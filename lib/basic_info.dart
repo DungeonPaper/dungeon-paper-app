@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
+final Firestore _db = Firestore.instance;
+
 class BasicInfo extends StatefulWidget {
   const BasicInfo({Key key}) : super(key: key);
 
@@ -12,10 +14,10 @@ class _BasicInfoState extends State<BasicInfo> {
   @override
   Widget build(BuildContext context) {
     return new StreamBuilder(
-        stream: Firestore.instance
-            .document('character_bios/B5g6u2M6nPOcPd65XMUr')
-            .snapshots(),
+        stream: _db.document('character_bios/B5g6u2M6nPOcPd65XMUr').snapshots(),
         builder: (context, snapshot) {
+          final character = snapshot.data;
+          final bool hasData = snapshot.hasData;
           return new Column(
               crossAxisAlignment: CrossAxisAlignment.center,
               children: <Widget>[
@@ -41,8 +43,12 @@ class _BasicInfoState extends State<BasicInfo> {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             mainAxisSize: MainAxisSize.min,
                             children: <Widget>[
-                              new Text("Level 1 Immolator"),
-                              new Text("Atri",
+                              new Text("Level 1 " + character['alignment'] + " " + character['mainClass'] + ", XP: " +
+                                  (hasData ? character['currentXP'].toString() : "")),
+                              new Text(
+                                  hasData
+                                      ? character['displayName']
+                                      : "Loading",
                                   style: new TextStyle(
                                       fontWeight: FontWeight.bold,
                                       fontSize: 24.0)),
