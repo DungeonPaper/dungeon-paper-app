@@ -1,11 +1,14 @@
 import 'dart:async';
+import 'dart:math';
 import 'package:dungeon_paper/db/character.dart';
 import 'package:dungeon_paper/db/user.dart';
 import 'package:dungeon_paper/redux/stores.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter_redux/flutter_redux.dart';
 import 'package:google_sign_in/google_sign_in.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 final FirebaseAuth _auth = FirebaseAuth.instance;
 final GoogleSignIn _googleSignIn = new GoogleSignIn();
@@ -18,24 +21,56 @@ class UserBadge extends StatefulWidget {
 }
 
 class _UserBadgeState extends State<UserBadge> {
-  FirebaseUser _user;
-
   @override
   Widget build(BuildContext context) {
-    print('User:' + _user.toString());
-    final initials = _user != null ?
-      _user.displayName.splitMapJoin(
-        new RegExp(r'[ ]'),
-        onMatch: (_) => '',
-        onNonMatch: (word) => word[0].toUpperCase()
-      ).substring(0, 2)
-      : '';
-    return new IconButton(
-      icon: new CircleAvatar(
-        child: new Text(initials),
-      ),
-      onPressed: () => _handleSignIn(),
-    );
+    return new StoreProvider<Map>(
+        store: userStore,
+        child: new StoreConnector<Map, Map>(
+          converter: (store) => store.state,
+          builder: (context, map) {
+            if (map == null || map['id'] == null) {
+              _getDetailsFromPrefs(context);
+            }
+
+            final DbUser user = map['data'];
+            final userName = user != null ? user.displayName : null;
+            final List<String> split = userName.split(' ');
+            final String initials = split.length > 0
+                ? split.map((s) => s[0].toUpperCase()).take(min(split.length, 2)).join('')
+                : '';
+            return new IconButton(
+              icon: new CircleAvatar(
+                child: new Text(initials),
+              ),
+              onPressed: () => _handleSignIn(),
+            );
+          },
+        ));
+  }
+
+  _getDetailsFromPrefs(BuildContext context) async {
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    String userEmail = prefs.getString('userEmail');
+    String characterId = prefs.getString('characterId');
+
+    if (userEmail == null || characterId == null) {
+      return;
+    }
+
+    Scaffold.of(context).showSnackBar(new SnackBar(
+      content: new Text(
+          'Logging in with $userEmail...'),
+      duration: new Duration(seconds: 4),
+    ));
+
+    DbUser user = await setCurrentUserByField('email', userEmail);
+    DbCharacter character = await setCurrentCharacterById(characterId);
+
+    Scaffold.of(context).showSnackBar(new SnackBar(
+      content: new Text(
+          'Logged in as ${user.displayName}\nCharacter: ${character.displayName}'),
+      duration: new Duration(seconds: 4),
+    ));
   }
 
   Future<FirebaseUser> _handleSignIn() async {
@@ -47,28 +82,16 @@ class _UserBadgeState extends State<UserBadge> {
     );
 
     print('Setting state: ${user.toString()}');
-    setState(() { _user = user; });
 
-    QuerySnapshot userQuery =
-        await Firestore.instance.collection('users').where('email', isEqualTo: user.email).getDocuments();
-
-    DocumentSnapshot userDoc = userQuery.documents.length > 0 ? userQuery.documents[0] : null;
-
-    DbUser dbUser = DbUser(userDoc.data);
-
-    DocumentSnapshot character = await dbUser.characters[0].get();
-    DbCharacter dbCharacter = DbCharacter(character.data);
-
-    userStore
-        .dispatch(new Action(type: UserActions.Login, payload: dbUser));
-
-    characterStore
-        .dispatch(new Action(type: CharacterActions.Set, payload: dbCharacter));
+    DbUser dbUser = await setCurrentUserByField('email', user.email);
+    DbCharacter dbCharacter = await setCurrentCharacterById(
+        (dbUser.characters[0] as DocumentReference).documentID);
 
     Scaffold.of(context).showSnackBar(new SnackBar(
-      content: new Text('Logged in as ${user.displayName}.'),
-      duration: new Duration(seconds: 4),
-    ));
+          content: new Text(
+              'Logged in as ${user.displayName}\nCharacter: ${dbCharacter.displayName}'),
+          duration: new Duration(seconds: 4),
+        ));
     return user;
   }
 }

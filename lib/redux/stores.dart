@@ -7,7 +7,7 @@ enum UserActions {
 }
 
 enum CharacterActions {
-  Set
+  Change
 }
 
 class Action<A, T> {
@@ -17,21 +17,35 @@ class Action<A, T> {
   Action({ this.type, this.payload });
 }
 
-DbUser userReducer(DbUser user, dynamic action) { //
+Map userReducer(Map state, dynamic action) { //
   if (action.type == UserActions.Login && action.payload != null) {
     print('Logging in: ' + action.payload.toString());
-    return action.payload;
+    state['id'] = action.payload['id'];
+    state['data'] = action.payload['data'];
+    return state;
   }
-  return user;
+
+  if (action.type == UserActions.Logout) {
+    print('Logging out');
+    return { 'id': null, 'data': null };
+  }
+
+  return state;
 }
 
-DbCharacter characterReducer(DbCharacter character, dynamic action) {
-  if (action.type == CharacterActions.Set && action.payload != null) {
+Map characterReducer(Map state, dynamic action) {
+  if (action.type == CharacterActions.Change && action.payload != null) {
     return action.payload;
   }
-  return character;
+  return state;
 }
 
+final userStore = new Store<Map>(userReducer, initialState: {
+  'id': null,
+  'data': new DbUser()
+});
 
-final userStore = new Store<DbUser>(userReducer, initialState: new DbUser());
-final characterStore = new Store<DbCharacter>(characterReducer, initialState: new DbCharacter());
+final characterStore = new Store<Map>(characterReducer, initialState: {
+  'id': null,
+  'data': new DbCharacter()
+});

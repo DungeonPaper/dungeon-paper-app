@@ -1,3 +1,7 @@
+import 'dart:async';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:dungeon_paper/redux/stores.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'base.dart';
 
 class DbCharacter extends DbBase {
@@ -81,3 +85,17 @@ const AlignmentMap = {
   Alignment.chaotic: 'chaotic',
   Alignment.evil: 'evil',
 };
+
+Future<DbCharacter> setCurrentCharacterById(String documentId) async {
+  DocumentSnapshot character = await Firestore.instance.document('character_bios/$documentId').get();
+  DbCharacter dbCharacter = DbCharacter(character.data);
+
+  SharedPreferences prefs = await SharedPreferences.getInstance();
+  prefs.setString('characterId', character.documentID);
+
+  characterStore.dispatch(new Action(
+      type: CharacterActions.Change,
+      payload: {'id': character.documentID, 'data': dbCharacter}));
+
+  return dbCharacter;
+}

@@ -13,10 +13,10 @@ class BasicInfo extends StatefulWidget {
 class _BasicInfoState extends State<BasicInfo> {
   @override
   Widget build(BuildContext context) {
-    return new StoreProvider<DbCharacter>(
+    return new StoreProvider<Map>(
         store: characterStore,
-        child: new StoreConnector<DbCharacter, DbCharacter>(
-            converter: (character) => character.state,
+        child: new StoreConnector<Map, DbCharacter>(
+            converter: (character) => character.state['data'],
             builder: (context, character) {
               return new Column(
                   crossAxisAlignment: CrossAxisAlignment.center,

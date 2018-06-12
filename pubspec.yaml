@@ -12,6 +12,7 @@ dependencies:
   cloud_firestore: ^0.7.3
   google_sign_in: ^3.0.4
   flutter_redux: ^0.5.1
+  shared_preferences: ^0.4.2
 
 dev_dependencies:
   flutter_test:
