@@ -1,7 +1,7 @@
+import 'package:dungeon_paper/db/character.dart';
+import 'package:dungeon_paper/redux/stores.dart';
 import 'package:flutter/material.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
-
-final Firestore _db = Firestore.instance;
+import 'package:flutter_redux/flutter_redux.dart';
 
 class BasicInfo extends StatefulWidget {
   const BasicInfo({Key key}) : super(key: key);
@@ -13,53 +13,56 @@ class BasicInfo extends StatefulWidget {
 class _BasicInfoState extends State<BasicInfo> {
   @override
   Widget build(BuildContext context) {
-    return new StreamBuilder(
-        stream: _db.document('character_bios/B5g6u2M6nPOcPd65XMUr').snapshots(),
-        builder: (context, snapshot) {
-          final character = snapshot.data;
-          final bool hasData = snapshot.hasData;
-          return new Column(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: <Widget>[
-                new Container(
-                  height: MediaQuery.of(context).size.height / 4.0,
-                  decoration: new BoxDecoration(
-                    image: new DecorationImage(
-                      fit: BoxFit.fitWidth,
-                      alignment: FractionalOffset.topCenter,
-                      image: new NetworkImage(
-                          'https://i.warosu.org/data/tg/img/0285/75/1385816259432.jpg'),
-                    ),
-                  ),
-                ),
-                new Row(
+    return new StoreProvider<DbCharacter>(
+        store: characterStore,
+        child: new StoreConnector<DbCharacter, DbCharacter>(
+            converter: (character) => character.state,
+            builder: (context, character) {
+              return new Column(
+                  crossAxisAlignment: CrossAxisAlignment.center,
                   children: <Widget>[
-                    new Expanded(
-                      child: new Card(
-                        elevation: 2.0,
-                        child: new Padding(
-                          padding: new EdgeInsets.all(16.0),
-                          child: new Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            mainAxisSize: MainAxisSize.min,
-                            children: <Widget>[
-                              new Text("Level 1 " + character['alignment'] + " " + character['mainClass'] + ", XP: " +
-                                  (hasData ? character['currentXP'].toString() : "")),
-                              new Text(
-                                  hasData
-                                      ? character['displayName']
-                                      : "Loading",
-                                  style: new TextStyle(
-                                      fontWeight: FontWeight.bold,
-                                      fontSize: 24.0)),
-                            ],
+                    character.photoURL != null
+                        ? new Container(
+                            height: MediaQuery.of(context).size.height / 4.0,
+                            decoration: new BoxDecoration(
+                              image: new DecorationImage(
+                                fit: BoxFit.fitWidth,
+                                alignment: FractionalOffset.topCenter,
+                                image: new NetworkImage(character.photoURL),
+                              ),
+                            ),
+                          )
+                        : new Placeholder(
+                            fallbackHeight:
+                                MediaQuery.of(context).size.height / 4,
+                            color: Colors.red),
+                    new Row(
+                      children: <Widget>[
+                        new Expanded(
+                          child: new Card(
+                            elevation: 2.0,
+                            child: new Padding(
+                              padding: new EdgeInsets.all(16.0),
+                              child: new Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                mainAxisSize: MainAxisSize.min,
+                                children: <Widget>[
+                                  new Text('Level ${character.level} ' +
+                                      '${character.alignment} ' +
+                                      '${character.mainClass}, XP: ' +
+                                      '${character.currentXP.toString()}'),
+                                  new Text('${character.displayName}',
+                                      style: new TextStyle(
+                                          fontWeight: FontWeight.bold,
+                                          fontSize: 24.0)),
+                                ],
+                              ),
+                            ),
                           ),
-                        ),
-                      ),
-                    )
-                  ],
-                ),
-              ]);
-        });
+                        )
+                      ],
+                    ),
+                  ]);
+            }));
   }
 }
