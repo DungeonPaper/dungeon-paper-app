@@ -23,6 +23,8 @@ class DungeonPaper extends StatelessWidget {
       ),
       theme: new ThemeData(
         primarySwatch: Colors.lightGreen,
+        brightness: Brightness.light,
+        scaffoldBackgroundColor: new Color.fromARGB(255, 229, 229, 229),
       ),
     );
   }

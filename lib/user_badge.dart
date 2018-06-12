@@ -27,12 +27,12 @@ class _UserBadgeState extends State<UserBadge> {
         store: userStore,
         child: new StoreConnector<Map, Map>(
           converter: (store) => store.state,
-          builder: (context, map) {
-            if (map == null || map['id'] == null) {
+          builder: (context, state) {
+            if (state == null || state['id'] == null) {
               _getDetailsFromPrefs(context);
             }
 
-            final DbUser user = map['data'];
+            final DbUser user = state['data'];
             final userName = user != null ? user.displayName : null;
             final List<String> split = userName.split(' ');
             final String initials = split.length > 0

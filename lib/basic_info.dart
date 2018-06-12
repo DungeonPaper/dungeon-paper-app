@@ -1,5 +1,6 @@
 import 'package:dungeon_paper/db/character.dart';
 import 'package:dungeon_paper/redux/stores.dart';
+import 'package:dungeon_paper/utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 
@@ -39,8 +40,9 @@ class _BasicInfoState extends State<BasicInfo> {
                     new Row(
                       children: <Widget>[
                         new Expanded(
-                          child: new Card(
-                            elevation: 2.0,
+                          child: new Material(
+                            // margin: EdgeInsets.all(0.0),
+
                             child: new Padding(
                               padding: new EdgeInsets.all(16.0),
                               child: new Column(
@@ -48,9 +50,9 @@ class _BasicInfoState extends State<BasicInfo> {
                                 mainAxisSize: MainAxisSize.min,
                                 children: <Widget>[
                                   new Text('Level ${character.level} ' +
-                                      '${character.alignment} ' +
-                                      '${character.mainClass}, XP: ' +
-                                      '${character.currentXP.toString()}'),
+                                          '${capitalize(character.alignment + ' ' + character.mainClass)}' // +
+                                      // ', XP: ${character.currentXP.toString()}'
+                                      ),
                                   new Text('${character.displayName}',
                                       style: new TextStyle(
                                           fontWeight: FontWeight.bold,
