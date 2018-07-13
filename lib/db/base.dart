@@ -7,13 +7,17 @@ class DbBase {
 
     defaultData.forEach((key, val) {
       if (!_map.containsKey(key) || _map[key] == null) {
-        _map[key] = defaultData[key];
+        set(key, defaultData[key]);
       }
     });
   }
 
   operator [](String key) {
     return _map[key];
+  }
+
+  set<T>(String key, T value) {
+    _map[key] = value;
   }
 
   get<T>(String key, [defaultVal]) {
@@ -32,4 +36,6 @@ class DbBase {
     }
     return value;
   }
+
+  get map => _map;
 }

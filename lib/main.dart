@@ -12,8 +12,22 @@ class DungeonPaper extends StatelessWidget {
       home: new Scaffold(
         appBar: new AppBar(
           title: new Text('Dungeon Paper'),
-          actions: <Widget>[
-            new UserBadge()
+          actions: <Widget>[new UserBadge()],
+        ),
+        bottomNavigationBar: BottomNavigationBar(
+          items: <BottomNavigationBarItem>[
+            BottomNavigationBarItem(
+              icon: Icon(Icons.person),
+              title: Text('Profile'),
+            ),
+            // BottomNavigationBarItem(
+            //   icon: ImageIcon(AssetImage('assets/swords.png')),
+            //   title: Text('Battle'),
+            // )
+            BottomNavigationBarItem(
+              icon: Icon(Icons.speaker_notes),
+              title: Text('Notes'),
+            )
           ],
         ),
         body: new BasicInfo(),
@@ -21,7 +35,7 @@ class DungeonPaper extends StatelessWidget {
       theme: new ThemeData(
         primarySwatch: Colors.lightGreen,
         brightness: Brightness.light,
-        scaffoldBackgroundColor: new Color.fromARGB(255, 245, 245, 245),
+        scaffoldBackgroundColor: new Color.fromARGB(255, 225, 225, 225),
       ),
     );
   }

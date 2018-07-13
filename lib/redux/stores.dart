@@ -1,11 +1,11 @@
 import 'package:dungeon_paper/db/user.dart';
 import 'package:redux/redux.dart';
 
-enum UserActions { Login, Logout }
+enum UserActions { Login, Logout, Loading }
 
-enum CharacterActions { Change, Remove, RemoveAll }
+enum CharacterActions { Change, Remove, RemoveAll, Loading }
 
-class Action<A, T> {
+class Action<T, A> {
   final A type;
   final T payload;
 
@@ -20,9 +20,17 @@ Map userReducer(Map state, dynamic action) {
     return state;
   }
 
+  if (action.type == UserActions.Loading && action.payload != null) {
+    state['loading'] = action.payload;
+    return state;
+  }
+
   if (action.type == UserActions.Logout) {
     print('Logging out');
-    return {'id': null, 'data': null};
+    state['id'] = null;
+    state['data'] = null;
+    state['loading'] = false;
+    return state;
   }
 
   return state;
@@ -35,15 +43,35 @@ Map characterReducer(Map state, dynamic action) {
     return state;
   }
 
+  if (action.type == CharacterActions.Loading && action.payload != null) {
+    state['loading'] = action.payload;
+    return state;
+  }
+
   if (action.type == CharacterActions.RemoveAll) {
-    return {'id': null, 'data': null};
+    state['id'] = null;
+    state['data'] = null;
+    state['loading'] = false;
+    return state;
   }
 
   return state;
 }
 
-final userStore = new Store<Map>(userReducer,
-    initialState: {'id': null, 'data': new DbUser()});
+final userStore = new Store<Map>(
+  userReducer,
+  initialState: {
+    'id': null,
+    'data': null,
+    'loading': false,
+  },
+);
 
-final characterStore = new Store<Map>(characterReducer,
-    initialState: {'id': null, 'data': null});
+final characterStore = new Store<Map>(
+  characterReducer,
+  initialState: {
+    'id': null,
+    'data': null,
+    'loading': false,
+  },
+);
