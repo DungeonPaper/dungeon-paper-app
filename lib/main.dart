@@ -1,6 +1,6 @@
+import 'package:dungeon_paper/profile_view/basic_info.dart';
+import 'package:dungeon_paper/profile_view/user_badge.dart';
 import 'package:flutter/material.dart';
-import 'user_badge.dart';
-import 'basic_info.dart';
 
 void main() => runApp(new DungeonPaper());
 

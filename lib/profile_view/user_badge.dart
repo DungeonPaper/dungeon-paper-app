@@ -38,6 +38,7 @@ class _UserBadgeState extends State<UserBadge> {
                     .take(min(split.length, 2))
                     .join('')
                 : '';
+
             return PopupMenuButton<String>(
               child: user.photoURL != null && user.photoURL.length > 0
                   ? Padding(

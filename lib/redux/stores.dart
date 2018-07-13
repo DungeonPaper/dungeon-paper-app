@@ -1,4 +1,3 @@
-import 'package:dungeon_paper/db/user.dart';
 import 'package:redux/redux.dart';
 
 enum UserActions { Login, Logout, Loading }

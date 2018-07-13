@@ -1,6 +1,6 @@
-import 'package:dungeon_paper/character_connector.dart';
-import 'package:dungeon_paper/character_headliner.dart';
-import 'package:dungeon_paper/user_connector.dart';
+import 'package:dungeon_paper/profile_view/character_headliner.dart';
+import 'package:dungeon_paper/redux/connectors/character_connector.dart';
+import 'package:dungeon_paper/redux/connectors/user_connector.dart';
 import 'package:flutter/material.dart';
 
 class BasicInfo extends StatelessWidget {
@@ -40,7 +40,7 @@ class BasicInfo extends StatelessWidget {
             return Column(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: charImageWidget +
-                    <Widget>[CharacterHeadline(character: character)]);
+                    [CharacterHeadline(character: character)]);
           },
         );
       },

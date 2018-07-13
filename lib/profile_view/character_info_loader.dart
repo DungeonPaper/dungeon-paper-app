@@ -1,6 +1,6 @@
-import 'package:dungeon_paper/character_headliner.dart';
 import 'package:dungeon_paper/db/character.dart';
 import 'package:dungeon_paper/db/user.dart';
+import 'package:dungeon_paper/profile_view/character_headliner.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:shared_preferences/shared_preferences.dart';
