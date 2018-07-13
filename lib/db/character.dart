@@ -25,25 +25,25 @@ class DbCharacter extends DbBase {
     'notes': [],
   };
 
-  String get alignment { return get<String>('alignment'); }
-  String get displayName { return get<String>('displayName'); }
-  String get mainClass { return get<String>('mainClass'); }
-  String get photoURL { return get<String>('photoURL'); }
-  num get level { return get<num>('level'); }
-  num get currentHP { return get<num>('currentHP'); }
-  num get currentXP { return get<num>('currentXP'); }
-  num get maxHP { return get<num>('maxHP'); }
-  num get armor { return get<num>('armor'); }
-  num get str { return get<num>('str'); }
-  num get dex { return get<num>('dex'); }
-  num get con { return get<num>('con'); }
-  num get wis { return get<num>('wis'); }
-  num get int { return get<num>('int'); }
-  num get cha { return get<num>('cha'); }
-  List get moves { return get<List>('moves'); }
-  List get notes { return get<List>('notes'); }
+  String get alignment => get<String>('alignment');
+  String get displayName => get<String>('displayName');
+  String get mainClass => get<String>('mainClass');
+  String get photoURL => get<String>('photoURL');
+  num get level => get<num>('level');
+  num get currentHP => get<num>('currentHP');
+  num get currentXP => get<num>('currentXP');
+  num get maxHP => get<num>('maxHP');
+  num get armor => get<num>('armor');
+  num get str => get<num>('str');
+  num get dex => get<num>('dex');
+  num get con => get<num>('con');
+  num get wis => get<num>('wis');
+  num get int => get<num>('int');
+  num get cha => get<num>('cha');
+  List get moves => get<List>('moves');
+  List get notes => get<List>('notes');
 
-  DbCharacter([Map map]): super(map);
+  DbCharacter([Map map]) : super(map);
 }
 
 enum ClassNames {
@@ -87,7 +87,8 @@ const AlignmentMap = {
 };
 
 Future<DbCharacter> setCurrentCharacterById(String documentId) async {
-  DocumentSnapshot character = await Firestore.instance.document('character_bios/$documentId').get();
+  DocumentSnapshot character =
+      await Firestore.instance.document('character_bios/$documentId').get();
   DbCharacter dbCharacter = DbCharacter(character.data);
 
   SharedPreferences prefs = await SharedPreferences.getInstance();
@@ -98,4 +99,12 @@ Future<DbCharacter> setCurrentCharacterById(String documentId) async {
       payload: {'id': character.documentID, 'data': dbCharacter}));
 
   return dbCharacter;
+}
+
+unsetCurrentCharacter() async {
+  SharedPreferences prefs = await SharedPreferences.getInstance();
+  prefs.remove('characterId');
+  characterStore.dispatch(Action(
+    type: CharacterActions.RemoveAll,
+  ));
 }

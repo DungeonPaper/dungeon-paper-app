@@ -1,7 +1,4 @@
-import 'package:dungeon_paper/db/character.dart';
-import 'package:dungeon_paper/db/user.dart';
 import 'package:flutter/material.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import 'user_badge.dart';
 import 'basic_info.dart';
 
@@ -24,7 +21,7 @@ class DungeonPaper extends StatelessWidget {
       theme: new ThemeData(
         primarySwatch: Colors.lightGreen,
         brightness: Brightness.light,
-        scaffoldBackgroundColor: new Color.fromARGB(255, 229, 229, 229),
+        scaffoldBackgroundColor: new Color.fromARGB(255, 245, 245, 245),
       ),
     );
   }
