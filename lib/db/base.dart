@@ -16,6 +16,10 @@ class DbBase {
     return _map[key];
   }
 
+  operator []=(String key, dynamic value) {
+    return _map[key] = value;
+  }
+
   set<T>(String key, T value) {
     _map[key] = value;
   }

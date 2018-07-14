@@ -1,18 +1,19 @@
 import 'package:dungeon_paper/profile_view/basic_info.dart';
 import 'package:dungeon_paper/profile_view/user_badge.dart';
+import 'package:dungeon_paper/redux/connectors/character_connector.dart';
 import 'package:flutter/material.dart';
 
-void main() => runApp(new DungeonPaper());
+void main() => runApp(DungeonPaper());
 
 class DungeonPaper extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return new MaterialApp(
+    return MaterialApp(
       title: 'Dungeon Paper',
-      home: new Scaffold(
-        appBar: new AppBar(
-          title: new Text('Dungeon Paper'),
-          actions: <Widget>[new UserBadge()],
+      home: Scaffold(
+        appBar: AppBar(
+          title: Text('Dungeon Paper'),
+          actions: <Widget>[UserBadge()],
         ),
         bottomNavigationBar: BottomNavigationBar(
           items: <BottomNavigationBarItem>[
@@ -30,12 +31,31 @@ class DungeonPaper extends StatelessWidget {
             )
           ],
         ),
-        body: new BasicInfo(),
+        body: CharacterConnector(
+            loader: Column(
+              mainAxisSize: MainAxisSize.max,
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: <Widget>[
+                Center(child: CircularProgressIndicator(value: null))
+              ],
+            ),
+            builder: (context, character) {
+              if (character == null) {
+                return Column(
+                  mainAxisSize: MainAxisSize.max,
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: <Widget>[Center(child: Text('Please log in!'))],
+                );
+              }
+              return BasicInfo(character: character);
+            }),
       ),
-      theme: new ThemeData(
+      theme: ThemeData(
         primarySwatch: Colors.lightGreen,
         brightness: Brightness.light,
-        scaffoldBackgroundColor: new Color.fromARGB(255, 225, 225, 225),
+        scaffoldBackgroundColor: Color.fromARGB(255, 225, 225, 225),
       ),
     );
   }

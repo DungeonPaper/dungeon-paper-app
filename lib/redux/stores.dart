@@ -2,7 +2,7 @@ import 'package:redux/redux.dart';
 
 enum UserActions { Login, Logout, Loading }
 
-enum CharacterActions { Change, Remove, RemoveAll, Loading }
+enum CharacterActions { Change, Remove, RemoveAll, Loading, SetField }
 
 class Action<T, A> {
   final A type;
@@ -44,6 +44,11 @@ Map characterReducer(Map state, dynamic action) {
 
   if (action.type == CharacterActions.Loading && action.payload != null) {
     state['loading'] = action.payload;
+    return state;
+  }
+
+  if (action.type == CharacterActions.SetField && action.payload != null) {
+    state['data'].set(action.payload['field'], action.payload['value']);
     return state;
   }
 

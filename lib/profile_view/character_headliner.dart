@@ -7,7 +7,7 @@ class CharacterHeadline extends StatelessWidget {
 
   const CharacterHeadline({
     Key key,
-    this.character,
+    @required this.character,
   }) : super(key: key);
 
   @override
@@ -16,8 +16,6 @@ class CharacterHeadline extends StatelessWidget {
       children: <Widget>[
         Expanded(
           child: Material(
-            // margin: EdgeInsets.all(0.0),
-
             child: Padding(
               padding: EdgeInsets.all(16.0),
               child: Column(

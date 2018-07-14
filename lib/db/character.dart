@@ -44,6 +44,27 @@ class DbCharacter extends DbBase {
   List get notes => get<List>('notes');
 
   DbCharacter([Map map]) : super(map);
+
+  static num statModifier(num stat) {
+    const modifiers = {1: -3, 4: -2, 6: -1, 9: 0, 13: 1, 16: 2, 18: 3};
+
+    if (modifiers.containsKey(stat)) {
+      return modifiers[stat];
+    }
+
+    for (num i = stat; i > 0; --i) {
+      if (modifiers.containsKey(i)) {
+        return modifiers[i];
+      }
+    }
+
+    return -1;
+  }
+
+  static String statModifierText(num stat) {
+    num mod = statModifier(stat);
+    return (mod >= 0 ? '+' : '') + mod.toString();
+  }
 }
 
 enum ClassNames {
