@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:dungeon_paper/db/character.dart';
 import 'package:dungeon_paper/redux/stores.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -6,8 +7,11 @@ import 'package:shared_preferences/shared_preferences.dart';
 class EditStatDialog extends StatefulWidget {
   final String name;
   final num value;
-  EditStatDialog({Key key, @required this.name, @required this.value})
-      : super(key: key);
+  EditStatDialog({
+    Key key,
+    @required this.name,
+    @required this.value,
+  }) : super(key: key);
 
   @override
   State<StatefulWidget> createState() =>
@@ -15,9 +19,16 @@ class EditStatDialog extends StatefulWidget {
 }
 
 class EditStatDialogState extends State<EditStatDialog> {
-  String name;
+  final String name;
+  final String fullName;
   num value;
-  EditStatDialogState({Key key, @required this.name, @required this.value});
+
+  EditStatDialogState({
+    Key key,
+    @required this.name,
+    @required this.value,
+  })  : fullName = DbCharacter.statNameMap[name],
+        super();
 
   @override
   Widget build(BuildContext context) {
@@ -30,7 +41,7 @@ class EditStatDialogState extends State<EditStatDialog> {
             mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
-              Text('Edit $name'),
+              Text('Edit $fullName'),
               Text(value.toString()),
               Form(
                 child: Column(
@@ -68,6 +79,8 @@ class EditStatDialogState extends State<EditStatDialog> {
         payload: {'field': name.toLowerCase(), 'value': value},
       ),
     );
-    firestore.document('character_bios/$charDocId').updateData({name.toLowerCase(): value});
+    firestore
+        .document('character_bios/$charDocId')
+        .updateData({name.toLowerCase(): value});
   }
 }

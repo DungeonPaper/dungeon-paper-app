@@ -25,6 +25,15 @@ class DbCharacter extends DbBase {
     'notes': [],
   };
 
+  static final statNameMap = {
+    'str': 'Strength',
+    'dex': 'Dexterity',
+    'int': 'Intelligence',
+    'wis': 'Wisdom',
+    'cha': 'Charisma',
+    'con': 'Constitution',
+  };
+
   String get alignment => get<String>('alignment');
   String get displayName => get<String>('displayName');
   String get mainClass => get<String>('mainClass');

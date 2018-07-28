@@ -9,7 +9,7 @@ class BasicInfo extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final List<Widget> children = [
+    List<Widget> children = [
       CharacterHeadline(character: character),
       character.photoURL.length > 0
           ? Container(
@@ -23,7 +23,7 @@ class BasicInfo extends StatelessWidget {
               ),
             )
           : Container(height: 0.0, width: 0.0),
-      BaseStats(character: character),
+      BaseStats(),
     ];
 
     return ListView(
