@@ -1,9 +1,13 @@
+import 'package:dungeon_paper/db/user.dart';
 import 'package:dungeon_paper/profile_view/basic_info.dart';
 import 'package:dungeon_paper/profile_view/user_badge.dart';
 import 'package:dungeon_paper/redux/connectors/character_connector.dart';
 import 'package:flutter/material.dart';
 
-void main() => runApp(DungeonPaper());
+void main() {
+  registerUserListener();
+  runApp(DungeonPaper());
+}
 
 class DungeonPaper extends StatelessWidget {
   @override

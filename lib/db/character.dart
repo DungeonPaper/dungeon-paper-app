@@ -1,6 +1,9 @@
 import 'dart:async';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:dungeon_paper/redux/stores.dart';
+import 'package:dungeon_paper/db/character_types.dart';
+import 'package:dungeon_paper/db/user.dart';
+import 'package:dungeon_paper/redux/actions/character_actions.dart';
+import 'package:dungeon_paper/redux/stores/character_store.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'base.dart';
 
@@ -25,32 +28,23 @@ class DbCharacter extends DbBase {
     'notes': [],
   };
 
-  static final statNameMap = {
-    'str': 'Strength',
-    'dex': 'Dexterity',
-    'int': 'Intelligence',
-    'wis': 'Wisdom',
-    'cha': 'Charisma',
-    'con': 'Constitution',
-  };
-
-  String get alignment => get<String>('alignment');
-  String get displayName => get<String>('displayName');
-  String get mainClass => get<String>('mainClass');
-  String get photoURL => get<String>('photoURL');
-  num get level => get<num>('level');
-  num get currentHP => get<num>('currentHP');
-  num get currentXP => get<num>('currentXP');
-  num get maxHP => get<num>('maxHP');
-  num get armor => get<num>('armor');
-  num get str => get<num>('str');
-  num get dex => get<num>('dex');
-  num get con => get<num>('con');
-  num get wis => get<num>('wis');
-  num get int => get<num>('int');
-  num get cha => get<num>('cha');
-  List get moves => get<List>('moves');
-  List get notes => get<List>('notes');
+  String get alignment => get('alignment');
+  String get displayName => get('displayName');
+  String get mainClass => get('mainClass');
+  String get photoURL => get('photoURL');
+  num get level => get('level');
+  num get currentHP => get('currentHP');
+  num get currentXP => get('currentXP');
+  num get maxHP => get('maxHP');
+  num get armor => get('armor');
+  num get str => get('str');
+  num get dex => get('dex');
+  num get con => get('con');
+  num get wis => get('wis');
+  num get int => get('int');
+  num get cha => get('cha');
+  List get moves => get('moves');
+  List get notes => get('notes');
 
   DbCharacter([Map map]) : super(map);
 
@@ -76,46 +70,6 @@ class DbCharacter extends DbBase {
   }
 }
 
-enum ClassNames {
-  bard,
-  cleric,
-  druid,
-  fighter,
-  paladin,
-  ranger,
-  thief,
-  wizard,
-  immolator,
-}
-
-const ClassNamesMap = {
-  ClassNames.bard: 'bard',
-  ClassNames.cleric: 'cleric',
-  ClassNames.druid: 'druid',
-  ClassNames.fighter: 'fighter',
-  ClassNames.paladin: 'paladin',
-  ClassNames.ranger: 'ranger',
-  ClassNames.thief: 'thief',
-  ClassNames.wizard: 'wizard',
-  ClassNames.immolator: 'immolator',
-};
-
-enum Alignment {
-  good,
-  lawful,
-  neutral,
-  chaotic,
-  evil,
-}
-
-const AlignmentMap = {
-  Alignment.good: 'good',
-  Alignment.lawful: 'lawful',
-  Alignment.neutral: 'neutral',
-  Alignment.chaotic: 'chaotic',
-  Alignment.evil: 'evil',
-};
-
 Future<DbCharacter> setCurrentCharacterById(String documentId) async {
   DocumentSnapshot character =
       await Firestore.instance.document('character_bios/$documentId').get();
@@ -124,9 +78,9 @@ Future<DbCharacter> setCurrentCharacterById(String documentId) async {
   SharedPreferences prefs = await SharedPreferences.getInstance();
   prefs.setString('characterId', character.documentID);
 
-  characterStore.dispatch(new Action(
-      type: CharacterActions.Change,
-      payload: {'id': character.documentID, 'data': dbCharacter}));
+  characterStore.dispatch(
+    CharacterActions.updateChar(character.documentID, dbCharacter),
+  );
 
   return dbCharacter;
 }
@@ -134,7 +88,36 @@ Future<DbCharacter> setCurrentCharacterById(String documentId) async {
 unsetCurrentCharacter() async {
   SharedPreferences prefs = await SharedPreferences.getInstance();
   prefs.remove('characterId');
-  characterStore.dispatch(Action(
-    type: CharacterActions.RemoveAll,
-  ));
+  characterStore.dispatch(CharacterActions.remove());
+}
+
+updateCharacter(Map<String, dynamic> data) async {
+  Firestore firestore = Firestore.instance;
+  final SharedPreferences sharedPrefs = await SharedPreferences.getInstance();
+  final String charDocId = sharedPrefs.getString('characterId');
+  final charDoc = firestore.document('character_bios/$charDocId')
+    ..updateData(data);
+  final charData = await charDoc.get();
+
+  characterStore.dispatch(
+    CharacterActions.updateChar(charDoc.documentID, DbCharacter(charData.data)),
+  );
+}
+
+createCharacter() async {
+  SharedPreferences sharedPrefs = await SharedPreferences.getInstance();
+  DbCharacter character = DbCharacter({});
+
+  DocumentReference charDoc =
+      await firestore.collection('character_bios').add(character.map);
+
+  String userDocId = sharedPrefs.getString('userId');
+
+  firestore.document('user/$userDocId').updateData({
+    'characters': [charDoc]
+  });
+
+  characterStore.dispatch(
+    CharacterActions.updateChar(charDoc.documentID, character),
+  );
 }

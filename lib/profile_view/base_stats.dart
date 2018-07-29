@@ -1,4 +1,5 @@
 import 'package:dungeon_paper/db/character.dart';
+import 'package:dungeon_paper/db/character_types.dart';
 import 'package:dungeon_paper/profile_view/edit_stat_dialog.dart';
 import 'package:dungeon_paper/redux/connectors/character_connector.dart';
 import 'package:flutter/material.dart';
@@ -41,7 +42,7 @@ class StatCard extends StatelessWidget {
   StatCard({
     Key key,
     @required this.name,
-  })  : fullName = DbCharacter.statNameMap[name],
+  })  : fullName = StatNameMap[name],
         super(key: key);
 
   final String name;
@@ -67,7 +68,7 @@ class StatCard extends StatelessWidget {
                 children: <Widget>[
                   Text('$fullName: $value', style: TextStyle(fontSize: 11.0)),
                   Text(
-                    '${name.toUpperCase()}: ' +
+                    '${name.toUpperCase()}' +
                     DbCharacter.statModifierText(value),
                     style:
                         TextStyle(fontSize: 20.0, fontWeight: FontWeight.bold),
