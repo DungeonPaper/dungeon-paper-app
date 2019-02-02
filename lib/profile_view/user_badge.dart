@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'dart:math';
+import 'package:dungeon_paper/db/auth.dart';
 import 'package:dungeon_paper/db/user.dart';
 import 'package:dungeon_paper/redux/stores/connectors.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -80,11 +81,11 @@ class _UserBadgeState extends State<UserBadge> {
     );
   }
 
-  Future<FirebaseUser> _handleSignIn() async {
-    return requestSignIn();
+  void _handleSignIn() {
+    requestSignInWithCredentials();
   }
 
-  Future<bool> _handleSignOut() async {
-    return requestSignOut();
+  _handleSignOut() async {
+    requestSignOut();
   }
 }

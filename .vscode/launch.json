@@ -8,9 +8,9 @@
     "type": "dart",
     "request": "launch",
     "program": "lib/main.dart",
-    "args": [
-      "-d711KPNY0809287",
-      "-v"
-    ]
+    // "args": [
+    //   "-d711KPNY0809287",
+    //   "-v"
+    // ]
   }, ]
 }

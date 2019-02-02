@@ -86,6 +86,7 @@ Future<DbCharacter> setCurrentCharacterById(String documentId) async {
 }
 
 unsetCurrentCharacter() async {
+  print('Unsetting characters');
   SharedPreferences prefs = await SharedPreferences.getInstance();
   prefs.remove('characterId');
   dwStore.dispatch(CharacterActions.remove());
@@ -120,4 +121,11 @@ createCharacter() async {
   dwStore.dispatch(
     CharacterActions.setCurrentChar(charDoc.documentID, character),
   );
+}
+
+getOrCreateCharacter(DocumentSnapshot userSnap) {
+  if (userSnap.data['characters'].length > 0) {
+    print('userSnap data:' + userSnap.data['characters'][0].documentID);
+    setCurrentCharacterById(userSnap.data['characters'][0].documentID);
+  }
 }

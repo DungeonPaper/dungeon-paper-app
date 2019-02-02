@@ -6,7 +6,6 @@ import 'package:dungeon_paper/redux/stores/connectors.dart';
 import 'package:flutter/material.dart';
 
 void main() {
-  registerUserListener();
   runApp(DungeonPaper());
 }
 

@@ -1,16 +1,13 @@
 import 'dart:async';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:dungeon_paper/db/auth.dart';
 import 'package:dungeon_paper/db/character.dart';
 import 'package:dungeon_paper/redux/actions/character_actions.dart';
 import 'package:dungeon_paper/redux/actions/user_actions.dart';
 import 'package:dungeon_paper/redux/stores/stores.dart';
-import 'package:google_sign_in/google_sign_in.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'base.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
-final GoogleSignIn _googleSignIn = new GoogleSignIn();
 final Firestore firestore = Firestore.instance;
 FirebaseUser authUser;
 DbUser currentUser = DbUser({});
@@ -50,15 +47,11 @@ setCurrentUserByEmail(String email) async {
   prefs.setString('userEmail', dbUser.email);
 
   dwStore.dispatch(UserActions.login(userDoc.documentID, dbUser));
-}
-
-requestSignOut() async {
-  await _googleSignIn.signOut();
-  unsetCurrentUser();
-  unsetCurrentCharacter();
+  getOrCreateCharacter(userDoc);
 }
 
 unsetCurrentUser() async {
+  print('Unsetting user');
   SharedPreferences prefs = await SharedPreferences.getInstance();
   prefs.remove('userId');
   prefs.remove('CharacterId');
@@ -66,36 +59,29 @@ unsetCurrentUser() async {
   dwStore.dispatch(UserActions.logout());
 }
 
-requestSignIn() async {
-  SharedPreferences sharedPrefs = await SharedPreferences.getInstance();
-  GoogleSignInAccount googleUser = await _googleSignIn.signIn();
-  GoogleSignInAuthentication googleAuth = await googleUser.authentication;
-
-  sharedPrefs.setString('accessToken', googleAuth.accessToken);
-  sharedPrefs.setString('idToken', googleAuth.idToken);
-
-  FirebaseUser authUser = await performSignIn();
-  setCurrentUserByEmail(authUser.email);
-
-  return authUser;
-}
-
 registerUserListener() {
-  FirebaseAuth.instance.onAuthStateChanged.listen((FirebaseUser authUser) {
+  try {
     if (listener != null) {
       listener.cancel();
     }
-    listener = dwStore.onChange.listen((DWStore state) async {
-      String id = state.user.currentUserDocID;
-      DbUser dbUser = state.user.current;
 
-      if (dbUser.characters != null && dbUser.characters.length > 0) {
-        DocumentSnapshot charSnap = await dbUser.characters[0].get();
-        DbCharacter charData = DbCharacter(charSnap.data);
-        dwStore.dispatch(CharacterActions.setCurrentChar(id, charData));
-      } else {
-        createCharacter();
+    listener = FirebaseAuth.instance.onAuthStateChanged
+        .listen((FirebaseUser authUser) {
+      if (authUser != null &&
+          authUser.email != null &&
+          authUser.email != dwStore.state.user.current.email) {
+        setCurrentUserByEmail(authUser.email);
+      }
+
+      if (authUser == null || authUser.email == null) {
+        unsetCurrentUser();
+        unsetCurrentCharacter();
       }
     });
-  });
+  } catch (e) {
+    print('error on user listener');
+    if (listener != null) {
+      listener.cancel();
+    }
+  }
 }
