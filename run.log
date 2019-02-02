@@ -1,0 +1,1207 @@
+[  +52 ms] executing: [/Users/chenasraf/.flutter.src/] git rev-parse --abbrev-ref --symbolic @{u}
+[  +58 ms] Exit code 0 from: git rev-parse --abbrev-ref --symbolic @{u}
+[        ] origin/beta
+[        ] executing: [/Users/chenasraf/.flutter.src/] git rev-parse --abbrev-ref HEAD
+[  +11 ms] Exit code 0 from: git rev-parse --abbrev-ref HEAD
+[        ] beta
+[   +1 ms] executing: [/Users/chenasraf/.flutter.src/] git ls-remote --get-url origin
+[  +15 ms] Exit code 0 from: git ls-remote --get-url origin
+[        ] https://github.com/flutter/flutter.git
+[        ] executing: [/Users/chenasraf/.flutter.src/] git log -n 1 --pretty=format:%H
+[  +18 ms] Exit code 0 from: git log -n 1 --pretty=format:%H
+[        ] 985ccb6d14c6ce5ce74823a4d366df2438eac44f
+[        ] executing: [/Users/chenasraf/.flutter.src/] git log -n 1 --pretty=format:%ar
+[  +13 ms] Exit code 0 from: git log -n 1 --pretty=format:%ar
+[        ] 3 weeks ago
+[   +1 ms] executing: [/Users/chenasraf/.flutter.src/] git describe --match v*.*.* --first-parent --long --tags
+[  +63 ms] Exit code 0 from: git describe --match v*.*.* --first-parent --long --tags
+[        ] v1.1.8-0-g985ccb6d1
+[ +517 ms] executing: /usr/local/Cellar/android-sdk/24.4.1_1/platform-tools/adb devices -l
+[  +18 ms] Exit code 0 from: /usr/local/Cellar/android-sdk/24.4.1_1/platform-tools/adb devices -l
+[        ] List of devices attached
+           711KPNY0809287         device usb:336592896X product:taimen model:Pixel_2_XL device:taimen
+[  +10 ms] executing: idevice_id -h
+[  +39 ms] /usr/bin/xcrun simctl list --json devices
+[ +476 ms] Found plugin cloud_firestore at /Users/chenasraf/.flutter.src/.pub-cache/hosted/pub.dartlang.org/cloud_firestore-0.7.4/
+[   +8 ms] Found plugin firebase_auth at /Users/chenasraf/.flutter.src/.pub-cache/hosted/pub.dartlang.org/firebase_auth-0.5.15/
+[   +2 ms] Found plugin firebase_core at /Users/chenasraf/.flutter.src/.pub-cache/hosted/pub.dartlang.org/firebase_core-0.2.5/
+[  +12 ms] Found plugin google_sign_in at /Users/chenasraf/.flutter.src/.pub-cache/hosted/pub.dartlang.org/google_sign_in-3.0.4/
+[  +11 ms] Found plugin shared_preferences at /Users/chenasraf/.flutter.src/.pub-cache/hosted/pub.dartlang.org/shared_preferences-0.4.2/
+[  +33 ms] Found plugin cloud_firestore at /Users/chenasraf/.flutter.src/.pub-cache/hosted/pub.dartlang.org/cloud_firestore-0.7.4/
+[   +4 ms] Found plugin firebase_auth at /Users/chenasraf/.flutter.src/.pub-cache/hosted/pub.dartlang.org/firebase_auth-0.5.15/
+[   +2 ms] Found plugin firebase_core at /Users/chenasraf/.flutter.src/.pub-cache/hosted/pub.dartlang.org/firebase_core-0.2.5/
+[   +6 ms] Found plugin google_sign_in at /Users/chenasraf/.flutter.src/.pub-cache/hosted/pub.dartlang.org/google_sign_in-3.0.4/
+[   +6 ms] Found plugin shared_preferences at /Users/chenasraf/.flutter.src/.pub-cache/hosted/pub.dartlang.org/shared_preferences-0.4.2/
+[  +45 ms] /usr/local/Cellar/android-sdk/24.4.1_1/platform-tools/adb -s 711KPNY0809287 shell getprop
+[ +150 ms] ro.hardware = taimen
+[   +1 ms] ro.build.characteristics = nosdcard
+[+2528 ms] Launching lib/main.dart on Pixel 2 XL in debug mode...
+[  +48 ms] Initializing gradle...
+[   +8 ms] Using gradle from /Users/chenasraf/Dev/dungeon_paper/android/gradlew.
+[ +147 ms] Exception while looking for Android Studio: FileSystemException: Directory listing failed, path = '/Applications/Unity/PlaybackEngines/WebGLSupport/BuildTools/Brotli/python/' (OS Error: Permission denied, errno = 13)
+[ +240 ms] Exception while looking for Android Studio: FileSystemException: Directory listing failed, path = '/Applications/Unity/PlaybackEngines/WebGLSupport/BuildTools/Emscripten_Mac/node/' (OS Error: Permission denied, errno = 13)
+[+1198 ms] executing: /usr/bin/defaults read /Applications/Android Studio 3.4 Preview.app/Contents/Info CFBundleShortVersionString
+[ +291 ms] Exit code 0 from: /usr/bin/defaults read /Applications/Android Studio 3.4 Preview.app/Contents/Info CFBundleShortVersionString
+[        ] EAP AI-183.5153.38.34.5256591
+[ +109 ms] executing: /usr/bin/defaults read /Applications/Android Studio.app/Contents/Info CFBundleShortVersionString
+[  +89 ms] Exit code 0 from: /usr/bin/defaults read /Applications/Android Studio.app/Contents/Info CFBundleShortVersionString
+[        ] 3.0
+[  +87 ms] executing: /Users/chenasraf/Dev/dungeon_paper/android/gradlew -v
+[ +774 ms] 
+           ------------------------------------------------------------
+           Gradle 4.1
+           ------------------------------------------------------------
+
+           Build time:   2017-08-07 14:38:48 UTC
+           Revision:     941559e020f6c357ebb08d5c67acdb858a3defc2
+
+           Groovy:       2.4.11
+           Ant:          Apache Ant(TM) version 1.9.6 compiled on June 29 2015
+           JVM:          1.8.0_152-release (JetBrains s.r.o 25.152-b08)
+           OS:           Mac OS X 10.13.6 x86_64
+[        ] Initializing gradle... (completed)
+[   +1 ms] Resolving dependencies...
+[        ] executing: [/Users/chenasraf/Dev/dungeon_paper/android/] /Users/chenasraf/Dev/dungeon_paper/android/gradlew app:properties
+[+2542 ms] google-services plugin could not detect any version for com.google.android.gms or com.google.firebase, default version: 11.4.2 will be used.
+           please apply google-services plugin at the bottom of the build file.
+           Could not find google-services.json while looking in [src/nullnull/debug, src/debug/nullnull, src/nullnull, src/debug, src/nullnullDebug]
+           registerResGeneratingTask is deprecated, use registerGeneratedFolders(FileCollection)
+           Could not find google-services.json while looking in [src/nullnull/dynamicProfile, src/dynamicProfile/nullnull, src/nullnull, src/dynamicProfile, src/nullnullDynamicProfile]
+           registerResGeneratingTask is deprecated, use registerGeneratedFolders(FileCollection)
+           Could not find google-services.json while looking in [src/nullnull/release, src/release/nullnull, src/nullnull, src/release, src/nullnullRelease]
+           registerResGeneratingTask is deprecated, use registerGeneratedFolders(FileCollection)
+           Could not find google-services.json while looking in [src/nullnull/profile, src/profile/nullnull, src/nullnull, src/profile, src/nullnullProfile]
+           registerResGeneratingTask is deprecated, use registerGeneratedFolders(FileCollection)
+           Could not find google-services.json while looking in [src/nullnull/dynamicRelease, src/dynamicRelease/nullnull, src/nullnull, src/dynamicRelease, src/nullnullDynamicRelease]
+           registerResGeneratingTask is deprecated, use registerGeneratedFolders(FileCollection)
+
+           ------------------------------------------------------------
+           Project :app
+           ------------------------------------------------------------
+
+           allprojects: [project ':app']
+           android: com.android.build.gradle.AppExtension_Decorated@6b2e7a22
+           androidDependencies: task ':app:androidDependencies'
+           ant: org.gradle.api.internal.project.DefaultAntBuilder@3d88d773
+           antBuilderFactory: org.gradle.api.internal.project.DefaultAntBuilderFactory@130289ad
+           archivesBaseName: app
+           artifacts: org.gradle.api.internal.artifacts.dsl.DefaultArtifactHandler_Decorated@6c618510
+           asDynamicObject: DynamicObject for project ':app'
+           assemble: task ':app:assemble'
+           assembleAndroidTest: task ':app:assembleAndroidTest'
+           assembleDebug: task ':app:assembleDebug'
+           assembleDebugAndroidTest: task ':app:assembleDebugAndroidTest'
+           assembleDebugUnitTest: task ':app:assembleDebugUnitTest'
+           assembleDynamicProfile: task ':app:assembleDynamicProfile'
+           assembleDynamicProfileUnitTest: task ':app:assembleDynamicProfileUnitTest'
+           assembleDynamicRelease: task ':app:assembleDynamicRelease'
+           assembleDynamicReleaseUnitTest: task ':app:assembleDynamicReleaseUnitTest'
+           assembleProfile: task ':app:assembleProfile'
+           assembleProfileUnitTest: task ':app:assembleProfileUnitTest'
+           assembleRelease: task ':app:assembleRelease'
+           assembleReleaseUnitTest: task ':app:assembleReleaseUnitTest'
+           baseClassLoaderScope: org.gradle.api.internal.initialization.DefaultClassLoaderScope@74861dd4
+           buildDependents: task ':app:buildDependents'
+           buildDir: /Users/chenasraf/Dev/dungeon_paper/build/app
+           buildFile: /Users/chenasraf/Dev/dungeon_paper/android/app/build.gradle
+           buildNeeded: task ':app:buildNeeded'
+           buildOutputs: BaseVariantOutput container
+           buildScriptSource: org.gradle.groovy.scripts.UriScriptSource@fce6f78
+           buildscript: org.gradle.api.internal.initialization.DefaultScriptHandler@806c0cd
+           bundleAppClassesDebug: task ':app:bundleAppClassesDebug'
+           bundleAppClassesDebugAndroidTest: task ':app:bundleAppClassesDebugAndroidTest'
+           bundleAppClassesDebugUnitTest: task ':app:bundleAppClassesDebugUnitTest'
+           bundleAppClassesDynamicProfile: task ':app:bundleAppClassesDynamicProfile'
+           bundleAppClassesDynamicProfileUnitTest: task ':app:bundleAppClassesDynamicProfileUnitTest'
+           bundleAppClassesDynamicRelease: task ':app:bundleAppClassesDynamicRelease'
+           bundleAppClassesDynamicReleaseUnitTest: task ':app:bundleAppClassesDynamicReleaseUnitTest'
+           bundleAppClassesProfile: task ':app:bundleAppClassesProfile'
+           bundleAppClassesProfileUnitTest: task ':app:bundleAppClassesProfileUnitTest'
+           bundleAppClassesRelease: task ':app:bundleAppClassesRelease'
+           bundleAppClassesReleaseUnitTest: task ':app:bundleAppClassesReleaseUnitTest'
+           check: task ':app:check'
+           checkDebugManifest: task ':app:checkDebugManifest'
+           checkDynamicProfileManifest: task ':app:checkDynamicProfileManifest'
+           checkDynamicReleaseManifest: task ':app:checkDynamicReleaseManifest'
+           checkProfileManifest: task ':app:checkProfileManifest'
+           checkReleaseManifest: task ':app:checkReleaseManifest'
+           childProjects: {}
+           class: class org.gradle.api.internal.project.DefaultProject_Decorated
+           classLoaderScope: org.gradle.api.internal.initialization.DefaultClassLoaderScope@682f9dd8
+           cleanBuildCache: task ':app:cleanBuildCache'
+           compileDebugAidl: task ':app:compileDebugAidl'
+           compileDebugAndroidTestAidl: task ':app:compileDebugAndroidTestAidl'
+           compileDebugAndroidTestJavaWithJavac: task ':app:compileDebugAndroidTestJavaWithJavac'
+           compileDebugAndroidTestNdk: task ':app:compileDebugAndroidTestNdk'
+           compileDebugAndroidTestRenderscript: task ':app:compileDebugAndroidTestRenderscript'
+           compileDebugAndroidTestShaders: task ':app:compileDebugAndroidTestShaders'
+           compileDebugAndroidTestSources: task ':app:compileDebugAndroidTestSources'
+           compileDebugJavaWithJavac: task ':app:compileDebugJavaWithJavac'
+           compileDebugNdk: task ':app:compileDebugNdk'
+           compileDebugRenderscript: task ':app:compileDebugRenderscript'
+           compileDebugShaders: task ':app:compileDebugShaders'
+           compileDebugSources: task ':app:compileDebugSources'
+           compileDebugUnitTestJavaWithJavac: task ':app:compileDebugUnitTestJavaWithJavac'
+           compileDebugUnitTestSources: task ':app:compileDebugUnitTestSources'
+           compileDynamicProfileAidl: task ':app:compileDynamicProfileAidl'
+           compileDynamicProfileJavaWithJavac: task ':app:compileDynamicProfileJavaWithJavac'
+           compileDynamicProfileNdk: task ':app:compileDynamicProfileNdk'
+           compileDynamicProfileRenderscript: task ':app:compileDynamicProfileRenderscript'
+           compileDynamicProfileShaders: task ':app:compileDynamicProfileShaders'
+           compileDynamicProfileSources: task ':app:compileDynamicProfileSources'
+           compileDynamicProfileUnitTestJavaWithJavac: task ':app:compileDynamicProfileUnitTestJavaWithJavac'
+           compileDynamicProfileUnitTestSources: task ':app:compileDynamicProfileUnitTestSources'
+           compileDynamicReleaseAidl: task ':app:compileDynamicReleaseAidl'
+           compileDynamicReleaseJavaWithJavac: task ':app:compileDynamicReleaseJavaWithJavac'
+           compileDynamicReleaseNdk: task ':app:compileDynamicReleaseNdk'
+           compileDynamicReleaseRenderscript: task ':app:compileDynamicReleaseRenderscript'
+           compileDynamicReleaseShaders: task ':app:compileDynamicReleaseShaders'
+           compileDynamicReleaseSources: task ':app:compileDynamicReleaseSources'
+           compileDynamicReleaseUnitTestJavaWithJavac: task ':app:compileDynamicReleaseUnitTestJavaWithJavac'
+           compileDynamicReleaseUnitTestSources: task ':app:compileDynamicReleaseUnitTestSources'
+           compileLint: task ':app:compileLint'
+           compileProfileAidl: task ':app:compileProfileAidl'
+           compileProfileJavaWithJavac: task ':app:compileProfileJavaWithJavac'
+           compileProfileNdk: task ':app:compileProfileNdk'
+           compileProfileRenderscript: task ':app:compileProfileRenderscript'
+           compileProfileShaders: task ':app:compileProfileShaders'
+           compileProfileSources: task ':app:compileProfileSources'
+           compileProfileUnitTestJavaWithJavac: task ':app:compileProfileUnitTestJavaWithJavac'
+           compileProfileUnitTestSources: task ':app:compileProfileUnitTestSources'
+           compileReleaseAidl: task ':app:compileReleaseAidl'
+           compileReleaseJavaWithJavac: task ':app:compileReleaseJavaWithJavac'
+           compileReleaseNdk: task ':app:compileReleaseNdk'
+           compileReleaseRenderscript: task ':app:compileReleaseRenderscript'
+           compileReleaseShaders: task ':app:compileReleaseShaders'
+           compileReleaseSources: task ':app:compileReleaseSources'
+           compileReleaseUnitTestJavaWithJavac: task ':app:compileReleaseUnitTestJavaWithJavac'
+           compileReleaseUnitTestSources: task ':app:compileReleaseUnitTestSources'
+           components: SoftwareComponentInternal set
+           configurationActions: org.gradle.configuration.project.DefaultProjectConfigurationActionContainer@2c0355b4
+           configurationTargetIdentifier: org.gradle.configuration.ConfigurationTargetIdentifier$1@50ca5ae3
+           configurations: configuration container
+           connectedAndroidTest: task ':app:connectedAndroidTest'
+           connectedCheck: task ':app:connectedCheck'
+           connectedDebugAndroidTest: task ':app:connectedDebugAndroidTest'
+           consumeConfigAttr: task ':app:consumeConfigAttr'
+           convention: org.gradle.api.internal.plugins.DefaultConvention@6e74e89f
+           copyFlutterAssetsDebug: task ':app:copyFlutterAssetsDebug'
+           copyFlutterAssetsDynamicProfile: task ':app:copyFlutterAssetsDynamicProfile'
+           copyFlutterAssetsDynamicRelease: task ':app:copyFlutterAssetsDynamicRelease'
+           copyFlutterAssetsProfile: task ':app:copyFlutterAssetsProfile'
+           copyFlutterAssetsRelease: task ':app:copyFlutterAssetsRelease'
+           createDebugCompatibleScreenManifests: task ':app:createDebugCompatibleScreenManifests'
+           createDynamicProfileCompatibleScreenManifests: task ':app:createDynamicProfileCompatibleScreenManifests'
+           createDynamicReleaseCompatibleScreenManifests: task ':app:createDynamicReleaseCompatibleScreenManifests'
+           createProfileCompatibleScreenManifests: task ':app:createProfileCompatibleScreenManifests'
+           createReleaseCompatibleScreenManifests: task ':app:createReleaseCompatibleScreenManifests'
+           defaultArtifacts: org.gradle.api.internal.plugins.DefaultArtifactPublicationSet_Decorated@7a2179d4
+           defaultTasks: []
+           deferredProjectConfiguration: org.gradle.api.internal.project.DeferredProjectConfiguration@4c393dd1
+           dependencies: org.gradle.api.internal.artifacts.dsl.dependencies.DefaultDependencyHandler_Decorated@4ea66bf7
+           depth: 1
+           description: null
+           deviceAndroidTest: task ':app:deviceAndroidTest'
+           deviceCheck: task ':app:deviceCheck'
+           displayName: project ':app'
+           distsDir: /Users/chenasraf/Dev/dungeon_paper/build/app/distributions
+           distsDirName: distributions
+           docsDir: /Users/chenasraf/Dev/dungeon_paper/build/app/docs
+           docsDirName: docs
+           ext: org.gradle.api.internal.plugins.DefaultExtraPropertiesExtension@75f52ac
+           extensions: org.gradle.api.internal.plugins.DefaultConvention@6e74e89f
+           extractProguardFiles: task ':app:extractProguardFiles'
+           extractTryWithResourcesSupportJarDebug: task ':app:extractTryWithResourcesSupportJarDebug'
+           extractTryWithResourcesSupportJarDebugAndroidTest: task ':app:extractTryWithResourcesSupportJarDebugAndroidTest'
+           extractTryWithResourcesSupportJarDynamicProfile: task ':app:extractTryWithResourcesSupportJarDynamicProfile'
+           extractTryWithResourcesSupportJarDynamicRelease: task ':app:extractTryWithResourcesSupportJarDynamicRelease'
+           extractTryWithResourcesSupportJarProfile: task ':app:extractTryWithResourcesSupportJarProfile'
+           extractTryWithResourcesSupportJarRelease: task ':app:extractTryWithResourcesSupportJarRelease'
+           fileOperations: org.gradle.api.internal.file.DefaultFileOperations@7641644a
+           fileResolver: org.gradle.api.internal.file.BaseDirFileResolver@731318e6
+           flutter: FlutterExtension_Decorated@e173ca0
+           flutterBuildDebug: task ':app:flutterBuildDebug'
+           flutterBuildDynamicProfile: task ':app:flutterBuildDynamicProfile'
+           flutterBuildDynamicRelease: task ':app:flutterBuildDynamicRelease'
+           flutterBuildProfile: task ':app:flutterBuildProfile'
+           flutterBuildRelease: task ':app:flutterBuildRelease'
+           flutterBuildX86Jar: task ':app:flutterBuildX86Jar'
+           generateDebugAndroidTestAssets: task ':app:generateDebugAndroidTestAssets'
+           generateDebugAndroidTestBuildConfig: task ':app:generateDebugAndroidTestBuildConfig'
+           generateDebugAndroidTestResValues: task ':app:generateDebugAndroidTestResValues'
+           generateDebugAndroidTestResources: task ':app:generateDebugAndroidTestResources'
+           generateDebugAndroidTestSources: task ':app:generateDebugAndroidTestSources'
+           generateDebugAssets: task ':app:generateDebugAssets'
+           generateDebugBuildConfig: task ':app:generateDebugBuildConfig'
+           generateDebugResValues: task ':app:generateDebugResValues'
+           generateDebugResources: task ':app:generateDebugResources'
+           generateDebugSources: task ':app:generateDebugSources'
+           generateDynamicProfileAssets: task ':app:generateDynamicProfileAssets'
+           generateDynamicProfileBuildConfig: task ':app:generateDynamicProfileBuildConfig'
+           generateDynamicProfileResValues: task ':app:generateDynamicProfileResValues'
+           generateDynamicProfileResources: task ':app:generateDynamicProfileResources'
+           generateDynamicProfileSources: task ':app:generateDynamicProfileSources'
+           generateDynamicReleaseAssets: task ':app:generateDynamicReleaseAssets'
+           generateDynamicReleaseBuildConfig: task ':app:generateDynamicReleaseBuildConfig'
+           generateDynamicReleaseResValues: task ':app:generateDynamicReleaseResValues'
+           generateDynamicReleaseResources: task ':app:generateDynamicReleaseResources'
+           generateDynamicReleaseSources: task ':app:generateDynamicReleaseSources'
+           generateProfileAssets: task ':app:generateProfileAssets'
+           generateProfileBuildConfig: task ':app:generateProfileBuildConfig'
+           generateProfileResValues: task ':app:generateProfileResValues'
+           generateProfileResources: task ':app:generateProfileResources'
+           generateProfileSources: task ':app:generateProfileSources'
+           generateReleaseAssets: task ':app:generateReleaseAssets'
+           generateReleaseBuildConfig: task ':app:generateReleaseBuildConfig'
+           generateReleaseResValues: task ':app:generateReleaseResValues'
+           generateReleaseResources: task ':app:generateReleaseResources'
+           generateReleaseSources: task ':app:generateReleaseSources'
+           gradle: build 'android'
+           group: android
+           identityPath: :app
+           inheritedScope: org.gradle.api.internal.ExtensibleDynamicObject$InheritedDynamicObject@7320d5fc
+           installDebug: task ':app:installDebug'
+           installDebugAndroidTest: task ':app:installDebugAndroidTest'
+           installDynamicProfile: task ':app:installDynamicProfile'
+           installDynamicRelease: task ':app:installDynamicRelease'
+           installProfile: task ':app:installProfile'
+           installRelease: task ':app:installRelease'
+           javaPreCompileDebug: task ':app:javaPreCompileDebug'
+           javaPreCompileDebugAndroidTest: task ':app:javaPreCompileDebugAndroidTest'
+           javaPreCompileDebugUnitTest: task ':app:javaPreCompileDebugUnitTest'
+           javaPreCompileDynamicProfile: task ':app:javaPreCompileDynamicProfile'
+           javaPreCompileDynamicProfileUnitTest: task ':app:javaPreCompileDynamicProfileUnitTest'
+           javaPreCompileDynamicRelease: task ':app:javaPreCompileDynamicRelease'
+           javaPreCompileDynamicReleaseUnitTest: task ':app:javaPreCompileDynamicReleaseUnitTest'
+           javaPreCompileProfile: task ':app:javaPreCompileProfile'
+           javaPreCompileProfileUnitTest: task ':app:javaPreCompileProfileUnitTest'
+           javaPreCompileRelease: task ':app:javaPreCompileRelease'
+           javaPreCompileReleaseUnitTest: task ':app:javaPreCompileReleaseUnitTest'
+           layout: org.gradle.api.internal.file.DefaultProjectLayout@ebe8ce6
+           libsDir: /Users/chenasraf/Dev/dungeon_paper/build/app/libs
+           libsDirName: libs
+           lint: task ':app:lint'
+           lintDebug: task ':app:lintDebug'
+           lintDynamicProfile: task ':app:lintDynamicProfile'
+           lintDynamicRelease: task ':app:lintDynamicRelease'
+           lintProfile: task ':app:lintProfile'
+           lintRelease: task ':app:lintRelease'
+           lintVitalRelease: task ':app:lintVitalRelease'
+           logger: org.gradle.internal.logging.slf4j.OutputEventListenerBackedLogger@48242879
+           logging: org.gradle.internal.logging.services.DefaultLoggingManager@658161ff
+           mergeDebugAndroidTestAssets: task ':app:mergeDebugAndroidTestAssets'
+           mergeDebugAndroidTestJniLibFolders: task ':app:mergeDebugAndroidTestJniLibFolders'
+           mergeDebugAndroidTestResources: task ':app:mergeDebugAndroidTestResources'
+           mergeDebugAndroidTestShaders: task ':app:mergeDebugAndroidTestShaders'
+           mergeDebugAssets: task ':app:mergeDebugAssets'
+           mergeDebugJniLibFolders: task ':app:mergeDebugJniLibFolders'
+           mergeDebugResources: task ':app:mergeDebugResources'
+           mergeDebugShaders: task ':app:mergeDebugShaders'
+           mergeDynamicProfileAssets: task ':app:mergeDynamicProfileAssets'
+           mergeDynamicProfileJniLibFolders: task ':app:mergeDynamicProfileJniLibFolders'
+           mergeDynamicProfileResources: task ':app:mergeDynamicProfileResources'
+           mergeDynamicProfileShaders: task ':app:mergeDynamicProfileShaders'
+           mergeDynamicReleaseAssets: task ':app:mergeDynamicReleaseAssets'
+           mergeDynamicReleaseJniLibFolders: task ':app:mergeDynamicReleaseJniLibFolders'
+           mergeDynamicReleaseResources: task ':app:mergeDynamicReleaseResources'
+           mergeDynamicReleaseShaders: task ':app:mergeDynamicReleaseShaders'
+           mergeProfileAssets: task ':app:mergeProfileAssets'
+           mergeProfileJniLibFolders: task ':app:mergeProfileJniLibFolders'
+           mergeProfileResources: task ':app:mergeProfileResources'
+           mergeProfileShaders: task ':app:mergeProfileShaders'
+           mergeReleaseAssets: task ':app:mergeReleaseAssets'
+           mergeReleaseJniLibFolders: task ':app:mergeReleaseJniLibFolders'
+           mergeReleaseResources: task ':app:mergeReleaseResources'
+           mergeReleaseShaders: task ':app:mergeReleaseShaders'
+           mockableAndroidJar: task ':app:mockableAndroidJar'
+           modelRegistry: org.gradle.model.internal.registry.DefaultModelRegistry@5244a3d3
+           modelSchemaStore: org.gradle.model.internal.manage.schema.extract.DefaultModelSchemaStore@29796810
+           module: org.gradle.api.internal.artifacts.ProjectBackedModule@7728ab80
+           name: app
+           normalization: org.gradle.normalization.internal.DefaultInputNormalizationHandler_Decorated@27be1352
+           objects: org.gradle.api.internal.model.DefaultObjectFactory@2e7337b9
+           org.gradle.jvmargs: -Xmx1536M
+           packageDebug: task ':app:packageDebug'
+           packageDebugAndroidTest: task ':app:packageDebugAndroidTest'
+           packageDynamicProfile: task ':app:packageDynamicProfile'
+           packageDynamicRelease: task ':app:packageDynamicRelease'
+           packageProfile: task ':app:packageProfile'
+           packageRelease: task ':app:packageRelease'
+           parent: root project 'android'
+           parentIdentifier: root project 'android'
+           path: :app
+           platformAttrExtractor: task ':app:platformAttrExtractor'
+           pluginManager: org.gradle.api.internal.plugins.DefaultPluginManager_Decorated@5d1d72ff
+           plugins: [org.gradle.api.plugins.HelpTasksPlugin@21ea58ef, com.android.build.gradle.api.AndroidBasePlugin@56299d0e, org.gradle.language.base.plugins.LifecycleBasePlugin@d7eb32f, org.gradle.api.plugins.BasePlugin@443f09f7, org.gradle.api.plugins.ReportingBasePlugin@2e102854, org.gradle.platform.base.plugins.ComponentBasePlugin@759f124f, org.gradle.language.base.plugins.LanguageBasePlugin@5a62c620, org.gradle.platform.base.plugins.BinaryBasePlugin@2190beba, org.gradle.api.plugins.JavaBasePlugin@5391732f, com.android.build.gradle.internal.coverage.JacocoPlugin@4e18d249, com.android.build.gradle.AppPlugin@380f6881, FlutterPlugin@67a8b01b, com.google.gms.googleservices.GoogleServicesPlugin@49d298d1]
+           preBuild: task ':app:preBuild'
+           preDebugAndroidTestBuild: task ':app:preDebugAndroidTestBuild'
+           preDebugBuild: task ':app:preDebugBuild'
+           preDebugUnitTestBuild: task ':app:preDebugUnitTestBuild'
+           preDynamicProfileBuild: task ':app:preDynamicProfileBuild'
+           preDynamicProfileUnitTestBuild: task ':app:preDynamicProfileUnitTestBuild'
+           preDynamicReleaseBuild: task ':app:preDynamicReleaseBuild'
+           preDynamicReleaseUnitTestBuild: task ':app:preDynamicReleaseUnitTestBuild'
+           preProfileBuild: task ':app:preProfileBuild'
+           preProfileUnitTestBuild: task ':app:preProfileUnitTestBuild'
+           preReleaseBuild: task ':app:preReleaseBuild'
+           preReleaseUnitTestBuild: task ':app:preReleaseUnitTestBuild'
+           prepareLintJar: task ':app:prepareLintJar'
+           processDebugAndroidTestJavaRes: task ':app:processDebugAndroidTestJavaRes'
+           processDebugAndroidTestManifest: task ':app:processDebugAndroidTestManifest'
+           processDebugAndroidTestResources: task ':app:processDebugAndroidTestResources'
+           processDebugGoogleServices: task ':app:processDebugGoogleServices'
+           processDebugJavaRes: task ':app:processDebugJavaRes'
+           processDebugManifest: task ':app:processDebugManifest'
+           processDebugResources: task ':app:processDebugResources'
+           processDebugUnitTestJavaRes: task ':app:processDebugUnitTestJavaRes'
+           processDynamicProfileGoogleServices: task ':app:processDynamicProfileGoogleServices'
+           processDynamicProfileJavaRes: task ':app:processDynamicProfileJavaRes'
+           processDynamicProfileManifest: task ':app:processDynamicProfileManifest'
+           processDynamicProfileResources: task ':app:processDynamicProfileResources'
+           processDynamicProfileUnitTestJavaRes: task ':app:processDynamicProfileUnitTestJavaRes'
+           processDynamicReleaseGoogleServices: task ':app:processDynamicReleaseGoogleServices'
+           processDynamicReleaseJavaRes: task ':app:processDynamicReleaseJavaRes'
+           processDynamicReleaseManifest: task ':app:processDynamicReleaseManifest'
+           processDynamicReleaseResources: task ':app:processDynamicReleaseResources'
+           processDynamicReleaseUnitTestJavaRes: task ':app:processDynamicReleaseUnitTestJavaRes'
+           processOperations: org.gradle.api.internal.file.DefaultFileOperations@7641644a
+           processProfileGoogleServices: task ':app:processProfileGoogleServices'
+           processProfileJavaRes: task ':app:processProfileJavaRes'
+           processProfileManifest: task ':app:processProfileManifest'
+           processProfileResources: task ':app:processProfileResources'
+           processProfileUnitTestJavaRes: task ':app:processProfileUnitTestJavaRes'
+           processReleaseGoogleServices: task ':app:processReleaseGoogleServices'
+           processReleaseJavaRes: task ':app:processReleaseJavaRes'
+           processReleaseManifest: task ':app:processReleaseManifest'
+           processReleaseResources: task ':app:processReleaseResources'
+           processReleaseUnitTestJavaRes: task ':app:processReleaseUnitTestJavaRes'
+           project: project ':app'
+           projectConfigurator: org.gradle.api.internal.project.BuildOperationCrossProjectConfigurator@33fd6e3a
+           projectDir: /Users/chenasraf/Dev/dungeon_paper/android/app
+           projectEvaluationBroadcaster: ProjectEvaluationListener broadcast
+           projectEvaluator: org.gradle.configuration.project.LifecycleProjectEvaluator@44d009ad
+           projectPath: :app
+           projectRegistry: org.gradle.api.internal.project.DefaultProjectRegistry@1323a6e6
+           properties: {...}
+           providers: org.gradle.api.internal.provider.DefaultProviderFactory@b5aa413
+           reporting: org.gradle.api.reporting.ReportingExtension_Decorated@251fb4f7
+           reportsDir: /Users/chenasraf/Dev/dungeon_paper/build/app/reports
+           repositories: repository container
+           resolveConfigAttr: task ':app:resolveConfigAttr'
+           resources: org.gradle.api.internal.resources.DefaultResourceHandler@7d4b82d0
+           rootDir: /Users/chenasraf/Dev/dungeon_paper/android
+           rootProject: root project 'android'
+           scriptHandlerFactory: org.gradle.api.internal.initialization.DefaultScriptHandlerFactory@391261b5
+           scriptPluginFactory: org.gradle.configuration.ScriptPluginFactorySelector@3788e4e7
+           serviceRegistryFactory: org.gradle.internal.service.scopes.ProjectScopeServices$4@6fe846ed
+           services: ProjectScopeServices
+           signingReport: task ':app:signingReport'
+           sourceCompatibility: 1.8
+           sourceSets: SourceSet container
+           splitsDiscoveryTaskDebug: task ':app:splitsDiscoveryTaskDebug'
+           splitsDiscoveryTaskDebugAndroidTest: task ':app:splitsDiscoveryTaskDebugAndroidTest'
+           splitsDiscoveryTaskDynamicProfile: task ':app:splitsDiscoveryTaskDynamicProfile'
+           splitsDiscoveryTaskDynamicRelease: task ':app:splitsDiscoveryTaskDynamicRelease'
+           splitsDiscoveryTaskProfile: task ':app:splitsDiscoveryTaskProfile'
+           splitsDiscoveryTaskRelease: task ':app:splitsDiscoveryTaskRelease'
+           standardOutputCapture: org.gradle.internal.logging.services.DefaultLoggingManager@658161ff
+           state: project state 'EXECUTED'
+           status: integration
+           subprojects: []
+           targetCompatibility: 1.8
+           tasks: task set
+           test: task ':app:test'
+           testDebugUnitTest: task ':app:testDebugUnitTest'
+           testDynamicProfileUnitTest: task ':app:testDynamicProfileUnitTest'
+           testDynamicReleaseUnitTest: task ':app:testDynamicReleaseUnitTest'
+           testProfileUnitTest: task ':app:testProfileUnitTest'
+           testReleaseUnitTest: task ':app:testReleaseUnitTest'
+           testReportDir: /Users/chenasraf/Dev/dungeon_paper/build/app/reports/tests
+           testReportDirName: tests
+           testResultsDir: /Users/chenasraf/Dev/dungeon_paper/build/app/test-results
+           testResultsDirName: test-results
+           transformClassesWithDesugarForDebug: task ':app:transformClassesWithDesugarForDebug'
+           transformClassesWithDesugarForDebugAndroidTest: task ':app:transformClassesWithDesugarForDebugAndroidTest'
+           transformClassesWithDesugarForDynamicProfile: task ':app:transformClassesWithDesugarForDynamicProfile'
+           transformClassesWithDesugarForDynamicRelease: task ':app:transformClassesWithDesugarForDynamicRelease'
+           transformClassesWithDesugarForProfile: task ':app:transformClassesWithDesugarForProfile'
+           transformClassesWithDesugarForRelease: task ':app:transformClassesWithDesugarForRelease'
+           transformClassesWithDexBuilderForDebug: task ':app:transformClassesWithDexBuilderForDebug'
+           transformClassesWithDexBuilderForDebugAndroidTest: task ':app:transformClassesWithDexBuilderForDebugAndroidTest'
+           transformClassesWithDexBuilderForDynamicProfile: task ':app:transformClassesWithDexBuilderForDynamicProfile'
+           transformClassesWithDexBuilderForDynamicRelease: task ':app:transformClassesWithDexBuilderForDynamicRelease'
+           transformClassesWithDexBuilderForProfile: task ':app:transformClassesWithDexBuilderForProfile'
+           transformClassesWithDexForRelease: task ':app:transformClassesWithDexForRelease'
+           transformClassesWithJarMergingForRelease: task ':app:transformClassesWithJarMergingForRelease'
+           transformClassesWithMultidexlistForDebug: task ':app:transformClassesWithMultidexlistForDebug'
+           transformClassesWithMultidexlistForDynamicProfile: task ':app:transformClassesWithMultidexlistForDynamicProfile'
+           transformClassesWithMultidexlistForDynamicRelease: task ':app:transformClassesWithMultidexlistForDynamicRelease'
+           transformClassesWithMultidexlistForProfile: task ':app:transformClassesWithMultidexlistForProfile'
+           transformClassesWithMultidexlistForRelease: task ':app:transformClassesWithMultidexlistForRelease'
+           transformClassesWithStackFramesFixerForDebug: task ':app:transformClassesWithStackFramesFixerForDebug'
+           transformClassesWithStackFramesFixerForDebugAndroidTest: task ':app:transformClassesWithStackFramesFixerForDebugAndroidTest'
+           transformClassesWithStackFramesFixerForDynamicProfile: task ':app:transformClassesWithStackFramesFixerForDynamicProfile'
+           transformClassesWithStackFramesFixerForDynamicRelease: task ':app:transformClassesWithStackFramesFixerForDynamicRelease'
+           transformClassesWithStackFramesFixerForProfile: task ':app:transformClassesWithStackFramesFixerForProfile'
+           transformClassesWithStackFramesFixerForRelease: task ':app:transformClassesWithStackFramesFixerForRelease'
+           transformDexArchiveWithDexMergerForDebug: task ':app:transformDexArchiveWithDexMergerForDebug'
+           transformDexArchiveWithDexMergerForDebugAndroidTest: task ':app:transformDexArchiveWithDexMergerForDebugAndroidTest'
+           transformDexArchiveWithDexMergerForDynamicProfile: task ':app:transformDexArchiveWithDexMergerForDynamicProfile'
+           transformDexArchiveWithDexMergerForDynamicRelease: task ':app:transformDexArchiveWithDexMergerForDynamicRelease'
+           transformDexArchiveWithDexMergerForProfile: task ':app:transformDexArchiveWithDexMergerForProfile'
+           transformDexArchiveWithExternalLibsDexMergerForDebugAndroidTest: task ':app:transformDexArchiveWithExternalLibsDexMergerForDebugAndroidTest'
+           transformNativeLibsWithMergeJniLibsForDebug: task ':app:transformNativeLibsWithMergeJniLibsForDebug'
+           transformNativeLibsWithMergeJniLibsForDebugAndroidTest: task ':app:transformNativeLibsWithMergeJniLibsForDebugAndroidTest'
+           transformNativeLibsWithMergeJniLibsForDynamicProfile: task ':app:transformNativeLibsWithMergeJniLibsForDynamicProfile'
+           transformNativeLibsWithMergeJniLibsForDynamicRelease: task ':app:transformNativeLibsWithMergeJniLibsForDynamicRelease'
+           transformNativeLibsWithMergeJniLibsForProfile: task ':app:transformNativeLibsWithMergeJniLibsForProfile'
+           transformNativeLibsWithMergeJniLibsForRelease: task ':app:transformNativeLibsWithMergeJniLibsForRelease'
+           transformResourcesWithMergeJavaResForDebug: task ':app:transformResourcesWithMergeJavaResForDebug'
+           transformResourcesWithMergeJavaResForDebugAndroidTest: task ':app:transformResourcesWithMergeJavaResForDebugAndroidTest'
+           transformResourcesWithMergeJavaResForDebugUnitTest: task ':app:transformResourcesWithMergeJavaResForDebugUnitTest'
+           transformResourcesWithMergeJavaResForDynamicProfile: task ':app:transformResourcesWithMergeJavaResForDynamicProfile'
+           transformResourcesWithMergeJavaResForDynamicProfileUnitTest: task ':app:transformResourcesWithMergeJavaResForDynamicProfileUnitTest'
+           transformResourcesWithMergeJavaResForDynamicRelease: task ':app:transformResourcesWithMergeJavaResForDynamicRelease'
+           transformResourcesWithMergeJavaResForDynamicReleaseUnitTest: task ':app:transformResourcesWithMergeJavaResForDynamicReleaseUnitTest'
+           transformResourcesWithMergeJavaResForProfile: task ':app:transformResourcesWithMergeJavaResForProfile'
+           transformResourcesWithMergeJavaResForProfileUnitTest: task ':app:transformResourcesWithMergeJavaResForProfileUnitTest'
+           transformResourcesWithMergeJavaResForRelease: task ':app:transformResourcesWithMergeJavaResForRelease'
+           transformResourcesWithMergeJavaResForReleaseUnitTest: task ':app:transformResourcesWithMergeJavaResForReleaseUnitTest'
+           uninstallAll: task ':app:uninstallAll'
+           uninstallDebug: task ':app:uninstallDebug'
+           uninstallDebugAndroidTest: task ':app:uninstallDebugAndroidTest'
+           uninstallDynamicProfile: task ':app:uninstallDynamicProfile'
+           uninstallDynamicRelease: task ':app:uninstallDynamicRelease'
+           uninstallProfile: task ':app:uninstallProfile'
+           uninstallRelease: task ':app:uninstallRelease'
+           validateSigningDebug: task ':app:validateSigningDebug'
+           validateSigningDebugAndroidTest: task ':app:validateSigningDebugAndroidTest'
+           validateSigningDynamicProfile: task ':app:validateSigningDynamicProfile'
+           validateSigningDynamicRelease: task ':app:validateSigningDynamicRelease'
+           validateSigningProfile: task ':app:validateSigningProfile'
+           validateSigningRelease: task ':app:validateSigningRelease'
+           version: unspecified
+           writeDebugApplicationId: task ':app:writeDebugApplicationId'
+           writeDynamicProfileApplicationId: task ':app:writeDynamicProfileApplicationId'
+           writeDynamicReleaseApplicationId: task ':app:writeDynamicReleaseApplicationId'
+           writeProfileApplicationId: task ':app:writeProfileApplicationId'
+           writeReleaseApplicationId: task ':app:writeReleaseApplicationId'
+           1 actionable task: 1 executed
+[   +4 ms] executing: [/Users/chenasraf/Dev/dungeon_paper/android/] /Users/chenasraf/Dev/dungeon_paper/android/gradlew app:tasks --all
+[+1200 ms] google-services plugin could not detect any version for com.google.android.gms or com.google.firebase, default version: 11.4.2 will be used.
+           please apply google-services plugin at the bottom of the build file.
+           Could not find google-services.json while looking in [src/nullnull/debug, src/debug/nullnull, src/nullnull, src/debug, src/nullnullDebug]
+           registerResGeneratingTask is deprecated, use registerGeneratedFolders(FileCollection)
+           Could not find google-services.json while looking in [src/nullnull/dynamicProfile, src/dynamicProfile/nullnull, src/nullnull, src/dynamicProfile, src/nullnullDynamicProfile]
+           registerResGeneratingTask is deprecated, use registerGeneratedFolders(FileCollection)
+           Could not find google-services.json while looking in [src/nullnull/release, src/release/nullnull, src/nullnull, src/release, src/nullnullRelease]
+           registerResGeneratingTask is deprecated, use registerGeneratedFolders(FileCollection)
+           Could not find google-services.json while looking in [src/nullnull/profile, src/profile/nullnull, src/nullnull, src/profile, src/nullnullProfile]
+           registerResGeneratingTask is deprecated, use registerGeneratedFolders(FileCollection)
+           Could not find google-services.json while looking in [src/nullnull/dynamicRelease, src/dynamicRelease/nullnull, src/nullnull, src/dynamicRelease, src/nullnullDynamicRelease]
+           registerResGeneratingTask is deprecated, use registerGeneratedFolders(FileCollection)
+
+           ------------------------------------------------------------
+           All tasks runnable from project :app
+           ------------------------------------------------------------
+
+           Android tasks
+           -------------
+           androidDependencies - Displays the Android dependencies of the project.
+           signingReport - Displays the signing info for each variant.
+           sourceSets - Prints out all the source sets defined in this project.
+
+           Build tasks
+           -----------
+           assemble - Assembles all variants of all applications and secondary packages.
+           assembleAndroidTest - Assembles all the Test applications.
+           assembleDebug - Assembles all Debug builds.
+           assembleDynamicProfile - Assembles all DynamicProfile builds.
+           assembleDynamicRelease - Assembles all DynamicRelease builds.
+           assembleProfile - Assembles all Profile builds.
+           assembleRelease - Assembles all Release builds.
+           build - Assembles and tests this project.
+           buildDependents - Assembles and tests this project and all projects that depend on it.
+           buildNeeded - Assembles and tests this project and all projects it depends on.
+           clean - Deletes the build directory.
+           cleanBuildCache - Deletes the build cache directory.
+           compileDebugAndroidTestSources
+           compileDebugSources
+           compileDebugUnitTestSources
+           compileDynamicProfileSources
+           compileDynamicProfileUnitTestSources
+           compileDynamicReleaseSources
+           compileDynamicReleaseUnitTestSources
+           compileProfileSources
+           compileProfileUnitTestSources
+           compileReleaseSources
+           compileReleaseUnitTestSources
+           mockableAndroidJar - Creates a version of android.jar that's suitable for unit tests.
+
+           Help tasks
+           ----------
+           buildEnvironment - Displays all buildscript dependencies declared in project ':app'.
+           components - Displays the components produced by project ':app'. [incubating]
+           dependencies - Displays all dependencies declared in project ':app'.
+           dependencyInsight - Displays the insight into a specific dependency in project ':app'.
+           dependentComponents - Displays the dependent components of components in project ':app'. [incubating]
+           help - Displays a help message.
+           model - Displays the configuration model of project ':app'. [incubating]
+           projects - Displays the sub-projects of project ':app'.
+           properties - Displays the properties of project ':app'.
+           tasks - Displays the tasks runnable from project ':app'.
+
+           Install tasks
+           -------------
+           installDebug - Installs the Debug build.
+           installDebugAndroidTest - Installs the android (on device) tests for the Debug build.
+           installDynamicProfile - Installs the DynamicProfile build.
+           installDynamicRelease - Installs the DynamicRelease build.
+           installProfile - Installs the Profile build.
+           installRelease - Installs the Release build.
+           uninstallAll - Uninstall all applications.
+           uninstallDebug - Uninstalls the Debug build.
+           uninstallDebugAndroidTest - Uninstalls the android (on device) tests for the Debug build.
+           uninstallDynamicProfile - Uninstalls the DynamicProfile build.
+           uninstallDynamicRelease - Uninstalls the DynamicRelease build.
+           uninstallProfile - Uninstalls the Profile build.
+           uninstallRelease - Uninstalls the Release build.
+
+           Verification tasks
+           ------------------
+           check - Runs all checks.
+           connectedAndroidTest - Installs and runs instrumentation tests for all flavors on connected devices.
+           connectedCheck - Runs all device checks on currently connected devices.
+           connectedDebugAndroidTest - Installs and runs the tests for debug on connected devices.
+           deviceAndroidTest - Installs and runs instrumentation tests using all Device Providers.
+           deviceCheck - Runs all device checks using Device Providers and Test Servers.
+           lint - Runs lint on all variants.
+           lintDebug - Runs lint on the Debug build.
+           lintDynamicProfile - Runs lint on the DynamicProfile build.
+           lintDynamicRelease - Runs lint on the DynamicRelease build.
+           lintProfile - Runs lint on the Profile build.
+           lintRelease - Runs lint on the Release build.
+           lintVitalRelease - Runs lint on just the fatal issues in the release build.
+           test - Run unit tests for all variants.
+           testDebugUnitTest - Run unit tests for the debug build.
+           testDynamicProfileUnitTest - Run unit tests for the dynamicProfile build.
+           testDynamicReleaseUnitTest - Run unit tests for the dynamicRelease build.
+           testProfileUnitTest - Run unit tests for the profile build.
+           testReleaseUnitTest - Run unit tests for the release build.
+
+           Other tasks
+           -----------
+           assembleDebugAndroidTest
+           assembleDebugUnitTest
+           assembleDynamicProfileUnitTest
+           assembleDynamicReleaseUnitTest
+           assembleProfileUnitTest
+           assembleReleaseUnitTest
+           bundleAppClassesDebug
+           bundleAppClassesDebugAndroidTest
+           bundleAppClassesDebugUnitTest
+           bundleAppClassesDynamicProfile
+           bundleAppClassesDynamicProfileUnitTest
+           bundleAppClassesDynamicRelease
+           bundleAppClassesDynamicReleaseUnitTest
+           bundleAppClassesProfile
+           bundleAppClassesProfileUnitTest
+           bundleAppClassesRelease
+           bundleAppClassesReleaseUnitTest
+           checkDebugManifest
+           checkDynamicProfileManifest
+           checkDynamicReleaseManifest
+           checkProfileManifest
+           checkReleaseManifest
+           compileDebugAidl
+           compileDebugAndroidTestAidl
+           compileDebugAndroidTestJavaWithJavac
+           compileDebugAndroidTestNdk
+           compileDebugAndroidTestRenderscript
+           compileDebugAndroidTestShaders
+           compileDebugJavaWithJavac
+           compileDebugNdk
+           compileDebugRenderscript
+           compileDebugShaders
+           compileDebugUnitTestJavaWithJavac
+           compileDynamicProfileAidl
+           compileDynamicProfileJavaWithJavac
+           compileDynamicProfileNdk
+           compileDynamicProfileRenderscript
+           compileDynamicProfileShaders
+           compileDynamicProfileUnitTestJavaWithJavac
+           compileDynamicReleaseAidl
+           compileDynamicReleaseJavaWithJavac
+           compileDynamicReleaseNdk
+           compileDynamicReleaseRenderscript
+           compileDynamicReleaseShaders
+           compileDynamicReleaseUnitTestJavaWithJavac
+           compileLint
+           compileProfileAidl
+           compileProfileJavaWithJavac
+           compileProfileNdk
+           compileProfileRenderscript
+           compileProfileShaders
+           compileProfileUnitTestJavaWithJavac
+           compileReleaseAidl
+           compileReleaseJavaWithJavac
+           compileReleaseNdk
+           compileReleaseRenderscript
+           compileReleaseShaders
+           compileReleaseUnitTestJavaWithJavac
+           consumeConfigAttr
+           copyFlutterAssetsDebug
+           copyFlutterAssetsDynamicProfile
+           copyFlutterAssetsDynamicRelease
+           copyFlutterAssetsProfile
+           copyFlutterAssetsRelease
+           createDebugCompatibleScreenManifests
+           createDynamicProfileCompatibleScreenManifests
+           createDynamicReleaseCompatibleScreenManifests
+           createProfileCompatibleScreenManifests
+           createReleaseCompatibleScreenManifests
+           extractProguardFiles
+           extractTryWithResourcesSupportJarDebug
+           extractTryWithResourcesSupportJarDebugAndroidTest
+           extractTryWithResourcesSupportJarDynamicProfile
+           extractTryWithResourcesSupportJarDynamicRelease
+           extractTryWithResourcesSupportJarProfile
+           extractTryWithResourcesSupportJarRelease
+           flutterBuildDebug
+           flutterBuildDynamicProfile
+           flutterBuildDynamicRelease
+           flutterBuildProfile
+           flutterBuildRelease
+           flutterBuildX86Jar
+           generateDebugAndroidTestAssets
+           generateDebugAndroidTestBuildConfig
+           generateDebugAndroidTestResources
+           generateDebugAndroidTestResValues
+           generateDebugAndroidTestSources
+           generateDebugAssets
+           generateDebugBuildConfig
+           generateDebugResources
+           generateDebugResValues
+           generateDebugSources
+           generateDynamicProfileAssets
+           generateDynamicProfileBuildConfig
+           generateDynamicProfileResources
+           generateDynamicProfileResValues
+           generateDynamicProfileSources
+           generateDynamicReleaseAssets
+           generateDynamicReleaseBuildConfig
+           generateDynamicReleaseResources
+           generateDynamicReleaseResValues
+           generateDynamicReleaseSources
+           generateProfileAssets
+           generateProfileBuildConfig
+           generateProfileResources
+           generateProfileResValues
+           generateProfileSources
+           generateReleaseAssets
+           generateReleaseBuildConfig
+           generateReleaseResources
+           generateReleaseResValues
+           generateReleaseSources
+           javaPreCompileDebug
+           javaPreCompileDebugAndroidTest
+           javaPreCompileDebugUnitTest
+           javaPreCompileDynamicProfile
+           javaPreCompileDynamicProfileUnitTest
+           javaPreCompileDynamicRelease
+           javaPreCompileDynamicReleaseUnitTest
+           javaPreCompileProfile
+           javaPreCompileProfileUnitTest
+           javaPreCompileRelease
+           javaPreCompileReleaseUnitTest
+           mergeDebugAndroidTestAssets
+           mergeDebugAndroidTestJniLibFolders
+           mergeDebugAndroidTestResources
+           mergeDebugAndroidTestShaders
+           mergeDebugAssets
+           mergeDebugJniLibFolders
+           mergeDebugResources
+           mergeDebugShaders
+           mergeDynamicProfileAssets
+           mergeDynamicProfileJniLibFolders
+           mergeDynamicProfileResources
+           mergeDynamicProfileShaders
+           mergeDynamicReleaseAssets
+           mergeDynamicReleaseJniLibFolders
+           mergeDynamicReleaseResources
+           mergeDynamicReleaseShaders
+           mergeProfileAssets
+           mergeProfileJniLibFolders
+           mergeProfileResources
+           mergeProfileShaders
+           mergeReleaseAssets
+           mergeReleaseJniLibFolders
+           mergeReleaseResources
+           mergeReleaseShaders
+           packageDebug
+           packageDebugAndroidTest
+           packageDynamicProfile
+           packageDynamicRelease
+           packageProfile
+           packageRelease
+           platformAttrExtractor
+           preBuild
+           preDebugAndroidTestBuild
+           preDebugBuild
+           preDebugUnitTestBuild
+           preDynamicProfileBuild
+           preDynamicProfileUnitTestBuild
+           preDynamicReleaseBuild
+           preDynamicReleaseUnitTestBuild
+           prepareLintJar
+           preProfileBuild
+           preProfileUnitTestBuild
+           preReleaseBuild
+           preReleaseUnitTestBuild
+           processDebugAndroidTestJavaRes
+           processDebugAndroidTestManifest
+           processDebugAndroidTestResources
+           processDebugGoogleServices
+           processDebugJavaRes
+           processDebugManifest
+           processDebugResources
+           processDebugUnitTestJavaRes
+           processDynamicProfileGoogleServices
+           processDynamicProfileJavaRes
+           processDynamicProfileManifest
+           processDynamicProfileResources
+           processDynamicProfileUnitTestJavaRes
+           processDynamicReleaseGoogleServices
+           processDynamicReleaseJavaRes
+           processDynamicReleaseManifest
+           processDynamicReleaseResources
+           processDynamicReleaseUnitTestJavaRes
+           processProfileGoogleServices
+           processProfileJavaRes
+           processProfileManifest
+           processProfileResources
+           processProfileUnitTestJavaRes
+           processReleaseGoogleServices
+           processReleaseJavaRes
+           processReleaseManifest
+           processReleaseResources
+           processReleaseUnitTestJavaRes
+           resolveConfigAttr
+           splitsDiscoveryTaskDebug
+           splitsDiscoveryTaskDebugAndroidTest
+           splitsDiscoveryTaskDynamicProfile
+           splitsDiscoveryTaskDynamicRelease
+           splitsDiscoveryTaskProfile
+           splitsDiscoveryTaskRelease
+           transformClassesWithDesugarForDebug
+           transformClassesWithDesugarForDebugAndroidTest
+           transformClassesWithDesugarForDynamicProfile
+           transformClassesWithDesugarForDynamicRelease
+           transformClassesWithDesugarForProfile
+           transformClassesWithDesugarForRelease
+           transformClassesWithDexBuilderForDebug
+           transformClassesWithDexBuilderForDebugAndroidTest
+           transformClassesWithDexBuilderForDynamicProfile
+           transformClassesWithDexBuilderForDynamicRelease
+           transformClassesWithDexBuilderForProfile
+           transformClassesWithDexForRelease
+           transformClassesWithJarMergingForRelease
+           transformClassesWithMultidexlistForDebug
+           transformClassesWithMultidexlistForDynamicProfile
+           transformClassesWithMultidexlistForDynamicRelease
+           transformClassesWithMultidexlistForProfile
+           transformClassesWithMultidexlistForRelease
+           transformClassesWithStackFramesFixerForDebug
+           transformClassesWithStackFramesFixerForDebugAndroidTest
+           transformClassesWithStackFramesFixerForDynamicProfile
+           transformClassesWithStackFramesFixerForDynamicRelease
+           transformClassesWithStackFramesFixerForProfile
+           transformClassesWithStackFramesFixerForRelease
+           transformDexArchiveWithDexMergerForDebug
+           transformDexArchiveWithDexMergerForDebugAndroidTest
+           transformDexArchiveWithDexMergerForDynamicProfile
+           transformDexArchiveWithDexMergerForDynamicRelease
+           transformDexArchiveWithDexMergerForProfile
+           transformDexArchiveWithExternalLibsDexMergerForDebugAndroidTest
+           transformNativeLibsWithMergeJniLibsForDebug
+           transformNativeLibsWithMergeJniLibsForDebugAndroidTest
+           transformNativeLibsWithMergeJniLibsForDynamicProfile
+           transformNativeLibsWithMergeJniLibsForDynamicRelease
+           transformNativeLibsWithMergeJniLibsForProfile
+           transformNativeLibsWithMergeJniLibsForRelease
+           transformResourcesWithMergeJavaResForDebug
+           transformResourcesWithMergeJavaResForDebugAndroidTest
+           transformResourcesWithMergeJavaResForDebugUnitTest
+           transformResourcesWithMergeJavaResForDynamicProfile
+           transformResourcesWithMergeJavaResForDynamicProfileUnitTest
+           transformResourcesWithMergeJavaResForDynamicRelease
+           transformResourcesWithMergeJavaResForDynamicReleaseUnitTest
+           transformResourcesWithMergeJavaResForProfile
+           transformResourcesWithMergeJavaResForProfileUnitTest
+           transformResourcesWithMergeJavaResForRelease
+           transformResourcesWithMergeJavaResForReleaseUnitTest
+           validateSigningDebug
+           validateSigningDebugAndroidTest
+           validateSigningDynamicProfile
+           validateSigningDynamicRelease
+           validateSigningProfile
+           validateSigningRelease
+           writeDebugApplicationId
+           writeDynamicProfileApplicationId
+           writeDynamicReleaseApplicationId
+           writeProfileApplicationId
+           writeReleaseApplicationId
+
+           Rules
+           -----
+           Pattern: clean<TaskName>: Cleans the output files of a task.
+           Pattern: build<ConfigurationName>: Assembles the artifacts of a configuration.
+           Pattern: upload<ConfigurationName>: Assembles and uploads the artifacts belonging to a configuration.
+           1 actionable task: 1 executed
+[   +5 ms] Resolving dependencies... (completed)
+[   +1 ms] executing: /usr/local/Cellar/android-sdk/24.4.1_1/build-tools/26.0.2/aapt dump xmltree /Users/chenasraf/Dev/dungeon_paper/build/app/outputs/apk/app.apk AndroidManifest.xml
+[  +29 ms] Exit code 0 from: /usr/local/Cellar/android-sdk/24.4.1_1/build-tools/26.0.2/aapt dump xmltree /Users/chenasraf/Dev/dungeon_paper/build/app/outputs/apk/app.apk AndroidManifest.xml
+[        ] N: android=http://schemas.android.com/apk/res/android
+             E: manifest (line=2)
+               A: android:versionCode(0x0101021b)=(type 0x10)0x1
+               A: android:versionName(0x0101021c)="1.0" (Raw: "1.0")
+               A: package="app.dungeonpaper" (Raw: "app.dungeonpaper")
+               E: uses-sdk (line=7)
+                 A: android:minSdkVersion(0x0101020c)=(type 0x10)0x10
+                 A: android:targetSdkVersion(0x01010270)=(type 0x10)0x1b
+               E: uses-permission (line=16)
+                 A: android:name(0x01010003)="android.permission.INTERNET" (Raw: "android.permission.INTERNET")
+               E: uses-permission (line=17)
+                 A: android:name(0x01010003)="android.permission.ACCESS_NETWORK_STATE" (Raw: "android.permission.ACCESS_NETWORK_STATE")
+               E: uses-permission (line=18)
+                 A: android:name(0x01010003)="android.permission.WAKE_LOCK" (Raw: "android.permission.WAKE_LOCK")
+               E: uses-permission (line=19)
+                 A: android:name(0x01010003)="com.google.android.finsky.permission.BIND_GET_INSTALL_REFERRER_SERVICE" (Raw: "com.google.android.finsky.permission.BIND_GET_INSTALL_REFERRER_SERVICE")
+               E: uses-permission (line=20)
+                 A: android:name(0x01010003)="com.google.android.c2dm.permission.RECEIVE" (Raw: "com.google.android.c2dm.permission.RECEIVE")
+               E: permission (line=22)
+                 A: android:name(0x01010003)="app.dungeonpaper.permission.C2D_MESSAGE" (Raw: "app.dungeonpaper.permission.C2D_MESSAGE")
+                 A: android:protectionLevel(0x01010009)=(type 0x11)0x2
+               E: uses-permission (line=26)
+                 A: android:name(0x01010003)="app.dungeonpaper.permission.C2D_MESSAGE" (Raw: "app.dungeonpaper.permission.C2D_MESSAGE")
+               E: application (line=34)
+                 A: android:label(0x01010001)="Dungeon Paper" (Raw: "Dungeon Paper")
+                 A: android:icon(0x01010002)=@0x7f090000
+                 A: android:name(0x01010003)="io.flutter.app.FlutterApplication" (Raw: "io.flutter.app.FlutterApplication")
+                 A: android:debuggable(0x0101000f)=(type 0x12)0xffffffff
+                 E: activity (line=39)
+                   A: android:theme(0x01010000)=@0x7f0b0000
+                   A: android:name(0x01010003)="app.dungeonpaper.MainActivity" (Raw: "app.dungeonpaper.MainActivity")
+                   A: android:launchMode(0x0101001d)=(type 0x10)0x1
+                   A: android:configChanges(0x0101001f)=(type 0x11)0x400035b4
+                   A: android:windowSoftInputMode(0x0101022b)=(type 0x11)0x10
+                   A: android:hardwareAccelerated(0x010102d3)=(type 0x12)0xffffffff
+                   E: meta-data (line=53)
+                     A: android:name(0x01010003)="io.flutter.app.android.SplashScreenUntilFirstFrame" (Raw: "io.flutter.app.android.SplashScreenUntilFirstFrame")
+                     A: android:value(0x01010024)=(type 0x12)0xffffffff
+                   E: intent-filter (line=57)
+                     E: action (line=58)
+                       A: android:name(0x01010003)="android.intent.action.MAIN" (Raw: "android.intent.action.MAIN")
+                     E: category (line=60)
+                       A: android:name(0x01010003)="android.intent.category.LAUNCHER" (Raw: "android.intent.category.LAUNCHER")
+                 E: activity (line=63)
+                   A: android:theme(0x01010000)=@0x1030010
+                   A: android:name(0x01010003)="com.google.firebase.auth.internal.FederatedSignInActivity" (Raw: "com.google.firebase.auth.internal.FederatedSignInActivity")
+                   A: android:permission(0x01010006)="com.google.firebase.auth.api.gms.permission.LAUNCH_FEDERATED_SIGN_IN" (Raw: "com.google.firebase.auth.api.gms.permission.LAUNCH_FEDERATED_SIGN_IN")
+                   A: android:exported(0x01010010)=(type 0x12)0xffffffff
+                   A: android:excludeFromRecents(0x01010017)=(type 0x12)0xffffffff
+                   A: android:launchMode(0x0101001d)=(type 0x10)0x3
+                 E: service (line=71)
+                   A: android:name(0x01010003)="com.google.firebase.components.ComponentDiscoveryService" (Raw: "com.google.firebase.components.ComponentDiscoveryService")
+                   E: meta-data (line=72)
+                     A: android:name(0x01010003)="com.google.firebase.components:com.google.firebase.auth.FirebaseAuthRegistrar" (Raw: "com.google.firebase.components:com.google.firebase.auth.FirebaseAuthRegistrar")
+                     A: android:value(0x01010024)="com.google.firebase.components.ComponentRegistrar" (Raw: "com.google.firebase.components.ComponentRegistrar")
+                   E: meta-data (line=75)
+                     A: android:name(0x01010003)="com.google.firebase.components:com.google.firebase.firestore.FirestoreRegistrar" (Raw: "com.google.firebase.components:com.google.firebase.firestore.FirestoreRegistrar")
+                     A: android:value(0x01010024)="com.google.firebase.components.ComponentRegistrar" (Raw: "com.google.firebase.components.ComponentRegistrar")
+                   E: meta-data (line=78)
+                     A: android:name(0x01010003)="com.google.firebase.components:com.google.firebase.analytics.connector.internal.AnalyticsConnectorRegistrar" (Raw: "com.google.firebase.components:com.google.firebase.analytics.connector.internal.AnalyticsConnectorRegistrar")
+                     A: android:value(0x01010024)="com.google.firebase.components.ComponentRegistrar" (Raw: "com.google.firebase.components.ComponentRegistrar")
+                   E: meta-data (line=81)
+                     A: android:name(0x01010003)="com.google.firebase.components:com.google.firebase.iid.Registrar" (Raw: "com.google.firebase.components:com.google.firebase.iid.Registrar")
+                     A: android:value(0x01010024)="com.google.firebase.components.ComponentRegistrar" (Raw: "com.google.firebase.components.ComponentRegistrar")
+                 E: activity (line=86)
+                   A: android:theme(0x01010000)=@0x1030010
+                   A: android:name(0x01010003)="com.google.android.gms.auth.api.signin.internal.SignInHubActivity" (Raw: "com.google.android.gms.auth.api.signin.internal.SignInHubActivity")
+                   A: android:exported(0x01010010)=(type 0x12)0x0
+                   A: android:excludeFromRecents(0x01010017)=(type 0x12)0xffffffff
+                 E: service (line=95)
+                   A: android:name(0x01010003)="com.google.android.gms.auth.api.signin.RevocationBoundService" (Raw: "com.google.android.gms.auth.api.signin.RevocationBoundService")
+                   A: android:permission(0x01010006)="com.google.android.gms.auth.api.signin.permission.REVOCATION_NOTIFICATION" (Raw: "com.google.android.gms.auth.api.signin.permission.REVOCATION_NOTIFICATION")
+                   A: android:exported(0x01010010)=(type 0x12)0xffffffff
+                 E: receiver (line=100)
+                   A: android:name(0x01010003)="com.google.android.gms.measurement.AppMeasurementReceiver" (Raw: "com.google.android.gms.measurement.AppMeasurementReceiver")
+                   A: android:enabled(0x0101000e)=(type 0x12)0xffffffff
+                   A: android:exported(0x01010010)=(type 0x12)0x0
+                 E: receiver (line=105)
+                   A: android:name(0x01010003)="com.google.android.gms.measurement.AppMeasurementInstallReferrerReceiver" (Raw: "com.google.android.gms.measurement.AppMeasurementInstallReferrerReceiver")
+                   A: android:permission(0x01010006)="android.permission.INSTALL_PACKAGES" (Raw: "android.permission.INSTALL_PACKAGES")
+                   A: android:enabled(0x0101000e)=(type 0x12)0xffffffff
+                   A: android:exported(0x01010010)=(type 0x12)0xffffffff
+                   E: intent-filter (line=110)
+                     E: action (line=111)
+                       A: android:name(0x01010003)="com.android.vending.INSTALL_REFERRER" (Raw: "com.android.vending.INSTALL_REFERRER")
+                 E: service (line=115)
+                   A: android:name(0x01010003)="com.google.android.gms.measurement.AppMeasurementService" (Raw: "com.google.android.gms.measurement.AppMeasurementService")
+                   A: android:enabled(0x0101000e)=(type 0x12)0xffffffff
+                   A: android:exported(0x01010010)=(type 0x12)0x0
+                 E: service (line=119)
+                   A: android:name(0x01010003)="com.google.android.gms.measurement.AppMeasurementJobService" (Raw: "com.google.android.gms.measurement.AppMeasurementJobService")
+                   A: android:permission(0x01010006)="android.permission.BIND_JOB_SERVICE" (Raw: "android.permission.BIND_JOB_SERVICE")
+                   A: android:enabled(0x0101000e)=(type 0x12)0xffffffff
+                   A: android:exported(0x01010010)=(type 0x12)0x0
+                 E: receiver (line=125)
+                   A: android:name(0x01010003)="com.google.firebase.iid.FirebaseInstanceIdReceiver" (Raw: "com.google.firebase.iid.FirebaseInstanceIdReceiver")
+                   A: android:permission(0x01010006)="com.google.android.c2dm.permission.SEND" (Raw: "com.google.android.c2dm.permission.SEND")
+                   A: android:exported(0x01010010)=(type 0x12)0xffffffff
+                   E: intent-filter (line=129)
+                     E: action (line=130)
+                       A: android:name(0x01010003)="com.google.android.c2dm.intent.RECEIVE" (Raw: "com.google.android.c2dm.intent.RECEIVE")
+                     E: category (line=132)
+                       A: android:name(0x01010003)="app.dungeonpaper" (Raw: "app.dungeonpaper")
+                 E: service (line=139)
+                   A: android:name(0x01010003)="com.google.firebase.iid.FirebaseInstanceIdService" (Raw: "com.google.firebase.iid.FirebaseInstanceIdService")
+                   A: android:exported(0x01010010)=(type 0x12)0xffffffff
+                   E: intent-filter (line=142)
+                     A: android:priority(0x0101001c)=(type 0x10)0xfffffe0c
+                     E: action (line=143)
+                       A: android:name(0x01010003)="com.google.firebase.INSTANCE_ID_EVENT" (Raw: "com.google.firebase.INSTANCE_ID_EVENT")
+                 E: activity (line=147)
+                   A: android:theme(0x01010000)=@0x1030010
+                   A: android:name(0x01010003)="com.google.android.gms.common.api.GoogleApiActivity" (Raw: "com.google.android.gms.common.api.GoogleApiActivity")
+                   A: android:exported(0x01010010)=(type 0x12)0x0
+                 E: provider (line=152)
+                   A: android:name(0x01010003)="com.google.firebase.provider.FirebaseInitProvider" (Raw: "com.google.firebase.provider.FirebaseInitProvider")
+                   A: android:exported(0x01010010)=(type 0x12)0x0
+                   A: android:authorities(0x01010018)="app.dungeonpaper.firebaseinitprovider" (Raw: "app.dungeonpaper.firebaseinitprovider")
+                   A: android:initOrder(0x0101001a)=(type 0x10)0x64
+                 E: meta-data (line=158)
+                   A: android:name(0x01010003)="com.google.android.gms.version" (Raw: "com.google.android.gms.version")
+                   A: android:value(0x01010024)=@0x7f070001
+                 E: meta-data (line=161)
+                   A: android:name(0x01010003)="android.support.VERSION" (Raw: "android.support.VERSION")
+                   A: android:value(0x01010024)="26.1.0" (Raw: "26.1.0")
+                 E: meta-data (line=164)
+                   A: android:name(0x01010003)="android.arch.lifecycle.VERSION" (Raw: "android.arch.lifecycle.VERSION")
+                   A: android:value(0x01010024)="27.0.0-SNAPSHOT" (Raw: "27.0.0-SNAPSHOT")
+[   +8 ms] executing: /usr/local/Cellar/android-sdk/24.4.1_1/platform-tools/adb -s 711KPNY0809287 shell -x logcat -v time -t 1
+[ +101 ms] Exit code 0 from: /usr/local/Cellar/android-sdk/24.4.1_1/platform-tools/adb -s 711KPNY0809287 shell -x logcat -v time -t 1
+[        ] --------- beginning of main
+           02-02 05:00:43.232 D/IMAP    (10007): imap idle chenasrafil@gmail.com
+[   +3 ms] executing: /usr/local/Cellar/android-sdk/24.4.1_1/platform-tools/adb -s 711KPNY0809287 shell -x logcat -v time
+[ +668 ms] DependencyChecker: nothing is modified after 2019-02-02 04:57:36.581.
+[   +2 ms] executing: /usr/local/Cellar/android-sdk/24.4.1_1/platform-tools/adb version
+[  +23 ms] Android Debug Bridge version 1.0.36
+           Revision 302830efc153-android
+[   +3 ms] executing: /usr/local/Cellar/android-sdk/24.4.1_1/platform-tools/adb start-server
+[  +18 ms] Building APK
+[  +12 ms] Gradle task 'assembleDebug'...
+[   +1 ms] executing: [/Users/chenasraf/Dev/dungeon_paper/android/] /Users/chenasraf/Dev/dungeon_paper/android/gradlew -Pverbose=true -Ptarget=/Users/chenasraf/Dev/dungeon_paper/lib/main.dart -Ptrack-widget-creation=false -Pcompilation-trace-file=compilation.txt -Ptarget-platform=android-arm64 assembleDebug
+[ +833 ms] google-services plugin could not detect any version for com.google.android.gms or com.google.firebase, default version: 11.4.2 will be used.
+[        ] please apply google-services plugin at the bottom of the build file.
+[  +71 ms] Could not find google-services.json while looking in [src/nullnull/debug, src/debug/nullnull, src/nullnull, src/debug, src/nullnullDebug]
+[        ] registerResGeneratingTask is deprecated, use registerGeneratedFolders(FileCollection)
+[        ] Could not find google-services.json while looking in [src/nullnull/dynamicProfile, src/dynamicProfile/nullnull, src/nullnull, src/dynamicProfile, src/nullnullDynamicProfile]
+[   +2 ms] registerResGeneratingTask is deprecated, use registerGeneratedFolders(FileCollection)
+[        ] Could not find google-services.json while looking in [src/nullnull/release, src/release/nullnull, src/nullnull, src/release, src/nullnullRelease]
+[        ] registerResGeneratingTask is deprecated, use registerGeneratedFolders(FileCollection)
+[        ] Could not find google-services.json while looking in [src/nullnull/profile, src/profile/nullnull, src/nullnull, src/profile, src/nullnullProfile]
+[        ] registerResGeneratingTask is deprecated, use registerGeneratedFolders(FileCollection)
+[        ] Could not find google-services.json while looking in [src/nullnull/dynamicRelease, src/dynamicRelease/nullnull, src/nullnull, src/dynamicRelease, src/nullnullDynamicRelease]
+[        ] registerResGeneratingTask is deprecated, use registerGeneratedFolders(FileCollection)
+[+1428 ms] [  +10 ms] executing: [/Users/chenasraf/.flutter.src/] git rev-parse --abbrev-ref --symbolic @{u}
+[  +35 ms] [  +45 ms] Exit code 0 from: git rev-parse --abbrev-ref --symbolic @{u}
+[        ] [        ] origin/beta
+[        ] [        ] executing: [/Users/chenasraf/.flutter.src/] git rev-parse --abbrev-ref HEAD
+[  +10 ms] [  +11 ms] Exit code 0 from: git rev-parse --abbrev-ref HEAD
+[        ] [        ] beta
+[        ] [        ] executing: [/Users/chenasraf/.flutter.src/] git ls-remote --get-url origin
+[  +10 ms] [  +11 ms] Exit code 0 from: git ls-remote --get-url origin
+[        ] [        ] https://github.com/flutter/flutter.git
+[        ] [        ] executing: [/Users/chenasraf/.flutter.src/] git log -n 1 --pretty=format:%H
+[  +20 ms] [  +16 ms] Exit code 0 from: git log -n 1 --pretty=format:%H
+[        ] [        ] 985ccb6d14c6ce5ce74823a4d366df2438eac44f
+[        ] [        ] executing: [/Users/chenasraf/.flutter.src/] git log -n 1 --pretty=format:%ar
+[  +10 ms] [  +12 ms] Exit code 0 from: git log -n 1 --pretty=format:%ar
+[        ] [        ] 3 weeks ago
+[        ] [   +1 ms] executing: [/Users/chenasraf/.flutter.src/] git describe --match v*.*.* --first-parent --long --tags
+[  +75 ms] [  +75 ms] Exit code 0 from: git describe --match v*.*.* --first-parent --long --tags
+[        ] [   +2 ms] v1.1.8-0-g985ccb6d1
+[ +304 ms] [ +299 ms] Found plugin cloud_firestore at /Users/chenasraf/.flutter.src/.pub-cache/hosted/pub.dartlang.org/cloud_firestore-0.7.4/
+[  +12 ms] [  +12 ms] Found plugin firebase_auth at /Users/chenasraf/.flutter.src/.pub-cache/hosted/pub.dartlang.org/firebase_auth-0.5.15/
+[        ] [   +4 ms] Found plugin firebase_core at /Users/chenasraf/.flutter.src/.pub-cache/hosted/pub.dartlang.org/firebase_core-0.2.5/
+[  +21 ms] [  +15 ms] Found plugin google_sign_in at /Users/chenasraf/.flutter.src/.pub-cache/hosted/pub.dartlang.org/google_sign_in-3.0.4/
+[  +11 ms] [  +13 ms] Found plugin shared_preferences at /Users/chenasraf/.flutter.src/.pub-cache/hosted/pub.dartlang.org/shared_preferences-0.4.2/
+[ +222 ms] [ +223 ms] Found plugin cloud_firestore at /Users/chenasraf/.flutter.src/.pub-cache/hosted/pub.dartlang.org/cloud_firestore-0.7.4/
+[        ] [   +5 ms] Found plugin firebase_auth at /Users/chenasraf/.flutter.src/.pub-cache/hosted/pub.dartlang.org/firebase_auth-0.5.15/
+[  +10 ms] [   +3 ms] Found plugin firebase_core at /Users/chenasraf/.flutter.src/.pub-cache/hosted/pub.dartlang.org/firebase_core-0.2.5/
+[        ] [   +7 ms] Found plugin google_sign_in at /Users/chenasraf/.flutter.src/.pub-cache/hosted/pub.dartlang.org/google_sign_in-3.0.4/
+[  +12 ms] [   +7 ms] Found plugin shared_preferences at /Users/chenasraf/.flutter.src/.pub-cache/hosted/pub.dartlang.org/shared_preferences-0.4.2/
+[ +429 ms] [ +434 ms] /Users/chenasraf/.flutter.src/bin/cache/dart-sdk/bin/dart /Users/chenasraf/.flutter.src/bin/cache/artifacts/engine/darwin-x64/frontend_server.dart.snapshot --sdk-root /Users/chenasraf/.flutter.src/bin/cache/artifacts/engine/common/flutter_patched_sdk/ --strong --target=flutter --no-link-platform --incremental --packages /Users/chenasraf/Dev/dungeon_paper/.packages --output-dill build/app.dill --depfile /Users/chenasraf/Dev/dungeon_paper/build/app/intermediates/flutter/debug/snapshot_blob.bin.d --filesystem-scheme org-dartlang-root package:dungeon_paper/main.dart
+[+2274 ms] [+2264 ms] Building bundle
+[        ] [   +1 ms] Writing asset files to /Users/chenasraf/Dev/dungeon_paper/build/app/intermediates/flutter/debug/flutter_assets
+[  +97 ms] [ +103 ms] Wrote /Users/chenasraf/Dev/dungeon_paper/build/app/intermediates/flutter/debug/flutter_assets
+[  +28 ms] [  +31 ms] "flutter bundle" took 3,262ms.
+[ +379 ms] Parsing json file: /Users/chenasraf/Dev/dungeon_paper/android/app/google-services.json
+[+3306 ms] 158 actionable tasks: 7 executed, 151 up-to-date
+[ +444 ms] Gradle task 'assembleDebug'... (completed)
+[  +61 ms] calculateSha: LocalDirectory: '/Users/chenasraf/Dev/dungeon_paper/build/app/outputs/apk'/app.apk
+[ +429 ms] Built build/app/outputs/apk/debug/app-debug.apk.
+[   +1 ms] executing: /usr/local/Cellar/android-sdk/24.4.1_1/build-tools/26.0.2/aapt dump xmltree /Users/chenasraf/Dev/dungeon_paper/build/app/outputs/apk/app.apk AndroidManifest.xml
+[  +14 ms] Exit code 0 from: /usr/local/Cellar/android-sdk/24.4.1_1/build-tools/26.0.2/aapt dump xmltree /Users/chenasraf/Dev/dungeon_paper/build/app/outputs/apk/app.apk AndroidManifest.xml
+[        ] N: android=http://schemas.android.com/apk/res/android
+             E: manifest (line=2)
+               A: android:versionCode(0x0101021b)=(type 0x10)0x1
+               A: android:versionName(0x0101021c)="1.0" (Raw: "1.0")
+               A: package="app.dungeonpaper" (Raw: "app.dungeonpaper")
+               E: uses-sdk (line=7)
+                 A: android:minSdkVersion(0x0101020c)=(type 0x10)0x10
+                 A: android:targetSdkVersion(0x01010270)=(type 0x10)0x1b
+               E: uses-permission (line=16)
+                 A: android:name(0x01010003)="android.permission.INTERNET" (Raw: "android.permission.INTERNET")
+               E: uses-permission (line=17)
+                 A: android:name(0x01010003)="android.permission.ACCESS_NETWORK_STATE" (Raw: "android.permission.ACCESS_NETWORK_STATE")
+               E: uses-permission (line=18)
+                 A: android:name(0x01010003)="android.permission.WAKE_LOCK" (Raw: "android.permission.WAKE_LOCK")
+               E: uses-permission (line=19)
+                 A: android:name(0x01010003)="com.google.android.finsky.permission.BIND_GET_INSTALL_REFERRER_SERVICE" (Raw: "com.google.android.finsky.permission.BIND_GET_INSTALL_REFERRER_SERVICE")
+               E: uses-permission (line=20)
+                 A: android:name(0x01010003)="com.google.android.c2dm.permission.RECEIVE" (Raw: "com.google.android.c2dm.permission.RECEIVE")
+               E: permission (line=22)
+                 A: android:name(0x01010003)="app.dungeonpaper.permission.C2D_MESSAGE" (Raw: "app.dungeonpaper.permission.C2D_MESSAGE")
+                 A: android:protectionLevel(0x01010009)=(type 0x11)0x2
+               E: uses-permission (line=26)
+                 A: android:name(0x01010003)="app.dungeonpaper.permission.C2D_MESSAGE" (Raw: "app.dungeonpaper.permission.C2D_MESSAGE")
+               E: application (line=34)
+                 A: android:label(0x01010001)="Dungeon Paper" (Raw: "Dungeon Paper")
+                 A: android:icon(0x01010002)=@0x7f090000
+                 A: android:name(0x01010003)="io.flutter.app.FlutterApplication" (Raw: "io.flutter.app.FlutterApplication")
+                 A: android:debuggable(0x0101000f)=(type 0x12)0xffffffff
+                 E: activity (line=39)
+                   A: android:theme(0x01010000)=@0x7f0b0000
+                   A: android:name(0x01010003)="app.dungeonpaper.MainActivity" (Raw: "app.dungeonpaper.MainActivity")
+                   A: android:launchMode(0x0101001d)=(type 0x10)0x1
+                   A: android:configChanges(0x0101001f)=(type 0x11)0x400035b4
+                   A: android:windowSoftInputMode(0x0101022b)=(type 0x11)0x10
+                   A: android:hardwareAccelerated(0x010102d3)=(type 0x12)0xffffffff
+                   E: meta-data (line=53)
+                     A: android:name(0x01010003)="io.flutter.app.android.SplashScreenUntilFirstFrame" (Raw: "io.flutter.app.android.SplashScreenUntilFirstFrame")
+                     A: android:value(0x01010024)=(type 0x12)0xffffffff
+                   E: intent-filter (line=57)
+                     E: action (line=58)
+                       A: android:name(0x01010003)="android.intent.action.MAIN" (Raw: "android.intent.action.MAIN")
+                     E: category (line=60)
+                       A: android:name(0x01010003)="android.intent.category.LAUNCHER" (Raw: "android.intent.category.LAUNCHER")
+                 E: activity (line=63)
+                   A: android:theme(0x01010000)=@0x1030010
+                   A: android:name(0x01010003)="com.google.firebase.auth.internal.FederatedSignInActivity" (Raw: "com.google.firebase.auth.internal.FederatedSignInActivity")
+                   A: android:permission(0x01010006)="com.google.firebase.auth.api.gms.permission.LAUNCH_FEDERATED_SIGN_IN" (Raw: "com.google.firebase.auth.api.gms.permission.LAUNCH_FEDERATED_SIGN_IN")
+                   A: android:exported(0x01010010)=(type 0x12)0xffffffff
+                   A: android:excludeFromRecents(0x01010017)=(type 0x12)0xffffffff
+                   A: android:launchMode(0x0101001d)=(type 0x10)0x3
+                 E: service (line=71)
+                   A: android:name(0x01010003)="com.google.firebase.components.ComponentDiscoveryService" (Raw: "com.google.firebase.components.ComponentDiscoveryService")
+                   E: meta-data (line=72)
+                     A: android:name(0x01010003)="com.google.firebase.components:com.google.firebase.auth.FirebaseAuthRegistrar" (Raw: "com.google.firebase.components:com.google.firebase.auth.FirebaseAuthRegistrar")
+                     A: android:value(0x01010024)="com.google.firebase.components.ComponentRegistrar" (Raw: "com.google.firebase.components.ComponentRegistrar")
+                   E: meta-data (line=75)
+                     A: android:name(0x01010003)="com.google.firebase.components:com.google.firebase.firestore.FirestoreRegistrar" (Raw: "com.google.firebase.components:com.google.firebase.firestore.FirestoreRegistrar")
+                     A: android:value(0x01010024)="com.google.firebase.components.ComponentRegistrar" (Raw: "com.google.firebase.components.ComponentRegistrar")
+                   E: meta-data (line=78)
+                     A: android:name(0x01010003)="com.google.firebase.components:com.google.firebase.analytics.connector.internal.AnalyticsConnectorRegistrar" (Raw: "com.google.firebase.components:com.google.firebase.analytics.connector.internal.AnalyticsConnectorRegistrar")
+                     A: android:value(0x01010024)="com.google.firebase.components.ComponentRegistrar" (Raw: "com.google.firebase.components.ComponentRegistrar")
+                   E: meta-data (line=81)
+                     A: android:name(0x01010003)="com.google.firebase.components:com.google.firebase.iid.Registrar" (Raw: "com.google.firebase.components:com.google.firebase.iid.Registrar")
+                     A: android:value(0x01010024)="com.google.firebase.components.ComponentRegistrar" (Raw: "com.google.firebase.components.ComponentRegistrar")
+                 E: activity (line=86)
+                   A: android:theme(0x01010000)=@0x1030010
+                   A: android:name(0x01010003)="com.google.android.gms.auth.api.signin.internal.SignInHubActivity" (Raw: "com.google.android.gms.auth.api.signin.internal.SignInHubActivity")
+                   A: android:exported(0x01010010)=(type 0x12)0x0
+                   A: android:excludeFromRecents(0x01010017)=(type 0x12)0xffffffff
+                 E: service (line=95)
+                   A: android:name(0x01010003)="com.google.android.gms.auth.api.signin.RevocationBoundService" (Raw: "com.google.android.gms.auth.api.signin.RevocationBoundService")
+                   A: android:permission(0x01010006)="com.google.android.gms.auth.api.signin.permission.REVOCATION_NOTIFICATION" (Raw: "com.google.android.gms.auth.api.signin.permission.REVOCATION_NOTIFICATION")
+                   A: android:exported(0x01010010)=(type 0x12)0xffffffff
+                 E: receiver (line=100)
+                   A: android:name(0x01010003)="com.google.android.gms.measurement.AppMeasurementReceiver" (Raw: "com.google.android.gms.measurement.AppMeasurementReceiver")
+                   A: android:enabled(0x0101000e)=(type 0x12)0xffffffff
+                   A: android:exported(0x01010010)=(type 0x12)0x0
+                 E: receiver (line=105)
+                   A: android:name(0x01010003)="com.google.android.gms.measurement.AppMeasurementInstallReferrerReceiver" (Raw: "com.google.android.gms.measurement.AppMeasurementInstallReferrerReceiver")
+                   A: android:permission(0x01010006)="android.permission.INSTALL_PACKAGES" (Raw: "android.permission.INSTALL_PACKAGES")
+                   A: android:enabled(0x0101000e)=(type 0x12)0xffffffff
+                   A: android:exported(0x01010010)=(type 0x12)0xffffffff
+                   E: intent-filter (line=110)
+                     E: action (line=111)
+                       A: android:name(0x01010003)="com.android.vending.INSTALL_REFERRER" (Raw: "com.android.vending.INSTALL_REFERRER")
+                 E: service (line=115)
+                   A: android:name(0x01010003)="com.google.android.gms.measurement.AppMeasurementService" (Raw: "com.google.android.gms.measurement.AppMeasurementService")
+                   A: android:enabled(0x0101000e)=(type 0x12)0xffffffff
+                   A: android:exported(0x01010010)=(type 0x12)0x0
+                 E: service (line=119)
+                   A: android:name(0x01010003)="com.google.android.gms.measurement.AppMeasurementJobService" (Raw: "com.google.android.gms.measurement.AppMeasurementJobService")
+                   A: android:permission(0x01010006)="android.permission.BIND_JOB_SERVICE" (Raw: "android.permission.BIND_JOB_SERVICE")
+                   A: android:enabled(0x0101000e)=(type 0x12)0xffffffff
+                   A: android:exported(0x01010010)=(type 0x12)0x0
+                 E: receiver (line=125)
+                   A: android:name(0x01010003)="com.google.firebase.iid.FirebaseInstanceIdReceiver" (Raw: "com.google.firebase.iid.FirebaseInstanceIdReceiver")
+                   A: android:permission(0x01010006)="com.google.android.c2dm.permission.SEND" (Raw: "com.google.android.c2dm.permission.SEND")
+                   A: android:exported(0x01010010)=(type 0x12)0xffffffff
+                   E: intent-filter (line=129)
+                     E: action (line=130)
+                       A: android:name(0x01010003)="com.google.android.c2dm.intent.RECEIVE" (Raw: "com.google.android.c2dm.intent.RECEIVE")
+                     E: category (line=132)
+                       A: android:name(0x01010003)="app.dungeonpaper" (Raw: "app.dungeonpaper")
+                 E: service (line=139)
+                   A: android:name(0x01010003)="com.google.firebase.iid.FirebaseInstanceIdService" (Raw: "com.google.firebase.iid.FirebaseInstanceIdService")
+                   A: android:exported(0x01010010)=(type 0x12)0xffffffff
+                   E: intent-filter (line=142)
+                     A: android:priority(0x0101001c)=(type 0x10)0xfffffe0c
+                     E: action (line=143)
+                       A: android:name(0x01010003)="com.google.firebase.INSTANCE_ID_EVENT" (Raw: "com.google.firebase.INSTANCE_ID_EVENT")
+                 E: activity (line=147)
+                   A: android:theme(0x01010000)=@0x1030010
+                   A: android:name(0x01010003)="com.google.android.gms.common.api.GoogleApiActivity" (Raw: "com.google.android.gms.common.api.GoogleApiActivity")
+                   A: android:exported(0x01010010)=(type 0x12)0x0
+                 E: provider (line=152)
+                   A: android:name(0x01010003)="com.google.firebase.provider.FirebaseInitProvider" (Raw: "com.google.firebase.provider.FirebaseInitProvider")
+                   A: android:exported(0x01010010)=(type 0x12)0x0
+                   A: android:authorities(0x01010018)="app.dungeonpaper.firebaseinitprovider" (Raw: "app.dungeonpaper.firebaseinitprovider")
+                   A: android:initOrder(0x0101001a)=(type 0x10)0x64
+                 E: meta-data (line=158)
+                   A: android:name(0x01010003)="com.google.android.gms.version" (Raw: "com.google.android.gms.version")
+                   A: android:value(0x01010024)=@0x7f070001
+                 E: meta-data (line=161)
+                   A: android:name(0x01010003)="android.support.VERSION" (Raw: "android.support.VERSION")
+                   A: android:value(0x01010024)="26.1.0" (Raw: "26.1.0")
+                 E: meta-data (line=164)
+                   A: android:name(0x01010003)="android.arch.lifecycle.VERSION" (Raw: "android.arch.lifecycle.VERSION")
+                   A: android:value(0x01010024)="27.0.0-SNAPSHOT" (Raw: "27.0.0-SNAPSHOT")
+[   +1 ms] Stopping app 'app.apk' on Pixel 2 XL.
+[        ] executing: /usr/local/Cellar/android-sdk/24.4.1_1/platform-tools/adb -s 711KPNY0809287 shell am force-stop app.dungeonpaper
+[ +155 ms] executing: /usr/local/Cellar/android-sdk/24.4.1_1/platform-tools/adb -s 711KPNY0809287 shell pm list packages app.dungeonpaper
+[  +69 ms] package:app.dungeonpaper
+[   +3 ms] executing: /usr/local/Cellar/android-sdk/24.4.1_1/platform-tools/adb -s 711KPNY0809287 shell cat /data/local/tmp/sky.app.dungeonpaper.sha1
+[  +50 ms] b4fe40b9a42e45a13882396bcd89e8166755e524
+[   +1 ms] Installing APK.
+[   +1 ms] executing: /usr/local/Cellar/android-sdk/24.4.1_1/platform-tools/adb version
+[  +28 ms] Android Debug Bridge version 1.0.36
+           Revision 302830efc153-android
+[   +1 ms] executing: /usr/local/Cellar/android-sdk/24.4.1_1/platform-tools/adb start-server
+[  +23 ms] Installing build/app/outputs/apk/app.apk...
+[        ] executing: /usr/local/Cellar/android-sdk/24.4.1_1/platform-tools/adb -s 711KPNY0809287 install -t -r /Users/chenasraf/Dev/dungeon_paper/build/app/outputs/apk/app.apk
+[+6150 ms] Success
+[   +1 ms] Installing build/app/outputs/apk/app.apk... (completed)
+[   +1 ms] executing: /usr/local/Cellar/android-sdk/24.4.1_1/platform-tools/adb -s 711KPNY0809287 shell echo -n 4e2858f8d79aea1f04a22f781434d1d649ff03b6 > /data/local/tmp/sky.app.dungeonpaper.sha1
+[  +30 ms] Pixel 2 XL startApp
+[   +2 ms] executing: /usr/local/Cellar/android-sdk/24.4.1_1/platform-tools/adb -s 711KPNY0809287 shell am start -a android.intent.action.RUN -f 0x20000000 --ez enable-background-compilation true --ez enable-dart-profiling true --ez enable-checked-mode true app.dungeonpaper/app.dungeonpaper.MainActivity
+[ +116 ms] Starting: Intent { act=android.intent.action.RUN flg=0x20000000 cmp=app.dungeonpaper/.MainActivity (has extras) }
+[        ] Waiting for observatory port to be available...
+[+1769 ms] Observatory URL on device: http://127.0.0.1:38665/
+[   +1 ms] executing: /usr/local/Cellar/android-sdk/24.4.1_1/platform-tools/adb -s 711KPNY0809287 forward tcp:0 tcp:38665
+[  +52 ms] "flutter run" took 30,476ms.

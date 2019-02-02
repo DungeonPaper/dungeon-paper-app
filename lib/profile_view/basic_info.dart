@@ -12,7 +12,7 @@ class BasicInfo extends StatelessWidget {
   Widget build(BuildContext context) {
     List<Widget> children = [
       CharacterHeadline(),
-      character.photoURL.length > 0
+      character.photoURL != null && character.photoURL.length > 0
           ? Container(
               height: MediaQuery.of(context).size.height / 4.0,
               decoration: BoxDecoration(

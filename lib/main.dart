@@ -1,7 +1,8 @@
+import 'package:dungeon_paper/db/character.dart';
 import 'package:dungeon_paper/db/user.dart';
 import 'package:dungeon_paper/profile_view/basic_info.dart';
 import 'package:dungeon_paper/profile_view/user_badge.dart';
-import 'package:dungeon_paper/redux/connectors/character_connector.dart';
+import 'package:dungeon_paper/redux/stores/connectors.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -35,7 +36,7 @@ class DungeonPaper extends StatelessWidget {
             )
           ],
         ),
-        body: CharacterConnector(
+        body: DWStoreConnector(
             loader: Column(
               mainAxisSize: MainAxisSize.max,
               mainAxisAlignment: MainAxisAlignment.center,
@@ -44,7 +45,8 @@ class DungeonPaper extends StatelessWidget {
                 Center(child: CircularProgressIndicator(value: null))
               ],
             ),
-            builder: (context, character) {
+            builder: (context, state) {
+              DbCharacter character = state.characters.current;
               if (character == null) {
                 return Column(
                   mainAxisSize: MainAxisSize.max,

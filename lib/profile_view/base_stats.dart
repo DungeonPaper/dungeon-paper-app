@@ -1,14 +1,14 @@
 import 'package:dungeon_paper/db/character.dart';
 import 'package:dungeon_paper/db/character_types.dart';
 import 'package:dungeon_paper/profile_view/edit_stat_dialog.dart';
-import 'package:dungeon_paper/redux/connectors/character_connector.dart';
+import 'package:dungeon_paper/redux/stores/connectors.dart';
 import 'package:flutter/material.dart';
 
 class BaseStats extends StatelessWidget {
   // const BaseStats({Key key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
-    return CharacterConnector(builder: (context, character) {
+    return DWStoreConnector(builder: (context, state) {
       return Container(
         padding: EdgeInsets.all(10.0),
         child: Column(
@@ -50,7 +50,8 @@ class StatCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext _context) {
-    return CharacterConnector(builder: (context, character) {
+    return DWStoreConnector(builder: (context, state) {
+      DbCharacter character = state.characters.current;
       num value = character[name.toLowerCase()];
 
       return Expanded(

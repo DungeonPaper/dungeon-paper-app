@@ -1,17 +1,25 @@
 import 'package:dungeon_paper/db/character.dart';
 import 'package:dungeon_paper/db/user.dart';
+import 'package:dungeon_paper/redux/stores/character_store.dart';
+import 'package:dungeon_paper/redux/stores/user_store.dart';
 import 'package:flutter/material.dart';
+import 'package:redux/redux.dart';
 
-class CharacterStore {
-  String id;
-  DbCharacter character;
+class DWStore {
+  final UserStore user;
+  final CharacterStore characters;
 
-  CharacterStore({@required this.id, @required this.character});
+  DWStore({@required this.user, @required this.characters});
 }
 
-class UserStore {
-  String id;
-  DbUser user;
+DWStore storeReducer(DWStore state, action) => new DWStore(
+    user: userReducer(state.user, action),
+    characters: characterReducer(state.characters, action));
 
-  UserStore({@required this.id, @required this.user});
-}
+DWStore initialState = DWStore(
+  user: UserStore(current: DbUser(), currentUserDocID: ''),
+  characters:
+      CharacterStore(currentCharDocID: '', current: DbCharacter(), characters: Map<String, DbCharacter>()),
+);
+
+Store<DWStore> dwStore = Store<DWStore>(storeReducer, initialState: initialState);

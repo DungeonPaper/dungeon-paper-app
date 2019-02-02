@@ -1,20 +1,16 @@
 import 'package:dungeon_paper/db/user.dart';
-import 'package:dungeon_paper/redux/actions/action.dart';
-import 'package:dungeon_paper/redux/stores/stores.dart';
 
-enum UserActionTypes { Login, Logout, Loading }
+class Login {
+  String id;
+  DbUser user;
+  Login(this.id, this.user);
+}
+
+class Logout {}
 
 class UserActions {
-  static Action login(String id, DbUser data) {
-    return Action(
-      type: UserActionTypes.Login,
-      payload: UserStore(id: id, user: data),
-    );
-  }
+  static Login login(String id, DbUser user) =>
+      Login(id, user);
 
-  static Action logout() {
-    return Action(
-      type: UserActionTypes.Login,
-    );
-  }
+  static Logout logout() => Logout();
 }

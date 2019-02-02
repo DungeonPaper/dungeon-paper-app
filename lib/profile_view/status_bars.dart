@@ -1,4 +1,5 @@
-import 'package:dungeon_paper/redux/connectors/character_connector.dart';
+import 'package:dungeon_paper/db/character.dart';
+import 'package:dungeon_paper/redux/stores/connectors.dart';
 import 'package:flutter/material.dart';
 
 class StatusBars extends StatelessWidget {
@@ -6,8 +7,9 @@ class StatusBars extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return CharacterConnector(
-      builder: (context, character) {
+    return DWStoreConnector(
+      builder: (context, state) {
+        DbCharacter character = state.characters.current;
         return Material(
           color: Colors.white,
           child: Padding(

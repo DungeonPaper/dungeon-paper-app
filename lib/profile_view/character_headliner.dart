@@ -1,4 +1,5 @@
-import 'package:dungeon_paper/redux/connectors/character_connector.dart';
+import 'package:dungeon_paper/db/character.dart';
+import 'package:dungeon_paper/redux/stores/connectors.dart';
 import 'package:dungeon_paper/utils.dart';
 import 'package:flutter/material.dart';
 
@@ -9,7 +10,8 @@ class CharacterHeadline extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return CharacterConnector(builder: (context, character) {
+    return DWStoreConnector(builder: (context, state) {
+      DbCharacter character = state.characters.current;
       num level = character.level;
       String alignment = capitalize(character.alignment);
       String mainClass = capitalize(character.mainClass);

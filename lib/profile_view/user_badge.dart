@@ -1,7 +1,7 @@
 import 'dart:async';
 import 'dart:math';
 import 'package:dungeon_paper/db/user.dart';
-import 'package:dungeon_paper/redux/connectors/user_connector.dart';
+import 'package:dungeon_paper/redux/stores/connectors.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
@@ -15,8 +15,9 @@ class UserBadge extends StatefulWidget {
 class _UserBadgeState extends State<UserBadge> {
   @override
   Widget build(BuildContext context) {
-    return UserConnector(
-      builder: (context, user) {
+    return DWStoreConnector(
+      builder: (context, state) {
+        DbUser user = state.user.current;
         if (user == null) {
           return IconButton(
             icon: CircleAvatar(
@@ -26,7 +27,7 @@ class _UserBadgeState extends State<UserBadge> {
             onPressed: () => _handleSignIn(),
           );
         }
-        final userName = user.displayName;
+        final userName = user.displayName != null ? user.displayName : '';
         final List<String> split = userName.split(' ');
         final String initials = split.length > 0
             ? split
@@ -34,6 +35,13 @@ class _UserBadgeState extends State<UserBadge> {
                 .take(min(split.length, 2))
                 .join('')
             : '';
+
+        if (user.photoURL == null || user.photoURL.length == 0) {
+          return GestureDetector(
+            child: CircleAvatar(child: Text(initials)),
+            onTap: () => _handleSignIn(),
+          );
+        }
 
         return PopupMenuButton<String>(
           child: user.photoURL != null && user.photoURL.length > 0
@@ -52,7 +60,7 @@ class _UserBadgeState extends State<UserBadge> {
                 enabled: false,
                 child: Row(
                   children: <Widget>[
-                    CircleAvatar(backgroundImage: NetworkImage(user.photoURL)),
+                    user.photoURL != null ? CircleAvatar(backgroundImage: NetworkImage(user.photoURL)) : null,
                     Spacer(flex: 1),
                     Text(userName,
                         style: TextStyle(

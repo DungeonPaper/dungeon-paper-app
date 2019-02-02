@@ -3,7 +3,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dungeon_paper/db/character_types.dart';
 import 'package:dungeon_paper/db/user.dart';
 import 'package:dungeon_paper/redux/actions/character_actions.dart';
-import 'package:dungeon_paper/redux/stores/character_store.dart';
+import 'package:dungeon_paper/redux/stores/stores.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'base.dart';
 
@@ -78,8 +78,8 @@ Future<DbCharacter> setCurrentCharacterById(String documentId) async {
   SharedPreferences prefs = await SharedPreferences.getInstance();
   prefs.setString('characterId', character.documentID);
 
-  characterStore.dispatch(
-    CharacterActions.updateChar(character.documentID, dbCharacter),
+  dwStore.dispatch(
+    CharacterActions.setCurrentChar(character.documentID, dbCharacter),
   );
 
   return dbCharacter;
@@ -88,7 +88,7 @@ Future<DbCharacter> setCurrentCharacterById(String documentId) async {
 unsetCurrentCharacter() async {
   SharedPreferences prefs = await SharedPreferences.getInstance();
   prefs.remove('characterId');
-  characterStore.dispatch(CharacterActions.remove());
+  dwStore.dispatch(CharacterActions.remove());
 }
 
 updateCharacter(Map<String, dynamic> data) async {
@@ -99,8 +99,8 @@ updateCharacter(Map<String, dynamic> data) async {
     ..updateData(data);
   final charData = await charDoc.get();
 
-  characterStore.dispatch(
-    CharacterActions.updateChar(charDoc.documentID, DbCharacter(charData.data)),
+  dwStore.dispatch(
+    CharacterActions.setCurrentChar(charDoc.documentID, DbCharacter(charData.data)),
   );
 }
 
@@ -117,7 +117,7 @@ createCharacter() async {
     'characters': [charDoc]
   });
 
-  characterStore.dispatch(
-    CharacterActions.updateChar(charDoc.documentID, character),
+  dwStore.dispatch(
+    CharacterActions.setCurrentChar(charDoc.documentID, character),
   );
 }

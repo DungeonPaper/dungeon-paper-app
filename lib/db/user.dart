@@ -4,9 +4,7 @@ import 'package:dungeon_paper/db/auth.dart';
 import 'package:dungeon_paper/db/character.dart';
 import 'package:dungeon_paper/redux/actions/character_actions.dart';
 import 'package:dungeon_paper/redux/actions/user_actions.dart';
-import 'package:dungeon_paper/redux/stores/character_store.dart';
 import 'package:dungeon_paper/redux/stores/stores.dart';
-import 'package:dungeon_paper/redux/stores/user_store.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'base.dart';
@@ -51,7 +49,7 @@ setCurrentUserByEmail(String email) async {
   prefs.setString('userId', userDoc.documentID);
   prefs.setString('userEmail', dbUser.email);
 
-  userStore.dispatch(UserActions.login(userDoc.documentID, dbUser));
+  dwStore.dispatch(UserActions.login(userDoc.documentID, dbUser));
 }
 
 requestSignOut() async {
@@ -65,7 +63,7 @@ unsetCurrentUser() async {
   prefs.remove('userId');
   prefs.remove('CharacterId');
   prefs.remove('userEmail');
-  userStore.dispatch(UserActions.logout());
+  dwStore.dispatch(UserActions.logout());
 }
 
 requestSignIn() async {
@@ -87,14 +85,14 @@ registerUserListener() {
     if (listener != null) {
       listener.cancel();
     }
-    listener = userStore.onChange.listen((UserStore state) async {
-      String id = state.id;
-      DbUser dbUser = state.user;
+    listener = dwStore.onChange.listen((DWStore state) async {
+      String id = state.user.currentUserDocID;
+      DbUser dbUser = state.user.current;
 
-      if (dbUser.characters.length > 0) {
+      if (dbUser.characters != null && dbUser.characters.length > 0) {
         DocumentSnapshot charSnap = await dbUser.characters[0].get();
         DbCharacter charData = DbCharacter(charSnap.data);
-        characterStore.dispatch(CharacterActions.updateChar(id, charData));
+        dwStore.dispatch(CharacterActions.setCurrentChar(id, charData));
       } else {
         createCharacter();
       }

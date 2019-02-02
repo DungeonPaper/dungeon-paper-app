@@ -1,20 +1,25 @@
+import 'package:dungeon_paper/db/user.dart';
 import 'package:dungeon_paper/redux/actions/user_actions.dart';
-import 'package:dungeon_paper/redux/stores/stores.dart';
-import 'package:redux/redux.dart';
+import 'package:meta/meta.dart';
 
-UserStore userReducer(UserStore state, dynamic action) {
-  switch (action.type) {
-    case (UserActionTypes.Login):
-      return action.payload;
+class UserStore {
+  String currentUserDocID;
+  DbUser current;
 
-    case (UserActionTypes.Logout):
-      return null;
+  UserStore({@required this.currentUserDocID, @required this.current});
+}
+
+UserStore userReducer(UserStore state, action) {
+  if (action is Login) {
+    return UserStore(
+      currentUserDocID: action.id,
+      current: action.user,
+    );
+  }
+
+  if (action is Logout) {
+    return UserStore(currentUserDocID: null, current: null);
   }
 
   return state;
 }
-
-Store<UserStore> userStore = new Store(
-  userReducer,
-  initialState: UserStore(id: null, user: null),
-);
