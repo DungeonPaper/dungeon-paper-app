@@ -1,8 +1,6 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dungeon_paper/db/character.dart';
-import 'package:dungeon_paper/redux/stores.dart';
+import 'package:dungeon_paper/db/character_types.dart';
 import 'package:flutter/material.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 class EditStatDialog extends StatefulWidget {
   final String name;
@@ -22,36 +20,54 @@ class EditStatDialogState extends State<EditStatDialog> {
   final String name;
   final String fullName;
   num value;
+  TextEditingController _controller;
 
   EditStatDialogState({
     Key key,
     @required this.name,
     @required this.value,
-  })  : fullName = DbCharacter.statNameMap[name],
+  })  : fullName = StatNameMap[name],
+        _controller = TextEditingController(text: value.toString()),
         super();
 
   @override
   Widget build(BuildContext context) {
+    String modifier = DbCharacter.statModifierText(value);
     return SimpleDialog(
-      title: Text('Title'),
+      title: Text('Edit $fullName'),
       children: <Widget>[
         Padding(
           padding: const EdgeInsets.symmetric(vertical: 16.0, horizontal: 26.0),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.start,
-            crossAxisAlignment: CrossAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.center,
             children: <Widget>[
-              Text('Edit $fullName'),
-              Text(value.toString()),
+              Text('$fullName: $value'),
+              Text('${name.toUpperCase()}: $modifier',
+                  style: TextStyle(
+                    fontSize: 20.0,
+                    fontWeight: FontWeight.bold,
+                  )),
               Form(
                 child: Column(
                   mainAxisSize: MainAxisSize.max,
                   children: <Widget>[
-                    TextField(
-                        onChanged: (val) => _setStateValue(num.parse(val))),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(vertical: 8.0),
+                      child: Container(
+                        width: 150.0,
+                        child: TextField(
+                          onChanged: (val) => _setStateValue(num.parse(val) != 0 ? num.parse(val) : ''),
+                          keyboardType: TextInputType.number,
+                          controller: _controller,
+                          // style: TextStyle(fontSize: 13.0),
+                          // textAlign: TextAlign.center,
+                        ),
+                      ),
+                    ),
                     RaisedButton(
                       onPressed: () => _saveValue(),
-                      child: Text('Submit'),
+                      child: const Text('Submit'),
                     ),
                   ],
                 ),
@@ -70,17 +86,6 @@ class EditStatDialogState extends State<EditStatDialog> {
   }
 
   _saveValue() async {
-    Firestore firestore = Firestore.instance;
-    SharedPreferences sharedPrefs = await SharedPreferences.getInstance();
-    String charDocId = sharedPrefs.getString('characterId');
-    characterStore.dispatch(
-      Action(
-        type: CharacterActions.SetField,
-        payload: {'field': name.toLowerCase(), 'value': value},
-      ),
-    );
-    firestore
-        .document('character_bios/$charDocId')
-        .updateData({name.toLowerCase(): value});
+    updateCharacter({name.toLowerCase(): value});
   }
 }

@@ -1,6 +1,7 @@
 import 'package:dungeon_paper/db/character.dart';
 import 'package:dungeon_paper/profile_view/base_stats.dart';
 import 'package:dungeon_paper/profile_view/character_headliner.dart';
+import 'package:dungeon_paper/profile_view/status_bars.dart';
 import 'package:flutter/material.dart';
 
 class BasicInfo extends StatelessWidget {
@@ -10,7 +11,7 @@ class BasicInfo extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     List<Widget> children = [
-      CharacterHeadline(character: character),
+      CharacterHeadline(),
       character.photoURL.length > 0
           ? Container(
               height: MediaQuery.of(context).size.height / 4.0,
@@ -23,6 +24,7 @@ class BasicInfo extends StatelessWidget {
               ),
             )
           : Container(height: 0.0, width: 0.0),
+      StatusBars(),
       BaseStats(),
     ];
 

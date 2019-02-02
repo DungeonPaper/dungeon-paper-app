@@ -1,9 +1,9 @@
 class DbBase {
   final Map defaultData = {};
-  Map _map = new Map();
+  Map _map = Map();
 
   DbBase([Map map = const {}]) {
-    _map = map != null ? map : new Map();
+    _map = map != null ? map : Map();
 
     defaultData.forEach((key, val) {
       if (!_map.containsKey(key) || _map[key] == null) {

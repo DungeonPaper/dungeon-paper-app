@@ -1,31 +1,34 @@
 import 'package:dungeon_paper/db/character.dart';
 import 'package:dungeon_paper/db/user.dart';
-import 'package:dungeon_paper/redux/stores.dart';
+import 'package:dungeon_paper/redux/stores/stores.dart';
+import 'package:dungeon_paper/redux/stores/user_store.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class UserConnector extends StatelessWidget {
-  final Widget loader;
   final Widget Function(BuildContext context, DbUser user) builder;
-  UserConnector({Key key, this.loader, this.builder}) : super(key: key);
+  final Widget loader;
+
+  UserConnector({Key key, @required this.builder, this.loader})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return StoreProvider<Map>(
+    return StoreProvider<UserStore>(
       store: userStore,
-      child: StoreConnector<Map, Map>(
+      child: StoreConnector<UserStore, UserStore>(
         converter: (characterStore) => characterStore.state,
         builder: (context, state) {
-          if (state['loading'] == true) {
-            return loader;
-          }
+          // if (state['loading'] == true) {
+          //   return loader;
+          // }
 
-          if (state['data'] == null) {
+          if (state.user == null) {
             _getDetailsFromPrefs(context);
           }
 
-          return builder(context, state['data']);
+          return builder(context, state.user);
         },
       ),
     );
@@ -40,7 +43,7 @@ class UserConnector extends StatelessWidget {
       return;
     }
 
-    await setCurrentUserByField('email', userEmail);
+    await setCurrentUserByEmail(userEmail);
     await setCurrentCharacterById(characterId);
   }
 }

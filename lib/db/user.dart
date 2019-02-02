@@ -1,15 +1,22 @@
 import 'dart:async';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:dungeon_paper/db/auth.dart';
 import 'package:dungeon_paper/db/character.dart';
-import 'package:dungeon_paper/redux/stores.dart';
-import 'package:flutter/material.dart';
+import 'package:dungeon_paper/redux/actions/character_actions.dart';
+import 'package:dungeon_paper/redux/actions/user_actions.dart';
+import 'package:dungeon_paper/redux/stores/character_store.dart';
+import 'package:dungeon_paper/redux/stores/stores.dart';
+import 'package:dungeon_paper/redux/stores/user_store.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'base.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
-final FirebaseAuth _auth = FirebaseAuth.instance;
 final GoogleSignIn _googleSignIn = new GoogleSignIn();
+final Firestore firestore = Firestore.instance;
+FirebaseUser authUser;
+DbUser currentUser = DbUser({});
+StreamSubscription listener;
 
 class DbUser extends DbBase {
   final defaultData = {
@@ -27,40 +34,30 @@ class DbUser extends DbBase {
   String get email => get<String>('email');
 }
 
-FirebaseUser authUser;
-DbUser currentUser = DbUser({});
-
-Future<DbUser> setCurrentUserByField(
-    String searchField, String searchValue) async {
+setCurrentUserByEmail(String email) async {
+  SharedPreferences prefs = await SharedPreferences.getInstance();
   QuerySnapshot userQuery = await Firestore.instance
       .collection('users')
-      .where(searchField, isEqualTo: searchValue)
+      .where('email', isEqualTo: email)
       .getDocuments();
 
-  DocumentSnapshot userDoc =
-      userQuery.documents.length > 0 ? userQuery.documents[0] : null;
+  if (userQuery.documents.length == 0) {
+    return;
+  }
+
+  DocumentSnapshot userDoc = userQuery.documents[0];
   DbUser dbUser = DbUser(userDoc.data);
 
-  SharedPreferences prefs = await SharedPreferences.getInstance();
   prefs.setString('userId', userDoc.documentID);
   prefs.setString('userEmail', dbUser.email);
 
-  userStore.dispatch(new Action(
-      type: UserActions.Login,
-      payload: {'id': userDoc.documentID, 'data': dbUser}));
-
-  return dbUser;
+  userStore.dispatch(UserActions.login(userDoc.documentID, dbUser));
 }
 
-Future<bool> googleSignOut(BuildContext context) async {
-  try {
-    await _googleSignIn.signOut();
-    unsetCurrentUser();
-    unsetCurrentCharacter();
-    return true;
-  } catch (e) {
-    return false;
-  }
+requestSignOut() async {
+  await _googleSignIn.signOut();
+  unsetCurrentUser();
+  unsetCurrentCharacter();
 }
 
 unsetCurrentUser() async {
@@ -68,42 +65,39 @@ unsetCurrentUser() async {
   prefs.remove('userId');
   prefs.remove('CharacterId');
   prefs.remove('userEmail');
-  currentUser = null;
-  userStore.dispatch(Action(type: UserActions.Logout));
+  userStore.dispatch(UserActions.logout());
 }
 
-Future<FirebaseUser> googleSignIn(BuildContext context) async {
+requestSignIn() async {
+  SharedPreferences sharedPrefs = await SharedPreferences.getInstance();
   GoogleSignInAccount googleUser = await _googleSignIn.signIn();
   GoogleSignInAuthentication googleAuth = await googleUser.authentication;
-  userStore.dispatch(Action(type: UserActions.Loading, payload: true));
-  characterStore.dispatch(Action(type: CharacterActions.Loading, payload: true));
-  FirebaseUser user = await _auth.signInWithGoogle(
-    accessToken: googleAuth.accessToken,
-    idToken: googleAuth.idToken,
-  );
-  DbUser dbUser = await setCurrentUserByField('email', user.email);
-  userStore.dispatch(Action(type: UserActions.Loading, payload: false));
 
-  if (dbUser.characters.length > 0) {
-    await setCurrentCharacterById(dbUser.characters[0].documentID);
-  } else {
-    DbCharacter character = DbCharacter({});
-    Firestore firestore = Firestore.instance;
-    DocumentReference charDoc =
-        await firestore.collection('character_bios').add(character.map);
-    SharedPreferences sharedPrefs = await SharedPreferences.getInstance();
-    String userDocId = sharedPrefs.getString('userId');
-    firestore.document('character_bios/$userDocId').updateData({
-      'characters': [charDoc]
+  sharedPrefs.setString('accessToken', googleAuth.accessToken);
+  sharedPrefs.setString('idToken', googleAuth.idToken);
+
+  FirebaseUser authUser = await performSignIn();
+  setCurrentUserByEmail(authUser.email);
+
+  return authUser;
+}
+
+registerUserListener() {
+  FirebaseAuth.instance.onAuthStateChanged.listen((FirebaseUser authUser) {
+    if (listener != null) {
+      listener.cancel();
+    }
+    listener = userStore.onChange.listen((UserStore state) async {
+      String id = state.id;
+      DbUser dbUser = state.user;
+
+      if (dbUser.characters.length > 0) {
+        DocumentSnapshot charSnap = await dbUser.characters[0].get();
+        DbCharacter charData = DbCharacter(charSnap.data);
+        characterStore.dispatch(CharacterActions.updateChar(id, charData));
+      } else {
+        createCharacter();
+      }
     });
-    characterStore.dispatch(Action(
-      type: CharacterActions.Change,
-      payload: {
-        'id': charDoc.documentID,
-        'data': dbUser,
-      },
-    ));
-  }
-  characterStore.dispatch(Action(type: CharacterActions.Loading, payload: false));
-  return user;
+  });
 }
