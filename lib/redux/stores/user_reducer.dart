@@ -17,7 +17,7 @@ UserStore userReducer(UserStore state, action) {
     );
   }
 
-  if (action is Logout) {
+  if (action is Logout || action is NoLogin) {
     return UserStore(currentUserDocID: null, current: null);
   }
 

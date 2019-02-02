@@ -7,10 +7,15 @@ class Login {
 }
 
 class Logout {}
+class NoLogin {}
+class RequestLogin {}
+
 
 class UserActions {
   static Login login(String id, DbUser user) =>
       Login(id, user);
 
   static Logout logout() => Logout();
+  static NoLogin noLogin() => NoLogin();
+  static RequestLogin requestLogin() => RequestLogin();
 }

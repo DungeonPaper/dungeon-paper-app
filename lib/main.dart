@@ -1,9 +1,11 @@
 import 'package:dungeon_paper/db/auth.dart';
 import 'package:dungeon_paper/db/character.dart';
 import 'package:dungeon_paper/db/user.dart';
+import 'package:dungeon_paper/notes_view/notes_view.dart';
 import 'package:dungeon_paper/profile_view/basic_info.dart';
 import 'package:dungeon_paper/profile_view/user_badge.dart';
 import 'package:dungeon_paper/redux/stores/connectors.dart';
+import 'package:dungeon_paper/redux/stores/loading_reducer.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -39,6 +41,7 @@ class DungeonPaper extends StatelessWidget {
         // ),
         bottomNavigationBar: NavBar(pageController: _pageController),
         body: DWStoreConnector(
+            loaderKey: LoadingKeys.Character,
             loader: Column(
               mainAxisSize: MainAxisSize.max,
               mainAxisAlignment: MainAxisAlignment.center,
@@ -58,18 +61,11 @@ class DungeonPaper extends StatelessWidget {
                 );
               }
               return PageView(
+                controller: _pageController,
                 children: [
                   BasicInfo(character: character),
-                  Column(
-                    mainAxisSize: MainAxisSize.max,
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: <Widget>[
-                      Center(child: const Text('Please log in!'))
-                    ],
-                  )
+                  NotesView(character: character),
                 ],
-                controller: _pageController,
               );
             }),
       ),

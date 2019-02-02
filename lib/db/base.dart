@@ -13,14 +13,14 @@ class DbBase {
   }
 
   operator [](String key) {
-    return _map[key];
+    return get(key);
   }
 
   operator []=(String key, dynamic value) {
-    return _map[key] = value;
+    return set(key, value);
   }
 
-  set<T>(String key, T value) {
+  void set<T>(String key, T value) {
     _map[key] = value;
   }
 
@@ -33,11 +33,12 @@ class DbBase {
       return defaultVal;
     }
 
-    final T value = _map[key];
+    var value = _map[key];
 
     if (value == null) {
       return defaultVal;
     }
+
     return value;
   }
 

@@ -15,14 +15,15 @@ performSignIn() async {
   String idToken = sharedPrefs.getString('idToken');
 
   if (accessToken == null || idToken == null) {
+    dwStore.dispatch(UserActions.noLogin());
     return null;
   }
 
+  dwStore.dispatch(UserActions.requestLogin());
   AuthCredential creds = GoogleAuthProvider.getCredential(
     accessToken: accessToken,
     idToken: idToken,
   );
-
 
   FirebaseUser user = await auth.signInWithCredential(creds);
   setCurrentUserByEmail(user.email);
@@ -31,6 +32,7 @@ performSignIn() async {
 }
 
 void requestSignInWithCredentials() async {
+  dwStore.dispatch(UserActions.requestLogin());
   SharedPreferences sharedPrefs = await SharedPreferences.getInstance();
   GoogleSignInAccount googleUser = await _googleSignIn.signIn();
   GoogleSignInAuthentication googleAuth = await googleUser.authentication;
