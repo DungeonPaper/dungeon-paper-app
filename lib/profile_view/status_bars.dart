@@ -5,6 +5,11 @@ import 'package:flutter/material.dart';
 class StatusBars extends StatelessWidget {
   // StatusBars({Key key}) : super(key: key);
   static const double _PROGRESS_HEIGHT = 20;
+  static const double _VALUE_WIDTH = 80;
+  static const valueStyle =
+      TextStyle(fontSize: 18, fontWeight: FontWeight.bold);
+  static const labelStyle =
+      TextStyle(fontSize: 17, fontWeight: FontWeight.w300, letterSpacing: -1);
 
   @override
   Widget build(BuildContext context) {
@@ -14,62 +19,77 @@ class StatusBars extends StatelessWidget {
         return Material(
           color: Colors.white,
           child: Padding(
-            padding: const EdgeInsets.all(8.0),
+            padding: const EdgeInsets.all(16.0),
             child: Column(
-              children: <Widget>[
-                SizedBox(
-                  height: _PROGRESS_HEIGHT,
-                  child: Padding(
-                    padding: const EdgeInsets.only(bottom: 4),
-                    child: LinearProgressIndicator(
-                      backgroundColor: Colors.pink,
-                      valueColor: AlwaysStoppedAnimation(Colors.red),
-                      value: character.currentHP > 0
-                          ? character.currentHP / character.maxHP * 100
-                          : 0,
-                    ),
+              children: [
+                Padding(
+                  padding:
+                      const EdgeInsets.symmetric(vertical: 4, horizontal: 0),
+                  child: Row(
+                    children: [
+                      Row(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          const Text('HP', style: labelStyle),
+                          SizedBox(
+                              width: _VALUE_WIDTH,
+                              child: Center(
+                                  child: Text(
+                                      '${character.currentHP}/${character.maxHP}',
+                                      style: valueStyle)))
+                        ],
+                      ),
+                      Expanded(
+                        child: SizedBox(
+                          height: _PROGRESS_HEIGHT,
+                          child: LinearProgressIndicator(
+                            backgroundColor: Colors.red.shade100,
+                            valueColor:
+                                AlwaysStoppedAnimation(Colors.red.shade700),
+                            value: character.currentHP > 0
+                                ? character.currentHP / character.maxHP
+                                : 0,
+                          ),
+                        ),
+                      ),
+                    ],
                   ),
                 ),
-                SizedBox(
-                  height: _PROGRESS_HEIGHT,
-                  child: Padding(
-                    padding: const EdgeInsets.only(top: 4),
-                    child: LinearProgressIndicator(
-                      backgroundColor: Colors.white70,
-                      valueColor: AlwaysStoppedAnimation(Colors.blue),
-                      value: character.currentXP > 0
-                          ? character.currentXP / (character.level + 7) * 100
-                          : 0,
-                    ),
+                Padding(
+                  padding:
+                      const EdgeInsets.symmetric(vertical: 4, horizontal: 0),
+                  child: Row(
+                    children: [
+                      Row(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          const Text('XP', style: labelStyle),
+                          SizedBox(
+                              width: _VALUE_WIDTH,
+                              child: Center(
+                                  child: Text(
+                                      '${character.currentXP}/${character.level * 7}',
+                                      style: valueStyle)))
+                        ],
+                      ),
+                      Expanded(
+                        child: SizedBox(
+                          height: _PROGRESS_HEIGHT,
+                          child: LinearProgressIndicator(
+                            backgroundColor: Colors.lightBlue.shade100,
+                            valueColor: AlwaysStoppedAnimation(Colors.blue),
+                            value: character.currentXP > 0
+                                ? character.currentXP / (character.level + 7)
+                                : 0,
+                          ),
+                        ),
+                      ),
+                    ],
                   ),
                 ),
               ],
             ),
           ),
-          // child: Padding(
-          //   padding: EdgeInsets.all(10.0),
-          //   child: Column(
-          //     mainAxisAlignment: MainAxisAlignment.center,
-          //     children: <Widget>[
-          //       Row(
-          //         mainAxisAlignment: MainAxisAlignment.center,
-          //         children: <Widget>[
-          //           LinearProgressIndicator(
-          //             value: character.currentHP > 0 ? character.currentHP / character.maxHP : 0,
-          //           ),
-          //         ],
-          //       ),
-          //       Row(
-          //         mainAxisAlignment: MainAxisAlignment.center,
-          //         children: <Widget>[
-          //           LinearProgressIndicator(
-          //             value: character.currentXP > 0 ? character.currentXP / (character.level + 7) : 0,
-          //           ),
-          //         ],
-          //       )
-          //     ],
-          //   ),
-          // ),
         );
       },
     );

@@ -20,13 +20,15 @@ class BasicInfo extends StatelessWidget {
           children: [
             CharacterHeadline(),
             character.photoURL != null && character.photoURL.length > 0
-                ? Container(
-                    height: max(MediaQuery.of(context).size.height / 4.0, 200),
-                    decoration: BoxDecoration(
-                      image: DecorationImage(
-                        fit: BoxFit.fitWidth,
-                        alignment: FractionalOffset.topCenter,
-                        image: NetworkImage(character.photoURL),
+                ? AspectRatio(
+                    aspectRatio: 16.0 / 9.0,
+                    child: Container(
+                      decoration: BoxDecoration(
+                        image: DecorationImage(
+                          fit: BoxFit.fitWidth,
+                          alignment: FractionalOffset.topCenter,
+                          image: NetworkImage(character.photoURL),
+                        ),
                       ),
                     ),
                   )

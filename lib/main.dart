@@ -12,6 +12,7 @@ void main() {
 }
 
 class DungeonPaper extends StatelessWidget {
+  PageController _pageController = PageController();
   @override
   Widget build(BuildContext context) {
     const appName = 'Dungeon Paper';
@@ -22,22 +23,21 @@ class DungeonPaper extends StatelessWidget {
           title: const Text(appName),
           actions: [UserBadge()],
         ),
-        bottomNavigationBar: BottomNavigationBar(
-          items: <BottomNavigationBarItem>[
-            BottomNavigationBarItem(
-              icon: Icon(Icons.person),
-              title: const Text('Profile'),
-            ),
-            // BottomNavigationBarItem(
-            //   icon: ImageIcon(AssetImage('assets/swords.png')),
-            //   title: Text('Battle'),
-            // )
-            BottomNavigationBarItem(
-              icon: Icon(Icons.speaker_notes),
-              title: const Text('Notes'),
-            )
-          ],
+        floatingActionButton: FloatingActionButton(
+          child: Icon(Icons.apps),
+          onPressed: () => null,
+          foregroundColor: Colors.white,
         ),
+        floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
+        // bottomNavigationBar: BottomNavigationBar(
+        //   items: [
+        //     BottomNavigationBarItem(
+        //         icon: Icon(Icons.speaker_notes), title: Text('Notes')),
+        //     BottomNavigationBarItem(
+        //         icon: Icon(Icons.speaker_notes), title: Text('Notes')),
+        //   ],
+        // ),
+        bottomNavigationBar: NavBar(pageController: _pageController),
         body: DWStoreConnector(
             loader: Column(
               mainAxisSize: MainAxisSize.max,
@@ -52,16 +52,82 @@ class DungeonPaper extends StatelessWidget {
                   mainAxisSize: MainAxisSize.max,
                   mainAxisAlignment: MainAxisAlignment.center,
                   crossAxisAlignment: CrossAxisAlignment.center,
-                  children: <Widget>[Center(child: const Text('Please log in!'))],
+                  children: <Widget>[
+                    Center(child: const Text('Please log in!'))
+                  ],
                 );
               }
-              return BasicInfo(character: character);
+              return PageView(
+                children: [
+                  BasicInfo(character: character),
+                  Column(
+                    mainAxisSize: MainAxisSize.max,
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: <Widget>[
+                      Center(child: const Text('Please log in!'))
+                    ],
+                  )
+                ],
+                controller: _pageController,
+              );
             }),
       ),
       theme: ThemeData(
         primarySwatch: Colors.lightGreen,
         brightness: Brightness.light,
         scaffoldBackgroundColor: const Color.fromARGB(255, 225, 225, 225),
+      ),
+    );
+  }
+}
+
+class NavBar extends StatelessWidget {
+  final PageController pageController;
+
+  const NavBar({
+    Key key,
+    @required this.pageController,
+  }) : super(key: key);
+
+  Widget _item(Widget label, IconData icon, [void Function() onTap]) =>
+      Expanded(
+        child: Material(
+          color: Colors.transparent,
+          child: SizedBox(
+            height: 70,
+            child: InkWell(
+              onTap: onTap,
+              child: Column(
+                mainAxisSize: MainAxisSize.max,
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: <Widget>[Icon(icon), label],
+              ),
+            ),
+          ),
+        ),
+      );
+  // IconButton(icon: Icon(icon), onPressed: onTap);
+
+  @override
+  Widget build(BuildContext context) {
+    return BottomAppBar(
+      shape: CircularNotchedRectangle(),
+      notchMargin: 6,
+      child: Row(
+        mainAxisSize: MainAxisSize.max,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        mainAxisAlignment: MainAxisAlignment.spaceAround,
+        children: [
+          _item(Text('Profile'), Icons.person, () {
+            pageController.animateToPage(0,
+                duration: Duration(milliseconds: 500), curve: Curves.easeOut);
+          }),
+          _item(Text('Notes'), Icons.speaker_notes, () {
+            pageController.animateToPage(1,
+                duration: Duration(milliseconds: 500), curve: Curves.easeOut);
+          }),
+        ],
       ),
     );
   }
