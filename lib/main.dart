@@ -1,3 +1,4 @@
+import 'package:dungeon_paper/db/auth.dart';
 import 'package:dungeon_paper/db/character.dart';
 import 'package:dungeon_paper/db/user.dart';
 import 'package:dungeon_paper/profile_view/basic_info.dart';
@@ -6,24 +7,26 @@ import 'package:dungeon_paper/redux/stores/connectors.dart';
 import 'package:flutter/material.dart';
 
 void main() {
+  performSignIn();
   runApp(DungeonPaper());
 }
 
 class DungeonPaper extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    const appName = 'Dungeon Paper';
     return MaterialApp(
-      title: 'Dungeon Paper',
+      title: appName,
       home: Scaffold(
         appBar: AppBar(
-          title: Text('Dungeon Paper'),
-          actions: <Widget>[UserBadge()],
+          title: const Text(appName),
+          actions: [UserBadge()],
         ),
         bottomNavigationBar: BottomNavigationBar(
           items: <BottomNavigationBarItem>[
             BottomNavigationBarItem(
               icon: Icon(Icons.person),
-              title: Text('Profile'),
+              title: const Text('Profile'),
             ),
             // BottomNavigationBarItem(
             //   icon: ImageIcon(AssetImage('assets/swords.png')),
@@ -31,7 +34,7 @@ class DungeonPaper extends StatelessWidget {
             // )
             BottomNavigationBarItem(
               icon: Icon(Icons.speaker_notes),
-              title: Text('Notes'),
+              title: const Text('Notes'),
             )
           ],
         ),
@@ -40,9 +43,7 @@ class DungeonPaper extends StatelessWidget {
               mainAxisSize: MainAxisSize.max,
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.center,
-              children: <Widget>[
-                Center(child: CircularProgressIndicator(value: null))
-              ],
+              children: [Center(child: CircularProgressIndicator(value: null))],
             ),
             builder: (context, state) {
               DbCharacter character = state.characters.current;
@@ -51,7 +52,7 @@ class DungeonPaper extends StatelessWidget {
                   mainAxisSize: MainAxisSize.max,
                   mainAxisAlignment: MainAxisAlignment.center,
                   crossAxisAlignment: CrossAxisAlignment.center,
-                  children: <Widget>[Center(child: Text('Please log in!'))],
+                  children: <Widget>[Center(child: const Text('Please log in!'))],
                 );
               }
               return BasicInfo(character: character);
@@ -60,7 +61,7 @@ class DungeonPaper extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.lightGreen,
         brightness: Brightness.light,
-        scaffoldBackgroundColor: Color.fromARGB(255, 225, 225, 225),
+        scaffoldBackgroundColor: const Color.fromARGB(255, 225, 225, 225),
       ),
     );
   }

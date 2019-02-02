@@ -1,3 +1,5 @@
+import 'dart:math';
+import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:dungeon_paper/db/character.dart';
 import 'package:dungeon_paper/profile_view/base_stats.dart';
 import 'package:dungeon_paper/profile_view/character_headliner.dart';
@@ -10,26 +12,37 @@ class BasicInfo extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    List<Widget> children = [
-      CharacterHeadline(),
-      character.photoURL != null && character.photoURL.length > 0
-          ? Container(
-              height: MediaQuery.of(context).size.height / 4.0,
-              decoration: BoxDecoration(
-                image: DecorationImage(
-                  fit: BoxFit.fitWidth,
-                  alignment: FractionalOffset.topCenter,
-                  image: NetworkImage(character.photoURL),
-                ),
-              ),
-            )
-          : Container(height: 0.0, width: 0.0),
-      StatusBars(),
-      BaseStats(),
-    ];
+    return OrientationBuilder(builder: (context, orientation) {
+      List<Widget> children = [
+        ListView(
+          shrinkWrap: true,
+          physics: NeverScrollableScrollPhysics(),
+          children: [
+            CharacterHeadline(),
+            character.photoURL != null && character.photoURL.length > 0
+                ? Container(
+                    height: max(MediaQuery.of(context).size.height / 4.0, 200),
+                    decoration: BoxDecoration(
+                      image: DecorationImage(
+                        fit: BoxFit.fitWidth,
+                        alignment: FractionalOffset.topCenter,
+                        image: NetworkImage(character.photoURL),
+                      ),
+                    ),
+                  )
+                : Container(height: 0.0, width: 0.0),
+            StatusBars(),
+          ],
+        ),
+        BaseStats(),
+      ];
 
-    return ListView(
-      children: children,
-    );
+      return StaggeredGridView.countBuilder(
+        crossAxisCount: orientation == Orientation.portrait ? 1 : 2,
+        itemCount: children.length,
+        itemBuilder: (context, index) => Container(child: children[index]),
+        staggeredTileBuilder: (index) => StaggeredTile.fit(1),
+      );
+    });
   }
 }

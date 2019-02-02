@@ -18,15 +18,15 @@ class CharacterHeadline extends StatelessWidget {
       String displayName = capitalize(character.displayName);
 
       return Row(
-        children: <Widget>[
+        children: [
           Expanded(
             child: Material(
               child: Padding(
-                padding: EdgeInsets.all(16.0),
+                padding: EdgeInsets.fromLTRB(16, 16, 16, 12),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   mainAxisSize: MainAxisSize.min,
-                  children: <Widget>[
+                  children: [
                     Text('Level $level $alignment $mainClass'),
                     Text(
                       '$displayName',

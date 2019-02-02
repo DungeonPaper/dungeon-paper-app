@@ -13,14 +13,16 @@ performSignIn() async {
   SharedPreferences sharedPrefs = await SharedPreferences.getInstance();
   String accessToken = sharedPrefs.getString('accessToken');
   String idToken = sharedPrefs.getString('idToken');
+
+  if (accessToken == null || idToken == null) {
+    return null;
+  }
+
   AuthCredential creds = GoogleAuthProvider.getCredential(
     accessToken: accessToken,
     idToken: idToken,
   );
 
-  if (accessToken == null || idToken == null) {
-    return null;
-  }
 
   FirebaseUser user = await auth.signInWithCredential(creds);
   setCurrentUserByEmail(user.email);

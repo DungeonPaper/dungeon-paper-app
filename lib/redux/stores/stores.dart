@@ -17,9 +17,9 @@ DWStore storeReducer(DWStore state, action) => new DWStore(
     characters: characterReducer(state.characters, action));
 
 DWStore initialState = DWStore(
-  user: UserStore(current: DbUser(), currentUserDocID: ''),
+  user: UserStore(current: null, currentUserDocID: null),
   characters:
-      CharacterStore(currentCharDocID: '', current: DbCharacter(), characters: Map<String, DbCharacter>()),
+      CharacterStore(currentCharDocID: null, current: null, characters: Map<String, DbCharacter>()),
 );
 
 Store<DWStore> dwStore = Store<DWStore>(storeReducer, initialState: initialState);
