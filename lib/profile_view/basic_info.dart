@@ -1,4 +1,3 @@
-import 'dart:math';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:dungeon_paper/db/character.dart';
 import 'package:dungeon_paper/profile_view/base_stats.dart';

@@ -65,9 +65,22 @@ class EditStatDialogState extends State<EditStatDialog> {
                         ),
                       ),
                     ),
-                    RaisedButton(
-                      onPressed: () => _saveValue(),
-                      child: const Text('Submit'),
+                    Padding(
+                      padding: const EdgeInsets.only(top: 24),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceAround,
+                        children: <Widget>[
+                          RaisedButton(
+                            color: Theme.of(context).colorScheme.primary,
+                            onPressed: () => _saveValue(),
+                            child: const Text('Save'),
+                          ),
+                          RaisedButton(
+                            onPressed: () => Navigator.pop(context),
+                            child: const Text('Cancel'),
+                          ),
+                        ],
+                      ),
                     ),
                   ],
                 ),
@@ -86,6 +99,7 @@ class EditStatDialogState extends State<EditStatDialog> {
   }
 
   _saveValue() async {
-    updateCharacter({name.toLowerCase(): value});
+    await updateCharacter({name.toLowerCase(): value});
+    Navigator.pop(context);
   }
 }

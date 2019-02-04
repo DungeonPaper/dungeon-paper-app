@@ -5,7 +5,6 @@ import 'package:dungeon_paper/redux/stores/connectors.dart';
 import 'package:flutter/material.dart';
 
 class BaseStats extends StatelessWidget {
-  // const BaseStats({Key key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
     return DWStoreConnector(builder: (context, state) {
@@ -55,13 +54,13 @@ class StatCard extends StatelessWidget {
       num value = character[name.toLowerCase()];
 
       return Expanded(
-        child: GestureDetector(
-          onTap: () => showDialog(
-                context: context,
-                builder: (context) => EditStatDialog(name: name, value: value),
-              ),
-          child: Card(
-            margin: EdgeInsets.all(10.0),
+        child: Card(
+          margin: EdgeInsets.all(10.0),
+          child: InkWell(
+            onTap: () => showDialog(
+                  context: context,
+                  builder: (context) => EditStatDialog(name: name, value: value),
+                ),
             child: Padding(
               padding: EdgeInsets.symmetric(horizontal: 10.0, vertical: 22.0),
               child: Column(
@@ -69,7 +68,7 @@ class StatCard extends StatelessWidget {
                 children: <Widget>[
                   Text('$fullName: $value', style: TextStyle(fontSize: 11.0)),
                   Text(
-                    '${name.toUpperCase()}' +
+                    '${name.toUpperCase()} ' +
                     DbCharacter.statModifierText(value),
                     style:
                         TextStyle(fontSize: 20.0, fontWeight: FontWeight.bold),

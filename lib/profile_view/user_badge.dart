@@ -1,9 +1,7 @@
-import 'dart:async';
 import 'dart:math';
 import 'package:dungeon_paper/db/auth.dart';
 import 'package:dungeon_paper/db/user.dart';
 import 'package:dungeon_paper/redux/stores/connectors.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 class UserBadge extends StatefulWidget {

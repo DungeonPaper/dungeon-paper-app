@@ -1,7 +1,6 @@
 import 'dart:async';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dungeon_paper/db/character_types.dart';
-import 'package:dungeon_paper/db/notes.dart';
 import 'package:dungeon_paper/db/user.dart';
 import 'package:dungeon_paper/redux/actions/character_actions.dart';
 import 'package:dungeon_paper/redux/stores/stores.dart';
@@ -93,10 +92,11 @@ unsetCurrentCharacter() async {
   dwStore.dispatch(CharacterActions.remove());
 }
 
-updateCharacter(Map<String, dynamic> data) async {
+Future<Map> updateCharacter(Map<String, dynamic> data) async {
   Firestore firestore = Firestore.instance;
   final SharedPreferences sharedPrefs = await SharedPreferences.getInstance();
   final String charDocId = sharedPrefs.getString('characterId');
+  print('Updating character: $data');
   final charDoc = firestore.document('character_bios/$charDocId')
     ..updateData(data);
   final charData = await charDoc.get();
@@ -104,6 +104,8 @@ updateCharacter(Map<String, dynamic> data) async {
   dwStore.dispatch(
     CharacterActions.setCurrentChar(charDoc.documentID, DbCharacter(charData.data)),
   );
+
+  return charData.data;
 }
 
 createCharacter() async {
