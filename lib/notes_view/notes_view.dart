@@ -16,30 +16,42 @@ class NotesView extends StatelessWidget {
     for (num i = 0; i < character.notes.length; i++) {
       notes.add(Container(
         margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-        child: NoteCard(key: Key('note-' + character.notes[i]['title']), index: i, note: character.notes[i]),
+        child: NoteCard(
+            key: Key('note-' + character.notes[i]['title']),
+            index: i,
+            note: character.notes[i]),
       ));
     }
     return ListView(children: notes);
   }
 }
 
+class NoteCard extends StatefulWidget {
+  final Map note;
+  final num index;
+  NoteCard({
+    Key key,
+    @required this.note,
+    @required this.index,
+  }) : super(key: key);
+
+  @override
+  NoteCardState createState() => NoteCardState();
+}
+
 class NoteCardState extends State<NoteCard> {
-  bool expanded;
-  Map note;
-  num index;
-  NoteCardState(
-      {@required this.expanded, @required this.note, @required this.index});
+  bool expanded = false;
 
   @override
   Widget build(BuildContext context) {
-    String desc = note['description'];
+    String desc = widget.note['description'];
     return Material(
       elevation: 1,
       shape: RoundedRectangleBorder(
         borderRadius: const BorderRadius.all(Radius.circular(5)),
       ),
       child: ExpansionTile(
-        title: Text(note['title']),
+        title: Text(widget.note['title']),
         initiallyExpanded: expanded,
         onExpansionChanged: (s) {
           setState(() {
@@ -79,16 +91,12 @@ class NoteCardState extends State<NoteCard> {
     showDialog(
         context: context,
         builder: (context) => EditNoteDialog(
-            mode: DialogMode.Edit,
-            index: index,
-            title: note['title'],
-            description: note['description'],
-            category: note['category'],
-            onUpdateNote: (_note) {
-              setState(() {
-                note = _note;
-              });
-            }));
+              mode: DialogMode.Edit,
+              index: widget.index,
+              title: widget.note['title'],
+              description: widget.note['description'],
+              category: widget.note['category'],
+            ));
   }
 
   void deleteCurrentNote(BuildContext context) async {
@@ -105,7 +113,7 @@ class NoteCardState extends State<NoteCard> {
                       color: Colors.red[700],
                       textColor: Colors.white,
                       onPressed: () {
-                        deleteNote(index);
+                        deleteNote(widget.index);
                         Navigator.pop(context);
                       },
                       child: Text('Delete')),
@@ -122,15 +130,4 @@ class NoteCardState extends State<NoteCard> {
       );
     }
   }
-}
-
-class NoteCard extends StatefulWidget {
-  final Map note;
-  final num index;
-  NoteCard({Key key, @required this.note, @required this.index})
-      : super(key: key);
-
-  @override
-  NoteCardState createState() =>
-      NoteCardState(index: index, note: note, expanded: false);
 }
