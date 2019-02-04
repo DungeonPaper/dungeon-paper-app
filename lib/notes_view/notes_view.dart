@@ -1,4 +1,5 @@
 import 'package:dungeon_paper/db/character.dart';
+import 'package:dungeon_paper/db/notes.dart';
 import 'package:dungeon_paper/notes_view/edit_note_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_markdown/flutter_markdown.dart';
@@ -15,7 +16,7 @@ class NotesView extends StatelessWidget {
     for (num i = 0; i < character.notes.length; i++) {
       notes.add(Container(
         margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-        child: NoteCard(index: i, note: character.notes[i]),
+        child: NoteCard(key: Key('note-' + character.notes[i]['title']), index: i, note: character.notes[i]),
       ));
     }
     return ListView(children: notes);
@@ -78,6 +79,7 @@ class NoteCardState extends State<NoteCard> {
     showDialog(
         context: context,
         builder: (context) => EditNoteDialog(
+            mode: DialogMode.Edit,
             index: index,
             title: note['title'],
             description: note['description'],
@@ -102,7 +104,10 @@ class NoteCardState extends State<NoteCard> {
                   RaisedButton(
                       color: Colors.red[700],
                       textColor: Colors.white,
-                      onPressed: () => /*deleteNote(index)*/ 0,
+                      onPressed: () {
+                        deleteNote(index);
+                        Navigator.pop(context);
+                      },
                       child: Text('Delete')),
                 ]));
   }

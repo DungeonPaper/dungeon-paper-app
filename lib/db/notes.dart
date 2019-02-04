@@ -18,32 +18,32 @@ class Note extends DbBase {
 }
 // ...NOT USED
 
-void updateNote(num index, Map note) async {
+Future updateNote(num index, Map note) async {
   if (dwStore.state.characters.current == null) {
     throw('No character loaded.');
   }
 
-  List notes = dwStore.state.characters.current.notes;
+  List notes = List.from(dwStore.state.characters.current.notes);
   notes[index] = note;
   await updateCharacter({'notes': notes});
 }
 
-void deleteNote(num index) async {
+Future deleteNote(num index) async {
   if (dwStore.state.characters.current == null) {
     throw('No character loaded.');
   }
 
-  List notes = dwStore.state.characters.current.notes;
+  List notes = List.from(dwStore.state.characters.current.notes);
   notes.removeAt(index);
   await updateCharacter({'notes': notes});
 }
 
-void createNote(Map note) async {
+Future createNote(Map note) async {
   if (dwStore.state.characters.current == null) {
     throw('No character loaded.');
   }
 
-  List notes = dwStore.state.characters.current.notes;
+  List notes = List.from(dwStore.state.characters.current.notes);
   notes.add(note);
   await updateCharacter({'notes': notes});
 }

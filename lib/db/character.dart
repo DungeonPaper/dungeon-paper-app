@@ -101,9 +101,9 @@ Future<Map> updateCharacter(Map<String, dynamic> data) async {
     ..updateData(data);
   final charData = await charDoc.get();
 
-  dwStore.dispatch(
-    CharacterActions.setCurrentChar(charDoc.documentID, DbCharacter(charData.data)),
-  );
+  data.forEach((k, v) {
+    dwStore.dispatch(CharacterActions.updateField(k, v));
+  });
 
   return charData.data;
 }

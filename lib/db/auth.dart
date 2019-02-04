@@ -40,7 +40,7 @@ void requestSignInWithCredentials() async {
   sharedPrefs.setString('accessToken', googleAuth.accessToken);
   sharedPrefs.setString('idToken', googleAuth.idToken);
 
-  performSignIn();
+  await performSignIn();
 }
 
 requestSignOut() async {

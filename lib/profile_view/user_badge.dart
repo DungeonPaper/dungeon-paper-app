@@ -5,13 +5,17 @@ import 'package:dungeon_paper/redux/stores/connectors.dart';
 import 'package:flutter/material.dart';
 
 class UserBadge extends StatefulWidget {
-  const UserBadge({Key key}) : super(key: key);
+  final void Function() onUserChange;
+  UserBadge({Key key, this.onUserChange}) : super(key: key);
 
   @override
-  _UserBadgeState createState() => new _UserBadgeState();
+  UserBadgeState createState() => UserBadgeState(onUserChange: onUserChange);
 }
 
-class _UserBadgeState extends State<UserBadge> {
+class UserBadgeState extends State<UserBadge> {
+  final void Function() onUserChange;
+  UserBadgeState({this.onUserChange});
+
   @override
   Widget build(BuildContext context) {
     return DWStoreConnector(
@@ -59,12 +63,14 @@ class _UserBadgeState extends State<UserBadge> {
                 enabled: false,
                 child: Row(
                   children: <Widget>[
-                    user.photoURL != null ? CircleAvatar(backgroundImage: NetworkImage(user.photoURL)) : null,
+                    user.photoURL != null
+                        ? CircleAvatar(
+                            backgroundImage: NetworkImage(user.photoURL))
+                        : null,
                     Spacer(flex: 1),
                     Text(userName,
                         style: TextStyle(
-                            color: Theme
-                                .of(context)
+                            color: Theme.of(context)
                                 .primaryTextTheme
                                 .body1
                                 .color)),
@@ -81,9 +87,15 @@ class _UserBadgeState extends State<UserBadge> {
 
   void _handleSignIn() {
     requestSignInWithCredentials();
+    if (onUserChange != null) {
+      onUserChange();
+    }
   }
 
   _handleSignOut() async {
     requestSignOut();
+    if (onUserChange != null) {
+      onUserChange();
+    }
   }
 }

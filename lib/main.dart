@@ -24,22 +24,12 @@ class DungeonPaper extends StatelessWidget {
       home: Scaffold(
         appBar: AppBar(
           title: const Text(appName),
-          actions: [UserBadge()],
+          actions: [UserBadge(onUserChange: () {
+            _pageController.jumpToPage(0);
+          })],
         ),
-        floatingActionButton: FloatingActionButton(
-          child: Icon(Icons.apps),
-          onPressed: () => null,
-          foregroundColor: Colors.white,
-        ),
+        floatingActionButton: ActionButtons(pageController: _pageController),
         floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
-        // bottomNavigationBar: BottomNavigationBar(
-        //   items: [
-        //     BottomNavigationBarItem(
-        //         icon: Icon(Icons.speaker_notes), title: Text('Notes')),
-        //     BottomNavigationBarItem(
-        //         icon: Icon(Icons.speaker_notes), title: Text('Notes')),
-        //   ],
-        // ),
         bottomNavigationBar: NavBar(pageController: _pageController),
         body: DWStoreConnector(
             loaderKey: LoadingKeys.Character,
