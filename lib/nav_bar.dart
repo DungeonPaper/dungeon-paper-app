@@ -1,5 +1,4 @@
 import 'package:dungeon_paper/notes_view/edit_note_dialog.dart';
-import 'package:dungeon_paper/redux/stores/stores.dart';
 import 'package:flutter/material.dart';
 
 enum Pages { Home, Profile }

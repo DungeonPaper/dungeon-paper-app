@@ -1,13 +1,31 @@
-class DbBase {
-  final Map defaultData = {};
-  Map _map = Map();
+Map<String, dynamic> dbClassMap = {};
 
-  DbBase([Map map = const {}]) {
+abstract class DbBase {
+  final Map defaultData;
+  Map _map = Map();
+  Map<String, Function(dynamic any)> propertyMapping = {};
+  List<String> listProperties = [];
+
+  bool isListProperty(String key) => listProperties.contains(key);
+  bool isMappedProperty(String key) => listProperties.contains(key);
+
+  DbBase(
+    Map map, {
+    this.defaultData: const {},
+    this.propertyMapping: const {},
+    this.listProperties: const [],
+  }) {
     _map = map != null ? map : Map();
 
     defaultData.forEach((key, val) {
       if (!_map.containsKey(key) || _map[key] == null) {
         set(key, defaultData[key]);
+      }
+    });
+
+    propertyMapping.forEach((key, val) {
+      if (_map[key].length > 0) {
+        set(key, _map[key]);
       }
     });
   }
@@ -21,6 +39,15 @@ class DbBase {
   }
 
   void set<T>(String key, T value) {
+    if (propertyMapping.containsKey(key)) {
+        if (isListProperty(key)) {
+          map[key] = List.from((value as List).map((i) => propertyMapping[key](i)));
+        } else {
+          map[key] = propertyMapping[key](value);
+        }
+      return;
+    }
+
     _map[key] = value;
   }
 
@@ -41,6 +68,9 @@ class DbBase {
 
     return value;
   }
+
+  List<T> getList<T extends DbBase>(String key) =>
+      List.from(get<List>(key, []));
 
   get map => _map;
 }

@@ -9,7 +9,7 @@ class EditNoteDialogState extends State<EditNoteDialog> {
   String category;
   String title;
   String description;
-  void Function(Map note) onUpdateNote;
+  void Function(Note note) onUpdateNote;
   Map<String, TextEditingController> _controllers;
 
   EditNoteDialogState({
@@ -109,11 +109,11 @@ class EditNoteDialogState extends State<EditNoteDialog> {
   }
 
   _updateNote() async {
-    Map note = {
+    Note note = Note({
       'title': title,
       'description': description,
       'category': category
-    };
+    });
     updateNote(index, note);
     if (onUpdateNote != null) {
       onUpdateNote(note);
@@ -122,11 +122,11 @@ class EditNoteDialogState extends State<EditNoteDialog> {
   }
 
   _createNote() async {
-    Map note = {
+    Note note = Note({
       'title': title,
       'description': description,
       'category': category
-    };
+    });
     createNote(note);
     if (onUpdateNote != null) {
       onUpdateNote(note);
@@ -141,7 +141,7 @@ class EditNoteDialog extends StatefulWidget {
   final String category;
   final String description;
   final DialogMode mode;
-  final void Function(Map note) onUpdateNote;
+  final void Function(Note note) onUpdateNote;
 
   EditNoteDialog({
     Key key,

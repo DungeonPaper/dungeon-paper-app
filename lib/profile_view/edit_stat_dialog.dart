@@ -3,36 +3,37 @@ import 'package:dungeon_paper/db/character_types.dart';
 import 'package:flutter/material.dart';
 
 class EditStatDialog extends StatefulWidget {
-  final String name;
+  final Stats stat;
   final num value;
   EditStatDialog({
     Key key,
-    @required this.name,
+    @required this.stat,
     @required this.value,
   }) : super(key: key);
 
   @override
   State<StatefulWidget> createState() =>
-      EditStatDialogState(name: name, value: value);
+      EditStatDialogState(stat: stat, value: value);
 }
 
 class EditStatDialogState extends State<EditStatDialog> {
-  final String name;
+  final Stats stat;
   final String fullName;
   num value;
   TextEditingController _controller;
 
   EditStatDialogState({
     Key key,
-    @required this.name,
+    @required this.stat,
     @required this.value,
-  })  : fullName = StatNameMap[name],
+  })  : fullName = StatNameMap[stat],
         _controller = TextEditingController(text: value.toString()),
         super();
 
   @override
   Widget build(BuildContext context) {
     String modifier = DbCharacter.statModifierText(value);
+    String name = stat.toString().split('.')[1];
     return SimpleDialog(
       title: Text('Edit $fullName'),
       children: <Widget>[
@@ -57,7 +58,8 @@ class EditStatDialogState extends State<EditStatDialog> {
                       child: Container(
                         width: 150.0,
                         child: TextField(
-                          onChanged: (val) => _setStateValue(num.parse(val) != 0 ? num.parse(val) : ''),
+                          onChanged: (val) => _setStateValue(
+                              num.parse(val) != 0 ? num.parse(val) : ''),
                           keyboardType: TextInputType.number,
                           controller: _controller,
                           // style: TextStyle(fontSize: 13.0),
@@ -99,6 +101,7 @@ class EditStatDialogState extends State<EditStatDialog> {
   }
 
   _saveValue() async {
+    String name = stat.toString().split('.')[1];
     await updateCharacter({name.toLowerCase(): value});
     Navigator.pop(context);
   }

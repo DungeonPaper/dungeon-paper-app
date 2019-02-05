@@ -4,23 +4,22 @@ import 'character.dart';
 
 // NOT USED...
 class Note extends DbBase {
-  var defaultData = {
-    'category': '',
-    'title': '',
-    'description': '',
-  };
-
   String get category => get('category');
   String get title => get('title');
   String get description => get('description');
 
-  Note([Map map]) : super(map);
+  Note([Map map])
+      : super(map, defaultData: {
+          'category': '',
+          'title': '',
+          'description': '',
+        });
 }
 // ...NOT USED
 
-Future updateNote(num index, Map note) async {
+Future updateNote(num index, Note note) async {
   if (dwStore.state.characters.current == null) {
-    throw('No character loaded.');
+    throw ('No character loaded.');
   }
 
   List notes = List.from(dwStore.state.characters.current.notes);
@@ -30,7 +29,7 @@ Future updateNote(num index, Map note) async {
 
 Future deleteNote(num index) async {
   if (dwStore.state.characters.current == null) {
-    throw('No character loaded.');
+    throw ('No character loaded.');
   }
 
   List notes = List.from(dwStore.state.characters.current.notes);
@@ -38,9 +37,9 @@ Future deleteNote(num index) async {
   await updateCharacter({'notes': notes});
 }
 
-Future createNote(Map note) async {
+Future createNote(Note note) async {
   if (dwStore.state.characters.current == null) {
-    throw('No character loaded.');
+    throw ('No character loaded.');
   }
 
   List notes = List.from(dwStore.state.characters.current.notes);

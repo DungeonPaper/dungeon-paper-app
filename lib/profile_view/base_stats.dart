@@ -16,18 +16,18 @@ class BaseStats extends StatelessWidget {
               mainAxisSize: MainAxisSize.max,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
-                StatCard(name: 'str'),
-                StatCard(name: 'dex'),
-                StatCard(name: 'con'),
+                StatCard(stat: Stats.str),
+                StatCard(stat: Stats.dex),
+                StatCard(stat: Stats.con),
               ],
             ),
             Row(
               mainAxisSize: MainAxisSize.max,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
-                StatCard(name: 'int'),
-                StatCard(name: 'wis'),
-                StatCard(name: 'cha'),
+                StatCard(stat: Stats.int),
+                StatCard(stat: Stats.wis),
+                StatCard(stat: Stats.cha),
               ],
             ),
           ],
@@ -40,17 +40,18 @@ class BaseStats extends StatelessWidget {
 class StatCard extends StatelessWidget {
   StatCard({
     Key key,
-    @required this.name,
-  })  : fullName = StatNameMap[name],
+    @required this.stat,
+  })  : fullName = StatNameMap[stat],
         super(key: key);
 
-  final String name;
+  final Stats stat;
   final String fullName;
 
   @override
   Widget build(BuildContext _context) {
     return DWStoreConnector(builder: (context, state) {
       DbCharacter character = state.characters.current;
+      String name = stat.toString().split('.')[1];
       num value = character[name.toLowerCase()];
 
       return Expanded(
@@ -59,7 +60,7 @@ class StatCard extends StatelessWidget {
           child: InkWell(
             onTap: () => showDialog(
                   context: context,
-                  builder: (context) => EditStatDialog(name: name, value: value),
+                  builder: (context) => EditStatDialog(stat: stat, value: value),
                 ),
             child: Padding(
               padding: EdgeInsets.symmetric(horizontal: 10.0, vertical: 22.0),

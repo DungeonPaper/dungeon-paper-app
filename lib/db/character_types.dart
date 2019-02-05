@@ -43,10 +43,10 @@ enum Stats {
 }
 
 const StatNameMap = {
-  'str': 'Strength',
-  'dex': 'Dexterity',
-  'int': 'Intelligence',
-  'wis': 'Wisdom',
-  'cha': 'Charisma',
-  'con': 'Constitution',
+  Stats.str: 'Strength',
+  Stats.dex: 'Dexterity',
+  Stats.int: 'Intelligence',
+  Stats.wis: 'Wisdom',
+  Stats.cha: 'Charisma',
+  Stats.con: 'Constitution',
 };

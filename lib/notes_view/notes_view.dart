@@ -27,7 +27,7 @@ class NotesView extends StatelessWidget {
 }
 
 class NoteCard extends StatefulWidget {
-  final Map note;
+  final Note note;
   final num index;
   NoteCard({
     Key key,
@@ -44,14 +44,14 @@ class NoteCardState extends State<NoteCard> {
 
   @override
   Widget build(BuildContext context) {
-    String desc = widget.note['description'];
+    String desc = widget.note.description;
     return Material(
       elevation: 1,
       shape: RoundedRectangleBorder(
         borderRadius: const BorderRadius.all(Radius.circular(5)),
       ),
       child: ExpansionTile(
-        title: Text(widget.note['title']),
+        title: Text(widget.note.title),
         initiallyExpanded: expanded,
         onExpansionChanged: (s) {
           setState(() {
@@ -93,9 +93,9 @@ class NoteCardState extends State<NoteCard> {
         builder: (context) => EditNoteDialog(
               mode: DialogMode.Edit,
               index: widget.index,
-              title: widget.note['title'],
-              description: widget.note['description'],
-              category: widget.note['category'],
+              title: widget.note.title,
+              description: widget.note.description,
+              category: widget.note.category,
             ));
   }
 
