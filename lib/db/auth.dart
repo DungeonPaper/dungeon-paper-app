@@ -3,6 +3,7 @@ import 'package:dungeon_paper/db/user.dart';
 import 'package:dungeon_paper/redux/actions/user_actions.dart';
 import 'package:dungeon_paper/redux/stores/stores.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -31,16 +32,27 @@ performSignIn() async {
   return user;
 }
 
-void requestSignInWithCredentials() async {
-  dwStore.dispatch(UserActions.requestLogin());
+Future requestSignInWithCredentials() async {
   SharedPreferences sharedPrefs = await SharedPreferences.getInstance();
-  GoogleSignInAccount googleUser = await _googleSignIn.signIn();
-  GoogleSignInAuthentication googleAuth = await googleUser.authentication;
+  try {
+    GoogleSignInAccount googleUser = await _googleSignIn.signIn();
+    if (googleUser == null) {
+      throw 'user_canceled';
+    }
+    dwStore.dispatch(UserActions.requestLogin());
+    GoogleSignInAuthentication googleAuth = await googleUser.authentication;
 
-  sharedPrefs.setString('accessToken', googleAuth.accessToken);
-  sharedPrefs.setString('idToken', googleAuth.idToken);
+    sharedPrefs.setString('accessToken', googleAuth.accessToken);
+    sharedPrefs.setString('idToken', googleAuth.idToken);
 
-  await performSignIn();
+    return performSignIn();
+  } catch (e) {
+    dwStore.dispatch(UserActions.noLogin());
+    if (e != 'user_canceled') {
+      throw e;
+    }
+    return null;
+  }
 }
 
 requestSignOut() async {

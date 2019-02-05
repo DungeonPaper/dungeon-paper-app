@@ -21,7 +21,7 @@ DWStore storeReducer(DWStore state, action) => DWStore(
     );
 
 DWStore initialState = DWStore(
-  loading: {LoadingKeys.Character: true, LoadingKeys.User: true},
+  loading: {LoadingKeys.Character: false, LoadingKeys.User: false},
   user: UserStore(current: null, currentUserDocID: null),
   characters: CharacterStore(
       currentCharDocID: null,

@@ -19,47 +19,60 @@ class DungeonPaper extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     const appName = 'Dungeon Paper';
+
     return MaterialApp(
       title: appName,
-      home: Scaffold(
-        appBar: AppBar(
-          title: const Text(appName),
-          actions: [UserBadge(onUserChange: () {
-            _pageController.jumpToPage(0);
-          })],
-        ),
-        floatingActionButton: ActionButtons(pageController: _pageController),
-        floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
-        bottomNavigationBar: NavBar(pageController: _pageController),
-        body: DWStoreConnector(
-            loaderKey: LoadingKeys.Character,
-            loader: Column(
-              mainAxisSize: MainAxisSize.max,
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [Center(child: CircularProgressIndicator(value: null))],
-            ),
-            builder: (context, state) {
-              DbCharacter character = state.characters.current;
-              if (character == null) {
-                return Column(
-                  mainAxisSize: MainAxisSize.max,
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: <Widget>[
-                    Center(child: const Text('Please log in!'))
-                  ],
-                );
-              }
-              return PageView(
+      home: DWStoreConnector(builder: (context, state) {
+        DbCharacter character = state.characters.current;
+        var body = character == null
+            ? Container(
+                decoration: BoxDecoration(
+                    color: Theme.of(context).scaffoldBackgroundColor),
+                child: Center(
+                  child: state.loading[LoadingKeys.Character]
+                      ? CircularProgressIndicator(value: null)
+                      : Column(
+                          mainAxisSize: MainAxisSize.max,
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Padding(
+                              padding: const EdgeInsets.only(bottom: 8.0),
+                              child: Text('Welcome to Dungeon Paper!',
+                                  style: TextStyle(fontSize: 24)),
+                            ),
+                            Text('Please log in at the rop right corner.')
+                          ],
+                        ),
+                ),
+              )
+            : PageView(
                 controller: _pageController,
                 children: [
                   BasicInfo(character: character),
                   NotesView(character: character),
                 ],
               );
-            }),
-      ),
+        return Scaffold(
+          appBar: AppBar(
+            title: const Text(appName),
+            actions: [
+              UserBadge(onUserChange: () {
+                _pageController.jumpToPage(0);
+              })
+            ],
+          ),
+          floatingActionButton: character != null
+              ? ActionButtons(pageController: _pageController)
+              : null,
+          floatingActionButtonLocation: character != null
+              ? FloatingActionButtonLocation.centerDocked
+              : null,
+          bottomNavigationBar: character != null
+              ? NavBar(pageController: _pageController)
+              : null,
+          body: body,
+        );
+      }),
       theme: ThemeData(
         primarySwatch: Colors.lightGreen,
         brightness: Brightness.light,

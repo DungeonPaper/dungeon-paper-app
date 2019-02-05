@@ -5,7 +5,7 @@ import 'package:flutter_redux/flutter_redux.dart';
 
 class DWStoreConnector extends StatelessWidget {
   final Widget Function(BuildContext context, DWStore state) builder;
-  final Widget loader;
+  final Widget Function(BuildContext context) loader;
   final LoadingKeys loaderKey;
 
   const DWStoreConnector(
@@ -23,7 +23,7 @@ class DWStoreConnector extends StatelessWidget {
           converter: (store) => store.state,
           builder: (context, state) {
             if (loaderKey != null && state.loading.keys.contains(loaderKey) && state.loading[loaderKey]) {
-              return loader;
+              return loader(context);
             }
             return builder(context, state);
           }),

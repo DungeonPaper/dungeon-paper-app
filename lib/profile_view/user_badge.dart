@@ -85,10 +85,25 @@ class UserBadgeState extends State<UserBadge> {
     );
   }
 
-  void _handleSignIn() {
-    requestSignInWithCredentials();
-    if (onUserChange != null) {
-      onUserChange();
+  void _handleSignIn() async {
+    try {
+      var user = await requestSignInWithCredentials();
+      if (user == null) {
+        throw ('user_canceled');
+      }
+      if (onUserChange != null) {
+        onUserChange();
+      }
+    } catch (e) {
+      if (e != 'user_canceled') {
+        throw e;
+      }
+      Scaffold.of(context).showSnackBar(
+        SnackBar(
+          content: Text('Login failed.'),
+          duration: Duration(seconds: 6),
+        ),
+      );
     }
   }
 
