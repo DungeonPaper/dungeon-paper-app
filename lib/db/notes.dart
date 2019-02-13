@@ -2,9 +2,34 @@ import 'package:dungeon_paper/db/base.dart';
 import 'package:dungeon_paper/redux/stores/stores.dart';
 import 'character.dart';
 
-// NOT USED...
+class NoteCategory {
+  String name;
+  NoteCategory(String _name)
+      : name = _name != null && _name.length > 0 ? _name : 'Misc';
+
+  static NoteCategory npcs = NoteCategory('NPCs');
+  static NoteCategory loot = NoteCategory('Loot');
+  static NoteCategory locations = NoteCategory('Locations');
+  static NoteCategory quests = NoteCategory('Quests');
+  static NoteCategory misc = NoteCategory('Misc');
+
+  @override
+  String toString() => name;
+
+  operator == (dynamic obj) {
+    if (obj == null || obj is! NoteCategory) {
+      return false;
+    }
+
+    return obj.name == name;
+  }
+
+  @override
+  int get hashCode => name.hashCode;
+}
+
 class Note extends DbBase {
-  String get category => get('category');
+  NoteCategory get category => NoteCategory(get('category'));
   String get title => get('title');
   String get description => get('description');
 
@@ -15,7 +40,6 @@ class Note extends DbBase {
           'description': '',
         });
 }
-// ...NOT USED
 
 Future updateNote(num index, Note note) async {
   if (dwStore.state.characters.current == null) {

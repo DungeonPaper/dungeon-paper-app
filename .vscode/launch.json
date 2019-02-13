@@ -8,9 +8,11 @@
     "type": "dart",
     "request": "launch",
     "program": "lib/main.dart",
-    // "args": [
-    //   "-d711KPNY0809287",
-    //   "-v"
-    // ]
+    "args": [
+      // "--flavor",
+      // "development"
+      // "-d711KPNY0809287",
+      // "-v"
+    ]
   }, ]
 }

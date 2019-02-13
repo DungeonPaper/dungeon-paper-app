@@ -8,9 +8,10 @@ import 'package:dungeon_paper/redux/stores/connectors.dart';
 import 'package:dungeon_paper/redux/stores/loading_reducer.dart';
 import 'package:flutter/material.dart';
 
-void main() {
-  performSignIn();
+void main() async {
   runApp(DungeonPaper());
+  // await Future.delayed(Duration(seconds: 2));
+  performSignIn();
 }
 
 class DungeonPaper extends StatelessWidget {

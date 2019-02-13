@@ -32,6 +32,19 @@ android {
         multiDexEnabled true
     }
 
+    // flavorDimensions "version"
+
+    // productFlavors {
+    //   development {
+    //     dimension "version"
+    //     applicationIdSuffix ".dev"
+    //     versionNameSuffix "-dev"
+    //   }
+    //   production {
+    //     dimension "version"
+    //   }
+    // }
+
     buildTypes {
         release {
             // TODO: Add your own signing config for the release build.

@@ -1,3 +1,4 @@
+import 'package:dungeon_paper/db/notes.dart';
 import 'package:dungeon_paper/notes_view/edit_note_dialog.dart';
 import 'package:flutter/material.dart';
 
@@ -112,7 +113,7 @@ class ActionButtonsState extends State<ActionButtons> {
               context: context,
               builder: (_ctx) => EditNoteDialog(
                     title: '',
-                    category: '',
+                    category: NoteCategory.misc,
                     description: '',
                     mode: DialogMode.Create,
                     index: -1,

@@ -1,7 +1,5 @@
 import 'package:dungeon_paper/db/character.dart';
-import 'package:dungeon_paper/redux/actions/character_actions.dart';
 import 'package:dungeon_paper/redux/stores/connectors.dart';
-import 'package:dungeon_paper/redux/stores/stores.dart';
 import 'package:flutter/material.dart';
 
 class StatusBars extends StatelessWidget {
@@ -19,13 +17,33 @@ class StatusBars extends StatelessWidget {
       builder: (context, state) {
         DbCharacter character = state.characters.current;
         Color hpBg = Colors.red.shade100;
+        if (character == null ||
+            character.currentHP == null ||
+            character.currentXP == null) {
+          return Material(
+            child: Center(
+              child: Container(
+                width: 40,
+                height: 40,
+                padding: EdgeInsets.all(5),
+                child: CircularProgressIndicator(),
+              ),
+            ),
+          );
+        }
+
         Animation<Color> hpValueColor =
             AlwaysStoppedAnimation(Colors.red.shade700);
-        double hpPerc =
-            character.currentHP > 0 ? character.currentHP / character.maxHP : 0;
+        double hpPerc = character != null &&
+                character.currentHP != null &&
+                character.currentHP > 0
+            ? character.currentHP / character.maxHP
+            : 0;
         Color xpBg = Colors.lightBlue.shade100;
         Animation<Color> xpValueColor = AlwaysStoppedAnimation(Colors.blue);
-        double xpPerc = character.currentXP > 0
+        double xpPerc = character != null &&
+                character.currentXP != null &&
+                character.currentXP > 0
             ? character.currentXP / (character.level + 7)
             : 0;
         return Material(
@@ -56,16 +74,16 @@ class StatusBars extends StatelessWidget {
                       Expanded(
                         child: SizedBox(
                           height: _PROGRESS_HEIGHT,
-                          child: EditableProgressBar(
+                          child: LinearProgressIndicator(
                             backgroundColor: hpBg,
                             valueColor: hpValueColor,
                             value: hpPerc,
-                            onEditUpdate: (value) => dwStore.dispatch(
-                                CharacterActions.updateField('currentHP',
-                                    (value * character.maxHP).round())),
-                            onEditEnd: (value) => updateCharacter({
-                                  'currentHP': (value * character.maxHP).round()
-                                }),
+                            // onEditUpdate: (value) => dwStore.dispatch(
+                            //     CharacterActions.updateField('currentHP',
+                            //         (value * character.maxHP).round())),
+                            // onEditEnd: (value) => updateCharacter({
+                            //       'currentHP': (value * character.maxHP).round()
+                            //    }),
                           ),
                         ),
                       ),
@@ -85,7 +103,7 @@ class StatusBars extends StatelessWidget {
                             width: _VALUE_WIDTH,
                             child: Center(
                               child: Text(
-                                  '${character.currentXP}/${character.level * 7}',
+                                  '${character.currentXP}/${character.level + 7}',
                                   style: valueStyle),
                             ),
                           )
@@ -94,17 +112,15 @@ class StatusBars extends StatelessWidget {
                       Expanded(
                         child: SizedBox(
                           height: _PROGRESS_HEIGHT,
-                          child: EditableProgressBar(
+                          child: LinearProgressIndicator(
                             backgroundColor: xpBg,
                             valueColor: xpValueColor,
                             value: xpPerc,
-                            onEditUpdate: (value) => dwStore.dispatch(
-                                CharacterActions.updateField('currentXP',
-                                    (value * (character.level + 7)).round())),
-                            onEditEnd: (value) => updateCharacter({
-                                  'currentXP':
-                                      (value * (character.level + 7)).round()
-                                }),
+                            // onEditUpdate: (value) => dwStore.dispatch(
+                            //     CharacterActions.updateField(
+                            //         'currentXP', value)),
+                            // onEditEnd: (value) =>
+                            //     updateCharacter({'currentXP': value}),
                           ),
                         ),
                       ),
@@ -117,94 +133,5 @@ class StatusBars extends StatelessWidget {
         );
       },
     );
-  }
-}
-
-class EditableProgressBar extends StatefulWidget {
-  const EditableProgressBar({
-    Key key,
-    @required this.backgroundColor,
-    @required this.valueColor,
-    @required this.value,
-    this.onEditEnd,
-    this.onEditUpdate,
-    this.onEditStart,
-  }) : super(key: key);
-
-  final Color backgroundColor;
-  final Animation valueColor;
-  final double value;
-  final void Function(double val) onEditStart;
-  final void Function(double val) onEditEnd;
-  final void Function(double val) onEditUpdate;
-
-  @override
-  EditableProgressBarState createState() => EditableProgressBarState();
-}
-
-class EditableProgressBarState extends State<EditableProgressBar> {
-  double value;
-  DateTime touchStart;
-  bool editing = false;
-
-  @override
-  Widget build(BuildContext context) {
-    return GestureDetector(
-      behavior: HitTestBehavior.opaque,
-      onDoubleTap: () {
-        setState(() {
-          editing = true;
-        });
-      },
-      onTapUp: (details) {
-        if (editing) {
-          setState(() {
-            editing = false;
-          });
-        }
-      },
-      onHorizontalDragStart: (details) {
-        if (widget.onEditStart != null) {
-          widget.onEditStart(value);
-        }
-      },
-      onHorizontalDragUpdate: (details) {
-        if (editing) {
-          updateValueByTouchPos(context, details.globalPosition);
-          if (widget.onEditUpdate != null) {
-            widget.onEditUpdate(value);
-          }
-        }
-      },
-      onHorizontalDragEnd: (details) {
-        setState(() {
-          touchStart = null;
-          editing = false;
-        });
-        if (widget.onEditEnd != null) {
-          widget.onEditEnd(value);
-        }
-      },
-      child: Container(
-        decoration: !editing
-            ? null
-            : BoxDecoration(border: Border.all(color: Colors.green, width: 2)),
-        child: LinearProgressIndicator(
-          backgroundColor: widget.backgroundColor,
-          valueColor: widget.valueColor,
-          value: widget.value.clamp(0.0, 1.0),
-        ),
-      ),
-    );
-  }
-
-  void updateValueByTouchPos(BuildContext context, Offset globalPosition) {
-    RenderBox rect = context.findRenderObject();
-    Offset offset = rect.globalToLocal(globalPosition);
-    num width = rect.size.width;
-    num x = offset.dx.clamp(0, width);
-    setState(() {
-      value = x / width;
-    });
   }
 }

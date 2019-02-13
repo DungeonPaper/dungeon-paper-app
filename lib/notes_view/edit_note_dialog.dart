@@ -6,7 +6,7 @@ enum DialogMode { Edit, Create }
 class EditNoteDialogState extends State<EditNoteDialog> {
   final num index;
   final DialogMode mode;
-  String category;
+  NoteCategory category;
   String title;
   String description;
   void Function(Note note) onUpdateNote;
@@ -31,65 +31,79 @@ class EditNoteDialogState extends State<EditNoteDialog> {
   Widget build(BuildContext context) {
     return SimpleDialog(
       contentPadding: EdgeInsets.all(16),
-      title: Text((mode == DialogMode.Create ? 'Create' : 'Edit') + 'Note'),
+      title: Text((mode == DialogMode.Create ? 'Create' : 'Edit') + ' Note'),
       children: <Widget>[
-        Column(
-          mainAxisAlignment: MainAxisAlignment.start,
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: <Widget>[
-            Form(
-              child: Column(
-                mainAxisSize: MainAxisSize.max,
-                children: <Widget>[
-                  Container(
-                    margin: const EdgeInsets.symmetric(vertical: 8.0),
-                    child: TextField(
-                      decoration: InputDecoration(labelText: 'Title'),
-                      autofocus: mode == DialogMode.Create,
-                      autocorrect: true,
-                      textCapitalization: TextCapitalization.words,
-                      onChanged: (val) => _setStateValue('title', val),
-                      controller: _controllers['title'],
-                      // style: TextStyle(fontSize: 13.0),
-                      // textAlign: TextAlign.center,
-                    ),
-                  ),
-                  Container(
-                    margin: const EdgeInsets.symmetric(vertical: 8.0),
-                    child: TextField(
-                      decoration: InputDecoration(labelText: 'Description'),
-                      autofocus: mode == DialogMode.Edit,
-                      maxLines: null,
-                      keyboardType: TextInputType.multiline,
-                      autocorrect: true,
-                      textCapitalization: TextCapitalization.sentences,
-                      onChanged: (val) => _setStateValue('description', val),
-                      controller: _controllers['description'],
-                      // style: TextStyle(fontSize: 13.0),
-                      // textAlign: TextAlign.center,
-                    ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.only(top: 24),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceAround,
-                      children: <Widget>[
-                        RaisedButton(
-                          color: Theme.of(context).colorScheme.primary,
-                          onPressed: () => mode == DialogMode.Create ? _createNote() : _updateNote(),
-                          child: const Text('Save'),
-                        ),
-                        RaisedButton(
-                          onPressed: () => Navigator.pop(context),
-                          child: const Text('Cancel'),
-                        ),
-                      ],
-                    ),
-                  ),
+        Form(
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: <Widget>[
+              TextField(
+                decoration: InputDecoration(hintText: 'Title'),
+                autofocus: mode == DialogMode.Create,
+                autocorrect: true,
+                textCapitalization: TextCapitalization.words,
+                onChanged: (val) => _setStateValue('title', val),
+                controller: _controllers['title'],
+              ),
+              DropdownButton(
+                hint: Text('Category'),
+                value: category,
+                onChanged: (cat) => _setStateValue('category', cat.toString()),
+                items: <DropdownMenuItem<NoteCategory>>[
+                  DropdownMenuItem(
+                      value: NoteCategory.npcs,
+                      child: Text(NoteCategory.npcs.toString())),
+                  DropdownMenuItem(
+                      value: NoteCategory.locations,
+                      child: Text(NoteCategory.locations.toString())),
+                  DropdownMenuItem(
+                      value: NoteCategory.quests,
+                      child: Text(NoteCategory.quests.toString())),
+                  DropdownMenuItem(
+                      value: NoteCategory.loot,
+                      child: Text(NoteCategory.loot.toString())),
+                  DropdownMenuItem(
+                      value: NoteCategory.misc,
+                      child: Text(NoteCategory.misc.toString())),
                 ],
               ),
-            ),
-          ],
+              Container(
+                margin: const EdgeInsets.symmetric(vertical: 8.0),
+                child: TextField(
+                  decoration: InputDecoration(labelText: 'Description'),
+                  autofocus: mode == DialogMode.Edit,
+                  maxLines: null,
+                  keyboardType: TextInputType.multiline,
+                  autocorrect: true,
+                  textCapitalization: TextCapitalization.sentences,
+                  onChanged: (val) => _setStateValue('description', val),
+                  controller: _controllers['description'],
+                  // style: TextStyle(fontSize: 13.0),
+                  // textAlign: TextAlign.center,
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.only(top: 24),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  children: <Widget>[
+                    RaisedButton(
+                      onPressed: () => Navigator.pop(context),
+                      child: const Text('Cancel'),
+                    ),
+                    RaisedButton(
+                      color: Theme.of(context).colorScheme.primary,
+                      onPressed: () => mode == DialogMode.Create
+                          ? _createNote()
+                          : _updateNote(),
+                      child: const Text('Save'),
+                    ),
+                  ],
+                ),
+              ),
+            ],
+          ),
         ),
       ],
     );
@@ -103,17 +117,14 @@ class EditNoteDialogState extends State<EditNoteDialog> {
         case 'description':
           return description = newValue;
         case 'category':
-          return category = newValue;
+          return category = NoteCategory(newValue);
       }
     });
   }
 
   _updateNote() async {
-    Note note = Note({
-      'title': title,
-      'description': description,
-      'category': category
-    });
+    Note note = Note(
+        {'title': title, 'description': description, 'category': category});
     updateNote(index, note);
     if (onUpdateNote != null) {
       onUpdateNote(note);
@@ -122,11 +133,8 @@ class EditNoteDialogState extends State<EditNoteDialog> {
   }
 
   _createNote() async {
-    Note note = Note({
-      'title': title,
-      'description': description,
-      'category': category
-    });
+    Note note = Note(
+        {'title': title, 'description': description, 'category': category});
     createNote(note);
     if (onUpdateNote != null) {
       onUpdateNote(note);
@@ -138,7 +146,7 @@ class EditNoteDialogState extends State<EditNoteDialog> {
 class EditNoteDialog extends StatefulWidget {
   final num index;
   final String title;
-  final String category;
+  final NoteCategory category;
   final String description;
   final DialogMode mode;
   final void Function(Note note) onUpdateNote;
