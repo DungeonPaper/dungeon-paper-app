@@ -140,5 +140,7 @@ getOrCreateCharacter(DocumentSnapshot userSnap) {
   if (userSnap.data['characters'].length > 0) {
     print('userSnap data:' + userSnap.data['characters'][0].documentID);
     setCurrentCharacterById(userSnap.data['characters'][0].documentID);
+  } else {
+    createCharacter();
   }
 }

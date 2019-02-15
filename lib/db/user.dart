@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dungeon_paper/db/character.dart';
+import 'package:dungeon_paper/db/listeners.dart';
 import 'package:dungeon_paper/redux/actions/user_actions.dart';
 import 'package:dungeon_paper/redux/stores/stores.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -46,6 +47,8 @@ setCurrentUserByEmail(String email) async {
   prefs.setString('userEmail', dbUser.email);
 
   dwStore.dispatch(UserActions.login(userDoc.documentID, dbUser));
+  registerDbUserListener();
+  registerDbCharsListener();
   getOrCreateCharacter(userDoc);
 }
 
@@ -56,32 +59,4 @@ unsetCurrentUser() async {
   prefs.remove('CharacterId');
   prefs.remove('userEmail');
   dwStore.dispatch(UserActions.logout());
-}
-
-registerUserListener() {
-  try {
-    if (listener != null) {
-      listener.cancel();
-    }
-
-    listener = FirebaseAuth.instance.onAuthStateChanged
-        .listen((FirebaseUser authUser) {
-      if (authUser != null &&
-          authUser.email != null &&
-          dwStore.state.user.current != null &&
-          authUser.email != dwStore.state.user.current.email) {
-        setCurrentUserByEmail(authUser.email);
-      }
-
-      if (authUser == null || authUser.email == null) {
-        unsetCurrentUser();
-        unsetCurrentCharacter();
-      }
-    });
-  } catch (e) {
-    print('error on user listener');
-    if (listener != null) {
-      listener.cancel();
-    }
-  }
 }

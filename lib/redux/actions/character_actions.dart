@@ -6,6 +6,11 @@ class SetCurrentChar {
   SetCurrentChar(this.id, this.character);
 }
 
+class SetCharacters {
+  Map<String, DbCharacter> characters;
+  SetCharacters(this.characters);
+}
+
 class UpdateField {
   String field;
   dynamic value;

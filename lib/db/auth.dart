@@ -1,4 +1,5 @@
 import 'package:dungeon_paper/db/character.dart';
+import 'package:dungeon_paper/db/listeners.dart';
 import 'package:dungeon_paper/db/user.dart';
 import 'package:dungeon_paper/redux/actions/user_actions.dart';
 import 'package:dungeon_paper/redux/stores/stores.dart';
@@ -27,7 +28,7 @@ performSignIn() async {
 
   FirebaseUser user = await auth.signInWithCredential(creds);
   setCurrentUserByEmail(user.email);
-  registerUserListener();
+  registerAuthUserListener();
   return user;
 }
 

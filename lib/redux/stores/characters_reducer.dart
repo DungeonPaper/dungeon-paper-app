@@ -1,5 +1,6 @@
 import 'package:dungeon_paper/db/character.dart';
 import 'package:dungeon_paper/redux/actions/character_actions.dart';
+import 'package:dungeon_paper/redux/actions/user_actions.dart';
 import 'package:meta/meta.dart';
 
 class CharacterStore {
@@ -16,6 +17,12 @@ class CharacterStore {
 }
 
 CharacterStore characterReducer(CharacterStore state, action) {
+  if (action is SetCharacters) {
+    state.characters = action.characters;
+    state.current = action.characters[state.currentCharDocID];
+    return state;
+  }
+
   if (action is SetCurrentChar) {
     state.currentCharDocID = action.id;
     state.characters[state.currentCharDocID] = action.character;

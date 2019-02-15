@@ -6,6 +6,7 @@ import 'package:dungeon_paper/profile_view/basic_info.dart';
 import 'package:dungeon_paper/profile_view/user_badge.dart';
 import 'package:dungeon_paper/redux/stores/connectors.dart';
 import 'package:dungeon_paper/redux/stores/loading_reducer.dart';
+import 'package:dungeon_paper/sidebar.dart';
 import 'package:flutter/material.dart';
 
 void main() async {
@@ -62,6 +63,7 @@ class DungeonPaper extends StatelessWidget {
               })
             ],
           ),
+          drawer: Sidebar(),
           floatingActionButton: character != null
               ? ActionButtons(pageController: _pageController)
               : null,
