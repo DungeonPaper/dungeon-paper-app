@@ -35,7 +35,7 @@ packages:
       name: cloud_firestore
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.8.2+3"
+    version: "0.9.0+2"
   collection:
     dependency: transitive
     description:
@@ -50,20 +50,27 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "0.1.2"
+  dungeon_world_data:
+    dependency: "direct main"
+    description:
+      name: dungeon_world_data
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "1.0.0"
   firebase_auth:
     dependency: "direct main"
     description:
       name: firebase_auth
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.7.0"
+    version: "0.8.1+1"
   firebase_core:
     dependency: transitive
     description:
       name: firebase_core
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.2.5+1"
+    version: "0.3.0+2"
   flutter:
     dependency: "direct main"
     description: flutter

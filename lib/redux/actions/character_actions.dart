@@ -20,12 +20,14 @@ class UpdateField {
 class RemoveAll {}
 
 class CharacterActions {
-  static SetCurrentChar setCurrentChar(
-          String id, DbCharacter data) =>
+  static SetCurrentChar setCurrentChar(String id, DbCharacter data) =>
       SetCurrentChar(id, data);
 
   static UpdateField updateField(String field, value) =>
       UpdateField(field, value);
+
+  static SetCharacters setCharacters(Map<String, DbCharacter> characters) =>
+      SetCharacters(characters);
 
   static RemoveAll remove() => RemoveAll();
 }

@@ -15,7 +15,7 @@ abstract class DbBase {
     this.propertyMapping: const {},
     this.listProperties: const [],
   }) {
-    _map = map != null ? map : Map();
+    _map = map != null ? Map.from(map) : Map();
 
     defaultData.forEach((key, val) {
       if (!_map.containsKey(key) || _map[key] == null) {
@@ -72,5 +72,5 @@ abstract class DbBase {
   List<T> getList<T extends DbBase>(String key) =>
       List.from(get<List>(key, []));
 
-  get map => _map;
+  get map => Map.from(_map);
 }

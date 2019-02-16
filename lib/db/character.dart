@@ -4,6 +4,7 @@ import 'package:dungeon_paper/db/character_types.dart';
 import 'package:dungeon_paper/db/notes.dart';
 import 'package:dungeon_paper/db/user.dart';
 import 'package:dungeon_paper/redux/actions/character_actions.dart';
+import 'package:dungeon_paper/redux/actions/user_actions.dart';
 import 'package:dungeon_paper/redux/stores/stores.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'base.dart';
@@ -90,6 +91,24 @@ Future<DbCharacter> setCurrentCharacterById(String documentId) async {
   return dbCharacter;
 }
 
+Future<Map<String, DbCharacter>> getAllCharacters(DocumentSnapshot user) async {
+  Map<String, Future<DocumentSnapshot>> refs = {};
+  Map<String, DbCharacter> chars = {};
+  user.data['characters'].forEach((char) {
+    refs[char.documentID] =
+        Firestore.instance.document('character_bios/${char.documentID}').get();
+  });
+
+  List<DocumentSnapshot> results = await Future.wait(refs.values);
+
+  results.forEach((r) {
+    chars[r.documentID] = DbCharacter(r.data);
+  });
+
+  dwStore.dispatch(CharacterActions.setCharacters(chars));
+  return chars;
+}
+
 unsetCurrentCharacter() async {
   print('Unsetting characters');
   SharedPreferences prefs = await SharedPreferences.getInstance();
@@ -120,17 +139,20 @@ Future<Map> updateCharacter(Map<String, dynamic> data) async {
 
 createCharacter() async {
   SharedPreferences sharedPrefs = await SharedPreferences.getInstance();
-  DbCharacter character = DbCharacter({});
+  DbCharacter character = DbCharacter();
 
   DocumentReference charDoc =
       await firestore.collection('character_bios').add(character.map);
 
   String userDocId = sharedPrefs.getString('userId');
-
-  firestore.document('user/$userDocId').updateData({
-    'characters': [charDoc]
-  });
-
+  var userDoc = Firestore.instance.document('users/$userDocId');
+  DocumentSnapshot user = await userDoc.get();
+  List characters = List.from(user.data['characters']);
+  if (characters == null) {
+    characters = [];
+  }
+  characters.add(charDoc);
+  userDoc.updateData({'characters': characters});
   dwStore.dispatch(
     CharacterActions.setCurrentChar(charDoc.documentID, character),
   );
@@ -139,6 +161,7 @@ createCharacter() async {
 getOrCreateCharacter(DocumentSnapshot userSnap) {
   if (userSnap.data['characters'].length > 0) {
     print('userSnap data:' + userSnap.data['characters'][0].documentID);
+    getAllCharacters(userSnap);
     setCurrentCharacterById(userSnap.data['characters'][0].documentID);
   } else {
     createCharacter();

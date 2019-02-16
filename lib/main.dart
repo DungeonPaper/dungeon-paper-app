@@ -1,9 +1,10 @@
 import 'package:dungeon_paper/db/auth.dart';
 import 'package:dungeon_paper/db/character.dart';
+import 'package:dungeon_paper/db/user.dart';
 import 'package:dungeon_paper/nav_bar.dart';
 import 'package:dungeon_paper/notes_view/notes_view.dart';
 import 'package:dungeon_paper/profile_view/basic_info.dart';
-import 'package:dungeon_paper/profile_view/user_badge.dart';
+import 'package:dungeon_paper/profile_view/login_button.dart';
 import 'package:dungeon_paper/redux/stores/connectors.dart';
 import 'package:dungeon_paper/redux/stores/loading_reducer.dart';
 import 'package:dungeon_paper/sidebar.dart';
@@ -26,7 +27,8 @@ class DungeonPaper extends StatelessWidget {
       title: appName,
       home: DWStoreConnector(builder: (context, state) {
         DbCharacter character = state.characters.current;
-        var body = character == null
+        DbUser user = state.user.current;
+        Widget body = character == null
             ? Container(
                 decoration: BoxDecoration(
                     color: Theme.of(context).scaffoldBackgroundColor),
@@ -58,12 +60,12 @@ class DungeonPaper extends StatelessWidget {
           appBar: AppBar(
             title: const Text(appName),
             actions: [
-              UserBadge(onUserChange: () {
+              LoginButton(onUserChange: () {
                 _pageController.jumpToPage(0);
               })
             ],
           ),
-          drawer: Sidebar(),
+          drawer: user != null ? Sidebar() : null,
           floatingActionButton: character != null
               ? ActionButtons(pageController: _pageController)
               : null,
