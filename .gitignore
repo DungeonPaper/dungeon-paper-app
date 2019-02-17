@@ -8,3 +8,4 @@ build/
 
 .flutter-plugins
 *.log
+google-services.json
