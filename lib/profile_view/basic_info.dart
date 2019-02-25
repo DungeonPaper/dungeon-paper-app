@@ -1,7 +1,7 @@
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:dungeon_paper/db/character.dart';
-import 'package:dungeon_paper/profile_view/base_stats.dart';
-import 'package:dungeon_paper/profile_view/character_headliner.dart';
+import 'package:dungeon_paper/profile_view/base_stats/base_stats.dart';
+import 'package:dungeon_paper/profile_view/character_headline.dart';
 import 'package:dungeon_paper/profile_view/status_bars.dart';
 import 'package:flutter/material.dart';
 

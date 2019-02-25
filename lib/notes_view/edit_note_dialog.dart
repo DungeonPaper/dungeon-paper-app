@@ -38,6 +38,15 @@ class EditNoteDialogState extends State<EditNoteDialog> {
             mainAxisSize: MainAxisSize.min,
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: <Widget>[
+              DropdownButton(
+                hint: Text('Category'),
+                value: category,
+                onChanged: (cat) => _setStateValue('category', cat.toString()),
+                items: NoteCategory.defaultCategories.map((category) => DropdownMenuItem(
+                  value: category,
+                  child: Text(category.toString()),
+                )).toList(),
+              ),
               TextField(
                 decoration: InputDecoration(hintText: 'Title'),
                 autofocus: mode == DialogMode.Create,
@@ -45,28 +54,6 @@ class EditNoteDialogState extends State<EditNoteDialog> {
                 textCapitalization: TextCapitalization.words,
                 onChanged: (val) => _setStateValue('title', val),
                 controller: _controllers['title'],
-              ),
-              DropdownButton(
-                hint: Text('Category'),
-                value: category,
-                onChanged: (cat) => _setStateValue('category', cat.toString()),
-                items: <DropdownMenuItem<NoteCategory>>[
-                  DropdownMenuItem(
-                      value: NoteCategory.npcs,
-                      child: Text(NoteCategory.npcs.toString())),
-                  DropdownMenuItem(
-                      value: NoteCategory.locations,
-                      child: Text(NoteCategory.locations.toString())),
-                  DropdownMenuItem(
-                      value: NoteCategory.quests,
-                      child: Text(NoteCategory.quests.toString())),
-                  DropdownMenuItem(
-                      value: NoteCategory.loot,
-                      child: Text(NoteCategory.loot.toString())),
-                  DropdownMenuItem(
-                      value: NoteCategory.misc,
-                      child: Text(NoteCategory.misc.toString())),
-                ],
               ),
               Container(
                 margin: const EdgeInsets.symmetric(vertical: 8.0),

@@ -1,9 +1,10 @@
-import 'dart:math';
-
 import 'package:dungeon_paper/utils.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 
-enum Pages { Home, Profile }
+enum Pages { Home, Battle, Profile }
+
+typedef Widget ColorBuilder(Color color);
 
 class NavBar extends StatefulWidget {
   final PageController pageController;
@@ -31,15 +32,35 @@ class NavBarState extends State<NavBar> {
     });
   }
 
-  Widget _item(BuildContext context, Widget label, IconData icon, num _index) =>
-      PageNavItem(
-          index: _index,
-          label: label,
-          icon: icon,
-          pageController: pageController);
+  Map<Pages, PageDetails> pageDetails = {
+    Pages.Home: PageDetails(Text('Profile'),
+        (color) => Icon(Icons.person, color: color), Pages.Home.index),
+    Pages.Battle: PageDetails(
+        Text('Battle'),
+        (color) => SvgPicture.asset(
+              'assets/swords.svg',
+              color: color,
+              width: 24,
+              height: 24,
+            ),
+        Pages.Battle.index),
+    Pages.Profile: PageDetails(
+        Text('Notes'),
+        (color) => Icon(Icons.speaker_notes, color: color),
+        Pages.Profile.index),
+  };
 
   @override
   Widget build(BuildContext context) {
+    List<Widget> pageItems = Pages.values.map((page) {
+      PageDetails details = pageDetails[page];
+      return PageNavItem(
+          index: details.index,
+          label: details.label,
+          iconBuilder: details.iconBuilder,
+          pageController: pageController);
+    }).toList();
+
     return BottomAppBar(
       shape: CircularNotchedRectangle(),
       notchMargin: 0,
@@ -47,11 +68,7 @@ class NavBarState extends State<NavBar> {
         mainAxisSize: MainAxisSize.max,
         crossAxisAlignment: CrossAxisAlignment.center,
         mainAxisAlignment: MainAxisAlignment.spaceAround,
-        children: [
-          _item(context, Text('Profile'), Icons.person, Pages.Home.index),
-          _item(
-              context, Text('Notes'), Icons.speaker_notes, Pages.Profile.index),
-        ],
+        children: pageItems,
       ),
     );
   }
@@ -63,19 +80,27 @@ class NavBarState extends State<NavBar> {
   }
 }
 
+class PageDetails {
+  final Widget label;
+  final ColorBuilder iconBuilder;
+  final num index;
+
+  PageDetails(this.label, this.iconBuilder, this.index);
+}
+
 class PageNavItem extends StatelessWidget {
   const PageNavItem({
     Key key,
     @required this.index,
     @required this.pageController,
     @required this.label,
-    @required this.icon,
+    @required this.iconBuilder,
   }) : super(key: key);
 
   final num index;
   final PageController pageController;
   final Widget label;
-  final IconData icon;
+  final ColorBuilder iconBuilder;
 
   @override
   Widget build(BuildContext context) {
@@ -102,7 +127,7 @@ class PageNavItem extends StatelessWidget {
               mainAxisSize: MainAxisSize.max,
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
-                Icon(icon, color: _color),
+                iconBuilder(_color),
                 DefaultTextStyle(style: TextStyle(color: _color), child: label)
               ],
             ),

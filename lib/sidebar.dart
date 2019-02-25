@@ -49,6 +49,7 @@ class SidebarState extends State<Sidebar> {
         Widget logOut = ListTile(
           title: Text('Log out'),
           onTap: () {
+            Navigator.pop(context);
             requestSignOut();
           },
         );

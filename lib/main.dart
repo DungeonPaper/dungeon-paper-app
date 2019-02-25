@@ -4,7 +4,7 @@ import 'package:dungeon_paper/db/user.dart';
 import 'package:dungeon_paper/fab.dart';
 import 'package:dungeon_paper/main_view.dart';
 import 'package:dungeon_paper/nav_bar.dart';
-import 'package:dungeon_paper/profile_view/login_button.dart';
+import 'package:dungeon_paper/login_button.dart';
 import 'package:dungeon_paper/redux/stores/connectors.dart';
 import 'package:dungeon_paper/redux/stores/loading_reducer.dart';
 import 'package:dungeon_paper/sidebar.dart';

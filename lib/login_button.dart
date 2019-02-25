@@ -28,7 +28,7 @@ class LoginButtonState extends State<LoginButton> {
               child: Icon(Icons.account_circle),
             ),
             tooltip: 'Log in',
-            onPressed: () => _handleSignIn(),
+            onPressed: _handleSignIn,
           );
         }
         return SizedBox(height: 0, width: 0);
@@ -47,7 +47,7 @@ class LoginButtonState extends State<LoginButton> {
       }
     } catch (e) {
       if (e != 'user_canceled') {
-        print(e);
+        throw(e);
       }
       Scaffold.of(context).showSnackBar(
         SnackBar(

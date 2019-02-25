@@ -13,6 +13,8 @@ class NoteCategory {
   static NoteCategory quests = NoteCategory('Quests');
   static NoteCategory misc = NoteCategory('Misc');
 
+  static List<NoteCategory> defaultCategories = [npcs, loot, locations, quests, misc];
+
   @override
   String toString() => name;
 

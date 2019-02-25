@@ -109,9 +109,6 @@ Future<DbCharacter> setCurrentCharacterById(String documentId) async {
       await Firestore.instance.document('character_bios/$documentId').get();
   DbCharacter dbCharacter = DbCharacter(character.data);
 
-  SharedPreferences prefs = await SharedPreferences.getInstance();
-  prefs.setString('characterId', character.documentID);
-
   dwStore.dispatch(
     CharacterActions.setCurrentChar(character.documentID, dbCharacter),
   );
@@ -139,16 +136,13 @@ Future<Map<String, DbCharacter>> getAllCharacters(DocumentSnapshot user) async {
 
 unsetCurrentCharacter() async {
   print('Unsetting characters');
-  SharedPreferences prefs = await SharedPreferences.getInstance();
-  prefs.remove('characterId');
   dwStore.dispatch(CharacterActions.remove());
 }
 
 Future<Map> updateCharacter(Map<String, dynamic> data) async {
   Firestore firestore = Firestore.instance;
-  final SharedPreferences sharedPrefs = await SharedPreferences.getInstance();
+
   final String charDocId = dwStore.state.characters.currentCharDocID;
-  print('Updating character: $data');
   DbCharacter character = dwStore.state.characters.current;
   data.forEach((k, v) {
     if (character.isListProperty(k)) {
@@ -166,19 +160,19 @@ Future<Map> updateCharacter(Map<String, dynamic> data) async {
 }
 
 createNewCharacter() async {
-  SharedPreferences sharedPrefs = await SharedPreferences.getInstance();
   DbCharacter character = DbCharacter();
 
-  DocumentReference charDoc =
-      await firestore.collection('character_bios').add(character.map);
-
-  String userDocId = sharedPrefs.getString('userId');
-  var userDoc = Firestore.instance.document('users/$userDocId');
+  String userDocId = dwStore.state.user.currentUserDocID;
+  DocumentReference userDoc = Firestore.instance.document('users/$userDocId');
   DocumentSnapshot user = await userDoc.get();
-  List characters = List.from(user.data['characters']);
+  List characters = List.from(user.data['characters'], growable: true);
+
   if (characters == null) {
     characters = [];
   }
+
+  DocumentReference charDoc =
+      await firestore.collection('character_bios').add(character.toJSON());
   characters.add(charDoc);
   userDoc.updateData({'characters': characters});
   dwStore.dispatch(

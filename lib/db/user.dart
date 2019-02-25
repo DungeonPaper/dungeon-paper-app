@@ -14,14 +14,15 @@ DbUser currentUser = DbUser({});
 StreamSubscription listener;
 
 class DbUser extends DbBase {
-  final defaultData = {
-    'characters': [],
-    'displayName': 'Guest',
-    'photoURL': null,
-    'email': 'your@gmail.com',
-  };
-
-  DbUser([Map map]) : super(map);
+  DbUser([Map map])
+      : super(map, defaultData: {
+          'characters': [],
+          'displayName': 'Guest',
+          'photoURL': null,
+          'email': 'your@gmail.com',
+        }, listProperties: [
+          'characters',
+        ]);
 
   List get characters => get<List>('characters');
   String get displayName => get<String>('displayName');

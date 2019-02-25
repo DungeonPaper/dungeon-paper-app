@@ -1,5 +1,6 @@
 import 'package:dungeon_paper/db/character.dart';
 import 'package:dungeon_paper/redux/actions/character_actions.dart';
+import 'package:dungeon_paper/redux/actions/user_actions.dart';
 import 'package:dungeon_paper/redux/stores/characters_reducer.dart';
 import 'package:dungeon_paper/redux/stores/loading_reducer.dart';
 import 'package:dungeon_paper/redux/stores/user_reducer.dart';
@@ -34,9 +35,21 @@ DWStore initialState = DWStore(
 
 void sharedPrefsMiddleware(Store store, action, NextDispatcher next) async {
   if (action is SetCurrentChar) {
-    SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
-    sharedPreferences.setString('characterId', action.id);
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    prefs.setString('characterId', action.id);
   }
+
+  if (action is RemoveAll) {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    prefs.remove('characterId');
+  }
+
+  if (action is Login) {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    prefs.setString('userId', action.id);
+    prefs.setString('userEmail', action.user.email);
+  }
+
   next(action);
 }
 

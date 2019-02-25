@@ -42,7 +42,6 @@ registerAuthUserListener() {
 StreamSubscription dbUserListener;
 
 registerDbUserListener() {
-  print("REGISTER DB USER LISTENER (${dwStore.state.user.currentUserDocID})");
   if (dbUserListener != null) {
     dbUserListener.cancel();
   }
@@ -59,22 +58,20 @@ registerDbUserListener() {
 StreamSubscription dbCharsListener;
 
 registerDbCharsListener() async {
-  print("REGISTER DB CHARS LISTENER (${dwStore.state.user.currentUserDocID})");
   if (dbCharsListener != null) {
     dbCharsListener.cancel();
   }
 
   SharedPreferences sharedPrefs = await SharedPreferences.getInstance();
 
-  // String userDocID = dwStore.state.user.currentUserDocID;
-  String userDocID = sharedPrefs.getString('userId');
+  String userDocID = dwStore.state.user.currentUserDocID;
   DocumentReference user = Firestore.instance.document('users/$userDocID');
   dbCharsListener = Firestore.instance
       .collection('character_bios')
       .where('user', isEqualTo: user)
       .snapshots()
       .listen((characters) {
-    Map<String, DbCharacter> updatedChars = {};
+    Map<String, DbCharacter> updatedChars = dwStore.state.characters.characters;
     characters.documents.forEach((character) {
       updatedChars[character.documentID] = DbCharacter(character.data);
     });

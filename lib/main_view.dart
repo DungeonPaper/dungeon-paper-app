@@ -1,10 +1,11 @@
 import 'package:dungeon_paper/db/character.dart';
+import 'package:dungeon_paper/nav_bar.dart';
 import 'package:dungeon_paper/notes_view/notes_view.dart';
 import 'package:dungeon_paper/profile_view/basic_info.dart';
 import 'package:flutter/material.dart';
 
 class MainView extends StatelessWidget {
-  const MainView({
+  MainView({
     Key key,
     @required PageController pageController,
     @required this.character,
@@ -14,14 +15,22 @@ class MainView extends StatelessWidget {
   final PageController _pageController;
   final DbCharacter character;
 
+  final Map<Pages, Widget Function(DbCharacter character)> pageMap = {
+    Pages.Home: (character) => BasicInfo(character: character),
+    Pages.Battle: (character) => Container(),
+    Pages.Profile: (character) => NotesView(character: character),
+  };
+
   @override
   Widget build(BuildContext context) {
+    List<Widget> pages = Pages.values.map((page) {
+      var map = pageMap[page];
+      return map(character);
+    }).toList();
+
     return PageView(
       controller: _pageController,
-      children: [
-        BasicInfo(character: character),
-        NotesView(character: character),
-      ],
+      children: pages,
     );
   }
 }
