@@ -2,7 +2,7 @@ Map<String, dynamic> dbClassMap = {};
 
 abstract class DbBase {
   final Map defaultData;
-  Map _map = Map();
+  Map<String, dynamic> _map = Map();
   Map<String, Function(dynamic any)> propertyMapping = {};
   List<String> listProperties = [];
 
@@ -40,11 +40,15 @@ abstract class DbBase {
 
   void set<T>(String key, T value) {
     if (propertyMapping.containsKey(key)) {
-        if (isListProperty(key)) {
-          map[key] = List.from((value as List).map((i) => propertyMapping[key](i)));
-        } else {
-          map[key] = propertyMapping[key](value);
-        }
+      T Function(dynamic obj) mapper = propertyMapping[key];
+      if (isListProperty(key)) {
+        List<T> mappedList =
+            List.from((value as List).map((i) => mapper(i))).toList();
+        _map[key] = mappedList;
+      } else {
+        _map[key] = mapper(value);
+      }
+
       return;
     }
 
@@ -73,4 +77,6 @@ abstract class DbBase {
       List.from(get<List>(key, []));
 
   get map => Map.from(_map);
+
+  Map toJSON();
 }

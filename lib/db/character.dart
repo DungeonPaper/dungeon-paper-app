@@ -4,9 +4,9 @@ import 'package:dungeon_paper/db/character_types.dart';
 import 'package:dungeon_paper/db/notes.dart';
 import 'package:dungeon_paper/db/user.dart';
 import 'package:dungeon_paper/redux/actions/character_actions.dart';
-import 'package:dungeon_paper/redux/actions/user_actions.dart';
 import 'package:dungeon_paper/redux/stores/stores.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:dungeon_world_data/move.dart';
 import 'base.dart';
 
 class DbCharacter extends DbBase {
@@ -51,7 +51,12 @@ class DbCharacter extends DbBase {
           'notes': [],
         }, propertyMapping: {
           'notes': (note) => Note(note),
-          // 'moves': (moves) => moves.map((move) => Move(move)),
+          'moves': (move) => Move(
+                key: move['key'],
+                name: move['name'],
+                description: move['description'],
+                classes: [],
+              ),
         });
 
   static num statModifier(num stat) {
@@ -73,6 +78,29 @@ class DbCharacter extends DbBase {
   static String statModifierText(num stat) {
     num mod = statModifier(stat);
     return (mod >= 0 ? '+' : '') + mod.toString();
+  }
+
+  @override
+  Map toJSON() {
+    return {
+      'alignment': get('alignment'),
+      'displayName': get('displayName'),
+      'mainClass': get('mainClass'),
+      'photoURL': get('photoURL'),
+      'level': get('level'),
+      'currentHP': get('currentHP'),
+      'currentXP': get('currentXP'),
+      'maxHP': get('maxHP'),
+      'armor': get('armor'),
+      'str': get('str'),
+      'dex': get('dex'),
+      'con': get('con'),
+      'wis': get('wis'),
+      'int': get('int'),
+      'cha': get('cha'),
+      'moves': get('moves').map((Move move) => move.toJSON()).toList(),
+      'notes': get('notes').map((Note note) => note.toJSON()).toList(),
+    };
   }
 }
 
@@ -119,25 +147,25 @@ unsetCurrentCharacter() async {
 Future<Map> updateCharacter(Map<String, dynamic> data) async {
   Firestore firestore = Firestore.instance;
   final SharedPreferences sharedPrefs = await SharedPreferences.getInstance();
-  final String charDocId = sharedPrefs.getString('characterId');
+  final String charDocId = dwStore.state.characters.currentCharDocID;
   print('Updating character: $data');
   DbCharacter character = dwStore.state.characters.current;
   data.forEach((k, v) {
     if (character.isListProperty(k)) {
-      data[k] = List<Map>.from(v.map((i) {
-        return i.map;
-      }));
+      data[k] = List<Map>.from(v.map((i) => i is DbBase ? i.toJSON() : i));
     }
     dwStore.dispatch(CharacterActions.updateField(k, data[k]));
   });
+
+  print('Updating character: $data');
   final charDoc = firestore.document('character_bios/$charDocId')
-    ..updateData(data is DbBase ? data.map : data);
+    ..updateData(data);
   final charData = await charDoc.get();
 
   return charData.data;
 }
 
-createCharacter() async {
+createNewCharacter() async {
   SharedPreferences sharedPrefs = await SharedPreferences.getInstance();
   DbCharacter character = DbCharacter();
 
@@ -156,14 +184,16 @@ createCharacter() async {
   dwStore.dispatch(
     CharacterActions.setCurrentChar(charDoc.documentID, character),
   );
+
+  return charDoc;
 }
 
-getOrCreateCharacter(DocumentSnapshot userSnap) {
+getOrCreateCharacter(DocumentSnapshot userSnap) async {
   if (userSnap.data['characters'].length > 0) {
     print('userSnap data:' + userSnap.data['characters'][0].documentID);
-    getAllCharacters(userSnap);
-    setCurrentCharacterById(userSnap.data['characters'][0].documentID);
+    await getAllCharacters(userSnap);
+    return setCurrentCharacterById(userSnap.data['characters'][0].documentID);
   } else {
-    createCharacter();
+    return createNewCharacter();
   }
 }

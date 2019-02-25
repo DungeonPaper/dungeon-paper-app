@@ -2,9 +2,11 @@ import 'dart:async';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dungeon_paper/db/character.dart';
 import 'package:dungeon_paper/db/user.dart';
+import 'package:dungeon_paper/redux/actions/character_actions.dart';
 import 'package:dungeon_paper/redux/actions/user_actions.dart';
 import 'package:dungeon_paper/redux/stores/stores.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 StreamSubscription authUserListener;
 
@@ -56,20 +58,26 @@ registerDbUserListener() {
 
 StreamSubscription dbCharsListener;
 
-registerDbCharsListener() {
+registerDbCharsListener() async {
   print("REGISTER DB CHARS LISTENER (${dwStore.state.user.currentUserDocID})");
   if (dbCharsListener != null) {
     dbCharsListener.cancel();
   }
 
-  String userDocID = dwStore.state.user.currentUserDocID;
-  DocumentReference user = Firestore.instance.document(userDocID);
+  SharedPreferences sharedPrefs = await SharedPreferences.getInstance();
+
+  // String userDocID = dwStore.state.user.currentUserDocID;
+  String userDocID = sharedPrefs.getString('userId');
+  DocumentReference user = Firestore.instance.document('users/$userDocID');
   dbCharsListener = Firestore.instance
       .collection('character_bios')
       .where('user', isEqualTo: user)
       .snapshots()
       .listen((characters) {
-    print('incoming! $characters');
-    // dwStore.dispatch(UserActions.login(userDocID, DbUser(user.data)));
+    Map<String, DbCharacter> updatedChars = {};
+    characters.documents.forEach((character) {
+      updatedChars[character.documentID] = DbCharacter(character.data);
+    });
+    dwStore.dispatch(CharacterActions.setCharacters(updatedChars));
   });
 }

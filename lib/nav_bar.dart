@@ -1,8 +1,17 @@
-import 'package:dungeon_paper/db/notes.dart';
-import 'package:dungeon_paper/notes_view/edit_note_dialog.dart';
+import 'dart:math';
+
+import 'package:dungeon_paper/utils.dart';
 import 'package:flutter/material.dart';
 
 enum Pages { Home, Profile }
+
+class NavBar extends StatefulWidget {
+  final PageController pageController;
+  NavBar({Key key, @required this.pageController}) : super(key: key);
+
+  @override
+  NavBarState createState() => NavBarState(pageController: pageController);
+}
 
 class NavBarState extends State<NavBar> {
   final PageController pageController;
@@ -22,35 +31,12 @@ class NavBarState extends State<NavBar> {
     });
   }
 
-  Widget _item(BuildContext context, Widget label, IconData icon, num _index) {
-    var _color = activePageIndex != null && activePageIndex.round() == _index
-        ? Theme.of(context).colorScheme.primary
-        : Theme.of(context).colorScheme.onSurface;
-
-    return Expanded(
-      child: Material(
-        color: Colors.transparent,
-        child: SizedBox(
-          height: 70,
-          child: InkWell(
-            onTap: () {
-              pageController.animateToPage(_index,
-                  duration: Duration(milliseconds: 500),
-                  curve: Curves.easeInOutQuart);
-            },
-            child: Column(
-              mainAxisSize: MainAxisSize.max,
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: <Widget>[
-                Icon(icon, color: _color),
-                DefaultTextStyle(style: TextStyle(color: _color), child: label)
-              ],
-            ),
-          ),
-        ),
-      ),
-    );
-  }
+  Widget _item(BuildContext context, Widget label, IconData icon, num _index) =>
+      PageNavItem(
+          index: _index,
+          label: label,
+          icon: icon,
+          pageController: pageController);
 
   @override
   Widget build(BuildContext context) {
@@ -77,102 +63,52 @@ class NavBarState extends State<NavBar> {
   }
 }
 
-class NavBar extends StatefulWidget {
-  final PageController pageController;
-  NavBar({Key key, @required this.pageController}) : super(key: key);
-
-  @override
-  NavBarState createState() => NavBarState(pageController: pageController);
-}
-
-class ActionButtonsState extends State<ActionButtons> {
-  final PageController pageController;
-  num activePageIndex;
-
-  ActionButtonsState({
+class PageNavItem extends StatelessWidget {
+  const PageNavItem({
     Key key,
+    @required this.index,
     @required this.pageController,
-  });
+    @required this.label,
+    @required this.icon,
+  }) : super(key: key);
 
-  @override
-  void initState() {
-    pageController.addListener(this.pageListener);
-    super.initState();
-  }
-
-  void pageListener() {
-    setState(() {
-      activePageIndex = pageController.page;
-    });
-  }
-
-  static Map<num, Widget Function(BuildContext context)> buttonsByIndex = {
-    Pages.Profile.index: (context) => FloatingActionButton(
-          child: Icon(Icons.add),
-          onPressed: () => showDialog(
-              context: context,
-              builder: (_ctx) => EditNoteDialog(
-                    title: '',
-                    category: NoteCategory.misc,
-                    description: '',
-                    mode: DialogMode.Create,
-                    index: -1,
-                  )),
-          foregroundColor: Colors.white,
-          mini: true,
-        ),
-  };
+  final num index;
+  final PageController pageController;
+  final Widget label;
+  final IconData icon;
 
   @override
   Widget build(BuildContext context) {
-    Widget pageButton = activePageIndex != null && buttonsByIndex.containsKey(activePageIndex.round())
-        ? buttonsByIndex[activePageIndex.round()](context)
-        : Opacity(
-            opacity: 0,
-            child: IgnorePointer(
-                child: FloatingActionButton(
-              child: Icon(Icons.add),
-              onPressed: () {},
-              mini: true,
-            )));
+    // var _color = pageController.page.round() == index
+    //     ?
+    //     : Theme.of(context).colorScheme.onSurface;
+    double activeIdx = pageController.page != null ? pageController.page : 0.0;
+    double t = clamp((activeIdx - index).abs(), 0, 1);
+    Color _color = Color.lerp(Theme.of(context).colorScheme.primary,
+        Theme.of(context).colorScheme.onSurface, t);
 
-    List<Widget> buttons = [
-      Container(
-        padding: EdgeInsets.only(bottom: 4),
-        child: pageButton,
-      ),
-      Container(
-        padding: EdgeInsets.symmetric(horizontal: 12),
-        child: FloatingActionButton(
-          child: Icon(Icons.apps),
-          onPressed: () {},
-          foregroundColor: Colors.white,
+    return Expanded(
+      child: Material(
+        color: Colors.transparent,
+        child: SizedBox(
+          height: 60,
+          child: InkWell(
+            onTap: () {
+              pageController.animateToPage(index,
+                  duration: Duration(milliseconds: 500),
+                  curve: Curves.easeInOutQuart);
+            },
+            child: Column(
+              mainAxisSize: MainAxisSize.max,
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: <Widget>[
+                Icon(icon, color: _color),
+                DefaultTextStyle(style: TextStyle(color: _color), child: label)
+              ],
+            ),
+          ),
         ),
       ),
-    ];
-
-    return Container(
-      margin: buttons.length == 2 ? EdgeInsets.only(bottom: 42) : null,
-      child: Column(
-          mainAxisAlignment: MainAxisAlignment.end,
-          mainAxisSize: MainAxisSize.min,
-          children: buttons),
     );
   }
-
-  @override
-  void dispose() {
-    pageController.removeListener(this.pageListener);
-    super.dispose();
-  }
-}
-
-class ActionButtons extends StatefulWidget {
-  final PageController pageController;
-
-  const ActionButtons({Key key, this.pageController}) : super(key: key);
-
-  @override
-  ActionButtonsState createState() =>
-      ActionButtonsState(pageController: pageController);
 }

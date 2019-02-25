@@ -43,7 +43,7 @@ class SidebarState extends State<Sidebar> {
         Widget addNew = ListTile(
           title: Text('+ Create Empty Character'),
           onTap: () {
-            createCharacter();
+            createNewCharacter();
           },
         );
         Widget logOut = ListTile(
@@ -58,6 +58,7 @@ class SidebarState extends State<Sidebar> {
             title: Text(character.displayName),
             onTap: () {
               dwStore.dispatch(CharacterActions.setCurrentChar(id, character));
+              Navigator.pop(context);
             },
           );
           characterItems.add(charLine);

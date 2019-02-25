@@ -47,7 +47,7 @@ class LoginButtonState extends State<LoginButton> {
       }
     } catch (e) {
       if (e != 'user_canceled') {
-        throw e;
+        print(e);
       }
       Scaffold.of(context).showSnackBar(
         SnackBar(
@@ -55,13 +55,6 @@ class LoginButtonState extends State<LoginButton> {
           duration: Duration(seconds: 6),
         ),
       );
-    }
-  }
-
-  _handleSignOut() async {
-    requestSignOut();
-    if (onUserChange != null) {
-      onUserChange();
     }
   }
 }

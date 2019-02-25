@@ -29,7 +29,7 @@ class NoteCategory {
 }
 
 class Note extends DbBase {
-  NoteCategory get category => NoteCategory(get('category'));
+  NoteCategory get category => NoteCategory(get('category').toString());
   String get title => get('title');
   String get description => get('description');
 
@@ -39,6 +39,15 @@ class Note extends DbBase {
           'title': '',
           'description': '',
         });
+
+  @override
+  Map toJSON() {
+    return {
+      'title': get('title'),
+      'category': get('category').toString(),
+      'description': get('description'),
+    };
+  }
 }
 
 Future updateNote(num index, Note note) async {

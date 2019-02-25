@@ -27,6 +27,16 @@ class DbUser extends DbBase {
   String get displayName => get<String>('displayName');
   String get photoURL => get<String>('photoURL');
   String get email => get<String>('email');
+
+  @override
+  Map toJSON() {
+    return {
+      'characters': characters,
+      'displayName': displayName,
+      'photoURL': photoURL,
+      'email': email,
+    };
+  }
 }
 
 setCurrentUserByEmail(String email) async {
@@ -47,9 +57,9 @@ setCurrentUserByEmail(String email) async {
   prefs.setString('userEmail', dbUser.email);
 
   dwStore.dispatch(UserActions.login(userDoc.documentID, dbUser));
+  await getOrCreateCharacter(userDoc);
   registerDbUserListener();
   registerDbCharsListener();
-  getOrCreateCharacter(userDoc);
 }
 
 unsetCurrentUser() async {

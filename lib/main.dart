@@ -1,18 +1,18 @@
 import 'package:dungeon_paper/db/auth.dart';
 import 'package:dungeon_paper/db/character.dart';
 import 'package:dungeon_paper/db/user.dart';
+import 'package:dungeon_paper/fab.dart';
+import 'package:dungeon_paper/main_view.dart';
 import 'package:dungeon_paper/nav_bar.dart';
-import 'package:dungeon_paper/notes_view/notes_view.dart';
-import 'package:dungeon_paper/profile_view/basic_info.dart';
 import 'package:dungeon_paper/profile_view/login_button.dart';
 import 'package:dungeon_paper/redux/stores/connectors.dart';
 import 'package:dungeon_paper/redux/stores/loading_reducer.dart';
 import 'package:dungeon_paper/sidebar.dart';
+import 'package:dungeon_paper/welcome.dart';
 import 'package:flutter/material.dart';
 
 void main() async {
   runApp(DungeonPaper());
-  // await Future.delayed(Duration(seconds: 2));
   performSignIn();
 }
 
@@ -29,33 +29,8 @@ class DungeonPaper extends StatelessWidget {
         DbCharacter character = state.characters.current;
         DbUser user = state.user.current;
         Widget body = character == null
-            ? Container(
-                decoration: BoxDecoration(
-                    color: Theme.of(context).scaffoldBackgroundColor),
-                child: Center(
-                  child: state.loading[LoadingKeys.Character]
-                      ? CircularProgressIndicator(value: null)
-                      : Column(
-                          mainAxisSize: MainAxisSize.max,
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Padding(
-                              padding: const EdgeInsets.only(bottom: 8.0),
-                              child: Text('Welcome to Dungeon Paper!',
-                                  style: TextStyle(fontSize: 24)),
-                            ),
-                            Text('Please log in at the rop right corner.')
-                          ],
-                        ),
-                ),
-              )
-            : PageView(
-                controller: _pageController,
-                children: [
-                  BasicInfo(character: character),
-                  NotesView(character: character),
-                ],
-              );
+            ? Welcome(loading: state.loading[LoadingKeys.Character])
+            : MainView(pageController: _pageController, character: character);
         return Scaffold(
           appBar: AppBar(
             title: const Text(appName),
@@ -67,10 +42,10 @@ class DungeonPaper extends StatelessWidget {
           ),
           drawer: user != null ? Sidebar() : null,
           floatingActionButton: character != null
-              ? ActionButtons(pageController: _pageController)
+              ? FAB(pageController: _pageController)
               : null,
           floatingActionButtonLocation: character != null
-              ? FloatingActionButtonLocation.centerDocked
+              ? FloatingActionButtonLocation.endFloat
               : null,
           bottomNavigationBar: character != null
               ? NavBar(pageController: _pageController)

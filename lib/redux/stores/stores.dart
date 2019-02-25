@@ -1,9 +1,12 @@
 import 'package:dungeon_paper/db/character.dart';
+import 'package:dungeon_paper/redux/actions/character_actions.dart';
 import 'package:dungeon_paper/redux/stores/characters_reducer.dart';
 import 'package:dungeon_paper/redux/stores/loading_reducer.dart';
 import 'package:dungeon_paper/redux/stores/user_reducer.dart';
 import 'package:flutter/material.dart';
 import 'package:redux/redux.dart';
+import 'package:redux_logging/redux_logging.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class DWStore {
   final UserStore user;
@@ -29,5 +32,19 @@ DWStore initialState = DWStore(
       characters: Map<String, DbCharacter>()),
 );
 
-Store<DWStore> dwStore =
-    Store<DWStore>(storeReducer, initialState: initialState);
+void sharedPrefsMiddleware(Store store, action, NextDispatcher next) async {
+  if (action is SetCurrentChar) {
+    SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
+    sharedPreferences.setString('characterId', action.id);
+  }
+  next(action);
+}
+
+Store<DWStore> dwStore = Store<DWStore>(
+  storeReducer,
+  initialState: initialState,
+  middleware: [
+    LoggingMiddleware.printer(),
+    sharedPrefsMiddleware,
+  ],
+);
