@@ -1,4 +1,3 @@
-import 'dart:math';
 import 'package:dungeon_paper/db/auth.dart';
 import 'package:dungeon_paper/db/user.dart';
 import 'package:dungeon_paper/redux/stores/connectors.dart';

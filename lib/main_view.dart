@@ -1,3 +1,4 @@
+import 'package:dungeon_paper/battle_view/battle_view.dart';
 import 'package:dungeon_paper/db/character.dart';
 import 'package:dungeon_paper/nav_bar.dart';
 import 'package:dungeon_paper/notes_view/notes_view.dart';
@@ -17,7 +18,7 @@ class MainView extends StatelessWidget {
 
   final Map<Pages, Widget Function(DbCharacter character)> pageMap = {
     Pages.Home: (character) => BasicInfo(character: character),
-    Pages.Battle: (character) => Container(),
+    Pages.Battle: (character) => BattleView(character: character),
     Pages.Profile: (character) => NotesView(character: character),
   };
 

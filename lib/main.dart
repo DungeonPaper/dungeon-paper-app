@@ -41,12 +41,10 @@ class DungeonPaper extends StatelessWidget {
             ],
           ),
           drawer: user != null ? Sidebar() : null,
-          floatingActionButton: character != null
-              ? FAB(pageController: _pageController)
-              : null,
-          floatingActionButtonLocation: character != null
-              ? FloatingActionButtonLocation.endFloat
-              : null,
+          floatingActionButton:
+              character != null ? FAB(pageController: _pageController) : null,
+          floatingActionButtonLocation:
+              character != null ? FloatingActionButtonLocation.endFloat : null,
           bottomNavigationBar: character != null
               ? NavBar(pageController: _pageController)
               : null,

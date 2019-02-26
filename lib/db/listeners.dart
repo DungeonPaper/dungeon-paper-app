@@ -6,7 +6,6 @@ import 'package:dungeon_paper/redux/actions/character_actions.dart';
 import 'package:dungeon_paper/redux/actions/user_actions.dart';
 import 'package:dungeon_paper/redux/stores/stores.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 StreamSubscription authUserListener;
 
@@ -61,8 +60,6 @@ registerDbCharsListener() async {
   if (dbCharsListener != null) {
     dbCharsListener.cancel();
   }
-
-  SharedPreferences sharedPrefs = await SharedPreferences.getInstance();
 
   String userDocID = dwStore.state.user.currentUserDocID;
   DocumentReference user = Firestore.instance.document('users/$userDocID');

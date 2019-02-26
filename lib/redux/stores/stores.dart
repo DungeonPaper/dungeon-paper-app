@@ -14,8 +14,11 @@ class DWStore {
   final CharacterStore characters;
   final Map<LoadingKeys, bool> loading;
 
-  DWStore(
-      {@required this.user, @required this.characters, @required this.loading});
+  DWStore({
+    @required this.user,
+    @required this.characters,
+    @required this.loading,
+  });
 }
 
 DWStore storeReducer(DWStore state, action) => DWStore(

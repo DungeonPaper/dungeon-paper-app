@@ -5,7 +5,6 @@ import 'package:dungeon_paper/db/notes.dart';
 import 'package:dungeon_paper/db/user.dart';
 import 'package:dungeon_paper/redux/actions/character_actions.dart';
 import 'package:dungeon_paper/redux/stores/stores.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import 'package:dungeon_world_data/move.dart';
 import 'base.dart';
 
@@ -27,19 +26,19 @@ class DbCharacter extends DbBase {
   num get wis => get('wis');
   num get int => get('int');
   num get cha => get('cha');
-  List get moves => get('moves');
-  List<Note> get notes => getList('notes');
+  List<Move> get moves => getList<Move>('moves');
+  List<Note> get notes => getList<Note>('notes');
 
   DbCharacter([Map map])
       : super(map, defaultData: {
           'alignment': AlignmentMap[Alignment.good],
-          'displayName': 'Traveler',
+          'displayName': 'New Traveler',
           'mainClass': 'bard',
           'photoURL': null,
-          'level': 0,
+          'level': 1,
           'currentHP': 0,
           'currentXP': 0,
-          'maxHP': 0,
+          'maxHP': 20,
           'armor': 0,
           'str': 0,
           'dex': 0,

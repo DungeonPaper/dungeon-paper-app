@@ -73,8 +73,8 @@ abstract class DbBase {
     return value;
   }
 
-  List<T> getList<T extends DbBase>(String key) =>
-      List.from(get<List>(key, []));
+  List<T> getList<T>(String key) =>
+      List.from(get<List<T>>(key, []));
 
   get map => Map.from(_map);
 

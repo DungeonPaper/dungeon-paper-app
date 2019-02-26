@@ -1,4 +1,4 @@
-
+import 'package:dungeon_paper/components/card_bottom_controls.dart';
 import 'package:dungeon_paper/db/notes.dart';
 import 'package:dungeon_paper/notes_view/edit_note_dialog.dart';
 import 'package:flutter/material.dart';
@@ -47,21 +47,11 @@ class NoteCardState extends State<NoteCard> {
                     ? desc
                     : 'This note has no content.'),
           ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.end,
-            children: <Widget>[
-              IconButton(
-                tooltip: 'Edit Note',
-                icon: Icon(Icons.edit),
-                onPressed: () => editNote(context),
-              ),
-              IconButton(
-                tooltip: 'Delete Note',
-                icon: Icon(Icons.delete),
-                onPressed: () => deleteCurrentNote(context),
-              ),
-            ],
-          )
+          CardBottomControls(
+            entityTypeName: 'Note',
+            onEdit: () => editNote(context),
+            onDelete: () => deleteCurrentNote(context),
+          ),
         ],
       ),
     );
