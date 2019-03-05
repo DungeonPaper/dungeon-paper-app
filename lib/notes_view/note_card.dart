@@ -58,15 +58,16 @@ class NoteCardState extends State<NoteCard> {
   }
 
   void editNote(BuildContext context) {
-    showDialog(
-        context: context,
-        builder: (context) => EditNoteDialog(
-              mode: DialogMode.Edit,
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (ctx) => EditNoteScreen(
               index: widget.index,
-              title: widget.note.title,
-              description: widget.note.description,
-              category: widget.note.category,
-            ));
+              note: widget.note,
+              mode: DialogMode.Edit,
+            ),
+      ),
+    );
   }
 
   void deleteCurrentNote(BuildContext context) async {

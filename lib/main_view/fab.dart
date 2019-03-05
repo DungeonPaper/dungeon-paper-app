@@ -1,5 +1,3 @@
-
-
 import 'package:dungeon_paper/db/notes.dart';
 import 'package:dungeon_paper/main_view/nav_bar.dart';
 import 'package:dungeon_paper/notes_view/edit_note_dialog.dart';
@@ -11,8 +9,7 @@ class FAB extends StatefulWidget {
   const FAB({Key key, this.pageController}) : super(key: key);
 
   @override
-  FABState createState() =>
-      FABState(pageController: pageController);
+  FABState createState() => FABState(pageController: pageController);
 }
 
 class FABState extends State<FAB> {
@@ -38,17 +35,18 @@ class FABState extends State<FAB> {
 
   static Map<num, Widget Function(BuildContext context)> buttonsByIndex = {
     Pages.Profile.index: (context) => FloatingActionButton(
-          child: Icon(Icons.add),
-          onPressed: () => showDialog(
-              context: context,
-              builder: (_ctx) => EditNoteDialog(
-                    title: '',
-                    category: NoteCategory.misc,
-                    description: '',
-                    mode: DialogMode.Create,
-                    index: -1,
-                  )),
           foregroundColor: Colors.white,
+          child: Icon(Icons.add),
+          onPressed: () => Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (ctx) => EditNoteScreen(
+                        note: Note(),
+                        mode: DialogMode.Create,
+                        index: -1,
+                      ),
+                ),
+              ),
           // mini: true,
         ),
   };
