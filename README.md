@@ -1,8 +1,3 @@
 # dungeon_paper
 
-A new Flutter project.
-
-## Getting Started
-
-For help getting started with Flutter, view our online
-[documentation](https://flutter.io/).
+A Flutter app for https:/dungeonpaper.app.
