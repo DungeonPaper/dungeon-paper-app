@@ -43,7 +43,7 @@ class Note extends DbBase {
         });
 
   @override
-  Map toJSON() {
+  Map<String, dynamic> toJSON() {
     return {
       'title': get('title'),
       'category': get('category').toString(),

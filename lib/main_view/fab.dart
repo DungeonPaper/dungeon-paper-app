@@ -1,7 +1,7 @@
 
 
 import 'package:dungeon_paper/db/notes.dart';
-import 'package:dungeon_paper/nav_bar.dart';
+import 'package:dungeon_paper/main_view/nav_bar.dart';
 import 'package:dungeon_paper/notes_view/edit_note_dialog.dart';
 import 'package:flutter/material.dart';
 

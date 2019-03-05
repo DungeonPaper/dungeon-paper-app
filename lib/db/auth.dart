@@ -21,15 +21,21 @@ performSignIn() async {
   }
 
   dwStore.dispatch(UserActions.requestLogin());
-  AuthCredential creds = GoogleAuthProvider.getCredential(
-    accessToken: accessToken,
-    idToken: idToken,
-  );
+  try {
+    AuthCredential creds = GoogleAuthProvider.getCredential(
+      accessToken: accessToken,
+      idToken: idToken,
+    );
 
-  FirebaseUser user = await auth.signInWithCredential(creds);
-  await setCurrentUserByEmail(user.email);
-  registerAuthUserListener();
-  return user;
+    FirebaseUser user = await auth.signInWithCredential(creds);
+    await setCurrentUserByEmail(user.email);
+    registerAuthUserListener();
+    return user;
+  } catch (e) {
+    dwStore.dispatch(UserActions.noLogin());
+    print(e);
+    return null;
+  }
 }
 
 Future requestSignInWithCredentials() async {

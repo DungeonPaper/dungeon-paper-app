@@ -1,14 +1,14 @@
 import 'package:dungeon_paper/db/auth.dart';
 import 'package:dungeon_paper/db/character.dart';
 import 'package:dungeon_paper/db/user.dart';
-import 'package:dungeon_paper/fab.dart';
-import 'package:dungeon_paper/main_view.dart';
-import 'package:dungeon_paper/nav_bar.dart';
-import 'package:dungeon_paper/login_button.dart';
+import 'package:dungeon_paper/main_view/fab.dart';
+import 'package:dungeon_paper/main_view/main_view.dart';
+import 'package:dungeon_paper/main_view/nav_bar.dart';
+import 'package:dungeon_paper/main_view/login_button.dart';
 import 'package:dungeon_paper/redux/stores/connectors.dart';
 import 'package:dungeon_paper/redux/stores/loading_reducer.dart';
-import 'package:dungeon_paper/sidebar.dart';
-import 'package:dungeon_paper/welcome.dart';
+import 'package:dungeon_paper/main_view/sidebar.dart';
+import 'package:dungeon_paper/main_view/welcome.dart';
 import 'package:flutter/material.dart';
 
 void main() async {

@@ -30,7 +30,7 @@ class DbUser extends DbBase {
   String get email => get<String>('email');
 
   @override
-  Map toJSON() {
+  Map<String, dynamic> toJSON() {
     return {
       'characters': characters,
       'displayName': displayName,

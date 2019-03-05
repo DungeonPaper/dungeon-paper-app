@@ -1,6 +1,6 @@
 import 'package:dungeon_paper/battle_view/battle_view.dart';
 import 'package:dungeon_paper/db/character.dart';
-import 'package:dungeon_paper/nav_bar.dart';
+import 'package:dungeon_paper/main_view/nav_bar.dart';
 import 'package:dungeon_paper/notes_view/notes_view.dart';
 import 'package:dungeon_paper/profile_view/basic_info.dart';
 import 'package:flutter/material.dart';

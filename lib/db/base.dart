@@ -78,5 +78,5 @@ abstract class DbBase {
 
   get map => Map.from(_map);
 
-  Map toJSON();
+  Map<String, dynamic> toJSON();
 }

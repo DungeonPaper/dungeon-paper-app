@@ -80,7 +80,7 @@ class DbCharacter extends DbBase {
   }
 
   @override
-  Map toJSON() {
+  Map<String, dynamic> toJSON() {
     return {
       'alignment': get('alignment'),
       'displayName': get('displayName'),
@@ -97,8 +97,8 @@ class DbCharacter extends DbBase {
       'wis': get('wis'),
       'int': get('int'),
       'cha': get('cha'),
-      'moves': get('moves').map((Move move) => move.toJSON()).toList(),
-      'notes': get('notes').map((Note note) => note.toJSON()).toList(),
+      'moves': get('moves').map((move) => move.toJSON()).toList(),
+      'notes': get('notes').map((note) => note.toJSON()).toList(),
     };
   }
 }
@@ -170,15 +170,22 @@ createNewCharacter() async {
     characters = [];
   }
 
-  DocumentReference charDoc =
-      await firestore.collection('character_bios').add(character.toJSON());
-  characters.add(charDoc);
-  userDoc.updateData({'characters': characters});
-  dwStore.dispatch(
-    CharacterActions.setCurrentChar(charDoc.documentID, character),
-  );
+  try {
+    var json = character.toJSON();
 
-  return charDoc;
+    DocumentReference charDoc = firestore.collection('character_bios').document();
+    charDoc.setData(json);
+    characters.add(charDoc);
+    userDoc.updateData({'characters': characters});
+    dwStore.dispatch(
+      CharacterActions.setCurrentChar(charDoc.documentID, character),
+    );
+
+    return charDoc;
+  } catch (e) {
+    print(e);
+    return null;
+  }
 }
 
 getOrCreateCharacter(DocumentSnapshot userSnap) async {
