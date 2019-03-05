@@ -7,12 +7,17 @@
     "name": "Flutter",
     "type": "dart",
     "request": "launch",
+    "program": "lib/main.dart"
+  }, {
+    "name": "Flutter (verbose)",
+    "type": "dart",
+    "request": "launch",
     "program": "lib/main.dart",
     "args": [
       // "--flavor",
       // "development"
       // "-d711KPNY0809287",
-      // "-v"
-    ]
+      "-v"
+    ],
   }, ]
 }
