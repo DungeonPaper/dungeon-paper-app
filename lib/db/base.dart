@@ -1,82 +1,21 @@
-Map<String, dynamic> dbClassMap = {};
+abstract class Serializer<K extends dynamic> {
+  Map<K, dynamic> toJSON();
+  Map<K, Function(dynamic value)> serializeMap;
 
-abstract class DbBase {
-  final Map defaultData;
-  Map<String, dynamic> _map = Map();
-  Map<String, Function(dynamic any)> propertyMapping = {};
-  List<String> listProperties = [];
+  serialize(K key, [dynamic value]) {
+    if (serializeMap.containsKey(key)) {
+      serializeMap[key](value);
+    } else {
+      throw('No serializeMap key for corresponding key.');
+    }
+  }
 
-  bool isListProperty(String key) => listProperties.contains(key);
-  bool isMappedProperty(String key) => listProperties.contains(key);
-
-  DbBase(
-    Map map, {
-    this.defaultData: const {},
-    this.propertyMapping: const {},
-    this.listProperties: const [],
-  }) {
-    _map = map != null ? Map.from(map) : Map();
-
-    defaultData.forEach((key, val) {
-      if (!_map.containsKey(key) || _map[key] == null) {
-        set(key, defaultData[key]);
-      }
-    });
-
-    propertyMapping.forEach((key, val) {
-      if (_map[key].length > 0) {
-        set(key, _map[key]);
-      }
+  serializeAll([Map map]) {
+    (map ?? serializeMap).forEach((k, v) {
+      serialize(k, map[k]);
     });
   }
 
-  operator [](String key) {
-    return get(key);
-  }
-
-  operator []=(String key, dynamic value) {
-    return set(key, value);
-  }
-
-  void set<T>(String key, T value) {
-    if (propertyMapping.containsKey(key)) {
-      T Function(dynamic obj) mapper = propertyMapping[key];
-      if (isListProperty(key)) {
-        List<T> mappedList =
-            List.from((value as List).map((i) => mapper(i))).toList();
-        _map[key] = mappedList;
-      } else {
-        _map[key] = mapper(value);
-      }
-
-      return;
-    }
-
-    _map[key] = value;
-  }
-
-  get<T>(String key, [defaultVal]) {
-    // if (defaultVal == null) {
-    //   defaultVal = defaultData[key];
-    // }
-
-    if (_map == null) {
-      return defaultVal;
-    }
-
-    var value = _map[key];
-
-    if (value == null) {
-      return defaultVal;
-    }
-
-    return value;
-  }
-
-  List<T> getList<T>(String key) =>
-      List.from(get<List<T>>(key, []));
-
-  get map => Map.from(_map);
-
-  Map<String, dynamic> toJSON();
+  /// When overriding this method, you must also call it in your constructor */
+  initSerializeMap([Map map]);
 }

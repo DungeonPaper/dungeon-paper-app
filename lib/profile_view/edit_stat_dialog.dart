@@ -1,5 +1,7 @@
 import 'package:dungeon_paper/db/character.dart';
 import 'package:dungeon_paper/db/character_types.dart';
+import 'package:dungeon_paper/redux/stores/stores.dart';
+import 'package:dungeon_paper/utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -137,8 +139,29 @@ class EditStatDialogState extends State<EditStatDialog> {
   }
 
   _saveValue() async {
-    String name = stat.toString().split('.')[1];
-    await updateCharacter({name.toLowerCase(): value});
+    String name = enumName(stat);
+    DbCharacter character = dwStore.state.characters.current;
+    switch (stat) {
+      case Stats.int:
+        character.int = value;
+        break;
+      case Stats.wis:
+        character.wis = value;
+        break;
+      case Stats.cha:
+        character.cha = value;
+        break;
+      case Stats.con:
+        character.con = value;
+        break;
+      case Stats.str:
+        character.str = value;
+        break;
+      case Stats.dex:
+        character.dex = value;
+        break;
+    }
+    await updateCharacter(character, [CharacterKeysMap[name.toLowerCase()]]);
     Navigator.pop(context);
   }
 }

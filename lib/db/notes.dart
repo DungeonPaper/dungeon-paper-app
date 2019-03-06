@@ -2,6 +2,48 @@ import 'package:dungeon_paper/db/base.dart';
 import 'package:dungeon_paper/redux/stores/stores.dart';
 import 'character.dart';
 
+enum NoteKeys { title, description, category }
+
+class Note with Serializer<NoteKeys> {
+  NoteCategory category;
+  String title;
+  String description;
+
+  Note([Map map]) {
+    map ??= {};
+    initSerializeMap({
+      NoteKeys.title: map['title'],
+      NoteKeys.description: map['description'],
+      NoteKeys.category: map['category'],
+    });
+  }
+
+  @override
+  toJSON() {
+    return {
+      NoteKeys.title: title,
+      NoteKeys.category: category,
+      NoteKeys.description: description,
+    };
+  }
+
+  @override
+  initSerializeMap([Map map]) {
+    serializeMap = {
+      NoteKeys.title: (v) {
+        title = v ?? '';
+      },
+      NoteKeys.description: (v) {
+        description = v ?? '';
+      },
+      NoteKeys.category: (v) {
+        category = NoteCategory(v);
+      },
+    };
+    return serializeAll(map);
+  }
+}
+
 class NoteCategory {
   String name;
   NoteCategory(String _name)
@@ -13,12 +55,18 @@ class NoteCategory {
   static NoteCategory quests = NoteCategory('Quests');
   static NoteCategory misc = NoteCategory('Misc');
 
-  static List<NoteCategory> defaultCategories = [npcs, loot, locations, quests, misc];
+  static List<NoteCategory> defaultCategories = [
+    npcs,
+    loot,
+    locations,
+    quests,
+    misc
+  ];
 
   @override
   String toString() => name;
 
-  operator == (dynamic obj) {
+  operator ==(dynamic obj) {
     if (obj == null || obj is! NoteCategory) {
       return false;
     }
@@ -30,36 +78,14 @@ class NoteCategory {
   int get hashCode => name.hashCode;
 }
 
-class Note extends DbBase {
-  NoteCategory get category => NoteCategory(get('category').toString());
-  String get title => get('title');
-  String get description => get('description');
-
-  Note([Map map])
-      : super(map, defaultData: {
-          'category': '',
-          'title': '',
-          'description': '',
-        });
-
-  @override
-  Map<String, dynamic> toJSON() {
-    return {
-      'title': get('title'),
-      'category': get('category').toString(),
-      'description': get('description'),
-    };
-  }
-}
-
 Future updateNote(num index, Note note) async {
   if (dwStore.state.characters.current == null) {
     throw ('No character loaded.');
   }
 
-  List notes = List.from(dwStore.state.characters.current.notes);
-  notes[index] = note;
-  await updateCharacter({'notes': notes});
+  DbCharacter character = dwStore.state.characters.current;
+  character.notes[index] = note;
+  await updateCharacter(character, [CharacterKeys.notes]);
 }
 
 Future deleteNote(num index) async {
@@ -67,9 +93,9 @@ Future deleteNote(num index) async {
     throw ('No character loaded.');
   }
 
-  List notes = List.from(dwStore.state.characters.current.notes);
-  notes.removeAt(index);
-  await updateCharacter({'notes': notes});
+  DbCharacter character = dwStore.state.characters.current;
+  character.notes.removeAt(index);
+  await updateCharacter(character, [CharacterKeys.notes]);
 }
 
 Future createNote(Note note) async {
@@ -77,7 +103,7 @@ Future createNote(Note note) async {
     throw ('No character loaded.');
   }
 
-  List notes = List.from(dwStore.state.characters.current.notes);
-  notes.add(note);
-  await updateCharacter({'notes': notes});
+  DbCharacter character = dwStore.state.characters.current;
+  character.notes.add(note);
+  await updateCharacter(character, [CharacterKeys.notes]);
 }

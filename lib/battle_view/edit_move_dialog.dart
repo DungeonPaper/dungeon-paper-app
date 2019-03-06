@@ -1,30 +1,28 @@
-import 'package:dungeon_paper/db/notes.dart';
+import 'package:dungeon_paper/db/moves.dart';
 import 'package:dungeon_paper/dialogs.dart';
+import 'package:dungeon_world_data/move.dart';
 import 'package:flutter/material.dart';
 
-class EditNoteFormState extends State<EditNoteForm> {
+class EditMoveFormState extends State<EditMoveForm> {
   final num index;
   final DialogMode mode;
-  NoteCategory category;
-  String title;
+  String name;
   String description;
-  void Function(Note note) onUpdateNote;
+  void Function(Move move) onUpdateMove;
   Widget Function(BuildContext context, Widget form, Function onSave) builder;
   Map<String, TextEditingController> _controllers;
 
-  EditNoteFormState({
+  EditMoveFormState({
     Key key,
     @required this.index,
-    @required this.category,
-    @required this.title,
+    @required this.name,
     @required this.description,
     @required this.mode,
     @required this.builder,
-    this.onUpdateNote,
+    this.onUpdateMove,
   })  : _controllers = {
-          'title': TextEditingController(text: title.toString()),
-          'description': TextEditingController(text: description.toString()),
-          'category': TextEditingController(text: category.toString()),
+          'name': TextEditingController(text: (name ?? '').toString()),
+          'description': TextEditingController(text: (description ?? '').toString()),
         },
         super();
 
@@ -35,24 +33,13 @@ class EditNoteFormState extends State<EditNoteForm> {
         mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: <Widget>[
-          DropdownButton(
-            hint: Text('Category'),
-            value: category,
-            onChanged: (cat) => _setStateValue('category', cat.toString()),
-            items: NoteCategory.defaultCategories
-                .map((category) => DropdownMenuItem(
-                      value: category,
-                      child: Text(category.toString()),
-                    ))
-                .toList(),
-          ),
           TextField(
-            decoration: InputDecoration(hintText: 'Title'),
+            decoration: InputDecoration(hintText: 'Move Name'),
             autofocus: mode == DialogMode.Create,
             autocorrect: true,
             textCapitalization: TextCapitalization.words,
-            onChanged: (val) => _setStateValue('title', val),
-            controller: _controllers['title'],
+            onChanged: (val) => _setStateValue('name', val),
+            controller: _controllers['name'],
           ),
           Container(
             margin: const EdgeInsets.symmetric(vertical: 8.0),
@@ -76,100 +63,93 @@ class EditNoteFormState extends State<EditNoteForm> {
     return builder(
       context,
       form,
-      mode == DialogMode.Create ? _createNote : _updateNote,
+      mode == DialogMode.Create ? _createMove : _updateMove,
     );
   }
 
   _setStateValue(String key, String newValue) {
     setState(() {
       switch (key) {
-        case 'title':
-          return title = newValue;
+        case 'name':
+          return name = newValue;
         case 'description':
           return description = newValue;
-        case 'category':
-          return category = NoteCategory(newValue);
       }
     });
   }
 
-  _updateNote() async {
-    Note note = Note(
-        {'title': title, 'description': description, 'category': category});
-    updateNote(index, note);
-    if (onUpdateNote != null) {
-      onUpdateNote(note);
+  _updateMove() async {
+    Move move = Move(name: name, description: description, classes: []);
+    updateMove(index, move);
+    if (onUpdateMove != null) {
+      onUpdateMove(move);
     }
     Navigator.pop(context);
   }
 
-  _createNote() async {
-    Note note = Note(
-        {'title': title, 'description': description, 'category': category});
-    createNote(note);
-    if (onUpdateNote != null) {
-      onUpdateNote(note);
+  _createMove() async {
+    Move move = Move(name: name, description: description, classes: []);
+    createMove(move);
+    if (onUpdateMove != null) {
+      onUpdateMove(move);
     }
     Navigator.pop(context);
   }
 }
 
-class EditNoteForm extends StatefulWidget {
+class EditMoveForm extends StatefulWidget {
   final num index;
-  final String title;
-  final NoteCategory category;
+  final String name;
   final String description;
   final DialogMode mode;
-  final void Function(BuildContext context, Widget form, Function onSave) builder;
-  final void Function(Note note) onUpdateNote;
+  final void Function(BuildContext context, Widget form, Function onSave)
+      builder;
+  final void Function(Move move) onUpdateMove;
 
-  EditNoteForm({
+  EditMoveForm({
     Key key,
     @required this.index,
-    @required this.category,
-    @required this.title,
+    @required this.name,
     @required this.description,
     @required this.mode,
     @required this.builder,
-    this.onUpdateNote,
+    this.onUpdateMove,
   }) : super(key: key);
 
   @override
-  State<StatefulWidget> createState() => EditNoteFormState(
+  State<StatefulWidget> createState() => EditMoveFormState(
         index: index,
-        title: title,
+        name: name,
         description: description,
-        category: category,
-        onUpdateNote: onUpdateNote,
+        onUpdateMove: onUpdateMove,
         mode: mode,
         builder: builder,
       );
 }
 
-class EditNoteDialog extends StatelessWidget {
-  const EditNoteDialog({
+class EditMoveDialog extends StatelessWidget {
+  const EditMoveDialog({
     Key key,
     @required this.index,
-    @required this.note,
+    @required this.move,
     @required this.mode,
   }) : super(key: key);
 
   final num index;
-  final Note note;
+  final Move move;
   final DialogMode mode;
 
   @override
   Widget build(BuildContext context) {
-    return EditNoteForm(
+    return EditMoveForm(
       mode: mode,
       index: index,
-      title: note.title,
-      description: note.description,
-      category: note.category,
+      name: move.name,
+      description: move.description,
       builder: (ctx, form, onSave) => SimpleDialog(
             contentPadding: EdgeInsets.all(16),
             title:
-                Text('${mode == DialogMode.Create ? 'Create' : 'Edit'} Note'),
+                Text('${mode == DialogMode.Create ? 'Create' : 'Edit'} Move'),
             children: <Widget>[
               form,
               Padding(
@@ -195,32 +175,31 @@ class EditNoteDialog extends StatelessWidget {
   }
 }
 
-class EditNoteScreen extends StatelessWidget {
-  const EditNoteScreen({
+class EditMoveScreen extends StatelessWidget {
+  const EditMoveScreen({
     Key key,
     @required this.index,
-    @required this.note,
+    @required this.move,
     @required this.mode,
   }) : super(key: key);
 
   final num index;
-  final Note note;
+  final Move move;
   final DialogMode mode;
 
   @override
   Widget build(BuildContext context) {
-    return EditNoteForm(
+    return EditMoveForm(
       mode: mode,
       index: index,
-      title: note.title,
-      description: note.description,
-      category: note.category,
+      name: move.name,
+      description: move.description,
       builder: (ctx, form, onSave) => Material(
             child: Column(
               children: <Widget>[
                 AppBar(
                   title: Text(
-                      '${mode == DialogMode.Create ? 'Create' : 'Edit'} Note'),
+                      '${mode == DialogMode.Create ? 'Create' : 'Edit'} Move'),
                   actions: <Widget>[
                     IconButton(
                       tooltip: 'Save',

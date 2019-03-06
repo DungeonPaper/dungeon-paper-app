@@ -13,30 +13,53 @@ FirebaseUser authUser;
 DbUser currentUser = DbUser({});
 StreamSubscription listener;
 
-class DbUser extends DbBase {
-  DbUser([Map map])
-      : super(map, defaultData: {
-          'characters': [],
-          'displayName': 'Guest',
-          'photoURL': null,
-          'email': 'your@gmail.com',
-        }, listProperties: [
-          'characters',
-        ]);
+enum UserKeys {
+  characters, displayName, photoURL, email
+}
 
-  List get characters => get<List>('characters');
-  String get displayName => get<String>('displayName');
-  String get photoURL => get<String>('photoURL');
-  String get email => get<String>('email');
+class DbUser with Serializer<UserKeys> {
+  DbUser([Map map]) {
+    map ??= {};
+    initSerializeMap({
+      UserKeys.characters: map['characters'],
+      UserKeys.displayName: map['displayName'],
+      UserKeys.photoURL: map['photoURL'],
+      UserKeys.email: map['email'],
+    });
+  }
+
+  List characters;
+  String displayName;
+  String photoURL;
+  String email;
 
   @override
-  Map<String, dynamic> toJSON() {
+  Map<UserKeys, dynamic> toJSON() {
     return {
-      'characters': characters,
-      'displayName': displayName,
-      'photoURL': photoURL,
-      'email': email,
+      UserKeys.characters: characters,
+      UserKeys.displayName: displayName,
+      UserKeys.photoURL: photoURL,
+      UserKeys.email: email,
     };
+  }
+
+  @override
+  initSerializeMap([Map map]) {
+    serializeMap = {
+      UserKeys.characters: (v) {
+        characters = v ?? [];
+      },
+      UserKeys.displayName: (v) {
+        displayName = v ?? 'Guest';
+      },
+      UserKeys.photoURL: (v) {
+        photoURL = v ?? '';
+      },
+      UserKeys.email: (v) {
+        email = v ?? 'email@guest.com';
+      },
+    };
+    serializeAll(map);
   }
 }
 

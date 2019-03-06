@@ -2,6 +2,7 @@ import 'package:dungeon_paper/db/character.dart';
 import 'package:dungeon_paper/db/character_types.dart';
 import 'package:dungeon_paper/profile_view/edit_stat_dialog.dart';
 import 'package:dungeon_paper/redux/stores/connectors.dart';
+import 'package:dungeon_paper/utils.dart';
 import 'package:flutter/material.dart';
 
 class StatCard extends StatelessWidget {
@@ -18,8 +19,8 @@ class StatCard extends StatelessWidget {
   Widget build(BuildContext _context) {
     return DWStoreConnector(builder: (context, state) {
       DbCharacter character = state.characters.current;
-      String name = stat.toString().split('.')[1];
-      num value = character[name.toLowerCase()];
+      String name = enumName(stat);
+      num value = getValue(character, stat);
 
       return Expanded(
         child: Card(
@@ -27,7 +28,8 @@ class StatCard extends StatelessWidget {
           child: InkWell(
             onTap: () => showDialog(
                   context: context,
-                  builder: (context) => EditStatDialog(stat: stat, value: value),
+                  builder: (context) =>
+                      EditStatDialog(stat: stat, value: value),
                 ),
             child: Padding(
               padding: EdgeInsets.symmetric(horizontal: 10.0, vertical: 22.0),
@@ -37,7 +39,7 @@ class StatCard extends StatelessWidget {
                   Text('$fullName: $value', style: TextStyle(fontSize: 11.0)),
                   Text(
                     '${name.toUpperCase()} ' +
-                    DbCharacter.statModifierText(value),
+                        DbCharacter.statModifierText(value),
                     style:
                         TextStyle(fontSize: 20.0, fontWeight: FontWeight.bold),
                   ),
@@ -48,5 +50,22 @@ class StatCard extends StatelessWidget {
         ),
       );
     });
+  }
+
+  getValue(DbCharacter character, Stats key) {
+    switch (enumName(key).toLowerCase()) {
+      case 'int':
+        return character.int;
+      case 'dex':
+        return character.dex;
+      case 'wis':
+        return character.wis;
+      case 'cha':
+        return character.cha;
+      case 'str':
+        return character.str;
+      case 'con':
+        return character.con;
+    }
   }
 }

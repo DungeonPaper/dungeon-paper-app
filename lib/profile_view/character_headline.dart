@@ -13,8 +13,8 @@ class CharacterHeadline extends StatelessWidget {
     return DWStoreConnector(builder: (context, state) {
       DbCharacter character = state.characters.current;
       num level = character.level;
-      String alignment = capitalize(character.alignment);
-      String mainClass = capitalize(character.mainClass);
+      String alignment = capitalize(enumName(character.alignment));
+      String mainClass = capitalize(character.mainClass.name);
       String displayName = capitalize(character.displayName);
 
       return Row(

@@ -1,5 +1,6 @@
 import 'package:dungeon_paper/components/card_bottom_controls.dart';
 import 'package:dungeon_paper/db/notes.dart';
+import 'package:dungeon_paper/dialogs.dart';
 import 'package:dungeon_paper/notes_view/edit_note_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_markdown/flutter_markdown.dart';

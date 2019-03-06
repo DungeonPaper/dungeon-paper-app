@@ -1,6 +1,9 @@
+import 'package:dungeon_paper/battle_view/edit_move_dialog.dart';
 import 'package:dungeon_paper/db/notes.dart';
+import 'package:dungeon_paper/dialogs.dart';
 import 'package:dungeon_paper/main_view/nav_bar.dart';
 import 'package:dungeon_paper/notes_view/edit_note_dialog.dart';
+import 'package:dungeon_world_data/move.dart';
 import 'package:flutter/material.dart';
 
 class FAB extends StatefulWidget {
@@ -47,7 +50,20 @@ class FABState extends State<FAB> {
                       ),
                 ),
               ),
-          // mini: true,
+        ),
+    Pages.Battle.index: (context) => FloatingActionButton(
+          foregroundColor: Colors.white,
+          child: Icon(Icons.add),
+          onPressed: () => Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (ctx) => EditMoveScreen(
+                        move: Move(),
+                        mode: DialogMode.Create,
+                        index: -1,
+                      ),
+                ),
+              ),
         ),
   };
 

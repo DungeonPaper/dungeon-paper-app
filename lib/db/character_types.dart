@@ -38,6 +38,14 @@ const AlignmentMap = {
   Alignment.evil: 'evil',
 };
 
+const AlignmentNameMap = {
+  'good': Alignment.good,
+  'lawful': Alignment.lawful,
+  'neutral': Alignment.neutral,
+  'chaotic': Alignment.chaotic,
+  'evil': Alignment.evil,
+};
+
 enum Stats {
   str, dex, int, wis, cha, con
 }

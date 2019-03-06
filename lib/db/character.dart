@@ -5,58 +5,95 @@ import 'package:dungeon_paper/db/notes.dart';
 import 'package:dungeon_paper/db/user.dart';
 import 'package:dungeon_paper/redux/actions/character_actions.dart';
 import 'package:dungeon_paper/redux/stores/stores.dart';
+import 'package:dungeon_paper/utils.dart';
+import 'package:dungeon_world_data/dw_data.dart';
 import 'package:dungeon_world_data/move.dart';
+import 'package:dungeon_world_data/player_class.dart';
 import 'base.dart';
 
-class DbCharacter extends DbBase {
-  var listProperties = ['notes', 'moves'];
+enum CharacterKeys {
+  alignment,
+  displayName,
+  mainClass,
+  photoURL,
+  level,
+  currentHP,
+  currentXP,
+  maxHP,
+  armor,
+  str,
+  dex,
+  con,
+  wis,
+  int,
+  cha,
+  moves,
+  notes,
+}
 
-  String get alignment => get('alignment');
-  String get displayName => get('displayName');
-  String get mainClass => get('mainClass');
-  String get photoURL => get('photoURL');
-  num get level => get('level');
-  num get currentHP => get('currentHP');
-  num get currentXP => get('currentXP');
-  num get maxHP => get('maxHP');
-  num get armor => get('armor');
-  num get str => get('str');
-  num get dex => get('dex');
-  num get con => get('con');
-  num get wis => get('wis');
-  num get int => get('int');
-  num get cha => get('cha');
-  List<Move> get moves => getList<Move>('moves');
-  List<Note> get notes => getList<Note>('notes');
+const Map<String, CharacterKeys> CharacterKeysMap = {
+  'alignment': CharacterKeys.alignment,
+  'displayName': CharacterKeys.displayName,
+  'mainClass': CharacterKeys.mainClass,
+  'photoURL': CharacterKeys.photoURL,
+  'level': CharacterKeys.level,
+  'currentHP': CharacterKeys.currentHP,
+  'currentXP': CharacterKeys.currentXP,
+  'maxHP': CharacterKeys.maxHP,
+  'armor': CharacterKeys.armor,
+  'str': CharacterKeys.str,
+  'dex': CharacterKeys.dex,
+  'con': CharacterKeys.con,
+  'wis': CharacterKeys.wis,
+  'int': CharacterKeys.int,
+  'cha': CharacterKeys.cha,
+  'moves': CharacterKeys.moves,
+  'notes': CharacterKeys.notes,
+};
 
-  DbCharacter([Map map])
-      : super(map, defaultData: {
-          'alignment': AlignmentMap[Alignment.good],
-          'displayName': 'New Traveler',
-          'mainClass': 'bard',
-          'photoURL': null,
-          'level': 1,
-          'currentHP': 0,
-          'currentXP': 0,
-          'maxHP': 20,
-          'armor': 0,
-          'str': 0,
-          'dex': 0,
-          'con': 0,
-          'wis': 0,
-          'int': 0,
-          'cha': 0,
-          'moves': [],
-          'notes': [],
-        }, propertyMapping: {
-          'notes': (note) => Note(note),
-          'moves': (move) => Move(
-                key: move['key'],
-                name: move['name'],
-                description: move['description'],
-                classes: [],
-              ),
-        });
+class DbCharacter with Serializer<CharacterKeys> {
+  DbCharacter([Map map]) {
+    map ??= {};
+    initSerializeMap({
+      CharacterKeys.alignment: map['alignment'],
+      CharacterKeys.displayName: map['displayName'],
+      CharacterKeys.mainClass: map['mainClass'],
+      CharacterKeys.photoURL: map['photoURL'],
+      CharacterKeys.level: map['level'],
+      CharacterKeys.currentHP: map['currentHP'],
+      CharacterKeys.currentXP: map['currentXP'],
+      CharacterKeys.maxHP: map['maxHP'],
+      CharacterKeys.armor: map['armor'],
+      CharacterKeys.str: map['str'],
+      CharacterKeys.dex: map['dex'],
+      CharacterKeys.con: map['con'],
+      CharacterKeys.wis: map['wis'],
+      CharacterKeys.int: map['int'],
+      CharacterKeys.cha: map['cha'],
+      CharacterKeys.moves: map['moves'],
+      CharacterKeys.notes: map['notes'],
+    });
+    mainClassKey = map['mainClass'];
+  }
+
+  Alignment alignment;
+  String displayName;
+  PlayerClass mainClass;
+  String mainClassKey;
+  String photoURL;
+  num level;
+  num currentHP;
+  num currentXP;
+  num maxHP;
+  num armor;
+  num str;
+  num dex;
+  num con;
+  num wis;
+  num int;
+  num cha;
+  List<Move> moves;
+  List<Note> notes;
 
   static num statModifier(num stat) {
     const modifiers = {1: -3, 4: -2, 6: -1, 9: 0, 13: 1, 16: 2, 18: 3};
@@ -80,26 +117,55 @@ class DbCharacter extends DbBase {
   }
 
   @override
-  Map<String, dynamic> toJSON() {
+  toJSON() {
     return {
-      'alignment': get('alignment'),
-      'displayName': get('displayName'),
-      'mainClass': get('mainClass'),
-      'photoURL': get('photoURL'),
-      'level': get('level'),
-      'currentHP': get('currentHP'),
-      'currentXP': get('currentXP'),
-      'maxHP': get('maxHP'),
-      'armor': get('armor'),
-      'str': get('str'),
-      'dex': get('dex'),
-      'con': get('con'),
-      'wis': get('wis'),
-      'int': get('int'),
-      'cha': get('cha'),
-      'moves': get('moves').map((move) => move.toJSON()).toList(),
-      'notes': get('notes').map((note) => note.toJSON()).toList(),
+      CharacterKeys.alignment: enumName(alignment),
+      CharacterKeys.displayName: displayName,
+      CharacterKeys.mainClass: mainClass.name,
+      CharacterKeys.photoURL: photoURL,
+      CharacterKeys.level: level,
+      CharacterKeys.currentHP: currentHP,
+      CharacterKeys.currentXP: currentXP,
+      CharacterKeys.maxHP: maxHP,
+      CharacterKeys.armor: armor,
+      CharacterKeys.str: str,
+      CharacterKeys.dex: dex,
+      CharacterKeys.con: con,
+      CharacterKeys.wis: wis,
+      CharacterKeys.int: int,
+      CharacterKeys.cha: cha,
+      CharacterKeys.moves: moves.map((move) => move.toJSON()).toList(),
+      CharacterKeys.notes: notes.map((note) => note.toJSON()).toList(),
     };
+  }
+
+  @override
+  initSerializeMap([Map map]) {
+    serializeMap = {
+      CharacterKeys.alignment: (v) => alignment = v != null
+          ? stringToEnum<Alignment>(AlignmentNameMap)(v)
+          : Alignment.good,
+      CharacterKeys.displayName: (v) => displayName = v ?? 'New Traveler',
+      CharacterKeys.mainClass: (v) => mainClass =
+          v != null ? dungeonWorld.classes[v] : dungeonWorld.classes['bard'],
+      CharacterKeys.photoURL: (v) => photoURL = v ?? '',
+      CharacterKeys.level: (v) => level = v ?? 1,
+      CharacterKeys.currentHP: (v) => currentHP = v ?? maxHP ?? 0,
+      CharacterKeys.currentXP: (v) => currentXP = v ?? 0,
+      CharacterKeys.maxHP: (v) => maxHP = v ?? 20,
+      CharacterKeys.armor: (v) => armor = v ?? 0,
+      CharacterKeys.str: (v) => str = v ?? 8,
+      CharacterKeys.dex: (v) => dex = v ?? 8,
+      CharacterKeys.con: (v) => con = v ?? 8,
+      CharacterKeys.wis: (v) => wis = v ?? 8,
+      CharacterKeys.int: (v) => int = v ?? 8,
+      CharacterKeys.cha: (v) => cha = v ?? 8,
+      CharacterKeys.moves: (v) => moves =
+          List.from(v ?? []).map((move) => Move.fromJSON(move)).toList(),
+      CharacterKeys.notes: (v) =>
+          notes = List.from(v ?? []).map((note) => Note(note)).toList(),
+    };
+    serializeAll(map);
   }
 }
 
@@ -138,21 +204,21 @@ unsetCurrentCharacter() async {
   dwStore.dispatch(CharacterActions.remove());
 }
 
-Future<Map> updateCharacter(Map<String, dynamic> data) async {
+Future<Map> updateCharacter(
+    DbCharacter character, List<CharacterKeys> updatedKeys) async {
   Firestore firestore = Firestore.instance;
 
   final String charDocId = dwStore.state.characters.currentCharDocID;
-  DbCharacter character = dwStore.state.characters.current;
-  data.forEach((k, v) {
-    if (character.isListProperty(k)) {
-      data[k] = List<Map>.from(v.map((i) => i is DbBase ? i.toJSON() : i));
-    }
-    dwStore.dispatch(CharacterActions.updateField(k, data[k]));
+  Map<CharacterKeys, dynamic> json = character.toJSON();
+  Map<String, dynamic> output = {};
+  updatedKeys.forEach((k) {
+    output[enumName(k)] = json[k];
   });
+  dwStore.dispatch(CharacterActions.setCurrentChar(charDocId, character));
 
-  print('Updating character: $data');
+  print('Updating character: $updatedKeys');
   final charDoc = firestore.document('character_bios/$charDocId')
-    ..updateData(data);
+    ..updateData(output);
   final charData = await charDoc.get();
 
   return charData.data;
@@ -171,9 +237,10 @@ createNewCharacter() async {
   }
 
   try {
-    var json = character.toJSON();
+    var json = character.toJSON().map((k, v) => MapEntry(enumName(k), v));
 
-    DocumentReference charDoc = firestore.collection('character_bios').document();
+    DocumentReference charDoc =
+        firestore.collection('character_bios').document();
     charDoc.setData(json);
     characters.add(charDoc);
     userDoc.updateData({'characters': characters});

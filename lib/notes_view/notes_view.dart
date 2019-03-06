@@ -36,7 +36,7 @@ class NotesView extends StatelessWidget {
           children.add(Padding(
             padding: const EdgeInsets.symmetric(vertical: 8.0),
             child: NoteCard(
-                key: Key('note-' + note['title']), index: i, note: note),
+                key: Key('note-' + note.title), index: i, note: note),
           ));
         }
       }

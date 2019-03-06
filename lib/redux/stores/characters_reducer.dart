@@ -29,11 +29,6 @@ CharacterStore characterReducer(CharacterStore state, action) {
     return state;
   }
 
-  if (action is UpdateField) {
-    state.characters[state.currentCharDocID].set(action.field, action.value);
-    return state;
-  }
-
   if (action is RemoveAll) {
     return CharacterStore(current: null, currentCharDocID: null, characters: Map<String, DbCharacter>());
   }
