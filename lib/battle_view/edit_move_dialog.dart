@@ -1,5 +1,8 @@
+import 'package:dungeon_paper/battle_view/add_existing_move.dart';
+import 'package:dungeon_paper/db/character.dart';
 import 'package:dungeon_paper/db/moves.dart';
 import 'package:dungeon_paper/dialogs.dart';
+import 'package:dungeon_paper/redux/stores/stores.dart';
 import 'package:dungeon_world_data/move.dart';
 import 'package:flutter/material.dart';
 
@@ -22,7 +25,8 @@ class EditMoveFormState extends State<EditMoveForm> {
     this.onUpdateMove,
   })  : _controllers = {
           'name': TextEditingController(text: (name ?? '').toString()),
-          'description': TextEditingController(text: (description ?? '').toString()),
+          'description':
+              TextEditingController(text: (description ?? '').toString()),
         },
         super();
 
@@ -35,7 +39,6 @@ class EditMoveFormState extends State<EditMoveForm> {
         children: <Widget>[
           TextField(
             decoration: InputDecoration(hintText: 'Move Name'),
-            autofocus: mode == DialogMode.Create,
             autocorrect: true,
             textCapitalization: TextCapitalization.words,
             onChanged: (val) => _setStateValue('name', val),
@@ -127,55 +130,7 @@ class EditMoveForm extends StatefulWidget {
       );
 }
 
-class EditMoveDialog extends StatelessWidget {
-  const EditMoveDialog({
-    Key key,
-    @required this.index,
-    @required this.move,
-    @required this.mode,
-  }) : super(key: key);
-
-  final num index;
-  final Move move;
-  final DialogMode mode;
-
-  @override
-  Widget build(BuildContext context) {
-    return EditMoveForm(
-      mode: mode,
-      index: index,
-      name: move.name,
-      description: move.description,
-      builder: (ctx, form, onSave) => SimpleDialog(
-            contentPadding: EdgeInsets.all(16),
-            title:
-                Text('${mode == DialogMode.Create ? 'Create' : 'Edit'} Move'),
-            children: <Widget>[
-              form,
-              Padding(
-                padding: const EdgeInsets.only(top: 24),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceAround,
-                  children: <Widget>[
-                    RaisedButton(
-                      onPressed: () => Navigator.pop(context),
-                      child: const Text('Cancel'),
-                    ),
-                    RaisedButton(
-                      color: Theme.of(context).colorScheme.primary,
-                      onPressed: onSave,
-                      child: const Text('Save'),
-                    ),
-                  ],
-                ),
-              ),
-            ],
-          ),
-    );
-  }
-}
-
-class EditMoveScreen extends StatelessWidget {
+class EditMoveScreen extends StatefulWidget {
   const EditMoveScreen({
     Key key,
     @required this.index,
@@ -188,29 +143,81 @@ class EditMoveScreen extends StatelessWidget {
   final DialogMode mode;
 
   @override
+  EditMoveScreenState createState() => EditMoveScreenState();
+}
+
+class EditMoveScreenState extends State<EditMoveScreen>
+    with SingleTickerProviderStateMixin {
+  TabController _controller;
+  EditMoveScreenState() {
+    _controller = TabController(vsync: this, length: 2);
+  }
+
+  final List<String> texts = ['Class Moves', 'Custom Move'];
+  int tabIdx = 0;
+
+  @override
+  void initState() {
+    _controller.addListener(() {
+      setState(() {
+        tabIdx = _controller.index;
+      });
+    });
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
+    DbCharacter character = dwStore.state.characters.current;
+
     return EditMoveForm(
-      mode: mode,
-      index: index,
-      name: move.name,
-      description: move.description,
+      mode: widget.mode,
+      index: widget.index,
+      name: widget.move.name,
+      description: widget.move.description,
       builder: (ctx, form, onSave) => Material(
             child: Column(
+              mainAxisSize: MainAxisSize.max,
               children: <Widget>[
                 AppBar(
                   title: Text(
-                      '${mode == DialogMode.Create ? 'Create' : 'Edit'} Move'),
-                  actions: <Widget>[
-                    IconButton(
-                      tooltip: 'Save',
-                      icon: Icon(Icons.save),
-                      onPressed: onSave,
-                    )
-                  ],
+                      '${widget.mode == DialogMode.Create ? 'Create' : 'Edit'} Move'),
+                  actions: tabIdx == 1
+                      ? <Widget>[
+                          IconButton(
+                            tooltip: 'Save',
+                            icon: Icon(Icons.save),
+                            onPressed: onSave,
+                          ),
+                        ]
+                      : [],
                 ),
-                Container(
-                  padding: EdgeInsets.all(16),
-                  child: form,
+                TabBar(
+                  controller: _controller,
+                  tabs: List.generate(
+                    texts.length,
+                    (i) => Tab(child: Text(texts[i])),
+                  ),
+                ),
+                Expanded(
+                  child: TabBarView(
+                    controller: _controller,
+                    children: <Widget>[
+                      Material(
+                        color: Theme.of(context).scaffoldBackgroundColor,
+                        child: AddExistingMove(
+                          key: PageStorageKey<String>(texts[0]),
+                          level: character.level,
+                          playerClass: character.mainClass,
+                        ),
+                      ),
+                      Container(
+                        key: PageStorageKey<String>(texts[1]),
+                        padding: EdgeInsets.all(16),
+                        child: form,
+                      ),
+                    ],
+                  ),
                 ),
               ],
             ),

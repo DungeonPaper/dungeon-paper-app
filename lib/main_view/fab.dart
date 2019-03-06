@@ -1,8 +1,10 @@
+import 'dart:math';
 import 'package:dungeon_paper/battle_view/edit_move_dialog.dart';
 import 'package:dungeon_paper/db/notes.dart';
 import 'package:dungeon_paper/dialogs.dart';
 import 'package:dungeon_paper/main_view/nav_bar.dart';
 import 'package:dungeon_paper/notes_view/edit_note_dialog.dart';
+import 'package:dungeon_paper/utils.dart';
 import 'package:dungeon_world_data/move.dart';
 import 'package:flutter/material.dart';
 
@@ -43,6 +45,7 @@ class FABState extends State<FAB> {
           onPressed: () => Navigator.push(
                 context,
                 MaterialPageRoute(
+                  fullscreenDialog: true,
                   builder: (ctx) => EditNoteScreen(
                         note: Note(),
                         mode: DialogMode.Create,
@@ -57,6 +60,7 @@ class FABState extends State<FAB> {
           onPressed: () => Navigator.push(
                 context,
                 MaterialPageRoute(
+                  fullscreenDialog: true,
                   builder: (ctx) => EditMoveScreen(
                         move: Move(),
                         mode: DialogMode.Create,
@@ -69,10 +73,19 @@ class FABState extends State<FAB> {
 
   @override
   Widget build(BuildContext context) {
-    return activePageIndex != null &&
-            buttonsByIndex.containsKey(activePageIndex.round())
-        ? buttonsByIndex[activePageIndex.round()](context)
-        : Container();
+    double activeIdx = pageController.page != null ? pageController.page : 0.0;
+    double t = (activeIdx.ceil() - activeIdx).abs();
+    t = lerp(t < 0.5 ? 1 - t : t / 1, 0.5, 1, 0, 1);
+
+    return Transform.scale(
+      scale: t,
+      child: Transform.rotate(
+        angle: -pi * t,
+        child: activeIdx != null && buttonsByIndex.containsKey(activeIdx.round())
+          ? buttonsByIndex[activeIdx.round()](context)
+          : SizedBox.shrink(),
+      ),
+    );
   }
 
   @override

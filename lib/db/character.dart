@@ -216,7 +216,7 @@ Future<Map> updateCharacter(
   });
   dwStore.dispatch(CharacterActions.setCurrentChar(charDocId, character));
 
-  print('Updating character: $updatedKeys');
+  print('Updating character: $output');
   final charDoc = firestore.document('character_bios/$charDocId')
     ..updateData(output);
   final charData = await charDoc.get();

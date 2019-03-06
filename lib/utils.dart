@@ -8,7 +8,11 @@ capitalize(String string, [String sep = ' ']) {
       onNonMatch: (s) => s[0].toUpperCase() + s.substring(1));
 }
 
-T clamp<T extends num>(T number, T low, T high) => max(low, min(number, high));
+double clamp<T extends num>(T number, T low, T high) =>
+    max(low * 1.0, min(number * 1.0, high * 1.0));
+
+double lerp(num t, num minA, num maxA, num minB, num maxB) =>
+    (t - minA) / (maxA - minA) * (maxB - minB) + minB;
 
 Type typeOf<T>() => T;
 
@@ -18,5 +22,7 @@ String enumName(Object o) {
 }
 
 E Function(String k) stringToEnum<E>(Map<String, E> enumValue) {
-  return (k) => enumValue.containsKey(k) ? enumValue[k] : throw ('No corresponding enum value');
+  return (k) => enumValue.containsKey(k)
+      ? enumValue[k]
+      : throw ('No corresponding enum value');
 }

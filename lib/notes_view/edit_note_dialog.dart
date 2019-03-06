@@ -120,7 +120,8 @@ class EditNoteForm extends StatefulWidget {
   final NoteCategory category;
   final String description;
   final DialogMode mode;
-  final void Function(BuildContext context, Widget form, Function onSave) builder;
+  final void Function(BuildContext context, Widget form, Function onSave)
+      builder;
   final void Function(Note note) onUpdateNote;
 
   EditNoteForm({
@@ -144,55 +145,6 @@ class EditNoteForm extends StatefulWidget {
         mode: mode,
         builder: builder,
       );
-}
-
-class EditNoteDialog extends StatelessWidget {
-  const EditNoteDialog({
-    Key key,
-    @required this.index,
-    @required this.note,
-    @required this.mode,
-  }) : super(key: key);
-
-  final num index;
-  final Note note;
-  final DialogMode mode;
-
-  @override
-  Widget build(BuildContext context) {
-    return EditNoteForm(
-      mode: mode,
-      index: index,
-      title: note.title,
-      description: note.description,
-      category: note.category,
-      builder: (ctx, form, onSave) => SimpleDialog(
-            contentPadding: EdgeInsets.all(16),
-            title:
-                Text('${mode == DialogMode.Create ? 'Create' : 'Edit'} Note'),
-            children: <Widget>[
-              form,
-              Padding(
-                padding: const EdgeInsets.only(top: 24),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceAround,
-                  children: <Widget>[
-                    RaisedButton(
-                      onPressed: () => Navigator.pop(context),
-                      child: const Text('Cancel'),
-                    ),
-                    RaisedButton(
-                      color: Theme.of(context).colorScheme.primary,
-                      onPressed: onSave,
-                      child: const Text('Save'),
-                    ),
-                  ],
-                ),
-              ),
-            ],
-          ),
-    );
-  }
 }
 
 class EditNoteScreen extends StatelessWidget {

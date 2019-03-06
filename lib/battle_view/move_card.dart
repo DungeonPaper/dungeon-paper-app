@@ -1,20 +1,24 @@
 import 'package:dungeon_paper/battle_view/edit_move_dialog.dart';
 import 'package:dungeon_paper/components/card_bottom_controls.dart';
+import 'package:dungeon_paper/components/confirmation_dialog.dart';
+import 'package:dungeon_paper/db/moves.dart';
 import 'package:dungeon_paper/dialogs.dart';
 import 'package:dungeon_world_data/move.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_markdown/flutter_markdown.dart';
 
+enum MoveCardMode { Addable, Editable, Fixed }
+
 class MoveCard extends StatefulWidget {
   final num index;
   final Move move;
-  final bool editable;
+  final MoveCardMode mode;
 
   const MoveCard({
     Key key,
     @required this.move,
     @required this.index,
-    this.editable,
+    this.mode,
   }) : super(key: key);
 
   @override
@@ -28,26 +32,57 @@ class MoveCardState extends State<MoveCard> {
 
     return Material(
       elevation: 1,
+      color: Colors.white,
       shape: RoundedRectangleBorder(
         borderRadius: const BorderRadius.all(Radius.circular(5)),
       ),
       child: ExpansionTile(
         title: Text(move.name),
+        initiallyExpanded: false,
         children: <Widget>[
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
             child: MarkdownBody(data: move.description),
           ),
-          CardBottomControls(
-            onEdit: widget.editable
-                ? () => EditMoveScreen(
-                      index: widget.index,
-                      move: widget.move,
-                      mode: DialogMode.Edit,
+          widget.mode == MoveCardMode.Editable
+              ? CardBottomControls(
+                  onEdit: () => Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          fullscreenDialog: true,
+                          builder: (ctx) => EditMoveScreen(
+                                index: widget.index,
+                                move: widget.move,
+                                mode: DialogMode.Edit,
+                              ),
+                        ),
+                      ),
+                  onDelete: () async => await showDialog(
+                        context: context,
+                        builder: (ctx) => ConfirmationDialog(
+                              title: Text('Delete Move?'),
+                              okButtonText: Text('Delete Move'),
+                            ),
+                      )
+                          ? deleteMove(widget.index)
+                          : null,
+                )
+              : widget.mode == MoveCardMode.Addable
+                  ? Padding(
+                      padding: EdgeInsetsDirectional.fromSTEB(0, 0, 16, 10),
+                      child: Align(
+                        alignment: Alignment.bottomRight,
+                        child: RaisedButton(
+                          color: Theme.of(context).primaryColorLight,
+                          child: Text('Add Move'),
+                          onPressed: () {
+                            createMove(widget.move);
+                            Navigator.pop(context, true);
+                          },
+                        ),
+                      ),
                     )
-                : null,
-            onDelete: widget.editable ? () {} : null,
-          ),
+                  : SizedBox.shrink(),
         ],
       ),
     );

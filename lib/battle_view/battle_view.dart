@@ -18,8 +18,9 @@ class BattleView extends StatelessWidget {
       'Starting Moves': character.mainClass.startingMoves,
       'Advanced Moves': character.moves
     };
-    num i = 0;
     categories.forEach((cat, moves) {
+      MoveCardMode mode =
+          cat == 'Advanced Moves' ? MoveCardMode.Editable : MoveCardMode.Fixed;
       cats.add(
         Padding(
           padding: const EdgeInsets.all(16),
@@ -27,20 +28,19 @@ class BattleView extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[Text(cat, style: titleStyle)] +
-                moves
-                    .map((move) => Padding(
+                List.generate(
+                    moves.length,
+                    (i) => Padding(
                           padding: const EdgeInsets.symmetric(vertical: 8),
                           child: MoveCard(
                             index: i,
-                            move: move,
-                            editable: cat == 'Advanced Moves',
+                            move: moves[i],
+                            mode: mode,
                           ),
-                        ))
-                    .toList(),
+                        )),
           ),
         ),
       );
-      i++;
     });
     return OrientationBuilder(builder: (context, orientation) {
       return StaggeredGridView.countBuilder(

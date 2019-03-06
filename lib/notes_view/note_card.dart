@@ -1,4 +1,5 @@
 import 'package:dungeon_paper/components/card_bottom_controls.dart';
+import 'package:dungeon_paper/components/confirmation_dialog.dart';
 import 'package:dungeon_paper/db/notes.dart';
 import 'package:dungeon_paper/dialogs.dart';
 import 'package:dungeon_paper/notes_view/edit_note_dialog.dart';
@@ -62,6 +63,7 @@ class NoteCardState extends State<NoteCard> {
     Navigator.push(
       context,
       MaterialPageRoute(
+        fullscreenDialog: true,
         builder: (ctx) => EditNoteScreen(
               index: widget.index,
               note: widget.note,
@@ -72,24 +74,15 @@ class NoteCardState extends State<NoteCard> {
   }
 
   void deleteCurrentNote(BuildContext context) async {
-    await showDialog(
-        context: context,
-        builder: (context) => AlertDialog(
-                title: const Text('Delete Note'),
-                content: const Text('Are you sure?'),
-                actions: [
-                  FlatButton(
-                      onPressed: () => Navigator.pop(context),
-                      child: Text('Cancel')),
-                  RaisedButton(
-                      color: Colors.red[700],
-                      textColor: Colors.white,
-                      onPressed: () {
-                        deleteNote(widget.index);
-                        Navigator.pop(context);
-                      },
-                      child: Text('Delete')),
-                ]));
+    if (await showDialog(
+      context: context,
+      builder: (context) => ConfirmationDialog(
+          title: const Text('Delete Note'),
+          text: const Text('Are you sure?'),
+          cancelButtonText: Text('Cancel')),
+    )) {
+      deleteNote(widget.index);
+    }
   }
 
   void _launchURL(String url) async {
