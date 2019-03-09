@@ -38,8 +38,8 @@ class FABState extends State<FAB> {
     });
   }
 
-  static Map<num, Widget Function(BuildContext context)> buttonsByIndex = {
-    Pages.Profile.index: (context) => FloatingActionButton(
+  static Map<Pages, Widget Function(BuildContext context)> buttonsByIndex = {
+    Pages.Profile: (context) => FloatingActionButton(
           foregroundColor: Colors.white,
           child: Icon(Icons.add),
           onPressed: () => Navigator.push(
@@ -54,7 +54,7 @@ class FABState extends State<FAB> {
                 ),
               ),
         ),
-    Pages.Battle.index: (context) => FloatingActionButton(
+    Pages.Battle: (context) => FloatingActionButton(
           foregroundColor: Colors.white,
           child: Icon(Icons.add),
           onPressed: () => Navigator.push(
@@ -73,16 +73,17 @@ class FABState extends State<FAB> {
 
   @override
   Widget build(BuildContext context) {
-    double activeIdx = pageController.page != null ? pageController.page : 0.0;
+    double activeIdx = pageController.hasClients && pageController.page != null ? pageController.page : 0.0;
     double t = (activeIdx.ceil() - activeIdx).abs();
     t = lerp(t < 0.5 ? 1 - t : t / 1, 0.5, 1, 0, 1);
+    var idx = Pages.values[activeIdx.round()];
 
     return Transform.scale(
       scale: t,
       child: Transform.rotate(
         angle: -pi * t,
-        child: activeIdx != null && buttonsByIndex.containsKey(activeIdx.round())
-          ? buttonsByIndex[activeIdx.round()](context)
+        child: activeIdx != null && buttonsByIndex.containsKey(idx)
+          ? buttonsByIndex[idx](context)
           : SizedBox.shrink(),
       ),
     );

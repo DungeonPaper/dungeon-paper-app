@@ -11,7 +11,7 @@ void main() async {
 }
 
 class DungeonPaper extends StatelessWidget {
-  final PageController _pageController = PageController();
+  final PageController _pageController = PageController(initialPage: 0);
 
   @override
   Widget build(BuildContext context) {
@@ -19,8 +19,8 @@ class DungeonPaper extends StatelessWidget {
 
     return MaterialApp(
       title: appName,
-      home: MainView(
-        appName: appName,
+      home: MainContainer(
+        title: appName,
         pageController: _pageController,
       ),
       theme: ThemeData(

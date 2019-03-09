@@ -16,25 +16,27 @@ class NavBar extends StatefulWidget {
 
 class NavBarState extends State<NavBar> {
   final PageController pageController;
-  num activePageIndex = 0;
+  double activePageIndex = 0;
 
   NavBarState({Key key, @required this.pageController});
 
   @override
   void initState() {
-    pageController.addListener(this.pageListener);
+    pageController.addListener(pageListener);
     super.initState();
   }
 
   void pageListener() {
-    setState(() {
-      activePageIndex = pageController.page;
-    });
+    if (pageController.hasClients && pageController.page != activePageIndex) {
+      setState(() {
+        activePageIndex = pageController.page;
+      });
+    }
   }
 
   Map<Pages, PageDetails> pageDetails = {
-    Pages.Home: PageDetails(Text('Profile'),
-        (color) => Icon(Icons.person, color: color), Pages.Home.index),
+    Pages.Home: PageDetails(
+        Text('Profile'), (color) => Icon(Icons.person, color: color)),
     Pages.Battle: PageDetails(
         Text('Battle'),
         (color) => SvgPicture.asset(
@@ -42,23 +44,26 @@ class NavBarState extends State<NavBar> {
               color: color,
               width: 24,
               height: 24,
-            ),
-        Pages.Battle.index),
+            )),
     Pages.Profile: PageDetails(
-        Text('Notes'),
-        (color) => Icon(Icons.speaker_notes, color: color),
-        Pages.Profile.index),
+        Text('Notes'), (color) => Icon(Icons.speaker_notes, color: color)),
   };
 
   @override
   Widget build(BuildContext context) {
     List<Widget> pageItems = Pages.values.map((page) {
       PageDetails details = pageDetails[page];
+      double t = clamp((activePageIndex - page.index).abs(), 0, 1);
+      Color color = Color.lerp(Theme.of(context).colorScheme.primary,
+          Theme.of(context).colorScheme.onSurface, t);
       return PageNavItem(
-          index: details.index,
-          label: details.label,
-          iconBuilder: details.iconBuilder,
-          pageController: pageController);
+        foregroundColor: color,
+        label: details.label,
+        iconBuilder: details.iconBuilder,
+        onChangePage: () => pageController.animateToPage(page.index,
+            duration: Duration(milliseconds: 500),
+            curve: Curves.easeInOutQuart),
+      );
     }).toList();
 
     return BottomAppBar(
@@ -75,7 +80,7 @@ class NavBarState extends State<NavBar> {
 
   @override
   void dispose() {
-    pageController.removeListener(this.pageListener);
+    pageController.removeListener(pageListener);
     super.dispose();
   }
 }
@@ -83,52 +88,40 @@ class NavBarState extends State<NavBar> {
 class PageDetails {
   final Widget label;
   final ColorBuilder iconBuilder;
-  final num index;
 
-  PageDetails(this.label, this.iconBuilder, this.index);
+  PageDetails(this.label, this.iconBuilder);
 }
 
 class PageNavItem extends StatelessWidget {
-  const PageNavItem({
-    Key key,
-    @required this.index,
-    @required this.pageController,
-    @required this.label,
-    @required this.iconBuilder,
-  }) : super(key: key);
+  const PageNavItem(
+      {Key key,
+      @required this.label,
+      @required this.iconBuilder,
+      @required this.foregroundColor,
+      @required this.onChangePage})
+      : super(key: key);
 
-  final num index;
-  final PageController pageController;
+  final Color foregroundColor;
   final Widget label;
   final ColorBuilder iconBuilder;
+  final Function onChangePage;
 
   @override
   Widget build(BuildContext context) {
-    // var _color = pageController.page.round() == index
-    //     ?
-    //     : Theme.of(context).colorScheme.onSurface;
-    double activeIdx = pageController.page != null ? pageController.page : 0.0;
-    double t = clamp((activeIdx - index).abs(), 0, 1);
-    Color _color = Color.lerp(Theme.of(context).colorScheme.primary,
-        Theme.of(context).colorScheme.onSurface, t);
-
     return Expanded(
       child: Material(
         color: Colors.transparent,
         child: SizedBox(
           height: 60,
           child: InkWell(
-            onTap: () {
-              pageController.animateToPage(index,
-                  duration: Duration(milliseconds: 500),
-                  curve: Curves.easeInOutQuart);
-            },
+            onTap: onChangePage,
             child: Column(
               mainAxisSize: MainAxisSize.max,
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
-                iconBuilder(_color),
-                DefaultTextStyle(style: TextStyle(color: _color), child: label)
+                iconBuilder(foregroundColor),
+                DefaultTextStyle(
+                    style: TextStyle(color: foregroundColor), child: label)
               ],
             ),
           ),

@@ -11,15 +11,47 @@ import 'package:dungeon_paper/redux/stores/connectors.dart';
 import 'package:dungeon_paper/redux/stores/loading_reducer.dart';
 import 'package:flutter/material.dart';
 
-class MainView extends StatelessWidget {
-  MainView({
+class MainContainer extends StatelessWidget {
+  MainContainer({
     Key key,
-    @required this.appName,
-    @required this.pageController,
+    @required this.title,
+    this.pageController,
   }) : super(key: key);
 
-  final String appName;
+  final String title;
   final PageController pageController;
+
+  @override
+  Widget build(BuildContext context) {
+    return DWStoreConnector(builder: (ctx, state) {
+      DbCharacter character = state.characters.current;
+      DbUser user = state.user.current;
+      return MainView(
+        character: character,
+        user: user,
+        title: title,
+        loading: state.loading[LoadingKeys.Character],
+        pageController: pageController,
+      );
+    });
+  }
+}
+
+class MainView extends StatelessWidget {
+  final DbCharacter character;
+  final DbUser user;
+  final String title;
+  final bool loading;
+  final PageController pageController;
+
+  MainView({
+    Key key,
+    @required this.character,
+    @required this.user,
+    @required this.title,
+    @required this.loading,
+    @required this.pageController,
+  }) : super(key: key);
 
   static Widget bottomSpacer = Container(height: 64);
 
@@ -31,38 +63,36 @@ class MainView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return DWStoreConnector(
-      builder: (context, state) {
-        DbCharacter character = state.characters.current;
-        DbUser user = state.user.current;
-        List<Widget> pages = Pages.values.map((page) {
-          var map = pageMap[page];
-          return map(character);
-        }).toList();
-
-        return Scaffold(
-          appBar: AppBar(
-            title: Text(appName),
-          ),
-          drawer: user != null ? Sidebar() : null,
-          floatingActionButton:
-              character != null ? FAB(pageController: pageController) : null,
-          floatingActionButtonLocation:
-              character != null ? FloatingActionButtonLocation.endFloat : null,
-          bottomNavigationBar:
-              character != null ? NavBar(pageController: pageController) : null,
-          body: PageView.custom(
-            controller: pageController,
-            childrenDelegate: SliverChildBuilderDelegate(
-              (context, idx) => character == null
-                  ? Welcome(
-                      loading: state.loading[LoadingKeys.Character],
-                      pageController: pageController,
-                    )
-                  : pages[idx],
-            ),
-          ),
-        );
-      });
+    PageView homeWidget = PageView.builder(
+      controller: pageController,
+      itemBuilder: (context, idx) => character == null
+          ? Welcome(
+              loading: loading,
+              pageController: pageController,
+            )
+          : pages[idx],
+      itemCount: character == null ? 1 : pages.length,
+    );
+    return Scaffold(
+      appBar: appBar,
+      drawer: drawer,
+      floatingActionButton: fab,
+      floatingActionButtonLocation: fabLocation,
+      bottomNavigationBar: navBar,
+      body: homeWidget,
+    );
   }
+
+  PreferredSizeWidget get appBar => AppBar(title: Text(title));
+  Widget get fab =>
+      character != null ? FAB(pageController: pageController) : null;
+  FloatingActionButtonLocation get fabLocation =>
+      character != null ? FloatingActionButtonLocation.endFloat : null;
+  Widget get drawer => user != null ? Sidebar() : null;
+  List<Widget> get pages => Pages.values.map((page) {
+        var map = pageMap[page];
+        return map(character);
+      }).toList();
+  Widget get navBar =>
+      character != null ? NavBar(pageController: pageController) : null;
 }

@@ -43,7 +43,7 @@ class BattleView extends StatelessWidget {
         ),
       );
     });
-    return OrientationBuilder(builder: (context, orientation) {
+    return Container(child: OrientationBuilder(builder: (context, orientation) {
       return StaggeredGridView.countBuilder(
         crossAxisCount: orientation == Orientation.portrait ? 1 : 2,
         itemCount: cats.length + 1,
@@ -51,6 +51,6 @@ class BattleView extends StatelessWidget {
             index < cats.length ? cats[index] : MainView.bottomSpacer,
         staggeredTileBuilder: (index) => StaggeredTile.fit(1),
       );
-    });
+    }));
   }
 }
