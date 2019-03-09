@@ -76,7 +76,11 @@ PrefsStore prefsReducer(PrefsStore state, action) {
   }
 
   if (action is Login) {
-    state.user = UserDetails(id: action.id, email: action.user.email);
+    state.user = UserDetails(
+      id: action.id,
+      email: action.user.email,
+      lastCharacterId: state.user.lastCharacterId,
+    );
   }
 
   if (action is Credentials) {
@@ -89,5 +93,6 @@ PrefsStore prefsReducer(PrefsStore state, action) {
       credentials: Credentials(),
     );
   }
+
   return state;
 }

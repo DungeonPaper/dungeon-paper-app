@@ -259,7 +259,11 @@ getOrCreateCharacter(DocumentSnapshot userSnap) async {
   if (userSnap.data['characters'].length > 0) {
     print('userSnap data:' + userSnap.data['characters'][0].documentID);
     await getAllCharacters(userSnap);
-    return setCurrentCharacterById(userSnap.data['characters'][0].documentID);
+
+    var lastCharId = dwStore.state.prefs.user.lastCharacterId;
+    DocumentReference lastChar = userSnap.data['characters']
+        .firstWhere((d) => lastCharId == null || d.documentID == lastCharId);
+    return setCurrentCharacterById(lastChar.documentID);
   } else {
     return createNewCharacter();
   }

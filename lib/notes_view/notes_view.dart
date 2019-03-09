@@ -41,7 +41,7 @@ class NotesView extends StatelessWidget {
           ));
         }
       }
-      if (children.length > 0) {
+      if (children.length > 1) {
         noteCategories[category] = Padding(
           padding: const EdgeInsets.all(16),
           child: Column(

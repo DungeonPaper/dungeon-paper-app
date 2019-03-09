@@ -1,4 +1,5 @@
 import 'package:dungeon_paper/db/character.dart';
+import 'package:dungeon_paper/profile_view/basic_info/hp_edit_dialog.dart';
 import 'package:dungeon_paper/redux/stores/connectors.dart';
 import 'package:flutter/material.dart';
 
@@ -52,6 +53,7 @@ class StatusBars extends StatelessWidget {
                 maxNum: character.maxHP.toString(),
                 borderRadius: BorderRadius.vertical(top: rounded),
                 labelText: 'HP',
+                onTap: () => showHpEditDialog(context, character),
               ),
               SizedBox(height: 1),
               StatusBarCard(
@@ -62,6 +64,7 @@ class StatusBars extends StatelessWidget {
                 borderRadius: BorderRadius.vertical(bottom: rounded),
                 maxNum: maxXp.toString(),
                 labelText: 'XP',
+                onTap: () {},
               ),
             ],
           ),
@@ -69,6 +72,10 @@ class StatusBars extends StatelessWidget {
       },
     );
   }
+
+  showHpEditDialog(BuildContext context, DbCharacter character) => showDialog(
+      context: context,
+      builder: (context) => HPEditDialog(character: character));
 }
 
 class StatusBarCard extends StatelessWidget {
@@ -81,6 +88,7 @@ class StatusBarCard extends StatelessWidget {
     @required this.maxNum,
     @required this.labelText,
     @required this.borderRadius,
+    @required this.onTap,
   }) : super(key: key);
 
   final Color barBackgroundColor;
@@ -90,6 +98,7 @@ class StatusBarCard extends StatelessWidget {
   final String maxNum;
   final String labelText;
   final BorderRadiusGeometry borderRadius;
+  final Function() onTap;
 
   @override
   Widget build(BuildContext context) {
@@ -98,12 +107,9 @@ class StatusBarCard extends StatelessWidget {
       elevation: 1,
       color: Colors.white,
       child: InkWell(
-        onTap: () {
-          print('ouch!');
-        },
+        onTap: onTap,
         child: Padding(
-          padding:
-              const EdgeInsets.symmetric(vertical: 12.0, horizontal: 16.0),
+          padding: const EdgeInsets.symmetric(vertical: 12.0, horizontal: 16.0),
           child: StatusBarInfo(
             barBackgroundColor: barBackgroundColor,
             barForegroundColor: barForegroundColor,

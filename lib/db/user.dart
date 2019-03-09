@@ -13,9 +13,7 @@ FirebaseUser authUser;
 DbUser currentUser = DbUser({});
 StreamSubscription listener;
 
-enum UserKeys {
-  characters, displayName, photoURL, email
-}
+enum UserKeys { characters, displayName, photoURL, email }
 
 class DbUser with Serializer<UserKeys> {
   DbUser([Map map]) {

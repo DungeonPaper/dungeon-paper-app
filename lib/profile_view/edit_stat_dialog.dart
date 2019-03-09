@@ -1,3 +1,4 @@
+import 'package:dungeon_paper/components/standard_dialog_controls.dart';
 import 'package:dungeon_paper/db/character.dart';
 import 'package:dungeon_paper/db/character_types.dart';
 import 'package:dungeon_paper/redux/stores/stores.dart';
@@ -36,14 +37,14 @@ class EditStatDialogState extends State<EditStatDialog> {
   @override
   Widget build(BuildContext context) {
     String modifier = DbCharacter.statModifierText(value);
-    String name = stat.toString().split('.')[1];
+    String name = enumName(stat);
     num controlledStat = int.parse(_controller.value.text);
 
     return SimpleDialog(
       title: Text('Edit $fullName'),
       children: <Widget>[
         Padding(
-          padding: const EdgeInsets.symmetric(vertical: 16.0, horizontal: 26.0),
+          padding: const EdgeInsets.only(top: 32.0),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.center,
@@ -99,22 +100,9 @@ class EditStatDialogState extends State<EditStatDialog> {
                         ],
                       ),
                     ),
-                    Padding(
-                      padding: const EdgeInsets.only(top: 24),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceAround,
-                        children: <Widget>[
-                          RaisedButton(
-                            onPressed: () => Navigator.pop(context),
-                            child: const Text('Cancel'),
-                          ),
-                          RaisedButton(
-                            color: Theme.of(context).colorScheme.primary,
-                            onPressed: () => _saveValue(),
-                            child: const Text('Save'),
-                          ),
-                        ],
-                      ),
+                    StandardDialogControls(
+                      onOK: () => _saveValue(),
+                      onCancel: () => Navigator.pop(context),
                     ),
                   ],
                 ),
