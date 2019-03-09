@@ -19,8 +19,9 @@ class Sidebar extends StatelessWidget {
             characterList(state.characters.characters, context) +
             [
               Divider(),
-              title('Application', context),
               addNew(),
+              Divider(),
+              title('Application', context),
               logOut(context),
             ];
 

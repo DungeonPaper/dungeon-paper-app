@@ -20,20 +20,34 @@ class CharacterHeadline extends StatelessWidget {
       return Row(
         children: [
           Expanded(
-            child: Material(
+            child: Container(
+              decoration: BoxDecoration(
+                  gradient: LinearGradient(
+                begin: AlignmentDirectional.topCenter,
+                end: AlignmentDirectional.bottomCenter,
+                colors: [
+                  Color.fromARGB(0, 0, 0, 0),
+                  Color.fromARGB(255, 150, 150, 150),
+                ],
+              )),
               child: Padding(
-                padding: EdgeInsets.fromLTRB(16, 16, 16, 12),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    Text('Level $level $alignment $mainClass'),
-                    Text(
-                      '$displayName',
-                      style: TextStyle(
-                          fontWeight: FontWeight.bold, fontSize: 24.0),
-                    ),
-                  ],
+                padding: EdgeInsets.fromLTRB(16, 32, 16, 12),
+                child: DefaultTextStyle(
+                  style: TextStyle(
+                      color: Colors.white,
+                      shadows: [Shadow(color: Colors.black, offset: Offset(1, 1))]),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Text('Level $level $alignment $mainClass'),
+                      Text(
+                        '$displayName',
+                        style: TextStyle(
+                            fontWeight: FontWeight.bold, fontSize: 24.0),
+                      ),
+                    ],
+                  ),
                 ),
               ),
             ),

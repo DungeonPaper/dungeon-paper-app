@@ -207,6 +207,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "2.1.5"
+  screen:
+    dependency: "direct main"
+    description:
+      name: screen
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.0.4"
   shared_preferences:
     dependency: "direct main"
     description:

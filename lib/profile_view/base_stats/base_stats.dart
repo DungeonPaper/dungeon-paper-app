@@ -8,7 +8,7 @@ class BaseStats extends StatelessWidget {
   Widget build(BuildContext context) {
     return DWStoreConnector(builder: (context, state) {
       return Container(
-        padding: EdgeInsets.all(10.0),
+        padding: EdgeInsets.all(8.0),
         child: Column(
           children: <Widget>[
             Row(
