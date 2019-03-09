@@ -1,3 +1,4 @@
+import 'package:dungeon_paper/components/confirmation_dialog.dart';
 import 'package:dungeon_paper/db/character.dart';
 import 'package:dungeon_paper/redux/stores/connectors.dart';
 import 'package:dungeon_paper/utils.dart';
@@ -33,18 +34,36 @@ class CharacterHeadline extends StatelessWidget {
               child: Padding(
                 padding: EdgeInsets.fromLTRB(16, 32, 16, 12),
                 child: DefaultTextStyle(
-                  style: TextStyle(
-                      color: Colors.white,
-                      shadows: [Shadow(color: Colors.black, offset: Offset(1, 1))]),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      Text('Level $level $alignment $mainClass'),
-                      Text(
-                        '$displayName',
-                        style: TextStyle(
-                            fontWeight: FontWeight.bold, fontSize: 24.0),
+                  style: TextStyle(color: Colors.white, shadows: [
+                    Shadow(color: Colors.black, offset: Offset(1, 1))
+                  ]),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: <Widget>[
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          Text('Level $level $alignment $mainClass'),
+                          Text(
+                            '$displayName',
+                            style: TextStyle(
+                                fontWeight: FontWeight.bold, fontSize: 24.0),
+                          ),
+                        ],
+                      ),
+                      IconButton(
+                        icon: Icon(Icons.mode_edit),
+                        onPressed: () {
+                          Scaffold.of(context)
+                            ..hideCurrentSnackBar()
+                            ..showSnackBar(SnackBar(
+                              content: Text('Not implemented'),
+                              key: Key('not_implemented'),
+                            ));
+                        },
+                        splashColor: Colors.white,
+                        color: Colors.white,
                       ),
                     ],
                   ),

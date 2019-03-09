@@ -60,7 +60,7 @@ class CharacterHeader extends StatelessWidget {
     var imageContainer =
         character.photoURL != null && character.photoURL.length > 0
             ? AspectRatio(aspectRatio: orientation == Orientation.portrait ? 2.0 / 1.0 : 14.0 / 9.0, child: image)
-            : Container(height: 30.0, width: 0.0);
+            : Container(height: 90.0, width: 0.0);
     return Stack(
       children: [
         imageContainer,

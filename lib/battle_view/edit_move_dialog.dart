@@ -177,32 +177,33 @@ class EditMoveScreenState extends State<EditMoveScreen>
       index: widget.index,
       name: widget.move.name,
       description: widget.move.description,
-      builder: (ctx, form, onSave) => Material(
-            child: Column(
-              mainAxisSize: MainAxisSize.max,
-              children: <Widget>[
-                AppBar(
-                  title: Text(
-                      '${widget.mode == DialogMode.Create ? 'Create' : 'Edit'} Move'),
-                  actions: tabIdx == 1
-                      ? <Widget>[
-                          IconButton(
-                            tooltip: 'Save',
-                            icon: Icon(Icons.save),
-                            onPressed: onSave,
-                          ),
-                        ]
-                      : [],
-                ),
-                TabBar(
+      builder: (ctx, form, onSave) {
+        var children = <Widget>[
+          AppBar(
+            title: Text(
+                '${widget.mode == DialogMode.Create ? 'Create' : 'Edit'} Move'),
+            actions: tabIdx == 1
+                ? <Widget>[
+                    IconButton(
+                      tooltip: 'Save',
+                      icon: Icon(Icons.save),
+                      onPressed: onSave,
+                    ),
+                  ]
+                : [],
+          ),
+          widget.mode == DialogMode.Create
+              ? TabBar(
                   controller: _controller,
                   tabs: List.generate(
                     texts.length,
                     (i) => Tab(child: Text(texts[i])),
                   ),
-                ),
-                Expanded(
-                  child: TabBarView(
+                )
+              : null,
+          Expanded(
+            child: widget.mode == DialogMode.Create
+                ? TabBarView(
                     controller: _controller,
                     children: <Widget>[
                       Material(
@@ -219,11 +220,22 @@ class EditMoveScreenState extends State<EditMoveScreen>
                         child: form,
                       ),
                     ],
+                  )
+                : Container(
+                    key: PageStorageKey<String>(texts[1]),
+                    padding: EdgeInsets.all(16),
+                    child: form,
                   ),
-                ),
-              ],
-            ),
           ),
+        ].where((el) => el != null).toList();
+
+        return Material(
+          child: Column(
+            mainAxisSize: MainAxisSize.max,
+            children: children,
+          ),
+        );
+      },
     );
   }
 }

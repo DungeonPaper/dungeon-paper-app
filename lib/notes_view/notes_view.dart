@@ -41,13 +41,15 @@ class NotesView extends StatelessWidget {
           ));
         }
       }
-      noteCategories[category] = Padding(
-        padding: const EdgeInsets.all(16),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: children,
-        ),
-      );
+      if (children.length > 0) {
+        noteCategories[category] = Padding(
+          padding: const EdgeInsets.all(16),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: children,
+          ),
+        );
+      }
     });
 
     return OrientationBuilder(builder: (context, orientation) {
