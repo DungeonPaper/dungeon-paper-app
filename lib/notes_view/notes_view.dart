@@ -14,17 +14,8 @@ class NotesView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Map<NoteCategory, Widget> noteCategories = {};
-
-    List<NoteCategory> order = [
-      NoteCategory.npcs,
-      NoteCategory.loot,
-      NoteCategory.locations,
-      NoteCategory.quests,
-      NoteCategory.misc
-    ];
-
-    order.forEach((category) {
+    List<Widget> noteCategories = [];
+    NoteCategory.defaultCategories.forEach((category) {
       Text title = Text(
         category.name,
         style: titleStyle,
@@ -42,22 +33,22 @@ class NotesView extends StatelessWidget {
         }
       }
       if (children.length > 1) {
-        noteCategories[category] = Padding(
+        noteCategories.add(Padding(
           padding: const EdgeInsets.all(16),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: children,
           ),
-        );
+        ));
       }
     });
 
     return OrientationBuilder(builder: (context, orientation) {
       return StaggeredGridView.countBuilder(
         crossAxisCount: orientation == Orientation.portrait ? 1 : 2,
-        itemCount: order.length + 1,
+        itemCount: noteCategories.length + 1,
         itemBuilder: (context, index) => index < noteCategories.length
-            ? noteCategories[order[index]]
+            ? noteCategories[index]
             : MainView.bottomSpacer,
         staggeredTileBuilder: (index) => StaggeredTile.fit(1),
       );

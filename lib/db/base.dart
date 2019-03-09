@@ -1,5 +1,5 @@
 abstract class Serializer<K extends dynamic> {
-  Map<K, dynamic> toJSON();
+  Map<String, dynamic> toJSON();
   Map<K, Function(dynamic value)> serializeMap;
 
   serialize(K key, [dynamic value]) {

@@ -21,9 +21,9 @@ class Note with Serializer<NoteKeys> {
   @override
   toJSON() {
     return {
-      NoteKeys.title: title,
-      NoteKeys.category: category,
-      NoteKeys.description: description,
+      'title': title,
+      'category': category,
+      'description': description,
     };
   }
 

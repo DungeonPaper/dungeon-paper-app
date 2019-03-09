@@ -119,23 +119,23 @@ class DbCharacter with Serializer<CharacterKeys> {
   @override
   toJSON() {
     return {
-      CharacterKeys.alignment: enumName(alignment),
-      CharacterKeys.displayName: displayName,
-      CharacterKeys.mainClass: mainClass.name,
-      CharacterKeys.photoURL: photoURL,
-      CharacterKeys.level: level,
-      CharacterKeys.currentHP: currentHP,
-      CharacterKeys.currentXP: currentXP,
-      CharacterKeys.maxHP: maxHP,
-      CharacterKeys.armor: armor,
-      CharacterKeys.str: str,
-      CharacterKeys.dex: dex,
-      CharacterKeys.con: con,
-      CharacterKeys.wis: wis,
-      CharacterKeys.int: int,
-      CharacterKeys.cha: cha,
-      CharacterKeys.moves: moves.map((move) => move.toJSON()).toList(),
-      CharacterKeys.notes: notes.map((note) => note.toJSON()).toList(),
+      'alignment': enumName(alignment),
+      'displayName': displayName,
+      'mainClass': mainClass.name,
+      'photoURL': photoURL,
+      'level': level,
+      'currentHP': currentHP,
+      'currentXP': currentXP,
+      'maxHP': maxHP,
+      'armor': armor,
+      'str': str,
+      'dex': dex,
+      'con': con,
+      'wis': wis,
+      'int': int,
+      'cha': cha,
+      'moves': moves.map((move) => move.toJSON()).toList(),
+      'notes': notes.map((note) => note.toJSON()).toList(),
     };
   }
 
@@ -209,10 +209,11 @@ Future<Map> updateCharacter(
   Firestore firestore = Firestore.instance;
 
   final String charDocId = dwStore.state.characters.currentCharDocID;
-  Map<CharacterKeys, dynamic> json = character.toJSON();
+  Map<String, dynamic> json = character.toJSON();
   Map<String, dynamic> output = {};
   updatedKeys.forEach((k) {
-    output[enumName(k)] = json[k];
+    var ck = enumName(k);
+    output[ck] = json[ck];
   });
   dwStore.dispatch(CharacterActions.setCurrentChar(charDocId, character));
 

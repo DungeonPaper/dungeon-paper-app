@@ -4,7 +4,6 @@ import 'package:dungeon_paper/db/character.dart';
 import 'package:dungeon_paper/db/listeners.dart';
 import 'package:dungeon_paper/redux/actions.dart';
 import 'package:dungeon_paper/redux/stores/stores.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import 'base.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
@@ -32,12 +31,12 @@ class DbUser with Serializer<UserKeys> {
   String email;
 
   @override
-  Map<UserKeys, dynamic> toJSON() {
+  toJSON() {
     return {
-      UserKeys.characters: characters,
-      UserKeys.displayName: displayName,
-      UserKeys.photoURL: photoURL,
-      UserKeys.email: email,
+      'characters': characters,
+      'displayName': displayName,
+      'photoURL': photoURL,
+      'email': email,
     };
   }
 
