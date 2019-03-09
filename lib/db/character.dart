@@ -3,7 +3,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dungeon_paper/db/character_types.dart';
 import 'package:dungeon_paper/db/notes.dart';
 import 'package:dungeon_paper/db/user.dart';
-import 'package:dungeon_paper/redux/actions/character_actions.dart';
+import 'package:dungeon_paper/redux/actions.dart';
 import 'package:dungeon_paper/redux/stores/stores.dart';
 import 'package:dungeon_paper/utils.dart';
 import 'package:dungeon_world_data/dw_data.dart';

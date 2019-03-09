@@ -1,5 +1,4 @@
-import 'package:dungeon_paper/redux/actions/character_actions.dart';
-import 'package:dungeon_paper/redux/actions/user_actions.dart';
+import 'package:dungeon_paper/redux/actions.dart';
 
 enum LoadingKeys {
   User,

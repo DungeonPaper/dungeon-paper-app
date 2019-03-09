@@ -1,5 +1,5 @@
 import 'package:dungeon_paper/db/character.dart';
-import 'package:dungeon_paper/redux/actions/character_actions.dart';
+import 'package:dungeon_paper/redux/actions.dart';
 import 'package:meta/meta.dart';
 
 class CharacterStore {

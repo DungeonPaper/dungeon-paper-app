@@ -8,7 +8,7 @@ import 'package:dungeon_paper/main_view/welcome.dart';
 import 'package:dungeon_paper/notes_view/notes_view.dart';
 import 'package:dungeon_paper/profile_view/basic_info/basic_info.dart';
 import 'package:dungeon_paper/redux/stores/connectors.dart';
-import 'package:dungeon_paper/redux/stores/loading_reducer.dart';
+import 'package:dungeon_paper/redux/stores/loading_store.dart';
 import 'package:flutter/material.dart';
 
 class MainContainer extends StatelessWidget {

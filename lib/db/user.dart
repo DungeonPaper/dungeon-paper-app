@@ -2,7 +2,7 @@ import 'dart:async';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dungeon_paper/db/character.dart';
 import 'package:dungeon_paper/db/listeners.dart';
-import 'package:dungeon_paper/redux/actions/user_actions.dart';
+import 'package:dungeon_paper/redux/actions.dart';
 import 'package:dungeon_paper/redux/stores/stores.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'base.dart';
@@ -64,7 +64,6 @@ class DbUser with Serializer<UserKeys> {
 }
 
 setCurrentUserByEmail(String email) async {
-  SharedPreferences prefs = await SharedPreferences.getInstance();
   QuerySnapshot userQuery = await Firestore.instance
       .collection('users')
       .where('email', isEqualTo: email)
@@ -77,9 +76,6 @@ setCurrentUserByEmail(String email) async {
   DocumentSnapshot userDoc = userQuery.documents[0];
   DbUser dbUser = DbUser(userDoc.data);
 
-  prefs.setString('userId', userDoc.documentID);
-  prefs.setString('userEmail', dbUser.email);
-
   dwStore.dispatch(UserActions.login(userDoc.documentID, dbUser));
   await getOrCreateCharacter(userDoc);
   registerDbUserListener();
@@ -88,9 +84,5 @@ setCurrentUserByEmail(String email) async {
 
 unsetCurrentUser() async {
   print('Unsetting user');
-  SharedPreferences prefs = await SharedPreferences.getInstance();
-  prefs.remove('userId');
-  prefs.remove('CharacterId');
-  prefs.remove('userEmail');
   dwStore.dispatch(UserActions.logout());
 }

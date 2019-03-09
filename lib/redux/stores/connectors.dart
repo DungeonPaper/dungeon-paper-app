@@ -1,4 +1,4 @@
-import 'package:dungeon_paper/redux/stores/loading_reducer.dart';
+import 'package:dungeon_paper/redux/stores/loading_store.dart';
 import 'package:dungeon_paper/redux/stores/stores.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
