@@ -25,16 +25,21 @@ class ConfirmationDialog extends StatelessWidget {
           child: text,
         ),
         Padding(
-          padding: const EdgeInsets.symmetric(vertical: 16.0),
+          padding: const EdgeInsets.symmetric(horizontal: 24.0, vertical: 16.0)
+              .copyWith(bottom: 0),
           child: Row(
-            mainAxisAlignment: MainAxisAlignment.center,
+            mainAxisAlignment: MainAxisAlignment.end,
             children: <Widget>[
               FlatButton(
                 child: cancelButtonText,
                 onPressed: () => Navigator.pop(context, false),
               ),
               RaisedButton(
-                child: okButtonText,
+                child: DefaultTextStyle(
+                  child: okButtonText,
+                  style: TextStyle(
+                      color: Colors.white, fontWeight: FontWeight.bold),
+                ),
                 color: Colors.red,
                 onPressed: () => Navigator.pop(context, true),
               ),

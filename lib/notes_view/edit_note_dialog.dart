@@ -1,3 +1,4 @@
+import 'package:dungeon_paper/components/markdown_help.dart';
 import 'package:dungeon_paper/db/notes.dart';
 import 'package:dungeon_paper/dialogs.dart';
 import 'package:flutter/material.dart';
@@ -69,6 +70,7 @@ class EditNoteFormState extends State<EditNoteForm> {
               // textAlign: TextAlign.center,
             ),
           ),
+          MarkdownHelp(),
         ],
       ),
     );

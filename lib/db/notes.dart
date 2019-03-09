@@ -37,7 +37,7 @@ class Note with Serializer<NoteKeys> {
         description = v ?? '';
       },
       NoteKeys.category: (v) {
-        category = NoteCategory(v.toString());
+        category = NoteCategory((v ?? NoteCategory.misc.name).toString());
       },
     };
     return serializeAll(map);

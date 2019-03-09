@@ -31,37 +31,38 @@ class MainView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return DWStoreConnector(builder: (context, state) {
-      DbCharacter character = state.characters.current;
-      DbUser user = state.user.current;
-      List<Widget> pages = Pages.values.map((page) {
-        var map = pageMap[page];
-        return map(character);
-      }).toList();
+    return DWStoreConnector(
+      builder: (context, state) {
+        DbCharacter character = state.characters.current;
+        DbUser user = state.user.current;
+        List<Widget> pages = Pages.values.map((page) {
+          var map = pageMap[page];
+          return map(character);
+        }).toList();
 
-      return Scaffold(
-        appBar: AppBar(
-          title: Text(appName),
-        ),
-        drawer: user != null ? Sidebar() : null,
-        floatingActionButton:
-            character != null ? FAB(pageController: pageController) : null,
-        floatingActionButtonLocation:
-            character != null ? FloatingActionButtonLocation.endFloat : null,
-        bottomNavigationBar:
-            character != null ? NavBar(pageController: pageController) : null,
-        body: PageView(
-          controller: pageController,
-          children: character == null
-              ? [
-                  Welcome(
-                    loading: state.loading[LoadingKeys.Character],
-                    pageController: pageController,
-                  )
-                ]
-              : pages,
-        ),
-      );
-    });
+        return Scaffold(
+          appBar: AppBar(
+            title: Text(appName),
+          ),
+          drawer: user != null ? Sidebar() : null,
+          floatingActionButton:
+              character != null ? FAB(pageController: pageController) : null,
+          floatingActionButtonLocation:
+              character != null ? FloatingActionButtonLocation.endFloat : null,
+          bottomNavigationBar:
+              character != null ? NavBar(pageController: pageController) : null,
+          body: PageView.custom(
+            controller: pageController,
+            childrenDelegate: SliverChildBuilderDelegate(
+              (context, idx) => character == null
+                  ? Welcome(
+                      loading: state.loading[LoadingKeys.Character],
+                      pageController: pageController,
+                    )
+                  : pages[idx],
+            ),
+          ),
+        );
+      });
   }
 }

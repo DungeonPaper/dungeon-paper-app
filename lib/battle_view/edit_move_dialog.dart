@@ -1,4 +1,5 @@
 import 'package:dungeon_paper/battle_view/add_existing_move.dart';
+import 'package:dungeon_paper/components/markdown_help.dart';
 import 'package:dungeon_paper/db/character.dart';
 import 'package:dungeon_paper/db/moves.dart';
 import 'package:dungeon_paper/dialogs.dart';
@@ -59,6 +60,7 @@ class EditMoveFormState extends State<EditMoveForm> {
               // textAlign: TextAlign.center,
             ),
           ),
+          MarkdownHelp(),
         ],
       ),
     );
