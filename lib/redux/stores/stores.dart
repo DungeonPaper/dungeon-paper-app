@@ -53,6 +53,13 @@ void sharedPrefsMiddleware(Store store, action, NextDispatcher next) async {
     prefs.setString('userEmail', action.user.email);
   }
 
+  if (action is Logout) {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    prefs.remove('userId');
+    prefs.remove('userEmail');
+    prefs.remove('characterId');
+  }
+
   next(action);
 }
 

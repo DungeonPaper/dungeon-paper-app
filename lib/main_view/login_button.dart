@@ -22,12 +22,14 @@ class LoginButtonState extends State<LoginButton> {
       builder: (context, state) {
         DbUser user = state.user.current;
         if (user == null) {
-          return IconButton(
-            icon: CircleAvatar(
-              child: Icon(Icons.account_circle),
+          return Container(
+            width: 220,
+            height: 50,
+            child: RaisedButton(
+              child: Text('Login with Google', style: TextStyle(fontSize: 20)),
+              color: Theme.of(context).accentColor,
+              onPressed: _handleSignIn,
             ),
-            tooltip: 'Log in',
-            onPressed: _handleSignIn,
           );
         }
         return SizedBox(height: 0, width: 0);
@@ -46,7 +48,7 @@ class LoginButtonState extends State<LoginButton> {
       }
     } catch (e) {
       if (e != 'user_canceled') {
-        throw(e);
+        throw (e);
       }
       Scaffold.of(context).showSnackBar(
         SnackBar(

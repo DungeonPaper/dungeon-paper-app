@@ -1,5 +1,6 @@
 import 'package:dungeon_paper/db/character.dart';
 import 'package:dungeon_paper/db/notes.dart';
+import 'package:dungeon_paper/main_view/main_view.dart';
 import 'package:dungeon_paper/notes_view/note_card.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
@@ -35,8 +36,8 @@ class NotesView extends StatelessWidget {
         if (note.category == category) {
           children.add(Padding(
             padding: const EdgeInsets.symmetric(vertical: 8.0),
-            child: NoteCard(
-                key: Key('note-' + note.title), index: i, note: note),
+            child:
+                NoteCard(key: Key('note-' + note.title), index: i, note: note),
           ));
         }
       }
@@ -52,8 +53,10 @@ class NotesView extends StatelessWidget {
     return OrientationBuilder(builder: (context, orientation) {
       return StaggeredGridView.countBuilder(
         crossAxisCount: orientation == Orientation.portrait ? 1 : 2,
-        itemCount: order.length,
-        itemBuilder: (context, index) => noteCategories[order[index]],
+        itemCount: order.length + 1,
+        itemBuilder: (context, index) => index < noteCategories.length
+            ? noteCategories[order[index]]
+            : MainView.bottomSpacer,
         staggeredTileBuilder: (index) => StaggeredTile.fit(1),
       );
     });

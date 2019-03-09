@@ -1,17 +1,11 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dungeon_paper/db/auth.dart';
-import 'package:dungeon_paper/db/character.dart';
-import 'package:dungeon_paper/db/user.dart';
-import 'package:dungeon_paper/main_view/fab.dart';
 import 'package:dungeon_paper/main_view/main_view.dart';
-import 'package:dungeon_paper/main_view/nav_bar.dart';
-import 'package:dungeon_paper/main_view/login_button.dart';
-import 'package:dungeon_paper/redux/stores/connectors.dart';
-import 'package:dungeon_paper/redux/stores/loading_reducer.dart';
-import 'package:dungeon_paper/main_view/sidebar.dart';
-import 'package:dungeon_paper/main_view/welcome.dart';
 import 'package:flutter/material.dart';
 
 void main() async {
+  Firestore firestore = Firestore.instance;
+  await firestore.settings(timestampsInSnapshotsEnabled: true);
   runApp(DungeonPaper());
   performSignIn();
 }
@@ -25,32 +19,10 @@ class DungeonPaper extends StatelessWidget {
 
     return MaterialApp(
       title: appName,
-      home: DWStoreConnector(builder: (context, state) {
-        DbCharacter character = state.characters.current;
-        DbUser user = state.user.current;
-        Widget body = character == null
-            ? Welcome(loading: state.loading[LoadingKeys.Character])
-            : MainView(pageController: _pageController, character: character);
-        return Scaffold(
-          appBar: AppBar(
-            title: const Text(appName),
-            actions: [
-              LoginButton(onUserChange: () {
-                _pageController.jumpToPage(0);
-              })
-            ],
-          ),
-          drawer: user != null ? Sidebar() : null,
-          floatingActionButton:
-              character != null ? FAB(pageController: _pageController) : null,
-          floatingActionButtonLocation:
-              character != null ? FloatingActionButtonLocation.endFloat : null,
-          bottomNavigationBar: character != null
-              ? NavBar(pageController: _pageController)
-              : null,
-          body: body,
-        );
-      }),
+      home: MainView(
+        appName: appName,
+        pageController: _pageController,
+      ),
       theme: ThemeData(
         primarySwatch: Colors.lightGreen,
         brightness: Brightness.light,

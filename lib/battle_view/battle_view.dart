@@ -1,5 +1,6 @@
 import 'package:dungeon_paper/battle_view/move_card.dart';
 import 'package:dungeon_paper/db/character.dart';
+import 'package:dungeon_paper/main_view/main_view.dart';
 import 'package:dungeon_world_data/move.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
@@ -45,8 +46,9 @@ class BattleView extends StatelessWidget {
     return OrientationBuilder(builder: (context, orientation) {
       return StaggeredGridView.countBuilder(
         crossAxisCount: orientation == Orientation.portrait ? 1 : 2,
-        itemCount: cats.length,
-        itemBuilder: (context, index) => cats[index],
+        itemCount: cats.length + 1,
+        itemBuilder: (context, index) =>
+            index < cats.length ? cats[index] : MainView.bottomSpacer,
         staggeredTileBuilder: (index) => StaggeredTile.fit(1),
       );
     });
