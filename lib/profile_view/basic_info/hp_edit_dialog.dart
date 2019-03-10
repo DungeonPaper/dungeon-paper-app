@@ -22,7 +22,7 @@ class _HPEditDialogState extends State<HPEditDialog> {
   @override
   initState() {
     value = widget.character.currentHP ?? 0;
-    initialValue = value ?? 0;
+    initialValue = value;
     super.initState();
   }
 
@@ -39,26 +39,67 @@ class _HPEditDialogState extends State<HPEditDialog> {
             mainAxisSize: MainAxisSize.max,
             children: <Widget>[
               SizedBox(
-                width: 100,
+                width: 150,
                 height: 100,
                 child: Center(
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: <Widget>[
-                      Text(
-                        value.toString(),
-                        style: TextStyle(fontSize: 36.0),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: <Widget>[
+                          Text(
+                            'HP ',
+                            textScaleFactor: 0.9,
+                            style: TextStyle(),
+                          ),
+                          Text(
+                            initialValue.toString(),
+                            style: TextStyle(fontSize: 36.0),
+                          ),
+                          Icon(Icons.arrow_forward),
+                          Text(
+                            value.toString(),
+                            style: TextStyle(fontSize: 36.0),
+                          ),
+                        ],
                       ),
-                      Text(
-                        "${difference >= 0 ? '+' : ''}$difference",
-                        style: TextStyle(
-                          fontSize: 20.0,
-                          color: difference > 0
-                              ? Colors.green
-                              : difference < 0
-                                  ? Colors.red
-                                  : Theme.of(context).textTheme.body1.color,
+                      Center(
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: <Widget>[
+                            Text(
+                              "${difference < 0 ? 'Damage' : 'Heal'}: ",
+                              textScaleFactor: 0.9,
+                              style: TextStyle(
+                                color: difference > 0
+                                    ? Colors.green
+                                    : difference < 0
+                                        ? Colors.red
+                                        : Theme.of(context)
+                                            .textTheme
+                                            .body1
+                                            .color,
+                              ),
+                            ),
+                            Text(
+                              "${difference >= 0 ? '+' : ''}$difference",
+                              style: TextStyle(
+                                fontSize: 20.0,
+                                color: difference > 0
+                                    ? Colors.green
+                                    : difference < 0
+                                        ? Colors.red
+                                        : Theme.of(context)
+                                            .textTheme
+                                            .body1
+                                            .color,
+                              ),
+                            ),
+                          ],
                         ),
                       ),
                     ],

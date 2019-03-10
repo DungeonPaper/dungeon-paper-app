@@ -22,12 +22,12 @@ class StandardDialogControls extends StatelessWidget {
         children: <Widget>[
           FlatButton(
             onPressed: onCancel,
-            child: okText,
+            child: cancelText,
           ),
           RaisedButton(
             color: Theme.of(context).colorScheme.primary,
             onPressed: onOK,
-            child: cancelText,
+            child: okText,
           ),
         ],
       ),
