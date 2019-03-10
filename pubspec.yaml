@@ -4,6 +4,7 @@ description: A new Flutter project.
 dependencies:
   flutter:
     sdk: flutter
+  wheel_spinner: ^0.0.4
   screen: ^0.0.4
   cupertino_icons: ^0.1.2
   google_sign_in: ^4.0.0

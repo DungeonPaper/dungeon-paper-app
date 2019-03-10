@@ -6,9 +6,13 @@ class StandardDialogControls extends StatelessWidget {
   final Widget cancelText;
   final Widget okText;
 
-  const StandardDialogControls(
-      {Key key, this.onOK, this.onCancel, Widget cancelText, Widget okText})
-      : cancelText = cancelText ?? const Text('Cancel'),
+  const StandardDialogControls({
+    Key key,
+    this.onOK,
+    this.onCancel,
+    Widget cancelText,
+    Widget okText,
+  })  : cancelText = cancelText ?? const Text('Cancel'),
         okText = okText ?? const Text('Save'),
         super(key: key);
 
@@ -21,7 +25,7 @@ class StandardDialogControls extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: <Widget>[
           FlatButton(
-            onPressed: onCancel,
+            onPressed: onCancel != null ? onCancel : () => Navigator.pop(context),
             child: cancelText,
           ),
           RaisedButton(
