@@ -1,5 +1,6 @@
 import 'package:dungeon_paper/db/character.dart';
 import 'package:dungeon_paper/profile_view/basic_info/hp_edit_dialog.dart';
+import 'package:dungeon_paper/profile_view/basic_info/xp_edit_dialog.dart';
 import 'package:dungeon_paper/redux/stores/connectors.dart';
 import 'package:flutter/material.dart';
 
@@ -9,7 +10,6 @@ class StatusBars extends StatelessWidget {
     return DWStoreConnector(
       builder: (context, state) {
         DbCharacter character = state.characters.current;
-        Color hpBg = Colors.red.shade100;
         if (character == null ||
             character.currentHP == null ||
             character.currentXP == null) {
@@ -25,22 +25,24 @@ class StatusBars extends StatelessWidget {
           );
         }
 
-        Animation<Color> hpValueColor =
-            AlwaysStoppedAnimation(Colors.red.shade700);
+        Color hpBg = Colors.red.shade100;
+        Color hpValueColor = Colors.red.shade700;
         double hpPerc = character != null &&
                 character.currentHP != null &&
                 character.currentHP > 0
             ? character.currentHP / character.maxHP
             : 0;
+
         Color xpBg = Colors.lightBlue.shade100;
+        Color xpValueColor = Colors.blue;
         int maxXp = character.level + 7;
-        Animation<Color> xpValueColor = AlwaysStoppedAnimation(Colors.blue);
         double xpPerc = character != null &&
                 character.currentXP != null &&
                 character.currentXP > 0
             ? character.currentXP / maxXp
             : 0;
         var rounded = Radius.circular(5);
+
         return Padding(
           padding: const EdgeInsets.all(8.0).copyWith(bottom: 0),
           child: Column(
@@ -64,7 +66,7 @@ class StatusBars extends StatelessWidget {
                 borderRadius: BorderRadius.vertical(bottom: rounded),
                 maxNum: maxXp.toString(),
                 labelText: 'XP',
-                onTap: () {},
+                onTap: () => showXpEditDialog(context, character),
               ),
             ],
           ),
@@ -76,6 +78,10 @@ class StatusBars extends StatelessWidget {
   showHpEditDialog(BuildContext context, DbCharacter character) => showDialog(
       context: context,
       builder: (context) => HPEditDialog(character: character));
+
+  showXpEditDialog(BuildContext context, DbCharacter character) => showDialog(
+      context: context,
+      builder: (context) => XPEditDialog(character: character));
 }
 
 class StatusBarCard extends StatelessWidget {
@@ -92,7 +98,7 @@ class StatusBarCard extends StatelessWidget {
   }) : super(key: key);
 
   final Color barBackgroundColor;
-  final Animation<Color> barForegroundColor;
+  final Color barForegroundColor;
   final double value;
   final String minNum;
   final String maxNum;
@@ -139,11 +145,11 @@ class StatusBarInfo extends StatelessWidget {
     @required this.value,
     @required this.minNum,
     @required this.maxNum,
-    @required this.labelText,
+    this.labelText,
   }) : super(key: key);
 
   final Color barBackgroundColor;
-  final Animation<Color> barForegroundColor;
+  final Color barForegroundColor;
   final double value;
   final String minNum;
   final String maxNum;
@@ -151,28 +157,31 @@ class StatusBarInfo extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    List labels = <Widget>[
+      SizedBox(
+        width: _VALUE_WIDTH,
+        child: Center(
+          child: Text('$minNum/$maxNum', style: valueStyle),
+        ),
+      )
+    ];
+    if (labelText != null) {
+      labels = <Widget>[Text(labelText, style: labelStyle)] + labels;
+    }
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 4, horizontal: 0),
       child: Row(
         children: [
           Row(
             crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              Text(labelText, style: labelStyle),
-              SizedBox(
-                width: _VALUE_WIDTH,
-                child: Center(
-                  child: Text('$minNum/$maxNum', style: valueStyle),
-                ),
-              )
-            ],
+            children: labels,
           ),
           Expanded(
             child: SizedBox(
               height: _PROGRESS_HEIGHT,
               child: LinearProgressIndicator(
                 backgroundColor: barBackgroundColor,
-                valueColor: barForegroundColor,
+                valueColor: AlwaysStoppedAnimation(barForegroundColor),
                 value: value,
                 // onEditUpdate: (value) => dwStore.dispatch(
                 //     CharacterActions.updateField('currentHP',

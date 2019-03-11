@@ -56,7 +56,7 @@ packages:
       name: dungeon_world_data
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "1.1.1"
+    version: "1.1.2"
   firebase_auth:
     dependency: "direct main"
     description:
@@ -178,7 +178,7 @@ packages:
       name: petitparser
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "2.1.1"
+    version: "2.2.1"
   quiver:
     dependency: transitive
     description:
@@ -304,5 +304,5 @@ packages:
     source: hosted
     version: "3.2.5"
 sdks:
-  dart: ">=2.1.1-dev.0.0 <3.0.0"
+  dart: ">=2.2.0 <3.0.0"
   flutter: ">=0.7.3 <2.0.0"

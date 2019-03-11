@@ -25,7 +25,8 @@ class StandardDialogControls extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: <Widget>[
           FlatButton(
-            onPressed: onCancel != null ? onCancel : () => Navigator.pop(context),
+            onPressed:
+                onCancel != null ? onCancel : () => Navigator.pop(context),
             child: cancelText,
           ),
           RaisedButton(

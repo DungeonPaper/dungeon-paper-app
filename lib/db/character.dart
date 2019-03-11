@@ -225,7 +225,7 @@ Future<Map> updateCharacter(
   return charData.data;
 }
 
-createNewCharacter() async {
+Future<DocumentReference> createNewCharacter() async {
   DbCharacter character = DbCharacter();
 
   String userDocId = dwStore.state.user.currentUserDocID;
@@ -266,6 +266,6 @@ getOrCreateCharacter(DocumentSnapshot userSnap) async {
         .firstWhere((d) => lastCharId == null || d.documentID == lastCharId);
     return setCurrentCharacterById(lastChar.documentID);
   } else {
-    return createNewCharacter();
+    return setCurrentCharacterById((await createNewCharacter()).documentID);
   }
 }

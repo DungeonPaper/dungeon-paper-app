@@ -1,4 +1,6 @@
 import 'package:dungeon_paper/components/standard_dialog_controls.dart';
+import 'package:dungeon_paper/profile_view/basic_info/current_stat_indicator.dart';
+import 'package:dungeon_paper/profile_view/status_bars.dart';
 import 'package:dungeon_paper/utils.dart';
 import 'package:wheel_spinner/wheel_spinner.dart';
 import 'package:dungeon_paper/db/character.dart';
@@ -65,10 +67,13 @@ class _HPEditDialogState extends State<HPEditDialog> {
     var screenWidth = MediaQuery.of(context).size.width;
     Widget indicator = Container(
       height: 110,
-      child: HPEditCurrentHPIndicator(
+      child: CurrentStatIndicator(
         initialValue: mode == HPMode.HP ? initialCurrentHP : initialMaxHP,
         value: mode == HPMode.HP ? currentHP : maxHP,
-        mode: mode,
+        label: mode == HPMode.HP ? 'HP' : 'Max HP',
+        differenceTextBuilder: (above) => mode == HPMode.HP
+            ? above ? 'Heal' : 'Damage'
+            : above ? 'Add' : 'Reduce',
       ),
     );
     Widget spinner = Container(
@@ -76,9 +81,7 @@ class _HPEditDialogState extends State<HPEditDialog> {
       child: WheelSpinner(
         key: Key(enumName(mode)),
         min: mode == HPMode.HP ? 0.0 : 1.0,
-        max: mode == HPMode.HP
-            ? maxHP.toDouble()
-            : double.infinity,
+        max: mode == HPMode.HP ? maxHP.toDouble() : double.infinity,
         value: mode == HPMode.HP ? currentHP.toDouble() : maxHP.toDouble(),
         minMaxLabelBuilder: (value) => value.toInt().toString(),
         onSlideUpdate: updateValue,
@@ -87,6 +90,17 @@ class _HPEditDialogState extends State<HPEditDialog> {
     return SimpleDialog(
       title: title,
       children: <Widget>[
+        Padding(
+          padding:
+              const EdgeInsets.symmetric(horizontal: 32.0).copyWith(top: 10.0),
+          child: StatusBarInfo(
+            value: currentHP / maxHP,
+            minNum: currentHP.toString(),
+            maxNum: maxHP.toString(),
+            barBackgroundColor: Colors.red.shade100,
+            barForegroundColor: Colors.red.shade700,
+          ),
+        ),
         Container(
           width: screenWidth >= HPEditDialog.MIN_ROW_WIDTH
               ? HPEditDialog.MIN_ROW_WIDTH.toDouble()
@@ -141,82 +155,5 @@ class _HPEditDialogState extends State<HPEditDialog> {
     setState(() {
       this.mode = mode;
     });
-  }
-}
-
-class HPEditCurrentHPIndicator extends StatelessWidget {
-  const HPEditCurrentHPIndicator({
-    Key key,
-    @required this.initialValue,
-    @required this.value,
-    @required this.mode,
-  }) : super(key: key);
-
-  final int initialValue;
-  final int value;
-  final HPMode mode;
-
-  @override
-  Widget build(BuildContext context) {
-    var difference = value - initialValue;
-
-    return Column(
-      mainAxisAlignment: MainAxisAlignment.center,
-      crossAxisAlignment: CrossAxisAlignment.center,
-      children: <Widget>[
-        Text(
-          mode == HPMode.HP ? 'HP ' : 'Max HP ',
-          textScaleFactor: 0.9,
-          style: TextStyle(),
-        ),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: <Widget>[
-            Text(
-              initialValue.toString(),
-              style: TextStyle(fontSize: 36.0),
-            ),
-            Icon(Icons.arrow_forward),
-            Text(
-              value.toString(),
-              style: TextStyle(fontSize: 36.0),
-            ),
-          ],
-        ),
-        Center(
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: <Widget>[
-              Text(
-                mode == HPMode.HP
-                    ? "${difference < 0 ? 'Damage' : 'Heal'}: "
-                    : "${difference < 0 ? 'Reduce' : 'Add'}: ",
-                textScaleFactor: 0.9,
-                style: TextStyle(
-                  color: difference > 0
-                      ? Colors.green
-                      : difference < 0
-                          ? Colors.red
-                          : Theme.of(context).textTheme.body1.color,
-                ),
-              ),
-              Text(
-                "${difference >= 0 ? '+' : ''}$difference",
-                style: TextStyle(
-                  fontSize: 20.0,
-                  color: difference > 0
-                      ? Colors.green
-                      : difference < 0
-                          ? Colors.red
-                          : Theme.of(context).textTheme.body1.color,
-                ),
-              ),
-            ],
-          ),
-        ),
-      ],
-    );
   }
 }
