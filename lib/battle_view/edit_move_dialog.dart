@@ -182,7 +182,7 @@ class EditMoveScreenState extends State<EditMoveScreen>
           AppBar(
             title: Text(
                 '${widget.mode == DialogMode.Create ? 'Create' : 'Edit'} Move'),
-            actions: tabIdx == 1
+            actions: tabIdx == 1 || widget.mode == DialogMode.Edit
                 ? <Widget>[
                     IconButton(
                       tooltip: 'Save',

@@ -1,7 +1,6 @@
 import 'package:dungeon_paper/components/standard_dialog_controls.dart';
 import 'package:dungeon_paper/profile_view/basic_info/current_stat_indicator.dart';
 import 'package:dungeon_paper/profile_view/status_bars.dart';
-import 'package:dungeon_paper/utils.dart';
 import 'package:wheel_spinner/wheel_spinner.dart';
 import 'package:dungeon_paper/db/character.dart';
 import 'package:flutter/material.dart';

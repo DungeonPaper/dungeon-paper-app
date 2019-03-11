@@ -1,17 +1,20 @@
 import 'package:dungeon_paper/db/character.dart';
+import 'package:dungeon_paper/profile_view/basic_info/edit_character_dialog.dart';
 import 'package:dungeon_paper/redux/stores/connectors.dart';
 import 'package:dungeon_paper/utils.dart';
 import 'package:flutter/material.dart';
 
 class CharacterHeadline extends StatelessWidget {
+  final DbCharacter character;
+
   const CharacterHeadline({
     Key key,
+    @required this.character,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return DWStoreConnector(builder: (context, state) {
-      DbCharacter character = state.characters.current;
       num level = character.level;
       String alignment = capitalize(enumName(character.alignment));
       String mainClass = capitalize(character.mainClass.name);
@@ -53,14 +56,7 @@ class CharacterHeadline extends StatelessWidget {
                       ),
                       IconButton(
                         icon: Icon(Icons.mode_edit),
-                        onPressed: () {
-                          Scaffold.of(context)
-                            ..hideCurrentSnackBar()
-                            ..showSnackBar(SnackBar(
-                              content: Text('Not implemented'),
-                              key: Key('not_implemented'),
-                            ));
-                        },
+                        onPressed: () => onEdit(context),
                         splashColor: Colors.white,
                         color: Colors.white,
                       ),
@@ -73,5 +69,15 @@ class CharacterHeadline extends StatelessWidget {
         ],
       );
     });
+  }
+
+  void onEdit(BuildContext context) {
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        fullscreenDialog: true,
+        builder: (context) => EditCharacterDialog(character: character),
+      ),
+    );
   }
 }

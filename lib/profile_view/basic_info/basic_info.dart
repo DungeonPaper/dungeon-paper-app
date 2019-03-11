@@ -7,23 +7,27 @@ import 'package:flutter/material.dart';
 
 class BasicInfo extends StatelessWidget {
   final DbCharacter character;
-  BasicInfo({Key key, @required this.character}) : super(key: key);
+
+  BasicInfo({
+    Key key,
+    @required this.character,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return OrientationBuilder(builder: (context, orientation) {
       List<Widget> children = [
         CharacterHeader(character: character, orientation: orientation),
-        StatusBars(),
-        BaseStats(),
+        StatusBars(character: character),
+        BaseStats(character: character),
       ];
-      var shortest = MediaQuery.of(context).size.shortestSide;
-      var longest = MediaQuery.of(context).size.longestSide;
+      var width = MediaQuery.of(context).size.width;
+      // var height = MediaQuery.of(context).size.height;
 
       return StaggeredGridView.extentBuilder(
         // return StaggeredGridView.countBuilder(
         maxCrossAxisExtent:
-            Orientation.portrait == orientation ? shortest : longest / 2,
+            Orientation.portrait == orientation ? width : width / 2,
         // crossAxisCount: orientation == Orientation.portrait ? 1 : 2,
         itemCount: children.length,
         itemBuilder: (context, index) => Container(child: children[index]),
@@ -57,16 +61,21 @@ class CharacterHeader extends StatelessWidget {
         ),
       ),
     );
-    var imageContainer =
-        character.photoURL != null && character.photoURL.length > 0
-            ? AspectRatio(aspectRatio: orientation == Orientation.portrait ? 2.0 / 1.0 : 14.0 / 9.0, child: image)
-            : Container(height: 90.0, width: 0.0);
+    var imageContainer = character.photoURL != null &&
+            character.photoURL.length > 0
+        ? AspectRatio(
+            aspectRatio:
+                orientation == Orientation.portrait ? 2.0 / 1.0 : 14.0 / 9.0,
+            child: image)
+        : Container(height: 90.0, width: 0.0);
     return Stack(
       children: [
         imageContainer,
         Positioned.fill(
           child: Align(
-              alignment: Alignment.bottomCenter, child: CharacterHeadline()),
+            alignment: Alignment.bottomCenter,
+            child: CharacterHeadline(character: character),
+          ),
         ),
       ],
     );
