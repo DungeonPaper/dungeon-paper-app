@@ -121,7 +121,7 @@ class DbCharacter with Serializer<CharacterKeys> {
     return {
       'alignment': enumName(alignment),
       'displayName': displayName,
-      'mainClass': mainClass.name,
+      'mainClass': mainClass.name.toLowerCase(),
       'photoURL': photoURL,
       'level': level,
       'currentHP': currentHP,
@@ -144,10 +144,10 @@ class DbCharacter with Serializer<CharacterKeys> {
     serializeMap = {
       CharacterKeys.alignment: (v) => alignment = v != null
           ? stringToEnum<Alignment>(AlignmentNameMap)(v)
-          : Alignment.good,
+          : Alignment.neutral,
       CharacterKeys.displayName: (v) => displayName = v ?? 'New Traveler',
       CharacterKeys.mainClass: (v) => mainClass =
-          v != null ? dungeonWorld.classes[v] : dungeonWorld.classes['bard'],
+          v != null && dungeonWorld.classes.containsKey(v) ? dungeonWorld.classes[v] : dungeonWorld.classes['bard'],
       CharacterKeys.photoURL: (v) => photoURL = v ?? '',
       CharacterKeys.level: (v) => level = v ?? 1,
       CharacterKeys.currentHP: (v) => currentHP = v ?? maxHP ?? 0,

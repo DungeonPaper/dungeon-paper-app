@@ -5,6 +5,7 @@ class ConfirmationDialog extends StatelessWidget {
   final Widget text;
   final Widget okButtonText;
   final Widget cancelButtonText;
+  final Object Function(bool result) returnValue;
 
   const ConfirmationDialog({
     Key key,
@@ -13,6 +14,7 @@ class ConfirmationDialog extends StatelessWidget {
         'This action can not be undone.\nAre you sure you want to proceed?'),
     this.okButtonText: const Text('OK'),
     this.cancelButtonText: const Text('Cancel'),
+    this.returnValue,
   }) : super(key: key);
 
   @override
@@ -32,7 +34,7 @@ class ConfirmationDialog extends StatelessWidget {
             children: <Widget>[
               FlatButton(
                 child: cancelButtonText,
-                onPressed: () => Navigator.pop(context, false),
+                onPressed: () => Navigator.pop(context, getReturnVal(false)),
               ),
               RaisedButton(
                 child: DefaultTextStyle(
@@ -41,12 +43,20 @@ class ConfirmationDialog extends StatelessWidget {
                       color: Colors.white, fontWeight: FontWeight.bold),
                 ),
                 color: Colors.red,
-                onPressed: () => Navigator.pop(context, true),
+                onPressed: () => Navigator.pop(context, getReturnVal(true)),
               ),
             ],
           ),
         )
       ],
     );
+  }
+
+  dynamic getReturnVal(bool result) {
+    if (returnValue != null) {
+      return returnValue(result);
+    }
+
+    return result;
   }
 }

@@ -1,7 +1,9 @@
+import 'package:dungeon_paper/components/animations/slide_route_from_right.dart';
 import 'package:dungeon_paper/db/character.dart';
 import 'package:dungeon_paper/profile_view/basic_info/change_class_dialog.dart';
 import 'package:dungeon_world_data/player_class.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_image/network.dart';
 
 class EditCharacterDialog extends StatefulWidget {
   final DbCharacter character;
@@ -119,23 +121,11 @@ class _EditCharacterDialogState extends State<EditCharacterDialog> {
       context,
       PageRouteBuilder(
         pageBuilder: (context, anim, anim2) => ChangeClassDialog(),
-        transitionsBuilder: (context, anim, anim2, child) {
-          return FadeTransition(
-            opacity: Tween(begin: 0.0, end: 1.0).animate(anim),
-            child: SlideTransition(
-              position: Tween(begin: Offset(1.0, 0.0), end: Offset.zero)
-                  .animate(anim),
-              child: FadeTransition(
-                opacity: Tween(begin: 1.0, end: 0.0).animate(anim2),
-                child: SlideTransition(
-                  position: Tween<Offset>(
-                    begin: Offset.zero,
-                    end: const Offset(1.0, 0.0),
-                  ).animate(anim2),
-                  child: child,
-                ),
-              ),
-            ),
+        transitionsBuilder: (context, inAnim, outAnim, child) {
+          return SlideRouteFromRight(
+            inAnim: inAnim,
+            outAnim: outAnim,
+            child: ChangeClassDialog(),
           );
         },
       ),
@@ -164,7 +154,7 @@ class _EditCharacterDialogState extends State<EditCharacterDialog> {
   }
 }
 
-class EditAvatarCard extends StatelessWidget {
+class EditAvatarCard extends StatefulWidget {
   final TextEditingController controller;
   final Function() onSave;
 
@@ -173,6 +163,13 @@ class EditAvatarCard extends StatelessWidget {
     @required this.controller,
     this.onSave,
   }) : super(key: key);
+
+  @override
+  _EditAvatarCardState createState() => _EditAvatarCardState();
+}
+
+class _EditAvatarCardState extends State<EditAvatarCard> {
+  bool imageError = false;
 
   @override
   Widget build(BuildContext context) {
@@ -190,8 +187,9 @@ class EditAvatarCard extends StatelessWidget {
               children: <Widget>[
                 Expanded(
                   child: TextField(
-                    controller: controller,
+                    controller: widget.controller,
                     textInputAction: TextInputAction.done,
+                    enableInteractiveSelection: true,
                     decoration: InputDecoration(
                       hintText: 'We recommend uploading to imgur.com',
                       labelText: 'Avatar Image URL',
@@ -206,26 +204,49 @@ class EditAvatarCard extends StatelessWidget {
     );
   }
 
-  Widget avatar() => controller.text.length > 0
-      ? AspectRatio(
-          aspectRatio: 14.0 / 9.0,
-          child: Container(
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.vertical(top: Radius.circular(5.0)),
-              image: DecorationImage(
-                fit: BoxFit.fitWidth,
-                alignment: FractionalOffset.topCenter,
-                image: NetworkImage(controller.text),
-              ),
-            ),
+  Widget avatar() {
+    // var image = NetworkImageWithRetry(widget.controller.text,
+    //     fetchStrategy: (uri, failure) async {
+    //       print('ahem');
+    //   if (failure != null) {
+    //     await Future.delayed(Duration(microseconds: 1));
+    //     setState(() {
+    //       imageError = true;
+    //     });
+    //     return FetchInstructions.giveUp(uri: uri);
+    //   } else {
+    //     setState(() {
+    //       imageError = false;
+    //     });
+    //     return NetworkImageWithRetry.defaultFetchStrategy(uri, failure);
+    //   }
+    // });
+    var image = NetworkImage(widget.controller.text);
+    var container = AspectRatio(
+      aspectRatio: 14.0 / 9.0,
+      child: Container(
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.vertical(top: Radius.circular(5.0)),
+          image: DecorationImage(
+            fit: BoxFit.fitWidth,
+            alignment: FractionalOffset.topCenter,
+            image: image,
           ),
-        )
-      : Container(
-          child: Padding(
-            padding: const EdgeInsets.all(40.0),
-            child: Text('Add an image URL in the field below.'),
-          ),
-        );
+        ),
+      ),
+    );
+    var placeholder = Container(
+      child: Padding(
+        padding: const EdgeInsets.all(40.0),
+        child: Text(!imageError
+            ? 'Add an image URL in the field below.'
+            : "We couldn't load your image,\nPlease check the URL and try again."),
+      ),
+    );
+    return widget.controller.text.length == 0 || imageError == true
+        ? placeholder
+        : container;
+  }
 }
 
 class EditDisplayNameCard extends StatelessWidget {
