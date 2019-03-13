@@ -1,53 +1,56 @@
 import 'package:dungeon_paper/components/markdown_help.dart';
-import 'package:dungeon_paper/db/moves.dart';
+import 'package:dungeon_paper/db/inventory.dart';
+import 'package:dungeon_paper/db/inventory_items.dart';
 import 'package:dungeon_paper/dialogs.dart';
-import 'package:dungeon_world_data/move.dart';
+import 'package:dungeon_world_data/equipment.dart';
 import 'package:flutter/material.dart';
 
-class CustomMoveFormBuilder extends StatefulWidget {
+class CustomInventoryItemFormBuilder extends StatefulWidget {
   final num index;
-  final Move move;
+  final InventoryItem item;
   final DialogMode mode;
   final void Function(BuildContext context, Widget form, Function onSave)
       builder;
-  final void Function(Move move) onUpdateMove;
+  final void Function(InventoryItem move) onUpdateItem;
 
-  CustomMoveFormBuilder({
+  CustomInventoryItemFormBuilder({
     Key key,
     @required this.index,
-    @required this.move,
+    @required this.item,
     @required this.mode,
     @required this.builder,
-    this.onUpdateMove,
+    this.onUpdateItem,
   }) : super(key: key);
 
   @override
-  State<StatefulWidget> createState() => CustomMoveFormBuilderState(
+  State<StatefulWidget> createState() => CustomInventoryItemFormBuilderState(
         index: index,
-        name: move.name,
-        description: move.description,
-        onUpdateMove: onUpdateMove,
+        name: item.item.name,
+        description: item.item.description,
+        onUpdateItem: onUpdateItem,
         mode: mode,
         builder: builder,
       );
 }
-class CustomMoveFormBuilderState extends State<CustomMoveFormBuilder> {
+
+class CustomInventoryItemFormBuilderState
+    extends State<CustomInventoryItemFormBuilder> {
   final num index;
   final DialogMode mode;
   String name;
   String description;
-  void Function(Move move) onUpdateMove;
+  void Function(InventoryItem move) onUpdateItem;
   Widget Function(BuildContext context, Widget form, Function onSave) builder;
   Map<String, TextEditingController> _controllers;
 
-  CustomMoveFormBuilderState({
+  CustomInventoryItemFormBuilderState({
     Key key,
     @required this.index,
     @required this.name,
     @required this.description,
     @required this.mode,
     @required this.builder,
-    this.onUpdateMove,
+    this.onUpdateItem,
   })  : _controllers = {
           'name': TextEditingController(text: (name ?? '').toString()),
           'description':
@@ -63,7 +66,7 @@ class CustomMoveFormBuilderState extends State<CustomMoveFormBuilder> {
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: <Widget>[
           TextField(
-            decoration: InputDecoration(hintText: 'Move Name'),
+            decoration: InputDecoration(hintText: 'Item Name'),
             autocorrect: true,
             textCapitalization: TextCapitalization.words,
             onChanged: (val) => _setStateValue('name', val),
@@ -92,7 +95,7 @@ class CustomMoveFormBuilderState extends State<CustomMoveFormBuilder> {
     return builder(
       context,
       form,
-      mode == DialogMode.Create ? _createMove : _updateMove,
+      mode == DialogMode.Create ? _createItem : _updateItem,
     );
   }
 
@@ -107,30 +110,34 @@ class CustomMoveFormBuilderState extends State<CustomMoveFormBuilder> {
     });
   }
 
-  _updateMove() async {
-    Move move = Move(
-      key: name.toLowerCase().replaceAll(RegExp('[^a-z]+'), '_'),
-      name: name,
-      description: description,
-      classes: [],
-    );
-    updateMove(index, move);
-    if (onUpdateMove != null) {
-      onUpdateMove(move);
+  _updateItem() async {
+    Equipment inv = widget.item.item;
+    num amount = widget.item.amount;
+    InventoryItem item = InventoryItem({
+      'item': inv.toJSON()..addAll({'name': name, 'description': description}),
+      'amount': amount,
+    });
+    updateInventoryItem(index, item);
+    if (onUpdateItem != null) {
+      onUpdateItem(item);
     }
     Navigator.pop(context);
   }
 
-  _createMove() async {
-    Move move = Move(
-      key: name.toLowerCase().replaceAll(RegExp('[^a-z]+'), '_'),
-      name: name,
-      description: description,
-      classes: [],
+  _createItem() async {
+    InventoryItem item = InventoryItem(
+      Equipment(
+        key: name.toLowerCase().replaceAll(RegExp('[^a-z]+'), '_'),
+        name: name,
+        description: description,
+        tags: [],
+        pluralName: name + 's',
+      ).toJSON()
+        ..addAll({'amount': widget.item.amount}),
     );
-    createMove(move);
-    if (onUpdateMove != null) {
-      onUpdateMove(move);
+    createInventoryItem(item);
+    if (onUpdateItem != null) {
+      onUpdateItem(item);
     }
     Navigator.pop(context);
   }

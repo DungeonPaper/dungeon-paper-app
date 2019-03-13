@@ -1,36 +1,34 @@
-import 'package:dungeon_paper/db/character.dart';
+import 'package:dungeon_paper/db/inventory.dart';
 import 'package:dungeon_paper/dialogs.dart';
-import 'package:dungeon_paper/move_screen/add_move.dart';
-import 'package:dungeon_paper/move_screen/add_spell.dart';
-import 'package:dungeon_paper/move_screen/custom_move_form.dart';
-import 'package:dungeon_paper/redux/stores/stores.dart';
-import 'package:dungeon_world_data/move.dart';
+import 'package:dungeon_paper/inventory_item_screen/add_inventory_item.dart';
+import 'package:dungeon_paper/inventory_item_screen/custom_inventory_item_form.dart';
 import 'package:flutter/material.dart';
 
-class MoveScreen extends StatefulWidget {
-  const MoveScreen({
+class InventoryItemScreen extends StatefulWidget {
+  const InventoryItemScreen({
     Key key,
     @required this.index,
-    @required this.move,
+    @required this.item,
     @required this.mode,
   }) : super(key: key);
 
   final num index;
-  final Move move;
+  final InventoryItem item;
   final DialogMode mode;
 
   @override
-  MoveScreenState createState() => MoveScreenState();
+  InventoryItemScreenState createState() => InventoryItemScreenState();
 }
 
-class MoveScreenState extends State<MoveScreen>
+class InventoryItemScreenState extends State<InventoryItemScreen>
     with SingleTickerProviderStateMixin {
   TabController _controller;
-  MoveScreenState() {
+
+  InventoryItemScreenState() {
     _controller = TabController(vsync: this, length: texts.length);
   }
 
-  final List<String> texts = ['Class Moves', 'Spells', 'Custom Move'];
+  final List<String> texts = ['Item List', 'Custom Item'];
   int tabIdx = 0;
 
   @override
@@ -45,12 +43,10 @@ class MoveScreenState extends State<MoveScreen>
 
   @override
   Widget build(BuildContext context) {
-    DbCharacter character = dwStore.state.characters.current;
-
-    return CustomMoveFormBuilder(
+    return CustomInventoryItemFormBuilder(
       mode: widget.mode,
       index: widget.index,
-      move: widget.move,
+      item: widget.item,
       builder: (ctx, form, onSave) {
         List<Widget> actions = <Widget>[
           IconButton(
@@ -64,20 +60,12 @@ class MoveScreenState extends State<MoveScreen>
           children: <Widget>[
             Container(
               color: Theme.of(context).scaffoldBackgroundColor,
-              child: AddMove(
+              child: AddInventoryItem(
                 key: PageStorageKey<String>(texts[0]),
-                level: character.level,
-                playerClass: character.mainClass,
               ),
             ),
             Container(
-              color: Theme.of(context).scaffoldBackgroundColor,
-              child: AddSpell(
-                key: PageStorageKey<String>(texts[1]),
-              ),
-            ),
-            Container(
-              key: PageStorageKey<String>(texts[2]),
+              key: PageStorageKey<String>(texts[1]),
               padding: EdgeInsets.all(16),
               child: form,
             ),
@@ -97,8 +85,10 @@ class MoveScreenState extends State<MoveScreen>
         );
         var appBar = AppBar(
           title: Text(
-              '${widget.mode == DialogMode.Create ? 'Create' : 'Edit'} Move'),
-          actions: tabIdx == 2 || widget.mode == DialogMode.Edit ? actions : [],
+              '${widget.mode == DialogMode.Create ? 'Create' : 'Edit'} Item'),
+          actions: tabIdx == texts.length - 1 || widget.mode == DialogMode.Edit
+              ? actions
+              : [],
         );
 
         var list = <Widget>[

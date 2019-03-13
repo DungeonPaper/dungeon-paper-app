@@ -50,7 +50,7 @@ class MoveCardState extends State<MoveCard> {
                         context,
                         MaterialPageRoute(
                           fullscreenDialog: true,
-                          builder: (ctx) => EditMoveScreen(
+                          builder: (ctx) => MoveScreen(
                                 index: widget.index,
                                 move: widget.move,
                                 mode: DialogMode.Edit,

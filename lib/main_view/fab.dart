@@ -1,6 +1,8 @@
 import 'dart:math';
+import 'package:dungeon_paper/db/inventory.dart';
 import 'package:dungeon_paper/db/notes.dart';
 import 'package:dungeon_paper/dialogs.dart';
+import 'package:dungeon_paper/inventory_item_screen/add_inventory_screen.dart';
 import 'package:dungeon_paper/main_view/nav_bar.dart';
 import 'package:dungeon_paper/move_screen/move_screen.dart';
 import 'package:dungeon_paper/notes_view/edit_note_dialog.dart';
@@ -57,23 +59,20 @@ class FABState extends State<FAB> {
     Pages.Equipment: (context) => FloatingActionButton(
           foregroundColor: Colors.white,
           child: Icon(Icons.add),
-          onPressed: () {},
-          // onPressed: () => Navigator.push(
-          //       context,
-          //       MaterialPageRoute(
-          //         fullscreenDialog: true,
-          //         builder: (ctx) => EditMoveScreen(
-          //               move: Move(
-          //                 key: '',
-          //                 name: '',
-          //                 description: '',
-          //                 classes: [],
-          //               ),
-          //               mode: DialogMode.Create,
-          //               index: -1,
-          //             ),
-          //       ),
-          //     ),
+          onPressed: () => Navigator.push(
+                context,
+                MaterialPageRoute(
+                  fullscreenDialog: true,
+                  builder: (ctx) => InventoryItemScreen(
+                        item: InventoryItem({
+                          'item': {},
+                          'amount': 1,
+                        }),
+                        mode: DialogMode.Create,
+                        index: -1,
+                      ),
+                ),
+              ),
         ),
     Pages.Battle: (context) => FloatingActionButton(
           foregroundColor: Colors.white,
@@ -82,7 +81,7 @@ class FABState extends State<FAB> {
                 context,
                 MaterialPageRoute(
                   fullscreenDialog: true,
-                  builder: (ctx) => EditMoveScreen(
+                  builder: (ctx) => MoveScreen(
                         move: Move(
                           key: '',
                           name: '',

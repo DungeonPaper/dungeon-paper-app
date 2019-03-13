@@ -59,7 +59,7 @@ class MainView extends StatelessWidget {
   final Map<Pages, Widget Function(DbCharacter character)> pageMap = {
     Pages.Home: (character) => BasicInfo(character: character),
     Pages.Battle: (character) => BattleView(character: character),
-    Pages.Equipment: (character) => EquipmentView(character: character),
+    Pages.Equipment: (character) => InventoryView(character: character),
     Pages.Notes: (character) => NotesView(character: character),
   };
 

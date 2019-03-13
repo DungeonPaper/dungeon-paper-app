@@ -46,11 +46,17 @@ class CategorizedList<T> extends StatelessWidget {
         style:
             titleStyle.copyWith(color: Theme.of(context).textTheme.body1.color),
       );
-      List<Widget> items = List.generate(
-          itemCount(category, index), (i) => itemBuilder(context, category, i));
+      num count = itemCount(category, index);
+      if (count == 0) {
+        return null;
+      }
+      List<Widget> items =
+          List.generate(count, (i) => itemBuilder(context, category, i));
+
       return Container(
-        padding: EdgeInsets.only(bottom: 16.0),
         child: Column(
+          mainAxisAlignment: MainAxisAlignment.start,
+          mainAxisSize: MainAxisSize.min,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[title] + items,
         ),
@@ -62,12 +68,18 @@ class CategorizedList<T> extends StatelessWidget {
         return StaggeredGridView.countBuilder(
           crossAxisCount: orientation == Orientation.portrait ? 1 : 2,
           itemCount: addSpacer ? cats.length + 1 : cats.length,
-          itemBuilder: (context, index) => index < cats.length
-              ? Padding(
-                  padding: const EdgeInsets.all(16),
-                  child: cats.elementAt(index))
-              : MainView.bottomSpacer,
-          staggeredTileBuilder: (index) => index < cats.length ? StaggeredTile.fit(1) : StaggeredTile.fit(2),
+          itemBuilder: (context, index) {
+            if (index < cats.length) {
+              Widget child = cats.elementAt(index);
+              if (child != null) {
+                return Padding(padding: const EdgeInsets.all(16), child: child);
+              }
+              return Container();
+            }
+            return MainView.bottomSpacer;
+          },
+          staggeredTileBuilder: (index) =>
+              index < cats.length ? StaggeredTile.fit(1) : StaggeredTile.fit(2)
         );
       },
     );

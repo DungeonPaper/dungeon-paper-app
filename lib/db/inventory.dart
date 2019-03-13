@@ -18,8 +18,8 @@ class InventoryItem with Serializer<EquipmentKeys> {
   @override
   toJSON() {
     return {
-      'title': item,
-      'description': amount,
+      'item': item.toJSON(),
+      'amount': amount,
     };
   }
 
@@ -27,7 +27,8 @@ class InventoryItem with Serializer<EquipmentKeys> {
   initSerializeMap([Map map]) {
     serializeMap = {
       EquipmentKeys.item: (v) {
-        item = v ?? Equipment('', [], '');
+        Equipment nv = v is Equipment ? v : Equipment.fromJSON(v ?? {});
+        item = nv;
       },
       EquipmentKeys.amount: (v) {
         amount = v ?? 1;

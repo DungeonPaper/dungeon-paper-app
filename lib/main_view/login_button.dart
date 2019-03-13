@@ -47,9 +47,9 @@ class LoginButtonState extends State<LoginButton> {
         onUserChange();
       }
     } catch (e) {
-      if (e != 'user_canceled') {
-        throw (e);
-      }
+      // if (e != 'user_canceled') {
+      //   throw (e);
+      // }
       Scaffold.of(context, nullOk: true).showSnackBar(
         SnackBar(
           content: Text('Login failed.'),

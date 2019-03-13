@@ -9,7 +9,6 @@ import 'package:firebase_auth/firebase_auth.dart';
 StreamSubscription authUserListener;
 
 registerAuthUserListener() {
-  print("REGISTER AUTH USER LISTENER");
   try {
     if (authUserListener != null) {
       authUserListener.cancel();
@@ -29,11 +28,13 @@ registerAuthUserListener() {
         unsetCurrentCharacter();
       }
     });
+    print("REGISTERED AUTH USER LISTENER");
   } catch (e) {
     print('error on user listener');
     if (authUserListener != null) {
       authUserListener.cancel();
     }
+    print("COULDN'T REGISTER AUTH USER LISTENER");
   }
 }
 
@@ -51,6 +52,7 @@ registerDbUserListener() {
       .listen((user) {
     dwStore.dispatch(UserActions.login(userDocID, DbUser(user.data)));
   });
+  print("REGISTERED DB USER LISTENER");
 }
 
 StreamSubscription dbCharsListener;
@@ -73,4 +75,5 @@ registerDbCharsListener() async {
     });
     dwStore.dispatch(CharacterActions.setCharacters(updatedChars));
   });
+  print("REGISTERED DB CHARACTER LISTENER");
 }

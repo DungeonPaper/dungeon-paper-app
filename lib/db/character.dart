@@ -1,7 +1,7 @@
 import 'dart:async';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dungeon_paper/db/character_types.dart';
-import 'package:dungeon_paper/db/equipment.dart';
+import 'package:dungeon_paper/db/inventory.dart';
 import 'package:dungeon_paper/db/notes.dart';
 import 'package:dungeon_paper/db/user.dart';
 import 'package:dungeon_paper/redux/actions.dart';
@@ -78,7 +78,7 @@ class DbCharacter with Serializer<CharacterKeys> {
       CharacterKeys.moves: map['moves'],
       CharacterKeys.notes: map['notes'],
       CharacterKeys.spells: map['spells'],
-      CharacterKeys.inventory: map['spells'],
+      CharacterKeys.inventory: map['inventory'],
     });
     mainClassKey = map['mainClass'];
   }
