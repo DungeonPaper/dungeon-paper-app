@@ -3,10 +3,10 @@ import 'package:dungeon_world_data/move.dart';
 import 'package:dungeon_world_data/player_class.dart';
 import 'package:flutter/material.dart';
 
-class AddExistingMove extends StatelessWidget {
+class AddMove extends StatelessWidget {
   final PlayerClass playerClass;
   final num level;
-  AddExistingMove({Key key, @required this.playerClass, @required this.level});
+  AddMove({Key key, @required this.playerClass, @required this.level});
 
   @override
   Widget build(BuildContext context) {

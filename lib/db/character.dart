@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dungeon_paper/db/character_types.dart';
+import 'package:dungeon_paper/db/equipment.dart';
 import 'package:dungeon_paper/db/notes.dart';
 import 'package:dungeon_paper/db/user.dart';
 import 'package:dungeon_paper/redux/actions.dart';
@@ -31,6 +32,7 @@ enum CharacterKeys {
   moves,
   notes,
   spells,
+  inventory,
 }
 
 const Map<String, CharacterKeys> CharacterKeysMap = {
@@ -76,6 +78,7 @@ class DbCharacter with Serializer<CharacterKeys> {
       CharacterKeys.moves: map['moves'],
       CharacterKeys.notes: map['notes'],
       CharacterKeys.spells: map['spells'],
+      CharacterKeys.inventory: map['spells'],
     });
     mainClassKey = map['mainClass'];
   }
@@ -99,6 +102,7 @@ class DbCharacter with Serializer<CharacterKeys> {
   List<Move> moves;
   List<Note> notes;
   List<Spell> spells;
+  List<InventoryItem> inventory;
 
   static num statModifier(num stat) {
     const modifiers = {1: -3, 4: -2, 6: -1, 9: 0, 13: 1, 16: 2, 18: 3};
@@ -142,6 +146,7 @@ class DbCharacter with Serializer<CharacterKeys> {
       'moves': moves.map((move) => move.toJSON()).toList(),
       'notes': notes.map((note) => note.toJSON()).toList(),
       'spells': spells.map((spell) => spell.toJSON()).toList(),
+      'inventory': inventory.map((item) => item.toJSON()).toList(),
     };
   }
 
@@ -174,6 +179,8 @@ class DbCharacter with Serializer<CharacterKeys> {
           notes = List.from(v ?? []).map((note) => Note(note)).toList(),
       CharacterKeys.spells: (v) => spells =
           List.from(v ?? []).map((spell) => Spell.fromJSON(spell)).toList(),
+      CharacterKeys.inventory: (v) => inventory =
+          List.from(v ?? []).map((item) => InventoryItem(item)).toList(),
     };
     serializeAll(map);
   }

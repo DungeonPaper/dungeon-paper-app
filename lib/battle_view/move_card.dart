@@ -1,8 +1,8 @@
-import 'package:dungeon_paper/battle_view/edit_move_dialog.dart';
 import 'package:dungeon_paper/components/card_bottom_controls.dart';
 import 'package:dungeon_paper/components/confirmation_dialog.dart';
 import 'package:dungeon_paper/db/moves.dart';
 import 'package:dungeon_paper/dialogs.dart';
+import 'package:dungeon_paper/move_screen/move_screen.dart';
 import 'package:dungeon_world_data/move.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_markdown/flutter_markdown.dart';

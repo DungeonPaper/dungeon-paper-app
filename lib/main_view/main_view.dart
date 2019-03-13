@@ -1,6 +1,7 @@
 import 'package:dungeon_paper/battle_view/battle_view.dart';
 import 'package:dungeon_paper/db/character.dart';
 import 'package:dungeon_paper/db/user.dart';
+import 'package:dungeon_paper/equipment_view/equipment_view.dart';
 import 'package:dungeon_paper/main_view/fab.dart';
 import 'package:dungeon_paper/main_view/nav_bar.dart';
 import 'package:dungeon_paper/main_view/sidebar.dart';
@@ -58,6 +59,7 @@ class MainView extends StatelessWidget {
   final Map<Pages, Widget Function(DbCharacter character)> pageMap = {
     Pages.Home: (character) => BasicInfo(character: character),
     Pages.Battle: (character) => BattleView(character: character),
+    Pages.Equipment: (character) => EquipmentView(character: character),
     Pages.Notes: (character) => NotesView(character: character),
   };
 
@@ -90,9 +92,9 @@ class MainView extends StatelessWidget {
       character != null ? FloatingActionButtonLocation.endFloat : null;
   Widget get drawer => user != null ? Sidebar() : null;
   List<Widget> get pages => Pages.values.map((page) {
-        var map = pageMap[page];
-        if (map != null) {
-          return map(character);
+        var builder = pageMap[page];
+        if (builder != null) {
+          return builder(character);
         }
         return Container();
       }).toList();

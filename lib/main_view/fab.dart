@@ -1,8 +1,8 @@
 import 'dart:math';
-import 'package:dungeon_paper/battle_view/edit_move_dialog.dart';
 import 'package:dungeon_paper/db/notes.dart';
 import 'package:dungeon_paper/dialogs.dart';
 import 'package:dungeon_paper/main_view/nav_bar.dart';
+import 'package:dungeon_paper/move_screen/move_screen.dart';
 import 'package:dungeon_paper/notes_view/edit_note_dialog.dart';
 import 'package:dungeon_paper/utils.dart';
 import 'package:dungeon_world_data/move.dart';
@@ -53,6 +53,27 @@ class FABState extends State<FAB> {
                       ),
                 ),
               ),
+        ),
+    Pages.Equipment: (context) => FloatingActionButton(
+          foregroundColor: Colors.white,
+          child: Icon(Icons.add),
+          onPressed: () {},
+          // onPressed: () => Navigator.push(
+          //       context,
+          //       MaterialPageRoute(
+          //         fullscreenDialog: true,
+          //         builder: (ctx) => EditMoveScreen(
+          //               move: Move(
+          //                 key: '',
+          //                 name: '',
+          //                 description: '',
+          //                 classes: [],
+          //               ),
+          //               mode: DialogMode.Create,
+          //               index: -1,
+          //             ),
+          //       ),
+          //     ),
         ),
     Pages.Battle: (context) => FloatingActionButton(
           foregroundColor: Colors.white,
