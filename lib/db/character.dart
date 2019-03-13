@@ -283,6 +283,7 @@ getOrCreateCharacter(DocumentSnapshot userSnap) async {
         .firstWhere((d) => lastCharId == null || d.documentID == lastCharId);
     return setCurrentCharacterById(lastChar.documentID);
   } else {
-    return setCurrentCharacterById((await createNewCharacter()).documentID);
+    DbCharacter char = await setCurrentCharacterById((await createNewCharacter()).documentID);
+    return char;
   }
 }

@@ -26,7 +26,7 @@ performSignIn() async {
     );
 
     FirebaseUser user = await auth.signInWithCredential(creds);
-    await setCurrentUserByEmail(user.email);
+    await setCurrentUser(user);
     registerAuthUserListener();
     return user;
   } catch (e) {

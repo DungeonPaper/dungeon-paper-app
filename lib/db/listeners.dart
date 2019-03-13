@@ -20,7 +20,7 @@ registerAuthUserListener() {
           authUser.email != null &&
           dwStore.state.user.current != null &&
           authUser.email != dwStore.state.user.current.email) {
-        setCurrentUserByEmail(authUser.email);
+        setCurrentUser(authUser);
       }
 
       if (authUser == null || authUser.email == null) {
