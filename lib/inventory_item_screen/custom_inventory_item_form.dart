@@ -37,11 +37,13 @@ class CustomInventoryItemFormBuilderState
     extends State<CustomInventoryItemFormBuilder> {
   final num index;
   final DialogMode mode;
+  final void Function(InventoryItem move) onUpdateItem;
+  final Widget Function(BuildContext context, Widget form, Function onSave)
+      builder;
+  final Map<String, TextEditingController> _controllers;
+
   String name;
   String description;
-  void Function(InventoryItem move) onUpdateItem;
-  Widget Function(BuildContext context, Widget form, Function onSave) builder;
-  Map<String, TextEditingController> _controllers;
 
   CustomInventoryItemFormBuilderState({
     Key key,
@@ -126,15 +128,18 @@ class CustomInventoryItemFormBuilderState
 
   _createItem() async {
     InventoryItem item = InventoryItem(
-      Equipment(
-        key: name.toLowerCase().replaceAll(RegExp('[^a-z]+'), '_'),
-        name: name,
-        description: description,
-        tags: [],
-        pluralName: name + 's',
-      ).toJSON()
-        ..addAll({'amount': widget.item.amount}),
+      {
+        'item': Equipment(
+          key: name.toLowerCase().replaceAll(RegExp('[^a-z]+'), '_'),
+          name: name,
+          description: description,
+          tags: [],
+          pluralName: name + 's',
+        ).toJSON(),
+        'amount': widget.item.amount
+      },
     );
+    print(item);
     createInventoryItem(item);
     if (onUpdateItem != null) {
       onUpdateItem(item);

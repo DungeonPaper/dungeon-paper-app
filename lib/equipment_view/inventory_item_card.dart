@@ -103,10 +103,37 @@ class InventoryItemCardState extends State<InventoryItemCard> {
             ),
           ),
           widget.mode == InventoryItemCardMode.Editable
-              ? CardBottomControls(
-                  entityTypeName: 'Inventory Item',
-                  onEdit: () => editInventoryItem(context),
-                  onDelete: () => deleteCurrentInventoryItem(context),
+              ? Row(
+                mainAxisAlignment: MainAxisAlignment.end,
+                  children: <Widget>[
+                    Expanded(
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.end,
+                        children: <Widget>[
+                          RaisedButton(
+                            shape: CircleBorder(side: BorderSide.none),
+                            child: Text('-'),
+                            onPressed: () {
+                              incrItemAmount(widget.index, widget.item, -1);
+                            },
+                          ),
+                          Text(widget.item.amount.toString()),
+                          RaisedButton(
+                            shape: CircleBorder(side: BorderSide.none),
+                            child: Text('+'),
+                            onPressed: () {
+                              incrItemAmount(widget.index, widget.item, 1);
+                            },
+                          )
+                        ],
+                      ),
+                    ),
+                    CardBottomControls(
+                      entityTypeName: 'Inventory Item',
+                      onEdit: () => editInventoryItem(context),
+                      onDelete: () => deleteCurrentInventoryItem(context),
+                    ),
+                  ],
                 )
               : Padding(
                   padding: EdgeInsets.all(8.0),
