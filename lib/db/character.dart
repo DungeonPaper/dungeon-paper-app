@@ -9,6 +9,7 @@ import 'package:dungeon_paper/utils.dart';
 import 'package:dungeon_world_data/dw_data.dart';
 import 'package:dungeon_world_data/move.dart';
 import 'package:dungeon_world_data/player_class.dart';
+import 'package:dungeon_world_data/spell.dart';
 import 'base.dart';
 
 enum CharacterKeys {
@@ -29,6 +30,7 @@ enum CharacterKeys {
   cha,
   moves,
   notes,
+  spells,
 }
 
 const Map<String, CharacterKeys> CharacterKeysMap = {
@@ -49,6 +51,7 @@ const Map<String, CharacterKeys> CharacterKeysMap = {
   'cha': CharacterKeys.cha,
   'moves': CharacterKeys.moves,
   'notes': CharacterKeys.notes,
+  'spells': CharacterKeys.spells,
 };
 
 class DbCharacter with Serializer<CharacterKeys> {
@@ -72,6 +75,7 @@ class DbCharacter with Serializer<CharacterKeys> {
       CharacterKeys.cha: map['cha'],
       CharacterKeys.moves: map['moves'],
       CharacterKeys.notes: map['notes'],
+      CharacterKeys.spells: map['spells'],
     });
     mainClassKey = map['mainClass'];
   }
@@ -94,6 +98,7 @@ class DbCharacter with Serializer<CharacterKeys> {
   num cha;
   List<Move> moves;
   List<Note> notes;
+  List<Spell> spells;
 
   static num statModifier(num stat) {
     const modifiers = {1: -3, 4: -2, 6: -1, 9: 0, 13: 1, 16: 2, 18: 3};
@@ -136,6 +141,7 @@ class DbCharacter with Serializer<CharacterKeys> {
       'cha': cha,
       'moves': moves.map((move) => move.toJSON()).toList(),
       'notes': notes.map((note) => note.toJSON()).toList(),
+      'spells': spells.map((spell) => spell.toJSON()).toList(),
     };
   }
 
@@ -147,7 +153,9 @@ class DbCharacter with Serializer<CharacterKeys> {
           : Alignment.neutral,
       CharacterKeys.displayName: (v) => displayName = v ?? 'New Traveler',
       CharacterKeys.mainClass: (v) => mainClass =
-          v != null && dungeonWorld.classes.containsKey(v) ? dungeonWorld.classes[v] : dungeonWorld.classes['bard'],
+          v != null && dungeonWorld.classes.containsKey(v)
+              ? dungeonWorld.classes[v]
+              : dungeonWorld.classes['bard'],
       CharacterKeys.photoURL: (v) => photoURL = v ?? '',
       CharacterKeys.level: (v) => level = v ?? 1,
       CharacterKeys.currentHP: (v) => currentHP = v ?? maxHP ?? 0,
@@ -164,6 +172,8 @@ class DbCharacter with Serializer<CharacterKeys> {
           List.from(v ?? []).map((move) => Move.fromJSON(move)).toList(),
       CharacterKeys.notes: (v) =>
           notes = List.from(v ?? []).map((note) => Note(note)).toList(),
+      CharacterKeys.spells: (v) => spells =
+          List.from(v ?? []).map((spell) => Spell.fromJSON(spell)).toList(),
     };
     serializeAll(map);
   }

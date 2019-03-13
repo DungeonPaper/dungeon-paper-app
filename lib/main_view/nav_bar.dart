@@ -2,7 +2,7 @@ import 'package:dungeon_paper/utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
-enum Pages { Home, Battle, Profile }
+enum Pages { Home, Battle, Equipment, Notes }
 
 typedef Widget ColorBuilder(Color color);
 
@@ -45,8 +45,15 @@ class NavBarState extends State<NavBar> {
               width: 24,
               height: 24,
             )),
-    Pages.Profile: PageDetails(
+    Pages.Notes: PageDetails(
         Text('Notes'), (color) => Icon(Icons.speaker_notes, color: color)),
+    Pages.Equipment: PageDetails(
+        Text('Equipment'), (color) => SvgPicture.asset(
+              'assets/armor.svg',
+              color: color,
+              width: 24,
+              height: 24,
+            )),
   };
 
   @override

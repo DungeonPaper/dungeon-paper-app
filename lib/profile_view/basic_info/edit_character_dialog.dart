@@ -3,7 +3,6 @@ import 'package:dungeon_paper/db/character.dart';
 import 'package:dungeon_paper/profile_view/basic_info/change_class_dialog.dart';
 import 'package:dungeon_world_data/player_class.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_image/network.dart';
 
 class EditCharacterDialog extends StatefulWidget {
   final DbCharacter character;

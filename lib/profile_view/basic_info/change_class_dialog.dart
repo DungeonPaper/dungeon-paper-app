@@ -1,4 +1,3 @@
-import 'package:dungeon_paper/components/animations/slide_route_from_right.dart';
 import 'package:dungeon_paper/components/class_description.dart';
 import 'package:dungeon_paper/components/confirmation_dialog.dart';
 import 'package:dungeon_paper/db/character.dart';

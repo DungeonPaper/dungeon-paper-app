@@ -3,21 +3,23 @@
     // for the documentation about the tasks.json format
     "version": "2.0.0",
     "tasks": [
-        {
-            "label": "Build APK",
-            "type": "shell",
-            "command": "flutter build apk"
-        },
-        {
-            "label": "Push APK",
-            "type": "shell",
-            "command": "adb push build/app/outputs/apk/release/app-release.apk /sdcard/Download/dungeon-paper.apk"
-        },
-        {
-            "label": "Build & Push APK",
-            "type": "shell",
-            "command": "flutter build apk && adb push build/app/outputs/apk/release/app-release.apk /sdcard/Download/dungeon-paper.apk",
-            "problemMatcher": []
-        }
+      {
+        "label": "Build APK",
+        "type": "shell",
+        "command": "flutter build apk",
+        "problemMatcher": []
+      },
+      {
+        "label": "Push APK",
+        "type": "shell",
+        "command": "adb push build/app/outputs/apk/release/app-release.apk /sdcard/Download/dungeon-paper.apk",
+        "problemMatcher": []
+      },
+      {
+        "label": "Build & Push APK",
+        "type": "shell",
+        "command": "flutter build apk && adb push build/app/outputs/apk/release/app-release.apk /sdcard/Download/dungeon-paper.apk",
+        "problemMatcher": []
+      }
     ]
 }

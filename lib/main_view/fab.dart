@@ -39,7 +39,7 @@ class FABState extends State<FAB> {
   }
 
   static Map<Pages, Widget Function(BuildContext context)> buttonsByIndex = {
-    Pages.Profile: (context) => FloatingActionButton(
+    Pages.Notes: (context) => FloatingActionButton(
           foregroundColor: Colors.white,
           child: Icon(Icons.add),
           onPressed: () => Navigator.push(
@@ -62,7 +62,12 @@ class FABState extends State<FAB> {
                 MaterialPageRoute(
                   fullscreenDialog: true,
                   builder: (ctx) => EditMoveScreen(
-                        move: Move(),
+                        move: Move(
+                          key: '',
+                          name: '',
+                          description: '',
+                          classes: [],
+                        ),
                         mode: DialogMode.Create,
                         index: -1,
                       ),
@@ -73,7 +78,9 @@ class FABState extends State<FAB> {
 
   @override
   Widget build(BuildContext context) {
-    double activeIdx = pageController.hasClients && pageController.page != null ? pageController.page : 0.0;
+    double activeIdx = pageController.hasClients && pageController.page != null
+        ? pageController.page
+        : 0.0;
     double t = (activeIdx.ceil() - activeIdx).abs();
     double rt = activeIdx.ceil() - activeIdx;
     t = lerp(t < 0.5 ? 1 - t : t / 1, 0.5, 1, 0, 1);
@@ -85,8 +92,8 @@ class FABState extends State<FAB> {
       child: Transform.rotate(
         angle: -pi * rt,
         child: activeIdx != null && buttonsByIndex.containsKey(idx)
-          ? buttonsByIndex[idx](context)
-          : SizedBox.shrink(),
+            ? buttonsByIndex[idx](context)
+            : SizedBox.shrink(),
       ),
     );
   }

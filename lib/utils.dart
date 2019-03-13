@@ -14,6 +14,13 @@ double clamp<T extends num>(T number, T low, T high) =>
 double lerp(num t, num minA, num maxA, num minB, num maxB) =>
     (t - minA) / (maxA - minA) * (maxB - minB) + minB;
 
+bool isNumeric(String s) {
+  if (s == null) {
+    return false;
+  }
+  return (double.tryParse(s.toString()) ?? null) != null;
+}
+
 Type typeOf<T>() => T;
 
 String enumName(Object o) {

@@ -1,4 +1,5 @@
 import 'package:dungeon_paper/battle_view/add_existing_move.dart';
+import 'package:dungeon_paper/battle_view/add_spell.dart';
 import 'package:dungeon_paper/components/markdown_help.dart';
 import 'package:dungeon_paper/db/character.dart';
 import 'package:dungeon_paper/db/moves.dart';
@@ -84,7 +85,12 @@ class EditMoveFormState extends State<EditMoveForm> {
   }
 
   _updateMove() async {
-    Move move = Move(name: name, description: description, classes: []);
+    Move move = Move(
+      key: name.toLowerCase().replaceAll(RegExp('[^a-z]+'), '_'),
+      name: name,
+      description: description,
+      classes: [],
+    );
     updateMove(index, move);
     if (onUpdateMove != null) {
       onUpdateMove(move);
@@ -93,7 +99,12 @@ class EditMoveFormState extends State<EditMoveForm> {
   }
 
   _createMove() async {
-    Move move = Move(name: name, description: description, classes: []);
+    Move move = Move(
+      key: name.toLowerCase().replaceAll(RegExp('[^a-z]+'), '_'),
+      name: name,
+      description: description,
+      classes: [],
+    );
     createMove(move);
     if (onUpdateMove != null) {
       onUpdateMove(move);
@@ -152,10 +163,10 @@ class EditMoveScreenState extends State<EditMoveScreen>
     with SingleTickerProviderStateMixin {
   TabController _controller;
   EditMoveScreenState() {
-    _controller = TabController(vsync: this, length: 2);
+    _controller = TabController(vsync: this, length: texts.length);
   }
 
-  final List<String> texts = ['Class Moves', 'Custom Move'];
+  final List<String> texts = ['Class Moves', 'Spells', 'Custom Move'];
   int tabIdx = 0;
 
   @override
@@ -182,7 +193,7 @@ class EditMoveScreenState extends State<EditMoveScreen>
           AppBar(
             title: Text(
                 '${widget.mode == DialogMode.Create ? 'Create' : 'Edit'} Move'),
-            actions: tabIdx == 1 || widget.mode == DialogMode.Edit
+            actions: tabIdx == 2 || widget.mode == DialogMode.Edit
                 ? <Widget>[
                     IconButton(
                       tooltip: 'Save',
@@ -214,8 +225,14 @@ class EditMoveScreenState extends State<EditMoveScreen>
                           playerClass: character.mainClass,
                         ),
                       ),
+                      Material(
+                        color: Theme.of(context).scaffoldBackgroundColor,
+                        child: AddSpell(
+                          key: PageStorageKey<String>(texts[1]),
+                        ),
+                      ),
                       Container(
-                        key: PageStorageKey<String>(texts[1]),
+                        key: PageStorageKey<String>(texts[2]),
                         padding: EdgeInsets.all(16),
                         child: form,
                       ),

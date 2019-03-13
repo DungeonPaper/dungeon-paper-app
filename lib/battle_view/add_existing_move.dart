@@ -20,6 +20,7 @@ class AddExistingMove extends StatelessWidget {
       Widget title = Text("Levels $minLevel-${minLevel + 4}",
           style: TextStyle(color: Theme.of(context).textTheme.subtitle.color));
       return Container(
+        padding: EdgeInsets.only(bottom: 16.0),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [title] +

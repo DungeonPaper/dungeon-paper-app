@@ -58,7 +58,7 @@ class MainView extends StatelessWidget {
   final Map<Pages, Widget Function(DbCharacter character)> pageMap = {
     Pages.Home: (character) => BasicInfo(character: character),
     Pages.Battle: (character) => BattleView(character: character),
-    Pages.Profile: (character) => NotesView(character: character),
+    Pages.Notes: (character) => NotesView(character: character),
   };
 
   @override
@@ -91,7 +91,10 @@ class MainView extends StatelessWidget {
   Widget get drawer => user != null ? Sidebar() : null;
   List<Widget> get pages => Pages.values.map((page) {
         var map = pageMap[page];
-        return map(character);
+        if (map != null) {
+          return map(character);
+        }
+        return Container();
       }).toList();
   Widget get navBar =>
       character != null ? NavBar(pageController: pageController) : null;
