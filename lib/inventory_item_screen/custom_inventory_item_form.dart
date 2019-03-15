@@ -1,12 +1,10 @@
 import 'package:dungeon_paper/components/markdown_help.dart';
-import 'package:dungeon_paper/db/inventory.dart';
 import 'package:dungeon_paper/db/inventory_items.dart';
 import 'package:dungeon_paper/dialogs.dart';
 import 'package:dungeon_world_data/equipment.dart';
 import 'package:flutter/material.dart';
 
 class CustomInventoryItemFormBuilder extends StatefulWidget {
-  final num index;
   final InventoryItem item;
   final DialogMode mode;
   final void Function(BuildContext context, Widget form, Function onSave)
@@ -15,7 +13,6 @@ class CustomInventoryItemFormBuilder extends StatefulWidget {
 
   CustomInventoryItemFormBuilder({
     Key key,
-    @required this.index,
     @required this.item,
     @required this.mode,
     @required this.builder,
@@ -24,7 +21,6 @@ class CustomInventoryItemFormBuilder extends StatefulWidget {
 
   @override
   State<StatefulWidget> createState() => CustomInventoryItemFormBuilderState(
-        index: index,
         name: item.item.name,
         description: item.item.description,
         onUpdateItem: onUpdateItem,
@@ -35,7 +31,6 @@ class CustomInventoryItemFormBuilder extends StatefulWidget {
 
 class CustomInventoryItemFormBuilderState
     extends State<CustomInventoryItemFormBuilder> {
-  final num index;
   final DialogMode mode;
   final void Function(InventoryItem move) onUpdateItem;
   final Widget Function(BuildContext context, Widget form, Function onSave)
@@ -47,7 +42,6 @@ class CustomInventoryItemFormBuilderState
 
   CustomInventoryItemFormBuilderState({
     Key key,
-    @required this.index,
     @required this.name,
     @required this.description,
     @required this.mode,
@@ -119,7 +113,7 @@ class CustomInventoryItemFormBuilderState
       'item': inv.toJSON()..addAll({'name': name, 'description': description}),
       'amount': amount,
     });
-    updateInventoryItem(index, item);
+    updateInventoryItem(item);
     if (onUpdateItem != null) {
       onUpdateItem(item);
     }

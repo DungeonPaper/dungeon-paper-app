@@ -1,5 +1,5 @@
 import 'dart:math';
-import 'package:dungeon_paper/db/inventory.dart';
+import 'package:dungeon_paper/db/inventory_items.dart';
 import 'package:dungeon_paper/db/notes.dart';
 import 'package:dungeon_paper/dialogs.dart';
 import 'package:dungeon_paper/inventory_item_screen/add_inventory_screen.dart';
@@ -51,7 +51,6 @@ class FABState extends State<FAB> {
                   builder: (ctx) => EditNoteScreen(
                         note: Note(),
                         mode: DialogMode.Create,
-                        index: -1,
                       ),
                 ),
               ),
@@ -69,7 +68,6 @@ class FABState extends State<FAB> {
                           'amount': 1,
                         }),
                         mode: DialogMode.Create,
-                        index: -1,
                       ),
                 ),
               ),

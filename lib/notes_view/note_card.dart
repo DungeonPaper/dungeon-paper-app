@@ -9,12 +9,10 @@ import 'package:url_launcher/url_launcher.dart';
 
 class NoteCard extends StatefulWidget {
   final Note note;
-  final num index;
 
   NoteCard({
     Key key,
     @required this.note,
-    @required this.index,
   }) : super(key: key);
 
   @override
@@ -65,7 +63,6 @@ class NoteCardState extends State<NoteCard> {
       MaterialPageRoute(
         fullscreenDialog: true,
         builder: (ctx) => EditNoteScreen(
-              index: widget.index,
               note: widget.note,
               mode: DialogMode.Edit,
             ),
@@ -81,7 +78,7 @@ class NoteCardState extends State<NoteCard> {
           text: const Text('Are you sure?'),
           cancelButtonText: Text('Cancel')),
     )) {
-      deleteNote(widget.index);
+      deleteNote(widget.note);
     }
   }
 

@@ -1,17 +1,21 @@
 import 'package:dungeon_paper/db/base.dart';
 import 'package:dungeon_paper/redux/stores/stores.dart';
+import 'package:dungeon_paper/utils.dart';
+import 'package:uuid/uuid.dart';
 import 'character.dart';
 
-enum NoteKeys { title, description, category }
+enum NoteKeys { key, title, description, category }
 
 class Note with Serializer<NoteKeys> {
   NoteCategory category;
+  String key;
   String title;
   String description;
 
   Note([Map map]) {
     map ??= {};
     initSerializeMap({
+      NoteKeys.key: map['key'],
       NoteKeys.title: map['title'],
       NoteKeys.description: map['description'],
       NoteKeys.category: map['category'],
@@ -21,8 +25,9 @@ class Note with Serializer<NoteKeys> {
   @override
   toJSON() {
     return {
+      'key': key,
       'title': title,
-      'category': category,
+      'category': category.toString(),
       'description': description,
     };
   }
@@ -30,6 +35,9 @@ class Note with Serializer<NoteKeys> {
   @override
   initSerializeMap([Map map]) {
     serializeMap = {
+      NoteKeys.key: (v) {
+        key = v ?? Uuid().v4();
+      },
       NoteKeys.title: (v) {
         title = v ?? '';
       },
@@ -78,22 +86,27 @@ class NoteCategory {
   int get hashCode => name.hashCode;
 }
 
-Future updateNote(num index, Note note) async {
+ReturnPredicate<Note> matchNote = matcher<Note>(
+    (Note i, Note o) => i.key != null && i.key == o.key || i.title == o.title);
+
+Future updateNote(Note note) async {
   if (dwStore.state.characters.current == null) {
     throw ('No character loaded.');
   }
 
   DbCharacter character = dwStore.state.characters.current;
+  num index = character.notes.indexWhere(matchNote(note));
   character.notes[index] = note;
   await updateCharacter(character, [CharacterKeys.notes]);
 }
 
-Future deleteNote(num index) async {
+Future deleteNote(Note note) async {
   if (dwStore.state.characters.current == null) {
     throw ('No character loaded.');
   }
 
   DbCharacter character = dwStore.state.characters.current;
+  num index = character.notes.indexWhere(matchNote(note));
   character.notes.removeAt(index);
   await updateCharacter(character, [CharacterKeys.notes]);
 }

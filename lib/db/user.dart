@@ -25,7 +25,7 @@ class DbUser with Serializer<UserKeys> {
     });
   }
 
-  List characters;
+  List<DocumentReference> characters;
   String displayName;
   String photoURL;
   String email;
@@ -44,7 +44,7 @@ class DbUser with Serializer<UserKeys> {
   initSerializeMap([Map map]) {
     serializeMap = {
       UserKeys.characters: (v) {
-        characters = v ?? [];
+        characters = List<DocumentReference>.from(v) ?? [];
       },
       UserKeys.displayName: (v) {
         displayName = v ?? 'Guest';

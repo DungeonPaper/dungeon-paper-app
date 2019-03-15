@@ -1,6 +1,8 @@
 import 'package:dungeon_paper/db/auth.dart';
 import 'package:dungeon_paper/db/user.dart';
+import 'package:dungeon_paper/redux/actions.dart';
 import 'package:dungeon_paper/redux/stores/connectors.dart';
+import 'package:dungeon_paper/redux/stores/stores.dart';
 import 'package:flutter/material.dart';
 
 class LoginButton extends StatefulWidget {
@@ -50,6 +52,9 @@ class LoginButtonState extends State<LoginButton> {
       // if (e != 'user_canceled') {
       //   throw (e);
       // }
+      print('SIGN IN ERROR:');
+      print(e);
+      dwStore.dispatch(UserActions.noLogin());
       Scaffold.of(context, nullOk: true).showSnackBar(
         SnackBar(
           content: Text('Login failed.'),

@@ -87,13 +87,13 @@ class Sidebar extends StatelessWidget {
 
   List<ListTile> characterList(
       Map<String, DbCharacter> characters, BuildContext context) {
-    return characters.keys.map((id) {
-      DbCharacter character = characters[id];
+    return dwStore.state.user.current.characters.map((charDoc) {
+      DbCharacter character = characters[charDoc.documentID];
       return ListTile(
         leading: Icon(Icons.person),
         title: Text(character.displayName),
         onTap: () {
-          dwStore.dispatch(CharacterActions.setCurrentChar(id, character));
+          dwStore.dispatch(CharacterActions.setCurrentChar(charDoc.documentID, character));
           Navigator.pop(context);
         },
       );

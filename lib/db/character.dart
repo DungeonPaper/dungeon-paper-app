@@ -1,7 +1,7 @@
 import 'dart:async';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dungeon_paper/db/character_types.dart';
-import 'package:dungeon_paper/db/inventory.dart';
+import 'package:dungeon_paper/db/inventory_items.dart';
 import 'package:dungeon_paper/db/notes.dart';
 import 'package:dungeon_paper/db/user.dart';
 import 'package:dungeon_paper/redux/actions.dart';
@@ -208,8 +208,14 @@ Future<Map<String, DbCharacter>> getAllCharacters(DocumentSnapshot user) async {
 
   List<DocumentSnapshot> results = await Future.wait(refs.values);
 
-  results.forEach((r) {
-    chars[r.documentID] = DbCharacter(r.data);
+  results.forEach((r) async {
+    var char = DbCharacter(r.data);
+    var migration = await checkAndPerformCharMigration(r.documentID, r.data);
+    if (migration != null) {
+      chars[r.documentID] = migration;
+    } else {
+      chars[r.documentID] = char;
+    }
   });
 
   dwStore.dispatch(CharacterActions.setCharacters(chars));
@@ -221,25 +227,28 @@ unsetCurrentCharacter() async {
   dwStore.dispatch(CharacterActions.remove());
 }
 
-Future<Map> updateCharacter(
-    DbCharacter character, List<CharacterKeys> updatedKeys) async {
+Future<DbCharacter> updateCharacter(
+    DbCharacter character, List<CharacterKeys> updatedKeys,
+    [String docId]) async {
   Firestore firestore = Firestore.instance;
 
-  final String charDocId = dwStore.state.characters.currentCharDocID;
+  final String charDocId = docId ?? dwStore.state.characters.currentCharDocID;
+  Map<String, DbCharacter> characters = dwStore.state.characters.characters;
   Map<String, dynamic> json = character.toJSON();
   Map<String, dynamic> output = {};
   updatedKeys.forEach((k) {
     var ck = enumName(k);
     output[ck] = json[ck];
   });
-  dwStore.dispatch(CharacterActions.setCurrentChar(charDocId, character));
+  characters[charDocId] = character;
+  dwStore.dispatch(CharacterActions.setCharacters(characters));
 
   print('Updating character: $output');
   final charDoc = firestore.document('character_bios/$charDocId')
     ..updateData(output);
   final charData = await charDoc.get();
 
-  return charData.data;
+  return DbCharacter(charData.data);
 }
 
 Future<DocumentReference> createNewCharacter() async {
@@ -283,7 +292,38 @@ getOrCreateCharacter(DocumentSnapshot userSnap) async {
         .firstWhere((d) => lastCharId == null || d.documentID == lastCharId);
     return setCurrentCharacterById(lastChar.documentID);
   } else {
-    DbCharacter char = await setCurrentCharacterById((await createNewCharacter()).documentID);
+    DbCharacter char =
+        await setCurrentCharacterById((await createNewCharacter()).documentID);
     return char;
   }
+}
+
+Future<DbCharacter> checkAndPerformCharMigration(
+    String docId, Map character) async {
+  List<CharacterKeys> keys = [];
+
+  Map<CharacterKeys, bool Function(dynamic obj)> predicateMap = {
+    CharacterKeys.notes: (notes) =>
+        notes != null && notes.any((note) => note['key'] == null),
+    CharacterKeys.inventory: (items) =>
+        items != null && items.any((item) => item['key'] == null),
+  };
+
+  predicateMap.forEach((enumKey, predicate) {
+    if (predicate == null) {
+      return;
+    }
+    String key = enumName(enumKey);
+    if (predicate(character[key])) {
+      keys.add(enumKey);
+    }
+  });
+
+  if (keys.isEmpty) {
+    print("No migrations for '${character['displayName']}' ($docId)");
+    return null;
+  }
+
+  print("Performing migrations for '${character['displayName']}' ($docId): $keys");
+  return updateCharacter(DbCharacter(character), keys, docId);
 }

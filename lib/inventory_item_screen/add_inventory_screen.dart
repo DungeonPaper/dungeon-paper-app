@@ -1,18 +1,18 @@
-import 'package:dungeon_paper/db/inventory.dart';
+import 'package:dungeon_paper/components/search_bar.dart';
+import 'package:dungeon_paper/db/inventory_items.dart';
 import 'package:dungeon_paper/dialogs.dart';
 import 'package:dungeon_paper/inventory_item_screen/add_inventory_item.dart';
 import 'package:dungeon_paper/inventory_item_screen/custom_inventory_item_form.dart';
+import 'package:dungeon_world_data/dw_data.dart';
 import 'package:flutter/material.dart';
 
 class InventoryItemScreen extends StatefulWidget {
   const InventoryItemScreen({
     Key key,
-    @required this.index,
     @required this.item,
     @required this.mode,
   }) : super(key: key);
 
-  final num index;
   final InventoryItem item;
   final DialogMode mode;
 
@@ -23,6 +23,7 @@ class InventoryItemScreen extends StatefulWidget {
 class InventoryItemScreenState extends State<InventoryItemScreen>
     with SingleTickerProviderStateMixin {
   TabController _controller;
+  String search = '';
 
   InventoryItemScreenState() {
     _controller = TabController(vsync: this, length: texts.length);
@@ -45,7 +46,6 @@ class InventoryItemScreenState extends State<InventoryItemScreen>
   Widget build(BuildContext context) {
     return CustomInventoryItemFormBuilder(
       mode: widget.mode,
-      index: widget.index,
       item: widget.item,
       builder: (ctx, form, onSave) {
         List<Widget> actions = <Widget>[
@@ -55,22 +55,6 @@ class InventoryItemScreenState extends State<InventoryItemScreen>
             onPressed: onSave,
           ),
         ];
-        var tabBarView = TabBarView(
-          controller: _controller,
-          children: <Widget>[
-            Container(
-              color: Theme.of(context).scaffoldBackgroundColor,
-              child: AddInventoryItem(
-                key: PageStorageKey<String>(texts[0]),
-              ),
-            ),
-            Container(
-              key: PageStorageKey<String>(texts[1]),
-              padding: EdgeInsets.all(16),
-              child: form,
-            ),
-          ],
-        );
         var formContainer = Container(
           key: PageStorageKey<String>(texts[1]),
           padding: EdgeInsets.all(16),
@@ -82,6 +66,21 @@ class InventoryItemScreenState extends State<InventoryItemScreen>
             texts.length,
             (i) => Tab(child: Text(texts[i])),
           ),
+        );
+        var tabBarView = TabBarView(
+          controller: _controller,
+          children: <Widget>[
+            Container(
+              key: PageStorageKey<String>(texts[0]),
+              color: Theme.of(context).scaffoldBackgroundColor,
+              child: AddInventoryItem(),
+            ),
+            Container(
+              key: PageStorageKey<String>(texts[1]),
+              padding: EdgeInsets.all(16),
+              child: form,
+            ),
+          ],
         );
         var appBar = AppBar(
           title: Text(

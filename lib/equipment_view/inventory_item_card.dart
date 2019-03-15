@@ -1,6 +1,5 @@
 import 'package:dungeon_paper/components/card_bottom_controls.dart';
 import 'package:dungeon_paper/components/confirmation_dialog.dart';
-import 'package:dungeon_paper/db/inventory.dart';
 import 'package:dungeon_paper/db/inventory_items.dart';
 import 'package:dungeon_paper/dialogs.dart';
 import 'package:dungeon_paper/inventory_item_screen/add_inventory_screen.dart';
@@ -13,13 +12,11 @@ enum InventoryItemCardMode { Addable, Editable }
 
 class InventoryItemCard extends StatefulWidget {
   final InventoryItem item;
-  final num index;
   final InventoryItemCardMode mode;
 
   InventoryItemCard({
     Key key,
     @required this.item,
-    @required this.index,
     @required this.mode,
   }) : super(key: key);
 
@@ -84,7 +81,7 @@ class InventoryItemCardState extends State<InventoryItemCard> {
         borderRadius: const BorderRadius.all(Radius.circular(5)),
       ),
       child: ExpansionTile(
-        key: PageStorageKey('inv-${widget.item.item.name}-${widget.index}'),
+        key: PageStorageKey('inv-${widget.item.key}'),
         title: title,
         initiallyExpanded: expanded == true,
         onExpansionChanged: (s) {
@@ -104,7 +101,7 @@ class InventoryItemCardState extends State<InventoryItemCard> {
           ),
           widget.mode == InventoryItemCardMode.Editable
               ? Row(
-                mainAxisAlignment: MainAxisAlignment.end,
+                  mainAxisAlignment: MainAxisAlignment.end,
                   children: <Widget>[
                     Expanded(
                       child: Row(
@@ -114,7 +111,7 @@ class InventoryItemCardState extends State<InventoryItemCard> {
                             shape: CircleBorder(side: BorderSide.none),
                             child: Text('-'),
                             onPressed: () {
-                              incrItemAmount(widget.index, widget.item, -1);
+                              incrItemAmount(widget.item, -1);
                             },
                           ),
                           Text(widget.item.amount.toString()),
@@ -122,7 +119,7 @@ class InventoryItemCardState extends State<InventoryItemCard> {
                             shape: CircleBorder(side: BorderSide.none),
                             child: Text('+'),
                             onPressed: () {
-                              incrItemAmount(widget.index, widget.item, 1);
+                              incrItemAmount(widget.item, 1);
                             },
                           )
                         ],
@@ -160,7 +157,6 @@ class InventoryItemCardState extends State<InventoryItemCard> {
       MaterialPageRoute(
         fullscreenDialog: true,
         builder: (ctx) => InventoryItemScreen(
-              index: widget.index,
               item: widget.item,
               mode: DialogMode.Edit,
             ),
@@ -176,7 +172,7 @@ class InventoryItemCardState extends State<InventoryItemCard> {
           text: const Text('Are you sure?'),
           cancelButtonText: Text('Cancel')),
     )) {
-      deleteInventoryItem(widget.index);
+      deleteInventoryItem(widget.item);
     }
   }
 

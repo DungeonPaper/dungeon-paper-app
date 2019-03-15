@@ -4,7 +4,6 @@ import 'package:dungeon_paper/dialogs.dart';
 import 'package:flutter/material.dart';
 
 class EditNoteFormState extends State<EditNoteForm> {
-  final num index;
   final DialogMode mode;
   NoteCategory category;
   String title;
@@ -15,7 +14,6 @@ class EditNoteFormState extends State<EditNoteForm> {
 
   EditNoteFormState({
     Key key,
-    @required this.index,
     @required this.category,
     @required this.title,
     @required this.description,
@@ -98,7 +96,7 @@ class EditNoteFormState extends State<EditNoteForm> {
   _updateNote() async {
     Note note = Note(
         {'title': title, 'description': description, 'category': category});
-    updateNote(index, note);
+    updateNote(note);
     if (onUpdateNote != null) {
       onUpdateNote(note);
     }
@@ -117,7 +115,6 @@ class EditNoteFormState extends State<EditNoteForm> {
 }
 
 class EditNoteForm extends StatefulWidget {
-  final num index;
   final String title;
   final NoteCategory category;
   final String description;
@@ -128,7 +125,6 @@ class EditNoteForm extends StatefulWidget {
 
   EditNoteForm({
     Key key,
-    @required this.index,
     @required this.category,
     @required this.title,
     @required this.description,
@@ -139,7 +135,6 @@ class EditNoteForm extends StatefulWidget {
 
   @override
   State<StatefulWidget> createState() => EditNoteFormState(
-        index: index,
         title: title,
         description: description,
         category: category,
@@ -152,12 +147,10 @@ class EditNoteForm extends StatefulWidget {
 class EditNoteScreen extends StatelessWidget {
   const EditNoteScreen({
     Key key,
-    @required this.index,
     @required this.note,
     @required this.mode,
   }) : super(key: key);
 
-  final num index;
   final Note note;
   final DialogMode mode;
 
@@ -165,7 +158,6 @@ class EditNoteScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return EditNoteForm(
       mode: mode,
-      index: index,
       title: note.title,
       description: note.description,
       category: note.category,

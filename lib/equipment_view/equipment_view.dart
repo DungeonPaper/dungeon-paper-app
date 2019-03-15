@@ -20,12 +20,13 @@ class InventoryView extends StatelessWidget {
       itemBuilder: (ctx, cat, i) => Padding(
             padding: EdgeInsets.symmetric(vertical: 8.0),
             child: InventoryItemCard(
-              index: i,
+              key: PageStorageKey(equipment[i].key),
               item: equipment[i],
               mode: InventoryItemCardMode.Editable,
             ),
           ),
       categories: ['equipment'],
+      addSpacer: true,
     );
   }
 }

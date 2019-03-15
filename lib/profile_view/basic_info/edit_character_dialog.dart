@@ -188,6 +188,7 @@ class _EditAvatarCardState extends State<EditAvatarCard> {
                   child: TextField(
                     controller: widget.controller,
                     textInputAction: TextInputAction.done,
+                    keyboardType: TextInputType.url,
                     enableInteractiveSelection: true,
                     decoration: InputDecoration(
                       hintText: 'We recommend uploading to imgur.com',
