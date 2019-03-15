@@ -73,7 +73,7 @@ class InventoryItemScreenState extends State<InventoryItemScreen>
             Container(
               key: PageStorageKey<String>(texts[0]),
               color: Theme.of(context).scaffoldBackgroundColor,
-              child: AddInventoryItem(),
+              child: AddInventoryItemContainer(),
             ),
             Container(
               key: PageStorageKey<String>(texts[1]),
