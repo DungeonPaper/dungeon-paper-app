@@ -1,7 +1,11 @@
 import 'package:dungeon_paper/components/animations/slide_route_from_right.dart';
 import 'package:dungeon_paper/db/character.dart';
+import 'package:dungeon_paper/db/character_types.dart' as Chr;
+import 'package:dungeon_paper/profile_view/basic_info/change_alignment_dialog.dart';
 import 'package:dungeon_paper/profile_view/basic_info/change_class_dialog.dart';
+import 'package:dungeon_paper/utils.dart';
 import 'package:dungeon_world_data/player_class.dart';
+import 'package:dungeon_world_data/alignment.dart' as DWA;
 import 'package:flutter/material.dart';
 
 class EditCharacterDialog extends StatefulWidget {
@@ -88,6 +92,11 @@ class _EditCharacterDialogState extends State<EditCharacterDialog> {
                         playerClass: widget.character.mainClass,
                         level: widget.character.level,
                         onTap: () => changeClass(context)),
+                    spacer,
+                    AlignmentDescription(
+                        playerClass: widget.character.mainClass,
+                        alignment: widget.character.alignment,
+                        onTap: () => changeAlignment(context)),
                   ],
                 ),
               ),
@@ -125,6 +134,26 @@ class _EditCharacterDialogState extends State<EditCharacterDialog> {
             inAnim: inAnim,
             outAnim: outAnim,
             child: ChangeClassDialog(),
+          );
+        },
+      ),
+    );
+  }
+
+  void changeAlignment(BuildContext context) async {
+    Navigator.push(
+      context,
+      PageRouteBuilder(
+        pageBuilder: (context, anim, anim2) => ChangeAlignmentDialog(
+              playerClass: widget.character.mainClass,
+            ),
+        transitionsBuilder: (context, inAnim, outAnim, child) {
+          return SlideRouteFromRight(
+            inAnim: inAnim,
+            outAnim: outAnim,
+            child: ChangeAlignmentDialog(
+              playerClass: widget.character.mainClass,
+            ),
           );
         },
       ),
@@ -333,6 +362,70 @@ class ClassSmallDescription extends StatelessWidget {
                       style: Theme.of(context).textTheme.body1,
                     ),
                   ],
+                ),
+              ),
+              Icon(Icons.chevron_right),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+class AlignmentDescription extends StatelessWidget {
+  final PlayerClass playerClass;
+  final Chr.Alignment alignment;
+  final VoidCallback onTap;
+  final int level;
+
+  const AlignmentDescription({
+    Key key,
+    @required this.playerClass,
+    @required this.alignment,
+    this.level,
+    this.onTap,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    String alignmentKey = enumName(alignment);
+    DWA.Alignment alignmentInfo = playerClass.alignments[alignmentKey] ?? DWA.Alignment(alignmentKey, alignmentKey, '');
+    bool hasDescription = alignmentInfo.description.isNotEmpty;
+
+    List<Widget> texts = <Widget>[
+      Text(
+        capitalize(alignmentInfo.name),
+        style: Theme.of(context).textTheme.title,
+      ),
+    ];
+    if (hasDescription) {
+      texts.add(Text(
+        alignmentInfo.description,
+        style: Theme.of(context).textTheme.body1,
+      ));
+    }
+    return Material(
+      color: Theme.of(context).canvasColor,
+      elevation: 1.0,
+      type: MaterialType.card,
+      borderRadius: BorderRadius.circular(5.0),
+      child: InkWell(
+        onTap: onTap,
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 16.0),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: <Widget>[
+              Padding(
+                padding: EdgeInsets.only(right: 16.0),
+                child: Icon(Icons.person, size: 40.0),
+              ),
+              Expanded(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: texts,
                 ),
               ),
               Icon(Icons.chevron_right),

@@ -5,25 +5,22 @@ import 'package:flutter/material.dart';
 
 class EditNoteFormState extends State<EditNoteForm> {
   final DialogMode mode;
-  NoteCategory category;
-  String title;
-  String description;
+  Note note;
   void Function(Note note) onUpdateNote;
   Widget Function(BuildContext context, Widget form, Function onSave) builder;
   Map<String, TextEditingController> _controllers;
 
   EditNoteFormState({
     Key key,
-    @required this.category,
-    @required this.title,
-    @required this.description,
+    @required this.note,
     @required this.mode,
     @required this.builder,
     this.onUpdateNote,
   })  : _controllers = {
-          'title': TextEditingController(text: title.toString()),
-          'description': TextEditingController(text: description.toString()),
-          'category': TextEditingController(text: category.toString()),
+          'title': TextEditingController(text: note.title.toString()),
+          'description':
+              TextEditingController(text: note.description.toString()),
+          'category': TextEditingController(text: note.category.toString()),
         },
         super();
 
@@ -36,7 +33,7 @@ class EditNoteFormState extends State<EditNoteForm> {
         children: <Widget>[
           DropdownButton(
             hint: Text('Category'),
-            value: category,
+            value: note.category,
             onChanged: (cat) => _setStateValue('category', cat.toString()),
             items: NoteCategory.defaultCategories
                 .map((category) => DropdownMenuItem(
@@ -84,18 +81,16 @@ class EditNoteFormState extends State<EditNoteForm> {
     setState(() {
       switch (key) {
         case 'title':
-          return title = newValue;
+          return note.title = newValue;
         case 'description':
-          return description = newValue;
+          return note.description = newValue;
         case 'category':
-          return category = NoteCategory(newValue);
+          return note.category = NoteCategory(newValue);
       }
     });
   }
 
   _updateNote() async {
-    Note note = Note(
-        {'title': title, 'description': description, 'category': category});
     updateNote(note);
     if (onUpdateNote != null) {
       onUpdateNote(note);
@@ -104,8 +99,6 @@ class EditNoteFormState extends State<EditNoteForm> {
   }
 
   _createNote() async {
-    Note note = Note(
-        {'title': title, 'description': description, 'category': category});
     createNote(note);
     if (onUpdateNote != null) {
       onUpdateNote(note);
@@ -115,9 +108,7 @@ class EditNoteFormState extends State<EditNoteForm> {
 }
 
 class EditNoteForm extends StatefulWidget {
-  final String title;
-  final NoteCategory category;
-  final String description;
+  final Note note;
   final DialogMode mode;
   final void Function(BuildContext context, Widget form, Function onSave)
       builder;
@@ -125,9 +116,7 @@ class EditNoteForm extends StatefulWidget {
 
   EditNoteForm({
     Key key,
-    @required this.category,
-    @required this.title,
-    @required this.description,
+    @required this.note,
     @required this.mode,
     @required this.builder,
     this.onUpdateNote,
@@ -135,9 +124,7 @@ class EditNoteForm extends StatefulWidget {
 
   @override
   State<StatefulWidget> createState() => EditNoteFormState(
-        title: title,
-        description: description,
-        category: category,
+        note: note,
         onUpdateNote: onUpdateNote,
         mode: mode,
         builder: builder,
@@ -158,9 +145,7 @@ class EditNoteScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return EditNoteForm(
       mode: mode,
-      title: note.title,
-      description: note.description,
-      category: note.category,
+      note: note,
       builder: (ctx, form, onSave) => Material(
             child: Column(
               children: <Widget>[

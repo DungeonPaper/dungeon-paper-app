@@ -33,28 +33,8 @@ enum CharacterKeys {
   notes,
   spells,
   inventory,
+  docVersion,
 }
-
-const Map<String, CharacterKeys> CharacterKeysMap = {
-  'alignment': CharacterKeys.alignment,
-  'displayName': CharacterKeys.displayName,
-  'mainClass': CharacterKeys.mainClass,
-  'photoURL': CharacterKeys.photoURL,
-  'level': CharacterKeys.level,
-  'currentHP': CharacterKeys.currentHP,
-  'currentXP': CharacterKeys.currentXP,
-  'maxHP': CharacterKeys.maxHP,
-  'armor': CharacterKeys.armor,
-  'str': CharacterKeys.str,
-  'dex': CharacterKeys.dex,
-  'con': CharacterKeys.con,
-  'wis': CharacterKeys.wis,
-  'int': CharacterKeys.int,
-  'cha': CharacterKeys.cha,
-  'moves': CharacterKeys.moves,
-  'notes': CharacterKeys.notes,
-  'spells': CharacterKeys.spells,
-};
 
 class DbCharacter with Serializer<CharacterKeys> {
   DbCharacter([Map map]) {
@@ -79,6 +59,7 @@ class DbCharacter with Serializer<CharacterKeys> {
       CharacterKeys.notes: map['notes'],
       CharacterKeys.spells: map['spells'],
       CharacterKeys.inventory: map['inventory'],
+      CharacterKeys.docVersion: map['docVersion'],
     });
     mainClassKey = map['mainClass'];
   }
@@ -103,6 +84,7 @@ class DbCharacter with Serializer<CharacterKeys> {
   List<Note> notes;
   List<Spell> spells;
   List<InventoryItem> inventory;
+  num docVersion;
 
   static num statModifier(num stat) {
     const modifiers = {1: -3, 4: -2, 6: -1, 9: 0, 13: 1, 16: 2, 18: 3};
@@ -147,6 +129,7 @@ class DbCharacter with Serializer<CharacterKeys> {
       'notes': notes.map((note) => note.toJSON()).toList(),
       'spells': spells.map((spell) => spell.toJSON()).toList(),
       'inventory': inventory.map((item) => item.toJSON()).toList(),
+      'docVersion': docVersion,
     };
   }
 
@@ -181,6 +164,7 @@ class DbCharacter with Serializer<CharacterKeys> {
           List.from(v ?? []).map((spell) => Spell.fromJSON(spell)).toList(),
       CharacterKeys.inventory: (v) => inventory =
           List.from(v ?? []).map((item) => InventoryItem(item)).toList(),
+      CharacterKeys.docVersion: (v) => docVersion = v ?? 1,
     };
     serializeAll(map);
   }
@@ -237,7 +221,7 @@ Future<DbCharacter> updateCharacter(
   Map<String, dynamic> json = character.toJSON();
   Map<String, dynamic> output = {};
   updatedKeys.forEach((k) {
-    var ck = enumName(k);
+    String ck = enumName(k);
     output[ck] = json[ck];
   });
   characters[charDocId] = character;
@@ -302,6 +286,14 @@ Future<DbCharacter> checkAndPerformCharMigration(
     String docId, Map character) async {
   List<CharacterKeys> keys = [];
 
+  num lastVersion = 2;
+  num curVersion = character[enumName(CharacterKeys.docVersion)] ?? 0;
+
+  if (curVersion == lastVersion) {
+    print("No migrations for '${character['displayName']}' ($docId)");
+    return null;
+  }
+
   Map<CharacterKeys, bool Function(dynamic obj)> predicateMap = {
     CharacterKeys.notes: (notes) =>
         notes != null && notes.any((note) => note['key'] == null),
@@ -319,11 +311,10 @@ Future<DbCharacter> checkAndPerformCharMigration(
     }
   });
 
-  if (keys.isEmpty) {
-    print("No migrations for '${character['displayName']}' ($docId)");
-    return null;
-  }
+  character[enumName(CharacterKeys.docVersion)] = lastVersion;
+  keys.add(CharacterKeys.docVersion);
 
-  print("Performing migrations for '${character['displayName']}' ($docId): $keys");
+  print(
+      "Performing migrations for '${character['displayName']}' ($docId): $keys");
   return updateCharacter(DbCharacter(character), keys, docId);
 }

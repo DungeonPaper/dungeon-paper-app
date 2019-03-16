@@ -127,29 +127,35 @@ class EditStatDialogState extends State<EditStatDialog> {
   }
 
   _saveValue() async {
-    String name = enumName(stat);
     DbCharacter character = dwStore.state.characters.current;
+    CharacterKeys key;
     switch (stat) {
       case Stats.int:
         character.int = value;
+        key = CharacterKeys.int;
         break;
       case Stats.wis:
         character.wis = value;
+        key = CharacterKeys.wis;
         break;
       case Stats.cha:
         character.cha = value;
+        key = CharacterKeys.cha;
         break;
       case Stats.con:
         character.con = value;
+        key = CharacterKeys.con;
         break;
       case Stats.str:
         character.str = value;
+        key = CharacterKeys.str;
         break;
       case Stats.dex:
         character.dex = value;
+        key = CharacterKeys.dex;
         break;
     }
-    await updateCharacter(character, [CharacterKeysMap[name.toLowerCase()]]);
+    await updateCharacter(character, [key]);
     Navigator.pop(context);
   }
 }

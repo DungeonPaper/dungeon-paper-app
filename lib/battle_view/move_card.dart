@@ -64,7 +64,7 @@ class MoveCardState extends State<MoveCard> {
                               okButtonText: Text('Delete Move'),
                             ),
                       )
-                          ? deleteMove(widget.index)
+                          ? deleteMove(widget.move)
                           : null,
                 )
               : widget.mode == MoveCardMode.Addable

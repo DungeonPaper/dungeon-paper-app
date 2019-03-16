@@ -114,7 +114,7 @@ class CustomMoveFormBuilderState extends State<CustomMoveFormBuilder> {
       description: description,
       classes: [],
     );
-    updateMove(index, move);
+    updateMove(move);
     if (onUpdateMove != null) {
       onUpdateMove(move);
     }

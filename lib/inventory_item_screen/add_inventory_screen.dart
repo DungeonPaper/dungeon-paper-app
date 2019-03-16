@@ -1,9 +1,7 @@
-import 'package:dungeon_paper/components/search_bar.dart';
 import 'package:dungeon_paper/db/inventory_items.dart';
 import 'package:dungeon_paper/dialogs.dart';
 import 'package:dungeon_paper/inventory_item_screen/add_inventory_item.dart';
 import 'package:dungeon_paper/inventory_item_screen/custom_inventory_item_form.dart';
-import 'package:dungeon_world_data/dw_data.dart';
 import 'package:flutter/material.dart';
 
 class InventoryItemScreen extends StatefulWidget {

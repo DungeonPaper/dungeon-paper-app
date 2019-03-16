@@ -34,7 +34,7 @@ E Function(String k) stringToEnum<E>(Map<String, E> enumValue) {
       : throw ('No corresponding enum value');
 }
 
-typedef Function(T obj) ReturnPredicate<T>(T obj);
+typedef bool Function(T obj) ReturnPredicate<T>(T obj);
 typedef bool InputPredicate<T>(T obj, T obj2);
 
 ReturnPredicate<T> matcher<T>(InputPredicate<T> predicate) => (T orig) => (T i) => predicate(i, orig);

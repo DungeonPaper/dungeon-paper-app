@@ -87,7 +87,7 @@ class NoteCategory {
 }
 
 ReturnPredicate<Note> matchNote = matcher<Note>(
-    (Note i, Note o) => i.key != null && i.key == o.key || i.title == o.title);
+    (Note i, Note o) => i.key == o.key);
 
 Future updateNote(Note note) async {
   if (dwStore.state.characters.current == null) {
