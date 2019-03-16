@@ -390,7 +390,8 @@ class AlignmentDescription extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     String alignmentKey = enumName(alignment);
-    DWA.Alignment alignmentInfo = playerClass.alignments[alignmentKey] ?? DWA.Alignment(alignmentKey, alignmentKey, '');
+    DWA.Alignment alignmentInfo = playerClass.alignments[alignmentKey] ??
+        DWA.Alignment(alignmentKey, alignmentKey, '');
     bool hasDescription = alignmentInfo.description.isNotEmpty;
 
     List<Widget> texts = <Widget>[
@@ -419,7 +420,7 @@ class AlignmentDescription extends StatelessWidget {
             children: <Widget>[
               Padding(
                 padding: EdgeInsets.only(right: 16.0),
-                child: Icon(Icons.person, size: 40.0),
+                child: Icon(icon, size: 40.0),
               ),
               Expanded(
                 child: Column(
@@ -434,5 +435,20 @@ class AlignmentDescription extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  get icon {
+    switch (alignment) {
+      case Chr.Alignment.good:
+        return Icons.mood;
+      case Chr.Alignment.lawful:
+        return Icons.sentiment_satisfied;
+      case Chr.Alignment.neutral:
+        return Icons.sentiment_neutral;
+      case Chr.Alignment.chaotic:
+        return Icons.sentiment_dissatisfied;
+      case Chr.Alignment.evil:
+        return Icons.mood_bad;
+    }
   }
 }
