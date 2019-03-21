@@ -8,7 +8,7 @@ class CustomMoveFormBuilder extends StatefulWidget {
   final num index;
   final Move move;
   final DialogMode mode;
-  final void Function(BuildContext context, Widget form, Function onSave)
+  final Widget Function(BuildContext context, Widget form, Function onSave)
       builder;
   final void Function(Move move) onUpdateMove;
 
@@ -22,38 +22,25 @@ class CustomMoveFormBuilder extends StatefulWidget {
   }) : super(key: key);
 
   @override
-  State<StatefulWidget> createState() => CustomMoveFormBuilderState(
-        index: index,
-        name: move.name,
-        description: move.description,
-        onUpdateMove: onUpdateMove,
-        mode: mode,
-        builder: builder,
-      );
+  State<StatefulWidget> createState() => CustomMoveFormBuilderState();
 }
+
 class CustomMoveFormBuilderState extends State<CustomMoveFormBuilder> {
-  final num index;
-  final DialogMode mode;
   String name;
   String description;
-  void Function(Move move) onUpdateMove;
-  Widget Function(BuildContext context, Widget form, Function onSave) builder;
   Map<String, TextEditingController> _controllers;
 
-  CustomMoveFormBuilderState({
-    Key key,
-    @required this.index,
-    @required this.name,
-    @required this.description,
-    @required this.mode,
-    @required this.builder,
-    this.onUpdateMove,
-  })  : _controllers = {
-          'name': TextEditingController(text: (name ?? '').toString()),
-          'description':
-              TextEditingController(text: (description ?? '').toString()),
-        },
-        super();
+  @override
+  void initState() {
+    _controllers = {
+      'name': TextEditingController(text: (widget.move.name ?? '').toString()),
+      'description': TextEditingController(
+          text: (widget.move.description ?? '').toString()),
+    };
+    name = _controllers['name'].text;
+    description = _controllers['description'].text;
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -73,7 +60,7 @@ class CustomMoveFormBuilderState extends State<CustomMoveFormBuilder> {
             margin: const EdgeInsets.symmetric(vertical: 8.0),
             child: TextField(
               decoration: InputDecoration(labelText: 'Description'),
-              autofocus: mode == DialogMode.Edit,
+              autofocus: widget.mode == DialogMode.Edit,
               maxLines: null,
               keyboardType: TextInputType.multiline,
               autocorrect: true,
@@ -89,10 +76,10 @@ class CustomMoveFormBuilderState extends State<CustomMoveFormBuilder> {
       ),
     );
 
-    return builder(
+    return widget.builder(
       context,
       form,
-      mode == DialogMode.Create ? _createMove : _updateMove,
+      widget.mode == DialogMode.Create ? _createMove : _updateMove,
     );
   }
 
@@ -108,30 +95,29 @@ class CustomMoveFormBuilderState extends State<CustomMoveFormBuilder> {
   }
 
   _updateMove() async {
-    Move move = Move(
-      key: name.toLowerCase().replaceAll(RegExp('[^a-z]+'), '_'),
-      name: name,
-      description: description,
-      classes: [],
-    );
+    var move = _generateMove();
     updateMove(move);
-    if (onUpdateMove != null) {
-      onUpdateMove(move);
+    if (widget.onUpdateMove != null) {
+      widget.onUpdateMove(move);
     }
     Navigator.pop(context);
   }
 
   _createMove() async {
-    Move move = Move(
+    var move = _generateMove();
+    createMove(move);
+    if (widget.onUpdateMove != null) {
+      widget.onUpdateMove(move);
+    }
+    Navigator.pop(context);
+  }
+
+  Move _generateMove() {
+    return Move(
       key: name.toLowerCase().replaceAll(RegExp('[^a-z]+'), '_'),
       name: name,
       description: description,
       classes: [],
     );
-    createMove(move);
-    if (onUpdateMove != null) {
-      onUpdateMove(move);
-    }
-    Navigator.pop(context);
   }
 }

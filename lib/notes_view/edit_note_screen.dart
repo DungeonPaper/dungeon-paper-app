@@ -24,15 +24,19 @@ class EditNoteForm extends StatefulWidget {
 
 class EditNoteFormState extends State<EditNoteForm> {
   Map<String, TextEditingController> _controllers;
+  String title;
+  String description;
+  NoteCategory category;
 
   @override
   void initState() {
     _controllers = {
-      'title': TextEditingController(text: widget.note.title.toString()),
-      'description':
-          TextEditingController(text: widget.note.description.toString()),
-      'category': TextEditingController(text: widget.note.category.toString()),
+      'title': TextEditingController(text: widget.note.title ?? ''),
+      'description': TextEditingController(text: widget.note.description ?? ''),
     };
+    title = _controllers['title'].text;
+    description = _controllers['description'].text;
+    category = widget.note.category ?? NoteCategory.misc;
     super.initState();
   }
 
@@ -43,10 +47,10 @@ class EditNoteFormState extends State<EditNoteForm> {
         mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: <Widget>[
-          DropdownButton(
+          DropdownButton<NoteCategory>(
             hint: Text('Category'),
-            value: widget.note.category,
-            onChanged: (cat) => _setStateValue('category', cat.toString()),
+            value: category,
+            onChanged: (cat) => _setStateValue('category', cat),
             items: NoteCategory.defaultCategories
                 .map((category) => DropdownMenuItem(
                       value: category,
@@ -89,21 +93,22 @@ class EditNoteFormState extends State<EditNoteForm> {
     );
   }
 
-  _setStateValue(String key, String newValue) {
+  _setStateValue(String key, dynamic newValue) {
     setState(() {
       switch (key) {
         case 'title':
-          return widget.note.title = newValue;
+          return title = newValue.toString();
         case 'description':
-          return widget.note.description = newValue;
+          return description = newValue.toString();
         case 'category':
-          return widget.note.category = NoteCategory(newValue);
+          return category = newValue as NoteCategory;
       }
     });
   }
 
   _updateNote() async {
-    updateNote(widget.note);
+    var note = _generateNote();
+    updateNote(note);
     if (widget.onUpdateNote != null) {
       widget.onUpdateNote(widget.note);
     }
@@ -111,11 +116,21 @@ class EditNoteFormState extends State<EditNoteForm> {
   }
 
   _createNote() async {
-    createNote(widget.note);
+    var note = _generateNote();
+    createNote(note);
     if (widget.onUpdateNote != null) {
       widget.onUpdateNote(widget.note);
     }
     Navigator.pop(context);
+  }
+
+  Note _generateNote() {
+    return Note({
+      'key': widget.note.key,
+      'title': _controllers['title'].text,
+      'description': _controllers['description'].text,
+      'category': category,
+    });
   }
 }
 
