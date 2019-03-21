@@ -7,7 +7,7 @@ import 'package:flutter/material.dart';
 class CustomInventoryItemFormBuilder extends StatefulWidget {
   final InventoryItem item;
   final DialogMode mode;
-  final void Function(BuildContext context, Widget form, Function onSave)
+  final Widget Function(BuildContext context, Widget form, Function onSave)
       builder;
   final void Function(InventoryItem move) onUpdateItem;
 
@@ -20,39 +20,31 @@ class CustomInventoryItemFormBuilder extends StatefulWidget {
   }) : super(key: key);
 
   @override
-  State<StatefulWidget> createState() => CustomInventoryItemFormBuilderState(
-        name: item.item.name,
-        description: item.item.description,
-        onUpdateItem: onUpdateItem,
-        mode: mode,
-        builder: builder,
-      );
+  State<StatefulWidget> createState() => CustomInventoryItemFormBuilderState();
 }
 
 class CustomInventoryItemFormBuilderState
     extends State<CustomInventoryItemFormBuilder> {
-  final DialogMode mode;
-  final void Function(InventoryItem move) onUpdateItem;
-  final Widget Function(BuildContext context, Widget form, Function onSave)
-      builder;
-  final Map<String, TextEditingController> _controllers;
+  Map<String, TextEditingController> _controllers;
 
   String name;
   String description;
+  String amount;
 
-  CustomInventoryItemFormBuilderState({
-    Key key,
-    @required this.name,
-    @required this.description,
-    @required this.mode,
-    @required this.builder,
-    this.onUpdateItem,
-  })  : _controllers = {
-          'name': TextEditingController(text: (name ?? '').toString()),
-          'description':
-              TextEditingController(text: (description ?? '').toString()),
-        },
-        super();
+  @override
+  void initState() {
+    _controllers = {
+      'name': TextEditingController(text: (widget.item.item.name ?? '').toString()),
+      'description': TextEditingController(
+          text: (widget.item.item.description ?? '').toString()),
+      'amount':
+          TextEditingController(text: (widget.item.amount ?? '').toString()),
+    };
+    name =_controllers['name'].text;
+    description =_controllers['description'].text;
+    amount =_controllers['amount'].text;
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -72,7 +64,7 @@ class CustomInventoryItemFormBuilderState
             margin: const EdgeInsets.symmetric(vertical: 8.0),
             child: TextField(
               decoration: InputDecoration(labelText: 'Description'),
-              autofocus: mode == DialogMode.Edit,
+              autofocus: widget.mode == DialogMode.Edit,
               maxLines: null,
               keyboardType: TextInputType.multiline,
               autocorrect: true,
@@ -84,14 +76,21 @@ class CustomInventoryItemFormBuilderState
             ),
           ),
           MarkdownHelp(),
+          SizedBox(width: 10,),
+          TextField(
+            decoration: InputDecoration(labelText: 'Item Amount'),
+            onChanged: (val) => _setStateValue('amount', val),
+            keyboardType: TextInputType.number,
+            controller: _controllers['amount'],
+          ),
         ],
       ),
     );
 
-    return builder(
+    return widget.builder(
       context,
       form,
-      mode == DialogMode.Create ? _createItem : _updateItem,
+      widget.mode == DialogMode.Create ? _createItem : _updateItem,
     );
   }
 
@@ -102,20 +101,21 @@ class CustomInventoryItemFormBuilderState
           return name = newValue;
         case 'description':
           return description = newValue;
+        case 'amount':
+          return amount = newValue;
       }
     });
   }
 
   _updateItem() async {
     Equipment inv = widget.item.item;
-    num amount = widget.item.amount;
     InventoryItem item = InventoryItem({
-      'item': inv.toJSON()..addAll({'name': name, 'description': description}),
-      'amount': amount,
+      'item': inv.toJSON()..addAll({'name': name, 'description': description, 'amount': int.tryParse(amount) ?? 1}),
+      'amount': int.tryParse(amount) ?? 1,
     });
     updateInventoryItem(item);
-    if (onUpdateItem != null) {
-      onUpdateItem(item);
+    if (widget.onUpdateItem != null) {
+      widget.onUpdateItem(item);
     }
     Navigator.pop(context);
   }
@@ -130,13 +130,13 @@ class CustomInventoryItemFormBuilderState
           tags: [],
           pluralName: name + 's',
         ).toJSON(),
-        'amount': widget.item.amount
+        'amount': int.tryParse(amount) ?? 1,
       },
     );
     print(item);
     createInventoryItem(item);
-    if (onUpdateItem != null) {
-      onUpdateItem(item);
+    if (widget.onUpdateItem != null) {
+      widget.onUpdateItem(item);
     }
     Navigator.pop(context);
   }
