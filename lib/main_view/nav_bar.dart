@@ -48,8 +48,9 @@ class NavBarState extends State<NavBar> {
     Pages.Notes: PageDetails(
         Text('Notes'), (color) => Icon(Icons.speaker_notes, color: color)),
     Pages.Equipment: PageDetails(
-        Text('Equipment'), (color) => SvgPicture.asset(
-              'assets/armor.svg',
+        Text('Inventory'), (color) => SvgPicture.asset(
+              // 'assets/armor.svg',
+              'assets/bag.svg',
               color: color,
               width: 24,
               height: 24,

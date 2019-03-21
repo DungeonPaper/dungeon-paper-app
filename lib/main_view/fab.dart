@@ -5,7 +5,7 @@ import 'package:dungeon_paper/dialogs.dart';
 import 'package:dungeon_paper/inventory_item_screen/add_inventory_screen.dart';
 import 'package:dungeon_paper/main_view/nav_bar.dart';
 import 'package:dungeon_paper/move_screen/move_screen.dart';
-import 'package:dungeon_paper/notes_view/edit_note_dialog.dart';
+import 'package:dungeon_paper/notes_view/edit_note_screen.dart';
 import 'package:dungeon_paper/utils.dart';
 import 'package:dungeon_world_data/move.dart';
 import 'package:flutter/material.dart';

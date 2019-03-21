@@ -49,7 +49,8 @@ flutter:
   assets:
     - assets/swords.svg
     - assets/dice.svg
-    - assets/armor.svg
+    - assets/bag.svg
+    # - assets/armor.svg
     # - assets/quill.svg
     # - images/a_dot_ham.jpeg
 

@@ -3,26 +3,38 @@ import 'package:dungeon_paper/db/notes.dart';
 import 'package:dungeon_paper/dialogs.dart';
 import 'package:flutter/material.dart';
 
-class EditNoteFormState extends State<EditNoteForm> {
+class EditNoteForm extends StatefulWidget {
+  final Note note;
   final DialogMode mode;
-  Note note;
-  void Function(Note note) onUpdateNote;
-  Widget Function(BuildContext context, Widget form, Function onSave) builder;
-  Map<String, TextEditingController> _controllers;
+  final Widget Function(BuildContext context, Widget form, Function onSave)
+      builder;
+  final void Function(Note note) onUpdateNote;
 
-  EditNoteFormState({
+  EditNoteForm({
     Key key,
     @required this.note,
     @required this.mode,
     @required this.builder,
     this.onUpdateNote,
-  })  : _controllers = {
-          'title': TextEditingController(text: note.title.toString()),
-          'description':
-              TextEditingController(text: note.description.toString()),
-          'category': TextEditingController(text: note.category.toString()),
-        },
-        super();
+  }) : super(key: key);
+
+  @override
+  State<StatefulWidget> createState() => EditNoteFormState();
+}
+
+class EditNoteFormState extends State<EditNoteForm> {
+  Map<String, TextEditingController> _controllers;
+
+  @override
+  void initState() {
+    _controllers = {
+      'title': TextEditingController(text: widget.note.title.toString()),
+      'description':
+          TextEditingController(text: widget.note.description.toString()),
+      'category': TextEditingController(text: widget.note.category.toString()),
+    };
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -33,7 +45,7 @@ class EditNoteFormState extends State<EditNoteForm> {
         children: <Widget>[
           DropdownButton(
             hint: Text('Category'),
-            value: note.category,
+            value: widget.note.category,
             onChanged: (cat) => _setStateValue('category', cat.toString()),
             items: NoteCategory.defaultCategories
                 .map((category) => DropdownMenuItem(
@@ -44,7 +56,7 @@ class EditNoteFormState extends State<EditNoteForm> {
           ),
           TextField(
             decoration: InputDecoration(hintText: 'Title'),
-            autofocus: mode == DialogMode.Create,
+            autofocus: widget.mode == DialogMode.Create,
             autocorrect: true,
             textCapitalization: TextCapitalization.words,
             onChanged: (val) => _setStateValue('title', val),
@@ -54,7 +66,7 @@ class EditNoteFormState extends State<EditNoteForm> {
             margin: const EdgeInsets.symmetric(vertical: 8.0),
             child: TextField(
               decoration: InputDecoration(labelText: 'Description'),
-              autofocus: mode == DialogMode.Edit,
+              autofocus: widget.mode == DialogMode.Edit,
               maxLines: null,
               keyboardType: TextInputType.multiline,
               autocorrect: true,
@@ -70,10 +82,10 @@ class EditNoteFormState extends State<EditNoteForm> {
       ),
     );
 
-    return builder(
+    return widget.builder(
       context,
       form,
-      mode == DialogMode.Create ? _createNote : _updateNote,
+      widget.mode == DialogMode.Create ? _createNote : _updateNote,
     );
   }
 
@@ -81,54 +93,30 @@ class EditNoteFormState extends State<EditNoteForm> {
     setState(() {
       switch (key) {
         case 'title':
-          return note.title = newValue;
+          return widget.note.title = newValue;
         case 'description':
-          return note.description = newValue;
+          return widget.note.description = newValue;
         case 'category':
-          return note.category = NoteCategory(newValue);
+          return widget.note.category = NoteCategory(newValue);
       }
     });
   }
 
   _updateNote() async {
-    updateNote(note);
-    if (onUpdateNote != null) {
-      onUpdateNote(note);
+    updateNote(widget.note);
+    if (widget.onUpdateNote != null) {
+      widget.onUpdateNote(widget.note);
     }
     Navigator.pop(context);
   }
 
   _createNote() async {
-    createNote(note);
-    if (onUpdateNote != null) {
-      onUpdateNote(note);
+    createNote(widget.note);
+    if (widget.onUpdateNote != null) {
+      widget.onUpdateNote(widget.note);
     }
     Navigator.pop(context);
   }
-}
-
-class EditNoteForm extends StatefulWidget {
-  final Note note;
-  final DialogMode mode;
-  final void Function(BuildContext context, Widget form, Function onSave)
-      builder;
-  final void Function(Note note) onUpdateNote;
-
-  EditNoteForm({
-    Key key,
-    @required this.note,
-    @required this.mode,
-    @required this.builder,
-    this.onUpdateNote,
-  }) : super(key: key);
-
-  @override
-  State<StatefulWidget> createState() => EditNoteFormState(
-        note: note,
-        onUpdateNote: onUpdateNote,
-        mode: mode,
-        builder: builder,
-      );
 }
 
 class EditNoteScreen extends StatelessWidget {
@@ -151,7 +139,7 @@ class EditNoteScreen extends StatelessWidget {
               children: <Widget>[
                 AppBar(
                   title: Text(
-                      '${mode == DialogMode.Create ? 'Create' : 'Edit'} Note'),
+                      '${mode == DialogMode.Create ? 'Add' : 'Edit'} Note'),
                   actions: <Widget>[
                     IconButton(
                       tooltip: 'Save',

@@ -97,7 +97,7 @@ class MoveScreenState extends State<MoveScreen>
         );
         var appBar = AppBar(
           title: Text(
-              '${widget.mode == DialogMode.Create ? 'Create' : 'Edit'} Move'),
+              '${widget.mode == DialogMode.Create ? 'Add' : 'Edit'} Move'),
           actions: tabIdx == 2 || widget.mode == DialogMode.Edit ? actions : [],
         );
 

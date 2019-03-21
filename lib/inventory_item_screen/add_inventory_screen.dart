@@ -82,7 +82,7 @@ class InventoryItemScreenState extends State<InventoryItemScreen>
         );
         var appBar = AppBar(
           title: Text(
-              '${widget.mode == DialogMode.Create ? 'Create' : 'Edit'} Item'),
+              '${widget.mode == DialogMode.Create ? 'Add' : 'Edit'} Item'),
           actions: tabIdx == texts.length - 1 || widget.mode == DialogMode.Edit
               ? actions
               : [],

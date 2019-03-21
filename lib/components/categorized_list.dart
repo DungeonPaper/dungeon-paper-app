@@ -63,10 +63,10 @@ class CategorizedList<T> extends StatelessWidget {
       );
     }).toList();
 
-    return OrientationBuilder(
-      builder: (context, orientation) {
+    return LayoutBuilder(
+      builder: (context, constraints) {
         return StaggeredGridView.countBuilder(
-          crossAxisCount: orientation == Orientation.portrait ? 1 : 2,
+          crossAxisCount: constraints.maxWidth < 450 ? 1 : 2,
           itemCount: addSpacer ? cats.length + 1 : cats.length,
           itemBuilder: (context, index) {
             if (index < cats.length) {
