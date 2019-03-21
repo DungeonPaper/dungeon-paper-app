@@ -7,8 +7,11 @@ class CharacterStore {
   DbCharacter current;
   Map<String, DbCharacter> characters;
 
-  CharacterStore({this.currentCharDocID, @required this.characters, this.current}) {
-    if (this.current == null && this.characters != null && this.characters.length > 0) {
+  CharacterStore(
+      {this.currentCharDocID, @required this.characters, this.current}) {
+    if (this.current == null &&
+        this.characters != null &&
+        this.characters.length > 0) {
       this.current = this.characters[this.characters.keys.first];
       this.currentCharDocID = this.characters.keys.first;
     }
@@ -18,6 +21,9 @@ class CharacterStore {
 CharacterStore characterReducer(CharacterStore state, action) {
   if (action is SetCharacters) {
     state.characters = action.characters;
+    if (action.characters.isNotEmpty && !state.characters.containsKey(state.currentCharDocID)) {
+      state.currentCharDocID = action.characters.keys.first;
+    }
     state.current = action.characters[state.currentCharDocID];
     return state;
   }
@@ -30,7 +36,10 @@ CharacterStore characterReducer(CharacterStore state, action) {
   }
 
   if (action is RemoveAll) {
-    return CharacterStore(current: null, currentCharDocID: null, characters: Map<String, DbCharacter>());
+    return CharacterStore(
+        current: null,
+        currentCharDocID: null,
+        characters: Map<String, DbCharacter>());
   }
 
   return state;

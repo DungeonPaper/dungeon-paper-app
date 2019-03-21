@@ -1,8 +1,10 @@
 import 'package:dungeon_paper/components/animations/slide_route_from_right.dart';
+import 'package:dungeon_paper/components/confirmation_dialog.dart';
 import 'package:dungeon_paper/db/character.dart';
 import 'package:dungeon_paper/db/character_types.dart' as Chr;
 import 'package:dungeon_paper/profile_view/basic_info/change_alignment_dialog.dart';
 import 'package:dungeon_paper/profile_view/basic_info/change_class_dialog.dart';
+import 'package:dungeon_paper/redux/stores/stores.dart';
 import 'package:dungeon_paper/utils.dart';
 import 'package:dungeon_world_data/player_class.dart';
 import 'package:dungeon_world_data/alignment.dart' as DWA;
@@ -82,6 +84,7 @@ class _EditCharacterDialogState extends State<EditCharacterDialog> {
               child: Padding(
                 padding: EdgeInsets.all(16.0),
                 child: Column(
+                  mainAxisSize: MainAxisSize.min,
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: <Widget>[
                     EditDisplayNameCard(controller: displayNameController),
@@ -97,6 +100,40 @@ class _EditCharacterDialogState extends State<EditCharacterDialog> {
                         playerClass: widget.character.mainClass,
                         alignment: widget.character.alignment,
                         onTap: () => changeAlignment(context)),
+                    spacer,
+                    dwStore.state.characters.characters.length > 1
+                        ? Align(
+                            alignment: Alignment.centerRight,
+                            child: FlatButton(
+                              // color: Colors.red,
+                              textColor: Colors.red,
+                              child: Text('Delete Character'),
+                              onPressed:
+                                  dwStore.state.characters.characters.isNotEmpty
+                                      ? () async {
+                                          if (await showDialog(
+                                            context: context,
+                                            builder: (context) =>
+                                                ConfirmationDialog(
+                                                  title:
+                                                      Text('Delete Character?'),
+                                                  text: Text(
+                                                      'THIS CAN NOT BE UNDONE!\nAre you sure this is what you want to do?'),
+                                                  okButtonText: Text(
+                                                      'I WANT THIS CHARACTER GONE!'),
+                                                  cancelButtonText: Text(
+                                                      'I regret clicking this'),
+                                                ),
+                                          )) {
+                                            deleteCharacter();
+                                            await Future.delayed(Duration(milliseconds: 1000));
+                                            Navigator.pop(context);
+                                          }
+                                        }
+                                      : null,
+                            ),
+                          )
+                        : SizedBox.shrink()
                   ],
                 ),
               ),

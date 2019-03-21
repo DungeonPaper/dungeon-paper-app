@@ -19,7 +19,7 @@ class Sidebar extends StatelessWidget {
             characterList(state.characters.characters, context) +
             [
               Divider(),
-              addNew(),
+              addNew(context),
               Divider(),
               title('Application', context),
               logOut(context),
@@ -55,11 +55,11 @@ class Sidebar extends StatelessWidget {
     return logOut;
   }
 
-  Widget addNew() {
+  Widget addNew(BuildContext context) {
     Widget addNew = ListTile(
       leading: Icon(Icons.add),
       title: Text('Create Empty Character'),
-      onTap: addNewCharacter,
+      onTap: addNewCharacter(context),
     );
     return addNew;
   }
@@ -93,7 +93,8 @@ class Sidebar extends StatelessWidget {
         leading: Icon(Icons.person),
         title: Text(character.displayName),
         onTap: () {
-          dwStore.dispatch(CharacterActions.setCurrentChar(charDoc.documentID, character));
+          dwStore.dispatch(
+              CharacterActions.setCurrentChar(charDoc.documentID, character));
           Navigator.pop(context);
         },
       );
@@ -107,7 +108,10 @@ class Sidebar extends StatelessWidget {
     };
   }
 
-  void addNewCharacter() {
-    createNewCharacter();
+  void Function() addNewCharacter(BuildContext context) {
+    return () {
+      createNewCharacter();
+      Navigator.pop(context);
+    };
   }
 }

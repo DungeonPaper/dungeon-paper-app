@@ -235,6 +235,23 @@ Future<DbCharacter> updateCharacter(
   return DbCharacter(charData.data);
 }
 
+deleteCharacter() async {
+  String userDocId = dwStore.state.user.currentUserDocID;
+  String charDocId = dwStore.state.characters.currentCharDocID;
+  DbUser user = dwStore.state.user.current;
+  if (user.characters.length == 1) {
+    throw ("Can't delete last character.");
+  }
+  user.characters.removeWhere((d) => d.documentID == charDocId);
+  var characters = dwStore.state.characters.characters
+    ..removeWhere((k, v) => k == charDocId);
+  await Firestore.instance
+      .document('users/$userDocId')
+      .updateData({'characters': user.characters});
+  await Firestore.instance.document('character_bios/$charDocId').delete();
+  dwStore.dispatch(CharacterActions.setCharacters(characters));
+}
+
 Future<DocumentReference> createNewCharacter() async {
   DbCharacter character = DbCharacter();
 
@@ -267,13 +284,16 @@ Future<DocumentReference> createNewCharacter() async {
 }
 
 getOrCreateCharacter(DocumentSnapshot userSnap) async {
-  if (userSnap.data['characters'].length > 0) {
+  if (userSnap.data['characters'].isNotEmpty) {
     print('userSnap data:' + userSnap.data['characters'][0].documentID);
     await getAllCharacters(userSnap);
 
     var lastCharId = dwStore.state.prefs.user.lastCharacterId;
-    DocumentReference lastChar = userSnap.data['characters']
-        .firstWhere((d) => lastCharId == null || d.documentID == lastCharId);
+    DocumentReference lastChar =
+        (userSnap.data['characters'] as List).firstWhere(
+      (d) => lastCharId == null || d.documentID == lastCharId,
+      orElse: () => userSnap.data['characters'][0],
+    );
     return setCurrentCharacterById(lastChar.documentID);
   } else {
     DbCharacter char =

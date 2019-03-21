@@ -29,8 +29,8 @@ class ConfirmationDialog extends StatelessWidget {
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: 24.0, vertical: 16.0)
               .copyWith(bottom: 0),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.end,
+          child: Wrap(
+            alignment: WrapAlignment.end,
             children: <Widget>[
               FlatButton(
                 child: cancelButtonText,
