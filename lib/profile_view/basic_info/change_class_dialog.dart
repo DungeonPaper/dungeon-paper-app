@@ -169,17 +169,23 @@ class _PreviewClassChangeState extends State<PreviewClassChange> {
   void save(ChangeClassConfirmationOptions options) {
     DbCharacter character = dwStore.state.characters.current;
     character.mainClass = widget.classDef;
+    List<CharacterKeys> keys = [];
+
     if (options.deleteMoves) {
       character.moves = <Move>[];
+      keys.add(CharacterKeys.moves);
     }
     if (options.resetXP) {
       character.level = 1;
       character.currentXP = 0;
+      keys.addAll([CharacterKeys.level, CharacterKeys.currentXP]);
     }
     if (options.resetHitDice) {
       character.hitDice = widget.classDef.damage;
+      keys.add(CharacterKeys.hitDice);
     }
-    updateCharacter(character, [CharacterKeys.mainClass]);
+
+    updateCharacter(character, keys);
   }
 
   void scrollListener() {
@@ -276,6 +282,7 @@ class _ConfirmClassChangeDialogState extends State<ConfirmClassChangeDialog> {
       options.resetXP = state;
     });
   }
+
   void toggleUpdateHitDice(bool state) {
     setState(() {
       options.resetHitDice = state;
