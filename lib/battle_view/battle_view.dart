@@ -33,7 +33,7 @@ class BattleView extends StatelessWidget {
           padding: const EdgeInsets.symmetric(vertical: 8),
           child: moves.first is Move
               ? MoveCard(
-                  key: moves[idx].key,
+                  key: PageStorageKey(moves[idx].key),
                   index: idx,
                   move: moves[idx],
                   mode: mode,
