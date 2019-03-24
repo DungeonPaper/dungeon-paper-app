@@ -10,6 +10,7 @@ import 'package:dungeon_paper/notes_view/notes_view.dart';
 import 'package:dungeon_paper/profile_view/basic_info/basic_info.dart';
 import 'package:dungeon_paper/redux/stores/connectors.dart';
 import 'package:dungeon_paper/redux/stores/loading_store.dart';
+import 'package:dungeon_paper/reference_view/reference_view.dart';
 import 'package:flutter/material.dart';
 
 class MainContainer extends StatelessWidget {
@@ -61,6 +62,7 @@ class MainView extends StatelessWidget {
     Pages.Battle: (character) => BattleView(character: character),
     Pages.Equipment: (character) => InventoryView(character: character),
     Pages.Notes: (character) => NotesView(character: character),
+    Pages.Reference: (character) => ReferenceView(),
   };
 
   @override
@@ -96,7 +98,7 @@ class MainView extends StatelessWidget {
         if (builder != null) {
           return builder(character);
         }
-        return Container();
+        return Center(child: Text('To Do!'));
       }).toList();
   Widget get navBar =>
       character != null ? NavBar(pageController: pageController) : null;

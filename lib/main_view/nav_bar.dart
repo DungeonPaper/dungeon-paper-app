@@ -1,8 +1,9 @@
 import 'package:dungeon_paper/utils.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
-enum Pages { Home, Battle, Equipment, Notes }
+enum Pages { Home, Battle, Reference, Equipment, Notes }
 
 typedef Widget ColorBuilder(Color color);
 
@@ -48,13 +49,16 @@ class NavBarState extends State<NavBar> {
     Pages.Notes: PageDetails(
         Text('Notes'), (color) => Icon(Icons.speaker_notes, color: color)),
     Pages.Equipment: PageDetails(
-        Text('Inventory'), (color) => SvgPicture.asset(
+        Text('Inventory'),
+        (color) => SvgPicture.asset(
               // 'assets/armor.svg',
               'assets/bag.svg',
               color: color,
               width: 24,
               height: 24,
             )),
+    Pages.Reference: PageDetails(
+        Text('Reference'), (color) => Icon(CupertinoIcons.book_solid, color: color,)),
   };
 
   @override
@@ -64,6 +68,11 @@ class NavBarState extends State<NavBar> {
       double t = clamp((activePageIndex - page.index).abs(), 0, 1);
       Color color = Color.lerp(Theme.of(context).colorScheme.primary,
           Theme.of(context).colorScheme.onSurface, t);
+
+      if (details == null) {
+        return Center(child: Text('To Do!'));
+      }
+
       return PageNavItem(
         foregroundColor: color,
         label: details.label,
