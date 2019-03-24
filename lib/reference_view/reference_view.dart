@@ -20,7 +20,6 @@ class ReferenceView extends StatelessWidget {
     return CategorizedList.builder(
       categories: categories.keys,
       itemCount: (key, idx) => categories[key].length,
-      addSpacer: true,
       titleBuilder: (ctx, key, idx) => Text(key),
       itemBuilder: (ctx, key, idx) {
         List moves = categories[key];
