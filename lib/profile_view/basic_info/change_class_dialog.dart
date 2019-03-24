@@ -176,6 +176,9 @@ class _PreviewClassChangeState extends State<PreviewClassChange> {
       character.level = 1;
       character.currentXP = 0;
     }
+    if (options.resetHitDice) {
+      character.hitDice = widget.classDef.damage;
+    }
     updateCharacter(character, [CharacterKeys.mainClass]);
   }
 
@@ -224,7 +227,7 @@ class _ConfirmClassChangeDialogState extends State<ConfirmClassChangeDialog> {
               padding: const EdgeInsets.symmetric(horizontal: 16.0)
                   .copyWith(bottom: 40.0),
               child: Text(
-                  'Please confirm your selection.\n\nChanging your class saves immediately, and can not be undone.'),
+                  'Please confirm your selection.\n\nChanging your class saves immediately.'),
             ),
             checkboxRow(
               'Remove all previous moves from current class',
@@ -235,6 +238,11 @@ class _ConfirmClassChangeDialogState extends State<ConfirmClassChangeDialog> {
               'Set level to 1 and XP to 0',
               options.resetXP,
               toggleResetXP,
+            ),
+            checkboxRow(
+              'Update hit dice to match this class',
+              options.resetHitDice,
+              toggleUpdateHitDice,
             ),
           ],
         ));
@@ -268,14 +276,21 @@ class _ConfirmClassChangeDialogState extends State<ConfirmClassChangeDialog> {
       options.resetXP = state;
     });
   }
+  void toggleUpdateHitDice(bool state) {
+    setState(() {
+      options.resetHitDice = state;
+    });
+  }
 }
 
 class ChangeClassConfirmationOptions {
-  bool deleteMoves = false;
-  bool resetXP = false;
+  bool deleteMoves;
+  bool resetXP;
+  bool resetHitDice;
 
   ChangeClassConfirmationOptions({
     this.deleteMoves = false,
     this.resetXP = false,
+    this.resetHitDice = false,
   });
 }
