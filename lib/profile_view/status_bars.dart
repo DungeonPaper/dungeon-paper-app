@@ -74,7 +74,7 @@ class StatusBars extends StatelessWidget {
 
   showHpEditDialog(BuildContext context, DbCharacter character) => showDialog(
       context: context,
-      builder: (context) => HPEditDialog(character: character));
+      builder: (context) => EditHPDialog(character: character));
 
   showXpEditDialog(BuildContext context, DbCharacter character) => showDialog(
       context: context,

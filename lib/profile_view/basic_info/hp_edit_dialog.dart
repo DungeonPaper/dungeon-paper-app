@@ -6,22 +6,22 @@ import 'package:wheel_spinner/wheel_spinner.dart';
 import 'package:dungeon_paper/db/character.dart';
 import 'package:flutter/material.dart';
 
-class HPEditDialog extends StatefulWidget {
+class EditHPDialog extends StatefulWidget {
   final DbCharacter character;
   static const int MIN_ROW_WIDTH = 410;
 
-  const HPEditDialog({
+  const EditHPDialog({
     Key key,
     @required this.character,
   }) : super(key: key);
 
   @override
-  _HPEditDialogState createState() => _HPEditDialogState();
+  _EditHPDialogState createState() => _EditHPDialogState();
 }
 
 enum HPMode { HP, MaxHP }
 
-class _HPEditDialogState extends State<HPEditDialog> {
+class _EditHPDialogState extends State<EditHPDialog> {
   int currentHP;
   int maxHP;
   int initialCurrentHP;
@@ -89,10 +89,11 @@ class _HPEditDialogState extends State<HPEditDialog> {
     );
     return SimpleDialog(
       title: title,
+      contentPadding:
+              const EdgeInsets.only(top: 32.0, bottom: 8.0),
       children: <Widget>[
         Padding(
-          padding:
-              const EdgeInsets.symmetric(horizontal: 32.0).copyWith(top: 10.0),
+          padding: const EdgeInsets.symmetric(horizontal: 32.0),
           child: StatusBarInfo(
             value: currentHP / maxHP,
             minNum: currentHP.toString(),
@@ -102,12 +103,12 @@ class _HPEditDialogState extends State<HPEditDialog> {
           ),
         ),
         Container(
-          width: screenWidth >= HPEditDialog.MIN_ROW_WIDTH
-              ? HPEditDialog.MIN_ROW_WIDTH.toDouble()
+          width: screenWidth >= EditHPDialog.MIN_ROW_WIDTH
+              ? EditHPDialog.MIN_ROW_WIDTH.toDouble()
               : 200.0,
           // height: screenWidth >= HPEditDialog.MIN_ROW_WIDTH ? null : 250,
-          padding: const EdgeInsets.all(32.0).copyWith(bottom: 0),
-          child: screenWidth >= HPEditDialog.MIN_ROW_WIDTH
+          padding: const EdgeInsets.only(top: 32.0),
+          child: screenWidth >= EditHPDialog.MIN_ROW_WIDTH
               ? Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   mainAxisSize: MainAxisSize.max,

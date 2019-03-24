@@ -18,23 +18,26 @@ class StandardDialogControls extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 40.0, horizontal: 16.0)
-          .copyWith(bottom: 0),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: <Widget>[
-          FlatButton(
-            onPressed:
-                onCancel != null ? onCancel : () => Navigator.pop(context),
-            child: cancelText,
-          ),
-          RaisedButton(
-            color: Theme.of(context).colorScheme.primary,
-            onPressed: onOK,
-            child: okText,
-          ),
-        ],
+    return Align(
+      alignment: Alignment.bottomRight,
+      child: Padding(
+        padding: const EdgeInsets.symmetric(vertical: 40.0, horizontal: 16.0)
+            .copyWith(bottom: 0),
+        child: Wrap(
+          alignment: WrapAlignment.end,
+          children: <Widget>[
+            FlatButton(
+              onPressed:
+                  onCancel != null ? onCancel : () => Navigator.pop(context),
+              child: cancelText,
+            ),
+            RaisedButton(
+              color: Theme.of(context).colorScheme.primary,
+              onPressed: onOK,
+              child: okText,
+            ),
+          ],
+        ),
       ),
     );
   }
