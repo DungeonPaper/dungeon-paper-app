@@ -1,3 +1,4 @@
+import 'package:dungeon_paper/profile_view/basic_info/armor_and_hit_dice.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:dungeon_paper/db/character.dart';
 import 'package:dungeon_paper/profile_view/base_stats/base_stats.dart';
@@ -18,6 +19,7 @@ class BasicInfo extends StatelessWidget {
     return OrientationBuilder(builder: (context, orientation) {
       List<Widget> children = [
         CharacterHeader(character: character, orientation: orientation),
+        ArmorAndHitDice(character: character),
         StatusBars(character: character),
         BaseStats(character: character),
       ];

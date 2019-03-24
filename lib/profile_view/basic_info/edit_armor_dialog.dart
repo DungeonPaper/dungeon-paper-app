@@ -1,56 +1,44 @@
 import 'package:dungeon_paper/components/standard_dialog_controls.dart';
 import 'package:dungeon_paper/db/character.dart';
-import 'package:dungeon_paper/db/character_types.dart';
 import 'package:dungeon_paper/flutter-utils.dart';
 import 'package:dungeon_paper/redux/stores/stores.dart';
-import 'package:dungeon_paper/utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
-class EditStatDialog extends StatefulWidget {
-  final Stats stat;
+class EditArmorDialog extends StatefulWidget {
   final num value;
-  EditStatDialog({
+  EditArmorDialog({
     Key key,
-    @required this.stat,
     @required this.value,
   }) : super(key: key);
 
   @override
-  State<StatefulWidget> createState() =>
-      EditStatDialogState(stat: stat, value: value);
+  State<StatefulWidget> createState() => EditArmorDialogState(value: value);
 }
 
-class EditStatDialogState extends State<EditStatDialog> {
-  final Stats stat;
-  final String fullName;
+class EditArmorDialogState extends State<EditArmorDialog> {
   num value;
   TextEditingController _controller;
 
-  EditStatDialogState({
+  EditArmorDialogState({
     Key key,
-    @required this.stat,
     @required this.value,
-  })  : fullName = StatNameMap[stat],
-        _controller = TextEditingController(text: value.toString()),
+  })  : _controller = TextEditingController(text: value.toString()),
         super();
 
   @override
   Widget build(BuildContext context) {
-    String modifier = DbCharacter.statModifierText(value);
-    String name = enumName(stat);
     num controlledStat = int.parse(_controller.value.text);
 
     return SimpleDialog(
-      title: Text('Edit $fullName'),
+      title: Text('Edit Armor'),
       contentPadding: const EdgeInsets.only(top: 32.0, bottom: 8.0),
       children: <Widget>[
         Column(
           mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: <Widget>[
-            Text('$fullName: $value'),
-            Text('${name.toUpperCase()}: $modifier',
+            Text('Armor: $value',
                 style: TextStyle(
                   fontSize: 20.0,
                   fontWeight: FontWeight.bold,
@@ -76,8 +64,8 @@ class EditStatDialogState extends State<EditStatDialog> {
                         ),
                         Expanded(
                           child: TextField(
-                            onChanged: (val) => _setStateValue(
-                                num.parse(val) != 0 ? num.parse(val) : ''),
+                            onChanged: (val) =>
+                                _setStateValue(int.tryParse(val)),
                             keyboardType: TextInputType.number,
                             inputFormatters: <TextInputFormatter>[
                               WhitelistingTextInputFormatter.digitsOnly,
@@ -127,34 +115,8 @@ class EditStatDialogState extends State<EditStatDialog> {
 
   _saveValue() async {
     DbCharacter character = dwStore.state.characters.current;
-    CharacterKeys key;
-    switch (stat) {
-      case Stats.int:
-        character.int = value;
-        key = CharacterKeys.int;
-        break;
-      case Stats.wis:
-        character.wis = value;
-        key = CharacterKeys.wis;
-        break;
-      case Stats.cha:
-        character.cha = value;
-        key = CharacterKeys.cha;
-        break;
-      case Stats.con:
-        character.con = value;
-        key = CharacterKeys.con;
-        break;
-      case Stats.str:
-        character.str = value;
-        key = CharacterKeys.str;
-        break;
-      case Stats.dex:
-        character.dex = value;
-        key = CharacterKeys.dex;
-        break;
-    }
-    await updateCharacter(character, [key]);
+    character.armor = value;
+    updateCharacter(character, [CharacterKeys.armor]);
     Navigator.pop(context);
   }
 }

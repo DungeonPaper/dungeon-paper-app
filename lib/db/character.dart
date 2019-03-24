@@ -7,6 +7,7 @@ import 'package:dungeon_paper/db/user.dart';
 import 'package:dungeon_paper/redux/actions.dart';
 import 'package:dungeon_paper/redux/stores/stores.dart';
 import 'package:dungeon_paper/utils.dart';
+import 'package:dungeon_world_data/dice.dart';
 import 'package:dungeon_world_data/dw_data.dart';
 import 'package:dungeon_world_data/move.dart';
 import 'package:dungeon_world_data/player_class.dart';
@@ -34,6 +35,7 @@ enum CharacterKeys {
   spells,
   inventory,
   docVersion,
+  hitDice,
 }
 
 class DbCharacter with Serializer<CharacterKeys> {
@@ -60,6 +62,7 @@ class DbCharacter with Serializer<CharacterKeys> {
       CharacterKeys.spells: map['spells'],
       CharacterKeys.inventory: map['inventory'],
       CharacterKeys.docVersion: map['docVersion'],
+      CharacterKeys.hitDice: map['hitDice'],
     });
     mainClassKey = map['mainClass'];
   }
@@ -85,6 +88,7 @@ class DbCharacter with Serializer<CharacterKeys> {
   List<Spell> spells;
   List<InventoryItem> inventory;
   num docVersion;
+  Dice hitDice;
 
   static num statModifier(num stat) {
     const modifiers = {1: -3, 4: -2, 6: -1, 9: 0, 13: 1, 16: 2, 18: 3};
@@ -130,6 +134,7 @@ class DbCharacter with Serializer<CharacterKeys> {
       'spells': spells.map((spell) => spell.toJSON()).toList(),
       'inventory': inventory.map((item) => item.toJSON()).toList(),
       'docVersion': docVersion,
+      'hitDice': hitDice.toString(),
     };
   }
 
@@ -165,6 +170,8 @@ class DbCharacter with Serializer<CharacterKeys> {
       CharacterKeys.inventory: (v) => inventory =
           List.from(v ?? []).map((item) => InventoryItem(item)).toList(),
       CharacterKeys.docVersion: (v) => docVersion = v ?? 1,
+      CharacterKeys.hitDice: (v) =>
+          hitDice = v != null ? Dice.parse(v) : mainClass.damage,
     };
     serializeAll(map);
   }

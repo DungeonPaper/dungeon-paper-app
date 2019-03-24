@@ -4,7 +4,14 @@ description: A new Flutter project.
 dependencies:
   flutter:
     sdk: flutter
-  wheel_spinner: ^0.0.4
+  wheel_spinner: ^0.0.6
+  # wheel_spinner:
+  #   path: ../wheel_spinner
+  # Firebase/Firestore
+  firebase_core: ^0.3.1+1
+  firebase_auth: ^0.8.1+4
+  cloud_firestore: ^0.9.5+2
+  #
   screen: ^0.0.4
   cupertino_icons: ^0.1.2
   google_sign_in: ^4.0.1+1
@@ -17,10 +24,6 @@ dependencies:
   redux_logging: ^0.3.0
   flutter_svg: ^0.10.4
   # quiver: '>=2.0.0 <3.0.0'
-  # Firebase/Firestore
-  firebase_core: ^0.3.1+1
-  firebase_auth: ^0.8.1+4
-  cloud_firestore: ^0.9.5+2
   flutter_image: ^1.0.0
   uuid: ^2.0.0
 
@@ -50,7 +53,7 @@ flutter:
     - assets/swords.svg
     - assets/dice.svg
     - assets/bag.svg
-    # - assets/armor.svg
+    - assets/armor.svg
     # - assets/quill.svg
     # - images/a_dot_ham.jpeg
 
