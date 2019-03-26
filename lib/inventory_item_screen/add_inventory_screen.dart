@@ -54,15 +54,21 @@ class InventoryItemScreenState extends State<InventoryItemScreen>
           ),
         ];
         var formContainer = Container(
-          key: PageStorageKey<String>(texts[1]),
-          padding: EdgeInsets.all(16),
-          child: form,
+          color: Theme.of(context).canvasColor,
+          child: SingleChildScrollView(
+            key: PageStorageKey<String>(texts[1]),
+            padding: EdgeInsets.all(16),
+            child: form,
+          ),
         );
-        var tabBar = TabBar(
-          controller: _controller,
-          tabs: List.generate(
-            texts.length,
-            (i) => Tab(child: Text(texts[i])),
+        var tabBar = Container(
+          color: Theme.of(context).canvasColor,
+          child: TabBar(
+            controller: _controller,
+            tabs: List.generate(
+              texts.length,
+              (i) => Tab(child: Text(texts[i])),
+            ),
           ),
         );
         var tabBarView = TabBarView(
@@ -73,34 +79,32 @@ class InventoryItemScreenState extends State<InventoryItemScreen>
               color: Theme.of(context).scaffoldBackgroundColor,
               child: AddInventoryItemContainer(),
             ),
-            Container(
-              key: PageStorageKey<String>(texts[1]),
-              padding: EdgeInsets.all(16),
-              child: form,
-            ),
+            formContainer
           ],
         );
         var appBar = AppBar(
-          title: Text(
-              '${widget.mode == DialogMode.Create ? 'Add' : 'Edit'} Item'),
+          title:
+              Text('${widget.mode == DialogMode.Create ? 'Add' : 'Edit'} Item'),
           actions: tabIdx == texts.length - 1 || widget.mode == DialogMode.Edit
               ? actions
               : [],
         );
 
         var list = <Widget>[
-          appBar,
-          widget.mode == DialogMode.Create ? tabBar : null,
           Expanded(
             child:
                 widget.mode == DialogMode.Create ? tabBarView : formContainer,
           ),
         ];
+        if (widget.mode == DialogMode.Create) {
+          list.insert(0, tabBar);
+        }
 
-        return Material(
-          child: Column(
+        return Scaffold(
+          appBar: appBar,
+          body: Column(
             // mainAxisSize: MainAxisSize.max,
-            children: list.where((el) => el != null).toList(),
+            children: list,
           ),
         );
       },

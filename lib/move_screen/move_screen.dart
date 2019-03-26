@@ -59,6 +59,14 @@ class MoveScreenState extends State<MoveScreen>
             onPressed: onSave,
           ),
         ];
+        var formContainer = Container(
+          color: Theme.of(context).canvasColor,
+          child: SingleChildScrollView(
+            key: PageStorageKey<String>(texts[1]),
+            padding: EdgeInsets.all(16),
+            child: form,
+          ),
+        );
         var tabBarView = TabBarView(
           controller: _controller,
           children: <Widget>[
@@ -76,44 +84,40 @@ class MoveScreenState extends State<MoveScreen>
                 key: PageStorageKey<String>(texts[1]),
               ),
             ),
-            Container(
-              key: PageStorageKey<String>(texts[2]),
-              padding: EdgeInsets.all(16),
-              child: form,
-            ),
+            formContainer,
           ],
         );
-        var formContainer = Container(
-          key: PageStorageKey<String>(texts[1]),
-          padding: EdgeInsets.all(16),
-          child: form,
-        );
-        var tabBar = TabBar(
-          controller: _controller,
-          tabs: List.generate(
-            texts.length,
-            (i) => Tab(child: Text(texts[i])),
+        var tabBar = Container(
+          color: Theme.of(context).canvasColor,
+          child: TabBar(
+            controller: _controller,
+            tabs: List.generate(
+              texts.length,
+              (i) => Tab(child: Text(texts[i])),
+            ),
           ),
         );
         var appBar = AppBar(
-          title: Text(
-              '${widget.mode == DialogMode.Create ? 'Add' : 'Edit'} Move'),
+          title:
+              Text('${widget.mode == DialogMode.Create ? 'Add' : 'Edit'} Move'),
           actions: tabIdx == 2 || widget.mode == DialogMode.Edit ? actions : [],
         );
 
         var list = <Widget>[
-          appBar,
-          widget.mode == DialogMode.Create ? tabBar : null,
           Expanded(
             child:
                 widget.mode == DialogMode.Create ? tabBarView : formContainer,
           ),
         ];
+        if (widget.mode == DialogMode.Create) {
+          list.insert(0, tabBar);
+        }
 
-        return Material(
-          child: Column(
+        return Scaffold(
+          appBar: appBar,
+          body: Column(
             // mainAxisSize: MainAxisSize.max,
-            children: list.where((el) => el != null).toList(),
+            children: list,
           ),
         );
       },
