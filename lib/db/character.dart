@@ -36,6 +36,8 @@ enum CharacterKeys {
   inventory,
   docVersion,
   hitDice,
+  looks,
+  race,
 }
 
 class DbCharacter with Serializer<CharacterKeys> {
@@ -63,6 +65,8 @@ class DbCharacter with Serializer<CharacterKeys> {
       CharacterKeys.inventory: map['inventory'],
       CharacterKeys.docVersion: map['docVersion'],
       CharacterKeys.hitDice: map['hitDice'],
+      CharacterKeys.looks: map['looks'],
+      CharacterKeys.race: map['race'],
     });
     mainClassKey = map['mainClass'];
   }
@@ -89,6 +93,8 @@ class DbCharacter with Serializer<CharacterKeys> {
   List<InventoryItem> inventory;
   num docVersion;
   Dice hitDice;
+  List<String> looks;
+  Move race;
 
   static num statModifier(num stat) {
     const modifiers = {1: -3, 4: -2, 6: -1, 9: 0, 13: 1, 16: 2, 18: 3};
@@ -135,6 +141,8 @@ class DbCharacter with Serializer<CharacterKeys> {
       'inventory': inventory.map((item) => item.toJSON()).toList(),
       'docVersion': docVersion,
       'hitDice': hitDice.toString(),
+      'looks': looks,
+      'race': race.toJSON(),
     };
   }
 
@@ -172,6 +180,9 @@ class DbCharacter with Serializer<CharacterKeys> {
       CharacterKeys.docVersion: (v) => docVersion = v ?? 1,
       CharacterKeys.hitDice: (v) =>
           hitDice = v != null ? Dice.parse(v) : mainClass.damage,
+      CharacterKeys.looks: (v) => looks = List.from(v ?? []).map((i) => i.toString()).toList(),
+      CharacterKeys.race: (v) =>
+          race = v != null ? Move.fromJSON(v) : mainClass.raceMoves.first,
     };
     serializeAll(map);
   }

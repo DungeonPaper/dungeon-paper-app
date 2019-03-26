@@ -13,11 +13,13 @@ class MoveCard extends StatefulWidget {
   final num index;
   final Move move;
   final MoveCardMode mode;
+  final bool raceMove;
 
   const MoveCard({
     Key key,
     @required this.move,
     @required this.index,
+    this.raceMove = false,
     this.mode,
   }) : super(key: key);
 
@@ -29,6 +31,7 @@ class MoveCardState extends State<MoveCard> {
   @override
   Widget build(BuildContext context) {
     Move move = widget.move;
+    Widget name = Text("${move.name}${widget.raceMove ? '\'s Racial Move: ' : ''}");
 
     return Material(
       elevation: 1,
@@ -37,7 +40,17 @@ class MoveCardState extends State<MoveCard> {
         borderRadius: const BorderRadius.all(Radius.circular(5)),
       ),
       child: ExpansionTile(
-        title: Text(move.name),
+        title: widget.raceMove
+            ? Row(
+                children: <Widget>[
+                  Padding(
+                    padding: const EdgeInsets.only(right: 8.0),
+                    child: Icon(Icons.pets),
+                  ),
+                  Expanded(child: name),
+                ],
+              )
+            : name,
         initiallyExpanded: false,
         children: <Widget>[
           Padding(

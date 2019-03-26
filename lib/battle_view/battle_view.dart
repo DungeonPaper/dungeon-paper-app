@@ -14,7 +14,7 @@ class BattleView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     Map<String, List> categories = {
-      'Starting Moves': character.mainClass.startingMoves,
+      'Starting Moves': [character.race] + character.mainClass.startingMoves,
       'Advanced Moves': character.moves,
       'Spells': character.spells,
     }..removeWhere((k, v) => v.isEmpty);
@@ -37,6 +37,7 @@ class BattleView extends StatelessWidget {
                   index: idx,
                   move: moves[idx],
                   mode: mode,
+                  raceMove: key == 'Starting Moves' && idx == 0,
                 )
               : moves.first is Spell
                   ? SpellCard(
