@@ -43,52 +43,43 @@ class _ChangeLooksDialogState extends State<ChangeLooksDialog> {
   @override
   Widget build(BuildContext context) {
     Map<int, List<String>> looksMap = widget.playerClass.looks.asMap();
-    return Container(
-      decoration: BoxDecoration(
-        color: Theme.of(context).primaryColor,
-      ),
-      child: Column(
-        mainAxisSize: MainAxisSize.max,
-        children: <Widget>[
-          AppBar(
-            title: Text('Change Looks'),
-            elevation: appBarElevation,
-            actions: <Widget>[
-              Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: RaisedButton(
-                  child: Text('Save'),
-                  color: Theme.of(context).canvasColor,
-                  onPressed: () => changeLooks(selected),
-                ),
-              )
-            ],
-          ),
-          Expanded(
-            child: CategorizedList<int>.builder(
-              itemCount: (key, i) => looksMap[key].length,
-              categories: looksMap.keys,
-              itemBuilder: (context, key, i) => Padding(
-                    padding: const EdgeInsets.symmetric(vertical: 8.0),
-                    child: TitleSubtitleCard(
-                      color: Theme.of(context).canvasColor.withOpacity(
-                          selected[key] != null &&
-                                  selected[key] != looksMap[key][i]
-                              ? 0.7
-                              : 1.0),
-                      title: Text(looksMap[key][i]),
-                      trailing: selected[key] == looksMap[key][i]
-                          ? Icon(Icons.check)
-                          : null,
-                      onTap: () => setState(() {
-                            selected[key] = looksMap[key][i];
-                          }),
-                    ),
-                  ),
-              titleBuilder: (context, key, i) => Text('Choose one:'),
+    return Scaffold(
+      backgroundColor: Theme.of(context).primaryColor,
+      appBar: AppBar(
+        title: Text('Change Looks'),
+        elevation: appBarElevation,
+        actions: <Widget>[
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: RaisedButton(
+              child: Text('Save'),
+              color: Theme.of(context).canvasColor,
+              onPressed: () => changeLooks(selected),
             ),
-          ),
+          )
         ],
+      ),
+      body: CategorizedList<int>.builder(
+        itemCount: (key, i) => looksMap[key].length,
+        categories: looksMap.keys,
+        itemBuilder: (context, key, i) => Padding(
+              padding: const EdgeInsets.symmetric(vertical: 8.0),
+              child: TitleSubtitleCard(
+                color: Theme.of(context).canvasColor.withOpacity(
+                    selected[key] != null &&
+                            selected[key] != looksMap[key][i]
+                        ? 0.7
+                        : 1.0),
+                title: Text(looksMap[key][i]),
+                trailing: selected[key] == looksMap[key][i]
+                    ? Icon(Icons.check)
+                    : null,
+                onTap: () => setState(() {
+                      selected[key] = looksMap[key][i];
+                    }),
+              ),
+            ),
+        titleBuilder: (context, key, i) => Text('Choose one:'),
       ),
     );
   }

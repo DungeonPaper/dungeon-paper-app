@@ -30,38 +30,30 @@ class _ChangeClassDialogState extends State<ChangeClassDialog> {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      decoration: BoxDecoration(
-        color: Theme.of(context).primaryColor,
+    return Scaffold(
+      backgroundColor: Theme.of(context).primaryColor,
+      appBar: AppBar(
+        title: Text('Choose Class'),
+        elevation: appBarElevation,
       ),
-      child: Column(
-        children: <Widget>[
-          AppBar(
-            title: Text('Choose Class'),
-            elevation: appBarElevation,
+      body: SingleChildScrollView(
+        controller: scrollController,
+        child: Padding(
+          padding: const EdgeInsets.all(16.0),
+          child: Column(
+            children: dungeonWorld.classes.values
+                .map(
+                  (availClass) => Padding(
+                        padding: EdgeInsets.only(bottom: 16.0),
+                        child: ClassSmallDescription(
+                          playerClass: availClass,
+                          onTap: previewClass(availClass),
+                        ),
+                      ),
+                )
+                .toList(),
           ),
-          Expanded(
-            child: SingleChildScrollView(
-              controller: scrollController,
-              child: Padding(
-                padding: const EdgeInsets.all(16.0),
-                child: Column(
-                  children: dungeonWorld.classes.values
-                      .map(
-                        (availClass) => Padding(
-                              padding: EdgeInsets.only(bottom: 16.0),
-                              child: ClassSmallDescription(
-                                playerClass: availClass,
-                                onTap: previewClass(availClass),
-                              ),
-                            ),
-                      )
-                      .toList(),
-                ),
-              ),
-            ),
-          ),
-        ],
+        ),
       ),
     );
   }
@@ -170,7 +162,11 @@ class _PreviewClassChangeState extends State<PreviewClassChange> {
     character.mainClass = widget.classDef;
     character.looks = [];
     character.race = null;
-    List<CharacterKeys> keys = [CharacterKeys.looks, CharacterKeys.race, CharacterKeys.mainClass];
+    List<CharacterKeys> keys = [
+      CharacterKeys.looks,
+      CharacterKeys.race,
+      CharacterKeys.mainClass
+    ];
 
     if (options.deleteMoves) {
       character.moves = <Move>[];

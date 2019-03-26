@@ -35,39 +35,32 @@ class _ChangeRaceDialogState extends State<ChangeRaceDialog> {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      decoration: BoxDecoration(
-        color: Theme.of(context).primaryColor,
-      ),
-      child: Column(
-        children: <Widget>[
+    return Scaffold(
+      backgroundColor: Theme.of(context).primaryColor,
+      appBar:
           AppBar(
             title: Text('Choose Race'),
             elevation: appBarElevation,
           ),
-          Expanded(
-            child: SingleChildScrollView(
-              controller: scrollController,
-              child: Padding(
-                padding: const EdgeInsets.all(16.0),
-                child: Column(
-                  children: widget.playerClass.raceMoves
-                      .map(
-                        (move) => Padding(
-                              padding: EdgeInsets.only(bottom: 16.0),
-                              child: RaceDescription(
-                                playerClass: widget.playerClass,
-                                race: move,
-                                onTap: changeRace(move),
-                              ),
-                            ),
-                      )
-                      .toList(),
-                ),
-              ),
-            ),
+      body: SingleChildScrollView(
+        controller: scrollController,
+        child: Padding(
+          padding: const EdgeInsets.all(16.0),
+          child: Column(
+            children: widget.playerClass.raceMoves
+                .map(
+                  (move) => Padding(
+                        padding: EdgeInsets.only(bottom: 16.0),
+                        child: RaceDescription(
+                          playerClass: widget.playerClass,
+                          race: move,
+                          onTap: changeRace(move),
+                        ),
+                      ),
+                )
+                .toList(),
           ),
-        ],
+        ),
       ),
     );
   }
