@@ -168,7 +168,9 @@ class _PreviewClassChangeState extends State<PreviewClassChange> {
   void save(ChangeClassConfirmationOptions options) {
     DbCharacter character = dwStore.state.characters.current;
     character.mainClass = widget.classDef;
-    List<CharacterKeys> keys = [];
+    character.looks = [];
+    character.race = null;
+    List<CharacterKeys> keys = [CharacterKeys.looks, CharacterKeys.race, CharacterKeys.mainClass];
 
     if (options.deleteMoves) {
       character.moves = <Move>[];
@@ -232,7 +234,7 @@ class _ConfirmClassChangeDialogState extends State<ConfirmClassChangeDialog> {
               padding: const EdgeInsets.symmetric(horizontal: 16.0)
                   .copyWith(bottom: 40.0),
               child: Text(
-                  'Please confirm your selection.\n\nChanging your class saves immediately.'),
+                  'Please confirm your selection.\n\nPlease note: race and looks will automatically reset.'),
             ),
             checkboxRow(
               'Remove all previous moves from current class',
