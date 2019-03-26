@@ -2,7 +2,7 @@ import 'package:dungeon_paper/components/class_description.dart';
 import 'package:dungeon_paper/components/confirmation_dialog.dart';
 import 'package:dungeon_paper/db/character.dart';
 import 'package:dungeon_paper/db/character_types.dart' as Chr;
-import 'package:dungeon_paper/profile_view/basic_info/edit_character_dialog.dart';
+import 'package:dungeon_paper/profile_view/edit_character/alignment_description_card.dart';
 import 'package:dungeon_paper/redux/stores/stores.dart';
 import 'package:dungeon_world_data/move.dart';
 import 'package:dungeon_world_data/player_class.dart';

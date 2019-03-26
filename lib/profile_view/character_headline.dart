@@ -1,5 +1,5 @@
 import 'package:dungeon_paper/db/character.dart';
-import 'package:dungeon_paper/profile_view/basic_info/edit_character_dialog.dart';
+import 'package:dungeon_paper/profile_view/edit_character/edit_character_dialog.dart';
 import 'package:dungeon_paper/redux/stores/connectors.dart';
 import 'package:dungeon_paper/utils.dart';
 import 'package:flutter/material.dart';

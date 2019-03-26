@@ -131,11 +131,67 @@ class AlignmentList extends StatelessWidget {
                 alignments
                     .map<Widget>(
                       (alignment) => TitleSubtitleRow(
-                            title: alignment.name,
-                            subtitle: alignment.description,
+                            contentPadding: EdgeInsets.symmetric(vertical: 8.0),
+                            title: Text(alignment.name),
+                            subtitle: Text(alignment.description),
                           ),
                     )
                     .toList(),
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+class ClassSmallDescription extends StatelessWidget {
+  final PlayerClass playerClass;
+  final VoidCallback onTap;
+  final int level;
+
+  const ClassSmallDescription({
+    Key key,
+    @required this.playerClass,
+    this.level,
+    this.onTap,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Material(
+      color: Theme.of(context).canvasColor,
+      elevation: 1.0,
+      type: MaterialType.card,
+      borderRadius: BorderRadius.circular(5.0),
+      child: InkWell(
+        onTap: onTap,
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 16.0),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: <Widget>[
+              Padding(
+                padding: EdgeInsets.only(right: 16.0),
+                child: Icon(Icons.person, size: 40.0),
+              ),
+              Expanded(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: <Widget>[
+                    Text(
+                      (level != null ? "Level $level " : "") + playerClass.name,
+                      style: Theme.of(context).textTheme.title,
+                    ),
+                    Text(
+                      'Change class',
+                      style: Theme.of(context).textTheme.body1,
+                    ),
+                  ],
+                ),
+              ),
+              Icon(Icons.chevron_right),
+            ],
           ),
         ),
       ),

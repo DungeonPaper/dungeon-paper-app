@@ -27,9 +27,8 @@ class NoteCardState extends State<NoteCard> {
     String desc = widget.note.description;
     return Material(
       elevation: 1,
-      shape: RoundedRectangleBorder(
-        borderRadius: const BorderRadius.all(Radius.circular(5)),
-      ),
+      borderRadius: const BorderRadius.all(Radius.circular(5)),
+      type: MaterialType.card,
       child: ExpansionTile(
         title: Text(widget.note.title),
         initiallyExpanded: expanded,

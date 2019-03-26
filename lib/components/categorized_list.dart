@@ -57,7 +57,7 @@ class CategorizedList<T> extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.start,
           mainAxisSize: MainAxisSize.min,
-          crossAxisAlignment: CrossAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.stretch,
           children: <Widget>[title] + items,
         ),
       );

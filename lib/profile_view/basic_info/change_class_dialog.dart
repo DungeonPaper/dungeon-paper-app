@@ -1,7 +1,6 @@
 import 'package:dungeon_paper/components/class_description.dart';
 import 'package:dungeon_paper/components/confirmation_dialog.dart';
 import 'package:dungeon_paper/db/character.dart';
-import 'package:dungeon_paper/profile_view/basic_info/edit_character_dialog.dart';
 import 'package:dungeon_paper/redux/stores/stores.dart';
 import 'package:dungeon_world_data/dw_data.dart';
 import 'package:dungeon_world_data/move.dart';
