@@ -60,26 +60,24 @@ class _EditCharacterDialogState extends State<EditCharacterDialog> {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      decoration: BoxDecoration(
-        color: Theme.of(context).primaryColor,
-      ),
-      child: Column(
-        children: <Widget>[
-          AppBar(
-            title: Text('Edit Character Details'),
-            elevation: appBarElevation,
-            actions: <Widget>[
-              Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: RaisedButton(
-                  child: Text('Save'),
-                  color: Theme.of(context).canvasColor,
-                  onPressed: formValid() ? save : null,
-                ),
-              ),
-            ],
+    return Scaffold(
+      backgroundColor: Theme.of(context).primaryColor,
+      appBar: AppBar(
+        title: Text('Edit Character Details'),
+        elevation: appBarElevation,
+        actions: <Widget>[
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: RaisedButton(
+              child: Text('Save'),
+              color: Theme.of(context).canvasColor,
+              onPressed: formValid() ? save : null,
+            ),
           ),
+        ],
+      ),
+      body: Column(
+        children: <Widget>[
           Expanded(
             child: SingleChildScrollView(
               controller: scrollController,
@@ -105,7 +103,8 @@ class _EditCharacterDialogState extends State<EditCharacterDialog> {
                     spacer,
                     RaceDescription(
                       playerClass: widget.character.mainClass,
-                      race: widget.character.race,
+                      race: widget.character.race ??
+                          widget.character.mainClass.raceMoves.first,
                       onTap: () => changeRace(context),
                     ),
                     spacer,

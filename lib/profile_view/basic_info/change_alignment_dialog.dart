@@ -38,39 +38,31 @@ class _ChangeAlignmentDialogState extends State<ChangeAlignmentDialog> {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      decoration: BoxDecoration(
-        color: Theme.of(context).primaryColor,
+    return Scaffold(
+      backgroundColor: Theme.of(context).primaryColor,
+      appBar: AppBar(
+        title: Text('Choose Alignment'),
+        elevation: appBarElevation,
       ),
-      child: Column(
-        children: <Widget>[
-          AppBar(
-            title: Text('Choose Alignment'),
-            elevation: appBarElevation,
+      body: SingleChildScrollView(
+        controller: scrollController,
+        child: Padding(
+          padding: const EdgeInsets.all(16.0),
+          child: Column(
+            children: Chr.Alignment.values
+                .map(
+                  (alignment) => Padding(
+                        padding: EdgeInsets.only(bottom: 16.0),
+                        child: AlignmentDescription(
+                          playerClass: widget.playerClass,
+                          alignment: alignment,
+                          onTap: changeAlignment(alignment),
+                        ),
+                      ),
+                )
+                .toList(),
           ),
-          Expanded(
-            child: SingleChildScrollView(
-              controller: scrollController,
-              child: Padding(
-                padding: const EdgeInsets.all(16.0),
-                child: Column(
-                  children: Chr.Alignment.values
-                      .map(
-                        (alignment) => Padding(
-                              padding: EdgeInsets.only(bottom: 16.0),
-                              child: AlignmentDescription(
-                                playerClass: widget.playerClass,
-                                alignment: alignment,
-                                onTap: changeAlignment(alignment),
-                              ),
-                            ),
-                      )
-                      .toList(),
-                ),
-              ),
-            ),
-          ),
-        ],
+        ),
       ),
     );
   }

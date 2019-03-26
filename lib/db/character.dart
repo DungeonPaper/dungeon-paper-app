@@ -142,7 +142,7 @@ class DbCharacter with Serializer<CharacterKeys> {
       'docVersion': docVersion,
       'hitDice': hitDice.toString(),
       'looks': looks,
-      'race': race.toJSON(),
+      'race': race?.toJSON(),
     };
   }
 
