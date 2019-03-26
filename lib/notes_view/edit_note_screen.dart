@@ -134,7 +134,7 @@ class EditNoteFormState extends State<EditNoteForm> {
   }
 }
 
-class EditNoteScreen extends StatelessWidget {
+class EditNoteScreen extends StatefulWidget {
   const EditNoteScreen({
     Key key,
     @required this.note,
@@ -145,31 +145,40 @@ class EditNoteScreen extends StatelessWidget {
   final DialogMode mode;
 
   @override
+  _EditNoteScreenState createState() => _EditNoteScreenState();
+}
+
+class _EditNoteScreenState extends State<EditNoteScreen> {
+  final ScrollController scrollController = ScrollController();
+
+  @override
   Widget build(BuildContext context) {
     return EditNoteForm(
-      mode: mode,
-      note: note,
-      builder: (ctx, form, onSave) => Material(
-            child: Column(
-              children: <Widget>[
-                AppBar(
-                  title: Text(
-                      '${mode == DialogMode.Create ? 'Add' : 'Edit'} Note'),
-                  actions: <Widget>[
-                    IconButton(
-                      tooltip: 'Save',
-                      icon: Icon(Icons.save),
-                      onPressed: onSave,
-                    )
-                  ],
-                ),
-                Container(
-                  padding: EdgeInsets.all(16),
-                  child: form,
-                ),
-              ],
+      mode: widget.mode,
+      note: widget.note,
+      builder: (ctx, form, onSave) {
+        return Scaffold(
+          backgroundColor: Theme.of(context).canvasColor,
+          appBar: AppBar(
+            title: Text(
+                '${widget.mode == DialogMode.Create ? 'Add' : 'Edit'} Note'),
+            actions: <Widget>[
+              IconButton(
+                tooltip: 'Save',
+                icon: Icon(Icons.save),
+                onPressed: onSave,
+              )
+            ],
+          ),
+          body: Container(
+            child: SingleChildScrollView(
+              controller: scrollController,
+              padding: EdgeInsets.all(16),
+              child: form,
             ),
           ),
+        );
+      },
     );
   }
 }

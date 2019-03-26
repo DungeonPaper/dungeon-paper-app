@@ -45,7 +45,7 @@ class MoveCardState extends State<MoveCard> {
                 children: <Widget>[
                   Padding(
                     padding: const EdgeInsets.only(right: 8.0),
-                    child: Icon(Icons.pets),
+                    child: Icon(Icons.pets, size: 12.0),
                   ),
                   Expanded(child: name),
                 ],
