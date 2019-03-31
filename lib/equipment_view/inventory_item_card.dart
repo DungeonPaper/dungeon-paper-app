@@ -1,16 +1,16 @@
 import 'package:dungeon_paper/components/card_bottom_controls.dart';
 import 'package:dungeon_paper/components/confirmation_dialog.dart';
+import 'package:dungeon_paper/components/tag_list.dart';
 import 'package:dungeon_paper/db/inventory_items.dart';
 import 'package:dungeon_paper/dialogs.dart';
 import 'package:dungeon_paper/inventory_item_screen/add_inventory_screen.dart';
-import 'package:dungeon_world_data/equipment.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_markdown/flutter_markdown.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 enum InventoryItemCardMode { Addable, Editable }
 
-class InventoryItemCard extends StatefulWidget {
+class InventoryItemCard extends StatelessWidget {
   final InventoryItem item;
   final InventoryItemCardMode mode;
 
@@ -21,16 +21,8 @@ class InventoryItemCard extends StatefulWidget {
   }) : super(key: key);
 
   @override
-  InventoryItemCardState createState() => InventoryItemCardState();
-}
-
-class InventoryItemCardState extends State<InventoryItemCard> {
-  bool expanded = false;
-
-  @override
   Widget build(BuildContext context) {
-    Equipment item = widget.item.item;
-    num amount = widget.item.amount;
+    num amount = item.amount;
 
     List<Widget> info = [];
     if (item.description != null && item.description.trim().isNotEmpty) {
@@ -38,37 +30,18 @@ class InventoryItemCardState extends State<InventoryItemCard> {
           onTapLink: (url) => _launchURL(url), data: item.description));
     }
     if (item.tags != null && item.tags.isNotEmpty) {
-      info.add(
-        Wrap(
-          children: item.tags
-              .map(
-                (tag) => Padding(
-                      padding: EdgeInsets.only(right: 4),
-                      child: Chip(
-                        label: Text(
-                          tag.hasValues
-                              ? tag.values.keys
-                                  .map((k) => '$k: ${tag.values[k]}')
-                                  .join(' ')
-                              : tag.name,
-                        ),
-                      ),
-                    ),
-              )
-              .toList(),
-        ),
-      );
+      info.add(TagList(tags: item.tags));
     }
 
     var titleChildren = <Widget>[
       Expanded(
         child: Text(
-          widget.item.item?.name ?? '',
+          item.name ?? '',
           overflow: TextOverflow.ellipsis,
         ),
       ),
     ];
-    if (widget.mode == InventoryItemCardMode.Editable) {
+    if (mode == InventoryItemCardMode.Editable) {
       titleChildren.add(Text('x$amount'));
     }
     var title = Row(
@@ -81,14 +54,8 @@ class InventoryItemCardState extends State<InventoryItemCard> {
         borderRadius: const BorderRadius.all(Radius.circular(5)),
       ),
       child: ExpansionTile(
-        key: PageStorageKey('inv-${widget.item.key}'),
+        key: PageStorageKey('inv-${item.key}'),
         title: title,
-        initiallyExpanded: expanded == true,
-        onExpansionChanged: (s) {
-          setState(() {
-            expanded = !expanded;
-          });
-        },
         children: <Widget>[
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
@@ -99,7 +66,7 @@ class InventoryItemCardState extends State<InventoryItemCard> {
               children: info,
             ),
           ),
-          widget.mode == InventoryItemCardMode.Editable
+          mode == InventoryItemCardMode.Editable
               ? Row(
                   mainAxisAlignment: MainAxisAlignment.end,
                   children: <Widget>[
@@ -111,15 +78,15 @@ class InventoryItemCardState extends State<InventoryItemCard> {
                             shape: CircleBorder(side: BorderSide.none),
                             child: Text('-'),
                             onPressed: () {
-                              incrItemAmount(widget.item, -1);
+                              incrItemAmount(item, -1);
                             },
                           ),
-                          Text(widget.item.amount.toString()),
+                          Text(item.amount.toString()),
                           RaisedButton(
                             shape: CircleBorder(side: BorderSide.none),
                             child: Text('+'),
                             onPressed: () {
-                              incrItemAmount(widget.item, 1);
+                              incrItemAmount(item, 1);
                             },
                           )
                         ],
@@ -140,7 +107,7 @@ class InventoryItemCardState extends State<InventoryItemCard> {
                       child: Text('Add Item'),
                       color: Theme.of(context).primaryColorLight,
                       onPressed: () {
-                        createInventoryItem(widget.item);
+                        createInventoryItem(item);
                         Navigator.pop(context);
                       },
                     ),
@@ -157,7 +124,7 @@ class InventoryItemCardState extends State<InventoryItemCard> {
       MaterialPageRoute(
         fullscreenDialog: true,
         builder: (ctx) => InventoryItemScreen(
-              item: widget.item,
+              item: item,
               mode: DialogMode.Edit,
             ),
       ),
@@ -172,7 +139,7 @@ class InventoryItemCardState extends State<InventoryItemCard> {
           text: const Text('Are you sure?'),
           cancelButtonText: Text('Cancel')),
     )) {
-      deleteInventoryItem(widget.item);
+      deleteInventoryItem(item);
     }
   }
 

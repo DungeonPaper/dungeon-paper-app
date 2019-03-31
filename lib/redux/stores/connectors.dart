@@ -23,20 +23,18 @@ class DWStoreConnector<T> extends StatelessWidget {
     Function(Store<DWStore> store) _converter =
         converter != null ? converter : (store) => store.state;
 
-    return StoreProvider<DWStore>(
-      store: dwStore,
-      child: StoreConnector<DWStore, T>(
-          converter: _converter,
-          builder: (context, state) {
-            DWStore store = dwStore.state;
+    return StoreConnector<DWStore, T>(
+        converter: _converter,
+        builder: (context, state) {
+          DWStore store = dwStore.state;
 
-            if (loaderKey != null &&
-                store.loading.keys.contains(loaderKey) &&
-                store.loading[loaderKey]) {
-              return loader(context);
-            }
-            return builder(context, state);
-          }),
-    );
+          if (loaderKey != null &&
+              store.loading.keys.contains(loaderKey) &&
+              store.loading[loaderKey]) {
+            return loader(context);
+          }
+
+          return builder(context, state);
+        });
   }
 }

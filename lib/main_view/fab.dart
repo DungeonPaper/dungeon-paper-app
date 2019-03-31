@@ -63,10 +63,7 @@ class FABState extends State<FAB> {
                 MaterialPageRoute(
                   fullscreenDialog: true,
                   builder: (ctx) => InventoryItemScreen(
-                        item: InventoryItem({
-                          'item': {},
-                          'amount': 1,
-                        }),
+                        item: InventoryItem(),
                         mode: DialogMode.Create,
                       ),
                 ),

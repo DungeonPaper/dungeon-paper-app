@@ -100,13 +100,11 @@ class _AddInventoryItemState extends State<AddInventoryItem> {
             titleBuilder: (ctx, key, idx) => Text(key),
             itemBuilder: (ctx, key, idx) {
               var item = itemMap[key][idx];
-              InventoryItem invItem =
-                  InventoryItem({'item': item.toJSON(), 'amount': 1});
               return Container(
                 padding: EdgeInsets.symmetric(vertical: 8.0),
                 child: InventoryItemCard(
-                  key: PageStorageKey('add-${invItem.key}'),
-                  item: invItem,
+                  key: PageStorageKey('add-${item.key}'),
+                  item: InventoryItem.fromEquipment(item),
                   mode: InventoryItemCardMode.Addable,
                 ),
               );

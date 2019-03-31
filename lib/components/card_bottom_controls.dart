@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 
 class CardBottomControls extends StatelessWidget {
   final String entityTypeName;
+  final List<Widget> leading;
+  final List<Widget> trailing;
   final Function onEdit;
   final Function onDelete;
 
@@ -10,10 +12,17 @@ class CardBottomControls extends StatelessWidget {
     this.onEdit,
     this.onDelete,
     this.entityTypeName,
+    this.leading = const [],
+    this.trailing = const [],
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    List<Widget> buttons = getButtons();
+    return Row(mainAxisAlignment: MainAxisAlignment.end, children: buttons);
+  }
+
+  List<Widget> getButtons() {
     List<Widget> buttons = [];
     Widget editButton = IconButton(
       tooltip: suffixType('Edit'),
@@ -25,13 +34,19 @@ class CardBottomControls extends StatelessWidget {
       icon: Icon(Icons.delete),
       onPressed: onDelete,
     );
+    if (leading.isNotEmpty) {
+      buttons.addAll(leading);
+    }
     if (onEdit != null) {
       buttons.add(editButton);
     }
     if (onDelete != null) {
       buttons.add(deleteButton);
     }
-    return Row(mainAxisAlignment: MainAxisAlignment.end, children: buttons);
+    if (trailing.isNotEmpty) {
+      buttons.addAll(trailing);
+    }
+    return buttons;
   }
 
   String suffixType(String text) {

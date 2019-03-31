@@ -1,7 +1,6 @@
 import 'package:dungeon_paper/components/markdown_help.dart';
 import 'package:dungeon_paper/db/inventory_items.dart';
 import 'package:dungeon_paper/dialogs.dart';
-import 'package:dungeon_world_data/equipment.dart';
 import 'package:flutter/material.dart';
 
 class CustomInventoryItemFormBuilder extends StatefulWidget {
@@ -34,15 +33,15 @@ class CustomInventoryItemFormBuilderState
   @override
   void initState() {
     _controllers = {
-      'name': TextEditingController(text: (widget.item.item.name ?? '').toString()),
+      'name': TextEditingController(text: (widget.item.name ?? '').toString()),
       'description': TextEditingController(
-          text: (widget.item.item.description ?? '').toString()),
+          text: (widget.item.description ?? '').toString()),
       'amount':
           TextEditingController(text: (widget.item.amount ?? '').toString()),
     };
-    name =_controllers['name'].text;
-    description =_controllers['description'].text;
-    amount =_controllers['amount'].text;
+    name = _controllers['name'].text;
+    description = _controllers['description'].text;
+    amount = _controllers['amount'].text;
     super.initState();
   }
 
@@ -76,7 +75,9 @@ class CustomInventoryItemFormBuilderState
             ),
           ),
           MarkdownHelp(),
-          SizedBox(width: 10,),
+          SizedBox(
+            width: 10,
+          ),
           TextField(
             decoration: InputDecoration(labelText: 'Item Amount'),
             onChanged: (val) => _setStateValue('amount', val),
@@ -108,11 +109,11 @@ class CustomInventoryItemFormBuilderState
   }
 
   _updateItem() async {
-    Equipment inv = widget.item.item;
-    InventoryItem item = InventoryItem({
-      'item': inv.toJSON()..addAll({'name': name, 'description': description, 'amount': int.tryParse(amount) ?? 1}),
-      'amount': int.tryParse(amount) ?? 1,
-    });
+    InventoryItem item = widget.item;
+    item.name = name;
+    item.description = description;
+    item.pluralName = name + 's';
+    item.amount = int.tryParse(amount);
     updateInventoryItem(item);
     if (widget.onUpdateItem != null) {
       widget.onUpdateItem(item);
@@ -122,16 +123,12 @@ class CustomInventoryItemFormBuilderState
 
   _createItem() async {
     InventoryItem item = InventoryItem(
-      {
-        'item': Equipment(
-          key: name.toLowerCase().replaceAll(RegExp('[^a-z]+'), '_'),
-          name: name,
-          description: description,
-          tags: [],
-          pluralName: name + 's',
-        ).toJSON(),
-        'amount': int.tryParse(amount) ?? 1,
-      },
+      key: name.toLowerCase().replaceAll(RegExp('[^a-z]+'), '_'),
+      name: name,
+      description: description,
+      tags: [],
+      pluralName: name + 's',
+      amount: int.tryParse(amount) ?? 1,
     );
     print(item);
     createInventoryItem(item);
