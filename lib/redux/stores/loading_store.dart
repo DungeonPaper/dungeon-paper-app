@@ -19,6 +19,7 @@ Map<LoadingKeys, bool> loadingReducer(Map<LoadingKeys, bool> state, action) {
 
   if (action is Login || action is NoLogin) {
     state[LoadingKeys.User] = false;
+    state[LoadingKeys.Character] = false;
   }
 
   return state;

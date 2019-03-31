@@ -3,6 +3,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dungeon_paper/db/character_types.dart';
 import 'package:dungeon_paper/db/inventory_items.dart';
 import 'package:dungeon_paper/db/notes.dart';
+import 'package:dungeon_paper/db/spells.dart';
 import 'package:dungeon_paper/db/user.dart';
 import 'package:dungeon_paper/redux/actions.dart';
 import 'package:dungeon_paper/redux/stores/stores.dart';
@@ -11,7 +12,6 @@ import 'package:dungeon_world_data/dice.dart';
 import 'package:dungeon_world_data/dw_data.dart';
 import 'package:dungeon_world_data/move.dart';
 import 'package:dungeon_world_data/player_class.dart';
-import 'package:dungeon_world_data/spell.dart';
 import 'base.dart';
 
 enum CharacterKeys {
@@ -89,7 +89,7 @@ class DbCharacter with Serializer<CharacterKeys> {
   num cha;
   List<Move> moves;
   List<Note> notes;
-  List<Spell> spells;
+  List<DbSpell> spells;
   List<InventoryItem> inventory;
   num docVersion;
   Dice hitDice;
@@ -174,9 +174,9 @@ class DbCharacter with Serializer<CharacterKeys> {
       CharacterKeys.notes: (v) =>
           notes = List.from(v ?? []).map((note) => Note(note)).toList(),
       CharacterKeys.spells: (v) => spells =
-          List.from(v ?? []).map((spell) => Spell.fromJSON(spell)).toList(),
+          List.from(v ?? []).map((spell) => DbSpell.fromJSON(spell)).toList(),
       CharacterKeys.inventory: (v) => inventory =
-          List.from(v ?? []).map((item) => InventoryItem(item)).toList(),
+          List.from(v ?? []).map<InventoryItem>((item) => InventoryItem.fromJSON(item)).toList(),
       CharacterKeys.docVersion: (v) => docVersion = v ?? 1,
       CharacterKeys.hitDice: (v) =>
           hitDice = v != null ? Dice.parse(v) : mainClass.damage,
@@ -324,7 +324,7 @@ Future<DbCharacter> checkAndPerformCharMigration(
     String docId, Map character) async {
   List<CharacterKeys> keys = [];
 
-  num lastVersion = 2;
+  num lastVersion = 3;
   num curVersion = character[enumName(CharacterKeys.docVersion)] ?? 0;
 
   if (curVersion == lastVersion) {
@@ -334,9 +334,9 @@ Future<DbCharacter> checkAndPerformCharMigration(
 
   Map<CharacterKeys, bool Function(dynamic obj)> predicateMap = {
     CharacterKeys.notes: (notes) =>
-        notes != null && notes.any((note) => note['key'] == null),
+        notes != null && notes.isNotEmpty && notes.any((note) => note['key'] == null),
     CharacterKeys.inventory: (items) =>
-        items != null && items.any((item) => item['key'] == null),
+        items != null && items.isNotEmpty && items.any((item) => item['key'] == null || item['item'] != null),
   };
 
   predicateMap.forEach((enumKey, predicate) {

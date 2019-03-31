@@ -30,7 +30,7 @@ class LoginButtonState extends State<LoginButton> {
             child: RaisedButton(
               child: Text('Login with Google', style: TextStyle(fontSize: 20)),
               color: Theme.of(context).accentColor,
-              onPressed: _handleSignIn,
+              onPressed: _handleSignIn(context),
             ),
           );
         }
@@ -39,28 +39,30 @@ class LoginButtonState extends State<LoginButton> {
     );
   }
 
-  void _handleSignIn() async {
-    try {
-      var user = await requestSignInWithCredentials();
-      if (user == null) {
-        throw ('user_canceled');
+  Function() _handleSignIn(BuildContext context) {
+    return () async {
+      try {
+        var user = await requestSignInWithCredentials();
+        if (user == null) {
+          throw ('user_canceled');
+        }
+        if (onUserChange != null) {
+          onUserChange();
+        }
+      } catch (e) {
+        // if (e != 'user_canceled') {
+        //   throw (e);
+        // }
+        print('SIGN IN ERROR:');
+        print(e);
+        dwStore.dispatch(UserActions.noLogin());
+        Scaffold.of(context, nullOk: true).showSnackBar(
+          SnackBar(
+            content: Text('Login failed.'),
+            duration: Duration(seconds: 6),
+          ),
+        );
       }
-      if (onUserChange != null) {
-        onUserChange();
-      }
-    } catch (e) {
-      // if (e != 'user_canceled') {
-      //   throw (e);
-      // }
-      print('SIGN IN ERROR:');
-      print(e);
-      dwStore.dispatch(UserActions.noLogin());
-      Scaffold.of(context, nullOk: true).showSnackBar(
-        SnackBar(
-          content: Text('Login failed.'),
-          duration: Duration(seconds: 6),
-        ),
-      );
-    }
+    };
   }
 }

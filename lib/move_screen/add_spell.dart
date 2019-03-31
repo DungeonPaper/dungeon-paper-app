@@ -1,5 +1,6 @@
 import 'package:dungeon_paper/battle_view/spell_card.dart';
 import 'package:dungeon_paper/components/categorized_list.dart';
+import 'package:dungeon_paper/db/spells.dart';
 import 'package:dungeon_paper/utils.dart';
 import 'package:dungeon_world_data/dw_data.dart';
 import 'package:dungeon_world_data/spell.dart';
@@ -33,7 +34,7 @@ class AddSpell extends StatelessWidget {
           ),
           child: SpellCard(
             index: -1,
-            spell: spell,
+            spell: DbSpell.fromSpell(spell),
             mode: SpellCardMode.Addable,
           ),
         );

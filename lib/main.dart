@@ -3,6 +3,7 @@ import 'package:dungeon_paper/main_view/main_view.dart';
 import 'package:dungeon_paper/redux/actions.dart';
 import 'package:dungeon_paper/redux/stores/stores.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_redux/flutter_redux.dart';
 import 'package:screen/screen.dart';
 
 void main() async {
@@ -20,16 +21,19 @@ class DungeonPaper extends StatelessWidget {
   Widget build(BuildContext context) {
     const appName = 'Dungeon Paper';
 
-    return MaterialApp(
-      title: appName,
-      home: MainContainer(
+    return StoreProvider<DWStore>(
+      store: dwStore,
+      child: MaterialApp(
         title: appName,
-        pageController: _pageController,
-      ),
-      theme: ThemeData(
-        primarySwatch: Colors.lightGreen,
-        brightness: Brightness.light,
-        scaffoldBackgroundColor: const Color.fromARGB(255, 225, 225, 225),
+        home: MainContainer(
+          title: appName,
+          pageController: _pageController,
+        ),
+        theme: ThemeData(
+          primarySwatch: Colors.lightGreen,
+          brightness: Brightness.light,
+          scaffoldBackgroundColor: const Color.fromARGB(255, 225, 225, 225),
+        ),
       ),
     );
   }
