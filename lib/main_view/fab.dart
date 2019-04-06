@@ -82,6 +82,7 @@ class FABState extends State<FAB> {
                           name: '',
                           description: '',
                           classes: [],
+                          explanation: '',
                         ),
                         mode: DialogMode.Create,
                         index: -1,

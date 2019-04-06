@@ -28,6 +28,7 @@ class CustomMoveFormBuilder extends StatefulWidget {
 class CustomMoveFormBuilderState extends State<CustomMoveFormBuilder> {
   String name;
   String description;
+  String explanation;
   Map<String, TextEditingController> _controllers;
 
   @override
@@ -36,6 +37,8 @@ class CustomMoveFormBuilderState extends State<CustomMoveFormBuilder> {
       'name': TextEditingController(text: (widget.move.name ?? '').toString()),
       'description': TextEditingController(
           text: (widget.move.description ?? '').toString()),
+      'explanation': TextEditingController(
+          text: (widget.move.explanation ?? '').toString()),
     };
     name = _controllers['name'].text;
     description = _controllers['description'].text;
@@ -71,6 +74,21 @@ class CustomMoveFormBuilderState extends State<CustomMoveFormBuilder> {
               // textAlign: TextAlign.center,
             ),
           ),
+          Container(
+            margin: const EdgeInsets.symmetric(vertical: 8.0),
+            child: TextField(
+              decoration: InputDecoration(labelText: 'Explanation'),
+              autofocus: widget.mode == DialogMode.Edit,
+              maxLines: null,
+              keyboardType: TextInputType.multiline,
+              autocorrect: true,
+              textCapitalization: TextCapitalization.sentences,
+              onChanged: (val) => _setStateValue('explanation', val),
+              controller: _controllers['explanation'],
+              // style: TextStyle(fontSize: 13.0),
+              // textAlign: TextAlign.center,
+            ),
+          ),
           MarkdownHelp(),
         ],
       ),
@@ -90,6 +108,8 @@ class CustomMoveFormBuilderState extends State<CustomMoveFormBuilder> {
           return name = newValue;
         case 'description':
           return description = newValue;
+        case 'explanation':
+          return explanation = newValue;
       }
     });
   }
@@ -117,6 +137,7 @@ class CustomMoveFormBuilderState extends State<CustomMoveFormBuilder> {
       key: name.toLowerCase().replaceAll(RegExp('[^a-z]+'), '_'),
       name: name,
       description: description,
+      explanation: explanation,
       classes: [],
     );
   }
