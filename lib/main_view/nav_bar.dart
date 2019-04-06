@@ -65,7 +65,7 @@ class NavBarState extends State<NavBar> {
   Widget build(BuildContext context) {
     List<Widget> pageItems = Pages.values.map((page) {
       PageDetails details = pageDetails[page];
-      double t = clamp((activePageIndex - page.index).abs(), 0, 1);
+      double t = (activePageIndex - page.index).abs();
       Color color = Color.lerp(Theme.of(context).colorScheme.primary,
           Theme.of(context).colorScheme.onSurface, t);
 
