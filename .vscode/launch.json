@@ -18,7 +18,7 @@
       // "--flavor",
       // "development"
       // "-d711KPNY0809287",
-      "--observatory-port 9933",
+      // "--observatory-port 9933",
       "-v"
     ],
   }]

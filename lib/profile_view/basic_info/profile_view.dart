@@ -6,10 +6,10 @@ import 'package:dungeon_paper/profile_view/character_headline.dart';
 import 'package:dungeon_paper/profile_view/status_bars.dart';
 import 'package:flutter/material.dart';
 
-class BasicInfo extends StatelessWidget {
+class ProfileView extends StatelessWidget {
   final DbCharacter character;
 
-  BasicInfo({
+  ProfileView({
     Key key,
     @required this.character,
   }) : super(key: key);
@@ -18,7 +18,7 @@ class BasicInfo extends StatelessWidget {
   Widget build(BuildContext context) {
     return OrientationBuilder(builder: (context, orientation) {
       List<Widget> children = [
-        CharacterHeader(character: character, orientation: orientation),
+        CharacterHeader(character: character),
         ArmorAndHitDice(character: character),
         StatusBars(character: character),
         BaseStats(character: character),
@@ -46,37 +46,48 @@ class CharacterHeader extends StatelessWidget {
   const CharacterHeader({
     Key key,
     @required this.character,
-    @required this.orientation,
   }) : super(key: key);
 
   final DbCharacter character;
-  final Orientation orientation;
 
   @override
   Widget build(BuildContext context) {
     var image = Container(
       decoration: BoxDecoration(
+        color: Theme.of(context).primaryColorLight,
         image: DecorationImage(
           fit: BoxFit.fitWidth,
           alignment: FractionalOffset.topCenter,
           image: NetworkImage(character.photoURL),
         ),
+        borderRadius: BorderRadius.circular(5.0),
       ),
     );
-    var imageContainer = character.photoURL != null &&
-            character.photoURL.length > 0
-        ? AspectRatio(
-            aspectRatio:
-                orientation == Orientation.portrait ? 2.0 / 1.0 : 14.0 / 9.0,
-            child: image)
-        : Container(height: 90.0, width: 0.0);
+    var imageContainer =
+        character.photoURL != null && character.photoURL.isNotEmpty
+            ? AspectRatio(aspectRatio: 14.0 / 9.0, child: image)
+            : Container(height: 90.0);
     return Stack(
-      children: [
-        imageContainer,
-        Positioned.fill(
-          child: Align(
-            alignment: Alignment.bottomCenter,
-            child: CharacterHeadline(character: character),
+      children: <Widget>[
+        Container(
+          height: 150.0,
+          decoration: BoxDecoration(
+            color: Theme.of(context).primaryColor,
+            borderRadius: BorderRadius.vertical(bottom: Radius.circular(16)),
+          ),
+        ),
+        Padding(
+          padding: const EdgeInsets.all(16.0).copyWith(bottom: 0),
+          child: Stack(
+            children: [
+              imageContainer,
+              Positioned.fill(
+                child: Align(
+                  alignment: Alignment.bottomCenter,
+                  child: CharacterHeadline(character: character),
+                ),
+              ),
+            ],
           ),
         ),
       ],
