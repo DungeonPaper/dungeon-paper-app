@@ -92,6 +92,7 @@ class Sidebar extends StatelessWidget {
       return ListTile(
         leading: Icon(Icons.person),
         title: Text(character.displayName),
+        selected: dwStore.state.characters.currentCharDocID == charDoc.documentID,
         onTap: () {
           dwStore.dispatch(
               CharacterActions.setCurrentChar(charDoc.documentID, character));
