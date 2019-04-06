@@ -130,7 +130,6 @@ class CustomInventoryItemFormBuilderState
       pluralName: name + 's',
       amount: int.tryParse(amount) ?? 1,
     );
-    print(item);
     createInventoryItem(item);
     if (widget.onUpdateItem != null) {
       widget.onUpdateItem(item);

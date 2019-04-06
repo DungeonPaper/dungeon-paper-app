@@ -3,7 +3,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
-enum Pages { Home, Battle, Reference, Equipment, Notes }
+enum Pages { Home, Battle, Reference, Inventory, Notes }
 
 typedef Widget ColorBuilder(Color color);
 
@@ -48,7 +48,7 @@ class NavBarState extends State<NavBar> {
             )),
     Pages.Notes: PageDetails(
         Text('Notes'), (color) => Icon(Icons.speaker_notes, color: color)),
-    Pages.Equipment: PageDetails(
+    Pages.Inventory: PageDetails(
         Text('Inventory'),
         (color) => SvgPicture.asset(
               // 'assets/armor.svg',

@@ -14,6 +14,10 @@ double clamp<T extends num>(T number, T low, T high) =>
 double lerp(num t, num minA, num maxA, num minB, num maxB) =>
     (t - minA) / (maxA - minA) * (maxB - minB) + minB;
 
+double clamp01<T extends num>(T number) => clamp(number, 0, 1);
+
+double lerp01(num t, num minA, num maxA) => lerp(t, minA, maxA, 0, 1);
+
 bool isNumeric(String s) {
   if (s == null) {
     return false;
@@ -37,6 +41,7 @@ E Function(String k) stringToEnum<E>(Map<String, E> enumValue) {
 typedef bool Function(T obj) ReturnPredicate<T>(T obj);
 typedef bool InputPredicate<T>(T obj, T obj2);
 
-ReturnPredicate<T> matcher<T>(InputPredicate<T> predicate) => (T orig) => (T i) => predicate(i, orig);
+ReturnPredicate<T> matcher<T>(InputPredicate<T> predicate) =>
+    (T orig) => (T i) => predicate(i, orig);
 
 // (Note note) => (Note n) => n.key != null && n.key == note.key || n.title == note.title;

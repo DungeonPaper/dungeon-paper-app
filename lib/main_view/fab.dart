@@ -55,7 +55,7 @@ class FABState extends State<FAB> {
                 ),
               ),
         ),
-    Pages.Equipment: (context) => FloatingActionButton(
+    Pages.Inventory: (context) => FloatingActionButton(
           foregroundColor: Colors.white,
           child: Icon(Icons.add),
           onPressed: () => Navigator.push(
