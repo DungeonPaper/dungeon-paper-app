@@ -3,7 +3,7 @@ import 'package:dungeon_paper/components/confirmation_dialog.dart';
 import 'package:dungeon_paper/components/tag_list.dart';
 import 'package:dungeon_paper/db/inventory_items.dart';
 import 'package:dungeon_paper/dialogs.dart';
-import 'package:dungeon_paper/inventory_item_screen/add_inventory_screen.dart';
+import 'package:dungeon_paper/inventory_item_view/add_inventory_item_container.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_markdown/flutter_markdown.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -123,7 +123,7 @@ class InventoryItemCard extends StatelessWidget {
       context,
       MaterialPageRoute(
         fullscreenDialog: true,
-        builder: (ctx) => InventoryItemScreen(
+        builder: (ctx) => AddInventoryItemContainer(
               item: item,
               mode: DialogMode.Edit,
             ),

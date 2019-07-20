@@ -1,7 +1,7 @@
 import 'package:dungeon_paper/battle_view/battle_view.dart';
 import 'package:dungeon_paper/db/character.dart';
 import 'package:dungeon_paper/db/user.dart';
-import 'package:dungeon_paper/equipment_view/equipment_view.dart';
+import 'package:dungeon_paper/equipment_view/inventory_view.dart';
 import 'package:dungeon_paper/main_view/appbar_title.dart';
 import 'package:dungeon_paper/main_view/fab.dart';
 import 'package:dungeon_paper/main_view/nav_bar.dart';

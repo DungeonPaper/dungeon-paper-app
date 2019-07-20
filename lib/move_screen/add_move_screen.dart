@@ -7,8 +7,8 @@ import 'package:dungeon_paper/redux/stores/stores.dart';
 import 'package:dungeon_world_data/move.dart';
 import 'package:flutter/material.dart';
 
-class MoveScreen extends StatefulWidget {
-  const MoveScreen({
+class AddMoveScreen extends StatefulWidget {
+  const AddMoveScreen({
     Key key,
     @required this.index,
     @required this.move,
@@ -20,13 +20,13 @@ class MoveScreen extends StatefulWidget {
   final DialogMode mode;
 
   @override
-  MoveScreenState createState() => MoveScreenState();
+  AddMoveScreenState createState() => AddMoveScreenState();
 }
 
-class MoveScreenState extends State<MoveScreen>
+class AddMoveScreenState extends State<AddMoveScreen>
     with SingleTickerProviderStateMixin {
   TabController _controller;
-  MoveScreenState() {
+  AddMoveScreenState() {
     _controller = TabController(vsync: this, length: texts.length);
   }
 

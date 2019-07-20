@@ -165,9 +165,9 @@ class DbCharacter with Serializer<CharacterKeys> {
               : dungeonWorld.classes['bard'],
       CharacterKeys.photoURL: (v) => photoURL = v ?? '',
       CharacterKeys.level: (v) => level = v ?? 1,
-      CharacterKeys.currentHP: (v) => currentHP = v ?? maxHP ?? 0,
+      CharacterKeys.maxHP: (v) => maxHP = v ?? defaultMaxHP,
+      CharacterKeys.currentHP: (v) => currentHP = v ?? maxHP ?? defaultMaxHP ?? 0,
       CharacterKeys.currentXP: (v) => currentXP = v ?? 0,
-      CharacterKeys.maxHP: (v) => maxHP = v ?? 20,
       CharacterKeys.armor: (v) => armor = v ?? 0,
       CharacterKeys.str: (v) => str = v ?? 8,
       CharacterKeys.dex: (v) => dex = v ?? 8,
@@ -193,6 +193,7 @@ class DbCharacter with Serializer<CharacterKeys> {
           race = v != null ? Move.fromJSON(v) : mainClass.raceMoves.first,
       CharacterKeys.coins: (v) => coins = v ?? 0,
     };
+    serialize(CharacterKeys.mainClass, map[CharacterKeys.mainClass]);
     serializeAll(map);
   }
 }

@@ -1,11 +1,11 @@
 import 'package:dungeon_paper/db/inventory_items.dart';
 import 'package:dungeon_paper/dialogs.dart';
-import 'package:dungeon_paper/inventory_item_screen/add_inventory_item.dart';
-import 'package:dungeon_paper/inventory_item_screen/custom_inventory_item_form.dart';
+import 'package:dungeon_paper/inventory_item_view/custom_inventory_item_form.dart';
+import 'package:dungeon_paper/inventory_item_view/existing_inventory_items_list.dart';
 import 'package:flutter/material.dart';
 
-class InventoryItemScreen extends StatefulWidget {
-  const InventoryItemScreen({
+class AddInventoryItemContainer extends StatefulWidget {
+  const AddInventoryItemContainer({
     Key key,
     @required this.item,
     @required this.mode,
@@ -15,15 +15,15 @@ class InventoryItemScreen extends StatefulWidget {
   final DialogMode mode;
 
   @override
-  InventoryItemScreenState createState() => InventoryItemScreenState();
+  AddInventoryItemContainerState createState() => AddInventoryItemContainerState();
 }
 
-class InventoryItemScreenState extends State<InventoryItemScreen>
+class AddInventoryItemContainerState extends State<AddInventoryItemContainer>
     with SingleTickerProviderStateMixin {
   TabController _controller;
   String search = '';
 
-  InventoryItemScreenState() {
+  AddInventoryItemContainerState() {
     _controller = TabController(vsync: this, length: texts.length);
   }
 
@@ -77,7 +77,7 @@ class InventoryItemScreenState extends State<InventoryItemScreen>
             Container(
               key: PageStorageKey<String>(texts[0]),
               color: Theme.of(context).scaffoldBackgroundColor,
-              child: AddInventoryItemContainer(),
+              child: ExistingInventoryItemsList(),
             ),
             formContainer
           ],
