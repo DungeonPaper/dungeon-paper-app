@@ -177,6 +177,11 @@ class _PreviewClassChangeState extends State<PreviewClassChange> {
       character.currentXP = 0;
       keys.addAll([CharacterKeys.level, CharacterKeys.currentXP]);
     }
+    if (options.resetMaxHP) {
+      character.maxHP = character.defaultMaxHP;
+      character.currentHP = character.maxHP;
+      keys.addAll([CharacterKeys.currentHP, CharacterKeys.maxHP]);
+    }
     if (options.resetHitDice) {
       character.hitDice = widget.classDef.damage;
       keys.add(CharacterKeys.hitDice);
@@ -243,6 +248,11 @@ class _ConfirmClassChangeDialogState extends State<ConfirmClassChangeDialog> {
               toggleResetXP,
             ),
             checkboxRow(
+              'Reset Max HP to match this class',
+              options.resetMaxHP,
+              toggleResetMaxHP,
+            ),
+            checkboxRow(
               'Update hit dice to match this class',
               options.resetHitDice,
               toggleUpdateHitDice,
@@ -279,6 +289,11 @@ class _ConfirmClassChangeDialogState extends State<ConfirmClassChangeDialog> {
       options.resetXP = state;
     });
   }
+  void toggleResetMaxHP(bool state) {
+    setState(() {
+      options.resetMaxHP = state;
+    });
+  }
 
   void toggleUpdateHitDice(bool state) {
     setState(() {
@@ -290,11 +305,13 @@ class _ConfirmClassChangeDialogState extends State<ConfirmClassChangeDialog> {
 class ChangeClassConfirmationOptions {
   bool deleteMoves;
   bool resetXP;
+  bool resetMaxHP;
   bool resetHitDice;
 
   ChangeClassConfirmationOptions({
     this.deleteMoves = false,
     this.resetXP = false,
+    this.resetMaxHP = false,
     this.resetHitDice = false,
   });
 }
