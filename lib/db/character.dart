@@ -38,6 +38,7 @@ enum CharacterKeys {
   hitDice,
   looks,
   race,
+  coins,
 }
 
 class DbCharacter with Serializer<CharacterKeys> {
@@ -67,6 +68,7 @@ class DbCharacter with Serializer<CharacterKeys> {
       CharacterKeys.hitDice: map['hitDice'],
       CharacterKeys.looks: map['looks'],
       CharacterKeys.race: map['race'],
+      CharacterKeys.coins: map['race'],
     });
     mainClassKey = map['mainClass'];
   }
@@ -95,6 +97,7 @@ class DbCharacter with Serializer<CharacterKeys> {
   Dice hitDice;
   List<String> looks;
   Move race;
+  num coins;
 
   static num statModifier(num stat) {
     const modifiers = {1: -3, 4: -2, 6: -1, 9: 0, 13: 1, 16: 2, 18: 3};
@@ -143,6 +146,7 @@ class DbCharacter with Serializer<CharacterKeys> {
       'hitDice': hitDice.toString(),
       'looks': looks,
       'race': race?.toJSON(),
+      'coins': coins,
     };
   }
 
@@ -175,14 +179,17 @@ class DbCharacter with Serializer<CharacterKeys> {
           notes = List.from(v ?? []).map((note) => Note(note)).toList(),
       CharacterKeys.spells: (v) => spells =
           List.from(v ?? []).map((spell) => DbSpell.fromJSON(spell)).toList(),
-      CharacterKeys.inventory: (v) => inventory =
-          List.from(v ?? []).map<InventoryItem>((item) => InventoryItem.fromJSON(item)).toList(),
+      CharacterKeys.inventory: (v) => inventory = List.from(v ?? [])
+          .map<InventoryItem>((item) => InventoryItem.fromJSON(item))
+          .toList(),
       CharacterKeys.docVersion: (v) => docVersion = v ?? 1,
       CharacterKeys.hitDice: (v) =>
           hitDice = v != null ? Dice.parse(v) : mainClass.damage,
-      CharacterKeys.looks: (v) => looks = List.from(v ?? []).map((i) => i.toString()).toList(),
+      CharacterKeys.looks: (v) =>
+          looks = List.from(v ?? []).map((i) => i.toString()).toList(),
       CharacterKeys.race: (v) =>
           race = v != null ? Move.fromJSON(v) : mainClass.raceMoves.first,
+      CharacterKeys.coins: (v) => coins = v ?? 0,
     };
     serializeAll(map);
   }
@@ -334,9 +341,13 @@ Future<DbCharacter> checkAndPerformCharMigration(
 
   Map<CharacterKeys, bool Function(dynamic obj)> predicateMap = {
     CharacterKeys.notes: (notes) =>
-        notes != null && notes.isNotEmpty && notes.any((note) => note['key'] == null),
+        notes != null &&
+        notes.isNotEmpty &&
+        notes.any((note) => note['key'] == null),
     CharacterKeys.inventory: (items) =>
-        items != null && items.isNotEmpty && items.any((item) => item['key'] == null || item['item'] != null),
+        items != null &&
+        items.isNotEmpty &&
+        items.any((item) => item['key'] == null || item['item'] != null),
   };
 
   predicateMap.forEach((enumKey, predicate) {

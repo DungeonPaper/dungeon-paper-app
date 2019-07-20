@@ -105,11 +105,14 @@ class CustomMoveFormBuilderState extends State<CustomMoveFormBuilder> {
     setState(() {
       switch (key) {
         case 'name':
-          return name = newValue;
+          name = newValue;
+          return;
         case 'description':
-          return description = newValue;
+          description = newValue;
+          return;
         case 'explanation':
-          return explanation = newValue;
+          explanation = newValue;
+          return;
       }
     });
   }

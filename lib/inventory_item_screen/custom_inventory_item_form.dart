@@ -99,11 +99,14 @@ class CustomInventoryItemFormBuilderState
     setState(() {
       switch (key) {
         case 'name':
-          return name = newValue;
+          name = newValue;
+          return;
         case 'description':
-          return description = newValue;
+          description = newValue;
+          return;
         case 'amount':
-          return amount = newValue;
+          amount = newValue;
+          return;
       }
     });
   }
