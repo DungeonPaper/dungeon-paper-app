@@ -55,6 +55,7 @@ flutter:
     - assets/bag.svg
     - assets/armor.svg
     - assets/coin-stack.svg
+    - assets/dumbbell.svg
     # - assets/quill.svg
     # - images/a_dot_ham.jpeg
 

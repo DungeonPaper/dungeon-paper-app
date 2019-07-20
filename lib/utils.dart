@@ -1,5 +1,7 @@
 import 'dart:math';
 
+import 'package:flutter/material.dart';
+
 capitalize(String string, [String sep = ' ']) {
   return string.splitMapJoin(RegExp(sep),
       onMatch: (s) =>
@@ -52,4 +54,11 @@ currency(num amt) {
 
 commatize(num number) {
   return number.toString().replaceAll(RegExp(r'\B(?=(\d{3})+(?!\d))'), ',');
+}
+
+class BgAndFgColors {
+  final Color background;
+  final Color foreground;
+
+  BgAndFgColors(this.background, this.foreground);
 }
