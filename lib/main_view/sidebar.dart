@@ -1,6 +1,7 @@
 import 'package:dungeon_paper/db/auth.dart';
 import 'package:dungeon_paper/db/character.dart';
 import 'package:dungeon_paper/db/user.dart';
+import 'package:dungeon_paper/main_view/credits.dart';
 import 'package:dungeon_paper/redux/actions.dart';
 import 'package:dungeon_paper/redux/stores/connectors.dart';
 import 'package:dungeon_paper/redux/stores/stores.dart';
@@ -22,6 +23,7 @@ class Sidebar extends StatelessWidget {
               addNew(context),
               Divider(),
               title('Application', context),
+              credits(context),
               logOut(context),
             ];
 
@@ -44,6 +46,14 @@ class Sidebar extends StatelessWidget {
       ),
     );
     return title;
+  }
+
+  Widget credits(BuildContext context) {
+    Widget credits = ListTile(
+      title: Text('Credits'),
+      onTap: showCreditsScreen(context),
+    );
+    return credits;
   }
 
   Widget logOut(BuildContext context) {
@@ -92,7 +102,8 @@ class Sidebar extends StatelessWidget {
       return ListTile(
         leading: Icon(Icons.person),
         title: Text(character.displayName),
-        selected: dwStore.state.characters.currentCharDocID == charDoc.documentID,
+        selected:
+            dwStore.state.characters.currentCharDocID == charDoc.documentID,
         onTap: () {
           dwStore.dispatch(
               CharacterActions.setCurrentChar(charDoc.documentID, character));
@@ -106,6 +117,18 @@ class Sidebar extends StatelessWidget {
     return () {
       Navigator.pop(context);
       requestSignOut();
+    };
+  }
+
+  void Function() showCreditsScreen(BuildContext context) {
+    return () {
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+          fullscreenDialog: true,
+          builder: (context) => CreditsView(),
+        ),
+      );
     };
   }
 
