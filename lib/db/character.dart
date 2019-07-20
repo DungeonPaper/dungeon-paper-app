@@ -68,7 +68,7 @@ class DbCharacter with Serializer<CharacterKeys> {
       CharacterKeys.hitDice: map['hitDice'],
       CharacterKeys.looks: map['looks'],
       CharacterKeys.race: map['race'],
-      CharacterKeys.coins: map['race'],
+      CharacterKeys.coins: map['coins'],
     });
     mainClassKey = map['mainClass'];
   }
