@@ -2,8 +2,6 @@ import 'dart:math';
 
 import 'package:dungeon_paper/components/standard_dialog_controls.dart';
 import 'package:dungeon_paper/db/character.dart';
-import 'package:dungeon_paper/db/character_types.dart';
-import 'package:dungeon_paper/flutter-utils.dart';
 import 'package:dungeon_paper/redux/stores/stores.dart';
 import 'package:dungeon_paper/utils.dart';
 import 'package:flutter/material.dart';

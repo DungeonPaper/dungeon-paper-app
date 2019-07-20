@@ -89,8 +89,7 @@ class _EditHPDialogState extends State<EditHPDialog> {
     );
     return SimpleDialog(
       title: title,
-      contentPadding:
-              const EdgeInsets.only(top: 32.0, bottom: 8.0),
+      contentPadding: const EdgeInsets.only(top: 32.0, bottom: 8.0),
       children: <Widget>[
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: 32.0),
@@ -126,7 +125,19 @@ class _EditHPDialogState extends State<EditHPDialog> {
                   ],
                 ),
         ),
-        StandardDialogControls(onOK: () => save(context)),
+        StandardDialogControls(
+          onOK: () => save(context),
+          extraActions: mode == HPMode.HP
+              ? null
+              : [
+                  RaisedButton(
+                    child: Text('Default'),
+                    onPressed: () {
+                      updateValue(widget.character.defaultMaxHP);
+                    },
+                  )
+                ],
+        ),
       ],
     );
   }
