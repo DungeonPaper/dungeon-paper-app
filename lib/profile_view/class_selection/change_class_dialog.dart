@@ -1,3 +1,4 @@
+import 'package:dungeon_paper/components/card_list_item.dart';
 import 'package:dungeon_paper/components/class_description.dart';
 import 'package:dungeon_paper/components/confirmation_dialog.dart';
 import 'package:dungeon_paper/db/character.dart';
@@ -7,12 +8,12 @@ import 'package:dungeon_world_data/move.dart';
 import 'package:dungeon_world_data/player_class.dart';
 import 'package:flutter/material.dart';
 
-class ChangeClassDialog extends StatefulWidget {
+class ClassSelectionScreen extends StatefulWidget {
   @override
-  _ChangeClassDialogState createState() => _ChangeClassDialogState();
+  _ClassSelectionScreenState createState() => _ClassSelectionScreenState();
 }
 
-class _ChangeClassDialogState extends State<ChangeClassDialog> {
+class _ClassSelectionScreenState extends State<ClassSelectionScreen> {
   ScrollController scrollController = ScrollController();
   double appBarElevation = 0.0;
 
@@ -44,12 +45,18 @@ class _ChangeClassDialogState extends State<ChangeClassDialog> {
             children: dungeonWorld.classes.values
                 .map(
                   (availClass) => Padding(
-                        padding: EdgeInsets.only(bottom: 16.0),
-                        child: ClassSmallDescription(
-                          playerClass: availClass,
-                          onTap: previewClass(availClass),
-                        ),
+                    padding: EdgeInsets.only(bottom: 16.0),
+                    child: CardListItem(
+                      title: Text(availClass.name),
+                      subtitle: Text('Preview class'),
+                      leading: Padding(
+                        padding: EdgeInsets.only(right: 16.0),
+                        child: Icon(Icons.person, size: 40.0),
                       ),
+                      trailing: Icon(Icons.chevron_right),
+                      onTap: previewClass(availClass),
+                    ),
+                  ),
                 )
                 .toList(),
           ),
@@ -60,15 +67,20 @@ class _ChangeClassDialogState extends State<ChangeClassDialog> {
 
   Function() previewClass(PlayerClass def) {
     return () async {
-      bool res = await Navigator.push(
-        context,
-        MaterialPageRoute(
-          fullscreenDialog: true,
-          builder: (context) => PreviewClassChange(classDef: def),
-        ),
-      );
-      if (res == true) {
-        Navigator.pop(context, res);
+      try {
+        bool res = await Navigator.push(
+          context,
+          MaterialPageRoute(
+            fullscreenDialog: true,
+            builder: (context) => ClassPreview(classDef: def),
+          ),
+        );
+        if (res == true) {
+          Navigator.pop(context, res);
+        }
+      } catch (e) {
+        print(e);
+        Navigator.pop(context, false);
       }
     };
   }
@@ -83,19 +95,19 @@ class _ChangeClassDialogState extends State<ChangeClassDialog> {
   }
 }
 
-class PreviewClassChange extends StatefulWidget {
+class ClassPreview extends StatefulWidget {
   final PlayerClass classDef;
 
-  const PreviewClassChange({
+  const ClassPreview({
     Key key,
     @required this.classDef,
   }) : super(key: key);
 
   @override
-  _PreviewClassChangeState createState() => _PreviewClassChangeState();
+  _ClassPreviewState createState() => _ClassPreviewState();
 }
 
-class _PreviewClassChangeState extends State<PreviewClassChange> {
+class _ClassPreviewState extends State<ClassPreview> {
   ScrollController scrollController = ScrollController();
   double appBarElevation = 0.0;
 
@@ -114,34 +126,27 @@ class _PreviewClassChangeState extends State<PreviewClassChange> {
   @override
   Widget build(BuildContext context) {
     var cls = widget.classDef;
-    return Container(
-      color: Theme.of(context).primaryColor,
-      child: Column(
-        children: <Widget>[
-          AppBar(
-            title: Text(cls.name),
-            actions: <Widget>[
-              Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: RaisedButton(
-                  child: Text('Choose'),
-                  color: Theme.of(context).canvasColor,
-                  onPressed: () => chooseThisClass(),
-                ),
-              )
-            ],
-            elevation: appBarElevation,
-          ),
-          Expanded(
-            child: SingleChildScrollView(
-              controller: scrollController,
-              child: Padding(
-                padding: const EdgeInsets.all(16.0),
-                child: ClassDescription(classDef: cls),
-              ),
+    return Scaffold(
+      backgroundColor: Theme.of(context).primaryColor,
+      appBar: AppBar(
+        title: Text(cls.name),
+        actions: <Widget>[
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: RaisedButton(
+              child: Text('Choose'),
+              color: Theme.of(context).canvasColor,
+              onPressed: () => chooseThisClass(),
             ),
-          ),
+          )
         ],
+        elevation: appBarElevation,
+      ),
+      body: Padding(
+        padding: const EdgeInsets.all(16.0),
+        child: Column(
+          children: <Widget>[ClassDescription(classDef: cls)],
+        ),
       ),
     );
   }
@@ -289,6 +294,7 @@ class _ConfirmClassChangeDialogState extends State<ConfirmClassChangeDialog> {
       options.resetXP = state;
     });
   }
+
   void toggleResetMaxHP(bool state) {
     setState(() {
       options.resetMaxHP = state;
