@@ -6,10 +6,10 @@ import 'package:dungeon_world_data/dw_data.dart';
 import 'package:dungeon_world_data/equipment.dart';
 import 'package:flutter/material.dart';
 
-class AddInventoryItemContainer extends StatelessWidget {
+class ExistingInventoryItemsList extends StatelessWidget {
   final Iterable<Equipment> items;
 
-  const AddInventoryItemContainer({Key key, this.items}) : super(key: key);
+  const ExistingInventoryItemsList({Key key, this.items}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -57,12 +57,10 @@ class _AddInventoryItemState extends State<AddInventoryItem> {
   }
 
   ctrlListener([String value]) {
-    print('from listener: $value');
     listener(value);
   }
 
   widgetListener([String value]) {
-    print('from widget: $value');
     listener(value);
   }
 

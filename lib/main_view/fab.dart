@@ -2,9 +2,9 @@ import 'dart:math';
 import 'package:dungeon_paper/db/inventory_items.dart';
 import 'package:dungeon_paper/db/notes.dart';
 import 'package:dungeon_paper/dialogs.dart';
-import 'package:dungeon_paper/inventory_item_screen/add_inventory_screen.dart';
+import 'package:dungeon_paper/inventory_item_view/add_inventory_item_container.dart';
 import 'package:dungeon_paper/main_view/nav_bar.dart';
-import 'package:dungeon_paper/move_screen/move_screen.dart';
+import 'package:dungeon_paper/move_screen/add_move_screen.dart';
 import 'package:dungeon_paper/notes_view/edit_note_screen.dart';
 import 'package:dungeon_paper/utils.dart';
 import 'package:dungeon_world_data/move.dart';
@@ -62,7 +62,7 @@ class FABState extends State<FAB> {
                 context,
                 MaterialPageRoute(
                   fullscreenDialog: true,
-                  builder: (ctx) => InventoryItemScreen(
+                  builder: (ctx) => AddInventoryItemContainer(
                         item: InventoryItem(),
                         mode: DialogMode.Create,
                       ),
@@ -76,7 +76,7 @@ class FABState extends State<FAB> {
                 context,
                 MaterialPageRoute(
                   fullscreenDialog: true,
-                  builder: (ctx) => MoveScreen(
+                  builder: (ctx) => AddMoveScreen(
                         move: Move(
                           key: '',
                           name: '',

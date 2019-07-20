@@ -21,17 +21,17 @@ class BattleView extends StatelessWidget {
 
     return CategorizedList.builder(
       categories: categories.keys,
-      itemCount: (key, idx) => categories[key].length,
+      itemCount: (key, idx) => categories[key].where((i) => i != null).toList().length,
       addSpacer: true,
       titleBuilder: (ctx, key, idx) => Text(key),
       itemBuilder: (ctx, key, idx) {
-        List moves = categories[key];
+        List moves = categories[key].where((i) => i != null).toList();
         MoveCardMode mode = key == 'Starting Moves'
             ? MoveCardMode.Fixed
             : MoveCardMode.Editable;
         return Padding(
           padding: const EdgeInsets.symmetric(vertical: 8),
-          child: moves.first is Move
+          child: key != 'Spells'
               ? MoveCard(
                   key: PageStorageKey(moves[idx].key ?? moves[idx].name),
                   index: idx,
@@ -39,13 +39,11 @@ class BattleView extends StatelessWidget {
                   mode: mode,
                   raceMove: key == 'Starting Moves' && idx == 0,
                 )
-              : moves.first is DbSpell
-                  ? SpellCard(
-                      index: idx,
-                      spell: moves[idx],
-                      mode: SpellCardMode.Editable,
-                    )
-                  : Container(),
+              : SpellCard(
+                  index: idx,
+                  spell: moves[idx],
+                  mode: SpellCardMode.Editable,
+                ),
         );
       },
     );
