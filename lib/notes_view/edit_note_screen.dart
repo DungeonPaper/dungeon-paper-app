@@ -97,11 +97,14 @@ class EditNoteFormState extends State<EditNoteForm> {
     setState(() {
       switch (key) {
         case 'title':
-          return title = newValue.toString();
+          title = newValue.toString();
+          return;
         case 'description':
-          return description = newValue.toString();
+          description = newValue.toString();
+          return;
         case 'category':
-          return category = newValue as NoteCategory;
+          category = newValue as NoteCategory;
+          return;
       }
     });
   }

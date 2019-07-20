@@ -41,11 +41,16 @@ class CategorizedList<T> extends StatelessWidget {
     num i = 0;
     Iterable<Widget> cats = categories.map((category) {
       num index = i++;
-      Widget title = DefaultTextStyle(
-        child: titleBuilder(context, category, index),
-        style:
-            titleStyle.copyWith(color: Theme.of(context).textTheme.body1.color),
-      );
+      var builtTitle = titleBuilder(context, category, index);
+      Widget title;
+
+      if (builtTitle != null) {
+        title = DefaultTextStyle(
+          child: builtTitle,
+          style: titleStyle.copyWith(
+              color: Theme.of(context).textTheme.body1.color),
+        );
+      }
       num count = itemCount(category, index);
       if (count == 0) {
         return null;
@@ -58,7 +63,7 @@ class CategorizedList<T> extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.start,
           mainAxisSize: MainAxisSize.min,
           crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: <Widget>[title] + items,
+          children: title != null ? [title] + items : items,
         ),
       );
     }).toList();
@@ -66,21 +71,22 @@ class CategorizedList<T> extends StatelessWidget {
     return LayoutBuilder(
       builder: (context, constraints) {
         return StaggeredGridView.countBuilder(
-          crossAxisCount: constraints.maxWidth < 450 ? 1 : 2,
-          itemCount: addSpacer ? cats.length + 1 : cats.length,
-          itemBuilder: (context, index) {
-            if (index < cats.length) {
-              Widget child = cats.elementAt(index);
-              if (child != null) {
-                return Padding(padding: const EdgeInsets.all(16), child: child);
+            crossAxisCount: constraints.maxWidth < 450 ? 1 : 2,
+            itemCount: addSpacer ? cats.length + 1 : cats.length,
+            itemBuilder: (context, index) {
+              if (index < cats.length) {
+                Widget child = cats.elementAt(index);
+                if (child != null) {
+                  return Padding(
+                      padding: const EdgeInsets.all(16), child: child);
+                }
+                return Container();
               }
-              return Container();
-            }
-            return MainView.bottomSpacer;
-          },
-          staggeredTileBuilder: (index) =>
-              index < cats.length ? StaggeredTile.fit(1) : StaggeredTile.fit(2)
-        );
+              return MainView.bottomSpacer;
+            },
+            staggeredTileBuilder: (index) => index < cats.length
+                ? StaggeredTile.fit(1)
+                : StaggeredTile.fit(2));
       },
     );
   }

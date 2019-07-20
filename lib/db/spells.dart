@@ -39,7 +39,7 @@ class DbSpell extends Spell {
 
   static DbSpell fromJSON(Map map) {
     var orig = Spell.fromJSON(map);
-    return DbSpell.fromSpell(orig, prepared: map['prepared']);
+    return DbSpell.fromSpell(orig, prepared: map['prepared'] ?? false);
   }
 
   @override

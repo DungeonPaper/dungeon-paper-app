@@ -37,7 +37,7 @@ class SpellCardState extends State<SpellCard> {
       ),
       child: ExpansionTile(
         key: PageStorageKey(spell.key),
-        title: widget.spell.prepared
+        title: widget.spell.prepared != null && widget.spell.prepared
             ? Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: <Widget>[
