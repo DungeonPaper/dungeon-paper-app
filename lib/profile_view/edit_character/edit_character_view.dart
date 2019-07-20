@@ -1,14 +1,13 @@
 import 'package:dungeon_paper/components/animations/slide_route_from_right.dart';
-import 'package:dungeon_paper/components/class_description.dart';
+import 'package:dungeon_paper/components/card_list_item.dart';
 import 'package:dungeon_paper/components/confirmation_dialog.dart';
 import 'package:dungeon_paper/db/character.dart';
 import 'package:dungeon_paper/profile_view/basic_info/change_alignment_dialog.dart';
-import 'package:dungeon_paper/profile_view/basic_info/change_class_dialog.dart';
+import 'package:dungeon_paper/profile_view/class_selection/change_class_dialog.dart';
 import 'package:dungeon_paper/profile_view/edit_character/alignment_description_card.dart';
-import 'package:dungeon_paper/profile_view/edit_character/edit_avatar_card.dart';
-import 'package:dungeon_paper/profile_view/edit_character/edit_display_name_card.dart';
 import 'package:dungeon_paper/profile_view/edit_character/edit_looks.dart';
 import 'package:dungeon_paper/profile_view/edit_character/edit_race.dart';
+import 'package:dungeon_paper/profile_view/edit_character/update_basic_info_view.dart';
 import 'package:dungeon_paper/redux/stores/stores.dart';
 import 'package:flutter/material.dart';
 
@@ -25,36 +24,19 @@ class EditCharacterDialog extends StatefulWidget {
 }
 
 class _EditCharacterDialogState extends State<EditCharacterDialog> {
-  String photoURL;
-  String displayName;
-  TextEditingController photoURLController;
-  TextEditingController displayNameController;
   static Widget spacer = SizedBox(height: 10.0);
   ScrollController scrollController = ScrollController();
   double appBarElevation = 0.0;
 
   @override
   void initState() {
-    photoURL = widget.character.photoURL ?? '';
-    displayName = widget.character.displayName ?? '';
-
     scrollController.addListener(scrollListener);
-
-    photoURLController =
-        TextEditingController.fromValue(TextEditingValue(text: photoURL))
-          ..addListener(photoURLListener);
-
-    displayNameController =
-        TextEditingController.fromValue(TextEditingValue(text: displayName))
-          ..addListener(displayNameListener);
     super.initState();
   }
 
   @override
   void dispose() {
     scrollController.removeListener(scrollListener);
-    photoURLController.removeListener(photoURLListener);
-    displayNameController.removeListener(displayNameListener);
     super.dispose();
   }
 
@@ -65,16 +47,6 @@ class _EditCharacterDialogState extends State<EditCharacterDialog> {
       appBar: AppBar(
         title: Text('Edit Character Details'),
         elevation: appBarElevation,
-        actions: <Widget>[
-          Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: RaisedButton(
-              child: Text('Save'),
-              color: Theme.of(context).canvasColor,
-              onPressed: formValid() ? save : null,
-            ),
-          ),
-        ],
       ),
       body: Column(
         children: <Widget>[
@@ -87,14 +59,30 @@ class _EditCharacterDialogState extends State<EditCharacterDialog> {
                   mainAxisSize: MainAxisSize.min,
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: <Widget>[
-                    EditDisplayNameCard(controller: displayNameController),
+                    CardListItem(
+                      title: Text('Basic Info'),
+                      subtitle: Text('Character name and avatar URL'),
+                      leading: Padding(
+                        padding: EdgeInsets.only(left: 5.0, right: 21.0),
+                        child: Icon(Icons.speaker_notes, size: 30.0),
+                      ),
+                      trailing: Icon(Icons.chevron_right),
+                      onTap: () => updateBasicInfo(context),
+                    ),
                     spacer,
-                    EditAvatarCard(controller: photoURLController),
-                    spacer,
-                    ClassSmallDescription(
-                        playerClass: widget.character.mainClass,
-                        level: widget.character.level,
-                        onTap: () => changeClass(context)),
+                    CardListItem(
+                      title: Text((widget.character.level != null
+                              ? "Level ${widget.character.level} "
+                              : "") +
+                          widget.character.mainClass.name),
+                      subtitle: Text('Change class'),
+                      leading: Padding(
+                        padding: EdgeInsets.only(right: 16.0),
+                        child: Icon(Icons.person, size: 40.0),
+                      ),
+                      trailing: Icon(Icons.chevron_right),
+                      onTap: () => changeClass(context),
+                    ),
                     spacer,
                     AlignmentDescription(
                         playerClass: widget.character.mainClass,
@@ -136,22 +124,16 @@ class _EditCharacterDialogState extends State<EditCharacterDialog> {
     );
   }
 
-  bool formValid() {
-    return <bool>[
-      displayName != null && displayName.length > 0,
-    ].every((cond) => cond);
-  }
-
   _deleteCharacter() async {
     if (await showDialog(
       context: context,
       builder: (context) => ConfirmationDialog(
-            title: Text('Delete Character?'),
-            text: Text(
-                'THIS CAN NOT BE UNDONE!\nAre you sure this is what you want to do?'),
-            okButtonText: Text('I WANT THIS CHARACTER GONE!'),
-            cancelButtonText: Text('I regret clicking this'),
-          ),
+        title: Text('Delete Character?'),
+        text: Text(
+            'THIS CAN NOT BE UNDONE!\nAre you sure this is what you want to do?'),
+        okButtonText: Text('I WANT THIS CHARACTER GONE!'),
+        cancelButtonText: Text('I regret clicking this'),
+      ),
     )) {
       deleteCharacter();
       await Future.delayed(Duration(milliseconds: 1000));
@@ -159,27 +141,33 @@ class _EditCharacterDialogState extends State<EditCharacterDialog> {
     }
   }
 
-  void save() {
-    DbCharacter character = widget.character;
-    character.displayName = displayName;
-    character.photoURL = photoURL;
-    updateCharacter(
-      character,
-      [CharacterKeys.displayName, CharacterKeys.photoURL],
-    );
-    Navigator.pop(context);
-  }
-
   void changeClass(BuildContext context) {
     Navigator.push(
       context,
       PageRouteBuilder(
-        pageBuilder: (context, anim, anim2) => ChangeClassDialog(),
+        pageBuilder: (context, anim, anim2) => ClassSelectionScreen(),
         transitionsBuilder: (context, inAnim, outAnim, child) {
           return SlideRouteFromRight(
             inAnim: inAnim,
             outAnim: outAnim,
-            child: ChangeClassDialog(),
+            child: ClassSelectionScreen(),
+          );
+        },
+      ),
+    );
+  }
+
+  void updateBasicInfo(BuildContext context) {
+    Navigator.push(
+      context,
+      PageRouteBuilder(
+        pageBuilder: (context, anim, anim2) =>
+            UpdateBasicInfoView(character: widget.character),
+        transitionsBuilder: (context, inAnim, outAnim, child) {
+          return SlideRouteFromRight(
+            inAnim: inAnim,
+            outAnim: outAnim,
+            child: UpdateBasicInfoView(character: widget.character),
           );
         },
       ),
@@ -191,8 +179,8 @@ class _EditCharacterDialogState extends State<EditCharacterDialog> {
       context,
       PageRouteBuilder(
         pageBuilder: (context, anim, anim2) => ChangeAlignmentDialog(
-              playerClass: widget.character.mainClass,
-            ),
+          playerClass: widget.character.mainClass,
+        ),
         transitionsBuilder: (context, inAnim, outAnim, child) {
           return SlideRouteFromRight(
             inAnim: inAnim,
@@ -211,8 +199,8 @@ class _EditCharacterDialogState extends State<EditCharacterDialog> {
       context,
       PageRouteBuilder(
         pageBuilder: (context, anim, anim2) => ChangeRaceDialog(
-              playerClass: widget.character.mainClass,
-            ),
+          playerClass: widget.character.mainClass,
+        ),
         transitionsBuilder: (context, inAnim, outAnim, child) {
           return SlideRouteFromRight(
             inAnim: inAnim,
@@ -231,9 +219,9 @@ class _EditCharacterDialogState extends State<EditCharacterDialog> {
       context,
       PageRouteBuilder(
         pageBuilder: (context, anim, anim2) => ChangeLooksDialog(
-              playerClass: widget.character.mainClass,
-              looks: widget.character.looks,
-            ),
+          playerClass: widget.character.mainClass,
+          looks: widget.character.looks,
+        ),
         transitionsBuilder: (context, inAnim, outAnim, child) {
           return SlideRouteFromRight(
             inAnim: inAnim,
@@ -246,18 +234,6 @@ class _EditCharacterDialogState extends State<EditCharacterDialog> {
         },
       ),
     );
-  }
-
-  void displayNameListener() {
-    setState(() {
-      displayName = displayNameController.text;
-    });
-  }
-
-  void photoURLListener() {
-    setState(() {
-      photoURL = photoURLController.text;
-    });
   }
 
   void scrollListener() {
