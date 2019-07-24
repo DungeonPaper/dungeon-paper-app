@@ -6,7 +6,8 @@ capitalize(String string, [String sep = ' ']) {
       onMatch: (s) =>
           s.input[s.start].toUpperCase() +
           s.input.substring(s.start + 1, s.end),
-      onNonMatch: (s) => s.isNotEmpty ? s[0].toUpperCase() + s.substring(1) : s);
+      onNonMatch: (s) =>
+          s.isNotEmpty ? s[0].toUpperCase() + s.substring(1) : s);
 }
 
 double clamp<T extends num>(T number, T low, T high) =>
@@ -51,8 +52,11 @@ currency(num amt) {
   return commatize(amt).replaceAll(RegExp(r'\.0+$'), '') + ' G';
 }
 
-commatize(num number) {
-  return number.toString().replaceAll(RegExp(r'\B(?=(\d{3})+(?!\d))'), ',');
+commatize(num number, [num precision = 2]) {
+  return number
+      .toStringAsFixed(precision)
+      .replaceAll(RegExp(r'\B(?=(\d{3})+(?!\d))'), ',')
+      .replaceFirst(RegExp(r'\.0+$'), '');
 }
 
 class BgAndFgColors {

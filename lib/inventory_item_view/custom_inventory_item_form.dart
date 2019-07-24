@@ -88,16 +88,6 @@ class CustomInventoryItemFormBuilderState
             },
             onDelete: (tag, idx) => tags.removeAt(idx),
           ),
-          // Row(
-          //   children: <Widget>[
-          //     Expanded(child: TextField()),
-          //     Checkbox(
-          //       value: false,
-          //       onChanged: (val) {},
-          //     ),
-          //     Expanded(child: TextField()),
-          //   ],
-          // ),
           MarkdownHelp(),
         ],
       ),
