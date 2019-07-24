@@ -1,0 +1,112 @@
+import 'package:dungeon_paper/components/standard_dialog_controls.dart';
+import 'package:dungeon_paper/dialogs.dart';
+import 'package:dungeon_world_data/dw_data.dart';
+import 'package:dungeon_world_data/tag.dart';
+import 'package:flutter/material.dart';
+
+import '../../utils.dart';
+
+class EditTagDialog extends StatefulWidget {
+  final Tag tag;
+  final Function(Tag tag) onSave;
+
+  const EditTagDialog({Key key, this.onSave, this.tag}) : super(key: key);
+
+  @override
+  _EditTagDialogState createState() => _EditTagDialogState();
+}
+
+enum TagValueTypes { number, text, bool }
+
+class _EditTagDialogState extends State<EditTagDialog> {
+  Map<String, TextEditingController> _controllers;
+  DialogMode _mode;
+  List<Tag> _copyableTags;
+
+  @override
+  void initState() {
+    _controllers = {
+      'name': TextEditingController.fromValue(
+        TextEditingValue(text: widget.tag != null ? widget.tag.name : ''),
+      ),
+      'value': TextEditingController.fromValue(
+        TextEditingValue(
+            text: widget.tag != null ? widget.tag.value.toString() : ''),
+      ),
+    };
+    _copyableTags = dungeonWorld.tags.values.toList()
+      ..sort((a, b) => a.name.compareTo(b.name));
+    _mode = widget.tag != null ? DialogMode.Edit : DialogMode.Create;
+    super.initState();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return SimpleDialog(
+      title: Text((_mode == DialogMode.Edit ? 'Edit' : 'Create') + ' Tag'),
+      contentPadding: EdgeInsets.symmetric(horizontal: 32, vertical: 24),
+      children: <Widget>[
+        Row(
+          children: <Widget>[
+            Text('Presets:'),
+            SizedBox(width: 24),
+            Expanded(
+              child: DropdownButtonFormField<Tag>(
+                items: [
+                  DropdownMenuItem(
+                    value: null,
+                    child: Text('None'),
+                  ),
+                  for (Tag copyableTag in _copyableTags)
+                    DropdownMenuItem(
+                      value: copyableTag,
+                      child: Text(capitalize(copyableTag.toString())),
+                    )
+                ],
+                onChanged: copyTag,
+              ),
+            ),
+          ],
+        ),
+        TextField(
+          decoration: InputDecoration(labelText: 'Tag name'),
+          controller: _controllers['name'],
+        ),
+        TextField(
+          decoration: InputDecoration(labelText: 'Tag value'),
+          controller: _controllers['value'],
+        ),
+        StandardDialogControls(onOK: onSave)
+      ],
+    );
+  }
+
+  void onSave() {
+    Navigator.pop(context);
+    widget.onSave(tag);
+  }
+
+  void copyTag(Tag tagToCopy) {
+    if (tagToCopy == null) return;
+    setState(() {
+      _controllers['name'].text = tagToCopy.name;
+      _controllers['value'].text =
+          tagToCopy.value != null ? tagToCopy.value.toString() : '';
+    });
+  }
+
+  Tag get tag {
+    String name = _controllers['name'].text;
+    String value = _controllers['value'].text;
+    dynamic parsedValue = value.toString();
+    if (RegExp(r'^\d+\.\d+$').hasMatch(value))
+      parsedValue = double.tryParse(value);
+    else if (RegExp(r'^\d+$').hasMatch(value))
+      parsedValue = int.tryParse(value);
+    else if (value == 'true')
+      parsedValue = true;
+    else if (value == 'false') parsedValue = false;
+    if (parsedValue == '') parsedValue = null;
+    return Tag(name, parsedValue);
+  }
+}

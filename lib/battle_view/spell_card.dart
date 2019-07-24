@@ -1,6 +1,6 @@
 import 'package:dungeon_paper/components/card_bottom_controls.dart';
 import 'package:dungeon_paper/components/confirmation_dialog.dart';
-import 'package:dungeon_paper/components/tag_list.dart';
+import 'package:dungeon_paper/components/tags/tag_list.dart';
 import 'package:dungeon_paper/db/spells.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_markdown/flutter_markdown.dart';

@@ -21,12 +21,12 @@ class LoadDisplay extends StatelessWidget {
     character.inventory.forEach((item) {
       Tag wght =
           item.tags?.firstWhere((t) => t.name == 'weight', orElse: () => null);
-      if (wght != null && wght.hasValues) {
+      if (wght != null && wght.hasValue) {
         num wghtValue = 0;
-        if (wght.values['weight'] is num) {
-          wghtValue += wght.values['weight'];
+        if (wght.value is num) {
+          wghtValue += wght.value;
         } else {
-          wghtValue += double.tryParse(wght.values['weight'] ?? 0) ?? 0.0;
+          wghtValue += double.tryParse(wght.value ?? 0) ?? 0.0;
         }
         count += wghtValue * item.amount;
       }
