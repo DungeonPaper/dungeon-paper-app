@@ -1,5 +1,4 @@
 import 'dart:math';
-
 import 'package:flutter/material.dart';
 
 capitalize(String string, [String sep = ' ']) {
@@ -7,7 +6,7 @@ capitalize(String string, [String sep = ' ']) {
       onMatch: (s) =>
           s.input[s.start].toUpperCase() +
           s.input.substring(s.start + 1, s.end),
-      onNonMatch: (s) => s[0].toUpperCase() + s.substring(1));
+      onNonMatch: (s) => s.isNotEmpty ? s[0].toUpperCase() + s.substring(1) : s);
 }
 
 double clamp<T extends num>(T number, T low, T high) =>

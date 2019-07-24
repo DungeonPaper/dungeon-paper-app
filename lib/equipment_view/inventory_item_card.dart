@@ -1,6 +1,6 @@
 import 'package:dungeon_paper/components/card_bottom_controls.dart';
 import 'package:dungeon_paper/components/confirmation_dialog.dart';
-import 'package:dungeon_paper/components/tag_list.dart';
+import 'package:dungeon_paper/components/tags/tag_list.dart';
 import 'package:dungeon_paper/db/inventory_items.dart';
 import 'package:dungeon_paper/dialogs.dart';
 import 'package:dungeon_paper/inventory_item_view/add_inventory_item_container.dart';
