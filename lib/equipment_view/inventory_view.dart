@@ -31,7 +31,7 @@ class InventoryView extends StatelessWidget {
       titleBuilder: (ctx, cat, i) => EquipmentTitles[cat],
       itemBuilder: childBuilderDelegator,
       categories: [EquipmentCats.Stats, EquipmentCats.Items],
-      addSpacer: true,
+      spacerCount: 1,
     );
   }
 

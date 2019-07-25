@@ -91,11 +91,14 @@ class _AddInventoryItemState extends State<AddInventoryItem> {
     return Stack(
       children: <Widget>[
         Padding(
-          padding: const EdgeInsets.only(top: 40.0),
+          padding: const EdgeInsets.only(top: 64.0),
           child: CategorizedList.builder(
-            categories: itemMap.keys.toList()..sort(),
-            itemCount: (key, idx) => itemMap[key].length,
-            titleBuilder: (ctx, key, idx) => Text(key),
+            categories: itemMap.keys.toList()
+              ..sort(),
+            itemCount: (key, idx) =>
+                itemMap[key].length,
+            titleBuilder: (ctx, key, idx) =>
+                Text(key),
             itemBuilder: (ctx, key, idx) {
               var item = itemMap[key][idx];
               return Container(
