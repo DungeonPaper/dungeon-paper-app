@@ -10,3 +10,4 @@ build/
 *.log
 google-services.json
 GoogleService-Info.plist
+secrets.json

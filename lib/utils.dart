@@ -1,5 +1,7 @@
+import 'dart:convert';
 import 'dart:math';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart' show rootBundle;
 
 capitalize(String string, [String sep = ' ']) {
   return string.splitMapJoin(RegExp(sep),
@@ -64,4 +66,18 @@ class BgAndFgColors {
   final Color foreground;
 
   BgAndFgColors(this.background, this.foreground);
+}
+
+Map _secrets;
+
+Future<Map> loadSecrets() async {
+  if (_secrets == null)
+    _secrets = jsonDecode(await rootBundle.loadString('secrets.json'));
+  return _secrets;
+}
+
+bool get isInDebugMode {
+  bool inDebugMode = false;
+  assert(inDebugMode = true);
+  return inDebugMode;
 }

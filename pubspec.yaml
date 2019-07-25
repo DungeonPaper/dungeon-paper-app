@@ -27,6 +27,7 @@ dependencies:
   flutter_image: ^1.0.0
   uuid: ^2.0.0
   autocomplete_textfield: ^1.7.3
+  sentry: ^2.2.0
 
 dev_dependencies:
   flutter_test:
@@ -51,6 +52,7 @@ flutter:
 
   # To add assets to your application, add an assets section, like this:
   assets:
+    - secrets.json
     - assets/swords.svg
     - assets/dice.svg
     - assets/bag.svg
