@@ -1,5 +1,14 @@
 # CHANGELOG
 
+## 1.0.4
+* Bugfix in character creation
+
+## 1.0.3
+* Bugfix in edit tag display
+
+## 1.0.2
+* Added tag editing to inventory items.
+
 ## 1.0.1
 * Added a display for coins, atop the inventory. You can tap on them to update the value
 * Added encumbrance display atop the inventory.

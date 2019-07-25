@@ -86,7 +86,7 @@ class CustomInventoryItemFormBuilderState
                   tags[idx] = tag;
               });
             },
-            onDelete: (tag, idx) => tags.removeAt(idx),
+            onDelete: (tag, idx) => setState(() => tags.removeAt(idx)),
           ),
           MarkdownHelp(),
         ],
