@@ -99,6 +99,13 @@ class DbCharacter with Serializer<CharacterKeys> {
   Move race;
   num coins;
 
+  num get strMod => statModifier(str);
+  num get dexMod => statModifier(dex);
+  num get conMod => statModifier(con);
+  num get wisMod => statModifier(wis);
+  num get intMod => statModifier(int);
+  num get chaMod => statModifier(cha);
+
   static num statModifier(num stat) {
     const modifiers = {1: -3, 4: -2, 6: -1, 9: 0, 13: 1, 16: 2, 18: 3};
 

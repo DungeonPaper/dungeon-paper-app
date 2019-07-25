@@ -4,7 +4,7 @@
   // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
   "version": "0.2.0",
   "configurations": [
-    {
+  {
     "name": "Flutter",
     "type": "dart",
     "request": "launch",
@@ -21,5 +21,11 @@
       // "--observatory-port 9933",
       "-v"
     ],
-  }]
+  },
+  {
+    "name": "Tests",
+    "type": "dart",
+    "request": "launch",
+    "program": "./test/"
+  }, ]
 }
