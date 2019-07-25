@@ -1,7 +1,7 @@
 import 'package:dungeon_paper/db/character.dart';
 import 'package:dungeon_paper/dialogs.dart';
-import 'package:dungeon_paper/move_screen/add_move.dart';
-import 'package:dungeon_paper/move_screen/add_spell.dart';
+import 'package:dungeon_paper/move_screen/add_move_list.dart';
+import 'package:dungeon_paper/move_screen/add_spell_list.dart';
 import 'package:dungeon_paper/move_screen/custom_move_form.dart';
 import 'package:dungeon_paper/redux/stores/stores.dart';
 import 'package:dungeon_world_data/move.dart';
@@ -72,7 +72,7 @@ class AddMoveScreenState extends State<AddMoveScreen>
           children: <Widget>[
             Container(
               color: Theme.of(context).scaffoldBackgroundColor,
-              child: AddMove(
+              child: AddMoveList(
                 key: PageStorageKey<String>(texts[0]),
                 level: character.level,
                 playerClass: character.mainClass,
@@ -80,7 +80,7 @@ class AddMoveScreenState extends State<AddMoveScreen>
             ),
             Container(
               color: Theme.of(context).scaffoldBackgroundColor,
-              child: AddSpell(
+              child: AddSpellList(
                 key: PageStorageKey<String>(texts[1]),
               ),
             ),

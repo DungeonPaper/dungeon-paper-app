@@ -20,7 +20,7 @@ class BattleView extends StatelessWidget {
     return CategorizedList.builder(
       categories: categories.keys,
       itemCount: (key, idx) => categories[key].where((i) => i != null).toList().length,
-      addSpacer: true,
+      spacerCount: 1,
       titleBuilder: (ctx, key, idx) => Text(key),
       itemBuilder: (ctx, key, idx) {
         List moves = categories[key].where((i) => i != null).toList();

@@ -11,7 +11,7 @@ class CategorizedList<T> extends StatelessWidget {
   final BuilderFunction<T> titleBuilder;
   final BuilderAnyFunction<T, int> itemCount;
   final bool staggered;
-  final bool addSpacer;
+  final num spacerCount;
 
   static const TextStyle titleStyle =
       TextStyle(fontSize: 16.0, fontWeight: FontWeight.bold);
@@ -23,7 +23,7 @@ class CategorizedList<T> extends StatelessWidget {
     @required this.itemBuilder,
     @required this.titleBuilder,
     this.staggered = true,
-    this.addSpacer = false,
+    this.spacerCount = 0,
   }) : super(key: key);
 
   const CategorizedList.builder({
@@ -33,7 +33,7 @@ class CategorizedList<T> extends StatelessWidget {
     @required this.itemBuilder,
     @required this.titleBuilder,
     this.staggered = true,
-    this.addSpacer = false,
+    this.spacerCount = 0,
   }) : super(key: key);
 
   @override
@@ -72,7 +72,7 @@ class CategorizedList<T> extends StatelessWidget {
       builder: (context, constraints) {
         return StaggeredGridView.countBuilder(
             crossAxisCount: constraints.maxWidth < 450 ? 1 : 2,
-            itemCount: addSpacer ? cats.length + 1 : cats.length,
+            itemCount: cats.length + spacerCount,
             itemBuilder: (context, index) {
               if (index < cats.length) {
                 Widget child = cats.elementAt(index);

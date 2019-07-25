@@ -6,8 +6,8 @@ import 'package:dungeon_world_data/dw_data.dart';
 import 'package:dungeon_world_data/spell.dart';
 import 'package:flutter/material.dart';
 
-class AddSpell extends StatelessWidget {
-  AddSpell({Key key}) : super(key: key);
+class AddSpellList extends StatelessWidget {
+  AddSpellList({Key key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
