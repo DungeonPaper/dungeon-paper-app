@@ -45,21 +45,21 @@ class DbCharacter with Serializer<CharacterKeys> {
   DbCharacter([Map map]) {
     map ??= {};
     initSerializeMap({
-      CharacterKeys.alignment: map['alignment'],
-      CharacterKeys.displayName: map['displayName'],
       CharacterKeys.mainClass: map['mainClass'],
-      CharacterKeys.photoURL: map['photoURL'],
-      CharacterKeys.level: map['level'],
-      CharacterKeys.currentHP: map['currentHP'],
-      CharacterKeys.currentXP: map['currentXP'],
-      CharacterKeys.maxHP: map['maxHP'],
-      CharacterKeys.armor: map['armor'],
       CharacterKeys.str: map['str'],
       CharacterKeys.dex: map['dex'],
       CharacterKeys.con: map['con'],
       CharacterKeys.wis: map['wis'],
       CharacterKeys.int: map['int'],
       CharacterKeys.cha: map['cha'],
+      CharacterKeys.alignment: map['alignment'],
+      CharacterKeys.displayName: map['displayName'],
+      CharacterKeys.photoURL: map['photoURL'],
+      CharacterKeys.level: map['level'],
+      CharacterKeys.currentHP: map['currentHP'],
+      CharacterKeys.currentXP: map['currentXP'],
+      CharacterKeys.maxHP: map['maxHP'],
+      CharacterKeys.armor: map['armor'],
       CharacterKeys.moves: map['moves'],
       CharacterKeys.notes: map['notes'],
       CharacterKeys.spells: map['spells'],
@@ -155,26 +155,26 @@ class DbCharacter with Serializer<CharacterKeys> {
   @override
   initSerializeMap([Map map]) {
     serializeMap = {
-      CharacterKeys.alignment: (v) => alignment = v != null
-          ? stringToEnum<Alignment>(AlignmentNameMap)(v)
-          : Alignment.neutral,
-      CharacterKeys.displayName: (v) => displayName = v ?? 'New Traveler',
       CharacterKeys.mainClass: (v) => mainClass =
           v != null && dungeonWorld.classes.containsKey(v)
               ? dungeonWorld.classes[v]
               : dungeonWorld.classes['bard'],
-      CharacterKeys.photoURL: (v) => photoURL = v ?? '',
-      CharacterKeys.level: (v) => level = v ?? 1,
-      CharacterKeys.maxHP: (v) => maxHP = v ?? defaultMaxHP,
-      CharacterKeys.currentHP: (v) => currentHP = v ?? maxHP ?? defaultMaxHP ?? 0,
-      CharacterKeys.currentXP: (v) => currentXP = v ?? 0,
-      CharacterKeys.armor: (v) => armor = v ?? 0,
       CharacterKeys.str: (v) => str = v ?? 8,
       CharacterKeys.dex: (v) => dex = v ?? 8,
       CharacterKeys.con: (v) => con = v ?? 8,
       CharacterKeys.wis: (v) => wis = v ?? 8,
       CharacterKeys.int: (v) => int = v ?? 8,
       CharacterKeys.cha: (v) => cha = v ?? 8,
+      CharacterKeys.alignment: (v) => alignment = v != null
+          ? stringToEnum<Alignment>(AlignmentNameMap)(v)
+          : Alignment.neutral,
+      CharacterKeys.displayName: (v) => displayName = v ?? 'New Traveler',
+      CharacterKeys.photoURL: (v) => photoURL = v ?? '',
+      CharacterKeys.level: (v) => level = v ?? 1,
+      CharacterKeys.maxHP: (v) => maxHP = v ?? defaultMaxHP,
+      CharacterKeys.currentHP: (v) => currentHP = v ?? maxHP ?? defaultMaxHP ?? 0,
+      CharacterKeys.currentXP: (v) => currentXP = v ?? 0,
+      CharacterKeys.armor: (v) => armor = v ?? 0,
       CharacterKeys.moves: (v) => moves =
           List.from(v ?? []).map((move) => Move.fromJSON(move)).toList(),
       CharacterKeys.notes: (v) =>
@@ -193,7 +193,6 @@ class DbCharacter with Serializer<CharacterKeys> {
           race = v != null ? Move.fromJSON(v) : mainClass.raceMoves.first,
       CharacterKeys.coins: (v) => coins = v ?? 0,
     };
-    serialize(CharacterKeys.mainClass, map[CharacterKeys.mainClass]);
     serializeAll(map);
   }
 }
