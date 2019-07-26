@@ -1,3 +1,4 @@
+import 'package:dungeon_paper/redux/stores/stores.dart';
 import 'package:dungeon_paper/utils.dart';
 import 'package:flutter/material.dart';
 import 'package:package_info/package_info.dart';
@@ -28,6 +29,7 @@ class FeedbackButton extends StatefulWidget {
 }
 
 class _FeedbackButtonState extends State<FeedbackButton> {
+  String userId;
   String email;
   String version;
   String buildNumber;
@@ -37,9 +39,16 @@ class _FeedbackButtonState extends State<FeedbackButton> {
 
   @override
   void initState() {
+    _getUserId();
     _getEmail();
     _getVersionData();
     super.initState();
+  }
+
+  _getUserId() async {
+    setState(() {
+      userId = dwStore.state.user.currentUserDocID;
+    });
   }
 
   _getEmail() async {
@@ -59,7 +68,7 @@ class _FeedbackButtonState extends State<FeedbackButton> {
 
   String get subject => Uri.encodeComponent('Dungeon Paper feedback');
   String get body => Uri.encodeComponent(
-      '\n\n\n\n\n--- PACKAGE INFO ---\nVersion: $version\nBuild Number: $buildNumber');
+      '\n\n\n\n\n--- PACKAGE INFO ---\nVersion: $version\nBuild Number: $buildNumber\nUser ID: $userId');
   void sendEmail() => launch('mailto:$email?subject=$subject&body=$body');
   void onPressed() {
     sendEmail();
@@ -68,7 +77,7 @@ class _FeedbackButtonState extends State<FeedbackButton> {
 
   @override
   Widget build(BuildContext context) {
-    if (![email, version].every((i) => i != null)) return Container();
+    if (![userId, email, version].every((i) => i != null)) return Container();
     if (widget.type == FeedbackButtonType.IconButton)
       return IconButton(
         icon: icon,
