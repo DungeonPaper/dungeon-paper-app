@@ -56,7 +56,7 @@ class CharacterHeadline extends StatelessWidget {
                   ],
                 ),
                 IconButton(
-                  icon: Icon(Icons.mode_edit),
+                  icon: Icon(Icons.settings),
                   onPressed: () => onEdit(context),
                   splashColor: Colors.white,
                   color: Colors.white,

@@ -1,7 +1,8 @@
+import 'package:dungeon_paper/about_view/about_view.dart';
+import 'package:dungeon_paper/about_view/feedback_icon_button.dart';
 import 'package:dungeon_paper/db/auth.dart';
 import 'package:dungeon_paper/db/character.dart';
 import 'package:dungeon_paper/db/user.dart';
-import 'package:dungeon_paper/main_view/credits.dart';
 import 'package:dungeon_paper/redux/actions.dart';
 import 'package:dungeon_paper/redux/stores/connectors.dart';
 import 'package:dungeon_paper/redux/stores/stores.dart';
@@ -24,6 +25,7 @@ class Sidebar extends StatelessWidget {
               Divider(),
               title('Application', context),
               credits(context),
+              sendFeedback(context),
               logOut(context),
             ];
 
@@ -50,17 +52,39 @@ class Sidebar extends StatelessWidget {
 
   Widget credits(BuildContext context) {
     Widget credits = ListTile(
-      title: Text('Credits'),
-      onTap: showCreditsScreen(context),
+      leading: Icon(Icons.info),
+      title: Text('About'),
+      onTap: () {
+        Navigator.pop(context);
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            fullscreenDialog: true,
+            builder: (context) => AboutView(),
+          ),
+        );
+      },
     );
     return credits;
+  }
+
+  Widget sendFeedback(BuildContext context) {
+    return FeedbackButton(
+      type: FeedbackButtonType.ListItem,
+      onPressed: () {
+        Navigator.pop(context);
+      },
+    );
   }
 
   Widget logOut(BuildContext context) {
     Widget logOut = ListTile(
       leading: Icon(Icons.exit_to_app),
       title: Text('Log out'),
-      onTap: doLogOut(context),
+      onTap: () {
+        Navigator.pop(context);
+        requestSignOut();
+      },
     );
     return logOut;
   }
@@ -69,7 +93,10 @@ class Sidebar extends StatelessWidget {
     Widget addNew = ListTile(
       leading: Icon(Icons.add),
       title: Text('Create Empty Character'),
-      onTap: addNewCharacter(context),
+      onTap: () {
+        createNewCharacter();
+        Navigator.pop(context);
+      },
     );
     return addNew;
   }
@@ -90,10 +117,12 @@ class Sidebar extends StatelessWidget {
     return header;
   }
 
-  TextStyle getTitleStyle(BuildContext context) => TextStyle(
-        color: Theme.of(context).primaryColor,
-        fontSize: 12,
-      );
+  TextStyle getTitleStyle(BuildContext context) {
+    return TextStyle(
+      color: Theme.of(context).primaryColor,
+      fontSize: 12,
+    );
+  }
 
   List<ListTile> characterList(
       Map<String, DbCharacter> characters, BuildContext context) {
@@ -111,31 +140,5 @@ class Sidebar extends StatelessWidget {
         },
       );
     }).toList();
-  }
-
-  void Function() doLogOut(BuildContext context) {
-    return () {
-      Navigator.pop(context);
-      requestSignOut();
-    };
-  }
-
-  void Function() showCreditsScreen(BuildContext context) {
-    return () {
-      Navigator.push(
-        context,
-        MaterialPageRoute(
-          fullscreenDialog: true,
-          builder: (context) => CreditsView(),
-        ),
-      );
-    };
-  }
-
-  void Function() addNewCharacter(BuildContext context) {
-    return () {
-      createNewCharacter();
-      Navigator.pop(context);
-    };
   }
 }
