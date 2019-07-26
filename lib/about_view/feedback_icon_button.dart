@@ -11,6 +11,18 @@ class FeedbackButton extends StatefulWidget {
 
   const FeedbackButton({Key key, @required this.type, this.onPressed})
       : super(key: key);
+
+  const FeedbackButton.iconButton({Key key, this.onPressed})
+      : type = FeedbackButtonType.IconButton,
+        super(key: key);
+
+  const FeedbackButton.raisedButton({Key key, this.onPressed})
+      : type = FeedbackButtonType.RaisedButton,
+        super(key: key);
+
+  const FeedbackButton.listItem({Key key, this.onPressed})
+      : type = FeedbackButtonType.ListItem,
+        super(key: key);
   @override
   _FeedbackButtonState createState() => _FeedbackButtonState();
 }

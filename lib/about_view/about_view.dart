@@ -40,7 +40,7 @@ class _AboutViewState extends State<AboutView> {
       appBar: AppBar(
         title: Text('About Dungeon Paper'),
         actions: <Widget>[
-          FeedbackButton(type: FeedbackButtonType.IconButton),
+          FeedbackButton.iconButton(),
         ],
       ),
       body: CategorizedList.childrenBuilder(

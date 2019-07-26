@@ -1,7 +1,13 @@
 # CHANGELOG
 
+## 1.0.6
+* Added about screen
+* Added feedback with link to email
+* Replaced "edit" icon near character details to cog
+
 ## 1.0.5
 * Added dropdown for class choice in add move list
+* Added error reporting to Sentry
 
 ## 1.0.4
 * Bugfix in character creation
