@@ -69,8 +69,7 @@ class Sidebar extends StatelessWidget {
   }
 
   Widget sendFeedback(BuildContext context) {
-    return FeedbackButton(
-      type: FeedbackButtonType.ListItem,
+    return FeedbackButton.listItem(
       onPressed: () {
         Navigator.pop(context);
       },
