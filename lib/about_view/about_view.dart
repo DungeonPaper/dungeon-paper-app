@@ -3,8 +3,10 @@ import 'dart:math';
 import 'package:dungeon_paper/about_view/feedback_icon_button.dart';
 import 'package:dungeon_paper/about_view/paypal_donate_button.dart';
 import 'package:dungeon_paper/components/categorized_list.dart';
+import 'package:dungeon_paper/components/hyperlink.dart';
 import 'package:flutter/material.dart';
 import 'package:package_info/package_info.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 const List<String> iconsCredits = [
   'ibrandify',
@@ -71,17 +73,15 @@ class _AboutViewState extends State<AboutView> {
             padding: const EdgeInsets.all(16.0),
             child: Column(
               children: <Widget>[
-                Text(
-                  'Develeoped by Chen Asraf\n© 2018-$year',
-                  textAlign: TextAlign.center,
-                ),
+                Text('Develeoped by Chen Asraf'),
+                Text('© 2018-$year'),
                 SizedBox(height: 15),
                 Text('Credits', style: Theme.of(context).textTheme.title),
                 SizedBox(height: 10.0),
                 Text('Icons', style: Theme.of(context).textTheme.subtitle),
                 for (String credit in iconsCredits)
                   Padding(
-                      padding: EdgeInsets.symmetric(vertical: 1),
+                      padding: const EdgeInsets.symmetric(vertical: 1),
                       child: Text(credit)),
                 if (!Platform.isIOS)
                   Padding(
@@ -98,6 +98,18 @@ class _AboutViewState extends State<AboutView> {
                 Padding(
                   padding: const EdgeInsets.all(16.0).copyWith(top: 0),
                   child: DonateButton(),
+                ),
+                Hyperlink(
+                  'Dungeon Paper On Github',
+                  'https://github.com/chenasraf/dungeon-paper-app',
+                  padding:
+                      const EdgeInsets.symmetric(vertical: 6.0, horizontal: 20),
+                ),
+                Hyperlink(
+                  'casraf.blog',
+                  'https://casraf.blog',
+                  padding:
+                      const EdgeInsets.symmetric(vertical: 6.0, horizontal: 20),
                 ),
               ],
             ),
