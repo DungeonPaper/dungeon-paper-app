@@ -12,6 +12,7 @@ class CategorizedList<T> extends StatelessWidget {
   final BuilderAnyFunction<T, int> itemCount;
   final bool staggered;
   final num spacerCount;
+  bool get _isChildrenBuilder => itemBuilder == null || itemCount == null;
 
   static const TextStyle titleStyle =
       TextStyle(fontSize: 16.0, fontWeight: FontWeight.bold);
@@ -36,12 +37,24 @@ class CategorizedList<T> extends StatelessWidget {
     this.spacerCount = 0,
   }) : super(key: key);
 
+  CategorizedList.childrenBuilder({
+    Key key,
+    List<T> children,
+    this.titleBuilder,
+    this.spacerCount = 0,
+    this.staggered = true,
+  })  : categories = children,
+        itemBuilder = null,
+        itemCount = null,
+        super(key: key);
+
   @override
   Widget build(BuildContext context) {
     num i = 0;
     Iterable<Widget> cats = categories.map((category) {
       num index = i++;
-      var builtTitle = titleBuilder(context, category, index);
+      var builtTitle =
+          titleBuilder == null ? null : titleBuilder(context, category, index);
       Widget title;
 
       if (builtTitle != null) {
@@ -51,12 +64,15 @@ class CategorizedList<T> extends StatelessWidget {
               color: Theme.of(context).textTheme.body1.color),
         );
       }
-      num count = itemCount(category, index);
+      num count = _isChildrenBuilder ? 1 : itemCount(category, index);
       if (count == 0) {
         return null;
       }
-      List<Widget> items =
-          List.generate(count, (i) => itemBuilder(context, category, i));
+      List<Widget> items = List.generate(
+          count,
+          (i) => _isChildrenBuilder
+              ? category
+              : itemBuilder(context, category, i));
 
       return Container(
         child: Column(
