@@ -1,4 +1,7 @@
-import 'package:dungeon_paper/main_view/login_button.dart';
+import 'package:dungeon_paper/widget_utils.dart';
+
+import '../about_view/feedback_icon_button.dart';
+import '../main_view/login_button.dart';
 import 'package:flutter/material.dart';
 
 class Welcome extends StatelessWidget {
@@ -18,7 +21,7 @@ class Welcome extends StatelessWidget {
           BoxDecoration(color: Theme.of(context).scaffoldBackgroundColor),
       child: Center(
         child: loading
-            ? CircularProgressIndicator(value: null)
+            ? PAGE_LOADER
             : Column(
                 mainAxisSize: MainAxisSize.max,
                 mainAxisAlignment: MainAxisAlignment.center,
@@ -30,7 +33,10 @@ class Welcome extends StatelessWidget {
                   ),
                   LoginButton(onUserChange: () {
                     pageController.jumpToPage(0);
-                  })
+                  }),
+                  SizedBox(height: 20),
+                  Text('Having trouble signing in?'),
+                  FeedbackButton.hyperlink(dontWaitForUser: true)
                 ],
               ),
       ),

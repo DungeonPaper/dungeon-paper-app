@@ -1,7 +1,7 @@
 import 'package:dungeon_paper/components/standard_dialog_controls.dart';
 import 'package:dungeon_paper/db/character.dart';
 import 'package:dungeon_paper/db/character_types.dart';
-import 'package:dungeon_paper/flutter-utils.dart';
+import 'package:dungeon_paper/flutter_utils.dart';
 import 'package:dungeon_paper/redux/stores/stores.dart';
 import 'package:dungeon_paper/utils.dart';
 import 'package:flutter/material.dart';
@@ -26,6 +26,7 @@ class EditStatDialogState extends State<EditStatDialog> {
   final String fullName;
   num value;
   TextEditingController _controller;
+  bool saving = false;
 
   EditStatDialogState({
     Key key,
@@ -101,7 +102,7 @@ class EditStatDialogState extends State<EditStatDialog> {
                     ),
                   ),
                   StandardDialogControls(
-                    onOK: () => _saveValue(),
+                    onOK: saving ? null : _saveValue,
                     onCancel: () => Navigator.pop(context),
                   ),
                 ],
@@ -154,6 +155,9 @@ class EditStatDialogState extends State<EditStatDialog> {
         key = CharacterKeys.dex;
         break;
     }
+    setState(() {
+      saving = true;
+    });
     await updateCharacter(character, [key]);
     Navigator.pop(context);
   }

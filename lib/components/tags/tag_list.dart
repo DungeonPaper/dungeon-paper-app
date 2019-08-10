@@ -4,12 +4,11 @@ import 'tag.dart';
 
 class TagList extends StatelessWidget {
   final List<Tag> tags;
-  final void Function(Tag tag, num idx) onDelete;
 
   const TagList({
     Key key,
     @required this.tags,
-    this.onDelete,
+
   }) : super(key: key);
 
   @override
@@ -21,10 +20,20 @@ class TagList extends StatelessWidget {
           Padding(
             padding: EdgeInsets.only(right: 4),
             child: TagChip(
-                tag: tags[i],
-                onDelete: onDelete != null ? (tag) => onDelete(tag, i) : null),
+              tag: tags[i],
+              onPressed: (tag) {
+                showDialog(
+                  context: context,
+                  builder: (ctx) => TagDescription(tag),
+                );
+              },
+            ),
           ),
       ],
     );
+  }
+
+  void onSave(Tag tag) {
+
   }
 }

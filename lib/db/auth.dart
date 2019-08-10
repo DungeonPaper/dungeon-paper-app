@@ -5,6 +5,9 @@ import 'package:dungeon_paper/redux/actions.dart';
 import 'package:dungeon_paper/redux/stores/stores.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
+import 'package:sentry/sentry.dart';
+
+import '../error_reporting.dart';
 
 FirebaseAuth auth = FirebaseAuth.instance;
 final GoogleSignIn _googleSignIn = new GoogleSignIn();
@@ -28,6 +31,11 @@ performSignIn() async {
     FirebaseUser user = await auth.signInWithCredential(creds);
     await setCurrentUser(user);
     registerAuthUserListener();
+    sentry.userContext = User(
+      email: user.email,
+      id: user.uid,
+      username: user.displayName,
+    );
     return user;
   } catch (e) {
     dwStore.dispatch(UserActions.noLogin());
@@ -44,7 +52,8 @@ Future requestSignInWithCredentials() async {
     }
     dwStore.dispatch(UserActions.requestLogin());
     GoogleSignInAuthentication googleAuth = await googleUser.authentication;
-    dwStore.dispatch(UserActions.giveCredentials(googleAuth.idToken, googleAuth.accessToken));
+    dwStore.dispatch(UserActions.giveCredentials(
+        googleAuth.idToken, googleAuth.accessToken));
 
     return performSignIn();
   } catch (e) {

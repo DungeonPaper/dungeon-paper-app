@@ -123,10 +123,13 @@ class Sidebar extends StatelessWidget {
     );
   }
 
-  List<ListTile> characterList(
+  List<Widget> characterList(
       Map<String, DbCharacter> characters, BuildContext context) {
+    if (dwStore.state.user.current.characters == null ||
+        dwStore.state.user.current.characters.isEmpty) return [];
     return dwStore.state.user.current.characters.map((charDoc) {
       DbCharacter character = characters[charDoc.documentID];
+      if (character == null) return Container();
       return ListTile(
         leading: Icon(Icons.person),
         title: Text(character.displayName),

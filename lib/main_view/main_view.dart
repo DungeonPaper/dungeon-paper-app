@@ -33,7 +33,8 @@ class MainContainer extends StatelessWidget {
       return MainView(
         character: character,
         user: user,
-        loading: state.loading[LoadingKeys.Character],
+        loading: state.loading[LoadingKeys.Character] ||
+            state.loading[LoadingKeys.User],
         pageController: pageController,
       );
     });

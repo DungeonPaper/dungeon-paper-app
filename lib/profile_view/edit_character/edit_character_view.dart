@@ -11,19 +11,19 @@ import 'package:dungeon_paper/profile_view/edit_character/update_basic_info_view
 import 'package:dungeon_paper/redux/stores/stores.dart';
 import 'package:flutter/material.dart';
 
-class EditCharacterDialog extends StatefulWidget {
+class EditCharacterView extends StatefulWidget {
   final DbCharacter character;
 
-  const EditCharacterDialog({
+  const EditCharacterView({
     Key key,
     @required this.character,
   }) : super(key: key);
 
   @override
-  _EditCharacterDialogState createState() => _EditCharacterDialogState();
+  _EditCharacterViewState createState() => _EditCharacterViewState();
 }
 
-class _EditCharacterDialogState extends State<EditCharacterDialog> {
+class _EditCharacterViewState extends State<EditCharacterView> {
   static Widget spacer = SizedBox(height: 10.0);
   ScrollController scrollController = ScrollController();
   double appBarElevation = 0.0;
@@ -125,6 +125,16 @@ class _EditCharacterDialogState extends State<EditCharacterDialog> {
   }
 
   _deleteCharacter() async {
+    if (dwStore.state.characters.characters.length == 1)
+      return showDialog(
+        context: context,
+        builder: (context) => ConfirmationDialog(
+          title: Text('Uhh, wait!'),
+          text: Text(
+              "You can't delete your last character.\n\nIf you want to start fresh, create another empty character first."),
+          noCancel: true,
+        ),
+      );
     if (await showDialog(
       context: context,
       builder: (context) => ConfirmationDialog(
