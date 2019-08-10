@@ -48,7 +48,7 @@ class _EditTagDialogState extends State<EditTagDialog> {
   Widget build(BuildContext context) {
     return SimpleDialog(
       title: Text((_mode == DialogMode.Edit ? 'Edit' : 'Create') + ' Tag'),
-      contentPadding: EdgeInsets.symmetric(horizontal: 32, vertical: 24),
+      contentPadding: EdgeInsets.symmetric(horizontal: 24, vertical: 16),
       children: <Widget>[
         Row(
           children: <Widget>[
@@ -85,7 +85,7 @@ class _EditTagDialogState extends State<EditTagDialog> {
           decoration: InputDecoration(labelText: 'Tag value'),
           controller: _controllers['value'],
         ),
-        StandardDialogControls(onOK: onSave)
+        StandardDialogControls(onOK: onSave, padding: EdgeInsets.only(top: 40),)
       ],
     );
   }

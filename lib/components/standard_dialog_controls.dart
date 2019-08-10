@@ -6,6 +6,7 @@ class StandardDialogControls extends StatelessWidget {
   final Widget cancelText;
   final Widget okText;
   final List<Widget> extraActions;
+  final EdgeInsets padding;
 
   const StandardDialogControls({
     Key key,
@@ -14,6 +15,7 @@ class StandardDialogControls extends StatelessWidget {
     Widget cancelText,
     Widget okText,
     this.extraActions,
+    this.padding = const EdgeInsets.only(top: 40, left: 16, right: 16),
   })  : cancelText = cancelText ?? const Text('Cancel'),
         okText = okText ?? const Text('Save'),
         super(key: key);
@@ -23,8 +25,7 @@ class StandardDialogControls extends StatelessWidget {
     return Align(
       alignment: Alignment.bottomRight,
       child: Padding(
-        padding: const EdgeInsets.symmetric(vertical: 40.0, horizontal: 16.0)
-            .copyWith(bottom: 0),
+        padding: padding,
         child: Wrap(
           alignment: WrapAlignment.end,
           spacing: 5.0,
