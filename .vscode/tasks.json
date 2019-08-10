@@ -12,13 +12,13 @@
       {
         "label": "Push APK",
         "type": "shell",
-        "command": "adb push build/app/outputs/apk/release/app-release.apk /sdcard/Download/dungeon-paper.apk",
+        "command": "deploy.sh",
         "problemMatcher": []
       },
       {
         "label": "Build & Push APK",
         "type": "shell",
-        "command": "flutter build apk && adb push build/app/outputs/apk/release/app-release.apk /sdcard/Download/dungeon-paper.apk",
+        "command": "deploy.sh -p",
         "problemMatcher": []
       }
     ]

@@ -83,3 +83,5 @@ bool get isInDebugMode {
   assert(inDebugMode = true);
   return inDebugMode;
 }
+
+R Function() pass1<T, R>(R Function(T a) a, T b) => a != null ? () => a(b): null;
