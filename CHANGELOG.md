@@ -5,6 +5,7 @@
 * Improved login loader
 * Show tag descriptions
 * Updated Dungeon World data package
+* Fixed bug with inventory items not being created with tags
 * General bugfixes
 
 ## 1.0.6

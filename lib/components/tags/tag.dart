@@ -1,5 +1,3 @@
-import 'package:dungeon_paper/components/standard_dialog_controls.dart';
-import 'package:dungeon_paper/components/tags/edit_tag.dart';
 import 'package:dungeon_world_data/tag.dart';
 import 'package:flutter/material.dart';
 import '../../utils.dart';
@@ -19,15 +17,18 @@ class TagChip extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var label = Text(tag != null ? capitalize(tag.toString()) : 'Add tag');
+    var onPressCb = pass1(onPressed, tag);
+    var onDeleteCb = pass1(onDelete, tag);
+
     if (onPressed == null)
       return Chip(
-        onDeleted: onDelete != null ? () => onDelete(tag) : null,
+        onDeleted: onDeleteCb,
         label: label,
       );
 
     return InputChip(
-      onPressed: onPressed != null ? () => onPressed(tag) : null,
-      onDeleted: onDelete != null ? () => onDelete(tag) : null,
+      onPressed: onPressCb,
+      onDeleted: onDeleteCb,
       label: label,
     );
   }
