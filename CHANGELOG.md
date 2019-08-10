@@ -1,5 +1,12 @@
 # CHANGELOG
 
+## 1.0.7
+* Improved error reporting
+* Improved login loader
+* Show tag descriptions
+* Updated Dungeon World data package
+* General bugfixes
+
 ## 1.0.6
 * Added about screen
 * Added feedback with link to email

@@ -29,6 +29,10 @@ class _EditTagDialogState extends State<EditTagDialog> {
       'name': TextEditingController.fromValue(
         TextEditingValue(text: widget.tag != null ? widget.tag.name : ''),
       ),
+      'description': TextEditingController.fromValue(
+        TextEditingValue(
+            text: widget.tag != null ? widget.tag.description.toString() : ''),
+      ),
       'value': TextEditingController.fromValue(
         TextEditingValue(
             text: widget.tag != null ? widget.tag.value.toString() : ''),
@@ -73,6 +77,11 @@ class _EditTagDialogState extends State<EditTagDialog> {
           controller: _controllers['name'],
         ),
         TextField(
+          maxLines: null,
+          decoration: InputDecoration(labelText: 'Tag description'),
+          controller: _controllers['description'],
+        ),
+        TextField(
           decoration: InputDecoration(labelText: 'Tag value'),
           controller: _controllers['value'],
         ),
@@ -92,6 +101,7 @@ class _EditTagDialogState extends State<EditTagDialog> {
       _controllers['name'].text = tagToCopy.name;
       _controllers['value'].text =
           tagToCopy.value != null ? tagToCopy.value.toString() : '';
+      _controllers['description'].text = tagToCopy.description ?? '';
     });
   }
 

@@ -7,7 +7,7 @@ import 'package:redux/redux.dart';
 class DWStoreConnector<T> extends StatelessWidget {
   final Widget Function(BuildContext context, T state) builder;
   final Widget Function(BuildContext context) loader;
-  final LoadingKeys loaderKey;
+  final List<LoadingKeys> loaderKeys;
   final T Function(Store<DWStore> store) converter;
 
   const DWStoreConnector({
@@ -15,7 +15,7 @@ class DWStoreConnector<T> extends StatelessWidget {
     @required this.builder,
     this.converter,
     this.loader,
-    this.loaderKey,
+    this.loaderKeys,
   }) : super(key: key);
 
   @override
@@ -28,9 +28,9 @@ class DWStoreConnector<T> extends StatelessWidget {
         builder: (context, state) {
           DWStore store = dwStore.state;
 
-          if (loaderKey != null &&
-              store.loading.keys.contains(loaderKey) &&
-              store.loading[loaderKey]) {
+          if (loaderKeys != null &&
+              loaderKeys.isNotEmpty &&
+              loaderKeys.any((k) => store.loading[k])) {
             return loader(context);
           }
 

@@ -58,7 +58,7 @@ class MoveCardState extends State<MoveCard> {
                           title: Text('Delete Move?'),
                           okButtonText: Text('Delete Move'),
                         ),
-                  )
+                  ) == true
                       ? deleteMove(widget.move)
                       : null,
             )

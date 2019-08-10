@@ -1,6 +1,6 @@
 import 'package:dungeon_paper/components/standard_dialog_controls.dart';
 import 'package:dungeon_paper/db/character.dart';
-import 'package:dungeon_paper/flutter-utils.dart';
+import 'package:dungeon_paper/flutter_utils.dart';
 import 'package:dungeon_paper/redux/stores/stores.dart';
 import 'package:dungeon_world_data/dice.dart';
 import 'package:flutter/material.dart';

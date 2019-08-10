@@ -6,7 +6,6 @@ import 'package:dungeon_paper/components/categorized_list.dart';
 import 'package:dungeon_paper/components/hyperlink.dart';
 import 'package:flutter/material.dart';
 import 'package:package_info/package_info.dart';
-import 'package:url_launcher/url_launcher.dart';
 
 const List<String> iconsCredits = [
   'ibrandify',

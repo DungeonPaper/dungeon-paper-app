@@ -6,8 +6,12 @@ class Hyperlink extends StatelessWidget {
   final String text;
   final String url;
 
-  const Hyperlink(this.text, this.url, {Key key, this.padding})
-      : super(key: key);
+  const Hyperlink(
+    this.text,
+    this.url, {
+    Key key,
+    this.padding = const EdgeInsets.all(0),
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

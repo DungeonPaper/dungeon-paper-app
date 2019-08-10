@@ -27,8 +27,8 @@ class CharacterHeadline extends StatelessWidget {
                   begin: AlignmentDirectional.topCenter,
                   end: AlignmentDirectional.bottomCenter,
                   colors: [
-                    Color.fromARGB(0, 0, 0, 0),
-                    Color.fromARGB(255, 150, 150, 150),
+                    Color.fromRGBO(0, 0, 0, 0),
+                    Color.fromRGBO(150, 150, 150, 1),
                   ],
                 )
               : null,
@@ -74,7 +74,7 @@ class CharacterHeadline extends StatelessWidget {
       context,
       MaterialPageRoute(
         fullscreenDialog: true,
-        builder: (context) => EditCharacterDialog(character: character),
+        builder: (context) => EditCharacterView(character: character),
       ),
     );
   }

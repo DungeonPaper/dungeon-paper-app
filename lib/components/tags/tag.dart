@@ -1,3 +1,5 @@
+import 'package:dungeon_paper/components/standard_dialog_controls.dart';
+import 'package:dungeon_paper/components/tags/edit_tag.dart';
 import 'package:dungeon_world_data/tag.dart';
 import 'package:flutter/material.dart';
 import '../../utils.dart';
@@ -27,6 +29,38 @@ class TagChip extends StatelessWidget {
       onPressed: onPressed != null ? () => onPressed(tag) : null,
       onDeleted: onDelete != null ? () => onDelete(tag) : null,
       label: label,
+    );
+  }
+}
+
+class TagDescription extends StatelessWidget {
+  final Tag tag;
+
+  const TagDescription(this.tag, {Key key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return SimpleDialog(
+      title: Text(capitalize(tag.name)),
+      contentPadding: EdgeInsets.all(24).copyWith(top: 16),
+      children: <Widget>[
+        ...[
+          Text('Description', style: Theme.of(context).textTheme.caption),
+          Text(tag.description != null && tag.description.isNotEmpty
+              ? tag.description
+              : 'No description provided'),
+        ],
+        SizedBox(height: 16),
+        if (tag.hasValue) ...[
+          Text('Value', style: Theme.of(context).textTheme.caption),
+          Text(tag.value.toString()),
+        ],
+        // StandardDialogControls(
+        //   okText: Text('Edit'),
+        //   onOK: () => showDialog(
+        //       context: context, builder: (context) => EditTagDialog(tag: tag)),
+        // ),
+      ],
     );
   }
 }
