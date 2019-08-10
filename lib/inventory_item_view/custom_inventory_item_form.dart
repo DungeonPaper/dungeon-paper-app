@@ -122,7 +122,7 @@ class CustomInventoryItemFormBuilderState
           .replaceAll(RegExp('[^a-z]+'), '_'),
       name: _controllers['name'].text,
       description: _controllers['description'].text,
-      tags: [],
+      tags: tags,
       pluralName: _controllers['name'].text + 's',
       amount: int.tryParse(_controllers['amount'].text) ?? 1,
     );
