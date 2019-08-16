@@ -2,7 +2,7 @@
 push=0
 while test $# -gt 0; do
   case "$1" in
-    -p) push=1; shift;;
+    -p|--push) push=1; shift;;
   esac
 done
 

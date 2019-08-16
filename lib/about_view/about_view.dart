@@ -1,11 +1,11 @@
 import 'dart:io';
 import 'dart:math';
-import 'package:dungeon_paper/about_view/feedback_icon_button.dart';
-import 'package:dungeon_paper/about_view/paypal_donate_button.dart';
-import 'package:dungeon_paper/components/categorized_list.dart';
-import 'package:dungeon_paper/components/hyperlink.dart';
+import './feedback_button.dart';
+import './paypal_donate_button.dart';
+import '../components/categorized_list.dart';
+import '../components/hyperlink.dart';
+import '../components/version_number.dart';
 import 'package:flutter/material.dart';
-import 'package:package_info/package_info.dart';
 
 const List<String> iconsCredits = [
   'ibrandify',
@@ -20,20 +20,6 @@ class AboutView extends StatefulWidget {
 
 class _AboutViewState extends State<AboutView> {
   final num year = DateTime.now().year;
-  String version;
-
-  @override
-  void initState() {
-    _getVersion();
-    super.initState();
-  }
-
-  _getVersion() async {
-    PackageInfo packageInfo = await PackageInfo.fromPlatform();
-    setState(() {
-      version = packageInfo.version;
-    });
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -56,7 +42,7 @@ class _AboutViewState extends State<AboutView> {
                 SizedBox(width: MediaQuery.of(context).size.width),
                 Text('Dungeon Paper',
                     style: Theme.of(context).textTheme.headline),
-                Text('Version $version'),
+                VersionNumber.text(prefix: 'Version'),
                 Padding(
                   padding: const EdgeInsets.symmetric(vertical: 24.0),
                   child: SizedBox.fromSize(
