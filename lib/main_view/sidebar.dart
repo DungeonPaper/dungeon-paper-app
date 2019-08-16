@@ -1,5 +1,5 @@
 import 'package:dungeon_paper/about_view/about_view.dart';
-import 'package:dungeon_paper/about_view/feedback_icon_button.dart';
+import 'package:dungeon_paper/about_view/feedback_button.dart';
 import 'package:dungeon_paper/db/auth.dart';
 import 'package:dungeon_paper/db/character.dart';
 import 'package:dungeon_paper/db/user.dart';

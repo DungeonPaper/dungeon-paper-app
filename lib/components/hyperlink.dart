@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
 
-class Hyperlink extends StatelessWidget {
+class Hyperlink<T> extends StatelessWidget {
   final EdgeInsets padding;
-  final String text;
+  final T text;
   final String url;
 
   const Hyperlink(
@@ -18,12 +18,12 @@ class Hyperlink extends StatelessWidget {
     return InkWell(
       child: Padding(
         padding: padding,
-        child: Text(
-          text,
+        child: DefaultTextStyle(
           style: TextStyle(
             color: Color.fromRGBO(25, 118, 210, 1),
             decoration: TextDecoration.underline,
           ),
+          child: text is Widget ? text : Text(text.toString()),
         ),
       ),
       onTap: () => launch(url),
