@@ -74,7 +74,8 @@ class CharacterHeadline extends StatelessWidget {
       context,
       MaterialPageRoute(
         fullscreenDialog: true,
-        builder: (context) => EditCharacterView(character: character),
+        builder: (context) =>
+            EditCharacterView(character: character),
       ),
     );
   }

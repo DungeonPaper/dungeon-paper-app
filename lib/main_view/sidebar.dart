@@ -3,6 +3,7 @@ import 'package:dungeon_paper/about_view/feedback_button.dart';
 import 'package:dungeon_paper/db/auth.dart';
 import 'package:dungeon_paper/db/character.dart';
 import 'package:dungeon_paper/db/user.dart';
+import 'package:dungeon_paper/profile_view/edit_character/create_character_view.dart';
 import 'package:dungeon_paper/redux/actions.dart';
 import 'package:dungeon_paper/redux/stores/connectors.dart';
 import 'package:dungeon_paper/redux/stores/stores.dart';
@@ -15,18 +16,64 @@ class Sidebar extends StatelessWidget {
       builder: (context, state) {
         DbUser user = state.user.current;
         List<Widget> items = [
-              header(user),
+              UserAccountsDrawerHeader(
+                accountEmail: Text(user.email),
+                accountName: Text(user.displayName),
+                currentAccountPicture: Container(
+                  decoration: BoxDecoration(
+                    shape: BoxShape.circle,
+                    image: DecorationImage(
+                      image: NetworkImage(user.photoURL),
+                    ),
+                  ),
+                ),
+              ),
               title('Characters', context),
             ] +
             characterList(state.characters.characters, context) +
             [
               Divider(),
-              addNew(context),
+              // Create Empty Character
+              ListTile(
+                leading: Icon(Icons.add),
+                title: Text('Create Empty Character'),
+                onTap: () {
+                  Navigator.pop(context);
+                  createNewCharacterScreen(context);
+                },
+              ),
               Divider(),
               title('Application', context),
-              credits(context),
-              sendFeedback(context),
-              logOut(context),
+              // About
+              ListTile(
+                leading: Icon(Icons.info),
+                title: Text('About'),
+                onTap: () {
+                  Navigator.pop(context);
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      fullscreenDialog: true,
+                      builder: (context) => AboutView(),
+                    ),
+                  );
+                },
+              ),
+              // Feedback
+              FeedbackButton.listItem(
+                onPressed: () {
+                  Navigator.pop(context);
+                },
+              ),
+              // Log out
+              ListTile(
+                leading: Icon(Icons.exit_to_app),
+                title: Text('Log out'),
+                onTap: () {
+                  Navigator.pop(context);
+                  requestSignOut();
+                },
+              ),
             ];
 
         return Drawer(
@@ -35,6 +82,16 @@ class Sidebar extends StatelessWidget {
           ),
         );
       },
+    );
+  }
+
+  void createNewCharacterScreen(BuildContext context) {
+    Navigator.push(
+      context,
+      MaterialPageRoute<bool>(
+        fullscreenDialog: true,
+        builder: (context) => CreateCharacterView(),
+      ),
     );
   }
 
@@ -50,72 +107,6 @@ class Sidebar extends StatelessWidget {
     return title;
   }
 
-  Widget credits(BuildContext context) {
-    Widget credits = ListTile(
-      leading: Icon(Icons.info),
-      title: Text('About'),
-      onTap: () {
-        Navigator.pop(context);
-        Navigator.push(
-          context,
-          MaterialPageRoute(
-            fullscreenDialog: true,
-            builder: (context) => AboutView(),
-          ),
-        );
-      },
-    );
-    return credits;
-  }
-
-  Widget sendFeedback(BuildContext context) {
-    return FeedbackButton.listItem(
-      onPressed: () {
-        Navigator.pop(context);
-      },
-    );
-  }
-
-  Widget logOut(BuildContext context) {
-    Widget logOut = ListTile(
-      leading: Icon(Icons.exit_to_app),
-      title: Text('Log out'),
-      onTap: () {
-        Navigator.pop(context);
-        requestSignOut();
-      },
-    );
-    return logOut;
-  }
-
-  Widget addNew(BuildContext context) {
-    Widget addNew = ListTile(
-      leading: Icon(Icons.add),
-      title: Text('Create Empty Character'),
-      onTap: () {
-        createNewCharacter();
-        Navigator.pop(context);
-      },
-    );
-    return addNew;
-  }
-
-  Widget header(DbUser user) {
-    Widget header = UserAccountsDrawerHeader(
-      accountEmail: Text(user.email),
-      accountName: Text(user.displayName),
-      currentAccountPicture: Container(
-        decoration: BoxDecoration(
-          shape: BoxShape.circle,
-          image: DecorationImage(
-            image: NetworkImage(user.photoURL),
-          ),
-        ),
-      ),
-    );
-    return header;
-  }
-
   TextStyle getTitleStyle(BuildContext context) {
     return TextStyle(
       color: Theme.of(context).primaryColor,
@@ -129,7 +120,7 @@ class Sidebar extends StatelessWidget {
         dwStore.state.user.current.characters.isEmpty) return [];
     return dwStore.state.user.current.characters.map((charDoc) {
       DbCharacter character = characters[charDoc.documentID];
-      if (character == null) return Container();
+      if (character?.displayName == null) return Container();
       return ListTile(
         leading: Icon(Icons.person),
         title: Text(character.displayName),

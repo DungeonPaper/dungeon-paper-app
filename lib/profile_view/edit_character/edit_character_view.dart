@@ -1,13 +1,15 @@
 import 'package:dungeon_paper/components/animations/slide_route_from_right.dart';
 import 'package:dungeon_paper/components/card_list_item.dart';
 import 'package:dungeon_paper/components/confirmation_dialog.dart';
+import 'package:dungeon_paper/components/scaffold_with_elevation.dart';
 import 'package:dungeon_paper/db/character.dart';
+import 'package:dungeon_paper/dialogs.dart';
 import 'package:dungeon_paper/profile_view/basic_info/change_alignment_dialog.dart';
 import 'package:dungeon_paper/profile_view/class_selection/change_class_dialog.dart';
 import 'package:dungeon_paper/profile_view/edit_character/alignment_description_card.dart';
 import 'package:dungeon_paper/profile_view/edit_character/edit_looks.dart';
 import 'package:dungeon_paper/profile_view/edit_character/edit_race.dart';
-import 'package:dungeon_paper/profile_view/edit_character/update_basic_info_view.dart';
+import 'package:dungeon_paper/profile_view/edit_character/edit_basic_info_view.dart';
 import 'package:dungeon_paper/redux/stores/stores.dart';
 import 'package:flutter/material.dart';
 
@@ -25,101 +27,108 @@ class EditCharacterView extends StatefulWidget {
 
 class _EditCharacterViewState extends State<EditCharacterView> {
   static Widget spacer = SizedBox(height: 10.0);
-  ScrollController scrollController = ScrollController();
-  double appBarElevation = 0.0;
-
-  @override
-  void initState() {
-    scrollController.addListener(scrollListener);
-    super.initState();
-  }
-
-  @override
-  void dispose() {
-    scrollController.removeListener(scrollListener);
-    super.dispose();
-  }
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Theme.of(context).primaryColor,
-      appBar: AppBar(
-        title: Text('Edit Character Details'),
-        elevation: appBarElevation,
-      ),
-      body: Column(
-        children: <Widget>[
-          Expanded(
-            child: SingleChildScrollView(
-              controller: scrollController,
-              child: Padding(
-                padding: EdgeInsets.all(16.0),
-                child: Column(
-                  mainAxisSize: MainAxisSize.min,
-                  crossAxisAlignment: CrossAxisAlignment.stretch,
-                  children: <Widget>[
-                    CardListItem(
-                      title: Text('Basic Info'),
-                      subtitle: Text('Character name and avatar URL'),
-                      leading: Padding(
-                        padding: EdgeInsets.only(left: 5.0, right: 21.0),
-                        child: Icon(Icons.speaker_notes, size: 30.0),
-                      ),
-                      trailing: Icon(Icons.chevron_right),
-                      onTap: () => updateBasicInfo(context),
-                    ),
-                    spacer,
-                    CardListItem(
-                      title: Text((widget.character.level != null
-                              ? "Level ${widget.character.level} "
-                              : "") +
-                          widget.character.mainClass.name),
-                      subtitle: Text('Change class'),
-                      leading: Padding(
-                        padding: EdgeInsets.only(right: 16.0),
-                        child: Icon(Icons.person, size: 40.0),
-                      ),
-                      trailing: Icon(Icons.chevron_right),
-                      onTap: () => changeClass(context),
-                    ),
-                    spacer,
-                    AlignmentDescription(
-                        playerClass: widget.character.mainClass,
-                        alignment: widget.character.alignment,
-                        onTap: () => changeAlignment(context)),
-                    spacer,
-                    RaceDescription(
-                      playerClass: widget.character.mainClass,
-                      race: widget.character.race ??
-                          widget.character.mainClass.raceMoves.first,
-                      onTap: () => changeRace(context),
-                    ),
-                    spacer,
-                    LooksDescription(
-                      playerClass: widget.character.mainClass,
-                      looks: widget.character.looks,
-                      onTap: () => changeLooks(context),
-                    ),
-                    spacer,
-                    Align(
-                      alignment: Alignment.centerRight,
-                      child: FlatButton(
-                        // color: Colors.red,
-                        textColor: Colors.red,
-                        child: Text('Delete Character'),
-                        onPressed:
-                            dwStore.state.characters.characters.isNotEmpty
-                                ? _deleteCharacter
-                                : null,
-                      ),
-                    )
-                  ],
+    return ScaffoldWithElevation.primaryBackground(
+      title: Text('Edit Character Details'),
+      automaticallyImplyLeading: true,
+      child: Padding(
+        padding: EdgeInsets.all(16.0),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: <Widget>[
+            CardListItem(
+              title: Text('Basic Info'),
+              subtitle: Text('Character name and avatar URL'),
+              leading: Padding(
+                padding: EdgeInsets.only(left: 5.0, right: 21.0),
+                child: Icon(Icons.speaker_notes, size: 30.0),
+              ),
+              trailing: Icon(Icons.chevron_right),
+              onTap: () => animatedScreen(
+                context,
+                EditBasicInfoView.withScaffold(
+                  mode: DialogMode.Edit,
+                  character: widget.character,
+                  onSave: _updateCharacter(context),
                 ),
               ),
             ),
-          ),
-        ],
+            spacer,
+            CardListItem(
+              title: Text(
+                (widget.character.level != null
+                        ? "Level ${widget.character.level} "
+                        : "") +
+                    widget.character.mainClass.name,
+              ),
+              subtitle: Text('Change class'),
+              leading: Padding(
+                padding: EdgeInsets.only(right: 16.0),
+                child: Icon(Icons.person, size: 40.0),
+              ),
+              trailing: Icon(Icons.chevron_right),
+              onTap: () => animatedScreen(
+                context,
+                ClassSelectionScreen.withScaffold(
+                  character: widget.character,
+                  onSave: _updateCharacter(context),
+                ),
+              ),
+            ),
+            spacer,
+            AlignmentDescription(
+              playerClass: widget.character.mainClass,
+              alignment: widget.character.alignment,
+              onTap: () => animatedScreen(
+                context,
+                ChangeAlignmentDialog.withScaffold(
+                  character: widget.character,
+                  onSave: _updateCharacter(context),
+                ),
+              ),
+            ),
+            spacer,
+            RaceDescription(
+              playerClass: widget.character.mainClass,
+              race: widget.character.race ??
+                  widget.character.mainClass.raceMoves.first,
+              onTap: () => animatedScreen(
+                context,
+                ChangeRaceDialog.withScaffold(
+                  onSave: _updateCharacter(context),
+                  character: widget.character,
+                ),
+              ),
+            ),
+            spacer,
+            LooksDescription(
+              playerClass: widget.character.mainClass,
+              looks: widget.character.looks,
+              onTap: () => animatedScreen(
+                context,
+                ChangeLooksDialog.withScaffold(
+                  character: widget.character,
+                  onSave: _updateCharacter(context),
+                ),
+              ),
+            ),
+            spacer,
+            Align(
+              alignment: Alignment.centerRight,
+              child: FlatButton(
+                // color: Colors.red,
+                textColor: Colors.red,
+                child: Text('Delete Character'),
+                onPressed: dwStore.state.characters.characters.isNotEmpty
+                    ? _deleteCharacter
+                    : null,
+              ),
+            )
+          ],
+        ),
       ),
     );
   }
@@ -151,107 +160,29 @@ class _EditCharacterViewState extends State<EditCharacterView> {
     }
   }
 
-  void changeClass(BuildContext context) {
+  void animatedScreen(BuildContext context, Widget child) {
     Navigator.push(
       context,
       PageRouteBuilder(
-        pageBuilder: (context, anim, anim2) => ClassSelectionScreen(),
+        pageBuilder: (context, anim, anim2) => child,
         transitionsBuilder: (context, inAnim, outAnim, child) {
           return SlideRouteFromRight(
             inAnim: inAnim,
             outAnim: outAnim,
-            child: ClassSelectionScreen(),
+            child: child,
           );
         },
       ),
     );
   }
 
-  void updateBasicInfo(BuildContext context) {
-    Navigator.push(
-      context,
-      PageRouteBuilder(
-        pageBuilder: (context, anim, anim2) =>
-            UpdateBasicInfoView(character: widget.character),
-        transitionsBuilder: (context, inAnim, outAnim, child) {
-          return SlideRouteFromRight(
-            inAnim: inAnim,
-            outAnim: outAnim,
-            child: UpdateBasicInfoView(character: widget.character),
-          );
-        },
-      ),
-    );
-  }
-
-  void changeAlignment(BuildContext context) async {
-    Navigator.push(
-      context,
-      PageRouteBuilder(
-        pageBuilder: (context, anim, anim2) => ChangeAlignmentDialog(
-          playerClass: widget.character.mainClass,
-        ),
-        transitionsBuilder: (context, inAnim, outAnim, child) {
-          return SlideRouteFromRight(
-            inAnim: inAnim,
-            outAnim: outAnim,
-            child: ChangeAlignmentDialog(
-              playerClass: widget.character.mainClass,
-            ),
-          );
-        },
-      ),
-    );
-  }
-
-  void changeRace(BuildContext context) async {
-    Navigator.push(
-      context,
-      PageRouteBuilder(
-        pageBuilder: (context, anim, anim2) => ChangeRaceDialog(
-          playerClass: widget.character.mainClass,
-        ),
-        transitionsBuilder: (context, inAnim, outAnim, child) {
-          return SlideRouteFromRight(
-            inAnim: inAnim,
-            outAnim: outAnim,
-            child: ChangeRaceDialog(
-              playerClass: widget.character.mainClass,
-            ),
-          );
-        },
-      ),
-    );
-  }
-
-  void changeLooks(BuildContext context) async {
-    Navigator.push(
-      context,
-      PageRouteBuilder(
-        pageBuilder: (context, anim, anim2) => ChangeLooksDialog(
-          playerClass: widget.character.mainClass,
-          looks: widget.character.looks,
-        ),
-        transitionsBuilder: (context, inAnim, outAnim, child) {
-          return SlideRouteFromRight(
-            inAnim: inAnim,
-            outAnim: outAnim,
-            child: ChangeLooksDialog(
-              playerClass: widget.character.mainClass,
-              looks: widget.character.looks,
-            ),
-          );
-        },
-      ),
-    );
-  }
-
-  void scrollListener() {
-    double newElevation = scrollController.offset > 16.0 ? 1.0 : 0.0;
-    if (newElevation != appBarElevation) {
-      setState(() {
-        appBarElevation = newElevation;
-      });
-    }
+  void Function(DbCharacter char, List<CharacterKeys> keys) _updateCharacter(
+      BuildContext context) {
+    return (DbCharacter char, List<CharacterKeys> keys) {
+      updateCharacter(char, keys);
+      if (context != null) {
+        Navigator.pop(context);
+      }
+    };
   }
 }
