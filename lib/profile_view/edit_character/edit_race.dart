@@ -1,86 +1,71 @@
-import 'package:dungeon_paper/components/title_subtitle_row.dart';
+import '../../components/title_subtitle_row.dart';
+import '../../profile_view/edit_character/character_wizard_utils.dart';
+import '../../db/character.dart';
+import '../../dialogs.dart';
 import 'package:dungeon_world_data/move.dart';
 import 'package:dungeon_world_data/player_class.dart';
 import 'package:flutter/material.dart';
-import 'package:dungeon_paper/db/character.dart';
-import 'package:dungeon_paper/redux/stores/stores.dart';
 
-class ChangeRaceDialog extends StatefulWidget {
-  final PlayerClass playerClass;
+class ChangeRaceDialog extends StatelessWidget {
+  final DbCharacter character;
+  final DialogMode mode;
+  final CharSaveFunction onSave;
+  final ScaffoldBuilderFunction builder;
 
   const ChangeRaceDialog({
     Key key,
-    @required this.playerClass,
+    this.mode = DialogMode.Edit,
+    @required this.character,
+    @required this.onSave,
+    this.builder,
   }) : super(key: key);
 
-  @override
-  _ChangeRaceDialogState createState() => _ChangeRaceDialogState();
-}
-
-class _ChangeRaceDialogState extends State<ChangeRaceDialog> {
-  ScrollController scrollController = ScrollController();
-  double appBarElevation = 0.0;
-
-  @override
-  void initState() {
-    scrollController.addListener(scrollListener);
-    super.initState();
-  }
-
-  @override
-  void dispose() {
-    scrollController.removeListener(scrollListener);
-    super.dispose();
-  }
+  ChangeRaceDialog.withScaffold({
+    Key key,
+    this.mode = DialogMode.Edit,
+    @required this.character,
+    @required this.onSave,
+    Function() onDidPop,
+    Function() onWillPop,
+  })  : builder = characterWizardScaffold(
+          mode: mode,
+          titleText: 'Choose Race',
+          onDidPop: onDidPop,
+          onWillPop: onWillPop,
+          buttonType: WizardScaffoldButtonType.back,
+        ),
+        super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Theme.of(context).primaryColor,
-      appBar:
-          AppBar(
-            title: Text('Choose Race'),
-            elevation: appBarElevation,
-          ),
-      body: SingleChildScrollView(
-        controller: scrollController,
-        child: Padding(
-          padding: const EdgeInsets.all(16.0),
-          child: Column(
-            children: widget.playerClass.raceMoves
-                .map(
-                  (move) => Padding(
-                        padding: EdgeInsets.only(bottom: 16.0),
-                        child: RaceDescription(
-                          playerClass: widget.playerClass,
-                          race: move,
-                          onTap: changeRace(move),
-                        ),
-                      ),
-                )
-                .toList(),
-          ),
-        ),
+    Widget child = Padding(
+      padding: const EdgeInsets.all(16.0),
+      child: Column(
+        children: character.mainClass.raceMoves
+            .map(
+              (move) => Padding(
+                padding: EdgeInsets.only(bottom: 16.0),
+                child: RaceDescription(
+                  playerClass: character.mainClass,
+                  race: move,
+                  onTap: changeRace(move),
+                ),
+              ),
+            )
+            .toList(),
       ),
     );
+    if (builder != null) {
+      return builder(context, child, null, null);
+    }
+    return child;
   }
 
   Function() changeRace(Move def) {
     return () async {
-      DbCharacter char = dwStore.state.characters.current;
-      char.race = def;
-      updateCharacter(char, [CharacterKeys.race]);
-      Navigator.pop(context, true);
+      character.race = def;
+      onSave(character, [CharacterKeys.race]);
     };
-  }
-
-  void scrollListener() {
-    double newElevation = scrollController.offset > 16.0 ? 1.0 : 0.0;
-    if (newElevation != appBarElevation) {
-      setState(() {
-        appBarElevation = newElevation;
-      });
-    }
   }
 }
 

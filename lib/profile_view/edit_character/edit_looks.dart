@@ -1,103 +1,150 @@
 import 'package:dungeon_paper/components/categorized_list.dart';
 import 'package:dungeon_paper/components/title_subtitle_row.dart';
 import 'package:dungeon_paper/db/character.dart';
-import 'package:dungeon_paper/redux/stores/stores.dart';
 import 'package:dungeon_world_data/player_class.dart';
 import 'package:flutter/material.dart';
 
+import '../../dialogs.dart';
+import 'character_wizard_utils.dart';
+
 class ChangeLooksDialog extends StatefulWidget {
-  final PlayerClass playerClass;
-  final List<String> looks;
+  final DbCharacter character;
+  final DialogMode mode;
+  final CharSaveFunction onSave;
+  final ScaffoldBuilderFunction builder;
 
   const ChangeLooksDialog({
     Key key,
-    @required this.playerClass,
-    @required this.looks,
+    @required this.character,
+    @required this.onSave,
+    this.mode = DialogMode.Edit,
+    this.builder,
   }) : super(key: key);
+
+  ChangeLooksDialog.withScaffold({
+    Key key,
+    @required this.character,
+    @required this.onSave,
+    this.mode = DialogMode.Edit,
+    Function() onDidPop,
+    Function() onWillPop,
+  })  : builder = characterWizardScaffold(
+          mode: mode,
+          titleText: 'Edit Looks',
+          onDidPop: onDidPop,
+          onWillPop: onWillPop,
+          buttonType: WizardScaffoldButtonType.back,
+        ),
+        super(key: key);
 
   @override
   _ChangeLooksDialogState createState() => _ChangeLooksDialogState();
 }
 
 class _ChangeLooksDialogState extends State<ChangeLooksDialog> {
-  ScrollController scrollController = ScrollController();
   List<String> selected;
-  double appBarElevation = 0.0;
 
   @override
   void initState() {
-    scrollController.addListener(scrollListener);
-    selected = widget.looks.isEmpty
-        ? List.generate(widget.playerClass.looks.length, (i) => null)
-        : List.generate(widget.playerClass.looks.length,
-            (i) => widget.looks.length >= i ? widget.looks[i] : null);
+    selected = widget.character.looks.isEmpty
+        ? List.generate(widget.character.mainClass.looks.length, (i) => null)
+        : List.generate(
+            widget.character.mainClass.looks.length,
+            (i) => widget.character.looks.length >= i
+                ? widget.character.looks[i]
+                : null);
     super.initState();
   }
 
   @override
-  void dispose() {
-    scrollController.removeListener(scrollListener);
-    super.dispose();
-  }
-
-  @override
   Widget build(BuildContext context) {
-    Map<int, List<String>> looksMap = widget.playerClass.looks.asMap();
-    return Scaffold(
-      backgroundColor: Theme.of(context).primaryColor,
-      appBar: AppBar(
-        title: Text('Change Looks'),
-        elevation: appBarElevation,
-        actions: <Widget>[
-          Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: RaisedButton(
-              child: Text('Save'),
-              color: Theme.of(context).canvasColor,
-              onPressed: () => changeLooks(selected),
-            ),
-          )
-        ],
+    var looksMap = widget.character.mainClass.looks;
+    Widget child = CategorizedList<int>.builder(
+      itemCount: (key, i) => looksMap[key].length,
+      categories: looksMap.asMap().keys,
+      itemBuilder: (context, looksCat, lookIdxInCat) => Padding(
+        padding: const EdgeInsets.symmetric(vertical: 8.0),
+        child: TitleSubtitleCard(
+          color: Theme.of(context).canvasColor.withOpacity(
+              selected.length > looksCat &&
+                      selected[looksCat] != null &&
+                      selected[looksCat] != looksMap[looksCat][lookIdxInCat]
+                  ? 0.7
+                  : 1.0),
+          title: Text(looksMap[looksCat][lookIdxInCat]),
+          trailing: selected.length > looksCat &&
+                  selected[looksCat] == looksMap[looksCat][lookIdxInCat]
+              ? Icon(Icons.check)
+              : null,
+          onTap: () => setState(() {
+            selected[looksCat] = looksMap[looksCat][lookIdxInCat];
+          }),
+        ),
       ),
-      body: CategorizedList<int>.builder(
-        itemCount: (key, i) => looksMap[key].length,
-        categories: looksMap.keys,
-        itemBuilder: (context, key, i) => Padding(
-              padding: const EdgeInsets.symmetric(vertical: 8.0),
-              child: TitleSubtitleCard(
-                color: Theme.of(context).canvasColor.withOpacity(
-                    selected[key] != null &&
-                            selected[key] != looksMap[key][i]
-                        ? 0.7
-                        : 1.0),
-                title: Text(looksMap[key][i]),
-                trailing: selected[key] == looksMap[key][i]
-                    ? Icon(Icons.check)
-                    : null,
-                onTap: () => setState(() {
-                      selected[key] = looksMap[key][i];
-                    }),
-              ),
-            ),
-        titleBuilder: (context, key, i) => Text('Choose one:'),
-      ),
+      titleBuilder: (context, key, i) => Text('Choose one:'),
     );
+    // TODO: why the fuck does ScaffoldWithElevation not work with CategorizedList???
+    if (widget.builder != null) {
+      var child2 = Padding(
+        padding: const EdgeInsets.all(16.0),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            for (var looksCat = 0; looksCat < looksMap.length; looksCat++) ...[
+              Padding(
+                padding: const EdgeInsets.all(8),
+                child: Text(
+                  'Choose one:',
+                  style: TextStyle(
+                    fontSize: 16.0,
+                    fontWeight: FontWeight.bold,
+                    color: Theme.of(context).textTheme.body1.color,
+                  ),
+                ),
+              ),
+              for (var lookIdxInCat = 0;
+                  lookIdxInCat < looksMap[looksCat].length;
+                  lookIdxInCat++)
+                Padding(
+                  padding: const EdgeInsets.all(8),
+                  child: TitleSubtitleCard(
+                    color: Theme.of(context).canvasColor.withOpacity(
+                        selected[looksCat] != null &&
+                                selected[looksCat] !=
+                                    looksMap[looksCat][lookIdxInCat]
+                            ? 0.7
+                            : 1.0),
+                    title: Text(looksMap[looksCat][lookIdxInCat]),
+                    trailing: selected.length > looksCat &&
+                            selected[looksCat] ==
+                                looksMap[looksCat][lookIdxInCat]
+                        ? Icon(Icons.check)
+                        : Container(),
+                    onTap: () => setState(
+                      () {
+                        selected[looksCat] = looksMap[looksCat][lookIdxInCat];
+                      },
+                    ),
+                  ),
+                ),
+            ]
+          ],
+        ),
+      );
+      return widget.builder(
+          context, child2, () => changeLooks(selected), isValid);
+    }
+    return child;
   }
 
   void changeLooks(List<String> def) async {
-    DbCharacter char = dwStore.state.characters.current;
-    char.looks = def;
-    updateCharacter(char, [CharacterKeys.looks]);
-    Navigator.pop(context, true);
+    widget.character.looks = def;
+    widget.onSave(widget.character, [CharacterKeys.looks]);
   }
 
-  void scrollListener() {
-    double newElevation = scrollController.offset > 16.0 ? 1.0 : 0.0;
-    if (newElevation != appBarElevation) {
-      setState(() {
-        appBarElevation = newElevation;
-      });
-    }
+  bool isValid() {
+    return selected.length == widget.character.mainClass.looks.length &&
+        selected.every((s) => s != null && s.isNotEmpty);
   }
 }
 

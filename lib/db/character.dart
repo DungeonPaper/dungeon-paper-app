@@ -179,7 +179,8 @@ class DbCharacter with Serializer<CharacterKeys> {
       CharacterKeys.photoURL: (v) => photoURL = v ?? '',
       CharacterKeys.level: (v) => level = v ?? 1,
       CharacterKeys.maxHP: (v) => maxHP = v ?? defaultMaxHP,
-      CharacterKeys.currentHP: (v) => currentHP = v ?? maxHP ?? defaultMaxHP ?? 0,
+      CharacterKeys.currentHP: (v) =>
+          currentHP = v ?? maxHP ?? defaultMaxHP ?? 0,
       CharacterKeys.currentXP: (v) => currentXP = v ?? 0,
       CharacterKeys.armor: (v) => armor = v ?? 0,
       CharacterKeys.moves: (v) => moves =
@@ -286,8 +287,8 @@ deleteCharacter() async {
   dwStore.dispatch(CharacterActions.setCharacters(characters));
 }
 
-Future<DocumentReference> createNewCharacter() async {
-  DbCharacter character = DbCharacter();
+Future<DocumentReference> createNewCharacter([DbCharacter character]) async {
+  character ??= DbCharacter();
 
   String userDocId = dwStore.state.user.currentUserDocID;
   DocumentReference userDoc = Firestore.instance.document('users/$userDocId');
