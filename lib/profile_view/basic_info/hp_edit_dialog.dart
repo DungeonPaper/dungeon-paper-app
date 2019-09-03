@@ -1,4 +1,6 @@
 import 'package:dungeon_paper/components/standard_dialog_controls.dart';
+import 'package:dungeon_paper/db/character_db.dart';
+import 'package:dungeon_paper/db/character_utils.dart';
 import 'package:dungeon_paper/profile_view/basic_info/current_stat_indicator.dart';
 import 'package:dungeon_paper/profile_view/status_bars.dart';
 import 'package:dungeon_paper/utils.dart';
@@ -26,6 +28,7 @@ class _EditHPDialogState extends State<EditHPDialog> {
   int maxHP;
   int initialCurrentHP;
   int initialMaxHP;
+  bool useDefaultMaxHP;
   HPMode mode;
 
   @override
@@ -34,6 +37,7 @@ class _EditHPDialogState extends State<EditHPDialog> {
     maxHP = widget.character.maxHP ?? 0;
     initialCurrentHP = currentHP;
     initialMaxHP = maxHP;
+    useDefaultMaxHP = widget.character.useDefaultMaxHP;
     mode = HPMode.HP;
     super.initState();
   }
@@ -68,29 +72,45 @@ class _EditHPDialogState extends State<EditHPDialog> {
     Widget indicator = Container(
       height: 110,
       child: CurrentStatIndicator(
-        initialValue: mode == HPMode.HP ? initialCurrentHP : initialMaxHP,
-        value: mode == HPMode.HP ? currentHP : maxHP,
-        label: mode == HPMode.HP ? 'HP' : 'Max HP',
-        differenceTextBuilder: (above) => mode == HPMode.HP
-            ? above ? 'Heal' : 'Damage'
-            : above ? 'Add' : 'Reduce',
+        initialValue: isHP ? initialCurrentHP : initialMaxHP,
+        value: isHP ? currentHP : maxHP,
+        label: isHP ? 'HP' : 'Max HP',
+        differenceTextBuilder: (above) =>
+            isHP ? above ? 'Heal' : 'Damage' : above ? 'Add' : 'Reduce',
       ),
     );
     Widget spinner = Container(
       height: 100,
       child: WheelSpinner(
         key: Key(enumName(mode)),
-        min: mode == HPMode.HP ? 0.0 : 1.0,
-        max: mode == HPMode.HP ? maxHP.toDouble() : double.infinity,
-        value: mode == HPMode.HP ? currentHP.toDouble() : maxHP.toDouble(),
+        min: isHP ? 0.0 : 1.0,
+        max: isHP ? maxHP.toDouble() : double.infinity,
+        value: isHP ? currentHP.toDouble() : maxHP.toDouble(),
         minMaxLabelBuilder: (value) => value.toInt().toString(),
         onSlideUpdate: updateValue,
       ),
     );
     return SimpleDialog(
       title: title,
-      contentPadding: const EdgeInsets.only(top: 32.0, bottom: 8.0),
+      contentPadding: EdgeInsets.only(top: isMaxHP ? 0 : 32, bottom: 8),
       children: <Widget>[
+        if (isMaxHP)
+          Padding(
+            padding: EdgeInsets.only(bottom: 16),
+            child: CheckboxListTile(
+              controlAffinity: ListTileControlAffinity.leading,
+              value: useDefaultMaxHP,
+              title: Text('Calculate based on stats'),
+              subtitle: Text(
+                  'Class Base HP (${widget.character.mainClass.baseHP}) + CON (${widget.character.conMod})'),
+              onChanged: (val) {
+                if (val) updateValue(widget.character.defaultMaxHP);
+                setState(() {
+                  useDefaultMaxHP = val;
+                });
+              },
+            ),
+          ),
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: 32.0),
           child: StatusBarInfo(
@@ -101,50 +121,44 @@ class _EditHPDialogState extends State<EditHPDialog> {
             barForegroundColor: Colors.red.shade700,
           ),
         ),
-        Container(
-          width: screenWidth >= EditHPDialog.MIN_ROW_WIDTH
-              ? EditHPDialog.MIN_ROW_WIDTH.toDouble()
-              : 200.0,
-          // height: screenWidth >= HPEditDialog.MIN_ROW_WIDTH ? null : 250,
-          padding: const EdgeInsets.only(top: 32.0),
-          child: screenWidth >= EditHPDialog.MIN_ROW_WIDTH
-              ? Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  mainAxisSize: MainAxisSize.max,
-                  children: <Widget>[
-                    Expanded(child: indicator),
-                    Expanded(child: spinner),
-                  ],
-                )
-              : Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  mainAxisSize: MainAxisSize.min,
-                  children: <Widget>[
-                    indicator,
-                    spinner,
-                  ],
-                ),
-        ),
+        if (isHP || !useDefaultMaxHP)
+          Container(
+            width: screenWidth >= EditHPDialog.MIN_ROW_WIDTH
+                ? EditHPDialog.MIN_ROW_WIDTH.toDouble()
+                : 200.0,
+            // height: screenWidth >= HPEditDialog.MIN_ROW_WIDTH ? null : 250,
+            padding: const EdgeInsets.only(top: 32.0),
+            child: screenWidth >= EditHPDialog.MIN_ROW_WIDTH
+                ? Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    mainAxisSize: MainAxisSize.max,
+                    children: <Widget>[
+                      Expanded(child: indicator),
+                      Expanded(child: spinner),
+                    ],
+                  )
+                : Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    mainAxisSize: MainAxisSize.min,
+                    children: <Widget>[
+                      indicator,
+                      spinner,
+                    ],
+                  ),
+          ),
         StandardDialogControls(
           onOK: () => save(context),
-          extraActions: mode == HPMode.HP
-              ? null
-              : [
-                  RaisedButton(
-                    child: Text('Default'),
-                    onPressed: () {
-                      updateValue(widget.character.defaultMaxHP);
-                    },
-                  )
-                ],
         ),
       ],
     );
   }
 
+  bool get isHP => mode == HPMode.HP;
+  bool get isMaxHP => mode == HPMode.MaxHP;
+
   updateValue(val) {
     setState(() {
-      if (mode == HPMode.HP) {
+      if (isHP) {
         currentHP = val.toInt();
       } else {
         maxHP = val.toInt();
@@ -159,7 +173,12 @@ class _EditHPDialogState extends State<EditHPDialog> {
     DbCharacter char = widget.character;
     char.currentHP = currentHP;
     char.maxHP = maxHP;
-    updateCharacter(char, [CharacterKeys.currentHP, CharacterKeys.maxHP]);
+    char.useDefaultMaxHP = useDefaultMaxHP;
+    updateCharacter(char, [
+      CharacterKeys.currentHP,
+      CharacterKeys.maxHP,
+      CharacterKeys.useDefaultMaxHP
+    ]);
     Navigator.pop(context);
   }
 

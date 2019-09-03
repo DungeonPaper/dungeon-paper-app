@@ -1,7 +1,9 @@
-import 'package:dungeon_paper/components/standard_dialog_controls.dart';
-import 'package:dungeon_paper/db/character.dart';
-import 'package:dungeon_paper/flutter_utils.dart';
-import 'package:dungeon_paper/redux/stores/stores.dart';
+import '../../components/standard_dialog_controls.dart';
+import '../../db/character.dart';
+import '../../db/character_db.dart';
+import '../../db/character_utils.dart';
+import '../../flutter_utils.dart';
+import '../../redux/stores/stores.dart';
 import 'package:dungeon_world_data/dice.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';

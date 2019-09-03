@@ -8,6 +8,7 @@ class ScaffoldWithElevation extends StatefulWidget {
   final Color backgroundColor;
   final bool _isThemePrimaryColor;
   final Widget appBarLeading;
+  final bool wrapWithScrollable;
 
   const ScaffoldWithElevation({
     Key key,
@@ -17,16 +18,18 @@ class ScaffoldWithElevation extends StatefulWidget {
     this.automaticallyImplyLeading = false,
     this.backgroundColor,
     this.appBarLeading,
+    this.wrapWithScrollable = true,
   })  : _isThemePrimaryColor = false,
         super(key: key);
 
   const ScaffoldWithElevation.primaryBackground({
     Key key,
-    this.automaticallyImplyLeading = false,
     @required this.child,
     @required this.title,
+    this.automaticallyImplyLeading = false,
     this.actions,
     this.appBarLeading,
+    this.wrapWithScrollable = true,
   })  : backgroundColor = null,
         _isThemePrimaryColor = true,
         super(key: key);
@@ -62,6 +65,13 @@ class _ScaffoldWithElevationState extends State<ScaffoldWithElevation> {
 
   @override
   Widget build(BuildContext context) {
+    Widget wrappedChild =
+        !widget.wrapWithScrollable
+            ? widget.child
+            : SingleChildScrollView(
+                controller: scrollController,
+                child: widget.child,
+              );
     return Scaffold(
       backgroundColor: widget._isThemePrimaryColor
           ? Theme.of(context).primaryColor
@@ -73,10 +83,7 @@ class _ScaffoldWithElevationState extends State<ScaffoldWithElevation> {
         actions: widget.actions,
         leading: widget.appBarLeading,
       ),
-      body: SingleChildScrollView(
-        controller: scrollController,
-        child: widget.child,
-      ),
+      body: wrappedChild,
     );
   }
 }

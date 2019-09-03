@@ -1,6 +1,8 @@
+import 'package:dungeon_paper/components/number_controller.dart';
 import 'package:dungeon_paper/components/standard_dialog_controls.dart';
 import 'package:dungeon_paper/db/character.dart';
-import 'package:dungeon_paper/db/character_types.dart';
+import 'package:dungeon_paper/db/character_db.dart';
+import 'package:dungeon_paper/db/character_utils.dart';
 import 'package:dungeon_paper/flutter_utils.dart';
 import 'package:dungeon_paper/redux/stores/stores.dart';
 import 'package:dungeon_paper/utils.dart';
@@ -25,7 +27,6 @@ class EditStatDialogState extends State<EditStatDialog> {
   final Stats stat;
   final String fullName;
   num value;
-  TextEditingController _controller;
   bool saving = false;
 
   EditStatDialogState({
@@ -33,14 +34,12 @@ class EditStatDialogState extends State<EditStatDialog> {
     @required this.stat,
     @required this.value,
   })  : fullName = StatNameMap[stat],
-        _controller = TextEditingController(text: value.toString()),
         super();
 
   @override
   Widget build(BuildContext context) {
     String modifier = DbCharacter.statModifierText(value);
     String name = enumName(stat);
-    num controlledStat = int.parse(_controller.value.text);
 
     return SimpleDialog(
       title: Text('Edit $fullName'),
@@ -62,44 +61,12 @@ class EditStatDialogState extends State<EditStatDialog> {
                 children: <Widget>[
                   Container(
                     padding: const EdgeInsets.symmetric(vertical: 8.0),
-                    child: Row(
-                      mainAxisSize: MainAxisSize.min,
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: <Widget>[
-                        RaisedButton(
-                          shape: CircleBorder(side: BorderSide.none),
-                          color: Colors.red.shade300,
-                          textColor: Colors.white,
-                          child: Text('-', style: TextStyle(fontSize: 30)),
-                          onPressed: () => _setStateValue(
-                              controlledStat > 0 ? controlledStat - 1 : 0),
-                        ),
-                        Expanded(
-                          child: TextField(
-                            onChanged: (val) => _setStateValue(
-                                num.parse(val) != 0 ? num.parse(val) : ''),
-                            keyboardType: TextInputType.number,
-                            inputFormatters: <TextInputFormatter>[
-                              WhitelistingTextInputFormatter.digitsOnly,
-                              BetweenValuesTextFormatter(0, 20)
-                            ],
-                            controller: _controller,
-                            autofocus: true,
-                            style: TextStyle(fontSize: 24.0),
-                            textAlign: TextAlign.center,
-                          ),
-                        ),
-                        RaisedButton(
-                          shape: CircleBorder(side: BorderSide.none),
-                          color: Colors.green.shade400,
-                          textColor: Colors.white,
-                          child: Text('+', style: TextStyle(fontSize: 24)),
-                          onPressed: () => _setStateValue(
-                              controlledStat < 20 ? controlledStat + 1 : 20),
-                        ),
-                      ],
-                    ),
+                    width: 150,
+                    child: NumberController(
+                        value: value,
+                        onChange: (val) => setState(() {
+                              _setStateValue(val);
+                            })),
                   ),
                   StandardDialogControls(
                     onOK: saving ? null : _saveValue,
@@ -118,12 +85,6 @@ class EditStatDialogState extends State<EditStatDialog> {
     setState(() {
       value = newValue;
     });
-
-    if (newValue != int.parse(_controller.text)) {
-      _controller.text = newValue.toString();
-      num len = newValue.toString().length;
-      _controller.selection = TextSelection(baseOffset: len, extentOffset: len);
-    }
   }
 
   _saveValue() async {

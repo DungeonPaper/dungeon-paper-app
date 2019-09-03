@@ -1,4 +1,6 @@
 import 'package:dungeon_paper/components/standard_dialog_controls.dart';
+import 'package:dungeon_paper/db/character_db.dart';
+import 'package:dungeon_paper/db/character_utils.dart' as Chr;
 import 'package:dungeon_paper/profile_view/basic_info/current_stat_indicator.dart';
 import 'package:dungeon_paper/profile_view/status_bars.dart';
 import 'package:wheel_spinner/wheel_spinner.dart';
@@ -122,7 +124,7 @@ class _XPEditDialogState extends State<XPEditDialog> {
   void save(BuildContext context) {
     DbCharacter char = widget.character;
     char.currentXP = currentXP;
-    updateCharacter(char, [CharacterKeys.currentXP]);
+    updateCharacter(char, [Chr.CharacterKeys.currentXP]);
     Navigator.pop(context);
   }
 
@@ -130,7 +132,8 @@ class _XPEditDialogState extends State<XPEditDialog> {
     DbCharacter char = widget.character;
     char.currentXP = 0;
     char.level++;
-    updateCharacter(char, [CharacterKeys.currentXP, CharacterKeys.level]);
+    updateCharacter(
+        char, [Chr.CharacterKeys.currentXP, Chr.CharacterKeys.level]);
     setState(() {
       currentXP = char.currentXP;
       initialCurrentXP = currentXP;
@@ -145,7 +148,8 @@ class _XPEditDialogState extends State<XPEditDialog> {
     DbCharacter char = widget.character;
     char.level--;
     char.currentXP = char.level + 6;
-    updateCharacter(char, [CharacterKeys.currentXP, CharacterKeys.level]);
+    updateCharacter(
+        char, [Chr.CharacterKeys.currentXP, Chr.CharacterKeys.level]);
     setState(() {
       currentXP = char.currentXP;
       initialCurrentXP = currentXP;

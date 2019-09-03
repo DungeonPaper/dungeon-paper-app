@@ -7,21 +7,27 @@ import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:screen/screen.dart';
 import 'error_reporting.dart';
+import 'theme.dart';
 
-void main() async {
+void withInit(Function() cb) async {
   // general setup
   await initErrorReporting();
   Firestore firestore = Firestore.instance;
   await firestore.settings(timestampsInSnapshotsEnabled: true);
   Screen.keepOn(true);
+  // SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
+  //   systemNavigationBarColor: theme.scaffoldBackgroundColor,
+  // ));
 
-  runZoned(
-    () async {
-      runApp(DungeonPaper());
-      dwStore.dispatch(AppInit());
-    },
-    onError: reportError,
-  );
+  //
+  runZoned(cb, onError: reportError);
+}
+
+void main() async {
+  withInit(() {
+    runApp(DungeonPaper());
+    dwStore.dispatch(AppInit());
+  });
 }
 
 class DungeonPaper extends StatelessWidget {
@@ -39,11 +45,7 @@ class DungeonPaper extends StatelessWidget {
           title: appName,
           pageController: _pageController,
         ),
-        theme: ThemeData(
-          primarySwatch: Colors.lightGreen,
-          brightness: Brightness.light,
-          scaffoldBackgroundColor: const Color.fromARGB(255, 225, 225, 225),
-        ),
+        theme: theme,
       ),
     );
   }

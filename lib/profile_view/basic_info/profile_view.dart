@@ -43,8 +43,11 @@ class ProfileView extends StatelessWidget {
 }
 
 class CharacterHeader extends StatelessWidget {
+  final bool editable;
+
   const CharacterHeader({
     Key key,
+    this.editable,
     @required this.character,
   }) : super(key: key);
 
@@ -84,7 +87,10 @@ class CharacterHeader extends StatelessWidget {
               Positioned.fill(
                 child: Align(
                   alignment: Alignment.bottomCenter,
-                  child: CharacterHeadline(character: character),
+                  child: CharacterHeadline(
+                    character: character,
+                    editable: editable,
+                  ),
                 ),
               ),
             ],

@@ -1,3 +1,5 @@
+import 'package:dungeon_paper/db/character_utils.dart';
+
 import '../../db/character.dart';
 import '../../components/confirmation_dialog.dart';
 import '../../components/scaffold_with_elevation.dart';
@@ -5,8 +7,13 @@ import '../../dialogs.dart';
 import 'package:flutter/material.dart';
 import 'create_character_view.dart';
 
-typedef ScaffoldBuilderFunction = Widget Function(BuildContext context,
-    Widget child, void Function() save, bool Function() isValid);
+typedef ScaffoldBuilderFunction = Widget Function({
+  @required BuildContext context,
+  @required Widget child,
+  @required void Function() save,
+  @required bool Function() isValid,
+  bool wrapWithScrollable,
+});
 typedef CharSaveFunction = void Function(
     DbCharacter char, List<CharacterKeys> keys);
 enum WizardScaffoldButtonType { close, back }
@@ -27,7 +34,7 @@ Function() wrapOnDidPopHandler(
   };
 }
 
-characterWizardScaffold({
+ScaffoldBuilderFunction characterWizardScaffold({
   DialogMode mode = DialogMode.Edit,
   @required String titleText,
   WizardScaffoldButtonType buttonType = WizardScaffoldButtonType.close,
@@ -35,9 +42,15 @@ characterWizardScaffold({
   Future<bool> Function() onWillPop,
   Function() onDidPop,
   String onLeaveText,
+  String nextStepText,
 }) {
-  return (BuildContext context, Widget child, void Function() save,
-      bool Function() isValid) {
+  return ({
+    @required BuildContext context,
+    @required Widget child,
+    @required void Function() save,
+    @required bool Function() isValid,
+    bool wrapWithScrollable = true,
+  }) {
     var isEdit = mode == DialogMode.Edit;
     var onWillPopHandler = wrapOnDidPopHandler(
       context,
@@ -51,11 +64,14 @@ characterWizardScaffold({
     return WillPopScope(
       onWillPop: shouldPreventPop ? onWillPop ?? onWillPopHandler : null,
       child: ScaffoldWithElevation.primaryBackground(
+        wrapWithScrollable: wrapWithScrollable,
         title: Text(titleText),
         actions: save != null
             ? [
                 GenericAppBarActionButton(
-                  child: Text(isEdit ? 'Save' : 'Next Step'),
+                  child: Text(nextStepText != null
+                      ? nextStepText
+                      : isEdit ? 'Save' : 'Next Step'),
                   onPressed: isValid != null ? isValid() ? save : null : null,
                 ),
               ]

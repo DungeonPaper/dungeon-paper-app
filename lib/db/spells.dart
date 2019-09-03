@@ -5,6 +5,9 @@ import 'package:dungeon_world_data/spell.dart';
 import 'package:dungeon_world_data/tag.dart';
 import 'package:uuid/uuid.dart';
 
+import 'character_db.dart';
+import 'character_utils.dart';
+
 ReturnPredicate<Spell> matchSpell =
     matcher<Spell>((Spell i, Spell o) => i.key == o.key);
 

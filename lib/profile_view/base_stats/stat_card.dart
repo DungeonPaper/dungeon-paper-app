@@ -1,8 +1,8 @@
-import 'package:dungeon_paper/db/character.dart';
-import 'package:dungeon_paper/db/character_types.dart';
-import 'package:dungeon_paper/profile_view/edit_stat_dialog.dart';
-import 'package:dungeon_paper/redux/stores/connectors.dart';
-import 'package:dungeon_paper/utils.dart';
+import '../../db/character.dart';
+import '../../db/character_utils.dart';
+import '../../profile_view/edit_stat_dialog.dart';
+import '../../redux/stores/connectors.dart';
+import '../../utils.dart';
 import 'package:flutter/material.dart';
 
 class StatCard extends StatelessWidget {

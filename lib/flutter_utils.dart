@@ -1,4 +1,5 @@
 import 'package:flutter/services.dart';
+import 'package:flutter/widgets.dart';
 
 class BetweenValuesTextFormatter extends TextInputFormatter {
   final num min;
@@ -17,3 +18,8 @@ class BetweenValuesTextFormatter extends TextInputFormatter {
     return newValue;
   }
 }
+
+typedef CallbackFunc<T, R> = R Function(T obj);
+typedef VoidCallbackFunc<T> = void Function(T obj);
+typedef EmptyCallback<R> = R Function();
+typedef VoidEmptyCallback = void Function();

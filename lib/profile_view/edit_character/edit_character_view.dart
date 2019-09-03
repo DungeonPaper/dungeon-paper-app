@@ -3,6 +3,8 @@ import 'package:dungeon_paper/components/card_list_item.dart';
 import 'package:dungeon_paper/components/confirmation_dialog.dart';
 import 'package:dungeon_paper/components/scaffold_with_elevation.dart';
 import 'package:dungeon_paper/db/character.dart';
+import 'package:dungeon_paper/db/character_db.dart';
+import 'package:dungeon_paper/db/character_utils.dart' as Chr;
 import 'package:dungeon_paper/dialogs.dart';
 import 'package:dungeon_paper/profile_view/basic_info/change_alignment_dialog.dart';
 import 'package:dungeon_paper/profile_view/class_selection/change_class_dialog.dart';
@@ -176,9 +178,9 @@ class _EditCharacterViewState extends State<EditCharacterView> {
     );
   }
 
-  void Function(DbCharacter char, List<CharacterKeys> keys) _updateCharacter(
+  void Function(DbCharacter char, List<Chr.CharacterKeys> keys) _updateCharacter(
       BuildContext context) {
-    return (DbCharacter char, List<CharacterKeys> keys) {
+    return (DbCharacter char, List<Chr.CharacterKeys> keys) {
       updateCharacter(char, keys);
       if (context != null) {
         Navigator.pop(context);
