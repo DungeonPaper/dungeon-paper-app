@@ -1,6 +1,6 @@
-import 'package:dungeon_paper/db/character.dart';
-import 'package:dungeon_paper/db/character_types.dart';
-import 'package:dungeon_paper/profile_view/base_stats/stat_card.dart';
+import '../../db/character.dart';
+import '../../db/character_utils.dart';
+import '../../profile_view/base_stats/stat_card.dart';
 import 'package:flutter/material.dart';
 
 class BaseStats extends StatelessWidget {

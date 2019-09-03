@@ -1,3 +1,5 @@
+import 'package:dungeon_paper/db/character_utils.dart';
+
 import '../../components/title_subtitle_row.dart';
 import '../../profile_view/edit_character/character_wizard_utils.dart';
 import '../../db/character.dart';
@@ -56,7 +58,7 @@ class ChangeRaceDialog extends StatelessWidget {
       ),
     );
     if (builder != null) {
-      return builder(context, child, null, null);
+      return builder(context: context, child: child, save: null, isValid: null);
     }
     return child;
   }

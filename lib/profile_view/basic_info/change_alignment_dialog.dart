@@ -1,5 +1,7 @@
+import 'package:dungeon_paper/db/character_utils.dart';
+
 import '../../db/character.dart';
-import '../../db/character_types.dart' as Chr;
+import '../../db/character_utils.dart' as Chr;
 import '../../dialogs.dart';
 import '../../profile_view/edit_character/alignment_description_card.dart';
 import '../../profile_view/edit_character/character_wizard_utils.dart';
@@ -55,7 +57,7 @@ class ChangeAlignmentDialog extends StatelessWidget {
       ),
     );
     if (builder != null) {
-      return builder(context, child, null, null);
+      return builder(context: context, child: child, save: null, isValid: null);
     }
     return child;
   }

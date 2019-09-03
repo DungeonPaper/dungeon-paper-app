@@ -18,13 +18,24 @@ class NavBarState extends State<NavBar> {
   final PageController pageController;
   double activePageIndex = 0;
 
-  NavBarState({Key key, @required this.pageController});
+  NavBarState({
+    Key key,
+    @required this.pageController,
+  });
 
   @override
   void initState() {
     pageController.addListener(pageListener);
     super.initState();
   }
+
+  // @override
+  // void didChangeDependencies() {
+  //   SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
+  //     systemNavigationBarColor: Theme.of(context).canvasColor,
+  //   ));
+  //   super.didChangeDependencies();
+  // }
 
   void pageListener() {
     if (pageController.hasClients && pageController.page != activePageIndex) {
@@ -57,7 +68,11 @@ class NavBarState extends State<NavBar> {
               height: 24,
             )),
     Pages.Reference: PageDetails(
-        Text('Reference'), (color) => Icon(CupertinoIcons.book_solid, color: color,)),
+        Text('Reference'),
+        (color) => Icon(
+              CupertinoIcons.book_solid,
+              color: color,
+            )),
   };
 
   @override
@@ -96,6 +111,9 @@ class NavBarState extends State<NavBar> {
 
   @override
   void dispose() {
+    // SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
+    //   systemNavigationBarColor: Theme.of(context).scaffoldBackgroundColor,
+    // ));
     pageController.removeListener(pageListener);
     super.dispose();
   }
@@ -109,13 +127,13 @@ class PageDetails {
 }
 
 class PageNavItem extends StatelessWidget {
-  const PageNavItem(
-      {Key key,
-      @required this.label,
-      @required this.iconBuilder,
-      @required this.foregroundColor,
-      @required this.onChangePage})
-      : super(key: key);
+  const PageNavItem({
+    Key key,
+    @required this.label,
+    @required this.iconBuilder,
+    @required this.foregroundColor,
+    @required this.onChangePage,
+  }) : super(key: key);
 
   final Color foregroundColor;
   final Widget label;
@@ -137,7 +155,9 @@ class PageNavItem extends StatelessWidget {
               children: <Widget>[
                 iconBuilder(foregroundColor),
                 DefaultTextStyle(
-                    style: TextStyle(color: foregroundColor), child: label)
+                  style: TextStyle(color: foregroundColor),
+                  child: label,
+                )
               ],
             ),
           ),

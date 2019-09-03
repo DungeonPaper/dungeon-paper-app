@@ -1,3 +1,5 @@
+import 'package:dungeon_paper/db/character_utils.dart';
+
 import '../../db/character.dart';
 import '../../dialogs.dart';
 import '../../profile_view/edit_character/edit_avatar_card.dart';
@@ -88,7 +90,8 @@ class _EditBasicInfoViewState extends State<EditBasicInfoView> {
       ),
     );
     if (widget.builder != null) {
-      return widget.builder(context, child, save, formValid);
+      return widget.builder(
+          context: context, child: child, save: save, isValid: formValid);
     }
     return child;
   }

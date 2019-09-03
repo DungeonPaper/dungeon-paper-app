@@ -1,4 +1,3 @@
-import 'package:dungeon_paper/db/character.dart';
 import 'package:dungeon_paper/db/listeners.dart';
 import 'package:dungeon_paper/db/user.dart';
 import 'package:dungeon_paper/redux/actions.dart';
@@ -6,8 +5,8 @@ import 'package:dungeon_paper/redux/stores/stores.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:sentry/sentry.dart';
-
 import '../error_reporting.dart';
+import 'character_db.dart';
 
 FirebaseAuth auth = FirebaseAuth.instance;
 final GoogleSignIn _googleSignIn = new GoogleSignIn();

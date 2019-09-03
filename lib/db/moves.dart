@@ -3,6 +3,9 @@ import 'package:dungeon_paper/redux/stores/stores.dart';
 import 'package:dungeon_paper/utils.dart';
 import 'package:dungeon_world_data/move.dart';
 
+import 'character_db.dart';
+import 'character_utils.dart';
+
 ReturnPredicate<Move> matchMove = matcher<Move>((Move i, Move o) => i.key == o.key);
 
 Future updateMove(Move move) async {

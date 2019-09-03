@@ -1,7 +1,7 @@
 import 'package:dungeon_paper/utils.dart';
 import 'package:flutter/material.dart';
 import 'package:dungeon_world_data/player_class.dart';
-import 'package:dungeon_paper/db/character_types.dart' as Chr;
+import 'package:dungeon_paper/db/character_utils.dart' as Chr;
 import 'package:dungeon_world_data/alignment.dart' as DWA;
 
 class AlignmentDescription extends StatelessWidget {

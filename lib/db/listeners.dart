@@ -6,6 +6,8 @@ import 'package:dungeon_paper/redux/actions.dart';
 import 'package:dungeon_paper/redux/stores/stores.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
+import 'character_db.dart';
+
 StreamSubscription authUserListener;
 
 registerAuthUserListener() {

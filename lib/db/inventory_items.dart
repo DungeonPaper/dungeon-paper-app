@@ -5,6 +5,9 @@ import 'package:dungeon_world_data/equipment.dart';
 import 'package:dungeon_world_data/tag.dart';
 import 'package:uuid/uuid.dart';
 
+import 'character_db.dart';
+import 'character_utils.dart';
+
 enum EquipmentKeys { key, item, amount }
 
 class InventoryItem extends Equipment {

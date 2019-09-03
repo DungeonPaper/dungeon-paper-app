@@ -1,9 +1,9 @@
 import 'package:dungeon_paper/components/categorized_list.dart';
 import 'package:dungeon_paper/components/title_subtitle_row.dart';
 import 'package:dungeon_paper/db/character.dart';
+import 'package:dungeon_paper/db/character_utils.dart';
 import 'package:dungeon_world_data/player_class.dart';
 import 'package:flutter/material.dart';
-
 import '../../dialogs.dart';
 import 'character_wizard_utils.dart';
 
@@ -83,56 +83,14 @@ class _ChangeLooksDialogState extends State<ChangeLooksDialog> {
       ),
       titleBuilder: (context, key, i) => Text('Choose one:'),
     );
-    // TODO: why the fuck does ScaffoldWithElevation not work with CategorizedList???
     if (widget.builder != null) {
-      var child2 = Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            for (var looksCat = 0; looksCat < looksMap.length; looksCat++) ...[
-              Padding(
-                padding: const EdgeInsets.all(8),
-                child: Text(
-                  'Choose one:',
-                  style: TextStyle(
-                    fontSize: 16.0,
-                    fontWeight: FontWeight.bold,
-                    color: Theme.of(context).textTheme.body1.color,
-                  ),
-                ),
-              ),
-              for (var lookIdxInCat = 0;
-                  lookIdxInCat < looksMap[looksCat].length;
-                  lookIdxInCat++)
-                Padding(
-                  padding: const EdgeInsets.all(8),
-                  child: TitleSubtitleCard(
-                    color: Theme.of(context).canvasColor.withOpacity(
-                        selected[looksCat] != null &&
-                                selected[looksCat] !=
-                                    looksMap[looksCat][lookIdxInCat]
-                            ? 0.7
-                            : 1.0),
-                    title: Text(looksMap[looksCat][lookIdxInCat]),
-                    trailing: selected.length > looksCat &&
-                            selected[looksCat] ==
-                                looksMap[looksCat][lookIdxInCat]
-                        ? Icon(Icons.check)
-                        : Container(),
-                    onTap: () => setState(
-                      () {
-                        selected[looksCat] = looksMap[looksCat][lookIdxInCat];
-                      },
-                    ),
-                  ),
-                ),
-            ]
-          ],
-        ),
-      );
       return widget.builder(
-          context, child2, () => changeLooks(selected), isValid);
+        context: context,
+        child: child,
+        save: () => changeLooks(selected),
+        isValid: isValid,
+        wrapWithScrollable: false,
+      );
     }
     return child;
   }

@@ -2,6 +2,7 @@ import 'package:dungeon_paper/components/card_list_item.dart';
 import 'package:dungeon_paper/components/class_description.dart';
 import 'package:dungeon_paper/components/confirmation_dialog.dart';
 import 'package:dungeon_paper/db/character.dart';
+import 'package:dungeon_paper/db/character_utils.dart';
 import 'package:dungeon_paper/dialogs.dart';
 import 'package:dungeon_paper/profile_view/edit_character/character_wizard_utils.dart';
 import 'package:dungeon_world_data/dw_data.dart';
@@ -64,7 +65,7 @@ class ClassSelectionScreen extends StatelessWidget {
       ),
     );
     if (builder != null) {
-      return builder(context, child, null, null);
+      return builder(context: context, child: child, save: null, isValid: null);
     }
     return child;
   }
@@ -91,32 +92,15 @@ class ClassSelectionScreen extends StatelessWidget {
     character.looks = [];
     character.race = null;
 
-    List<CharacterKeys> keys = [
+    var keys = [
+      CharacterKeys.mainClass,
       CharacterKeys.looks,
       CharacterKeys.race,
-      CharacterKeys.mainClass
     ];
 
-    if (options.deleteMoves) {
-      character.moves = <Move>[];
-      keys.add(CharacterKeys.moves);
-    }
-    if (options.resetXP) {
-      character.level = 1;
-      character.currentXP = 0;
-      keys.addAll([CharacterKeys.level, CharacterKeys.currentXP]);
-    }
-    if (options.resetMaxHP) {
-      character.maxHP = character.defaultMaxHP;
-      character.currentHP = character.maxHP;
-      keys.addAll([CharacterKeys.currentHP, CharacterKeys.maxHP]);
-    }
-    if (options.resetHitDice) {
-      character.hitDice = def.damage;
-      keys.add(CharacterKeys.hitDice);
-    }
+    var result = options.applyToCharacter(character);
 
-    onSave(character, keys);
+    onSave(result.character, result.keys + keys);
   }
 
   Function() previewClass(BuildContext context, PlayerClass def) {
@@ -323,6 +307,16 @@ class _ConfirmClassChangeDialogState extends State<ConfirmClassChangeDialog> {
   }
 }
 
+class ChangeClassConfirmationResults {
+  final DbCharacter character;
+  final List<CharacterKeys> keys;
+
+  ChangeClassConfirmationResults({
+    @required this.character,
+    @required this.keys,
+  });
+}
+
 class ChangeClassConfirmationOptions {
   bool deleteMoves;
   bool resetXP;
@@ -343,4 +337,32 @@ class ChangeClassConfirmationOptions {
         resetMaxHP: val,
         resetHitDice: val,
       );
+
+  ChangeClassConfirmationResults applyToCharacter(DbCharacter character) {
+    List<CharacterKeys> keys = [];
+
+    if (deleteMoves) {
+      character.moves = <Move>[];
+      keys.add(CharacterKeys.moves);
+    }
+
+    if (resetXP) {
+      character.level = 1;
+      character.currentXP = 0;
+      keys.addAll([CharacterKeys.level, CharacterKeys.currentXP]);
+    }
+
+    if (resetMaxHP) {
+      character.maxHP = character.defaultMaxHP;
+      character.currentHP = character.maxHP;
+      keys.addAll([CharacterKeys.currentHP, CharacterKeys.maxHP]);
+    }
+
+    if (resetHitDice) {
+      character.hitDice = character.mainClass.damage;
+      keys.add(CharacterKeys.hitDice);
+    }
+
+    return ChangeClassConfirmationResults(character: character, keys: keys);
+  }
 }

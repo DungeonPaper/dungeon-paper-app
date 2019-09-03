@@ -3,6 +3,8 @@ import 'package:dungeon_paper/redux/stores/stores.dart';
 import 'package:dungeon_paper/utils.dart';
 import 'package:uuid/uuid.dart';
 import 'character.dart';
+import 'character_db.dart';
+import 'character_utils.dart';
 
 enum NoteKeys { key, title, description, category }
 

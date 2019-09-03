@@ -6,9 +6,11 @@ import 'package:flutter/material.dart';
 
 class CharacterHeadline extends StatelessWidget {
   final DbCharacter character;
+  final bool editable;
 
   const CharacterHeadline({
     Key key,
+    this.editable = true,
     @required this.character,
   }) : super(key: key);
 
@@ -55,12 +57,13 @@ class CharacterHeadline extends StatelessWidget {
                     ),
                   ],
                 ),
-                IconButton(
-                  icon: Icon(Icons.settings),
-                  onPressed: () => onEdit(context),
-                  splashColor: Colors.white,
-                  color: Colors.white,
-                ),
+                if (editable)
+                  IconButton(
+                    icon: Icon(Icons.settings),
+                    onPressed: () => onEdit(context),
+                    splashColor: Colors.white,
+                    color: Colors.white,
+                  ),
               ],
             ),
           ),
@@ -74,8 +77,7 @@ class CharacterHeadline extends StatelessWidget {
       context,
       MaterialPageRoute(
         fullscreenDialog: true,
-        builder: (context) =>
-            EditCharacterView(character: character),
+        builder: (context) => EditCharacterView(character: character),
       ),
     );
   }
