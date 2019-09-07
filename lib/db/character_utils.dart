@@ -1,3 +1,5 @@
+import 'package:dungeon_paper/utils.dart';
+
 enum ClassNames {
   bard,
   cleric,
@@ -38,13 +40,8 @@ const AlignmentMap = {
   Alignment.evil: 'evil',
 };
 
-const AlignmentNameMap = {
-  'good': Alignment.good,
-  'lawful': Alignment.lawful,
-  'neutral': Alignment.neutral,
-  'chaotic': Alignment.chaotic,
-  'evil': Alignment.evil,
-};
+// ignore: non_constant_identifier_names
+final Map<String, Alignment> AlignmentNameMap = invertMap(AlignmentMap);
 
 enum Stats { str, dex, int, wis, cha, con }
 
@@ -84,6 +81,8 @@ enum CharacterKeys {
   race,
   coins,
 }
+
+const int MAX_STAT_VALUE = 20;
 
 const Map<CharacterKeys, String> CHARACTER_KEY_DB_MAPPING = {
   CharacterKeys.mainClass: 'mainClass',

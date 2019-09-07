@@ -37,22 +37,20 @@ class ClassDescription extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: <Widget>[
                   StatIcon(
-                      icon: Icon(Icons.healing, size: 40.0),
-                      label: Text('Base HP'),
-                      value: Text(classDef.baseHP.toString())),
+                    icon: Icon(Icons.healing, size: 40.0),
+                    label: Text('Base HP'),
+                    value: Text(classDef.baseHP.toString()),
+                  ),
                   StatIcon(
-                      icon: SvgPicture.asset(
-                        'assets/dice.svg',
-                        // color: color,
-                        width: 40.0,
-                        height: 40.0,
-                      ),
-                      label: Text('Damage Die'),
-                      value: Text(classDef.damage.toString())),
-                  // StatIcon(
-                  //     icon: Icons.healing,
-                  //     label: Text('Base HP'),
-                  //     value: Text(classDef.baseHP.toString())),
+                    icon: SvgPicture.asset(
+                      'assets/dice.svg',
+                      // color: color,
+                      width: 40.0,
+                      height: 40.0,
+                    ),
+                    label: Text('Damage Die'),
+                    value: Text(classDef.damage.toString()),
+                  ),
                 ],
               ),
             ),
@@ -124,19 +122,16 @@ class AlignmentList extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
-                  Text('Available alignments:',
-                      style: textTheme.subtitle
-                          .copyWith(color: theme.primaryColor)),
-                ] +
-                alignments
-                    .map<Widget>(
-                      (alignment) => TitleSubtitleRow(
-                        contentPadding: EdgeInsets.symmetric(vertical: 8.0),
-                        title: Text(alignment.name),
-                        subtitle: Text(alignment.description),
-                      ),
-                    )
-                    .toList(),
+              Text('Available alignments:',
+                  style:
+                      textTheme.subtitle.copyWith(color: theme.primaryColor)),
+              for (var alignment in alignments)
+                TitleSubtitleRow(
+                  contentPadding: EdgeInsets.symmetric(vertical: 8.0),
+                  title: Text(alignment.name),
+                  subtitle: Text(alignment.description),
+                ),
+            ],
           ),
         ),
       ),

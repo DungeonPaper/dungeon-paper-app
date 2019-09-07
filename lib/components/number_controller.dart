@@ -1,11 +1,12 @@
+import 'package:dungeon_paper/db/character_utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 import '../flutter_utils.dart';
 
 class NumberController extends StatefulWidget {
-  final num value;
-  final VoidCallbackFunc<num> onChange;
+  final int value;
+  final VoidCallbackFunc<int> onChange;
 
   const NumberController({
     Key key,
@@ -18,7 +19,7 @@ class NumberController extends StatefulWidget {
 }
 
 class _NumberControllerState extends State<NumberController> {
-  num get controlledStat => int.parse(_controller.value.text);
+  int get controlledStat => int.parse(_controller.value.text);
   TextEditingController _controller;
 
   @override
@@ -32,14 +33,15 @@ class _NumberControllerState extends State<NumberController> {
     return Row(
       mainAxisSize: MainAxisSize.min,
       mainAxisAlignment: MainAxisAlignment.center,
-      crossAxisAlignment: CrossAxisAlignment.center,
+      // crossAxisAlignment: CrossAxisAlignment.center,
       children: <Widget>[
         RaisedButton(
           shape: CircleBorder(side: BorderSide.none),
           color: Colors.red.shade300,
           textColor: Colors.white,
           child: Text('-', style: TextStyle(fontSize: 30)),
-          onPressed: () => _update(controlledStat > 0 ? controlledStat - 1 : 0),
+          onPressed: () =>
+              _update(controlledStat > 0 ? controlledStat - 1 : 0, true),
         ),
         Expanded(
           child: TextField(
@@ -52,13 +54,13 @@ class _NumberControllerState extends State<NumberController> {
             keyboardType: TextInputType.number,
             inputFormatters: <TextInputFormatter>[
               WhitelistingTextInputFormatter.digitsOnly,
-              BetweenValuesTextFormatter(0, 20)
+              BetweenValuesTextFormatter(0, MAX_STAT_VALUE)
             ],
             decoration: InputDecoration(errorText: !_validate ? '' : null),
             controller: _controller,
             autofocus: true,
             style: TextStyle(fontSize: 24.0),
-            textAlign: TextAlign.center,
+            textAlign: TextAlign.left,
           ),
         ),
         RaisedButton(
@@ -66,8 +68,11 @@ class _NumberControllerState extends State<NumberController> {
           color: Colors.green.shade400,
           textColor: Colors.white,
           child: Text('+', style: TextStyle(fontSize: 24)),
-          onPressed: () =>
-              _update(controlledStat < 20 ? controlledStat + 1 : 20),
+          onPressed: () => _update(
+              controlledStat < MAX_STAT_VALUE
+                  ? controlledStat + 1
+                  : MAX_STAT_VALUE,
+              true),
         ),
       ],
     );
@@ -75,10 +80,11 @@ class _NumberControllerState extends State<NumberController> {
 
   bool get _validate {
     num intVal = int.tryParse(_controller.text);
-    return intVal != null && intVal <= 20 && intVal >= 0;
+    return intVal != null && intVal <= MAX_STAT_VALUE && intVal >= 0;
   }
 
-  _update(num val) {
+  _update(num val, [bool updateText = false]) {
+    if (updateText) _controller.text = val.toString();
     if (widget.onChange != null) {
       widget.onChange(val);
     }

@@ -6,6 +6,7 @@ class CardListItem extends StatelessWidget {
   final Widget leading;
   final Widget trailing;
   final VoidCallback onTap;
+  final MaterialType type;
 
   const CardListItem({
     Key key,
@@ -14,6 +15,7 @@ class CardListItem extends StatelessWidget {
     this.subtitle,
     this.leading,
     this.trailing,
+    this.type = MaterialType.card,
   }) : super(key: key);
 
   @override
@@ -21,7 +23,7 @@ class CardListItem extends StatelessWidget {
     return Material(
       color: Theme.of(context).canvasColor,
       elevation: 1.0,
-      type: MaterialType.card,
+      type: type,
       borderRadius: BorderRadius.circular(5.0),
       child: InkWell(
         onTap: onTap,

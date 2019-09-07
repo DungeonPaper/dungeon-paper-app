@@ -1,4 +1,4 @@
-import 'package:dungeon_paper/main_view/main_view.dart';
+import '../widget_utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 
@@ -98,7 +98,7 @@ class CategorizedList<T> extends StatelessWidget {
                 }
                 return Container();
               }
-              return MainView.bottomSpacer;
+              return BOTTOM_SPACER;
             },
             staggeredTileBuilder: (index) => index < cats.length
                 ? StaggeredTile.fit(1)

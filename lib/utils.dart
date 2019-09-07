@@ -84,4 +84,9 @@ bool get isInDebugMode {
   return inDebugMode;
 }
 
-R Function() pass1<T, R>(R Function(T a) a, T b) => a != null ? () => a(b): null;
+R Function() pass1<T, R>(R Function(T a) a, T b) =>
+    a != null ? () => a(b) : null;
+
+Map<V, K> invertMap<K, V>(Map<K, V> map) {
+  return map.map((k, v) => MapEntry(v, k));
+}

@@ -1,5 +1,5 @@
-import 'package:dungeon_paper/components/standard_dialog_controls.dart';
-import 'package:dungeon_paper/dialogs.dart';
+import '../standard_dialog_controls.dart';
+import '../dialogs.dart';
 import 'package:dungeon_world_data/dw_data.dart';
 import 'package:dungeon_world_data/tag.dart';
 import 'package:flutter/material.dart';
