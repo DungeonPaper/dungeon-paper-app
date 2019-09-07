@@ -16,19 +16,18 @@ class TitleSubtitleRow extends StatelessWidget {
   Widget build(BuildContext context) {
     ThemeData theme = Theme.of(context);
     TextTheme textTheme = theme.textTheme;
-    List<Widget> children = [];
-    if (title != null) {
-      children.add(DefaultTextStyle(
-        child: title,
-        style: textTheme.title,
-      ));
-    }
-    if (subtitle != null) {
-      children.add(DefaultTextStyle(
-        child: subtitle,
-        style: textTheme.body1,
-      ));
-    }
+    List<Widget> children = [
+      if (title != null)
+        DefaultTextStyle(
+          child: title,
+          style: textTheme.title,
+        ),
+      if (subtitle != null)
+        DefaultTextStyle(
+          child: subtitle,
+          style: textTheme.body1,
+        )
+    ];
 
     return Container(
       padding: contentPadding ?? const EdgeInsets.symmetric(vertical: 16.0),

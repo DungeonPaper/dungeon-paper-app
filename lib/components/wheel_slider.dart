@@ -83,53 +83,51 @@ class _WheelSliderState extends State<WheelSlider> {
               dragOffset = null;
             });
           },
-          child: SizedBox.fromSize(
-            size: Size(widget.width.toDouble(), widget.height.toDouble()),
-            child: Container(
-              child: Stack(
-                children: List<Widget>.generate(
-                      20,
-                      (i) {
-                        double valueFraction = (value.ceil() - value) * 10;
-                        double top =
-                            (widget.height / 10 * i) - widget.height / 2;
-                        top += valueFraction;
-                        return Positioned.fromRect(
-                          rect: Rect.fromLTWH(
-                            0.0,
-                            top,
-                            widget.width.toDouble(),
-                            0,
-                          ),
-                          child: Divider(
-                            color: Colors.grey[600],
-                          ),
-                        );
-                      },
-                    ).toList() +
-                    (widget.labelBuilder != null
-                        ? [widget.labelBuilder(value)]
-                        : []),
+          child: Container(
+            width: widget.width,
+            height: widget.height,
+            child: Stack(
+              children: List<Widget>.generate(
+                    20,
+                    (i) {
+                      double valueFraction = (value.ceil() - value) * 10;
+                      double top = (widget.height / 10 * i) - widget.height / 2;
+                      top += valueFraction;
+                      return Positioned.fromRect(
+                        rect: Rect.fromLTWH(
+                          0.0,
+                          top,
+                          widget.width.toDouble(),
+                          0,
+                        ),
+                        child: Divider(
+                          color: Colors.grey[600],
+                        ),
+                      );
+                    },
+                  ).toList() +
+                  (widget.labelBuilder != null
+                      ? [widget.labelBuilder(value)]
+                      : []),
+            ),
+            decoration: BoxDecoration(
+              gradient: LinearGradient(
+                begin: Alignment.topCenter,
+                end: Alignment.bottomCenter,
+                stops: [0.0, shadowOffset, 1.0 - shadowOffset, 1.0],
+                colors: [
+                  Colors.grey[350],
+                  Colors.grey[50],
+                  Colors.grey[50],
+                  Colors.grey[350]
+                ],
               ),
-              decoration: BoxDecoration(
-                gradient: LinearGradient(
-                  begin: Alignment.topCenter,
-                  end: Alignment.bottomCenter,
-                  stops: [0.0, shadowOffset, 1.0 - shadowOffset, 1.0],
-                  colors: [
-                    Colors.grey[350],
-                    Colors.grey[50],
-                    Colors.grey[50],
-                    Colors.grey[350]
-                  ],
-                ),
-                border: Border.all(
-                  width: 1,
-                  style: BorderStyle.solid,
-                  color: Colors.grey[600],
-                ),
-                borderRadius: BorderRadius.circular(3.5),
+              border: Border.all(
+                width: 1,
+                style: BorderStyle.solid,
+                color: Colors.grey[600],
               ),
+              borderRadius: BorderRadius.circular(3.5),
             ),
           ),
         ),

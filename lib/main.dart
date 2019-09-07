@@ -1,6 +1,6 @@
 import 'dart:async';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'main_view/main_view.dart';
+import 'views/main_view/main_view.dart';
 import 'redux/actions.dart';
 import 'redux/stores/stores.dart';
 import 'package:flutter/material.dart';
