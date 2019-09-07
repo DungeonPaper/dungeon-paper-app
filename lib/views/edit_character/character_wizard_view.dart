@@ -116,7 +116,7 @@ class _CharacterWizardViewState extends State<CharacterWizardView> {
   void _nextStep() async {
     num stepIdx = CreateCharacterStep.values.indexOf(step);
     stepIdx++;
-    if (stepIdx >= CreateCharacterStep.values.length) {
+    if (stepIdx >= CreateCharacterStep.values.length - 1) {
       setState(() {
         step = CreateCharacterStep.values[stepIdx];
       });
