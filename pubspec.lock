@@ -70,7 +70,7 @@ packages:
       name: crypto
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "2.1.1+1"
+    version: "2.1.2"
   cupertino_icons:
     dependency: "direct main"
     description:
@@ -117,7 +117,7 @@ packages:
       name: flutter_launcher_icons
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.7.2+1"
+    version: "0.7.3"
   flutter_markdown:
     dependency: "direct main"
     description:
@@ -157,7 +157,7 @@ packages:
       name: google_sign_in
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "4.0.6"
+    version: "4.0.7"
   http:
     dependency: transitive
     description:
@@ -220,7 +220,7 @@ packages:
       name: path
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "1.6.2"
+    version: "1.6.4"
   path_drawing:
     dependency: transitive
     description:
@@ -255,7 +255,7 @@ packages:
       name: quiver
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "2.0.3"
+    version: "2.0.5"
   redux:
     dependency: transitive
     description:
@@ -323,7 +323,7 @@ packages:
       name: string_scanner
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "1.0.4"
+    version: "1.0.5"
   term_glyph:
     dependency: transitive
     description:
