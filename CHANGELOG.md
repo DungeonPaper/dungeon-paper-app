@@ -2,7 +2,7 @@
 
 ## 1.0.8
 * Character creation wizard
-* Added social links to about page: check out our [https://facebook.com/dungeonpaper](Facebook) and [https://twitter.com/dungeonpaper](Twitter)!
+* Added social links to about page: check out our [Facebook](https://facebook.com/dungeonpaper) and [Twitter](https://twitter.com/dungeonpaper)!
 
 ## 1.0.7
 * Improved error reporting
