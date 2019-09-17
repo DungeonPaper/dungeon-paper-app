@@ -8,6 +8,7 @@ SentryClient sentry;
 
 // Error reporting
 Future<void> initErrorReporting() async {
+  WidgetsFlutterBinding.ensureInitialized();
   var secrets = await loadSecrets();
   sentry = SentryClient(dsn: secrets['SENTRY_DSN']);
 
