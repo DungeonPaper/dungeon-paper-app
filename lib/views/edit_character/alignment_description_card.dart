@@ -68,18 +68,5 @@ class AlignmentDescription extends StatelessWidget {
     );
   }
 
-  get icon {
-    switch (alignment) {
-      case Chr.Alignment.good:
-        return Icons.mood;
-      case Chr.Alignment.lawful:
-        return Icons.sentiment_satisfied;
-      case Chr.Alignment.neutral:
-        return Icons.sentiment_neutral;
-      case Chr.Alignment.chaotic:
-        return Icons.sentiment_dissatisfied;
-      case Chr.Alignment.evil:
-        return Icons.mood_bad;
-    }
-  }
+  get icon => Chr.ALIGNMENT_ICON_MAP[alignment];
 }

@@ -23,7 +23,7 @@ class Welcome extends StatelessWidget {
       decoration:
           BoxDecoration(color: Theme.of(context).scaffoldBackgroundColor),
       child: loading
-          ? const Center(child: PAGE_LOADER)
+          ? Center(child: PageLoader())
           : SingleChildScrollView(
               primary: true,
               child: Center(

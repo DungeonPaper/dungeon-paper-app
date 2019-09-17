@@ -74,22 +74,31 @@ class RaceDescription extends StatelessWidget {
   final void Function() onTap;
   final PlayerClass playerClass;
   final Move race;
+  final Color color;
+  final double elevation;
+  final EdgeInsets margin;
 
   const RaceDescription({
     Key key,
     this.onTap,
     @required this.race,
     @required this.playerClass,
+    this.color,
+    this.elevation,
+    this.margin,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return TitleSubtitleCard(
+      margin: margin,
       leading: Icon(Icons.pets, size: 40),
       title: Text(race.name),
       subtitle: Text(race.description),
-      trailing: Icon(Icons.chevron_right),
+      trailing: onTap != null ? Icon(Icons.chevron_right) : null,
       onTap: onTap,
+      color: color,
+      elevation: elevation,
     );
   }
 }

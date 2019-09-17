@@ -1,4 +1,6 @@
-import 'package:dungeon_paper/utils.dart';
+import 'package:flutter/material.dart';
+
+import '../utils.dart';
 
 enum ClassNames {
   bard,
@@ -157,4 +159,12 @@ const Map<CharacterKeys, String> CHARACTER_STAT_MODIFIER_LABELS = {
   CharacterKeys.wis: 'WIS',
   CharacterKeys.int: 'INT',
   CharacterKeys.cha: 'CHA',
+};
+
+const Map<Alignment, IconData> ALIGNMENT_ICON_MAP = {
+  Alignment.good: Icons.mood,
+  Alignment.lawful: Icons.sentiment_satisfied,
+  Alignment.neutral: Icons.sentiment_neutral,
+  Alignment.chaotic: Icons.sentiment_dissatisfied,
+  Alignment.evil: Icons.mood_bad,
 };
