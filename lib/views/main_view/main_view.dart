@@ -1,3 +1,9 @@
+import 'package:dungeon_paper/redux/stores/prefs_store.dart';
+import 'package:dungeon_paper/views/whats_new/whats_new_view.dart';
+import 'package:package_info/package_info.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+
+import '../../version.dart';
 import '../../widget_utils.dart';
 import '../battle_view/battle_view.dart';
 import '../../db/character.dart';
@@ -83,6 +89,7 @@ class _MainViewState extends State<MainView> {
         });
       }
     });
+    _showWhatsNew();
     super.initState();
   }
 
@@ -131,4 +138,21 @@ class _MainViewState extends State<MainView> {
   Widget get navBar => widget.character != null
       ? NavBar(pageController: widget.pageController)
       : null;
+
+  void _showWhatsNew() async {
+    PackageInfo packageInfo = await PackageInfo.fromPlatform();
+    SharedPreferences sharedPrefs = await SharedPreferences.getInstance();
+    String lastVersionKey = enumName(SharedPrefKeys.LastOpenedVersion);
+    sharedPrefs.remove(lastVersionKey);
+    SemVer lastViewedAt;
+    if (sharedPrefs.containsKey(lastVersionKey)) {
+      lastViewedAt = SemVer.from(sharedPrefs.getString(lastVersionKey));
+    }
+    if (lastViewedAt == null || lastViewedAt < SemVer.from(packageInfo.version))
+      showDialog(
+        context: context,
+        builder: (context) => WhatsNew.dialog(),
+      );
+    sharedPrefs.setString(lastVersionKey, packageInfo.version);
+  }
 }

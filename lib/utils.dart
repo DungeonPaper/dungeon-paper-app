@@ -70,7 +70,7 @@ class BgAndFgColors {
 
 Map _secrets;
 
-Future<Map> loadSecrets() async {
+Future<Map<String, dynamic>> loadSecrets() async {
   if (_secrets == null) {
     _secrets = jsonDecode(await rootBundle.loadString('secrets.json'));
     if (isInDebugMode) print('Loaded secrets: $_secrets');

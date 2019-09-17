@@ -1,3 +1,5 @@
+import 'package:dungeon_paper/views/whats_new/whats_new_view.dart';
+
 import '../about_view/about_view.dart';
 import '../about_view/feedback_button.dart';
 import '../../db/auth.dart';
@@ -66,6 +68,17 @@ class Sidebar extends StatelessWidget {
                 },
               ),
               // Log out
+              ListTile(
+                leading: Icon(Icons.update),
+                title: Text("What's New?"),
+                onTap: () {
+                  Navigator.pop(context);
+                  showDialog(
+                    context: context,
+                    builder: (context) => WhatsNew.dialog(),
+                  );
+                },
+              ),
               ListTile(
                 leading: Icon(Icons.exit_to_app),
                 title: Text('Log out'),

@@ -74,12 +74,10 @@ class ChangelogParser {
     Map<SemVer, List<String>> output = {};
     SemVer cur;
     for (String line in changelog.split('\n')) {
-      print('Parsing line: "$line"');
       if (line.trim().startsWith(RegExp('#\b')) || line.trim() == "") continue;
 
       // version number line
       if (RegExp('##').matchAsPrefix(line.trim()) != null) {
-        print('Parsing version from line: $line');
         final String lineWithoutPrefix = line.substring(2).trim();
         final String versionStringMatch =
             RegExp('([0-9]+\.){2}[0-9]+').stringMatch(lineWithoutPrefix);
@@ -89,7 +87,6 @@ class ChangelogParser {
 
       // message line
       if (RegExp('\\*\s*').matchAsPrefix(line.trim()) != null) {
-        print('Parsing message from line: $line');
         String message = line.trim().substring(1).trim();
         if (!output.containsKey(cur)) output[cur] = [];
         output[cur].add(message);

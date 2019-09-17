@@ -30,18 +30,20 @@ class StandardDialogControls extends StatelessWidget {
           alignment: WrapAlignment.end,
           spacing: 5.0,
           children: <Widget>[
-            FlatButton(
-              onPressed:
-                  onCancel != null ? onCancel : () => Navigator.pop(context),
-              child: cancelText,
-            ),
+            if (onCancel != null)
+              FlatButton(
+                onPressed:
+                    onCancel != null ? onCancel : () => Navigator.pop(context),
+                child: cancelText,
+              ),
             if (extraActions != null && extraActions.isNotEmpty)
               ...extraActions,
-            RaisedButton(
-              color: Theme.of(context).colorScheme.primary,
-              onPressed: onOK,
-              child: okText,
-            ),
+            if (onOK != null)
+              RaisedButton(
+                color: Theme.of(context).colorScheme.primary,
+                onPressed: onOK,
+                child: okText,
+              ),
           ],
         ),
       ),
