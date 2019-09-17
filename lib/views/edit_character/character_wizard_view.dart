@@ -42,7 +42,12 @@ class _CharacterWizardViewState extends State<CharacterWizardView> {
   Widget getCorrectView({BuildContext context}) {
     switch (step) {
       case CreateCharacterStep.Finishing:
-        return Center(child: PAGE_LOADER);
+        return Container(
+          color: Theme.of(context).primaryColor,
+          child: Center(
+            child: PageLoader(),
+          ),
+        );
       case CreateCharacterStep.Summary:
         return CharacterSummary.withScaffold(
           character: character,
@@ -115,14 +120,14 @@ class _CharacterWizardViewState extends State<CharacterWizardView> {
 
   void _nextStep() async {
     num stepIdx = CreateCharacterStep.values.indexOf(step);
-    stepIdx++;
-    if (stepIdx >= CreateCharacterStep.values.length - 1) {
+    if (stepIdx >= CreateCharacterStep.values.length - 2) {
       setState(() {
-        step = CreateCharacterStep.values[stepIdx];
+        step = CreateCharacterStep.Finishing;
       });
       await createNewCharacter(character);
       Navigator.pop(context);
     } else {
+      stepIdx++;
       setState(() {
         step = CreateCharacterStep.values[stepIdx];
       });

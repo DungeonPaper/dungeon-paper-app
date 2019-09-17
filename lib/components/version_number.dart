@@ -27,9 +27,11 @@ class _VersionNumberState extends State<VersionNumber> {
 
   _getVersion() async {
     PackageInfo packageInfo = await PackageInfo.fromPlatform();
-    setState(() {
-      version = packageInfo.version;
-    });
+
+    if (this.mounted)
+      setState(() {
+        version = packageInfo.version;
+      });
   }
 
   @override

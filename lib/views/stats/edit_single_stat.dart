@@ -8,7 +8,7 @@ import 'package:dungeon_paper/utils.dart';
 import 'package:flutter/material.dart';
 
 class EditStatDialog extends StatefulWidget {
-  final Stats stat;
+  final CharacterKeys stat;
   final num value;
   EditStatDialog({
     Key key,
@@ -22,7 +22,7 @@ class EditStatDialog extends StatefulWidget {
 }
 
 class EditStatDialogState extends State<EditStatDialog> {
-  final Stats stat;
+  final CharacterKeys stat;
   final String fullName;
   num value;
   bool saving = false;
@@ -87,30 +87,33 @@ class EditStatDialogState extends State<EditStatDialog> {
   _saveValue() async {
     final DbCharacter character = dwStore.state.characters.current;
     CharacterKeys key;
+
     switch (stat) {
-      case Stats.int:
+      case CharacterKeys.int:
         character.int = value;
         key = CharacterKeys.int;
         break;
-      case Stats.wis:
+      case CharacterKeys.wis:
         character.wis = value;
         key = CharacterKeys.wis;
         break;
-      case Stats.cha:
+      case CharacterKeys.cha:
         character.cha = value;
         key = CharacterKeys.cha;
         break;
-      case Stats.con:
+      case CharacterKeys.con:
         character.con = value;
         key = CharacterKeys.con;
         break;
-      case Stats.str:
+      case CharacterKeys.str:
         character.str = value;
         key = CharacterKeys.str;
         break;
-      case Stats.dex:
+      case CharacterKeys.dex:
         character.dex = value;
         key = CharacterKeys.dex;
+        break;
+      default:
         break;
     }
     setState(() {

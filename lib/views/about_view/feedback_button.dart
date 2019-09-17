@@ -113,24 +113,27 @@ class _FeedbackButtonState extends State<FeedbackButton> {
   }
 
   _getUserId() async {
-    setState(() {
-      userId = dwStore.state.user.currentUserDocID;
-    });
+    if (this.mounted)
+      setState(() {
+        userId = dwStore.state.user.currentUserDocID;
+      });
   }
 
   _getEmail() async {
     var secrets = await loadSecrets();
-    setState(() {
-      email = secrets['FEEDBACK_EMAIL'];
-    });
+    if (this.mounted)
+      setState(() {
+        email = secrets['FEEDBACK_EMAIL'];
+      });
   }
 
   _getVersionData() async {
     PackageInfo packageInfo = await PackageInfo.fromPlatform();
-    setState(() {
-      version = packageInfo.version;
-      buildNumber = packageInfo.buildNumber;
-    });
+    if (this.mounted)
+      setState(() {
+        version = packageInfo.version;
+        buildNumber = packageInfo.buildNumber;
+      });
   }
 
   String get subject => Uri.encodeComponent('Dungeon Paper feedback');

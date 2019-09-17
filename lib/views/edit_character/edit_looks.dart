@@ -110,25 +110,34 @@ class LooksDescription extends StatelessWidget {
   final void Function() onTap;
   final PlayerClass playerClass;
   final List<String> looks;
+  final Color color;
+  final double elevation;
+  final EdgeInsets margin;
 
   const LooksDescription({
     Key key,
     this.onTap,
     @required this.playerClass,
     @required this.looks,
+    this.color,
+    this.elevation,
+    this.margin,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return TitleSubtitleCard(
-      color: Theme.of(context)
-          .canvasColor
-          .withOpacity(playerClass.looks.isNotEmpty ? 1.0 : 0.85),
+      color: color ??
+          Theme.of(context)
+              .canvasColor
+              .withOpacity(playerClass.looks.isNotEmpty ? 1.0 : 0.85),
+      elevation: elevation,
+      margin: margin,
       title: Text('Looks'),
       leading: Icon(Icons.person_pin, size: 40),
       subtitle:
           Text(looks.isNotEmpty ? looks.join('; ') : 'No features selected'),
-      trailing: Icon(Icons.chevron_right),
+      trailing: onTap != null ? Icon(Icons.chevron_right) : null,
       onTap: playerClass.looks.isNotEmpty ? onTap : null,
     );
   }

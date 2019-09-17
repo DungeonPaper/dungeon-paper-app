@@ -51,6 +51,8 @@ class TitleSubtitleCard extends StatelessWidget {
   final Widget leading;
   final Widget trailing;
   final Color color;
+  final double elevation;
+  final EdgeInsets margin;
 
   const TitleSubtitleCard({
     Key key,
@@ -61,6 +63,8 @@ class TitleSubtitleCard extends StatelessWidget {
     this.leading,
     this.trailing,
     this.color,
+    this.elevation = 1.0,
+    this.margin,
   }) : super(key: key);
 
   @override
@@ -75,10 +79,9 @@ class TitleSubtitleCard extends StatelessWidget {
             mainAxisSize: MainAxisSize.min,
             children: <Widget>[top, child],
           );
-    return Material(
-      borderRadius: BorderRadius.circular(5),
-      type: MaterialType.card,
-      elevation: 1.0,
+    return Card(
+      margin: margin,
+      elevation: elevation,
       color: color ?? Theme.of(context).canvasColor,
       child: InkWell(
         onTap: onTap,
@@ -98,20 +101,14 @@ class TitleSubtitleCard extends StatelessWidget {
       return content;
     }
 
-    List<Widget> children = [Expanded(child: content)];
-
-    if (leading != null) {
-      children.insert(
-          0,
-          Padding(
-            padding: EdgeInsets.only(right: 16.0),
-            child: leading,
-          ));
-    }
-    if (trailing != null) {
-      children.add(trailing);
-    }
-
-    return Row(children: children);
+    return Row(children: [
+      if (leading != null)
+        Padding(
+          padding: EdgeInsets.only(right: 16.0),
+          child: leading,
+        ),
+      Expanded(child: content),
+      if (trailing != null) trailing,
+    ]);
   }
 }
