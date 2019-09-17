@@ -4,7 +4,11 @@ import 'package:package_info/package_info.dart';
 class VersionNumber extends StatefulWidget {
   final Widget Function(String version) builder;
 
-  const VersionNumber({Key key, @required this.builder}) : super(key: key);
+  const VersionNumber({
+    Key key,
+    @required this.builder,
+  }) : super(key: key);
+
   factory VersionNumber.text({Key key, String prefix, String suffix}) =>
       VersionNumber(
         key: key,

@@ -29,6 +29,7 @@ dependencies:
   autocomplete_textfield: ^1.7.3
   sentry: ^2.2.0
   package_info: ^0.4.0+6
+  quiver_hashcode: ^2.0.0
 
 dev_dependencies:
   flutter_test:
@@ -45,7 +46,6 @@ flutter_icons:
 
 # The following section is specific to Flutter.
 flutter:
-
   # The following line ensures that the Material Icons font is
   # included with your application, so that you can use the icons in
   # the material Icons class.
@@ -63,13 +63,10 @@ flutter:
     - assets/dumbbell.svg
     # - assets/quill.svg
     # - images/a_dot_ham.jpeg
-
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.io/assets-and-images/#resolution-aware.
-
   # For details regarding adding assets from package dependencies, see
   # https://flutter.io/assets-and-images/#from-packages
-
   # To add custom fonts to your application, add a fonts section here,
   # in this "flutter" section. Each entry in this list should have a
   # "family" key with the font family name, and a "fonts" key with a

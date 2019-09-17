@@ -6,9 +6,9 @@ class Hyperlink<T> extends StatelessWidget {
   final T text;
   final String url;
 
-  const Hyperlink(
+  const Hyperlink({
     this.text,
-    this.url, {
+    this.url,
     Key key,
     this.padding = const EdgeInsets.all(0),
   }) : super(key: key);

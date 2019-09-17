@@ -1,5 +1,8 @@
 import 'dart:io';
 import 'dart:math';
+import 'package:flutter/gestures.dart';
+import 'package:url_launcher/url_launcher.dart';
+
 import './feedback_button.dart';
 import './paypal_donate_button.dart';
 import '../../components/categorized_list.dart';
@@ -33,7 +36,7 @@ class _AboutViewState extends State<AboutView> {
       body: CategorizedList.childrenBuilder(
         children: [
           Padding(
-            padding: const EdgeInsets.all(16.0),
+            padding: const EdgeInsets.only(top: 16.0),
             child: Column(
               mainAxisSize: MainAxisSize.max,
               crossAxisAlignment: CrossAxisAlignment.center,
@@ -43,6 +46,27 @@ class _AboutViewState extends State<AboutView> {
                 Text('Dungeon Paper',
                     style: Theme.of(context).textTheme.headline),
                 VersionNumber.text(prefix: 'Version'),
+                Container(
+                  width: 300,
+                  padding: EdgeInsets.only(top: 4),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: [
+                      Hyperlink(
+                        text: 'Facebook',
+                        url: 'https://facebook.com/dungeonpaper',
+                      ),
+                      Hyperlink(
+                        text: 'Twitter',
+                        url: 'https://twitte.com/dungeonpaper',
+                      ),
+                      Hyperlink(
+                        text: 'GitHub',
+                        url: 'https://github.com/chenasraf/dungeon-paper-app',
+                      ),
+                    ],
+                  ),
+                ),
                 Padding(
                   padding: const EdgeInsets.symmetric(vertical: 24.0),
                   child: SizedBox.fromSize(
@@ -55,10 +79,25 @@ class _AboutViewState extends State<AboutView> {
             ),
           ),
           Padding(
-            padding: const EdgeInsets.all(16.0),
+            padding: const EdgeInsets.all(16.0).copyWith(top: 0),
             child: Column(
               children: <Widget>[
-                Text('Develeoped by Chen Asraf'),
+                Text.rich(
+                  TextSpan(
+                    children: [
+                      TextSpan(text: 'Develeoped by '),
+                      TextSpan(
+                        text: 'Chen Asraf',
+                        recognizer: TapGestureRecognizer()
+                          ..onTap = () => launch('https://casraf.blog'),
+                        style: TextStyle(
+                          color: Color.fromRGBO(25, 118, 210, 1),
+                          decoration: TextDecoration.underline,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
                 Text('© 2018-$year'),
                 SizedBox(height: 15),
                 Text('Credits', style: Theme.of(context).textTheme.title),
@@ -83,18 +122,6 @@ class _AboutViewState extends State<AboutView> {
                 Padding(
                   padding: const EdgeInsets.all(16.0).copyWith(top: 0),
                   child: DonateButton(),
-                ),
-                Hyperlink(
-                  'Dungeon Paper On Github',
-                  'https://github.com/chenasraf/dungeon-paper-app',
-                  padding:
-                      const EdgeInsets.symmetric(vertical: 6.0, horizontal: 20),
-                ),
-                Hyperlink(
-                  'casraf.blog',
-                  'https://casraf.blog',
-                  padding:
-                      const EdgeInsets.symmetric(vertical: 6.0, horizontal: 20),
                 ),
               ],
             ),
