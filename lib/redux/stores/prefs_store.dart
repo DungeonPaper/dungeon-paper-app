@@ -9,6 +9,7 @@ enum SharedPrefKeys {
   CharacterId,
   AccessToken,
   IdToken,
+  LastOpenedVersion
 }
 
 Map<SharedPrefKeys, String> keyMap = {
