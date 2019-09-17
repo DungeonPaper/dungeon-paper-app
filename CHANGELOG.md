@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## 1.0.8
+* Character creation wizard
+* Added social links to about page
+
 ## 1.0.7
 * Improved error reporting
 * Improved login loader

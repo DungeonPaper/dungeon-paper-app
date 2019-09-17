@@ -1,6 +1,5 @@
-import 'package:dungeon_paper/components/title_subtitle_row.dart';
-import 'package:dungeon_paper/views/basic_info/character_photo.dart';
-import 'package:dungeon_paper/views/battle_view/move_card.dart';
+import '../../components/title_subtitle_row.dart';
+import '../../views/basic_info/character_photo.dart';
 import '../../utils.dart';
 import '../../views/profile_view/character_headline.dart';
 import '../../views/stats/stats_summary.dart';

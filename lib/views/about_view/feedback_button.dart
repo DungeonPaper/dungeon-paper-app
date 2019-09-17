@@ -88,7 +88,7 @@ class FeedbackButton extends StatefulWidget {
         key: key,
         onPressed: onPressed,
         dontWaitForUser: dontWaitForUser,
-        builder: (_, mailtoUrl) => Hyperlink(labelText, mailtoUrl),
+        builder: (_, mailtoUrl) => Hyperlink(text: labelText, url: mailtoUrl),
       );
 
   @override
