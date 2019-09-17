@@ -143,7 +143,6 @@ class _MainViewState extends State<MainView> {
     PackageInfo packageInfo = await PackageInfo.fromPlatform();
     SharedPreferences sharedPrefs = await SharedPreferences.getInstance();
     String lastVersionKey = enumName(SharedPrefKeys.LastOpenedVersion);
-    sharedPrefs.remove(lastVersionKey);
     SemVer lastViewedAt;
     if (sharedPrefs.containsKey(lastVersionKey)) {
       lastViewedAt = SemVer.from(sharedPrefs.getString(lastVersionKey));
