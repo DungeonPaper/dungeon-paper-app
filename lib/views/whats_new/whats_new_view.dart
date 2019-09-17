@@ -1,14 +1,14 @@
-import 'dart:developer';
+import 'package:dungeon_paper/widget_utils.dart';
 
-import 'package:dungeon_paper/components/standard_dialog_controls.dart';
+import '../../components/standard_dialog_controls.dart';
+import '../../utils.dart';
+import '../../version.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_markdown/flutter_markdown.dart';
 import 'package:http/http.dart' as http;
-import 'package:dungeon_paper/utils.dart';
 import 'package:flutter/widgets.dart';
 import 'package:package_info/package_info.dart';
-
-import '../../version.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class WhatsNew extends StatefulWidget {
   final Widget Function(BuildContext context, Widget child) builder;
@@ -75,7 +75,11 @@ class _WhatsNewState extends State<WhatsNew> {
     if (currentVersion == null ||
         changelog == null ||
         changelog[currentVersion] == null)
-      child = Container();
+      child = Container(
+        width: 150,
+        height: 150,
+        child: Center(child: PageLoader()),
+      );
     else
       child = Column(
         children: <Widget>[
@@ -84,6 +88,7 @@ class _WhatsNewState extends State<WhatsNew> {
                 const EdgeInsets.symmetric(horizontal: 16.0, vertical: 24.0),
             child: MarkdownBody(
               data: mapped(currentVersion),
+              onTapLink: (url) => launch(url),
             ),
           ),
         ],
