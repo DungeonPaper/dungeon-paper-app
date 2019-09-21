@@ -46,6 +46,7 @@ class _EditStatsState extends State<EditStats> {
   int _int;
   int _wis;
   int _cha;
+  Map<CharacterKeys, bool> errors = {};
 
   @override
   void initState() {
@@ -91,35 +92,54 @@ class _EditStatsState extends State<EditStats> {
 
   CallbackFunc<num, VoidEmptyCallbackFunc> _setter(CharacterKeys stat) {
     Function(num) setter;
+    Function(bool) errorSetter;
     switch (stat) {
       case (CharacterKeys.str):
         setter = (val) {
           _str = val;
+        };
+        errorSetter = (state) {
+          errors[CharacterKeys.str] = state;
         };
         break;
       case (CharacterKeys.dex):
         setter = (val) {
           _dex = val;
         };
+        errorSetter = (state) {
+          errors[CharacterKeys.dex] = state;
+        };
         break;
       case (CharacterKeys.con):
         setter = (val) {
           _con = val;
+        };
+        errorSetter = (state) {
+          errors[CharacterKeys.con] = state;
         };
         break;
       case (CharacterKeys.int):
         setter = (val) {
           _int = val;
         };
+        errorSetter = (state) {
+          errors[CharacterKeys.int] = state;
+        };
         break;
       case (CharacterKeys.cha):
         setter = (val) {
           _cha = val;
         };
+        errorSetter = (state) {
+          errors[CharacterKeys.cha] = state;
+        };
         break;
       case (CharacterKeys.wis):
         setter = (val) {
           _wis = val;
+        };
+        errorSetter = (state) {
+          errors[CharacterKeys.wis] = state;
         };
         break;
       default:
@@ -128,7 +148,12 @@ class _EditStatsState extends State<EditStats> {
 
     return (val) {
       return () {
-        if (val != null) setter(val);
+        if (val == null) {
+          errorSetter(true);
+        } else {
+          errorSetter(false);
+          setter(val);
+        }
       };
     };
   }
@@ -169,8 +194,9 @@ class _EditStatsState extends State<EditStats> {
   }
 
   bool _isFormValid() {
-    return [_str, _dex, _cha, _wis, _int, _con]
-        .every((s) => s >= 0 && s <= MAX_STAT_VALUE);
+    return !errors.values.any((s) => s) &&
+        [_str, _dex, _cha, _wis, _int, _con]
+            .every((s) => s >= 0 && s <= MAX_STAT_VALUE);
   }
 }
 

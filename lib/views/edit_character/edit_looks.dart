@@ -77,7 +77,10 @@ class _ChangeLooksDialogState extends State<ChangeLooksDialog> {
               ? Icon(Icons.check)
               : null,
           onTap: () => setState(() {
-            selected[looksCat] = looksMap[looksCat][lookIdxInCat];
+            if (selected[looksCat] == looksMap[looksCat][lookIdxInCat])
+              selected[looksCat] = '';
+            else
+              selected[looksCat] = looksMap[looksCat][lookIdxInCat];
           }),
         ),
       ),
@@ -101,8 +104,9 @@ class _ChangeLooksDialogState extends State<ChangeLooksDialog> {
   }
 
   bool isValid() {
-    return selected.length == widget.character.mainClass.looks.length &&
-        selected.every((s) => s != null && s.isNotEmpty);
+    return true;
+    // return selected.length == widget.character.mainClass.looks.length &&
+    //     selected.every((s) => s != null && s.isNotEmpty);
   }
 }
 
