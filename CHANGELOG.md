@@ -3,7 +3,8 @@
 ## 1.0.8
 * Character creation wizard
 * Added "What's New?" dialog
-* Added social links to about page: check out our [Facebook](https://facebook.com/dungeonpaper) and [Twitter](https://twitter.com/dungeonpaper)!
+* Bugfixes and small UI improvements
+* Check out our [Facebook](https://facebook.com/dungeonpaper) and [Twitter](https://twitter.com/dungeonpaper)!
 
 ## 1.0.7
 * Improved error reporting
