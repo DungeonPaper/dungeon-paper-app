@@ -25,13 +25,14 @@ class EditStatDialogState extends State<EditStatDialog> {
   final CharacterKeys stat;
   final String fullName;
   num value;
+  bool valueError = false;
   bool saving = false;
 
   EditStatDialogState({
     Key key,
     @required this.stat,
     @required this.value,
-  })  : fullName = StatNameMap[stat],
+  })  : fullName = CHARACTER_STAT_LABELS[stat],
         super();
 
   @override
@@ -59,14 +60,17 @@ class EditStatDialogState extends State<EditStatDialog> {
                 children: <Widget>[
                   Container(
                     padding: const EdgeInsets.symmetric(vertical: 8.0),
-                    width: 150,
+                    width: 240,
                     child: NumberController(
+                      min: 1,
+                      max: MAX_STAT_VALUE,
                       value: value,
                       onChange: _setStateValue,
                     ),
                   ),
                   StandardDialogControls(
                     onOK: saving ? null : _saveValue,
+                    okDisabled: valueError,
                     onCancel: () => Navigator.pop(context),
                   ),
                 ],
@@ -80,7 +84,12 @@ class EditStatDialogState extends State<EditStatDialog> {
 
   _setStateValue(num newValue) {
     setState(() {
-      value = newValue;
+      if (newValue == null)
+        valueError = true;
+      else {
+        valueError = false;
+        value = newValue;
+      }
     });
   }
 

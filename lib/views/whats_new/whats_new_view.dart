@@ -100,7 +100,20 @@ class _WhatsNewState extends State<WhatsNew> {
 
   String mapped(SemVer ver) {
     if (changelog == null || changelog[ver] == null) return "";
-    return "## Version $ver\n\n" + changelog[ver].map((s) => '* $s').join('\n');
+    var keys = changelog.keys;
+    var verIdx = keys.toList().indexOf(ver);
+    SemVer prevVersion;
+    if (verIdx < keys.length - 1) prevVersion = keys.elementAt(verIdx + 1);
+    List<SemVer> versions = [
+      ver,
+      if (prevVersion != null) prevVersion,
+    ];
+    return versions.map(_verString).toList().join('\n');
+  }
+
+  String _verString(SemVer v) {
+    String prefix = v == currentVersion ? '' : 'Previous ';
+    return "## ${prefix}Version $v\n\n" + changelog[v].map((s) => '* $s').join('\n');
   }
 
   void _initChangelog() async {

@@ -7,6 +7,8 @@ class StandardDialogControls extends StatelessWidget {
   final Widget okText;
   final List<Widget> extraActions;
   final EdgeInsets padding;
+  final bool okDisabled;
+  final bool cancelDisabled;
 
   const StandardDialogControls({
     Key key,
@@ -16,6 +18,8 @@ class StandardDialogControls extends StatelessWidget {
     Widget okText,
     this.extraActions,
     this.padding = const EdgeInsets.only(top: 40, left: 16, right: 16),
+    this.okDisabled = false,
+    this.cancelDisabled = false,
   })  : cancelText = cancelText ?? const Text('Cancel'),
         okText = okText ?? const Text('Save'),
         super(key: key);
@@ -33,7 +37,7 @@ class StandardDialogControls extends StatelessWidget {
             if (onCancel != null)
               FlatButton(
                 onPressed:
-                    onCancel != null ? onCancel : () => Navigator.pop(context),
+                    !cancelDisabled ? onCancel != null ? onCancel : () => Navigator.pop(context) : null,
                 child: cancelText,
               ),
             if (extraActions != null && extraActions.isNotEmpty)
@@ -41,7 +45,7 @@ class StandardDialogControls extends StatelessWidget {
             if (onOK != null)
               RaisedButton(
                 color: Theme.of(context).colorScheme.primary,
-                onPressed: onOK,
+                onPressed: !okDisabled ? onOK : null,
                 child: okText,
               ),
           ],

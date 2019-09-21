@@ -8,8 +8,8 @@ import 'package:uuid/uuid.dart';
 import 'character_db.dart';
 import 'character_utils.dart';
 
-ReturnPredicate<Spell> matchSpell =
-    matcher<Spell>((Spell i, Spell o) => i.key == o.key);
+ReturnPredicate<DbSpell> matchSpell =
+    matcher<DbSpell>((DbSpell i, DbSpell o) => i.key == o.key);
 
 class DbSpell extends Spell {
   bool prepared;

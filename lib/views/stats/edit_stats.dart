@@ -81,58 +81,59 @@ class _EditStatsState extends State<EditStats> {
     return child;
   }
 
-  void Function(int) _valueUpdateBuilder(
-      CallbackFunc<int, VoidEmptyCallbackFunc> setter) {
+  void Function(num) _valueUpdateBuilder(
+      CallbackFunc<num, VoidEmptyCallbackFunc> setter) {
     return (val) {
       final setterVal = setter(val);
       setState(setterVal);
     };
   }
 
-  CallbackFunc<int, VoidEmptyCallbackFunc> _setter(CharacterKeys stat) {
+  CallbackFunc<num, VoidEmptyCallbackFunc> _setter(CharacterKeys stat) {
+    Function(num) setter;
     switch (stat) {
       case (CharacterKeys.str):
-        return (val) {
-          return () {
-            _str = val;
-          };
+        setter = (val) {
+          _str = val;
         };
+        break;
       case (CharacterKeys.dex):
-        return (val) {
-          return () {
-            _dex = val;
-          };
+        setter = (val) {
+          _dex = val;
         };
+        break;
       case (CharacterKeys.con):
-        return (val) {
-          return () {
-            _con = val;
-          };
+        setter = (val) {
+          _con = val;
         };
+        break;
       case (CharacterKeys.int):
-        return (val) {
-          return () {
-            _int = val;
-          };
+        setter = (val) {
+          _int = val;
         };
+        break;
       case (CharacterKeys.cha):
-        return (val) {
-          return () {
-            _cha = val;
-          };
+        setter = (val) {
+          _cha = val;
         };
+        break;
       case (CharacterKeys.wis):
-        return (val) {
-          return () {
-            _wis = val;
-          };
+        setter = (val) {
+          _wis = val;
         };
+        break;
       default:
-        return null;
+        setter = (val) {};
     }
+
+    return (val) {
+      return () {
+        if (val != null) setter(val);
+      };
+    };
   }
 
-  int _getter(CharacterKeys stat) {
+  num _getter(CharacterKeys stat) {
     switch (stat) {
       case (CharacterKeys.str):
         return _str;
@@ -206,6 +207,8 @@ class EditStatListTile extends StatelessWidget {
             child: NumberController(
               value: value,
               onChange: onChange,
+              min: 0,
+              max: MAX_STAT_VALUE,
             ),
           ),
         ),
