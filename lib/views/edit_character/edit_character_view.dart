@@ -121,9 +121,16 @@ class _EditCharacterViewState extends State<EditCharacterView> {
             Align(
               alignment: Alignment.centerRight,
               child: FlatButton(
-                // color: Colors.red,
-                textColor: Colors.red,
-                child: Text('Delete Character'),
+                color: Colors.red,
+                textColor: Colors.white,
+                child: Row(
+                  mainAxisSize: MainAxisSize.min,
+                  children: <Widget>[
+                    Icon(Icons.delete),
+                    SizedBox(width: 8),
+                    Text('Delete Character'),
+                  ],
+                ),
                 onPressed: dwStore.state.characters.characters.isNotEmpty
                     ? _deleteCharacter
                     : null,

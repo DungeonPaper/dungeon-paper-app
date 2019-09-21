@@ -1,41 +1,44 @@
 import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
 
-class BetweenValuesTextFormatter<T extends num> extends TextInputFormatter {
-  final T min;
-  final T max;
-  final bool allowNull;
+enum FormatType { Integer, Decimal }
 
-  BetweenValuesTextFormatter(this.min, this.max, {this.allowNull = true});
+class BetweenValuesTextFormatter extends TextInputFormatter {
+  final num min;
+  final num max;
+  final bool allowNull;
+  final FormatType formatType;
+
+  BetweenValuesTextFormatter(
+    this.min,
+    this.max, {
+    this.allowNull = true,
+    this.formatType = FormatType.Integer,
+  });
 
   @override
   TextEditingValue formatEditUpdate(
       TextEditingValue oldValue, TextEditingValue newValue) {
     try {
-      T newNum;
-      newNum = T is int
-          ? int.parse(newValue.text) as T
-          : double.tryParse(newValue.text) as T;
-      String newNumString = newNum.toString();
+      num newNum = double.tryParse(newValue.text);
+      if (newNum == null ||
+          (formatType == FormatType.Integer && newValue.text.contains('.')))
+        throw FormatException();
       if (newNum < min || newNum > max) {
         return oldValue;
       }
-      return TextEditingValue(
-        selection: newNumString != newValue.text
-            ? TextSelection(
-                baseOffset: newNumString.length,
-                extentOffset: newNumString.length,
-              )
-            : newValue.selection,
-        composing: newValue.composing,
-        text: newNumString,
-      );
+      return newValue;
     } on FormatException {
-      if (newValue.text == '' && this.allowNull) {
+      if (newValue.text == '' ||
+          (newValue.text.endsWith('.') && newValue.text.length > 0) &&
+              (min < 0 && newValue.text.trim() == '-') &&
+              this.allowNull) {
         return newValue;
       }
-      return oldValue;
+    } on Error catch (e) {
+      print(e);
     }
+    return oldValue;
   }
 }
 
