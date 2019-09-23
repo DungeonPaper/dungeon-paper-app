@@ -58,7 +58,7 @@ class _ChangeLooksDialogState extends State<ChangeLooksDialog> {
 
   @override
   Widget build(BuildContext context) {
-    var looksMap = widget.character.mainClass.looks;
+    List<List<String>> looksMap = widget.character.mainClass.looks;
     Widget child = CategorizedList<int>.builder(
       itemCount: (key, i) => looksMap[key].length,
       categories: looksMap.asMap().keys,
@@ -90,8 +90,8 @@ class _ChangeLooksDialogState extends State<ChangeLooksDialog> {
       return widget.builder(
         context: context,
         child: child,
-        save: () => changeLooks(selected),
-        isValid: isValid,
+        save: _save,
+        isValid: _isValid,
         wrapWithScrollable: false,
       );
     }
@@ -103,10 +103,15 @@ class _ChangeLooksDialogState extends State<ChangeLooksDialog> {
     widget.onSave(widget.character, [CharacterKeys.looks]);
   }
 
-  bool isValid() {
+  bool _isValid() {
     return true;
     // return selected.length == widget.character.mainClass.looks.length &&
     //     selected.every((s) => s != null && s.isNotEmpty);
+  }
+
+  void _save() {
+    List<String> filtered = selected.where((s) => s != null && s.isNotEmpty).toList();
+    changeLooks(filtered);
   }
 }
 
