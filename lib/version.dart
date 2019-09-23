@@ -58,6 +58,14 @@ class SemVer {
     return major < actual.major || minor < actual.minor || patch < actual.patch;
   }
 
+  bool operator >=(dynamic ver) {
+    return this == ver || this > ver;
+  }
+
+  bool operator <=(dynamic ver) {
+    return this == ver || this < ver;
+  }
+
   @override
   String toString() => "$major.$minor.$patch";
 }
@@ -70,8 +78,8 @@ class ChangelogParser {
     this.changelog,
   });
 
-  static Map<SemVer, List<String>> parseString(String changelog) {
-    Map<SemVer, List<String>> output = {};
+  static Map<SemVer, String> parseString(String changelog) {
+    Map<SemVer, String> output = {};
     SemVer cur;
     for (String line in changelog.split('\n')) {
       if (line.trim().startsWith(RegExp('#\b')) || line.trim() == "") continue;
@@ -86,12 +94,12 @@ class ChangelogParser {
       }
 
       // message line
-      if (RegExp('\\*\s*').matchAsPrefix(line.trim()) != null) {
-        String message = line.trim().substring(1).trim();
-        if (!output.containsKey(cur)) output[cur] = [];
-        output[cur].add(message);
-        continue;
-      }
+      // if (RegExp('\\*\s*').matchAsPrefix(line.trim()) != null) {
+      String message = line; // .trim().substring(1).trim();
+      if (!output.containsKey(cur)) output[cur] = "";
+      output[cur] += message;
+      continue;
+      // }
     }
 
     return output;

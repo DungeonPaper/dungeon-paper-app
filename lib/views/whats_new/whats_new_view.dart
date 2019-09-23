@@ -58,7 +58,7 @@ class WhatsNew extends StatefulWidget {
 }
 
 class _WhatsNewState extends State<WhatsNew> {
-  Map<SemVer, List<String>> changelog;
+  Map<SemVer, String> changelog;
   String changelogUrl;
   SemVer currentVersion;
 
@@ -99,7 +99,8 @@ class _WhatsNewState extends State<WhatsNew> {
   }
 
   String mapped(SemVer ver) {
-    if (changelog == null || changelog[ver] == null) return "";
+    if (changelog == null) return "";
+    if (changelog[ver] == null) ver = changelog.keys.firstWhere((k) => k <= ver);
     var keys = changelog.keys;
     var verIdx = keys.toList().indexOf(ver);
     SemVer prevVersion;
@@ -113,7 +114,7 @@ class _WhatsNewState extends State<WhatsNew> {
 
   String _verString(SemVer v) {
     String prefix = v == currentVersion ? '' : 'Previous ';
-    return "## ${prefix}Version $v\n\n" + changelog[v].map((s) => '* $s').join('\n');
+    return "## ${prefix}Version $v\n\n" + changelog[v];
   }
 
   void _initChangelog() async {
@@ -134,7 +135,8 @@ class _WhatsNewState extends State<WhatsNew> {
   }
 
   Future<void> _getChangelog() async {
-    var res = await http.get(changelogUrl);
+    var client = http.Client();
+    var res = await client.post(Uri.parse(changelogUrl));
     setState(() {
       changelog = ChangelogParser.parseString(res.body);
     });

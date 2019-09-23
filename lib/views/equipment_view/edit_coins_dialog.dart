@@ -21,7 +21,7 @@ class EditCoinsDialog extends StatefulWidget {
 }
 
 class EditCoinsDialogState extends State<EditCoinsDialog> {
-  num value;
+  double value;
   TextEditingController _controller;
   bool valueError = false;
 
