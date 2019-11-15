@@ -1,9 +1,8 @@
 import 'package:dungeon_paper/redux/stores/prefs_store.dart';
 import 'package:dungeon_paper/views/whats_new/whats_new_view.dart';
 import 'package:package_info/package_info.dart';
+import 'package:pub_semver/pub_semver.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-
-import '../../version.dart';
 import '../../widget_utils.dart';
 import '../battle_view/battle_view.dart';
 import '../../db/character.dart';
@@ -143,11 +142,11 @@ class _MainViewState extends State<MainView> {
     PackageInfo packageInfo = await PackageInfo.fromPlatform();
     SharedPreferences sharedPrefs = await SharedPreferences.getInstance();
     String lastVersionKey = enumName(SharedPrefKeys.LastOpenedVersion);
-    SemVer lastViewedAt;
+    Version lastViewedAt;
     if (sharedPrefs.containsKey(lastVersionKey)) {
-      lastViewedAt = SemVer.from(sharedPrefs.getString(lastVersionKey));
+      lastViewedAt = Version.parse(sharedPrefs.getString(lastVersionKey));
     }
-    if (lastViewedAt == null || lastViewedAt < SemVer.from(packageInfo.version))
+    if (lastViewedAt == null || lastViewedAt < Version.parse(packageInfo.version))
       showDialog(
         context: context,
         builder: (context) => WhatsNew.dialog(),

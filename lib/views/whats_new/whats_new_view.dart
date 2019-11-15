@@ -1,4 +1,5 @@
 import 'package:dungeon_paper/widget_utils.dart';
+import 'package:pub_semver/pub_semver.dart';
 
 import '../../components/standard_dialog_controls.dart';
 import '../../utils.dart';
@@ -58,9 +59,10 @@ class WhatsNew extends StatefulWidget {
 }
 
 class _WhatsNewState extends State<WhatsNew> {
-  Map<SemVer, String> changelog;
+  Map<Version, String> changelog;
   String changelogUrl;
-  SemVer currentVersion;
+  Version currentVersion;
+  bool error = false;
 
   @override
   void initState() {
@@ -74,11 +76,16 @@ class _WhatsNewState extends State<WhatsNew> {
     Widget child;
     if (currentVersion == null ||
         changelog == null ||
-        changelog[currentVersion] == null)
+        changelog[currentVersion] == null) if (!error)
       child = Container(
         width: 150,
         height: 150,
         child: Center(child: PageLoader()),
+      );
+    else
+      child = Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 24.0),
+        child: Text("Looks like we had a problem fetching the changelog. Try later!"),
       );
     else
       child = Column(
@@ -98,21 +105,22 @@ class _WhatsNewState extends State<WhatsNew> {
     return child;
   }
 
-  String mapped(SemVer ver) {
+  String mapped(Version ver) {
     if (changelog == null) return "";
-    if (changelog[ver] == null) ver = changelog.keys.firstWhere((k) => k <= ver);
+    if (changelog[ver] == null)
+      ver = changelog.keys.firstWhere((k) => k <= ver);
     var keys = changelog.keys;
     var verIdx = keys.toList().indexOf(ver);
-    SemVer prevVersion;
+    Version prevVersion;
     if (verIdx < keys.length - 1) prevVersion = keys.elementAt(verIdx + 1);
-    List<SemVer> versions = [
+    List<Version> versions = [
       ver,
       if (prevVersion != null) prevVersion,
     ];
-    return versions.map(_verString).toList().join('\n');
+    return versions.map(_verString).toList().join('\n\n');
   }
 
-  String _verString(SemVer v) {
+  String _verString(Version v) {
     String prefix = v == currentVersion ? '' : 'Previous ';
     return "## ${prefix}Version $v\n\n" + changelog[v];
   }
@@ -125,7 +133,7 @@ class _WhatsNewState extends State<WhatsNew> {
   void _getCurrentVersion() async {
     var packageInfo = await PackageInfo.fromPlatform();
     setState(() {
-      currentVersion = SemVer.from(packageInfo.version);
+      currentVersion = Version.parse(packageInfo.version);
     });
   }
 
@@ -135,8 +143,14 @@ class _WhatsNewState extends State<WhatsNew> {
   }
 
   Future<void> _getChangelog() async {
-    var client = http.Client();
-    var res = await client.post(Uri.parse(changelogUrl));
+    http.Client client = http.Client();
+    http.Response res = await client.post(Uri.parse(changelogUrl));
+    if (res.statusCode != 200) {
+      setState(() {
+        error = true;
+      });
+      return;
+    }
     setState(() {
       changelog = ChangelogParser.parseString(res.body);
     });
