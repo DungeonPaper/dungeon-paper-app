@@ -1,6 +1,5 @@
 import 'package:dungeon_paper/widget_utils.dart';
 import 'package:pub_semver/pub_semver.dart';
-
 import '../../components/standard_dialog_controls.dart';
 import '../../utils.dart';
 import '../../version.dart';
@@ -74,20 +73,21 @@ class _WhatsNewState extends State<WhatsNew> {
   @override
   Widget build(BuildContext context) {
     Widget child;
-    if (currentVersion == null ||
-        changelog == null ||
-        changelog[currentVersion] == null) if (!error)
-      child = Container(
-        width: 150,
-        height: 150,
-        child: Center(child: PageLoader()),
-      );
-    else
-      child = Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 24.0),
-        child: Text("Looks like we had a problem fetching the changelog. Try later!"),
-      );
-    else
+    if (currentVersion == null || changelog == null) {
+      if (!error) {
+        child = Container(
+          width: 150,
+          height: 150,
+          child: Center(child: PageLoader()),
+        );
+      } else {
+        child = Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 24.0),
+          child: Text(
+              "Looks like we had a problem fetching the changelog. Try later!"),
+        );
+      }
+    } else {
       child = Column(
         children: <Widget>[
           Padding(
@@ -100,6 +100,7 @@ class _WhatsNewState extends State<WhatsNew> {
           ),
         ],
       );
+    }
 
     if (widget.builder != null) return widget.builder(context, child);
     return child;
@@ -109,8 +110,8 @@ class _WhatsNewState extends State<WhatsNew> {
     if (changelog == null) return "";
     if (changelog[ver] == null)
       ver = changelog.keys.firstWhere((k) => k <= ver);
-    var keys = changelog.keys;
-    var verIdx = keys.toList().indexOf(ver);
+    Iterable<Version> keys = changelog.keys;
+    int verIdx = keys.toList().indexOf(ver);
     Version prevVersion;
     if (verIdx < keys.length - 1) prevVersion = keys.elementAt(verIdx + 1);
     List<Version> versions = [
@@ -131,7 +132,7 @@ class _WhatsNewState extends State<WhatsNew> {
   }
 
   void _getCurrentVersion() async {
-    var packageInfo = await PackageInfo.fromPlatform();
+    PackageInfo packageInfo = await PackageInfo.fromPlatform();
     setState(() {
       currentVersion = Version.parse(packageInfo.version);
     });
