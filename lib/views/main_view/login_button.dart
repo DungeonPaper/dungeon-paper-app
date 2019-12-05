@@ -42,7 +42,7 @@ class LoginButtonState extends State<LoginButton> {
   Function() _handleSignIn(BuildContext context) {
     return () async {
       try {
-        var user = await requestSignInWithCredentials();
+        var user = await auth.signInWithGoogle();
         if (user == null) {
           throw ('user_canceled');
         }

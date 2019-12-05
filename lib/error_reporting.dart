@@ -1,6 +1,6 @@
 import 'dart:async';
-
 import 'package:dungeon_paper/utils.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/widgets.dart';
 import 'package:sentry/sentry.dart';
 
@@ -32,4 +32,12 @@ Future<void> reportError(dynamic error, dynamic stackTrace) async {
       stackTrace: stackTrace,
     );
   }
+}
+
+registerUserContext(FirebaseUser user) {
+  sentry.userContext = User(
+    email: user.email,
+    id: user.uid,
+    username: user.displayName,
+  );
 }

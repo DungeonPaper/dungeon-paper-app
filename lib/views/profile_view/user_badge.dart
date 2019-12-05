@@ -87,7 +87,7 @@ class UserBadgeState extends State<UserBadge> {
 
   void _handleSignIn() async {
     try {
-      var user = await requestSignInWithCredentials();
+      var user = await auth.signInWithGoogle();
       if (user == null) {
         throw ('user_canceled');
       }
@@ -108,7 +108,7 @@ class UserBadgeState extends State<UserBadge> {
   }
 
   _handleSignOut() async {
-    requestSignOut();
+    await auth.requestSignOut();
     if (onUserChange != null) {
       onUserChange();
     }
