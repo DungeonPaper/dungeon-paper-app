@@ -1,6 +1,7 @@
 import 'package:dungeon_paper/db/auth.dart';
 import 'package:dungeon_paper/redux/actions.dart';
 import 'package:dungeon_paper/redux/stores/stores.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 enum SharedPrefKeys {
@@ -25,6 +26,17 @@ class Credentials {
   String idToken;
 
   Credentials({this.accessToken, this.idToken});
+
+  AuthCredential get googleCredentials => GoogleAuthProvider.getCredential(
+        accessToken: accessToken,
+        idToken: idToken,
+      );
+
+  bool get isEmpty =>
+      accessToken == null ||
+      accessToken == '' ||
+      idToken == null ||
+      idToken == '';
 }
 
 class UserDetails {
@@ -58,7 +70,11 @@ class PrefsStore {
     );
 
     dwStore.dispatch(SetPrefs(store));
-    performSignIn();
+    if (!store.credentials.isEmpty) {
+      FirebaseUser user =
+          await auth.getFirebaseUser(store.credentials.googleCredentials);
+      if (user == null) await auth.signInWithGoogle();
+    }
     return store;
   }
 }

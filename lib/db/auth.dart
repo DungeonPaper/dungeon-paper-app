@@ -4,69 +4,66 @@ import 'package:dungeon_paper/redux/actions.dart';
 import 'package:dungeon_paper/redux/stores/stores.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
-import 'package:sentry/sentry.dart';
 import '../error_reporting.dart';
 import 'character_db.dart';
 
-FirebaseAuth auth = FirebaseAuth.instance;
-final GoogleSignIn _googleSignIn = new GoogleSignIn();
+class PaperAuth {
+  final GoogleSignIn _gg = GoogleSignIn();
+  final FirebaseAuth _fb = FirebaseAuth.instance;
 
-performSignIn() async {
-  String accessToken = dwStore.state.prefs.credentials.accessToken;
-  String idToken = dwStore.state.prefs.credentials.idToken;
-
-  if (accessToken == null || idToken == null) {
-    dwStore.dispatch(UserActions.noLogin());
-    return null;
-  }
-
-  dwStore.dispatch(UserActions.requestLogin());
-  try {
-    AuthCredential creds = GoogleAuthProvider.getCredential(
-      accessToken: accessToken,
-      idToken: idToken,
-    );
-
-    FirebaseUser user = await auth.signInWithCredential(creds);
-    await setCurrentUser(user);
-    registerAuthUserListener();
-    sentry.userContext = User(
-      email: user.email,
-      id: user.uid,
-      username: user.displayName,
-    );
-    return user;
-  } catch (e) {
-    dwStore.dispatch(UserActions.noLogin());
-    print(e);
-    return null;
-  }
-}
-
-Future requestSignInWithCredentials() async {
-  try {
-    GoogleSignInAccount googleUser = await _googleSignIn.signIn();
-    if (googleUser == null) {
-      throw 'user_canceled';
-    }
+  void _prepSignIn() {
     dwStore.dispatch(UserActions.requestLogin());
-    GoogleSignInAuthentication googleAuth = await googleUser.authentication;
-    dwStore.dispatch(UserActions.giveCredentials(
-        googleAuth.idToken, googleAuth.accessToken));
+  }
 
-    return performSignIn();
-  } catch (e) {
+  void _cancelSignIn() {
     dwStore.dispatch(UserActions.noLogin());
-    if (e != 'user_canceled') {
-      throw e;
+  }
+
+  Future<FirebaseUser> getFirebaseUser(AuthCredential creds) async {
+    _prepSignIn();
+    try {
+      FirebaseUser user = await _fb.signInWithCredential(creds);
+      await setCurrentUser(user);
+      registerAuthUserListener();
+      registerUserContext(user);
+      return user;
+    } catch (e) {
+      _cancelSignIn();
+      print(e);
+      return null;
     }
-    return null;
+  }
+
+  Future<AuthCredential> signInWithGoogle() async {
+    _prepSignIn();
+    try {
+      GoogleSignInAccount googleUser = await _gg.signInSilently();
+
+      if (googleUser == null) {
+        googleUser = await _gg.signIn();
+
+        if (googleUser == null) throw 'user_canceled';
+      }
+
+      GoogleSignInAuthentication googleAuth = await googleUser.authentication;
+
+      dwStore.dispatch(UserActions.giveCredentials(
+          googleAuth.idToken, googleAuth.accessToken));
+
+      return GoogleAuthProvider.getCredential(
+          idToken: googleAuth.idToken, accessToken: googleAuth.accessToken);
+    } catch (e) {
+      _cancelSignIn();
+      print(e);
+      return null;
+    }
+  }
+
+  requestSignOut() async {
+    await _gg.signOut();
+    unsetCurrentCharacter();
+    unsetCurrentUser();
   }
 }
 
-requestSignOut() async {
-  await _googleSignIn.signOut();
-
-  unsetCurrentCharacter();
-  unsetCurrentUser();
-}
+PaperAuth auth = PaperAuth();

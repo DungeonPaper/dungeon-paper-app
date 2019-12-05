@@ -44,7 +44,11 @@ class _EditHPDialogState extends State<EditHPDialog> {
 
   @override
   Widget build(BuildContext context) {
-    var title = Row(
+    final Map<HPMode, String> hpTitles = {
+      HPMode.HP: 'HP' + (currentHP != widget.character.currentHP ? ' *' : ''),
+      HPMode.MaxHP: 'Max HP' + (maxHP != widget.character.maxHP ? ' *' : ''),
+    };
+    final Widget title = Row(
       children: <Widget>[
         Expanded(child: Text('Manage HP')),
         Text(
@@ -55,15 +59,13 @@ class _EditHPDialogState extends State<EditHPDialog> {
         DropdownButton(
           value: mode,
           onChanged: changeMode,
-          items: [
-            DropdownMenuItem(
-                value: HPMode.HP,
-                child: Text('HP' +
-                    (currentHP != widget.character.currentHP ? ' *' : ''))),
-            DropdownMenuItem(
-                value: HPMode.MaxHP,
-                child: Text(
-                    'Max HP' + (maxHP != widget.character.maxHP ? ' *' : ''))),
+          items:
+          [
+            for (HPMode mode in hpTitles.keys)
+              DropdownMenuItem(
+                value: mode,
+                child: Text(hpTitles[mode]),
+              ),
           ],
         ),
       ],

@@ -84,7 +84,7 @@ class Sidebar extends StatelessWidget {
                 title: Text('Log out'),
                 onTap: () {
                   Navigator.pop(context);
-                  requestSignOut();
+                  auth.requestSignOut();
                 },
               ),
             ];
