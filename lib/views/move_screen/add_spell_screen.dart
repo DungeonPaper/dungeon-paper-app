@@ -1,35 +1,34 @@
-import '../../db/character.dart';
+import 'package:dungeon_paper/db/spells.dart';
 import '../../components/dialogs.dart';
-import 'add_move_list.dart';
-import 'custom_move_form.dart';
-import '../../redux/stores/stores.dart';
-import 'package:dungeon_world_data/move.dart';
+import 'add_spell_list.dart';
 import 'package:flutter/material.dart';
 
-class AddMoveScreen extends StatefulWidget {
-  const AddMoveScreen({
+import 'custom_spell_screen.dart';
+
+class AddSpellScreen extends StatefulWidget {
+  const AddSpellScreen({
     Key key,
     @required this.index,
-    @required this.move,
+    @required this.spell,
     @required this.mode,
   }) : super(key: key);
 
   final num index;
-  final Move move;
+  final DbSpell spell;
   final DialogMode mode;
 
   @override
-  AddMoveScreenState createState() => AddMoveScreenState();
+  AddSpellScreenState createState() => AddSpellScreenState();
 }
 
-class AddMoveScreenState extends State<AddMoveScreen>
+class AddSpellScreenState extends State<AddSpellScreen>
     with SingleTickerProviderStateMixin {
   TabController _controller;
-  AddMoveScreenState() {
+  AddSpellScreenState() {
     _controller = TabController(vsync: this, length: texts.length);
   }
 
-  final List<String> texts = ['Class Moves', 'Custom Move'];
+  final List<String> texts = ['Spellbook', 'Custom Spell'];
   int tabIdx = 0;
 
   @override
@@ -44,12 +43,10 @@ class AddMoveScreenState extends State<AddMoveScreen>
 
   @override
   Widget build(BuildContext context) {
-    DbCharacter character = dwStore.state.characters.current;
-
-    return CustomMoveFormBuilder(
+    return CustomSpellFormBuilder(
       mode: widget.mode,
       index: widget.index,
-      move: widget.move,
+      spell: widget.spell,
       builder: (ctx, form, onSave) {
         List<Widget> actions = <Widget>[
           IconButton(
@@ -71,10 +68,8 @@ class AddMoveScreenState extends State<AddMoveScreen>
           children: <Widget>[
             Container(
               color: Theme.of(context).scaffoldBackgroundColor,
-              child: AddMoveList(
-                key: PageStorageKey<String>(texts[0]),
-                level: character.level,
-                playerClass: character.mainClass,
+              child: AddSpellList(
+                key: PageStorageKey<String>(texts[1]),
               ),
             ),
             formContainer,
@@ -92,7 +87,7 @@ class AddMoveScreenState extends State<AddMoveScreen>
         );
         var appBar = AppBar(
           title:
-              Text('${widget.mode == DialogMode.Create ? 'Add' : 'Edit'} Move'),
+              Text('${widget.mode == DialogMode.Create ? 'Add' : 'Edit'} Spell'),
           actions: tabIdx == 1 || widget.mode == DialogMode.Edit ? actions : [],
         );
 
