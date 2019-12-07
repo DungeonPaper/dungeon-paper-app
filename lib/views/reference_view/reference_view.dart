@@ -17,10 +17,10 @@ class ReferenceView extends StatelessWidget {
     }..removeWhere((k, v) => v.isEmpty);
 
     return CategorizedList.builder(
-      categories: categories.keys,
+      items: categories.keys,
       itemCount: (key, idx) => categories[key].length,
       titleBuilder: (ctx, key, idx) => Text(key),
-      itemBuilder: (ctx, key, idx) {
+      itemBuilder: (ctx, key, idx, catI) {
         List moves = categories[key];
         return Padding(
           padding: const EdgeInsets.symmetric(vertical: 8),
@@ -29,7 +29,6 @@ class ReferenceView extends StatelessWidget {
                   key: PageStorageKey('$key-$idx'),
                   index: idx,
                   move: moves[idx],
-                  mode: MoveCardMode.Fixed,
                 )
               : moves.first is Spell
                   ? SpellCard(

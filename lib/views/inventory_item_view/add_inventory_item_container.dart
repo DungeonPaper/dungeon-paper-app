@@ -15,7 +15,8 @@ class AddInventoryItemContainer extends StatefulWidget {
   final DialogMode mode;
 
   @override
-  AddInventoryItemContainerState createState() => AddInventoryItemContainerState();
+  AddInventoryItemContainerState createState() =>
+      AddInventoryItemContainerState();
 }
 
 class AddInventoryItemContainerState extends State<AddInventoryItemContainer>
@@ -23,26 +24,23 @@ class AddInventoryItemContainerState extends State<AddInventoryItemContainer>
   TabController _controller;
   String search = '';
 
-  AddInventoryItemContainerState() {
-    _controller = TabController(vsync: this, length: texts.length);
-  }
-
   final List<String> texts = ['Item List', 'Custom Item'];
   int tabIdx = 0;
 
   @override
   void initState() {
-    _controller.addListener(() {
-      setState(() {
-        tabIdx = _controller.index;
+    _controller = TabController(vsync: this, length: texts.length)
+      ..addListener(() {
+        setState(() {
+          tabIdx = _controller.index;
+        });
       });
-    });
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
-    return CustomInventoryItemFormBuilder(
+    return CustomInventoryItemForm(
       mode: widget.mode,
       item: widget.item,
       builder: (ctx, form, onSave) {
@@ -91,14 +89,12 @@ class AddInventoryItemContainerState extends State<AddInventoryItemContainer>
         );
 
         var list = <Widget>[
+          if (widget.mode == DialogMode.Create) tabBar,
           Expanded(
             child:
                 widget.mode == DialogMode.Create ? tabBarView : formContainer,
           ),
         ];
-        if (widget.mode == DialogMode.Create) {
-          list.insert(0, tabBar);
-        }
 
         return Scaffold(
           appBar: appBar,

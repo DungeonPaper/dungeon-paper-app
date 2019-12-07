@@ -5,7 +5,7 @@ import '../flutter_utils.dart';
 
 class NumberController extends StatefulWidget {
   final num value;
-  final VoidCallbackFunc<num> onChange;
+  final VoidCallbackDelegate<num> onChange;
   final double height;
   final num min;
   final num max;

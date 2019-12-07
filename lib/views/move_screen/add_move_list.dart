@@ -8,7 +8,14 @@ import 'package:flutter/material.dart';
 class AddMoveList extends StatefulWidget {
   final PlayerClass playerClass;
   final num level;
-  AddMoveList({Key key, @required this.playerClass, @required this.level});
+  final void Function(Move move) onSave;
+
+  AddMoveList({
+    Key key,
+    @required this.playerClass,
+    @required this.level,
+    @required this.onSave,
+  });
 
   @override
   _AddMoveListState createState() => _AddMoveListState();
@@ -32,11 +39,11 @@ class _AddMoveListState extends State<AddMoveList> {
     const LEADING_KEY = '';
 
     return CategorizedList.builder(
-      categories: [LEADING_KEY] + moves.keys.map((k) => k.toString()).toList(),
+      items: [LEADING_KEY] + moves.keys.map((k) => k.toString()).toList(),
       titleBuilder: (ctx, minLevel, idx) => minLevel != LEADING_KEY
           ? Text("Levels $minLevel-${int.parse(minLevel) + 4}")
           : null,
-      itemBuilder: (ctx, key, idx) {
+      itemBuilder: (ctx, key, idx, catI) {
         if (key == LEADING_KEY) {
           return Row(
             children: <Widget>[
@@ -69,6 +76,7 @@ class _AddMoveListState extends State<AddMoveList> {
             index: -1,
             move: moves[int.parse(key)].elementAt(idx),
             mode: MoveCardMode.Addable,
+            onSave: widget.onSave,
           ),
         );
       },
