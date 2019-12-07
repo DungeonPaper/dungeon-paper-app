@@ -3,7 +3,7 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart' show rootBundle;
 
-capitalize(String string, [String sep = ' ']) {
+String capitalize(String string, [String sep = ' ']) {
   return string.splitMapJoin(RegExp(sep),
       onMatch: (s) =>
           s.input[s.start].toUpperCase() +
