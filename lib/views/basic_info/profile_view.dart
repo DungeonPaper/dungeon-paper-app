@@ -20,7 +20,7 @@ class ProfileView extends StatelessWidget {
   Widget build(BuildContext context) {
     return OrientationBuilder(builder: (context, orientation) {
       List<Widget> children = [
-        CharacterHeader(character: character),
+        PhotoAndSummary(character: character),
         ArmorAndHitDice(character: character),
         StatusBars(character: character),
         BaseStats(character: character),
@@ -44,10 +44,10 @@ class ProfileView extends StatelessWidget {
   }
 }
 
-class CharacterHeader extends StatelessWidget {
+class PhotoAndSummary extends StatelessWidget {
   final bool editable;
 
-  const CharacterHeader({
+  const PhotoAndSummary({
     Key key,
     this.editable = true,
     @required this.character,

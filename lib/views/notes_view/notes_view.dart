@@ -24,10 +24,10 @@ class NotesView extends StatelessWidget {
 
     return CategorizedList<NoteCategory>.builder(
       itemCount: (cat, idx) => cats[cat].length,
-      categories: cats.keys,
+      items: cats.keys,
       spacerCount: 1,
       titleBuilder: (context, cat, idx) => Text(cat.name),
-      itemBuilder: (context, cat, idx) => Padding(
+      itemBuilder: (context, cat, idx, catI) => Padding(
             padding: const EdgeInsets.symmetric(vertical: 8.0),
             child: NoteCard(
               key: Key(cats[cat].elementAt(idx).key),

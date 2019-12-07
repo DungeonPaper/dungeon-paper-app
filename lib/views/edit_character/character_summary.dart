@@ -125,7 +125,7 @@ class AlignmentSummary extends StatelessWidget {
       margin: EdgeInsets.all(0),
       color: Theme.of(context).canvasColor.withOpacity(0.5),
       leading: Icon(icon, size: 40),
-      title: Text(alignment.name),
+      title: Text(alignment.name ?? 'No Alignment'),
       subtitle:
           alignment.description != null ? Text(alignment.description) : null,
     );

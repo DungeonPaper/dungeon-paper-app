@@ -95,15 +95,16 @@ class _MainViewState extends State<MainView> {
 
   @override
   Widget build(BuildContext context) {
-    PageView homeWidget = PageView.builder(
+    Widget homeWidget = PageView(
       controller: widget.pageController,
-      itemBuilder: (context, idx) => widget.character == null
-          ? Welcome(
-              loading: widget.loading,
-              pageController: widget.pageController,
-            )
-          : pages[idx],
-      itemCount: widget.character == null ? 1 : pages.length,
+      children: widget.character != null
+          ? pages
+          : [
+              Welcome(
+                loading: widget.loading,
+                pageController: widget.pageController,
+              )
+            ],
     );
     return Scaffold(
       appBar: AppBar(

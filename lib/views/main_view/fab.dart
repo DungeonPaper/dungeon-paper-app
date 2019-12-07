@@ -12,7 +12,10 @@ import 'package:flutter/material.dart';
 class FAB extends StatefulWidget {
   final PageController pageController;
 
-  const FAB({Key key, this.pageController}) : super(key: key);
+  const FAB({
+    Key key,
+    this.pageController,
+  }) : super(key: key);
 
   @override
   FABState createState() => FABState(pageController: pageController);

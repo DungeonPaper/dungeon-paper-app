@@ -9,6 +9,10 @@ class ScaffoldWithElevation extends StatefulWidget {
   final bool _isThemePrimaryColor;
   final Widget appBarLeading;
   final bool wrapWithScrollable;
+  final bool elevateAfterScrolling;
+  final Widget bottomNavigationBar;
+  final Widget bottomSheet;
+  final ScrollController scrollController;
 
   const ScaffoldWithElevation({
     Key key,
@@ -19,6 +23,10 @@ class ScaffoldWithElevation extends StatefulWidget {
     this.backgroundColor,
     this.appBarLeading,
     this.wrapWithScrollable = true,
+    this.elevateAfterScrolling = true,
+    this.bottomNavigationBar,
+    this.bottomSheet,
+    this.scrollController,
   })  : _isThemePrimaryColor = false,
         super(key: key);
 
@@ -30,6 +38,10 @@ class ScaffoldWithElevation extends StatefulWidget {
     this.actions,
     this.appBarLeading,
     this.wrapWithScrollable = true,
+    this.elevateAfterScrolling = true,
+    this.bottomNavigationBar,
+    this.bottomSheet,
+    this.scrollController,
   })  : backgroundColor = null,
         _isThemePrimaryColor = true,
         super(key: key);
@@ -39,13 +51,15 @@ class ScaffoldWithElevation extends StatefulWidget {
 }
 
 class _ScaffoldWithElevationState extends State<ScaffoldWithElevation> {
-  ScrollController scrollController = ScrollController();
+  ScrollController scrollController;
   double appBarElevation = 0.0;
 
   @override
   void initState() {
-    scrollController.addListener(scrollListener);
     super.initState();
+    scrollController = (widget.scrollController ?? ScrollController())
+      ..addListener(scrollListener);
+    if (!widget.elevateAfterScrolling) appBarElevation = 1.0;
   }
 
   @override
@@ -56,6 +70,7 @@ class _ScaffoldWithElevationState extends State<ScaffoldWithElevation> {
 
   void scrollListener() {
     double newElevation = scrollController.offset > 16.0 ? 1.0 : 0.0;
+    if (!widget.elevateAfterScrolling) return;
     if (newElevation != appBarElevation) {
       setState(() {
         appBarElevation = newElevation;
@@ -65,13 +80,12 @@ class _ScaffoldWithElevationState extends State<ScaffoldWithElevation> {
 
   @override
   Widget build(BuildContext context) {
-    Widget wrappedChild =
-        !widget.wrapWithScrollable
-            ? widget.child
-            : SingleChildScrollView(
-                controller: scrollController,
-                child: widget.child,
-              );
+    Widget wrappedChild = !widget.wrapWithScrollable
+        ? widget.child
+        : SingleChildScrollView(
+            controller: scrollController,
+            child: widget.child,
+          );
     return Scaffold(
       backgroundColor: widget._isThemePrimaryColor
           ? Theme.of(context).primaryColor
@@ -84,6 +98,8 @@ class _ScaffoldWithElevationState extends State<ScaffoldWithElevation> {
         leading: widget.appBarLeading,
       ),
       body: wrappedChild,
+      bottomNavigationBar: widget.bottomNavigationBar,
+      bottomSheet: widget.bottomSheet,
     );
   }
 }
