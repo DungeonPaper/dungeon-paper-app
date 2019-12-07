@@ -3,6 +3,8 @@
 ## 1.0.9
 * Better auth renewal
 * Better edit looks view
+* Split move/spell creation
+* Added spell create/edit screen
 * Bugfixes
 
 ## 1.0.8
