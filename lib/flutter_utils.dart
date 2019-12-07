@@ -43,7 +43,41 @@ class BetweenValuesTextFormatter extends TextInputFormatter {
   }
 }
 
-typedef CallbackFunc<T, R> = R Function(T obj);
-typedef VoidCallbackFunc<T> = void Function(T obj);
-typedef EmptyCallbackFunc<R> = R Function();
-typedef VoidEmptyCallbackFunc = void Function();
+class NumberFormatter extends TextInputFormatter {
+  final String patternDec = "\-?(([0-9]+\.[0-9]*)|[0-9]*)";
+  final String patternInt = "\-?[0-9]*";
+  final FormatType formatType;
+
+  NumberFormatter([this.formatType = FormatType.Integer]);
+  NumberFormatter.int() : formatType = FormatType.Integer;
+  NumberFormatter.dec() : formatType = FormatType.Decimal;
+
+  @override
+  TextEditingValue formatEditUpdate(
+      TextEditingValue oldValue, TextEditingValue newValue) {
+    return WhitelistingTextInputFormatter(RegExp(pattern))
+        .formatEditUpdate(oldValue, newValue);
+  }
+
+  Pattern get pattern =>
+      formatType == FormatType.Integer ? patternInt : patternDec;
+}
+
+typedef CallbackDelegate<T, R> = R Function(T obj);
+typedef VoidCallbackDelegate<T> = void Function(T obj);
+typedef EmptyCallbackDelegate<R> = R Function();
+typedef VoidEmptyCallbackDelegate = void Function();
+
+class SingleChildRow extends StatelessWidget {
+  final Widget child;
+
+  const SingleChildRow({
+    Key key,
+    @required this.child,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(children: [Expanded(child: child)]);
+  }
+}

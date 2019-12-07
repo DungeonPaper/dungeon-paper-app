@@ -82,6 +82,7 @@ enum CharacterKeys {
   looks,
   race,
   coins,
+  lastUpdateDt,
 }
 
 const int MAX_STAT_VALUE = 20;

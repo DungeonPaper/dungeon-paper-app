@@ -12,6 +12,9 @@ String capitalize(String string, [String sep = ' ']) {
           s.isNotEmpty ? s[0].toUpperCase() + s.substring(1) : s);
 }
 
+T noopReturn<T>(T a) => a;
+void noopVoid<T>(T a) {}
+
 double clamp<T extends num>(T number, T low, T high) =>
     max(low * 1.0, min(number * 1.0, high * 1.0));
 
@@ -89,4 +92,19 @@ R Function() pass1<T, R>(R Function(T a) a, T b) =>
 
 Map<V, K> invertMap<K, V>(Map<K, V> map) {
   return map.map((k, v) => MapEntry(v, k));
+}
+
+class Enumeration<T> {
+  final int index;
+  final T value;
+
+  Enumeration(this.index, this.value);
+
+  int get i => index;
+  T get v => value;
+}
+
+Iterable<Enumeration<T>> enumerate<T>(Iterable<T> items) sync* {
+  int idx = 0;
+  for (T item in items) yield Enumeration(idx++, item);
 }
