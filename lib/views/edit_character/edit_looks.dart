@@ -1,4 +1,5 @@
-import '../../components/categorized_list.dart';
+import 'package:dungeon_paper/utils.dart';
+import 'package:flutter_typeahead/flutter_typeahead.dart';
 import '../../components/title_subtitle_row.dart';
 import '../../db/character.dart';
 import '../../db/character_utils.dart';
@@ -43,49 +44,118 @@ class ChangeLooksDialog extends StatefulWidget {
 
 class _ChangeLooksDialogState extends State<ChangeLooksDialog> {
   List<String> selected;
+  List<TextEditingController> _controllers;
+  List<List<String>> looksOptions;
 
   @override
   void initState() {
-    selected = widget.character.looks.isEmpty
-        ? List.generate(widget.character.mainClass.looks.length, (i) => null)
-        : List.generate(
-            widget.character.mainClass.looks.length,
-            (i) => widget.character.looks.length >= i
-                ? widget.character.looks[i]
-                : null);
+    looksOptions = widget.character.mainClass.looks;
+    selected = List.generate(
+        widget.character.looks.isNotEmpty
+            ? widget.character.looks.length
+            : looksOptions.length,
+        (i) => widget.character.looks.isNotEmpty &&
+                widget.character.looks.length >= i
+            ? widget.character.looks[i]
+            : null);
+    _controllers = List.generate(
+      widget.character.looks.isNotEmpty
+          ? widget.character.looks.length
+          : looksOptions.length,
+      (i) => TextEditingController(
+        text: selected[i] ?? '',
+      )..addListener(() {
+          setState(() {
+            selected[i] = _controllers[i].text;
+          });
+        }),
+    );
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
-    List<List<String>> looksMap = widget.character.mainClass.looks;
-    Widget child = CategorizedList<int>.builder(
-      itemCount: (key, i) => looksMap[key].length,
-      categories: looksMap.asMap().keys,
-      itemBuilder: (context, looksCat, lookIdxInCat) => Padding(
-        padding: const EdgeInsets.symmetric(vertical: 8.0),
-        child: TitleSubtitleCard(
-          color: Theme.of(context).canvasColor.withOpacity(
-              selected.length > looksCat &&
-                      selected[looksCat] != null &&
-                      selected[looksCat] != looksMap[looksCat][lookIdxInCat]
-                  ? 0.7
-                  : 1.0),
-          title: Text(looksMap[looksCat][lookIdxInCat]),
-          trailing: selected.length > looksCat &&
-                  selected[looksCat] == looksMap[looksCat][lookIdxInCat]
-              ? Icon(Icons.check)
-              : null,
-          onTap: () => setState(() {
-            if (selected[looksCat] == looksMap[looksCat][lookIdxInCat])
-              selected[looksCat] = '';
-            else
-              selected[looksCat] = looksMap[looksCat][lookIdxInCat];
-          }),
+    Widget child = SingleChildScrollView(
+      child: Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: <Widget>[
+            for (var i = 0; i < selected.length; i++)
+              Card(
+                child: Padding(
+                  padding:
+                      const EdgeInsets.symmetric(vertical: 8, horizontal: 8),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: <Widget>[
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: <Widget>[
+                          Text('Enter a small feature of your appearance.'),
+                          IconButton(
+                              icon: Icon(Icons.delete),
+                              onPressed: () {
+                                _removeRow(i);
+                              }),
+                        ],
+                      ),
+                      TypeAheadField(
+                        textFieldConfiguration: TextFieldConfiguration(
+                          decoration: InputDecoration(
+                            hintText: looksOptions[i % looksOptions.length]
+                                    .take(3)
+                                    .join(', ') +
+                                '...',
+                          ),
+                          controller: _controllers[i],
+                          textCapitalization: TextCapitalization.words,
+                        ),
+                        suggestionsCallback: (term) async => term.isNotEmpty
+                            ? (looksOptions.length > i
+                                    ? looksOptions[i]
+                                    : looksOptions
+                                        .reduce((all, cur) => [...all, ...cur]))
+                                .where(
+                                  (val) => val.toLowerCase().contains(
+                                        term.trim().toLowerCase(),
+                                      ),
+                                )
+                                .map(capitalize)
+                                .toList()
+                            : [],
+                        itemBuilder: (context, val) {
+                          return ListTile(title: Text(val));
+                        },
+                        noItemsFoundBuilder: (context) =>
+                            Container(width: 0, height: 0),
+                        onSuggestionSelected: (val) => _setValue(i, val),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+            Center(
+              child: Padding(
+                padding: const EdgeInsets.all(16.0),
+                child: Container(
+                  width: 50,
+                  height: 50,
+                  child: FloatingActionButton(
+                    backgroundColor: Theme.of(context).canvasColor,
+                    child: Icon(Icons.add),
+                    onPressed: _addRow,
+                  ),
+                ),
+              ),
+            )
+          ],
         ),
       ),
-      titleBuilder: (context, key, i) => Text('Choose one:'),
     );
+
     if (widget.builder != null) {
       return widget.builder(
         context: context,
@@ -103,6 +173,36 @@ class _ChangeLooksDialogState extends State<ChangeLooksDialog> {
     widget.onSave(widget.character, [CharacterKeys.looks]);
   }
 
+  void _setValue(int i, String val) {
+    setState(() {
+      selected[i] = val;
+      _controllers[i].text = val;
+    });
+    print(selected);
+  }
+
+  void _addRow() {
+    setState(() {
+      num i = selected.length;
+      selected.add('');
+      _controllers.add(
+        TextEditingController(text: '')
+          ..addListener(() {
+            setState(() {
+              selected[i] = _controllers[i].text;
+            });
+          }),
+      );
+    });
+  }
+
+  void _removeRow(num i) {
+    setState(() {
+      selected.removeAt(i);
+      _controllers.removeAt(i);
+    });
+  }
+
   bool _isValid() {
     return true;
     // return selected.length == widget.character.mainClass.looks.length &&
@@ -110,7 +210,8 @@ class _ChangeLooksDialogState extends State<ChangeLooksDialog> {
   }
 
   void _save() {
-    List<String> filtered = selected.where((s) => s != null && s.isNotEmpty).toList();
+    List<String> filtered =
+        selected.where((s) => s != null && s.isNotEmpty).toList();
     changeLooks(filtered);
   }
 }
