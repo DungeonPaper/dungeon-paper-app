@@ -30,12 +30,12 @@ class InventoryView extends StatelessWidget {
       itemCount: (ctx, cat) => cat == 0 ? 1 : equipment.length,
       titleBuilder: (ctx, cat, i) => EquipmentTitles[cat],
       itemBuilder: childBuilderDelegator,
-      categories: [EquipmentCats.Stats, EquipmentCats.Items],
+      items: [EquipmentCats.Stats, EquipmentCats.Items],
       spacerCount: 1,
     );
   }
 
-  Widget childBuilderDelegator(BuildContext ctx, dynamic cat, num i) {
+  Widget childBuilderDelegator(BuildContext ctx, dynamic cat, num i, num catI) {
     var equipment = character.inventory;
     if (cat == EquipmentCats.Stats) {
       return Wrap(

@@ -18,7 +18,7 @@ class AddSpellList extends StatelessWidget {
     });
 
     return CategorizedList.builder(
-      categories: spells.keys,
+      items: spells.keys,
       itemCount: (cat, idx) => spells[cat].length,
       titleBuilder: (ctx, cat, idx) {
         var list = spells[cat];
@@ -26,7 +26,7 @@ class AddSpellList extends StatelessWidget {
             ? "Level ${list.first.level}"
             : capitalize(list.first.level));
       },
-      itemBuilder: (ctx, cat, idx) {
+      itemBuilder: (ctx, cat, idx, catI) {
         var spell = spells[cat][idx];
         return Padding(
           padding: EdgeInsets.symmetric(

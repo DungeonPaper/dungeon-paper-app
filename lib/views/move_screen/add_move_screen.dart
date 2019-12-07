@@ -9,14 +9,14 @@ import 'package:flutter/material.dart';
 class AddMoveScreen extends StatefulWidget {
   const AddMoveScreen({
     Key key,
-    @required this.index,
     @required this.move,
     @required this.mode,
+    @required this.onSave,
   }) : super(key: key);
 
-  final num index;
   final Move move;
   final DialogMode mode;
+  final void Function(Move move) onSave;
 
   @override
   AddMoveScreenState createState() => AddMoveScreenState();
@@ -48,8 +48,8 @@ class AddMoveScreenState extends State<AddMoveScreen>
 
     return CustomMoveFormBuilder(
       mode: widget.mode,
-      index: widget.index,
       move: widget.move,
+      onSave: widget.onSave,
       builder: (ctx, form, onSave) {
         List<Widget> actions = <Widget>[
           IconButton(
@@ -75,6 +75,7 @@ class AddMoveScreenState extends State<AddMoveScreen>
                 key: PageStorageKey<String>(texts[0]),
                 level: character.level,
                 playerClass: character.mainClass,
+                onSave: widget.onSave,
               ),
             ),
             formContainer,

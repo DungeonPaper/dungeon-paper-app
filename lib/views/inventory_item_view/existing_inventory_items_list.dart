@@ -92,10 +92,13 @@ class _AddInventoryItemState extends State<AddInventoryItem> {
         Padding(
           padding: const EdgeInsets.only(top: 64.0),
           child: CategorizedList.builder(
-            categories: itemMap.keys.toList()..sort(),
-            itemCount: (key, idx) => itemMap[key].length,
-            titleBuilder: (ctx, key, idx) => Text(key),
-            itemBuilder: (ctx, key, idx) {
+            items: itemMap.keys.toList()
+              ..sort(),
+            itemCount: (key, idx) =>
+                itemMap[key].length,
+            titleBuilder: (ctx, key, idx) =>
+                Text(key),
+            itemBuilder: (ctx, key, idx, catI) {
               var item = itemMap[key][idx];
               return Container(
                 padding: EdgeInsets.symmetric(vertical: 8.0),

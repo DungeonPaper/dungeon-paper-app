@@ -1,5 +1,5 @@
 import 'package:pedantic/pedantic.dart';
-
+import 'package:uuid/uuid.dart';
 import '../../components/markdown_help.dart';
 import '../../components/tags/editable_tag_list.dart';
 import '../../db/inventory_items.dart';
@@ -7,40 +7,41 @@ import '../../components/dialogs.dart';
 import 'package:dungeon_world_data/tag.dart';
 import 'package:flutter/material.dart';
 
-class CustomInventoryItemFormBuilder extends StatefulWidget {
+import '../../widget_utils.dart';
+
+class CustomInventoryItemForm extends StatefulWidget {
   final InventoryItem item;
   final DialogMode mode;
   final Widget Function(BuildContext context, Widget form, Function onSave)
       builder;
   final void Function(InventoryItem move) onUpdateItem;
 
-  CustomInventoryItemFormBuilder({
+  CustomInventoryItemForm({
     Key key,
-    @required this.item,
+    this.item,
     @required this.mode,
     @required this.builder,
     this.onUpdateItem,
   }) : super(key: key);
 
   @override
-  State<StatefulWidget> createState() => CustomInventoryItemFormBuilderState();
+  State<StatefulWidget> createState() => CustomInventoryItemFormState();
 }
 
-class CustomInventoryItemFormBuilderState
-    extends State<CustomInventoryItemFormBuilder> {
+class CustomInventoryItemFormState extends State<CustomInventoryItemForm> {
   Map<String, TextEditingController> _controllers;
   List<Tag> tags;
 
   @override
   void initState() {
-    _controllers = {
-      'name': TextEditingController(text: (widget.item.name ?? '').toString()),
-      'description': TextEditingController(
-          text: (widget.item.description ?? '').toString()),
-      'amount':
-          TextEditingController(text: (widget.item.amount ?? '1').toString()),
-    };
-    tags = List.from(widget.item.tags ?? []);
+    final InventoryItem item = widget.item ?? InventoryItem(key: Uuid().v4());
+    _controllers = WidgetUtils.textEditingControllerMap(map: {
+      'name': EditingControllerConfig(defaultValue: item.name ?? ''),
+      'description':
+          EditingControllerConfig(defaultValue: item.description ?? ''),
+      'amount': EditingControllerConfig(defaultValue: item.amount ?? ''),
+    });
+    tags = List.from(item.tags ?? []);
     super.initState();
   }
 
@@ -96,11 +97,15 @@ class CustomInventoryItemFormBuilderState
       ),
     );
 
-    return widget.builder(
-      context,
-      form,
-      widget.mode == DialogMode.Create ? _createItem : _updateItem,
-    );
+    if (widget.builder != null) {
+      return widget.builder(
+        context,
+        form,
+        widget.mode == DialogMode.Create ? _createItem : _updateItem,
+      );
+    }
+
+    return form;
   }
 
   _updateItem() async {

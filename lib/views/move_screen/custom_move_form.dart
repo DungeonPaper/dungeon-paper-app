@@ -1,26 +1,23 @@
 import 'package:pedantic/pedantic.dart';
 
 import '../../components/markdown_help.dart';
-import '../../db/moves.dart';
 import '../../components/dialogs.dart';
 import 'package:dungeon_world_data/move.dart';
 import 'package:flutter/material.dart';
 
 class CustomMoveFormBuilder extends StatefulWidget {
-  final num index;
   final Move move;
   final DialogMode mode;
   final Widget Function(BuildContext context, Widget form, Function onSave)
       builder;
-  final void Function(Move move) onUpdateMove;
+  final void Function(Move move) onSave;
 
   CustomMoveFormBuilder({
     Key key,
-    @required this.index,
     @required this.move,
     @required this.mode,
     @required this.builder,
-    this.onUpdateMove,
+    @required this.onSave,
   }) : super(key: key);
 
   @override
@@ -99,7 +96,7 @@ class CustomMoveFormBuilderState extends State<CustomMoveFormBuilder> {
     return widget.builder(
       context,
       form,
-      widget.mode == DialogMode.Create ? _createMove : _updateMove,
+      _updateMove,
     );
   }
 
@@ -120,21 +117,10 @@ class CustomMoveFormBuilderState extends State<CustomMoveFormBuilder> {
   }
 
   _updateMove() async {
-    var move = _generateMove();
-    unawaited(updateMove(move));
-    if (widget.onUpdateMove != null) {
-      widget.onUpdateMove(move);
+    Move move = _generateMove();
+    if (widget.onSave != null) {
+      widget.onSave(move);
     }
-    Navigator.pop(context);
-  }
-
-  _createMove() async {
-    var move = _generateMove();
-    unawaited(createMove(move));
-    if (widget.onUpdateMove != null) {
-      widget.onUpdateMove(move);
-    }
-    Navigator.pop(context);
   }
 
   Move _generateMove() {

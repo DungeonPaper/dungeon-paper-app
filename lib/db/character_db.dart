@@ -52,12 +52,17 @@ unsetCurrentCharacter() async {
 Future<DbCharacter> updateCharacter(
     DbCharacter character, List<CharacterKeys> updatedKeys,
     [String docId]) async {
+  if (updatedKeys.isEmpty) {
+    return character;
+  }
   Firestore firestore = Firestore.instance;
 
   final String charDocId = docId ?? dwStore.state.characters.currentCharDocID;
   Map<String, DbCharacter> characters = dwStore.state.characters.characters;
   Map<String, dynamic> json = character.toJSON();
-  Map<String, dynamic> output = {};
+  Map<String, dynamic> output = {
+    enumName(CharacterKeys.lastUpdateDt): Timestamp.now(),
+  };
   updatedKeys.forEach((k) {
     String ck = enumName(k);
     output[ck] = json[ck];

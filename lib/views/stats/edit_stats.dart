@@ -83,14 +83,14 @@ class _EditStatsState extends State<EditStats> {
   }
 
   void Function(num) _valueUpdateBuilder(
-      CallbackFunc<num, VoidEmptyCallbackFunc> setter) {
+      CallbackDelegate<num, VoidEmptyCallbackDelegate> setter) {
     return (val) {
       final setterVal = setter(val);
       setState(setterVal);
     };
   }
 
-  CallbackFunc<num, VoidEmptyCallbackFunc> _setter(CharacterKeys stat) {
+  CallbackDelegate<num, VoidEmptyCallbackDelegate> _setter(CharacterKeys stat) {
     Function(num) setter;
     Function(bool) errorSetter;
     switch (stat) {
