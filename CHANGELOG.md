@@ -5,7 +5,6 @@
 * Better edit looks view
 * Split move/spell creation
 * Added spell create/edit screen
-* Bugfixes
 
 ## 1.0.8
 * Character creation wizard

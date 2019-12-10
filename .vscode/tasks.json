@@ -1,25 +1,33 @@
 {
-    // See https://go.microsoft.com/fwlink/?LinkId=733558
-    // for the documentation about the tasks.json format
-    "version": "2.0.0",
-    "tasks": [
-      {
-        "label": "Build APK",
-        "type": "shell",
-        "command": "flutter build apk",
-        "problemMatcher": []
-      },
-      {
-        "label": "Push APK",
-        "type": "shell",
-        "command": "deploy.sh",
-        "problemMatcher": []
-      },
-      {
-        "label": "Build & Push APK",
-        "type": "shell",
-        "command": "deploy.sh -p",
-        "problemMatcher": []
-      }
-    ]
+  // See https://go.microsoft.com/fwlink/?LinkId=733558
+  // for the documentation about the tasks.json format
+  "version": "2.0.0",
+  "tasks": [
+  {
+    "label": "Build APK",
+    "type": "shell",
+    "command": "./deploy.sh",
+    "problemMatcher": []
+  },
+  {
+    "label": "Push APK",
+    "type": "shell",
+    "command": "./deploy.sh",
+    "args": ["-p", "-b"],
+    "problemMatcher": []
+  },
+  {
+    "label": "Build & Push APK",
+    "type": "shell",
+    "command": "./deploy.sh",
+    "args": ["-p"],
+    "problemMatcher": []
+  },
+  {
+    "label": "Build, Push & Install APK",
+    "type": "shell",
+    "command": "./deploy.sh",
+    "args": ["-p", "-i"],
+    "problemMatcher": []
+  }]
 }
