@@ -54,7 +54,7 @@ class AddMoveOrSpell extends StatelessWidget {
                             explanation: '',
                           ),
                           mode: DialogMode.Create,
-                          index: -1,
+                          onSave: null,
                         ),
                       ),
                     );

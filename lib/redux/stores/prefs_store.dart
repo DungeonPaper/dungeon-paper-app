@@ -73,7 +73,10 @@ class PrefsStore {
     if (!store.credentials.isEmpty) {
       FirebaseUser user =
           await auth.getFirebaseUser(store.credentials.googleCredentials);
-      if (user == null) await auth.signInWithGoogle();
+      if (user == null) {
+        var creds = await auth.signInWithGoogle();
+        await auth.getFirebaseUser(creds);
+      }
     }
     return store;
   }
