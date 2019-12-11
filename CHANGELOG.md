@@ -1,8 +1,10 @@
 # CHANGELOG
 
-## 1.0.8+1
-* You should now be able to stay logged in for longer without having to choose your account again.
-* Bugfixes
+## 1.0.9
+* Better auth renewal
+* Better edit looks view
+* Split move/spell creation
+* Added spell create/edit screen
 
 ## 1.0.8
 * Character creation wizard

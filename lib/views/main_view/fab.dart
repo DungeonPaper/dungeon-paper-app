@@ -1,13 +1,12 @@
+import 'package:dungeon_paper/views/move_screen/add_move_or_spell.dart';
 import '../../db/inventory_items.dart';
 import '../../db/notes.dart';
 import '../../components/dialogs.dart';
 import '../inventory_item_view/add_inventory_item_container.dart';
-import '../move_screen/add_move_screen.dart';
 import '../notes_view/edit_note_screen.dart';
 import '../../utils.dart';
 import 'nav_bar.dart';
 import 'dart:math';
-import 'package:dungeon_world_data/move.dart';
 import 'package:flutter/material.dart';
 
 class FAB extends StatefulWidget {
@@ -72,22 +71,9 @@ class FABState extends State<FAB> {
     Pages.Battle: (context) => FloatingActionButton(
           foregroundColor: Colors.white,
           child: Icon(Icons.add),
-          onPressed: () => Navigator.push(
-            context,
-            MaterialPageRoute(
-              fullscreenDialog: true,
-              builder: (ctx) => AddMoveScreen(
-                move: Move(
-                  key: '',
-                  name: '',
-                  description: '',
-                  classes: [],
-                  explanation: '',
-                ),
-                mode: DialogMode.Create,
-                index: -1,
-              ),
-            ),
+          onPressed: () => showDialog(
+            context: context,
+            builder: (context) => AddMoveOrSpell(),
           ),
         ),
   };

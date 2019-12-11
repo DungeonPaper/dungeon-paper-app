@@ -1,7 +1,9 @@
 import 'package:dungeon_paper/components/card_bottom_controls.dart';
 import 'package:dungeon_paper/components/confirmation_dialog.dart';
+import 'package:dungeon_paper/components/dialogs.dart';
 import 'package:dungeon_paper/components/tags/tag_list.dart';
 import 'package:dungeon_paper/db/spells.dart';
+import 'package:dungeon_paper/views/move_screen/add_spell_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_markdown/flutter_markdown.dart';
 
@@ -78,26 +80,26 @@ class SpellCardState extends State<SpellCard> {
                       },
                     )
                   ],
-                  // onEdit: () => Navigator.push(
-                  //       context,
-                  //       MaterialPageRoute(
-                  //         fullscreenDialog: true,
-                  //         builder: (ctx) => EditMoveScreen(
-                  //               index: widget.index,
-                  //               move: widget.spell,
-                  //               mode: DialogMode.Edit,
-                  //             ),
-                  //       ),
-                  //     ),
+                  onEdit: () => Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      fullscreenDialog: true,
+                      builder: (ctx) => AddSpellScreen(
+                        index: widget.index,
+                        spell: widget.spell,
+                        mode: DialogMode.Edit,
+                      ),
+                    ),
+                  ),
                   onDelete: () async => await showDialog(
-                        context: context,
-                        builder: (ctx) => ConfirmationDialog(
-                              title: Text('Delete Spell?'),
-                              okButtonText: Text('Delete Spell'),
-                            ),
-                      )
-                          ? deleteSpell(widget.spell)
-                          : null,
+                    context: context,
+                    builder: (ctx) => ConfirmationDialog(
+                      title: Text('Delete Spell?'),
+                      okButtonText: Text('Delete Spell'),
+                    ),
+                  )
+                      ? deleteSpell(widget.spell)
+                      : null,
                 )
               : widget.mode == SpellCardMode.Addable
                   ? Padding(

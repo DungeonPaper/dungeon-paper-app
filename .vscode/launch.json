@@ -8,7 +8,10 @@
     "name": "Flutter",
     "type": "dart",
     "request": "launch",
-    "program": "lib/main.dart"
+    "program": "lib/main.dart",
+    "env": {
+      "CHROME_EXECUTABLE": "brave",
+    }
   }, {
     "name": "Flutter (verbose)",
     "type": "dart",
