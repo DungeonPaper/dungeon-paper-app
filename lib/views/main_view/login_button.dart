@@ -3,6 +3,7 @@ import 'package:dungeon_paper/db/user.dart';
 import 'package:dungeon_paper/redux/actions.dart';
 import 'package:dungeon_paper/redux/stores/connectors.dart';
 import 'package:dungeon_paper/redux/stores/stores.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 class LoginButton extends StatefulWidget {
@@ -42,10 +43,11 @@ class LoginButtonState extends State<LoginButton> {
   Function() _handleSignIn(BuildContext context) {
     return () async {
       try {
-        var user = await auth.signInWithGoogle();
-        if (user == null) {
+        AuthCredential creds = await auth.signInWithGoogle();
+        if (creds == null) {
           throw ('user_canceled');
         }
+        await auth.getFirebaseUser(creds);
         if (onUserChange != null) {
           onUserChange();
         }
