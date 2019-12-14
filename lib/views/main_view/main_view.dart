@@ -120,7 +120,7 @@ class _MainViewState extends State<MainView> {
   }
 
   Widget get fab => widget.character != null
-      ? FAB(pageController: widget.pageController)
+      ? FAB(pageController: widget.pageController, character: widget.character)
       : null;
 
   FloatingActionButtonLocation get fabLocation =>

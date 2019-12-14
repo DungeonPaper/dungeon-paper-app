@@ -27,7 +27,6 @@ class ReferenceView extends StatelessWidget {
           child: moves.first is Move
               ? MoveCard(
                   key: PageStorageKey('$key-$idx'),
-                  index: idx,
                   move: moves[idx],
                 )
               : moves.first is Spell

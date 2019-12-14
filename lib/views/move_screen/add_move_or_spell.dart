@@ -1,16 +1,19 @@
 import 'package:dungeon_paper/components/dialogs.dart';
 import 'package:dungeon_paper/db/spells.dart';
 import 'package:dungeon_world_data/move.dart';
+import 'package:dungeon_world_data/player_class.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:uuid/uuid.dart';
-
 import 'add_move_screen.dart';
 import 'add_spell_screen.dart';
 
 class AddMoveOrSpell extends StatelessWidget {
+  final PlayerClass defaultClass;
+
   const AddMoveOrSpell({
     Key key,
+    this.defaultClass
   }) : super(key: key);
 
   @override
@@ -53,9 +56,9 @@ class AddMoveOrSpell extends StatelessWidget {
                             classes: [],
                             explanation: '',
                           ),
-                          index: -1,
                           mode: DialogMode.Create,
-                          // onSave: null,
+                          onSave: null,
+                          defaultClass: defaultClass,
                         ),
                       ),
                     );

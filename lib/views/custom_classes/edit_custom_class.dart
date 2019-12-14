@@ -22,7 +22,7 @@ class EditCustomClass extends StatefulWidget {
   _EditCustomClassState createState() => _EditCustomClassState();
 }
 
-enum EditCustomClassTab { BasicInfo, Moves, Looks }
+enum EditCustomClassTab { BasicInfo, Moves, Looks, Alignments }
 
 class _EditCustomClassState extends State<EditCustomClass>
     with SingleTickerProviderStateMixin {
@@ -31,11 +31,13 @@ class _EditCustomClassState extends State<EditCustomClass>
   ValueNotifier<bool> basicInfoValid;
   ValueNotifier<bool> movesValid;
   ValueNotifier<bool> looksValid;
+  ValueNotifier<bool> alignmentsValid;
 
   static const Map<EditCustomClassTab, String> TAB_TITLES = {
     EditCustomClassTab.BasicInfo: 'General',
     EditCustomClassTab.Moves: 'Moves',
     EditCustomClassTab.Looks: 'Look Choices',
+    EditCustomClassTab.Alignments: 'Alignments',
   };
 
   @override
@@ -43,6 +45,7 @@ class _EditCustomClassState extends State<EditCustomClass>
     basicInfoValid = ValueNotifier(false);
     movesValid = ValueNotifier(true);
     looksValid = ValueNotifier(false);
+    alignmentsValid = ValueNotifier(true);
 
     def = PlayerClass(
       key: Uuid().v4(),
@@ -105,25 +108,25 @@ class _EditCustomClassState extends State<EditCustomClass>
   }
 
   Tab _mapTab(EditCustomClassTab k) => Tab(
-      child: Container(
-        constraints: BoxConstraints(maxWidth: 150),
-        child: Row(
-          mainAxisSize: MainAxisSize.min,
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: <Widget>[
-            Text(TAB_TITLES[k]),
-            if (!_isValid(k))
-              Padding(
-                padding: const EdgeInsets.only(left: 8.0),
-                child: Icon(
-                  Icons.error,
-                  color: Theme.of(context).errorColor,
+        child: Container(
+          constraints: BoxConstraints(maxWidth: 150),
+          child: Row(
+            mainAxisSize: MainAxisSize.min,
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: <Widget>[
+              Text(TAB_TITLES[k]),
+              if (!_isValid(k))
+                Padding(
+                  padding: const EdgeInsets.only(left: 8.0),
+                  child: Icon(
+                    Icons.error,
+                    color: Theme.of(context).errorColor,
+                  ),
                 ),
-              ),
-          ],
+            ],
+          ),
         ),
-      ),
-    );
+      );
 
   Map<EditCustomClassTab, Widget> get _tabs => {
         EditCustomClassTab.BasicInfo: ClassBasicDetails(
@@ -150,6 +153,14 @@ class _EditCustomClassState extends State<EditCustomClass>
             def.looks = looks;
           }),
         ),
+        EditCustomClassTab.Alignments: CustomClassLooks(
+          mode: widget.mode,
+          looks: def.looks,
+          validityNotifier: looksValid,
+          onUpdate: (looks) => setState(() {
+            def.looks = looks;
+          }),
+        ),
       };
 
   bool _isValid(EditCustomClassTab k) {
@@ -160,6 +171,8 @@ class _EditCustomClassState extends State<EditCustomClass>
         return movesValid.value;
       case EditCustomClassTab.Looks:
         return looksValid.value;
+      case EditCustomClassTab.Alignments:
+        return alignmentsValid.value;
     }
     return true;
   }
