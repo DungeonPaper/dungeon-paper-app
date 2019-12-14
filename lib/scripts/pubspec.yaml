@@ -1,0 +1,6 @@
+name: scripts
+
+dependencies:
+  args: ^1.5.2
+  path: ^1.6.4
+  pub_semver: ^1.4.2
