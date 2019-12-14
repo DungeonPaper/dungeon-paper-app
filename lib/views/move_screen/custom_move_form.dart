@@ -11,6 +11,7 @@ class CustomMoveFormBuilder extends StatefulWidget {
   final Widget Function(BuildContext context, Widget form, Function onSave)
       builder;
   final void Function(Move move) onSave;
+  final String moveLabel;
 
   CustomMoveFormBuilder({
     Key key,
@@ -18,6 +19,7 @@ class CustomMoveFormBuilder extends StatefulWidget {
     @required this.mode,
     @required this.builder,
     @required this.onSave,
+    this.moveLabel = 'Move',
   }) : super(key: key);
 
   @override
@@ -52,7 +54,7 @@ class CustomMoveFormBuilderState extends State<CustomMoveFormBuilder> {
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: <Widget>[
           TextField(
-            decoration: InputDecoration(hintText: 'Move Name'),
+            decoration: InputDecoration(labelText: '${widget.moveLabel} Name'),
             autocorrect: true,
             textCapitalization: TextCapitalization.words,
             onChanged: (val) => _setStateValue('name', val),

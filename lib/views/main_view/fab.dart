@@ -1,3 +1,4 @@
+import 'package:dungeon_paper/db/character.dart';
 import 'package:dungeon_paper/views/move_screen/add_move_or_spell.dart';
 import '../../db/inventory_items.dart';
 import '../../db/notes.dart';
@@ -11,10 +12,12 @@ import 'package:flutter/material.dart';
 
 class FAB extends StatefulWidget {
   final PageController pageController;
+  final DbCharacter character;
 
   const FAB({
     Key key,
-    this.pageController,
+    @required this.pageController,
+    @required this.character,
   }) : super(key: key);
 
   @override
@@ -42,8 +45,8 @@ class FABState extends State<FAB> {
     });
   }
 
-  static Map<Pages, Widget Function(BuildContext context)> buttonsByIndex = {
-    Pages.Notes: (context) => FloatingActionButton(
+  static Map<Pages, Widget Function(BuildContext context, DbCharacter character)> buttonsByIndex = {
+    Pages.Notes: (context, character) => FloatingActionButton(
           foregroundColor: Colors.white,
           child: Icon(Icons.add),
           onPressed: () => Navigator.push(
@@ -57,7 +60,7 @@ class FABState extends State<FAB> {
             ),
           ),
         ),
-    Pages.Inventory: (context) => FloatingActionButton(
+    Pages.Inventory: (context, character) => FloatingActionButton(
           foregroundColor: Colors.white,
           child: Icon(Icons.add),
           onPressed: () => Navigator.push(
@@ -71,12 +74,12 @@ class FABState extends State<FAB> {
             ),
           ),
         ),
-    Pages.Battle: (context) => FloatingActionButton(
+    Pages.Battle: (context, character) => FloatingActionButton(
           foregroundColor: Colors.white,
           child: Icon(Icons.add),
           onPressed: () => showDialog(
             context: context,
-            builder: (context) => AddMoveOrSpell(),
+            builder: (context) => AddMoveOrSpell(defaultClass: character.mainClass),
           ),
         ),
   };
@@ -97,7 +100,7 @@ class FABState extends State<FAB> {
       child: Transform.rotate(
         angle: -pi * rt,
         child: activeIdx != null && buttonsByIndex.containsKey(idx)
-            ? buttonsByIndex[idx](context)
+            ? buttonsByIndex[idx](context, widget.character)
             : SizedBox.shrink(),
       ),
     );
