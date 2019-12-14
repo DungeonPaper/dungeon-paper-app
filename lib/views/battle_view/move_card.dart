@@ -9,7 +9,6 @@ import 'package:flutter_markdown/flutter_markdown.dart';
 enum MoveCardMode { Addable, Editable, Fixed }
 
 class MoveCard extends StatefulWidget {
-  final num index;
   final Move move;
   final MoveCardMode mode;
   final bool raceMove;
@@ -19,7 +18,6 @@ class MoveCard extends StatefulWidget {
   const MoveCard({
     Key key,
     @required this.move,
-    @required this.index,
     this.onSave,
     this.onDelete,
     this.mode = MoveCardMode.Fixed,

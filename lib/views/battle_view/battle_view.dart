@@ -18,7 +18,7 @@ class BattleView extends StatelessWidget {
       'Starting Moves': [character.race] + character.mainClass.startingMoves,
       'Advanced Moves': character.moves,
       'Spells': character.spells,
-    }..removeWhere((k, v) => v.isEmpty || v.every((_v) => _v != null));
+    }..removeWhere((k, v) => v.isEmpty || v.every((_v) => _v == null));
 
     return CategorizedList.builder(
       items: categories.keys,
@@ -35,7 +35,6 @@ class BattleView extends StatelessWidget {
           child: moves[idx] is Move
               ? MoveCard(
                   key: PageStorageKey(moves[idx].key ?? moves[idx].name),
-                  index: idx,
                   move: moves[idx],
                   mode: mode,
                   raceMove: key == 'Starting Moves' && idx == 0,

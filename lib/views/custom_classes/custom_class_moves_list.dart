@@ -2,6 +2,7 @@ import 'package:dungeon_paper/components/categorized_list.dart';
 import 'package:dungeon_paper/components/dialogs.dart';
 import 'package:dungeon_paper/views/battle_view/move_card.dart';
 import 'package:dungeon_paper/views/move_screen/add_move_screen.dart';
+import 'package:dungeon_paper/views/move_screen/add_race_move_screen.dart';
 import 'package:dungeon_paper/widget_utils.dart';
 import 'package:dungeon_world_data/move.dart';
 import 'package:dungeon_world_data/player_class.dart';
@@ -60,7 +61,7 @@ class CustomClassMoveList extends StatelessWidget {
           padding: const EdgeInsets.symmetric(vertical: 8.0),
           child: MoveCard(
             move: moves[i],
-            index: i,
+            raceMove: cats.keys.elementAt(catI) == MoveCategory.Race,
             mode: MoveCardMode.Editable,
             onSave: (move) => _updateMoveInCat(context, move, cat),
           ),
@@ -73,17 +74,27 @@ class CustomClassMoveList extends StatelessWidget {
     Navigator.push(
       context,
       MaterialPageRoute(
-        builder: (context) => AddMoveScreen(
-          mode: DialogMode.Create,
-          move: Move(
+        builder: (context) {
+          Move blankMove = Move(
             key: Uuid().v4(),
             name: '',
             description: '',
             explanation: '',
             classes: [],
-          ),
-          onSave: (move) => _addMoveToCat(context, move, cat),
-        ),
+          );
+          if (cat == MoveCategory.Race) {
+            return AddRaceMoveScreen(
+              mode: DialogMode.Create,
+              move: blankMove,
+              onSave: (move) => _addMoveToCat(context, move, cat),
+            );
+          }
+          return AddMoveScreen(
+            mode: DialogMode.Create,
+            move: blankMove,
+            onSave: (move) => _addMoveToCat(context, move, cat),
+          );
+        },
       ),
     );
   }
