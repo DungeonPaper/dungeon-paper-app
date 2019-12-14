@@ -1,19 +1,18 @@
-import '../battle_view/move_card.dart';
-import '../../components/categorized_list.dart';
+import 'package:dungeon_paper/components/player_class_list.dart';
 import 'package:dungeon_world_data/dw_data.dart';
 import 'package:dungeon_world_data/move.dart';
 import 'package:dungeon_world_data/player_class.dart';
 import 'package:flutter/material.dart';
+import '../battle_view/move_card.dart';
+import '../../components/categorized_list.dart';
 
 class AddMoveList extends StatefulWidget {
   final PlayerClass playerClass;
-  final num level;
   final void Function(Move move) onSave;
 
   AddMoveList({
     Key key,
-    @required this.playerClass,
-    @required this.level,
+    this.playerClass,
     @required this.onSave,
   });
 
@@ -26,13 +25,14 @@ class _AddMoveListState extends State<AddMoveList> {
 
   @override
   void initState() {
-    currentCls = widget.playerClass;
+    currentCls = widget.playerClass ?? dungeonWorld.classes.values.elementAt(0);
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
     Map<int, List<Move>> moves = {
+      0: currentCls.startingMoves,
       1: currentCls.advancedMoves1,
       6: currentCls.advancedMoves2
     };
@@ -40,8 +40,10 @@ class _AddMoveListState extends State<AddMoveList> {
 
     return CategorizedList.builder(
       items: [LEADING_KEY] + moves.keys.map((k) => k.toString()).toList(),
-      titleBuilder: (ctx, minLevel, idx) => minLevel != LEADING_KEY
-          ? Text("Levels $minLevel-${int.parse(minLevel) + 4}")
+      titleBuilder: (ctx, String minLevel, idx) => minLevel != LEADING_KEY
+          ? minLevel == '0'
+              ? Text("Starting Moves")
+              : Text("Levels $minLevel-${int.parse(minLevel) + 4}")
           : null,
       itemBuilder: (ctx, key, idx, catI) {
         if (key == LEADING_KEY) {
@@ -51,18 +53,13 @@ class _AddMoveListState extends State<AddMoveList> {
                 child: Text('Moves from class:'),
               ),
               Expanded(
-                child: DropdownButton(
-                  isExpanded: true,
+                child: PlayerClassList.dropdown(
                   value: currentCls,
-                  onChanged: (cls) => setState(() {
-                    currentCls = cls;
-                  }),
-                  items: dungeonWorld.classes
-                      .map((v) => DropdownMenuItem(
-                            value: v,
-                            child: Text(v.name),
-                          ))
-                      .toList(),
+                  onChanged: (cls) {
+                    setState(() {
+                      currentCls = cls;
+                    });
+                  },
                 ),
               )
             ],
@@ -73,7 +70,6 @@ class _AddMoveListState extends State<AddMoveList> {
             vertical: 8.0,
           ),
           child: MoveCard(
-            index: -1,
             move: moves[int.parse(key)].elementAt(idx),
             mode: MoveCardMode.Addable,
             onSave: widget.onSave,

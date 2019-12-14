@@ -1,8 +1,7 @@
-import '../../db/character.dart';
+import 'package:dungeon_world_data/player_class.dart';
 import '../../components/dialogs.dart';
 import 'add_move_list.dart';
 import 'custom_move_form.dart';
-import '../../redux/stores/stores.dart';
 import 'package:dungeon_world_data/move.dart';
 import 'package:flutter/material.dart';
 
@@ -12,11 +11,13 @@ class AddMoveScreen extends StatefulWidget {
     @required this.move,
     @required this.mode,
     @required this.onSave,
+    this.defaultClass,
   }) : super(key: key);
 
   final Move move;
   final DialogMode mode;
   final void Function(Move move) onSave;
+  final PlayerClass defaultClass;
 
   @override
   AddMoveScreenState createState() => AddMoveScreenState();
@@ -44,8 +45,6 @@ class AddMoveScreenState extends State<AddMoveScreen>
 
   @override
   Widget build(BuildContext context) {
-    DbCharacter character = dwStore.state.characters.current;
-
     return CustomMoveFormBuilder(
       mode: widget.mode,
       move: widget.move,
@@ -73,8 +72,7 @@ class AddMoveScreenState extends State<AddMoveScreen>
               color: Theme.of(context).scaffoldBackgroundColor,
               child: AddMoveList(
                 key: PageStorageKey<String>(texts[0]),
-                level: character.level,
-                playerClass: character.mainClass,
+                playerClass: widget.defaultClass,
                 onSave: widget.onSave,
               ),
             ),
