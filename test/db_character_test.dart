@@ -5,14 +5,14 @@ import 'package:flutter_test/flutter_test.dart';
 void main() {
   group('DbCharacter', () {
     test('base', () {
+      var wizard = dungeonWorld.classes.firstWhere((k) => k.key == 'wizard');
       var char = DbCharacter({
         'mainClass': 'wizard',
         'con': 10,
       });
-      expect(char.mainClass, equals(dungeonWorld.classes['wizard']));
+      expect(char.mainClass, equals(wizard));
       expect(char.currentHP, equals(4));
-      expect(char.maxHP,
-          equals(dungeonWorld.classes['wizard'].baseHP + char.conMod));
+      expect(char.maxHP, equals(wizard.baseHP + char.conMod));
     });
     test('json', () {
       var char = DbCharacter({

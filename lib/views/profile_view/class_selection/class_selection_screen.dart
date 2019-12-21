@@ -45,7 +45,7 @@ class ClassSelectionScreen extends StatelessWidget {
     Widget child = Padding(
       padding: const EdgeInsets.all(16.0),
       child: Column(
-        children: dungeonWorld.classes.values
+        children: dungeonWorld.classes
             .map(
               (availClass) => Padding(
                 padding: EdgeInsets.only(bottom: 16.0),
