@@ -25,7 +25,7 @@ class AddInventoryItem extends StatefulWidget {
   AddInventoryItem({
     Key key,
     Iterable<Equipment> items,
-  })  : items = items ?? dungeonWorld.equipment.values,
+  })  : items = items ?? dungeonWorld.equipment,
         super(key: key);
 
   @override

@@ -12,7 +12,7 @@ class AddSpellList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     Map<String, List<Spell>> spells = {};
-    dungeonWorld.spells.forEach((key, spell) {
+    dungeonWorld.spells.forEach((spell) {
       spells[spell.level.toString()] ??= [];
       spells[spell.level.toString()].add(spell);
     });
