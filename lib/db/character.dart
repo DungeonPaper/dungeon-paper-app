@@ -121,10 +121,10 @@ class DbCharacter with Serializer<CharacterKeys> {
   @override
   initSerializeMap([Map map]) {
     serializeMap = {
-      CharacterKeys.mainClass: (v) => mainClass =
-          v != null && dungeonWorld.classes.containsKey(v)
-              ? dungeonWorld.classes[v]
-              : dungeonWorld.classes['bard'],
+      CharacterKeys.mainClass: (v) => mainClass = v != null
+          ? dungeonWorld.classes.firstWhere((c) => c.key == v,
+              orElse: () => dungeonWorld.classes.first)
+          : dungeonWorld.classes.first,
       CharacterKeys.useDefaultMaxHP: (v) => useDefaultMaxHP = v ?? false,
       CharacterKeys.str: (v) => str = v ?? 8,
       CharacterKeys.dex: (v) => dex = v ?? 8,

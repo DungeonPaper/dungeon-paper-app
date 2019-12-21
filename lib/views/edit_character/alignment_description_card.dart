@@ -22,7 +22,7 @@ class AlignmentDescription extends StatelessWidget {
   Widget build(BuildContext context) {
     String alignmentKey = enumName(alignment);
     DWA.Alignment alignmentInfo = playerClass.alignments[alignmentKey] ??
-        DWA.Alignment(alignmentKey, alignmentKey, '');
+        DWA.Alignment(key: alignmentKey, name: alignmentKey, description: '');
     bool hasDescription = alignmentInfo.description.isNotEmpty;
 
     List<Widget> texts = <Widget>[

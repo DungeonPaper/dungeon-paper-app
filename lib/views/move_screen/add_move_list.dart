@@ -50,10 +50,10 @@ class _AddMoveListState extends State<AddMoveList> {
                   onChanged: (cls) => setState(() {
                     currentCls = cls;
                   }),
-                  items: dungeonWorld.classes.keys
-                      .map((k) => DropdownMenuItem(
-                            value: dungeonWorld.classes[k],
-                            child: Text(dungeonWorld.classes[k].name),
+                  items: dungeonWorld.classes
+                      .map((v) => DropdownMenuItem(
+                            value: v,
+                            child: Text(v.name),
                           ))
                       .toList(),
                 ),
