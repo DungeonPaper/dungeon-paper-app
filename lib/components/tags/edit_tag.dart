@@ -38,8 +38,7 @@ class _EditTagDialogState extends State<EditTagDialog> {
             text: widget.tag != null ? widget.tag.value.toString() : ''),
       ),
     };
-    _copyableTags = dungeonWorld.tags.values.toList()
-      ..sort((a, b) => a.name.compareTo(b.name));
+    _copyableTags = dungeonWorld.tags..sort((a, b) => a.name.compareTo(b.name));
     _mode = widget.tag != null ? DialogMode.Edit : DialogMode.Create;
     super.initState();
   }
@@ -85,7 +84,10 @@ class _EditTagDialogState extends State<EditTagDialog> {
           decoration: InputDecoration(labelText: 'Tag value'),
           controller: _controllers['value'],
         ),
-        StandardDialogControls(onOK: onSave, padding: EdgeInsets.only(top: 40),)
+        StandardDialogControls(
+          onOK: onSave,
+          padding: EdgeInsets.only(top: 40),
+        )
       ],
     );
   }
