@@ -1,5 +1,5 @@
 import 'dart:io';
-
+import 'package:pedantic/pedantic.dart';
 import 'package:args/args.dart';
 import 'package:path/path.dart';
 import 'package:pub_semver/pub_semver.dart';
@@ -69,14 +69,15 @@ main(List<String> args) async {
 
   if (install == true) {
     print("Installing $outputPath...");
-    Process result = (await Process.start('adb', ['install', '-r', apkPath]))
-      ..stdout.pipe(stdout);
+    var result = await Process.start('adb', ['install', '-r', apkPath]);
+    unawaited(result.stdout.pipe(stdout));
     if (await result.exitCode != 0) {
       print("Uninstalling old version...");
-      (await Process.start('adb', ['uninstall', 'app.dungeonpaper']))
-        ..stdout.pipe(stdout);
-      (await Process.start('adb', ['install', '-r', apkPath]))
-        ..stdout.pipe(stdout);
+      var uninstall =
+          await Process.start('adb', ['uninstall', 'app.dungeonpaper']);
+      unawaited(uninstall.stdout.pipe(stdout));
+      var install = await Process.start('adb', ['install', '-r', apkPath]);
+      unawaited(install.stdout.pipe(stdout));
     }
   }
 

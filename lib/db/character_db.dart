@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dungeon_paper/redux/stores/stores.dart';
+import 'package:pedantic/pedantic.dart';
 
 import '../redux/actions.dart';
 import '../utils.dart';
@@ -65,8 +66,8 @@ Future<DbCharacter> updateCharacter(
   dwStore.dispatch(CharacterActions.setCharacters(characters));
 
   print('Updating character: $output');
-  final charDoc = firestore.document('character_bios/$charDocId')
-    ..updateData(output);
+  final charDoc = firestore.document('character_bios/$charDocId');
+  unawaited(charDoc.updateData(output));
   final charData = await charDoc.get();
 
   return DbCharacter(charData.data);
@@ -106,9 +107,9 @@ Future<DocumentReference> createNewCharacter([DbCharacter character]) async {
 
     DocumentReference charDoc =
         firestore.collection('character_bios').document();
-    charDoc.setData(json);
+    unawaited(charDoc.setData(json));
     characters.add(charDoc);
-    userDoc.updateData({'characters': characters});
+    unawaited(userDoc.updateData({'characters': characters}));
     dwStore.dispatch(
       CharacterActions.setCurrentChar(charDoc.documentID, character),
     );

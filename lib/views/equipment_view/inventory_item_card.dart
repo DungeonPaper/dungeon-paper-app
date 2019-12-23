@@ -1,3 +1,5 @@
+import 'package:pedantic/pedantic.dart';
+
 import '../../components/card_bottom_controls.dart';
 import '../../components/confirmation_dialog.dart';
 import '../../components/tags/tag_list.dart';
@@ -139,7 +141,7 @@ class InventoryItemCard extends StatelessWidget {
           text: const Text('Are you sure?'),
           cancelButtonText: Text('Cancel')),
     )) {
-      deleteInventoryItem(item);
+      unawaited(deleteInventoryItem(item));
     }
   }
 

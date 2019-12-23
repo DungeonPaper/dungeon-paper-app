@@ -5,6 +5,7 @@ import 'package:dungeon_paper/db/user.dart';
 import 'package:dungeon_paper/redux/actions.dart';
 import 'package:dungeon_paper/redux/stores/stores.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:pedantic/pedantic.dart';
 
 import 'character_db.dart';
 
@@ -61,11 +62,11 @@ StreamSubscription dbCharsListener;
 
 registerDbCharsListener() async {
   if (dbCharsListener != null) {
-    dbCharsListener.cancel();
+    unawaited(dbCharsListener.cancel());
   }
 
-  String userDocID = dwStore.state.user.currentUserDocID;
-  DocumentReference user = Firestore.instance.document('users/$userDocID');
+  String charDocID = dwStore.state.characters.currentCharDocID;
+  DocumentReference user = Firestore.instance.document('users/$charDocID');
   dbCharsListener = Firestore.instance
       .collection('character_bios')
       .where('user', isEqualTo: user)
