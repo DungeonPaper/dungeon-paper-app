@@ -1,3 +1,5 @@
+import 'package:pedantic/pedantic.dart';
+
 import '../../components/standard_dialog_controls.dart';
 import '../../db/character.dart';
 import '../../db/character_db.dart';
@@ -118,7 +120,7 @@ class EditArmorDialogState extends State<EditArmorDialog> {
   _saveValue() async {
     DbCharacter character = dwStore.state.characters.current;
     character.armor = value;
-    updateCharacter(character, [CharacterKeys.armor]);
+    unawaited(updateCharacter(character, [CharacterKeys.armor]));
     Navigator.pop(context);
   }
 }

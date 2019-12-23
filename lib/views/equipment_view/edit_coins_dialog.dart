@@ -8,9 +8,10 @@ import 'package:dungeon_paper/redux/stores/stores.dart';
 import 'package:dungeon_paper/utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:pedantic/pedantic.dart';
 
 class EditCoinsDialog extends StatefulWidget {
-  final num value;
+  final double value;
   EditCoinsDialog({
     Key key,
     @required this.value,
@@ -79,6 +80,7 @@ class EditCoinsDialogState extends State<EditCoinsDialog> {
       });
       return;
     }
+
     setState(() {
       value = newValue;
       valueError = false;
@@ -94,7 +96,7 @@ class EditCoinsDialogState extends State<EditCoinsDialog> {
   _saveValue() async {
     DbCharacter character = dwStore.state.characters.current;
     character.coins = value;
-    await updateCharacter(character, [CharacterKeys.coins]);
+    unawaited(updateCharacter(character, [CharacterKeys.coins]));
     Navigator.pop(context);
   }
 }

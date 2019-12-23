@@ -2,6 +2,7 @@ import 'dart:async';
 import 'package:dungeon_paper/utils.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/widgets.dart';
+import 'package:pedantic/pedantic.dart';
 import 'package:sentry/sentry.dart';
 
 SentryClient sentry;
@@ -27,10 +28,10 @@ Future<void> reportError(dynamic error, dynamic stackTrace) async {
     print(stackTrace);
     return;
   } else {
-    sentry.captureException(
+    unawaited(sentry.captureException(
       exception: error,
       stackTrace: stackTrace,
-    );
+    ));
   }
 }
 

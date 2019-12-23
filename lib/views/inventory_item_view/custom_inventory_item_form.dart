@@ -1,3 +1,5 @@
+import 'package:pedantic/pedantic.dart';
+
 import '../../components/markdown_help.dart';
 import '../../components/tags/editable_tag_list.dart';
 import '../../db/inventory_items.dart';
@@ -108,7 +110,7 @@ class CustomInventoryItemFormBuilderState
     item.pluralName = _controllers['name'].text + 's';
     item.amount = int.tryParse(_controllers['amount'].text);
     item.tags = tags;
-    updateInventoryItem(item);
+    unawaited(updateInventoryItem(item));
     if (widget.onUpdateItem != null) {
       widget.onUpdateItem(item);
     }
@@ -127,7 +129,7 @@ class CustomInventoryItemFormBuilderState
       pluralName: _controllers['name'].text + 's',
       amount: int.tryParse(_controllers['amount'].text) ?? 1,
     );
-    createInventoryItem(item);
+    unawaited(createInventoryItem(item));
     if (widget.onUpdateItem != null) {
       widget.onUpdateItem(item);
     }

@@ -1,6 +1,7 @@
 import 'package:dungeon_paper/components/tags/editable_tag_list.dart';
 import 'package:dungeon_paper/db/spells.dart';
 import 'package:dungeon_world_data/tag.dart';
+import 'package:pedantic/pedantic.dart';
 import '../../components/markdown_help.dart';
 import '../../components/dialogs.dart';
 import 'package:flutter/material.dart';
@@ -118,7 +119,7 @@ class CustomSpellFormBuilderState extends State<CustomSpellFormBuilder> {
 
   _updateSpell() async {
     var move = _generateSpell();
-    updateSpell(move);
+    unawaited(updateSpell(move));
     if (widget.onUpdateSpell != null) {
       widget.onUpdateSpell(move);
     }
@@ -127,7 +128,7 @@ class CustomSpellFormBuilderState extends State<CustomSpellFormBuilder> {
 
   _createSpell() async {
     var move = _generateSpell();
-    createSpell(move);
+    unawaited(createSpell(move));
     if (widget.onUpdateSpell != null) {
       widget.onUpdateSpell(move);
     }
