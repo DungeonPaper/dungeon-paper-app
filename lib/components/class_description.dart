@@ -1,6 +1,6 @@
 import 'package:dungeon_paper/components/title_subtitle_row.dart';
 import 'package:dungeon_world_data/player_class.dart';
-import 'package:dungeon_world_data/alignment.dart' as DWAlignment;
+import 'package:dungeon_world_data/alignment.dart' as dw_alignment;
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
@@ -103,7 +103,7 @@ class AlignmentList extends StatelessWidget {
     @required this.alignments,
   }) : super(key: key);
 
-  final Iterable<DWAlignment.Alignment> alignments;
+  final Iterable<dw_alignment.Alignment> alignments;
 
   @override
   Widget build(BuildContext context) {

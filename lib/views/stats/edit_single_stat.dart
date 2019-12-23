@@ -84,9 +84,9 @@ class EditStatDialogState extends State<EditStatDialog> {
 
   _setStateValue(num newValue) {
     setState(() {
-      if (newValue == null)
+      if (newValue == null) {
         valueError = true;
-      else {
+      } else {
         valueError = false;
         value = newValue;
       }

@@ -7,7 +7,7 @@ import '../../db/character.dart';
 import '../../components/dialogs.dart';
 import 'character_wizard_utils.dart';
 import 'package:flutter/material.dart';
-import '../../db/character_utils.dart' as Chr;
+import '../../db/character_utils.dart' as chr;
 import 'edit_looks.dart';
 import 'edit_race.dart';
 
@@ -125,7 +125,7 @@ class AlignmentSummary extends StatelessWidget {
   }
 
   String get alignmentKey => enumName(character.alignment);
-  get icon => Chr.ALIGNMENT_ICON_MAP[character.alignment];
+  get icon => chr.ALIGNMENT_ICON_MAP[character.alignment];
 }
 
 class RaceSummary extends StatelessWidget {
@@ -148,7 +148,7 @@ class RaceSummary extends StatelessWidget {
   }
 
   String get alignmentKey => enumName(character.alignment);
-  get icon => Chr.ALIGNMENT_ICON_MAP[character.alignment];
+  get icon => chr.ALIGNMENT_ICON_MAP[character.alignment];
 }
 
 class ClassSummary extends StatelessWidget {
@@ -175,7 +175,7 @@ class ClassSummary extends StatelessWidget {
   }
 
   String get alignmentKey => enumName(character.alignment);
-  get icon => Chr.ALIGNMENT_ICON_MAP[character.alignment];
+  get icon => chr.ALIGNMENT_ICON_MAP[character.alignment];
 }
 
 class LooksSummary extends StatelessWidget {
@@ -198,5 +198,5 @@ class LooksSummary extends StatelessWidget {
   }
 
   String get alignmentKey => enumName(character.alignment);
-  get icon => Chr.ALIGNMENT_ICON_MAP[character.alignment];
+  get icon => chr.ALIGNMENT_ICON_MAP[character.alignment];
 }

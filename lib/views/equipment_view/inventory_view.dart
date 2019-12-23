@@ -12,7 +12,7 @@ enum EquipmentCats {
 
 const EquipmentTitles = {
   EquipmentCats.Stats: null,
-  EquipmentCats.Items: const Text('Posessions'),
+  EquipmentCats.Items: Text('Posessions'),
 };
 
 class InventoryView extends StatelessWidget {

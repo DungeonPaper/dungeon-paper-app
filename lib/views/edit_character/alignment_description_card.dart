@@ -1,12 +1,12 @@
 import '../../utils.dart';
-import '../../db/character_utils.dart' as Chr;
+import '../../db/character_utils.dart' as chr;
 import 'package:flutter/material.dart';
 import 'package:dungeon_world_data/player_class.dart';
-import 'package:dungeon_world_data/alignment.dart' as DWA;
+import 'package:dungeon_world_data/alignment.dart' as dw_alignment;
 
 class AlignmentDescription extends StatelessWidget {
   final PlayerClass playerClass;
-  final Chr.Alignment alignment;
+  final chr.Alignment alignment;
   final VoidCallback onTap;
   final int level;
 
@@ -21,8 +21,8 @@ class AlignmentDescription extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     String alignmentKey = enumName(alignment);
-    DWA.Alignment alignmentInfo = playerClass.alignments[alignmentKey] ??
-        DWA.Alignment(key: alignmentKey, name: alignmentKey, description: '');
+    dw_alignment.Alignment alignmentInfo = playerClass.alignments[alignmentKey] ??
+        dw_alignment.Alignment(key: alignmentKey, name: alignmentKey, description: '');
     bool hasDescription = alignmentInfo.description.isNotEmpty;
 
     List<Widget> texts = <Widget>[
@@ -68,5 +68,5 @@ class AlignmentDescription extends StatelessWidget {
     );
   }
 
-  get icon => Chr.ALIGNMENT_ICON_MAP[alignment];
+  get icon => chr.ALIGNMENT_ICON_MAP[alignment];
 }

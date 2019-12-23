@@ -22,15 +22,16 @@ class BetweenValuesTextFormatter extends TextInputFormatter {
     try {
       num newNum = double.tryParse(newValue.text);
       if (newNum == null ||
-          (formatType == FormatType.Integer && newValue.text.contains('.')))
+          (formatType == FormatType.Integer && newValue.text.contains('.'))) {
         throw FormatException();
+      }
       if (newNum < min || newNum > max) {
         return oldValue;
       }
       return newValue;
     } on FormatException {
       if (newValue.text == '' ||
-          (newValue.text.endsWith('.') && newValue.text.length > 0) &&
+          (newValue.text.endsWith('.') && newValue.text.isNotEmpty) &&
               (min < 0 && newValue.text.trim() == '-') &&
               this.allowNull) {
         return newValue;

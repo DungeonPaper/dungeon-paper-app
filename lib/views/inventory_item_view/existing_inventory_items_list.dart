@@ -68,8 +68,7 @@ class _AddInventoryItemState extends State<AddInventoryItem> {
   Widget build(BuildContext context) {
     Map<String, List<Equipment>> itemMap = {};
     Iterable<Equipment> filtered = search.isNotEmpty
-        ? widget.items
-            .where((item) => clean(item.name).indexOf(clean(search)) > -1)
+        ? widget.items.where((item) => clean(item.name).contains(clean(search)))
         : widget.items;
     filtered.forEach((item) {
       String key =
@@ -93,12 +92,9 @@ class _AddInventoryItemState extends State<AddInventoryItem> {
         Padding(
           padding: const EdgeInsets.only(top: 64.0),
           child: CategorizedList.builder(
-            categories: itemMap.keys.toList()
-              ..sort(),
-            itemCount: (key, idx) =>
-                itemMap[key].length,
-            titleBuilder: (ctx, key, idx) =>
-                Text(key),
+            categories: itemMap.keys.toList()..sort(),
+            itemCount: (key, idx) => itemMap[key].length,
+            titleBuilder: (ctx, key, idx) => Text(key),
             itemBuilder: (ctx, key, idx) {
               var item = itemMap[key][idx];
               return Container(

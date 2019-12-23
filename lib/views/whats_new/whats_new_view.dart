@@ -108,8 +108,9 @@ class _WhatsNewState extends State<WhatsNew> {
 
   String mapped(Version ver) {
     if (changelog == null) return "";
-    if (changelog[ver] == null)
+    if (changelog[ver] == null) {
       ver = changelog.keys.firstWhere((k) => k <= ver);
+    }
     Iterable<Version> keys = changelog.keys;
     int verIdx = keys.toList().indexOf(ver);
     Version prevVersion;
