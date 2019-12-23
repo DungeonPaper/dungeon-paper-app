@@ -100,7 +100,7 @@ class _EditBasicInfoViewState extends State<EditBasicInfoView> {
   bool formValid() {
     return dirty &&
         <bool>[
-          displayName != null && displayName.length > 0,
+          displayName != null && displayName.isNotEmpty,
         ].every((cond) => cond);
   }
 

@@ -95,10 +95,12 @@ class _NumberControllerState extends State<NumberController> {
 
   bool get _validate {
     num intVal = int.tryParse(_controller.text);
-    if (widget.min > -double.infinity)
+    if (widget.min > -double.infinity) {
       return intVal != null && intVal >= widget.min;
-    if (widget.max < double.infinity)
+    }
+    if (widget.max < double.infinity) {
       return intVal != null && intVal <= widget.max;
+    }
     return true;
   }
 

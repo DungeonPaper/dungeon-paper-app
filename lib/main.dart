@@ -13,8 +13,8 @@ void withInit(Function() cb) async {
   // general setup
   await initErrorReporting();
   Firestore firestore = Firestore.instance;
-  await firestore.settings(timestampsInSnapshotsEnabled: true);
-  Screen.keepOn(true);
+  await firestore.settings();
+  await Screen.keepOn(true);
   // SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
   //   systemNavigationBarColor: theme.scaffoldBackgroundColor,
   // ));

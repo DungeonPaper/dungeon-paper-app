@@ -4,7 +4,7 @@ import '../../components/confirmation_dialog.dart';
 import '../../components/scaffold_with_elevation.dart';
 import '../../db/character.dart';
 import '../../db/character_db.dart';
-import '../../db/character_utils.dart' as Chr;
+import '../../db/character_utils.dart' as chr;
 import '../../components/dialogs.dart';
 import '../basic_info/change_alignment_dialog.dart';
 import '../profile_view/class_selection/class_selection_screen.dart';
@@ -143,7 +143,7 @@ class _EditCharacterViewState extends State<EditCharacterView> {
   }
 
   _deleteCharacter() async {
-    if (dwStore.state.characters.characters.length == 1)
+    if (dwStore.state.characters.characters.length == 1) {
       return showDialog(
         context: context,
         builder: (context) => ConfirmationDialog(
@@ -153,6 +153,7 @@ class _EditCharacterViewState extends State<EditCharacterView> {
           noCancel: true,
         ),
       );
+    }
     if (await showDialog(
       context: context,
       builder: (context) => ConfirmationDialog(
@@ -185,9 +186,9 @@ class _EditCharacterViewState extends State<EditCharacterView> {
     );
   }
 
-  void Function(DbCharacter char, List<Chr.CharacterKeys> keys)
+  void Function(DbCharacter char, List<chr.CharacterKeys> keys)
       _updateCharacter(BuildContext context) {
-    return (DbCharacter char, List<Chr.CharacterKeys> keys) {
+    return (DbCharacter char, List<chr.CharacterKeys> keys) {
       updateCharacter(char, keys);
       if (context != null) {
         Navigator.pop(context);

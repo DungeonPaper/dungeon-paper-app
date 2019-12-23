@@ -11,7 +11,7 @@ class CharacterStore {
       {this.currentCharDocID, @required this.characters, this.current}) {
     if (this.current == null &&
         this.characters != null &&
-        this.characters.length > 0) {
+        this.characters.isNotEmpty) {
       this.current = this.characters[this.characters.keys.first];
       this.currentCharDocID = this.characters.keys.first;
     }

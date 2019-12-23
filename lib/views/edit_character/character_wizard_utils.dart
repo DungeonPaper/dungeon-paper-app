@@ -26,10 +26,11 @@ Function() wrapOnDidPopHandler(
       builder: (ctx) => ConfirmationDialog(text: Text(text)),
     );
     if (res) {
-      if (onPop == null)
+      if (onPop == null) {
         Navigator.pop(context, false);
-      else
+      } else {
         onPop();
+      }
     }
   };
 }
