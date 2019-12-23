@@ -1,3 +1,5 @@
+import 'package:pedantic/pedantic.dart';
+
 import '../../components/standard_dialog_controls.dart';
 import '../../db/character_db.dart';
 import '../../db/character_utils.dart' as chr;
@@ -132,8 +134,8 @@ class _XPEditDialogState extends State<XPEditDialog> {
     DbCharacter char = widget.character;
     char.currentXP = 0;
     char.level++;
-    updateCharacter(
-        char, [chr.CharacterKeys.currentXP, chr.CharacterKeys.level]);
+    unawaited(updateCharacter(
+        char, [chr.CharacterKeys.currentXP, chr.CharacterKeys.level]));
     setState(() {
       currentXP = char.currentXP;
       initialCurrentXP = currentXP;
@@ -148,8 +150,8 @@ class _XPEditDialogState extends State<XPEditDialog> {
     DbCharacter char = widget.character;
     char.level--;
     char.currentXP = char.level + 6;
-    updateCharacter(
-        char, [chr.CharacterKeys.currentXP, chr.CharacterKeys.level]);
+    unawaited(updateCharacter(
+        char, [chr.CharacterKeys.currentXP, chr.CharacterKeys.level]));
     setState(() {
       currentXP = char.currentXP;
       initialCurrentXP = currentXP;

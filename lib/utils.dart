@@ -50,11 +50,11 @@ ReturnPredicate<T> matcher<T>(InputPredicate<T> predicate) =>
 
 // (Note note) => (Note n) => n.key != null && n.key == note.key || n.title == note.title;
 
-currency(num amt) {
+String currency(num amt) {
   return commatize(amt).replaceAll(RegExp(r'\.0+$'), '') + ' G';
 }
 
-commatize(num number, [num precision = 2]) {
+String commatize(num number, [num precision = 2]) {
   return number
       .toStringAsFixed(precision)
       .replaceAll(RegExp(r'\B(?=(\d{3})+(?!\d))'), ',')

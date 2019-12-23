@@ -1,3 +1,5 @@
+import 'package:pedantic/pedantic.dart';
+
 import '../../components/markdown_help.dart';
 import '../../db/moves.dart';
 import '../../components/dialogs.dart';
@@ -119,7 +121,7 @@ class CustomMoveFormBuilderState extends State<CustomMoveFormBuilder> {
 
   _updateMove() async {
     var move = _generateMove();
-    updateMove(move);
+    unawaited(updateMove(move));
     if (widget.onUpdateMove != null) {
       widget.onUpdateMove(move);
     }
@@ -128,7 +130,7 @@ class CustomMoveFormBuilderState extends State<CustomMoveFormBuilder> {
 
   _createMove() async {
     var move = _generateMove();
-    createMove(move);
+    unawaited(createMove(move));
     if (widget.onUpdateMove != null) {
       widget.onUpdateMove(move);
     }
@@ -137,7 +139,7 @@ class CustomMoveFormBuilderState extends State<CustomMoveFormBuilder> {
 
   Move _generateMove() {
     return Move(
-      key: name.toLowerCase().replaceAll(RegExp('[^a-z]+'), '_'),
+      key: widget.move.key,
       name: name,
       description: description,
       explanation: explanation,
