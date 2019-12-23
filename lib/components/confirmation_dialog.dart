@@ -13,8 +13,8 @@ class ConfirmationDialog extends StatelessWidget {
     this.title = const Text('Are you sure?'),
     this.text = const Text(
         'This action can not be undone.\nAre you sure you want to proceed?'),
-    this.okButtonText: const Text('OK'),
-    this.cancelButtonText: const Text('Cancel'),
+    this.okButtonText = const Text('OK'),
+    this.cancelButtonText = const Text('Cancel'),
     this.returnValue,
     this.noCancel = false,
   }) : super(key: key);

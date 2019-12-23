@@ -57,7 +57,7 @@ class Note with Serializer<NoteKeys> {
 class NoteCategory {
   String name;
   NoteCategory(String _name)
-      : name = _name != null && _name.length > 0 ? _name : 'Misc';
+      : name = _name != null && _name.isNotEmpty ? _name : 'Misc';
 
   static NoteCategory npcs = NoteCategory('NPCs');
   static NoteCategory loot = NoteCategory('Loot');

@@ -90,7 +90,7 @@ class _EditAvatarCardState extends State<EditAvatarCard> {
             : "We couldn't load your image,\nPlease check the URL and try again."),
       ),
     );
-    return widget.controller.text.length == 0 || imageError == true
+    return widget.controller.text.isEmpty || imageError == true
         ? placeholder
         : container;
   }

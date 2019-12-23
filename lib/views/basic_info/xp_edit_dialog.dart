@@ -1,6 +1,6 @@
 import '../../components/standard_dialog_controls.dart';
 import '../../db/character_db.dart';
-import '../../db/character_utils.dart' as Chr;
+import '../../db/character_utils.dart' as chr;
 import '../basic_info/current_stat_indicator.dart';
 import '../profile_view/status_bars.dart';
 import '../../db/character.dart';
@@ -124,7 +124,7 @@ class _XPEditDialogState extends State<XPEditDialog> {
   void save(BuildContext context) {
     DbCharacter char = widget.character;
     char.currentXP = currentXP;
-    updateCharacter(char, [Chr.CharacterKeys.currentXP]);
+    updateCharacter(char, [chr.CharacterKeys.currentXP]);
     Navigator.pop(context);
   }
 
@@ -133,7 +133,7 @@ class _XPEditDialogState extends State<XPEditDialog> {
     char.currentXP = 0;
     char.level++;
     updateCharacter(
-        char, [Chr.CharacterKeys.currentXP, Chr.CharacterKeys.level]);
+        char, [chr.CharacterKeys.currentXP, chr.CharacterKeys.level]);
     setState(() {
       currentXP = char.currentXP;
       initialCurrentXP = currentXP;
@@ -149,7 +149,7 @@ class _XPEditDialogState extends State<XPEditDialog> {
     char.level--;
     char.currentXP = char.level + 6;
     updateCharacter(
-        char, [Chr.CharacterKeys.currentXP, Chr.CharacterKeys.level]);
+        char, [chr.CharacterKeys.currentXP, chr.CharacterKeys.level]);
     setState(() {
       currentXP = char.currentXP;
       initialCurrentXP = currentXP;

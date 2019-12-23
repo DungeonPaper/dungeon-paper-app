@@ -111,13 +111,13 @@ class _EditTagDialogState extends State<EditTagDialog> {
     String name = _controllers['name'].text;
     String value = _controllers['value'].text;
     dynamic parsedValue = value.toString();
-    if (RegExp(r'^\d+\.\d+$').hasMatch(value))
+    if (RegExp(r'^\d+\.\d+$').hasMatch(value)) {
       parsedValue = double.tryParse(value);
-    else if (RegExp(r'^\d+$').hasMatch(value))
+    } else if (RegExp(r'^\d+$').hasMatch(value)) {
       parsedValue = int.tryParse(value);
-    else if (value == 'true')
+    } else if (value == 'true') {
       parsedValue = true;
-    else if (value == 'false') parsedValue = false;
+    } else if (value == 'false') parsedValue = false;
     if (parsedValue == '') parsedValue = null;
     return Tag(name, parsedValue);
   }

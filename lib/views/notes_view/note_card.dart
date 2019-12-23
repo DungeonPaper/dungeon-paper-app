@@ -42,7 +42,7 @@ class NoteCardState extends State<NoteCard> {
             padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
             child: MarkdownBody(
                 onTapLink: (url) => _launchURL(url),
-                data: desc.trim().length > 0
+                data: desc.trim().isNotEmpty
                     ? desc
                     : 'This note has no content.'),
           ),
