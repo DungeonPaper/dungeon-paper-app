@@ -1,3 +1,5 @@
+import 'package:pedantic/pedantic.dart';
+
 import '../../components/card_bottom_controls.dart';
 import '../../components/confirmation_dialog.dart';
 import '../../db/notes.dart';
@@ -77,7 +79,7 @@ class NoteCardState extends State<NoteCard> {
           text: const Text('Are you sure?'),
           cancelButtonText: Text('Cancel')),
     )) {
-      deleteNote(widget.note);
+      unawaited(deleteNote(widget.note));
     }
   }
 

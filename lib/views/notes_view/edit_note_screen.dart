@@ -1,3 +1,5 @@
+import 'package:pedantic/pedantic.dart';
+
 import '../../components/markdown_help.dart';
 import '../../db/notes.dart';
 import '../../components/dialogs.dart';
@@ -111,7 +113,7 @@ class EditNoteFormState extends State<EditNoteForm> {
 
   _updateNote() async {
     var note = _generateNote();
-    updateNote(note);
+    unawaited(updateNote(note));
     if (widget.onUpdateNote != null) {
       widget.onUpdateNote(widget.note);
     }
@@ -120,7 +122,7 @@ class EditNoteFormState extends State<EditNoteForm> {
 
   _createNote() async {
     var note = _generateNote();
-    createNote(note);
+    unawaited(createNote(note));
     if (widget.onUpdateNote != null) {
       widget.onUpdateNote(widget.note);
     }

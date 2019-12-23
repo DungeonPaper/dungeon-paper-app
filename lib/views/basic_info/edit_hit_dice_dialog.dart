@@ -1,3 +1,5 @@
+import 'package:pedantic/pedantic.dart';
+
 import '../../components/standard_dialog_controls.dart';
 import '../../db/character.dart';
 import '../../db/character_db.dart';
@@ -118,7 +120,7 @@ class EditHitDiceDialogState extends State<EditHitDiceDialog> {
   _saveValue() async {
     DbCharacter character = dwStore.state.characters.current;
     character.hitDice = Dice(sides, amount);
-    updateCharacter(character, [CharacterKeys.hitDice]);
+    unawaited(updateCharacter(character, [CharacterKeys.hitDice]));
     Navigator.pop(context);
   }
 }

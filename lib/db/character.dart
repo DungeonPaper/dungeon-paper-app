@@ -159,7 +159,9 @@ class DbCharacter with Serializer<CharacterKeys> {
           looks = List.from(v ?? []).map((i) => i.toString()).toList(),
       CharacterKeys.race: (v) =>
           race = v != null ? Move.fromJSON(v) : mainClass.raceMoves.first,
-      CharacterKeys.coins: (v) => coins = v ?? 0,
+      CharacterKeys.coins: (v) => coins = v is num
+          ? v.toDouble()
+          : v != null ? double.tryParse(v).toDouble() ?? 0.0 : 0.0,
     };
   }
 }

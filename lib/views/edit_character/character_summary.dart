@@ -8,6 +8,7 @@ import '../../components/dialogs.dart';
 import 'character_wizard_utils.dart';
 import 'package:flutter/material.dart';
 import '../../db/character_utils.dart' as chr;
+import 'package:dungeon_world_data/alignment.dart' as dwa_alignment;
 import 'edit_looks.dart';
 import 'edit_race.dart';
 
@@ -113,14 +114,20 @@ class AlignmentSummary extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final alignment = character.mainClass.alignments[alignmentKey];
+    final alignment = character.mainClass.alignments.containsKey(alignmentKey)
+        ? character.mainClass.alignments[alignmentKey]
+        : dwa_alignment.Alignment(
+            name: capitalize(alignmentKey),
+            description: null,
+          );
     return TitleSubtitleCard(
       elevation: 0.0,
       margin: EdgeInsets.all(0),
       color: Theme.of(context).canvasColor.withOpacity(0.5),
       leading: Icon(icon, size: 40),
       title: Text(alignment.name),
-      subtitle: Text(alignment.description),
+      subtitle:
+          alignment.description != null ? Text(alignment.description) : null,
     );
   }
 
@@ -163,10 +170,13 @@ class ClassSummary extends StatelessWidget {
   Widget build(BuildContext context) {
     return TitleSubtitleCard(
       title: Text(character.mainClass.name),
-      subtitle: Text(
-        character.mainClass.description,
-        overflow: TextOverflow.ellipsis,
-      ),
+      subtitle: character.mainClass.description != null &&
+              character.mainClass.description.trim().isNotEmpty
+          ? Text(
+              character.mainClass.description,
+              overflow: TextOverflow.ellipsis,
+            )
+          : null,
       leading: Icon(Icons.person, size: 40.0),
       color: Theme.of(context).canvasColor.withOpacity(0.5),
       elevation: 0,
