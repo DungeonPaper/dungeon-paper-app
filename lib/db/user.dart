@@ -68,7 +68,7 @@ setCurrentUser(FirebaseUser user) async {
       .getDocuments();
 
   DocumentSnapshot userSnap;
-  if (userQuery.documents.length == 0) {
+  if (userQuery.documents.isEmpty) {
     DocumentReference userDoc = await createNewUser(user);
     userSnap = await userDoc.get();
   } else {

@@ -1,6 +1,6 @@
 import '../../db/character_utils.dart';
 import '../../db/character.dart';
-import '../../db/character_utils.dart' as Chr;
+import '../../db/character_utils.dart' as chr;
 import '../../components/dialogs.dart';
 import '../edit_character/alignment_description_card.dart';
 import '../edit_character/character_wizard_utils.dart';
@@ -41,7 +41,7 @@ class ChangeAlignmentDialog extends StatelessWidget {
     Widget child = Padding(
       padding: const EdgeInsets.all(16.0),
       child: Column(
-        children: Chr.Alignment.values
+        children: chr.Alignment.values
             .map(
               (alignment) => Padding(
                 padding: EdgeInsets.only(bottom: 16.0),
@@ -61,7 +61,7 @@ class ChangeAlignmentDialog extends StatelessWidget {
     return child;
   }
 
-  Function() changeAlignment(Chr.Alignment def) {
+  Function() changeAlignment(chr.Alignment def) {
     return () async {
       character.alignment = def;
       onSave(character, [CharacterKeys.alignment]);

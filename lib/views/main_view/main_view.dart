@@ -146,11 +146,13 @@ class _MainViewState extends State<MainView> {
     if (sharedPrefs.containsKey(lastVersionKey)) {
       lastViewedAt = Version.parse(sharedPrefs.getString(lastVersionKey));
     }
-    if (lastViewedAt == null || lastViewedAt < Version.parse(packageInfo.version))
+    if (lastViewedAt == null ||
+        lastViewedAt < Version.parse(packageInfo.version)) {
       showDialog(
         context: context,
         builder: (context) => WhatsNew.dialog(),
       );
+    }
     sharedPrefs.setString(lastVersionKey, packageInfo.version);
   }
 }

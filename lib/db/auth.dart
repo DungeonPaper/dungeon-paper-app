@@ -22,7 +22,8 @@ class PaperAuth {
   Future<FirebaseUser> getFirebaseUser(AuthCredential creds) async {
     _prepSignIn();
     try {
-      FirebaseUser user = await _fb.signInWithCredential(creds);
+      var result = await _fb.signInWithCredential(creds);
+      var user = result.user;
       await setCurrentUser(user);
       registerAuthUserListener();
       registerUserContext(user);

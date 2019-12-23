@@ -80,10 +80,11 @@ class CustomInventoryItemFormBuilderState
             tags: tags,
             onSave: (tag, idx) {
               setState(() {
-                if (idx == tags.length)
+                if (idx == tags.length) {
                   tags.add(tag);
-                else
+                } else {
                   tags[idx] = tag;
+                }
               });
             },
             onDelete: (tag, idx) => setState(() => tags.removeAt(idx)),
