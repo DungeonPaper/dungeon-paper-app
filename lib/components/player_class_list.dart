@@ -34,6 +34,6 @@ class PlayerClassList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return builder(context, value, dungeonWorld.classes.values.toList(), onChanged);
+    return builder(context, value, dungeonWorld.classes, onChanged);
   }
 }
