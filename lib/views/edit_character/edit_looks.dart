@@ -1,6 +1,6 @@
+import 'package:dungeon_paper/components/card_list_item.dart';
 import 'package:dungeon_paper/utils.dart';
 import 'package:flutter_typeahead/flutter_typeahead.dart';
-import '../../components/title_subtitle_row.dart';
 import '../../db/character.dart';
 import '../../db/character_utils.dart';
 import '../../components/dialogs.dart';
@@ -236,7 +236,7 @@ class LooksDescription extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return TitleSubtitleCard(
+    return CardListItem(
       color: color ??
           Theme.of(context)
               .canvasColor
