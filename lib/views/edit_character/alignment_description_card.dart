@@ -1,3 +1,5 @@
+import 'package:dungeon_paper/components/card_list_item.dart';
+
 import '../../utils.dart';
 import '../../db/character_utils.dart' as chr;
 import 'package:flutter/material.dart';
@@ -21,8 +23,10 @@ class AlignmentDescription extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     String alignmentKey = enumName(alignment);
-    dw_alignment.Alignment alignmentInfo = playerClass.alignments[alignmentKey] ??
-        dw_alignment.Alignment(key: alignmentKey, name: alignmentKey, description: '');
+    dw_alignment.Alignment alignmentInfo =
+        playerClass.alignments[alignmentKey] ??
+            dw_alignment.Alignment(
+                key: alignmentKey, name: alignmentKey, description: '');
     bool hasDescription = alignmentInfo.description.isNotEmpty;
 
     List<Widget> texts = <Widget>[
@@ -37,34 +41,14 @@ class AlignmentDescription extends StatelessWidget {
         style: Theme.of(context).textTheme.body1,
       ));
     }
-    return Material(
-      color: Theme.of(context).canvasColor,
-      elevation: 1.0,
-      type: MaterialType.card,
-      borderRadius: BorderRadius.circular(5.0),
-      child: InkWell(
-        onTap: onTap,
-        child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 16.0),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: <Widget>[
-              Padding(
-                padding: EdgeInsets.only(right: 16.0),
-                child: Icon(icon, size: 40.0),
-              ),
-              Expanded(
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: texts,
-                ),
-              ),
-              Icon(Icons.chevron_right),
-            ],
-          ),
-        ),
-      ),
+    return CardListItem(
+      leading: Icon(icon, size: 40.0),
+      trailing: onTap != null ? Icon(Icons.chevron_right) : null,
+      title: Text(capitalize(alignmentInfo.name)),
+      subtitle: alignmentInfo.description != null
+          ? Text(alignmentInfo.description)
+          : null,
+      onTap: onTap,
     );
   }
 

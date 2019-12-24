@@ -1,5 +1,5 @@
+import 'package:dungeon_paper/components/card_list_item.dart';
 import 'package:dungeon_paper/db/character_utils.dart';
-import '../../components/title_subtitle_row.dart';
 import '../../db/character.dart';
 import '../../components/dialogs.dart';
 import 'character_wizard_utils.dart';
@@ -90,7 +90,7 @@ class RaceDescription extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return TitleSubtitleCard(
+    return CardListItem(
       margin: margin,
       leading: Icon(Icons.pets, size: 40),
       title: Text(race.name),
