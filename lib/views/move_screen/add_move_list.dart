@@ -25,7 +25,7 @@ class _AddMoveListState extends State<AddMoveList> {
 
   @override
   void initState() {
-    currentCls = widget.playerClass ?? dungeonWorld.classes.values.elementAt(0);
+    currentCls = widget.playerClass ?? dungeonWorld.classes.elementAt(0);
     super.initState();
   }
 

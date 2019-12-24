@@ -50,12 +50,13 @@ class CustomClassMoveList extends StatelessWidget {
       itemBuilder: (context, List<Move> moves, i, catI) {
         MoveCategory cat = cats.keys.elementAt(catI);
 
-        if (i >= moves.length)
+        if (i >= moves.length) {
           return Center(
             child: AddButton(
               onPressed: () => _addMove(context, cat),
             ),
           );
+        }
 
         return Padding(
           padding: const EdgeInsets.symmetric(vertical: 8.0),

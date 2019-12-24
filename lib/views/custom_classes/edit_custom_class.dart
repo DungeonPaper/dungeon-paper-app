@@ -66,7 +66,7 @@ class _EditCustomClassState extends State<EditCustomClass>
       bonds: [],
       gearChoices: [],
       raceMoves: [],
-      spells: {},
+      spells: [],
     );
     tabController = TabController(length: _tabs.keys.length, vsync: this);
     super.initState();

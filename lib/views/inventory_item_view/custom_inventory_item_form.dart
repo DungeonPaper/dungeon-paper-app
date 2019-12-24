@@ -39,7 +39,7 @@ class CustomInventoryItemFormState extends State<CustomInventoryItemForm> {
       'name': EditingControllerConfig(defaultValue: item.name ?? ''),
       'description':
           EditingControllerConfig(defaultValue: item.description ?? ''),
-      'amount': EditingControllerConfig(defaultValue: item.amount ?? ''),
+      'amount': EditingControllerConfig(defaultValue: item.amount?.toString() ?? ''),
     });
     tags = List.from(item.tags ?? []);
     super.initState();
