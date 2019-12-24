@@ -1,5 +1,3 @@
-import 'package:pedantic/pedantic.dart';
-
 import '../../components/markdown_help.dart';
 import '../../components/dialogs.dart';
 import 'package:dungeon_world_data/move.dart';
@@ -123,6 +121,7 @@ class CustomMoveFormBuilderState extends State<CustomMoveFormBuilder> {
     if (widget.onSave != null) {
       widget.onSave(move);
     }
+    Navigator.pop(context);
   }
 
   Move _generateMove() {

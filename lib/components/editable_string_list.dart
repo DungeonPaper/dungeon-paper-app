@@ -48,8 +48,9 @@ class _EditableStringListState extends State<EditableStringList> {
     controllers = WidgetUtils.textEditingControllerMap(
       list: list,
     ).values.toList();
-    if (widget.validityNotifier != null)
+    if (widget.validityNotifier != null) {
       widget.validityNotifier.value = _isValid();
+    }
   }
 
   VoidEmptyCallbackDelegate _updateFor(int i) {
@@ -62,8 +63,9 @@ class _EditableStringListState extends State<EditableStringList> {
   }
 
   void _update() {
-    if (widget.validityNotifier != null)
+    if (widget.validityNotifier != null) {
       widget.validityNotifier.value = _isValid();
+    }
     if (widget.onSave != null) widget.onSave(strings);
   }
 
