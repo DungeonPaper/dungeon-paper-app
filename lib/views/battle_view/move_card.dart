@@ -123,12 +123,14 @@ class MoveCardState extends State<MoveCard> {
   }
 
   _save() {
-    if (widget.onSave != null)
+    if (widget.onSave != null) {
       widget.onSave(widget.move);
+    }
   }
 
   _delete() {
-    if (widget.onSave != null)
+    if (widget.onSave != null) {
       widget.onSave(widget.move);
+    }
   }
 }

@@ -106,5 +106,7 @@ class Enumeration<T> {
 
 Iterable<Enumeration<T>> enumerate<T>(Iterable<T> items) sync* {
   int idx = 0;
-  for (T item in items) yield Enumeration(idx++, item);
+  for (T item in items) {
+    yield Enumeration(idx++, item);
+  }
 }

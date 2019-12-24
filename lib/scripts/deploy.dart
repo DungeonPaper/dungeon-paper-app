@@ -6,14 +6,14 @@ import 'package:pub_semver/pub_semver.dart';
 
 ArgParser parser = ArgParser();
 
-main(List<String> args) async {
-  bool build = true;
-  bool push = false;
-  bool install = false;
+void main(List<String> args) async {
+  var build = true;
+  var push = false;
+  var install = false;
   Version version;
-  List<String> platforms = ['android-arm', 'android-arm64'];
-  String apkPath = 'build/app/outputs/apk/release/app-arm64-v8a-release.apk';
-  String outputPath;
+  var platforms = ['android-arm', 'android-arm64'];
+  var apkPath = 'build/app/outputs/apk/release/app-arm64-v8a-release.apk';
+  var outputPath;
 
   parser.addFlag('build', abbr: 'b', defaultsTo: build, callback: (val) {
     build = val;
@@ -32,7 +32,7 @@ main(List<String> args) async {
   parser.parse(args);
 
   if (![build, push, install].any((v) => v == true)) {
-    print("Nothing to do! Quitting.");
+    print('Nothing to do! Quitting.');
     exit(1);
   }
 
@@ -44,8 +44,8 @@ main(List<String> args) async {
   outputPath = '/sdcard/Download/dungeon-paper-$version.apk';
 
   if (build == true) {
-    print("Building...");
-    List<Future<Process>> results = [
+    print('Building...');
+    var results = [
       Process.start('flutter',
           ['build', 'appbundle', '--target-platform', platforms.join(',')]),
       Process.start('flutter', [
@@ -63,16 +63,16 @@ main(List<String> args) async {
   }
 
   if (push == true) {
-    print("Pushing $apkPath to $outputPath...");
+    print('Pushing $apkPath to $outputPath...');
     await Process.start('adb', ['push', apkPath, outputPath]);
   }
 
   if (install == true) {
-    print("Installing $outputPath...");
+    print('Installing $outputPath...');
     var result = await Process.start('adb', ['install', '-r', apkPath]);
     unawaited(result.stdout.pipe(stdout));
     if (await result.exitCode != 0) {
-      print("Uninstalling old version...");
+      print('Uninstalling old version...');
       var uninstall =
           await Process.start('adb', ['uninstall', 'app.dungeonpaper']);
       unawaited(uninstall.stdout.pipe(stdout));
@@ -81,15 +81,15 @@ main(List<String> args) async {
     }
   }
 
-  print("Done!");
+  print('Done!');
 }
 
 Future<String> getVersionString() async {
-  File buildFile = File(
+  var buildFile = File(
       join(dirname(Platform.script.path), '../../android/app/build.gradle'));
 
-  String contents = await buildFile.readAsString();
-  RegExpMatch match = RegExp('versionName "(.+)"').firstMatch(contents);
+  var contents = await buildFile.readAsString();
+  var match = RegExp('versionName "(.+)"').firstMatch(contents);
   if (match != null) {
     return match.group(1);
   }

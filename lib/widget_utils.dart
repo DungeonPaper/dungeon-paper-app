@@ -114,7 +114,7 @@ class WidgetUtils {
     if (value is String) {
       config = EditingControllerConfig(key: key, defaultValue: value);
     } else if (value is! EditingControllerConfig) {
-      throw new FormatException("value must be of valid type");
+      throw FormatException("value must be of valid type");
     } else {
       config = value;
     }
