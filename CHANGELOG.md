@@ -1,5 +1,8 @@
 # CHANGELOG
 
+## 1.0.10
+* Coin dialog bug fix attempt
+
 ## 1.0.9
 * Better auth renewal
 * Better edit looks view
