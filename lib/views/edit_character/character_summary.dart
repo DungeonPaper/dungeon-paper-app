@@ -1,4 +1,4 @@
-import '../../components/title_subtitle_row.dart';
+import 'package:dungeon_paper/components/card_list_item.dart';
 import '../../views/basic_info/character_photo.dart';
 import '../../utils.dart';
 import '../../views/profile_view/character_headline.dart';
@@ -120,7 +120,7 @@ class AlignmentSummary extends StatelessWidget {
             name: capitalize(alignmentKey),
             description: null,
           );
-    return TitleSubtitleCard(
+    return CardListItem(
       elevation: 0.0,
       margin: EdgeInsets.all(0),
       color: Theme.of(context).canvasColor.withOpacity(0.5),
@@ -168,7 +168,7 @@ class ClassSummary extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return TitleSubtitleCard(
+    return CardListItem(
       title: Text(character.mainClass.name),
       subtitle: character.mainClass.description != null &&
               character.mainClass.description.trim().isNotEmpty

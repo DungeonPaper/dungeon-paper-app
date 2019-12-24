@@ -1,4 +1,4 @@
-import 'package:dungeon_paper/components/title_subtitle_row.dart';
+import 'package:dungeon_paper/components/card_list_item.dart';
 import 'package:dungeon_world_data/player_class.dart';
 import 'package:dungeon_world_data/alignment.dart' as dw_alignment;
 import 'package:flutter/material.dart';
@@ -127,7 +127,7 @@ class AlignmentList extends StatelessWidget {
                       textTheme.subtitle.copyWith(color: theme.primaryColor)),
               for (var alignment in alignments)
                 TitleSubtitleRow(
-                  contentPadding: EdgeInsets.symmetric(vertical: 8.0),
+                  // contentPadding: EdgeInsets.symmetric(vertical: 8.0),
                   title: Text(alignment.name),
                   subtitle: Text(alignment.description),
                 ),
