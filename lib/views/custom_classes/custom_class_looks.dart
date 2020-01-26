@@ -54,7 +54,7 @@ class _CustomClassLooksState extends State<CustomClassLooks> {
   }
 
   Widget _childBuilder(BuildContext context, list, num i, num catI) {
-    if (list is String && list == ADD)
+    if (list is String && list == ADD) {
       return Center(
         child: AddButton(
           size: BUTTON_SIZE,
@@ -62,6 +62,7 @@ class _CustomClassLooksState extends State<CustomClassLooks> {
           textScaleFactor: 1.5,
         ),
       );
+    }
 
     int idx = items.indexOf(list);
     return Card(
@@ -94,10 +95,11 @@ class _CustomClassLooksState extends State<CustomClassLooks> {
               textCapitalization: TextCapitalization.words,
               onSave: (lst) {
                 setState(() {
-                  if (items.length <= i)
+                  if (items.length <= i) {
                     items.add(lst);
-                  else
+                  } else {
                     items[idx] = lst;
+                  }
                 });
                 if (widget.onUpdate != null) widget.onUpdate(items);
               },
@@ -129,8 +131,9 @@ class _CustomClassLooksState extends State<CustomClassLooks> {
   }
 
   _listener() {
-    if (widget.validityNotifier != null)
+    if (widget.validityNotifier != null) {
       widget.validityNotifier.value = _isValid();
+    }
   }
 
   bool _isValid() => validities.every((v) => v.value);

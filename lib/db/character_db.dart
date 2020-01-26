@@ -78,7 +78,7 @@ Future<DbCharacter> updateCharacter(
   return DbCharacter(charData.data);
 }
 
-deleteCharacter() async {
+void deleteCharacter() async {
   String userDocId = dwStore.state.user.currentUserDocID;
   String charDocId = dwStore.state.characters.currentCharDocID;
   DbUser user = dwStore.state.user.current;

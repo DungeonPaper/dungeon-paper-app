@@ -78,8 +78,9 @@ class _ClassBasicDetailsState extends State<ClassBasicDetails> {
   }
 
   updateWith(PlayerClass def) {
-    if (widget.validityNotifier != null)
+    if (widget.validityNotifier != null) {
       widget.validityNotifier.value = _isValid();
+    }
     if (widget.onUpdate != null) widget.onUpdate(def);
   }
 
