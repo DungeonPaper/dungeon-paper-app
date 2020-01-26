@@ -31,5 +31,36 @@ void main() {
       expect(json['mainClass'], equals('druid'));
       expect(json['hitDice'], equals('1d6'));
     });
+
+    test('auto max HP', () {
+      var char1 = DbCharacter({
+        'mainClass': 'immolator', // base HP 6
+        'displayName': 'Goku',
+        'str': 20,
+        'dex': 10,
+        'int': 8,
+        'wis': 11,
+        'con': 10,
+        'cha': 14,
+        'useDefaultMaxHP': true,
+      });
+      var char2 = DbCharacter({
+        'mainClass': 'wizard', // base HP 4
+        'displayName': 'Harry Potter',
+        'str': 20,
+        'dex': 10,
+        'int': 8,
+        'wis': 11,
+        'con': 16,
+        'cha': 14,
+        'useDefaultMaxHP': true,
+      });
+      expect(char1.maxHP, equals(6));
+      expect(char2.maxHP, equals(6));
+      char1.con = 16; // +1 mod
+      char2.con = 10; // 0 mod
+      expect(char1.maxHP, equals(8));
+      expect(char2.maxHP, equals(4));
+    });
   });
 }

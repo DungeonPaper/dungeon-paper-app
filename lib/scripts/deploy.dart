@@ -44,6 +44,11 @@ void main(List<String> args) async {
   outputPath = '/sdcard/Download/dungeon-paper-$version.apk';
 
   if (build == true) {
+    print('Running tests...');
+    var testProc = Process.start('flutter', ['test']);
+    var testRun = await testProc;
+    await testRun.stdout.pipe(stdout);
+
     print('Building...');
     var results = [
       Process.start('flutter',
@@ -57,9 +62,9 @@ void main(List<String> args) async {
       ]),
     ];
     var outs = await Future.wait(results);
-    outs.forEach((out) {
-      out.stdout.pipe(stdout);
-    });
+    for (var out in await outs) {
+      await out.stdout.pipe(stdout);
+    }
   }
 
   if (push == true) {
