@@ -20,7 +20,7 @@ class LoadDisplay extends StatelessWidget {
     double count = 0.0;
     character.inventory.forEach((item) {
       Tag wght =
-          item.tags?.firstWhere((t) => t.name == 'weight', orElse: () => null);
+          item.tags?.firstWhere((t) => t?.name == 'weight', orElse: () => null);
       if (wght != null && wght.hasValue) {
         num wghtValue = 0;
         if (wght.value is num) {
@@ -48,7 +48,7 @@ class LoadDisplay extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Tooltip(
-      message: 'Encumbrance',
+      message: 'Current Load, from inventory items with "Weight" tag',
       child: Chip(
         backgroundColor: severity.background,
         padding: EdgeInsets.all(12.0),
@@ -58,7 +58,7 @@ class LoadDisplay extends StatelessWidget {
             mainAxisSize: MainAxisSize.min,
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Text('ENC.'),
+              Text('LOAD'),
               SizedBox.fromSize(size: Size.square(10)),
               SvgPicture.asset(
                 'assets/dumbbell.svg',

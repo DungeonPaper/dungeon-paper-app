@@ -27,10 +27,11 @@ class _SecretsLoaderState extends State<SecretsLoader> {
 
   _getSecrets() async {
     Map<String, dynamic> loaded = await loadSecrets();
-    if (this.mounted)
+    if (this.mounted) {
       setState(() {
         secrets = loaded;
       });
+    }
   }
 
   @override
