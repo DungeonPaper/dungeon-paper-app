@@ -1,3 +1,5 @@
+import 'package:dungeon_paper/components/dialogs.dart';
+import 'package:dungeon_paper/views/custom_classes/edit_custom_class.dart';
 import 'package:dungeon_paper/views/whats_new/whats_new_view.dart';
 
 import '../about_view/about_view.dart';
@@ -44,22 +46,22 @@ class Sidebar extends StatelessWidget {
                   createNewCharacterScreen(context);
                 },
               ),
-              // ListTile(
-              //   leading: Icon(Icons.add),
-              //   title: Text('Create New Class'),
-              //   onTap: () {
-              //     Navigator.pop(context);
-              //     Navigator.push(
-              //       context,
-              //       MaterialPageRoute<bool>(
-              //         fullscreenDialog: true,
-              //         builder: (context) => EditCustomClass(
-              //           mode: DialogMode.Create,
-              //         ),
-              //       ),
-              //     );
-              //   },
-              // ),
+              ListTile(
+                leading: Icon(Icons.add),
+                title: Text('Create New Class'),
+                onTap: () {
+                  Navigator.pop(context);
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute<bool>(
+                      fullscreenDialog: true,
+                      builder: (context) => EditCustomClass(
+                        mode: DialogMode.Create,
+                      ),
+                    ),
+                  );
+                },
+              ),
               Divider(),
               title('Application', context),
               // About
