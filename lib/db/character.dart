@@ -80,7 +80,7 @@ class DbCharacter with Serializer<CharacterKeys> {
     return (mod >= 0 ? '+' : '') + mod.toString();
   }
 
-  num get defaultMaxHP => mainClass.baseHP + statModifier(con);
+  num get defaultMaxHP => mainClass.baseHP + conMod;
 
   @override
   toJSON() {

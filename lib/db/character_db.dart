@@ -126,7 +126,7 @@ Future<DocumentReference> createNewCharacter([DbCharacter character]) async {
   }
 }
 
-getOrCreateCharacter(DocumentSnapshot userSnap) async {
+Future<DbCharacter> getOrCreateCharacter(DocumentSnapshot userSnap) async {
   if (userSnap.data['characters'].isNotEmpty) {
     print('userSnap data:' + userSnap.data['characters'][0].documentID);
     await getAllCharacters(userSnap);
