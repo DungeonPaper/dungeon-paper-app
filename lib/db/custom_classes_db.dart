@@ -11,11 +11,22 @@ Future<DocumentReference> cerateCustomClass(PlayerClass playerClass) async {
   return doc;
 }
 
-Future<DocumentReference> updateCustomClass(String docId, PlayerClass playerClass) async {
+Future<DocumentReference> updateCustomClass(
+    String docId, PlayerClass playerClass) async {
   var json = playerClass.toJSON();
   var userDocId = dwStore.state.user.currentUserDocID;
-  var doc =
-      Firestore.instance.collection('custom_classes/${userDocId}').document(docId);
+  var doc = Firestore.instance
+      .collection('custom_classes/${userDocId}')
+      .document(docId);
   await doc.updateData(json);
   return doc;
+}
+
+Future<List<DocumentSnapshot>> getCustomClasses() async {
+  var userDocId = dwStore.state.user.currentUserDocID;
+  var docs = await Firestore.instance
+      .collection('custom_classes').document(userDocId)
+      .collection('classes')
+      .getDocuments();
+  return docs.documents;
 }

@@ -1,7 +1,6 @@
 import 'package:dungeon_paper/components/dialogs.dart';
 import 'package:dungeon_paper/views/custom_classes/edit_custom_class.dart';
 import 'package:dungeon_paper/views/whats_new/whats_new_view.dart';
-
 import '../about_view/about_view.dart';
 import '../about_view/feedback_button.dart';
 import '../../db/auth.dart';

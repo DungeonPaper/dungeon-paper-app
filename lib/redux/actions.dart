@@ -1,6 +1,7 @@
 import 'package:dungeon_paper/db/character.dart';
 import 'package:dungeon_paper/db/user.dart';
 import 'package:dungeon_paper/redux/stores/prefs_store.dart';
+import 'package:dungeon_world_data/player_class.dart';
 
 class AppInit {}
 
@@ -51,4 +52,17 @@ class SetPrefs {
   final PrefsStore prefs;
 
   SetPrefs(this.prefs);
+}
+
+class SetCustomClasses {
+  final Map<String, PlayerClass> classes;
+
+  SetCustomClasses(this.classes);
+}
+
+class GetCustomClasses {}
+
+class CustomClassesActions {
+  static SetCustomClasses setCustomClasses(Map<String, PlayerClass> classes) =>
+    SetCustomClasses(classes);
 }

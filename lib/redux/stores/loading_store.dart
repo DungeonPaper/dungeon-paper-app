@@ -3,6 +3,7 @@ import 'package:dungeon_paper/redux/actions.dart';
 enum LoadingKeys {
   User,
   Character,
+  CustomClasses,
 }
 
 Map<LoadingKeys, bool> loadingReducer(Map<LoadingKeys, bool> state, action) {
@@ -25,6 +26,11 @@ Map<LoadingKeys, bool> loadingReducer(Map<LoadingKeys, bool> state, action) {
   if (action is NoLogin) {
     state[LoadingKeys.Character] = false;
     state[LoadingKeys.User] = false;
+    return state;
+  }
+
+  if (action is GetCustomClasses) {
+    state[LoadingKeys.CustomClasses] = true;
     return state;
   }
 
