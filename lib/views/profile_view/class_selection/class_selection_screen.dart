@@ -1,8 +1,9 @@
+import 'package:dungeon_paper/refactor/character.dart';
+
 import '../../edit_character/character_wizard_utils.dart';
 import '../../../components/card_list_item.dart';
 import '../../../components/class_description.dart';
 import '../../../components/confirmation_dialog.dart';
-import '../../../db/character.dart';
 import '../../../db/character_utils.dart';
 import '../../../components/dialogs.dart';
 import 'package:dungeon_world_data/dw_data.dart';
@@ -11,7 +12,7 @@ import 'package:dungeon_world_data/player_class.dart';
 import 'package:flutter/material.dart';
 
 class ClassSelectionScreen extends StatelessWidget {
-  final DbCharacter character;
+  final Character character;
   final DialogMode mode;
   final CharSaveFunction onSave;
   final ScaffoldBuilderFunction builder;
@@ -308,7 +309,7 @@ class _ConfirmClassChangeDialogState extends State<ConfirmClassChangeDialog> {
 }
 
 class ChangeClassConfirmationResults {
-  final DbCharacter character;
+  final Character character;
   final List<CharacterKeys> keys;
 
   ChangeClassConfirmationResults({
@@ -338,7 +339,7 @@ class ChangeClassConfirmationOptions {
         resetHitDice: val,
       );
 
-  ChangeClassConfirmationResults applyToCharacter(DbCharacter character) {
+  ChangeClassConfirmationResults applyToCharacter(Character character) {
     List<CharacterKeys> keys = [];
 
     if (deleteMoves) {

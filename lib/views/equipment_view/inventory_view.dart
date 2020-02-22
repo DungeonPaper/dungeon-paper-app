@@ -1,5 +1,5 @@
+import 'package:dungeon_paper/refactor/character.dart';
 import '../../components/categorized_list.dart';
-import '../../db/character.dart';
 import '../equipment_view/coins_display.dart';
 import '../equipment_view/inventory_item_card.dart';
 import '../equipment_view/load_display.dart';
@@ -16,7 +16,7 @@ const EquipmentTitles = {
 };
 
 class InventoryView extends StatelessWidget {
-  final DbCharacter character;
+  final Character character;
 
   const InventoryView({
     Key key,

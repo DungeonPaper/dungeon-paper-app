@@ -1,9 +1,9 @@
 import 'package:dungeon_paper/components/number_controller.dart';
 import 'package:dungeon_paper/components/standard_dialog_controls.dart';
-import 'package:dungeon_paper/db/character.dart';
 import 'package:dungeon_paper/db/character_db.dart';
 import 'package:dungeon_paper/db/character_utils.dart';
 import 'package:dungeon_paper/redux/stores/stores.dart';
+import 'package:dungeon_paper/refactor/character.dart';
 import 'package:dungeon_paper/utils.dart';
 import 'package:flutter/material.dart';
 
@@ -37,7 +37,7 @@ class EditStatDialogState extends State<EditStatDialog> {
 
   @override
   Widget build(BuildContext context) {
-    String modifier = DbCharacter.statModifierText(value);
+    String modifier = Character.statModifierText(value);
     String name = enumName(stat);
 
     return SimpleDialog(
@@ -94,7 +94,7 @@ class EditStatDialogState extends State<EditStatDialog> {
   }
 
   _saveValue() async {
-    final DbCharacter character = dwStore.state.characters.current;
+    final Character character = dwStore.state.characters.current;
     CharacterKeys key;
 
     switch (stat) {

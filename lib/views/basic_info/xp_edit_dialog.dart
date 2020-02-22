@@ -1,3 +1,4 @@
+import 'package:dungeon_paper/refactor/character.dart';
 import 'package:pedantic/pedantic.dart';
 
 import '../../components/standard_dialog_controls.dart';
@@ -5,12 +6,11 @@ import '../../db/character_db.dart';
 import '../../db/character_utils.dart' as chr;
 import '../basic_info/current_stat_indicator.dart';
 import '../profile_view/status_bars.dart';
-import '../../db/character.dart';
 import 'package:wheel_spinner/wheel_spinner.dart';
 import 'package:flutter/material.dart';
 
 class XPEditDialog extends StatefulWidget {
-  final DbCharacter character;
+  final Character character;
   static const int MIN_ROW_WIDTH = 410;
 
   const XPEditDialog({
@@ -124,14 +124,14 @@ class _XPEditDialogState extends State<XPEditDialog> {
   }
 
   void save(BuildContext context) {
-    DbCharacter char = widget.character;
+    Character char = widget.character;
     char.currentXP = currentXP;
     updateCharacter(char, [chr.CharacterKeys.currentXP]);
     Navigator.pop(context);
   }
 
   void levelUp(BuildContext context) async {
-    DbCharacter char = widget.character;
+    Character char = widget.character;
     char.currentXP = 0;
     char.level++;
     unawaited(updateCharacter(
@@ -147,7 +147,7 @@ class _XPEditDialogState extends State<XPEditDialog> {
   }
 
   void levelDown(BuildContext context) async {
-    DbCharacter char = widget.character;
+    Character char = widget.character;
     char.level--;
     char.currentXP = char.level + 6;
     unawaited(updateCharacter(
@@ -170,7 +170,7 @@ class LevelUpDialog extends StatelessWidget {
     this.levelDown = false,
   }) : super(key: key);
 
-  final DbCharacter char;
+  final Character char;
   final bool levelDown;
 
   @override

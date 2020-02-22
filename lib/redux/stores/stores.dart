@@ -1,9 +1,9 @@
-import 'package:dungeon_paper/db/character.dart';
 import 'package:dungeon_paper/redux/stores/characters_store.dart';
 import 'package:dungeon_paper/redux/stores/custom_classes_store.dart';
 import 'package:dungeon_paper/redux/stores/loading_store.dart';
 import 'package:dungeon_paper/redux/stores/prefs_store.dart';
 import 'package:dungeon_paper/redux/stores/user_store.dart';
+import 'package:dungeon_paper/refactor/character.dart';
 import 'package:flutter/material.dart';
 import 'package:redux/redux.dart';
 import 'package:redux_logging/redux_logging.dart';
@@ -44,7 +44,7 @@ var initialState = DWStore(
   characters: CharacterStore(
     currentCharDocID: null,
     current: null,
-    characters: Map<String, DbCharacter>(),
+    characters: Map<String, Character>(),
   ),
   customClasses: CustomClassesStore(
     customClasses: {},

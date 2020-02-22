@@ -1,19 +1,16 @@
-import 'package:dungeon_paper/db/character.dart';
 import 'package:dungeon_paper/redux/actions.dart';
+import 'package:dungeon_paper/refactor/character.dart';
 import 'package:meta/meta.dart';
 
 class CharacterStore {
   String currentCharDocID;
-  DbCharacter current;
-  Map<String, DbCharacter> characters;
+  Character current;
+  Map<String, Character> characters;
 
-  CharacterStore(
-      {this.currentCharDocID, @required this.characters, this.current}) {
-    if (this.current == null &&
-        this.characters != null &&
-        this.characters.isNotEmpty) {
-      this.current = this.characters[this.characters.keys.first];
-      this.currentCharDocID = this.characters.keys.first;
+  CharacterStore({currentCharDocID, @required characters, current}) {
+    if (current == null && characters != null && characters.isNotEmpty) {
+      current = characters[characters.keys.first];
+      currentCharDocID = characters.keys.first;
     }
   }
 }
@@ -21,7 +18,8 @@ class CharacterStore {
 CharacterStore characterReducer(CharacterStore state, action) {
   if (action is SetCharacters) {
     state.characters = action.characters;
-    if (action.characters.isNotEmpty && !state.characters.containsKey(state.currentCharDocID)) {
+    if (action.characters.isNotEmpty &&
+        !state.characters.containsKey(state.currentCharDocID)) {
       state.currentCharDocID = action.characters.keys.first;
     }
     state.current = action.characters[state.currentCharDocID];
@@ -39,7 +37,7 @@ CharacterStore characterReducer(CharacterStore state, action) {
     return CharacterStore(
         current: null,
         currentCharDocID: null,
-        characters: Map<String, DbCharacter>());
+        characters: Map<String, Character>());
   }
 
   return state;

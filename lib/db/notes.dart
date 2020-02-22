@@ -1,8 +1,8 @@
 import 'package:dungeon_paper/db/base.dart';
 import 'package:dungeon_paper/redux/stores/stores.dart';
+import 'package:dungeon_paper/refactor/character.dart';
 import 'package:dungeon_paper/utils.dart';
 import 'package:uuid/uuid.dart';
-import 'character.dart';
 import 'character_db.dart';
 import 'character_utils.dart';
 
@@ -88,15 +88,15 @@ class NoteCategory {
   int get hashCode => name.hashCode;
 }
 
-ReturnPredicate<Note> matchNote = matcher<Note>(
-    (Note i, Note o) => i.key == o.key);
+ReturnPredicate<Note> matchNote =
+    matcher<Note>((Note i, Note o) => i.key == o.key);
 
 Future updateNote(Note note) async {
   if (dwStore.state.characters.current == null) {
     throw ('No character loaded.');
   }
 
-  DbCharacter character = dwStore.state.characters.current;
+  Character character = dwStore.state.characters.current;
   num index = character.notes.indexWhere(matchNote(note));
   character.notes[index] = note;
   await updateCharacter(character, [CharacterKeys.notes]);
@@ -107,7 +107,7 @@ Future deleteNote(Note note) async {
     throw ('No character loaded.');
   }
 
-  DbCharacter character = dwStore.state.characters.current;
+  Character character = dwStore.state.characters.current;
   num index = character.notes.indexWhere(matchNote(note));
   character.notes.removeAt(index);
   await updateCharacter(character, [CharacterKeys.notes]);
@@ -118,7 +118,7 @@ Future createNote(Note note) async {
     throw ('No character loaded.');
   }
 
-  DbCharacter character = dwStore.state.characters.current;
+  Character character = dwStore.state.characters.current;
   character.notes.add(note);
   await updateCharacter(character, [CharacterKeys.notes]);
 }

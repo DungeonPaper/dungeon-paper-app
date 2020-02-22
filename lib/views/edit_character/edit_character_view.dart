@@ -1,8 +1,8 @@
+import 'package:dungeon_paper/refactor/character.dart';
 import '../../components/animations/slide_route_from_right.dart';
 import '../../components/card_list_item.dart';
 import '../../components/confirmation_dialog.dart';
 import '../../components/scaffold_with_elevation.dart';
-import '../../db/character.dart';
 import '../../db/character_db.dart';
 import '../../db/character_utils.dart' as chr;
 import '../../components/dialogs.dart';
@@ -16,7 +16,7 @@ import 'edit_basic_info_view.dart';
 import 'package:flutter/material.dart';
 
 class EditCharacterView extends StatefulWidget {
-  final DbCharacter character;
+  final Character character;
 
   const EditCharacterView({
     Key key,
@@ -186,9 +186,9 @@ class _EditCharacterViewState extends State<EditCharacterView> {
     );
   }
 
-  void Function(DbCharacter char, List<chr.CharacterKeys> keys)
+  void Function(Character char, List<chr.CharacterKeys> keys)
       _updateCharacter(BuildContext context) {
-    return (DbCharacter char, List<chr.CharacterKeys> keys) {
+    return (Character char, List<chr.CharacterKeys> keys) {
       updateCharacter(char, keys);
       if (context != null) {
         Navigator.pop(context);

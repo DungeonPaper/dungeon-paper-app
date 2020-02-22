@@ -1,10 +1,9 @@
-import 'package:dungeon_paper/db/character.dart';
 import 'package:dungeon_paper/redux/stores/stores.dart';
+import 'package:dungeon_paper/refactor/character.dart';
 import 'package:dungeon_paper/utils.dart';
 import 'package:dungeon_world_data/equipment.dart';
 import 'package:dungeon_world_data/tag.dart';
 import 'package:uuid/uuid.dart';
-
 import 'character_db.dart';
 import 'character_utils.dart';
 
@@ -64,7 +63,7 @@ Future updateInventoryItem(InventoryItem item) async {
     throw ('No character loaded.');
   }
 
-  DbCharacter character = dwStore.state.characters.current;
+  Character character = dwStore.state.characters.current;
   num index = character.inventory.indexWhere(invItemMatcher(item));
   character.inventory[index] = item;
   await updateCharacter(character, [CharacterKeys.inventory]);
@@ -75,7 +74,7 @@ Future deleteInventoryItem(InventoryItem item) async {
     throw ('No character loaded.');
   }
 
-  DbCharacter character = dwStore.state.characters.current;
+  Character character = dwStore.state.characters.current;
   num index = character.inventory.indexWhere(invItemMatcher(item));
   character.inventory.removeAt(index);
   return updateCharacter(character, [CharacterKeys.inventory]);
@@ -86,7 +85,7 @@ Future createInventoryItem(InventoryItem item) async {
     throw ('No character loaded.');
   }
 
-  DbCharacter character = dwStore.state.characters.current;
+  Character character = dwStore.state.characters.current;
   character.inventory.add(item);
   return updateCharacter(character, [CharacterKeys.inventory]);
 }
@@ -96,7 +95,7 @@ Future incrItemAmount(InventoryItem item, num amount) async {
     throw ('No character loaded.');
   }
 
-  DbCharacter character = dwStore.state.characters.current;
+  Character character = dwStore.state.characters.current;
   item.amount += amount;
   item.amount = clamp(item.amount, 0, double.infinity).toInt();
   num index = character.inventory.indexWhere(invItemMatcher(item));
