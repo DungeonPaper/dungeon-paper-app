@@ -1,4 +1,4 @@
-import '../../db/character.dart';
+import 'package:dungeon_paper/refactor/character.dart';
 import '../../db/character_db.dart';
 import '../basic_info/change_alignment_dialog.dart';
 import '../profile_view/class_selection/class_selection_screen.dart';
@@ -29,7 +29,7 @@ class CharacterWizardView extends StatefulWidget {
 }
 
 class _CharacterWizardViewState extends State<CharacterWizardView> {
-  DbCharacter character = DbCharacter();
+  Character character = Character();
   CreateCharacterStep step = CreateCharacterStep.BasicInfo;
 
   @override

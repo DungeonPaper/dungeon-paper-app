@@ -4,7 +4,6 @@ import '../../views/basic_info/character_photo.dart';
 import '../../utils.dart';
 import '../../views/profile_view/character_headline.dart';
 import '../../views/stats/stats_summary.dart';
-import '../../db/character.dart';
 import '../../components/dialogs.dart';
 import 'character_wizard_utils.dart';
 import 'package:flutter/material.dart';

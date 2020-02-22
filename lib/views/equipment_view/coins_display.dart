@@ -1,4 +1,4 @@
-import 'package:dungeon_paper/db/character.dart';
+import 'package:dungeon_paper/refactor/character.dart';
 import 'package:dungeon_paper/utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
@@ -6,7 +6,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'edit_coins_dialog.dart';
 
 class CoinsDisplay extends StatelessWidget {
-  final DbCharacter character;
+  final Character character;
 
   const CoinsDisplay({
     Key key,

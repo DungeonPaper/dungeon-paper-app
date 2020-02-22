@@ -1,9 +1,9 @@
 import 'dart:async';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:dungeon_paper/db/character.dart';
 import 'package:dungeon_paper/db/user.dart';
 import 'package:dungeon_paper/redux/actions.dart';
 import 'package:dungeon_paper/redux/stores/stores.dart';
+import 'package:dungeon_paper/refactor/character.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:pedantic/pedantic.dart';
 
@@ -72,9 +72,12 @@ registerDbCharsListener() async {
       .where('user', isEqualTo: user)
       .snapshots()
       .listen((characters) {
-    Map<String, DbCharacter> updatedChars = dwStore.state.characters.characters;
+    Map<String, Character> updatedChars = dwStore.state.characters.characters;
     characters.documents.forEach((character) {
-      updatedChars[character.documentID] = DbCharacter(character.data);
+      updatedChars[character.documentID] = Character.fromData(
+        data: character.data,
+        ref: character.reference,
+      );
     });
     dwStore.dispatch(CharacterActions.setCharacters(updatedChars));
   });

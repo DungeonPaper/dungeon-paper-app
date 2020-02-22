@@ -1,10 +1,10 @@
 import 'package:dungeon_paper/components/dialogs.dart';
+import 'package:dungeon_paper/refactor/character.dart';
 import 'package:dungeon_paper/views/custom_classes/edit_custom_class.dart';
 import 'package:dungeon_paper/views/whats_new/whats_new_view.dart';
 import '../about_view/about_view.dart';
 import '../about_view/feedback_button.dart';
 import '../../db/auth.dart';
-import '../../db/character.dart';
 import '../../db/user.dart';
 import '../edit_character/character_wizard_view.dart';
 import '../../redux/actions.dart';
@@ -145,11 +145,11 @@ class Sidebar extends StatelessWidget {
   }
 
   List<Widget> characterList(
-      Map<String, DbCharacter> characters, BuildContext context) {
+      Map<String, Character> characters, BuildContext context) {
     if (dwStore.state.user.current.characters == null ||
         dwStore.state.user.current.characters.isEmpty) return [];
     return dwStore.state.user.current.characters.map((charDoc) {
-      DbCharacter character = characters[charDoc.documentID];
+      Character character = characters[charDoc.documentID];
       if (character?.displayName == null) return Container();
       return ListTile(
         leading: Icon(Icons.person),

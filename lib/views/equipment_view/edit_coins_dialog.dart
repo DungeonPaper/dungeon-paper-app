@@ -1,10 +1,10 @@
 import 'package:dungeon_paper/components/number_controller.dart';
 import 'package:dungeon_paper/components/standard_dialog_controls.dart';
-import 'package:dungeon_paper/db/character.dart';
 import 'package:dungeon_paper/db/character_db.dart';
 import 'package:dungeon_paper/db/character_utils.dart';
 import 'package:dungeon_paper/flutter_utils.dart';
 import 'package:dungeon_paper/redux/stores/stores.dart';
+import 'package:dungeon_paper/refactor/character.dart';
 import 'package:dungeon_paper/utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -94,7 +94,7 @@ class EditCoinsDialogState extends State<EditCoinsDialog> {
   }
 
   _saveValue() async {
-    DbCharacter character = dwStore.state.characters.current;
+    Character character = dwStore.state.characters.current;
     character.coins = value;
     unawaited(updateCharacter(character, [CharacterKeys.coins]));
     Navigator.pop(context);

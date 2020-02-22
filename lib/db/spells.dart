@@ -1,5 +1,5 @@
-import 'package:dungeon_paper/db/character.dart';
 import 'package:dungeon_paper/redux/stores/stores.dart';
+import 'package:dungeon_paper/refactor/character.dart';
 import 'package:dungeon_paper/utils.dart';
 import 'package:dungeon_world_data/spell.dart';
 import 'package:dungeon_world_data/tag.dart';
@@ -58,7 +58,7 @@ Future updateSpell(Spell spell) async {
     throw ('No character loaded.');
   }
 
-  DbCharacter character = dwStore.state.characters.current;
+  Character character = dwStore.state.characters.current;
   num index = character.spells.indexWhere(matchSpell(spell));
   character.spells[index] = spell;
   await updateCharacter(character, [CharacterKeys.spells]);
@@ -69,7 +69,7 @@ Future deleteSpell(Spell spell) async {
     throw ('No character loaded.');
   }
 
-  DbCharacter character = dwStore.state.characters.current;
+  Character character = dwStore.state.characters.current;
   num index = character.spells.indexWhere(matchSpell(spell));
   character.spells.removeAt(index);
   await updateCharacter(character, [CharacterKeys.spells]);
@@ -80,7 +80,7 @@ Future createSpell(Spell spell) async {
     throw ('No character loaded.');
   }
 
-  DbCharacter character = dwStore.state.characters.current;
+  Character character = dwStore.state.characters.current;
   character.spells.add(spell);
   await updateCharacter(character, [CharacterKeys.spells]);
 }

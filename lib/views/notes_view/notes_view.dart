@@ -1,11 +1,11 @@
+import 'package:dungeon_paper/refactor/character.dart';
 import '../../components/categorized_list.dart';
-import '../../db/character.dart';
 import '../../db/notes.dart';
 import 'note_card.dart';
 import 'package:flutter/material.dart';
 
 class NotesView extends StatelessWidget {
-  final DbCharacter character;
+  final Character character;
 
   NotesView({
     Key key,

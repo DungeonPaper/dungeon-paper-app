@@ -1,9 +1,9 @@
-import 'package:dungeon_paper/db/character.dart';
 import 'package:dungeon_paper/db/character_utils.dart';
+import 'package:dungeon_paper/refactor/character.dart';
 import 'package:flutter/material.dart';
 
 class StatsSummary extends StatelessWidget {
-  final DbCharacter character;
+  final Character character;
 
   const StatsSummary({
     Key key,
@@ -43,7 +43,7 @@ class StatsSummary extends StatelessWidget {
                             ),
                             Text(
                               '${CHARACTER_STAT_MODIFIER_LABELS[stat]} ' +
-                                  DbCharacter.statModifierText(_getStat(stat)),
+                                  Character.statModifierText(_getStat(stat)),
                               style: TextStyle(
                                 fontSize: 20.0,
                                 fontWeight: FontWeight.bold,

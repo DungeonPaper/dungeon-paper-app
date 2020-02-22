@@ -1,17 +1,17 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dungeon_paper/redux/stores/stores.dart';
+import 'package:dungeon_paper/refactor/character.dart';
 import 'package:pedantic/pedantic.dart';
-
 import '../redux/actions.dart';
 import '../utils.dart';
-import 'character.dart';
 import 'character_utils.dart';
 import 'user.dart';
 
-Future<DbCharacter> setCurrentCharacterById(String documentId) async {
+Future<Character> setCurrentCharacterById(String documentId) async {
   DocumentSnapshot character =
       await Firestore.instance.document('character_bios/$documentId').get();
-  DbCharacter dbCharacter = DbCharacter(character.data);
+  Character dbCharacter =
+      Character.fromData(ref: character.reference, data: character.data);
 
   dwStore.dispatch(
     CharacterActions.setCurrentChar(character.documentID, dbCharacter),
@@ -20,9 +20,9 @@ Future<DbCharacter> setCurrentCharacterById(String documentId) async {
   return dbCharacter;
 }
 
-Future<Map<String, DbCharacter>> getAllCharacters(DocumentSnapshot user) async {
+Future<Map<String, Character>> getAllCharacters(DocumentSnapshot user) async {
   Map<String, Future<DocumentSnapshot>> refs = {};
-  Map<String, DbCharacter> chars = {};
+  Map<String, Character> chars = {};
   user.data['characters'].forEach((char) {
     refs[char.documentID] =
         Firestore.instance.document('character_bios/${char.documentID}').get();
@@ -31,7 +31,7 @@ Future<Map<String, DbCharacter>> getAllCharacters(DocumentSnapshot user) async {
   List<DocumentSnapshot> results = await Future.wait(refs.values);
 
   results.forEach((r) async {
-    var char = DbCharacter(r.data);
+    var char = Character.fromData(ref: r.reference, data: r.data);
     var migration = await checkAndPerformCharMigration(r.documentID, r.data);
     if (migration != null) {
       chars[r.documentID] = migration;
@@ -49,8 +49,8 @@ unsetCurrentCharacter() async {
   dwStore.dispatch(CharacterActions.remove());
 }
 
-Future<DbCharacter> updateCharacter(
-    DbCharacter character, List<CharacterKeys> updatedKeys,
+Future<Character> updateCharacter(
+    Character character, List<CharacterKeys> updatedKeys,
     [String docId]) async {
   if (updatedKeys.isEmpty) {
     return character;
@@ -58,7 +58,7 @@ Future<DbCharacter> updateCharacter(
   Firestore firestore = Firestore.instance;
 
   final String charDocId = docId ?? dwStore.state.characters.currentCharDocID;
-  Map<String, DbCharacter> characters = dwStore.state.characters.characters;
+  Map<String, Character> characters = dwStore.state.characters.characters;
   Map<String, dynamic> json = character.toJSON();
   Map<String, dynamic> output = {
     enumName(CharacterKeys.lastUpdateDt): Timestamp.now(),
@@ -75,7 +75,7 @@ Future<DbCharacter> updateCharacter(
   unawaited(charDoc.updateData(output));
   final charData = await charDoc.get();
 
-  return DbCharacter(charData.data);
+  return Character.fromData(ref: charDoc, data: charData.data);
 }
 
 void deleteCharacter() async {
@@ -95,8 +95,8 @@ void deleteCharacter() async {
   dwStore.dispatch(CharacterActions.setCharacters(characters));
 }
 
-Future<DocumentReference> createNewCharacter([DbCharacter character]) async {
-  character ??= DbCharacter();
+Future<DocumentReference> createNewCharacter([Character character]) async {
+  character ??= Character();
 
   String userDocId = dwStore.state.user.currentUserDocID;
   DocumentReference userDoc = Firestore.instance.document('users/$userDocId');
@@ -126,7 +126,7 @@ Future<DocumentReference> createNewCharacter([DbCharacter character]) async {
   }
 }
 
-Future<DbCharacter> getOrCreateCharacter(DocumentSnapshot userSnap) async {
+Future<Character> getOrCreateCharacter(DocumentSnapshot userSnap) async {
   if (userSnap.data['characters'].isNotEmpty) {
     print('userSnap data:' + userSnap.data['characters'][0].documentID);
     await getAllCharacters(userSnap);
@@ -139,13 +139,13 @@ Future<DbCharacter> getOrCreateCharacter(DocumentSnapshot userSnap) async {
     );
     return setCurrentCharacterById(lastChar.documentID);
   } else {
-    DbCharacter char =
+    Character char =
         await setCurrentCharacterById((await createNewCharacter()).documentID);
     return char;
   }
 }
 
-Future<DbCharacter> checkAndPerformCharMigration(
+Future<Character> checkAndPerformCharMigration(
     String docId, Map character) async {
   List<CharacterKeys> keys = [];
 
@@ -183,5 +183,5 @@ Future<DbCharacter> checkAndPerformCharMigration(
 
   print(
       "Performing migrations for '${character['displayName']}' ($docId): $keys");
-  return updateCharacter(DbCharacter(character), keys, docId);
+  return updateCharacter(Character.fromData(data: character), keys, docId);
 }

@@ -1,11 +1,11 @@
-import '../../db/character.dart';
+import 'package:dungeon_paper/refactor/character.dart';
 import '../basic_info/edit_armor_dialog.dart';
 import '../basic_info/edit_hit_dice_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
 class ArmorAndHitDice extends StatelessWidget {
-  final DbCharacter character;
+  final Character character;
 
   const ArmorAndHitDice({
     Key key,

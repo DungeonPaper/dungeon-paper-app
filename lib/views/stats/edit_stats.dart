@@ -1,5 +1,6 @@
+import 'package:dungeon_paper/refactor/character.dart';
+
 import '../../components/number_controller.dart';
-import '../../db/character.dart';
 import '../../db/character_utils.dart';
 import '../../components/dialogs.dart';
 import '../../flutter_utils.dart';
@@ -7,7 +8,7 @@ import 'package:flutter/material.dart';
 import '../edit_character/character_wizard_utils.dart';
 
 class EditStats extends StatefulWidget {
-  final DbCharacter character;
+  final Character character;
   final CharSaveFunction onSave;
   final ScaffoldBuilderFunction builder;
 
@@ -178,7 +179,7 @@ class _EditStatsState extends State<EditStats> {
   }
 
   _save() {
-    final DbCharacter character = widget.character;
+    final Character character = widget.character;
     final List<CharacterKeys> keys = ORDERED_STATS;
 
     character.str = _str;
@@ -226,7 +227,7 @@ class EditStatListTile extends StatelessWidget {
           ),
           subtitle: Text(
             "${CHARACTER_STAT_MODIFIER_LABELS[stat]}: " +
-                "${DbCharacter.statModifier(value)}",
+                "${Character.statModifier(value)}",
           ),
           trailing: Container(
             width: 230,

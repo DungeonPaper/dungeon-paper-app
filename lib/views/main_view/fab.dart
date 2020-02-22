@@ -1,4 +1,4 @@
-import 'package:dungeon_paper/db/character.dart';
+import 'package:dungeon_paper/refactor/character.dart';
 import 'package:dungeon_paper/views/move_screen/add_move_or_spell.dart';
 import '../../db/inventory_items.dart';
 import '../../db/notes.dart';
@@ -12,7 +12,7 @@ import 'package:flutter/material.dart';
 
 class FAB extends StatefulWidget {
   final PageController pageController;
-  final DbCharacter character;
+  final Character character;
 
   const FAB({
     Key key,
@@ -45,7 +45,7 @@ class FABState extends State<FAB> {
     });
   }
 
-  static Map<Pages, Widget Function(BuildContext context, DbCharacter character)> buttonsByIndex = {
+  static Map<Pages, Widget Function(BuildContext context, Character character)> buttonsByIndex = {
     Pages.Notes: (context, character) => FloatingActionButton(
           foregroundColor: Colors.white,
           child: Icon(Icons.add),

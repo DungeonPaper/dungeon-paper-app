@@ -1,5 +1,4 @@
-
-import '../../db/character.dart';
+import 'package:dungeon_paper/refactor/character.dart';
 import 'package:flutter/material.dart';
 
 class CharacterPhoto extends StatelessWidget {
@@ -8,7 +7,7 @@ class CharacterPhoto extends StatelessWidget {
     @required this.character,
   }) : super(key: key);
 
-  final DbCharacter character;
+  final Character character;
 
   @override
   Widget build(BuildContext context) {
