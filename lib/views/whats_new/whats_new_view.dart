@@ -140,8 +140,8 @@ class _WhatsNewState extends State<WhatsNew> {
   }
 
   Future<void> _getSecrets() async {
-    Map<String, dynamic> secrets = await loadSecrets();
-    changelogUrl = secrets['GITHUB_CHANGELOG_URL'];
+    Secrets secrets = await loadSecrets();
+    changelogUrl = secrets.GITHUB_CHANGELOG_URL;
   }
 
   Future<void> _getChangelog() async {

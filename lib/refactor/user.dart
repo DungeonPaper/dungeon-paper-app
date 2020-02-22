@@ -7,6 +7,10 @@ class User extends FirebaseEntity {
   String photoURL;
 
   User([DocumentReference ref]) : super(ref);
+  User.fromData({
+    DocumentReference ref,
+    Map<String, dynamic> data,
+  }) : super.fromData(ref: ref, data: data);
 
   @override
   deserializeData(Map<String, dynamic> data) {
@@ -16,7 +20,7 @@ class User extends FirebaseEntity {
   }
 
   @override
-  Map<String, dynamic> serializeData() {
+  Map<String, dynamic> toJSON() {
     return {
       'displayName': displayName,
       'email': email,

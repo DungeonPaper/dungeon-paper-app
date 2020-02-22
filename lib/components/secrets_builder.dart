@@ -2,22 +2,22 @@ import 'package:flutter/material.dart';
 import '../flutter_utils.dart';
 import '../utils.dart';
 
-class SecretsLoader extends StatefulWidget {
+class SecretsBuilder extends StatefulWidget {
   final Widget loader;
-  final CallbackDelegate<Map<String, dynamic>, Widget> builder;
+  final CallbackDelegate<Secrets, Widget> builder;
 
-  const SecretsLoader({
+  const SecretsBuilder({
     Key key,
     this.loader,
     @required this.builder,
   }) : super(key: key);
 
   @override
-  _SecretsLoaderState createState() => _SecretsLoaderState();
+  _SecretsBuilderState createState() => _SecretsBuilderState();
 }
 
-class _SecretsLoaderState extends State<SecretsLoader> {
-  Map<String, dynamic> secrets;
+class _SecretsBuilderState extends State<SecretsBuilder> {
+  Secrets secrets;
 
   @override
   initState() {
@@ -26,7 +26,7 @@ class _SecretsLoaderState extends State<SecretsLoader> {
   }
 
   _getSecrets() async {
-    Map<String, dynamic> loaded = await loadSecrets();
+    Secrets loaded = await loadSecrets();
     if (this.mounted) {
       setState(() {
         secrets = loaded;

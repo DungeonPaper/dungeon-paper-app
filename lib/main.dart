@@ -1,13 +1,13 @@
 import 'dart:async';
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'views/main_view/main_view.dart';
-import 'redux/actions.dart';
-import 'redux/stores/stores.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:screen/screen.dart';
-import 'error_reporting.dart';
-import 'theme.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:dungeon_paper/error_reporting.dart';
+import 'package:dungeon_paper/redux/actions.dart';
+import 'package:dungeon_paper/redux/stores/stores.dart';
+import 'package:dungeon_paper/theme.dart';
+import 'package:dungeon_paper/views/main_view/main_view.dart';
 
 void withInit(Function() cb) async {
   // general setup
