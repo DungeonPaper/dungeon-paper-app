@@ -1,7 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 abstract class Serializable {
-  getData();
   deserializeData(Map<String, dynamic> data);
   serializeData();
 }
@@ -13,14 +12,21 @@ abstract class FirebaseEntity implements Serializable {
   DateTime lastUpdated;
 
   FirebaseEntity([this.ref]) : docID = ref?.documentID {
+    initEmptyData();
     if (ref != null) {
-      getData();
-    } else {
-      initEmptyData();
+      _getRemoteData();
     }
   }
 
-  void getData() async {
+  FirebaseEntity.fromData({
+    Map<String, dynamic> data,
+    this.ref,
+  }) : docID = ref?.documentID {
+    deserializeData(data);
+    lastUpdated = (snapshot?.data ?? {})['lastUpdated'];
+  }
+
+  void _getRemoteData() async {
     snapshot = await ref.get();
     deserializeData(snapshot.data);
     lastUpdated = snapshot.data['lastUpdated'];
@@ -31,4 +37,6 @@ abstract class FirebaseEntity implements Serializable {
   }
 
   Map<String, dynamic> defaultData();
+  Map<String, dynamic> toJSON();
+  Map<String, dynamic> serializeData() => toJSON();
 }

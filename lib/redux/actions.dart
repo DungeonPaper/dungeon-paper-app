@@ -22,7 +22,7 @@ class UserActions {
   static Logout logout() => Logout();
   static NoLogin noLogin() => NoLogin();
   static RequestLogin requestLogin() => RequestLogin();
-  static Credentials giveCredentials(String id, String token) => Credentials(idToken: id, accessToken: token);
+  static Credentials giveCredentials(String idToken, String accessToken) => Credentials(idToken: idToken, accessToken: accessToken);
 }
 
 class SetCurrentChar {

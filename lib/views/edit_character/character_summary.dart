@@ -1,4 +1,5 @@
 import 'package:dungeon_paper/components/card_list_item.dart';
+import 'package:dungeon_paper/refactor/character.dart';
 import '../../views/basic_info/character_photo.dart';
 import '../../utils.dart';
 import '../../views/profile_view/character_headline.dart';
@@ -13,7 +14,7 @@ import 'edit_looks.dart';
 import 'edit_race.dart';
 
 class CharacterSummary extends StatelessWidget {
-  final DbCharacter character;
+  final Character character;
   final CharSaveFunction onSave;
   final ScaffoldBuilderFunction builder;
 
@@ -105,7 +106,7 @@ class CharacterSummary extends StatelessWidget {
 }
 
 class AlignmentSummary extends StatelessWidget {
-  final DbCharacter character;
+  final Character character;
 
   AlignmentSummary({
     Key key,
@@ -136,7 +137,7 @@ class AlignmentSummary extends StatelessWidget {
 }
 
 class RaceSummary extends StatelessWidget {
-  final DbCharacter character;
+  final Character character;
 
   RaceSummary({
     Key key,
@@ -159,7 +160,7 @@ class RaceSummary extends StatelessWidget {
 }
 
 class ClassSummary extends StatelessWidget {
-  final DbCharacter character;
+  final Character character;
 
   ClassSummary({
     Key key,
@@ -189,7 +190,7 @@ class ClassSummary extends StatelessWidget {
 }
 
 class LooksSummary extends StatelessWidget {
-  final DbCharacter character;
+  final Character character;
 
   LooksSummary({
     Key key,

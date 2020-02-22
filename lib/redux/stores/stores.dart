@@ -33,7 +33,7 @@ DWStore storeReducer(DWStore state, action) => DWStore(
       customClasses: customClassesReducer(state.customClasses, action),
     );
 
-DWStore initialState = DWStore(
+var initialState = DWStore(
   prefs: PrefsStore(),
   loading: {
     LoadingKeys.Character: false,
