@@ -11,7 +11,7 @@ Future<Character> setCurrentCharacterById(String documentId) async {
   DocumentSnapshot character =
       await Firestore.instance.document('character_bios/$documentId').get();
   Character dbCharacter =
-      Character.fromData(ref: character.reference, data: character.data);
+      Character(ref: character.reference, data: character.data);
 
   dwStore.dispatch(
     CharacterActions.setCurrentChar(character.documentID, dbCharacter),
@@ -31,7 +31,7 @@ Future<Map<String, Character>> getAllCharacters(DocumentSnapshot user) async {
   List<DocumentSnapshot> results = await Future.wait(refs.values);
 
   results.forEach((r) async {
-    var char = Character.fromData(ref: r.reference, data: r.data);
+    var char = Character(ref: r.reference, data: r.data);
     var migration = await checkAndPerformCharMigration(r.documentID, r.data);
     if (migration != null) {
       chars[r.documentID] = migration;
@@ -75,23 +75,18 @@ Future<Character> updateCharacter(
   unawaited(charDoc.updateData(output));
   final charData = await charDoc.get();
 
-  return Character.fromData(ref: charDoc, data: charData.data);
+  return Character(ref: charDoc, data: charData.data);
 }
 
 void deleteCharacter() async {
-  String userDocId = dwStore.state.user.currentUserDocID;
-  String charDocId = dwStore.state.characters.currentCharDocID;
-  DbUser user = dwStore.state.user.current;
-  if (user.characters.length == 1) {
-    throw ("Can't delete last character.");
-  }
-  user.characters.removeWhere((d) => d.documentID == charDocId);
+  var charDocId = dwStore.state.characters.currentCharDocID;
+  dwStore.state.characters.characters.removeWhere((id, _) => id == charDocId);
+  var user = dwStore.state.user.current;
   var characters = dwStore.state.characters.characters
     ..removeWhere((k, v) => k == charDocId);
   await Firestore.instance
-      .document('users/$userDocId')
-      .updateData({'characters': user.characters});
-  await Firestore.instance.document('character_bios/$charDocId').delete();
+      .document('user_data/${user.email}/characters/$charDocId')
+      .delete();
   dwStore.dispatch(CharacterActions.setCharacters(characters));
 }
 
@@ -183,5 +178,5 @@ Future<Character> checkAndPerformCharMigration(
 
   print(
       "Performing migrations for '${character['displayName']}' ($docId): $keys");
-  return updateCharacter(Character.fromData(data: character), keys, docId);
+  return updateCharacter(Character(data: character), keys, docId);
 }

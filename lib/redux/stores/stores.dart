@@ -40,7 +40,7 @@ var initialState = DWStore(
     LoadingKeys.User: false,
     LoadingKeys.CustomClasses: false,
   },
-  user: UserStore(current: null, currentUserDocID: null),
+  user: UserStore(current: null, currentUserDocID: null, firebaseUser: null),
   characters: CharacterStore(
     currentCharDocID: null,
     current: null,

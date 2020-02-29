@@ -59,9 +59,8 @@ Future updateSpell(Spell spell) async {
   }
 
   Character character = dwStore.state.characters.current;
-  num index = character.spells.indexWhere(matchSpell(spell));
-  character.spells[index] = spell;
-  await updateCharacter(character, [CharacterKeys.spells]);
+  character.spells = findAndReplaceByKey(character.spells, spell.key, spell);
+  await character.update(keys: ['spells']);
 }
 
 Future deleteSpell(Spell spell) async {

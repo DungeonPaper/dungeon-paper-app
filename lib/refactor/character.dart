@@ -11,12 +11,10 @@ import 'package:dungeon_world_data/move.dart';
 import 'package:dungeon_world_data/player_class.dart';
 
 class Character extends FirebaseEntity {
-  Character([DocumentReference ref]) : super(ref);
-
-  Character.fromData({
+  Character({
     Map<String, dynamic> data,
     DocumentReference ref,
-  }) : super.fromData(ref: ref, data: data);
+  }) : super(ref: ref, data: data);
 
   Alignment alignment;
   String displayName;
@@ -81,11 +79,11 @@ class Character extends FirebaseEntity {
   num get defaultMaxHP => (mainClass?.baseHP ?? 0) + conMod;
 
   @override
-  deserializeData(Map<String, dynamic> data) {
-    final defaults = defaultData();
+  deserializeData(Map<String, dynamic> data, [Map<String, dynamic> defaults]) {
+    defaults ??= defaultData();
     final _mainClass = dungeonWorld.classes.firstWhere(
         (c) => c.key == data['mainClass'],
-        orElse: () => defaults['mainClass']);
+        orElse: () => dungeonWorld.classes[defaults['mainClass']]);
     displayName = data['displayName'] ?? defaults['displayName'];
     photoURL = data['photoURL'] ?? defaults['photoURL'];
     mainClass = _mainClass;
@@ -99,23 +97,18 @@ class Character extends FirebaseEntity {
     alignment = stringToEnum<Alignment>(AlignmentNameMap)(
         data['alignment'] ?? defaults['alignment']);
     armor = data['armor'] ?? defaults['armor'];
-    hitDice = Dice.parse(data['hitDice'] ?? defaults['hitDice'].toString());
+    hitDice = Dice.parse((data['hitDice'] ?? defaults['hitDice']).toString());
     looks = List.from(data['looks'] ?? []).map((i) => i.toString()).toList();
-    race =
-        data['race'] != null ? Move.fromJSON(data['race']) : defaults['race'];
+    race = Move.fromJSON(data['race'] ?? defaults['race']);
     coins = data['coins'] ?? defaults['coins'];
-    moves = List.from(data['moves'] ?? [])
-        .map((m) => m is Move ? m : Move.fromJSON(m))
-        .toList();
-    notes = List.from(data['notes'] ?? [])
-        .map((note) => note is Note ? note : Note(note))
-        .toList();
+    moves =
+        List.from(data['moves'] ?? []).map((m) => Move.fromJSON(m)).toList();
+    notes = List.from(data['notes'] ?? []).map((note) => Note(note)).toList();
     spells = List.from(data['spells'] ?? [])
-        .map((spell) => spell is DbSpell ? spell : DbSpell.fromJSON(spell))
+        .map((spell) => DbSpell.fromJSON(spell))
         .toList();
     inventory = List.from(data['inventory'] ?? [])
-        .map<InventoryItem>((item) =>
-            item is InventoryItem ? item : InventoryItem.fromJSON(item))
+        .map<InventoryItem>((item) => InventoryItem.fromJSON(item))
         .toList();
 
     useDefaultMaxHP = data['useDefaultMaxHP'] ?? defaults['useDefaultMaxHP'];
@@ -160,9 +153,9 @@ class Character extends FirebaseEntity {
   Map<String, dynamic> defaultData() {
     final _mainClass = dungeonWorld.classes.first;
     return {
-      'alignment': Alignment.neutral,
+      'alignment': enumName(Alignment.neutral),
       'displayName': 'Traveler',
-      'mainClass': _mainClass,
+      'mainClass': _mainClass.key,
       'photoURL': null,
       'level': 1,
       'currentHP': 10,
@@ -179,9 +172,9 @@ class Character extends FirebaseEntity {
       'notes': [],
       'spells': [],
       'inventory': [],
-      'hitDice': Dice.d6,
+      'hitDice': Dice.d6.toString(),
       'looks': [],
-      'race': _mainClass.raceMoves.first,
+      'race': _mainClass.raceMoves.first.toJSON(),
       'coins': 0,
       'useDefaultMaxHP': true,
     };

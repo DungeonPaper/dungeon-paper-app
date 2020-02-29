@@ -95,7 +95,7 @@ PrefsStore prefsReducer(PrefsStore state, action) {
 
   if (action is Login) {
     state.user = UserDetails(
-      id: action.id,
+      id: action.user.docID,
       email: action.user.email,
       lastCharacterId: state.user.lastCharacterId,
     );

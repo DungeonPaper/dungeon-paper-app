@@ -23,10 +23,9 @@ Future<DocumentReference> updateCustomClass(
 }
 
 Future<List<DocumentSnapshot>> getCustomClasses() async {
-  var userDocId = dwStore.state.user.currentUserDocID;
+  var user = dwStore.state.user.current;
   var docs = await Firestore.instance
-      .collection('custom_classes').document(userDocId)
-      .collection('classes')
+      .collection('user_data/${user.email}/custom_classes')
       .getDocuments();
   return docs.documents;
 }

@@ -4,7 +4,7 @@ import 'helpers/entity_base_helper.dart';
 void main() {
   group('Firebase Entity', () {
     test('Direct inheritence', () {
-      var testA = EntityTestBase.fromData(data: {'a': 10});
+      var testA = EntityTestBase(data: {'a': 10});
       var json = testA.toJSON();
 
       expect(testA.a, equals(10));
@@ -12,7 +12,7 @@ void main() {
     });
 
     test('Extended inheritence', () {
-      var testB = EntityTest.fromData(data: {'a': 5, 'b': 'Gohan'});
+      var testB = EntityTest(data: {'a': 5, 'b': 'Gohan'});
       var json = testB.toJSON();
 
       expect(testB.a, equals(5));

@@ -1,11 +1,11 @@
 import 'package:dungeon_paper/components/dialogs.dart';
+import 'package:dungeon_paper/refactor/auth.dart' as auth;
 import 'package:dungeon_paper/refactor/character.dart';
+import 'package:dungeon_paper/refactor/user.dart';
 import 'package:dungeon_paper/views/custom_classes/edit_custom_class.dart';
 import 'package:dungeon_paper/views/whats_new/whats_new_view.dart';
 import '../about_view/about_view.dart';
 import '../about_view/feedback_button.dart';
-import '../../db/auth.dart';
-import '../../db/user.dart';
 import '../edit_character/character_wizard_view.dart';
 import '../../redux/actions.dart';
 import '../../redux/stores/connectors.dart';
@@ -17,7 +17,7 @@ class Sidebar extends StatelessWidget {
   Widget build(BuildContext context) {
     return DWStoreConnector<DWStore>(
       builder: (context, state) {
-        DbUser user = state.user.current;
+        User user = state.user.current;
         List<Widget> items = [
               UserAccountsDrawerHeader(
                 accountEmail: Text(user.email),
@@ -101,7 +101,7 @@ class Sidebar extends StatelessWidget {
                 title: Text('Log out'),
                 onTap: () {
                   Navigator.pop(context);
-                  auth.requestSignOut();
+                  auth.signOutFlow(auth.SignInMethod.Google);
                 },
               ),
             ];
@@ -146,19 +146,16 @@ class Sidebar extends StatelessWidget {
 
   List<Widget> characterList(
       Map<String, Character> characters, BuildContext context) {
-    if (dwStore.state.user.current.characters == null ||
-        dwStore.state.user.current.characters.isEmpty) return [];
-    return dwStore.state.user.current.characters.map((charDoc) {
-      Character character = characters[charDoc.documentID];
+    if (characters == null || characters.isEmpty) return [];
+    return characters.values.map((character) {
       if (character?.displayName == null) return Container();
       return ListTile(
         leading: Icon(Icons.person),
         title: Text(character.displayName),
-        selected:
-            dwStore.state.characters.currentCharDocID == charDoc.documentID,
+        selected: dwStore.state.characters.currentCharDocID == character.docID,
         onTap: () {
           dwStore.dispatch(
-              CharacterActions.setCurrentChar(charDoc.documentID, character));
+              CharacterActions.setCurrentChar(character.docID, character));
           Navigator.pop(context);
         },
       );

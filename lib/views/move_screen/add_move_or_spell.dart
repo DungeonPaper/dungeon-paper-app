@@ -40,7 +40,7 @@ class AddMoveOrSpell extends StatelessWidget {
                   ),
                   label: Text(
                     'Add Move',
-                    style: Theme.of(context).textTheme.title,
+                    style: Theme.of(context).textTheme.headline6,
                   ),
                   onPressed: () {
                     Navigator.pop(context);
@@ -73,7 +73,7 @@ class AddMoveOrSpell extends StatelessWidget {
                   icon: Icon(Icons.book),
                   label: Text(
                     'Add Spell',
-                    style: Theme.of(context).textTheme.title,
+                    style: Theme.of(context).textTheme.headline6,
                   ),
                   onPressed: () {
                     Navigator.pop(context);

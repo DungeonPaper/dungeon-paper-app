@@ -4,6 +4,7 @@ import 'package:dungeon_paper/db/user.dart';
 import 'package:dungeon_paper/redux/actions.dart';
 import 'package:dungeon_paper/redux/stores/stores.dart';
 import 'package:dungeon_paper/refactor/character.dart';
+import 'package:dungeon_paper/refactor/user.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:pedantic/pedantic.dart';
 
@@ -23,7 +24,7 @@ registerAuthUserListener() {
           authUser.email != null &&
           dwStore.state.user.current != null &&
           authUser.email != dwStore.state.user.current.email) {
-        setCurrentUser(authUser);
+        dwStore.dispatch(UserActions.setFirebaseUser(authUser));
       }
 
       if (authUser == null || authUser.email == null) {
@@ -53,7 +54,7 @@ registerDbUserListener() {
       .document('users/$userDocID')
       .snapshots()
       .listen((user) {
-    dwStore.dispatch(UserActions.login(userDocID, DbUser(user.data)));
+    dwStore.dispatch(UserActions.setUser(User(data: user.data)));
   });
   print("REGISTERED DB USER LISTENER");
 }
@@ -74,7 +75,7 @@ registerDbCharsListener() async {
       .listen((characters) {
     Map<String, Character> updatedChars = dwStore.state.characters.characters;
     characters.documents.forEach((character) {
-      updatedChars[character.documentID] = Character.fromData(
+      updatedChars[character.documentID] = Character(
         data: character.data,
         ref: character.reference,
       );

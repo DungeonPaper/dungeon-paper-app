@@ -4,6 +4,7 @@ import 'package:dungeon_paper/db/custom_classes_db.dart';
 import 'package:dungeon_paper/db/listeners.dart';
 import 'package:dungeon_paper/redux/actions.dart';
 import 'package:dungeon_paper/redux/stores/stores.dart';
+import 'package:dungeon_paper/refactor/user.dart';
 import 'package:dungeon_world_data/player_class.dart';
 import 'base.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -70,14 +71,14 @@ void setCurrentUser(FirebaseUser user) async {
 
   DocumentSnapshot userSnap;
   if (userQuery.documents.isEmpty) {
-    DocumentReference userDoc = await createNewUser(user);
+    var userDoc = await createNewUser(user);
     userSnap = await userDoc.get();
   } else {
     userSnap = userQuery.documents[0];
   }
-  DbUser dbUser = DbUser(userSnap.data);
+  User dbUser = User(data: userSnap.data, ref: userSnap.reference);
 
-  dwStore.dispatch(UserActions.login(userSnap.documentID, dbUser));
+  dwStore.dispatch(UserActions.setUser(dbUser));
   await getOrCreateCharacter(userSnap);
   var customClasses = {
     for (DocumentSnapshot cls in await getCustomClasses())
@@ -94,12 +95,8 @@ void unsetCurrentUser() async {
 }
 
 Future<DocumentReference> createNewUser(FirebaseUser user) async {
-  DocumentReference userDoc = Firestore.instance.collection('users').document();
-  await userDoc.setData({
-    'email': user.email,
-    'displayName': user.displayName,
-    'photoURL': user.photoUrl,
-    'characters': [],
-  });
+  var userDoc = Firestore.instance.collection('user_data').document(user.email);
+  var dbUser = User(ref: userDoc);
+  await userDoc.setData(dbUser.toJSON());
   return userDoc;
 }

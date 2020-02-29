@@ -6,17 +6,17 @@ class User extends FirebaseEntity {
   String email;
   String photoURL;
 
-  User([DocumentReference ref]) : super(ref);
-  User.fromData({
+  User({
     DocumentReference ref,
     Map<String, dynamic> data,
-  }) : super.fromData(ref: ref, data: data);
+  }) : super(ref: ref, data: data);
 
   @override
   deserializeData(Map<String, dynamic> data) {
-    displayName = data['displayName'];
-    email = data['email'];
-    photoURL = data['photoURL'];
+    var defaults = defaultData();
+    displayName = data['displayName'] ?? defaults['displayName'];
+    email = data['email'] ?? defaults['email'];
+    photoURL = data['photoURL'] ?? defaults['photoURL'];
   }
 
   @override
