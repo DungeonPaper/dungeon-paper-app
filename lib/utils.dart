@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'dart:math';
+import 'package:dungeon_world_data/_base.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart' show rootBundle;
 
@@ -83,7 +84,8 @@ class Secrets {
   String get PAYPAL_DONATE_URL => _data['PAYPAL_DONATE_URL'];
   String get FEEDBACK_EMAIL => _data['FEEDBACK_EMAIL'];
   String get GITHUB_CHANGELOG_URL => _data['GITHUB_CHANGELOG_URL'];
-  String get API_BASE => _data['API_BASE'];
+  String get API_DOMAIN => _data['API_DOMAIN'];
+  String get API_PATH => _data['API_PATH'];
 
   operator [](String key) {
     return _data[key];
@@ -131,4 +133,10 @@ Iterable<Enumeration<T>> enumerate<T>(Iterable<T> items) sync* {
   for (T item in items) {
     yield Enumeration(idx++, item);
   }
+}
+
+List<T> findAndReplaceByKey<T extends DWEntity>(List<T> list, String key, T newObj) {
+  num index = list.indexWhere((it) => it.key == key);
+  list[index] = newObj;
+  return list;
 }

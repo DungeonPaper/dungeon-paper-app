@@ -6,7 +6,7 @@ void main() {
   group('Character', () {
     test('properly uses class values', () {
       var wizard = dungeonWorld.classes.firstWhere((k) => k.key == 'wizard');
-      var char = Character.fromData(
+      var char = Character(
         data: {
           'mainClass': 'wizard',
           'con': 10,
@@ -17,7 +17,7 @@ void main() {
       expect(char.maxHP, equals(wizard.baseHP + char.conMod));
     });
     test('properly dumps json', () {
-      var char = Character.fromData(
+      var char = Character(
         data: {
           'mainClass': 'druid',
           'displayName': 'Goku',
@@ -37,7 +37,7 @@ void main() {
     });
 
     test('auto max HP get/set', () {
-      var char1 = Character.fromData(
+      var char1 = Character(
         data: {
           'mainClass': 'immolator', // base HP 6
           'displayName': 'Goku',
@@ -50,7 +50,7 @@ void main() {
           'useDefaultMaxHP': true,
         },
       );
-      var char2 = Character.fromData(
+      var char2 = Character(
         data: {
           'mainClass': 'wizard', // base HP 4
           'displayName': 'Harry Potter',

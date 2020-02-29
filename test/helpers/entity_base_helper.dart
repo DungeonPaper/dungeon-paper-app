@@ -4,11 +4,10 @@ import 'package:dungeon_paper/refactor/entity_base.dart';
 class EntityTestBase extends FirebaseEntity {
   num a;
 
-  EntityTestBase([DocumentReference ref]) : super(ref);
-  EntityTestBase.fromData({
+  EntityTestBase({
     DocumentReference ref,
     Map<String, dynamic> data,
-  }) : super.fromData(ref: ref, data: data);
+  }) : super(ref: ref, data: data);
 
   @override
   Map<String, dynamic> defaultData() {
@@ -29,11 +28,10 @@ class EntityTestBase extends FirebaseEntity {
 class EntityTest extends EntityTestBase {
   String b;
 
-  EntityTest([DocumentReference ref]) : super(ref);
-  EntityTest.fromData({
+  EntityTest({
     DocumentReference ref,
     Map<String, dynamic> data,
-  }) : super.fromData(ref: ref, data: data);
+  }) : super(ref: ref, data: data);
 
   @override
   Map<String, dynamic> defaultData() {

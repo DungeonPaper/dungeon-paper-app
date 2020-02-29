@@ -1,7 +1,6 @@
 import 'package:dungeon_paper/redux/actions.dart';
 import 'package:dungeon_paper/redux/stores/stores.dart';
 import 'package:dungeon_paper/refactor/api.dart';
-import 'package:dungeon_paper/refactor/character.dart';
 import 'package:dungeon_paper/refactor/user_with_characters.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -40,7 +39,6 @@ Future<FirebaseUser> signInFlow(SignInMethod method) async {
   dispatchFinalDataToStore(
     credentials: creds,
     firebaseUser: user,
-    characters: [],
     dbLoginData: loginResult,
   );
 
@@ -51,23 +49,33 @@ void dispatchFinalDataToStore({
   @required ExposedAuthCredential credentials,
   @required FirebaseUser firebaseUser,
   @required UserWithCharacters dbLoginData,
-  @required List<Character> characters,
-}) {
+}) async {
+  var prefs = dwStore.state.prefs;
   if (firebaseUser == null || credentials == null) {
     dwStore.dispatch(UserActions.noLogin());
     return;
   }
+  dwStore.dispatch(UserActions.login(
+    user: dbLoginData,
+    credentials: credentials,
+    firebaseUser: firebaseUser,
+  ));
   dwStore.dispatch(
-    UserActions.giveCredentials(
-      credentials.idToken,
-      credentials.accessToken,
+    CharacterActions.setCharacters({
+      for (var char in dbLoginData.characters) char.docID: char,
+    }),
+  );
+  var currentID =
+      prefs.user.lastCharacterId ?? dbLoginData.characters.first.docID;
+  dwStore.dispatch(
+    CharacterActions.setCurrentChar(
+      currentID,
+      dbLoginData.characters.firstWhere(
+        (char) => char.docID == currentID,
+        orElse: () => dbLoginData.characters.first,
+      ),
     ),
   );
-  CharacterActions.setCharacters({
-    // TODO: add when done refactoring redux and testing entity base
-    // for (var char in characters)
-    //   char.docID: char
-  });
 }
 
 void signOutFlow(SignInMethod method) {
@@ -90,8 +98,8 @@ Future<ExposedAuthCredential> signInWithGoogle() async {
       if (googleUser == null) throw 'google_user_error';
     }
 
-    GoogleSignInAuthentication googleAuth = await googleUser.authentication;
-    AuthCredential credential = GoogleAuthProvider.getCredential(
+    var googleAuth = await googleUser.authentication;
+    var credential = GoogleAuthProvider.getCredential(
       idToken: googleAuth.idToken,
       accessToken: googleAuth.accessToken,
     );

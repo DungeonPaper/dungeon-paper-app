@@ -53,7 +53,7 @@ class _EditHPDialogState extends State<EditHPDialog> {
         Expanded(child: Text('Manage HP')),
         Text(
           'Editing: ',
-          style: Theme.of(context).textTheme.body1,
+          style: Theme.of(context).textTheme.bodyText2,
         ),
         SizedBox(width: 4),
         DropdownButton(

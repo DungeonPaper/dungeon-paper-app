@@ -20,13 +20,13 @@ class ClassDescription extends StatelessWidget {
     TextTheme textTheme = theme.textTheme;
     return Container(
       child: DefaultTextStyle(
-        style: textTheme.body1,
+        style: textTheme.bodyText2,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: <Widget>[
             Text(
               'A little bit about ${classDef.name}s...',
-              style: textTheme.title,
+              style: textTheme.headline6,
             ),
             spacer,
             Text(classDef.description),
@@ -86,7 +86,7 @@ class StatIcon extends StatelessWidget {
         icon,
         DefaultTextStyle(
           child: value,
-          style: textTheme.headline.copyWith(fontSize: 30),
+          style: textTheme.headline5.copyWith(fontSize: 30),
         ),
         DefaultTextStyle(
           child: label,
@@ -124,7 +124,7 @@ class AlignmentList extends StatelessWidget {
             children: <Widget>[
               Text('Available alignments:',
                   style:
-                      textTheme.subtitle.copyWith(color: theme.primaryColor)),
+                      textTheme.subtitle2.copyWith(color: theme.primaryColor)),
               for (var alignment in alignments)
                 TitleSubtitleRow(
                   // contentPadding: EdgeInsets.symmetric(vertical: 8.0),

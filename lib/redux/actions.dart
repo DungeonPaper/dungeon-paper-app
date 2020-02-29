@@ -1,14 +1,23 @@
-import 'package:dungeon_paper/db/user.dart';
 import 'package:dungeon_paper/redux/stores/prefs_store.dart';
+import 'package:dungeon_paper/refactor/auth.dart';
 import 'package:dungeon_paper/refactor/character.dart';
+import 'package:dungeon_paper/refactor/user.dart';
 import 'package:dungeon_world_data/player_class.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/foundation.dart';
 
 class AppInit {}
 
 class Login {
-  String id;
-  DbUser user;
-  Login(this.id, this.user);
+  User user;
+  FirebaseUser firebaseUser;
+  ExposedAuthCredential credentials;
+
+  Login({
+    @required this.user,
+    @required this.firebaseUser,
+    @required this.credentials,
+  });
 }
 
 class Logout {}
@@ -18,18 +27,40 @@ class NoLogin {}
 class RequestLogin {}
 
 class UserActions {
-  static Login login(String id, DbUser user) => Login(id, user);
+  static Login login({
+    User user,
+    ExposedAuthCredential credentials,
+    FirebaseUser firebaseUser,
+  }) =>
+      Login(
+        user: user,
+        credentials: credentials,
+        firebaseUser: firebaseUser,
+      );
   static Logout logout() => Logout();
   static NoLogin noLogin() => NoLogin();
   static RequestLogin requestLogin() => RequestLogin();
-  static Credentials giveCredentials(String idToken, String accessToken) =>
-      Credentials(idToken: idToken, accessToken: accessToken);
+  static SetUser setUser(User user) => SetUser(user);
+  static SetFirebaseUser setFirebaseUser(FirebaseUser user) =>
+      SetFirebaseUser(user);
 }
 
 class SetCurrentChar {
   final String id;
   final Character character;
   SetCurrentChar(this.id, this.character);
+}
+
+class SetUser {
+  final User user;
+
+  SetUser(this.user);
+}
+
+class SetFirebaseUser {
+  final FirebaseUser user;
+
+  SetFirebaseUser(this.user);
 }
 
 class SetCharacters {

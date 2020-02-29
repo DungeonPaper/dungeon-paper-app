@@ -34,7 +34,7 @@ class StatsSummary extends StatelessWidget {
                           horizontal: 10.0, vertical: 22.0),
                       child: DefaultTextStyle(
                         textAlign: TextAlign.center,
-                        style: Theme.of(context).textTheme.body1,
+                        style: Theme.of(context).textTheme.bodyText2,
                         child: Column(
                           children: <Widget>[
                             Text(

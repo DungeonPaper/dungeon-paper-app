@@ -76,7 +76,7 @@ class _CustomClassLooksState extends State<CustomClassLooks> {
               children: <Widget>[
                 Expanded(
                   child: Text('Choice Set #${idx + 1}',
-                      style: Theme.of(context).textTheme.title),
+                      style: Theme.of(context).textTheme.headline6),
                 ),
                 IconButton(
                   padding: EdgeInsets.all(0),

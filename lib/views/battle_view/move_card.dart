@@ -87,7 +87,7 @@ class MoveCardState extends State<MoveCard> {
             alignment: Alignment.centerLeft,
             child: Text(
               'Explanation',
-              style: Theme.of(context).textTheme.body2,
+              style: Theme.of(context).textTheme.bodyText1,
             ),
           ),
         ),

@@ -7,11 +7,10 @@ class UserWithCharacters extends User {
   List<Character> characters;
   Firestore _db = Firestore.instance;
 
-  UserWithCharacters([DocumentReference ref]) : super(ref);
-  UserWithCharacters.fromData({
+  UserWithCharacters({
     DocumentReference ref,
     Map<String, dynamic> data,
-  }) : super.fromData(ref: ref, data: data);
+  }) : super(ref: ref, data: data);
 
   @override
   Map<String, dynamic> defaultData() {
@@ -24,10 +23,10 @@ class UserWithCharacters extends User {
   @override
   deserializeData(Map<String, dynamic> data) {
     super.deserializeData(data);
-    characters = data['characters'].map((char) => Character.fromData(
+    characters = (data['characters'] as List).map((char) => Character(
           ref: _db.document(char['docID']),
           data: char['data'],
-        ));
+        )).toList();
   }
 
   @override

@@ -20,12 +20,12 @@ class TitleSubtitleRow extends StatelessWidget {
       if (title != null)
         DefaultTextStyle(
           child: title,
-          style: textTheme.title,
+          style: textTheme.headline6,
         ),
       if (subtitle != null)
         DefaultTextStyle(
           child: subtitle,
-          style: textTheme.body1,
+          style: textTheme.bodyText2,
         )
     ];
 
