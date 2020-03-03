@@ -179,18 +179,15 @@ class _EditStatsState extends State<EditStats> {
   }
 
   _save() {
-    final Character character = widget.character;
-    final List<CharacterKeys> keys = ORDERED_STATS;
-
-    character.str = _str;
-    character.dex = _dex;
-    character.cha = _cha;
-    character.wis = _wis;
-    character.int = _int;
-    character.con = _con;
-
     if (widget.onSave != null) {
-      widget.onSave(character, keys);
+      widget.onSave({
+        'str': _str,
+        'dex': _dex,
+        'cha': _cha,
+        'wis': _wis,
+        'int': _int,
+        'con': _con,
+      });
     }
   }
 

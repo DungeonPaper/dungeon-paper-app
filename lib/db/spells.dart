@@ -5,8 +5,6 @@ import 'package:dungeon_world_data/spell.dart';
 import 'package:dungeon_world_data/tag.dart';
 import 'package:uuid/uuid.dart';
 
-import 'character_db.dart';
-import 'character_utils.dart';
 
 ReturnPredicate<DbSpell> matchSpell =
     matcher<DbSpell>((DbSpell i, DbSpell o) => i.key == o.key);
@@ -59,8 +57,8 @@ Future updateSpell(Spell spell) async {
   }
 
   Character character = dwStore.state.characters.current;
-  character.spells = findAndReplaceByKey(character.spells, spell.key, spell);
-  await character.update(keys: ['spells']);
+  await character
+      .update(json: {'spells': findAndReplaceInList(character.spells, spell)});
 }
 
 Future deleteSpell(Spell spell) async {
@@ -71,7 +69,8 @@ Future deleteSpell(Spell spell) async {
   Character character = dwStore.state.characters.current;
   num index = character.spells.indexWhere(matchSpell(spell));
   character.spells.removeAt(index);
-  await updateCharacter(character, [CharacterKeys.spells]);
+  await character
+      .update(json: {'spells': removeFromList(character.spells, spell)});
 }
 
 Future createSpell(Spell spell) async {
@@ -81,5 +80,5 @@ Future createSpell(Spell spell) async {
 
   Character character = dwStore.state.characters.current;
   character.spells.add(spell);
-  await updateCharacter(character, [CharacterKeys.spells]);
+  await character.update(json: {'spells': addToList(character.spells, spell)});
 }

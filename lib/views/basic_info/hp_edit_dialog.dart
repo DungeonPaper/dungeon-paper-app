@@ -1,7 +1,5 @@
 import 'package:dungeon_paper/refactor/character.dart';
 import '../../components/standard_dialog_controls.dart';
-import '../../db/character_db.dart';
-import '../../db/character_utils.dart';
 import '../basic_info/current_stat_indicator.dart';
 import '../profile_view/status_bars.dart';
 import '../../utils.dart';
@@ -172,14 +170,11 @@ class _EditHPDialogState extends State<EditHPDialog> {
 
   void save(BuildContext context) {
     var char = widget.character;
-    char.currentHP = currentHP;
-    char.maxHP = maxHP;
-    char.useDefaultMaxHP = useDefaultMaxHP;
-    updateCharacter(char, [
-      CharacterKeys.currentHP,
-      CharacterKeys.maxHP,
-      CharacterKeys.useDefaultMaxHP
-    ]);
+    char.update(json: {
+      'currentHP': currentHP,
+      'maxHP': maxHP,
+      'useDefaultMaxHP': useDefaultMaxHP,
+    });
     Navigator.pop(context);
   }
 

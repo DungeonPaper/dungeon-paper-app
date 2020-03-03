@@ -2,8 +2,6 @@ import 'package:dungeon_paper/redux/stores/stores.dart';
 import 'package:dungeon_paper/refactor/character.dart';
 import 'package:dungeon_paper/utils.dart';
 import 'package:dungeon_world_data/move.dart';
-import 'character_db.dart';
-import 'character_utils.dart';
 
 ReturnPredicate<Move> matchMove =
     matcher<Move>((Move i, Move o) => i.key == o.key);
@@ -16,7 +14,8 @@ Future updateMove(Move move) async {
   Character character = dwStore.state.characters.current;
   num index = character.moves.indexWhere(matchMove(move));
   character.moves[index] = move;
-  await updateCharacter(character, [CharacterKeys.moves]);
+  await character
+      .update(json: {'moves': findAndReplaceInList(character.moves, move)});
 }
 
 Future deleteMove(Move move) async {
@@ -25,9 +24,8 @@ Future deleteMove(Move move) async {
   }
 
   Character character = dwStore.state.characters.current;
-  num index = character.moves.indexWhere(matchMove(move));
-  character.moves.removeAt(index);
-  await updateCharacter(character, [CharacterKeys.moves]);
+  await character
+      .update(json: {'moves': removeFromList(character.moves, move)});
 }
 
 Future createMove(Move move) async {
@@ -36,6 +34,5 @@ Future createMove(Move move) async {
   }
 
   Character character = dwStore.state.characters.current;
-  character.moves.add(move);
-  await updateCharacter(character, [CharacterKeys.moves]);
+  await character.update(json: {'moves': addToList(character.moves, move)});
 }

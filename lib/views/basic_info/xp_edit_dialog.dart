@@ -2,8 +2,6 @@ import 'package:dungeon_paper/refactor/character.dart';
 import 'package:pedantic/pedantic.dart';
 
 import '../../components/standard_dialog_controls.dart';
-import '../../db/character_db.dart';
-import '../../db/character_utils.dart' as chr;
 import '../basic_info/current_stat_indicator.dart';
 import '../profile_view/status_bars.dart';
 import 'package:wheel_spinner/wheel_spinner.dart';
@@ -125,17 +123,13 @@ class _XPEditDialogState extends State<XPEditDialog> {
 
   void save(BuildContext context) {
     Character char = widget.character;
-    char.currentXP = currentXP;
-    updateCharacter(char, [chr.CharacterKeys.currentXP]);
+    char.update(json: {'currentXP': currentXP});
     Navigator.pop(context);
   }
 
   void levelUp(BuildContext context) async {
     Character char = widget.character;
-    char.currentXP = 0;
-    char.level++;
-    unawaited(updateCharacter(
-        char, [chr.CharacterKeys.currentXP, chr.CharacterKeys.level]));
+    unawaited(char.update(json: {'currentXP': 0, 'level': char.level + 1}));
     setState(() {
       currentXP = char.currentXP;
       initialCurrentXP = currentXP;
@@ -148,10 +142,7 @@ class _XPEditDialogState extends State<XPEditDialog> {
 
   void levelDown(BuildContext context) async {
     Character char = widget.character;
-    char.level--;
-    char.currentXP = char.level + 6;
-    unawaited(updateCharacter(
-        char, [chr.CharacterKeys.currentXP, chr.CharacterKeys.level]));
+    unawaited(char.update(json: {'currentXP': char.level + 5, 'level': char.level - 1}));
     setState(() {
       currentXP = char.currentXP;
       initialCurrentXP = currentXP;

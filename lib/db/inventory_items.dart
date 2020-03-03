@@ -4,8 +4,6 @@ import 'package:dungeon_paper/utils.dart';
 import 'package:dungeon_world_data/equipment.dart';
 import 'package:dungeon_world_data/tag.dart';
 import 'package:uuid/uuid.dart';
-import 'character_db.dart';
-import 'character_utils.dart';
 
 enum EquipmentKeys { key, item, amount }
 
@@ -64,9 +62,9 @@ Future updateInventoryItem(InventoryItem item) async {
   }
 
   Character character = dwStore.state.characters.current;
-  num index = character.inventory.indexWhere(invItemMatcher(item));
-  character.inventory[index] = item;
-  await updateCharacter(character, [CharacterKeys.inventory]);
+  await character.update(json: {
+    'inventory': findAndReplaceInList(character.inventory, item),
+  });
 }
 
 Future deleteInventoryItem(InventoryItem item) async {
@@ -75,9 +73,8 @@ Future deleteInventoryItem(InventoryItem item) async {
   }
 
   Character character = dwStore.state.characters.current;
-  num index = character.inventory.indexWhere(invItemMatcher(item));
-  character.inventory.removeAt(index);
-  return updateCharacter(character, [CharacterKeys.inventory]);
+  return character
+      .update(json: {'inventory': removeFromList(character.inventory, item)});
 }
 
 Future createInventoryItem(InventoryItem item) async {
@@ -87,7 +84,8 @@ Future createInventoryItem(InventoryItem item) async {
 
   Character character = dwStore.state.characters.current;
   character.inventory.add(item);
-  return updateCharacter(character, [CharacterKeys.inventory]);
+  return character
+      .update(json: {'inventory': addToList(character.inventory, item)});
 }
 
 Future incrItemAmount(InventoryItem item, num amount) async {
@@ -96,11 +94,10 @@ Future incrItemAmount(InventoryItem item, num amount) async {
   }
 
   Character character = dwStore.state.characters.current;
-  item.amount += amount;
-  item.amount = clamp(item.amount, 0, double.infinity).toInt();
-  num index = character.inventory.indexWhere(invItemMatcher(item));
-  print(item);
-  print("matching: ${item.key}");
-  character.inventory[index] = item;
-  return await updateCharacter(character, [CharacterKeys.inventory]);
+  return await character.update(json: {
+    'inventory': findAndReplaceInList(
+      character.inventory,
+      item..amount = clamp(amount, 0, double.infinity).toInt(),
+    ),
+  });
 }

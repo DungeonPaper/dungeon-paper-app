@@ -1,13 +1,10 @@
 import 'package:dungeon_paper/refactor/character.dart';
-
 import '../../edit_character/character_wizard_utils.dart';
 import '../../../components/card_list_item.dart';
 import '../../../components/class_description.dart';
 import '../../../components/confirmation_dialog.dart';
-import '../../../db/character_utils.dart';
 import '../../../components/dialogs.dart';
 import 'package:dungeon_world_data/dw_data.dart';
-import 'package:dungeon_world_data/move.dart';
 import 'package:dungeon_world_data/player_class.dart';
 import 'package:flutter/material.dart';
 
@@ -89,19 +86,17 @@ class ClassSelectionScreen extends StatelessWidget {
 
   void save(BuildContext context, PlayerClass def,
       ChangeClassConfirmationOptions options) {
-    character.mainClass = def;
-    character.looks = [];
-    character.race = null;
-
-    var keys = [
-      CharacterKeys.mainClass,
-      CharacterKeys.looks,
-      CharacterKeys.race,
-    ];
-
     var result = options.applyToCharacter(character);
-
-    onSave(result.character, result.keys + keys);
+    onSave(
+      result.data
+        ..addAll(
+          {
+            'mainClass': def.key,
+            'looks': [],
+            'race': null,
+          },
+        ),
+    );
   }
 
   Function() previewClass(BuildContext context, PlayerClass def) {
@@ -310,11 +305,11 @@ class _ConfirmClassChangeDialogState extends State<ConfirmClassChangeDialog> {
 
 class ChangeClassConfirmationResults {
   final Character character;
-  final List<CharacterKeys> keys;
+  final Map<String, dynamic> data;
 
   ChangeClassConfirmationResults({
     @required this.character,
-    @required this.keys,
+    @required this.data,
   });
 }
 
@@ -340,30 +335,26 @@ class ChangeClassConfirmationOptions {
       );
 
   ChangeClassConfirmationResults applyToCharacter(Character character) {
-    List<CharacterKeys> keys = [];
+    var data = <String, dynamic>{};
 
     if (deleteMoves) {
-      character.moves = <Move>[];
-      keys.add(CharacterKeys.moves);
+      data['moves'] = [];
     }
 
     if (resetXP) {
-      character.level = 1;
-      character.currentXP = 0;
-      keys.addAll([CharacterKeys.level, CharacterKeys.currentXP]);
+      data['level'] = 1;
+      data['currentXP'] = 0;
     }
 
     if (resetMaxHP) {
-      character.maxHP = character.defaultMaxHP;
-      character.currentHP = character.maxHP;
-      keys.addAll([CharacterKeys.currentHP, CharacterKeys.maxHP]);
+      data['maxHP'] = character.defaultMaxHP;
+      data['currentHP'] = character.maxHP;
     }
 
     if (resetHitDice) {
-      character.hitDice = character.mainClass.damage;
-      keys.add(CharacterKeys.hitDice);
+      data['hitDice'] = character.mainClass.damage;
     }
 
-    return ChangeClassConfirmationResults(character: character, keys: keys);
+    return ChangeClassConfirmationResults(character: character, data: data);
   }
 }

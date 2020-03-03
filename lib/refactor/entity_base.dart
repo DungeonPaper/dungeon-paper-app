@@ -7,7 +7,7 @@ abstract class Serializable {
 
 abstract class FirebaseEntity implements Serializable {
   final DocumentReference ref;
-  final String docID;
+  String docID;
   DocumentSnapshot snapshot;
   DateTime lastUpdated;
 
@@ -16,8 +16,12 @@ abstract class FirebaseEntity implements Serializable {
     Map<String, dynamic> data,
   }) : docID = ref?.documentID {
     initEmptyData();
+
     if (data != null && data.isNotEmpty) {
-      deserializeData(data);
+      var defaults = toJSON();
+      deserializeData(
+        data.map((k, v) => defaults.keys.contains(k) ? defaults[k] : data[k]),
+      );
       lastUpdated = data['lastUpdated'];
     } else if (ref != null) {
       _getRemoteData();
@@ -43,28 +47,37 @@ abstract class FirebaseEntity implements Serializable {
     ref.delete();
   }
 
-  void create([Map<String, dynamic> data]) {
-    update(data: data, keys: data.keys);
-  }
+  void create([Map<String, dynamic> data]) => update(json: data);
 
-  void update({Map<String, dynamic> data, List<String> keys}) {
+  Future<void> update({Map<String, dynamic> json, bool save = true}) async {
+    var current = toJSON();
     if (ref == null) {
       return _noRef();
     }
-    if (data == null) {
-      data = toJSON();
+    if (json == null) {
+      json = toJSON();
     }
-    if (keys == null) {
-      keys = data.keys;
-    }
-    keys.add('lastUpdated');
-    data['lastUpdated'] = DateTime.now();
+    json['lastUpdated'] = DateTime.now();
 
-    ref.updateData(keys == data.keys
-        ? data
-        : Map.fromEntries(
-            keys.map((k) => MapEntry(k, data[k])),
-          ));
+    if (save) {
+      await ref.updateData(current.keys == json.keys
+          ? json
+          : Map.fromEntries(
+              current.keys.map((k) => MapEntry(k, json[k])),
+            ));
+      var newData = await ref.get();
+      deserializeData(
+        json.map((k, v) =>
+            MapEntry(k, current.keys.contains(k) ? newData[k] : json[k])),
+      );
+    } else {
+      deserializeData(
+        current.keys == json.keys
+            ? json
+            : json.map((k, v) =>
+                MapEntry(k, current.keys.contains(k) ? json[k] : current[k])),
+      );
+    }
   }
 
   void _noRef() {

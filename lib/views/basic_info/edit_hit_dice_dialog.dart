@@ -1,8 +1,6 @@
-import 'package:dungeon_paper/refactor/character.dart';
 import 'package:pedantic/pedantic.dart';
+
 import '../../components/standard_dialog_controls.dart';
-import '../../db/character_db.dart';
-import '../../db/character_utils.dart';
 import '../../flutter_utils.dart';
 import '../../redux/stores/stores.dart';
 import 'package:dungeon_world_data/dice.dart';
@@ -117,9 +115,10 @@ class EditHitDiceDialogState extends State<EditHitDiceDialog> {
   }
 
   _saveValue() async {
-    Character character = dwStore.state.characters.current;
-    character.hitDice = Dice(sides, amount);
-    unawaited(updateCharacter(character, [CharacterKeys.hitDice]));
+    var character = dwStore.state.characters.current;
+    var dice = Dice(sides, amount);
+    character.hitDice = dice;
+    unawaited(character.update(json: {'hitDice': dice.toString()}));
     Navigator.pop(context);
   }
 }

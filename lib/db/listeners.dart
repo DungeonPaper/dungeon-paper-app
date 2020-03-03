@@ -8,17 +8,15 @@ import 'package:dungeon_paper/refactor/user.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:pedantic/pedantic.dart';
 
-import 'character_db.dart';
+StreamSubscription _fbUserListener;
 
-StreamSubscription authUserListener;
-
-registerAuthUserListener() {
+registerFirebaseUserListener() {
   try {
-    if (authUserListener != null) {
-      authUserListener.cancel();
+    if (_fbUserListener != null) {
+      _fbUserListener.cancel();
     }
 
-    authUserListener = FirebaseAuth.instance.onAuthStateChanged
+    _fbUserListener = FirebaseAuth.instance.onAuthStateChanged
         .listen((FirebaseUser authUser) {
       if (authUser != null &&
           authUser.email != null &&
@@ -29,58 +27,67 @@ registerAuthUserListener() {
 
       if (authUser == null || authUser.email == null) {
         unsetCurrentUser();
-        unsetCurrentCharacter();
+        dwStore.dispatch(CharacterActions.remove());
       }
     });
     print("REGISTERED AUTH USER LISTENER");
   } catch (e) {
     print('error on user listener');
-    if (authUserListener != null) {
-      authUserListener.cancel();
+    if (_fbUserListener != null) {
+      _fbUserListener.cancel();
     }
     print("COULDN'T REGISTER AUTH USER LISTENER");
   }
 }
 
-StreamSubscription dbUserListener;
+StreamSubscription _userListener;
 
-registerDbUserListener() {
-  if (dbUserListener != null) {
-    dbUserListener.cancel();
+registerUserListener() {
+  if (_userListener != null) {
+    _userListener.cancel();
   }
 
   String userDocID = dwStore.state.user.currentUserDocID;
-  dbUserListener = Firestore.instance
-      .document('users/$userDocID')
-      .snapshots()
-      .listen((user) {
-    dwStore.dispatch(UserActions.setUser(User(data: user.data)));
+  _userListener =
+      Firestore.instance.document(userDocID).snapshots().listen((user) {
+    dwStore.dispatch(
+      UserActions.setUser(
+        User(
+          data: user.data,
+          ref: user.reference,
+        ),
+      ),
+    );
   });
   print("REGISTERED DB USER LISTENER");
 }
 
-StreamSubscription dbCharsListener;
+StreamSubscription _charsListener;
 
-registerDbCharsListener() async {
-  if (dbCharsListener != null) {
-    unawaited(dbCharsListener.cancel());
+registerCharactersListener() async {
+  if (_charsListener != null) {
+    unawaited(_charsListener.cancel());
   }
 
-  String charDocID = dwStore.state.characters.currentCharDocID;
-  DocumentReference user = Firestore.instance.document('users/$charDocID');
-  dbCharsListener = Firestore.instance
-      .collection('character_bios')
-      .where('user', isEqualTo: user)
-      .snapshots()
-      .listen((characters) {
-    Map<String, Character> updatedChars = dwStore.state.characters.characters;
-    characters.documents.forEach((character) {
-      updatedChars[character.documentID] = Character(
-        data: character.data,
-        ref: character.reference,
-      );
-    });
-    dwStore.dispatch(CharacterActions.setCharacters(updatedChars));
+  String userDocID = dwStore.state.user.current.docID;
+  DocumentReference user = Firestore.instance.document('user_data/$userDocID');
+  _charsListener =
+      user.collection('characters').snapshots().listen((characters) {
+    dwStore.dispatch(
+      CharacterActions.setCharacters(
+        Map.fromEntries(
+          characters.documents.map(
+            (character) => MapEntry(
+              character.reference.path,
+              Character(
+                data: character.data,
+                ref: character.reference,
+              ),
+            ),
+          ),
+        ),
+      ),
+    );
   });
   print("REGISTERED DB CHARACTER LISTENER");
 }

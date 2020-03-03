@@ -1,5 +1,5 @@
+import 'package:dungeon_paper/redux/stores/stores.dart';
 import 'package:dungeon_paper/refactor/character.dart';
-import '../../db/character_db.dart';
 import '../basic_info/change_alignment_dialog.dart';
 import '../profile_view/class_selection/class_selection_screen.dart';
 import '../stats/edit_stats.dart';
@@ -100,9 +100,9 @@ class _CharacterWizardViewState extends State<CharacterWizardView> {
     }
   }
 
-  void _copyCharAndProceed(char, _ks) {
+  void _copyCharAndProceed(_ks) {
     setState(() {
-      character = char;
+      character.update(json: _ks, save: false);
       _nextStep();
     });
   }
@@ -124,7 +124,8 @@ class _CharacterWizardViewState extends State<CharacterWizardView> {
       setState(() {
         step = CreateCharacterStep.Finishing;
       });
-      await createNewCharacter(character);
+      var user = dwStore.state.user.current;
+      await user.createCharacter(character);
       Navigator.pop(context);
     } else {
       stepIdx++;

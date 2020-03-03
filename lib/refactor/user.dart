@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:dungeon_paper/refactor/character.dart';
 import 'package:dungeon_paper/refactor/entity_base.dart';
 
 class User extends FirebaseEntity {
@@ -35,5 +36,11 @@ class User extends FirebaseEntity {
       'email': 'guest@guest.com',
       'photoURL': 'about:blank',
     };
+  }
+
+  Character createCharacter(Character character) {
+    var doc = Firestore.instance.collection(docID + '/characters').document();
+    doc.setData(character.toJSON());
+    return character..docID = doc.path;
   }
 }

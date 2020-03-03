@@ -135,8 +135,24 @@ Iterable<Enumeration<T>> enumerate<T>(Iterable<T> items) sync* {
   }
 }
 
-List<T> findAndReplaceByKey<T extends DWEntity>(List<T> list, String key, T newObj) {
-  num index = list.indexWhere((it) => it.key == key);
+bool Function(T) keyMatcher<T>(dynamic Function(T) delegate, T object) =>
+    (compare) => delegate(object) == delegate(compare);
+
+bool Function(DWEntity) dwEntityMatcher(DWEntity comp) =>
+    keyMatcher((o) => o.key, comp);
+
+bool Function(T) getMatcher<T>(T obj, [bool Function(T) defaultMatcher]) =>
+    obj is DWEntity ? dwEntityMatcher(obj) : defaultMatcher ?? (o) => o == obj;
+
+List<T> findAndReplaceInList<T>(List<T> list, T newObj,
+    [bool Function(T) matcher]) {
+  num index = list.indexWhere(getMatcher(newObj, matcher));
+  list = List.from(list);
   list[index] = newObj;
   return list;
 }
+
+List<T> removeFromList<T>(List<T> list, T obj) =>
+    List.from(list)..removeWhere(getMatcher(obj));
+
+List<T> addToList<T>(List<T> list, T item) => List.from(list)..add(item);
