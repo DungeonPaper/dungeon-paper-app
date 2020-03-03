@@ -1,5 +1,4 @@
 import 'package:dungeon_paper/components/card_list_item.dart';
-import 'package:dungeon_paper/db/character_utils.dart';
 import 'package:dungeon_paper/refactor/character.dart';
 import '../../components/dialogs.dart';
 import 'character_wizard_utils.dart';
@@ -65,7 +64,7 @@ class ChangeRaceDialog extends StatelessWidget {
   Function() changeRace(Move def) {
     return () async {
       character.race = def;
-      onSave(character, [CharacterKeys.race]);
+      onSave({'race': def.key});
     };
   }
 }

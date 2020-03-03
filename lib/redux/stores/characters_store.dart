@@ -9,8 +9,8 @@ class CharacterStore {
 
   CharacterStore({currentCharDocID, @required characters, current}) {
     if (current == null && characters != null && characters.isNotEmpty) {
-      current = characters[characters.keys.first];
-      currentCharDocID = characters.keys.first;
+      current = characters[characters.data.first];
+      currentCharDocID = characters.data.first;
     }
   }
 }

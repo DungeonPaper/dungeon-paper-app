@@ -1,3 +1,4 @@
+import 'package:dungeon_paper/db/listeners.dart';
 import 'package:dungeon_paper/redux/actions.dart';
 import 'package:dungeon_paper/redux/stores/stores.dart';
 import 'package:dungeon_paper/refactor/api.dart';
@@ -42,7 +43,15 @@ Future<FirebaseUser> signInFlow(SignInMethod method) async {
     dbLoginData: loginResult,
   );
 
+  registerAllListeners();
+
   return user;
+}
+
+void registerAllListeners() {
+  registerFirebaseUserListener();
+  registerUserListener();
+  registerCharactersListener();
 }
 
 void dispatchFinalDataToStore({

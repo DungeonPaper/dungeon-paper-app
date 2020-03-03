@@ -1,8 +1,6 @@
 import 'package:dungeon_paper/refactor/character.dart';
 import 'package:pedantic/pedantic.dart';
 import '../../components/standard_dialog_controls.dart';
-import '../../db/character_db.dart';
-import '../../db/character_utils.dart';
 import '../../flutter_utils.dart';
 import '../../redux/stores/stores.dart';
 import 'package:flutter/material.dart';
@@ -118,8 +116,7 @@ class EditArmorDialogState extends State<EditArmorDialog> {
 
   _saveValue() async {
     Character character = dwStore.state.characters.current;
-    character.armor = value;
-    unawaited(updateCharacter(character, [CharacterKeys.armor]));
+    unawaited(character.update(json: {'armor': value}));
     Navigator.pop(context);
   }
 }

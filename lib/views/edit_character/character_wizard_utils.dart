@@ -1,5 +1,3 @@
-import 'package:dungeon_paper/db/character_utils.dart';
-import 'package:dungeon_paper/refactor/character.dart';
 import '../../components/confirmation_dialog.dart';
 import '../../components/scaffold_with_elevation.dart';
 import '../../components/dialogs.dart';
@@ -14,7 +12,7 @@ typedef ScaffoldBuilderFunction = Widget Function({
   bool wrapWithScrollable,
 });
 typedef CharSaveFunction = void Function(
-    Character char, List<CharacterKeys> keys);
+    Map<String, dynamic> data);
 enum WizardScaffoldButtonType { close, back }
 
 Function() wrapOnDidPopHandler(

@@ -1,14 +1,10 @@
 import 'dart:async';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:dungeon_paper/db/custom_classes_db.dart';
-import 'package:dungeon_paper/db/listeners.dart';
 import 'package:dungeon_paper/redux/actions.dart';
 import 'package:dungeon_paper/redux/stores/stores.dart';
 import 'package:dungeon_paper/refactor/user.dart';
-import 'package:dungeon_world_data/player_class.dart';
 import 'base.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'character_db.dart';
 
 final Firestore firestore = Firestore.instance;
 FirebaseUser authUser;
@@ -61,32 +57,6 @@ class DbUser with Serializer<UserKeys> {
     };
     serializeAll(map);
   }
-}
-
-void setCurrentUser(FirebaseUser user) async {
-  QuerySnapshot userQuery = await Firestore.instance
-      .collection('users')
-      .where('email', isEqualTo: user.email)
-      .getDocuments();
-
-  DocumentSnapshot userSnap;
-  if (userQuery.documents.isEmpty) {
-    var userDoc = await createNewUser(user);
-    userSnap = await userDoc.get();
-  } else {
-    userSnap = userQuery.documents[0];
-  }
-  User dbUser = User(data: userSnap.data, ref: userSnap.reference);
-
-  dwStore.dispatch(UserActions.setUser(dbUser));
-  await getOrCreateCharacter(userSnap);
-  var customClasses = {
-    for (DocumentSnapshot cls in await getCustomClasses())
-      cls.documentID: PlayerClass.fromJSON(cls.data),
-  };
-  dwStore.dispatch(SetCustomClasses(customClasses));
-  registerDbUserListener();
-  registerDbCharsListener();
 }
 
 void unsetCurrentUser() async {

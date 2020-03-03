@@ -3,8 +3,6 @@ import 'package:dungeon_paper/redux/stores/stores.dart';
 import 'package:dungeon_paper/refactor/character.dart';
 import 'package:dungeon_paper/utils.dart';
 import 'package:uuid/uuid.dart';
-import 'character_db.dart';
-import 'character_utils.dart';
 
 enum NoteKeys { key, title, description, category }
 
@@ -97,9 +95,8 @@ Future updateNote(Note note) async {
   }
 
   Character character = dwStore.state.characters.current;
-  num index = character.notes.indexWhere(matchNote(note));
-  character.notes[index] = note;
-  await updateCharacter(character, [CharacterKeys.notes]);
+  await character
+      .update(json: {'notes': findAndReplaceInList(character.notes, note)});
 }
 
 Future deleteNote(Note note) async {
@@ -108,9 +105,8 @@ Future deleteNote(Note note) async {
   }
 
   Character character = dwStore.state.characters.current;
-  num index = character.notes.indexWhere(matchNote(note));
-  character.notes.removeAt(index);
-  await updateCharacter(character, [CharacterKeys.notes]);
+  await character
+      .update(json: {'notes': removeFromList(character.notes, note)});
 }
 
 Future createNote(Note note) async {
@@ -119,6 +115,5 @@ Future createNote(Note note) async {
   }
 
   Character character = dwStore.state.characters.current;
-  character.notes.add(note);
-  await updateCharacter(character, [CharacterKeys.notes]);
+  await character.update(json: {'notes': addToList(character.notes, note)});
 }

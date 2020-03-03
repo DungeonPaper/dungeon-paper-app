@@ -4,7 +4,6 @@ import 'edit_avatar_card.dart';
 import 'edit_display_name_card.dart';
 import 'package:flutter/material.dart';
 import 'character_wizard_utils.dart';
-import 'package:dungeon_paper/db/character_utils.dart';
 
 class EditBasicInfoView extends StatefulWidget {
   final Character character;
@@ -106,13 +105,10 @@ class _EditBasicInfoViewState extends State<EditBasicInfoView> {
 
   void save() {
     if (widget.onSave != null) {
-      Character character = widget.character;
-      character.displayName = displayName;
-      character.photoURL = photoURL;
-      widget.onSave(character, [
-        CharacterKeys.displayName,
-        CharacterKeys.photoURL,
-      ]);
+      widget.onSave({
+        'displayName': displayName,
+        'photoURL': photoURL,
+      });
     }
   }
 

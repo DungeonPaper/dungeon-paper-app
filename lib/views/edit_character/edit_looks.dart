@@ -2,7 +2,6 @@ import 'package:dungeon_paper/components/card_list_item.dart';
 import 'package:dungeon_paper/refactor/character.dart';
 import 'package:dungeon_paper/utils.dart';
 import 'package:flutter_typeahead/flutter_typeahead.dart';
-import '../../db/character_utils.dart';
 import '../../components/dialogs.dart';
 import 'character_wizard_utils.dart';
 import 'package:dungeon_world_data/player_class.dart';
@@ -170,7 +169,7 @@ class _ChangeLooksDialogState extends State<ChangeLooksDialog> {
 
   void changeLooks(List<String> def) async {
     widget.character.looks = def;
-    widget.onSave(widget.character, [CharacterKeys.looks]);
+    widget.onSave({'looks': def});
   }
 
   void _setValue(int i, String val) {

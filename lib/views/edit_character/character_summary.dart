@@ -92,7 +92,7 @@ class CharacterSummary extends StatelessWidget {
       return builder(
         context: context,
         child: child,
-        save: () => onSave(character, []),
+        save: () => onSave({}),
         isValid: () => true,
       );
     }
