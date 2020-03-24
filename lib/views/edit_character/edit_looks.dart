@@ -177,7 +177,6 @@ class _ChangeLooksDialogState extends State<ChangeLooksDialog> {
       selected[i] = val;
       _controllers[i].text = val;
     });
-    print(selected);
   }
 
   void _addRow() {

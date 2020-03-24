@@ -4,6 +4,8 @@ import 'package:flutter_test/flutter_test.dart';
 
 void main() {
   group('Character', () {
+    //
+    //
     test('properly uses class values', () {
       var wizard = dungeonWorld.classes.firstWhere((k) => k.key == 'wizard');
       var char = Character(
@@ -45,7 +47,7 @@ void main() {
           'dex': 10,
           'int': 8,
           'wis': 11,
-          'con': 10,
+          'con': 10, // mod = 0
           'cha': 14,
           'useDefaultMaxHP': true,
         },
@@ -63,12 +65,17 @@ void main() {
           'useDefaultMaxHP': true,
         },
       );
-      expect(char1.maxHP, equals(6));
+      var immolator =
+          dungeonWorld.classes.firstWhere((el) => el.key == 'immolator');
+      var wizard = dungeonWorld.classes.firstWhere((el) => el.key == 'wizard');
+      expect(
+          char1.maxHP, equals(immolator.baseHP + Character.statModifier(10)));
       expect(char2.maxHP, equals(6));
       char1.con = 16; // +1 mod
       char2.con = 10; // 0 mod
-      expect(char1.maxHP, equals(8));
-      expect(char2.maxHP, equals(4));
+      expect(
+          char1.maxHP, equals(immolator.baseHP + Character.statModifier(16)));
+      expect(char2.maxHP, equals(wizard.baseHP + Character.statModifier(10)));
     });
   });
 }

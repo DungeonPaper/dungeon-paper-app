@@ -22,6 +22,8 @@ class Note with Serializer<NoteKeys> {
     });
   }
 
+  factory Note.fromJSON(Map map) => Note(map);
+
   @override
   toJSON() {
     return {
