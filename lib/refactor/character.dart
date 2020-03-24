@@ -47,7 +47,6 @@ Fields _userFields = Fields()
             orElse: () => dungeonWorld.classes.first,
           ),
         ),
-
         Field<Alignment>(
           context: ctx,
           fieldName: 'alignment',
@@ -133,8 +132,7 @@ Fields _userFields = Fields()
       ]);
 
 class Character extends FirebaseEntity {
-  Fields _fields;
-  Fields get fields => _fields ??= _userFields.copy(this);
+  Fields fields = _userFields.copy();
 
   Character({
     Map<String, dynamic> data,
