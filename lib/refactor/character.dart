@@ -12,7 +12,7 @@ import 'package:dungeon_world_data/dw_data.dart';
 import 'package:dungeon_world_data/move.dart';
 import 'package:dungeon_world_data/player_class.dart';
 
-// Ordered by whichever data needs to come earliest for the rest to be able to calculate easily
+// Ordered by whichever data needs to come earliest for the rest to be able to calculate
 Fields _userFields = Fields()
   ..register((ctx) => [
         // Stats
