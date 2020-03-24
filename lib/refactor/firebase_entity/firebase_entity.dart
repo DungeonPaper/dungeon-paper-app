@@ -60,8 +60,6 @@ abstract class FirebaseEntity {
     if (save) {
       await ref.updateData(json);
     }
-
-    deserializeData(json);
   }
 
   void _noRef() {
@@ -69,11 +67,9 @@ abstract class FirebaseEntity {
   }
 
   void deserializeData(Map<String, dynamic> data) {
-    var values = toJSON();
     for (var key in data.keys) {
       var field = fields.get(key);
       var value = field.fromJSON(data[key], fields);
-      values[key] = value;
       field.set(value);
     }
   }
