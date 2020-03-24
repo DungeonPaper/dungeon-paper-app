@@ -59,6 +59,7 @@ abstract class FirebaseEntity {
 
     if (save) {
       await ref.updateData(json);
+      fields.setDirty(false);
     }
   }
 

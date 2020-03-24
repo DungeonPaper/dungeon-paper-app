@@ -115,6 +115,12 @@ class Fields<C> {
     _map[field.fieldName] = field.copy(this);
   }
 
+  void setDirty(bool state) {
+    fields.forEach((field) {
+      field.setDirty(state);
+    });
+  }
+
   Iterable<Field> get fields => _map.values;
 
   List<String> get dirtyFields => _map.entries
