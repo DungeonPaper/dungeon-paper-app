@@ -4,7 +4,7 @@ import 'package:dungeon_paper/refactor/firebase_entity/firebase_entity.dart';
 var _fields = Fields()
   ..register((ctx) => [
         Field<num>(fieldName: 'a', defaultValue: (ctx) => 0),
-        Field<num>(fieldName: 'b', defaultValue: (ctx) => 0),
+        Field<String>(fieldName: 'b', defaultValue: (ctx) => ''),
       ]);
 
 class EntityTestBase extends FirebaseEntity {
