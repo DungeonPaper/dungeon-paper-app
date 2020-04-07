@@ -13,13 +13,13 @@ class MoveCard extends StatefulWidget {
   final MoveCardMode mode;
   final bool raceMove;
   final void Function(Move move) onSave;
-  final void Function(Move move) onDelete;
+  final void Function() onDelete;
 
   const MoveCard({
     Key key,
     @required this.move,
-    this.onSave,
-    this.onDelete,
+    @required this.onSave,
+    @required this.onDelete,
     this.mode = MoveCardMode.Fixed,
     this.raceMove = false,
   }) : super(key: key);

@@ -68,6 +68,11 @@ class SetCharacters {
   SetCharacters(this.characters);
 }
 
+class UpdateCharacter {
+  final Character character;
+  UpdateCharacter(this.character);
+}
+
 class RemoveAll {}
 
 class CharacterActions {
@@ -76,6 +81,9 @@ class CharacterActions {
 
   static SetCharacters setCharacters(Map<String, Character> characters) =>
       SetCharacters(characters);
+
+  static UpdateCharacter updateCharacter(Character character) =>
+      UpdateCharacter(character);
 
   static RemoveAll remove() => RemoveAll();
 }

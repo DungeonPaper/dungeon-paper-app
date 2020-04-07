@@ -42,12 +42,12 @@ registerFirebaseUserListener() {
 
 StreamSubscription _userListener;
 
-registerUserListener() {
+registerUserListener(FirebaseUser fbUser) {
   if (_userListener != null) {
     _userListener.cancel();
   }
 
-  String userDocID = dwStore.state.user.currentUserDocID;
+  String userDocID = 'users/${fbUser.email}';
   _userListener =
       Firestore.instance.document(userDocID).snapshots().listen((user) {
     dwStore.dispatch(
@@ -73,19 +73,24 @@ registerCharactersListener() async {
   DocumentReference user = Firestore.instance.document('user_data/$userDocID');
   _charsListener =
       user.collection('characters').snapshots().listen((characters) {
+    if (characters.documents.isEmpty) {
+      return;
+    }
+    var chars = dwStore.state.characters.characters;
     dwStore.dispatch(
       CharacterActions.setCharacters(
-        Map.fromEntries(
-          characters.documents.map(
-            (character) => MapEntry(
-              character.reference.path,
-              Character(
-                data: character.data,
-                ref: character.reference,
+        chars
+          ..addEntries(
+            characters.documents.map(
+              (character) => MapEntry(
+                character.reference.path,
+                Character(
+                  data: character.data,
+                  ref: character.reference,
+                ),
               ),
             ),
           ),
-        ),
       ),
     );
   });

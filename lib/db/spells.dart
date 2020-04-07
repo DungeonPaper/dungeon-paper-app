@@ -1,10 +1,8 @@
-import 'package:dungeon_paper/redux/stores/stores.dart';
 import 'package:dungeon_paper/refactor/character.dart';
 import 'package:dungeon_paper/utils.dart';
 import 'package:dungeon_world_data/spell.dart';
 import 'package:dungeon_world_data/tag.dart';
 import 'package:uuid/uuid.dart';
-
 
 ReturnPredicate<DbSpell> matchSpell =
     matcher<DbSpell>((DbSpell i, DbSpell o) => i.key == o.key);
@@ -51,34 +49,19 @@ class DbSpell extends Spell {
   }
 }
 
-Future updateSpell(Spell spell) async {
-  if (dwStore.state.characters.current == null) {
-    throw ('No character loaded.');
-  }
-
-  Character character = dwStore.state.characters.current;
+Future updateSpell(Character character, DbSpell spell) async {
   await character
       .update(json: {'spells': findAndReplaceInList(character.spells, spell)});
 }
 
-Future deleteSpell(Spell spell) async {
-  if (dwStore.state.characters.current == null) {
-    throw ('No character loaded.');
-  }
-
-  Character character = dwStore.state.characters.current;
+Future deleteSpell(Character character, DbSpell spell) async {
   num index = character.spells.indexWhere(matchSpell(spell));
   character.spells.removeAt(index);
   await character
       .update(json: {'spells': removeFromList(character.spells, spell)});
 }
 
-Future createSpell(Spell spell) async {
-  if (dwStore.state.characters.current == null) {
-    throw ('No character loaded.');
-  }
-
-  Character character = dwStore.state.characters.current;
+Future createSpell(Character character, DbSpell spell) async {
   character.spells.add(spell);
   await character.update(json: {'spells': addToList(character.spells, spell)});
 }

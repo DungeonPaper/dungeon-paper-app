@@ -1,4 +1,3 @@
-import 'package:dungeon_paper/redux/stores/stores.dart';
 import 'package:dungeon_paper/refactor/character.dart';
 import 'package:dungeon_paper/utils.dart';
 import 'package:dungeon_world_data/equipment.dart';
@@ -51,49 +50,35 @@ class InventoryItem extends Equipment {
     map['amount'] = amount;
     return map;
   }
+
+  @override
+  InventoryItem copy() {
+    return InventoryItem.fromJSON(toJSON());
+  }
 }
 
 ReturnPredicate<InventoryItem> invItemMatcher = matcher(
     (InventoryItem i, InventoryItem o) => i.key != null && i.key == o.key);
 
-Future updateInventoryItem(InventoryItem item) async {
-  if (dwStore.state.characters.current == null) {
-    throw ('No character loaded.');
-  }
-
-  Character character = dwStore.state.characters.current;
+Future updateInventoryItem(Character character, InventoryItem item) async {
   await character.update(json: {
     'inventory': findAndReplaceInList(character.inventory, item),
   });
 }
 
-Future deleteInventoryItem(InventoryItem item) async {
-  if (dwStore.state.characters.current == null) {
-    throw ('No character loaded.');
-  }
-
-  Character character = dwStore.state.characters.current;
+Future deleteInventoryItem(Character character, InventoryItem item) async {
   return character
       .update(json: {'inventory': removeFromList(character.inventory, item)});
 }
 
-Future createInventoryItem(InventoryItem item) async {
-  if (dwStore.state.characters.current == null) {
-    throw ('No character loaded.');
-  }
-
-  Character character = dwStore.state.characters.current;
+Future createInventoryItem(Character character, InventoryItem item) async {
   character.inventory.add(item);
   return character
       .update(json: {'inventory': addToList(character.inventory, item)});
 }
 
-Future incrItemAmount(InventoryItem item, num amount) async {
-  if (dwStore.state.characters.current == null) {
-    throw ('No character loaded.');
-  }
-
-  Character character = dwStore.state.characters.current;
+Future incrItemAmount(
+    Character character, InventoryItem item, num amount) async {
   return await character.update(json: {
     'inventory': findAndReplaceInList(
       character.inventory,

@@ -61,11 +61,11 @@ class CustomClassMoveList extends StatelessWidget {
         return Padding(
           padding: const EdgeInsets.symmetric(vertical: 8.0),
           child: MoveCard(
-            move: moves[i],
-            raceMove: cats.keys.elementAt(catI) == MoveCategory.Race,
-            mode: MoveCardMode.Editable,
-            onSave: (move) => _updateMoveInCat(context, move, cat),
-          ),
+              move: moves[i],
+              raceMove: cats.keys.elementAt(catI) == MoveCategory.Race,
+              mode: MoveCardMode.Editable,
+              onSave: (move) => _updateMoveInCat(context, move, cat),
+              onDelete: () => _deleteMoveInCat(context, moves[i], cat)),
         );
       },
     );
@@ -140,6 +140,33 @@ class CustomClassMoveList extends StatelessWidget {
         num idx =
             playerClass.advancedMoves2.indexWhere((m) => m.key == move.key);
         playerClass.advancedMoves2[idx] = move;
+        break;
+    }
+
+    if (onUpdate != null) onUpdate(playerClass);
+    Navigator.pop(context);
+  }
+
+  void _deleteMoveInCat(BuildContext context, Move move, MoveCategory cat) {
+    switch (cat) {
+      case MoveCategory.Starting:
+        num idx =
+            playerClass.startingMoves.indexWhere((m) => m.key == move.key);
+        playerClass.startingMoves.removeAt(idx);
+        break;
+      case MoveCategory.Race:
+        num idx = playerClass.raceMoves.indexWhere((m) => m.key == move.key);
+        playerClass.raceMoves.removeAt(idx);
+        break;
+      case MoveCategory.Advanced1:
+        num idx =
+            playerClass.advancedMoves1.indexWhere((m) => m.key == move.key);
+        playerClass.advancedMoves1.removeAt(idx);
+        break;
+      case MoveCategory.Advanced2:
+        num idx =
+            playerClass.advancedMoves2.indexWhere((m) => m.key == move.key);
+        playerClass.advancedMoves2.removeAt(idx);
         break;
     }
 

@@ -10,7 +10,7 @@ void printWrapped(String text) {
   pattern.allMatches(text).forEach((match) => print(match.group(0)));
 }
 
-Future<UserWithCharacters> doApiLogin(
+Future<UserWithChildren> doApiLogin(
     FirebaseUser user, ExposedAuthCredential credential) async {
   if (user == null || credential == null) {
     return null;
@@ -31,7 +31,7 @@ Future<UserWithCharacters> doApiLogin(
     if (json.containsKey('status') && json['status'] == 'error') {
       return null;
     }
-    return UserWithCharacters(data: json);
+    return UserWithChildren(data: json);
   }
   throw Exception('bad response: ${response.body}');
 }

@@ -1,4 +1,5 @@
 import 'package:dungeon_paper/redux/stores/prefs_store.dart';
+import 'package:dungeon_paper/redux/stores/stores.dart';
 import 'package:dungeon_paper/refactor/character.dart';
 import 'package:dungeon_paper/refactor/user.dart';
 import 'package:dungeon_paper/views/whats_new/whats_new_view.dart';
@@ -34,9 +35,9 @@ class MainContainer extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return DWStoreConnector(builder: (ctx, state) {
-      Character character = state.characters.current;
-      User user = state.user.current;
+    return DWStoreConnector<DWStore>(builder: (ctx, state) {
+      var character = state.characters.current;
+      var user = state.user.current;
       return MainView(
         character: character,
         user: user,

@@ -26,6 +26,11 @@ CharacterStore characterReducer(CharacterStore state, action) {
     return state;
   }
 
+  if (action is UpdateCharacter) {
+    state.characters[action.character.docID] = action.character;
+    return state;
+  }
+
   if (action is SetCurrentChar) {
     state.currentCharDocID = action.id;
     state.characters[state.currentCharDocID] = action.character;

@@ -13,14 +13,18 @@ abstract class FirebaseEntity {
     this.ref,
     Map<String, dynamic> data,
   }) : docID = ref?.documentID {
-    deserializeData(defaultData());
-
     if (data != null && data.isNotEmpty) {
       deserializeData(data);
-      lastUpdated = data['lastUpdated'];
+      lastUpdated = data['lastUpdated'] != null
+          ? DateTime.fromMillisecondsSinceEpoch(
+              data['lastUpdated']['_seconds'] * 1000)
+          : null;
     } else if (ref != null) {
       _getRemoteData();
+    } else {
+      deserializeData(defaultData());
     }
+    fields.setDirty(false);
   }
 
   void _getRemoteData() async {
@@ -50,17 +54,29 @@ abstract class FirebaseEntity {
           (k) => MapEntry(k, fields.get(k).toJSON()),
         ),
       );
-    } else {
-      for (var k in json.keys) {
-        fields.get(k).set(json[k]);
-      }
+    } else if (json.isNotEmpty) {
+      json = prepareJSONUpdate(json);
     }
     json['lastUpdated'] = DateTime.now();
 
     if (save) {
+      print('Updating $this');
+      print(json);
       await ref.updateData(json);
-      fields.setDirty(false);
+      json.forEach((k, v) => fields[k].setDirty(false));
     }
+  }
+
+  prepareJSONUpdate(Map<String, dynamic> json, {bool useSetter = true}) {
+    for (var k in json.keys) {
+      var field = fields.get(k);
+      var value = fields.get(k).fromJSON(json[k], fields.get(k).context);
+      if (useSetter) {
+        field.set(value);
+      }
+      json[k] = field.toJSON();
+    }
+    return json;
   }
 
   void _noRef() {
@@ -70,6 +86,18 @@ abstract class FirebaseEntity {
   void deserializeData(Map<String, dynamic> data) {
     for (var key in data.keys) {
       var field = fields.get(key);
+      if (field == null) {
+        print(
+            'Field not found for: $key in $this. Generating automatic field.');
+        fields.addField(
+          Field(
+            fieldName: key,
+            value: data[key],
+            defaultValue: null,
+          ),
+        );
+        continue;
+      }
       var value = field.fromJSON(data[key], fields);
       field.set(value);
     }
