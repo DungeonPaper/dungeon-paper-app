@@ -1,3 +1,4 @@
+import 'package:dungeon_paper/db/inventory_items.dart';
 import 'package:dungeon_paper/refactor/character.dart';
 import '../../components/categorized_list.dart';
 import '../equipment_view/coins_display.dart';
@@ -55,6 +56,8 @@ class InventoryView extends StatelessWidget {
         key: PageStorageKey(equipment[i].key),
         item: equipment[i],
         mode: InventoryItemCardMode.Editable,
+        onSave: (item) => updateInventoryItem(character, item),
+        onDelete: () => deleteInventoryItem(character, equipment[i]),
       ),
     );
   }

@@ -70,6 +70,7 @@ class AddSpellScreenState extends State<AddSpellScreen>
               color: Theme.of(context).scaffoldBackgroundColor,
               child: AddSpellList(
                 key: PageStorageKey<String>(texts[1]),
+                onSave: onSave,
               ),
             ),
             formContainer,
@@ -86,8 +87,8 @@ class AddSpellScreenState extends State<AddSpellScreen>
           ),
         );
         var appBar = AppBar(
-          title:
-              Text('${widget.mode == DialogMode.Create ? 'Add' : 'Edit'} Spell'),
+          title: Text(
+              '${widget.mode == DialogMode.Create ? 'Add' : 'Edit'} Spell'),
           actions: tabIdx == 1 || widget.mode == DialogMode.Edit ? actions : [],
         );
 

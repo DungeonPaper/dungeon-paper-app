@@ -43,21 +43,21 @@ Future<FirebaseUser> signInFlow(SignInMethod method) async {
     dbLoginData: loginResult,
   );
 
-  registerAllListeners();
+  registerAllListeners(user);
 
   return user;
 }
 
-void registerAllListeners() {
+void registerAllListeners(FirebaseUser fbUser) {
   registerFirebaseUserListener();
-  registerUserListener();
+  registerUserListener(fbUser);
   registerCharactersListener();
 }
 
 void dispatchFinalDataToStore({
   @required ExposedAuthCredential credentials,
   @required FirebaseUser firebaseUser,
-  @required UserWithCharacters dbLoginData,
+  @required UserWithChildren dbLoginData,
 }) async {
   var prefs = dwStore.state.prefs;
   if (firebaseUser == null || credentials == null) {
@@ -74,17 +74,19 @@ void dispatchFinalDataToStore({
       for (var char in dbLoginData.characters) char.docID: char,
     }),
   );
-  var currentID =
-      prefs.user.lastCharacterId ?? dbLoginData.characters.first.docID;
-  dwStore.dispatch(
-    CharacterActions.setCurrentChar(
-      currentID,
-      dbLoginData.characters.firstWhere(
-        (char) => char.docID == currentID,
-        orElse: () => dbLoginData.characters.first,
+  if (dbLoginData.characters.isNotEmpty) {
+    var currentID =
+        prefs.user.lastCharacterId ?? dbLoginData.characters.first.docID;
+    dwStore.dispatch(
+      CharacterActions.setCurrentChar(
+        currentID,
+        dbLoginData.characters.firstWhere(
+          (char) => char.docID == currentID,
+          orElse: () => dbLoginData.characters.first,
+        ),
       ),
-    ),
-  );
+    );
+  }
 }
 
 void signOutFlow(SignInMethod method) {

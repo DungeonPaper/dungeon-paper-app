@@ -5,134 +5,130 @@ import 'package:dungeon_paper/db/character_utils.dart';
 import 'package:dungeon_paper/db/inventory_items.dart';
 import 'package:dungeon_paper/db/notes.dart';
 import 'package:dungeon_paper/db/spells.dart';
+import 'package:dungeon_paper/redux/actions.dart';
+import 'package:dungeon_paper/redux/stores/stores.dart';
 import 'package:dungeon_paper/refactor/firebase_entity/firebase_entity.dart';
 import 'package:dungeon_paper/utils.dart';
 import 'package:dungeon_world_data/dice.dart';
 import 'package:dungeon_world_data/dw_data.dart';
 import 'package:dungeon_world_data/move.dart';
 import 'package:dungeon_world_data/player_class.dart';
+import 'package:pedantic/pedantic.dart';
 
 // Ordered by whichever data needs to come earliest for the rest to be able to calculate
-Fields _userFields = Fields()
-  ..register((ctx) => [
-        // Stats
-        Field<num>(context: ctx, fieldName: 'armor', defaultValue: (ctx) => 0),
-        Field<num>(context: ctx, fieldName: 'str', defaultValue: (ctx) => 8),
-        Field<num>(context: ctx, fieldName: 'dex', defaultValue: (ctx) => 8),
-        // con needs to stay above mainClass & maxHP
-        Field<num>(
-          context: ctx,
-          fieldName: 'con',
-          defaultValue: (ctx) => 8,
-        ),
-        Field<num>(context: ctx, fieldName: 'wis', defaultValue: (ctx) => 8),
-        Field<num>(context: ctx, fieldName: 'int', defaultValue: (ctx) => 8),
-        Field<num>(context: ctx, fieldName: 'cha', defaultValue: (ctx) => 8),
+Fields _charFields = Fields([
+  //
+  // Stats
+  Field<num>(fieldName: 'armor', defaultValue: (ctx) => 0),
+  Field<num>(fieldName: 'str', defaultValue: (ctx) => 8),
+  Field<num>(fieldName: 'dex', defaultValue: (ctx) => 8),
+  //
+  // con needs to stay above mainClass & maxHP
+  Field<num>(
+    fieldName: 'con',
+    defaultValue: (ctx) => 8,
+  ),
+  Field<num>(fieldName: 'wis', defaultValue: (ctx) => 8),
+  Field<num>(fieldName: 'int', defaultValue: (ctx) => 8),
+  Field<num>(fieldName: 'cha', defaultValue: (ctx) => 8), // Preferences
+  Field<bool>(
+    fieldName: 'useDefaultMaxHP',
+    defaultValue: (ctx) => true,
+  ),
+  //
+  // Class
+  Field<PlayerClass>(
+    fieldName: 'mainClass',
+    defaultValue: (ctx) => dungeonWorld.classes.first,
+    toJSON: (cls, ctx) => cls.key,
+    fromJSON: (key, ctx) => dungeonWorld.classes.firstWhere(
+      (c) => c.key == key,
+      orElse: () => dungeonWorld.classes.first,
+    ),
+  ),
+  Field<Alignment>(
+    fieldName: 'alignment',
+    defaultValue: (ctx) => Alignment.neutral,
+    toJSON: (alignment, ctx) => enumName(alignment),
+    fromJSON: (alignment, ctx) => AlignmentMap.entries
+        .firstWhere((entry) => entry.value == alignment)
+        .key,
+  ),
+  Field<num>(
+    fieldName: 'maxHP',
+    defaultValue: (ctx) {
+      var _mainClassOriginal = ctx?.get<PlayerClass>('mainClass')?.value ??
+          dungeonWorld.classes.first;
+      var conMod = Character.statModifier(ctx?.get<num>('con')?.value ?? 8);
+      return _mainClassOriginal.baseHP + conMod;
+    },
+  ),
 
-        // Preferences
-        Field<bool>(
-          context: ctx,
-          fieldName: 'useDefaultMaxHP',
-          defaultValue: (ctx) => true,
-        ),
-
-        // Class
-        Field<PlayerClass>(
-          context: ctx,
-          fieldName: 'mainClass',
-          defaultValue: (ctx) => dungeonWorld.classes.first,
-          toJSON: (cls, ctx) => cls.key,
-          fromJSON: (key, ctx) => dungeonWorld.classes.firstWhere(
-            (c) => c.key == key,
-            orElse: () => dungeonWorld.classes.first,
-          ),
-        ),
-        Field<Alignment>(
-          context: ctx,
-          fieldName: 'alignment',
-          defaultValue: (ctx) => Alignment.neutral,
-          toJSON: (alignment, ctx) => enumName(alignment),
-        ),
-        Field<num>(
-            context: ctx,
-            fieldName: 'maxHP',
-            defaultValue: (ctx) {
-              var _mainClassOriginal =
-                  ctx.get<PlayerClass>('mainClass')?.value ??
-                      dungeonWorld.classes.first;
-              var conMod =
-                  Character.statModifier(ctx.get<num>('con')?.value ?? 8);
-              return _mainClassOriginal.baseHP + conMod;
-            }),
-
-        /// Rest are by no significant order
-        Field<String>(
-          context: ctx,
-          fieldName: 'displayName',
-          defaultValue: (ctx) => 'Traveler',
-        ),
-        Field<String>(
-            context: ctx, fieldName: 'photoURL', defaultValue: (ctx) => ''),
-        Field<num>(context: ctx, fieldName: 'level', defaultValue: (ctx) => 1),
-        Field<num>(
-            context: ctx, fieldName: 'currentHP', defaultValue: (ctx) => 10),
-        Field<num>(
-            context: ctx, fieldName: 'currentXP', defaultValue: (ctx) => 0),
-        Field<List<Move>>(
-          context: ctx,
-          fieldName: 'moves',
-          defaultValue: (ctx) => [],
-          fromJSON: (moves, ctx) =>
-              (moves as List).map<Move>((m) => Move.fromJSON(m)).toList(),
-          toJSON: (moves, ctx) => moves.map((m) => m.toJSON()),
-        ),
-        Field<List<Note>>(
-          context: ctx,
-          fieldName: 'notes',
-          defaultValue: (ctx) => [],
-          fromJSON: (notes, ctx) =>
-              (notes as List).map<Note>((n) => Note.fromJSON(n)).toList(),
-          toJSON: (notes, ctx) => notes.map((n) => n.toJSON()),
-        ),
-        Field<List<DbSpell>>(
-          context: ctx,
-          fieldName: 'spells',
-          defaultValue: (ctx) => [],
-          fromJSON: (spells, ctx) => (spells as List)
-              .map<DbSpell>((s) => DbSpell.fromJSON(s))
-              .toList(),
-          toJSON: (spells, ctx) => spells.map((s) => s.toJSON()),
-        ),
-        Field<List<InventoryItem>>(
-          context: ctx,
-          fieldName: 'inventory',
-          defaultValue: (ctx) => [],
-          fromJSON: (inventory, ctx) => (inventory as List)
-              .map<InventoryItem>((s) => InventoryItem.fromJSON(s))
-              .toList(),
-          toJSON: (inventory, ctx) => inventory.map((i) => i.toJSON()),
-        ),
-        Field<Dice>(
-          context: ctx,
-          fieldName: 'hitDice',
-          defaultValue: (ctx) => Dice.d6,
-          fromJSON: (dice, ctx) => Dice.parse(dice),
-          toJSON: (dice, ctx) => dice.toString(),
-        ),
-        Field<List<String>>(
-            context: ctx, fieldName: 'looks', defaultValue: (ctx) => []),
-        Field<Move>(
-          context: ctx,
-          fieldName: 'race',
-          defaultValue: (ctx) => dungeonWorld.classes.first.raceMoves.first,
-          fromJSON: (move, ctx) => Move.fromJSON(move),
-          toJSON: (move, ctx) => move.toJSON(),
-        ),
-        Field<num>(context: ctx, fieldName: 'coins', defaultValue: (ctx) => 0),
-      ]);
+  /// Rest are by no significant order
+  Field<String>(
+    fieldName: 'displayName',
+    defaultValue: (ctx) => 'Traveler',
+  ),
+  Field<String>(fieldName: 'photoURL', defaultValue: (ctx) => ''),
+  Field<num>(fieldName: 'level', defaultValue: (ctx) => 1),
+  Field<num>(fieldName: 'currentHP', defaultValue: (ctx) => 10),
+  Field<num>(fieldName: 'currentXP', defaultValue: (ctx) => 0),
+  Field<List<Move>>(
+    fieldName: 'moves',
+    defaultValue: (ctx) => [],
+    fromJSON: (moves, ctx) {
+      print('moves: $moves');
+      var mapped = (moves as Iterable).map<Move>((m) {
+        print('m: $m');
+        return Move.fromJSON(m);
+      }).toList();
+      return mapped;
+    },
+    toJSON: (moves, ctx) => moves.map((m) => m.toJSON()).toList(),
+  ),
+  Field<List<Note>>(
+    fieldName: 'notes',
+    defaultValue: (ctx) => [],
+    fromJSON: (notes, ctx) =>
+        (notes as List).map<Note>((n) => Note.fromJSON(n)).toList(),
+    toJSON: (notes, ctx) => notes.map((n) => n.toJSON()).toList(),
+  ),
+  Field<List<DbSpell>>(
+    fieldName: 'spells',
+    defaultValue: (ctx) => [],
+    fromJSON: (spells, ctx) =>
+        (spells as List).map<DbSpell>((s) => DbSpell.fromJSON(s)).toList(),
+    toJSON: (spells, ctx) => spells.map((s) => s.toJSON()).toList(),
+  ),
+  Field<List<InventoryItem>>(
+    fieldName: 'inventory',
+    defaultValue: (ctx) => [],
+    fromJSON: (inventory, ctx) => (inventory as List)
+        .map<InventoryItem>((s) => InventoryItem.fromJSON(s))
+        .toList(),
+    toJSON: (inventory, ctx) => inventory.map((i) => i.toJSON()).toList(),
+  ),
+  Field<Dice>(
+    fieldName: 'hitDice',
+    defaultValue: (ctx) => Dice.d6,
+    fromJSON: (dice, ctx) => Dice.parse(dice),
+    toJSON: (dice, ctx) => dice.toString(),
+  ),
+  Field<List<String>>(fieldName: 'looks', defaultValue: (ctx) => []),
+  Field<Move>(
+    fieldName: 'race',
+    defaultValue: (ctx) => dungeonWorld.classes.first.raceMoves.first,
+    fromJSON: (move, ctx) => Move.fromJSON(move),
+    toJSON: (move, ctx) => move.toJSON(),
+  ),
+  Field<num>(fieldName: 'coins', defaultValue: (ctx) => 0),
+]);
 
 class Character extends FirebaseEntity {
-  Fields fields = _userFields.copy();
+  Fields _fields;
+
+  @override
+  Fields get fields => _fields ??= _charFields.copy();
 
   Character({
     Map<String, dynamic> data,
@@ -241,4 +237,17 @@ class Character extends FirebaseEntity {
   }
 
   num get defaultMaxHP => (mainClass?.baseHP ?? 0) + conMod;
+
+  @override
+  Future<void> update({Map<String, dynamic> json, bool save = true}) async {
+    // if (json == null || json.isEmpty == true) {
+    //   return;
+    // }
+    // json = prepareJSONUpdate(json, useSetter: false);
+    unawaited(super.update(json: json, save: save));
+    dwStore.dispatch(CharacterActions.updateCharacter(this));
+  }
+
+  @override
+  String toString() => '$displayName (Lv. $level ${mainClass?.name})';
 }

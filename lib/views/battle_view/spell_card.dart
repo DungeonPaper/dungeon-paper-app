@@ -1,7 +1,6 @@
 import 'package:dungeon_paper/components/card_bottom_controls.dart';
 import 'package:dungeon_paper/components/confirmation_dialog.dart';
 import 'package:dungeon_paper/components/dialogs.dart';
-import 'package:dungeon_paper/components/tags/tag_list.dart';
 import 'package:dungeon_paper/db/spells.dart';
 import 'package:dungeon_paper/views/move_screen/add_spell_screen.dart';
 import 'package:flutter/material.dart';
@@ -13,12 +12,16 @@ class SpellCard extends StatefulWidget {
   final num index;
   final DbSpell spell;
   final SpellCardMode mode;
+  final void Function(DbSpell) onSave;
+  final void Function() onDelete;
 
   const SpellCard({
     Key key,
     @required this.spell,
     @required this.index,
     this.mode,
+    @required this.onSave,
+    @required this.onDelete,
   }) : super(key: key);
 
   @override
@@ -64,7 +67,7 @@ class SpellCardState extends State<SpellCard> {
                       const EdgeInsets.symmetric(horizontal: 16, vertical: 0),
                   child: Align(
                     alignment: Alignment.centerLeft,
-                    child: TagList(tags: widget.spell.tags),
+                    // child: TagList(tags: widget.spell.tags),
                   ),
                 )
               : SizedBox.shrink(),
@@ -76,7 +79,9 @@ class SpellCardState extends State<SpellCard> {
                       value: spell.prepared,
                       onChanged: (val) {
                         spell.prepared = val;
-                        updateSpell(widget.spell);
+                        if (widget.onSave != null) {
+                          widget.onSave(spell);
+                        }
                       },
                     )
                   ],
@@ -91,15 +96,19 @@ class SpellCardState extends State<SpellCard> {
                       ),
                     ),
                   ),
-                  onDelete: () async => await showDialog(
-                    context: context,
-                    builder: (ctx) => ConfirmationDialog(
-                      title: Text('Delete Spell?'),
-                      okButtonText: Text('Delete Spell'),
-                    ),
-                  )
-                      ? deleteSpell(widget.spell)
-                      : null,
+                  onDelete: () async {
+                    if (await showDialog(
+                      context: context,
+                      builder: (ctx) => ConfirmationDialog(
+                        title: Text('Delete Spell?'),
+                        okButtonText: Text('Delete Spell'),
+                      ),
+                    )) {
+                      if (widget.onDelete != null) {
+                        widget.onDelete();
+                      }
+                    }
+                  },
                 )
               : widget.mode == SpellCardMode.Addable
                   ? Padding(
@@ -110,8 +119,9 @@ class SpellCardState extends State<SpellCard> {
                           color: Theme.of(context).primaryColorLight,
                           child: Text('Add Spell'),
                           onPressed: () {
-                            createSpell(widget.spell);
-                            Navigator.pop(context, true);
+                            if (widget.onSave != null) {
+                              widget.onSave(widget.spell);
+                            }
                           },
                         ),
                       ),

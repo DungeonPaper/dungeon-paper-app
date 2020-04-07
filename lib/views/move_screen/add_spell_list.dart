@@ -7,7 +7,12 @@ import 'package:dungeon_world_data/spell.dart';
 import 'package:flutter/material.dart';
 
 class AddSpellList extends StatelessWidget {
-  AddSpellList({Key key}) : super(key: key);
+  final void Function(DbSpell) onSave;
+
+  AddSpellList({
+    Key key,
+    @required this.onSave,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -36,6 +41,8 @@ class AddSpellList extends StatelessWidget {
             index: -1,
             spell: DbSpell.fromSpell(spell),
             mode: SpellCardMode.Addable,
+            onSave: onSave,
+            onDelete: null,
           ),
         );
       },

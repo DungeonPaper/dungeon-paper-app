@@ -45,7 +45,8 @@ class FABState extends State<FAB> {
     });
   }
 
-  static Map<Pages, Widget Function(BuildContext context, Character character)> buttonsByIndex = {
+  static Map<Pages, Widget Function(BuildContext context, Character character)>
+      buttonsByIndex = {
     Pages.Notes: (context, character) => FloatingActionButton(
           foregroundColor: Colors.white,
           child: Icon(Icons.add),
@@ -70,6 +71,7 @@ class FABState extends State<FAB> {
               builder: (ctx) => AddInventoryItemContainer(
                 item: InventoryItem(),
                 mode: DialogMode.Create,
+                onSave: (item) => createInventoryItem(character, item),
               ),
             ),
           ),
@@ -79,7 +81,10 @@ class FABState extends State<FAB> {
           child: Icon(Icons.add),
           onPressed: () => showDialog(
             context: context,
-            builder: (context) => AddMoveOrSpell(defaultClass: character.mainClass),
+            builder: (context) => AddMoveOrSpell(
+              character: character,
+              defaultClass: character.mainClass,
+            ),
           ),
         ),
   };

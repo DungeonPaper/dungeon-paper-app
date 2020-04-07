@@ -1,4 +1,3 @@
-import 'package:pedantic/pedantic.dart';
 import 'package:uuid/uuid.dart';
 import '../../components/markdown_help.dart';
 import '../../components/tags/editable_tag_list.dart';
@@ -6,7 +5,6 @@ import '../../db/inventory_items.dart';
 import '../../components/dialogs.dart';
 import 'package:dungeon_world_data/tag.dart';
 import 'package:flutter/material.dart';
-
 import '../../widget_utils.dart';
 
 class CustomInventoryItemForm extends StatefulWidget {
@@ -14,14 +12,14 @@ class CustomInventoryItemForm extends StatefulWidget {
   final DialogMode mode;
   final Widget Function(BuildContext context, Widget form, Function onSave)
       builder;
-  final void Function(InventoryItem move) onUpdateItem;
+  final void Function(InventoryItem move) onSave;
 
   CustomInventoryItemForm({
     Key key,
     this.item,
     @required this.mode,
     @required this.builder,
-    this.onUpdateItem,
+    this.onSave,
   }) : super(key: key);
 
   @override
@@ -39,7 +37,8 @@ class CustomInventoryItemFormState extends State<CustomInventoryItemForm> {
       'name': EditingControllerConfig(defaultValue: item.name ?? ''),
       'description':
           EditingControllerConfig(defaultValue: item.description ?? ''),
-      'amount': EditingControllerConfig(defaultValue: item.amount?.toString() ?? ''),
+      'amount':
+          EditingControllerConfig(defaultValue: item.amount?.toString() ?? ''),
     });
     tags = List.from(item.tags ?? []);
     super.initState();
@@ -115,11 +114,9 @@ class CustomInventoryItemFormState extends State<CustomInventoryItemForm> {
     item.pluralName = _controllers['name'].text + 's';
     item.amount = int.tryParse(_controllers['amount'].text);
     item.tags = tags;
-    unawaited(updateInventoryItem(item));
-    if (widget.onUpdateItem != null) {
-      widget.onUpdateItem(item);
+    if (widget.onSave != null) {
+      widget.onSave(item);
     }
-    Navigator.pop(context);
   }
 
   _createItem() async {
@@ -134,10 +131,8 @@ class CustomInventoryItemFormState extends State<CustomInventoryItemForm> {
       pluralName: _controllers['name'].text + 's',
       amount: int.tryParse(_controllers['amount'].text) ?? 1,
     );
-    unawaited(createInventoryItem(item));
-    if (widget.onUpdateItem != null) {
-      widget.onUpdateItem(item);
+    if (widget.onSave != null) {
+      widget.onSave(item);
     }
-    Navigator.pop(context);
   }
 }

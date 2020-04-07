@@ -52,11 +52,23 @@ class Field<T> {
   dynamic toJSON() =>
       isSerialized ? _toJSON != null ? _toJSON(_value, context) : _value : null;
 
-  T fromJSON(dynamic _value, Fields context) => _value is T
-      ? _value
-      : _fromJSON != null
-          ? _fromJSON(_value ?? defaultValue, context)
-          : _value ?? defaultValue;
+  T fromJSON(dynamic _value, Fields context) {
+    if (_value is T) {
+      return _value;
+    }
+    if (_fromJSON != null) {
+      if (_value != null) {
+        if (T is Iterable && _value is Iterable && _value.isNotEmpty) {
+          return _fromJSONList(_value, context).toList() as T;
+        }
+        return _fromJSON(_value, context);
+      }
+    }
+    return defaultValue;
+  }
+
+  List<K> _fromJSONList<K, V>(Iterable<V> value, Fields context) =>
+      List<K>.from(value);
 
   Field<T> copy(
     Fields newContext, {
@@ -77,12 +89,24 @@ class Field<T> {
         fromJSON: fromJSON ?? _fromJSON,
         isSerialized: isSerialized ?? this.isSerialized,
         listeners: listeners ?? _listeners,
-      );
+      )..addListeners(_listeners);
 
   // Listeners
   void addListener(Listener<T> listener) {
     if (!_listeners.contains(listener)) {
       _listeners.add(listener);
+    }
+  }
+
+  void addListeners(Iterable<Listener<T>> listeners) {
+    for (var listener in listeners) {
+      addListener(listener);
+    }
+  }
+
+  void removeListeners(Iterable<Listener<T>> listeners) {
+    for (var listener in listeners) {
+      removeListener(listener);
     }
   }
 
@@ -99,6 +123,12 @@ class Field<T> {
 
 class Fields<C> {
   Map<String, Field> _map = {};
+
+  Fields(Iterable<Field> fields) {
+    for (var field in fields) {
+      addField(field);
+    }
+  }
 
   Map<String, dynamic> get currentData =>
       _map.map((k, v) => MapEntry(k, v.value));
@@ -122,6 +152,9 @@ class Fields<C> {
   }
 
   Iterable<Field> get fields => _map.values;
+  Iterable<String> get keys => _map.keys;
+  Field operator [](String field) => _map[field];
+  void operator []=(String field, dynamic value) => _map[field] = value;
 
   List<String> get dirtyFields => _map.entries
       .where((entry) => entry.value.isDirty == true)
@@ -133,16 +166,27 @@ class Fields<C> {
       .map((entry) => entry.key)
       .toList();
 
-  Fields<C> copy([dynamic context]) {
-    var instance = Fields();
-    return instance..register((copy) => _map.values.map((v) => v.copy(copy)));
+  Fields<C> copy() {
+    return Fields(_map.values);
   }
 
-  addListener<L>(String key, Listener<L> listener) {
-    get(key)?.addListener(listener);
+  Fields<C> copyWith(Iterable<Field> fields) {
+    var _copy = copy();
+    for (var field in fields) {
+      _copy.addField(field);
+    }
+    return _copy;
   }
 
-  bool removeListener<L>(String key, Listener<L> listener) {
-    return get(key)?.removeListener(listener);
+  void addListener<L>(Listener<L> listener) {
+    for (var key in keys) {
+      get(key)?.addListener(listener);
+    }
+  }
+
+  void removeListener<L>(Listener<L> listener) {
+    for (var key in keys) {
+      get(key)?.removeListener(listener);
+    }
   }
 }

@@ -8,12 +8,20 @@ import 'package:flutter/material.dart';
 
 class ExistingInventoryItemsList extends StatelessWidget {
   final Iterable<Equipment> items;
+  final void Function(InventoryItem) onSave;
 
-  const ExistingInventoryItemsList({Key key, this.items}) : super(key: key);
+  const ExistingInventoryItemsList({
+    Key key,
+    this.items,
+    @required this.onSave,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return AddInventoryItem(items: items);
+    return AddInventoryItem(
+      items: items,
+      onSave: onSave,
+    );
   }
 }
 
@@ -21,10 +29,12 @@ class AddInventoryItem extends StatefulWidget {
   final Iterable<Equipment> items;
   final TextEditingController _searchController =
       TextEditingController(text: '');
+  final void Function(InventoryItem) onSave;
 
   AddInventoryItem({
     Key key,
     Iterable<Equipment> items,
+    @required this.onSave,
   })  : items = items ?? dungeonWorld.equipment,
         super(key: key);
 
@@ -92,12 +102,9 @@ class _AddInventoryItemState extends State<AddInventoryItem> {
         Padding(
           padding: const EdgeInsets.only(top: 64.0),
           child: CategorizedList.builder(
-            items: itemMap.keys.toList()
-              ..sort(),
-            itemCount: (key, idx) =>
-                itemMap[key].length,
-            titleBuilder: (ctx, key, idx) =>
-                Text(key),
+            items: itemMap.keys.toList()..sort(),
+            itemCount: (key, idx) => itemMap[key].length,
+            titleBuilder: (ctx, key, idx) => Text(key),
             itemBuilder: (ctx, key, idx, catI) {
               var item = itemMap[key][idx];
               return Container(
@@ -106,6 +113,8 @@ class _AddInventoryItemState extends State<AddInventoryItem> {
                   key: PageStorageKey('add-${item.key}'),
                   item: InventoryItem.fromEquipment(item),
                   mode: InventoryItemCardMode.Addable,
+                  onSave: widget.onSave,
+                  onDelete: null,
                 ),
               );
             },
