@@ -1,6 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dungeon_paper/refactor/custom_class.dart';
-import 'package:dungeon_paper/refactor/firebase_entity/firebase_entity.dart';
+import 'package:dungeon_paper/refactor/firebase_entity/fields/fields.dart';
 import 'package:dungeon_paper/refactor/user.dart';
 import 'package:dungeon_paper/refactor/character.dart';
 import 'package:dungeon_world_data/player_class.dart';
@@ -51,9 +51,9 @@ var _userWithChildrenFields = userFields.copyWith([
 ]);
 
 class UserWithChildren extends User {
-  Fields _fields;
+  FieldsContext _fields;
   @override
-  Fields get fields => _fields ??= _userWithChildrenFields.copy();
+  FieldsContext get fields => _fields ??= _userWithChildrenFields.copy();
 
   List<Character> get characters =>
       fields.get<List<Character>>('characters').get;

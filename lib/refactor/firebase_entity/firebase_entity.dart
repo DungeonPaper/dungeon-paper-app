@@ -1,13 +1,12 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:dungeon_paper/refactor/firebase_entity/fields.dart';
-export 'package:dungeon_paper/refactor/firebase_entity/fields.dart';
+import 'package:dungeon_paper/refactor/firebase_entity/fields/fields.dart';
 
 abstract class FirebaseEntity {
   final DocumentReference ref;
   String docID;
   DocumentSnapshot snapshot;
   DateTime lastUpdated;
-  Fields get fields;
+  FieldsContext get fields;
 
   FirebaseEntity({
     this.ref,
@@ -68,15 +67,16 @@ abstract class FirebaseEntity {
   }
 
   prepareJSONUpdate(Map<String, dynamic> json, {bool useSetter = true}) {
+    var output = {};
     for (var k in json.keys) {
       var field = fields.get(k);
-      var value = fields.get(k).fromJSON(json[k], fields.get(k).context);
+      var value = fields.get(k).fromJSON(json[k]);
       if (useSetter) {
         field.set(value);
       }
-      json[k] = field.toJSON();
+      output[field.outputFieldName] = field.toJSON();
     }
-    return json;
+    return output;
   }
 
   void _noRef() {
@@ -98,7 +98,7 @@ abstract class FirebaseEntity {
         );
         continue;
       }
-      var value = field.fromJSON(data[key], fields);
+      var value = field.fromJSON(data[key]);
       field.set(value);
     }
   }

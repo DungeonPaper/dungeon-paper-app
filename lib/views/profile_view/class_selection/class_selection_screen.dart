@@ -91,7 +91,7 @@ class ClassSelectionScreen extends StatelessWidget {
       result.data
         ..addAll(
           {
-            'mainClass': def.key,
+            'playerClasses': [def.toJSON()],
             'looks': [],
             'race': null,
           },

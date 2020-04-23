@@ -1,17 +1,18 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dungeon_paper/refactor/character.dart';
+import 'package:dungeon_paper/refactor/firebase_entity/fields/fields.dart';
 import 'package:dungeon_paper/refactor/firebase_entity/firebase_entity.dart';
 
-Fields userFields = Fields([
+FieldsContext userFields = FieldsContext([
   Field<String>(fieldName: 'displayName', defaultValue: (ctx) => ''),
   Field<String>(fieldName: 'email', defaultValue: (ctx) => ''),
   Field<String>(fieldName: 'photoURL', defaultValue: (ctx) => ''),
 ]);
 
 class User extends FirebaseEntity {
-  Fields _fields;
+  FieldsContext _fields;
   @override
-  Fields get fields => _fields ??= userFields.copy();
+  FieldsContext get fields => _fields ??= userFields.copy();
   String get displayName => fields.get<String>('displayName').get;
   set displayName(val) => fields.get<String>('displayName').set(val);
   String get email => fields.get<String>('email').get;
