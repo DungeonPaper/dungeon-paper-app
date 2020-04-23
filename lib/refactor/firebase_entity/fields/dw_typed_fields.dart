@@ -256,29 +256,28 @@ class PlayerClassField extends DWEntityField<PlayerClass> {
           value: value,
           isSerialized: isSerialized,
           listeners: listeners,
-          defaultValue: defaultValue ?? _defVal,
+          defaultValue: defaultValue ??
+              (ctx) => PlayerClass(
+                    name: '',
+                    description: '',
+                    baseHP: 0,
+                    load: 0,
+                    damage: Dice.d6,
+                    looks: [
+                      ['']
+                    ],
+                    startingMoves: [],
+                    advancedMoves1: [],
+                    advancedMoves2: [],
+                    alignments: {},
+                    names: {},
+                    bonds: [],
+                    gearChoices: [],
+                    raceMoves: [],
+                    spells: [],
+                  ),
           create: (value) => PlayerClass.fromJSON(value),
         );
-
-  static PlayerClass _defVal(FieldsContext ctx) => PlayerClass(
-        name: '',
-        description: '',
-        baseHP: 0,
-        load: 0,
-        damage: Dice.d6,
-        looks: [
-          ['']
-        ],
-        startingMoves: [],
-        advancedMoves1: [],
-        advancedMoves2: [],
-        alignments: {},
-        names: {},
-        bonds: [],
-        gearChoices: [],
-        raceMoves: [],
-        spells: [],
-      );
 }
 
 class PlayerClassListField
@@ -301,6 +300,27 @@ class PlayerClassListField
           isSerialized: isSerialized,
           listeners: listeners,
           defaultValue: defaultValue,
+        );
+}
+
+class AlignmentNameField extends Field<AlignmentName> {
+  AlignmentNameField({
+    FieldsContext context,
+    @required String fieldName,
+    AlignmentName value,
+    List<FieldListener<AlignmentName>> listeners,
+    bool isSerialized = true,
+    AlignmentName Function(FieldsContext ctx) defaultValue,
+  }) : super(
+          fieldName: fieldName,
+          value: value,
+          isSerialized: isSerialized,
+          listeners: listeners,
+          defaultValue: defaultValue ?? (ctx) => AlignmentName.neutral,
+          fromJSON: (alignment, ctx) => AlignmentMap.entries
+              .firstWhere((entry) => entry.value == alignment)
+              .key,
+          toJSON: (alignment, ctx) => enumName(alignment),
         );
 }
 
@@ -338,6 +358,53 @@ class AlignmentListField extends DWEntityListField<AlignmentField, Alignment> {
     List<Alignment> Function(FieldsContext context) defaultValue,
   }) : super(
           field: AlignmentField(
+            context: context,
+            fieldName: fieldName,
+            isSerialized: isSerialized,
+          ),
+          fieldName: fieldName,
+          value: value,
+          isSerialized: isSerialized,
+          listeners: listeners,
+          defaultValue: defaultValue,
+        );
+}
+
+class CharacterField extends Field<Character> {
+  CharacterField({
+    FieldsContext context,
+    @required String fieldName,
+    Character value,
+    List<FieldListener<Character>> listeners,
+    bool isSerialized = true,
+    Character Function(FieldsContext ctx) defaultValue,
+  }) : super(
+          fieldName: fieldName,
+          value: value,
+          isSerialized: isSerialized,
+          listeners: listeners,
+          defaultValue: defaultValue ?? (ctx) => Character(),
+          fromJSON: (value, ctx) => value is Map &&
+                  (value.containsKey('data') || value.containsKey('docIS'))
+              ? Character(
+                  ref: Firestore.instance.document(value['docID']),
+                  data: value['data'],
+                )
+              : Character(data: value),
+          toJSON: (value, ctx) => value.toJSON(),
+        );
+}
+
+class CharacterListField extends ListOfField<CharacterField, Character> {
+  CharacterListField({
+    FieldsContext context,
+    @required String fieldName,
+    List<Character> value,
+    List<FieldListener<List<Character>>> listeners,
+    bool isSerialized = true,
+    List<Character> Function(FieldsContext context) defaultValue,
+  }) : super(
+          field: CharacterField(
             context: context,
             fieldName: fieldName,
             isSerialized: isSerialized,

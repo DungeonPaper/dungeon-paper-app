@@ -40,7 +40,7 @@ class ChangeAlignmentDialog extends StatelessWidget {
     Widget child = Padding(
       padding: const EdgeInsets.all(16.0),
       child: Column(
-        children: chr.Alignment.values
+        children: chr.AlignmentName.values
             .map(
               (alignment) => Padding(
                 padding: EdgeInsets.only(bottom: 16.0),
@@ -60,7 +60,7 @@ class ChangeAlignmentDialog extends StatelessWidget {
     return child;
   }
 
-  Function() changeAlignment(chr.Alignment def) {
+  Function() changeAlignment(chr.AlignmentName def) {
     return () async {
       onSave({'alignment': def});
     };

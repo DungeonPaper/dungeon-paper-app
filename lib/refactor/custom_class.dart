@@ -9,23 +9,11 @@ import 'package:dungeon_world_data/spell.dart';
 
 // Ordered by whichever data needs to come earliest for the rest to be able to calculate
 FieldsContext _clsFields = FieldsContext([
-  Field<String>(
-    fieldName: 'name',
-    defaultValue: (ctx) => '',
-  ),
-  Field<String>(
-    fieldName: 'description',
-    defaultValue: (ctx) => '',
-  ),
-  Field<num>(
-    fieldName: 'load',
-    defaultValue: (ctx) => 0,
-  ),
-  Field<num>(
-    fieldName: 'baseHP',
-    defaultValue: (ctx) => 0,
-  ),
-  Field<Dice>(
+  StringField(fieldName: 'name'),
+  StringField(fieldName: 'description'),
+  IntField(fieldName: 'load'),
+  IntField(fieldName: 'baseHP'),
+  DiceField(
     fieldName: 'damage',
     defaultValue: (ctx) => Dice.d6,
   ),
@@ -41,30 +29,15 @@ FieldsContext _clsFields = FieldsContext([
     fieldName: 'looks',
     defaultValue: (ctx) => [],
   ),
-  Field<Map<String, Alignment>>(
+  Field<Map<String, AlignmentName>>(
     fieldName: 'alignments',
     defaultValue: (ctx) => {},
   ),
-  Field<List<Move>>(
-    fieldName: 'raceMoves',
-    defaultValue: (ctx) => [],
-  ),
-  Field<List<Move>>(
-    fieldName: 'startingMoves',
-    defaultValue: (ctx) => [],
-  ),
-  Field<List<Move>>(
-    fieldName: 'advancedMoves1',
-    defaultValue: (ctx) => [],
-  ),
-  Field<List<Move>>(
-    fieldName: 'advancedMoves2',
-    defaultValue: (ctx) => [],
-  ),
-  Field<List<Spell>>(
-    fieldName: 'spells',
-    defaultValue: (ctx) => [],
-  ),
+  MoveListField(fieldName: 'raceMoves'),
+  MoveListField(fieldName: 'startingMoves'),
+  MoveListField(fieldName: 'advancedMoves1'),
+  MoveListField(fieldName: 'advancedMoves2'),
+  SpellListField(fieldName: 'spells'),
   Field<List<GearChoice>>(
     fieldName: 'gearChoices',
     defaultValue: (ctx) => [],
@@ -100,7 +73,7 @@ class CustomClass extends FirebaseEntity {
   set bonds(value) => fields.get('bonds').set(value);
   Field<List<List<String>>> get looks => fields.get('looks').get;
   set looks(value) => fields.get('looks').set(value);
-  Field<Map<String, Alignment>> get alignments => fields.get('alignments').get;
+  Field<Map<String, AlignmentName>> get alignments => fields.get('alignments').get;
   set alignments(value) => fields.get('alignments').set(value);
   Field<List<Move>> get raceMoves => fields.get('raceMoves').get;
   set raceMoves(value) => fields.get('raceMoves').set(value);

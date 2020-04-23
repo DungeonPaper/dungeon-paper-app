@@ -14,7 +14,7 @@ class LoadDisplay extends StatelessWidget {
   }) : super(key: key);
 
   num get maxLoad =>
-      character.mainClass.load + Character.statModifier(character.str);
+      character.mainClass.load + CharacterFields.statModifier(character.str);
 
   num get currentLoad {
     double count = 0.0;

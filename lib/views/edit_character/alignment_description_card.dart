@@ -8,7 +8,7 @@ import 'package:dungeon_world_data/alignment.dart' as dw_alignment;
 
 class AlignmentDescription extends StatelessWidget {
   final PlayerClass playerClass;
-  final chr.Alignment alignment;
+  final chr.AlignmentName alignment;
   final VoidCallback onTap;
   final int level;
 

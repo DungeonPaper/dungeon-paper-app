@@ -68,14 +68,15 @@ void main() {
           'useDefaultMaxHP': true,
         },
       );
-      expect(
-          char1.maxHP, equals(immolator.baseHP + Character.statModifier(10)));
+      expect(char1.maxHP,
+          equals(immolator.baseHP + CharacterFields.statModifier(10)));
       expect(char2.maxHP, equals(6));
       char1.con = 16; // +1 mod
       char2.con = 10; // 0 mod
-      expect(
-          char1.maxHP, equals(immolator.baseHP + Character.statModifier(16)));
-      expect(char2.maxHP, equals(wizard.baseHP + Character.statModifier(10)));
+      expect(char1.maxHP,
+          equals(immolator.baseHP + CharacterFields.statModifier(16)));
+      expect(char2.maxHP,
+          equals(wizard.baseHP + CharacterFields.statModifier(10)));
     });
   });
 }

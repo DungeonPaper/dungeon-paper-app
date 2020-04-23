@@ -104,7 +104,7 @@ class DecimalField extends Field<double> {
   }) : super(
           context: context,
           fieldName: fieldName,
-          defaultValue: defaultValue,
+          defaultValue: defaultValue ?? (ctx) => 0.0,
           value: value,
           listeners: listeners,
           isSerialized: isSerialized,
