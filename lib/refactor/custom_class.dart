@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dungeon_paper/db/character_utils.dart';
+import 'package:dungeon_paper/refactor/firebase_entity/fields/fields.dart';
 import 'package:dungeon_paper/refactor/firebase_entity/firebase_entity.dart';
 import 'package:dungeon_world_data/dice.dart';
 import 'package:dungeon_world_data/gear_choice.dart';
@@ -7,7 +8,7 @@ import 'package:dungeon_world_data/move.dart';
 import 'package:dungeon_world_data/spell.dart';
 
 // Ordered by whichever data needs to come earliest for the rest to be able to calculate
-Fields _clsFields = Fields([
+FieldsContext _clsFields = FieldsContext([
   Field<String>(
     fieldName: 'name',
     defaultValue: (ctx) => '',
@@ -71,10 +72,10 @@ Fields _clsFields = Fields([
 ]);
 
 class CustomClass extends FirebaseEntity {
-  Fields _fields;
+  FieldsContext _fields;
 
   @override
-  Fields get fields => _fields ??= _clsFields.copy();
+  FieldsContext get fields => _fields ??= _clsFields.copy();
 
   CustomClass({
     Map<String, dynamic> data,

@@ -4,24 +4,27 @@ import 'package:flutter_test/flutter_test.dart';
 
 void main() {
   group('Character', () {
-    //
-    //
+    var wizard = dungeonWorld.classes.firstWhere((k) => k.key == 'wizard');
+    var druid = dungeonWorld.classes.firstWhere((k) => k.key == 'druid');
+    var immolator =
+        dungeonWorld.classes.firstWhere((k) => k.key == 'immolator');
+
     test('properly uses class values', () {
-      var wizard = dungeonWorld.classes.firstWhere((k) => k.key == 'wizard');
       var char = Character(
         data: {
-          'mainClass': 'wizard',
+          'playerClasses': [wizard.toJSON()],
           'con': 10,
         },
       );
-      expect(char.mainClass, equals(wizard));
+      expect(char.mainClass.key, equals(wizard.key));
       expect(char.currentHP, equals(4));
       expect(char.maxHP, equals(wizard.baseHP + char.conMod));
     });
+
     test('properly dumps json', () {
       var char = Character(
         data: {
-          'mainClass': 'druid',
+          'playerClasses': [druid.toJSON()],
           'displayName': 'Goku',
           'str': 20,
           'dex': 10,
@@ -34,14 +37,14 @@ void main() {
       var json = char.toJSON();
       expect(json['alignment'], equals('neutral'));
       expect(json['displayName'], equals('Goku'));
-      expect(json['mainClass'], equals('druid'));
+      expect(json['playerClasses'][0]['key'], equals('druid'));
       expect(json['hitDice'], equals('1d6'));
     });
 
     test('auto max HP get/set', () {
       var char1 = Character(
         data: {
-          'mainClass': 'immolator', // base HP 6
+          'playerClasses': [immolator.toJSON()], // base HP 6
           'displayName': 'Goku',
           'str': 20,
           'dex': 10,
@@ -54,7 +57,7 @@ void main() {
       );
       var char2 = Character(
         data: {
-          'mainClass': 'wizard', // base HP 4
+          'playerClasses': [wizard.toJSON()], // base HP 4
           'displayName': 'Harry Potter',
           'str': 20,
           'dex': 10,
@@ -65,9 +68,6 @@ void main() {
           'useDefaultMaxHP': true,
         },
       );
-      var immolator =
-          dungeonWorld.classes.firstWhere((el) => el.key == 'immolator');
-      var wizard = dungeonWorld.classes.firstWhere((el) => el.key == 'wizard');
       expect(
           char1.maxHP, equals(immolator.baseHP + Character.statModifier(10)));
       expect(char2.maxHP, equals(6));
