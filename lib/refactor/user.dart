@@ -4,9 +4,9 @@ import 'package:dungeon_paper/refactor/firebase_entity/fields/fields.dart';
 import 'package:dungeon_paper/refactor/firebase_entity/firebase_entity.dart';
 
 FieldsContext userFields = FieldsContext([
-  Field<String>(fieldName: 'displayName', defaultValue: (ctx) => ''),
-  Field<String>(fieldName: 'email', defaultValue: (ctx) => ''),
-  Field<String>(fieldName: 'photoURL', defaultValue: (ctx) => ''),
+  StringField(fieldName: 'displayName'),
+  StringField(fieldName: 'email'),
+  StringField(fieldName: 'photoURL'),
 ]);
 
 class User extends FirebaseEntity {

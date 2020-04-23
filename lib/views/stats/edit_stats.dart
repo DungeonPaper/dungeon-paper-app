@@ -224,7 +224,7 @@ class EditStatListTile extends StatelessWidget {
           ),
           subtitle: Text(
             "${CHARACTER_STAT_MODIFIER_LABELS[stat]}: " +
-                "${Character.statModifier(value)}",
+                "${CharacterFields.statModifier(value)}",
           ),
           trailing: Container(
             width: 230,
