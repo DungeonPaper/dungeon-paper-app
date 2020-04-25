@@ -121,7 +121,12 @@ void signOutFlow(SignInMethod method) async {
 Future<ExposedAuthCredential> signInWithGoogle() async {
   try {
     var inst = await _googleSignIn;
-    GoogleSignInAccount googleUser = await inst.signInSilently();
+    GoogleSignInAccount googleUser;
+    try {
+      googleUser = await inst.signInSilently();
+    } catch (e) {
+      print(e);
+    }
 
     if (googleUser == null) {
       googleUser = await inst.signIn();
@@ -129,7 +134,6 @@ Future<ExposedAuthCredential> signInWithGoogle() async {
     }
 
     var googleAuth = await googleUser.authentication;
-    print('googleAuth: $googleAuth');
     var credential = GoogleAuthProvider.getCredential(
       idToken: googleAuth.idToken,
       accessToken: googleAuth.accessToken,
