@@ -5,7 +5,7 @@ import 'package:dungeon_paper/db/spells.dart';
 import 'package:dungeon_paper/db/db.dart';
 import 'package:dungeon_paper/refactor/character.dart';
 import 'package:dungeon_paper/utils.dart';
-import 'package:dungeon_world_data/_base.dart';
+import 'package:dungeon_world_data/dw_data.dart';
 import 'package:dungeon_world_data/alignment.dart';
 import 'package:dungeon_world_data/dice.dart';
 import 'package:dungeon_world_data/gear_choice.dart';

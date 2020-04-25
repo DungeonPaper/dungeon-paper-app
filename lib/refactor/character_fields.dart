@@ -23,7 +23,7 @@ mixin CharacterFields implements FirebaseEntity {
       fieldName: 'maxHP',
       defaultValue: (ctx) {
         var _mainClassOriginal = dungeonWorld.classes.first;
-        var conMod = 8;
+        var con = 8;
         if (ctx != null) {
           if (ctx['playerClasses'] != null) {
             var classes = ctx.get<List<PlayerClass>>('playerClasses').value;
@@ -31,11 +31,10 @@ mixin CharacterFields implements FirebaseEntity {
                 classes.isNotEmpty ? classes.first : dungeonWorld.classes.first;
           }
           if (ctx['con'] != null) {
-            var con = ctx.get<num>('con').value;
-            conMod = statModifier(con);
+            con = ctx.get<num>('con').value;
           }
         }
-        return _mainClassOriginal.baseHP + conMod;
+        return _mainClassOriginal.baseHP + con;
       },
     ),
 
@@ -43,7 +42,10 @@ mixin CharacterFields implements FirebaseEntity {
     StringField(fieldName: 'displayName', defaultValue: (ctx) => 'Traveler'),
     StringField(fieldName: 'photoURL'),
     IntField(fieldName: 'level', defaultValue: (ctx) => 1),
-    IntField(fieldName: 'currentHP', defaultValue: (ctx) => 10),
+    IntField(
+      fieldName: 'currentHP',
+      defaultValue: (ctx) => ctx?.get<num>('maxHP')?.get ?? 10,
+    ),
     IntField(fieldName: 'currentXP'),
     MoveListField(fieldName: 'moves'),
     NoteListField(fieldName: 'notes'),
@@ -91,7 +93,7 @@ mixin CharacterFields implements FirebaseEntity {
   num get _maxHP => fields.get<num>('maxHP').value;
   set _maxHP(num value) => fields.get<num>('maxHP').set(value);
   num get maxHP => useDefaultMaxHP == true ? defaultMaxHP : _maxHP;
-  num get defaultMaxHP => (mainClass?.baseHP ?? 0) + conMod;
+  num get defaultMaxHP => (mainClass?.baseHP ?? 0) + con;
 
   num get strMod => statModifier(str);
   num get dexMod => statModifier(dex);
@@ -133,10 +135,6 @@ mixin CharacterFields implements FirebaseEntity {
       fields.get<List<InventoryItem>>('inventory').value;
   set inventory(List<InventoryItem> value) =>
       fields.get<List<InventoryItem>>('inventory').set(value);
-
-  // Misc
-  num get docVersion => fields.get<num>('docVersion').value;
-  set docVersion(num value) => fields.get<num>('docVersion').set(value);
 
   // Bio
   String get displayName => fields.get<String>('displayName').value;

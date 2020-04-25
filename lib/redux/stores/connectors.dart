@@ -20,8 +20,8 @@ class DWStoreConnector<T> extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Function(Store<DWStore> store) _converter =
-        converter != null ? converter : (store) => store.state;
+    T Function(Store<DWStore> store) _converter =
+        converter != null ? converter : (store) => store.state as T;
 
     return StoreConnector<DWStore, T>(
         converter: _converter,

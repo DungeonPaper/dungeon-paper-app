@@ -22,7 +22,8 @@ class PlayerClassList extends StatelessWidget {
       PlayerClassList(
         builder: (context, value, list, onChanged) => DropdownButton(
           isExpanded: true,
-          value: value,
+          value: list.firstWhere((cls) => cls.key == value.key,
+              orElse: () => list.first),
           onChanged: onChanged,
           items: list
               .map((cls) => DropdownMenuItem(value: cls, child: Text(cls.name)))
@@ -34,6 +35,7 @@ class PlayerClassList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    print('classes: ${dungeonWorld.classes}');
     return builder(context, value, dungeonWorld.classes, onChanged);
   }
 }

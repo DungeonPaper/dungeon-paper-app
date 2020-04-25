@@ -1,6 +1,6 @@
 import 'dart:convert';
 import 'dart:math';
-import 'package:dungeon_world_data/_base.dart';
+import 'package:dungeon_world_data/dw_data.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart' show rootBundle;
 

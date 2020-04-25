@@ -100,7 +100,7 @@ class AddMoveOrSpell extends StatelessWidget {
                           mode: DialogMode.Create,
                           onSave: (spell) {
                             createSpell(character, spell);
-                            Navigator.pop(context);
+                            Navigator.pop(ctx);
                           },
                           index: -1,
                         ),

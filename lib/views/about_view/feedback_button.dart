@@ -142,9 +142,9 @@ class _FeedbackButtonState extends State<FeedbackButton> {
   String get subject => Uri.encodeComponent('Dungeon Paper feedback');
   String get body => Uri.encodeComponent("""\n\n\n\n
     --- PACKAGE INFO ---
-    Version: $version
-    Build Number: $buildNumber
-    User ID: ${userId ?? 'Unavailable'}
+    Version: $version\n
+    Build Number: $buildNumber\n
+    User ID: ${userId ?? 'Unavailable'}\n
     """);
   // '\n\n\n\n\n--- PACKAGE INFO ---\nVersion: $version\nBuild Number: $buildNumber\nUser ID: ${userId ?? 'Unavailable'}');
   String get mailtoUrl => 'mailto:$email?subject=$subject&body=$body';

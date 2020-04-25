@@ -121,7 +121,6 @@ class CustomMoveFormBuilderState extends State<CustomMoveFormBuilder> {
     if (widget.onSave != null) {
       widget.onSave(move);
     }
-    Navigator.pop(context);
   }
 
   Move _generateMove() {

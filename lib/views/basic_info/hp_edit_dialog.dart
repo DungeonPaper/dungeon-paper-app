@@ -101,7 +101,7 @@ class _EditHPDialogState extends State<EditHPDialog> {
               value: useDefaultMaxHP,
               title: Text('Calculate based on stats'),
               subtitle: Text(
-                  'Class Base HP (${widget.character.mainClass.baseHP}) + CON (${widget.character.conMod})'),
+                  'Class Base HP (${widget.character.mainClass.baseHP}) + Constitution (${widget.character.con})'),
               onChanged: (val) {
                 if (val) updateValue(widget.character.defaultMaxHP);
                 setState(() {
