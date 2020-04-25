@@ -13,7 +13,13 @@ abstract class FirebaseEntity {
     Map<String, dynamic> data,
   }) : docID = ref?.documentID {
     if (data != null && data.isNotEmpty) {
-      deserializeData(data);
+      var defaults = defaultData();
+      var dataWithDefaults = Map<String, dynamic>.from(defaults)
+        ..addEntries([
+          for (var key in defaults.keys)
+            if (data.containsKey(key)) MapEntry(key, data[key])
+        ]);
+      deserializeData(dataWithDefaults);
       lastUpdated = data['lastUpdated'] != null
           ? DateTime.fromMillisecondsSinceEpoch(
               data['lastUpdated']['_seconds'] * 1000)
@@ -85,21 +91,18 @@ abstract class FirebaseEntity {
 
   void deserializeData(Map<String, dynamic> data) {
     for (var key in data.keys) {
-      var field = fields.get(key);
-      if (field == null) {
-        print(
-            'Field not found for: $key in $this. Generating automatic field.');
-        fields.addField(
-          Field(
-            fieldName: key,
-            value: data[key],
-            defaultValue: null,
-          ),
-        );
-        continue;
+      try {
+        var field = fields.get(key);
+        if (field == null) {
+          continue;
+        }
+        var value = field.fromJSON(data[key]);
+        field.set(value);
+      } catch (e) {
+        print('[$runtimeType] Error deserializing key: $key');
+        print('Given value: ${data[key]}');
+        rethrow;
       }
-      var value = field.fromJSON(data[key]);
-      field.set(value);
     }
   }
 

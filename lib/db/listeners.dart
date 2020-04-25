@@ -1,6 +1,5 @@
 import 'dart:async';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:dungeon_paper/db/user.dart';
 import 'package:dungeon_paper/db/db.dart';
 import 'package:dungeon_paper/redux/actions.dart';
 import 'package:dungeon_paper/redux/stores/stores.dart';
@@ -27,7 +26,7 @@ registerFirebaseUserListener() {
       }
 
       if (authUser == null || authUser.email == null) {
-        unsetCurrentUser();
+        UserActions.logout();
         dwStore.dispatch(CharacterActions.remove());
       }
     });

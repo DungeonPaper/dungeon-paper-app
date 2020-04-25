@@ -55,13 +55,10 @@ Future updateSpell(Character character, DbSpell spell) async {
 }
 
 Future deleteSpell(Character character, DbSpell spell) async {
-  num index = character.spells.indexWhere(matchSpell(spell));
-  character.spells.removeAt(index);
   await character
       .update(json: {'spells': removeFromList(character.spells, spell)});
 }
 
 Future createSpell(Character character, DbSpell spell) async {
-  character.spells.add(spell);
   await character.update(json: {'spells': addToList(character.spells, spell)});
 }

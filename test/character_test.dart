@@ -17,8 +17,8 @@ void main() {
         },
       );
       expect(char.mainClass.key, equals(wizard.key));
-      expect(char.currentHP, equals(4));
-      expect(char.maxHP, equals(wizard.baseHP + char.conMod));
+      expect(char.currentHP, equals(wizard.baseHP + char.con));
+      expect(char.maxHP, equals(wizard.baseHP + char.con));
     });
 
     test('properly dumps json', () {
@@ -68,15 +68,12 @@ void main() {
           'useDefaultMaxHP': true,
         },
       );
-      expect(char1.maxHP,
-          equals(immolator.baseHP + CharacterFields.statModifier(10)));
-      expect(char2.maxHP, equals(6));
+      expect(char1.maxHP, equals(immolator.baseHP + char1.con));
+      expect(char2.maxHP, equals(wizard.baseHP + char2.con));
       char1.con = 16; // +1 mod
       char2.con = 10; // 0 mod
-      expect(char1.maxHP,
-          equals(immolator.baseHP + CharacterFields.statModifier(16)));
-      expect(char2.maxHP,
-          equals(wizard.baseHP + CharacterFields.statModifier(10)));
+      expect(char1.maxHP, equals(immolator.baseHP + char1.con));
+      expect(char2.maxHP, equals(wizard.baseHP + char2.con));
     });
   });
 }

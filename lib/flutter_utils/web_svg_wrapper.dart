@@ -20,14 +20,20 @@ class WebSvgWrapper {
     String semanticsLabel,
   }) {
     if (kIsWeb) {
-      return Image.network(
-        '/assets/$uri',
+      return Container(
+        key: Key(uri),
         width: width,
         height: height,
-        fit: fit,
-        color: color,
         alignment: alignment,
-        semanticLabel: semanticsLabel,
+        child: Image.network(
+          '/assets/$uri',
+          width: width,
+          height: height,
+          fit: fit,
+          color: color,
+          alignment: alignment,
+          semanticLabel: semanticsLabel,
+        ),
       );
     }
     return FutureBuilder(
