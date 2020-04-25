@@ -13,35 +13,17 @@ FieldsContext _clsFields = FieldsContext([
   StringField(fieldName: 'description'),
   IntField(fieldName: 'load'),
   IntField(fieldName: 'baseHP'),
-  DiceField(
-    fieldName: 'damage',
-    defaultValue: (ctx) => Dice.d6,
-  ),
-  Field<Map<String, List<String>>>(
-    fieldName: 'names',
-    defaultValue: (ctx) => {},
-  ),
-  Field<List<String>>(
-    fieldName: 'bonds',
-    defaultValue: (ctx) => [],
-  ),
-  Field<List<List<String>>>(
-    fieldName: 'looks',
-    defaultValue: (ctx) => [],
-  ),
-  Field<Map<String, AlignmentName>>(
-    fieldName: 'alignments',
-    defaultValue: (ctx) => {},
-  ),
+  DiceField(fieldName: 'damage', defaultValue: (ctx) => Dice.d6),
+  NamesMapField(fieldName: 'names'),
+  BondsListField(fieldName: 'bonds'),
+  LooksOptionsListField(fieldName: 'looks'),
+  AlignmentsMapField(fieldName: 'alignments'),
   MoveListField(fieldName: 'raceMoves'),
   MoveListField(fieldName: 'startingMoves'),
   MoveListField(fieldName: 'advancedMoves1'),
   MoveListField(fieldName: 'advancedMoves2'),
   SpellListField(fieldName: 'spells'),
-  Field<List<GearChoice>>(
-    fieldName: 'gearChoices',
-    defaultValue: (ctx) => [],
-  ),
+  GearChoiceListField(fieldName: 'gearChoices'),
 ]);
 
 class CustomClass extends FirebaseEntity {
@@ -55,37 +37,37 @@ class CustomClass extends FirebaseEntity {
     DocumentReference ref,
   }) : super(ref: ref, data: data);
 
-  Field<String> get key => fields.get('key').get;
+  String get key => fields.get('key').get;
   set key(value) => fields.get('key').set(value);
-  Field<String> get name => fields.get('name').get;
+  String get name => fields.get('name').get;
   set name(value) => fields.get('name').set(value);
-  Field<String> get description => fields.get('description').get;
+  String get description => fields.get('description').get;
   set description(value) => fields.get('description').set(value);
-  Field<num> get load => fields.get('load').get;
+  num get load => fields.get('load').get;
   set load(value) => fields.get('load').set(value);
-  Field<num> get baseHP => fields.get('baseHP').get;
+  num get baseHP => fields.get('baseHP').get;
   set baseHP(value) => fields.get('baseHP').set(value);
-  Field<Dice> get damage => fields.get('damage').get;
+  Dice get damage => fields.get('damage').get;
   set damage(value) => fields.get('damage').set(value);
-  Field<Map<String, List<String>>> get names => fields.get('names').get;
+  Map<String, List<String>> get names => fields.get('names').get;
   set names(value) => fields.get('names').set(value);
-  Field<List<String>> get bonds => fields.get('bonds').get;
+  List<String> get bonds => fields.get('bonds').get;
   set bonds(value) => fields.get('bonds').set(value);
-  Field<List<List<String>>> get looks => fields.get('looks').get;
+  List<List<String>> get looks => fields.get('looks').get;
   set looks(value) => fields.get('looks').set(value);
-  Field<Map<String, AlignmentName>> get alignments => fields.get('alignments').get;
+  Map<String, AlignmentName> get alignments => fields.get('alignments').get;
   set alignments(value) => fields.get('alignments').set(value);
-  Field<List<Move>> get raceMoves => fields.get('raceMoves').get;
+  List<Move> get raceMoves => fields.get('raceMoves').get;
   set raceMoves(value) => fields.get('raceMoves').set(value);
-  Field<List<Move>> get startingMoves => fields.get('startingMoves').get;
+  List<Move> get startingMoves => fields.get('startingMoves').get;
   set startingMoves(value) => fields.get('startingMoves').set(value);
-  Field<List<Move>> get advancedMoves1 => fields.get('advancedMoves1').get;
+  List<Move> get advancedMoves1 => fields.get('advancedMoves1').get;
   set advancedMoves1(value) => fields.get('advancedMoves1').set(value);
-  Field<List<Move>> get advancedMoves2 => fields.get('advancedMoves2').get;
+  List<Move> get advancedMoves2 => fields.get('advancedMoves2').get;
   set advancedMoves2(value) => fields.get('advancedMoves2').set(value);
-  Field<List<Spell>> get spells => fields.get('spells').get;
+  List<Spell> get spells => fields.get('spells').get;
   set spells(value) => fields.get('spells').set(value);
-  Field<List<GearChoice>> get gearChoices => fields.get('gearChoices').get;
+  List<GearChoice> get gearChoices => fields.get('gearChoices').get;
   set gearChoices(value) => fields.get('gearChoices').set(value);
 
   @override

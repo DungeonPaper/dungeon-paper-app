@@ -8,6 +8,7 @@ import 'package:dungeon_paper/utils.dart';
 import 'package:dungeon_world_data/_base.dart';
 import 'package:dungeon_world_data/alignment.dart';
 import 'package:dungeon_world_data/dice.dart';
+import 'package:dungeon_world_data/gear_choice.dart';
 import 'package:dungeon_world_data/move.dart';
 import 'package:dungeon_world_data/player_class.dart';
 import 'package:flutter/foundation.dart';

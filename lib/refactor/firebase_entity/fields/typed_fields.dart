@@ -143,7 +143,7 @@ class StringField extends Field<String> {
         );
 }
 
-class ListOfField<F extends Field, V> extends Field<List<V>> {
+class ListOfField<V> extends Field<List<V>> {
   final FieldBase field;
 
   ListOfField({
@@ -167,31 +167,19 @@ class ListOfField<F extends Field, V> extends Field<List<V>> {
           toJSON: (value, ctx) => value is List && value.isNotEmpty
               ? value.map((el) => field.copy(ctx, value: el).toJSON()).toList()
               : [],
-          // fromJSON: _fromJSONList<V>(field),
-          // toJSON: _toJSONList<V>(field),
         );
-
-  // static List<V> Function(dynamic, FieldsContext) _fromJSONList<V>(
-  //         Field field) =>
-  //     (value, ctx) => value is List && value.isNotEmpty
-  //         ? value.map((el) => field.copy(ctx, value: el).fromJSON(el)).toList()
-  //         : [];
-  // static List<V> Function(dynamic, FieldsContext) _toJSONList<V>(Field field) =>
-  //     (value, ctx) => value is Iterable && value.isNotEmpty
-  //         ? value.map((el) => field.copy(ctx, value: el).toJSON()).toList()
-  //         : [];
 
   @override
   FieldBase<List<V>> copy(
     FieldsContext newContext, {
     String fieldName,
-    F field,
+    Field<List<V>> field,
     List<V> Function(FieldsContext context) defaultValue,
     List<V> value,
     List<FieldListener<List<V>>> listeners,
     bool isSerialized = true,
   }) =>
-      ListOfField<F, V>(
+      ListOfField<V>(
         context: newContext,
         fieldName: fieldName ?? this.fieldName,
         field: field ?? this.field,
@@ -202,7 +190,56 @@ class ListOfField<F extends Field, V> extends Field<List<V>> {
       );
 }
 
-class StringListField extends ListOfField<StringField, String> {
+class MapOfField<K, V> extends Field<Map<K, V>> {
+  final FieldBase field;
+
+  MapOfField({
+    @required this.field,
+    FieldsContext context,
+    @required String fieldName,
+    Map<K, V> Function(FieldsContext context) defaultValue,
+    Map<K, V> value,
+    List<FieldListener<Map<K, V>>> listeners,
+    bool isSerialized = true,
+  }) : super(
+          context: context,
+          fieldName: fieldName,
+          defaultValue: defaultValue ?? (ctx) => <K, V>{},
+          value: value,
+          listeners: listeners,
+          isSerialized: isSerialized,
+          fromJSON: (value, ctx) => value is Map && value.isNotEmpty
+              ? value.map<K, V>(
+                  (k, v) => MapEntry<K, V>(k, field.copy(ctx).fromJSON(v)))
+              : <K, V>{},
+          toJSON: (value, ctx) => value is Map && value.isNotEmpty
+              ? value.map((k, v) =>
+                  MapEntry<K, V>(k, field.copy(ctx, value: v).toJSON()))
+              : <K, V>{},
+        );
+
+  @override
+  FieldBase<Map<K, V>> copy(
+    FieldsContext newContext, {
+    String fieldName,
+    Field<Map<K, V>> field,
+    Map<K, V> Function(FieldsContext context) defaultValue,
+    Map<K, V> value,
+    List<FieldListener<Map<K, V>>> listeners,
+    bool isSerialized = true,
+  }) =>
+      MapOfField<K, V>(
+        context: newContext,
+        fieldName: fieldName ?? this.fieldName,
+        field: field ?? this.field,
+        value: value ?? this.value,
+        isSerialized: isSerialized ?? this.isSerialized,
+        listeners: listeners ?? this._listeners,
+        defaultValue: defaultValue ?? this.defaultValueGetter,
+      );
+}
+
+class StringListField extends ListOfField<String> {
   StringListField({
     FieldsContext context,
     @required String fieldName,

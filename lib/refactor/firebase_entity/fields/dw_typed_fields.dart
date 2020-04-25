@@ -26,11 +26,10 @@ abstract class DWEntityField<T extends DWEntity> extends Field<T> {
         );
 }
 
-class DWEntityListField<F extends DWEntityField<T>, T extends DWEntity>
-    extends ListOfField<F, T> {
+class DWEntityListField<T extends DWEntity> extends ListOfField<T> {
   DWEntityListField({
     FieldsContext context,
-    @required F field,
+    @required DWEntityField<T> field,
     @required String fieldName,
     List<T> value,
     List<FieldListener<List<T>>> listeners,
@@ -70,7 +69,7 @@ class MoveField extends DWEntityField<Move> {
         );
 }
 
-class MoveListField extends DWEntityListField<MoveField, Move> {
+class MoveListField extends DWEntityListField<Move> {
   MoveListField({
     FieldsContext context,
     @required String fieldName,
@@ -139,8 +138,7 @@ class InventoryItemField extends DWEntityField<InventoryItem> {
         );
 }
 
-class InventoryItemListField
-    extends ListOfField<InventoryItemField, InventoryItem> {
+class InventoryItemListField extends ListOfField<InventoryItem> {
   InventoryItemListField({
     FieldsContext context,
     @required String fieldName,
@@ -186,7 +184,7 @@ class SpellField extends DWEntityField<DbSpell> {
         );
 }
 
-class SpellListField extends ListOfField<SpellField, DbSpell> {
+class SpellListField extends ListOfField<DbSpell> {
   SpellListField({
     FieldsContext context,
     @required String fieldName,
@@ -226,7 +224,7 @@ class NoteField extends Field<Note> {
         );
 }
 
-class NoteListField extends ListOfField<NoteField, Note> {
+class NoteListField extends ListOfField<Note> {
   NoteListField({
     FieldsContext context,
     @required String fieldName,
@@ -297,8 +295,7 @@ class PlayerClassField extends DWEntityField<PlayerClass> {
         };
 }
 
-class PlayerClassListField
-    extends DWEntityListField<PlayerClassField, PlayerClass> {
+class PlayerClassListField extends DWEntityListField<PlayerClass> {
   PlayerClassListField({
     FieldsContext context,
     @required String fieldName,
@@ -363,7 +360,7 @@ class AlignmentField extends DWEntityField<Alignment> {
         );
 }
 
-class AlignmentListField extends DWEntityListField<AlignmentField, Alignment> {
+class AlignmentListField extends DWEntityListField<Alignment> {
   AlignmentListField({
     FieldsContext context,
     @required String fieldName,
@@ -412,7 +409,7 @@ class CharacterField extends Field<Character> {
         );
 }
 
-class CharacterListField extends ListOfField<CharacterField, Character> {
+class CharacterListField extends ListOfField<Character> {
   CharacterListField({
     FieldsContext context,
     @required String fieldName,
@@ -431,5 +428,116 @@ class CharacterListField extends ListOfField<CharacterField, Character> {
           isSerialized: isSerialized,
           listeners: listeners,
           defaultValue: defaultValue,
+        );
+}
+
+class NamesMapField extends MapOfField<String, List<String>> {
+  NamesMapField({
+    FieldsContext context,
+    @required String fieldName,
+    Map<String, List<String>> value,
+    List<FieldListener<Map<String, List<String>>>> listeners,
+    bool isSerialized = true,
+    Map<String, List<String>> Function(FieldsContext ctx) defaultValue,
+  }) : super(
+          context: context,
+          field: StringListField(fieldName: fieldName),
+          fieldName: fieldName,
+          value: value,
+          isSerialized: isSerialized,
+          listeners: listeners,
+        );
+}
+
+class BondsListField extends StringListField {
+  BondsListField({
+    FieldsContext context,
+    @required String fieldName,
+    List<String> value,
+    List<FieldListener<List<String>>> listeners,
+    bool isSerialized = true,
+    List<String> Function(FieldsContext ctx) defaultValue,
+  }) : super(
+          context: context,
+          fieldName: fieldName,
+          value: value,
+          isSerialized: isSerialized,
+          listeners: listeners,
+        );
+}
+
+class LooksOptionsListField extends ListOfField<List<String>> {
+  LooksOptionsListField({
+    FieldsContext context,
+    @required String fieldName,
+    List<List<String>> value,
+    List<FieldListener<List<List<String>>>> listeners,
+    bool isSerialized = true,
+    List<List<String>> Function(FieldsContext ctx) defaultValue,
+  }) : super(
+          context: context,
+          fieldName: fieldName,
+          field: StringListField(fieldName: fieldName),
+          value: value,
+          isSerialized: isSerialized,
+          listeners: listeners,
+        );
+}
+
+class AlignmentsMapField extends MapOfField<String, AlignmentName> {
+  AlignmentsMapField({
+    FieldsContext context,
+    @required String fieldName,
+    Map<String, AlignmentName> value,
+    List<FieldListener<Map<String, AlignmentName>>> listeners,
+    bool isSerialized = true,
+    Map<String, AlignmentName> Function(FieldsContext ctx) defaultValue,
+  }) : super(
+          context: context,
+          field: ListOfField<String>(
+            fieldName: fieldName,
+            field: StringField(fieldName: fieldName),
+          ),
+          fieldName: fieldName,
+          value: value,
+          isSerialized: isSerialized,
+          listeners: listeners,
+          defaultValue: defaultValue ?? (ctx) => <String, AlignmentName>{},
+        );
+}
+
+class GearChoiceField extends DWEntityField<GearChoice> {
+  GearChoiceField({
+    FieldsContext context,
+    @required String fieldName,
+    GearChoice value,
+    List<FieldListener<GearChoice>> listeners,
+    bool isSerialized = true,
+    GearChoice Function(FieldsContext ctx) defaultValue,
+  }) : super(
+          context: context,
+          fieldName: fieldName,
+          value: value,
+          isSerialized: isSerialized,
+          listeners: listeners,
+          create: (value) => GearChoice.fromJSON(value),
+        );
+}
+
+class GearChoiceListField extends DWEntityListField<GearChoice> {
+  GearChoiceListField({
+    FieldsContext context,
+    @required String fieldName,
+    List<GearChoice> value,
+    List<FieldListener<List<GearChoice>>> listeners,
+    bool isSerialized = true,
+    List<GearChoice> Function(FieldsContext ctx) defaultValue,
+  }) : super(
+          context: context,
+          fieldName: fieldName,
+          field: GearChoiceField(fieldName: fieldName),
+          value: value,
+          isSerialized: isSerialized,
+          listeners: listeners,
         );
 }

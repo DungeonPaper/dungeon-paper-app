@@ -48,7 +48,7 @@ registerUserListener(FirebaseUser fbUser) {
     _userListener.cancel();
   }
 
-  String userDocID = 'users/${fbUser.email}';
+  String userDocID = 'user_data/${fbUser.email}';
   _userListener = firestore.document(userDocID).snapshots().listen((user) {
     dwStore.dispatch(
       UserActions.setUser(
