@@ -1,4 +1,4 @@
-import 'package:dungeon_paper/flutter_utils.dart';
+import 'package:dungeon_paper/flutter_utils/flutter_utils.dart';
 import 'package:dungeon_paper/widget_utils.dart';
 import 'package:flutter/material.dart';
 import '../utils.dart';

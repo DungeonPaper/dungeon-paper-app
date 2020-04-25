@@ -2,7 +2,8 @@ part of 'fields.dart';
 
 abstract class FieldBase<T> {
   final String fieldName;
-  final String outputFieldName;
+  String get outputFieldName => _outputFieldName ?? fieldName;
+  final String _outputFieldName;
   final T Function(FieldsContext context) defaultValueGetter;
   T _value;
   bool _dirty = false;
@@ -16,12 +17,13 @@ abstract class FieldBase<T> {
   FieldBase({
     @required this.context,
     @required this.fieldName,
-    this.outputFieldName,
+    String outputFieldName,
     @required T Function(FieldsContext context) defaultValue,
     @required T value,
     @required List<FieldListener<T>> listeners,
     @required this.isSerialized,
   })  : defaultValueGetter = defaultValue,
+        _outputFieldName = outputFieldName,
         _listeners = listeners ?? [] {
     this.value = value ?? defaultValue(context);
   }

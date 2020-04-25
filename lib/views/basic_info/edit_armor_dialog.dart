@@ -1,7 +1,7 @@
 import 'package:dungeon_paper/refactor/character.dart';
 import 'package:pedantic/pedantic.dart';
 import '../../components/standard_dialog_controls.dart';
-import '../../flutter_utils.dart';
+import '../../flutter_utils/flutter_utils.dart';
 import '../../redux/stores/stores.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';

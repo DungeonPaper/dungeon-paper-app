@@ -18,6 +18,7 @@ class Sidebar extends StatelessWidget {
     return DWStoreConnector<DWStore>(
       builder: (context, state) {
         User user = state.user.current;
+        print('sidebar user: $user');
         List<Widget> items = [
               UserAccountsDrawerHeader(
                 accountEmail: Text(user.email),

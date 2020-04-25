@@ -49,6 +49,7 @@ class AddInventoryItemContainerState extends State<AddInventoryItemContainer>
         if (widget.onSave != null) {
           widget.onSave(item);
         }
+        Navigator.pop(context);
       },
       builder: (ctx, form, onSave) {
         List<Widget> actions = <Widget>[

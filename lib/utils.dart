@@ -86,6 +86,7 @@ class Secrets {
   String get GITHUB_CHANGELOG_URL => _data['GITHUB_CHANGELOG_URL'];
   String get API_DOMAIN => _data['API_DOMAIN'];
   String get API_PATH => _data['API_PATH'];
+  String get GOOGLE_CLIENT_ID => _data['GOOGLE_CLIENT_ID'];
 
   operator [](String key) {
     return _data[key];
@@ -152,7 +153,7 @@ List<T> findAndReplaceInList<T>(List<T> list, T newObj,
   return list;
 }
 
-List<T> removeFromList<T>(List<T> list, T obj) =>
-    List.from(list)..removeWhere(getMatcher(obj));
+List<T> removeFromList<T>(List<T> list, T obj, [bool Function(T) matcher]) =>
+    List.from(list)..removeWhere(getMatcher(obj, matcher));
 
 List<T> addToList<T>(List<T> list, T item) => List.from(list)..add(item);

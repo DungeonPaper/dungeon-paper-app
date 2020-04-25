@@ -1,5 +1,4 @@
 import 'package:dungeon_paper/db/base.dart';
-import 'package:dungeon_paper/redux/stores/stores.dart';
 import 'package:dungeon_paper/refactor/character.dart';
 import 'package:dungeon_paper/utils.dart';
 import 'package:uuid/uuid.dart';
@@ -91,31 +90,19 @@ class NoteCategory {
 ReturnPredicate<Note> matchNote =
     matcher<Note>((Note i, Note o) => i.key == o.key);
 
-Future updateNote(Note note) async {
-  if (dwStore.state.characters.current == null) {
-    throw ('No character loaded.');
-  }
-
-  Character character = dwStore.state.characters.current;
-  await character
-      .update(json: {'notes': findAndReplaceInList(character.notes, note)});
+Future updateNote(Character character, Note note) async {
+  await character.update(json: {
+    'notes': findAndReplaceInList<Note>(
+        character.notes, note, (n) => note.key == n.key)
+  });
 }
 
-Future deleteNote(Note note) async {
-  if (dwStore.state.characters.current == null) {
-    throw ('No character loaded.');
-  }
-
-  Character character = dwStore.state.characters.current;
-  await character
-      .update(json: {'notes': removeFromList(character.notes, note)});
+Future deleteNote(Character character, Note note) async {
+  await character.update(json: {
+    'notes': removeFromList(character.notes, note, (n) => note.key == n.key)
+  });
 }
 
-Future createNote(Note note) async {
-  if (dwStore.state.characters.current == null) {
-    throw ('No character loaded.');
-  }
-
-  Character character = dwStore.state.characters.current;
+Future createNote(Character character, Note note) async {
   await character.update(json: {'notes': addToList(character.notes, note)});
 }

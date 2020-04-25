@@ -1,8 +1,8 @@
 import 'package:dungeon_paper/components/card_list_item.dart';
+import 'package:dungeon_paper/flutter_utils/flutter_utils.dart';
 import 'package:dungeon_world_data/player_class.dart';
 import 'package:dungeon_world_data/alignment.dart' as dw_alignment;
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 
 class ClassDescription extends StatelessWidget {
   final PlayerClass classDef;
@@ -42,8 +42,8 @@ class ClassDescription extends StatelessWidget {
                     value: Text(classDef.baseHP.toString()),
                   ),
                   StatIcon(
-                    icon: SvgPicture.asset(
-                      'assets/dice.svg',
+                    icon: PlatformSvg.asset(
+                      'dice.svg',
                       // color: color,
                       width: 40.0,
                       height: 40.0,

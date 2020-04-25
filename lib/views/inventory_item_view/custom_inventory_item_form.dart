@@ -10,7 +10,7 @@ import '../../widget_utils.dart';
 class CustomInventoryItemForm extends StatefulWidget {
   final InventoryItem item;
   final DialogMode mode;
-  final Widget Function(BuildContext context, Widget form, Function onSave)
+  final Widget Function(BuildContext context, Widget form, Function() onSave)
       builder;
   final void Function(InventoryItem move) onSave;
 

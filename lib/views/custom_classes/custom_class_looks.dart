@@ -3,7 +3,7 @@ import 'package:dungeon_paper/components/dialogs.dart';
 import 'package:dungeon_paper/components/editable_string_list.dart';
 import 'package:flutter/material.dart';
 import 'package:uuid/uuid.dart';
-import '../../flutter_utils.dart';
+import '../../flutter_utils/flutter_utils.dart';
 import '../../widget_utils.dart';
 
 class CustomClassLooks extends StatefulWidget {
@@ -49,7 +49,6 @@ class _CustomClassLooksState extends State<CustomClassLooks> {
       items: [...items, ADD],
       itemCount: (cat, i) => 1,
       itemBuilder: _childBuilder,
-
     );
   }
 

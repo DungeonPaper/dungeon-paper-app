@@ -1,8 +1,8 @@
+import 'package:dungeon_paper/flutter_utils/flutter_utils.dart';
 import 'package:dungeon_paper/refactor/character.dart';
 import 'package:dungeon_paper/utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'edit_coins_dialog.dart';
 
 class CoinsDisplay extends StatelessWidget {
@@ -29,8 +29,8 @@ class CoinsDisplay extends StatelessWidget {
           mainAxisSize: MainAxisSize.min,
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            SvgPicture.asset(
-              'assets/coin-stack.svg',
+            PlatformSvg.asset(
+              'coin-stack.svg',
               width: 20,
             ),
             SizedBox.fromSize(size: Size.square(10)),

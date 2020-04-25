@@ -11,11 +11,13 @@ class AddSpellScreen extends StatefulWidget {
     @required this.index,
     @required this.spell,
     @required this.mode,
+    @required this.onSave,
   }) : super(key: key);
 
   final num index;
   final DbSpell spell;
   final DialogMode mode;
+  final void Function(DbSpell move) onSave;
 
   @override
   AddSpellScreenState createState() => AddSpellScreenState();
@@ -70,7 +72,7 @@ class AddSpellScreenState extends State<AddSpellScreen>
               color: Theme.of(context).scaffoldBackgroundColor,
               child: AddSpellList(
                 key: PageStorageKey<String>(texts[1]),
-                onSave: onSave,
+                onSave: widget.onSave,
               ),
             ),
             formContainer,

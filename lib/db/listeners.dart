@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dungeon_paper/db/user.dart';
+import 'package:dungeon_paper/db/db.dart';
 import 'package:dungeon_paper/redux/actions.dart';
 import 'package:dungeon_paper/redux/stores/stores.dart';
 import 'package:dungeon_paper/refactor/character.dart';
@@ -48,8 +49,7 @@ registerUserListener(FirebaseUser fbUser) {
   }
 
   String userDocID = 'users/${fbUser.email}';
-  _userListener =
-      Firestore.instance.document(userDocID).snapshots().listen((user) {
+  _userListener = firestore.document(userDocID).snapshots().listen((user) {
     dwStore.dispatch(
       UserActions.setUser(
         User(
@@ -70,7 +70,7 @@ registerCharactersListener() async {
   }
 
   String userDocID = dwStore.state.user.current.docID;
-  DocumentReference user = Firestore.instance.document('user_data/$userDocID');
+  DocumentReference user = firestore.document('user_data/$userDocID');
   _charsListener =
       user.collection('characters').snapshots().listen((characters) {
     if (characters.documents.isEmpty) {

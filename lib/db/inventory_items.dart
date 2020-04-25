@@ -72,7 +72,6 @@ Future deleteInventoryItem(Character character, InventoryItem item) async {
 }
 
 Future createInventoryItem(Character character, InventoryItem item) async {
-  character.inventory.add(item);
   return character
       .update(json: {'inventory': addToList(character.inventory, item)});
 }

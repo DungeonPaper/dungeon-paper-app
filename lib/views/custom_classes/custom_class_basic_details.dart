@@ -2,7 +2,7 @@ import 'package:dungeon_paper/components/dialogs.dart';
 import 'package:dungeon_world_data/player_class.dart';
 import 'package:flutter/material.dart';
 
-import '../../flutter_utils.dart';
+import '../../flutter_utils/flutter_utils.dart';
 import '../../widget_utils.dart';
 
 class ClassBasicDetails extends StatefulWidget {
@@ -113,7 +113,9 @@ class _ClassBasicDetailsState extends State<ClassBasicDetails> {
                         decoration: InputDecoration(
                           labelText: 'Class name',
                           hintText: 'Barbarian, Paladin, Wizard...',
-                          errorText: editingControllers[Keys.name].text.isEmpty ? 'Please enter class name' : null,
+                          errorText: editingControllers[Keys.name].text.isEmpty
+                              ? 'Please enter class name'
+                              : null,
                         ),
                       ),
                       TextFormField(

@@ -92,6 +92,7 @@ class SpellCardState extends State<SpellCard> {
                       builder: (ctx) => AddSpellScreen(
                         index: widget.index,
                         spell: widget.spell,
+                        onSave: widget.onSave,
                         mode: DialogMode.Edit,
                       ),
                     ),

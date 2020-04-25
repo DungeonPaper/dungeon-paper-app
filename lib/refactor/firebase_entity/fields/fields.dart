@@ -1,8 +1,8 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dungeon_paper/db/character_utils.dart';
 import 'package:dungeon_paper/db/inventory_items.dart';
 import 'package:dungeon_paper/db/notes.dart';
 import 'package:dungeon_paper/db/spells.dart';
+import 'package:dungeon_paper/db/db.dart';
 import 'package:dungeon_paper/refactor/character.dart';
 import 'package:dungeon_paper/utils.dart';
 import 'package:dungeon_world_data/_base.dart';

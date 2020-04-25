@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:dungeon_paper/db/db.dart';
 import 'package:dungeon_paper/redux/stores/stores.dart';
 import 'package:dungeon_paper/refactor/character.dart';
 import '../redux/actions.dart';
@@ -6,8 +7,7 @@ import '../utils.dart';
 import 'character_utils.dart';
 
 Future<Character> setCurrentCharacterById(String documentId) async {
-  DocumentSnapshot character =
-      await Firestore.instance.document(documentId).get();
+  DocumentSnapshot character = await firestore.document(documentId).get();
   Character dbCharacter =
       Character(ref: character.reference, data: character.data);
 

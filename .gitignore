@@ -15,3 +15,4 @@ secrets.json
 *.aab
 flutter_export_*.sh
 .tmp
+web/env.js

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
-import '../flutter_utils.dart';
+import '../flutter_utils/flutter_utils.dart';
 
 class NumberController extends StatefulWidget {
   final num value;

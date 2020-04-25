@@ -25,10 +25,24 @@ class Field<T> extends FieldBase<T> {
         );
 
   @override
-  T _fromJSON(value) => __fromJSON != null ? __fromJSON(value, context) : value;
+  T _fromJSON(value) {
+    try {
+      return __fromJSON != null ? __fromJSON(value, context) : value;
+    } catch (e) {
+      print(e);
+      rethrow;
+    }
+  }
 
   @override
-  dynamic _toJSON() => __toJSON != null ? __toJSON(value, context) : value;
+  dynamic _toJSON() {
+    try {
+      return __toJSON != null ? __toJSON(value, context) : value;
+    } catch (e) {
+      print(e);
+      rethrow;
+    }
+  }
 
   @override
   FieldBase<T> copy(
@@ -66,10 +80,9 @@ class BoolField extends Field<bool> {
           value: value,
           listeners: listeners,
           isSerialized: isSerialized,
+          fromJSON: (value, ctx) =>
+              value == true || value != false && value != null,
         );
-
-  @override
-  bool _fromJSON(value) => value == true || value != false && value != null;
 }
 
 class IntField extends Field<int> {
@@ -87,10 +100,8 @@ class IntField extends Field<int> {
           value: value,
           listeners: listeners,
           isSerialized: isSerialized,
+          fromJSON: (value, ctx) => int.tryParse(value),
         );
-
-  @override
-  int _fromJSON(value) => int.tryParse(value);
 }
 
 class DecimalField extends Field<double> {
@@ -108,10 +119,9 @@ class DecimalField extends Field<double> {
           value: value,
           listeners: listeners,
           isSerialized: isSerialized,
+          fromJSON: (value, ctx) =>
+              value is num ? value.toDouble() : double.tryParse(value),
         );
-
-  @override
-  double _fromJSON(value) => double.tryParse(value);
 }
 
 class StringField extends Field<String> {
@@ -129,10 +139,8 @@ class StringField extends Field<String> {
           value: value,
           listeners: listeners,
           isSerialized: isSerialized,
+          fromJSON: (value, ctx) => value?.toString() ?? '',
         );
-
-  @override
-  String _fromJSON(value) => value?.toString();
 }
 
 class ListOfField<F extends Field, V> extends Field<List<V>> {

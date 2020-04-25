@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '../flutter_utils.dart';
+import '../flutter_utils/flutter_utils.dart';
 import '../utils.dart';
 
 class SecretsBuilder extends StatefulWidget {
