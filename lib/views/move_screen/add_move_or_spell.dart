@@ -1,11 +1,11 @@
 import 'package:dungeon_paper/components/dialogs.dart';
 import 'package:dungeon_paper/db/moves.dart';
 import 'package:dungeon_paper/db/spells.dart';
+import 'package:dungeon_paper/flutter_utils/flutter_utils.dart';
 import 'package:dungeon_paper/refactor/character.dart';
 import 'package:dungeon_world_data/move.dart';
 import 'package:dungeon_world_data/player_class.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:uuid/uuid.dart';
 import 'add_move_screen.dart';
 import 'add_spell_screen.dart';
@@ -37,8 +37,8 @@ class AddMoveOrSpell extends StatelessWidget {
                 height: 60,
                 child: RaisedButton.icon(
                   color: Colors.orange,
-                  icon: SvgPicture.asset(
-                    'assets/swords.svg',
+                  icon: PlatformSvg.asset(
+                    'swords.svg',
                     width: 24,
                     height: 24,
                   ),
@@ -62,6 +62,7 @@ class AddMoveOrSpell extends StatelessWidget {
                           ),
                           mode: DialogMode.Create,
                           onSave: (move) {
+                            print('add_move_or_spell.dart onCreateMove');
                             createMove(character, move);
                             Navigator.pop(ctx);
                           },
@@ -97,6 +98,10 @@ class AddMoveOrSpell extends StatelessWidget {
                             level: '1-5',
                           ),
                           mode: DialogMode.Create,
+                          onSave: (spell) {
+                            createSpell(character, spell);
+                            Navigator.pop(context);
+                          },
                           index: -1,
                         ),
                       ),

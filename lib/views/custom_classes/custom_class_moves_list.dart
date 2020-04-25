@@ -8,7 +8,7 @@ import 'package:dungeon_world_data/move.dart';
 import 'package:dungeon_world_data/player_class.dart';
 import 'package:flutter/material.dart';
 import 'package:uuid/uuid.dart';
-import '../../flutter_utils.dart';
+import '../../flutter_utils/flutter_utils.dart';
 
 enum MoveCategory { Race, Starting, Advanced1, Advanced2 }
 

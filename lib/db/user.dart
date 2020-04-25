@@ -1,12 +1,12 @@
 import 'dart:async';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:dungeon_paper/db/db.dart';
 import 'package:dungeon_paper/redux/actions.dart';
 import 'package:dungeon_paper/redux/stores/stores.dart';
 import 'package:dungeon_paper/refactor/user.dart';
 import 'base.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
-final Firestore firestore = Firestore.instance;
 FirebaseUser authUser;
 DbUser currentUser = DbUser({});
 StreamSubscription listener;
@@ -65,7 +65,7 @@ void unsetCurrentUser() async {
 }
 
 Future<DocumentReference> createNewUser(FirebaseUser user) async {
-  var userDoc = Firestore.instance.collection('user_data').document(user.email);
+  var userDoc = firestore.collection('user_data').document(user.email);
   var dbUser = User(ref: userDoc);
   await userDoc.setData(dbUser.toJSON());
   return userDoc;

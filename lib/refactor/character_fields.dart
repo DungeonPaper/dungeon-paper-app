@@ -50,7 +50,7 @@ mixin CharacterFields implements FirebaseEntity {
     SpellListField(fieldName: 'spells'),
     InventoryItemListField(fieldName: 'inventory'),
     DiceField(fieldName: 'hitDice'),
-    StringListField(fieldName: 'looks', defaultValue: (ctx) => []),
+    StringListField(fieldName: 'looks'),
     MoveField(
       fieldName: 'race',
       defaultValue: (ctx) => dungeonWorld.classes.first.raceMoves.first,

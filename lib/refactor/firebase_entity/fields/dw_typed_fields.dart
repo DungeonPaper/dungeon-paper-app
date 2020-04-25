@@ -11,6 +11,7 @@ abstract class DWEntityField<T extends DWEntity> extends Field<T> {
     List<FieldListener<T>> listeners,
     bool isSerialized = true,
     T Function(FieldsContext ctx) defaultValue,
+    dynamic Function(T value, FieldsContext ctx) toJSON,
   }) : super(
           context: context,
           fieldName: fieldName,
@@ -19,7 +20,9 @@ abstract class DWEntityField<T extends DWEntity> extends Field<T> {
           listeners: listeners,
           defaultValue: defaultValue,
           fromJSON: (value, ctx) => value is T ? value : create(value),
-          toJSON: (value, ctx) => value is T ? value.toJSON() : value,
+          toJSON: (value, ctx) => value is T
+              ? toJSON != null ? toJSON(value, ctx) : value.toJSON()
+              : value,
         );
 }
 
@@ -234,7 +237,7 @@ class NoteListField extends ListOfField<NoteField, Note> {
     List<Note> Function(dynamic value, FieldsContext context) fromJSON,
     List<Note> Function(FieldsContext context) defaultValue,
   }) : super(
-          field: SpellField(fieldName: fieldName),
+          field: NoteField(fieldName: fieldName),
           fieldName: fieldName,
           value: value,
           isSerialized: isSerialized,
@@ -276,8 +279,22 @@ class PlayerClassField extends DWEntityField<PlayerClass> {
                     raceMoves: [],
                     spells: [],
                   ),
-          create: (value) => PlayerClass.fromJSON(value),
+          create: (value) => PlayerClass.fromJSON(_fbJsonToDwJson(value)),
+          toJSON: (value, ctx) => _dwJsonToFbJson(value.toJSON()),
         );
+
+  static _fbJsonToDwJson(Map json) => json['looks'] is List
+      ? json
+      : {
+          ...json,
+          'looks': (json['looks'] as Map).values.toList(),
+        };
+  static _dwJsonToFbJson(Map json) => json['looks'] is Map
+      ? json
+      : {
+          ...json,
+          'looks': (json['looks'] as List).asMap(),
+        };
 }
 
 class PlayerClassListField
@@ -387,7 +404,7 @@ class CharacterField extends Field<Character> {
           fromJSON: (value, ctx) => value is Map &&
                   (value.containsKey('data') || value.containsKey('docIS'))
               ? Character(
-                  ref: Firestore.instance.document(value['docID']),
+                  ref: firestore.document(value['docID']),
                   data: value['data'],
                 )
               : Character(data: value),

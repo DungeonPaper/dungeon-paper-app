@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:dungeon_paper/db/db.dart';
 import 'package:dungeon_paper/refactor/character.dart';
 import 'package:dungeon_paper/refactor/firebase_entity/fields/fields.dart';
 import 'package:dungeon_paper/refactor/firebase_entity/firebase_entity.dart';
@@ -26,7 +27,7 @@ class User extends FirebaseEntity {
   }) : super(ref: ref, data: data);
 
   Character createCharacter(Character character) {
-    var doc = Firestore.instance.collection(docID + '/characters').document();
+    var doc = firestore.collection(docID + '/characters').document();
     doc.setData(character.toJSON());
     return character..docID = doc.path;
   }

@@ -62,12 +62,12 @@ abstract class FirebaseEntity {
       print('Updating $this');
       print(json);
       await ref.updateData(json);
-      json.forEach((k, v) => fields[k].setDirty(false));
+      json.forEach((k, v) => fields[k]?.setDirty(false));
     }
   }
 
   prepareJSONUpdate(Map<String, dynamic> json, {bool useSetter = true}) {
-    var output = {};
+    var output = <String, dynamic>{};
     for (var k in json.keys) {
       var field = fields.get(k);
       var value = fields.get(k).fromJSON(json[k]);

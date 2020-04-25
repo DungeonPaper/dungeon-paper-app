@@ -3,7 +3,7 @@ import 'package:dungeon_paper/refactor/character.dart';
 import '../../components/number_controller.dart';
 import '../../db/character_utils.dart';
 import '../../components/dialogs.dart';
-import '../../flutter_utils.dart';
+import '../../flutter_utils/flutter_utils.dart';
 import 'package:flutter/material.dart';
 import '../edit_character/character_wizard_utils.dart';
 

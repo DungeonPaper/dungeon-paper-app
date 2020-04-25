@@ -1,8 +1,8 @@
+import 'package:dungeon_paper/flutter_utils/flutter_utils.dart';
 import 'package:dungeon_paper/refactor/character.dart';
 import '../basic_info/edit_armor_dialog.dart';
 import '../basic_info/edit_hit_dice_dialog.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 
 class ArmorAndHitDice extends StatelessWidget {
   final Character character;
@@ -20,8 +20,8 @@ class ArmorAndHitDice extends StatelessWidget {
         children: <Widget>[
           _item(
             context,
-            icon: SvgPicture.asset(
-              'assets/armor.svg',
+            icon: PlatformSvg.asset(
+              'armor.svg',
               width: 20,
               height: 20,
             ),
@@ -34,8 +34,8 @@ class ArmorAndHitDice extends StatelessWidget {
           ),
           _item(
             context,
-            icon: SvgPicture.asset(
-              'assets/dice.svg',
+            icon: PlatformSvg.asset(
+              'dice.svg',
               width: 20,
               height: 20,
             ),

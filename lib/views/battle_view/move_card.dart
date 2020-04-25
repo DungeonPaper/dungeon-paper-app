@@ -49,7 +49,10 @@ class MoveCardState extends State<MoveCard> {
                   builder: (ctx) => AddMoveScreen(
                     move: widget.move,
                     mode: DialogMode.Edit,
-                    onSave: widget.onSave,
+                    onSave: (move) {
+                      _save(move);
+                      Navigator.pop(ctx);
+                    },
                   ),
                 ),
               ),
@@ -72,7 +75,7 @@ class MoveCardState extends State<MoveCard> {
                     child: RaisedButton(
                       color: Theme.of(context).primaryColorLight,
                       child: Text('Add Move'),
-                      onPressed: _save,
+                      onPressed: () => _save(widget.move),
                     ),
                   ),
                 )
@@ -122,15 +125,15 @@ class MoveCardState extends State<MoveCard> {
     );
   }
 
-  _save() {
+  _save(Move move) {
     if (widget.onSave != null) {
-      widget.onSave(widget.move);
+      widget.onSave(move);
     }
   }
 
   _delete() {
-    if (widget.onSave != null) {
-      widget.onSave(widget.move);
+    if (widget.onDelete != null) {
+      widget.onDelete();
     }
   }
 }

@@ -1,8 +1,9 @@
 import 'dart:async';
+import 'package:dungeon_paper/db/db.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:screen/screen.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dungeon_paper/error_reporting.dart';
 import 'package:dungeon_paper/redux/actions.dart';
 import 'package:dungeon_paper/redux/stores/stores.dart';
@@ -10,20 +11,22 @@ import 'package:dungeon_paper/theme.dart';
 import 'package:dungeon_paper/views/main_view/main_view.dart';
 
 void withInit(Function() cb) async {
-  // general setup
-  await initErrorReporting();
-  Firestore firestore = Firestore.instance;
-  await firestore.settings();
-  await Screen.keepOn(true);
-  // SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
-  //   systemNavigationBarColor: theme.scaffoldBackgroundColor,
-  // ));
-
-  //
-  runZoned(cb, onError: reportError);
+  try {
+    WidgetsFlutterBinding.ensureInitialized();
+    print('withInit');
+    if (!kIsWeb) {
+      await initErrorReporting();
+      await Screen.keepOn(true);
+    }
+    runZoned(cb, onError: reportError);
+  } catch (e) {
+    print(e);
+    rethrow;
+  }
 }
 
 void main() async {
+  initApp(web: kIsWeb);
   withInit(() {
     runApp(DungeonPaper());
     dwStore.dispatch(AppInit());
@@ -41,11 +44,13 @@ class DungeonPaper extends StatelessWidget {
       store: dwStore,
       child: MaterialApp(
         title: appName,
-        home: MainContainer(
-          title: appName,
-          pageController: _pageController,
-        ),
         theme: theme,
+        routes: {
+          '/': (ctx) => MainContainer(
+                title: appName,
+                pageController: _pageController,
+              ),
+        },
       ),
     );
   }

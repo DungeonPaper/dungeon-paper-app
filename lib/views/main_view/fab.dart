@@ -57,6 +57,7 @@ class FABState extends State<FAB> {
               builder: (ctx) => EditNoteScreen(
                 note: Note(),
                 mode: DialogMode.Create,
+                onSave: (note) => createNote(character, note),
               ),
             ),
           ),

@@ -9,7 +9,7 @@ class CustomSpellFormBuilder extends StatefulWidget {
   final num index;
   final DbSpell spell;
   final DialogMode mode;
-  final Widget Function(BuildContext context, Widget form, Function onSave)
+  final Widget Function(BuildContext context, Widget form, Function() onSave)
       builder;
   final void Function(DbSpell move) onSave;
 
@@ -93,11 +93,7 @@ class CustomSpellFormBuilderState extends State<CustomSpellFormBuilder> {
       ),
     );
 
-    return widget.builder(
-      context,
-      form,
-      widget.mode == DialogMode.Create ? _createSpell : _updateSpell,
-    );
+    return widget.builder(context, form, _saveSpell);
   }
 
   _setStateValue(String key, String newValue) {
@@ -116,17 +112,10 @@ class CustomSpellFormBuilderState extends State<CustomSpellFormBuilder> {
     });
   }
 
-  _updateSpell() async {
-    var move = _generateSpell();
+  void _saveSpell() async {
+    var spell = _generateSpell();
     if (widget.onSave != null) {
-      widget.onSave(move);
-    }
-  }
-
-  _createSpell() async {
-    var move = _generateSpell();
-    if (widget.onSave != null) {
-      widget.onSave(move);
+      widget.onSave(spell);
     }
   }
 
