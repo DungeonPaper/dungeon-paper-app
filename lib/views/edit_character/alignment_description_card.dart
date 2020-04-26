@@ -8,7 +8,7 @@ import 'package:dungeon_world_data/alignment.dart' as dw_alignment;
 
 class AlignmentDescription extends StatelessWidget {
   final PlayerClass playerClass;
-  final chr.Alignment alignment;
+  final chr.AlignmentName alignment;
   final VoidCallback onTap;
   final int level;
 
@@ -32,13 +32,13 @@ class AlignmentDescription extends StatelessWidget {
     List<Widget> texts = <Widget>[
       Text(
         capitalize(alignmentInfo.name),
-        style: Theme.of(context).textTheme.title,
+        style: Theme.of(context).textTheme.headline6,
       ),
     ];
     if (hasDescription) {
       texts.add(Text(
         alignmentInfo.description,
-        style: Theme.of(context).textTheme.body1,
+        style: Theme.of(context).textTheme.bodyText2,
       ));
     }
     return CardListItem(

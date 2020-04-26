@@ -47,7 +47,7 @@ void sharedPrefsMiddleware(Store store, action, NextDispatcher next) {
 
   if (action is Login) {
     withPrefs((prefs) {
-      prefs.setString(keyMap[SharedPrefKeys.UserId], action.id);
+      prefs.setString(keyMap[SharedPrefKeys.UserId], action.user.docID);
       prefs.setString(keyMap[SharedPrefKeys.UserEmail], action.user.email);
     });
   }

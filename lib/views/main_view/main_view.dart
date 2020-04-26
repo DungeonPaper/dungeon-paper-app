@@ -1,4 +1,7 @@
 import 'package:dungeon_paper/redux/stores/prefs_store.dart';
+import 'package:dungeon_paper/redux/stores/stores.dart';
+import 'package:dungeon_paper/refactor/character.dart';
+import 'package:dungeon_paper/refactor/user.dart';
 import 'package:dungeon_paper/views/whats_new/whats_new_view.dart';
 import 'package:package_info/package_info.dart';
 import 'package:pedantic/pedantic.dart';
@@ -6,8 +9,6 @@ import 'package:pub_semver/pub_semver.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../../widget_utils.dart';
 import '../battle_view/battle_view.dart';
-import '../../db/character.dart';
-import '../../db/user.dart';
 import '../equipment_view/inventory_view.dart';
 import '../notes_view/notes_view.dart';
 import '../basic_info/profile_view.dart';
@@ -34,9 +35,9 @@ class MainContainer extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return DWStoreConnector(builder: (ctx, state) {
-      DbCharacter character = state.characters.current;
-      DbUser user = state.user.current;
+    return DWStoreConnector<DWStore>(builder: (ctx, state) {
+      var character = state.characters.current;
+      var user = state.user.current;
       return MainView(
         character: character,
         user: user,
@@ -49,8 +50,8 @@ class MainContainer extends StatelessWidget {
 }
 
 class MainView extends StatefulWidget {
-  final DbCharacter character;
-  final DbUser user;
+  final Character character;
+  final User user;
   final bool loading;
   final PageController pageController;
 
@@ -69,7 +70,7 @@ class MainView extends StatefulWidget {
 }
 
 class _MainViewState extends State<MainView> {
-  final Map<Pages, Widget Function(DbCharacter character)> pageMap = {
+  final Map<Pages, Widget Function(Character character)> pageMap = {
     Pages.Home: (character) => ProfileView(character: character),
     Pages.Battle: (character) => BattleView(character: character),
     Pages.Inventory: (character) => InventoryView(character: character),

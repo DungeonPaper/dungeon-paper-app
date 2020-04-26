@@ -1,10 +1,30 @@
 <!DOCTYPE html>
 <html>
+
 <head>
   <meta charset="UTF-8">
   <title>Dungeon Paper</title>
 </head>
+
 <body>
+  <script src="https://www.gstatic.com/firebasejs/7.14.1/firebase-app.js"></script>
+
+  <!-- If you enabled Analytics in your project, add the Firebase SDK for Analytics -->
+  <!-- <script src="https://www.gstatic.com/firebasejs/7.14.1/firebase-analytics.js"></script> -->
+
+  <!-- Add Firebase products that you want to use -->
+  <script src="https://www.gstatic.com/firebasejs/7.14.1/firebase-auth.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/7.14.1/firebase-firestore.js"></script>
+  <script src="env.js"></script>
+  <script>
+    firebase.initializeApp({
+      projectId: env.projectId,
+      clientId: env.clientId,
+      apiKey: env.apiKey,
+    });
+
+  </script>
   <script src="main.dart.js" type="application/javascript"></script>
 </body>
+
 </html>

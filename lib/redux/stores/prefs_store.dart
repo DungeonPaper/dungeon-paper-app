@@ -1,6 +1,6 @@
-import 'package:dungeon_paper/db/auth.dart';
 import 'package:dungeon_paper/redux/actions.dart';
 import 'package:dungeon_paper/redux/stores/stores.dart';
+import 'package:dungeon_paper/refactor/auth.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -55,7 +55,7 @@ class PrefsStore {
       : credentials = credentials ?? Credentials(),
         user = user ?? UserDetails();
 
-  static Future<PrefsStore> loadAll() async {
+  static Future<void> loadAll() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     PrefsStore store = PrefsStore(
       credentials: Credentials(
@@ -72,13 +72,11 @@ class PrefsStore {
     dwStore.dispatch(SetPrefs(store));
     if (!store.credentials.isEmpty) {
       FirebaseUser user =
-          await auth.getFirebaseUser(store.credentials.googleCredentials);
+          await getFirebaseUser(store.credentials.googleCredentials);
       if (user == null) {
-        var creds = await auth.signInWithGoogle();
-        await auth.getFirebaseUser(creds);
+        await signInFlow(SignInMethod.Google);
       }
     }
-    return store;
   }
 }
 
@@ -97,7 +95,7 @@ PrefsStore prefsReducer(PrefsStore state, action) {
 
   if (action is Login) {
     state.user = UserDetails(
-      id: action.id,
+      id: action.user.docID,
       email: action.user.email,
       lastCharacterId: state.user.lastCharacterId,
     );

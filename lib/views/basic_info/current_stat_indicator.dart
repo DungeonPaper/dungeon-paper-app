@@ -55,7 +55,7 @@ class CurrentStatIndicator extends StatelessWidget {
                       ? Colors.green
                       : difference < 0
                           ? Colors.red
-                          : Theme.of(context).textTheme.body1.color,
+                          : Theme.of(context).textTheme.bodyText2.color,
                 ),
               ),
               Text(
@@ -66,7 +66,7 @@ class CurrentStatIndicator extends StatelessWidget {
                       ? Colors.green
                       : difference < 0
                           ? Colors.red
-                          : Theme.of(context).textTheme.body1.color,
+                          : Theme.of(context).textTheme.bodyText2.color,
                 ),
               ),
             ],

@@ -1,14 +1,14 @@
 import 'package:dungeon_paper/db/moves.dart';
+import 'package:dungeon_paper/db/spells.dart';
+import 'package:dungeon_paper/refactor/character.dart';
 import 'package:dungeon_world_data/move.dart';
-
 import '../battle_view/move_card.dart';
 import '../battle_view/spell_card.dart';
 import 'package:dungeon_paper/components/categorized_list.dart';
-import 'package:dungeon_paper/db/character.dart';
 import 'package:flutter/material.dart';
 
 class BattleView extends StatelessWidget {
-  final DbCharacter character;
+  final Character character;
 
   const BattleView({Key key, this.character}) : super(key: key);
 
@@ -38,12 +38,15 @@ class BattleView extends StatelessWidget {
                   move: moves[idx],
                   mode: mode,
                   raceMove: key == 'Starting Moves' && idx == 0,
-                  onSave: (move) => updateMove(move),
+                  onSave: (move) => updateMove(character, move),
+                  onDelete: () => deleteMove(character, moves[idx]),
                 )
               : SpellCard(
                   index: idx,
                   spell: moves[idx],
                   mode: SpellCardMode.Editable,
+                  onSave: (spell) => updateSpell(character, spell),
+                  onDelete: () => deleteSpell(character, moves[idx]),
                 ),
         );
       },

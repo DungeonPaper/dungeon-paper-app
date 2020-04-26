@@ -1,7 +1,6 @@
 import 'package:dungeon_paper/components/tags/editable_tag_list.dart';
 import 'package:dungeon_paper/db/spells.dart';
 import 'package:dungeon_world_data/tag.dart';
-import 'package:pedantic/pedantic.dart';
 import '../../components/markdown_help.dart';
 import '../../components/dialogs.dart';
 import 'package:flutter/material.dart';
@@ -10,9 +9,9 @@ class CustomSpellFormBuilder extends StatefulWidget {
   final num index;
   final DbSpell spell;
   final DialogMode mode;
-  final Widget Function(BuildContext context, Widget form, Function onSave)
+  final Widget Function(BuildContext context, Widget form, Function() onSave)
       builder;
-  final void Function(DbSpell move) onUpdateSpell;
+  final void Function(DbSpell move) onSave;
 
   CustomSpellFormBuilder({
     Key key,
@@ -20,7 +19,7 @@ class CustomSpellFormBuilder extends StatefulWidget {
     @required this.spell,
     @required this.mode,
     @required this.builder,
-    this.onUpdateSpell,
+    this.onSave,
   }) : super(key: key);
 
   @override
@@ -94,11 +93,7 @@ class CustomSpellFormBuilderState extends State<CustomSpellFormBuilder> {
       ),
     );
 
-    return widget.builder(
-      context,
-      form,
-      widget.mode == DialogMode.Create ? _createSpell : _updateSpell,
-    );
+    return widget.builder(context, form, _saveSpell);
   }
 
   _setStateValue(String key, String newValue) {
@@ -117,22 +112,11 @@ class CustomSpellFormBuilderState extends State<CustomSpellFormBuilder> {
     });
   }
 
-  _updateSpell() async {
-    var move = _generateSpell();
-    unawaited(updateSpell(move));
-    if (widget.onUpdateSpell != null) {
-      widget.onUpdateSpell(move);
+  void _saveSpell() async {
+    var spell = _generateSpell();
+    if (widget.onSave != null) {
+      widget.onSave(spell);
     }
-    Navigator.pop(context);
-  }
-
-  _createSpell() async {
-    var move = _generateSpell();
-    unawaited(createSpell(move));
-    if (widget.onUpdateSpell != null) {
-      widget.onUpdateSpell(move);
-    }
-    Navigator.pop(context);
   }
 
   DbSpell _generateSpell() {

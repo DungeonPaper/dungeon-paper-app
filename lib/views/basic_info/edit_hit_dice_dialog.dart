@@ -1,15 +1,10 @@
+import 'package:dungeon_paper/components/standard_dialog_controls.dart';
+import 'package:dungeon_paper/flutter_utils/flutter_utils.dart';
+import 'package:dungeon_paper/redux/stores/stores.dart';
 import 'package:pedantic/pedantic.dart';
-
-import '../../components/standard_dialog_controls.dart';
-import '../../db/character.dart';
-import '../../db/character_db.dart';
-import '../../db/character_utils.dart';
-import '../../flutter_utils.dart';
-import '../../redux/stores/stores.dart';
 import 'package:dungeon_world_data/dice.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 
 class EditHitDiceDialog extends StatefulWidget {
   final Dice dice;
@@ -53,8 +48,8 @@ class EditHitDiceDialogState extends State<EditHitDiceDialog> {
                 children: <Widget>[
                   Padding(
                     padding: const EdgeInsets.only(right: 16.0),
-                    child: SvgPicture.asset(
-                      'assets/dice.svg',
+                    child: PlatformSvg.asset(
+                      'dice.svg',
                       width: 40,
                       height: 40,
                     ),
@@ -118,9 +113,10 @@ class EditHitDiceDialogState extends State<EditHitDiceDialog> {
   }
 
   _saveValue() async {
-    DbCharacter character = dwStore.state.characters.current;
-    character.hitDice = Dice(sides, amount);
-    unawaited(updateCharacter(character, [CharacterKeys.hitDice]));
+    var character = dwStore.state.characters.current;
+    var dice = Dice(sides, amount);
+    character.damageDice = dice;
+    unawaited(character.update(json: {'hitDice': dice.toString()}));
     Navigator.pop(context);
   }
 }

@@ -89,7 +89,7 @@ class CategorizedList<T> extends StatelessWidget {
         title = DefaultTextStyle(
           child: builtTitle,
           style: titleStyle.copyWith(
-              color: Theme.of(context).textTheme.body1.color),
+              color: Theme.of(context).textTheme.bodyText2.color),
         );
       }
       num count = _isChildrenBuilder ? 1 : itemCount(item, catIndex);

@@ -1,10 +1,11 @@
-import '../../../db/character.dart';
+import 'package:dungeon_paper/refactor/character.dart';
+
 import '../../../db/character_utils.dart';
 import '../../profile_view/base_stats/stat_card.dart';
 import 'package:flutter/material.dart';
 
 class BaseStats extends StatelessWidget {
-  final DbCharacter character;
+  final Character character;
 
   const BaseStats({
     Key key,

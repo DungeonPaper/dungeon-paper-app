@@ -6,7 +6,7 @@ import 'package:flutter/material.dart';
 class CustomMoveFormBuilder extends StatefulWidget {
   final Move move;
   final DialogMode mode;
-  final Widget Function(BuildContext context, Widget form, Function onSave)
+  final Widget Function(BuildContext context, Widget form, Function() onSave)
       builder;
   final void Function(Move move) onSave;
   final String moveLabel;
@@ -121,7 +121,6 @@ class CustomMoveFormBuilderState extends State<CustomMoveFormBuilder> {
     if (widget.onSave != null) {
       widget.onSave(move);
     }
-    Navigator.pop(context);
   }
 
   Move _generateMove() {

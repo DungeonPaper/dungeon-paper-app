@@ -1,11 +1,11 @@
+import 'package:dungeon_paper/refactor/character.dart';
 import '../../components/categorized_list.dart';
-import '../../db/character.dart';
 import '../../db/notes.dart';
 import 'note_card.dart';
 import 'package:flutter/material.dart';
 
 class NotesView extends StatelessWidget {
-  final DbCharacter character;
+  final Character character;
 
   NotesView({
     Key key,
@@ -27,13 +27,18 @@ class NotesView extends StatelessWidget {
       items: cats.keys,
       spacerCount: 1,
       titleBuilder: (context, cat, idx) => Text(cat.name),
-      itemBuilder: (context, cat, idx, catI) => Padding(
-            padding: const EdgeInsets.symmetric(vertical: 8.0),
-            child: NoteCard(
-              key: Key(cats[cat].elementAt(idx).key),
-              note: cats[cat].elementAt(idx),
-            ),
+      itemBuilder: (context, cat, idx, catI) {
+        var note = cats[cat].elementAt(idx);
+        return Padding(
+          padding: const EdgeInsets.symmetric(vertical: 8.0),
+          child: NoteCard(
+            key: Key(note.key),
+            note: note,
+            onSave: (_note) => updateNote(character, _note),
+            onDelete: () => updateNote(character, note),
           ),
+        );
+      },
     );
   }
 }

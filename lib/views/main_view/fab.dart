@@ -1,4 +1,4 @@
-import 'package:dungeon_paper/db/character.dart';
+import 'package:dungeon_paper/refactor/character.dart';
 import 'package:dungeon_paper/views/move_screen/add_move_or_spell.dart';
 import '../../db/inventory_items.dart';
 import '../../db/notes.dart';
@@ -12,7 +12,7 @@ import 'package:flutter/material.dart';
 
 class FAB extends StatefulWidget {
   final PageController pageController;
-  final DbCharacter character;
+  final Character character;
 
   const FAB({
     Key key,
@@ -45,7 +45,8 @@ class FABState extends State<FAB> {
     });
   }
 
-  static Map<Pages, Widget Function(BuildContext context, DbCharacter character)> buttonsByIndex = {
+  static Map<Pages, Widget Function(BuildContext context, Character character)>
+      buttonsByIndex = {
     Pages.Notes: (context, character) => FloatingActionButton(
           foregroundColor: Colors.white,
           child: Icon(Icons.add),
@@ -56,6 +57,7 @@ class FABState extends State<FAB> {
               builder: (ctx) => EditNoteScreen(
                 note: Note(),
                 mode: DialogMode.Create,
+                onSave: (note) => createNote(character, note),
               ),
             ),
           ),
@@ -70,6 +72,7 @@ class FABState extends State<FAB> {
               builder: (ctx) => AddInventoryItemContainer(
                 item: InventoryItem(),
                 mode: DialogMode.Create,
+                onSave: (item) => createInventoryItem(character, item),
               ),
             ),
           ),
@@ -79,7 +82,10 @@ class FABState extends State<FAB> {
           child: Icon(Icons.add),
           onPressed: () => showDialog(
             context: context,
-            builder: (context) => AddMoveOrSpell(defaultClass: character.mainClass),
+            builder: (context) => AddMoveOrSpell(
+              character: character,
+              defaultClass: character.mainClass,
+            ),
           ),
         ),
   };
