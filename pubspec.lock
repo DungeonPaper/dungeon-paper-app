@@ -98,7 +98,7 @@ packages:
       name: dungeon_world_data
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "2.0.1"
+    version: "2.0.3"
   firebase:
     dependency: transitive
     description:

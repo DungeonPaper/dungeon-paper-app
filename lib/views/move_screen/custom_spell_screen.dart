@@ -19,7 +19,7 @@ class CustomSpellFormBuilder extends StatefulWidget {
     @required this.spell,
     @required this.mode,
     @required this.builder,
-    this.onSave,
+    @required this.onSave,
   }) : super(key: key);
 
   @override

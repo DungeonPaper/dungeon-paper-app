@@ -1,10 +1,10 @@
+import 'package:dungeon_paper/flutter_utils/flutter_utils.dart';
 import 'package:flutter/material.dart';
-import '../flutter_utils.dart';
 import '../utils.dart';
 
 class SecretsLoader extends StatefulWidget {
   final Widget loader;
-  final CallbackDelegate<Map<String, dynamic>, Widget> builder;
+  final CallbackDelegate<Secrets, Widget> builder;
 
   const SecretsLoader({
     Key key,
@@ -17,7 +17,7 @@ class SecretsLoader extends StatefulWidget {
 }
 
 class _SecretsLoaderState extends State<SecretsLoader> {
-  Map<String, dynamic> secrets;
+  Secrets secrets;
 
   @override
   initState() {
@@ -26,7 +26,7 @@ class _SecretsLoaderState extends State<SecretsLoader> {
   }
 
   _getSecrets() async {
-    Map<String, dynamic> loaded = await loadSecrets();
+    var loaded = await loadSecrets();
     if (this.mounted) {
       setState(() {
         secrets = loaded;
