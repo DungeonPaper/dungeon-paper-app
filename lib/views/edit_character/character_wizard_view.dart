@@ -100,9 +100,9 @@ class _CharacterWizardViewState extends State<CharacterWizardView> {
     }
   }
 
-  void _copyCharAndProceed(_ks) {
+  void _copyCharAndProceed(_ks) async {
+    await character.update(json: _ks, save: false);
     setState(() {
-      character.update(json: _ks, save: false);
       _nextStep();
     });
   }

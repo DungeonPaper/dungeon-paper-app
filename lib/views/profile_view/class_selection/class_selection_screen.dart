@@ -86,7 +86,8 @@ class ClassSelectionScreen extends StatelessWidget {
 
   void save(BuildContext context, PlayerClass def,
       ChangeClassConfirmationOptions options) {
-    var result = options.applyToCharacter(character);
+    var result = options.applyToCharacter(character, def);
+    character.mainClass = def;
     onSave(
       result.data
         ..addAll(
@@ -334,7 +335,8 @@ class ChangeClassConfirmationOptions {
         resetHitDice: val,
       );
 
-  ChangeClassConfirmationResults applyToCharacter(Character character) {
+  ChangeClassConfirmationResults applyToCharacter(
+      Character character, PlayerClass mainClass) {
     var data = <String, dynamic>{};
 
     if (deleteMoves) {
@@ -352,7 +354,7 @@ class ChangeClassConfirmationOptions {
     }
 
     if (resetHitDice) {
-      data['hitDice'] = character.mainClass.damage;
+      data['hitDice'] = mainClass.damage;
     }
 
     return ChangeClassConfirmationResults(character: character, data: data);

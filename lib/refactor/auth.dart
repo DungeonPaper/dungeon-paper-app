@@ -71,15 +71,15 @@ void dispatchFinalDataToStore({
   @required FirebaseUser firebaseUser,
   @required UserWithChildren dbLoginData,
 }) async {
+  if (firebaseUser == null || credentials == null || dbLoginData == null) {
+    dwStore.dispatch(UserActions.noLogin());
+    return;
+  }
+
   var prefs = dwStore.state.prefs;
   var user = User(
       data: dbLoginData.toJSON()..remove('characters'), ref: dbLoginData.ref);
   var characters = dbLoginData.characters;
-
-  if (firebaseUser == null || credentials == null) {
-    dwStore.dispatch(UserActions.noLogin());
-    return;
-  }
 
   dwStore.dispatch(UserActions.login(
     user: user,
@@ -97,7 +97,6 @@ void dispatchFinalDataToStore({
     var currentID = prefs.user.lastCharacterId ?? characters.first.docID;
     dwStore.dispatch(
       CharacterActions.setCurrentChar(
-        currentID,
         characters.firstWhere(
           (char) => char.docID == currentID,
           orElse: () => characters.first,

@@ -138,7 +138,7 @@ class Sidebar extends StatelessWidget {
     }
     return CharacterListTile.list(
       characters.values,
-      selectedId: dwStore.state.characters.currentCharDocID,
+      selectedId: dwStore.state.characters.current.docID,
     );
   }
 }
@@ -162,8 +162,7 @@ class CharacterListTile extends StatelessWidget {
       title: Text(character.displayName),
       selected: selected,
       onTap: () {
-        dwStore.dispatch(
-            CharacterActions.setCurrentChar(character.docID, character));
+        dwStore.dispatch(CharacterActions.setCurrentChar(character));
         Navigator.pop(context);
       },
     );
@@ -174,7 +173,7 @@ class CharacterListTile extends StatelessWidget {
       characters
           .map((character) => CharacterListTile(
                 character: character,
-                selected: selectedId == character.docID,
+                selected: selectedId != null && selectedId == character.docID,
               ))
           .toList();
 }

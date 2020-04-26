@@ -1,5 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dungeon_paper/db/db.dart';
+import 'package:dungeon_paper/redux/actions.dart';
+import 'package:dungeon_paper/redux/stores/stores.dart';
 import 'package:dungeon_paper/refactor/character.dart';
 import 'package:dungeon_paper/refactor/firebase_entity/fields/fields.dart';
 import 'package:dungeon_paper/refactor/firebase_entity/firebase_entity.dart';
@@ -26,10 +28,17 @@ class User extends FirebaseEntity {
     Map<String, dynamic> data,
   }) : super(ref: ref, data: data);
 
-  Character createCharacter(Character character) {
-    var doc = firestore.collection(docID + '/characters').document();
-    doc.setData(character.toJSON());
-    return character..docID = doc.path;
+  Future<Character> createCharacter(Character character) async {
+    var doc = firestore.collection(ref.path + '/characters').document();
+    var data = character.toJSON();
+    print('Creating character: $data');
+    await doc.setData(data);
+    character
+      ..docID = doc.documentID
+      ..ref = doc;
+    dwStore.dispatch(CharacterActions.addCharacter(character));
+    dwStore.dispatch(CharacterActions.setCurrentChar(character));
+    return character;
   }
 
   @override

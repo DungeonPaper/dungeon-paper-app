@@ -64,7 +64,7 @@ class ChangeRaceDialog extends StatelessWidget {
   Function() changeRace(Move def) {
     return () async {
       character.race = def;
-      onSave({'race': def.key});
+      onSave({'race': def});
     };
   }
 }
