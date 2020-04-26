@@ -13,13 +13,13 @@ class MoveCard extends StatefulWidget {
   final MoveCardMode mode;
   final bool raceMove;
   final void Function(Move move) onSave;
-  final void Function(Move move) onDelete;
+  final void Function() onDelete;
 
   const MoveCard({
     Key key,
     @required this.move,
-    this.onSave,
-    this.onDelete,
+    @required this.onSave,
+    @required this.onDelete,
     this.mode = MoveCardMode.Fixed,
     this.raceMove = false,
   }) : super(key: key);
@@ -49,7 +49,10 @@ class MoveCardState extends State<MoveCard> {
                   builder: (ctx) => AddMoveScreen(
                     move: widget.move,
                     mode: DialogMode.Edit,
-                    onSave: widget.onSave,
+                    onSave: (move) {
+                      _save(move);
+                      Navigator.pop(ctx);
+                    },
                   ),
                 ),
               ),
@@ -72,7 +75,7 @@ class MoveCardState extends State<MoveCard> {
                     child: RaisedButton(
                       color: Theme.of(context).primaryColorLight,
                       child: Text('Add Move'),
-                      onPressed: _save,
+                      onPressed: () => _save(widget.move),
                     ),
                   ),
                 )
@@ -87,7 +90,7 @@ class MoveCardState extends State<MoveCard> {
             alignment: Alignment.centerLeft,
             child: Text(
               'Explanation',
-              style: Theme.of(context).textTheme.body2,
+              style: Theme.of(context).textTheme.bodyText1,
             ),
           ),
         ),
@@ -122,15 +125,15 @@ class MoveCardState extends State<MoveCard> {
     );
   }
 
-  _save() {
+  _save(Move move) {
     if (widget.onSave != null) {
-      widget.onSave(widget.move);
+      widget.onSave(move);
     }
   }
 
   _delete() {
-    if (widget.onSave != null) {
-      widget.onSave(widget.move);
+    if (widget.onDelete != null) {
+      widget.onDelete();
     }
   }
 }

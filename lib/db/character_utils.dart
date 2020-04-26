@@ -26,7 +26,7 @@ const ClassNamesMap = {
   ClassNames.immolator: 'immolator',
 };
 
-enum Alignment {
+enum AlignmentName {
   good,
   lawful,
   neutral,
@@ -35,15 +35,15 @@ enum Alignment {
 }
 
 const AlignmentMap = {
-  Alignment.good: 'good',
-  Alignment.lawful: 'lawful',
-  Alignment.neutral: 'neutral',
-  Alignment.chaotic: 'chaotic',
-  Alignment.evil: 'evil',
+  AlignmentName.good: 'good',
+  AlignmentName.lawful: 'lawful',
+  AlignmentName.neutral: 'neutral',
+  AlignmentName.chaotic: 'chaotic',
+  AlignmentName.evil: 'evil',
 };
 
 // ignore: non_constant_identifier_names
-final Map<String, Alignment> AlignmentNameMap = invertMap(AlignmentMap);
+final Map<String, AlignmentName> AlignmentNameMap = invertMap(AlignmentMap);
 
 enum Stats { str, dex, int, wis, cha, con }
 
@@ -162,10 +162,10 @@ const Map<CharacterKeys, String> CHARACTER_STAT_MODIFIER_LABELS = {
   CharacterKeys.cha: 'CHA',
 };
 
-const Map<Alignment, IconData> ALIGNMENT_ICON_MAP = {
-  Alignment.good: Icons.mood,
-  Alignment.lawful: Icons.sentiment_satisfied,
-  Alignment.neutral: Icons.sentiment_neutral,
-  Alignment.chaotic: Icons.sentiment_dissatisfied,
-  Alignment.evil: Icons.mood_bad,
+const Map<AlignmentName, IconData> ALIGNMENT_ICON_MAP = {
+  AlignmentName.good: Icons.mood,
+  AlignmentName.lawful: Icons.sentiment_satisfied,
+  AlignmentName.neutral: Icons.sentiment_neutral,
+  AlignmentName.chaotic: Icons.sentiment_dissatisfied,
+  AlignmentName.evil: Icons.mood_bad,
 };

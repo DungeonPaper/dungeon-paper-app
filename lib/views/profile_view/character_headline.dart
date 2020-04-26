@@ -1,10 +1,11 @@
-import '../../db/character.dart';
+import 'package:dungeon_paper/refactor/character.dart';
+
 import '../edit_character/edit_character_view.dart';
 import '../../utils.dart';
 import 'package:flutter/material.dart';
 
 class CharacterHeadline extends StatelessWidget {
-  final DbCharacter character;
+  final Character character;
   final bool editable;
 
   const CharacterHeadline({

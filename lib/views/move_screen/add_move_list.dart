@@ -73,6 +73,7 @@ class _AddMoveListState extends State<AddMoveList> {
             move: moves[int.parse(key)].elementAt(idx),
             mode: MoveCardMode.Addable,
             onSave: widget.onSave,
+            onDelete: null,
           ),
         );
       },

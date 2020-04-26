@@ -1,10 +1,8 @@
+import 'package:dungeon_paper/refactor/character.dart';
 import '../../components/animations/slide_route_from_right.dart';
 import '../../components/card_list_item.dart';
 import '../../components/confirmation_dialog.dart';
 import '../../components/scaffold_with_elevation.dart';
-import '../../db/character.dart';
-import '../../db/character_db.dart';
-import '../../db/character_utils.dart' as chr;
 import '../../components/dialogs.dart';
 import '../basic_info/change_alignment_dialog.dart';
 import '../profile_view/class_selection/class_selection_screen.dart';
@@ -16,7 +14,7 @@ import 'edit_basic_info_view.dart';
 import 'package:flutter/material.dart';
 
 class EditCharacterView extends StatefulWidget {
-  final DbCharacter character;
+  final Character character;
 
   const EditCharacterView({
     Key key,
@@ -164,7 +162,7 @@ class _EditCharacterViewState extends State<EditCharacterView> {
         cancelButtonText: Text('I regret clicking this'),
       ),
     )) {
-      deleteCharacter();
+      await widget.character.delete();
       await Future.delayed(Duration(milliseconds: 1000));
       Navigator.pop(context);
     }
@@ -186,10 +184,9 @@ class _EditCharacterViewState extends State<EditCharacterView> {
     );
   }
 
-  void Function(DbCharacter char, List<chr.CharacterKeys> keys)
-      _updateCharacter(BuildContext context) {
-    return (DbCharacter char, List<chr.CharacterKeys> keys) {
-      updateCharacter(char, keys);
+  void Function(Map<String, dynamic>) _updateCharacter(BuildContext context) {
+    return (data) async {
+      await widget.character.update(json: data);
       if (context != null) {
         Navigator.pop(context);
       }

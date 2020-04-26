@@ -1,4 +1,4 @@
-import '../../db/character.dart';
+import 'package:dungeon_paper/refactor/character.dart';
 import '../profile_view/base_stats/base_stats.dart';
 import '../profile_view/character_headline.dart';
 import '../profile_view/status_bars.dart';
@@ -9,7 +9,7 @@ import 'package:flutter/material.dart';
 import 'character_photo.dart';
 
 class ProfileView extends StatelessWidget {
-  final DbCharacter character;
+  final Character character;
 
   ProfileView({
     Key key,
@@ -53,7 +53,7 @@ class PhotoAndSummary extends StatelessWidget {
     @required this.character,
   }) : super(key: key);
 
-  final DbCharacter character;
+  final Character character;
 
   @override
   Widget build(BuildContext context) {

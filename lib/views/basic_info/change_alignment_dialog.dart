@@ -1,5 +1,4 @@
-import '../../db/character_utils.dart';
-import '../../db/character.dart';
+import 'package:dungeon_paper/refactor/character.dart';
 import '../../db/character_utils.dart' as chr;
 import '../../components/dialogs.dart';
 import '../edit_character/alignment_description_card.dart';
@@ -10,7 +9,7 @@ class ChangeAlignmentDialog extends StatelessWidget {
   final DialogMode mode;
   final CharSaveFunction onSave;
   final ScaffoldBuilderFunction builder;
-  final DbCharacter character;
+  final Character character;
 
   const ChangeAlignmentDialog({
     Key key,
@@ -41,7 +40,7 @@ class ChangeAlignmentDialog extends StatelessWidget {
     Widget child = Padding(
       padding: const EdgeInsets.all(16.0),
       child: Column(
-        children: chr.Alignment.values
+        children: chr.AlignmentName.values
             .map(
               (alignment) => Padding(
                 padding: EdgeInsets.only(bottom: 16.0),
@@ -61,10 +60,9 @@ class ChangeAlignmentDialog extends StatelessWidget {
     return child;
   }
 
-  Function() changeAlignment(chr.Alignment def) {
+  Function() changeAlignment(chr.AlignmentName def) {
     return () async {
-      character.alignment = def;
-      onSave(character, [CharacterKeys.alignment]);
+      onSave({'alignment': def});
     };
   }
 }

@@ -9,10 +9,12 @@ class AddInventoryItemContainer extends StatefulWidget {
     Key key,
     @required this.item,
     @required this.mode,
+    @required this.onSave,
   }) : super(key: key);
 
   final InventoryItem item;
   final DialogMode mode;
+  final void Function(InventoryItem) onSave;
 
   @override
   AddInventoryItemContainerState createState() =>
@@ -43,6 +45,12 @@ class AddInventoryItemContainerState extends State<AddInventoryItemContainer>
     return CustomInventoryItemForm(
       mode: widget.mode,
       item: widget.item,
+      onSave: (item) {
+        if (widget.onSave != null) {
+          widget.onSave(item);
+        }
+        Navigator.pop(context);
+      },
       builder: (ctx, form, onSave) {
         List<Widget> actions = <Widget>[
           IconButton(
@@ -75,7 +83,7 @@ class AddInventoryItemContainerState extends State<AddInventoryItemContainer>
             Container(
               key: PageStorageKey<String>(texts[0]),
               color: Theme.of(context).scaffoldBackgroundColor,
-              child: ExistingInventoryItemsList(),
+              child: ExistingInventoryItemsList(onSave: widget.onSave),
             ),
             formContainer
           ],

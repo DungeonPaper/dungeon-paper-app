@@ -1,8 +1,8 @@
 import 'package:dungeon_paper/components/card_list_item.dart';
+import 'package:dungeon_paper/flutter_utils/flutter_utils.dart';
 import 'package:dungeon_world_data/player_class.dart';
 import 'package:dungeon_world_data/alignment.dart' as dw_alignment;
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 
 class ClassDescription extends StatelessWidget {
   final PlayerClass classDef;
@@ -20,13 +20,13 @@ class ClassDescription extends StatelessWidget {
     TextTheme textTheme = theme.textTheme;
     return Container(
       child: DefaultTextStyle(
-        style: textTheme.body1,
+        style: textTheme.bodyText2,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: <Widget>[
             Text(
               'A little bit about ${classDef.name}s...',
-              style: textTheme.title,
+              style: textTheme.headline6,
             ),
             spacer,
             Text(classDef.description),
@@ -42,8 +42,8 @@ class ClassDescription extends StatelessWidget {
                     value: Text(classDef.baseHP.toString()),
                   ),
                   StatIcon(
-                    icon: SvgPicture.asset(
-                      'assets/dice.svg',
+                    icon: PlatformSvg.asset(
+                      'dice.svg',
                       // color: color,
                       width: 40.0,
                       height: 40.0,
@@ -86,7 +86,7 @@ class StatIcon extends StatelessWidget {
         icon,
         DefaultTextStyle(
           child: value,
-          style: textTheme.headline.copyWith(fontSize: 30),
+          style: textTheme.headline5.copyWith(fontSize: 30),
         ),
         DefaultTextStyle(
           child: label,
@@ -124,7 +124,7 @@ class AlignmentList extends StatelessWidget {
             children: <Widget>[
               Text('Available alignments:',
                   style:
-                      textTheme.subtitle.copyWith(color: theme.primaryColor)),
+                      textTheme.subtitle2.copyWith(color: theme.primaryColor)),
               for (var alignment in alignments)
                 TitleSubtitleRow(
                   // contentPadding: EdgeInsets.symmetric(vertical: 8.0),

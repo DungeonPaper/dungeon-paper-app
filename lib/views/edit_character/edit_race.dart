@@ -1,6 +1,5 @@
 import 'package:dungeon_paper/components/card_list_item.dart';
-import 'package:dungeon_paper/db/character_utils.dart';
-import '../../db/character.dart';
+import 'package:dungeon_paper/refactor/character.dart';
 import '../../components/dialogs.dart';
 import 'character_wizard_utils.dart';
 import 'package:dungeon_world_data/move.dart';
@@ -8,7 +7,7 @@ import 'package:dungeon_world_data/player_class.dart';
 import 'package:flutter/material.dart';
 
 class ChangeRaceDialog extends StatelessWidget {
-  final DbCharacter character;
+  final Character character;
   final DialogMode mode;
   final CharSaveFunction onSave;
   final ScaffoldBuilderFunction builder;
@@ -65,7 +64,7 @@ class ChangeRaceDialog extends StatelessWidget {
   Function() changeRace(Move def) {
     return () async {
       character.race = def;
-      onSave(character, [CharacterKeys.race]);
+      onSave({'race': def.key});
     };
   }
 }

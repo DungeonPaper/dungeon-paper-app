@@ -1,6 +1,6 @@
+import 'package:dungeon_paper/flutter_utils/flutter_utils.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 
 enum Pages { Home, Battle, Reference, Inventory, Notes }
 
@@ -50,8 +50,8 @@ class NavBarState extends State<NavBar> {
         Text('Profile'), (color) => Icon(Icons.person, color: color)),
     Pages.Battle: PageDetails(
         Text('Battle'),
-        (color) => SvgPicture.asset(
-              'assets/swords.svg',
+        (color) => PlatformSvg.asset(
+              'swords.svg',
               color: color,
               width: 24,
               height: 24,
@@ -60,9 +60,9 @@ class NavBarState extends State<NavBar> {
         Text('Notes'), (color) => Icon(Icons.speaker_notes, color: color)),
     Pages.Inventory: PageDetails(
         Text('Inventory'),
-        (color) => SvgPicture.asset(
-              // 'assets/armor.svg',
-              'assets/bag.svg',
+        (color) => PlatformSvg.asset(
+              // 'armor.svg',
+              'bag.svg',
               color: color,
               width: 24,
               height: 24,
