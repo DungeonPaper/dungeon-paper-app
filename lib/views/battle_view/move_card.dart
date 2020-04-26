@@ -1,6 +1,5 @@
 import '../../components/card_bottom_controls.dart';
 import '../../components/confirmation_dialog.dart';
-import '../../db/moves.dart';
 import '../../components/dialogs.dart';
 import '../move_screen/add_move_screen.dart';
 import 'package:dungeon_world_data/move.dart';
@@ -10,17 +9,19 @@ import 'package:flutter_markdown/flutter_markdown.dart';
 enum MoveCardMode { Addable, Editable, Fixed }
 
 class MoveCard extends StatefulWidget {
-  final num index;
   final Move move;
   final MoveCardMode mode;
   final bool raceMove;
+  final void Function(Move move) onSave;
+  final void Function() onDelete;
 
   const MoveCard({
     Key key,
     @required this.move,
-    @required this.index,
+    @required this.onSave,
+    @required this.onDelete,
+    this.mode = MoveCardMode.Fixed,
     this.raceMove = false,
-    this.mode,
   }) : super(key: key);
 
   @override
@@ -46,9 +47,12 @@ class MoveCardState extends State<MoveCard> {
                 MaterialPageRoute(
                   fullscreenDialog: true,
                   builder: (ctx) => AddMoveScreen(
-                    index: widget.index,
                     move: widget.move,
                     mode: DialogMode.Edit,
+                    onSave: (move) {
+                      _save(move);
+                      Navigator.pop(ctx);
+                    },
                   ),
                 ),
               ),
@@ -60,7 +64,7 @@ class MoveCardState extends State<MoveCard> {
                         ),
                       ) ==
                       true
-                  ? deleteMove(widget.move)
+                  ? _delete
                   : null,
             )
           : widget.mode == MoveCardMode.Addable
@@ -71,10 +75,7 @@ class MoveCardState extends State<MoveCard> {
                     child: RaisedButton(
                       color: Theme.of(context).primaryColorLight,
                       child: Text('Add Move'),
-                      onPressed: () {
-                        createMove(widget.move);
-                        Navigator.pop(context, true);
-                      },
+                      onPressed: () => _save(widget.move),
                     ),
                   ),
                 )
@@ -87,8 +88,10 @@ class MoveCardState extends State<MoveCard> {
           padding: const EdgeInsets.symmetric(horizontal: 16.0),
           child: Align(
             alignment: Alignment.centerLeft,
-            child:
-                Text('Explanation', style: Theme.of(context).textTheme.body2),
+            child: Text(
+              'Explanation',
+              style: Theme.of(context).textTheme.bodyText1,
+            ),
           ),
         ),
         Padding(
@@ -97,7 +100,7 @@ class MoveCardState extends State<MoveCard> {
         ),
       ]);
     }
-    var expansionTile = ExpansionTile(
+    Widget expansionTile = ExpansionTile(
       title: widget.raceMove
           ? Row(
               children: <Widget>[
@@ -120,5 +123,17 @@ class MoveCardState extends State<MoveCard> {
       ),
       child: expansionTile,
     );
+  }
+
+  _save(Move move) {
+    if (widget.onSave != null) {
+      widget.onSave(move);
+    }
+  }
+
+  _delete() {
+    if (widget.onDelete != null) {
+      widget.onDelete();
+    }
   }
 }

@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
-import '../flutter_utils.dart';
+import '../flutter_utils/flutter_utils.dart';
 
 class NumberController extends StatefulWidget {
   final num value;
-  final VoidCallbackFunc<num> onChange;
+  final VoidCallbackDelegate<num> onChange;
   final double height;
   final num min;
   final num max;
@@ -95,10 +95,12 @@ class _NumberControllerState extends State<NumberController> {
 
   bool get _validate {
     num intVal = int.tryParse(_controller.text);
-    if (widget.min > -double.infinity)
+    if (widget.min > -double.infinity) {
       return intVal != null && intVal >= widget.min;
-    if (widget.max < double.infinity)
+    }
+    if (widget.max < double.infinity) {
       return intVal != null && intVal <= widget.max;
+    }
     return true;
   }
 

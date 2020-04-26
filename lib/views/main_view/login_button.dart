@@ -1,29 +1,19 @@
-import 'package:dungeon_paper/db/auth.dart';
-import 'package:dungeon_paper/db/user.dart';
-import 'package:dungeon_paper/redux/actions.dart';
 import 'package:dungeon_paper/redux/stores/connectors.dart';
 import 'package:dungeon_paper/redux/stores/stores.dart';
-import 'package:firebase_auth/firebase_auth.dart';
+import 'package:dungeon_paper/refactor/auth.dart';
 import 'package:flutter/material.dart';
 
-class LoginButton extends StatefulWidget {
+class LoginButton extends StatelessWidget {
   final void Function() onUserChange;
+
   LoginButton({Key key, this.onUserChange}) : super(key: key);
 
   @override
-  LoginButtonState createState() =>
-      LoginButtonState(onUserChange: onUserChange);
-}
-
-class LoginButtonState extends State<LoginButton> {
-  final void Function() onUserChange;
-  LoginButtonState({this.onUserChange});
-
-  @override
   Widget build(BuildContext context) {
-    return DWStoreConnector(
+    return DWStoreConnector<DWStore>(
       builder: (context, state) {
-        DbUser user = state.user.current;
+        print('state: $state');
+        var user = state.user.current;
         if (user == null) {
           return Container(
             width: 220,
@@ -43,11 +33,10 @@ class LoginButtonState extends State<LoginButton> {
   Function() _handleSignIn(BuildContext context) {
     return () async {
       try {
-        AuthCredential creds = await auth.signInWithGoogle();
-        if (creds == null) {
+        var user = await signInFlow(SignInMethod.Google);
+        if (user == null) {
           throw ('user_canceled');
         }
-        await auth.getFirebaseUser(creds);
         if (onUserChange != null) {
           onUserChange();
         }
@@ -57,7 +46,6 @@ class LoginButtonState extends State<LoginButton> {
         // }
         print('SIGN IN ERROR:');
         print(e);
-        dwStore.dispatch(UserActions.noLogin());
         Scaffold.of(context, nullOk: true).showSnackBar(
           SnackBar(
             content: Text('Login failed.'),

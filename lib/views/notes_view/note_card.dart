@@ -1,18 +1,22 @@
-import '../../components/card_bottom_controls.dart';
-import '../../components/confirmation_dialog.dart';
-import '../../db/notes.dart';
-import '../../components/dialogs.dart';
-import 'edit_note_screen.dart';
+import 'package:dungeon_paper/components/card_bottom_controls.dart';
+import 'package:dungeon_paper/components/confirmation_dialog.dart';
+import 'package:dungeon_paper/components/dialogs.dart';
+import 'package:dungeon_paper/db/notes.dart';
+import 'package:dungeon_paper/views/notes_view/edit_note_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_markdown/flutter_markdown.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class NoteCard extends StatefulWidget {
   final Note note;
+  final void Function(Note) onSave;
+  final void Function() onDelete;
 
   NoteCard({
     Key key,
     @required this.note,
+    @required this.onSave,
+    @required this.onDelete,
   }) : super(key: key);
 
   @override
@@ -42,7 +46,7 @@ class NoteCardState extends State<NoteCard> {
             padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
             child: MarkdownBody(
                 onTapLink: (url) => _launchURL(url),
-                data: desc.trim().length > 0
+                data: desc.trim().isNotEmpty
                     ? desc
                     : 'This note has no content.'),
           ),
@@ -62,22 +66,26 @@ class NoteCardState extends State<NoteCard> {
       MaterialPageRoute(
         fullscreenDialog: true,
         builder: (ctx) => EditNoteScreen(
-              note: widget.note,
-              mode: DialogMode.Edit,
-            ),
+          note: widget.note,
+          mode: DialogMode.Edit,
+          onSave: widget.onSave,
+        ),
       ),
     );
   }
 
   void deleteCurrentNote(BuildContext context) async {
     if (await showDialog(
-      context: context,
-      builder: (context) => ConfirmationDialog(
-          title: const Text('Delete Note'),
-          text: const Text('Are you sure?'),
-          cancelButtonText: Text('Cancel')),
-    )) {
-      deleteNote(widget.note);
+          context: context,
+          builder: (context) => ConfirmationDialog(
+              title: const Text('Delete Note'),
+              text: const Text('Are you sure?'),
+              cancelButtonText: Text('Cancel')),
+        ) ==
+        true) {
+      if (widget.onDelete != null) {
+        widget.onDelete();
+      }
     }
   }
 

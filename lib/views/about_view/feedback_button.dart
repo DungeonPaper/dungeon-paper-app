@@ -11,7 +11,7 @@ class FeedbackButton extends StatefulWidget {
   final Widget Function(Function() onPressed, String mailtoUrl) builder;
   final Widget icon;
   final String labelText;
-  static const Icon feedbackIcon = const Icon(Icons.feedback);
+  static const Icon feedbackIcon = Icon(Icons.feedback);
   static const feedbackLabel = 'Send Feedback';
 
   const FeedbackButton({
@@ -113,35 +113,38 @@ class _FeedbackButtonState extends State<FeedbackButton> {
   }
 
   _getUserId() async {
-    if (this.mounted)
+    if (this.mounted) {
       setState(() {
         userId = dwStore.state.user.currentUserDocID;
       });
+    }
   }
 
   _getEmail() async {
     var secrets = await loadSecrets();
-    if (this.mounted)
+    if (this.mounted) {
       setState(() {
         email = secrets['FEEDBACK_EMAIL'];
       });
+    }
   }
 
   _getVersionData() async {
     PackageInfo packageInfo = await PackageInfo.fromPlatform();
-    if (this.mounted)
+    if (this.mounted) {
       setState(() {
         version = packageInfo.version;
         buildNumber = packageInfo.buildNumber;
       });
+    }
   }
 
   String get subject => Uri.encodeComponent('Dungeon Paper feedback');
   String get body => Uri.encodeComponent("""\n\n\n\n
     --- PACKAGE INFO ---
-    Version: $version
-    Build Number: $buildNumber
-    User ID: ${userId ?? 'Unavailable'}
+    Version: $version\n
+    Build Number: $buildNumber\n
+    User ID: ${userId ?? 'Unavailable'}\n
     """);
   // '\n\n\n\n\n--- PACKAGE INFO ---\nVersion: $version\nBuild Number: $buildNumber\nUser ID: ${userId ?? 'Unavailable'}');
   String get mailtoUrl => 'mailto:$email?subject=$subject&body=$body';

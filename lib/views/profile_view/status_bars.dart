@@ -1,10 +1,11 @@
-import '../../db/character.dart';
+import 'package:dungeon_paper/refactor/character.dart';
+
 import '../basic_info/hp_edit_dialog.dart';
 import '../basic_info/xp_edit_dialog.dart';
 import 'package:flutter/material.dart';
 
 class StatusBars extends StatelessWidget {
-  final DbCharacter character;
+  final Character character;
 
   const StatusBars({Key key, @required this.character}) : super(key: key);
   @override
@@ -72,11 +73,11 @@ class StatusBars extends StatelessWidget {
     );
   }
 
-  showHpEditDialog(BuildContext context, DbCharacter character) => showDialog(
+  showHpEditDialog(BuildContext context, Character character) => showDialog(
       context: context,
       builder: (context) => EditHPDialog(character: character));
 
-  showXpEditDialog(BuildContext context, DbCharacter character) => showDialog(
+  showXpEditDialog(BuildContext context, Character character) => showDialog(
       context: context,
       builder: (context) => XPEditDialog(character: character));
 }

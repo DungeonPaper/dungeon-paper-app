@@ -1,13 +1,14 @@
+import 'package:dungeon_paper/refactor/character.dart';
+
 import '../../components/number_controller.dart';
-import '../../db/character.dart';
 import '../../db/character_utils.dart';
 import '../../components/dialogs.dart';
-import '../../flutter_utils.dart';
+import '../../flutter_utils/flutter_utils.dart';
 import 'package:flutter/material.dart';
 import '../edit_character/character_wizard_utils.dart';
 
 class EditStats extends StatefulWidget {
-  final DbCharacter character;
+  final Character character;
   final CharSaveFunction onSave;
   final ScaffoldBuilderFunction builder;
 
@@ -83,14 +84,14 @@ class _EditStatsState extends State<EditStats> {
   }
 
   void Function(num) _valueUpdateBuilder(
-      CallbackFunc<num, VoidEmptyCallbackFunc> setter) {
+      CallbackDelegate<num, VoidEmptyCallbackDelegate> setter) {
     return (val) {
       final setterVal = setter(val);
       setState(setterVal);
     };
   }
 
-  CallbackFunc<num, VoidEmptyCallbackFunc> _setter(CharacterKeys stat) {
+  CallbackDelegate<num, VoidEmptyCallbackDelegate> _setter(CharacterKeys stat) {
     Function(num) setter;
     Function(bool) errorSetter;
     switch (stat) {
@@ -178,18 +179,15 @@ class _EditStatsState extends State<EditStats> {
   }
 
   _save() {
-    final DbCharacter character = widget.character;
-    final List<CharacterKeys> keys = ORDERED_STATS;
-
-    character.str = _str;
-    character.dex = _dex;
-    character.cha = _cha;
-    character.wis = _wis;
-    character.int = _int;
-    character.con = _con;
-
     if (widget.onSave != null) {
-      widget.onSave(character, keys);
+      widget.onSave({
+        'str': _str,
+        'dex': _dex,
+        'cha': _cha,
+        'wis': _wis,
+        'int': _int,
+        'con': _con,
+      });
     }
   }
 
@@ -226,7 +224,7 @@ class EditStatListTile extends StatelessWidget {
           ),
           subtitle: Text(
             "${CHARACTER_STAT_MODIFIER_LABELS[stat]}: " +
-                "${DbCharacter.statModifier(value)}",
+                "${CharacterFields.statModifier(value)}",
           ),
           trailing: Container(
             width: 230,

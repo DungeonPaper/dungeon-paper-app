@@ -25,12 +25,12 @@ class EditDisplayNameCard extends StatelessWidget {
                 decoration: InputDecoration(
                   labelText: 'Character name',
                   labelStyle: TextStyle(
-                    fontSize: Theme.of(context).textTheme.subhead.fontSize,
+                    fontSize: Theme.of(context).textTheme.subtitle1.fontSize,
                   ),
                   hintText: "Your character's name",
                 ),
                 style: TextStyle(
-                  fontSize: Theme.of(context).textTheme.title.fontSize,
+                  fontSize: Theme.of(context).textTheme.headline6.fontSize,
                 ),
               ),
             ),

@@ -1,12 +1,12 @@
-import 'package:dungeon_paper/db/character.dart';
+import 'package:dungeon_paper/flutter_utils/flutter_utils.dart';
+import 'package:dungeon_paper/refactor/character.dart';
 import 'package:dungeon_paper/utils.dart';
 import 'package:dungeon_world_data/tag.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 
 class LoadDisplay extends StatelessWidget {
-  final DbCharacter character;
+  final Character character;
 
   const LoadDisplay({
     Key key,
@@ -14,13 +14,13 @@ class LoadDisplay extends StatelessWidget {
   }) : super(key: key);
 
   num get maxLoad =>
-      character.mainClass.load + DbCharacter.statModifier(character.str);
+      character.mainClass.load + CharacterFields.statModifier(character.str);
 
   num get currentLoad {
     double count = 0.0;
     character.inventory.forEach((item) {
       Tag wght =
-          item.tags?.firstWhere((t) => t.name == 'weight', orElse: () => null);
+          item.tags?.firstWhere((t) => t?.name == 'weight', orElse: () => null);
       if (wght != null && wght.hasValue) {
         num wghtValue = 0;
         if (wght.value is num) {
@@ -48,7 +48,7 @@ class LoadDisplay extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Tooltip(
-      message: 'Encumbrance',
+      message: 'Current Load, from inventory items with "Weight" tag',
       child: Chip(
         backgroundColor: severity.background,
         padding: EdgeInsets.all(12.0),
@@ -58,10 +58,10 @@ class LoadDisplay extends StatelessWidget {
             mainAxisSize: MainAxisSize.min,
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Text('ENC.'),
+              Text('LOAD'),
               SizedBox.fromSize(size: Size.square(10)),
-              SvgPicture.asset(
-                'assets/dumbbell.svg',
+              PlatformSvg.asset(
+                'dumbbell.svg',
                 width: 20,
                 color: severity.foreground,
               ),

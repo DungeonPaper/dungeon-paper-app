@@ -1,4 +1,4 @@
-import '../../db/character.dart';
+import 'package:dungeon_paper/refactor/character.dart';
 import '../profile_view/base_stats/base_stats.dart';
 import '../profile_view/character_headline.dart';
 import '../profile_view/status_bars.dart';
@@ -9,7 +9,7 @@ import 'package:flutter/material.dart';
 import 'character_photo.dart';
 
 class ProfileView extends StatelessWidget {
-  final DbCharacter character;
+  final Character character;
 
   ProfileView({
     Key key,
@@ -20,7 +20,7 @@ class ProfileView extends StatelessWidget {
   Widget build(BuildContext context) {
     return OrientationBuilder(builder: (context, orientation) {
       List<Widget> children = [
-        CharacterHeader(character: character),
+        PhotoAndSummary(character: character),
         ArmorAndHitDice(character: character),
         StatusBars(character: character),
         BaseStats(character: character),
@@ -44,16 +44,16 @@ class ProfileView extends StatelessWidget {
   }
 }
 
-class CharacterHeader extends StatelessWidget {
+class PhotoAndSummary extends StatelessWidget {
   final bool editable;
 
-  const CharacterHeader({
+  const PhotoAndSummary({
     Key key,
     this.editable = true,
     @required this.character,
   }) : super(key: key);
 
-  final DbCharacter character;
+  final Character character;
 
   @override
   Widget build(BuildContext context) {

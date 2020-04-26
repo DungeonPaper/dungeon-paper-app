@@ -1,5 +1,6 @@
+import 'package:dungeon_paper/db/inventory_items.dart';
+import 'package:dungeon_paper/refactor/character.dart';
 import '../../components/categorized_list.dart';
-import '../../db/character.dart';
 import '../equipment_view/coins_display.dart';
 import '../equipment_view/inventory_item_card.dart';
 import '../equipment_view/load_display.dart';
@@ -12,11 +13,11 @@ enum EquipmentCats {
 
 const EquipmentTitles = {
   EquipmentCats.Stats: null,
-  EquipmentCats.Items: const Text('Posessions'),
+  EquipmentCats.Items: Text('Posessions'),
 };
 
 class InventoryView extends StatelessWidget {
-  final DbCharacter character;
+  final Character character;
 
   const InventoryView({
     Key key,
@@ -30,12 +31,12 @@ class InventoryView extends StatelessWidget {
       itemCount: (ctx, cat) => cat == 0 ? 1 : equipment.length,
       titleBuilder: (ctx, cat, i) => EquipmentTitles[cat],
       itemBuilder: childBuilderDelegator,
-      categories: [EquipmentCats.Stats, EquipmentCats.Items],
+      items: [EquipmentCats.Stats, EquipmentCats.Items],
       spacerCount: 1,
     );
   }
 
-  Widget childBuilderDelegator(BuildContext ctx, dynamic cat, num i) {
+  Widget childBuilderDelegator(BuildContext ctx, dynamic cat, num i, num catI) {
     var equipment = character.inventory;
     if (cat == EquipmentCats.Stats) {
       return Wrap(
@@ -55,6 +56,8 @@ class InventoryView extends StatelessWidget {
         key: PageStorageKey(equipment[i].key),
         item: equipment[i],
         mode: InventoryItemCardMode.Editable,
+        onSave: (item) => updateInventoryItem(character, item),
+        onDelete: () => deleteInventoryItem(character, equipment[i]),
       ),
     );
   }

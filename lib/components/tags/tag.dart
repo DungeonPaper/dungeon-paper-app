@@ -20,11 +20,12 @@ class TagChip extends StatelessWidget {
     var onPressCb = pass1(onPressed, tag);
     var onDeleteCb = pass1(onDelete, tag);
 
-    if (onPressed == null)
+    if (onPressed == null) {
       return Chip(
         onDeleted: onDeleteCb,
         label: label,
       );
+    }
 
     return InputChip(
       onPressed: onPressCb,
