@@ -49,6 +49,7 @@ class AddSpellScreenState extends State<AddSpellScreen>
       mode: widget.mode,
       index: widget.index,
       spell: widget.spell,
+      onSave: widget.onSave,
       builder: (ctx, form, onSave) {
         List<Widget> actions = <Widget>[
           IconButton(
