@@ -1,6 +1,4 @@
 import 'dart:math';
-
-import 'package:pedantic/pedantic.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dungeon_paper/redux/actions.dart';
 import 'package:dungeon_paper/redux/stores/stores.dart';
