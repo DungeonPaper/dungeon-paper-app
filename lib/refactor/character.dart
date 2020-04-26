@@ -30,8 +30,10 @@ class Character extends FirebaseEntity with CharacterFields {
 
   @override
   Future<void> update({Map<String, dynamic> json, bool save = true}) async {
-    unawaited(super.update(json: json, save: save));
-    dwStore.dispatch(CharacterActions.updateCharacter(this));
+    await super.update(json: json, save: save);
+    if (save && docID != null) {
+      dwStore.dispatch(CharacterActions.updateCharacter(this));
+    }
   }
 
   @override

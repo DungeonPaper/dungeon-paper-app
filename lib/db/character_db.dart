@@ -5,13 +5,12 @@ import 'package:dungeon_paper/refactor/character.dart';
 import '../redux/actions.dart';
 
 Future<Character> setCurrentCharacterById(String documentId) async {
-  DocumentSnapshot character = await firestore.document(documentId).get();
-  Character dbCharacter =
-      Character(ref: character.reference, data: character.data);
+  DocumentSnapshot snapshot = await firestore.document(documentId).get();
+  Character character = Character(ref: snapshot.reference, data: snapshot.data);
 
   dwStore.dispatch(
-    CharacterActions.setCurrentChar(character.documentID, dbCharacter),
+    CharacterActions.setCurrentChar(character),
   );
 
-  return dbCharacter;
+  return character;
 }

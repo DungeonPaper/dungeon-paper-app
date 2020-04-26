@@ -291,7 +291,9 @@ class PlayerClassField extends DWEntityField<PlayerClass> {
       ? json
       : {
           ...json,
-          'looks': (json['looks'] as List).asMap(),
+          'looks': (json['looks'] as List<List<String>>)
+              .asMap()
+              .map((k, v) => MapEntry<String, List<String>>(k.toString(), v)),
         };
 }
 

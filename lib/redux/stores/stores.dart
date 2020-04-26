@@ -42,7 +42,6 @@ var initialState = DWStore(
   },
   user: UserStore(current: null, currentUserDocID: null, firebaseUser: null),
   characters: CharacterStore(
-    currentCharDocID: null,
     current: null,
     characters: Map<String, Character>(),
   ),

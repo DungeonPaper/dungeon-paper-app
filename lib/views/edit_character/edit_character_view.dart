@@ -1,3 +1,4 @@
+import 'package:dungeon_paper/redux/actions.dart';
 import 'package:dungeon_paper/refactor/character.dart';
 import '../../components/animations/slide_route_from_right.dart';
 import '../../components/card_list_item.dart';
@@ -162,6 +163,7 @@ class _EditCharacterViewState extends State<EditCharacterView> {
         cancelButtonText: Text('I regret clicking this'),
       ),
     )) {
+      dwStore.dispatch(CharacterActions.removeCharacter(widget.character));
       await widget.character.delete();
       await Future.delayed(Duration(milliseconds: 1000));
       Navigator.pop(context);
@@ -187,6 +189,7 @@ class _EditCharacterViewState extends State<EditCharacterView> {
   void Function(Map<String, dynamic>) _updateCharacter(BuildContext context) {
     return (data) async {
       await widget.character.update(json: data);
+      setState(() {});
       if (context != null) {
         Navigator.pop(context);
       }

@@ -2,7 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dungeon_paper/refactor/firebase_entity/fields/fields.dart';
 
 abstract class FirebaseEntity {
-  final DocumentReference ref;
+  DocumentReference ref;
   String docID;
   DocumentSnapshot snapshot;
   DateTime lastUpdated;
@@ -50,9 +50,6 @@ abstract class FirebaseEntity {
   void create([Map<String, dynamic> data]) => update(json: data);
 
   Future<void> update({Map<String, dynamic> json, bool save = true}) async {
-    if (ref == null) {
-      return _noRef();
-    }
     if (json == null) {
       json = Map.fromEntries(
         fields.dirtyFields.map(
@@ -65,6 +62,9 @@ abstract class FirebaseEntity {
     json['lastUpdated'] = DateTime.now();
 
     if (save) {
+      if (ref == null) {
+        return _noRef();
+      }
       print('Updating $this');
       print(json);
       await ref.updateData(json);

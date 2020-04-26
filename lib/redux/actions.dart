@@ -68,6 +68,16 @@ class SetCharacters {
   SetCharacters(this.characters);
 }
 
+class AddCharacter {
+  final Character character;
+  AddCharacter(this.character);
+}
+
+class RemoveCharacter {
+  final Character character;
+  RemoveCharacter(this.character);
+}
+
 class UpdateCharacter {
   final Character character;
   UpdateCharacter(this.character);
@@ -76,11 +86,17 @@ class UpdateCharacter {
 class RemoveAll {}
 
 class CharacterActions {
-  static SetCurrentChar setCurrentChar(String id, Character data) =>
-      SetCurrentChar(id, data);
+  static SetCurrentChar setCurrentChar(Character data) =>
+      SetCurrentChar(data.docID, data);
 
   static SetCharacters setCharacters(Map<String, Character> characters) =>
       SetCharacters(characters);
+
+  static AddCharacter addCharacter(Character character) =>
+      AddCharacter(character);
+
+  static RemoveCharacter removeCharacter(Character character) =>
+      RemoveCharacter(character);
 
   static UpdateCharacter updateCharacter(Character character) =>
       UpdateCharacter(character);
