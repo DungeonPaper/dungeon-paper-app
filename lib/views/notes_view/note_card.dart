@@ -68,7 +68,12 @@ class NoteCardState extends State<NoteCard> {
         builder: (ctx) => EditNoteScreen(
           note: widget.note,
           mode: DialogMode.Edit,
-          onSave: widget.onSave,
+          onSave: (note) {
+            if (widget.onSave != null) {
+              widget.onSave(note);
+            }
+            Navigator.pop(ctx);
+          },
         ),
       ),
     );

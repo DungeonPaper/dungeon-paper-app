@@ -35,7 +35,7 @@ class NotesView extends StatelessWidget {
             key: Key(note.key),
             note: note,
             onSave: (_note) => updateNote(character, _note),
-            onDelete: () => updateNote(character, note),
+            onDelete: () => deleteNote(character, note),
           ),
         );
       },
