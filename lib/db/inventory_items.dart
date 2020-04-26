@@ -1,12 +1,8 @@
-import 'package:dungeon_paper/db/character.dart';
-import 'package:dungeon_paper/redux/stores/stores.dart';
+import 'package:dungeon_paper/refactor/character.dart';
 import 'package:dungeon_paper/utils.dart';
 import 'package:dungeon_world_data/equipment.dart';
 import 'package:dungeon_world_data/tag.dart';
 import 'package:uuid/uuid.dart';
-
-import 'character_db.dart';
-import 'character_utils.dart';
 
 enum EquipmentKeys { key, item, amount }
 
@@ -54,54 +50,38 @@ class InventoryItem extends Equipment {
     map['amount'] = amount;
     return map;
   }
+
+  @override
+  InventoryItem copy() {
+    return InventoryItem.fromJSON(toJSON());
+  }
 }
 
 ReturnPredicate<InventoryItem> invItemMatcher = matcher(
     (InventoryItem i, InventoryItem o) => i.key != null && i.key == o.key);
 
-Future updateInventoryItem(InventoryItem item) async {
-  if (dwStore.state.characters.current == null) {
-    throw ('No character loaded.');
-  }
-
-  DbCharacter character = dwStore.state.characters.current;
-  num index = character.inventory.indexWhere(invItemMatcher(item));
-  character.inventory[index] = item;
-  await updateCharacter(character, [CharacterKeys.inventory]);
+Future updateInventoryItem(Character character, InventoryItem item) async {
+  await character.update(json: {
+    'inventory': findAndReplaceInList(character.inventory, item),
+  });
 }
 
-Future deleteInventoryItem(InventoryItem item) async {
-  if (dwStore.state.characters.current == null) {
-    throw ('No character loaded.');
-  }
-
-  DbCharacter character = dwStore.state.characters.current;
-  num index = character.inventory.indexWhere(invItemMatcher(item));
-  character.inventory.removeAt(index);
-  return updateCharacter(character, [CharacterKeys.inventory]);
+Future deleteInventoryItem(Character character, InventoryItem item) async {
+  return character
+      .update(json: {'inventory': removeFromList(character.inventory, item)});
 }
 
-Future createInventoryItem(InventoryItem item) async {
-  if (dwStore.state.characters.current == null) {
-    throw ('No character loaded.');
-  }
-
-  DbCharacter character = dwStore.state.characters.current;
-  character.inventory.add(item);
-  return updateCharacter(character, [CharacterKeys.inventory]);
+Future createInventoryItem(Character character, InventoryItem item) async {
+  return character
+      .update(json: {'inventory': addToList(character.inventory, item)});
 }
 
-Future incrItemAmount(InventoryItem item, num amount) async {
-  if (dwStore.state.characters.current == null) {
-    throw ('No character loaded.');
-  }
-
-  DbCharacter character = dwStore.state.characters.current;
-  item.amount += amount;
-  item.amount = clamp(item.amount, 0, double.infinity).toInt();
-  num index = character.inventory.indexWhere(invItemMatcher(item));
-  print(item);
-  print("matching: ${item.key}");
-  character.inventory[index] = item;
-  return await updateCharacter(character, [CharacterKeys.inventory]);
+Future incrItemAmount(
+    Character character, InventoryItem item, num amount) async {
+  return await character.update(json: {
+    'inventory': findAndReplaceInList(
+      character.inventory,
+      item..amount = clamp(amount, 0, double.infinity).toInt(),
+    ),
+  });
 }

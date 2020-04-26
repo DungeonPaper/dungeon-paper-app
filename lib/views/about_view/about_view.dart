@@ -44,7 +44,7 @@ class _AboutViewState extends State<AboutView> {
               children: <Widget>[
                 SizedBox(width: MediaQuery.of(context).size.width),
                 Text('Dungeon Paper',
-                    style: Theme.of(context).textTheme.headline),
+                    style: Theme.of(context).textTheme.headline5),
                 VersionNumber.text(prefix: 'Version'),
                 Container(
                   width: 300,
@@ -100,9 +100,9 @@ class _AboutViewState extends State<AboutView> {
                 ),
                 Text('© 2018-$year'),
                 SizedBox(height: 15),
-                Text('Credits', style: Theme.of(context).textTheme.title),
+                Text('Credits', style: Theme.of(context).textTheme.headline6),
                 SizedBox(height: 10.0),
-                Text('Icons', style: Theme.of(context).textTheme.subtitle),
+                Text('Icons', style: Theme.of(context).textTheme.subtitle2),
                 for (String credit in iconsCredits)
                   Padding(
                       padding: const EdgeInsets.symmetric(vertical: 1),

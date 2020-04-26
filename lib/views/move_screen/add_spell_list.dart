@@ -7,18 +7,23 @@ import 'package:dungeon_world_data/spell.dart';
 import 'package:flutter/material.dart';
 
 class AddSpellList extends StatelessWidget {
-  AddSpellList({Key key}) : super(key: key);
+  final void Function(DbSpell) onSave;
+
+  AddSpellList({
+    Key key,
+    @required this.onSave,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     Map<String, List<Spell>> spells = {};
-    dungeonWorld.spells.forEach((key, spell) {
+    dungeonWorld.spells.forEach((spell) {
       spells[spell.level.toString()] ??= [];
       spells[spell.level.toString()].add(spell);
     });
 
     return CategorizedList.builder(
-      categories: spells.keys,
+      items: spells.keys,
       itemCount: (cat, idx) => spells[cat].length,
       titleBuilder: (ctx, cat, idx) {
         var list = spells[cat];
@@ -26,7 +31,7 @@ class AddSpellList extends StatelessWidget {
             ? "Level ${list.first.level}"
             : capitalize(list.first.level));
       },
-      itemBuilder: (ctx, cat, idx) {
+      itemBuilder: (ctx, cat, idx, catI) {
         var spell = spells[cat][idx];
         return Padding(
           padding: EdgeInsets.symmetric(
@@ -36,6 +41,8 @@ class AddSpellList extends StatelessWidget {
             index: -1,
             spell: DbSpell.fromSpell(spell),
             mode: SpellCardMode.Addable,
+            onSave: onSave,
+            onDelete: null,
           ),
         );
       },

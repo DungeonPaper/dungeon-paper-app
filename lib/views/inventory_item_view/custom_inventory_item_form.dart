@@ -1,44 +1,46 @@
+import 'package:uuid/uuid.dart';
 import '../../components/markdown_help.dart';
 import '../../components/tags/editable_tag_list.dart';
 import '../../db/inventory_items.dart';
 import '../../components/dialogs.dart';
 import 'package:dungeon_world_data/tag.dart';
 import 'package:flutter/material.dart';
+import '../../widget_utils.dart';
 
-class CustomInventoryItemFormBuilder extends StatefulWidget {
+class CustomInventoryItemForm extends StatefulWidget {
   final InventoryItem item;
   final DialogMode mode;
-  final Widget Function(BuildContext context, Widget form, Function onSave)
+  final Widget Function(BuildContext context, Widget form, Function() onSave)
       builder;
-  final void Function(InventoryItem move) onUpdateItem;
+  final void Function(InventoryItem move) onSave;
 
-  CustomInventoryItemFormBuilder({
+  CustomInventoryItemForm({
     Key key,
-    @required this.item,
+    this.item,
     @required this.mode,
     @required this.builder,
-    this.onUpdateItem,
+    this.onSave,
   }) : super(key: key);
 
   @override
-  State<StatefulWidget> createState() => CustomInventoryItemFormBuilderState();
+  State<StatefulWidget> createState() => CustomInventoryItemFormState();
 }
 
-class CustomInventoryItemFormBuilderState
-    extends State<CustomInventoryItemFormBuilder> {
+class CustomInventoryItemFormState extends State<CustomInventoryItemForm> {
   Map<String, TextEditingController> _controllers;
   List<Tag> tags;
 
   @override
   void initState() {
-    _controllers = {
-      'name': TextEditingController(text: (widget.item.name ?? '').toString()),
-      'description': TextEditingController(
-          text: (widget.item.description ?? '').toString()),
+    final InventoryItem item = widget.item ?? InventoryItem(key: Uuid().v4());
+    _controllers = WidgetUtils.textEditingControllerMap(map: {
+      'name': EditingControllerConfig(defaultValue: item.name ?? ''),
+      'description':
+          EditingControllerConfig(defaultValue: item.description ?? ''),
       'amount':
-          TextEditingController(text: (widget.item.amount ?? '1').toString()),
-    };
-    tags = List.from(widget.item.tags ?? []);
+          EditingControllerConfig(defaultValue: item.amount?.toString() ?? ''),
+    });
+    tags = List.from(item.tags ?? []);
     super.initState();
   }
 
@@ -80,10 +82,11 @@ class CustomInventoryItemFormBuilderState
             tags: tags,
             onSave: (tag, idx) {
               setState(() {
-                if (idx == tags.length)
+                if (idx == tags.length) {
                   tags.add(tag);
-                else
+                } else {
                   tags[idx] = tag;
+                }
               });
             },
             onDelete: (tag, idx) => setState(() => tags.removeAt(idx)),
@@ -93,11 +96,15 @@ class CustomInventoryItemFormBuilderState
       ),
     );
 
-    return widget.builder(
-      context,
-      form,
-      widget.mode == DialogMode.Create ? _createItem : _updateItem,
-    );
+    if (widget.builder != null) {
+      return widget.builder(
+        context,
+        form,
+        widget.mode == DialogMode.Create ? _createItem : _updateItem,
+      );
+    }
+
+    return form;
   }
 
   _updateItem() async {
@@ -107,11 +114,9 @@ class CustomInventoryItemFormBuilderState
     item.pluralName = _controllers['name'].text + 's';
     item.amount = int.tryParse(_controllers['amount'].text);
     item.tags = tags;
-    updateInventoryItem(item);
-    if (widget.onUpdateItem != null) {
-      widget.onUpdateItem(item);
+    if (widget.onSave != null) {
+      widget.onSave(item);
     }
-    Navigator.pop(context);
   }
 
   _createItem() async {
@@ -126,10 +131,8 @@ class CustomInventoryItemFormBuilderState
       pluralName: _controllers['name'].text + 's',
       amount: int.tryParse(_controllers['amount'].text) ?? 1,
     );
-    createInventoryItem(item);
-    if (widget.onUpdateItem != null) {
-      widget.onUpdateItem(item);
+    if (widget.onSave != null) {
+      widget.onSave(item);
     }
-    Navigator.pop(context);
   }
 }

@@ -7,9 +7,12 @@
 build/
 
 .flutter-plugins
+.flutter-plugins-dependencies
 *.log
 google-services.json
 GoogleService-Info.plist
 secrets.json
 *.aab
 flutter_export_*.sh
+.tmp
+web/env.js

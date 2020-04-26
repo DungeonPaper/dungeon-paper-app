@@ -1,3 +1,4 @@
+import 'package:dungeon_paper/refactor/character.dart';
 import 'package:dungeon_paper/views/move_screen/add_move_or_spell.dart';
 import '../../db/inventory_items.dart';
 import '../../db/notes.dart';
@@ -11,8 +12,13 @@ import 'package:flutter/material.dart';
 
 class FAB extends StatefulWidget {
   final PageController pageController;
+  final Character character;
 
-  const FAB({Key key, this.pageController}) : super(key: key);
+  const FAB({
+    Key key,
+    @required this.pageController,
+    @required this.character,
+  }) : super(key: key);
 
   @override
   FABState createState() => FABState(pageController: pageController);
@@ -39,8 +45,9 @@ class FABState extends State<FAB> {
     });
   }
 
-  static Map<Pages, Widget Function(BuildContext context)> buttonsByIndex = {
-    Pages.Notes: (context) => FloatingActionButton(
+  static Map<Pages, Widget Function(BuildContext context, Character character)>
+      buttonsByIndex = {
+    Pages.Notes: (context, character) => FloatingActionButton(
           foregroundColor: Colors.white,
           child: Icon(Icons.add),
           onPressed: () => Navigator.push(
@@ -50,11 +57,12 @@ class FABState extends State<FAB> {
               builder: (ctx) => EditNoteScreen(
                 note: Note(),
                 mode: DialogMode.Create,
+                onSave: (note) => createNote(character, note),
               ),
             ),
           ),
         ),
-    Pages.Inventory: (context) => FloatingActionButton(
+    Pages.Inventory: (context, character) => FloatingActionButton(
           foregroundColor: Colors.white,
           child: Icon(Icons.add),
           onPressed: () => Navigator.push(
@@ -64,16 +72,20 @@ class FABState extends State<FAB> {
               builder: (ctx) => AddInventoryItemContainer(
                 item: InventoryItem(),
                 mode: DialogMode.Create,
+                onSave: (item) => createInventoryItem(character, item),
               ),
             ),
           ),
         ),
-    Pages.Battle: (context) => FloatingActionButton(
+    Pages.Battle: (context, character) => FloatingActionButton(
           foregroundColor: Colors.white,
           child: Icon(Icons.add),
           onPressed: () => showDialog(
             context: context,
-            builder: (context) => AddMoveOrSpell(),
+            builder: (context) => AddMoveOrSpell(
+              character: character,
+              defaultClass: character.mainClass,
+            ),
           ),
         ),
   };
@@ -94,7 +106,7 @@ class FABState extends State<FAB> {
       child: Transform.rotate(
         angle: -pi * rt,
         child: activeIdx != null && buttonsByIndex.containsKey(idx)
-            ? buttonsByIndex[idx](context)
+            ? buttonsByIndex[idx](context, widget.character)
             : SizedBox.shrink(),
       ),
     );

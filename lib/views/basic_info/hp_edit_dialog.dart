@@ -1,15 +1,13 @@
+import 'package:dungeon_paper/refactor/character.dart';
 import '../../components/standard_dialog_controls.dart';
-import '../../db/character_db.dart';
-import '../../db/character_utils.dart';
 import '../basic_info/current_stat_indicator.dart';
 import '../profile_view/status_bars.dart';
 import '../../utils.dart';
 import 'package:wheel_spinner/wheel_spinner.dart';
-import '../../db/character.dart';
 import 'package:flutter/material.dart';
 
 class EditHPDialog extends StatefulWidget {
-  final DbCharacter character;
+  final Character character;
   static const int MIN_ROW_WIDTH = 410;
 
   const EditHPDialog({
@@ -53,14 +51,13 @@ class _EditHPDialogState extends State<EditHPDialog> {
         Expanded(child: Text('Manage HP')),
         Text(
           'Editing: ',
-          style: Theme.of(context).textTheme.body1,
+          style: Theme.of(context).textTheme.bodyText2,
         ),
         SizedBox(width: 4),
         DropdownButton(
           value: mode,
           onChanged: changeMode,
-          items:
-          [
+          items: [
             for (HPMode mode in hpTitles.keys)
               DropdownMenuItem(
                 value: mode,
@@ -104,7 +101,7 @@ class _EditHPDialogState extends State<EditHPDialog> {
               value: useDefaultMaxHP,
               title: Text('Calculate based on stats'),
               subtitle: Text(
-                  'Class Base HP (${widget.character.mainClass.baseHP}) + CON (${widget.character.conMod})'),
+                  'Class Base HP (${widget.character.mainClass.baseHP}) + Constitution (${widget.character.con})'),
               onChanged: (val) {
                 if (val) updateValue(widget.character.defaultMaxHP);
                 setState(() {
@@ -172,15 +169,12 @@ class _EditHPDialogState extends State<EditHPDialog> {
   }
 
   void save(BuildContext context) {
-    DbCharacter char = widget.character;
-    char.currentHP = currentHP;
-    char.maxHP = maxHP;
-    char.useDefaultMaxHP = useDefaultMaxHP;
-    updateCharacter(char, [
-      CharacterKeys.currentHP,
-      CharacterKeys.maxHP,
-      CharacterKeys.useDefaultMaxHP
-    ]);
+    var char = widget.character;
+    char.update(json: {
+      'currentHP': currentHP,
+      'maxHP': maxHP,
+      'useDefaultMaxHP': useDefaultMaxHP,
+    });
     Navigator.pop(context);
   }
 

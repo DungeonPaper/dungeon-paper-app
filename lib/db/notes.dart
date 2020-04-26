@@ -1,10 +1,7 @@
 import 'package:dungeon_paper/db/base.dart';
-import 'package:dungeon_paper/redux/stores/stores.dart';
+import 'package:dungeon_paper/refactor/character.dart';
 import 'package:dungeon_paper/utils.dart';
 import 'package:uuid/uuid.dart';
-import 'character.dart';
-import 'character_db.dart';
-import 'character_utils.dart';
 
 enum NoteKeys { key, title, description, category }
 
@@ -23,6 +20,8 @@ class Note with Serializer<NoteKeys> {
       NoteKeys.category: map['category'],
     });
   }
+
+  factory Note.fromJSON(Map map) => Note(map);
 
   @override
   toJSON() {
@@ -57,7 +56,7 @@ class Note with Serializer<NoteKeys> {
 class NoteCategory {
   String name;
   NoteCategory(String _name)
-      : name = _name != null && _name.length > 0 ? _name : 'Misc';
+      : name = _name != null && _name.isNotEmpty ? _name : 'Misc';
 
   static NoteCategory npcs = NoteCategory('NPCs');
   static NoteCategory loot = NoteCategory('Loot');
@@ -88,37 +87,22 @@ class NoteCategory {
   int get hashCode => name.hashCode;
 }
 
-ReturnPredicate<Note> matchNote = matcher<Note>(
-    (Note i, Note o) => i.key == o.key);
+ReturnPredicate<Note> matchNote =
+    matcher<Note>((Note i, Note o) => i.key == o.key);
 
-Future updateNote(Note note) async {
-  if (dwStore.state.characters.current == null) {
-    throw ('No character loaded.');
-  }
-
-  DbCharacter character = dwStore.state.characters.current;
-  num index = character.notes.indexWhere(matchNote(note));
-  character.notes[index] = note;
-  await updateCharacter(character, [CharacterKeys.notes]);
+Future updateNote(Character character, Note note) async {
+  await character.update(json: {
+    'notes': findAndReplaceInList<Note>(
+        character.notes, note, (n) => note.key == n.key)
+  });
 }
 
-Future deleteNote(Note note) async {
-  if (dwStore.state.characters.current == null) {
-    throw ('No character loaded.');
-  }
-
-  DbCharacter character = dwStore.state.characters.current;
-  num index = character.notes.indexWhere(matchNote(note));
-  character.notes.removeAt(index);
-  await updateCharacter(character, [CharacterKeys.notes]);
+Future deleteNote(Character character, Note note) async {
+  await character.update(json: {
+    'notes': removeFromList(character.notes, note, (n) => note.key == n.key)
+  });
 }
 
-Future createNote(Note note) async {
-  if (dwStore.state.characters.current == null) {
-    throw ('No character loaded.');
-  }
-
-  DbCharacter character = dwStore.state.characters.current;
-  character.notes.add(note);
-  await updateCharacter(character, [CharacterKeys.notes]);
+Future createNote(Character character, Note note) async {
+  await character.update(json: {'notes': addToList(character.notes, note)});
 }

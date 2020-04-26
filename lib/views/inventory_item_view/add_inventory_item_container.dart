@@ -9,13 +9,16 @@ class AddInventoryItemContainer extends StatefulWidget {
     Key key,
     @required this.item,
     @required this.mode,
+    @required this.onSave,
   }) : super(key: key);
 
   final InventoryItem item;
   final DialogMode mode;
+  final void Function(InventoryItem) onSave;
 
   @override
-  AddInventoryItemContainerState createState() => AddInventoryItemContainerState();
+  AddInventoryItemContainerState createState() =>
+      AddInventoryItemContainerState();
 }
 
 class AddInventoryItemContainerState extends State<AddInventoryItemContainer>
@@ -23,28 +26,31 @@ class AddInventoryItemContainerState extends State<AddInventoryItemContainer>
   TabController _controller;
   String search = '';
 
-  AddInventoryItemContainerState() {
-    _controller = TabController(vsync: this, length: texts.length);
-  }
-
   final List<String> texts = ['Item List', 'Custom Item'];
   int tabIdx = 0;
 
   @override
   void initState() {
-    _controller.addListener(() {
-      setState(() {
-        tabIdx = _controller.index;
+    _controller = TabController(vsync: this, length: texts.length)
+      ..addListener(() {
+        setState(() {
+          tabIdx = _controller.index;
+        });
       });
-    });
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
-    return CustomInventoryItemFormBuilder(
+    return CustomInventoryItemForm(
       mode: widget.mode,
       item: widget.item,
+      onSave: (item) {
+        if (widget.onSave != null) {
+          widget.onSave(item);
+        }
+        Navigator.pop(context);
+      },
       builder: (ctx, form, onSave) {
         List<Widget> actions = <Widget>[
           IconButton(
@@ -77,7 +83,7 @@ class AddInventoryItemContainerState extends State<AddInventoryItemContainer>
             Container(
               key: PageStorageKey<String>(texts[0]),
               color: Theme.of(context).scaffoldBackgroundColor,
-              child: ExistingInventoryItemsList(),
+              child: ExistingInventoryItemsList(onSave: widget.onSave),
             ),
             formContainer
           ],
@@ -91,14 +97,12 @@ class AddInventoryItemContainerState extends State<AddInventoryItemContainer>
         );
 
         var list = <Widget>[
+          if (widget.mode == DialogMode.Create) tabBar,
           Expanded(
             child:
                 widget.mode == DialogMode.Create ? tabBarView : formContainer,
           ),
         ];
-        if (widget.mode == DialogMode.Create) {
-          list.insert(0, tabBar);
-        }
 
         return Scaffold(
           appBar: appBar,

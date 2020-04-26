@@ -108,8 +108,9 @@ class _WhatsNewState extends State<WhatsNew> {
 
   String mapped(Version ver) {
     if (changelog == null) return "";
-    if (changelog[ver] == null)
+    if (changelog[ver] == null) {
       ver = changelog.keys.firstWhere((k) => k <= ver);
+    }
     Iterable<Version> keys = changelog.keys;
     int verIdx = keys.toList().indexOf(ver);
     Version prevVersion;
@@ -139,8 +140,8 @@ class _WhatsNewState extends State<WhatsNew> {
   }
 
   Future<void> _getSecrets() async {
-    Map<String, dynamic> secrets = await loadSecrets();
-    changelogUrl = secrets['GITHUB_CHANGELOG_URL'];
+    Secrets secrets = await loadSecrets();
+    changelogUrl = secrets.GITHUB_CHANGELOG_URL;
   }
 
   Future<void> _getChangelog() async {

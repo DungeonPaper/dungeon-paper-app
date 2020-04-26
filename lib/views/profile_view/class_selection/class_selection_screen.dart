@@ -1,17 +1,15 @@
+import 'package:dungeon_paper/refactor/character.dart';
 import '../../edit_character/character_wizard_utils.dart';
 import '../../../components/card_list_item.dart';
 import '../../../components/class_description.dart';
 import '../../../components/confirmation_dialog.dart';
-import '../../../db/character.dart';
-import '../../../db/character_utils.dart';
 import '../../../components/dialogs.dart';
 import 'package:dungeon_world_data/dw_data.dart';
-import 'package:dungeon_world_data/move.dart';
 import 'package:dungeon_world_data/player_class.dart';
 import 'package:flutter/material.dart';
 
 class ClassSelectionScreen extends StatelessWidget {
-  final DbCharacter character;
+  final Character character;
   final DialogMode mode;
   final CharSaveFunction onSave;
   final ScaffoldBuilderFunction builder;
@@ -45,7 +43,7 @@ class ClassSelectionScreen extends StatelessWidget {
     Widget child = Padding(
       padding: const EdgeInsets.all(16.0),
       child: Column(
-        children: dungeonWorld.classes.values
+        children: dungeonWorld.classes
             .map(
               (availClass) => Padding(
                 padding: EdgeInsets.only(bottom: 16.0),
@@ -88,19 +86,17 @@ class ClassSelectionScreen extends StatelessWidget {
 
   void save(BuildContext context, PlayerClass def,
       ChangeClassConfirmationOptions options) {
-    character.mainClass = def;
-    character.looks = [];
-    character.race = null;
-
-    var keys = [
-      CharacterKeys.mainClass,
-      CharacterKeys.looks,
-      CharacterKeys.race,
-    ];
-
     var result = options.applyToCharacter(character);
-
-    onSave(result.character, result.keys + keys);
+    onSave(
+      result.data
+        ..addAll(
+          {
+            'playerClasses': [def.toJSON()],
+            'looks': [],
+            'race': null,
+          },
+        ),
+    );
   }
 
   Function() previewClass(BuildContext context, PlayerClass def) {
@@ -308,12 +304,12 @@ class _ConfirmClassChangeDialogState extends State<ConfirmClassChangeDialog> {
 }
 
 class ChangeClassConfirmationResults {
-  final DbCharacter character;
-  final List<CharacterKeys> keys;
+  final Character character;
+  final Map<String, dynamic> data;
 
   ChangeClassConfirmationResults({
     @required this.character,
-    @required this.keys,
+    @required this.data,
   });
 }
 
@@ -338,31 +334,27 @@ class ChangeClassConfirmationOptions {
         resetHitDice: val,
       );
 
-  ChangeClassConfirmationResults applyToCharacter(DbCharacter character) {
-    List<CharacterKeys> keys = [];
+  ChangeClassConfirmationResults applyToCharacter(Character character) {
+    var data = <String, dynamic>{};
 
     if (deleteMoves) {
-      character.moves = <Move>[];
-      keys.add(CharacterKeys.moves);
+      data['moves'] = [];
     }
 
     if (resetXP) {
-      character.level = 1;
-      character.currentXP = 0;
-      keys.addAll([CharacterKeys.level, CharacterKeys.currentXP]);
+      data['level'] = 1;
+      data['currentXP'] = 0;
     }
 
     if (resetMaxHP) {
-      character.maxHP = character.defaultMaxHP;
-      character.currentHP = character.maxHP;
-      keys.addAll([CharacterKeys.currentHP, CharacterKeys.maxHP]);
+      data['maxHP'] = character.defaultMaxHP;
+      data['currentHP'] = character.maxHP;
     }
 
     if (resetHitDice) {
-      character.hitDice = character.mainClass.damage;
-      keys.add(CharacterKeys.hitDice);
+      data['hitDice'] = character.mainClass.damage;
     }
 
-    return ChangeClassConfirmationResults(character: character, keys: keys);
+    return ChangeClassConfirmationResults(character: character, data: data);
   }
 }

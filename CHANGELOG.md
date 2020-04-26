@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## 1.1.0
+* Major backend overhaul, and improvements to data handling & reliability.
+* Preparations for custom classes.
+
 ## 1.0.9
 * Better auth renewal
 * Better edit looks view

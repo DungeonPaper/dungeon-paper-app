@@ -1,18 +1,19 @@
-import '../../components/title_subtitle_row.dart';
+import 'package:dungeon_paper/components/card_list_item.dart';
+import 'package:dungeon_paper/refactor/character.dart';
 import '../../views/basic_info/character_photo.dart';
 import '../../utils.dart';
 import '../../views/profile_view/character_headline.dart';
 import '../../views/stats/stats_summary.dart';
-import '../../db/character.dart';
 import '../../components/dialogs.dart';
 import 'character_wizard_utils.dart';
 import 'package:flutter/material.dart';
-import '../../db/character_utils.dart' as Chr;
+import '../../db/character_utils.dart' as chr;
+import 'package:dungeon_world_data/alignment.dart' as dwa_alignment;
 import 'edit_looks.dart';
 import 'edit_race.dart';
 
 class CharacterSummary extends StatelessWidget {
-  final DbCharacter character;
+  final Character character;
   final CharSaveFunction onSave;
   final ScaffoldBuilderFunction builder;
 
@@ -91,7 +92,7 @@ class CharacterSummary extends StatelessWidget {
       return builder(
         context: context,
         child: child,
-        save: () => onSave(character, []),
+        save: () => onSave({}),
         isValid: () => true,
       );
     }
@@ -104,7 +105,7 @@ class CharacterSummary extends StatelessWidget {
 }
 
 class AlignmentSummary extends StatelessWidget {
-  final DbCharacter character;
+  final Character character;
 
   AlignmentSummary({
     Key key,
@@ -113,23 +114,29 @@ class AlignmentSummary extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final alignment = character.mainClass.alignments[alignmentKey];
-    return TitleSubtitleCard(
+    final alignment = character.mainClass.alignments.containsKey(alignmentKey)
+        ? character.mainClass.alignments[alignmentKey]
+        : dwa_alignment.Alignment(
+            name: capitalize(alignmentKey),
+            description: null,
+          );
+    return CardListItem(
       elevation: 0.0,
       margin: EdgeInsets.all(0),
       color: Theme.of(context).canvasColor.withOpacity(0.5),
       leading: Icon(icon, size: 40),
-      title: Text(alignment.name),
-      subtitle: Text(alignment.description),
+      title: Text(alignment.name ?? 'No Alignment'),
+      subtitle:
+          alignment.description != null ? Text(alignment.description) : null,
     );
   }
 
   String get alignmentKey => enumName(character.alignment);
-  get icon => Chr.ALIGNMENT_ICON_MAP[character.alignment];
+  get icon => chr.ALIGNMENT_ICON_MAP[character.alignment];
 }
 
 class RaceSummary extends StatelessWidget {
-  final DbCharacter character;
+  final Character character;
 
   RaceSummary({
     Key key,
@@ -148,11 +155,11 @@ class RaceSummary extends StatelessWidget {
   }
 
   String get alignmentKey => enumName(character.alignment);
-  get icon => Chr.ALIGNMENT_ICON_MAP[character.alignment];
+  get icon => chr.ALIGNMENT_ICON_MAP[character.alignment];
 }
 
 class ClassSummary extends StatelessWidget {
-  final DbCharacter character;
+  final Character character;
 
   ClassSummary({
     Key key,
@@ -161,12 +168,15 @@ class ClassSummary extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return TitleSubtitleCard(
+    return CardListItem(
       title: Text(character.mainClass.name),
-      subtitle: Text(
-        character.mainClass.description,
-        overflow: TextOverflow.ellipsis,
-      ),
+      subtitle: character.mainClass.description != null &&
+              character.mainClass.description.trim().isNotEmpty
+          ? Text(
+              character.mainClass.description,
+              overflow: TextOverflow.ellipsis,
+            )
+          : null,
       leading: Icon(Icons.person, size: 40.0),
       color: Theme.of(context).canvasColor.withOpacity(0.5),
       elevation: 0,
@@ -175,11 +185,11 @@ class ClassSummary extends StatelessWidget {
   }
 
   String get alignmentKey => enumName(character.alignment);
-  get icon => Chr.ALIGNMENT_ICON_MAP[character.alignment];
+  get icon => chr.ALIGNMENT_ICON_MAP[character.alignment];
 }
 
 class LooksSummary extends StatelessWidget {
-  final DbCharacter character;
+  final Character character;
 
   LooksSummary({
     Key key,
@@ -198,5 +208,5 @@ class LooksSummary extends StatelessWidget {
   }
 
   String get alignmentKey => enumName(character.alignment);
-  get icon => Chr.ALIGNMENT_ICON_MAP[character.alignment];
+  get icon => chr.ALIGNMENT_ICON_MAP[character.alignment];
 }

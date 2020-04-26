@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'dart:math';
+import 'package:dungeon_world_data/dw_data.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart' show rootBundle;
 
@@ -11,6 +12,9 @@ String capitalize(String string, [String sep = ' ']) {
       onNonMatch: (s) =>
           s.isNotEmpty ? s[0].toUpperCase() + s.substring(1) : s);
 }
+
+T noopReturn<T>(T a) => a;
+void noopVoid<T>(T a) {}
 
 double clamp<T extends num>(T number, T low, T high) =>
     max(low * 1.0, min(number * 1.0, high * 1.0));
@@ -26,7 +30,7 @@ bool isNumeric(String s) {
   if (s == null) {
     return false;
   }
-  return (double.tryParse(s.toString()) ?? null) != null;
+  return double.tryParse(s.toString()) != null;
 }
 
 Type typeOf<T>() => T;
@@ -36,10 +40,12 @@ String enumName(Object o) {
   return text.substring(text.indexOf(".") + 1);
 }
 
-E Function(String k) stringToEnum<E>(Map<String, E> enumValue) {
-  return (k) => enumValue.containsKey(k)
-      ? enumValue[k]
-      : throw ('No corresponding enum value');
+E Function(dynamic k) stringToEnum<E>(Map<String, E> enumValue) {
+  return (k) => k is E
+      ? k
+      : k is String && enumValue.containsKey(k)
+          ? enumValue[k]
+          : throw ('No corresponding enum value');
 }
 
 typedef bool Function(T ret) ReturnPredicate<T>(T par);
@@ -50,11 +56,11 @@ ReturnPredicate<T> matcher<T>(InputPredicate<T> predicate) =>
 
 // (Note note) => (Note n) => n.key != null && n.key == note.key || n.title == note.title;
 
-currency(num amt) {
+String currency(num amt) {
   return commatize(amt).replaceAll(RegExp(r'\.0+$'), '') + ' G';
 }
 
-commatize(num number, [num precision = 2]) {
+String commatize(num number, [num precision = 2]) {
   return number
       .toStringAsFixed(precision)
       .replaceAll(RegExp(r'\B(?=(\d{3})+(?!\d))'), ',')
@@ -68,11 +74,33 @@ class BgAndFgColors {
   BgAndFgColors(this.background, this.foreground);
 }
 
-Map _secrets;
+Secrets _secrets;
 
-Future<Map<String, dynamic>> loadSecrets() async {
+class Secrets {
+  final Map<String, dynamic> _data;
+  Secrets(Map<String, dynamic> data) : _data = data;
+
+  String get SENTRY_DSN => _data['SENTRY_DSN'];
+  String get PAYPAL_DONATE_URL => _data['PAYPAL_DONATE_URL'];
+  String get FEEDBACK_EMAIL => _data['FEEDBACK_EMAIL'];
+  String get GITHUB_CHANGELOG_URL => _data['GITHUB_CHANGELOG_URL'];
+  String get API_DOMAIN => _data['API_DOMAIN'];
+  String get API_PATH => _data['API_PATH'];
+  String get GOOGLE_CLIENT_ID => _data['GOOGLE_CLIENT_ID'];
+
+  operator [](String key) {
+    return _data[key];
+  }
+
+  @override
+  String toString() => _data
+      // .map((key, value) => MapEntry(key, '*' * value.toString().length))
+      .toString();
+}
+
+Future<Secrets> loadSecrets() async {
   if (_secrets == null) {
-    _secrets = jsonDecode(await rootBundle.loadString('secrets.json'));
+    _secrets = Secrets(jsonDecode(await rootBundle.loadString('secrets.json')));
     if (isInDebugMode) print('Loaded secrets: $_secrets');
   }
   return _secrets;
@@ -90,3 +118,42 @@ R Function() pass1<T, R>(R Function(T a) a, T b) =>
 Map<V, K> invertMap<K, V>(Map<K, V> map) {
   return map.map((k, v) => MapEntry(v, k));
 }
+
+class Enumeration<T> {
+  final int index;
+  final T value;
+
+  Enumeration(this.index, this.value);
+
+  int get i => index;
+  T get v => value;
+}
+
+Iterable<Enumeration<T>> enumerate<T>(Iterable<T> items) sync* {
+  int idx = 0;
+  for (T item in items) {
+    yield Enumeration(idx++, item);
+  }
+}
+
+bool Function(T) keyMatcher<T>(dynamic Function(T) delegate, T object) =>
+    (compare) => delegate(object) == delegate(compare);
+
+bool Function(DWEntity) dwEntityMatcher(DWEntity comp) =>
+    keyMatcher((o) => o.key, comp);
+
+bool Function(T) getMatcher<T>(T obj, [bool Function(T) defaultMatcher]) =>
+    obj is DWEntity ? dwEntityMatcher(obj) : defaultMatcher ?? (o) => o == obj;
+
+List<T> findAndReplaceInList<T>(List<T> list, T newObj,
+    [bool Function(T) matcher]) {
+  num index = list.indexWhere(getMatcher(newObj, matcher));
+  list = List.from(list);
+  list[index] = newObj;
+  return list;
+}
+
+List<T> removeFromList<T>(List<T> list, T obj, [bool Function(T) matcher]) =>
+    List.from(list)..removeWhere(getMatcher(obj, matcher));
+
+List<T> addToList<T>(List<T> list, T item) => List.from(list)..add(item);

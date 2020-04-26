@@ -38,8 +38,7 @@ class _EditTagDialogState extends State<EditTagDialog> {
             text: widget.tag != null ? widget.tag.value.toString() : ''),
       ),
     };
-    _copyableTags = dungeonWorld.tags.values.toList()
-      ..sort((a, b) => a.name.compareTo(b.name));
+    _copyableTags = dungeonWorld.tags..sort((a, b) => a.name.compareTo(b.name));
     _mode = widget.tag != null ? DialogMode.Edit : DialogMode.Create;
     super.initState();
   }
@@ -85,7 +84,10 @@ class _EditTagDialogState extends State<EditTagDialog> {
           decoration: InputDecoration(labelText: 'Tag value'),
           controller: _controllers['value'],
         ),
-        StandardDialogControls(onOK: onSave, padding: EdgeInsets.only(top: 40),)
+        StandardDialogControls(
+          onOK: onSave,
+          padding: EdgeInsets.only(top: 40),
+        )
       ],
     );
   }
@@ -109,13 +111,13 @@ class _EditTagDialogState extends State<EditTagDialog> {
     String name = _controllers['name'].text;
     String value = _controllers['value'].text;
     dynamic parsedValue = value.toString();
-    if (RegExp(r'^\d+\.\d+$').hasMatch(value))
+    if (RegExp(r'^\d+\.\d+$').hasMatch(value)) {
       parsedValue = double.tryParse(value);
-    else if (RegExp(r'^\d+$').hasMatch(value))
+    } else if (RegExp(r'^\d+$').hasMatch(value)) {
       parsedValue = int.tryParse(value);
-    else if (value == 'true')
+    } else if (value == 'true') {
       parsedValue = true;
-    else if (value == 'false') parsedValue = false;
+    } else if (value == 'false') parsedValue = false;
     if (parsedValue == '') parsedValue = null;
     return Tag(name, parsedValue);
   }

@@ -8,12 +8,20 @@ import 'package:flutter/material.dart';
 
 class ExistingInventoryItemsList extends StatelessWidget {
   final Iterable<Equipment> items;
+  final void Function(InventoryItem) onSave;
 
-  const ExistingInventoryItemsList({Key key, this.items}) : super(key: key);
+  const ExistingInventoryItemsList({
+    Key key,
+    this.items,
+    @required this.onSave,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return AddInventoryItem(items: items);
+    return AddInventoryItem(
+      items: items,
+      onSave: onSave,
+    );
   }
 }
 
@@ -21,11 +29,13 @@ class AddInventoryItem extends StatefulWidget {
   final Iterable<Equipment> items;
   final TextEditingController _searchController =
       TextEditingController(text: '');
+  final void Function(InventoryItem) onSave;
 
   AddInventoryItem({
     Key key,
     Iterable<Equipment> items,
-  })  : items = items ?? dungeonWorld.equipment.values,
+    @required this.onSave,
+  })  : items = items ?? dungeonWorld.equipment,
         super(key: key);
 
   @override
@@ -68,8 +78,7 @@ class _AddInventoryItemState extends State<AddInventoryItem> {
   Widget build(BuildContext context) {
     Map<String, List<Equipment>> itemMap = {};
     Iterable<Equipment> filtered = search.isNotEmpty
-        ? widget.items
-            .where((item) => clean(item.name).indexOf(clean(search)) > -1)
+        ? widget.items.where((item) => clean(item.name).contains(clean(search)))
         : widget.items;
     filtered.forEach((item) {
       String key =
@@ -93,13 +102,10 @@ class _AddInventoryItemState extends State<AddInventoryItem> {
         Padding(
           padding: const EdgeInsets.only(top: 64.0),
           child: CategorizedList.builder(
-            categories: itemMap.keys.toList()
-              ..sort(),
-            itemCount: (key, idx) =>
-                itemMap[key].length,
-            titleBuilder: (ctx, key, idx) =>
-                Text(key),
-            itemBuilder: (ctx, key, idx) {
+            items: itemMap.keys.toList()..sort(),
+            itemCount: (key, idx) => itemMap[key].length,
+            titleBuilder: (ctx, key, idx) => Text(key),
+            itemBuilder: (ctx, key, idx, catI) {
               var item = itemMap[key][idx];
               return Container(
                 padding: EdgeInsets.symmetric(vertical: 8.0),
@@ -107,6 +113,8 @@ class _AddInventoryItemState extends State<AddInventoryItem> {
                   key: PageStorageKey('add-${item.key}'),
                   item: InventoryItem.fromEquipment(item),
                   mode: InventoryItemCardMode.Addable,
+                  onSave: widget.onSave,
+                  onDelete: null,
                 ),
               );
             },

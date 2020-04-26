@@ -1,9 +1,8 @@
 import 'package:dungeon_paper/components/number_controller.dart';
 import 'package:dungeon_paper/components/standard_dialog_controls.dart';
-import 'package:dungeon_paper/db/character.dart';
-import 'package:dungeon_paper/db/character_db.dart';
 import 'package:dungeon_paper/db/character_utils.dart';
 import 'package:dungeon_paper/redux/stores/stores.dart';
+import 'package:dungeon_paper/refactor/character.dart';
 import 'package:dungeon_paper/utils.dart';
 import 'package:flutter/material.dart';
 
@@ -37,7 +36,7 @@ class EditStatDialogState extends State<EditStatDialog> {
 
   @override
   Widget build(BuildContext context) {
-    String modifier = DbCharacter.statModifierText(value);
+    String modifier = Character.statModifierText(value);
     String name = enumName(stat);
 
     return SimpleDialog(
@@ -84,9 +83,9 @@ class EditStatDialogState extends State<EditStatDialog> {
 
   _setStateValue(num newValue) {
     setState(() {
-      if (newValue == null)
+      if (newValue == null) {
         valueError = true;
-      else {
+      } else {
         valueError = false;
         value = newValue;
       }
@@ -94,33 +93,33 @@ class EditStatDialogState extends State<EditStatDialog> {
   }
 
   _saveValue() async {
-    final DbCharacter character = dwStore.state.characters.current;
-    CharacterKeys key;
+    final Character character = dwStore.state.characters.current;
+    String key;
 
     switch (stat) {
       case CharacterKeys.int:
         character.int = value;
-        key = CharacterKeys.int;
+        key = 'int';
         break;
       case CharacterKeys.wis:
         character.wis = value;
-        key = CharacterKeys.wis;
+        key = 'wis';
         break;
       case CharacterKeys.cha:
         character.cha = value;
-        key = CharacterKeys.cha;
+        key = 'cha';
         break;
       case CharacterKeys.con:
         character.con = value;
-        key = CharacterKeys.con;
+        key = 'con';
         break;
       case CharacterKeys.str:
         character.str = value;
-        key = CharacterKeys.str;
+        key = 'str';
         break;
       case CharacterKeys.dex:
         character.dex = value;
-        key = CharacterKeys.dex;
+        key = 'dex';
         break;
       default:
         break;
@@ -128,7 +127,7 @@ class EditStatDialogState extends State<EditStatDialog> {
     setState(() {
       saving = true;
     });
-    await updateCharacter(character, [key]);
+    await character.update(json: {key: value});
     Navigator.pop(context);
   }
 }

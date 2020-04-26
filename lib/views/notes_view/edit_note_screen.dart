@@ -1,21 +1,21 @@
-import '../../components/markdown_help.dart';
-import '../../db/notes.dart';
-import '../../components/dialogs.dart';
+import 'package:dungeon_paper/components/dialogs.dart';
+import 'package:dungeon_paper/components/markdown_help.dart';
+import 'package:dungeon_paper/db/notes.dart';
 import 'package:flutter/material.dart';
 
 class EditNoteForm extends StatefulWidget {
   final Note note;
   final DialogMode mode;
-  final Widget Function(BuildContext context, Widget form, Function onSave)
+  final Widget Function(BuildContext context, Widget form, Function() onSave)
       builder;
-  final void Function(Note note) onUpdateNote;
+  final void Function(Note note) onSave;
 
   EditNoteForm({
     Key key,
     @required this.note,
     @required this.mode,
     @required this.builder,
-    this.onUpdateNote,
+    this.onSave,
   }) : super(key: key);
 
   @override
@@ -111,18 +111,16 @@ class EditNoteFormState extends State<EditNoteForm> {
 
   _updateNote() async {
     var note = _generateNote();
-    updateNote(note);
-    if (widget.onUpdateNote != null) {
-      widget.onUpdateNote(widget.note);
+    if (widget.onSave != null) {
+      widget.onSave(note);
     }
     Navigator.pop(context);
   }
 
   _createNote() async {
     var note = _generateNote();
-    createNote(note);
-    if (widget.onUpdateNote != null) {
-      widget.onUpdateNote(widget.note);
+    if (widget.onSave != null) {
+      widget.onSave(note);
     }
     Navigator.pop(context);
   }
@@ -142,10 +140,12 @@ class EditNoteScreen extends StatefulWidget {
     Key key,
     @required this.note,
     @required this.mode,
+    @required this.onSave,
   }) : super(key: key);
 
   final Note note;
   final DialogMode mode;
+  final void Function(Note) onSave;
 
   @override
   _EditNoteScreenState createState() => _EditNoteScreenState();
@@ -159,6 +159,7 @@ class _EditNoteScreenState extends State<EditNoteScreen> {
     return EditNoteForm(
       mode: widget.mode,
       note: widget.note,
+      onSave: widget.onSave,
       builder: (ctx, form, onSave) {
         return Scaffold(
           backgroundColor: Theme.of(context).canvasColor,

@@ -1,3 +1,4 @@
+import 'package:dungeon_paper/utils.dart';
 import '../../components/card_bottom_controls.dart';
 import '../../components/confirmation_dialog.dart';
 import '../../components/tags/tag_list.dart';
@@ -13,11 +14,15 @@ enum InventoryItemCardMode { Addable, Editable }
 class InventoryItemCard extends StatelessWidget {
   final InventoryItem item;
   final InventoryItemCardMode mode;
+  final void Function(InventoryItem) onSave;
+  final void Function() onDelete;
 
   InventoryItemCard({
     Key key,
     @required this.item,
     @required this.mode,
+    @required this.onSave,
+    @required this.onDelete,
   }) : super(key: key);
 
   @override
@@ -78,7 +83,10 @@ class InventoryItemCard extends StatelessWidget {
                             shape: CircleBorder(side: BorderSide.none),
                             child: Text('-'),
                             onPressed: () {
-                              incrItemAmount(item, -1);
+                              var copy = _incrAmount(item, -1);
+                              if (onSave != null) {
+                                onSave(copy);
+                              }
                             },
                           ),
                           Text(item.amount.toString()),
@@ -86,7 +94,10 @@ class InventoryItemCard extends StatelessWidget {
                             shape: CircleBorder(side: BorderSide.none),
                             child: Text('+'),
                             onPressed: () {
-                              incrItemAmount(item, 1);
+                              var copy = _incrAmount(item, 1);
+                              if (onSave != null) {
+                                onSave(copy);
+                              }
                             },
                           )
                         ],
@@ -107,7 +118,9 @@ class InventoryItemCard extends StatelessWidget {
                       child: Text('Add Item'),
                       color: Theme.of(context).primaryColorLight,
                       onPressed: () {
-                        createInventoryItem(item);
+                        if (onSave != null) {
+                          onSave(item);
+                        }
                         Navigator.pop(context);
                       },
                     ),
@@ -126,6 +139,7 @@ class InventoryItemCard extends StatelessWidget {
         builder: (ctx) => AddInventoryItemContainer(
           item: item,
           mode: DialogMode.Edit,
+          onSave: onSave,
         ),
       ),
     );
@@ -139,7 +153,9 @@ class InventoryItemCard extends StatelessWidget {
           text: const Text('Are you sure?'),
           cancelButtonText: Text('Cancel')),
     )) {
-      deleteInventoryItem(item);
+      if (onDelete != null) {
+        onDelete();
+      }
     }
   }
 
@@ -152,5 +168,10 @@ class InventoryItemCard extends StatelessWidget {
         duration: Duration(seconds: 4),
       );
     }
+  }
+
+  InventoryItem _incrAmount(InventoryItem item, num amount) {
+    return item.copy()
+      ..amount = clamp(item.amount + amount, 0, double.infinity);
   }
 }

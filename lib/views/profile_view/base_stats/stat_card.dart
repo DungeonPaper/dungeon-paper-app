@@ -1,11 +1,12 @@
-import '../../../db/character.dart';
+import 'package:dungeon_paper/refactor/character.dart';
+
 import '../../../db/character_utils.dart';
 import '../../stats/edit_single_stat.dart';
 import '../../../utils.dart';
 import 'package:flutter/material.dart';
 
 class StatCard extends StatelessWidget {
-  final DbCharacter character;
+  final Character character;
   final CharacterKeys stat;
 
   StatCard({
@@ -38,7 +39,7 @@ class StatCard extends StatelessWidget {
                 ),
                 Text(
                   '${CHARACTER_STAT_MODIFIER_LABELS[stat]} ' +
-                      DbCharacter.statModifierText(value),
+                      Character.statModifierText(value),
                   style: TextStyle(
                     fontSize: 20.0,
                     fontWeight: FontWeight.bold,
@@ -52,7 +53,7 @@ class StatCard extends StatelessWidget {
     );
   }
 
-  getValue(DbCharacter character, CharacterKeys key) {
+  getValue(Character character, CharacterKeys key) {
     switch (enumName(key).toLowerCase()) {
       case 'int':
         return character.int;

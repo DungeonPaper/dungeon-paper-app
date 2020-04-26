@@ -1,13 +1,12 @@
-import '../../db/character.dart';
+import 'package:dungeon_paper/refactor/character.dart';
 import '../../components/dialogs.dart';
 import 'edit_avatar_card.dart';
 import 'edit_display_name_card.dart';
 import 'package:flutter/material.dart';
 import 'character_wizard_utils.dart';
-import 'package:dungeon_paper/db/character_utils.dart';
 
 class EditBasicInfoView extends StatefulWidget {
-  final DbCharacter character;
+  final Character character;
   final CharSaveFunction onSave;
   final DialogMode mode;
   final ScaffoldBuilderFunction builder;
@@ -100,19 +99,16 @@ class _EditBasicInfoViewState extends State<EditBasicInfoView> {
   bool formValid() {
     return dirty &&
         <bool>[
-          displayName != null && displayName.length > 0,
+          displayName != null && displayName.isNotEmpty,
         ].every((cond) => cond);
   }
 
   void save() {
     if (widget.onSave != null) {
-      DbCharacter character = widget.character;
-      character.displayName = displayName;
-      character.photoURL = photoURL;
-      widget.onSave(character, [
-        CharacterKeys.displayName,
-        CharacterKeys.photoURL,
-      ]);
+      widget.onSave({
+        'displayName': displayName,
+        'photoURL': photoURL,
+      });
     }
   }
 

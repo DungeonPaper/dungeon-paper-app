@@ -1,16 +1,15 @@
 import 'package:dungeon_paper/components/number_controller.dart';
 import 'package:dungeon_paper/components/standard_dialog_controls.dart';
-import 'package:dungeon_paper/db/character.dart';
-import 'package:dungeon_paper/db/character_db.dart';
-import 'package:dungeon_paper/db/character_utils.dart';
-import 'package:dungeon_paper/flutter_utils.dart';
+import 'package:dungeon_paper/flutter_utils/flutter_utils.dart';
 import 'package:dungeon_paper/redux/stores/stores.dart';
+import 'package:dungeon_paper/refactor/character.dart';
 import 'package:dungeon_paper/utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:pedantic/pedantic.dart';
 
 class EditCoinsDialog extends StatefulWidget {
-  final num value;
+  final double value;
   EditCoinsDialog({
     Key key,
     @required this.value,
@@ -79,6 +78,7 @@ class EditCoinsDialogState extends State<EditCoinsDialog> {
       });
       return;
     }
+
     setState(() {
       value = newValue;
       valueError = false;
@@ -92,9 +92,9 @@ class EditCoinsDialogState extends State<EditCoinsDialog> {
   }
 
   _saveValue() async {
-    DbCharacter character = dwStore.state.characters.current;
+    Character character = dwStore.state.characters.current;
     character.coins = value;
-    await updateCharacter(character, [CharacterKeys.coins]);
+    unawaited(character.update(json: {'coins': value}));
     Navigator.pop(context);
   }
 }
