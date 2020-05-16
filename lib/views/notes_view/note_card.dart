@@ -72,7 +72,6 @@ class NoteCardState extends State<NoteCard> {
             if (widget.onSave != null) {
               widget.onSave(note);
             }
-            Navigator.pop(ctx);
           },
         ),
       ),

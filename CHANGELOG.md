@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## 1.1.1
+* Fixed an issue with updating notes after the previous update.
+* Fixed an issue with adding new moves from the higher levels set.
+
 ## 1.1.0
 * Major backend overhaul, and improvements to data handling & reliability.
 * Preparations for custom classes.

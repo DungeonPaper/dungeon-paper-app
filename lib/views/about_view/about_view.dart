@@ -46,42 +46,7 @@ class _AboutViewState extends State<AboutView> {
                 Text('Dungeon Paper',
                     style: Theme.of(context).textTheme.headline5),
                 VersionNumber.text(prefix: 'Version'),
-                Container(
-                  width: 300,
-                  padding: EdgeInsets.only(top: 4),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    children: [
-                      Hyperlink(
-                        text: 'Facebook',
-                        url: 'https://facebook.com/dungeonpaper',
-                      ),
-                      Hyperlink(
-                        text: 'Twitter',
-                        url: 'https://twitte.com/dungeonpaper',
-                      ),
-                      Hyperlink(
-                        text: 'GitHub',
-                        url: 'https://github.com/chenasraf/dungeon-paper-app',
-                      ),
-                    ],
-                  ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.symmetric(vertical: 24.0),
-                  child: SizedBox.fromSize(
-                    size: Size.square(
-                        min(MediaQuery.of(context).size.width - 32, 200)),
-                    child: Image.asset('assets/logo.png'),
-                  ),
-                ),
-              ],
-            ),
-          ),
-          Padding(
-            padding: const EdgeInsets.all(16.0).copyWith(top: 0),
-            child: Column(
-              children: <Widget>[
+                SizedBox(height: 16),
                 Text.rich(
                   TextSpan(
                     children: [
@@ -100,6 +65,49 @@ class _AboutViewState extends State<AboutView> {
                 ),
                 Text('© 2018-$year'),
                 SizedBox(height: 15),
+                Container(
+                  width: 300,
+                  padding: EdgeInsets.only(top: 4),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: [
+                      Hyperlink(
+                        text: 'Facebook',
+                        url: 'https://facebook.com/dungeonpaper',
+                      ),
+                      Hyperlink(
+                        text: 'Twitter',
+                        url: 'https://twitter.com/dungeonpaper',
+                      ),
+                      Hyperlink(
+                        text: 'GitHub',
+                        url: 'https://github.com/chenasraf/dungeon-paper-app',
+                      ),
+                    ],
+                  ),
+                ),
+                Container(
+                  padding: EdgeInsets.only(top: 8),
+                  child: Hyperlink(
+                    text: 'Privacy Policy',
+                    url: 'https://casraf.blog/dungeon-paper-privacy-policy',
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 24.0),
+                  child: SizedBox.fromSize(
+                    size: Size.square(
+                        min(MediaQuery.of(context).size.width - 32, 200)),
+                    child: Image.asset('assets/logo.png'),
+                  ),
+                ),
+              ],
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.all(16.0).copyWith(top: 0),
+            child: Column(
+              children: <Widget>[
                 Text('Credits', style: Theme.of(context).textTheme.headline6),
                 SizedBox(height: 10.0),
                 Text('Icons', style: Theme.of(context).textTheme.subtitle2),
