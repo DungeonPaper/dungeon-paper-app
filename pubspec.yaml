@@ -7,7 +7,7 @@ dependencies:
   wheel_spinner: ^0.0.6
   # wheel_spinner:
   #   path: ../wheel_spinner
-  dungeon_world_data: ^2.0.3
+  dungeon_world_data: ^2.0.3+1
   # dungeon_world_data:
   #   path: ../dw_data
   # Firebase/Firestore
