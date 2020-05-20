@@ -39,6 +39,7 @@ dependencies:
   flutter_typeahead: ^1.7.0
   pedantic: ^1.8.0
   universal_html: ^1.2.2
+  reorderables: ^0.3.2
 
 dev_dependencies:
   flutter_test:

@@ -34,7 +34,7 @@ class LoginButton extends StatelessWidget {
   Function() _handleSignIn(BuildContext context) {
     return () async {
       try {
-        var user = await signInFlow(Credentials(provider: null));
+        var user = await signInFlow(Credentials());
         if (user == null) {
           throw ('user_canceled');
         }

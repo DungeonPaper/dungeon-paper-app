@@ -36,13 +36,9 @@ Future<FirebaseUser> signInFlow(Credentials creds) async {
   var user = await getFirebaseUser(providerCreds);
 
   if (user == null) {
-    switch (creds.provider) {
-      default:
-        creds = await signInWithGoogle();
-        providerCreds = creds.googleCredentials;
-        user = await getFirebaseUser(providerCreds);
-        break;
-    }
+    creds = await creds.refresh();
+    providerCreds = creds.providerCredentials;
+    user = await getFirebaseUser(providerCreds);
   }
 
   final loginResult = await doApiLogin(user, creds);
@@ -115,14 +111,16 @@ void signOutFlow(SignInMethod method) async {
   dwStore.dispatch(CharacterActions.remove());
 }
 
-Future<Credentials> signInWithGoogle() async {
+Future<Credentials> signInWithGoogle({bool silent = true}) async {
   try {
     var gInstance = await _googleSignIn;
     GoogleSignInAccount googleUser;
-    try {
-      googleUser = await gInstance.signInSilently();
-    } catch (e) {
-      print(e);
+    if (silent == true) {
+      try {
+        googleUser = await gInstance.signInSilently();
+      } catch (e) {
+        print(e);
+      }
     }
 
     if (googleUser == null) {
@@ -134,10 +132,11 @@ Future<Credentials> signInWithGoogle() async {
 
     var googleAuth = await googleUser.authentication;
 
-    return Credentials(
-      idToken: googleAuth.idToken,
-      accessToken: googleAuth.accessToken,
-      provider: GoogleAuthProvider,
+    return Credentials.fromAuthCredential(
+      GoogleAuthProvider.getCredential(
+        idToken: googleAuth.idToken,
+        accessToken: googleAuth.accessToken,
+      ),
     );
   } catch (e) {
     print(e);

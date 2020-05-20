@@ -58,6 +58,7 @@ mixin CharacterFields implements FirebaseEntity {
       defaultValue: (ctx) => dungeonWorld.classes.first.raceMoves.first,
     ),
     DecimalField(fieldName: 'coins'),
+    IntField(fieldName: 'order'),
   ]);
 
   FieldsContext _fields;
@@ -147,6 +148,8 @@ mixin CharacterFields implements FirebaseEntity {
   set race(Move value) => fields.get<Move>('race').set(value);
   num get coins => fields.get<num>('coins').value;
   set coins(num value) => fields.get<num>('coins').set(value);
+  num get order => fields.get<num>('order').value;
+  set order(num value) => fields.get<num>('order').set(value);
   bool get useDefaultMaxHP => fields.get<bool>('useDefaultMaxHP').value;
 
   static num statModifier(num stat) {
