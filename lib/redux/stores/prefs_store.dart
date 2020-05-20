@@ -58,9 +58,9 @@ class Credentials {
   Future<Credentials> refresh({bool attemptSilent}) {
     switch (provider) {
       case GoogleAuthCredential:
+      default:
         return signInWithGoogle(silent: attemptSilent);
     }
-    return null;
   }
 
   AuthCredential get providerCredentials {

@@ -5,7 +5,6 @@ import 'package:dungeon_paper/redux/stores/stores.dart';
 import 'package:dungeon_paper/refactor/auth.dart' as auth;
 import 'package:dungeon_paper/refactor/character.dart';
 import 'package:dungeon_paper/refactor/user.dart';
-import 'package:dungeon_paper/utils.dart';
 import 'package:dungeon_paper/views/about_view/about_view.dart';
 import 'package:dungeon_paper/views/about_view/feedback_button.dart';
 import 'package:dungeon_paper/views/custom_classes/edit_custom_class.dart';
@@ -20,7 +19,8 @@ class Sidebar extends StatefulWidget {
 }
 
 class _SidebarState extends State<Sidebar> {
-  bool _userMenuExpanded = false;
+  // bool _userMenuExpanded = false;
+
   @override
   Widget build(BuildContext context) {
     return DWStoreConnector<DWStore>(
