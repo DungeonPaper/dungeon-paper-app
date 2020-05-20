@@ -47,6 +47,10 @@ registerUserListener(FirebaseUser fbUser) {
     _userListener.cancel();
   }
 
+  if (fbUser == null) {
+    return;
+  }
+
   String userDocID = 'user_data/${fbUser.email}';
   _userListener = firestore.document(userDocID).snapshots().listen((user) {
     dwStore.dispatch(
@@ -58,6 +62,7 @@ registerUserListener(FirebaseUser fbUser) {
       ),
     );
   });
+
   print("REGISTERED DB USER LISTENER");
 }
 
