@@ -141,7 +141,7 @@ class _FeedbackButtonState extends State<FeedbackButton> {
 
   String get subject => Uri.encodeComponent('Dungeon Paper feedback');
   String get body => Uri.encodeComponent("""\n\n\n\n
-    --- PACKAGE INFO ---
+    --- PACKAGE INFO ---\n
     Version: $version\n
     Build Number: $buildNumber\n
     User ID: ${userId ?? 'Unavailable'}\n
@@ -156,8 +156,8 @@ class _FeedbackButtonState extends State<FeedbackButton> {
 
   @override
   Widget build(BuildContext context) {
-    if (![widget.dontWaitForUser ? true : userId, email, version]
-        .every((i) => i != null)) return Container();
+    if ([widget.dontWaitForUser ? true : userId, email, version]
+        .any((i) => i == null)) return Container();
     return widget.builder(onPressed, mailtoUrl);
   }
 }

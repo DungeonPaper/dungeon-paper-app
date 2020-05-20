@@ -148,13 +148,17 @@ class _WhatsNewState extends State<WhatsNew> {
     http.Client client = http.Client();
     http.Response res = await client.post(Uri.parse(changelogUrl));
     if (res.statusCode != 200) {
-      setState(() {
-        error = true;
-      });
+      if (mounted) {
+        setState(() {
+          error = true;
+        });
+      }
       return;
     }
-    setState(() {
-      changelog = ChangelogParser.parseString(res.body);
-    });
+    if (mounted) {
+      setState(() {
+        changelog = ChangelogParser.parseString(res.body);
+      });
+    }
   }
 }
