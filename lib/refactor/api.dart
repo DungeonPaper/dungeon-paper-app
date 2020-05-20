@@ -1,5 +1,5 @@
 import 'dart:convert';
-import 'package:dungeon_paper/refactor/auth.dart';
+import 'package:dungeon_paper/redux/stores/prefs_store.dart';
 import 'package:dungeon_paper/refactor/user_with_characters.dart';
 import 'package:dungeon_paper/utils.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -11,7 +11,7 @@ void printWrapped(String text) {
 }
 
 Future<UserWithChildren> doApiLogin(
-    FirebaseUser user, ExposedAuthCredential credential) async {
+    FirebaseUser user, Credentials credential) async {
   if (user == null || credential == null) {
     return null;
   }
