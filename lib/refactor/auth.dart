@@ -1,5 +1,6 @@
 import 'package:dungeon_paper/db/listeners.dart';
 import 'package:dungeon_paper/redux/actions.dart';
+import 'package:dungeon_paper/redux/stores/prefs_store.dart';
 import 'package:dungeon_paper/redux/stores/stores.dart';
 import 'package:dungeon_paper/refactor/api.dart';
 import 'package:dungeon_paper/refactor/user.dart';
@@ -28,26 +29,23 @@ enum SignInMethod {
   Google,
 }
 
-class ExposedAuthCredential {
-  final String idToken;
-  final String accessToken;
-  final AuthCredential credential;
+Future<FirebaseUser> signInFlow(Credentials creds) async {
+  AuthCredential providerCreds = creds.providerCredentials;
 
-  ExposedAuthCredential({this.idToken, this.accessToken, this.credential});
-}
-
-Future<FirebaseUser> signInFlow(SignInMethod method) async {
-  ExposedAuthCredential creds;
   dwStore.dispatch(UserActions.requestLogin());
+  var user = await getFirebaseUser(providerCreds);
 
-  switch (method) {
-    case SignInMethod.Google:
-      creds = await signInWithGoogle();
-      break;
+  if (user == null) {
+    switch (creds.provider) {
+      default:
+        creds = await signInWithGoogle();
+        providerCreds = creds.googleCredentials;
+        user = await getFirebaseUser(providerCreds);
+        break;
+    }
   }
 
-  var user = await getFirebaseUser(creds?.credential);
-  var loginResult = await doApiLogin(user, creds);
+  final loginResult = await doApiLogin(user, creds);
 
   dispatchFinalDataToStore(
     credentials: creds,
@@ -67,7 +65,7 @@ void registerAllListeners(FirebaseUser fbUser) {
 }
 
 void dispatchFinalDataToStore({
-  @required ExposedAuthCredential credentials,
+  @required Credentials credentials,
   @required FirebaseUser firebaseUser,
   @required UserWithChildren dbLoginData,
 }) async {
@@ -117,31 +115,29 @@ void signOutFlow(SignInMethod method) async {
   dwStore.dispatch(CharacterActions.remove());
 }
 
-Future<ExposedAuthCredential> signInWithGoogle() async {
+Future<Credentials> signInWithGoogle() async {
   try {
-    var inst = await _googleSignIn;
+    var gInstance = await _googleSignIn;
     GoogleSignInAccount googleUser;
     try {
-      googleUser = await inst.signInSilently();
+      googleUser = await gInstance.signInSilently();
     } catch (e) {
       print(e);
     }
 
     if (googleUser == null) {
-      googleUser = await inst.signIn();
-      if (googleUser == null) throw 'google_user_error';
+      googleUser = await gInstance.signIn();
+      if (googleUser == null) {
+        throw 'google_user_error';
+      }
     }
 
     var googleAuth = await googleUser.authentication;
-    var credential = GoogleAuthProvider.getCredential(
-      idToken: googleAuth.idToken,
-      accessToken: googleAuth.accessToken,
-    );
 
-    return ExposedAuthCredential(
+    return Credentials(
       idToken: googleAuth.idToken,
       accessToken: googleAuth.accessToken,
-      credential: credential,
+      provider: GoogleAuthProvider,
     );
   } catch (e) {
     print(e);
@@ -151,9 +147,6 @@ Future<ExposedAuthCredential> signInWithGoogle() async {
 
 Future<FirebaseUser> getFirebaseUser(AuthCredential creds) async {
   try {
-    if (creds == null) {
-      throw 'credentials_error';
-    }
     var result = await _auth.signInWithCredential(creds);
     var user = result.user;
     return user;

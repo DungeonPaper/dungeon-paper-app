@@ -2,6 +2,8 @@ import 'package:dungeon_paper/redux/actions.dart';
 import 'package:dungeon_paper/redux/stores/stores.dart';
 import 'package:dungeon_paper/refactor/auth.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/foundation.dart';
+import 'package:pedantic/pedantic.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 enum SharedPrefKeys {
@@ -24,8 +26,26 @@ Map<SharedPrefKeys, String> keyMap = {
 class Credentials {
   String accessToken;
   String idToken;
+  Type provider;
+  AuthCredential _providerCreds;
 
-  Credentials({this.accessToken, this.idToken});
+  Credentials({
+    this.accessToken,
+    this.idToken,
+    AuthCredential providerCredentials,
+    @required this.provider,
+  }) : _providerCreds = providerCredentials;
+
+  AuthCredential get providerCredentials {
+    if (_providerCreds != null) {
+      return _providerCreds;
+    }
+    switch (provider) {
+      case GoogleAuthProvider:
+        return _providerCreds = googleCredentials;
+    }
+    return null;
+  }
 
   AuthCredential get googleCredentials => GoogleAuthProvider.getCredential(
         accessToken: accessToken,
@@ -37,6 +57,8 @@ class Credentials {
       accessToken == '' ||
       idToken == null ||
       idToken == '';
+
+  bool get isNotEmpty => !isEmpty;
 }
 
 class UserDetails {
@@ -52,7 +74,7 @@ class PrefsStore {
   UserDetails user;
 
   PrefsStore({Credentials credentials, UserDetails user})
-      : credentials = credentials ?? Credentials(),
+      : credentials = credentials ?? Credentials(provider: null),
         user = user ?? UserDetails();
 
   static Future<void> loadAll() async {
@@ -61,6 +83,7 @@ class PrefsStore {
       credentials: Credentials(
         idToken: prefs.getString(keyMap[SharedPrefKeys.IdToken]),
         accessToken: prefs.getString(keyMap[SharedPrefKeys.AccessToken]),
+        provider: GoogleAuthProvider,
       ),
       user: UserDetails(
         id: prefs.getString(keyMap[SharedPrefKeys.UserId]),
@@ -70,12 +93,8 @@ class PrefsStore {
     );
 
     dwStore.dispatch(SetPrefs(store));
-    if (!store.credentials.isEmpty) {
-      FirebaseUser user =
-          await getFirebaseUser(store.credentials.googleCredentials);
-      if (user == null) {
-        await signInFlow(SignInMethod.Google);
-      }
+    if (store.credentials.isNotEmpty) {
+      unawaited(signInFlow(store.credentials));
     }
   }
 }
@@ -108,7 +127,7 @@ PrefsStore prefsReducer(PrefsStore state, action) {
   if (action is Logout) {
     state = PrefsStore(
       user: UserDetails(),
-      credentials: Credentials(),
+      credentials: Credentials(provider: null),
     );
   }
 

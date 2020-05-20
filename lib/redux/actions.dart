@@ -1,5 +1,4 @@
 import 'package:dungeon_paper/redux/stores/prefs_store.dart';
-import 'package:dungeon_paper/refactor/auth.dart';
 import 'package:dungeon_paper/refactor/character.dart';
 import 'package:dungeon_paper/refactor/user.dart';
 import 'package:dungeon_world_data/player_class.dart';
@@ -11,7 +10,7 @@ class AppInit {}
 class Login {
   User user;
   FirebaseUser firebaseUser;
-  ExposedAuthCredential credentials;
+  Credentials credentials;
 
   Login({
     @required this.user,
@@ -29,7 +28,7 @@ class RequestLogin {}
 class UserActions {
   static Login login({
     User user,
-    ExposedAuthCredential credentials,
+    Credentials credentials,
     FirebaseUser firebaseUser,
   }) =>
       Login(
