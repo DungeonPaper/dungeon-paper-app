@@ -13,10 +13,6 @@ import 'package:dungeon_paper/views/edit_character/character_wizard_view.dart';
 import 'package:dungeon_paper/views/manage_characters_view/manage_characters_view.dart';
 import 'package:dungeon_paper/views/whats_new/whats_new_view.dart';
 import 'package:flutter/material.dart';
-import 'package:pedantic/pedantic.dart';
-import 'package:reorderables/reorderables.dart';
-
-const ENABLE_CLASS_CREATION = false;
 
 class Sidebar extends StatefulWidget {
   @override
@@ -63,7 +59,7 @@ class _SidebarState extends State<Sidebar> {
                   createNewCharacterScreen(context);
                 },
               ),
-              if (ENABLE_CLASS_CREATION)
+              if (user.hasFeature('create_custom_class'))
                 ListTile(
                   leading: Icon(Icons.add),
                   title: Text('Create New Class'),
