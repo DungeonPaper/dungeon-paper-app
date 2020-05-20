@@ -10,6 +10,10 @@ FieldsContext userFields = FieldsContext([
   StringField(fieldName: 'displayName'),
   StringField(fieldName: 'email'),
   StringField(fieldName: 'photoURL'),
+  MapOfField<String, dynamic>(
+    fieldName: 'features',
+    field: Field<dynamic>(fieldName: 'features', defaultValue: (ctx) => null),
+  ),
 ]);
 
 class User extends FirebaseEntity {
@@ -22,6 +26,13 @@ class User extends FirebaseEntity {
   set email(val) => fields.get<String>('email').set(val);
   String get photoURL => fields.get<String>('photoURL').get;
   set photoURL(val) => fields.get<String>('photoURL').set(val);
+  Map<String, dynamic> get features =>
+      fields.get<Map<String, dynamic>>('features').get;
+
+  bool hasFeature(String key) =>
+      features.containsKey(key) &&
+      features[key] != false &&
+      features[key] != null;
 
   User({
     DocumentReference ref,
