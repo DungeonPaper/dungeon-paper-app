@@ -36,6 +36,7 @@ class WhatsNew extends StatefulWidget {
       children: <Widget>[
         child,
         StandardDialogControls(
+          padding: EdgeInsets.symmetric(horizontal: 16).copyWith(top: 16),
           onOK: () => Navigator.pop(context),
           okText: Text('Got it!'),
         )
@@ -58,7 +59,7 @@ class WhatsNew extends StatefulWidget {
 }
 
 class _WhatsNewState extends State<WhatsNew> {
-  Map<Version, String> changelog;
+  Map<Version, ChangelogContent> changelog;
   String changelogUrl;
   Version currentVersion;
   bool error = false;
@@ -92,10 +93,22 @@ class _WhatsNewState extends State<WhatsNew> {
         children: <Widget>[
           Padding(
             padding:
-                const EdgeInsets.symmetric(horizontal: 16.0, vertical: 24.0),
-            child: MarkdownBody(
-              data: mapped(currentVersion),
-              onTapLink: (url) => launch(url),
+                const EdgeInsets.symmetric(horizontal: 16.0).copyWith(top: 24),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                for (var data in enumerate(mapped(currentVersion)))
+                  Padding(
+                    padding: data.index > 0
+                        ? const EdgeInsets.only(top: 32.0)
+                        : const EdgeInsets.all(0),
+                    child: MarkdownBody(
+                      data: data.value,
+                      onTapLink: (url) => launch(url),
+                    ),
+                  ),
+              ],
             ),
           ),
         ],
@@ -106,8 +119,8 @@ class _WhatsNewState extends State<WhatsNew> {
     return child;
   }
 
-  String mapped(Version ver) {
-    if (changelog == null) return "";
+  List<String> mapped(Version ver) {
+    if (changelog == null) return [];
     if (changelog[ver] == null) {
       ver = changelog.keys.firstWhere((k) => k <= ver);
     }
@@ -119,12 +132,14 @@ class _WhatsNewState extends State<WhatsNew> {
       ver,
       if (prevVersion != null) prevVersion,
     ];
-    return versions.map(_verString).toList().join('\n\n');
+    return versions.map(_verString).toList();
   }
 
   String _verString(Version v) {
     String prefix = v == currentVersion ? '' : 'Previous ';
-    return "## ${prefix}Version $v\n\n" + changelog[v];
+    return "## ${prefix}Version ${changelog[v].title}\n\n" +
+        changelog[v].lines.join('\n') +
+        "\n\n";
   }
 
   void _initChangelog() async {

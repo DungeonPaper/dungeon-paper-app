@@ -8,8 +8,8 @@ class ChangelogParser {
     this.changelog,
   });
 
-  static Map<Version, String> parseString(String changelog) {
-    Map<Version, String> output = {};
+  static Map<Version, ChangelogContent> parseString(String changelog) {
+    Map<Version, ChangelogContent> output = {};
     Version cur;
     for (String line in changelog.split('\n')) {
       if (line.trim().startsWith(RegExp('#\b')) || line.trim() == "") continue;
@@ -20,6 +20,9 @@ class ChangelogParser {
         final String versionStringMatch =
             RegExp('([0-9]+\.){2}[0-9]+').stringMatch(lineWithoutPrefix);
         cur = Version.parse(versionStringMatch);
+        if (!output.containsKey(cur)) {
+          output[cur] = ChangelogContent(cur, title: lineWithoutPrefix);
+        }
         continue;
       }
 
@@ -27,8 +30,7 @@ class ChangelogParser {
       // if (RegExp('\\*\s*').matchAsPrefix(line.trim()) != null) {
       String message = line; // .trim().substring(1).trim();
       if (cur != null) {
-        if (!output.containsKey(cur)) output[cur] = "";
-        output[cur] += "$message\n";
+        output[cur].lines.add("$message");
         continue;
       }
       // }
@@ -41,4 +43,16 @@ class ChangelogParser {
 
   Map<Version, List<String>> get parsed =>
       _parsed != null ? _parsed : _parsed = parse();
+}
+
+class ChangelogContent {
+  final Version version;
+  final List<String> lines;
+  String title;
+  ChangelogContent(
+    this.version, {
+    String title,
+    List<String> lines,
+  })  : this.title = title ?? version.toString(),
+        this.lines = lines ?? [];
 }
