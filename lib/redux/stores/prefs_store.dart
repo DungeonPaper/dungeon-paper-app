@@ -2,9 +2,9 @@ import 'package:dungeon_paper/redux/actions.dart';
 import 'package:dungeon_paper/redux/stores/stores.dart';
 import 'package:dungeon_paper/refactor/auth.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/foundation.dart';
 import 'package:pedantic/pedantic.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:firebase_auth_platform_interface/firebase_auth_platform_interface.dart';
 
 enum SharedPrefKeys {
   UserEmail,
@@ -24,30 +24,57 @@ Map<SharedPrefKeys, String> keyMap = {
 };
 
 class Credentials {
-  String accessToken;
-  String idToken;
   Type provider;
   AuthCredential _providerCreds;
+  Map<String, String> _map;
 
   Credentials({
-    this.accessToken,
-    this.idToken,
+    Map<String, String> data,
     AuthCredential providerCredentials,
-    @required this.provider,
-  }) : _providerCreds = providerCredentials;
+    Type provider,
+  })  : _map = data,
+        _providerCreds = providerCredentials,
+        this.provider = provider ?? providerCredentials?.runtimeType;
+
+  String get idToken => _map['idToken'];
+  String get accessToken => _map['accessToken'];
+
+  factory Credentials.fromAuthCredential(AuthCredential credential) {
+    switch (credential.runtimeType) {
+      case GoogleAuthCredential:
+        GoogleAuthCredential cred = credential;
+        return Credentials(
+          providerCredentials: cred,
+          data: {
+            'idToken': cred.idToken,
+            'accessToken': cred.accessToken,
+          },
+        );
+      default:
+        return Credentials(providerCredentials: credential);
+    }
+  }
+
+  Future<Credentials> refresh({bool attemptSilent}) {
+    switch (provider) {
+      case GoogleAuthCredential:
+        return signInWithGoogle(silent: attemptSilent);
+    }
+    return null;
+  }
 
   AuthCredential get providerCredentials {
     if (_providerCreds != null) {
       return _providerCreds;
     }
     switch (provider) {
-      case GoogleAuthProvider:
+      case GoogleAuthCredential:
         return _providerCreds = googleCredentials;
     }
     return null;
   }
 
-  AuthCredential get googleCredentials => GoogleAuthProvider.getCredential(
+  AuthCredential get googleCredentials => GoogleAuthCredential(
         accessToken: accessToken,
         idToken: idToken,
       );
@@ -74,16 +101,17 @@ class PrefsStore {
   UserDetails user;
 
   PrefsStore({Credentials credentials, UserDetails user})
-      : credentials = credentials ?? Credentials(provider: null),
+      : credentials = credentials ?? Credentials(),
         user = user ?? UserDetails();
 
   static Future<void> loadAll() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     PrefsStore store = PrefsStore(
-      credentials: Credentials(
-        idToken: prefs.getString(keyMap[SharedPrefKeys.IdToken]),
-        accessToken: prefs.getString(keyMap[SharedPrefKeys.AccessToken]),
-        provider: GoogleAuthProvider,
+      credentials: Credentials.fromAuthCredential(
+        GoogleAuthCredential(
+          idToken: prefs.getString(keyMap[SharedPrefKeys.IdToken]),
+          accessToken: prefs.getString(keyMap[SharedPrefKeys.AccessToken]),
+        ),
       ),
       user: UserDetails(
         id: prefs.getString(keyMap[SharedPrefKeys.UserId]),
@@ -127,7 +155,7 @@ PrefsStore prefsReducer(PrefsStore state, action) {
   if (action is Logout) {
     state = PrefsStore(
       user: UserDetails(),
-      credentials: Credentials(provider: null),
+      credentials: Credentials(),
     );
   }
 

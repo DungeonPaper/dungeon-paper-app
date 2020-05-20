@@ -73,6 +73,10 @@ registerCharactersListener() async {
     unawaited(_charsListener.cancel());
   }
 
+  if (dwStore.state.user.current == null) {
+    return;
+  }
+
   String userDocID = dwStore.state.user.current.docID;
   DocumentReference user = firestore.document('user_data/$userDocID');
   _charsListener =
