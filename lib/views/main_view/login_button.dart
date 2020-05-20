@@ -1,3 +1,4 @@
+import 'package:dungeon_paper/redux/actions.dart';
 import 'package:dungeon_paper/redux/stores/connectors.dart';
 import 'package:dungeon_paper/redux/stores/prefs_store.dart';
 import 'package:dungeon_paper/redux/stores/stores.dart';
@@ -47,6 +48,7 @@ class LoginButton extends StatelessWidget {
         // }
         print('SIGN IN ERROR:');
         print(e);
+        dwStore.dispatch(UserActions.noLogin());
         Scaffold.of(context, nullOk: true).showSnackBar(
           SnackBar(
             content: Text('Login failed.'),

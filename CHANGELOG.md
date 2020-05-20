@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## 1.1.2
+* Added manage characters screen with reordering
+* Improved login flow
+
 ## 1.1.1
 * Fixed an issue with updating notes after the previous update.
 * Fixed an issue with adding new moves from the higher levels set.

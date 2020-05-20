@@ -37,6 +37,9 @@ Future<FirebaseUser> signInFlow(Credentials creds) async {
 
   if (user == null) {
     creds = await creds.refresh();
+    if (creds.isEmpty) {
+      throw 'could_not_auth';
+    }
     providerCreds = creds.providerCredentials;
     user = await getFirebaseUser(providerCreds);
   }

@@ -1,6 +1,5 @@
 import 'package:dungeon_paper/components/confirmation_dialog.dart';
 import 'package:dungeon_paper/redux/actions.dart';
-import 'package:dungeon_paper/redux/stores/connectors.dart';
 import 'package:dungeon_paper/redux/stores/stores.dart';
 import 'package:dungeon_paper/refactor/character.dart';
 import 'package:dungeon_paper/utils.dart';
@@ -21,6 +20,7 @@ class _ManageCharactersViewState extends State<ManageCharactersView> {
   void initState() {
     characters = dwStore.state.characters.characters.values.toList()
       ..sort((a, b) => a.order - b.order);
+    super.initState();
   }
 
   @override
@@ -56,49 +56,58 @@ class _ManageCharactersViewState extends State<ManageCharactersView> {
         },
         children: [
           for (var char in characters)
-            Card(
+            IntrinsicWidth(
               key: Key(char.docID),
-              child: ListTile(
-                leading: Padding(
-                  padding: const EdgeInsets.only(top: 4.0),
-                  child: Icon(Icons.person, size: 30),
-                ),
-                title: Text(char.displayName),
-                subtitle: Text(
-                    'Level ${char.level} ${capitalize(enumName(char.alignment))} ${capitalize(char.mainClass.name)}'),
-                trailing: Row(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    IconButton(
-                      icon: Icon(Icons.settings),
-                      tooltip: 'Edit ${char.displayName}',
-                      onPressed: () => onEdit(char, context),
+              child: Card(
+                child: Container(
+                  width: MediaQuery.of(context).size.width,
+                  child: ListTile(
+                    leading: Container(
+                      padding: const EdgeInsets.only(top: 4.0),
+                      width: 10,
+                      height: 10,
+                      child: Icon(Icons.person, size: 30),
                     ),
-                    IconButton(
-                      color: Colors.red,
-                      icon: Icon(Icons.delete_forever),
-                      tooltip: 'Delete ${char.displayName}',
-                      onPressed: () async {
-                        if (await showDialog(
-                          context: context,
-                          builder: (context) => ConfirmationDialog(
-                            title: Text('Delete Character?'),
-                            text: Text(
-                                'THIS CAN NOT BE UNDONE!\nAre you sure this is what you want to do?'),
-                            okButtonText: Text('I WANT THIS CHARACTER GONE!'),
-                            cancelButtonText: Text('I regret clicking this'),
-                          ),
-                        )) {
-                          dwStore
-                              .dispatch(CharacterActions.removeCharacter(char));
-                          await char.delete();
-                          setState(() {
-                            characters = characters..remove(char);
-                          });
-                        }
-                      },
+                    title: Text(char.displayName),
+                    subtitle: Text(
+                        'Level ${char.level} ${capitalize(enumName(char.alignment))} ${capitalize(char.mainClass.name)}'),
+                    trailing: Row(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        IconButton(
+                          icon: Icon(Icons.settings),
+                          tooltip: 'Edit ${char.displayName}',
+                          onPressed: () => onEdit(char, context),
+                        ),
+                        IconButton(
+                          color: Colors.red,
+                          icon: Icon(Icons.delete_forever),
+                          tooltip: 'Delete ${char.displayName}',
+                          onPressed: () async {
+                            if (await showDialog(
+                              context: context,
+                              builder: (context) => ConfirmationDialog(
+                                title: Text('Delete Character?'),
+                                text: Text(
+                                    'THIS CAN NOT BE UNDONE!\nAre you sure this is what you want to do?'),
+                                okButtonText:
+                                    Text('I WANT THIS CHARACTER GONE!'),
+                                cancelButtonText:
+                                    Text('I regret clicking this'),
+                              ),
+                            )) {
+                              dwStore.dispatch(
+                                  CharacterActions.removeCharacter(char));
+                              await char.delete();
+                              setState(() {
+                                characters = characters..remove(char);
+                              });
+                            }
+                          },
+                        ),
+                      ],
                     ),
-                  ],
+                  ),
                 ),
               ),
             ),
