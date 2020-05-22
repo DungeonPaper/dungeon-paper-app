@@ -1,6 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:dungeon_paper/refactor/firebase_entity/fields/fields.dart';
-import 'package:dungeon_paper/refactor/firebase_entity/firebase_entity.dart';
+import 'package:dungeon_paper/db/models/firebase_entity/fields/fields.dart';
+import 'package:dungeon_paper/db/models/firebase_entity/firebase_entity.dart';
 
 var _fields = FieldsContext([
   IntField(fieldName: 'a', defaultValue: (ctx) => 0),
