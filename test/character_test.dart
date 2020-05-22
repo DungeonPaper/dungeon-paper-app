@@ -1,4 +1,4 @@
-import 'package:dungeon_paper/refactor/character.dart';
+import 'package:dungeon_paper/db/models/character.dart';
 import 'package:dungeon_world_data/dw_data.dart';
 import 'package:flutter_test/flutter_test.dart';
 

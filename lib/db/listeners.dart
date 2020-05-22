@@ -1,12 +1,14 @@
 import 'dart:async';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dungeon_paper/db/db.dart';
-import 'package:dungeon_paper/redux/actions.dart';
-import 'package:dungeon_paper/redux/stores/stores.dart';
-import 'package:dungeon_paper/refactor/character.dart';
-import 'package:dungeon_paper/refactor/user.dart';
+import 'package:dungeon_paper/src/redux/characters/characters_store.dart';
+import 'package:dungeon_paper/src/redux/stores.dart';
+import 'package:dungeon_paper/src/redux/users/user_store.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:pedantic/pedantic.dart';
+
+import 'models/character.dart';
+import 'models/user.dart';
 
 StreamSubscription _fbUserListener;
 
@@ -22,12 +24,12 @@ registerFirebaseUserListener() {
           authUser.email != null &&
           dwStore.state.user.current != null &&
           authUser.email != dwStore.state.user.current.email) {
-        dwStore.dispatch(UserActions.setFirebaseUser(authUser));
+        dwStore.dispatch(SetFirebaseUser(authUser));
       }
 
       if (authUser == null || authUser.email == null) {
-        UserActions.logout();
-        dwStore.dispatch(CharacterActions.remove());
+        dwStore.dispatch(Logout());
+        dwStore.dispatch(ClearCharacters());
       }
     });
     print("REGISTERED AUTH USER LISTENER");
@@ -54,7 +56,7 @@ registerUserListener(FirebaseUser fbUser) {
   String userDocID = 'user_data/${fbUser.email}';
   _userListener = firestore.document(userDocID).snapshots().listen((user) {
     dwStore.dispatch(
-      UserActions.setUser(
+      SetUser(
         User(
           data: user.data,
           ref: user.reference,
@@ -86,7 +88,7 @@ registerCharactersListener() async {
     }
     var chars = dwStore.state.characters.characters;
     dwStore.dispatch(
-      CharacterActions.setCharacters(
+      SetCharacters(
         chars
           ..addEntries(
             characters.documents.map(

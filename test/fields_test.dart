@@ -1,4 +1,4 @@
-import 'package:dungeon_paper/refactor/firebase_entity/fields/fields.dart';
+import 'package:dungeon_paper/db/models/firebase_entity/fields/fields.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'helpers/entity_base_helper.dart';
 

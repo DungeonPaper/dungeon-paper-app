@@ -1,14 +1,13 @@
 import 'dart:async';
 import 'package:dungeon_paper/db/db.dart';
+import 'package:dungeon_paper/src/pages/scaffold/main_view.dart';
+import 'package:dungeon_paper/src/redux/stores.dart';
+import 'package:dungeon_paper/src/utils/error_reporting.dart';
+import 'package:dungeon_paper/themes/main_theme.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:screen/screen.dart';
-import 'package:dungeon_paper/error_reporting.dart';
-import 'package:dungeon_paper/redux/actions.dart';
-import 'package:dungeon_paper/redux/stores/stores.dart';
-import 'package:dungeon_paper/theme.dart';
-import 'package:dungeon_paper/views/main_view/main_view.dart';
 
 void withInit(Function() cb) async {
   try {
@@ -44,7 +43,7 @@ class DungeonPaper extends StatelessWidget {
       store: dwStore,
       child: MaterialApp(
         title: appName,
-        theme: theme,
+        theme: mainTheme,
         routes: {
           '/': (ctx) => MainContainer(
                 title: appName,
