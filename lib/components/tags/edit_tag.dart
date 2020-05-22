@@ -27,15 +27,13 @@ class _EditTagDialogState extends State<EditTagDialog> {
   void initState() {
     _controllers = {
       'name': TextEditingController.fromValue(
-        TextEditingValue(text: widget.tag != null ? widget.tag.name : ''),
+        TextEditingValue(text: widget.tag?.name ?? ''),
       ),
       'description': TextEditingController.fromValue(
-        TextEditingValue(
-            text: widget.tag != null ? widget.tag.description.toString() : ''),
+        TextEditingValue(text: (widget.tag?.description ?? '').toString()),
       ),
       'value': TextEditingController.fromValue(
-        TextEditingValue(
-            text: widget.tag != null ? widget.tag.value.toString() : ''),
+        TextEditingValue(text: (widget.tag?.value ?? '').toString()),
       ),
     };
     _copyableTags = dungeonWorld.tags..sort((a, b) => a.name.compareTo(b.name));
@@ -79,6 +77,7 @@ class _EditTagDialogState extends State<EditTagDialog> {
           maxLines: null,
           decoration: InputDecoration(labelText: 'Tag description'),
           controller: _controllers['description'],
+          textCapitalization: TextCapitalization.sentences,
         ),
         TextField(
           decoration: InputDecoration(labelText: 'Tag value'),
@@ -100,9 +99,8 @@ class _EditTagDialogState extends State<EditTagDialog> {
   void copyTag(Tag tagToCopy) {
     if (tagToCopy == null) return;
     setState(() {
-      _controllers['name'].text = tagToCopy.name;
-      _controllers['value'].text =
-          tagToCopy.value != null ? tagToCopy.value.toString() : '';
+      _controllers['name'].text = tagToCopy.name ?? '';
+      _controllers['value'].text = (tagToCopy.value ?? '').toString();
       _controllers['description'].text = tagToCopy.description ?? '';
     });
   }
@@ -110,6 +108,8 @@ class _EditTagDialogState extends State<EditTagDialog> {
   Tag get tag {
     String name = _controllers['name'].text;
     String value = _controllers['value'].text;
+    String description = _controllers['description'].text;
+
     dynamic parsedValue = value.toString();
     if (RegExp(r'^\d+\.\d+$').hasMatch(value)) {
       parsedValue = double.tryParse(value);
@@ -119,6 +119,6 @@ class _EditTagDialogState extends State<EditTagDialog> {
       parsedValue = true;
     } else if (value == 'false') parsedValue = false;
     if (parsedValue == '') parsedValue = null;
-    return Tag(name, parsedValue);
+    return Tag(name, parsedValue, description);
   }
 }
