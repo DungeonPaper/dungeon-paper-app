@@ -5,12 +5,27 @@ import 'package:flutter/widgets.dart';
 import 'package:package_info/package_info.dart';
 import 'package:pedantic/pedantic.dart';
 import 'package:sentry/sentry.dart';
+import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 
 SentryClient sentry;
 
 // Error reporting
 Future<void> initErrorReporting() async {
   WidgetsFlutterBinding.ensureInitialized();
+  await initCrashalytics();
+}
+
+Future<void> initCrashalytics() async {
+  FlutterError.onError = (details) {
+    if (isInDebugMode) {
+      FlutterError.dumpErrorToConsole(details);
+    } else {
+      Crashlytics.instance.recordFlutterError(details);
+    }
+  };
+}
+
+Future<void> initSentry() async {
   var secrets = await loadSecrets();
   var packageInfo = await PackageInfo.fromPlatform();
   sentry = SentryClient(
@@ -29,16 +44,17 @@ Future<void> initErrorReporting() async {
   };
 }
 
-Future<void> reportError(dynamic error, dynamic stackTrace) async {
+Future<void> reportError(dynamic error, StackTrace stackTrace) async {
   print('Caught error: $error');
   if (isInDebugMode) {
     print(stackTrace);
     return;
   } else {
-    unawaited(sentry.captureException(
-      exception: error,
-      stackTrace: stackTrace,
-    ));
+    // unawaited(sentry.captureException(
+    //   exception: error,
+    //   stackTrace: stackTrace,
+    // ));
+    unawaited(Crashlytics.instance.recordError(error, stackTrace));
   }
 }
 
