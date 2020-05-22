@@ -18,7 +18,7 @@ void withInit(Function() cb) async {
       await initErrorReporting();
       await Screen.keepOn(true);
     }
-    runZoned(cb, onError: reportError);
+    runZonedGuarded(cb, reportError);
   } catch (e) {
     print(e);
     rethrow;
