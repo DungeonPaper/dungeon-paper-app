@@ -4,10 +4,10 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/widgets.dart';
 import 'package:package_info/package_info.dart';
 import 'package:pedantic/pedantic.dart';
-import 'package:sentry/sentry.dart';
+// import 'package:sentry/sentry.dart';
 import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 
-SentryClient sentry;
+// SentryClient sentry;
 
 // Error reporting
 Future<void> initErrorReporting() async {
@@ -25,24 +25,24 @@ Future<void> initCrashalytics() async {
   };
 }
 
-Future<void> initSentry() async {
-  var secrets = await loadSecrets();
-  var packageInfo = await PackageInfo.fromPlatform();
-  sentry = SentryClient(
-    dsn: secrets['SENTRY_DSN'],
-    environmentAttributes: Event(
-      release: packageInfo.version,
-    ),
-  );
+// Future<void> initSentry() async {
+//   var secrets = await loadSecrets();
+//   var packageInfo = await PackageInfo.fromPlatform();
+//   sentry = SentryClient(
+//     dsn: secrets['SENTRY_DSN'],
+//     environmentAttributes: Event(
+//       release: packageInfo.version,
+//     ),
+//   );
 
-  FlutterError.onError = (FlutterErrorDetails details) {
-    if (isInDebugMode) {
-      FlutterError.dumpErrorToConsole(details);
-    } else {
-      Zone.current.handleUncaughtError(details.exception, details.stack);
-    }
-  };
-}
+//   FlutterError.onError = (FlutterErrorDetails details) {
+//     if (isInDebugMode) {
+//       FlutterError.dumpErrorToConsole(details);
+//     } else {
+//       Zone.current.handleUncaughtError(details.exception, details.stack);
+//     }
+//   };
+// }
 
 Future<void> reportError(dynamic error, StackTrace stackTrace) async {
   print('Caught error: $error');
@@ -58,10 +58,10 @@ Future<void> reportError(dynamic error, StackTrace stackTrace) async {
   }
 }
 
-registerUserContext(FirebaseUser user) {
-  sentry.userContext = User(
-    email: user.email,
-    id: user.uid,
-    username: user.displayName,
-  );
-}
+// registerUserContext(FirebaseUser user) {
+//   sentry.userContext = User(
+//     email: user.email,
+//     id: user.uid,
+//     username: user.displayName,
+//   );
+// }
