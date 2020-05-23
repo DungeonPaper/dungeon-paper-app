@@ -2,7 +2,7 @@ import 'package:dungeon_paper/src/redux/characters/characters_store.dart';
 import 'package:dungeon_paper/src/redux/stores.dart';
 import 'package:dungeon_paper/src/redux/users/user_store.dart';
 import 'package:dungeon_paper/src/utils/auth.dart';
-import 'package:firebase_auth/firebase_auth.dart';
+import 'package:dungeon_paper/src/utils/credentials.dart';
 import 'package:pedantic/pedantic.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:firebase_auth_platform_interface/firebase_auth_platform_interface.dart';
@@ -28,71 +28,6 @@ Map<SharedPrefKeys, String> keyMap = {
   SharedPrefKeys.UserEmail: 'userEmail',
 };
 
-class Credentials {
-  Type provider;
-  AuthCredential _providerCreds;
-  Map<String, String> _map;
-
-  Credentials({
-    Map<String, String> data,
-    AuthCredential providerCredentials,
-    Type provider,
-  })  : _map = data,
-        _providerCreds = providerCredentials,
-        this.provider = provider ?? providerCredentials?.runtimeType;
-
-  String get idToken => _map['idToken'];
-  String get accessToken => _map['accessToken'];
-
-  factory Credentials.fromAuthCredential(AuthCredential credential) {
-    switch (credential.runtimeType) {
-      case GoogleAuthCredential:
-        GoogleAuthCredential cred = credential;
-        return Credentials(
-          providerCredentials: cred,
-          data: {
-            'idToken': cred.idToken,
-            'accessToken': cred.accessToken,
-          },
-        );
-      default:
-        return Credentials(providerCredentials: credential);
-    }
-  }
-
-  Future<Credentials> refresh({bool attemptSilent}) {
-    switch (provider) {
-      case GoogleAuthCredential:
-      default:
-        return signInWithGoogle(silent: attemptSilent);
-    }
-  }
-
-  AuthCredential get providerCredentials {
-    if (_providerCreds != null) {
-      return _providerCreds;
-    }
-    switch (provider) {
-      case GoogleAuthCredential:
-        return _providerCreds = googleCredentials;
-    }
-    return null;
-  }
-
-  AuthCredential get googleCredentials => GoogleAuthCredential(
-        accessToken: accessToken,
-        idToken: idToken,
-      );
-
-  bool get isEmpty =>
-      accessToken == null ||
-      accessToken == '' ||
-      idToken == null ||
-      idToken == '';
-
-  bool get isNotEmpty => !isEmpty;
-}
-
 class UserDetails {
   String email;
   String id;
@@ -105,14 +40,12 @@ class PrefsStore {
   Credentials credentials;
   UserDetails user;
 
-  PrefsStore({Credentials credentials, UserDetails user})
-      : credentials = credentials ?? Credentials(),
-        user = user ?? UserDetails();
+  PrefsStore({this.credentials, this.user});
 
   static Future<void> loadAll() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     PrefsStore store = PrefsStore(
-      credentials: Credentials.fromAuthCredential(
+      credentials: GoogleCredentials.fromAuthCredential(
         GoogleAuthCredential(
           idToken: prefs.getString(keyMap[SharedPrefKeys.IdToken]),
           accessToken: prefs.getString(keyMap[SharedPrefKeys.AccessToken]),
@@ -127,7 +60,15 @@ class PrefsStore {
 
     dwStore.dispatch(SetPrefs(store));
     if (store.credentials.isNotEmpty) {
-      unawaited(signInFlow(store.credentials));
+      try {
+        unawaited(signInFlow(
+          store.credentials,
+          silent: true,
+          interactiveOnFailSilent: false,
+        ));
+      } on Exception {
+        print('Silent login failed');
+      }
     }
   }
 }
@@ -151,16 +92,13 @@ PrefsStore prefsReducer(PrefsStore state, action) {
       email: action.user.email,
       lastCharacterId: state.user.lastCharacterId,
     );
-  }
-
-  if (action is Credentials) {
-    state.credentials = action;
+    state.credentials = action.credentials;
   }
 
   if (action is Logout) {
     state = PrefsStore(
       user: UserDetails(),
-      credentials: Credentials(),
+      credentials: null,
     );
   }
 

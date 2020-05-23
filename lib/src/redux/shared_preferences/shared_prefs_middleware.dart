@@ -5,17 +5,16 @@ void withPrefs(Function(SharedPreferences inst) fn) async {
   fn(prefs);
 }
 
-void sharedPrefsMiddleware(Store store, action, NextDispatcher next) {
+void sharedPrefsMiddleware(Store<DWStore> store, action, NextDispatcher next) {
   if (action is AppInit) {
     PrefsStore.loadAll();
   }
 
   if (action is SetPrefs) {
     withPrefs((prefs) {
-      prefs.setString(
-          keyMap[SharedPrefKeys.IdToken], action.prefs.credentials.idToken);
-      prefs.setString(keyMap[SharedPrefKeys.AccessToken],
-          action.prefs.credentials.accessToken);
+      for (var el in action.prefs.credentials.serialize().entries) {
+        prefs.setString(el.key, el.value);
+      }
       prefs.setString(keyMap[SharedPrefKeys.UserEmail], action.prefs.user.id);
       prefs.setString(keyMap[SharedPrefKeys.UserId], action.prefs.user.email);
       prefs.setString(keyMap[SharedPrefKeys.CharacterId],
@@ -25,8 +24,9 @@ void sharedPrefsMiddleware(Store store, action, NextDispatcher next) {
 
   if (action is Credentials) {
     withPrefs((prefs) {
-      prefs.setString(keyMap[SharedPrefKeys.IdToken], action.idToken);
-      prefs.setString(keyMap[SharedPrefKeys.AccessToken], action.accessToken);
+      for (var el in action.serialize().entries) {
+        prefs.setString(el.key, el.value);
+      }
     });
   }
 
@@ -47,17 +47,16 @@ void sharedPrefsMiddleware(Store store, action, NextDispatcher next) {
     withPrefs((prefs) {
       prefs.setString(keyMap[SharedPrefKeys.UserId], action.user.docID);
       prefs.setString(keyMap[SharedPrefKeys.UserEmail], action.user.email);
-      prefs.setString(
-          keyMap[SharedPrefKeys.IdToken], action.credentials.idToken);
-      prefs.setString(
-          keyMap[SharedPrefKeys.AccessToken], action.credentials.accessToken);
+      for (var el in action.credentials.serialize().entries) {
+        prefs.setString(el.key, el.value);
+      }
     });
   }
 
   if (action is Logout) {
     withPrefs((prefs) {
-      prefs.remove(keyMap[SharedPrefKeys.AccessToken]);
       prefs.remove(keyMap[SharedPrefKeys.IdToken]);
+      prefs.remove(keyMap[SharedPrefKeys.AccessToken]);
       prefs.remove(keyMap[SharedPrefKeys.UserId]);
       prefs.remove(keyMap[SharedPrefKeys.UserEmail]);
       prefs.remove(keyMap[SharedPrefKeys.CharacterId]);

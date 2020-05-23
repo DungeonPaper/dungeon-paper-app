@@ -80,16 +80,9 @@ class CustomInventoryItemFormState extends State<CustomInventoryItemForm> {
           ),
           EditableTagList(
             tags: tags,
-            onSave: (tag, idx) {
-              setState(() {
-                if (idx == tags.length) {
-                  tags.add(tag);
-                } else {
-                  tags[idx] = tag;
-                }
-              });
-            },
-            onDelete: (tag, idx) => setState(() => tags.removeAt(idx)),
+            onSave: (updated) => setState(() {
+              tags = updated;
+            }),
           ),
           MarkdownHelp(),
         ],

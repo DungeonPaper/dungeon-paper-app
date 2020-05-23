@@ -2,7 +2,8 @@ part of './character.dart';
 
 mixin CharacterFields implements FirebaseEntity {
   // Ordered by whichever data needs to come earliest for the rest to be able to calculate
-  FieldsContext _charFields = FieldsContext([
+  @override
+  FieldsContext fields = FieldsContext([
     //
     // Stats
     IntField(fieldName: 'armor', defaultValue: (ctx) => 0),
@@ -27,8 +28,9 @@ mixin CharacterFields implements FirebaseEntity {
         if (ctx != null) {
           if (ctx['playerClasses'] != null) {
             var classes = ctx.get<List<PlayerClass>>('playerClasses').value;
-            _mainClassOriginal =
-                classes.isNotEmpty ? classes.first : dungeonWorld.classes.first;
+            if (classes.isNotEmpty) {
+              _mainClassOriginal = classes.first;
+            }
           }
           if (ctx['con'] != null) {
             con = ctx.get<num>('con').value;
@@ -60,11 +62,6 @@ mixin CharacterFields implements FirebaseEntity {
     DecimalField(fieldName: 'coins'),
     IntField(fieldName: 'order'),
   ]);
-
-  FieldsContext _fields;
-
-  @override
-  FieldsContext get fields => _fields ??= _charFields.copy();
 
   // Class-Related
   set useDefaultMaxHP(bool value) =>

@@ -1,8 +1,8 @@
 import 'package:dungeon_paper/src/redux/connectors.dart';
-import 'package:dungeon_paper/src/redux/shared_preferences/prefs_store.dart';
 import 'package:dungeon_paper/src/redux/stores.dart';
 import 'package:dungeon_paper/src/redux/users/user_store.dart';
 import 'package:dungeon_paper/src/utils/auth.dart';
+import 'package:dungeon_paper/src/utils/credentials.dart';
 import 'package:flutter/material.dart';
 
 class LoginButton extends StatelessWidget {
@@ -35,7 +35,7 @@ class LoginButton extends StatelessWidget {
   Function() _handleSignIn(BuildContext context) {
     return () async {
       try {
-        var user = await signInFlow(Credentials());
+        var user = await signInFlow(GoogleCredentials());
         if (user == null) {
           throw ('user_canceled');
         }

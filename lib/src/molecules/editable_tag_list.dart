@@ -1,15 +1,18 @@
 import 'package:dungeon_paper/src/atoms/tag_chip.dart';
 import 'package:dungeon_paper/src/dialogs/edit_tag_dialog.dart';
+import 'package:dungeon_paper/src/utils/utils.dart';
 import 'package:dungeon_world_data/tag.dart';
 import 'package:flutter/material.dart';
 
 class EditableTagList extends StatelessWidget {
   final List<Tag> tags;
-  final void Function(Tag tag, num index) onDelete;
-  final void Function(Tag tag, num index) onSave;
+  final void Function(List<Tag> tag) onSave;
 
-  const EditableTagList({Key key, List<Tag> tags, this.onDelete, this.onSave})
-      : tags = tags ?? const [],
+  const EditableTagList({
+    Key key,
+    List<Tag> tags,
+    this.onSave,
+  })  : tags = tags ?? const [],
         super(key: key);
 
   @override
@@ -19,34 +22,40 @@ class EditableTagList extends StatelessWidget {
       spacing: 5.0,
       children: [
         for (num i = 0; i < tags.length; i++)
-          TagChip(
-            tag: tags[i],
-            onPressed: (tag) => openEditDialog(context, i, tag),
-            onDelete: handleDelete(i),
-          ),
+          if (tags[i]?.name != null)
+            TagChip(
+              tag: tags[i],
+              onPressed: (tag) => openEditDialog(context, tag),
+              onDelete: handleDelete(),
+            ),
         TagChip(
           tag: null,
-          onPressed: (tag) => openEditDialog(context, tags.length, tag),
+          onPressed: (tag) => openEditDialog(context, tag),
         ),
       ],
     );
   }
 
-  handleDelete(num idx) {
+  handleDelete() {
     return (Tag tag) {
-      if (onDelete == null) return;
-      onDelete(tag, idx);
+      if (onSave == null) return;
+      onSave(
+        removeFromList(tags, tag)..removeWhere((tag) => tag?.name == null),
+      );
     };
   }
 
-  void openEditDialog(BuildContext context, num idx, Tag tag) {
+  void openEditDialog(BuildContext context, Tag tag) {
     showDialog(
       context: context,
       builder: (ctx) => EditTagDialog(
           tag: tag,
           onSave: (tag) {
             if (onSave == null) return;
-            onSave(tag, idx);
+            onSave(
+              findAndReplaceInList(tags, tag)
+                ..removeWhere((tag) => tag?.name == null),
+            );
           }),
     );
   }

@@ -150,10 +150,15 @@ List<T> findAndReplaceInList<T>(List<T> list, T newObj,
   num index = list.indexWhere(getMatcher(newObj, matcher));
   list = List.from(list);
   list[index] = newObj;
+  list.removeWhere((element) => element == null);
   return list;
 }
 
 List<T> removeFromList<T>(List<T> list, T obj, [bool Function(T) matcher]) =>
-    List.from(list)..removeWhere(getMatcher(obj, matcher));
+    List.from(list)
+      ..removeWhere(getMatcher(obj, matcher))
+      ..removeWhere((element) => element == null);
 
-List<T> addToList<T>(List<T> list, T item) => List.from(list)..add(item);
+List<T> addToList<T>(List<T> list, T item) => List.from(list)
+  ..add(item)
+  ..removeWhere((element) => element == null);

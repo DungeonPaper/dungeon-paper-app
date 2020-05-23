@@ -47,7 +47,7 @@ class InventoryItem extends Equipment {
 
   @override
   Map toJSON() {
-    Map map = super.toJSON();
+    var map = super.toJSON();
     map['amount'] = amount;
     return map;
   }

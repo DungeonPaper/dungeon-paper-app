@@ -2,7 +2,6 @@ import 'package:dungeon_paper/db/listeners.dart';
 import 'package:dungeon_paper/db/models/user.dart';
 import 'package:dungeon_paper/db/models/user_with_characters.dart';
 import 'package:dungeon_paper/src/redux/characters/characters_store.dart';
-import 'package:dungeon_paper/src/redux/shared_preferences/prefs_store.dart';
 import 'package:dungeon_paper/src/redux/stores.dart';
 import 'package:dungeon_paper/src/redux/users/user_store.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -11,6 +10,7 @@ import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:pedantic/pedantic.dart';
 import 'api.dart';
+import 'credentials.dart';
 import 'utils.dart';
 
 final FirebaseAuth _auth = FirebaseAuth.instance;
@@ -30,15 +30,22 @@ enum SignInMethod {
   Google,
 }
 
-Future<FirebaseUser> signInFlow(Credentials creds) async {
+Future<FirebaseUser> signInFlow(
+  Credentials creds, {
+  bool silent = false,
+  bool interactiveOnFailSilent = true,
+}) async {
   AuthCredential providerCreds = creds.providerCredentials;
 
   dwStore.dispatch(RequestLogin());
   var user = await getFirebaseUser(providerCreds);
 
   if (user == null) {
-    creds = await creds.refresh();
-    if (creds.isEmpty) {
+    creds = await creds.signIn(
+      attemptSilent: silent,
+      interactiveOnFailSilent: interactiveOnFailSilent,
+    );
+    if (creds == null || creds.isEmpty) {
       throw 'could_not_auth';
     }
     providerCreds = creds.providerCredentials;
@@ -105,12 +112,17 @@ void dispatchFinalDataToStore({
 }
 
 void signOutFlow() async {
+  var creds = dwStore.state.prefs.credentials;
   unawaited(_auth.signOut());
+  unawaited(creds.signOut());
   dwStore.dispatch(Logout());
   dwStore.dispatch(ClearCharacters());
 }
 
-Future<Credentials> signInWithGoogle({bool silent = true}) async {
+Future<Credentials> signInWithGoogle({
+  bool silent,
+  bool interactiveOnFailSilent,
+}) async {
   try {
     var gInstance = await _googleSignIn;
     GoogleSignInAccount googleUser;
@@ -122,16 +134,17 @@ Future<Credentials> signInWithGoogle({bool silent = true}) async {
       }
     }
 
-    if (googleUser == null) {
+    if (googleUser == null && (!silent || interactiveOnFailSilent)) {
       googleUser = await gInstance.signIn();
-      if (googleUser == null) {
-        throw 'google_user_error';
-      }
+    }
+
+    if (googleUser == null) {
+      throw 'google_user_error';
     }
 
     var googleAuth = await googleUser.authentication;
 
-    return Credentials.fromAuthCredential(
+    return GoogleCredentials.fromAuthCredential(
       GoogleAuthProvider.getCredential(
         idToken: googleAuth.idToken,
         accessToken: googleAuth.accessToken,
@@ -141,6 +154,11 @@ Future<Credentials> signInWithGoogle({bool silent = true}) async {
     print(e);
     return null;
   }
+}
+
+Future<GoogleSignInAccount> signOutWithGoogle() async {
+  var gInstance = await _googleSignIn;
+  return await gInstance.signOut();
 }
 
 Future<FirebaseUser> getFirebaseUser(AuthCredential creds) async {
