@@ -12,6 +12,7 @@ import 'package:dungeon_world_data/gear_choice.dart';
 import 'package:dungeon_world_data/move.dart';
 import 'package:dungeon_world_data/player_class.dart';
 import 'package:flutter/foundation.dart';
+import 'package:quiver_hashcode/hashcode.dart';
 part 'field.dart';
 part 'typed_fields.dart';
 part 'dw_typed_fields.dart';
@@ -86,4 +87,7 @@ class FieldsContext {
       get(key)?.removeListener(listener);
     }
   }
+
+  @override
+  int get hashCode => hashObjects(_map.entries);
 }

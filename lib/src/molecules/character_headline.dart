@@ -28,16 +28,19 @@ class CharacterHeadline extends StatelessWidget {
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: <Widget>[
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                Text('Level $level $alignment $mainClass'),
-                Text(
-                  '$displayName',
-                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 24.0),
-                ),
-              ],
+            Flexible(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Text('Level $level $alignment $mainClass'),
+                  Text(
+                    '$displayName',
+                    style:
+                        TextStyle(fontWeight: FontWeight.bold, fontSize: 24.0),
+                  ),
+                ],
+              ),
             ),
             if (editable == true)
               IconButton(

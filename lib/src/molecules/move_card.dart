@@ -64,7 +64,7 @@ class MoveCardState extends State<MoveCard> {
                         ),
                       ) ==
                       true
-                  ? _delete
+                  ? _delete()
                   : null,
             )
           : widget.mode == MoveCardMode.Addable
