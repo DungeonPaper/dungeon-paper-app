@@ -3,7 +3,6 @@ import 'package:dungeon_paper/src/redux/stores.dart';
 import 'package:dungeon_paper/src/redux/users/user_store.dart';
 import 'package:dungeon_paper/src/utils/auth.dart';
 import 'package:dungeon_paper/src/utils/credentials.dart';
-import 'package:pedantic/pedantic.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:firebase_auth_platform_interface/firebase_auth_platform_interface.dart';
 import 'package:redux/redux.dart';

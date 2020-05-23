@@ -1,11 +1,9 @@
 import 'dart:async';
 import 'package:dungeon_paper/src/utils/utils.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/widgets.dart';
-import 'package:package_info/package_info.dart';
 import 'package:pedantic/pedantic.dart';
-// import 'package:sentry/sentry.dart';
 import 'package:firebase_crashlytics/firebase_crashlytics.dart';
+// import 'package:sentry/sentry.dart';
 
 // SentryClient sentry;
 
