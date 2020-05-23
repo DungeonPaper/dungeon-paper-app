@@ -1,9 +1,10 @@
 import 'dart:convert';
 import 'package:dungeon_paper/db/models/user_with_characters.dart';
-import 'package:dungeon_paper/src/redux/shared_preferences/prefs_store.dart';
 import 'package:dungeon_paper/src/utils/utils.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:http/http.dart' as http;
+
+import 'credentials.dart';
 
 void printWrapped(String text) {
   final pattern = RegExp('.{1,800}'); // 800 is the size of each chunk

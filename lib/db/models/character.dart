@@ -27,12 +27,20 @@ class Character extends FirebaseEntity with CharacterFields {
     return (mod >= 0 ? '+' : '') + mod.toString();
   }
 
+  // @override
+  // Future<void> update({Map<String, dynamic> json, bool save = true}) async {
+  //   await super.update(json: json, save: save);
+  //   if (save && docID != null) {
+  //     dwStore.dispatch(UpdateCharacter(this));
+  //   }
+  // }
+
   @override
-  Future<void> update({Map<String, dynamic> json, bool save = true}) async {
-    await super.update(json: json, save: save);
-    if (save && docID != null) {
+  void finalizeUpdate(Map<String, dynamic> json, {bool save = true}) {
+    if (save) {
       dwStore.dispatch(UpdateCharacter(this));
     }
+    super.finalizeUpdate(json, save: save);
   }
 
   @override

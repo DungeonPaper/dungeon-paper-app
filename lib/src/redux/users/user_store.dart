@@ -1,5 +1,5 @@
 import 'package:dungeon_paper/db/models/user.dart';
-import 'package:dungeon_paper/src/redux/shared_preferences/prefs_store.dart';
+import 'package:dungeon_paper/src/utils/credentials.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:meta/meta.dart';
 

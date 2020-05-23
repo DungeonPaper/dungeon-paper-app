@@ -171,7 +171,9 @@ class InventoryItemCard extends StatelessWidget {
   }
 
   InventoryItem _incrAmount(InventoryItem item, num amount) {
-    return item.copy()
-      ..amount = clamp(item.amount + amount, 0, double.infinity);
+    var copy = item.copy();
+    var amt = clamp(copy.amount + amount, 0, double.infinity);
+    copy.amount = amt.toInt();
+    return copy;
   }
 }

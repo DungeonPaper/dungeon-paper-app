@@ -71,22 +71,13 @@ class CustomSpellFormBuilderState extends State<CustomSpellFormBuilder> {
               textCapitalization: TextCapitalization.sentences,
               onChanged: (val) => _setStateValue('description', val),
               controller: _controllers['description'],
-              // style: TextStyle(fontSize: 13.0),
-              // textAlign: TextAlign.center,
             ),
           ),
           EditableTagList(
             tags: tags,
-            onSave: (tag, idx) {
-              setState(() {
-                if (idx == tags.length) {
-                  tags.add(tag);
-                } else {
-                  tags[idx] = tag;
-                }
-              });
-            },
-            onDelete: (tag, idx) => setState(() => tags.removeAt(idx)),
+            onSave: (updated) => setState(() {
+              tags = updated;
+            }),
           ),
           MarkdownHelp(),
         ],

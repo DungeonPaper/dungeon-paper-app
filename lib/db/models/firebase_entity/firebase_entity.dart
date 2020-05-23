@@ -14,12 +14,7 @@ abstract class FirebaseEntity {
     Map<String, dynamic> data,
   }) : docID = ref?.documentID {
     if (data != null && data.isNotEmpty) {
-      var defaults = defaultData();
-      var dataWithDefaults = Map<String, dynamic>.from(defaults)
-        ..addEntries([
-          for (var key in defaults.keys)
-            if (data.containsKey(key)) MapEntry(key, data[key])
-        ]);
+      var dataWithDefaults = _mergeDataWithDefaults(data);
       deserializeData(dataWithDefaults);
       lastUpdated = data['lastUpdated'] != null
           ? DateTime.fromMillisecondsSinceEpoch(
@@ -33,10 +28,21 @@ abstract class FirebaseEntity {
     fields.setDirty(false);
   }
 
+  Map<String, dynamic> _mergeDataWithDefaults(Map<String, dynamic> data) {
+    var defaults = defaultData();
+    var dataWithDefaults = Map<String, dynamic>.from(defaults)
+      ..addEntries([
+        for (var key in defaults.keys)
+          if (data.containsKey(key)) MapEntry(key, data[key])
+      ]);
+    return dataWithDefaults;
+  }
+
   void _getRemoteData() async {
     snapshot = await ref.get();
     if (snapshot != null && snapshot.data != null) {
-      deserializeData(snapshot.data);
+      var data = _mergeDataWithDefaults(snapshot.data);
+      deserializeData(data);
       lastUpdated = snapshot.data['lastUpdated'];
     }
   }
@@ -51,6 +57,12 @@ abstract class FirebaseEntity {
   void create([Map<String, dynamic> data]) => update(json: data);
 
   Future<void> update({Map<String, dynamic> json, bool save = true}) async {
+    json = prepareUpdate(json);
+    setFields(json);
+    finalizeUpdate(json, save: save);
+  }
+
+  Map<String, dynamic> prepareUpdate(Map<String, dynamic> json) {
     if (json == null) {
       json = Map.fromEntries(
         fields.dirtyFields.map(
@@ -61,7 +73,10 @@ abstract class FirebaseEntity {
       json = prepareJSONUpdate(json);
     }
     json['lastUpdated'] = DateTime.now();
+    return json;
+  }
 
+  void finalizeUpdate(Map<String, dynamic> json, {bool save = true}) async {
     if (save) {
       if (ref == null) {
         return _noRef();
@@ -69,11 +84,20 @@ abstract class FirebaseEntity {
       print('Updating $this');
       print(json);
       await ref.updateData(json);
-      json.forEach((k, v) => fields[k]?.setDirty(false));
+      unsetDirty(json);
     }
   }
 
-  prepareJSONUpdate(Map<String, dynamic> json, {bool useSetter = true}) {
+  void setFields(Map<String, dynamic> json) {
+    json.forEach((k, v) => fields[k]?.set(fields[k]?.fromJSON(v)));
+  }
+
+  void unsetDirty(Map<String, dynamic> json) {
+    json.forEach((k, v) => fields[k]?.setDirty(false));
+  }
+
+  Map<String, dynamic> prepareJSONUpdate(Map<String, dynamic> json,
+      {bool useSetter = true}) {
     var output = <String, dynamic>{};
     for (var k in json.keys) {
       var field = fields.get(k);
