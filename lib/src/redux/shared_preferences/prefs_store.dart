@@ -61,13 +61,20 @@ class PrefsStore {
     dwStore.dispatch(SetPrefs(store));
     if (store.credentials.isNotEmpty) {
       try {
-        unawaited(signInFlow(
+        var user = await signInFlow(
           store.credentials,
           silent: true,
           interactiveOnFailSilent: false,
-        ));
-      } on Exception {
+        );
+        if (user == null) {
+          throw SignInError('no_silent_login');
+        }
+      } on SignInError {
+        dwStore.dispatch(NoLogin());
         print('Silent login failed');
+      } catch (e) {
+        print('Silent login unexpected error:');
+        rethrow;
       }
     }
   }

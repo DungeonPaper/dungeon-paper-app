@@ -15,27 +15,30 @@ class CoinsChip extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return InkWell(
-      onTap: () {
-        showDialog(
-          context: context,
-          builder: (context) => EditCoinsDialog(value: character.coins),
-        );
-      },
-      child: Chip(
-        backgroundColor: Theme.of(context).primaryColorLight,
-        padding: EdgeInsets.all(12.0),
-        label: Row(
-          mainAxisSize: MainAxisSize.min,
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            PlatformSvg.asset(
-              'coin-stack.svg',
-              width: 20,
-            ),
-            SizedBox.fromSize(size: Size.square(10)),
-            Text(currency(character.coins))
-          ],
+    return Tooltip(
+      message: 'Coins',
+      child: InkWell(
+        onTap: () {
+          showDialog(
+            context: context,
+            builder: (context) => EditCoinsDialog(value: character.coins),
+          );
+        },
+        child: Chip(
+          backgroundColor: Theme.of(context).primaryColorLight,
+          padding: EdgeInsets.all(12.0),
+          label: Row(
+            mainAxisSize: MainAxisSize.min,
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              PlatformSvg.asset(
+                'coin-stack.svg',
+                width: 20,
+              ),
+              SizedBox.fromSize(size: Size.square(10)),
+              Text(currency(character.coins))
+            ],
+          ),
         ),
       ),
     );

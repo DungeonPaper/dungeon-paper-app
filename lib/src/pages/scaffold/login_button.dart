@@ -37,7 +37,7 @@ class LoginButton extends StatelessWidget {
       try {
         var user = await signInFlow(GoogleCredentials());
         if (user == null) {
-          throw ('user_canceled');
+          throw SignInError('user_canceled');
         }
         if (onUserChange != null) {
           onUserChange();

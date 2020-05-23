@@ -19,6 +19,28 @@ abstract class Credentials<T extends AuthCredential> {
   Future<Credentials> signIn({
     @required bool attemptSilent,
     @required bool interactiveOnFailSilent,
+  }) {
+    if (isEmpty && attemptSilent) {
+      throw SignInError('credentials_empty');
+    }
+    try {
+      var result = _signIn(
+        attemptSilent: attemptSilent,
+        interactiveOnFailSilent: interactiveOnFailSilent,
+      );
+      return result;
+    } on SignInError catch (e) {
+      print(e);
+      rethrow;
+    } catch (e) {
+      print('Unexpected error:');
+      rethrow;
+    }
+  }
+
+  Future<Credentials> _signIn({
+    @required bool attemptSilent,
+    @required bool interactiveOnFailSilent,
   });
 
   Future<void> signOut();
@@ -48,7 +70,8 @@ class GoogleCredentials extends Credentials<GoogleAuthCredential> {
         },
       );
 
-  Future<Credentials> signIn({
+  @override
+  Future<Credentials> _signIn({
     @required bool attemptSilent,
     @required bool interactiveOnFailSilent,
   }) =>
@@ -57,6 +80,7 @@ class GoogleCredentials extends Credentials<GoogleAuthCredential> {
         interactiveOnFailSilent: interactiveOnFailSilent,
       );
 
+  @override
   Future<void> signOut({
     @required bool attemptSilent,
     @required bool interactiveOnFailSilent,

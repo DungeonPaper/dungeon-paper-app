@@ -153,4 +153,6 @@ abstract class FirebaseEntity {
   }
 
   Map<String, dynamic> serializeData() => toJSON();
+
+  operator ==(o) => o is FirebaseEntity && o.docID == docID;
 }

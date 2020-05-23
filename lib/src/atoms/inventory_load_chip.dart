@@ -35,20 +35,25 @@ class InventoryLoadChip extends StatelessWidget {
   }
 
   BgAndFgColors get severity {
-    double perc = currentLoad * 1.0 / maxLoad;
-    if (perc >= 0.7) {
+    if (currentLoadPercent >= 1) {
       return BgAndFgColors(Colors.red[400], Colors.white);
     }
-    if (perc >= 0.4) {
+    if (currentLoadPercent >= 0.7) {
       return BgAndFgColors(Colors.yellow[200], Colors.black);
     }
     return BgAndFgColors(Colors.green[300], Colors.black);
   }
 
+  double get currentLoadPercent => currentLoad * 1.0 / maxLoad;
+
   @override
   Widget build(BuildContext context) {
+    var ttMsg = 'The weight you can carry.';
+    if (currentLoadPercent >= 1) {
+      ttMsg += '\nYou are over-encumbered!';
+    }
     return Tooltip(
-      message: 'Current Load, from inventory items with "Weight" tag',
+      message: ttMsg,
       child: Chip(
         backgroundColor: severity.background,
         padding: EdgeInsets.all(12.0),

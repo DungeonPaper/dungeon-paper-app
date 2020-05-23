@@ -46,7 +46,7 @@ Future<FirebaseUser> signInFlow(
       interactiveOnFailSilent: interactiveOnFailSilent,
     );
     if (creds == null || creds.isEmpty) {
-      throw 'could_not_auth';
+      throw SignInError('credentials_empty');
     }
     providerCreds = creds.providerCredentials;
     user = await getFirebaseUser(providerCreds);
@@ -139,7 +139,7 @@ Future<Credentials> signInWithGoogle({
     }
 
     if (googleUser == null) {
-      throw 'google_user_error';
+      throw SignInError('google_sign_in_error');
     }
 
     var googleAuth = await googleUser.authentication;
@@ -170,4 +170,9 @@ Future<FirebaseUser> getFirebaseUser(AuthCredential creds) async {
     print(e);
     return null;
   }
+}
+
+class SignInError extends Error {
+  final String message;
+  SignInError(this.message);
 }

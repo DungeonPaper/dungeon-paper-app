@@ -20,5 +20,17 @@ void main() {
       expect(json['a'], equals(5));
       expect(json['b'], equals('Gohan'));
     });
+
+    test('Entity Equality', () {
+      var testA = EntityTest(data: {'a': 8, 'b': 'Gohan'});
+      var testB = EntityTest(data: {'a': 5, 'b': 'Gohan'});
+      expect(testA, equals(testB));
+    });
+
+    test('Fields Equality', () {
+      var testA = EntityTest(data: {'a': 8, 'b': 'Gohan'});
+      var testB = EntityTest(data: {'a': 5, 'b': 'Gohan'});
+      expect(testA.fields, isNot(equals(testB.fields)));
+    });
   });
 }
