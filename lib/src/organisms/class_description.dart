@@ -43,7 +43,7 @@ class ClassDescription extends StatelessWidget {
                   ),
                   StatIcon(
                     icon: PlatformSvg.asset(
-                      'dice.svg',
+                      'dice/d20.svg',
                       // color: color,
                       width: 40.0,
                       height: 40.0,

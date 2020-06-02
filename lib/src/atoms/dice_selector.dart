@@ -9,7 +9,7 @@ class DiceSelector extends StatefulWidget {
   final void Function(Dice) onChanged;
   final bool showIcon;
   final num iconSize;
-  final TextStyle inputTextStyle;
+  final TextStyle textStyle;
 
   const DiceSelector({
     Key key,
@@ -17,7 +17,7 @@ class DiceSelector extends StatefulWidget {
     @required this.dice,
     this.showIcon = false,
     this.iconSize = 40,
-    this.inputTextStyle,
+    this.textStyle,
   }) : super(key: key);
 
   @override
@@ -29,6 +29,15 @@ class _DiceSelectorState extends State<DiceSelector> {
   Dice dice;
   num get amount => dice.amount;
   num get sides => dice.sides;
+
+  static List<Dice> diceList = [
+    Dice.d4,
+    Dice.d6,
+    Dice.d8,
+    Dice.d10,
+    Dice.d12,
+    Dice.d20,
+  ];
 
   @override
   void initState() {
@@ -43,6 +52,9 @@ class _DiceSelectorState extends State<DiceSelector> {
 
   @override
   Widget build(BuildContext context) {
+    print('sides: $sides, dice: ${Dice(sides)}, dice from prop: $dice');
+    print('list: ${diceList}');
+    print('where: ${diceList.where((d) => d == Dice(sides))}');
     return Container(
       padding: const EdgeInsets.symmetric(vertical: 8.0),
       child: Row(
@@ -54,7 +66,7 @@ class _DiceSelectorState extends State<DiceSelector> {
             Padding(
               padding: const EdgeInsets.only(right: 16.0),
               child: PlatformSvg.asset(
-                'dice.svg',
+                'dice/d20.svg',
                 width: widget.iconSize.toDouble(),
                 height: widget.iconSize.toDouble(),
               ),
@@ -62,38 +74,36 @@ class _DiceSelectorState extends State<DiceSelector> {
           Container(
             width: 40,
             child: TextField(
-              onChanged: (val) =>
-                  setState(() => dice.amount = int.tryParse(val) ?? amount),
+              onChanged: (val) {
+                setState(() => dice = Dice(sides, int.tryParse(val) ?? amount));
+                delegateChange(dice);
+              },
               keyboardType: TextInputType.number,
               inputFormatters: <TextInputFormatter>[
                 WhitelistingTextInputFormatter.digitsOnly,
                 BetweenValuesTextFormatter(1, 99)
               ],
               controller: controller,
-              style: widget.inputTextStyle,
+              style: widget.textStyle,
               textAlign: TextAlign.right,
             ),
           ),
           DropdownButton<Dice>(
             value: Dice(sides),
-            items: [
-              Dice.d4,
-              Dice.d6,
-              Dice.d8,
-              Dice.d10,
-              Dice.d12,
-              Dice.d20,
-            ]
-                .map((dice) => DropdownMenuItem(
-                      key: Key(dice.toString()),
-                      value: dice,
+            items: diceList
+                .map((d) => DropdownMenuItem(
+                      key: Key(d.toString()),
+                      value: d,
                       child: Text(
-                        'd${dice.sides}',
-                        style: TextStyle(fontSize: 24.0),
+                        'd${d.sides}',
+                        style: widget.textStyle,
                       ),
                     ))
                 .toList(),
-            onChanged: (val) => setState(() => dice.sides = val.sides),
+            onChanged: (val) {
+              setState(() => dice = Dice(val.sides, amount));
+              delegateChange(dice);
+            },
           )
         ],
       ),

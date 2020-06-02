@@ -35,7 +35,7 @@ class ArmorAndHitDice extends StatelessWidget {
           _item(
             context,
             icon: PlatformSvg.asset(
-              'dice.svg',
+              'dice/d20.svg',
               width: 20,
               height: 20,
             ),

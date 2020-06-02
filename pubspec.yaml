@@ -68,7 +68,12 @@ flutter:
     - secrets.json
     - assets/logo.png
     - assets/swords.svg
-    - assets/dice.svg
+    - assets/dice/d4.svg
+    - assets/dice/d6.svg
+    - assets/dice/d8.svg
+    - assets/dice/d10.svg
+    - assets/dice/d12.svg
+    - assets/dice/d20.svg
     - assets/bag.svg
     - assets/armor.svg
     - assets/coin-stack.svg

@@ -1,7 +1,7 @@
 import 'package:dungeon_paper/src/dialogs/standard_dialog_controls.dart';
 import 'package:dungeon_paper/src/flutter_utils/widget_utils.dart';
 import 'package:dungeon_paper/src/utils/utils.dart';
-import 'package:dungeon_paper/src/utils/version.dart';
+import 'package:dungeon_paper/src/utils/changelog.dart';
 import 'package:pub_semver/pub_semver.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_markdown/flutter_markdown.dart';
@@ -124,15 +124,13 @@ class _WhatsNewState extends State<WhatsNew> {
     if (changelog[ver] == null) {
       ver = changelog.keys.firstWhere((k) => k <= ver);
     }
-    Iterable<Version> keys = changelog.keys;
-    int verIdx = keys.toList().indexOf(ver);
-    Version prevVersion;
-    if (verIdx < keys.length - 1) prevVersion = keys.elementAt(verIdx + 1);
-    List<Version> versions = [
-      ver,
-      if (prevVersion != null) prevVersion,
-    ];
-    return versions.map(_verString).toList();
+    const LIMIT = 3;
+    int verIdx = changelog.keys.toList().indexOf(ver);
+    List<Version> versions = changelog.keys.toList();
+
+    if (verIdx > 0) versions.removeRange(0, verIdx);
+
+    return versions.take(LIMIT).map(_verString).toList();
   }
 
   String _verString(Version v) {
