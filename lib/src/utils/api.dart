@@ -1,5 +1,6 @@
 import 'dart:convert';
-import 'package:dungeon_paper/db/models/user_with_characters.dart';
+import 'package:dungeon_paper/db/db.dart';
+import 'package:dungeon_paper/db/models/user.dart';
 import 'package:dungeon_paper/src/utils/utils.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:http/http.dart' as http;
@@ -11,18 +12,18 @@ void printWrapped(String text) {
   pattern.allMatches(text).forEach((match) => print(match.group(0)));
 }
 
-Future<UserWithChildren> doApiLogin(
-    FirebaseUser user, Credentials credential) async {
-  if (user == null || credential == null) {
+Future<User> doApiLogin(FirebaseUser fbUser, Credentials credential) async {
+  if (fbUser == null || credential == null) {
     return null;
   }
 
   var secrets = await loadSecrets();
-  var idToken = await user.getIdToken();
+  var idToken = await fbUser.getIdToken();
   var uri = Uri(
     host: secrets.API_DOMAIN,
     scheme: 'https',
     path: '${secrets.API_PATH}/login/',
+    queryParameters: {'include_nested': 'false'},
   );
   var response = await http.get(uri.toString(), headers: {
     'Authorization': 'Bearer ' + idToken.token,
@@ -32,7 +33,12 @@ Future<UserWithChildren> doApiLogin(
     if (json.containsKey('status') && json['status'] == 'error') {
       return null;
     }
-    return UserWithChildren(data: json);
+    var user = User(
+      ref: firestore.collection('user_data').document(fbUser.email),
+      autoLoad: false,
+    );
+    await user.getRemoteData();
+    return user;
   }
   throw Exception('bad response: ${response.body}');
 }

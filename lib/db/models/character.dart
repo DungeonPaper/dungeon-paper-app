@@ -22,7 +22,8 @@ class Character extends FirebaseEntity with CharacterFields {
   Character({
     Map<String, dynamic> data,
     DocumentReference ref,
-  }) : super(ref: ref, data: data);
+    bool autoLoad,
+  }) : super(ref: ref, data: data, autoLoad: autoLoad);
 
   static Character of(BuildContext context) {
     return context
@@ -33,6 +34,13 @@ class Character extends FirebaseEntity with CharacterFields {
   static String statModifierText(num stat) {
     num mod = CharacterFields.statModifier(stat);
     return (mod >= 0 ? '+' : '') + mod.toString();
+  }
+
+  @override
+  Future<Map<String, dynamic>> getRemoteData() async {
+    var res = await super.getRemoteData();
+    dwStore.dispatch(UpsertCharacter(this));
+    return res;
   }
 
   // @override
@@ -46,7 +54,7 @@ class Character extends FirebaseEntity with CharacterFields {
   @override
   void finalizeUpdate(Map<String, dynamic> json, {bool save = true}) {
     if (save) {
-      dwStore.dispatch(UpdateCharacter(this));
+      dwStore.dispatch(UpsertCharacter(this));
     }
     super.finalizeUpdate(json, save: save);
   }

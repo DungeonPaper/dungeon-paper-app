@@ -76,15 +76,15 @@
 
 ## 1.0.0-beta3
 * Added reference view with basic & special moves
-* Added display for armor and hit dice
+* Added display for armor and damage dice
 * Bugfixes
 
 ## 1.0.0-beta2.1
-* Added display for armor and hit dice
+* Added display for armor and damage dice
 * Bugfixes
 
 ## 1.0.0-beta2
-* Added display for armor and hit dice
+* Added display for armor and damage dice
 
 ## 1.0.0-alpha11
 * First open beta releasea
@@ -108,15 +108,15 @@
 
 ## 1.0.0-beta3
 * Added reference view with basic & special moves
-* Added display for armor and hit dice
+* Added display for armor and damage dice
 * Bugfixesa
 
 ## 1.0.0-beta2.1
-* Added display for armor and hit dice
+* Added display for armor and damage dice
 * Bugfixesa
 
 ## 1.0.0-beta2
-* Added display for armor and hit dicea
+* Added display for armor and damage dicea
 
 ## 1.0.0-alpha11
 * Usability updatea

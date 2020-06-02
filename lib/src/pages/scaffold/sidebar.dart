@@ -44,7 +44,10 @@ class _SidebarState extends State<Sidebar> {
                 'Characters',
                 context,
                 leading: InkWell(
-                  child: Text('Edit'.toUpperCase()),
+                  child: Padding(
+                    padding: EdgeInsets.all(8),
+                    child: Text('Edit'.toUpperCase()),
+                  ),
                   onTap: () => manageCharactersScreen(context),
                 ),
               ),
@@ -143,7 +146,7 @@ class _SidebarState extends State<Sidebar> {
   Widget title(String text, BuildContext context, {Widget leading}) {
     TextStyle titleStyle = getTitleStyle(context);
     Widget title = Padding(
-      padding: EdgeInsets.all(16).copyWith(bottom: 0),
+      padding: EdgeInsets.all(16).copyWith(bottom: 8),
       child: Text(
         text.toUpperCase(),
         style: titleStyle,
@@ -158,7 +161,7 @@ class _SidebarState extends State<Sidebar> {
       children: [
         title,
         Padding(
-          padding: EdgeInsets.all(16).copyWith(bottom: 0),
+          padding: EdgeInsets.only(right: 16),
           child: DefaultTextStyle(
             child: leading,
             style: titleStyle.copyWith(

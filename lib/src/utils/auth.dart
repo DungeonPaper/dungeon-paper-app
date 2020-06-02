@@ -1,6 +1,6 @@
 import 'package:dungeon_paper/db/listeners.dart';
+import 'package:dungeon_paper/db/models/character.dart';
 import 'package:dungeon_paper/db/models/user.dart';
-import 'package:dungeon_paper/db/models/user_with_characters.dart';
 import 'package:dungeon_paper/src/redux/characters/characters_store.dart';
 import 'package:dungeon_paper/src/redux/stores.dart';
 import 'package:dungeon_paper/src/redux/users/user_store.dart';
@@ -36,14 +36,14 @@ Future<FirebaseUser> signInFlow(
   bool interactiveOnFailSilent = true,
 }) async {
   AuthCredential providerCreds = creds.providerCredentials;
-  FirebaseUser user;
+  FirebaseUser fbUser;
 
   dwStore.dispatch(RequestLogin());
   if (creds?.isNotEmpty == true) {
-    user = await getFirebaseUser(providerCreds);
+    fbUser = await getFirebaseUser(providerCreds);
   }
 
-  if (user == null) {
+  if (fbUser == null) {
     creds = await creds.signIn(
       attemptSilent: silent,
       interactiveOnFailSilent: interactiveOnFailSilent,
@@ -52,20 +52,20 @@ Future<FirebaseUser> signInFlow(
       throw SignInError('credentials_empty');
     }
     providerCreds = creds.providerCredentials;
-    user = await getFirebaseUser(providerCreds);
+    fbUser = await getFirebaseUser(providerCreds);
   }
 
-  final loginResult = await doApiLogin(user, creds);
+  final user = await doApiLogin(fbUser, creds);
 
   dispatchFinalDataToStore(
     credentials: creds,
-    firebaseUser: user,
-    dbLoginData: loginResult,
+    firebaseUser: fbUser,
+    user: user,
   );
 
-  registerAllListeners(user);
+  registerAllListeners(fbUser);
 
-  return user;
+  return fbUser;
 }
 
 void registerAllListeners(FirebaseUser fbUser) {
@@ -77,17 +77,15 @@ void registerAllListeners(FirebaseUser fbUser) {
 void dispatchFinalDataToStore({
   @required Credentials credentials,
   @required FirebaseUser firebaseUser,
-  @required UserWithChildren dbLoginData,
+  @required User user,
 }) async {
-  if (firebaseUser == null || credentials == null || dbLoginData == null) {
+  if (firebaseUser == null || credentials == null || user == null) {
     dwStore.dispatch(NoLogin());
     return;
   }
 
   var prefs = dwStore.state.prefs;
-  var user = User(
-      data: dbLoginData.toJSON()..remove('characters'), ref: dbLoginData.ref);
-  var characters = dbLoginData.characters;
+  var characters = user.characters;
 
   dwStore.dispatch(Login(
     user: user,
@@ -95,19 +93,18 @@ void dispatchFinalDataToStore({
     firebaseUser: firebaseUser,
   ));
 
-  dwStore.dispatch(
-    SetCharacters({
-      for (var char in characters) char.docID: char,
-    }),
-  );
+  final charactersData = {
+    for (var char in characters)
+      char.documentID: Character(ref: char, autoLoad: true),
+  };
 
   if (characters.isNotEmpty) {
-    var currentID = prefs.user.lastCharacterId ?? characters.first.docID;
+    var currentID = prefs.user.lastCharacterId ?? characters.first.documentID;
     dwStore.dispatch(
       SetCurrentChar(
-        characters.firstWhere(
+        charactersData.values.firstWhere(
           (char) => char.docID == currentID,
-          orElse: () => characters.first,
+          orElse: () => charactersData.values.first,
         ),
       ),
     );

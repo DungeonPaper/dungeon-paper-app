@@ -2,7 +2,8 @@ part of 'characters_store.dart';
 
 class SetCharacters {
   final Map<String, Character> characters;
-  SetCharacters(this.characters);
+  final bool overwrite;
+  SetCharacters(this.characters, [this.overwrite = true]);
 }
 
 class SetCurrentChar {
@@ -11,19 +12,14 @@ class SetCurrentChar {
   SetCurrentChar(this.character);
 }
 
-class AddCharacter {
-  final Character character;
-  AddCharacter(this.character);
-}
-
 class RemoveCharacter {
   final Character character;
   RemoveCharacter(this.character);
 }
 
-class UpdateCharacter {
+class UpsertCharacter {
   final Character character;
-  UpdateCharacter(this.character);
+  UpsertCharacter(this.character);
 }
 
 class ClearCharacters {}

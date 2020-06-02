@@ -86,22 +86,14 @@ registerCharactersListener() async {
     if (characters.documents.isEmpty) {
       return;
     }
-    var chars = dwStore.state.characters.characters;
     dwStore.dispatch(
-      SetCharacters(
-        chars
-          ..addEntries(
-            characters.documents.map(
-              (character) => MapEntry(
-                character.reference.path,
-                Character(
-                  data: character.data,
-                  ref: character.reference,
-                ),
-              ),
-            ),
+      SetCharacters({
+        for (var character in characters.documents)
+          character.reference.path: Character(
+            data: character.data,
+            ref: character.reference,
           ),
-      ),
+      }, false),
     );
   });
   print("REGISTERED DB CHARACTER LISTENER");

@@ -258,3 +258,44 @@ class StringListField extends ListOfField<String> {
           defaultValue: defaultValue,
         );
 }
+
+class DocumentReferenceListField extends ListOfField<DocumentReference> {
+  DocumentReferenceListField({
+    FieldsContext context,
+    @required String fieldName,
+    List<DocumentReference> value,
+    List<FieldListener<List<DocumentReference>>> listeners,
+    bool isSerialized = true,
+    dynamic Function(List<DocumentReference> value, FieldsContext context)
+        toJSON,
+    List<DocumentReference> Function(dynamic value, FieldsContext context)
+        fromJSON,
+    List<DocumentReference> Function(FieldsContext context) defaultValue,
+  }) : super(
+          field: DocumentReferenceField(fieldName: fieldName),
+          fieldName: fieldName,
+          value: value,
+          isSerialized: isSerialized,
+          listeners: listeners,
+          defaultValue: defaultValue,
+        );
+}
+
+class DocumentReferenceField extends Field<DocumentReference> {
+  DocumentReferenceField({
+    FieldsContext context,
+    @required String fieldName,
+    DocumentReference Function(FieldsContext context) defaultValue,
+    DocumentReference value,
+    List<FieldListener<DocumentReference>> listeners,
+    bool isSerialized = true,
+  }) : super(
+          context: context,
+          fieldName: fieldName,
+          defaultValue: defaultValue ?? (ctx) => null,
+          value: value,
+          listeners: listeners,
+          isSerialized: isSerialized,
+          fromJSON: (value, ctx) => value,
+        );
+}

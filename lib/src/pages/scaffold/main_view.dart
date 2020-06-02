@@ -142,7 +142,8 @@ class _MainViewState extends State<MainView> {
   FloatingActionButtonLocation get fabLocation =>
       widget.character != null ? FloatingActionButtonLocation.endFloat : null;
 
-  Widget get drawer => widget.user != null ? Sidebar() : null;
+  Widget get drawer =>
+      widget.user != null && widget.character != null ? Sidebar() : null;
 
   List<Widget> get pages => Pages.values.map((page) {
         var builder = pageMap[page];

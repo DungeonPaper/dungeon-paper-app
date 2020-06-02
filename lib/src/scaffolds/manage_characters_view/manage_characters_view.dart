@@ -34,26 +34,7 @@ class _ManageCharactersViewState extends State<ManageCharactersView> {
         ),
         padding: EdgeInsets.all(8),
         mainAxisSize: MainAxisSize.min,
-        onReorder: (oldIdx, newIdx) {
-          var copy = [...characters];
-          var char = copy.elementAt(oldIdx);
-          copy
-            ..removeAt(oldIdx)
-            ..insert(newIdx, char);
-          for (var char in enumerate(copy)) {
-            unawaited(char.value.update(json: {'order': char.index}));
-          }
-          setState(() {
-            characters = [...copy];
-          });
-          dwStore.dispatch(
-            SetCharacters(
-              Map<String, Character>.fromEntries(
-                copy.map((char) => MapEntry(char.docID, char)),
-              ),
-            ),
-          );
-        },
+        onReorder: _reorder,
         children: [
           for (var char in characters)
             IntrinsicWidth(
@@ -77,7 +58,7 @@ class _ManageCharactersViewState extends State<ManageCharactersView> {
                         IconButton(
                           icon: Icon(Icons.settings),
                           tooltip: 'Edit ${char.displayName}',
-                          onPressed: () => onEdit(char, context),
+                          onPressed: () => _edit(char, context),
                         ),
                         IconButton(
                           color: Colors.red,
@@ -115,7 +96,28 @@ class _ManageCharactersViewState extends State<ManageCharactersView> {
     );
   }
 
-  void onEdit(Character char, BuildContext context) {
+  void _reorder(num oldIdx, num newIdx) {
+    var copy = [...characters];
+    var char = copy.elementAt(oldIdx);
+    copy
+      ..removeAt(oldIdx)
+      ..insert(newIdx, char);
+    for (var char in enumerate(copy)) {
+      unawaited(char.value.update(json: {'order': char.index}));
+    }
+    setState(() {
+      characters = [...copy];
+    });
+    dwStore.dispatch(
+      SetCharacters(
+        Map<String, Character>.fromEntries(
+          copy.map((char) => MapEntry(char.docID, char)),
+        ),
+      ),
+    );
+  }
+
+  void _edit(Character char, BuildContext context) {
     Navigator.push(
       context,
       MaterialPageRoute(

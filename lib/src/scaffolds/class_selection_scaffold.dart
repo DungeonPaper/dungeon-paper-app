@@ -253,7 +253,7 @@ class _ConfirmClassChangeDialogState extends State<ConfirmClassChangeDialog> {
                 toggleResetMaxHP,
               ),
               checkboxRow(
-                'Update hit dice to match this class',
+                'Update damage dice to match this class',
                 options.resetHitDice,
                 toggleUpdateHitDice,
               ),

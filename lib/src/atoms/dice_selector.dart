@@ -1,5 +1,5 @@
+import 'package:dungeon_paper/src/atoms/dice_icon.dart';
 import 'package:dungeon_paper/src/flutter_utils/input_formatters.dart';
-import 'package:dungeon_paper/src/flutter_utils/platform_svg.dart';
 import 'package:dungeon_world_data/dice.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -52,9 +52,6 @@ class _DiceSelectorState extends State<DiceSelector> {
 
   @override
   Widget build(BuildContext context) {
-    print('sides: $sides, dice: ${Dice(sides)}, dice from prop: $dice');
-    print('list: ${diceList}');
-    print('where: ${diceList.where((d) => d == Dice(sides))}');
     return Container(
       padding: const EdgeInsets.symmetric(vertical: 8.0),
       child: Row(
@@ -65,10 +62,9 @@ class _DiceSelectorState extends State<DiceSelector> {
           if (widget.showIcon == true)
             Padding(
               padding: const EdgeInsets.only(right: 16.0),
-              child: PlatformSvg.asset(
-                'dice/d20.svg',
-                width: widget.iconSize.toDouble(),
-                height: widget.iconSize.toDouble(),
+              child: DiceIcon(
+                dice: dice,
+                size: widget.iconSize.toDouble(),
               ),
             ),
           Container(

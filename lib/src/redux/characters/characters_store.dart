@@ -16,7 +16,12 @@ class CharacterStore {
 
 CharacterStore characterReducer(CharacterStore state, action) {
   if (action is SetCharacters) {
-    state.characters = action.characters;
+    if (action.overwrite == true) {
+      state.characters = action.characters;
+    } else {
+      state.characters ??= {};
+      state.characters.addAll(action.characters);
+    }
     if (action.characters.isNotEmpty &&
         !state.characters.containsKey(state.current?.docID)) {
       state.current = action.characters.values.first;
@@ -24,7 +29,7 @@ CharacterStore characterReducer(CharacterStore state, action) {
     return state;
   }
 
-  if (action is AddCharacter) {
+  if (action is UpsertCharacter) {
     state.characters = {
       ...state.characters,
       action.character.docID: action.character
@@ -40,7 +45,7 @@ CharacterStore characterReducer(CharacterStore state, action) {
     return state;
   }
 
-  if (action is UpdateCharacter) {
+  if (action is UpsertCharacter) {
     state.characters[action.character.docID] = action.character;
     return state;
   }

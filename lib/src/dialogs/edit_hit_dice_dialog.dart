@@ -28,7 +28,7 @@ class EditHitDiceDialogState extends State<EditHitDiceDialog> {
   @override
   Widget build(BuildContext context) {
     return SimpleDialog(
-      title: Text('Edit Hit Dice'),
+      title: Text('Edit Damage Dice'),
       contentPadding: const EdgeInsets.only(top: 32.0, bottom: 8.0),
       children: <Widget>[
         Column(

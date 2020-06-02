@@ -1,8 +1,7 @@
 import 'dart:math';
-
+import 'package:dungeon_paper/src/atoms/dice_icon.dart';
 import 'package:dungeon_paper/src/atoms/dice_selector.dart';
 import 'package:dungeon_paper/src/dialogs/standard_dialog_controls.dart';
-import 'package:dungeon_paper/src/flutter_utils/platform_svg.dart';
 import 'package:dungeon_paper/src/utils/utils.dart';
 import 'package:dungeon_world_data/dice.dart';
 import 'package:dungeon_world_data/dw_data.dart' show DiceResult;
@@ -330,10 +329,9 @@ class DiceValue extends StatelessWidget {
             animation: animation,
             builder: (context, child) => Transform.translate(
               offset: diceOffset,
-              child: PlatformSvg.asset(
-                'dice/d${dice.value.sides}.svg',
-                width: size,
-                height: size,
+              child: DiceIcon(
+                dice: dice.value,
+                size: size,
                 color: Color.lerp(
                   Colors.grey,
                   controller?.result != null
