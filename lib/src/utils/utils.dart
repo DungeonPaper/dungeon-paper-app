@@ -145,13 +145,20 @@ bool Function(DWEntity) dwEntityMatcher(DWEntity comp) =>
 bool Function(T) getMatcher<T>(T obj, [bool Function(T) defaultMatcher]) =>
     obj is DWEntity ? dwEntityMatcher(obj) : defaultMatcher ?? (o) => o == obj;
 
-List<T> findAndReplaceInList<T>(List<T> list, T newObj,
+List<T> findAndReplaceInList<T>(List<T> list, T obj,
     [bool Function(T) matcher]) {
-  num index = list.indexWhere(getMatcher(newObj, matcher));
-  list = List.from(list);
-  list[index] = newObj;
-  list.removeWhere((element) => element == null);
-  return list;
+  num index = list.indexWhere(getMatcher(obj, matcher));
+  return List.from(list)
+    ..[index] = obj
+    ..removeWhere((element) => element == null);
+}
+
+List<T> upsertIntoList<T>(List<T> list, T obj, [bool Function(T) matcher]) {
+  num index = list.indexWhere(getMatcher(obj, matcher));
+  if (index == -1) {
+    return addToList(list, obj);
+  }
+  return findAndReplaceInList(list, obj, matcher);
 }
 
 List<T> removeFromList<T>(List<T> list, T obj, [bool Function(T) matcher]) =>

@@ -1,8 +1,8 @@
 # CHANGELOG
 
-## 1.1.2
+## 1.1.3
 * Added manage characters screen with reordering
-* Improved login flow
+* Various bug fixes
 
 ## 1.1.1
 * Fixed an issue with updating notes after the previous update.

@@ -2,6 +2,7 @@ import 'package:dungeon_paper/db/models/spells.dart';
 import 'package:dungeon_paper/src/atoms/card_bottom_controls.dart';
 import 'package:dungeon_paper/src/dialogs/confirmation_dialog.dart';
 import 'package:dungeon_paper/src/dialogs/dialogs.dart';
+import 'package:dungeon_paper/src/lists/tag_list.dart';
 import 'package:dungeon_paper/src/scaffolds/add_spell_scaffold.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_markdown/flutter_markdown.dart';
@@ -67,7 +68,7 @@ class SpellCardState extends State<SpellCard> {
                       const EdgeInsets.symmetric(horizontal: 16, vertical: 0),
                   child: Align(
                     alignment: Alignment.centerLeft,
-                    // child: TagList(tags: widget.spell.tags),
+                    child: TagList(tags: widget.spell.tags),
                   ),
                 )
               : SizedBox.shrink(),

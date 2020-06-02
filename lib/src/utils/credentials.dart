@@ -13,7 +13,11 @@ abstract class Credentials<T extends AuthCredential> {
   }) : _map = data;
 
   bool get isEmpty =>
-      _map == null || _map.isEmpty || providerCredentials == null;
+      _map == null ||
+      _map.isEmpty ||
+      _map.values.any((v) => v == null) ||
+      providerCredentials == null;
+
   bool get isNotEmpty => !isEmpty;
 
   Future<Credentials> signIn({

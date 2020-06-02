@@ -53,7 +53,7 @@ class EditableTagList extends StatelessWidget {
           onSave: (tag) {
             if (onSave == null) return;
             onSave(
-              findAndReplaceInList(tags, tag)
+              upsertIntoList(tags, tag)
                 ..removeWhere((tag) => tag?.name == null),
             );
           }),

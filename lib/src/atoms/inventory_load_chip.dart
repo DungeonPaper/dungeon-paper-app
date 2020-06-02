@@ -35,7 +35,7 @@ class InventoryLoadChip extends StatelessWidget {
   }
 
   BgAndFgColors get severity {
-    if (currentLoadPercent >= 1) {
+    if (isOverEncumbered) {
       return BgAndFgColors(Colors.red[400], Colors.white);
     }
     if (currentLoadPercent >= 0.7) {
@@ -45,11 +45,12 @@ class InventoryLoadChip extends StatelessWidget {
   }
 
   double get currentLoadPercent => currentLoad * 1.0 / maxLoad;
+  bool get isOverEncumbered => currentLoadPercent >= 1;
 
   @override
   Widget build(BuildContext context) {
     var ttMsg = 'The weight you can carry.';
-    if (currentLoadPercent >= 1) {
+    if (isOverEncumbered) {
       ttMsg += '\nYou are over-encumbered!';
     }
     return Tooltip(
