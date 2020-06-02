@@ -1,4 +1,5 @@
 import 'package:dungeon_paper/db/models/character.dart';
+import 'package:dungeon_paper/src/atoms/dice_icon.dart';
 import 'package:dungeon_paper/src/dialogs/edit_armor_dialog.dart';
 import 'package:dungeon_paper/src/dialogs/edit_hit_dice_dialog.dart';
 import 'package:dungeon_paper/src/flutter_utils/platform_svg.dart';
@@ -34,12 +35,11 @@ class ArmorAndHitDice extends StatelessWidget {
           ),
           _item(
             context,
-            icon: PlatformSvg.asset(
-              'dice/d20.svg',
-              width: 20,
-              height: 20,
+            icon: DiceIcon(
+              dice: character.damageDice,
+              size: 20,
             ),
-            title: Text('HIT DICE'),
+            title: Text('DMG DICE'),
             value: Text(character.damageDice.toString()),
             onTap: () => showDialog(
               context: context,

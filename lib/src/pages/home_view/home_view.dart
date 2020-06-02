@@ -1,6 +1,6 @@
 import 'package:dungeon_paper/db/models/character.dart';
 import 'package:dungeon_paper/src/lists/stat_card_grid.dart';
-import 'package:dungeon_paper/src/molecules/armor_and_hit_dice.dart';
+import 'package:dungeon_paper/src/molecules/armor_and_dmg_dice.dart';
 import 'package:dungeon_paper/src/molecules/character_headline.dart';
 import 'package:dungeon_paper/src/molecules/character_photo.dart';
 import 'package:dungeon_paper/src/molecules/status_bars.dart';

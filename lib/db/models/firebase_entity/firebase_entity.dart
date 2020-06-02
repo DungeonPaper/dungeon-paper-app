@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter/foundation.dart';
 
 import 'fields/fields.dart';
 
@@ -12,16 +13,19 @@ abstract class FirebaseEntity {
   FirebaseEntity({
     this.ref,
     Map<String, dynamic> data,
+    bool autoLoad = false,
   }) : docID = ref?.documentID {
     if (data != null && data.isNotEmpty) {
       var dataWithDefaults = _mergeDataWithDefaults(data);
       deserializeData(dataWithDefaults);
       lastUpdated = data['lastUpdated'] != null
-          ? DateTime.fromMillisecondsSinceEpoch(
-              data['lastUpdated']['_seconds'] * 1000)
+          ? data['lastUpdated'] is Timestamp
+              ? (data['lastUpdated'] as Timestamp).toDate()
+              : DateTime.fromMillisecondsSinceEpoch(
+                  data['lastUpdated']['_seconds'] * 1000)
           : null;
-    } else if (ref != null) {
-      _getRemoteData();
+    } else if (ref != null && autoLoad == true) {
+      getRemoteData();
     } else {
       deserializeData(defaultData());
     }
@@ -38,13 +42,16 @@ abstract class FirebaseEntity {
     return dataWithDefaults;
   }
 
-  void _getRemoteData() async {
+  @mustCallSuper
+  Future<Map<String, dynamic>> getRemoteData() async {
+    var output = <String, dynamic>{};
     snapshot = await ref.get();
     if (snapshot != null && snapshot.data != null) {
       var data = _mergeDataWithDefaults(snapshot.data);
-      deserializeData(data);
+      output = await deserializeData(data);
       lastUpdated = snapshot.data['lastUpdated'];
     }
+    return output;
   }
 
   void delete() {
@@ -114,7 +121,8 @@ abstract class FirebaseEntity {
     return null; // could also throw exception...?
   }
 
-  void deserializeData(Map<String, dynamic> data) {
+  Map<String, dynamic> deserializeData(Map<String, dynamic> data) {
+    var output = <String, dynamic>{};
     for (var key in data.keys) {
       try {
         var field = fields.get(key);
@@ -123,12 +131,14 @@ abstract class FirebaseEntity {
         }
         var value = field.fromJSON(data[key]);
         field.set(value);
+        output[key] = value;
       } catch (e) {
         print('[$runtimeType] Error deserializing key: $key');
         print('Given value: ${data[key]}');
         rethrow;
       }
     }
+    return output;
   }
 
   Map<String, dynamic> toJSON() {

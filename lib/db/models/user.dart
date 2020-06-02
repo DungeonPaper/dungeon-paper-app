@@ -15,6 +15,8 @@ FieldsContext userFields = FieldsContext([
     fieldName: 'features',
     field: Field<dynamic>(fieldName: 'features', defaultValue: (ctx) => null),
   ),
+  DocumentReferenceListField(fieldName: 'characters'),
+  DocumentReferenceListField(fieldName: 'custom_classes'),
 ]);
 
 class User extends FirebaseEntity {
@@ -29,6 +31,10 @@ class User extends FirebaseEntity {
   set photoURL(val) => fields.get<String>('photoURL').set(val);
   Map<String, dynamic> get features =>
       fields.get<Map<String, dynamic>>('features').get;
+  List<DocumentReference> get customClasses =>
+      fields.get<List<DocumentReference>>('custom_classes').get;
+  List<DocumentReference> get characters =>
+      fields.get<List<DocumentReference>>('characters').get;
 
   bool hasFeature(String key) =>
       features.containsKey(key) &&
@@ -38,7 +44,8 @@ class User extends FirebaseEntity {
   User({
     DocumentReference ref,
     Map<String, dynamic> data,
-  }) : super(ref: ref, data: data);
+    bool autoLoad,
+  }) : super(ref: ref, data: data, autoLoad: autoLoad);
 
   Future<Character> createCharacter(Character character) async {
     var doc = firestore.collection(ref.path + '/characters').document();
@@ -48,7 +55,7 @@ class User extends FirebaseEntity {
     character
       ..docID = doc.documentID
       ..ref = doc;
-    dwStore.dispatch(AddCharacter(character));
+    dwStore.dispatch(UpsertCharacter(character));
     dwStore.dispatch(SetCurrentChar(character));
     return character;
   }
