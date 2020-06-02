@@ -13,6 +13,8 @@ const List<String> iconsCredits = [
   'ibrandify',
   'Freepik',
   'fontawesome',
+  'Skoll',
+  'Delapouite',
 ];
 
 class AboutView extends StatefulWidget {

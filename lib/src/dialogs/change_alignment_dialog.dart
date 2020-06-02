@@ -1,7 +1,7 @@
 import 'package:dungeon_paper/db/helpers/character_utils.dart' as chr;
 import 'package:dungeon_paper/db/models/character.dart';
 import 'package:dungeon_paper/src/dialogs/dialogs.dart';
-import 'package:dungeon_paper/src/molecules/alignment_description_card.dart';
+import 'package:dungeon_paper/src/atoms/alignment_description_card.dart';
 import 'package:dungeon_paper/src/pages/character_wizard/character_wizard_utils.dart';
 import 'package:dungeon_paper/src/utils/utils.dart';
 import 'package:flutter/material.dart';

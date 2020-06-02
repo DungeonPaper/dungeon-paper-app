@@ -1,5 +1,7 @@
 import 'package:dungeon_paper/db/models/character.dart';
 import 'package:dungeon_paper/db/models/user.dart';
+import 'package:dungeon_paper/src/dialogs/roll_dice_dialog.dart';
+import 'package:dungeon_paper/src/flutter_utils/platform_svg.dart';
 import 'package:dungeon_paper/src/flutter_utils/widget_utils.dart';
 import 'package:dungeon_paper/src/pages/battle_view/battle_view.dart';
 import 'package:dungeon_paper/src/pages/home_view/home_view.dart';
@@ -111,6 +113,16 @@ class _MainViewState extends State<MainView> {
       appBar: AppBar(
         title: AppBarTitle(pageController: widget.pageController),
         elevation: elevation,
+        // actions: [
+        //   IconButton(
+        //     tooltip: 'Roll Dice',
+        //     icon: PlatformSvg.asset('dice.svg', width: 24, height: 24),
+        //     onPressed: () => showDialog(
+        //       context: context,
+        //       builder: (context) => RollDiceDialog(),
+        //     ),
+        //   )
+        // ],
       ),
       drawer: drawer,
       floatingActionButton: fab,

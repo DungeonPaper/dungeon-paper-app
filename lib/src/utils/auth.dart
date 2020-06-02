@@ -36,9 +36,12 @@ Future<FirebaseUser> signInFlow(
   bool interactiveOnFailSilent = true,
 }) async {
   AuthCredential providerCreds = creds.providerCredentials;
+  FirebaseUser user;
 
   dwStore.dispatch(RequestLogin());
-  var user = await getFirebaseUser(providerCreds);
+  if (creds?.isNotEmpty == true) {
+    user = await getFirebaseUser(providerCreds);
+  }
 
   if (user == null) {
     creds = await creds.signIn(

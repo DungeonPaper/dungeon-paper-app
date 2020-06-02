@@ -1,3 +1,4 @@
+import 'package:dungeon_paper/src/atoms/dice_selector.dart';
 import 'package:dungeon_paper/src/dialogs/standard_dialog_controls.dart';
 import 'package:dungeon_paper/src/flutter_utils/input_formatters.dart';
 import 'package:dungeon_paper/src/flutter_utils/platform_svg.dart';
@@ -15,20 +16,17 @@ class EditHitDiceDialog extends StatefulWidget {
   }) : super(key: key);
 
   @override
-  State<StatefulWidget> createState() =>
-      EditHitDiceDialogState(amount: dice.amount, sides: dice.sides);
+  State<StatefulWidget> createState() => EditHitDiceDialogState();
 }
 
 class EditHitDiceDialogState extends State<EditHitDiceDialog> {
-  num amount;
-  num sides;
-  TextEditingController _amountController;
+  Dice dice;
 
-  EditHitDiceDialogState({
-    Key key,
-    @required this.amount,
-    @required this.sides,
-  }) : _amountController = TextEditingController(text: amount.toString());
+  @override
+  void initState() {
+    dice = widget.dice;
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -40,59 +38,14 @@ class EditHitDiceDialogState extends State<EditHitDiceDialog> {
           mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: <Widget>[
-            Container(
-              padding: const EdgeInsets.symmetric(vertical: 8.0),
-              child: Row(
-                mainAxisSize: MainAxisSize.min,
-                mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: <Widget>[
-                  Padding(
-                    padding: const EdgeInsets.only(right: 16.0),
-                    child: PlatformSvg.asset(
-                      'dice.svg',
-                      width: 40,
-                      height: 40,
-                    ),
-                  ),
-                  Container(
-                    width: 40,
-                    child: TextField(
-                      onChanged: (val) => _setStateAmount(int.tryParse(val)),
-                      keyboardType: TextInputType.number,
-                      inputFormatters: <TextInputFormatter>[
-                        WhitelistingTextInputFormatter.digitsOnly,
-                        BetweenValuesTextFormatter(1, 99)
-                      ],
-                      controller: _amountController,
-                      style: TextStyle(fontSize: 24.0),
-                      textAlign: TextAlign.right,
-                    ),
-                  ),
-                  DropdownButton<Dice>(
-                    value: Dice(sides),
-                    items: [
-                      Dice.d4,
-                      Dice.d6,
-                      Dice.d8,
-                      Dice.d10,
-                      Dice.d12,
-                      Dice.d20,
-                    ]
-                        .map((dice) => DropdownMenuItem(
-                              key: Key(dice.toString()),
-                              value: dice,
-                              child: Text('d${dice.sides}',
-                                  style: TextStyle(fontSize: 24.0)),
-                            ))
-                        .toList(),
-                    onChanged: (val) => _setStateSides(val.sides),
-                  )
-                ],
-              ),
+            DiceSelector(
+              dice: dice,
+              showIcon: true,
+              onChanged: (d) => setState(() => dice = d),
+              inputTextStyle: TextStyle(fontSize: 24),
             ),
             StandardDialogControls(
-              onOK: () => _saveValue(),
+              onOK: _saveValue,
               onCancel: () => Navigator.pop(context),
             ),
           ],
@@ -101,23 +54,10 @@ class EditHitDiceDialogState extends State<EditHitDiceDialog> {
     );
   }
 
-  _setStateAmount(num newValue) {
-    setState(() {
-      amount = newValue;
-    });
-  }
-
-  _setStateSides(num newValue) {
-    setState(() {
-      sides = newValue;
-    });
-  }
-
   _saveValue() async {
     var character = dwStore.state.characters.current;
-    var dice = Dice(sides, amount);
     character.damageDice = dice;
-    unawaited(character.update(json: {'hitDice': dice.toString()}));
+    unawaited(character.update());
     Navigator.pop(context);
   }
 }

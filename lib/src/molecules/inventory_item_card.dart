@@ -34,7 +34,7 @@ class InventoryItemCard extends StatelessWidget {
       info.add(MarkdownBody(
           onTapLink: (url) => _launchURL(url), data: item.description));
     }
-    if (item.tags != null && item.tags.isNotEmpty) {
+    if (item.tags?.isNotEmpty == true) {
       info.add(TagList(tags: item.tags));
     }
 
