@@ -1,12 +1,9 @@
 import 'package:dungeon_paper/src/atoms/dice_selector.dart';
 import 'package:dungeon_paper/src/dialogs/standard_dialog_controls.dart';
-import 'package:dungeon_paper/src/flutter_utils/input_formatters.dart';
-import 'package:dungeon_paper/src/flutter_utils/platform_svg.dart';
 import 'package:dungeon_paper/src/redux/stores.dart';
 import 'package:pedantic/pedantic.dart';
 import 'package:dungeon_world_data/dice.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 
 class EditHitDiceDialog extends StatefulWidget {
   final Dice dice;
@@ -42,7 +39,7 @@ class EditHitDiceDialogState extends State<EditHitDiceDialog> {
               dice: dice,
               showIcon: true,
               onChanged: (d) => setState(() => dice = d),
-              inputTextStyle: TextStyle(fontSize: 24),
+              textStyle: TextStyle(fontSize: 24),
             ),
             StandardDialogControls(
               onOK: _saveValue,

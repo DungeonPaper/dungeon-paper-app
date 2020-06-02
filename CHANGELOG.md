@@ -1,5 +1,8 @@
 # CHANGELOG
 
+## 1.1.5
+* Added dice roll dialog
+
 ## 1.1.3
 * Added manage characters screen with reordering
 * Various bug fixes

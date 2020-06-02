@@ -113,16 +113,19 @@ class _MainViewState extends State<MainView> {
       appBar: AppBar(
         title: AppBarTitle(pageController: widget.pageController),
         elevation: elevation,
-        // actions: [
-        //   IconButton(
-        //     tooltip: 'Roll Dice',
-        //     icon: PlatformSvg.asset('dice.svg', width: 24, height: 24),
-        //     onPressed: () => showDialog(
-        //       context: context,
-        //       builder: (context) => RollDiceDialog(),
-        //     ),
-        //   )
-        // ],
+        actions: widget.character != null
+            ? [
+                IconButton(
+                  tooltip: 'Roll Dice',
+                  icon:
+                      PlatformSvg.asset('dice/d20.svg', width: 24, height: 24),
+                  onPressed: () => showDialog(
+                    context: context,
+                    builder: (context) => RollDiceDialog(),
+                  ),
+                )
+              ]
+            : null,
       ),
       drawer: drawer,
       floatingActionButton: fab,
