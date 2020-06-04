@@ -42,17 +42,27 @@ class LoginButton extends StatelessWidget {
         if (onUserChange != null) {
           onUserChange();
         }
-      } catch (e) {
+      } on SignInError catch (e) {
         // if (e != 'user_canceled') {
         //   throw (e);
         // }
-        print('SIGN IN ERROR:');
-        print(e);
+        print('NORMAL SIGN IN ERROR:');
+        print(e.toString());
         dwStore.dispatch(NoLogin());
         Scaffold.of(context, nullOk: true).showSnackBar(
           SnackBar(
             content: Text('Login failed.'),
             duration: Duration(seconds: 6),
+          ),
+        );
+      } catch (e) {
+        print('IRREGULAR SIGN IN ERROR:');
+        print(e.toString());
+        dwStore.dispatch(NoLogin());
+        Scaffold.of(context, nullOk: true).showSnackBar(
+          SnackBar(
+            content: Text('Something went wrong... Please try again later.'),
+            duration: Duration(seconds: 10),
           ),
         );
       }

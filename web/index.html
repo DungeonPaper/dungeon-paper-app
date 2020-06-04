@@ -17,11 +17,7 @@
   <script src="https://www.gstatic.com/firebasejs/7.14.1/firebase-firestore.js"></script>
   <script src="env.js"></script>
   <script>
-    firebase.initializeApp({
-      projectId: env.projectId,
-      clientId: env.clientId,
-      apiKey: env.apiKey,
-    });
+    firebase.initializeApp(env);
 
   </script>
   <script src="main.dart.js" type="application/javascript"></script>

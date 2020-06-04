@@ -34,7 +34,7 @@ class _EditCharacterViewState extends State<EditCharacterView> {
     return ScaffoldWithElevation.primaryBackground(
       title: Text('Edit Character Details'),
       automaticallyImplyLeading: true,
-      child: Padding(
+      body: Padding(
         padding: EdgeInsets.all(16.0),
         child: Column(
           mainAxisSize: MainAxisSize.min,

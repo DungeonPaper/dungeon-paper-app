@@ -85,7 +85,7 @@ ScaffoldBuilderFunction characterWizardScaffold({
           ),
           onPressed: finalOnWillPop,
         ),
-        child: child,
+        body: child,
       ),
     );
   };

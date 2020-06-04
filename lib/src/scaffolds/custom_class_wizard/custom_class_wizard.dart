@@ -79,7 +79,7 @@ class _CustomClassWizardState extends State<CustomClassWizard>
           : '${enumName(widget.mode).substring(0, 5)}ing: ${def.name}'),
       wrapWithScrollable: false,
       elevateAfterScrolling: false,
-      child: Column(
+      body: Column(
         children: <Widget>[
           Row(
             children: <Widget>[

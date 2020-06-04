@@ -67,17 +67,21 @@ flutter:
   assets:
     - secrets.json
     - assets/logo.png
-    - assets/swords.svg
+
+    # dice
     - assets/dice/d4.svg
     - assets/dice/d6.svg
     - assets/dice/d8.svg
     - assets/dice/d10.svg
     - assets/dice/d12.svg
     - assets/dice/d20.svg
-    - assets/bag.svg
+
     - assets/armor.svg
+    - assets/bag.svg
+    - assets/book-stack.svg
     - assets/coin-stack.svg
     - assets/dumbbell.svg
+    - assets/swords.svg
     # - assets/quill.svg
     # - images/a_dot_ham.jpeg
   # An image asset can refer to one or more resolution-specific "variants", see

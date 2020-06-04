@@ -19,19 +19,19 @@ class DWStoreConnector<T> extends StatelessWidget {
     this.loaderKeys,
   }) : super(key: key);
 
+  T Function(Store<DWStore> store) get _converter =>
+      converter ?? (store) => store.state as T;
+
   @override
   Widget build(BuildContext context) {
-    T Function(Store<DWStore> store) _converter =
-        converter != null ? converter : (store) => store.state as T;
-
     return StoreConnector<DWStore, T>(
         converter: _converter,
         builder: (context, state) {
-          DWStore store = dwStore.state;
+          var keys = dwStore.state.loading;
 
           if (loaderKeys != null &&
               loaderKeys.isNotEmpty &&
-              loaderKeys.any((k) => store.loading[k])) {
+              loaderKeys.any((k) => keys[k] == true)) {
             return loader(context);
           }
 

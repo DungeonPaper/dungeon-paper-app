@@ -2,8 +2,11 @@ import 'package:dungeon_paper/db/models/character.dart';
 import 'package:dungeon_paper/db/models/user.dart';
 import 'package:dungeon_paper/src/atoms/feedback_button.dart';
 import 'package:dungeon_paper/src/dialogs/dialogs.dart';
+import 'package:dungeon_paper/src/flutter_utils/platform_svg.dart';
 import 'package:dungeon_paper/src/pages/about_view/about_view.dart';
 import 'package:dungeon_paper/src/pages/character_wizard/character_wizard_view.dart';
+import 'package:dungeon_paper/src/pages/compendium/compendium_view.dart';
+import 'package:dungeon_paper/src/pages/custom_classes_view/custom_classes_view.dart';
 import 'package:dungeon_paper/src/pages/whats_new_view/whats_new_view.dart';
 import 'package:dungeon_paper/src/redux/characters/characters_store.dart';
 import 'package:dungeon_paper/src/redux/connectors.dart';
@@ -64,11 +67,21 @@ class _SidebarState extends State<Sidebar> {
               ),
               if (user.hasFeature('create_custom_class'))
                 ListTile(
-                  leading: Icon(Icons.add),
-                  title: Text('Create New Class'),
+                  leading: Padding(
+                    padding: const EdgeInsets.only(top: 4, left: 4),
+                    child: PlatformSvg.asset(
+                      'book-stack.svg',
+                      width: 16,
+                      height: 16,
+                      color: Theme.of(context).brightness == Brightness.light
+                          ? Colors.black45
+                          : Theme.of(context).accentColor,
+                    ),
+                  ),
+                  title: Text('Compendium'),
                   onTap: () {
                     Navigator.pop(context);
-                    createNewClassScreen(context);
+                    compendiumScreen(context);
                   },
                 ),
               Divider(),
@@ -132,10 +145,10 @@ class _SidebarState extends State<Sidebar> {
     openPage(context, builder: (context) => ManageCharactersView());
   }
 
-  void createNewClassScreen(BuildContext context) {
+  void compendiumScreen(BuildContext context) {
     openPage(
       context,
-      builder: (context) => CustomClassWizard(mode: DialogMode.Create),
+      builder: (context) => CustomClassesView(),
     );
   }
 

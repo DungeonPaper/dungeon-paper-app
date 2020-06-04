@@ -1,5 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dungeon_paper/db/helpers/character_utils.dart';
+import 'package:dungeon_paper/src/redux/custom_classes/custom_classes_store.dart';
+import 'package:dungeon_paper/src/redux/stores.dart';
 import 'package:dungeon_world_data/dice.dart';
 import 'package:dungeon_world_data/gear_choice.dart';
 import 'package:dungeon_world_data/move.dart';
@@ -36,7 +38,8 @@ class CustomClass extends FirebaseEntity {
   CustomClass({
     Map<String, dynamic> data,
     DocumentReference ref,
-  }) : super(ref: ref, data: data);
+    bool autoLoad,
+  }) : super(ref: ref, data: data, autoLoad: autoLoad);
 
   String get key => fields.get('key').get;
   set key(value) => fields.get('key').set(value);
@@ -70,6 +73,14 @@ class CustomClass extends FirebaseEntity {
   set spells(value) => fields.get('spells').set(value);
   List<GearChoice> get gearChoices => fields.get('gearChoices').get;
   set gearChoices(value) => fields.get('gearChoices').set(value);
+
+  @override
+  void finalizeUpdate(Map<String, dynamic> json, {bool save = true}) {
+    if (save) {
+      dwStore.dispatch(UpsertCustomClass(this));
+    }
+    super.finalizeUpdate(json, save: save);
+  }
 
   @override
   String toString() => 'Custom Class: $name ($key)';

@@ -37,17 +37,19 @@ class MainContainer extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return DWStoreConnector<DWStore>(builder: (ctx, state) {
-      var character = state.characters.current;
-      var user = state.user.current;
-      return MainView(
-        character: character,
-        user: user,
-        loading: state.loading[LoadingKeys.Character] ||
-            state.loading[LoadingKeys.User],
-        pageController: pageController,
-      );
-    });
+    return DWStoreConnector<DWStore>(
+      builder: (ctx, state) {
+        var character = state.characters.current;
+        var user = state.user.current;
+        return MainView(
+          character: character,
+          user: user,
+          loading: state.loading[LoadingKeys.Character] ||
+              state.loading[LoadingKeys.User],
+          pageController: pageController,
+        );
+      },
+    );
   }
 }
 
