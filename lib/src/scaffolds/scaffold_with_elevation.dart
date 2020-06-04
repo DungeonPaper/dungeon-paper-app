@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 class ScaffoldWithElevation extends StatefulWidget {
   final bool automaticallyImplyLeading;
-  final Widget child;
+  final Widget body;
   final Widget title;
   final List<Widget> actions;
   final Color backgroundColor;
@@ -13,10 +13,13 @@ class ScaffoldWithElevation extends StatefulWidget {
   final Widget bottomNavigationBar;
   final Widget bottomSheet;
   final ScrollController scrollController;
+  final Widget floatingActionButton;
+  final FloatingActionButtonAnimator floatingActionButtonAnimator;
+  final FloatingActionButtonLocation floatingActionButtonLocation;
 
   const ScaffoldWithElevation({
     Key key,
-    @required this.child,
+    @required this.body,
     @required this.title,
     this.actions,
     this.automaticallyImplyLeading = false,
@@ -27,12 +30,15 @@ class ScaffoldWithElevation extends StatefulWidget {
     this.bottomNavigationBar,
     this.bottomSheet,
     this.scrollController,
+    this.floatingActionButton,
+    this.floatingActionButtonAnimator,
+    this.floatingActionButtonLocation,
   })  : _isThemePrimaryColor = false,
         super(key: key);
 
   const ScaffoldWithElevation.primaryBackground({
     Key key,
-    @required this.child,
+    @required this.body,
     @required this.title,
     this.automaticallyImplyLeading = false,
     this.actions,
@@ -42,6 +48,9 @@ class ScaffoldWithElevation extends StatefulWidget {
     this.bottomNavigationBar,
     this.bottomSheet,
     this.scrollController,
+    this.floatingActionButton,
+    this.floatingActionButtonAnimator,
+    this.floatingActionButtonLocation,
   })  : backgroundColor = null,
         _isThemePrimaryColor = true,
         super(key: key);
@@ -81,10 +90,10 @@ class _ScaffoldWithElevationState extends State<ScaffoldWithElevation> {
   @override
   Widget build(BuildContext context) {
     Widget wrappedChild = !widget.wrapWithScrollable
-        ? widget.child
+        ? widget.body
         : SingleChildScrollView(
             controller: scrollController,
-            child: widget.child,
+            child: widget.body,
           );
     return Scaffold(
       backgroundColor: widget._isThemePrimaryColor
@@ -100,6 +109,9 @@ class _ScaffoldWithElevationState extends State<ScaffoldWithElevation> {
       body: wrappedChild,
       bottomNavigationBar: widget.bottomNavigationBar,
       bottomSheet: widget.bottomSheet,
+      floatingActionButton: widget.floatingActionButton,
+      floatingActionButtonAnimator: widget.floatingActionButtonAnimator,
+      floatingActionButtonLocation: widget.floatingActionButtonLocation,
     );
   }
 }

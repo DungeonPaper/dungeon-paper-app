@@ -15,11 +15,14 @@ class PlatformSvg {
     String semanticsLabel,
   }) {
     if (kIsWeb) {
-      return WebSvgWrapper.network(
-        'assets/$assetName',
+      return Image.network(
+        'assets/assets/$assetName',
         width: width,
         height: height,
+        fit: fit,
         color: color,
+        alignment: alignment,
+        semanticLabel: semanticsLabel,
       );
     }
     return SvgPicture.asset(

@@ -1,8 +1,8 @@
-import 'package:dungeon_world_data/player_class.dart';
+import 'package:dungeon_paper/db/models/custom_class.dart';
 part 'custom_class_actions.dart';
 
 class CustomClassesStore {
-  Map<String, PlayerClass> customClasses;
+  Map<String, CustomClass> customClasses;
 
   CustomClassesStore({
     this.customClasses,
@@ -12,6 +12,13 @@ class CustomClassesStore {
 CustomClassesStore customClassesReducer(CustomClassesStore state, action) {
   if (action is SetCustomClasses) {
     state.customClasses = action.classes;
+    return state;
+  }
+
+  if (action is UpsertCustomClass) {
+    state.customClasses.addAll({
+      action.customClass.docID: action.customClass,
+    });
     return state;
   }
 
