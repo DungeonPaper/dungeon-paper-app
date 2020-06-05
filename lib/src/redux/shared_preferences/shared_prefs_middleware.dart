@@ -33,7 +33,7 @@ void sharedPrefsMiddleware(Store<DWStore> store, action, NextDispatcher next) {
   if (action is SetCurrentChar) {
     withPrefs((prefs) {
       prefs.setString(
-          keyMap[SharedPrefKeys.CharacterId], action.character.docID);
+          keyMap[SharedPrefKeys.CharacterId], action.character.documentID);
     });
   }
 
@@ -45,7 +45,7 @@ void sharedPrefsMiddleware(Store<DWStore> store, action, NextDispatcher next) {
 
   if (action is Login) {
     withPrefs((prefs) {
-      prefs.setString(keyMap[SharedPrefKeys.UserId], action.user.docID);
+      prefs.setString(keyMap[SharedPrefKeys.UserId], action.user.documentID);
       prefs.setString(keyMap[SharedPrefKeys.UserEmail], action.user.email);
       for (var el in action.credentials.serialize().entries) {
         prefs.setString(el.key, el.value);

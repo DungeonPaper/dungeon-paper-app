@@ -9,7 +9,8 @@ class ScaffoldWithElevation extends StatefulWidget {
   final bool _isThemePrimaryColor;
   final Widget appBarLeading;
   final bool wrapWithScrollable;
-  final bool elevateAfterScrolling;
+  final bool useElevation;
+  final double elevation;
   final Widget bottomNavigationBar;
   final Widget bottomSheet;
   final ScrollController scrollController;
@@ -26,13 +27,14 @@ class ScaffoldWithElevation extends StatefulWidget {
     this.backgroundColor,
     this.appBarLeading,
     this.wrapWithScrollable = true,
-    this.elevateAfterScrolling = true,
+    this.useElevation = true,
     this.bottomNavigationBar,
     this.bottomSheet,
     this.scrollController,
     this.floatingActionButton,
     this.floatingActionButtonAnimator,
     this.floatingActionButtonLocation,
+    this.elevation,
   })  : _isThemePrimaryColor = false,
         super(key: key);
 
@@ -44,13 +46,14 @@ class ScaffoldWithElevation extends StatefulWidget {
     this.actions,
     this.appBarLeading,
     this.wrapWithScrollable = true,
-    this.elevateAfterScrolling = true,
+    this.useElevation = true,
     this.bottomNavigationBar,
     this.bottomSheet,
     this.scrollController,
     this.floatingActionButton,
     this.floatingActionButtonAnimator,
     this.floatingActionButtonLocation,
+    this.elevation,
   })  : backgroundColor = null,
         _isThemePrimaryColor = true,
         super(key: key);
@@ -61,14 +64,15 @@ class ScaffoldWithElevation extends StatefulWidget {
 
 class _ScaffoldWithElevationState extends State<ScaffoldWithElevation> {
   ScrollController scrollController;
-  double appBarElevation = 0.0;
+  double appBarElevation;
 
   @override
   void initState() {
     super.initState();
+    appBarElevation = widget.elevation ?? 0.0;
     scrollController = (widget.scrollController ?? ScrollController())
       ..addListener(scrollListener);
-    if (!widget.elevateAfterScrolling) appBarElevation = 1.0;
+    if (!widget.useElevation && widget.elevation == null) appBarElevation = 1.0;
   }
 
   @override
@@ -79,7 +83,7 @@ class _ScaffoldWithElevationState extends State<ScaffoldWithElevation> {
 
   void scrollListener() {
     double newElevation = scrollController.offset > 16.0 ? 1.0 : 0.0;
-    if (!widget.elevateAfterScrolling) return;
+    if (!widget.useElevation) return;
     if (newElevation != appBarElevation) {
       setState(() {
         appBarElevation = newElevation;

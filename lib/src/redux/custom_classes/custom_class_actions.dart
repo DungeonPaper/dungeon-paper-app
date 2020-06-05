@@ -2,7 +2,8 @@ part of 'custom_classes_store.dart';
 
 class SetCustomClasses {
   final Map<String, CustomClass> classes;
-  SetCustomClasses(this.classes);
+  final bool overwrite;
+  SetCustomClasses(this.classes, [this.overwrite]);
 }
 
 class UpsertCustomClass {

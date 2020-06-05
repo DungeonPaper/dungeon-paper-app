@@ -7,14 +7,14 @@ import 'package:flutter/material.dart';
 import 'package:uuid/uuid.dart';
 
 class CustomClassLooks extends StatefulWidget {
-  final List<List<String>> looks;
+  final Map<num, List<String>> looks;
   final VoidCallbackDelegate<List<List<String>>> onUpdate;
   final ValueNotifier validityNotifier;
   final DialogMode mode;
 
   const CustomClassLooks({
     Key key,
-    this.looks = const [],
+    this.looks = const {},
     this.onUpdate,
     this.validityNotifier,
     @required this.mode,
@@ -34,7 +34,7 @@ class _CustomClassLooksState extends State<CustomClassLooks> {
 
   @override
   void initState() {
-    items = List<List<String>>.from(widget.looks);
+    items = List<List<String>>.from(widget.looks.values);
     keys = List.generate(items.length, (i) => Key(Uuid().v4()));
     validities = List.generate(
         items.length,
@@ -57,6 +57,8 @@ class _CustomClassLooksState extends State<CustomClassLooks> {
       return Center(
         child: AddButton(
           size: BUTTON_SIZE,
+          backgroundColor: Theme.of(context).colorScheme.surface,
+          foregroundColor: Theme.of(context).colorScheme.onSurface,
           onPressed: _isValid() ? _addRow : null,
           textScaleFactor: 1.5,
         ),
@@ -80,8 +82,7 @@ class _CustomClassLooksState extends State<CustomClassLooks> {
                 IconButton(
                   padding: EdgeInsets.all(0),
                   icon: Icon(Icons.delete_forever),
-                  onPressed:
-                      items.length > 1 ? () => _removeKey(keys[idx]) : null,
+                  onPressed: () => _removeKey(keys[idx]),
                 )
               ],
             ),
@@ -100,7 +101,7 @@ class _CustomClassLooksState extends State<CustomClassLooks> {
                     items[idx] = lst;
                   }
                 });
-                if (widget.onUpdate != null) widget.onUpdate(items);
+                _update();
               },
             ),
           ],
@@ -116,7 +117,7 @@ class _CustomClassLooksState extends State<CustomClassLooks> {
       validities.add(ValueNotifier(false)..addListener(_listener));
     });
 
-    if (widget.onUpdate != null) widget.onUpdate(items);
+    _update();
   }
 
   void _removeKey(Key key) {
@@ -126,13 +127,16 @@ class _CustomClassLooksState extends State<CustomClassLooks> {
       items.removeAt(idx);
       validities.removeAt(idx);
     });
-    if (widget.onUpdate != null) widget.onUpdate(items);
+    _update();
   }
 
   _listener() {
-    if (widget.validityNotifier != null) {
-      widget.validityNotifier.value = _isValid();
-    }
+    widget.validityNotifier?.value = _isValid();
+  }
+
+  _update() {
+    widget.validityNotifier?.value = _isValid();
+    if (widget.onUpdate != null) widget.onUpdate(items);
   }
 
   bool _isValid() => validities.every((v) => v.value);

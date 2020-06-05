@@ -1,17 +1,14 @@
 import 'package:dungeon_paper/db/models/character.dart';
 import 'package:dungeon_paper/db/models/user.dart';
 import 'package:dungeon_paper/src/atoms/feedback_button.dart';
-import 'package:dungeon_paper/src/dialogs/dialogs.dart';
 import 'package:dungeon_paper/src/flutter_utils/platform_svg.dart';
 import 'package:dungeon_paper/src/pages/about_view/about_view.dart';
 import 'package:dungeon_paper/src/pages/character_wizard/character_wizard_view.dart';
-import 'package:dungeon_paper/src/pages/compendium/compendium_view.dart';
 import 'package:dungeon_paper/src/pages/custom_classes_view/custom_classes_view.dart';
 import 'package:dungeon_paper/src/pages/whats_new_view/whats_new_view.dart';
 import 'package:dungeon_paper/src/redux/characters/characters_store.dart';
 import 'package:dungeon_paper/src/redux/connectors.dart';
 import 'package:dungeon_paper/src/redux/stores.dart';
-import 'package:dungeon_paper/src/scaffolds/custom_class_wizard/custom_class_wizard.dart';
 import 'package:dungeon_paper/src/scaffolds/manage_characters_view/manage_characters_view.dart';
 import 'package:dungeon_paper/src/utils/auth.dart';
 import 'package:flutter/material.dart';
@@ -199,7 +196,7 @@ class _SidebarState extends State<Sidebar> {
     }
     return CharacterListTile.list(
       characters.values.toList()..sort((ch1, ch2) => ch1.order - ch2.order),
-      selectedId: dwStore.state.characters.current.docID,
+      selectedId: dwStore.state.characters.current.documentID,
     );
   }
 }
@@ -233,9 +230,10 @@ class CharacterListTile extends StatelessWidget {
           {String selectedId}) =>
       characters
           .map((character) => CharacterListTile(
-                key: Key(character.docID),
+                key: Key(character.documentID),
                 character: character,
-                selected: selectedId != null && selectedId == character.docID,
+                selected:
+                    selectedId != null && selectedId == character.documentID,
               ))
           .toList();
 }

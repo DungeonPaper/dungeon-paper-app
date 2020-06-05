@@ -20,7 +20,7 @@ class UserStore {
 UserStore userReducer(UserStore state, action) {
   if (action is Login) {
     return UserStore(
-      currentUserDocID: action.user.docID,
+      currentUserDocID: action.user.documentID,
       current: action.user,
       firebaseUser: action.firebaseUser,
     );
@@ -29,7 +29,7 @@ UserStore userReducer(UserStore state, action) {
   if (action is SetUser) {
     return state
       ..current = action.user
-      ..currentUserDocID = action.user.docID;
+      ..currentUserDocID = action.user.documentID;
   }
 
   if (action is Logout || action is NoLogin) {

@@ -10,6 +10,7 @@ class DiceSelector extends StatefulWidget {
   final bool showIcon;
   final num iconSize;
   final TextStyle textStyle;
+  final EdgeInsets padding;
 
   const DiceSelector({
     Key key,
@@ -18,6 +19,7 @@ class DiceSelector extends StatefulWidget {
     this.showIcon = false,
     this.iconSize = 40,
     this.textStyle,
+    this.padding = const EdgeInsets.symmetric(vertical: 8.0),
   }) : super(key: key);
 
   @override
@@ -53,7 +55,7 @@ class _DiceSelectorState extends State<DiceSelector> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: const EdgeInsets.symmetric(vertical: 8.0),
+      padding: widget.padding,
       child: Row(
         mainAxisSize: MainAxisSize.min,
         mainAxisAlignment: MainAxisAlignment.center,

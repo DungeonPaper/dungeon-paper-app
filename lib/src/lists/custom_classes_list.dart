@@ -6,15 +6,21 @@ import 'package:flutter/material.dart';
 
 class CustomClassesList extends StatelessWidget {
   final SingleChildWidgetBuilder builder;
+  final void Function(CustomClass) onEdit;
+  final void Function(CustomClass) onDelete;
 
   const CustomClassesList({
     Key key,
+    this.onEdit,
+    this.onDelete,
   })  : builder = null,
         super(key: key);
 
   const CustomClassesList.builder({
     Key key,
     this.builder,
+    this.onEdit,
+    this.onDelete,
   }) : super(key: key);
 
   SingleChildWidgetBuilder get _builder => builder ?? (ctx, child) => child;
@@ -26,10 +32,15 @@ class CustomClassesList extends StatelessWidget {
           store.state.customClasses.customClasses.values.toList(),
       builder: (context, classes) => SingleChildScrollView(
         child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             for (var cls in classes)
-              CardListItem(
-                title: Text(cls.name),
+              InkWell(
+                onTap: onEdit != null ? () => onEdit(cls) : null,
+                child: CardListItem(
+                  leading: Icon(Icons.person, size: 40),
+                  title: Text(cls.name),
+                ),
               )
           ],
         ),

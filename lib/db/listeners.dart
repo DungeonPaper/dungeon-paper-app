@@ -1,7 +1,9 @@
 import 'dart:async';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dungeon_paper/db/db.dart';
+import 'package:dungeon_paper/db/models/custom_class.dart';
 import 'package:dungeon_paper/src/redux/characters/characters_store.dart';
+import 'package:dungeon_paper/src/redux/custom_classes/custom_classes_store.dart';
 import 'package:dungeon_paper/src/redux/stores.dart';
 import 'package:dungeon_paper/src/redux/users/user_store.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -79,7 +81,7 @@ registerCharactersListener() async {
     return;
   }
 
-  String userDocID = dwStore.state.user.current.docID;
+  String userDocID = dwStore.state.user.current.documentID;
   DocumentReference user = firestore.document('user_data/$userDocID');
   _charsListener =
       user.collection('characters').snapshots().listen((characters) {
@@ -93,8 +95,38 @@ registerCharactersListener() async {
             data: character.data,
             ref: character.reference,
           ),
-      }, false),
+      }),
     );
   });
   print("REGISTERED DB CHARACTER LISTENER");
+}
+
+StreamSubscription _classesListener;
+registerCustomClassesListener() async {
+  if (_classesListener != null) {
+    unawaited(_classesListener.cancel());
+  }
+
+  if (dwStore.state.user.current == null) {
+    return;
+  }
+
+  String userDocID = dwStore.state.user.current.documentID;
+  DocumentReference user = firestore.document('user_data/$userDocID');
+  _classesListener =
+      user.collection('custom_classes').snapshots().listen((classes) {
+    if (classes.documents.isEmpty) {
+      return;
+    }
+    dwStore.dispatch(
+      SetCustomClasses({
+        for (var character in classes.documents)
+          character.reference.path: CustomClass(
+            data: character.data,
+            ref: character.reference,
+          ),
+      }),
+    );
+  });
+  print("REGISTERED DB CLASSES LISTENER");
 }

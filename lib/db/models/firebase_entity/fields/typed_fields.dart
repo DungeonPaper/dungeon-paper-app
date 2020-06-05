@@ -214,7 +214,7 @@ class MapOfField<K, V> extends Field<Map<K, V>> {
               : <K, V>{},
           toJSON: (value, ctx) => value is Map && value.isNotEmpty
               ? value.map((k, v) =>
-                  MapEntry<K, V>(k, field.copy(ctx, value: v).toJSON()))
+                  MapEntry<K, dynamic>(k, field.copy(ctx, value: v).toJSON()))
               : <K, V>{},
         );
 

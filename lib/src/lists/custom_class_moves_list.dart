@@ -1,3 +1,4 @@
+import 'package:dungeon_paper/db/models/custom_class.dart';
 import 'package:dungeon_paper/src/atoms/categorized_list.dart';
 import 'package:dungeon_paper/src/dialogs/dialogs.dart';
 import 'package:dungeon_paper/src/flutter_utils/widget_utils.dart';
@@ -6,24 +7,25 @@ import 'package:dungeon_paper/src/scaffolds/add_move_scaffold.dart';
 import 'package:dungeon_paper/src/scaffolds/add_race_move_scaffold.dart';
 import 'package:dungeon_paper/src/utils/types.dart';
 import 'package:dungeon_world_data/move.dart';
-import 'package:dungeon_world_data/player_class.dart';
 import 'package:flutter/material.dart';
 import 'package:uuid/uuid.dart';
 
 enum MoveCategory { Race, Starting, Advanced1, Advanced2 }
 
 class CustomClassMoveList extends StatelessWidget {
-  final VoidCallbackDelegate<PlayerClass> onUpdate;
-  final PlayerClass playerClass;
+  final VoidCallbackDelegate<CustomClass> onUpdate;
+  final CustomClass customClass;
   final DialogMode mode;
   final ValueNotifier validityNotifier;
+  final bool raceMoveMode;
 
   const CustomClassMoveList({
     Key key,
     @required this.onUpdate,
-    @required this.playerClass,
+    @required this.customClass,
     @required this.mode,
     this.validityNotifier,
+    @required this.raceMoveMode,
   }) : super(key: key);
 
   static const TITLES = {
@@ -36,23 +38,28 @@ class CustomClassMoveList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     Map<MoveCategory, List<Move>> cats = {
-      MoveCategory.Race: playerClass.raceMoves,
-      MoveCategory.Starting: playerClass.startingMoves,
-      MoveCategory.Advanced1: playerClass.advancedMoves1,
-      MoveCategory.Advanced2: playerClass.advancedMoves2,
+      if (raceMoveMode) MoveCategory.Race: customClass.raceMoves,
+      if (!raceMoveMode) ...{
+        MoveCategory.Starting: customClass.startingMoves,
+        MoveCategory.Advanced1: customClass.advancedMoves1,
+        MoveCategory.Advanced2: customClass.advancedMoves2,
+      }
     };
 
     return CategorizedList.builder(
       items: cats.values,
       itemCount: (moves, i) => moves != null ? moves.length + 1 : 1,
-      titleBuilder: (context, moves, i) => Text(
-          i < cats.keys.length ? TITLES[cats.keys.elementAt(i)] : 'No Title'),
+      titleBuilder: (context, moves, i) => Text(raceMoveMode == true
+          ? ''
+          : i < cats.keys.length ? TITLES[cats.keys.elementAt(i)] : 'No Title'),
       itemBuilder: (context, List<Move> moves, i, catI) {
         MoveCategory cat = cats.keys.elementAt(catI);
 
         if (i >= moves.length) {
           return Center(
             child: AddButton(
+              backgroundColor: Theme.of(context).colorScheme.surface,
+              foregroundColor: Theme.of(context).colorScheme.onSurface,
               onPressed: () => _addMove(context, cat),
             ),
           );
@@ -103,20 +110,19 @@ class CustomClassMoveList extends StatelessWidget {
   _addMoveToCat(BuildContext context, Move move, MoveCategory cat) {
     switch (cat) {
       case MoveCategory.Starting:
-        playerClass.startingMoves.add(move);
+        customClass.startingMoves.add(move);
         break;
       case MoveCategory.Race:
-        playerClass.raceMoves.add(move);
+        customClass.raceMoves.add(move);
         break;
       case MoveCategory.Advanced1:
-        playerClass.advancedMoves1.add(move);
+        customClass.advancedMoves1.add(move);
         break;
       case MoveCategory.Advanced2:
-        playerClass.advancedMoves2.add(move);
+        customClass.advancedMoves2.add(move);
         break;
     }
-
-    if (onUpdate != null) onUpdate(playerClass);
+    _update();
     Navigator.pop(context);
   }
 
@@ -124,53 +130,57 @@ class CustomClassMoveList extends StatelessWidget {
     switch (cat) {
       case MoveCategory.Starting:
         num idx =
-            playerClass.startingMoves.indexWhere((m) => m.key == move.key);
-        playerClass.startingMoves[idx] = move;
+            customClass.startingMoves.indexWhere((m) => m.key == move.key);
+        customClass.startingMoves[idx] = move;
         break;
       case MoveCategory.Race:
-        num idx = playerClass.raceMoves.indexWhere((m) => m.key == move.key);
-        playerClass.raceMoves[idx] = move;
+        num idx = customClass.raceMoves.indexWhere((m) => m.key == move.key);
+        customClass.raceMoves[idx] = move;
         break;
       case MoveCategory.Advanced1:
         num idx =
-            playerClass.advancedMoves1.indexWhere((m) => m.key == move.key);
-        playerClass.advancedMoves1[idx] = move;
+            customClass.advancedMoves1.indexWhere((m) => m.key == move.key);
+        customClass.advancedMoves1[idx] = move;
         break;
       case MoveCategory.Advanced2:
         num idx =
-            playerClass.advancedMoves2.indexWhere((m) => m.key == move.key);
-        playerClass.advancedMoves2[idx] = move;
+            customClass.advancedMoves2.indexWhere((m) => m.key == move.key);
+        customClass.advancedMoves2[idx] = move;
         break;
     }
 
-    if (onUpdate != null) onUpdate(playerClass);
-    Navigator.pop(context);
+    _update();
   }
 
   void _deleteMoveInCat(BuildContext context, Move move, MoveCategory cat) {
     switch (cat) {
       case MoveCategory.Starting:
         num idx =
-            playerClass.startingMoves.indexWhere((m) => m.key == move.key);
-        playerClass.startingMoves.removeAt(idx);
+            customClass.startingMoves.indexWhere((m) => m.key == move.key);
+        customClass.startingMoves.removeAt(idx);
         break;
       case MoveCategory.Race:
-        num idx = playerClass.raceMoves.indexWhere((m) => m.key == move.key);
-        playerClass.raceMoves.removeAt(idx);
+        num idx = customClass.raceMoves.indexWhere((m) => m.key == move.key);
+        customClass.raceMoves.removeAt(idx);
         break;
       case MoveCategory.Advanced1:
         num idx =
-            playerClass.advancedMoves1.indexWhere((m) => m.key == move.key);
-        playerClass.advancedMoves1.removeAt(idx);
+            customClass.advancedMoves1.indexWhere((m) => m.key == move.key);
+        customClass.advancedMoves1.removeAt(idx);
         break;
       case MoveCategory.Advanced2:
         num idx =
-            playerClass.advancedMoves2.indexWhere((m) => m.key == move.key);
-        playerClass.advancedMoves2.removeAt(idx);
+            customClass.advancedMoves2.indexWhere((m) => m.key == move.key);
+        customClass.advancedMoves2.removeAt(idx);
         break;
     }
 
-    if (onUpdate != null) onUpdate(playerClass);
-    Navigator.pop(context);
+    _update();
+  }
+
+  _update() {
+    validityNotifier?.value =
+        raceMoveMode ? customClass.raceMoves.isNotEmpty : true;
+    if (onUpdate != null) onUpdate(customClass);
   }
 }

@@ -1,9 +1,14 @@
+import 'package:dungeon_paper/db/helpers/character_utils.dart';
+import 'package:dungeon_paper/db/models/custom_class.dart';
 import 'package:dungeon_paper/src/dialogs/dialogs.dart';
 import 'package:dungeon_paper/src/lists/custom_class_moves_list.dart';
+import 'package:dungeon_paper/src/molecules/custom_class_alignments.dart';
 import 'package:dungeon_paper/src/molecules/custom_class_basic_details.dart';
 import 'package:dungeon_paper/src/molecules/custom_class_looks.dart';
+import 'package:dungeon_paper/src/redux/stores.dart';
 import 'package:dungeon_paper/src/scaffolds/scaffold_with_elevation.dart';
 import 'package:dungeon_paper/src/utils/utils.dart';
+import 'package:dungeon_world_data/alignment.dart' as dw;
 import 'package:dungeon_world_data/dice.dart';
 import 'package:dungeon_world_data/player_class.dart';
 import 'package:flutter/material.dart';
@@ -11,85 +16,114 @@ import 'package:uuid/uuid.dart';
 
 class CustomClassWizard extends StatefulWidget {
   final DialogMode mode;
+  final CustomClass customClass;
 
   const CustomClassWizard({
     Key key,
     @required this.mode,
-  }) : super(key: key);
+    this.customClass,
+  })  : assert(mode == DialogMode.Create || customClass != null),
+        super(key: key);
 
   @override
   _CustomClassWizardState createState() => _CustomClassWizardState();
 }
 
-enum CustomClassWizardTab { BasicInfo, Moves, Looks, Alignments }
+enum CustomClassWizardTab { BasicInfo, Moves, Races, Looks, Alignments }
 
 class _CustomClassWizardState extends State<CustomClassWizard>
     with SingleTickerProviderStateMixin {
-  PlayerClass def;
+  CustomClass def;
   TabController tabController;
   ValueNotifier<bool> basicInfoValid;
   ValueNotifier<bool> movesValid;
+  ValueNotifier<bool> racesValid;
   ValueNotifier<bool> looksValid;
   ValueNotifier<bool> alignmentsValid;
 
   static const Map<CustomClassWizardTab, String> TAB_TITLES = {
     CustomClassWizardTab.BasicInfo: 'General',
     CustomClassWizardTab.Moves: 'Moves',
+    CustomClassWizardTab.Races: 'Races',
     CustomClassWizardTab.Looks: 'Look Choices',
     CustomClassWizardTab.Alignments: 'Alignments',
   };
 
   @override
   void initState() {
-    basicInfoValid = ValueNotifier(false);
+    def = widget.customClass != null
+        ? CustomClass(
+            data: widget.customClass.toJSON(),
+            ref: widget.customClass.ref,
+          )
+        : PlayerClass(
+            key: Uuid().v4(),
+            name: '',
+            description: '',
+            baseHP: 0,
+            load: 0,
+            damage: Dice.d6,
+            looks: [],
+            startingMoves: [],
+            advancedMoves1: [],
+            advancedMoves2: [],
+            alignments: {
+              for (var name in AlignmentName.values)
+                enumName(name): dw.Alignment(
+                  name: capitalize(enumName(name)),
+                  key: enumName(name),
+                  description: '',
+                ),
+            },
+            // TBD
+            names: {},
+            bonds: [],
+            gearChoices: [],
+            raceMoves: [],
+            spells: [],
+          );
+
+    basicInfoValid = ValueNotifier(def.name.isNotEmpty);
+    racesValid = ValueNotifier(def.raceMoves.isNotEmpty);
     movesValid = ValueNotifier(true);
-    looksValid = ValueNotifier(false);
+    looksValid = ValueNotifier(true);
     alignmentsValid = ValueNotifier(true);
 
-    def = PlayerClass(
-      key: Uuid().v4(),
-      name: '',
-      description: '',
-      baseHP: 0,
-      load: 0,
-      damage: Dice.d6,
-      looks: [
-        ['']
-      ],
-      startingMoves: [],
-      advancedMoves1: [],
-      advancedMoves2: [],
-      alignments: {},
-      // TBD
-      names: {},
-      bonds: [],
-      gearChoices: [],
-      raceMoves: [],
-      spells: [],
-    );
     tabController = TabController(length: _tabs.keys.length, vsync: this);
+
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
-    return ScaffoldWithElevation(
+    return ScaffoldWithElevation.primaryBackground(
       title: Text(def.name.isEmpty
           ? 'Custom Class'
-          : '${enumName(widget.mode).substring(0, 5)}ing: ${def.name}'),
+          : '${widget.mode == DialogMode.Create ? 'Creat' : 'Edit'}ing: ${def.name}'),
+      actions: [
+        IconButton(
+          icon: Icon(Icons.save),
+          tooltip: 'Save',
+          onPressed: _isClsValid ? _save : null,
+        )
+      ],
       wrapWithScrollable: false,
-      elevateAfterScrolling: false,
+      useElevation: false,
+      elevation: 0,
       body: Column(
         children: <Widget>[
           Row(
             children: <Widget>[
               Expanded(
-                child: Container(
-                  color: Theme.of(context).canvasColor,
-                  child: TabBar(
-                    isScrollable: true,
-                    controller: tabController,
-                    tabs: _tabs.keys.map(_mapTab).toList(),
+                child: Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Container(
+                    color: Theme.of(context).primaryColor,
+                    child: TabBar(
+                      isScrollable: true,
+                      controller: tabController,
+                      tabs: _tabs.keys.map(_mapTab).toList(),
+                    ),
                   ),
                 ),
               ),
@@ -119,7 +153,7 @@ class _CustomClassWizardState extends State<CustomClassWizard>
                   padding: const EdgeInsets.only(left: 8.0),
                   child: Icon(
                     Icons.error,
-                    color: Theme.of(context).errorColor,
+                    color: Colors.orange[300],
                   ),
                 ),
             ],
@@ -130,16 +164,26 @@ class _CustomClassWizardState extends State<CustomClassWizard>
   Map<CustomClassWizardTab, Widget> get _tabs => {
         CustomClassWizardTab.BasicInfo: ClassBasicDetails(
           mode: widget.mode,
-          playerClass: def,
+          customClass: def,
           validityNotifier: basicInfoValid,
+          onUpdate: (cls) => setState(() {
+            def = cls;
+          }),
+        ),
+        CustomClassWizardTab.Races: CustomClassMoveList(
+          mode: widget.mode,
+          customClass: def,
+          validityNotifier: racesValid,
+          raceMoveMode: true,
           onUpdate: (cls) => setState(() {
             def = cls;
           }),
         ),
         CustomClassWizardTab.Moves: CustomClassMoveList(
           mode: widget.mode,
-          playerClass: def,
+          customClass: def,
           validityNotifier: movesValid,
+          raceMoveMode: false,
           onUpdate: (cls) => setState(() {
             def = cls;
           }),
@@ -152,12 +196,11 @@ class _CustomClassWizardState extends State<CustomClassWizard>
             def.looks = looks;
           }),
         ),
-        CustomClassWizardTab.Alignments: CustomClassLooks(
+        CustomClassWizardTab.Alignments: CustomClassAlignments(
           mode: widget.mode,
-          looks: def.looks,
-          validityNotifier: looksValid,
-          onUpdate: (looks) => setState(() {
-            def.looks = looks;
+          alignments: def.alignments,
+          onUpdate: (alignments) => setState(() {
+            def.alignments = alignments;
           }),
         ),
       };
@@ -168,11 +211,33 @@ class _CustomClassWizardState extends State<CustomClassWizard>
         return basicInfoValid.value;
       case CustomClassWizardTab.Moves:
         return movesValid.value;
+      case CustomClassWizardTab.Races:
+        return racesValid.value;
       case CustomClassWizardTab.Looks:
         return looksValid.value;
       case CustomClassWizardTab.Alignments:
         return alignmentsValid.value;
     }
     return true;
+  }
+
+  bool get _isClsValid => [
+        basicInfoValid,
+        racesValid,
+        movesValid,
+        looksValid,
+        alignmentsValid,
+      ].every((validator) => validator.value == true);
+
+  _save() async {
+    var user = dwStore.state.user.current;
+    if (widget.mode == DialogMode.Create) {
+      var ref = user.ref.collection('custom_classes').document();
+      def..ref = ref;
+      await def.create();
+    } else {
+      await def.update();
+    }
+    Navigator.pop(context);
   }
 }

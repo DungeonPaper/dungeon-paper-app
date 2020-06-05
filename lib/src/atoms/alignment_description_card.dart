@@ -3,7 +3,7 @@ import 'package:dungeon_paper/src/atoms/card_list_item.dart';
 import 'package:dungeon_paper/src/utils/utils.dart';
 import 'package:flutter/material.dart';
 import 'package:dungeon_world_data/player_class.dart';
-import 'package:dungeon_world_data/alignment.dart' as dw_alignment;
+import 'package:dungeon_world_data/alignment.dart' as dw;
 
 class AlignmentDescription extends StatelessWidget {
   final PlayerClass playerClass;
@@ -22,10 +22,8 @@ class AlignmentDescription extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     String alignmentKey = enumName(alignment);
-    dw_alignment.Alignment alignmentInfo =
-        playerClass.alignments[alignmentKey] ??
-            dw_alignment.Alignment(
-                key: alignmentKey, name: alignmentKey, description: '');
+    dw.Alignment alignmentInfo = playerClass.alignments[alignmentKey] ??
+        dw.Alignment(key: alignmentKey, name: alignmentKey, description: '');
     bool hasDescription = alignmentInfo.description.isNotEmpty;
 
     List<Widget> texts = <Widget>[

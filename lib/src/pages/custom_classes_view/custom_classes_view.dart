@@ -1,3 +1,4 @@
+import 'package:dungeon_paper/db/models/custom_class.dart';
 import 'package:dungeon_paper/src/dialogs/dialogs.dart';
 import 'package:dungeon_paper/src/lists/custom_classes_list.dart';
 import 'package:dungeon_paper/src/scaffolds/custom_class_wizard/custom_class_wizard.dart';
@@ -12,12 +13,13 @@ class CustomClassesView extends StatefulWidget {
 class _CustomClassesViewState extends State<CustomClassesView> {
   @override
   Widget build(BuildContext context) {
-    return ScaffoldWithElevation(
+    return ScaffoldWithElevation.primaryBackground(
       title: Text('Custom Classes'),
-      body: CustomClassesList(),
+      body: CustomClassesList(onEdit: _edit),
       floatingActionButton: FloatingActionButton(
         child: Icon(Icons.add),
-        foregroundColor: Colors.white,
+        backgroundColor: Theme.of(context).colorScheme.surface,
+        foregroundColor: Theme.of(context).colorScheme.onSurface,
         onPressed: _add,
       ),
     );
@@ -28,6 +30,18 @@ class _CustomClassesViewState extends State<CustomClassesView> {
       context,
       MaterialPageRoute<bool>(
         builder: (context) => CustomClassWizard(mode: DialogMode.Create),
+      ),
+    );
+  }
+
+  void _edit(CustomClass cls) {
+    Navigator.push(
+      context,
+      MaterialPageRoute<bool>(
+        builder: (context) => CustomClassWizard(
+          mode: DialogMode.Edit,
+          customClass: cls,
+        ),
       ),
     );
   }
