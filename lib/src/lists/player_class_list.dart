@@ -1,3 +1,4 @@
+import 'package:dungeon_paper/src/redux/stores.dart';
 import 'package:dungeon_world_data/dw_data.dart';
 import 'package:dungeon_world_data/player_class.dart';
 import 'package:flutter/material.dart';
@@ -35,7 +36,10 @@ class PlayerClassList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    print('classes: ${dungeonWorld.classes}');
-    return builder(context, value, dungeonWorld.classes, onChanged);
+    var _dw = dungeonWorld.classes;
+    var _custom = dwStore.state.customClasses.customClasses.values
+        .map((cls) => cls.toPlayerClass());
+    var combined = [..._dw, ..._custom];
+    return builder(context, value, combined, onChanged);
   }
 }

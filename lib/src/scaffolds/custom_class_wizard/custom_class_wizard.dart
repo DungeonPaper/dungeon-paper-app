@@ -1,4 +1,3 @@
-import 'package:dungeon_paper/db/helpers/character_utils.dart';
 import 'package:dungeon_paper/db/models/custom_class.dart';
 import 'package:dungeon_paper/src/dialogs/dialogs.dart';
 import 'package:dungeon_paper/src/lists/custom_class_moves_list.dart';
@@ -7,12 +6,7 @@ import 'package:dungeon_paper/src/molecules/custom_class_basic_details.dart';
 import 'package:dungeon_paper/src/molecules/custom_class_looks.dart';
 import 'package:dungeon_paper/src/redux/stores.dart';
 import 'package:dungeon_paper/src/scaffolds/scaffold_with_elevation.dart';
-import 'package:dungeon_paper/src/utils/utils.dart';
-import 'package:dungeon_world_data/alignment.dart' as dw;
-import 'package:dungeon_world_data/dice.dart';
-import 'package:dungeon_world_data/player_class.dart';
 import 'package:flutter/material.dart';
-import 'package:uuid/uuid.dart';
 
 class CustomClassWizard extends StatefulWidget {
   final DialogMode mode;
@@ -51,36 +45,14 @@ class _CustomClassWizardState extends State<CustomClassWizard>
 
   @override
   void initState() {
+    var user = dwStore.state.user.current;
     def = widget.customClass != null
         ? CustomClass(
             data: widget.customClass.toJSON(),
             ref: widget.customClass.ref,
           )
-        : PlayerClass(
-            key: Uuid().v4(),
-            name: '',
-            description: '',
-            baseHP: 0,
-            load: 0,
-            damage: Dice.d6,
-            looks: [],
-            startingMoves: [],
-            advancedMoves1: [],
-            advancedMoves2: [],
-            alignments: {
-              for (var name in AlignmentName.values)
-                enumName(name): dw.Alignment(
-                  name: capitalize(enumName(name)),
-                  key: enumName(name),
-                  description: '',
-                ),
-            },
-            // TBD
-            names: {},
-            bonds: [],
-            gearChoices: [],
-            raceMoves: [],
-            spells: [],
+        : CustomClass(
+            ref: user.ref.collection('custom_classes').document(),
           );
 
     basicInfoValid = ValueNotifier(def.name.isNotEmpty);
@@ -193,7 +165,11 @@ class _CustomClassWizardState extends State<CustomClassWizard>
           looks: def.looks,
           validityNotifier: looksValid,
           onUpdate: (looks) => setState(() {
-            def.looks = looks;
+            def.looks = Map<String, List<String>>.from(
+              looks.asMap().map(
+                    (k, v) => MapEntry(k.toString(), v),
+                  ),
+            );
           }),
         ),
         CustomClassWizardTab.Alignments: CustomClassAlignments(
@@ -230,10 +206,7 @@ class _CustomClassWizardState extends State<CustomClassWizard>
       ].every((validator) => validator.value == true);
 
   _save() async {
-    var user = dwStore.state.user.current;
     if (widget.mode == DialogMode.Create) {
-      var ref = user.ref.collection('custom_classes').document();
-      def..ref = ref;
       await def.create();
     } else {
       await def.update();

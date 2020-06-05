@@ -2,6 +2,7 @@ import 'package:dungeon_paper/db/models/character.dart';
 import 'package:dungeon_paper/src/atoms/card_list_item.dart';
 import 'package:dungeon_paper/src/dialogs/confirmation_dialog.dart';
 import 'package:dungeon_paper/src/dialogs/dialogs.dart';
+import 'package:dungeon_paper/src/lists/player_class_list.dart';
 import 'package:dungeon_paper/src/organisms/class_description.dart';
 import 'package:dungeon_paper/src/pages/character_wizard/character_wizard_utils.dart';
 import 'package:dungeon_world_data/dw_data.dart';
@@ -42,10 +43,12 @@ class ClassSelectionScaffold extends StatelessWidget {
   Widget build(BuildContext context) {
     Widget child = Padding(
       padding: const EdgeInsets.all(16.0),
-      child: Column(
-        children: dungeonWorld.classes
-            .map(
-              (availClass) => Padding(
+      child: PlayerClassList(
+        onChanged: (cls) {},
+        builder: (context, _value, list, _onChanged) => Column(
+          children: [
+            for (var availClass in list)
+              Padding(
                 padding: EdgeInsets.only(bottom: 16.0),
                 child: CardListItem(
                   title: Text(availClass.name),
@@ -58,8 +61,8 @@ class ClassSelectionScaffold extends StatelessWidget {
                   onTap: previewClass(context, availClass),
                 ),
               ),
-            )
-            .toList(),
+          ],
+        ),
       ),
     );
     if (builder != null) {
@@ -174,10 +177,11 @@ class _ClassPreviewState extends State<ClassPreview> {
         elevation: appBarElevation,
       ),
       body: SingleChildScrollView(
-          child: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: ClassDescription(classDef: cls),
-      )),
+        child: Padding(
+          padding: const EdgeInsets.all(16.0),
+          child: ClassDescription(classDef: cls),
+        ),
+      ),
     );
   }
 

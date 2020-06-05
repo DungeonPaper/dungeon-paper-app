@@ -468,14 +468,14 @@ class BondsListField extends StringListField {
         );
 }
 
-class LooksOptionsMapField extends MapOfField<num, List<String>> {
+class LooksOptionsMapField extends MapOfField<String, List<String>> {
   LooksOptionsMapField({
     FieldsContext context,
     @required String fieldName,
-    Map<num, List<String>> value,
-    List<FieldListener<Map<num, List<String>>>> listeners,
+    Map<String, List<String>> value,
+    List<FieldListener<Map<String, List<String>>>> listeners,
     bool isSerialized = true,
-    Map<num, List<String>> Function(FieldsContext ctx) defaultValue,
+    Map<String, List<String>> Function(FieldsContext ctx) defaultValue,
   }) : super(
           context: context,
           fieldName: fieldName,

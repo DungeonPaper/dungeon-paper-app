@@ -1,7 +1,9 @@
+import 'package:dungeon_paper/db/helpers/character_utils.dart';
 import 'package:dungeon_paper/src/atoms/categorized_list.dart';
 import 'package:dungeon_paper/src/dialogs/dialogs.dart';
 import 'package:dungeon_paper/src/molecules/editable_alignment.dart';
 import 'package:dungeon_paper/src/utils/types.dart';
+import 'package:dungeon_paper/src/utils/utils.dart';
 import 'package:dungeon_world_data/alignment.dart' as dw;
 import 'package:flutter/material.dart';
 
@@ -27,7 +29,20 @@ class _CustomClassAlignmentsState extends State<CustomClassAlignments> {
 
   @override
   void initState() {
-    alignments = Map<String, dw.Alignment>.from(widget.alignments);
+    alignments = Map<String, dw.Alignment>.fromEntries(
+      AlignmentName.values.map(
+        (e) => MapEntry(
+          enumName(e),
+          dw.Alignment(
+            key: enumName(e),
+            name: capitalize(
+              enumName(e),
+            ),
+            description: widget.alignments[enumName(e)]?.description ?? '',
+          ),
+        ),
+      ),
+    );
     super.initState();
   }
 
@@ -54,6 +69,7 @@ class _CustomClassAlignmentsState extends State<CustomClassAlignments> {
     setState(() {
       alignments[alignment.key] = alignment;
     });
-    widget.onUpdate?.call(alignments);
+    widget.onUpdate?.call(
+        {...alignments}..removeWhere((k, v) => v.description?.isEmpty == true));
   }
 }

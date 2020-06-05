@@ -7,7 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:uuid/uuid.dart';
 
 class CustomClassLooks extends StatefulWidget {
-  final Map<num, List<String>> looks;
+  final Map<String, List<String>> looks;
   final VoidCallbackDelegate<List<List<String>>> onUpdate;
   final ValueNotifier validityNotifier;
   final DialogMode mode;
