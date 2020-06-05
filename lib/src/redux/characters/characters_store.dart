@@ -23,7 +23,7 @@ CharacterStore characterReducer(CharacterStore state, action) {
       state.characters.addAll(action.characters);
     }
     if (action.characters.isNotEmpty &&
-        !state.characters.containsKey(state.current?.docID)) {
+        !state.characters.containsKey(state.current?.documentID)) {
       state.current = action.characters.values.first;
     }
     return state;
@@ -32,21 +32,21 @@ CharacterStore characterReducer(CharacterStore state, action) {
   if (action is UpsertCharacter) {
     state.characters = {
       ...state.characters,
-      action.character.docID: action.character
+      action.character.documentID: action.character
     };
     return state;
   }
 
   if (action is RemoveCharacter) {
-    state.characters.removeWhere((k, v) => k == action.character.docID);
-    if (state.current.docID == action.character.docID) {
+    state.characters.removeWhere((k, v) => k == action.character.documentID);
+    if (state.current.documentID == action.character.documentID) {
       state.current = state.characters.values.first;
     }
     return state;
   }
 
   if (action is UpsertCharacter) {
-    state.characters[action.character.docID] = action.character;
+    state.characters[action.character.documentID] = action.character;
     return state;
   }
 

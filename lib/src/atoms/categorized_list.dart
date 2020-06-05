@@ -15,6 +15,7 @@ class CategorizedList<T> extends StatelessWidget {
   final BuilderAnyFunction<T, int> itemCount;
   final bool staggered;
   final num spacerCount;
+  final EdgeInsets itemMargin;
   bool get _isChildrenBuilder => itemBuilder == null || itemCount == null;
 
   static const TextStyle titleStyle =
@@ -26,6 +27,7 @@ class CategorizedList<T> extends StatelessWidget {
     this.titleBuilder,
     this.spacerCount = 0,
     this.staggered = true,
+    this.itemMargin = const EdgeInsets.all(16),
   })  : items = children,
         itemBuilder = null,
         itemCount = null,
@@ -39,6 +41,7 @@ class CategorizedList<T> extends StatelessWidget {
     this.titleBuilder,
     this.staggered = true,
     this.spacerCount = 0,
+    this.itemMargin = const EdgeInsets.all(16),
   }) : super(key: key);
 
   CategorizedList.childrenBuilder({
@@ -47,6 +50,7 @@ class CategorizedList<T> extends StatelessWidget {
     this.titleBuilder,
     this.spacerCount = 0,
     this.staggered = true,
+    this.itemMargin = const EdgeInsets.all(16),
   })  : items = children,
         itemBuilder = null,
         itemCount = null,
@@ -66,7 +70,9 @@ class CategorizedList<T> extends StatelessWidget {
                 Widget child = cats.elementAt(index);
                 if (child != null) {
                   return Padding(
-                      padding: const EdgeInsets.all(16), child: child);
+                    padding: itemMargin,
+                    child: child,
+                  );
                 }
                 return Container();
               }

@@ -169,3 +169,17 @@ List<T> removeFromList<T>(List<T> list, T obj, [bool Function(T) matcher]) =>
 List<T> addToList<T>(List<T> list, T item) => List.from(list)
   ..add(item)
   ..removeWhere((element) => element == null);
+
+String camelToSnake(String string) =>
+    string[0] +
+    string.substring(1).replaceAllMapped(
+          RegExp(r'[A-Z]'),
+          (match) => '_' + match.group(0).toLowerCase(),
+        );
+
+String snakeToCamel(String string) =>
+    string[0] +
+    string.substring(1).replaceAllMapped(
+          RegExp(r'_([a-zA-Z])'),
+          (match) => match.group(1).toUpperCase(),
+        );

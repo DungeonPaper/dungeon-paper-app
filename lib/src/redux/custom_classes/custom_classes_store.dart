@@ -17,7 +17,7 @@ CustomClassesStore customClassesReducer(CustomClassesStore state, action) {
 
   if (action is UpsertCustomClass) {
     state.customClasses.addAll({
-      action.customClass.docID: action.customClass,
+      action.customClass.documentID: action.customClass,
     });
     return state;
   }

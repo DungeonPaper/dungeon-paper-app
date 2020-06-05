@@ -1,10 +1,12 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:dungeon_paper/db/helpers/character_utils.dart';
 import 'package:dungeon_paper/src/redux/custom_classes/custom_classes_store.dart';
 import 'package:dungeon_paper/src/redux/stores.dart';
+import 'package:dungeon_paper/src/utils/utils.dart';
+import 'package:dungeon_world_data/alignment.dart';
 import 'package:dungeon_world_data/dice.dart';
 import 'package:dungeon_world_data/gear_choice.dart';
 import 'package:dungeon_world_data/move.dart';
+import 'package:dungeon_world_data/player_class.dart';
 import 'package:dungeon_world_data/spell.dart';
 
 import 'firebase_entity/fields/fields.dart';
@@ -12,6 +14,7 @@ import 'firebase_entity/firebase_entity.dart';
 
 // Ordered by whichever data needs to come earliest for the rest to be able to calculate
 FieldsContext _clsFields = FieldsContext([
+  StringField(fieldName: 'key'),
   StringField(fieldName: 'name'),
   StringField(fieldName: 'description'),
   IntField(fieldName: 'load'),
@@ -19,7 +22,7 @@ FieldsContext _clsFields = FieldsContext([
   DiceField(fieldName: 'damage', defaultValue: (ctx) => Dice.d6),
   NamesMapField(fieldName: 'names'),
   BondsListField(fieldName: 'bonds'),
-  LooksOptionsListField(fieldName: 'looks'),
+  LooksOptionsMapField(fieldName: 'looks'),
   AlignmentsMapField(fieldName: 'alignments'),
   MoveListField(fieldName: 'raceMoves'),
   MoveListField(fieldName: 'startingMoves'),
@@ -41,6 +44,15 @@ class CustomClass extends FirebaseEntity {
     bool autoLoad,
   }) : super(ref: ref, data: data, autoLoad: autoLoad);
 
+  CustomClass.fromPlayerClass(
+    PlayerClass playerClass, {
+    DocumentReference ref,
+  }) : super(
+          data: Map<String, dynamic>.from(
+              playerClass.toJSON().map((k, v) => MapEntry(snakeToCamel(k), v))),
+          ref: ref,
+        );
+
   String get key => fields.get('key').get;
   set key(value) => fields.get('key').set(value);
   String get name => fields.get('name').get;
@@ -57,9 +69,9 @@ class CustomClass extends FirebaseEntity {
   set names(value) => fields.get('names').set(value);
   List<String> get bonds => fields.get('bonds').get;
   set bonds(value) => fields.get('bonds').set(value);
-  List<List<String>> get looks => fields.get('looks').get;
+  Map<num, List<String>> get looks => fields.get('looks').get;
   set looks(value) => fields.get('looks').set(value);
-  Map<String, AlignmentName> get alignments => fields.get('alignments').get;
+  Map<String, Alignment> get alignments => fields.get('alignments').get;
   set alignments(value) => fields.get('alignments').set(value);
   List<Move> get raceMoves => fields.get('raceMoves').get;
   set raceMoves(value) => fields.get('raceMoves').set(value);
@@ -80,6 +92,12 @@ class CustomClass extends FirebaseEntity {
       dwStore.dispatch(UpsertCustomClass(this));
     }
     super.finalizeUpdate(json, save: save);
+  }
+
+  @override
+  void finalizeCreate(Map<String, dynamic> json) {
+    dwStore.dispatch(UpsertCustomClass(this));
+    super.finalizeCreate(json);
   }
 
   @override

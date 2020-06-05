@@ -468,14 +468,14 @@ class BondsListField extends StringListField {
         );
 }
 
-class LooksOptionsListField extends ListOfField<List<String>> {
-  LooksOptionsListField({
+class LooksOptionsMapField extends MapOfField<num, List<String>> {
+  LooksOptionsMapField({
     FieldsContext context,
     @required String fieldName,
-    List<List<String>> value,
-    List<FieldListener<List<List<String>>>> listeners,
+    Map<num, List<String>> value,
+    List<FieldListener<Map<num, List<String>>>> listeners,
     bool isSerialized = true,
-    List<List<String>> Function(FieldsContext ctx) defaultValue,
+    Map<num, List<String>> Function(FieldsContext ctx) defaultValue,
   }) : super(
           context: context,
           fieldName: fieldName,
@@ -486,25 +486,22 @@ class LooksOptionsListField extends ListOfField<List<String>> {
         );
 }
 
-class AlignmentsMapField extends MapOfField<String, AlignmentName> {
+class AlignmentsMapField extends MapOfField<String, Alignment> {
   AlignmentsMapField({
     FieldsContext context,
     @required String fieldName,
-    Map<String, AlignmentName> value,
-    List<FieldListener<Map<String, AlignmentName>>> listeners,
+    Map<String, Alignment> value,
+    List<FieldListener<Map<String, Alignment>>> listeners,
     bool isSerialized = true,
-    Map<String, AlignmentName> Function(FieldsContext ctx) defaultValue,
+    Map<String, Alignment> Function(FieldsContext ctx) defaultValue,
   }) : super(
           context: context,
-          field: ListOfField<String>(
-            fieldName: fieldName,
-            field: StringField(fieldName: fieldName),
-          ),
+          field: AlignmentField(fieldName: fieldName),
           fieldName: fieldName,
           value: value,
           isSerialized: isSerialized,
           listeners: listeners,
-          defaultValue: defaultValue ?? (ctx) => <String, AlignmentName>{},
+          defaultValue: defaultValue ?? (ctx) => <String, Alignment>{},
         );
 }
 
@@ -522,6 +519,11 @@ class GearChoiceField extends DWEntityField<GearChoice> {
           value: value,
           isSerialized: isSerialized,
           listeners: listeners,
+          defaultValue: defaultValue ??
+              (ctx) => GearChoice(
+                    label: '',
+                    gearOptions: [],
+                  ),
           create: (value) => GearChoice.fromJSON(value),
         );
 }
@@ -540,6 +542,7 @@ class GearChoiceListField extends DWEntityListField<GearChoice> {
           field: GearChoiceField(fieldName: fieldName),
           value: value,
           isSerialized: isSerialized,
+          defaultValue: defaultValue ?? (ctx) => [],
           listeners: listeners,
         );
 }

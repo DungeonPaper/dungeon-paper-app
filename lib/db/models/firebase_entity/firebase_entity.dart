@@ -5,16 +5,17 @@ import 'fields/fields.dart';
 
 abstract class FirebaseEntity {
   DocumentReference ref;
-  String docID;
   DocumentSnapshot snapshot;
   DateTime lastUpdated;
   FieldsContext get fields;
+  String get documentID => ref?.documentID;
+  String get documentPath => ref?.path;
 
   FirebaseEntity({
     this.ref,
     Map<String, dynamic> data,
     bool autoLoad = false,
-  }) : docID = ref?.documentID {
+  }) {
     if (data != null && data.isNotEmpty) {
       var dataWithDefaults = _mergeDataWithDefaults(data);
       deserializeData(dataWithDefaults);
@@ -49,7 +50,7 @@ abstract class FirebaseEntity {
     if (snapshot != null && snapshot.data != null) {
       var data = _mergeDataWithDefaults(snapshot.data);
       output = await deserializeData(data);
-      lastUpdated = snapshot.data['lastUpdated'];
+      lastUpdated = (snapshot.data['lastUpdated'] as Timestamp).toDate();
     }
     return output;
   }
@@ -61,15 +62,20 @@ abstract class FirebaseEntity {
     ref.delete();
   }
 
-  void create([Map<String, dynamic> data]) => update(json: data);
+  Future<void> create() async {
+    var data = toJSON();
+    data = prepareData(data);
+    setFields(data);
+    finalizeCreate(data);
+  }
 
   Future<void> update({Map<String, dynamic> json, bool save = true}) async {
-    json = prepareUpdate(json);
+    json = prepareData(json);
     setFields(json);
     finalizeUpdate(json, save: save);
   }
 
-  Map<String, dynamic> prepareUpdate(Map<String, dynamic> json) {
+  Map<String, dynamic> prepareData(Map<String, dynamic> json) {
     if (json == null) {
       json = Map.fromEntries(
         fields.dirtyFields.map(
@@ -93,6 +99,16 @@ abstract class FirebaseEntity {
       await ref.updateData(json);
       unsetDirty(json);
     }
+  }
+
+  void finalizeCreate(Map<String, dynamic> json) async {
+    if (ref == null) {
+      return _noRef();
+    }
+    print('Creating $this');
+    print(json);
+    await ref.setData(json);
+    unsetDirty(json);
   }
 
   void setFields(Map<String, dynamic> json) {
@@ -164,5 +180,5 @@ abstract class FirebaseEntity {
 
   Map<String, dynamic> serializeData() => toJSON();
 
-  operator ==(o) => o is FirebaseEntity && o.docID == docID;
+  operator ==(o) => o is FirebaseEntity && o.documentID == documentID;
 }

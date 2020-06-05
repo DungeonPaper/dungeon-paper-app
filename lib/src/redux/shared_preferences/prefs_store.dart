@@ -85,7 +85,7 @@ PrefsStore prefsReducer(PrefsStore state, action) {
   }
 
   if (action is SetCurrentChar) {
-    state.user.lastCharacterId = action.character.docID;
+    state.user.lastCharacterId = action.character.documentID;
   }
 
   if (action is ClearCharacters) {
@@ -94,7 +94,7 @@ PrefsStore prefsReducer(PrefsStore state, action) {
 
   if (action is Login) {
     state.user = UserDetails(
-      id: action.user.docID,
+      id: action.user.documentID,
       email: action.user.email,
       lastCharacterId: state.user.lastCharacterId,
     );

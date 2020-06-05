@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dungeon_paper/db/db.dart';
 import 'package:dungeon_paper/src/redux/characters/characters_store.dart';
 import 'package:dungeon_paper/src/redux/stores.dart';
+import 'package:dungeon_paper/src/redux/users/user_store.dart';
 
 import 'character.dart';
 import 'firebase_entity/fields/fields.dart';
@@ -15,8 +16,6 @@ FieldsContext userFields = FieldsContext([
     fieldName: 'features',
     field: Field<dynamic>(fieldName: 'features', defaultValue: (ctx) => null),
   ),
-  DocumentReferenceListField(fieldName: 'characters'),
-  DocumentReferenceListField(fieldName: 'custom_classes'),
 ]);
 
 class User extends FirebaseEntity {
@@ -31,10 +30,6 @@ class User extends FirebaseEntity {
   set photoURL(val) => fields.get<String>('photoURL').set(val);
   Map<String, dynamic> get features =>
       fields.get<Map<String, dynamic>>('features').get;
-  List<DocumentReference> get customClasses =>
-      fields.get<List<DocumentReference>>('custom_classes').get;
-  List<DocumentReference> get characters =>
-      fields.get<List<DocumentReference>>('characters').get;
 
   bool hasFeature(String key) =>
       features.containsKey(key) &&
@@ -52,12 +47,18 @@ class User extends FirebaseEntity {
     var data = character.toJSON();
     print('Creating character: $data');
     await doc.setData(data);
-    character
-      ..docID = doc.documentID
-      ..ref = doc;
+    character..ref = doc;
     dwStore.dispatch(UpsertCharacter(character));
     dwStore.dispatch(SetCurrentChar(character));
     return character;
+  }
+
+  @override
+  void finalizeUpdate(Map<String, dynamic> json, {bool save = true}) {
+    if (save) {
+      dwStore.dispatch(SetUser(this));
+    }
+    super.finalizeUpdate(json, save: save);
   }
 
   @override

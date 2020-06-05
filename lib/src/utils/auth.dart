@@ -1,9 +1,6 @@
 import 'package:dungeon_paper/db/listeners.dart';
-import 'package:dungeon_paper/db/models/character.dart';
-import 'package:dungeon_paper/db/models/custom_class.dart';
 import 'package:dungeon_paper/db/models/user.dart';
 import 'package:dungeon_paper/src/redux/characters/characters_store.dart';
-import 'package:dungeon_paper/src/redux/custom_classes/custom_classes_store.dart';
 import 'package:dungeon_paper/src/redux/stores.dart';
 import 'package:dungeon_paper/src/redux/users/user_store.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -65,8 +62,6 @@ Future<FirebaseUser> signInFlow(
     user: user,
   );
 
-  registerAllListeners(fbUser);
-
   return fbUser;
 }
 
@@ -74,6 +69,7 @@ void registerAllListeners(FirebaseUser fbUser) {
   registerFirebaseUserListener();
   registerUserListener(fbUser);
   registerCharactersListener();
+  registerCustomClassesListener();
 }
 
 void dispatchFinalDataToStore({
@@ -86,39 +82,12 @@ void dispatchFinalDataToStore({
     return;
   }
 
-  var prefs = dwStore.state.prefs;
-
   dwStore.dispatch(Login(
     user: user,
     credentials: credentials,
     firebaseUser: firebaseUser,
   ));
-
-  final charactersData = {
-    for (var char in user.characters)
-      char.documentID: Character(ref: char, autoLoad: true),
-  };
-
-  final customClassesData = {
-    for (var char in user.customClasses)
-      char.documentID: CustomClass(ref: char, autoLoad: true),
-  };
-
-  if (charactersData.isNotEmpty) {
-    var currentID = prefs.user.lastCharacterId ?? charactersData.keys.first;
-    dwStore.dispatch(
-      SetCurrentChar(
-        charactersData.values.firstWhere(
-          (char) => char.docID == currentID,
-          orElse: () => charactersData.values.first,
-        ),
-      ),
-    );
-  }
-
-  if (customClassesData.isNotEmpty) {
-    dwStore.dispatch(SetCustomClasses(customClassesData));
-  }
+  registerAllListeners(firebaseUser);
 }
 
 void signOutFlow() async {

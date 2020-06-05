@@ -1,19 +1,21 @@
+import 'package:dungeon_paper/db/models/custom_class.dart';
+import 'package:dungeon_paper/src/atoms/dice_selector.dart';
 import 'package:dungeon_paper/src/dialogs/dialogs.dart';
 import 'package:dungeon_paper/src/flutter_utils/input_formatters.dart';
 import 'package:dungeon_paper/src/flutter_utils/widget_utils.dart';
 import 'package:dungeon_paper/src/utils/types.dart';
-import 'package:dungeon_world_data/player_class.dart';
+import 'package:dungeon_world_data/dice.dart';
 import 'package:flutter/material.dart';
 
 class ClassBasicDetails extends StatefulWidget {
-  final VoidCallbackDelegate<PlayerClass> onUpdate;
-  final PlayerClass playerClass;
+  final VoidCallbackDelegate<CustomClass> onUpdate;
+  final CustomClass customClass;
   final ValueNotifier validityNotifier;
   final DialogMode mode;
 
   const ClassBasicDetails({
     Key key,
-    @required this.playerClass,
+    @required this.customClass,
     @required this.onUpdate,
     this.validityNotifier,
     @required this.mode,
@@ -27,6 +29,8 @@ enum Keys { name, description, baseHP, load }
 
 class _ClassBasicDetailsState extends State<ClassBasicDetails> {
   Map<Keys, TextEditingController> editingControllers;
+  Dice dice;
+
   @override
   void initState() {
     super.initState();
@@ -35,27 +39,27 @@ class _ClassBasicDetailsState extends State<ClassBasicDetails> {
       list: [
         EditingControllerConfig(
           key: Keys.name,
-          defaultValue: widget.playerClass.name,
+          defaultValue: widget.customClass.name,
           listener: () {
-            PlayerClass def = widget.playerClass;
+            CustomClass def = widget.customClass;
             def.name = editingControllers[Keys.name].text.trim();
             updateWith(def);
           },
         ),
         EditingControllerConfig(
           key: Keys.description,
-          defaultValue: widget.playerClass.description,
+          defaultValue: widget.customClass.description,
           listener: () {
-            PlayerClass def = widget.playerClass;
+            CustomClass def = widget.customClass;
             def.description = editingControllers[Keys.description].text.trim();
             updateWith(def);
           },
         ),
         EditingControllerConfig(
           key: Keys.baseHP,
-          defaultValue: (widget.playerClass.baseHP ?? 0).toString(),
+          defaultValue: (widget.customClass.baseHP ?? 0).toString(),
           listener: () {
-            PlayerClass def = widget.playerClass;
+            CustomClass def = widget.customClass;
             def.baseHP =
                 int.tryParse(editingControllers[Keys.baseHP].text.trim()) ?? 0;
             updateWith(def);
@@ -63,9 +67,9 @@ class _ClassBasicDetailsState extends State<ClassBasicDetails> {
         ),
         EditingControllerConfig(
           key: Keys.load,
-          defaultValue: (widget.playerClass.load ?? 0).toString(),
+          defaultValue: (widget.customClass.load ?? 0).toString(),
           listener: () {
-            PlayerClass def = widget.playerClass;
+            CustomClass def = widget.customClass;
             def.load =
                 int.tryParse(editingControllers[Keys.load].text.trim()) ?? 0;
             updateWith(def);
@@ -74,10 +78,12 @@ class _ClassBasicDetailsState extends State<ClassBasicDetails> {
       ],
     );
 
+    dice = widget.customClass.damage;
+
     widget.validityNotifier.value = _isValid();
   }
 
-  updateWith(PlayerClass def) {
+  updateWith(CustomClass def) {
     if (widget.validityNotifier != null) {
       widget.validityNotifier.value = _isValid();
     }
@@ -99,6 +105,7 @@ class _ClassBasicDetailsState extends State<ClassBasicDetails> {
         padding: const EdgeInsets.all(8.0),
         child: Form(
           child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
             children: <Widget>[
               Card(
                 child: Padding(
@@ -148,7 +155,7 @@ class _ClassBasicDetailsState extends State<ClassBasicDetails> {
                               inputFormatters: [NumberFormatter.int()],
                               keyboardType: TextInputType.number,
                               decoration: InputDecoration(
-                                labelText: 'Default Base HP',
+                                labelText: 'Base HP',
                                 hintText: '0',
                               ),
                             ),
@@ -160,7 +167,7 @@ class _ClassBasicDetailsState extends State<ClassBasicDetails> {
                               inputFormatters: [NumberFormatter.int()],
                               keyboardType: TextInputType.number,
                               decoration: InputDecoration(
-                                labelText: 'Default Max Load',
+                                labelText: 'Max Load',
                                 hintText: '0',
                               ),
                             ),
@@ -171,6 +178,25 @@ class _ClassBasicDetailsState extends State<ClassBasicDetails> {
                   ),
                 ),
               ),
+              Card(
+                child: Padding(
+                  padding: cardPadding,
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                    children: [
+                      Text('Damage Dice',
+                          style: Theme.of(context).textTheme.caption),
+                      DiceSelector(
+                        padding: EdgeInsets.all(0),
+                        showIcon: true,
+                        dice: dice,
+                        onChanged: (d) => setState(() => dice = d),
+                      ),
+                    ],
+                  ),
+                ),
+              )
             ],
           ),
         ),

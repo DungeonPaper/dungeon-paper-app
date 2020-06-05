@@ -38,7 +38,7 @@ class _ManageCharactersViewState extends State<ManageCharactersView> {
         children: [
           for (var char in characters)
             IntrinsicWidth(
-              key: Key(char.docID),
+              key: Key(char.documentID),
               child: Card(
                 child: Container(
                   width: MediaQuery.of(context).size.width,
@@ -111,7 +111,7 @@ class _ManageCharactersViewState extends State<ManageCharactersView> {
     dwStore.dispatch(
       SetCharacters(
         Map<String, Character>.fromEntries(
-          copy.map((char) => MapEntry(char.docID, char)),
+          copy.map((char) => MapEntry(char.documentID, char)),
         ),
       ),
     );

@@ -40,12 +40,16 @@ class PageLoader extends StatelessWidget {
 class AddButton extends StatelessWidget {
   final Function() onPressed;
   final double textScaleFactor;
+  final Color backgroundColor;
+  final Color foregroundColor;
 
   const AddButton({
     Key key,
     @required this.onPressed,
     this.size = 50,
     this.textScaleFactor = 1.5,
+    this.backgroundColor,
+    this.foregroundColor,
   }) : super(key: key);
 
   final double size;
@@ -57,7 +61,8 @@ class AddButton extends StatelessWidget {
       minWidth: size,
       height: size,
       child: RaisedButton(
-        color: Theme.of(context).primaryColor,
+        color: backgroundColor ?? Theme.of(context).primaryColor,
+        textColor: foregroundColor ?? Theme.of(context).colorScheme.surface,
         child: Text(
           '+',
           textScaleFactor: textScaleFactor,

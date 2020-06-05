@@ -9,7 +9,7 @@ class Compendium extends StatelessWidget {
   Widget build(BuildContext context) {
     return StoreProvider<DWStore>(
       store: dwStore,
-      child: ScaffoldWithElevation(
+      child: ScaffoldWithElevation.primaryBackground(
         title: Text('Compendium'),
         body: CustomClassesList(),
       ),
