@@ -53,6 +53,14 @@ class CustomClass extends FirebaseEntity {
           ref: ref,
         );
 
+  PlayerClass toPlayerClass() {
+    var data = Map<String, dynamic>.from(
+      toJSON().map((k, v) => MapEntry(camelToSnake(k), v)),
+    );
+    data['looks'] = looks.values.toList();
+    return PlayerClass.fromJSON(data);
+  }
+
   String get key => fields.get('key').get;
   set key(value) => fields.get('key').set(value);
   String get name => fields.get('name').get;
@@ -69,7 +77,7 @@ class CustomClass extends FirebaseEntity {
   set names(value) => fields.get('names').set(value);
   List<String> get bonds => fields.get('bonds').get;
   set bonds(value) => fields.get('bonds').set(value);
-  Map<num, List<String>> get looks => fields.get('looks').get;
+  Map<String, List<String>> get looks => fields.get('looks').get;
   set looks(value) => fields.get('looks').set(value);
   Map<String, Alignment> get alignments => fields.get('alignments').get;
   set alignments(value) => fields.get('alignments').set(value);

@@ -128,14 +128,14 @@ class CustomClassMoveList extends StatelessWidget {
 
   _updateMoveInCat(BuildContext context, Move move, MoveCategory cat) {
     switch (cat) {
+      case MoveCategory.Race:
+        num idx = customClass.raceMoves.indexWhere((m) => m.key == move.key);
+        customClass.raceMoves[idx] = move;
+        break;
       case MoveCategory.Starting:
         num idx =
             customClass.startingMoves.indexWhere((m) => m.key == move.key);
         customClass.startingMoves[idx] = move;
-        break;
-      case MoveCategory.Race:
-        num idx = customClass.raceMoves.indexWhere((m) => m.key == move.key);
-        customClass.raceMoves[idx] = move;
         break;
       case MoveCategory.Advanced1:
         num idx =
@@ -154,14 +154,14 @@ class CustomClassMoveList extends StatelessWidget {
 
   void _deleteMoveInCat(BuildContext context, Move move, MoveCategory cat) {
     switch (cat) {
+      case MoveCategory.Race:
+        num idx = customClass.raceMoves.indexWhere((m) => m.key == move.key);
+        customClass.raceMoves.removeAt(idx);
+        break;
       case MoveCategory.Starting:
         num idx =
             customClass.startingMoves.indexWhere((m) => m.key == move.key);
         customClass.startingMoves.removeAt(idx);
-        break;
-      case MoveCategory.Race:
-        num idx = customClass.raceMoves.indexWhere((m) => m.key == move.key);
-        customClass.raceMoves.removeAt(idx);
         break;
       case MoveCategory.Advanced1:
         num idx =

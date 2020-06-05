@@ -191,7 +191,12 @@ class _ClassBasicDetailsState extends State<ClassBasicDetails> {
                         padding: EdgeInsets.all(0),
                         showIcon: true,
                         dice: dice,
-                        onChanged: (d) => setState(() => dice = d),
+                        onChanged: (d) => setState(() {
+                          dice = d;
+                          var def = widget.customClass;
+                          def.damage = dice;
+                          updateWith(def);
+                        }),
                       ),
                     ],
                   ),

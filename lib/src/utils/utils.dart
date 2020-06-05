@@ -13,6 +13,22 @@ String capitalize(String string, [String sep = ' ']) {
           s.isNotEmpty ? s[0].toUpperCase() + s.substring(1) : s);
 }
 
+String pluralize(
+  num amount,
+  String str, {
+  String plural = '{}s',
+  Map<String, String> specificAmounts = const {},
+}) {
+  if (specificAmounts.containsKey(amount)) {
+    return specificAmounts[amount];
+  }
+  if (amount == 1) {
+    return '$amount $str';
+  }
+  var _plural = plural.replaceAll('{}', str);
+  return '$amount $_plural';
+}
+
 T noopReturn<T>(T a) => a;
 void noopVoid<T>(T a) {}
 
@@ -173,7 +189,7 @@ List<T> addToList<T>(List<T> list, T item) => List.from(list)
 String camelToSnake(String string) =>
     string[0] +
     string.substring(1).replaceAllMapped(
-          RegExp(r'[A-Z]'),
+          RegExp(r'[A-Z]+'),
           (match) => '_' + match.group(0).toLowerCase(),
         );
 

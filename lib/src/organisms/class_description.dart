@@ -43,7 +43,7 @@ class ClassDescription extends StatelessWidget {
                   ),
                   StatIcon(
                     icon: PlatformSvg.asset(
-                      'dice/d20.svg',
+                      'dice/d${classDef.damage.sides}.svg',
                       // color: color,
                       width: 40.0,
                       height: 40.0,
@@ -81,19 +81,20 @@ class StatIcon extends StatelessWidget {
     ThemeData theme = Theme.of(context);
     TextTheme textTheme = theme.textTheme;
     return Container(
-        child: Column(
-      children: <Widget>[
-        icon,
-        DefaultTextStyle(
-          child: value,
-          style: textTheme.headline5.copyWith(fontSize: 30),
-        ),
-        DefaultTextStyle(
-          child: label,
-          style: textTheme.caption,
-        ),
-      ],
-    ));
+      child: Column(
+        children: <Widget>[
+          icon,
+          DefaultTextStyle(
+            child: value,
+            style: textTheme.headline5.copyWith(fontSize: 30),
+          ),
+          DefaultTextStyle(
+            child: label,
+            style: textTheme.caption,
+          ),
+        ],
+      ),
+    );
   }
 }
 

@@ -2,6 +2,7 @@ import 'package:dungeon_paper/db/models/custom_class.dart';
 import 'package:dungeon_paper/src/atoms/card_list_item.dart';
 import 'package:dungeon_paper/src/flutter_utils/widget_utils.dart';
 import 'package:dungeon_paper/src/redux/connectors.dart';
+import 'package:dungeon_paper/src/utils/utils.dart';
 import 'package:flutter/material.dart';
 
 class CustomClassesList extends StatelessWidget {
@@ -40,6 +41,7 @@ class CustomClassesList extends StatelessWidget {
                 child: CardListItem(
                   leading: Icon(Icons.person, size: 40),
                   title: Text(cls.name),
+                  subtitle: Text(_subtitle(cls)),
                 ),
               )
           ],
@@ -47,5 +49,17 @@ class CustomClassesList extends StatelessWidget {
       ),
     );
     return _builder(context, child);
+  }
+
+  String _subtitle(CustomClass cls) {
+    var _allMoves = cls.startingMoves + cls.advancedMoves1 + cls.advancedMoves2;
+    var _alignments =
+        cls.alignments.values.where((a) => a.description?.isNotEmpty);
+    var counts = [
+      if (cls.raceMoves.isNotEmpty) pluralize(cls.raceMoves.length, 'Race'),
+      if (_allMoves.isNotEmpty) pluralize(_allMoves.length, 'Move'),
+      if (_alignments.isNotEmpty) pluralize(_alignments.length, 'Alignment'),
+    ];
+    return counts.join(', ');
   }
 }

@@ -35,6 +35,7 @@ class _EditableAlignmentState extends State<EditableAlignment> {
       title: Text(alignment.name),
       margin: EdgeInsets.all(0),
       subtitle: TextField(
+        textCapitalization: TextCapitalization.sentences,
         decoration:
             InputDecoration(hintText: "Enter a description or leave empty"),
         controller: controller,

@@ -121,7 +121,7 @@ registerCustomClassesListener() async {
     dwStore.dispatch(
       SetCustomClasses({
         for (var character in classes.documents)
-          character.reference.path: CustomClass(
+          character.reference.documentID: CustomClass(
             data: character.data,
             ref: character.reference,
           ),

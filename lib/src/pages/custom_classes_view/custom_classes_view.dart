@@ -15,7 +15,10 @@ class _CustomClassesViewState extends State<CustomClassesView> {
   Widget build(BuildContext context) {
     return ScaffoldWithElevation.primaryBackground(
       title: Text('Custom Classes'),
-      body: CustomClassesList(onEdit: _edit),
+      body: Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: CustomClassesList(onEdit: _edit),
+      ),
       floatingActionButton: FloatingActionButton(
         child: Icon(Icons.add),
         backgroundColor: Theme.of(context).colorScheme.surface,
