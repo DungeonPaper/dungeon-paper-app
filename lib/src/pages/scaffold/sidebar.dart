@@ -43,25 +43,33 @@ class _SidebarState extends State<Sidebar> {
               title(
                 'Characters',
                 context,
-                leading: InkWell(
-                  child: Padding(
-                    padding: EdgeInsets.all(8),
-                    child: Text('Edit'.toUpperCase()),
-                  ),
-                  onTap: () => manageCharactersScreen(context),
+                leading: Row(
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.only(right: 8.0),
+                      child: InkWell(
+                        child: Padding(
+                          padding: EdgeInsets.all(8),
+                          child: Text('+ Create New'.toUpperCase()),
+                        ),
+                        onTap: () => createNewCharacterScreen(context),
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.only(right: 8.0),
+                      child: InkWell(
+                        child: Padding(
+                          padding: EdgeInsets.all(8),
+                          child: Text('Manage'.toUpperCase()),
+                        ),
+                        onTap: () => manageCharactersScreen(context),
+                      ),
+                    ),
+                  ],
                 ),
               ),
               ...characterList(state.characters.characters, context),
               Divider(),
-              // Create Empty Character
-              ListTile(
-                leading: Icon(Icons.add),
-                title: Text('Create New Character'),
-                onTap: () {
-                  Navigator.pop(context);
-                  createNewCharacterScreen(context);
-                },
-              ),
               if (user.hasFeature('create_custom_class'))
                 ListTile(
                   leading: Padding(
@@ -135,10 +143,12 @@ class _SidebarState extends State<Sidebar> {
   }
 
   void createNewCharacterScreen(BuildContext context) {
+    Navigator.pop(context);
     openPage(context, builder: (context) => CharacterWizardView());
   }
 
   void manageCharactersScreen(BuildContext context) {
+    Navigator.pop(context);
     openPage(context, builder: (context) => ManageCharactersView());
   }
 
@@ -156,7 +166,7 @@ class _SidebarState extends State<Sidebar> {
   Widget title(String text, BuildContext context, {Widget leading}) {
     TextStyle titleStyle = getTitleStyle(context);
     Widget title = Padding(
-      padding: EdgeInsets.all(16).copyWith(bottom: 8),
+      padding: EdgeInsets.all(8),
       child: Text(
         text.toUpperCase(),
         style: titleStyle,
@@ -170,13 +180,10 @@ class _SidebarState extends State<Sidebar> {
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
         title,
-        Padding(
-          padding: EdgeInsets.only(right: 16),
-          child: DefaultTextStyle(
-            child: leading,
-            style: titleStyle.copyWith(
-                color: Theme.of(context).textTheme.headline3.color),
-          ),
+        DefaultTextStyle(
+          child: leading,
+          style: titleStyle.copyWith(
+              color: Theme.of(context).textTheme.headline3.color),
         ),
       ],
     );
