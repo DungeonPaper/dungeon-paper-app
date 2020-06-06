@@ -10,6 +10,7 @@ import 'package:dungeon_world_data/gear_choice.dart';
 import 'package:dungeon_world_data/move.dart';
 import 'package:dungeon_world_data/player_class.dart';
 import 'package:dungeon_world_data/spell.dart';
+import 'package:pedantic/pedantic.dart';
 import 'package:uuid/uuid.dart';
 
 // Ordered by whichever data needs to come earliest for the rest to be able to calculate
@@ -116,7 +117,7 @@ class CustomClass extends FirebaseEntity {
 
   @override
   Future<void> delete() async {
-    super.delete();
+    unawaited(super.delete());
     dwStore.dispatch(RemoveCustomClass(this));
   }
 
