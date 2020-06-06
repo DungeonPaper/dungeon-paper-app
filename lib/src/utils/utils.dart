@@ -196,6 +196,6 @@ String camelToSnake(String string) =>
 String snakeToCamel(String string) =>
     string[0] +
     string.substring(1).replaceAllMapped(
-          RegExp(r'_([a-zA-Z])'),
+          RegExp(r'_([a-zA-Z0-9])'),
           (match) => match.group(1).toUpperCase(),
         );

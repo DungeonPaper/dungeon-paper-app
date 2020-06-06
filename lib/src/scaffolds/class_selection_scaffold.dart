@@ -44,8 +44,7 @@ class ClassSelectionScaffold extends StatelessWidget {
     Widget child = Padding(
       padding: const EdgeInsets.all(16.0),
       child: PlayerClassList(
-        onChanged: (cls) {},
-        builder: (context, _value, list, _onChanged) => Column(
+        builder: (context, list) => Column(
           children: [
             for (var availClass in list)
               Padding(

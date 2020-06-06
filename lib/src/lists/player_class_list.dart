@@ -4,24 +4,27 @@ import 'package:dungeon_world_data/player_class.dart';
 import 'package:flutter/material.dart';
 
 class PlayerClassList extends StatelessWidget {
-  final PlayerClass value;
-  final void Function(PlayerClass) onChanged;
-  final Widget Function(BuildContext, PlayerClass, List<PlayerClass>,
-      void Function(PlayerClass)) builder;
+  final Widget Function(BuildContext, List<PlayerClass>) builder;
+  final bool includeCustom;
+  final bool includeDefault;
 
   const PlayerClassList({
     Key key,
-    this.value,
-    @required this.onChanged,
     @required this.builder,
+    this.includeCustom = true,
+    this.includeDefault = true,
   }) : super(key: key);
 
   factory PlayerClassList.dropdown({
     PlayerClass value,
+    bool includeCustom = true,
+    bool includeDefault = true,
     @required void Function(PlayerClass) onChanged,
   }) =>
       PlayerClassList(
-        builder: (context, value, list, onChanged) => DropdownButton(
+        includeCustom: includeCustom,
+        includeDefault: includeDefault,
+        builder: (context, list) => DropdownButton(
           isExpanded: true,
           value: list.firstWhere((cls) => cls.key == value.key,
               orElse: () => list.first),
@@ -30,8 +33,6 @@ class PlayerClassList extends StatelessWidget {
               .map((cls) => DropdownMenuItem(value: cls, child: Text(cls.name)))
               .toList(),
         ),
-        onChanged: onChanged,
-        value: value,
       );
 
   @override
@@ -39,7 +40,10 @@ class PlayerClassList extends StatelessWidget {
     var _dw = dungeonWorld.classes;
     var _custom = dwStore.state.customClasses.customClasses.values
         .map((cls) => cls.toPlayerClass());
-    var combined = [..._dw, ..._custom];
-    return builder(context, value, combined, onChanged);
+    var combined = <PlayerClass>[
+      if (includeDefault) ..._dw,
+      if (includeCustom) ..._custom,
+    ];
+    return builder(context, combined);
   }
 }

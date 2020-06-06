@@ -1,4 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:dungeon_paper/db/models/firebase_entity/fields/fields.dart';
+import 'package:dungeon_paper/db/models/firebase_entity/firebase_entity.dart';
 import 'package:dungeon_paper/src/redux/custom_classes/custom_classes_store.dart';
 import 'package:dungeon_paper/src/redux/stores.dart';
 import 'package:dungeon_paper/src/utils/utils.dart';
@@ -8,13 +10,11 @@ import 'package:dungeon_world_data/gear_choice.dart';
 import 'package:dungeon_world_data/move.dart';
 import 'package:dungeon_world_data/player_class.dart';
 import 'package:dungeon_world_data/spell.dart';
-
-import 'firebase_entity/fields/fields.dart';
-import 'firebase_entity/firebase_entity.dart';
+import 'package:uuid/uuid.dart';
 
 // Ordered by whichever data needs to come earliest for the rest to be able to calculate
 FieldsContext _clsFields = FieldsContext([
-  StringField(fieldName: 'key'),
+  StringField(fieldName: 'key', defaultValue: (ctx) => Uuid().v4()),
   StringField(fieldName: 'name'),
   StringField(fieldName: 'description'),
   IntField(fieldName: 'load'),
@@ -48,10 +48,22 @@ class CustomClass extends FirebaseEntity {
     PlayerClass playerClass, {
     DocumentReference ref,
   }) : super(
-          data: Map<String, dynamic>.from(
-              playerClass.toJSON().map((k, v) => MapEntry(snakeToCamel(k), v))),
+          data: _copyPlayerClsData(playerClass),
           ref: ref,
         );
+
+  static Map<String, dynamic> _copyPlayerClsData(PlayerClass playerClass) {
+    var json = playerClass.toJSON().map((k, v) => MapEntry(snakeToCamel(k), v));
+    json['looks'] = Map<String, dynamic>.from(
+      ((json['looks'] ?? []) as List<List<String>>).asMap().map(
+            (k, v) => MapEntry(k.toString(), v),
+          ),
+    );
+    json['baseHP'] = json['baseHp'];
+    json.remove('baseHp');
+    json.remove('key');
+    return Map<String, dynamic>.from(json);
+  }
 
   PlayerClass toPlayerClass() {
     var data = Map<String, dynamic>.from(

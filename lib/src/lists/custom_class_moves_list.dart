@@ -111,15 +111,19 @@ class CustomClassMoveList extends StatelessWidget {
     switch (cat) {
       case MoveCategory.Starting:
         customClass.startingMoves.add(move);
+        customClass.fields['startingMoves'].setDirty(true);
         break;
       case MoveCategory.Race:
         customClass.raceMoves.add(move);
+        customClass.fields['raceMoves'].setDirty(true);
         break;
       case MoveCategory.Advanced1:
         customClass.advancedMoves1.add(move);
+        customClass.fields['advancedMoves1'].setDirty(true);
         break;
       case MoveCategory.Advanced2:
         customClass.advancedMoves2.add(move);
+        customClass.fields['advancedMoves2'].setDirty(true);
         break;
     }
     _update();
@@ -131,21 +135,25 @@ class CustomClassMoveList extends StatelessWidget {
       case MoveCategory.Race:
         num idx = customClass.raceMoves.indexWhere((m) => m.key == move.key);
         customClass.raceMoves[idx] = move;
+        customClass.fields['raceMoves'].setDirty(true);
         break;
       case MoveCategory.Starting:
         num idx =
             customClass.startingMoves.indexWhere((m) => m.key == move.key);
         customClass.startingMoves[idx] = move;
+        customClass.fields['startingMoves'].setDirty(true);
         break;
       case MoveCategory.Advanced1:
         num idx =
             customClass.advancedMoves1.indexWhere((m) => m.key == move.key);
         customClass.advancedMoves1[idx] = move;
+        customClass.fields['advancedMoves1'].setDirty(true);
         break;
       case MoveCategory.Advanced2:
         num idx =
             customClass.advancedMoves2.indexWhere((m) => m.key == move.key);
         customClass.advancedMoves2[idx] = move;
+        customClass.fields['advancedMoves2'].setDirty(true);
         break;
     }
 
@@ -157,21 +165,25 @@ class CustomClassMoveList extends StatelessWidget {
       case MoveCategory.Race:
         num idx = customClass.raceMoves.indexWhere((m) => m.key == move.key);
         customClass.raceMoves.removeAt(idx);
+        customClass.fields['raceMoves'].setDirty(true);
         break;
       case MoveCategory.Starting:
         num idx =
             customClass.startingMoves.indexWhere((m) => m.key == move.key);
         customClass.startingMoves.removeAt(idx);
+        customClass.fields['startingMoves'].setDirty(true);
         break;
       case MoveCategory.Advanced1:
         num idx =
             customClass.advancedMoves1.indexWhere((m) => m.key == move.key);
         customClass.advancedMoves1.removeAt(idx);
+        customClass.fields['advancedMoves1'].setDirty(true);
         break;
       case MoveCategory.Advanced2:
         num idx =
             customClass.advancedMoves2.indexWhere((m) => m.key == move.key);
         customClass.advancedMoves2.removeAt(idx);
+        customClass.fields['advancedMoves2'].setDirty(true);
         break;
     }
 

@@ -49,7 +49,8 @@ class _CustomClassWizardState extends State<CustomClassWizard>
     def = widget.customClass != null
         ? CustomClass(
             data: widget.customClass.toJSON(),
-            ref: widget.customClass.ref,
+            ref: widget.customClass.ref ??
+                user.ref.collection('custom_classes').document(),
           )
         : CustomClass(
             ref: user.ref.collection('custom_classes').document(),
