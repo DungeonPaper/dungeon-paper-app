@@ -106,6 +106,7 @@ class TitleSubtitleRow extends StatelessWidget {
           ? children.first
           : children.isNotEmpty
               ? Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: children,
                 )

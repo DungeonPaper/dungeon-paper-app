@@ -55,11 +55,14 @@ abstract class FirebaseEntity {
     return output;
   }
 
-  void delete() {
+  Future<void> delete() async {
+    print('Deleting $this');
+
     if (ref == null) {
       return _noRef();
     }
-    ref.delete();
+
+    await ref.delete();
   }
 
   Future<void> create() async {

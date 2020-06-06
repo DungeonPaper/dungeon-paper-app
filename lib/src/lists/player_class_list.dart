@@ -1,3 +1,4 @@
+import 'package:dungeon_paper/src/redux/connectors.dart';
 import 'package:dungeon_paper/src/redux/stores.dart';
 import 'package:dungeon_world_data/dw_data.dart';
 import 'package:dungeon_world_data/player_class.dart';
@@ -37,13 +38,17 @@ class PlayerClassList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var _dw = dungeonWorld.classes;
-    var _custom = dwStore.state.customClasses.customClasses.values
-        .map((cls) => cls.toPlayerClass());
-    var combined = <PlayerClass>[
-      if (includeDefault) ..._dw,
-      if (includeCustom) ..._custom,
-    ];
-    return builder(context, combined);
+    return DWStoreConnector<List<PlayerClass>>(
+      builder: builder,
+      converter: (store) {
+        var _dw = dungeonWorld.classes;
+        var _custom = dwStore.state.customClasses.customClasses.values
+            .map((cls) => cls.toPlayerClass());
+        return [
+          if (includeDefault) ..._dw,
+          if (includeCustom) ..._custom,
+        ];
+      },
+    );
   }
 }

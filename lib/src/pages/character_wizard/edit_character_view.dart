@@ -43,10 +43,7 @@ class _EditCharacterViewState extends State<EditCharacterView> {
             CardListItem(
               title: Text('Basic Info'),
               subtitle: Text('Character name and avatar URL'),
-              leading: Padding(
-                padding: EdgeInsets.only(left: 5.0, right: 21.0),
-                child: Icon(Icons.speaker_notes, size: 30.0),
-              ),
+              leading: Icon(Icons.speaker_notes, size: 40.0),
               trailing: Icon(Icons.chevron_right),
               onTap: () => animatedScreen(
                 context,
@@ -66,10 +63,7 @@ class _EditCharacterViewState extends State<EditCharacterView> {
                     widget.character.mainClass.name,
               ),
               subtitle: Text('Change class'),
-              leading: Padding(
-                padding: EdgeInsets.only(right: 16.0),
-                child: Icon(Icons.person, size: 40.0),
-              ),
+              leading: Icon(Icons.person, size: 40.0),
               trailing: Icon(Icons.chevron_right),
               onTap: () => animatedScreen(
                 context,

@@ -115,6 +115,12 @@ class CustomClass extends FirebaseEntity {
   }
 
   @override
+  Future<void> delete() async {
+    super.delete();
+    dwStore.dispatch(RemoveCustomClass(this));
+  }
+
+  @override
   void finalizeCreate(Map<String, dynamic> json) {
     dwStore.dispatch(UpsertCustomClass(this));
     super.finalizeCreate(json);

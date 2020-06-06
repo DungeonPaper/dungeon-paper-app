@@ -104,15 +104,18 @@ class _ChangeLooksDialogState extends State<ChangeLooksDialog> {
                       TypeAheadField(
                         textFieldConfiguration: TextFieldConfiguration(
                           decoration: InputDecoration(
-                            hintText: looksOptions[i % looksOptions.length]
-                                    .take(3)
-                                    .join(', ') +
-                                '...',
+                            hintText: looksOptions.isNotEmpty
+                                ? looksOptions[i % looksOptions.length]
+                                        .take(3)
+                                        .join(', ') +
+                                    '...'
+                                : "Describe a feature of your character's appearance",
                           ),
                           controller: _controllers[i],
                           textCapitalization: TextCapitalization.words,
                         ),
-                        suggestionsCallback: (term) async => term.isNotEmpty
+                        suggestionsCallback: (term) async => term.isNotEmpty &&
+                                looksOptions.isNotEmpty
                             ? (looksOptions.length > i
                                     ? looksOptions[i]
                                     : looksOptions
@@ -235,10 +238,7 @@ class LooksDescription extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return CardListItem(
-      color: color ??
-          Theme.of(context)
-              .canvasColor
-              .withOpacity(playerClass.looks.isNotEmpty ? 1.0 : 0.85),
+      color: color ?? Theme.of(context).canvasColor,
       elevation: elevation,
       margin: margin,
       title: Text('Looks'),
@@ -246,7 +246,7 @@ class LooksDescription extends StatelessWidget {
       subtitle:
           Text(looks.isNotEmpty ? looks.join('; ') : 'No features selected'),
       trailing: onTap != null ? Icon(Icons.chevron_right) : null,
-      onTap: playerClass.looks.isNotEmpty ? onTap : null,
+      onTap: onTap,
     );
   }
 }
