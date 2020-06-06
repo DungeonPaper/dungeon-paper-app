@@ -70,35 +70,28 @@ class _SidebarState extends State<Sidebar> {
               ),
               ...characterList(state.characters.characters, context),
               Divider(),
-              if (user.hasFeature('create_custom_class'))
-                ListTile(
-                  leading: Padding(
-                    padding: const EdgeInsets.only(top: 4, left: 4),
-                    child: PlatformSvg.asset(
-                      'book-stack.svg',
-                      width: 16,
-                      height: 16,
-                      color: Theme.of(context).brightness == Brightness.light
-                          ? Colors.black45
-                          : Theme.of(context).accentColor,
-                    ),
+              ListTile(
+                leading: Padding(
+                  padding: const EdgeInsets.only(top: 4, left: 4),
+                  child: PlatformSvg.asset(
+                    'book-stack.svg',
+                    width: 16,
+                    height: 16,
+                    color: Theme.of(context).brightness == Brightness.light
+                        ? Colors.black45
+                        : Theme.of(context).accentColor,
                   ),
-                  title: Text('Compendium'),
-                  onTap: () {
-                    Navigator.pop(context);
-                    compendiumScreen(context);
-                  },
                 ),
+                title: Text('Compendium'),
+                onTap: () => compendiumScreen(context),
+              ),
               Divider(),
               title('Application', context),
               // About
               ListTile(
                 leading: Icon(Icons.info),
                 title: Text('About'),
-                onTap: () {
-                  Navigator.pop(context);
-                  aboutScreen(context);
-                },
+                onTap: () => aboutScreen(context),
               ),
               // Feedback
               FeedbackButton.listItem(onPressed: () => Navigator.pop(context)),
@@ -153,6 +146,7 @@ class _SidebarState extends State<Sidebar> {
   }
 
   void compendiumScreen(BuildContext context) {
+    Navigator.pop(context);
     openPage(
       context,
       builder: (context) => CustomClassesView(),
@@ -160,6 +154,7 @@ class _SidebarState extends State<Sidebar> {
   }
 
   void aboutScreen(BuildContext context) {
+    Navigator.pop(context);
     openPage(context, builder: (context) => AboutView());
   }
 
