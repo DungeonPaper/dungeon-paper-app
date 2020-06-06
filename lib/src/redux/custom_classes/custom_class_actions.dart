@@ -11,6 +11,11 @@ class UpsertCustomClass {
   UpsertCustomClass(this.customClass);
 }
 
+class RemoveCustomClass {
+  final CustomClass customClass;
+  RemoveCustomClass(this.customClass);
+}
+
 class GetCustomClasses {}
 
 class CustomClassesActions {

@@ -11,11 +11,13 @@ import 'package:flutter/material.dart';
 class CustomClassWizard extends StatefulWidget {
   final DialogMode mode;
   final CustomClass customClass;
+  final void Function(CustomClass) onSave;
 
   const CustomClassWizard({
     Key key,
     @required this.mode,
     this.customClass,
+    this.onSave,
   })  : assert(mode == DialogMode.Create || customClass != null),
         super(key: key);
 
@@ -211,6 +213,7 @@ class _CustomClassWizardState extends State<CustomClassWizard>
       await def.create();
     } else {
       await def.update();
+      widget.onSave?.call(def);
     }
     Navigator.pop(context);
   }

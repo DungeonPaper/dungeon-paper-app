@@ -36,14 +36,16 @@ class CustomClassesList extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             for (var cls in classes)
-              InkWell(
+              CardListItem(
                 onTap: onEdit != null ? () => onEdit(cls) : null,
-                child: CardListItem(
-                  leading: Icon(Icons.person, size: 40),
-                  title: Text(cls.name),
-                  subtitle: Text(_subtitle(cls)),
+                leading: Icon(Icons.person, size: 40),
+                trailing: IconButton(
+                  icon: Icon(Icons.delete),
+                  onPressed: () => onDelete?.call(cls),
                 ),
-              )
+                title: Text(cls.name),
+                subtitle: Text(_subtitle(cls)),
+              ),
           ],
         ),
       ),

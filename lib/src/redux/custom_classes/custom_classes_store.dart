@@ -22,5 +22,10 @@ CustomClassesStore customClassesReducer(CustomClassesStore state, action) {
     return state;
   }
 
+  if (action is RemoveCustomClass) {
+    state.customClasses.remove(action.customClass.documentID);
+    return state;
+  }
+
   return state;
 }
