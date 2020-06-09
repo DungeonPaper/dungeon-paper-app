@@ -25,7 +25,7 @@ class Note with Serializer<NoteKeys> {
   factory Note.fromJSON(Map map) => Note(map);
 
   @override
-  toJSON() {
+  Map<String, dynamic> toJSON() {
     return {
       'key': key,
       'title': title,
@@ -35,7 +35,7 @@ class Note with Serializer<NoteKeys> {
   }
 
   @override
-  initSerializeMap([Map map]) {
+  dynamic initSerializeMap([Map map]) {
     serializeMap = {
       NoteKeys.key: (v) {
         key = v ?? Uuid().v4();
@@ -76,8 +76,9 @@ class NoteCategory {
   @override
   String toString() => name;
 
-  operator ==(dynamic obj) {
-    if (obj == null || obj is! NoteCategory) {
+  @override
+  bool operator ==(dynamic obj) {
+    if (obj is! NoteCategory) {
       return false;
     }
 

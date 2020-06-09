@@ -57,7 +57,7 @@ class _NumberControllerState extends State<NumberController> {
           Expanded(
             child: TextField(
               onChanged: (val) {
-                num intVal = widget.formatType == FormatType.Integer
+                var intVal = widget.formatType == FormatType.Integer
                     ? int.tryParse(val)
                     : double.tryParse(val);
                 _update(intVal);
@@ -104,7 +104,7 @@ class _NumberControllerState extends State<NumberController> {
     return true;
   }
 
-  _update(num val, [bool updateText = false]) {
+  void _update(num val, [bool updateText = false]) {
     if (updateText) _controller.text = val.toString();
     if (widget.onChange != null) {
       widget.onChange(val);

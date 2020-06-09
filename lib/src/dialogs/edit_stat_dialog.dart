@@ -36,8 +36,8 @@ class EditStatDialogState extends State<EditStatDialog> {
 
   @override
   Widget build(BuildContext context) {
-    String modifier = Character.statModifierText(value);
-    String name = enumName(stat);
+    var modifier = Character.statModifierText(value);
+    var name = enumName(stat);
 
     return SimpleDialog(
       title: Text('Edit $fullName'),
@@ -81,7 +81,7 @@ class EditStatDialogState extends State<EditStatDialog> {
     );
   }
 
-  _setStateValue(num newValue) {
+  void _setStateValue(num newValue) {
     setState(() {
       if (newValue == null) {
         valueError = true;
@@ -92,8 +92,8 @@ class EditStatDialogState extends State<EditStatDialog> {
     });
   }
 
-  _saveValue() async {
-    final Character character = dwStore.state.characters.current;
+  void _saveValue() async {
+    final character = dwStore.state.characters.current;
     String key;
 
     switch (stat) {

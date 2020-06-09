@@ -19,10 +19,12 @@ class EditableLinearProgressIndicator extends StatefulWidget {
   final void Function(double val) onEditUpdate;
 
   @override
-  EditableLinearProgressIndicatorState createState() => EditableLinearProgressIndicatorState();
+  EditableLinearProgressIndicatorState createState() =>
+      EditableLinearProgressIndicatorState();
 }
 
-class EditableLinearProgressIndicatorState extends State<EditableLinearProgressIndicator> {
+class EditableLinearProgressIndicatorState
+    extends State<EditableLinearProgressIndicator> {
   double value;
   DateTime touchStart;
   bool editing = false;
@@ -80,9 +82,9 @@ class EditableLinearProgressIndicatorState extends State<EditableLinearProgressI
 
   void updateValueByTouchPos(BuildContext context, Offset globalPosition) {
     RenderBox rect = context.findRenderObject();
-    Offset offset = rect.globalToLocal(globalPosition);
-    num width = rect.size.width;
-    num x = offset.dx.clamp(0, width);
+    var offset = rect.globalToLocal(globalPosition);
+    var width = rect.size.width;
+    var x = offset.dx.clamp(0, width);
     setState(() {
       value = x / width;
     });

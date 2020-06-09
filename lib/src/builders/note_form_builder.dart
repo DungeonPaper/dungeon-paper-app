@@ -93,7 +93,7 @@ class NoteFormBuilderState extends State<NoteFormBuilder> {
     );
   }
 
-  _setStateValue(String key, dynamic newValue) {
+  void _setStateValue(String key, dynamic newValue) {
     setState(() {
       switch (key) {
         case 'title':
@@ -109,7 +109,7 @@ class NoteFormBuilderState extends State<NoteFormBuilder> {
     });
   }
 
-  _updateNote() async {
+  void _updateNote() async {
     var note = _generateNote();
     if (widget.onSave != null) {
       widget.onSave(note);
@@ -117,7 +117,7 @@ class NoteFormBuilderState extends State<NoteFormBuilder> {
     Navigator.pop(context);
   }
 
-  _createNote() async {
+  void _createNote() async {
     var note = _generateNote();
     if (widget.onSave != null) {
       widget.onSave(note);

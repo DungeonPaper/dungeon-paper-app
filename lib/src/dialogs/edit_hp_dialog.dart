@@ -31,7 +31,7 @@ class _EditHPDialogState extends State<EditHPDialog> {
   HPMode mode;
 
   @override
-  initState() {
+  void initState() {
     currentHP = widget.character.currentHP ?? 0;
     maxHP = widget.character.maxHP ?? 0;
     initialCurrentHP = currentHP;
@@ -43,7 +43,7 @@ class _EditHPDialogState extends State<EditHPDialog> {
 
   @override
   Widget build(BuildContext context) {
-    final Map<HPMode, String> hpTitles = {
+    final hpTitles = {
       HPMode.HP: 'HP' + (currentHP != widget.character.currentHP ? ' *' : ''),
       HPMode.MaxHP: 'Max HP' + (maxHP != widget.character.maxHP ? ' *' : ''),
     };
@@ -156,7 +156,7 @@ class _EditHPDialogState extends State<EditHPDialog> {
   bool get isHP => mode == HPMode.HP;
   bool get isMaxHP => mode == HPMode.MaxHP;
 
-  updateValue(val) {
+  void updateValue(val) {
     setState(() {
       if (isHP) {
         currentHP = val.toInt();

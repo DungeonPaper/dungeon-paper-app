@@ -2,10 +2,10 @@ import 'package:dungeon_paper/src/flutter_utils/widget_utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 
-typedef E BuilderAnyFunction<T, E>(T category, num index);
-typedef Widget BuilderFunction<T>(
+typedef BuilderAnyFunction<T, E> = E Function(T category, num index);
+typedef BuilderFunction<T> = Widget Function(
     BuildContext context, T category, num itemIndex);
-typedef Widget BuilderFunctionWithCatIndex<T>(
+typedef BuilderFunctionWithCatIndex<T> = Widget Function(
     BuildContext context, T category, num itemIndex, num catIndex);
 
 class CategorizedList<T> extends StatelessWidget {
@@ -58,7 +58,7 @@ class CategorizedList<T> extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    List<Widget> cats = _itemsToWidgets(context);
+    var cats = _itemsToWidgets(context);
 
     return LayoutBuilder(
       builder: (context, constraints) {
@@ -67,7 +67,7 @@ class CategorizedList<T> extends StatelessWidget {
             itemCount: cats.length + spacerCount,
             itemBuilder: (context, index) {
               if (index < cats.length) {
-                Widget child = cats.elementAt(index);
+                var child = cats.elementAt(index);
                 if (child != null) {
                   return Padding(
                     padding: itemMargin,
@@ -104,7 +104,7 @@ class CategorizedList<T> extends StatelessWidget {
       if (count == 0) {
         return null;
       }
-      List<Widget> outputItems = List.generate(
+      var outputItems = List.generate(
           count,
           (j) => _isChildrenBuilder
               ? item

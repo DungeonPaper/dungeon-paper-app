@@ -30,7 +30,7 @@ class CardListItem extends StatelessWidget {
       title: title,
       subtitle: subtitle,
     );
-    Widget content = child == null
+    var content = child == null
         ? top
         : Column(
             mainAxisSize: MainAxisSize.min,
@@ -85,9 +85,9 @@ class TitleSubtitleRow extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    ThemeData theme = Theme.of(context);
-    TextTheme textTheme = theme.textTheme;
-    List<Widget> children = [
+    var theme = Theme.of(context);
+    var textTheme = theme.textTheme;
+    var children = <Widget>[
       if (title != null)
         DefaultTextStyle(
           child: title,

@@ -32,7 +32,7 @@ class Character extends FirebaseEntity with CharacterFields {
   }
 
   static String statModifierText(num stat) {
-    num mod = CharacterFields.statModifier(stat);
+    var mod = CharacterFields.statModifier(stat);
     return (mod >= 0 ? '+' : '') + mod.toString();
   }
 

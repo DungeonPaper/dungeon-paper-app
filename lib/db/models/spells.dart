@@ -44,7 +44,7 @@ class DbSpell extends Spell {
 
   @override
   Map toJSON() {
-    Map map = super.toJSON();
+    var map = super.toJSON();
     map['prepared'] = prepared;
     return map;
   }

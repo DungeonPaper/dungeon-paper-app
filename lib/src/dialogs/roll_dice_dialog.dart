@@ -86,7 +86,7 @@ class _RollDiceDialogState extends State<RollDiceDialog> {
     );
   }
 
-  _add(Dice dice) {
+  void _add(Dice dice) {
     setState(() {
       controllers.add(DiceController(dice)..roll());
       diceList.add(dice);
@@ -94,13 +94,13 @@ class _RollDiceDialogState extends State<RollDiceDialog> {
     });
   }
 
-  _set(Dice dice) {
+  void _set(Dice dice) {
     setState(() {
       addingController.value = dice;
     });
   }
 
-  _removeAt(num idx) {
+  void _removeAt(num idx) {
     setState(() {
       diceList.removeAt(idx);
       controllers.removeAt(idx);
@@ -186,7 +186,7 @@ class DiceController extends ValueNotifier<Dice> {
     super.value = newValue;
   }
 
-  roll() {
+  void roll() {
     result = dice.getRoll();
     notifyListeners();
   }
@@ -224,7 +224,7 @@ class _DiceIconListState extends State<DiceIconList>
     super.initState();
   }
 
-  _reanimate() {
+  void _reanimate() {
     print('listener');
     // if (mounted == true) {
     setState(_animate);
@@ -233,7 +233,7 @@ class _DiceIconListState extends State<DiceIconList>
     // }
   }
 
-  _animate() {
+  void _animate() {
     animationControllers = List.generate(
       widget.controller.value.amount,
       (idx) => AnimationController(

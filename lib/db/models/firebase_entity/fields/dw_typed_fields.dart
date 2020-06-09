@@ -281,13 +281,13 @@ class PlayerClassField extends DWEntityField<PlayerClass> {
           toJSON: (value, ctx) => _dwJsonToFbJson(value.toJSON()),
         );
 
-  static _fbJsonToDwJson(Map json) => json['looks'] is List
+  static Map _fbJsonToDwJson(Map json) => json['looks'] is List
       ? json
       : {
           ...json,
           'looks': (json['looks'] as Map).values.toList(),
         };
-  static _dwJsonToFbJson(Map json) => json['looks'] is Map
+  static Map _dwJsonToFbJson(Map json) => json['looks'] is Map
       ? json
       : {
           ...json,

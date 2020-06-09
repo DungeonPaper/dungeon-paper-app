@@ -1,4 +1,3 @@
-import 'package:dungeon_paper/db/models/character.dart';
 import 'package:dungeon_paper/src/dialogs/standard_dialog_controls.dart';
 import 'package:dungeon_paper/src/flutter_utils/input_formatters.dart';
 import 'package:dungeon_paper/src/redux/stores.dart';
@@ -19,7 +18,7 @@ class EditArmorDialog extends StatefulWidget {
 
 class EditArmorDialogState extends State<EditArmorDialog> {
   num value;
-  TextEditingController _controller;
+  final TextEditingController _controller;
 
   EditArmorDialogState({
     Key key,
@@ -102,7 +101,7 @@ class EditArmorDialogState extends State<EditArmorDialog> {
     );
   }
 
-  _setStateValue(num newValue) {
+  void _setStateValue(num newValue) {
     setState(() {
       value = newValue;
     });
@@ -114,8 +113,8 @@ class EditArmorDialogState extends State<EditArmorDialog> {
     }
   }
 
-  _saveValue() async {
-    Character character = dwStore.state.characters.current;
+  void _saveValue() async {
+    var character = dwStore.state.characters.current;
     unawaited(character.update(json: {'armor': value}));
     Navigator.pop(context);
   }

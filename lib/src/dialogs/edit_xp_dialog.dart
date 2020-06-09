@@ -25,7 +25,7 @@ class _EditXPDialogState extends State<EditXPDialog> {
   int initialCurrentXP;
 
   @override
-  initState() {
+  void initState() {
     currentXP = widget.character.currentXP ?? 0;
     initialCurrentXP = currentXP;
     super.initState();
@@ -115,21 +115,23 @@ class _EditXPDialogState extends State<EditXPDialog> {
     );
   }
 
-  updateValue(val) {
+  void updateValue(val) {
     setState(() {
       currentXP = val.toInt();
     });
   }
 
   void save(BuildContext context) {
-    Character char = widget.character;
-    char.update(json: {'currentXP': currentXP});
+    final char = widget.character..currentXP = currentXP;
+    unawaited(char.update());
     Navigator.pop(context);
   }
 
   void levelUp(BuildContext context) async {
-    Character char = widget.character;
-    unawaited(char.update(json: {'currentXP': 0, 'level': char.level + 1}));
+    final char = widget.character
+      ..currentXP = 0
+      ..level += 1;
+    unawaited(char.update());
     setState(() {
       currentXP = char.currentXP;
       initialCurrentXP = currentXP;
@@ -141,9 +143,11 @@ class _EditXPDialogState extends State<EditXPDialog> {
   }
 
   void levelDown(BuildContext context) async {
-    Character char = widget.character;
-    unawaited(char
-        .update(json: {'currentXP': char.level + 5, 'level': char.level - 1}));
+    final char = widget.character;
+    char
+      ..currentXP = char.level + 5
+      ..level -= 1;
+    unawaited(char.update());
     setState(() {
       currentXP = char.currentXP;
       initialCurrentXP = currentXP;

@@ -1,4 +1,3 @@
-import 'package:dungeon_paper/db/models/character.dart';
 import 'package:dungeon_paper/src/atoms/number_controller.dart';
 import 'package:dungeon_paper/src/dialogs/standard_dialog_controls.dart';
 import 'package:dungeon_paper/src/flutter_utils/input_formatters.dart';
@@ -21,7 +20,7 @@ class EditCoinsDialog extends StatefulWidget {
 
 class EditCoinsDialogState extends State<EditCoinsDialog> {
   double value;
-  TextEditingController _controller;
+  final TextEditingController _controller;
   bool valueError = false;
 
   EditCoinsDialogState({
@@ -71,7 +70,7 @@ class EditCoinsDialogState extends State<EditCoinsDialog> {
     );
   }
 
-  _setStateValue(num newValue) {
+  void _setStateValue(num newValue) {
     if (newValue == null) {
       setState(() {
         valueError = true;
@@ -91,8 +90,8 @@ class EditCoinsDialogState extends State<EditCoinsDialog> {
     }
   }
 
-  _saveValue() async {
-    Character character = dwStore.state.characters.current;
+  void _saveValue() async {
+    var character = dwStore.state.characters.current;
     character.coins = value;
     unawaited(character.update(json: {'coins': value}));
     Navigator.pop(context);

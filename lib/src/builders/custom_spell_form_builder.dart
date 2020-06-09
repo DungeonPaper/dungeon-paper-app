@@ -87,7 +87,7 @@ class CustomSpellFormBuilderState extends State<CustomSpellFormBuilder> {
     return widget.builder(context, form, _saveSpell);
   }
 
-  _setStateValue(String key, String newValue) {
+  void _setStateValue(String key, String newValue) {
     setState(() {
       switch (key) {
         case 'name':
