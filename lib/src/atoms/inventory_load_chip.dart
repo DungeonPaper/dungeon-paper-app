@@ -13,13 +13,12 @@ class InventoryLoadChip extends StatelessWidget {
     @required this.character,
   }) : super(key: key);
 
-  num get maxLoad =>
-      character.mainClass.load + CharacterFields.statModifier(character.str);
+  num get maxLoad => character.mainClass.load + character.str;
 
   num get currentLoad {
-    double count = 0.0;
+    var count = 0.0;
     character.inventory.forEach((item) {
-      Tag wght =
+      var wght =
           item.tags?.firstWhere((t) => t?.name == 'weight', orElse: () => null);
       if (wght != null && wght.hasValue) {
         num wghtValue = 0;
