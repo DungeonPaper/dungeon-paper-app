@@ -58,8 +58,8 @@ class Field<T> extends FieldBase<T> {
         fieldName: fieldName ?? this.fieldName,
         value: value ?? this.value,
         isSerialized: isSerialized ?? this.isSerialized,
-        listeners: listeners ?? this._listeners,
-        defaultValue: defaultValue ?? this.defaultValueGetter,
+        listeners: listeners ?? _listeners,
+        defaultValue: defaultValue ?? defaultValueGetter,
         fromJSON: __fromJSON,
         toJSON: __toJSON,
       );
@@ -185,8 +185,8 @@ class ListOfField<V> extends Field<List<V>> {
         field: field ?? this.field,
         value: value ?? this.value,
         isSerialized: isSerialized ?? this.isSerialized,
-        listeners: listeners ?? this._listeners,
-        defaultValue: defaultValue ?? this.defaultValueGetter,
+        listeners: listeners ?? _listeners,
+        defaultValue: defaultValue ?? defaultValueGetter,
       );
 }
 
@@ -234,8 +234,8 @@ class MapOfField<K, V> extends Field<Map<K, V>> {
         field: field ?? this.field,
         value: value ?? this.value,
         isSerialized: isSerialized ?? this.isSerialized,
-        listeners: listeners ?? this._listeners,
-        defaultValue: defaultValue ?? this.defaultValueGetter,
+        listeners: listeners ?? _listeners,
+        defaultValue: defaultValue ?? defaultValueGetter,
       );
 }
 

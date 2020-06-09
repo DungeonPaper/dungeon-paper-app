@@ -36,7 +36,7 @@ class InventoryItem extends Equipment {
     );
   }
 
-  static fromJSON(Map map) {
+  factory InventoryItem.fromJSON(Map map) {
     var orig = Equipment.fromJSON(_getItem(map));
     return InventoryItem.fromEquipment(orig, amount: map['amount']);
   }

@@ -1,5 +1,4 @@
 import 'dart:async';
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dungeon_paper/db/db.dart';
 import 'package:dungeon_paper/db/models/custom_class.dart';
 import 'package:dungeon_paper/src/redux/characters/characters_store.dart';
@@ -14,7 +13,7 @@ import 'models/user.dart';
 
 StreamSubscription _fbUserListener;
 
-registerFirebaseUserListener() {
+void registerFirebaseUserListener() {
   try {
     if (_fbUserListener != null) {
       _fbUserListener.cancel();
@@ -34,7 +33,7 @@ registerFirebaseUserListener() {
         dwStore.dispatch(ClearCharacters());
       }
     });
-    print("REGISTERED AUTH USER LISTENER");
+    print('REGISTERED AUTH USER LISTENER');
   } catch (e) {
     print('error on user listener');
     if (_fbUserListener != null) {
@@ -46,7 +45,7 @@ registerFirebaseUserListener() {
 
 StreamSubscription _userListener;
 
-registerUserListener(FirebaseUser fbUser) {
+void registerUserListener(FirebaseUser fbUser) {
   if (_userListener != null) {
     _userListener.cancel();
   }
@@ -55,7 +54,7 @@ registerUserListener(FirebaseUser fbUser) {
     return;
   }
 
-  String userDocID = 'user_data/${fbUser.email}';
+  var userDocID = 'user_data/${fbUser.email}';
   _userListener = firestore.document(userDocID).snapshots().listen((user) {
     dwStore.dispatch(
       SetUser(
@@ -67,12 +66,12 @@ registerUserListener(FirebaseUser fbUser) {
     );
   });
 
-  print("REGISTERED DB USER LISTENER");
+  print('REGISTERED DB USER LISTENER');
 }
 
 StreamSubscription _charsListener;
 
-registerCharactersListener() async {
+void registerCharactersListener() async {
   if (_charsListener != null) {
     unawaited(_charsListener.cancel());
   }
@@ -81,8 +80,8 @@ registerCharactersListener() async {
     return;
   }
 
-  String userDocID = dwStore.state.user.current.documentID;
-  DocumentReference user = firestore.document('user_data/$userDocID');
+  var userDocID = dwStore.state.user.current.documentID;
+  var user = firestore.document('user_data/$userDocID');
   _charsListener =
       user.collection('characters').snapshots().listen((characters) {
     if (characters.documents.isEmpty) {
@@ -98,11 +97,11 @@ registerCharactersListener() async {
       }),
     );
   });
-  print("REGISTERED DB CHARACTER LISTENER");
+  print('REGISTERED DB CHARACTER LISTENER');
 }
 
 StreamSubscription _classesListener;
-registerCustomClassesListener() async {
+void registerCustomClassesListener() async {
   if (_classesListener != null) {
     unawaited(_classesListener.cancel());
   }
@@ -111,8 +110,8 @@ registerCustomClassesListener() async {
     return;
   }
 
-  String userDocID = dwStore.state.user.current.documentID;
-  DocumentReference user = firestore.document('user_data/$userDocID');
+  var userDocID = dwStore.state.user.current.documentID;
+  var user = firestore.document('user_data/$userDocID');
   _classesListener =
       user.collection('custom_classes').snapshots().listen((classes) {
     if (classes.documents.isEmpty) {
@@ -128,5 +127,5 @@ registerCustomClassesListener() async {
       }),
     );
   });
-  print("REGISTERED DB CLASSES LISTENER");
+  print('REGISTERED DB CLASSES LISTENER');
 }

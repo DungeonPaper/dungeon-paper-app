@@ -112,26 +112,26 @@ class _FeedbackButtonState extends State<FeedbackButton> {
     super.initState();
   }
 
-  _getUserId() async {
-    if (this.mounted) {
+  void _getUserId() async {
+    if (mounted) {
       setState(() {
         userId = dwStore.state.user.currentUserDocID;
       });
     }
   }
 
-  _getEmail() async {
+  void _getEmail() async {
     var secrets = await loadSecrets();
-    if (this.mounted) {
+    if (mounted) {
       setState(() {
         email = secrets['FEEDBACK_EMAIL'];
       });
     }
   }
 
-  _getVersionData() async {
-    PackageInfo packageInfo = await PackageInfo.fromPlatform();
-    if (this.mounted) {
+  void _getVersionData() async {
+    var packageInfo = await PackageInfo.fromPlatform();
+    if (mounted) {
       setState(() {
         version = packageInfo.version;
         buildNumber = packageInfo.buildNumber;
@@ -140,9 +140,9 @@ class _FeedbackButtonState extends State<FeedbackButton> {
   }
 
   String get subject => Uri.encodeComponent('Dungeon Paper Feedback');
-  String get body => Uri.encodeComponent("""
+  String get body => Uri.encodeComponent('''
     --- Dungeon Paper Version: $version / $buildNumber
-    """);
+    ''');
   String get mailtoUrl => 'mailto:$email?subject=$subject&body=$body';
   void sendEmail() => launch(mailtoUrl);
   void onPressed() {

@@ -12,7 +12,7 @@ abstract class FieldBase<T> {
   dynamic _toJSON() => value;
   T _fromJSON(dynamic value);
   final bool isSerialized;
-  List<FieldListener<T>> _listeners;
+  final List<FieldListener<T>> _listeners;
 
   FieldBase({
     @required this.context,
@@ -43,7 +43,7 @@ abstract class FieldBase<T> {
     value = val;
   }
 
-  setDirty(bool value) {
+  void setDirty(bool value) {
     _dirty = value;
   }
 
@@ -73,8 +73,8 @@ abstract class FieldBase<T> {
         fieldName: fieldName ?? this.fieldName,
         value: value ?? this.value,
         isSerialized: isSerialized ?? this.isSerialized,
-        listeners: listeners ?? this._listeners,
-        defaultValue: defaultValue ?? this.defaultValueGetter,
+        listeners: listeners ?? _listeners,
+        defaultValue: defaultValue ?? defaultValueGetter,
       );
 
   // Listeners

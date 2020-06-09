@@ -21,7 +21,7 @@ part 'dw_typed_fields.dart';
 typedef FieldListener<T> = void Function(T, FieldsContext);
 
 class FieldsContext {
-  Map<String, FieldBase> _map = {};
+  final Map<String, FieldBase> _map = {};
 
   FieldsContext(Iterable<FieldBase> fields) {
     for (var field in fields) {
@@ -34,13 +34,13 @@ class FieldsContext {
 
   FieldBase<T> get<T>(String fieldName) => _map[fieldName];
 
-  register(Iterable<FieldBase> Function(FieldsContext context) fields) {
+  void register(Iterable<FieldBase> Function(FieldsContext context) fields) {
     for (var field in fields(this)) {
       addField(field);
     }
   }
 
-  addField(FieldBase field) {
+  void addField(FieldBase field) {
     _map[field.fieldName] = field.copy(this);
   }
 

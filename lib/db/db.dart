@@ -24,4 +24,4 @@ FirebaseApp initApp({bool web}) {
   return _app;
 }
 
-main() => initApp();
+void main() => initApp();

@@ -51,7 +51,7 @@ class EditHitDiceDialogState extends State<EditHitDiceDialog> {
     );
   }
 
-  _saveValue() async {
+  void _saveValue() async {
     var character = dwStore.state.characters.current;
     character.damageDice = dice;
     unawaited(character.update());

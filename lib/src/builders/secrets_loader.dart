@@ -20,14 +20,14 @@ class _SecretsLoaderState extends State<SecretsLoader> {
   Secrets secrets;
 
   @override
-  initState() {
+  void initState() {
     super.initState();
     _getSecrets();
   }
 
-  _getSecrets() async {
+  void _getSecrets() async {
     var loaded = await loadSecrets();
-    if (this.mounted) {
+    if (mounted) {
       setState(() {
         secrets = loaded;
       });

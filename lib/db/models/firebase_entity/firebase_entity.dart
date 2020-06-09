@@ -183,5 +183,6 @@ abstract class FirebaseEntity {
 
   Map<String, dynamic> serializeData() => toJSON();
 
-  operator ==(o) => o is FirebaseEntity && o.documentID == documentID;
+  @override
+  bool operator ==(o) => o is FirebaseEntity && o.documentID == documentID;
 }

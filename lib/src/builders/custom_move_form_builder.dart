@@ -100,7 +100,7 @@ class CustomMoveFormBuilderState extends State<CustomMoveFormBuilder> {
     );
   }
 
-  _setStateValue(String key, String newValue) {
+  void _setStateValue(String key, String newValue) {
     setState(() {
       switch (key) {
         case 'name':
@@ -116,8 +116,8 @@ class CustomMoveFormBuilderState extends State<CustomMoveFormBuilder> {
     });
   }
 
-  _updateMove() async {
-    Move move = _generateMove();
+  void _updateMove() async {
+    var move = _generateMove();
     if (widget.onSave != null) {
       widget.onSave(move);
     }

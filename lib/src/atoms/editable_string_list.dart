@@ -38,7 +38,7 @@ class _EditableStringListState extends State<EditableStringList> {
   void initState() {
     super.initState();
     strings = [...widget.strings];
-    List<EditingControllerConfig> list = [
+    var list = [
       for (Enumeration<String> str in enumerate(strings))
         EditingControllerConfig(
           defaultValue: str.v,

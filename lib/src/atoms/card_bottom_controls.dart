@@ -18,12 +18,12 @@ class CardBottomControls extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    List<Widget> buttons = getButtons();
+    var buttons = getButtons();
     return Row(mainAxisAlignment: MainAxisAlignment.end, children: buttons);
   }
 
   List<Widget> getButtons() {
-    List<Widget> buttons = [];
+    var buttons = [];
     Widget editButton = IconButton(
       tooltip: suffixType('Edit'),
       icon: Icon(Icons.edit),

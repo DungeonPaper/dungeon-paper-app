@@ -97,7 +97,7 @@ mixin CharacterFields implements FirebaseEntity {
   num get dexMod => statModifier(dex);
   num get conMod => statModifier(con);
   num get wisMod => statModifier(wis);
-  num get intMod => statModifier(this.int);
+  num get intMod => statModifier(int);
   num get chaMod => statModifier(cha);
 
   set maxHP(value) {
@@ -156,7 +156,7 @@ mixin CharacterFields implements FirebaseEntity {
       return modifiers[stat];
     }
 
-    for (num i = stat; i > 0; --i) {
+    for (var i = stat; i > 0; --i) {
       if (modifiers.containsKey(i)) {
         return modifiers[i];
       }

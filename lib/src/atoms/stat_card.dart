@@ -16,7 +16,7 @@ class StatCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    num value = getValue(character, stat);
+    var value = getValue(character, stat);
 
     return Expanded(
       child: Card(
@@ -51,7 +51,7 @@ class StatCard extends StatelessWidget {
     );
   }
 
-  getValue(Character character, CharacterKeys key) {
+  num getValue(Character character, CharacterKeys key) {
     switch (enumName(key).toLowerCase()) {
       case 'int':
         return character.int;
@@ -64,6 +64,7 @@ class StatCard extends StatelessWidget {
       case 'str':
         return character.str;
       case 'con':
+      default:
         return character.con;
     }
   }

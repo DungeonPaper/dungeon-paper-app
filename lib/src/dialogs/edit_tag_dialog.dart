@@ -106,9 +106,9 @@ class _EditTagDialogState extends State<EditTagDialog> {
   }
 
   Tag get tag {
-    String name = _controllers['name'].text;
-    String value = _controllers['value'].text;
-    String description = _controllers['description'].text;
+    var name = _controllers['name'].text;
+    var value = _controllers['value'].text;
+    var description = _controllers['description'].text;
 
     dynamic parsedValue = value.toString();
     if (RegExp(r'^\d+\.\d+$').hasMatch(value)) {

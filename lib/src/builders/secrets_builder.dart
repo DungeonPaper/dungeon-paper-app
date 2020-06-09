@@ -20,14 +20,14 @@ class _SecretsBuilderState extends State<SecretsBuilder> {
   Secrets secrets;
 
   @override
-  initState() {
+  void initState() {
     super.initState();
     _getSecrets();
   }
 
-  _getSecrets() async {
-    Secrets loaded = await loadSecrets();
-    if (this.mounted) {
+  void _getSecrets() async {
+    var loaded = await loadSecrets();
+    if (mounted) {
       setState(() {
         secrets = loaded;
       });
