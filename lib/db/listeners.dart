@@ -90,7 +90,7 @@ void registerCharactersListener() async {
     dwStore.dispatch(
       SetCharacters({
         for (var character in characters.documents)
-          character.reference.path: Character(
+          character.reference.documentID: Character(
             data: character.data,
             ref: character.reference,
           ),

@@ -23,7 +23,7 @@ class CardBottomControls extends StatelessWidget {
   }
 
   List<Widget> getButtons() {
-    var buttons = [];
+    var buttons = <Widget>[];
     Widget editButton = IconButton(
       tooltip: suffixType('Edit'),
       icon: Icon(Icons.edit),

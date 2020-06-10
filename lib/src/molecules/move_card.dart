@@ -31,7 +31,7 @@ class MoveCard extends StatefulWidget {
 class MoveCardState extends State<MoveCard> {
   @override
   Widget build(BuildContext context) {
-    Move move = widget.move;
+    var move = widget.move;
     Widget name =
         Text("${move.name}${widget.raceMove ? '\'s Racial Move' : ''}");
 
@@ -125,13 +125,13 @@ class MoveCardState extends State<MoveCard> {
     );
   }
 
-  _save(Move move) {
+  void _save(Move move) {
     if (widget.onSave != null) {
       widget.onSave(move);
     }
   }
 
-  _delete() {
+  void _delete() {
     if (widget.onDelete != null) {
       widget.onDelete();
     }
