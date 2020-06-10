@@ -50,7 +50,12 @@ abstract class FirebaseEntity {
     if (snapshot != null && snapshot.data != null) {
       var data = _mergeDataWithDefaults(snapshot.data);
       output = await deserializeData(data);
-      lastUpdated = (snapshot.data['lastUpdated'] as Timestamp).toDate();
+      lastUpdated = data['lastUpdated'] != null
+          ? data['lastUpdated'] is Timestamp
+              ? (data['lastUpdated'] as Timestamp).toDate()
+              : DateTime.fromMillisecondsSinceEpoch(
+                  data['lastUpdated']['_seconds'] * 1000)
+          : null;
     }
     return output;
   }
