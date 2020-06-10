@@ -31,7 +31,7 @@ class _AddMoveListState extends State<AddMoveList> {
 
   @override
   Widget build(BuildContext context) {
-    Map<int, List<Move>> moves = {
+    var moves = <int, List<Move>>{
       0: currentCls.startingMoves,
       1: currentCls.advancedMoves1,
       6: currentCls.advancedMoves2
@@ -42,8 +42,8 @@ class _AddMoveListState extends State<AddMoveList> {
       items: [LEADING_KEY] + moves.keys.map((k) => k.toString()).toList(),
       titleBuilder: (ctx, String minLevel, idx) => minLevel != LEADING_KEY
           ? minLevel == '0'
-              ? Text("Starting Moves")
-              : Text("Levels $minLevel-${int.parse(minLevel) + 4}")
+              ? Text('Starting Moves')
+              : Text('Levels $minLevel-${int.parse(minLevel) + 4}')
           : null,
       itemBuilder: (ctx, key, idx, catI) {
         if (key == LEADING_KEY) {

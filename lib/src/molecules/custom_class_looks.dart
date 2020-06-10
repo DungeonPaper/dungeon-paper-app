@@ -65,7 +65,7 @@ class _CustomClassLooksState extends State<CustomClassLooks> {
       );
     }
 
-    int idx = items.indexOf(list);
+    var idx = items.indexOf(list);
     return Card(
       child: Padding(
         padding: const EdgeInsets.all(16.0),
@@ -122,7 +122,7 @@ class _CustomClassLooksState extends State<CustomClassLooks> {
 
   void _removeKey(Key key) {
     setState(() {
-      int idx = keys.indexOf(key);
+      var idx = keys.indexOf(key);
       keys.removeAt(idx);
       items.removeAt(idx);
       validities.removeAt(idx);
@@ -130,11 +130,11 @@ class _CustomClassLooksState extends State<CustomClassLooks> {
     _update();
   }
 
-  _listener() {
+  void _listener() {
     widget.validityNotifier?.value = _isValid();
   }
 
-  _update() {
+  void _update() {
     widget.validityNotifier?.value = _isValid();
     if (widget.onUpdate != null) widget.onUpdate(items);
   }

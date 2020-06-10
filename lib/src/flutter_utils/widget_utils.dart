@@ -2,7 +2,8 @@ import 'package:flutter/material.dart';
 
 const BOTTOM_SPACER = SizedBox(height: 64);
 
-typedef Widget SingleChildWidgetBuilder(BuildContext context, Widget child);
+typedef SingleChildWidgetBuilder = Widget Function(
+    BuildContext context, Widget child);
 
 class PageLoader extends StatelessWidget {
   final Color color;
@@ -20,7 +21,7 @@ class PageLoader extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    CircularProgressIndicator loader = CircularProgressIndicator(
+    var loader = CircularProgressIndicator(
       valueColor: AlwaysStoppedAnimation<Color>(
           color ?? Theme.of(context).primaryColor),
       backgroundColor: backgroundColor,
@@ -85,8 +86,7 @@ class EditingControllerConfig {
   });
 
   TextEditingController toEditingController() {
-    TextEditingController controller =
-        TextEditingController(text: defaultValue);
+    var controller = TextEditingController(text: defaultValue);
     if (listener != null) {
       controller.addListener(listener);
     }
@@ -99,16 +99,15 @@ class WidgetUtils {
     Map<T, dynamic> map,
     List list,
   }) {
-    final Map<T, TextEditingController> output = {};
-    int idx = 0;
-    final Map<T, dynamic> iter = map != null
-        ? map
-        : Map.fromIterable(
-            list,
-            key: (i) => (i is EditingControllerConfig ? i.key : i) ?? idx++,
-          );
+    final output = <T, TextEditingController>{};
+    var idx = 0;
+    final iter = map ??
+        Map.fromIterable(
+          list,
+          key: (i) => (i is EditingControllerConfig ? i.key : i) ?? idx++,
+        );
     iter.forEach((key, value) {
-      EditingControllerConfig config = _parseConfig(key, value);
+      var config = _parseConfig(key, value);
       output[config.key] = config.toEditingController();
     });
     return output;
@@ -119,7 +118,7 @@ class WidgetUtils {
     if (value is String) {
       config = EditingControllerConfig(key: key, defaultValue: value);
     } else if (value is! EditingControllerConfig) {
-      throw FormatException("value must be of valid type");
+      throw FormatException('value must be of valid type');
     } else {
       config = value;
     }

@@ -85,7 +85,7 @@ class _WhatsNewState extends State<WhatsNew> {
         child = Padding(
           padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 24.0),
           child: Text(
-              "Looks like we had a problem fetching the changelog. Try later!"),
+              'Looks like we had a problem fetching the changelog. Try later!'),
         );
       }
     } else {
@@ -125,8 +125,8 @@ class _WhatsNewState extends State<WhatsNew> {
       ver = changelog.keys.firstWhere((k) => k <= ver);
     }
     const LIMIT = 3;
-    int verIdx = changelog.keys.toList().indexOf(ver);
-    List<Version> versions = changelog.keys.toList();
+    var verIdx = changelog.keys.toList().indexOf(ver);
+    var versions = changelog.keys.toList();
 
     if (verIdx > 0) versions.removeRange(0, verIdx);
 
@@ -134,10 +134,10 @@ class _WhatsNewState extends State<WhatsNew> {
   }
 
   String _verString(Version v) {
-    String prefix = v == currentVersion ? '' : 'Previous ';
-    return "## ${prefix}Version ${changelog[v].title}\n\n" +
+    var prefix = v == currentVersion ? '' : 'Previous ';
+    return '## ${prefix}Version ${changelog[v].title}\n\n' +
         changelog[v].lines.join('\n') +
-        "\n\n";
+        '\n\n';
   }
 
   void _initChangelog() async {
@@ -146,20 +146,20 @@ class _WhatsNewState extends State<WhatsNew> {
   }
 
   void _getCurrentVersion() async {
-    PackageInfo packageInfo = await PackageInfo.fromPlatform();
+    var packageInfo = await PackageInfo.fromPlatform();
     setState(() {
       currentVersion = Version.parse(packageInfo.version);
     });
   }
 
   Future<void> _getSecrets() async {
-    Secrets secrets = await loadSecrets();
+    var secrets = await loadSecrets();
     changelogUrl = secrets.GITHUB_CHANGELOG_URL;
   }
 
   Future<void> _getChangelog() async {
-    http.Client client = http.Client();
-    http.Response res = await client.post(Uri.parse(changelogUrl));
+    var client = http.Client();
+    var res = await client.post(Uri.parse(changelogUrl));
     if (res.statusCode != 200) {
       if (mounted) {
         setState(() {

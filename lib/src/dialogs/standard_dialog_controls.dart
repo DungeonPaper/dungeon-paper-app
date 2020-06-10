@@ -36,8 +36,9 @@ class StandardDialogControls extends StatelessWidget {
           children: <Widget>[
             if (onCancel != null)
               FlatButton(
-                onPressed:
-                    !cancelDisabled ? onCancel != null ? onCancel : () => Navigator.pop(context) : null,
+                onPressed: !cancelDisabled
+                    ? (onCancel ?? () => Navigator.pop(context))
+                    : null,
                 child: cancelText,
               ),
             if (extraActions != null && extraActions.isNotEmpty)

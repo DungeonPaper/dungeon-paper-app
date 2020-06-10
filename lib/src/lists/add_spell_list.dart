@@ -16,7 +16,7 @@ class AddSpellList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Map<String, List<Spell>> spells = {};
+    var spells = <String, List<Spell>>{};
     dungeonWorld.spells.forEach((spell) {
       spells[spell.level.toString()] ??= [];
       spells[spell.level.toString()].add(spell);
@@ -28,7 +28,7 @@ class AddSpellList extends StatelessWidget {
       titleBuilder: (ctx, cat, idx) {
         var list = spells[cat];
         return Text(isNumeric(list.first.level)
-            ? "Level ${list.first.level}"
+            ? 'Level ${list.first.level}'
             : capitalize(list.first.level));
       },
       itemBuilder: (ctx, cat, idx, catI) {

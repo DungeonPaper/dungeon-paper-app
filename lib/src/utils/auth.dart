@@ -54,7 +54,7 @@ Future<FirebaseUser> signInFlow(
     fbUser = await getFirebaseUser(providerCreds);
   }
 
-  final user = await doApiLogin(fbUser, creds);
+  final user = await getOrCreateUser(fbUser);
 
   dispatchFinalDataToStore(
     credentials: creds,

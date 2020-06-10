@@ -36,11 +36,11 @@ class FABState extends State<FAB> {
 
   @override
   void initState() {
-    pageController.addListener(this.pageListener);
+    pageController.addListener(_pageListener);
     super.initState();
   }
 
-  void pageListener() {
+  void _pageListener() {
     setState(() {
       activePageIndex = pageController.page;
     });
@@ -93,11 +93,11 @@ class FABState extends State<FAB> {
 
   @override
   Widget build(BuildContext context) {
-    double activeIdx = pageController.hasClients && pageController.page != null
+    var activeIdx = pageController.hasClients && pageController.page != null
         ? pageController.page
         : 0.0;
-    double t = (activeIdx.ceil() - activeIdx).abs();
-    double rt = activeIdx.ceil() - activeIdx;
+    var t = (activeIdx.ceil() - activeIdx).abs();
+    var rt = activeIdx.ceil() - activeIdx;
     t = lerp(t < 0.5 ? 1 - t : t / 1, 0.5, 1, 0, 1);
     rt = lerp(1 - rt, 0.5, 1, 0, 1);
     var idx = Pages.values[activeIdx.round()];
@@ -115,7 +115,7 @@ class FABState extends State<FAB> {
 
   @override
   void dispose() {
-    pageController.removeListener(this.pageListener);
+    pageController.removeListener(_pageListener);
     super.dispose();
   }
 }

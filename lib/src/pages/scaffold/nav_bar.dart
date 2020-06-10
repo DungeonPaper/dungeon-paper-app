@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 
 enum Pages { Home, Battle, Reference, Inventory, Notes }
 
-typedef Widget ColorBuilder(Color color);
+typedef ColorBuilder = Widget Function(Color color);
 
 class NavBar extends StatefulWidget {
   final PageController pageController;
@@ -77,10 +77,10 @@ class NavBarState extends State<NavBar> {
 
   @override
   Widget build(BuildContext context) {
-    List<Widget> pageItems = Pages.values.map((page) {
-      PageDetails details = pageDetails[page];
-      double t = (activePageIndex - page.index).abs();
-      Color color = Color.lerp(Theme.of(context).colorScheme.primary,
+    var pageItems = Pages.values.map((page) {
+      var details = pageDetails[page];
+      var t = (activePageIndex - page.index).abs();
+      var color = Color.lerp(Theme.of(context).colorScheme.primary,
           Theme.of(context).colorScheme.onSurface, t);
 
       if (details == null) {

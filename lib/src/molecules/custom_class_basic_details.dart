@@ -41,7 +41,7 @@ class _ClassBasicDetailsState extends State<ClassBasicDetails> {
           key: Keys.name,
           defaultValue: widget.customClass.name,
           listener: () {
-            CustomClass def = widget.customClass;
+            var def = widget.customClass;
             def.name = editingControllers[Keys.name].text.trim();
             updateWith(def);
           },
@@ -50,7 +50,7 @@ class _ClassBasicDetailsState extends State<ClassBasicDetails> {
           key: Keys.description,
           defaultValue: widget.customClass.description,
           listener: () {
-            CustomClass def = widget.customClass;
+            var def = widget.customClass;
             def.description = editingControllers[Keys.description].text.trim();
             updateWith(def);
           },
@@ -59,7 +59,7 @@ class _ClassBasicDetailsState extends State<ClassBasicDetails> {
           key: Keys.baseHP,
           defaultValue: (widget.customClass.baseHP ?? 0).toString(),
           listener: () {
-            CustomClass def = widget.customClass;
+            var def = widget.customClass;
             def.baseHP =
                 int.tryParse(editingControllers[Keys.baseHP].text.trim()) ?? 0;
             updateWith(def);
@@ -69,7 +69,7 @@ class _ClassBasicDetailsState extends State<ClassBasicDetails> {
           key: Keys.load,
           defaultValue: (widget.customClass.load ?? 0).toString(),
           listener: () {
-            CustomClass def = widget.customClass;
+            var def = widget.customClass;
             def.load =
                 int.tryParse(editingControllers[Keys.load].text.trim()) ?? 0;
             updateWith(def);
@@ -83,7 +83,7 @@ class _ClassBasicDetailsState extends State<ClassBasicDetails> {
     widget.validityNotifier.value = _isValid();
   }
 
-  updateWith(CustomClass def) {
+  void updateWith(CustomClass def) {
     if (widget.validityNotifier != null) {
       widget.validityNotifier.value = _isValid();
     }
@@ -94,11 +94,10 @@ class _ClassBasicDetailsState extends State<ClassBasicDetails> {
 
   @override
   Widget build(BuildContext context) {
-    final TextStyle cardCaptionStyle =
-        Theme.of(context).textTheme.caption.copyWith(
-              color: Theme.of(context).primaryColor,
-            );
-    final EdgeInsets cardPadding = const EdgeInsets.all(16.0);
+    final cardCaptionStyle = Theme.of(context).textTheme.caption.copyWith(
+          color: Theme.of(context).primaryColor,
+        );
+    final cardPadding = const EdgeInsets.all(16.0);
 
     return SingleChildScrollView(
       child: Padding(

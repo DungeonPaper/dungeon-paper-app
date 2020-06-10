@@ -34,7 +34,7 @@ class BetweenValuesTextFormatter extends TextInputFormatter {
       if (newValue.text == '' ||
           (newValue.text.endsWith('.') && newValue.text.isNotEmpty) &&
               (min < 0 && newValue.text.trim() == '-') &&
-              this.allowNull) {
+              allowNull) {
         return newValue;
       }
     } on Error catch (e) {
@@ -45,8 +45,8 @@ class BetweenValuesTextFormatter extends TextInputFormatter {
 }
 
 class NumberFormatter extends TextInputFormatter {
-  final String patternDec = "\-?(([0-9]+\.[0-9]*)|[0-9]*)";
-  final String patternInt = "\-?[0-9]*";
+  final String patternDec = '\-?(([0-9]+\.[0-9]*)|[0-9]*)';
+  final String patternInt = '\-?[0-9]*';
   final FormatType formatType;
 
   NumberFormatter([this.formatType = FormatType.Integer]);

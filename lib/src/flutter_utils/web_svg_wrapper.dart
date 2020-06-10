@@ -10,7 +10,7 @@ class WebSvgWrapper {
   static final Random _random = Random();
   static Future<String> _loadAsset(String uri) async =>
       rootBundle.loadString(uri);
-  static network(
+  static Widget network(
     String uri, {
     double width,
     double height,

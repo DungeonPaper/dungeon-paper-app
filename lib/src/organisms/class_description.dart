@@ -16,8 +16,8 @@ class ClassDescription extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    ThemeData theme = Theme.of(context);
-    TextTheme textTheme = theme.textTheme;
+    var theme = Theme.of(context);
+    var textTheme = theme.textTheme;
     return Container(
       child: DefaultTextStyle(
         style: textTheme.bodyText2,
@@ -78,8 +78,8 @@ class StatIcon extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    ThemeData theme = Theme.of(context);
-    TextTheme textTheme = theme.textTheme;
+    var theme = Theme.of(context);
+    var textTheme = theme.textTheme;
     return Container(
       child: Column(
         children: <Widget>[
@@ -108,8 +108,8 @@ class AlignmentList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    ThemeData theme = Theme.of(context);
-    TextTheme textTheme = theme.textTheme;
+    var theme = Theme.of(context);
+    var textTheme = theme.textTheme;
 
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 8.0),

@@ -37,7 +37,7 @@ class CustomClassMoveList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Map<MoveCategory, List<Move>> cats = {
+    var cats = <MoveCategory, List<Move>>{
       if (raceMoveMode) MoveCategory.Race: customClass.raceMoves,
       if (!raceMoveMode) ...{
         MoveCategory.Starting: customClass.startingMoves,
@@ -53,7 +53,7 @@ class CustomClassMoveList extends StatelessWidget {
           ? ''
           : i < cats.keys.length ? TITLES[cats.keys.elementAt(i)] : 'No Title'),
       itemBuilder: (context, List<Move> moves, i, catI) {
-        MoveCategory cat = cats.keys.elementAt(catI);
+        var cat = cats.keys.elementAt(catI);
 
         if (i >= moves.length) {
           return Center(
@@ -78,12 +78,12 @@ class CustomClassMoveList extends StatelessWidget {
     );
   }
 
-  _addMove(BuildContext context, MoveCategory cat) {
+  void _addMove(BuildContext context, MoveCategory cat) {
     Navigator.push(
       context,
       MaterialPageRoute(
         builder: (context) {
-          Move blankMove = Move(
+          var blankMove = Move(
             key: Uuid().v4(),
             name: '',
             description: '',
@@ -107,7 +107,7 @@ class CustomClassMoveList extends StatelessWidget {
     );
   }
 
-  _addMoveToCat(BuildContext context, Move move, MoveCategory cat) {
+  void _addMoveToCat(BuildContext context, Move move, MoveCategory cat) {
     switch (cat) {
       case MoveCategory.Starting:
         customClass.startingMoves.add(move);
@@ -130,7 +130,7 @@ class CustomClassMoveList extends StatelessWidget {
     Navigator.pop(context);
   }
 
-  _updateMoveInCat(BuildContext context, Move move, MoveCategory cat) {
+  void _updateMoveInCat(BuildContext context, Move move, MoveCategory cat) {
     switch (cat) {
       case MoveCategory.Race:
         num idx = customClass.raceMoves.indexWhere((m) => m.key == move.key);
@@ -190,7 +190,7 @@ class CustomClassMoveList extends StatelessWidget {
     _update();
   }
 
-  _update() {
+  void _update() {
     validityNotifier?.value =
         raceMoveMode ? customClass.raceMoves.isNotEmpty : true;
     if (onUpdate != null) onUpdate(customClass);
