@@ -15,10 +15,10 @@ class CharacterHeadline extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    num level = character.level;
-    String alignment = capitalize(enumName(character.alignment));
-    String mainClass = capitalize(character.mainClass.name);
-    String displayName = capitalize(character.displayName);
+    var level = character.level;
+    var alignment = capitalize(enumName(character.alignment));
+    var mainClass = capitalize(character.mainClass.name);
+    var displayName = capitalize(character.displayName);
 
     return Container(
       child: DefaultTextStyle(

@@ -60,29 +60,28 @@ class _AddInventoryItemState extends State<AddInventoryItem> {
     super.dispose();
   }
 
-  listener([String value]) {
+  void listener([String value]) {
     setState(() {
       search = value ?? widget._searchController.text;
     });
   }
 
-  ctrlListener([String value]) {
+  void ctrlListener([String value]) {
     listener(value);
   }
 
-  widgetListener([String value]) {
+  void widgetListener([String value]) {
     listener(value);
   }
 
   @override
   Widget build(BuildContext context) {
-    Map<String, List<Equipment>> itemMap = {};
-    Iterable<Equipment> filtered = search.isNotEmpty
+    var itemMap = <String, List<Equipment>>{};
+    var filtered = search.isNotEmpty
         ? widget.items.where((item) => clean(item.name).contains(clean(search)))
         : widget.items;
     filtered.forEach((item) {
-      String key =
-          item.name.isNotEmpty ? item.name.trim()[0].toUpperCase() : '#';
+      var key = item.name.isNotEmpty ? item.name.trim()[0].toUpperCase() : '#';
       itemMap[key] ??= [];
       itemMap[key].add(item);
     });

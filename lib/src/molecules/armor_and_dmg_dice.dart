@@ -59,7 +59,7 @@ class ArmorAndHitDice extends StatelessWidget {
     Widget value,
     VoidCallback onTap,
   }) {
-    TextStyle style = Theme.of(context).textTheme.bodyText2.copyWith();
+    var style = Theme.of(context).textTheme.bodyText2.copyWith();
     return Expanded(
       child: InkWell(
         onTap: onTap,
