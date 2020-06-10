@@ -1,5 +1,7 @@
 # Dungeon Paper
 
+## We are active on [Discord](https://discord.gg/HB5HQja) | [Twitter](https://twitter.com/DungeonPaper) | [Facebook](https://facebook.com/DungeonPaper)
+
 Dungeon Paper is an interactive character sheet for your Dungeon World characters.
 This is the source of this app, but to fully use it you must set up your own firebase credentials and sign your own app.
 No one in this repository will provide any secret keys to anyone, ever.
@@ -12,6 +14,8 @@ Features currently included:
 * Add notes and organize them into categories, so you can easily keep track of everything going on in your campaign and your character.
 * Keep track of inventory items, added from the standard list, or create new ones
 * View & edit tags on items & spells
+* Creating custom classes
+* Rolling dice
 
 *Notes:*
 - Dungeon Paper is open source and uses Firebase as its databse & authentication manager.
