@@ -32,7 +32,7 @@ class CustomInventoryItemFormState extends State<CustomInventoryItemForm> {
 
   @override
   void initState() {
-    final InventoryItem item = widget.item ?? InventoryItem(key: Uuid().v4());
+    final item = widget.item ?? InventoryItem(key: Uuid().v4());
     _controllers = WidgetUtils.textEditingControllerMap(map: {
       'name': EditingControllerConfig(defaultValue: item.name ?? ''),
       'description':
@@ -100,8 +100,8 @@ class CustomInventoryItemFormState extends State<CustomInventoryItemForm> {
     return form;
   }
 
-  _updateItem() async {
-    InventoryItem item = widget.item;
+  void _updateItem() async {
+    var item = widget.item;
     item.name = _controllers['name'].text;
     item.description = _controllers['description'].text;
     item.pluralName = _controllers['name'].text + 's';
@@ -112,8 +112,8 @@ class CustomInventoryItemFormState extends State<CustomInventoryItemForm> {
     }
   }
 
-  _createItem() async {
-    InventoryItem item = InventoryItem(
+  void _createItem() async {
+    var item = InventoryItem(
       key: _controllers['name']
           .text
           .toLowerCase()

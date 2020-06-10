@@ -58,8 +58,8 @@ class _EditCharacterViewState extends State<EditCharacterView> {
             CardListItem(
               title: Text(
                 (widget.character.level != null
-                        ? "Level ${widget.character.level} "
-                        : "") +
+                        ? 'Level ${widget.character.level} '
+                        : '') +
                     widget.character.mainClass.name,
               ),
               subtitle: Text('Change class'),
@@ -135,7 +135,7 @@ class _EditCharacterViewState extends State<EditCharacterView> {
     );
   }
 
-  _deleteCharacter() async {
+  Future<bool> _deleteCharacter() async {
     if (dwStore.state.characters.characters.length == 1) {
       return showDialog(
         context: context,
@@ -146,8 +146,7 @@ class _EditCharacterViewState extends State<EditCharacterView> {
           noCancel: true,
         ),
       );
-    }
-    if (await showDialog(
+    } else if (await showDialog(
       context: context,
       builder: (context) => ConfirmationDialog(
         title: Text('Delete Character?'),
@@ -161,7 +160,9 @@ class _EditCharacterViewState extends State<EditCharacterView> {
       await widget.character.delete();
       await Future.delayed(Duration(milliseconds: 1000));
       Navigator.pop(context);
+      return true;
     }
+    return false;
   }
 
   void animatedScreen(BuildContext context, Widget child) {

@@ -52,7 +52,7 @@ class AddInventoryItemScaffoldState extends State<AddInventoryItemScaffold>
         Navigator.pop(context);
       },
       builder: (ctx, form, onSave) {
-        List<Widget> actions = <Widget>[
+        var actions = <Widget>[
           IconButton(
             tooltip: 'Save',
             icon: Icon(Icons.save),

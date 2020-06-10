@@ -211,8 +211,7 @@ class _ChangeLooksDialogState extends State<ChangeLooksDialog> {
   }
 
   void _save() {
-    List<String> filtered =
-        selected.where((s) => s != null && s.isNotEmpty).toList();
+    var filtered = selected.where((s) => s?.isNotEmpty == true).toList();
     changeLooks(filtered);
   }
 }

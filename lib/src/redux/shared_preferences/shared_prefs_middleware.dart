@@ -1,7 +1,7 @@
 part of 'prefs_store.dart';
 
 void withPrefs(Function(SharedPreferences inst) fn) async {
-  SharedPreferences prefs = await SharedPreferences.getInstance();
+  var prefs = await SharedPreferences.getInstance();
   fn(prefs);
 }
 

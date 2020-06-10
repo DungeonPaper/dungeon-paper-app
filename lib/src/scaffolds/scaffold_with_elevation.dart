@@ -82,7 +82,7 @@ class _ScaffoldWithElevationState extends State<ScaffoldWithElevation> {
   }
 
   void scrollListener() {
-    double newElevation = scrollController.offset > 16.0 ? 1.0 : 0.0;
+    var newElevation = scrollController.offset > 16.0 ? 1.0 : 0.0;
     if (!widget.useElevation) return;
     if (newElevation != appBarElevation) {
       setState(() {
@@ -93,7 +93,7 @@ class _ScaffoldWithElevationState extends State<ScaffoldWithElevation> {
 
   @override
   Widget build(BuildContext context) {
-    Widget wrappedChild = !widget.wrapWithScrollable
+    var wrappedChild = !widget.wrapWithScrollable
         ? widget.body
         : SingleChildScrollView(
             controller: scrollController,

@@ -50,7 +50,7 @@ class AddMoveScreenState extends State<AddMoveScreen>
       move: widget.move,
       onSave: widget.onSave,
       builder: (ctx, form, onSave) {
-        List<Widget> actions = <Widget>[
+        var actions = <Widget>[
           IconButton(
             tooltip: 'Save',
             icon: Icon(Icons.save),

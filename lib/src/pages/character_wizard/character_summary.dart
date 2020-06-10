@@ -132,7 +132,7 @@ class AlignmentSummary extends StatelessWidget {
   }
 
   String get alignmentKey => enumName(character.alignment);
-  get icon => chr.ALIGNMENT_ICON_MAP[character.alignment];
+  IconData get icon => chr.ALIGNMENT_ICON_MAP[character.alignment];
 }
 
 class RaceSummary extends StatelessWidget {
@@ -155,7 +155,7 @@ class RaceSummary extends StatelessWidget {
   }
 
   String get alignmentKey => enumName(character.alignment);
-  get icon => chr.ALIGNMENT_ICON_MAP[character.alignment];
+  IconData get icon => chr.ALIGNMENT_ICON_MAP[character.alignment];
 }
 
 class ClassSummary extends StatelessWidget {
@@ -185,7 +185,7 @@ class ClassSummary extends StatelessWidget {
   }
 
   String get alignmentKey => enumName(character.alignment);
-  get icon => chr.ALIGNMENT_ICON_MAP[character.alignment];
+  IconData get icon => chr.ALIGNMENT_ICON_MAP[character.alignment];
 }
 
 class LooksSummary extends StatelessWidget {
@@ -208,5 +208,5 @@ class LooksSummary extends StatelessWidget {
   }
 
   String get alignmentKey => enumName(character.alignment);
-  get icon => chr.ALIGNMENT_ICON_MAP[character.alignment];
+  IconData get icon => chr.ALIGNMENT_ICON_MAP[character.alignment];
 }

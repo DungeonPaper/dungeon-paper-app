@@ -24,22 +24,19 @@ class StatusBars extends StatelessWidget {
       );
     }
 
-    Color hpBg = Colors.red.shade100;
-    Color hpValueColor = Colors.red.shade700;
-    double hpPerc = character != null &&
+    var hpBg = Colors.red.shade100;
+    var hpValueColor = Colors.red.shade700;
+    var hpPerc = character != null &&
             character.currentHP != null &&
             character.currentHP > 0
         ? character.currentHP / character.maxHP
         : 0;
 
-    Color xpBg = Colors.lightBlue.shade100;
-    Color xpValueColor = Colors.blue;
-    int maxXp = character.level + 7;
-    double xpPerc = character != null &&
-            character.currentXP != null &&
-            character.currentXP > 0
-        ? character.currentXP / maxXp
-        : 0;
+    var xpBg = Colors.lightBlue.shade100;
+    var xpValueColor = Colors.blue;
+    var maxXp = character.level + 7;
+    var xpPerc =
+        (character?.currentXP ?? 0) > 0 ? character.currentXP / maxXp : 0;
     var rounded = Radius.circular(5);
 
     return Padding(
@@ -72,13 +69,15 @@ class StatusBars extends StatelessWidget {
     );
   }
 
-  showHpEditDialog(BuildContext context, Character character) => showDialog(
-      context: context,
-      builder: (context) => EditHPDialog(character: character));
+  void showHpEditDialog(BuildContext context, Character character) =>
+      showDialog(
+          context: context,
+          builder: (context) => EditHPDialog(character: character));
 
-  showXpEditDialog(BuildContext context, Character character) => showDialog(
-      context: context,
-      builder: (context) => EditXPDialog(character: character));
+  void showXpEditDialog(BuildContext context, Character character) =>
+      showDialog(
+          context: context,
+          builder: (context) => EditXPDialog(character: character));
 }
 
 class StatusBarCard extends StatelessWidget {

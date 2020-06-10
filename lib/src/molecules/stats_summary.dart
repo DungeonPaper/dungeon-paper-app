@@ -12,11 +12,11 @@ class StatsSummary extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    List<List<CharacterKeys>> rows = [
+    var rows = <List<CharacterKeys>>[
       ORDERED_STATS.sublist(0, 3),
       ORDERED_STATS.sublist(3)
     ];
-    Radius round = Radius.circular(4);
+    var round = Radius.circular(4);
     return Column(
       mainAxisSize: MainAxisSize.max,
       children: <Widget>[

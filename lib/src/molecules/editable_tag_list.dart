@@ -36,7 +36,7 @@ class EditableTagList extends StatelessWidget {
     );
   }
 
-  handleDelete() {
+  void Function(Tag) handleDelete() {
     return (Tag tag) {
       if (onSave == null) return;
       onSave(

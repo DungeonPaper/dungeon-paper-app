@@ -18,7 +18,7 @@ class ProfileView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return OrientationBuilder(builder: (context, orientation) {
-      List<Widget> children = [
+      var children = <Widget>[
         PhotoAndSummary(character: character),
         ArmorAndHitDice(character: character),
         StatusBars(character: character),

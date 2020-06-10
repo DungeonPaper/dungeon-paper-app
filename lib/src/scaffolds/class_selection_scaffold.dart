@@ -76,7 +76,7 @@ class ClassSelectionScaffold extends StatelessWidget {
       Navigator.pop(context, true);
       return;
     }
-    ChangeClassConfirmationOptions options = await showDialog(
+    var options = await showDialog<ChangeClassConfirmationOptions>(
       context: context,
       builder: (context) => ConfirmClassChangeDialog(mode: mode),
     );
@@ -105,7 +105,7 @@ class ClassSelectionScaffold extends StatelessWidget {
   Function() previewClass(BuildContext context, PlayerClass def) {
     return () async {
       try {
-        bool res = await Navigator.push(
+        var res = await Navigator.push(
           context,
           MaterialPageRoute(
             fullscreenDialog: true,
@@ -185,7 +185,7 @@ class _ClassPreviewState extends State<ClassPreview> {
   }
 
   void scrollListener() {
-    double newElevation = scrollController.offset > 16.0 ? 1.0 : 0.0;
+    var newElevation = scrollController.offset > 16.0 ? 1.0 : 0.0;
     if (newElevation != appBarElevation) {
       setState(() {
         appBarElevation = newElevation;
@@ -218,7 +218,7 @@ class _ConfirmClassChangeDialogState extends State<ConfirmClassChangeDialog> {
 
   @override
   Widget build(BuildContext context) {
-    bool isEdit = widget.mode == DialogMode.Edit;
+    var isEdit = widget.mode == DialogMode.Edit;
     return ConfirmationDialog(
         title: Text(isEdit ? 'Change Class?' : 'Choose Class?'),
         okButtonText:

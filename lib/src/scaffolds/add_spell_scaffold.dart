@@ -50,7 +50,7 @@ class AddSpellScaffoldState extends State<AddSpellScaffold>
       spell: widget.spell,
       onSave: widget.onSave,
       builder: (ctx, form, onSave) {
-        List<Widget> actions = <Widget>[
+        var actions = <Widget>[
           IconButton(
             tooltip: 'Save',
             icon: Icon(Icons.save),

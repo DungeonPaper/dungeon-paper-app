@@ -37,7 +37,7 @@ class _EditableAlignmentState extends State<EditableAlignment> {
       subtitle: TextField(
         textCapitalization: TextCapitalization.sentences,
         decoration:
-            InputDecoration(hintText: "Enter a description or leave empty"),
+            InputDecoration(hintText: 'Enter a description or leave empty'),
         controller: controller,
       ),
     );
@@ -47,7 +47,7 @@ class _EditableAlignmentState extends State<EditableAlignment> {
     widget.onUpdate?.call(_getAlignment());
   }
 
-  get icon => ALIGNMENT_ICON_MAP[AlignmentName.values
+  IconData get icon => ALIGNMENT_ICON_MAP[AlignmentName.values
       .firstWhere((element) => widget.alignment.key == enumName(element))];
 
   dw.Alignment _getAlignment() {

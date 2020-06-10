@@ -178,7 +178,7 @@ class _EditStatsState extends State<EditStats> {
     }
   }
 
-  _save() {
+  void _save() {
     if (widget.onSave != null) {
       widget.onSave({
         'str': _str,
@@ -223,8 +223,8 @@ class EditStatListTile extends StatelessWidget {
             textScaleFactor: 1.2,
           ),
           subtitle: Text(
-            "${CHARACTER_STAT_MODIFIER_LABELS[stat]}: " +
-                "${CharacterFields.statModifier(value)}",
+            '${CHARACTER_STAT_MODIFIER_LABELS[stat]}: '
+            '${CharacterFields.statModifier(value)}',
           ),
           trailing: Container(
             width: 230,
