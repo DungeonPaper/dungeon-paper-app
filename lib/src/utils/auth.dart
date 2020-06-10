@@ -34,7 +34,7 @@ Future<FirebaseUser> signInFlow(
   bool silent = false,
   bool interactiveOnFailSilent = true,
 }) async {
-  AuthCredential providerCreds = creds.providerCredentials;
+  var providerCreds = creds.providerCredentials;
   FirebaseUser fbUser;
 
   dwStore.dispatch(RequestLogin());

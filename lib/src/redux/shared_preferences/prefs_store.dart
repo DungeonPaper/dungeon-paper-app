@@ -42,8 +42,8 @@ class PrefsStore {
   PrefsStore({this.credentials, this.user});
 
   static Future<void> loadAll() async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    PrefsStore store = PrefsStore(
+    var prefs = await SharedPreferences.getInstance();
+    var store = PrefsStore(
       credentials: GoogleCredentials.fromAuthCredential(
         GoogleAuthCredential(
           idToken: prefs.getString(keyMap[SharedPrefKeys.IdToken]),

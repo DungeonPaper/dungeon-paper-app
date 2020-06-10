@@ -9,7 +9,7 @@ class ReferenceView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Map<String, List> categories = {
+    var categories = <String, List>{
       'Basic Moves': dungeonWorld.basicMoves,
       'Special Moves': dungeonWorld.specialMoves,
     }..removeWhere((k, v) => v.isEmpty);
@@ -19,7 +19,7 @@ class ReferenceView extends StatelessWidget {
       itemCount: (key, idx) => categories[key].length,
       titleBuilder: (ctx, key, idx) => Text(key),
       itemBuilder: (ctx, key, idx, catI) {
-        List moves = categories[key];
+        var moves = categories[key];
         return Padding(
           padding: const EdgeInsets.symmetric(vertical: 8),
           child: moves.first is Move

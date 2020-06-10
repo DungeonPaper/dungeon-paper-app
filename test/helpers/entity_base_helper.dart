@@ -8,6 +8,7 @@ var _fields = FieldsContext([
 ]);
 
 class EntityTestBase extends FirebaseEntity {
+  @override
   FieldsContext fields = _fields.copy();
   num get a => fields.get<num>('a').get;
   set a(val) => fields.get<num>('a').set(val);
@@ -19,6 +20,7 @@ class EntityTestBase extends FirebaseEntity {
 }
 
 class EntityTest extends EntityTestBase {
+  @override
   FieldsContext fields = _fields.copy();
   String get b => fields.get<String>('b').get;
   set b(val) => fields.get<String>('b').set(val);

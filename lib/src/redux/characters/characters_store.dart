@@ -53,7 +53,7 @@ CharacterStore characterReducer(CharacterStore state, action) {
   }
 
   if (action is ClearCharacters) {
-    return CharacterStore(current: null, characters: Map<String, Character>());
+    return CharacterStore(current: null, characters: <String, Character>{});
   }
 
   return state;

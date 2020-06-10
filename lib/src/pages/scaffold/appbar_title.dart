@@ -38,13 +38,13 @@ class _AppBarTitleTextState extends State<AppBarTitleText> {
   double page;
 
   @override
-  initState() {
+  void initState() {
+    super.initState();
     widget.pageController.addListener(() {
       setState(() {
         page = widget.pageController.page;
       });
     });
-    super.initState();
   }
 
   @override

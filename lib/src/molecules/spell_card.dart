@@ -32,7 +32,7 @@ class SpellCard extends StatefulWidget {
 class SpellCardState extends State<SpellCard> {
   @override
   Widget build(BuildContext context) {
-    DbSpell spell = widget.spell;
+    var spell = widget.spell;
     Widget name = Text(spell.name);
 
     return Material(

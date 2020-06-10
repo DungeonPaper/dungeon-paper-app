@@ -27,9 +27,9 @@ class InventoryItemCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    num amount = item.amount;
+    var amount = item.amount;
 
-    List<Widget> info = [];
+    var info = <Widget>[];
     if (item.description != null && item.description.trim().isNotEmpty) {
       info.add(MarkdownBody(
           onTapLink: (url) => _launchURL(url), data: item.description));

@@ -53,7 +53,7 @@ Type typeOf<T>() => T;
 
 String enumName(Object o) {
   var text = o.toString();
-  return text.substring(text.indexOf(".") + 1);
+  return text.substring(text.indexOf('.') + 1);
 }
 
 E Function(dynamic k) stringToEnum<E>(Map<String, E> enumValue) {
@@ -64,8 +64,8 @@ E Function(dynamic k) stringToEnum<E>(Map<String, E> enumValue) {
           : throw ('No corresponding enum value');
 }
 
-typedef bool Function(T ret) ReturnPredicate<T>(T par);
-typedef bool InputPredicate<T>(T par, T par2);
+typedef ReturnPredicate<T> = bool Function(T ret) Function(T par);
+typedef InputPredicate<T> = bool Function(T par, T par2);
 
 ReturnPredicate<T> matcher<T>(InputPredicate<T> predicate) =>
     (T orig) => (T i) => predicate(i, orig);
@@ -104,7 +104,7 @@ class Secrets {
   String get API_PATH => _data['API_PATH'];
   String get GOOGLE_CLIENT_ID => _data['GOOGLE_CLIENT_ID'];
 
-  operator [](String key) {
+  dynamic operator [](String key) {
     return _data[key];
   }
 
@@ -123,7 +123,7 @@ Future<Secrets> loadSecrets() async {
 }
 
 bool get isInDebugMode {
-  bool inDebugMode = false;
+  var inDebugMode = false;
   assert(inDebugMode = true);
   return inDebugMode;
 }
@@ -146,8 +146,8 @@ class Enumeration<T> {
 }
 
 Iterable<Enumeration<T>> enumerate<T>(Iterable<T> items) sync* {
-  int idx = 0;
-  for (T item in items) {
+  var idx = 0;
+  for (var item in items) {
     yield Enumeration(idx++, item);
   }
 }

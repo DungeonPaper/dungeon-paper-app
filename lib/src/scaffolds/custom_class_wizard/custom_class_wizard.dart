@@ -208,7 +208,7 @@ class _CustomClassWizardState extends State<CustomClassWizard>
         alignmentsValid,
       ].every((validator) => validator.value == true);
 
-  _save() async {
+  void _save() async {
     if (widget.mode == DialogMode.Create) {
       await def.create();
     } else {

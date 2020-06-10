@@ -5,7 +5,7 @@ import 'package:firebase_auth_platform_interface/firebase_auth_platform_interfac
 
 abstract class Credentials<T extends AuthCredential> {
   T providerCredentials;
-  Map<String, String> _map;
+  final Map<String, String> _map;
 
   Credentials({
     Map<String, String> data,

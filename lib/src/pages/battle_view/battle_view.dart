@@ -14,7 +14,7 @@ class BattleView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Map<String, List> categories = {
+    var categories = <String, List>{
       'Starting Moves': [character.race] + character.mainClass.startingMoves,
       'Advanced Moves': character.moves,
       'Spells': character.spells,
@@ -26,8 +26,8 @@ class BattleView extends StatelessWidget {
       spacerCount: 1,
       titleBuilder: (ctx, key, idx) => Text(key),
       itemBuilder: (ctx, key, idx, catIdx) {
-        List moves = categories[key];
-        MoveCardMode mode = key == 'Starting Moves'
+        var moves = categories[key];
+        var mode = key == 'Starting Moves'
             ? MoveCardMode.Fixed
             : MoveCardMode.Editable;
         return Padding(

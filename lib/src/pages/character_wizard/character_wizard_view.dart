@@ -96,7 +96,7 @@ class _CharacterWizardViewState extends State<CharacterWizardView> {
           mode: DialogMode.Create,
           onSave: _copyCharAndProceed,
           onLeaveText:
-              "Leaving this screen will discard any selections you made and cancel the character creation.",
+              'Leaving this screen will discard any selections you made and cancel the character creation.',
         );
     }
   }

@@ -2,7 +2,7 @@ import 'package:pub_semver/pub_semver.dart';
 
 class ChangelogParser {
   String changelog;
-  Map<Version, List<String>> _parsed;
+  Map<Version, ChangelogContent> _parsed;
 
   ChangelogParser({
     this.changelog,
@@ -30,7 +30,7 @@ class ChangelogParser {
       // if (RegExp('\\*\s*').matchAsPrefix(line.trim()) != null) {
       var message = line; // .trim().substring(1).trim();
       if (cur != null) {
-        output[cur].lines.add("$message");
+        output[cur].lines.add('$message');
         continue;
       }
       // }
@@ -41,7 +41,7 @@ class ChangelogParser {
 
   Map<Version, ChangelogContent> parse() => parseString(changelog);
 
-  Map<Version, List<String>> get parsed => _parsed ??= parse();
+  Map<Version, ChangelogContent> get parsed => _parsed ??= parse();
 }
 
 class ChangelogContent {

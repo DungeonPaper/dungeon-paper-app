@@ -18,7 +18,7 @@ enum WizardScaffoldButtonType { close, back }
 Function() wrapOnDidPopHandler(
     BuildContext context, String text, Function() onPop) {
   return () async {
-    bool res = await showDialog(
+    var res = await showDialog(
       context: context,
       builder: (ctx) => ConfirmationDialog(text: Text(text)),
     );
@@ -52,11 +52,9 @@ ScaffoldBuilderFunction characterWizardScaffold({
     var isEdit = mode == DialogMode.Edit;
     var onWillPopHandler = wrapOnDidPopHandler(
       context,
-      onLeaveText != null
-          ? onLeaveText
-          : isEdit
-              ? "If you leave this screen now, your changes won't be saved."
-              : "If you go back, changes made on this screen will not be saved.",
+      onLeaveText ?? isEdit
+          ? "If you leave this screen now, your changes won't be saved."
+          : 'If you go back, changes made on this screen will not be saved.',
       onDidPop,
     );
     var finalOnWillPop =
@@ -69,9 +67,7 @@ ScaffoldBuilderFunction characterWizardScaffold({
         actions: save != null
             ? [
                 GenericAppBarActionButton(
-                  child: Text(nextStepText != null
-                      ? nextStepText
-                      : isEdit ? 'Save' : 'Next Step'),
+                  child: Text(nextStepText ?? isEdit ? 'Save' : 'Next Step'),
                   onPressed: isValid != null ? isValid() ? save : null : null,
                 ),
               ]

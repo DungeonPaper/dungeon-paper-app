@@ -14,7 +14,7 @@ class NotesView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Map<NoteCategory, Iterable<Note>> cats = {};
+    var cats = <NoteCategory, Iterable<Note>>{};
     NoteCategory.defaultCategories.forEach((category) {
       var notes = character.notes.where((note) => note.category == category);
       if (notes.isNotEmpty) {

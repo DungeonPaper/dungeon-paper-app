@@ -25,7 +25,7 @@ class _SidebarState extends State<Sidebar> {
   Widget build(BuildContext context) {
     return DWStoreConnector<DWStore>(
       builder: (context, state) {
-        User user = state.user.current;
+        var user = state.user.current;
 
         return Drawer(
           child: ListView(
@@ -159,7 +159,7 @@ class _SidebarState extends State<Sidebar> {
   }
 
   Widget title(String text, BuildContext context, {Widget leading}) {
-    TextStyle titleStyle = getTitleStyle(context);
+    var titleStyle = getTitleStyle(context);
     Widget title = Padding(
       padding: EdgeInsets.all(8),
       child: Text(
