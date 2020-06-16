@@ -34,19 +34,28 @@ class _DiceRollBoxState extends State<DiceRollBox>
   @override
   void initState() {
     super.initState();
-    print('initState $context');
+    if (widget.animated) {
+      _initAnimations();
+    }
     if (widget.controller != null) {
-      widget.controller.addListener(_reanimate);
+      if (widget.animated) {
+        widget.controller.addListener(_animate);
+      }
       if (!widget.controller.isRolled) {
-        print('rolling...');
         widget.controller.roll();
+      } else if (widget.animated) {
+        for (var ctrl in animationControllers) {
+          ctrl.value = 1;
+        }
       }
     }
   }
 
   @override
   void dispose() {
-    animationControllers.forEach((ctrl) => ctrl.dispose());
+    for (var ctrl in animationControllers) {
+      ctrl.dispose();
+    }
     widget.controller?.removeListener(_animate);
     super.dispose();
   }
@@ -137,6 +146,17 @@ class _DiceRollBoxState extends State<DiceRollBox>
       );
 
   void _animate() {
+    for (var cont in animationControllers) {
+      if (widget.animated) {
+        cont.reset();
+        cont.forward();
+      } else {
+        cont.value = 1;
+      }
+    }
+  }
+
+  void _initAnimations() {
     var _flat = flatDice;
     animationControllers = List.generate(
       _flat.length,
@@ -152,19 +172,5 @@ class _DiceRollBoxState extends State<DiceRollBox>
         curve: Curves.easeOutQuint,
       ),
     );
-
-    for (var cont in animationControllers) {
-      if (widget.animated) {
-        cont.reset();
-        cont.forward();
-      } else {
-        cont.value = 1;
-      }
-    }
-  }
-
-  void _reanimate() {
-    print('call listener');
-    _animate();
   }
 }
