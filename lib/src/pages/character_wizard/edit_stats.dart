@@ -1,40 +1,18 @@
 import 'package:dungeon_paper/db/helpers/character_utils.dart';
 import 'package:dungeon_paper/db/models/character.dart';
 import 'package:dungeon_paper/src/atoms/number_controller.dart';
-import 'package:dungeon_paper/src/dialogs/dialogs.dart';
 import 'package:dungeon_paper/src/utils/types.dart';
 import 'package:flutter/material.dart';
 
-import 'character_wizard_utils.dart';
-
 class EditStats extends StatefulWidget {
   final Character character;
-  final CharSaveFunction onSave;
-  final ScaffoldBuilderFunction builder;
+  final VoidCallbackDelegate<Character> onUpdate;
 
   const EditStats({
     Key key,
     @required this.character,
-    @required this.onSave,
-    this.builder,
+    @required this.onUpdate,
   }) : super(key: key);
-
-  EditStats.withScaffold({
-    Key key,
-    @required this.character,
-    @required this.onSave,
-    Function() onDidPop,
-    Function() onWillPop,
-    bool shouldPreventPop = true,
-  })  : builder = characterWizardScaffold(
-          titleText: 'Stats',
-          onDidPop: onDidPop,
-          onWillPop: onWillPop,
-          shouldPreventPop: shouldPreventPop,
-          buttonType: WizardScaffoldButtonType.back,
-          mode: DialogMode.Create,
-        ),
-        super(key: key);
 
   @override
   _EditStatsState createState() => _EditStatsState();
@@ -62,25 +40,18 @@ class _EditStatsState extends State<EditStats> {
 
   @override
   Widget build(BuildContext context) {
-    var child = Column(
-      children: <Widget>[
-        for (CharacterKeys stat in ORDERED_STATS)
-          EditStatListTile(
-            stat: stat,
-            value: _getter(stat),
-            onChange: _valueUpdateBuilder(_setter(stat)),
-          ),
-      ],
+    return SingleChildScrollView(
+      child: Column(
+        children: <Widget>[
+          for (CharacterKeys stat in ORDERED_STATS)
+            EditStatListTile(
+              stat: stat,
+              value: _getter(stat),
+              onChange: _valueUpdateBuilder(_setter(stat)),
+            ),
+        ],
+      ),
     );
-    if (widget.builder != null) {
-      return widget.builder(
-        context: context,
-        child: child,
-        save: _save,
-        isValid: _isFormValid,
-      );
-    }
-    return child;
   }
 
   void Function(num) _valueUpdateBuilder(
@@ -97,7 +68,9 @@ class _EditStatsState extends State<EditStats> {
     switch (stat) {
       case (CharacterKeys.str):
         setter = (val) {
+          widget.character.str = val;
           _str = val;
+          widget?.onUpdate(widget.character);
         };
         errorSetter = (state) {
           errors[CharacterKeys.str] = state;
@@ -105,7 +78,9 @@ class _EditStatsState extends State<EditStats> {
         break;
       case (CharacterKeys.dex):
         setter = (val) {
+          widget.character.dex = val;
           _dex = val;
+          widget?.onUpdate(widget.character);
         };
         errorSetter = (state) {
           errors[CharacterKeys.dex] = state;
@@ -113,7 +88,9 @@ class _EditStatsState extends State<EditStats> {
         break;
       case (CharacterKeys.con):
         setter = (val) {
+          widget.character.con = val;
           _con = val;
+          widget?.onUpdate(widget.character);
         };
         errorSetter = (state) {
           errors[CharacterKeys.con] = state;
@@ -121,7 +98,9 @@ class _EditStatsState extends State<EditStats> {
         break;
       case (CharacterKeys.int):
         setter = (val) {
+          widget.character.int = val;
           _int = val;
+          widget?.onUpdate(widget.character);
         };
         errorSetter = (state) {
           errors[CharacterKeys.int] = state;
@@ -129,7 +108,9 @@ class _EditStatsState extends State<EditStats> {
         break;
       case (CharacterKeys.cha):
         setter = (val) {
+          widget.character.cha = val;
           _cha = val;
+          widget?.onUpdate(widget.character);
         };
         errorSetter = (state) {
           errors[CharacterKeys.cha] = state;
@@ -137,7 +118,9 @@ class _EditStatsState extends State<EditStats> {
         break;
       case (CharacterKeys.wis):
         setter = (val) {
+          widget.character.wis = val;
           _wis = val;
+          widget?.onUpdate(widget.character);
         };
         errorSetter = (state) {
           errors[CharacterKeys.wis] = state;
@@ -177,25 +160,6 @@ class _EditStatsState extends State<EditStats> {
         return null;
     }
   }
-
-  void _save() {
-    if (widget.onSave != null) {
-      widget.onSave({
-        'str': _str,
-        'dex': _dex,
-        'cha': _cha,
-        'wis': _wis,
-        'int': _int,
-        'con': _con,
-      });
-    }
-  }
-
-  bool _isFormValid() {
-    return !errors.values.any((s) => s) &&
-        [_str, _dex, _cha, _wis, _int, _con]
-            .every((s) => s >= 0 && s <= MAX_STAT_VALUE);
-  }
 }
 
 class EditStatListTile extends StatelessWidget {
@@ -233,6 +197,7 @@ class EditStatListTile extends StatelessWidget {
               onChange: onChange,
               min: 0,
               max: MAX_STAT_VALUE,
+              autoFocus: false,
             ),
           ),
         ),

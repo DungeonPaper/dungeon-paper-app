@@ -1,3 +1,4 @@
+import 'package:dungeon_paper/src/utils/utils.dart';
 import 'package:dungeon_world_data/dice.dart';
 import 'package:dungeon_world_data/dw_data.dart'
     show DiceResult; // TODO: remove
@@ -41,6 +42,11 @@ class DiceListController extends ValueNotifier<List<Dice>> {
     super.value = newValue;
   }
 
+  operator []=(int idx, dynamic value) {
+    super.value[idx] = value;
+    notifyListeners();
+  }
+
   void add(Dice value) {
     results = null;
     isRolled = false;
@@ -67,4 +73,24 @@ class DiceListController extends ValueNotifier<List<Dice>> {
     isRolled = true;
     notifyListeners();
   }
+
+  List<Dice> get flat => value.fold(
+        <Dice>[],
+        (list, dice) =>
+            list +
+            List.generate(
+              dice.amount,
+              (index) => Dice(dice.sides),
+            ),
+      );
+
+  List<DiceResult> get flatResults => enumerate(results).fold(
+        <DiceResult>[],
+        (list, result) =>
+            list +
+            List.generate(
+              result.value.results.length,
+              (index) => result.value,
+            ),
+      );
 }

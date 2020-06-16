@@ -12,7 +12,6 @@ import 'package:screen/screen.dart';
 void withInit(Function() cb) async {
   try {
     WidgetsFlutterBinding.ensureInitialized();
-    print('withInit');
     if (!kIsWeb) {
       await initErrorReporting();
       await Screen.keepOn(true);

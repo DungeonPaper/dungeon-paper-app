@@ -1,6 +1,7 @@
 import 'package:dungeon_paper/db/models/character.dart';
 import 'package:dungeon_paper/src/atoms/card_list_item.dart';
 import 'package:dungeon_paper/src/dialogs/dialogs.dart';
+import 'package:dungeon_paper/src/utils/types.dart';
 import 'package:dungeon_paper/src/utils/utils.dart';
 import 'package:flutter_typeahead/flutter_typeahead.dart';
 import 'character_wizard_utils.dart';
@@ -10,13 +11,13 @@ import 'package:flutter/material.dart';
 class ChangeLooksDialog extends StatefulWidget {
   final Character character;
   final DialogMode mode;
-  final CharSaveFunction onSave;
+  final VoidCallbackDelegate<Character> onUpdate;
   final ScaffoldBuilderFunction builder;
 
   const ChangeLooksDialog({
     Key key,
     @required this.character,
-    @required this.onSave,
+    @required this.onUpdate,
     this.mode = DialogMode.Edit,
     this.builder,
   }) : super(key: key);
@@ -24,7 +25,7 @@ class ChangeLooksDialog extends StatefulWidget {
   ChangeLooksDialog.withScaffold({
     Key key,
     @required this.character,
-    @required this.onSave,
+    @required this.onUpdate,
     this.mode = DialogMode.Edit,
     Function() onDidPop,
     Function() onWillPop,
@@ -171,8 +172,9 @@ class _ChangeLooksDialogState extends State<ChangeLooksDialog> {
   }
 
   void changeLooks(List<String> def) async {
-    widget.character.looks = def;
-    widget.onSave({'looks': def});
+    var char = widget.character;
+    char.looks = def;
+    widget.onUpdate?.call(char);
   }
 
   void _setValue(int i, String val) {

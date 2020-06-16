@@ -35,7 +35,7 @@ class _RollDiceDialogState extends State<RollDiceDialog> {
                 : EdgeInsets.only(bottom: 16),
             child: DiceRollBox(
               key: Key('dice-${list.value.hash}'),
-              diceList: list.value.value,
+              diceList: list.value.flat,
               controller: controllers[list.index],
               onRemove: () => _removeAt(list.index),
             ),
@@ -51,9 +51,7 @@ class _RollDiceDialogState extends State<RollDiceDialog> {
                 Padding(
                   padding: const EdgeInsets.only(top: 8),
                   child: DiceIconList(
-                    // key: Key(
-                    //     'd-${addingController.value.length}-${addingController.value.map((el) => el.toString()).join(',')}'),
-                    diceList: addingController.value,
+                    key: Key(addingController.value.join(',')),
                     controller: addingController,
                     animations: null,
                   ),
@@ -66,10 +64,14 @@ class _RollDiceDialogState extends State<RollDiceDialog> {
                     children: [
                       for (var d in enumerate(addingController.value))
                         DiceSelector(
-                          key: Key('d-${d.index}-${d.value}'),
+                          key: Key('d-${d.index}'),
                           dice: d.value,
                           textStyle: TextStyle(fontSize: 20),
-                          onChanged: _set,
+                          onChanged: (val) {
+                            if (val?.amount != null && val.amount > 0) {
+                              _set(d.index, val);
+                            }
+                          },
                         ),
                       IconButton(
                         color: Theme.of(context).primaryColor,
@@ -89,16 +91,15 @@ class _RollDiceDialogState extends State<RollDiceDialog> {
 
   void _add(List<Dice> dice) {
     setState(() {
-      var _ctrl = DiceListController(dice);
+      var _ctrl = DiceListController([...dice]);
       controllers.add(_ctrl);
       diceList.add(dice);
-      addingController.value = [Dice(dice.first?.sides ?? 20)];
     });
   }
 
-  void _set(Dice dice) {
+  void _set(int idx, Dice dice) {
     setState(() {
-      addingController.value = [dice];
+      addingController[idx] = dice;
     });
   }
 

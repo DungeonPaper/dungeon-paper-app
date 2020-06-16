@@ -18,7 +18,9 @@ mixin CharacterFields implements FirebaseEntity {
     BoolField(fieldName: 'useDefaultMaxHP', defaultValue: (ctx) => true),
     //
     // Class
-    PlayerClassListField(fieldName: 'playerClasses'),
+    PlayerClassListField(
+        fieldName: 'playerClasses',
+        defaultValue: (ctx) => [dungeonWorld.classes.first]),
     AlignmentNameField(fieldName: 'alignment'),
     IntField(
       fieldName: 'maxHP',

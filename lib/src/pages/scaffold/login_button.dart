@@ -14,7 +14,6 @@ class LoginButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return DWStoreConnector<DWStore>(
       builder: (context, state) {
-        print('state: $state');
         var user = state.user.current;
         if (user == null) {
           return Container(

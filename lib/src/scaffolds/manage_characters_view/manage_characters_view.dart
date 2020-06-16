@@ -1,8 +1,10 @@
 import 'package:dungeon_paper/db/models/character.dart';
 import 'package:dungeon_paper/src/dialogs/confirmation_dialog.dart';
-import 'package:dungeon_paper/src/pages/character_wizard/edit_character_view.dart';
+import 'package:dungeon_paper/src/dialogs/dialogs.dart';
+import 'package:dungeon_paper/src/pages/character_wizard/character_wizard_view.dart';
 import 'package:dungeon_paper/src/redux/characters/characters_store.dart';
 import 'package:dungeon_paper/src/redux/stores.dart';
+import 'package:dungeon_paper/src/scaffolds/scaffold_with_elevation.dart';
 import 'package:dungeon_paper/src/utils/utils.dart';
 import 'package:flutter/material.dart';
 import 'package:pedantic/pedantic.dart';
@@ -25,8 +27,15 @@ class _ManageCharactersViewState extends State<ManageCharactersView> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(title: Text('Manage Characters')),
+    return ScaffoldWithElevation.primaryBackground(
+      title: Text('Manage Characters'),
+      floatingActionButton: FloatingActionButton(
+        child: Icon(Icons.add),
+        backgroundColor: Theme.of(context).canvasColor,
+        // foregroundColor: Theme.of(context).canvasColor,
+        onPressed: _openCreatePage,
+      ),
+      automaticallyImplyLeading: true,
       body: ReorderableColumn(
         header: Padding(
           padding: const EdgeInsets.all(16.0),
@@ -122,7 +131,22 @@ class _ManageCharactersViewState extends State<ManageCharactersView> {
       context,
       MaterialPageRoute(
         fullscreenDialog: true,
-        builder: (context) => EditCharacterView(character: char),
+        builder: (context) => CharacterWizardView(
+          character: char,
+          mode: DialogMode.Edit,
+        ),
+      ),
+    );
+  }
+
+  void _openCreatePage() {
+    Navigator.push(
+      context,
+      MaterialPageRoute<bool>(
+        builder: (context) => CharacterWizardView(
+          character: null,
+          mode: DialogMode.Create,
+        ),
       ),
     );
   }
