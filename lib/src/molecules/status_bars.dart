@@ -35,8 +35,9 @@ class StatusBars extends StatelessWidget {
     var xpBg = Colors.lightBlue.shade100;
     var xpValueColor = Colors.blue;
     var maxXp = character.level + 7;
-    var xpPerc =
-        (character?.currentXP ?? 0) > 0 ? character.currentXP / maxXp : 0;
+    var xpPerc = (character?.currentXP ?? 0) > 0
+        ? character.currentXP.toDouble() / maxXp.toDouble()
+        : 0.0;
     var rounded = Radius.circular(5);
 
     return Padding(
