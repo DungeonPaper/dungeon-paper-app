@@ -3,6 +3,7 @@
 ## 1.1.7
 * Created Compendium screen
 * Unified character create/update into tabbed layout
+* Various bugfixes
 
 ## 1.1.6
 * Custom classes creation screen mostly finalized
