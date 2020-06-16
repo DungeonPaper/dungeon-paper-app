@@ -95,7 +95,6 @@ class AddMoveOrSpell extends StatelessWidget {
                             name: '',
                             description: '',
                             tags: [],
-                            level: '1-5',
                           ),
                           mode: DialogMode.Create,
                           onSave: (spell) {

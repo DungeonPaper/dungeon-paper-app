@@ -31,7 +31,7 @@ class CustomClassMoveList extends StatelessWidget {
   static const TITLES = {
     MoveCategory.Race: 'Races',
     MoveCategory.Starting: 'Starting Moves',
-    MoveCategory.Advanced1: 'Advanced Moves 1-5',
+    MoveCategory.Advanced1: 'Advanced Moves 2-5',
     MoveCategory.Advanced2: 'Advanced Moves 6-10',
   };
 
