@@ -24,10 +24,6 @@ class _RollDiceDialogState extends State<RollDiceDialog> {
 
   @override
   Widget build(BuildContext context) {
-    print('hashes:');
-    for (var h in controllers.map((c) => '${c.hash}-${c.results.join(',')}')) {
-      print(h);
-    }
     return SimpleDialog(
       title: Text('Roll Dice'),
       titlePadding: EdgeInsets.all(16).copyWith(bottom: 0),
@@ -38,8 +34,7 @@ class _RollDiceDialogState extends State<RollDiceDialog> {
                 ? const EdgeInsets.symmetric(vertical: 16)
                 : EdgeInsets.only(bottom: 16),
             child: DiceRollBox(
-              key: Key(
-                  'dice-${list.value.hash}-${list.value.results?.join(',')}'),
+              key: Key('dice-${list.value.hash}'),
               diceList: list.value.value,
               controller: controllers[list.index],
               onRemove: () => _removeAt(list.index),
