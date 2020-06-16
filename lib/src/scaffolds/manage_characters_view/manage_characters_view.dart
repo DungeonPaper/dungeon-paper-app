@@ -88,9 +88,11 @@ class _ManageCharactersViewState extends State<ManageCharactersView> {
                             )) {
                               dwStore.dispatch(RemoveCharacter(char));
                               await char.delete();
-                              setState(() {
-                                characters = characters..remove(char);
-                              });
+                              if (mounted) {
+                                setState(() {
+                                  characters = characters..remove(char);
+                                });
+                              }
                             }
                           },
                         ),
