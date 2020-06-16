@@ -3,7 +3,6 @@ import 'dart:math';
 import 'package:dungeon_paper/src/atoms/dice_icon.dart';
 import 'package:dungeon_paper/src/utils/utils.dart';
 import 'package:dungeon_world_data/dice.dart';
-import 'package:dungeon_world_data/dw_data.dart' show DiceResult;
 import 'package:flutter/material.dart';
 
 class DiceRollIcon extends StatelessWidget {

@@ -1,7 +1,5 @@
 import 'package:dungeon_paper/src/utils/utils.dart';
 import 'package:dungeon_world_data/dice.dart';
-import 'package:dungeon_world_data/dw_data.dart'
-    show DiceResult; // TODO: remove
 import 'package:flutter/material.dart';
 import 'package:uuid/uuid.dart';
 

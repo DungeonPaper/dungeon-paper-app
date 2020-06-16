@@ -82,7 +82,8 @@ class _AboutViewState extends State<AboutView> {
                       ),
                       Hyperlink(
                         text: 'GitHub',
-                        url: 'https://github.com/chenasraf/dungeon-paper-app',
+                        url:
+                            'https://github.com/DungeonPaper/dungeon-paper-app',
                       ),
                     ],
                   ),
