@@ -43,8 +43,9 @@ class ArmorAndHitDice extends StatelessWidget {
             value: Text(character.damageDice.toString()),
             onTap: () => showDialog(
               context: context,
-              builder: (context) =>
-                  EditHitDiceDialog(dice: character.damageDice),
+              builder: (context) => EditDamageDiceDialog(
+                character: character,
+              ),
             ),
           ),
         ],

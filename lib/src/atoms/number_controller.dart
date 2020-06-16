@@ -10,6 +10,7 @@ class NumberController extends StatefulWidget {
   final num min;
   final num max;
   final FormatType formatType;
+  final bool autoFocus;
 
   const NumberController({
     Key key,
@@ -19,6 +20,7 @@ class NumberController extends StatefulWidget {
     this.min = -double.infinity,
     this.max = double.infinity,
     this.formatType = FormatType.Integer,
+    this.autoFocus = true,
   }) : super(key: key);
 
   @override
@@ -74,7 +76,7 @@ class _NumberControllerState extends State<NumberController> {
                 errorText: !_validate ? '${widget.min}-${widget.max}' : null,
               ),
               controller: _controller,
-              autofocus: true,
+              autofocus: widget.autoFocus,
               style: TextStyle(fontSize: 24.0),
               textAlign: TextAlign.left,
             ),

@@ -10,6 +10,7 @@ class AlignmentDescription extends StatelessWidget {
   final chr.AlignmentName alignment;
   final VoidCallback onTap;
   final int level;
+  final bool selected;
 
   const AlignmentDescription({
     Key key,
@@ -17,7 +18,9 @@ class AlignmentDescription extends StatelessWidget {
     @required this.alignment,
     this.level,
     this.onTap,
-  }) : super(key: key);
+    this.selected,
+  })  : assert(playerClass != null),
+        super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -42,6 +45,9 @@ class AlignmentDescription extends StatelessWidget {
       leading: Icon(icon, size: 40.0),
       trailing: onTap != null ? Icon(Icons.chevron_right) : null,
       title: Text(capitalize(alignmentInfo.name)),
+      color: Theme.of(context)
+          .canvasColor
+          .withOpacity(selected != false ? 1 : 0.5),
       subtitle: alignmentInfo.description != null
           ? Text(alignmentInfo.description)
           : null,

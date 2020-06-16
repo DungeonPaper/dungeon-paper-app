@@ -1,10 +1,9 @@
 import 'package:dungeon_paper/db/models/character.dart';
 import 'package:dungeon_paper/src/dialogs/change_alignment_dialog.dart';
 import 'package:dungeon_paper/src/dialogs/dialogs.dart';
-import 'package:dungeon_paper/src/flutter_utils/widget_utils.dart';
 import 'package:dungeon_paper/src/redux/stores.dart';
-import 'package:dungeon_paper/src/scaffolds/class_selection_scaffold.dart';
-import 'character_summary.dart';
+import 'package:dungeon_paper/src/scaffolds/class_select_scaffold.dart';
+import 'package:dungeon_paper/src/scaffolds/scaffold_with_elevation.dart';
 import 'edit_basic_info_view.dart';
 import 'edit_race.dart';
 import 'edit_looks.dart';
@@ -13,127 +12,222 @@ import 'package:flutter/widgets.dart';
 
 import 'edit_stats.dart';
 
-enum CreateCharacterStep {
+enum CreateCharacterTab {
   BasicInfo,
   MainClass,
   Alignment,
   Race,
   Looks,
   Stats,
-  Summary,
-  Finishing
 }
 
 class CharacterWizardView extends StatefulWidget {
+  final DialogMode mode;
+  final Character character;
+  final void Function(Character) onSave;
+
+  const CharacterWizardView({
+    Key key,
+    @required this.mode,
+    @required this.character,
+    this.onSave,
+  }) : super(key: key);
+
   @override
   _CharacterWizardViewState createState() => _CharacterWizardViewState();
 }
 
-class _CharacterWizardViewState extends State<CharacterWizardView> {
-  Character character = Character();
-  CreateCharacterStep step = CreateCharacterStep.BasicInfo;
+class _CharacterWizardViewState extends State<CharacterWizardView>
+    with SingleTickerProviderStateMixin {
+  Character character;
+  TabController tabController;
+  ValueNotifier<bool> basicInfoValid;
+  ValueNotifier<bool> mainClassValid;
+  ValueNotifier<bool> alignmentValid;
+  ValueNotifier<bool> raceValid;
+  ValueNotifier<bool> looksValid;
+  ValueNotifier<bool> statsValid;
+
+  static const Map<CreateCharacterTab, String> TAB_TITLES = {
+    CreateCharacterTab.BasicInfo: 'General',
+    CreateCharacterTab.MainClass: 'Class',
+    CreateCharacterTab.Alignment: 'Alignment',
+    CreateCharacterTab.Race: 'Race',
+    CreateCharacterTab.Looks: 'Looks',
+    CreateCharacterTab.Stats: 'Stats',
+  };
+
+  @override
+  void initState() {
+    var user = dwStore.state.user.current;
+    character = widget.character != null
+        ? Character(
+            data: widget.character.toJSON(),
+            ref: widget.character.ref ??
+                user.ref.collection('characters').document(),
+          )
+        : Character(
+            ref: user.ref.collection('characters').document(),
+          );
+
+    basicInfoValid = ValueNotifier(true);
+    mainClassValid = ValueNotifier(true);
+    alignmentValid = ValueNotifier(character.alignment != null);
+    raceValid = ValueNotifier(character.race != null);
+    looksValid = ValueNotifier(true);
+    statsValid = ValueNotifier(true);
+
+    tabController = TabController(length: _tabs.keys.length, vsync: this);
+
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
-    return getCorrectView(
-      context: context,
+    return ScaffoldWithElevation.primaryBackground(
+      title: Text(character.displayName.isEmpty
+          ? 'Character'
+          : '${widget.mode == DialogMode.Create ? 'Creat' : 'Edit'}ing: ${character.displayName}'),
+      actions: [
+        IconButton(
+          icon: Icon(Icons.save),
+          tooltip: 'Save',
+          onPressed: _isCharValid ? _save : null,
+        )
+      ],
+      wrapWithScrollable: false,
+      useElevation: false,
+      elevation: 0,
+      body: Column(
+        children: <Widget>[
+          Row(
+            children: <Widget>[
+              Expanded(
+                child: Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Container(
+                    color: Theme.of(context).primaryColor,
+                    child: TabBar(
+                      isScrollable: true,
+                      controller: tabController,
+                      tabs: _tabs.keys.map(_mapTab).toList(),
+                    ),
+                  ),
+                ),
+              ),
+            ],
+          ),
+          Expanded(
+            child: TabBarView(
+              controller: tabController,
+              children: _tabs.values.toList(),
+            ),
+          ),
+        ],
+      ),
     );
   }
 
-  Widget getCorrectView({BuildContext context}) {
-    switch (step) {
-      case CreateCharacterStep.Finishing:
-        return Container(
-          color: Theme.of(context).primaryColor,
-          child: Center(
-            child: PageLoader(),
+  Tab _mapTab(CreateCharacterTab k) => Tab(
+        child: Container(
+          constraints: BoxConstraints(maxWidth: 150),
+          child: Row(
+            mainAxisSize: MainAxisSize.min,
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: <Widget>[
+              Text(TAB_TITLES[k]),
+              if (!_isValid(k))
+                Padding(
+                  padding: const EdgeInsets.only(left: 8.0),
+                  child: Icon(
+                    Icons.error,
+                    color: Colors.orange[300],
+                  ),
+                ),
+            ],
           ),
-        );
-      case CreateCharacterStep.Summary:
-        return CharacterSummary.withScaffold(
-          character: character,
-          onSave: _copyCharAndProceed,
-          onWillPop: _prevStep,
-        );
-      case CreateCharacterStep.Stats:
-        return EditStats.withScaffold(
-          character: character,
-          onSave: _copyCharAndProceed,
-          onDidPop: _prevStep,
-        );
-      case CreateCharacterStep.Looks:
-        return ChangeLooksDialog.withScaffold(
+        ),
+      );
+
+  Map<CreateCharacterTab, Widget> get _tabs => {
+        CreateCharacterTab.BasicInfo: EditBasicInfoView(
           character: character,
           mode: DialogMode.Create,
-          onSave: _copyCharAndProceed,
-          onDidPop: _prevStep,
-        );
-      case CreateCharacterStep.Race:
-        return ChangeRaceDialog.withScaffold(
+          onUpdate: (char) => setState(() {
+            character = char;
+          }),
+        ),
+        CreateCharacterTab.MainClass: ClassSelectView(
           character: character,
           mode: DialogMode.Create,
-          onSave: _copyCharAndProceed,
-          onDidPop: _prevStep,
-        );
-      case CreateCharacterStep.Alignment:
-        return ChangeAlignmentDialog.withScaffold(
+          onUpdate: (char) => setState(() {
+            character = char;
+          }),
+        ),
+        CreateCharacterTab.Alignment: ChangeAlignmentDialog(
           character: character,
           mode: DialogMode.Create,
-          onSave: _copyCharAndProceed,
-          onDidPop: _prevStep,
-        );
-      case CreateCharacterStep.MainClass:
-        return ClassSelectionScaffold.withScaffold(
+          onUpdate: (char) => setState(() {
+            character = char;
+          }),
+        ),
+        CreateCharacterTab.Race: ChangeRaceDialog(
           character: character,
           mode: DialogMode.Create,
-          onSave: _copyCharAndProceed,
-          onDidPop: _prevStep,
-        );
-      case CreateCharacterStep.BasicInfo:
-      default:
-        return EditBasicInfoView.withScaffold(
+          onUpdate: (char) => setState(() {
+            character = char;
+          }),
+        ),
+        CreateCharacterTab.Looks: ChangeLooksDialog(
           character: character,
           mode: DialogMode.Create,
-          onSave: _copyCharAndProceed,
-          onLeaveText:
-              'Leaving this screen will discard any selections you made and cancel the character creation.',
-        );
+          onUpdate: (char) => setState(() {
+            character = char;
+          }),
+        ),
+        CreateCharacterTab.Stats: EditStats(
+          character: character,
+          onUpdate: (char) => setState(() {
+            character = char;
+          }),
+        ),
+      };
+
+  bool _isValid(CreateCharacterTab k) {
+    switch (k) {
+      case CreateCharacterTab.BasicInfo:
+        return basicInfoValid.value;
+      case CreateCharacterTab.MainClass:
+        return mainClassValid.value;
+      case CreateCharacterTab.Alignment:
+        return alignmentValid.value;
+      case CreateCharacterTab.Race:
+        return raceValid.value;
+      case CreateCharacterTab.Looks:
+        return looksValid.value;
+      case CreateCharacterTab.Stats:
+        return statsValid.value;
     }
+    return true;
   }
 
-  void _copyCharAndProceed(_ks) async {
-    await character.update(json: _ks, save: false);
-    setState(() {
-      _nextStep();
-    });
-  }
+  bool get _isCharValid => [
+        basicInfoValid,
+        mainClassValid,
+        alignmentValid,
+        raceValid,
+        looksValid,
+        statsValid,
+      ].every((validator) => validator.value == true);
 
-  Future<bool> _prevStep() async {
-    num stepIdx = CreateCharacterStep.values.indexOf(step);
-    if (stepIdx == 0) {
-      return true;
-    }
-    setState(() {
-      step = CreateCharacterStep.values[--stepIdx];
-    });
-    return false;
-  }
-
-  void _nextStep() async {
-    num stepIdx = CreateCharacterStep.values.indexOf(step);
-    if (stepIdx >= CreateCharacterStep.values.length - 2) {
-      setState(() {
-        step = CreateCharacterStep.Finishing;
-      });
-      var user = dwStore.state.user.current;
-      await user.createCharacter(character);
-      Navigator.pop(context);
+  void _save() async {
+    if (widget.mode == DialogMode.Create) {
+      await character.create();
     } else {
-      stepIdx++;
-      setState(() {
-        step = CreateCharacterStep.values[stepIdx];
-      });
+      await character.update();
     }
+    widget.onSave?.call(character);
+    Navigator.pop(context);
   }
 }
 

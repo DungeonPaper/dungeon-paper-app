@@ -14,21 +14,28 @@
     "label": "Push APK",
     "type": "shell",
     "command": "dart",
-    "args": ["lib/tools/deploy.dart", "-p", "-b", "-d", "518e84af"],
+    "args": ["lib/tools/deploy.dart", "--push", "--no-test", "--no-build", "-d", "518e84af"],
     "problemMatcher": []
   },
   {
     "label": "Build & Push APK",
     "type": "shell",
     "command": "dart",
-    "args": ["lib/tools/deploy.dart", "-p", "-d", "518e84af"],
+    "args": ["lib/tools/deploy.dart", "--push", "-d", "518e84af"],
+    "problemMatcher": []
+  },
+  {
+    "label": "Build & Push APK (Skip Tests)",
+    "type": "shell",
+    "command": "dart",
+    "args": ["lib/tools/deploy.dart", "--push", "--no-test", "-d", "518e84af"],
     "problemMatcher": []
   },
   {
     "label": "Build, Push & Install APK",
     "type": "shell",
     "command": "dart",
-    "args": ["lib/tools/deploy.dart", "-p", "-i", "-d", "518e84af"],
+    "args": ["lib/tools/deploy.dart", "--push", "--install", "-d", "518e84af"],
     "problemMatcher": []
   }]
 }

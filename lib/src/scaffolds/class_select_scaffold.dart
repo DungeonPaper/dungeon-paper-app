@@ -5,62 +5,52 @@ import 'package:dungeon_paper/src/dialogs/dialogs.dart';
 import 'package:dungeon_paper/src/lists/player_class_list.dart';
 import 'package:dungeon_paper/src/organisms/class_description.dart';
 import 'package:dungeon_paper/src/pages/character_wizard/character_wizard_utils.dart';
+import 'package:dungeon_paper/src/utils/types.dart';
 import 'package:dungeon_world_data/dw_data.dart';
 import 'package:dungeon_world_data/player_class.dart';
 import 'package:flutter/material.dart';
 
-class ClassSelectionScaffold extends StatelessWidget {
+class ClassSelectView extends StatelessWidget {
   final Character character;
   final DialogMode mode;
-  final CharSaveFunction onSave;
+  final VoidCallbackDelegate<Character> onUpdate;
   final ScaffoldBuilderFunction builder;
 
-  const ClassSelectionScaffold({
+  const ClassSelectView({
     Key key,
     @required this.character,
-    @required this.onSave,
+    @required this.onUpdate,
     this.builder,
     this.mode = DialogMode.Edit,
   }) : super(key: key);
 
-  ClassSelectionScaffold.withScaffold({
-    Key key,
-    @required this.character,
-    @required this.onSave,
-    this.mode = DialogMode.Edit,
-    Function() onDidPop,
-    Function() onWillPop,
-  })  : builder = characterWizardScaffold(
-          mode: mode,
-          titleText: 'Main Class',
-          buttonType: WizardScaffoldButtonType.back,
-          onDidPop: onDidPop,
-          onWillPop: onWillPop,
-        ),
-        super(key: key);
-
   @override
   Widget build(BuildContext context) {
-    Widget child = Padding(
-      padding: const EdgeInsets.all(16.0),
-      child: PlayerClassList(
-        builder: (context, list) => Column(
-          children: [
-            for (var availClass in list)
-              Padding(
-                padding: EdgeInsets.only(bottom: 16.0),
-                child: CardListItem(
-                  title: Text(availClass.name),
-                  subtitle: Text('Preview class'),
-                  leading: Padding(
-                    padding: EdgeInsets.only(right: 16.0),
-                    child: Icon(Icons.person, size: 40.0),
+    Widget child = SingleChildScrollView(
+      child: Padding(
+        padding: const EdgeInsets.all(16.0),
+        child: PlayerClassList(
+          builder: (context, list) {
+            var sorted = [...list]
+              ..sort((a, b) => character.mainClass == a ? -1 : 1);
+            return Column(
+              children: [
+                for (var availClass in sorted)
+                  Padding(
+                    padding: EdgeInsets.only(bottom: 16.0),
+                    child: CardListItem(
+                      title: Text(availClass.name),
+                      subtitle: Text('Preview class'),
+                      leading: Icon(Icons.person, size: 40.0),
+                      color: Theme.of(context).canvasColor.withOpacity(
+                          availClass == character.mainClass ? 1 : 0.5),
+                      trailing: Icon(Icons.chevron_right),
+                      onTap: previewClass(context, availClass),
+                    ),
                   ),
-                  trailing: Icon(Icons.chevron_right),
-                  onTap: previewClass(context, availClass),
-                ),
-              ),
-          ],
+              ],
+            );
+          },
         ),
       ),
     );
@@ -90,16 +80,7 @@ class ClassSelectionScaffold extends StatelessWidget {
       ChangeClassConfirmationOptions options) {
     var result = options.applyToCharacter(character, def);
     character.mainClass = def;
-    onSave(
-      result.data
-        ..addAll(
-          {
-            'playerClasses': [def.toJSON()],
-            'looks': [],
-            'race': null,
-          },
-        ),
-    );
+    onUpdate?.call(result.character);
   }
 
   Function() previewClass(BuildContext context, PlayerClass def) {
@@ -309,11 +290,9 @@ class _ConfirmClassChangeDialogState extends State<ConfirmClassChangeDialog> {
 
 class ChangeClassConfirmationResults {
   final Character character;
-  final Map<String, dynamic> data;
 
   ChangeClassConfirmationResults({
     @required this.character,
-    @required this.data,
   });
 }
 
@@ -340,26 +319,24 @@ class ChangeClassConfirmationOptions {
 
   ChangeClassConfirmationResults applyToCharacter(
       Character character, PlayerClass mainClass) {
-    var data = <String, dynamic>{};
-
     if (deleteMoves) {
-      data['moves'] = [];
+      character.moves = [];
     }
 
     if (resetXP) {
-      data['level'] = 1;
-      data['currentXP'] = 0;
+      character.level = 1;
+      character.currentXP = 0;
     }
 
     if (resetMaxHP) {
-      data['maxHP'] = character.defaultMaxHP;
-      data['currentHP'] = character.maxHP;
+      character.maxHP = character.defaultMaxHP;
+      character.currentHP = character.maxHP;
     }
 
     if (resetHitDice) {
-      data['hitDice'] = mainClass.damage;
+      character.damageDice = mainClass.damage;
     }
 
-    return ChangeClassConfirmationResults(character: character, data: data);
+    return ChangeClassConfirmationResults(character: character);
   }
 }

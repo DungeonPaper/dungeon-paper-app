@@ -107,7 +107,6 @@ class _DiceRollBoxState extends State<DiceRollBox>
               builder: (context, dice, child) => Padding(
                 padding: const EdgeInsets.symmetric(vertical: 8),
                 child: DiceIconList(
-                  diceList: dice,
                   controller: widget.controller,
                   animations: animations,
                 ),

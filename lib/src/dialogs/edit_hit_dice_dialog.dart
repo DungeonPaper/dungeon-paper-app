@@ -1,22 +1,28 @@
+import 'package:dungeon_paper/db/models/character.dart';
 import 'package:dungeon_paper/src/atoms/dice_selector.dart';
 import 'package:dungeon_paper/src/dialogs/standard_dialog_controls.dart';
-import 'package:dungeon_paper/src/redux/stores.dart';
+import 'package:dungeon_paper/src/utils/types.dart';
 import 'package:pedantic/pedantic.dart';
 import 'package:dungeon_world_data/dice.dart';
 import 'package:flutter/material.dart';
 
-class EditHitDiceDialog extends StatefulWidget {
-  final Dice dice;
-  EditHitDiceDialog({
+class EditDamageDiceDialog extends StatefulWidget {
+  final Character character;
+  final VoidCallbackDelegate<Character> onSave;
+
+  EditDamageDiceDialog({
     Key key,
-    @required this.dice,
+    @required this.character,
+    this.onSave,
   }) : super(key: key);
 
+  Dice get dice => character.damageDice;
+
   @override
-  State<StatefulWidget> createState() => EditHitDiceDialogState();
+  State<StatefulWidget> createState() => EditDamageDiceDialogState();
 }
 
-class EditHitDiceDialogState extends State<EditHitDiceDialog> {
+class EditDamageDiceDialogState extends State<EditDamageDiceDialog> {
   Dice dice;
 
   @override
@@ -51,8 +57,9 @@ class EditHitDiceDialogState extends State<EditHitDiceDialog> {
     );
   }
 
+  Character get character => widget.character;
+
   void _saveValue() async {
-    var character = dwStore.state.characters.current;
     character.damageDice = dice;
     unawaited(character.update());
     Navigator.pop(context);

@@ -27,10 +27,10 @@ class DiceSelector extends StatefulWidget {
 }
 
 class _DiceSelectorState extends State<DiceSelector> {
-  TextEditingController controller;
-  Dice dice;
-  num get amount => dice.amount;
-  num get sides => dice.sides;
+  TextEditingController amountController;
+  FocusNode focusNode;
+  num get amount => int.tryParse(amountController.text);
+  num sides;
 
   static List<Dice> diceList = [
     Dice.d4,
@@ -43,17 +43,25 @@ class _DiceSelectorState extends State<DiceSelector> {
 
   @override
   void initState() {
-    dice = widget.dice;
-    controller = TextEditingController.fromValue(
+    sides = widget.dice.sides;
+    amountController = TextEditingController.fromValue(
       TextEditingValue(
         text: widget.dice.amount.toString(),
       ),
     );
+    focusNode = FocusNode()..addListener(_focusListener);
     super.initState();
   }
 
   @override
+  void dispose() {
+    focusNode.removeListener(_focusListener);
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
+    // print('controller: $amountController');
     return Container(
       padding: widget.padding,
       child: Row(
@@ -65,53 +73,70 @@ class _DiceSelectorState extends State<DiceSelector> {
             Padding(
               padding: const EdgeInsets.only(right: 16.0),
               child: DiceIcon(
-                dice: dice,
+                dice: Dice(sides, amount),
                 size: widget.iconSize.toDouble(),
               ),
             ),
           Container(
-            width: 40,
+            width: 50,
             child: TextField(
-              onChanged: (val) {
-                setState(() => dice = Dice(sides, int.tryParse(val) ?? amount));
-                delegateChange(dice);
-              },
+              onChanged: _updateAmount,
               keyboardType: TextInputType.number,
               inputFormatters: <TextInputFormatter>[
                 WhitelistingTextInputFormatter.digitsOnly,
                 BetweenValuesTextFormatter(1, 99)
               ],
-              controller: controller,
+              controller: amountController,
               style: widget.textStyle,
               textAlign: TextAlign.right,
+              focusNode: focusNode,
             ),
           ),
           DropdownButton<Dice>(
             value: Dice(sides),
-            items: diceList
-                .map((d) => DropdownMenuItem(
-                      key: Key(d.toString()),
-                      value: d,
-                      child: Text(
-                        'd${d.sides}',
-                        style: widget.textStyle,
-                      ),
-                    ))
-                .toList(),
-            onChanged: (val) {
-              setState(() => dice = Dice(val.sides, amount));
-              delegateChange(dice);
-            },
+            items: [
+              for (var d in diceList)
+                DropdownMenuItem(
+                  key: Key(d.toString()),
+                  value: d,
+                  child: Text(
+                    'd${d.sides}',
+                    style: widget.textStyle,
+                  ),
+                ),
+            ],
+            onChanged: _updateSides,
           )
         ],
       ),
     );
   }
 
-  void delegateChange(Dice dice) {
-    if (widget.onChanged == null) {
-      return;
+  void _updateSides(val) {
+    sides = val.sides;
+    _delegateChange(Dice(sides, amount));
+  }
+
+  void _updateAmount(val) {
+    var _amt = int.tryParse(val) ?? amount;
+    _delegateChange(Dice(sides, _amt));
+  }
+
+  void _delegateChange(Dice dice) {
+    widget.onChanged?.call(dice);
+  }
+
+  void _focusListener() {
+    if (focusNode.hasFocus) {
+      setState(() {
+        amountController.value = amountController.value.copyWith(
+          selection: TextSelection(
+            baseOffset: 0,
+            extentOffset: amountController.text.length,
+          ),
+        );
+        // print('set: ${amountController.value}');
+      });
     }
-    widget.onChanged(dice);
   }
 }

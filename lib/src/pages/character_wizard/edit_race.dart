@@ -1,7 +1,7 @@
 import 'package:dungeon_paper/db/models/character.dart';
 import 'package:dungeon_paper/src/atoms/card_list_item.dart';
 import 'package:dungeon_paper/src/dialogs/dialogs.dart';
-import 'character_wizard_utils.dart';
+import 'package:dungeon_paper/src/utils/types.dart';
 import 'package:dungeon_world_data/move.dart';
 import 'package:dungeon_world_data/player_class.dart';
 import 'package:flutter/material.dart';
@@ -9,62 +9,45 @@ import 'package:flutter/material.dart';
 class ChangeRaceDialog extends StatelessWidget {
   final Character character;
   final DialogMode mode;
-  final CharSaveFunction onSave;
-  final ScaffoldBuilderFunction builder;
+  final VoidCallbackDelegate<Character> onUpdate;
 
   const ChangeRaceDialog({
     Key key,
     this.mode = DialogMode.Edit,
     @required this.character,
-    @required this.onSave,
-    this.builder,
+    @required this.onUpdate,
   }) : super(key: key);
-
-  ChangeRaceDialog.withScaffold({
-    Key key,
-    this.mode = DialogMode.Edit,
-    @required this.character,
-    @required this.onSave,
-    Function() onDidPop,
-    Function() onWillPop,
-  })  : builder = characterWizardScaffold(
-          mode: mode,
-          titleText: 'Choose Race',
-          onDidPop: onDidPop,
-          onWillPop: onWillPop,
-          buttonType: WizardScaffoldButtonType.back,
-        ),
-        super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    Widget child = Padding(
-      padding: const EdgeInsets.all(16.0),
-      child: Column(
-        children: character.mainClass.raceMoves
-            .map(
-              (move) => Padding(
-                padding: EdgeInsets.only(bottom: 16.0),
-                child: RaceDescription(
-                  playerClass: character.mainClass,
-                  race: move,
-                  onTap: changeRace(move),
+    return SingleChildScrollView(
+      child: Padding(
+        padding: const EdgeInsets.all(16.0),
+        child: Column(
+          children: character.mainClass.raceMoves
+              .map(
+                (move) => Padding(
+                  padding: EdgeInsets.only(bottom: 16.0),
+                  child: RaceDescription(
+                    playerClass: character.mainClass,
+                    race: move,
+                    onTap: changeRace(move),
+                    color: Theme.of(context)
+                        .canvasColor
+                        .withOpacity(character.race == move ? 1 : 0.5),
+                  ),
                 ),
-              ),
-            )
-            .toList(),
+              )
+              .toList(),
+        ),
       ),
     );
-    if (builder != null) {
-      return builder(context: context, child: child, save: null, isValid: null);
-    }
-    return child;
   }
 
   Function() changeRace(Move def) {
     return () async {
       character.race = def;
-      onSave({'race': def});
+      onUpdate?.call(character);
     };
   }
 }

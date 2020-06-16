@@ -20,6 +20,7 @@ class _CustomClassesViewState extends State<CustomClassesView> {
   Widget build(BuildContext context) {
     return ScaffoldWithElevation.primaryBackground(
       title: Text('Custom Classes'),
+      automaticallyImplyLeading: true,
       actions: [
         PlayerClassList(
           builder: (context, list) => PopupMenuButton<PlayerClass>(

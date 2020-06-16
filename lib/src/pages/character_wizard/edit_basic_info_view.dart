@@ -1,130 +1,85 @@
 import 'package:dungeon_paper/db/models/character.dart';
 import 'package:dungeon_paper/src/dialogs/dialogs.dart';
+import 'package:dungeon_paper/src/flutter_utils/widget_utils.dart';
 import 'package:dungeon_paper/src/molecules/edit_avatar_card.dart';
+import 'package:dungeon_paper/src/utils/types.dart';
 import 'edit_display_name_card.dart';
 import 'package:flutter/material.dart';
-import 'character_wizard_utils.dart';
 
 class EditBasicInfoView extends StatefulWidget {
   final Character character;
-  final CharSaveFunction onSave;
+  final VoidCallbackDelegate<Character> onUpdate;
   final DialogMode mode;
-  final ScaffoldBuilderFunction builder;
+  final ValueNotifier validityNotifier;
 
   const EditBasicInfoView({
     Key key,
-    @required this.onSave,
+    @required this.onUpdate,
     this.mode = DialogMode.Edit,
     this.character,
-    this.builder,
+    this.validityNotifier,
   }) : super(key: key);
-
-  EditBasicInfoView.withScaffold({
-    Key key,
-    @required this.onSave,
-    this.mode = DialogMode.Edit,
-    this.character,
-    Function() onDidPop,
-    Function() onWillPop,
-    String onLeaveText,
-    bool shouldPreventPop = true,
-  })  : builder = characterWizardScaffold(
-          mode: mode,
-          titleText: 'Basic Information',
-          buttonType: mode == DialogMode.Edit
-              ? WizardScaffoldButtonType.back
-              : WizardScaffoldButtonType.close,
-          onDidPop: onDidPop,
-          onWillPop: onWillPop,
-          shouldPreventPop: shouldPreventPop,
-          onLeaveText: onLeaveText,
-        ),
-        super(key: key);
 
   @override
   _EditBasicInfoViewState createState() => _EditBasicInfoViewState();
 }
 
+enum Keys { displayName, photoURL }
+
 class _EditBasicInfoViewState extends State<EditBasicInfoView> {
   static Widget spacer = SizedBox(height: 10.0);
-
-  String photoURL;
-  String displayName;
-  TextEditingController photoURLController;
-  TextEditingController displayNameController;
-  bool dirty;
+  Map<Keys, TextEditingController> editingControllers;
 
   @override
   void initState() {
-    photoURL = widget.character.photoURL ?? '';
-    displayName = widget.character.displayName ?? '';
-
-    photoURLController =
-        TextEditingController.fromValue(TextEditingValue(text: photoURL))
-          ..addListener(photoURLListener);
-
-    displayNameController =
-        TextEditingController.fromValue(TextEditingValue(text: displayName))
-          ..addListener(displayNameListener);
-    dirty = false;
+    editingControllers = WidgetUtils.textEditingControllerMap(list: [
+      EditingControllerConfig(
+        key: Keys.displayName,
+        defaultValue: widget.character.displayName,
+        listener: () {
+          var def = widget.character;
+          def.displayName = editingControllers[Keys.displayName].text.trim();
+          widget.validityNotifier.value = _isValid();
+          updateWith(def);
+        },
+      ),
+      EditingControllerConfig(
+        key: Keys.photoURL,
+        defaultValue: widget.character.photoURL,
+        listener: () {
+          var def = widget.character;
+          def.photoURL = editingControllers[Keys.photoURL].text.trim();
+          widget.validityNotifier.value = _isValid();
+          updateWith(def);
+        },
+      ),
+    ]);
     super.initState();
   }
 
   @override
-  void dispose() {
-    photoURLController.removeListener(photoURLListener);
-    displayNameController.removeListener(displayNameListener);
-    super.dispose();
-  }
-
-  @override
   Widget build(BuildContext context) {
-    var child = Padding(
-      padding: const EdgeInsets.all(16.0),
-      child: Column(
-        children: [
-          EditDisplayNameCard(controller: displayNameController),
-          spacer,
-          EditAvatarCard(controller: photoURLController),
-        ],
+    return SingleChildScrollView(
+      child: Padding(
+        padding: const EdgeInsets.all(16.0),
+        child: Column(
+          children: [
+            EditDisplayNameCard(
+                controller: editingControllers[Keys.displayName]),
+            spacer,
+            EditAvatarCard(controller: editingControllers[Keys.photoURL]),
+          ],
+        ),
       ),
     );
-    if (widget.builder != null) {
-      return widget.builder(
-          context: context, child: child, save: save, isValid: formValid);
+  }
+
+  bool _isValid() => editingControllers[Keys.displayName].text.isNotEmpty;
+
+  void updateWith(Character def) {
+    if (widget.validityNotifier != null) {
+      widget.validityNotifier.value = _isValid();
     }
-    return child;
-  }
-
-  bool formValid() {
-    return dirty &&
-        <bool>[
-          displayName != null && displayName.isNotEmpty,
-        ].every((cond) => cond);
-  }
-
-  void save() {
-    if (widget.onSave != null) {
-      widget.onSave({
-        'displayName': displayName,
-        'photoURL': photoURL,
-      });
-    }
-  }
-
-  void displayNameListener() {
-    setState(() {
-      // dirty = displayName != displayNameController.text;
-      dirty = true;
-      displayName = displayNameController.text;
-    });
-  }
-
-  void photoURLListener() {
-    setState(() {
-      // dirty = photoURL != photoURLController.text;
-      dirty = true;
-      photoURL = photoURLController.text;
-    });
+    if (widget.onUpdate != null) widget.onUpdate(def);
   }
 }

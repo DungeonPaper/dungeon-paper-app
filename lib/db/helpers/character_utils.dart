@@ -84,35 +84,7 @@ enum CharacterKeys {
   lastUpdateDt,
 }
 
-const int MAX_STAT_VALUE = 20;
-
-const Map<CharacterKeys, String> CHARACTER_KEY_DB_MAPPING = {
-  CharacterKeys.mainClass: 'mainClass',
-  CharacterKeys.useDefaultMaxHP: 'useDefaultMaxHP',
-  CharacterKeys.str: 'str',
-  CharacterKeys.dex: 'dex',
-  CharacterKeys.con: 'con',
-  CharacterKeys.wis: 'wis',
-  CharacterKeys.int: 'int',
-  CharacterKeys.cha: 'cha',
-  CharacterKeys.alignment: 'alignment',
-  CharacterKeys.displayName: 'displayName',
-  CharacterKeys.photoURL: 'photoURL',
-  CharacterKeys.level: 'level',
-  CharacterKeys.currentHP: 'currentHP',
-  CharacterKeys.currentXP: 'currentXP',
-  CharacterKeys.maxHP: 'maxHP',
-  CharacterKeys.armor: 'armor',
-  CharacterKeys.moves: 'moves',
-  CharacterKeys.notes: 'notes',
-  CharacterKeys.spells: 'spells',
-  CharacterKeys.inventory: 'inventory',
-  CharacterKeys.docVersion: 'docVersion',
-  CharacterKeys.hitDice: 'hitDice',
-  CharacterKeys.looks: 'looks',
-  CharacterKeys.race: 'race',
-  CharacterKeys.coins: 'coins',
-};
+const int MAX_STAT_VALUE = 18;
 
 const List<CharacterKeys> ORDERED_STATS = [
   CharacterKeys.str,
@@ -122,26 +94,6 @@ const List<CharacterKeys> ORDERED_STATS = [
   CharacterKeys.wis,
   CharacterKeys.cha,
 ];
-
-const Map<CharacterKeys, String> CHARACTER_KEY_LABELS = {
-  CharacterKeys.mainClass: 'Main Class',
-  CharacterKeys.alignment: 'Alignment',
-  CharacterKeys.displayName: 'Display Name',
-  CharacterKeys.photoURL: 'Photo URL',
-  CharacterKeys.level: 'Level',
-  CharacterKeys.currentHP: 'HP',
-  CharacterKeys.currentXP: 'XP',
-  CharacterKeys.maxHP: 'Max HP',
-  CharacterKeys.armor: 'Armor',
-  CharacterKeys.moves: 'Moves',
-  CharacterKeys.notes: 'Notes',
-  CharacterKeys.spells: 'Spells',
-  CharacterKeys.inventory: 'Inventory',
-  CharacterKeys.hitDice: 'Damage Dice',
-  CharacterKeys.looks: 'Looks',
-  CharacterKeys.race: 'Race',
-  CharacterKeys.coins: 'Coins',
-};
 
 const Map<CharacterKeys, String> CHARACTER_STAT_LABELS = {
   CharacterKeys.str: 'Strength',
