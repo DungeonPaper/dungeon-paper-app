@@ -33,18 +33,27 @@ class _AddMoveListState extends State<AddMoveList> {
   Widget build(BuildContext context) {
     var moves = <int, List<Move>>{
       0: currentCls.startingMoves,
-      1: currentCls.advancedMoves1,
+      2: currentCls.advancedMoves1,
       6: currentCls.advancedMoves2
     };
     const LEADING_KEY = '';
 
     return CategorizedList.builder(
       items: [LEADING_KEY] + moves.keys.map((k) => k.toString()).toList(),
-      titleBuilder: (ctx, String minLevel, idx) => minLevel != LEADING_KEY
-          ? minLevel == '0'
-              ? Text('Starting Moves')
-              : Text('Levels $minLevel-${int.parse(minLevel) + 4}')
-          : null,
+      titleBuilder: (ctx, String minLevel, idx) {
+        if (minLevel == LEADING_KEY) {
+          return null;
+        }
+
+        var maxLevel = moves.keys.firstWhere(
+                (curLevel) => curLevel > int.tryParse(minLevel),
+                orElse: () => 11) -
+            1;
+
+        return minLevel == '0'
+            ? Text('Starting Moves')
+            : Text('Levels $minLevel-${maxLevel}');
+      },
       itemBuilder: (ctx, key, idx, catI) {
         if (key == LEADING_KEY) {
           return Row(

@@ -79,12 +79,10 @@ class _DiceRollBoxState extends State<DiceRollBox>
                   ValueListenableBuilder<List<Dice>>(
                     valueListenable: widget.controller,
                     builder: (context, dice, child) {
-                      var total = widget.controller.results.fold<int>(
-                          0,
-                          (_total, cur) =>
-                              _total + cur.results.reduce((a, b) => a + b));
+                      var total = widget.controller.results
+                          .fold<int>(0, (_total, cur) => _total + cur.total);
                       return Text(
-                        'Result: $total',
+                        'Total: $total',
                         style: TextStyle(fontSize: 16),
                       );
                     },

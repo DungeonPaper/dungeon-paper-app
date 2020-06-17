@@ -27,6 +27,7 @@ class DiceController extends ValueNotifier<Dice> {
 
 class DiceListController extends ValueNotifier<List<Dice>> {
   List<DiceResult> results;
+  List<int> modifiers;
   String hash;
   bool isRolled = false;
 
@@ -43,6 +44,10 @@ class DiceListController extends ValueNotifier<List<Dice>> {
   operator []=(int idx, dynamic value) {
     super.value[idx] = value;
     notifyListeners();
+  }
+
+  Dice operator [](int idx) {
+    return super.value[idx];
   }
 
   void add(Dice value) {
@@ -72,6 +77,11 @@ class DiceListController extends ValueNotifier<List<Dice>> {
     notifyListeners();
   }
 
+  void setMod(int idx, int mod) {
+    value[idx] = value[idx].copyWith(modifier: mod);
+    notifyListeners();
+  }
+
   List<Dice> get flat => value.fold(
         <Dice>[],
         (list, dice) =>
@@ -82,7 +92,7 @@ class DiceListController extends ValueNotifier<List<Dice>> {
             ),
       );
 
-  List<DiceResult> get flatResults => enumerate(results).fold(
+  List<DiceResult> get flatResults => enumerate(results ?? []).fold(
         <DiceResult>[],
         (list, result) =>
             list +

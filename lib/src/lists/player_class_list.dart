@@ -30,9 +30,10 @@ class PlayerClassList extends StatelessWidget {
           value: list.firstWhere((cls) => cls.key == value.key,
               orElse: () => list.first),
           onChanged: onChanged,
-          items: list
-              .map((cls) => DropdownMenuItem(value: cls, child: Text(cls.name)))
-              .toList(),
+          items: [
+            for (var cls in list)
+              DropdownMenuItem(value: cls, child: Text(cls.name)),
+          ],
         ),
       );
 
