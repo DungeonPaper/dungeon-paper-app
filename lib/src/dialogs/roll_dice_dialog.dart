@@ -1,12 +1,19 @@
-import 'package:dungeon_paper/src/atoms/dice_selector.dart';
+import 'package:dungeon_paper/db/models/character.dart';
 import 'package:dungeon_paper/src/flutter_utils/dice_controller.dart';
-import 'package:dungeon_paper/src/molecules/dice_icon_list.dart';
 import 'package:dungeon_paper/src/molecules/dice_roll_box.dart';
+import 'package:dungeon_paper/src/molecules/dice_roll_builder.dart';
 import 'package:dungeon_paper/src/utils/utils.dart';
 import 'package:dungeon_world_data/dice.dart';
 import 'package:flutter/material.dart';
 
 class RollDiceDialog extends StatefulWidget {
+  final Character character;
+
+  const RollDiceDialog({
+    Key key,
+    this.character,
+  }) : super(key: key);
+
   @override
   _RollDiceDialogState createState() => _RollDiceDialogState();
 }
@@ -42,47 +49,9 @@ class _RollDiceDialogState extends State<RollDiceDialog> {
           ),
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: 16),
-          child: Card(
-            color: Theme.of(context).canvasColor,
-            elevation: 3,
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              children: [
-                Padding(
-                  padding: const EdgeInsets.only(top: 8),
-                  child: DiceIconList(
-                    key: Key(addingController.value.join(',')),
-                    controller: addingController,
-                    animations: null,
-                  ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 16),
-                  child: Row(
-                    mainAxisSize: MainAxisSize.max,
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      for (var d in enumerate(addingController.value))
-                        DiceSelector(
-                          key: Key('d-${d.index}'),
-                          dice: d.value,
-                          textStyle: TextStyle(fontSize: 20),
-                          onChanged: (val) {
-                            if (val?.amount != null && val.amount > 0) {
-                              _set(d.index, val);
-                            }
-                          },
-                        ),
-                      IconButton(
-                        color: Theme.of(context).primaryColor,
-                        icon: Icon(Icons.check),
-                        onPressed: () => _add(addingController.value),
-                      ),
-                    ],
-                  ),
-                ),
-              ],
-            ),
+          child: DiceRollBuilder(
+            character: widget.character,
+            onChanged: _add,
           ),
         ),
       ],
@@ -94,12 +63,6 @@ class _RollDiceDialogState extends State<RollDiceDialog> {
       var _ctrl = DiceListController([...dice]);
       controllers.add(_ctrl);
       diceList.add(dice);
-    });
-  }
-
-  void _set(int idx, Dice dice) {
-    setState(() {
-      addingController[idx] = dice;
     });
   }
 

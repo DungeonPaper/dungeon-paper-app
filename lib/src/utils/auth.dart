@@ -14,6 +14,7 @@ import 'utils.dart';
 
 final FirebaseAuth _auth = FirebaseAuth.instance;
 GoogleSignIn _googleSignInInstance;
+
 Future<GoogleSignIn> get _googleSignIn async {
   if (_googleSignInInstance == null) {
     var secrets = await loadSecrets();
@@ -142,6 +143,12 @@ Future<GoogleSignInAccount> signOutWithGoogle() async {
 
 Future<FirebaseUser> getFirebaseUser(AuthCredential creds) async {
   try {
+    var persistedUser = await _auth.currentUser();
+
+    if (persistedUser != null) {
+      return persistedUser;
+    }
+
     var result = await _auth.signInWithCredential(creds);
     var user = result.user;
     return user;

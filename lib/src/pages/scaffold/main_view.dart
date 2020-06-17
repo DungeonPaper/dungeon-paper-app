@@ -123,7 +123,9 @@ class _MainViewState extends State<MainView> {
                       PlatformSvg.asset('dice/d20.svg', width: 24, height: 24),
                   onPressed: () => showDialog(
                     context: context,
-                    builder: (context) => RollDiceDialog(),
+                    builder: (context) => RollDiceDialog(
+                      character: widget.character,
+                    ),
                   ),
                 )
               ]
