@@ -10,12 +10,12 @@ import 'package:flutter/material.dart';
 class ChangeLooksDialog extends StatefulWidget {
   final Character character;
   final DialogMode mode;
-  final VoidCallbackDelegate<Character> onSave;
+  final VoidCallbackDelegate<Character> onUpdate;
 
   const ChangeLooksDialog({
     Key key,
     @required this.character,
-    @required this.onSave,
+    @required this.onUpdate,
     this.mode = DialogMode.Edit,
   }) : super(key: key);
 
@@ -146,7 +146,7 @@ class _ChangeLooksDialogState extends State<ChangeLooksDialog> {
   void changeLooks(List<String> def) async {
     var char = widget.character;
     char.looks = def;
-    widget.onSave?.call(char);
+    widget.onUpdate?.call(char);
   }
 
   void _setValue(int i, String val) {

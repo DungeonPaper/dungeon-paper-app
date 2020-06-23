@@ -48,6 +48,7 @@ class _CharacterWizardViewState extends State<CharacterWizardView>
   ValueNotifier<bool> raceValid;
   ValueNotifier<bool> looksValid;
   ValueNotifier<bool> statsValid;
+  bool dirty;
 
   static const Map<CreateCharacterTab, String> TAB_TITLES = {
     CreateCharacterTab.BasicInfo: 'General',
@@ -77,6 +78,7 @@ class _CharacterWizardViewState extends State<CharacterWizardView>
     raceValid = ValueNotifier(character.race != null);
     looksValid = ValueNotifier(true);
     statsValid = ValueNotifier(true);
+    dirty = false;
 
     tabController = TabController(length: _tabs.keys.length, vsync: this);
 
@@ -158,13 +160,15 @@ class _CharacterWizardViewState extends State<CharacterWizardView>
           character: character,
           mode: DialogMode.Create,
           onUpdate: (char) => setState(() {
+            dirty = true;
             character = char;
           }),
         ),
         CreateCharacterTab.MainClass: ClassSelectView(
           character: character,
           mode: DialogMode.Create,
-          onSave: (char) => setState(() {
+          onUpdate: (char) => setState(() {
+            dirty = true;
             character = char;
           }),
         ),
@@ -172,6 +176,7 @@ class _CharacterWizardViewState extends State<CharacterWizardView>
           character: character,
           mode: DialogMode.Create,
           onUpdate: (char) => setState(() {
+            dirty = true;
             character = char;
           }),
         ),
@@ -179,19 +184,22 @@ class _CharacterWizardViewState extends State<CharacterWizardView>
           character: character,
           mode: DialogMode.Create,
           onUpdate: (char) => setState(() {
+            dirty = true;
             character = char;
           }),
         ),
         CreateCharacterTab.Looks: ChangeLooksDialog(
           character: character,
           mode: DialogMode.Create,
-          onSave: (char) => setState(() {
+          onUpdate: (char) => setState(() {
+            dirty = true;
             character = char;
           }),
         ),
         CreateCharacterTab.Stats: EditStats(
           character: character,
           onUpdate: (char) => setState(() {
+            dirty = true;
             character = char;
           }),
         ),
@@ -234,16 +242,22 @@ class _CharacterWizardViewState extends State<CharacterWizardView>
     Navigator.pop(context);
   }
 
-  void _confirmExit() async {
+  Future<bool> _confirmExit() async {
     var verb = widget.mode == DialogMode.Edit ? 'edit' : 'creation';
-    if (await await showDialog(
+    if (!dirty) {
+      return true;
+    }
+    if (await showDialog(
           context: context,
           builder: (ctx) => ConfirmationDialog(
-              text: Text('Are you sure you want to quit character $verb?')),
+              text: Text(
+                  'Are you sure you want to quit character $verb?\nYour changes will not be saved.')),
         ) ==
         true) {
       Navigator.pop(context, true);
+      return true;
     }
+    return false;
   }
 }
 

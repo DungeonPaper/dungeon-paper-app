@@ -31,27 +31,44 @@ class _RollDiceDialogState extends State<RollDiceDialog> {
 
   @override
   Widget build(BuildContext context) {
-    return SimpleDialog(
-      title: Text('Roll Dice'),
-      titlePadding: EdgeInsets.all(16).copyWith(bottom: 0),
+    return Column(
       children: [
-        for (var list in enumerate(controllers))
-          Padding(
-            padding: list.index > 0
-                ? const EdgeInsets.symmetric(vertical: 16)
-                : EdgeInsets.only(bottom: 16),
-            child: DiceRollBox(
-              key: Key('dice-${list.value.hash}'),
-              diceList: list.value.value,
-              controller: controllers[list.index],
-              onRemove: () => _removeAt(list.index),
+        Container(
+          height: 52,
+          child: Center(
+            child: Text(
+              'Roll Dice',
+              style: Theme.of(context).textTheme.headline4.copyWith(
+                    color: Theme.of(context).canvasColor,
+                  ),
             ),
           ),
-        Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 16),
-          child: DiceRollBuilder(
-            character: widget.character,
-            onChanged: _add,
+        ),
+        Expanded(
+          child: SingleChildScrollView(
+            child: Column(
+              children: [
+                for (var list in enumerate(controllers))
+                  Padding(
+                    padding: list.index > 0
+                        ? const EdgeInsets.symmetric(vertical: 16)
+                        : EdgeInsets.only(bottom: 16),
+                    child: DiceRollBox(
+                      key: Key('dice-${list.value.hash}'),
+                      diceList: list.value.value,
+                      controller: controllers[list.index],
+                      onRemove: () => _removeAt(list.index),
+                    ),
+                  ),
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 16),
+                  child: DiceRollBuilder(
+                    character: widget.character,
+                    onChanged: _add,
+                  ),
+                ),
+              ],
+            ),
           ),
         ),
       ],

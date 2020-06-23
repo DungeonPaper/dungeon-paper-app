@@ -12,12 +12,12 @@ import 'package:flutter/material.dart';
 class ClassSelectView extends StatelessWidget {
   final Character character;
   final DialogMode mode;
-  final VoidCallbackDelegate<Character> onSave;
+  final VoidCallbackDelegate<Character> onUpdate;
 
   const ClassSelectView({
     Key key,
     @required this.character,
-    @required this.onSave,
+    @required this.onUpdate,
     this.mode = DialogMode.Edit,
   }) : super(key: key);
 
@@ -74,7 +74,7 @@ class ClassSelectView extends StatelessWidget {
       ChangeClassConfirmationOptions options) {
     var result = options.applyToCharacter(character, def);
     character.mainClass = def;
-    onSave?.call(result.character);
+    onUpdate?.call(result.character);
   }
 
   Function() previewClass(BuildContext context, PlayerClass def) {
