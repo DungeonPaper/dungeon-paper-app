@@ -30,7 +30,7 @@ class ChangelogParser {
       // if (RegExp('\\*\s*').matchAsPrefix(line.trim()) != null) {
       var message = line; // .trim().substring(1).trim();
       if (cur != null) {
-        output[cur].lines.add('$message');
+        output[cur].lines.add(message);
         continue;
       }
       // }

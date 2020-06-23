@@ -5,6 +5,8 @@ import 'package:dungeon_paper/src/atoms/feedback_button.dart';
 import 'package:dungeon_paper/src/atoms/hyperlink.dart';
 import 'package:dungeon_paper/src/atoms/paypal_donate_button.dart';
 import 'package:dungeon_paper/src/atoms/version_number.dart';
+import 'package:dungeon_paper/src/flutter_utils/platform_svg.dart';
+import 'package:dungeon_paper/src/pages/whats_new_view/whats_new_view.dart';
 import 'package:flutter/gestures.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:flutter/material.dart';
@@ -12,9 +14,11 @@ import 'package:flutter/material.dart';
 const List<String> iconsCredits = [
   'ibrandify',
   'Freepik',
-  'fontawesome',
+  'FontAwesome',
   'Skoll',
   'Delapouite',
+  'iconmonstr',
+  'Icon8',
 ];
 
 class AboutView extends StatefulWidget {
@@ -24,6 +28,7 @@ class AboutView extends StatefulWidget {
 
 class _AboutViewState extends State<AboutView> {
   final num year = DateTime.now().year;
+  static const double SOCIAL_ICON_SIZE = 24;
 
   @override
   Widget build(BuildContext context) {
@@ -32,6 +37,14 @@ class _AboutViewState extends State<AboutView> {
         title: Text('About Dungeon Paper'),
         actions: <Widget>[
           FeedbackButton.iconButton(),
+          IconButton(
+            icon: Icon(Icons.history),
+            tooltip: "What's New?",
+            onPressed: () => showDialog(
+              context: context,
+              builder: (context) => WhatsNew.dialog(),
+            ),
+          )
         ],
       ),
       body: CategorizedList.childrenBuilder(
@@ -40,59 +53,103 @@ class _AboutViewState extends State<AboutView> {
             padding: const EdgeInsets.only(top: 16.0),
             child: Column(
               mainAxisSize: MainAxisSize.max,
-              crossAxisAlignment: CrossAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.stretch,
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
-                SizedBox(width: MediaQuery.of(context).size.width),
-                Text('Dungeon Paper',
-                    style: Theme.of(context).textTheme.headline5),
-                VersionNumber.text(prefix: 'Version'),
-                SizedBox(height: 16),
-                Text.rich(
-                  TextSpan(
-                    children: [
-                      TextSpan(text: 'Develeoped by '),
+                WhatsNewBox(
+                  children: [
+                    SizedBox(width: MediaQuery.of(context).size.width),
+                    Text('Dungeon Paper',
+                        style: Theme.of(context).textTheme.headline5),
+                    VersionNumber.text(prefix: 'Version'),
+                    SizedBox(height: 16),
+                    Text.rich(
                       TextSpan(
-                        text: 'Chen Asraf',
-                        recognizer: TapGestureRecognizer()
-                          ..onTap = () => launch('https://casraf.blog'),
-                        style: TextStyle(
-                          color: Color.fromRGBO(25, 118, 210, 1),
-                          decoration: TextDecoration.underline,
-                        ),
+                        children: [
+                          TextSpan(text: 'Develeoped by '),
+                          TextSpan(
+                            text: 'Chen Asraf',
+                            recognizer: TapGestureRecognizer()
+                              ..onTap = () => launch('https://casraf.blog'),
+                            style: TextStyle(
+                              color: Color.fromRGBO(25, 118, 210, 1),
+                              decoration: TextDecoration.underline,
+                            ),
+                          ),
+                        ],
                       ),
-                    ],
-                  ),
+                    ),
+                    Text('© 2018-$year'),
+                  ],
                 ),
-                Text('© 2018-$year'),
                 SizedBox(height: 15),
-                Container(
-                  width: 300,
-                  padding: EdgeInsets.only(top: 4),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                WhatsNewBox(
+                  child: Table(
+                    columnWidths: {
+                      0: FlexColumnWidth(1),
+                      1: FixedColumnWidth(14),
+                      2: FlexColumnWidth(1),
+                    },
                     children: [
-                      Hyperlink(
-                        text: 'Facebook',
-                        url: 'https://facebook.com/dungeonpaper',
+                      TableRow(
+                        children: [
+                          SocialButton(
+                            assetName: 'facebook',
+                            label: 'Facebook',
+                            color: Color(0xFF1878F3),
+                            textColor: Colors.white,
+                            url: 'https://facebook.com/DungeonPaper',
+                          ),
+                          Container(),
+                          SocialButton(
+                            label: 'Twitter',
+                            assetName: 'twitter',
+                            color: Color(0xFF00ACEE),
+                            textColor: Colors.white,
+                            url: 'https://twitter.com/dungeonpaper',
+                          ),
+                        ],
                       ),
-                      Hyperlink(
-                        text: 'Twitter',
-                        url: 'https://twitter.com/dungeonpaper',
+                      TableRow(
+                        children: [
+                          SocialButton(
+                            label: 'GitHub',
+                            url:
+                                'https://github.com/DungeonPaper/dungeon-paper-app',
+                            assetName: 'github',
+                            color: Colors.black,
+                            textColor: Colors.white,
+                          ),
+                          Container(),
+                          SocialButton(
+                            label: 'Discord',
+                            url: 'https://discord.gg/rXx2FNw',
+                            assetName: 'discord',
+                            color: Color(0xFF7289DB),
+                            textColor: Colors.white,
+                          ),
+                        ],
                       ),
-                      Hyperlink(
-                        text: 'GitHub',
-                        url:
-                            'https://github.com/DungeonPaper/dungeon-paper-app',
-                      ),
+                      TableRow(children: [
+                        SocialButton(
+                          label: 'casraf.blog',
+                          url:
+                              'https://casraf.blog/?utm_medium=app&utm_source=about',
+                          icon: Icon(Icons.public),
+                          color: Color(0xFFAA0000),
+                          textColor: Colors.white,
+                        ),
+                        Container(),
+                        SocialButton(
+                          label: 'Privacy',
+                          icon: Icon(Icons.lock),
+                          url:
+                              'https://casraf.blog/dungeon-paper-privacy-policy',
+                          color: Theme.of(context).primaryColor,
+                          textColor: Theme.of(context).colorScheme.onPrimary,
+                        ),
+                      ])
                     ],
-                  ),
-                ),
-                Container(
-                  padding: EdgeInsets.only(top: 8),
-                  child: Hyperlink(
-                    text: 'Privacy Policy',
-                    url: 'https://casraf.blog/dungeon-paper-privacy-policy',
                   ),
                 ),
                 Padding(
@@ -137,6 +194,77 @@ class _AboutViewState extends State<AboutView> {
             ),
           ),
         ],
+      ),
+    );
+  }
+}
+
+class SocialButton extends StatelessWidget {
+  final String label;
+  final String assetName;
+  final Widget icon;
+  final Color color;
+  final Color textColor;
+  final String url;
+
+  const SocialButton({
+    Key key,
+    @required this.label,
+    this.assetName,
+    this.icon,
+    @required this.color,
+    this.textColor,
+    @required this.url,
+  })  : assert(icon != null || assetName != null),
+        super(key: key);
+
+  static const double SOCIAL_ICON_SIZE = 24;
+
+  @override
+  Widget build(BuildContext context) {
+    return RaisedButton.icon(
+      icon: assetName != null
+          ? PlatformSvg.asset(
+              'social/$assetName.svg',
+              width: SOCIAL_ICON_SIZE,
+              height: SOCIAL_ICON_SIZE,
+              color: textColor,
+            )
+          : icon,
+      color: color,
+      textColor: textColor,
+      label: Text(
+        label,
+        textScaleFactor: 1.25,
+      ),
+      onPressed: () => launch(url),
+    );
+  }
+}
+
+class WhatsNewBox extends StatelessWidget {
+  final Widget child;
+  final List<Widget> children;
+
+  const WhatsNewBox({
+    Key key,
+    this.child,
+    this.children,
+  })  : assert(child != null || children != null),
+        super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    var content = children != null && children.isNotEmpty
+        ? Column(
+            children: children,
+          )
+        : child;
+
+    return Card(
+      child: Padding(
+        padding: EdgeInsets.all(16),
+        child: content,
       ),
     );
   }

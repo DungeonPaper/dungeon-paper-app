@@ -76,6 +76,12 @@ flutter:
     - assets/dice/d12.svg
     - assets/dice/d20.svg
 
+    # social
+    - assets/social/discord.svg
+    - assets/social/facebook.svg
+    - assets/social/github.svg
+    - assets/social/twitter.svg
+
     - assets/armor.svg
     - assets/bag.svg
     - assets/book-stack.svg

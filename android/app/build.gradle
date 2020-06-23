@@ -37,7 +37,7 @@ android {
 
         // VERSION
         versionCode 40
-        versionName "1.1.7"
+        versionName "1.1.6+3"
     }
 
     // flavorDimensions "version"
