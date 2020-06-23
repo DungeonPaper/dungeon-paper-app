@@ -68,6 +68,9 @@ class _DiceRollBoxState extends State<DiceRollBox>
       padding: const EdgeInsets.symmetric(horizontal: 16),
       child: Card(
         color: Theme.of(context).canvasColor,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.all(Radius.circular(10)),
+        ),
         child: Column(
           children: [
             Container(
