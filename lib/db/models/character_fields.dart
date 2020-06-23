@@ -150,6 +150,7 @@ mixin CharacterFields implements FirebaseEntity {
   num get order => fields.get<num>('order').value;
   set order(num value) => fields.get<num>('order').set(value);
   bool get useDefaultMaxHP => fields.get<bool>('useDefaultMaxHP').value;
+  core.int get maxLoad => mainClass.load + strMod;
 
   static num statModifier(num stat) {
     const modifiers = {1: -3, 4: -2, 6: -1, 9: 0, 13: 1, 16: 2, 18: 3};
