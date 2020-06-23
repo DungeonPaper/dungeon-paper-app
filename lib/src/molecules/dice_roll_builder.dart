@@ -25,9 +25,11 @@ class DiceRollBuilder extends StatefulWidget {
 class _DiceRollBuilderState extends State<DiceRollBuilder> {
   DiceListController addingController;
 
+  static List<Dice> DEFAULT_DICE = [Dice.d6 * 2];
+
   @override
   void initState() {
-    addingController = DiceListController([Dice.d20]);
+    addingController = DiceListController(DEFAULT_DICE);
     super.initState();
   }
 
@@ -127,7 +129,7 @@ class _DiceRollBuilderState extends State<DiceRollBuilder> {
 
   void _addRow() {
     setState(() {
-      addingController.add(Dice.d20);
+      addingController.add(Dice.d6 * 2);
     });
   }
 }

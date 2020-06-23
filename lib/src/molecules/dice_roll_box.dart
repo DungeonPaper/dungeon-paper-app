@@ -28,8 +28,8 @@ class DiceRollBox extends StatefulWidget {
 
 class _DiceRollBoxState extends State<DiceRollBox>
     with TickerProviderStateMixin {
-  List<Animation<double>> animations = [];
-  List<AnimationController> animationControllers = [];
+  List<List<Animation<double>>> animations = [];
+  List<List<AnimationController>> animationControllers = [];
 
   @override
   void initState() {
@@ -44,8 +44,10 @@ class _DiceRollBoxState extends State<DiceRollBox>
       if (!widget.controller.isRolled) {
         widget.controller.roll();
       } else if (widget.animated) {
-        for (var ctrl in animationControllers) {
-          ctrl.value = 1;
+        for (var group in animationControllers) {
+          for (var ctrl in group) {
+            ctrl.value = 1;
+          }
         }
       }
     }
@@ -53,8 +55,10 @@ class _DiceRollBoxState extends State<DiceRollBox>
 
   @override
   void dispose() {
-    for (var ctrl in animationControllers) {
-      ctrl.dispose();
+    for (var group in animationControllers) {
+      for (var ctrl in group) {
+        ctrl.dispose();
+      }
     }
     widget.controller?.removeListener(_animate);
     super.dispose();
@@ -116,57 +120,38 @@ class _DiceRollBoxState extends State<DiceRollBox>
     );
   }
 
-  List<Dice> get flatDice => widget.diceList.fold(
-        <Dice>[],
-        (list, dice) =>
-            list +
-            List.generate(
-              dice.amount,
-              (index) => Dice(dice.sides),
-            ),
-      );
-
-  List<DiceController> get flatDiceControllers =>
-      enumerate(widget.diceList).fold(
-        <DiceController>[],
-        (list, dice) =>
-            list +
-            List.generate(
-              dice.value.amount,
-              (index) => DiceController(
-                  dice.value,
-                  widget.controller?.results != null &&
-                          widget.controller.results.length > dice.index
-                      ? widget.controller.results[dice.index]
-                      : null),
-            ),
-      );
-
   void _animate() {
-    for (var cont in animationControllers) {
-      if (widget.animated) {
-        cont.reset();
-        cont.forward();
-      } else {
-        cont.value = 1;
+    for (var group in animationControllers) {
+      for (var ctrl in group) {
+        if (widget.animated) {
+          ctrl.reset();
+          ctrl.forward();
+        } else {
+          ctrl.value = 1;
+        }
       }
     }
   }
 
   void _initAnimations() {
-    var _flat = flatDice;
     animationControllers = List.generate(
-      _flat.length,
-      (idx) => AnimationController(
-        vsync: this,
-        duration: Duration(milliseconds: Random().nextInt(10) * 200 + 2000),
+      widget.diceList.length,
+      (idx) => List.generate(
+        widget.diceList[idx].amount,
+        (innerIdx) => AnimationController(
+          vsync: this,
+          duration: Duration(milliseconds: Random().nextInt(10) * 200 + 2000),
+        ),
       ),
     );
     animations = List.generate(
-      _flat.length,
-      (idx) => CurvedAnimation(
-        parent: animationControllers[idx],
-        curve: Curves.easeOutQuint,
+      widget.diceList.length,
+      (idx) => List.generate(
+        widget.diceList[idx].amount,
+        (innerIdx) => CurvedAnimation(
+          parent: animationControllers[idx][innerIdx],
+          curve: Curves.easeOutQuint,
+        ),
       ),
     );
   }
