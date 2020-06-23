@@ -1,4 +1,5 @@
 import 'dart:core';
+import 'dart:core' as core;
 import 'dart:math';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dungeon_paper/db/helpers/character_utils.dart';

@@ -12,7 +12,7 @@ class InventoryLoadChip extends StatelessWidget {
     @required this.character,
   }) : super(key: key);
 
-  num get maxLoad => character.mainClass.load + character.str;
+  num get maxLoad => character.maxLoad;
 
   num get currentLoad {
     var count = 0.0;
