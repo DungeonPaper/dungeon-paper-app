@@ -189,7 +189,7 @@ List<T> addToList<T>(List<T> list, T item) => List.from(list)
 String camelToSnake(String string) =>
     string[0] +
     string.substring(1).replaceAllMapped(
-          RegExp(r'[A-Z]+'),
+          RegExp(r'[A-Z0-9]+'),
           (match) => '_' + match.group(0).toLowerCase(),
         );
 
