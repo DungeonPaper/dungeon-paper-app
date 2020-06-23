@@ -1,4 +1,5 @@
 import 'package:dungeon_paper/db/models/custom_class.dart';
+import 'package:dungeon_paper/src/dialogs/confirmation_dialog.dart';
 import 'package:dungeon_paper/src/dialogs/dialogs.dart';
 import 'package:dungeon_paper/src/lists/custom_class_moves_list.dart';
 import 'package:dungeon_paper/src/molecules/custom_class_alignments.dart';
@@ -36,6 +37,7 @@ class _CustomClassWizardState extends State<CustomClassWizard>
   ValueNotifier<bool> racesValid;
   ValueNotifier<bool> looksValid;
   ValueNotifier<bool> alignmentsValid;
+  bool dirty;
 
   static const Map<CustomClassWizardTab, String> TAB_TITLES = {
     CustomClassWizardTab.BasicInfo: 'General',
@@ -63,6 +65,7 @@ class _CustomClassWizardState extends State<CustomClassWizard>
     movesValid = ValueNotifier(true);
     looksValid = ValueNotifier(true);
     alignmentsValid = ValueNotifier(true);
+    dirty = false;
 
     tabController = TabController(length: _tabs.keys.length, vsync: this);
 
@@ -71,46 +74,49 @@ class _CustomClassWizardState extends State<CustomClassWizard>
 
   @override
   Widget build(BuildContext context) {
-    return ScaffoldWithElevation.primaryBackground(
-      title: Text(def.name.isEmpty
-          ? 'Custom Class'
-          : '${widget.mode == DialogMode.Create ? 'Creat' : 'Edit'}ing: ${def.name}'),
-      actions: [
-        IconButton(
-          icon: Icon(Icons.save),
-          tooltip: 'Save',
-          onPressed: _isClsValid ? _save : null,
-        )
-      ],
-      wrapWithScrollable: false,
-      useElevation: false,
-      elevation: 0,
-      body: Column(
-        children: <Widget>[
-          Row(
-            children: <Widget>[
-              Expanded(
-                child: Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Container(
-                    color: Theme.of(context).primaryColor,
-                    child: TabBar(
-                      isScrollable: true,
-                      controller: tabController,
-                      tabs: _tabs.keys.map(_mapTab).toList(),
+    return WillPopScope(
+      onWillPop: _confirmExit,
+      child: ScaffoldWithElevation.primaryBackground(
+        title: Text(def.name.isEmpty
+            ? 'Custom Class'
+            : '${widget.mode == DialogMode.Create ? 'Creat' : 'Edit'}ing: ${def.name}'),
+        actions: [
+          IconButton(
+            icon: Icon(Icons.save),
+            tooltip: 'Save',
+            onPressed: _isClsValid ? _save : null,
+          )
+        ],
+        wrapWithScrollable: false,
+        useElevation: false,
+        elevation: 0,
+        body: Column(
+          children: <Widget>[
+            Row(
+              children: <Widget>[
+                Expanded(
+                  child: Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Container(
+                      color: Theme.of(context).primaryColor,
+                      child: TabBar(
+                        isScrollable: true,
+                        controller: tabController,
+                        tabs: _tabs.keys.map(_mapTab).toList(),
+                      ),
                     ),
                   ),
                 ),
-              ),
-            ],
-          ),
-          Expanded(
-            child: TabBarView(
-              controller: tabController,
-              children: _tabs.values.toList(),
+              ],
             ),
-          ),
-        ],
+            Expanded(
+              child: TabBarView(
+                controller: tabController,
+                children: _tabs.values.toList(),
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }
@@ -142,6 +148,7 @@ class _CustomClassWizardState extends State<CustomClassWizard>
           customClass: def,
           validityNotifier: basicInfoValid,
           onUpdate: (cls) => setState(() {
+            dirty = true;
             def = cls;
           }),
         ),
@@ -151,6 +158,7 @@ class _CustomClassWizardState extends State<CustomClassWizard>
           validityNotifier: racesValid,
           raceMoveMode: true,
           onUpdate: (cls) => setState(() {
+            dirty = true;
             def = cls;
           }),
         ),
@@ -160,6 +168,7 @@ class _CustomClassWizardState extends State<CustomClassWizard>
           validityNotifier: movesValid,
           raceMoveMode: false,
           onUpdate: (cls) => setState(() {
+            dirty = true;
             def = cls;
           }),
         ),
@@ -168,6 +177,7 @@ class _CustomClassWizardState extends State<CustomClassWizard>
           looks: def.looks,
           validityNotifier: looksValid,
           onUpdate: (looks) => setState(() {
+            dirty = true;
             def.looks = Map<String, List<String>>.from(
               looks.asMap().map(
                     (k, v) => MapEntry(k.toString(), v),
@@ -179,6 +189,7 @@ class _CustomClassWizardState extends State<CustomClassWizard>
           mode: widget.mode,
           alignments: def.alignments,
           onUpdate: (alignments) => setState(() {
+            dirty = true;
             def.alignments = alignments;
           }),
         ),
@@ -216,5 +227,23 @@ class _CustomClassWizardState extends State<CustomClassWizard>
       widget.onSave?.call(def);
     }
     Navigator.pop(context);
+  }
+
+  Future<bool> _confirmExit() async {
+    var verb = widget.mode == DialogMode.Edit ? 'edit' : 'creation';
+    if (!dirty) {
+      return true;
+    }
+    if (await showDialog(
+          context: context,
+          builder: (ctx) => ConfirmationDialog(
+              text: Text(
+                  'Are you sure you want to quit custom class $verb?\nYour changes will not be saved.')),
+        ) ==
+        true) {
+      Navigator.pop(context, true);
+      return true;
+    }
+    return false;
   }
 }
