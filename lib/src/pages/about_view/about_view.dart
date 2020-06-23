@@ -221,19 +221,26 @@ class SocialButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return RaisedButton.icon(
-      icon: assetName != null
-          ? PlatformSvg.asset(
-              'social/$assetName.svg',
-              width: SOCIAL_ICON_SIZE,
-              height: SOCIAL_ICON_SIZE,
-              color: textColor,
-            )
-          : icon,
+      icon: Container(
+        width: SOCIAL_ICON_SIZE,
+        child: assetName != null
+            ? PlatformSvg.asset(
+                'social/$assetName.svg',
+                width: SOCIAL_ICON_SIZE,
+                height: SOCIAL_ICON_SIZE,
+                color: textColor,
+              )
+            : icon,
+      ),
       color: color,
       textColor: textColor,
-      label: Text(
-        label,
-        textScaleFactor: 1.25,
+      label: Expanded(
+        child: Center(
+          child: Text(
+            label,
+            textScaleFactor: 1.25,
+          ),
+        ),
       ),
       onPressed: () => launch(url),
     );
