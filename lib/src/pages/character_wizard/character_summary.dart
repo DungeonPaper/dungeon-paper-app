@@ -1,46 +1,25 @@
 import 'package:dungeon_paper/db/helpers/character_utils.dart' as chr;
 import 'package:dungeon_paper/db/models/character.dart';
 import 'package:dungeon_paper/src/atoms/card_list_item.dart';
-import 'package:dungeon_paper/src/dialogs/dialogs.dart';
 import 'package:dungeon_paper/src/molecules/character_headline.dart';
 import 'package:dungeon_paper/src/molecules/character_photo.dart';
 import 'package:dungeon_paper/src/molecules/stats_summary.dart';
-import 'package:dungeon_paper/src/pages/character_wizard/character_wizard_utils.dart';
 import 'package:dungeon_paper/src/pages/character_wizard/edit_looks.dart';
 import 'package:dungeon_paper/src/pages/character_wizard/edit_race.dart';
+import 'package:dungeon_paper/src/utils/types.dart';
 import 'package:dungeon_paper/src/utils/utils.dart';
 import 'package:flutter/material.dart';
 import 'package:dungeon_world_data/alignment.dart' as dwa_alignment;
 
 class CharacterSummary extends StatelessWidget {
   final Character character;
-  final CharSaveFunction onSave;
-  final ScaffoldBuilderFunction builder;
+  final VoidCallbackDelegate<Character> onSave;
 
   CharacterSummary({
     Key key,
     @required this.character,
     @required this.onSave,
-    this.builder,
   }) : super(key: key);
-
-  CharacterSummary.withScaffold({
-    Key key,
-    @required this.character,
-    @required this.onSave,
-    Function() onDidPop,
-    Function() onWillPop,
-    bool shouldPreventPop = true,
-  })  : builder = characterWizardScaffold(
-          mode: DialogMode.Create,
-          titleText: 'Summary',
-          nextStepText: 'Finish',
-          onDidPop: onDidPop,
-          onWillPop: onWillPop,
-          shouldPreventPop: shouldPreventPop,
-          buttonType: WizardScaffoldButtonType.back,
-        ),
-        super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -88,14 +67,6 @@ class CharacterSummary extends StatelessWidget {
         ),
       ),
     );
-    if (builder != null) {
-      return builder(
-        context: context,
-        child: child,
-        save: () => onSave({}),
-        isValid: () => true,
-      );
-    }
     return child;
   }
 

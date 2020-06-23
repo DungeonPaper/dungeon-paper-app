@@ -20,8 +20,8 @@ class RollDiceDialog extends StatefulWidget {
 
 class _RollDiceDialogState extends State<RollDiceDialog> {
   DiceListController addingController;
-  final List<List<Dice>> diceList = [];
-  final List<DiceListController> controllers = [];
+  List<List<Dice>> diceList = [];
+  List<DiceListController> controllers = [];
 
   static List<Dice> DEFAULT_DICE = [Dice.d6 * 2];
 

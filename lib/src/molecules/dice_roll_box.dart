@@ -112,6 +112,27 @@ class _DiceRollBoxState extends State<DiceRollBox>
                 ),
               ),
             ),
+            ValueListenableBuilder<List<Dice>>(
+              valueListenable: widget.controller,
+              builder: (context, dice, child) {
+                var total = widget.controller.results
+                    .fold<int>(0, (_total, cur) => _total + cur.total);
+                var totalModifiers = widget.controller.results
+                    .fold<int>(0, (_total, cur) => _total + cur.dice.modifier);
+                var totalWithoutModifiers = total - totalModifiers;
+                return Text(
+                  'WITHOUT MOD.: $totalWithoutModifiers | MOD. TOTAL: $totalModifiers',
+                  style: TextStyle(
+                    fontSize: 12,
+                    color: Theme.of(context)
+                        .colorScheme
+                        .onSurface
+                        .withOpacity(0.4),
+                  ),
+                );
+              },
+            ),
+            SizedBox(height: 8),
           ],
         ),
       ),
