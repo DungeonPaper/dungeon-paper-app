@@ -68,7 +68,6 @@ class _DiceRollBuilderState extends State<DiceRollBuilder> {
                           }
                         },
                       ),
-                      SizedBox(width: 16),
                       ModifierSelector(
                         value: d.value.modifier,
                         character: widget.character,

@@ -4,39 +4,20 @@ import 'package:dungeon_paper/src/dialogs/dialogs.dart';
 import 'package:dungeon_paper/src/utils/types.dart';
 import 'package:dungeon_paper/src/utils/utils.dart';
 import 'package:flutter_typeahead/flutter_typeahead.dart';
-import 'character_wizard_utils.dart';
 import 'package:dungeon_world_data/player_class.dart';
 import 'package:flutter/material.dart';
 
 class ChangeLooksDialog extends StatefulWidget {
   final Character character;
   final DialogMode mode;
-  final VoidCallbackDelegate<Character> onUpdate;
-  final ScaffoldBuilderFunction builder;
+  final VoidCallbackDelegate<Character> onSave;
 
   const ChangeLooksDialog({
     Key key,
     @required this.character,
-    @required this.onUpdate,
+    @required this.onSave,
     this.mode = DialogMode.Edit,
-    this.builder,
   }) : super(key: key);
-
-  ChangeLooksDialog.withScaffold({
-    Key key,
-    @required this.character,
-    @required this.onUpdate,
-    this.mode = DialogMode.Edit,
-    Function() onDidPop,
-    Function() onWillPop,
-  })  : builder = characterWizardScaffold(
-          mode: mode,
-          titleText: 'Edit Looks',
-          onDidPop: onDidPop,
-          onWillPop: onWillPop,
-          buttonType: WizardScaffoldButtonType.back,
-        ),
-        super(key: key);
 
   @override
   _ChangeLooksDialogState createState() => _ChangeLooksDialogState();
@@ -159,22 +140,13 @@ class _ChangeLooksDialogState extends State<ChangeLooksDialog> {
       ),
     );
 
-    if (widget.builder != null) {
-      return widget.builder(
-        context: context,
-        child: child,
-        save: _save,
-        isValid: _isValid,
-        wrapWithScrollable: false,
-      );
-    }
     return child;
   }
 
   void changeLooks(List<String> def) async {
     var char = widget.character;
     char.looks = def;
-    widget.onUpdate?.call(char);
+    widget.onSave?.call(char);
   }
 
   void _setValue(int i, String val) {
@@ -204,17 +176,6 @@ class _ChangeLooksDialogState extends State<ChangeLooksDialog> {
       selected.removeAt(i);
       _controllers.removeAt(i);
     });
-  }
-
-  bool _isValid() {
-    return true;
-    // return selected.length == widget.character.mainClass.looks.length &&
-    //     selected.every((s) => s != null && s.isNotEmpty);
-  }
-
-  void _save() {
-    var filtered = selected.where((s) => s?.isNotEmpty == true).toList();
-    changeLooks(filtered);
   }
 }
 

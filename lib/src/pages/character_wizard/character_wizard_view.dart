@@ -1,5 +1,6 @@
 import 'package:dungeon_paper/db/models/character.dart';
 import 'package:dungeon_paper/src/dialogs/change_alignment_dialog.dart';
+import 'package:dungeon_paper/src/dialogs/confirmation_dialog.dart';
 import 'package:dungeon_paper/src/dialogs/dialogs.dart';
 import 'package:dungeon_paper/src/redux/stores.dart';
 import 'package:dungeon_paper/src/scaffolds/class_select_scaffold.dart';
@@ -84,46 +85,49 @@ class _CharacterWizardViewState extends State<CharacterWizardView>
 
   @override
   Widget build(BuildContext context) {
-    return ScaffoldWithElevation.primaryBackground(
-      title: Text(character.displayName.isEmpty
-          ? 'Character'
-          : '${widget.mode == DialogMode.Create ? 'Creat' : 'Edit'}ing: ${character.displayName}'),
-      actions: [
-        IconButton(
-          icon: Icon(Icons.save),
-          tooltip: 'Save',
-          onPressed: _isCharValid ? _save : null,
-        )
-      ],
-      wrapWithScrollable: false,
-      useElevation: false,
-      elevation: 0,
-      body: Column(
-        children: <Widget>[
-          Row(
-            children: <Widget>[
-              Expanded(
-                child: Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Container(
-                    color: Theme.of(context).primaryColor,
-                    child: TabBar(
-                      isScrollable: true,
-                      controller: tabController,
-                      tabs: _tabs.keys.map(_mapTab).toList(),
+    return WillPopScope(
+      onWillPop: _confirmExit,
+      child: ScaffoldWithElevation.primaryBackground(
+        title: Text(character.displayName.isEmpty
+            ? 'Character'
+            : '${widget.mode == DialogMode.Create ? 'Creat' : 'Edit'}ing: ${character.displayName}'),
+        actions: [
+          IconButton(
+            icon: Icon(Icons.save),
+            tooltip: 'Save',
+            onPressed: _isCharValid ? _save : null,
+          )
+        ],
+        wrapWithScrollable: false,
+        useElevation: false,
+        elevation: 0,
+        body: Column(
+          children: <Widget>[
+            Row(
+              children: <Widget>[
+                Expanded(
+                  child: Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Container(
+                      color: Theme.of(context).primaryColor,
+                      child: TabBar(
+                        isScrollable: true,
+                        controller: tabController,
+                        tabs: _tabs.keys.map(_mapTab).toList(),
+                      ),
                     ),
                   ),
                 ),
-              ),
-            ],
-          ),
-          Expanded(
-            child: TabBarView(
-              controller: tabController,
-              children: _tabs.values.toList(),
+              ],
             ),
-          ),
-        ],
+            Expanded(
+              child: TabBarView(
+                controller: tabController,
+                children: _tabs.values.toList(),
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }
@@ -160,7 +164,7 @@ class _CharacterWizardViewState extends State<CharacterWizardView>
         CreateCharacterTab.MainClass: ClassSelectView(
           character: character,
           mode: DialogMode.Create,
-          onUpdate: (char) => setState(() {
+          onSave: (char) => setState(() {
             character = char;
           }),
         ),
@@ -181,7 +185,7 @@ class _CharacterWizardViewState extends State<CharacterWizardView>
         CreateCharacterTab.Looks: ChangeLooksDialog(
           character: character,
           mode: DialogMode.Create,
-          onUpdate: (char) => setState(() {
+          onSave: (char) => setState(() {
             character = char;
           }),
         ),
@@ -228,6 +232,18 @@ class _CharacterWizardViewState extends State<CharacterWizardView>
     }
     widget.onSave?.call(character);
     Navigator.pop(context);
+  }
+
+  void _confirmExit() async {
+    var verb = widget.mode == DialogMode.Edit ? 'edit' : 'creation';
+    if (await await showDialog(
+          context: context,
+          builder: (ctx) => ConfirmationDialog(
+              text: Text('Are you sure you want to quit character $verb?')),
+        ) ==
+        true) {
+      Navigator.pop(context, true);
+    }
   }
 }
 

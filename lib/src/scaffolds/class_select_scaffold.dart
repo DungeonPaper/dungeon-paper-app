@@ -4,7 +4,6 @@ import 'package:dungeon_paper/src/dialogs/confirmation_dialog.dart';
 import 'package:dungeon_paper/src/dialogs/dialogs.dart';
 import 'package:dungeon_paper/src/lists/player_class_list.dart';
 import 'package:dungeon_paper/src/organisms/class_description.dart';
-import 'package:dungeon_paper/src/pages/character_wizard/character_wizard_utils.dart';
 import 'package:dungeon_paper/src/utils/types.dart';
 import 'package:dungeon_world_data/dw_data.dart';
 import 'package:dungeon_world_data/player_class.dart';
@@ -13,14 +12,12 @@ import 'package:flutter/material.dart';
 class ClassSelectView extends StatelessWidget {
   final Character character;
   final DialogMode mode;
-  final VoidCallbackDelegate<Character> onUpdate;
-  final ScaffoldBuilderFunction builder;
+  final VoidCallbackDelegate<Character> onSave;
 
   const ClassSelectView({
     Key key,
     @required this.character,
-    @required this.onUpdate,
-    this.builder,
+    @required this.onSave,
     this.mode = DialogMode.Edit,
   }) : super(key: key);
 
@@ -54,9 +51,6 @@ class ClassSelectView extends StatelessWidget {
         ),
       ),
     );
-    if (builder != null) {
-      return builder(context: context, child: child, save: null, isValid: null);
-    }
     return child;
   }
 
@@ -80,7 +74,7 @@ class ClassSelectView extends StatelessWidget {
       ChangeClassConfirmationOptions options) {
     var result = options.applyToCharacter(character, def);
     character.mainClass = def;
-    onUpdate?.call(result.character);
+    onSave?.call(result.character);
   }
 
   Function() previewClass(BuildContext context, PlayerClass def) {

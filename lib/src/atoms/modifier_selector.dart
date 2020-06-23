@@ -26,53 +26,49 @@ class ModifierSelector extends StatelessWidget {
         textStyle.copyWith(color: Theme.of(context).colorScheme.onSurface);
     var modText = textStyle.copyWith(
         color: Theme.of(context).colorScheme.onSurface.withOpacity(0.4),
+        fontSize: normalText.fontSize * 0.5);
+    var emptyText = textStyle.copyWith(
+        color: Theme.of(context).colorScheme.onSurface.withOpacity(0.4),
         fontSize: normalText.fontSize * 0.75);
-    return DropdownButton(
-      value: value,
-      selectedItemBuilder: (context) => [
-        for (var n in options)
-          Container(
-            width: 60,
-            alignment: Alignment.centerLeft,
-            child: Text(
-              (n > 0 ? '+' : '') + n.toString(),
-              style: normalText,
+    return Container(
+      width: 100,
+      child: DropdownButton(
+        isExpanded: true,
+        value: value,
+        selectedItemBuilder: (context) => [
+          for (var n in options)
+            Container(
+              alignment: Alignment.centerLeft,
+              child: Text(
+                n == 0 ? 'MOD' : (n > 0 ? '+' : '') + n.toString(),
+                style: n == 0 ? emptyText : normalText,
+              ),
             ),
-          ),
-      ],
-      items: [
-        for (var n in options)
-          DropdownMenuItem(
-            child: Container(
-              width: 100,
-              child: RichText(
-                text: TextSpan(
-                  text: (n > 0 ? '+' : '') + n.toString(),
-                  style: normalText,
+        ],
+        items: [
+          for (var n in options)
+            DropdownMenuItem(
+              child: Container(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
+                    Text(
+                      (n > 0 ? '+' : '') + n.toString(),
+                      style: normalText,
+                    ),
                     if (_getModifiersForValue(n).isNotEmpty)
-                      TextSpan(
-                        text: ' (',
-                        style: modText,
-                      ),
-                    for (var m in enumerate(_getModifiersForValue(n)))
-                      TextSpan(
-                        text: (m.index > 0 ? ', ' : '') + m.value,
-                        style: modText,
-                      ),
-                    if (_getModifiersForValue(n).isNotEmpty)
-                      TextSpan(
-                        text: ')',
+                      Text(
+                        '(' + _getModifiersForValue(n).join(', ') + ')',
                         style: modText,
                       ),
                   ],
                 ),
               ),
-            ),
-            value: n,
-          )
-      ],
-      onChanged: onChanged,
+              value: n,
+            )
+        ],
+        onChanged: onChanged,
+      ),
     );
   }
 
