@@ -14,18 +14,19 @@ class TagList extends StatelessWidget {
       alignment: WrapAlignment.start,
       children: [
         for (num i = 0; i < tags.length; i++)
-          Padding(
-            padding: EdgeInsets.only(right: 4),
-            child: TagChip(
-              tag: tags[i],
-              onPressed: (tag) {
-                showDialog(
-                  context: context,
-                  builder: (ctx) => TagDescriptionDialog(tag),
-                );
-              },
+          if (tags[i]?.name != null)
+            Padding(
+              padding: EdgeInsets.only(right: 4),
+              child: TagChip(
+                tag: tags[i],
+                onPressed: (tag) {
+                  showDialog(
+                    context: context,
+                    builder: (ctx) => TagDescriptionDialog(tag),
+                  );
+                },
+              ),
             ),
-          ),
       ],
     );
   }

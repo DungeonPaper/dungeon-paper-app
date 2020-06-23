@@ -1,6 +1,5 @@
 import 'package:dungeon_paper/db/models/character.dart';
 import 'package:dungeon_paper/src/utils/types.dart';
-import 'package:dungeon_paper/src/utils/utils.dart';
 import 'package:flutter/material.dart';
 
 class ModifierSelector extends StatelessWidget {
