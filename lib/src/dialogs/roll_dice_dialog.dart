@@ -23,9 +23,11 @@ class _RollDiceDialogState extends State<RollDiceDialog> {
   final List<List<Dice>> diceList = [];
   final List<DiceListController> controllers = [];
 
+  static List<Dice> DEFAULT_DICE = [Dice.d6 * 2];
+
   @override
   void initState() {
-    addingController = DiceListController([Dice.d20]);
+    addingController = DiceListController(DEFAULT_DICE);
     super.initState();
   }
 
@@ -42,7 +44,7 @@ class _RollDiceDialogState extends State<RollDiceDialog> {
                 : EdgeInsets.only(bottom: 16),
             child: DiceRollBox(
               key: Key('dice-${list.value.hash}'),
-              diceList: list.value.flat,
+              diceList: list.value.value,
               controller: controllers[list.index],
               onRemove: () => _removeAt(list.index),
             ),

@@ -7,7 +7,7 @@ import 'package:flutter/material.dart';
 class DiceIconList extends StatelessWidget {
   final double iconSize;
   final DiceListController controller;
-  final List<Animation> animations;
+  final List<List<Animation>> animations;
 
   const DiceIconList({
     Key key,
@@ -20,20 +20,23 @@ class DiceIconList extends StatelessWidget {
   Widget build(BuildContext context) {
     return Wrap(
       children: [
-        for (var group in controller.value)
-          for (var dice in enumerate(
-              List.generate(group.amount, (idx) => Dice(group.sides, 1))))
+        for (var group in enumerate(controller.value))
+          for (var dice in enumerate(List.generate(
+              group.value.amount, (idx) => Dice(group.value.sides, 1))))
             Padding(
               padding: EdgeInsets.all(8),
               child: DiceRollIcon(
                 // key: Key(
                 //     'anim-${dice.index}-${dice.value}-${_ctrl.length > dice.index ? _ctrl[dice.index].result.toString() : '0'}'),
-                animation: animations != null && animations.length > dice.index
-                    ? animations[dice.index]
+                animation: animations != null &&
+                        animations.length > group.index &&
+                        animations[group.index].length > dice.index
+                    ? animations[group.index][dice.index]
                     : AlwaysStoppedAnimation(1.0),
                 dice: dice,
-                result: controller.flatResults.length > dice.index
-                    ? controller.flatResults[dice.index]
+                result: controller.results != null &&
+                        controller.results.length > group.index
+                    ? controller.results[group.index]
                     : null,
                 size: iconSize,
               ),
