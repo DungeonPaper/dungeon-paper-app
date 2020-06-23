@@ -31,7 +31,7 @@ class ModifierSelector extends StatelessWidget {
         color: Theme.of(context).colorScheme.onSurface.withOpacity(0.4),
         fontSize: normalText.fontSize * 0.75);
     return Container(
-      width: 100,
+      width: 70,
       child: DropdownButton(
         isExpanded: true,
         value: value,

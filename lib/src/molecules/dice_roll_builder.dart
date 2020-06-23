@@ -29,7 +29,7 @@ class _DiceRollBuilderState extends State<DiceRollBuilder> {
 
   @override
   void initState() {
-    addingController = DiceListController(DEFAULT_DICE);
+    addingController = DiceListController(List.from(DEFAULT_DICE));
     super.initState();
   }
 
@@ -38,6 +38,9 @@ class _DiceRollBuilderState extends State<DiceRollBuilder> {
     return Card(
       color: Theme.of(context).canvasColor,
       elevation: 3,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.all(Radius.circular(10)),
+      ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
@@ -68,12 +71,14 @@ class _DiceRollBuilderState extends State<DiceRollBuilder> {
                           }
                         },
                       ),
+                      SizedBox(width: 16),
                       ModifierSelector(
                         value: d.value.modifier,
                         character: widget.character,
                         onChanged: (n) => _setMod(d.index, n),
                         textStyle: TextStyle(fontSize: 20),
                       ),
+                      Expanded(child: Container()),
                       if (addingController.value.length > 1)
                         IconButton(
                           icon: Icon(Icons.close),

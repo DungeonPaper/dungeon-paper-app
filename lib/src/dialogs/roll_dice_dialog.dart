@@ -19,15 +19,13 @@ class RollDiceDialog extends StatefulWidget {
 }
 
 class _RollDiceDialogState extends State<RollDiceDialog> {
-  DiceListController addingController;
-  List<List<Dice>> diceList = [];
-  List<DiceListController> controllers = [];
-
-  static List<Dice> DEFAULT_DICE = [Dice.d6 * 2];
+  List<List<Dice>> diceList;
+  List<DiceListController> controllers;
 
   @override
   void initState() {
-    addingController = DiceListController(DEFAULT_DICE);
+    diceList = [];
+    controllers = [];
     super.initState();
   }
 
