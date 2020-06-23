@@ -2,7 +2,6 @@ import 'dart:io';
 import 'dart:math';
 import 'package:dungeon_paper/src/atoms/categorized_list.dart';
 import 'package:dungeon_paper/src/atoms/feedback_button.dart';
-import 'package:dungeon_paper/src/atoms/hyperlink.dart';
 import 'package:dungeon_paper/src/atoms/paypal_donate_button.dart';
 import 'package:dungeon_paper/src/atoms/version_number.dart';
 import 'package:dungeon_paper/src/flutter_utils/platform_svg.dart';
@@ -28,7 +27,6 @@ class AboutView extends StatefulWidget {
 
 class _AboutViewState extends State<AboutView> {
   final num year = DateTime.now().year;
-  static const double SOCIAL_ICON_SIZE = 24;
 
   @override
   Widget build(BuildContext context) {
