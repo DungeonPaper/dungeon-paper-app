@@ -1,8 +1,6 @@
 import 'dart:math';
-
 import 'package:dungeon_paper/src/flutter_utils/dice_controller.dart';
 import 'package:dungeon_paper/src/molecules/dice_icon_list.dart';
-import 'package:dungeon_paper/src/utils/utils.dart';
 import 'package:dungeon_world_data/dice.dart';
 import 'package:flutter/material.dart';
 
