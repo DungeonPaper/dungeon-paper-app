@@ -34,7 +34,6 @@ class _AboutViewState extends State<AboutView> {
       appBar: AppBar(
         title: Text('About Dungeon Paper'),
         actions: <Widget>[
-          FeedbackButton.iconButton(),
           IconButton(
             icon: Icon(Icons.history),
             tooltip: "What's New?",
@@ -128,25 +127,48 @@ class _AboutViewState extends State<AboutView> {
                           ),
                         ],
                       ),
-                      TableRow(children: [
-                        SocialButton(
-                          label: 'casraf.blog',
-                          url:
-                              'https://casraf.blog/?utm_medium=app&utm_source=about',
-                          icon: Icon(Icons.public),
-                          color: Color(0xFFAA0000),
-                          textColor: Colors.white,
-                        ),
-                        Container(),
-                        SocialButton(
-                          label: 'Privacy',
-                          icon: Icon(Icons.lock),
-                          url:
-                              'https://casraf.blog/dungeon-paper-privacy-policy',
-                          color: Theme.of(context).primaryColor,
-                          textColor: Theme.of(context).colorScheme.onPrimary,
-                        ),
-                      ])
+                      TableRow(
+                        children: [
+                          FeedbackButton(
+                            dontWaitForUser: true,
+                            onReady: () {
+                              print('onReady fired');
+                              setState(() {});
+                            },
+                            builder: (onPressed, url) => SocialButton(
+                              label: 'Email',
+                              icon: Icon(Icons.email),
+                              url: url,
+                              color: Colors.orange[300],
+                              textColor:
+                                  Theme.of(context).colorScheme.onPrimary,
+                            ),
+                          ),
+                          Container(),
+                          SocialButton(
+                            label: 'Privacy',
+                            icon: Icon(Icons.lock),
+                            url:
+                                'https://casraf.blog/dungeon-paper-privacy-policy',
+                            color: Theme.of(context).primaryColor,
+                            textColor: Theme.of(context).colorScheme.onPrimary,
+                          ),
+                        ],
+                      ),
+                      TableRow(
+                        children: [
+                          SocialButton(
+                            label: 'casraf.blog',
+                            url:
+                                'https://casraf.blog/?utm_medium=app&utm_source=about',
+                            icon: Icon(Icons.public),
+                            color: Color(0xFFAA0000),
+                            textColor: Colors.white,
+                          ),
+                          Container(),
+                          Container(),
+                        ],
+                      ),
                     ],
                   ),
                 ),
