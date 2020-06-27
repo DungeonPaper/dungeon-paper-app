@@ -3,6 +3,7 @@ import 'package:dungeon_paper/src/redux/stores.dart';
 import 'package:dungeon_paper/src/redux/users/user_store.dart';
 import 'package:dungeon_paper/src/utils/auth.dart';
 import 'package:dungeon_paper/src/utils/credentials.dart';
+import 'package:flutter/foundation.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:firebase_auth_platform_interface/firebase_auth_platform_interface.dart';
 import 'package:redux/redux.dart';
@@ -38,23 +39,101 @@ class UserDetails {
 class PrefsStore {
   Credentials credentials;
   UserDetails user;
+  final Map<SharedPrefKeys, String> _map;
 
-  PrefsStore({this.credentials, this.user});
+  PrefsStore({
+    Map<SharedPrefKeys, String> map,
+    this.credentials,
+    this.user,
+  }) : _map = map ?? {} {
+    _writeValuesFromMap(_map);
+  }
+
+  void _writeValuesFromMap(Map<SharedPrefKeys, String> map) {
+    _writeGoogleCredsFromMap(map);
+    _writeUserFromMap(map);
+  }
+
+  List<SharedPrefKeys> _intersectKeys(
+          List<SharedPrefKeys> source, List<SharedPrefKeys> target) =>
+      source.where((el) => target.contains(el)).toList();
+
+  void _prefLoader({
+    @required List<SharedPrefKeys> checkList,
+    @required Map<SharedPrefKeys, String> map,
+    @required void Function(Map<SharedPrefKeys, String>) onListFull,
+  }) {
+    var intersect = _intersectKeys(checkList, [...map.keys, ..._map.keys]);
+    if (_allKeysContain(intersect, map)) {
+      onListFull({..._map, ...map});
+    }
+  }
+
+  bool _allKeysContain(List<SharedPrefKeys> checkKeys,
+          Map<SharedPrefKeys, String> existingKeys) =>
+      checkKeys.every((key) => existingKeys.containsKey(key));
+
+  void _writeGoogleCredsFromMap(Map<SharedPrefKeys, String> map) {
+    _prefLoader(
+      map: map,
+      checkList: [
+        SharedPrefKeys.IdToken,
+        SharedPrefKeys.AccessToken,
+      ],
+      onListFull: (all) {
+        credentials = GoogleCredentials.fromAuthCredential(
+          GoogleAuthCredential(
+            idToken: all[SharedPrefKeys.IdToken],
+            accessToken: all[SharedPrefKeys.AccessToken],
+          ),
+        );
+      },
+    );
+  }
+
+  void _writeUserFromMap(Map<SharedPrefKeys, String> map) {
+    _prefLoader(
+      map: map,
+      checkList: [
+        SharedPrefKeys.UserId,
+        SharedPrefKeys.UserEmail,
+        SharedPrefKeys.CharacterId,
+      ],
+      onListFull: (all) {
+        user = UserDetails(
+          id: all[SharedPrefKeys.UserId],
+          email: all[SharedPrefKeys.UserEmail],
+          lastCharacterId: all[SharedPrefKeys.CharacterId],
+        );
+      },
+    );
+  }
 
   static Future<void> loadAll() async {
     var prefs = await SharedPreferences.getInstance();
+    var _map = <SharedPrefKeys, String>{
+      SharedPrefKeys.IdToken: prefs.getString(keyMap[SharedPrefKeys.IdToken]),
+      SharedPrefKeys.AccessToken:
+          prefs.getString(keyMap[SharedPrefKeys.AccessToken]),
+      SharedPrefKeys.UserId: prefs.getString(keyMap[SharedPrefKeys.UserId]),
+      SharedPrefKeys.UserEmail:
+          prefs.getString(keyMap[SharedPrefKeys.UserEmail]),
+      SharedPrefKeys.CharacterId:
+          prefs.getString(keyMap[SharedPrefKeys.CharacterId]),
+    };
     var store = PrefsStore(
       credentials: GoogleCredentials.fromAuthCredential(
         GoogleAuthCredential(
-          idToken: prefs.getString(keyMap[SharedPrefKeys.IdToken]),
-          accessToken: prefs.getString(keyMap[SharedPrefKeys.AccessToken]),
+          idToken: _map[SharedPrefKeys.IdToken],
+          accessToken: _map[SharedPrefKeys.AccessToken],
         ),
       ),
       user: UserDetails(
-        id: prefs.getString(keyMap[SharedPrefKeys.UserId]),
-        email: prefs.getString(keyMap[SharedPrefKeys.UserEmail]),
-        lastCharacterId: prefs.getString(keyMap[SharedPrefKeys.CharacterId]),
+        id: _map[SharedPrefKeys.UserId],
+        email: _map[SharedPrefKeys.UserEmail],
+        lastCharacterId: _map[SharedPrefKeys.CharacterId],
       ),
+      map: _map,
     );
 
     dwStore.dispatch(SetPrefs(store));
