@@ -164,7 +164,7 @@ class _FeedbackButtonState extends State<FeedbackButton> {
   void sendEmail() => launch(mailtoUrl);
   void onPressed() {
     sendEmail();
-    if (widget.onPressed != null) widget.onPressed();
+    widget.onPressed?.call();
   }
 
   @override
