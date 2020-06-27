@@ -71,7 +71,7 @@ class _RollDiceDialogState extends State<RollDiceDialog> {
   }
 
   num reversedIndex(num idx) {
-    return diceList.length - idx;
+    return diceList.length - idx - 1;
   }
 
   Iterable<DiceListController> get reversedControllers => controllers.reversed;
