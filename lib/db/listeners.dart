@@ -87,15 +87,21 @@ void registerCharactersListener() async {
     if (characters.documents.isEmpty) {
       return;
     }
+    var chars = {
+      for (var character in characters.documents)
+        character.reference.documentID: Character(
+          data: character.data,
+          ref: character.reference,
+        ),
+    };
     dwStore.dispatch(
-      SetCharacters({
-        for (var character in characters.documents)
-          character.reference.documentID: Character(
-            data: character.data,
-            ref: character.reference,
-          ),
-      }),
+      SetCharacters(chars),
     );
+    var lastCharId = dwStore.state.prefs.user.lastCharacterId;
+    var matchingChar = chars[lastCharId];
+    if (lastCharId != null && matchingChar != null) {
+      dwStore.dispatch(SetCurrentChar(matchingChar));
+    }
   });
   print('REGISTERED DB CHARACTER LISTENER');
 }
