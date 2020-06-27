@@ -11,6 +11,8 @@ class FeedbackButton extends StatefulWidget {
   final Widget Function(Function() onPressed, String mailtoUrl) builder;
   final Widget icon;
   final String labelText;
+  final void Function() onReady;
+
   static const Icon feedbackIcon = Icon(Icons.feedback);
   static const feedbackLabel = 'Send Feedback';
 
@@ -21,6 +23,7 @@ class FeedbackButton extends StatefulWidget {
     this.labelText = feedbackLabel,
     this.onPressed,
     this.dontWaitForUser = false,
+    this.onReady,
   }) : super(key: key);
 
   factory FeedbackButton.iconButton({
@@ -115,7 +118,9 @@ class _FeedbackButtonState extends State<FeedbackButton> {
   void _getUserId() async {
     if (mounted) {
       setState(() {
+        print('setting userId');
         userId = dwStore.state.user.currentUserDocID;
+        _notifyReady();
       });
     }
   }
@@ -124,7 +129,9 @@ class _FeedbackButtonState extends State<FeedbackButton> {
     var secrets = await loadSecrets();
     if (mounted) {
       setState(() {
+        print('setting email');
         email = secrets['FEEDBACK_EMAIL'];
+        _notifyReady();
       });
     }
   }
@@ -133,9 +140,19 @@ class _FeedbackButtonState extends State<FeedbackButton> {
     var packageInfo = await PackageInfo.fromPlatform();
     if (mounted) {
       setState(() {
+        print('setting version & buildNumber');
         version = packageInfo.version;
         buildNumber = packageInfo.buildNumber;
+        _notifyReady();
       });
+    }
+  }
+
+  void _notifyReady() {
+    print('should notify?');
+    if (isReady) {
+      print('notifying');
+      widget?.onReady?.call();
     }
   }
 
@@ -152,8 +169,21 @@ class _FeedbackButtonState extends State<FeedbackButton> {
 
   @override
   Widget build(BuildContext context) {
-    if ([widget.dontWaitForUser ? true : userId, email, version]
-        .any((i) => i == null)) return Container();
-    return widget.builder(onPressed, mailtoUrl);
+    if (!isReady) {
+      return Container();
+    }
+    return Container(
+      key: Key(_strRepr),
+      child: widget.builder(onPressed, mailtoUrl),
+    );
   }
+
+  Iterable<String> get _arrRepr => [
+        widget.dontWaitForUser ? 'true' : userId,
+        email,
+        version
+      ].map((el) => el?.toString?.call() ?? '');
+  String get _strRepr => _arrRepr.join('-');
+
+  bool get isReady => !_arrRepr.any((i) => i == null);
 }

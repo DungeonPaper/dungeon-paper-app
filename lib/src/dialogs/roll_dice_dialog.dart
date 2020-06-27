@@ -52,12 +52,12 @@ class _RollDiceDialogState extends State<RollDiceDialog> {
           child: SingleChildScrollView(
             child: Column(
               children: [
-                for (var list in enumerate(controllers.reversed)) ...[
+                for (var list in enumerate(reversedControllers)) ...[
                   SizedBox(height: 16),
                   DiceRollBox(
                     key: Key('dice-${list.value.hash}'),
                     diceList: list.value.value,
-                    controller: controllers.reversed.elementAt(list.index),
+                    controller: reversedControllers.elementAt(list.index),
                     onRemove: () => _removeAt(list.index),
                   ),
                 ],
@@ -70,6 +70,12 @@ class _RollDiceDialogState extends State<RollDiceDialog> {
     );
   }
 
+  num reversedIndex(num idx) {
+    return diceList.length - idx;
+  }
+
+  Iterable<DiceListController> get reversedControllers => controllers.reversed;
+
   void _add(List<Dice> dice) {
     setState(() {
       var _ctrl = DiceListController([...dice]);
@@ -79,6 +85,7 @@ class _RollDiceDialogState extends State<RollDiceDialog> {
   }
 
   void _removeAt(num idx) {
+    idx = reversedIndex(idx);
     setState(() {
       diceList.removeAt(idx);
       controllers.removeAt(idx);

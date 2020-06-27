@@ -63,7 +63,7 @@ class _DiceRollBuilderState extends State<DiceRollBuilder> {
                   Row(
                     children: [
                       DiceSelector(
-                        key: Key('d-${d.index}'),
+                        key: Key('d-${d.index}-${d.value}'),
                         dice: d.value,
                         textStyle: TextStyle(fontSize: 20),
                         onChanged: (val) {
@@ -82,7 +82,7 @@ class _DiceRollBuilderState extends State<DiceRollBuilder> {
                       Expanded(child: Container()),
                       if (addingController.value.length > 1)
                         IconButton(
-                          icon: Icon(Icons.close),
+                          icon: Icon(Icons.delete),
                           onPressed: () => _remove(d.index),
                         )
                     ],

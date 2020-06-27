@@ -1,7 +1,7 @@
 import 'dart:math';
-import 'package:dungeon_paper/src/atoms/feedback_button.dart';
 import 'package:dungeon_paper/src/atoms/version_number.dart';
 import 'package:dungeon_paper/src/flutter_utils/widget_utils.dart';
+import 'package:dungeon_paper/src/pages/about_view/about_view.dart';
 import 'package:dungeon_paper/src/pages/scaffold/login_button.dart';
 import 'package:flutter/material.dart';
 
@@ -46,11 +46,27 @@ class WelcomeView extends StatelessWidget {
                     }),
                     SizedBox(height: 20),
                     Text('Having trouble signing in?'),
-                    FeedbackButton.hyperlink(dontWaitForUser: true)
+                    RaisedButton(
+                      color: Theme.of(context).colorScheme.primary,
+                      onPressed: _openAboutView(context),
+                      child: Text('Contact Us'),
+                    )
                   ],
                 ),
               ),
             ),
     );
+  }
+
+  void Function() _openAboutView(BuildContext context) {
+    return () {
+      Navigator.push(
+        context,
+        MaterialPageRoute<bool>(
+          fullscreenDialog: true,
+          builder: (context) => AboutView(),
+        ),
+      );
+    };
   }
 }
