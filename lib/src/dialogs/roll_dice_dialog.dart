@@ -44,29 +44,24 @@ class _RollDiceDialogState extends State<RollDiceDialog> {
             ),
           ),
         ),
+        DiceRollBuilder(
+          character: widget.character,
+          onChanged: _add,
+        ),
         Expanded(
           child: SingleChildScrollView(
             child: Column(
               children: [
-                for (var list in enumerate(controllers))
-                  Padding(
-                    padding: list.index > 0
-                        ? const EdgeInsets.symmetric(vertical: 16)
-                        : EdgeInsets.only(bottom: 16),
-                    child: DiceRollBox(
-                      key: Key('dice-${list.value.hash}'),
-                      diceList: list.value.value,
-                      controller: controllers[list.index],
-                      onRemove: () => _removeAt(list.index),
-                    ),
+                for (var list in enumerate(controllers.reversed)) ...[
+                  SizedBox(height: 16),
+                  DiceRollBox(
+                    key: Key('dice-${list.value.hash}'),
+                    diceList: list.value.value,
+                    controller: controllers.reversed.elementAt(list.index),
+                    onRemove: () => _removeAt(list.index),
                   ),
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 16),
-                  child: DiceRollBuilder(
-                    character: widget.character,
-                    onChanged: _add,
-                  ),
-                ),
+                ],
+                SizedBox(height: 16),
               ],
             ),
           ),

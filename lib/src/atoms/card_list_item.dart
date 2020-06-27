@@ -10,6 +10,7 @@ class CardListItem extends StatelessWidget {
   final Color color;
   final double elevation;
   final EdgeInsets margin;
+  final double width;
 
   const CardListItem({
     Key key,
@@ -22,6 +23,7 @@ class CardListItem extends StatelessWidget {
     this.color,
     this.elevation = 1.0,
     this.margin,
+    this.width,
   }) : super(key: key);
 
   @override
@@ -44,6 +46,7 @@ class CardListItem extends StatelessWidget {
       child: InkWell(
         onTap: onTap,
         child: Container(
+          width: width,
           padding: EdgeInsets.only(
             left: leading != null ? 8.0 : 16.0,
             right: trailing != null ? 8.0 : 16.0,
