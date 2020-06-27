@@ -29,13 +29,14 @@ class _DiceRollBuilderState extends State<DiceRollBuilder> {
 
   @override
   void initState() {
-    addingController = DiceListController(List.from(DEFAULT_DICE));
+    _resetController();
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
     return Card(
+      margin: EdgeInsets.symmetric(horizontal: 8, vertical: 0),
       color: Theme.of(context).canvasColor,
       elevation: 3,
       shape: RoundedRectangleBorder(
@@ -129,11 +130,16 @@ class _DiceRollBuilderState extends State<DiceRollBuilder> {
 
   void _onAdd() {
     widget.onChanged?.call(addingController.value);
+    setState(_resetController);
   }
 
   void _addRow() {
     setState(() {
       addingController.add(Dice.d6 * 2);
     });
+  }
+
+  void _resetController() {
+    addingController = DiceListController(List.from(DEFAULT_DICE));
   }
 }
