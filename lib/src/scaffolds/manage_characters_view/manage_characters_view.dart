@@ -2,6 +2,7 @@ import 'package:dungeon_paper/db/models/character.dart';
 import 'package:dungeon_paper/src/atoms/card_list_item.dart';
 import 'package:dungeon_paper/src/dialogs/confirmation_dialog.dart';
 import 'package:dungeon_paper/src/dialogs/dialogs.dart';
+import 'package:dungeon_paper/src/dialogs/export_characters_dialog.dart';
 import 'package:dungeon_paper/src/pages/character_wizard/character_wizard_view.dart';
 import 'package:dungeon_paper/src/redux/characters/characters_store.dart';
 import 'package:dungeon_paper/src/redux/stores.dart';
@@ -32,6 +33,13 @@ class _ManageCharactersViewState extends State<ManageCharactersView> {
   Widget build(BuildContext context) {
     return ScaffoldWithElevation.primaryBackground(
       title: Text('Manage Characters'),
+      actions: [
+        IconButton(
+          icon: Icon(Icons.file_upload),
+          onPressed: _openExportDialog,
+          tooltip: 'Export Characters',
+        ),
+      ],
       floatingActionButton: FloatingActionButton(
         child: Icon(Icons.add),
         backgroundColor: Theme.of(context).canvasColor,
@@ -145,6 +153,13 @@ class _ManageCharactersViewState extends State<ManageCharactersView> {
           mode: DialogMode.Create,
         ),
       ),
+    );
+  }
+
+  void _openExportDialog() {
+    showDialog(
+      context: context,
+      builder: (context) => ExportCharactersDialog(),
     );
   }
 }
