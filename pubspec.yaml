@@ -42,6 +42,10 @@ dependencies:
   pedantic: ^1.8.0
   universal_html: ^1.2.2
   reorderables: ^0.3.2
+  flutter_file_dialog: ^0.0.5
+  path_provider: ^1.6.11
+  path: ^1.7.0
+  # permission_handler: ^5.0.1+1
 
 dev_dependencies:
   flutter_test:
