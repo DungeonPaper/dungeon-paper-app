@@ -1,6 +1,7 @@
 import 'package:dungeon_paper/db/models/character.dart';
 import 'package:dungeon_paper/src/molecules/current_stat_indicator.dart';
 import 'package:dungeon_paper/src/molecules/status_bars.dart';
+import 'package:dungeon_paper/src/utils/analytics.dart';
 import 'package:pedantic/pedantic.dart';
 import 'package:wheel_spinner/wheel_spinner.dart';
 import 'package:flutter/material.dart';
@@ -108,7 +109,7 @@ class _EditXPDialogState extends State<EditXPDialog> {
           cancelText: Text('Close'),
           onOK: currentXP != maxXP &&
                   (currentXP != 0 || widget.character.level == 1)
-              ? () => save(context)
+              ? () => _save(context)
               : null,
         ),
       ],
@@ -121,13 +122,16 @@ class _EditXPDialogState extends State<EditXPDialog> {
     });
   }
 
-  void save(BuildContext context) {
-    final char = widget.character..currentXP = currentXP;
-    unawaited(char.update());
+  void _save(BuildContext context) {
+    analytics.logEvent(name: Events.SaveXP);
+    widget.character
+      ..currentXP = currentXP
+      ..update();
     Navigator.pop(context);
   }
 
   void levelUp(BuildContext context) async {
+    unawaited(analytics.logEvent(name: Events.LevelUp));
     final char = widget.character
       ..currentXP = 0
       ..level += 1;
@@ -143,6 +147,7 @@ class _EditXPDialogState extends State<EditXPDialog> {
   }
 
   void levelDown(BuildContext context) async {
+    unawaited(analytics.logEvent(name: Events.LevelDown));
     final char = widget.character;
     char
       ..currentXP = char.level + 5

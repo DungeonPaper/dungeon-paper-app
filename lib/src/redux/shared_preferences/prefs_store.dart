@@ -3,6 +3,7 @@ import 'package:dungeon_paper/src/redux/stores.dart';
 import 'package:dungeon_paper/src/redux/users/user_store.dart';
 import 'package:dungeon_paper/src/utils/auth.dart';
 import 'package:dungeon_paper/src/utils/credentials.dart';
+import 'package:dungeon_paper/src/utils/logger.dart';
 import 'package:flutter/foundation.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:firebase_auth_platform_interface/firebase_auth_platform_interface.dart';
@@ -149,9 +150,9 @@ class PrefsStore {
         }
       } on SignInError {
         dwStore.dispatch(NoLogin());
-        print('Silent login failed');
+        logger.d('Silent login failed');
       } catch (e) {
-        print('Silent login unexpected error:');
+        logger.d('Silent login unexpected error:');
         rethrow;
       }
     }

@@ -3,6 +3,7 @@ import 'package:dungeon_paper/src/redux/stores.dart';
 import 'package:dungeon_paper/src/redux/users/user_store.dart';
 import 'package:dungeon_paper/src/utils/auth.dart';
 import 'package:dungeon_paper/src/utils/credentials.dart';
+import 'package:dungeon_paper/src/utils/logger.dart';
 import 'package:flutter/material.dart';
 
 class LoginButton extends StatelessWidget {
@@ -45,8 +46,8 @@ class LoginButton extends StatelessWidget {
         // if (e != 'user_canceled') {
         //   throw (e);
         // }
-        print('NORMAL SIGN IN ERROR:');
-        print(e.toString());
+        logger.d('NORMAL SIGN IN ERROR:');
+        logger.d(e.toString());
         dwStore.dispatch(NoLogin());
         Scaffold.of(context, nullOk: true).showSnackBar(
           SnackBar(
@@ -55,8 +56,8 @@ class LoginButton extends StatelessWidget {
           ),
         );
       } catch (e) {
-        print('IRREGULAR SIGN IN ERROR:');
-        print(e.toString());
+        logger.d('IRREGULAR SIGN IN ERROR:');
+        logger.d(e.toString());
         dwStore.dispatch(NoLogin());
         Scaffold.of(context, nullOk: true).showSnackBar(
           SnackBar(

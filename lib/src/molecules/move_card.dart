@@ -2,6 +2,7 @@ import 'package:dungeon_paper/src/atoms/card_bottom_controls.dart';
 import 'package:dungeon_paper/src/dialogs/confirmation_dialog.dart';
 import 'package:dungeon_paper/src/dialogs/dialogs.dart';
 import 'package:dungeon_paper/src/scaffolds/add_move_scaffold.dart';
+import 'package:dungeon_paper/src/utils/analytics.dart';
 import 'package:dungeon_world_data/move.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_markdown/flutter_markdown.dart';
@@ -56,6 +57,7 @@ class MoveCardState extends State<MoveCard> {
                   ),
                 ),
               ),
+              entityTypeName: 'Move',
               onDelete: () async => await showDialog(
                         context: context,
                         builder: (ctx) => ConfirmationDialog(
@@ -114,6 +116,10 @@ class MoveCardState extends State<MoveCard> {
           : name,
       initiallyExpanded: false,
       children: children,
+      onExpansionChanged: (value) => analytics.logEvent(
+        name: Events.ExpandMoveCard,
+        parameters: {'state': value.toString()},
+      ),
     );
     return Material(
       elevation: 1,

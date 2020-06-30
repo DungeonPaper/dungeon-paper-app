@@ -2,6 +2,8 @@ import 'package:dungeon_paper/db/models/character.dart';
 import 'package:dungeon_paper/src/flutter_utils/dice_controller.dart';
 import 'package:dungeon_paper/src/molecules/dice_roll_box.dart';
 import 'package:dungeon_paper/src/molecules/dice_roll_builder.dart';
+import 'package:dungeon_paper/src/utils/analytics.dart';
+import 'package:dungeon_paper/src/utils/logger.dart';
 import 'package:dungeon_paper/src/utils/utils.dart';
 import 'package:dungeon_world_data/dice.dart';
 import 'package:flutter/material.dart';
@@ -77,6 +79,11 @@ class _RollDiceDialogState extends State<RollDiceDialog> {
   Iterable<DiceListController> get reversedControllers => controllers.reversed;
 
   void _add(List<Dice> dice) {
+    logger.d('Add dice ${dice.join(', ')}');
+    analytics.logEvent(
+      name: Events.RollNewDice,
+      parameters: {'dice': dice.join(', ')},
+    );
     setState(() {
       var _ctrl = DiceListController([...dice]);
       controllers.add(_ctrl);
@@ -86,6 +93,11 @@ class _RollDiceDialogState extends State<RollDiceDialog> {
 
   void _removeAt(num idx) {
     idx = reversedIndex(idx);
+    logger.d('Remove dice ${diceList[idx].join(', ')}');
+    analytics.logEvent(
+      name: Events.RemoveDice,
+      parameters: {'dice': diceList[idx].join(', ')},
+    );
     setState(() {
       diceList.removeAt(idx);
       controllers.removeAt(idx);

@@ -9,7 +9,9 @@ import 'package:dungeon_paper/src/redux/characters/characters_store.dart';
 import 'package:dungeon_paper/src/redux/connectors.dart';
 import 'package:dungeon_paper/src/redux/stores.dart';
 import 'package:dungeon_paper/src/scaffolds/manage_characters_view/manage_characters_view.dart';
+import 'package:dungeon_paper/src/utils/analytics.dart';
 import 'package:dungeon_paper/src/utils/auth.dart';
+import 'package:dungeon_paper/src/utils/logger.dart';
 import 'package:flutter/material.dart';
 
 class Sidebar extends StatefulWidget {
@@ -19,6 +21,13 @@ class Sidebar extends StatefulWidget {
 
 class _SidebarState extends State<Sidebar> {
   // bool _userMenuExpanded = false;
+
+  @override
+  void initState() {
+    super.initState();
+    logger.d('Open Sidebar');
+    analytics.logEvent(name: Events.OpenSidebar);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -110,8 +119,14 @@ class _SidebarState extends State<Sidebar> {
     );
   }
 
-  void openPage(BuildContext context,
-      {Widget Function(BuildContext) builder, bool fullScreenDialog = true}) {
+  void openPage(
+    String pageName,
+    BuildContext context, {
+    Widget Function(BuildContext) builder,
+    bool fullScreenDialog = true,
+  }) {
+    logger.d('Page View: $pageName');
+    analytics.setCurrentScreen(screenName: pageName);
     Navigator.push(
       context,
       MaterialPageRoute<bool>(
@@ -123,22 +138,30 @@ class _SidebarState extends State<Sidebar> {
 
   void createNewCharacterScreen(BuildContext context) {
     Navigator.pop(context);
-    openPage(context,
-        builder: (context) => CharacterWizardView(
-              character: null,
-              mode: DialogMode.Create,
-              onSave: (char) => dwStore.dispatch(SetCurrentChar(char)),
-            ));
+    openPage(
+      ScreenNames.CharacterScreen,
+      context,
+      builder: (context) => CharacterWizardView(
+        character: null,
+        mode: DialogMode.Create,
+        onSave: (char) => dwStore.dispatch(SetCurrentChar(char)),
+      ),
+    );
   }
 
   void manageCharactersScreen(BuildContext context) {
     Navigator.pop(context);
-    openPage(context, builder: (context) => ManageCharactersView());
+    openPage(
+      ScreenNames.ManageCharacters,
+      context,
+      builder: (context) => ManageCharactersView(),
+    );
   }
 
   void compendiumScreen(BuildContext context) {
     Navigator.pop(context);
     openPage(
+      ScreenNames.Compendium,
       context,
       builder: (context) => Compendium(),
     );
@@ -146,7 +169,7 @@ class _SidebarState extends State<Sidebar> {
 
   void aboutScreen(BuildContext context) {
     Navigator.pop(context);
-    openPage(context, builder: (context) => AboutView());
+    openPage(ScreenNames.About, context, builder: (context) => AboutView());
   }
 
   Widget title(String text, BuildContext context, {Widget leading}) {
@@ -213,6 +236,11 @@ class CharacterListTile extends StatelessWidget {
       title: Text(character.displayName),
       selected: selected,
       onTap: () {
+        logger.d('Set Current Char: $character');
+        analytics.logEvent(name: Events.ChangeCharacter, parameters: {
+          'documentID': character.documentID,
+          'order': character.order,
+        });
         dwStore.dispatch(SetCurrentChar(character));
         Navigator.pop(context);
       },

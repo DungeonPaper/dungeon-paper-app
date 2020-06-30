@@ -6,6 +6,8 @@ import 'package:dungeon_paper/src/lists/player_class_list.dart';
 import 'package:dungeon_paper/src/redux/stores.dart';
 import 'package:dungeon_paper/src/scaffolds/custom_class_wizard/custom_class_wizard.dart';
 import 'package:dungeon_paper/src/scaffolds/scaffold_with_elevation.dart';
+import 'package:dungeon_paper/src/utils/analytics.dart';
+import 'package:dungeon_paper/src/utils/logger.dart';
 import 'package:dungeon_world_data/player_class.dart';
 import 'package:flutter/material.dart';
 import 'package:pedantic/pedantic.dart';
@@ -16,6 +18,13 @@ class CustomClassesView extends StatefulWidget {
 }
 
 class _CustomClassesViewState extends State<CustomClassesView> {
+  @override
+  void initState() {
+    super.initState();
+    logger.d('Page View: ${ScreenNames.CustomClasses}');
+    analytics.setCurrentScreen(screenName: ScreenNames.CustomClasses);
+  }
+
   @override
   Widget build(BuildContext context) {
     return ScaffoldWithElevation.primaryBackground(
@@ -75,20 +84,22 @@ class _CustomClassesViewState extends State<CustomClassesView> {
         builder: (context) => CustomClassWizard(
           mode: DialogMode.Edit,
           customClass: cls,
-          onSave: (_cls) async {
-            for (var char in dwStore.state.characters.characters.values) {
-              if (char.playerClasses.any((el) => el.key == _cls.key)) {
-                var _updated = char.playerClasses
-                    .map((el) => el.key == _cls.key ? _cls.toPlayerClass() : el)
-                    .toList();
-                char.playerClasses = _updated;
-                await char.update();
-              }
-            }
-          },
+          onSave: _save,
         ),
       ),
     );
+  }
+
+  void _save(CustomClass _cls) async {
+    for (var char in dwStore.state.characters.characters.values) {
+      if (char.playerClasses.any((el) => el.key == _cls.key)) {
+        var _updated = char.playerClasses
+            .map((el) => el.key == _cls.key ? _cls.toPlayerClass() : el)
+            .toList();
+        char.playerClasses = _updated;
+        await char.update();
+      }
+    }
   }
 
   void _delete(CustomClass cls) async {

@@ -5,6 +5,7 @@ import 'package:dungeon_paper/db/models/character.dart';
 import 'package:dungeon_paper/db/models/inventory_items.dart';
 import 'package:dungeon_paper/db/models/notes.dart';
 import 'package:dungeon_paper/db/models/spells.dart';
+import 'package:dungeon_paper/src/utils/logger.dart';
 import 'package:dungeon_paper/src/utils/utils.dart';
 import 'package:dungeon_world_data/dw_data.dart';
 import 'package:dungeon_world_data/alignment.dart';

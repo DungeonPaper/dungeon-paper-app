@@ -1,3 +1,4 @@
+import 'package:dungeon_paper/src/utils/logger.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
@@ -38,7 +39,7 @@ class BetweenValuesTextFormatter extends TextInputFormatter {
         return newValue;
       }
     } on Error catch (e) {
-      print(e);
+      logger.e(e);
     }
     return oldValue;
   }

@@ -1,4 +1,5 @@
 import 'package:dungeon_paper/src/utils/auth.dart';
+import 'package:dungeon_paper/src/utils/logger.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
 import 'package:firebase_auth_platform_interface/firebase_auth_platform_interface.dart';
@@ -34,7 +35,7 @@ abstract class Credentials<T extends AuthCredential> {
       );
       return result;
     } on SignInError catch (e) {
-      print(e);
+      logger.e(e);
       rethrow;
     } catch (e) {
       print('Unexpected error:');

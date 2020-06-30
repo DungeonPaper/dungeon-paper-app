@@ -1,5 +1,6 @@
 import 'package:dungeon_paper/src/atoms/hyperlink.dart';
 import 'package:dungeon_paper/src/redux/stores.dart';
+import 'package:dungeon_paper/src/utils/logger.dart';
 import 'package:dungeon_paper/src/utils/utils.dart';
 import 'package:flutter/material.dart';
 import 'package:package_info/package_info.dart';
@@ -118,7 +119,7 @@ class _FeedbackButtonState extends State<FeedbackButton> {
   void _getUserId() async {
     if (mounted) {
       setState(() {
-        print('setting userId');
+        logger.d('setting userId');
         userId = dwStore.state.user.currentUserDocID;
         _notifyReady();
       });
@@ -129,7 +130,7 @@ class _FeedbackButtonState extends State<FeedbackButton> {
     var secrets = await loadSecrets();
     if (mounted) {
       setState(() {
-        print('setting email');
+        logger.d('setting email');
         email = secrets['FEEDBACK_EMAIL'];
         _notifyReady();
       });
@@ -140,7 +141,7 @@ class _FeedbackButtonState extends State<FeedbackButton> {
     var packageInfo = await PackageInfo.fromPlatform();
     if (mounted) {
       setState(() {
-        print('setting version & buildNumber');
+        logger.d('setting version & buildNumber');
         version = packageInfo.version;
         buildNumber = packageInfo.buildNumber;
         _notifyReady();
@@ -149,9 +150,9 @@ class _FeedbackButtonState extends State<FeedbackButton> {
   }
 
   void _notifyReady() {
-    print('should notify?');
+    logger.d('should notify?');
     if (isReady) {
-      print('notifying');
+      logger.d('notifying');
       widget?.onReady?.call();
     }
   }

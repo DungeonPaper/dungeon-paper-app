@@ -8,6 +8,8 @@ import 'package:dungeon_paper/src/pages/character_wizard/character_wizard_view.d
 import 'package:dungeon_paper/src/redux/characters/characters_store.dart';
 import 'package:dungeon_paper/src/redux/stores.dart';
 import 'package:dungeon_paper/src/scaffolds/scaffold_with_elevation.dart';
+import 'package:dungeon_paper/src/utils/analytics.dart';
+import 'package:dungeon_paper/src/utils/logger.dart';
 import 'package:dungeon_paper/src/utils/utils.dart';
 import 'package:flutter/material.dart';
 import 'package:pedantic/pedantic.dart';
@@ -83,26 +85,7 @@ class _ManageCharactersViewState extends State<ManageCharactersView> {
                         color: Colors.red,
                         icon: Icon(Icons.delete_forever),
                         tooltip: 'Delete ${char.displayName}',
-                        onPressed: () async {
-                          if (await showDialog(
-                            context: context,
-                            builder: (context) => ConfirmationDialog(
-                              title: Text('Delete Character?'),
-                              text: Text(
-                                  'THIS CAN NOT BE UNDONE!\nAre you sure this is what you want to do?'),
-                              okButtonText: Text('I WANT THIS CHARACTER GONE!'),
-                              cancelButtonText: Text('I regret clicking this'),
-                            ),
-                          )) {
-                            dwStore.dispatch(RemoveCharacter(char));
-                            await char.delete();
-                            if (mounted) {
-                              setState(() {
-                                characters = characters..remove(char);
-                              });
-                            }
-                          }
-                        },
+                        onPressed: _delete(char),
                       ),
                     ],
                   ),
@@ -146,6 +129,32 @@ class _ManageCharactersViewState extends State<ManageCharactersView> {
         ),
       ),
     );
+  }
+
+  Future<void> Function() _delete(Character char) {
+    return () async {
+      logger.d('Delete Character');
+      final result = await showDialog(
+        context: context,
+        builder: (context) => ConfirmationDialog(
+          title: Text('Delete Character?'),
+          text: Text(
+              'THIS CAN NOT BE UNDONE!\nAre you sure this is what you want to do?'),
+          okButtonText: Text('I WANT THIS CHARACTER GONE!'),
+          cancelButtonText: Text('I regret clicking this'),
+        ),
+      );
+      if (result == true) {
+        unawaited(analytics.logEvent(name: Events.DeleteCharacter));
+        dwStore.dispatch(RemoveCharacter(char));
+        await char.delete();
+        if (mounted) {
+          setState(() {
+            characters = characters..remove(char);
+          });
+        }
+      }
+    };
   }
 
   void _openCreatePage() {

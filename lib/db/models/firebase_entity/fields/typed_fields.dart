@@ -29,7 +29,7 @@ class Field<T> extends FieldBase<T> {
     try {
       return __fromJSON != null ? __fromJSON(value, context) : value;
     } catch (e) {
-      print(e);
+      logger.e(e);
       rethrow;
     }
   }
@@ -39,7 +39,7 @@ class Field<T> extends FieldBase<T> {
     try {
       return __toJSON != null ? __toJSON(value, context) : value;
     } catch (e) {
-      print(e);
+      logger.e(e);
       rethrow;
     }
   }

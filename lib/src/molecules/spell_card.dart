@@ -4,6 +4,7 @@ import 'package:dungeon_paper/src/dialogs/confirmation_dialog.dart';
 import 'package:dungeon_paper/src/dialogs/dialogs.dart';
 import 'package:dungeon_paper/src/lists/tag_list.dart';
 import 'package:dungeon_paper/src/scaffolds/add_spell_scaffold.dart';
+import 'package:dungeon_paper/src/utils/analytics.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_markdown/flutter_markdown.dart';
 
@@ -116,6 +117,7 @@ class SpellCardState extends State<SpellCard> {
                       }
                     }
                   },
+                  entityTypeName: 'Spell',
                 )
               : widget.mode == SpellCardMode.Addable
                   ? Padding(
@@ -135,6 +137,10 @@ class SpellCardState extends State<SpellCard> {
                     )
                   : SizedBox.shrink(),
         ],
+        onExpansionChanged: (value) => analytics.logEvent(
+          name: Events.ExpandSpellCard,
+          parameters: {'state': value.toString()},
+        ),
       ),
     );
   }

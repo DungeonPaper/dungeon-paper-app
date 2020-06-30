@@ -4,6 +4,7 @@ import 'package:dungeon_paper/src/dialogs/confirmation_dialog.dart';
 import 'package:dungeon_paper/src/dialogs/dialogs.dart';
 import 'package:dungeon_paper/src/lists/player_class_list.dart';
 import 'package:dungeon_paper/src/organisms/class_description.dart';
+import 'package:dungeon_paper/src/utils/logger.dart';
 import 'package:dungeon_paper/src/utils/types.dart';
 import 'package:dungeon_world_data/dw_data.dart';
 import 'package:dungeon_world_data/player_class.dart';
@@ -94,7 +95,7 @@ class ClassSelectView extends StatelessWidget {
           Navigator.pop(context, res);
         }
       } catch (e) {
-        print(e);
+        logger.e(e);
         Navigator.pop(context, false);
       }
     };

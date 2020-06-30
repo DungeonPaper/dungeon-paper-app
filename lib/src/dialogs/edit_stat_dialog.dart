@@ -3,8 +3,10 @@ import 'package:dungeon_paper/db/models/character.dart';
 import 'package:dungeon_paper/src/atoms/number_controller.dart';
 import 'package:dungeon_paper/src/dialogs/standard_dialog_controls.dart';
 import 'package:dungeon_paper/src/redux/stores.dart';
+import 'package:dungeon_paper/src/utils/analytics.dart';
 import 'package:dungeon_paper/src/utils/utils.dart';
 import 'package:flutter/material.dart';
+import 'package:pedantic/pedantic.dart';
 
 class EditStatDialog extends StatefulWidget {
   final CharacterKeys stat;
@@ -128,6 +130,7 @@ class EditStatDialogState extends State<EditStatDialog> {
       saving = true;
     });
     await character.update(json: {key: value});
+    unawaited(analytics.logEvent(name: Events.EditStat));
     Navigator.pop(context);
   }
 }

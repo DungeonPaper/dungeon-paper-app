@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'dart:math';
+import 'package:dungeon_paper/src/utils/logger.dart';
 import 'package:dungeon_world_data/dw_data.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart' show rootBundle;
@@ -117,7 +118,7 @@ class Secrets {
 Future<Secrets> loadSecrets() async {
   if (_secrets == null) {
     _secrets = Secrets(jsonDecode(await rootBundle.loadString('secrets.json')));
-    if (isInDebugMode) print('Loaded secrets: $_secrets');
+    if (isInDebugMode) logger.d('Loaded secrets: $_secrets');
   }
   return _secrets;
 }
@@ -186,12 +187,13 @@ List<T> addToList<T>(List<T> list, T item) => List.from(list)
   ..add(item)
   ..removeWhere((element) => element == null);
 
-String camelToSnake(String string) =>
-    string[0] +
-    string.substring(1).replaceAllMapped(
-          RegExp(r'[A-Z0-9]+'),
-          (match) => '_' + match.group(0).toLowerCase(),
-        );
+String camelToSnake(String string) => string?.isNotEmpty == true
+    ? string[0].toLowerCase() +
+        string.substring(1).replaceAllMapped(
+              RegExp(r'[A-Z0-9]+'),
+              (match) => '_' + match.group(0).toLowerCase(),
+            )
+    : '';
 
 String snakeToCamel(String string) =>
     string[0] +

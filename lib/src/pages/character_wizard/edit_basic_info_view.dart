@@ -39,7 +39,6 @@ class _EditBasicInfoViewState extends State<EditBasicInfoView> {
         listener: () {
           var def = widget.character;
           def.displayName = editingControllers[Keys.displayName].text.trim();
-          widget.validityNotifier.value = _isValid();
           updateWith(def);
         },
       ),
@@ -49,7 +48,6 @@ class _EditBasicInfoViewState extends State<EditBasicInfoView> {
         listener: () {
           var def = widget.character;
           def.photoURL = editingControllers[Keys.photoURL].text.trim();
-          widget.validityNotifier.value = _isValid();
           updateWith(def);
         },
       ),
@@ -77,9 +75,7 @@ class _EditBasicInfoViewState extends State<EditBasicInfoView> {
   bool _isValid() => editingControllers[Keys.displayName].text.isNotEmpty;
 
   void updateWith(Character def) {
-    if (widget.validityNotifier != null) {
-      widget.validityNotifier.value = _isValid();
-    }
-    if (widget.onUpdate != null) widget.onUpdate(def);
+    widget.validityNotifier?.value = _isValid();
+    widget?.onUpdate?.call(def);
   }
 }

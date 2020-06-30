@@ -4,6 +4,7 @@ import 'package:dungeon_paper/src/dialogs/confirmation_dialog.dart';
 import 'package:dungeon_paper/src/dialogs/dialogs.dart';
 import 'package:dungeon_paper/src/lists/tag_list.dart';
 import 'package:dungeon_paper/src/scaffolds/add_inventory_item_scaffold.dart';
+import 'package:dungeon_paper/src/utils/analytics.dart';
 import 'package:dungeon_paper/src/utils/utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_markdown/flutter_markdown.dart';
@@ -127,6 +128,10 @@ class InventoryItemCard extends StatelessWidget {
                   ),
                 )
         ],
+        onExpansionChanged: (value) => analytics.logEvent(
+          name: Events.ExpandInventoryItemCard,
+          parameters: {'state': value.toString()},
+        ),
       ),
     );
   }

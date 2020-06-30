@@ -61,7 +61,7 @@ class _DiceSelectorState extends State<DiceSelector> {
 
   @override
   Widget build(BuildContext context) {
-    // print('controller: $amountController');
+    // logger.d('controller: $amountController');
     return Container(
       padding: widget.padding,
       child: Row(
@@ -135,7 +135,7 @@ class _DiceSelectorState extends State<DiceSelector> {
             extentOffset: amountController.text.length,
           ),
         );
-        // print('set: ${amountController.value}');
+        // logger.d('set: ${amountController.value}');
       });
     }
   }
