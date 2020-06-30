@@ -1,4 +1,5 @@
 import 'package:dungeon_paper/db/models/character.dart';
+import 'package:dungeon_paper/db/models/user.dart';
 import 'package:dungeon_paper/src/atoms/card_list_item.dart';
 import 'package:dungeon_paper/src/dialogs/confirmation_dialog.dart';
 import 'package:dungeon_paper/src/dialogs/dialogs.dart';
@@ -19,12 +20,14 @@ class ManageCharactersView extends StatefulWidget {
 
 class _ManageCharactersViewState extends State<ManageCharactersView> {
   List<Character> characters;
+  User user;
   ScrollController scrollController;
 
   @override
   void initState() {
     characters = dwStore.state.characters.characters.values.toList()
       ..sort((a, b) => a.order - b.order);
+    user = dwStore.state.user.current;
     scrollController = ScrollController();
     super.initState();
   }
@@ -34,11 +37,12 @@ class _ManageCharactersViewState extends State<ManageCharactersView> {
     return ScaffoldWithElevation.primaryBackground(
       title: Text('Manage Characters'),
       actions: [
-        IconButton(
-          icon: Icon(Icons.file_upload),
-          onPressed: _openExportDialog,
-          tooltip: 'Export Characters',
-        ),
+        if (user.isTester)
+          IconButton(
+            icon: Icon(Icons.file_upload),
+            onPressed: _openExportDialog,
+            tooltip: 'Export Characters',
+          ),
       ],
       floatingActionButton: FloatingActionButton(
         child: Icon(Icons.add),

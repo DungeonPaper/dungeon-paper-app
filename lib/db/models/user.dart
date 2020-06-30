@@ -32,9 +32,12 @@ class User extends FirebaseEntity {
       fields.get<Map<String, dynamic>>('features').get;
 
   bool hasFeature(String key) =>
+      key != null &&
       features.containsKey(key) &&
       features[key] != false &&
       features[key] != null;
+
+  bool get isTester => hasFeature('tester');
 
   User({
     DocumentReference ref,

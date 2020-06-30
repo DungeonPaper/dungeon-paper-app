@@ -1,32 +1,59 @@
 # Dungeon Paper
 
-## We are active on [Discord](https://discord.gg/HB5HQja) | [Twitter](https://twitter.com/DungeonPaper) | [Facebook](https://facebook.com/DungeonPaper)
+## We are active on [Discord](https://bit.ly/DungeonPaper-Discord) | [Twitter](https://twitter.com/DungeonPaper) | [Facebook](https://facebook.com/DungeonPaper)
+
+Dungeon World players, this is the app for you!
+
+Keep all your characters' bio, stats, moves and possessions with this interactive character sheet. Join for smoother, zero-hustle Dungeon World campaigns!
+
+All the customization you need for a great experience is here:
 
 Dungeon Paper is an interactive character sheet for your Dungeon World characters.
 This is the source of this app, but to fully use it you must set up your own firebase credentials and sign your own app.
+Once that is properly set up, the app should create entities based on logins to the app, so nothing else should be created for the database beforehand.
 No one in this repository will provide any secret keys to anyone, ever.
 
-Features currently included:
+## Dungeon Paper is available on [Google Play](https://bit.ly/DungeonPaper-Android).
 
-* Adding basic details such as character name, image, alignment, looks, race
-* Setting & viewing stats and modifiers, health and experience
-* Add moves & spells from the database list, or add your own custom ones
-* Add notes and organize them into categories, so you can easily keep track of everything going on in your campaign and your character.
-* Keep track of inventory items, added from the standard list, or create new ones
-* View & edit tags on items & spells
-* Creating custom classes
-* Rolling dice
+## Features
 
-*Notes:*
-- Dungeon Paper is open source and uses Firebase as its databse & authentication manager.
-- Please open issues for any suggestions you have, or any bug reports.
-  When submitting bugs, try to be as detailed as possible, and hopefuly responsive to further questions for clarification.
+* Unlimited number of character sheets
+* Create your own classes and races to use for your characters
+* Add basic details (character name, image, race and alignment)
+* Set and view stats and modifiers, life, experience, armor and damage dice
+* Add moves and spells from the playbook, or add your own homebrew
+* Keep track of inventory items, coins and load
+* Add notes and organize them into categories, to keep track of everything going on in your group's campaign and your character
+* Roll dice from anywhere in the app
+
+## Development Set Up
+
+1. Download Flutter
+
+    Use whatever Flutter channel you deem necessary, this should be compatible with master and beta, dev breaks a lot so no commitment.  
+    More information on [Flutter.dev](https://flutter.dev).
+
+1.  Connect your Firebase credentials for the app
+
+    - [Android Instructions](https://firebase.google.com/docs/android/setup)
+    - [iOS Instructions](https://firebase.google.com/docs/ios/setup)
+
+1. Build & Run the project
+
+---
 
 # CONTRIBUTING
-Dungeon Paper is built with [Flutter](https://flutter.dev), and is currently available on Google Play on beta.
 
-- If you wish to contribute, feel free to fork this repository and create a PR once you have a stable contribution.
-  As mentioned above, Firebase secret keys must be your own, and so are the databases and services related to them.
-  This project uses Firebase auth and database services.
-- Bug reports are also great contributions, so feel free to open appropriate issues if you have any.
-- If you want to use this source yourself, please read [the license](LICENSE.md).
+## Help with code
+
+1. Fork this repository
+1. Run the project, and make your changes.
+1. Do your best to make sure nothing breaks. There are minimal tests so try QAing the change yourself before proceeding
+1. Create a PR once you have a stable contribution
+
+As mentioned above, Firebase secret keys must be your own, and so are the databases and services related to them.
+This project uses Firebase auth, Firestore, and Crashlytics.
+
+## Help by bug reporting or requesting features
+- Feel free to use the GitHub issues to post one of the issue templates.
+- We are also active on [Discord](https://bit.ly/DungeonPaper-Discord)
