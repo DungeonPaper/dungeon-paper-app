@@ -169,7 +169,11 @@ class _SidebarState extends State<Sidebar> {
 
   void aboutScreen(BuildContext context) {
     Navigator.pop(context);
-    openPage(ScreenNames.About, context, builder: (context) => AboutView());
+    openPage(
+      ScreenNames.About,
+      context,
+      builder: (context) => AboutView(),
+    );
   }
 
   Widget title(String text, BuildContext context, {Widget leading}) {
@@ -192,7 +196,8 @@ class _SidebarState extends State<Sidebar> {
         DefaultTextStyle(
           child: leading,
           style: titleStyle.copyWith(
-              color: Theme.of(context).textTheme.headline3.color),
+            color: Theme.of(context).textTheme.headline3.color,
+          ),
         ),
       ],
     );
@@ -247,8 +252,10 @@ class CharacterListTile extends StatelessWidget {
     );
   }
 
-  static List<Widget> list(Iterable<Character> characters,
-          {String selectedId}) =>
+  static List<Widget> list(
+    Iterable<Character> characters, {
+    String selectedId,
+  }) =>
       characters
           .map((character) => CharacterListTile(
                 key: Key(character.documentID),
