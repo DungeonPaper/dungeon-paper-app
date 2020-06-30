@@ -179,7 +179,8 @@ class _ExportCharactersDialogState extends State<ExportCharactersDialog> {
     return _dataParsers[_format]?.call(chars);
   }
 
-  Map<ExportFormat, String Function(List<Character>)> _dataParsers = {
+  static final Map<ExportFormat, String Function(List<Character>)>
+      _dataParsers = {
     ExportFormat.JSON: (chars) {
       var charsData = chars.map((char) => char.toJSON()).toList();
       var _strData = jsonEncode(charsData);
