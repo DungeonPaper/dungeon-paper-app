@@ -3,6 +3,8 @@ import 'package:dungeon_paper/db/models/user.dart';
 import 'package:dungeon_paper/src/redux/characters/characters_store.dart';
 import 'package:dungeon_paper/src/redux/stores.dart';
 import 'package:dungeon_paper/src/redux/users/user_store.dart';
+import 'package:dungeon_paper/src/utils/analytics.dart';
+import 'package:dungeon_paper/src/utils/logger.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -55,7 +57,10 @@ Future<FirebaseUser> signInFlow(
     fbUser = await getFirebaseUser(providerCreds);
   }
 
-  final user = await getOrCreateUser(fbUser);
+  final user = await getOrCreateUser(
+    fbUser,
+    signInMethod: creds.providerCredentials.providerId,
+  );
 
   dispatchFinalDataToStore(
     credentials: creds,
@@ -88,6 +93,9 @@ void dispatchFinalDataToStore({
     credentials: credentials,
     firebaseUser: firebaseUser,
   ));
+
+  unawaited(analytics.logLogin(
+      loginMethod: credentials.providerCredentials.providerId));
   registerAllListeners(firebaseUser);
 }
 
@@ -110,7 +118,7 @@ Future<Credentials> signInWithGoogle({
       try {
         googleUser = await gInstance.signInSilently();
       } catch (e) {
-        print(e);
+        logger.e(e);
       }
     }
 
@@ -131,7 +139,7 @@ Future<Credentials> signInWithGoogle({
       ),
     );
   } catch (e) {
-    print(e);
+    logger.e(e);
     return null;
   }
 }
@@ -153,7 +161,7 @@ Future<FirebaseUser> getFirebaseUser(AuthCredential creds) async {
     var user = result.user;
     return user;
   } catch (e) {
-    print(e);
+    logger.e(e);
     return null;
   }
 }
@@ -161,4 +169,9 @@ Future<FirebaseUser> getFirebaseUser(AuthCredential creds) async {
 class SignInError implements Exception {
   final String message;
   const SignInError([this.message]);
+
+  @override
+  String toString() {
+    return '$runtimeType($message)';
+  }
 }

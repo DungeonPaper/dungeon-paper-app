@@ -14,7 +14,10 @@ import 'package:dungeon_paper/src/redux/connectors.dart';
 import 'package:dungeon_paper/src/redux/loading/loading_store.dart';
 import 'package:dungeon_paper/src/redux/shared_preferences/prefs_store.dart';
 import 'package:dungeon_paper/src/redux/stores.dart';
+import 'package:dungeon_paper/src/utils/analytics.dart';
+import 'package:dungeon_paper/src/utils/logger.dart';
 import 'package:dungeon_paper/src/utils/utils.dart';
+import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:package_info/package_info.dart';
 import 'package:pedantic/pedantic.dart';
 import 'package:pub_semver/pub_semver.dart';
@@ -81,22 +84,46 @@ class _MainViewState extends State<MainView> {
     Pages.Notes: (character) => NotesView(character: character),
     Pages.Reference: (character) => ReferenceView(),
   };
+  final FirebaseAnalytics analytics = FirebaseAnalytics();
 
   double elevation = 0.0;
+  String lastPageName = 'Home';
 
   @override
   void initState() {
     widget.pageController.addListener(() {
-      if (widget.pageController.hasClients &&
-          clamp01(widget.pageController.page) != elevation) {
-        setState(() {
-          elevation = clamp01(widget.pageController.page);
-        });
+      if (widget.pageController.hasClients) {
+        if (clamp01(widget.pageController.page) != elevation) {
+          setState(() {
+            elevation = clamp01(widget.pageController.page);
+          });
+        }
+        if (widget.pageController.page.round() == widget.pageController.page) {
+          logger.d('Page View: $pageName');
+          if (pageName != lastPageName) {
+            analytics.setCurrentScreen(
+              screenName: pageName,
+            );
+            setState(() {
+              lastPageName = pageName;
+            });
+          } else {
+            analytics.logEvent(name: Events.ReturnToScreen, parameters: {
+              'screen_name': lastPageName,
+            });
+          }
+        }
       }
     });
     _showWhatsNew();
     super.initState();
   }
+
+  String get pageName => enumName(
+        Pages.values.elementAt(
+          widget.pageController?.page?.toInt?.call() ?? 0,
+        ),
+      );
 
   @override
   Widget build(BuildContext context) {
@@ -121,12 +148,18 @@ class _MainViewState extends State<MainView> {
                   tooltip: 'Roll Dice',
                   icon:
                       PlatformSvg.asset('dice/d20.svg', width: 24, height: 24),
-                  onPressed: () => showDialog(
-                    context: context,
-                    builder: (context) => RollDiceDialog(
-                      character: widget.character,
-                    ),
-                  ),
+                  onPressed: () {
+                    analytics.logEvent(
+                      name: Events.OpenDiceDialog,
+                      parameters: {'screen_name': pageName},
+                    );
+                    showDialog(
+                      context: context,
+                      builder: (context) => RollDiceDialog(
+                        character: widget.character,
+                      ),
+                    );
+                  },
                 )
               ]
             : null,

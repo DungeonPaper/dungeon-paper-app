@@ -1,3 +1,6 @@
+import 'package:dungeon_paper/src/utils/analytics.dart';
+import 'package:dungeon_paper/src/utils/logger.dart';
+import 'package:dungeon_paper/src/utils/utils.dart';
 import 'package:flutter/material.dart';
 
 class CardBottomControls extends StatelessWidget {
@@ -11,7 +14,7 @@ class CardBottomControls extends StatelessWidget {
     Key key,
     this.onEdit,
     this.onDelete,
-    this.entityTypeName,
+    @required this.entityTypeName,
     this.leading = const [],
     this.trailing = const [],
   }) : super(key: key);
@@ -27,12 +30,12 @@ class CardBottomControls extends StatelessWidget {
     Widget editButton = IconButton(
       tooltip: suffixType('Edit'),
       icon: Icon(Icons.edit),
-      onPressed: onEdit,
+      onPressed: _addAnalytics('Edit', onEdit),
     );
     Widget deleteButton = IconButton(
       tooltip: suffixType('Delete'),
       icon: Icon(Icons.delete),
-      onPressed: onDelete,
+      onPressed: _addAnalytics('Delete', onDelete),
     );
     if (leading.isNotEmpty) {
       buttons.addAll(leading);
@@ -55,5 +58,15 @@ class CardBottomControls extends StatelessWidget {
     }
 
     return text;
+  }
+
+  void Function() _addAnalytics(String actionName, void Function() action) {
+    return () {
+      final _actionName =
+          '${actionName.toLowerCase()}_${camelToSnake(entityTypeName)}';
+      logger.d(_actionName);
+      analytics.logEvent(name: _actionName);
+      action?.call();
+    };
   }
 }

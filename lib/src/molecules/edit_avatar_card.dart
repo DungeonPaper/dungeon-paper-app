@@ -54,7 +54,7 @@ class _EditAvatarCardState extends State<EditAvatarCard> {
   Widget avatar() {
     // var image = NetworkImageWithRetry(widget.controller.text,
     //     fetchStrategy: (uri, failure) async {
-    //       print('ahem');
+    //       logger.d('ahem');
     //   if (failure != null) {
     //     await Future.delayed(Duration(microseconds: 1));
     //     setState(() {

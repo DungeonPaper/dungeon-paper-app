@@ -1,6 +1,7 @@
 import 'package:dungeon_paper/db/models/character.dart';
 import 'package:dungeon_paper/src/molecules/current_stat_indicator.dart';
 import 'package:dungeon_paper/src/molecules/status_bars.dart';
+import 'package:dungeon_paper/src/utils/analytics.dart';
 import 'package:dungeon_paper/src/utils/utils.dart';
 import 'package:wheel_spinner/wheel_spinner.dart';
 import 'package:flutter/material.dart';
@@ -147,7 +148,7 @@ class _EditHPDialogState extends State<EditHPDialog> {
                   ),
           ),
         StandardDialogControls(
-          onOK: () => save(context),
+          onOK: () => _save(context),
         ),
       ],
     );
@@ -169,13 +170,13 @@ class _EditHPDialogState extends State<EditHPDialog> {
     });
   }
 
-  void save(BuildContext context) {
-    var char = widget.character;
-    char.update(json: {
-      'currentHP': currentHP,
-      'maxHP': maxHP,
-      'useDefaultMaxHP': useDefaultMaxHP,
-    });
+  void _save(BuildContext context) {
+    analytics.logEvent(name: Events.SaveHP);
+    widget.character
+      ..currentHP = currentHP
+      ..maxHP = maxHP
+      ..useDefaultMaxHP = useDefaultMaxHP
+      ..update();
     Navigator.pop(context);
   }
 

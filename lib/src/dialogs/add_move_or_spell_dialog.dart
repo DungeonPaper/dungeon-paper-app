@@ -5,6 +5,7 @@ import 'package:dungeon_paper/src/dialogs/dialogs.dart';
 import 'package:dungeon_paper/src/flutter_utils/platform_svg.dart';
 import 'package:dungeon_paper/src/scaffolds/add_move_scaffold.dart';
 import 'package:dungeon_paper/src/scaffolds/add_spell_scaffold.dart';
+import 'package:dungeon_paper/src/utils/logger.dart';
 import 'package:dungeon_world_data/move.dart';
 import 'package:dungeon_world_data/player_class.dart';
 import 'package:flutter/material.dart';
@@ -62,7 +63,7 @@ class AddMoveOrSpell extends StatelessWidget {
                           ),
                           mode: DialogMode.Create,
                           onSave: (move) {
-                            print('add_move_or_spell.dart onCreateMove');
+                            logger.d('add_move_or_spell.dart onCreateMove');
                             createMove(character, move);
                             Navigator.pop(ctx);
                           },

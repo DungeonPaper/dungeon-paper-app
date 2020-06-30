@@ -3,6 +3,7 @@ import 'package:dungeon_paper/src/atoms/card_bottom_controls.dart';
 import 'package:dungeon_paper/src/dialogs/confirmation_dialog.dart';
 import 'package:dungeon_paper/src/dialogs/dialogs.dart';
 import 'package:dungeon_paper/src/scaffolds/edit_note_scaffold.dart';
+import 'package:dungeon_paper/src/utils/analytics.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_markdown/flutter_markdown.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -24,8 +25,6 @@ class NoteCard extends StatefulWidget {
 }
 
 class NoteCardState extends State<NoteCard> {
-  bool expanded = false;
-
   @override
   Widget build(BuildContext context) {
     var desc = widget.note.description;
@@ -35,12 +34,10 @@ class NoteCardState extends State<NoteCard> {
       type: MaterialType.card,
       child: ExpansionTile(
         title: Text(widget.note.title),
-        initiallyExpanded: expanded,
-        onExpansionChanged: (s) {
-          setState(() {
-            expanded = !expanded;
-          });
-        },
+        onExpansionChanged: (value) => analytics.logEvent(
+          name: Events.ExpandNoteCard,
+          parameters: {'state': value.toString()},
+        ),
         children: <Widget>[
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),

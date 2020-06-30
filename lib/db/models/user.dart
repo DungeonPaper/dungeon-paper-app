@@ -3,6 +3,7 @@ import 'package:dungeon_paper/db/db.dart';
 import 'package:dungeon_paper/src/redux/characters/characters_store.dart';
 import 'package:dungeon_paper/src/redux/stores.dart';
 import 'package:dungeon_paper/src/redux/users/user_store.dart';
+import 'package:dungeon_paper/src/utils/logger.dart';
 
 import 'character.dart';
 import 'firebase_entity/fields/fields.dart';
@@ -48,7 +49,7 @@ class User extends FirebaseEntity {
   Future<Character> createCharacter(Character character) async {
     var doc = firestore.collection(ref.path + '/characters').document();
     var data = character.toJSON();
-    print('Creating character: $data');
+    logger.d('Creating character: $data');
     await doc.setData(data);
     character..ref = doc;
     dwStore.dispatch(UpsertCharacter(character));

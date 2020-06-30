@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:dungeon_paper/src/utils/logger.dart';
 import 'package:flutter/foundation.dart';
 
 import 'fields/fields.dart';
@@ -61,7 +62,7 @@ abstract class FirebaseEntity {
   }
 
   Future<void> delete() async {
-    print('Deleting $this');
+    logger.d('Deleting $this');
 
     if (ref == null) {
       return _noRef();
@@ -102,8 +103,8 @@ abstract class FirebaseEntity {
       if (ref == null) {
         return _noRef();
       }
-      print('Updating $this');
-      print(json);
+      logger.d('Updating $this');
+      logger.d(json.toString());
       await ref.updateData(json);
       unsetDirty(json);
     }
@@ -113,8 +114,8 @@ abstract class FirebaseEntity {
     if (ref == null) {
       return _noRef();
     }
-    print('Creating $this');
-    print(json);
+    logger.d('Creating $this');
+    logger.d(json);
     await ref.setData(json);
     unsetDirty(json);
   }
@@ -157,8 +158,8 @@ abstract class FirebaseEntity {
         field.set(value);
         output[key] = value;
       } catch (e) {
-        print('[$runtimeType] Error deserializing key: $key');
-        print('Given value: ${data[key]}');
+        logger.d('[$runtimeType] Error deserializing key: $key');
+        logger.d('Given value: ${data[key]}');
         rethrow;
       }
     }

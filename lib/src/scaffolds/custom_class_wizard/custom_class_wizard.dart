@@ -7,7 +7,10 @@ import 'package:dungeon_paper/src/molecules/custom_class_basic_details.dart';
 import 'package:dungeon_paper/src/molecules/custom_class_looks.dart';
 import 'package:dungeon_paper/src/redux/stores.dart';
 import 'package:dungeon_paper/src/scaffolds/scaffold_with_elevation.dart';
+import 'package:dungeon_paper/src/utils/analytics.dart';
+import 'package:dungeon_paper/src/utils/utils.dart';
 import 'package:flutter/material.dart';
+import 'package:pedantic/pedantic.dart';
 
 class CustomClassWizard extends StatefulWidget {
   final DialogMode mode;
@@ -220,6 +223,12 @@ class _CustomClassWizardState extends State<CustomClassWizard>
       ].every((validator) => validator.value == true);
 
   void _save() async {
+    unawaited(analytics.logEvent(
+      name: Events.SaveCustomClass,
+      parameters: {
+        'mode': enumName(widget.mode).toLowerCase(),
+      },
+    ));
     if (widget.mode == DialogMode.Create) {
       await def.create();
     } else {

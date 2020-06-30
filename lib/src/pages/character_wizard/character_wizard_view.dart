@@ -5,6 +5,10 @@ import 'package:dungeon_paper/src/dialogs/dialogs.dart';
 import 'package:dungeon_paper/src/redux/stores.dart';
 import 'package:dungeon_paper/src/scaffolds/class_select_scaffold.dart';
 import 'package:dungeon_paper/src/scaffolds/scaffold_with_elevation.dart';
+import 'package:dungeon_paper/src/utils/analytics.dart';
+import 'package:dungeon_paper/src/utils/logger.dart';
+import 'package:dungeon_paper/src/utils/utils.dart';
+import 'package:pedantic/pedantic.dart';
 import 'edit_basic_info_view.dart';
 import 'edit_race.dart';
 import 'edit_looks.dart';
@@ -81,7 +85,8 @@ class _CharacterWizardViewState extends State<CharacterWizardView>
     dirty = false;
 
     tabController = TabController(length: _tabs.keys.length, vsync: this);
-
+    logger.d('Page View: ${ScreenNames.CharacterScreen}');
+    analytics.setCurrentScreen(screenName: ScreenNames.CharacterScreen);
     super.initState();
   }
 
@@ -233,6 +238,12 @@ class _CharacterWizardViewState extends State<CharacterWizardView>
       ].every((validator) => validator.value == true);
 
   void _save() async {
+    unawaited(analytics.logEvent(
+      name: Events.SaveCharacter,
+      parameters: {
+        'mode': enumName(widget.mode).toLowerCase(),
+      },
+    ));
     if (widget.mode == DialogMode.Create) {
       await character.create();
     } else {

@@ -5,6 +5,7 @@ import 'package:dungeon_paper/src/redux/characters/characters_store.dart';
 import 'package:dungeon_paper/src/redux/custom_classes/custom_classes_store.dart';
 import 'package:dungeon_paper/src/redux/stores.dart';
 import 'package:dungeon_paper/src/redux/users/user_store.dart';
+import 'package:dungeon_paper/src/utils/logger.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:pedantic/pedantic.dart';
 
@@ -33,13 +34,13 @@ void registerFirebaseUserListener() {
         dwStore.dispatch(ClearCharacters());
       }
     });
-    print('REGISTERED AUTH USER LISTENER');
+    logger.d('REGISTERED AUTH USER LISTENER');
   } catch (e) {
-    print('error on user listener');
+    logger.d('error on user listener');
     if (_fbUserListener != null) {
       _fbUserListener.cancel();
     }
-    print("COULDN'T REGISTER AUTH USER LISTENER");
+    logger.d("COULDN'T REGISTER AUTH USER LISTENER");
   }
 }
 
@@ -66,7 +67,7 @@ void registerUserListener(FirebaseUser fbUser) {
     );
   });
 
-  print('REGISTERED DB USER LISTENER');
+  logger.d('REGISTERED DB USER LISTENER');
 }
 
 StreamSubscription _charsListener;
@@ -103,7 +104,7 @@ void registerCharactersListener() async {
       dwStore.dispatch(SetCurrentChar(matchingChar));
     }
   });
-  print('REGISTERED DB CHARACTER LISTENER');
+  logger.d('REGISTERED DB CHARACTER LISTENER');
 }
 
 StreamSubscription _classesListener;
@@ -133,5 +134,5 @@ void registerCustomClassesListener() async {
       }),
     );
   });
-  print('REGISTERED DB CLASSES LISTENER');
+  logger.d('REGISTERED DB CLASSES LISTENER');
 }

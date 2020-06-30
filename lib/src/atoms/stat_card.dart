@@ -22,10 +22,7 @@ class StatCard extends StatelessWidget {
       child: Card(
         margin: EdgeInsets.all(10.0),
         child: InkWell(
-          onTap: () => showDialog(
-            context: context,
-            builder: (context) => EditStatDialog(stat: stat, value: value),
-          ),
+          onTap: _edit(context),
           child: Padding(
             padding: EdgeInsets.symmetric(horizontal: 10.0, vertical: 22.0),
             child: Column(
@@ -67,5 +64,15 @@ class StatCard extends StatelessWidget {
       default:
         return character.con;
     }
+  }
+
+  void Function() _edit(BuildContext context) {
+    final value = getValue(character, stat);
+    return () {
+      showDialog(
+        context: context,
+        builder: (context) => EditStatDialog(stat: stat, value: value),
+      );
+    };
   }
 }

@@ -1,9 +1,13 @@
 import 'dart:async';
 import 'package:dungeon_paper/db/db.dart';
+import 'package:dungeon_paper/src/flutter_utils/on_init_caller.dart';
 import 'package:dungeon_paper/src/pages/scaffold/main_view.dart';
 import 'package:dungeon_paper/src/redux/stores.dart';
+import 'package:dungeon_paper/src/utils/analytics.dart';
 import 'package:dungeon_paper/src/utils/error_reporting.dart';
+import 'package:dungeon_paper/src/utils/logger.dart';
 import 'package:dungeon_paper/themes/main_theme.dart';
+import 'package:firebase_analytics/observer.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
@@ -18,7 +22,7 @@ void withInit(Function() cb) async {
     }
     runZonedGuarded(cb, reportError);
   } catch (e) {
-    print(e);
+    logger.e(e);
     rethrow;
   }
 }
@@ -33,6 +37,8 @@ void main() async {
 
 class DungeonPaper extends StatelessWidget {
   final PageController _pageController = PageController(initialPage: 0);
+  final FirebaseAnalyticsObserver observer =
+      FirebaseAnalyticsObserver(analytics: analytics);
 
   @override
   Widget build(BuildContext context) {
@@ -40,15 +46,19 @@ class DungeonPaper extends StatelessWidget {
 
     return StoreProvider<DWStore>(
       store: dwStore,
-      child: MaterialApp(
-        title: appName,
-        theme: mainTheme,
-        routes: {
-          '/': (ctx) => MainContainer(
-                title: appName,
-                pageController: _pageController,
-              ),
-        },
+      child: OnInitCaller(
+        onInit: () => analytics.logAppOpen(),
+        child: MaterialApp(
+          title: appName,
+          theme: mainTheme,
+          routes: {
+            '/': (ctx) => MainContainer(
+                  title: appName,
+                  pageController: _pageController,
+                ),
+          },
+          navigatorObservers: [observer],
+        ),
       ),
     );
   }
