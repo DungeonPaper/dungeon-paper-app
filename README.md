@@ -1,6 +1,8 @@
 # Dungeon Paper
 
-## We are active on [Discord](https://bit.ly/DungeonPaper-Discord) | [Twitter](https://twitter.com/DungeonPaper) | [Facebook](https://facebook.com/DungeonPaper)
+[![discord](https://img.shields.io/discord/719848105586982915?label=Discord&logo=discord&style=social)](https://bit.ly/DungeonPaper-Discord)
+[![facebook](https://img.shields.io/static/v1?label=Like&style=social&logo=facebook&message=%20)](https://bit.ly/DungeonPaper-Facebook)
+[![twitter](https://img.shields.io/twitter/follow/espadrine?label=Follow&style=social)](https://bit.ly/DungeonPaper-Twitter)
 
 Dungeon World players, this is the app for you!
 
