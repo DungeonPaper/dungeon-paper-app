@@ -96,6 +96,15 @@ void dispatchFinalDataToStore({
 
   unawaited(analytics.logLogin(
       loginMethod: credentials.providerCredentials.providerId));
+  unawaited(analytics.setUserId(firebaseUser.uid));
+  unawaited(analytics.setUserProperty(
+    name: 'document_id',
+    value: user.documentID,
+  ));
+  unawaited(analytics.setUserProperty(
+    name: 'is_tester',
+    value: user.isTester.toString(),
+  ));
   registerAllListeners(firebaseUser);
 }
 

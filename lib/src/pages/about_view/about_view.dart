@@ -68,7 +68,8 @@ class _AboutViewState extends State<AboutView> {
                           TextSpan(
                             text: 'Chen Asraf',
                             recognizer: TapGestureRecognizer()
-                              ..onTap = () => launch('https://casraf.blog'),
+                              ..onTap = () => launch(
+                                  'https://casraf.blog/?utm_medium=app&utm_source=about'),
                             style: TextStyle(
                               color: Color.fromRGBO(25, 118, 210, 1),
                               decoration: TextDecoration.underline,
@@ -96,7 +97,7 @@ class _AboutViewState extends State<AboutView> {
                             label: 'Facebook',
                             color: Color(0xFF1878F3),
                             textColor: Colors.white,
-                            url: 'https://facebook.com/DungeonPaper',
+                            url: 'https://bit.ly/DungeonPaper-Facebook',
                           ),
                           Container(),
                           SocialButton(
@@ -104,7 +105,7 @@ class _AboutViewState extends State<AboutView> {
                             assetName: 'twitter',
                             color: Color(0xFF00ACEE),
                             textColor: Colors.white,
-                            url: 'https://twitter.com/dungeonpaper',
+                            url: 'https://bit.ly/DungeonPaper-Twitter',
                           ),
                         ],
                       ),
@@ -112,8 +113,7 @@ class _AboutViewState extends State<AboutView> {
                         children: [
                           SocialButton(
                             label: 'GitHub',
-                            url:
-                                'https://github.com/DungeonPaper/dungeon-paper-app',
+                            url: 'https://bit.ly/DungeonPaper-GitHub',
                             assetName: 'github',
                             color: Colors.black,
                             textColor: Colors.white,
@@ -121,7 +121,7 @@ class _AboutViewState extends State<AboutView> {
                           Container(),
                           SocialButton(
                             label: 'Discord',
-                            url: 'https://discord.gg/rXx2FNw',
+                            url: 'https://bit.ly/DungeonPaper-GitHub',
                             assetName: 'discord',
                             color: Color(0xFF7289DB),
                             textColor: Colors.white,
@@ -149,8 +149,7 @@ class _AboutViewState extends State<AboutView> {
                           SocialButton(
                             label: 'Privacy',
                             icon: Icon(Icons.lock),
-                            url:
-                                'https://casraf.blog/dungeon-paper-privacy-policy',
+                            url: 'https://bit.ly/DungeonPaper-Privacy',
                             color: Theme.of(context).primaryColor,
                             textColor: Theme.of(context).colorScheme.onPrimary,
                           ),
