@@ -7,6 +7,8 @@ import 'package:dungeon_paper/src/pages/character_wizard/character_wizard_view.d
 import 'package:dungeon_paper/src/pages/compendium/compendium_view.dart';
 import 'package:dungeon_paper/src/redux/characters/characters_store.dart';
 import 'package:dungeon_paper/src/redux/connectors.dart';
+import 'package:dungeon_paper/src/redux/shared_preferences/prefs_settings.dart';
+import 'package:dungeon_paper/src/redux/shared_preferences/prefs_store.dart';
 import 'package:dungeon_paper/src/redux/stores.dart';
 import 'package:dungeon_paper/src/scaffolds/manage_characters_view/manage_characters_view.dart';
 import 'package:dungeon_paper/src/utils/analytics.dart';
@@ -34,6 +36,10 @@ class _SidebarState extends State<Sidebar> {
     return DWStoreConnector<DWStore>(
       builder: (context, state) {
         var user = state.user.current;
+        var settings = state.prefs.settings;
+        var buttonStyle = getTitleStyle(context).copyWith(
+          color: Theme.of(context).textTheme.headline3.color,
+        );
 
         return Drawer(
           child: ListView(
@@ -53,25 +59,21 @@ class _SidebarState extends State<Sidebar> {
                 context,
                 leading: Row(
                   children: [
-                    Padding(
-                      padding: const EdgeInsets.only(right: 8.0),
-                      child: InkWell(
-                        child: Padding(
-                          padding: EdgeInsets.all(8),
-                          child: Text('+ Create New'.toUpperCase()),
-                        ),
-                        onTap: () => createNewCharacterScreen(context),
+                    FlatButton(
+                      padding: EdgeInsets.all(0),
+                      child: Text(
+                        '+ Create New'.toUpperCase(),
+                        style: buttonStyle,
                       ),
+                      onPressed: () => createNewCharacterScreen(context),
                     ),
-                    Padding(
-                      padding: const EdgeInsets.only(right: 8.0),
-                      child: InkWell(
-                        child: Padding(
-                          padding: EdgeInsets.all(8),
-                          child: Text('Manage'.toUpperCase()),
-                        ),
-                        onTap: () => manageCharactersScreen(context),
+                    FlatButton(
+                      padding: EdgeInsets.all(0),
+                      child: Text(
+                        'Manage'.toUpperCase(),
+                        style: buttonStyle,
                       ),
+                      onPressed: () => manageCharactersScreen(context),
                     ),
                   ],
                 ),
@@ -92,6 +94,23 @@ class _SidebarState extends State<Sidebar> {
                 ),
                 title: Text('Compendium'),
                 onTap: () => compendiumScreen(context),
+              ),
+              Divider(),
+              title('Settings', context),
+              ListTile(
+                leading: Icon(Icons.settings),
+                title: Text('Keep screen on'),
+                trailing: Switch.adaptive(
+                  value: settings.keepScreenOn,
+                  onChanged: (value) {
+                    dwStore.dispatch(
+                      ChangeSetting<bool>(
+                        name: SettingName.keepScreenOn,
+                        value: value,
+                      ),
+                    );
+                  },
+                ),
               ),
               Divider(),
               title('Application', context),
@@ -179,7 +198,7 @@ class _SidebarState extends State<Sidebar> {
   Widget title(String text, BuildContext context, {Widget leading}) {
     var titleStyle = getTitleStyle(context);
     Widget title = Padding(
-      padding: EdgeInsets.all(8),
+      padding: EdgeInsets.all(8).copyWith(left: 18),
       child: Text(
         text.toUpperCase(),
         style: titleStyle,
@@ -188,6 +207,9 @@ class _SidebarState extends State<Sidebar> {
     if (leading == null) {
       return title;
     }
+    var leadingStyle = titleStyle.copyWith(
+      color: Theme.of(context).textTheme.headline3.color,
+    );
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       crossAxisAlignment: CrossAxisAlignment.center,
@@ -195,9 +217,7 @@ class _SidebarState extends State<Sidebar> {
         title,
         DefaultTextStyle(
           child: leading,
-          style: titleStyle.copyWith(
-            color: Theme.of(context).textTheme.headline3.color,
-          ),
+          style: leadingStyle,
         ),
       ],
     );

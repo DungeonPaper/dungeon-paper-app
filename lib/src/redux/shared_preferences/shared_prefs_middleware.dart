@@ -63,5 +63,11 @@ void sharedPrefsMiddleware(Store<DWStore> store, action, NextDispatcher next) {
     });
   }
 
+  if (action is ChangeSetting) {
+    withPrefs((prefs) {
+      PrefsSettings.setToPrefs(prefs, action.name, action.value);
+    });
+  }
+
   next(action);
 }
