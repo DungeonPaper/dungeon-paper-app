@@ -46,6 +46,7 @@ mixin CharacterFields implements FirebaseEntity {
     StringField(fieldName: 'displayName', defaultValue: (ctx) => 'Traveler'),
     StringField(fieldName: 'photoURL'),
     IntField(fieldName: 'level', defaultValue: (ctx) => 1),
+    StringField(fieldName: 'bio'),
     IntField(
       fieldName: 'currentHP',
       defaultValue: (ctx) => ctx?.get<num>('maxHP')?.get ?? 10,
@@ -141,6 +142,8 @@ mixin CharacterFields implements FirebaseEntity {
   set displayName(String value) => fields.get<String>('displayName').set(value);
   String get photoURL => fields.get<String>('photoURL').value;
   set photoURL(String value) => fields.get<String>('photoURL').set(value);
+  String get bio => fields.get<String>('bio').value;
+  set bio(String value) => fields.get<String>('bio').set(value);
   List<String> get looks => fields.get<List<String>>('looks').value;
   set looks(List<String> value) => fields.get<List<String>>('looks').set(value);
   Move get race => fields.get<Move>('race').value;
