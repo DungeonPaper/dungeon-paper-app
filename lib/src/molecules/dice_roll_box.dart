@@ -10,12 +10,14 @@ class DiceRollBox extends StatefulWidget {
   final DiceListController controller;
   final bool animated;
   final void Function() onRemove;
+  final EdgeInsets padding;
 
   DiceRollBox({
     Key key,
     @required this.controller,
     this.animated = true,
     this.onRemove,
+    this.padding,
   })  : assert(controller != null),
         assert(controller.value != null && (controller.value?.length ?? 0) > 0),
         super(key: key);
@@ -65,7 +67,7 @@ class _DiceRollBoxState extends State<DiceRollBox>
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 16),
+      padding: widget.padding ?? const EdgeInsets.symmetric(horizontal: 16),
       child: Card(
         color: Theme.of(context).canvasColor,
         shape: RoundedRectangleBorder(

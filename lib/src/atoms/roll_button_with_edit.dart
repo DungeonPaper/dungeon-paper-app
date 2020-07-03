@@ -29,7 +29,7 @@ class RollButtonWithEdit extends StatelessWidget {
               dice: diceList?.first ?? (Dice.d6 * 2),
               size: 24,
             ),
-            label: label ?? Text('Roll $diceList'),
+            label: label ?? Text('Roll ${diceList.join(', ')}'),
             onPressed: onRoll,
             onLongPress: _openRollDialog(context, rollImmediately: true),
           ),
