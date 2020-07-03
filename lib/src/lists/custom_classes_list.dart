@@ -1,5 +1,6 @@
 import 'package:dungeon_paper/db/models/custom_class.dart';
 import 'package:dungeon_paper/src/atoms/card_list_item.dart';
+import 'package:dungeon_paper/src/atoms/empty_state.dart';
 import 'package:dungeon_paper/src/flutter_utils/widget_utils.dart';
 import 'package:dungeon_paper/src/redux/connectors.dart';
 import 'package:dungeon_paper/src/utils/utils.dart';
@@ -31,24 +32,38 @@ class CustomClassesList extends StatelessWidget {
     var child = DWStoreConnector<List<CustomClass>>(
       converter: (store) =>
           store.state.customClasses.customClasses.values.toList(),
-      builder: (context, classes) => SingleChildScrollView(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: [
-            for (var cls in classes)
-              CardListItem(
-                onTap: onEdit != null ? () => onEdit(cls) : null,
-                leading: Icon(Icons.person, size: 40),
-                trailing: IconButton(
-                  icon: Icon(Icons.delete),
-                  onPressed: () => onDelete?.call(cls),
-                ),
-                title: Text(cls.name),
-                subtitle: Text(_subtitle(cls)),
+      builder: (context, classes) {
+        if (classes.isEmpty) {
+          return Padding(
+            padding: const EdgeInsets.symmetric(vertical: 16.0),
+            child: Center(
+              child: EmptyState(
+                title: Text('You have no custom classes'),
+                subtitle: Text("Start by tapping the '+' button"),
+                image: Icon(Icons.person, size: 80),
               ),
-          ],
-        ),
-      ),
+            ),
+          );
+        }
+        return SingleChildScrollView(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              for (var cls in classes)
+                CardListItem(
+                  onTap: onEdit != null ? () => onEdit(cls) : null,
+                  leading: Icon(Icons.person, size: 40),
+                  trailing: IconButton(
+                    icon: Icon(Icons.delete),
+                    onPressed: () => onDelete?.call(cls),
+                  ),
+                  title: Text(cls.name),
+                  subtitle: Text(_subtitle(cls)),
+                ),
+            ],
+          ),
+        );
+      },
     );
     return _builder(context, child);
   }

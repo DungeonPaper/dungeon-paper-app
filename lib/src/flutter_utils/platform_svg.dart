@@ -5,18 +5,24 @@ import 'package:flutter_svg/flutter_svg.dart';
 class PlatformSvg {
   static Widget asset(
     String assetName, {
-    double width,
-    double height,
+    num width,
+    num height,
+
+    /// Overrides width & height
+    num size,
     BoxFit fit = BoxFit.contain,
     Color color,
     alignment = Alignment.center,
     String semanticsLabel,
   }) {
+    if (size != null) {
+      width = height = size;
+    }
     if (kIsWeb) {
       return Image.network(
         'assets/assets/$assetName',
-        width: width,
-        height: height,
+        width: width.toDouble(),
+        height: height.toDouble(),
         fit: fit,
         color: color,
         alignment: alignment,
@@ -25,8 +31,8 @@ class PlatformSvg {
     }
     return SvgPicture.asset(
       'assets/$assetName',
-      width: width,
-      height: height,
+      width: width.toDouble(),
+      height: height.toDouble(),
       fit: fit,
       color: color,
       alignment: alignment,

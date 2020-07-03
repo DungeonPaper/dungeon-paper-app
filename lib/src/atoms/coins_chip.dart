@@ -34,7 +34,7 @@ class CoinsChip extends StatelessWidget {
           children: [
             PlatformSvg.asset(
               'coin-stack.svg',
-              width: 20,
+              size: 20,
             ),
             SizedBox.fromSize(size: Size.square(10)),
             Text(currency(character.coins))
