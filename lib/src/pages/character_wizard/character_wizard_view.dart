@@ -76,8 +76,8 @@ class _CharacterWizardViewState extends State<CharacterWizardView>
             ref: user.ref.collection('characters').document(),
           );
 
-    basicInfoValid = ValueNotifier(true);
-    mainClassValid = ValueNotifier(true);
+    basicInfoValid = ValueNotifier(character.displayName.isNotEmpty);
+    mainClassValid = ValueNotifier(character.mainClass != null);
     alignmentValid = ValueNotifier(character.alignment != null);
     raceValid = ValueNotifier(character.race != null);
     looksValid = ValueNotifier(true);

@@ -5,10 +5,10 @@ import 'package:dungeon_paper/src/dialogs/edit_hit_dice_dialog.dart';
 import 'package:dungeon_paper/src/flutter_utils/platform_svg.dart';
 import 'package:flutter/material.dart';
 
-class ArmorAndHitDice extends StatelessWidget {
+class ArmorAndDmgDice extends StatelessWidget {
   final Character character;
 
-  const ArmorAndHitDice({
+  const ArmorAndDmgDice({
     Key key,
     @required this.character,
   }) : super(key: key);
