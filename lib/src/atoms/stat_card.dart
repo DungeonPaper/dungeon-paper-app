@@ -1,7 +1,9 @@
 import 'package:dungeon_paper/db/helpers/character_utils.dart';
 import 'package:dungeon_paper/db/models/character.dart';
 import 'package:dungeon_paper/src/dialogs/edit_stat_dialog.dart';
+import 'package:dungeon_paper/src/dialogs/roll_dice_dialog.dart';
 import 'package:dungeon_paper/src/utils/utils.dart';
+import 'package:dungeon_world_data/dice.dart';
 import 'package:flutter/material.dart';
 
 class StatCard extends StatelessWidget {
@@ -23,6 +25,7 @@ class StatCard extends StatelessWidget {
         margin: EdgeInsets.all(10.0),
         child: InkWell(
           onTap: _edit(context),
+          onLongPress: _openRollDialog(context),
           child: Padding(
             padding: EdgeInsets.symmetric(horizontal: 10.0, vertical: 22.0),
             child: Column(
@@ -76,6 +79,23 @@ class StatCard extends StatelessWidget {
           value: value,
           character: character,
         ),
+      );
+    };
+  }
+
+  void Function() _openRollDialog(BuildContext context) {
+    final value = getValue(character, stat);
+    return () {
+      showDialog(
+        context: context,
+        builder: (context) {
+          var statDice = [Dice(6, 2, CharacterFields.statModifier(value))];
+          return RollDiceDialog(
+            character: character,
+            initialDiceList: statDice,
+            initialAddingDice: statDice,
+          );
+        },
       );
     };
   }
