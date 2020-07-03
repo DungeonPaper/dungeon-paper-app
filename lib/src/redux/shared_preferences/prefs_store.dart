@@ -1,4 +1,5 @@
 import 'package:dungeon_paper/src/redux/characters/characters_store.dart';
+import 'package:dungeon_paper/src/redux/shared_preferences/prefs_settings.dart';
 import 'package:dungeon_paper/src/redux/stores.dart';
 import 'package:dungeon_paper/src/redux/users/user_store.dart';
 import 'package:dungeon_paper/src/utils/auth.dart';
@@ -40,13 +41,17 @@ class UserDetails {
 class PrefsStore {
   Credentials credentials;
   UserDetails user;
+  PrefsSettings settings;
+
   final Map<SharedPrefKeys, String> _map;
 
   PrefsStore({
     Map<SharedPrefKeys, String> map,
     this.credentials,
     this.user,
+    this.settings,
   }) : _map = map ?? {} {
+    settings ??= PrefsSettings();
     _writeValuesFromMap(_map);
   }
 
@@ -135,7 +140,10 @@ class PrefsStore {
         lastCharacterId: _map[SharedPrefKeys.CharacterId],
       ),
       map: _map,
+      settings: PrefsSettings.loadFromPrefs(prefs),
     );
+
+    store.settings.applyAllSettings();
 
     dwStore.dispatch(SetPrefs(store));
     if (store.credentials.isNotEmpty) {
@@ -186,6 +194,11 @@ PrefsStore prefsReducer(PrefsStore state, action) {
       user: UserDetails(),
       credentials: null,
     );
+  }
+
+  if (action is ChangeSetting) {
+    state.settings.set(action.name, action.value);
+    return state;
   }
 
   return state;

@@ -91,30 +91,7 @@ class _MainViewState extends State<MainView> {
 
   @override
   void initState() {
-    widget.pageController.addListener(() {
-      if (widget.pageController.hasClients) {
-        if (clamp01(widget.pageController.page) != elevation) {
-          setState(() {
-            elevation = clamp01(widget.pageController.page);
-          });
-        }
-        if (widget.pageController.page.round() == widget.pageController.page) {
-          logger.d('Page View: $pageName');
-          if (pageName != lastPageName) {
-            analytics.setCurrentScreen(
-              screenName: pageName,
-            );
-            setState(() {
-              lastPageName = pageName;
-            });
-          } else {
-            analytics.logEvent(name: Events.ReturnToScreen, parameters: {
-              'screen_name': lastPageName,
-            });
-          }
-        }
-      }
-    });
+    widget.pageController.addListener(_pageListener);
     _showWhatsNew();
     super.initState();
   }
@@ -210,5 +187,36 @@ class _MainViewState extends State<MainView> {
       ));
     }
     unawaited(sharedPrefs.setString(lastVersionKey, packageInfo.version));
+  }
+
+  void _pageListener() {
+    if (widget.pageController.hasClients) {
+      if (clamp01(widget.pageController.page) != elevation) {
+        setState(() {
+          elevation = clamp01(widget.pageController.page);
+        });
+      }
+      if (widget.pageController.page.round() == widget.pageController.page) {
+        if (pageName != lastPageName) {
+          setState(() {
+            lastPageName = pageName;
+          });
+          logger.d('Page View: $pageName (from: $lastPageName)');
+          analytics.setCurrentScreen(
+            screenName: pageName,
+          );
+        } else {
+          analytics.logEvent(name: Events.ReturnToScreen, parameters: {
+            'screen_name': lastPageName,
+          });
+        }
+      }
+    }
+  }
+
+  @override
+  void dispose() {
+    widget.pageController.removeListener(_pageListener);
+    super.dispose();
   }
 }
