@@ -46,7 +46,7 @@ class _AboutViewState extends State<AboutView> {
         ],
       ),
       body: CategorizedList.childrenBuilder(
-        children: [
+        children: <Widget>[
           Padding(
             padding: const EdgeInsets.only(top: 16.0),
             child: Column(

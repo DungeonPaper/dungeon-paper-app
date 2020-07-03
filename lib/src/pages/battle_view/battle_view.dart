@@ -58,10 +58,10 @@ class BattleView extends StatelessWidget {
   Widget buildItem(List moves, num idx, CategoryKeys key) {
     if (key == CategoryKeys.EmptyState) {
       return EmptyState(
-        assetName: 'armor.svg',
+        assetName: 'swords.svg',
         title: Text('You have no learned skills'),
         subtitle: Text(
-            "Add a move or spell using the '+' button to start building your list."),
+            "Use the '+' button to add a move or spell and start building your list."),
       );
     }
     return moves?.isNotEmpty == true

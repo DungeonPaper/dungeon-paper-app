@@ -104,10 +104,10 @@ class CategorizedList<T> extends StatelessWidget {
       if (count == 0) {
         return null;
       }
-      var outputItems = List.generate(
+      var outputItems = List<Widget>.generate(
           count,
           (j) => _isChildrenBuilder
-              ? item
+              ? item.value
               : itemBuilder(context, item.value, j, item.index));
 
       return Container(

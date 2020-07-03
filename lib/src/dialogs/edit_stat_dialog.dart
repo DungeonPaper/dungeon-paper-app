@@ -1,20 +1,28 @@
 import 'package:dungeon_paper/db/helpers/character_utils.dart';
 import 'package:dungeon_paper/db/models/character.dart';
 import 'package:dungeon_paper/src/atoms/number_controller.dart';
+import 'package:dungeon_paper/src/atoms/roll_button_with_edit.dart';
 import 'package:dungeon_paper/src/dialogs/standard_dialog_controls.dart';
+import 'package:dungeon_paper/src/flutter_utils/dice_controller.dart';
+import 'package:dungeon_paper/src/molecules/dice_roll_box.dart';
 import 'package:dungeon_paper/src/redux/stores.dart';
 import 'package:dungeon_paper/src/utils/analytics.dart';
 import 'package:dungeon_paper/src/utils/utils.dart';
+import 'package:dungeon_world_data/dice.dart';
 import 'package:flutter/material.dart';
 import 'package:pedantic/pedantic.dart';
+import 'package:uuid/uuid.dart';
 
 class EditStatDialog extends StatefulWidget {
   final CharacterKeys stat;
   final num value;
+  final Character character;
+
   EditStatDialog({
     Key key,
     @required this.stat,
     @required this.value,
+    @required this.character,
   }) : super(key: key);
 
   @override
@@ -25,9 +33,12 @@ class EditStatDialog extends StatefulWidget {
 class EditStatDialogState extends State<EditStatDialog> {
   final CharacterKeys stat;
   final String fullName;
+
   num value;
   bool valueError = false;
   bool saving = false;
+  DiceListController rollingController;
+  String rollSession;
 
   EditStatDialogState({
     Key key,
@@ -40,6 +51,7 @@ class EditStatDialogState extends State<EditStatDialog> {
   Widget build(BuildContext context) {
     var modifier = Character.statModifierText(value);
     var name = enumName(stat);
+    var statName = name.toUpperCase();
 
     return SimpleDialog(
       title: Text('Edit $fullName'),
@@ -50,7 +62,7 @@ class EditStatDialogState extends State<EditStatDialog> {
           crossAxisAlignment: CrossAxisAlignment.center,
           children: <Widget>[
             Text('$fullName: $value'),
-            Text('${name.toUpperCase()}: $modifier',
+            Text('${statName}: $modifier',
                 style: TextStyle(
                   fontSize: 20.0,
                   fontWeight: FontWeight.bold,
@@ -60,7 +72,7 @@ class EditStatDialogState extends State<EditStatDialog> {
                 mainAxisSize: MainAxisSize.max,
                 children: <Widget>[
                   Container(
-                    padding: const EdgeInsets.symmetric(vertical: 8.0),
+                    padding: const EdgeInsets.symmetric(vertical: 8),
                     width: 240,
                     child: NumberController(
                       min: 1,
@@ -69,7 +81,23 @@ class EditStatDialogState extends State<EditStatDialog> {
                       onChange: _setStateValue,
                     ),
                   ),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 16),
+                    child: RollButtonWithEdit(
+                      label: Text('Roll 2d6 + $statName'),
+                      diceList: dice,
+                      onRoll: _rollStat,
+                      character: widget.character,
+                    ),
+                  ),
+                  if (rollingController != null)
+                    DiceRollBox(
+                      key: Key(rollSession),
+                      controller: rollingController,
+                      onRemove: _removeRoll,
+                    ),
                   StandardDialogControls(
+                    padding: const EdgeInsets.symmetric(horizontal: 16),
                     onOK: saving ? null : _saveValue,
                     okDisabled: valueError,
                     onCancel: () => Navigator.pop(context),
@@ -133,4 +161,20 @@ class EditStatDialogState extends State<EditStatDialog> {
     unawaited(analytics.logEvent(name: Events.EditStat));
     Navigator.pop(context);
   }
+
+  void _removeRoll() {
+    setState(() {
+      rollingController = null;
+      rollSession = null;
+    });
+  }
+
+  void _rollStat() {
+    setState(() {
+      rollingController = DiceListController(dice);
+      rollSession = Uuid().v4();
+    });
+  }
+
+  List<Dice> get dice => [Dice(6, 2, CharacterFields.statModifier(value))];
 }

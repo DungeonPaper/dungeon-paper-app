@@ -10,10 +10,14 @@ import 'package:flutter/material.dart';
 
 class RollDiceDialog extends StatefulWidget {
   final Character character;
+  final List<Dice> initialDiceList;
+  final List<Dice> initialAddingDice;
 
   const RollDiceDialog({
     Key key,
     this.character,
+    this.initialDiceList,
+    this.initialAddingDice,
   }) : super(key: key);
 
   @override
@@ -22,12 +26,22 @@ class RollDiceDialog extends StatefulWidget {
 
 class _RollDiceDialogState extends State<RollDiceDialog> {
   List<List<Dice>> diceList;
+  List<Dice> addingDice;
   List<DiceListController> controllers;
 
   @override
   void initState() {
     diceList = [];
     controllers = [];
+
+    if (widget.initialDiceList?.isNotEmpty == true) {
+      _addDiceToState(widget.initialDiceList).call();
+    }
+
+    if (widget.initialAddingDice?.isNotEmpty == true) {
+      addingDice = [...widget.initialAddingDice];
+    }
+
     super.initState();
   }
 
@@ -48,6 +62,7 @@ class _RollDiceDialogState extends State<RollDiceDialog> {
         ),
         DiceRollBuilder(
           character: widget.character,
+          initialValue: addingDice,
           onChanged: _add,
         ),
         Expanded(
@@ -58,7 +73,6 @@ class _RollDiceDialogState extends State<RollDiceDialog> {
                   SizedBox(height: 16),
                   DiceRollBox(
                     key: Key('dice-${list.value.hash}'),
-                    diceList: list.value.value,
                     controller: reversedControllers.elementAt(list.index),
                     onRemove: () => _removeAt(list.index),
                   ),
@@ -84,11 +98,15 @@ class _RollDiceDialogState extends State<RollDiceDialog> {
       name: Events.RollNewDice,
       parameters: {'dice': dice.join(', ')},
     );
-    setState(() {
+    setState(_addDiceToState(dice));
+  }
+
+  void Function() _addDiceToState(List<Dice> dice) {
+    return () {
       var _ctrl = DiceListController([...dice]);
       controllers.add(_ctrl);
       diceList.add(dice);
-    });
+    };
   }
 
   void _removeAt(num idx) {

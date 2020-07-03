@@ -154,7 +154,7 @@ class InventoryItemCard extends StatelessWidget {
     if (await showDialog(
       context: context,
       builder: (context) => ConfirmationDialog(
-          title: const Text('Delete InventoryItem'),
+          title: const Text('Delete Inventory Item'),
           text: const Text('Are you sure?'),
           cancelButtonText: Text('Cancel')),
     )) {

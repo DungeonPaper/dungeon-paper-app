@@ -7,19 +7,17 @@ import 'package:dungeon_world_data/dice.dart';
 import 'package:flutter/material.dart';
 
 class DiceRollBox extends StatefulWidget {
-  final List<Dice> diceList;
   final DiceListController controller;
   final bool animated;
   final void Function() onRemove;
 
-  const DiceRollBox({
+  DiceRollBox({
     Key key,
-    @required this.diceList,
     @required this.controller,
     this.animated = true,
     this.onRemove,
   })  : assert(controller != null),
-        assert(diceList != null && (diceList?.length ?? 0) > 0),
+        assert(controller.value != null && (controller.value?.length ?? 0) > 0),
         super(key: key);
 
   @override
@@ -168,9 +166,9 @@ class _DiceRollBoxState extends State<DiceRollBox>
 
   void _initAnimations() {
     animationControllers = List.generate(
-      widget.diceList.length,
+      widget.controller.value.length,
       (idx) => List.generate(
-        widget.diceList[idx].amount,
+        widget.controller.value[idx].amount,
         (innerIdx) => AnimationController(
           vsync: this,
           duration: Duration(milliseconds: Random().nextInt(10) * 200 + 2000),
@@ -178,9 +176,9 @@ class _DiceRollBoxState extends State<DiceRollBox>
       ),
     );
     animations = List.generate(
-      widget.diceList.length,
+      widget.controller.value.length,
       (idx) => List.generate(
-        widget.diceList[idx].amount,
+        widget.controller.value[idx].amount,
         (innerIdx) => CurvedAnimation(
           parent: animationControllers[idx][innerIdx],
           curve: Curves.easeOutQuint,
