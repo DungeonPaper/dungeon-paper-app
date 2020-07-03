@@ -11,14 +11,12 @@ import 'package:firebase_analytics/observer.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
-import 'package:screen/screen.dart';
 
 void withInit(Function() cb) async {
   try {
     WidgetsFlutterBinding.ensureInitialized();
     if (!kIsWeb) {
       await initErrorReporting();
-      await Screen.keepOn(true);
     }
     runZonedGuarded(cb, reportError);
   } catch (e) {

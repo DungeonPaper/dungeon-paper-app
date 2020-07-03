@@ -10,13 +10,11 @@ import 'package:flutter/material.dart';
 enum EquipmentCats {
   Stats,
   Items,
-  EmptyState,
 }
 
 const EquipmentTitles = {
   EquipmentCats.Stats: null,
   EquipmentCats.Items: Text('Posessions'),
-  EquipmentCats.EmptyState: null,
 };
 
 class InventoryView extends StatelessWidget {
@@ -30,6 +28,27 @@ class InventoryView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var equipment = character.inventory;
+
+    if (equipment.isEmpty) {
+      return SingleChildScrollView(
+        child: Column(
+          children: [
+            Padding(
+              padding: const EdgeInsets.only(top: 16.0),
+              child: InventoryInfoBar(character: character),
+            ),
+            SizedBox(height: 16),
+            EmptyState(
+              title: Text('Your inventory is empty'),
+              subtitle:
+                  Text("Use the '+' button to add things to your possession."),
+              assetName: 'bag.svg',
+            ),
+          ],
+        ),
+      );
+    }
+
     return CategorizedList.builder(
       itemCount: (ctx, cat) => cat == 1 ? equipment.length : 1,
       titleBuilder: (ctx, cat, i) => EquipmentTitles[cat],
@@ -37,7 +56,6 @@ class InventoryView extends StatelessWidget {
       items: [
         EquipmentCats.Stats,
         EquipmentCats.Items,
-        if (equipment.isEmpty) EquipmentCats.EmptyState,
       ],
       spacerCount: 1,
     );
@@ -45,25 +63,8 @@ class InventoryView extends StatelessWidget {
 
   Widget _itemBuilder(BuildContext ctx, EquipmentCats cat, num i, num catI) {
     var equipment = character.inventory;
-
-    if (cat == EquipmentCats.EmptyState) {
-      return EmptyState(
-        title: Text('Your inventory is empty'),
-        subtitle: Text("Use the '+' button to add things to your possession."),
-        assetName: 'bag.svg',
-      );
-    }
-
     if (cat == EquipmentCats.Stats) {
-      return Wrap(
-          // alignment: Alignment.centerLeft,
-          spacing: 10.0,
-          alignment: WrapAlignment.end,
-          crossAxisAlignment: WrapCrossAlignment.center,
-          children: [
-            InventoryLoadChip(character: character),
-            CoinsChip(character: character),
-          ]);
+      return InventoryInfoBar(character: character);
     }
     var item = equipment[i];
 
@@ -76,6 +77,29 @@ class InventoryView extends StatelessWidget {
         onSave: (item) => updateInventoryItem(character, item),
         onDelete: () => deleteInventoryItem(character, item),
       ),
+    );
+  }
+}
+
+class InventoryInfoBar extends StatelessWidget {
+  const InventoryInfoBar({
+    Key key,
+    @required this.character,
+  }) : super(key: key);
+
+  final Character character;
+
+  @override
+  Widget build(BuildContext context) {
+    return Wrap(
+      // alignment: Alignment.centerLeft,
+      spacing: 10.0,
+      alignment: WrapAlignment.center,
+      crossAxisAlignment: WrapCrossAlignment.center,
+      children: [
+        InventoryLoadChip(character: character),
+        CoinsChip(character: character),
+      ],
     );
   }
 }

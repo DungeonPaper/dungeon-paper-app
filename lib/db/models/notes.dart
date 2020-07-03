@@ -64,7 +64,6 @@ class NoteCategory {
   static NoteCategory locations = NoteCategory('Locations');
   static NoteCategory quests = NoteCategory('Quests');
   static NoteCategory misc = NoteCategory('Misc');
-  static NoteCategory emptyState = NoteCategory('Empty State');
 
   static List<NoteCategory> defaultCategories = [
     npcs,

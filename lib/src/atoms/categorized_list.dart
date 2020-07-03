@@ -61,9 +61,10 @@ class CategorizedList<T> extends StatelessWidget {
   Widget build(BuildContext context) {
     var cats = _itemsToWidgets(context);
 
-    return LayoutBuilder(
-      builder: (context, constraints) {
-        return StaggeredGridView.countBuilder(
+    return OrientationBuilder(
+      builder: (context, orientation) {
+        return LayoutBuilder(
+          builder: (context, constraints) => StaggeredGridView.countBuilder(
             crossAxisCount: constraints.maxWidth < 450 ? 1 : 2,
             itemCount: cats.length + spacerCount,
             itemBuilder: (context, index) {
@@ -81,7 +82,9 @@ class CategorizedList<T> extends StatelessWidget {
             },
             staggeredTileBuilder: (index) => index < cats.length
                 ? StaggeredTile.fit(1)
-                : StaggeredTile.fit(2));
+                : StaggeredTile.fit(2),
+          ),
+        );
       },
     );
   }
