@@ -11,11 +11,13 @@ import 'package:flutter/material.dart';
 class DiceRollBuilder extends StatefulWidget {
   final VoidCallbackDelegate<List<Dice>> onChanged;
   final Character character;
+  final List<Dice> initialValue;
 
   const DiceRollBuilder({
     Key key,
     this.onChanged,
     this.character,
+    this.initialValue,
   }) : super(key: key);
 
   @override
@@ -29,7 +31,7 @@ class _DiceRollBuilderState extends State<DiceRollBuilder> {
 
   @override
   void initState() {
-    _resetController();
+    _resetController(widget.initialValue);
     super.initState();
   }
 
@@ -139,7 +141,8 @@ class _DiceRollBuilderState extends State<DiceRollBuilder> {
     });
   }
 
-  void _resetController() {
-    addingController = DiceListController(List.from(DEFAULT_DICE));
+  void _resetController([List<Dice> initialDice]) {
+    addingController =
+        DiceListController(initialDice ?? List.from(DEFAULT_DICE));
   }
 }

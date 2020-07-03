@@ -37,7 +37,7 @@ class InventoryView extends StatelessWidget {
       items: [
         EquipmentCats.Stats,
         EquipmentCats.Items,
-        EquipmentCats.EmptyState
+        if (equipment.isEmpty) EquipmentCats.EmptyState,
       ],
       spacerCount: 1,
     );
@@ -46,10 +46,10 @@ class InventoryView extends StatelessWidget {
   Widget _itemBuilder(BuildContext ctx, EquipmentCats cat, num i, num catI) {
     var equipment = character.inventory;
 
-    if (cat == EquipmentCats.EmptyState && equipment.isEmpty) {
+    if (cat == EquipmentCats.EmptyState) {
       return EmptyState(
         title: Text('Your inventory is empty'),
-        subtitle: Text("Use the '+' button to add belongings."),
+        subtitle: Text("Use the '+' button to add things to your possession."),
         assetName: 'bag.svg',
       );
     }

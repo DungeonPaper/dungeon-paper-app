@@ -1,5 +1,4 @@
 import 'package:dungeon_paper/db/models/character.dart';
-import 'package:dungeon_paper/src/dialogs/biography_dialog.dart';
 import 'package:dungeon_paper/src/molecules/character_headline.dart';
 import 'package:dungeon_paper/src/molecules/character_photo.dart';
 import 'package:flutter/material.dart';

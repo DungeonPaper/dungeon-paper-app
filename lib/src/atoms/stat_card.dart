@@ -71,7 +71,11 @@ class StatCard extends StatelessWidget {
     return () {
       showDialog(
         context: context,
-        builder: (context) => EditStatDialog(stat: stat, value: value),
+        builder: (context) => EditStatDialog(
+          stat: stat,
+          value: value,
+          character: character,
+        ),
       );
     };
   }
