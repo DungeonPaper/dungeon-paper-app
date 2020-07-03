@@ -34,13 +34,13 @@ class _CustomClassesViewState extends State<CustomClassesView> {
         PlayerClassList(
           builder: (context, list) => PopupMenuButton<PlayerClass>(
             icon: Icon(Icons.content_copy),
-            tooltip: 'Copy existing class:',
+            tooltip: 'Copy existing class',
             onSelected: _copyExisting,
             itemBuilder: (context) => [
               PopupMenuItem<PlayerClass>(
                 value: null,
                 enabled: false,
-                child: Text('Copy existing class'),
+                child: Text('Copy existing class:'),
               ),
               ...list.map(
                 (el) => PopupMenuItem<PlayerClass>(

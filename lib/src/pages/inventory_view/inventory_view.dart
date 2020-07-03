@@ -2,6 +2,7 @@ import 'package:dungeon_paper/db/models/character.dart';
 import 'package:dungeon_paper/db/models/inventory_items.dart';
 import 'package:dungeon_paper/src/atoms/categorized_list.dart';
 import 'package:dungeon_paper/src/atoms/coins_chip.dart';
+import 'package:dungeon_paper/src/atoms/empty_state.dart';
 import 'package:dungeon_paper/src/atoms/inventory_load_chip.dart';
 import 'package:dungeon_paper/src/molecules/inventory_item_card.dart';
 import 'package:flutter/material.dart';
@@ -9,11 +10,13 @@ import 'package:flutter/material.dart';
 enum EquipmentCats {
   Stats,
   Items,
+  EmptyState,
 }
 
 const EquipmentTitles = {
   EquipmentCats.Stats: null,
   EquipmentCats.Items: Text('Posessions'),
+  EquipmentCats.EmptyState: null,
 };
 
 class InventoryView extends StatelessWidget {
@@ -28,16 +31,29 @@ class InventoryView extends StatelessWidget {
   Widget build(BuildContext context) {
     var equipment = character.inventory;
     return CategorizedList.builder(
-      itemCount: (ctx, cat) => cat == 0 ? 1 : equipment.length,
+      itemCount: (ctx, cat) => cat == 1 ? equipment.length : 1,
       titleBuilder: (ctx, cat, i) => EquipmentTitles[cat],
-      itemBuilder: childBuilderDelegator,
-      items: [EquipmentCats.Stats, EquipmentCats.Items],
+      itemBuilder: _itemBuilder,
+      items: [
+        EquipmentCats.Stats,
+        EquipmentCats.Items,
+        EquipmentCats.EmptyState
+      ],
       spacerCount: 1,
     );
   }
 
-  Widget childBuilderDelegator(BuildContext ctx, dynamic cat, num i, num catI) {
+  Widget _itemBuilder(BuildContext ctx, EquipmentCats cat, num i, num catI) {
     var equipment = character.inventory;
+
+    if (cat == EquipmentCats.EmptyState && equipment.isEmpty) {
+      return EmptyState(
+        title: Text('Your inventory is empty'),
+        subtitle: Text("Use the '+' button to add belongings."),
+        assetName: 'bag.svg',
+      );
+    }
+
     if (cat == EquipmentCats.Stats) {
       return Wrap(
           // alignment: Alignment.centerLeft,
@@ -49,15 +65,16 @@ class InventoryView extends StatelessWidget {
             CoinsChip(character: character),
           ]);
     }
+    var item = equipment[i];
 
     return Padding(
       padding: EdgeInsets.symmetric(vertical: 8.0),
       child: InventoryItemCard(
-        key: PageStorageKey(equipment[i].key),
-        item: equipment[i],
+        key: PageStorageKey(item.key),
+        item: item,
         mode: InventoryItemCardMode.Editable,
         onSave: (item) => updateInventoryItem(character, item),
-        onDelete: () => deleteInventoryItem(character, equipment[i]),
+        onDelete: () => deleteInventoryItem(character, item),
       ),
     );
   }

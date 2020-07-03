@@ -1,4 +1,5 @@
 import 'package:dungeon_paper/src/flutter_utils/widget_utils.dart';
+import 'package:dungeon_paper/src/utils/utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 
@@ -86,11 +87,10 @@ class CategorizedList<T> extends StatelessWidget {
   }
 
   List<Widget> _itemsToWidgets(BuildContext context) {
-    num catIndex = 0;
-
-    return items.map((item) {
-      var builtTitle =
-          titleBuilder == null ? null : titleBuilder(context, item, catIndex);
+    return enumerate(items).map((item) {
+      var builtTitle = titleBuilder == null
+          ? null
+          : titleBuilder(context, item.value, item.index);
       Widget title;
 
       if (builtTitle != null) {
@@ -100,7 +100,7 @@ class CategorizedList<T> extends StatelessWidget {
               color: Theme.of(context).textTheme.bodyText2.color),
         );
       }
-      num count = _isChildrenBuilder ? 1 : itemCount(item, catIndex);
+      num count = _isChildrenBuilder ? 1 : itemCount(item.value, item.index);
       if (count == 0) {
         return null;
       }
@@ -108,9 +108,7 @@ class CategorizedList<T> extends StatelessWidget {
           count,
           (j) => _isChildrenBuilder
               ? item
-              : itemBuilder(context, item, j, catIndex));
-
-      catIndex++;
+              : itemBuilder(context, item.value, j, item.index));
 
       return Container(
         child: Column(

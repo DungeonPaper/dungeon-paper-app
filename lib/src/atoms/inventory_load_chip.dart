@@ -66,7 +66,7 @@ class InventoryLoadChip extends StatelessWidget {
               SizedBox.fromSize(size: Size.square(10)),
               PlatformSvg.asset(
                 'dumbbell.svg',
-                width: 20,
+                size: 20,
                 color: severity.foreground,
               ),
               SizedBox.fromSize(size: Size.square(10)),
