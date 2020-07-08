@@ -8,8 +8,6 @@ Dungeon World players, this is the app for you!
 
 Keep all your characters' bio, stats, moves and possessions with this interactive character sheet. Join for smoother, zero-hustle Dungeon World campaigns!
 
-All the customization you need for a great experience is here:
-
 Dungeon Paper is an interactive character sheet for your Dungeon World characters.
 This is the source of this app, but to fully use it you must set up your own firebase credentials and sign your own app.
 Once that is properly set up, the app should create entities based on logins to the app, so nothing else should be created for the database beforehand.
