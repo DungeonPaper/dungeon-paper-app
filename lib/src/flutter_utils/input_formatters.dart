@@ -57,7 +57,7 @@ class NumberFormatter extends TextInputFormatter {
   @override
   TextEditingValue formatEditUpdate(
       TextEditingValue oldValue, TextEditingValue newValue) {
-    return WhitelistingTextInputFormatter(RegExp(pattern))
+    return FilteringTextInputFormatter.allow(RegExp(pattern))
         .formatEditUpdate(oldValue, newValue);
   }
 
