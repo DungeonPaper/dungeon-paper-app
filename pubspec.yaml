@@ -31,7 +31,7 @@ dependencies:
   redux_logging: ^0.4.0
   flutter_svg: ^0.18.0
   # quiver: '>=2.0.0 <3.0.0'
-  flutter_image: ^1.0.0
+  flutter_image: ^3.0.0
   uuid: ^2.0.0
   # sentry: ^2.2.0
   package_info: ^0.4.0+6
