@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_image/network.dart';
 
 class EditAvatarCard extends StatefulWidget {
   final TextEditingController controller;
@@ -52,45 +53,56 @@ class _EditAvatarCardState extends State<EditAvatarCard> {
   }
 
   Widget avatar() {
-    // var image = NetworkImageWithRetry(widget.controller.text,
-    //     fetchStrategy: (uri, failure) async {
-    //       logger.d('ahem');
-    //   if (failure != null) {
-    //     await Future.delayed(Duration(microseconds: 1));
-    //     setState(() {
-    //       imageError = true;
-    //     });
-    //     return FetchInstructions.giveUp(uri: uri);
-    //   } else {
-    //     setState(() {
-    //       imageError = false;
-    //     });
-    //     return NetworkImageWithRetry.defaultFetchStrategy(uri, failure);
-    //   }
-    // });
-    var image = NetworkImage(widget.controller.text);
+    final isUrl = Uri.parse(widget.controller.text).scheme.startsWith('http');
     var container = AspectRatio(
       aspectRatio: 14.0 / 9.0,
       child: Container(
         decoration: BoxDecoration(
           borderRadius: BorderRadius.vertical(top: Radius.circular(5.0)),
-          image: DecorationImage(
-            fit: BoxFit.fitWidth,
-            alignment: FractionalOffset.topCenter,
-            image: image,
-          ),
+          image: isUrl
+              ? DecorationImage(
+                  fit: BoxFit.fitWidth,
+                  alignment: FractionalOffset.topCenter,
+                  image: NetworkImageWithRetry(
+                    widget.controller.text,
+                    fetchStrategy: (uri, err) async {
+                      try {
+                        if (err == null || !uri.scheme.startsWith('http')) {
+                          return NetworkImageWithRetry.defaultFetchStrategy(
+                              uri, err);
+                        } else {
+                          setState(() {
+                            imageError = true;
+                          });
+                          return FetchInstructions.giveUp(uri: uri);
+                        }
+                      } catch (e) {
+                        setState(() {
+                          imageError = true;
+                        });
+                        return FetchInstructions.giveUp(uri: uri);
+                      }
+                    },
+                  ),
+                )
+              : null,
         ),
       ),
     );
     var placeholder = Container(
       child: Padding(
         padding: const EdgeInsets.all(40.0),
-        child: Text(!imageError
-            ? 'Add an image URL in the field below.'
-            : "We couldn't load your image,\nPlease check the URL and try again."),
+        child: Text(
+          imageError
+              ? "We couldn't load your image,\nPlease check the URL and try again."
+              : !isUrl
+                  ? "Try adding a valid URL.\nThis doesn't seem like one!"
+                  : 'Add an image URL in the field below.',
+          textAlign: TextAlign.center,
+        ),
       ),
     );
-    return widget.controller.text.isEmpty || imageError == true
+    return widget.controller.text.isEmpty || imageError == true || !isUrl
         ? placeholder
         : container;
   }
