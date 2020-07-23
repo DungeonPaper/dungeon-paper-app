@@ -83,90 +83,103 @@ class _AboutViewState extends State<AboutView> {
                 ),
                 SizedBox(height: 15),
                 WhatsNewBox(
-                  child: Table(
-                    columnWidths: {
-                      0: FlexColumnWidth(1),
-                      1: FixedColumnWidth(14),
-                      2: FlexColumnWidth(1),
-                    },
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    crossAxisAlignment: CrossAxisAlignment.stretch,
                     children: [
-                      TableRow(
-                        children: [
-                          SocialButton(
-                            assetName: 'facebook',
-                            label: 'Facebook',
-                            color: Color(0xFF1878F3),
-                            textColor: Colors.white,
-                            url: 'https://bit.ly/DungeonPaper-Facebook',
-                          ),
-                          Container(),
-                          SocialButton(
-                            label: 'Twitter',
-                            assetName: 'twitter',
-                            color: Color(0xFF00ACEE),
-                            textColor: Colors.white,
-                            url: 'https://bit.ly/DungeonPaper-Twitter',
-                          ),
-                        ],
+                      Text(
+                        'Got feedback? Want to stay up to date?\nFollow or contact us at:',
+                        textAlign: TextAlign.center,
+                        style: Theme.of(context).textTheme.subtitle1,
                       ),
-                      TableRow(
+                      SizedBox(height: 8),
+                      Table(
+                        columnWidths: {
+                          0: FlexColumnWidth(1),
+                          1: FixedColumnWidth(14),
+                          2: FlexColumnWidth(1),
+                        },
                         children: [
-                          SocialButton(
-                            label: 'GitHub',
-                            url: 'https://bit.ly/DungeonPaper-GitHub',
-                            assetName: 'github',
-                            color: Colors.black,
-                            textColor: Colors.white,
+                          TableRow(
+                            children: [
+                              SocialButton(
+                                assetName: 'facebook',
+                                label: 'Facebook',
+                                color: Color(0xFF1878F3),
+                                textColor: Colors.white,
+                                url: 'https://bit.ly/DungeonPaper-Facebook',
+                              ),
+                              Container(),
+                              SocialButton(
+                                label: 'Twitter',
+                                assetName: 'twitter',
+                                color: Color(0xFF00ACEE),
+                                textColor: Colors.white,
+                                url: 'https://bit.ly/DungeonPaper-Twitter',
+                              ),
+                            ],
                           ),
-                          Container(),
-                          SocialButton(
-                            label: 'Discord',
-                            url: 'https://bit.ly/DungeonPaper-GitHub',
-                            assetName: 'discord',
-                            color: Color(0xFF7289DB),
-                            textColor: Colors.white,
+                          TableRow(
+                            children: [
+                              SocialButton(
+                                label: 'GitHub',
+                                url: 'https://bit.ly/DungeonPaper-GitHub',
+                                assetName: 'github',
+                                color: Colors.black,
+                                textColor: Colors.white,
+                              ),
+                              Container(),
+                              SocialButton(
+                                label: 'Discord',
+                                url: 'https://bit.ly/DungeonPaper-GitHub',
+                                assetName: 'discord',
+                                color: Color(0xFF7289DB),
+                                textColor: Colors.white,
+                              ),
+                            ],
                           ),
-                        ],
-                      ),
-                      TableRow(
-                        children: [
-                          FeedbackButton(
-                            dontWaitForUser: true,
-                            onReady: () {
-                              logger.d('onReady fired');
-                              setState(() {});
-                            },
-                            builder: (onPressed, url) => SocialButton(
-                              label: 'Email',
-                              icon: Icon(Icons.email),
-                              url: url,
-                              color: Colors.orange[300],
-                              textColor:
-                                  Theme.of(context).colorScheme.onPrimary,
-                            ),
+                          TableRow(
+                            children: [
+                              FeedbackButton(
+                                dontWaitForUser: true,
+                                onReady: () {
+                                  logger.d('onReady fired');
+                                  setState(() {});
+                                },
+                                builder: (onPressed, url) => SocialButton(
+                                  label: 'Email',
+                                  icon: Icon(Icons.email),
+                                  url: url,
+                                  color: Colors.orange[300],
+                                  textColor:
+                                      Theme.of(context).colorScheme.onPrimary,
+                                ),
+                              ),
+                              Container(),
+                              SocialButton(
+                                label: 'Privacy',
+                                icon: Icon(Icons.lock),
+                                url: 'https://bit.ly/DungeonPaper-Privacy',
+                                color: Theme.of(context).primaryColor,
+                                textColor:
+                                    Theme.of(context).colorScheme.onPrimary,
+                              ),
+                            ],
                           ),
-                          Container(),
-                          SocialButton(
-                            label: 'Privacy',
-                            icon: Icon(Icons.lock),
-                            url: 'https://bit.ly/DungeonPaper-Privacy',
-                            color: Theme.of(context).primaryColor,
-                            textColor: Theme.of(context).colorScheme.onPrimary,
+                          TableRow(
+                            children: [
+                              SocialButton(
+                                label: 'casraf.blog',
+                                url:
+                                    'https://casraf.blog/?utm_medium=app&utm_source=about',
+                                icon: Icon(Icons.public),
+                                color: Color(0xFFAA0000),
+                                textColor: Colors.white,
+                              ),
+                              Container(),
+                              Container(),
+                            ],
                           ),
-                        ],
-                      ),
-                      TableRow(
-                        children: [
-                          SocialButton(
-                            label: 'casraf.blog',
-                            url:
-                                'https://casraf.blog/?utm_medium=app&utm_source=about',
-                            icon: Icon(Icons.public),
-                            color: Color(0xFFAA0000),
-                            textColor: Colors.white,
-                          ),
-                          Container(),
-                          Container(),
                         ],
                       ),
                     ],

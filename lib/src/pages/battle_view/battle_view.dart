@@ -8,6 +8,7 @@ import 'package:dungeon_paper/src/flutter_utils/dice_controller.dart';
 import 'package:dungeon_paper/src/molecules/dice_roll_box.dart';
 import 'package:dungeon_paper/src/molecules/move_card.dart';
 import 'package:dungeon_paper/src/molecules/spell_card.dart';
+import 'package:dungeon_world_data/dice.dart';
 import 'package:dungeon_world_data/move.dart';
 import 'package:flutter/material.dart';
 import 'package:uuid/uuid.dart';
@@ -78,11 +79,28 @@ class _BattleViewState extends State<BattleView> {
       return Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          RollButtonWithEdit(
-            character: widget.character,
-            diceList: [widget.character.damageDice],
-            onRoll: _onRoll,
-            label: Text('Roll Damage (${widget.character.damageDice})'),
+          Row(
+            mainAxisSize: MainAxisSize.max,
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Expanded(
+                child: RollButtonWithEdit(
+                  character: widget.character,
+                  diceList: [Dice.d6 * 2],
+                  onRoll: _onRoll(Dice.d6 * 2),
+                  label: Text('Roll Action (${Dice.d6 * 2})'),
+                ),
+              ),
+              SizedBox(width: 12),
+              Expanded(
+                child: RollButtonWithEdit(
+                  character: widget.character,
+                  diceList: [widget.character.damageDice],
+                  onRoll: _onRoll(widget.character.damageDice),
+                  label: Text('Roll Damage (${widget.character.damageDice})'),
+                ),
+              ),
+            ],
           ),
           if (diceListController != null)
             DiceRollBox(
@@ -128,11 +146,13 @@ class _BattleViewState extends State<BattleView> {
         : Container();
   }
 
-  void _onRoll() {
-    setState(() {
-      rollSession = Uuid().v4();
-      diceListController = DiceListController([widget.character.damageDice]);
-    });
+  void Function() _onRoll(Dice dice) {
+    return () {
+      setState(() {
+        rollSession = Uuid().v4();
+        diceListController = DiceListController([dice]);
+      });
+    };
   }
 
   void _removeRoll() {

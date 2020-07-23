@@ -119,7 +119,6 @@ class _FeedbackButtonState extends State<FeedbackButton> {
   void _getUserId() async {
     if (mounted) {
       setState(() {
-        logger.d('setting userId');
         userId = dwStore.state.user.currentUserDocID;
         _notifyReady();
       });
@@ -130,7 +129,6 @@ class _FeedbackButtonState extends State<FeedbackButton> {
     var secrets = await loadSecrets();
     if (mounted) {
       setState(() {
-        logger.d('setting email');
         email = secrets['FEEDBACK_EMAIL'];
         _notifyReady();
       });
@@ -141,7 +139,6 @@ class _FeedbackButtonState extends State<FeedbackButton> {
     var packageInfo = await PackageInfo.fromPlatform();
     if (mounted) {
       setState(() {
-        logger.d('setting version & buildNumber');
         version = packageInfo.version;
         buildNumber = packageInfo.buildNumber;
         _notifyReady();
@@ -150,9 +147,7 @@ class _FeedbackButtonState extends State<FeedbackButton> {
   }
 
   void _notifyReady() {
-    logger.d('should notify?');
     if (isReady) {
-      logger.d('notifying');
       widget?.onReady?.call();
     }
   }

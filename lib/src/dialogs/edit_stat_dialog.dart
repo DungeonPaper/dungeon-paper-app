@@ -62,14 +62,17 @@ class EditStatDialogState extends State<EditStatDialog> {
           crossAxisAlignment: CrossAxisAlignment.center,
           children: <Widget>[
             Text('$fullName: $value'),
-            Text('${statName}: $modifier',
-                style: TextStyle(
-                  fontSize: 20.0,
-                  fontWeight: FontWeight.bold,
-                )),
+            Text(
+              '${statName}: $modifier',
+              style: TextStyle(
+                fontSize: 20.0,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
             Form(
               child: Column(
                 mainAxisSize: MainAxisSize.max,
+                crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: <Widget>[
                   Container(
                     padding: const EdgeInsets.symmetric(vertical: 8),
@@ -82,7 +85,10 @@ class EditStatDialogState extends State<EditStatDialog> {
                     ),
                   ),
                   Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 16),
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 16,
+                      vertical: 8,
+                    ),
                     child: RollButtonWithEdit(
                       label: Text('Roll 2d6 + $statName'),
                       diceList: dice,
