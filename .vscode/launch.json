@@ -13,7 +13,7 @@
       "CHROME_EXECUTABLE": "brave",
     },
     "args": [
-      "-d518e84af",
+      // "-d518e84af",
     ]
   }, {
     "name": "Flutter (verbose)",
