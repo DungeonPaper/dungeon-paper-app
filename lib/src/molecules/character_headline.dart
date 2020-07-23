@@ -51,6 +51,7 @@ class CharacterHeadline extends StatelessWidget {
                 icon: Icon(Icons.library_books),
                 color: Colors.white,
                 onPressed: _openBioScreen(context),
+                visualDensity: VisualDensity.compact,
               ),
             if (editable == true)
               IconButton(
@@ -58,6 +59,7 @@ class CharacterHeadline extends StatelessWidget {
                 onPressed: () => _openEdit(context),
                 splashColor: Colors.white,
                 color: Colors.white,
+                visualDensity: VisualDensity.compact,
               ),
           ],
         ),

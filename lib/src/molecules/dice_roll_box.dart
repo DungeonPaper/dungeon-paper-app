@@ -107,16 +107,7 @@ class _DiceRollBoxState extends State<DiceRollBox>
                 ],
               ),
             ),
-            ValueListenableBuilder<List<Dice>>(
-              valueListenable: widget.controller,
-              builder: (context, dice, child) => Padding(
-                padding: const EdgeInsets.symmetric(vertical: 8),
-                child: DiceIconList(
-                  controller: widget.controller,
-                  animations: animations,
-                ),
-              ),
-            ),
+            SizedBox(height: 8),
             ValueListenableBuilder<List<Dice>>(
               valueListenable: widget.controller,
               builder: (context, dice, child) {
@@ -137,7 +128,16 @@ class _DiceRollBoxState extends State<DiceRollBox>
                 );
               },
             ),
-            SizedBox(height: 8),
+            ValueListenableBuilder<List<Dice>>(
+              valueListenable: widget.controller,
+              builder: (context, dice, child) => Padding(
+                padding: const EdgeInsets.symmetric(vertical: 8),
+                child: DiceIconList(
+                  controller: widget.controller,
+                  animations: animations,
+                ),
+              ),
+            ),
           ],
         ),
       ),

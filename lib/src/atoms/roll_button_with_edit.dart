@@ -20,48 +20,28 @@ class RollButtonWithEdit extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Row(
-      children: [
-        Expanded(
-          child: RaisedButton.icon(
-            color: Theme.of(context).primaryColor,
-            icon: DiceIcon(
-              dice: diceList?.first ?? (Dice.d6 * 2),
-              size: 24,
-            ),
-            label: label ?? Text('Roll ${diceList.join(', ')}'),
-            onPressed: onRoll,
-            onLongPress: _openRollDialog(context, rollImmediately: true),
-          ),
-        ),
-        SizedBox(width: 4),
-        ButtonTheme(
-          minWidth: 40,
-          child: Tooltip(
-            message: 'Edit in Roll Dice dialog',
-            child: RaisedButton(
-              color: Theme.of(context).primaryColor,
-              child: Icon(Icons.edit),
-              onPressed: _openRollDialog(context),
-              padding: EdgeInsets.zero,
-            ),
-          ),
-        ),
-      ],
+    return RaisedButton.icon(
+      color: Theme.of(context).primaryColor,
+      padding: EdgeInsets.all(12),
+      icon: DiceIcon(
+        dice: diceList?.first ?? (Dice.d6 * 2),
+        size: 24,
+      ),
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
+      label: label ?? Text('Roll ${diceList.join(', ')}'),
+      onPressed: onRoll,
+      onLongPress: _openRollDialog(context),
     );
   }
 
-  void Function() _openRollDialog(
-    BuildContext context, {
-    bool rollImmediately = false,
-  }) {
+  void Function() _openRollDialog(BuildContext context) {
     return () {
       showDialog(
         context: context,
         builder: (context) => RollDiceDialog(
           character: character,
-          initialAddingDice: rollImmediately ? [] : diceList,
-          initialDiceList: rollImmediately ? diceList : [],
+          initialAddingDice: diceList,
+          initialDiceList: diceList,
         ),
       );
     };
