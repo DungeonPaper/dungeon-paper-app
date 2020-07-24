@@ -95,11 +95,13 @@ class _DiceRollBuilderState extends State<DiceRollBuilder> {
                     IconButton(
                       icon: Icon(Icons.add),
                       onPressed: _addRow,
+                      tooltip: 'Add dice',
                     ),
                     IconButton(
                       color: Theme.of(context).primaryColor,
                       icon: Icon(Icons.check),
                       onPressed: _onAdd,
+                      tooltip: 'Roll & Reset',
                     ),
                   ],
                 ),

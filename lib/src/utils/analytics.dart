@@ -11,6 +11,7 @@ class Events {
   static const OpenDiceDialog = 'open_dice_screen';
   static const RollNewDice = 'roll_new_dice';
   static const RerollDice = 'reroll_dice';
+  static const EditDice = 'edit_dice';
   static const RemoveDice = 'remove_dice';
   static const ExpandMoveCard = 'expand_move_card';
   static const ExpandSpellCard = 'expand_spell_card';

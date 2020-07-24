@@ -170,7 +170,7 @@ class _ExportCharactersDialogState extends State<ExportCharactersDialog> {
     await _tmpFile.writeAsString(_strData);
 
     final params = SaveFileDialogParams(sourceFilePath: _tmpFile.path);
-    unawaited(FlutterFileDialog.saveFile(params: params));
+    await FlutterFileDialog.saveFile(params: params);
   }
 
   String _dumpDataString() {

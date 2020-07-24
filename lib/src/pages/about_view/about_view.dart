@@ -28,6 +28,7 @@ class AboutView extends StatefulWidget {
 
 class _AboutViewState extends State<AboutView> {
   final num year = DateTime.now().year;
+  final utm = 'utm_medium=app&utm_source=about';
 
   @override
   Widget build(BuildContext context) {
@@ -56,7 +57,14 @@ class _AboutViewState extends State<AboutView> {
               children: <Widget>[
                 WhatsNewBox(
                   children: [
-                    SizedBox(width: MediaQuery.of(context).size.width),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(vertical: 24.0),
+                      child: SizedBox.fromSize(
+                        size: Size.square(
+                            min(MediaQuery.of(context).size.width - 32, 128)),
+                        child: Image.asset('assets/logo.png'),
+                      ),
+                    ),
                     Text('Dungeon Paper',
                         style: Theme.of(context).textTheme.headline5),
                     VersionNumber.text(prefix: 'Version'),
@@ -68,8 +76,8 @@ class _AboutViewState extends State<AboutView> {
                           TextSpan(
                             text: 'Chen Asraf',
                             recognizer: TapGestureRecognizer()
-                              ..onTap = () => launch(
-                                  'https://casraf.blog/?utm_medium=app&utm_source=about'),
+                              ..onTap =
+                                  () => launch('https://casraf.blog/?$utm'),
                             style: TextStyle(
                               color: Color.fromRGBO(25, 118, 210, 1),
                               decoration: TextDecoration.underline,
@@ -88,7 +96,7 @@ class _AboutViewState extends State<AboutView> {
                     crossAxisAlignment: CrossAxisAlignment.stretch,
                     children: [
                       Text(
-                        'Got feedback? Want to stay up to date?\nFollow or contact us at:',
+                        'Have feedback? Want to stay up to date?\nFollow or contact us at:',
                         textAlign: TextAlign.center,
                         style: Theme.of(context).textTheme.subtitle1,
                       ),
@@ -131,7 +139,7 @@ class _AboutViewState extends State<AboutView> {
                               Container(),
                               SocialButton(
                                 label: 'Discord',
-                                url: 'https://bit.ly/DungeonPaper-GitHub',
+                                url: 'https://bit.ly/DungeonPaper-Discord',
                                 assetName: 'discord',
                                 color: Color(0xFF7289DB),
                                 textColor: Colors.white,
@@ -143,7 +151,6 @@ class _AboutViewState extends State<AboutView> {
                               FeedbackButton(
                                 dontWaitForUser: true,
                                 onReady: () {
-                                  logger.d('onReady fired');
                                   setState(() {});
                                 },
                                 builder: (onPressed, url) => SocialButton(
@@ -170,27 +177,25 @@ class _AboutViewState extends State<AboutView> {
                             children: [
                               SocialButton(
                                 label: 'casraf.blog',
-                                url:
-                                    'https://casraf.blog/?utm_medium=app&utm_source=about',
+                                url: 'https://casraf.blog/?$utm',
                                 icon: Icon(Icons.public),
                                 color: Color(0xFFAA0000),
                                 textColor: Colors.white,
                               ),
                               Container(),
-                              Container(),
+                              SocialButton(
+                                label: 'Rate',
+                                url:
+                                    'https://play.google.com/store/apps/details?id=app.dungeonpaper&$utm',
+                                icon: Icon(Icons.star),
+                                color: Color(0xFF66A030),
+                                textColor: Colors.white,
+                              ),
                             ],
                           ),
                         ],
                       ),
                     ],
-                  ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.symmetric(vertical: 24.0),
-                  child: SizedBox.fromSize(
-                    size: Size.square(
-                        min(MediaQuery.of(context).size.width - 32, 200)),
-                    child: Image.asset('assets/logo.png'),
                   ),
                 ),
               ],
