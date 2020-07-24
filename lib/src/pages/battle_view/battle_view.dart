@@ -4,6 +4,7 @@ import 'package:dungeon_paper/db/models/spells.dart';
 import 'package:dungeon_paper/src/atoms/categorized_list.dart';
 import 'package:dungeon_paper/src/atoms/empty_state.dart';
 import 'package:dungeon_paper/src/atoms/roll_button_with_edit.dart';
+import 'package:dungeon_paper/src/dialogs/roll_dice_dialog.dart';
 import 'package:dungeon_paper/src/flutter_utils/dice_controller.dart';
 import 'package:dungeon_paper/src/molecules/dice_roll_box.dart';
 import 'package:dungeon_paper/src/molecules/move_card.dart';
@@ -109,6 +110,7 @@ class _BattleViewState extends State<BattleView> {
               controller: diceListController,
               animated: true,
               onRemove: _removeRoll,
+              onEdit: _editRoll,
             ),
         ],
       );
@@ -160,5 +162,15 @@ class _BattleViewState extends State<BattleView> {
       rollSession = Uuid().v4();
       diceListController = null;
     });
+  }
+
+  void _editRoll() {
+    showDialog(
+      context: context,
+      builder: (context) => RollDiceDialog(
+        character: widget.character,
+        initialAddingDice: diceListController.value,
+      ),
+    );
   }
 }

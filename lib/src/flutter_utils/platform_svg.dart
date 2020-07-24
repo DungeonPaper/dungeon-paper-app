@@ -29,14 +29,16 @@ class PlatformSvg {
         semanticLabel: semanticsLabel,
       );
     }
-    return SvgPicture.asset(
-      'assets/$assetName',
+    return Container(
       width: width.toDouble(),
       height: height.toDouble(),
-      fit: fit,
-      color: color,
-      alignment: alignment,
-      semanticsLabel: semanticsLabel,
+      child: SvgPicture.asset(
+        'assets/$assetName',
+        fit: fit,
+        color: color,
+        alignment: alignment,
+        semanticsLabel: semanticsLabel,
+      ),
     );
   }
 }

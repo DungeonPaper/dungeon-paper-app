@@ -26,20 +26,20 @@ class RollDiceDialog extends StatefulWidget {
 
 class _RollDiceDialogState extends State<RollDiceDialog> {
   List<List<Dice>> diceList;
-  List<Dice> addingDice;
+  DiceListController addingDiceCtrl;
   List<DiceListController> controllers;
 
   @override
   void initState() {
     diceList = [];
     controllers = [];
+    addingDiceCtrl = DiceListController(
+        widget.initialAddingDice?.isNotEmpty == true
+            ? [...widget.initialAddingDice]
+            : [Dice.d6 * 2]);
 
     if (widget.initialDiceList?.isNotEmpty == true) {
       _addDiceToState(widget.initialDiceList).call();
-    }
-
-    if (widget.initialAddingDice?.isNotEmpty == true) {
-      addingDice = [...widget.initialAddingDice];
     }
 
     super.initState();
@@ -60,11 +60,17 @@ class _RollDiceDialogState extends State<RollDiceDialog> {
             ),
           ),
         ),
-        DiceRollBuilder(
-          key: Key(addingDice.toString()),
-          character: widget.character,
-          initialValue: addingDice,
-          onChanged: _add,
+        ValueListenableBuilder(
+          valueListenable: addingDiceCtrl,
+          builder: (context, dice, child) {
+            logger.d('key: ${Key(dice.toString())}');
+            return DiceRollBuilder(
+              key: Key(dice.toString()),
+              character: widget.character,
+              initialValue: dice,
+              onChanged: _add,
+            );
+          },
         ),
         Expanded(
           child: SingleChildScrollView(
@@ -101,13 +107,17 @@ class _RollDiceDialogState extends State<RollDiceDialog> {
       parameters: {'dice': dice.join(', ')},
     );
     setState(_addDiceToState(dice));
+    setState(() {
+      addingDiceCtrl.value = [Dice.d6 * 2];
+    });
   }
 
   void Function() _addDiceToState(List<Dice> dice) {
     return () {
-      var _ctrl = DiceListController([...dice]);
+      final _ctrl = DiceListController([...dice]);
       controllers.add(_ctrl);
       diceList.add(dice);
+      logger.d('diceList: ${addingDiceCtrl.value}');
     };
   }
 
@@ -132,7 +142,8 @@ class _RollDiceDialogState extends State<RollDiceDialog> {
       parameters: {'dice': diceList[idx].join(', ')},
     );
     setState(() {
-      addingDice = List.from(diceList[idx]);
+      addingDiceCtrl.value = List.from(diceList[idx]);
+      logger.d('diceList: ${addingDiceCtrl.value}');
     });
   }
 }

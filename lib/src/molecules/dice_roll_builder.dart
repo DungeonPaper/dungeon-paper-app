@@ -48,12 +48,16 @@ class _DiceRollBuilderState extends State<DiceRollBuilder> {
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           Padding(
-            padding: const EdgeInsets.only(top: 8),
-            child: DiceIconList(
-              key: Key(addingController.value.join(',')),
-              controller: addingController,
-              animations: null,
+            padding: const EdgeInsets.all(8).copyWith(bottom: 0),
+            child: Text(
+              addingController.value.join(', '),
+              style: Theme.of(context).textTheme.caption,
             ),
+          ),
+          DiceIconList(
+            key: Key(addingController.value.join(',')),
+            controller: addingController,
+            animations: null,
           ),
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 16),
@@ -86,6 +90,7 @@ class _DiceRollBuilderState extends State<DiceRollBuilder> {
                         IconButton(
                           icon: Icon(Icons.delete),
                           onPressed: () => _remove(d.index),
+                          tooltip: 'Remove dice',
                         )
                     ],
                   ),
