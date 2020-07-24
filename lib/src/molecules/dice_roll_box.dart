@@ -10,6 +10,7 @@ class DiceRollBox extends StatefulWidget {
   final DiceListController controller;
   final bool animated;
   final void Function() onRemove;
+  final void Function() onEdit;
   final EdgeInsets padding;
 
   DiceRollBox({
@@ -17,6 +18,7 @@ class DiceRollBox extends StatefulWidget {
     @required this.controller,
     this.animated = true,
     this.onRemove,
+    this.onEdit,
     this.padding,
   })  : assert(controller != null),
         assert(controller.value != null && (controller.value?.length ?? 0) > 0),
@@ -99,10 +101,21 @@ class _DiceRollBoxState extends State<DiceRollBox>
                     IconButton(
                       icon: Icon(Icons.close),
                       onPressed: widget.onRemove,
+                      visualDensity: VisualDensity.compact,
+                      tooltip: 'Remove Dice',
+                    ),
+                  if (widget.onEdit != null)
+                    IconButton(
+                      icon: Icon(Icons.edit),
+                      onPressed: widget.onEdit,
+                      visualDensity: VisualDensity.compact,
+                      tooltip: 'Edit Dice',
                     ),
                   IconButton(
                     icon: Icon(Icons.refresh),
                     onPressed: _reroll,
+                    visualDensity: VisualDensity.compact,
+                    tooltip: 'Roll Again',
                   ),
                 ],
               ),

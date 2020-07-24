@@ -1,3 +1,4 @@
+import 'package:dungeon_paper/db/models/user.dart';
 import 'package:dungeon_paper/src/redux/connectors.dart';
 import 'package:dungeon_paper/src/redux/stores.dart';
 import 'package:dungeon_paper/src/redux/users/user_store.dart';
@@ -13,9 +14,9 @@ class LoginButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return DWStoreConnector<DWStore>(
-      builder: (context, state) {
-        var user = state.user.current;
+    return DWStoreConnector<User>(
+      converter: (store) => store.state.user.current,
+      builder: (context, user) {
         if (user == null) {
           return Container(
             width: 220,

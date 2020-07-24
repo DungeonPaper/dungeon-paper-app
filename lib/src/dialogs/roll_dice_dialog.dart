@@ -61,6 +61,7 @@ class _RollDiceDialogState extends State<RollDiceDialog> {
           ),
         ),
         DiceRollBuilder(
+          key: Key(addingDice.toString()),
           character: widget.character,
           initialValue: addingDice,
           onChanged: _add,
@@ -75,6 +76,7 @@ class _RollDiceDialogState extends State<RollDiceDialog> {
                     key: Key('dice-${list.value.hash}'),
                     controller: reversedControllers.elementAt(list.index),
                     onRemove: () => _removeAt(list.index),
+                    onEdit: () => _editAt(list.index),
                   ),
                 ],
                 SizedBox(height: 16),
@@ -119,6 +121,18 @@ class _RollDiceDialogState extends State<RollDiceDialog> {
     setState(() {
       diceList.removeAt(idx);
       controllers.removeAt(idx);
+    });
+  }
+
+  void _editAt(num idx) {
+    idx = reversedIndex(idx);
+    logger.d('Edit dice ${diceList[idx].join(', ')}');
+    analytics.logEvent(
+      name: Events.EditDice,
+      parameters: {'dice': diceList[idx].join(', ')},
+    );
+    setState(() {
+      addingDice = List.from(diceList[idx]);
     });
   }
 }
