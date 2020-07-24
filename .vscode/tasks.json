@@ -37,5 +37,17 @@
     "command": "dart",
     "args": ["lib/tools/deploy.dart", "--push", "--install", "-d", "518e84af"],
     "problemMatcher": []
+  }, {
+    "label": "Install Only",
+    "type": "shell",
+    "command": "dart",
+    "args": ["lib/tools/deploy.dart", "--no-build", "--install", "--no-test", "-d", "518e84af"],
+    "problemMatcher": []
+  }, {
+    "label": "Test Only",
+    "type": "shell",
+    "command": "dart",
+    "args": ["lib/tools/deploy.dart", "--no-build", "-d", "518e84af"],
+    "problemMatcher": []
   }]
 }
