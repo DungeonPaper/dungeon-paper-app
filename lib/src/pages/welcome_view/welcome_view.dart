@@ -1,6 +1,6 @@
 import 'dart:math';
 import 'package:dungeon_paper/src/atoms/version_number.dart';
-import 'package:dungeon_paper/src/flutter_utils/widget_utils.dart';
+import 'package:dungeon_paper/src/flutter_utils/loading_container.dart';
 import 'package:dungeon_paper/src/pages/about_view/about_view.dart';
 import 'package:dungeon_paper/src/pages/scaffold/login_button.dart';
 import 'package:flutter/material.dart';
@@ -17,44 +17,45 @@ class WelcomeView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      decoration:
-          BoxDecoration(color: Theme.of(context).scaffoldBackgroundColor),
-      child: loading
-          ? Center(child: PageLoader())
-          : SingleChildScrollView(
-              primary: true,
-              child: Center(
-                child: Column(
-                  mainAxisSize: MainAxisSize.max,
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Padding(
-                      padding: const EdgeInsets.symmetric(vertical: 24.0),
-                      child: SizedBox.fromSize(
-                        size: Size.square(
-                            min(MediaQuery.of(context).size.width - 32, 200)),
-                        child: Image.asset('assets/logo.png'),
-                      ),
-                    ),
-                    Text('Welcome to Dungeon Paper!',
-                        style: TextStyle(fontSize: 24)),
-                    VersionNumber.text(prefix: 'Version'),
-                    SizedBox(height: 24),
-                    LoginButton(onUserChange: () {
-                      pageController.jumpToPage(0);
-                    }),
-                    SizedBox(height: 20),
-                    Text('Having trouble signing in?'),
-                    RaisedButton(
-                      color: Theme.of(context).colorScheme.primary,
-                      onPressed: _openAboutView(context),
-                      child: Text('Contact Us'),
-                    )
-                  ],
+    return LoadingContainer(
+      loading: loading,
+      child: Container(
+        decoration:
+            BoxDecoration(color: Theme.of(context).scaffoldBackgroundColor),
+        child: SingleChildScrollView(
+          primary: true,
+          child: Center(
+            child: Column(
+              mainAxisSize: MainAxisSize.max,
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 24.0),
+                  child: SizedBox.fromSize(
+                    size: Size.square(
+                        min(MediaQuery.of(context).size.width - 32, 200)),
+                    child: Image.asset('assets/logo.png'),
+                  ),
                 ),
-              ),
+                Text('Welcome to Dungeon Paper!',
+                    style: TextStyle(fontSize: 24)),
+                VersionNumber.text(prefix: 'Version'),
+                SizedBox(height: 24),
+                LoginButton(onUserChange: () {
+                  pageController.jumpToPage(0);
+                }),
+                SizedBox(height: 20),
+                Text('Trouble signing in?'),
+                RaisedButton(
+                  color: Theme.of(context).colorScheme.primary,
+                  onPressed: _openAboutView(context),
+                  child: Text('Contact Us'),
+                )
+              ],
             ),
+          ),
+        ),
+      ),
     );
   }
 
