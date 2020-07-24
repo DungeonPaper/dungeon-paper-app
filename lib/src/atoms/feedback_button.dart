@@ -1,6 +1,5 @@
 import 'package:dungeon_paper/src/atoms/hyperlink.dart';
 import 'package:dungeon_paper/src/redux/stores.dart';
-import 'package:dungeon_paper/src/utils/logger.dart';
 import 'package:dungeon_paper/src/utils/utils.dart';
 import 'package:flutter/material.dart';
 import 'package:package_info/package_info.dart';

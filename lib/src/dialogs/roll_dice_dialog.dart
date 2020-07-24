@@ -62,15 +62,12 @@ class _RollDiceDialogState extends State<RollDiceDialog> {
         ),
         ValueListenableBuilder(
           valueListenable: addingDiceCtrl,
-          builder: (context, dice, child) {
-            logger.d('key: ${Key(dice.toString())}');
-            return DiceRollBuilder(
-              key: Key(dice.toString()),
-              character: widget.character,
-              initialValue: dice,
-              onChanged: _add,
-            );
-          },
+          builder: (context, dice, child) => DiceRollBuilder(
+            key: Key(dice.toString()),
+            character: widget.character,
+            initialValue: dice,
+            onChanged: _add,
+          ),
         ),
         Expanded(
           child: SingleChildScrollView(
@@ -117,7 +114,6 @@ class _RollDiceDialogState extends State<RollDiceDialog> {
       final _ctrl = DiceListController([...dice]);
       controllers.add(_ctrl);
       diceList.add(dice);
-      logger.d('diceList: ${addingDiceCtrl.value}');
     };
   }
 
