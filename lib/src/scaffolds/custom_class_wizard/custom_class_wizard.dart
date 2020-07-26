@@ -93,6 +93,7 @@ class _CustomClassWizardState extends State<CustomClassWizard>
         wrapWithScrollable: false,
         useElevation: false,
         elevation: 0,
+        automaticallyImplyLeading: true,
         body: Column(
           children: <Widget>[
             Row(

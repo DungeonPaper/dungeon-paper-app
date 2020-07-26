@@ -76,6 +76,7 @@ class _BattleViewState extends State<BattleView> {
   }
 
   Widget buildItem(List moves, num idx, CategoryKeys key) {
+    final narrowScreen = MediaQuery.of(context).size.width < 500;
     if (key == CategoryKeys.Dice) {
       return Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -89,7 +90,8 @@ class _BattleViewState extends State<BattleView> {
                   character: widget.character,
                   diceList: [Dice.d6 * 2],
                   onRoll: _onRoll(Dice.d6 * 2),
-                  label: Text('Roll Action (${Dice.d6 * 2})'),
+                  label: Text((narrowScreen ? 'Act' : 'Roll Action') +
+                      ' (${Dice.d6 * 2})'),
                 ),
               ),
               SizedBox(width: 12),
@@ -98,7 +100,8 @@ class _BattleViewState extends State<BattleView> {
                   character: widget.character,
                   diceList: [widget.character.damageDice],
                   onRoll: _onRoll(widget.character.damageDice),
-                  label: Text('Roll Damage (${widget.character.damageDice})'),
+                  label: Text((narrowScreen ? 'Dmg' : 'Roll Damage') +
+                      ' (${widget.character.damageDice})'),
                 ),
               ),
             ],

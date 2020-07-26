@@ -51,7 +51,7 @@ class CustomClassesList extends StatelessWidget {
             children: [
               for (var cls in classes)
                 CardListItem(
-                  onTap: onEdit != null ? () => onEdit(cls) : null,
+                  onTap: () => onEdit?.call(cls),
                   leading: Icon(Icons.person, size: 40),
                   trailing: IconButton(
                     icon: Icon(Icons.delete),
