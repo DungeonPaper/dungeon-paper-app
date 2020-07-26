@@ -107,6 +107,7 @@ class _CharacterWizardViewState extends State<CharacterWizardView>
         ],
         wrapWithScrollable: false,
         useElevation: false,
+        automaticallyImplyLeading: true,
         elevation: 0,
         body: Column(
           children: <Widget>[

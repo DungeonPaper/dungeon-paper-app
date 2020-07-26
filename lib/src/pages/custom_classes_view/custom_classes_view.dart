@@ -30,6 +30,8 @@ class _CustomClassesViewState extends State<CustomClassesView> {
     return ScaffoldWithElevation.primaryBackground(
       title: Text('Custom Classes'),
       automaticallyImplyLeading: true,
+      useElevation: false,
+      elevation: 0,
       actions: [
         PlayerClassList(
           builder: (context, list) => PopupMenuButton<PlayerClass>(
@@ -55,39 +57,44 @@ class _CustomClassesViewState extends State<CustomClassesView> {
       body: Padding(
         padding: const EdgeInsets.all(8.0),
         child: CustomClassesList(
-          onEdit: _edit,
-          onDelete: _delete,
+          onEdit: _edit(context),
+          onDelete: _delete(context),
         ),
       ),
       floatingActionButton: FloatingActionButton(
         child: Icon(Icons.add),
         backgroundColor: Theme.of(context).colorScheme.surface,
         foregroundColor: Theme.of(context).colorScheme.onSurface,
-        onPressed: _add,
+        onPressed: _add(context),
       ),
     );
   }
 
-  void _add() {
-    Navigator.push(
-      context,
-      MaterialPageRoute<bool>(
-        builder: (context) => CustomClassWizard(mode: DialogMode.Create),
-      ),
-    );
-  }
-
-  void _edit(CustomClass cls) {
-    Navigator.push(
-      context,
-      MaterialPageRoute<bool>(
-        builder: (context) => CustomClassWizard(
-          mode: DialogMode.Edit,
-          customClass: cls,
-          onSave: _save,
+  void Function() _add(BuildContext context) {
+    return () {
+      Navigator.push(
+        context,
+        MaterialPageRoute<bool>(
+          builder: (context) => CustomClassWizard(mode: DialogMode.Create),
         ),
-      ),
-    );
+      );
+    };
+  }
+
+  void Function(CustomClass) _edit(BuildContext context) {
+    return (cls) {
+      Navigator.push(
+        context,
+        MaterialPageRoute<bool>(
+          fullscreenDialog: true,
+          builder: (context) => CustomClassWizard(
+            mode: DialogMode.Edit,
+            customClass: cls,
+            onSave: _save,
+          ),
+        ),
+      );
+    };
   }
 
   void _save(CustomClass _cls) async {
@@ -102,18 +109,20 @@ class _CustomClassesViewState extends State<CustomClassesView> {
     }
   }
 
-  void _delete(CustomClass cls) async {
-    if (await showDialog(
-          context: context,
-          builder: (context) => ConfirmationDialog(
-            title: Text('Are you sure you want to delete this class?'),
-            text: Text(
-                "Don't worry, your characters using this class wil not be affected."),
-          ),
-        ) ==
-        true) {
-      unawaited(cls.delete());
-    }
+  Future<void> Function(CustomClass) _delete(BuildContext context) {
+    return (cls) async {
+      if (await showDialog(
+            context: context,
+            builder: (context) => ConfirmationDialog(
+              title: Text('Are you sure you want to delete this class?'),
+              text: Text(
+                  "Don't worry, your characters using this class wil not be affected."),
+            ),
+          ) ==
+          true) {
+        unawaited(cls.delete());
+      }
+    };
   }
 
   void _copyExisting(PlayerClass cls) {
