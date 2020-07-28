@@ -28,7 +28,14 @@ class RollButtonWithEdit extends StatelessWidget {
         size: 24,
       ),
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
-      label: label ?? Text('Roll ${diceList.join(', ')}'),
+      label: Flexible(
+        fit: FlexFit.loose,
+        child: DefaultTextStyle(
+          style: Theme.of(context).textTheme.button,
+          textAlign: TextAlign.center,
+          child: label ?? Text('Roll ${diceList.join(', ')}'),
+        ),
+      ),
       onPressed: onRoll,
       onLongPress: _openRollDialog(context),
     );

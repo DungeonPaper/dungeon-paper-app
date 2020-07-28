@@ -58,14 +58,18 @@ class LoginButton extends StatelessWidget {
         );
       } catch (e) {
         logger.d('IRREGULAR SIGN IN ERROR:');
-        logger.d(e.toString());
+        logger.e(e);
         dwStore.dispatch(NoLogin());
-        Scaffold.of(context, nullOk: true).showSnackBar(
-          SnackBar(
-            content: Text('Something went wrong... Please try again later.'),
-            duration: Duration(seconds: 10),
-          ),
-        );
+        try {
+          Scaffold.of(context, nullOk: true).showSnackBar(
+            SnackBar(
+              content: Text('Something went wrong... Please try again later.'),
+              duration: Duration(seconds: 10),
+            ),
+          );
+        } catch (e) {
+          logger.e(e);
+        }
       }
     };
   }

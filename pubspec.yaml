@@ -35,7 +35,7 @@ dependencies:
   flutter_image: ^3.0.0
   uuid: ^2.0.0
   # sentry: ^2.2.0
-  package_info: ^0.4.0+6
+  package_info: ^0.4.1
   quiver_hashcode: ^2.0.0
   http: ^0.12.0+4
   pub_semver: ^1.4.2

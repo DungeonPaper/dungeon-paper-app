@@ -1,12 +1,13 @@
 import 'dart:io';
 import 'package:dungeon_paper/src/builders/secrets_builder.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class DonateButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    if (Platform.isIOS) return Container();
+    if (!kIsWeb && Platform.isIOS) return Container();
     return SecretsBuilder(
       builder: (secrets) {
         return RaisedButton(

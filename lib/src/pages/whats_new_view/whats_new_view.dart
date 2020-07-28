@@ -159,7 +159,7 @@ class _WhatsNewState extends State<WhatsNew> {
 
   Future<void> _getChangelog() async {
     var client = http.Client();
-    var res = await client.post(Uri.parse(changelogUrl));
+    var res = await client.get(Uri.parse(changelogUrl));
     if (res.statusCode != 200) {
       if (mounted) {
         setState(() {
