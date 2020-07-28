@@ -20,8 +20,14 @@ class ProfileView extends StatelessWidget {
       var children = <Widget>[
         PhotoAndSummary(character: character),
         ArmorAndDmgDice(character: character),
-        StatusBars(character: character),
-        BaseStats(character: character),
+        Padding(
+          padding: const EdgeInsets.all(16).copyWith(top: 8),
+          child: StatusBars(character: character),
+        ),
+        Padding(
+          padding: const EdgeInsets.all(16).copyWith(top: 0),
+          child: BaseStats(character: character),
+        ),
       ];
       var width = MediaQuery.of(context).size.width;
       // var height = MediaQuery.of(context).size.height;
@@ -32,7 +38,7 @@ class ProfileView extends StatelessWidget {
             Orientation.portrait == orientation ? width : width / 2,
         // crossAxisCount: orientation == Orientation.portrait ? 1 : 2,
         itemCount: children.length,
-        itemBuilder: (context, index) => Container(child: children[index]),
+        itemBuilder: (context, index) => children[index],
         staggeredTileBuilder: (index) => StaggeredTile.fit(1),
       );
       // return orientation == Orientation.portrait

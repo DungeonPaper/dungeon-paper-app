@@ -36,8 +36,8 @@ android {
         multiDexEnabled true
 
         // VERSION
-        versionCode 45
-        versionName "1.1.7+2"
+        versionCode 46
+        versionName "1.1.7+3"
     }
 
     // flavorDimensions "version"
