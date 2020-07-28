@@ -104,6 +104,7 @@ class Secrets {
   String get API_DOMAIN => _data['API_DOMAIN'];
   String get API_PATH => _data['API_PATH'];
   String get GOOGLE_CLIENT_ID => _data['GOOGLE_CLIENT_ID'];
+  String get VERSION_NUMBER => _data['VERSION_NUMBER'];
 
   dynamic operator [](String key) {
     return _data[key];

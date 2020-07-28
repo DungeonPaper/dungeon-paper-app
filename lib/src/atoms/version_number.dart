@@ -1,3 +1,5 @@
+import 'package:dungeon_paper/src/utils/utils.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/widgets.dart';
 import 'package:package_info/package_info.dart';
 
@@ -30,6 +32,14 @@ class _VersionNumberState extends State<VersionNumber> {
   }
 
   void _getVersion() async {
+    if (kIsWeb) {
+      final secrets = await loadSecrets();
+      setState(() {
+        version = secrets.VERSION_NUMBER;
+      });
+      return;
+    }
+
     var packageInfo = await PackageInfo.fromPlatform();
 
     if (mounted) {

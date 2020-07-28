@@ -16,7 +16,7 @@ abstract class Credentials<T extends AuthCredential> {
   bool get isEmpty =>
       _map == null ||
       _map.isEmpty ||
-      _map.values.any((v) => v == null) ||
+      // _map.values.any((v) => v == null) ||
       providerCredentials == null;
 
   bool get isNotEmpty => !isEmpty;

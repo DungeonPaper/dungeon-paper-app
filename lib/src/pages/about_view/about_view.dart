@@ -6,6 +6,7 @@ import 'package:dungeon_paper/src/atoms/paypal_donate_button.dart';
 import 'package:dungeon_paper/src/atoms/version_number.dart';
 import 'package:dungeon_paper/src/flutter_utils/platform_svg.dart';
 import 'package:dungeon_paper/src/pages/whats_new_view/whats_new_view.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/gestures.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:flutter/material.dart';
@@ -211,7 +212,7 @@ class _AboutViewState extends State<AboutView> {
                   Padding(
                       padding: const EdgeInsets.symmetric(vertical: 1),
                       child: Text(credit)),
-                if (!Platform.isIOS)
+                if (kIsWeb || !Platform.isIOS)
                   Padding(
                     padding: const EdgeInsets.only(top: 16.0),
                     child: Text(
