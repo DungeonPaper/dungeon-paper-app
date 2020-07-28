@@ -11,7 +11,6 @@ class DiceRollBox extends StatefulWidget {
   final bool animated;
   final void Function() onRemove;
   final void Function() onEdit;
-  final EdgeInsets padding;
 
   DiceRollBox({
     Key key,
@@ -19,7 +18,6 @@ class DiceRollBox extends StatefulWidget {
     this.animated = true,
     this.onRemove,
     this.onEdit,
-    this.padding,
   })  : assert(controller != null),
         assert(controller.value != null && (controller.value?.length ?? 0) > 0),
         super(key: key);
@@ -68,91 +66,88 @@ class _DiceRollBoxState extends State<DiceRollBox>
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: widget.padding ?? const EdgeInsets.symmetric(horizontal: 16),
-      child: Card(
-        color: Theme.of(context).canvasColor,
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.all(Radius.circular(10)),
-        ),
-        child: Column(
-          children: [
-            Container(
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.vertical(top: Radius.circular(10)),
-                color: Theme.of(context).primaryColor,
-              ),
-              padding: EdgeInsets.only(left: 16),
-              child: Row(
-                children: [
-                  ValueListenableBuilder<List<Dice>>(
-                    valueListenable: widget.controller,
-                    builder: (context, dice, child) {
-                      var total = widget.controller.results
-                          .fold<int>(0, (_total, cur) => _total + cur.total);
-                      return Text(
-                        'Total: $total',
-                        style: TextStyle(fontSize: 16),
-                      );
-                    },
-                  ),
-                  Expanded(child: Container()),
-                  if (widget.onRemove != null)
-                    IconButton(
-                      icon: Icon(Icons.close),
-                      onPressed: widget.onRemove,
-                      visualDensity: VisualDensity.compact,
-                      tooltip: 'Remove Dice',
-                    ),
-                  if (widget.onEdit != null)
-                    IconButton(
-                      icon: Icon(Icons.edit),
-                      onPressed: widget.onEdit,
-                      visualDensity: VisualDensity.compact,
-                      tooltip: 'Edit Dice',
-                    ),
-                  IconButton(
-                    icon: Icon(Icons.refresh),
-                    onPressed: _reroll,
-                    visualDensity: VisualDensity.compact,
-                    tooltip: 'Roll Again',
-                  ),
-                ],
-              ),
+    return Card(
+      margin: EdgeInsets.zero,
+      color: Theme.of(context).canvasColor,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.all(Radius.circular(10)),
+      ),
+      child: Column(
+        children: [
+          Container(
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.vertical(top: Radius.circular(10)),
+              color: Theme.of(context).primaryColor,
             ),
-            SizedBox(height: 8),
-            ValueListenableBuilder<List<Dice>>(
-              valueListenable: widget.controller,
-              builder: (context, dice, child) {
-                var total = widget.controller.results
-                    .fold<int>(0, (_total, cur) => _total + cur.total);
-                var totalModifiers = widget.controller.results
-                    .fold<int>(0, (_total, cur) => _total + cur.dice.modifier);
-                var totalWithoutModifiers = total - totalModifiers;
-                return Text(
-                  'WITHOUT MOD.: $totalWithoutModifiers | MOD. TOTAL: $totalModifiers',
-                  style: TextStyle(
-                    fontSize: 12,
-                    color: Theme.of(context)
-                        .colorScheme
-                        .onSurface
-                        .withOpacity(0.4),
-                  ),
-                );
-              },
-            ),
-            ValueListenableBuilder<List<Dice>>(
-              valueListenable: widget.controller,
-              builder: (context, dice, child) => Padding(
-                padding: const EdgeInsets.symmetric(vertical: 8),
-                child: DiceIconList(
-                  controller: widget.controller,
-                  animations: animations,
+            padding: EdgeInsets.only(left: 16),
+            child: Row(
+              children: [
+                ValueListenableBuilder<List<Dice>>(
+                  valueListenable: widget.controller,
+                  builder: (context, dice, child) {
+                    var total = widget.controller.results
+                        .fold<int>(0, (_total, cur) => _total + cur.total);
+                    return Text(
+                      'Total: $total',
+                      style: TextStyle(fontSize: 16),
+                    );
+                  },
                 ),
+                Expanded(child: Container()),
+                if (widget.onRemove != null)
+                  IconButton(
+                    icon: Icon(Icons.close),
+                    onPressed: widget.onRemove,
+                    visualDensity: VisualDensity.compact,
+                    tooltip: 'Remove Dice',
+                  ),
+                if (widget.onEdit != null)
+                  IconButton(
+                    icon: Icon(Icons.edit),
+                    onPressed: widget.onEdit,
+                    visualDensity: VisualDensity.compact,
+                    tooltip: 'Edit Dice',
+                  ),
+                IconButton(
+                  icon: Icon(Icons.refresh),
+                  onPressed: _reroll,
+                  visualDensity: VisualDensity.compact,
+                  tooltip: 'Roll Again',
+                ),
+              ],
+            ),
+          ),
+          SizedBox(height: 8),
+          ValueListenableBuilder<List<Dice>>(
+            valueListenable: widget.controller,
+            builder: (context, dice, child) {
+              var total = widget.controller.results
+                  .fold<int>(0, (_total, cur) => _total + cur.total);
+              var totalModifiers = widget.controller.results
+                  .fold<int>(0, (_total, cur) => _total + cur.dice.modifier);
+              var totalWithoutModifiers = total - totalModifiers;
+              return Text(
+                '${widget.controller.value.join(', ')}\nWITHOUT MOD.: $totalWithoutModifiers | MOD. TOTAL: $totalModifiers',
+                textAlign: TextAlign.center,
+                style: TextStyle(
+                  fontSize: 12,
+                  color:
+                      Theme.of(context).colorScheme.onSurface.withOpacity(0.4),
+                ),
+              );
+            },
+          ),
+          ValueListenableBuilder<List<Dice>>(
+            valueListenable: widget.controller,
+            builder: (context, dice, child) => Padding(
+              padding: const EdgeInsets.symmetric(vertical: 8),
+              child: DiceIconList(
+                controller: widget.controller,
+                animations: animations,
               ),
             ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }

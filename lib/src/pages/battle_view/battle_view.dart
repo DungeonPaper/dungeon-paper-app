@@ -104,13 +104,15 @@ class _BattleViewState extends State<BattleView> {
             ],
           ),
           if (diceListController != null)
-            DiceRollBox(
-              key: Key(rollSession),
-              padding: EdgeInsets.zero,
-              controller: diceListController,
-              animated: true,
-              onRemove: _removeRoll,
-              onEdit: _editRoll,
+            Padding(
+              padding: const EdgeInsets.only(top: 16),
+              child: DiceRollBox(
+                key: Key(rollSession),
+                controller: diceListController,
+                animated: true,
+                onRemove: _removeRoll,
+                onEdit: _editRoll,
+              ),
             ),
         ],
       );
@@ -165,12 +167,10 @@ class _BattleViewState extends State<BattleView> {
   }
 
   void _editRoll() {
-    showDialog(
+    showDiceRollDialog(
       context: context,
-      builder: (context) => RollDiceDialog(
-        character: widget.character,
-        initialAddingDice: diceListController.value,
-      ),
+      character: widget.character,
+      initialAddingDice: diceListController.value,
     );
   }
 }

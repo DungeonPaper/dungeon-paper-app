@@ -72,11 +72,14 @@ class _RollDiceDialogState extends State<RollDiceDialog> {
         children: [
           for (var list in enumerate(reversedControllers)) ...[
             SizedBox(height: 16),
-            DiceRollBox(
-              key: Key('dice-${list.value.hash}'),
-              controller: reversedControllers.elementAt(list.index),
-              onRemove: () => _removeAt(list.index),
-              onEdit: () => _editAt(list.index),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 16),
+              child: DiceRollBox(
+                key: Key('dice-${list.value.hash}'),
+                controller: reversedControllers.elementAt(list.index),
+                onRemove: () => _removeAt(list.index),
+                onEdit: () => _editAt(list.index),
+              ),
             ),
           ],
           SizedBox(height: 16),
@@ -181,4 +184,48 @@ class RollDialogTitle extends StatelessWidget {
       ),
     );
   }
+}
+
+void showDiceRollDialog({
+  @required BuildContext context,
+  Key key,
+  @required Character character,
+  List<Dice> initialAddingDice,
+  List<Dice> initialDiceList,
+}) {
+  Navigator.push(
+    context,
+    PageRouteBuilder(
+      opaque: false,
+      transitionDuration: Duration(milliseconds: 200),
+      pageBuilder: (context, anim, anim2) => SafeArea(
+        child: RollDiceDialog(
+          key: key,
+          character: character,
+          initialAddingDice: initialAddingDice,
+          initialDiceList: initialDiceList,
+        ),
+      ),
+      transitionsBuilder: (context, anim, anim2, child) => Opacity(
+        opacity: anim.value,
+        child: Stack(
+          fit: StackFit.expand,
+          children: [
+            Positioned.fill(
+              child: Material(
+                color: Colors.black.withOpacity(0.7),
+                child: GestureDetector(
+                  onTap: () => Navigator.pop(context),
+                ),
+              ),
+            ),
+            Transform.translate(
+              offset: Offset(0, (anim.value * -50) + 50),
+              child: child,
+            ),
+          ],
+        ),
+      ),
+    ),
+  );
 }

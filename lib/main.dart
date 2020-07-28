@@ -11,12 +11,13 @@ import 'package:firebase_analytics/observer.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
+import 'package:pedantic/pedantic.dart';
 
 void withInit(Function() cb) async {
   try {
     WidgetsFlutterBinding.ensureInitialized();
     if (!kIsWeb) {
-      await initErrorReporting();
+      unawaited(initErrorReporting());
     }
     runZonedGuarded(cb, reportError);
   } catch (e) {
@@ -28,8 +29,8 @@ void withInit(Function() cb) async {
 void main() async {
   initApp(web: kIsWeb);
   withInit(() {
-    runApp(DungeonPaper());
     dwStore.dispatch(AppInit());
+    runApp(DungeonPaper());
   });
 }
 

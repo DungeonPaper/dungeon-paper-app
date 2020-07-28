@@ -130,11 +130,9 @@ class _MainViewState extends State<MainView> {
                       name: Events.OpenDiceDialog,
                       parameters: {'screen_name': pageName},
                     );
-                    showDialog(
+                    showDiceRollDialog(
                       context: context,
-                      builder: (context) => RollDiceDialog(
-                        character: widget.character,
-                      ),
+                      character: widget.character,
                     );
                   },
                 )

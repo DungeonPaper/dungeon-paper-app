@@ -98,11 +98,15 @@ class EditStatDialogState extends State<EditStatDialog> {
                     ),
                   ),
                   if (rollingController != null)
-                    DiceRollBox(
-                      key: Key(rollSession),
-                      controller: rollingController,
-                      onRemove: _removeRoll,
-                      onEdit: _editRoll,
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 16.0)
+                          .copyWith(bottom: 8),
+                      child: DiceRollBox(
+                        key: Key(rollSession),
+                        controller: rollingController,
+                        onRemove: _removeRoll,
+                        onEdit: _editRoll,
+                      ),
                     ),
                   StandardDialogControls(
                     padding: const EdgeInsets.symmetric(horizontal: 16),
@@ -178,12 +182,10 @@ class EditStatDialogState extends State<EditStatDialog> {
   }
 
   void _editRoll() {
-    showDialog(
+    showDiceRollDialog(
       context: context,
-      builder: (context) => RollDiceDialog(
-        character: widget.character,
-        initialAddingDice: rollingController.value,
-      ),
+      character: widget.character,
+      initialAddingDice: rollingController.value,
     );
   }
 
