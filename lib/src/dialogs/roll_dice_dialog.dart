@@ -187,12 +187,18 @@ class RollDialogTitle extends StatelessWidget {
 }
 
 void showDiceRollDialog({
-  @required BuildContext context,
   Key key,
+  @required BuildContext context,
+  @required String analyticsSource,
   @required Character character,
   List<Dice> initialAddingDice,
   List<Dice> initialDiceList,
 }) {
+  logger.d("Open Dice Dialog ${{'screen_name': analyticsSource}}");
+  analytics.setCurrentScreen(screenName: ScreenNames.DiceRoll);
+  analytics.logEvent(name: Events.OpenDiceDialog, parameters: {
+    'screen_name': analyticsSource,
+  });
   Navigator.push(
     context,
     PageRouteBuilder(

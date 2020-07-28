@@ -9,13 +9,15 @@ class RollButtonWithEdit extends StatelessWidget {
   final Widget label;
   final void Function() onRoll;
   final Character character;
+  final String analyticsSource;
 
   const RollButtonWithEdit({
     Key key,
-    @required this.diceList,
     this.label,
+    @required this.diceList,
     @required this.onRoll,
     @required this.character,
+    @required this.analyticsSource,
   }) : super(key: key);
 
   @override
@@ -48,6 +50,7 @@ class RollButtonWithEdit extends StatelessWidget {
         character: character,
         initialAddingDice: diceList,
         initialDiceList: diceList,
+        analyticsSource: analyticsSource,
       );
     };
   }

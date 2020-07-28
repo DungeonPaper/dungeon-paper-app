@@ -95,6 +95,7 @@ class EditStatDialogState extends State<EditStatDialog> {
                       diceList: dice,
                       onRoll: _rollStat,
                       character: widget.character,
+                      analyticsSource: 'Edit Stat Dialog',
                     ),
                   ),
                   if (rollingController != null)
@@ -186,6 +187,7 @@ class EditStatDialogState extends State<EditStatDialog> {
       context: context,
       character: widget.character,
       initialAddingDice: rollingController.value,
+      analyticsSource: 'Edit Stat Dialog',
     );
   }
 

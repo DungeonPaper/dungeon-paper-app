@@ -30,6 +30,7 @@ class Events {
 }
 
 class ScreenNames {
+  static const DiceRoll = 'edit_character';
   static const CharacterScreen = 'edit_character';
   static const ManageCharacters = 'manage_characters';
   static const Compendium = 'compendium';
