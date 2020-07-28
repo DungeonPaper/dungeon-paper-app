@@ -49,17 +49,7 @@ class _RollDiceDialogState extends State<RollDiceDialog> {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        Container(
-          height: 52,
-          child: Center(
-            child: Text(
-              'Roll Dice',
-              style: Theme.of(context).textTheme.headline4.copyWith(
-                    color: Theme.of(context).canvasColor,
-                  ),
-            ),
-          ),
-        ),
+        RollDialogTitle(),
         ValueListenableBuilder(
           valueListenable: addingDiceCtrl,
           builder: (context, dice, child) => DiceRollBuilder(
@@ -70,24 +60,28 @@ class _RollDiceDialogState extends State<RollDiceDialog> {
           ),
         ),
         Expanded(
-          child: SingleChildScrollView(
-            child: Column(
-              children: [
-                for (var list in enumerate(reversedControllers)) ...[
-                  SizedBox(height: 16),
-                  DiceRollBox(
-                    key: Key('dice-${list.value.hash}'),
-                    controller: reversedControllers.elementAt(list.index),
-                    onRemove: () => _removeAt(list.index),
-                    onEdit: () => _editAt(list.index),
-                  ),
-                ],
-                SizedBox(height: 16),
-              ],
-            ),
-          ),
+          child: buildDiceList(),
         ),
       ],
+    );
+  }
+
+  SingleChildScrollView buildDiceList() {
+    return SingleChildScrollView(
+      child: Column(
+        children: [
+          for (var list in enumerate(reversedControllers)) ...[
+            SizedBox(height: 16),
+            DiceRollBox(
+              key: Key('dice-${list.value.hash}'),
+              controller: reversedControllers.elementAt(list.index),
+              onRemove: () => _removeAt(list.index),
+              onEdit: () => _editAt(list.index),
+            ),
+          ],
+          SizedBox(height: 16),
+        ],
+      ),
     );
   }
 
@@ -141,5 +135,50 @@ class _RollDiceDialogState extends State<RollDiceDialog> {
       addingDiceCtrl.value = List.from(diceList[idx]);
       logger.d('diceList: ${addingDiceCtrl.value}');
     });
+  }
+}
+
+class RollDialogTitle extends StatelessWidget {
+  const RollDialogTitle({
+    Key key,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    // var mq = MediaQuery.of(context);
+    return Container(
+      height: 52,
+      // width: mq.orientation == Orientation.portrait
+      //     ? mq.size.width
+      //     : mq.size.width / 2,
+      child: Material(
+        color: Colors.transparent,
+        child: Row(
+          mainAxisSize: MainAxisSize.max,
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            IconButton(
+              icon: Icon(Icons.close),
+              onPressed: () => Navigator.pop(context),
+              color: Theme.of(context).canvasColor,
+              iconSize: 30,
+            ),
+            Expanded(
+              child: Padding(
+                padding: const EdgeInsets.only(right: 40),
+                child: Text(
+                  'Roll Dice',
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                    color: Theme.of(context).canvasColor,
+                    fontSize: 28,
+                  ),
+                ),
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
   }
 }

@@ -21,8 +21,7 @@ class StatCard extends StatelessWidget {
     var value = getValue(character, stat);
 
     return Expanded(
-      child: Card(
-        margin: EdgeInsets.all(10.0),
+      child: Container(
         child: InkWell(
           onTap: _edit(context),
           onLongPress: _openRollDialog(context),

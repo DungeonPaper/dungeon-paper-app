@@ -40,8 +40,7 @@ class StatusBars extends StatelessWidget {
         : 0.0;
     var rounded = Radius.circular(5);
 
-    return Padding(
-      padding: const EdgeInsets.all(8.0).copyWith(bottom: 0),
+    return Container(
       child: Column(
         children: <Widget>[
           StatusBarCard(
