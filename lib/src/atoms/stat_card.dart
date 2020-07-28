@@ -85,16 +85,13 @@ class StatCard extends StatelessWidget {
   void Function() _openRollDialog(BuildContext context) {
     final value = getValue(character, stat);
     return () {
-      showDialog(
+      var statDice = [Dice(6, 2, CharacterFields.statModifier(value))];
+
+      showDiceRollDialog(
         context: context,
-        builder: (context) {
-          var statDice = [Dice(6, 2, CharacterFields.statModifier(value))];
-          return RollDiceDialog(
-            character: character,
-            initialDiceList: statDice,
-            initialAddingDice: statDice,
-          );
-        },
+        character: character,
+        initialDiceList: statDice,
+        initialAddingDice: statDice,
       );
     };
   }

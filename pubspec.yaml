@@ -26,7 +26,7 @@ dependencies:
   screen: ^0.0.4
   cupertino_icons: ^0.1.2
   flutter_redux: ^0.6.0
-  flutter_staggered_grid_view: ^0.3.0
+  flutter_staggered_grid_view: ^0.3.1
   flutter_markdown: ^0.2.0
   url_launcher: ^5.4.5
   redux_logging: ^0.4.0
@@ -52,12 +52,13 @@ dependencies:
 dev_dependencies:
   flutter_test:
     sdk: flutter
-  flutter_launcher_icons: ^0.7.0
+  flutter_launcher_icons: ^0.7.5
 
 flutter_icons:
-  image_path: launcher_icons/android.png
   android: true
   ios: true
+  image_path_android: launcher_icons/android.png
+  image_path_ios: launcher_icons/ios.png
 
 # For information on the generic Dart part of this file, see the
 # following page: https://www.dartlang.org/tools/pub/pubspec

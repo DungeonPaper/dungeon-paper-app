@@ -43,13 +43,11 @@ class RollButtonWithEdit extends StatelessWidget {
 
   void Function() _openRollDialog(BuildContext context) {
     return () {
-      showDialog(
+      showDiceRollDialog(
         context: context,
-        builder: (context) => RollDiceDialog(
-          character: character,
-          initialAddingDice: diceList,
-          initialDiceList: diceList,
-        ),
+        character: character,
+        initialAddingDice: diceList,
+        initialDiceList: diceList,
       );
     };
   }
