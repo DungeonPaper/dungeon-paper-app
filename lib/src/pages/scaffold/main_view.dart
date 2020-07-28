@@ -126,13 +126,10 @@ class _MainViewState extends State<MainView> {
                   icon:
                       PlatformSvg.asset('dice/d20.svg', width: 24, height: 24),
                   onPressed: () {
-                    analytics.logEvent(
-                      name: Events.OpenDiceDialog,
-                      parameters: {'screen_name': pageName},
-                    );
                     showDiceRollDialog(
                       context: context,
                       character: widget.character,
+                      analyticsSource: pageName,
                     );
                   },
                 )

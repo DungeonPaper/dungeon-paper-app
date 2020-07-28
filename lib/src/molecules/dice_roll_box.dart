@@ -162,6 +162,7 @@ class _DiceRollBoxState extends State<DiceRollBox>
   }
 
   void _animate() {
+    _initAnimations();
     for (var group in animationControllers) {
       for (var ctrl in group) {
         if (widget.animated) {
@@ -181,7 +182,7 @@ class _DiceRollBoxState extends State<DiceRollBox>
         widget.controller.value[idx].amount,
         (innerIdx) => AnimationController(
           vsync: this,
-          duration: Duration(milliseconds: Random().nextInt(10) * 200 + 2000),
+          duration: Duration(milliseconds: Random().nextInt(10) * 300 + 2000),
         ),
       ),
     );

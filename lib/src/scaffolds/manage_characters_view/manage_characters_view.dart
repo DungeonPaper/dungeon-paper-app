@@ -104,7 +104,8 @@ class _ManageCharactersViewState extends State<ManageCharactersView> {
       ..removeAt(oldIdx)
       ..insert(newIdx, char);
     for (var char in enumerate(copy)) {
-      unawaited(char.value.update(json: {'order': char.index}));
+      char.value.order = char.index;
+      unawaited(char.value.update());
     }
     setState(() {
       characters = [...copy];

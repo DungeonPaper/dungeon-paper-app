@@ -90,6 +90,7 @@ class _BattleViewState extends State<BattleView> {
                   diceList: [Dice.d6 * 2],
                   onRoll: _onRoll(Dice.d6 * 2),
                   label: Text('Roll Action'),
+                  analyticsSource: 'Battle - Roll Action',
                 ),
               ),
               SizedBox(width: 12),
@@ -99,6 +100,7 @@ class _BattleViewState extends State<BattleView> {
                   diceList: [widget.character.damageDice],
                   onRoll: _onRoll(widget.character.damageDice),
                   label: Text('Roll Damage'),
+                  analyticsSource: 'Battle - Roll Danmage',
                 ),
               ),
             ],
@@ -171,6 +173,7 @@ class _BattleViewState extends State<BattleView> {
       context: context,
       character: widget.character,
       initialAddingDice: diceListController.value,
+      analyticsSource: 'Battle',
     );
   }
 }

@@ -92,6 +92,7 @@ class StatCard extends StatelessWidget {
         character: character,
         initialDiceList: statDice,
         initialAddingDice: statDice,
+        analyticsSource: 'Stat Card',
       );
     };
   }
