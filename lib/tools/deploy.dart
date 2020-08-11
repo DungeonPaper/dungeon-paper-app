@@ -91,7 +91,10 @@ void main(List<String> args) async {
     var testProc = Process.start('flutter', ['test']);
     var testRun = await testProc;
     await stdout.addStream(testRun.stdout);
-    await stdout.addStream(testRun.stderr);
+    testRun.stderr.listen((event) {
+      print('Build failed: $event');
+      throw Exception('Build failed');
+    });
   }
 
   if (options.build) {
