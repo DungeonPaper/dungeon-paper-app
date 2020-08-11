@@ -1,3 +1,7 @@
 [*.md]
 trim_trailing_whitespace = false
 insert_final_newline = true
+
+[*.plist]
+tab_width = 2
+indent_style = tab
