@@ -506,13 +506,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "0.4.0"
-  reorderables:
-    dependency: "direct main"
-    description:
-      name: reorderables
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "0.3.2"
   screen:
     dependency: "direct main"
     description:
