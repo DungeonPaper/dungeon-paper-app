@@ -1,5 +1,12 @@
 # CHANGELOG
 
+## 1.1.8
+* Roll buttons in some pages
+* Bio edit
+* Keep screen on toggle in sidebar
+* Removed reorderables from char management screen and replaced with icon buttons
+* Bugfixes
+
 ## 1.1.7
 * Created Compendium screen
 * Unified character create/update into tabbed layout

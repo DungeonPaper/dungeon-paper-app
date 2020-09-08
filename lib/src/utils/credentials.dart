@@ -1,14 +1,14 @@
-import 'package:dungeon_paper/src/utils/auth.dart';
+import 'package:dungeon_paper/src/utils/auth/auth.dart';
 import 'package:dungeon_paper/src/utils/logger.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
 import 'package:firebase_auth_platform_interface/firebase_auth_platform_interface.dart';
 
-abstract class Credentials<T extends AuthCredential> {
+abstract class CredentialsOld_<T extends AuthCredential> {
   T providerCredentials;
   final Map<String, String> _map;
 
-  Credentials({
+  CredentialsOld_({
     Map<String, String> data,
     this.providerCredentials,
   }) : _map = data;
@@ -23,7 +23,7 @@ abstract class Credentials<T extends AuthCredential> {
 
   bool get isNotEmpty => !isEmpty;
 
-  Future<Credentials> signIn({
+  Future<CredentialsOld_> signIn({
     @required bool attemptSilent,
     @required bool interactiveOnFailSilent,
   }) {
@@ -45,7 +45,7 @@ abstract class Credentials<T extends AuthCredential> {
     }
   }
 
-  Future<Credentials> _signIn({
+  Future<CredentialsOld_> _signIn({
     @required bool attemptSilent,
     @required bool interactiveOnFailSilent,
   });
@@ -55,7 +55,7 @@ abstract class Credentials<T extends AuthCredential> {
   Map<String, String> serialize() => _map;
 }
 
-class GoogleCredentials extends Credentials<GoogleAuthCredential> {
+class GoogleCredentials extends CredentialsOld_<GoogleAuthCredential> {
   GoogleCredentials({
     Map<String, String> data,
     GoogleAuthCredential providerCredentials,
@@ -68,7 +68,8 @@ class GoogleCredentials extends Credentials<GoogleAuthCredential> {
   String get accessToken => _map['accessToken'];
 
   factory GoogleCredentials.fromAuthCredential(
-          GoogleAuthCredential credential) =>
+    GoogleAuthCredential credential,
+  ) =>
       GoogleCredentials(
         providerCredentials: credential,
         data: {
@@ -78,7 +79,7 @@ class GoogleCredentials extends Credentials<GoogleAuthCredential> {
       );
 
   @override
-  Future<Credentials> _signIn({
+  Future<CredentialsOld_> _signIn({
     @required bool attemptSilent,
     @required bool interactiveOnFailSilent,
   }) =>
@@ -93,9 +94,45 @@ class GoogleCredentials extends Credentials<GoogleAuthCredential> {
     @required bool interactiveOnFailSilent,
   }) =>
       signOutWithGoogle();
+}
 
-  // AuthCredential get googleCredentials => GoogleAuthCredential(
-  //       accessToken: accessToken,
-  //       idToken: idToken,
-  //     );
+class EmailCredentials extends CredentialsOld_<EmailAuthCredential> {
+  EmailCredentials({
+    Map<String, String> data,
+    EmailAuthCredential providerCredentials,
+  }) : super(
+          data: data,
+          providerCredentials: providerCredentials,
+        );
+
+  String get idToken => _map['idToken'];
+  String get accessToken => _map['accessToken'];
+
+  factory EmailCredentials.fromAuthCredential(
+    EmailAuthCredential credential,
+  ) =>
+      EmailCredentials(
+        providerCredentials: credential,
+        data: {
+          'email': credential.email,
+          'password': credential.password,
+        },
+      );
+
+  @override
+  Future<CredentialsOld_> _signIn({
+    @required bool attemptSilent,
+    @required bool interactiveOnFailSilent,
+  }) =>
+      signInWithGoogle(
+        silent: attemptSilent,
+        interactiveOnFailSilent: interactiveOnFailSilent,
+      );
+
+  @override
+  Future<void> signOut({
+    @required bool attemptSilent,
+    @required bool interactiveOnFailSilent,
+  }) =>
+      signOutWithGoogle();
 }
