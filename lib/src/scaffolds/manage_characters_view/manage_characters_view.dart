@@ -126,15 +126,6 @@ class _ManageCharactersViewState extends State<ManageCharactersView> {
     );
   }
 
-  void _reorder(num oldIdx, num newIdx) {
-    var copy = [...characters];
-    var char = copy.elementAt(oldIdx);
-    copy
-      ..removeAt(oldIdx)
-      ..insert(newIdx, char);
-    _updateChars(copy);
-  }
-
   void _moveUp(num oldIdx) {
     var copy = [...characters];
     var char = copy.elementAt(oldIdx);

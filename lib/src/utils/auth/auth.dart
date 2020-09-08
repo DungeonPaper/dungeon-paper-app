@@ -10,11 +10,11 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:pedantic/pedantic.dart';
-import 'api.dart';
-import 'credentials.dart';
-import 'utils.dart';
+import '../api.dart';
+import '../credentials.dart';
+import '../utils.dart';
+import 'auth_common.dart';
 
-final FirebaseAuth _auth = FirebaseAuth.instance;
 GoogleSignIn _googleSignInInstance;
 
 Future<GoogleSignIn> get _googleSignIn async {
@@ -28,12 +28,8 @@ Future<GoogleSignIn> get _googleSignIn async {
   return _googleSignInInstance;
 }
 
-enum SignInMethod {
-  Google,
-}
-
 Future<FirebaseUser> signInFlow(
-  Credentials creds, {
+  CredentialsOld_ creds, {
   bool silent = false,
   bool interactiveOnFailSilent = true,
 }) async {
@@ -57,7 +53,7 @@ Future<FirebaseUser> signInFlow(
     fbUser = await getFirebaseUser(providerCreds);
   }
 
-  final user = await getOrCreateUser(
+  final user = await getDatabaseUser(
     fbUser,
     signInMethod: creds.providerCredentials.providerId,
   );
@@ -79,7 +75,7 @@ void registerAllListeners(FirebaseUser fbUser) {
 }
 
 void dispatchFinalDataToStore({
-  @required Credentials credentials,
+  @required CredentialsOld_ credentials,
   @required FirebaseUser firebaseUser,
   @required User user,
 }) async {
@@ -88,11 +84,11 @@ void dispatchFinalDataToStore({
     return;
   }
 
-  dwStore.dispatch(Login(
-    user: user,
-    credentials: credentials,
-    firebaseUser: firebaseUser,
-  ));
+  // dwStore.dispatch(Login(
+  //   user: user,
+  //   // credentials: credentials,
+  //   firebaseUser: firebaseUser,
+  // ));
 
   unawaited(analytics.logLogin(
       loginMethod: credentials.providerCredentials.providerId));
@@ -110,13 +106,13 @@ void dispatchFinalDataToStore({
 
 void signOutFlow() async {
   var creds = dwStore.state.prefs.credentials;
-  unawaited(_auth.signOut());
+  unawaited(auth.signOut());
   unawaited(creds.signOut());
   dwStore.dispatch(Logout());
   dwStore.dispatch(ClearCharacters());
 }
 
-Future<Credentials> signInWithGoogle({
+Future<CredentialsOld_> signInWithGoogle({
   bool silent,
   bool interactiveOnFailSilent,
 }) async {
@@ -160,13 +156,13 @@ Future<GoogleSignInAccount> signOutWithGoogle() async {
 
 Future<FirebaseUser> getFirebaseUser(AuthCredential creds) async {
   try {
-    var persistedUser = await _auth.currentUser();
+    var persistedUser = await auth.currentUser();
 
     if (persistedUser != null) {
       return persistedUser;
     }
 
-    var result = await _auth.signInWithCredential(creds);
+    var result = await auth.signInWithCredential(creds);
     var user = result.user;
     return user;
   } catch (e) {

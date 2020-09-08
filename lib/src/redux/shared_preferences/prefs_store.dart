@@ -2,7 +2,9 @@ import 'package:dungeon_paper/src/redux/characters/characters_store.dart';
 import 'package:dungeon_paper/src/redux/shared_preferences/prefs_settings.dart';
 import 'package:dungeon_paper/src/redux/stores.dart';
 import 'package:dungeon_paper/src/redux/users/user_store.dart';
-import 'package:dungeon_paper/src/utils/auth.dart';
+import 'package:dungeon_paper/src/utils/auth/auth.dart';
+import 'package:dungeon_paper/src/utils/auth/auth_flow.dart';
+import 'package:dungeon_paper/src/utils/auth/credentials/auth_credentials.dart';
 import 'package:dungeon_paper/src/utils/credentials.dart';
 import 'package:dungeon_paper/src/utils/logger.dart';
 import 'package:flutter/foundation.dart';
@@ -92,7 +94,7 @@ class PrefsStore {
             idToken: all[SharedPrefKeys.IdToken],
             accessToken: all[SharedPrefKeys.AccessToken],
           ),
-        );
+        ) as Credentials;
       },
     );
   }
@@ -128,12 +130,13 @@ class PrefsStore {
           prefs.getString(keyMap[SharedPrefKeys.CharacterId]),
     };
     var store = PrefsStore(
+      // TODO handle multiple types
       credentials: GoogleCredentials.fromAuthCredential(
         GoogleAuthCredential(
           idToken: _map[SharedPrefKeys.IdToken],
           accessToken: _map[SharedPrefKeys.AccessToken],
         ),
-      ),
+      ) as Credentials,
       user: UserDetails(
         id: _map[SharedPrefKeys.UserId],
         email: _map[SharedPrefKeys.UserEmail],
@@ -148,11 +151,7 @@ class PrefsStore {
     dwStore.dispatch(SetPrefs(store));
     if (store.credentials.isNotEmpty) {
       try {
-        var user = await signInFlow(
-          store.credentials,
-          silent: true,
-          interactiveOnFailSilent: false,
-        );
+        var user = await performSignIn(store.credentials, interactive: false);
         if (user == null) {
           throw SignInError('no_silent_login');
         }
