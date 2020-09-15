@@ -17,32 +17,43 @@ abstract class Credentials<T extends AuthCredential> {
   bool get isEmpty;
   bool get isNotEmpty => !isEmpty;
 
-  Future<Credentials<AuthCredential>> platformSignIn({
-    @required bool interactive,
-  });
-
   Future<FirebaseUser> signIn({
     @required bool interactive,
   }) async {
     FirebaseUser fbUser;
+
     if (isNotEmpty) {
       fbUser = await firebaseUser;
     }
 
     if (fbUser == null) {
-      var cred = await platformSignIn(interactive: interactive);
+      Credentials<AuthCredential> cred;
+
+      try {
+        cred = await generateCredentials(interactive: interactive);
+      } catch (e) {
+        logger.e(e);
+        rethrow;
+      }
+
       if (cred == null || cred.isEmpty) {
         throw SignInError('credentials_empty');
       }
+
       fbUser = await cred.firebaseUser;
+
       if (fbUser == null) {
-        throw SignInError('credentials_error');
+        throw SignInError('no_fb_user');
       }
 
       return fbUser;
     }
 
     return fbUser;
+  }
+
+  Future<void> signOut() async {
+    return auth.signOut();
   }
 
   Future<FirebaseUser> get firebaseUser async {
@@ -62,7 +73,9 @@ abstract class Credentials<T extends AuthCredential> {
     }
   }
 
-  Future<void> signOut();
+  Future<Credentials<AuthCredential>> generateCredentials({
+    @required bool interactive,
+  });
 
   Map<String, String> serialize() => data;
 }
