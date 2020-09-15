@@ -9,7 +9,7 @@ abstract class Credentials<T extends AuthCredential> {
   Credentials({
     this.providerCredentials,
     this.data,
-  });
+  }) : assert(data != null);
 
   T providerCredentials;
   Map<String, String> data;
