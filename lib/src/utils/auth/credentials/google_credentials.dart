@@ -13,8 +13,8 @@ class GoogleCredentials extends Credentials<GoogleAuthCredential> {
     Map<String, String> data,
     GoogleAuthCredential providerCredentials,
   }) : super(
-          data: data,
-          providerCredentials: providerCredentials,
+          data: data ?? {},
+          providerCredentials: providerCredentials ?? GoogleAuthCredential(),
         );
 
   String get idToken => data['idToken'];
@@ -38,7 +38,7 @@ class GoogleCredentials extends Credentials<GoogleAuthCredential> {
     @required bool interactive,
   }) async {
     try {
-      if (data?.isNotEmpty == true) {
+      if (isNotEmpty) {
         return GoogleCredentials.fromAuthCredential(
           GoogleAuthProvider.getCredential(
             idToken: data['idToken'],
@@ -95,7 +95,5 @@ class GoogleCredentials extends Credentials<GoogleAuthCredential> {
   }
 
   @override
-  bool get isEmpty =>
-      data['accessToken']?.isNotEmpty == true &&
-      data['idToken']?.isNotEmpty == true;
+  bool get isEmpty => data['accessToken'] == null || data['idToken'] == null;
 }

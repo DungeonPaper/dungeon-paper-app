@@ -8,9 +8,10 @@ import 'package:dungeon_paper/src/utils/auth/credentials/auth_credentials.dart';
 import 'package:dungeon_paper/src/utils/auth/credentials/email_credentials.dart';
 import 'package:dungeon_paper/src/utils/auth/credentials/google_credentials.dart';
 import 'package:dungeon_paper/src/utils/logger.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
-class LoginButton<T> extends StatelessWidget {
+class LoginButton<T extends Credentials> extends StatelessWidget {
   final void Function() onUserChange;
 
   LoginButton({Key key, this.onUserChange}) : super(key: key);
@@ -47,6 +48,8 @@ class LoginButton<T> extends StatelessWidget {
           case EmailCredentials:
             creds = EmailCredentials();
             break;
+          default:
+            throw AuthException('no_method', 'No sign in method provided.');
         }
 
         await signInWithCredentials(creds);
@@ -54,9 +57,8 @@ class LoginButton<T> extends StatelessWidget {
         if (onUserChange != null) {
           onUserChange();
         }
-      } on SignInError catch (e) {
-        logger.d('NORMAL SIGN IN ERROR:');
-        logger.e(e);
+      } on SignInError catch (err, stack) {
+        logger.e('Normal sign in error:', err, stack);
         dwStore.dispatch(NoLogin());
         Scaffold.of(context, nullOk: true).showSnackBar(
           SnackBar(
@@ -64,9 +66,8 @@ class LoginButton<T> extends StatelessWidget {
             duration: Duration(seconds: 6),
           ),
         );
-      } catch (e) {
-        logger.d('IRREGULAR SIGN IN ERROR:');
-        logger.e(e);
+      } catch (err, stack) {
+        logger.e('Irregular sign in error:', err, stack);
         dwStore.dispatch(NoLogin());
         try {
           Scaffold.of(context, nullOk: true).showSnackBar(

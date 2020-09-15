@@ -10,7 +10,7 @@ class EmailCredentials extends Credentials<EmailAuthCredential> {
     Map<String, String> data,
     EmailAuthCredential providerCredentials,
   }) : super(
-          data: data,
+          data: data ?? {},
           providerCredentials: providerCredentials,
         );
 
