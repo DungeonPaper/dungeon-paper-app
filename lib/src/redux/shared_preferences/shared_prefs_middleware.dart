@@ -22,7 +22,7 @@ void sharedPrefsMiddleware(Store<DWStore> store, action, NextDispatcher next) {
     });
   }
 
-  if (action is CredentialsOld_) {
+  if (action is Credentials) {
     withPrefs((prefs) {
       for (var el in action.serialize().entries) {
         prefs.setString(el.key, el.value);

@@ -34,29 +34,42 @@ class GoogleCredentials extends Credentials<GoogleAuthCredential> {
       );
 
   @override
-  Future<Credentials<AuthCredential>> platformSignIn({
+  Future<Credentials<AuthCredential>> generateCredentials({
     @required bool interactive,
   }) async {
     try {
+      if (data?.isNotEmpty == true) {
+        return GoogleCredentials.fromAuthCredential(
+          GoogleAuthProvider.getCredential(
+            idToken: data['idToken'],
+            accessToken: data['accessToken'],
+          ),
+        );
+      }
+
       var gInstance = await _googleSignIn;
-      GoogleSignInAccount googleUser;
+      GoogleSignInAccount gSignInAccount;
       if (!interactive) {
         try {
-          googleUser = await gInstance.signInSilently();
+          gSignInAccount = await gInstance.signInSilently();
         } catch (e) {
           logger.e(e);
         }
       }
 
-      if (googleUser == null && interactive) {
-        googleUser = await gInstance.signIn();
+      if (gSignInAccount == null && interactive) {
+        try {
+          gSignInAccount = await gInstance.signIn();
+        } catch (e) {
+          throw SignInError('google_sign_in_error');
+        }
       }
 
-      if (googleUser == null) {
-        throw SignInError('google_sign_in_error');
+      if (gSignInAccount == null) {
+        throw SignInError('user_cancel');
       }
 
-      var gAuth = await googleUser.authentication;
+      var gAuth = await gSignInAccount.authentication;
 
       return GoogleCredentials.fromAuthCredential(
         GoogleAuthProvider.getCredential(
@@ -85,17 +98,4 @@ class GoogleCredentials extends Credentials<GoogleAuthCredential> {
   bool get isEmpty =>
       data['accessToken']?.isNotEmpty == true &&
       data['idToken']?.isNotEmpty == true;
-
-  @override
-  Future<void> signOut() {
-    // TODO: implement signOut
-    throw UnimplementedError();
-  }
-
-  // @override
-  // Future<void> signOut({
-  //   @required bool attemptSilent,
-  //   @required bool interactiveOnFailSilent,
-  // }) =>
-  //     signOutWithGoogle();
 }

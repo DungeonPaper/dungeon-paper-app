@@ -2,8 +2,11 @@ import 'package:dungeon_paper/db/models/user.dart';
 import 'package:dungeon_paper/src/redux/connectors.dart';
 import 'package:dungeon_paper/src/redux/stores.dart';
 import 'package:dungeon_paper/src/redux/users/user_store.dart';
-import 'package:dungeon_paper/src/utils/auth/auth.dart';
-import 'package:dungeon_paper/src/utils/credentials.dart';
+import 'package:dungeon_paper/src/utils/auth/auth_common.dart';
+import 'package:dungeon_paper/src/utils/auth/auth_flow.dart';
+import 'package:dungeon_paper/src/utils/auth/credentials/auth_credentials.dart';
+import 'package:dungeon_paper/src/utils/auth/credentials/email_credentials.dart';
+import 'package:dungeon_paper/src/utils/auth/credentials/google_credentials.dart';
 import 'package:dungeon_paper/src/utils/logger.dart';
 import 'package:flutter/material.dart';
 
@@ -36,7 +39,7 @@ class LoginButton<T> extends StatelessWidget {
   Function() _handleSignIn(BuildContext context) {
     return () async {
       try {
-        CredentialsOld_ creds;
+        Credentials creds;
         switch (T) {
           case GoogleCredentials:
             creds = GoogleCredentials();
@@ -46,20 +49,14 @@ class LoginButton<T> extends StatelessWidget {
             break;
         }
 
-        var user = await signInFlow(creds);
+        await signInWithCredentials(creds);
 
-        if (user == null) {
-          throw SignInError('user_canceled');
-        }
         if (onUserChange != null) {
           onUserChange();
         }
       } on SignInError catch (e) {
-        // if (e != 'user_canceled') {
-        //   throw (e);
-        // }
         logger.d('NORMAL SIGN IN ERROR:');
-        logger.d(e.toString());
+        logger.e(e);
         dwStore.dispatch(NoLogin());
         Scaffold.of(context, nullOk: true).showSnackBar(
           SnackBar(

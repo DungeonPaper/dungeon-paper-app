@@ -1,18 +1,18 @@
 import 'package:dungeon_paper/db/listeners.dart';
 import 'package:dungeon_paper/db/models/user.dart';
+import 'package:dungeon_paper/src/redux/characters/characters_store.dart';
 import 'package:dungeon_paper/src/redux/stores.dart';
 import 'package:dungeon_paper/src/redux/users/user_store.dart';
 import 'package:dungeon_paper/src/utils/analytics.dart';
 import 'package:dungeon_paper/src/utils/api.dart';
 import 'package:dungeon_paper/src/utils/auth/credentials/auth_credentials.dart';
-import 'package:dungeon_paper/src/utils/credentials.dart';
 import 'package:dungeon_paper/src/utils/logger.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
 import 'package:pedantic/pedantic.dart';
 import 'auth_common.dart';
 
-Future<FirebaseUser> performSignIn<T extends AuthCredential>(
+Future<FirebaseUser> signInWithCredentials<T extends AuthCredential>(
   Credentials<T> creds, {
   bool interactive = true,
 }) async {
@@ -32,6 +32,18 @@ Future<FirebaseUser> performSignIn<T extends AuthCredential>(
   );
 
   return fbUser;
+}
+
+Future<void> signOutWithCredentials<T extends AuthCredential>(
+    Credentials<T> creds) async {
+  dwStore.dispatch(Logout());
+  dwStore.dispatch(ClearCharacters());
+  return creds.signOut();
+}
+
+Future<void> signOutAll() {
+  var creds = dwStore.state.prefs.credentials;
+  return signOutWithCredentials(creds);
 }
 
 Future<FirebaseUser> getFirebaseUser(AuthCredential creds) async {

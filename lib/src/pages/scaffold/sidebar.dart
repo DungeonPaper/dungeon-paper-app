@@ -12,7 +12,7 @@ import 'package:dungeon_paper/src/redux/shared_preferences/prefs_store.dart';
 import 'package:dungeon_paper/src/redux/stores.dart';
 import 'package:dungeon_paper/src/scaffolds/manage_characters_view/manage_characters_view.dart';
 import 'package:dungeon_paper/src/utils/analytics.dart';
-import 'package:dungeon_paper/src/utils/auth/auth.dart';
+import 'package:dungeon_paper/src/utils/auth/auth_flow.dart';
 import 'package:dungeon_paper/src/utils/logger.dart';
 import 'package:flutter/material.dart';
 
@@ -128,7 +128,7 @@ class _SidebarState extends State<Sidebar> {
                 title: Text('Log out'),
                 onTap: () {
                   Navigator.pop(context);
-                  signOutFlow();
+                  signOutAll();
                 },
               ),
             ],
