@@ -38,6 +38,25 @@ Future<UserLogin> signInWithCredentials<T extends AuthCredential>(
   );
 }
 
+Future<UserLogin> signInWithFbUser(
+    FirebaseUser fbUser, Credentials creds) async {
+  final dbUser = await getDatabaseUser(
+    fbUser,
+    signInMethod: creds.providerCredentials.providerId,
+  );
+
+  dispatchFinalDataToStore(
+    credentials: creds,
+    firebaseUser: fbUser,
+    user: dbUser,
+  );
+
+  return UserLogin(
+    firebaseUser: fbUser,
+    user: dbUser,
+  );
+}
+
 Future<void> signOutWithCredentials<T extends AuthCredential>(
     Credentials<T> creds) async {
   dwStore.dispatch(Logout());

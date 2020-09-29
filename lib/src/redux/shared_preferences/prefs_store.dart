@@ -8,7 +8,6 @@ import 'package:dungeon_paper/src/utils/auth/credentials/auth_credentials.dart';
 import 'package:dungeon_paper/src/utils/logger.dart';
 import 'package:flutter/foundation.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:firebase_auth_platform_interface/firebase_auth_platform_interface.dart';
 import 'package:redux/redux.dart';
 import 'package:dungeon_paper/src/utils/class_extensions/map_extensions.dart';
 
@@ -60,7 +59,7 @@ class PrefsStore {
   }
 
   void _writeValuesFromMap(Map<SharedPrefKeys, String> map) {
-    _writeGoogleCredsFromMap(map);
+    _writeUserCredsFromMap(map);
     _writeUserFromMap(map);
   }
 
@@ -83,20 +82,17 @@ class PrefsStore {
           Map<SharedPrefKeys, String> existingKeys) =>
       checkKeys.every((key) => existingKeys.containsKey(key));
 
-  void _writeGoogleCredsFromMap(Map<SharedPrefKeys, String> map) {
+  void _writeUserCredsFromMap(Map<SharedPrefKeys, String> map) {
     _prefLoader(
       map: map,
       checkList: [
+        SharedPrefKeys.SignInProvider,
         SharedPrefKeys.IdToken,
         SharedPrefKeys.AccessToken,
       ],
       onListFull: (all) {
-        credentials = GoogleCredentials.fromAuthCredential(
-          GoogleAuthCredential(
-            idToken: all[SharedPrefKeys.IdToken],
-            accessToken: all[SharedPrefKeys.AccessToken],
-          ),
-        );
+        credentials = Credentials.fromStorage(
+            all[SharedPrefKeys.SignInProvider], all.cast<String, String>());
       },
     );
   }

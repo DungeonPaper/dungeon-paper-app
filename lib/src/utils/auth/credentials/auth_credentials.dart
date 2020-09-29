@@ -1,4 +1,5 @@
 import 'package:dungeon_paper/db/models/user.dart';
+import 'package:dungeon_paper/src/utils/auth/auth_flow.dart';
 import 'package:dungeon_paper/src/utils/logger.dart';
 import 'package:dungeon_paper/src/utils/utils.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -6,7 +7,6 @@ import 'package:flutter/foundation.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 
 import '../auth_common.dart';
-import 'package:firebase_auth_platform_interface/firebase_auth_platform_interface.dart';
 
 part 'google_credentials.dart';
 part 'email_credentials.dart';
@@ -25,7 +25,9 @@ abstract class Credentials<T extends AuthCredential> {
   Credentials({
     this.providerCredentials,
     @required this.data,
-  }) : assert(data != null);
+  })  : assert(SignInMethod.values
+            .every((m) => signInMethodKeys.values.contains(m))),
+        assert(data != null);
 
   factory Credentials.fromStorage(
       String providerName, Map<String, String> data) {
