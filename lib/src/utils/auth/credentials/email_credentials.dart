@@ -44,7 +44,18 @@ class EmailCredentials extends Credentials<EmailAuthCredential> {
     }
   }
 
+  Future<UserLogin> signUp() async {
+    var res = await auth.createUserWithEmailAndPassword(
+      email: email,
+      password: password,
+    );
+    return signInWithFbUser(res.user, this);
+  }
+
   @override
   bool get isEmpty =>
       data['email']?.isNotEmpty != true && data['password']?.isNotEmpty != true;
+
+  @override
+  Map<String, String> serialize() => {...data}..remove('password');
 }

@@ -114,8 +114,12 @@ abstract class FirebaseEntity {
     if (ref == null) {
       return _noRef();
     }
-    logger.d('Creating $this');
-    logger.d(json);
+    try {
+      logger.d('Creating $this');
+      logger.d(json);
+    } catch (e, stack) {
+      logger.e('Logging error', e, stack);
+    }
     await ref.setData(json);
     unsetDirty(json);
   }
