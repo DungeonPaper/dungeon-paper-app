@@ -2,8 +2,7 @@ import 'dart:math';
 import 'package:dungeon_paper/src/atoms/version_number.dart';
 import 'package:dungeon_paper/src/flutter_utils/loading_container.dart';
 import 'package:dungeon_paper/src/pages/about_view/about_view.dart';
-import 'package:dungeon_paper/src/pages/scaffold/login_button.dart';
-import 'package:dungeon_paper/src/utils/auth/credentials/google_credentials.dart';
+import 'package:dungeon_paper/src/pages/auth/login_view.dart';
 import 'package:flutter/material.dart';
 
 class WelcomeView extends StatelessWidget {
@@ -42,9 +41,11 @@ class WelcomeView extends StatelessWidget {
                     style: TextStyle(fontSize: 24)),
                 VersionNumber.text(prefix: 'Version'),
                 SizedBox(height: 24),
-                LoginButton<GoogleCredentials>(onUserChange: () {
-                  pageController.jumpToPage(0);
-                }),
+                LoginView(
+                    // onUserChange: () {
+                    //   pageController.jumpToPage(0);
+                    // },
+                    ),
                 SizedBox(height: 20),
                 Text('Trouble signing in?'),
                 RaisedButton(

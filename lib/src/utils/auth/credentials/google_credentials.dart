@@ -1,12 +1,4 @@
-import 'package:dungeon_paper/src/utils/logger.dart';
-import 'package:dungeon_paper/src/utils/utils.dart';
-import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/foundation.dart';
-import 'package:google_sign_in/google_sign_in.dart';
-
-import '../auth_common.dart';
-import 'auth_credentials.dart';
-import 'package:firebase_auth_platform_interface/firebase_auth_platform_interface.dart';
+part of 'auth_credentials.dart';
 
 class GoogleCredentials extends Credentials<GoogleAuthCredential> {
   GoogleCredentials({
@@ -14,7 +6,11 @@ class GoogleCredentials extends Credentials<GoogleAuthCredential> {
     GoogleAuthCredential providerCredentials,
   }) : super(
           data: data ?? {},
-          providerCredentials: providerCredentials ?? GoogleAuthCredential(),
+          providerCredentials: providerCredentials ??
+              GoogleAuthCredential(
+                idToken: null,
+                accessToken: null,
+              ),
         );
 
   String get idToken => data['idToken'];

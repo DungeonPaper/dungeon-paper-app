@@ -57,12 +57,16 @@ String enumName(Object o) {
   return text.substring(text.indexOf('.') + 1);
 }
 
-E Function(dynamic k) stringToEnum<E>(Map<String, E> enumValue) {
+E Function(dynamic k) stringToEnumPredicate<E>(Map<String, E> map) {
   return (k) => k is E
       ? k
-      : k is String && enumValue.containsKey(k)
-          ? enumValue[k]
+      : k is String && map.containsKey(k)
+          ? map[k]
           : throw ('No corresponding enum value');
+}
+
+E stringToEnum<E>(dynamic key, Map<String, E> map) {
+  return stringToEnumPredicate(map)(key);
 }
 
 typedef ReturnPredicate<T> = bool Function(T ret) Function(T par);
