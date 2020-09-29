@@ -1,15 +1,60 @@
 import 'package:dungeon_paper/db/models/user.dart';
 import 'package:dungeon_paper/src/utils/logger.dart';
+import 'package:dungeon_paper/src/utils/utils.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 
 import '../auth_common.dart';
+import 'package:firebase_auth_platform_interface/firebase_auth_platform_interface.dart';
+
+part 'google_credentials.dart';
+part 'email_credentials.dart';
+
+enum SignInMethod {
+  Google,
+  Email,
+}
+
+const signInMethodKeys = {
+  'google': SignInMethod.Google,
+  'email': SignInMethod.Email,
+};
 
 abstract class Credentials<T extends AuthCredential> {
   Credentials({
     this.providerCredentials,
-    this.data,
+    @required this.data,
   }) : assert(data != null);
+
+  factory Credentials.fromStorage(
+      String providerName, Map<String, String> data) {
+    SignInMethod provider;
+    try {
+      provider = stringToEnum(providerName, signInMethodKeys);
+    } catch (_) {
+      provider = null;
+    }
+    switch (provider) {
+      case SignInMethod.Email:
+        // assert(data['email'] != null && data['password'] != null);
+        return EmailCredentials.fromAuthCredential(
+          EmailAuthCredential(
+            email: data['email'],
+            password: data['password'],
+          ),
+        ) as Credentials<T>;
+      case SignInMethod.Google:
+      default:
+        // assert(data['idToken'] != null && data['accessToken'] != null);
+        return GoogleCredentials.fromAuthCredential(
+          GoogleAuthCredential(
+            idToken: data['idToken'],
+            accessToken: data['accessToken'],
+          ),
+        ) as Credentials<T>;
+    }
+  }
 
   T providerCredentials;
   Map<String, String> data;

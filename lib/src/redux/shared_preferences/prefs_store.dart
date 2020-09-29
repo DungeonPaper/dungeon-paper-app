@@ -5,12 +5,12 @@ import 'package:dungeon_paper/src/redux/users/user_store.dart';
 import 'package:dungeon_paper/src/utils/auth/auth_common.dart';
 import 'package:dungeon_paper/src/utils/auth/auth_flow.dart';
 import 'package:dungeon_paper/src/utils/auth/credentials/auth_credentials.dart';
-import 'package:dungeon_paper/src/utils/auth/credentials/google_credentials.dart';
 import 'package:dungeon_paper/src/utils/logger.dart';
 import 'package:flutter/foundation.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:firebase_auth_platform_interface/firebase_auth_platform_interface.dart';
 import 'package:redux/redux.dart';
+import 'package:dungeon_paper/src/utils/class_extensions/map_extensions.dart';
 
 part 'shared_prefs_middleware.dart';
 part 'pref_actions.dart';
@@ -19,9 +19,10 @@ enum SharedPrefKeys {
   UserEmail,
   UserId,
   CharacterId,
-  AccessToken,
+  LastOpenedVersion,
+  SignInProvider,
   IdToken,
-  LastOpenedVersion
+  AccessToken,
 }
 
 Map<SharedPrefKeys, String> keyMap = {
@@ -30,6 +31,7 @@ Map<SharedPrefKeys, String> keyMap = {
   SharedPrefKeys.CharacterId: 'characterId',
   SharedPrefKeys.UserId: 'userId',
   SharedPrefKeys.UserEmail: 'userEmail',
+  SharedPrefKeys.SignInProvider: 'signInProvider',
 };
 
 class UserDetails {
@@ -120,6 +122,8 @@ class PrefsStore {
   static Future<void> loadAll() async {
     var prefs = await SharedPreferences.getInstance();
     var _map = <SharedPrefKeys, String>{
+      SharedPrefKeys.SignInProvider:
+          prefs.getString(keyMap[SharedPrefKeys.SignInProvider]),
       SharedPrefKeys.IdToken: prefs.getString(keyMap[SharedPrefKeys.IdToken]),
       SharedPrefKeys.AccessToken:
           prefs.getString(keyMap[SharedPrefKeys.AccessToken]),
@@ -129,13 +133,20 @@ class PrefsStore {
       SharedPrefKeys.CharacterId:
           prefs.getString(keyMap[SharedPrefKeys.CharacterId]),
     };
+    if (_map[SharedPrefKeys.AccessToken] != null &&
+        _map[SharedPrefKeys.IdToken] != null &&
+        _map[SharedPrefKeys.SignInProvider] == null) {
+      _map[SharedPrefKeys.SignInProvider] =
+          signInMethodKeys.inverse[SignInMethod.Google];
+      await prefs.setString(
+        keyMap[SharedPrefKeys.SignInProvider],
+        signInMethodKeys.inverse[SignInMethod.Google],
+      );
+    }
     var store = PrefsStore(
-      // TODO handle multiple types
-      credentials: GoogleCredentials.fromAuthCredential(
-        GoogleAuthCredential(
-          idToken: _map[SharedPrefKeys.IdToken],
-          accessToken: _map[SharedPrefKeys.AccessToken],
-        ),
+      credentials: Credentials.fromStorage(
+        _map[SharedPrefKeys.SignInProvider],
+        _map.map((k, v) => MapEntry(keyMap[k], v)),
       ),
       user: UserDetails(
         id: _map[SharedPrefKeys.UserId],
@@ -143,10 +154,8 @@ class PrefsStore {
         lastCharacterId: _map[SharedPrefKeys.CharacterId],
       ),
       map: _map,
-      settings: PrefsSettings.loadFromPrefs(prefs),
+      settings: PrefsSettings.loadFromPrefs(prefs)..applyAllSettings(),
     );
-
-    store.settings.applyAllSettings();
 
     dwStore.dispatch(SetPrefs(store));
     if (store.credentials.isNotEmpty) {

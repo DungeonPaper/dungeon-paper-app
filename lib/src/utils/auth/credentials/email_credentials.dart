@@ -1,9 +1,4 @@
-import 'package:dungeon_paper/src/utils/auth/auth_common.dart';
-import 'package:dungeon_paper/src/utils/logger.dart';
-import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/foundation.dart';
-import 'auth_credentials.dart';
-import 'package:firebase_auth_platform_interface/firebase_auth_platform_interface.dart';
+part of 'auth_credentials.dart';
 
 class EmailCredentials extends Credentials<EmailAuthCredential> {
   EmailCredentials({
@@ -14,8 +9,8 @@ class EmailCredentials extends Credentials<EmailAuthCredential> {
           providerCredentials: providerCredentials,
         );
 
-  String get idToken => data['idToken'];
-  String get accessToken => data['accessToken'];
+  String get email => data['email'];
+  String get password => data['password'];
 
   factory EmailCredentials.fromAuthCredential(
     EmailAuthCredential credential,
@@ -39,8 +34,8 @@ class EmailCredentials extends Credentials<EmailAuthCredential> {
 
       return EmailCredentials.fromAuthCredential(
         EmailAuthProvider.getCredential(
-          email: data['email'],
-          password: data['password'],
+          email: email,
+          password: password,
         ),
       );
     } catch (e) {
@@ -51,5 +46,5 @@ class EmailCredentials extends Credentials<EmailAuthCredential> {
 
   @override
   bool get isEmpty =>
-      data['email']?.isNotEmpty == true && data['password']?.isNotEmpty == true;
+      data['email']?.isNotEmpty != true && data['password']?.isNotEmpty != true;
 }

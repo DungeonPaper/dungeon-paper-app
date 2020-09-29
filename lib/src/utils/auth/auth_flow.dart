@@ -12,10 +12,11 @@ import 'package:flutter/foundation.dart';
 import 'package:pedantic/pedantic.dart';
 import 'auth_common.dart';
 
-Future<FirebaseUser> signInWithCredentials<T extends AuthCredential>(
+Future<UserLogin> signInWithCredentials<T extends AuthCredential>(
   Credentials<T> creds, {
   bool interactive = true,
 }) async {
+  assert(creds != null);
   dwStore.dispatch(RequestLogin());
 
   var fbUser = await creds.signIn(interactive: interactive);
@@ -31,7 +32,10 @@ Future<FirebaseUser> signInWithCredentials<T extends AuthCredential>(
     user: dbUser,
   );
 
-  return fbUser;
+  return UserLogin(
+    firebaseUser: fbUser,
+    user: dbUser,
+  );
 }
 
 Future<void> signOutWithCredentials<T extends AuthCredential>(
