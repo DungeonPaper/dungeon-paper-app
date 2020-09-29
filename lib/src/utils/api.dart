@@ -10,6 +10,9 @@ Future<User> getDatabaseUser(
   FirebaseUser fbUser, {
   @required String signInMethod,
 }) async {
+  if (fbUser == null) {
+    return null;
+  }
   var user = User(
     ref: firestore.collection('user_data').document(fbUser.email),
     autoLoad: false,

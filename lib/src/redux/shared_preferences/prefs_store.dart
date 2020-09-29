@@ -19,7 +19,7 @@ enum SharedPrefKeys {
   LastOpenedVersion,
 }
 
-Map<SharedPrefKeys, String> keyMap = {
+Map<SharedPrefKeys, String> sharedPrefsKeyMap = {
   SharedPrefKeys.CharacterId: 'characterId',
   SharedPrefKeys.UserId: 'userId',
   SharedPrefKeys.UserEmail: 'userEmail',
@@ -92,11 +92,12 @@ class PrefsStore {
   static Future<void> loadAll() async {
     var prefs = await SharedPreferences.getInstance();
     var _map = <SharedPrefKeys, String>{
-      SharedPrefKeys.UserId: prefs.getString(keyMap[SharedPrefKeys.UserId]),
+      SharedPrefKeys.UserId:
+          prefs.getString(sharedPrefsKeyMap[SharedPrefKeys.UserId]),
       SharedPrefKeys.UserEmail:
-          prefs.getString(keyMap[SharedPrefKeys.UserEmail]),
+          prefs.getString(sharedPrefsKeyMap[SharedPrefKeys.UserEmail]),
       SharedPrefKeys.CharacterId:
-          prefs.getString(keyMap[SharedPrefKeys.CharacterId]),
+          prefs.getString(sharedPrefsKeyMap[SharedPrefKeys.CharacterId]),
     };
     var store = PrefsStore(
       user: UserDetails(
@@ -109,6 +110,7 @@ class PrefsStore {
     );
 
     dwStore.dispatch(SetPrefs(store));
+    dwStore.dispatch(RequestLogin());
     try {
       var user = await signInAutomatically();
       if (user == null) {
@@ -118,6 +120,7 @@ class PrefsStore {
       dwStore.dispatch(NoLogin());
       logger.d('Silent login failed');
     } catch (e) {
+      dwStore.dispatch(NoLogin());
       logger.d('Silent login unexpected error:');
       rethrow;
     }
@@ -143,7 +146,6 @@ PrefsStore prefsReducer(PrefsStore state, action) {
       email: action.user.email,
       lastCharacterId: state.user.lastCharacterId,
     );
-    // state.credentials = action.credentials;
   }
 
   if (action is Logout) {
