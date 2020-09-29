@@ -1,5 +1,4 @@
 import 'package:dungeon_paper/db/models/user.dart';
-import 'package:dungeon_paper/src/utils/auth/credentials/auth_credentials.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:meta/meta.dart';
 

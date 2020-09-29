@@ -1,33 +1,86 @@
 import 'package:dungeon_paper/db/listeners.dart';
 import 'package:dungeon_paper/db/models/user.dart';
-import 'package:dungeon_paper/src/redux/characters/characters_store.dart';
 import 'package:dungeon_paper/src/redux/stores.dart';
 import 'package:dungeon_paper/src/redux/users/user_store.dart';
 import 'package:dungeon_paper/src/utils/analytics.dart';
 import 'package:dungeon_paper/src/utils/api.dart';
-import 'package:dungeon_paper/src/utils/auth/credentials/auth_credentials.dart';
 import 'package:dungeon_paper/src/utils/logger.dart';
+import 'package:dungeon_paper/src/utils/utils.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 import 'package:pedantic/pedantic.dart';
 import 'auth_common.dart';
 
-Future<UserLogin> signInWithCredentials<T extends AuthCredential>(
-  Credentials<T> creds, {
-  bool interactive = true,
-}) async {
+Future<UserLogin> signInWithCredentials(AuthCredential creds) async {
   assert(creds != null);
   dwStore.dispatch(RequestLogin());
 
-  var fbUser = await creds.signIn(interactive: interactive);
+  var res = await auth.signInWithCredential(creds);
+  return signInWithFbUser(res?.user);
+}
 
+Future<UserLogin> signInWithEmailAndPassword({
+  @required String email,
+  @required String password,
+}) async {
+  dwStore.dispatch(RequestLogin());
+
+  var res = await auth.signInWithEmailAndPassword(
+    email: email,
+    password: password,
+  );
+  return signInWithFbUser(res?.user);
+}
+
+Future<UserLogin> createUserWithEmailAndPassword({
+  @required String email,
+  @required String password,
+}) async {
+  dwStore.dispatch(RequestLogin());
+
+  var res = await auth.signInWithEmailAndPassword(
+    email: email,
+    password: password,
+  );
+  return signInWithFbUser(res?.user);
+}
+
+GoogleSignIn _gSignIn;
+Future<GoogleSignIn> _getGSignIn() async {
+  if (_gSignIn != null) {
+    return _gSignIn;
+  }
+  var secrets = await loadSecrets();
+  return _gSignIn = kIsWeb
+      ? GoogleSignIn(clientId: secrets.GOOGLE_CLIENT_ID)
+      : GoogleSignIn();
+}
+
+Future<UserLogin> signInWithGoogle({@required bool interactive}) async {
+  dwStore.dispatch(RequestLogin());
+  var inst = await _getGSignIn();
+  var acct = await (interactive ? inst.signIn() : inst.signInSilently());
+  var authRes = await acct.authentication;
+  var cred = GoogleAuthProvider.getCredential(
+    accessToken: authRes.accessToken,
+    idToken: authRes.idToken,
+  );
+  var res = await auth.signInWithCredential(cred);
+  return signInWithFbUser(res?.user);
+}
+
+Future<UserLogin> signInAutomatically() async {
+  return signInWithFbUser(await auth.currentUser());
+}
+
+Future<UserLogin> signInWithFbUser(FirebaseUser fbUser) async {
   final dbUser = await getDatabaseUser(
     fbUser,
-    signInMethod: creds.providerCredentials.providerId,
+    signInMethod: fbUser.providerId,
   );
 
   dispatchFinalDataToStore(
-    credentials: creds,
     firebaseUser: fbUser,
     user: dbUser,
   );
@@ -36,50 +89,19 @@ Future<UserLogin> signInWithCredentials<T extends AuthCredential>(
     firebaseUser: fbUser,
     user: dbUser,
   );
-}
-
-Future<UserLogin> signInWithFbUser(
-    FirebaseUser fbUser, Credentials creds) async {
-  final dbUser = await getDatabaseUser(
-    fbUser,
-    signInMethod: creds.providerCredentials.providerId,
-  );
-
-  dispatchFinalDataToStore(
-    credentials: creds,
-    firebaseUser: fbUser,
-    user: dbUser,
-  );
-
-  return UserLogin(
-    firebaseUser: fbUser,
-    user: dbUser,
-  );
-}
-
-Future<void> signOutWithCredentials<T extends AuthCredential>(
-    Credentials<T> creds) async {
-  dwStore.dispatch(Logout());
-  dwStore.dispatch(ClearCharacters());
-  return creds.signOut();
 }
 
 Future<void> signOutAll() {
-  var creds = dwStore.state.prefs.credentials;
-  return signOutWithCredentials(creds);
+  dwStore.dispatch(Logout());
+  _gSignIn?.disconnect();
+  return auth.signOut();
 }
 
-Future<FirebaseUser> getFirebaseUser(AuthCredential creds) async {
+Future<FirebaseUser> getPersistedFirebaseUser() async {
   try {
     var persistedUser = await auth.currentUser();
 
-    if (persistedUser != null) {
-      return persistedUser;
-    }
-
-    var result = await auth.signInWithCredential(creds);
-    var user = result.user;
-    return user;
+    return persistedUser;
   } catch (e) {
     logger.e(e);
     return null;
@@ -87,23 +109,21 @@ Future<FirebaseUser> getFirebaseUser(AuthCredential creds) async {
 }
 
 void dispatchFinalDataToStore({
-  @required Credentials credentials,
   @required FirebaseUser firebaseUser,
   @required User user,
 }) async {
-  if ([firebaseUser, credentials, user].any((el) => el == null)) {
+  if ([firebaseUser, user].any((el) => el == null)) {
     dwStore.dispatch(NoLogin());
     return;
   }
 
   dwStore.dispatch(Login(
     user: user,
-    credentials: credentials,
     firebaseUser: firebaseUser,
   ));
 
   unawaited(analytics.logLogin(
-    loginMethod: credentials.providerCredentials.providerId,
+    loginMethod: firebaseUser.providerId,
   ));
   unawaited(analytics.setUserId(firebaseUser.uid));
   unawaited(analytics.setUserProperty(

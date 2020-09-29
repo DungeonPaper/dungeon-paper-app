@@ -305,14 +305,16 @@ class UserDrawerHeader extends StatelessWidget {
         UserAccountsDrawerHeader(
           accountEmail: Text(user.email),
           accountName: Text(user.displayName),
-          currentAccountPicture: Container(
-            decoration: BoxDecoration(
-              shape: BoxShape.circle,
-              image: DecorationImage(
-                image: NetworkImage(user.photoURL),
-              ),
-            ),
-          ),
+          currentAccountPicture: user.photoURL?.isNotEmpty == true
+              ? Container(
+                  decoration: BoxDecoration(
+                    shape: BoxShape.circle,
+                    image: DecorationImage(
+                      image: NetworkImage(user.photoURL),
+                    ),
+                  ),
+                )
+              : Container(),
           onDetailsPressed: onToggleUserMenu,
         ),
       ],

@@ -1,9 +1,8 @@
 import 'package:dungeon_paper/db/models/user.dart';
 import 'package:dungeon_paper/src/redux/connectors.dart';
-import 'package:dungeon_paper/src/utils/auth/credentials/auth_credentials.dart';
 import 'package:flutter/material.dart';
 
-class LoginButton<T extends Credentials> extends StatelessWidget {
+class LoginButton extends StatelessWidget {
   // final void Function(UserLogin login) onUserChange;
   final void Function() onPressed;
   final String label;

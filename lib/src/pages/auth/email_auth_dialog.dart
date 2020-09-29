@@ -1,13 +1,13 @@
 import 'package:dungeon_paper/src/dialogs/standard_dialog_controls.dart';
 import 'package:dungeon_paper/src/flutter_utils/input_validators.dart';
 import 'package:dungeon_paper/src/flutter_utils/widget_utils.dart';
-import 'package:dungeon_paper/src/utils/auth/auth_common.dart';
-import 'package:dungeon_paper/src/utils/auth/credentials/auth_credentials.dart';
+import 'package:dungeon_paper/src/utils/auth/auth_flow.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:email_validator/email_validator.dart';
 
 class EmailAuthDialog extends StatefulWidget {
-  final void Function(EmailCredentials) onLoggedIn;
+  final void Function(FirebaseUser) onLoggedIn;
   final bool signUpMode;
 
   const EmailAuthDialog({
@@ -141,20 +141,21 @@ class _EmailAuthDialogState extends State<EmailAuthDialog> {
   bool validatePassword(String password) =>
       PasswordValidator.validate(password);
 
-  EmailCredentials get credentials => EmailCredentials.fromAuthCredential(
-        EmailAuthCredential(
-          email: email,
-          password: password,
-        ),
-      );
-
-  void login() {
-    widget.onLoggedIn?.call(credentials);
+  void login() async {
+    var res = await signInWithEmailAndPassword(
+      email: email,
+      password: password,
+    );
+    widget.onLoggedIn?.call(res.firebaseUser);
   }
 
   void signUp() async {
     try {
-      await credentials.signUp();
+      var res = await createUserWithEmailAndPassword(
+        email: email,
+        password: password,
+      );
+      widget.onLoggedIn?.call(res.firebaseUser);
     } catch (e) {
       setState(() {
         error = e.message;

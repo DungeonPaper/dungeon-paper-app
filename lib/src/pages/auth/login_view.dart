@@ -6,8 +6,6 @@ import 'package:dungeon_paper/src/utils/auth/auth_flow.dart';
 import 'package:dungeon_paper/src/utils/logger.dart';
 import 'package:flutter/material.dart';
 
-import 'package:dungeon_paper/src/utils/auth/credentials/auth_credentials.dart';
-
 import 'login_button.dart';
 
 class LoginView extends StatelessWidget {
@@ -15,26 +13,26 @@ class LoginView extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        LoginButton<GoogleCredentials>(
+        LoginButton(
           label: 'Google sign in',
           color: Colors.white,
           icon: Icon(Icons.g_translate),
           onPressed: () => _signIn(
             context,
-            () => signInWithCredentials(GoogleCredentials()),
+            () => signInWithGoogle(interactive: true),
           ),
         ),
         SizedBox(height: 5),
-        LoginButton<EmailCredentials>(
+        LoginButton(
           label: 'Email sign in',
           color: Colors.orange[100],
           icon: Icon(Icons.email),
           onPressed: () => showDialog(
             context: context,
             builder: (context) => EmailAuthDialog(
-              onLoggedIn: (creds) => _signIn(
+              onLoggedIn: (user) => _signIn(
                 context,
-                () => signInWithCredentials(creds),
+                () => Navigator.pop(context),
               ),
             ),
           ),
@@ -43,8 +41,7 @@ class LoginView extends StatelessWidget {
     );
   }
 
-  void _signIn(
-      BuildContext context, Future<UserLogin> Function() doLogin) async {
+  void _signIn(BuildContext context, void Function() doLogin) async {
     try {
       await doLogin();
     } on SignInError catch (err, stack) {
