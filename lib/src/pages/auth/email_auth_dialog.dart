@@ -1,4 +1,3 @@
-import 'package:dungeon_paper/src/dialogs/standard_dialog_controls.dart';
 import 'package:dungeon_paper/src/flutter_utils/input_validators.dart';
 import 'package:dungeon_paper/src/flutter_utils/widget_utils.dart';
 import 'package:dungeon_paper/src/utils/auth/auth_flow.dart';
@@ -26,6 +25,8 @@ class _EmailAuthDialogState extends State<EmailAuthDialog> {
   bool obscured;
   bool rememberMe;
   String error;
+  String savedEmail;
+  bool loading;
 
   @override
   void initState() {
@@ -34,11 +35,16 @@ class _EmailAuthDialogState extends State<EmailAuthDialog> {
     controllers = WidgetUtils.textEditingControllerMap(
       map: {
         'email': EditingControllerConfig(
-            defaultValue: '', listener: () => setState(() {})),
+          defaultValue: '',
+          listener: () => setState(() {}),
+        ),
         'password': EditingControllerConfig(
-            defaultValue: '', listener: () => setState(() {})),
+          defaultValue: '',
+          listener: () => setState(() {}),
+        ),
       },
     );
+    loading = false;
     error = null;
     rememberMe = false;
     obscured = true;
@@ -104,28 +110,47 @@ class _EmailAuthDialogState extends State<EmailAuthDialog> {
                   Text(error, style: TextStyle(color: Colors.red)),
                   SizedBox(height: 20),
                 ],
-                Row(
-                  children: [
-                    Text(signUpMode
-                        ? 'Already have an account?'
-                        : 'Need to create an account?'),
-                    SizedBox(width: 10),
-                    RaisedButton(
-                      visualDensity: VisualDensity.compact,
-                      color: Theme.of(context).primaryColor,
-                      child: Text(signUpMode ? 'Sign In' : 'Sign Up'),
-                      onPressed: () => setState(() => signUpMode = !signUpMode),
-                    ),
-                  ],
+                Text(signUpMode
+                    ? 'Already have an account?'
+                    : 'Need to create an account?'),
+                SizedBox(width: 10),
+                RaisedButton(
+                  visualDensity: VisualDensity.comfortable,
+                  color: Theme.of(context).accentColor,
+                  child: Text(
+                    signUpMode ? 'Sign In' : 'Sign Up',
+                    textScaleFactor: 1.1,
+                  ),
+                  onPressed: () => setState(() => signUpMode = !signUpMode),
                 ),
-                StandardDialogControls(
-                  padding: EdgeInsets.only(top: 40),
-                  okText: Text(signUpMode ? 'Sign Up' : 'Sign In'),
-                  okDisabled: (email.isEmpty || !validateEmail(email)) ||
-                      (password.isEmpty ||
-                          signUpMode && !validatePassword(password)),
-                  onOK: signUpMode ? signUp : login,
-                )
+                SizedBox(height: 40),
+                Align(
+                  alignment: Alignment.centerRight,
+                  child: Container(
+                    height: 50,
+                    width: 120,
+                    child: RaisedButton(
+                      color: Theme.of(context).primaryColor,
+                      onPressed: loading || !isValid
+                          ? null
+                          : signUpMode ? signUp : login,
+                      child: loading
+                          ? Container(
+                              height: 20,
+                              width: 20,
+                              child: CircularProgressIndicator(
+                                valueColor:
+                                    AlwaysStoppedAnimation(Colors.white),
+                                value: null,
+                              ),
+                            )
+                          : Text(
+                              signUpMode ? 'Sign Up' : 'Sign In',
+                              textScaleFactor: 1.5,
+                            ),
+                    ),
+                  ),
+                ),
               ],
             ),
           ),
@@ -136,34 +161,81 @@ class _EmailAuthDialogState extends State<EmailAuthDialog> {
 
   String get password => controllers['password'].text;
   String get email => controllers['email'].text;
+  bool get isValid =>
+      email?.isNotEmpty == true &&
+      validateEmail(email) &&
+      (password?.isNotEmpty == true &&
+          (!signUpMode || validatePassword(password)));
 
   bool validateEmail(String email) => EmailValidator.validate(email);
   bool validatePassword(String password) =>
       PasswordValidator.validate(password);
 
   void login() async {
-    var res = await signInWithEmailAndPassword(
-      email: email,
-      password: password,
-    );
-    widget.onLoggedIn?.call(res.firebaseUser);
+    setState(() {
+      loading = true;
+      error = null;
+    });
+    try {
+      var res = await signInWithEmailAndPassword(
+        email: email,
+        password: password,
+      );
+      widget.onLoggedIn?.call(res?.firebaseUser);
+    } catch (e) {
+      setState(() {
+        loading = false;
+        error = errMessage(e);
+      });
+    }
   }
 
   void signUp() async {
+    setState(() {
+      loading = true;
+      error = null;
+    });
     try {
       var res = await createUserWithEmailAndPassword(
         email: email,
         password: password,
       );
-      widget.onLoggedIn?.call(res.firebaseUser);
+      widget.onLoggedIn?.call(res?.firebaseUser);
     } catch (e) {
       setState(() {
-        error = e.message;
-        if (e.code == 'ERROR_EMAIL_ALREADY_IN_USE') {
-          error += '\nIf you are already signed up using other providers, '
-              'sign in and link an email and password to your account.';
-        }
+        loading = false;
+        error = errMessage(e);
       });
+    }
+  }
+
+  String errMessage(dynamic e) {
+    switch (e.code) {
+      case 'ERROR_EMAIL_ALREADY_IN_USE':
+      case 'account-exists-with-different-credential':
+        return e.message +
+            '\n\nIf you are already signed up using other providers, '
+                'sign in and link an email and password to your account.';
+      case 'ERROR_WRONG_PASSWORD':
+      case 'wrong-password':
+        return 'Wrong email/password combination.';
+      case 'ERROR_USER_NOT_FOUND':
+      case 'user-not-found':
+        return 'No user found with this email.';
+      case 'ERROR_USER_DISABLED':
+      case 'user-disabled':
+        return 'User disabled.';
+      case 'ERROR_TOO_MANY_REQUESTS':
+      case 'operation-too-many-requests':
+        return 'Too many requests to log into this account.';
+      case 'ERROR_OPERATION_NOT_ALLOWED':
+      case 'operation-not-allowed':
+        return 'Server error, please try again later.';
+      case 'ERROR_INVALID_EMAIL':
+      case 'invalid-email':
+        return 'Email address is invalid.';
+      default:
+        return 'Login failed. Please try again.';
     }
   }
 }

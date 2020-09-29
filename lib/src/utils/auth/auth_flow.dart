@@ -4,7 +4,6 @@ import 'package:dungeon_paper/src/redux/stores.dart';
 import 'package:dungeon_paper/src/redux/users/user_store.dart';
 import 'package:dungeon_paper/src/utils/analytics.dart';
 import 'package:dungeon_paper/src/utils/api.dart';
-import 'package:dungeon_paper/src/utils/logger.dart';
 import 'package:dungeon_paper/src/utils/utils.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
@@ -37,6 +36,7 @@ Future<UserLogin> createUserWithEmailAndPassword({
   @required String email,
   @required String password,
 }) async {
+  assert(email != null && password != null);
   dwStore.dispatch(RequestLogin());
 
   var res = await auth.signInWithEmailAndPassword(
@@ -77,7 +77,7 @@ Future<UserLogin> signInAutomatically() async {
 Future<UserLogin> signInWithFbUser(FirebaseUser fbUser) async {
   final dbUser = await getDatabaseUser(
     fbUser,
-    signInMethod: fbUser.providerId,
+    signInMethod: fbUser?.providerId,
   );
 
   dispatchFinalDataToStore(
@@ -95,17 +95,6 @@ Future<void> signOutAll() {
   dwStore.dispatch(Logout());
   _gSignIn?.disconnect();
   return auth.signOut();
-}
-
-Future<FirebaseUser> getPersistedFirebaseUser() async {
-  try {
-    var persistedUser = await auth.currentUser();
-
-    return persistedUser;
-  } catch (e) {
-    logger.e(e);
-    return null;
-  }
 }
 
 void dispatchFinalDataToStore({
