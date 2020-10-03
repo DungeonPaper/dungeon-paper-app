@@ -160,7 +160,10 @@ class PageNavItem extends StatelessWidget {
               children: <Widget>[
                 iconBuilder(foregroundColor),
                 DefaultTextStyle(
-                  style: TextStyle(color: foregroundColor),
+                  style: Theme.of(context)
+                      .textTheme
+                      .bodyText2
+                      .copyWith(color: foregroundColor),
                   child: label,
                 )
               ],

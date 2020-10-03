@@ -40,8 +40,8 @@ class RollButtonWithEdit extends StatelessWidget {
       ),
       label: Flexible(
         fit: FlexFit.loose,
-        child: DefaultTextStyle(
-          style: Theme.of(context).textTheme.button.copyWith(color: textColor),
+        child: DefaultTextStyle.merge(
+          style: TextStyle(color: textColor),
           textAlign: TextAlign.center,
           child: label ?? Text('Roll ${diceList.join(', ')}'),
         ),

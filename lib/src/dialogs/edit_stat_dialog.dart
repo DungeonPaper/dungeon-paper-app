@@ -96,6 +96,7 @@ class EditStatDialogState extends State<EditStatDialog> {
                       onRoll: _rollStat,
                       character: widget.character,
                       analyticsSource: 'Edit Stat Dialog',
+                      brightness: Brightness.light,
                     ),
                   ),
                   if (rollingController != null)

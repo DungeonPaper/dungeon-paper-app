@@ -70,6 +70,19 @@ Future<UserLogin> signInWithGoogle({@required bool interactive}) async {
   return signInWithFbUser(res?.user);
 }
 
+Future<UserLogin> signInWithApple({@required bool interactive}) async {
+  dwStore.dispatch(RequestLogin());
+  var inst = await _getGSignIn();
+  var acct = await (interactive ? inst.signIn() : inst.signInSilently());
+  var authRes = await acct.authentication;
+  var cred = GoogleAuthProvider.getCredential(
+    accessToken: authRes.accessToken,
+    idToken: authRes.idToken,
+  );
+  var res = await auth.signInWithCredential(cred);
+  return signInWithFbUser(res?.user);
+}
+
 Future<UserLogin> signInAutomatically() async {
   return signInWithFbUser(await auth.currentUser());
 }

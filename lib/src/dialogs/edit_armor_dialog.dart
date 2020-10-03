@@ -56,9 +56,9 @@ class EditArmorDialogState extends State<EditArmorDialog> {
                       children: <Widget>[
                         RaisedButton(
                           shape: CircleBorder(side: BorderSide.none),
-                          color: Colors.red.shade300,
+                          color: Colors.red[300],
                           textColor: Colors.white,
-                          child: Text('-', style: TextStyle(fontSize: 30)),
+                          child: Icon(Icons.remove, size: 24),
                           onPressed: () => _setStateValue(
                               controlledStat > 0 ? controlledStat - 1 : 0),
                         ),
@@ -79,9 +79,9 @@ class EditArmorDialogState extends State<EditArmorDialog> {
                         ),
                         RaisedButton(
                           shape: CircleBorder(side: BorderSide.none),
-                          color: Colors.green.shade400,
+                          color: Colors.green[300],
                           textColor: Colors.white,
-                          child: Text('+', style: TextStyle(fontSize: 24)),
+                          child: Icon(Icons.add, size: 24),
                           onPressed: () => _setStateValue(
                               controlledStat < 20 ? controlledStat + 1 : 20),
                         ),

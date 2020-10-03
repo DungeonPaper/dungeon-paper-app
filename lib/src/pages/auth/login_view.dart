@@ -1,3 +1,4 @@
+import 'package:dungeon_paper/src/flutter_utils/platform_svg.dart';
 import 'package:dungeon_paper/src/pages/auth/email_auth_view.dart';
 import 'package:dungeon_paper/src/redux/stores.dart';
 import 'package:dungeon_paper/src/redux/users/user_store.dart';
@@ -16,17 +17,54 @@ class LoginView extends StatelessWidget {
         LoginButton(
           label: 'Google sign in',
           color: Colors.white,
-          icon: Icon(Icons.g_translate),
+          icon: Image(
+            image: AssetImage('assets/social/google.png'),
+            width: 30,
+            height: 30,
+          ),
           onPressed: () => _signIn(
             context,
             () => signInWithGoogle(interactive: true),
           ),
         ),
         SizedBox(height: 5),
+        // LoginButton(
+        //   label: 'Apple sign in',
+        //   color: Colors.black,
+        //   textColor: Colors.white,
+        //   icon: PlatformSvg.asset(
+        //     'social/apple.svg',
+        //     size: 20,
+        //     color: Colors.white,
+        //   ),
+        //   onPressed: () => _signIn(
+        //     context,
+        //     () => signInWithApple(interactive: true),
+        //   ),
+        // ),
+        // SizedBox(height: 5),
+        // LoginButton(
+        //   label: 'Facebook sign in',
+        //   color: Color(0xFF1878F3),
+        //   textColor: Colors.white,
+        //   icon: PlatformSvg.asset(
+        //     'social/facebook.svg',
+        //     size: 20,
+        //     color: Colors.white,
+        //   ),
+        //   onPressed: () => _signIn(
+        //     context,
+        //     () => signInWithGoogle(interactive: true),
+        //   ),
+        // ),
+        // SizedBox(height: 5),
         LoginButton(
           label: 'Email sign in',
-          color: Colors.orange[100],
-          icon: Icon(Icons.email),
+          textColor: Theme.of(context).colorScheme.onSecondary,
+          icon: Icon(
+            Icons.email,
+            color: Theme.of(context).colorScheme.onSecondary,
+          ),
           onPressed: () => showDialog(
             context: context,
             builder: (context) => EmailAuthView(
