@@ -80,8 +80,11 @@ class NavBarState extends State<NavBar> {
     var pageItems = Pages.values.map((page) {
       var details = pageDetails[page];
       var t = (activePageIndex - page.index).abs();
-      var color = Color.lerp(Theme.of(context).colorScheme.primary,
-          Theme.of(context).colorScheme.onSurface, t);
+      var color = Color.lerp(
+        Theme.of(context).colorScheme.secondary,
+        Theme.of(context).colorScheme.onSurface,
+        t,
+      );
 
       if (details == null) {
         return Center(child: Text('To Do!'));
@@ -99,7 +102,8 @@ class NavBarState extends State<NavBar> {
 
     return BottomAppBar(
       shape: CircularNotchedRectangle(),
-      notchMargin: 0,
+      color: Theme.of(context).primaryColor,
+      elevation: 0,
       child: Row(
         mainAxisSize: MainAxisSize.max,
         crossAxisAlignment: CrossAxisAlignment.center,

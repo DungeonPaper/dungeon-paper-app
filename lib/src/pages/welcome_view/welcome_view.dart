@@ -49,7 +49,7 @@ class WelcomeView extends StatelessWidget {
                 SizedBox(height: 20),
                 Text('Trouble signing in?'),
                 RaisedButton(
-                  color: Theme.of(context).colorScheme.primary,
+                  color: Theme.of(context).colorScheme.surface,
                   onPressed: _openAboutView(context),
                   child: Text('Contact Us'),
                 )
