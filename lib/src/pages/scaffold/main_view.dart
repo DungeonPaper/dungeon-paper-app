@@ -116,14 +116,23 @@ class _MainViewState extends State<MainView> {
     );
     return Scaffold(
       appBar: AppBar(
+        textTheme: Theme.of(context).textTheme.apply(
+              bodyColor: Theme.of(context).colorScheme.secondary,
+            ),
+        iconTheme:
+            IconThemeData(color: Theme.of(context).colorScheme.secondary),
         title: AppBarTitle(pageController: widget.pageController),
         elevation: 0,
         actions: widget.character != null
             ? [
                 IconButton(
                   tooltip: 'Roll Dice',
-                  icon:
-                      PlatformSvg.asset('dice/d20.svg', width: 24, height: 24),
+                  icon: PlatformSvg.asset(
+                    'dice/d20.svg',
+                    width: 24,
+                    height: 24,
+                    color: Theme.of(context).colorScheme.secondary,
+                  ),
                   onPressed: () {
                     showDiceRollDialog(
                       context: context,

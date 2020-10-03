@@ -38,7 +38,6 @@ class RollButtonWithEdit extends StatelessWidget {
         size: 24,
         color: textColor,
       ),
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
       label: Flexible(
         fit: FlexFit.loose,
         child: DefaultTextStyle(

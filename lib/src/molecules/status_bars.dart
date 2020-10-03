@@ -38,7 +38,7 @@ class StatusBars extends StatelessWidget {
     var xpPerc = (character?.currentXP ?? 0) > 0
         ? character.currentXP.toDouble() / maxXp.toDouble()
         : 0.0;
-    var rounded = Radius.circular(5);
+    var rounded = Radius.circular(15);
 
     return Container(
       child: Column(
@@ -107,7 +107,7 @@ class StatusBarCard extends StatelessWidget {
     return Material(
       shape: RoundedRectangleBorder(borderRadius: borderRadius),
       elevation: 1,
-      color: Colors.white,
+      color: Theme.of(context).cardColor,
       child: InkWell(
         onTap: onTap,
         child: Padding(

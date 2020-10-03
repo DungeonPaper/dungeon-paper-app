@@ -78,18 +78,29 @@ class _DiceSelectorState extends State<DiceSelector> {
               ),
             ),
           Container(
-            width: 50,
+            width: 58,
+            padding: EdgeInsets.only(right: 8),
             child: TextField(
               onChanged: _updateAmount,
               keyboardType: TextInputType.number,
               inputFormatters: <TextInputFormatter>[
-                WhitelistingTextInputFormatter.digitsOnly,
+                FilteringTextInputFormatter.digitsOnly,
                 BetweenValuesTextFormatter(1, 99)
               ],
               controller: amountController,
               style: widget.textStyle,
               textAlign: TextAlign.right,
               focusNode: focusNode,
+              decoration: InputDecoration(
+                contentPadding:
+                    EdgeInsets.symmetric(vertical: 0, horizontal: 8),
+                enabledBorder: OutlineInputBorder(
+                  borderSide: BorderSide(
+                    color: Theme.of(context).disabledColor.withOpacity(0.1),
+                    width: 1,
+                  ),
+                ),
+              ),
             ),
           ),
           DropdownButton<Dice>(

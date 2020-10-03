@@ -58,7 +58,7 @@ class _EditAvatarCardState extends State<EditAvatarCard> {
       aspectRatio: 14.0 / 9.0,
       child: Container(
         decoration: BoxDecoration(
-          borderRadius: BorderRadius.vertical(top: Radius.circular(5.0)),
+          borderRadius: BorderRadius.vertical(top: Radius.circular(15)),
           image: isUrl
               ? DecorationImage(
                   fit: BoxFit.fitWidth,

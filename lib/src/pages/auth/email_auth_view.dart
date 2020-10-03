@@ -61,7 +61,7 @@ class _EmailAuthViewState extends State<EmailAuthView> {
           textAlign: TextAlign.center,
         ),
         Form(
-          autovalidate: true,
+          autovalidateMode: AutovalidateMode.onUserInteraction,
           child: AutofillGroup(
             child: Column(
               mainAxisSize: MainAxisSize.min,
@@ -133,7 +133,9 @@ class _EmailAuthViewState extends State<EmailAuthView> {
                       color: Theme.of(context).primaryColor,
                       onPressed: loading || !isValid
                           ? null
-                          : signUpMode ? signUp : login,
+                          : signUpMode
+                              ? signUp
+                              : login,
                       child: loading
                           ? Container(
                               height: 20,

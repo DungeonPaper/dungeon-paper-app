@@ -59,20 +59,18 @@ class _SidebarState extends State<Sidebar> {
                 context,
                 leading: Row(
                   children: [
-                    FlatButton(
-                      padding: EdgeInsets.all(0),
-                      child: Text(
-                        '+ Create New'.toUpperCase(),
-                        style: buttonStyle,
-                      ),
+                    IconButton(
+                      color: Theme.of(context).accentColor,
+                      padding: EdgeInsets.zero,
+                      icon: Icon(Icons.add),
+                      tooltip: 'Create new character',
                       onPressed: () => createNewCharacterScreen(context),
                     ),
-                    FlatButton(
-                      padding: EdgeInsets.all(0),
-                      child: Text(
-                        'Manage'.toUpperCase(),
-                        style: buttonStyle,
-                      ),
+                    IconButton(
+                      color: Theme.of(context).accentColor,
+                      padding: EdgeInsets.zero,
+                      icon: Icon(Icons.settings),
+                      tooltip: 'Manage characters',
                       onPressed: () => manageCharactersScreen(context),
                     ),
                   ],
@@ -225,7 +223,8 @@ class _SidebarState extends State<Sidebar> {
 
   TextStyle getTitleStyle(BuildContext context) {
     return TextStyle(
-      color: Theme.of(context).primaryColor,
+      color: Theme.of(context).accentColor,
+      fontWeight: FontWeight.w600,
       fontSize: 12,
     );
   }
@@ -256,19 +255,22 @@ class CharacterListTile extends StatelessWidget {
     if (character?.displayName == null) {
       return Container(height: 0);
     }
-    return ListTile(
-      leading: Icon(Icons.person),
-      title: Text(character.displayName),
-      selected: selected,
-      onTap: () {
-        logger.d('Set Current Char: $character');
-        analytics.logEvent(name: Events.ChangeCharacter, parameters: {
-          'documentID': character.documentID,
-          'order': character.order,
-        });
-        dwStore.dispatch(SetCurrentChar(character));
-        Navigator.pop(context);
-      },
+    return ListTileTheme.merge(
+      selectedColor: Theme.of(context).colorScheme.secondaryVariant,
+      child: ListTile(
+        leading: Icon(Icons.person),
+        title: Text(character.displayName),
+        selected: selected,
+        onTap: () {
+          logger.d('Set Current Char: $character');
+          analytics.logEvent(name: Events.ChangeCharacter, parameters: {
+            'documentID': character.documentID,
+            'order': character.order,
+          });
+          dwStore.dispatch(SetCurrentChar(character));
+          Navigator.pop(context);
+        },
+      ),
     );
   }
 
@@ -303,8 +305,15 @@ class UserDrawerHeader extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
         UserAccountsDrawerHeader(
-          accountEmail: Text(user.email),
-          accountName: Text(user.displayName),
+          decoration: BoxDecoration(color: Theme.of(context).accentColor),
+          accountEmail: Text(
+            user.email,
+            style: TextStyle(color: Theme.of(context).colorScheme.onSecondary),
+          ),
+          accountName: Text(
+            user.displayName,
+            style: TextStyle(color: Theme.of(context).colorScheme.onSecondary),
+          ),
           currentAccountPicture: user.photoURL?.isNotEmpty == true
               ? Container(
                   decoration: BoxDecoration(
