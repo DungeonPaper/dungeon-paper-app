@@ -19,7 +19,7 @@ class CharacterPhoto extends StatelessWidget {
           alignment: FractionalOffset.topCenter,
           image: NetworkImage(character.photoURL),
         ),
-        borderRadius: BorderRadius.circular(5.0),
+        borderRadius: BorderRadius.circular(15),
       ),
     );
   }

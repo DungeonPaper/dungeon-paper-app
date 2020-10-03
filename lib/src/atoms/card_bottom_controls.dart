@@ -21,18 +21,23 @@ class CardBottomControls extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var buttons = getButtons();
-    return Row(mainAxisAlignment: MainAxisAlignment.end, children: buttons);
+    var buttons = getButtons(context);
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.end,
+      children: buttons,
+    );
   }
 
-  List<Widget> getButtons() {
+  List<Widget> getButtons(BuildContext context) {
     var buttons = <Widget>[];
     Widget editButton = IconButton(
+      color: Theme.of(context).colorScheme.secondary,
       tooltip: suffixType('Edit'),
       icon: Icon(Icons.edit),
       onPressed: _addAnalytics('Edit', onEdit),
     );
     Widget deleteButton = IconButton(
+      color: Theme.of(context).colorScheme.secondary,
       tooltip: suffixType('Delete'),
       icon: Icon(Icons.delete),
       onPressed: _addAnalytics('Delete', onDelete),

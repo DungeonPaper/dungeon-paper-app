@@ -80,41 +80,51 @@ class _DiceRollBoxState extends State<DiceRollBox>
               color: Theme.of(context).colorScheme.secondary,
             ),
             padding: EdgeInsets.only(left: 16),
-            child: Row(
-              children: [
-                ValueListenableBuilder<List<Dice>>(
-                  valueListenable: widget.controller,
-                  builder: (context, dice, child) {
-                    var total = widget.controller.results
-                        .fold<int>(0, (_total, cur) => _total + cur.total);
-                    return Text(
-                      'Total: $total',
-                      textScaleFactor: 1,
-                    );
-                  },
+            child: DefaultTextStyle(
+              style: TextStyle(
+                color: Theme.of(context).colorScheme.onSecondary,
+              ),
+              child: IconTheme.merge(
+                data: IconThemeData(
+                  color: Theme.of(context).colorScheme.onSecondary,
                 ),
-                Expanded(child: Container()),
-                if (widget.onRemove != null)
-                  IconButton(
-                    icon: Icon(Icons.close),
-                    onPressed: widget.onRemove,
-                    visualDensity: VisualDensity.compact,
-                    tooltip: 'Remove Dice',
-                  ),
-                if (widget.onEdit != null)
-                  IconButton(
-                    icon: Icon(Icons.edit),
-                    onPressed: widget.onEdit,
-                    visualDensity: VisualDensity.compact,
-                    tooltip: 'Edit Dice',
-                  ),
-                IconButton(
-                  icon: Icon(Icons.refresh),
-                  onPressed: _reroll,
-                  visualDensity: VisualDensity.compact,
-                  tooltip: 'Roll Again',
+                child: Row(
+                  children: [
+                    ValueListenableBuilder<List<Dice>>(
+                      valueListenable: widget.controller,
+                      builder: (context, dice, child) {
+                        var total = widget.controller.results
+                            .fold<int>(0, (_total, cur) => _total + cur.total);
+                        return Text(
+                          'Total: $total',
+                          textScaleFactor: 1.2,
+                        );
+                      },
+                    ),
+                    Expanded(child: Container()),
+                    if (widget.onRemove != null)
+                      IconButton(
+                        icon: Icon(Icons.close),
+                        onPressed: widget.onRemove,
+                        visualDensity: VisualDensity.compact,
+                        tooltip: 'Remove Dice',
+                      ),
+                    if (widget.onEdit != null)
+                      IconButton(
+                        icon: Icon(Icons.edit),
+                        onPressed: widget.onEdit,
+                        visualDensity: VisualDensity.compact,
+                        tooltip: 'Edit Dice',
+                      ),
+                    IconButton(
+                      icon: Icon(Icons.refresh),
+                      onPressed: _reroll,
+                      visualDensity: VisualDensity.compact,
+                      tooltip: 'Roll Again',
+                    ),
+                  ],
                 ),
-              ],
+              ),
             ),
           ),
           SizedBox(height: 8),

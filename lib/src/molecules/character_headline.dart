@@ -29,6 +29,7 @@ class CharacterHeadline extends StatelessWidget {
             shadows: [Shadow(color: Colors.black, offset: Offset(1, 1))]),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          crossAxisAlignment: CrossAxisAlignment.end,
           children: <Widget>[
             Flexible(
               fit: FlexFit.tight,

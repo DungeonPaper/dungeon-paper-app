@@ -121,12 +121,8 @@ class MoveCardState extends State<MoveCard> {
         parameters: {'state': value.toString()},
       ),
     );
-    return Material(
-      elevation: 1,
-      color: Colors.white,
-      shape: RoundedRectangleBorder(
-        borderRadius: const BorderRadius.all(Radius.circular(5)),
-      ),
+    return Card(
+      margin: EdgeInsets.zero,
       child: expansionTile,
     );
   }

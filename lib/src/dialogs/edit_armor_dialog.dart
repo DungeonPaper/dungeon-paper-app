@@ -68,7 +68,7 @@ class EditArmorDialogState extends State<EditArmorDialog> {
                                 _setStateValue(int.tryParse(val)),
                             keyboardType: TextInputType.number,
                             inputFormatters: <TextInputFormatter>[
-                              WhitelistingTextInputFormatter.digitsOnly,
+                              FilteringTextInputFormatter.digitsOnly,
                               BetweenValuesTextFormatter(0, 20)
                             ],
                             controller: _controller,

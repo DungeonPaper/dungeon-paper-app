@@ -25,9 +25,20 @@ class ArmorAndDmgDice extends StatelessWidget {
               'armor.svg',
               width: 20,
               height: 20,
+              color: Theme.of(context).colorScheme.secondary,
             ),
-            title: Text('ARMOR'),
-            value: Text(character.armor.toString()),
+            title: Text(
+              'ARMOR',
+              style: TextStyle(
+                color: Theme.of(context).colorScheme.secondary,
+              ),
+            ),
+            value: Text(
+              character.armor.toString(),
+              style: TextStyle(
+                color: Theme.of(context).colorScheme.secondary,
+              ),
+            ),
             onTap: () => showDialog(
               context: context,
               builder: (context) => EditArmorDialog(value: character.armor),
@@ -38,9 +49,20 @@ class ArmorAndDmgDice extends StatelessWidget {
             icon: DiceIcon(
               dice: character.damageDice,
               size: 20,
+              color: Theme.of(context).colorScheme.secondary,
             ),
-            title: Text('DMG DICE'),
-            value: Text(character.damageDice.toString()),
+            title: Text(
+              'DMG DICE',
+              style: TextStyle(
+                color: Theme.of(context).colorScheme.secondary,
+              ),
+            ),
+            value: Text(
+              character.damageDice.toString(),
+              style: TextStyle(
+                color: Theme.of(context).colorScheme.secondary,
+              ),
+            ),
             onTap: () => showDialog(
               context: context,
               builder: (context) => EditDamageDiceDialog(

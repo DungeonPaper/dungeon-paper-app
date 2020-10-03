@@ -28,10 +28,8 @@ class NoteCardState extends State<NoteCard> {
   @override
   Widget build(BuildContext context) {
     var desc = widget.note.description;
-    return Material(
-      elevation: 1,
-      borderRadius: const BorderRadius.all(Radius.circular(5)),
-      type: MaterialType.card,
+    return Card(
+      margin: EdgeInsets.zero,
       child: ExpansionTile(
         title: Text(widget.note.title),
         onExpansionChanged: (value) => analytics.logEvent(
