@@ -1,4 +1,4 @@
-import 'package:dungeon_paper/src/pages/auth/email_auth_dialog.dart';
+import 'package:dungeon_paper/src/pages/auth/email_auth_view.dart';
 import 'package:dungeon_paper/src/redux/stores.dart';
 import 'package:dungeon_paper/src/redux/users/user_store.dart';
 import 'package:dungeon_paper/src/utils/auth/auth_common.dart';
@@ -29,7 +29,7 @@ class LoginView extends StatelessWidget {
           icon: Icon(Icons.email),
           onPressed: () => showDialog(
             context: context,
-            builder: (context) => EmailAuthDialog(
+            builder: (context) => EmailAuthView(
               onLoggedIn: (user) => _signIn(
                 context,
                 () => Navigator.pop(context),

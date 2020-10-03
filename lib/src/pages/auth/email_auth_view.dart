@@ -5,21 +5,21 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:email_validator/email_validator.dart';
 
-class EmailAuthDialog extends StatefulWidget {
+class EmailAuthView extends StatefulWidget {
   final void Function(FirebaseUser) onLoggedIn;
   final bool signUpMode;
 
-  const EmailAuthDialog({
+  const EmailAuthView({
     Key key,
     @required this.onLoggedIn,
     this.signUpMode,
   }) : super(key: key);
 
   @override
-  _EmailAuthDialogState createState() => _EmailAuthDialogState();
+  _EmailAuthViewState createState() => _EmailAuthViewState();
 }
 
-class _EmailAuthDialogState extends State<EmailAuthDialog> {
+class _EmailAuthViewState extends State<EmailAuthView> {
   Map<String, TextEditingController> controllers;
   bool signUpMode;
   bool obscured;

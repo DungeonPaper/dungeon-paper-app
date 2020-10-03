@@ -60,7 +60,6 @@ class ArmorAndDmgDice extends StatelessWidget {
     Widget value,
     VoidCallback onTap,
   }) {
-    var style = Theme.of(context).textTheme.bodyText2.copyWith();
     return Expanded(
       child: InkWell(
         onTap: onTap,
@@ -69,12 +68,12 @@ class ArmorAndDmgDice extends StatelessWidget {
           child: Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
-              DefaultTextStyle(child: title, style: style),
+              title,
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 8.0),
                 child: icon,
               ),
-              DefaultTextStyle(child: value, style: style),
+              value,
             ],
           ),
         ),

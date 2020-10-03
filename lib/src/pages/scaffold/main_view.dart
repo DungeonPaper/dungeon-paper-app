@@ -86,7 +86,6 @@ class _MainViewState extends State<MainView> {
   };
   final FirebaseAnalytics analytics = FirebaseAnalytics();
 
-  double elevation = 0.0;
   String lastPageName = 'Home';
 
   @override
@@ -118,7 +117,7 @@ class _MainViewState extends State<MainView> {
     return Scaffold(
       appBar: AppBar(
         title: AppBarTitle(pageController: widget.pageController),
-        elevation: elevation,
+        elevation: 0,
         actions: widget.character != null
             ? [
                 IconButton(
@@ -186,11 +185,11 @@ class _MainViewState extends State<MainView> {
 
   void _pageListener() {
     if (widget.pageController.hasClients) {
-      if (clamp01(widget.pageController.page) != elevation) {
-        setState(() {
-          elevation = clamp01(widget.pageController.page);
-        });
-      }
+      // if (clamp01(widget.pageController.page) != elevation) {
+      //   setState(() {
+      //     elevation = clamp01(widget.pageController.page);
+      //   });
+      // }
       if (widget.pageController.page.round() == widget.pageController.page) {
         if (pageName != lastPageName) {
           setState(() {

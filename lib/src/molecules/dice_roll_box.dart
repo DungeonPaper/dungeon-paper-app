@@ -77,7 +77,7 @@ class _DiceRollBoxState extends State<DiceRollBox>
           Container(
             decoration: BoxDecoration(
               borderRadius: BorderRadius.vertical(top: Radius.circular(10)),
-              color: Theme.of(context).primaryColor,
+              color: Theme.of(context).colorScheme.secondary,
             ),
             padding: EdgeInsets.only(left: 16),
             child: Row(
@@ -89,7 +89,7 @@ class _DiceRollBoxState extends State<DiceRollBox>
                         .fold<int>(0, (_total, cur) => _total + cur.total);
                     return Text(
                       'Total: $total',
-                      style: TextStyle(fontSize: 16),
+                      textScaleFactor: 1,
                     );
                   },
                 ),

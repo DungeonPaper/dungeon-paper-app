@@ -23,7 +23,8 @@ class PageLoader extends StatelessWidget {
   Widget build(BuildContext context) {
     var loader = CircularProgressIndicator(
       valueColor: AlwaysStoppedAnimation<Color>(
-          color ?? Theme.of(context).primaryColor),
+        color ?? Theme.of(context).colorScheme.surface,
+      ),
       backgroundColor: backgroundColor,
       strokeWidth: strokeWidth ?? 4.0,
     );
