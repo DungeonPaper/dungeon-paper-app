@@ -25,35 +25,41 @@ class WelcomeView extends StatelessWidget {
         child: SingleChildScrollView(
           primary: true,
           child: Center(
-            child: Column(
-              mainAxisSize: MainAxisSize.max,
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Padding(
-                  padding: const EdgeInsets.symmetric(vertical: 24.0),
-                  child: SizedBox.fromSize(
-                    size: Size.square(
-                        min(MediaQuery.of(context).size.width - 32, 200)),
-                    child: Image.asset('assets/logo.png'),
-                  ),
-                ),
-                Text('Welcome to Dungeon Paper!',
-                    style: TextStyle(fontSize: 24)),
-                VersionNumber.text(prefix: 'Version'),
-                SizedBox(height: 24),
-                LoginView(
-                    // onUserChange: () {
-                    //   pageController.jumpToPage(0);
-                    // },
+            child: DefaultTextStyle(
+              style: Theme.of(context)
+                  .textTheme
+                  .bodyText2
+                  .copyWith(color: Theme.of(context).accentColor),
+              child: Column(
+                mainAxisSize: MainAxisSize.max,
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.symmetric(vertical: 24.0),
+                    child: SizedBox.fromSize(
+                      size: Size.square(
+                          min(MediaQuery.of(context).size.width - 32, 200)),
+                      child: Image.asset('assets/logo.png'),
                     ),
-                SizedBox(height: 20),
-                Text('Trouble signing in?'),
-                RaisedButton(
-                  color: Theme.of(context).colorScheme.surface,
-                  onPressed: _openAboutView(context),
-                  child: Text('Contact Us'),
-                )
-              ],
+                  ),
+                  Text('Welcome to Dungeon Paper!',
+                      style: TextStyle(fontSize: 24)),
+                  VersionNumber.text(prefix: 'Version'),
+                  SizedBox(height: 24),
+                  LoginView(
+                      // onUserChange: () {
+                      //   pageController.jumpToPage(0);
+                      // },
+                      ),
+                  SizedBox(height: 20),
+                  Text('Trouble signing in?'),
+                  RaisedButton(
+                    color: Theme.of(context).colorScheme.surface,
+                    onPressed: _openAboutView(context),
+                    child: Text('Contact Us'),
+                  )
+                ],
+              ),
             ),
           ),
         ),

@@ -224,8 +224,8 @@ class _SidebarState extends State<Sidebar> {
   TextStyle getTitleStyle(BuildContext context) {
     return TextStyle(
       color: Theme.of(context).accentColor,
-      fontWeight: FontWeight.w600,
-      fontSize: 12,
+      fontWeight: FontWeight.w700,
+      fontSize: 14,
     );
   }
 

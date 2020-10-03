@@ -87,6 +87,7 @@ class _MainViewState extends State<MainView> {
   final FirebaseAnalytics analytics = FirebaseAnalytics();
 
   String lastPageName = 'Home';
+  double elevation = 0;
 
   @override
   void initState() {
@@ -122,7 +123,7 @@ class _MainViewState extends State<MainView> {
         iconTheme:
             IconThemeData(color: Theme.of(context).colorScheme.secondary),
         title: AppBarTitle(pageController: widget.pageController),
-        elevation: 0,
+        elevation: elevation,
         actions: widget.character != null
             ? [
                 IconButton(
@@ -167,7 +168,7 @@ class _MainViewState extends State<MainView> {
         if (builder != null) {
           return builder(widget.character);
         }
-        return Center(child: Text('To Do!'));
+        return Center(child: Container());
       }).toList();
 
   Widget get navBar => widget.character != null

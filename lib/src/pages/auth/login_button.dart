@@ -7,13 +7,15 @@ class LoginButton extends StatelessWidget {
   final void Function() onPressed;
   final String label;
   final Color color;
+  final Color textColor;
   final Widget icon;
 
   LoginButton({
     Key key,
     @required this.onPressed,
     @required this.label,
-    @required this.color,
+    this.color,
+    this.textColor,
     @required this.icon,
     // this.onUserChange,
   }) : super(key: key);
@@ -37,6 +39,7 @@ class LoginButton extends StatelessWidget {
                   style: TextStyle(
                     fontSize: 14,
                     fontWeight: FontWeight.normal,
+                    color: textColor,
                   ),
                 ),
               ),

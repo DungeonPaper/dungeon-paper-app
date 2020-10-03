@@ -46,6 +46,7 @@ class StandardDialogControls extends StatelessWidget {
             if (onOK != null)
               RaisedButton(
                 color: Theme.of(context).colorScheme.primary,
+                textColor: Theme.of(context).colorScheme.onPrimary,
                 onPressed: !okDisabled ? onOK : null,
                 child: okText,
               ),

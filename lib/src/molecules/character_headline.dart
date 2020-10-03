@@ -23,10 +23,13 @@ class CharacterHeadline extends StatelessWidget {
     var displayName = capitalize(character.displayName);
 
     return Container(
-      child: DefaultTextStyle(
+      child: DefaultTextStyle.merge(
         style: TextStyle(
-            color: Colors.white,
-            shadows: [Shadow(color: Colors.black, offset: Offset(1, 1))]),
+          color: Colors.white,
+          shadows: [
+            Shadow(color: Colors.black, offset: Offset(1, 1)),
+          ],
+        ),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           crossAxisAlignment: CrossAxisAlignment.end,

@@ -25,7 +25,10 @@ class BiographyDialog extends StatelessWidget {
             child: Text(
               'Character biography',
               textScaleFactor: 1.1,
-              style: Theme.of(context).textTheme.bodyText1,
+              style: Theme.of(context)
+                  .textTheme
+                  .bodyText2
+                  .copyWith(fontWeight: FontWeight.w700),
             ),
           ),
           MarkdownBody(
@@ -39,7 +42,10 @@ class BiographyDialog extends StatelessWidget {
             child: Text(
               '${character.mainClass.name} description',
               textScaleFactor: 1.1,
-              style: Theme.of(context).textTheme.bodyText1,
+              style: Theme.of(context)
+                  .textTheme
+                  .bodyText2
+                  .copyWith(fontWeight: FontWeight.w700),
             ),
           ),
           MarkdownBody(

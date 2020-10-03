@@ -19,6 +19,7 @@ var mainTheme = ThemeData(
   accentColor: _secondary,
   scaffoldBackgroundColor: _primary,
   cardColor: Colors.white.withOpacity(0.85),
+  fontFamily: 'Nunito',
   cardTheme: CardTheme(
     shape: RoundedRectangleBorder(
       borderRadius: BorderRadius.circular(15),

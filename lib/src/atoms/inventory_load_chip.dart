@@ -39,7 +39,7 @@ class InventoryLoadChip extends StatelessWidget {
     if (currentLoadPercent >= 0.7) {
       return BgAndFgColors(Colors.yellow[200], Colors.black);
     }
-    return BgAndFgColors(Colors.green[300], Colors.black);
+    return BgAndFgColors(Colors.green[500], Colors.black);
   }
 
   double get currentLoadPercent => currentLoad * 1.0 / maxLoad;
