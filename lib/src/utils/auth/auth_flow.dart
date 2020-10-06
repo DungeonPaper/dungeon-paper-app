@@ -1,3 +1,4 @@
+import 'package:apple_sign_in/apple_sign_in.dart';
 import 'package:dungeon_paper/db/listeners.dart';
 import 'package:dungeon_paper/db/models/user.dart';
 import 'package:dungeon_paper/src/redux/stores.dart';
@@ -70,17 +71,23 @@ Future<UserLogin> signInWithGoogle({@required bool interactive}) async {
   return signInWithFbUser(res?.user);
 }
 
+Future<bool> checkAppleSignIn() async {
+  return AppleSignIn.isAvailable();
+}
+
 Future<UserLogin> signInWithApple({@required bool interactive}) async {
   dwStore.dispatch(RequestLogin());
-  var inst = await _getGSignIn();
-  var acct = await (interactive ? inst.signIn() : inst.signInSilently());
-  var authRes = await acct.authentication;
-  var cred = GoogleAuthProvider.getCredential(
-    accessToken: authRes.accessToken,
-    idToken: authRes.idToken,
+  var scopes = <Scope>[];
+  final result = await AppleSignIn.performRequests(
+    [AppleIdRequest(requestedScopes: scopes)],
   );
-  var res = await auth.signInWithCredential(cred);
-  return signInWithFbUser(res?.user);
+  final appleIdCredential = result.credential;
+  final oAuthProvider = OAuthProvider(providerId: 'apple.com');
+  final credential = oAuthProvider.getCredential(
+    idToken: String.fromCharCodes(appleIdCredential.identityToken),
+    accessToken: String.fromCharCodes(appleIdCredential.authorizationCode),
+  );
+  return signInWithCredentials(credential);
 }
 
 Future<UserLogin> signInAutomatically() async {

@@ -37,6 +37,7 @@ class _SidebarState extends State<Sidebar> {
       builder: (context, state) {
         var user = state.user.current;
         var settings = state.prefs.settings;
+        // ignore: unused_local_variable
         var buttonStyle = getTitleStyle(context).copyWith(
           color: Theme.of(context).textTheme.headline3.color,
         );

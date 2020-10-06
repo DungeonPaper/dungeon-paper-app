@@ -17,21 +17,6 @@
       ]
     },
     {
-      "name": "Flutter (verbose)",
-      "type": "dart",
-      "request": "launch",
-      "program": "lib/main.dart",
-      "args": [
-        // "--flavor",
-        // "development"
-        // "-d711KPNY0809287",
-        // "--observatory-port 9933",
-        "-v",
-        "--web-port",
-        "8090"
-      ],
-    },
-    {
       "name": "Flutter (RELEASE)",
       "type": "dart",
       "request": "launch",
