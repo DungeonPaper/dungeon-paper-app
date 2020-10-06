@@ -28,20 +28,25 @@ class LoginView extends StatelessWidget {
           ),
         ),
         SizedBox(height: 5),
-        // LoginButton(
-        //   label: 'Apple sign in',
-        //   color: Colors.black,
-        //   textColor: Colors.white,
-        //   icon: PlatformSvg.asset(
-        //     'social/apple.svg',
-        //     size: 20,
-        //     color: Colors.white,
-        //   ),
-        //   onPressed: () => _signIn(
-        //     context,
-        //     () => signInWithApple(interactive: true),
-        //   ),
-        // ),
+        FutureBuilder(
+          future: checkAppleSignIn(),
+          builder: (context, AsyncSnapshot<bool> available) => available.data
+              ? LoginButton(
+                  label: 'Apple sign in',
+                  color: Colors.black,
+                  textColor: Colors.white,
+                  icon: PlatformSvg.asset(
+                    'social/apple.svg',
+                    size: 20,
+                    color: Colors.white,
+                  ),
+                  onPressed: () => _signIn(
+                    context,
+                    () => signInWithApple(interactive: true),
+                  ),
+                )
+              : Container(),
+        ),
         // SizedBox(height: 5),
         // LoginButton(
         //   label: 'Facebook sign in',

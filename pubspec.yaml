@@ -1,6 +1,6 @@
 name: dungeon_paper
 description: A Dungeon World character sheet app written with Flutter.
-version: 1.1.8+1
+version: 1.1.8+2
 
 dependencies:
   flutter:
@@ -48,6 +48,7 @@ dependencies:
   # permission_handler: ^5.0.1+1
   logger: ^0.9.1
   email_validator: ^1.0.5
+  apple_sign_in: ^0.1.0
 
 dev_dependencies:
   flutter_test:
