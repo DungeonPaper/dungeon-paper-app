@@ -3,6 +3,7 @@ import 'package:dungeon_paper/db/models/user.dart';
 import 'package:dungeon_paper/src/dialogs/dialogs.dart';
 import 'package:dungeon_paper/src/flutter_utils/platform_svg.dart';
 import 'package:dungeon_paper/src/pages/about_view/about_view.dart';
+import 'package:dungeon_paper/src/pages/auth/email_auth_view.dart';
 import 'package:dungeon_paper/src/pages/character_wizard/character_wizard_view.dart';
 import 'package:dungeon_paper/src/pages/compendium/compendium_view.dart';
 import 'package:dungeon_paper/src/redux/characters/characters_store.dart';
@@ -22,12 +23,13 @@ class Sidebar extends StatefulWidget {
 }
 
 class _SidebarState extends State<Sidebar> {
-  // bool _userMenuExpanded = false;
+  bool _userMenuExpanded;
 
   @override
   void initState() {
     super.initState();
     logger.d('Open Sidebar');
+    _userMenuExpanded = false;
     analytics.logEvent(name: Events.OpenSidebar);
   }
 
@@ -47,14 +49,34 @@ class _SidebarState extends State<Sidebar> {
             children: [
               UserDrawerHeader(
                 user: user,
-                onToggleUserMenu: null,
-                // onToggleUserMenu: () {
-                //   setState(() {
-                //     _userMenuExpanded = !_userMenuExpanded;
-                //   });
-                // },
+                onToggleUserMenu: () {
+                  setState(() {
+                    _userMenuExpanded = !_userMenuExpanded;
+                  });
+                },
               ),
-              // if (!_userMenuExpanded) ...[
+              if (_userMenuExpanded) ...[
+                // ListTile(
+                //   title: Text('Link with Email'),
+                //   onTap: () => showDialog(
+                //     context: context,
+                //     builder: (context) => EmailAuthView(
+                //       signUpMode: true,
+                //       linkMode: true,
+                //       onLoggedIn: (_) => Navigator.pop(context),
+                //     ),
+                //   ),
+                // ),
+                // Log out
+                ListTile(
+                  leading: Icon(Icons.exit_to_app),
+                  title: Text('Log out'),
+                  onTap: () {
+                    Navigator.pop(context);
+                    signOutAll();
+                  },
+                ),
+              ],
               title(
                 'Characters',
                 context,
@@ -118,17 +140,6 @@ class _SidebarState extends State<Sidebar> {
                 leading: Icon(Icons.info),
                 title: Text('About'),
                 onTap: () => aboutScreen(context),
-              ),
-              // Log out
-              // ],
-              // if (_userMenuExpanded)
-              ListTile(
-                leading: Icon(Icons.exit_to_app),
-                title: Text('Log out'),
-                onTap: () {
-                  Navigator.pop(context);
-                  signOutAll();
-                },
               ),
             ],
           ),

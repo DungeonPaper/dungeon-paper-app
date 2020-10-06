@@ -1,18 +1,22 @@
 import 'package:dungeon_paper/src/flutter_utils/input_validators.dart';
 import 'package:dungeon_paper/src/flutter_utils/widget_utils.dart';
+import 'package:dungeon_paper/src/utils/auth/auth_common.dart';
 import 'package:dungeon_paper/src/utils/auth/auth_flow.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:email_validator/email_validator.dart';
+import 'package:flutter/services.dart';
 
 class EmailAuthView extends StatefulWidget {
   final void Function(FirebaseUser) onLoggedIn;
   final bool signUpMode;
+  final bool linkMode;
 
   const EmailAuthView({
     Key key,
     @required this.onLoggedIn,
     this.signUpMode,
+    this.linkMode,
   }) : super(key: key);
 
   @override
@@ -133,9 +137,11 @@ class _EmailAuthViewState extends State<EmailAuthView> {
                       color: Theme.of(context).primaryColor,
                       onPressed: loading || !isValid
                           ? null
-                          : signUpMode
-                              ? signUp
-                              : login,
+                          : widget.linkMode
+                              ? _link
+                              : signUpMode
+                                  ? _signUp
+                                  : _login,
                       child: loading
                           ? Container(
                               height: 20,
@@ -173,7 +179,26 @@ class _EmailAuthViewState extends State<EmailAuthView> {
   bool validatePassword(String password) =>
       PasswordValidator.validate(password);
 
-  void login() async {
+  void _link() async {
+    try {
+      var res = await linkWithCredentials(
+        EmailAuthCredential(
+          email: email,
+          password: password,
+        ),
+      );
+      if (res) {
+        widget.onLoggedIn?.call(await auth.currentUser());
+      }
+    } catch (e) {
+      setState(() {
+        loading = false;
+        error = errMessage(e);
+      });
+    }
+  }
+
+  void _login() async {
     setState(() {
       loading = true;
       error = null;
@@ -192,7 +217,7 @@ class _EmailAuthViewState extends State<EmailAuthView> {
     }
   }
 
-  void signUp() async {
+  void _signUp() async {
     setState(() {
       loading = true;
       error = null;
