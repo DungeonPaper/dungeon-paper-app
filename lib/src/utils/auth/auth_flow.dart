@@ -77,7 +77,7 @@ Future<bool> checkAppleSignIn() async {
 
 Future<UserLogin> signInWithApple({@required bool interactive}) async {
   dwStore.dispatch(RequestLogin());
-  var scopes = <Scope>[];
+  var scopes = [Scope.email, Scope.fullName];
   final result = await AppleSignIn.performRequests(
     [AppleIdRequest(requestedScopes: scopes)],
   );
