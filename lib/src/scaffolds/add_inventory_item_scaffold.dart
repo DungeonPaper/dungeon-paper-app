@@ -2,6 +2,7 @@ import 'package:dungeon_paper/db/models/inventory_items.dart';
 import 'package:dungeon_paper/src/dialogs/dialogs.dart';
 import 'package:dungeon_paper/src/lists/existing_inventory_items_list.dart';
 import 'package:dungeon_paper/src/scaffolds/custom_inventory_item_form.dart';
+import 'package:dungeon_paper/src/scaffolds/scaffold_with_elevation.dart';
 import 'package:flutter/material.dart';
 
 class AddInventoryItemScaffold extends StatefulWidget {
@@ -60,21 +61,18 @@ class AddInventoryItemScaffoldState extends State<AddInventoryItemScaffold>
           ),
         ];
         var formContainer = Container(
-          color: Theme.of(context).canvasColor,
+          color: Theme.of(context).scaffoldBackgroundColor,
           child: SingleChildScrollView(
             key: PageStorageKey<String>(texts[1]),
             padding: EdgeInsets.all(16),
             child: form,
           ),
         );
-        var tabBar = Container(
-          color: Theme.of(context).canvasColor,
-          child: TabBar(
-            controller: _controller,
-            tabs: List.generate(
-              texts.length,
-              (i) => Tab(child: Text(texts[i])),
-            ),
+        var tabBar = TabBar(
+          controller: _controller,
+          tabs: List.generate(
+            texts.length,
+            (i) => Tab(child: Text(texts[i])),
           ),
         );
         var tabBarView = TabBarView(
@@ -88,13 +86,6 @@ class AddInventoryItemScaffoldState extends State<AddInventoryItemScaffold>
             formContainer
           ],
         );
-        var appBar = AppBar(
-          title:
-              Text('${widget.mode == DialogMode.Create ? 'Add' : 'Edit'} Item'),
-          actions: tabIdx == texts.length - 1 || widget.mode == DialogMode.Edit
-              ? actions
-              : [],
-        );
 
         var list = <Widget>[
           if (widget.mode == DialogMode.Create) tabBar,
@@ -104,10 +95,16 @@ class AddInventoryItemScaffoldState extends State<AddInventoryItemScaffold>
           ),
         ];
 
-        return Scaffold(
-          appBar: appBar,
+        return ScaffoldWithElevation(
+          useElevation: false,
+          wrapWithScrollable: false,
+          elevation: 0.0,
+          title:
+              Text('${widget.mode == DialogMode.Create ? 'Add' : 'Edit'} Item'),
+          actions: tabIdx == texts.length - 1 || widget.mode == DialogMode.Edit
+              ? actions
+              : [],
           body: Column(
-            // mainAxisSize: MainAxisSize.max,
             children: list,
           ),
         );

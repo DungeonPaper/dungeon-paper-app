@@ -47,7 +47,7 @@ class AlignmentDescription extends StatelessWidget {
       title: Text(capitalize(alignmentInfo.name)),
       color: Theme.of(context)
           .canvasColor
-          .withOpacity(selected != false ? 1 : 0.5),
+          .withOpacity(selected != false ? 1 : 0.7),
       subtitle: alignmentInfo.description != null
           ? Text(alignmentInfo.description)
           : null,

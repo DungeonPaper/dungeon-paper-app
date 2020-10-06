@@ -52,7 +52,7 @@ class CustomInventoryItemFormState extends State<CustomInventoryItemForm> {
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: <Widget>[
           TextField(
-            decoration: InputDecoration(hintText: 'Item Name'),
+            decoration: InputDecoration(labelText: 'Item Name'),
             autocorrect: true,
             textCapitalization: TextCapitalization.words,
             controller: _controllers['name'],

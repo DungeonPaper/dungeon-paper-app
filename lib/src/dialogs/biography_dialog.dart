@@ -13,13 +13,12 @@ class BiographyDialog extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var hasBio = character.bio?.isNotEmpty == true;
-    var hasClsDescr = character.mainClass?.description?.isNotEmpty == true;
-    return SimpleDialog(
-      title: Text('Biography'),
-      contentPadding: const EdgeInsets.all(24),
-      children: [
-        if (hasBio) ...[
+    final hasBio = character.bio?.isNotEmpty == true;
+    final hasClsDescr = character.mainClass?.description?.isNotEmpty == true;
+    final hasLooks = character.looks.isNotEmpty;
+    final blocks = <List<Widget>>[
+      if (hasBio)
+        [
           Padding(
             padding: const EdgeInsets.only(bottom: 4.0),
             child: Text(
@@ -35,8 +34,26 @@ class BiographyDialog extends StatelessWidget {
             data: character.bio,
           ),
         ],
-        if (hasBio && hasClsDescr) SizedBox(height: 30),
-        if (hasClsDescr) ...[
+      if (hasLooks)
+        [
+          Padding(
+            padding: const EdgeInsets.only(bottom: 4.0),
+            child: Text(
+              'Appearance',
+              textScaleFactor: 1.1,
+              style: Theme.of(context)
+                  .textTheme
+                  .bodyText2
+                  .copyWith(fontWeight: FontWeight.w700),
+            ),
+          ),
+          Text(character.looks.join(', ')),
+        ],
+      if (hasClsDescr)
+        [
+          // ExpansionTile(
+          //   tilePadding: EdgeInsets.zero,
+          //   title:
           Padding(
             padding: const EdgeInsets.only(bottom: 4.0),
             child: Text(
@@ -48,9 +65,21 @@ class BiographyDialog extends StatelessWidget {
                   .copyWith(fontWeight: FontWeight.w700),
             ),
           ),
+          // children: [
           MarkdownBody(
             data: character.mainClass.description,
           ),
+          // ],
+          // )
+        ]
+    ];
+    return SimpleDialog(
+      title: Text('Biography'),
+      contentPadding: const EdgeInsets.all(24),
+      children: [
+        for (var block in blocks) ...[
+          ...block,
+          SizedBox(height: 30),
         ]
       ],
     );

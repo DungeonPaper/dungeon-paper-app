@@ -34,17 +34,14 @@ class ClassSelectView extends StatelessWidget {
             return Column(
               children: [
                 for (var availClass in sorted)
-                  Padding(
-                    padding: EdgeInsets.only(bottom: 16.0),
-                    child: CardListItem(
-                      title: Text(availClass.name),
-                      subtitle: Text('Preview class'),
-                      leading: Icon(Icons.person, size: 40.0),
-                      color: Theme.of(context).canvasColor.withOpacity(
-                          availClass == character.mainClass ? 1 : 0.5),
-                      trailing: Icon(Icons.chevron_right),
-                      onTap: previewClass(context, availClass),
-                    ),
+                  CardListItem(
+                    title: Text(availClass.name),
+                    subtitle: Text('Preview class'),
+                    leading: Icon(Icons.person, size: 40.0),
+                    color: Theme.of(context).canvasColor.withOpacity(
+                        availClass == character.mainClass ? 1 : 0.7),
+                    trailing: Icon(Icons.chevron_right),
+                    onTap: previewClass(context, availClass),
                   ),
               ],
             );
@@ -202,7 +199,9 @@ class _ConfirmClassChangeDialogState extends State<ConfirmClassChangeDialog> {
         cancelButtonText: Text('Wait, not yet'),
         returnValue: (bool confirmed) {
           return confirmed
-              ? isEdit ? options : ChangeClassConfirmationOptions.all(true)
+              ? isEdit
+                  ? options
+                  : ChangeClassConfirmationOptions.all(true)
               : null;
         },
         text: Column(

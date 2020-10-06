@@ -48,6 +48,7 @@ class _ChangeLooksDialogState extends State<ChangeLooksDialog> {
       )..addListener(() {
           setState(() {
             selected[i] = _controllers[i].text;
+            changeLooks(selected);
           });
         }),
     );

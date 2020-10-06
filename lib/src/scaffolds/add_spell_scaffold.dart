@@ -2,6 +2,7 @@ import 'package:dungeon_paper/db/models/spells.dart';
 import 'package:dungeon_paper/src/builders/custom_spell_form_builder.dart';
 import 'package:dungeon_paper/src/dialogs/dialogs.dart';
 import 'package:dungeon_paper/src/lists/add_spell_list.dart';
+import 'package:dungeon_paper/src/scaffolds/scaffold_with_elevation.dart';
 import 'package:flutter/material.dart';
 
 class AddSpellScaffold extends StatefulWidget {
@@ -58,7 +59,7 @@ class AddSpellScaffoldState extends State<AddSpellScaffold>
           ),
         ];
         var formContainer = Container(
-          color: Theme.of(context).canvasColor,
+          color: Theme.of(context).primaryColor,
           child: SingleChildScrollView(
             key: PageStorageKey<String>(texts[1]),
             padding: EdgeInsets.all(16),
@@ -79,7 +80,7 @@ class AddSpellScaffoldState extends State<AddSpellScaffold>
           ],
         );
         var tabBar = Container(
-          color: Theme.of(context).canvasColor,
+          color: Theme.of(context).scaffoldBackgroundColor,
           child: TabBar(
             controller: _controller,
             tabs: List.generate(
@@ -87,11 +88,6 @@ class AddSpellScaffoldState extends State<AddSpellScaffold>
               (i) => Tab(child: Text(texts[i])),
             ),
           ),
-        );
-        var appBar = AppBar(
-          title: Text(
-              '${widget.mode == DialogMode.Create ? 'Add' : 'Edit'} Spell'),
-          actions: tabIdx == 1 || widget.mode == DialogMode.Edit ? actions : [],
         );
 
         var list = <Widget>[
@@ -104,8 +100,13 @@ class AddSpellScaffoldState extends State<AddSpellScaffold>
           list.insert(0, tabBar);
         }
 
-        return Scaffold(
-          appBar: appBar,
+        return ScaffoldWithElevation(
+          useElevation: false,
+          wrapWithScrollable: false,
+          elevation: 0.0,
+          title: Text(
+              '${widget.mode == DialogMode.Create ? 'Add' : 'Edit'} Spell'),
+          actions: tabIdx == 1 || widget.mode == DialogMode.Edit ? actions : [],
           body: Column(
             // mainAxisSize: MainAxisSize.max,
             children: list,
