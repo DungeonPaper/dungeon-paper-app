@@ -30,7 +30,7 @@ class LoginView extends StatelessWidget {
         SizedBox(height: 5),
         FutureBuilder(
           future: checkAppleSignIn(),
-          builder: (context, AsyncSnapshot<bool> available) => available.data
+          builder: (context, AsyncSnapshot<bool> available) => available.data == true
               ? Padding(
                   padding: const EdgeInsets.only(bottom: 5),
                   child: LoginButton(

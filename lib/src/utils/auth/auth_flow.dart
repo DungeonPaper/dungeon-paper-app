@@ -5,89 +5,57 @@ import 'package:dungeon_paper/src/redux/stores.dart';
 import 'package:dungeon_paper/src/redux/users/user_store.dart';
 import 'package:dungeon_paper/src/utils/analytics.dart';
 import 'package:dungeon_paper/src/utils/api.dart';
+import 'package:dungeon_paper/src/utils/logger.dart';
 import 'package:dungeon_paper/src/utils/utils.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
+import 'package:flutter/services.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:pedantic/pedantic.dart';
 import 'auth_common.dart';
+part 'auth_email.dart';
+part 'auth_google.dart';
+part 'auth_apple.dart';
 
 Future<UserLogin> signInWithCredentials(AuthCredential creds) async {
   assert(creds != null);
   dwStore.dispatch(RequestLogin());
 
-  var res = await auth.signInWithCredential(creds);
+  final res = await auth.signInWithCredential(creds);
   return signInWithFbUser(res?.user);
 }
 
-Future<UserLogin> signInWithEmailAndPassword({
-  @required String email,
-  @required String password,
-}) async {
-  dwStore.dispatch(RequestLogin());
-
-  var res = await auth.signInWithEmailAndPassword(
-    email: email,
-    password: password,
-  );
-  return signInWithFbUser(res?.user);
-}
-
-Future<UserLogin> createUserWithEmailAndPassword({
-  @required String email,
-  @required String password,
-}) async {
-  assert(email != null && password != null);
-  dwStore.dispatch(RequestLogin());
-
-  var res = await auth.signInWithEmailAndPassword(
-    email: email,
-    password: password,
-  );
-  return signInWithFbUser(res?.user);
-}
-
-GoogleSignIn _gSignIn;
-Future<GoogleSignIn> _getGSignIn() async {
-  if (_gSignIn != null) {
-    return _gSignIn;
+Future<bool> linkWithCredentials(AuthCredential creds) async {
+  final user = await auth.currentUser();
+  try {
+    await user.linkWithCredential(creds);
+    return true;
+  } on PlatformException catch (e) {
+    if (e.code == 'ERROR_REQUIRES_RECENT_LOGIN') {
+      AuthCredential creds;
+      final firstNonFbProvider = user.providerData.firstWhere(
+        (data) => data.providerId != 'firebase',
+        orElse: () => null,
+      );
+      switch (firstNonFbProvider.providerId) {
+        case 'google.com':
+          creds = await getGoogleCredential(interactive: true);
+          break;
+        case 'apple.id':
+          creds = await getAppleCredential(interactive: true);
+          break;
+        default:
+          throw Exception('Unimplemented provider method');
+      }
+      await user.reauthenticateWithCredential(creds);
+      await user.linkWithCredential(creds);
+      return true;
+    }
+    rethrow;
+  } catch (e, stack) {
+    logger.w('Could not link with credential: $creds', e, stack);
+    return false;
   }
-  var secrets = await loadSecrets();
-  return _gSignIn = kIsWeb
-      ? GoogleSignIn(clientId: secrets.GOOGLE_CLIENT_ID)
-      : GoogleSignIn();
-}
-
-Future<UserLogin> signInWithGoogle({@required bool interactive}) async {
-  dwStore.dispatch(RequestLogin());
-  var inst = await _getGSignIn();
-  var acct = await (interactive ? inst.signIn() : inst.signInSilently());
-  var authRes = await acct.authentication;
-  var cred = GoogleAuthProvider.getCredential(
-    accessToken: authRes.accessToken,
-    idToken: authRes.idToken,
-  );
-  var res = await auth.signInWithCredential(cred);
-  return signInWithFbUser(res?.user);
-}
-
-Future<bool> checkAppleSignIn() async {
-  return AppleSignIn.isAvailable();
-}
-
-Future<UserLogin> signInWithApple({@required bool interactive}) async {
-  dwStore.dispatch(RequestLogin());
-  var scopes = [Scope.email, Scope.fullName];
-  final result = await AppleSignIn.performRequests(
-    [AppleIdRequest(requestedScopes: scopes)],
-  );
-  final appleIdCredential = result.credential;
-  final oAuthProvider = OAuthProvider(providerId: 'apple.com');
-  final credential = oAuthProvider.getCredential(
-    idToken: String.fromCharCodes(appleIdCredential.identityToken),
-    accessToken: String.fromCharCodes(appleIdCredential.authorizationCode),
-  );
-  return signInWithCredentials(credential);
 }
 
 Future<UserLogin> signInAutomatically() async {
