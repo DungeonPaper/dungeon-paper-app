@@ -54,7 +54,7 @@ class CustomSpellFormBuilderState extends State<CustomSpellFormBuilder> {
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: <Widget>[
           TextField(
-            decoration: InputDecoration(hintText: 'Spell Name'),
+            decoration: InputDecoration(labelText: 'Spell Name'),
             autocorrect: true,
             textCapitalization: TextCapitalization.words,
             onChanged: (val) => _setStateValue('name', val),

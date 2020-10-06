@@ -7,11 +7,8 @@ class EditBioCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Material(
-      color: Theme.of(context).canvasColor,
-      elevation: 1.0,
-      type: MaterialType.card,
-      borderRadius: BorderRadius.circular(5.0),
+    return Card(
+      margin: EdgeInsets.zero,
       child: Padding(
         padding: const EdgeInsets.all(8.0).copyWith(top: 0.0),
         child: Row(

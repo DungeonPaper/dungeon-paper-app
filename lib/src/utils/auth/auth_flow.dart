@@ -32,22 +32,22 @@ Future<bool> linkWithCredentials(AuthCredential creds) async {
     return true;
   } on PlatformException catch (e) {
     if (e.code == 'ERROR_REQUIRES_RECENT_LOGIN') {
-      AuthCredential creds;
+      AuthCredential origCreds;
       final firstNonFbProvider = user.providerData.firstWhere(
         (data) => data.providerId != 'firebase',
         orElse: () => null,
       );
       switch (firstNonFbProvider.providerId) {
         case 'google.com':
-          creds = await getGoogleCredential(interactive: true);
+          origCreds = await getGoogleCredential(interactive: true);
           break;
-        case 'apple.id':
-          creds = await getAppleCredential(interactive: true);
+        case 'apple.com':
+          origCreds = await getAppleCredential(interactive: true);
           break;
         default:
           throw Exception('Unimplemented provider method');
       }
-      await user.reauthenticateWithCredential(creds);
+      await user.reauthenticateWithCredential(origCreds);
       await user.linkWithCredential(creds);
       return true;
     }

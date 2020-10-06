@@ -59,7 +59,7 @@ class NoteFormBuilderState extends State<NoteFormBuilder> {
                 .toList(),
           ),
           TextField(
-            decoration: InputDecoration(hintText: 'Title'),
+            decoration: InputDecoration(labelText: 'Title'),
             autofocus: widget.mode == DialogMode.Create,
             autocorrect: true,
             textCapitalization: TextCapitalization.words,

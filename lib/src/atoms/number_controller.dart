@@ -87,8 +87,9 @@ class _NumberControllerState extends State<NumberController> {
             textColor: Colors.white,
             child: Icon(Icons.add, size: 30),
             onPressed: () => _update(
-                controlledStat < widget.max ? controlledStat + 1 : widget.max,
-                true),
+              controlledStat < widget.max ? controlledStat + 1 : widget.max,
+              true,
+            ),
           ),
         ],
       ),

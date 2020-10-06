@@ -20,11 +20,8 @@ class _EditAvatarCardState extends State<EditAvatarCard> {
 
   @override
   Widget build(BuildContext context) {
-    return Material(
-      color: Theme.of(context).canvasColor,
-      elevation: 1.0,
-      type: MaterialType.card,
-      borderRadius: BorderRadius.circular(5.0),
+    return Card(
+      margin: EdgeInsets.zero,
       child: Column(
         children: <Widget>[
           avatar(),

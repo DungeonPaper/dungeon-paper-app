@@ -33,8 +33,7 @@ class MoveCardState extends State<MoveCard> {
   @override
   Widget build(BuildContext context) {
     var move = widget.move;
-    Widget name =
-        Text("${move.name}${widget.raceMove ? '\'s Racial Move' : ''}");
+    Widget name = Text("${move.name}${widget.raceMove ? '\'s Move' : ''}");
 
     var children = <Widget>[
       Padding(

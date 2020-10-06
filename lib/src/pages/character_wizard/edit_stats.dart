@@ -1,5 +1,6 @@
 import 'package:dungeon_paper/db/helpers/character_utils.dart';
 import 'package:dungeon_paper/db/models/character.dart';
+import 'package:dungeon_paper/src/atoms/card_list_item.dart';
 import 'package:dungeon_paper/src/atoms/number_controller.dart';
 import 'package:dungeon_paper/src/utils/types.dart';
 import 'package:flutter/material.dart';
@@ -41,15 +42,18 @@ class _EditStatsState extends State<EditStats> {
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
-      child: Column(
-        children: <Widget>[
-          for (CharacterKeys stat in ORDERED_STATS)
-            EditStatListTile(
-              stat: stat,
-              value: _getter(stat),
-              onChange: _valueUpdateBuilder(_setter(stat)),
-            ),
-        ],
+      child: Padding(
+        padding: const EdgeInsets.all(16.0),
+        child: Column(
+          children: <Widget>[
+            for (CharacterKeys stat in ORDERED_STATS)
+              EditStatListTile(
+                stat: stat,
+                value: _getter(stat),
+                onChange: _valueUpdateBuilder(_setter(stat)),
+              ),
+          ],
+        ),
       ),
     );
   }
@@ -176,30 +180,21 @@ class EditStatListTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.all(8.0),
-      child: Material(
-        elevation: 1.0,
-        type: MaterialType.card,
-        child: ListTile(
-          title: Text(
-            CHARACTER_STAT_LABELS[stat],
-            textScaleFactor: 1.2,
-          ),
-          subtitle: Text(
-            '${CHARACTER_STAT_MODIFIER_LABELS[stat]}: '
-            '${CharacterFields.statModifier(value)}',
-          ),
-          trailing: Container(
-            width: 230,
-            child: NumberController(
-              value: value,
-              onChange: onChange,
-              min: 0,
-              max: MAX_STAT_VALUE,
-              autoFocus: false,
-            ),
-          ),
+    return CardListItem(
+      padding: EdgeInsets.only(left: 8),
+      title: Text(CHARACTER_STAT_LABELS[stat]),
+      subtitle: Text(
+        '${CHARACTER_STAT_MODIFIER_LABELS[stat]}: '
+        '${CharacterFields.statModifier(value)}',
+      ),
+      trailing: Container(
+        width: 230,
+        child: NumberController(
+          value: value,
+          onChange: onChange,
+          min: 0,
+          max: MAX_STAT_VALUE,
+          autoFocus: false,
         ),
       ),
     );
