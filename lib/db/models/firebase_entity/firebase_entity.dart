@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:dungeon_paper/db/db.dart';
 import 'package:dungeon_paper/src/utils/logger.dart';
 import 'package:flutter/foundation.dart';
 
@@ -82,6 +83,17 @@ abstract class FirebaseEntity {
     json = prepareData(json);
     setFields(json);
     finalizeUpdate(json, save: save);
+  }
+
+  Future<void> move(String newId, {bool useSameParent = true}) async {
+    final oldRef = ref;
+    ref = useSameParent
+        ? ref.parent().document(newId)
+        : firestore.document(newId);
+    logger.d('Creating new document: ${ref.path}');
+    await create();
+    logger.d('Success. Deleting ${oldRef.path}');
+    await oldRef.delete();
   }
 
   Map<String, dynamic> prepareData(Map<String, dynamic> json) {

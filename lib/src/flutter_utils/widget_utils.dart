@@ -5,13 +5,13 @@ const BOTTOM_SPACER = SizedBox(height: 64);
 typedef SingleChildWidgetBuilder = Widget Function(
     BuildContext context, Widget child);
 
-class PageLoader extends StatelessWidget {
+class Loader extends StatelessWidget {
   final Color color;
   final Color backgroundColor;
   final Size size;
   final double strokeWidth;
 
-  const PageLoader({
+  const Loader({
     Key key,
     this.color,
     this.backgroundColor,
