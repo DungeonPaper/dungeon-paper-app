@@ -2,8 +2,8 @@ import 'package:dungeon_paper/db/models/character.dart';
 import 'package:dungeon_paper/src/dialogs/dialogs.dart';
 import 'package:dungeon_paper/src/flutter_utils/widget_utils.dart';
 import 'package:dungeon_paper/src/molecules/edit_avatar_card.dart';
-import 'package:dungeon_paper/src/pages/character_wizard/edit_bio_card.dart';
-import 'package:dungeon_paper/src/pages/character_wizard/edit_display_name_card.dart';
+import 'package:dungeon_paper/src/pages/edit_character/edit_bio_card.dart';
+import 'package:dungeon_paper/src/pages/edit_character/edit_display_name_card.dart';
 import 'package:dungeon_paper/src/utils/types.dart';
 import 'package:flutter/material.dart';
 

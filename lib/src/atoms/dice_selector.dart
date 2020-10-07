@@ -91,16 +91,6 @@ class _DiceSelectorState extends State<DiceSelector> {
               style: widget.textStyle,
               textAlign: TextAlign.right,
               focusNode: focusNode,
-              decoration: InputDecoration(
-                contentPadding:
-                    EdgeInsets.symmetric(vertical: 0, horizontal: 8),
-                enabledBorder: OutlineInputBorder(
-                  borderSide: BorderSide(
-                    color: Theme.of(context).disabledColor.withOpacity(0.1),
-                    width: 1,
-                  ),
-                ),
-              ),
             ),
           ),
           DropdownButton<Dice>(

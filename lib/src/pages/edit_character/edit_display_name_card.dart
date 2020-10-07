@@ -1,32 +1,35 @@
 import 'package:flutter/material.dart';
 
-class EditBioCard extends StatelessWidget {
+class EditDisplayNameCard extends StatelessWidget {
   final TextEditingController controller;
 
-  const EditBioCard({Key key, this.controller}) : super(key: key);
+  const EditDisplayNameCard({
+    Key key,
+    @required this.controller,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Card(
       margin: EdgeInsets.zero,
       child: Padding(
-        padding: const EdgeInsets.all(8.0).copyWith(top: 0.0),
+        padding: const EdgeInsets.all(16),
         child: Row(
           children: <Widget>[
             Expanded(
               child: TextField(
-                maxLines: null,
-                minLines: 3,
                 controller: controller,
                 textInputAction: TextInputAction.done,
-                textCapitalization: TextCapitalization.sentences,
+                textCapitalization: TextCapitalization.words,
                 decoration: InputDecoration(
-                  labelText: 'Biography',
+                  labelText: 'Character name',
                   labelStyle: TextStyle(
                     fontSize: Theme.of(context).textTheme.subtitle1.fontSize,
                   ),
-                  hintText:
-                      'Tell us about your character.\nWhere it comes from, their motivation,\nor anything you want.\nGet creative!',
+                  hintText: "Your character's name",
+                ),
+                style: TextStyle(
+                  fontSize: Theme.of(context).textTheme.headline6.fontSize,
                 ),
               ),
             ),
