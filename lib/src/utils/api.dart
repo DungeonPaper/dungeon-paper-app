@@ -21,14 +21,11 @@ Future<User> getDatabaseUser(
   if (data.isEmpty) {
     unawaited(analytics.logSignUp(signUpMethod: signInMethod));
     user
-      ..displayName = fbUser.displayName
+      ..displayName = fbUser.displayName ?? fbUser.email
       ..email = fbUser.email
       ..photoURL = fbUser.photoUrl;
     await user.create();
-    await Character(
-      ref: user.ref.collection('characters').document(),
-      autoLoad: false,
-    ).create();
+    await user.createCharacter(Character());
   }
   return user;
 }

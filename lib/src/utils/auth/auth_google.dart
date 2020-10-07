@@ -1,4 +1,4 @@
-part of 'auth_flow.dart';
+part of 'auth.dart';
 
 GoogleSignIn _gSignIn;
 Future<GoogleSignIn> _getGSignIn() async {

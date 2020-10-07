@@ -79,7 +79,7 @@ class _WhatsNewState extends State<WhatsNew> {
         child = Container(
           width: 150,
           height: 150,
-          child: Center(child: PageLoader()),
+          child: Center(child: Loader()),
         );
       } else {
         child = Padding(

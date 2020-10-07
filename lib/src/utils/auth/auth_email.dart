@@ -1,4 +1,4 @@
-part of 'auth_flow.dart';
+part of 'auth.dart';
 
 Future<UserLogin> signInWithEmailAndPassword({
   @required String email,

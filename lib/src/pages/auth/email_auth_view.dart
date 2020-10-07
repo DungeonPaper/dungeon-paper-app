@@ -1,14 +1,14 @@
 import 'package:dungeon_paper/src/flutter_utils/input_validators.dart';
 import 'package:dungeon_paper/src/flutter_utils/widget_utils.dart';
 import 'package:dungeon_paper/src/utils/auth/auth_common.dart';
-import 'package:dungeon_paper/src/utils/auth/auth_flow.dart';
+import 'package:dungeon_paper/src/utils/auth/auth.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:email_validator/email_validator.dart';
 import 'package:flutter/services.dart';
 
 class EmailAuthView extends StatefulWidget {
-  final void Function(FirebaseUser) onLoggedIn;
+  final void Function(FirebaseUser, EmailAuthCredential) onLoggedIn;
   final bool signUpMode;
   final bool linkMode;
 
@@ -188,7 +188,7 @@ class _EmailAuthViewState extends State<EmailAuthView> {
         ),
       );
       if (res) {
-        widget.onLoggedIn?.call(await auth.currentUser());
+        widget.onLoggedIn?.call(await auth.currentUser(), credential);
       }
     } catch (e) {
       setState(() {
@@ -208,7 +208,7 @@ class _EmailAuthViewState extends State<EmailAuthView> {
         email: email,
         password: password,
       );
-      widget.onLoggedIn?.call(res?.firebaseUser);
+      widget.onLoggedIn?.call(res?.firebaseUser, credential);
     } catch (e) {
       setState(() {
         loading = false;
@@ -227,7 +227,7 @@ class _EmailAuthViewState extends State<EmailAuthView> {
         email: email,
         password: password,
       );
-      widget.onLoggedIn?.call(res?.firebaseUser);
+      widget.onLoggedIn?.call(res?.firebaseUser, credential);
     } catch (e) {
       setState(() {
         loading = false;
@@ -235,6 +235,11 @@ class _EmailAuthViewState extends State<EmailAuthView> {
       });
     }
   }
+
+  EmailAuthCredential get credential => EmailAuthCredential(
+        email: email,
+        password: password,
+      );
 
   String errMessage(dynamic e) {
     switch (e.code) {

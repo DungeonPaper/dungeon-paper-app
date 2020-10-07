@@ -16,6 +16,7 @@ import 'auth_common.dart';
 part 'auth_email.dart';
 part 'auth_google.dart';
 part 'auth_apple.dart';
+part 'auth_helpers.dart';
 
 Future<UserLogin> signInWithCredentials(AuthCredential creds) async {
   assert(creds != null);
@@ -32,22 +33,7 @@ Future<bool> linkWithCredentials(AuthCredential creds) async {
     return true;
   } on PlatformException catch (e) {
     if (e.code == 'ERROR_REQUIRES_RECENT_LOGIN') {
-      AuthCredential origCreds;
-      final firstNonFbProvider = user.providerData.firstWhere(
-        (data) => data.providerId != 'firebase',
-        orElse: () => null,
-      );
-      switch (firstNonFbProvider.providerId) {
-        case 'google.com':
-          origCreds = await getGoogleCredential(interactive: true);
-          break;
-        case 'apple.com':
-          origCreds = await getAppleCredential(interactive: true);
-          break;
-        default:
-          throw Exception('Unimplemented provider method');
-      }
-      await user.reauthenticateWithCredential(origCreds);
+      await reauthenticateUser(user);
       await user.linkWithCredential(creds);
       return true;
     }
@@ -56,6 +42,68 @@ Future<bool> linkWithCredentials(AuthCredential creds) async {
     logger.w('Could not link with credential: $creds', e, stack);
     return false;
   }
+}
+
+Future<bool> unlinkFromProvider(String providerId) async {
+  final user = await auth.currentUser();
+  try {
+    await user.unlinkFromProvider(providerId);
+    return true;
+  } on PlatformException catch (e) {
+    if (e.code == 'ERROR_REQUIRES_RECENT_LOGIN') {
+      await reauthenticateUser(user);
+      await user.unlinkFromProvider(providerId);
+      return true;
+    }
+    rethrow;
+  } catch (e, stack) {
+    logger.w('Could not unlink with provider: $providerId', e, stack);
+    return false;
+  }
+}
+
+Future<bool> updateEmail(String email) async {
+  final user = await auth.currentUser();
+  try {
+    await user.updateEmail(email);
+    return true;
+  } on PlatformException catch (e) {
+    if (e.code == 'ERROR_REQUIRES_RECENT_LOGIN') {
+      await reauthenticateUser(user);
+      await user.unlinkFromProvider(email);
+      return true;
+    }
+    rethrow;
+  } catch (e, stack) {
+    logger.w('Could not update email to: $email', e, stack);
+    return false;
+  }
+}
+
+Future<bool> reauthenticateUser(FirebaseUser user) async {
+  try {
+    AuthCredential origCreds;
+    final primary = getPrimaryAuthProvider(user);
+    switch (primary.providerId) {
+      case 'google.com':
+        origCreds = await getGoogleCredential(interactive: true);
+        break;
+      case 'apple.com':
+        origCreds = await getAppleCredential(interactive: true);
+        break;
+      default:
+        throw Exception('Unimplemented provider method');
+    }
+    await user.reauthenticateWithCredential(origCreds);
+    return true;
+  } catch (e) {
+    return false;
+  }
+}
+
+Future<void> sendPasswordResetLink() async {
+  final user = await auth.currentUser();
+  await auth.sendPasswordResetEmail(email: user.email);
 }
 
 Future<UserLogin> signInAutomatically() async {
@@ -79,10 +127,10 @@ Future<UserLogin> signInWithFbUser(FirebaseUser fbUser) async {
   );
 }
 
-Future<void> signOutAll() {
+Future<void> signOutAll() async {
   dwStore.dispatch(Logout());
-  _gSignIn?.disconnect();
-  return auth.signOut();
+  unawaited(_gSignIn?.disconnect());
+  unawaited(auth.signOut());
 }
 
 void dispatchFinalDataToStore({

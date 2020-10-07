@@ -3,7 +3,7 @@ import 'package:dungeon_paper/src/pages/auth/email_auth_view.dart';
 import 'package:dungeon_paper/src/redux/stores.dart';
 import 'package:dungeon_paper/src/redux/users/user_store.dart';
 import 'package:dungeon_paper/src/utils/auth/auth_common.dart';
-import 'package:dungeon_paper/src/utils/auth/auth_flow.dart';
+import 'package:dungeon_paper/src/utils/auth/auth.dart';
 import 'package:dungeon_paper/src/utils/logger.dart';
 import 'package:flutter/material.dart';
 
@@ -30,25 +30,26 @@ class LoginView extends StatelessWidget {
         SizedBox(height: 5),
         FutureBuilder(
           future: checkAppleSignIn(),
-          builder: (context, AsyncSnapshot<bool> available) => available.data == true
-              ? Padding(
-                  padding: const EdgeInsets.only(bottom: 5),
-                  child: LoginButton(
-                    label: 'Apple sign in',
-                    color: Colors.black,
-                    textColor: Colors.white,
-                    icon: PlatformSvg.asset(
-                      'social/apple.svg',
-                      size: 20,
-                      color: Colors.white,
-                    ),
-                    onPressed: () => _signIn(
-                      context,
-                      () => signInWithApple(interactive: true),
-                    ),
-                  ),
-                )
-              : Container(),
+          builder: (context, AsyncSnapshot<bool> available) =>
+              available.data == true
+                  ? Padding(
+                      padding: const EdgeInsets.only(bottom: 5),
+                      child: LoginButton(
+                        label: 'Apple sign in',
+                        color: Colors.black,
+                        textColor: Colors.white,
+                        icon: PlatformSvg.asset(
+                          'social/apple.svg',
+                          size: 20,
+                          color: Colors.white,
+                        ),
+                        onPressed: () => _signIn(
+                          context,
+                          () => signInWithApple(interactive: true),
+                        ),
+                      ),
+                    )
+                  : Container(),
         ),
         // LoginButton(
         //   label: 'Facebook sign in',
@@ -75,7 +76,7 @@ class LoginView extends StatelessWidget {
           onPressed: () => showDialog(
             context: context,
             builder: (context) => EmailAuthView(
-              onLoggedIn: (user) => _signIn(
+              onLoggedIn: (user, _cred) => _signIn(
                 context,
                 () => Navigator.pop(context),
               ),
