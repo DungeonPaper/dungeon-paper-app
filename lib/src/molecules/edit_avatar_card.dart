@@ -26,7 +26,7 @@ class _EditAvatarCardState extends State<EditAvatarCard> {
         children: <Widget>[
           avatar(),
           Padding(
-            padding: const EdgeInsets.all(8.0).copyWith(top: 0.0),
+            padding: const EdgeInsets.all(16),
             child: Row(
               children: <Widget>[
                 Expanded(
@@ -66,7 +66,9 @@ class _EditAvatarCardState extends State<EditAvatarCard> {
                       try {
                         if (err == null || !uri.scheme.startsWith('http')) {
                           return NetworkImageWithRetry.defaultFetchStrategy(
-                              uri, err);
+                            uri,
+                            err,
+                          );
                         } else {
                           setState(() {
                             imageError = true;

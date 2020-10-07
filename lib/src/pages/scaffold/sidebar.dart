@@ -3,8 +3,9 @@ import 'package:dungeon_paper/db/models/user.dart';
 import 'package:dungeon_paper/src/dialogs/dialogs.dart';
 import 'package:dungeon_paper/src/flutter_utils/platform_svg.dart';
 import 'package:dungeon_paper/src/pages/about_view/about_view.dart';
+import 'package:dungeon_paper/src/pages/account_view/account_view.dart';
 import 'package:dungeon_paper/src/pages/auth/email_auth_view.dart';
-import 'package:dungeon_paper/src/pages/character_wizard/edit_character_view.dart';
+import 'package:dungeon_paper/src/pages/edit_character/edit_character_view.dart';
 import 'package:dungeon_paper/src/pages/compendium/compendium_view.dart';
 import 'package:dungeon_paper/src/redux/characters/characters_store.dart';
 import 'package:dungeon_paper/src/redux/connectors.dart';
@@ -67,6 +68,18 @@ class _SidebarState extends State<Sidebar> {
                 //     ),
                 //   ),
                 // ),
+                // Log out
+                ListTile(
+                  leading: Icon(Icons.person),
+                  title: Text('Account'),
+                  onTap: () => Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      fullscreenDialog: true,
+                      builder: (context) => AccountView(),
+                    ),
+                  ),
+                ),
                 // Log out
                 ListTile(
                   leading: Icon(Icons.exit_to_app),

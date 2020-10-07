@@ -137,7 +137,7 @@ class _EmailAuthViewState extends State<EmailAuthView> {
                       color: Theme.of(context).primaryColor,
                       onPressed: loading || !isValid
                           ? null
-                          : widget.linkMode
+                          : widget.linkMode == true
                               ? _link
                               : signUpMode
                                   ? _signUp

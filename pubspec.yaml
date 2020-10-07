@@ -49,6 +49,7 @@ dependencies:
   logger: ^0.9.1
   email_validator: ^1.0.5
   apple_sign_in: ^0.1.0
+  theme_provider: ^0.4.0+1
 
 dev_dependencies:
   flutter_test:
