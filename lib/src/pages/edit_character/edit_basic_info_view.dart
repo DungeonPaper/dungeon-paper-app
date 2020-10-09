@@ -76,9 +76,13 @@ class _EditBasicInfoViewState extends State<EditBasicInfoView> {
               controller: editingControllers[_Keys.displayName],
             ),
             spacer,
-            EditAvatarCard(controller: editingControllers[_Keys.photoURL]),
+            EditAvatarCard(
+              controller: editingControllers[_Keys.photoURL],
+            ),
             spacer,
-            EditBioCard(controller: editingControllers[_Keys.bio]),
+            EditBioCard(
+              controller: editingControllers[_Keys.bio],
+            ),
           ],
         ),
       ),

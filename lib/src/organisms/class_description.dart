@@ -1,5 +1,5 @@
 import 'package:dungeon_paper/src/atoms/card_list_item.dart';
-import 'package:dungeon_paper/src/flutter_utils/platform_svg.dart';
+import 'package:dungeon_paper/src/atoms/dice_icon.dart';
 import 'package:dungeon_world_data/player_class.dart';
 import 'package:dungeon_world_data/alignment.dart' as dw_alignment;
 import 'package:flutter/material.dart';
@@ -29,29 +29,41 @@ class ClassDescription extends StatelessWidget {
               style: textTheme.headline6,
             ),
             spacer,
-            Text(classDef.description),
-            spacer,
-            Padding(
-              padding: const EdgeInsets.symmetric(vertical: 16.0),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: <Widget>[
-                  StatIcon(
-                    icon: Icon(Icons.healing, size: 40.0),
-                    label: Text('Base HP'),
-                    value: Text(classDef.baseHP.toString()),
-                  ),
-                  StatIcon(
-                    icon: PlatformSvg.asset(
-                      'dice/d${classDef.damage.sides}.svg',
-                      // color: color,
-                      width: 40.0,
-                      height: 40.0,
+            Card(
+              child: Padding(
+                padding: const EdgeInsets.all(16),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: [
+                    Text(
+                      classDef.description,
+                      style: theme.textTheme.bodyText1
+                          .copyWith(color: theme.accentColor),
                     ),
-                    label: Text('Damage Die'),
-                    value: Text(classDef.damage.toString()),
-                  ),
-                ],
+                    spacer,
+                    Padding(
+                      padding: const EdgeInsets.symmetric(vertical: 16.0),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        children: <Widget>[
+                          StatIcon(
+                            icon: Icon(Icons.healing, size: 40.0),
+                            label: Text('Base HP'),
+                            value: Text(classDef.baseHP.toString()),
+                          ),
+                          StatIcon(
+                            icon: DiceIcon(
+                              dice: classDef.damage,
+                              size: 40,
+                            ),
+                            label: Text('Damage Die'),
+                            value: Text(classDef.damage.toString()),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
               ),
             ),
             spacer,
@@ -83,14 +95,22 @@ class StatIcon extends StatelessWidget {
     return Container(
       child: Column(
         children: <Widget>[
-          icon,
+          IconTheme(
+            child: icon,
+            data: IconThemeData(color: theme.accentColor),
+          ),
           DefaultTextStyle(
             child: value,
-            style: textTheme.headline5.copyWith(fontSize: 30),
+            style: textTheme.headline5.copyWith(
+              fontSize: 30,
+              color: theme.accentColor,
+            ),
           ),
           DefaultTextStyle(
             child: label,
-            style: textTheme.caption,
+            style: textTheme.caption.copyWith(
+              color: theme.accentColor,
+            ),
           ),
         ],
       ),
@@ -111,6 +131,10 @@ class AlignmentList extends StatelessWidget {
     var theme = Theme.of(context);
     var textTheme = theme.textTheme;
 
+    if (!alignments.any((align) => align?.description?.isNotEmpty == true)) {
+      return Container();
+    }
+
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 8.0),
       child: Container(
@@ -123,12 +147,14 @@ class AlignmentList extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
-              Text('Available alignments:',
-                  style:
-                      textTheme.subtitle2.copyWith(color: theme.primaryColor)),
+              Text(
+                'Available alignments:',
+                style: textTheme.subtitle2.copyWith(
+                  color: theme.accentColor,
+                ),
+              ),
               for (var alignment in alignments)
                 TitleSubtitleRow(
-                  // contentPadding: EdgeInsets.symmetric(vertical: 8.0),
                   title: Text(alignment.name),
                   subtitle: Text(alignment.description),
                 ),

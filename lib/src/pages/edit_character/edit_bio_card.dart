@@ -25,8 +25,11 @@ class EditBioCard extends StatelessWidget {
                   labelStyle: TextStyle(
                     fontSize: Theme.of(context).textTheme.subtitle1.fontSize,
                   ),
-                  hintText:
-                      'Tell us about your character.\nWhere it comes from, their motivation,\nor anything you want.\nGet creative!',
+                  hintText: 'Tell us about your character.\n'
+                      'Where it comes from, their motivation,\n'
+                      'or anything you want.\n'
+                      'Get creative!',
+                  floatingLabelBehavior: FloatingLabelBehavior.always,
                 ),
               ),
             ),

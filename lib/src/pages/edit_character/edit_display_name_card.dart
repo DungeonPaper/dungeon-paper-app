@@ -23,6 +23,7 @@ class EditDisplayNameCard extends StatelessWidget {
                 textCapitalization: TextCapitalization.words,
                 decoration: InputDecoration(
                   labelText: 'Character name',
+                  floatingLabelBehavior: FloatingLabelBehavior.always,
                   labelStyle: TextStyle(
                     fontSize: Theme.of(context).textTheme.subtitle1.fontSize,
                   ),
