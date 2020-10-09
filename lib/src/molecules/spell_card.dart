@@ -54,6 +54,7 @@ class SpellCardState extends State<SpellCard> {
                 ],
               )
             : name,
+        expandedCrossAxisAlignment: CrossAxisAlignment.stretch,
         children: <Widget>[
           Padding(
             padding: const EdgeInsets.all(16),

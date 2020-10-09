@@ -115,6 +115,7 @@ class MoveCardState extends State<MoveCard> {
           : name,
       initiallyExpanded: false,
       children: children,
+      expandedCrossAxisAlignment: CrossAxisAlignment.stretch,
       onExpansionChanged: (value) => analytics.logEvent(
         name: Events.ExpandMoveCard,
         parameters: {'state': value.toString()},

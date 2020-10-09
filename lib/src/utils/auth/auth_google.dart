@@ -17,7 +17,7 @@ Future<UserLogin> signInWithGoogle({
   dwStore.dispatch(RequestLogin());
   final cred = await getGoogleCredential(interactive: interactive);
   final res = await auth.signInWithCredential(cred);
-  return signInWithFbUser(res?.user);
+  return signInWithFbUser(SignInMethod.google, res?.user);
 }
 
 Future<GoogleAuthCredential> getGoogleCredential({

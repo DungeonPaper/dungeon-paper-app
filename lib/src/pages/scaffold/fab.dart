@@ -71,6 +71,7 @@ class FABState extends State<FAB> {
                   note: Note(),
                   mode: DialogMode.Create,
                   onSave: (note) => createNote(character, note),
+                  categories: collectCategories(character.notes),
                 ),
               ),
             ),

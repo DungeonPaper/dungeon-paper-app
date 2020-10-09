@@ -207,3 +207,13 @@ String snakeToCamel(String string) =>
           RegExp(r'_([a-zA-Z0-9])'),
           (match) => match.group(1).toUpperCase(),
         );
+
+Map<K, List<V>> groupBy<K, V>(Iterable<V> list, K Function(V) predicate) {
+  final out = <K, List<V>>{};
+  for (final item in list) {
+    final k = predicate(item);
+    out[k] ??= <V>[];
+    out[k].add(item);
+  }
+  return out;
+}
