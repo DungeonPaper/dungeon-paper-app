@@ -21,7 +21,9 @@ abstract class DWEntityField<T extends DWEntity> extends Field<T> {
           defaultValue: defaultValue,
           fromJSON: (value, ctx) => value is T ? value : create(value),
           toJSON: (value, ctx) => value is T
-              ? toJSON != null ? toJSON(value, ctx) : value.toJSON()
+              ? toJSON != null
+                  ? toJSON(value, ctx)
+                  : value.toJSON()
               : value,
         );
 }
@@ -403,7 +405,7 @@ class CharacterField extends Field<Character> {
           fromJSON: (value, ctx) => value is Map &&
                   (value.containsKey('data') || value.containsKey('docIS'))
               ? Character(
-                  ref: firestore.document(value['docID']),
+                  ref: firestore.doc(value['docID']),
                   data: value['data'],
                 )
               : Character(data: value),

@@ -22,7 +22,8 @@ Future<UserLogin> createUserWithEmailAndPassword({
   return signInWithFbUser(res?.user);
 }
 
-Future<AuthResult> performEmailAuth(String email, String password) async {
+Future<fb.UserCredential> performEmailAuth(
+    String email, String password) async {
   final res = await auth.signInWithEmailAndPassword(
     email: email,
     password: password,

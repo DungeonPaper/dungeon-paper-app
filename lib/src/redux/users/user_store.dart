@@ -1,5 +1,5 @@
 import 'package:dungeon_paper/db/models/user.dart';
-import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_auth/firebase_auth.dart' as fb;
 import 'package:meta/meta.dart';
 
 part 'user_actions.dart';
@@ -7,7 +7,7 @@ part 'user_actions.dart';
 class UserStore {
   String currentUserDocID;
   User current;
-  FirebaseUser firebaseUser;
+  fb.User firebaseUser;
 
   UserStore({
     @required this.currentUserDocID,

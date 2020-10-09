@@ -1,23 +1,20 @@
 import 'dart:async';
-import 'dart:io';
 
 import 'package:dungeon_paper/src/flutter_utils/widget_utils.dart';
 import 'package:dungeon_paper/src/pages/auth/email_auth_view.dart';
 import 'package:dungeon_paper/src/utils/auth/auth.dart';
 import 'package:dungeon_paper/src/utils/auth/auth_common.dart';
-import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_auth/firebase_auth.dart' as fb;
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 class AuthProviderTileData {
   final String id;
   final String displayName;
-  final Future<bool> Function(AuthProviderTileData) link;
 
   AuthProviderTileData({
     @required this.id,
     @required this.displayName,
-    @required this.link,
   });
 }
 
@@ -29,7 +26,7 @@ class AuthProviderTile extends StatefulWidget {
   }) : super(key: key);
 
   final AuthProviderTileData data;
-  final FirebaseUser user;
+  final fb.User user;
 
   @override
   _AuthProviderTileState createState() => _AuthProviderTileState();
@@ -39,7 +36,7 @@ class _AuthProviderTileState extends State<AuthProviderTile> {
   bool loading;
   bool isAvailable;
   AuthProviderTileData get data => widget.data;
-  FirebaseUser get user => widget.user;
+  fb.User get user => widget.user;
 
   @override
   void initState() {
@@ -83,7 +80,7 @@ class _AuthProviderTileState extends State<AuthProviderTile> {
               ),
             ])
           : Text(title),
-      subtitle: Text(subtitle),
+      subtitle: subtitle?.isNotEmpty == true ? Text(subtitle) : null,
       trailing: RaisedButton(
         color: Theme.of(context).accentColor,
         textColor: Theme.of(context).colorScheme.onSecondary,

@@ -2,19 +2,19 @@ import 'package:dungeon_paper/db/db.dart';
 import 'package:dungeon_paper/db/models/character.dart';
 import 'package:dungeon_paper/db/models/user.dart';
 import 'package:dungeon_paper/src/utils/analytics.dart';
-import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_auth/firebase_auth.dart' as fb;
 import 'package:flutter/foundation.dart';
 import 'package:pedantic/pedantic.dart';
 
 Future<User> getDatabaseUser(
-  FirebaseUser fbUser, {
+  fb.User fbUser, {
   @required String signInMethod,
 }) async {
   if (fbUser == null) {
     return null;
   }
   var user = User(
-    ref: firestore.collection('user_data').document(fbUser.email),
+    ref: firestore.collection('user_data').doc(fbUser.email),
     autoLoad: false,
   );
   var data = await user.getRemoteData();
@@ -23,7 +23,7 @@ Future<User> getDatabaseUser(
     user
       ..displayName = fbUser.displayName ?? fbUser.email
       ..email = fbUser.email
-      ..photoURL = fbUser.photoUrl;
+      ..photoURL = fbUser.photoURL;
     await user.create();
     await user.createCharacter(Character());
   }

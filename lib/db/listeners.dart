@@ -6,7 +6,7 @@ import 'package:dungeon_paper/src/redux/custom_classes/custom_classes_store.dart
 import 'package:dungeon_paper/src/redux/stores.dart';
 import 'package:dungeon_paper/src/redux/users/user_store.dart';
 import 'package:dungeon_paper/src/utils/logger.dart';
-import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_auth/firebase_auth.dart' as fb;
 import 'package:pedantic/pedantic.dart';
 
 import 'models/character.dart';
@@ -20,8 +20,7 @@ void registerFirebaseUserListener() {
       _fbUserListener.cancel();
     }
 
-    _fbUserListener = FirebaseAuth.instance.onAuthStateChanged
-        .listen((FirebaseUser authUser) {
+    _fbUserListener = auth.authStateChanges().listen((authUser) {
       if (authUser != null &&
           authUser.email != null &&
           dwStore.state.user.current != null &&
@@ -46,7 +45,7 @@ void registerFirebaseUserListener() {
 
 StreamSubscription _userListener;
 
-void registerUserListener(FirebaseUser fbUser) {
+void registerUserListener(fb.User fbUser) {
   if (_userListener != null) {
     _userListener.cancel();
   }
@@ -56,11 +55,11 @@ void registerUserListener(FirebaseUser fbUser) {
   }
 
   var userDocID = 'user_data/${fbUser.email}';
-  _userListener = firestore.document(userDocID).snapshots().listen((user) {
+  _userListener = firestore.doc(userDocID).snapshots().listen((user) {
     dwStore.dispatch(
       SetUser(
         User(
-          data: user.data,
+          data: user.data(),
           ref: user.reference,
         ),
       ),
@@ -82,16 +81,16 @@ void registerCharactersListener() async {
   }
 
   var userDocID = dwStore.state.user.current.documentID;
-  var user = firestore.document('user_data/$userDocID');
+  var user = firestore.doc('user_data/$userDocID');
   _charsListener =
       user.collection('characters').snapshots().listen((characters) {
-    if (characters.documents.isEmpty) {
+    if (characters.docs.isEmpty) {
       return;
     }
     var chars = {
-      for (var character in characters.documents)
-        character.reference.documentID: Character(
-          data: character.data,
+      for (var character in characters.docs)
+        character.reference.id: Character(
+          data: character.data(),
           ref: character.reference,
         ),
     };
@@ -118,17 +117,17 @@ void registerCustomClassesListener() async {
   }
 
   var userDocID = dwStore.state.user.current.documentID;
-  var user = firestore.document('user_data/$userDocID');
+  var user = firestore.doc('user_data/$userDocID');
   _classesListener =
       user.collection('custom_classes').snapshots().listen((classes) {
-    if (classes.documents.isEmpty) {
+    if (classes.docs.isEmpty) {
       return;
     }
     dwStore.dispatch(
       SetCustomClasses({
-        for (var character in classes.documents)
-          character.reference.documentID: CustomClass(
-            data: character.data,
+        for (var character in classes.docs)
+          character.reference.id: CustomClass(
+            data: character.data(),
             ref: character.reference,
           ),
       }),
