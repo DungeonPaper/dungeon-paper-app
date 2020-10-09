@@ -92,7 +92,9 @@ class _ManageCharactersViewState extends State<ManageCharactersView> {
                               color: Colors.red,
                               icon: Icon(Icons.delete_forever),
                               tooltip: 'Delete ${char.value.displayName}',
-                              onPressed: _delete(char.value),
+                              onPressed: characters.length > 1
+                                  ? _delete(char.value)
+                                  : null,
                               visualDensity: VisualDensity.compact,
                             ),
                           ]),

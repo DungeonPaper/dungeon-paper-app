@@ -50,11 +50,12 @@ class _AccountViewState extends State<AccountView> {
         final fbUser = login.firebaseUser;
         final hasPassword = isUserLinkedToAuth('password', fbUser);
         final hasAvatar = user.photoURL?.isNotEmpty == true;
-        final initials = user.displayName
-            .split(RegExp(r'[\.\s]+'))
-            .take(2)
-            .map((word) => word[0].toUpperCase())
-            .join('');
+        final initials =
+            (user.displayName.length > 2 ? user.displayName : user.email)
+                .split(RegExp(r'[\.\s]+'))
+                .take(2)
+                .map((word) => word[0].toUpperCase())
+                .join('');
         return ScaffoldWithElevation(
           automaticallyImplyLeading: true,
           title: Text('Your Account'),

@@ -118,6 +118,18 @@ class LogTask extends Task {
           run: _run(message),
         );
 
+  LogTask.syncArgs(
+    FutureOr<String> message, {
+    bool Function(ArgOptions) condition,
+    FutureOr<void> Function(ArgOptions) beforeAll,
+    FutureOr<void> Function(ArgOptions) afterAll,
+  }) : super(
+          condition: condition,
+          beforeAll: beforeAll,
+          afterAll: afterAll,
+          run: _run((o) => message),
+        );
+
   static Future<void> Function(ArgOptions) _run(
     FutureOr<String> Function(ArgOptions) message,
   ) {
