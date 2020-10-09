@@ -107,6 +107,7 @@ class _DiceSelectorState extends State<DiceSelector> {
                 ),
             ],
             onChanged: _updateSides,
+            dropdownColor: Theme.of(context).cardColor,
           )
         ],
       ),

@@ -52,7 +52,10 @@ class CustomMoveFormBuilderState extends State<CustomMoveFormBuilder> {
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: <Widget>[
           TextField(
-            decoration: InputDecoration(labelText: '${widget.moveLabel} Name'),
+            decoration: InputDecoration(
+              labelText: '${widget.moveLabel} Name',
+              floatingLabelBehavior: FloatingLabelBehavior.always,
+            ),
             autocorrect: true,
             textCapitalization: TextCapitalization.words,
             onChanged: (val) => _setStateValue('name', val),
@@ -61,8 +64,12 @@ class CustomMoveFormBuilderState extends State<CustomMoveFormBuilder> {
           Container(
             margin: const EdgeInsets.symmetric(vertical: 8.0),
             child: TextField(
-              decoration: InputDecoration(labelText: 'Description'),
+              decoration: InputDecoration(
+                labelText: 'Description',
+                floatingLabelBehavior: FloatingLabelBehavior.always,
+              ),
               autofocus: widget.mode == DialogMode.Edit,
+              minLines: 6,
               maxLines: null,
               keyboardType: TextInputType.multiline,
               autocorrect: true,
@@ -76,8 +83,12 @@ class CustomMoveFormBuilderState extends State<CustomMoveFormBuilder> {
           Container(
             margin: const EdgeInsets.symmetric(vertical: 8.0),
             child: TextField(
-              decoration: InputDecoration(labelText: 'Explanation'),
+              decoration: InputDecoration(
+                labelText: 'Explanation',
+                floatingLabelBehavior: FloatingLabelBehavior.always,
+              ),
               autofocus: widget.mode == DialogMode.Edit,
+              minLines: 6,
               maxLines: null,
               keyboardType: TextInputType.multiline,
               autocorrect: true,

@@ -58,7 +58,10 @@ class NoteFormBuilderState extends State<NoteFormBuilder> {
           // ),
           TypeAheadField<String>(
             textFieldConfiguration: TextFieldConfiguration(
-              decoration: InputDecoration(labelText: 'Category'),
+              decoration: InputDecoration(
+                labelText: 'Category',
+                floatingLabelBehavior: FloatingLabelBehavior.always,
+              ),
               textCapitalization: TextCapitalization.words,
               controller: _controllers['category'],
             ),
@@ -72,7 +75,10 @@ class NoteFormBuilderState extends State<NoteFormBuilder> {
           ),
           SizedBox(height: 10),
           TextField(
-            decoration: InputDecoration(labelText: 'Title'),
+            decoration: InputDecoration(
+              labelText: 'Title',
+              floatingLabelBehavior: FloatingLabelBehavior.always,
+            ),
             autofocus: widget.mode == DialogMode.Create,
             autocorrect: true,
             textCapitalization: TextCapitalization.words,
@@ -81,8 +87,12 @@ class NoteFormBuilderState extends State<NoteFormBuilder> {
           Container(
             margin: const EdgeInsets.symmetric(vertical: 8.0),
             child: TextField(
-              decoration: InputDecoration(labelText: 'Description'),
+              decoration: InputDecoration(
+                labelText: 'Description',
+                floatingLabelBehavior: FloatingLabelBehavior.always,
+              ),
               autofocus: widget.mode == DialogMode.Edit,
+              minLines: 6,
               maxLines: null,
               keyboardType: TextInputType.multiline,
               autocorrect: true,

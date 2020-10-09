@@ -38,6 +38,7 @@ class _EditAvatarCardState extends State<EditAvatarCard> {
                     decoration: InputDecoration(
                       hintText: 'We recommend uploading to imgur.com',
                       labelText: 'Avatar Image URL',
+                      floatingLabelBehavior: FloatingLabelBehavior.always,
                     ),
                   ),
                 ),
