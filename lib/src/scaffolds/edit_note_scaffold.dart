@@ -10,9 +10,11 @@ class EditNoteScreen extends StatefulWidget {
     @required this.note,
     @required this.mode,
     @required this.onSave,
+    @required this.categories,
   }) : super(key: key);
 
   final Note note;
+  final List<String> categories;
   final DialogMode mode;
   final void Function(Note) onSave;
 
@@ -29,6 +31,7 @@ class _EditNoteScreenState extends State<EditNoteScreen> {
       mode: widget.mode,
       note: widget.note,
       onSave: widget.onSave,
+      categories: widget.categories,
       builder: (ctx, form, onSave) {
         return ScaffoldWithElevation(
           title:

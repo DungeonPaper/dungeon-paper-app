@@ -59,6 +59,7 @@ class InventoryItemCard extends StatelessWidget {
       child: ExpansionTile(
         key: PageStorageKey('inv-${item.key}'),
         title: title,
+        expandedCrossAxisAlignment: CrossAxisAlignment.stretch,
         children: <Widget>[
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),

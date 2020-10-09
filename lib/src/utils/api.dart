@@ -2,13 +2,14 @@ import 'package:dungeon_paper/db/db.dart';
 import 'package:dungeon_paper/db/models/character.dart';
 import 'package:dungeon_paper/db/models/user.dart';
 import 'package:dungeon_paper/src/utils/analytics.dart';
+import 'package:dungeon_paper/src/utils/auth/auth.dart';
 import 'package:firebase_auth/firebase_auth.dart' as fb;
 import 'package:flutter/foundation.dart';
 import 'package:pedantic/pedantic.dart';
 
 Future<User> getDatabaseUser(
   fb.User fbUser, {
-  @required String signInMethod,
+  @required SignInMethod signInMethod,
 }) async {
   if (fbUser == null) {
     return null;
@@ -19,7 +20,7 @@ Future<User> getDatabaseUser(
   );
   var data = await user.getRemoteData();
   if (data.isEmpty) {
-    unawaited(analytics.logSignUp(signUpMethod: signInMethod));
+    unawaited(analytics.logSignUp(signUpMethod: signInMethod.name));
     user
       ..displayName = fbUser.displayName ?? fbUser.email
       ..email = fbUser.email

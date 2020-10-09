@@ -28,7 +28,7 @@ void withInit(Function() cb) async {
 }
 
 void main() async {
-  initApp(web: kIsWeb);
+  await initApp(web: kIsWeb);
   withInit(() {
     dwStore.dispatch(AppInit());
     runApp(DungeonPaper());

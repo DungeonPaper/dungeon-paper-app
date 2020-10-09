@@ -7,10 +7,18 @@ import 'character.dart';
 enum NoteKeys { key, title, description, category }
 
 class Note with Serializer<NoteKeys> {
-  NoteCategory category;
+  String category;
   String key;
   String title;
   String description;
+
+  static final defaultCategories = [
+    'NPCs',
+    'Loot',
+    'Locations',
+    'Quests',
+    'Misc'
+  ];
 
   Note([Map map]) {
     map ??= {};
@@ -29,7 +37,7 @@ class Note with Serializer<NoteKeys> {
     return {
       'key': key,
       'title': title,
-      'category': category.toString(),
+      'category': category,
       'description': description,
     };
   }
@@ -47,46 +55,11 @@ class Note with Serializer<NoteKeys> {
         description = v ?? '';
       },
       NoteKeys.category: (v) {
-        category = NoteCategory((v ?? NoteCategory.misc.name).toString());
+        category = v ?? 'Misc';
       },
     };
     return serializeAll(map);
   }
-}
-
-class NoteCategory {
-  String name;
-  NoteCategory(String _name)
-      : name = _name != null && _name.isNotEmpty ? _name : 'Misc';
-
-  static NoteCategory npcs = NoteCategory('NPCs');
-  static NoteCategory loot = NoteCategory('Loot');
-  static NoteCategory locations = NoteCategory('Locations');
-  static NoteCategory quests = NoteCategory('Quests');
-  static NoteCategory misc = NoteCategory('Misc');
-
-  static List<NoteCategory> defaultCategories = [
-    npcs,
-    loot,
-    locations,
-    quests,
-    misc
-  ];
-
-  @override
-  String toString() => name;
-
-  @override
-  bool operator ==(dynamic obj) {
-    if (obj is! NoteCategory) {
-      return false;
-    }
-
-    return obj.name == name;
-  }
-
-  @override
-  int get hashCode => name.hashCode;
 }
 
 ReturnPredicate<Note> matchNote =
@@ -108,3 +81,12 @@ Future deleteNote(Character character, Note note) async {
 Future createNote(Character character, Note note) async {
   await character.update(json: {'notes': addToList(character.notes, note)});
 }
+
+List<String> collectCategories(
+  List<Note> notes, {
+  bool includeDefault = true,
+}) =>
+    {
+      if (includeDefault == true) ...Note.defaultCategories,
+      ...groupBy<String, Note>(notes, (note) => note.category).keys
+    }.toList();

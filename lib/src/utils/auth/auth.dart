@@ -14,6 +14,7 @@ import 'package:flutter/services.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:pedantic/pedantic.dart';
 import 'auth_common.dart';
+export 'auth_common.dart';
 part 'auth_email.dart';
 part 'auth_google.dart';
 part 'auth_apple.dart';
@@ -24,7 +25,8 @@ Future<UserLogin> signInWithCredentials(AuthCredential creds) async {
   dwStore.dispatch(RequestLogin());
 
   final res = await auth.signInWithCredential(creds);
-  return signInWithFbUser(res?.user);
+  return signInWithFbUser(
+      SignInMethod.fromCredential(res.credential), res?.user);
 }
 
 Future<bool> linkWithCredentials(AuthCredential creds) async {
@@ -108,14 +110,14 @@ Future<void> sendPasswordResetLink() async {
 }
 
 Future<UserLogin> signInAutomatically() async {
-  return signInWithFbUser(auth.currentUser);
+  return signInWithFbUser(SignInMethod.firebase, auth.currentUser);
 }
 
-Future<UserLogin> signInWithFbUser(fb.User fbUser) async {
+Future<UserLogin> signInWithFbUser(
+    SignInMethod signInMethod, fb.User fbUser) async {
   final dbUser = await getDatabaseUser(
     fbUser,
-    // TODO pass login provider
-    signInMethod: 'firebase',
+    signInMethod: signInMethod,
   );
 
   dispatchFinalDataToStore(
@@ -150,7 +152,6 @@ void dispatchFinalDataToStore({
   ));
 
   unawaited(analytics.logLogin(
-    // TODO pass login provider
     loginMethod: 'firebase',
   ));
   unawaited(analytics.setUserId(firebaseUser.uid));

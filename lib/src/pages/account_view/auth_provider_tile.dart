@@ -3,7 +3,6 @@ import 'dart:async';
 import 'package:dungeon_paper/src/flutter_utils/widget_utils.dart';
 import 'package:dungeon_paper/src/pages/auth/email_auth_view.dart';
 import 'package:dungeon_paper/src/utils/auth/auth.dart';
-import 'package:dungeon_paper/src/utils/auth/auth_common.dart';
 import 'package:firebase_auth/firebase_auth.dart' as fb;
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';

@@ -6,7 +6,7 @@ Future<UserLogin> signInWithEmailAndPassword({
 }) async {
   dwStore.dispatch(RequestLogin());
   final res = await performEmailAuth(email, password);
-  return signInWithFbUser(res?.user);
+  return signInWithFbUser(SignInMethod.password, res?.user);
 }
 
 Future<UserLogin> createUserWithEmailAndPassword({
@@ -19,7 +19,7 @@ Future<UserLogin> createUserWithEmailAndPassword({
     email: email,
     password: password,
   );
-  return signInWithFbUser(res?.user);
+  return signInWithFbUser(SignInMethod.password, res?.user);
 }
 
 Future<fb.UserCredential> performEmailAuth(

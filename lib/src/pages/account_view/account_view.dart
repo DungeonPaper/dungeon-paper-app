@@ -4,7 +4,6 @@ import 'package:dungeon_paper/src/pages/account_view/auth_provider_tile.dart';
 import 'package:dungeon_paper/src/redux/connectors.dart';
 import 'package:dungeon_paper/src/scaffolds/scaffold_with_elevation.dart';
 import 'package:dungeon_paper/src/utils/auth/auth.dart';
-import 'package:dungeon_paper/src/utils/auth/auth_common.dart';
 import 'package:dungeon_paper/src/utils/share.dart';
 import 'package:flutter/material.dart';
 

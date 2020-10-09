@@ -10,6 +10,7 @@ import 'package:url_launcher/url_launcher.dart';
 
 class NoteCard extends StatefulWidget {
   final Note note;
+  final List<String> categories;
   final void Function(Note) onSave;
   final void Function() onDelete;
 
@@ -18,6 +19,7 @@ class NoteCard extends StatefulWidget {
     @required this.note,
     @required this.onSave,
     @required this.onDelete,
+    @required this.categories,
   }) : super(key: key);
 
   @override
@@ -36,6 +38,7 @@ class NoteCardState extends State<NoteCard> {
           name: Events.ExpandNoteCard,
           parameters: {'state': value.toString()},
         ),
+        expandedCrossAxisAlignment: CrossAxisAlignment.stretch,
         children: <Widget>[
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
@@ -63,6 +66,7 @@ class NoteCardState extends State<NoteCard> {
         builder: (ctx) => EditNoteScreen(
           note: widget.note,
           mode: DialogMode.Edit,
+          categories: widget.categories,
           onSave: (note) {
             if (widget.onSave != null) {
               widget.onSave(note);
