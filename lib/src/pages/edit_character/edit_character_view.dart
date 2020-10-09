@@ -69,11 +69,11 @@ class _EditCharacterViewState extends State<EditCharacterView>
     character = widget.character != null
         ? Character(
             data: widget.character.toJSON(),
-            ref: widget.character.ref ??
-                user.ref.collection('characters').document(),
+            ref:
+                widget.character.ref ?? user.ref.collection('characters').doc(),
           )
         : Character(
-            ref: user.ref.collection('characters').document(),
+            ref: user.ref.collection('characters').doc(),
           );
 
     basicInfoValid = ValueNotifier(character.displayName.isNotEmpty);

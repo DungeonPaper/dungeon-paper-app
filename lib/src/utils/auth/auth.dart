@@ -1,4 +1,5 @@
 import 'package:apple_sign_in/apple_sign_in.dart';
+import 'package:dungeon_paper/db/db.dart';
 import 'package:dungeon_paper/db/listeners.dart';
 import 'package:dungeon_paper/db/models/user.dart';
 import 'package:dungeon_paper/src/redux/stores.dart';
@@ -7,7 +8,7 @@ import 'package:dungeon_paper/src/utils/analytics.dart';
 import 'package:dungeon_paper/src/utils/api.dart';
 import 'package:dungeon_paper/src/utils/logger.dart';
 import 'package:dungeon_paper/src/utils/utils.dart';
-import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_auth/firebase_auth.dart' as fb;
 import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
 import 'package:google_sign_in/google_sign_in.dart';
@@ -27,7 +28,7 @@ Future<UserLogin> signInWithCredentials(AuthCredential creds) async {
 }
 
 Future<bool> linkWithCredentials(AuthCredential creds) async {
-  final user = await auth.currentUser();
+  final user = auth.currentUser;
   try {
     await user.linkWithCredential(creds);
     return true;
@@ -45,14 +46,14 @@ Future<bool> linkWithCredentials(AuthCredential creds) async {
 }
 
 Future<bool> unlinkFromProvider(String providerId) async {
-  final user = await auth.currentUser();
+  final user = auth.currentUser;
   try {
-    await user.unlinkFromProvider(providerId);
+    await user.unlink(providerId);
     return true;
   } on PlatformException catch (e) {
     if (e.code == 'ERROR_REQUIRES_RECENT_LOGIN') {
       await reauthenticateUser(user);
-      await user.unlinkFromProvider(providerId);
+      await user.unlink(providerId);
       return true;
     }
     rethrow;
@@ -63,14 +64,14 @@ Future<bool> unlinkFromProvider(String providerId) async {
 }
 
 Future<bool> updateEmail(String email) async {
-  final user = await auth.currentUser();
+  final user = auth.currentUser;
   try {
     await user.updateEmail(email);
     return true;
   } on PlatformException catch (e) {
     if (e.code == 'ERROR_REQUIRES_RECENT_LOGIN') {
       await reauthenticateUser(user);
-      await user.unlinkFromProvider(email);
+      await user.updateEmail(email);
       return true;
     }
     rethrow;
@@ -80,7 +81,7 @@ Future<bool> updateEmail(String email) async {
   }
 }
 
-Future<bool> reauthenticateUser(FirebaseUser user) async {
+Future<bool> reauthenticateUser(fb.User user) async {
   try {
     AuthCredential origCreds;
     final primary = getPrimaryAuthProvider(user);
@@ -102,18 +103,19 @@ Future<bool> reauthenticateUser(FirebaseUser user) async {
 }
 
 Future<void> sendPasswordResetLink() async {
-  final user = await auth.currentUser();
+  final user = auth.currentUser;
   await auth.sendPasswordResetEmail(email: user.email);
 }
 
 Future<UserLogin> signInAutomatically() async {
-  return signInWithFbUser(await auth.currentUser());
+  return signInWithFbUser(auth.currentUser);
 }
 
-Future<UserLogin> signInWithFbUser(FirebaseUser fbUser) async {
+Future<UserLogin> signInWithFbUser(fb.User fbUser) async {
   final dbUser = await getDatabaseUser(
     fbUser,
-    signInMethod: fbUser?.providerId,
+    // TODO pass login provider
+    signInMethod: 'firebase',
   );
 
   dispatchFinalDataToStore(
@@ -134,7 +136,7 @@ Future<void> signOutAll() async {
 }
 
 void dispatchFinalDataToStore({
-  @required FirebaseUser firebaseUser,
+  @required fb.User firebaseUser,
   @required User user,
 }) async {
   if ([firebaseUser, user].any((el) => el == null)) {
@@ -148,7 +150,8 @@ void dispatchFinalDataToStore({
   ));
 
   unawaited(analytics.logLogin(
-    loginMethod: firebaseUser.providerId,
+    // TODO pass login provider
+    loginMethod: 'firebase',
   ));
   unawaited(analytics.setUserId(firebaseUser.uid));
   unawaited(analytics.setUserProperty(
@@ -163,7 +166,7 @@ void dispatchFinalDataToStore({
   registerAllListeners(firebaseUser);
 }
 
-void registerAllListeners(FirebaseUser fbUser) {
+void registerAllListeners(fb.User fbUser) {
   registerFirebaseUserListener();
   registerUserListener(fbUser);
   registerCharactersListener();

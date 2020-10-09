@@ -1,4 +1,3 @@
-import 'package:dungeon_paper/db/models/user.dart';
 import 'package:dungeon_paper/src/dialogs/single_field_edit_dialog.dart';
 import 'package:dungeon_paper/src/flutter_utils/widget_utils.dart';
 import 'package:dungeon_paper/src/pages/account_view/auth_provider_tile.dart';
@@ -14,17 +13,14 @@ class AccountView extends StatefulWidget {
     AuthProviderTileData(
       id: 'password',
       displayName: 'Email & Password',
-      link: (_) async => true,
     ),
     AuthProviderTileData(
       id: 'google.com',
       displayName: 'Google',
-      link: (_) async => true,
     ),
     AuthProviderTileData(
       id: 'apple.com',
       displayName: 'Apple',
-      link: (_) async => true,
     ),
   ];
 
@@ -137,14 +133,17 @@ class _AccountViewState extends State<AccountView> {
                                 ? 'A password reset link has been sent to your email address.'
                                 : 'You can log in using your email and password')
                             : null,
-                        trailing: TextButton(
+                        trailing: FlatButton(
+                          textColor: Theme.of(context).colorScheme.secondary,
                           child: loadingPasswordReset
                               ? Loader(
                                   size: Size.square(16),
                                   strokeWidth: 2,
                                   color: Theme.of(context).accentColor,
                                 )
-                              : Text('Reset Password'),
+                              : Text(passwordResetSent
+                                  ? 'Send Again'
+                                  : 'Reset Password'),
                           onPressed: () => _sendPasswordReset(context),
                         ),
                       ),
@@ -199,6 +198,9 @@ class _AccountViewState extends State<AccountView> {
   void _sendPasswordReset(BuildContext context) async {
     setState(() => loadingPasswordReset = true);
     await sendPasswordResetLink();
-    setState(() => loadingPasswordReset = false);
+    setState(() {
+      loadingPasswordReset = false;
+      passwordResetSent = true;
+    });
   }
 }

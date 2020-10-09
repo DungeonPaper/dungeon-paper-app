@@ -1,14 +1,15 @@
+import 'package:dungeon_paper/db/db.dart';
 import 'package:dungeon_paper/src/flutter_utils/input_validators.dart';
 import 'package:dungeon_paper/src/flutter_utils/widget_utils.dart';
 import 'package:dungeon_paper/src/utils/auth/auth_common.dart';
 import 'package:dungeon_paper/src/utils/auth/auth.dart';
-import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_auth/firebase_auth.dart' as fb;
 import 'package:flutter/material.dart';
 import 'package:email_validator/email_validator.dart';
 import 'package:flutter/services.dart';
 
 class EmailAuthView extends StatefulWidget {
-  final void Function(FirebaseUser, EmailAuthCredential) onLoggedIn;
+  final void Function(fb.User, EmailAuthCredential) onLoggedIn;
   final bool signUpMode;
   final bool linkMode;
 
@@ -182,13 +183,13 @@ class _EmailAuthViewState extends State<EmailAuthView> {
   void _link() async {
     try {
       var res = await linkWithCredentials(
-        EmailAuthCredential(
+        EmailAuthProvider.credential(
           email: email,
           password: password,
         ),
       );
       if (res) {
-        widget.onLoggedIn?.call(await auth.currentUser(), credential);
+        widget.onLoggedIn?.call(auth.currentUser, credential);
       }
     } catch (e) {
       setState(() {
@@ -236,7 +237,7 @@ class _EmailAuthViewState extends State<EmailAuthView> {
     }
   }
 
-  EmailAuthCredential get credential => EmailAuthCredential(
+  EmailAuthCredential get credential => EmailAuthProvider.credential(
         email: email,
         password: password,
       );

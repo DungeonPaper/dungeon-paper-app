@@ -26,7 +26,7 @@ Future<GoogleAuthCredential> getGoogleCredential({
   final inst = await _getGSignIn();
   final acct = await (interactive ? inst.signIn() : inst.signInSilently());
   final authRes = await acct.authentication;
-  final cred = GoogleAuthProvider.getCredential(
+  final cred = GoogleAuthProvider.credential(
     accessToken: authRes.accessToken,
     idToken: authRes.idToken,
   );
