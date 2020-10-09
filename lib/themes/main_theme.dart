@@ -31,6 +31,7 @@ var mainTheme = ThemeData(
   accentColor: _secondary,
   scaffoldBackgroundColor: _primary,
   cardColor: cardColor,
+  canvasColor: cardColor,
   fontFamily: 'Nunito',
   textTheme: TextTheme(
     headline6: TextStyle(color: _secondary),

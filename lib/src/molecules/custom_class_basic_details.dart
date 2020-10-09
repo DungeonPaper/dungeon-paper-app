@@ -113,6 +113,7 @@ class _ClassBasicDetailsState extends State<ClassBasicDetails> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: <Widget>[
                       Text('Name & Information', style: cardCaptionStyle),
+                      SizedBox(height: 16),
                       TextFormField(
                         controller: editingControllers[Keys.name],
                         textCapitalization: TextCapitalization.words,
@@ -124,6 +125,7 @@ class _ClassBasicDetailsState extends State<ClassBasicDetails> {
                               : null,
                         ),
                       ),
+                      SizedBox(height: 16),
                       TextFormField(
                         controller: editingControllers[Keys.description],
                         textCapitalization: TextCapitalization.sentences,
@@ -146,6 +148,7 @@ class _ClassBasicDetailsState extends State<ClassBasicDetails> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: <Widget>[
                       Text('Stat Basis', style: cardCaptionStyle),
+                      SizedBox(height: 16),
                       Row(
                         children: [
                           Expanded(
