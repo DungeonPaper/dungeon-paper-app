@@ -13,11 +13,26 @@ enum Device {
 }
 
 class ArgOptions {
-  bool help = false;
-  bool test = false;
-  bool build = false;
-  bool push = false;
-  bool install = false;
+  ArgOptions({
+    this.help,
+    this.test,
+    this.build,
+    this.push,
+    this.install,
+    this.device,
+    this.version,
+    this.platform,
+  });
+
+  ArgOptions.fromArgs(List<String> args) {
+    _createArgParser().parse(args);
+  }
+
+  bool help;
+  bool test;
+  bool build;
+  bool push;
+  bool install;
   String device;
   Version version;
   Device platform = Device.android;
@@ -27,6 +42,8 @@ class ArgOptions {
       'build/app/outputs/apk/release/app-arm64-v8a-release.apk';
 
   List<String> get deviceArgs => device != null ? ['-s', device] : [];
+
+  String devicePrefix(String prefix) => device != null ? '$prefix $device' : '';
 
   Map<String, bool> get actionables => <String, bool>{
         for (var key in mapLabels.keys)
@@ -43,57 +60,47 @@ class ArgOptions {
         'Install': install,
       };
 
-  ArgOptions.fromArgs(List<String> args) {
-    final parser = ArgParser();
-    parser.addFlag(
+  ArgParser _createArgParser() => ArgParser()
+    ..addFlag(
       'test',
       abbr: 't',
       defaultsTo: false,
       callback: (val) => test = val,
-    );
-
-    parser.addFlag(
+    )
+    ..addFlag(
       'build',
       abbr: 'b',
       defaultsTo: false,
       callback: (val) => build = val,
-    );
-
-    parser.addFlag(
+    )
+    ..addFlag(
       'push',
       abbr: 'p',
       defaultsTo: false,
       callback: (val) => push = val,
-    );
-
-    parser.addFlag(
+    )
+    ..addFlag(
       'install',
       abbr: 'i',
       defaultsTo: false,
       callback: (val) => install = val,
-    );
-
-    parser.addOption(
+    )
+    ..addOption(
       'version',
       abbr: 'v',
       defaultsTo: getVersionString(),
       callback: (val) => version = Version.parse(val),
-    );
-
-    parser.addOption(
+    )
+    ..addOption(
       'device',
       abbr: 'd',
       defaultsTo: null,
       callback: (val) => device = val,
-    );
-
-    parser.addFlag(
+    )
+    ..addFlag(
       'help',
       abbr: 'h',
       defaultsTo: false,
       callback: (val) => help = val,
     );
-
-    parser.parse(args);
-  }
 }
