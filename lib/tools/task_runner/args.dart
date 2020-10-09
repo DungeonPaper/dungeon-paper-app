@@ -1,7 +1,7 @@
 import 'package:args/args.dart';
 import 'package:pub_semver/pub_semver.dart';
 
-import 'deploy_utils.dart';
+import 'task_utils.dart';
 
 enum Device {
   android,

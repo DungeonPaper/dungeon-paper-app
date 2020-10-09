@@ -1,19 +1,15 @@
 import 'dart:async';
 import 'dart:io';
 import 'args.dart';
-import 'deployment_runner.dart';
+import 'task_runner.dart';
 
 class Task {
   final bool Function(ArgOptions) condition;
   final FutureOr<void> Function(ArgOptions) run;
-  final FutureOr<void> Function(ArgOptions) beforeAll;
-  final FutureOr<void> Function(ArgOptions) afterAll;
 
   Task({
     this.condition,
     this.run,
-    this.beforeAll,
-    this.afterAll,
   });
 }
 
@@ -22,12 +18,8 @@ class TaskGroup extends Task {
 
   TaskGroup({
     bool Function(ArgOptions) condition,
-    FutureOr<void> Function(ArgOptions) beforeAll,
-    FutureOr<void> Function(ArgOptions) afterAll,
     this.tasks,
   }) : super(
-          afterAll: afterAll,
-          beforeAll: beforeAll,
           condition: condition,
           run: _runTasks(tasks),
         );
@@ -38,11 +30,11 @@ class TaskGroup extends Task {
     return (options) => _runner(options, tasks).runAll();
   }
 
-  static DeploymentRunner _runner(
+  static TaskRunner _runner(
     ArgOptions options,
     List<Task> tasks,
   ) {
-    return DeploymentRunner(
+    return TaskRunner(
       options: options,
       tasks: tasks,
     );
@@ -59,8 +51,6 @@ class ProcessTask extends Task {
     FutureOr<void> Function(ArgOptions, Error, StackTrace) onError,
   }) : super(
           condition: condition,
-          beforeAll: beforeAll,
-          afterAll: afterAll,
           run: _runProcess(process, args, onError),
         );
 
@@ -113,8 +103,6 @@ class LogTask extends Task {
     FutureOr<void> Function(ArgOptions) afterAll,
   }) : super(
           condition: condition,
-          beforeAll: beforeAll,
-          afterAll: afterAll,
           run: _run(message),
         );
 
@@ -125,8 +113,6 @@ class LogTask extends Task {
     FutureOr<void> Function(ArgOptions) afterAll,
   }) : super(
           condition: condition,
-          beforeAll: beforeAll,
-          afterAll: afterAll,
           run: _run((o) => message),
         );
 
