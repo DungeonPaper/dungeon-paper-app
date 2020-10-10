@@ -7,13 +7,13 @@ class PlatformSvg {
     String assetName, {
     num width,
     num height,
-
-    /// Overrides width & height
-    num size,
     BoxFit fit = BoxFit.contain,
     Color color,
     alignment = Alignment.center,
     String semanticsLabel,
+
+    /// Overrides width & height
+    num size,
   }) {
     if (size != null) {
       width = height = size;
@@ -29,16 +29,14 @@ class PlatformSvg {
         semanticLabel: semanticsLabel,
       );
     }
-    return Container(
+    return SvgPicture.asset(
+      'assets/$assetName',
       width: width.toDouble(),
       height: height.toDouble(),
-      child: SvgPicture.asset(
-        'assets/$assetName',
-        fit: fit,
-        color: color,
-        alignment: alignment,
-        semanticsLabel: semanticsLabel,
-      ),
+      fit: fit,
+      color: color,
+      alignment: alignment,
+      semanticsLabel: semanticsLabel,
     );
   }
 }
