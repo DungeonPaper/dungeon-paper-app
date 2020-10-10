@@ -8,7 +8,7 @@
       "type": "shell",
       "command": "dart",
       "args": [
-        "lib/tools/deploy/deploy.dart",
+        "lib/tools/task_runner/deploy.dart",
         "--build",
         "-d",
         "518e84af"
@@ -20,7 +20,7 @@
       "type": "shell",
       "command": "dart",
       "args": [
-        "lib/tools/deploy/deploy.dart",
+        "lib/tools/task_runner/deploy.dart",
         "--push",
         "-d",
         "518e84af"
@@ -32,7 +32,7 @@
       "type": "shell",
       "command": "dart",
       "args": [
-        "lib/tools/deploy/deploy.dart",
+        "lib/tools/task_runner/deploy.dart",
         "--test",
         "--build",
         "--push",
@@ -46,7 +46,7 @@
       "type": "shell",
       "command": "dart",
       "args": [
-        "lib/tools/deploy/deploy.dart",
+        "lib/tools/task_runner/deploy.dart",
         "--build",
         "--push",
         "-d",
@@ -59,7 +59,7 @@
       "type": "shell",
       "command": "dart",
       "args": [
-        "lib/tools/deploy/deploy.dart",
+        "lib/tools/task_runner/deploy.dart",
         "--test",
         "--build",
         "--push",
@@ -74,7 +74,7 @@
       "type": "shell",
       "command": "dart",
       "args": [
-        "lib/tools/deploy/deploy.dart",
+        "lib/tools/task_runner/deploy.dart",
         "--build",
         "--push",
         "--install",
@@ -88,7 +88,7 @@
       "type": "shell",
       "command": "dart",
       "args": [
-        "lib/tools/deploy/deploy.dart",
+        "lib/tools/task_runner/deploy.dart",
         "--install",
         "-d",
         "518e84af"
@@ -100,7 +100,7 @@
       "type": "shell",
       "command": "dart",
       "args": [
-        "lib/tools/deploy/deploy.dart",
+        "lib/tools/task_runner/deploy.dart",
         "--push",
         "--install",
         "-d",
@@ -113,7 +113,7 @@
       "type": "shell",
       "command": "dart",
       "args": [
-        "lib/tools/deploy/deploy.dart",
+        "lib/tools/task_runner/deploy.dart",
         "--test",
         "-d",
         "518e84af"

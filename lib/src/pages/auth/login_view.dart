@@ -133,7 +133,7 @@ class LoginView extends StatelessWidget {
                 password: result.credential.password,
               );
             }
-            Navigation.pop(context);
+            Navigator.pop(context);
             completer.complete(EmailAuthResponse());
           } catch (e, stack) {
             completer.complete(EmailAuthResponse(e, stack));
