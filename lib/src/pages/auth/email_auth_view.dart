@@ -7,16 +7,35 @@ import 'package:flutter/material.dart';
 import 'package:email_validator/email_validator.dart';
 import 'package:flutter/services.dart';
 
+class EmailAuthResult {
+  final EmailAuthCredential credential;
+  final bool isSignUp;
+
+  EmailAuthResult({
+    @required this.credential,
+    @required this.isSignUp,
+  });
+}
+
+class EmailAuthResponse {
+  final dynamic error;
+  final bool success;
+  final StackTrace stack;
+
+  EmailAuthResponse([this.error, this.stack])
+      : success = error == null && stack == null;
+}
+
 class EmailAuthView extends StatefulWidget {
-  final void Function(fb.User, EmailAuthCredential) onLoggedIn;
+  final Future<EmailAuthResponse> Function(EmailAuthResult) onConfirm;
   final bool signUpMode;
-  final bool linkMode;
+  final bool canSwitchModes;
 
   const EmailAuthView({
     Key key,
-    @required this.onLoggedIn,
+    @required this.onConfirm,
     this.signUpMode,
-    this.linkMode,
+    this.canSwitchModes = true,
   }) : super(key: key);
 
   @override
@@ -56,110 +75,115 @@ class _EmailAuthViewState extends State<EmailAuthView> {
 
   @override
   Widget build(BuildContext context) {
-    return SimpleDialog(
+    return AlertDialog(
       contentPadding: EdgeInsets.symmetric(horizontal: 24, vertical: 16),
-      children: [
-        Text(
-          signUpMode ? 'Sign Up' : 'Sign In',
-          textScaleFactor: 2.5,
-          textAlign: TextAlign.center,
-        ),
-        Form(
-          autovalidateMode: AutovalidateMode.onUserInteraction,
-          child: AutofillGroup(
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                TextFormField(
-                  controller: controllers['email'],
-                  autofillHints: [AutofillHints.email],
-                  decoration: InputDecoration(
-                    labelText: 'Email address',
-                    hintText: 'example@domain.com',
-                  ),
-                  keyboardType: TextInputType.emailAddress,
-                  textInputAction: TextInputAction.next,
-                  validator: (email) =>
-                      email.isNotEmpty && !EmailValidator.validate(email)
-                          ? 'Please enter a valid email address'
-                          : null,
-                ),
-                TextFormField(
-                  controller: controllers['password'],
-                  autofillHints: [AutofillHints.password],
-                  decoration: InputDecoration(
-                    labelText: 'Password',
-                    suffixIcon: IconButton(
-                      icon: Icon(
-                        Icons.remove_red_eye,
-                        color: obscured ? Colors.grey[600] : Colors.blue[300],
+      title: Text(
+        signUpMode ? 'Sign Up' : 'Sign In',
+        textScaleFactor: 2.2,
+        textAlign: TextAlign.center,
+      ),
+      content: SingleChildScrollView(
+        child: Column(
+          children: [
+            Form(
+              autovalidateMode: AutovalidateMode.onUserInteraction,
+              child: AutofillGroup(
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    SizedBox(height: 32),
+                    TextFormField(
+                      controller: controllers['email'],
+                      autofillHints: [AutofillHints.email],
+                      decoration: InputDecoration(
+                        labelText: 'Email address',
+                        hintText: 'example@domain.com',
+                        floatingLabelBehavior: FloatingLabelBehavior.always,
                       ),
-                      tooltip: obscured
-                          ? 'Tap to show password'
-                          : 'Tap to hide password',
-                      onPressed: () => setState(() => obscured = !obscured),
+                      keyboardType: TextInputType.emailAddress,
+                      textInputAction: TextInputAction.next,
+                      validator: (email) =>
+                          email.isNotEmpty && !EmailValidator.validate(email)
+                              ? 'Please enter a valid email address'
+                              : null,
                     ),
-                  ),
-                  obscureText: obscured,
-                  keyboardType: TextInputType.emailAddress,
-                  textInputAction: TextInputAction.done,
-                  validator: signUpMode
-                      ? (pwd) => pwd.isNotEmpty && !validatePassword(password)
-                          ? PasswordValidator.getMessage(password)
-                          : null
-                      : null,
-                ),
-                SizedBox(height: 20),
-                if (error != null) ...[
-                  Text(error, style: TextStyle(color: Colors.red)),
-                  SizedBox(height: 20),
-                ],
-                Text(signUpMode
-                    ? 'Already have an account?'
-                    : 'Need to create an account?'),
-                SizedBox(width: 10),
-                RaisedButton(
-                  visualDensity: VisualDensity.comfortable,
-                  color: Theme.of(context).accentColor,
-                  child: Text(
-                    signUpMode ? 'Sign In' : 'Sign Up',
-                    textScaleFactor: 1.1,
-                  ),
-                  onPressed: () => setState(() => signUpMode = !signUpMode),
-                ),
-                SizedBox(height: 40),
-                Align(
-                  alignment: Alignment.centerRight,
-                  child: Container(
-                    height: 50,
-                    width: 120,
-                    child: RaisedButton(
-                      color: Theme.of(context).primaryColor,
-                      onPressed: loading || !isValid
-                          ? null
-                          : widget.linkMode == true
-                              ? _link
-                              : signUpMode
-                                  ? _signUp
-                                  : _login,
-                      child: loading
-                          ? Container(
-                              height: 20,
-                              width: 20,
-                              child: CircularProgressIndicator(
-                                valueColor:
-                                    AlwaysStoppedAnimation(Colors.white),
-                                value: null,
-                              ),
-                            )
-                          : Text(
-                              signUpMode ? 'Sign Up' : 'Sign In',
-                              textScaleFactor: 1.5,
-                            ),
+                    SizedBox(height: 16),
+                    TextFormField(
+                      controller: controllers['password'],
+                      autofillHints: [AutofillHints.password],
+                      decoration: InputDecoration(
+                        labelText: 'Password',
+                        floatingLabelBehavior: FloatingLabelBehavior.always,
+                        suffixIcon: IconButton(
+                          icon: Icon(
+                            Icons.remove_red_eye,
+                            color:
+                                obscured ? Colors.grey[600] : Colors.blue[300],
+                          ),
+                          tooltip: obscured
+                              ? 'Tap to show password'
+                              : 'Tap to hide password',
+                          onPressed: () => setState(() => obscured = !obscured),
+                        ),
+                      ),
+                      obscureText: obscured,
+                      keyboardType: TextInputType.emailAddress,
+                      textInputAction: TextInputAction.done,
+                      validator: signUpMode
+                          ? (pwd) =>
+                              pwd.isNotEmpty && !validatePassword(password)
+                                  ? PasswordValidator.getMessage(password)
+                                  : null
+                          : null,
                     ),
-                  ),
+                    SizedBox(height: 20),
+                    if (error != null) ...[
+                      Text(error, style: TextStyle(color: Colors.red)),
+                      SizedBox(height: 20),
+                    ],
+                    Text(signUpMode
+                        ? 'Already have an account?'
+                        : 'Need to create an account?'),
+                    SizedBox(width: 10),
+                    RaisedButton(
+                      color: Theme.of(context).accentColor,
+                      textColor: Theme.of(context).colorScheme.onSecondary,
+                      child: Text(
+                        signUpMode ? 'Sign In' : 'Sign Up',
+                        textScaleFactor: 1.1,
+                      ),
+                      onPressed: () => setState(() => signUpMode = !signUpMode),
+                    ),
+                    SizedBox(height: 40),
+                  ],
                 ),
-              ],
+              ),
+            ),
+          ],
+        ),
+      ),
+      actions: [
+        Align(
+          alignment: Alignment.centerRight,
+          child: Container(
+            height: 50,
+            width: 120,
+            child: RaisedButton(
+              color: Theme.of(context).primaryColor,
+              onPressed: loading || !isValid ? null : _confirm,
+              child: loading
+                  ? Container(
+                      height: 20,
+                      width: 20,
+                      child: CircularProgressIndicator(
+                        valueColor: AlwaysStoppedAnimation(Colors.white),
+                        value: null,
+                      ),
+                    )
+                  : Text(
+                      signUpMode ? 'Sign Up' : 'Sign In',
+                      textScaleFactor: 1.5,
+                    ),
             ),
           ),
         ),
@@ -179,67 +203,36 @@ class _EmailAuthViewState extends State<EmailAuthView> {
   bool validatePassword(String password) =>
       PasswordValidator.validate(password);
 
-  void _link() async {
-    try {
-      var res = await linkWithCredentials(
-        EmailAuthProvider.credential(
-          email: email,
-          password: password,
-        ),
-      );
-      if (res) {
-        widget.onLoggedIn?.call(auth.currentUser, credential);
-      }
-    } catch (e) {
-      setState(() {
-        loading = false;
-        error = errMessage(e);
-      });
-    }
-  }
-
-  void _login() async {
-    setState(() {
-      loading = true;
-      error = null;
-    });
-    try {
-      var res = await signInWithEmailAndPassword(
-        email: email,
-        password: password,
-      );
-      widget.onLoggedIn?.call(res?.firebaseUser, credential);
-    } catch (e) {
-      setState(() {
-        loading = false;
-        error = errMessage(e);
-      });
-    }
-  }
-
-  void _signUp() async {
-    setState(() {
-      loading = true;
-      error = null;
-    });
-    try {
-      var res = await createUserWithEmailAndPassword(
-        email: email,
-        password: password,
-      );
-      widget.onLoggedIn?.call(res?.firebaseUser, credential);
-    } catch (e) {
-      setState(() {
-        loading = false;
-        error = errMessage(e);
-      });
-    }
-  }
-
   EmailAuthCredential get credential => EmailAuthProvider.credential(
         email: email,
         password: password,
       );
+
+  void _confirm() async {
+    setState(() {
+      loading = true;
+      error = null;
+    });
+    try {
+      final response = await widget.onConfirm?.call(
+        EmailAuthResult(
+          credential: credential,
+          isSignUp: signUpMode,
+        ),
+      );
+      setState(() {
+        loading = false;
+        if (!response.success) {
+          error = 'A general error occured. Please try again.';
+        }
+      });
+    } catch (e) {
+      setState(() {
+        loading = false;
+        error = errMessage(e);
+      });
+    }
+  }
 
   String errMessage(dynamic e) {
     switch (e.code) {

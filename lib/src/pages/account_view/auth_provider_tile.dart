@@ -115,8 +115,9 @@ class _AuthProviderTileState extends State<AuthProviderTile> {
         showDialog(
           context: context,
           builder: (context) => EmailAuthView(
-            onLoggedIn: (_user, cred) {
-              completer.complete(cred);
+            onConfirm: (result) async {
+              completer.complete(result.credential);
+              return EmailAuthResponse();
             },
           ),
         );

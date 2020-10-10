@@ -11,13 +11,14 @@ final installAndroid = TaskGroup(
       onError: (o, e, stack) async {
         TaskGroup(
           tasks: [
-            LogTask.syncArgs('Failed to install. Uninstalling old version...'),
-            ProcessTask.syncArgs(
+            LogTask.staticArgs(
+                'Failed to install. Uninstalling old version...'),
+            ProcessTask.staticArgs(
               process: 'adb',
               args: [...o.deviceArgs, 'uninstall', 'app.dungeonpaper'],
             ),
-            LogTask.syncArgs('Installing new version...'),
-            ProcessTask.syncArgs(
+            LogTask.staticArgs('Installing new version...'),
+            ProcessTask.staticArgs(
               process: 'adb',
               args: [...o.deviceArgs, 'install', 'app.dungeonpaper'],
             ),
@@ -43,7 +44,7 @@ final buildAndroid = TaskGroup(
   condition: (o) => o.build == true,
   tasks: [
     LogTask((o) => 'Building App Bundle'),
-    ProcessTask.syncArgs(
+    ProcessTask.staticArgs(
       process: 'flutter',
       args: [
         'build',
@@ -53,7 +54,7 @@ final buildAndroid = TaskGroup(
       ],
     ),
     LogTask((o) => 'Building APK'),
-    ProcessTask.syncArgs(
+    ProcessTask.staticArgs(
       process: 'flutter',
       args: ['build', 'apk', '--split-per-abi'],
     ),

@@ -24,21 +24,21 @@ class TaskGroup extends Task {
           run: _runTasks(tasks),
         );
 
-  static FutureOr<void> Function(ArgOptions) _runTasks(
-    List<Task> tasks,
-  ) {
-    return (options) => _runner(options, tasks).runAll();
-  }
+  TaskGroup.staticArgs({
+    bool condition,
+    this.tasks,
+  }) : super(
+          condition: (_) => condition,
+          run: _runTasks(tasks),
+        );
 
-  static TaskRunner _runner(
-    ArgOptions options,
-    List<Task> tasks,
-  ) {
-    return TaskRunner(
-      options: options,
-      tasks: tasks,
-    );
-  }
+  static FutureOr<void> Function(ArgOptions) _runTasks(List<Task> tasks) =>
+      (options) => _runner(options, tasks).runAll();
+
+  static TaskRunner _runner(ArgOptions options, List<Task> tasks) => TaskRunner(
+        options: options,
+        tasks: tasks,
+      );
 }
 
 class ProcessTask extends Task {
@@ -54,7 +54,7 @@ class ProcessTask extends Task {
           run: _runProcess(process, args, onError),
         );
 
-  factory ProcessTask.syncArgs({
+  factory ProcessTask.staticArgs({
     String process,
     List<String> args,
     bool Function(ArgOptions) condition,
@@ -82,7 +82,7 @@ class ProcessTask extends Task {
         final result = await Process.start(_process, _args);
         await stdout.addStream(result.stdout);
         await stdout.addStream(result.stderr);
-        var exitCode = await result.exitCode;
+        final exitCode = await result.exitCode;
         if (exitCode != 0) {
           final stack = StackTrace.current;
           final e = StateError('Process exited with error code: $exitCode');
@@ -99,18 +99,14 @@ class LogTask extends Task {
   LogTask(
     FutureOr<String> Function(ArgOptions) message, {
     bool Function(ArgOptions) condition,
-    FutureOr<void> Function(ArgOptions) beforeAll,
-    FutureOr<void> Function(ArgOptions) afterAll,
   }) : super(
           condition: condition,
           run: _run(message),
         );
 
-  LogTask.syncArgs(
-    FutureOr<String> message, {
+  LogTask.staticArgs(
+    String message, {
     bool Function(ArgOptions) condition,
-    FutureOr<void> Function(ArgOptions) beforeAll,
-    FutureOr<void> Function(ArgOptions) afterAll,
   }) : super(
           condition: condition,
           run: _run((o) => message),

@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:dungeon_paper/src/flutter_utils/platform_svg.dart';
 import 'package:dungeon_paper/src/pages/auth/email_auth_view.dart';
 import 'package:dungeon_paper/src/redux/stores.dart';
@@ -75,10 +77,7 @@ class LoginView extends StatelessWidget {
           onPressed: () => showDialog(
             context: context,
             builder: (context) => EmailAuthView(
-              onLoggedIn: (user, _cred) => _signIn(
-                context,
-                () => Navigator.pop(context),
-              ),
+              onConfirm: _emailSignIn(context),
             ),
           ),
         ),
@@ -112,5 +111,36 @@ class LoginView extends StatelessWidget {
         logger.e('Error displaying SnackBar', e, stack);
       }
     }
+  }
+
+  Future<EmailAuthResponse> Function(EmailAuthResult) _emailSignIn(
+    BuildContext context,
+  ) {
+    return (result) async {
+      final completer = Completer<EmailAuthResponse>();
+      await _signIn(
+        context,
+        () async {
+          try {
+            if (result.isSignUp) {
+              await createUserWithEmailAndPassword(
+                email: result.credential.email,
+                password: result.credential.password,
+              );
+            } else {
+              await signInWithEmailAndPassword(
+                email: result.credential.email,
+                password: result.credential.password,
+              );
+            }
+            Navigation.pop(context);
+            completer.complete(EmailAuthResponse());
+          } catch (e, stack) {
+            completer.complete(EmailAuthResponse(e, stack));
+          }
+        },
+      );
+      return completer.future;
+    };
   }
 }
