@@ -59,10 +59,7 @@ class DungeonPaper extends StatelessWidget {
                 title: 'Dungeon Paper',
                 theme: ThemeProvider.themeOf(context).data,
                 routes: {
-                  '/': (ctx) => MainContainer(
-                        title: 'Dungeon Paper',
-                        pageController: _pageController,
-                      ),
+                  '/': (ctx) => MainContainer(pageController: _pageController),
                 },
                 navigatorObservers: [observer],
               ),

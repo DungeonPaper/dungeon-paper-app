@@ -1,3 +1,4 @@
+import 'package:dungeon_paper/src/atoms/user_avatar.dart';
 import 'package:dungeon_paper/src/dialogs/single_field_edit_dialog.dart';
 import 'package:dungeon_paper/src/flutter_utils/widget_utils.dart';
 import 'package:dungeon_paper/src/pages/account_view/auth_provider_tile.dart';
@@ -49,13 +50,6 @@ class _AccountViewState extends State<AccountView> {
         final user = login.user;
         final fbUser = login.firebaseUser;
         final hasPassword = isUserLinkedToAuth('password', fbUser);
-        final hasAvatar = user.photoURL?.isNotEmpty == true;
-        final initials =
-            (user.displayName.length > 2 ? user.displayName : user.email)
-                .split(RegExp(r'[\.\s]+'))
-                .take(2)
-                .map((word) => word[0].toUpperCase())
-                .join('');
         return ScaffoldWithElevation(
           automaticallyImplyLeading: true,
           title: Text('Your Account'),
@@ -63,27 +57,8 @@ class _AccountViewState extends State<AccountView> {
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
               Center(
-                child: CircleAvatar(
-                  backgroundImage:
-                      hasAvatar ? NetworkImage(user.photoURL) : null,
-                  child: !hasAvatar
-                      ? Text(
-                          initials,
-                          textScaleFactor: 2,
-                        )
-                      : null,
-                  radius: 50,
-                ),
+                child: UserAvatar(user: user),
               ),
-              // Padding(
-              //   padding: const EdgeInsets.symmetric(vertical: 16),
-              //   child: Center(
-              //     child: Text(
-              //       user.displayName,
-              //       style: Theme.of(context).textTheme.headline5,
-              //     ),
-              //   ),
-              // ),
               Card(
                 margin: EdgeInsets.all(16),
                 child: Column(

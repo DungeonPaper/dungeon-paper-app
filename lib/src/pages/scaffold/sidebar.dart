@@ -1,5 +1,6 @@
 import 'package:dungeon_paper/db/models/character.dart';
 import 'package:dungeon_paper/db/models/user.dart';
+import 'package:dungeon_paper/src/atoms/user_avatar.dart';
 import 'package:dungeon_paper/src/dialogs/dialogs.dart';
 import 'package:dungeon_paper/src/flutter_utils/platform_svg.dart';
 import 'package:dungeon_paper/src/pages/about_view/about_view.dart';
@@ -338,16 +339,7 @@ class UserDrawerHeader extends StatelessWidget {
             user.displayName,
             style: TextStyle(color: Theme.of(context).colorScheme.onSecondary),
           ),
-          currentAccountPicture: user.photoURL?.isNotEmpty == true
-              ? Container(
-                  decoration: BoxDecoration(
-                    shape: BoxShape.circle,
-                    image: DecorationImage(
-                      image: NetworkImage(user.photoURL),
-                    ),
-                  ),
-                )
-              : Container(),
+          currentAccountPicture: UserAvatar(user: user),
           onDetailsPressed: onToggleUserMenu,
         ),
       ],

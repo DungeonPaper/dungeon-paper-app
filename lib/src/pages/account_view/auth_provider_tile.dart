@@ -54,8 +54,9 @@ class _AuthProviderTileState extends State<AuthProviderTile> {
     }
 
     final primary = getPrimaryAuthProvider(user);
-    final isPrimary = primary.providerId == data.id;
-    final isLinked = user.providerData.any((d) => d.providerId == data.id);
+    final isPrimary = primary?.providerId == data.id;
+    final isLinked =
+        user?.providerData?.any((d) => d.providerId == data.id) == true;
     final current = getAuthProvider(data.id, user);
     final email = current?.email;
     final title = data.displayName;
@@ -94,7 +95,7 @@ class _AuthProviderTileState extends State<AuthProviderTile> {
   Future _toggleLink() async {
     final isLinked = isUserLinkedToAuth(data.id, user);
     setState(() => loading = true);
-    final cred = await _getCredential(context, data.id);
+    final cred = await _getCredential(context, data.id, isLinked: isLinked);
     if (isLinked) {
       await unlinkFromProvider(data.id);
     } else {
@@ -104,27 +105,40 @@ class _AuthProviderTileState extends State<AuthProviderTile> {
   }
 
   Future<AuthCredential> _getCredential(
-      BuildContext context, String providerId) {
+    BuildContext context,
+    String providerId, {
+    bool isLinked = false,
+  }) {
     switch (providerId) {
       case 'google.com':
         return getGoogleCredential(interactive: true);
       case 'apple.com':
         return getAppleCredential(interactive: true);
       case 'password':
-        final completer = Completer<EmailAuthCredential>();
-        showDialog(
-          context: context,
-          builder: (context) => EmailAuthView(
-            onConfirm: (result) async {
-              completer.complete(result.credential);
-              return EmailAuthResponse();
-            },
-          ),
-        );
-        return completer.future;
+        return _emailAuthDialog(context, isLinked);
       default:
         return null;
     }
+  }
+
+  Future<EmailAuthCredential> _emailAuthDialog(
+      BuildContext context, bool isLinked) {
+    var completer = Completer<EmailAuthCredential>();
+    setState(() => loading = false);
+    showDialog(
+      context: context,
+      builder: (context) => EmailAuthView(
+        canSwitchModes: false,
+        mode: isLinked ? EmailAuthViewMode.signIn : EmailAuthViewMode.signUp,
+        onClose: () => setState(() => loading = false),
+        onConfirm: (result) async {
+          completer.complete(result.credential);
+          setState(() => loading = true);
+          return EmailAuthResponse();
+        },
+      ),
+    );
+    return completer.future;
   }
 
   Future<void> _getAppleAvailability() async {

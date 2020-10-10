@@ -43,17 +43,19 @@ class _AppBarTitleTextState extends State<AppBarTitleText> {
   @override
   void initState() {
     super.initState();
-    widget.pageController.addListener(() {
-      setState(() {
-        page = widget.pageController.page;
-      });
-    });
+    widget.pageController.addListener(_titleListener);
+  }
+
+  @override
+  void dispose() {
+    widget.pageController.removeListener(_titleListener);
+    super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
     if (page == null) {
-      return Container();
+      return defaultTitle;
     }
     var nextOpacity = 1.0 - (page.ceil() - page);
     var currentOpacity = page == page.ceil() ? 1.0 : (page.ceil() - page);
@@ -78,6 +80,14 @@ class _AppBarTitleTextState extends State<AppBarTitleText> {
           kIsWeb || Platform.isAndroid ? TextAlign.left : TextAlign.center,
       child: Stack(children: children),
     );
+  }
+
+  void _titleListener() {
+    if (mounted) {
+      setState(() {
+        page = widget.pageController.page;
+      });
+    }
   }
 
   Pages get currentPage => widget.pageController.page != null

@@ -34,8 +34,8 @@ Future<bool> linkWithCredentials(AuthCredential creds) async {
   try {
     await user.linkWithCredential(creds);
     return true;
-  } on PlatformException catch (e) {
-    if (e.code == 'ERROR_REQUIRES_RECENT_LOGIN') {
+  } on FirebaseAuthException catch (e) {
+    if (e.code == 'requires-recent-login') {
       await reauthenticateUser(user);
       await user.linkWithCredential(creds);
       return true;
