@@ -133,7 +133,8 @@ Future<UserLogin> signInWithFbUser(
 
 Future<void> signOutAll() async {
   dwStore.dispatch(Logout());
-  unawaited(_gSignIn?.disconnect());
+  await _getGSignIn();
+  unawaited(_gSignIn.disconnect());
   unawaited(auth.signOut());
 }
 

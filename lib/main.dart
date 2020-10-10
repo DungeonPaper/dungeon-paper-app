@@ -42,8 +42,6 @@ class DungeonPaper extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    const appName = 'Dungeon Paper';
-
     return ThemeProvider(
       defaultThemeId: 'normal',
       themes: [
@@ -58,11 +56,11 @@ class DungeonPaper extends StatelessWidget {
           child: ThemeConsumer(
             child: Builder(
               builder: (context) => MaterialApp(
-                title: appName,
+                title: 'Dungeon Paper',
                 theme: ThemeProvider.themeOf(context).data,
                 routes: {
                   '/': (ctx) => MainContainer(
-                        title: appName,
+                        title: 'Dungeon Paper',
                         pageController: _pageController,
                       ),
                 },

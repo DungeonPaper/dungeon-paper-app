@@ -1,5 +1,6 @@
 import 'package:dungeon_paper/db/models/character.dart';
 import 'package:dungeon_paper/db/models/user.dart';
+import 'package:dungeon_paper/src/atoms/dice_icon.dart';
 import 'package:dungeon_paper/src/dialogs/roll_dice_dialog.dart';
 import 'package:dungeon_paper/src/flutter_utils/platform_svg.dart';
 import 'package:dungeon_paper/src/flutter_utils/widget_utils.dart';
@@ -17,6 +18,7 @@ import 'package:dungeon_paper/src/redux/stores.dart';
 import 'package:dungeon_paper/src/utils/analytics.dart';
 import 'package:dungeon_paper/src/utils/logger.dart';
 import 'package:dungeon_paper/src/utils/utils.dart';
+import 'package:dungeon_world_data/dice.dart';
 import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:package_info/package_info.dart';
 import 'package:pedantic/pedantic.dart';
@@ -128,10 +130,9 @@ class _MainViewState extends State<MainView> {
             ? [
                 IconButton(
                   tooltip: 'Roll Dice',
-                  icon: PlatformSvg.asset(
-                    'dice/d20.svg',
-                    width: 24,
-                    height: 24,
+                  icon: DiceIcon(
+                    dice: Dice.d20,
+                    size: 24,
                     color: Theme.of(context).colorScheme.secondary,
                   ),
                   onPressed: () {

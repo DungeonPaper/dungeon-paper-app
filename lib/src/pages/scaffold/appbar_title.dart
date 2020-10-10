@@ -53,7 +53,7 @@ class _AppBarTitleTextState extends State<AppBarTitleText> {
   @override
   Widget build(BuildContext context) {
     if (page == null) {
-      return defaultTitle;
+      return Container();
     }
     var nextOpacity = 1.0 - (page.ceil() - page);
     var currentOpacity = page == page.ceil() ? 1.0 : (page.ceil() - page);

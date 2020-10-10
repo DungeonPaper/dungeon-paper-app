@@ -3,6 +3,7 @@ import 'package:dungeon_paper/src/atoms/version_number.dart';
 import 'package:dungeon_paper/src/flutter_utils/loading_container.dart';
 import 'package:dungeon_paper/src/pages/about_view/about_view.dart';
 import 'package:dungeon_paper/src/pages/auth/login_view.dart';
+import 'package:dungeon_paper/src/pages/whats_new_view/whats_new_view.dart';
 import 'package:flutter/material.dart';
 
 class WelcomeView extends StatelessWidget {
@@ -19,47 +20,59 @@ class WelcomeView extends StatelessWidget {
   Widget build(BuildContext context) {
     return LoadingContainer(
       loading: loading,
-      child: Container(
-        decoration:
-            BoxDecoration(color: Theme.of(context).scaffoldBackgroundColor),
+      child: Center(
         child: SingleChildScrollView(
-          primary: true,
-          child: Center(
-            child: DefaultTextStyle(
-              style: Theme.of(context)
-                  .textTheme
-                  .bodyText2
-                  .copyWith(color: Theme.of(context).accentColor),
-              child: Column(
-                mainAxisSize: MainAxisSize.max,
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Padding(
-                    padding: const EdgeInsets.symmetric(vertical: 24.0),
-                    child: SizedBox.fromSize(
-                      size: Size.square(
-                          min(MediaQuery.of(context).size.width - 32, 200)),
-                      child: Image.asset('assets/logo.png'),
-                    ),
+          child: DefaultTextStyle(
+            style: Theme.of(context)
+                .textTheme
+                .bodyText2
+                .copyWith(color: Theme.of(context).accentColor),
+            child: Column(
+              mainAxisSize: MainAxisSize.max,
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 24.0),
+                  child: SizedBox.fromSize(
+                    size: Size.square(
+                        min(MediaQuery.of(context).size.width - 32, 200)),
+                    child: Image.asset('assets/logo.png'),
                   ),
-                  Text('Welcome to Dungeon Paper!',
-                      style: TextStyle(fontSize: 24)),
-                  VersionNumber.text(prefix: 'Version'),
-                  SizedBox(height: 24),
-                  LoginView(
-                      // onUserChange: () {
-                      //   pageController.jumpToPage(0);
-                      // },
-                      ),
-                  SizedBox(height: 20),
-                  Text('Trouble signing in?'),
-                  RaisedButton(
-                    color: Theme.of(context).colorScheme.surface,
-                    onPressed: _openAboutView(context),
-                    child: Text('Contact Us'),
-                  )
-                ],
-              ),
+                ),
+                Text('Welcome to Dungeon Paper!',
+                    style: TextStyle(fontSize: 24)),
+                VersionNumber.text(prefix: 'Version'),
+                SizedBox(height: 24),
+                LoginView(),
+                SizedBox(height: 40),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.end,
+                  children: [
+                    Column(
+                      children: [
+                        Text("What's New?"),
+                        RaisedButton(
+                          color: Theme.of(context).colorScheme.surface,
+                          onPressed: _openWhatsNew(context),
+                          child: Text('Changelog'),
+                        ),
+                      ],
+                    ),
+                    SizedBox(width: 12),
+                    Column(
+                      children: [
+                        Text("Can't sign in?"),
+                        RaisedButton(
+                          color: Theme.of(context).colorScheme.surface,
+                          onPressed: _openAboutView(context),
+                          child: Text('Contact Us'),
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
+              ],
             ),
           ),
         ),
@@ -75,6 +88,15 @@ class WelcomeView extends StatelessWidget {
           fullscreenDialog: true,
           builder: (context) => AboutView(),
         ),
+      );
+    };
+  }
+
+  void Function() _openWhatsNew(BuildContext context) {
+    return () {
+      showDialog(
+        context: context,
+        builder: (context) => WhatsNew.dialog(),
       );
     };
   }
