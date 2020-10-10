@@ -24,15 +24,22 @@ class EmailAuthResponse {
       : success = error == null && stack == null;
 }
 
+enum EmailAuthViewMode {
+  signUp,
+  signIn,
+}
+
 class EmailAuthView extends StatefulWidget {
   final Future<EmailAuthResponse> Function(EmailAuthResult) onConfirm;
-  final bool signUpMode;
+  final void Function() onClose;
+  final EmailAuthViewMode mode;
   final bool canSwitchModes;
 
   const EmailAuthView({
     Key key,
     @required this.onConfirm,
-    this.signUpMode,
+    this.mode,
+    this.onClose,
     this.canSwitchModes = true,
   }) : super(key: key);
 
@@ -42,28 +49,22 @@ class EmailAuthView extends StatefulWidget {
 
 class _EmailAuthViewState extends State<EmailAuthView> {
   Map<String, TextEditingController> controllers;
-  bool signUpMode;
+  EmailAuthViewMode mode;
   bool obscured;
   bool rememberMe;
   String error;
   String savedEmail;
   bool loading;
 
+  bool get signUpMode => mode == EmailAuthViewMode.signUp;
+  bool get signInMode => mode == EmailAuthViewMode.signIn;
+
   @override
   void initState() {
     super.initState();
-    signUpMode = widget.signUpMode ?? false;
+    mode = widget.mode ?? EmailAuthViewMode.signIn;
     controllers = WidgetUtils.textEditingControllerMap(
-      map: {
-        'email': EditingControllerConfig(
-          defaultValue: '',
-          listener: () => setState(() {}),
-        ),
-        'password': EditingControllerConfig(
-          defaultValue: '',
-          listener: () => setState(() {}),
-        ),
-      },
+      map: {'email': '', 'password': ''},
     );
     loading = false;
     error = null;
@@ -73,119 +74,133 @@ class _EmailAuthViewState extends State<EmailAuthView> {
 
   @override
   Widget build(BuildContext context) {
-    return AlertDialog(
-      contentPadding: EdgeInsets.symmetric(horizontal: 24, vertical: 16),
-      title: Text(
-        signUpMode ? 'Sign Up' : 'Sign In',
-        textScaleFactor: 2.2,
-        textAlign: TextAlign.center,
-      ),
-      content: SingleChildScrollView(
-        child: Column(
-          children: [
-            Form(
-              autovalidateMode: AutovalidateMode.onUserInteraction,
-              child: AutofillGroup(
-                child: Column(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    SizedBox(height: 32),
-                    TextFormField(
-                      controller: controllers['email'],
-                      autofillHints: [AutofillHints.email],
-                      decoration: InputDecoration(
-                        labelText: 'Email address',
-                        hintText: 'example@domain.com',
-                        floatingLabelBehavior: FloatingLabelBehavior.always,
-                      ),
-                      keyboardType: TextInputType.emailAddress,
-                      textInputAction: TextInputAction.next,
-                      validator: (email) =>
-                          email.isNotEmpty && !EmailValidator.validate(email)
-                              ? 'Please enter a valid email address'
-                              : null,
-                    ),
-                    SizedBox(height: 16),
-                    TextFormField(
-                      controller: controllers['password'],
-                      autofillHints: [AutofillHints.password],
-                      decoration: InputDecoration(
-                        labelText: 'Password',
-                        floatingLabelBehavior: FloatingLabelBehavior.always,
-                        suffixIcon: IconButton(
-                          icon: Icon(
-                            Icons.remove_red_eye,
-                            color:
-                                obscured ? Colors.grey[600] : Colors.blue[300],
-                          ),
-                          tooltip: obscured
-                              ? 'Tap to show password'
-                              : 'Tap to hide password',
-                          onPressed: () => setState(() => obscured = !obscured),
+    return WillPopScope(
+      onWillPop: () {
+        widget.onClose?.call();
+        return Future.value(true);
+      },
+      child: AlertDialog(
+        contentPadding: EdgeInsets.symmetric(horizontal: 24, vertical: 16),
+        title: Text(
+          signUpMode ? 'Sign Up' : 'Sign In',
+          textScaleFactor: 2.2,
+          textAlign: TextAlign.center,
+        ),
+        content: SingleChildScrollView(
+          child: Column(
+            children: [
+              Form(
+                autovalidateMode: AutovalidateMode.onUserInteraction,
+                child: AutofillGroup(
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      SizedBox(height: 32),
+                      TextFormField(
+                        controller: controllers['email'],
+                        autofillHints: [AutofillHints.email],
+                        decoration: InputDecoration(
+                          labelText: 'Email address',
+                          hintText: 'example@domain.com',
+                          floatingLabelBehavior: FloatingLabelBehavior.always,
                         ),
+                        keyboardType: TextInputType.emailAddress,
+                        textInputAction: TextInputAction.next,
+                        validator: (email) =>
+                            email.isNotEmpty && !EmailValidator.validate(email)
+                                ? 'Please enter a valid email address'
+                                : null,
                       ),
-                      obscureText: obscured,
-                      keyboardType: TextInputType.emailAddress,
-                      textInputAction: TextInputAction.done,
-                      validator: signUpMode
-                          ? (pwd) =>
-                              pwd.isNotEmpty && !validatePassword(password)
-                                  ? PasswordValidator.getMessage(password)
-                                  : null
-                          : null,
-                    ),
-                    SizedBox(height: 20),
-                    if (error != null) ...[
-                      Text(error, style: TextStyle(color: Colors.red)),
+                      SizedBox(height: 16),
+                      TextFormField(
+                        controller: controllers['password'],
+                        autofillHints: [AutofillHints.password],
+                        decoration: InputDecoration(
+                          labelText: 'Password',
+                          floatingLabelBehavior: FloatingLabelBehavior.always,
+                          suffixIcon: IconButton(
+                            icon: Icon(
+                              Icons.remove_red_eye,
+                              color: obscured
+                                  ? Colors.grey[600]
+                                  : Colors.blue[300],
+                            ),
+                            tooltip: obscured
+                                ? 'Tap to show password'
+                                : 'Tap to hide password',
+                            onPressed: () =>
+                                setState(() => obscured = !obscured),
+                          ),
+                        ),
+                        obscureText: obscured,
+                        keyboardType: TextInputType.emailAddress,
+                        textInputAction: TextInputAction.done,
+                        validator: signUpMode
+                            ? (pwd) =>
+                                pwd.isNotEmpty && !validatePassword(password)
+                                    ? PasswordValidator.getMessage(password)
+                                    : null
+                            : null,
+                      ),
                       SizedBox(height: 20),
+                      if (error != null) ...[
+                        Text(error, style: TextStyle(color: Colors.red)),
+                        SizedBox(height: 20),
+                      ],
+                      if (widget.canSwitchModes) ...[
+                        Text(signUpMode
+                            ? 'Already have an account?'
+                            : 'Need to create an account?'),
+                        SizedBox(width: 10),
+                        RaisedButton(
+                          color: Theme.of(context).accentColor,
+                          textColor: Theme.of(context).colorScheme.onSecondary,
+                          child: Text(
+                            signUpMode ? 'Sign In' : 'Sign Up',
+                            textScaleFactor: 1.1,
+                          ),
+                          onPressed: () => setState(
+                            () => mode = mode == EmailAuthViewMode.signIn
+                                ? EmailAuthViewMode.signUp
+                                : EmailAuthViewMode.signIn,
+                          ),
+                        ),
+                      ],
+                      SizedBox(height: 40),
                     ],
-                    Text(signUpMode
-                        ? 'Already have an account?'
-                        : 'Need to create an account?'),
-                    SizedBox(width: 10),
-                    RaisedButton(
-                      color: Theme.of(context).accentColor,
-                      textColor: Theme.of(context).colorScheme.onSecondary,
-                      child: Text(
-                        signUpMode ? 'Sign In' : 'Sign Up',
-                        textScaleFactor: 1.1,
-                      ),
-                      onPressed: () => setState(() => signUpMode = !signUpMode),
-                    ),
-                    SizedBox(height: 40),
-                  ],
+                  ),
                 ),
               ),
-            ),
-          ],
-        ),
-      ),
-      actions: [
-        Align(
-          alignment: Alignment.centerRight,
-          child: Container(
-            height: 50,
-            width: 120,
-            child: RaisedButton(
-              color: Theme.of(context).primaryColor,
-              onPressed: loading || !isValid ? null : _confirm,
-              child: loading
-                  ? Container(
-                      height: 20,
-                      width: 20,
-                      child: CircularProgressIndicator(
-                        valueColor: AlwaysStoppedAnimation(Colors.white),
-                        value: null,
-                      ),
-                    )
-                  : Text(
-                      signUpMode ? 'Sign Up' : 'Sign In',
-                      textScaleFactor: 1.5,
-                    ),
-            ),
+            ],
           ),
         ),
-      ],
+        actions: [
+          Align(
+            alignment: Alignment.centerRight,
+            child: Container(
+              height: 50,
+              width: 120,
+              child: RaisedButton(
+                color: Theme.of(context).primaryColor,
+                onPressed: loading || !isValid ? null : _confirm,
+                child: loading
+                    ? Container(
+                        height: 20,
+                        width: 20,
+                        child: CircularProgressIndicator(
+                          valueColor: AlwaysStoppedAnimation(Colors.white),
+                          value: null,
+                        ),
+                      )
+                    : Text(
+                        signUpMode ? 'Sign Up' : 'Sign In',
+                        textScaleFactor: 1.5,
+                      ),
+              ),
+            ),
+          ),
+        ],
+      ),
     );
   }
 
@@ -227,7 +242,7 @@ class _EmailAuthViewState extends State<EmailAuthView> {
     } catch (e) {
       setState(() {
         loading = false;
-        error = errMessage(e);
+        error = e.message;
       });
     }
   }

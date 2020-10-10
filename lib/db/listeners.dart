@@ -21,8 +21,7 @@ void registerFirebaseUserListener() {
     }
 
     _fbUserListener = auth.authStateChanges().listen((authUser) {
-      if (authUser != null &&
-          authUser.email != null &&
+      if (authUser?.email != null &&
           dwStore.state.user.current != null &&
           authUser.email != dwStore.state.user.current.email) {
         dwStore.dispatch(SetFirebaseUser(authUser));

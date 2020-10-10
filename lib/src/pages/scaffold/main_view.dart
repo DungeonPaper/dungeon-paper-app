@@ -32,11 +32,9 @@ import 'package:flutter/material.dart';
 class MainContainer extends StatelessWidget {
   MainContainer({
     Key key,
-    @required this.title,
     this.pageController,
   }) : super(key: key);
 
-  final String title;
   final PageController pageController;
 
   @override
@@ -123,7 +121,9 @@ class _MainViewState extends State<MainView> {
             ),
         iconTheme:
             IconThemeData(color: Theme.of(context).colorScheme.secondary),
-        title: AppBarTitle(pageController: widget.pageController),
+        title: widget.character == null
+            ? null
+            : AppBarTitle(pageController: widget.pageController),
         elevation: elevation,
         actions: widget.character != null
             ? [

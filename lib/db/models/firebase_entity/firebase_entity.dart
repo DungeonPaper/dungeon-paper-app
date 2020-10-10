@@ -49,7 +49,7 @@ abstract class FirebaseEntity {
   Future<Map<String, dynamic>> getRemoteData() async {
     var output = <String, dynamic>{};
     snapshot = await ref.get();
-    if (snapshot != null && snapshot.data != null) {
+    if (snapshot?.data() != null) {
       var data = _mergeDataWithDefaults(snapshot.data());
       output = await deserializeData(data);
       lastUpdated = data['lastUpdated'] != null

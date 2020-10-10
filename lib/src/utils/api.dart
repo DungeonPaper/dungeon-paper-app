@@ -14,8 +14,12 @@ Future<User> getDatabaseUser(
   if (fbUser == null) {
     return null;
   }
+  final email = fbUser.email ??
+      fbUser.providerData
+          .firstWhere((element) => element.email?.isNotEmpty == true)
+          ?.email;
   var user = User(
-    ref: firestore.collection('user_data').doc(fbUser.email),
+    ref: firestore.collection('user_data').doc(email),
     autoLoad: false,
   );
   var data = await user.getRemoteData();
@@ -27,6 +31,11 @@ Future<User> getDatabaseUser(
       ..photoURL = fbUser.photoURL;
     await user.create();
     await user.createCharacter(Character());
+  } else {
+    if (user.email?.isEmpty != true) {
+      user.email = email;
+      await user.update();
+    }
   }
   return user;
 }
