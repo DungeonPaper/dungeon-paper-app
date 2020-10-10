@@ -4,52 +4,50 @@
 
 - New theme
 - Alternate login methods
-- iOS test build
-- Notes: category is now free text
+- _new_: Notes: category is now free text
 - Bugfixes
 
 ## 1.1.8
 
-- Roll buttons in some pages
-- Bio edit
-- Keep screen on toggle in sidebar
-- Removed reorderables from char management screen and replaced with icon buttons
-- Bugfixes
+- _New:_ Roll buttons in certain places in the app. Long-press the roll buttons to load them up in the full roll dialog.
+- _New:_ Support for biography in character edit screen. You can view it & the class description on the paper icon next to your character name.
+- _New:_ Change whether the app keeps the screen always on or not, using the toggle in the sidebar.
+- Bug fixes and stability improvements
 
 ## 1.1.7
 
-- Created Compendium screen
-- Unified character create/update into tabbed layout
-- Various bugfixes
+_Thank you for your continued support!_
 
-## 1.1.6
+- First public release
+- This version adds a dice roller to the app bar
+- Redesigned the character creation/edit view
+- Added a "Compendium" section in the sidebar, which boasts **_custom classes_**!
+- Your account is now available offline!
 
-- Custom classes creation screen mostly finalized
-- Fixes to dice rolling
+## 1.1.4
 
-## 1.1.5
-
-- Added dice roll dialog
-
-## 1.1.3
-
-- Added manage characters screen with reordering
+- Added "Manage Characters" screen that lets you reorder them.
 - Various bug fixes
 
 ## 1.1.1
 
+_Thank you, dear users, for providing valuable feedback!_
+
 - Fixed an issue with updating notes after the previous update.
 - Fixed an issue with adding new moves from the higher levels set.
+  If you do not manage to add new moves for levels 1-5 or 6-10, try logging out
+  and then back in.
 
 ## 1.1.0
 
-- Major backend overhaul, and improvements to data handling & reliability.
-- Preparations for custom classes.
+- Major backend overhaul, and improvements to data handling & reliability
+- Preparations for custom classes
+- Bugfix in max HP calculation
+- Added Barbarian class to predefined list
 
 ## 1.0.9
 
-- Better auth renewal
-- Better edit looks view
+- Edit looks with custom text, or pick from predefined list
 - Split move/spell creation
 - Added spell create/edit screen
 
@@ -121,21 +119,21 @@
 ## 1.0.0-beta3
 
 - Added reference view with basic & special moves
-- Added display for armor and damage dice
+- Added display for armor and hit dice
 - Bugfixes
 
 ## 1.0.0-beta2.1
 
-- Added display for armor and damage dice
+- Added display for armor and hit dice
 - Bugfixes
 
 ## 1.0.0-beta2
 
-- Added display for armor and damage dice
+- Added display for armor and hit dice
 
 ## 1.0.0-alpha11
 
-- First open beta releasea
+- First open beta release
 
 ## 1.0.0-alpha10
 
