@@ -1,8 +1,6 @@
-import 'package:dungeon_paper/db/db.dart';
 import 'package:dungeon_paper/src/flutter_utils/input_validators.dart';
 import 'package:dungeon_paper/src/flutter_utils/widget_utils.dart';
 import 'package:dungeon_paper/src/utils/auth/auth.dart';
-import 'package:firebase_auth/firebase_auth.dart' as fb;
 import 'package:flutter/material.dart';
 import 'package:email_validator/email_validator.dart';
 import 'package:flutter/services.dart';

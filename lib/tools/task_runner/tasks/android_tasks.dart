@@ -20,7 +20,7 @@ final installAndroid = TaskGroup(
             LogTask.staticArgs('Installing new version...'),
             ProcessTask.staticArgs(
               process: 'adb',
-              args: [...o.deviceArgs, 'install', 'app.dungeonpaper'],
+              args: [...o.deviceArgs, 'install', '-r', o.apkPath],
             ),
           ],
         ).run(o);

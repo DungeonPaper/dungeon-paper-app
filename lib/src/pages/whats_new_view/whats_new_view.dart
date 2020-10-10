@@ -1,5 +1,3 @@
-import 'dart:math';
-
 import 'package:dungeon_paper/src/dialogs/standard_dialog_controls.dart';
 import 'package:dungeon_paper/src/flutter_utils/widget_utils.dart';
 import 'package:dungeon_paper/src/utils/utils.dart';

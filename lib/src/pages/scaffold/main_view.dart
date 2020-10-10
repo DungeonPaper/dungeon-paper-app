@@ -2,7 +2,6 @@ import 'package:dungeon_paper/db/models/character.dart';
 import 'package:dungeon_paper/db/models/user.dart';
 import 'package:dungeon_paper/src/atoms/dice_icon.dart';
 import 'package:dungeon_paper/src/dialogs/roll_dice_dialog.dart';
-import 'package:dungeon_paper/src/flutter_utils/platform_svg.dart';
 import 'package:dungeon_paper/src/flutter_utils/widget_utils.dart';
 import 'package:dungeon_paper/src/pages/battle_view/battle_view.dart';
 import 'package:dungeon_paper/src/pages/home_view/home_view.dart';
