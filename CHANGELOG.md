@@ -5,6 +5,7 @@
 - New theme
 - Alternate login methods
 - iOS test build
+- Notes: category is now free text
 - Bugfixes
 
 ## 1.1.8
@@ -135,47 +136,6 @@
 ## 1.0.0-alpha11
 
 - First open beta releasea
-
-## 1.0.0-beta7
-
-- Added ability to set spells as prepared
-- Added explanation field to movesa
-
-## 1.0.0-beta6
-
-- Added ability to set spells as prepareda
-
-## 1.0.0-beta5
-
-- Bugfixesa
-
-## 1.0.0-beta4
-
-- Bugfixesa
-
-## 1.0.0-beta4
-
-- You can now edit looks and race
-- Your race move is now displayed atop your starting movesa
-
-## 1.0.0-beta3
-
-- Added reference view with basic & special moves
-- Added display for armor and damage dice
-- Bugfixesa
-
-## 1.0.0-beta2.1
-
-- Added display for armor and damage dice
-- Bugfixesa
-
-## 1.0.0-beta2
-
-- Added display for armor and damage dicea
-
-## 1.0.0-alpha11
-
-- Usability updatea
 
 ## 1.0.0-alpha10
 
