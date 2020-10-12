@@ -36,12 +36,8 @@ class SpellCardState extends State<SpellCard> {
     var spell = widget.spell;
     Widget name = Text(spell.name);
 
-    return Material(
-      elevation: 1,
-      color: Colors.white,
-      shape: RoundedRectangleBorder(
-        borderRadius: const BorderRadius.all(Radius.circular(5)),
-      ),
+    return Card(
+      margin: EdgeInsets.zero,
       child: ExpansionTile(
         key: PageStorageKey(spell.key),
         title: widget.spell.prepared != null && widget.spell.prepared
@@ -58,6 +54,7 @@ class SpellCardState extends State<SpellCard> {
                 ],
               )
             : name,
+        expandedCrossAxisAlignment: CrossAxisAlignment.stretch,
         children: <Widget>[
           Padding(
             padding: const EdgeInsets.all(16),

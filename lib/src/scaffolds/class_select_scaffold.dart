@@ -4,6 +4,7 @@ import 'package:dungeon_paper/src/dialogs/confirmation_dialog.dart';
 import 'package:dungeon_paper/src/dialogs/dialogs.dart';
 import 'package:dungeon_paper/src/lists/player_class_list.dart';
 import 'package:dungeon_paper/src/organisms/class_description.dart';
+import 'package:dungeon_paper/src/scaffolds/scaffold_with_elevation.dart';
 import 'package:dungeon_paper/src/utils/logger.dart';
 import 'package:dungeon_paper/src/utils/types.dart';
 import 'package:dungeon_world_data/dw_data.dart';
@@ -34,17 +35,14 @@ class ClassSelectView extends StatelessWidget {
             return Column(
               children: [
                 for (var availClass in sorted)
-                  Padding(
-                    padding: EdgeInsets.only(bottom: 16.0),
-                    child: CardListItem(
-                      title: Text(availClass.name),
-                      subtitle: Text('Preview class'),
-                      leading: Icon(Icons.person, size: 40.0),
-                      color: Theme.of(context).canvasColor.withOpacity(
-                          availClass == character.mainClass ? 1 : 0.5),
-                      trailing: Icon(Icons.chevron_right),
-                      onTap: previewClass(context, availClass),
-                    ),
+                  CardListItem(
+                    title: Text(availClass.name),
+                    subtitle: Text('Preview class'),
+                    leading: Icon(Icons.person, size: 40.0),
+                    color: Theme.of(context).canvasColor.withOpacity(
+                        availClass == character.mainClass ? 1 : 0.7),
+                    trailing: Icon(Icons.chevron_right),
+                    onTap: previewClass(context, availClass),
                   ),
               ],
             );
@@ -102,7 +100,7 @@ class ClassSelectView extends StatelessWidget {
   }
 }
 
-class ClassPreview extends StatefulWidget {
+class ClassPreview extends StatelessWidget {
   final PlayerClass classDef;
   final void Function() onSave;
 
@@ -113,44 +111,20 @@ class ClassPreview extends StatefulWidget {
   }) : super(key: key);
 
   @override
-  _ClassPreviewState createState() => _ClassPreviewState();
-}
-
-class _ClassPreviewState extends State<ClassPreview> {
-  ScrollController scrollController = ScrollController();
-  double appBarElevation = 0.0;
-
-  @override
-  void initState() {
-    scrollController.addListener(scrollListener);
-    super.initState();
-  }
-
-  @override
-  void dispose() {
-    scrollController.removeListener(scrollListener);
-    super.dispose();
-  }
-
-  @override
   Widget build(BuildContext context) {
-    var cls = widget.classDef;
-    return Scaffold(
-      backgroundColor: Theme.of(context).primaryColor,
-      appBar: AppBar(
-        title: Text(cls.name),
-        actions: <Widget>[
-          Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: RaisedButton(
-              child: Text('Choose'),
-              color: Theme.of(context).canvasColor,
-              onPressed: widget.onSave,
-            ),
-          )
-        ],
-        elevation: appBarElevation,
-      ),
+    var cls = classDef;
+    return ScaffoldWithElevation(
+      title: Text(cls.name),
+      actions: <Widget>[
+        Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: RaisedButton(
+            child: Text('Choose'),
+            color: Theme.of(context).canvasColor,
+            onPressed: onSave,
+          ),
+        )
+      ],
       body: SingleChildScrollView(
         child: Padding(
           padding: const EdgeInsets.all(16.0),
@@ -158,15 +132,6 @@ class _ClassPreviewState extends State<ClassPreview> {
         ),
       ),
     );
-  }
-
-  void scrollListener() {
-    var newElevation = scrollController.offset > 16.0 ? 1.0 : 0.0;
-    if (newElevation != appBarElevation) {
-      setState(() {
-        appBarElevation = newElevation;
-      });
-    }
   }
 }
 
@@ -202,7 +167,9 @@ class _ConfirmClassChangeDialogState extends State<ConfirmClassChangeDialog> {
         cancelButtonText: Text('Wait, not yet'),
         returnValue: (bool confirmed) {
           return confirmed
-              ? isEdit ? options : ChangeClassConfirmationOptions.all(true)
+              ? isEdit
+                  ? options
+                  : ChangeClassConfirmationOptions.all(true)
               : null;
         },
         text: Column(

@@ -2,36 +2,40 @@ import 'package:dungeon_paper/db/db.dart';
 import 'package:dungeon_paper/db/models/character.dart';
 import 'package:dungeon_paper/db/models/user.dart';
 import 'package:dungeon_paper/src/utils/analytics.dart';
-import 'package:dungeon_paper/src/utils/logger.dart';
-import 'package:firebase_auth/firebase_auth.dart';
+import 'package:dungeon_paper/src/utils/auth/auth.dart';
+import 'package:firebase_auth/firebase_auth.dart' as fb;
 import 'package:flutter/foundation.dart';
 import 'package:pedantic/pedantic.dart';
 
-void printWrapped(String text) {
-  final pattern = RegExp('.{1,800}'); // 800 is the size of each chunk
-  pattern.allMatches(text).forEach((match) => logger.d(match.group(0)));
-}
-
-Future<User> getOrCreateUser(
-  FirebaseUser fbUser, {
-  @required String signInMethod,
+Future<User> getDatabaseUser(
+  fb.User fbUser, {
+  @required SignInMethod signInMethod,
 }) async {
+  if (fbUser == null) {
+    return null;
+  }
+  final email = fbUser.email ??
+      fbUser.providerData
+          .firstWhere((element) => element.email?.isNotEmpty == true)
+          ?.email;
   var user = User(
-    ref: firestore.collection('user_data').document(fbUser.email),
+    ref: firestore.collection('user_data').doc(email),
     autoLoad: false,
   );
   var data = await user.getRemoteData();
   if (data.isEmpty) {
-    unawaited(analytics.logSignUp(signUpMethod: signInMethod));
+    unawaited(analytics.logSignUp(signUpMethod: signInMethod.name));
     user
-      ..displayName = fbUser.displayName
+      ..displayName = fbUser.displayName ?? fbUser.email
       ..email = fbUser.email
-      ..photoURL = fbUser.photoUrl;
+      ..photoURL = fbUser.photoURL;
     await user.create();
-    await Character(
-      ref: user.ref.collection('characters').document(),
-      autoLoad: false,
-    ).create();
+    await user.createCharacter(Character());
+  } else {
+    if (user.email?.isEmpty != true) {
+      user.email = email;
+      await user.update();
+    }
   }
   return user;
 }

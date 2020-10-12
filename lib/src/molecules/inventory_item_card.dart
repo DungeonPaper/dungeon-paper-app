@@ -54,14 +54,12 @@ class InventoryItemCard extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: titleChildren,
     );
-    return Material(
-      elevation: 1,
-      shape: RoundedRectangleBorder(
-        borderRadius: const BorderRadius.all(Radius.circular(5)),
-      ),
+    return Card(
+      margin: EdgeInsets.zero,
       child: ExpansionTile(
         key: PageStorageKey('inv-${item.key}'),
         title: title,
+        expandedCrossAxisAlignment: CrossAxisAlignment.stretch,
         children: <Widget>[
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),

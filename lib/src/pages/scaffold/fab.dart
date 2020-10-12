@@ -11,6 +11,16 @@ import 'nav_bar.dart';
 import 'dart:math';
 import 'package:flutter/material.dart';
 
+class FABData {
+  final void Function() onPressed;
+  final Widget icon;
+
+  FABData({
+    @required this.onPressed,
+    @required this.icon,
+  });
+}
+
 class FAB extends StatefulWidget {
   final PageController pageController;
   final Character character;
@@ -46,50 +56,66 @@ class FABState extends State<FAB> {
     });
   }
 
-  static Map<Pages, Widget Function(BuildContext context, Character character)>
-      buttonsByIndex = {
-    Pages.Notes: (context, character) => FloatingActionButton(
-          foregroundColor: Colors.white,
-          child: Icon(Icons.add),
-          onPressed: () => Navigator.push(
-            context,
-            MaterialPageRoute(
-              fullscreenDialog: true,
-              builder: (ctx) => EditNoteScreen(
-                note: Note(),
-                mode: DialogMode.Create,
-                onSave: (note) => createNote(character, note),
+  Color get backgroundColor => Theme.of(context).cardColor;
+  Color get foregroundColor => Theme.of(context).colorScheme.secondary;
+
+  Widget Function(BuildContext, Character) buttonsByIndex(Pages page) {
+    var map = <Pages, FABData Function(BuildContext, Character)>{
+      Pages.Notes: (context, character) => FABData(
+            icon: Icon(Icons.add),
+            onPressed: () => Navigator.push(
+              context,
+              MaterialPageRoute(
+                fullscreenDialog: true,
+                builder: (ctx) => EditNoteScreen(
+                  note: Note(),
+                  mode: DialogMode.Create,
+                  onSave: (note) => createNote(character, note),
+                  categories: collectCategories(character.notes),
+                ),
               ),
             ),
           ),
-        ),
-    Pages.Inventory: (context, character) => FloatingActionButton(
-          foregroundColor: Colors.white,
-          child: Icon(Icons.add),
-          onPressed: () => Navigator.push(
-            context,
-            MaterialPageRoute(
-              fullscreenDialog: true,
-              builder: (ctx) => AddInventoryItemScaffold(
-                item: InventoryItem(),
-                mode: DialogMode.Create,
-                onSave: (item) => createInventoryItem(character, item),
+      Pages.Inventory: (context, character) => FABData(
+            icon: Icon(Icons.add),
+            onPressed: () => Navigator.push(
+              context,
+              MaterialPageRoute(
+                fullscreenDialog: true,
+                builder: (ctx) => AddInventoryItemScaffold(
+                  item: InventoryItem(),
+                  mode: DialogMode.Create,
+                  onSave: (item) => createInventoryItem(character, item),
+                ),
               ),
             ),
           ),
-        ),
-    Pages.Battle: (context, character) => FloatingActionButton(
-          foregroundColor: Colors.white,
-          child: Icon(Icons.add),
-          onPressed: () => showDialog(
-            context: context,
-            builder: (context) => AddMoveOrSpell(
-              character: character,
-              defaultClass: character.mainClass,
+      Pages.Battle: (context, character) => FABData(
+            icon: Icon(Icons.add),
+            onPressed: () => showDialog(
+              context: context,
+              builder: (context) => AddMoveOrSpell(
+                character: character,
+                defaultClass: character.mainClass,
+              ),
             ),
-          ),
-        ),
-  };
+          )
+    };
+
+    return (context, char) {
+      var _item = map[page];
+
+      if (_item == null) return null;
+      var data = _item(context, char);
+
+      return FloatingActionButton(
+        backgroundColor: backgroundColor,
+        foregroundColor: foregroundColor,
+        child: data.icon,
+        onPressed: data.onPressed,
+      );
+    };
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -100,14 +126,15 @@ class FABState extends State<FAB> {
     var rt = activeIdx.ceil() - activeIdx;
     t = lerp(t < 0.5 ? 1 - t : t / 1, 0.5, 1, 0, 1);
     rt = lerp(1 - rt, 0.5, 1, 0, 1);
-    var idx = Pages.values[activeIdx.round()];
+    var page = Pages.values[activeIdx.round()];
+    var button = buttonsByIndex(page);
 
     return Transform.scale(
       scale: t,
       child: Transform.rotate(
         angle: -pi * rt,
-        child: activeIdx != null && buttonsByIndex.containsKey(idx)
-            ? buttonsByIndex[idx](context, widget.character)
+        child: activeIdx != null && button != null
+            ? button(context, widget.character)
             : SizedBox.shrink(),
       ),
     );

@@ -1,9 +1,11 @@
 import 'package:dungeon_paper/db/models/character.dart';
 import 'package:dungeon_paper/db/models/user.dart';
+import 'package:dungeon_paper/src/atoms/user_avatar.dart';
 import 'package:dungeon_paper/src/dialogs/dialogs.dart';
 import 'package:dungeon_paper/src/flutter_utils/platform_svg.dart';
 import 'package:dungeon_paper/src/pages/about_view/about_view.dart';
-import 'package:dungeon_paper/src/pages/character_wizard/character_wizard_view.dart';
+import 'package:dungeon_paper/src/pages/account_view/account_view.dart';
+import 'package:dungeon_paper/src/pages/edit_character/edit_character_view.dart';
 import 'package:dungeon_paper/src/pages/compendium/compendium_view.dart';
 import 'package:dungeon_paper/src/redux/characters/characters_store.dart';
 import 'package:dungeon_paper/src/redux/connectors.dart';
@@ -12,7 +14,7 @@ import 'package:dungeon_paper/src/redux/shared_preferences/prefs_store.dart';
 import 'package:dungeon_paper/src/redux/stores.dart';
 import 'package:dungeon_paper/src/scaffolds/manage_characters_view/manage_characters_view.dart';
 import 'package:dungeon_paper/src/utils/analytics.dart';
-import 'package:dungeon_paper/src/utils/auth.dart';
+import 'package:dungeon_paper/src/utils/auth/auth.dart';
 import 'package:dungeon_paper/src/utils/logger.dart';
 import 'package:flutter/material.dart';
 
@@ -22,12 +24,13 @@ class Sidebar extends StatefulWidget {
 }
 
 class _SidebarState extends State<Sidebar> {
-  // bool _userMenuExpanded = false;
+  bool _userMenuExpanded;
 
   @override
   void initState() {
     super.initState();
     logger.d('Open Sidebar');
+    _userMenuExpanded = false;
     analytics.logEvent(name: Events.OpenSidebar);
   }
 
@@ -37,6 +40,7 @@ class _SidebarState extends State<Sidebar> {
       builder: (context, state) {
         var user = state.user.current;
         var settings = state.prefs.settings;
+        // ignore: unused_local_variable
         var buttonStyle = getTitleStyle(context).copyWith(
           color: Theme.of(context).textTheme.headline3.color,
         );
@@ -46,33 +50,63 @@ class _SidebarState extends State<Sidebar> {
             children: [
               UserDrawerHeader(
                 user: user,
-                onToggleUserMenu: null,
-                // onToggleUserMenu: () {
-                //   setState(() {
-                //     _userMenuExpanded = !_userMenuExpanded;
-                //   });
-                // },
+                onToggleUserMenu: () {
+                  setState(() {
+                    _userMenuExpanded = !_userMenuExpanded;
+                  });
+                },
               ),
-              // if (!_userMenuExpanded) ...[
+              if (_userMenuExpanded) ...[
+                // ListTile(
+                //   title: Text('Link with Email'),
+                //   onTap: () => showDialog(
+                //     context: context,
+                //     builder: (context) => EmailAuthView(
+                //       signUpMode: true,
+                //       linkMode: true,
+                //       onLoggedIn: (_) => Navigator.pop(context),
+                //     ),
+                //   ),
+                // ),
+                // Log out
+                ListTile(
+                  leading: Icon(Icons.person),
+                  title: Text('Account'),
+                  onTap: () => Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      fullscreenDialog: true,
+                      builder: (context) => AccountView(),
+                    ),
+                  ),
+                ),
+                // Log out
+                ListTile(
+                  leading: Icon(Icons.exit_to_app),
+                  title: Text('Log out'),
+                  onTap: () {
+                    Navigator.pop(context);
+                    signOutAll();
+                  },
+                ),
+              ],
               title(
                 'Characters',
                 context,
                 leading: Row(
                   children: [
-                    FlatButton(
-                      padding: EdgeInsets.all(0),
-                      child: Text(
-                        '+ Create New'.toUpperCase(),
-                        style: buttonStyle,
-                      ),
+                    IconButton(
+                      color: Theme.of(context).accentColor,
+                      padding: EdgeInsets.zero,
+                      icon: Icon(Icons.add),
+                      tooltip: 'Create new character',
                       onPressed: () => createNewCharacterScreen(context),
                     ),
-                    FlatButton(
-                      padding: EdgeInsets.all(0),
-                      child: Text(
-                        'Manage'.toUpperCase(),
-                        style: buttonStyle,
-                      ),
+                    IconButton(
+                      color: Theme.of(context).accentColor,
+                      padding: EdgeInsets.zero,
+                      icon: Icon(Icons.settings),
+                      tooltip: 'Manage characters',
                       onPressed: () => manageCharactersScreen(context),
                     ),
                   ],
@@ -120,17 +154,6 @@ class _SidebarState extends State<Sidebar> {
                 title: Text('About'),
                 onTap: () => aboutScreen(context),
               ),
-              // Log out
-              // ],
-              // if (_userMenuExpanded)
-              ListTile(
-                leading: Icon(Icons.exit_to_app),
-                title: Text('Log out'),
-                onTap: () {
-                  Navigator.pop(context);
-                  signOutFlow();
-                },
-              ),
             ],
           ),
         );
@@ -160,7 +183,7 @@ class _SidebarState extends State<Sidebar> {
     openPage(
       ScreenNames.CharacterScreen,
       context,
-      builder: (context) => CharacterWizardView(
+      builder: (context) => EditCharacterView(
         character: null,
         mode: DialogMode.Create,
         onSave: (char) => dwStore.dispatch(SetCurrentChar(char)),
@@ -225,8 +248,9 @@ class _SidebarState extends State<Sidebar> {
 
   TextStyle getTitleStyle(BuildContext context) {
     return TextStyle(
-      color: Theme.of(context).primaryColor,
-      fontSize: 12,
+      color: Theme.of(context).accentColor,
+      fontWeight: FontWeight.w700,
+      fontSize: 14,
     );
   }
 
@@ -256,19 +280,22 @@ class CharacterListTile extends StatelessWidget {
     if (character?.displayName == null) {
       return Container(height: 0);
     }
-    return ListTile(
-      leading: Icon(Icons.person),
-      title: Text(character.displayName),
-      selected: selected,
-      onTap: () {
-        logger.d('Set Current Char: $character');
-        analytics.logEvent(name: Events.ChangeCharacter, parameters: {
-          'documentID': character.documentID,
-          'order': character.order,
-        });
-        dwStore.dispatch(SetCurrentChar(character));
-        Navigator.pop(context);
-      },
+    return ListTileTheme.merge(
+      selectedColor: Theme.of(context).colorScheme.secondaryVariant,
+      child: ListTile(
+        leading: Icon(Icons.person),
+        title: Text(character.displayName),
+        selected: selected,
+        onTap: () {
+          logger.d('Set Current Char: $character');
+          analytics.logEvent(name: Events.ChangeCharacter, parameters: {
+            'documentID': character.documentID,
+            'order': character.order,
+          });
+          dwStore.dispatch(SetCurrentChar(character));
+          Navigator.pop(context);
+        },
+      ),
     );
   }
 
@@ -303,16 +330,16 @@ class UserDrawerHeader extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
         UserAccountsDrawerHeader(
-          accountEmail: Text(user.email),
-          accountName: Text(user.displayName),
-          currentAccountPicture: Container(
-            decoration: BoxDecoration(
-              shape: BoxShape.circle,
-              image: DecorationImage(
-                image: NetworkImage(user.photoURL),
-              ),
-            ),
+          decoration: BoxDecoration(color: Theme.of(context).accentColor),
+          accountEmail: Text(
+            user.email,
+            style: TextStyle(color: Theme.of(context).colorScheme.onSecondary),
           ),
+          accountName: Text(
+            user.displayName,
+            style: TextStyle(color: Theme.of(context).colorScheme.onSecondary),
+          ),
+          currentAccountPicture: UserAvatar(user: user),
           onDetailsPressed: onToggleUserMenu,
         ),
       ],

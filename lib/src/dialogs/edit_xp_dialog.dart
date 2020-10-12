@@ -68,51 +68,57 @@ class _EditXPDialogState extends State<EditXPDialog> {
         onSlideUpdate: updateValue,
       ),
     );
-    return SimpleDialog(
+    return AlertDialog(
       title: Text('Manage XP'),
-      children: <Widget>[
-        Padding(
-          padding:
-              const EdgeInsets.symmetric(horizontal: 32.0).copyWith(top: 10.0),
-          child: StatusBarInfo(
-            value: currentXP / maxXP,
-            minNum: currentXP.toString(),
-            maxNum: maxXP.toString(),
-            barBackgroundColor: Colors.lightBlue.shade100,
-            barForegroundColor: Colors.blue,
-          ),
+      content: SingleChildScrollView(
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: <Widget>[
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 32.0)
+                  .copyWith(top: 10.0),
+              child: StatusBarInfo(
+                value: currentXP / maxXP,
+                minNum: currentXP.toString(),
+                maxNum: maxXP.toString(),
+                barBackgroundColor: Colors.lightBlue.shade100,
+                barForegroundColor: Colors.blue,
+              ),
+            ),
+            Container(
+              width: screenWidth >= EditXPDialog.MIN_ROW_WIDTH
+                  ? EditXPDialog.MIN_ROW_WIDTH.toDouble()
+                  : 200.0,
+              padding: const EdgeInsets.all(32.0).copyWith(bottom: 0),
+              child: screenWidth >= EditXPDialog.MIN_ROW_WIDTH
+                  ? Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      mainAxisSize: MainAxisSize.max,
+                      children: <Widget>[
+                        Expanded(child: indicator),
+                        Expanded(child: spinner),
+                      ],
+                    )
+                  : Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      mainAxisSize: MainAxisSize.min,
+                      children: <Widget>[
+                        indicator,
+                        spinner,
+                      ],
+                    ),
+            ),
+          ],
         ),
-        Container(
-          width: screenWidth >= EditXPDialog.MIN_ROW_WIDTH
-              ? EditXPDialog.MIN_ROW_WIDTH.toDouble()
-              : 200.0,
-          padding: const EdgeInsets.all(32.0).copyWith(bottom: 0),
-          child: screenWidth >= EditXPDialog.MIN_ROW_WIDTH
-              ? Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  mainAxisSize: MainAxisSize.max,
-                  children: <Widget>[
-                    Expanded(child: indicator),
-                    Expanded(child: spinner),
-                  ],
-                )
-              : Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  mainAxisSize: MainAxisSize.min,
-                  children: <Widget>[
-                    indicator,
-                    spinner,
-                  ],
-                ),
-        ),
-        StandardDialogControls(
-          cancelText: Text('Close'),
-          onOK: currentXP != maxXP &&
-                  (currentXP != 0 || widget.character.level == 1)
-              ? () => _save(context)
-              : null,
-        ),
-      ],
+      ),
+      actions: StandardDialogControls.actions(
+        context: context,
+        cancelText: Text('Close'),
+        onConfirm: currentXP != maxXP &&
+                (currentXP != 0 || widget.character.level == 1)
+            ? () => _save(context)
+            : null,
+      ),
     );
   }
 
@@ -176,23 +182,24 @@ class LevelUpDialog extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SimpleDialog(
+    return AlertDialog(
       title: Text(!levelDown ? 'Woah! Congratulations!' : 'Wait, what?'),
-      children: <Widget>[
-        Padding(
-          padding: const EdgeInsets.all(32.0),
-          child: Text('You are now level ${char.level}!'),
-        ),
-        Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 32.0),
-          child: Align(
-            alignment: Alignment.centerRight,
-            child: RaisedButton(
-              child: Text('Continue'),
-              onPressed: () => Navigator.pop(context),
+      content: SingleChildScrollView(
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: <Widget>[
+            Padding(
+              padding: const EdgeInsets.all(32.0),
+              child: Text('You are now level ${char.level}!'),
             ),
-          ),
-        )
+          ],
+        ),
+      ),
+      actions: [
+        RaisedButton(
+          child: Text('Continue'),
+          onPressed: () => Navigator.pop(context),
+        ),
       ],
     );
   }

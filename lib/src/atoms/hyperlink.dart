@@ -5,13 +5,17 @@ class Hyperlink<T> extends StatelessWidget {
   final EdgeInsets padding;
   final T text;
   final String url;
+  final void Function() onTap;
 
   const Hyperlink({
-    this.text,
-    this.url,
     Key key,
+    @required this.text,
+    this.url,
+    this.onTap,
     this.padding = const EdgeInsets.all(0),
-  }) : super(key: key);
+  })  : assert(onTap != null || url != null),
+        assert(text != null),
+        super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -26,7 +30,7 @@ class Hyperlink<T> extends StatelessWidget {
           child: text is Widget ? text : Text(text.toString()),
         ),
       ),
-      onTap: () => launch(url),
+      onTap: onTap ?? () => launch(url),
     );
   }
 }

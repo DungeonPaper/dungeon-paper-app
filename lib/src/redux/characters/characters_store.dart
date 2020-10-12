@@ -8,13 +8,15 @@ class CharacterStore {
   Map<String, Character> characters;
 
   CharacterStore({@required characters, this.current}) {
-    if (current == null && characters != null && characters.isNotEmpty) {
+    if (current == null && characters?.isNotEmpty == true) {
       current = characters[characters.data.first];
     }
   }
 }
 
 CharacterStore characterReducer(CharacterStore state, action) {
+  state.characters ??= {};
+
   if (action is SetCharacters) {
     if (action.overwrite == true) {
       state.characters = action.characters;
@@ -41,7 +43,7 @@ CharacterStore characterReducer(CharacterStore state, action) {
 
   if (action is UpsertCharacter) {
     state.characters[action.character.documentID] = action.character;
-    if (state.current.documentID == action.character.documentID) {
+    if (state.current?.documentID == action.character.documentID) {
       state.current = action.character;
     }
     return state;

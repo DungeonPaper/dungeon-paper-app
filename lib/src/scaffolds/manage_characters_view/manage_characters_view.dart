@@ -6,7 +6,7 @@ import 'package:dungeon_paper/src/atoms/card_list_item.dart';
 import 'package:dungeon_paper/src/dialogs/confirmation_dialog.dart';
 import 'package:dungeon_paper/src/dialogs/dialogs.dart';
 import 'package:dungeon_paper/src/dialogs/export_characters_dialog.dart';
-import 'package:dungeon_paper/src/pages/character_wizard/character_wizard_view.dart';
+import 'package:dungeon_paper/src/pages/edit_character/edit_character_view.dart';
 import 'package:dungeon_paper/src/redux/characters/characters_store.dart';
 import 'package:dungeon_paper/src/redux/stores.dart';
 import 'package:dungeon_paper/src/scaffolds/scaffold_with_elevation.dart';
@@ -92,7 +92,9 @@ class _ManageCharactersViewState extends State<ManageCharactersView> {
                               color: Colors.red,
                               icon: Icon(Icons.delete_forever),
                               tooltip: 'Delete ${char.value.displayName}',
-                              onPressed: _delete(char.value),
+                              onPressed: characters.length > 1
+                                  ? _delete(char.value)
+                                  : null,
                               visualDensity: VisualDensity.compact,
                             ),
                           ]),
@@ -124,15 +126,6 @@ class _ManageCharactersViewState extends State<ManageCharactersView> {
         ],
       ),
     );
-  }
-
-  void _reorder(num oldIdx, num newIdx) {
-    var copy = [...characters];
-    var char = copy.elementAt(oldIdx);
-    copy
-      ..removeAt(oldIdx)
-      ..insert(newIdx, char);
-    _updateChars(copy);
   }
 
   void _moveUp(num oldIdx) {
@@ -175,7 +168,7 @@ class _ManageCharactersViewState extends State<ManageCharactersView> {
       context,
       MaterialPageRoute(
         fullscreenDialog: true,
-        builder: (context) => CharacterWizardView(
+        builder: (context) => EditCharacterView(
           character: char,
           mode: DialogMode.Edit,
         ),
@@ -213,7 +206,7 @@ class _ManageCharactersViewState extends State<ManageCharactersView> {
     Navigator.push(
       context,
       MaterialPageRoute<bool>(
-        builder: (context) => CharacterWizardView(
+        builder: (context) => EditCharacterView(
           character: null,
           mode: DialogMode.Create,
         ),

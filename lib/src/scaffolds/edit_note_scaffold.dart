@@ -1,6 +1,7 @@
 import 'package:dungeon_paper/db/models/notes.dart';
 import 'package:dungeon_paper/src/builders/note_form_builder.dart';
 import 'package:dungeon_paper/src/dialogs/dialogs.dart';
+import 'package:dungeon_paper/src/scaffolds/scaffold_with_elevation.dart';
 import 'package:flutter/material.dart';
 
 class EditNoteScreen extends StatefulWidget {
@@ -9,9 +10,11 @@ class EditNoteScreen extends StatefulWidget {
     @required this.note,
     @required this.mode,
     @required this.onSave,
+    @required this.categories,
   }) : super(key: key);
 
   final Note note;
+  final List<String> categories;
   final DialogMode mode;
   final void Function(Note) onSave;
 
@@ -28,26 +31,21 @@ class _EditNoteScreenState extends State<EditNoteScreen> {
       mode: widget.mode,
       note: widget.note,
       onSave: widget.onSave,
+      categories: widget.categories,
       builder: (ctx, form, onSave) {
-        return Scaffold(
-          backgroundColor: Theme.of(context).canvasColor,
-          appBar: AppBar(
-            title: Text(
-                '${widget.mode == DialogMode.Create ? 'Add' : 'Edit'} Note'),
-            actions: <Widget>[
-              IconButton(
-                tooltip: 'Save',
-                icon: Icon(Icons.save),
-                onPressed: onSave,
-              )
-            ],
-          ),
-          body: Container(
-            child: SingleChildScrollView(
-              controller: scrollController,
-              padding: EdgeInsets.all(16),
-              child: form,
-            ),
+        return ScaffoldWithElevation(
+          title:
+              Text('${widget.mode == DialogMode.Create ? 'Add' : 'Edit'} Note'),
+          actions: <Widget>[
+            IconButton(
+              tooltip: 'Save',
+              icon: Icon(Icons.save),
+              onPressed: onSave,
+            )
+          ],
+          body: Padding(
+            padding: EdgeInsets.all(16),
+            child: form,
           ),
         );
       },

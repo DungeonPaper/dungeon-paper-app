@@ -13,29 +13,73 @@ class BiographyDialog extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SimpleDialog(
-      title: Text('Biography'),
-      contentPadding: const EdgeInsets.all(24),
-      children: [
-        if (character.bio?.isNotEmpty == true) ...[
+    final hasBio = character.bio?.isNotEmpty == true;
+    final hasClsDescr = character.mainClass?.description?.isNotEmpty == true;
+    final hasLooks = character.looks.isNotEmpty;
+    final blocks = <List<Widget>>[
+      if (hasBio)
+        [
           Padding(
             padding: const EdgeInsets.only(bottom: 4.0),
-            child: Text('Character biography',
-                style: Theme.of(context).textTheme.bodyText1),
+            child: Text(
+              'Character biography',
+              textScaleFactor: 1.1,
+              style: Theme.of(context)
+                  .textTheme
+                  .bodyText2
+                  .copyWith(fontWeight: FontWeight.w700),
+            ),
           ),
           MarkdownBody(
             data: character.bio,
           ),
         ],
-        if (character.mainClass?.description?.isNotEmpty == true) ...[
+      if (hasLooks)
+        [
           Padding(
             padding: const EdgeInsets.only(bottom: 4.0),
-            child: Text('${character.mainClass.name} description',
-                style: Theme.of(context).textTheme.bodyText1),
+            child: Text(
+              'Appearance',
+              textScaleFactor: 1.1,
+              style: Theme.of(context)
+                  .textTheme
+                  .bodyText2
+                  .copyWith(fontWeight: FontWeight.w700),
+            ),
           ),
+          Text(character.looks.join(', ')),
+        ],
+      if (hasClsDescr)
+        [
+          // ExpansionTile(
+          //   tilePadding: EdgeInsets.zero,
+          //   title:
+          Padding(
+            padding: const EdgeInsets.only(bottom: 4.0),
+            child: Text(
+              '${character.mainClass.name} description',
+              textScaleFactor: 1.1,
+              style: Theme.of(context)
+                  .textTheme
+                  .bodyText2
+                  .copyWith(fontWeight: FontWeight.w700),
+            ),
+          ),
+          // children: [
           MarkdownBody(
             data: character.mainClass.description,
           ),
+          // ],
+          // )
+        ]
+    ];
+    return SimpleDialog(
+      title: Text('Biography'),
+      contentPadding: const EdgeInsets.all(24),
+      children: [
+        for (var block in blocks) ...[
+          ...block,
+          SizedBox(height: 30),
         ]
       ],
     );

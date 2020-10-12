@@ -30,10 +30,12 @@ enum Keys { name, description, baseHP, load }
 class _ClassBasicDetailsState extends State<ClassBasicDetails> {
   Map<Keys, TextEditingController> editingControllers;
   Dice dice;
+  bool nameDirty;
 
   @override
   void initState() {
     super.initState();
+    nameDirty = false;
 
     editingControllers = WidgetUtils.textEditingControllerMap(
       list: [
@@ -41,9 +43,12 @@ class _ClassBasicDetailsState extends State<ClassBasicDetails> {
           key: Keys.name,
           defaultValue: widget.customClass.name,
           listener: () {
-            var def = widget.customClass;
-            def.name = editingControllers[Keys.name].text.trim();
-            updateWith(def);
+            setState(() {
+              var def = widget.customClass;
+              def.name = editingControllers[Keys.name].text.trim();
+              updateWith(def);
+              nameDirty = true;
+            });
           },
         ),
         EditingControllerConfig(
@@ -113,17 +118,22 @@ class _ClassBasicDetailsState extends State<ClassBasicDetails> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: <Widget>[
                       Text('Name & Information', style: cardCaptionStyle),
+                      SizedBox(height: 16),
                       TextFormField(
                         controller: editingControllers[Keys.name],
                         textCapitalization: TextCapitalization.words,
+                        autovalidateMode: AutovalidateMode.onUserInteraction,
                         decoration: InputDecoration(
                           labelText: 'Class name',
                           hintText: 'Barbarian, Paladin, Wizard...',
-                          errorText: editingControllers[Keys.name].text.isEmpty
+                          errorText: nameDirty &&
+                                  editingControllers[Keys.name].text.isEmpty
                               ? 'Please enter class name'
                               : null,
+                          floatingLabelBehavior: FloatingLabelBehavior.always,
                         ),
                       ),
+                      SizedBox(height: 16),
                       TextFormField(
                         controller: editingControllers[Keys.description],
                         textCapitalization: TextCapitalization.sentences,
@@ -133,6 +143,7 @@ class _ClassBasicDetailsState extends State<ClassBasicDetails> {
                           labelText: 'Class description',
                           hintText:
                               'Describe your class in free-form here.\nBe creative, everyone is watching!',
+                          floatingLabelBehavior: FloatingLabelBehavior.always,
                         ),
                       ),
                     ],
@@ -146,6 +157,7 @@ class _ClassBasicDetailsState extends State<ClassBasicDetails> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: <Widget>[
                       Text('Stat Basis', style: cardCaptionStyle),
+                      SizedBox(height: 16),
                       Row(
                         children: [
                           Expanded(
@@ -156,6 +168,8 @@ class _ClassBasicDetailsState extends State<ClassBasicDetails> {
                               decoration: InputDecoration(
                                 labelText: 'Base HP',
                                 hintText: '0',
+                                floatingLabelBehavior:
+                                    FloatingLabelBehavior.always,
                               ),
                             ),
                           ),
@@ -168,6 +182,8 @@ class _ClassBasicDetailsState extends State<ClassBasicDetails> {
                               decoration: InputDecoration(
                                 labelText: 'Max Load',
                                 hintText: '0',
+                                floatingLabelBehavior:
+                                    FloatingLabelBehavior.always,
                               ),
                             ),
                           ),

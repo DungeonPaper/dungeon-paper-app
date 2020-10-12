@@ -5,13 +5,13 @@ const BOTTOM_SPACER = SizedBox(height: 64);
 typedef SingleChildWidgetBuilder = Widget Function(
     BuildContext context, Widget child);
 
-class PageLoader extends StatelessWidget {
+class Loader extends StatelessWidget {
   final Color color;
   final Color backgroundColor;
   final Size size;
   final double strokeWidth;
 
-  const PageLoader({
+  const Loader({
     Key key,
     this.color,
     this.backgroundColor,
@@ -23,7 +23,8 @@ class PageLoader extends StatelessWidget {
   Widget build(BuildContext context) {
     var loader = CircularProgressIndicator(
       valueColor: AlwaysStoppedAnimation<Color>(
-          color ?? Theme.of(context).primaryColor),
+        color ?? Theme.of(context).colorScheme.surface,
+      ),
       backgroundColor: backgroundColor,
       strokeWidth: strokeWidth ?? 4.0,
     );

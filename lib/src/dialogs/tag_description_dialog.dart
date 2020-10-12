@@ -24,11 +24,6 @@ class TagDescriptionDialog extends StatelessWidget {
           Text('Value', style: Theme.of(context).textTheme.caption),
           Text(tag.value.toString()),
         ],
-        // StandardDialogControls(
-        //   okText: Text('Edit'),
-        //   onOK: () => showDialog(
-        //       context: context, builder: (context) => EditTagDialog(tag: tag)),
-        // ),
       ],
     );
   }

@@ -19,8 +19,10 @@ class CategorizedList<T> extends StatelessWidget {
   final EdgeInsets itemMargin;
   bool get _isChildrenBuilder => itemBuilder == null || itemCount == null;
 
-  static const TextStyle titleStyle =
-      TextStyle(fontSize: 16.0, fontWeight: FontWeight.bold);
+  TextStyle titleStyle(BuildContext context) => Theme.of(context)
+      .textTheme
+      .bodyText2
+      .copyWith(fontSize: 16.0, fontWeight: FontWeight.bold);
 
   const CategorizedList({
     Key key,
@@ -99,8 +101,9 @@ class CategorizedList<T> extends StatelessWidget {
       if (builtTitle != null) {
         title = DefaultTextStyle(
           child: builtTitle,
-          style: titleStyle.copyWith(
-              color: Theme.of(context).textTheme.bodyText2.color),
+          style: titleStyle(context).copyWith(
+            color: Theme.of(context).colorScheme.secondary,
+          ),
         );
       }
       num count = _isChildrenBuilder ? 1 : itemCount(item.value, item.index);

@@ -76,8 +76,13 @@ class _EditHPDialogState extends State<EditHPDialog> {
         initialValue: isHP ? initialCurrentHP : initialMaxHP,
         value: isHP ? currentHP : maxHP,
         label: isHP ? 'HP' : 'Max HP',
-        differenceTextBuilder: (above) =>
-            isHP ? above ? 'Heal' : 'Damage' : above ? 'Add' : 'Reduce',
+        differenceTextBuilder: (above) => isHP
+            ? above
+                ? 'Heal'
+                : 'Damage'
+            : above
+                ? 'Add'
+                : 'Reduce',
       ),
     );
     Widget spinner = Container(
@@ -91,66 +96,72 @@ class _EditHPDialogState extends State<EditHPDialog> {
         onSlideUpdate: updateValue,
       ),
     );
-    return SimpleDialog(
+    return AlertDialog(
       title: title,
       contentPadding: EdgeInsets.only(top: isMaxHP ? 0 : 32, bottom: 8),
-      children: <Widget>[
-        if (isMaxHP)
-          Padding(
-            padding: EdgeInsets.only(bottom: 16),
-            child: CheckboxListTile(
-              controlAffinity: ListTileControlAffinity.leading,
-              value: useDefaultMaxHP,
-              title: Text('Calculate based on stats'),
-              subtitle: Text(
-                  'Class Base HP (${widget.character.mainClass.baseHP}) + Constitution (${widget.character.con})'),
-              onChanged: (val) {
-                if (val) updateValue(widget.character.defaultMaxHP);
-                setState(() {
-                  useDefaultMaxHP = val;
-                });
-              },
+      content: SingleChildScrollView(
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: <Widget>[
+            if (isMaxHP)
+              Padding(
+                padding: EdgeInsets.only(bottom: 16),
+                child: CheckboxListTile(
+                  controlAffinity: ListTileControlAffinity.leading,
+                  value: useDefaultMaxHP,
+                  title: Text('Calculate based on stats'),
+                  subtitle: Text(
+                      'Class Base HP (${widget.character.mainClass.baseHP}) + Constitution (${widget.character.con})'),
+                  onChanged: (val) {
+                    if (val) updateValue(widget.character.defaultMaxHP);
+                    setState(() {
+                      useDefaultMaxHP = val;
+                    });
+                  },
+                ),
+              ),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 32.0),
+              child: StatusBarInfo(
+                value: currentHP / maxHP,
+                minNum: currentHP.toString(),
+                maxNum: maxHP.toString(),
+                barBackgroundColor: Colors.red.shade100,
+                barForegroundColor: Colors.red.shade700,
+              ),
             ),
-          ),
-        Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 32.0),
-          child: StatusBarInfo(
-            value: currentHP / maxHP,
-            minNum: currentHP.toString(),
-            maxNum: maxHP.toString(),
-            barBackgroundColor: Colors.red.shade100,
-            barForegroundColor: Colors.red.shade700,
-          ),
+            if (isHP || !useDefaultMaxHP)
+              Container(
+                width: screenWidth >= EditHPDialog.MIN_ROW_WIDTH
+                    ? EditHPDialog.MIN_ROW_WIDTH.toDouble()
+                    : 200.0,
+                // height: screenWidth >= HPEditDialog.MIN_ROW_WIDTH ? null : 250,
+                padding: const EdgeInsets.only(top: 32.0),
+                child: screenWidth >= EditHPDialog.MIN_ROW_WIDTH
+                    ? Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        mainAxisSize: MainAxisSize.max,
+                        children: <Widget>[
+                          Expanded(child: indicator),
+                          Expanded(child: spinner),
+                        ],
+                      )
+                    : Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        mainAxisSize: MainAxisSize.min,
+                        children: <Widget>[
+                          indicator,
+                          spinner,
+                        ],
+                      ),
+              ),
+          ],
         ),
-        if (isHP || !useDefaultMaxHP)
-          Container(
-            width: screenWidth >= EditHPDialog.MIN_ROW_WIDTH
-                ? EditHPDialog.MIN_ROW_WIDTH.toDouble()
-                : 200.0,
-            // height: screenWidth >= HPEditDialog.MIN_ROW_WIDTH ? null : 250,
-            padding: const EdgeInsets.only(top: 32.0),
-            child: screenWidth >= EditHPDialog.MIN_ROW_WIDTH
-                ? Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    mainAxisSize: MainAxisSize.max,
-                    children: <Widget>[
-                      Expanded(child: indicator),
-                      Expanded(child: spinner),
-                    ],
-                  )
-                : Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    mainAxisSize: MainAxisSize.min,
-                    children: <Widget>[
-                      indicator,
-                      spinner,
-                    ],
-                  ),
-          ),
-        StandardDialogControls(
-          onOK: () => _save(context),
-        ),
-      ],
+      ),
+      actions: StandardDialogControls.actions(
+        context: context,
+        onConfirm: () => _save(context),
+      ),
     );
   }
 

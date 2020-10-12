@@ -33,8 +33,7 @@ class MoveCardState extends State<MoveCard> {
   @override
   Widget build(BuildContext context) {
     var move = widget.move;
-    Widget name =
-        Text("${move.name}${widget.raceMove ? '\'s Racial Move' : ''}");
+    Widget name = Text("${move.name}${widget.raceMove ? '\'s Move' : ''}");
 
     var children = <Widget>[
       Padding(
@@ -116,17 +115,14 @@ class MoveCardState extends State<MoveCard> {
           : name,
       initiallyExpanded: false,
       children: children,
+      expandedCrossAxisAlignment: CrossAxisAlignment.stretch,
       onExpansionChanged: (value) => analytics.logEvent(
         name: Events.ExpandMoveCard,
         parameters: {'state': value.toString()},
       ),
     );
-    return Material(
-      elevation: 1,
-      color: Colors.white,
-      shape: RoundedRectangleBorder(
-        borderRadius: const BorderRadius.all(Radius.circular(5)),
-      ),
+    return Card(
+      margin: EdgeInsets.zero,
       child: expansionTile,
     );
   }

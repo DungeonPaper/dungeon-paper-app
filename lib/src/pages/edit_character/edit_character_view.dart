@@ -26,12 +26,12 @@ enum CreateCharacterTab {
   Stats,
 }
 
-class CharacterWizardView extends StatefulWidget {
+class EditCharacterView extends StatefulWidget {
   final DialogMode mode;
   final Character character;
   final void Function(Character) onSave;
 
-  const CharacterWizardView({
+  const EditCharacterView({
     Key key,
     @required this.mode,
     @required this.character,
@@ -39,10 +39,10 @@ class CharacterWizardView extends StatefulWidget {
   }) : super(key: key);
 
   @override
-  _CharacterWizardViewState createState() => _CharacterWizardViewState();
+  _EditCharacterViewState createState() => _EditCharacterViewState();
 }
 
-class _CharacterWizardViewState extends State<CharacterWizardView>
+class _EditCharacterViewState extends State<EditCharacterView>
     with SingleTickerProviderStateMixin {
   Character character;
   TabController tabController;
@@ -69,11 +69,11 @@ class _CharacterWizardViewState extends State<CharacterWizardView>
     character = widget.character != null
         ? Character(
             data: widget.character.toJSON(),
-            ref: widget.character.ref ??
-                user.ref.collection('characters').document(),
+            ref:
+                widget.character.ref ?? user.ref.collection('characters').doc(),
           )
         : Character(
-            ref: user.ref.collection('characters').document(),
+            ref: user.ref.collection('characters').doc(),
           );
 
     basicInfoValid = ValueNotifier(character.displayName.isNotEmpty);
@@ -116,13 +116,10 @@ class _CharacterWizardViewState extends State<CharacterWizardView>
                 Expanded(
                   child: Padding(
                     padding: const EdgeInsets.all(8.0),
-                    child: Container(
-                      color: Theme.of(context).primaryColor,
-                      child: TabBar(
-                        isScrollable: true,
-                        controller: tabController,
-                        tabs: _tabs.keys.map(_mapTab).toList(),
-                      ),
+                    child: TabBar(
+                      isScrollable: true,
+                      controller: tabController,
+                      tabs: _tabs.keys.map(_mapTab).toList(),
                     ),
                   ),
                 ),
@@ -199,7 +196,7 @@ class _CharacterWizardViewState extends State<CharacterWizardView>
           mode: DialogMode.Create,
           onUpdate: (char) => setState(() {
             dirty = true;
-            character = char;
+            character.looks = char.looks;
           }),
         ),
         CreateCharacterTab.Stats: EditStats(

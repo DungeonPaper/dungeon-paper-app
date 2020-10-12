@@ -2,6 +2,7 @@ import 'package:dungeon_paper/db/models/character.dart';
 import 'package:dungeon_paper/db/models/notes.dart';
 import 'package:dungeon_paper/src/atoms/categorized_list.dart';
 import 'package:dungeon_paper/src/atoms/empty_state.dart';
+import 'package:dungeon_paper/src/utils/utils.dart';
 import 'note_card.dart';
 import 'package:flutter/material.dart';
 
@@ -15,13 +16,7 @@ class NotesView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var cats = <NoteCategory, Iterable<Note>>{};
-    NoteCategory.defaultCategories.forEach((category) {
-      var notes = character.notes.where((note) => note.category == category);
-      if (notes.isNotEmpty) {
-        cats[category] = notes;
-      }
-    });
+    var cats = groupBy<String, Note>(character.notes, (note) => note.category);
     if (cats.values.every((el) => el.isEmpty)) {
       return Padding(
         padding: const EdgeInsets.symmetric(vertical: 8.0),
@@ -33,11 +28,11 @@ class NotesView extends StatelessWidget {
       );
     }
 
-    return CategorizedList<NoteCategory>.builder(
+    return CategorizedList<String>.builder(
       itemCount: (cat, idx) => cats[cat].length,
       items: cats.keys,
       spacerCount: 1,
-      titleBuilder: (context, cat, idx) => Text(cat.name),
+      titleBuilder: (context, cat, idx) => Text(cat),
       itemBuilder: (context, cat, idx, catI) {
         var note = cats[cat].elementAt(idx);
         return Padding(
@@ -45,6 +40,7 @@ class NotesView extends StatelessWidget {
           child: NoteCard(
             key: Key(note.key),
             note: note,
+            categories: collectCategories(character.notes),
             onSave: (_note) => updateNote(character, _note),
             onDelete: () => deleteNote(character, note),
           ),

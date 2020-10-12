@@ -59,7 +59,12 @@ class _AddMoveListState extends State<AddMoveList> {
           return Row(
             children: <Widget>[
               Expanded(
-                child: Text('Moves from class:'),
+                child: Text(
+                  'Moves from class:',
+                  style: TextStyle(
+                    color: Theme.of(context).colorScheme.onBackground,
+                  ),
+                ),
               ),
               Expanded(
                 child: PlayerClassList.dropdown(

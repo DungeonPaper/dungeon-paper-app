@@ -10,6 +10,7 @@ class CardListItem extends StatelessWidget {
   final Color color;
   final double elevation;
   final EdgeInsets margin;
+  final EdgeInsets padding;
   final double width;
 
   const CardListItem({
@@ -24,6 +25,7 @@ class CardListItem extends StatelessWidget {
     this.elevation = 1.0,
     this.margin,
     this.width,
+    this.padding,
   }) : super(key: key);
 
   @override
@@ -39,21 +41,25 @@ class CardListItem extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: <Widget>[top, child],
           );
+    var finalContent = Container(
+      width: width,
+      padding: padding ??
+          EdgeInsets.only(
+            left: leading != null ? 8.0 : 16.0,
+            right: trailing != null ? 8.0 : 16.0,
+          ),
+      child: contentLayout(content),
+    );
     return Card(
       margin: margin,
       elevation: elevation,
       color: color ?? Theme.of(context).canvasColor,
-      child: InkWell(
-        onTap: onTap,
-        child: Container(
-          width: width,
-          padding: EdgeInsets.only(
-            left: leading != null ? 8.0 : 16.0,
-            right: trailing != null ? 8.0 : 16.0,
-          ),
-          child: contentLayout(content),
-        ),
-      ),
+      child: onTap != null
+          ? InkWell(
+              onTap: onTap,
+              child: finalContent,
+            )
+          : finalContent,
     );
   }
 

@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:dungeon_paper/src/dialogs/standard_dialog_controls.dart';
 import 'package:dungeon_paper/src/flutter_utils/widget_utils.dart';
 import 'package:dungeon_paper/src/utils/utils.dart';
@@ -29,18 +31,20 @@ class WhatsNew extends StatefulWidget {
         super(key: key);
 
   static Widget dialogBuilder(BuildContext context, Widget child) {
-    return SimpleDialog(
+    return AlertDialog(
       title: Text("What's New?"),
-      contentPadding: EdgeInsets.only(bottom: 8),
-      titlePadding: EdgeInsets.all(16).copyWith(bottom: 0),
-      children: <Widget>[
-        child,
-        StandardDialogControls(
-          padding: EdgeInsets.symmetric(horizontal: 16).copyWith(top: 16),
-          onOK: () => Navigator.pop(context),
-          okText: Text('Got it!'),
-        )
-      ],
+      contentPadding: EdgeInsets.symmetric(horizontal: 8),
+      content: Container(
+        height: min(400, MediaQuery.of(context).size.height),
+        child: SingleChildScrollView(
+          child: child,
+        ),
+      ),
+      actions: StandardDialogControls.actions(
+        context: context,
+        onConfirm: () => Navigator.pop(context),
+        confirmText: Text('Got it!'),
+      ),
     );
   }
 
@@ -79,7 +83,7 @@ class _WhatsNewState extends State<WhatsNew> {
         child = Container(
           width: 150,
           height: 150,
-          child: Center(child: PageLoader()),
+          child: Center(child: Loader()),
         );
       } else {
         child = Padding(
@@ -90,6 +94,7 @@ class _WhatsNewState extends State<WhatsNew> {
       }
     } else {
       child = Column(
+        mainAxisSize: MainAxisSize.min,
         children: <Widget>[
           Padding(
             padding:

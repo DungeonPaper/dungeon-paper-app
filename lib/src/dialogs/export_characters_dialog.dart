@@ -34,78 +34,84 @@ class _ExportCharactersDialogState extends State<ExportCharactersDialog> {
 
   @override
   Widget build(BuildContext context) {
-    return SimpleDialog(
+    return AlertDialog(
       title: Text('Export Characters'),
       contentPadding: EdgeInsets.only(bottom: 8),
-      children: [
-        _Padded(child: Text('Select characters to export')),
-        _Padded(
-          child: Row(
-            children: [
-              Text('Select export format:'),
-              SizedBox(width: 16),
-              DropdownButton(
-                value: _format,
-                onChanged: _setFormat,
-                items: [
-                  for (var format in ExportFormat.values
-                      .where((format) => _dataParsers[format] != null))
-                    DropdownMenuItem(
-                      child: Text(enumName(format)),
-                      value: _dataParsers[format] != null ? format : null,
-                    ),
-                ],
-              ),
-            ],
-          ),
-        ),
-        CharacterList(
-          key: Key(_toExport.map((char) => char.documentID).toString()),
-          builder: (context, list) => _Padded(
-            horizontal: 8,
-            child: Row(
-              children: [
-                Flexible(
-                  child: Column(
-                    children: [
-                      ListTile(
-                        leading: Checkbox(
-                          value: _allChecked(list),
-                          onChanged: _onCheckAll(list),
-                        ),
-                        title: Text(
-                          'Select All',
-                          style: TextStyle(
-                            color: Theme.of(context)
-                                .colorScheme
-                                .onSurface
-                                .withOpacity(0.6),
-                          ),
-                        ),
-                        onTap: _toggleAll(list),
-                      ),
-                      for (var char in list)
-                        ListTile(
-                          leading: Checkbox(
-                            value: _toExport.contains(char),
-                            onChanged: _onChecked(char),
-                          ),
-                          title: Text(char.displayName),
-                          onTap: _toggle(char),
+      content: SingleChildScrollView(
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            _Padded(child: Text('Select characters to export')),
+            _Padded(
+              child: Row(
+                children: [
+                  Text('Select export format:'),
+                  SizedBox(width: 16),
+                  DropdownButton(
+                    value: _format,
+                    onChanged: _setFormat,
+                    items: [
+                      for (var format in ExportFormat.values
+                          .where((format) => _dataParsers[format] != null))
+                        DropdownMenuItem(
+                          child: Text(enumName(format)),
+                          value: _dataParsers[format] != null ? format : null,
                         ),
                     ],
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
-          ),
+            CharacterList(
+              key: Key(_toExport.map((char) => char.documentID).toString()),
+              builder: (context, list) => _Padded(
+                horizontal: 8,
+                child: Row(
+                  children: [
+                    Flexible(
+                      child: Column(
+                        children: [
+                          ListTile(
+                            leading: Checkbox(
+                              value: _allChecked(list),
+                              onChanged: _onCheckAll(list),
+                            ),
+                            title: Text(
+                              'Select All',
+                              style: TextStyle(
+                                color: Theme.of(context)
+                                    .colorScheme
+                                    .onSurface
+                                    .withOpacity(0.6),
+                              ),
+                            ),
+                            onTap: _toggleAll(list),
+                          ),
+                          for (var char in list)
+                            ListTile(
+                              leading: Checkbox(
+                                value: _toExport.contains(char),
+                                onChanged: _onChecked(char),
+                              ),
+                              title: Text(char.displayName),
+                              onTap: _toggle(char),
+                            ),
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          ],
         ),
-        StandardDialogControls(
-          okText: Text('Export'),
-          onOK: _export,
-          onCancel: _exit,
-        ),
-      ],
+      ),
+      actions: StandardDialogControls.actions(
+        context: context,
+        confirmText: Text('Export'),
+        onConfirm: _export,
+        onCancel: _exit,
+      ),
     );
   }
 
