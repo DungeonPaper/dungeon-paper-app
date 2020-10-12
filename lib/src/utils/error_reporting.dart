@@ -4,6 +4,8 @@ import 'package:flutter/widgets.dart';
 import 'package:pedantic/pedantic.dart';
 import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 
+final crashlytics = FirebaseCrashlytics.instance;
+
 // Error reporting
 Future<void> initErrorReporting() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -15,7 +17,7 @@ Future<void> initCrashalytics() async {
     if (isInDebugMode) {
       FlutterError.dumpErrorToConsole(details);
     } else {
-      Crashlytics.instance.recordFlutterError(details);
+      crashlytics.recordFlutterError(details);
     }
   };
 }
@@ -26,6 +28,6 @@ Future<void> reportError(dynamic error, StackTrace stackTrace) async {
     print(stackTrace);
     return;
   } else {
-    unawaited(Crashlytics.instance.recordError(error, stackTrace));
+    unawaited(crashlytics.recordError(error, stackTrace));
   }
 }

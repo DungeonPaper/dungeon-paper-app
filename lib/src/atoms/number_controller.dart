@@ -20,7 +20,7 @@ class NumberController extends StatefulWidget {
     this.min = -double.infinity,
     this.max = double.infinity,
     this.formatType = FormatType.Integer,
-    this.autoFocus = true,
+    this.autoFocus = false,
   }) : super(key: key);
 
   @override
@@ -49,9 +49,9 @@ class _NumberControllerState extends State<NumberController> {
         children: <Widget>[
           RaisedButton(
             shape: CircleBorder(side: BorderSide.none),
-            color: Colors.red.shade300,
+            color: Colors.red[300],
             textColor: Colors.white,
-            child: Text('-', style: TextStyle(fontSize: 30)),
+            child: Icon(Icons.remove, size: 30),
             onPressed: () => _update(
                 controlledStat > widget.min ? controlledStat - 1 : widget.min,
                 true),
@@ -83,12 +83,13 @@ class _NumberControllerState extends State<NumberController> {
           ),
           RaisedButton(
             shape: CircleBorder(side: BorderSide.none),
-            color: Colors.green.shade400,
+            color: Colors.green[300],
             textColor: Colors.white,
-            child: Text('+', style: TextStyle(fontSize: 24)),
+            child: Icon(Icons.add, size: 30),
             onPressed: () => _update(
-                controlledStat < widget.max ? controlledStat + 1 : widget.max,
-                true),
+              controlledStat < widget.max ? controlledStat + 1 : widget.max,
+              true,
+            ),
           ),
         ],
       ),

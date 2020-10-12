@@ -25,9 +25,20 @@ class ArmorAndDmgDice extends StatelessWidget {
               'armor.svg',
               width: 20,
               height: 20,
+              color: Theme.of(context).colorScheme.secondary,
             ),
-            title: Text('ARMOR'),
-            value: Text(character.armor.toString()),
+            title: Text(
+              'ARMOR',
+              style: TextStyle(
+                color: Theme.of(context).colorScheme.secondary,
+              ),
+            ),
+            value: Text(
+              character.armor.toString(),
+              style: TextStyle(
+                color: Theme.of(context).colorScheme.secondary,
+              ),
+            ),
             onTap: () => showDialog(
               context: context,
               builder: (context) => EditArmorDialog(value: character.armor),
@@ -38,9 +49,20 @@ class ArmorAndDmgDice extends StatelessWidget {
             icon: DiceIcon(
               dice: character.damageDice,
               size: 20,
+              color: Theme.of(context).colorScheme.secondary,
             ),
-            title: Text('DMG DICE'),
-            value: Text(character.damageDice.toString()),
+            title: Text(
+              'DMG DICE',
+              style: TextStyle(
+                color: Theme.of(context).colorScheme.secondary,
+              ),
+            ),
+            value: Text(
+              character.damageDice.toString(),
+              style: TextStyle(
+                color: Theme.of(context).colorScheme.secondary,
+              ),
+            ),
             onTap: () => showDialog(
               context: context,
               builder: (context) => EditDamageDiceDialog(
@@ -60,7 +82,6 @@ class ArmorAndDmgDice extends StatelessWidget {
     Widget value,
     VoidCallback onTap,
   }) {
-    var style = Theme.of(context).textTheme.bodyText2.copyWith();
     return Expanded(
       child: InkWell(
         onTap: onTap,
@@ -69,12 +90,12 @@ class ArmorAndDmgDice extends StatelessWidget {
           child: Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
-              DefaultTextStyle(child: title, style: style),
+              title,
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 8.0),
                 child: icon,
               ),
-              DefaultTextStyle(child: value, style: style),
+              value,
             ],
           ),
         ),

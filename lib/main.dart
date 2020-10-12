@@ -12,6 +12,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:pedantic/pedantic.dart';
+import 'package:theme_provider/theme_provider.dart';
 
 void withInit(Function() cb) async {
   try {
@@ -27,7 +28,7 @@ void withInit(Function() cb) async {
 }
 
 void main() async {
-  initApp(web: kIsWeb);
+  await initApp(web: kIsWeb);
   withInit(() {
     dwStore.dispatch(AppInit());
     runApp(DungeonPaper());
@@ -41,22 +42,29 @@ class DungeonPaper extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    const appName = 'Dungeon Paper';
-
-    return StoreProvider<DWStore>(
-      store: dwStore,
-      child: OnInitCaller(
-        onInit: () => analytics.logAppOpen(),
-        child: MaterialApp(
-          title: appName,
-          theme: mainTheme,
-          routes: {
-            '/': (ctx) => MainContainer(
-                  title: appName,
-                  pageController: _pageController,
-                ),
-          },
-          navigatorObservers: [observer],
+    return ThemeProvider(
+      defaultThemeId: 'normal',
+      themes: [
+        AppTheme(id: 'normal', data: mainTheme, description: 'Normal theme'),
+        AppTheme(
+            id: 'normal_2', data: mainTheme, description: 'Normal theme 2'),
+      ],
+      child: StoreProvider<DWStore>(
+        store: dwStore,
+        child: OnInitCaller(
+          onInit: () => analytics.logAppOpen(),
+          child: ThemeConsumer(
+            child: Builder(
+              builder: (context) => MaterialApp(
+                title: 'Dungeon Paper',
+                theme: ThemeProvider.themeOf(context).data,
+                routes: {
+                  '/': (ctx) => MainContainer(pageController: _pageController),
+                },
+                navigatorObservers: [observer],
+              ),
+            ),
+          ),
         ),
       ),
     );

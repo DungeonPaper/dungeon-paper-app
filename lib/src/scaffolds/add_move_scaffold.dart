@@ -1,6 +1,7 @@
 import 'package:dungeon_paper/src/builders/custom_move_form_builder.dart';
 import 'package:dungeon_paper/src/dialogs/dialogs.dart';
 import 'package:dungeon_paper/src/lists/add_move_list.dart';
+import 'package:dungeon_paper/src/scaffolds/scaffold_with_elevation.dart';
 import 'package:dungeon_world_data/player_class.dart';
 import 'package:dungeon_world_data/move.dart';
 import 'package:flutter/material.dart';
@@ -58,7 +59,7 @@ class AddMoveScreenState extends State<AddMoveScreen>
           ),
         ];
         var formContainer = Container(
-          color: Theme.of(context).canvasColor,
+          color: Theme.of(context).scaffoldBackgroundColor,
           child: SingleChildScrollView(
             key: PageStorageKey<String>(texts[1]),
             padding: EdgeInsets.all(16),
@@ -68,31 +69,20 @@ class AddMoveScreenState extends State<AddMoveScreen>
         var tabBarView = TabBarView(
           controller: _controller,
           children: <Widget>[
-            Container(
-              color: Theme.of(context).scaffoldBackgroundColor,
-              child: AddMoveList(
-                key: PageStorageKey<String>(texts[0]),
-                playerClass: widget.defaultClass,
-                onSave: widget.onSave,
-              ),
+            AddMoveList(
+              key: PageStorageKey<String>(texts[0]),
+              playerClass: widget.defaultClass,
+              onSave: widget.onSave,
             ),
             formContainer,
           ],
         );
-        var tabBar = Container(
-          color: Theme.of(context).canvasColor,
-          child: TabBar(
-            controller: _controller,
-            tabs: List.generate(
-              texts.length,
-              (i) => Tab(child: Text(texts[i])),
-            ),
+        var tabBar = TabBar(
+          controller: _controller,
+          tabs: List.generate(
+            texts.length,
+            (i) => Tab(child: Text(texts[i])),
           ),
-        );
-        var appBar = AppBar(
-          title:
-              Text('${widget.mode == DialogMode.Create ? 'Add' : 'Edit'} Move'),
-          actions: tabIdx == 1 || widget.mode == DialogMode.Edit ? actions : [],
         );
 
         var list = <Widget>[
@@ -105,10 +95,14 @@ class AddMoveScreenState extends State<AddMoveScreen>
           list.insert(0, tabBar);
         }
 
-        return Scaffold(
-          appBar: appBar,
+        return ScaffoldWithElevation(
+          useElevation: false,
+          wrapWithScrollable: false,
+          elevation: 0.0,
+          title:
+              Text('${widget.mode == DialogMode.Create ? 'Add' : 'Edit'} Move'),
+          actions: tabIdx == 1 || widget.mode == DialogMode.Edit ? actions : [],
           body: Column(
-            // mainAxisSize: MainAxisSize.max,
             children: list,
           ),
         );

@@ -23,8 +23,8 @@ class StatCard extends StatelessWidget {
     return Expanded(
       child: Container(
         child: InkWell(
-          onTap: _edit(context),
-          onLongPress: _openRollDialog(context),
+          onLongPress: _edit(context),
+          onTap: _openRollDialog(context),
           child: Padding(
             padding: EdgeInsets.symmetric(horizontal: 10.0, vertical: 22.0),
             child: Column(

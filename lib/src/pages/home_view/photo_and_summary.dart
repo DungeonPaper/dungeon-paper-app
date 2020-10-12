@@ -20,54 +20,46 @@ class PhotoAndSummary extends StatelessWidget {
     var imageContainer =
         character.photoURL != null && character.photoURL.isNotEmpty
             ? AspectRatio(aspectRatio: 14.0 / 9.0, child: image)
-            : Container(height: 90.0);
-    return Stack(
-      children: <Widget>[
-        Container(
-          height: 150.0,
-          decoration: BoxDecoration(
-            color: Theme.of(context).primaryColor,
-            borderRadius: BorderRadius.vertical(bottom: Radius.circular(16)),
-          ),
-        ),
-        Padding(
-          padding: const EdgeInsets.all(16.0).copyWith(bottom: 0),
-          child: Stack(
-            children: [
-              imageContainer,
-              Positioned.fill(
-                child: Align(
-                  alignment: Alignment.bottomCenter,
-                  child: Container(
-                    decoration: BoxDecoration(
-                      gradient: character.photoURL != null &&
-                              character.photoURL.isNotEmpty
-                          ? LinearGradient(
-                              begin: AlignmentDirectional.topCenter,
-                              end: AlignmentDirectional.bottomCenter,
-                              colors: [
-                                Color.fromRGBO(0, 0, 0, 0),
-                                Color.fromRGBO(150, 150, 150, 1),
-                              ],
-                            )
-                          : null,
-                      borderRadius:
-                          BorderRadius.vertical(bottom: Radius.circular(5)),
-                    ),
-                    child: Padding(
-                      padding: const EdgeInsets.fromLTRB(16, 32, 16, 12),
-                      child: CharacterHeadline(
-                        character: character,
-                        editable: editable,
-                      ),
-                    ),
+            : Container(height: 100.0);
+    return Padding(
+      padding: const EdgeInsets.all(16.0).copyWith(bottom: 0),
+      child: Stack(
+        children: [
+          imageContainer,
+          Positioned.fill(
+            child: Align(
+              alignment: Alignment.bottomCenter,
+              child: Container(
+                decoration: BoxDecoration(
+                  gradient: character.photoURL != null &&
+                          character.photoURL.isNotEmpty
+                      ? LinearGradient(
+                          begin: AlignmentDirectional.topCenter,
+                          end: AlignmentDirectional.bottomCenter,
+                          colors: [
+                            Color.fromRGBO(0, 0, 0, 0),
+                            Color.fromRGBO(0, 0, 0, 0.6),
+                          ],
+                        )
+                      : null,
+                  borderRadius: BorderRadius.vertical(
+                    bottom: Radius.circular(15),
+                  ),
+                ),
+                child: Padding(
+                  padding: const EdgeInsets.fromLTRB(16, 32, 16, 12),
+                  child: CharacterHeadline(
+                    character: character,
+                    editable: editable,
                   ),
                 ),
               ),
-            ],
+            ),
           ),
-        ),
-      ],
+        ],
+      ),
+      //     ),
+      // ],
     );
   }
 }

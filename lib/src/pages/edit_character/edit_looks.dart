@@ -48,6 +48,7 @@ class _ChangeLooksDialogState extends State<ChangeLooksDialog> {
       )..addListener(() {
           setState(() {
             selected[i] = _controllers[i].text;
+            changeLooks(selected);
           });
         }),
     );
@@ -129,6 +130,7 @@ class _ChangeLooksDialogState extends State<ChangeLooksDialog> {
                   height: 50,
                   child: FloatingActionButton(
                     backgroundColor: Theme.of(context).canvasColor,
+                    foregroundColor: Theme.of(context).colorScheme.onSurface,
                     child: Icon(Icons.add),
                     onPressed: _addRow,
                   ),

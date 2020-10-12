@@ -38,7 +38,7 @@ class CustomInventoryItemFormState extends State<CustomInventoryItemForm> {
       'description':
           EditingControllerConfig(defaultValue: item.description ?? ''),
       'amount':
-          EditingControllerConfig(defaultValue: item.amount?.toString() ?? ''),
+          EditingControllerConfig(defaultValue: item.amount?.toString() ?? '1'),
     });
     tags = List.from(item.tags ?? []);
     super.initState();
@@ -51,11 +51,26 @@ class CustomInventoryItemFormState extends State<CustomInventoryItemForm> {
         mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: <Widget>[
-          TextField(
-            decoration: InputDecoration(hintText: 'Item Name'),
-            autocorrect: true,
-            textCapitalization: TextCapitalization.words,
-            controller: _controllers['name'],
+          Row(
+            children: [
+              Expanded(
+                child: TextField(
+                  decoration: InputDecoration(labelText: 'Item Name'),
+                  autocorrect: true,
+                  textCapitalization: TextCapitalization.words,
+                  controller: _controllers['name'],
+                ),
+              ),
+              SizedBox(width: 12),
+              Container(
+                width: 100,
+                child: TextField(
+                  decoration: InputDecoration(labelText: 'Item Amount'),
+                  keyboardType: TextInputType.number,
+                  controller: _controllers['amount'],
+                ),
+              ),
+            ],
           ),
           Container(
             margin: const EdgeInsets.symmetric(vertical: 8.0),
@@ -71,12 +86,6 @@ class CustomInventoryItemFormState extends State<CustomInventoryItemForm> {
               // style: TextStyle(fontSize: 13.0),
               // textAlign: TextAlign.center,
             ),
-          ),
-          SizedBox(width: 10),
-          TextField(
-            decoration: InputDecoration(labelText: 'Item Amount'),
-            keyboardType: TextInputType.number,
-            controller: _controllers['amount'],
           ),
           EditableTagList(
             tags: tags,

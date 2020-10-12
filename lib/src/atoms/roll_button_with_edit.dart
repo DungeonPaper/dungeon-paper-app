@@ -10,6 +10,7 @@ class RollButtonWithEdit extends StatelessWidget {
   final void Function() onRoll;
   final Character character;
   final String analyticsSource;
+  final Brightness brightness;
 
   const RollButtonWithEdit({
     Key key,
@@ -18,22 +19,29 @@ class RollButtonWithEdit extends StatelessWidget {
     @required this.onRoll,
     @required this.character,
     @required this.analyticsSource,
+    this.brightness = Brightness.dark,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    var textColor = brightness == Brightness.light
+        ? Theme.of(context).colorScheme.onSecondary
+        : Theme.of(context).colorScheme.onPrimary;
     return RaisedButton.icon(
-      color: Theme.of(context).primaryColor,
+      color: brightness == Brightness.light
+          ? Theme.of(context).colorScheme.secondary
+          : Theme.of(context).colorScheme.primary,
+      textColor: textColor,
       padding: EdgeInsets.all(12),
       icon: DiceIcon(
         dice: diceList?.first ?? (Dice.d6 * 2),
         size: 24,
+        color: textColor,
       ),
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
       label: Flexible(
         fit: FlexFit.loose,
-        child: DefaultTextStyle(
-          style: Theme.of(context).textTheme.button,
+        child: DefaultTextStyle.merge(
+          style: TextStyle(color: textColor),
           textAlign: TextAlign.center,
           child: label ?? Text('Roll ${diceList.join(', ')}'),
         ),

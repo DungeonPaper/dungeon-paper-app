@@ -43,51 +43,59 @@ class _EditTagDialogState extends State<EditTagDialog> {
 
   @override
   Widget build(BuildContext context) {
-    return SimpleDialog(
+    return AlertDialog(
       title: Text((_mode == DialogMode.Edit ? 'Edit' : 'Create') + ' Tag'),
       contentPadding: EdgeInsets.symmetric(horizontal: 24, vertical: 16),
-      children: <Widget>[
-        Row(
+      content: SingleChildScrollView(
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
           children: <Widget>[
-            Text('Presets:'),
-            SizedBox(width: 24),
-            Expanded(
-              child: DropdownButtonFormField<Tag>(
-                items: [
-                  DropdownMenuItem(
-                    value: null,
-                    child: Text('None'),
+            Row(
+              children: <Widget>[
+                Text('Presets:'),
+                SizedBox(width: 24),
+                Expanded(
+                  child: DropdownButtonFormField<Tag>(
+                    items: [
+                      DropdownMenuItem(
+                        value: null,
+                        child: Text('None'),
+                      ),
+                      for (Tag copyableTag in _copyableTags)
+                        DropdownMenuItem(
+                          value: copyableTag,
+                          child: Text(capitalize(copyableTag.toString())),
+                        )
+                    ],
+                    onChanged: copyTag,
                   ),
-                  for (Tag copyableTag in _copyableTags)
-                    DropdownMenuItem(
-                      value: copyableTag,
-                      child: Text(capitalize(copyableTag.toString())),
-                    )
-                ],
-                onChanged: copyTag,
-              ),
+                ),
+              ],
+            ),
+            SizedBox(height: 16),
+            TextField(
+              decoration: InputDecoration(labelText: 'Tag name'),
+              controller: _controllers['name'],
+            ),
+            SizedBox(height: 16),
+            TextField(
+              maxLines: null,
+              decoration: InputDecoration(labelText: 'Tag description'),
+              controller: _controllers['description'],
+              textCapitalization: TextCapitalization.sentences,
+            ),
+            SizedBox(height: 16),
+            TextField(
+              decoration: InputDecoration(labelText: 'Tag value'),
+              controller: _controllers['value'],
             ),
           ],
         ),
-        TextField(
-          decoration: InputDecoration(labelText: 'Tag name'),
-          controller: _controllers['name'],
-        ),
-        TextField(
-          maxLines: null,
-          decoration: InputDecoration(labelText: 'Tag description'),
-          controller: _controllers['description'],
-          textCapitalization: TextCapitalization.sentences,
-        ),
-        TextField(
-          decoration: InputDecoration(labelText: 'Tag value'),
-          controller: _controllers['value'],
-        ),
-        StandardDialogControls(
-          onOK: onSave,
-          padding: EdgeInsets.only(top: 40),
-        )
-      ],
+      ),
+      actions: StandardDialogControls.actions(
+        context: context,
+        onConfirm: onSave,
+      ),
     );
   }
 

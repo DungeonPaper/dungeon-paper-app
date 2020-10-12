@@ -57,12 +57,16 @@ String enumName(Object o) {
   return text.substring(text.indexOf('.') + 1);
 }
 
-E Function(dynamic k) stringToEnum<E>(Map<String, E> enumValue) {
+E Function(dynamic k) stringToEnumPredicate<E>(Map<String, E> map) {
   return (k) => k is E
       ? k
-      : k is String && enumValue.containsKey(k)
-          ? enumValue[k]
+      : k is String && map.containsKey(k)
+          ? map[k]
           : throw ('No corresponding enum value');
+}
+
+E stringToEnum<E>(dynamic key, Map<String, E> map) {
+  return stringToEnumPredicate(map)(key);
 }
 
 typedef ReturnPredicate<T> = bool Function(T ret) Function(T par);
@@ -105,6 +109,7 @@ class Secrets {
   String get API_PATH => _data['API_PATH'];
   String get GOOGLE_CLIENT_ID => _data['GOOGLE_CLIENT_ID'];
   String get VERSION_NUMBER => _data['VERSION_NUMBER'];
+  String get ANDROID_APP_URL => _data['ANDROID_APP_URL'];
 
   dynamic operator [](String key) {
     return _data[key];
@@ -202,3 +207,13 @@ String snakeToCamel(String string) =>
           RegExp(r'_([a-zA-Z0-9])'),
           (match) => match.group(1).toUpperCase(),
         );
+
+Map<K, List<V>> groupBy<K, V>(Iterable<V> list, K Function(V) predicate) {
+  final out = <K, List<V>>{};
+  for (final item in list) {
+    final k = predicate(item);
+    out[k] ??= <V>[];
+    out[k].add(item);
+  }
+  return out;
+}

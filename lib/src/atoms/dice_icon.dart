@@ -20,7 +20,7 @@ class DiceIcon extends StatelessWidget {
       'dice/d${dice.sides}.svg',
       width: size,
       height: size,
-      color: color,
+      color: color ?? IconTheme.of(context).color,
     );
   }
 }

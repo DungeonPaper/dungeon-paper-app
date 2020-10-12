@@ -78,12 +78,13 @@ class _DiceSelectorState extends State<DiceSelector> {
               ),
             ),
           Container(
-            width: 50,
+            width: 58,
+            padding: EdgeInsets.only(right: 8),
             child: TextField(
               onChanged: _updateAmount,
               keyboardType: TextInputType.number,
               inputFormatters: <TextInputFormatter>[
-                WhitelistingTextInputFormatter.digitsOnly,
+                FilteringTextInputFormatter.digitsOnly,
                 BetweenValuesTextFormatter(1, 99)
               ],
               controller: amountController,
@@ -106,6 +107,7 @@ class _DiceSelectorState extends State<DiceSelector> {
                 ),
             ],
             onChanged: _updateSides,
+            dropdownColor: Theme.of(context).cardColor,
           )
         ],
       ),

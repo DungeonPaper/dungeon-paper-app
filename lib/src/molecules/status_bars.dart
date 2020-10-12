@@ -30,7 +30,7 @@ class StatusBars extends StatelessWidget {
             character.currentHP != null &&
             character.currentHP > 0
         ? character.currentHP / character.maxHP
-        : 0;
+        : 0.0;
 
     var xpBg = Colors.lightBlue.shade100;
     var xpValueColor = Colors.blue;
@@ -38,7 +38,7 @@ class StatusBars extends StatelessWidget {
     var xpPerc = (character?.currentXP ?? 0) > 0
         ? character.currentXP.toDouble() / maxXp.toDouble()
         : 0.0;
-    var rounded = Radius.circular(5);
+    var rounded = Radius.circular(15);
 
     return Container(
       child: Column(
@@ -107,11 +107,12 @@ class StatusBarCard extends StatelessWidget {
     return Material(
       shape: RoundedRectangleBorder(borderRadius: borderRadius),
       elevation: 1,
-      color: Colors.white,
+      color: Theme.of(context).cardColor,
       child: InkWell(
         onTap: onTap,
         child: Padding(
-          padding: const EdgeInsets.symmetric(vertical: 12.0, horizontal: 16.0),
+          padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 16)
+              .copyWith(right: 8),
           child: StatusBarInfo(
             barBackgroundColor: barBackgroundColor,
             barForegroundColor: barForegroundColor,
@@ -127,8 +128,8 @@ class StatusBarCard extends StatelessWidget {
 }
 
 class StatusBarInfo extends StatelessWidget {
-  static const double _PROGRESS_HEIGHT = 20;
-  static const double _VALUE_WIDTH = 80;
+  static const double _PROGRESS_HEIGHT = 35;
+  static const double _VALUE_WIDTH = 100;
   static const valueStyle =
       TextStyle(fontSize: 18, fontWeight: FontWeight.bold);
   static const labelStyle =
@@ -154,27 +155,32 @@ class StatusBarInfo extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     List labels = <Widget>[
+      if (labelText != null)
+        SizedBox(
+          width: _VALUE_WIDTH / 3.5,
+          child: Text(
+            labelText,
+            style: labelStyle,
+          ),
+        ),
       SizedBox(
-        width: _VALUE_WIDTH,
+        width: _VALUE_WIDTH / 1.5,
         child: Center(
           child: Text('$minNum/$maxNum', style: valueStyle),
         ),
       )
     ];
-    if (labelText != null) {
-      labels = <Widget>[Text(labelText, style: labelStyle)] + labels;
-    }
-    return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 4, horizontal: 0),
-      child: Row(
-        children: [
-          Row(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: labels,
-          ),
-          Expanded(
-            child: SizedBox(
-              height: _PROGRESS_HEIGHT,
+    return Row(
+      children: [
+        Row(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: labels,
+        ),
+        Expanded(
+          child: SizedBox(
+            height: _PROGRESS_HEIGHT,
+            child: ClipRRect(
+              borderRadius: BorderRadius.all(Radius.circular(8)),
               child: LinearProgressIndicator(
                 backgroundColor: barBackgroundColor,
                 valueColor: AlwaysStoppedAnimation(barForegroundColor),
@@ -188,8 +194,8 @@ class StatusBarInfo extends StatelessWidget {
               ),
             ),
           ),
-        ],
-      ),
+        ),
+      ],
     );
   }
 }

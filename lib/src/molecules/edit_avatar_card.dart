@@ -20,16 +20,13 @@ class _EditAvatarCardState extends State<EditAvatarCard> {
 
   @override
   Widget build(BuildContext context) {
-    return Material(
-      color: Theme.of(context).canvasColor,
-      elevation: 1.0,
-      type: MaterialType.card,
-      borderRadius: BorderRadius.circular(5.0),
+    return Card(
+      margin: EdgeInsets.zero,
       child: Column(
         children: <Widget>[
           avatar(),
           Padding(
-            padding: const EdgeInsets.all(8.0).copyWith(top: 0.0),
+            padding: const EdgeInsets.all(16),
             child: Row(
               children: <Widget>[
                 Expanded(
@@ -41,6 +38,7 @@ class _EditAvatarCardState extends State<EditAvatarCard> {
                     decoration: InputDecoration(
                       hintText: 'We recommend uploading to imgur.com',
                       labelText: 'Avatar Image URL',
+                      floatingLabelBehavior: FloatingLabelBehavior.always,
                     ),
                   ),
                 ),
@@ -58,7 +56,7 @@ class _EditAvatarCardState extends State<EditAvatarCard> {
       aspectRatio: 14.0 / 9.0,
       child: Container(
         decoration: BoxDecoration(
-          borderRadius: BorderRadius.vertical(top: Radius.circular(5.0)),
+          borderRadius: BorderRadius.vertical(top: Radius.circular(15)),
           image: isUrl
               ? DecorationImage(
                   fit: BoxFit.fitWidth,
@@ -69,7 +67,9 @@ class _EditAvatarCardState extends State<EditAvatarCard> {
                       try {
                         if (err == null || !uri.scheme.startsWith('http')) {
                           return NetworkImageWithRetry.defaultFetchStrategy(
-                              uri, err);
+                            uri,
+                            err,
+                          );
                         } else {
                           setState(() {
                             imageError = true;

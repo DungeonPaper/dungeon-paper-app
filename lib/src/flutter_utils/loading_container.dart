@@ -19,7 +19,7 @@ class LoadingContainer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     if (loading == true) {
-      return loader ?? Center(child: PageLoader());
+      return loader ?? Center(child: Loader());
     }
     return child ?? builder?.call();
   }

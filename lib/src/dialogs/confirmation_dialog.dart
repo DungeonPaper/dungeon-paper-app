@@ -11,8 +11,8 @@ class ConfirmationDialog extends StatelessWidget {
   const ConfirmationDialog({
     Key key,
     this.title = const Text('Are you sure?'),
-    this.text = const Text(
-        'This action can not be undone.\nAre you sure you want to proceed?'),
+    this.text =
+        const Text('This action can not be undone.\nDo you want to proceed?'),
     this.okButtonText = const Text('OK'),
     this.cancelButtonText = const Text('Cancel'),
     this.returnValue,
@@ -21,36 +21,28 @@ class ConfirmationDialog extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SimpleDialog(
+    return AlertDialog(
       title: title,
-      children: <Widget>[
-        Padding(
+      content: SingleChildScrollView(
+        child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 24.0, vertical: 16.0),
           child: text,
         ),
-        Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 24.0, vertical: 16.0)
-              .copyWith(bottom: 0),
-          child: Wrap(
-            alignment: WrapAlignment.end,
-            children: <Widget>[
-              if (!noCancel)
-                FlatButton(
-                  child: cancelButtonText,
-                  onPressed: () => Navigator.pop(context, getReturnVal(false)),
-                ),
-              RaisedButton(
-                child: DefaultTextStyle(
-                  child: okButtonText,
-                  style: TextStyle(
-                      color: Colors.white, fontWeight: FontWeight.bold),
-                ),
-                color: Colors.red,
-                onPressed: () => Navigator.pop(context, getReturnVal(true)),
-              ),
-            ],
+      ),
+      actions: <Widget>[
+        if (!noCancel)
+          FlatButton(
+            child: cancelButtonText,
+            onPressed: () => Navigator.pop(context, getReturnVal(false)),
           ),
-        )
+        RaisedButton(
+          child: DefaultTextStyle(
+            child: okButtonText,
+            style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
+          ),
+          color: Colors.red,
+          onPressed: () => Navigator.pop(context, getReturnVal(true)),
+        ),
       ],
     );
   }

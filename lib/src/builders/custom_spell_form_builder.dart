@@ -54,7 +54,10 @@ class CustomSpellFormBuilderState extends State<CustomSpellFormBuilder> {
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: <Widget>[
           TextField(
-            decoration: InputDecoration(hintText: 'Spell Name'),
+            decoration: InputDecoration(
+              labelText: 'Spell Name',
+              floatingLabelBehavior: FloatingLabelBehavior.always,
+            ),
             autocorrect: true,
             textCapitalization: TextCapitalization.words,
             onChanged: (val) => _setStateValue('name', val),
@@ -63,8 +66,12 @@ class CustomSpellFormBuilderState extends State<CustomSpellFormBuilder> {
           Container(
             margin: const EdgeInsets.symmetric(vertical: 8.0),
             child: TextField(
-              decoration: InputDecoration(labelText: 'Description'),
+              decoration: InputDecoration(
+                labelText: 'Description',
+                floatingLabelBehavior: FloatingLabelBehavior.always,
+              ),
               autofocus: widget.mode == DialogMode.Edit,
+              minLines: 6,
               maxLines: null,
               keyboardType: TextInputType.multiline,
               autocorrect: true,

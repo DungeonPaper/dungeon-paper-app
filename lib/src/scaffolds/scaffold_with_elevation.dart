@@ -104,6 +104,11 @@ class _ScaffoldWithElevationState extends State<ScaffoldWithElevation> {
           ? Theme.of(context).primaryColor
           : widget.backgroundColor,
       appBar: AppBar(
+        textTheme: Theme.of(context).textTheme.apply(
+              bodyColor: Theme.of(context).colorScheme.secondary,
+            ),
+        iconTheme:
+            IconThemeData(color: Theme.of(context).colorScheme.secondary),
         title: widget.title,
         elevation: appBarElevation,
         automaticallyImplyLeading: widget.automaticallyImplyLeading,

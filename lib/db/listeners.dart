@@ -6,7 +6,7 @@ import 'package:dungeon_paper/src/redux/custom_classes/custom_classes_store.dart
 import 'package:dungeon_paper/src/redux/stores.dart';
 import 'package:dungeon_paper/src/redux/users/user_store.dart';
 import 'package:dungeon_paper/src/utils/logger.dart';
-import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_auth/firebase_auth.dart' as fb;
 import 'package:pedantic/pedantic.dart';
 
 import 'models/character.dart';
@@ -16,58 +16,46 @@ StreamSubscription _fbUserListener;
 
 void registerFirebaseUserListener() {
   try {
-    if (_fbUserListener != null) {
-      _fbUserListener.cancel();
-    }
+    _fbUserListener?.cancel();
 
-    _fbUserListener = FirebaseAuth.instance.onAuthStateChanged
-        .listen((FirebaseUser authUser) {
-      if (authUser != null &&
-          authUser.email != null &&
-          dwStore.state.user.current != null &&
-          authUser.email != dwStore.state.user.current.email) {
-        dwStore.dispatch(SetFirebaseUser(authUser));
-      }
-
-      if (authUser == null || authUser.email == null) {
+    _fbUserListener = auth.authStateChanges().listen((fbUser) {
+      if (fbUser != null && fbUser.email != dwStore.state.user.current?.email) {
+        dwStore.dispatch(SetFirebaseUser(fbUser));
+      } else if (fbUser?.email == null) {
         dwStore.dispatch(Logout());
         dwStore.dispatch(ClearCharacters());
       }
     });
-    logger.d('REGISTERED AUTH USER LISTENER');
+    logger.d('Registered auth user listener');
   } catch (e) {
     logger.d('error on user listener');
-    if (_fbUserListener != null) {
-      _fbUserListener.cancel();
-    }
-    logger.d("COULDN'T REGISTER AUTH USER LISTENER");
+    _fbUserListener?.cancel();
+    logger.d("Couldn't register auth user listener");
   }
 }
 
 StreamSubscription _userListener;
 
-void registerUserListener(FirebaseUser fbUser) {
-  if (_userListener != null) {
-    _userListener.cancel();
-  }
+void registerUserListener(fb.User fbUser) {
+  _userListener?.cancel();
 
   if (fbUser == null) {
     return;
   }
 
-  var userDocID = 'user_data/${fbUser.email}';
-  _userListener = firestore.document(userDocID).snapshots().listen((user) {
+  final userDocID = 'user_data/${fbUser.email}';
+  _userListener = firestore.doc(userDocID).snapshots().listen((user) {
     dwStore.dispatch(
       SetUser(
         User(
-          data: user.data,
+          data: user.data(),
           ref: user.reference,
         ),
       ),
     );
   });
 
-  logger.d('REGISTERED DB USER LISTENER');
+  logger.d('Registered db user listener');
 }
 
 StreamSubscription _charsListener;
@@ -81,30 +69,30 @@ void registerCharactersListener() async {
     return;
   }
 
-  var userDocID = dwStore.state.user.current.documentID;
-  var user = firestore.document('user_data/$userDocID');
+  final userDocID = dwStore.state.user.current.documentID;
+  final user = firestore.doc('user_data/$userDocID');
   _charsListener =
       user.collection('characters').snapshots().listen((characters) {
-    if (characters.documents.isEmpty) {
+    if (characters.docs.isEmpty) {
       return;
     }
-    var chars = {
-      for (var character in characters.documents)
-        character.reference.documentID: Character(
-          data: character.data,
+    final chars = {
+      for (final character in characters.docs)
+        character.reference.id: Character(
+          data: character.data(),
           ref: character.reference,
         ),
     };
     dwStore.dispatch(
       SetCharacters(chars),
     );
-    var lastCharId = dwStore.state.prefs.user.lastCharacterId;
-    var matchingChar = chars[lastCharId];
+    final lastCharId = dwStore.state.prefs.user.lastCharacterId;
+    final matchingChar = chars[lastCharId];
     if (lastCharId != null && matchingChar != null) {
       dwStore.dispatch(SetCurrentChar(matchingChar));
     }
   });
-  logger.d('REGISTERED DB CHARACTER LISTENER');
+  logger.d('Registered db character listener');
 }
 
 StreamSubscription _classesListener;
@@ -117,22 +105,22 @@ void registerCustomClassesListener() async {
     return;
   }
 
-  var userDocID = dwStore.state.user.current.documentID;
-  var user = firestore.document('user_data/$userDocID');
+  final userDocID = dwStore.state.user.current.documentID;
+  final user = firestore.doc('user_data/$userDocID');
   _classesListener =
       user.collection('custom_classes').snapshots().listen((classes) {
-    if (classes.documents.isEmpty) {
+    if (classes.docs.isEmpty) {
       return;
     }
     dwStore.dispatch(
       SetCustomClasses({
-        for (var character in classes.documents)
-          character.reference.documentID: CustomClass(
-            data: character.data,
+        for (final character in classes.docs)
+          character.reference.id: CustomClass(
+            data: character.data(),
             ref: character.reference,
           ),
       }),
     );
   });
-  logger.d('REGISTERED DB CLASSES LISTENER');
+  logger.d('Registered db classes listener');
 }

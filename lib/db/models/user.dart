@@ -3,6 +3,7 @@ import 'package:dungeon_paper/db/db.dart';
 import 'package:dungeon_paper/src/redux/characters/characters_store.dart';
 import 'package:dungeon_paper/src/redux/stores.dart';
 import 'package:dungeon_paper/src/redux/users/user_store.dart';
+import 'package:dungeon_paper/src/utils/auth/auth.dart';
 import 'package:dungeon_paper/src/utils/logger.dart';
 
 import 'character.dart';
@@ -23,6 +24,7 @@ class User extends FirebaseEntity {
   FieldsContext _fields;
   @override
   FieldsContext get fields => _fields ??= userFields.copy();
+
   String get displayName => fields.get<String>('displayName').get;
   set displayName(val) => fields.get<String>('displayName').set(val);
   String get email => fields.get<String>('email').get;
@@ -47,10 +49,10 @@ class User extends FirebaseEntity {
   }) : super(ref: ref, data: data, autoLoad: autoLoad);
 
   Future<Character> createCharacter(Character character) async {
-    var doc = firestore.collection(ref.path + '/characters').document();
+    var doc = firestore.collection(ref.path + '/characters').doc();
     var data = character.toJSON();
     logger.d('Creating character: $data');
-    await doc.setData(data);
+    await doc.set(data);
     character..ref = doc;
     dwStore.dispatch(UpsertCharacter(character));
     dwStore.dispatch(SetCurrentChar(character));
@@ -67,4 +69,10 @@ class User extends FirebaseEntity {
 
   @override
   String toString() => '$displayName ($email)';
+
+  Future<void> changeEmail(String newEmail) async {
+    email = newEmail;
+    await updateEmail(newEmail);
+    return move(newEmail);
+  }
 }

@@ -31,7 +31,15 @@ class SearchBar extends StatelessWidget {
             onEditingComplete: onEditingComplete,
             onSubmitted: onSubmitted,
             onChanged: onChanged,
-            decoration: InputDecoration(hintText: 'Type an item name'),
+            decoration: InputDecoration(
+              hintText: 'Type an item name',
+              border: InputBorder.none,
+              enabledBorder: InputBorder.none,
+              focusedBorder: InputBorder.none,
+              disabledBorder: InputBorder.none,
+              errorBorder: InputBorder.none,
+              filled: false,
+            ),
           ),
         ),
         IconButton(

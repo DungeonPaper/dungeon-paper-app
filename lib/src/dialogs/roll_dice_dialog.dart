@@ -172,10 +172,11 @@ class RollDialogTitle extends StatelessWidget {
                 child: Text(
                   'Roll Dice',
                   textAlign: TextAlign.center,
-                  style: TextStyle(
-                    color: Theme.of(context).canvasColor,
-                    fontSize: 28,
-                  ),
+                  style: Theme.of(context).textTheme.headline1.copyWith(
+                        color: Theme.of(context).canvasColor,
+                        fontSize: 28,
+                        fontWeight: FontWeight.w500,
+                      ),
                 ),
               ),
             ),

@@ -25,14 +25,11 @@ class ChangeAlignmentDialog extends StatelessWidget {
         child: Column(
           children: chr.AlignmentName.values
               .map(
-                (alignment) => Padding(
-                  padding: EdgeInsets.only(bottom: 16.0),
-                  child: AlignmentDescription(
-                    playerClass: character.mainClass,
-                    alignment: alignment,
-                    onTap: changeAlignment(alignment),
-                    selected: alignment == character.alignment,
-                  ),
+                (alignment) => AlignmentDescription(
+                  playerClass: character.mainClass,
+                  alignment: alignment,
+                  onTap: changeAlignment(alignment),
+                  selected: alignment == character.alignment,
                 ),
               )
               .toList(),

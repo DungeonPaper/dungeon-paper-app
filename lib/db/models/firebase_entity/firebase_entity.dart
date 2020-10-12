@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:dungeon_paper/db/db.dart';
 import 'package:dungeon_paper/src/utils/logger.dart';
 import 'package:flutter/foundation.dart';
 
@@ -9,7 +10,7 @@ abstract class FirebaseEntity {
   DocumentSnapshot snapshot;
   DateTime lastUpdated;
   FieldsContext get fields;
-  String get documentID => ref?.documentID;
+  String get documentID => ref?.id;
   String get documentPath => ref?.path;
 
   FirebaseEntity({
@@ -48,8 +49,8 @@ abstract class FirebaseEntity {
   Future<Map<String, dynamic>> getRemoteData() async {
     var output = <String, dynamic>{};
     snapshot = await ref.get();
-    if (snapshot != null && snapshot.data != null) {
-      var data = _mergeDataWithDefaults(snapshot.data);
+    if (snapshot?.data() != null) {
+      var data = _mergeDataWithDefaults(snapshot.data());
       output = await deserializeData(data);
       lastUpdated = data['lastUpdated'] != null
           ? data['lastUpdated'] is Timestamp
@@ -84,6 +85,15 @@ abstract class FirebaseEntity {
     finalizeUpdate(json, save: save);
   }
 
+  Future<void> move(String newId, {bool useSameParent = true}) async {
+    final oldRef = ref;
+    ref = useSameParent ? ref.parent.doc(newId) : firestore.doc(newId);
+    logger.d('Creating new document: ${ref.path}');
+    await create();
+    logger.d('Success. Deleting ${oldRef.path}');
+    await oldRef.delete();
+  }
+
   Map<String, dynamic> prepareData(Map<String, dynamic> json) {
     if (json == null) {
       json = Map.fromEntries(
@@ -105,7 +115,7 @@ abstract class FirebaseEntity {
       }
       logger.d('Updating $this');
       logger.d(json.toString());
-      await ref.updateData(json);
+      await ref.update(json);
       unsetDirty(json);
     }
   }
@@ -114,9 +124,13 @@ abstract class FirebaseEntity {
     if (ref == null) {
       return _noRef();
     }
-    logger.d('Creating $this');
-    logger.d(json);
-    await ref.setData(json);
+    try {
+      logger.d('Creating $this');
+      logger.d(json);
+    } catch (e, stack) {
+      logger.e('Logging error', e, stack);
+    }
+    await ref.set(json);
     unsetDirty(json);
   }
 

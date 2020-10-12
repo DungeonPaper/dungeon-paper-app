@@ -30,8 +30,7 @@ class EmptyState extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var _fgColor =
-        foregroundColor ?? Theme.of(context).colorScheme.onBackground;
+    var _fgColor = foregroundColor ?? Theme.of(context).accentColor;
     var imgSize = 80.toDouble();
     return Container(
       child: Column(
@@ -44,16 +43,19 @@ class EmptyState extends StatelessWidget {
                 Theme.of(context).textTheme.headline5.copyWith(color: _fgColor),
             textAlign: TextAlign.center,
           ),
-          Padding(
-            padding: const EdgeInsets.all(24),
-            child: assetName != null
-                ? PlatformSvg.asset(
-                    assetName,
-                    size: imgSize,
-                    alignment: Alignment.center,
-                    color: _fgColor,
-                  )
-                : image,
+          IconTheme.merge(
+            data: IconThemeData(color: _fgColor),
+            child: Padding(
+              padding: const EdgeInsets.all(24),
+              child: assetName != null
+                  ? PlatformSvg.asset(
+                      assetName,
+                      size: imgSize,
+                      alignment: Alignment.center,
+                      color: _fgColor,
+                    )
+                  : image,
+            ),
           ),
           Container(
             width: min(MediaQuery.of(context).size.width, 260),

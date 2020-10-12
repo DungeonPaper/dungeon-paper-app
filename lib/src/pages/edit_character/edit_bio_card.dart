@@ -7,13 +7,10 @@ class EditBioCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Material(
-      color: Theme.of(context).canvasColor,
-      elevation: 1.0,
-      type: MaterialType.card,
-      borderRadius: BorderRadius.circular(5.0),
+    return Card(
+      margin: EdgeInsets.zero,
       child: Padding(
-        padding: const EdgeInsets.all(8.0).copyWith(top: 0.0),
+        padding: const EdgeInsets.all(16),
         child: Row(
           children: <Widget>[
             Expanded(
@@ -28,8 +25,11 @@ class EditBioCard extends StatelessWidget {
                   labelStyle: TextStyle(
                     fontSize: Theme.of(context).textTheme.subtitle1.fontSize,
                   ),
-                  hintText:
-                      'Tell us about your character.\nWhere it comes from, their motivation,\nor anything you want.\nGet creative!',
+                  hintText: 'Tell us about your character.\n'
+                      'Where it comes from, their motivation,\n'
+                      'or anything you want.\n'
+                      'Get creative!',
+                  floatingLabelBehavior: FloatingLabelBehavior.always,
                 ),
               ),
             ),

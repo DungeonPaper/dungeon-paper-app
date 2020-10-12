@@ -2,12 +2,10 @@ import 'package:dungeon_paper/src/redux/characters/characters_store.dart';
 import 'package:dungeon_paper/src/redux/shared_preferences/prefs_settings.dart';
 import 'package:dungeon_paper/src/redux/stores.dart';
 import 'package:dungeon_paper/src/redux/users/user_store.dart';
-import 'package:dungeon_paper/src/utils/auth.dart';
-import 'package:dungeon_paper/src/utils/credentials.dart';
+import 'package:dungeon_paper/src/utils/auth/auth.dart';
 import 'package:dungeon_paper/src/utils/logger.dart';
 import 'package:flutter/foundation.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:firebase_auth_platform_interface/firebase_auth_platform_interface.dart';
 import 'package:redux/redux.dart';
 
 part 'shared_prefs_middleware.dart';
@@ -17,14 +15,10 @@ enum SharedPrefKeys {
   UserEmail,
   UserId,
   CharacterId,
-  AccessToken,
-  IdToken,
-  LastOpenedVersion
+  LastOpenedVersion,
 }
 
-Map<SharedPrefKeys, String> keyMap = {
-  SharedPrefKeys.AccessToken: 'accessToken',
-  SharedPrefKeys.IdToken: 'idToken',
+Map<SharedPrefKeys, String> sharedPrefsKeyMap = {
   SharedPrefKeys.CharacterId: 'characterId',
   SharedPrefKeys.UserId: 'userId',
   SharedPrefKeys.UserEmail: 'userEmail',
@@ -39,7 +33,6 @@ class UserDetails {
 }
 
 class PrefsStore {
-  Credentials credentials;
   UserDetails user;
   PrefsSettings settings;
 
@@ -47,7 +40,6 @@ class PrefsStore {
 
   PrefsStore({
     Map<SharedPrefKeys, String> map,
-    this.credentials,
     this.user,
     this.settings,
   }) : _map = map ?? {} {
@@ -56,7 +48,6 @@ class PrefsStore {
   }
 
   void _writeValuesFromMap(Map<SharedPrefKeys, String> map) {
-    _writeGoogleCredsFromMap(map);
     _writeUserFromMap(map);
   }
 
@@ -79,24 +70,6 @@ class PrefsStore {
           Map<SharedPrefKeys, String> existingKeys) =>
       checkKeys.every((key) => existingKeys.containsKey(key));
 
-  void _writeGoogleCredsFromMap(Map<SharedPrefKeys, String> map) {
-    _prefLoader(
-      map: map,
-      checkList: [
-        SharedPrefKeys.IdToken,
-        SharedPrefKeys.AccessToken,
-      ],
-      onListFull: (all) {
-        credentials = GoogleCredentials.fromAuthCredential(
-          GoogleAuthCredential(
-            idToken: all[SharedPrefKeys.IdToken],
-            accessToken: all[SharedPrefKeys.AccessToken],
-          ),
-        );
-      },
-    );
-  }
-
   void _writeUserFromMap(Map<SharedPrefKeys, String> map) {
     _prefLoader(
       map: map,
@@ -118,51 +91,37 @@ class PrefsStore {
   static Future<void> loadAll() async {
     var prefs = await SharedPreferences.getInstance();
     var _map = <SharedPrefKeys, String>{
-      SharedPrefKeys.IdToken: prefs.getString(keyMap[SharedPrefKeys.IdToken]),
-      SharedPrefKeys.AccessToken:
-          prefs.getString(keyMap[SharedPrefKeys.AccessToken]),
-      SharedPrefKeys.UserId: prefs.getString(keyMap[SharedPrefKeys.UserId]),
+      SharedPrefKeys.UserId:
+          prefs.getString(sharedPrefsKeyMap[SharedPrefKeys.UserId]),
       SharedPrefKeys.UserEmail:
-          prefs.getString(keyMap[SharedPrefKeys.UserEmail]),
+          prefs.getString(sharedPrefsKeyMap[SharedPrefKeys.UserEmail]),
       SharedPrefKeys.CharacterId:
-          prefs.getString(keyMap[SharedPrefKeys.CharacterId]),
+          prefs.getString(sharedPrefsKeyMap[SharedPrefKeys.CharacterId]),
     };
     var store = PrefsStore(
-      credentials: GoogleCredentials.fromAuthCredential(
-        GoogleAuthCredential(
-          idToken: _map[SharedPrefKeys.IdToken],
-          accessToken: _map[SharedPrefKeys.AccessToken],
-        ),
-      ),
       user: UserDetails(
         id: _map[SharedPrefKeys.UserId],
         email: _map[SharedPrefKeys.UserEmail],
         lastCharacterId: _map[SharedPrefKeys.CharacterId],
       ),
       map: _map,
-      settings: PrefsSettings.loadFromPrefs(prefs),
+      settings: PrefsSettings.loadFromPrefs(prefs)..applyAllSettings(),
     );
 
-    store.settings.applyAllSettings();
-
     dwStore.dispatch(SetPrefs(store));
-    if (store.credentials.isNotEmpty) {
-      try {
-        var user = await signInFlow(
-          store.credentials,
-          silent: true,
-          interactiveOnFailSilent: false,
-        );
-        if (user == null) {
-          throw SignInError('no_silent_login');
-        }
-      } on SignInError {
-        dwStore.dispatch(NoLogin());
-        logger.d('Silent login failed');
-      } catch (e) {
-        logger.d('Silent login unexpected error:');
-        rethrow;
+    dwStore.dispatch(RequestLogin());
+    try {
+      var user = await signInAutomatically();
+      if (user == null) {
+        throw SignInError('no_silent_login');
       }
+    } on SignInError {
+      dwStore.dispatch(NoLogin());
+      logger.d('Silent login failed');
+    } catch (e) {
+      dwStore.dispatch(NoLogin());
+      logger.d('Silent login unexpected error:');
+      rethrow;
     }
   }
 }
@@ -186,13 +145,11 @@ PrefsStore prefsReducer(PrefsStore state, action) {
       email: action.user.email,
       lastCharacterId: state.user.lastCharacterId,
     );
-    state.credentials = action.credentials;
   }
 
   if (action is Logout) {
     state = PrefsStore(
       user: UserDetails(),
-      credentials: null,
     );
   }
 

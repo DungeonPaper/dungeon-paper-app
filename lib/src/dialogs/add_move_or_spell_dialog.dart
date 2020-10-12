@@ -37,15 +37,21 @@ class AddMoveOrSpell extends StatelessWidget {
               Container(
                 height: 60,
                 child: RaisedButton.icon(
-                  color: Colors.orange,
-                  icon: PlatformSvg.asset(
-                    'swords.svg',
-                    width: 24,
-                    height: 24,
+                  color: Color(0xFF9B1D20),
+                  icon: Padding(
+                    padding: const EdgeInsets.only(top: 8),
+                    child: PlatformSvg.asset(
+                      'swords.svg',
+                      width: 30,
+                      height: 30,
+                      color: Theme.of(context).colorScheme.onSecondary,
+                    ),
                   ),
                   label: Text(
                     'Add Move',
-                    style: Theme.of(context).textTheme.headline6,
+                    style: Theme.of(context).textTheme.headline6.copyWith(
+                          color: Theme.of(context).colorScheme.onSecondary,
+                        ),
                   ),
                   onPressed: () {
                     Navigator.pop(context);
@@ -78,11 +84,31 @@ class AddMoveOrSpell extends StatelessWidget {
               Container(
                 height: 60,
                 child: RaisedButton.icon(
-                  color: Colors.lightBlue,
-                  icon: Icon(Icons.book),
+                  color: Color(0xFF2274A5),
+                  // icon: Icon(
+                  //   Icons.book,
+                  //   color: Theme.of(context).colorScheme.onSecondary,
+                  //   size: 30,
+                  // ),
+                  icon: Icon(
+                    Icons.menu_book_rounded,
+                    color: Theme.of(context).colorScheme.onSecondary,
+                    size: 30,
+                  ),
+                  // icon: Padding(
+                  //   padding: const EdgeInsets.only(top: 8),
+                  //   child: PlatformSvg.asset(
+                  //     'book-stack.svg',
+                  //     width: 30,
+                  //     height: 30,
+                  //     color: Theme.of(context).colorScheme.onSecondary,
+                  //   ),
+                  // ),
                   label: Text(
                     'Add Spell',
-                    style: Theme.of(context).textTheme.headline6,
+                    style: Theme.of(context).textTheme.headline6.copyWith(
+                          color: Theme.of(context).colorScheme.onSecondary,
+                        ),
                   ),
                   onPressed: () {
                     Navigator.pop(context);

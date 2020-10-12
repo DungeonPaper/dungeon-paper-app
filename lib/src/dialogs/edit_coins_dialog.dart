@@ -31,42 +31,48 @@ class EditCoinsDialogState extends State<EditCoinsDialog> {
 
   @override
   Widget build(BuildContext context) {
-    return SimpleDialog(
+    return AlertDialog(
       title: Text('Update Currency'),
       contentPadding: const EdgeInsets.only(top: 32.0, bottom: 8.0),
-      children: <Widget>[
-        Column(
-          mainAxisAlignment: MainAxisAlignment.start,
-          crossAxisAlignment: CrossAxisAlignment.center,
+      content: SingleChildScrollView(
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
           children: <Widget>[
-            Text('Coins: ${currency(value)}',
-                style: TextStyle(
-                  fontSize: 20.0,
-                  fontWeight: FontWeight.bold,
-                )),
-            Form(
-              child: Column(
-                mainAxisSize: MainAxisSize.max,
-                children: <Widget>[
-                  Container(
-                    padding: const EdgeInsets.symmetric(vertical: 8.0),
-                    child: NumberController(
-                      value: value,
-                      formatType: FormatType.Decimal,
-                      onChange: _setStateValue,
-                    ),
+            Column(
+              mainAxisAlignment: MainAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: <Widget>[
+                Text('Coins: ${currency(value)}',
+                    style: TextStyle(
+                      fontSize: 20.0,
+                      fontWeight: FontWeight.bold,
+                    )),
+                Form(
+                  child: Column(
+                    mainAxisSize: MainAxisSize.max,
+                    children: <Widget>[
+                      Container(
+                        padding: const EdgeInsets.symmetric(vertical: 8.0),
+                        child: NumberController(
+                          value: value,
+                          formatType: FormatType.Decimal,
+                          onChange: _setStateValue,
+                        ),
+                      ),
+                    ],
                   ),
-                  StandardDialogControls(
-                    onOK: () => _saveValue(),
-                    okDisabled: valueError,
-                    onCancel: () => Navigator.pop(context),
-                  ),
-                ],
-              ),
+                ),
+              ],
             ),
           ],
         ),
-      ],
+      ),
+      actions: StandardDialogControls.actions(
+        context: context,
+        onConfirm: () => _saveValue(),
+        confirmDisabled: valueError,
+        onCancel: () => Navigator.pop(context),
+      ),
     );
   }
 

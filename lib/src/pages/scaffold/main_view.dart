@@ -1,7 +1,7 @@
 import 'package:dungeon_paper/db/models/character.dart';
 import 'package:dungeon_paper/db/models/user.dart';
+import 'package:dungeon_paper/src/atoms/dice_icon.dart';
 import 'package:dungeon_paper/src/dialogs/roll_dice_dialog.dart';
-import 'package:dungeon_paper/src/flutter_utils/platform_svg.dart';
 import 'package:dungeon_paper/src/flutter_utils/widget_utils.dart';
 import 'package:dungeon_paper/src/pages/battle_view/battle_view.dart';
 import 'package:dungeon_paper/src/pages/home_view/home_view.dart';
@@ -17,6 +17,7 @@ import 'package:dungeon_paper/src/redux/stores.dart';
 import 'package:dungeon_paper/src/utils/analytics.dart';
 import 'package:dungeon_paper/src/utils/logger.dart';
 import 'package:dungeon_paper/src/utils/utils.dart';
+import 'package:dungeon_world_data/dice.dart';
 import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:package_info/package_info.dart';
 import 'package:pedantic/pedantic.dart';
@@ -31,11 +32,9 @@ import 'package:flutter/material.dart';
 class MainContainer extends StatelessWidget {
   MainContainer({
     Key key,
-    @required this.title,
     this.pageController,
   }) : super(key: key);
 
-  final String title;
   final PageController pageController;
 
   @override
@@ -86,8 +85,8 @@ class _MainViewState extends State<MainView> {
   };
   final FirebaseAnalytics analytics = FirebaseAnalytics();
 
-  double elevation = 0.0;
   String lastPageName = 'Home';
+  double elevation = 0;
 
   @override
   void initState() {
@@ -117,14 +116,24 @@ class _MainViewState extends State<MainView> {
     );
     return Scaffold(
       appBar: AppBar(
-        title: AppBarTitle(pageController: widget.pageController),
+        textTheme: Theme.of(context).textTheme.apply(
+              bodyColor: Theme.of(context).colorScheme.secondary,
+            ),
+        iconTheme:
+            IconThemeData(color: Theme.of(context).colorScheme.secondary),
+        title: widget.character == null
+            ? null
+            : AppBarTitle(pageController: widget.pageController),
         elevation: elevation,
         actions: widget.character != null
             ? [
                 IconButton(
                   tooltip: 'Roll Dice',
-                  icon:
-                      PlatformSvg.asset('dice/d20.svg', width: 24, height: 24),
+                  icon: DiceIcon(
+                    dice: Dice.d20,
+                    size: 24,
+                    color: Theme.of(context).colorScheme.secondary,
+                  ),
                   onPressed: () {
                     showDiceRollDialog(
                       context: context,
@@ -159,7 +168,7 @@ class _MainViewState extends State<MainView> {
         if (builder != null) {
           return builder(widget.character);
         }
-        return Center(child: Text('To Do!'));
+        return Center(child: Container());
       }).toList();
 
   Widget get navBar => widget.character != null
@@ -186,11 +195,11 @@ class _MainViewState extends State<MainView> {
 
   void _pageListener() {
     if (widget.pageController.hasClients) {
-      if (clamp01(widget.pageController.page) != elevation) {
-        setState(() {
-          elevation = clamp01(widget.pageController.page);
-        });
-      }
+      // if (clamp01(widget.pageController.page) != elevation) {
+      //   setState(() {
+      //     elevation = clamp01(widget.pageController.page);
+      //   });
+      // }
       if (widget.pageController.page.round() == widget.pageController.page) {
         if (pageName != lastPageName) {
           setState(() {

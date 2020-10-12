@@ -3,51 +3,122 @@
   // for the documentation about the tasks.json format
   "version": "2.0.0",
   "tasks": [
-  {
-    "label": "Build APK",
-    "type": "shell",
-    "command": "dart",
-    "args": ["lib/tools/deploy.dart", "-d", "518e84af"],
-    "problemMatcher": []
-  },
-  {
-    "label": "Push APK",
-    "type": "shell",
-    "command": "dart",
-    "args": ["lib/tools/deploy.dart", "--push", "--no-test", "--no-build", "-d", "518e84af"],
-    "problemMatcher": []
-  },
-  {
-    "label": "Build & Push APK",
-    "type": "shell",
-    "command": "dart",
-    "args": ["lib/tools/deploy.dart", "--push", "-d", "518e84af"],
-    "problemMatcher": []
-  },
-  {
-    "label": "Build & Push APK (Skip Tests)",
-    "type": "shell",
-    "command": "dart",
-    "args": ["lib/tools/deploy.dart", "--push", "--no-test", "-d", "518e84af"],
-    "problemMatcher": []
-  },
-  {
-    "label": "Build, Push & Install APK",
-    "type": "shell",
-    "command": "dart",
-    "args": ["lib/tools/deploy.dart", "--push", "--install", "-d", "518e84af"],
-    "problemMatcher": []
-  }, {
-    "label": "Install Only",
-    "type": "shell",
-    "command": "dart",
-    "args": ["lib/tools/deploy.dart", "--no-build", "--install", "--no-test", "-d", "518e84af"],
-    "problemMatcher": []
-  }, {
-    "label": "Test Only",
-    "type": "shell",
-    "command": "dart",
-    "args": ["lib/tools/deploy.dart", "--no-build", "-d", "518e84af"],
-    "problemMatcher": []
-  }]
+    {
+      "label": "Build APK",
+      "type": "shell",
+      "command": "dart",
+      "args": [
+        "lib/tools/task_runner/deploy.dart",
+        "--build",
+        "-d",
+        "518e84af"
+      ],
+      "problemMatcher": []
+    },
+    {
+      "label": "Push APK",
+      "type": "shell",
+      "command": "dart",
+      "args": [
+        "lib/tools/task_runner/deploy.dart",
+        "--push",
+        "-d",
+        "518e84af"
+      ],
+      "problemMatcher": []
+    },
+    {
+      "label": "Build & Push APK",
+      "type": "shell",
+      "command": "dart",
+      "args": [
+        "lib/tools/task_runner/deploy.dart",
+        "--test",
+        "--build",
+        "--push",
+        "-d",
+        "518e84af"
+      ],
+      "problemMatcher": []
+    },
+    {
+      "label": "Build & Push APK (Skip Tests)",
+      "type": "shell",
+      "command": "dart",
+      "args": [
+        "lib/tools/task_runner/deploy.dart",
+        "--build",
+        "--push",
+        "-d",
+        "518e84af"
+      ],
+      "problemMatcher": []
+    },
+    {
+      "label": "Build, Push & Install APK",
+      "type": "shell",
+      "command": "dart",
+      "args": [
+        "lib/tools/task_runner/deploy.dart",
+        "--test",
+        "--build",
+        "--push",
+        "--install",
+        "-d",
+        "518e84af"
+      ],
+      "problemMatcher": []
+    },
+    {
+      "label": "Build, Push & Install APK (Skip Tests)",
+      "type": "shell",
+      "command": "dart",
+      "args": [
+        "lib/tools/task_runner/deploy.dart",
+        "--build",
+        "--push",
+        "--install",
+        "-d",
+        "518e84af"
+      ],
+      "problemMatcher": []
+    },
+    {
+      "label": "Install Only",
+      "type": "shell",
+      "command": "dart",
+      "args": [
+        "lib/tools/task_runner/deploy.dart",
+        "--install",
+        "-d",
+        "518e84af"
+      ],
+      "problemMatcher": []
+    },
+    {
+      "label": "Push & Install",
+      "type": "shell",
+      "command": "dart",
+      "args": [
+        "lib/tools/task_runner/deploy.dart",
+        "--push",
+        "--install",
+        "-d",
+        "518e84af"
+      ],
+      "problemMatcher": []
+    },
+    {
+      "label": "Test Only",
+      "type": "shell",
+      "command": "dart",
+      "args": [
+        "lib/tools/task_runner/deploy.dart",
+        "--test",
+        "-d",
+        "518e84af"
+      ],
+      "problemMatcher": []
+    }
+  ]
 }

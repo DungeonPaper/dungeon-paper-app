@@ -57,10 +57,10 @@ class _CustomClassWizardState extends State<CustomClassWizard>
         ? CustomClass(
             data: widget.customClass.toJSON(),
             ref: widget.customClass.ref ??
-                user.ref.collection('custom_classes').document(),
+                user.ref.collection('custom_classes').doc(),
           )
         : CustomClass(
-            ref: user.ref.collection('custom_classes').document(),
+            ref: user.ref.collection('custom_classes').doc(),
           );
 
     basicInfoValid = ValueNotifier(def.name.isNotEmpty);

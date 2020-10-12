@@ -2,13 +2,11 @@ part of 'user_store.dart';
 
 class Login {
   User user;
-  FirebaseUser firebaseUser;
-  Credentials credentials;
+  fb.User firebaseUser;
 
   Login({
     @required this.user,
     @required this.firebaseUser,
-    @required this.credentials,
   });
 }
 
@@ -25,7 +23,7 @@ class SetUser {
 }
 
 class SetFirebaseUser {
-  final FirebaseUser user;
+  final fb.User user;
 
   SetFirebaseUser(this.user);
 }

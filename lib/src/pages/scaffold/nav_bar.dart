@@ -1,4 +1,5 @@
 import 'package:dungeon_paper/src/flutter_utils/platform_svg.dart';
+import 'package:dungeon_paper/src/utils/utils.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -80,11 +81,14 @@ class NavBarState extends State<NavBar> {
     var pageItems = Pages.values.map((page) {
       var details = pageDetails[page];
       var t = (activePageIndex - page.index).abs();
-      var color = Color.lerp(Theme.of(context).colorScheme.primary,
-          Theme.of(context).colorScheme.onSurface, t);
+      var color = Color.lerp(
+        Theme.of(context).colorScheme.surface.withOpacity(0.8), // slected color
+        Theme.of(context).colorScheme.secondary, // unselected color
+        clamp01(t),
+      );
 
       if (details == null) {
-        return Center(child: Text('To Do!'));
+        return Container();
       }
 
       return PageNavItem(
@@ -99,7 +103,8 @@ class NavBarState extends State<NavBar> {
 
     return BottomAppBar(
       shape: CircularNotchedRectangle(),
-      notchMargin: 0,
+      color: Theme.of(context).colorScheme.primary,
+      elevation: 0,
       child: Row(
         mainAxisSize: MainAxisSize.max,
         crossAxisAlignment: CrossAxisAlignment.center,
@@ -155,7 +160,10 @@ class PageNavItem extends StatelessWidget {
               children: <Widget>[
                 iconBuilder(foregroundColor),
                 DefaultTextStyle(
-                  style: TextStyle(color: foregroundColor),
+                  style: Theme.of(context)
+                      .textTheme
+                      .bodyText2
+                      .copyWith(color: foregroundColor),
                   child: label,
                 )
               ],
