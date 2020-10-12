@@ -54,11 +54,12 @@ class EditStatDialogState extends State<EditStatDialog> {
     var name = enumName(stat);
     var statName = name.toUpperCase();
 
-    return SimpleDialog(
+    return AlertDialog(
       title: Text('Edit $fullName'),
       contentPadding: const EdgeInsets.only(top: 32.0, bottom: 8.0),
-      children: <Widget>[
-        Column(
+      content: SingleChildScrollView(
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
           mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: <Widget>[
@@ -70,58 +71,50 @@ class EditStatDialogState extends State<EditStatDialog> {
                 fontWeight: FontWeight.bold,
               ),
             ),
-            Form(
-              child: Column(
-                mainAxisSize: MainAxisSize.max,
-                crossAxisAlignment: CrossAxisAlignment.stretch,
-                children: <Widget>[
-                  Container(
-                    padding: const EdgeInsets.symmetric(vertical: 8),
-                    width: 240,
-                    child: NumberController(
-                      min: 1,
-                      max: MAX_STAT_VALUE,
-                      value: value,
-                      onChange: _setStateValue,
-                    ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.symmetric(
-                      horizontal: 16,
-                      vertical: 8,
-                    ),
-                    child: RollButtonWithEdit(
-                      label: Text('Roll 2d6 + $statName'),
-                      diceList: dice,
-                      onRoll: _rollStat,
-                      character: widget.character,
-                      analyticsSource: 'Edit Stat Dialog',
-                      brightness: Brightness.light,
-                    ),
-                  ),
-                  if (rollingController != null)
-                    Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 16.0)
-                          .copyWith(bottom: 8),
-                      child: DiceRollBox(
-                        key: Key(rollSession),
-                        controller: rollingController,
-                        onRemove: _removeRoll,
-                        onEdit: _editRoll,
-                      ),
-                    ),
-                  StandardDialogControls(
-                    padding: const EdgeInsets.symmetric(horizontal: 16),
-                    onOK: saving ? null : _saveValue,
-                    okDisabled: valueError,
-                    onCancel: () => Navigator.pop(context),
-                  ),
-                ],
+            Container(
+              padding: const EdgeInsets.symmetric(vertical: 8),
+              width: 240,
+              child: NumberController(
+                min: 1,
+                max: MAX_STAT_VALUE,
+                value: value,
+                onChange: _setStateValue,
               ),
             ),
+            Padding(
+              padding: const EdgeInsets.symmetric(
+                horizontal: 16,
+                vertical: 8,
+              ),
+              child: RollButtonWithEdit(
+                label: Text('Roll 2d6 + $statName'),
+                diceList: dice,
+                onRoll: _rollStat,
+                character: widget.character,
+                analyticsSource: 'Edit Stat Dialog',
+                brightness: Brightness.light,
+              ),
+            ),
+            if (rollingController != null)
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 16.0)
+                    .copyWith(bottom: 8),
+                child: DiceRollBox(
+                  key: Key(rollSession),
+                  controller: rollingController,
+                  onRemove: _removeRoll,
+                  onEdit: _editRoll,
+                ),
+              ),
           ],
         ),
-      ],
+      ),
+      actions: StandardDialogControls.actions(
+        context: context,
+        onConfirm: saving ? null : _saveValue,
+        confirmDisabled: valueError,
+        onCancel: () => Navigator.pop(context),
+      ),
     );
   }
 

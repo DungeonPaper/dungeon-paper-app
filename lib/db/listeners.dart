@@ -16,44 +16,34 @@ StreamSubscription _fbUserListener;
 
 void registerFirebaseUserListener() {
   try {
-    if (_fbUserListener != null) {
-      _fbUserListener.cancel();
-    }
+    _fbUserListener?.cancel();
 
-    _fbUserListener = auth.authStateChanges().listen((authUser) {
-      if (authUser?.email != null &&
-          dwStore.state.user.current != null &&
-          authUser.email != dwStore.state.user.current.email) {
-        dwStore.dispatch(SetFirebaseUser(authUser));
-      }
-
-      if (authUser == null || authUser.email == null) {
+    _fbUserListener = auth.authStateChanges().listen((fbUser) {
+      if (fbUser != null && fbUser.email != dwStore.state.user.current?.email) {
+        dwStore.dispatch(SetFirebaseUser(fbUser));
+      } else if (fbUser?.email == null) {
         dwStore.dispatch(Logout());
         dwStore.dispatch(ClearCharacters());
       }
     });
-    logger.d('REGISTERED AUTH USER LISTENER');
+    logger.d('Registered auth user listener');
   } catch (e) {
     logger.d('error on user listener');
-    if (_fbUserListener != null) {
-      _fbUserListener.cancel();
-    }
-    logger.d("COULDN'T REGISTER AUTH USER LISTENER");
+    _fbUserListener?.cancel();
+    logger.d("Couldn't register auth user listener");
   }
 }
 
 StreamSubscription _userListener;
 
 void registerUserListener(fb.User fbUser) {
-  if (_userListener != null) {
-    _userListener.cancel();
-  }
+  _userListener?.cancel();
 
   if (fbUser == null) {
     return;
   }
 
-  var userDocID = 'user_data/${fbUser.email}';
+  final userDocID = 'user_data/${fbUser.email}';
   _userListener = firestore.doc(userDocID).snapshots().listen((user) {
     dwStore.dispatch(
       SetUser(
@@ -65,7 +55,7 @@ void registerUserListener(fb.User fbUser) {
     );
   });
 
-  logger.d('REGISTERED DB USER LISTENER');
+  logger.d('Registered db user listener');
 }
 
 StreamSubscription _charsListener;
@@ -79,15 +69,15 @@ void registerCharactersListener() async {
     return;
   }
 
-  var userDocID = dwStore.state.user.current.documentID;
-  var user = firestore.doc('user_data/$userDocID');
+  final userDocID = dwStore.state.user.current.documentID;
+  final user = firestore.doc('user_data/$userDocID');
   _charsListener =
       user.collection('characters').snapshots().listen((characters) {
     if (characters.docs.isEmpty) {
       return;
     }
-    var chars = {
-      for (var character in characters.docs)
+    final chars = {
+      for (final character in characters.docs)
         character.reference.id: Character(
           data: character.data(),
           ref: character.reference,
@@ -96,13 +86,13 @@ void registerCharactersListener() async {
     dwStore.dispatch(
       SetCharacters(chars),
     );
-    var lastCharId = dwStore.state.prefs.user.lastCharacterId;
-    var matchingChar = chars[lastCharId];
+    final lastCharId = dwStore.state.prefs.user.lastCharacterId;
+    final matchingChar = chars[lastCharId];
     if (lastCharId != null && matchingChar != null) {
       dwStore.dispatch(SetCurrentChar(matchingChar));
     }
   });
-  logger.d('REGISTERED DB CHARACTER LISTENER');
+  logger.d('Registered db character listener');
 }
 
 StreamSubscription _classesListener;
@@ -115,8 +105,8 @@ void registerCustomClassesListener() async {
     return;
   }
 
-  var userDocID = dwStore.state.user.current.documentID;
-  var user = firestore.doc('user_data/$userDocID');
+  final userDocID = dwStore.state.user.current.documentID;
+  final user = firestore.doc('user_data/$userDocID');
   _classesListener =
       user.collection('custom_classes').snapshots().listen((classes) {
     if (classes.docs.isEmpty) {
@@ -124,7 +114,7 @@ void registerCustomClassesListener() async {
     }
     dwStore.dispatch(
       SetCustomClasses({
-        for (var character in classes.docs)
+        for (final character in classes.docs)
           character.reference.id: CustomClass(
             data: character.data(),
             ref: character.reference,
@@ -132,5 +122,5 @@ void registerCustomClassesListener() async {
       }),
     );
   });
-  logger.d('REGISTERED DB CLASSES LISTENER');
+  logger.d('Registered db classes listener');
 }

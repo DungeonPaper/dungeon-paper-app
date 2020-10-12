@@ -33,11 +33,12 @@ class EditDamageDiceDialogState extends State<EditDamageDiceDialog> {
 
   @override
   Widget build(BuildContext context) {
-    return SimpleDialog(
+    return AlertDialog(
       title: Text('Edit Damage Dice'),
       contentPadding: const EdgeInsets.only(top: 32.0, bottom: 8.0),
-      children: <Widget>[
-        Column(
+      content: SingleChildScrollView(
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
           mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: <Widget>[
@@ -47,13 +48,14 @@ class EditDamageDiceDialogState extends State<EditDamageDiceDialog> {
               onChanged: (d) => setState(() => dice = d),
               textStyle: TextStyle(fontSize: 24),
             ),
-            StandardDialogControls(
-              onOK: _saveValue,
-              onCancel: () => Navigator.pop(context),
-            ),
           ],
         ),
-      ],
+      ),
+      actions: StandardDialogControls.actions(
+        context: context,
+        onConfirm: _saveValue,
+        onCancel: () => Navigator.pop(context),
+      ),
     );
   }
 

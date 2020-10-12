@@ -30,11 +30,12 @@ class EditArmorDialogState extends State<EditArmorDialog> {
   Widget build(BuildContext context) {
     num controlledStat = int.parse(_controller.value.text);
 
-    return SimpleDialog(
+    return AlertDialog(
       title: Text('Edit Armor'),
       contentPadding: const EdgeInsets.only(top: 32.0, bottom: 8.0),
-      children: <Widget>[
-        Column(
+      content: SingleChildScrollView(
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
           mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: <Widget>[
@@ -72,7 +73,6 @@ class EditArmorDialogState extends State<EditArmorDialog> {
                               BetweenValuesTextFormatter(0, 20)
                             ],
                             controller: _controller,
-                            autofocus: true,
                             style: TextStyle(fontSize: 24.0),
                             textAlign: TextAlign.center,
                           ),
@@ -88,16 +88,17 @@ class EditArmorDialogState extends State<EditArmorDialog> {
                       ],
                     ),
                   ),
-                  StandardDialogControls(
-                    onOK: () => _saveValue(),
-                    onCancel: () => Navigator.pop(context),
-                  ),
                 ],
               ),
             ),
           ],
         ),
-      ],
+      ),
+      actions: StandardDialogControls.actions(
+        context: context,
+        onConfirm: () => _saveValue(),
+        onCancel: () => Navigator.pop(context),
+      ),
     );
   }
 
