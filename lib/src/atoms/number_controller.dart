@@ -20,7 +20,7 @@ class NumberController extends StatefulWidget {
     this.min = -double.infinity,
     this.max = double.infinity,
     this.formatType = FormatType.Integer,
-    this.autoFocus = true,
+    this.autoFocus = false,
   }) : super(key: key);
 
   @override

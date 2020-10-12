@@ -21,19 +21,25 @@ class SingleFieldEditDialog<T> extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SimpleDialog(
+    return AlertDialog(
       title: title,
-      children: [
-        Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 16),
-          child: fieldBuilder(context),
+      content: SingleChildScrollView(
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 16),
+              child: fieldBuilder(context),
+            ),
+          ],
         ),
-        StandardDialogControls(
-          onOK: onOK,
-          okText: Text('Save'),
-          onCancel: onCancel,
-        )
-      ],
+      ),
+      actions: StandardDialogControls.actions(
+        context: context,
+        onConfirm: onOK,
+        confirmText: Text('Save'),
+        onCancel: onCancel,
+      ),
     );
   }
 }
