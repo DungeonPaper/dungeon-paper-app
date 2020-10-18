@@ -4,10 +4,12 @@ import 'package:flutter/material.dart';
 
 class VerifyPasswordDialog extends StatefulWidget {
   final void Function(String password) onConfirm;
+  final Widget confirmText;
 
   const VerifyPasswordDialog({
     Key key,
     this.onConfirm,
+    this.confirmText,
   }) : super(key: key);
 
   @override
@@ -36,6 +38,7 @@ class _VerifyPasswordDialogState extends State<VerifyPasswordDialog> {
       ),
       actions: StandardDialogControls.actions(
         context: context,
+        confirmText: widget.confirmText,
         onConfirm: () => widget.onConfirm?.call(controller.text),
         onCancel: () => Navigator.pop(context),
         confirmDisabled: isValid.value == false,

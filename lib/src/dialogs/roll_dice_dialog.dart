@@ -222,7 +222,11 @@ void showDiceRollDialog({
               child: Material(
                 color: Colors.black.withOpacity(0.7),
                 child: GestureDetector(
-                  onTap: () => Navigator.pop(context),
+                  onTap: () {
+                    if (Navigator.of(context).canPop()) {
+                      Navigator.pop(context);
+                    }
+                  },
                 ),
               ),
             ),

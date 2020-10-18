@@ -7,6 +7,7 @@ import 'package:dungeon_paper/src/scaffolds/scaffold_with_elevation.dart';
 import 'package:dungeon_paper/src/utils/auth/auth.dart';
 import 'package:dungeon_paper/src/utils/share.dart';
 import 'package:flutter/material.dart';
+import 'package:firebase_auth/firebase_auth.dart' as fb;
 
 class AccountView extends StatefulWidget {
   static final _providersData = [
@@ -120,7 +121,7 @@ class _AccountViewState extends State<AccountView> {
                               : Text(passwordResetSent
                                   ? 'Send Again'
                                   : 'Reset Password'),
-                          onPressed: () => _sendPasswordReset(context),
+                          onPressed: () => _sendPasswordReset(context, fbUser),
                         ),
                       ),
                     ],
@@ -171,9 +172,9 @@ class _AccountViewState extends State<AccountView> {
     );
   }
 
-  void _sendPasswordReset(BuildContext context) async {
+  void _sendPasswordReset(BuildContext context, fb.User user) async {
     setState(() => loadingPasswordReset = true);
-    await sendPasswordResetLink();
+    await sendPasswordResetLink(user.email);
     setState(() {
       loadingPasswordReset = false;
       passwordResetSent = true;

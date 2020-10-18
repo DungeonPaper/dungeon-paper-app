@@ -54,7 +54,7 @@ _Thank you, dear users, for providing valuable feedback!_
 ## 1.0.8
 
 - Character creation wizard
-- Added "What's New?" dialog
+- Added "Changelog" dialog
 - Bugfixes and small UI improvements
 - Check out our [Facebook](https://facebook.com/dungeonpaper) and [Twitter](https://twitter.com/dungeonpaper)!
 
