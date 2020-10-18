@@ -36,7 +36,6 @@ void registerFirebaseUserListener() {
 }
 
 void _setFbUser(fb.User fbUser) {
-  logger.d('Setting fbUser = $fbUser');
   if (fbUser != null) {
     dwStore.dispatch(SetFirebaseUser(fbUser));
   } else {

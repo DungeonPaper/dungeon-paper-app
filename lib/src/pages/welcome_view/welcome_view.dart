@@ -1,9 +1,13 @@
 import 'dart:math';
 import 'package:dungeon_paper/src/atoms/version_number.dart';
+import 'package:dungeon_paper/src/dialogs/single_field_edit_dialog.dart';
+import 'package:dungeon_paper/src/flutter_utils/input_validators.dart';
 import 'package:dungeon_paper/src/flutter_utils/loading_container.dart';
 import 'package:dungeon_paper/src/pages/about_view/about_view.dart';
 import 'package:dungeon_paper/src/pages/auth/login_view.dart';
 import 'package:dungeon_paper/src/pages/whats_new_view/whats_new_view.dart';
+import 'package:dungeon_paper/src/utils/auth/auth.dart';
+import 'package:email_validator/email_validator.dart';
 import 'package:flutter/material.dart';
 
 class WelcomeView extends StatelessWidget {
@@ -47,11 +51,11 @@ class WelcomeView extends StatelessWidget {
                 SizedBox(height: 40),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.end,
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Column(
                       children: [
-                        Text("What's New?"),
+                        Text("Changelog"),
                         RaisedButton(
                           color: Theme.of(context).colorScheme.surface,
                           onPressed: _openWhatsNew(context),
@@ -63,6 +67,11 @@ class WelcomeView extends StatelessWidget {
                     Column(
                       children: [
                         Text("Can't sign in?"),
+                        RaisedButton(
+                          color: Theme.of(context).colorScheme.surface,
+                          onPressed: _openResetPasswordView(context),
+                          child: Text('Reset Password'),
+                        ),
                         RaisedButton(
                           color: Theme.of(context).colorScheme.surface,
                           onPressed: _openAboutView(context),
@@ -87,6 +96,26 @@ class WelcomeView extends StatelessWidget {
         MaterialPageRoute<bool>(
           fullscreenDialog: true,
           builder: (context) => AboutView(),
+        ),
+      );
+    };
+  }
+
+  void Function() _openResetPasswordView(BuildContext context) {
+    return () {
+      showDialog(
+        context: context,
+        builder: (context) => SingleTextFieldEditDialog(
+          title: Text('Reset Password'),
+          confirmText: Text('Send Password Reset'),
+          fieldName: 'Email address',
+          value: '',
+          onCancel: () => Navigator.pop(context),
+          confirmDisabled: (email) => !EmailValidator.validate(email),
+          onSave: (email) async {
+            await sendPasswordResetLink(email);
+            Navigator.pop(context);
+          },
         ),
       );
     };

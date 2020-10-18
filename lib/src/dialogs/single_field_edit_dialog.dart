@@ -4,19 +4,23 @@ import 'package:flutter/material.dart';
 class SingleFieldEditDialog<T> extends StatelessWidget {
   final String fieldName;
   final T value;
-  final void Function() onOK;
+  final void Function() onConfirm;
   final void Function() onCancel;
   final Widget Function(BuildContext) fieldBuilder;
   final Widget title;
+  final Widget confirmText;
+  final bool confirmDisabled;
 
   const SingleFieldEditDialog({
     Key key,
     @required this.fieldName,
     @required this.value,
-    @required this.onOK,
+    @required this.onConfirm,
     @required this.onCancel,
     @required this.fieldBuilder,
     @required this.title,
+    this.confirmText,
+    this.confirmDisabled,
   }) : super(key: key);
 
   @override
@@ -36,8 +40,9 @@ class SingleFieldEditDialog<T> extends StatelessWidget {
       ),
       actions: StandardDialogControls.actions(
         context: context,
-        onConfirm: onOK,
-        confirmText: Text('Save'),
+        onConfirm: onConfirm,
+        confirmDisabled: confirmDisabled,
+        confirmText: confirmText ?? Text('Save'),
         onCancel: onCancel,
       ),
     );
@@ -48,8 +53,11 @@ class SingleTextFieldEditDialog extends StatefulWidget {
   final String value;
   final String fieldName;
   final Widget title;
+  final Widget confirmText;
   final void Function(String) onSave;
   final void Function() onCancel;
+  final bool allowEmpty;
+  final bool Function(String) confirmDisabled;
 
   const SingleTextFieldEditDialog({
     Key key,
@@ -58,6 +66,9 @@ class SingleTextFieldEditDialog extends StatefulWidget {
     @required this.title,
     @required this.onSave,
     @required this.onCancel,
+    this.confirmText,
+    this.allowEmpty = false,
+    this.confirmDisabled,
   }) : super(key: key);
 
   @override
@@ -72,8 +83,12 @@ class _SingleTextFieldEditDialogState extends State<SingleTextFieldEditDialog> {
   void initState() {
     controller = TextEditingController.fromValue(
       TextEditingValue(text: widget.value?.toString()),
-    );
+    )..addListener(_listener);
     super.initState();
+  }
+
+  void _listener() {
+    setState(() {});
   }
 
   @override
@@ -82,7 +97,9 @@ class _SingleTextFieldEditDialogState extends State<SingleTextFieldEditDialog> {
       title: widget.title,
       value: widget.value,
       fieldName: widget.fieldName,
-      onOK: () => widget.onSave?.call(controller.text),
+      confirmText: widget.confirmText,
+      onConfirm: () => widget.onSave?.call(controller.text),
+      confirmDisabled: isEmpty || _confirmDisabled,
       onCancel: widget.onCancel,
       fieldBuilder: (context) => Padding(
         padding: const EdgeInsets.only(top: 24),
@@ -95,4 +112,9 @@ class _SingleTextFieldEditDialogState extends State<SingleTextFieldEditDialog> {
       ),
     );
   }
+
+  bool get isEmpty => widget.allowEmpty == true || controller.text.isEmpty;
+
+  bool get _confirmDisabled =>
+      widget.confirmDisabled?.call(controller.text) == true;
 }

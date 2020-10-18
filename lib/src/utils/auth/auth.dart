@@ -68,6 +68,7 @@ Future<bool> unlinkFromProvider(String providerId) async {
     (user) async {
       await user.unlink(providerId);
       await user.reload();
+      // TODO update db user email instead (which propagates to this anyway)
       await user.updateEmail(newEmail);
     },
     errorMessage: 'Could not unlink with provider: $providerId',
@@ -102,9 +103,8 @@ Future<bool> reauthenticateUser(fb.User user) async {
   }
 }
 
-Future<void> sendPasswordResetLink() async {
-  final user = auth.currentUser;
-  await auth.sendPasswordResetEmail(email: user.email);
+Future<void> sendPasswordResetLink(String email) async {
+  await auth.sendPasswordResetEmail(email: email);
 }
 
 Future<UserLogin> signInAutomatically() async {

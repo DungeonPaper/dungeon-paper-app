@@ -38,7 +38,7 @@ class _AboutViewState extends State<AboutView> {
         actions: <Widget>[
           IconButton(
             icon: Icon(Icons.history),
-            tooltip: "What's New?",
+            tooltip: "Changelog",
             onPressed: () => showDialog(
               context: context,
               builder: (context) => WhatsNew.dialog(),
