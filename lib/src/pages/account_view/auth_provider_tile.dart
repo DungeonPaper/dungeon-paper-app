@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:dungeon_paper/src/flutter_utils/widget_utils.dart';
 import 'package:dungeon_paper/src/pages/auth/email_auth_view.dart';
+import 'package:dungeon_paper/src/pages/auth/verify_password_dialog.dart';
 import 'package:dungeon_paper/src/utils/auth/auth.dart';
 import 'package:firebase_auth/firebase_auth.dart' as fb;
 import 'package:flutter/foundation.dart';
@@ -84,7 +85,12 @@ class _AuthProviderTileState extends State<AuthProviderTile> {
       trailing: RaisedButton(
         color: Theme.of(context).accentColor,
         textColor: Theme.of(context).colorScheme.onSecondary,
-        child: loading ? Loader() : Text(isLinked ? 'Unlink' : 'Link'),
+        child: loading
+            ? Loader(
+                size: Size.square(16),
+                strokeWidth: 2,
+              )
+            : Text(isLinked ? 'Unlink' : 'Link'),
         onPressed: isPrimary ? null : _toggleLink,
         visualDensity: VisualDensity.compact,
       ),
@@ -101,21 +107,25 @@ class _AuthProviderTileState extends State<AuthProviderTile> {
     } else {
       await linkWithCredentials(cred);
     }
-    setState(() => loading = false);
+    if (mounted) {
+      setState(() => loading = false);
+    }
   }
 
   Future<AuthCredential> _getCredential(
     BuildContext context,
     String providerId, {
     bool isLinked = false,
-  }) {
+  }) async {
     switch (providerId) {
       case 'google.com':
         return getGoogleCredential(interactive: true);
       case 'apple.com':
         return getAppleCredential(interactive: true);
       case 'password':
-        return _emailAuthDialog(context, isLinked);
+        final result = await _emailAuthDialog(context, isLinked);
+        Navigator.pop(context);
+        return result;
       default:
         return null;
     }
@@ -127,16 +137,29 @@ class _AuthProviderTileState extends State<AuthProviderTile> {
     setState(() => loading = false);
     showDialog(
       context: context,
-      builder: (context) => EmailAuthView(
-        canSwitchModes: false,
-        mode: isLinked ? EmailAuthViewMode.signIn : EmailAuthViewMode.signUp,
-        onClose: () => setState(() => loading = false),
-        onConfirm: (result) async {
-          completer.complete(result.credential);
-          setState(() => loading = true);
-          return EmailAuthResponse();
-        },
-      ),
+      builder: (context) => !isLinked
+          ? EmailAuthView(
+              canSwitchModes: false,
+              mode: EmailAuthViewMode.signUp,
+              onClose: () => setState(() => loading = false),
+              onConfirm: (result) async {
+                completer.complete(result.credential);
+                setState(() => loading = true);
+                return EmailAuthResponse();
+              },
+            )
+          : VerifyPasswordDialog(
+              onConfirm: (pwd) {
+                completer.complete(
+                  EmailAuthProvider.credential(
+                    email: user.email,
+                    password: pwd,
+                  ) as EmailAuthCredential,
+                );
+                setState(() => loading = true);
+                return EmailAuthResponse();
+              },
+            ),
     );
     return completer.future;
   }
