@@ -51,6 +51,7 @@ class _AccountViewState extends State<AccountView> {
         final fbUser = login.firebaseUser;
         final hasPassword = isUserLinkedToAuth('password', fbUser);
         return ScaffoldWithElevation(
+          key: Key('${fbUser.email}-${fbUser.displayName}-${fbUser.photoURL}'),
           automaticallyImplyLeading: true,
           title: Text('Your Account'),
           body: Column(

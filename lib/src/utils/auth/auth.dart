@@ -29,58 +29,56 @@ Future<UserLogin> signInWithCredentials(AuthCredential creds) async {
       SignInMethod.fromCredential(res.credential), res?.user);
 }
 
-Future<bool> linkWithCredentials(AuthCredential creds) async {
+Future<bool> withReauth<T>(
+  Future<T> Function(fb.User) callback, {
+  @required String errorMessage,
+  bool dispatchUser = true,
+}) async {
   final user = auth.currentUser;
   try {
-    await user.linkWithCredential(creds);
+    await callback(user);
     return true;
   } on FirebaseAuthException catch (e) {
     if (e.code == 'requires-recent-login') {
       await reauthenticateUser(user);
-      await user.linkWithCredential(creds);
+      await callback(user);
       return true;
     }
     rethrow;
   } catch (e, stack) {
-    logger.w('Could not link with credential: $creds', e, stack);
+    logger.w(errorMessage, e, stack);
     return false;
   }
+}
+
+Future<bool> linkWithCredentials(AuthCredential creds) async {
+  return withReauth(
+    (user) => user.linkWithCredential(creds),
+    errorMessage: 'Could not link with credential: $creds',
+  );
 }
 
 Future<bool> unlinkFromProvider(String providerId) async {
   final user = auth.currentUser;
-  try {
-    await user.unlink(providerId);
-    return true;
-  } on PlatformException catch (e) {
-    if (e.code == 'ERROR_REQUIRES_RECENT_LOGIN') {
-      await reauthenticateUser(user);
+  final firstOtherProvider = user.providerData.firstWhere(
+      (data) => data.providerId != providerId && data.email?.isNotEmpty == true,
+      orElse: () => null);
+  final newEmail = firstOtherProvider?.email;
+  return withReauth(
+    (user) async {
       await user.unlink(providerId);
-      return true;
-    }
-    rethrow;
-  } catch (e, stack) {
-    logger.w('Could not unlink with provider: $providerId', e, stack);
-    return false;
-  }
+      await user.reload();
+      await user.updateEmail(newEmail);
+    },
+    errorMessage: 'Could not unlink with provider: $providerId',
+  );
 }
 
 Future<bool> updateEmail(String email) async {
-  final user = auth.currentUser;
-  try {
-    await user.updateEmail(email);
-    return true;
-  } on PlatformException catch (e) {
-    if (e.code == 'ERROR_REQUIRES_RECENT_LOGIN') {
-      await reauthenticateUser(user);
-      await user.updateEmail(email);
-      return true;
-    }
-    rethrow;
-  } catch (e, stack) {
-    logger.w('Could not update email to: $email', e, stack);
-    return false;
-  }
+  return withReauth(
+    (user) => user.updateEmail(email),
+    errorMessage: 'Could not update email to: $email',
+  );
 }
 
 Future<bool> reauthenticateUser(fb.User user) async {

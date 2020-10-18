@@ -5,6 +5,7 @@ import 'package:dungeon_paper/src/dialogs/dialogs.dart';
 import 'package:dungeon_paper/src/flutter_utils/platform_svg.dart';
 import 'package:dungeon_paper/src/pages/about_view/about_view.dart';
 import 'package:dungeon_paper/src/pages/account_view/account_view.dart';
+import 'package:dungeon_paper/src/pages/custom_classes_view/custom_classes_view.dart';
 import 'package:dungeon_paper/src/pages/edit_character/edit_character_view.dart';
 import 'package:dungeon_paper/src/pages/compendium/compendium_view.dart';
 import 'package:dungeon_paper/src/redux/characters/characters_store.dart';
@@ -114,6 +115,7 @@ class _SidebarState extends State<Sidebar> {
               ),
               ...characterList(state.characters.characters, context),
               Divider(),
+              title('Compendium', context),
               ListTile(
                 leading: Padding(
                   padding: const EdgeInsets.only(top: 4, left: 4),
@@ -126,11 +128,11 @@ class _SidebarState extends State<Sidebar> {
                         : Theme.of(context).accentColor,
                   ),
                 ),
-                title: Text('Compendium'),
-                onTap: () => compendiumScreen(context),
+                title: Text('Custom Classes'),
+                onTap: () => customClassesScreen(context),
               ),
               Divider(),
-              title('Settings', context),
+              title('Application', context),
               ListTile(
                 leading: Icon(Icons.settings),
                 title: Text('Keep screen on'),
@@ -146,8 +148,6 @@ class _SidebarState extends State<Sidebar> {
                   },
                 ),
               ),
-              Divider(),
-              title('Application', context),
               // About
               ListTile(
                 leading: Icon(Icons.info),
@@ -200,12 +200,21 @@ class _SidebarState extends State<Sidebar> {
     );
   }
 
-  void compendiumScreen(BuildContext context) {
+  // void compendiumScreen(BuildContext context) {
+  //   Navigator.pop(context);
+  //   openPage(
+  //     ScreenNames.Compendium,
+  //     context,
+  //     builder: (context) => Compendium(),
+  //   );
+  // }
+
+  void customClassesScreen(BuildContext context) {
     Navigator.pop(context);
     openPage(
-      ScreenNames.Compendium,
+      ScreenNames.CustomClasses,
       context,
-      builder: (context) => Compendium(),
+      builder: (context) => CustomClassesView(),
     );
   }
 

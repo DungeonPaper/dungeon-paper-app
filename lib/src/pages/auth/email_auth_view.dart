@@ -1,4 +1,4 @@
-import 'package:dungeon_paper/src/flutter_utils/input_validators.dart';
+import 'package:dungeon_paper/src/atoms/password_field.dart';
 import 'package:dungeon_paper/src/flutter_utils/widget_utils.dart';
 import 'package:dungeon_paper/src/utils/auth/auth.dart';
 import 'package:flutter/material.dart';
@@ -17,11 +17,11 @@ class EmailAuthResult {
 
 class EmailAuthResponse {
   final dynamic error;
-  final bool success;
   final StackTrace stack;
 
-  EmailAuthResponse([this.error, this.stack])
-      : success = error == null && stack == null;
+  const EmailAuthResponse([this.error, this.stack]);
+
+  bool get success => error == null && stack == null;
 }
 
 enum EmailAuthViewMode {
@@ -50,11 +50,11 @@ class EmailAuthView extends StatefulWidget {
 class _EmailAuthViewState extends State<EmailAuthView> {
   Map<String, TextEditingController> controllers;
   EmailAuthViewMode mode;
-  bool obscured;
   bool rememberMe;
   String error;
   String savedEmail;
   bool loading;
+  ValueNotifier<bool> passwordValid;
 
   bool get signUpMode => mode == EmailAuthViewMode.signUp;
   bool get signInMode => mode == EmailAuthViewMode.signIn;
@@ -64,12 +64,21 @@ class _EmailAuthViewState extends State<EmailAuthView> {
     super.initState();
     mode = widget.mode ?? EmailAuthViewMode.signIn;
     controllers = WidgetUtils.textEditingControllerMap(
-      map: {'email': '', 'password': ''},
+      map: {
+        'email': EditingControllerConfig(
+          defaultValue: '',
+          listener: () => setState(() {}),
+        ),
+        'password': EditingControllerConfig(
+          defaultValue: '',
+          listener: () => setState(() {}),
+        )
+      },
     );
     loading = false;
     error = null;
     rememberMe = false;
-    obscured = true;
+    passwordValid = ValueNotifier(false);
   }
 
   @override
@@ -112,35 +121,9 @@ class _EmailAuthViewState extends State<EmailAuthView> {
                                 : null,
                       ),
                       SizedBox(height: 16),
-                      TextFormField(
+                      PasswordField(
                         controller: controllers['password'],
-                        autofillHints: [AutofillHints.password],
-                        decoration: InputDecoration(
-                          labelText: 'Password',
-                          floatingLabelBehavior: FloatingLabelBehavior.always,
-                          suffixIcon: IconButton(
-                            icon: Icon(
-                              Icons.remove_red_eye,
-                              color: obscured
-                                  ? Colors.grey[600]
-                                  : Colors.blue[300],
-                            ),
-                            tooltip: obscured
-                                ? 'Tap to show password'
-                                : 'Tap to hide password',
-                            onPressed: () =>
-                                setState(() => obscured = !obscured),
-                          ),
-                        ),
-                        obscureText: obscured,
-                        keyboardType: TextInputType.emailAddress,
-                        textInputAction: TextInputAction.done,
-                        validator: signUpMode
-                            ? (pwd) =>
-                                pwd.isNotEmpty && !validatePassword(password)
-                                    ? PasswordValidator.getMessage(password)
-                                    : null
-                            : null,
+                        validNotifier: passwordValid,
                       ),
                       SizedBox(height: 20),
                       if (error != null) ...[
@@ -209,12 +192,9 @@ class _EmailAuthViewState extends State<EmailAuthView> {
   bool get isValid =>
       email?.isNotEmpty == true &&
       validateEmail(email) &&
-      (password?.isNotEmpty == true &&
-          (!signUpMode || validatePassword(password)));
+      passwordValid.value == true;
 
   bool validateEmail(String email) => EmailValidator.validate(email);
-  bool validatePassword(String password) =>
-      PasswordValidator.validate(password);
 
   EmailAuthCredential get credential => EmailAuthProvider.credential(
         email: email,

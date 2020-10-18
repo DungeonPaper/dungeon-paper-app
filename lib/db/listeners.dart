@@ -12,25 +12,36 @@ import 'package:pedantic/pedantic.dart';
 import 'models/character.dart';
 import 'models/user.dart';
 
-StreamSubscription _fbUserListener;
+StreamSubscription _fbUserChangeListener;
+StreamSubscription _fbUserUpdateListener;
 
 void registerFirebaseUserListener() {
   try {
-    _fbUserListener?.cancel();
+    _fbUserChangeListener?.cancel();
+    _fbUserUpdateListener?.cancel();
 
-    _fbUserListener = auth.authStateChanges().listen((fbUser) {
-      if (fbUser != null && fbUser.email != dwStore.state.user.current?.email) {
-        dwStore.dispatch(SetFirebaseUser(fbUser));
-      } else if (fbUser?.email == null) {
-        dwStore.dispatch(Logout());
-        dwStore.dispatch(ClearCharacters());
+    _fbUserChangeListener = auth.authStateChanges().listen((fbUser) {
+      _fbUserUpdateListener?.cancel();
+      if (fbUser != null) {
+        _fbUserUpdateListener = auth.userChanges().listen(_setFbUser);
       }
+      _setFbUser(fbUser);
     });
     logger.d('Registered auth user listener');
   } catch (e) {
     logger.d('error on user listener');
-    _fbUserListener?.cancel();
+    _fbUserChangeListener?.cancel();
     logger.d("Couldn't register auth user listener");
+  }
+}
+
+void _setFbUser(fb.User fbUser) {
+  logger.d('Setting fbUser = $fbUser');
+  if (fbUser != null) {
+    dwStore.dispatch(SetFirebaseUser(fbUser));
+  } else {
+    dwStore.dispatch(Logout());
+    dwStore.dispatch(ClearCharacters());
   }
 }
 
