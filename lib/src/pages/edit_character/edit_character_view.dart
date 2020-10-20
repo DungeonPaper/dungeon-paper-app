@@ -94,7 +94,7 @@ class _EditCharacterViewState extends State<EditCharacterView>
   Widget build(BuildContext context) {
     return WillPopScope(
       onWillPop: _confirmExit,
-      child: ScaffoldWithElevation.primaryBackground(
+      child: ScaffoldWithElevation(
         title: Text(character.displayName.isEmpty
             ? 'Character'
             : '${widget.mode == DialogMode.Create ? 'Creat' : 'Edit'}ing: ${character.displayName}'),

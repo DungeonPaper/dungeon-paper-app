@@ -32,7 +32,7 @@ class WhatsNew extends StatefulWidget {
 
   static Widget dialogBuilder(BuildContext context, Widget child) {
     return AlertDialog(
-      title: Text("Changelog"),
+      title: Text('Changelog'),
       contentPadding: EdgeInsets.symmetric(horizontal: 8),
       content: Container(
         height: min(400, MediaQuery.of(context).size.height),
@@ -52,7 +52,7 @@ class WhatsNew extends StatefulWidget {
     return Scaffold(
       backgroundColor: Theme.of(context).canvasColor,
       appBar: AppBar(
-        title: Text("Changelog"),
+        title: Text('Changelog'),
       ),
       body: SingleChildScrollView(child: child),
     );

@@ -1,3 +1,4 @@
+import 'package:dungeon_paper/src/pages/scaffold/main_app_bar.dart';
 import 'package:flutter/material.dart';
 
 class ScaffoldWithElevation extends StatefulWidget {
@@ -6,7 +7,6 @@ class ScaffoldWithElevation extends StatefulWidget {
   final Widget title;
   final List<Widget> actions;
   final Color backgroundColor;
-  final bool _isThemePrimaryColor;
   final Widget appBarLeading;
   final bool wrapWithScrollable;
   final bool useElevation;
@@ -17,13 +17,14 @@ class ScaffoldWithElevation extends StatefulWidget {
   final Widget floatingActionButton;
   final FloatingActionButtonAnimator floatingActionButtonAnimator;
   final FloatingActionButtonLocation floatingActionButtonLocation;
+  final Widget drawer;
 
   const ScaffoldWithElevation({
     Key key,
     @required this.body,
     @required this.title,
     this.actions,
-    this.automaticallyImplyLeading = false,
+    this.automaticallyImplyLeading = true,
     this.backgroundColor,
     this.appBarLeading,
     this.wrapWithScrollable = true,
@@ -35,28 +36,8 @@ class ScaffoldWithElevation extends StatefulWidget {
     this.floatingActionButtonAnimator,
     this.floatingActionButtonLocation,
     this.elevation,
-  })  : _isThemePrimaryColor = false,
-        super(key: key);
-
-  const ScaffoldWithElevation.primaryBackground({
-    Key key,
-    @required this.body,
-    @required this.title,
-    this.automaticallyImplyLeading = false,
-    this.actions,
-    this.appBarLeading,
-    this.wrapWithScrollable = true,
-    this.useElevation = true,
-    this.bottomNavigationBar,
-    this.bottomSheet,
-    this.scrollController,
-    this.floatingActionButton,
-    this.floatingActionButtonAnimator,
-    this.floatingActionButtonLocation,
-    this.elevation,
-  })  : backgroundColor = null,
-        _isThemePrimaryColor = true,
-        super(key: key);
+    this.drawer,
+  }) : super(key: key);
 
   @override
   _ScaffoldWithElevationState createState() => _ScaffoldWithElevationState();
@@ -81,8 +62,18 @@ class _ScaffoldWithElevationState extends State<ScaffoldWithElevation> {
     super.dispose();
   }
 
+  @override
+  void didUpdateWidget(covariant ScaffoldWithElevation oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    if (widget.scrollController != oldWidget.scrollController) {
+      oldWidget.scrollController?.removeListener(scrollListener);
+      scrollController = (widget.scrollController ?? ScrollController())
+        ..addListener(scrollListener);
+    }
+  }
+
   void scrollListener() {
-    var newElevation = scrollController.offset > 16.0 ? 1.0 : 0.0;
+    final newElevation = scrollController.offset > 16.0 ? 1.0 : 0.0;
     if (!widget.useElevation) return;
     if (newElevation != appBarElevation) {
       setState(() {
@@ -93,22 +84,16 @@ class _ScaffoldWithElevationState extends State<ScaffoldWithElevation> {
 
   @override
   Widget build(BuildContext context) {
-    var wrappedChild = !widget.wrapWithScrollable
+    final wrappedChild = !widget.wrapWithScrollable
         ? widget.body
         : SingleChildScrollView(
             controller: scrollController,
             child: widget.body,
           );
+    final theme = Theme.of(context);
     return Scaffold(
-      backgroundColor: widget._isThemePrimaryColor
-          ? Theme.of(context).primaryColor
-          : widget.backgroundColor,
-      appBar: AppBar(
-        textTheme: Theme.of(context).textTheme.apply(
-              bodyColor: Theme.of(context).colorScheme.secondary,
-            ),
-        iconTheme:
-            IconThemeData(color: Theme.of(context).colorScheme.secondary),
+      backgroundColor: widget.backgroundColor ?? theme.scaffoldBackgroundColor,
+      appBar: MainAppBar(
         title: widget.title,
         elevation: appBarElevation,
         automaticallyImplyLeading: widget.automaticallyImplyLeading,
@@ -121,6 +106,7 @@ class _ScaffoldWithElevationState extends State<ScaffoldWithElevation> {
       floatingActionButton: widget.floatingActionButton,
       floatingActionButtonAnimator: widget.floatingActionButtonAnimator,
       floatingActionButtonLocation: widget.floatingActionButtonLocation,
+      drawer: widget.drawer,
     );
   }
 }

@@ -12,12 +12,10 @@ import 'package:flutter/material.dart';
 
 class WelcomeView extends StatelessWidget {
   final bool loading;
-  final PageController pageController;
 
   const WelcomeView({
     Key key,
     @required this.loading,
-    @required this.pageController,
   }) : super(key: key);
 
   @override
@@ -55,7 +53,7 @@ class WelcomeView extends StatelessWidget {
                   children: [
                     Column(
                       children: [
-                        Text("Changelog"),
+                        Text('Changelog'),
                         RaisedButton(
                           color: Theme.of(context).colorScheme.surface,
                           onPressed: _openWhatsNew(context),
