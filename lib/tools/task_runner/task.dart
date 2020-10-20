@@ -41,6 +41,30 @@ class TaskGroup extends Task {
       );
 }
 
+class DeviceTaskGroup extends TaskGroup {
+  DeviceTaskGroup({
+    Device device,
+    List<Task> tasks,
+    bool Function(ArgOptions) condition,
+  }) : super(
+          condition: (o) =>
+              condition?.call(o) != false &&
+              (o.platform == Device.all || o.platform == device),
+          tasks: tasks,
+        );
+
+  DeviceTaskGroup.staticArgs({
+    Device device,
+    List<Task> tasks,
+    bool condition,
+  }) : super(
+          condition: (o) =>
+              condition != false &&
+              (o.platform == Device.all || o.platform == device),
+          tasks: tasks,
+        );
+}
+
 class ProcessTask extends Task {
   ProcessTask({
     FutureOr<String> Function(ArgOptions) process,
@@ -57,15 +81,15 @@ class ProcessTask extends Task {
   factory ProcessTask.staticArgs({
     String process,
     List<String> args,
-    bool Function(ArgOptions) condition,
+    bool condition,
     FutureOr<void> Function(ArgOptions) beforeAll,
     FutureOr<void> Function(ArgOptions) afterAll,
     FutureOr<void> Function(ArgOptions, Error, StackTrace) onError,
   }) =>
       ProcessTask(
-        process: (_) => Future.value(process),
-        args: (_) => Future.value(args),
-        condition: condition,
+        process: (_) => process,
+        args: (_) => args,
+        condition: (_) => condition,
         beforeAll: beforeAll,
         afterAll: afterAll,
       );

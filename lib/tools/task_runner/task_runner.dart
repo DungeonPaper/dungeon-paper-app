@@ -16,7 +16,7 @@ class TaskRunner {
 
   Future<void> _runTasksMain() async {
     for (final task in tasks) {
-      if (task.condition == null || task.condition(options)) {
+      if (task.condition == null || task.condition(options) != false) {
         await task.run(options);
       }
     }
