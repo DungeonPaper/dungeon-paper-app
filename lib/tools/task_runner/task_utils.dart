@@ -5,11 +5,11 @@ String getVersionString() {
   final buildFile = File(
     join(
       dirname(Platform.script.path),
-      join('..', '..', '..', 'android', 'app', 'build.gradle'),
+      join('..', '..', '..', 'pubspec.yaml'),
     ),
   );
   final contents = buildFile.readAsStringSync();
-  final match = RegExp('versionName "(.+)"').firstMatch(contents);
+  final match = RegExp('version: (.+)').firstMatch(contents);
   if (match != null) {
     return match.group(1);
   }
@@ -24,4 +24,9 @@ Map<K, List<V>> groupBy<K, V>(Iterable<V> list, K Function(V) predicate) {
     out[k].add(item);
   }
   return out;
+}
+
+String enumName(Object o) {
+  var text = o.toString();
+  return text.substring(text.indexOf('.') + 1);
 }

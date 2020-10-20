@@ -4,6 +4,7 @@ import 'package:pub_semver/pub_semver.dart';
 import 'task_utils.dart';
 
 enum Device {
+  all,
   android,
   iOS,
   web,
@@ -96,6 +97,17 @@ class ArgOptions {
       abbr: 'd',
       defaultsTo: null,
       callback: (val) => device = val,
+    )
+    ..addOption(
+      'platform',
+      abbr: 'l',
+      defaultsTo: enumName(Device.android),
+      allowed: Device.values.map(enumName),
+      callback: (val) => platform = Device.values.firstWhere(
+        (device) =>
+            enumName(device).toLowerCase() == val.toString().toLowerCase(),
+        orElse: () => Device.android,
+      ),
     )
     ..addFlag(
       'help',

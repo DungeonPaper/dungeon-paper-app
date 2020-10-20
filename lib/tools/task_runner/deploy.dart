@@ -2,6 +2,7 @@ import 'args.dart';
 import 'task.dart';
 import 'task_runner.dart';
 import 'tasks/android_tasks.dart';
+import 'tasks/ios_tasks.dart';
 import 'tasks/test_task.dart';
 
 void main(List<String> args) {
@@ -25,6 +26,7 @@ void main(List<String> args) {
       }),
       testTask,
       android,
+      iOS,
     ],
   ).runAll();
 }

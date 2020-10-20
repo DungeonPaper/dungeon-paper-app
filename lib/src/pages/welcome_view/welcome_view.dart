@@ -1,7 +1,6 @@
 import 'dart:math';
 import 'package:dungeon_paper/src/atoms/version_number.dart';
 import 'package:dungeon_paper/src/dialogs/single_field_edit_dialog.dart';
-import 'package:dungeon_paper/src/flutter_utils/input_validators.dart';
 import 'package:dungeon_paper/src/flutter_utils/loading_container.dart';
 import 'package:dungeon_paper/src/pages/about_view/about_view.dart';
 import 'package:dungeon_paper/src/pages/auth/login_view.dart';

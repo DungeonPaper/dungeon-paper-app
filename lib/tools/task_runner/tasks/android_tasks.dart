@@ -61,8 +61,8 @@ final buildAndroid = TaskGroup(
   ],
 );
 
-final android = TaskGroup(
-  condition: (o) => o.platform == Device.android,
+final android = DeviceTaskGroup(
+  device: Device.android,
   tasks: [
     buildAndroid,
     pushAndroid,

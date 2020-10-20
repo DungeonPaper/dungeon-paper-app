@@ -14,7 +14,6 @@ import 'package:dungeon_paper/src/redux/connectors.dart';
 import 'package:dungeon_paper/src/redux/loading/loading_store.dart';
 import 'package:dungeon_paper/src/redux/shared_preferences/prefs_store.dart';
 import 'package:dungeon_paper/src/redux/stores.dart';
-import 'package:dungeon_paper/src/scaffolds/scaffold_with_elevation.dart';
 import 'package:dungeon_paper/src/utils/analytics.dart';
 import 'package:dungeon_paper/src/utils/logger.dart';
 import 'package:dungeon_paper/src/utils/utils.dart';
@@ -166,8 +165,8 @@ class _MainViewState extends State<MainView> {
         widget.pageController?.page?.toInt?.call() ?? 0,
       );
 
-  ScrollController get _currentScrollController =>
-      widget.pageController.hasClients ? scrollControllers[page] : null;
+  // ScrollController get _currentScrollController =>
+  //     widget.pageController.hasClients ? scrollControllers[page] : null;
 
   Widget get fab => widget.character != null
       ? FAB(pageController: widget.pageController, character: widget.character)

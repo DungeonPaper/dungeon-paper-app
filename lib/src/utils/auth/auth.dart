@@ -10,7 +10,6 @@ import 'package:dungeon_paper/src/utils/logger.dart';
 import 'package:dungeon_paper/src/utils/utils.dart';
 import 'package:firebase_auth/firebase_auth.dart' as fb;
 import 'package:flutter/foundation.dart';
-import 'package:flutter/services.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:pedantic/pedantic.dart';
 import 'auth_common.dart';
@@ -26,7 +25,9 @@ Future<UserLogin> signInWithCredentials(AuthCredential creds) async {
 
   final res = await auth.signInWithCredential(creds);
   return signInWithFbUser(
-      SignInMethod.fromCredential(res.credential), res?.user);
+    SignInMethod.fromProviderId(res.credential.providerId),
+    res?.user,
+  );
 }
 
 Future<bool> withReauth<T>(
@@ -86,7 +87,9 @@ Future<bool> reauthenticateUser(fb.User user) async {
   try {
     AuthCredential origCreds;
     final primary = getPrimaryAuthProvider(user);
-    switch (primary.providerId) {
+    final signInMethod = primary.providerId;
+
+    switch (signInMethod) {
       case 'google.com':
         origCreds = await getGoogleCredential(interactive: true);
         break;
@@ -96,6 +99,7 @@ Future<bool> reauthenticateUser(fb.User user) async {
       default:
         throw Exception('Unimplemented provider method');
     }
+
     await user.reauthenticateWithCredential(origCreds);
     return true;
   } catch (e) {
