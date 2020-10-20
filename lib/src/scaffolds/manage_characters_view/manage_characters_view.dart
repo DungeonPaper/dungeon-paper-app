@@ -35,7 +35,7 @@ class _ManageCharactersViewState extends State<ManageCharactersView> {
 
   @override
   Widget build(BuildContext context) {
-    return ScaffoldWithElevation.primaryBackground(
+    return ScaffoldWithElevation(
       title: Text('Manage Characters'),
       actions: [
         if (user.isTester)

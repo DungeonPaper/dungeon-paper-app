@@ -79,7 +79,7 @@ class _CustomClassWizardState extends State<CustomClassWizard>
   Widget build(BuildContext context) {
     return WillPopScope(
       onWillPop: _confirmExit,
-      child: ScaffoldWithElevation.primaryBackground(
+      child: ScaffoldWithElevation(
         title: Text(def.name.isEmpty
             ? 'Custom Class'
             : '${widget.mode == DialogMode.Create ? 'Creat' : 'Edit'}ing: ${def.name}'),

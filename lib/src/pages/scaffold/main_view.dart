@@ -14,6 +14,7 @@ import 'package:dungeon_paper/src/redux/connectors.dart';
 import 'package:dungeon_paper/src/redux/loading/loading_store.dart';
 import 'package:dungeon_paper/src/redux/shared_preferences/prefs_store.dart';
 import 'package:dungeon_paper/src/redux/stores.dart';
+import 'package:dungeon_paper/src/scaffolds/scaffold_with_elevation.dart';
 import 'package:dungeon_paper/src/utils/analytics.dart';
 import 'package:dungeon_paper/src/utils/logger.dart';
 import 'package:dungeon_paper/src/utils/utils.dart';
@@ -23,8 +24,9 @@ import 'package:package_info/package_info.dart';
 import 'package:pedantic/pedantic.dart';
 import 'package:pub_semver/pub_semver.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'appbar_title.dart';
+import 'app_bar_title.dart';
 import 'fab.dart';
+import 'main_app_bar.dart';
 import 'nav_bar.dart';
 import 'sidebar.dart';
 import 'package:flutter/material.dart';
@@ -75,83 +77,97 @@ class MainView extends StatefulWidget {
   _MainViewState createState() => _MainViewState();
 }
 
+typedef PageBuilder = Widget Function(Character character);
+
 class _MainViewState extends State<MainView> {
-  final Map<Pages, Widget Function(Character character)> pageMap = {
+  final Map<Pages, PageBuilder> pageMap = {
     Pages.Home: (character) => ProfileView(character: character),
     Pages.Battle: (character) => BattleView(character: character),
     Pages.Inventory: (character) => InventoryView(character: character),
     Pages.Notes: (character) => NotesView(character: character),
-    Pages.Reference: (character) => ReferenceView(),
+    Pages.Reference: (_) => ReferenceView(),
   };
   final FirebaseAnalytics analytics = FirebaseAnalytics();
 
+  Map<Pages, ScrollController> scrollControllers;
   String lastPageName = 'Home';
   double elevation = 0;
 
   @override
   void initState() {
     widget.pageController.addListener(_pageListener);
+    scrollControllers = {};
+    Pages.values.forEach((page) {
+      scrollControllers[page] =
+          ScrollController(initialScrollOffset: 0, keepScrollOffset: true);
+    });
     _showWhatsNew();
     super.initState();
   }
 
-  String get pageName => enumName(
-        Pages.values.elementAt(
-          widget.pageController?.page?.toInt?.call() ?? 0,
-        ),
-      );
+  @override
+  void dispose() {
+    widget.pageController.removeListener(_pageListener);
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
-    Widget homeWidget = PageView(
-      controller: widget.pageController,
-      children: widget.character != null
-          ? pages
-          : [
-              WelcomeView(
-                loading: widget.loading,
-                pageController: widget.pageController,
-              )
-            ],
-    );
     return Scaffold(
-      appBar: AppBar(
-        textTheme: Theme.of(context).textTheme.apply(
-              bodyColor: Theme.of(context).colorScheme.secondary,
-            ),
-        iconTheme:
-            IconThemeData(color: Theme.of(context).colorScheme.secondary),
-        title: widget.character == null
-            ? null
-            : AppBarTitle(pageController: widget.pageController),
-        elevation: elevation,
-        actions: widget.character != null
-            ? [
-                IconButton(
-                  tooltip: 'Roll Dice',
-                  icon: DiceIcon(
-                    dice: Dice.d20,
-                    size: 24,
-                    color: Theme.of(context).colorScheme.secondary,
-                  ),
-                  onPressed: () {
-                    showDiceRollDialog(
-                      context: context,
-                      character: widget.character,
-                      analyticsSource: pageName,
-                    );
-                  },
-                )
-              ]
-            : null,
+      appBar: MainAppBar(
+        title: appBarTitle,
+        // wrapWithScrollable: false,
+        // scrollController: _currentScrollController,
+        actions: actions(context),
+        elevation: 0,
       ),
       drawer: drawer,
       floatingActionButton: fab,
       floatingActionButtonLocation: fabLocation,
       bottomNavigationBar: navBar,
-      body: homeWidget,
+      body: pageView,
     );
   }
+
+  List<Widget> actions(BuildContext context) => widget.character != null
+      ? [
+          IconButton(
+            tooltip: 'Roll Dice',
+            icon: DiceIcon(
+              dice: Dice.d20,
+              size: 24,
+              color: Theme.of(context).colorScheme.secondary,
+            ),
+            onPressed: () {
+              showDiceRollDialog(
+                context: context,
+                character: widget.character,
+                analyticsSource: pageName,
+              );
+            },
+          )
+        ]
+      : null;
+
+  Widget get appBarTitle => widget.character == null
+      ? null
+      : AppBarTitle(pageController: widget.pageController);
+
+  Widget get pageView => PageView(
+        controller: widget.pageController,
+        children: widget.character != null
+            ? pages
+            : [WelcomeView(loading: widget.loading)],
+      );
+
+  String get pageName => enumName(page);
+
+  Pages get page => Pages.values.elementAt(
+        widget.pageController?.page?.toInt?.call() ?? 0,
+      );
+
+  ScrollController get _currentScrollController =>
+      widget.pageController.hasClients ? scrollControllers[page] : null;
 
   Widget get fab => widget.character != null
       ? FAB(pageController: widget.pageController, character: widget.character)
@@ -164,9 +180,19 @@ class _MainViewState extends State<MainView> {
       widget.user != null && widget.character != null ? Sidebar() : null;
 
   List<Widget> get pages => Pages.values.map((page) {
-        var builder = pageMap[page];
+        final builder = pageMap[page];
         if (builder != null) {
-          return builder(widget.character);
+          final child = builder(widget.character);
+          return child;
+          // return Container(
+          //   color: Colors.blue[100],
+          //   child: SingleChildScrollView(
+          //     controller: widget.pageController.hasClients
+          //         ? scrollControllers[page]
+          //         : null,
+          //     child: Container(color: Colors.red[100], child: child),
+          //   ),
+          // );
         }
         return Center(child: Container());
       }).toList();
@@ -216,11 +242,5 @@ class _MainViewState extends State<MainView> {
         }
       }
     }
-  }
-
-  @override
-  void dispose() {
-    widget.pageController.removeListener(_pageListener);
-    super.dispose();
   }
 }

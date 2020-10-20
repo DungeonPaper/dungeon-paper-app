@@ -115,7 +115,7 @@ class _SidebarState extends State<Sidebar> {
               ),
               ...characterList(state.characters.characters, context),
               Divider(),
-              title('Compendium', context),
+              title('Custom Content', context),
               ListTile(
                 leading: Padding(
                   padding: const EdgeInsets.only(top: 4, left: 4),

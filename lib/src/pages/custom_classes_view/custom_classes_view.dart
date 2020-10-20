@@ -27,7 +27,7 @@ class _CustomClassesViewState extends State<CustomClassesView> {
 
   @override
   Widget build(BuildContext context) {
-    return ScaffoldWithElevation.primaryBackground(
+    return ScaffoldWithElevation(
       title: Text('Custom Classes'),
       automaticallyImplyLeading: true,
       useElevation: false,

@@ -10,29 +10,27 @@ class Compendium extends StatelessWidget {
   Widget build(BuildContext context) {
     return StoreProvider<DWStore>(
       store: dwStore,
-      child: ScaffoldWithElevation.primaryBackground(
+      child: ScaffoldWithElevation(
         title: Text('Compendium'),
         automaticallyImplyLeading: true,
-        body: SingleChildScrollView(
-          child: Padding(
-            padding: const EdgeInsets.all(8),
-            child: Column(
-              children: [
-                CardListItem(
-                  title: Text('Custom Classes'),
-                  leading: Icon(Icons.person),
-                  onTap: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute<bool>(
-                        fullscreenDialog: true,
-                        builder: (context) => CustomClassesView(),
-                      ),
-                    );
-                  },
-                )
-              ],
-            ),
+        body: Padding(
+          padding: const EdgeInsets.all(8),
+          child: Column(
+            children: [
+              CardListItem(
+                title: Text('Custom Classes'),
+                leading: Icon(Icons.person),
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute<bool>(
+                      fullscreenDialog: true,
+                      builder: (context) => CustomClassesView(),
+                    ),
+                  );
+                },
+              )
+            ],
           ),
         ),
       ),
