@@ -17,6 +17,8 @@ class CategorizedList<T> extends StatelessWidget {
   final bool staggered;
   final num spacerCount;
   final EdgeInsets itemMargin;
+  final ScrollController scrollController;
+
   bool get _isChildrenBuilder => itemBuilder == null || itemCount == null;
 
   TextStyle titleStyle(BuildContext context) => Theme.of(context)
@@ -31,6 +33,7 @@ class CategorizedList<T> extends StatelessWidget {
     this.spacerCount = 0,
     this.staggered = true,
     this.itemMargin = const EdgeInsets.all(16),
+    this.scrollController,
   })  : items = children,
         itemBuilder = null,
         itemCount = null,
@@ -45,6 +48,7 @@ class CategorizedList<T> extends StatelessWidget {
     this.staggered = true,
     this.spacerCount = 0,
     this.itemMargin = const EdgeInsets.all(16),
+    this.scrollController,
   }) : super(key: key);
 
   CategorizedList.childrenBuilder({
@@ -54,6 +58,7 @@ class CategorizedList<T> extends StatelessWidget {
     this.spacerCount = 0,
     this.staggered = true,
     this.itemMargin = const EdgeInsets.all(16),
+    this.scrollController,
   })  : items = children,
         itemBuilder = null,
         itemCount = null,
@@ -68,6 +73,7 @@ class CategorizedList<T> extends StatelessWidget {
         return LayoutBuilder(
           builder: (context, constraints) => StaggeredGridView.countBuilder(
             crossAxisCount: constraints.maxWidth < 450 ? 1 : 2,
+            controller: scrollController,
             itemCount: cats.length + spacerCount,
             itemBuilder: (context, index) {
               if (index < cats.length) {
@@ -116,16 +122,14 @@ class CategorizedList<T> extends StatelessWidget {
               ? item.value
               : itemBuilder(context, item.value, j, item.index));
 
-      return Container(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.start,
-          mainAxisSize: MainAxisSize.min,
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: [
-            if (title != null) title,
-            ...outputItems,
-          ],
-        ),
+      return Column(
+        mainAxisAlignment: MainAxisAlignment.start,
+        mainAxisSize: MainAxisSize.min,
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          if (title != null) title,
+          ...outputItems,
+        ],
       );
     }).toList();
   }

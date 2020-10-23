@@ -93,7 +93,7 @@ class _EditableStringListState extends State<EditableStringList> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.end,
       children: <Widget>[
-        for (Enumeration<String> str in enumerate(strings))
+        for (Enumeration<String> str in enumerate(strings)) ...[
           Row(
             mainAxisSize: MainAxisSize.max,
             children: <Widget>[
@@ -119,6 +119,8 @@ class _EditableStringListState extends State<EditableStringList> {
               )
             ],
           ),
+          SizedBox(height: 8),
+        ],
         RaisedButton(
           color: Theme.of(context).primaryColor,
           child: Text(widget.addButtonText),

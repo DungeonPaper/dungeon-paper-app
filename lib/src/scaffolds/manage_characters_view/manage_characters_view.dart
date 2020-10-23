@@ -1,5 +1,4 @@
 import 'dart:math';
-
 import 'package:dungeon_paper/db/models/character.dart';
 import 'package:dungeon_paper/db/models/user.dart';
 import 'package:dungeon_paper/src/atoms/card_list_item.dart';
@@ -47,8 +46,8 @@ class _ManageCharactersViewState extends State<ManageCharactersView> {
       ],
       floatingActionButton: FloatingActionButton(
         child: Icon(Icons.add),
-        backgroundColor: Theme.of(context).canvasColor,
-        // foregroundColor: Theme.of(context).canvasColor,
+        backgroundColor: Theme.of(context).colorScheme.background,
+        foregroundColor: Theme.of(context).colorScheme.onBackground,
         onPressed: _openCreatePage,
       ),
       automaticallyImplyLeading: true,

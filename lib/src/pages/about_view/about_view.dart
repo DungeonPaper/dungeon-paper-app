@@ -6,6 +6,7 @@ import 'package:dungeon_paper/src/atoms/paypal_donate_button.dart';
 import 'package:dungeon_paper/src/atoms/version_number.dart';
 import 'package:dungeon_paper/src/flutter_utils/platform_svg.dart';
 import 'package:dungeon_paper/src/pages/whats_new_view/whats_new_view.dart';
+import 'package:dungeon_paper/src/scaffolds/scaffold_with_elevation.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/gestures.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -29,24 +30,32 @@ class AboutView extends StatefulWidget {
 class _AboutViewState extends State<AboutView> {
   final num year = DateTime.now().year;
   final utm = 'utm_medium=app&utm_source=about';
+  ScrollController scrollController;
+
+  @override
+  void initState() {
+    scrollController = ScrollController();
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text('About Dungeon Paper'),
-        actions: <Widget>[
-          IconButton(
-            icon: Icon(Icons.history),
-            tooltip: 'Changelog',
-            onPressed: () => showDialog(
-              context: context,
-              builder: (context) => WhatsNew.dialog(),
-            ),
-          )
-        ],
-      ),
+    return ScaffoldWithElevation(
+      title: Text('About Dungeon Paper'),
+      actions: <Widget>[
+        IconButton(
+          icon: Icon(Icons.history),
+          tooltip: 'Changelog',
+          onPressed: () => showDialog(
+            context: context,
+            builder: (context) => WhatsNew.dialog(),
+          ),
+        )
+      ],
+      wrapWithScrollable: false,
+      scrollController: scrollController,
       body: CategorizedList.childrenBuilder(
+        scrollController: scrollController,
         children: <Widget>[
           Padding(
             padding: const EdgeInsets.only(top: 16.0),
@@ -181,6 +190,7 @@ class _AboutViewState extends State<AboutView> {
                                 icon: Icon(Icons.public),
                                 color: Color(0xFFAA0000),
                                 textColor: Colors.white,
+                                textScaleFactor: 0.9,
                               ),
                               Container(),
                               SocialButton(
@@ -244,6 +254,7 @@ class SocialButton extends StatelessWidget {
   final Color color;
   final Color textColor;
   final String url;
+  final double textScaleFactor;
 
   const SocialButton({
     Key key,
@@ -253,6 +264,7 @@ class SocialButton extends StatelessWidget {
     @required this.color,
     this.textColor,
     @required this.url,
+    this.textScaleFactor = 0,
   })  : assert(icon != null || assetName != null),
         super(key: key);
 
@@ -278,7 +290,7 @@ class SocialButton extends StatelessWidget {
         child: Center(
           child: Text(
             label,
-            textScaleFactor: 1.25,
+            textScaleFactor: 1.25 * textScaleFactor,
           ),
         ),
       ),
