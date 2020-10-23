@@ -26,11 +26,13 @@ class RollDiceDialog extends StatefulWidget {
   _RollDiceDialogState createState() => _RollDiceDialogState();
 }
 
-class _RollDiceDialogState extends State<RollDiceDialog> {
+class _RollDiceDialogState extends State<RollDiceDialog>
+    with SingleTickerProviderStateMixin {
   String sessionKey;
   List<List<Dice>> diceList;
   DiceListController addingDiceCtrl;
   List<DiceListController> controllers;
+  // Animation<double> animation;
 
   @override
   void initState() {
@@ -40,6 +42,8 @@ class _RollDiceDialogState extends State<RollDiceDialog> {
         widget.initialAddingDice?.isNotEmpty == true
             ? [...widget.initialAddingDice]
             : [Dice.d6 * 2]);
+    // animation = AnimationController(
+    //     vsync: this, value: 1, lowerBound: 1, upperBound: 1.5);
     sessionKey = generateSessionKey();
 
     if (widget.initialDiceList?.isNotEmpty == true) {
@@ -74,12 +78,22 @@ class _RollDiceDialogState extends State<RollDiceDialog> {
               RollDialogTitle(),
               ValueListenableBuilder(
                 valueListenable: addingDiceCtrl,
-                builder: (context, dice, child) => DiceRollBuilder(
+                builder: (context, dice, child) =>
+                    // AnimatedBuilder(
+                    //     animation: animation,
+                    //     builder: (context, snapshot) {
+                    //       return
+                    //       Transform.scale(
+                    //         scale: animation.value,
+                    //         child:
+                    DiceRollBuilder(
                   key: Key(sessionKey),
                   character: widget.character,
                   initialValue: dice,
                   onChanged: _add,
                 ),
+                //   );
+                // }),
               ),
               Expanded(
                 child: buildDiceList(),
@@ -100,6 +114,7 @@ class _RollDiceDialogState extends State<RollDiceDialog> {
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 16),
               child: DiceRollBox(
+                key: Key('dice-${list.value.hash}'),
                 controller: reversedControllers.elementAt(list.index),
                 onRemove: () => _removeAt(list.index),
                 onEdit: () => _editAt(list.index),
@@ -163,6 +178,8 @@ class _RollDiceDialogState extends State<RollDiceDialog> {
     );
     setState(() {
       addingDiceCtrl.value = List.from(diceList[idx]);
+      // diceList.removeAt(idx);
+      // controllers.removeAt(idx);
       logger.d('diceList: ${addingDiceCtrl.value}');
       sessionKey = generateSessionKey();
     });

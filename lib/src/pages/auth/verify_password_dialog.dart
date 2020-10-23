@@ -6,11 +6,15 @@ import 'package:get/get.dart';
 class VerifyPasswordDialog extends StatefulWidget {
   final void Function(String password) onConfirm;
   final Widget confirmText;
+  final Widget title;
+  final List<Widget> children;
 
   const VerifyPasswordDialog({
     Key key,
-    this.onConfirm,
+    this.title,
     this.confirmText,
+    this.onConfirm,
+    this.children,
   }) : super(key: key);
 
   @override
@@ -31,10 +35,19 @@ class _VerifyPasswordDialogState extends State<VerifyPasswordDialog> {
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
+      title: widget.title ?? Text('Verify Password'),
       content: SingleChildScrollView(
-        child: PasswordField(
-          validNotifier: isValid,
-          controller: controller,
+        child: AutofillGroup(
+          child: Column(
+            children: [
+              ...(widget.children ?? []),
+              if (widget.children?.isNotEmpty == true) SizedBox(height: 16),
+              PasswordField(
+                validNotifier: isValid,
+                controller: controller,
+              ),
+            ],
+          ),
         ),
       ),
       actions: StandardDialogControls.actions(

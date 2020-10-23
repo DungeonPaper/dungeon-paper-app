@@ -55,7 +55,10 @@ class CustomInventoryItemFormState extends State<CustomInventoryItemForm> {
             children: [
               Expanded(
                 child: TextField(
-                  decoration: InputDecoration(labelText: 'Item Name'),
+                  decoration: InputDecoration(
+                    labelText: 'Item Name',
+                    floatingLabelBehavior: FloatingLabelBehavior.always,
+                  ),
                   autocorrect: true,
                   textCapitalization: TextCapitalization.words,
                   controller: _controllers['name'],
@@ -65,7 +68,10 @@ class CustomInventoryItemFormState extends State<CustomInventoryItemForm> {
               Container(
                 width: 100,
                 child: TextField(
-                  decoration: InputDecoration(labelText: 'Item Amount'),
+                  decoration: InputDecoration(
+                    labelText: 'Item Amount',
+                    floatingLabelBehavior: FloatingLabelBehavior.always,
+                  ),
                   keyboardType: TextInputType.number,
                   controller: _controllers['amount'],
                 ),
@@ -76,12 +82,16 @@ class CustomInventoryItemFormState extends State<CustomInventoryItemForm> {
             margin: const EdgeInsets.symmetric(vertical: 8.0),
             child: TextField(
               decoration: InputDecoration(
-                  labelText: 'Description (Markdown supported)'),
+                labelText: 'Description',
+                floatingLabelBehavior: FloatingLabelBehavior.always,
+              ),
               autofocus: widget.mode == DialogMode.Edit,
               maxLines: null,
+              minLines: 6,
               keyboardType: TextInputType.multiline,
               autocorrect: true,
               textCapitalization: TextCapitalization.sentences,
+
               controller: _controllers['description'],
               // style: TextStyle(fontSize: 13.0),
               // textAlign: TextAlign.center,

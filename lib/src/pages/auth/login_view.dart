@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:dungeon_paper/src/flutter_utils/platform_svg.dart';
+import 'package:dungeon_paper/src/flutter_utils/widget_utils.dart';
 import 'package:dungeon_paper/src/pages/auth/email_auth_view.dart';
 import 'package:dungeon_paper/src/redux/stores.dart';
 import 'package:dungeon_paper/src/redux/users/user_store.dart';
@@ -95,7 +96,7 @@ class LoginView extends StatelessWidget {
       Get.snackbar(
         'Error',
         'Login failed.',
-        duration: Duration(seconds: 6),
+        duration: SnackBarDuration.long,
       );
     } catch (err, stack) {
       logger.e('Irregular sign in error:', err, stack);

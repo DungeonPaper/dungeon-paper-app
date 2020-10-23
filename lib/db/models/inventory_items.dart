@@ -61,23 +61,33 @@ class InventoryItem extends Equipment {
 ReturnPredicate<InventoryItem> invItemMatcher = matcher(
     (InventoryItem i, InventoryItem o) => i.key != null && i.key == o.key);
 
-Future updateInventoryItem(Character character, InventoryItem item) async {
-  await character.update(json: {
+Future<void> updateInventoryItem(
+    Character character, InventoryItem item) async {
+  return character.update(json: {
     'inventory': findAndReplaceInList(character.inventory, item),
   });
 }
 
-Future deleteInventoryItem(Character character, InventoryItem item) async {
+Future<void> deleteInventoryItem(
+    Character character, InventoryItem item) async {
   return character
       .update(json: {'inventory': removeFromList(character.inventory, item)});
 }
 
-Future createInventoryItem(Character character, InventoryItem item) async {
+Future<void> createInventoryItem(
+    Character character, InventoryItem item) async {
+  final found = character.inventory
+      .firstWhere((it) => it.name == item.name, orElse: () => null);
+  if (found != null) {
+    return character.update(json: {
+      'inventory': findAndReplaceInList(character.inventory, found..amount += 1)
+    });
+  }
   return character
       .update(json: {'inventory': addToList(character.inventory, item)});
 }
 
-Future incrItemAmount(
+Future<void> incrItemAmount(
     Character character, InventoryItem item, num amount) async {
   return await character.update(json: {
     'inventory': findAndReplaceInList(

@@ -20,41 +20,53 @@ class SearchBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Row(
-      children: <Widget>[
-        Expanded(
-          child: TextField(
-            controller: _controller,
-            autocorrect: false,
-            keyboardType: TextInputType.text,
-            textInputAction: TextInputAction.search,
-            onEditingComplete: onEditingComplete,
-            onSubmitted: onSubmitted,
-            onChanged: onChanged,
-            decoration: InputDecoration(
-              hintText: 'Type an item name',
-              border: InputBorder.none,
-              enabledBorder: InputBorder.none,
-              focusedBorder: InputBorder.none,
-              disabledBorder: InputBorder.none,
-              errorBorder: InputBorder.none,
-              filled: false,
-            ),
+    return Padding(
+      padding: const EdgeInsets.all(8),
+      child: Material(
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(24)),
+        color: Theme.of(context).canvasColor,
+        elevation: 5,
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+          child: Row(
+            children: <Widget>[
+              Expanded(
+                child: TextField(
+                  controller: _controller,
+                  autocorrect: false,
+                  keyboardType: TextInputType.text,
+                  textInputAction: TextInputAction.search,
+                  onEditingComplete: onEditingComplete,
+                  onSubmitted: onSubmitted,
+                  onChanged: onChanged,
+                  decoration: InputDecoration(
+                    hintText: 'Type an item name',
+                    border: InputBorder.none,
+                    enabledBorder: InputBorder.none,
+                    focusedBorder: InputBorder.none,
+                    disabledBorder: InputBorder.none,
+                    errorBorder: InputBorder.none,
+                    filled: false,
+                  ),
+                ),
+              ),
+              IconButton(
+                icon: controller.text.isEmpty
+                    ? Icon(Icons.search)
+                    : Icon(Icons.clear),
+                onPressed: () {
+                  controller.text = '';
+                  if (onChanged != null) {
+                    onChanged('');
+                  } else if (onSubmitted != null) {
+                    onSubmitted('');
+                  }
+                },
+              ),
+            ],
           ),
         ),
-        IconButton(
-          icon:
-              controller.text.isEmpty ? Icon(Icons.search) : Icon(Icons.clear),
-          onPressed: () {
-            controller.text = '';
-            if (onChanged != null) {
-              onChanged('');
-            } else if (onSubmitted != null) {
-              onSubmitted('');
-            }
-          },
-        ),
-      ],
+      ),
     );
   }
 }
