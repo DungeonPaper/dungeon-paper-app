@@ -8,6 +8,7 @@ import 'package:dungeon_paper/src/utils/auth/auth.dart';
 import 'package:dungeon_paper/src/utils/share.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart' as fb;
+import 'package:get/get.dart';
 
 class AccountView extends StatefulWidget {
   static final _providersData = [
@@ -78,9 +79,9 @@ class _AccountViewState extends State<AccountView> {
                           onSave: (displayName) async {
                             user.displayName = displayName;
                             await user.update();
-                            Navigator.pop(context);
+                            Get.back();
                           },
-                          onCancel: () => Navigator.pop(context),
+                          onCancel: () => Get.back(),
                         ),
                       ),
                     ),
@@ -97,9 +98,9 @@ class _AccountViewState extends State<AccountView> {
                             title: Text('Edit Email'),
                             onSave: (email) async {
                               await user.changeEmail(email);
-                              Navigator.pop(context);
+                              Get.back();
                             },
-                            onCancel: () => Navigator.pop(context),
+                            onCancel: () => Get.back(),
                           ),
                         ),
                       ),

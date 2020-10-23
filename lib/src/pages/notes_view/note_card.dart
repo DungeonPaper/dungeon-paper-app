@@ -6,6 +6,7 @@ import 'package:dungeon_paper/src/scaffolds/edit_note_scaffold.dart';
 import 'package:dungeon_paper/src/utils/analytics.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_markdown/flutter_markdown.dart';
+import 'package:get/get.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class NoteCard extends StatefulWidget {
@@ -59,20 +60,16 @@ class NoteCardState extends State<NoteCard> {
   }
 
   void editNote(BuildContext context) {
-    Navigator.push(
-      context,
-      MaterialPageRoute(
-        fullscreenDialog: true,
-        builder: (ctx) => EditNoteScreen(
-          note: widget.note,
-          mode: DialogMode.Edit,
-          categories: widget.categories,
-          onSave: (note) {
-            if (widget.onSave != null) {
-              widget.onSave(note);
-            }
-          },
-        ),
+    Get.to(
+      EditNoteScreen(
+        note: widget.note,
+        mode: DialogMode.Edit,
+        categories: widget.categories,
+        onSave: (note) {
+          if (widget.onSave != null) {
+            widget.onSave(note);
+          }
+        },
       ),
     );
   }
@@ -96,8 +93,9 @@ class NoteCardState extends State<NoteCard> {
     if (await canLaunch(url)) {
       await launch(url);
     } else {
-      SnackBar(
-        content: const Text("Hmm... Couldn't launch URL. Is it well-formed?"),
+      Get.snackbar(
+        'Hmm...',
+        "Couldn't launch URL. Is it well-formed?",
         duration: Duration(seconds: 4),
       );
     }

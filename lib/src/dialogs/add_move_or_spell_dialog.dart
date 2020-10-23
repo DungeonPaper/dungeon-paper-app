@@ -9,6 +9,7 @@ import 'package:dungeon_paper/src/utils/logger.dart';
 import 'package:dungeon_world_data/move.dart';
 import 'package:dungeon_world_data/player_class.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:uuid/uuid.dart';
 
 class AddMoveOrSpell extends StatelessWidget {
@@ -54,27 +55,23 @@ class AddMoveOrSpell extends StatelessWidget {
                         ),
                   ),
                   onPressed: () {
-                    Navigator.pop(context);
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        fullscreenDialog: true,
-                        builder: (ctx) => AddMoveScreen(
-                          move: Move(
-                            key: Uuid().v4(),
-                            name: '',
-                            description: '',
-                            classes: [],
-                            explanation: '',
-                          ),
-                          mode: DialogMode.Create,
-                          onSave: (move) {
-                            logger.d('add_move_or_spell.dart onCreateMove');
-                            createMove(character, move);
-                            Navigator.pop(ctx);
-                          },
-                          defaultClass: defaultClass,
+                    Get.back();
+                    Get.to(
+                      AddMoveScreen(
+                        move: Move(
+                          key: Uuid().v4(),
+                          name: '',
+                          description: '',
+                          classes: [],
+                          explanation: '',
                         ),
+                        mode: DialogMode.Create,
+                        onSave: (move) {
+                          logger.d('add_move_or_spell.dart onCreateMove');
+                          createMove(character, move);
+                          Get.back();
+                        },
+                        defaultClass: defaultClass,
                       ),
                     );
                   },
@@ -111,25 +108,21 @@ class AddMoveOrSpell extends StatelessWidget {
                         ),
                   ),
                   onPressed: () {
-                    Navigator.pop(context);
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        fullscreenDialog: true,
-                        builder: (ctx) => AddSpellScaffold(
-                          spell: DbSpell(
-                            key: Uuid().v4(),
-                            name: '',
-                            description: '',
-                            tags: [],
-                          ),
-                          mode: DialogMode.Create,
-                          onSave: (spell) {
-                            createSpell(character, spell);
-                            Navigator.pop(ctx);
-                          },
-                          index: -1,
+                    Get.back();
+                    Get.to(
+                      AddSpellScaffold(
+                        spell: DbSpell(
+                          key: Uuid().v4(),
+                          name: '',
+                          description: '',
+                          tags: [],
                         ),
+                        mode: DialogMode.Create,
+                        onSave: (spell) {
+                          createSpell(character, spell);
+                          Get.back();
+                        },
+                        index: -1,
                       ),
                     );
                   },

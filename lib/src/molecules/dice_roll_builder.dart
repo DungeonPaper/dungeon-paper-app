@@ -41,9 +41,6 @@ class _DiceRollBuilderState extends State<DiceRollBuilder> {
       margin: EdgeInsets.symmetric(horizontal: 8, vertical: 0),
       color: Theme.of(context).canvasColor,
       elevation: 3,
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.all(Radius.circular(10)),
-      ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
@@ -54,10 +51,15 @@ class _DiceRollBuilderState extends State<DiceRollBuilder> {
               style: Theme.of(context).textTheme.caption,
             ),
           ),
-          DiceIconList(
-            key: Key(addingController.value.join(',')),
-            controller: addingController,
-            animations: null,
+          ConstrainedBox(
+            constraints: BoxConstraints(minHeight: 50, maxHeight: 200),
+            child: SingleChildScrollView(
+              child: DiceIconList(
+                key: Key(addingController.value.join(',')),
+                controller: addingController,
+                animations: null,
+              ),
+            ),
           ),
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 16),
@@ -69,7 +71,6 @@ class _DiceRollBuilderState extends State<DiceRollBuilder> {
                   Row(
                     children: [
                       DiceSelector(
-                        key: Key('d-${d.index}-${d.value}'),
                         dice: d.value,
                         textStyle: TextStyle(fontSize: 20),
                         onChanged: (val) {

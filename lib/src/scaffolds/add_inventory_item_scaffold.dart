@@ -4,6 +4,7 @@ import 'package:dungeon_paper/src/lists/existing_inventory_items_list.dart';
 import 'package:dungeon_paper/src/scaffolds/custom_inventory_item_form.dart';
 import 'package:dungeon_paper/src/scaffolds/scaffold_with_elevation.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 class AddInventoryItemScaffold extends StatefulWidget {
   const AddInventoryItemScaffold({
@@ -50,7 +51,7 @@ class AddInventoryItemScaffoldState extends State<AddInventoryItemScaffold>
         if (widget.onSave != null) {
           widget.onSave(item);
         }
-        Navigator.pop(context);
+        Get.back();
       },
       builder: (ctx, form, onSave) {
         var actions = <Widget>[

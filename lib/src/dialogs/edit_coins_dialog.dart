@@ -5,6 +5,7 @@ import 'package:dungeon_paper/src/redux/stores.dart';
 import 'package:dungeon_paper/src/utils/utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:get/get.dart';
 import 'package:pedantic/pedantic.dart';
 
 class EditCoinsDialog extends StatefulWidget {
@@ -71,7 +72,7 @@ class EditCoinsDialogState extends State<EditCoinsDialog> {
         context: context,
         onConfirm: () => _saveValue(),
         confirmDisabled: valueError,
-        onCancel: () => Navigator.pop(context),
+        onCancel: () => Get.back(),
       ),
     );
   }
@@ -100,6 +101,6 @@ class EditCoinsDialogState extends State<EditCoinsDialog> {
     var character = dwStore.state.characters.current;
     character.coins = value;
     unawaited(character.update(json: {'coins': value}));
-    Navigator.pop(context);
+    Get.back();
   }
 }

@@ -2,6 +2,7 @@ import 'package:dungeon_paper/db/models/character.dart';
 import 'package:dungeon_paper/src/atoms/dice_selector.dart';
 import 'package:dungeon_paper/src/dialogs/standard_dialog_controls.dart';
 import 'package:dungeon_paper/src/utils/types.dart';
+import 'package:get/get.dart';
 import 'package:pedantic/pedantic.dart';
 import 'package:dungeon_world_data/dice.dart';
 import 'package:flutter/material.dart';
@@ -54,7 +55,7 @@ class EditDamageDiceDialogState extends State<EditDamageDiceDialog> {
       actions: StandardDialogControls.actions(
         context: context,
         onConfirm: _saveValue,
-        onCancel: () => Navigator.pop(context),
+        onCancel: () => Get.back(),
       ),
     );
   }
@@ -64,6 +65,6 @@ class EditDamageDiceDialogState extends State<EditDamageDiceDialog> {
   void _saveValue() async {
     character.damageDice = dice;
     unawaited(character.update());
-    Navigator.pop(context);
+    Get.back();
   }
 }

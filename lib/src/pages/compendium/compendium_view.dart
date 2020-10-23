@@ -4,6 +4,7 @@ import 'package:dungeon_paper/src/redux/stores.dart';
 import 'package:dungeon_paper/src/scaffolds/scaffold_with_elevation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
+import 'package:get/get.dart';
 
 class Compendium extends StatelessWidget {
   @override
@@ -21,13 +22,7 @@ class Compendium extends StatelessWidget {
                 title: Text('Custom Classes'),
                 leading: Icon(Icons.person),
                 onTap: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute<bool>(
-                      fullscreenDialog: true,
-                      builder: (context) => CustomClassesView(),
-                    ),
-                  );
+                  Get.to(CustomClassesView());
                 },
               )
             ],

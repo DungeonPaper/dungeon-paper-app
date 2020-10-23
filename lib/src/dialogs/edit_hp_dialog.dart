@@ -3,6 +3,7 @@ import 'package:dungeon_paper/src/molecules/current_stat_indicator.dart';
 import 'package:dungeon_paper/src/molecules/status_bars.dart';
 import 'package:dungeon_paper/src/utils/analytics.dart';
 import 'package:dungeon_paper/src/utils/utils.dart';
+import 'package:get/get.dart';
 import 'package:wheel_spinner/wheel_spinner.dart';
 import 'package:flutter/material.dart';
 
@@ -188,7 +189,7 @@ class _EditHPDialogState extends State<EditHPDialog> {
       ..maxHP = maxHP
       ..useDefaultMaxHP = useDefaultMaxHP
       ..update();
-    Navigator.pop(context);
+    Get.back();
   }
 
   void changeMode(HPMode mode) {

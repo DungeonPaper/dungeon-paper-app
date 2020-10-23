@@ -17,6 +17,7 @@ import 'package:dungeon_paper/src/utils/analytics.dart';
 import 'package:dungeon_paper/src/utils/auth/auth.dart';
 import 'package:dungeon_paper/src/utils/logger.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 class Sidebar extends StatefulWidget {
   @override
@@ -64,7 +65,7 @@ class _SidebarState extends State<Sidebar> {
                 //     builder: (context) => EmailAuthView(
                 //       signUpMode: true,
                 //       linkMode: true,
-                //       onLoggedIn: (_) => Navigator.pop(context),
+                //       onLoggedIn: (_) => Get.back(),
                 //     ),
                 //   ),
                 // ),
@@ -72,20 +73,14 @@ class _SidebarState extends State<Sidebar> {
                 ListTile(
                   leading: Icon(Icons.person),
                   title: Text('Account'),
-                  onTap: () => Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      fullscreenDialog: true,
-                      builder: (context) => AccountView(),
-                    ),
-                  ),
+                  onTap: () => Get.to(AccountView()),
                 ),
                 // Log out
                 ListTile(
                   leading: Icon(Icons.exit_to_app),
                   title: Text('Log out'),
                   onTap: () {
-                    Navigator.pop(context);
+                    Get.back();
                     signOutAll();
                   },
                 ),
@@ -162,27 +157,18 @@ class _SidebarState extends State<Sidebar> {
 
   void openPage(
     String pageName,
-    BuildContext context, {
-    Widget Function(BuildContext) builder,
-    bool fullScreenDialog = true,
-  }) {
+    Widget page,
+  ) {
     logger.d('Page View: $pageName');
     analytics.setCurrentScreen(screenName: pageName);
-    Navigator.push(
-      context,
-      MaterialPageRoute<bool>(
-        fullscreenDialog: fullScreenDialog,
-        builder: builder,
-      ),
-    );
+    Get.to(page);
   }
 
   void createNewCharacterScreen(BuildContext context) {
-    Navigator.pop(context);
+    Get.back();
     openPage(
       ScreenNames.CharacterScreen,
-      context,
-      builder: (context) => EditCharacterView(
+      EditCharacterView(
         character: null,
         mode: DialogMode.Create,
         onSave: (char) => dwStore.dispatch(SetCurrentChar(char)),
@@ -191,16 +177,12 @@ class _SidebarState extends State<Sidebar> {
   }
 
   void manageCharactersScreen(BuildContext context) {
-    Navigator.pop(context);
-    openPage(
-      ScreenNames.ManageCharacters,
-      context,
-      builder: (context) => ManageCharactersView(),
-    );
+    Get.back();
+    openPage(ScreenNames.ManageCharacters, ManageCharactersView());
   }
 
   // void compendiumScreen(BuildContext context) {
-  //   Navigator.pop(context);
+  //   Get.back();
   //   openPage(
   //     ScreenNames.Compendium,
   //     context,
@@ -209,21 +191,13 @@ class _SidebarState extends State<Sidebar> {
   // }
 
   void customClassesScreen(BuildContext context) {
-    Navigator.pop(context);
-    openPage(
-      ScreenNames.CustomClasses,
-      context,
-      builder: (context) => CustomClassesView(),
-    );
+    Get.back();
+    openPage(ScreenNames.CustomClasses, CustomClassesView());
   }
 
   void aboutScreen(BuildContext context) {
-    Navigator.pop(context);
-    openPage(
-      ScreenNames.About,
-      context,
-      builder: (context) => AboutView(),
-    );
+    Get.back();
+    openPage(ScreenNames.About, AboutView());
   }
 
   Widget title(String text, BuildContext context, {Widget leading}) {
@@ -301,7 +275,7 @@ class CharacterListTile extends StatelessWidget {
             'order': character.order,
           });
           dwStore.dispatch(SetCurrentChar(character));
-          Navigator.pop(context);
+          Get.back();
         },
       ),
     );

@@ -10,6 +10,7 @@ import 'package:dungeon_paper/src/utils/types.dart';
 import 'package:dungeon_world_data/dw_data.dart';
 import 'package:dungeon_world_data/player_class.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 class ClassSelectView extends StatelessWidget {
   final Character character;
@@ -56,7 +57,7 @@ class ClassSelectView extends StatelessWidget {
   void chooseClass(BuildContext context, PlayerClass def) async {
     if (mode == DialogMode.Create) {
       save(context, def, ChangeClassConfirmationOptions.all(true));
-      Navigator.pop(context, true);
+      Get.back(result: true);
       return;
     }
     var options = await showDialog<ChangeClassConfirmationOptions>(
@@ -65,7 +66,7 @@ class ClassSelectView extends StatelessWidget {
     );
     if (options != null) {
       save(context, def, options);
-      Navigator.pop(context, true);
+      Get.back(result: true);
     }
   }
 
@@ -79,22 +80,18 @@ class ClassSelectView extends StatelessWidget {
   Function() previewClass(BuildContext context, PlayerClass def) {
     return () async {
       try {
-        var res = await Navigator.push(
-          context,
-          MaterialPageRoute(
-            fullscreenDialog: true,
-            builder: (context) => ClassPreview(
-              classDef: def,
-              onSave: () => chooseClass(context, def),
-            ),
+        var res = await Get.to(
+          ClassPreview(
+            classDef: def,
+            onSave: () => chooseClass(context, def),
           ),
         );
         if (res == true && mode == DialogMode.Edit) {
-          Navigator.pop(context, res);
+          Get.back(result: res);
         }
       } catch (e) {
         logger.e(e);
-        Navigator.pop(context, false);
+        Get.back(result: false);
       }
     };
   }

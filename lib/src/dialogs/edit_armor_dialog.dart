@@ -1,6 +1,7 @@
 import 'package:dungeon_paper/src/dialogs/standard_dialog_controls.dart';
 import 'package:dungeon_paper/src/flutter_utils/input_formatters.dart';
 import 'package:dungeon_paper/src/redux/stores.dart';
+import 'package:get/get.dart';
 import 'package:pedantic/pedantic.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -97,7 +98,7 @@ class EditArmorDialogState extends State<EditArmorDialog> {
       actions: StandardDialogControls.actions(
         context: context,
         onConfirm: () => _saveValue(),
-        onCancel: () => Navigator.pop(context),
+        onCancel: () => Get.back(),
       ),
     );
   }
@@ -117,6 +118,6 @@ class EditArmorDialogState extends State<EditArmorDialog> {
   void _saveValue() async {
     var character = dwStore.state.characters.current;
     unawaited(character.update(json: {'armor': value}));
-    Navigator.pop(context);
+    Get.back();
   }
 }

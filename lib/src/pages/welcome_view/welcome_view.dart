@@ -8,6 +8,7 @@ import 'package:dungeon_paper/src/pages/whats_new_view/whats_new_view.dart';
 import 'package:dungeon_paper/src/utils/auth/auth.dart';
 import 'package:email_validator/email_validator.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 class WelcomeView extends StatelessWidget {
   final bool loading;
@@ -66,12 +67,12 @@ class WelcomeView extends StatelessWidget {
                         Text("Can't sign in?"),
                         RaisedButton(
                           color: Theme.of(context).colorScheme.surface,
-                          onPressed: _openResetPasswordView(context),
+                          onPressed: _openResetPasswordView,
                           child: Text('Reset Password'),
                         ),
                         RaisedButton(
                           color: Theme.of(context).colorScheme.surface,
-                          onPressed: _openAboutView(context),
+                          onPressed: _openAboutView,
                           child: Text('Contact Us'),
                         ),
                       ],
@@ -86,36 +87,25 @@ class WelcomeView extends StatelessWidget {
     );
   }
 
-  void Function() _openAboutView(BuildContext context) {
-    return () {
-      Navigator.push(
-        context,
-        MaterialPageRoute<bool>(
-          fullscreenDialog: true,
-          builder: (context) => AboutView(),
-        ),
-      );
-    };
+  void _openAboutView() {
+    Get.to(AboutView());
   }
 
-  void Function() _openResetPasswordView(BuildContext context) {
-    return () {
-      showDialog(
-        context: context,
-        builder: (context) => SingleTextFieldEditDialog(
-          title: Text('Reset Password'),
-          confirmText: Text('Send Password Reset'),
-          fieldName: 'Email address',
-          value: '',
-          onCancel: () => Navigator.pop(context),
-          confirmDisabled: (email) => !EmailValidator.validate(email),
-          onSave: (email) async {
-            await sendPasswordResetLink(email);
-            Navigator.pop(context);
-          },
-        ),
-      );
-    };
+  void _openResetPasswordView() {
+    Get.dialog(
+      SingleTextFieldEditDialog(
+        title: Text('Reset Password'),
+        confirmText: Text('Send Password Reset'),
+        fieldName: 'Email address',
+        value: '',
+        onCancel: () => Get.back(),
+        confirmDisabled: (email) => !EmailValidator.validate(email),
+        onSave: (email) async {
+          await sendPasswordResetLink(email);
+          Get.back();
+        },
+      ),
+    );
   }
 
   void Function() _openWhatsNew(BuildContext context) {

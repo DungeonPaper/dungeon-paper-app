@@ -8,6 +8,7 @@ import 'package:dungeon_paper/src/scaffolds/add_race_move_scaffold.dart';
 import 'package:dungeon_paper/src/utils/types.dart';
 import 'package:dungeon_world_data/move.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:uuid/uuid.dart';
 
 enum MoveCategory { Race, Starting, Advanced1, Advanced2 }
@@ -37,7 +38,7 @@ class CustomClassMoveList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var cats = <MoveCategory, List<Move>>{
+    final cats = <MoveCategory, List<Move>>{
       if (raceMoveMode) MoveCategory.Race: customClass.raceMoves,
       if (!raceMoveMode) ...{
         MoveCategory.Starting: customClass.startingMoves,
@@ -51,9 +52,11 @@ class CustomClassMoveList extends StatelessWidget {
       itemCount: (moves, i) => moves != null ? moves.length + 1 : 1,
       titleBuilder: (context, moves, i) => Text(raceMoveMode == true
           ? ''
-          : i < cats.keys.length ? TITLES[cats.keys.elementAt(i)] : 'No Title'),
+          : i < cats.keys.length
+              ? TITLES[cats.keys.elementAt(i)]
+              : 'No Title'),
       itemBuilder: (context, List<Move> moves, i, catI) {
-        var cat = cats.keys.elementAt(catI);
+        final cat = cats.keys.elementAt(catI);
 
         if (i >= moves.length) {
           return Center(
@@ -79,31 +82,25 @@ class CustomClassMoveList extends StatelessWidget {
   }
 
   void _addMove(BuildContext context, MoveCategory cat) {
-    Navigator.push(
-      context,
-      MaterialPageRoute(
-        builder: (context) {
-          var blankMove = Move(
-            key: Uuid().v4(),
-            name: '',
-            description: '',
-            explanation: '',
-            classes: [],
-          );
-          if (cat == MoveCategory.Race) {
-            return AddRaceMoveScaffold(
+    final blankMove = Move(
+      key: Uuid().v4(),
+      name: '',
+      description: '',
+      explanation: '',
+      classes: [],
+    );
+    Get.to(
+      cat == MoveCategory.Race
+          ? AddRaceMoveScaffold(
               mode: DialogMode.Create,
               move: blankMove,
               onSave: (move) => _addMoveToCat(context, move, cat),
-            );
-          }
-          return AddMoveScreen(
-            mode: DialogMode.Create,
-            move: blankMove,
-            onSave: (move) => _addMoveToCat(context, move, cat),
-          );
-        },
-      ),
+            )
+          : AddMoveScreen(
+              mode: DialogMode.Create,
+              move: blankMove,
+              onSave: (move) => _addMoveToCat(context, move, cat),
+            ),
     );
   }
 
@@ -127,7 +124,7 @@ class CustomClassMoveList extends StatelessWidget {
         break;
     }
     _update();
-    Navigator.pop(context);
+    Get.back();
   }
 
   void _updateMoveInCat(BuildContext context, Move move, MoveCategory cat) {

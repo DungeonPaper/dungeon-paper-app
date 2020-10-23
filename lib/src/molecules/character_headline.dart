@@ -4,6 +4,7 @@ import 'package:dungeon_paper/src/dialogs/dialogs.dart';
 import 'package:dungeon_paper/src/pages/edit_character/edit_character_view.dart';
 import 'package:dungeon_paper/src/utils/utils.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 class CharacterHeadline extends StatelessWidget {
   final Character character;
@@ -72,14 +73,10 @@ class CharacterHeadline extends StatelessWidget {
   }
 
   void _openEdit(BuildContext context) {
-    Navigator.push(
-      context,
-      MaterialPageRoute(
-        fullscreenDialog: true,
-        builder: (context) => EditCharacterView(
-          character: character,
-          mode: DialogMode.Edit,
-        ),
+    Get.to(
+      EditCharacterView(
+        character: character,
+        mode: DialogMode.Edit,
       ),
     );
   }

@@ -1,6 +1,7 @@
 import 'package:dungeon_paper/src/atoms/password_field.dart';
 import 'package:dungeon_paper/src/dialogs/standard_dialog_controls.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 class VerifyPasswordDialog extends StatefulWidget {
   final void Function(String password) onConfirm;
@@ -40,7 +41,7 @@ class _VerifyPasswordDialogState extends State<VerifyPasswordDialog> {
         context: context,
         confirmText: widget.confirmText,
         onConfirm: () => widget.onConfirm?.call(controller.text),
-        onCancel: () => Navigator.pop(context),
+        onCancel: () => Get.back(),
         confirmDisabled: isValid.value == false,
       ),
     );

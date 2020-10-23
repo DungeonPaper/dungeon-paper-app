@@ -7,6 +7,7 @@ import 'package:dungeon_paper/src/scaffolds/add_spell_scaffold.dart';
 import 'package:dungeon_paper/src/utils/analytics.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_markdown/flutter_markdown.dart';
+import 'package:get/get.dart';
 
 enum SpellCardMode { Addable, Editable, Fixed }
 
@@ -84,21 +85,17 @@ class SpellCardState extends State<SpellCard> {
                       },
                     )
                   ],
-                  onEdit: () => Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      fullscreenDialog: true,
-                      builder: (ctx) => AddSpellScaffold(
-                        index: widget.index,
-                        spell: widget.spell,
-                        onSave: (spell) {
-                          if (widget.onSave != null) {
-                            widget.onSave(spell);
-                          }
-                          Navigator.pop(ctx);
-                        },
-                        mode: DialogMode.Edit,
-                      ),
+                  onEdit: () => Get.to(
+                    AddSpellScaffold(
+                      index: widget.index,
+                      spell: widget.spell,
+                      onSave: (spell) {
+                        if (widget.onSave != null) {
+                          widget.onSave(spell);
+                        }
+                        Get.back();
+                      },
+                      mode: DialogMode.Edit,
                     ),
                   ),
                   onDelete: () async {

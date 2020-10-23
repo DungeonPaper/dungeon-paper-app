@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 class StandardDialogControls extends StatelessWidget {
   final void Function() onConfirm;
@@ -63,9 +64,7 @@ class StandardDialogControls extends StatelessWidget {
       <Widget>[
         if (onCancel != null)
           FlatButton(
-            onPressed: !cancelDisabled
-                ? (onCancel ?? () => Navigator.pop(context))
-                : null,
+            onPressed: !cancelDisabled ? (onCancel ?? () => Get.back()) : null,
             child: cancelText,
           ),
         if (middle?.isNotEmpty == true) ...middle,

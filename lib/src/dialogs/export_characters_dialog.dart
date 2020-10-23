@@ -7,6 +7,7 @@ import 'package:dungeon_paper/src/lists/character_list.dart';
 import 'package:dungeon_paper/src/utils/utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_file_dialog/flutter_file_dialog.dart';
+import 'package:get/get.dart';
 import 'package:path/path.dart' show join;
 import 'package:path_provider/path_provider.dart';
 
@@ -202,7 +203,7 @@ class _ExportCharactersDialogState extends State<ExportCharactersDialog> {
   }
 
   void _exit() {
-    Navigator.pop(context);
+    Get.back();
   }
 }
 

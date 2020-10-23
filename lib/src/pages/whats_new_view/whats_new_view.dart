@@ -4,6 +4,7 @@ import 'package:dungeon_paper/src/dialogs/standard_dialog_controls.dart';
 import 'package:dungeon_paper/src/flutter_utils/widget_utils.dart';
 import 'package:dungeon_paper/src/utils/utils.dart';
 import 'package:dungeon_paper/src/utils/changelog.dart';
+import 'package:get/get.dart';
 import 'package:pub_semver/pub_semver.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_markdown/flutter_markdown.dart';
@@ -42,7 +43,7 @@ class WhatsNew extends StatefulWidget {
       ),
       actions: StandardDialogControls.actions(
         context: context,
-        onConfirm: () => Navigator.pop(context),
+        onConfirm: () => Get.back(),
         confirmText: Text('Got it!'),
       ),
     );

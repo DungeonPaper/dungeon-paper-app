@@ -7,6 +7,8 @@ import 'package:dungeon_paper/src/utils/logger.dart';
 import 'package:dungeon_paper/src/utils/utils.dart';
 import 'package:dungeon_world_data/dice.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:uuid/uuid.dart';
 
 class RollDiceDialog extends StatefulWidget {
   final Character character;
@@ -25,6 +27,7 @@ class RollDiceDialog extends StatefulWidget {
 }
 
 class _RollDiceDialogState extends State<RollDiceDialog> {
+  String sessionKey;
   List<List<Dice>> diceList;
   DiceListController addingDiceCtrl;
   List<DiceListController> controllers;
@@ -37,6 +40,7 @@ class _RollDiceDialogState extends State<RollDiceDialog> {
         widget.initialAddingDice?.isNotEmpty == true
             ? [...widget.initialAddingDice]
             : [Dice.d6 * 2]);
+    sessionKey = generateSessionKey();
 
     if (widget.initialDiceList?.isNotEmpty == true) {
       _addDiceToState(widget.initialDiceList).call();
@@ -45,22 +49,43 @@ class _RollDiceDialogState extends State<RollDiceDialog> {
     super.initState();
   }
 
+  String generateSessionKey() => Uuid().v4();
+
   @override
   Widget build(BuildContext context) {
-    return Column(
+    return Stack(
+      fit: StackFit.expand,
       children: [
-        RollDialogTitle(),
-        ValueListenableBuilder(
-          valueListenable: addingDiceCtrl,
-          builder: (context, dice, child) => DiceRollBuilder(
-            key: Key(dice.toString()),
-            character: widget.character,
-            initialValue: dice,
-            onChanged: _add,
+        Positioned.fill(
+          child: Material(
+            color: Colors.black.withOpacity(0.7),
+            child: GestureDetector(
+              onTap: () {
+                if (Navigator.of(context).canPop()) {
+                  Get.back();
+                }
+              },
+            ),
           ),
         ),
-        Expanded(
-          child: buildDiceList(),
+        SafeArea(
+          child: Column(
+            children: [
+              RollDialogTitle(),
+              ValueListenableBuilder(
+                valueListenable: addingDiceCtrl,
+                builder: (context, dice, child) => DiceRollBuilder(
+                  key: Key(sessionKey),
+                  character: widget.character,
+                  initialValue: dice,
+                  onChanged: _add,
+                ),
+              ),
+              Expanded(
+                child: buildDiceList(),
+              ),
+            ],
+          ),
         ),
       ],
     );
@@ -75,7 +100,6 @@ class _RollDiceDialogState extends State<RollDiceDialog> {
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 16),
               child: DiceRollBox(
-                key: Key('dice-${list.value.hash}'),
                 controller: reversedControllers.elementAt(list.index),
                 onRemove: () => _removeAt(list.index),
                 onEdit: () => _editAt(list.index),
@@ -103,6 +127,7 @@ class _RollDiceDialogState extends State<RollDiceDialog> {
     setState(_addDiceToState(dice));
     setState(() {
       addingDiceCtrl.value = [Dice.d6 * 2];
+      sessionKey = generateSessionKey();
     });
   }
 
@@ -111,6 +136,7 @@ class _RollDiceDialogState extends State<RollDiceDialog> {
       final _ctrl = DiceListController([...dice]);
       controllers.add(_ctrl);
       diceList.add(dice);
+      sessionKey = generateSessionKey();
     };
   }
 
@@ -124,6 +150,7 @@ class _RollDiceDialogState extends State<RollDiceDialog> {
     setState(() {
       diceList.removeAt(idx);
       controllers.removeAt(idx);
+      sessionKey = generateSessionKey();
     });
   }
 
@@ -137,6 +164,7 @@ class _RollDiceDialogState extends State<RollDiceDialog> {
     setState(() {
       addingDiceCtrl.value = List.from(diceList[idx]);
       logger.d('diceList: ${addingDiceCtrl.value}');
+      sessionKey = generateSessionKey();
     });
   }
 }
@@ -162,7 +190,7 @@ class RollDialogTitle extends StatelessWidget {
           children: [
             IconButton(
               icon: Icon(Icons.close),
-              onPressed: () => Navigator.pop(context),
+              onPressed: () => Get.back(),
               color: Theme.of(context).canvasColor,
               iconSize: 30,
             ),
@@ -200,43 +228,48 @@ void showDiceRollDialog({
   analytics.logEvent(name: Events.OpenDiceDialog, parameters: {
     'screen_name': analyticsSource,
   });
-  Navigator.push(
-    context,
-    PageRouteBuilder(
-      opaque: false,
-      transitionDuration: Duration(milliseconds: 200),
-      pageBuilder: (context, anim, anim2) => SafeArea(
-        child: RollDiceDialog(
-          key: key,
-          character: character,
-          initialAddingDice: initialAddingDice,
-          initialDiceList: initialDiceList,
-        ),
-      ),
-      transitionsBuilder: (context, anim, anim2, child) => Opacity(
-        opacity: anim.value,
-        child: Stack(
-          fit: StackFit.expand,
-          children: [
-            Positioned.fill(
-              child: Material(
-                color: Colors.black.withOpacity(0.7),
-                child: GestureDetector(
-                  onTap: () {
-                    if (Navigator.of(context).canPop()) {
-                      Navigator.pop(context);
-                    }
-                  },
-                ),
-              ),
-            ),
-            Transform.translate(
-              offset: Offset(0, (anim.value * -50) + 50),
-              child: child,
-            ),
-          ],
-        ),
-      ),
+  Get.dialog(
+    RollDiceDialog(
+      key: key,
+      character: character,
+      initialAddingDice: initialAddingDice,
+      initialDiceList: initialDiceList,
     ),
   );
+}
+
+class RollDiceDialogTransition extends CustomTransition {
+  @override
+  Widget buildTransition(
+      BuildContext context,
+      Curve curve,
+      Alignment alignment,
+      Animation<double> animation,
+      Animation<double> secondaryAnimation,
+      Widget child) {
+    return Opacity(
+      opacity: animation.value,
+      child: Stack(
+        fit: StackFit.expand,
+        children: [
+          Positioned.fill(
+            child: Material(
+              color: Colors.black.withOpacity(0.7),
+              child: GestureDetector(
+                onTap: () {
+                  if (Navigator.of(context).canPop()) {
+                    Get.back();
+                  }
+                },
+              ),
+            ),
+          ),
+          Transform.translate(
+            offset: Offset(0, (animation.value * -50) + 50),
+            child: child,
+          ),
+        ],
+      ),
+    );
+  }
 }

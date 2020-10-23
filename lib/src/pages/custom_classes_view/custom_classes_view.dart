@@ -10,6 +10,7 @@ import 'package:dungeon_paper/src/utils/analytics.dart';
 import 'package:dungeon_paper/src/utils/logger.dart';
 import 'package:dungeon_world_data/player_class.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:pedantic/pedantic.dart';
 
 class CustomClassesView extends StatefulWidget {
@@ -72,26 +73,17 @@ class _CustomClassesViewState extends State<CustomClassesView> {
 
   void Function() _add(BuildContext context) {
     return () {
-      Navigator.push(
-        context,
-        MaterialPageRoute<bool>(
-          builder: (context) => CustomClassWizard(mode: DialogMode.Create),
-        ),
-      );
+      Get.to(CustomClassWizard(mode: DialogMode.Create));
     };
   }
 
   void Function(CustomClass) _edit(BuildContext context) {
     return (cls) {
-      Navigator.push(
-        context,
-        MaterialPageRoute<bool>(
-          fullscreenDialog: true,
-          builder: (context) => CustomClassWizard(
-            mode: DialogMode.Edit,
-            customClass: cls,
-            onSave: _save,
-          ),
+      Get.to(
+        CustomClassWizard(
+          mode: DialogMode.Edit,
+          customClass: cls,
+          onSave: _save,
         ),
       );
     };
@@ -129,13 +121,10 @@ class _CustomClassesViewState extends State<CustomClassesView> {
     var custCls = CustomClass.fromPlayerClass(cls);
     custCls.name = custCls.name + ' copy';
 
-    Navigator.push(
-      context,
-      MaterialPageRoute<bool>(
-        builder: (context) => CustomClassWizard(
-          mode: DialogMode.Create,
-          customClass: custCls,
-        ),
+    Get.to(
+      CustomClassWizard(
+        mode: DialogMode.Create,
+        customClass: custCls,
       ),
     );
   }

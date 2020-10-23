@@ -10,6 +10,7 @@ import 'package:dungeon_paper/src/scaffolds/scaffold_with_elevation.dart';
 import 'package:dungeon_paper/src/utils/analytics.dart';
 import 'package:dungeon_paper/src/utils/utils.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:pedantic/pedantic.dart';
 
 class CustomClassWizard extends StatefulWidget {
@@ -236,7 +237,7 @@ class _CustomClassWizardState extends State<CustomClassWizard>
       await def.update();
       widget.onSave?.call(def);
     }
-    Navigator.pop(context);
+    Get.back();
   }
 
   Future<bool> _confirmExit() async {
@@ -247,11 +248,14 @@ class _CustomClassWizardState extends State<CustomClassWizard>
     if (await showDialog(
           context: context,
           builder: (ctx) => ConfirmationDialog(
-              text: Text(
-                  'Are you sure you want to quit custom class $verb?\nYour changes will not be saved.')),
+            text: Text(
+              'Are you sure you want to quit custom class $verb?\n'
+              'Your changes will not be saved.',
+            ),
+          ),
         ) ==
         true) {
-      Navigator.pop(context, true);
+      Get.back(result: true);
       return true;
     }
     return false;
