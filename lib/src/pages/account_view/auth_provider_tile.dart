@@ -1,4 +1,6 @@
 import 'dart:async';
+import 'package:dungeon_paper/src/utils/logger.dart';
+import 'package:dungeon_paper/src/utils/utils.dart';
 import 'package:get/get.dart';
 import 'package:dungeon_paper/src/flutter_utils/widget_utils.dart';
 import 'package:dungeon_paper/src/pages/auth/email_auth_view.dart';
@@ -104,6 +106,9 @@ class _AuthProviderTileState extends State<AuthProviderTile> {
     final isLinked = isUserLinkedToAuth(data.id, user);
     setState(() => loading = true);
     final cred = await _getCredential(context, data.id, isLinked: isLinked);
+    final verb = '${isLinked ? 'un' : ''}linking';
+    final verbPast = '${isLinked ? 'un' : ''}linked';
+    final preposition = !isLinked ? 'to' : 'from';
     try {
       if (isLinked) {
         await unlinkFromProvider(data.id);
@@ -113,13 +118,22 @@ class _AuthProviderTileState extends State<AuthProviderTile> {
       if (mounted) {
         setState(() => loading = false);
       }
-    } catch (e) {
+      Get.snackbar(
+        '${capitalize(verb)} success',
+        'Account was $verbPast ${preposition} ${data.displayName}',
+        duration: SnackBarDuration.long,
+      );
+    } catch (e, stack) {
+      logger.e('Error with $verb', e, stack);
       setState(() {
         loading = false;
         error = e.message;
       });
       Get.snackbar(
-          'Problem with account ${!isLinked ? 'un' : ''}linking', e.message);
+        'Problem with account $verb',
+        e.message,
+        duration: SnackBarDuration.long,
+      );
     }
   }
 
@@ -160,6 +174,12 @@ class _AuthProviderTileState extends State<AuthProviderTile> {
               },
             )
           : VerifyPasswordDialog(
+              title: Text('Verify Password'),
+              confirmText: Text('Unlink'),
+              children: [
+                Text(
+                    'This is a sensitive operation.\nPlease re-type your password to verify:'),
+              ],
               onConfirm: (pwd) {
                 completer.complete(
                   EmailAuthProvider.credential(

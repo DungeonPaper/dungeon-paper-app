@@ -99,15 +99,24 @@ class _AddInventoryItemState extends State<AddInventoryItem> {
     return Stack(
       children: <Widget>[
         Padding(
-          padding: const EdgeInsets.only(top: 64.0),
+          padding: const EdgeInsets.only(top: 32),
           child: CategorizedList.builder(
             items: itemMap.keys.toList()..sort(),
             itemCount: (key, idx) => itemMap[key].length,
-            titleBuilder: (ctx, key, idx) => Text(key),
+            titleBuilder: (ctx, key, idx) {
+              final child = Text(key);
+              if (idx == 0) {
+                return Padding(
+                  padding: const EdgeInsets.only(top: 32),
+                  child: child,
+                );
+              }
+              return child;
+            },
             itemBuilder: (ctx, key, idx, catI) {
               var item = itemMap[key][idx];
               return Container(
-                padding: EdgeInsets.symmetric(vertical: 8.0),
+                padding: EdgeInsets.symmetric(vertical: 8),
                 child: InventoryItemCard(
                   key: PageStorageKey('add-${item.key}'),
                   item: InventoryItem.fromEquipment(item),
@@ -119,20 +128,7 @@ class _AddInventoryItemState extends State<AddInventoryItem> {
             },
           ),
         ),
-        Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: Material(
-            shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(5.0)),
-            color: Theme.of(context).canvasColor,
-            child: Padding(
-              padding:
-                  const EdgeInsets.symmetric(horizontal: 8.0, vertical: 4.0),
-              child: searchBar,
-            ),
-            elevation: 5.0,
-          ),
-        ),
+        searchBar
       ],
     );
   }

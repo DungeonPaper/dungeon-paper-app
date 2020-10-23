@@ -89,7 +89,7 @@ class _DiceRollBuilderState extends State<DiceRollBuilder> {
                       Expanded(child: Container()),
                       if (addingController.value.length > 1)
                         IconButton(
-                          icon: Icon(Icons.delete),
+                          icon: Icon(Icons.remove_circle),
                           onPressed: () => _remove(d.index),
                           tooltip: 'Remove dice',
                         )
@@ -98,16 +98,16 @@ class _DiceRollBuilderState extends State<DiceRollBuilder> {
                 Row(
                   children: [
                     Expanded(child: Container()),
-                    IconButton(
+                    FlatButton.icon(
                       icon: Icon(Icons.add),
+                      label: Text('Add Dice'),
                       onPressed: _addRow,
-                      tooltip: 'Add dice',
                     ),
-                    IconButton(
-                      color: Theme.of(context).primaryColor,
+                    RaisedButton.icon(
                       icon: Icon(Icons.check),
+                      // textColor: Theme.of(context).colorScheme.primary,
+                      label: Text('Roll'),
                       onPressed: _onAdd,
-                      tooltip: 'Roll & Reset',
                     ),
                   ],
                 ),

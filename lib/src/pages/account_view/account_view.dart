@@ -142,6 +142,7 @@ class _AccountViewState extends State<AccountView> {
                   children: [
                     for (var provider in AccountView._providersData)
                       AuthProviderTile(
+                        key: Key('provider-' + provider.id),
                         data: provider,
                         user: fbUser,
                       )

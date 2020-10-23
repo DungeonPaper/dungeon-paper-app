@@ -2,6 +2,7 @@ import 'package:dungeon_paper/db/models/inventory_items.dart';
 import 'package:dungeon_paper/src/atoms/card_bottom_controls.dart';
 import 'package:dungeon_paper/src/dialogs/confirmation_dialog.dart';
 import 'package:dungeon_paper/src/dialogs/dialogs.dart';
+import 'package:dungeon_paper/src/flutter_utils/widget_utils.dart';
 import 'package:dungeon_paper/src/lists/tag_list.dart';
 import 'package:dungeon_paper/src/scaffolds/add_inventory_item_scaffold.dart';
 import 'package:dungeon_paper/src/utils/analytics.dart';
@@ -166,7 +167,7 @@ class InventoryItemCard extends StatelessWidget {
       Get.snackbar(
         'Hmm...',
         "Couldn't launch URL. Is it well-formed?",
-        duration: Duration(seconds: 4),
+        duration: SnackBarDuration.short,
       );
     }
   }

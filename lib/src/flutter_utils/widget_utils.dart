@@ -5,6 +5,11 @@ const BOTTOM_SPACER = SizedBox(height: 64);
 typedef SingleChildWidgetBuilder = Widget Function(
     BuildContext context, Widget child);
 
+class SnackBarDuration {
+  static const Duration long = Duration(seconds: 6);
+  static const Duration short = Duration(seconds: 3);
+}
+
 class Loader extends StatelessWidget {
   final Color color;
   final Color backgroundColor;

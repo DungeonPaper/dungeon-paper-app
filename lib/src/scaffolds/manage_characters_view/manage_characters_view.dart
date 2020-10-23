@@ -55,10 +55,10 @@ class _ManageCharactersViewState extends State<ManageCharactersView> {
       body: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
-          Padding(
-            padding: const EdgeInsets.all(16.0),
-            child: Text('Tip: Hold & drag a character to change its order.'),
-          ),
+          // Padding(
+          //   padding: const EdgeInsets.all(16.0),
+          //   child: Text('Tip: Hold & drag a character to change its order.'),
+          // ),
           for (var char in enumerate(characters))
             Padding(
               key: Key(char.value.documentID),
