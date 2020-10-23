@@ -11,6 +11,7 @@ import 'package:dungeon_paper/src/utils/analytics.dart';
 import 'package:dungeon_paper/src/utils/utils.dart';
 import 'package:dungeon_world_data/dice.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:pedantic/pedantic.dart';
 import 'package:uuid/uuid.dart';
 
@@ -113,7 +114,7 @@ class EditStatDialogState extends State<EditStatDialog> {
         context: context,
         onConfirm: saving ? null : _saveValue,
         confirmDisabled: valueError,
-        onCancel: () => Navigator.pop(context),
+        onCancel: () => Get.back(),
       ),
     );
   }
@@ -166,7 +167,7 @@ class EditStatDialogState extends State<EditStatDialog> {
     });
     await character.update(json: {key: value});
     unawaited(analytics.logEvent(name: Events.EditStat));
-    Navigator.pop(context);
+    Get.back();
   }
 
   void _removeRoll() {

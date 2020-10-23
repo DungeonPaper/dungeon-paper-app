@@ -11,6 +11,7 @@ import 'package:firebase_analytics/observer.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
+import 'package:get/get.dart';
 import 'package:pedantic/pedantic.dart';
 import 'package:theme_provider/theme_provider.dart';
 
@@ -55,7 +56,7 @@ class DungeonPaper extends StatelessWidget {
           onInit: () => analytics.logAppOpen(),
           child: ThemeConsumer(
             child: Builder(
-              builder: (context) => MaterialApp(
+              builder: (context) => GetMaterialApp(
                 title: 'Dungeon Paper',
                 theme: ThemeProvider.themeOf(context).data,
                 routes: {

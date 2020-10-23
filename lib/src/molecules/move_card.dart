@@ -6,6 +6,7 @@ import 'package:dungeon_paper/src/utils/analytics.dart';
 import 'package:dungeon_world_data/move.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_markdown/flutter_markdown.dart';
+import 'package:get/get.dart';
 
 enum MoveCardMode { Addable, Editable, Fixed }
 
@@ -42,18 +43,14 @@ class MoveCardState extends State<MoveCard> {
       ),
       widget.mode == MoveCardMode.Editable
           ? CardBottomControls(
-              onEdit: () => Navigator.push(
-                context,
-                MaterialPageRoute(
-                  fullscreenDialog: true,
-                  builder: (ctx) => AddMoveScreen(
-                    move: widget.move,
-                    mode: DialogMode.Edit,
-                    onSave: (move) {
-                      _save(move);
-                      Navigator.pop(ctx);
-                    },
-                  ),
+              onEdit: () => Get.to(
+                AddMoveScreen(
+                  move: widget.move,
+                  mode: DialogMode.Edit,
+                  onSave: (move) {
+                    _save(move);
+                    Get.back();
+                  },
                 ),
               ),
               entityTypeName: 'Move',

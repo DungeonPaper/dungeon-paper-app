@@ -3,6 +3,7 @@ import 'package:dungeon_paper/src/atoms/markdown_help.dart';
 import 'package:dungeon_paper/src/dialogs/dialogs.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_typeahead/flutter_typeahead.dart';
+import 'package:get/get.dart';
 
 class NoteFormBuilder extends StatefulWidget {
   final Note note;
@@ -119,7 +120,7 @@ class NoteFormBuilderState extends State<NoteFormBuilder> {
     if (widget.onSave != null) {
       widget.onSave(note);
     }
-    Navigator.pop(context);
+    Get.back();
   }
 
   void _createNote() async {
@@ -127,7 +128,7 @@ class NoteFormBuilderState extends State<NoteFormBuilder> {
     if (widget.onSave != null) {
       widget.onSave(note);
     }
-    Navigator.pop(context);
+    Get.back();
   }
 
   Note _generateNote() {

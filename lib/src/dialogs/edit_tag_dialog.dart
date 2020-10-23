@@ -2,6 +2,7 @@ import 'package:dungeon_paper/src/utils/utils.dart';
 import 'package:dungeon_world_data/dw_data.dart';
 import 'package:dungeon_world_data/tag.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 import 'dialogs.dart';
 import 'standard_dialog_controls.dart';
@@ -100,7 +101,7 @@ class _EditTagDialogState extends State<EditTagDialog> {
   }
 
   void onSave() {
-    Navigator.pop(context);
+    Get.back();
     widget.onSave(tag);
   }
 

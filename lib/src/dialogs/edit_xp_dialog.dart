@@ -2,6 +2,7 @@ import 'package:dungeon_paper/db/models/character.dart';
 import 'package:dungeon_paper/src/molecules/current_stat_indicator.dart';
 import 'package:dungeon_paper/src/molecules/status_bars.dart';
 import 'package:dungeon_paper/src/utils/analytics.dart';
+import 'package:get/get.dart';
 import 'package:pedantic/pedantic.dart';
 import 'package:wheel_spinner/wheel_spinner.dart';
 import 'package:flutter/material.dart';
@@ -133,7 +134,7 @@ class _EditXPDialogState extends State<EditXPDialog> {
     widget.character
       ..currentXP = currentXP
       ..update();
-    Navigator.pop(context);
+    Get.back();
   }
 
   void levelUp(BuildContext context) async {
@@ -198,7 +199,7 @@ class LevelUpDialog extends StatelessWidget {
       actions: [
         RaisedButton(
           child: Text('Continue'),
-          onPressed: () => Navigator.pop(context),
+          onPressed: () => Get.back(),
         ),
       ],
     );

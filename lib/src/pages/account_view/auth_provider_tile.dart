@@ -1,5 +1,5 @@
 import 'dart:async';
-
+import 'package:get/get.dart';
 import 'package:dungeon_paper/src/flutter_utils/widget_utils.dart';
 import 'package:dungeon_paper/src/pages/auth/email_auth_view.dart';
 import 'package:dungeon_paper/src/pages/auth/verify_password_dialog.dart';
@@ -118,9 +118,8 @@ class _AuthProviderTileState extends State<AuthProviderTile> {
         loading = false;
         error = e.message;
       });
-      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-        content: Text(e.message),
-      ));
+      Get.snackbar(
+          'Problem with account ${!isLinked ? 'un' : ''}linking', e.message);
     }
   }
 
@@ -136,7 +135,7 @@ class _AuthProviderTileState extends State<AuthProviderTile> {
         return getAppleCredential(interactive: true);
       case 'password':
         final result = await _emailAuthDialog(context, isLinked);
-        Navigator.pop(context);
+        Get.back();
         return result;
       default:
         return null;

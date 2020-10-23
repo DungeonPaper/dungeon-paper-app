@@ -6,6 +6,7 @@ import 'package:dungeon_paper/src/dialogs/dialogs.dart';
 import 'package:dungeon_paper/src/scaffolds/add_inventory_item_scaffold.dart';
 import 'package:dungeon_paper/src/scaffolds/edit_note_scaffold.dart';
 import 'package:dungeon_paper/src/utils/utils.dart';
+import 'package:get/get.dart';
 
 import 'nav_bar.dart';
 import 'dart:math';
@@ -63,30 +64,22 @@ class FABState extends State<FAB> {
     var map = <Pages, FABData Function(BuildContext, Character)>{
       Pages.Notes: (context, character) => FABData(
             icon: Icon(Icons.add),
-            onPressed: () => Navigator.push(
-              context,
-              MaterialPageRoute(
-                fullscreenDialog: true,
-                builder: (ctx) => EditNoteScreen(
-                  note: Note(),
-                  mode: DialogMode.Create,
-                  onSave: (note) => createNote(character, note),
-                  categories: collectCategories(character.notes),
-                ),
+            onPressed: () => Get.to(
+              EditNoteScreen(
+                note: Note(),
+                mode: DialogMode.Create,
+                onSave: (note) => createNote(character, note),
+                categories: collectCategories(character.notes),
               ),
             ),
           ),
       Pages.Inventory: (context, character) => FABData(
             icon: Icon(Icons.add),
-            onPressed: () => Navigator.push(
-              context,
-              MaterialPageRoute(
-                fullscreenDialog: true,
-                builder: (ctx) => AddInventoryItemScaffold(
-                  item: InventoryItem(),
-                  mode: DialogMode.Create,
-                  onSave: (item) => createInventoryItem(character, item),
-                ),
+            onPressed: () => Get.to(
+              AddInventoryItemScaffold(
+                item: InventoryItem(),
+                mode: DialogMode.Create,
+                onSave: (item) => createInventoryItem(character, item),
               ),
             ),
           ),

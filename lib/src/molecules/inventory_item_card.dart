@@ -8,6 +8,7 @@ import 'package:dungeon_paper/src/utils/analytics.dart';
 import 'package:dungeon_paper/src/utils/utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_markdown/flutter_markdown.dart';
+import 'package:get/get.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 enum InventoryItemCardMode { Addable, Editable }
@@ -120,7 +121,7 @@ class InventoryItemCard extends StatelessWidget {
                         if (onSave != null) {
                           onSave(item);
                         }
-                        Navigator.pop(context);
+                        Get.back();
                       },
                     ),
                   ),
@@ -135,15 +136,11 @@ class InventoryItemCard extends StatelessWidget {
   }
 
   void editInventoryItem(BuildContext context) {
-    Navigator.push(
-      context,
-      MaterialPageRoute(
-        fullscreenDialog: true,
-        builder: (ctx) => AddInventoryItemScaffold(
-          item: item,
-          mode: DialogMode.Edit,
-          onSave: onSave,
-        ),
+    Get.to(
+      AddInventoryItemScaffold(
+        item: item,
+        mode: DialogMode.Edit,
+        onSave: onSave,
       ),
     );
   }
@@ -166,8 +163,9 @@ class InventoryItemCard extends StatelessWidget {
     if (await canLaunch(url)) {
       await launch(url);
     } else {
-      SnackBar(
-        content: const Text("Hmm... Couldn't launch URL. Is it well-formed?"),
+      Get.snackbar(
+        'Hmm...',
+        "Couldn't launch URL. Is it well-formed?",
         duration: Duration(seconds: 4),
       );
     }

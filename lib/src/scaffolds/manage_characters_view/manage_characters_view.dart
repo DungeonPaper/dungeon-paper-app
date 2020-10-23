@@ -13,6 +13,7 @@ import 'package:dungeon_paper/src/utils/analytics.dart';
 import 'package:dungeon_paper/src/utils/logger.dart';
 import 'package:dungeon_paper/src/utils/utils.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:pedantic/pedantic.dart';
 
 class ManageCharactersView extends StatefulWidget {
@@ -163,14 +164,10 @@ class _ManageCharactersViewState extends State<ManageCharactersView> {
   }
 
   void _edit(Character char, BuildContext context) {
-    Navigator.push(
-      context,
-      MaterialPageRoute(
-        fullscreenDialog: true,
-        builder: (context) => EditCharacterView(
-          character: char,
-          mode: DialogMode.Edit,
-        ),
+    Get.to(
+      EditCharacterView(
+        character: char,
+        mode: DialogMode.Edit,
       ),
     );
   }
@@ -202,13 +199,10 @@ class _ManageCharactersViewState extends State<ManageCharactersView> {
   }
 
   void _openCreatePage() {
-    Navigator.push(
-      context,
-      MaterialPageRoute<bool>(
-        builder: (context) => EditCharacterView(
-          character: null,
-          mode: DialogMode.Create,
-        ),
+    Get.to(
+      EditCharacterView(
+        character: null,
+        mode: DialogMode.Create,
       ),
     );
   }

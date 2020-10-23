@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 class ConfirmationDialog extends StatelessWidget {
   final Widget title;
@@ -33,7 +34,7 @@ class ConfirmationDialog extends StatelessWidget {
         if (!noCancel)
           FlatButton(
             child: cancelButtonText,
-            onPressed: () => Navigator.pop(context, getReturnVal(false)),
+            onPressed: () => Get.back(result: getReturnVal(false)),
           ),
         RaisedButton(
           child: DefaultTextStyle(
@@ -41,7 +42,7 @@ class ConfirmationDialog extends StatelessWidget {
             style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
           ),
           color: Colors.red,
-          onPressed: () => Navigator.pop(context, getReturnVal(true)),
+          onPressed: () => Get.back(result: getReturnVal(true)),
         ),
       ],
     );

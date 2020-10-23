@@ -8,6 +8,7 @@ import 'package:dungeon_paper/src/scaffolds/scaffold_with_elevation.dart';
 import 'package:dungeon_paper/src/utils/analytics.dart';
 import 'package:dungeon_paper/src/utils/logger.dart';
 import 'package:dungeon_paper/src/utils/utils.dart';
+import 'package:get/get.dart';
 import 'package:pedantic/pedantic.dart';
 import 'edit_basic_info_view.dart';
 import 'edit_race.dart';
@@ -248,7 +249,7 @@ class _EditCharacterViewState extends State<EditCharacterView>
       await character.update();
     }
     widget.onSave?.call(character);
-    Navigator.pop(context);
+    Get.back();
   }
 
   Future<bool> _confirmExit() async {
@@ -263,7 +264,7 @@ class _EditCharacterViewState extends State<EditCharacterView>
                   'Are you sure you want to quit character $verb?\nYour changes will not be saved.')),
         ) ==
         true) {
-      Navigator.pop(context, true);
+      Get.back(result: true);
       return true;
     }
     return false;
