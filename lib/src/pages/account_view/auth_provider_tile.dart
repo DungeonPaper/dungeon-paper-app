@@ -37,11 +37,13 @@ class _AuthProviderTileState extends State<AuthProviderTile> {
   bool isAvailable;
   AuthProviderTileData get data => widget.data;
   fb.User get user => widget.user;
+  String error;
 
   @override
   void initState() {
     loading = false;
     isAvailable = data.id != 'apple.com';
+    error = null;
     if (data.id == 'apple.com') {
       _getAppleAvailability();
     }
@@ -102,13 +104,23 @@ class _AuthProviderTileState extends State<AuthProviderTile> {
     final isLinked = isUserLinkedToAuth(data.id, user);
     setState(() => loading = true);
     final cred = await _getCredential(context, data.id, isLinked: isLinked);
-    if (isLinked) {
-      await unlinkFromProvider(data.id);
-    } else {
-      await linkWithCredentials(cred);
-    }
-    if (mounted) {
-      setState(() => loading = false);
+    try {
+      if (isLinked) {
+        await unlinkFromProvider(data.id);
+      } else {
+        await linkWithCredentials(cred);
+      }
+      if (mounted) {
+        setState(() => loading = false);
+      }
+    } catch (e) {
+      setState(() {
+        loading = false;
+        error = e.message;
+      });
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+        content: Text(e.message),
+      ));
     }
   }
 

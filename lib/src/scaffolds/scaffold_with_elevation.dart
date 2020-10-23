@@ -1,4 +1,5 @@
 import 'package:dungeon_paper/src/pages/scaffold/main_app_bar.dart';
+import 'package:dungeon_paper/src/utils/utils.dart';
 import 'package:flutter/material.dart';
 
 class ScaffoldWithElevation extends StatefulWidget {
@@ -73,8 +74,9 @@ class _ScaffoldWithElevationState extends State<ScaffoldWithElevation> {
   }
 
   void scrollListener() {
-    final newElevation = scrollController.offset > 16.0 ? 1.0 : 0.0;
     if (!widget.useElevation) return;
+    final newElevation =
+        lerp(clamp(scrollController.offset, 0, 30), 0, 30, 0, 5);
     if (newElevation != appBarElevation) {
       setState(() {
         appBarElevation = newElevation;

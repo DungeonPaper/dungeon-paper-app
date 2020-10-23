@@ -63,8 +63,8 @@ class _CustomClassesViewState extends State<CustomClassesView> {
       ),
       floatingActionButton: FloatingActionButton(
         child: Icon(Icons.add),
-        backgroundColor: Theme.of(context).colorScheme.surface,
-        foregroundColor: Theme.of(context).colorScheme.onSurface,
+        backgroundColor: Theme.of(context).colorScheme.background,
+        foregroundColor: Theme.of(context).colorScheme.onBackground,
         onPressed: _add(context),
       ),
     );

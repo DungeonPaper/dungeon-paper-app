@@ -8,6 +8,8 @@ class SingleFieldEditDialog<T> extends StatelessWidget {
   final void Function() onCancel;
   final Widget Function(BuildContext) fieldBuilder;
   final Widget title;
+  final Widget prompt;
+  final Iterable<Widget> children;
   final Widget confirmText;
   final bool confirmDisabled;
 
@@ -21,6 +23,8 @@ class SingleFieldEditDialog<T> extends StatelessWidget {
     @required this.title,
     this.confirmText,
     this.confirmDisabled,
+    this.prompt,
+    this.children,
   }) : super(key: key);
 
   @override
@@ -31,6 +35,8 @@ class SingleFieldEditDialog<T> extends StatelessWidget {
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
+            if (prompt != null) prompt,
+            if (children?.isNotEmpty == true) ...children,
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 16),
               child: fieldBuilder(context),

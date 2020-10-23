@@ -34,6 +34,7 @@ class EmailAuthView extends StatefulWidget {
   final void Function() onClose;
   final EmailAuthViewMode mode;
   final bool canSwitchModes;
+  final String error;
 
   const EmailAuthView({
     Key key,
@@ -41,6 +42,7 @@ class EmailAuthView extends StatefulWidget {
     this.mode,
     this.onClose,
     this.canSwitchModes = true,
+    this.error,
   }) : super(key: key);
 
   @override
@@ -79,6 +81,14 @@ class _EmailAuthViewState extends State<EmailAuthView> {
     error = null;
     rememberMe = false;
     passwordValid = ValueNotifier(false);
+  }
+
+  @override
+  void didUpdateWidget(covariant EmailAuthView oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    if (error != null && oldWidget.error != error) {
+      error = error;
+    }
   }
 
   @override
