@@ -68,28 +68,30 @@ class _RollDiceViewState extends State<RollDiceView>
       ),
     );
 
-    return ScaffoldWithElevation(
-      title: Text('Roll Dice'),
-      wrapWithScrollable: false,
-      body: isLandscape
-          ? Row(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Expanded(child: SingleChildScrollView(child: builder)),
-                Expanded(
-                  child: SingleChildScrollView(child: buildDiceList()),
-                )
-              ],
-            )
-          : Column(
-              children: [
-                builder,
-                Expanded(
-                  child:
-                      SingleChildScrollView(child: buildDiceList(padTop: true)),
-                ),
-              ],
+    return SafeArea(
+      child: Column(
+        children: [
+          RollDialogTitle(),
+          if (isLandscape)
+            Expanded(
+              child: Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Expanded(child: SingleChildScrollView(child: builder)),
+                  Expanded(
+                    child: SingleChildScrollView(child: buildDiceList()),
+                  )
+                ],
+              ),
             ),
+          if (!isLandscape) ...[
+            builder,
+            Expanded(
+              child: SingleChildScrollView(child: buildDiceList(padTop: true)),
+            ),
+          ],
+        ],
+      ),
     );
   }
 
@@ -230,14 +232,12 @@ void showDiceRollView({
   analytics.logEvent(name: Events.OpenDiceDialog, parameters: {
     'screen_name': analyticsSource,
   });
-  Get.to(
-      RollDiceView(
-        key: key,
-        character: character,
-        initialAddingDice: initialAddingDice,
-        initialDiceList: initialDiceList,
-      ),
-      fullscreenDialog: true);
+  Get.dialog(RollDiceView(
+    key: key,
+    character: character,
+    initialAddingDice: initialAddingDice,
+    initialDiceList: initialDiceList,
+  ));
 }
 
 class RollDiceDialogTransition extends CustomTransition {
