@@ -105,7 +105,8 @@ class _DiceRollBuilderState extends State<DiceRollBuilder> {
                     ),
                     RaisedButton.icon(
                       icon: Icon(Icons.check),
-                      // textColor: Theme.of(context).colorScheme.primary,
+                      color: Theme.of(context).colorScheme.primary,
+                      textColor: Theme.of(context).colorScheme.onPrimary,
                       label: Text('Roll'),
                       onPressed: _onAdd,
                     ),
