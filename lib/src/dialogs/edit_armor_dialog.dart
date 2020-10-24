@@ -66,8 +66,11 @@ class EditArmorDialogState extends State<EditArmorDialog> {
                         ),
                         Expanded(
                           child: TextField(
-                            onChanged: (val) =>
-                                _setStateValue(int.tryParse(val)),
+                            onChanged: (val) {
+                              if (int.tryParse(val) != null) {
+                                _setStateValue(int.tryParse(val));
+                              }
+                            },
                             keyboardType: TextInputType.number,
                             inputFormatters: <TextInputFormatter>[
                               FilteringTextInputFormatter.digitsOnly,
@@ -108,7 +111,7 @@ class EditArmorDialogState extends State<EditArmorDialog> {
       value = newValue;
     });
 
-    if (newValue != int.parse(_controller.text)) {
+    if (newValue != int.tryParse(_controller.text)) {
       _controller.text = newValue.toString();
       num len = newValue.toString().length;
       _controller.selection = TextSelection(baseOffset: len, extentOffset: len);

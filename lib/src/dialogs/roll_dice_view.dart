@@ -2,7 +2,6 @@ import 'package:dungeon_paper/db/models/character.dart';
 import 'package:dungeon_paper/src/flutter_utils/dice_controller.dart';
 import 'package:dungeon_paper/src/molecules/dice_roll_box.dart';
 import 'package:dungeon_paper/src/molecules/dice_roll_builder.dart';
-import 'package:dungeon_paper/src/scaffolds/scaffold_with_elevation.dart';
 import 'package:dungeon_paper/src/utils/analytics.dart';
 import 'package:dungeon_paper/src/utils/logger.dart';
 import 'package:dungeon_paper/src/utils/utils.dart';
