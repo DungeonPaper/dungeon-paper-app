@@ -4,99 +4,21 @@
   "version": "2.0.0",
   "tasks": [
     {
-      "label": "Build APK",
+      "label": "Build",
       "type": "shell",
       "command": "dart",
       "args": [
         "lib/tools/task_runner/deploy.dart",
         "--build",
+        "-l",
+        "${input:platform}",
         "-d",
         "518e84af"
       ],
       "problemMatcher": []
     },
     {
-      "label": "Push APK",
-      "type": "shell",
-      "command": "dart",
-      "args": [
-        "lib/tools/task_runner/deploy.dart",
-        "--push",
-        "-d",
-        "518e84af"
-      ],
-      "problemMatcher": []
-    },
-    {
-      "label": "Build & Push APK",
-      "type": "shell",
-      "command": "dart",
-      "args": [
-        "lib/tools/task_runner/deploy.dart",
-        "--test",
-        "--build",
-        "--push",
-        "-d",
-        "518e84af"
-      ],
-      "problemMatcher": []
-    },
-    {
-      "label": "Build & Push APK (Skip Tests)",
-      "type": "shell",
-      "command": "dart",
-      "args": [
-        "lib/tools/task_runner/deploy.dart",
-        "--build",
-        "--push",
-        "-d",
-        "518e84af"
-      ],
-      "problemMatcher": []
-    },
-    {
-      "label": "Build, Push & Install APK",
-      "type": "shell",
-      "command": "dart",
-      "args": [
-        "lib/tools/task_runner/deploy.dart",
-        "--test",
-        "--build",
-        "--push",
-        "--install",
-        "-d",
-        "518e84af"
-      ],
-      "problemMatcher": []
-    },
-    {
-      "label": "Build, Push & Install APK (Skip Tests)",
-      "type": "shell",
-      "command": "dart",
-      "args": [
-        "lib/tools/task_runner/deploy.dart",
-        "--build",
-        "--push",
-        "--install",
-        "-d",
-        "518e84af"
-      ],
-      "problemMatcher": []
-    },
-    {
-      "label": "Install Only",
-      "type": "shell",
-      "command": "dart",
-      "args": [
-        "lib/tools/task_runner/deploy.dart",
-        "--install",
-        "-d",
-        "518e84af"
-      ],
-      "problemMatcher": []
-    },
-    {
-      "label": "Push & Install",
+      "label": "Push & Install Existing APK",
       "type": "shell",
       "command": "dart",
       "args": [
@@ -109,7 +31,7 @@
       "problemMatcher": []
     },
     {
-      "label": "Test Only",
+      "label": "Test",
       "type": "shell",
       "command": "dart",
       "args": [
@@ -119,6 +41,28 @@
         "518e84af"
       ],
       "problemMatcher": []
+    }
+  ],
+  "inputs": [
+    {
+      "id": "platform",
+      "type": "pickString",
+      "default": "android",
+      "description": "Pick a platform to deploy on",
+      "options": [
+        {
+          "value": "android",
+          "label": "Android"
+        },
+        {
+          "value": "ios",
+          "label": "iOS",
+        },
+        {
+          "value": "all",
+          "label": "All"
+        }
+      ]
     }
   ]
 }

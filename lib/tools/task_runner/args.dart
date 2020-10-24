@@ -26,7 +26,7 @@ class ArgOptions {
   });
 
   ArgOptions.fromArgs(List<String> args) {
-    _createArgParser().parse(args);
+    _parser.parse(args);
   }
 
   bool help;
@@ -60,6 +60,9 @@ class ArgOptions {
         'Push': push,
         'Install': install,
       };
+
+  ArgParser _parser;
+  ArgParser get parser => _parser ??= _createArgParser();
 
   ArgParser _createArgParser() => ArgParser()
     ..addFlag(
@@ -102,7 +105,7 @@ class ArgOptions {
       'platform',
       abbr: 'l',
       defaultsTo: enumName(Device.android),
-      allowed: Device.values.map(enumName),
+      allowed: Device.values.map((d) => enumName(d).toLowerCase()),
       callback: (val) => platform = Device.values.firstWhere(
         (device) =>
             enumName(device).toLowerCase() == val.toString().toLowerCase(),

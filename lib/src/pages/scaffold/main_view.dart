@@ -1,7 +1,7 @@
 import 'package:dungeon_paper/db/models/character.dart';
 import 'package:dungeon_paper/db/models/user.dart';
 import 'package:dungeon_paper/src/atoms/dice_icon.dart';
-import 'package:dungeon_paper/src/dialogs/roll_dice_dialog.dart';
+import 'package:dungeon_paper/src/dialogs/roll_dice_view.dart';
 import 'package:dungeon_paper/src/flutter_utils/widget_utils.dart';
 import 'package:dungeon_paper/src/pages/battle_view/battle_view.dart';
 import 'package:dungeon_paper/src/pages/home_view/home_view.dart';
@@ -138,8 +138,7 @@ class _MainViewState extends State<MainView> {
               color: Theme.of(context).colorScheme.secondary,
             ),
             onPressed: () {
-              showDiceRollDialog(
-                context: context,
+              showDiceRollView(
                 character: widget.character,
                 analyticsSource: pageName,
               );

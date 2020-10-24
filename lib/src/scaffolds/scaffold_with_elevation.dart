@@ -19,6 +19,7 @@ class ScaffoldWithElevation extends StatefulWidget {
   final FloatingActionButtonAnimator floatingActionButtonAnimator;
   final FloatingActionButtonLocation floatingActionButtonLocation;
   final Widget drawer;
+  final bool useAppBar;
 
   const ScaffoldWithElevation({
     Key key,
@@ -38,6 +39,7 @@ class ScaffoldWithElevation extends StatefulWidget {
     this.floatingActionButtonLocation,
     this.elevation,
     this.drawer,
+    this.useAppBar = true,
   }) : super(key: key);
 
   @override
@@ -95,13 +97,15 @@ class _ScaffoldWithElevationState extends State<ScaffoldWithElevation> {
     final theme = Theme.of(context);
     return Scaffold(
       backgroundColor: widget.backgroundColor ?? theme.scaffoldBackgroundColor,
-      appBar: MainAppBar(
-        title: widget.title,
-        elevation: appBarElevation,
-        automaticallyImplyLeading: widget.automaticallyImplyLeading,
-        actions: widget.actions,
-        leading: widget.appBarLeading,
-      ),
+      appBar: widget.useAppBar != false
+          ? MainAppBar(
+              title: widget.title,
+              elevation: appBarElevation,
+              automaticallyImplyLeading: widget.automaticallyImplyLeading,
+              actions: widget.actions,
+              leading: widget.appBarLeading,
+            )
+          : null,
       body: wrappedChild,
       bottomNavigationBar: widget.bottomNavigationBar,
       bottomSheet: widget.bottomSheet,

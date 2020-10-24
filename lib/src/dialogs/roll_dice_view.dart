@@ -2,6 +2,7 @@ import 'package:dungeon_paper/db/models/character.dart';
 import 'package:dungeon_paper/src/flutter_utils/dice_controller.dart';
 import 'package:dungeon_paper/src/molecules/dice_roll_box.dart';
 import 'package:dungeon_paper/src/molecules/dice_roll_builder.dart';
+import 'package:dungeon_paper/src/scaffolds/scaffold_with_elevation.dart';
 import 'package:dungeon_paper/src/utils/analytics.dart';
 import 'package:dungeon_paper/src/utils/logger.dart';
 import 'package:dungeon_paper/src/utils/utils.dart';
@@ -10,12 +11,12 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:uuid/uuid.dart';
 
-class RollDiceDialog extends StatefulWidget {
+class RollDiceView extends StatefulWidget {
   final Character character;
   final List<Dice> initialDiceList;
   final List<Dice> initialAddingDice;
 
-  const RollDiceDialog({
+  const RollDiceView({
     Key key,
     this.character,
     this.initialDiceList,
@@ -23,16 +24,15 @@ class RollDiceDialog extends StatefulWidget {
   }) : super(key: key);
 
   @override
-  _RollDiceDialogState createState() => _RollDiceDialogState();
+  _RollDiceViewState createState() => _RollDiceViewState();
 }
 
-class _RollDiceDialogState extends State<RollDiceDialog>
+class _RollDiceViewState extends State<RollDiceView>
     with SingleTickerProviderStateMixin {
   String sessionKey;
   List<List<Dice>> diceList;
   DiceListController addingDiceCtrl;
   List<DiceListController> controllers;
-  // Animation<double> animation;
 
   @override
   void initState() {
@@ -42,8 +42,6 @@ class _RollDiceDialogState extends State<RollDiceDialog>
         widget.initialAddingDice?.isNotEmpty == true
             ? [...widget.initialAddingDice]
             : [Dice.d6 * 2]);
-    // animation = AnimationController(
-    //     vsync: this, value: 1, lowerBound: 1, upperBound: 1.5);
     sessionKey = generateSessionKey();
 
     if (widget.initialDiceList?.isNotEmpty == true) {
@@ -57,73 +55,61 @@ class _RollDiceDialogState extends State<RollDiceDialog>
 
   @override
   Widget build(BuildContext context) {
-    return Stack(
-      fit: StackFit.expand,
-      children: [
-        Positioned.fill(
-          child: Material(
-            color: Colors.black.withOpacity(0.7),
-            child: GestureDetector(
-              onTap: () {
-                if (Navigator.of(context).canPop()) {
-                  Get.back();
-                }
-              },
-            ),
-          ),
-        ),
-        SafeArea(
-          child: Column(
-            children: [
-              RollDialogTitle(),
-              ValueListenableBuilder(
-                valueListenable: addingDiceCtrl,
-                builder: (context, dice, child) =>
-                    // AnimatedBuilder(
-                    //     animation: animation,
-                    //     builder: (context, snapshot) {
-                    //       return
-                    //       Transform.scale(
-                    //         scale: animation.value,
-                    //         child:
-                    DiceRollBuilder(
-                  key: Key(sessionKey),
-                  character: widget.character,
-                  initialValue: dice,
-                  onChanged: _add,
+    final isLandscape =
+        MediaQuery.of(context).orientation == Orientation.landscape;
+
+    final builder = ValueListenableBuilder(
+      valueListenable: addingDiceCtrl,
+      builder: (context, dice, child) => DiceRollBuilder(
+        key: Key(sessionKey),
+        character: widget.character,
+        initialValue: dice,
+        onChanged: _add,
+      ),
+    );
+
+    return ScaffoldWithElevation(
+      title: Text('Roll Dice'),
+      wrapWithScrollable: false,
+      body: isLandscape
+          ? Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Expanded(child: SingleChildScrollView(child: builder)),
+                Expanded(
+                  child: SingleChildScrollView(child: buildDiceList()),
+                )
+              ],
+            )
+          : Column(
+              children: [
+                builder,
+                Expanded(
+                  child:
+                      SingleChildScrollView(child: buildDiceList(padTop: true)),
                 ),
-                //   );
-                // }),
-              ),
-              Expanded(
-                child: buildDiceList(),
-              ),
-            ],
-          ),
-        ),
-      ],
+              ],
+            ),
     );
   }
 
-  SingleChildScrollView buildDiceList() {
-    return SingleChildScrollView(
-      child: Column(
-        children: [
-          for (var list in enumerate(reversedControllers)) ...[
-            SizedBox(height: 16),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 16),
-              child: DiceRollBox(
-                key: Key('dice-${list.value.hash}'),
-                controller: reversedControllers.elementAt(list.index),
-                onRemove: () => _removeAt(list.index),
-                onEdit: () => _editAt(list.index),
-              ),
+  Widget buildDiceList({bool padTop = false}) {
+    return Column(
+      children: [
+        if (padTop == true) SizedBox(height: 16),
+        for (var list in enumerate(reversedControllers)) ...[
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 16),
+            child: DiceRollBox(
+              key: Key('dice-${list.value.hash}'),
+              controller: reversedControllers.elementAt(list.index),
+              onRemove: () => _removeAt(list.index),
+              onEdit: () => _editAt(list.index),
             ),
-          ],
+          ),
           SizedBox(height: 16),
         ],
-      ),
+      ],
     );
   }
 
@@ -232,9 +218,8 @@ class RollDialogTitle extends StatelessWidget {
   }
 }
 
-void showDiceRollDialog({
+void showDiceRollView({
   Key key,
-  @required BuildContext context,
   @required String analyticsSource,
   @required Character character,
   List<Dice> initialAddingDice,
@@ -245,14 +230,14 @@ void showDiceRollDialog({
   analytics.logEvent(name: Events.OpenDiceDialog, parameters: {
     'screen_name': analyticsSource,
   });
-  Get.dialog(
-    RollDiceDialog(
-      key: key,
-      character: character,
-      initialAddingDice: initialAddingDice,
-      initialDiceList: initialDiceList,
-    ),
-  );
+  Get.to(
+      RollDiceView(
+        key: key,
+        character: character,
+        initialAddingDice: initialAddingDice,
+        initialDiceList: initialDiceList,
+      ),
+      fullscreenDialog: true);
 }
 
 class RollDiceDialogTransition extends CustomTransition {

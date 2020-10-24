@@ -9,6 +9,7 @@ import 'package:dungeon_paper/src/pages/whats_new_view/whats_new_view.dart';
 import 'package:dungeon_paper/src/scaffolds/scaffold_with_elevation.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/gestures.dart';
+import 'package:get/get.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:flutter/material.dart';
 
@@ -43,17 +44,15 @@ class _AboutViewState extends State<AboutView> {
     return ScaffoldWithElevation(
       title: Text('About Dungeon Paper'),
       actions: <Widget>[
-        IconButton(
+        FlatButton.icon(
           icon: Icon(Icons.history),
-          tooltip: 'Changelog',
-          onPressed: () => showDialog(
-            context: context,
-            builder: (context) => WhatsNew.dialog(),
-          ),
+          label: Text('Changelog'),
+          onPressed: () => Get.dialog(WhatsNew.dialog()),
         )
       ],
       wrapWithScrollable: false,
       scrollController: scrollController,
+      useAppBar: false,
       body: CategorizedList.childrenBuilder(
         scrollController: scrollController,
         children: <Widget>[
@@ -74,8 +73,10 @@ class _AboutViewState extends State<AboutView> {
                         child: Image.asset('assets/logo.png'),
                       ),
                     ),
-                    Text('Dungeon Paper',
-                        style: Theme.of(context).textTheme.headline5),
+                    Text(
+                      'Dungeon Paper',
+                      style: Theme.of(context).textTheme.headline5,
+                    ),
                     VersionNumber.text(prefix: 'Version'),
                     SizedBox(height: 16),
                     Text.rich(
@@ -264,7 +265,7 @@ class SocialButton extends StatelessWidget {
     @required this.color,
     this.textColor,
     @required this.url,
-    this.textScaleFactor = 0,
+    this.textScaleFactor = 1,
   })  : assert(icon != null || assetName != null),
         super(key: key);
 
@@ -290,7 +291,7 @@ class SocialButton extends StatelessWidget {
         child: Center(
           child: Text(
             label,
-            textScaleFactor: 1.25 * textScaleFactor,
+            textScaleFactor: 1.25 * (textScaleFactor ?? 1),
           ),
         ),
       ),
