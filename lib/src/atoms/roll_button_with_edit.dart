@@ -1,6 +1,6 @@
 import 'package:dungeon_paper/db/models/character.dart';
 import 'package:dungeon_paper/src/atoms/dice_icon.dart';
-import 'package:dungeon_paper/src/dialogs/roll_dice_dialog.dart';
+import 'package:dungeon_paper/src/dialogs/roll_dice_view.dart';
 import 'package:dungeon_world_data/dice.dart';
 import 'package:flutter/material.dart';
 
@@ -53,8 +53,7 @@ class RollButtonWithEdit extends StatelessWidget {
 
   void Function() _openRollDialog(BuildContext context) {
     return () {
-      showDiceRollDialog(
-        context: context,
+      showDiceRollView(
         character: character,
         initialAddingDice: diceList,
         initialDiceList: diceList,

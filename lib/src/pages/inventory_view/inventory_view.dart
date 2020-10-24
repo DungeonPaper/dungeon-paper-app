@@ -27,7 +27,13 @@ class InventoryView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var equipment = character.inventory;
+    final equipment = character.inventory;
+    final emptyState = EmptyState(
+      title: Text('Your inventory is empty'),
+      subtitle: Text("Use the '+' button to add things to your possession."),
+      assetName: 'bag.svg',
+    );
+    final isShort = MediaQuery.of(context).size.height < 420;
 
     if (equipment.isEmpty) {
       return SingleChildScrollView(
@@ -38,12 +44,15 @@ class InventoryView extends StatelessWidget {
               child: InventoryInfoBar(character: character),
             ),
             SizedBox(height: 16),
-            EmptyState(
-              title: Text('Your inventory is empty'),
-              subtitle:
-                  Text("Use the '+' button to add things to your possession."),
-              assetName: 'bag.svg',
-            ),
+            isShort
+                ? emptyState
+                : ConstrainedBox(
+                    constraints: BoxConstraints(
+                      // minHeight: 200,
+                      maxHeight: MediaQuery.of(context).size.height - 300,
+                    ),
+                    child: emptyState,
+                  ),
           ],
         ),
       );

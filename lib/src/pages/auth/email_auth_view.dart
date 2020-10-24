@@ -4,6 +4,7 @@ import 'package:dungeon_paper/src/utils/auth/auth.dart';
 import 'package:flutter/material.dart';
 import 'package:email_validator/email_validator.dart';
 import 'package:flutter/services.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class EmailAuthResult {
   final EmailAuthCredential credential;
@@ -152,13 +153,27 @@ class _EmailAuthViewState extends State<EmailAuthView> {
                             signUpMode ? 'Sign In' : 'Sign Up',
                             textScaleFactor: 1.1,
                           ),
-                          onPressed: () => setState(
-                            () => mode = mode == EmailAuthViewMode.signIn
-                                ? EmailAuthViewMode.signUp
-                                : EmailAuthViewMode.signIn,
-                          ),
+                          onPressed: !loading
+                              ? () => setState(
+                                    () => mode =
+                                        mode == EmailAuthViewMode.signIn
+                                            ? EmailAuthViewMode.signUp
+                                            : EmailAuthViewMode.signIn,
+                                  )
+                              : null,
                         ),
                       ],
+                      RaisedButton(
+                        child: Text(
+                          'Privacy Policy',
+                          textScaleFactor: 1.1,
+                        ),
+                        onPressed: !loading
+                            ? () => launch(
+                                  'https://casraf.blog/dungeon-paper-privacy-policy',
+                                )
+                            : null,
+                      ),
                       SizedBox(height: 40),
                     ],
                   ),

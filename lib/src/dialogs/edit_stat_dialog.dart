@@ -2,7 +2,7 @@ import 'package:dungeon_paper/db/helpers/character_utils.dart';
 import 'package:dungeon_paper/db/models/character.dart';
 import 'package:dungeon_paper/src/atoms/number_controller.dart';
 import 'package:dungeon_paper/src/atoms/roll_button_with_edit.dart';
-import 'package:dungeon_paper/src/dialogs/roll_dice_dialog.dart';
+import 'package:dungeon_paper/src/dialogs/roll_dice_view.dart';
 import 'package:dungeon_paper/src/dialogs/standard_dialog_controls.dart';
 import 'package:dungeon_paper/src/flutter_utils/dice_controller.dart';
 import 'package:dungeon_paper/src/molecules/dice_roll_box.dart';
@@ -178,8 +178,7 @@ class EditStatDialogState extends State<EditStatDialog> {
   }
 
   void _editRoll() {
-    showDiceRollDialog(
-      context: context,
+    showDiceRollView(
       character: widget.character,
       initialAddingDice: rollingController.value,
       analyticsSource: 'Edit Stat Dialog',

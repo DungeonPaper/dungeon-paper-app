@@ -9,6 +9,7 @@ import 'package:dungeon_paper/src/utils/auth/auth.dart';
 import 'package:email_validator/email_validator.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class WelcomeView extends StatelessWidget {
   final bool loading;
@@ -53,11 +54,16 @@ class WelcomeView extends StatelessWidget {
                   children: [
                     Column(
                       children: [
-                        Text('Changelog'),
+                        Text('Information'),
                         RaisedButton(
                           color: Theme.of(context).colorScheme.surface,
-                          onPressed: _openWhatsNew(context),
+                          onPressed: _openWhatsNew,
                           child: Text('Changelog'),
+                        ),
+                        RaisedButton(
+                          color: Theme.of(context).colorScheme.surface,
+                          onPressed: _openPrivacyPolicy,
+                          child: Text('Privacy Policy'),
                         ),
                       ],
                     ),
@@ -108,12 +114,11 @@ class WelcomeView extends StatelessWidget {
     );
   }
 
-  void Function() _openWhatsNew(BuildContext context) {
-    return () {
-      showDialog(
-        context: context,
-        builder: (context) => WhatsNew.dialog(),
-      );
-    };
+  void _openWhatsNew() {
+    Get.dialog(WhatsNew.dialog());
+  }
+
+  void _openPrivacyPolicy() {
+    launch('https://casraf.blog/dungeon-paper-privacy-policy');
   }
 }

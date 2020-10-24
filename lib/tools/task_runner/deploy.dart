@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'args.dart';
 import 'task.dart';
 import 'task_runner.dart';
@@ -11,6 +13,10 @@ void main(List<String> args) {
     tasks: [
       LogTask((o) {
         if (!o.hasActionables) {
+          if (o.help) {
+            print(o.parser.usage);
+            exit(0);
+          }
           throw Exception('No actions to perform');
         }
         final lst =
