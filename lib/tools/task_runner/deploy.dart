@@ -3,6 +3,7 @@ import 'dart:io';
 import 'args.dart';
 import 'task.dart';
 import 'task_runner.dart';
+import 'task_utils.dart';
 import 'tasks/android_tasks.dart';
 import 'tasks/ios_tasks.dart';
 import 'tasks/test_task.dart';
@@ -26,6 +27,7 @@ void main(List<String> args) {
                   .where((i) => i != null && i.isNotEmpty)
                   .join(' & ') +
               (lst.length == 1 ? ' Only' : ''),
+          if (o.build == true) 'Platform: ${enumName(o.platform)}',
           'Version: ${o.version}',
         ];
         return msg.join('\n');

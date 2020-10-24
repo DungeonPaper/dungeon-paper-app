@@ -26,7 +26,7 @@ class ArgOptions {
   });
 
   ArgOptions.fromArgs(List<String> args) {
-    _parser.parse(args);
+    parser.parse(args);
   }
 
   bool help;
