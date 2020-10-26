@@ -25,67 +25,70 @@ class WelcomeView extends StatelessWidget {
       loading: loading,
       child: Center(
         child: SingleChildScrollView(
-          child: DefaultTextStyle(
-            style: Theme.of(context)
-                .textTheme
-                .bodyText2
-                .copyWith(color: Theme.of(context).accentColor),
-            child: Column(
-              mainAxisSize: MainAxisSize.max,
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Padding(
-                  padding: const EdgeInsets.symmetric(vertical: 24.0),
-                  child: SizedBox.fromSize(
-                    size: Size.square(
-                        min(MediaQuery.of(context).size.width - 32, 200)),
-                    child: Image.asset('assets/logo.png'),
+          child: Padding(
+            padding: const EdgeInsets.symmetric(vertical: 32),
+            child: DefaultTextStyle(
+              style: Theme.of(context)
+                  .textTheme
+                  .bodyText2
+                  .copyWith(color: Theme.of(context).accentColor),
+              child: Column(
+                mainAxisSize: MainAxisSize.max,
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.symmetric(vertical: 24),
+                    child: SizedBox.fromSize(
+                      size: Size.square(
+                          min(MediaQuery.of(context).size.width - 32, 200)),
+                      child: Image.asset('assets/logo.png'),
+                    ),
                   ),
-                ),
-                Text('Welcome to Dungeon Paper!',
-                    style: TextStyle(fontSize: 24)),
-                VersionNumber.text(prefix: 'Version'),
-                SizedBox(height: 24),
-                LoginView(),
-                SizedBox(height: 40),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Column(
-                      children: [
-                        Text('Information'),
-                        RaisedButton(
-                          color: Theme.of(context).colorScheme.surface,
-                          onPressed: _openWhatsNew,
-                          child: Text('Changelog'),
-                        ),
-                        RaisedButton(
-                          color: Theme.of(context).colorScheme.surface,
-                          onPressed: _openPrivacyPolicy,
-                          child: Text('Privacy Policy'),
-                        ),
-                      ],
-                    ),
-                    SizedBox(width: 12),
-                    Column(
-                      children: [
-                        Text("Can't sign in?"),
-                        RaisedButton(
-                          color: Theme.of(context).colorScheme.surface,
-                          onPressed: _openResetPasswordView,
-                          child: Text('Reset Password'),
-                        ),
-                        RaisedButton(
-                          color: Theme.of(context).colorScheme.surface,
-                          onPressed: _openAboutView,
-                          child: Text('Contact Us'),
-                        ),
-                      ],
-                    ),
-                  ],
-                ),
-              ],
+                  Text('Welcome to Dungeon Paper!',
+                      style: TextStyle(fontSize: 24)),
+                  VersionNumber.text(prefix: 'Version'),
+                  SizedBox(height: 24),
+                  LoginView(),
+                  SizedBox(height: 40),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Column(
+                        children: [
+                          Text('Information'),
+                          RaisedButton(
+                            color: Theme.of(context).colorScheme.surface,
+                            onPressed: _openWhatsNew,
+                            child: Text('Changelog'),
+                          ),
+                          RaisedButton(
+                            color: Theme.of(context).colorScheme.surface,
+                            onPressed: _openPrivacyPolicy,
+                            child: Text('Privacy Policy'),
+                          ),
+                        ],
+                      ),
+                      SizedBox(width: 12),
+                      Column(
+                        children: [
+                          Text("Can't sign in?"),
+                          RaisedButton(
+                            color: Theme.of(context).colorScheme.surface,
+                            onPressed: _openResetPasswordView,
+                            child: Text('Reset Password'),
+                          ),
+                          RaisedButton(
+                            color: Theme.of(context).colorScheme.surface,
+                            onPressed: _openAboutView,
+                            child: Text('Contact Us'),
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
+                ],
+              ),
             ),
           ),
         ),
