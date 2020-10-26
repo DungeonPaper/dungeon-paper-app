@@ -26,7 +26,6 @@ import 'package:pub_semver/pub_semver.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'app_bar_title.dart';
 import 'fab.dart';
-import 'main_app_bar.dart';
 import 'nav_bar.dart';
 import 'sidebar.dart';
 import 'package:flutter/material.dart';

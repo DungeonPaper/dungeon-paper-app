@@ -123,7 +123,7 @@ class _AuthProviderTileState extends State<AuthProviderTile> {
         'Account was $verbPast ${preposition} ${data.displayName}',
         duration: SnackBarDuration.long,
       );
-    } on SignInError catch (e, stack) {
+    } on SignInError catch (e) {
       setState(() {
         error = e.message == 'user_canceled'
             ? "Sign in process wasn't completed."
