@@ -33,18 +33,6 @@ class CustomClassesList extends StatelessWidget {
       converter: (store) =>
           store.state.customClasses.customClasses.values.toList(),
       builder: (context, classes) {
-        if (classes.isEmpty) {
-          return Padding(
-            padding: const EdgeInsets.symmetric(vertical: 16.0),
-            child: Center(
-              child: EmptyState(
-                title: Text('You have no custom classes'),
-                subtitle: Text("Start by tapping the '+' button"),
-                image: Icon(Icons.person, size: 80),
-              ),
-            ),
-          );
-        }
         return SingleChildScrollView(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
