@@ -82,9 +82,11 @@ class _WhatsNewState extends State<WhatsNew> {
     if (currentVersion == null || changelog == null) {
       if (!error) {
         child = Container(
-          width: 150,
-          height: 150,
-          child: Center(child: Loader()),
+          width: min(320, MediaQuery.of(context).size.width),
+          height: min(400, MediaQuery.of(context).size.height),
+          child: Center(
+            child: Loader(color: Theme.of(context).colorScheme.primary),
+          ),
         );
       } else {
         child = Padding(
