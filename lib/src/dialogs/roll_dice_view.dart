@@ -69,6 +69,7 @@ class _RollDiceViewState extends State<RollDiceView>
 
     return SafeArea(
       child: Column(
+        mainAxisSize: MainAxisSize.min,
         children: [
           RollDialogTitle(),
           if (isLandscape)
@@ -78,7 +79,8 @@ class _RollDiceViewState extends State<RollDiceView>
                 children: [
                   Expanded(child: SingleChildScrollView(child: builder)),
                   Expanded(
-                    child: SingleChildScrollView(child: buildDiceList()),
+                    child: SingleChildScrollView(
+                        child: Column(children: buildDiceList())),
                   )
                 ],
               ),
@@ -86,7 +88,16 @@ class _RollDiceViewState extends State<RollDiceView>
           if (!isLandscape) ...[
             builder,
             Expanded(
-              child: SingleChildScrollView(child: buildDiceList(padTop: true)),
+              child: SingleChildScrollView(
+                child: Column(
+                  mainAxisSize: MainAxisSize.max,
+                  children: [
+                    SizedBox(height: 16),
+                    ...buildDiceList(),
+                    Container(color: Colors.red),
+                  ],
+                ),
+              ),
             ),
           ],
         ],
@@ -94,24 +105,20 @@ class _RollDiceViewState extends State<RollDiceView>
     );
   }
 
-  Widget buildDiceList({bool padTop = false}) {
-    return Column(
-      children: [
-        if (padTop == true) SizedBox(height: 16),
-        for (var list in enumerate(reversedControllers)) ...[
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 16),
-            child: DiceRollBox(
-              key: Key('dice-${list.value.hash}'),
-              controller: reversedControllers.elementAt(list.index),
-              onRemove: () => _removeAt(list.index),
-              onEdit: () => _editAt(list.index),
-            ),
+  List<Widget> buildDiceList() {
+    return [
+      for (var list in enumerate(reversedControllers))
+        Padding(
+          padding:
+              const EdgeInsets.symmetric(horizontal: 16).copyWith(bottom: 32),
+          child: DiceRollBox(
+            key: Key('dice-${list.value.hash}'),
+            controller: reversedControllers.elementAt(list.index),
+            onRemove: () => _removeAt(list.index),
+            onEdit: () => _editAt(list.index),
           ),
-          SizedBox(height: 16),
-        ],
-      ],
-    );
+        ),
+    ];
   }
 
   num reversedIndex(num idx) {
@@ -231,12 +238,15 @@ void showDiceRollView({
   analytics.logEvent(name: Events.OpenDiceDialog, parameters: {
     'screen_name': analyticsSource,
   });
-  Get.dialog(RollDiceView(
-    key: key,
-    character: character,
-    initialAddingDice: initialAddingDice,
-    initialDiceList: initialDiceList,
-  ));
+  Get.dialog(
+    RollDiceView(
+      key: key,
+      character: character,
+      initialAddingDice: initialAddingDice,
+      initialDiceList: initialDiceList,
+    ),
+    barrierColor: Colors.black.withOpacity(0.7),
+  );
 }
 
 class RollDiceDialogTransition extends CustomTransition {

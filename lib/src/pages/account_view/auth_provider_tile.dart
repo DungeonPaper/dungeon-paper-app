@@ -105,11 +105,11 @@ class _AuthProviderTileState extends State<AuthProviderTile> {
   Future _toggleLink() async {
     final isLinked = isUserLinkedToAuth(data.id, user);
     setState(() => loading = true);
-    final cred = await _getCredential(context, data.id, isLinked: isLinked);
     final verb = '${isLinked ? 'un' : ''}linking';
     final verbPast = '${isLinked ? 'un' : ''}linked';
     final preposition = !isLinked ? 'to' : 'from';
     try {
+      final cred = await _getCredential(context, data.id, isLinked: isLinked);
       if (isLinked) {
         await unlinkFromProvider(data.id);
       } else {
@@ -123,17 +123,29 @@ class _AuthProviderTileState extends State<AuthProviderTile> {
         'Account was $verbPast ${preposition} ${data.displayName}',
         duration: SnackBarDuration.long,
       );
-    } catch (e, stack) {
-      logger.e('Error with $verb', e, stack);
+    } on SignInError catch (e, stack) {
       setState(() {
-        loading = false;
-        error = e.message;
+        error = e.message == 'user_canceled'
+            ? "Sign in process wasn't completed."
+            : e.message;
       });
       Get.snackbar(
         'Problem with account $verb',
-        e.message,
+        error,
         duration: SnackBarDuration.long,
       );
+    } catch (e, stack) {
+      logger.e('Error with $verb', e, stack);
+      setState(() {
+        error = 'Something went wrong. Try again or contact us for support.';
+      });
+      Get.snackbar(
+        'Problem with account $verb',
+        error,
+        duration: SnackBarDuration.long,
+      );
+    } finally {
+      setState(() => loading = false);
     }
   }
 

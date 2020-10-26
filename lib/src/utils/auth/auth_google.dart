@@ -25,6 +25,9 @@ Future<GoogleAuthCredential> getGoogleCredential({
 }) async {
   final inst = await _getGSignIn();
   final acct = await (interactive ? inst.signIn() : inst.signInSilently());
+  if (acct == null) {
+    throw SignInError('user_canceled');
+  }
   final authRes = await acct.authentication;
   final cred = GoogleAuthProvider.credential(
     accessToken: authRes.accessToken,

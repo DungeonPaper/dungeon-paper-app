@@ -14,6 +14,7 @@ import 'package:dungeon_paper/src/redux/connectors.dart';
 import 'package:dungeon_paper/src/redux/loading/loading_store.dart';
 import 'package:dungeon_paper/src/redux/shared_preferences/prefs_store.dart';
 import 'package:dungeon_paper/src/redux/stores.dart';
+import 'package:dungeon_paper/src/scaffolds/scaffold_with_elevation.dart';
 import 'package:dungeon_paper/src/utils/analytics.dart';
 import 'package:dungeon_paper/src/utils/logger.dart';
 import 'package:dungeon_paper/src/utils/utils.dart';
@@ -112,14 +113,16 @@ class _MainViewState extends State<MainView> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: MainAppBar(
-        title: appBarTitle,
-        // wrapWithScrollable: false,
-        // scrollController: _currentScrollController,
-        actions: actions(context),
-        elevation: 0,
-      ),
+    final useAppBar = widget.character != null;
+    return ScaffoldWithElevation(
+      // appBar: MainAppBar(
+      // scrollController: _currentScrollController,
+      title: appBarTitle,
+      actions: actions(context),
+      elevation: 0,
+      // ),
+      wrapWithScrollable: false,
+      useAppBar: useAppBar,
       drawer: drawer,
       floatingActionButton: fab,
       floatingActionButtonLocation: fabLocation,

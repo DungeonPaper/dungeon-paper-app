@@ -43,16 +43,8 @@ class _AboutViewState extends State<AboutView> {
   Widget build(BuildContext context) {
     return ScaffoldWithElevation(
       title: Text('About Dungeon Paper'),
-      actions: <Widget>[
-        FlatButton.icon(
-          icon: Icon(Icons.history),
-          label: Text('Changelog'),
-          onPressed: () => Get.dialog(WhatsNew.dialog()),
-        )
-      ],
       wrapWithScrollable: false,
       scrollController: scrollController,
-      useAppBar: false,
       body: CategorizedList.childrenBuilder(
         scrollController: scrollController,
         children: <Widget>[
@@ -78,6 +70,12 @@ class _AboutViewState extends State<AboutView> {
                       style: Theme.of(context).textTheme.headline5,
                     ),
                     VersionNumber.text(prefix: 'Version'),
+                    SizedBox(height: 16),
+                    RaisedButton.icon(
+                      icon: Icon(Icons.history),
+                      label: Text('Changelog'),
+                      onPressed: () => Get.dialog(WhatsNew.dialog()),
+                    ),
                     SizedBox(height: 16),
                     Text.rich(
                       TextSpan(
