@@ -41,6 +41,7 @@ Future<bool> withReauth<T>(
     return true;
   } on FirebaseAuthException catch (e) {
     if (e.code == 'requires-recent-login') {
+      await Future.delayed(Duration(seconds: 2));
       await reauthenticateUser(user);
       await callback(user);
       return true;
@@ -172,7 +173,4 @@ void dispatchFinalDataToStore({
 
 void registerAllListeners(fb.User fbUser) {
   registerFirebaseUserListener();
-  registerUserListener(fbUser);
-  registerCharactersListener();
-  registerCustomClassesListener();
 }

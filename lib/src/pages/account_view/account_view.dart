@@ -191,7 +191,6 @@ class _AccountViewState extends State<AccountView> {
         title: Text('Edit Display Name'),
         onSave: (displayName) async {
           unawaited(analytics.logEvent(name: Events.EditDisplayNameConfirm));
-
           user.displayName = displayName;
           await user.update();
           Get.back();

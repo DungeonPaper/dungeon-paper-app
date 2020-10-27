@@ -21,12 +21,7 @@ abstract class FirebaseEntity {
     if (data != null && data.isNotEmpty) {
       var dataWithDefaults = _mergeDataWithDefaults(data);
       deserializeData(dataWithDefaults);
-      lastUpdated = data['lastUpdated'] != null
-          ? data['lastUpdated'] is Timestamp
-              ? (data['lastUpdated'] as Timestamp).toDate()
-              : DateTime.fromMillisecondsSinceEpoch(
-                  data['lastUpdated']['_seconds'] * 1000)
-          : null;
+      lastUpdated = _getTimestamp(data['lastUpdated']);
     } else if (ref != null && autoLoad == true) {
       getRemoteData();
     } else {
@@ -45,6 +40,12 @@ abstract class FirebaseEntity {
     return dataWithDefaults;
   }
 
+  DateTime _getTimestamp(dynamic original) => original != null
+      ? original is Timestamp
+          ? original.toDate()
+          : DateTime.fromMillisecondsSinceEpoch(original['_seconds'] * 1000)
+      : null;
+
   @mustCallSuper
   Future<Map<String, dynamic>> getRemoteData() async {
     var output = <String, dynamic>{};
@@ -52,12 +53,7 @@ abstract class FirebaseEntity {
     if (snapshot?.data() != null) {
       var data = _mergeDataWithDefaults(snapshot.data());
       output = await deserializeData(data);
-      lastUpdated = data['lastUpdated'] != null
-          ? data['lastUpdated'] is Timestamp
-              ? (data['lastUpdated'] as Timestamp).toDate()
-              : DateTime.fromMillisecondsSinceEpoch(
-                  data['lastUpdated']['_seconds'] * 1000)
-          : null;
+      lastUpdated = _getTimestamp(data['lastUpdated']);
     }
     return output;
   }
@@ -104,7 +100,6 @@ abstract class FirebaseEntity {
     } else if (json.isNotEmpty) {
       json = prepareJSONUpdate(json);
     }
-    json['lastUpdated'] = DateTime.now();
     return json;
   }
 
@@ -115,7 +110,7 @@ abstract class FirebaseEntity {
       }
       logger.d('Updating $this');
       logger.d(json.toString());
-      await ref.update(json);
+      await ref.update({...json, 'lastUpdated': FieldValue.serverTimestamp()});
       unsetDirty(json);
     }
   }
@@ -130,7 +125,7 @@ abstract class FirebaseEntity {
     } catch (e, stack) {
       logger.e('Logging error', e, stack);
     }
-    await ref.set(json);
+    await ref.set({...json, 'lastUpdated': FieldValue.serverTimestamp()});
     unsetDirty(json);
   }
 

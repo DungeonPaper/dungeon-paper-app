@@ -16,6 +16,13 @@ class Loader extends StatelessWidget {
   final Size size;
   final double strokeWidth;
 
+  factory Loader.button({Color color, Color backgroundColor}) => Loader(
+        size: Size.square(16),
+        color: color,
+        backgroundColor: backgroundColor,
+        strokeWidth: 2,
+      );
+
   const Loader({
     Key key,
     this.color,
