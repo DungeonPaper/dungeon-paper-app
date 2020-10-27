@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'package:dungeon_paper/src/utils/analytics.dart';
 import 'package:dungeon_paper/src/utils/logger.dart';
 import 'package:dungeon_paper/src/utils/utils.dart';
 import 'package:get/get.dart';
@@ -9,6 +10,7 @@ import 'package:dungeon_paper/src/utils/auth/auth.dart';
 import 'package:firebase_auth/firebase_auth.dart' as fb;
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:pedantic/pedantic.dart';
 
 class AuthProviderTileData {
   final String id;
@@ -108,12 +110,24 @@ class _AuthProviderTileState extends State<AuthProviderTile> {
     final verb = '${isLinked ? 'un' : ''}linking';
     final verbPast = '${isLinked ? 'un' : ''}linked';
     final preposition = !isLinked ? 'to' : 'from';
+    unawaited(analytics.logEvent(
+      name: isLinked ? Events.AccountUnlinkAttempt : Events.AccountLinkAttempt,
+      parameters: {'provider': data.id},
+    ));
     try {
       final cred = await _getCredential(context, data.id, isLinked: isLinked);
       if (isLinked) {
         await unlinkFromProvider(data.id);
+        unawaited(analytics.logEvent(
+          name: Events.AccountUnlinkSuccess,
+          parameters: {'provider': data.id},
+        ));
       } else {
         await linkWithCredentials(cred);
+        unawaited(analytics.logEvent(
+          name: Events.AccountLinkSuccess,
+          parameters: {'provider': data.id},
+        ));
       }
       if (mounted) {
         setState(() => loading = false);
@@ -129,6 +143,17 @@ class _AuthProviderTileState extends State<AuthProviderTile> {
             ? "Sign in process wasn't completed."
             : e.message;
       });
+      if (isLinked) {
+        unawaited(analytics.logEvent(
+          name: Events.AccountUnlinkFail,
+          parameters: {'provider': data.id, 'reason': 'user_cancel'},
+        ));
+      } else {
+        unawaited(analytics.logEvent(
+          name: Events.AccountLinkFail,
+          parameters: {'provider': data.id, 'reason': 'user_cancel'},
+        ));
+      }
       Get.snackbar(
         'Problem with account $verb',
         error,
@@ -139,6 +164,25 @@ class _AuthProviderTileState extends State<AuthProviderTile> {
       setState(() {
         error = 'Something went wrong. Try again or contact us for support.';
       });
+      if (isLinked) {
+        unawaited(analytics.logEvent(
+          name: Events.AccountUnlinkFail,
+          parameters: {
+            'provider': data.id,
+            'reason': 'error',
+            'error': e.toString()
+          },
+        ));
+      } else {
+        unawaited(analytics.logEvent(
+          name: Events.AccountLinkFail,
+          parameters: {
+            'provider': data.id,
+            'reason': 'error',
+            'error': e.toString()
+          },
+        ));
+      }
       Get.snackbar(
         'Problem with account $verb',
         error,

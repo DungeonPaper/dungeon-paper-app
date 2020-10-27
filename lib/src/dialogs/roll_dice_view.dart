@@ -67,6 +67,7 @@ class _RollDiceViewState extends State<RollDiceView>
       ),
     );
 
+    var results = buildDiceList();
     return SafeArea(
       child: Column(
         mainAxisSize: MainAxisSize.min,
@@ -79,8 +80,8 @@ class _RollDiceViewState extends State<RollDiceView>
                 children: [
                   Expanded(child: SingleChildScrollView(child: builder)),
                   Expanded(
-                    child: SingleChildScrollView(
-                        child: Column(children: buildDiceList())),
+                    child:
+                        SingleChildScrollView(child: Column(children: results)),
                   )
                 ],
               ),
@@ -88,14 +89,17 @@ class _RollDiceViewState extends State<RollDiceView>
           if (!isLandscape) ...[
             builder,
             Expanded(
-              child: SingleChildScrollView(
-                child: Column(
-                  mainAxisSize: MainAxisSize.max,
-                  children: [
-                    SizedBox(height: 16),
-                    ...buildDiceList(),
-                    Container(color: Colors.red),
-                  ],
+              child: GestureDetector(
+                onTap: () => Get.back(),
+                child: SingleChildScrollView(
+                  child: Column(
+                    mainAxisSize: MainAxisSize.max,
+                    children: [
+                      SizedBox(height: 16),
+                      ...results,
+                      Container(color: Colors.red),
+                    ],
+                  ),
                 ),
               ),
             ),

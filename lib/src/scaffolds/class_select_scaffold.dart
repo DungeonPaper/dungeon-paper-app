@@ -162,7 +162,7 @@ class _ConfirmClassChangeDialogState extends State<ConfirmClassChangeDialog> {
         okButtonText:
             Text(isEdit ? "I'm sure, let's do this" : 'Choose this class'),
         cancelButtonText: Text('Wait, not yet'),
-        returnValue: (bool confirmed) {
+        returnValue: (confirmed) {
           return confirmed
               ? isEdit
                   ? options

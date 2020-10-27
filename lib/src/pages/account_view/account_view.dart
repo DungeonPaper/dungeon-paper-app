@@ -1,14 +1,18 @@
+import 'package:dungeon_paper/db/models/user.dart';
 import 'package:dungeon_paper/src/atoms/user_avatar.dart';
+import 'package:dungeon_paper/src/dialogs/confirmation_dialog.dart';
 import 'package:dungeon_paper/src/dialogs/single_field_edit_dialog.dart';
 import 'package:dungeon_paper/src/flutter_utils/widget_utils.dart';
 import 'package:dungeon_paper/src/pages/account_view/auth_provider_tile.dart';
 import 'package:dungeon_paper/src/redux/connectors.dart';
 import 'package:dungeon_paper/src/scaffolds/scaffold_with_elevation.dart';
+import 'package:dungeon_paper/src/utils/analytics.dart';
 import 'package:dungeon_paper/src/utils/auth/auth.dart';
 import 'package:dungeon_paper/src/utils/share.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart' as fb;
 import 'package:get/get.dart';
+import 'package:pedantic/pedantic.dart';
 
 class AccountView extends StatefulWidget {
   static final _providersData = [
@@ -36,6 +40,7 @@ class _AccountViewState extends State<AccountView> {
 
   @override
   void initState() {
+    analytics.setCurrentScreen(screenName: ScreenNames.Account);
     passwordResetSent = false;
     loadingPasswordReset = false;
     super.initState();
@@ -70,39 +75,14 @@ class _AccountViewState extends State<AccountView> {
                       title: Text('Display name'),
                       subtitle: Text(user.displayName),
                       trailing: Icon(Icons.edit),
-                      onTap: () => showDialog(
-                        context: context,
-                        builder: (context) => SingleTextFieldEditDialog(
-                          value: user.displayName,
-                          fieldName: 'Display Name',
-                          title: Text('Edit Display Name'),
-                          onSave: (displayName) async {
-                            user.displayName = displayName;
-                            await user.update();
-                            Get.back();
-                          },
-                          onCancel: () => Get.back(),
-                        ),
-                      ),
+                      onTap: () => _openEditDisplayName(context, user),
                     ),
                     if (hasPassword) ...[
                       ListTile(
                         title: Text('Email address'),
                         subtitle: Text(user.email),
                         trailing: Icon(Icons.edit),
-                        onTap: () => showDialog(
-                          context: context,
-                          builder: (context) => SingleTextFieldEditDialog(
-                            value: user.email,
-                            fieldName: 'Email address',
-                            title: Text('Edit Email'),
-                            onSave: (email) async {
-                              await user.changeEmail(email);
-                              Get.back();
-                            },
-                            onCancel: () => Get.back(),
-                          ),
-                        ),
+                        onTap: () => _openEditEmail(context, user),
                       ),
                       ListTile(
                         title: Text('Password'),
@@ -162,7 +142,7 @@ class _AccountViewState extends State<AccountView> {
                       child: Text('Invite a friend', textScaleFactor: 1.1),
                       color: Theme.of(context).colorScheme.secondary,
                       textColor: Theme.of(context).colorScheme.onSecondary,
-                      onPressed: shareAppLink,
+                      onPressed: _shareAppLink,
                     )
                   ],
                 ),
@@ -174,12 +154,77 @@ class _AccountViewState extends State<AccountView> {
     );
   }
 
+  void _shareAppLink() {
+    analytics.logEvent(name: Events.ShareApp);
+    shareAppLink();
+  }
+
+  void _openEditEmail(BuildContext context, User user) {
+    analytics.logEvent(name: Events.EditEmailAttempt);
+    showDialog(
+      context: context,
+      builder: (context) => SingleTextFieldEditDialog(
+        value: user.email,
+        fieldName: 'Email address',
+        title: Text('Edit Email'),
+        onSave: (email) async {
+          unawaited(analytics.logEvent(name: Events.EditEmailConfirm));
+          await user.changeEmail(email);
+          Get.back();
+        },
+        onCancel: () {
+          unawaited(analytics.logEvent(name: Events.EditEmailCancel));
+          Get.back();
+        },
+      ),
+    );
+  }
+
+  void _openEditDisplayName(BuildContext context, User user) {
+    analytics.logEvent(name: Events.EditDisplayNameAttempt);
+
+    showDialog(
+      context: context,
+      builder: (context) => SingleTextFieldEditDialog(
+        value: user.displayName,
+        fieldName: 'Display Name',
+        title: Text('Edit Display Name'),
+        onSave: (displayName) async {
+          unawaited(analytics.logEvent(name: Events.EditDisplayNameConfirm));
+
+          user.displayName = displayName;
+          await user.update();
+          Get.back();
+        },
+        onCancel: () {
+          unawaited(analytics.logEvent(name: Events.EditDisplayNameCancel));
+          Get.back();
+        },
+      ),
+    );
+  }
+
   void _sendPasswordReset(BuildContext context, fb.User user) async {
-    setState(() => loadingPasswordReset = true);
-    await sendPasswordResetLink(user.email);
-    setState(() {
-      loadingPasswordReset = false;
-      passwordResetSent = true;
-    });
+    unawaited(analytics.logEvent(name: Events.PasswordResetAttempt));
+    final res = await Get.dialog<bool>(ConfirmationDialog(
+      okButtonText: Text('Reset Password'),
+      title: Text('Reset Password'),
+      text: Text(
+          'Selecting "Reset Password" will send a link to your account\'s email address,'
+          'which you can use to change your password to a new one.\n\n'
+          'The email address that will be sent to is:\n\n'
+          '\t\t\t${user.email}'),
+    ));
+    if (res == true) {
+      unawaited(analytics.logEvent(name: Events.PasswordResetConfirm));
+      setState(() => loadingPasswordReset = true);
+      await sendPasswordResetLink(user.email);
+      setState(() {
+        loadingPasswordReset = false;
+        passwordResetSent = true;
+      });
+    } else {
+      unawaited(analytics.logEvent(name: Events.PasswordResetCancel));
+    }
   }
 }
