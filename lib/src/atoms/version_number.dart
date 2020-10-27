@@ -2,9 +2,10 @@ import 'package:dungeon_paper/src/utils/utils.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/widgets.dart';
 import 'package:package_info/package_info.dart';
+import 'package:pub_semver/pub_semver.dart';
 
 class VersionNumber extends StatefulWidget {
-  final Widget Function(String version) builder;
+  final Widget Function(Version version) builder;
 
   const VersionNumber({
     Key key,
@@ -14,8 +15,8 @@ class VersionNumber extends StatefulWidget {
   factory VersionNumber.text({Key key, String prefix, String suffix}) =>
       VersionNumber(
         key: key,
-        builder: (v) =>
-            Text([prefix, v, suffix].where((s) => s != null).join(' ')),
+        builder: (v) => Text(
+            [prefix, v.toString(), suffix].where((s) => s != null).join(' ')),
       );
 
   @override
@@ -23,20 +24,22 @@ class VersionNumber extends StatefulWidget {
 }
 
 class _VersionNumberState extends State<VersionNumber> {
-  String version;
+  Version version;
 
   @override
   void initState() {
-    _getVersion();
     super.initState();
+    _getVersion();
   }
 
   void _getVersion() async {
     if (kIsWeb) {
       final secrets = await loadSecrets();
-      setState(() {
-        version = secrets.VERSION_NUMBER;
-      });
+      if (mounted) {
+        setState(() {
+          version = Version.parse(secrets.VERSION_NUMBER);
+        });
+      }
       return;
     }
 
@@ -44,13 +47,17 @@ class _VersionNumberState extends State<VersionNumber> {
 
     if (mounted) {
       setState(() {
-        version = packageInfo.version;
+        version =
+            Version.parse(packageInfo.version + '+${packageInfo.buildNumber}');
       });
     }
   }
 
   @override
   Widget build(BuildContext context) {
-    return widget.builder(version ?? '...');
+    if (version == null) {
+      return Container();
+    }
+    return widget.builder(version);
   }
 }

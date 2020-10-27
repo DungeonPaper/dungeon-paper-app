@@ -159,7 +159,11 @@ class _AboutViewState extends State<AboutView> {
                               FeedbackButton(
                                 dontWaitForUser: true,
                                 onReady: () {
-                                  setState(() {});
+                                  Future.delayed(Duration.zero, () {
+                                    if (mounted) {
+                                      setState(() {});
+                                    }
+                                  });
                                 },
                                 builder: (onPressed, url) => SocialButton(
                                   label: 'Email',
