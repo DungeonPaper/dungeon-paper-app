@@ -42,8 +42,8 @@ class MainContainer extends StatelessWidget {
   Widget build(BuildContext context) {
     return DWStoreConnector<DWStore>(
       builder: (ctx, state) {
-        var character = state.characters.current;
-        var user = state.user.current;
+        final character = state.characters.current;
+        final user = state.user.current;
         return MainView(
           character: character,
           user: user,

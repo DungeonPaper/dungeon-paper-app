@@ -1,10 +1,13 @@
+import 'dart:async';
+
 import 'package:dungeon_paper/src/dialogs/standard_dialog_controls.dart';
+import 'package:dungeon_paper/src/flutter_utils/widget_utils.dart';
 import 'package:flutter/material.dart';
 
-class SingleFieldEditDialog<T> extends StatelessWidget {
+class SingleFieldEditDialog<T> extends StatefulWidget {
   final String fieldName;
   final T value;
-  final void Function() onConfirm;
+  final FutureOr<void> Function() onConfirm;
   final void Function() onCancel;
   final Widget Function(BuildContext) fieldBuilder;
   final Widget title;
@@ -28,30 +31,51 @@ class SingleFieldEditDialog<T> extends StatelessWidget {
   }) : super(key: key);
 
   @override
+  _SingleFieldEditDialogState<T> createState() =>
+      _SingleFieldEditDialogState<T>();
+}
+
+class _SingleFieldEditDialogState<T> extends State<SingleFieldEditDialog<T>> {
+  bool loading;
+
+  @override
+  void initState() {
+    super.initState();
+    loading = false;
+  }
+
+  @override
   Widget build(BuildContext context) {
     return AlertDialog(
-      title: title,
+      title: widget.title,
       content: SingleChildScrollView(
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            if (prompt != null) prompt,
-            if (children?.isNotEmpty == true) ...children,
+            if (widget.prompt != null) widget.prompt,
+            if (widget.children?.isNotEmpty == true) ...widget.children,
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 16),
-              child: fieldBuilder(context),
+              child: widget.fieldBuilder(context),
             ),
           ],
         ),
       ),
       actions: StandardDialogControls.actions(
         context: context,
-        onConfirm: onConfirm,
-        confirmDisabled: confirmDisabled,
-        confirmText: confirmText ?? Text('Save'),
-        onCancel: onCancel,
+        onConfirm: _confirm,
+        confirmDisabled: widget.confirmDisabled || loading,
+        confirmText:
+            loading ? Loader.button() : widget.confirmText ?? Text('Save'),
+        onCancel: widget.onCancel,
       ),
     );
+  }
+
+  void _confirm() async {
+    setState(() => loading = true);
+    await widget.onConfirm?.call();
+    setState(() => loading = false);
   }
 }
 
@@ -60,7 +84,7 @@ class SingleTextFieldEditDialog extends StatefulWidget {
   final String fieldName;
   final Widget title;
   final Widget confirmText;
-  final void Function(String) onSave;
+  final FutureOr<void> Function(String) onSave;
   final void Function() onCancel;
   final bool allowEmpty;
   final bool Function(String) confirmDisabled;
