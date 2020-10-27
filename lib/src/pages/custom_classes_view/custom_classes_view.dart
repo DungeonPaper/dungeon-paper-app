@@ -4,6 +4,7 @@ import 'package:dungeon_paper/src/dialogs/confirmation_dialog.dart';
 import 'package:dungeon_paper/src/dialogs/dialogs.dart';
 import 'package:dungeon_paper/src/lists/custom_classes_list.dart';
 import 'package:dungeon_paper/src/lists/player_class_list.dart';
+import 'package:dungeon_paper/src/redux/connectors.dart';
 import 'package:dungeon_paper/src/redux/stores.dart';
 import 'package:dungeon_paper/src/scaffolds/custom_class_wizard/custom_class_wizard.dart';
 import 'package:dungeon_paper/src/scaffolds/scaffold_with_elevation.dart';
@@ -29,58 +30,61 @@ class _CustomClassesViewState extends State<CustomClassesView> {
 
   @override
   Widget build(BuildContext context) {
-    final hasClasses =
-        dwStore.state.customClasses.customClasses?.isNotEmpty == true;
-
-    return ScaffoldWithElevation(
-      title: Text('Custom Classes'),
-      automaticallyImplyLeading: true,
-      useElevation: false,
-      elevation: 0,
-      actions: [
-        PlayerClassList(
-          builder: (context, list) => PopupMenuButton<PlayerClass>(
-            icon: Icon(Icons.content_copy),
-            tooltip: 'Copy existing class',
-            onSelected: _copyExisting,
-            itemBuilder: (context) => [
-              PopupMenuItem<PlayerClass>(
-                value: null,
-                enabled: false,
-                child: Text('Copy existing class:'),
-              ),
-              ...list.map(
-                (el) => PopupMenuItem<PlayerClass>(
-                  value: el,
-                  child: Text(el.name),
-                ),
-              ),
-            ],
-          ),
-        ),
-      ],
-      wrapWithScrollable: hasClasses,
-      body: hasClasses
-          ? Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: CustomClassesList(
-                onEdit: _edit(context),
-                onDelete: _delete(context),
-              ),
-            )
-          : Center(
-              child: EmptyState(
-                title: Text('You have no custom classes'),
-                subtitle: Text("Start by tapping the '+' button"),
-                image: Icon(Icons.person, size: 80),
+    return DWStoreConnector<bool>(
+      converter: (store) =>
+          store.state.customClasses.customClasses?.isNotEmpty == true,
+      builder: (context, hasClasses) {
+        return ScaffoldWithElevation(
+          title: Text('Custom Classes'),
+          automaticallyImplyLeading: true,
+          useElevation: false,
+          elevation: 0,
+          actions: [
+            PlayerClassList(
+              builder: (context, list) => PopupMenuButton<PlayerClass>(
+                icon: Icon(Icons.content_copy),
+                tooltip: 'Copy existing class',
+                onSelected: _copyExisting,
+                itemBuilder: (context) => [
+                  PopupMenuItem<PlayerClass>(
+                    value: null,
+                    enabled: false,
+                    child: Text('Copy existing class:'),
+                  ),
+                  ...list.map(
+                    (el) => PopupMenuItem<PlayerClass>(
+                      value: el,
+                      child: Text(el.name),
+                    ),
+                  ),
+                ],
               ),
             ),
-      floatingActionButton: FloatingActionButton(
-        child: Icon(Icons.add),
-        backgroundColor: Theme.of(context).colorScheme.background,
-        foregroundColor: Theme.of(context).colorScheme.onBackground,
-        onPressed: _add(context),
-      ),
+          ],
+          wrapWithScrollable: hasClasses,
+          body: hasClasses
+              ? Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: CustomClassesList(
+                    onEdit: _edit(context),
+                    onDelete: _delete(context),
+                  ),
+                )
+              : Center(
+                  child: EmptyState(
+                    title: Text('You have no custom classes'),
+                    subtitle: Text("Start by tapping the '+' button"),
+                    image: Icon(Icons.person, size: 80),
+                  ),
+                ),
+          floatingActionButton: FloatingActionButton(
+            child: Icon(Icons.add),
+            backgroundColor: Theme.of(context).colorScheme.background,
+            foregroundColor: Theme.of(context).colorScheme.onBackground,
+            onPressed: _add(context),
+          ),
+        );
+      },
     );
   }
 

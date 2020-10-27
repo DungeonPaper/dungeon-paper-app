@@ -94,11 +94,8 @@ class _AccountViewState extends State<AccountView> {
                         trailing: FlatButton(
                           textColor: Theme.of(context).colorScheme.secondary,
                           child: loadingPasswordReset
-                              ? Loader(
-                                  size: Size.square(16),
-                                  strokeWidth: 2,
-                                  color: Theme.of(context).accentColor,
-                                )
+                              ? Loader.button(
+                                  color: Theme.of(context).accentColor)
                               : Text(passwordResetSent
                                   ? 'Send Again'
                                   : 'Reset Password'),
