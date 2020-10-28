@@ -13,7 +13,7 @@ This is the source of this app, but to fully use it you must set up your own fir
 Once that is properly set up, the app should create entities based on logins to the app, so nothing else should be created for the database beforehand.
 No one in this repository will provide any secret keys to anyone, ever.
 
-## Dungeon Paper is available on [Google Play](https://bit.ly/DungeonPaper-Android).
+## Dungeon Paper is on [Google Play](https://bit.ly/DungeonPaper-Android) and [iOS](https://bit.ly/DungeonPaper-iOS)!
 
 ## Features
 
