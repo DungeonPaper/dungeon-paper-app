@@ -13,7 +13,7 @@ import 'package:get/get.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:flutter/material.dart';
 
-const List<String> iconsCredits = [
+const iconsCredits = [
   'ibrandify',
   'Freepik',
   'FontAwesome',
@@ -55,7 +55,7 @@ class _AboutViewState extends State<AboutView> {
               crossAxisAlignment: CrossAxisAlignment.stretch,
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
-                WhatsNewBox(
+                AboutBox(
                   children: [
                     Padding(
                       padding: const EdgeInsets.symmetric(vertical: 24.0),
@@ -98,7 +98,7 @@ class _AboutViewState extends State<AboutView> {
                   ],
                 ),
                 SizedBox(height: 15),
-                WhatsNewBox(
+                AboutBox(
                   child: Column(
                     mainAxisSize: MainAxisSize.min,
                     crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -198,8 +198,9 @@ class _AboutViewState extends State<AboutView> {
                               Container(),
                               SocialButton(
                                 label: 'Rate',
-                                url:
-                                    'https://play.google.com/store/apps/details?id=app.dungeonpaper&$utm',
+                                url: Platform.isIOS
+                                    ? 'https://apps.apple.com/us/app/dungeon-paper/id1525383509'
+                                    : 'https://play.google.com/store/apps/details?id=app.dungeonpaper&$utm',
                                 icon: Icon(Icons.star),
                                 color: Color(0xFF66A030),
                                 textColor: Colors.white,
@@ -302,11 +303,11 @@ class SocialButton extends StatelessWidget {
   }
 }
 
-class WhatsNewBox extends StatelessWidget {
+class AboutBox extends StatelessWidget {
   final Widget child;
   final List<Widget> children;
 
-  const WhatsNewBox({
+  const AboutBox({
     Key key,
     this.child,
     this.children,
@@ -315,7 +316,7 @@ class WhatsNewBox extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var content = children != null && children.isNotEmpty
+    final content = children != null && children.isNotEmpty
         ? Column(
             children: children,
           )
