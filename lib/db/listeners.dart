@@ -96,9 +96,9 @@ void registerCharactersListener(fb.User firebaseUser) {
 StreamSubscription _classesListener;
 void registerCustomClassesListener(fb.User firebaseUser) {
   _classesListener?.cancel();
-  final userDocID = firebaseUser;
+  final email = firebaseUser.email;
   _classesListener = firestore
-      .collection('user_data/$userDocID/custom_classes')
+      .collection('user_data/$email/custom_classes')
       .snapshots()
       .listen((classes) {
     if (classes.docs.isEmpty) {

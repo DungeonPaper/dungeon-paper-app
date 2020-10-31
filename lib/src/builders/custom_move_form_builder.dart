@@ -1,5 +1,7 @@
 import 'package:dungeon_paper/src/atoms/markdown_help.dart';
 import 'package:dungeon_paper/src/dialogs/dialogs.dart';
+import 'package:dungeon_paper/src/flutter_utils/widget_utils.dart';
+import 'package:dungeon_paper/src/lists/move_template_list.dart';
 import 'package:dungeon_world_data/move.dart';
 import 'package:flutter/material.dart';
 
@@ -32,13 +34,11 @@ class CustomMoveFormBuilderState extends State<CustomMoveFormBuilder> {
 
   @override
   void initState() {
-    _controllers = {
-      'name': TextEditingController(text: (widget.move.name ?? '').toString()),
-      'description': TextEditingController(
-          text: (widget.move.description ?? '').toString()),
-      'explanation': TextEditingController(
-          text: (widget.move.explanation ?? '').toString()),
-    };
+    _controllers = WidgetUtils.textEditingControllerMap(map: {
+      'name': widget.move.name ?? '',
+      'description': widget.move.description ?? '',
+      'explanation': widget.move.explanation ?? '',
+    });
     name = _controllers['name'].text;
     description = _controllers['description'].text;
     super.initState();
@@ -99,6 +99,7 @@ class CustomMoveFormBuilderState extends State<CustomMoveFormBuilder> {
               // textAlign: TextAlign.center,
             ),
           ),
+          MoveTemplateList(onSelectTemplate: _insertTemplate),
           MarkdownHelp(),
         ],
       ),
@@ -109,6 +110,30 @@ class CustomMoveFormBuilderState extends State<CustomMoveFormBuilder> {
       form,
       _updateMove,
     );
+  }
+
+  void _insertTemplate(String template) {
+    final ctl = _controllers['description'];
+    final sel = ctl.selection;
+
+    // text is empty
+    if ((sel.end == -1 && sel.start == -1) || ctl.text.isEmpty) {
+      setState(() {
+        ctl.text = template;
+        ctl.selection =
+            TextSelection(baseOffset: 0, extentOffset: template.length);
+      });
+      return;
+    }
+
+    // insert text on selection
+    setState(() {
+      ctl.text = ctl.text.substring(0, sel.start) +
+          template +
+          ctl.text.substring(sel.end);
+      ctl.selection = TextSelection(
+          baseOffset: sel.start, extentOffset: sel.start + template.length);
+    });
   }
 
   void _setStateValue(String key, String newValue) {
