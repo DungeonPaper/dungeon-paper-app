@@ -43,27 +43,26 @@ class _ExportCharactersViewState extends State<ExportCharactersView> {
             style: Theme.of(context).textTheme.headline6,
           ),
         ),
-        _Padded(
-          child: Row(
-            children: [
-              Text('Select export format:'),
-              SizedBox(width: 16),
-              DropdownButton(
-                value: _format,
-                onChanged: _setFormat,
-                items: [
-                  for (final format in ExportFormat.values
-                      .where((format) => _dataParsers[format] != null))
-                    DropdownMenuItem(
-                      child: Text(enumName(format)),
-                      value: _dataParsers[format] != null ? format : null,
-                    ),
-                ],
-              ),
-            ],
-          ),
-        ),
-        Divider(),
+        // _Padded(
+        //   child: Row(
+        //     children: [
+        //       Text('Select export format:'),
+        //       SizedBox(width: 16),
+        //       DropdownButton(
+        //         value: _format,
+        //         onChanged: _setFormat,
+        //         items: [
+        //           for (final format in ExportFormat.values
+        //               .where((format) => _dataParsers[format] != null))
+        //             DropdownMenuItem(
+        //               child: Text(enumName(format)),
+        //               value: _dataParsers[format] != null ? format : null,
+        //             ),
+        //         ],
+        //       ),
+        //     ],
+        //   ),
+        // ),
         CharacterSelectList(
           selected: _toExport,
           onChange: (chars) => setState(() => _toExport = chars),
