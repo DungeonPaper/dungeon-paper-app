@@ -4,9 +4,9 @@ import 'package:dungeon_paper/src/atoms/stat_card.dart';
 import 'package:dungeon_paper/src/dialogs/roll_dice_view.dart';
 import 'package:dungeon_paper/src/flutter_utils/dice_controller.dart';
 import 'package:dungeon_paper/src/molecules/dice_roll_box.dart';
-import 'package:dungeon_paper/src/utils/utils.dart';
 import 'package:dungeon_world_data/dice.dart';
 import 'package:flutter/material.dart';
+import 'package:uuid/uuid.dart';
 
 class BaseStats extends StatefulWidget {
   final Character character;
@@ -25,7 +25,7 @@ class _BaseStatsState extends State<BaseStats> {
   final String analyticsSource = 'Stat Card Grid';
 
   DiceListController diceController;
-  CharacterKey openStat;
+  String sessionKey;
 
   @override
   void initState() {
@@ -85,13 +85,13 @@ class _BaseStatsState extends State<BaseStats> {
             ],
           ),
         ),
-        if (openStat != null && diceController != null)
+        if (sessionKey != null && diceController != null)
           Padding(
             key: globalKey,
             padding: const EdgeInsets.only(top: 16),
             child: DiceRollBox(
               analyticsSource: analyticsSource,
-              key: Key(enumName(openStat)),
+              key: Key(sessionKey),
               controller: diceController,
               onEdit: () => _openRoll(diceController.value),
               onRemove: _unroll,
@@ -101,11 +101,13 @@ class _BaseStatsState extends State<BaseStats> {
     );
   }
 
+  String generateSessionKey() => Uuid().v4();
+
   void Function() _roll(CharacterKey key) {
     return () {
       setState(() {
+        sessionKey = generateSessionKey();
         final list = [Dice(6, 2, widget.character.modifierFromKey(key))];
-        openStat = key;
         diceController = DiceListController(list);
         Future.delayed(
           Duration(milliseconds: 50),
@@ -118,8 +120,8 @@ class _BaseStatsState extends State<BaseStats> {
 
   void _unroll() {
     setState(() {
-      openStat = null;
       diceController = null;
+      sessionKey = null;
     });
   }
 
