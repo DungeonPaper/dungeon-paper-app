@@ -46,12 +46,12 @@ class _ManageCharactersViewState extends State<ManageCharactersView> {
     return ScaffoldWithElevation(
       title: Text('Manage Characters'),
       actions: [
-        if (user.isTester)
-          FlatButton.icon(
-            icon: Icon(Icons.settings_backup_restore),
-            onPressed: _openBackupView,
-            label: Text('Import/Export'),
-          ),
+        FlatButton.icon(
+          icon: Icon(Icons.settings_backup_restore),
+          onPressed: _openBackupView,
+          textColor: Theme.of(context).accentColor,
+          label: Text('Backup'),
+        ),
       ],
       floatingActionButton: FloatingActionButton(
         child: Icon(Icons.add),
