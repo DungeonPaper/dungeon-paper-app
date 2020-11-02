@@ -41,8 +41,8 @@ class _ImportCharactersViewState extends State<ImportCharactersView> {
             style: Theme.of(context).textTheme.headline6,
           ),
         ),
-        Divider(),
-        if (_loadedCharacters.isNotEmpty)
+        if (_loadedCharacters.isNotEmpty) ...[
+          Divider(),
           Padding(
             padding: const EdgeInsets.only(bottom: 16),
             child: CharacterSelectList(
@@ -51,13 +51,14 @@ class _ImportCharactersViewState extends State<ImportCharactersView> {
               onChange: (chars) => setState(() => _toImport = chars),
             ),
           ),
+        ],
         if (_loadedCharacters.isEmpty)
           Padding(
-            padding:
-                const EdgeInsets.symmetric(horizontal: 8).copyWith(bottom: 8),
-            child: RaisedButton(
+            padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 24),
+            child: RaisedButton.icon(
               padding: const EdgeInsets.all(8),
-              child: Text('Import'),
+              label: Text('Browse...'),
+              icon: Icon(Icons.folder),
               onPressed: _pickFile,
             ),
           ),
@@ -66,9 +67,10 @@ class _ImportCharactersViewState extends State<ImportCharactersView> {
               const EdgeInsets.symmetric(horizontal: 8).copyWith(bottom: 8),
           child: Align(
             alignment: Alignment.centerRight,
-            child: RaisedButton(
+            child: RaisedButton.icon(
               padding: const EdgeInsets.all(8),
-              child: Text(
+              icon: Icon(Icons.file_download),
+              label: Text(
                 'Import',
                 textScaleFactor: 1.5,
               ),
