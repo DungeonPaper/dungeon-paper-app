@@ -107,7 +107,7 @@ class _CustomClassesViewState extends State<CustomClassesView> {
   }
 
   void _save(CustomClass _cls) async {
-    for (var char in dwStore.state.characters.characters.values) {
+    for (var char in dwStore.state.characters.all.values) {
       if (char.playerClasses.any((el) => el.key == _cls.key)) {
         var _updated = char.playerClasses
             .map((el) => el.key == _cls.key ? _cls.toPlayerClass() : el)

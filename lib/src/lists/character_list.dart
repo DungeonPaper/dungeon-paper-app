@@ -35,9 +35,8 @@ class CharacterList extends StatelessWidget {
     return DWStoreConnector<List<Character>>(
       builder: builder,
       converter: (store) {
-        var _characters = dwStore.state.characters.characters.values.toList()
+        return dwStore.state.characters.all.values.toList()
           ..sort((a, b) => a.order - b.order);
-        return _characters;
       },
     );
   }

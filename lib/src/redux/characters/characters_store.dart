@@ -5,7 +5,7 @@ part 'character_actions.dart';
 
 class CharacterStore {
   Character current;
-  Map<String, Character> characters;
+  Map<String, Character> all;
 
   CharacterStore({@required characters, this.current}) {
     if (current == null && characters?.isNotEmpty == true) {
@@ -15,34 +15,34 @@ class CharacterStore {
 }
 
 CharacterStore characterReducer(CharacterStore state, action) {
-  state.characters ??= {};
+  state.all ??= {};
 
   if (action is SetCharacters) {
     if (action.overwrite == true) {
-      state.characters = action.characters;
+      state.all = action.characters;
     } else {
-      state.characters ??= {};
-      state.characters.addAll(action.characters);
+      state.all ??= {};
+      state.all.addAll(action.characters);
     }
     if (state.current != null) {
       state.current = action.characters[state.current.documentID];
     } else if (action.characters.isNotEmpty &&
-        !state.characters.containsKey(state.current?.documentID)) {
+        !state.all.containsKey(state.current?.documentID)) {
       state.current = action.characters.values.first;
     }
     return state;
   }
 
   if (action is RemoveCharacter) {
-    state.characters.removeWhere((k, v) => k == action.character.documentID);
+    state.all.removeWhere((k, v) => k == action.character.documentID);
     if (state.current.documentID == action.character.documentID) {
-      state.current = state.characters.values.first;
+      state.current = state.all.values.first;
     }
     return state;
   }
 
   if (action is UpsertCharacter) {
-    state.characters[action.character.documentID] = action.character;
+    state.all[action.character.documentID] = action.character;
     if (state.current?.documentID == action.character.documentID) {
       state.current = action.character;
     }
