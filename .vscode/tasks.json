@@ -4,7 +4,7 @@
   "version": "2.0.0",
   "tasks": [
     {
-      "label": "Build",
+      "label": "Build (pick platform)",
       "type": "shell",
       "command": "dart",
       "args": [
@@ -12,6 +12,22 @@
         "--build",
         "-l",
         "${input:platform}",
+        "-d",
+        "518e84af"
+      ],
+      "problemMatcher": []
+    },
+    {
+      "label": "Build (pick platform) + Full-push to Android",
+      "type": "shell",
+      "command": "dart",
+      "args": [
+        "lib/tools/task_runner/deploy.dart",
+        "--build",
+        "-l",
+        "${input:platform}",
+        "--push",
+        "--install",
         "-d",
         "518e84af"
       ],
