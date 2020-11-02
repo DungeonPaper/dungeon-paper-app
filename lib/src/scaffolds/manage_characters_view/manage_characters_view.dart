@@ -5,6 +5,7 @@ import 'package:dungeon_paper/db/models/user.dart';
 import 'package:dungeon_paper/src/atoms/card_list_item.dart';
 import 'package:dungeon_paper/src/dialogs/confirmation_dialog.dart';
 import 'package:dungeon_paper/src/dialogs/dialogs.dart';
+import 'package:dungeon_paper/src/flutter_utils/widget_utils.dart';
 import 'package:dungeon_paper/src/pages/backup_view/backup_view.dart';
 import 'package:dungeon_paper/src/pages/edit_character/edit_character_view.dart';
 import 'package:dungeon_paper/src/redux/characters/characters_store.dart';
@@ -26,6 +27,7 @@ class _ManageCharactersViewState extends State<ManageCharactersView> {
   List<Character> characters;
   StreamSubscription<DWStore> subscription;
   User user;
+  bool sortMode;
 
   @override
   void initState() {
@@ -33,6 +35,7 @@ class _ManageCharactersViewState extends State<ManageCharactersView> {
     characters = dwStore.state.characters.all.values.toList()
       ..sort((a, b) => a.order - b.order);
     user = dwStore.state.user.current;
+    sortMode = false;
     super.initState();
   }
 
@@ -53,14 +56,6 @@ class _ManageCharactersViewState extends State<ManageCharactersView> {
   Widget build(BuildContext context) {
     return ScaffoldWithElevation(
       title: Text('Manage Characters'),
-      actions: [
-        FlatButton.icon(
-          icon: Icon(Icons.settings_backup_restore),
-          onPressed: _openBackupView,
-          textColor: Theme.of(context).accentColor,
-          label: Text('Backup'),
-        ),
-      ],
       floatingActionButton: FloatingActionButton(
         child: Icon(Icons.add),
         backgroundColor: Theme.of(context).colorScheme.background,
@@ -68,40 +63,61 @@ class _ManageCharactersViewState extends State<ManageCharactersView> {
         onPressed: _openCreatePage,
       ),
       automaticallyImplyLeading: true,
-      body: Column(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          // Padding(
-          //   padding: const EdgeInsets.all(16.0),
-          //   child: Text('Tip: Hold & drag a character to change its order.'),
-          // ),
-          for (var char in enumerate(characters))
-            Padding(
-              key: Key(char.value.documentID),
-              padding: const EdgeInsets.only(left: 8),
-              child: CardListItem(
+      body: Padding(
+        padding:
+            const EdgeInsets.all(8).copyWith(bottom: BOTTOM_SPACER.height + 16),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            // Padding(
+            //   padding: const EdgeInsets.all(16.0),
+            //   child: Text('Tip: Hold & drag a character to change its order.'),
+            // ),
+            Row(
+              mainAxisSize: MainAxisSize.max,
+              children: [
+                Expanded(
+                  child: RaisedButton.icon(
+                    icon: Icon(Icons.sort),
+                    onPressed: () => setState(() => sortMode = !sortMode),
+                    color: Theme.of(context).colorScheme.secondary,
+                    textColor: Theme.of(context).colorScheme.onSecondary,
+                    label: Text(!sortMode ? 'Sort' : 'Done'),
+                  ),
+                ),
+                SizedBox(width: 16),
+                Expanded(
+                  child: RaisedButton.icon(
+                    icon: Icon(Icons.settings_backup_restore),
+                    onPressed: !sortMode ? _openBackupView : null,
+                    color: Theme.of(context).colorScheme.secondary,
+                    textColor: Theme.of(context).colorScheme.onSecondary,
+                    label: Text('Backup'),
+                  ),
+                ),
+              ],
+            ),
+            for (var char in enumerate(characters))
+              CardListItem(
+                key: Key(char.value.documentID),
                 width: MediaQuery.of(context).size.width - 22,
                 title: Text(char.value.displayName),
                 leading: Icon(Icons.person, size: 40),
+                onTap: () => _select(char.value),
                 subtitle: Text('Level ${char.value.level} '
                     '${capitalize(enumName(char.value.alignment))} '
                     '${capitalize(char.value.mainClass.name)}'),
-                trailing: Row(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    Padding(
-                      padding: const EdgeInsets.symmetric(vertical: 8.0),
-                      child: Table(
-                        columnWidths: {
-                          0: FixedColumnWidth(32),
-                          1: FixedColumnWidth(32),
-                        },
-                        children: [
-                          TableRow(children: [
+                trailing: Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 8.0),
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    children: !sortMode
+                        ? [
                             IconButton(
                               icon: Icon(Icons.edit),
                               tooltip: 'Edit ${char.value.displayName}',
-                              onPressed: () => _edit(char.value, context),
+                              onPressed: () => _edit(char.value),
                               visualDensity: VisualDensity.compact,
                             ),
                             IconButton(
@@ -113,8 +129,8 @@ class _ManageCharactersViewState extends State<ManageCharactersView> {
                                   : null,
                               visualDensity: VisualDensity.compact,
                             ),
-                          ]),
-                          TableRow(children: [
+                          ]
+                        : [
                             IconButton(
                               icon: Icon(Icons.arrow_upward),
                               tooltip: 'Move Up',
@@ -131,15 +147,12 @@ class _ManageCharactersViewState extends State<ManageCharactersView> {
                                   : null,
                               visualDensity: VisualDensity.compact,
                             ),
-                          ]),
-                        ],
-                      ),
-                    )
-                  ],
+                          ],
+                  ),
                 ),
-              ),
-            ),
-        ],
+              )
+          ],
+        ),
       ),
     );
   }
@@ -175,13 +188,18 @@ class _ManageCharactersViewState extends State<ManageCharactersView> {
     );
   }
 
-  void _edit(Character char, BuildContext context) {
+  void _edit(Character char) {
     Get.to(
       EditCharacterView(
         character: char,
         mode: DialogMode.Edit,
       ),
     );
+  }
+
+  void _select(Character char) {
+    dwStore.dispatch(SetCurrentChar(char));
+    Get.back();
   }
 
   Future<void> Function() _delete(Character char) {
