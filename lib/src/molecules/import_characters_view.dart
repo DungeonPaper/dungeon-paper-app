@@ -4,6 +4,7 @@ import 'dart:io';
 import 'package:dungeon_paper/db/models/character.dart';
 import 'package:dungeon_paper/src/dialogs/confirmation_dialog.dart';
 import 'package:dungeon_paper/src/lists/character_select_list.dart';
+import 'package:dungeon_paper/src/redux/characters/characters_store.dart';
 import 'package:dungeon_paper/src/redux/stores.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_file_dialog/flutter_file_dialog.dart';
@@ -104,16 +105,23 @@ class _ImportCharactersViewState extends State<ImportCharactersView> {
     try {
       final user = dwStore.state.user.current;
       final characters = dwStore.state.characters.all;
+      final finalChars = Set<Character>.from(characters.values);
       for (final char in _toImport) {
-        final found = characters.values.firstWhere(
+        final found = finalChars.firstWhere(
             (_char) => _char.displayName == char.displayName,
             orElse: () => null);
+        Character added;
         if (found == null) {
-          await user.createCharacter(char);
+          added = await user.createCharacter(char);
         } else {
           await found.update(json: char.toJSON());
+          added = found;
         }
+        finalChars.remove(found);
+        finalChars.add(added);
       }
+
+      dwStore.dispatch(SetCharacters.fromIterable(finalChars));
 
       setState(() {
         _loadedCharacters = {};

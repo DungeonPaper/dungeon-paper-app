@@ -50,7 +50,7 @@ class StatCard extends StatelessWidget {
   }
 
   num getValue(Character character, CharacterKey key) =>
-      character.modifierFromKey(key);
+      character.statValueFromKey(key);
 
   void Function() _edit(BuildContext context) {
     final value = getValue(character, stat);

@@ -3,7 +3,14 @@ part of 'characters_store.dart';
 class SetCharacters {
   final Map<String, Character> characters;
   final bool overwrite;
-  SetCharacters(this.characters, [this.overwrite = true]);
+  SetCharacters(this.characters, {this.overwrite = true});
+
+  factory SetCharacters.fromIterable(Iterable<Character> iterable,
+          {bool overwrite = true}) =>
+      SetCharacters(
+        {for (final char in iterable) char.documentID: char},
+        overwrite: overwrite,
+      );
 }
 
 class SetCurrentChar {
