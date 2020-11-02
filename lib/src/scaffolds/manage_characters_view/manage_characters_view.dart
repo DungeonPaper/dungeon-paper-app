@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:math';
 import 'package:dungeon_paper/db/models/character.dart';
 import 'package:dungeon_paper/db/models/user.dart';
@@ -23,15 +24,22 @@ class ManageCharactersView extends StatefulWidget {
 
 class _ManageCharactersViewState extends State<ManageCharactersView> {
   List<Character> characters;
+  StreamSubscription<DWStore> subscription;
   User user;
 
   @override
   void initState() {
-    dwStore.onChange.listen(_loadCharsFromState);
+    subscription = dwStore.onChange.listen(_loadCharsFromState);
     characters = dwStore.state.characters.all.values.toList()
       ..sort((a, b) => a.order - b.order);
     user = dwStore.state.user.current;
     super.initState();
+  }
+
+  @override
+  void dispose() {
+    subscription.cancel();
+    super.dispose();
   }
 
   void _loadCharsFromState(DWStore state) {
