@@ -12,7 +12,7 @@ class StatsSummary extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var rows = <List<CharacterKeys>>[
+    var rows = <List<CharacterKey>>[
       ORDERED_STATS.sublist(0, 3),
       ORDERED_STATS.sublist(3)
     ];
@@ -73,19 +73,19 @@ class StatsSummary extends StatelessWidget {
     );
   }
 
-  int _getStat(CharacterKeys stat) {
+  int _getStat(CharacterKey stat) {
     switch (stat) {
-      case (CharacterKeys.str):
+      case (CharacterKey.str):
         return character.str;
-      case (CharacterKeys.dex):
+      case (CharacterKey.dex):
         return character.dex;
-      case (CharacterKeys.con):
+      case (CharacterKey.con):
         return character.con;
-      case (CharacterKeys.int):
+      case (CharacterKey.int):
         return character.int;
-      case (CharacterKeys.cha):
+      case (CharacterKey.cha):
         return character.cha;
-      case (CharacterKeys.wis):
+      case (CharacterKey.wis):
         return character.wis;
       default:
         return null;

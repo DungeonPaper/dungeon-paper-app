@@ -8,12 +8,14 @@ import 'package:flutter/material.dart';
 
 class StatCard extends StatelessWidget {
   final Character character;
-  final CharacterKeys stat;
+  final CharacterKey stat;
+  final void Function() onTap;
 
-  StatCard({
+  const StatCard({
     Key key,
     @required this.character,
     @required this.stat,
+    @required this.onTap,
   }) : super(key: key);
 
   @override
@@ -24,7 +26,7 @@ class StatCard extends StatelessWidget {
       child: Container(
         child: InkWell(
           onLongPress: _edit(context),
-          onTap: _openRollDialog(context),
+          onTap: onTap,
           child: Padding(
             padding: EdgeInsets.symmetric(horizontal: 10.0, vertical: 22.0),
             child: Column(
@@ -50,23 +52,8 @@ class StatCard extends StatelessWidget {
     );
   }
 
-  num getValue(Character character, CharacterKeys key) {
-    switch (enumName(key).toLowerCase()) {
-      case 'int':
-        return character.int;
-      case 'dex':
-        return character.dex;
-      case 'wis':
-        return character.wis;
-      case 'cha':
-        return character.cha;
-      case 'str':
-        return character.str;
-      case 'con':
-      default:
-        return character.con;
-    }
-  }
+  num getValue(Character character, CharacterKey key) =>
+      character.modifierFromKey(key);
 
   void Function() _edit(BuildContext context) {
     final value = getValue(character, stat);
@@ -78,20 +65,6 @@ class StatCard extends StatelessWidget {
           value: value,
           character: character,
         ),
-      );
-    };
-  }
-
-  void Function() _openRollDialog(BuildContext context) {
-    final value = getValue(character, stat);
-    return () {
-      var statDice = [Dice(6, 2, CharacterFields.statModifier(value))];
-
-      showDiceRollView(
-        character: character,
-        initialDiceList: statDice,
-        initialAddingDice: statDice,
-        analyticsSource: 'Stat Card',
       );
     };
   }

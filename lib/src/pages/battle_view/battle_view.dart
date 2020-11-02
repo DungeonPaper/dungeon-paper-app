@@ -111,6 +111,7 @@ class _BattleViewState extends State<BattleView> {
             Padding(
               padding: const EdgeInsets.only(top: 16),
               child: DiceRollBox(
+                analyticsSource: 'Battle View',
                 key: Key(rollSession),
                 controller: diceListController,
                 animated: true,

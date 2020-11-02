@@ -13,13 +13,9 @@ This is the source of this app, but to fully use it you must set up your own fir
 Once that is properly set up, the app should create entities based on logins to the app, so nothing else should be created for the database beforehand.
 No one in this repository will provide any secret keys to anyone, ever.
 
-<p align="center">
-
 ![dungeon paper](https://casraf.blog/assets/images/dungeon-paper/logo-512.png)
 
 [![android](https://img.shields.io/static/v1?label=Google%20Play&style=for-the-badge&logo=google-play&message=%E2%80%BA&labelColor=689f38&color=33691e&)](https://bit.ly/DungeonPaper-Android) [![ios](https://img.shields.io/static/v1?label=App%20Store&style=for-the-badge&logo=apple&message=%E2%80%BA&labelColor=000000&color=000000&)](https://bit.ly/DungeonPaper-iOS)
-
-</p>
 
 ## Features
 

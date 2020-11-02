@@ -16,7 +16,7 @@ import 'package:pedantic/pedantic.dart';
 import 'package:uuid/uuid.dart';
 
 class EditStatDialog extends StatefulWidget {
-  final CharacterKeys stat;
+  final CharacterKey stat;
   final num value;
   final Character character;
 
@@ -33,8 +33,9 @@ class EditStatDialog extends StatefulWidget {
 }
 
 class EditStatDialogState extends State<EditStatDialog> {
-  final CharacterKeys stat;
+  final CharacterKey stat;
   final String fullName;
+  final String analyticsSource = 'Edit Stat Dialog';
 
   num value;
   bool valueError = false;
@@ -92,7 +93,7 @@ class EditStatDialogState extends State<EditStatDialog> {
                 diceList: dice,
                 onRoll: _rollStat,
                 character: widget.character,
-                analyticsSource: 'Edit Stat Dialog',
+                analyticsSource: analyticsSource,
                 brightness: Brightness.light,
               ),
             ),
@@ -101,6 +102,7 @@ class EditStatDialogState extends State<EditStatDialog> {
                 padding: const EdgeInsets.symmetric(horizontal: 16.0)
                     .copyWith(bottom: 8),
                 child: DiceRollBox(
+                  analyticsSource: analyticsSource,
                   key: Key(rollSession),
                   controller: rollingController,
                   onRemove: _removeRoll,
@@ -135,27 +137,27 @@ class EditStatDialogState extends State<EditStatDialog> {
     String key;
 
     switch (stat) {
-      case CharacterKeys.int:
+      case CharacterKey.int:
         character.int = value;
         key = 'int';
         break;
-      case CharacterKeys.wis:
+      case CharacterKey.wis:
         character.wis = value;
         key = 'wis';
         break;
-      case CharacterKeys.cha:
+      case CharacterKey.cha:
         character.cha = value;
         key = 'cha';
         break;
-      case CharacterKeys.con:
+      case CharacterKey.con:
         character.con = value;
         key = 'con';
         break;
-      case CharacterKeys.str:
+      case CharacterKey.str:
         character.str = value;
         key = 'str';
         break;
-      case CharacterKeys.dex:
+      case CharacterKey.dex:
         character.dex = value;
         key = 'dex';
         break;
@@ -181,7 +183,7 @@ class EditStatDialogState extends State<EditStatDialog> {
     showDiceRollView(
       character: widget.character,
       initialAddingDice: rollingController.value,
-      analyticsSource: 'Edit Stat Dialog',
+      analyticsSource: analyticsSource,
     );
   }
 
@@ -192,5 +194,5 @@ class EditStatDialogState extends State<EditStatDialog> {
     });
   }
 
-  List<Dice> get dice => [Dice(6, 2, CharacterFields.statModifier(value))];
+  List<Dice> get dice => [Dice(6, 2, CharacterFields.modifierFromValue(value))];
 }
