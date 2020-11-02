@@ -4,7 +4,7 @@ import 'package:dungeon_paper/db/models/user.dart';
 import 'package:dungeon_paper/src/atoms/card_list_item.dart';
 import 'package:dungeon_paper/src/dialogs/confirmation_dialog.dart';
 import 'package:dungeon_paper/src/dialogs/dialogs.dart';
-import 'package:dungeon_paper/src/dialogs/export_characters_dialog.dart';
+import 'package:dungeon_paper/src/pages/backup_view/backup_view.dart';
 import 'package:dungeon_paper/src/pages/edit_character/edit_character_view.dart';
 import 'package:dungeon_paper/src/redux/characters/characters_store.dart';
 import 'package:dungeon_paper/src/redux/stores.dart';
@@ -27,7 +27,7 @@ class _ManageCharactersViewState extends State<ManageCharactersView> {
 
   @override
   void initState() {
-    characters = dwStore.state.characters.characters.values.toList()
+    characters = dwStore.state.characters.all.values.toList()
       ..sort((a, b) => a.order - b.order);
     user = dwStore.state.user.current;
     super.initState();
@@ -39,10 +39,10 @@ class _ManageCharactersViewState extends State<ManageCharactersView> {
       title: Text('Manage Characters'),
       actions: [
         if (user.isTester)
-          IconButton(
-            icon: Icon(Icons.file_upload),
-            onPressed: _openExportDialog,
-            tooltip: 'Export Characters',
+          FlatButton.icon(
+            icon: Icon(Icons.settings_backup_restore),
+            onPressed: _openBackupView,
+            label: Text('Import/Export'),
           ),
       ],
       floatingActionButton: FloatingActionButton(
@@ -207,10 +207,7 @@ class _ManageCharactersViewState extends State<ManageCharactersView> {
     );
   }
 
-  void _openExportDialog() {
-    showDialog(
-      context: context,
-      builder: (context) => ExportCharactersDialog(),
-    );
+  void _openBackupView() {
+    Get.to(BackupView());
   }
 }

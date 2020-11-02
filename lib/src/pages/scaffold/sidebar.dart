@@ -107,7 +107,7 @@ class _SidebarState extends State<Sidebar> {
                   ],
                 ),
               ),
-              ...characterList(state.characters.characters, context),
+              ...characterList(state.characters.all, context),
               Divider(),
               title('Custom Content', context),
               ListTile(

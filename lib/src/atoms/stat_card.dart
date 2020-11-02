@@ -1,9 +1,6 @@
 import 'package:dungeon_paper/db/helpers/character_utils.dart';
 import 'package:dungeon_paper/db/models/character.dart';
 import 'package:dungeon_paper/src/dialogs/edit_stat_dialog.dart';
-import 'package:dungeon_paper/src/dialogs/roll_dice_view.dart';
-import 'package:dungeon_paper/src/utils/utils.dart';
-import 'package:dungeon_world_data/dice.dart';
 import 'package:flutter/material.dart';
 
 class StatCard extends StatelessWidget {
