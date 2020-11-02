@@ -13,30 +13,36 @@ This is the source of this app, but to fully use it you must set up your own fir
 Once that is properly set up, the app should create entities based on logins to the app, so nothing else should be created for the database beforehand.
 No one in this repository will provide any secret keys to anyone, ever.
 
-## Dungeon Paper is on [Google Play](https://bit.ly/DungeonPaper-Android) and [iOS](https://bit.ly/DungeonPaper-iOS)!
+<p align="center">
+
+![dungeon paper](https://casraf.blog/assets/images/dungeon-paper/logo-512.png)
+
+[![android](https://img.shields.io/static/v1?label=Google%20Play&style=for-the-badge&logo=google-play&message=%E2%80%BA&labelColor=689f38&color=33691e&)](https://bit.ly/DungeonPaper-Android) [![ios](https://img.shields.io/static/v1?label=App%20Store&style=for-the-badge&logo=apple&message=%E2%80%BA&labelColor=000000&color=000000&)](https://bit.ly/DungeonPaper-iOS)
+
+</p>
 
 ## Features
 
-* Unlimited number of character sheets
-* Create your own classes and races to use for your characters
-* Add basic details (character name, image, race and alignment)
-* Set and view stats and modifiers, life, experience, armor and damage dice
-* Add moves and spells from the playbook, or add your own homebrew
-* Keep track of inventory items, coins and load
-* Add notes and organize them into categories, to keep track of everything going on in your group's campaign and your character
-* Roll dice from anywhere in the app
+- Unlimited number of character sheets
+- Create your own classes and races to use for your characters
+- Add basic details (character name, image, race and alignment)
+- Set and view stats and modifiers, life, experience, armor and damage dice
+- Add moves and spells from the playbook, or add your own homebrew
+- Keep track of inventory items, coins and load
+- Add notes and organize them into categories, to keep track of everything going on in your group's campaign and your character
+- Roll dice from anywhere in the app
 
 ## Development Set Up
 
 1. Download Flutter
 
-    Use whatever Flutter channel you deem necessary, this should be compatible with master and beta, dev breaks a lot so no commitment.  
-    More information on [Flutter.dev](https://flutter.dev).
+   Use whatever Flutter channel you deem necessary, this should be compatible with master and beta, dev breaks a lot so no commitment.  
+   More information on [Flutter.dev](https://flutter.dev).
 
-1.  Connect your Firebase credentials for the app
+1. Connect your Firebase credentials for the app
 
-    - [Android Instructions](https://firebase.google.com/docs/android/setup)
-    - [iOS Instructions](https://firebase.google.com/docs/ios/setup)
+   - [Android Instructions](https://firebase.google.com/docs/android/setup)
+   - [iOS Instructions](https://firebase.google.com/docs/ios/setup)
 
 1. Build & Run the project
 
@@ -55,5 +61,6 @@ As mentioned above, Firebase secret keys must be your own, and so are the databa
 This project uses Firebase auth, Firestore, and Crashlytics.
 
 ## Help by bug reporting or requesting features
+
 - Feel free to use the GitHub issues to post one of the issue templates.
 - We are also active on [Discord](https://bit.ly/DungeonPaper-Discord)

@@ -70,8 +70,8 @@ Future<bool> unlinkFromProvider(String providerId) async {
     (user) async {
       await user.unlink(providerId);
       await user.reload();
-      // TODO update db user email instead (which propagates to this anyway)
-      await user.updateEmail(newEmail);
+      final dbUser = dwStore.state.user.current;
+      await dbUser.changeEmail(newEmail);
     },
     errorMessage: 'Could not unlink with provider: $providerId',
   );

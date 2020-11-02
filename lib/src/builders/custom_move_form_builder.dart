@@ -27,9 +27,6 @@ class CustomMoveFormBuilder extends StatefulWidget {
 }
 
 class CustomMoveFormBuilderState extends State<CustomMoveFormBuilder> {
-  String name;
-  String description;
-  String explanation;
   Map<String, TextEditingController> _controllers;
 
   @override
@@ -39,8 +36,6 @@ class CustomMoveFormBuilderState extends State<CustomMoveFormBuilder> {
       'description': widget.move.description ?? '',
       'explanation': widget.move.explanation ?? '',
     });
-    name = _controllers['name'].text;
-    description = _controllers['description'].text;
     super.initState();
   }
 
@@ -58,7 +53,6 @@ class CustomMoveFormBuilderState extends State<CustomMoveFormBuilder> {
             ),
             autocorrect: true,
             textCapitalization: TextCapitalization.words,
-            onChanged: (val) => _setStateValue('name', val),
             controller: _controllers['name'],
           ),
           Container(
@@ -74,7 +68,6 @@ class CustomMoveFormBuilderState extends State<CustomMoveFormBuilder> {
               keyboardType: TextInputType.multiline,
               autocorrect: true,
               textCapitalization: TextCapitalization.sentences,
-              onChanged: (val) => _setStateValue('description', val),
               controller: _controllers['description'],
               // style: TextStyle(fontSize: 13.0),
               // textAlign: TextAlign.center,
@@ -93,7 +86,6 @@ class CustomMoveFormBuilderState extends State<CustomMoveFormBuilder> {
               keyboardType: TextInputType.multiline,
               autocorrect: true,
               textCapitalization: TextCapitalization.sentences,
-              onChanged: (val) => _setStateValue('explanation', val),
               controller: _controllers['explanation'],
               // style: TextStyle(fontSize: 13.0),
               // textAlign: TextAlign.center,
@@ -136,36 +128,15 @@ class CustomMoveFormBuilderState extends State<CustomMoveFormBuilder> {
     });
   }
 
-  void _setStateValue(String key, String newValue) {
-    setState(() {
-      switch (key) {
-        case 'name':
-          name = newValue;
-          return;
-        case 'description':
-          description = newValue;
-          return;
-        case 'explanation':
-          explanation = newValue;
-          return;
-      }
-    });
-  }
-
   void _updateMove() async {
-    var move = _generateMove();
-    if (widget.onSave != null) {
-      widget.onSave(move);
-    }
+    widget.onSave?.call(_move);
   }
 
-  Move _generateMove() {
-    return Move(
-      key: widget.move.key,
-      name: name,
-      description: description,
-      explanation: explanation,
-      classes: [],
-    );
-  }
+  Move get _move => Move(
+        key: widget.move.key,
+        name: _controllers['name'].text,
+        description: _controllers['description'].text,
+        explanation: _controllers['explanation'].text,
+        classes: [],
+      );
 }
