@@ -116,6 +116,7 @@ class _RollDiceViewState extends State<RollDiceView>
           padding:
               const EdgeInsets.symmetric(horizontal: 16).copyWith(bottom: 32),
           child: DiceRollBox(
+            analyticsSource: 'Roll Dice View',
             key: Key('dice-${list.value.hash}'),
             controller: reversedControllers.elementAt(list.index),
             onRemove: () => _removeAt(list.index),

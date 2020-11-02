@@ -8,12 +8,14 @@ import 'package:flutter/material.dart';
 
 class DiceRollBox extends StatefulWidget {
   final DiceListController controller;
+  final String analyticsSource;
   final bool animated;
   final void Function() onRemove;
   final void Function() onEdit;
 
   DiceRollBox({
     Key key,
+    @required this.analyticsSource,
     @required this.controller,
     this.animated = true,
     this.onRemove,
@@ -166,7 +168,10 @@ class _DiceRollBoxState extends State<DiceRollBox>
     logger.d('Reroll ${widget.controller.value.join(', ')}');
     analytics.logEvent(
       name: Events.RerollDice,
-      parameters: {'dice': widget.controller.value.join(', ')},
+      parameters: {
+        'dice': widget.controller.value.join(', '),
+        'screen_name': widget.analyticsSource,
+      },
     );
     widget.controller.roll();
   }

@@ -6,6 +6,7 @@ import 'package:dungeon_paper/db/helpers/character_utils.dart';
 import 'package:dungeon_paper/src/inherited_widgets/inherited_character.dart';
 import 'package:dungeon_paper/src/redux/characters/characters_store.dart';
 import 'package:dungeon_paper/src/redux/stores.dart';
+import 'package:dungeon_paper/src/utils/utils.dart';
 import 'package:dungeon_world_data/dice.dart';
 import 'package:dungeon_world_data/dw_data.dart';
 import 'package:dungeon_world_data/move.dart';
@@ -33,7 +34,7 @@ class Character extends FirebaseEntity with CharacterFields {
   }
 
   static String statModifierText(num stat) {
-    var mod = CharacterFields.statModifier(stat);
+    var mod = CharacterFields.modifierFromValue(stat);
     return (mod >= 0 ? '+' : '') + mod.toString();
   }
 

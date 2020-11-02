@@ -26,7 +26,7 @@ class _EditStatsState extends State<EditStats> {
   int _int;
   int _wis;
   int _cha;
-  Map<CharacterKeys, bool> errors = {};
+  Map<CharacterKey, bool> errors = {};
 
   @override
   void initState() {
@@ -46,7 +46,7 @@ class _EditStatsState extends State<EditStats> {
         padding: const EdgeInsets.all(16.0),
         child: Column(
           children: <Widget>[
-            for (CharacterKeys stat in ORDERED_STATS)
+            for (CharacterKey stat in ORDERED_STATS)
               EditStatListTile(
                 stat: stat,
                 value: _getter(stat),
@@ -66,68 +66,68 @@ class _EditStatsState extends State<EditStats> {
     };
   }
 
-  CallbackDelegate<num, VoidEmptyCallbackDelegate> _setter(CharacterKeys stat) {
+  CallbackDelegate<num, VoidEmptyCallbackDelegate> _setter(CharacterKey stat) {
     Function(num) setter;
     Function(bool) errorSetter;
     switch (stat) {
-      case (CharacterKeys.str):
+      case (CharacterKey.str):
         setter = (val) {
           widget.character.str = val;
           _str = val;
           widget?.onUpdate(widget.character);
         };
         errorSetter = (state) {
-          errors[CharacterKeys.str] = state;
+          errors[CharacterKey.str] = state;
         };
         break;
-      case (CharacterKeys.dex):
+      case (CharacterKey.dex):
         setter = (val) {
           widget.character.dex = val;
           _dex = val;
           widget?.onUpdate(widget.character);
         };
         errorSetter = (state) {
-          errors[CharacterKeys.dex] = state;
+          errors[CharacterKey.dex] = state;
         };
         break;
-      case (CharacterKeys.con):
+      case (CharacterKey.con):
         setter = (val) {
           widget.character.con = val;
           _con = val;
           widget?.onUpdate(widget.character);
         };
         errorSetter = (state) {
-          errors[CharacterKeys.con] = state;
+          errors[CharacterKey.con] = state;
         };
         break;
-      case (CharacterKeys.int):
+      case (CharacterKey.int):
         setter = (val) {
           widget.character.int = val;
           _int = val;
           widget?.onUpdate(widget.character);
         };
         errorSetter = (state) {
-          errors[CharacterKeys.int] = state;
+          errors[CharacterKey.int] = state;
         };
         break;
-      case (CharacterKeys.cha):
+      case (CharacterKey.cha):
         setter = (val) {
           widget.character.cha = val;
           _cha = val;
           widget?.onUpdate(widget.character);
         };
         errorSetter = (state) {
-          errors[CharacterKeys.cha] = state;
+          errors[CharacterKey.cha] = state;
         };
         break;
-      case (CharacterKeys.wis):
+      case (CharacterKey.wis):
         setter = (val) {
           widget.character.wis = val;
           _wis = val;
           widget?.onUpdate(widget.character);
         };
         errorSetter = (state) {
-          errors[CharacterKeys.wis] = state;
+          errors[CharacterKey.wis] = state;
         };
         break;
       default:
@@ -146,19 +146,19 @@ class _EditStatsState extends State<EditStats> {
     };
   }
 
-  num _getter(CharacterKeys stat) {
+  num _getter(CharacterKey stat) {
     switch (stat) {
-      case (CharacterKeys.str):
+      case (CharacterKey.str):
         return _str;
-      case (CharacterKeys.dex):
+      case (CharacterKey.dex):
         return _dex;
-      case (CharacterKeys.con):
+      case (CharacterKey.con):
         return _con;
-      case (CharacterKeys.int):
+      case (CharacterKey.int):
         return _int;
-      case (CharacterKeys.cha):
+      case (CharacterKey.cha):
         return _cha;
-      case (CharacterKeys.wis):
+      case (CharacterKey.wis):
         return _wis;
       default:
         return null;
@@ -167,7 +167,7 @@ class _EditStatsState extends State<EditStats> {
 }
 
 class EditStatListTile extends StatelessWidget {
-  final CharacterKeys stat;
+  final CharacterKey stat;
   final int value;
   final Function(int) onChange;
 
@@ -185,7 +185,7 @@ class EditStatListTile extends StatelessWidget {
       title: Text(CHARACTER_STAT_LABELS[stat]),
       subtitle: Text(
         '${CHARACTER_STAT_MODIFIER_LABELS[stat]}: '
-        '${CharacterFields.statModifier(value)}',
+        '${CharacterFields.modifierFromValue(value)}',
       ),
       trailing: Container(
         width: 230,

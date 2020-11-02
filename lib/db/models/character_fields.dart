@@ -96,12 +96,12 @@ mixin CharacterFields implements FirebaseEntity {
   num get maxHP => useDefaultMaxHP == true ? defaultMaxHP : _maxHP;
   num get defaultMaxHP => (mainClass?.baseHP ?? 0) + con;
 
-  num get strMod => statModifier(str);
-  num get dexMod => statModifier(dex);
-  num get conMod => statModifier(con);
-  num get wisMod => statModifier(wis);
-  num get intMod => statModifier(int);
-  num get chaMod => statModifier(cha);
+  num get strMod => modifierFromValue(str);
+  num get dexMod => modifierFromValue(dex);
+  num get conMod => modifierFromValue(con);
+  num get wisMod => modifierFromValue(wis);
+  num get intMod => modifierFromValue(int);
+  num get chaMod => modifierFromValue(cha);
 
   set maxHP(value) {
     _maxHP = value;
@@ -155,7 +155,33 @@ mixin CharacterFields implements FirebaseEntity {
   bool get useDefaultMaxHP => fields.get<bool>('useDefaultMaxHP').value;
   core.int get maxLoad => mainClass.load + strMod;
 
-  static num statModifier(num stat) {
+  num modifierFromKey(CharacterKey key) {
+    final _key = enumName(key).toLowerCase();
+    switch (_key) {
+      case 'int':
+        return modifierFromValue(int);
+      case 'dex':
+        return modifierFromValue(dex);
+      case 'wis':
+        return modifierFromValue(wis);
+      case 'cha':
+        return modifierFromValue(cha);
+      case 'str':
+        return modifierFromValue(str);
+      case 'con':
+        return modifierFromValue(con);
+      default:
+        throw Exception('Bad modifier provided: $key');
+    }
+  }
+
+  CharacterKey modifierKey(String modifierName) =>
+      CharacterKey.values.firstWhere(
+        (v) => enumName(v) == modifierName,
+        orElse: () => null,
+      );
+
+  static num modifierFromValue(num stat) {
     const modifiers = {1: -3, 4: -2, 6: -1, 9: 0, 13: 1, 16: 2, 18: 3};
 
     if (modifiers.containsKey(stat)) {

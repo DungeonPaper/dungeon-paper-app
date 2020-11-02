@@ -55,7 +55,7 @@ const StatNameMap = {
   Stats.con: 'Constitution',
 };
 
-enum CharacterKeys {
+enum CharacterKey {
   alignment,
   displayName,
   mainClass,
@@ -86,31 +86,31 @@ enum CharacterKeys {
 
 const int MAX_STAT_VALUE = 18;
 
-const List<CharacterKeys> ORDERED_STATS = [
-  CharacterKeys.str,
-  CharacterKeys.dex,
-  CharacterKeys.con,
-  CharacterKeys.int,
-  CharacterKeys.wis,
-  CharacterKeys.cha,
+const List<CharacterKey> ORDERED_STATS = [
+  CharacterKey.str,
+  CharacterKey.dex,
+  CharacterKey.con,
+  CharacterKey.int,
+  CharacterKey.wis,
+  CharacterKey.cha,
 ];
 
-const Map<CharacterKeys, String> CHARACTER_STAT_LABELS = {
-  CharacterKeys.str: 'Strength',
-  CharacterKeys.dex: 'Dexterity',
-  CharacterKeys.con: 'Constitution',
-  CharacterKeys.wis: 'Wisdom',
-  CharacterKeys.int: 'Intelligence',
-  CharacterKeys.cha: 'Charisma',
+const Map<CharacterKey, String> CHARACTER_STAT_LABELS = {
+  CharacterKey.str: 'Strength',
+  CharacterKey.dex: 'Dexterity',
+  CharacterKey.con: 'Constitution',
+  CharacterKey.wis: 'Wisdom',
+  CharacterKey.int: 'Intelligence',
+  CharacterKey.cha: 'Charisma',
 };
 
-const Map<CharacterKeys, String> CHARACTER_STAT_MODIFIER_LABELS = {
-  CharacterKeys.str: 'STR',
-  CharacterKeys.dex: 'DEX',
-  CharacterKeys.con: 'CON',
-  CharacterKeys.wis: 'WIS',
-  CharacterKeys.int: 'INT',
-  CharacterKeys.cha: 'CHA',
+const Map<CharacterKey, String> CHARACTER_STAT_MODIFIER_LABELS = {
+  CharacterKey.str: 'STR',
+  CharacterKey.dex: 'DEX',
+  CharacterKey.con: 'CON',
+  CharacterKey.wis: 'WIS',
+  CharacterKey.int: 'INT',
+  CharacterKey.cha: 'CHA',
 };
 
 const Map<AlignmentName, IconData> ALIGNMENT_ICON_MAP = {
