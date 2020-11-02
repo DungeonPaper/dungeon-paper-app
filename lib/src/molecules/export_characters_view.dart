@@ -74,9 +74,10 @@ class _ExportCharactersViewState extends State<ExportCharactersView> {
               const EdgeInsets.symmetric(horizontal: 8).copyWith(bottom: 8),
           child: Align(
             alignment: Alignment.centerRight,
-            child: RaisedButton(
+            child: RaisedButton.icon(
               padding: const EdgeInsets.all(8),
-              child: Text(
+              icon: Icon(Icons.file_upload),
+              label: Text(
                 'Export',
                 textScaleFactor: 1.5,
               ),

@@ -15,6 +15,11 @@ class BackupView extends StatelessWidget {
             Card(
               child: ExpansionTile(
                 tilePadding: const EdgeInsets.all(16),
+                leading: Icon(
+                  Icons.file_upload,
+                  size: 30,
+                  color: Theme.of(context).colorScheme.onSurface,
+                ),
                 title: Text(
                   'Export',
                   style: Theme.of(context).textTheme.headline5,
@@ -26,6 +31,11 @@ class BackupView extends StatelessWidget {
             Card(
               child: ExpansionTile(
                 tilePadding: const EdgeInsets.all(16),
+                leading: Icon(
+                  Icons.file_download,
+                  size: 30,
+                  color: Theme.of(context).colorScheme.onSurface,
+                ),
                 title: Text(
                   'Import',
                   style: Theme.of(context).textTheme.headline5,
