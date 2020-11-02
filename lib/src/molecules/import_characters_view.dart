@@ -41,8 +41,7 @@ class _ImportCharactersViewState extends State<ImportCharactersView> {
             style: Theme.of(context).textTheme.headline6,
           ),
         ),
-        if (_loadedCharacters.isNotEmpty) ...[
-          Divider(),
+        if (_loadedCharacters.isNotEmpty)
           Padding(
             padding: const EdgeInsets.only(bottom: 16),
             child: CharacterSelectList(
@@ -51,7 +50,6 @@ class _ImportCharactersViewState extends State<ImportCharactersView> {
               onChange: (chars) => setState(() => _toImport = chars),
             ),
           ),
-        ],
         if (_loadedCharacters.isEmpty)
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 24),

@@ -64,6 +64,7 @@ class _CharacterSelectListState extends State<CharacterSelectList> {
                 Divider(),
                 for (var char in list)
                   CheckboxListTile(
+                    secondary: Icon(Icons.person),
                     dense: true,
                     value: selected.contains(char),
                     onChanged: _onChecked(char),
