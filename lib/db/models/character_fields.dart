@@ -155,6 +155,26 @@ mixin CharacterFields implements FirebaseEntity {
   bool get useDefaultMaxHP => fields.get<bool>('useDefaultMaxHP').value;
   core.int get maxLoad => mainClass.load + strMod;
 
+  num statValueFromKey(CharacterKey key) {
+    final _key = enumName(key).toLowerCase();
+    switch (_key) {
+      case 'int':
+        return int;
+      case 'dex':
+        return dex;
+      case 'wis':
+        return wis;
+      case 'cha':
+        return cha;
+      case 'str':
+        return str;
+      case 'con':
+        return con;
+      default:
+        throw Exception('Bad modifier provided: $key');
+    }
+  }
+
   num modifierFromKey(CharacterKey key) {
     final _key = enumName(key).toLowerCase();
     switch (_key) {

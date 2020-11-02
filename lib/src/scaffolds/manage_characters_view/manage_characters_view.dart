@@ -27,10 +27,18 @@ class _ManageCharactersViewState extends State<ManageCharactersView> {
 
   @override
   void initState() {
+    dwStore.onChange.listen(_loadCharsFromState);
     characters = dwStore.state.characters.all.values.toList()
       ..sort((a, b) => a.order - b.order);
     user = dwStore.state.user.current;
     super.initState();
+  }
+
+  void _loadCharsFromState(DWStore state) {
+    setState(() {
+      characters = state.characters.all.values.toList()
+        ..sort((a, b) => a.order - b.order);
+    });
   }
 
   @override
@@ -155,11 +163,7 @@ class _ManageCharactersViewState extends State<ManageCharactersView> {
       characters = [...copy];
     });
     dwStore.dispatch(
-      SetCharacters(
-        Map<String, Character>.fromEntries(
-          copy.map((char) => MapEntry(char.documentID, char)),
-        ),
-      ),
+      SetCharacters.fromIterable(copy),
     );
   }
 
