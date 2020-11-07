@@ -17,6 +17,7 @@ import 'firebase_entity/fields/fields.dart';
 import 'inventory_items.dart';
 import 'notes.dart';
 import 'spells.dart';
+import 'package:flutter/painting.dart' as painting;
 
 part 'character_fields.dart';
 

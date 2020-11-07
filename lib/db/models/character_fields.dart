@@ -64,6 +64,18 @@ mixin CharacterFields implements FirebaseEntity {
     ),
     DecimalField(fieldName: 'coins'),
     IntField(fieldName: 'order'),
+    Field<CharacterSettings>(
+      fieldName: 'settings',
+      defaultValue: (ctx) {
+        if (ctx?.raw == null) {
+          return CharacterSettings();
+        }
+        final _oldUseDefMaxHp = ctx?.raw['useDefaultMaxHp'];
+        return CharacterSettings(useDefaultMaxHp: _oldUseDefMaxHp ?? true);
+      },
+      fromJSON: (val, ctx) => CharacterSettings.fromJSON(val),
+      toJSON: (val, ctx) => val.toJSON(),
+    ),
   ]);
 
   // Class-Related
@@ -154,6 +166,11 @@ mixin CharacterFields implements FirebaseEntity {
   set order(num value) => fields.get<num>('order').set(value);
   bool get useDefaultMaxHP => fields.get<bool>('useDefaultMaxHP').value;
   core.int get maxLoad => mainClass.load + strMod;
+  CharacterSettings get settings =>
+      fields.get<CharacterSettings>('settings').value;
+
+  set settings(CharacterSettings value) =>
+      fields.get<CharacterSettings>('settings').set(value);
 
   num statValueFromKey(CharacterKey key) {
     final _key = enumName(key).toLowerCase();
@@ -216,4 +233,35 @@ mixin CharacterFields implements FirebaseEntity {
 
     return -1;
   }
+}
+
+class CharacterSettings {
+  final bool useDefaultMaxHp;
+  final painting.Alignment photoAlignment;
+
+  CharacterSettings({
+    this.useDefaultMaxHp = true,
+    this.photoAlignment = painting.Alignment.topCenter,
+  });
+
+  factory CharacterSettings.fromJSON(Map map) {
+    return CharacterSettings(
+      useDefaultMaxHp: map['useDefaultMaxHp'] ?? true,
+      photoAlignment: map['photoAlignment'] ?? painting.Alignment.topCenter,
+    );
+  }
+
+  CharacterSettings copyWith({
+    bool useDefaultMaxHp,
+    painting.Alignment photoAlignment,
+  }) =>
+      CharacterSettings(
+        useDefaultMaxHp: useDefaultMaxHp ?? this.useDefaultMaxHp,
+        photoAlignment: photoAlignment ?? this.photoAlignment,
+      );
+
+  Map toJSON() => {
+        'useDefaultMaxHp': useDefaultMaxHp,
+        'photoAlignment': photoAlignment,
+      };
 }
