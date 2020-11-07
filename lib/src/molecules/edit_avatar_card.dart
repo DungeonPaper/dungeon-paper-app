@@ -1,13 +1,18 @@
+import 'package:dungeon_paper/db/models/character.dart';
+import 'package:dungeon_paper/src/dialogs/position_alignment_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_image/network.dart';
+import 'package:get/get.dart';
 
 class EditAvatarCard extends StatefulWidget {
+  final Character character;
   final TextEditingController controller;
   final Function() onSave;
 
   const EditAvatarCard({
     Key key,
     @required this.controller,
+    @required this.character,
     this.onSave,
   }) : super(key: key);
 
@@ -24,7 +29,24 @@ class _EditAvatarCardState extends State<EditAvatarCard> {
       margin: EdgeInsets.zero,
       child: Column(
         children: <Widget>[
-          avatar(),
+          Stack(
+            children: [
+              avatar,
+              Positioned(
+                top: 8,
+                right: 8,
+                child: ClipOval(
+                  child: Container(
+                    color: Colors.white,
+                    child: IconButton(
+                      icon: Icon(Icons.fullscreen),
+                      onPressed: _openPositionAlignmentDialog,
+                    ),
+                  ),
+                ),
+              ),
+            ],
+          ),
           Padding(
             padding: const EdgeInsets.all(16),
             child: Row(
@@ -50,7 +72,22 @@ class _EditAvatarCardState extends State<EditAvatarCard> {
     );
   }
 
-  Widget avatar() {
+  void _openPositionAlignmentDialog() {
+    Get.dialog(
+      PositionAlignmentDialog(
+        title: Text('Avatar alignment'),
+        alignment: widget.character.settings.photoAlignment,
+        onSave: (align) {
+          widget.character.settings =
+              widget.character.settings.copyWith(photoAlignment: align);
+          setState(() {});
+          widget.onSave();
+        },
+      ),
+    );
+  }
+
+  Widget get avatar {
     final isUrl = Uri.parse(widget.controller.text).scheme.startsWith('http');
     var container = AspectRatio(
       aspectRatio: 14.0 / 9.0,
@@ -60,7 +97,7 @@ class _EditAvatarCardState extends State<EditAvatarCard> {
           image: isUrl
               ? DecorationImage(
                   fit: BoxFit.fitWidth,
-                  alignment: FractionalOffset.topCenter,
+                  alignment: widget.character.settings.photoAlignment,
                   image: NetworkImageWithRetry(
                     widget.controller.text,
                     fetchStrategy: (uri, err) async {

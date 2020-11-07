@@ -77,6 +77,7 @@ class _EditBasicInfoViewState extends State<EditBasicInfoView> {
             ),
             spacer,
             EditAvatarCard(
+              character: widget.character,
               controller: editingControllers[_Keys.photoURL],
             ),
             spacer,

@@ -217,3 +217,17 @@ Map<K, List<V>> groupBy<K, V>(Iterable<V> list, K Function(V) predicate) {
   }
   return out;
 }
+
+V mapSwitch<K, V>(
+  Map<K, V> map,
+  K value, {
+  V defaultValue,
+}) {
+  for (final iter in map.entries) {
+    if (iter.key == value) {
+      return iter.value;
+    }
+  }
+
+  return defaultValue;
+}

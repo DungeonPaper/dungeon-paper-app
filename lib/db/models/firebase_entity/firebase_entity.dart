@@ -157,6 +157,7 @@ abstract class FirebaseEntity {
 
   Map<String, dynamic> deserializeData(Map<String, dynamic> data) {
     var output = <String, dynamic>{};
+    fields.init(data);
     for (var key in data.keys) {
       try {
         var field = fields.get(key);

@@ -16,7 +16,7 @@ class CharacterPhoto extends StatelessWidget {
         color: Theme.of(context).primaryColorLight,
         image: DecorationImage(
           fit: BoxFit.fitWidth,
-          alignment: FractionalOffset.topCenter,
+          alignment: character.settings.photoAlignment,
           image: NetworkImage(character.photoURL),
         ),
         borderRadius: BorderRadius.circular(15),

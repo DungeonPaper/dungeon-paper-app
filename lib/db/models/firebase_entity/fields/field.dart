@@ -47,8 +47,11 @@ abstract class FieldBase<T> {
     _dirty = value;
   }
 
-  dynamic toJSON() =>
-      isSerialized ? _toJSON != null ? _toJSON() : _value : null;
+  dynamic toJSON() => isSerialized
+      ? _toJSON != null
+          ? _toJSON()
+          : _value
+      : null;
 
   T fromJSON(dynamic _value) {
     if (_value is T) {
