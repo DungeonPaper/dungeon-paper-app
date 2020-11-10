@@ -4,13 +4,13 @@ import 'package:flutter_test/flutter_test.dart';
 
 void main() {
   group('Character', () {
-    var wizard = dungeonWorld.classes.firstWhere((k) => k.key == 'wizard');
-    var druid = dungeonWorld.classes.firstWhere((k) => k.key == 'druid');
-    var immolator =
+    final wizard = dungeonWorld.classes.firstWhere((k) => k.key == 'wizard');
+    final druid = dungeonWorld.classes.firstWhere((k) => k.key == 'druid');
+    final immolator =
         dungeonWorld.classes.firstWhere((k) => k.key == 'immolator');
 
     test('properly uses class values', () {
-      var char = Character(
+      final char = Character(
         data: {
           'playerClasses': [wizard.toJSON()],
           'con': 10,
@@ -22,7 +22,7 @@ void main() {
     });
 
     test('properly dumps json', () {
-      var char = Character(
+      final char = Character(
         data: {
           'playerClasses': [druid.toJSON()],
           'displayName': 'Goku',
@@ -34,7 +34,7 @@ void main() {
           'cha': 14,
         },
       );
-      var json = char.toJSON();
+      final json = char.toJSON();
       expect(json['alignment'], equals('neutral'));
       expect(json['displayName'], equals('Goku'));
       expect(json['playerClasses'][0]['key'], equals('druid'));
@@ -42,7 +42,7 @@ void main() {
     });
 
     test('auto max HP get/set', () {
-      var char1 = Character(
+      final char1 = Character(
         data: {
           'playerClasses': [immolator.toJSON()], // base HP 6
           'displayName': 'Goku',
@@ -55,7 +55,7 @@ void main() {
           'useDefaultMaxHP': true,
         },
       );
-      var char2 = Character(
+      final char2 = Character(
         data: {
           'playerClasses': [wizard.toJSON()], // base HP 4
           'displayName': 'Harry Potter',
@@ -74,6 +74,36 @@ void main() {
       char2.con = 10; // 0 mod
       expect(char1.maxHP, equals(immolator.baseHP + char1.con));
       expect(char2.maxHP, equals(wizard.baseHP + char2.con));
+    });
+  });
+
+  group('Character migrations', () {
+    group('Settings migration', () {
+      group('useDefaultMaxHP', () {
+        test('value different from default', () {
+          final char2 = Character(
+            data: {
+              'useDefaultMaxHP': false,
+            },
+          );
+          expect(char2.useDefaultMaxHP, equals(false));
+          expect(char2.settings.useDefaultMaxHp, equals(false));
+        });
+
+        test('value set and changed but has lingering old data', () {
+          final char3 = Character(
+            data: {
+              'useDefaultMaxHP': true,
+              'settings': {
+                'useDefaultMaxHp': false,
+              }
+            },
+          );
+
+          expect(char3.useDefaultMaxHP, equals(false));
+          expect(char3.settings.useDefaultMaxHp, equals(false));
+        });
+      });
     });
   });
 }

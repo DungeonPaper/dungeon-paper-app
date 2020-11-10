@@ -17,7 +17,8 @@ class ExportCharactersView extends StatefulWidget {
 
 enum ExportFormat {
   JSON,
-  HTML,
+  CSV,
+  // HTML,
   // PDF,
 }
 
@@ -43,26 +44,27 @@ class _ExportCharactersViewState extends State<ExportCharactersView> {
             style: Theme.of(context).textTheme.headline6,
           ),
         ),
-        // _Padded(
-        //   child: Row(
-        //     children: [
-        //       Text('Select export format:'),
-        //       SizedBox(width: 16),
-        //       DropdownButton(
-        //         value: _format,
-        //         onChanged: _setFormat,
-        //         items: [
-        //           for (final format in ExportFormat.values
-        //               .where((format) => _dataParsers[format] != null))
-        //             DropdownMenuItem(
-        //               child: Text(enumName(format)),
-        //               value: _dataParsers[format] != null ? format : null,
-        //             ),
-        //         ],
-        //       ),
-        //     ],
-        //   ),
-        // ),
+        if (_dataParsers.values.length > 1)
+          _Padded(
+            child: Row(
+              children: [
+                Text('Select export format:'),
+                SizedBox(width: 16),
+                DropdownButton(
+                  value: _format,
+                  onChanged: _setFormat,
+                  items: [
+                    for (final format in ExportFormat.values)
+                      if (_dataParsers[format] != null)
+                        DropdownMenuItem(
+                          child: Text(enumName(format)),
+                          value: format,
+                        ),
+                  ],
+                ),
+              ],
+            ),
+          ),
         CharacterSelectList(
           selected: _toExport,
           onChange: (chars) => setState(() => _toExport = chars),
@@ -91,7 +93,9 @@ class _ExportCharactersViewState extends State<ExportCharactersView> {
   void _export() async {
     final _strData = _dumpDataString();
     final tmp = await getTemporaryDirectory();
-    final fileName = 'dungeon-paper-characters.json';
+    final ext = formatExts[_format];
+    final dt = DateTime.now().toIso8601String();
+    final fileName = 'dungeon-paper-$dt.$ext';
 
     final _tmpFile = File(join(tmp.path, fileName));
     await _tmpFile.writeAsString(_strData);
@@ -119,14 +123,41 @@ class _ExportCharactersViewState extends State<ExportCharactersView> {
     return _dataParsers[_format]?.call(chars);
   }
 
-  static final Map<ExportFormat, String Function(List<Character>)>
-      _dataParsers = {
+  static Map<ExportFormat, String> formatExts = {
+    ExportFormat.JSON: 'json',
+    ExportFormat.CSV: 'csv',
+  };
+
+  static Map<ExportFormat, String Function(List<Character>)> _dataParsers = {
     ExportFormat.JSON: (chars) {
       final charsData = chars.map((char) => char.toJSON()).toList();
       final _strData = jsonEncode(charsData);
       return _strData;
-    }
+    },
+    // ExportFormat.CSV: (chars) {
+    //   final output = <List<String>>[];
+    //   final headers = <String>[];
+    //   for (final field in chars.elementAt(0).fields.fields) {
+    //     if (field.isSerialized) {
+    //       headers.add(field.outputFieldName);
+    //     }
+    //   }
+    //   output.add(headers);
+
+    //   for (final char in chars) {
+    //     final row = <String>[];
+    //     for (final field in char.fields.fields) {
+    //       if (field.isSerialized) {
+    //         row.add(__quoteWrap(field.toJSON().toString()));
+    //       }
+    //     }
+    //     output.add(row);
+    //   }
+    //   return output.map((r) => r.map(__quoteWrap).join(',')).join('\n');
+    // },
   };
+
+  static String __quoteWrap(String str) => str.contains(' ') ? '"$str"' : str;
 
   void _setFormat(ExportFormat format) {
     if (format != null) {

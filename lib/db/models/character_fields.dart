@@ -15,7 +15,6 @@ mixin CharacterFields implements FirebaseEntity {
     IntField(fieldName: 'wis', defaultValue: (ctx) => 8),
     IntField(fieldName: 'int', defaultValue: (ctx) => 8),
     IntField(fieldName: 'cha', defaultValue: (ctx) => 8), // Preferences
-    BoolField(fieldName: 'useDefaultMaxHP', defaultValue: (ctx) => true),
     //
     // Class
     PlayerClassListField(
@@ -67,11 +66,9 @@ mixin CharacterFields implements FirebaseEntity {
     Field<CharacterSettings>(
       fieldName: 'settings',
       defaultValue: (ctx) {
-        if (ctx?.raw == null) {
-          return CharacterSettings();
-        }
-        final _oldUseDefMaxHp = ctx?.raw['useDefaultMaxHp'];
-        return CharacterSettings(useDefaultMaxHp: _oldUseDefMaxHp ?? true);
+        final raw = ctx?.raw ?? {};
+        final _oldUseDefMaxHp = raw['useDefaultMaxHP'] ?? true;
+        return CharacterSettings(useDefaultMaxHp: _oldUseDefMaxHp);
       },
       fromJSON: (val, ctx) => CharacterSettings.fromJSON(val),
       toJSON: (val, ctx) => val.toJSON(),
@@ -79,8 +76,9 @@ mixin CharacterFields implements FirebaseEntity {
   ]);
 
   // Class-Related
-  set useDefaultMaxHP(bool value) =>
-      fields.get<bool>('useDefaultMaxHP').set(value);
+  set useDefaultMaxHP(bool value) => settings.useDefaultMaxHp = value;
+  bool get useDefaultMaxHP => settings.useDefaultMaxHp;
+
   set alignment(AlignmentName value) =>
       fields.get<AlignmentName>('alignment').set(value);
 
@@ -164,7 +162,6 @@ mixin CharacterFields implements FirebaseEntity {
   set coins(num value) => fields.get<num>('coins').set(value);
   num get order => fields.get<num>('order').value;
   set order(num value) => fields.get<num>('order').set(value);
-  bool get useDefaultMaxHP => fields.get<bool>('useDefaultMaxHP').value;
   core.int get maxLoad => mainClass.load + strMod;
   CharacterSettings get settings =>
       fields.get<CharacterSettings>('settings').value;
@@ -233,35 +230,4 @@ mixin CharacterFields implements FirebaseEntity {
 
     return -1;
   }
-}
-
-class CharacterSettings {
-  final bool useDefaultMaxHp;
-  final painting.Alignment photoAlignment;
-
-  CharacterSettings({
-    this.useDefaultMaxHp = true,
-    this.photoAlignment = painting.Alignment.topCenter,
-  });
-
-  factory CharacterSettings.fromJSON(Map map) {
-    return CharacterSettings(
-      useDefaultMaxHp: map['useDefaultMaxHp'] ?? true,
-      photoAlignment: map['photoAlignment'] ?? painting.Alignment.topCenter,
-    );
-  }
-
-  CharacterSettings copyWith({
-    bool useDefaultMaxHp,
-    painting.Alignment photoAlignment,
-  }) =>
-      CharacterSettings(
-        useDefaultMaxHp: useDefaultMaxHp ?? this.useDefaultMaxHp,
-        photoAlignment: photoAlignment ?? this.photoAlignment,
-      );
-
-  Map toJSON() => {
-        'useDefaultMaxHp': useDefaultMaxHp,
-        'photoAlignment': photoAlignment,
-      };
 }
