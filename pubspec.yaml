@@ -10,6 +10,7 @@ dependencies:
   cupertino_icons: ^1.0.0
   dungeon_world_data: ^2.0.5+9
   email_validator: ^1.0.5
+  excel: ^1.1.5
   firebase_analytics: ^6.0.2
   firebase_auth: ^0.18.1+2
   firebase_core: ^0.5.0+1
@@ -112,20 +113,20 @@ flutter:
   #       - asset: fonts/TrajanPro_Bold.ttf
   #         weight: 700
   fonts:
-    - family: "Noto Sans"
-      fonts:
-        - asset: assets/fonts/Noto_Sans_KR/NotoSansKR-Black.otf
-          weight: 900
-        - asset: assets/fonts/Noto_Sans_KR/NotoSansKR-Bold.otf
-          weight: 700
-        - asset: assets/fonts/Noto_Sans_KR/NotoSansKR-Medium.otf
-          weight: 500
-        - asset: assets/fonts/Noto_Sans_KR/NotoSansKR-Regular.otf
-          weight: 400
-        - asset: assets/fonts/Noto_Sans_KR/NotoSansKR-Light.otf
-          weight: 300
-        - asset: assets/fonts/Noto_Sans_KR/NotoSansKR-Thin.otf
-          weight: 100
+    # - family: "Noto Sans"
+    #   fonts:
+    #     - asset: assets/fonts/Noto_Sans_KR/NotoSansKR-Black.otf
+    #       weight: 900
+    #     - asset: assets/fonts/Noto_Sans_KR/NotoSansKR-Bold.otf
+    #       weight: 700
+    #     - asset: assets/fonts/Noto_Sans_KR/NotoSansKR-Medium.otf
+    #       weight: 500
+    #     - asset: assets/fonts/Noto_Sans_KR/NotoSansKR-Regular.otf
+    #       weight: 400
+    #     - asset: assets/fonts/Noto_Sans_KR/NotoSansKR-Light.otf
+    #       weight: 300
+    #     - asset: assets/fonts/Noto_Sans_KR/NotoSansKR-Thin.otf
+    #       weight: 100
     - family: Nunito
       fonts:
         - asset: assets/fonts/Nunito/Nunito-Black.ttf

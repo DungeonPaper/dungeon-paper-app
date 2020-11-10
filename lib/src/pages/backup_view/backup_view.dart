@@ -1,7 +1,7 @@
-import 'package:dungeon_paper/src/molecules/export_characters_view.dart';
-import 'package:dungeon_paper/src/molecules/import_characters_view.dart';
 import 'package:dungeon_paper/src/scaffolds/scaffold_with_elevation.dart';
 import 'package:flutter/material.dart';
+import 'export_view.dart';
+import 'import_view.dart';
 
 class BackupView extends StatelessWidget {
   @override
@@ -24,7 +24,7 @@ class BackupView extends StatelessWidget {
                   'Export',
                   style: Theme.of(context).textTheme.headline5,
                 ),
-                children: [ExportCharactersView()],
+                children: [ExportView()],
               ),
             ),
             SizedBox(height: 16),
@@ -40,7 +40,7 @@ class BackupView extends StatelessWidget {
                   'Import',
                   style: Theme.of(context).textTheme.headline5,
                 ),
-                children: [ImportCharactersView()],
+                children: [ImportView()],
               ),
             ),
           ],

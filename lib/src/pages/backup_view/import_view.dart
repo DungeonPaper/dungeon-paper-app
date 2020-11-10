@@ -2,32 +2,37 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:dungeon_paper/db/models/character.dart';
+import 'package:dungeon_paper/db/models/custom_class.dart';
 import 'package:dungeon_paper/src/dialogs/confirmation_dialog.dart';
 import 'package:dungeon_paper/src/lists/character_select_list.dart';
+import 'package:dungeon_paper/src/lists/custom_class_select_list.dart';
 import 'package:dungeon_paper/src/redux/characters/characters_store.dart';
 import 'package:dungeon_paper/src/redux/stores.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_file_dialog/flutter_file_dialog.dart';
 import 'package:get/get.dart';
 
-class ImportCharactersView extends StatefulWidget {
+class ImportView extends StatefulWidget {
   @override
-  _ImportCharactersViewState createState() => _ImportCharactersViewState();
+  _ImportViewState createState() => _ImportViewState();
 }
 
 enum ImportFormat {
   JSON,
 }
 
-class _ImportCharactersViewState extends State<ImportCharactersView> {
-  Set<Character> _toImport;
+class _ImportViewState extends State<ImportView> {
+  Set<Character> _charactersToImport;
+  Set<CustomClass> _classesToImport;
   Set<Character> _loadedCharacters;
+  Set<CustomClass> _loadedClasses;
 
   @override
   void initState() {
     super.initState();
     _loadedCharacters = {};
-    _toImport = {};
+    _loadedClasses = {};
+    _charactersToImport = {};
   }
 
   @override
@@ -42,13 +47,34 @@ class _ImportCharactersViewState extends State<ImportCharactersView> {
           ),
         ),
         if (_loadedCharacters.isNotEmpty)
-          Padding(
-            padding: const EdgeInsets.only(bottom: 16),
-            child: CharacterSelectList(
-              characters: _loadedCharacters,
-              selected: _toImport,
-              onChange: (chars) => setState(() => _toImport = chars),
-            ),
+          ExpansionTile(
+            title: Text('Select characters'),
+            children: [
+              Padding(
+                padding: const EdgeInsets.only(bottom: 16),
+                child: CharacterSelectList(
+                  characters: _loadedCharacters,
+                  selected: _charactersToImport,
+                  onChange: (chars) =>
+                      setState(() => _charactersToImport = chars),
+                ),
+              ),
+            ],
+          ),
+        if (_loadedClasses.isNotEmpty)
+          ExpansionTile(
+            title: Text('Select custom classes'),
+            children: [
+              Padding(
+                padding: const EdgeInsets.only(bottom: 16),
+                child: CustomClassSelectList(
+                  characters: _loadedClasses.map((c) => c.toPlayerClass()),
+                  selected: _classesToImport.map((c) => c.toPlayerClass()),
+                  onChange: (chars) => setState(() => _classesToImport =
+                      chars.map((c) => CustomClass.fromPlayerClass(c))),
+                ),
+              ),
+            ],
           ),
         if (_loadedCharacters.isEmpty)
           Padding(
@@ -72,7 +98,7 @@ class _ImportCharactersViewState extends State<ImportCharactersView> {
                 'Import',
                 textScaleFactor: 1.5,
               ),
-              onPressed: _toImport.isNotEmpty ? _confirmImport : null,
+              onPressed: _charactersToImport.isNotEmpty ? _confirmImport : null,
             ),
           ),
         ),
@@ -90,10 +116,7 @@ class _ImportCharactersViewState extends State<ImportCharactersView> {
         Get.snackbar('Import Failed', 'Operation canceled');
       } else {
         final _tmpFile = File(path);
-        final chars = await _loadFile(_tmpFile);
-        setState(() {
-          _loadedCharacters = Set.from(chars);
-        });
+        await _loadFile(_tmpFile);
       }
     } catch (e) {
       Get.snackbar('Import Failed', 'Something went wrong.');
@@ -106,7 +129,7 @@ class _ImportCharactersViewState extends State<ImportCharactersView> {
       final user = dwStore.state.user.current;
       final characters = dwStore.state.characters.all;
       final finalChars = Set<Character>.from(characters.values);
-      for (final char in _toImport) {
+      for (final char in _charactersToImport) {
         final found = finalChars.firstWhere(
             (_char) => _char.displayName == char.displayName,
             orElse: () => null);
@@ -125,7 +148,7 @@ class _ImportCharactersViewState extends State<ImportCharactersView> {
 
       setState(() {
         _loadedCharacters = {};
-        _toImport = {};
+        _charactersToImport = {};
       });
 
       Get.snackbar(
@@ -151,20 +174,26 @@ class _ImportCharactersViewState extends State<ImportCharactersView> {
     }
   }
 
-  Future<List<Character>> _loadFile(File file) async {
+  void _loadFile(File file) async {
     final str = await file.readAsString();
     final _format = ImportFormat.JSON;
-    return _dataParsers[_format]?.call(str);
+    final data = _dataParsers[_format]?.call(str);
+
+    setState(() {
+      _loadedCharacters = Set.from(data.characters);
+      _loadedCharacters = Set.from(data.characters);
+    });
   }
 
-  static final Map<ImportFormat, List<Character> Function(String)>
-      _dataParsers = {
+  final Map<ImportFormat, ImportData Function(String)> _dataParsers = {
     ImportFormat.JSON: (str) {
-      final json = jsonDecode(str) as List<dynamic>;
-      final chars = Set<Character>.from(
-        json.map((v) => Character(data: v)),
-      ).toList();
-      return chars;
+      final raw = jsonDecode(str);
+      final json = raw is List ? {'characters': raw} : raw;
+      final chars = Set<Character>.from(json.map((v) => Character(data: v)));
+      final customClasses =
+          Set<CustomClass>.from(json.map((v) => CustomClass(data: v)));
+
+      return ImportData(characters: chars, customClasses: customClasses);
     }
   };
 }
@@ -199,4 +228,14 @@ class _Padded extends StatelessWidget {
     }
     return _p;
   }
+}
+
+class ImportData {
+  final Set<Character> characters;
+  final Set<CustomClass> customClasses;
+
+  ImportData({
+    @required this.characters,
+    @required this.customClasses,
+  });
 }
