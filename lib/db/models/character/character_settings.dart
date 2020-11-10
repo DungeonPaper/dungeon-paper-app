@@ -14,9 +14,6 @@ final _alignmentMapping = {
   'bottomRight': painting.Alignment.bottomRight,
 };
 
-typedef _DataListener = void Function(_CharacterSettingsData);
-typedef _ValueListener = void Function(CharacterSettings);
-
 class _CharacterSettingsData {
   final ValueNotifier<bool> _useDefaultMaxHp;
   final ValueNotifier<painting.Alignment> _photoAlignment;
@@ -54,6 +51,7 @@ class CharacterSettings extends ValueNotifier<_CharacterSettingsData> {
     value.addListener(notifyListeners);
   }
 
+  // aliases
   bool get useDefaultMaxHp => value.useDefaultMaxHp;
   set useDefaultMaxHp(bool newValue) => value.useDefaultMaxHp = newValue;
   painting.Alignment get photoAlignment => value.photoAlignment;
