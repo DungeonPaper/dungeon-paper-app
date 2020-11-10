@@ -1,23 +1,27 @@
 import 'dart:core';
 import 'dart:core' as core;
 import 'dart:math';
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:dungeon_paper/db/helpers/character_utils.dart';
+
 import 'package:dungeon_paper/src/inherited_widgets/inherited_character.dart';
 import 'package:dungeon_paper/src/redux/characters/characters_store.dart';
 import 'package:dungeon_paper/src/redux/stores.dart';
 import 'package:dungeon_paper/src/utils/utils.dart';
+
 import 'package:dungeon_world_data/dice.dart';
 import 'package:dungeon_world_data/dw_data.dart';
 import 'package:dungeon_world_data/move.dart';
 import 'package:dungeon_world_data/player_class.dart';
+
 import 'package:flutter/widgets.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+
+import '../helpers/character_utils.dart';
+import '../models/character_settings.dart';
 import 'firebase_entity/firebase_entity.dart';
 import 'firebase_entity/fields/fields.dart';
 import 'inventory_items.dart';
 import 'notes.dart';
 import 'spells.dart';
-import 'package:flutter/painting.dart' as painting;
 
 part 'character_fields.dart';
 

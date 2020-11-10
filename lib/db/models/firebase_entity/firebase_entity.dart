@@ -18,6 +18,7 @@ abstract class FirebaseEntity {
     Map<String, dynamic> data,
     bool autoLoad = false,
   }) {
+    fields.init(data);
     if (data != null && data.isNotEmpty) {
       var dataWithDefaults = _mergeDataWithDefaults(data);
       deserializeData(dataWithDefaults);
@@ -157,7 +158,6 @@ abstract class FirebaseEntity {
 
   Map<String, dynamic> deserializeData(Map<String, dynamic> data) {
     var output = <String, dynamic>{};
-    fields.init(data);
     for (var key in data.keys) {
       try {
         var field = fields.get(key);
