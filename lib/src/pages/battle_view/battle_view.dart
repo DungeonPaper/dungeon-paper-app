@@ -98,8 +98,14 @@ class _BattleViewState extends State<BattleView> {
               Expanded(
                 child: RollButtonWithEdit(
                   character: widget.character,
-                  diceList: [widget.character.damageDice],
-                  onRoll: _onRoll(widget.character.damageDice),
+                  diceList: [
+                    widget.character.damageDice
+                        .copyWith(modifier: widget.character.equippedDamage)
+                  ],
+                  onRoll: _onRoll(
+                    widget.character.damageDice
+                        .copyWith(modifier: widget.character.equippedDamage),
+                  ),
                   label: Text('Roll Damage'),
                   analyticsSource: 'Battle - Roll Danmage',
                   brightness: Brightness.light,
