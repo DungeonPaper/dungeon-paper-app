@@ -7,6 +7,7 @@ import 'package:dungeon_paper/src/dialogs/confirmation_dialog.dart';
 import 'package:dungeon_paper/src/lists/character_select_list.dart';
 import 'package:dungeon_paper/src/lists/custom_class_select_list.dart';
 import 'package:dungeon_paper/src/redux/characters/characters_store.dart';
+import 'package:dungeon_paper/src/redux/custom_classes/custom_classes_store.dart';
 import 'package:dungeon_paper/src/redux/stores.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_file_dialog/flutter_file_dialog.dart';
@@ -42,7 +43,7 @@ class _ImportViewState extends State<ImportView> {
       children: [
         _Padded(
           child: Text(
-            '${_loadedCharacters.isNotEmpty ? 'Select' : 'Load'} characters to import',
+            '${_loadedCharacters.isNotEmpty ? 'Select' : 'Load'} data to import',
             style: Theme.of(context).textTheme.headline6,
           ),
         ),
@@ -127,8 +128,10 @@ class _ImportViewState extends State<ImportView> {
   void _import() async {
     try {
       final user = dwStore.state.user.current;
-      final characters = dwStore.state.characters.all;
-      final finalChars = Set<Character>.from(characters.values);
+      final finalChars =
+          Set<Character>.from(dwStore.state.characters.all.values);
+      final finalClasses = Set<CustomClass>.from(
+          dwStore.state.customClasses.customClasses.values);
       for (final char in _charactersToImport) {
         final found = finalChars.firstWhere(
             (_char) => _char.displayName == char.displayName,
@@ -143,8 +146,22 @@ class _ImportViewState extends State<ImportView> {
         finalChars.remove(found);
         finalChars.add(added);
       }
+      for (final cls in _classesToImport) {
+        final found = finalClasses.firstWhere((_char) => _char.key == cls.key,
+            orElse: () => null);
+        CustomClass added;
+        if (found == null) {
+          added = await user.createCustomClass(cls);
+        } else {
+          await found.update(json: cls.toJSON());
+          added = found;
+        }
+        finalClasses.remove(found);
+        finalClasses.add(added);
+      }
 
       dwStore.dispatch(SetCharacters.fromIterable(finalChars));
+      dwStore.dispatch(SetCustomClasses.fromIterable(finalClasses));
 
       setState(() {
         _loadedCharacters = {};

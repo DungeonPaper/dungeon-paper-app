@@ -41,7 +41,7 @@ class ArmorAndDmgDice extends StatelessWidget {
             ),
             onTap: () => showDialog(
               context: context,
-              builder: (context) => EditArmorDialog(value: character.armor),
+              builder: (context) => EditArmorDialog(character: character),
             ),
           ),
           _item(

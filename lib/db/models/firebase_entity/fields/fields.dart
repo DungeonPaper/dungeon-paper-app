@@ -24,6 +24,7 @@ typedef FieldListener<T> = void Function(T, FieldsContext);
 class FieldsContext {
   final Map<String, FieldBase> _map = {};
   final Map<String, dynamic> _raw = {};
+  final List<FieldListener> _listeners = [];
 
   FieldsContext(Iterable<FieldBase> fields) {
     for (var field in fields) {
@@ -35,7 +36,7 @@ class FieldsContext {
       _map.map((k, v) => MapEntry(k, v.value));
 
   void init(Map<String, dynamic> map) {
-    _raw.addAll(map);
+    _raw.addAll(map ?? {});
   }
 
   Map<String, dynamic> get raw => _raw;
@@ -86,12 +87,14 @@ class FieldsContext {
   }
 
   void addListener<L>(FieldListener<L> listener) {
+    _listeners.add(listener);
     for (var key in keys) {
       get(key)?.addListener(listener);
     }
   }
 
   void removeListener<L>(FieldListener<L> listener) {
+    _listeners.remove(listener);
     for (var key in keys) {
       get(key)?.removeListener(listener);
     }

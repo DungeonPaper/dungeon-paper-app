@@ -2,8 +2,12 @@ part of 'custom_classes_store.dart';
 
 class SetCustomClasses {
   final Map<String, CustomClass> classes;
-  final bool overwrite;
-  SetCustomClasses(this.classes, [this.overwrite]);
+  SetCustomClasses(this.classes);
+
+  factory SetCustomClasses.fromIterable(Iterable<CustomClass> iterable) =>
+      SetCustomClasses({
+        for (final cls in iterable) cls.documentID: cls,
+      });
 }
 
 class UpsertCustomClass {

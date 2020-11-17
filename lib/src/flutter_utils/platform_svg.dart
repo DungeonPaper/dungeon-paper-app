@@ -2,39 +2,75 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
-class PlatformSvg {
-  static Widget asset(
+class PlatformSvg extends StatelessWidget {
+  final String uri;
+  final num width;
+  final num height;
+  final BoxFit fit;
+  final Color color;
+  final Alignment alignment;
+  final String semanticsLabel;
+
+  /// Overrides width & height;
+  final num size;
+
+  PlatformSvg({
+    Key key,
+    @required this.uri,
+    this.width,
+    this.height,
+    this.size,
+    this.fit = BoxFit.contain,
+    this.color,
+    this.alignment = Alignment.center,
+    this.semanticsLabel,
+  }) : super(key: key);
+
+  factory PlatformSvg.asset(
     String assetName, {
     num width,
     num height,
+    num size,
     BoxFit fit = BoxFit.contain,
     Color color,
-    alignment = Alignment.center,
+    Alignment alignment = Alignment.center,
     String semanticsLabel,
-
-    /// Overrides width & height
-    num size,
-  }) {
-    if (size != null) {
-      width = height = size;
-    }
-    if (kIsWeb) {
-      return Image.network(
-        'assets/assets/$assetName',
-        width: width.toDouble(),
-        height: height.toDouble(),
+  }) =>
+      PlatformSvg(
+        uri: kIsWeb ? 'assets/assets/$assetName' : 'assets/$assetName',
+        width: width,
+        height: height,
+        size: size,
         fit: fit,
         color: color,
+        alignment: alignment,
+        semanticsLabel: semanticsLabel,
+      );
+
+  num get _width => size ?? width;
+  num get _height => size ?? height;
+
+  @override
+  Widget build(BuildContext context) {
+    final _color = color ?? IconTheme.of(context).color;
+    if (kIsWeb) {
+      return Image.network(
+        uri,
+        width: _width.toDouble(),
+        height: _height.toDouble(),
+        fit: fit,
+        color: _color,
         alignment: alignment,
         semanticLabel: semanticsLabel,
       );
     }
+
     return SvgPicture.asset(
-      'assets/$assetName',
-      width: width.toDouble(),
-      height: height.toDouble(),
+      uri,
+      width: _width.toDouble(),
+      height: _height.toDouble(),
       fit: fit,
-      color: color,
+      color: _color,
       alignment: alignment,
       semanticsLabel: semanticsLabel,
     );

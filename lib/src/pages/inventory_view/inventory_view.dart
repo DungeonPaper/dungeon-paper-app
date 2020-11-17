@@ -1,5 +1,6 @@
 import 'package:dungeon_paper/db/models/character.dart';
 import 'package:dungeon_paper/db/models/inventory_items.dart';
+import 'package:dungeon_paper/src/atoms/armor_chip.dart';
 import 'package:dungeon_paper/src/atoms/categorized_list.dart';
 import 'package:dungeon_paper/src/atoms/coins_chip.dart';
 import 'package:dungeon_paper/src/atoms/empty_state.dart';
@@ -102,11 +103,12 @@ class InventoryInfoBar extends StatelessWidget {
   Widget build(BuildContext context) {
     return Wrap(
       // alignment: Alignment.centerLeft,
-      spacing: 10.0,
+      spacing: 5,
       alignment: WrapAlignment.center,
       crossAxisAlignment: WrapCrossAlignment.center,
       children: [
         InventoryLoadChip(character: character),
+        ArmorChip(character: character),
         CoinsChip(character: character),
       ],
     );

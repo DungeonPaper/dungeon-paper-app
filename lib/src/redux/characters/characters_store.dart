@@ -18,12 +18,8 @@ CharacterStore characterReducer(CharacterStore state, action) {
   state.all ??= {};
 
   if (action is SetCharacters) {
-    if (action.overwrite == true) {
-      state.all = action.characters;
-    } else {
-      state.all ??= {};
-      state.all.addAll(action.characters);
-    }
+    state.all = action.characters;
+
     if (state.current != null) {
       state.current = action.characters[state.current.documentID];
     } else if (action.characters.isNotEmpty &&

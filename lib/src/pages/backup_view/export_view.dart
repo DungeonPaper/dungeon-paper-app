@@ -5,8 +5,10 @@ import 'package:dungeon_paper/db/models/character.dart';
 import 'package:dungeon_paper/db/models/custom_class.dart';
 import 'package:dungeon_paper/src/lists/character_select_list.dart';
 import 'package:dungeon_paper/src/lists/custom_class_select_list.dart';
+import 'package:dungeon_paper/src/pages/backup_view/xlsx_character_formatter.dart';
 import 'package:dungeon_paper/src/utils/utils.dart';
 import 'package:dungeon_world_data/player_class.dart';
+import 'package:excel/excel.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_file_dialog/flutter_file_dialog.dart';
 import 'package:get/get.dart';
@@ -109,14 +111,14 @@ class _ExportViewState extends State<ExportView> {
   }
 
   void _export() async {
-    final _strData = _dumpDataString();
+    final _strData = await _dumpDataString();
     final tmp = await getTemporaryDirectory();
     final ext = formatExts[_format];
     final dt = DateTime.now().toIso8601String();
     final fileName = 'dungeon-paper-$dt.$ext';
 
     final _tmpFile = File(join(tmp.path, fileName));
-    await _tmpFile.writeAsString(_strData);
+    await _tmpFile.writeAsBytes(_strData);
 
     final params = SaveFileDialogParams(sourceFilePath: _tmpFile.path);
     try {
@@ -126,23 +128,27 @@ class _ExportViewState extends State<ExportView> {
       } else {
         Get.snackbar(
           'Export Successful',
-          'Your characters were exported without problems',
+          'Your data was exported without problems.',
         );
       }
     } catch (e) {
-      Get.snackbar('Export Failed', 'Something went wrong.');
+      Get.snackbar('Export Failed',
+          'Something went wrong.\nTry again or contact support if this persists.');
       rethrow;
     }
   }
 
-  String _dumpDataString() {
+  Future<List<int>> _dumpDataString() async {
+    if (_dataParsers[_format] == null) {
+      return null;
+    }
     final chars = Set<Character>.from(
         _charactersToExport.toList()..sort((a, b) => a.order - b.order));
 
-    final classes = Set<CustomClass>.from(_classesToExport);
+    final classes = {..._classesToExport};
 
-    return _dataParsers[_format]
-        ?.call(ExportData(characters: chars, customClasses: classes));
+    return await _dataParsers[_format]
+        .call(ExportData(characters: chars, customClasses: classes));
   }
 
   static Map<ExportFormat, String> formatExts = {
@@ -150,15 +156,24 @@ class _ExportViewState extends State<ExportView> {
     ExportFormat.Excel: 'xlsx',
   };
 
-  static final Map<ExportFormat, String Function(ExportData)> _dataParsers = {
+  static final Map<ExportFormat, Future<List<int>> Function(ExportData)>
+      _dataParsers = {
     ExportFormat.JSON: (data) {
       final charsData = data.characters.map((char) => char.toJSON()).toList();
       final classesData =
           data.customClasses.map((char) => char.toJSON()).toList();
       final _strData =
           jsonEncode({'characters': charsData, 'classes': classesData});
-      return _strData;
+      return Future.value(utf8.encode(_strData));
     },
+    // ExportFormat.Excel: (data) async {
+    //   final xl = Excel.createExcel();
+    //   for (final char in data.characters) {
+    //     xl['Character: ' + char.displayName] =
+    //         await generateCharacterExcelSheet(char);
+    //   }
+    //   return xl.encode();
+    // },
   };
 
   void _setFormat(ExportFormat format) {
@@ -204,7 +219,7 @@ class _Padded extends StatelessWidget {
 
 class ExportData {
   final Set<Character> characters;
-  final Set<CustomClass> customClasses;
+  final Set<PlayerClass> customClasses;
 
   ExportData({
     @required this.characters,

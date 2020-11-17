@@ -54,12 +54,14 @@ class _ManageCharactersViewState extends State<ManageCharactersView> {
 
   @override
   Widget build(BuildContext context) {
+    final mq = MediaQuery.of(context);
+    final theme = Theme.of(context);
     return ScaffoldWithElevation(
       title: Text('Manage Characters'),
       floatingActionButton: FloatingActionButton(
         child: Icon(Icons.add),
-        backgroundColor: Theme.of(context).colorScheme.background,
-        foregroundColor: Theme.of(context).colorScheme.onBackground,
+        backgroundColor: theme.colorScheme.background,
+        foregroundColor: theme.colorScheme.onBackground,
         onPressed: _openCreatePage,
       ),
       automaticallyImplyLeading: true,
@@ -76,24 +78,16 @@ class _ManageCharactersViewState extends State<ManageCharactersView> {
             // ),
             Row(
               mainAxisSize: MainAxisSize.max,
+              mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Expanded(
+                Container(
+                  width: mq.size.width < 500 ? mq.size.width / 2 : 200,
                   child: RaisedButton.icon(
                     icon: Icon(Icons.sort),
                     onPressed: () => setState(() => sortMode = !sortMode),
-                    color: Theme.of(context).colorScheme.secondary,
-                    textColor: Theme.of(context).colorScheme.onSecondary,
+                    color: theme.colorScheme.secondary,
+                    textColor: theme.colorScheme.onSecondary,
                     label: Text(!sortMode ? 'Sort' : 'Done'),
-                  ),
-                ),
-                SizedBox(width: 16),
-                Expanded(
-                  child: RaisedButton.icon(
-                    icon: Icon(Icons.settings_backup_restore),
-                    onPressed: !sortMode ? _openBackupView : null,
-                    color: Theme.of(context).colorScheme.secondary,
-                    textColor: Theme.of(context).colorScheme.onSecondary,
-                    label: Text('Backup'),
                   ),
                 ),
               ],

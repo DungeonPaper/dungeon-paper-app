@@ -27,8 +27,7 @@ class ExistingInventoryItemsList extends StatelessWidget {
 
 class AddInventoryItem extends StatefulWidget {
   final Iterable<Equipment> items;
-  final TextEditingController _searchController =
-      TextEditingController(text: '');
+  final TextEditingController _searchController = TextEditingController();
   final void Function(InventoryItem) onSave;
 
   AddInventoryItem({
@@ -50,38 +49,31 @@ class _AddInventoryItemState extends State<AddInventoryItem> {
 
   @override
   void initState() {
-    widget._searchController.addListener(ctrlListener);
+    widget._searchController.addListener(_onChange);
     super.initState();
   }
 
   @override
   void dispose() {
-    widget._searchController.removeListener(ctrlListener);
+    widget._searchController.removeListener(_onChange);
     super.dispose();
   }
 
-  void listener([String value]) {
+  void _onChange([String value]) {
     setState(() {
       search = value ?? widget._searchController.text;
     });
   }
 
-  void ctrlListener([String value]) {
-    listener(value);
-  }
-
-  void widgetListener([String value]) {
-    listener(value);
-  }
-
   @override
   Widget build(BuildContext context) {
-    var itemMap = <String, List<Equipment>>{};
-    var filtered = search.isNotEmpty
+    final itemMap = <String, List<Equipment>>{};
+    final filtered = search.isNotEmpty
         ? widget.items.where((item) => clean(item.name).contains(clean(search)))
         : widget.items;
     filtered.forEach((item) {
-      var key = item.name.isNotEmpty ? item.name.trim()[0].toUpperCase() : '#';
+      final key =
+          item.name.isNotEmpty ? item.name.trim()[0].toUpperCase() : '#';
       itemMap[key] ??= [];
       itemMap[key].add(item);
     });
@@ -90,11 +82,11 @@ class _AddInventoryItemState extends State<AddInventoryItem> {
       widget._searchController.selection =
           TextSelection.fromPosition(TextPosition(offset: search.length));
     }
-    var searchBar = SearchBar(
+    final searchBar = SearchBar(
       controller: widget._searchController,
-      onChanged: widgetListener,
-      onSubmitted: widgetListener,
-      onEditingComplete: widgetListener,
+      onChanged: _onChange,
+      onSubmitted: _onChange,
+      onEditingComplete: _onChange,
     );
     return Stack(
       children: <Widget>[
@@ -114,7 +106,7 @@ class _AddInventoryItemState extends State<AddInventoryItem> {
               return child;
             },
             itemBuilder: (ctx, key, idx, catI) {
-              var item = itemMap[key][idx];
+              final item = itemMap[key][idx];
               return Container(
                 padding: EdgeInsets.symmetric(vertical: 8),
                 child: InventoryItemCard(

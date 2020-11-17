@@ -7,6 +7,7 @@ import 'package:dungeon_paper/src/pages/about_view/about_view.dart';
 import 'package:dungeon_paper/src/pages/account_view/account_view.dart';
 import 'package:dungeon_paper/src/pages/custom_classes_view/custom_classes_view.dart';
 import 'package:dungeon_paper/src/pages/edit_character/edit_character_view.dart';
+import 'package:dungeon_paper/src/pages/settings_view/settings_view.dart';
 import 'package:dungeon_paper/src/redux/characters/characters_store.dart';
 import 'package:dungeon_paper/src/redux/connectors.dart';
 import 'package:dungeon_paper/src/redux/shared_preferences/prefs_settings.dart';
@@ -129,18 +130,8 @@ class _SidebarState extends State<Sidebar> {
               title('Application', context),
               ListTile(
                 leading: Icon(Icons.settings),
-                title: Text('Keep screen on'),
-                trailing: Switch.adaptive(
-                  value: settings.keepScreenOn,
-                  onChanged: (value) {
-                    dwStore.dispatch(
-                      ChangeSetting<bool>(
-                        name: SettingName.keepScreenOn,
-                        value: value,
-                      ),
-                    );
-                  },
-                ),
+                title: Text('Settings'),
+                onTap: () => openPage(ScreenNames.Settings, SettingsView()),
               ),
               // About
               ListTile(

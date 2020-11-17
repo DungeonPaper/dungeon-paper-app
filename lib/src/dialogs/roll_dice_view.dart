@@ -114,7 +114,7 @@ class _RollDiceViewState extends State<RollDiceView>
       for (var list in enumerate(reversedControllers))
         Padding(
           padding:
-              const EdgeInsets.symmetric(horizontal: 16).copyWith(bottom: 32),
+              const EdgeInsets.symmetric(horizontal: 16).copyWith(bottom: 16),
           child: DiceRollBox(
             analyticsSource: 'Roll Dice View',
             key: Key('dice-${list.value.hash}'),
@@ -135,7 +135,7 @@ class _RollDiceViewState extends State<RollDiceView>
   void _add(List<Dice> dice) {
     logger.d('Add dice ${dice.join(', ')}');
     analytics.logEvent(
-      name: Events.RollNewDice,
+      name: Events.AddDice,
       parameters: {'dice': dice.join(', ')},
     );
     setState(_addDiceToState(dice));
