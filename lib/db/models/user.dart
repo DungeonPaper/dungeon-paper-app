@@ -1,12 +1,14 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dungeon_paper/db/db.dart';
 import 'package:dungeon_paper/src/redux/characters/characters_store.dart';
+import 'package:dungeon_paper/src/redux/custom_classes/custom_classes_store.dart';
 import 'package:dungeon_paper/src/redux/stores.dart';
 import 'package:dungeon_paper/src/redux/users/user_store.dart';
 import 'package:dungeon_paper/src/utils/auth/auth.dart';
 import 'package:dungeon_paper/src/utils/logger.dart';
 
 import 'character.dart';
+import 'custom_class.dart';
 import 'firebase_entity/fields/fields.dart';
 import 'firebase_entity/firebase_entity.dart';
 
@@ -57,6 +59,16 @@ class User extends FirebaseEntity {
     dwStore.dispatch(UpsertCharacter(character));
     dwStore.dispatch(SetCurrentChar(character));
     return character;
+  }
+
+  Future<CustomClass> createCustomClass(CustomClass cls) async {
+    var doc = firestore.collection(ref.path + '/custom_classes').doc();
+    var data = cls.toJSON();
+    logger.d('Creating custom class: $data');
+    await doc.set(data);
+    cls..ref = doc;
+    dwStore.dispatch(UpsertCustomClass(cls));
+    return cls;
   }
 
   @override

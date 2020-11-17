@@ -11,6 +11,7 @@ class NumberController extends StatefulWidget {
   final num max;
   final FormatType formatType;
   final bool autoFocus;
+  final bool enabled;
 
   const NumberController({
     Key key,
@@ -21,6 +22,7 @@ class NumberController extends StatefulWidget {
     this.max = double.infinity,
     this.formatType = FormatType.Integer,
     this.autoFocus = false,
+    this.enabled = true,
   }) : super(key: key);
 
   @override
@@ -40,6 +42,11 @@ class _NumberControllerState extends State<NumberController> {
   }
 
   @override
+  void didUpdateWidget(covariant NumberController oldWidget) {
+    super.didUpdateWidget(oldWidget);
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Container(
       height: widget.height,
@@ -52,12 +59,17 @@ class _NumberControllerState extends State<NumberController> {
             color: Colors.red[300],
             textColor: Colors.white,
             child: Icon(Icons.remove, size: 30),
-            onPressed: () => _update(
-                controlledStat > widget.min ? controlledStat - 1 : widget.min,
-                true),
+            onPressed: widget.enabled == true
+                ? () => _update(
+                    controlledStat > widget.min
+                        ? controlledStat - 1
+                        : widget.min,
+                    true)
+                : null,
           ),
           Expanded(
             child: TextField(
+              enabled: widget.enabled,
               onChanged: (val) {
                 var intVal = widget.formatType == FormatType.Integer
                     ? int.tryParse(val)
@@ -86,10 +98,14 @@ class _NumberControllerState extends State<NumberController> {
             color: Colors.green[300],
             textColor: Colors.white,
             child: Icon(Icons.add, size: 30),
-            onPressed: () => _update(
-              controlledStat < widget.max ? controlledStat + 1 : widget.max,
-              true,
-            ),
+            onPressed: widget.enabled == true
+                ? () => _update(
+                      controlledStat < widget.max
+                          ? controlledStat + 1
+                          : widget.max,
+                      true,
+                    )
+                : null,
           ),
         ],
       ),

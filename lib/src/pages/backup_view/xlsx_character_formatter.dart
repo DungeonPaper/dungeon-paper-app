@@ -10,7 +10,7 @@ class _Stat {
   _Stat(this.columnIndex, this.rowIndex, this.name, this.value);
 }
 
-Future<Sheet> formatCharacter(Character character) async {
+Future<Sheet> generateCharacterExcelSheet(Character character) async {
   final xl = Excel.createExcel();
   final sheet = xl.sheets[await xl.getDefaultSheet()];
   final headerStyle = CellStyle(

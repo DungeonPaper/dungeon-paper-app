@@ -9,6 +9,7 @@ enum EquipmentKeys { key, item, amount }
 
 class InventoryItem extends Equipment {
   num amount;
+  bool equipped;
 
   InventoryItem({
     String key,
@@ -17,6 +18,7 @@ class InventoryItem extends Equipment {
     String description,
     List<Tag> tags,
     this.amount,
+    this.equipped = false,
   }) : super(
           key: key ?? Uuid().v4(),
           name: name,
@@ -33,6 +35,7 @@ class InventoryItem extends Equipment {
       pluralName: equipment.pluralName,
       tags: equipment.tags,
       amount: amount,
+      equipped: false,
     );
   }
 
@@ -46,15 +49,18 @@ class InventoryItem extends Equipment {
   }
 
   @override
-  Map toJSON() {
-    var map = super.toJSON();
-    map['amount'] = amount;
-    return map;
-  }
+  Map toJSON() => {
+        ...super.toJSON(),
+        'amount': amount,
+        'equipped': equipped,
+      };
 
   @override
   InventoryItem copy() {
-    return InventoryItem.fromJSON(toJSON());
+    return InventoryItem.fromJSON({
+      ...toJSON(),
+      'key': Uuid().v4(),
+    });
   }
 }
 

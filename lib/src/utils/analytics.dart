@@ -9,6 +9,7 @@ class Events {
   static const ChangeCharacter = 'change_character';
   static const ReturnToScreen = 'return_to_screen';
   static const OpenDiceDialog = 'open_dice_screen';
+  static const AddDice = 'add_dice';
   static const RollNewDice = 'roll_new_dice';
   static const RerollDice = 'reroll_dice';
   static const EditDice = 'edit_dice';
@@ -53,4 +54,5 @@ class ScreenNames {
   static const CustomClasses = 'custom_classes';
   static const About = 'about';
   static const Account = 'account';
+  static const Settings = 'settings';
 }

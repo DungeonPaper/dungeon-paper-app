@@ -26,8 +26,9 @@ class CoinsChip extends StatelessWidget {
             builder: (context) => EditCoinsDialog(value: character.coins),
           );
         },
+        visualDensity: VisualDensity.compact,
         backgroundColor: Color(0xFFF5EB6B),
-        padding: EdgeInsets.all(12.0),
+        padding: EdgeInsets.all(8),
         label: Row(
           mainAxisSize: MainAxisSize.min,
           mainAxisAlignment: MainAxisAlignment.spaceBetween,

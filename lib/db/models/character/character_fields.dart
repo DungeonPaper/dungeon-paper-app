@@ -76,7 +76,8 @@ mixin CharacterFields implements FirebaseEntity {
   ]);
 
   // Class-Related
-  set useDefaultMaxHP(bool value) => settings.useDefaultMaxHp = value;
+  set useDefaultMaxHP(bool value) =>
+      settings = settings.copyWith(useDefaultMaxHp: value);
   bool get useDefaultMaxHP => settings.useDefaultMaxHp;
 
   set alignment(AlignmentName value) =>
@@ -131,8 +132,9 @@ mixin CharacterFields implements FirebaseEntity {
   set int(num value) => fields.get<num>('int').set(value);
   num get cha => fields.get<num>('cha').value;
   set cha(num value) => fields.get<num>('cha').set(value);
-  num get armor => fields.get<num>('armor').value;
+  num get armor => settings.autoCalcArmor ? calculatedArmor : rawArmor;
   set armor(num value) => fields.get<num>('armor').set(value);
+  num get rawArmor => fields.get<num>('armor').value;
 
   // Main Item Types
   List<Move> get moves => fields.get<List<Move>>('moves').value;
@@ -229,5 +231,44 @@ mixin CharacterFields implements FirebaseEntity {
     }
 
     return -1;
+  }
+
+  num get load {
+    var count = 0.0;
+    inventory.forEach((item) {
+      final wght =
+          item.tags?.firstWhere((t) => t?.name == 'weight', orElse: () => null);
+      if (wght != null && wght.hasValue) {
+        num wghtValue = 0;
+        if (wght.value is num) {
+          wghtValue += wght.value;
+        } else {
+          wghtValue += double.tryParse(wght.value ?? 0) ?? 0.0;
+        }
+        count += wghtValue * item.amount;
+      }
+    });
+    return count;
+  }
+
+  num get calculatedArmor {
+    var count = 0;
+    inventory.forEach((item) {
+      if (!item.equipped) {
+        return 0;
+      }
+      final armor =
+          item.tags?.firstWhere((t) => t?.name == 'armor', orElse: () => null);
+      if (armor != null && armor.hasValue) {
+        num armorValue = 0;
+        if (armor.value is num) {
+          armorValue += armor.value;
+        } else {
+          armorValue += core.int.tryParse(armor.value ?? 0) ?? 0;
+        }
+        count += armorValue * item.amount;
+      }
+    });
+    return count;
   }
 }

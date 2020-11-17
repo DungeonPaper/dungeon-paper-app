@@ -36,6 +36,15 @@ class _DiceRollBoxState extends State<DiceRollBox>
   @override
   void initState() {
     super.initState();
+
+    analytics.logEvent(
+      name: Events.RollNewDice,
+      parameters: {
+        'dice': widget.controller.value.join(', '),
+        'screen_name': widget.analyticsSource,
+      },
+    );
+
     if (widget.animated) {
       _initAnimations();
     }

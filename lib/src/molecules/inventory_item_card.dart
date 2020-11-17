@@ -49,6 +49,16 @@ class InventoryItemCard extends StatelessWidget {
         ),
       ),
     ];
+    if (item.equipped == true) {
+      titleChildren.add(
+        Chip(
+          backgroundColor: Colors.lightBlue[100],
+          label: Text('Prepared'),
+          padding: EdgeInsets.all(0),
+          // labelPadding: EdgeInsets.all(0),
+        ),
+      );
+    }
     if (mode == InventoryItemCardMode.Editable) {
       titleChildren.add(Text('x$amount'));
     }
@@ -70,6 +80,22 @@ class InventoryItemCard extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.stretch,
               mainAxisSize: MainAxisSize.min,
               children: info,
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 16),
+            child: Row(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Text(item.equipped ? 'Equipped' : 'Unequiped'),
+                Switch(
+                  value: item.equipped,
+                  onChanged: (val) {
+                    item.equipped = val;
+                    onSave?.call(item);
+                  },
+                )
+              ],
             ),
           ),
           mode == InventoryItemCardMode.Editable

@@ -13,24 +13,7 @@ class InventoryLoadChip extends StatelessWidget {
   }) : super(key: key);
 
   num get maxLoad => character.maxLoad;
-
-  num get currentLoad {
-    var count = 0.0;
-    character.inventory.forEach((item) {
-      var wght =
-          item.tags?.firstWhere((t) => t?.name == 'weight', orElse: () => null);
-      if (wght != null && wght.hasValue) {
-        num wghtValue = 0;
-        if (wght.value is num) {
-          wghtValue += wght.value;
-        } else {
-          wghtValue += double.tryParse(wght.value ?? 0) ?? 0.0;
-        }
-        count += wghtValue * item.amount;
-      }
-    });
-    return count;
-  }
+  num get currentLoad => character.load;
 
   BgAndFgColors get severity {
     if (isOverEncumbered) {
@@ -54,8 +37,9 @@ class InventoryLoadChip extends StatelessWidget {
     return Tooltip(
       message: ttMsg,
       child: Chip(
+        visualDensity: VisualDensity.compact,
         backgroundColor: severity.background,
-        padding: EdgeInsets.all(12.0),
+        padding: EdgeInsets.all(8),
         label: DefaultTextStyle.merge(
           style: TextStyle(color: severity.foreground),
           child: Row(

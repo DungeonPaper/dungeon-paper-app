@@ -1,3 +1,6 @@
+import 'package:dungeon_paper/db/models/character.dart';
+import 'package:dungeon_paper/db/models/character/character_settings.dart';
+import 'package:dungeon_paper/src/atoms/number_controller.dart';
 import 'package:dungeon_paper/src/dialogs/standard_dialog_controls.dart';
 import 'package:dungeon_paper/src/flutter_utils/input_formatters.dart';
 import 'package:dungeon_paper/src/redux/stores.dart';
@@ -7,30 +10,34 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 class EditArmorDialog extends StatefulWidget {
-  final num value;
+  final Character character;
   EditArmorDialog({
     Key key,
-    @required this.value,
+    @required this.character,
   }) : super(key: key);
 
   @override
-  State<StatefulWidget> createState() => EditArmorDialogState(value: value);
+  State<StatefulWidget> createState() => EditArmorDialogState();
 }
 
 class EditArmorDialogState extends State<EditArmorDialog> {
   num value;
-  final TextEditingController _controller;
+  bool autoCalc;
 
   EditArmorDialogState({
     Key key,
-    @required this.value,
-  })  : _controller = TextEditingController(text: value.toString()),
-        super();
+  }) : super();
+
+  @override
+  void initState() {
+    super.initState();
+    value = widget.character.armor;
+    autoCalc = widget.character.settings.autoCalcArmor;
+  }
 
   @override
   Widget build(BuildContext context) {
-    num controlledStat = int.parse(_controller.value.text);
-
+    final visibleValue = autoCalc ? widget.character.calculatedArmor : value;
     return AlertDialog(
       title: Text('Edit Armor'),
       contentPadding: const EdgeInsets.only(top: 32.0, bottom: 8.0),
@@ -40,7 +47,7 @@ class EditArmorDialogState extends State<EditArmorDialog> {
           mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: <Widget>[
-            Text('Armor: $value',
+            Text('Armor: $visibleValue',
                 style: TextStyle(
                   fontSize: 20.0,
                   fontWeight: FontWeight.bold,
@@ -51,47 +58,18 @@ class EditArmorDialogState extends State<EditArmorDialog> {
                 children: <Widget>[
                   Container(
                     padding: const EdgeInsets.symmetric(vertical: 8.0),
-                    child: Row(
-                      mainAxisSize: MainAxisSize.min,
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: <Widget>[
-                        RaisedButton(
-                          shape: CircleBorder(side: BorderSide.none),
-                          color: Colors.red[300],
-                          textColor: Colors.white,
-                          child: Icon(Icons.remove, size: 24),
-                          onPressed: () => _setStateValue(
-                              controlledStat > 0 ? controlledStat - 1 : 0),
-                        ),
-                        Expanded(
-                          child: TextField(
-                            onChanged: (val) {
-                              if (int.tryParse(val) != null) {
-                                _setStateValue(int.tryParse(val));
-                              }
-                            },
-                            keyboardType: TextInputType.number,
-                            inputFormatters: <TextInputFormatter>[
-                              FilteringTextInputFormatter.digitsOnly,
-                              BetweenValuesTextFormatter(0, 20)
-                            ],
-                            controller: _controller,
-                            style: TextStyle(fontSize: 24.0),
-                            textAlign: TextAlign.center,
-                          ),
-                        ),
-                        RaisedButton(
-                          shape: CircleBorder(side: BorderSide.none),
-                          color: Colors.green[300],
-                          textColor: Colors.white,
-                          child: Icon(Icons.add, size: 24),
-                          onPressed: () => _setStateValue(
-                              controlledStat < 20 ? controlledStat + 1 : 20),
-                        ),
-                      ],
+                    child: NumberController(
+                      formatType: FormatType.Integer,
+                      value: value,
+                      onChange: (val) => setState(() => value = val),
+                      enabled: !autoCalc,
                     ),
                   ),
+                  CheckboxListTile(
+                    value: autoCalc,
+                    onChanged: (val) => setState(() => autoCalc = val),
+                    title: Text('Automatically calculate from equipped items'),
+                  )
                 ],
               ),
             ),
@@ -106,21 +84,11 @@ class EditArmorDialogState extends State<EditArmorDialog> {
     );
   }
 
-  void _setStateValue(num newValue) {
-    setState(() {
-      value = newValue;
-    });
-
-    if (newValue != int.tryParse(_controller.text)) {
-      _controller.text = newValue.toString();
-      num len = newValue.toString().length;
-      _controller.selection = TextSelection(baseOffset: len, extentOffset: len);
-    }
-  }
-
   void _saveValue() async {
     var character = dwStore.state.characters.current;
-    unawaited(character.update(json: {'armor': value}));
+    character.settings = character.settings.copyWith(autoCalcArmor: autoCalc);
+    character.armor = value;
+    unawaited(character.update());
     Get.back();
   }
 }
