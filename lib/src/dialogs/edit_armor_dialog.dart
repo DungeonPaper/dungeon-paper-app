@@ -37,7 +37,7 @@ class EditArmorDialogState extends State<EditArmorDialog> {
 
   @override
   Widget build(BuildContext context) {
-    final visibleValue = autoCalc ? widget.character.calculatedArmor : value;
+    final visibleValue = autoCalc ? widget.character.equippedArmor : value;
     return AlertDialog(
       title: Text('Edit Armor'),
       contentPadding: const EdgeInsets.only(top: 32.0, bottom: 8.0),

@@ -132,7 +132,7 @@ mixin CharacterFields implements FirebaseEntity {
   set int(num value) => fields.get<num>('int').set(value);
   num get cha => fields.get<num>('cha').value;
   set cha(num value) => fields.get<num>('cha').set(value);
-  num get armor => settings.autoCalcArmor ? calculatedArmor : rawArmor;
+  num get armor => settings.autoCalcArmor ? equippedArmor : rawArmor;
   set armor(num value) => fields.get<num>('armor').set(value);
   num get rawArmor => fields.get<num>('armor').value;
 
@@ -236,8 +236,9 @@ mixin CharacterFields implements FirebaseEntity {
   num get load {
     var count = 0.0;
     inventory.forEach((item) {
-      final wght =
-          item.tags?.firstWhere((t) => t?.name == 'weight', orElse: () => null);
+      final wght = item.tags?.firstWhere(
+          (t) => t?.name?.toLowerCase() == 'weight',
+          orElse: () => null);
       if (wght != null && wght.hasValue) {
         num wghtValue = 0;
         if (wght.value is num) {
@@ -251,20 +252,43 @@ mixin CharacterFields implements FirebaseEntity {
     return count;
   }
 
-  num get calculatedArmor {
+  num get equippedArmor {
     var count = 0;
     inventory.forEach((item) {
       if (!item.equipped) {
         return 0;
       }
-      final armor =
-          item.tags?.firstWhere((t) => t?.name == 'armor', orElse: () => null);
+      final armor = item.tags?.firstWhere(
+          (t) => t?.name?.toLowerCase() == 'armor',
+          orElse: () => null);
       if (armor != null && armor.hasValue) {
         num armorValue = 0;
         if (armor.value is num) {
           armorValue += armor.value;
         } else {
           armorValue += core.int.tryParse(armor.value ?? 0) ?? 0;
+        }
+        count += armorValue * item.amount;
+      }
+    });
+    return count;
+  }
+
+  num get equippedDamage {
+    var count = 0;
+    inventory.forEach((item) {
+      if (!item.equipped) {
+        return 0;
+      }
+      final damage = item.tags?.firstWhere(
+          (t) => t?.name?.toLowerCase() == 'damage',
+          orElse: () => null);
+      if (damage != null && damage.hasValue) {
+        num armorValue = 0;
+        if (damage.value is num) {
+          armorValue += damage.value;
+        } else {
+          armorValue += core.int.tryParse(damage.value ?? 0) ?? 0;
         }
         count += armorValue * item.amount;
       }
