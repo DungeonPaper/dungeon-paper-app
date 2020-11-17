@@ -27,7 +27,11 @@ class InventoryItem extends Equipment {
           tags: tags,
         );
 
-  static InventoryItem fromEquipment(Equipment equipment, {int amount = 1}) {
+  static InventoryItem fromEquipment(
+    Equipment equipment, {
+    int amount = 1,
+    bool equipped = false,
+  }) {
     return InventoryItem(
       key: equipment.key ?? Uuid().v4(),
       name: equipment.name,
@@ -35,13 +39,17 @@ class InventoryItem extends Equipment {
       pluralName: equipment.pluralName,
       tags: equipment.tags,
       amount: amount,
-      equipped: false,
+      equipped: equipped,
     );
   }
 
   factory InventoryItem.fromJSON(Map map) {
     var orig = Equipment.fromJSON(_getItem(map));
-    return InventoryItem.fromEquipment(orig, amount: map['amount']);
+    return InventoryItem.fromEquipment(
+      orig,
+      amount: map['amount'],
+      equipped: map['equipped'],
+    );
   }
 
   static R _getItem<R>(Map map) {
@@ -56,10 +64,10 @@ class InventoryItem extends Equipment {
       };
 
   @override
-  InventoryItem copy() {
+  InventoryItem copy({bool regenerateKey = false}) {
     return InventoryItem.fromJSON({
       ...toJSON(),
-      'key': Uuid().v4(),
+      if (regenerateKey == true) 'key': Uuid().v4(),
     });
   }
 }

@@ -50,14 +50,15 @@ class InventoryItemCard extends StatelessWidget {
       ),
     ];
     if (item.equipped == true) {
-      titleChildren.add(
+      titleChildren.addAll([
         Chip(
-          backgroundColor: Colors.lightBlue[100],
-          label: Text('Prepared'),
+          backgroundColor: Colors.orange[300],
+          label: Text('Equipped'),
           padding: EdgeInsets.all(0),
           // labelPadding: EdgeInsets.all(0),
         ),
-      );
+        SizedBox(width: 10),
+      ]);
     }
     if (mode == InventoryItemCardMode.Editable) {
       titleChildren.add(Text('x$amount'));
@@ -91,8 +92,9 @@ class InventoryItemCard extends StatelessWidget {
                 Switch(
                   value: item.equipped,
                   onChanged: (val) {
-                    item.equipped = val;
-                    onSave?.call(item);
+                    final copy = item.copy();
+                    copy.equipped = val;
+                    onSave?.call(copy);
                   },
                 )
               ],
@@ -111,9 +113,7 @@ class InventoryItemCard extends StatelessWidget {
                             child: Text('-'),
                             onPressed: () {
                               var copy = _incrAmount(item, -1);
-                              if (onSave != null) {
-                                onSave(copy);
-                              }
+                              onSave?.call(copy);
                             },
                           ),
                           Text(item.amount.toString()),
@@ -122,9 +122,7 @@ class InventoryItemCard extends StatelessWidget {
                             child: Text('+'),
                             onPressed: () {
                               var copy = _incrAmount(item, 1);
-                              if (onSave != null) {
-                                onSave(copy);
-                              }
+                              onSave?.call(copy);
                             },
                           )
                         ],
@@ -145,9 +143,7 @@ class InventoryItemCard extends StatelessWidget {
                       child: Text('Add Item'),
                       color: Theme.of(context).primaryColorLight,
                       onPressed: () {
-                        if (onSave != null) {
-                          onSave(item);
-                        }
+                        onSave?.call(item);
                         Get.back();
                       },
                     ),
@@ -180,9 +176,7 @@ class InventoryItemCard extends StatelessWidget {
           text: const Text('Are you sure?'),
           cancelButtonText: Text('Cancel')),
     )) {
-      if (onDelete != null) {
-        onDelete();
-      }
+      onDelete?.call();
     }
   }
 

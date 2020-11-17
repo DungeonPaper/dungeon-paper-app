@@ -171,7 +171,7 @@ bool Function(T) getMatcher<T>(T obj, [bool Function(T) defaultMatcher]) =>
 List<T> findAndReplaceInList<T>(List<T> list, T obj,
     [bool Function(T) matcher]) {
   num index = list.indexWhere(getMatcher(obj, matcher));
-  return List.from(list)
+  return List<T>.from(list)
     ..[index] = obj
     ..removeWhere((element) => element == null);
 }
