@@ -66,18 +66,24 @@ class CustomClassMoveList extends StatelessWidget {
                   Wrap(
                     alignment: WrapAlignment.center,
                     children: [
-                      ActionChip(
-                        label: Text('Add human'),
-                        onPressed: _onAddTemplate(key: 'human', name: 'Human'),
-                      ),
-                      ActionChip(
-                        label: Text('Add elf'),
-                        onPressed: _onAddTemplate(key: 'elf', name: 'Elf'),
-                      ),
-                      ActionChip(
-                        label: Text('Add orc'),
-                        onPressed: _onAddTemplate(key: 'orc', name: 'Orc'),
-                      ),
+                      for (final race in [
+                        _RaceTemplate('Human'),
+                        _RaceTemplate('Elf'),
+                        _RaceTemplate('Orc'),
+                      ])
+                        Padding(
+                          padding: const EdgeInsets.only(right: 8),
+                          child: RaisedButton(
+                            color: Theme.of(context).cardColor,
+                            child: Text('Add ${race.name}'),
+                            onPressed: customClass.raceMoves.firstWhere(
+                                        (m) => m.name == race.name,
+                                        orElse: () => null) ==
+                                    null
+                                ? _onAddTemplate(name: race.name)
+                                : null,
+                          ),
+                        ),
                     ],
                   ),
                 AddButton(
@@ -216,17 +222,28 @@ class CustomClassMoveList extends StatelessWidget {
   }
 
   void Function() _onAddTemplate({
-    @required String key,
     @required String name,
   }) =>
       () {
-        customClass.raceMoves.add(Move(
-          key: key,
-          name: name,
-          description: '',
-          explanation: '',
-          classes: [],
-        ));
+        final found = customClass.raceMoves.firstWhere(
+          (m) => m.name == name,
+          orElse: () => null,
+        );
+
+        if (found == null) {
+          customClass.raceMoves.add(Move(
+            name: name,
+            description: '',
+            explanation: '',
+            classes: [],
+          ));
+        }
         onUpdate?.call(customClass);
       };
+}
+
+class _RaceTemplate {
+  final String name;
+
+  _RaceTemplate(this.name);
 }

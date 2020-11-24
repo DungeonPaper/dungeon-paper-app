@@ -46,7 +46,7 @@ class _ExportViewState extends State<ExportView> {
       children: [
         _Padded(
           child: Text(
-            'Select characters to export',
+            'Select data to export',
             style: Theme.of(context).textTheme.headline6,
           ),
         ),
