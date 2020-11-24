@@ -30,12 +30,15 @@ class InventoryLoadChip extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var ttMsg = 'The weight you can carry.';
+    var ttMsg = 'The amount of weight you can carry.\n'
+        'This is auto calculated from "Weight" tags\n'
+        'on carried inventory items.';
     if (isOverEncumbered) {
       ttMsg += '\nYou are over-encumbered!';
     }
     return Tooltip(
       message: ttMsg,
+      showDuration: Duration(seconds: 5),
       child: Chip(
         visualDensity: VisualDensity.compact,
         backgroundColor: severity.background,

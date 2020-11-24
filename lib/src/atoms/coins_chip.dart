@@ -17,7 +17,8 @@ class CoinsChip extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Tooltip(
-      message: 'Coins',
+      message: 'Your current amount of coin. Press to update.',
+      showDuration: Duration(seconds: 2),
       child: ActionChip(
         onPressed: () {
           analytics.logEvent(name: Events.OpenCoinsChip);

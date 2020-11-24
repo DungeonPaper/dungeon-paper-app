@@ -4,6 +4,7 @@ import 'package:dungeon_paper/src/dialogs/edit_armor_dialog.dart';
 import 'package:dungeon_paper/src/dialogs/edit_hit_dice_dialog.dart';
 import 'package:dungeon_paper/src/flutter_utils/platform_svg.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 class ArmorAndDmgDice extends StatelessWidget {
   final Character character;
@@ -39,10 +40,7 @@ class ArmorAndDmgDice extends StatelessWidget {
                 color: Theme.of(context).colorScheme.secondary,
               ),
             ),
-            onTap: () => showDialog(
-              context: context,
-              builder: (context) => EditArmorDialog(character: character),
-            ),
+            onTap: () => Get.dialog(EditArmorDialog(character: character)),
           ),
           _item(
             context,
@@ -63,12 +61,7 @@ class ArmorAndDmgDice extends StatelessWidget {
                 color: Theme.of(context).colorScheme.secondary,
               ),
             ),
-            onTap: () => showDialog(
-              context: context,
-              builder: (context) => EditDamageDiceDialog(
-                character: character,
-              ),
-            ),
+            onTap: () => Get.dialog(EditDamageDiceDialog(character: character)),
           ),
         ],
       ),
