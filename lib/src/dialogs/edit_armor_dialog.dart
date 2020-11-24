@@ -1,5 +1,4 @@
 import 'package:dungeon_paper/db/models/character.dart';
-import 'package:dungeon_paper/db/models/character/character_settings.dart';
 import 'package:dungeon_paper/src/atoms/number_controller.dart';
 import 'package:dungeon_paper/src/dialogs/standard_dialog_controls.dart';
 import 'package:dungeon_paper/src/flutter_utils/input_formatters.dart';
@@ -7,7 +6,6 @@ import 'package:dungeon_paper/src/redux/stores.dart';
 import 'package:get/get.dart';
 import 'package:pedantic/pedantic.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 
 class EditArmorDialog extends StatefulWidget {
   final Character character;

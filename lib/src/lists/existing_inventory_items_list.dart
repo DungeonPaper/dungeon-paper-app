@@ -93,6 +93,7 @@ class _AddInventoryItemState extends State<AddInventoryItem> {
         Padding(
           padding: const EdgeInsets.only(top: 32),
           child: CategorizedList.builder(
+            keyBuilder: null,
             items: itemMap.keys.toList()..sort(),
             itemCount: (key, idx) => itemMap[key].length,
             titleBuilder: (ctx, key, idx) {

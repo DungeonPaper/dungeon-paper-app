@@ -1,10 +1,14 @@
 import 'package:dungeon_paper/src/flutter_utils/widget_utils.dart';
+import 'package:dungeon_paper/src/redux/shared_preferences/expansion_states.dart';
+import 'package:dungeon_paper/src/redux/stores.dart';
 import 'package:dungeon_paper/src/utils/utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 
 typedef BuilderAnyFunction<T, E> = E Function(T category, num index);
 typedef BuilderFunction<T> = Widget Function(
+    BuildContext context, T category, num itemIndex);
+typedef KeyBuilderFunction<T> = String Function(
     BuildContext context, T category, num itemIndex);
 typedef BuilderFunctionWithCatIndex<T> = Widget Function(
     BuildContext context, T category, num itemIndex, num catIndex);
@@ -13,11 +17,13 @@ class CategorizedList<T> extends StatelessWidget {
   final Iterable<T> items;
   final BuilderFunctionWithCatIndex<T> itemBuilder;
   final BuilderFunction<T> titleBuilder;
+  final KeyBuilderFunction<T> keyBuilder;
   final BuilderAnyFunction<T, int> itemCount;
   final bool staggered;
   final num spacerCount;
   final EdgeInsets itemMargin;
   final ScrollController scrollController;
+  final bool saveExpansionStates;
 
   bool get _isChildrenBuilder => itemBuilder == null || itemCount == null;
 
@@ -30,10 +36,12 @@ class CategorizedList<T> extends StatelessWidget {
     Key key,
     List<T> children,
     this.titleBuilder,
+    @required this.keyBuilder,
     this.spacerCount = 0,
     this.staggered = true,
-    this.itemMargin = const EdgeInsets.all(16),
+    this.itemMargin = _defaultItemMargin,
     this.scrollController,
+    this.saveExpansionStates = true,
   })  : items = children,
         itemBuilder = null,
         itemCount = null,
@@ -44,25 +52,16 @@ class CategorizedList<T> extends StatelessWidget {
     @required this.items,
     @required this.itemCount,
     @required this.itemBuilder,
+    @required this.keyBuilder,
     this.titleBuilder,
     this.staggered = true,
     this.spacerCount = 0,
-    this.itemMargin = const EdgeInsets.all(16),
+    this.itemMargin = _defaultItemMargin,
     this.scrollController,
+    this.saveExpansionStates = true,
   }) : super(key: key);
 
-  CategorizedList.childrenBuilder({
-    Key key,
-    List<T> children,
-    this.titleBuilder,
-    this.spacerCount = 0,
-    this.staggered = true,
-    this.itemMargin = const EdgeInsets.all(16),
-    this.scrollController,
-  })  : items = children,
-        itemBuilder = null,
-        itemCount = null,
-        super(key: key);
+  static const _defaultItemMargin = EdgeInsets.symmetric(horizontal: 16);
 
   @override
   Widget build(BuildContext context) {
@@ -104,15 +103,16 @@ class CategorizedList<T> extends StatelessWidget {
           : titleBuilder(context, item.value, item.index);
       Widget title;
 
+      var titleTextStyle = titleStyle(context).copyWith(
+        color: Theme.of(context).colorScheme.secondary,
+      );
       if (builtTitle != null) {
         title = DefaultTextStyle(
           child: builtTitle,
-          style: titleStyle(context).copyWith(
-            color: Theme.of(context).colorScheme.secondary,
-          ),
+          style: titleTextStyle,
         );
       }
-      num count = _isChildrenBuilder ? 1 : itemCount(item.value, item.index);
+      final count = _isChildrenBuilder ? 1 : itemCount(item.value, item.index);
       if (count == 0) {
         return null;
       }
@@ -122,15 +122,46 @@ class CategorizedList<T> extends StatelessWidget {
               ? item.value
               : itemBuilder(context, item.value, j, item.index));
 
-      return Column(
-        mainAxisAlignment: MainAxisAlignment.start,
-        mainAxisSize: MainAxisSize.min,
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: [
-          if (title != null) title,
-          ...outputItems,
-        ],
+      final builtKey = keyBuilder?.call(context, item.value, item.index);
+
+      if (title == null) {
+        return Column(
+          mainAxisAlignment: MainAxisAlignment.start,
+          mainAxisSize: MainAxisSize.min,
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: outputItems,
+        );
+      }
+
+      return Theme(
+        data: Theme.of(context).copyWith(
+          dividerColor: Colors.transparent,
+          unselectedWidgetColor: titleTextStyle.color,
+        ),
+        child: IconTheme(
+          data:
+              Theme.of(context).iconTheme.copyWith(color: titleTextStyle.color),
+          child: ExpansionTile(
+            tilePadding: EdgeInsets.only(right: 8),
+            title: title,
+            initiallyExpanded: expansionStates.isExpanded(builtKey),
+            expandedCrossAxisAlignment: CrossAxisAlignment.stretch,
+            children: outputItems,
+            onExpansionChanged: _onExpansionChanged(builtKey),
+          ),
+        ),
       );
     }).toList();
   }
+
+  void Function(bool) _onExpansionChanged(String key) {
+    return (value) {
+      if (key != null) {
+        expansionStates.setExpansion(key, value);
+      }
+    };
+  }
+
+  ExpansionStates get expansionStates =>
+      dwStore.state.prefs.settings.expansionStates;
 }

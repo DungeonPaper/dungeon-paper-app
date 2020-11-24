@@ -39,6 +39,7 @@ class _AddMoveListState extends State<AddMoveList> {
     const LEADING_KEY = '';
 
     return CategorizedList.builder(
+      keyBuilder: null,
       items: [LEADING_KEY] + moves.keys.map((k) => k.toString()).toList(),
       titleBuilder: (ctx, String minLevel, idx) {
         if (minLevel == LEADING_KEY) {

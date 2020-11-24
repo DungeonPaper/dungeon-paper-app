@@ -168,17 +168,18 @@ class _FeedbackButtonState extends State<FeedbackButton> {
       return Container();
     }
     return Container(
-      key: Key(_strRepr),
       child: widget.builder(onPressed, mailtoUrl),
     );
   }
 
   Iterable<String> get _arrRepr => [
-        widget.dontWaitForUser ? 'true' : userId,
+        userId ?? (widget.dontWaitForUser ? 'true' : 'false'),
         email,
         version
       ].map((el) => el?.toString?.call() ?? '');
+
+  // ignore: unused_element
   String get _strRepr => _arrRepr.join('-');
 
-  bool get isReady => !_arrRepr.any((i) => i == null);
+  bool get isReady => !_arrRepr.any((i) => i == 'false' || i == null);
 }

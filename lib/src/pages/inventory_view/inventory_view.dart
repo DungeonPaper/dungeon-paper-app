@@ -7,16 +7,19 @@ import 'package:dungeon_paper/src/atoms/damage_chip.dart';
 import 'package:dungeon_paper/src/atoms/empty_state.dart';
 import 'package:dungeon_paper/src/atoms/inventory_load_chip.dart';
 import 'package:dungeon_paper/src/molecules/inventory_item_card.dart';
+import 'package:dungeon_paper/src/utils/utils.dart';
 import 'package:flutter/material.dart';
 
 enum EquipmentCats {
   Stats,
-  Items,
+  EquippedItems,
+  UnequippedItems,
 }
 
 const EquipmentTitles = {
   EquipmentCats.Stats: null,
-  EquipmentCats.Items: Text('Posessions'),
+  EquipmentCats.EquippedItems: Text('Equipped'),
+  EquipmentCats.UnequippedItems: Text('Posessions'),
 };
 
 class InventoryView extends StatelessWidget {
@@ -29,7 +32,7 @@ class InventoryView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final equipment = character.inventory;
+    final equipment = _equipmentGrouped;
     final emptyState = EmptyState(
       title: Text('Your inventory is empty'),
       subtitle: Text("Use the '+' button to add things to your possession."),
@@ -61,23 +64,40 @@ class InventoryView extends StatelessWidget {
     }
 
     return CategorizedList.builder(
-      itemCount: (ctx, cat) => cat == 1 ? equipment.length : 1,
+      keyBuilder: (ctx, key, idx) => 'InventoryView.' + enumName(key),
+      itemCount: (cat, idx) =>
+          cat != EquipmentCats.Stats ? equipment[_catToKey(cat)].length : 1,
       titleBuilder: (ctx, cat, i) => EquipmentTitles[cat],
       itemBuilder: _itemBuilder,
       items: [
         EquipmentCats.Stats,
-        EquipmentCats.Items,
+        EquipmentCats.EquippedItems,
+        EquipmentCats.UnequippedItems,
       ],
       spacerCount: 1,
     );
   }
 
+  Map<String, List<InventoryItem>> get _equipmentGrouped =>
+      <String, List<InventoryItem>>{'equipped': [], 'unequipped': []}
+        ..addAll(groupBy(
+          character.inventory,
+          (i) => i.equipped == true ? 'equipped' : 'unequipped',
+        ));
+
+  String _catToKey(EquipmentCats cat) => cat == EquipmentCats.EquippedItems
+      ? 'equipped'
+      : cat == EquipmentCats.UnequippedItems
+          ? 'unequipped'
+          : null;
+
   Widget _itemBuilder(BuildContext ctx, EquipmentCats cat, num i, num catI) {
-    var equipment = character.inventory;
     if (cat == EquipmentCats.Stats) {
       return InventoryInfoBar(character: character);
     }
-    var item = equipment[i];
+
+    final equipment = _equipmentGrouped;
+    final item = equipment[_catToKey(cat)][i];
 
     return Padding(
       padding: EdgeInsets.symmetric(vertical: 8.0),

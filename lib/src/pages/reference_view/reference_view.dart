@@ -1,5 +1,6 @@
 import 'package:dungeon_paper/src/atoms/categorized_list.dart';
 import 'package:dungeon_paper/src/molecules/move_card.dart';
+import 'package:dungeon_paper/src/utils/utils.dart';
 import 'package:dungeon_world_data/dw_data.dart';
 import 'package:dungeon_world_data/move.dart';
 import 'package:flutter/material.dart';
@@ -15,6 +16,7 @@ class ReferenceView extends StatelessWidget {
     }..removeWhere((k, v) => v.isEmpty);
 
     return CategorizedList.builder(
+      keyBuilder: (ctx, key, idx) => 'ReferenceView.' + enumName(key),
       items: categories.keys,
       itemCount: (key, idx) => categories[key].length,
       titleBuilder: (ctx, key, idx) => Text(key),

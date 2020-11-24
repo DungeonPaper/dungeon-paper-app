@@ -29,6 +29,7 @@ class NotesView extends StatelessWidget {
     }
 
     return CategorizedList<String>.builder(
+      keyBuilder: (ctx, key, idx) => 'NotesView.' + enumName(key),
       itemCount: (cat, idx) => cats[cat].length,
       items: cats.keys,
       spacerCount: 1,
