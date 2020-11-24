@@ -5,20 +5,20 @@ import 'package:flutter/material.dart';
 
 class CustomClassSelectList extends StatelessWidget {
   final Iterable<PlayerClass> selected;
-  final Iterable<PlayerClass> characters;
+  final Iterable<PlayerClass> classes;
   final void Function(Set<PlayerClass>) onChange;
 
   const CustomClassSelectList({
     Key key,
     this.selected,
-    this.characters,
+    this.classes,
     this.onChange,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    if (characters?.isNotEmpty == true) {
-      return _list(characters);
+    if (classes?.isNotEmpty == true) {
+      return _list(classes);
     }
 
     return PlayerClassList(

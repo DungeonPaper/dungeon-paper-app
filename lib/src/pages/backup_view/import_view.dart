@@ -9,6 +9,7 @@ import 'package:dungeon_paper/src/lists/custom_class_select_list.dart';
 import 'package:dungeon_paper/src/redux/characters/characters_store.dart';
 import 'package:dungeon_paper/src/redux/custom_classes/custom_classes_store.dart';
 import 'package:dungeon_paper/src/redux/stores.dart';
+import 'package:dungeon_world_data/player_class.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_file_dialog/flutter_file_dialog.dart';
 import 'package:get/get.dart';
@@ -34,6 +35,7 @@ class _ImportViewState extends State<ImportView> {
     _loadedCharacters = {};
     _loadedClasses = {};
     _charactersToImport = {};
+    _classesToImport = {};
   }
 
   @override
@@ -69,15 +71,18 @@ class _ImportViewState extends State<ImportView> {
               Padding(
                 padding: const EdgeInsets.only(bottom: 16),
                 child: CustomClassSelectList(
-                  characters: _loadedClasses.map((c) => c.toPlayerClass()),
-                  selected: _classesToImport.map((c) => c.toPlayerClass()),
-                  onChange: (chars) => setState(() => _classesToImport =
-                      chars.map((c) => CustomClass.fromPlayerClass(c))),
+                  classes: _loadedClasses.map((c) => c.toPlayerClass()).toSet(),
+                  selected:
+                      _classesToImport.map((c) => c.toPlayerClass()).toSet(),
+                  onChange: (classes) => setState(() => _classesToImport =
+                      classes
+                          .map((c) => CustomClass.fromPlayerClass(c))
+                          .toSet()),
                 ),
               ),
             ],
           ),
-        if (_loadedCharacters.isEmpty)
+        if (_loadedCharacters.isEmpty && _loadedClasses.isEmpty)
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 24),
             child: RaisedButton.icon(
@@ -99,7 +104,10 @@ class _ImportViewState extends State<ImportView> {
                 'Import',
                 textScaleFactor: 1.5,
               ),
-              onPressed: _charactersToImport.isNotEmpty ? _confirmImport : null,
+              onPressed:
+                  _charactersToImport.isNotEmpty || _classesToImport.isNotEmpty
+                      ? _confirmImport
+                      : null,
             ),
           ),
         ),
@@ -166,6 +174,8 @@ class _ImportViewState extends State<ImportView> {
       setState(() {
         _loadedCharacters = {};
         _charactersToImport = {};
+        _loadedClasses = {};
+        _classesToImport = {};
       });
 
       Get.snackbar(
@@ -182,7 +192,7 @@ class _ImportViewState extends State<ImportView> {
     final res = await Get.dialog(ConfirmationDialog(
       title: Text('Please Confirm'),
       text: Text(
-          "Existing characters with the same name will be overwritten.\nAre you sure that's okay?"),
+          "Existing characters and classes that match the imported ones will be overwritten.\nAre you sure that's okay?"),
       okButtonText: Text('Overwrite & Import'),
     ));
 
@@ -198,7 +208,7 @@ class _ImportViewState extends State<ImportView> {
 
     setState(() {
       _loadedCharacters = Set.from(data.characters);
-      _loadedCharacters = Set.from(data.characters);
+      _loadedClasses = Set.from(data.customClasses);
     });
   }
 
@@ -206,9 +216,12 @@ class _ImportViewState extends State<ImportView> {
     ImportFormat.JSON: (str) {
       final raw = jsonDecode(str);
       final json = raw is List ? {'characters': raw} : raw;
-      final chars = Set<Character>.from(json.map((v) => Character(data: v)));
-      final customClasses =
-          Set<CustomClass>.from(json.map((v) => CustomClass(data: v)));
+      final chars = Set<Character>.from(
+              json['characters']?.map((v) => Character(data: v))) ??
+          [];
+      final customClasses = Set<CustomClass>.from(json['classes']?.map(
+              (v) => CustomClass.fromPlayerClass(PlayerClass.fromJSON(v)))) ??
+          [];
 
       return ImportData(characters: chars, customClasses: customClasses);
     }

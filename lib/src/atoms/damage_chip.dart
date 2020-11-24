@@ -19,7 +19,7 @@ class DamageChip extends StatelessWidget {
   Widget build(BuildContext context) {
     return Chip(
       visualDensity: VisualDensity.compact,
-      backgroundColor: Colors.red[400],
+      backgroundColor: Colors.red[900],
       padding: EdgeInsets.all(8),
       label: IconTheme(
         data: IconThemeData(color: Colors.white),

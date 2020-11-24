@@ -108,9 +108,9 @@ class InventoryInfoBar extends StatelessWidget {
       alignment: WrapAlignment.center,
       crossAxisAlignment: WrapCrossAlignment.center,
       children: [
-        InventoryLoadChip(character: character),
         DamageChip(character: character),
         ArmorChip(character: character),
+        InventoryLoadChip(character: character),
         CoinsChip(character: character),
       ],
     );
