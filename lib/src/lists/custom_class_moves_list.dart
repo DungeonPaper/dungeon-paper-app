@@ -60,10 +60,32 @@ class CustomClassMoveList extends StatelessWidget {
 
         if (i >= moves.length) {
           return Center(
-            child: AddButton(
-              backgroundColor: Theme.of(context).colorScheme.surface,
-              foregroundColor: Theme.of(context).colorScheme.onSurface,
-              onPressed: () => _addMove(context, cat),
+            child: Column(
+              children: [
+                if (raceMoveMode)
+                  Wrap(
+                    alignment: WrapAlignment.center,
+                    children: [
+                      ActionChip(
+                        label: Text('Add human'),
+                        onPressed: _onAddTemplate(key: 'human', name: 'Human'),
+                      ),
+                      ActionChip(
+                        label: Text('Add elf'),
+                        onPressed: _onAddTemplate(key: 'elf', name: 'Elf'),
+                      ),
+                      ActionChip(
+                        label: Text('Add orc'),
+                        onPressed: _onAddTemplate(key: 'orc', name: 'Orc'),
+                      ),
+                    ],
+                  ),
+                AddButton(
+                  backgroundColor: Theme.of(context).colorScheme.surface,
+                  foregroundColor: Theme.of(context).colorScheme.onSurface,
+                  onPressed: () => _addMove(context, cat),
+                ),
+              ],
             ),
           );
         }
@@ -190,6 +212,21 @@ class CustomClassMoveList extends StatelessWidget {
   void _update() {
     validityNotifier?.value =
         raceMoveMode ? customClass.raceMoves.isNotEmpty : true;
-    if (onUpdate != null) onUpdate(customClass);
+    onUpdate?.call(customClass);
   }
+
+  void Function() _onAddTemplate({
+    @required String key,
+    @required String name,
+  }) =>
+      () {
+        customClass.raceMoves.add(Move(
+          key: key,
+          name: name,
+          description: '',
+          explanation: '',
+          classes: [],
+        ));
+        onUpdate?.call(customClass);
+      };
 }

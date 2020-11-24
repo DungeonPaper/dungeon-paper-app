@@ -24,12 +24,12 @@ class AlignmentDescription extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var alignmentKey = enumName(alignment);
-    var alignmentInfo = playerClass.alignments[alignmentKey] ??
+    final alignmentKey = enumName(alignment);
+    final alignmentInfo = playerClass.alignments[alignmentKey] ??
         dw.Alignment(key: alignmentKey, name: alignmentKey, description: '');
-    var hasDescription = alignmentInfo.description.isNotEmpty;
+    final hasDescription = alignmentInfo.description.isNotEmpty;
 
-    var texts = <Widget>[
+    final texts = <Widget>[
       Text(
         capitalize(alignmentInfo.name),
         style: Theme.of(context).textTheme.headline6,
