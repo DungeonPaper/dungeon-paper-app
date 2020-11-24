@@ -6,6 +6,7 @@ import 'package:dungeon_paper/src/atoms/empty_state.dart';
 import 'package:dungeon_paper/src/atoms/roll_button_with_edit.dart';
 import 'package:dungeon_paper/src/dialogs/roll_dice_view.dart';
 import 'package:dungeon_paper/src/flutter_utils/dice_controller.dart';
+import 'package:dungeon_paper/src/flutter_utils/widget_utils.dart';
 import 'package:dungeon_paper/src/molecules/dice_roll_box.dart';
 import 'package:dungeon_paper/src/molecules/move_card.dart';
 import 'package:dungeon_paper/src/molecules/spell_card.dart';
@@ -65,7 +66,7 @@ class _BattleViewState extends State<BattleView> {
       keyBuilder: (ctx, key, idx) => 'BattleView.' + enumName(key),
       items: categories.keys,
       itemCount: (key, idx) => categories[key].length,
-      spacerCount: 1,
+      bottomSpacerHeight: BOTTOM_SPACER.height,
       titleBuilder: (ctx, key, idx) =>
           BattleView._CATEGORY_LABELS.containsKey(key)
               ? Text(BattleView._CATEGORY_LABELS[key])

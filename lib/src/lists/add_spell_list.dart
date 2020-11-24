@@ -52,13 +52,13 @@ class _AddSpellListState extends State<AddSpellList> {
             keyBuilder: null,
             items: spells.keys,
             itemCount: (cat, idx) => spells[cat].length,
+            topSpacerHeight: 32,
             titleBuilder: (ctx, cat, idx) {
               final list = spells[cat];
-              return Padding(
-                padding: EdgeInsets.only(top: idx == 0 ? 32 : 0),
-                child: Text(isNumeric(list.first.level)
+              return Text(
+                isNumeric(list.first.level)
                     ? 'Level ${list.first.level}'
-                    : capitalize(list.first.level)),
+                    : capitalize(list.first.level),
               );
             },
             itemBuilder: (ctx, cat, idx, catI) {
@@ -78,16 +78,22 @@ class _AddSpellListState extends State<AddSpellList> {
             },
           ),
         ),
-        SearchBar(controller: searchController),
+        SearchBar(
+          controller: searchController,
+          hintText: 'Type to search spells',
+        ),
       ],
     );
   }
 
   bool _isVisible(Spell spell) =>
       searchController.text.isEmpty ||
-      spell.name
-          .toLowerCase()
-          .contains(searchController.text.toLowerCase().trim());
+      _matchStr(spell.name) ||
+      _matchStr(spell.description);
+
+  bool _matchStr(String str) => (str ?? '')
+      .toLowerCase()
+      .contains(searchController.text.toLowerCase().trim());
 
   void _searchListener() {
     setState(() {});

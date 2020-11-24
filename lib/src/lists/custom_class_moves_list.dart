@@ -51,11 +51,13 @@ class CustomClassMoveList extends StatelessWidget {
       keyBuilder: null,
       items: cats.values,
       itemCount: (moves, i) => moves != null ? moves.length + 1 : 1,
-      titleBuilder: (context, moves, i) => Text(raceMoveMode == true
-          ? ''
-          : i < cats.keys.length
-              ? TITLES[cats.keys.elementAt(i)]
-              : 'No Title'),
+      titleBuilder: (context, moves, i) => raceMoveMode == true
+          ? null
+          : Text(
+              i < cats.keys.length
+                  ? TITLES[cats.keys.elementAt(i)]
+                  : 'No Title',
+            ),
       itemBuilder: (context, List<Move> moves, i, catI) {
         final cat = cats.keys.elementAt(catI);
 

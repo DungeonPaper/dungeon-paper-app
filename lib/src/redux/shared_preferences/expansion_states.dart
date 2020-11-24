@@ -57,7 +57,7 @@ class ExpansionStates {
   }
 
   bool isExpanded(String key) =>
-      !_charData.containsKey(key) || _charData[key] == true;
+      key == null || !_charData.containsKey(key) || _charData[key] == true;
 
   String get charId => dwStore.state.characters.current?.documentID;
 

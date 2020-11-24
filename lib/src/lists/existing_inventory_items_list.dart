@@ -83,6 +83,7 @@ class _AddInventoryItemState extends State<AddInventoryItem> {
           TextSelection.fromPosition(TextPosition(offset: search.length));
     }
     final searchBar = SearchBar(
+      hintText: 'Type to search items',
       controller: widget._searchController,
       onChanged: _onChange,
       onSubmitted: _onChange,
