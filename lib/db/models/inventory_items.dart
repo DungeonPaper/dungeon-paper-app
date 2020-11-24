@@ -48,7 +48,7 @@ class InventoryItem extends Equipment {
     return InventoryItem.fromEquipment(
       orig,
       amount: map['amount'],
-      equipped: map['equipped'],
+      equipped: map['equipped'] ?? false,
     );
   }
 
@@ -60,7 +60,7 @@ class InventoryItem extends Equipment {
   Map toJSON() => {
         ...super.toJSON(),
         'amount': amount,
-        'equipped': equipped,
+        'equipped': equipped ?? false,
       };
 
   @override

@@ -51,6 +51,7 @@ class _CustomClassAlignmentsState extends State<CustomClassAlignments> {
     return Padding(
       padding: const EdgeInsets.all(8),
       child: CategorizedList.builder(
+        keyBuilder: null,
         items: alignments.values.toList(),
         itemMargin: EdgeInsets.all(8),
         itemCount: (cat, i) => 1,

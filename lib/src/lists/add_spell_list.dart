@@ -49,6 +49,7 @@ class _AddSpellListState extends State<AddSpellList> {
         Padding(
           padding: const EdgeInsets.only(top: 32),
           child: CategorizedList.builder(
+            keyBuilder: null,
             items: spells.keys,
             itemCount: (cat, idx) => spells[cat].length,
             titleBuilder: (ctx, cat, idx) {

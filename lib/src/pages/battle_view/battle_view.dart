@@ -9,6 +9,7 @@ import 'package:dungeon_paper/src/flutter_utils/dice_controller.dart';
 import 'package:dungeon_paper/src/molecules/dice_roll_box.dart';
 import 'package:dungeon_paper/src/molecules/move_card.dart';
 import 'package:dungeon_paper/src/molecules/spell_card.dart';
+import 'package:dungeon_paper/src/utils/utils.dart';
 import 'package:dungeon_world_data/dice.dart';
 import 'package:dungeon_world_data/move.dart';
 import 'package:flutter/material.dart';
@@ -61,6 +62,7 @@ class _BattleViewState extends State<BattleView> {
     }
 
     return CategorizedList.builder(
+      keyBuilder: (ctx, key, idx) => 'BattleView.' + enumName(key),
       items: categories.keys,
       itemCount: (key, idx) => categories[key].length,
       spacerCount: 1,

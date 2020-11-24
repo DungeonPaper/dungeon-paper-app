@@ -28,9 +28,10 @@ class AboutView extends StatefulWidget {
   _AboutViewState createState() => _AboutViewState();
 }
 
+final num year = DateTime.now().year;
+final utm = 'utm_medium=app&utm_source=about';
+
 class _AboutViewState extends State<AboutView> {
-  final num year = DateTime.now().year;
-  final utm = 'utm_medium=app&utm_source=about';
   ScrollController scrollController;
 
   @override
@@ -45,7 +46,8 @@ class _AboutViewState extends State<AboutView> {
       title: Text('About Dungeon Paper'),
       wrapWithScrollable: false,
       scrollController: scrollController,
-      body: CategorizedList.childrenBuilder(
+      body: CategorizedList(
+        keyBuilder: null,
         scrollController: scrollController,
         children: <Widget>[
           Padding(
@@ -55,163 +57,9 @@ class _AboutViewState extends State<AboutView> {
               crossAxisAlignment: CrossAxisAlignment.stretch,
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
-                AboutBox(
-                  children: [
-                    Padding(
-                      padding: const EdgeInsets.symmetric(vertical: 24.0),
-                      child: SizedBox.fromSize(
-                        size: Size.square(
-                            min(MediaQuery.of(context).size.width - 32, 128)),
-                        child: Image.asset('assets/logo.png'),
-                      ),
-                    ),
-                    Text(
-                      'Dungeon Paper',
-                      style: Theme.of(context).textTheme.headline5,
-                    ),
-                    VersionNumber.text(prefix: 'Version'),
-                    SizedBox(height: 16),
-                    RaisedButton.icon(
-                      icon: Icon(Icons.history),
-                      label: Text('Changelog'),
-                      onPressed: () => Get.dialog(WhatsNew.dialog()),
-                    ),
-                    SizedBox(height: 16),
-                    Text.rich(
-                      TextSpan(
-                        children: [
-                          TextSpan(text: 'Develeoped by '),
-                          TextSpan(
-                            text: 'Chen Asraf',
-                            recognizer: TapGestureRecognizer()
-                              ..onTap =
-                                  () => launch('https://casraf.blog/?$utm'),
-                            style: TextStyle(
-                              color: Color.fromRGBO(25, 118, 210, 1),
-                              decoration: TextDecoration.underline,
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                    Text('© 2018-$year'),
-                  ],
-                ),
+                AppInfoBox(),
                 SizedBox(height: 15),
-                AboutBox(
-                  child: Column(
-                    mainAxisSize: MainAxisSize.min,
-                    crossAxisAlignment: CrossAxisAlignment.stretch,
-                    children: [
-                      Text(
-                        'Have feedback? Want to stay up to date?\nFollow or contact us at:',
-                        textAlign: TextAlign.center,
-                        style: Theme.of(context).textTheme.subtitle1,
-                      ),
-                      SizedBox(height: 8),
-                      Table(
-                        columnWidths: {
-                          0: FlexColumnWidth(1),
-                          1: FixedColumnWidth(14),
-                          2: FlexColumnWidth(1),
-                        },
-                        children: [
-                          TableRow(
-                            children: [
-                              SocialButton(
-                                assetName: 'facebook',
-                                label: 'Facebook',
-                                color: Color(0xFF1878F3),
-                                textColor: Colors.white,
-                                url: 'https://bit.ly/DungeonPaper-Facebook',
-                              ),
-                              Container(),
-                              SocialButton(
-                                label: 'Twitter',
-                                assetName: 'twitter',
-                                color: Color(0xFF00ACEE),
-                                textColor: Colors.white,
-                                url: 'https://bit.ly/DungeonPaper-Twitter',
-                              ),
-                            ],
-                          ),
-                          TableRow(
-                            children: [
-                              SocialButton(
-                                label: 'GitHub',
-                                url: 'https://bit.ly/DungeonPaper-GitHub',
-                                assetName: 'github',
-                                color: Colors.black,
-                                textColor: Colors.white,
-                              ),
-                              Container(),
-                              SocialButton(
-                                label: 'Discord',
-                                url: 'https://bit.ly/DungeonPaper-Discord',
-                                assetName: 'discord',
-                                color: Color(0xFF7289DB),
-                                textColor: Colors.white,
-                              ),
-                            ],
-                          ),
-                          TableRow(
-                            children: [
-                              FeedbackButton(
-                                dontWaitForUser: true,
-                                onReady: () {
-                                  Future.delayed(Duration.zero, () {
-                                    if (mounted) {
-                                      setState(() {});
-                                    }
-                                  });
-                                },
-                                builder: (onPressed, url) => SocialButton(
-                                  label: 'Email',
-                                  icon: Icon(Icons.email),
-                                  url: url,
-                                  color: Colors.orange[300],
-                                  textColor:
-                                      Theme.of(context).colorScheme.onPrimary,
-                                ),
-                              ),
-                              Container(),
-                              SocialButton(
-                                label: 'Privacy',
-                                icon: Icon(Icons.lock),
-                                url: 'https://bit.ly/DungeonPaper-Privacy',
-                                color: Theme.of(context).primaryColor,
-                                textColor:
-                                    Theme.of(context).colorScheme.onPrimary,
-                              ),
-                            ],
-                          ),
-                          TableRow(
-                            children: [
-                              SocialButton(
-                                label: 'casraf.blog',
-                                url: 'https://casraf.blog/?$utm',
-                                icon: Icon(Icons.public),
-                                color: Color(0xFFAA0000),
-                                textColor: Colors.white,
-                                textScaleFactor: 0.9,
-                              ),
-                              Container(),
-                              SocialButton(
-                                label: 'Rate',
-                                url: Platform.isIOS
-                                    ? 'https://apps.apple.com/us/app/dungeon-paper/id1525383509'
-                                    : 'https://play.google.com/store/apps/details?id=app.dungeonpaper&$utm',
-                                icon: Icon(Icons.star),
-                                color: Color(0xFF66A030),
-                                textColor: Colors.white,
-                              ),
-                            ],
-                          ),
-                        ],
-                      ),
-                    ],
-                  ),
-                ),
+                ContactUsBox()
               ],
             ),
           ),
@@ -247,6 +95,56 @@ class _AboutViewState extends State<AboutView> {
           ),
         ],
       ),
+    );
+  }
+}
+
+class AppInfoBox extends StatelessWidget {
+  const AppInfoBox({
+    Key key,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return AboutBox(
+      children: [
+        Padding(
+          padding: const EdgeInsets.symmetric(vertical: 24.0),
+          child: SizedBox.fromSize(
+            size: Size.square(min(MediaQuery.of(context).size.width - 32, 128)),
+            child: Image.asset('assets/logo.png'),
+          ),
+        ),
+        Text(
+          'Dungeon Paper',
+          style: Theme.of(context).textTheme.headline5,
+        ),
+        VersionNumber.text(prefix: 'Version'),
+        SizedBox(height: 16),
+        RaisedButton.icon(
+          icon: Icon(Icons.history),
+          label: Text('Changelog'),
+          onPressed: () => Get.dialog(WhatsNew.dialog()),
+        ),
+        SizedBox(height: 16),
+        Text.rich(
+          TextSpan(
+            children: [
+              TextSpan(text: 'Develeoped by '),
+              TextSpan(
+                text: 'Chen Asraf',
+                recognizer: TapGestureRecognizer()
+                  ..onTap = () => launch('https://casraf.blog/?$utm'),
+                style: TextStyle(
+                  color: Color.fromRGBO(25, 118, 210, 1),
+                  decoration: TextDecoration.underline,
+                ),
+              ),
+            ],
+          ),
+        ),
+        Text('© 2018-$year'),
+      ],
     );
   }
 }
@@ -326,6 +224,124 @@ class AboutBox extends StatelessWidget {
       child: Padding(
         padding: EdgeInsets.all(16),
         child: content,
+      ),
+    );
+  }
+}
+
+class ContactUsBox extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return AboutBox(
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          Text(
+            'Have feedback? Want to stay up to date?\nFollow or contact us at:',
+            textAlign: TextAlign.center,
+            style: Theme.of(context).textTheme.subtitle1,
+          ),
+          SizedBox(height: 8),
+          Table(
+            columnWidths: {
+              0: FlexColumnWidth(1),
+              1: FixedColumnWidth(14),
+              2: FlexColumnWidth(1),
+            },
+            children: [
+              TableRow(
+                children: [
+                  SocialButton(
+                    assetName: 'facebook',
+                    label: 'Facebook',
+                    color: Color(0xFF1878F3),
+                    textColor: Colors.white,
+                    url: 'https://bit.ly/DungeonPaper-Facebook',
+                  ),
+                  Container(),
+                  SocialButton(
+                    label: 'Twitter',
+                    assetName: 'twitter',
+                    color: Color(0xFF00ACEE),
+                    textColor: Colors.white,
+                    url: 'https://bit.ly/DungeonPaper-Twitter',
+                  ),
+                ],
+              ),
+              TableRow(
+                children: [
+                  SocialButton(
+                    label: 'GitHub',
+                    url: 'https://bit.ly/DungeonPaper-GitHub',
+                    assetName: 'github',
+                    color: Colors.black,
+                    textColor: Colors.white,
+                  ),
+                  Container(),
+                  SocialButton(
+                    label: 'Discord',
+                    url: 'https://bit.ly/DungeonPaper-Discord',
+                    assetName: 'discord',
+                    color: Color(0xFF7289DB),
+                    textColor: Colors.white,
+                  ),
+                ],
+              ),
+              TableRow(
+                children: [
+                  FeedbackButton(
+                    dontWaitForUser: true,
+                    onReady: () {
+                      // Future.delayed(Duration.zero, () {
+                      //   if (mounted) {
+                      //     setState(() {});
+                      //   }
+                      // });
+                    },
+                    builder: (onPressed, url) => SocialButton(
+                      label: 'Email',
+                      icon: Icon(Icons.email),
+                      url: url,
+                      color: Colors.orange[300],
+                      textColor: Theme.of(context).colorScheme.onPrimary,
+                    ),
+                  ),
+                  Container(),
+                  SocialButton(
+                    label: 'Privacy',
+                    icon: Icon(Icons.lock),
+                    url: 'https://bit.ly/DungeonPaper-Privacy',
+                    color: Theme.of(context).primaryColor,
+                    textColor: Theme.of(context).colorScheme.onPrimary,
+                  ),
+                ],
+              ),
+              TableRow(
+                children: [
+                  SocialButton(
+                    label: 'casraf.blog',
+                    url: 'https://casraf.blog/?$utm',
+                    icon: Icon(Icons.public),
+                    color: Color(0xFFAA0000),
+                    textColor: Colors.white,
+                    textScaleFactor: 0.9,
+                  ),
+                  Container(),
+                  SocialButton(
+                    label: 'Rate',
+                    url: Platform.isIOS
+                        ? 'https://apps.apple.com/us/app/dungeon-paper/id1525383509'
+                        : 'https://play.google.com/store/apps/details?id=app.dungeonpaper&$utm',
+                    icon: Icon(Icons.star),
+                    color: Color(0xFF66A030),
+                    textColor: Colors.white,
+                  ),
+                ],
+              ),
+            ],
+          ),
+        ],
       ),
     );
   }

@@ -1,6 +1,5 @@
 import 'package:dungeon_paper/db/models/character.dart';
 import 'package:dungeon_paper/src/atoms/dice_icon.dart';
-import 'package:dungeon_paper/src/flutter_utils/platform_svg.dart';
 import 'package:dungeon_world_data/dice.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';

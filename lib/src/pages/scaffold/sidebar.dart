@@ -10,8 +10,6 @@ import 'package:dungeon_paper/src/pages/edit_character/edit_character_view.dart'
 import 'package:dungeon_paper/src/pages/settings_view/settings_view.dart';
 import 'package:dungeon_paper/src/redux/characters/characters_store.dart';
 import 'package:dungeon_paper/src/redux/connectors.dart';
-import 'package:dungeon_paper/src/redux/shared_preferences/prefs_settings.dart';
-import 'package:dungeon_paper/src/redux/shared_preferences/prefs_store.dart';
 import 'package:dungeon_paper/src/redux/stores.dart';
 import 'package:dungeon_paper/src/scaffolds/manage_characters_view/manage_characters_view.dart';
 import 'package:dungeon_paper/src/utils/analytics.dart';
@@ -41,11 +39,6 @@ class _SidebarState extends State<Sidebar> {
     return DWStoreConnector<DWStore>(
       builder: (context, state) {
         var user = state.user.current;
-        var settings = state.prefs.settings;
-        // ignore: unused_local_variable
-        var buttonStyle = getTitleStyle(context).copyWith(
-          color: Theme.of(context).textTheme.headline3.color,
-        );
 
         return Drawer(
           child: ListView(
@@ -59,18 +52,6 @@ class _SidebarState extends State<Sidebar> {
                 },
               ),
               if (_userMenuExpanded) ...[
-                // ListTile(
-                //   title: Text('Link with Email'),
-                //   onTap: () => showDialog(
-                //     context: context,
-                //     builder: (context) => EmailAuthView(
-                //       signUpMode: true,
-                //       linkMode: true,
-                //       onLoggedIn: (_) => Get.back(),
-                //     ),
-                //   ),
-                // ),
-                // Log out
                 ListTile(
                   leading: Icon(Icons.person),
                   title: Text('Account'),
@@ -171,15 +152,6 @@ class _SidebarState extends State<Sidebar> {
     Get.back();
     openPage(ScreenNames.ManageCharacters, ManageCharactersView());
   }
-
-  // void compendiumScreen(BuildContext context) {
-  //   Get.back();
-  //   openPage(
-  //     ScreenNames.Compendium,
-  //     context,
-  //     builder: (context) => Compendium(),
-  //   );
-  // }
 
   void customClassesScreen(BuildContext context) {
     Get.back();

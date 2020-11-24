@@ -48,6 +48,7 @@ class CustomClassMoveList extends StatelessWidget {
     };
 
     return CategorizedList.builder(
+      keyBuilder: null,
       items: cats.values,
       itemCount: (moves, i) => moves != null ? moves.length + 1 : 1,
       titleBuilder: (context, moves, i) => Text(raceMoveMode == true

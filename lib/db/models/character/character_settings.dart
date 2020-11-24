@@ -1,5 +1,4 @@
 import 'package:dungeon_paper/src/utils/utils.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/painting.dart' as painting;
 
 final _alignmentMapping = {

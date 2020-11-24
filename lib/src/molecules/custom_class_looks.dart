@@ -46,6 +46,7 @@ class _CustomClassLooksState extends State<CustomClassLooks> {
   @override
   Widget build(BuildContext context) {
     return CategorizedList.builder(
+      keyBuilder: null,
       items: [...items, ADD],
       itemCount: (cat, i) => 1,
       itemBuilder: _childBuilder,
