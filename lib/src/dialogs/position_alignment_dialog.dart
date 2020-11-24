@@ -33,8 +33,9 @@ class _PositionAlignmentDialogState extends State<PositionAlignmentDialog> {
 
   @override
   Widget build(BuildContext context) {
-    final size = 250.0;
+    final size = 180.0;
     return AlertDialog(
+      scrollable: false,
       title: widget.title,
       actions: StandardDialogControls.actions(
         context: context,
@@ -43,42 +44,59 @@ class _PositionAlignmentDialogState extends State<PositionAlignmentDialog> {
           widget.onSave(alignment);
         },
       ),
-      content: Container(
+      content: SizedBox(
         height: size,
         width: size,
-        child: GridView.count(
-          crossAxisCount: 3,
-          childAspectRatio: 1,
-          children: [
-            for (final align in [
-              Alignment.topLeft,
-              Alignment.topCenter,
-              Alignment.topRight,
-              Alignment.centerLeft,
-              Alignment.center,
-              Alignment.centerRight,
-              Alignment.bottomLeft,
-              Alignment.bottomCenter,
-              Alignment.bottomRight,
-            ])
-              IconButton(
-                icon: _icon(align),
-                color: alignment == align
-                    ? Theme.of(context).colorScheme.primary
-                    : Theme.of(context).colorScheme.onSurface,
-                tooltip: enumName(align)
-                    .split(RegExp(r'(?=[A-Z])'))
-                    .map((str) => capitalize(str))
-                    .join(' '),
-                onPressed: () => setState(() => alignment = align),
-                padding: EdgeInsets.zero,
-                visualDensity: VisualDensity.compact,
-              ),
-          ],
+        child: Container(
+          child: Column(
+            children: [
+              for (final group in _groupedAlignments)
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    for (final align in group)
+                      SizedBox(
+                        width: size / 3,
+                        height: size / 3,
+                        child: Tooltip(
+                          child: InkWell(
+                            child: _icon(align),
+                            onTap: () => setState(() => alignment = align),
+                          ),
+                          message: _tooltip(align),
+                        ),
+                      ),
+                  ],
+                ),
+            ],
+          ),
         ),
       ),
     );
   }
+
+  final _groupedAlignments = [
+    [
+      Alignment.topLeft,
+      Alignment.topCenter,
+      Alignment.topRight,
+    ],
+    [
+      Alignment.centerLeft,
+      Alignment.center,
+      Alignment.centerRight,
+    ],
+    [
+      Alignment.bottomLeft,
+      Alignment.bottomCenter,
+      Alignment.bottomRight,
+    ]
+  ];
+
+  String _tooltip(Alignment align) => enumName(align)
+      .split(RegExp(r'(?=[A-Z])'))
+      .map((str) => capitalize(str))
+      .join(' ');
 
   Widget _icon(Alignment alignment) {
     final degrees = mapSwitch<Alignment, double>({
@@ -97,6 +115,9 @@ class _PositionAlignmentDialogState extends State<PositionAlignmentDialog> {
       angle: degrees * (math.pi / 180),
       child: Icon(
         alignment == Alignment.center ? Icons.crop_square : Icons.arrow_upward,
+        color: alignment == this.alignment
+            ? Theme.of(context).colorScheme.primary
+            : Theme.of(context).colorScheme.onSurface,
       ),
     );
   }
