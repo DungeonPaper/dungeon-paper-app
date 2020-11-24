@@ -2,6 +2,7 @@ import 'package:dungeon_paper/db/models/character.dart';
 import 'package:dungeon_paper/db/models/notes.dart';
 import 'package:dungeon_paper/src/atoms/categorized_list.dart';
 import 'package:dungeon_paper/src/atoms/empty_state.dart';
+import 'package:dungeon_paper/src/flutter_utils/widget_utils.dart';
 import 'package:dungeon_paper/src/utils/utils.dart';
 import 'note_card.dart';
 import 'package:flutter/material.dart';
@@ -32,7 +33,7 @@ class NotesView extends StatelessWidget {
       keyBuilder: (ctx, key, idx) => 'NotesView.' + enumName(key),
       itemCount: (cat, idx) => cats[cat].length,
       items: cats.keys,
-      spacerCount: 1,
+      bottomSpacerHeight: BOTTOM_SPACER.height,
       titleBuilder: (context, cat, idx) => Text(cat),
       itemBuilder: (context, cat, idx, catI) {
         var note = cats[cat].elementAt(idx);

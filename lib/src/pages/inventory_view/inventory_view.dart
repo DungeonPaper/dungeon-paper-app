@@ -6,6 +6,7 @@ import 'package:dungeon_paper/src/atoms/coins_chip.dart';
 import 'package:dungeon_paper/src/atoms/damage_chip.dart';
 import 'package:dungeon_paper/src/atoms/empty_state.dart';
 import 'package:dungeon_paper/src/atoms/inventory_load_chip.dart';
+import 'package:dungeon_paper/src/flutter_utils/widget_utils.dart';
 import 'package:dungeon_paper/src/molecules/inventory_item_card.dart';
 import 'package:dungeon_paper/src/utils/utils.dart';
 import 'package:flutter/material.dart';
@@ -74,7 +75,7 @@ class InventoryView extends StatelessWidget {
         EquipmentCats.EquippedItems,
         EquipmentCats.UnequippedItems,
       ],
-      spacerCount: 1,
+      bottomSpacerHeight: BOTTOM_SPACER.height,
     );
   }
 

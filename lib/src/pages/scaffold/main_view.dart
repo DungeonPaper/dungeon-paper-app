@@ -226,6 +226,9 @@ class _MainViewState extends State<MainView> {
       //     elevation = clamp01(widget.pageController.page);
       //   });
       // }
+      if (FocusScope.of(context).isFirstFocus) {
+        FocusScope.of(context).requestFocus(FocusNode());
+      }
       if (widget.pageController.page.round() == widget.pageController.page) {
         if (pageName != lastPageName) {
           setState(() {
