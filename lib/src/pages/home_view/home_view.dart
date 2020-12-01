@@ -6,10 +6,10 @@ import 'package:dungeon_paper/src/pages/home_view/photo_and_summary.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:flutter/material.dart';
 
-class ProfileView extends StatelessWidget {
+class HomeView extends StatelessWidget {
   final Character character;
 
-  ProfileView({
+  HomeView({
     Key key,
     @required this.character,
   }) : super(key: key);

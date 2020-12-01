@@ -38,7 +38,7 @@ class _ReferenceViewState extends State<ReferenceView> {
     return Stack(
       children: [
         Padding(
-          padding: const EdgeInsets.only(top: 32),
+          padding: const EdgeInsets.only(top: 24),
           child: CategorizedList.builder(
             keyBuilder: (ctx, key, idx) => 'ReferenceView.' + enumName(key),
             items: categories.keys,
@@ -62,7 +62,10 @@ class _ReferenceViewState extends State<ReferenceView> {
             },
           ),
         ),
-        SearchBar(controller: searchController),
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 16),
+          child: SearchBar(controller: searchController),
+        ),
       ],
     );
   }

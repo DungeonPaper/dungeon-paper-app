@@ -83,5 +83,5 @@ class MainAppBar extends StatelessWidget with PreferredSizeWidget {
   }
 
   @override
-  final preferredSize = Size.fromHeight(50.0);
+  final preferredSize = Size.fromHeight(55);
 }

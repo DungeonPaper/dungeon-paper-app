@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 
-const _defaultContentPadding =
-    EdgeInsets.only(bottom: 12, left: 16, right: 16, top: 4);
+const _defaultContentPadding = EdgeInsets.all(16);
 
 class SettingsListTile extends StatelessWidget {
   final Widget title;

@@ -19,10 +19,10 @@ class PhotoAndSummary extends StatelessWidget {
     var image = CharacterPhoto(character: character);
     var imageContainer =
         character.photoURL != null && character.photoURL.isNotEmpty
-            ? AspectRatio(aspectRatio: 14.0 / 9.0, child: image)
-            : Container(height: 100.0);
+            ? AspectRatio(aspectRatio: 14.0 / 9, child: image)
+            : Container(height: 100);
     return Padding(
-      padding: const EdgeInsets.all(16.0).copyWith(bottom: 0),
+      padding: const EdgeInsets.symmetric(horizontal: 16),
       child: Stack(
         children: [
           imageContainer,
