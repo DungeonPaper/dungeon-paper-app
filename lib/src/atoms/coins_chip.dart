@@ -19,29 +19,48 @@ class CoinsChip extends StatelessWidget {
     return Tooltip(
       message: 'Your current amount of coin. Press to update.',
       showDuration: Duration(seconds: 2),
-      child: ActionChip(
-        onPressed: () {
-          analytics.logEvent(name: Events.OpenCoinsChip);
-          showDialog(
-            context: context,
-            builder: (context) => EditCoinsDialog(value: character.coins),
-          );
-        },
-        visualDensity: VisualDensity.compact,
-        backgroundColor: Color(0xFFF5EB6B),
-        padding: EdgeInsets.all(8),
-        label: Row(
-          mainAxisSize: MainAxisSize.min,
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            PlatformSvg.asset(
-              'coin-stack.svg',
-              size: 20,
+      child: Stack(
+        children: [
+          ActionChip(
+            onPressed: () {
+              analytics.logEvent(name: Events.OpenCoinsChip);
+              showDialog(
+                context: context,
+                builder: (context) => EditCoinsDialog(value: character.coins),
+              );
+            },
+            visualDensity: VisualDensity.compact,
+            backgroundColor: Color(0xFFF5EB6B),
+            padding: EdgeInsets.all(8),
+            label: Row(
+              mainAxisSize: MainAxisSize.min,
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                PlatformSvg.asset(
+                  'coin-stack.svg',
+                  size: 20,
+                ),
+                SizedBox.fromSize(size: Size.square(10)),
+                Text(currency(character.coins))
+              ],
             ),
-            SizedBox.fromSize(size: Size.square(10)),
-            Text(currency(character.coins))
-          ],
-        ),
+          ),
+          Positioned(
+            right: 0,
+            top: 0,
+            child: Material(
+              shape: CircleBorder(),
+              color: Theme.of(context).cardColor,
+              child: Padding(
+                padding: const EdgeInsets.all(2),
+                child: Icon(
+                  Icons.edit,
+                  size: 12,
+                ),
+              ),
+            ),
+          ),
+        ],
       ),
     );
   }

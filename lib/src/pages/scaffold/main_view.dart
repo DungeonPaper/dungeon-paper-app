@@ -80,7 +80,7 @@ typedef PageBuilder = Widget Function(Character character);
 
 class _MainViewState extends State<MainView> {
   final Map<Pages, PageBuilder> pageMap = {
-    Pages.Home: (character) => ProfileView(character: character),
+    Pages.Home: (character) => HomeView(character: character),
     Pages.Battle: (character) => BattleView(character: character),
     Pages.Inventory: (character) => InventoryView(character: character),
     Pages.Notes: (character) => NotesView(character: character),

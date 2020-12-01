@@ -47,7 +47,7 @@ class _AddSpellListState extends State<AddSpellList> {
     return Stack(
       children: [
         Padding(
-          padding: const EdgeInsets.only(top: 32),
+          padding: const EdgeInsets.only(top: 40),
           child: CategorizedList.builder(
             keyBuilder: null,
             items: spells.keys,
@@ -78,9 +78,12 @@ class _AddSpellListState extends State<AddSpellList> {
             },
           ),
         ),
-        SearchBar(
-          controller: searchController,
-          hintText: 'Type to search spells',
+        Padding(
+          padding: const EdgeInsets.all(16).copyWith(bottom: 0),
+          child: SearchBar(
+            controller: searchController,
+            hintText: 'Type to search spells',
+          ),
         ),
       ],
     );

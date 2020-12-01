@@ -75,7 +75,9 @@ class InventoryItemCard extends StatelessWidget {
         expandedCrossAxisAlignment: CrossAxisAlignment.stretch,
         children: <Widget>[
           Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
+            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16)
+                .copyWith(
+                    bottom: mode == InventoryItemCardMode.Editable ? 0 : 16),
             child: Column(
               mainAxisAlignment: MainAxisAlignment.start,
               crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -83,10 +85,10 @@ class InventoryItemCard extends StatelessWidget {
               children: info,
             ),
           ),
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 16),
-            child: Row(
+          if (mode == InventoryItemCardMode.Editable)
+            Row(
               mainAxisSize: MainAxisSize.min,
+              mainAxisAlignment: MainAxisAlignment.end,
               children: [
                 Text(item.equipped ? 'Equipped' : 'Unequiped'),
                 Switch(
@@ -99,7 +101,6 @@ class InventoryItemCard extends StatelessWidget {
                 )
               ],
             ),
-          ),
           mode == InventoryItemCardMode.Editable
               ? Row(
                   mainAxisAlignment: MainAxisAlignment.end,

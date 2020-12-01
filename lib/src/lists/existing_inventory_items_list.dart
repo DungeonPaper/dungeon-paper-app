@@ -82,31 +82,16 @@ class _AddInventoryItemState extends State<AddInventoryItem> {
       widget._searchController.selection =
           TextSelection.fromPosition(TextPosition(offset: search.length));
     }
-    final searchBar = SearchBar(
-      hintText: 'Type to search items',
-      controller: widget._searchController,
-      onChanged: _onChange,
-      onSubmitted: _onChange,
-      onEditingComplete: _onChange,
-    );
     return Stack(
       children: <Widget>[
         Padding(
-          padding: const EdgeInsets.only(top: 32),
+          padding: const EdgeInsets.only(top: 40),
           child: CategorizedList.builder(
             keyBuilder: null,
             items: itemMap.keys.toList()..sort(),
             itemCount: (key, idx) => itemMap[key].length,
-            titleBuilder: (ctx, key, idx) {
-              final child = Text(key);
-              if (idx == 0) {
-                return Padding(
-                  padding: const EdgeInsets.only(top: 32),
-                  child: child,
-                );
-              }
-              return child;
-            },
+            titleBuilder: (ctx, key, idx) => Text(key),
+            topSpacerHeight: 40,
             itemBuilder: (ctx, key, idx, catI) {
               final item = itemMap[key][idx];
               return Container(
@@ -122,7 +107,16 @@ class _AddInventoryItemState extends State<AddInventoryItem> {
             },
           ),
         ),
-        searchBar
+        Padding(
+          padding: const EdgeInsets.all(16).copyWith(bottom: 0),
+          child: SearchBar(
+            hintText: 'Type to search items',
+            controller: widget._searchController,
+            onChanged: _onChange,
+            onSubmitted: _onChange,
+            onEditingComplete: _onChange,
+          ),
+        )
       ],
     );
   }

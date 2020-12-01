@@ -115,10 +115,8 @@ class _EditXPDialogState extends State<EditXPDialog> {
       actions: StandardDialogControls.actions(
         context: context,
         cancelText: Text('Close'),
-        onConfirm: currentXP != maxXP &&
-                (currentXP != 0 || widget.character.level == 1)
-            ? () => _save(context)
-            : null,
+        onConfirm: () => _save(context),
+        confirmDisabled: currentXP == maxXP,
       ),
     );
   }

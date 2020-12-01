@@ -21,31 +21,51 @@ class ArmorChip extends StatelessWidget {
       message:
           'This is auto calculated from "Armor" tags\non equipped inventory items.\nPress to override with a custom value.',
       showDuration: Duration(seconds: 3),
-      child: ActionChip(
-        visualDensity: VisualDensity.compact,
-        backgroundColor: Colors.grey[700],
-        padding: EdgeInsets.all(8),
-        onPressed: () => Get.dialog(EditArmorDialog(character: character)),
-        label: IconTheme(
-          data: IconThemeData(color: Colors.white),
-          child: DefaultTextStyle.merge(
-            style: TextStyle(color: Colors.white),
-            child: Row(
-              mainAxisSize: MainAxisSize.min,
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Text('EQP. ARMOR'),
-                SizedBox(width: 10),
-                PlatformSvg.asset(
-                  'armor.svg',
-                  size: 20,
+      child: Stack(
+        clipBehavior: Clip.none,
+        children: [
+          ActionChip(
+            visualDensity: VisualDensity.compact,
+            backgroundColor: Colors.grey[700],
+            padding: EdgeInsets.all(8),
+            onPressed: () => Get.dialog(EditArmorDialog(character: character)),
+            label: IconTheme(
+              data: IconThemeData(color: Colors.white),
+              child: DefaultTextStyle.merge(
+                style: TextStyle(color: Colors.white),
+                child: Row(
+                  mainAxisSize: MainAxisSize.min,
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text('EQP. ARMOR'),
+                    SizedBox(width: 10),
+                    PlatformSvg.asset(
+                      'armor.svg',
+                      size: 20,
+                    ),
+                    SizedBox(width: 10),
+                    Text('$armor'),
+                  ],
                 ),
-                SizedBox(width: 10),
-                Text('$armor'),
-              ],
+              ),
             ),
           ),
-        ),
+          Positioned(
+            right: 0,
+            top: 0,
+            child: Material(
+              shape: CircleBorder(),
+              color: Theme.of(context).cardColor,
+              child: Padding(
+                padding: const EdgeInsets.all(2),
+                child: Icon(
+                  Icons.edit,
+                  size: 12,
+                ),
+              ),
+            ),
+          ),
+        ],
       ),
     );
   }

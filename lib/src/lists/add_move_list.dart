@@ -51,7 +51,7 @@ class _AddMoveListState extends State<AddMoveList> {
     return Stack(
       children: [
         Padding(
-          padding: const EdgeInsets.only(top: 32),
+          padding: const EdgeInsets.only(top: 40),
           child: CategorizedList.builder(
             keyBuilder: null,
             topSpacerHeight: 48,
@@ -112,9 +112,12 @@ class _AddMoveListState extends State<AddMoveList> {
             bottomSpacerHeight: BOTTOM_SPACER.height,
           ),
         ),
-        SearchBar(
-          controller: searchController,
-          hintText: 'Type to search moves',
+        Padding(
+          padding: const EdgeInsets.all(16).copyWith(bottom: 0),
+          child: SearchBar(
+            controller: searchController,
+            hintText: 'Type to search moves',
+          ),
         ),
       ],
     );
