@@ -78,10 +78,10 @@ class NavBarState extends State<NavBar> {
 
   @override
   Widget build(BuildContext context) {
-    var pageItems = Pages.values.map((page) {
-      var details = pageDetails[page];
-      var t = (activePageIndex - page.index).abs();
-      var color = Color.lerp(
+    final pageItems = Pages.values.map((page) {
+      final details = pageDetails[page];
+      final t = (activePageIndex - page.index).abs();
+      final color = Color.lerp(
         Theme.of(context).colorScheme.surface.withOpacity(0.8), // slected color
         Theme.of(context).colorScheme.secondary, // unselected color
         clamp01(t),
@@ -100,15 +100,15 @@ class NavBarState extends State<NavBar> {
             curve: Curves.easeInOutQuart),
       );
     }).toList();
+    final width = MediaQuery.of(context).size.width;
 
     return BottomAppBar(
-      shape: CircularNotchedRectangle(),
       color: Theme.of(context).colorScheme.primary,
       elevation: 0,
       child: Row(
-        mainAxisSize: MainAxisSize.max,
         crossAxisAlignment: CrossAxisAlignment.center,
-        mainAxisAlignment: MainAxisAlignment.spaceAround,
+        mainAxisAlignment:
+            width < 300 ? MainAxisAlignment.spaceAround : MainAxisAlignment.end,
         children: pageItems,
       ),
     );

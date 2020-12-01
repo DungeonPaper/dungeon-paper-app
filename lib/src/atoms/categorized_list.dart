@@ -81,12 +81,13 @@ class _CategorizedListState<T> extends State<CategorizedList<T>> {
   @override
   Widget build(BuildContext context) {
     final cats = _itemsToWidgets(context);
+    final origTheme = Theme.of(context);
 
     return OrientationBuilder(
       // key: PageStorageKey('$sessionKey: $sessionKey'),
       builder: (context, orientation) {
         return Theme(
-          data: Theme.of(context).copyWith(
+          data: origTheme.copyWith(
             dividerColor: Colors.transparent,
             unselectedWidgetColor: titleStyle(context).color,
           ),
@@ -132,6 +133,7 @@ class _CategorizedListState<T> extends State<CategorizedList<T>> {
   }
 
   Widget _itemBuilder(BuildContext context, int index, T item) {
+    final origTheme = Theme.of(context);
     final builtTitle = widget.titleBuilder?.call(context, item, index);
     final titleTextStyle = titleStyle(context).copyWith(
       color: Theme.of(context).colorScheme.secondary,
@@ -139,9 +141,12 @@ class _CategorizedListState<T> extends State<CategorizedList<T>> {
     final count = _isChildrenBuilder ? 1 : widget.itemCount(item, index);
     final outputItems = List<Widget>.generate(
       count,
-      (j) => _isChildrenBuilder
-          ? item
-          : widget.itemBuilder(context, item, j, index),
+      (j) => Theme(
+        data: origTheme,
+        child: _isChildrenBuilder
+            ? item
+            : widget.itemBuilder(context, item, j, index),
+      ),
     );
 
     final builtKey = widget.keyBuilder?.call(context, item, index);
