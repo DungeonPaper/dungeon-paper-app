@@ -30,6 +30,7 @@ class ExpansionStates {
       _initData({});
       return;
     }
+
     try {
       final orig = Map<String, String>.from(jsonDecode(str));
       final parsed = Map.fromEntries(

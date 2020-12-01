@@ -7,7 +7,7 @@ class BackupView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ScaffoldWithElevation(
-      title: Text('Import and Export Characters'),
+      title: Text('Import and Export Data'),
       body: Padding(
         padding: const EdgeInsets.all(16),
         child: Column(

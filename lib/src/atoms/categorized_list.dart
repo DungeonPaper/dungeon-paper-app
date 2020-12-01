@@ -112,8 +112,6 @@ class _CategorizedListState<T> extends State<CategorizedList<T>> {
                     return Container();
                   }
                   return SizedBox(height: widget.bottomSpacerHeight);
-                  // }
-                  // return SizedBox(height: topSpacerHeight);
                 },
                 staggeredTileBuilder: (index) => index < cats.length
                     ? StaggeredTile.fit(1)
@@ -139,20 +137,20 @@ class _CategorizedListState<T> extends State<CategorizedList<T>> {
     );
     final count = _isChildrenBuilder ? 1 : widget.itemCount(item, index);
     final outputItems = List<Widget>.generate(
-        count,
-        (j) => _isChildrenBuilder
-            ? item
-            : widget.itemBuilder(context, item, j, index));
+      count,
+      (j) => _isChildrenBuilder
+          ? item
+          : widget.itemBuilder(context, item, j, index),
+    );
 
     final builtKey = widget.keyBuilder?.call(context, item, index);
-    Widget title;
-
-    if (builtTitle != null) {
-      title = DefaultTextStyle(
-        child: builtTitle,
-        style: titleTextStyle,
-      );
-    }
+    final charId = dwStore.state.characters.current?.documentID;
+    final title = builtTitle != null
+        ? DefaultTextStyle(
+            child: builtTitle,
+            style: titleTextStyle,
+          )
+        : null;
 
     if (count == 0) {
       return null;
@@ -170,10 +168,7 @@ class _CategorizedListState<T> extends State<CategorizedList<T>> {
     return Container(
       child: ExpansionTile(
         title: title,
-        key: PageStorageKey('$sessionKey-$index-expansion'),
-        // key: PageStorageKey(
-        //   [sessionKey, index.toString()].join('-'),
-        // ),
+        key: PageStorageKey('$sessionKey-$index-$charId-expansion'),
         initiallyExpanded: expansionStates.isExpanded(builtKey),
         expandedCrossAxisAlignment: CrossAxisAlignment.stretch,
         tilePadding: EdgeInsets.only(right: 8),
