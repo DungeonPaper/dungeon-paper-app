@@ -41,7 +41,7 @@ class InventoryView extends StatelessWidget {
     );
     final isShort = MediaQuery.of(context).size.height < 420;
 
-    if (equipment.isEmpty) {
+    if (equipment.values.every((i) => i == null || i.isEmpty)) {
       return SingleChildScrollView(
         child: Column(
           children: [
