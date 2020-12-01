@@ -113,9 +113,10 @@ class _CategorizedListState<T> extends State<CategorizedList<T>> {
                   }
                   return SizedBox(height: widget.bottomSpacerHeight);
                 },
-                staggeredTileBuilder: (index) => index < cats.length
-                    ? StaggeredTile.fit(1)
-                    : StaggeredTile.fit(2),
+                staggeredTileBuilder: (index) =>
+                    index < topSpacerCount || (index - 1 >= cats.length)
+                        ? StaggeredTile.fit(2)
+                        : StaggeredTile.fit(1),
               );
             },
           ),
