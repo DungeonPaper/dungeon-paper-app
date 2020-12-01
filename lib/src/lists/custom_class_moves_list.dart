@@ -73,6 +73,8 @@ class CustomClassMoveList extends StatelessWidget {
                         _RaceTemplate('Human'),
                         _RaceTemplate('Elf'),
                         _RaceTemplate('Orc'),
+                        _RaceTemplate('Dwarf'),
+                        _RaceTemplate('Halfling'),
                       ])
                         Padding(
                           padding: const EdgeInsets.only(right: 8),
