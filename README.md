@@ -44,9 +44,9 @@ No one in this repository will provide any secret keys to anyone, ever.
 
 ---
 
-# CONTRIBUTING
+## Contributing
 
-## Help with code
+### Help with code
 
 1. Fork this repository
 1. Run the project, and make your changes.
@@ -56,7 +56,7 @@ No one in this repository will provide any secret keys to anyone, ever.
 As mentioned above, Firebase secret keys must be your own, and so are the databases and services related to them.
 This project uses Firebase auth, Firestore, and Crashlytics.
 
-## Help by bug reporting or requesting features
+### Help by bug reporting or requesting features
 
 - Feel free to use the GitHub issues to post one of the issue templates.
 - We are also active on [Discord](https://bit.ly/DungeonPaper-Discord)
