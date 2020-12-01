@@ -22,7 +22,7 @@ class SettingsView extends StatelessWidget {
                 padding: EdgeInsets.all(16).copyWith(top: 0),
                 child: Material(
                   shape: RoundedRectangleBorder(borderRadius: cardRadius),
-                  color: Theme.of(context).canvasColor,
+                  color: Theme.of(context).cardColor,
                   child: Column(
                     children: [
                       SettingsListTile(
