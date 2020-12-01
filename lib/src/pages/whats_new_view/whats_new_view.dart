@@ -34,11 +34,16 @@ class WhatsNew extends StatefulWidget {
   static Widget dialogBuilder(BuildContext context, Widget child) {
     return AlertDialog(
       title: Text('Changelog'),
-      contentPadding: EdgeInsets.symmetric(horizontal: 8),
+      titlePadding: EdgeInsets.all(24).copyWith(bottom: 16),
+      contentPadding: EdgeInsets.zero,
       content: Container(
         height: min(400, MediaQuery.of(context).size.height),
         child: SingleChildScrollView(
-          child: child,
+          child: Padding(
+            padding:
+                const EdgeInsets.symmetric(horizontal: 8).copyWith(bottom: 32),
+            child: child,
+          ),
         ),
       ),
       actions: StandardDialogControls.actions(
@@ -90,7 +95,7 @@ class _WhatsNewState extends State<WhatsNew> {
         );
       } else {
         child = Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 24.0),
+          padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 24),
           child: Text(
               'Looks like we had a problem fetching the changelog. Try later!'),
         );
@@ -101,21 +106,18 @@ class _WhatsNewState extends State<WhatsNew> {
         children: <Widget>[
           Padding(
             padding:
-                const EdgeInsets.symmetric(horizontal: 16.0).copyWith(top: 24),
+                const EdgeInsets.symmetric(horizontal: 16).copyWith(top: 24),
             child: Column(
               mainAxisSize: MainAxisSize.min,
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
-                for (var data in enumerate(mapped(currentVersion)))
-                  Padding(
-                    padding: data.index > 0
-                        ? const EdgeInsets.only(top: 32.0)
-                        : const EdgeInsets.all(0),
-                    child: MarkdownBody(
-                      data: data.value,
-                      onTapLink: (url) => launch(url),
-                    ),
+                for (var data in enumerate(mapped(currentVersion))) ...[
+                  if (data.index > 0) Divider(height: 64),
+                  MarkdownBody(
+                    data: data.value,
+                    onTapLink: (url) => launch(url),
                   ),
+                ],
               ],
             ),
           ),
