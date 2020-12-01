@@ -99,7 +99,10 @@ class _ExportViewState extends State<ExportView> {
                 'Export',
                 textScaleFactor: 1.5,
               ),
-              onPressed: _charactersToExport.isNotEmpty ? _export : null,
+              onPressed:
+                  _charactersToExport.isNotEmpty || _classesToExport.isNotEmpty
+                      ? _export
+                      : null,
             ),
           ),
         ),
