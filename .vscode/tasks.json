@@ -36,9 +36,7 @@
       "args": [
         "lib/tools/task_runner/deploy.dart",
         "--push",
-        "--install",
-        "-d",
-        "10.100.102.9:5555"
+        "--install"
       ],
       "problemMatcher": []
     },
