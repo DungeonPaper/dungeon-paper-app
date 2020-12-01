@@ -40,7 +40,7 @@ class NotesView extends StatelessWidget {
         return Padding(
           padding: const EdgeInsets.symmetric(vertical: 8.0),
           child: NoteCard(
-            key: Key(note.key),
+            key: PageStorageKey(note.key),
             note: note,
             categories: collectCategories(character.notes),
             onSave: (_note) => updateNote(character, _note),

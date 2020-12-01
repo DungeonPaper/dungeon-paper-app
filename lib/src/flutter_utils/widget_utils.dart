@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-const BOTTOM_SPACER = SizedBox(height: 64);
+const BOTTOM_SPACER = SizedBox(height: 72);
 const TOP_SPACER = SizedBox(height: 32);
 
 typedef SingleChildWidgetBuilder = Widget Function(
