@@ -192,7 +192,10 @@ class _ImportViewState extends State<ImportView> {
     final res = await Get.dialog(ConfirmationDialog(
       title: Text('Please Confirm'),
       text: Text(
-          "Existing characters and classes that match the imported ones will be overwritten.\nAre you sure that's okay?"),
+        'Existing characters and classes that match the imported ones will be overwritten.\n'
+        'Characters of classes that are imported will also reflect the new changes.\n'
+        "Are you sure that's okay?",
+      ),
       okButtonText: Text('Overwrite & Import'),
     ));
 

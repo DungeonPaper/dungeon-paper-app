@@ -108,10 +108,18 @@ class CustomClass extends FirebaseEntity {
   set gearChoices(value) => fields.get('gearChoices').set(value);
 
   @override
-  void finalizeUpdate(Map<String, dynamic> json, {bool save = true}) {
+  void finalizeCreate(Map<String, dynamic> json) async {
+    dwStore.dispatch(UpsertCustomClass(this));
+    await _updateChars();
+    super.finalizeCreate(json);
+  }
+
+  @override
+  void finalizeUpdate(Map<String, dynamic> json, {bool save = true}) async {
     if (save) {
       dwStore.dispatch(UpsertCustomClass(this));
     }
+    await _updateChars();
     super.finalizeUpdate(json, save: save);
   }
 
@@ -121,10 +129,16 @@ class CustomClass extends FirebaseEntity {
     dwStore.dispatch(RemoveCustomClass(this));
   }
 
-  @override
-  void finalizeCreate(Map<String, dynamic> json) {
-    dwStore.dispatch(UpsertCustomClass(this));
-    super.finalizeCreate(json);
+  Future<void> _updateChars() async {
+    for (var char in dwStore.state.characters.all.values) {
+      if (char.playerClasses.any((el) => el.key == key)) {
+        var _updated = char.playerClasses
+            .map((el) => el.key == key ? toPlayerClass() : el)
+            .toList();
+        char.playerClasses = _updated;
+        await char.update();
+      }
+    }
   }
 
   @override

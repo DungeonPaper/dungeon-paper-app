@@ -235,8 +235,8 @@ class _CustomClassWizardState extends State<CustomClassWizard>
       await def.create();
     } else {
       await def.update();
-      widget.onSave?.call(def);
     }
+    widget.onSave?.call(def);
     Get.back();
   }
 

@@ -11,9 +11,7 @@
         "lib/tools/task_runner/deploy.dart",
         "--build",
         "-l",
-        "${input:platform}",
-        "-d",
-        "518e84af"
+        "${input:platform}"
       ],
       "problemMatcher": []
     },
@@ -27,9 +25,7 @@
         "-l",
         "${input:platform}",
         "--push",
-        "--install",
-        "-d",
-        "518e84af"
+        "--install"
       ],
       "problemMatcher": []
     },
@@ -42,7 +38,7 @@
         "--push",
         "--install",
         "-d",
-        "518e84af"
+        "10.100.102.9:5555"
       ],
       "problemMatcher": []
     },
@@ -52,9 +48,7 @@
       "command": "dart",
       "args": [
         "lib/tools/task_runner/deploy.dart",
-        "--test",
-        "-d",
-        "518e84af"
+        "--test"
       ],
       "problemMatcher": []
     }

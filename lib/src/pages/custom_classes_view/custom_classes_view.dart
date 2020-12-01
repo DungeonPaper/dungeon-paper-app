@@ -5,7 +5,6 @@ import 'package:dungeon_paper/src/dialogs/dialogs.dart';
 import 'package:dungeon_paper/src/lists/custom_classes_list.dart';
 import 'package:dungeon_paper/src/lists/player_class_list.dart';
 import 'package:dungeon_paper/src/redux/connectors.dart';
-import 'package:dungeon_paper/src/redux/stores.dart';
 import 'package:dungeon_paper/src/scaffolds/custom_class_wizard/custom_class_wizard.dart';
 import 'package:dungeon_paper/src/scaffolds/scaffold_with_elevation.dart';
 import 'package:dungeon_paper/src/utils/analytics.dart';
@@ -100,22 +99,9 @@ class _CustomClassesViewState extends State<CustomClassesView> {
         CustomClassWizard(
           mode: DialogMode.Edit,
           customClass: cls,
-          onSave: _save,
         ),
       );
     };
-  }
-
-  void _save(CustomClass _cls) async {
-    for (var char in dwStore.state.characters.all.values) {
-      if (char.playerClasses.any((el) => el.key == _cls.key)) {
-        var _updated = char.playerClasses
-            .map((el) => el.key == _cls.key ? _cls.toPlayerClass() : el)
-            .toList();
-        char.playerClasses = _updated;
-        await char.update();
-      }
-    }
   }
 
   Future<void> Function(CustomClass) _delete(BuildContext context) {
