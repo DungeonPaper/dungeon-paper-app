@@ -1,11 +1,12 @@
 import 'dart:io';
+import '../args.dart';
 import '../task.dart';
 
 final testTask = TaskGroup(
   condition: (o) => o.test == true,
   tasks: [
     LogTask((o) => 'Running Tests'),
-    Task(
+    Task<ArgOptions>(
       run: (o) async {
         var testProc = Process.start('flutter', ['test']);
         var testRun = await testProc;

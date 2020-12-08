@@ -1,55 +1,97 @@
 import 'dart:async';
 import 'dart:io';
 import 'args.dart';
-import 'task_runner.dart';
 
-class Task {
-  final bool Function(ArgOptions) condition;
-  final FutureOr<void> Function(ArgOptions) run;
+class Task<T> {
+  final bool Function(T) condition;
+  final T options;
+  final FutureOr<void> Function(T) _run;
 
   Task({
     this.condition,
-    this.run,
-  });
+    FutureOr<void> Function(T) run,
+    T options,
+  })  : _run = run,
+        options = options;
+
+  factory Task.staticArgs({
+    bool condition,
+    FutureOr<void> Function() run,
+    T options,
+  }) =>
+      Task(
+        condition: condition != null ? (_) => condition : null,
+        run: (_) => run(),
+        options: options,
+      );
+
+  FutureOr<void> dispose() {}
+
+  FutureOr<void> run([T options]) {
+    _run(options ?? this.options);
+    dispose();
+  }
 }
 
-class TaskGroup extends Task {
+class TaskGroup<T> extends Task<dynamic> {
   final List<Task> tasks;
 
   TaskGroup({
-    bool Function(ArgOptions) condition,
+    bool Function(dynamic) condition,
     this.tasks,
+    dynamic options,
   }) : super(
           condition: condition,
-          run: _runTasks(tasks),
+          run: _runTasks(tasks, options),
+          options: options,
         );
 
   TaskGroup.staticArgs({
     bool condition,
     this.tasks,
+    dynamic options,
   }) : super(
-          condition: (_) => condition,
-          run: _runTasks(tasks),
+          condition: condition != null ? (_) => condition : null,
+          run: _runTasks(tasks, options),
+          options: options,
         );
 
-  static FutureOr<void> Function(ArgOptions) _runTasks(List<Task> tasks) =>
-      (options) => _runner(options, tasks).runAll();
+  @override
+  FutureOr<void> run([dynamic options]) =>
+      _runTasks(tasks, options ?? this.options).call(null);
 
-  static TaskRunner _runner(ArgOptions options, List<Task> tasks) => TaskRunner(
-        options: options,
-        tasks: tasks,
-      );
+  static Future<void> Function(T) _runTasks<T>(List<Task> tasks, T options) {
+    return (_) async {
+      for (final task in tasks) {
+        if (task.condition?.call(options) != false) {
+          await task.run(options);
+        }
+      }
+    };
+  }
+
+  @override
+  void dispose() {
+    for (final task in tasks) {
+      if (task.condition?.call(options) != false) {
+        task.dispose();
+      }
+    }
+    super.dispose();
+  }
 }
 
-class DeviceTaskGroup extends TaskGroup {
+class DeviceTaskGroup extends TaskGroup<ArgOptions> {
   DeviceTaskGroup({
     Device device,
     List<Task> tasks,
     bool Function(ArgOptions) condition,
   }) : super(
-          condition: (o) =>
-              condition?.call(o) != false &&
-              (o.platform == Device.all || o.platform == device),
+          condition: condition != null
+              ? (o) =>
+                  condition.call(o) != false &&
+                  (o.platform == Device.all || o.platform == device)
+              : null,
           tasks: tasks,
         );
 
@@ -65,9 +107,9 @@ class DeviceTaskGroup extends TaskGroup {
         );
 }
 
-class ProcessTask extends Task {
-  ProcessTask({
-    FutureOr<String> Function(ArgOptions) process,
+class ProcessTask extends Task<ArgOptions> {
+  ProcessTask(
+    FutureOr<String> Function(ArgOptions) process, {
     FutureOr<List<String>> Function(ArgOptions) args,
     bool Function(ArgOptions) condition,
     FutureOr<void> Function(ArgOptions) beforeAll,
@@ -78,8 +120,8 @@ class ProcessTask extends Task {
           run: _runProcess(process, args, onError),
         );
 
-  factory ProcessTask.staticArgs({
-    String process,
+  factory ProcessTask.staticArgs(
+    String process, {
     List<String> args,
     bool condition,
     FutureOr<void> Function(ArgOptions) beforeAll,
@@ -87,9 +129,9 @@ class ProcessTask extends Task {
     FutureOr<void> Function(ArgOptions, Error, StackTrace) onError,
   }) =>
       ProcessTask(
-        process: (_) => process,
-        args: (_) => args,
-        condition: (_) => condition,
+        (_) => process,
+        args: args != null ? (_) => args : null,
+        condition: condition != null ? (_) => condition : null,
         beforeAll: beforeAll,
         afterAll: afterAll,
       );
@@ -101,11 +143,11 @@ class ProcessTask extends Task {
   ) =>
       (o) async {
         final _process = await process(o);
-        final _args = await args(o);
+        final _args = await (args?.call(o) ?? <String>[]);
         print('Running process: $_process "${_args.join('\" \"')}"');
-        final result = await Process.start(_process, _args);
-        await stdout.addStream(result.stdout);
-        await stdout.addStream(result.stderr);
+        final result = await Process.run(_process, _args);
+        stdout.write(result.stdout);
+        stdout.write(result.stderr);
         final exitCode = await result.exitCode;
         if (exitCode != 0) {
           final stack = StackTrace.current;
@@ -117,15 +159,22 @@ class ProcessTask extends Task {
           }
         }
       };
+
+  @override
+  void dispose() async {
+    await stdout.flush();
+    await stderr.flush();
+    super.dispose();
+  }
 }
 
-class LogTask extends Task {
+class LogTask extends Task<ArgOptions> {
   LogTask(
     FutureOr<String> Function(ArgOptions) message, {
     bool Function(ArgOptions) condition,
   }) : super(
           condition: condition,
-          run: _run(message),
+          run: _log(message),
         );
 
   LogTask.staticArgs(
@@ -133,14 +182,13 @@ class LogTask extends Task {
     bool Function(ArgOptions) condition,
   }) : super(
           condition: condition,
-          run: _run((o) => message),
+          run: _log((o) => message),
         );
 
-  static Future<void> Function(ArgOptions) _run(
+  FutureOr<void> log(String message) => _log((o) => message);
+
+  static Future<void> Function(ArgOptions) _log(
     FutureOr<String> Function(ArgOptions) message,
-  ) {
-    return (o) async {
-      print(await message(o));
-    };
-  }
+  ) =>
+      (o) async => print(await message(o));
 }

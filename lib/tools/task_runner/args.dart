@@ -15,15 +15,17 @@ enum Device {
 
 class ArgOptions {
   ArgOptions({
-    this.help,
-    this.test,
-    this.build,
-    this.push,
-    this.install,
+    this.help = false,
+    this.test = true,
+    this.build = true,
+    this.push = true,
+    this.install = true,
     this.device,
-    this.version,
-    this.platform,
-  });
+    Version version,
+    this.platform = Device.all,
+    String outputFilePrefix,
+  })  : version = version ?? Version.parse(getVersionString()),
+        outputFilePrefix = outputFilePrefix ?? getAppName() ?? 'flutter_app';
 
   ArgOptions.fromArgs(List<String> args) {
     parser.parse(args);
@@ -35,12 +37,14 @@ class ArgOptions {
   bool push;
   bool install;
   String device;
+  String outputFilePrefix;
   Version version;
   Device platform = Device.android;
 
-  String get outputPath => '/sdcard/Download/dungeon-paper-$version.apk';
+  String get deviceFilePath =>
+      '/sdcard/Download/$outputFilePrefix-$version.apk';
 
-  String get apkPath =>
+  String get localOutputPath =>
       'build/app/outputs/apk/release/app-arm64-v8a-release.apk';
 
   List<String> get deviceArgs => device != null ? ['-s', device] : [];
@@ -63,7 +67,14 @@ class ArgOptions {
       };
 
   ArgParser _parser;
-  ArgParser get parser => _parser ??= _createArgParser();
+  ArgParser get parser {
+    // ignore: unnecessary_null_comparison
+    if (_parser != null) {
+      return _parser;
+    }
+    _parser = _createArgParser();
+    return _parser;
+  }
 
   ArgParser _createArgParser() => ArgParser()
     ..addFlag(
@@ -95,6 +106,12 @@ class ArgOptions {
       abbr: 'v',
       defaultsTo: getVersionString(),
       callback: (val) => version = Version.parse(val),
+    )
+    ..addOption(
+      'output-filename',
+      abbr: 'f',
+      defaultsTo: getAppName(),
+      callback: (val) => outputFilePrefix = val,
     )
     ..addOption(
       'device',
