@@ -160,7 +160,7 @@ class _ImportViewState extends State<ImportView> {
             orElse: () => null);
         CustomClass added;
         if (found == null) {
-          // added = await user.createCustomClass(cls);
+          added = await user.createCustomClass(cls);
         } else {
           await found.update(json: cls.toJSON());
           added = found;
