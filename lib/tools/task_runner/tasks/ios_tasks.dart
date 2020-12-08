@@ -6,7 +6,7 @@ import '../task.dart';
 //   tasks: [
 //     LogTask((o) => 'Installing ${o.version} ${o.devicePrefix('on ')}'),
 //     ProcessTask(
-//       process: (_) => 'adb',
+//       (_) => 'adb',
 //       args: (o) => [...o.deviceArgs, 'install', '-r', o.apkPath],
 //       onError: (o, e, stack) async {
 //         TaskGroup(
@@ -14,12 +14,12 @@ import '../task.dart';
 //             LogTask.staticArgs(
 //                 'Failed to install. Uninstalling old version...'),
 //             ProcessTask.staticArgs(
-//               process: 'adb',
+//               'adb',
 //               args: [...o.deviceArgs, 'uninstall', 'app.dungeonpaper'],
 //             ),
 //             LogTask.staticArgs('Installing new version...'),
 //             ProcessTask.staticArgs(
-//               process: 'adb',
+//               'adb',
 //               args: [...o.deviceArgs, 'install', '-r', o.apkPath],
 //             ),
 //           ],
@@ -34,7 +34,7 @@ import '../task.dart';
 //   tasks: [
 //     LogTask((o) => 'Pushing to ${o.outputPath}'),
 //     ProcessTask(
-//       process: (_) => 'adb',
+//       (_) => 'adb',
 //       args: (o) => [...o.deviceArgs, 'push', o.apkPath, o.outputPath],
 //     ),
 //   ],
@@ -45,7 +45,7 @@ final buildIOS = TaskGroup(
   tasks: [
     LogTask((o) => 'Building iOS'),
     ProcessTask.staticArgs(
-      process: 'flutter',
+      'flutter',
       args: [
         'build',
         'ios',

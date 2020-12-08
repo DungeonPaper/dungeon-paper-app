@@ -1,19 +1,23 @@
 import 'dart:io';
 import 'package:path/path.dart';
 
+final _pubspecFile = File(
+  join(
+    dirname(Platform.script.path),
+    join('..', '..', '..', 'pubspec.yaml'),
+  ),
+);
+
 String getVersionString() {
-  final buildFile = File(
-    join(
-      dirname(Platform.script.path),
-      join('..', '..', '..', 'pubspec.yaml'),
-    ),
-  );
-  final contents = buildFile.readAsStringSync();
+  final contents = _pubspecFile.readAsStringSync();
   final match = RegExp('version: (.+)').firstMatch(contents);
-  if (match != null) {
-    return match.group(1);
-  }
-  return null;
+  return match?.group(1);
+}
+
+String getAppName() {
+  final contents = _pubspecFile.readAsStringSync();
+  final match = RegExp('name: (.+)').firstMatch(contents);
+  return match?.group(1);
 }
 
 Map<K, List<V>> groupBy<K, V>(Iterable<V> list, K Function(V) predicate) {

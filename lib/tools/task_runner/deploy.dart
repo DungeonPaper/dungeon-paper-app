@@ -2,7 +2,6 @@ import 'dart:io';
 
 import 'args.dart';
 import 'task.dart';
-import 'task_runner.dart';
 import 'task_utils.dart';
 import 'tasks/android_tasks.dart';
 import 'tasks/ios_tasks.dart';
@@ -28,7 +27,7 @@ void main(List<String> args) {
     ];
     return msg.join('\n');
   });
-  TaskRunner(
+  TaskGroup(
     options: ArgOptions.fromArgs(args),
     tasks: [
       logTask,
@@ -36,5 +35,5 @@ void main(List<String> args) {
       android,
       iOS,
     ],
-  ).runAll();
+  ).run();
 }

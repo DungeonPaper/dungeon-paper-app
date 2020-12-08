@@ -6,21 +6,21 @@ final installAndroid = TaskGroup(
   tasks: [
     LogTask((o) => 'Installing ${o.version} ${o.devicePrefix('on ')}'),
     ProcessTask(
-      process: (_) => 'adb',
-      args: (o) => [...o.deviceArgs, 'install', '-r', o.apkPath],
+      (_) => 'adb',
+      args: (o) => [...o.deviceArgs, 'install', '-r', o.localOutputPath],
       onError: (o, e, stack) async {
         TaskGroup(
           tasks: [
             LogTask.staticArgs(
                 'Failed to install. Uninstalling old version...'),
             ProcessTask.staticArgs(
-              process: 'adb',
+              'adb',
               args: [...o.deviceArgs, 'uninstall', 'app.dungeonpaper'],
             ),
             LogTask.staticArgs('Installing new version...'),
             ProcessTask.staticArgs(
-              process: 'adb',
-              args: [...o.deviceArgs, 'install', '-r', o.apkPath],
+              'adb',
+              args: [...o.deviceArgs, 'install', '-r', o.localOutputPath],
             ),
           ],
         ).run(o);
@@ -32,10 +32,11 @@ final installAndroid = TaskGroup(
 final pushAndroid = TaskGroup(
   condition: (o) => o.push == true,
   tasks: [
-    LogTask((o) => 'Pushing to ${o.outputPath}'),
+    LogTask((o) => 'Pushing to ${o.deviceFilePath}'),
     ProcessTask(
-      process: (_) => 'adb',
-      args: (o) => [...o.deviceArgs, 'push', o.apkPath, o.outputPath],
+      (_) => 'adb',
+      args: (o) =>
+          [...o.deviceArgs, 'push', o.localOutputPath, o.deviceFilePath],
     ),
   ],
 );
@@ -45,7 +46,7 @@ final buildAndroid = TaskGroup(
   tasks: [
     LogTask((o) => 'Building App Bundle'),
     ProcessTask.staticArgs(
-      process: 'flutter',
+      'flutter',
       args: [
         'build',
         'appbundle',
@@ -55,7 +56,7 @@ final buildAndroid = TaskGroup(
     ),
     LogTask((o) => 'Building APK'),
     ProcessTask.staticArgs(
-      process: 'flutter',
+      'flutter',
       args: ['build', 'apk', '--split-per-abi'],
     ),
   ],
