@@ -38,7 +38,8 @@ class ArgOptions {
   Version version;
   Device platform = Device.android;
 
-  String get outputPath => '/sdcard/Download/dungeon-paper-${version}.apk';
+  String get outputPath => '/sdcard/Download/dungeon-paper-$version.apk';
+
   String get apkPath =>
       'build/app/outputs/apk/release/app-arm64-v8a-release.apk';
 
