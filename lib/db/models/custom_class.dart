@@ -48,12 +48,16 @@ class CustomClass extends FirebaseEntity {
   CustomClass.fromPlayerClass(
     PlayerClass playerClass, {
     DocumentReference ref,
+    bool retainKey = false,
   }) : super(
-          data: _copyPlayerClsData(playerClass),
+          data: _copyPlayerClsData(playerClass, retainKey: retainKey),
           ref: ref,
         );
 
-  static Map<String, dynamic> _copyPlayerClsData(PlayerClass playerClass) {
+  static Map<String, dynamic> _copyPlayerClsData(
+    PlayerClass playerClass, {
+    bool retainKey = false,
+  }) {
     var json = playerClass.toJSON().map((k, v) => MapEntry(snakeToCamel(k), v));
     json['looks'] = Map<String, dynamic>.from(
       ((json['looks'] ?? []) as List<List<String>>).asMap().map(
@@ -62,7 +66,9 @@ class CustomClass extends FirebaseEntity {
     );
     json['baseHP'] = json['baseHp'];
     json.remove('baseHp');
-    json.remove('key');
+    if (!retainKey) {
+      json.remove('key');
+    }
     return Map<String, dynamic>.from(json);
   }
 

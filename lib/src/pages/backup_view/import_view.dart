@@ -76,7 +76,8 @@ class _ImportViewState extends State<ImportView> {
                       _classesToImport.map((c) => c.toPlayerClass()).toSet(),
                   onChange: (classes) => setState(() => _classesToImport =
                       classes
-                          .map((c) => CustomClass.fromPlayerClass(c))
+                          .map((c) =>
+                              CustomClass.fromPlayerClass(c, retainKey: true))
                           .toSet()),
                 ),
               ),
@@ -159,7 +160,7 @@ class _ImportViewState extends State<ImportView> {
             orElse: () => null);
         CustomClass added;
         if (found == null) {
-          added = await user.createCustomClass(cls);
+          // added = await user.createCustomClass(cls);
         } else {
           await found.update(json: cls.toJSON());
           added = found;
@@ -222,8 +223,14 @@ class _ImportViewState extends State<ImportView> {
       final chars = Set<Character>.from(
               json['characters']?.map((v) => Character(data: v))) ??
           [];
-      final customClasses = Set<CustomClass>.from(json['classes']?.map(
-              (v) => CustomClass.fromPlayerClass(PlayerClass.fromJSON(v)))) ??
+      final customClasses = Set<CustomClass>.from(
+            json['classes']?.map(
+              (v) => CustomClass.fromPlayerClass(
+                PlayerClass.fromJSON(v),
+                retainKey: true,
+              ),
+            ),
+          ) ??
           [];
 
       return ImportData(characters: chars, customClasses: customClasses);

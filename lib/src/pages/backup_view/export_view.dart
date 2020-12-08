@@ -77,15 +77,16 @@ class _ExportViewState extends State<ExportView> {
             ),
           ],
         ),
-        ExpansionTile(
-          title: Text('Custom Classes'),
-          children: [
-            CustomClassSelectList(
-              selected: _classesToExport,
-              onChange: (chars) => setState(() => _classesToExport = chars),
-            ),
-          ],
-        ),
+        if (_classesToExport?.isNotEmpty != true)
+          ExpansionTile(
+            title: Text('Custom Classes'),
+            children: [
+              CustomClassSelectList(
+                selected: _classesToExport,
+                onChange: (chars) => setState(() => _classesToExport = chars),
+              ),
+            ],
+          ),
         SizedBox(height: 16),
         Padding(
           padding:
@@ -99,10 +100,10 @@ class _ExportViewState extends State<ExportView> {
                 'Export',
                 textScaleFactor: 1.5,
               ),
-              onPressed:
-                  _charactersToExport.isNotEmpty || _classesToExport.isNotEmpty
-                      ? _export
-                      : null,
+              onPressed: _charactersToExport?.isNotEmpty == true ||
+                      _classesToExport?.isNotEmpty == true
+                  ? _export
+                  : null,
             ),
           ),
         ),
