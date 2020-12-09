@@ -27,8 +27,8 @@ class Task<T> {
 
   FutureOr<void> dispose() {}
 
-  FutureOr<void> run([T options]) {
-    _run(options ?? this.options);
+  FutureOr<void> run([T options]) async {
+    await _run(options ?? this.options);
     dispose();
   }
 }
@@ -42,7 +42,7 @@ class TaskGroup<T> extends Task<dynamic> {
     dynamic options,
   }) : super(
           condition: condition,
-          run: _runTasks(tasks, options),
+          run: _runTasks(tasks, options, condition),
           options: options,
         );
 
@@ -52,18 +52,27 @@ class TaskGroup<T> extends Task<dynamic> {
     dynamic options,
   }) : super(
           condition: condition != null ? (_) => condition : null,
-          run: _runTasks(tasks, options),
+          run: _runTasks(
+            tasks,
+            options,
+            condition != null ? (_) => condition : null,
+          ),
           options: options,
         );
 
   @override
   FutureOr<void> run([dynamic options]) =>
-      _runTasks(tasks, options ?? this.options).call(null);
+      _runTasks(tasks, options ?? this.options, condition).call(null);
 
-  static Future<void> Function(T) _runTasks<T>(List<Task> tasks, T options) {
+  static Future<void> Function(T) _runTasks<T>(
+    List<Task> tasks,
+    T options,
+    bool Function(T) condition,
+  ) {
     return (_) async {
       for (final task in tasks) {
-        if (task.condition?.call(options) != false) {
+        if (condition?.call(options) != false &&
+            task.condition?.call(options) != false) {
           await task.run(options);
         }
       }
@@ -89,9 +98,8 @@ class DeviceTaskGroup extends TaskGroup<ArgOptions> {
   }) : super(
           condition: condition != null
               ? (o) =>
-                  condition.call(o) != false &&
-                  (o.platform == Device.all || o.platform == device)
-              : null,
+                  condition.call(o) != false && _isDeviceIncluded(o, device)
+              : (o) => _isDeviceIncluded(o, device),
           tasks: tasks,
         );
 
@@ -100,11 +108,12 @@ class DeviceTaskGroup extends TaskGroup<ArgOptions> {
     List<Task> tasks,
     bool condition,
   }) : super(
-          condition: (o) =>
-              condition != false &&
-              (o.platform == Device.all || o.platform == device),
+          condition: (o) => condition != false && _isDeviceIncluded(o, device),
           tasks: tasks,
         );
+
+  static bool _isDeviceIncluded(ArgOptions o, Device device) =>
+      o.platform == Device.all || o.platform == device;
 }
 
 class ProcessTask extends Task<ArgOptions> {
@@ -144,7 +153,7 @@ class ProcessTask extends Task<ArgOptions> {
       (o) async {
         final _process = await process(o);
         final _args = await (args?.call(o) ?? <String>[]);
-        print('Running process: $_process "${_args.join('\" \"')}"');
+        print('\n\nRunning process: $_process "${_args.join('\" \"')}"\n\n');
         final result = await Process.run(_process, _args);
         stdout.write(result.stdout);
         stdout.write(result.stderr);
