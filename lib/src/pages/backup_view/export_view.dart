@@ -2,8 +2,10 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:dungeon_paper/db/models/character.dart';
+import 'package:dungeon_paper/db/models/custom_class.dart';
 import 'package:dungeon_paper/src/lists/character_select_list.dart';
 import 'package:dungeon_paper/src/lists/custom_class_select_list.dart';
+import 'package:dungeon_paper/src/redux/stores.dart';
 import 'package:dungeon_paper/src/utils/utils.dart';
 import 'package:dungeon_world_data/player_class.dart';
 import 'package:flutter/material.dart';
@@ -27,6 +29,7 @@ enum ExportFormat {
 class _ExportViewState extends State<ExportView> {
   Set<Character> _charactersToExport;
   Set<PlayerClass> _classesToExport;
+  Set<CustomClass> _allCustomClasses;
   ExportFormat _format;
 
   @override
@@ -34,6 +37,8 @@ class _ExportViewState extends State<ExportView> {
     super.initState();
     _format = ExportFormat.JSON;
     _charactersToExport = {};
+    _allCustomClasses =
+        Set.from(dwStore.state.customClasses.customClasses.values);
   }
 
   @override
@@ -77,7 +82,7 @@ class _ExportViewState extends State<ExportView> {
             ),
           ],
         ),
-        if (_classesToExport?.isNotEmpty != true)
+        if (_allCustomClasses?.isNotEmpty != true)
           ExpansionTile(
             title: Text('Custom Classes'),
             children: [
