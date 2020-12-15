@@ -18,7 +18,7 @@ class LoginView extends StatelessWidget {
     return Column(
       children: [
         LoginButton(
-          label: 'Google sign in',
+          label: 'Sign In with Google',
           color: Colors.white,
           icon: Image(
             image: AssetImage('assets/social/google.png'),
@@ -38,7 +38,7 @@ class LoginView extends StatelessWidget {
                   ? Padding(
                       padding: const EdgeInsets.only(bottom: 5),
                       child: LoginButton(
-                        label: 'Apple sign in',
+                        label: 'Sign In with Apple',
                         color: Colors.black,
                         textColor: Colors.white,
                         icon: PlatformSvg.asset(
@@ -55,7 +55,7 @@ class LoginView extends StatelessWidget {
                   : Container(),
         ),
         // LoginButton(
-        //   label: 'Facebook sign in',
+        //   label: 'Sign In with Facebook',
         //   color: Color(0xFF1878F3),
         //   textColor: Colors.white,
         //   icon: PlatformSvg.asset(
@@ -70,7 +70,7 @@ class LoginView extends StatelessWidget {
         // ),
         // SizedBox(height: 5),
         LoginButton(
-          label: 'Email sign in',
+          label: 'Sign In with Email',
           textColor: Theme.of(context).colorScheme.onSecondary,
           icon: Icon(
             Icons.email,

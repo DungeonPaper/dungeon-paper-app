@@ -31,8 +31,7 @@ class LoginButton extends StatelessWidget {
             height: 40,
             child: RaisedButton.icon(
               icon: icon,
-              label: Container(
-                width: 120,
+              label: Expanded(
                 child: Text(
                   label,
                   textAlign: TextAlign.center,
