@@ -26,7 +26,7 @@ class WelcomeView extends StatelessWidget {
       child: Center(
         child: SingleChildScrollView(
           child: Padding(
-            padding: const EdgeInsets.symmetric(vertical: 32),
+            padding: const EdgeInsets.all(32),
             child: DefaultTextStyle(
               style: Theme.of(context)
                   .textTheme
@@ -36,17 +36,28 @@ class WelcomeView extends StatelessWidget {
                 mainAxisSize: MainAxisSize.max,
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
+                  SizedBox.fromSize(
+                    size: Size.square(
+                        min(MediaQuery.of(context).size.width - 32, 200)),
+                    child: Image.asset('assets/logo.png'),
+                  ),
+                  SizedBox(height: 24),
+                  Text(
+                    'Welcome to Dungeon Paper!',
+                    textScaleFactor: 1.75,
+                  ),
+                  VersionNumber.text(prefix: 'Version'),
+                  SizedBox(height: 24),
                   Padding(
-                    padding: const EdgeInsets.symmetric(vertical: 24),
-                    child: SizedBox.fromSize(
-                      size: Size.square(
-                          min(MediaQuery.of(context).size.width - 32, 200)),
-                      child: Image.asset('assets/logo.png'),
+                    padding: const EdgeInsets.symmetric(horizontal: 32),
+                    child: Text(
+                      'Sign up to Dungeon Paper to sync your characters, '
+                      'custom content and settings',
+                      textAlign: TextAlign.center,
+                      textScaleFactor: 1.1,
+                      style: TextStyle(fontWeight: FontWeight.w300),
                     ),
                   ),
-                  Text('Welcome to Dungeon Paper!',
-                      style: TextStyle(fontSize: 24)),
-                  VersionNumber.text(prefix: 'Version'),
                   SizedBox(height: 24),
                   LoginView(),
                   SizedBox(height: 40),

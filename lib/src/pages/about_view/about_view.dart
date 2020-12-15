@@ -50,19 +50,17 @@ class _AboutViewState extends State<AboutView> {
         keyBuilder: null,
         scrollController: scrollController,
         children: <Widget>[
-          Padding(
-            padding: const EdgeInsets.only(top: 16.0),
-            child: Column(
-              mainAxisSize: MainAxisSize.max,
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: <Widget>[
-                AppInfoBox(),
-                SizedBox(height: 15),
-                ContactUsBox()
-              ],
-            ),
+          Column(
+            mainAxisSize: MainAxisSize.max,
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: <Widget>[
+              AppInfoBox(),
+              SizedBox(height: 16),
+              ContactUsBox()
+            ],
           ),
+          SizedBox(height: 16),
           Padding(
             padding: const EdgeInsets.all(16.0).copyWith(top: 0),
             child: Column(
@@ -292,13 +290,6 @@ class ContactUsBox extends StatelessWidget {
                 children: [
                   FeedbackButton(
                     dontWaitForUser: true,
-                    onReady: () {
-                      // Future.delayed(Duration.zero, () {
-                      //   if (mounted) {
-                      //     setState(() {});
-                      //   }
-                      // });
-                    },
                     builder: (onPressed, url) => SocialButton(
                       label: 'Email',
                       icon: Icon(Icons.email),
@@ -320,16 +311,16 @@ class ContactUsBox extends StatelessWidget {
               TableRow(
                 children: [
                   SocialButton(
-                    label: 'casraf.blog',
-                    url: 'https://casraf.blog/?$utm',
+                    label: 'Website',
+                    url: 'https://dungeonpaper.app/?$utm',
                     icon: Icon(Icons.public),
-                    color: Color(0xFFAA0000),
-                    textColor: Colors.white,
+                    color: Color(0xFFFFFFFF),
+                    textColor: Colors.black,
                     textScaleFactor: 0.9,
                   ),
                   Container(),
                   SocialButton(
-                    label: 'Rate',
+                    label: 'Review',
                     url: Platform.isIOS
                         ? 'https://apps.apple.com/us/app/dungeon-paper/id1525383509'
                         : 'https://play.google.com/store/apps/details?id=app.dungeonpaper&$utm',
