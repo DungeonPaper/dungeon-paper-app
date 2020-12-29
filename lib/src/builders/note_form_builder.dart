@@ -1,6 +1,8 @@
 import 'package:dungeon_paper/db/models/notes.dart';
 import 'package:dungeon_paper/src/atoms/markdown_help.dart';
 import 'package:dungeon_paper/src/dialogs/dialogs.dart';
+import 'package:dungeon_paper/src/molecules/editable_tag_list.dart';
+import 'package:dungeon_world_data/tag.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_typeahead/flutter_typeahead.dart';
 import 'package:get/get.dart';
@@ -28,6 +30,7 @@ class NoteFormBuilder extends StatefulWidget {
 
 class NoteFormBuilderState extends State<NoteFormBuilder> {
   Map<String, TextEditingController> _controllers;
+  List<Tag> tags;
 
   @override
   void initState() {
@@ -36,6 +39,7 @@ class NoteFormBuilderState extends State<NoteFormBuilder> {
       'title': TextEditingController(text: widget.note.title ?? ''),
       'description': TextEditingController(text: widget.note.description ?? ''),
     };
+    tags = widget.note.tags ?? [];
     super.initState();
   }
 
@@ -46,17 +50,6 @@ class NoteFormBuilderState extends State<NoteFormBuilder> {
         mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: <Widget>[
-          // DropdownButton<String>(
-          //   hint: Text('Category'),
-          //   value: category,
-          //   onChanged: (cat) => _setStateValue('category', cat),
-          //   items: Note.defaultCategories
-          //       .map((cat) => DropdownMenuItem(
-          //             value: cat,
-          //             child: Text(cat),
-          //           ))
-          //       .toList(),
-          // ),
           TypeAheadField<String>(
             textFieldConfiguration: TextFieldConfiguration(
               decoration: InputDecoration(
@@ -99,9 +92,11 @@ class NoteFormBuilderState extends State<NoteFormBuilder> {
               autocorrect: true,
               textCapitalization: TextCapitalization.sentences,
               controller: _controllers['description'],
-              // style: TextStyle(fontSize: 13.0),
-              // textAlign: TextAlign.center,
             ),
+          ),
+          EditableTagList(
+            tags: tags,
+            onSave: (t) => setState(() => tags = t),
           ),
           MarkdownHelp(),
         ],
@@ -137,6 +132,7 @@ class NoteFormBuilderState extends State<NoteFormBuilder> {
       'title': _controllers['title'].text,
       'description': _controllers['description'].text,
       'category': _controllers['category'].text,
+      'tags': tags.map((t) => t.toJSON()).toList(),
     });
   }
 }

@@ -229,14 +229,7 @@ class _MainViewState extends State<MainView> {
 
   void _pageListener() {
     if (widget.pageController.hasClients) {
-      // if (clamp01(widget.pageController.page) != elevation) {
-      //   setState(() {
-      //     elevation = clamp01(widget.pageController.page);
-      //   });
-      // }
-      if (FocusScope.of(context).isFirstFocus) {
-        FocusScope.of(context).requestFocus(FocusNode());
-      }
+      loseAllFocus(context);
       if (widget.pageController.page.round() == widget.pageController.page) {
         if (pageName != lastPageName) {
           setState(() {

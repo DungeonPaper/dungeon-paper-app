@@ -1,16 +1,18 @@
 import 'package:dungeon_paper/db/base.dart';
 import 'package:dungeon_paper/src/utils/utils.dart';
+import 'package:dungeon_world_data/tag.dart';
 import 'package:uuid/uuid.dart';
 
 import 'character.dart';
 
-enum NoteKeys { key, title, description, category }
+enum NoteKeys { key, title, description, category, tags }
 
 class Note with Serializer<NoteKeys> {
   String category;
   String key;
   String title;
   String description;
+  List<Tag> tags;
 
   static final defaultCategories = [
     'NPCs',
@@ -27,6 +29,7 @@ class Note with Serializer<NoteKeys> {
       NoteKeys.title: map['title'],
       NoteKeys.description: map['description'],
       NoteKeys.category: map['category'],
+      NoteKeys.tags: map['tags'],
     });
   }
 
@@ -39,6 +42,7 @@ class Note with Serializer<NoteKeys> {
       'title': title,
       'category': category,
       'description': description,
+      'tags': tags.map((t) => t.toJSON()).toList(),
     };
   }
 
@@ -56,6 +60,11 @@ class Note with Serializer<NoteKeys> {
       },
       NoteKeys.category: (v) {
         category = v ?? 'Misc';
+      },
+      NoteKeys.tags: (v) {
+        tags = (v as List ?? [])
+            .map((t) => t is Tag ? t : Tag.fromJSON(t))
+            .toList();
       },
     };
     return serializeAll(map);

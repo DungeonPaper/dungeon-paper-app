@@ -98,7 +98,7 @@ class _InventoryViewState extends State<InventoryView> {
           ),
         ),
         Padding(
-          padding: const EdgeInsets.all(16).copyWith(bottom: 0),
+          padding: const EdgeInsets.symmetric(horizontal: 16),
           child: SearchBar(
             controller: searchController,
             hintText: 'Type to search items',
@@ -108,19 +108,19 @@ class _InventoryViewState extends State<InventoryView> {
     );
   }
 
-  Map<String, Iterable<InventoryItem>> get _equipmentGrouped =>
-      <String, Iterable<InventoryItem>>{'equipped': [], 'unequipped': []}
+  Map<String, List<InventoryItem>> get _equipmentGrouped =>
+      <String, List<InventoryItem>>{'equipped': [], 'unequipped': []}
         ..addAll(groupBy(
           widget.character.inventory,
           (i) => i.equipped == true ? 'equipped' : 'unequipped',
         ));
 
-  Map<String, Iterable<InventoryItem>> get _equipmentFiltered {
-    final equipment = _equipmentGrouped;
-    return {
-      'equipped': equipment['equipped'].where(_isVisible),
-      'unequipped': equipment['unequipped'].where(_isVisible),
-    };
+  Map<String, List<InventoryItem>> get _equipmentFiltered {
+    return Map.from(
+      _equipmentGrouped.map(
+        (key, value) => MapEntry(key, value.where(_isVisible).toList()),
+      ),
+    );
   }
 
   String _catToKey(EquipmentCats cat) => cat == EquipmentCats.EquippedItems
@@ -134,7 +134,7 @@ class _InventoryViewState extends State<InventoryView> {
       return InventoryInfoBar(character: widget.character);
     }
 
-    final item = _equipmentFiltered[_catToKey(cat)].elementAt(i);
+    final item = _equipmentFiltered[_catToKey(cat)][i];
 
     return Padding(
       padding: EdgeInsets.symmetric(vertical: 8.0),
@@ -152,21 +152,11 @@ class _InventoryViewState extends State<InventoryView> {
     setState(() {});
   }
 
-  bool _isVisible(InventoryItem item) {
-    logger.d('item: $item, search: ${searchController.text}'
-        '\nname: ${_matchStr(item.name)}'
-        '\ndescription: ${_matchStr(item.description)}'
-        '\ntags: ${_matchStr(item.tags.map((t) => t.toJSON().toString()).join(', '))}');
-    logger.d((searchController.text.isEmpty ||
-            _matchStr(item.name) ||
-            _matchStr(item.description) ||
-            _matchStr(item.tags.map((t) => t.toJSON().toString()).join(', ')))
-        .toString());
-    return searchController.text.isEmpty ||
-        _matchStr(item.name) ||
-        _matchStr(item.description) ||
-        _matchStr(item.tags.map((t) => t.toJSON().toString()).join(', '));
-  }
+  bool _isVisible(InventoryItem item) =>
+      searchController.text.isEmpty ||
+      _matchStr(item.name) ||
+      _matchStr(item.description) ||
+      _matchStr(item.tags.map((t) => t.toJSON().toString()).join(', '));
 
   bool _matchStr(String str) => (str ?? '')
       .toLowerCase()
