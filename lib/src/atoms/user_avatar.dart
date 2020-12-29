@@ -30,6 +30,10 @@ class UserAvatar extends StatelessWidget {
       textScaleFactor: textScaleFactor,
     );
 
+    if (user.photoURL?.isEmpty != false) {
+      return CircleAvatar(child: _initials, radius: radius);
+    }
+
     return CachedNetworkImage(
       imageUrl: user.photoURL,
       imageBuilder: (context, image) => CircleAvatar(
