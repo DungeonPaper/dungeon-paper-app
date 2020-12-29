@@ -15,6 +15,12 @@ class CharacterPhoto extends StatelessWidget {
   Widget build(BuildContext context) {
     return CachedNetworkImage(
       imageUrl: character.photoURL,
+      placeholder: (context, url) => Container(
+        decoration: BoxDecoration(
+          color: Get.theme.colorScheme.secondary,
+          borderRadius: BorderRadius.circular(15),
+        ),
+      ),
       imageBuilder: (context, image) => Container(
         decoration: BoxDecoration(
           color: Get.theme.primaryColorLight,

@@ -32,6 +32,8 @@ dependencies:
   git_hooks: ^0.0.4
   google_sign_in: ^4.4.4
   http: ^0.12.2
+  icon_shadow: ^1.0.1
+  image_picker: ^0.6.7+17
   logger: ^0.9.4
   package_info: ^0.4.3
   path: ^1.7.0
