@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:dungeon_paper/db/models/user.dart';
 import 'package:dungeon_paper/src/atoms/user_avatar.dart';
 import 'package:dungeon_paper/src/dialogs/confirmation_dialog.dart';
@@ -9,9 +11,11 @@ import 'package:dungeon_paper/src/scaffolds/main_scaffold.dart';
 import 'package:dungeon_paper/src/utils/analytics.dart';
 import 'package:dungeon_paper/src/utils/auth/auth.dart';
 import 'package:dungeon_paper/src/utils/share.dart';
+import 'package:dungeon_paper/src/utils/storage.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart' as fb;
 import 'package:get/get.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:pedantic/pedantic.dart';
 
 class AccountView extends StatefulWidget {
@@ -37,6 +41,7 @@ class AccountView extends StatefulWidget {
 class _AccountViewState extends State<AccountView> {
   bool passwordResetSent;
   bool loadingPasswordReset;
+  File imageFile;
 
   @override
   void initState() {
@@ -65,7 +70,46 @@ class _AccountViewState extends State<AccountView> {
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
               Center(
-                child: UserAvatar(user: user),
+                child: InkWell(
+                  onTap: _pickImage(user),
+                  child: Stack(
+                    children: [
+                      UserAvatar(user: user),
+                      Positioned.fill(
+                        child: Container(
+                          clipBehavior: Clip.antiAlias,
+                          decoration: ShapeDecoration(
+                            shape: CircleBorder(),
+                          ),
+                          child: Align(
+                            alignment: Alignment.bottomCenter,
+                            child: Container(
+                              height: 30,
+                              color: Colors.black.withOpacity(0.8),
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                children: [
+                                  Icon(
+                                    Icons.camera_alt,
+                                    color: Colors.white,
+                                    size: 10,
+                                  ),
+                                  SizedBox(width: 4),
+                                  Text(
+                                    'UPLOAD',
+                                    style: TextStyle(color: Colors.white),
+                                    textScaleFactor: 0.7,
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
               ),
               Card(
                 margin: EdgeInsets.all(16),
@@ -221,5 +265,31 @@ class _AccountViewState extends State<AccountView> {
     } else {
       unawaited(analytics.logEvent(name: Events.PasswordResetCancel));
     }
+  }
+
+  void Function() _pickImage(User user) {
+    return () async {
+      final picker = ImagePicker();
+
+      final pickedFile = await picker.getImage(source: ImageSource.gallery);
+
+      setState(() {
+        imageFile = File(pickedFile.path);
+      });
+
+      _upload(user);
+    };
+  }
+
+  void _upload(User user) async {
+    if (imageFile == null) {
+      return;
+    }
+    final downloadURL = await uploadImage(imageFile, directory: 'user_photos');
+    setState(() {
+      imageFile = null;
+    });
+    user.photoURL = downloadURL;
+    unawaited(user.update());
   }
 }

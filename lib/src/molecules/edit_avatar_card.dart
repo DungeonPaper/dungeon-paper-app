@@ -2,18 +2,12 @@ import 'dart:io';
 import 'dart:math';
 
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:dungeon_paper/db/db.dart';
 import 'package:dungeon_paper/db/models/character.dart';
-import 'package:dungeon_paper/src/dialogs/position_alignment_dialog.dart';
 import 'package:dungeon_paper/src/flutter_utils/widget_utils.dart';
-import 'package:dungeon_paper/src/molecules/character_photo.dart';
-import 'package:firebase_storage/firebase_storage.dart';
+import 'package:dungeon_paper/src/utils/storage.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_image/network.dart';
-import 'package:get/get.dart';
 import 'package:icon_shadow/icon_shadow.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:path/path.dart';
 
 class EditAvatarCard extends StatefulWidget {
   final Character character;
@@ -69,6 +63,7 @@ class _EditAvatarCardState extends State<EditAvatarCard> {
                         Transform.rotate(
                           angle: pi,
                           child: IconButton(
+                            tooltip: 'Align to top',
                             icon: IconShadowWidget(
                               Icon(
                                 Icons.file_download,
@@ -81,6 +76,7 @@ class _EditAvatarCardState extends State<EditAvatarCard> {
                           ),
                         ),
                         IconButton(
+                          tooltip: 'Align to center',
                           icon: IconShadowWidget(
                             Icon(
                               Icons.center_focus_strong,
@@ -91,6 +87,7 @@ class _EditAvatarCardState extends State<EditAvatarCard> {
                           onPressed: () => setPhotoAlignment(Alignment.center),
                         ),
                         IconButton(
+                          tooltip: 'Align to bottom',
                           icon: IconShadowWidget(
                             Icon(
                               Icons.file_download,
@@ -207,10 +204,7 @@ class _EditAvatarCardState extends State<EditAvatarCard> {
     if (imageFile == null) {
       return;
     }
-    final fileName = basename(imageFile.path);
-    final firebaseStorageRef = storage.ref().child('avatars/$fileName');
-    final uploadTask = await firebaseStorageRef.putFile(imageFile);
-    final downloadURL = await uploadTask.ref.getDownloadURL();
+    final downloadURL = await uploadImage(imageFile, directory: 'avatars');
     setState(() {
       imageFile = null;
     });
