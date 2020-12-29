@@ -27,7 +27,8 @@ Future<FirebaseApp> initApp({bool web}) async {
   }
 
   WidgetsFlutterBinding.ensureInitialized();
-  _app = await Firebase.initializeApp();
+  await Firebase.initializeApp();
+  _app = Firebase.app();
   _firestore = FirebaseFirestore.instance;
   _auth = FirebaseAuth.instance;
   if (kIsWeb) {

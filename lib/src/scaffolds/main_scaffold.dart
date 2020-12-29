@@ -1,5 +1,4 @@
 import 'package:dungeon_paper/src/pages/scaffold/main_app_bar.dart';
-import 'package:dungeon_paper/src/utils/logger.dart';
 import 'package:dungeon_paper/src/utils/utils.dart';
 import 'package:dungeon_paper/themes/themes.dart';
 import 'package:flutter/material.dart';
