@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 class EditDisplayNameCard extends StatelessWidget {
   final TextEditingController controller;
@@ -25,12 +26,12 @@ class EditDisplayNameCard extends StatelessWidget {
                   labelText: 'Character name',
                   floatingLabelBehavior: FloatingLabelBehavior.always,
                   labelStyle: TextStyle(
-                    fontSize: Theme.of(context).textTheme.subtitle1.fontSize,
+                    fontSize: Get.theme.textTheme.subtitle1.fontSize,
                   ),
                   hintText: "Your character's name",
                 ),
                 style: TextStyle(
-                  fontSize: Theme.of(context).textTheme.headline6.fontSize,
+                  fontSize: Get.theme.textTheme.headline6.fontSize,
                 ),
               ),
             ),

@@ -4,7 +4,7 @@ import 'package:dungeon_paper/src/dialogs/confirmation_dialog.dart';
 import 'package:dungeon_paper/src/dialogs/dialogs.dart';
 import 'package:dungeon_paper/src/lists/player_class_list.dart';
 import 'package:dungeon_paper/src/organisms/class_description.dart';
-import 'package:dungeon_paper/src/scaffolds/scaffold_with_elevation.dart';
+import 'package:dungeon_paper/src/scaffolds/main_scaffold.dart';
 import 'package:dungeon_paper/src/utils/logger.dart';
 import 'package:dungeon_paper/src/utils/types.dart';
 import 'package:dungeon_world_data/dw_data.dart';
@@ -40,7 +40,7 @@ class ClassSelectView extends StatelessWidget {
                     title: Text(availClass.name),
                     subtitle: Text('Preview class'),
                     leading: Icon(Icons.person, size: 40.0),
-                    color: Theme.of(context).canvasColor.withOpacity(
+                    color: Get.theme.canvasColor.withOpacity(
                         availClass == character.mainClass ? 1 : 0.7),
                     trailing: Icon(Icons.chevron_right),
                     onTap: previewClass(context, availClass),
@@ -110,14 +110,14 @@ class ClassPreview extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var cls = classDef;
-    return ScaffoldWithElevation(
+    return MainScaffold(
       title: Text(cls.name),
       actions: <Widget>[
         Padding(
           padding: const EdgeInsets.all(8.0),
           child: RaisedButton(
             child: Text('Choose'),
-            color: Theme.of(context).canvasColor,
+            color: Get.theme.canvasColor,
             onPressed: onSave,
           ),
         )

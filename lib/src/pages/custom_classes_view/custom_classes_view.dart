@@ -6,7 +6,7 @@ import 'package:dungeon_paper/src/lists/custom_classes_list.dart';
 import 'package:dungeon_paper/src/lists/player_class_list.dart';
 import 'package:dungeon_paper/src/redux/connectors.dart';
 import 'package:dungeon_paper/src/scaffolds/custom_class_wizard/custom_class_wizard.dart';
-import 'package:dungeon_paper/src/scaffolds/scaffold_with_elevation.dart';
+import 'package:dungeon_paper/src/scaffolds/main_scaffold.dart';
 import 'package:dungeon_paper/src/utils/analytics.dart';
 import 'package:dungeon_paper/src/utils/logger.dart';
 import 'package:dungeon_world_data/player_class.dart';
@@ -33,7 +33,7 @@ class _CustomClassesViewState extends State<CustomClassesView> {
       converter: (store) =>
           store.state.customClasses.customClasses?.isNotEmpty == true,
       builder: (context, hasClasses) {
-        return ScaffoldWithElevation(
+        return MainScaffold(
           title: Text('Custom Classes'),
           automaticallyImplyLeading: true,
           useElevation: false,
@@ -78,8 +78,8 @@ class _CustomClassesViewState extends State<CustomClassesView> {
                 ),
           floatingActionButton: FloatingActionButton(
             child: Icon(Icons.add),
-            backgroundColor: Theme.of(context).colorScheme.background,
-            foregroundColor: Theme.of(context).colorScheme.onBackground,
+            backgroundColor: Get.theme.colorScheme.background,
+            foregroundColor: Get.theme.colorScheme.onBackground,
             onPressed: _add(context),
           ),
         );

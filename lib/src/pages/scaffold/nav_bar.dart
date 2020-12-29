@@ -2,6 +2,7 @@ import 'package:dungeon_paper/src/flutter_utils/platform_svg.dart';
 import 'package:dungeon_paper/src/utils/utils.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 enum Pages { Home, Battle, Reference, Inventory, Notes }
 
@@ -33,7 +34,7 @@ class NavBarState extends State<NavBar> {
   // @override
   // void didChangeDependencies() {
   //   SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
-  //     systemNavigationBarColor: Theme.of(context).canvasColor,
+  //     systemNavigationBarColor: Get.theme.canvasColor,
   //   ));
   //   super.didChangeDependencies();
   // }
@@ -82,8 +83,8 @@ class NavBarState extends State<NavBar> {
       final details = pageDetails[page];
       final t = (activePageIndex - page.index).abs();
       final color = Color.lerp(
-        Theme.of(context).colorScheme.surface.withOpacity(0.8), // slected color
-        Theme.of(context).colorScheme.secondary, // unselected color
+        Get.theme.colorScheme.surface.withOpacity(0.8), // slected color
+        Get.theme.colorScheme.secondary, // unselected color
         clamp01(t),
       );
 
@@ -103,7 +104,7 @@ class NavBarState extends State<NavBar> {
     final width = MediaQuery.of(context).size.width;
 
     return BottomAppBar(
-      color: Theme.of(context).colorScheme.primary,
+      color: Get.theme.colorScheme.primary,
       elevation: 0,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.center,
@@ -117,7 +118,7 @@ class NavBarState extends State<NavBar> {
   @override
   void dispose() {
     // SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
-    //   systemNavigationBarColor: Theme.of(context).scaffoldBackgroundColor,
+    //   systemNavigationBarColor: Get.theme.scaffoldBackgroundColor,
     // ));
     pageController.removeListener(pageListener);
     super.dispose();
@@ -160,9 +161,7 @@ class PageNavItem extends StatelessWidget {
               children: <Widget>[
                 iconBuilder(foregroundColor),
                 DefaultTextStyle(
-                  style: Theme.of(context)
-                      .textTheme
-                      .bodyText2
+                  style: Get.theme.textTheme.bodyText2
                       .copyWith(color: foregroundColor),
                   child: label,
                 )

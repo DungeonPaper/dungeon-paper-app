@@ -5,6 +5,7 @@ import 'package:dungeon_paper/src/flutter_utils/widget_utils.dart';
 import 'package:dungeon_paper/src/utils/types.dart';
 import 'package:flutter/material.dart';
 import 'package:uuid/uuid.dart';
+import 'package:get/get.dart';
 
 class CustomClassLooks extends StatefulWidget {
   final Map<String, List<String>> looks;
@@ -58,8 +59,8 @@ class _CustomClassLooksState extends State<CustomClassLooks> {
       return Center(
         child: AddButton(
           size: BUTTON_SIZE,
-          backgroundColor: Theme.of(context).colorScheme.surface,
-          foregroundColor: Theme.of(context).colorScheme.onSurface,
+          backgroundColor: Get.theme.colorScheme.surface,
+          foregroundColor: Get.theme.colorScheme.onSurface,
           onPressed: _isValid() ? _addRow : null,
           textScaleFactor: 1.5,
         ),
@@ -78,7 +79,7 @@ class _CustomClassLooksState extends State<CustomClassLooks> {
               children: <Widget>[
                 Expanded(
                   child: Text('Choice Set #${idx + 1}',
-                      style: Theme.of(context).textTheme.headline6),
+                      style: Get.theme.textTheme.headline6),
                 ),
                 IconButton(
                   padding: EdgeInsets.all(0),

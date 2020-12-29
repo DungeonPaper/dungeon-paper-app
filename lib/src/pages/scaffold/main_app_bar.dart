@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 class MainAppBar extends StatelessWidget with PreferredSizeWidget {
   final Widget leading;
@@ -52,7 +53,7 @@ class MainAppBar extends StatelessWidget with PreferredSizeWidget {
 
   @override
   Widget build(BuildContext context) {
-    final theme = Theme.of(context);
+    final theme = Get.theme;
     final _textTheme = (textTheme ?? theme.textTheme)
         .apply(bodyColor: theme.colorScheme.secondary);
     final _iconTheme = (iconTheme ?? theme.iconTheme)

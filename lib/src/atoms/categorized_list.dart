@@ -4,6 +4,7 @@ import 'package:dungeon_paper/src/utils/utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:uuid/uuid.dart';
+import 'package:get/get.dart';
 
 typedef BuilderAnyFunction<T, E> = E Function(T category, num index);
 typedef BuilderFunction<T> = Widget Function(
@@ -66,9 +67,7 @@ class _CategorizedListState<T> extends State<CategorizedList<T>> {
   bool get _isChildrenBuilder =>
       widget.itemBuilder == null || widget.itemCount == null;
 
-  TextStyle titleStyle(BuildContext context) => Theme.of(context)
-      .textTheme
-      .bodyText2
+  TextStyle titleStyle(BuildContext context) => Get.theme.textTheme.bodyText2
       .copyWith(fontSize: 16.0, fontWeight: FontWeight.bold);
 
   int get bottomSpacerCount =>
@@ -81,7 +80,7 @@ class _CategorizedListState<T> extends State<CategorizedList<T>> {
   @override
   Widget build(BuildContext context) {
     final cats = _itemsToWidgets(context);
-    final origTheme = Theme.of(context);
+    final origTheme = Get.theme;
 
     return OrientationBuilder(
       // key: PageStorageKey('$sessionKey: $sessionKey'),
@@ -133,10 +132,10 @@ class _CategorizedListState<T> extends State<CategorizedList<T>> {
   }
 
   Widget _itemBuilder(BuildContext context, int index, T item) {
-    final origTheme = Theme.of(context);
+    final origTheme = Get.theme;
     final builtTitle = widget.titleBuilder?.call(context, item, index);
     final titleTextStyle = titleStyle(context).copyWith(
-      color: Theme.of(context).colorScheme.secondary,
+      color: Get.theme.colorScheme.secondary,
     );
     final count = _isChildrenBuilder ? 1 : widget.itemCount(item, index);
     final outputItems = List<Widget>.generate(

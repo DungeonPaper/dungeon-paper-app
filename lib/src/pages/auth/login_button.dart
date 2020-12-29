@@ -1,6 +1,7 @@
 import 'package:dungeon_paper/db/models/user.dart';
 import 'package:dungeon_paper/src/redux/connectors.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 class LoginButton extends StatelessWidget {
   // final void Function(UserLogin login) onUserChange;
@@ -42,7 +43,7 @@ class LoginButton extends StatelessWidget {
                   ),
                 ),
               ),
-              color: color ?? Theme.of(context).accentColor,
+              color: color ?? Get.theme.accentColor,
               onPressed: onPressed,
             ),
           );

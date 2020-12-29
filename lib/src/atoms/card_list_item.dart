@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 class CardListItem extends StatelessWidget {
   final void Function() onTap;
@@ -53,7 +54,7 @@ class CardListItem extends StatelessWidget {
     return Card(
       margin: margin,
       elevation: elevation,
-      color: color ?? Theme.of(context).canvasColor,
+      color: color ?? Get.theme.canvasColor,
       child: onTap != null
           ? InkWell(
               onTap: onTap,
@@ -94,7 +95,7 @@ class TitleSubtitleRow extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var theme = Theme.of(context);
+    var theme = Get.theme;
     var textTheme = theme.textTheme;
     var children = <Widget>[
       if (title != null)

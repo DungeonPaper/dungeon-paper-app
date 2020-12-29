@@ -6,7 +6,7 @@ import 'package:dungeon_paper/src/molecules/custom_class_alignments.dart';
 import 'package:dungeon_paper/src/molecules/custom_class_basic_details.dart';
 import 'package:dungeon_paper/src/molecules/custom_class_looks.dart';
 import 'package:dungeon_paper/src/redux/stores.dart';
-import 'package:dungeon_paper/src/scaffolds/scaffold_with_elevation.dart';
+import 'package:dungeon_paper/src/scaffolds/main_scaffold.dart';
 import 'package:dungeon_paper/src/utils/analytics.dart';
 import 'package:dungeon_paper/src/utils/utils.dart';
 import 'package:flutter/material.dart';
@@ -80,7 +80,7 @@ class _CustomClassWizardState extends State<CustomClassWizard>
   Widget build(BuildContext context) {
     return WillPopScope(
       onWillPop: _confirmExit,
-      child: ScaffoldWithElevation(
+      child: MainScaffold(
         title: Text(def.name.isEmpty
             ? 'Custom Class'
             : '${widget.mode == DialogMode.Create ? 'Creat' : 'Edit'}ing: ${def.name}'),
@@ -103,7 +103,7 @@ class _CustomClassWizardState extends State<CustomClassWizard>
                   child: Padding(
                     padding: const EdgeInsets.all(8.0),
                     child: Container(
-                      color: Theme.of(context).primaryColor,
+                      color: Get.theme.primaryColor,
                       child: TabBar(
                         isScrollable: true,
                         controller: tabController,

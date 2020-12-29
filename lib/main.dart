@@ -6,18 +6,19 @@ import 'package:dungeon_paper/src/redux/stores.dart';
 import 'package:dungeon_paper/src/utils/analytics.dart';
 import 'package:dungeon_paper/src/utils/error_reporting.dart';
 import 'package:dungeon_paper/src/utils/logger.dart';
-import 'package:dungeon_paper/themes/main_theme.dart';
 import 'package:firebase_analytics/observer.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:get/get.dart';
 import 'package:pedantic/pedantic.dart';
-import 'package:theme_provider/theme_provider.dart';
+
+import 'themes/themes.dart';
 
 void withInit(Function() cb) async {
   try {
     WidgetsFlutterBinding.ensureInitialized();
+    Themes.init();
     if (!kIsWeb) {
       unawaited(initErrorReporting());
     }
@@ -43,29 +44,17 @@ class DungeonPaper extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ThemeProvider(
-      defaultThemeId: 'normal',
-      themes: [
-        AppTheme(id: 'normal', data: mainTheme, description: 'Normal theme'),
-        AppTheme(
-            id: 'normal_2', data: mainTheme, description: 'Normal theme 2'),
-      ],
-      child: StoreProvider<DWStore>(
-        store: dwStore,
-        child: OnInitCaller(
-          onInit: () => analytics.logAppOpen(),
-          child: ThemeConsumer(
-            child: Builder(
-              builder: (context) => GetMaterialApp(
-                title: 'Dungeon Paper',
-                theme: ThemeProvider.themeOf(context).data,
-                routes: {
-                  '/': (ctx) => MainContainer(pageController: _pageController),
-                },
-                navigatorObservers: [observer],
-              ),
-            ),
-          ),
+    return StoreProvider<DWStore>(
+      store: dwStore,
+      child: OnInitCaller(
+        onInit: () => analytics.logAppOpen(),
+        child: GetMaterialApp(
+          title: 'Dungeon Paper',
+          theme: Themes.currentTheme,
+          routes: {
+            '/': (ctx) => MainContainer(pageController: _pageController),
+          },
+          navigatorObservers: [observer],
         ),
       ),
     );

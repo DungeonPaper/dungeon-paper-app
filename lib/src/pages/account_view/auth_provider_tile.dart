@@ -89,8 +89,8 @@ class _AuthProviderTileState extends State<AuthProviderTile> {
           : Text(title),
       subtitle: subtitle?.isNotEmpty == true ? Text(subtitle) : null,
       trailing: RaisedButton(
-        color: Theme.of(context).accentColor,
-        textColor: Theme.of(context).colorScheme.onSecondary,
+        color: Get.theme.accentColor,
+        textColor: Get.theme.colorScheme.onSecondary,
         child: loading ? Loader.button() : Text(isLinked ? 'Unlink' : 'Link'),
         onPressed: isPrimary ? null : _toggleLink,
         visualDensity: VisualDensity.compact,

@@ -3,6 +3,7 @@ import 'package:dungeon_paper/src/atoms/dice_icon.dart';
 import 'package:dungeon_world_data/player_class.dart';
 import 'package:dungeon_world_data/alignment.dart' as dw_alignment;
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 class ClassDescription extends StatelessWidget {
   final PlayerClass classDef;
@@ -16,7 +17,7 @@ class ClassDescription extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var theme = Theme.of(context);
+    var theme = Get.theme;
     var textTheme = theme.textTheme;
     return Container(
       child: DefaultTextStyle(
@@ -90,7 +91,7 @@ class StatIcon extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var theme = Theme.of(context);
+    var theme = Get.theme;
     var textTheme = theme.textTheme;
     return Container(
       child: Column(
@@ -128,7 +129,7 @@ class AlignmentList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var theme = Theme.of(context);
+    var theme = Get.theme;
     var textTheme = theme.textTheme;
 
     if (!alignments.any((align) => align?.description?.isNotEmpty == true)) {

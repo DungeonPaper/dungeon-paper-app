@@ -2,7 +2,7 @@ import 'package:dungeon_paper/db/models/inventory_items.dart';
 import 'package:dungeon_paper/src/dialogs/dialogs.dart';
 import 'package:dungeon_paper/src/lists/existing_inventory_items_list.dart';
 import 'package:dungeon_paper/src/scaffolds/custom_inventory_item_form.dart';
-import 'package:dungeon_paper/src/scaffolds/scaffold_with_elevation.dart';
+import 'package:dungeon_paper/src/scaffolds/main_scaffold.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -62,7 +62,7 @@ class AddInventoryItemScaffoldState extends State<AddInventoryItemScaffold>
           ),
         ];
         var formContainer = Container(
-          color: Theme.of(context).scaffoldBackgroundColor,
+          color: Get.theme.scaffoldBackgroundColor,
           child: SingleChildScrollView(
             key: PageStorageKey<String>(texts[1]),
             padding: EdgeInsets.all(16),
@@ -81,7 +81,7 @@ class AddInventoryItemScaffoldState extends State<AddInventoryItemScaffold>
           children: <Widget>[
             Container(
               key: PageStorageKey<String>(texts[0]),
-              color: Theme.of(context).scaffoldBackgroundColor,
+              color: Get.theme.scaffoldBackgroundColor,
               child: ExistingInventoryItemsList(onSave: widget.onSave),
             ),
             formContainer
@@ -96,7 +96,7 @@ class AddInventoryItemScaffoldState extends State<AddInventoryItemScaffold>
           ),
         ];
 
-        return ScaffoldWithElevation(
+        return MainScaffold(
           useElevation: false,
           wrapWithScrollable: false,
           elevation: 0.0,

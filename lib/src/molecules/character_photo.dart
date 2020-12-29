@@ -1,5 +1,6 @@
 import 'package:dungeon_paper/db/models/character.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 class CharacterPhoto extends StatelessWidget {
   const CharacterPhoto({
@@ -13,7 +14,7 @@ class CharacterPhoto extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
-        color: Theme.of(context).primaryColorLight,
+        color: Get.theme.primaryColorLight,
         image: DecorationImage(
           fit: BoxFit.fitWidth,
           alignment: character.settings.photoAlignment,

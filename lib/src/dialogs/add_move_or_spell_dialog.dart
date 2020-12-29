@@ -45,14 +45,14 @@ class AddMoveOrSpell extends StatelessWidget {
                       'swords.svg',
                       width: 30,
                       height: 30,
-                      color: Theme.of(context).colorScheme.onSecondary,
+                      color: Get.theme.colorScheme.onSecondary,
                     ),
                   ),
                   label: Text(
                     'Add Move',
-                    style: Theme.of(context).textTheme.headline6.copyWith(
-                          color: Theme.of(context).colorScheme.onSecondary,
-                        ),
+                    style: Get.theme.textTheme.headline6.copyWith(
+                      color: Get.theme.colorScheme.onSecondary,
+                    ),
                   ),
                   onPressed: () {
                     Get.back();
@@ -84,12 +84,12 @@ class AddMoveOrSpell extends StatelessWidget {
                   color: Color(0xFF2274A5),
                   // icon: Icon(
                   //   Icons.book,
-                  //   color: Theme.of(context).colorScheme.onSecondary,
+                  //   color: Get.theme.colorScheme.onSecondary,
                   //   size: 30,
                   // ),
                   icon: Icon(
                     Icons.menu_book_rounded,
-                    color: Theme.of(context).colorScheme.onSecondary,
+                    color: Get.theme.colorScheme.onSecondary,
                     size: 30,
                   ),
                   // icon: Padding(
@@ -98,14 +98,14 @@ class AddMoveOrSpell extends StatelessWidget {
                   //     'book-stack.svg',
                   //     width: 30,
                   //     height: 30,
-                  //     color: Theme.of(context).colorScheme.onSecondary,
+                  //     color: Get.theme.colorScheme.onSecondary,
                   //   ),
                   // ),
                   label: Text(
                     'Add Spell',
-                    style: Theme.of(context).textTheme.headline6.copyWith(
-                          color: Theme.of(context).colorScheme.onSecondary,
-                        ),
+                    style: Get.theme.textTheme.headline6.copyWith(
+                      color: Get.theme.colorScheme.onSecondary,
+                    ),
                   ),
                   onPressed: () {
                     Get.back();

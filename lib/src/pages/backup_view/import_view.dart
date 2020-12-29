@@ -46,7 +46,7 @@ class _ImportViewState extends State<ImportView> {
         _Padded(
           child: Text(
             '${_loadedCharacters.isNotEmpty ? 'Select' : 'Load'} data to import',
-            style: Theme.of(context).textTheme.headline6,
+            style: Get.theme.textTheme.headline6,
           ),
         ),
         if (_loadedCharacters.isNotEmpty)

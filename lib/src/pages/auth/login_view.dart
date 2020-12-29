@@ -71,10 +71,10 @@ class LoginView extends StatelessWidget {
         // SizedBox(height: 5),
         LoginButton(
           label: 'Sign In with Email',
-          textColor: Theme.of(context).colorScheme.onSecondary,
+          textColor: Get.theme.colorScheme.onSecondary,
           icon: Icon(
             Icons.email,
-            color: Theme.of(context).colorScheme.onSecondary,
+            color: Get.theme.colorScheme.onSecondary,
           ),
           onPressed: () => showDialog(
             context: context,

@@ -2,6 +2,7 @@ import 'package:dungeon_paper/db/models/character.dart';
 import 'package:dungeon_paper/src/dialogs/edit_hp_dialog.dart';
 import 'package:dungeon_paper/src/dialogs/edit_xp_dialog.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 class StatusBars extends StatelessWidget {
   final Character character;
@@ -107,7 +108,7 @@ class StatusBarCard extends StatelessWidget {
     return Material(
       shape: RoundedRectangleBorder(borderRadius: borderRadius),
       elevation: 1,
-      color: Theme.of(context).cardColor,
+      color: Get.theme.cardColor,
       child: InkWell(
         onTap: onTap,
         child: Padding(

@@ -49,7 +49,7 @@ class _ExportViewState extends State<ExportView> {
         _Padded(
           child: Text(
             'Select data to export',
-            style: Theme.of(context).textTheme.headline6,
+            style: Get.theme.textTheme.headline6,
           ),
         ),
         if (_dataParsers.values.length > 1)

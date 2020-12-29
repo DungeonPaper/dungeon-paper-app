@@ -73,14 +73,14 @@ class _SidebarState extends State<Sidebar> {
                 leading: Row(
                   children: [
                     IconButton(
-                      color: Theme.of(context).accentColor,
+                      color: Get.theme.accentColor,
                       padding: EdgeInsets.zero,
                       icon: Icon(Icons.add),
                       tooltip: 'Create new character',
                       onPressed: () => createNewCharacterScreen(context),
                     ),
                     IconButton(
-                      color: Theme.of(context).accentColor,
+                      color: Get.theme.accentColor,
                       padding: EdgeInsets.zero,
                       icon: Icon(Icons.settings),
                       tooltip: 'Manage characters',
@@ -99,9 +99,9 @@ class _SidebarState extends State<Sidebar> {
                     'book-stack.svg',
                     width: 16,
                     height: 16,
-                    color: Theme.of(context).brightness == Brightness.light
+                    color: Get.theme.brightness == Brightness.light
                         ? Colors.black45
-                        : Theme.of(context).accentColor,
+                        : Get.theme.accentColor,
                   ),
                 ),
                 title: Text('Custom Classes'),
@@ -176,7 +176,7 @@ class _SidebarState extends State<Sidebar> {
       return title;
     }
     var leadingStyle = titleStyle.copyWith(
-      color: Theme.of(context).textTheme.headline3.color,
+      color: Get.theme.textTheme.headline3.color,
     );
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -193,7 +193,7 @@ class _SidebarState extends State<Sidebar> {
 
   TextStyle getTitleStyle(BuildContext context) {
     return TextStyle(
-      color: Theme.of(context).accentColor,
+      color: Get.theme.accentColor,
       fontWeight: FontWeight.w700,
       fontSize: 14,
     );
@@ -226,7 +226,7 @@ class CharacterListTile extends StatelessWidget {
       return Container(height: 0);
     }
     return ListTileTheme.merge(
-      selectedColor: Theme.of(context).colorScheme.secondaryVariant,
+      selectedColor: Get.theme.colorScheme.secondaryVariant,
       child: ListTile(
         leading: Icon(Icons.person),
         title: Text(character.displayName),
@@ -275,14 +275,14 @@ class UserDrawerHeader extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
         UserAccountsDrawerHeader(
-          decoration: BoxDecoration(color: Theme.of(context).accentColor),
+          decoration: BoxDecoration(color: Get.theme.accentColor),
           accountEmail: Text(
             user.email,
-            style: TextStyle(color: Theme.of(context).colorScheme.onSecondary),
+            style: TextStyle(color: Get.theme.colorScheme.onSecondary),
           ),
           accountName: Text(
             user.displayName,
-            style: TextStyle(color: Theme.of(context).colorScheme.onSecondary),
+            style: TextStyle(color: Get.theme.colorScheme.onSecondary),
           ),
           currentAccountPicture: UserAvatar(user: user),
           onDetailsPressed: onToggleUserMenu,

@@ -10,6 +10,7 @@ import 'package:dungeon_paper/src/utils/types.dart';
 import 'package:dungeon_paper/src/utils/utils.dart';
 import 'package:flutter/material.dart';
 import 'package:dungeon_world_data/alignment.dart' as dwa_alignment;
+import 'package:get/get.dart';
 
 class CharacterSummary extends StatelessWidget {
   final Character character;
@@ -94,7 +95,7 @@ class AlignmentSummary extends StatelessWidget {
     return CardListItem(
       elevation: 0.0,
       margin: EdgeInsets.all(0),
-      color: Theme.of(context).canvasColor.withOpacity(0.5),
+      color: Get.theme.canvasColor.withOpacity(0.5),
       leading: Icon(icon, size: 40),
       title: Text(alignment.name ?? 'No Alignment'),
       subtitle:
@@ -119,7 +120,7 @@ class RaceSummary extends StatelessWidget {
     return RaceDescription(
       race: character.race,
       playerClass: character.mainClass,
-      color: Theme.of(context).canvasColor.withOpacity(0.5),
+      color: Get.theme.canvasColor.withOpacity(0.5),
       elevation: 0,
       margin: EdgeInsets.all(0),
     );
@@ -149,7 +150,7 @@ class ClassSummary extends StatelessWidget {
             )
           : null,
       leading: Icon(Icons.person, size: 40.0),
-      color: Theme.of(context).canvasColor.withOpacity(0.5),
+      color: Get.theme.canvasColor.withOpacity(0.5),
       elevation: 0,
       margin: EdgeInsets.all(0),
     );
@@ -172,7 +173,7 @@ class LooksSummary extends StatelessWidget {
     return LooksDescription(
       playerClass: character.mainClass,
       looks: character.looks,
-      color: Theme.of(context).canvasColor.withOpacity(0.5),
+      color: Get.theme.canvasColor.withOpacity(0.5),
       elevation: 0,
       margin: EdgeInsets.all(0),
     );

@@ -2,8 +2,9 @@ import 'package:dungeon_paper/db/models/spells.dart';
 import 'package:dungeon_paper/src/builders/custom_spell_form_builder.dart';
 import 'package:dungeon_paper/src/dialogs/dialogs.dart';
 import 'package:dungeon_paper/src/lists/add_spell_list.dart';
-import 'package:dungeon_paper/src/scaffolds/scaffold_with_elevation.dart';
+import 'package:dungeon_paper/src/scaffolds/main_scaffold.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 class AddSpellScaffold extends StatefulWidget {
   const AddSpellScaffold({
@@ -59,7 +60,7 @@ class AddSpellScaffoldState extends State<AddSpellScaffold>
           ),
         ];
         var formContainer = Container(
-          color: Theme.of(context).primaryColor,
+          color: Get.theme.primaryColor,
           child: SingleChildScrollView(
             key: PageStorageKey<String>(texts[1]),
             padding: EdgeInsets.all(16),
@@ -70,7 +71,7 @@ class AddSpellScaffoldState extends State<AddSpellScaffold>
           controller: _controller,
           children: <Widget>[
             Container(
-              color: Theme.of(context).scaffoldBackgroundColor,
+              color: Get.theme.scaffoldBackgroundColor,
               child: AddSpellList(
                 key: PageStorageKey<String>(texts[1]),
                 onSave: widget.onSave,
@@ -80,7 +81,7 @@ class AddSpellScaffoldState extends State<AddSpellScaffold>
           ],
         );
         var tabBar = Container(
-          color: Theme.of(context).scaffoldBackgroundColor,
+          color: Get.theme.scaffoldBackgroundColor,
           child: TabBar(
             controller: _controller,
             tabs: List.generate(
@@ -100,7 +101,7 @@ class AddSpellScaffoldState extends State<AddSpellScaffold>
           list.insert(0, tabBar);
         }
 
-        return ScaffoldWithElevation(
+        return MainScaffold(
           useElevation: false,
           wrapWithScrollable: false,
           elevation: 0.0,

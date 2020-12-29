@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 const BOTTOM_SPACER = SizedBox(height: 72);
 const TOP_SPACER = SizedBox(height: 32);
@@ -36,7 +37,7 @@ class Loader extends StatelessWidget {
   Widget build(BuildContext context) {
     var loader = CircularProgressIndicator(
       valueColor: AlwaysStoppedAnimation<Color>(
-        color ?? Theme.of(context).colorScheme.surface,
+        color ?? Get.theme.colorScheme.surface,
       ),
       backgroundColor: backgroundColor,
       strokeWidth: strokeWidth ?? 4.0,
@@ -76,8 +77,8 @@ class AddButton extends StatelessWidget {
       minWidth: size,
       height: size,
       child: RaisedButton(
-        color: backgroundColor ?? Theme.of(context).primaryColor,
-        textColor: foregroundColor ?? Theme.of(context).colorScheme.surface,
+        color: backgroundColor ?? Get.theme.primaryColor,
+        textColor: foregroundColor ?? Get.theme.colorScheme.surface,
         child: Text(
           '+',
           textScaleFactor: textScaleFactor,

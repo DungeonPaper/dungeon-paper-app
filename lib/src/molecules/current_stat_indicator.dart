@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 class CurrentStatIndicator extends StatelessWidget {
   const CurrentStatIndicator({
@@ -55,7 +56,7 @@ class CurrentStatIndicator extends StatelessWidget {
                       ? Colors.green
                       : difference < 0
                           ? Colors.red
-                          : Theme.of(context).textTheme.bodyText2.color,
+                          : Get.theme.textTheme.bodyText2.color,
                 ),
               ),
               Text(
@@ -66,7 +67,7 @@ class CurrentStatIndicator extends StatelessWidget {
                       ? Colors.green
                       : difference < 0
                           ? Colors.red
-                          : Theme.of(context).textTheme.bodyText2.color,
+                          : Get.theme.textTheme.bodyText2.color,
                 ),
               ),
             ],

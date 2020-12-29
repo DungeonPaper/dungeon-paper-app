@@ -3,6 +3,7 @@ import 'package:dungeon_paper/src/atoms/dice_icon.dart';
 import 'package:dungeon_paper/src/dialogs/roll_dice_view.dart';
 import 'package:dungeon_world_data/dice.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 class RollButtonWithEdit extends StatelessWidget {
   final List<Dice> diceList;
@@ -25,12 +26,12 @@ class RollButtonWithEdit extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var textColor = brightness == Brightness.light
-        ? Theme.of(context).colorScheme.onSecondary
-        : Theme.of(context).colorScheme.onPrimary;
+        ? Get.theme.colorScheme.onSecondary
+        : Get.theme.colorScheme.onPrimary;
     return RaisedButton.icon(
       color: brightness == Brightness.light
-          ? Theme.of(context).colorScheme.secondary
-          : Theme.of(context).colorScheme.primary,
+          ? Get.theme.colorScheme.secondary
+          : Get.theme.colorScheme.primary,
       textColor: textColor,
       padding: EdgeInsets.all(12),
       icon: DiceIcon(

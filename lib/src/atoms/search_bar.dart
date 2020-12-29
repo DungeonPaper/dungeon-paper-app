@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 class SearchBar extends StatelessWidget {
   final TextEditingController _controller;
@@ -24,7 +25,7 @@ class SearchBar extends StatelessWidget {
   Widget build(BuildContext context) {
     return Material(
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30)),
-      color: Theme.of(context).canvasColor,
+      color: Get.theme.canvasColor,
       elevation: 5,
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),

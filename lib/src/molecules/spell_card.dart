@@ -119,7 +119,7 @@ class SpellCardState extends State<SpellCard> {
                       child: Align(
                         alignment: Alignment.bottomRight,
                         child: RaisedButton(
-                          color: Theme.of(context).primaryColorLight,
+                          color: Get.theme.primaryColorLight,
                           child: Text('Add Spell'),
                           onPressed: () {
                             if (widget.onSave != null) {

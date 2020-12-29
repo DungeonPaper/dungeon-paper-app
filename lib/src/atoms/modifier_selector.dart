@@ -1,6 +1,7 @@
 import 'package:dungeon_paper/db/models/character.dart';
 import 'package:dungeon_paper/src/utils/types.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 class ModifierSelector extends StatelessWidget {
   final VoidCallbackDelegate<int> onChanged;
@@ -21,13 +22,12 @@ class ModifierSelector extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var options = List.generate(MAX_NUM * 2 + 1, (idx) => -MAX_NUM + idx);
-    var normalText =
-        textStyle.copyWith(color: Theme.of(context).colorScheme.onSurface);
+    var normalText = textStyle.copyWith(color: Get.theme.colorScheme.onSurface);
     var modText = textStyle.copyWith(
-        color: Theme.of(context).colorScheme.onSurface.withOpacity(0.4),
+        color: Get.theme.colorScheme.onSurface.withOpacity(0.4),
         fontSize: normalText.fontSize * 0.5);
     var emptyText = textStyle.copyWith(
-        color: Theme.of(context).colorScheme.onSurface.withOpacity(0.4),
+        color: Get.theme.colorScheme.onSurface.withOpacity(0.4),
         fontSize: normalText.fontSize * 0.75);
     return Container(
       width: 70,

@@ -7,6 +7,7 @@ import 'package:dungeon_world_data/dw_data.dart';
 import 'package:dungeon_world_data/move.dart';
 import 'package:dungeon_world_data/player_class.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 class AddMoveList extends StatefulWidget {
   final PlayerClass playerClass;
@@ -78,7 +79,7 @@ class _AddMoveListState extends State<AddMoveList> {
                       child: Text(
                         'Moves from class:',
                         style: TextStyle(
-                          color: Theme.of(context).colorScheme.onBackground,
+                          color: Get.theme.colorScheme.onBackground,
                         ),
                       ),
                     ),

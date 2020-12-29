@@ -57,8 +57,8 @@ class FABState extends State<FAB> {
     });
   }
 
-  Color get backgroundColor => Theme.of(context).cardColor;
-  Color get foregroundColor => Theme.of(context).colorScheme.secondary;
+  Color get backgroundColor => Get.theme.cardColor;
+  Color get foregroundColor => Get.theme.colorScheme.secondary;
 
   Widget Function(BuildContext, Character) buttonsByIndex(Pages page) {
     var map = <Pages, FABData Function(BuildContext, Character)>{

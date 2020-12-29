@@ -6,6 +6,7 @@ import 'package:dungeon_paper/src/flutter_utils/widget_utils.dart';
 import 'package:dungeon_paper/src/utils/types.dart';
 import 'package:dungeon_world_data/dice.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 class ClassBasicDetails extends StatefulWidget {
   final VoidCallbackDelegate<CustomClass> onUpdate;
@@ -99,9 +100,9 @@ class _ClassBasicDetailsState extends State<ClassBasicDetails> {
 
   @override
   Widget build(BuildContext context) {
-    final cardCaptionStyle = Theme.of(context).textTheme.caption.copyWith(
-          color: Theme.of(context).primaryColor,
-        );
+    final cardCaptionStyle = Get.theme.textTheme.caption.copyWith(
+      color: Get.theme.primaryColor,
+    );
     final cardPadding = const EdgeInsets.all(16.0);
 
     return SingleChildScrollView(
@@ -200,8 +201,7 @@ class _ClassBasicDetailsState extends State<ClassBasicDetails> {
                     mainAxisSize: MainAxisSize.min,
                     crossAxisAlignment: CrossAxisAlignment.stretch,
                     children: [
-                      Text('Damage Dice',
-                          style: Theme.of(context).textTheme.caption),
+                      Text('Damage Dice', style: Get.theme.textTheme.caption),
                       DiceSelector(
                         padding: EdgeInsets.all(0),
                         showIcon: true,

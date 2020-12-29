@@ -79,7 +79,7 @@ class CustomClassMoveList extends StatelessWidget {
                         Padding(
                           padding: const EdgeInsets.only(right: 8),
                           child: RaisedButton(
-                            color: Theme.of(context).cardColor,
+                            color: Get.theme.cardColor,
                             child: Text('Add ${race.name}'),
                             onPressed: customClass.raceMoves.firstWhere(
                                         (m) => m.name == race.name,
@@ -92,8 +92,8 @@ class CustomClassMoveList extends StatelessWidget {
                     ],
                   ),
                 AddButton(
-                  backgroundColor: Theme.of(context).colorScheme.surface,
-                  foregroundColor: Theme.of(context).colorScheme.onSurface,
+                  backgroundColor: Get.theme.colorScheme.surface,
+                  foregroundColor: Get.theme.colorScheme.onSurface,
                   onPressed: () => _addMove(context, cat),
                 ),
               ],

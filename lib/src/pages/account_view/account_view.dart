@@ -5,7 +5,7 @@ import 'package:dungeon_paper/src/dialogs/single_field_edit_dialog.dart';
 import 'package:dungeon_paper/src/flutter_utils/widget_utils.dart';
 import 'package:dungeon_paper/src/pages/account_view/auth_provider_tile.dart';
 import 'package:dungeon_paper/src/redux/connectors.dart';
-import 'package:dungeon_paper/src/scaffolds/scaffold_with_elevation.dart';
+import 'package:dungeon_paper/src/scaffolds/main_scaffold.dart';
 import 'package:dungeon_paper/src/utils/analytics.dart';
 import 'package:dungeon_paper/src/utils/auth/auth.dart';
 import 'package:dungeon_paper/src/utils/share.dart';
@@ -57,7 +57,7 @@ class _AccountViewState extends State<AccountView> {
         final user = login.user;
         final fbUser = login.firebaseUser;
         final hasPassword = isUserLinkedToAuth('password', fbUser);
-        return ScaffoldWithElevation(
+        return MainScaffold(
           key: Key('${fbUser.email}-${fbUser.displayName}-${fbUser.photoURL}'),
           automaticallyImplyLeading: true,
           title: Text('Your Account'),
@@ -92,10 +92,9 @@ class _AccountViewState extends State<AccountView> {
                                 : 'You can log in using your email and password')
                             : null,
                         trailing: FlatButton(
-                          textColor: Theme.of(context).colorScheme.secondary,
+                          textColor: Get.theme.colorScheme.secondary,
                           child: loadingPasswordReset
-                              ? Loader.button(
-                                  color: Theme.of(context).accentColor)
+                              ? Loader.button(color: Get.theme.accentColor)
                               : Text(passwordResetSent
                                   ? 'Send Again'
                                   : 'Reset Password'),
@@ -110,7 +109,7 @@ class _AccountViewState extends State<AccountView> {
                 padding: const EdgeInsets.symmetric(horizontal: 24),
                 child: Text(
                   'Ways to log in',
-                  style: Theme.of(context).textTheme.subtitle2,
+                  style: Get.theme.textTheme.subtitle2,
                 ),
               ),
               Padding(
@@ -137,8 +136,8 @@ class _AccountViewState extends State<AccountView> {
                     ),
                     RaisedButton(
                       child: Text('Invite a friend', textScaleFactor: 1.1),
-                      color: Theme.of(context).colorScheme.secondary,
-                      textColor: Theme.of(context).colorScheme.onSecondary,
+                      color: Get.theme.colorScheme.secondary,
+                      textColor: Get.theme.colorScheme.onSecondary,
                       onPressed: _shareAppLink,
                     )
                   ],
