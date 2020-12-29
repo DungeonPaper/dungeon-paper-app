@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:email_validator/email_validator.dart';
 import 'package:flutter/services.dart';
 import 'package:url_launcher/url_launcher.dart';
+import 'package:get/get.dart';
 
 class EmailAuthResult {
   final EmailAuthCredential credential;
@@ -147,8 +148,8 @@ class _EmailAuthViewState extends State<EmailAuthView> {
                             : 'Need to create an account?'),
                         SizedBox(width: 10),
                         RaisedButton(
-                          color: Theme.of(context).accentColor,
-                          textColor: Theme.of(context).colorScheme.onSecondary,
+                          color: Get.theme.accentColor,
+                          textColor: Get.theme.colorScheme.onSecondary,
                           child: Text(
                             signUpMode ? 'Sign In' : 'Sign Up',
                             textScaleFactor: 1.1,
@@ -189,7 +190,7 @@ class _EmailAuthViewState extends State<EmailAuthView> {
               height: 50,
               width: 120,
               child: RaisedButton(
-                color: Theme.of(context).primaryColor,
+                color: Get.theme.primaryColor,
                 onPressed: loading || !isValid ? null : _confirm,
                 child: loading
                     ? Container(

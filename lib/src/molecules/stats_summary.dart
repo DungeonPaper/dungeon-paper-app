@@ -1,6 +1,7 @@
 import 'package:dungeon_paper/db/helpers/character_utils.dart';
 import 'package:dungeon_paper/db/models/character.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 class StatsSummary extends StatelessWidget {
   final Character character;
@@ -28,13 +29,13 @@ class StatsSummary extends StatelessWidget {
                   child: Card(
                     margin: EdgeInsets.all(0),
                     elevation: 0,
-                    color: Theme.of(context).canvasColor.withOpacity(0.5),
+                    color: Get.theme.canvasColor.withOpacity(0.5),
                     child: Padding(
                       padding: const EdgeInsets.symmetric(
                           horizontal: 10.0, vertical: 22.0),
                       child: DefaultTextStyle(
                         textAlign: TextAlign.center,
-                        style: Theme.of(context).textTheme.bodyText2,
+                        style: Get.theme.textTheme.bodyText2,
                         child: Column(
                           children: <Widget>[
                             Text(

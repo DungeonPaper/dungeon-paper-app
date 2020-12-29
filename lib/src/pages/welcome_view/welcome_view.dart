@@ -28,10 +28,8 @@ class WelcomeView extends StatelessWidget {
           child: Padding(
             padding: const EdgeInsets.all(32),
             child: DefaultTextStyle(
-              style: Theme.of(context)
-                  .textTheme
-                  .bodyText2
-                  .copyWith(color: Theme.of(context).accentColor),
+              style: Get.theme.textTheme.bodyText2
+                  .copyWith(color: Get.theme.accentColor),
               child: Column(
                 mainAxisSize: MainAxisSize.max,
                 mainAxisAlignment: MainAxisAlignment.center,
@@ -69,12 +67,12 @@ class WelcomeView extends StatelessWidget {
                         children: [
                           Text('Information'),
                           RaisedButton(
-                            color: Theme.of(context).colorScheme.surface,
+                            color: Get.theme.colorScheme.surface,
                             onPressed: _openWhatsNew,
                             child: Text('Changelog'),
                           ),
                           RaisedButton(
-                            color: Theme.of(context).colorScheme.surface,
+                            color: Get.theme.colorScheme.surface,
                             onPressed: _openPrivacyPolicy,
                             child: Text('Privacy Policy'),
                           ),
@@ -85,12 +83,12 @@ class WelcomeView extends StatelessWidget {
                         children: [
                           Text("Can't sign in?"),
                           RaisedButton(
-                            color: Theme.of(context).colorScheme.surface,
+                            color: Get.theme.colorScheme.surface,
                             onPressed: _openResetPasswordView,
                             child: Text('Reset Password'),
                           ),
                           RaisedButton(
-                            color: Theme.of(context).colorScheme.surface,
+                            color: Get.theme.colorScheme.surface,
                             onPressed: _openAboutView,
                             child: Text('Contact Us'),
                           ),

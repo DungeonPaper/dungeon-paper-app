@@ -5,6 +5,7 @@ import 'package:dungeon_paper/src/utils/analytics.dart';
 import 'package:dungeon_paper/src/utils/utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:get/get.dart';
 
 class CoinsChip extends StatelessWidget {
   final Character character;
@@ -50,7 +51,7 @@ class CoinsChip extends StatelessWidget {
             top: 0,
             child: Material(
               shape: CircleBorder(),
-              color: Theme.of(context).cardColor,
+              color: Get.theme.cardColor,
               child: Padding(
                 padding: const EdgeInsets.all(2),
                 child: Icon(

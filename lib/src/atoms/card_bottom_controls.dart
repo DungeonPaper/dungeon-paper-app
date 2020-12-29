@@ -2,6 +2,7 @@ import 'package:dungeon_paper/src/utils/analytics.dart';
 import 'package:dungeon_paper/src/utils/logger.dart';
 import 'package:dungeon_paper/src/utils/utils.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 class CardBottomControls extends StatelessWidget {
   final String entityTypeName;
@@ -31,13 +32,13 @@ class CardBottomControls extends StatelessWidget {
   List<Widget> getButtons(BuildContext context) {
     var buttons = <Widget>[];
     Widget editButton = IconButton(
-      color: Theme.of(context).colorScheme.secondary,
+      color: Get.theme.colorScheme.secondary,
       tooltip: suffixType('Edit'),
       icon: Icon(Icons.edit),
       onPressed: _addAnalytics('Edit', onEdit),
     );
     Widget deleteButton = IconButton(
-      color: Theme.of(context).colorScheme.secondary,
+      color: Get.theme.colorScheme.secondary,
       tooltip: suffixType('Delete'),
       icon: Icon(Icons.delete),
       onPressed: _addAnalytics('Delete', onDelete),

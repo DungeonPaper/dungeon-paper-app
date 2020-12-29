@@ -2,6 +2,7 @@ import 'package:dungeon_paper/src/builders/custom_move_form_builder.dart';
 import 'package:dungeon_paper/src/dialogs/dialogs.dart';
 import 'package:dungeon_world_data/move.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 class AddRaceMoveScaffold extends StatefulWidget {
   const AddRaceMoveScaffold({
@@ -45,7 +46,7 @@ class AddRaceMoveScaffoldState extends State<AddRaceMoveScaffold>
           appBar: appBar,
           body: SingleChildScrollView(
             child: Container(
-              color: Theme.of(context).canvasColor,
+              color: Get.theme.canvasColor,
               child: SingleChildScrollView(
                 padding: EdgeInsets.all(16),
                 child: form,

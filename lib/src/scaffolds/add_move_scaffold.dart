@@ -1,10 +1,11 @@
 import 'package:dungeon_paper/src/builders/custom_move_form_builder.dart';
 import 'package:dungeon_paper/src/dialogs/dialogs.dart';
 import 'package:dungeon_paper/src/lists/add_move_list.dart';
-import 'package:dungeon_paper/src/scaffolds/scaffold_with_elevation.dart';
+import 'package:dungeon_paper/src/scaffolds/main_scaffold.dart';
 import 'package:dungeon_world_data/player_class.dart';
 import 'package:dungeon_world_data/move.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 class AddMoveScreen extends StatefulWidget {
   const AddMoveScreen({
@@ -59,7 +60,7 @@ class AddMoveScreenState extends State<AddMoveScreen>
           ),
         ];
         var formContainer = Container(
-          color: Theme.of(context).scaffoldBackgroundColor,
+          color: Get.theme.scaffoldBackgroundColor,
           child: SingleChildScrollView(
             key: PageStorageKey<String>(texts[1]),
             padding: EdgeInsets.all(16),
@@ -95,7 +96,7 @@ class AddMoveScreenState extends State<AddMoveScreen>
           list.insert(0, tabBar);
         }
 
-        return ScaffoldWithElevation(
+        return MainScaffold(
           useElevation: false,
           wrapWithScrollable: false,
           elevation: 0.0,

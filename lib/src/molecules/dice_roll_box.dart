@@ -5,6 +5,7 @@ import 'package:dungeon_paper/src/utils/analytics.dart';
 import 'package:dungeon_paper/src/utils/logger.dart';
 import 'package:dungeon_world_data/dice.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 class DiceRollBox extends StatefulWidget {
   final DiceListController controller;
@@ -79,7 +80,7 @@ class _DiceRollBoxState extends State<DiceRollBox>
   Widget build(BuildContext context) {
     return Card(
       margin: EdgeInsets.zero,
-      color: Theme.of(context).canvasColor,
+      color: Get.theme.canvasColor,
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.all(Radius.circular(10)),
       ),
@@ -88,16 +89,16 @@ class _DiceRollBoxState extends State<DiceRollBox>
           Container(
             decoration: BoxDecoration(
               borderRadius: BorderRadius.vertical(top: Radius.circular(10)),
-              color: Theme.of(context).colorScheme.secondary,
+              color: Get.theme.colorScheme.secondary,
             ),
             padding: EdgeInsets.only(left: 16),
             child: DefaultTextStyle(
               style: TextStyle(
-                color: Theme.of(context).colorScheme.onSecondary,
+                color: Get.theme.colorScheme.onSecondary,
               ),
               child: IconTheme.merge(
                 data: IconThemeData(
-                  color: Theme.of(context).colorScheme.onSecondary,
+                  color: Get.theme.colorScheme.onSecondary,
                 ),
                 child: Row(
                   children: [
@@ -152,8 +153,7 @@ class _DiceRollBoxState extends State<DiceRollBox>
                 textAlign: TextAlign.center,
                 style: TextStyle(
                   fontSize: 12,
-                  color:
-                      Theme.of(context).colorScheme.onSurface.withOpacity(0.4),
+                  color: Get.theme.colorScheme.onSurface.withOpacity(0.4),
                 ),
               );
             },

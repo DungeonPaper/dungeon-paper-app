@@ -116,8 +116,8 @@ class _PositionAlignmentDialogState extends State<PositionAlignmentDialog> {
       child: Icon(
         alignment == Alignment.center ? Icons.crop_square : Icons.arrow_upward,
         color: alignment == this.alignment
-            ? Theme.of(context).colorScheme.primary
-            : Theme.of(context).colorScheme.onSurface,
+            ? Get.theme.colorScheme.primary
+            : Get.theme.colorScheme.onSurface,
       ),
     );
   }

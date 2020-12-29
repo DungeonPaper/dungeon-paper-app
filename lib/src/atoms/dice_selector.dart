@@ -3,6 +3,7 @@ import 'package:dungeon_paper/src/flutter_utils/input_formatters.dart';
 import 'package:dungeon_world_data/dice.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:get/get.dart';
 
 class DiceSelector extends StatefulWidget {
   final Dice dice;
@@ -107,7 +108,7 @@ class _DiceSelectorState extends State<DiceSelector> {
                 ),
             ],
             onChanged: _updateSides,
-            dropdownColor: Theme.of(context).cardColor,
+            dropdownColor: Get.theme.cardColor,
           )
         ],
       ),

@@ -9,7 +9,7 @@ import 'package:dungeon_paper/src/flutter_utils/widget_utils.dart';
 import 'package:dungeon_paper/src/pages/edit_character/edit_character_view.dart';
 import 'package:dungeon_paper/src/redux/characters/characters_store.dart';
 import 'package:dungeon_paper/src/redux/stores.dart';
-import 'package:dungeon_paper/src/scaffolds/scaffold_with_elevation.dart';
+import 'package:dungeon_paper/src/scaffolds/main_scaffold.dart';
 import 'package:dungeon_paper/src/utils/analytics.dart';
 import 'package:dungeon_paper/src/utils/logger.dart';
 import 'package:dungeon_paper/src/utils/utils.dart';
@@ -54,8 +54,8 @@ class _ManageCharactersViewState extends State<ManageCharactersView> {
   @override
   Widget build(BuildContext context) {
     final mq = MediaQuery.of(context);
-    final theme = Theme.of(context);
-    return ScaffoldWithElevation(
+    final theme = Get.theme;
+    return MainScaffold(
       title: Text('Manage Characters'),
       floatingActionButton: FloatingActionButton(
         child: Icon(Icons.add),

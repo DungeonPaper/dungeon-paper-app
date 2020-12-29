@@ -1,8 +1,11 @@
 import 'package:dungeon_paper/src/pages/scaffold/main_app_bar.dart';
+import 'package:dungeon_paper/src/utils/logger.dart';
 import 'package:dungeon_paper/src/utils/utils.dart';
+import 'package:dungeon_paper/themes/themes.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
-class ScaffoldWithElevation extends StatefulWidget {
+class MainScaffold extends StatefulWidget {
   final bool automaticallyImplyLeading;
   final Widget body;
   final Widget title;
@@ -21,7 +24,7 @@ class ScaffoldWithElevation extends StatefulWidget {
   final Widget drawer;
   final bool useAppBar;
 
-  const ScaffoldWithElevation({
+  const MainScaffold({
     Key key,
     @required this.body,
     @required this.title,
@@ -43,10 +46,10 @@ class ScaffoldWithElevation extends StatefulWidget {
   }) : super(key: key);
 
   @override
-  _ScaffoldWithElevationState createState() => _ScaffoldWithElevationState();
+  _MainScaffoldState createState() => _MainScaffoldState();
 }
 
-class _ScaffoldWithElevationState extends State<ScaffoldWithElevation> {
+class _MainScaffoldState extends State<MainScaffold> {
   ScrollController scrollController;
   double appBarElevation;
 
@@ -66,7 +69,7 @@ class _ScaffoldWithElevationState extends State<ScaffoldWithElevation> {
   }
 
   @override
-  void didUpdateWidget(covariant ScaffoldWithElevation oldWidget) {
+  void didUpdateWidget(covariant MainScaffold oldWidget) {
     super.didUpdateWidget(oldWidget);
     if (widget.scrollController != oldWidget.scrollController) {
       oldWidget.scrollController?.removeListener(scrollListener);
@@ -94,25 +97,30 @@ class _ScaffoldWithElevationState extends State<ScaffoldWithElevation> {
             controller: scrollController,
             child: widget.body,
           );
-    final theme = Theme.of(context);
-    return Scaffold(
-      backgroundColor: widget.backgroundColor ?? theme.scaffoldBackgroundColor,
-      appBar: widget.useAppBar != false
-          ? MainAppBar(
-              title: widget.title,
-              elevation: appBarElevation,
-              automaticallyImplyLeading: widget.automaticallyImplyLeading,
-              actions: widget.actions,
-              leading: widget.appBarLeading,
-            )
-          : null,
-      body: wrappedChild,
-      bottomNavigationBar: widget.bottomNavigationBar,
-      bottomSheet: widget.bottomSheet,
-      floatingActionButton: widget.floatingActionButton,
-      floatingActionButtonAnimator: widget.floatingActionButtonAnimator,
-      floatingActionButtonLocation: widget.floatingActionButtonLocation,
-      drawer: widget.drawer,
+
+    return GetBuilder<Themes>(
+      builder: (themes) {
+        return Scaffold(
+          backgroundColor:
+              widget.backgroundColor ?? themes.current.scaffoldBackgroundColor,
+          appBar: widget.useAppBar != false
+              ? MainAppBar(
+                  title: widget.title,
+                  elevation: appBarElevation,
+                  automaticallyImplyLeading: widget.automaticallyImplyLeading,
+                  actions: widget.actions,
+                  leading: widget.appBarLeading,
+                )
+              : null,
+          body: wrappedChild,
+          bottomNavigationBar: widget.bottomNavigationBar,
+          bottomSheet: widget.bottomSheet,
+          floatingActionButton: widget.floatingActionButton,
+          floatingActionButtonAnimator: widget.floatingActionButtonAnimator,
+          floatingActionButtonLocation: widget.floatingActionButtonLocation,
+          drawer: widget.drawer,
+        );
+      },
     );
   }
 }

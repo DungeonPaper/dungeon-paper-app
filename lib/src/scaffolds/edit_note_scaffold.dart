@@ -1,7 +1,7 @@
 import 'package:dungeon_paper/db/models/notes.dart';
 import 'package:dungeon_paper/src/builders/note_form_builder.dart';
 import 'package:dungeon_paper/src/dialogs/dialogs.dart';
-import 'package:dungeon_paper/src/scaffolds/scaffold_with_elevation.dart';
+import 'package:dungeon_paper/src/scaffolds/main_scaffold.dart';
 import 'package:flutter/material.dart';
 
 class EditNoteScreen extends StatefulWidget {
@@ -33,7 +33,7 @@ class _EditNoteScreenState extends State<EditNoteScreen> {
       onSave: widget.onSave,
       categories: widget.categories,
       builder: (ctx, form, onSave) {
-        return ScaffoldWithElevation(
+        return MainScaffold(
           title:
               Text('${widget.mode == DialogMode.Create ? 'Add' : 'Edit'} Note'),
           actions: <Widget>[

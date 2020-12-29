@@ -207,7 +207,7 @@ class RollDialogTitle extends StatelessWidget {
             IconButton(
               icon: Icon(Icons.close),
               onPressed: () => Get.back(),
-              color: Theme.of(context).canvasColor,
+              color: Get.theme.canvasColor,
               iconSize: 30,
             ),
             Expanded(
@@ -216,11 +216,11 @@ class RollDialogTitle extends StatelessWidget {
                 child: Text(
                   'Roll Dice',
                   textAlign: TextAlign.center,
-                  style: Theme.of(context).textTheme.headline1.copyWith(
-                        color: Theme.of(context).canvasColor,
-                        fontSize: 28,
-                        fontWeight: FontWeight.w500,
-                      ),
+                  style: Get.theme.textTheme.headline1.copyWith(
+                    color: Get.theme.canvasColor,
+                    fontSize: 28,
+                    fontWeight: FontWeight.w500,
+                  ),
                 ),
               ),
             ),

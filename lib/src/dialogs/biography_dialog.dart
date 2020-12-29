@@ -2,6 +2,7 @@ import 'package:dungeon_paper/db/models/character.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_markdown/flutter_markdown.dart';
+import 'package:get/get.dart';
 
 class BiographyDialog extends StatelessWidget {
   final Character character;
@@ -24,9 +25,7 @@ class BiographyDialog extends StatelessWidget {
             child: Text(
               'Character biography',
               textScaleFactor: 1.1,
-              style: Theme.of(context)
-                  .textTheme
-                  .bodyText2
+              style: Get.theme.textTheme.bodyText2
                   .copyWith(fontWeight: FontWeight.w700),
             ),
           ),
@@ -41,9 +40,7 @@ class BiographyDialog extends StatelessWidget {
             child: Text(
               'Appearance',
               textScaleFactor: 1.1,
-              style: Theme.of(context)
-                  .textTheme
-                  .bodyText2
+              style: Get.theme.textTheme.bodyText2
                   .copyWith(fontWeight: FontWeight.w700),
             ),
           ),
@@ -59,9 +56,7 @@ class BiographyDialog extends StatelessWidget {
             child: Text(
               '${character.mainClass.name} description',
               textScaleFactor: 1.1,
-              style: Theme.of(context)
-                  .textTheme
-                  .bodyText2
+              style: Get.theme.textTheme.bodyText2
                   .copyWith(fontWeight: FontWeight.w700),
             ),
           ),

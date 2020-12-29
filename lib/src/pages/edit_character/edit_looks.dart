@@ -6,6 +6,7 @@ import 'package:dungeon_paper/src/utils/utils.dart';
 import 'package:flutter_typeahead/flutter_typeahead.dart';
 import 'package:dungeon_world_data/player_class.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 class ChangeLooksDialog extends StatefulWidget {
   final Character character;
@@ -129,8 +130,8 @@ class _ChangeLooksDialogState extends State<ChangeLooksDialog> {
                   width: 50,
                   height: 50,
                   child: FloatingActionButton(
-                    backgroundColor: Theme.of(context).canvasColor,
-                    foregroundColor: Theme.of(context).colorScheme.onSurface,
+                    backgroundColor: Get.theme.canvasColor,
+                    foregroundColor: Get.theme.colorScheme.onSurface,
                     child: Icon(Icons.add),
                     onPressed: _addRow,
                   ),
@@ -202,7 +203,7 @@ class LooksDescription extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return CardListItem(
-      color: color ?? Theme.of(context).canvasColor,
+      color: color ?? Get.theme.canvasColor,
       elevation: elevation,
       margin: margin,
       title: Text('Looks'),

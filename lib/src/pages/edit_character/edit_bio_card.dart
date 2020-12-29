@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 class EditBioCard extends StatelessWidget {
   final TextEditingController controller;
@@ -23,7 +24,7 @@ class EditBioCard extends StatelessWidget {
                 decoration: InputDecoration(
                   labelText: 'Biography',
                   labelStyle: TextStyle(
-                    fontSize: Theme.of(context).textTheme.subtitle1.fontSize,
+                    fontSize: Get.theme.textTheme.subtitle1.fontSize,
                   ),
                   hintText: 'Tell us about your character.\n'
                       'Where it comes from, their motivation,\n'

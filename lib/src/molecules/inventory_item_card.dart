@@ -142,7 +142,7 @@ class InventoryItemCard extends StatelessWidget {
                     alignment: Alignment.centerRight,
                     child: RaisedButton(
                       child: Text('Add Item'),
-                      color: Theme.of(context).primaryColorLight,
+                      color: Get.theme.primaryColorLight,
                       onPressed: () {
                         onSave?.call(item);
                         Get.back();

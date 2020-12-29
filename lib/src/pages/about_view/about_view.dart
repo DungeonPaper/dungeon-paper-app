@@ -6,7 +6,7 @@ import 'package:dungeon_paper/src/atoms/paypal_donate_button.dart';
 import 'package:dungeon_paper/src/atoms/version_number.dart';
 import 'package:dungeon_paper/src/flutter_utils/platform_svg.dart';
 import 'package:dungeon_paper/src/pages/whats_new_view/whats_new_view.dart';
-import 'package:dungeon_paper/src/scaffolds/scaffold_with_elevation.dart';
+import 'package:dungeon_paper/src/scaffolds/main_scaffold.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/gestures.dart';
 import 'package:get/get.dart';
@@ -42,7 +42,7 @@ class _AboutViewState extends State<AboutView> {
 
   @override
   Widget build(BuildContext context) {
-    return ScaffoldWithElevation(
+    return MainScaffold(
       title: Text('About Dungeon Paper'),
       wrapWithScrollable: false,
       scrollController: scrollController,
@@ -65,9 +65,9 @@ class _AboutViewState extends State<AboutView> {
             padding: const EdgeInsets.all(16.0).copyWith(top: 0),
             child: Column(
               children: <Widget>[
-                Text('Credits', style: Theme.of(context).textTheme.headline6),
+                Text('Credits', style: Get.theme.textTheme.headline6),
                 SizedBox(height: 10.0),
-                Text('Icons', style: Theme.of(context).textTheme.subtitle2),
+                Text('Icons', style: Get.theme.textTheme.subtitle2),
                 for (String credit in iconsCredits)
                   Padding(
                       padding: const EdgeInsets.symmetric(vertical: 1),
@@ -80,7 +80,7 @@ class _AboutViewState extends State<AboutView> {
                       textAlign: TextAlign.center,
                       style: TextStyle(
                           fontStyle: FontStyle.italic,
-                          color: Theme.of(context).textTheme.caption.color),
+                          color: Get.theme.textTheme.caption.color),
                       textScaleFactor: 0.7,
                     ),
                   ),
@@ -115,7 +115,7 @@ class AppInfoBox extends StatelessWidget {
         ),
         Text(
           'Dungeon Paper',
-          style: Theme.of(context).textTheme.headline5,
+          style: Get.theme.textTheme.headline5,
         ),
         VersionNumber.text(prefix: 'Version'),
         SizedBox(height: 16),
@@ -238,7 +238,7 @@ class ContactUsBox extends StatelessWidget {
           Text(
             'Have feedback? Want to stay up to date?\nFollow or contact us at:',
             textAlign: TextAlign.center,
-            style: Theme.of(context).textTheme.subtitle1,
+            style: Get.theme.textTheme.subtitle1,
           ),
           SizedBox(height: 8),
           Table(
@@ -295,7 +295,7 @@ class ContactUsBox extends StatelessWidget {
                       icon: Icon(Icons.email),
                       url: url,
                       color: Colors.orange[300],
-                      textColor: Theme.of(context).colorScheme.onPrimary,
+                      textColor: Get.theme.colorScheme.onPrimary,
                     ),
                   ),
                   Container(),
@@ -303,8 +303,8 @@ class ContactUsBox extends StatelessWidget {
                     label: 'Privacy',
                     icon: Icon(Icons.lock),
                     url: 'https://bit.ly/DungeonPaper-Privacy',
-                    color: Theme.of(context).primaryColor,
-                    textColor: Theme.of(context).colorScheme.onPrimary,
+                    color: Get.theme.primaryColor,
+                    textColor: Get.theme.colorScheme.onPrimary,
                   ),
                 ],
               ),

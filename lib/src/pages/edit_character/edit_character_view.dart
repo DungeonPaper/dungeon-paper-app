@@ -4,7 +4,7 @@ import 'package:dungeon_paper/src/dialogs/confirmation_dialog.dart';
 import 'package:dungeon_paper/src/dialogs/dialogs.dart';
 import 'package:dungeon_paper/src/redux/stores.dart';
 import 'package:dungeon_paper/src/scaffolds/class_select_scaffold.dart';
-import 'package:dungeon_paper/src/scaffolds/scaffold_with_elevation.dart';
+import 'package:dungeon_paper/src/scaffolds/main_scaffold.dart';
 import 'package:dungeon_paper/src/utils/analytics.dart';
 import 'package:dungeon_paper/src/utils/logger.dart';
 import 'package:dungeon_paper/src/utils/utils.dart';
@@ -95,7 +95,7 @@ class _EditCharacterViewState extends State<EditCharacterView>
   Widget build(BuildContext context) {
     return WillPopScope(
       onWillPop: _confirmExit,
-      child: ScaffoldWithElevation(
+      child: MainScaffold(
         title: Text(character.displayName.isEmpty
             ? 'Character'
             : '${widget.mode == DialogMode.Create ? 'Creat' : 'Edit'}ing: ${character.displayName}'),
@@ -287,7 +287,7 @@ class GenericAppBarActionButton extends StatelessWidget {
       padding: const EdgeInsets.all(8.0).copyWith(left: 4.0),
       child: RaisedButton(
         child: child,
-        color: Theme.of(context).canvasColor,
+        color: Get.theme.canvasColor,
         onPressed: onPressed,
       ),
     );

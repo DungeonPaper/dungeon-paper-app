@@ -1,5 +1,6 @@
 import 'package:dungeon_paper/src/utils/utils.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 class SelectableList<T> extends StatefulWidget {
   final Iterable<T> selected;
@@ -57,7 +58,7 @@ class SelectableList<T> extends StatefulWidget {
           title: DefaultTextStyle(
             child: Text('Select All'),
             style: TextStyle(
-              color: Theme.of(context).colorScheme.onSurface.withOpacity(0.6),
+              color: Get.theme.colorScheme.onSurface.withOpacity(0.6),
             ).merge(selectAllTextStyle),
           ),
           onChanged: onToggle,

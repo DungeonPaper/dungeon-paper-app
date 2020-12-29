@@ -14,21 +14,24 @@ import 'package:dungeon_paper/src/redux/connectors.dart';
 import 'package:dungeon_paper/src/redux/loading/loading_store.dart';
 import 'package:dungeon_paper/src/redux/shared_preferences/prefs_store.dart';
 import 'package:dungeon_paper/src/redux/stores.dart';
-import 'package:dungeon_paper/src/scaffolds/scaffold_with_elevation.dart';
+import 'package:dungeon_paper/src/scaffolds/main_scaffold.dart';
 import 'package:dungeon_paper/src/utils/analytics.dart';
 import 'package:dungeon_paper/src/utils/logger.dart';
 import 'package:dungeon_paper/src/utils/utils.dart';
+import 'package:dungeon_paper/themes/themes.dart';
 import 'package:dungeon_world_data/dice.dart';
 import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:package_info/package_info.dart';
 import 'package:pedantic/pedantic.dart';
 import 'package:pub_semver/pub_semver.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:get/get.dart';
+import 'package:flutter/material.dart';
+
 import 'app_bar_title.dart';
 import 'fab.dart';
 import 'nav_bar.dart';
 import 'sidebar.dart';
-import 'package:flutter/material.dart';
 
 class MainContainer extends StatelessWidget {
   MainContainer({
@@ -40,16 +43,21 @@ class MainContainer extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return DWStoreConnector<DWStore>(
-      builder: (ctx, state) {
-        final character = state.characters.current;
-        final user = state.user.current;
-        return MainView(
-          character: character,
-          user: user,
-          loading: state.loading[LoadingKeys.Character] ||
-              state.loading[LoadingKeys.User],
-          pageController: pageController,
+    return GetBuilder<Themes>(
+      init: Themes.instance,
+      builder: (themes) {
+        return DWStoreConnector<DWStore>(
+          builder: (ctx, state) {
+            final character = state.characters.current;
+            final user = state.user.current;
+            return MainView(
+              character: character,
+              user: user,
+              loading: state.loading[LoadingKeys.Character] ||
+                  state.loading[LoadingKeys.User],
+              pageController: pageController,
+            );
+          },
         );
       },
     );
@@ -113,7 +121,7 @@ class _MainViewState extends State<MainView> {
   @override
   Widget build(BuildContext context) {
     final useAppBar = widget.character != null;
-    return ScaffoldWithElevation(
+    return MainScaffold(
       // appBar: MainAppBar(
       // scrollController: _currentScrollController,
       title: appBarTitle,
@@ -137,7 +145,7 @@ class _MainViewState extends State<MainView> {
             icon: DiceIcon(
               dice: Dice.d20,
               size: 24,
-              color: Theme.of(context).colorScheme.secondary,
+              color: Get.theme.colorScheme.secondary,
             ),
             onPressed: () {
               showDiceRollView(

@@ -71,7 +71,7 @@ class MoveCardState extends State<MoveCard> {
                   child: Align(
                     alignment: Alignment.bottomRight,
                     child: RaisedButton(
-                      color: Theme.of(context).primaryColorLight,
+                      color: Get.theme.primaryColorLight,
                       child: Text('Add Move'),
                       onPressed: () => _save(widget.move),
                     ),
@@ -88,7 +88,7 @@ class MoveCardState extends State<MoveCard> {
             alignment: Alignment.centerLeft,
             child: Text(
               'Explanation',
-              style: Theme.of(context).textTheme.bodyText1,
+              style: Get.theme.textTheme.bodyText1,
             ),
           ),
         ),

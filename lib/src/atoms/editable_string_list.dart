@@ -2,6 +2,7 @@ import 'package:dungeon_paper/src/flutter_utils/widget_utils.dart';
 import 'package:dungeon_paper/src/utils/types.dart';
 import 'package:dungeon_paper/src/utils/utils.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 class EditableStringList extends StatefulWidget {
   final List<String> strings;
@@ -122,7 +123,7 @@ class _EditableStringListState extends State<EditableStringList> {
           SizedBox(height: 8),
         ],
         RaisedButton(
-          color: Theme.of(context).primaryColor,
+          color: Get.theme.primaryColor,
           child: Text(widget.addButtonText),
           onPressed: strings[strings.length - 1].isNotEmpty ? _addRow : null,
         )

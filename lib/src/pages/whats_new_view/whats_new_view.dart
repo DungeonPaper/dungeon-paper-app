@@ -56,7 +56,7 @@ class WhatsNew extends StatefulWidget {
 
   static Widget scaffoldBuilder(BuildContext context, Widget child) {
     return Scaffold(
-      backgroundColor: Theme.of(context).canvasColor,
+      backgroundColor: Get.theme.canvasColor,
       appBar: AppBar(
         title: Text('Changelog'),
       ),
@@ -90,7 +90,7 @@ class _WhatsNewState extends State<WhatsNew> {
           width: min(320, MediaQuery.of(context).size.width),
           height: min(400, MediaQuery.of(context).size.height),
           child: Center(
-            child: Loader(color: Theme.of(context).colorScheme.primary),
+            child: Loader(color: Get.theme.colorScheme.primary),
           ),
         );
       } else {

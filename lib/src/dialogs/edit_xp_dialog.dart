@@ -48,7 +48,7 @@ class _EditXPDialogState extends State<EditXPDialog> {
             )
           : Center(
               child: RaisedButton(
-                color: Theme.of(context).primaryColor,
+                color: Get.theme.primaryColor,
                 padding: EdgeInsets.symmetric(horizontal: 30.0, vertical: 16.0),
                 child: Text(currentXP > 0 ? 'Level Up' : 'Level Down'),
                 onPressed: currentXP == 0 && widget.character.level == 1

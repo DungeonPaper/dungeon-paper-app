@@ -70,8 +70,8 @@ class StandardDialogControls extends StatelessWidget {
         if (middle?.isNotEmpty == true) ...middle,
         if (onConfirm != null)
           RaisedButton(
-            color: Theme.of(context).colorScheme.primary,
-            textColor: Theme.of(context).colorScheme.onPrimary,
+            color: Get.theme.colorScheme.primary,
+            textColor: Get.theme.colorScheme.onPrimary,
             onPressed: !confirmDisabled ? onConfirm : null,
             child: confirmText,
           ),

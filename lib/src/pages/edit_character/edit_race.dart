@@ -5,6 +5,7 @@ import 'package:dungeon_paper/src/utils/types.dart';
 import 'package:dungeon_world_data/move.dart';
 import 'package:dungeon_world_data/player_class.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 class ChangeRaceDialog extends StatelessWidget {
   final Character character;
@@ -32,8 +33,7 @@ class ChangeRaceDialog extends StatelessWidget {
                     playerClass: character.mainClass,
                     race: move,
                     onTap: changeRace(move),
-                    color: Theme.of(context)
-                        .canvasColor
+                    color: Get.theme.canvasColor
                         .withOpacity(character.race == move ? 1 : 0.5),
                   ),
                 ),

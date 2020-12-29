@@ -55,7 +55,7 @@ class ArmorChip extends StatelessWidget {
             top: 0,
             child: Material(
               shape: CircleBorder(),
-              color: Theme.of(context).cardColor,
+              color: Get.theme.cardColor,
               child: Padding(
                 padding: const EdgeInsets.all(2),
                 child: Icon(

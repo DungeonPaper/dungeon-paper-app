@@ -2,6 +2,7 @@ import 'dart:math';
 
 import 'package:dungeon_paper/src/flutter_utils/platform_svg.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 class EmptyState extends StatelessWidget {
   /// Path to SVG image in assets
@@ -30,7 +31,7 @@ class EmptyState extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var _fgColor = foregroundColor ?? Theme.of(context).accentColor;
+    var _fgColor = foregroundColor ?? Get.theme.accentColor;
     var imgSize = 80.toDouble();
     return Container(
       child: Column(
@@ -39,8 +40,7 @@ class EmptyState extends StatelessWidget {
         children: [
           DefaultTextStyle(
             child: title,
-            style:
-                Theme.of(context).textTheme.headline5.copyWith(color: _fgColor),
+            style: Get.theme.textTheme.headline5.copyWith(color: _fgColor),
             textAlign: TextAlign.center,
           ),
           IconTheme.merge(
@@ -61,10 +61,7 @@ class EmptyState extends StatelessWidget {
             width: min(MediaQuery.of(context).size.width, 260),
             child: DefaultTextStyle(
               child: subtitle,
-              style: Theme.of(context)
-                  .textTheme
-                  .headline6
-                  .copyWith(color: _fgColor),
+              style: Get.theme.textTheme.headline6.copyWith(color: _fgColor),
               textAlign: TextAlign.center,
             ),
           ),

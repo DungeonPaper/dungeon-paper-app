@@ -1,6 +1,7 @@
 import 'package:dungeon_paper/src/utils/utils.dart';
 import 'package:flutter/material.dart';
 import 'package:dungeon_world_data/tag.dart';
+import 'package:get/get.dart';
 
 class TagDescriptionDialog extends StatelessWidget {
   final Tag tag;
@@ -14,14 +15,14 @@ class TagDescriptionDialog extends StatelessWidget {
       contentPadding: EdgeInsets.all(24).copyWith(top: 16),
       children: <Widget>[
         ...[
-          Text('Description', style: Theme.of(context).textTheme.caption),
+          Text('Description', style: Get.theme.textTheme.caption),
           Text(tag.description != null && tag.description.isNotEmpty
               ? tag.description
               : 'No description provided'),
         ],
         SizedBox(height: 16),
         if (tag.hasValue) ...[
-          Text('Value', style: Theme.of(context).textTheme.caption),
+          Text('Value', style: Get.theme.textTheme.caption),
           Text(tag.value.toString()),
         ],
       ],

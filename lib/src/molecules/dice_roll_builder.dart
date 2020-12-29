@@ -7,6 +7,7 @@ import 'package:dungeon_paper/src/utils/types.dart';
 import 'package:dungeon_paper/src/utils/utils.dart';
 import 'package:dungeon_world_data/dice.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 class DiceRollBuilder extends StatefulWidget {
   final VoidCallbackDelegate<List<Dice>> onChanged;
@@ -39,7 +40,7 @@ class _DiceRollBuilderState extends State<DiceRollBuilder> {
   Widget build(BuildContext context) {
     return Card(
       margin: EdgeInsets.symmetric(horizontal: 8, vertical: 0),
-      color: Theme.of(context).canvasColor,
+      color: Get.theme.canvasColor,
       elevation: 3,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -48,7 +49,7 @@ class _DiceRollBuilderState extends State<DiceRollBuilder> {
             padding: const EdgeInsets.all(8).copyWith(bottom: 0),
             child: Text(
               addingController.value.join(', '),
-              style: Theme.of(context).textTheme.caption,
+              style: Get.theme.textTheme.caption,
             ),
           ),
           ConstrainedBox(
@@ -105,8 +106,8 @@ class _DiceRollBuilderState extends State<DiceRollBuilder> {
                     ),
                     RaisedButton.icon(
                       icon: Icon(Icons.check),
-                      color: Theme.of(context).colorScheme.primary,
-                      textColor: Theme.of(context).colorScheme.onPrimary,
+                      color: Get.theme.colorScheme.primary,
+                      textColor: Get.theme.colorScheme.onPrimary,
                       label: Text('Roll'),
                       onPressed: _onAdd,
                     ),
