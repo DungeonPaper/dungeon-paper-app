@@ -50,43 +50,9 @@ class CharacterHeadline extends StatelessWidget {
                 ],
               ),
             ),
-            if (character.bio?.isNotEmpty == true ||
-                character.mainClass?.description?.isNotEmpty == true)
-              IconButton(
-                icon: Icon(Icons.library_books),
-                color: Colors.white,
-                onPressed: _openBioScreen(context),
-                visualDensity: VisualDensity.compact,
-              ),
-            if (editable == true)
-              IconButton(
-                icon: Icon(Icons.edit),
-                onPressed: () => _openEdit(context),
-                splashColor: Colors.white,
-                color: Colors.white,
-                visualDensity: VisualDensity.compact,
-              ),
           ],
         ),
       ),
     );
-  }
-
-  void _openEdit(BuildContext context) {
-    Get.to(
-      EditCharacterView(
-        character: character,
-        mode: DialogMode.Edit,
-      ),
-    );
-  }
-
-  void Function() _openBioScreen(BuildContext context) {
-    return () {
-      showDialog(
-        context: context,
-        builder: (context) => BiographyDialog(character: character),
-      );
-    };
   }
 }
