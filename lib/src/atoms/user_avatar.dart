@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:dungeon_paper/db/models/user.dart';
 import 'package:flutter/material.dart';
 
@@ -24,15 +25,22 @@ class UserAvatar extends StatelessWidget {
         .map((word) => word?.isNotEmpty == true ? word[0].toUpperCase() : '')
         .join('');
 
-    return CircleAvatar(
-      backgroundImage: hasAvatar ? NetworkImage(user.photoURL) : null,
-      child: !hasAvatar
-          ? Text(
-              initials,
-              textScaleFactor: textScaleFactor,
-            )
-          : null,
-      radius: radius,
+    final _initials = Text(
+      initials,
+      textScaleFactor: textScaleFactor,
+    );
+
+    return CachedNetworkImage(
+      imageUrl: user.photoURL,
+      imageBuilder: (context, image) => CircleAvatar(
+        backgroundImage: image,
+        child: !hasAvatar ? _initials : null,
+        radius: radius,
+      ),
+      placeholder: (context, url) =>
+          CircleAvatar(child: _initials, radius: radius),
+      errorWidget: (context, url, err) =>
+          CircleAvatar(child: _initials, radius: radius),
     );
   }
 }

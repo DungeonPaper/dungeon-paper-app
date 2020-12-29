@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:dungeon_paper/db/models/character.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -12,15 +13,18 @@ class CharacterPhoto extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      decoration: BoxDecoration(
-        color: Get.theme.primaryColorLight,
-        image: DecorationImage(
-          fit: BoxFit.fitWidth,
-          alignment: character.settings.photoAlignment,
-          image: NetworkImage(character.photoURL),
+    return CachedNetworkImage(
+      imageUrl: character.photoURL,
+      imageBuilder: (context, image) => Container(
+        decoration: BoxDecoration(
+          color: Get.theme.primaryColorLight,
+          image: DecorationImage(
+            fit: BoxFit.fitWidth,
+            alignment: character.settings.photoAlignment,
+            image: image,
+          ),
+          borderRadius: BorderRadius.circular(15),
         ),
-        borderRadius: BorderRadius.circular(15),
       ),
     );
   }
