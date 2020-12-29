@@ -1,6 +1,5 @@
 import 'package:dungeon_paper/src/pages/backup_view/backup_view.dart';
 import 'package:dungeon_paper/src/pages/settings_view/settings_list_tile.dart';
-import 'package:dungeon_paper/src/pages/theme_select_view/theme_select_view.dart';
 import 'package:dungeon_paper/src/redux/connectors.dart';
 import 'package:dungeon_paper/src/redux/shared_preferences/prefs_settings.dart';
 import 'package:dungeon_paper/src/redux/shared_preferences/prefs_store.dart';
