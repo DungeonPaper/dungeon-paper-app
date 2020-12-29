@@ -153,7 +153,9 @@ class ProcessTask extends Task<ArgOptions> {
       (o) async {
         final _process = await process(o);
         final _args = await (args?.call(o) ?? <String>[]);
-        print('\n\nRunning process: $_process "${_args.join('\" \"')}"\n\n');
+        final _argsStr =
+            _args.map((a) => a.contains(' ') ? '"$a"' : a).join(' ');
+        print('\n\nRunning process: $_process ${_argsStr}\n\n');
         final result = await Process.run(_process, _args);
         stdout.write(result.stdout);
         stdout.write(result.stderr);

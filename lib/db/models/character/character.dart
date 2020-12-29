@@ -2,7 +2,6 @@ import 'dart:core';
 import 'dart:core' as core;
 import 'dart:math';
 
-import 'package:dungeon_paper/src/inherited_widgets/inherited_character.dart';
 import 'package:dungeon_paper/src/redux/characters/characters_store.dart';
 import 'package:dungeon_paper/src/redux/stores.dart';
 import 'package:dungeon_paper/src/utils/utils.dart';
@@ -12,7 +11,6 @@ import 'package:dungeon_world_data/dw_data.dart';
 import 'package:dungeon_world_data/move.dart';
 import 'package:dungeon_world_data/player_class.dart';
 
-import 'package:flutter/widgets.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 import 'character_settings.dart';
@@ -31,12 +29,6 @@ class Character extends FirebaseEntity with CharacterFields {
     DocumentReference ref,
     bool autoLoad,
   }) : super(ref: ref, data: data, autoLoad: autoLoad);
-
-  static Character of(BuildContext context) {
-    return context
-        .dependOnInheritedWidgetOfExactType<InheritedCharacter>()
-        ?.character;
-  }
 
   static String statModifierText(num stat) {
     var mod = CharacterFields.modifierFromValue(stat);
