@@ -82,7 +82,7 @@ class _ExportViewState extends State<ExportView> {
             ),
           ],
         ),
-        if (_allCustomClasses?.isNotEmpty != true)
+        if (_allCustomClasses?.isNotEmpty == true)
           ExpansionTile(
             title: Text('Custom Classes'),
             children: [
