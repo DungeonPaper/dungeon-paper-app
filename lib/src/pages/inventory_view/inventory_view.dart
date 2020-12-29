@@ -6,8 +6,10 @@ import 'package:dungeon_paper/src/atoms/coins_chip.dart';
 import 'package:dungeon_paper/src/atoms/damage_chip.dart';
 import 'package:dungeon_paper/src/atoms/empty_state.dart';
 import 'package:dungeon_paper/src/atoms/inventory_load_chip.dart';
+import 'package:dungeon_paper/src/atoms/search_bar.dart';
 import 'package:dungeon_paper/src/flutter_utils/widget_utils.dart';
 import 'package:dungeon_paper/src/molecules/inventory_item_card.dart';
+import 'package:dungeon_paper/src/utils/logger.dart';
 import 'package:dungeon_paper/src/utils/utils.dart';
 import 'package:flutter/material.dart';
 
@@ -23,7 +25,7 @@ const EquipmentTitles = {
   EquipmentCats.UnequippedItems: Text('Posessions'),
 };
 
-class InventoryView extends StatelessWidget {
+class InventoryView extends StatefulWidget {
   final Character character;
 
   const InventoryView({
@@ -32,8 +34,20 @@ class InventoryView extends StatelessWidget {
   }) : super(key: key);
 
   @override
+  _InventoryViewState createState() => _InventoryViewState();
+}
+
+class _InventoryViewState extends State<InventoryView> {
+  TextEditingController searchController;
+
+  @override
+  void initState() {
+    super.initState();
+    searchController = TextEditingController()..addListener(_searchListener);
+  }
+
+  @override
   Widget build(BuildContext context) {
-    final equipment = _equipmentGrouped;
     final emptyState = EmptyState(
       title: Text('Your inventory is empty'),
       subtitle: Text("Use the '+' button to add things to your possession."),
@@ -41,13 +55,13 @@ class InventoryView extends StatelessWidget {
     );
     final isShort = MediaQuery.of(context).size.height < 420;
 
-    if (equipment.values.every((i) => i == null || i.isEmpty)) {
+    if (_equipmentGrouped.values.every((i) => i == null || i.isEmpty)) {
       return SingleChildScrollView(
         child: Column(
           children: [
             Padding(
               padding: const EdgeInsets.only(top: 16.0),
-              child: InventoryInfoBar(character: character),
+              child: InventoryInfoBar(character: widget.character),
             ),
             SizedBox(height: 16),
             isShort
@@ -64,27 +78,50 @@ class InventoryView extends StatelessWidget {
       );
     }
 
-    return CategorizedList.builder(
-      keyBuilder: (ctx, key, idx) => 'InventoryView.' + enumName(key),
-      itemCount: (cat, idx) =>
-          cat != EquipmentCats.Stats ? equipment[_catToKey(cat)].length : 1,
-      titleBuilder: (ctx, cat, i) => EquipmentTitles[cat],
-      itemBuilder: _itemBuilder,
-      items: [
-        EquipmentCats.Stats,
-        EquipmentCats.EquippedItems,
-        EquipmentCats.UnequippedItems,
+    return Stack(
+      children: [
+        Padding(
+          padding: const EdgeInsets.only(top: 90),
+          child: CategorizedList.builder(
+            keyBuilder: (ctx, key, idx) => 'InventoryView.' + enumName(key),
+            itemCount: (cat, idx) => cat != EquipmentCats.Stats
+                ? _equipmentFiltered[_catToKey(cat)].length
+                : 1,
+            titleBuilder: (ctx, cat, i) => EquipmentTitles[cat],
+            itemBuilder: _itemBuilder,
+            items: [
+              EquipmentCats.Stats,
+              EquipmentCats.EquippedItems,
+              EquipmentCats.UnequippedItems,
+            ],
+            bottomSpacerHeight: BOTTOM_SPACER.height,
+          ),
+        ),
+        Padding(
+          padding: const EdgeInsets.all(16).copyWith(bottom: 0),
+          child: SearchBar(
+            controller: searchController,
+            hintText: 'Type to search items',
+          ),
+        ),
       ],
-      bottomSpacerHeight: BOTTOM_SPACER.height,
     );
   }
 
-  Map<String, List<InventoryItem>> get _equipmentGrouped =>
-      <String, List<InventoryItem>>{'equipped': [], 'unequipped': []}
+  Map<String, Iterable<InventoryItem>> get _equipmentGrouped =>
+      <String, Iterable<InventoryItem>>{'equipped': [], 'unequipped': []}
         ..addAll(groupBy(
-          character.inventory,
+          widget.character.inventory,
           (i) => i.equipped == true ? 'equipped' : 'unequipped',
         ));
+
+  Map<String, Iterable<InventoryItem>> get _equipmentFiltered {
+    final equipment = _equipmentGrouped;
+    return {
+      'equipped': equipment['equipped'].where(_isVisible),
+      'unequipped': equipment['unequipped'].where(_isVisible),
+    };
+  }
 
   String _catToKey(EquipmentCats cat) => cat == EquipmentCats.EquippedItems
       ? 'equipped'
@@ -94,11 +131,10 @@ class InventoryView extends StatelessWidget {
 
   Widget _itemBuilder(BuildContext ctx, EquipmentCats cat, num i, num catI) {
     if (cat == EquipmentCats.Stats) {
-      return InventoryInfoBar(character: character);
+      return InventoryInfoBar(character: widget.character);
     }
 
-    final equipment = _equipmentGrouped;
-    final item = equipment[_catToKey(cat)][i];
+    final item = _equipmentFiltered[_catToKey(cat)].elementAt(i);
 
     return Padding(
       padding: EdgeInsets.symmetric(vertical: 8.0),
@@ -106,11 +142,35 @@ class InventoryView extends StatelessWidget {
         key: PageStorageKey(item.key),
         item: item,
         mode: InventoryItemCardMode.Editable,
-        onSave: (item) => updateInventoryItem(character, item),
-        onDelete: () => deleteInventoryItem(character, item),
+        onSave: (item) => updateInventoryItem(widget.character, item),
+        onDelete: () => deleteInventoryItem(widget.character, item),
       ),
     );
   }
+
+  void _searchListener() {
+    setState(() {});
+  }
+
+  bool _isVisible(InventoryItem item) {
+    logger.d('item: $item, search: ${searchController.text}'
+        '\nname: ${_matchStr(item.name)}'
+        '\ndescription: ${_matchStr(item.description)}'
+        '\ntags: ${_matchStr(item.tags.map((t) => t.toJSON().toString()).join(', '))}');
+    logger.d((searchController.text.isEmpty ||
+            _matchStr(item.name) ||
+            _matchStr(item.description) ||
+            _matchStr(item.tags.map((t) => t.toJSON().toString()).join(', ')))
+        .toString());
+    return searchController.text.isEmpty ||
+        _matchStr(item.name) ||
+        _matchStr(item.description) ||
+        _matchStr(item.tags.map((t) => t.toJSON().toString()).join(', '));
+  }
+
+  bool _matchStr(String str) => (str ?? '')
+      .toLowerCase()
+      .contains(searchController.text.toLowerCase().trim());
 }
 
 class InventoryInfoBar extends StatelessWidget {
