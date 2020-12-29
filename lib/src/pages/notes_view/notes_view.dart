@@ -2,12 +2,13 @@ import 'package:dungeon_paper/db/models/character.dart';
 import 'package:dungeon_paper/db/models/notes.dart';
 import 'package:dungeon_paper/src/atoms/categorized_list.dart';
 import 'package:dungeon_paper/src/atoms/empty_state.dart';
+import 'package:dungeon_paper/src/atoms/search_bar.dart';
 import 'package:dungeon_paper/src/flutter_utils/widget_utils.dart';
 import 'package:dungeon_paper/src/utils/utils.dart';
 import 'note_card.dart';
 import 'package:flutter/material.dart';
 
-class NotesView extends StatelessWidget {
+class NotesView extends StatefulWidget {
   final Character character;
 
   NotesView({
@@ -16,8 +17,20 @@ class NotesView extends StatelessWidget {
   }) : super(key: key);
 
   @override
+  _NotesViewState createState() => _NotesViewState();
+}
+
+class _NotesViewState extends State<NotesView> {
+  TextEditingController searchController;
+
+  @override
+  void initState() {
+    super.initState();
+    searchController = TextEditingController()..addListener(_searchListener);
+  }
+
+  @override
   Widget build(BuildContext context) {
-    var cats = groupBy<String, Note>(character.notes, (note) => note.category);
     if (cats.values.every((el) => el.isEmpty)) {
       return Padding(
         padding: const EdgeInsets.symmetric(vertical: 8.0),
@@ -29,25 +42,62 @@ class NotesView extends StatelessWidget {
       );
     }
 
-    return CategorizedList<String>.builder(
-      keyBuilder: (ctx, key, idx) => 'NotesView.' + enumName(key),
-      itemCount: (cat, idx) => cats[cat].length,
-      items: cats.keys,
-      bottomSpacerHeight: BOTTOM_SPACER.height,
-      titleBuilder: (context, cat, idx) => Text(cat),
-      itemBuilder: (context, cat, idx, catI) {
-        var note = cats[cat].elementAt(idx);
-        return Padding(
-          padding: const EdgeInsets.symmetric(vertical: 8.0),
-          child: NoteCard(
-            key: PageStorageKey(note.key),
-            note: note,
-            categories: collectCategories(character.notes),
-            onSave: (_note) => updateNote(character, _note),
-            onDelete: () => deleteNote(character, note),
+    return Stack(
+      children: [
+        Padding(
+          padding: const EdgeInsets.only(top: 90),
+          child: CategorizedList<String>.builder(
+            keyBuilder: (ctx, key, idx) => 'NotesView.' + enumName(key),
+            itemCount: (cat, idx) => filtered[cat].length,
+            items: filtered.keys,
+            bottomSpacerHeight: BOTTOM_SPACER.height,
+            titleBuilder: (context, cat, idx) => Text(cat),
+            itemBuilder: (context, cat, idx, catI) {
+              final note = filtered[cat].elementAt(idx);
+              return Padding(
+                padding: const EdgeInsets.symmetric(vertical: 8.0),
+                child: NoteCard(
+                  key: PageStorageKey(note.key),
+                  note: note,
+                  categories: collectCategories(widget.character.notes),
+                  onSave: (_note) => updateNote(widget.character, _note),
+                  onDelete: () => deleteNote(widget.character, note),
+                ),
+              );
+            },
           ),
-        );
-      },
+        ),
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 16),
+          child: SearchBar(
+            controller: searchController,
+            hintText: 'Type to search notes',
+          ),
+        ),
+      ],
     );
   }
+
+  Map<String, List<Note>> get cats =>
+      groupBy<String, Note>(widget.character.notes, (note) => note.category);
+
+  Map<String, List<Note>> get filtered => Map.from(
+        cats.map(
+          (key, value) => MapEntry(key, value.where(_isVisible).toList()),
+        ),
+      );
+
+  void _searchListener() {
+    setState(() {});
+  }
+
+  bool _isVisible(Note note) =>
+      searchController.text.isEmpty ||
+      _matchStr(note.title) ||
+      _matchStr(note.description) ||
+      _matchStr(note.tags.map((t) => t.toJSON().toString()).join(', '));
+
+  bool _matchStr(String str) => (str ?? '')
+      .toLowerCase()
+      .contains(searchController.text.toLowerCase().trim());
 }

@@ -1,3 +1,4 @@
+import 'package:dungeon_paper/src/utils/logger.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -140,4 +141,9 @@ class WidgetUtils {
     config.key ??= key;
     return config;
   }
+}
+
+void loseAllFocus(BuildContext context) {
+  FocusScope.of(context).requestFocus(FocusNode());
+  FocusManager.instance.primaryFocus?.unfocus();
 }
