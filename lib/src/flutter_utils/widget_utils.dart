@@ -1,4 +1,3 @@
-import 'package:dungeon_paper/src/utils/logger.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 

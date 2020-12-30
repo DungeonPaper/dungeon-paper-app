@@ -204,7 +204,11 @@ class _EditAvatarCardState extends State<EditAvatarCard> {
     if (imageFile == null) {
       return;
     }
-    final downloadURL = await uploadImage(imageFile, directory: 'avatars');
+    final downloadURL = await uploadImage(
+      imageFile,
+      directory: 'avatars',
+      extraMetadata: {'characterId': widget.character.documentID},
+    );
     setState(() {
       imageFile = null;
     });

@@ -9,7 +9,6 @@ import 'package:dungeon_paper/src/atoms/inventory_load_chip.dart';
 import 'package:dungeon_paper/src/atoms/search_bar.dart';
 import 'package:dungeon_paper/src/flutter_utils/widget_utils.dart';
 import 'package:dungeon_paper/src/molecules/inventory_item_card.dart';
-import 'package:dungeon_paper/src/utils/logger.dart';
 import 'package:dungeon_paper/src/utils/utils.dart';
 import 'package:flutter/material.dart';
 
@@ -68,7 +67,6 @@ class _InventoryViewState extends State<InventoryView> {
                 ? emptyState
                 : ConstrainedBox(
                     constraints: BoxConstraints(
-                      // minHeight: 200,
                       maxHeight: MediaQuery.of(context).size.height - 300,
                     ),
                     child: emptyState,
