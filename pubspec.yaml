@@ -1,6 +1,6 @@
 name: dungeon_paper
 description: A Dungeon World character sheet app written with Flutter.
-version: 1.2.5+66
+version: 1.2.5+67
 
 environment:
   sdk: ">=2.8.0 <3.0.0"
@@ -10,16 +10,16 @@ dependencies:
     sdk: flutter
   apple_sign_in: ^0.1.0
   cached_network_image: ^2.5.0
-  cloud_firestore: ^0.14.1+3
+  cloud_firestore: ^0.14.4
   cupertino_icons: ^1.0.0
   dungeon_world_data: ^2.0.5+9
   email_validator: ^1.0.5
   excel: ^1.1.5
   facebook_app_events: ^0.8.2
-  firebase_analytics: ^6.0.2
-  firebase_auth: ^0.18.1+2
-  firebase_core: ^0.5.0+1
-  firebase_crashlytics: ^0.2.1+1
+  firebase_analytics: ^6.3.0
+  firebase_auth: ^0.18.4+1
+  firebase_core: ^0.5.3
+  firebase_crashlytics: ^0.2.4
   firebase_storage: ^5.2.0
   flutter_file_dialog: ^0.0.5
   flutter_image: ^3.0.0
