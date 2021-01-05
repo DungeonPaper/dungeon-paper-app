@@ -115,7 +115,9 @@ class _WhatsNewState extends State<WhatsNew> {
                   if (data.index > 0) Divider(height: 64),
                   MarkdownBody(
                     data: data.value,
-                    onTapLink: (url) => launch(url),
+                    onTapLink: (text, url, _title) => launch(url),
+                    listItemCrossAxisAlignment:
+                        MarkdownListItemCrossAxisAlignment.start,
                   ),
                 ],
               ],

@@ -39,7 +39,10 @@ class MoveCardState extends State<MoveCard> {
     var children = <Widget>[
       Padding(
         padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
-        child: MarkdownBody(data: move.description),
+        child: MarkdownBody(
+          data: move.description,
+          listItemCrossAxisAlignment: MarkdownListItemCrossAxisAlignment.start,
+        ),
       ),
       widget.mode == MoveCardMode.Editable
           ? CardBottomControls(
@@ -94,7 +97,11 @@ class MoveCardState extends State<MoveCard> {
         ),
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
-          child: MarkdownBody(data: move.explanation),
+          child: MarkdownBody(
+            data: move.explanation,
+            listItemCrossAxisAlignment:
+                MarkdownListItemCrossAxisAlignment.start,
+          ),
         ),
       ]);
     }

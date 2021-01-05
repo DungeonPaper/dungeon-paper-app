@@ -327,7 +327,7 @@ packages:
       name: flutter_markdown
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.4.4"
+    version: "0.5.2"
   flutter_plugin_android_lifecycle:
     dependency: transitive
     description:
@@ -491,7 +491,7 @@ packages:
       name: markdown
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "2.1.8"
+    version: "3.0.0"
   matcher:
     dependency: transitive
     description:
