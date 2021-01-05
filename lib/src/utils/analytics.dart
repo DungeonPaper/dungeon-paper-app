@@ -44,6 +44,9 @@ class Events {
   static const PasswordResetAttempt = 'password_reset_attempt';
   static const PasswordResetConfirm = 'password_reset_confirm';
   static const PasswordResetCancel = 'password_reset_cancel';
+  static const UploadCharacterAvatarAttempt = 'upload_character_avatar_attempt';
+  static const UploadCharacterAvatarSuccess = 'upload_character_avatar_success';
+  static const UploadCharacterAvatarFail = 'upload_character_avatar_fail';
 }
 
 class ScreenNames {

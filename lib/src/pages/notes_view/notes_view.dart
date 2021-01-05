@@ -4,7 +4,9 @@ import 'package:dungeon_paper/src/atoms/categorized_list.dart';
 import 'package:dungeon_paper/src/atoms/empty_state.dart';
 import 'package:dungeon_paper/src/atoms/search_bar.dart';
 import 'package:dungeon_paper/src/flutter_utils/widget_utils.dart';
+import 'package:dungeon_paper/src/molecules/tag_filter.dart';
 import 'package:dungeon_paper/src/utils/utils.dart';
+import 'package:dungeon_world_data/tag.dart';
 import 'note_card.dart';
 import 'package:flutter/material.dart';
 
@@ -22,11 +24,13 @@ class NotesView extends StatefulWidget {
 
 class _NotesViewState extends State<NotesView> {
   TextEditingController searchController;
+  Iterable<Tag> selectedTags;
 
   @override
   void initState() {
     super.initState();
     searchController = TextEditingController()..addListener(_searchListener);
+    selectedTags = [];
   }
 
   @override
@@ -45,7 +49,7 @@ class _NotesViewState extends State<NotesView> {
     return Stack(
       children: [
         Padding(
-          padding: const EdgeInsets.only(top: 90),
+          padding: const EdgeInsets.only(top: 60),
           child: CategorizedList<String>.builder(
             keyBuilder: (ctx, key, idx) => 'NotesView.' + enumName(key),
             itemCount: (cat, idx) => filtered[cat].length,
@@ -67,6 +71,8 @@ class _NotesViewState extends State<NotesView> {
             },
           ),
         ),
+        // Column(
+        //   children: [
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: 16),
           child: SearchBar(
@@ -74,9 +80,28 @@ class _NotesViewState extends State<NotesView> {
             hintText: 'Type to search notes',
           ),
         ),
+        //     TagFilter(
+        //       tags: allTags,
+        //       selected: selectedTags,
+        //       onChanged: (tags) => setState(
+        //         () => selectedTags = tags,
+        //       ),
+        //     ),
+        //   ],
+        // ),
       ],
     );
   }
+
+  Iterable<Tag> get allTags => cats.values.fold(
+        <Tag>[],
+        (previousValue, element) => unique([
+          ...previousValue,
+          ...element
+              .map((e) => e.tags)
+              .reduce((value, element) => [...value, ...element]),
+        ], (t) => t.name),
+      );
 
   Map<String, List<Note>> get cats =>
       groupBy<String, Note>(widget.character.notes, (note) => note.category);
@@ -91,11 +116,16 @@ class _NotesViewState extends State<NotesView> {
     setState(() {});
   }
 
-  bool _isVisible(Note note) =>
-      searchController.text.isEmpty ||
-      _matchStr(note.title) ||
-      _matchStr(note.description) ||
-      _matchStr(note.tags.map((t) => t.toJSON().toString()).join(', '));
+  bool _isVisible(Note note) => [
+        // text search
+        searchController.text.isEmpty ||
+            _matchStr(note.title) ||
+            _matchStr(note.description) ||
+            _matchStr(note.tags.map((t) => t.toJSON().toString()).join(', ')),
+        // tag search
+        selectedTags.isEmpty ||
+            note.tags.any((tag) => selectedTags.contains(tag))
+      ].every((element) => element == true);
 
   bool _matchStr(String str) => (str ?? '')
       .toLowerCase()

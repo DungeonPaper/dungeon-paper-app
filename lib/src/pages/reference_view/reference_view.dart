@@ -64,7 +64,10 @@ class _ReferenceViewState extends State<ReferenceView> {
         ),
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: 16),
-          child: SearchBar(controller: searchController),
+          child: SearchBar(
+            controller: searchController,
+            hintText: 'Type to search reference',
+          ),
         ),
       ],
     );
