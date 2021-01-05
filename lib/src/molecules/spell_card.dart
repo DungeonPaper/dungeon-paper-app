@@ -59,7 +59,11 @@ class SpellCardState extends State<SpellCard> {
         children: <Widget>[
           Padding(
             padding: const EdgeInsets.all(16),
-            child: MarkdownBody(data: spell.description),
+            child: MarkdownBody(
+              data: spell.description,
+              listItemCrossAxisAlignment:
+                  MarkdownListItemCrossAxisAlignment.start,
+            ),
           ),
           widget.spell.tags != null && widget.spell.tags.isNotEmpty
               ? Padding(

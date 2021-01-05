@@ -46,10 +46,11 @@ class NoteCardState extends State<NoteCard> {
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
             child: MarkdownBody(
-                onTapLink: (url) => _launchURL(url),
-                data: desc.trim().isNotEmpty
-                    ? desc
-                    : 'This note has no content.'),
+              onTapLink: (text, url, _title) => _launchURL(url),
+              data: desc.trim().isNotEmpty ? desc : 'This note has no content.',
+              listItemCrossAxisAlignment:
+                  MarkdownListItemCrossAxisAlignment.start,
+            ),
           ),
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 16),

@@ -31,6 +31,8 @@ class BiographyDialog extends StatelessWidget {
           ),
           MarkdownBody(
             data: character.bio,
+            listItemCrossAxisAlignment:
+                MarkdownListItemCrossAxisAlignment.start,
           ),
         ],
       if (hasLooks)
@@ -63,6 +65,8 @@ class BiographyDialog extends StatelessWidget {
           // children: [
           MarkdownBody(
             data: character.mainClass.description,
+            listItemCrossAxisAlignment:
+                MarkdownListItemCrossAxisAlignment.start,
           ),
           // ],
           // )
