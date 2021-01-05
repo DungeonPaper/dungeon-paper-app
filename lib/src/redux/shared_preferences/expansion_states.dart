@@ -2,6 +2,8 @@ import 'dart:convert';
 
 import 'package:dungeon_paper/src/redux/shared_preferences/prefs_settings.dart';
 import 'package:dungeon_paper/src/redux/shared_preferences/prefs_store.dart';
+import 'package:dungeon_paper/src/utils/analytics.dart';
+import 'package:pedantic/pedantic.dart';
 
 import '../stores.dart';
 
@@ -79,6 +81,13 @@ class ExpansionStates {
   }
 
   void setExpansion(String key, bool value) {
+    unawaited(analytics.logEvent(
+      name: Events.ToggleExpansion,
+      parameters: {
+        'expansion_key': key,
+        'value': value,
+      },
+    ));
     _set(key, value);
   }
 

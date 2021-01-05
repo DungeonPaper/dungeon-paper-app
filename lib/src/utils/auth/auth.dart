@@ -167,6 +167,10 @@ void dispatchFinalDataToStore({
     name: 'is_tester',
     value: user.isTester.toString(),
   ));
+  unawaited(analytics.setUserProperty(
+    name: 'connected_accounts',
+    value: firebaseUser.providerData.map((d) => d.providerId).join(','),
+  ));
 
   registerAllListeners(firebaseUser);
 }
