@@ -58,7 +58,8 @@ class CustomClass extends FirebaseEntity {
     PlayerClass playerClass, {
     bool retainKey = false,
   }) {
-    var json = playerClass.toJSON().map((k, v) => MapEntry(snakeToCamel(k), v));
+    final json =
+        playerClass.toJSON().map((k, v) => MapEntry(snakeToCamel(k), v));
     json['looks'] = Map<String, dynamic>.from(
       ((json['looks'] ?? []) as List<List<String>>).asMap().map(
             (k, v) => MapEntry(k.toString(), v),
@@ -73,7 +74,7 @@ class CustomClass extends FirebaseEntity {
   }
 
   PlayerClass toPlayerClass() {
-    var data = Map<String, dynamic>.from(
+    final data = Map<String, dynamic>.from(
       toJSON().map((k, v) => MapEntry(camelToSnake(k), v)),
     );
     data['looks'] = looks.values.toList();
@@ -136,9 +137,9 @@ class CustomClass extends FirebaseEntity {
   }
 
   Future<void> _updateChars() async {
-    for (var char in dwStore.state.characters.all.values) {
+    for (final char in dwStore.state.characters.all.values) {
       if (char.playerClasses.any((el) => el.key == key)) {
-        var _updated = char.playerClasses
+        final _updated = char.playerClasses
             .map((el) => el.key == key ? toPlayerClass() : el)
             .toList();
         char.playerClasses = _updated;

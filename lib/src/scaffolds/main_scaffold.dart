@@ -100,8 +100,9 @@ class _MainScaffoldState extends State<MainScaffold> {
     return GetBuilder<Themes>(
       builder: (themes) {
         return Scaffold(
-          backgroundColor:
-              widget.backgroundColor ?? themes.current.scaffoldBackgroundColor,
+          backgroundColor: widget.backgroundColor ??
+              themes.current?.scaffoldBackgroundColor ??
+              Get.theme.scaffoldBackgroundColor,
           appBar: widget.useAppBar != false
               ? MainAppBar(
                   title: widget.title,
