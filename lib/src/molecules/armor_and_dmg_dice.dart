@@ -35,9 +35,9 @@ class ArmorAndDmgDice extends StatelessWidget {
               ),
             ),
             value: Text(
-              character.armor.toString() +
-                  '+' +
-                  character.equippedDamage.toString(),
+              character.armor.toString(), // +
+              // '+' +
+              // character.equippedDamage.toString(),
               style: TextStyle(
                 color: Get.theme.colorScheme.secondary,
               ),

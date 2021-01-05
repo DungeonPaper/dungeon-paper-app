@@ -38,13 +38,13 @@ class _ReferenceViewState extends State<ReferenceView> {
     return Stack(
       children: [
         Padding(
-          padding: const EdgeInsets.only(top: 24),
+          padding: const EdgeInsets.only(top: 28),
           child: CategorizedList.builder(
             keyBuilder: (ctx, key, idx) => 'ReferenceView.' + enumName(key),
             items: categories.keys,
             itemCount: (key, idx) => categories[key].length,
             titleBuilder: (ctx, key, idx) => Text(key),
-            topSpacerHeight: 40,
+            topSpacerHeight: 38,
             itemBuilder: (ctx, key, idx, catI) {
               final moves = categories[key];
               return Padding(
