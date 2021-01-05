@@ -4,6 +4,7 @@ import 'package:dungeon_paper/db/models/spells.dart';
 import 'package:dungeon_paper/src/atoms/categorized_list.dart';
 import 'package:dungeon_paper/src/atoms/empty_state.dart';
 import 'package:dungeon_paper/src/atoms/roll_button_with_edit.dart';
+import 'package:dungeon_paper/src/atoms/search_bar.dart';
 import 'package:dungeon_paper/src/dialogs/roll_dice_view.dart';
 import 'package:dungeon_paper/src/flutter_utils/dice_controller.dart';
 import 'package:dungeon_paper/src/flutter_utils/widget_utils.dart';
@@ -29,7 +30,6 @@ class BattleView extends StatefulWidget {
     CategoryKeys.StartingMoves: 'Starting Moves',
     CategoryKeys.AdvancedMoves: 'Advanced Moves',
     CategoryKeys.Spells: 'Spells',
-    CategoryKeys.EmptyState: '',
   };
 
   final Character character;
@@ -46,75 +46,87 @@ class BattleView extends StatefulWidget {
 class _BattleViewState extends State<BattleView> {
   DiceListController diceListController;
   String rollSession;
+  TextEditingController searchController;
+
+  @override
+  void initState() {
+    searchController = TextEditingController()..addListener(_searchListener);
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
-    var categories = {
-      CategoryKeys.Dice: [null],
-      CategoryKeys.StartingMoves:
-          [widget.character.race] + widget.character.mainClass.startingMoves,
-      CategoryKeys.AdvancedMoves: widget.character.moves,
-      CategoryKeys.Spells: widget.character.spells,
-    };
-
-    if ([CategoryKeys.AdvancedMoves, CategoryKeys.Spells]
-        .every((el) => categories[el].isEmpty)) {
-      categories[CategoryKeys.EmptyState] = [null];
-    }
-
-    return CategorizedList.builder(
-      keyBuilder: (ctx, key, idx) => 'BattleView.' + enumName(key),
-      items: categories.keys,
-      itemCount: (key, idx) => categories[key].length,
-      bottomSpacerHeight: BOTTOM_SPACER.height,
-      titleBuilder: (ctx, key, idx) =>
-          BattleView._CATEGORY_LABELS.containsKey(key)
-              ? Text(BattleView._CATEGORY_LABELS[key])
-              : null,
-      itemBuilder: (ctx, key, idx, catIdx) {
-        var moves = categories[key];
-        return buildItem(moves, idx, key);
-      },
+    return Stack(
+      children: [
+        Padding(
+          padding: const EdgeInsets.only(top: 30),
+          child: CategorizedList.builder(
+            keyBuilder: (ctx, key, idx) => 'BattleView.' + enumName(key),
+            items: filtered.keys,
+            itemCount: (key, idx) => filtered[key].length,
+            bottomSpacerHeight: BOTTOM_SPACER.height,
+            topSpacerHeight: 50,
+            titleBuilder: (ctx, key, idx) =>
+                BattleView._CATEGORY_LABELS.containsKey(key)
+                    ? Text(BattleView._CATEGORY_LABELS[key])
+                    : null,
+            itemBuilder: (ctx, key, idx, catIdx) {
+              var moves = filtered[key];
+              return buildItem(moves, idx, key);
+            },
+          ),
+        ),
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 16),
+          child: SearchBar(
+            controller: searchController,
+            hintText: 'Type to search moves or spells',
+          ),
+        ),
+      ],
     );
   }
 
-  Widget buildItem(List moves, num idx, CategoryKeys key) {
+  Widget buildItem(List moves, int idx, CategoryKeys key) {
     if (key == CategoryKeys.Dice) {
       return Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          Row(
-            mainAxisSize: MainAxisSize.max,
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Expanded(
-                child: RollButtonWithEdit(
-                  character: widget.character,
-                  diceList: [Dice.d6 * 2],
-                  onRoll: _onRoll(Dice.d6 * 2),
-                  label: Text('Roll Action'),
-                  analyticsSource: 'Battle - Roll Action',
-                  brightness: Brightness.light,
-                ),
-              ),
-              SizedBox(width: 12),
-              Expanded(
-                child: RollButtonWithEdit(
-                  character: widget.character,
-                  diceList: [
-                    widget.character.damageDice
-                        .copyWith(modifier: widget.character.equippedDamage)
-                  ],
-                  onRoll: _onRoll(
-                    widget.character.damageDice
-                        .copyWith(modifier: widget.character.equippedDamage),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 1),
+            child: Row(
+              mainAxisSize: MainAxisSize.max,
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Expanded(
+                  child: RollButtonWithEdit(
+                    character: widget.character,
+                    diceList: [Dice.d6 * 2],
+                    onRoll: _onRoll(Dice.d6 * 2),
+                    label: Text('Roll Action'),
+                    analyticsSource: 'Battle - Roll Action',
+                    brightness: Brightness.light,
                   ),
-                  label: Text('Roll Damage'),
-                  analyticsSource: 'Battle - Roll Danmage',
-                  brightness: Brightness.light,
                 ),
-              ),
-            ],
+                SizedBox(width: 12),
+                Expanded(
+                  child: RollButtonWithEdit(
+                    character: widget.character,
+                    diceList: [
+                      widget.character.damageDice
+                          .copyWith(modifier: widget.character.equippedDamage)
+                    ],
+                    onRoll: _onRoll(
+                      widget.character.damageDice
+                          .copyWith(modifier: widget.character.equippedDamage),
+                    ),
+                    label: Text('Roll Damage'),
+                    analyticsSource: 'Battle - Roll Danmage',
+                    brightness: Brightness.light,
+                  ),
+                ),
+              ],
+            ),
           ),
           if (diceListController != null)
             Padding(
@@ -132,11 +144,14 @@ class _BattleViewState extends State<BattleView> {
       );
     }
     if (key == CategoryKeys.EmptyState) {
-      return EmptyState(
-        assetName: 'swords.svg',
-        title: Text('You have no learned skills'),
-        subtitle: Text(
-            "Use the '+' button to add a move or spell and start building your list."),
+      return Padding(
+        padding: EdgeInsets.only(top: 30),
+        child: EmptyState(
+          assetName: 'swords.svg',
+          title: Text('You have no learned skills'),
+          subtitle: Text(
+              "Use the '+' button to add a move or spell and start building your list."),
+        ),
       );
     }
     return moves?.isNotEmpty == true
@@ -164,6 +179,30 @@ class _BattleViewState extends State<BattleView> {
         : Container();
   }
 
+  Map<CategoryKeys, List<dynamic>> get categories => {
+        CategoryKeys.Dice: [null],
+        CategoryKeys.StartingMoves:
+            [widget.character.race] + widget.character.mainClass.startingMoves,
+        CategoryKeys.AdvancedMoves: widget.character.moves,
+        CategoryKeys.Spells: widget.character.spells,
+        if (widget.character.moves.isEmpty && widget.character.spells.isEmpty)
+          CategoryKeys.EmptyState: [null],
+      };
+
+  Map<CategoryKeys, List<dynamic>> get filtered => Map.from(
+        categories.map(
+          (key, value) => [CategoryKeys.Dice, CategoryKeys.EmptyState]
+                  .contains(key)
+              ? MapEntry(key, value)
+              : MapEntry(
+                  key,
+                  value
+                      .where((v) =>
+                          v is Move ? _isMoveVisible(v) : _isSpellVisible(v))
+                      .toList()),
+        ),
+      );
+
   void Function() _onRoll(Dice dice) {
     return () {
       setState(() {
@@ -187,4 +226,26 @@ class _BattleViewState extends State<BattleView> {
       analyticsSource: 'Battle',
     );
   }
+
+  void _searchListener() {
+    setState(() {});
+  }
+
+  bool _isMoveVisible(Move move) =>
+      move != null &&
+      (searchController.text.isEmpty ||
+          _matchStr(move.name) ||
+          _matchStr(move.description) ||
+          _matchStr(move.explanation));
+
+  bool _isSpellVisible(DbSpell spell) =>
+      spell != null &&
+      (searchController.text.isEmpty ||
+          _matchStr(spell.name) ||
+          _matchStr(spell.description) ||
+          _matchStr(spell.tags.map((t) => t.toJSON().toString()).join(', ')));
+
+  bool _matchStr(String str) => (str ?? '')
+      .toLowerCase()
+      .contains(searchController.text.toLowerCase().trim());
 }

@@ -231,3 +231,9 @@ V mapSwitch<K, V>(
 
   return defaultValue;
 }
+
+Set<T> unique<T>(Iterable<T> list, dynamic Function(T) value) {
+  final reversed = list.toList().reversed.toList();
+  final values = list.map(value).toSet();
+  return Set.from(reversed..retainWhere((x) => values.remove(value(x))));
+}

@@ -285,7 +285,11 @@ class _AccountViewState extends State<AccountView> {
     if (imageFile == null) {
       return;
     }
-    final downloadURL = await uploadImage(imageFile, directory: 'user_photos');
+    final downloadURL = await uploadImage(
+      imageFile,
+      directory: 'user_photos',
+      analyticsSource: ScreenNames.Account,
+    );
     setState(() {
       imageFile = null;
     });
