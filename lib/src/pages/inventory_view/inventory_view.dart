@@ -79,13 +79,14 @@ class _InventoryViewState extends State<InventoryView> {
     return Stack(
       children: [
         Padding(
-          padding: const EdgeInsets.only(top: 90),
+          padding: const EdgeInsets.only(top: 30),
           child: CategorizedList.builder(
             keyBuilder: (ctx, key, idx) => 'InventoryView.' + enumName(key),
             itemCount: (cat, idx) => cat != EquipmentCats.Stats
                 ? _equipmentFiltered[_catToKey(cat)].length
                 : 1,
             titleBuilder: (ctx, cat, i) => EquipmentTitles[cat],
+            topSpacerHeight: 50,
             itemBuilder: _itemBuilder,
             items: [
               EquipmentCats.Stats,

@@ -86,22 +86,25 @@ class _AccountViewState extends State<AccountView> {
                             child: Container(
                               height: 30,
                               color: Colors.black.withOpacity(0.8),
-                              child: Row(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                crossAxisAlignment: CrossAxisAlignment.center,
-                                children: [
-                                  Icon(
-                                    Icons.camera_alt,
-                                    color: Colors.white,
-                                    size: 10,
-                                  ),
-                                  SizedBox(width: 4),
-                                  Text(
-                                    'UPLOAD',
-                                    style: TextStyle(color: Colors.white),
-                                    textScaleFactor: 0.7,
-                                  ),
-                                ],
+                              child: Transform.translate(
+                                offset: Offset(0, -4),
+                                child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  crossAxisAlignment: CrossAxisAlignment.center,
+                                  children: [
+                                    Icon(
+                                      Icons.camera_alt,
+                                      color: Colors.white,
+                                      size: 10,
+                                    ),
+                                    SizedBox(width: 4),
+                                    Text(
+                                      'UPLOAD',
+                                      style: TextStyle(color: Colors.white),
+                                      textScaleFactor: 0.7,
+                                    ),
+                                  ],
+                                ),
                               ),
                             ),
                           ),
