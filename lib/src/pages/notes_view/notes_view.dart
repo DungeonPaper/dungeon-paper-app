@@ -4,7 +4,6 @@ import 'package:dungeon_paper/src/atoms/categorized_list.dart';
 import 'package:dungeon_paper/src/atoms/empty_state.dart';
 import 'package:dungeon_paper/src/atoms/search_bar.dart';
 import 'package:dungeon_paper/src/flutter_utils/widget_utils.dart';
-import 'package:dungeon_paper/src/molecules/tag_filter.dart';
 import 'package:dungeon_paper/src/utils/utils.dart';
 import 'package:dungeon_world_data/tag.dart';
 import 'note_card.dart';

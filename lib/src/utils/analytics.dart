@@ -47,6 +47,7 @@ class Events {
   static const UploadCharacterAvatarAttempt = 'upload_character_avatar_attempt';
   static const UploadCharacterAvatarSuccess = 'upload_character_avatar_success';
   static const UploadCharacterAvatarFail = 'upload_character_avatar_fail';
+  static const ToggleExpansion = 'toggle_expansion';
 }
 
 class ScreenNames {
