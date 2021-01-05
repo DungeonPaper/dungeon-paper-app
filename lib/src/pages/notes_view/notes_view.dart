@@ -48,12 +48,13 @@ class _NotesViewState extends State<NotesView> {
     return Stack(
       children: [
         Padding(
-          padding: const EdgeInsets.only(top: 60),
+          padding: const EdgeInsets.only(top: 28),
           child: CategorizedList<String>.builder(
             keyBuilder: (ctx, key, idx) => 'NotesView.' + enumName(key),
             itemCount: (cat, idx) => filtered[cat].length,
             items: filtered.keys,
             bottomSpacerHeight: BOTTOM_SPACER.height,
+            topSpacerHeight: 38,
             titleBuilder: (context, cat, idx) => Text(cat),
             itemBuilder: (context, cat, idx, catI) {
               final note = filtered[cat].elementAt(idx);
