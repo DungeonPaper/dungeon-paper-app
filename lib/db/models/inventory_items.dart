@@ -10,6 +10,9 @@ enum EquipmentKeys { key, item, amount }
 class InventoryItem extends Equipment {
   num amount;
   bool equipped;
+  bool countWeight;
+  bool countDamage;
+  bool countArmor;
 
   InventoryItem({
     String key,
@@ -19,6 +22,9 @@ class InventoryItem extends Equipment {
     List<Tag> tags,
     this.amount,
     this.equipped = false,
+    this.countWeight = true,
+    this.countDamage = true,
+    this.countArmor = true,
   }) : super(
           key: key ?? Uuid().v4(),
           name: name,
@@ -31,6 +37,9 @@ class InventoryItem extends Equipment {
     Equipment equipment, {
     int amount = 1,
     bool equipped = false,
+    bool countWeight = true,
+    bool countDamage = true,
+    bool countArmor = true,
   }) {
     return InventoryItem(
       key: equipment.key ?? Uuid().v4(),
@@ -40,7 +49,94 @@ class InventoryItem extends Equipment {
       tags: equipment.tags,
       amount: amount,
       equipped: equipped,
+      countWeight: countWeight,
+      countDamage: countDamage,
+      countArmor: countArmor,
     );
+  }
+
+  bool get hasDamage =>
+      tags?.firstWhere(
+        (t) => t?.name?.toLowerCase() == 'damage',
+        orElse: () => null,
+      ) !=
+      null;
+
+  bool get hasWeight =>
+      tags?.firstWhere(
+        (t) => t?.name?.toLowerCase() == 'weight',
+        orElse: () => null,
+      ) !=
+      null;
+
+  bool get hasArmor =>
+      tags?.firstWhere(
+        (t) => t?.name?.toLowerCase() == 'armor',
+        orElse: () => null,
+      ) !=
+      null;
+
+  double get armor {
+    if (!equipped || !countArmor) {
+      return 0;
+    }
+
+    final armor = tags?.firstWhere(
+      (t) => t?.name?.toLowerCase() == 'armor',
+      orElse: () => null,
+    );
+    if (armor != null && armor.hasValue) {
+      var armorValue = 0.toDouble();
+      if (armor.value is num) {
+        armorValue += armor.value;
+      } else {
+        armorValue += double.tryParse(armor.value ?? '0') ?? 0.0;
+      }
+      return armorValue * amount.toDouble();
+    }
+    return 0;
+  }
+
+  double get weight {
+    if (!equipped || !countWeight) {
+      return 0;
+    }
+
+    final armor = tags?.firstWhere(
+      (t) => t?.name?.toLowerCase() == 'weight',
+      orElse: () => null,
+    );
+    if (armor != null && armor.hasValue) {
+      var weightValue = 0.toDouble();
+      if (armor.value is num) {
+        weightValue += armor.value;
+      } else {
+        weightValue += double.tryParse(armor.value ?? '0') ?? 0.0;
+      }
+      return weightValue * amount;
+    }
+    return 0;
+  }
+
+  int get damage {
+    if (!equipped || !countDamage) {
+      return 0;
+    }
+
+    final damage = tags?.firstWhere(
+      (t) => t?.name?.toLowerCase() == 'damage',
+      orElse: () => null,
+    );
+    if (damage != null && damage.hasValue) {
+      var damageValue = 0;
+      if (damage.value is num) {
+        damageValue += damage.value;
+      } else {
+        damageValue += int.tryParse(damage.value ?? 0) ?? 0;
+      }
+      return damageValue;
+    }
+    return 0;
   }
 
   factory InventoryItem.fromJSON(Map map) {
@@ -49,6 +145,9 @@ class InventoryItem extends Equipment {
       orig,
       amount: map['amount'],
       equipped: map['equipped'] ?? false,
+      countWeight: map['count_weight'] ?? true,
+      countDamage: map['count_damage'] ?? true,
+      countArmor: map['count_armor'] ?? true,
     );
   }
 
@@ -61,6 +160,9 @@ class InventoryItem extends Equipment {
         ...super.toJSON(),
         'amount': amount,
         'equipped': equipped ?? false,
+        'count_weight': countWeight ?? true,
+        'count_damage': countDamage ?? true,
+        'count_armor': countArmor ?? true,
       };
 
   @override

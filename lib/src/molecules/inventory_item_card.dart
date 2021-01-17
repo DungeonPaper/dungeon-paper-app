@@ -91,20 +91,60 @@ class InventoryItemCard extends StatelessWidget {
             ),
           ),
           if (mode == InventoryItemCardMode.Editable)
-            Row(
-              mainAxisSize: MainAxisSize.min,
-              mainAxisAlignment: MainAxisAlignment.end,
-              children: [
-                Text(item.equipped ? 'Equipped' : 'Unequiped'),
-                Switch(
-                  value: item.equipped,
-                  onChanged: (val) {
-                    final copy = item.copy();
-                    copy.equipped = val;
-                    onSave?.call(copy);
-                  },
-                )
-              ],
+            Padding(
+              padding:
+                  const EdgeInsets.symmetric(horizontal: 16).copyWith(top: 32),
+              child: Wrap(
+                alignment: WrapAlignment.end,
+                spacing: 6,
+                runSpacing: -8,
+                children: [
+                  if (item.hasWeight)
+                    FilterChip(
+                      visualDensity: VisualDensity.compact,
+                      label: Text(!item.countWeight ? 'No weight' : 'Weight'),
+                      selected: item.countWeight,
+                      onSelected: (val) {
+                        final copy = item.copy();
+                        copy.countWeight = val;
+                        onSave?.call(copy);
+                      },
+                    ),
+                  if (item.hasDamage)
+                    FilterChip(
+                      visualDensity: VisualDensity.compact,
+                      label: Text(!item.countDamage ? 'No damage' : 'Damage'),
+                      selected: item.countDamage,
+                      onSelected: (val) {
+                        final copy = item.copy();
+                        copy.countDamage = val;
+                        onSave?.call(copy);
+                      },
+                    ),
+                  if (item.hasArmor)
+                    FilterChip(
+                      visualDensity: VisualDensity.compact,
+                      label: Text(!item.countArmor ? 'No armor' : 'Armor'),
+                      selected: item.countArmor,
+                      onSelected: (val) {
+                        final copy = item.copy();
+                        copy.countArmor = val;
+                        onSave?.call(copy);
+                      },
+                    ),
+                  FilterChip(
+                    visualDensity: VisualDensity.compact,
+                    label: Text(item.equipped ? 'Equipped' : 'Unequiped'),
+                    selected: item.equipped,
+                    onSelected: (val) {
+                      final copy = item.copy();
+                      copy.equipped = val;
+                      onSave?.call(copy);
+                    },
+                    selectedColor: Colors.orange[300],
+                  ),
+                ],
+              ),
             ),
           mode == InventoryItemCardMode.Editable
               ? Row(

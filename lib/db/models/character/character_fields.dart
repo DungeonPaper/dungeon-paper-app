@@ -234,66 +234,11 @@ mixin CharacterFields implements FirebaseEntity {
     return -1;
   }
 
-  num get load {
-    var count = 0.0;
-    inventory.forEach((item) {
-      final wght = item.tags?.firstWhere(
-          (t) => t?.name?.toLowerCase() == 'weight',
-          orElse: () => null);
-      if (wght != null && wght.hasValue) {
-        num wghtValue = 0;
-        if (wght.value is num) {
-          wghtValue += wght.value;
-        } else {
-          wghtValue += double.tryParse(wght.value ?? 0) ?? 0.0;
-        }
-        count += wghtValue * item.amount;
-      }
-    });
-    return count;
-  }
+  num get load => inventory.fold(0, (count, item) => count += item.weight);
 
-  num get equippedArmor {
-    var count = 0;
-    inventory.forEach((item) {
-      if (!item.equipped) {
-        return 0;
-      }
-      final armor = item.tags?.firstWhere(
-          (t) => t?.name?.toLowerCase() == 'armor',
-          orElse: () => null);
-      if (armor != null && armor.hasValue) {
-        num armorValue = 0;
-        if (armor.value is num) {
-          armorValue += armor.value;
-        } else {
-          armorValue += core.int.tryParse(armor.value ?? 0) ?? 0;
-        }
-        count += armorValue * item.amount;
-      }
-    });
-    return count;
-  }
+  num get equippedArmor =>
+      inventory.fold(0, (count, item) => count += item.armor);
 
-  num get equippedDamage {
-    var count = 0;
-    inventory.forEach((item) {
-      if (!item.equipped) {
-        return 0;
-      }
-      final damage = item.tags?.firstWhere(
-          (t) => t?.name?.toLowerCase() == 'damage',
-          orElse: () => null);
-      if (damage != null && damage.hasValue) {
-        num armorValue = 0;
-        if (damage.value is num) {
-          armorValue += damage.value;
-        } else {
-          armorValue += core.int.tryParse(damage.value ?? 0) ?? 0;
-        }
-        count += armorValue * item.amount;
-      }
-    });
-    return count;
-  }
+  num get equippedDamage =>
+      inventory.fold(0, (count, item) => count += item.damage);
 }
