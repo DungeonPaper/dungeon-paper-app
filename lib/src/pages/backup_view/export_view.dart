@@ -6,6 +6,7 @@ import 'package:dungeon_paper/db/models/custom_class.dart';
 import 'package:dungeon_paper/src/lists/character_select_list.dart';
 import 'package:dungeon_paper/src/lists/custom_class_select_list.dart';
 import 'package:dungeon_paper/src/redux/stores.dart';
+import 'package:dungeon_paper/src/utils/analytics.dart';
 import 'package:dungeon_paper/src/utils/utils.dart';
 import 'package:dungeon_world_data/player_class.dart';
 import 'package:flutter/material.dart';
@@ -13,6 +14,7 @@ import 'package:flutter_file_dialog/flutter_file_dialog.dart';
 import 'package:get/get.dart';
 import 'package:path/path.dart' show join;
 import 'package:path_provider/path_provider.dart';
+import 'package:pedantic/pedantic.dart';
 
 class ExportView extends StatefulWidget {
   @override
@@ -117,6 +119,10 @@ class _ExportViewState extends State<ExportView> {
   }
 
   void _export() async {
+    unawaited(analytics.logEvent(name: Events.ExportStart, parameters: {
+      'characters_count': _charactersToExport.length,
+      'classes_count': _classesToExport.length,
+    }));
     final _strData = await _dumpDataString();
     final tmp = await getTemporaryDirectory();
     final ext = formatExts[_format];
@@ -130,14 +136,24 @@ class _ExportViewState extends State<ExportView> {
     try {
       final path = await FlutterFileDialog.saveFile(params: params);
       if (path == null) {
+        unawaited(analytics.logEvent(name: Events.ExportFail, parameters: {
+          'reason': 'user_canceled',
+        }));
         Get.snackbar('Export Failed', 'Operation canceled');
       } else {
+        unawaited(analytics.logEvent(name: Events.ExportSuccess, parameters: {
+          'characters_count': _charactersToExport.length,
+          'classes_count': _classesToExport.length,
+        }));
         Get.snackbar(
           'Export Successful',
           'Your data was exported without problems.',
         );
       }
     } catch (e) {
+      unawaited(analytics.logEvent(name: Events.ExportFail, parameters: {
+        'reason': e.toString(),
+      }));
       Get.snackbar('Export Failed',
           'Something went wrong.\nTry again or contact support if this persists.');
       rethrow;

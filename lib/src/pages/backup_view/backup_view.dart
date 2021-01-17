@@ -4,7 +4,12 @@ import 'package:get/get.dart';
 import 'export_view.dart';
 import 'import_view.dart';
 
-class BackupView extends StatelessWidget {
+class BackupView extends StatefulWidget {
+  @override
+  _BackupViewState createState() => _BackupViewState();
+}
+
+class _BackupViewState extends State<BackupView> {
   @override
   Widget build(BuildContext context) {
     return MainScaffold(

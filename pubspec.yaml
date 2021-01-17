@@ -39,6 +39,7 @@ dependencies:
   path: ^1.7.0
   path_provider: ^1.6.18
   pedantic: ^1.9.2
+  platform: ^2.2.1
   pub_semver: ^1.4.4
   quiver_hashcode: ^2.0.0
   redux_logging: ^0.4.0
