@@ -20,7 +20,6 @@ class EditArmorDialog extends StatefulWidget {
 
 class EditArmorDialogState extends State<EditArmorDialog> {
   num value;
-  bool autoCalc;
 
   EditArmorDialogState({
     Key key,
@@ -29,15 +28,14 @@ class EditArmorDialogState extends State<EditArmorDialog> {
   @override
   void initState() {
     super.initState();
-    value = widget.character.armor;
-    autoCalc = widget.character.settings.autoCalcArmor;
+    value = widget.character.baseArmor;
   }
 
   @override
   Widget build(BuildContext context) {
-    final visibleValue = autoCalc ? widget.character.equippedArmor : value;
+    final equippedArmor = widget.character.equippedArmor;
     return AlertDialog(
-      title: Text('Edit Armor'),
+      title: Text('Edit Base Armor'),
       contentPadding: const EdgeInsets.only(top: 32.0, bottom: 8.0),
       content: SingleChildScrollView(
         child: Column(
@@ -45,30 +43,41 @@ class EditArmorDialogState extends State<EditArmorDialog> {
           mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: <Widget>[
-            Text('Armor: $visibleValue',
-                style: TextStyle(
-                  fontSize: 20.0,
-                  fontWeight: FontWeight.bold,
-                )),
-            Form(
-              child: Column(
-                mainAxisSize: MainAxisSize.max,
-                children: <Widget>[
-                  Container(
-                    padding: const EdgeInsets.symmetric(vertical: 8.0),
-                    child: NumberController(
-                      formatType: FormatType.Integer,
-                      value: value,
-                      onChange: (val) => setState(() => value = val),
-                      enabled: !autoCalc,
+            DefaultTextStyle.merge(
+              style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text('Total armor: '),
+                  if (value != widget.character.baseArmor)
+                    Wrap(
+                      children: [
+                        Text(widget.character.armor.toString()),
+                        Icon(Icons.arrow_right_alt),
+                        Text((value + widget.character.equippedArmor)
+                            .toString()),
+                      ],
                     ),
-                  ),
-                  CheckboxListTile(
-                    value: autoCalc,
-                    onChanged: (val) => setState(() => autoCalc = val),
-                    title: Text('Automatically calculate from equipped items'),
-                  )
+                  if (value == widget.character.baseArmor)
+                    Text(widget.character.armor.toString()),
                 ],
+              ),
+            ),
+            Text('Equipped armor: $equippedArmor'),
+            Form(
+              child: Container(
+                padding: const EdgeInsets.symmetric(vertical: 8.0),
+                child: NumberController(
+                  decoration: InputDecoration(
+                    labelText: 'Base armor',
+                    hintText: '0',
+                  ),
+                  formatType: FormatType.Integer,
+                  value: value,
+                  min: 0,
+                  max: 20,
+                  onChange: (val) => setState(() => value = val ?? 0),
+                ),
               ),
             ),
           ],
@@ -84,8 +93,7 @@ class EditArmorDialogState extends State<EditArmorDialog> {
 
   void _saveValue() async {
     var character = dwStore.state.characters.current;
-    character.settings = character.settings.copyWith(autoCalcArmor: autoCalc);
-    character.armor = value;
+    character.baseArmor = value;
     unawaited(character.update());
     Get.back();
   }

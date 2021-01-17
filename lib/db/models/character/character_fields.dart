@@ -132,9 +132,10 @@ mixin CharacterFields implements FirebaseEntity {
   set int(num value) => fields.get<num>('int').set(value);
   num get cha => fields.get<num>('cha').value;
   set cha(num value) => fields.get<num>('cha').set(value);
-  num get armor => settings.autoCalcArmor ? equippedArmor : rawArmor;
+  num get armor => equippedArmor + baseArmor;
   set armor(num value) => fields.get<num>('armor').set(value);
-  num get rawArmor => fields.get<num>('armor').value;
+  num get baseArmor => fields.get<num>('armor').value;
+  set baseArmor(num value) => armor = value;
 
   // Main Item Types
   List<Move> get moves => fields.get<List<Move>>('moves').value;

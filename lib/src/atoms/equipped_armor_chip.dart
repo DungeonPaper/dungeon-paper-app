@@ -5,15 +5,15 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
 
-class ArmorChip extends StatelessWidget {
+class EquippedArmorChip extends StatelessWidget {
   final Character character;
 
-  const ArmorChip({
+  const EquippedArmorChip({
     Key key,
     @required this.character,
   }) : super(key: key);
 
-  num get armor => character.armor;
+  num get armor => character.equippedArmor;
 
   @override
   Widget build(BuildContext context) {
