@@ -47,6 +47,7 @@ class SpellCardState extends State<SpellCard> {
                 children: <Widget>[
                   name,
                   Chip(
+                    visualDensity: VisualDensity.compact,
                     backgroundColor: Colors.lightBlue[100],
                     label: Text('Prepared'),
                     padding: EdgeInsets.all(0),
@@ -65,30 +66,36 @@ class SpellCardState extends State<SpellCard> {
                   MarkdownListItemCrossAxisAlignment.start,
             ),
           ),
-          widget.spell.tags != null && widget.spell.tags.isNotEmpty
-              ? Padding(
-                  padding:
-                      const EdgeInsets.symmetric(horizontal: 16, vertical: 0),
-                  child: Align(
-                    alignment: Alignment.centerLeft,
-                    child: TagList(tags: widget.spell.tags),
+          if (widget.spell.tags != null && widget.spell.tags.isNotEmpty)
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 16),
+              child: TagList(tags: widget.spell.tags),
+            ),
+          Padding(
+            padding:
+                const EdgeInsets.symmetric(horizontal: 16).copyWith(top: 16),
+            child: Wrap(
+              alignment: WrapAlignment.end,
+              spacing: 6,
+              runSpacing: -8,
+              children: [
+                if (widget.mode == SpellCardMode.Editable)
+                  FilterChip(
+                    visualDensity: VisualDensity.compact,
+                    label: Text(spell.prepared ? 'Prepared' : 'Unprepared'),
+                    selected: spell.prepared,
+                    selectedColor: Colors.lightBlue[100],
+                    onSelected: (val) {
+                      final copy = spell.copy();
+                      copy.prepared = val;
+                      widget.onSave?.call(copy);
+                    },
                   ),
-                )
-              : SizedBox.shrink(),
+              ],
+            ),
+          ),
           widget.mode == SpellCardMode.Editable
               ? CardBottomControls(
-                  leading: <Widget>[
-                    Text(widget.spell.prepared ? 'Prepared' : 'Unprepared'),
-                    Switch(
-                      value: spell.prepared,
-                      onChanged: (val) {
-                        spell.prepared = val;
-                        if (widget.onSave != null) {
-                          widget.onSave(spell);
-                        }
-                      },
-                    )
-                  ],
                   onEdit: () => Get.to(
                     AddSpellScaffold(
                       index: widget.index,

@@ -16,8 +16,14 @@ class TagChip extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var label =
-        Text(tag?.name != null ? capitalize(tag.toString()) : 'Add tag');
+    var label = Row(
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        Icon(Icons.label),
+        SizedBox(width: 4),
+        Text(tag?.name != null ? capitalize(tag.toString()) : 'Add tag'),
+      ],
+    );
     var onPressCb = pass1(onPressed, tag);
     var onDeleteCb = pass1(onDelete, tag);
 

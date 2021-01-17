@@ -1,18 +1,20 @@
+import 'package:dungeon_paper/db/models/character.dart';
 import 'package:dungeon_paper/db/models/inventory_items.dart';
 import 'package:dungeon_paper/src/atoms/flexible_columns.dart';
 import 'package:dungeon_paper/src/atoms/search_bar.dart';
 import 'package:dungeon_paper/src/molecules/inventory_item_card.dart';
 import 'package:dungeon_world_data/dw_data.dart';
-import 'package:dungeon_world_data/equipment.dart';
 import 'package:flutter/material.dart';
 
 class ExistingInventoryItemsList extends StatelessWidget {
-  final Iterable<Equipment> items;
+  final Iterable<InventoryItem> items;
   final void Function(InventoryItem) onSave;
+  final Character character;
 
   const ExistingInventoryItemsList({
     Key key,
     this.items,
+    @required this.character,
     @required this.onSave,
   }) : super(key: key);
 
@@ -21,20 +23,26 @@ class ExistingInventoryItemsList extends StatelessWidget {
     return AddInventoryItem(
       items: items,
       onSave: onSave,
+      character: character,
     );
   }
 }
 
 class AddInventoryItem extends StatefulWidget {
-  final Iterable<Equipment> items;
+  final Iterable<InventoryItem> items;
   final TextEditingController _searchController = TextEditingController();
   final void Function(InventoryItem) onSave;
+  final Character character;
 
   AddInventoryItem({
     Key key,
-    Iterable<Equipment> items,
+    Iterable<InventoryItem> items,
+    @required this.character,
     @required this.onSave,
-  })  : items = items ?? dungeonWorld.equipment,
+  })  : items = items ??
+            dungeonWorld.equipment
+                .map((i) => InventoryItem.fromEquipment(i))
+                .toList(),
         super(key: key);
 
   @override
@@ -67,7 +75,7 @@ class _AddInventoryItemState extends State<AddInventoryItem> {
 
   @override
   Widget build(BuildContext context) {
-    final itemMap = <String, List<Equipment>>{};
+    final itemMap = <String, List<InventoryItem>>{};
     final filtered = search.isNotEmpty
         ? widget.items.where((item) => clean(item.name).contains(clean(search)))
         : widget.items;
@@ -98,10 +106,11 @@ class _AddInventoryItemState extends State<AddInventoryItem> {
                 padding: EdgeInsets.symmetric(vertical: 8),
                 child: InventoryItemCard(
                   key: PageStorageKey('add-${item.key}'),
-                  item: InventoryItem.fromEquipment(item),
+                  item: item,
                   mode: InventoryItemCardMode.Addable,
                   onSave: widget.onSave,
                   onDelete: null,
+                  character: widget.character,
                 ),
               );
             },

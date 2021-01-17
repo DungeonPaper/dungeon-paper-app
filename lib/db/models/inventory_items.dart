@@ -27,10 +27,10 @@ class InventoryItem extends Equipment {
     this.countArmor = true,
   }) : super(
           key: key ?? Uuid().v4(),
-          name: name,
+          name: name ?? '',
           pluralName: pluralName,
-          description: description,
-          tags: tags,
+          description: description ?? '',
+          tags: tags ?? [],
         );
 
   static InventoryItem fromEquipment(
@@ -43,15 +43,15 @@ class InventoryItem extends Equipment {
   }) {
     return InventoryItem(
       key: equipment.key ?? Uuid().v4(),
-      name: equipment.name,
-      description: equipment.description,
+      name: equipment.name ?? '',
+      description: equipment.description ?? '',
       pluralName: equipment.pluralName,
-      tags: equipment.tags,
-      amount: amount,
-      equipped: equipped,
-      countWeight: countWeight,
-      countDamage: countDamage,
-      countArmor: countArmor,
+      tags: equipment.tags ?? [],
+      amount: amount ?? 1,
+      equipped: equipped ?? false,
+      countWeight: countWeight ?? true,
+      countDamage: countDamage ?? true,
+      countArmor: countArmor ?? true,
     );
   }
 
@@ -76,8 +76,8 @@ class InventoryItem extends Equipment {
       ) !=
       null;
 
-  double get armor {
-    if (!equipped || !countArmor) {
+  int get armor {
+    if (!countArmor) {
       return 0;
     }
 
@@ -86,19 +86,19 @@ class InventoryItem extends Equipment {
       orElse: () => null,
     );
     if (armor != null && armor.hasValue) {
-      var armorValue = 0.toDouble();
+      var armorValue = 0;
       if (armor.value is num) {
         armorValue += armor.value;
       } else {
-        armorValue += double.tryParse(armor.value ?? '0') ?? 0.0;
+        armorValue += int.tryParse(armor.value ?? '0') ?? 0.0;
       }
-      return armorValue * amount.toDouble();
+      return armorValue * amount;
     }
     return 0;
   }
 
   double get weight {
-    if (!equipped || !countWeight) {
+    if (!countWeight) {
       return 0;
     }
 
@@ -106,6 +106,9 @@ class InventoryItem extends Equipment {
       (t) => t?.name?.toLowerCase() == 'weight',
       orElse: () => null,
     );
+    if (name == 'Axe') {
+      print(this.toString());
+    }
     if (armor != null && armor.hasValue) {
       var weightValue = 0.toDouble();
       if (armor.value is num) {
@@ -119,7 +122,7 @@ class InventoryItem extends Equipment {
   }
 
   int get damage {
-    if (!equipped || !countDamage) {
+    if (!countDamage) {
       return 0;
     }
 

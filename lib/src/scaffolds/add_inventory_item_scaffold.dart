@@ -1,3 +1,4 @@
+import 'package:dungeon_paper/db/models/character.dart';
 import 'package:dungeon_paper/db/models/inventory_items.dart';
 import 'package:dungeon_paper/src/dialogs/dialogs.dart';
 import 'package:dungeon_paper/src/lists/existing_inventory_items_list.dart';
@@ -7,16 +8,18 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class AddInventoryItemScaffold extends StatefulWidget {
+  final InventoryItem item;
+  final DialogMode mode;
+  final void Function(InventoryItem) onSave;
+  final Character character;
+
   const AddInventoryItemScaffold({
     Key key,
     @required this.item,
     @required this.mode,
     @required this.onSave,
+    @required this.character,
   }) : super(key: key);
-
-  final InventoryItem item;
-  final DialogMode mode;
-  final void Function(InventoryItem) onSave;
 
   @override
   AddInventoryItemScaffoldState createState() =>
@@ -82,7 +85,10 @@ class AddInventoryItemScaffoldState extends State<AddInventoryItemScaffold>
             Container(
               key: PageStorageKey<String>(texts[0]),
               color: Get.theme.scaffoldBackgroundColor,
-              child: ExistingInventoryItemsList(onSave: widget.onSave),
+              child: ExistingInventoryItemsList(
+                onSave: widget.onSave,
+                character: widget.character,
+              ),
             ),
             formContainer
           ],

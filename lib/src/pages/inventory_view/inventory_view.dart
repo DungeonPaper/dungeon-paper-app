@@ -143,6 +143,7 @@ class _InventoryViewState extends State<InventoryView> {
         mode: InventoryItemCardMode.Editable,
         onSave: (item) => updateInventoryItem(widget.character, item),
         onDelete: () => deleteInventoryItem(widget.character, item),
+        character: widget.character,
       ),
     );
   }

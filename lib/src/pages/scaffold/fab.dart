@@ -80,6 +80,7 @@ class FABState extends State<FAB> {
                 item: InventoryItem(),
                 mode: DialogMode.Create,
                 onSave: (item) => createInventoryItem(character, item),
+                character: character,
               ),
             ),
           ),

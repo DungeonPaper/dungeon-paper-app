@@ -236,9 +236,9 @@ mixin CharacterFields implements FirebaseEntity {
 
   num get load => inventory.fold(0, (count, item) => count += item.weight);
 
-  num get equippedArmor =>
-      inventory.fold(0, (count, item) => count += item.armor);
+  num get equippedArmor => inventory.fold(
+      0, (count, item) => count += (item.equipped ? item.armor : 0));
 
-  num get equippedDamage =>
-      inventory.fold(0, (count, item) => count += item.damage);
+  num get equippedDamage => inventory.fold(
+      0, (count, item) => count += (item.equipped ? item.damage : 0));
 }
