@@ -1,5 +1,5 @@
 import 'package:dungeon_paper/db/models/inventory_items.dart';
-import 'package:dungeon_paper/src/atoms/categorized_list.dart';
+import 'package:dungeon_paper/src/atoms/flexible_columns.dart';
 import 'package:dungeon_paper/src/atoms/search_bar.dart';
 import 'package:dungeon_paper/src/molecules/inventory_item_card.dart';
 import 'package:dungeon_world_data/dw_data.dart';
@@ -86,7 +86,7 @@ class _AddInventoryItemState extends State<AddInventoryItem> {
       children: <Widget>[
         Padding(
           padding: const EdgeInsets.only(top: 40),
-          child: CategorizedList.builder(
+          child: FlexibleColumns.builder(
             keyBuilder: null,
             items: itemMap.keys.toList()..sort(),
             itemCount: (key, idx) => itemMap[key].length,

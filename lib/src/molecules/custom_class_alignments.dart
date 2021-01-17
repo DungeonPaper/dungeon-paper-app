@@ -1,5 +1,5 @@
 import 'package:dungeon_paper/db/helpers/character_utils.dart';
-import 'package:dungeon_paper/src/atoms/categorized_list.dart';
+import 'package:dungeon_paper/src/atoms/flexible_columns.dart';
 import 'package:dungeon_paper/src/dialogs/dialogs.dart';
 import 'package:dungeon_paper/src/molecules/editable_alignment.dart';
 import 'package:dungeon_paper/src/utils/types.dart';
@@ -50,7 +50,7 @@ class _CustomClassAlignmentsState extends State<CustomClassAlignments> {
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.all(8),
-      child: CategorizedList.builder(
+      child: FlexibleColumns.builder(
         keyBuilder: null,
         items: alignments.values.toList(),
         itemMargin: EdgeInsets.all(8),

@@ -1,4 +1,4 @@
-import 'package:dungeon_paper/src/atoms/categorized_list.dart';
+import 'package:dungeon_paper/src/atoms/flexible_columns.dart';
 import 'package:dungeon_paper/src/atoms/search_bar.dart';
 import 'package:dungeon_paper/src/flutter_utils/widget_utils.dart';
 import 'package:dungeon_paper/src/lists/player_class_list.dart';
@@ -53,7 +53,7 @@ class _AddMoveListState extends State<AddMoveList> {
       children: [
         Padding(
           padding: const EdgeInsets.only(top: 40),
-          child: CategorizedList.builder(
+          child: FlexibleColumns.builder(
             keyBuilder: null,
             topSpacerHeight: 48,
             items: [LEADING_KEY] + moves.keys.map((k) => k.toString()).toList(),

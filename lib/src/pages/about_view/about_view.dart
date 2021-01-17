@@ -1,6 +1,6 @@
 import 'dart:io';
 import 'dart:math';
-import 'package:dungeon_paper/src/atoms/categorized_list.dart';
+import 'package:dungeon_paper/src/atoms/flexible_columns.dart';
 import 'package:dungeon_paper/src/atoms/feedback_button.dart';
 import 'package:dungeon_paper/src/atoms/paypal_donate_button.dart';
 import 'package:dungeon_paper/src/atoms/version_number.dart';
@@ -46,7 +46,7 @@ class _AboutViewState extends State<AboutView> {
       title: Text('About Dungeon Paper'),
       wrapWithScrollable: false,
       scrollController: scrollController,
-      body: CategorizedList(
+      body: FlexibleColumns(
         keyBuilder: null,
         scrollController: scrollController,
         children: <Widget>[

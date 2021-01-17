@@ -1,4 +1,4 @@
-import 'package:dungeon_paper/src/atoms/categorized_list.dart';
+import 'package:dungeon_paper/src/atoms/flexible_columns.dart';
 import 'package:dungeon_paper/src/atoms/editable_string_list.dart';
 import 'package:dungeon_paper/src/dialogs/dialogs.dart';
 import 'package:dungeon_paper/src/flutter_utils/widget_utils.dart';
@@ -46,7 +46,7 @@ class _CustomClassLooksState extends State<CustomClassLooks> {
 
   @override
   Widget build(BuildContext context) {
-    return CategorizedList.builder(
+    return FlexibleColumns.builder(
       keyBuilder: null,
       items: [...items, ADD],
       itemCount: (cat, i) => 1,

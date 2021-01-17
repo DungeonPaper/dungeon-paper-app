@@ -1,5 +1,5 @@
 import 'package:dungeon_paper/db/models/custom_class.dart';
-import 'package:dungeon_paper/src/atoms/categorized_list.dart';
+import 'package:dungeon_paper/src/atoms/flexible_columns.dart';
 import 'package:dungeon_paper/src/dialogs/dialogs.dart';
 import 'package:dungeon_paper/src/flutter_utils/widget_utils.dart';
 import 'package:dungeon_paper/src/molecules/move_card.dart';
@@ -47,7 +47,7 @@ class CustomClassMoveList extends StatelessWidget {
       }
     };
 
-    return CategorizedList.builder(
+    return FlexibleColumns.builder(
       keyBuilder: null,
       items: cats.values,
       itemCount: (moves, i) => moves != null ? moves.length + 1 : 1,
