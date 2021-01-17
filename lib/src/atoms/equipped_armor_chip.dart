@@ -44,7 +44,9 @@ class EquippedArmorChip extends StatelessWidget {
                       size: 20,
                     ),
                     SizedBox(width: 10),
-                    Text('$armor'),
+                    Text(armor == armor.ceil()
+                        ? armor.toStringAsFixed(0)
+                        : armor.toString()),
                   ],
                 ),
               ),

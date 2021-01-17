@@ -49,17 +49,16 @@ class EditArmorDialogState extends State<EditArmorDialog> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Text('Total armor: '),
-                  if (value != widget.character.baseArmor)
-                    Wrap(
-                      children: [
-                        Text(widget.character.armor.toString()),
-                        Icon(Icons.arrow_right_alt),
-                        Text((value + widget.character.equippedArmor)
-                            .toString()),
-                      ],
-                    ),
-                  if (value == widget.character.baseArmor)
-                    Text(widget.character.armor.toString()),
+                  value != widget.character.baseArmor
+                      ? Wrap(
+                          children: [
+                            Text(widget.character.armor.toString()),
+                            Icon(Icons.arrow_right_alt),
+                            Text((value + widget.character.equippedArmor)
+                                .toString()),
+                          ],
+                        )
+                      : Text(widget.character.armor.toString()),
                 ],
               ),
             ),
