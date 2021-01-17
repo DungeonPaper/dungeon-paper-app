@@ -6,12 +6,14 @@ class TagChip extends StatelessWidget {
   final Tag tag;
   final void Function(Tag tag) onDelete;
   final void Function(Tag tag) onPressed;
+  final VisualDensity visualDensity;
 
   const TagChip({
     Key key,
     this.tag,
     this.onDelete,
     this.onPressed,
+    this.visualDensity,
   }) : super(key: key);
 
   @override
@@ -19,7 +21,7 @@ class TagChip extends StatelessWidget {
     var label = Row(
       mainAxisSize: MainAxisSize.min,
       children: [
-        Icon(Icons.label),
+        Icon(Icons.label, size: 14),
         SizedBox(width: 4),
         Text(tag?.name != null ? capitalize(tag.toString()) : 'Add tag'),
       ],
@@ -31,6 +33,7 @@ class TagChip extends StatelessWidget {
       return Chip(
         onDeleted: onDeleteCb,
         label: label,
+        visualDensity: visualDensity,
       );
     }
 
@@ -38,6 +41,7 @@ class TagChip extends StatelessWidget {
       onPressed: onPressCb,
       onDeleted: onDeleteCb,
       label: label,
+      visualDensity: visualDensity,
     );
   }
 }

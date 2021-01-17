@@ -36,7 +36,22 @@ class NoteCardState extends State<NoteCard> {
     return Card(
       margin: EdgeInsets.zero,
       child: ExpansionTile(
-        title: Text(widget.note.title),
+        title: ConstrainedBox(
+          constraints: BoxConstraints(minHeight: 45),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Text(widget.note.title),
+            ],
+          ),
+        ),
+        subtitle: widget.note.tags.isNotEmpty
+            ? TagList(
+                visualDensity: VisualDensity.compact,
+                tags: widget.note.tags,
+              )
+            : null,
         onExpansionChanged: (value) => analytics.logEvent(
           name: Events.ExpandNoteCard,
           parameters: {'state': value.toString()},
