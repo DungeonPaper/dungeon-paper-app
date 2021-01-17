@@ -1,7 +1,7 @@
 import 'package:dungeon_paper/db/models/character.dart';
 import 'package:dungeon_paper/db/models/inventory_items.dart';
 import 'package:dungeon_paper/src/atoms/armor_chip.dart';
-import 'package:dungeon_paper/src/atoms/categorized_list.dart';
+import 'package:dungeon_paper/src/atoms/flexible_columns.dart';
 import 'package:dungeon_paper/src/atoms/coins_chip.dart';
 import 'package:dungeon_paper/src/atoms/damage_chip.dart';
 import 'package:dungeon_paper/src/atoms/empty_state.dart';
@@ -80,7 +80,7 @@ class _InventoryViewState extends State<InventoryView> {
       children: [
         Padding(
           padding: const EdgeInsets.only(top: 30),
-          child: CategorizedList.builder(
+          child: FlexibleColumns.builder(
             keyBuilder: (ctx, key, idx) => 'InventoryView.' + enumName(key),
             itemCount: (cat, idx) => cat != EquipmentCats.Stats
                 ? _equipmentFiltered[_catToKey(cat)].length

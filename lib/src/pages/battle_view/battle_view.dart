@@ -1,7 +1,7 @@
 import 'package:dungeon_paper/db/models/character.dart';
 import 'package:dungeon_paper/db/models/moves.dart';
 import 'package:dungeon_paper/db/models/spells.dart';
-import 'package:dungeon_paper/src/atoms/categorized_list.dart';
+import 'package:dungeon_paper/src/atoms/flexible_columns.dart';
 import 'package:dungeon_paper/src/atoms/empty_state.dart';
 import 'package:dungeon_paper/src/atoms/roll_button_with_edit.dart';
 import 'package:dungeon_paper/src/atoms/search_bar.dart';
@@ -60,7 +60,7 @@ class _BattleViewState extends State<BattleView> {
       children: [
         Padding(
           padding: const EdgeInsets.only(top: 30),
-          child: CategorizedList.builder(
+          child: FlexibleColumns.builder(
             keyBuilder: (ctx, key, idx) => 'BattleView.' + enumName(key),
             items: filtered.keys,
             itemCount: (key, idx) => filtered[key].length,

@@ -10,6 +10,7 @@ import 'package:dungeon_paper/src/utils/logger.dart';
 import 'package:dungeon_paper/src/utils/utils.dart';
 import 'package:firebase_auth/firebase_auth.dart' as fb;
 import 'package:flutter/foundation.dart';
+import 'package:get/get.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:pedantic/pedantic.dart';
 import 'package:platform/platform.dart';
@@ -156,6 +157,11 @@ void dispatchFinalDataToStore({
     firebaseUser: firebaseUser,
   ));
 
+  _setUserProperties(firebaseUser, user);
+  registerAllListeners(firebaseUser);
+}
+
+void _setUserProperties(fb.User firebaseUser, User user) {
   unawaited(analytics.logLogin(
     loginMethod: 'firebase',
   ));
@@ -188,8 +194,10 @@ void dispatchFinalDataToStore({
     name: 'latest_platform_version',
     value: LocalPlatform().operatingSystemVersion,
   ));
-
-  registerAllListeners(firebaseUser);
+  unawaited(analytics.setUserProperty(
+    name: 'latest_device_type',
+    value: Get.mediaQuery.size.shortestSide < 600 ? 'mobile' : 'tablet',
+  ));
 }
 
 void registerAllListeners(fb.User fbUser) {

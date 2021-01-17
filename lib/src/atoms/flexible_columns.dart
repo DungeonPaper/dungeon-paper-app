@@ -1,4 +1,4 @@
-import 'package:dungeon_paper/src/redux/shared_preferences/expansion_states.dart';
+import 'package:dungeon_paper/src/atoms/expandable_list.dart';
 import 'package:dungeon_paper/src/redux/stores.dart';
 import 'package:dungeon_paper/src/utils/utils.dart';
 import 'package:flutter/material.dart';
@@ -14,7 +14,7 @@ typedef KeyBuilderFunction<T> = String Function(
 typedef BuilderFunctionWithCatIndex<T> = Widget Function(
     BuildContext context, T category, num itemIndex, num catIndex);
 
-class CategorizedList<T> extends StatefulWidget {
+class FlexibleColumns<T> extends StatefulWidget {
   final Iterable<T> items;
   final BuilderFunctionWithCatIndex<T> itemBuilder;
   final BuilderFunction<T> titleBuilder;
@@ -26,7 +26,7 @@ class CategorizedList<T> extends StatefulWidget {
   final EdgeInsets itemMargin;
   final ScrollController scrollController;
 
-  CategorizedList({
+  FlexibleColumns({
     Key key,
     List<T> children,
     this.titleBuilder,
@@ -41,7 +41,7 @@ class CategorizedList<T> extends StatefulWidget {
         itemCount = null,
         super(key: key);
 
-  CategorizedList.builder({
+  FlexibleColumns.builder({
     Key key,
     @required this.items,
     @required this.itemCount,
@@ -58,10 +58,10 @@ class CategorizedList<T> extends StatefulWidget {
   static const _defaultItemMargin = EdgeInsets.symmetric(horizontal: 16);
 
   @override
-  _CategorizedListState<T> createState() => _CategorizedListState<T>();
+  _FlexibleColumnsState<T> createState() => _FlexibleColumnsState<T>();
 }
 
-class _CategorizedListState<T> extends State<CategorizedList<T>> {
+class _FlexibleColumnsState<T> extends State<FlexibleColumns<T>> {
   final String sessionKey = Uuid().v4();
 
   bool get _isChildrenBuilder =>
@@ -75,11 +75,8 @@ class _CategorizedListState<T> extends State<CategorizedList<T>> {
 
   int get topSpacerCount => clamp01(widget.topSpacerHeight.toInt()).toInt();
 
-  bool get saveExpansionStates => widget.keyBuilder != null;
-
   @override
   Widget build(BuildContext context) {
-    final cats = _itemsToWidgets(context);
     final origTheme = Get.theme;
 
     return OrientationBuilder(
@@ -91,38 +88,46 @@ class _CategorizedListState<T> extends State<CategorizedList<T>> {
             unselectedWidgetColor: titleStyle(context).color,
           ),
           child: LayoutBuilder(
-            builder: (context, constraints) {
-              return StaggeredGridView.countBuilder(
-                crossAxisCount: constraints.maxWidth < 450 ? 1 : 2,
-                controller: widget.scrollController,
-                itemCount: cats.length + bottomSpacerCount + topSpacerCount,
-                itemBuilder: (context, index) {
-                  if (index < topSpacerCount) {
-                    return SizedBox(height: widget.topSpacerHeight);
-                  }
-                  index -= topSpacerCount;
-                  if (index < cats.length) {
-                    final child = cats.elementAt(index);
-                    if (child != null) {
-                      return Padding(
-                        padding: widget.itemMargin,
-                        child: child,
-                      );
-                    }
-                    return Container();
-                  }
-                  return SizedBox(height: widget.bottomSpacerHeight);
-                },
-                staggeredTileBuilder: (index) =>
-                    index < topSpacerCount || (index - 1 >= cats.length)
-                        ? StaggeredTile.fit(2)
-                        : StaggeredTile.fit(1),
-              );
-            },
+            builder: _layoutBuilder(),
           ),
         );
       },
     );
+  }
+
+  void Function(BuildContext, BoxConstraints) _layoutBuilder() {
+    return (context, constraints) {
+      final cats = _itemsToWidgets(context);
+      return StaggeredGridView.countBuilder(
+        crossAxisCount: constraints.maxWidth < 450 ? 1 : 2,
+        controller: widget.scrollController,
+        itemCount: cats.length + bottomSpacerCount + topSpacerCount,
+        itemBuilder: _itemWrapperBuilder,
+        staggeredTileBuilder: (index) =>
+            index < topSpacerCount || (index - 1 >= cats.length)
+                ? StaggeredTile.fit(2)
+                : StaggeredTile.fit(1),
+      );
+    };
+  }
+
+  Widget _itemWrapperBuilder(context, index) {
+    final cats = _itemsToWidgets(context);
+    if (index < topSpacerCount) {
+      return SizedBox(height: widget.topSpacerHeight);
+    }
+    index -= topSpacerCount;
+    if (index < cats.length) {
+      final child = cats.elementAt(index);
+      if (child != null) {
+        return Padding(
+          padding: widget.itemMargin,
+          child: child,
+        );
+      }
+      return Container();
+    }
+    return SizedBox(height: widget.bottomSpacerHeight);
   }
 
   List<Widget> _itemsToWidgets(BuildContext context) {
@@ -157,40 +162,11 @@ class _CategorizedListState<T> extends State<CategorizedList<T>> {
           )
         : null;
 
-    if (count == 0) {
-      return null;
-    }
-
-    if (title == null) {
-      return Column(
-        mainAxisAlignment: MainAxisAlignment.start,
-        mainAxisSize: MainAxisSize.min,
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: outputItems,
-      );
-    }
-
-    return Container(
-      child: ExpansionTile(
-        title: title,
-        key: PageStorageKey('$sessionKey-$index-$charId-expansion'),
-        initiallyExpanded: expansionStates.isExpanded(builtKey),
-        expandedCrossAxisAlignment: CrossAxisAlignment.stretch,
-        tilePadding: EdgeInsets.only(right: 8),
-        onExpansionChanged: _onExpansionChanged(builtKey),
-        children: outputItems,
-      ),
+    return ExpandableList(
+      key: PageStorageKey('$sessionKey-$index-$charId-expansion'),
+      expansionKey: builtKey,
+      title: title,
+      children: outputItems,
     );
   }
-
-  void Function(bool) _onExpansionChanged(String key) {
-    return (value) {
-      if (key != null) {
-        expansionStates.setExpansion(key, value);
-      }
-    };
-  }
-
-  ExpansionStates get expansionStates =>
-      dwStore.state.prefs.settings.expansionStates;
 }

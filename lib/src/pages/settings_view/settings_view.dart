@@ -7,7 +7,6 @@ import 'package:dungeon_paper/src/redux/stores.dart';
 import 'package:dungeon_paper/src/scaffolds/main_scaffold.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:dungeon_paper/src/utils/analytics.dart';
 
 class SettingsView extends StatelessWidget {
   @override

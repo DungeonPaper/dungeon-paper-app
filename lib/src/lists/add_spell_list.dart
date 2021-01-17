@@ -1,5 +1,5 @@
 import 'package:dungeon_paper/db/models/spells.dart';
-import 'package:dungeon_paper/src/atoms/categorized_list.dart';
+import 'package:dungeon_paper/src/atoms/flexible_columns.dart';
 import 'package:dungeon_paper/src/atoms/search_bar.dart';
 import 'package:dungeon_paper/src/molecules/spell_card.dart';
 import 'package:dungeon_paper/src/utils/utils.dart';
@@ -48,7 +48,7 @@ class _AddSpellListState extends State<AddSpellList> {
       children: [
         Padding(
           padding: const EdgeInsets.only(top: 40),
-          child: CategorizedList.builder(
+          child: FlexibleColumns.builder(
             keyBuilder: null,
             items: spells.keys,
             itemCount: (cat, idx) => spells[cat].length,

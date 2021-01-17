@@ -1,6 +1,6 @@
 import 'package:dungeon_paper/db/models/character.dart';
 import 'package:dungeon_paper/db/models/notes.dart';
-import 'package:dungeon_paper/src/atoms/categorized_list.dart';
+import 'package:dungeon_paper/src/atoms/flexible_columns.dart';
 import 'package:dungeon_paper/src/atoms/empty_state.dart';
 import 'package:dungeon_paper/src/atoms/search_bar.dart';
 import 'package:dungeon_paper/src/flutter_utils/widget_utils.dart';
@@ -49,7 +49,7 @@ class _NotesViewState extends State<NotesView> {
       children: [
         Padding(
           padding: const EdgeInsets.only(top: 28),
-          child: CategorizedList<String>.builder(
+          child: FlexibleColumns<String>.builder(
             keyBuilder: (ctx, key, idx) => 'NotesView.' + enumName(key),
             itemCount: (cat, idx) => filtered[cat].length,
             items: filtered.keys,

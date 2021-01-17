@@ -1,4 +1,4 @@
-import 'package:dungeon_paper/src/atoms/categorized_list.dart';
+import 'package:dungeon_paper/src/atoms/flexible_columns.dart';
 import 'package:dungeon_paper/src/atoms/search_bar.dart';
 import 'package:dungeon_paper/src/molecules/move_card.dart';
 import 'package:dungeon_paper/src/utils/utils.dart';
@@ -39,7 +39,7 @@ class _ReferenceViewState extends State<ReferenceView> {
       children: [
         Padding(
           padding: const EdgeInsets.only(top: 28),
-          child: CategorizedList.builder(
+          child: FlexibleColumns.builder(
             keyBuilder: (ctx, key, idx) => 'ReferenceView.' + enumName(key),
             items: categories.keys,
             itemCount: (key, idx) => categories[key].length,
