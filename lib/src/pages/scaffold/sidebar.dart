@@ -23,14 +23,22 @@ class Sidebar extends StatefulWidget {
   _SidebarState createState() => _SidebarState();
 }
 
-class _SidebarState extends State<Sidebar> {
-  bool _userMenuExpanded;
+class _SidebarState extends State<Sidebar> with SingleTickerProviderStateMixin {
+  AnimationController userMenuCtrl;
+  Animation<double> userMenuAnim;
 
   @override
   void initState() {
     super.initState();
     logger.d('Open Sidebar');
-    _userMenuExpanded = false;
+    userMenuCtrl = AnimationController(
+      vsync: this,
+      duration: Duration(milliseconds: 300),
+    );
+    userMenuAnim = CurvedAnimation(
+      parent: userMenuCtrl,
+      curve: Curves.easeInOut,
+    );
     analytics.logEvent(name: Events.OpenSidebar);
   }
 
@@ -38,35 +46,34 @@ class _SidebarState extends State<Sidebar> {
   Widget build(BuildContext context) {
     return DWStoreConnector<DWStore>(
       builder: (context, state) {
-        var user = state.user.current;
+        final user = state.user.current;
 
         return Drawer(
           child: ListView(
             children: [
               UserDrawerHeader(
                 user: user,
-                onToggleUserMenu: () {
-                  setState(() {
-                    _userMenuExpanded = !_userMenuExpanded;
-                  });
-                },
+                onToggleUserMenu: _toggleUserMenu,
               ),
-              if (_userMenuExpanded) ...[
-                ListTile(
-                  leading: Icon(Icons.person),
-                  title: Text('Account'),
-                  onTap: () => Get.to(AccountView()),
+              SizeTransition(
+                axis: Axis.vertical,
+                sizeFactor: userMenuAnim,
+                child: Column(
+                  children: [
+                    ListTile(
+                      leading: Icon(Icons.person),
+                      title: Text('Account'),
+                      onTap: () => Get.to(AccountView()),
+                    ),
+                    // Log out
+                    ListTile(
+                      leading: Icon(Icons.exit_to_app),
+                      title: Text('Log out'),
+                      onTap: _signOut,
+                    ),
+                  ],
                 ),
-                // Log out
-                ListTile(
-                  leading: Icon(Icons.exit_to_app),
-                  title: Text('Log out'),
-                  onTap: () {
-                    Get.back();
-                    signOutAll();
-                  },
-                ),
-              ],
+              ),
               title(
                 'Characters',
                 context,
@@ -127,6 +134,21 @@ class _SidebarState extends State<Sidebar> {
     );
   }
 
+  void _toggleUserMenu() {
+    setState(() {
+      if (userMenuCtrl.value == userMenuCtrl.lowerBound) {
+        userMenuCtrl.forward();
+      } else {
+        userMenuCtrl.reverse();
+      }
+    });
+  }
+
+  void _signOut() {
+    Get.back();
+    signOutAll();
+  }
+
   void openPage(
     String pageName,
     Widget page,
@@ -164,7 +186,7 @@ class _SidebarState extends State<Sidebar> {
   }
 
   Widget title(String text, BuildContext context, {Widget leading}) {
-    var titleStyle = getTitleStyle(context);
+    final titleStyle = getTitleStyle(context);
     Widget title = Padding(
       padding: EdgeInsets.all(8).copyWith(left: 18),
       child: Text(
@@ -175,7 +197,7 @@ class _SidebarState extends State<Sidebar> {
     if (leading == null) {
       return title;
     }
-    var leadingStyle = titleStyle.copyWith(
+    final leadingStyle = titleStyle.copyWith(
       color: Get.theme.textTheme.headline3.color,
     );
     return Row(
@@ -284,7 +306,10 @@ class UserDrawerHeader extends StatelessWidget {
             user.displayName,
             style: TextStyle(color: Get.theme.colorScheme.onSecondary),
           ),
-          currentAccountPicture: UserAvatar(user: user),
+          currentAccountPicture: GestureDetector(
+            child: UserAvatar(user: user),
+            onTap: () => Get.to(AccountView()),
+          ),
           onDetailsPressed: onToggleUserMenu,
         ),
       ],

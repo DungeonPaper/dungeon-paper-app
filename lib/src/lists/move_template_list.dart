@@ -1,5 +1,7 @@
 import 'package:dungeon_paper/db/models/move_templates.dart';
+import 'package:dungeon_paper/src/dialogs/standard_dialog_controls.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 class MoveTemplateList extends StatelessWidget {
   final void Function(String message) onSelectTemplate;
@@ -9,24 +11,28 @@ class MoveTemplateList extends StatelessWidget {
 
   static const _defaultTemplates = <MoveTemplate>[
     MoveTemplate(
-      label: 'Simple',
+      shortLabel: 'Simple',
+      longLabel: 'Simple move',
       help: 'Basic template for simple move.',
       text: _singleBoth,
     ),
     MoveTemplate(
-      label: 'Multi. choice',
+      shortLabel: 'Multi. choice',
+      longLabel: 'Multiple choice success & trouble',
       help:
           'Template with multiple options for success,\nand multiple options for trouble.',
       text: _multiBoth,
     ),
     MoveTemplate(
-      label: 'Multi. success',
+      shortLabel: 'Multi. success',
+      longLabel: 'Multiple choice success',
       help:
           'Template with multiple options for success,\nbut only one outcome for trouble.',
       text: _multiSuccess,
     ),
     MoveTemplate(
-      label: 'Multi. failure',
+      shortLabel: 'Multi. trouble',
+      longLabel: 'Multiple choice trouble',
       help:
           'Template with multiple options for trouble,\nbut only one outcome for success.',
       text: _multiFail,
@@ -60,10 +66,18 @@ class MoveTemplateList extends StatelessWidget {
                   // Tooltip(
                   //   message: template.help,
                   // child:
-                  ActionChip(
-                    label: Text(template.label),
-                    onPressed: () => onSelectTemplate?.call(template.text),
-                    visualDensity: VisualDensity.compact,
+                  InkWell(
+                    child: ActionChip(
+                      label: Text(template.shortLabel),
+                      onPressed: () => onSelectTemplate?.call(template.text),
+                      visualDensity: VisualDensity.compact,
+                    ),
+                    onLongPress: () => Get.dialog(
+                      _TemplatePreviewDialog(
+                        template: template,
+                        onInsert: () => onSelectTemplate?.call(template.text),
+                      ),
+                    ),
                   ),
                   // ),
                   SizedBox(width: 8),
@@ -106,4 +120,41 @@ class MoveTemplateList extends StatelessWidget {
       '  $_bullet $_blank\n'
       '  $_bullet $_blank\n'
       '  $_bullet $_blank\n';
+}
+
+class _TemplatePreviewDialog extends StatelessWidget {
+  const _TemplatePreviewDialog({
+    Key key,
+    @required this.template,
+    @required this.onInsert,
+  }) : super(key: key);
+
+  final MoveTemplate template;
+  final VoidCallback onInsert;
+
+  @override
+  Widget build(BuildContext context) {
+    return AlertDialog(
+      title: Text(template.longLabel + ' preview'),
+      content: Column(
+        mainAxisSize: MainAxisSize.min,
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          Text(template.help, style: Get.theme.textTheme.caption),
+          SizedBox(height: 24),
+          Text(template.text),
+        ],
+      ),
+      actions: StandardDialogControls.actions(
+        context: context,
+        onConfirm: () {
+          onInsert?.call();
+          Get.back();
+        },
+        onCancel: () => Get.back(),
+        confirmText: Text('Insert Template'),
+        cancelText: Text('Close'),
+      ),
+    );
+  }
 }
