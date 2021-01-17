@@ -12,6 +12,7 @@ import 'package:firebase_auth/firebase_auth.dart' as fb;
 import 'package:flutter/foundation.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:pedantic/pedantic.dart';
+import 'package:platform/platform.dart';
 import 'auth_common.dart';
 export 'auth_common.dart';
 part 'auth_email.dart';
@@ -170,6 +171,22 @@ void dispatchFinalDataToStore({
   unawaited(analytics.setUserProperty(
     name: 'connected_accounts',
     value: firebaseUser.providerData.map((d) => d.providerId).join(','),
+  ));
+  unawaited(analytics.setUserProperty(
+    name: 'characters_count',
+    value: dwStore.state.characters.all.length.toString(),
+  ));
+  unawaited(analytics.setUserProperty(
+    name: 'classes_count',
+    value: dwStore.state.customClasses.customClasses.length.toString(),
+  ));
+  unawaited(analytics.setUserProperty(
+    name: 'latest_platform_name',
+    value: LocalPlatform().operatingSystem,
+  ));
+  unawaited(analytics.setUserProperty(
+    name: 'latest_platform_version',
+    value: LocalPlatform().operatingSystemVersion,
   ));
 
   registerAllListeners(firebaseUser);

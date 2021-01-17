@@ -9,10 +9,12 @@ import 'package:dungeon_paper/src/lists/custom_class_select_list.dart';
 import 'package:dungeon_paper/src/redux/characters/characters_store.dart';
 import 'package:dungeon_paper/src/redux/custom_classes/custom_classes_store.dart';
 import 'package:dungeon_paper/src/redux/stores.dart';
+import 'package:dungeon_paper/src/utils/analytics.dart';
 import 'package:dungeon_world_data/player_class.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_file_dialog/flutter_file_dialog.dart';
 import 'package:get/get.dart';
+import 'package:pedantic/pedantic.dart';
 
 class ImportView extends StatefulWidget {
   @override
@@ -136,6 +138,10 @@ class _ImportViewState extends State<ImportView> {
 
   void _import() async {
     try {
+      unawaited(analytics.logEvent(name: Events.ImportStart, parameters: {
+        'characters_count': _charactersToImport.length,
+        'classes_count': _classesToImport.length,
+      }));
       final user = dwStore.state.user.current;
       final finalChars =
           Set<Character>.from(dwStore.state.characters.all.values);
@@ -169,6 +175,11 @@ class _ImportViewState extends State<ImportView> {
         finalClasses.add(added);
       }
 
+      unawaited(analytics.logEvent(name: Events.ImportSuccess, parameters: {
+        'characters_count': _charactersToImport.length,
+        'classes_count': _classesToImport.length,
+      }));
+
       dwStore.dispatch(SetCharacters.fromIterable(finalChars));
       dwStore.dispatch(SetCustomClasses.fromIterable(finalClasses));
 
@@ -178,12 +189,14 @@ class _ImportViewState extends State<ImportView> {
         _loadedClasses = {};
         _classesToImport = {};
       });
-
       Get.snackbar(
         'Import Successful',
         'Your characters were imported without problems',
       );
     } catch (e) {
+      unawaited(analytics.logEvent(name: Events.ImportFail, parameters: {
+        'reason': e.toString(),
+      }));
       Get.snackbar('Import Failed', 'Something went wrong.');
       rethrow;
     }

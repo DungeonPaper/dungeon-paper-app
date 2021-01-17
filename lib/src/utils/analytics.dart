@@ -48,6 +48,16 @@ class Events {
   static const UploadCharacterAvatarSuccess = 'upload_character_avatar_success';
   static const UploadCharacterAvatarFail = 'upload_character_avatar_fail';
   static const ToggleExpansion = 'toggle_expansion';
+  static const ExportStart = 'export_start';
+  static const ExportSuccess = 'export_success';
+  static const ExportFail = 'export_fail';
+  static const ImportStart = 'import_start';
+  static const ImportSuccess = 'import_success';
+  static const ImportFail = 'import_fail';
+  static const InsertMoveTemplate = 'insert_move_template';
+  static const PreviewMoveTemplate = 'preview_move_template';
+  static const CharactersSortStart = 'characters_sort_start';
+  static const CharactersSortEnd = 'characters_sort_end';
 }
 
 class ScreenNames {

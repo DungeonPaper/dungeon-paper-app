@@ -83,7 +83,7 @@ class _ManageCharactersViewState extends State<ManageCharactersView> {
                   width: mq.size.width < 500 ? mq.size.width / 2 : 200,
                   child: RaisedButton.icon(
                     icon: Icon(Icons.sort),
-                    onPressed: () => setState(() => sortMode = !sortMode),
+                    onPressed: _toggleSort,
                     color: theme.colorScheme.secondary,
                     textColor: theme.colorScheme.onSecondary,
                     label: Text(!sortMode ? 'Sort' : 'Done'),
@@ -148,6 +148,18 @@ class _ManageCharactersViewState extends State<ManageCharactersView> {
         ),
       ),
     );
+  }
+
+  void _toggleSort() {
+    unawaited(
+      analytics.logEvent(
+        name: sortMode ? Events.CharactersSortEnd : Events.CharactersSortStart,
+        parameters: {
+          'characters_count': characters.length,
+        },
+      ),
+    );
+    setState(() => sortMode = !sortMode);
   }
 
   void _moveUp(num oldIdx) {

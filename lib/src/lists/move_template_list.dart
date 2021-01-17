@@ -1,7 +1,9 @@
 import 'package:dungeon_paper/db/models/move_templates.dart';
 import 'package:dungeon_paper/src/dialogs/standard_dialog_controls.dart';
+import 'package:dungeon_paper/src/utils/analytics.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:pedantic/pedantic.dart';
 
 class MoveTemplateList extends StatelessWidget {
   final void Function(String message) onSelectTemplate;
@@ -69,15 +71,10 @@ class MoveTemplateList extends StatelessWidget {
                   InkWell(
                     child: ActionChip(
                       label: Text(template.shortLabel),
-                      onPressed: () => onSelectTemplate?.call(template.text),
+                      onPressed: _insert(template),
                       visualDensity: VisualDensity.compact,
                     ),
-                    onLongPress: () => Get.dialog(
-                      _TemplatePreviewDialog(
-                        template: template,
-                        onInsert: () => onSelectTemplate?.call(template.text),
-                      ),
-                    ),
+                    onLongPress: _preview(template),
                   ),
                   // ),
                   SizedBox(width: 8),
@@ -120,6 +117,27 @@ class MoveTemplateList extends StatelessWidget {
       '  $_bullet $_blank\n'
       '  $_bullet $_blank\n'
       '  $_bullet $_blank\n';
+
+  void Function() _insert(MoveTemplate template) => () {
+        unawaited(
+            analytics.logEvent(name: Events.InsertMoveTemplate, parameters: {
+          'template': template.shortLabel,
+        }));
+        onSelectTemplate?.call(template.text);
+      };
+
+  void Function() _preview(MoveTemplate template) => () {
+        unawaited(
+            analytics.logEvent(name: Events.PreviewMoveTemplate, parameters: {
+          'template': template.shortLabel,
+        }));
+        Get.dialog(
+          _TemplatePreviewDialog(
+            template: template,
+            onInsert: _insert(template),
+          ),
+        );
+      };
 }
 
 class _TemplatePreviewDialog extends StatelessWidget {
