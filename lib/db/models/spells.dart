@@ -48,6 +48,9 @@ class DbSpell extends Spell {
     map['prepared'] = prepared;
     return map;
   }
+
+  @override
+  DbSpell copy() => DbSpell.fromJSON(toJSON());
 }
 
 Future updateSpell(Character character, DbSpell spell) async {

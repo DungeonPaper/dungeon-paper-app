@@ -237,3 +237,6 @@ Set<T> unique<T>(Iterable<T> list, dynamic Function(T) value) {
   final values = list.map(value).toSet();
   return Set.from(reversed..retainWhere((x) => values.remove(value(x))));
 }
+
+String prettyDouble(num number) =>
+    number == number.ceil() ? number.toStringAsFixed(0) : number.toString();

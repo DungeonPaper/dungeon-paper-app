@@ -1,7 +1,11 @@
+import 'package:dungeon_paper/db/models/character.dart';
 import 'package:dungeon_paper/db/models/inventory_items.dart';
 import 'package:dungeon_paper/src/atoms/card_bottom_controls.dart';
+import 'package:dungeon_paper/src/atoms/dice_icon.dart';
+import 'package:dungeon_paper/src/atoms/icon_chip.dart';
 import 'package:dungeon_paper/src/dialogs/confirmation_dialog.dart';
 import 'package:dungeon_paper/src/dialogs/dialogs.dart';
+import 'package:dungeon_paper/src/flutter_utils/platform_svg.dart';
 import 'package:dungeon_paper/src/flutter_utils/widget_utils.dart';
 import 'package:dungeon_paper/src/lists/tag_list.dart';
 import 'package:dungeon_paper/src/scaffolds/add_inventory_item_scaffold.dart';
@@ -19,6 +23,7 @@ class InventoryItemCard extends StatelessWidget {
   final InventoryItemCardMode mode;
   final void Function(InventoryItem) onSave;
   final void Function() onDelete;
+  final Character character;
 
   InventoryItemCard({
     Key key,
@@ -26,6 +31,7 @@ class InventoryItemCard extends StatelessWidget {
     @required this.mode,
     @required this.onSave,
     @required this.onDelete,
+    @required this.character,
   }) : super(key: key);
 
   @override
@@ -54,9 +60,10 @@ class InventoryItemCard extends StatelessWidget {
         ),
       ),
     ];
-    if (item.equipped == true) {
+    if (mode == InventoryItemCardMode.Editable && item.equipped == true) {
       titleChildren.addAll([
         Chip(
+          visualDensity: VisualDensity.compact,
           backgroundColor: Colors.orange[300],
           label: Text('Equipped'),
           padding: EdgeInsets.all(0),
@@ -66,17 +73,71 @@ class InventoryItemCard extends StatelessWidget {
       ]);
     }
     if (mode == InventoryItemCardMode.Editable) {
-      titleChildren.add(Text('x$amount'));
+      titleChildren.add(Padding(
+        padding: const EdgeInsets.symmetric(vertical: 8),
+        child: Text('x$amount'),
+      ));
     }
+
     var title = Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: titleChildren,
     );
+
     return Card(
       margin: EdgeInsets.zero,
       child: ExpansionTile(
         key: PageStorageKey('inv-${item.key}'),
-        title: title,
+        title: ConstrainedBox(
+          constraints: BoxConstraints(minHeight: 45),
+          child: title,
+        ),
+        subtitle: [item.damage, item.armor, item.weight].any((i) => i != 0)
+            ? Wrap(
+                spacing: 4,
+                children: [
+                  if (item.damage != 0)
+                    IconChip(
+                      visualDensity: VisualDensity.compact,
+                      spacing: 4,
+                      icon: DiceIcon(
+                        dice: character.damageDice,
+                        size: 14,
+                      ),
+                      label: Text(
+                        (item.damage >= 0 ? '+' : '-') + commatize(item.damage),
+                        textScaleFactor: 0.8,
+                      ),
+                    ),
+                  if (item.armor != 0)
+                    IconChip(
+                      visualDensity: VisualDensity.compact,
+                      spacing: 4,
+                      icon: PlatformSvg.asset(
+                        'armor.svg',
+                        size: 14,
+                      ),
+                      label: Text(
+                        commatize(item.armor),
+                        textScaleFactor: 0.8,
+                      ),
+                    ),
+                  if (item.weight != 0)
+                    IconChip(
+                      visualDensity: VisualDensity.compact,
+                      spacing: 4,
+                      icon: PlatformSvg.asset(
+                        'dumbbell.svg',
+                        size: 14,
+                      ),
+                      label: Text(
+                        commatize(item.weight),
+                        textScaleFactor: 0.8,
+                      ),
+                    ),
+                ],
+              )
+            : null,
         expandedCrossAxisAlignment: CrossAxisAlignment.stretch,
         children: <Widget>[
           Padding(
@@ -93,7 +154,7 @@ class InventoryItemCard extends StatelessWidget {
           if (mode == InventoryItemCardMode.Editable)
             Padding(
               padding:
-                  const EdgeInsets.symmetric(horizontal: 16).copyWith(top: 32),
+                  const EdgeInsets.symmetric(horizontal: 16).copyWith(top: 16),
               child: Wrap(
                 alignment: WrapAlignment.end,
                 spacing: 6,
@@ -136,12 +197,12 @@ class InventoryItemCard extends StatelessWidget {
                     visualDensity: VisualDensity.compact,
                     label: Text(item.equipped ? 'Equipped' : 'Unequiped'),
                     selected: item.equipped,
+                    selectedColor: Colors.orange[300],
                     onSelected: (val) {
                       final copy = item.copy();
                       copy.equipped = val;
                       onSave?.call(copy);
                     },
-                    selectedColor: Colors.orange[300],
                   ),
                 ],
               ),
@@ -210,6 +271,7 @@ class InventoryItemCard extends StatelessWidget {
         item: item,
         mode: DialogMode.Edit,
         onSave: onSave,
+        character: character,
       ),
     );
   }

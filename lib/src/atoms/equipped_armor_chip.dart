@@ -13,7 +13,7 @@ class EquippedArmorChip extends StatelessWidget {
     @required this.character,
   }) : super(key: key);
 
-  num get armor => character.equippedArmor;
+  int get armor => character.equippedArmor;
 
   @override
   Widget build(BuildContext context) {
@@ -44,9 +44,7 @@ class EquippedArmorChip extends StatelessWidget {
                       size: 20,
                     ),
                     SizedBox(width: 10),
-                    Text(armor == armor.ceil()
-                        ? armor.toStringAsFixed(0)
-                        : armor.toString()),
+                    Text(armor.toString()),
                   ],
                 ),
               ),

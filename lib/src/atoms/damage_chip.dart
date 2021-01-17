@@ -40,7 +40,7 @@ class DamageChip extends StatelessWidget {
                   size: 20,
                 ),
                 SizedBox(width: 10),
-                Text('$damage'),
+                Text((damage >= 0 ? '+' : '-') + damage.toString()),
               ],
             ),
           ),
