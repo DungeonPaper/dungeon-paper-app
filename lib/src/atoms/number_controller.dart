@@ -2,6 +2,7 @@ import 'package:dungeon_paper/src/flutter_utils/input_formatters.dart';
 import 'package:dungeon_paper/src/utils/types.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:get/get.dart';
 
 class NumberController extends StatefulWidget {
   final num value;
@@ -12,6 +13,7 @@ class NumberController extends StatefulWidget {
   final FormatType formatType;
   final bool autoFocus;
   final bool enabled;
+  final InputDecoration decoration;
 
   const NumberController({
     Key key,
@@ -23,6 +25,7 @@ class NumberController extends StatefulWidget {
     this.formatType = FormatType.Integer,
     this.autoFocus = false,
     this.enabled = true,
+    this.decoration,
   }) : super(key: key);
 
   @override
@@ -84,8 +87,16 @@ class _NumberControllerState extends State<NumberController> {
                   formatType: widget.formatType,
                 ),
               ],
-              decoration: InputDecoration(
-                errorText: !_validate ? '${widget.min}-${widget.max}' : null,
+              decoration: (widget.decoration ?? InputDecoration()).copyWith(
+                errorText: !_validate
+                    ? widget.decoration.errorText ??
+                        '${widget.min}-${widget.max}'
+                    : null,
+                labelStyle: TextStyle(
+                  fontSize:
+                      Get.theme.inputDecorationTheme.labelStyle.fontSize ??
+                          Get.theme.textTheme.subtitle1.fontSize,
+                ),
               ),
               controller: _controller,
               autofocus: widget.autoFocus,
