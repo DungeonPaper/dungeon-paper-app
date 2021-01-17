@@ -5,8 +5,13 @@ import 'package:flutter/material.dart';
 
 class TagList extends StatelessWidget {
   final List<Tag> tags;
+  final VisualDensity visualDensity;
 
-  const TagList({Key key, @required this.tags}) : super(key: key);
+  const TagList({
+    Key key,
+    @required this.tags,
+    this.visualDensity,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -19,6 +24,7 @@ class TagList extends StatelessWidget {
               padding: EdgeInsets.only(right: 4),
               child: TagChip(
                 tag: tags[i],
+                visualDensity: visualDensity,
                 onPressed: (tag) {
                   showDialog(
                     context: context,

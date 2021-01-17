@@ -49,7 +49,10 @@ class InventoryItemCard extends StatelessWidget {
       );
     }
     if (item.tags?.isNotEmpty == true) {
-      info.add(TagList(tags: item.tags));
+      info.add(TagList(
+        tags: item.tags,
+        visualDensity: VisualDensity.compact,
+      ));
     }
 
     var titleChildren = <Widget>[

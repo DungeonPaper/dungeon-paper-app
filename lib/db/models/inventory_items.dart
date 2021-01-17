@@ -106,9 +106,6 @@ class InventoryItem extends Equipment {
       (t) => t?.name?.toLowerCase() == 'weight',
       orElse: () => null,
     );
-    if (name == 'Axe') {
-      print(this.toString());
-    }
     if (armor != null && armor.hasValue) {
       var weightValue = 0.toDouble();
       if (armor.value is num) {

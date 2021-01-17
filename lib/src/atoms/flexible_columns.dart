@@ -162,6 +162,10 @@ class _FlexibleColumnsState<T> extends State<FlexibleColumns<T>> {
           )
         : null;
 
+    if (outputItems.isEmpty) {
+      return Container();
+    }
+
     return ExpandableList(
       key: PageStorageKey('$sessionKey-$index-$charId-expansion'),
       expansionKey: builtKey,
