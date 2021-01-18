@@ -67,7 +67,7 @@ class FABState extends State<FAB> {
             onPressed: () => Get.to(
               EditNoteScreen(
                 note: Note(),
-                mode: DialogMode.Create,
+                mode: DialogMode.create,
                 onSave: (note) => createNote(character, note),
                 categories: collectCategories(character.notes),
               ),
@@ -78,7 +78,7 @@ class FABState extends State<FAB> {
             onPressed: () => Get.to(
               AddInventoryItemScaffold(
                 item: InventoryItem(),
-                mode: DialogMode.Create,
+                mode: DialogMode.create,
                 onSave: (item) => createInventoryItem(character, item),
                 character: character,
               ),

@@ -32,7 +32,7 @@ class AddRaceMoveScaffoldState extends State<AddRaceMoveScaffold>
       builder: (ctx, form, onSave) {
         var appBar = AppBar(
           title: Text(
-              '${widget.mode == DialogMode.Create ? 'Add' : 'Edit'} Race Move'),
+              '${widget.mode == DialogMode.create ? 'Add' : 'Edit'} Race Move'),
           actions: <Widget>[
             IconButton(
               tooltip: 'Save',

@@ -116,3 +116,28 @@ void registerCustomClassesListener(fb.User firebaseUser) {
   });
   logger.d('Registered db classes listener');
 }
+
+StreamSubscription _campaignsListener;
+
+void registerCampaignsListener(fb.User firebaseUser) {
+  _campaignsListener?.cancel();
+  final email = firebaseUser.email;
+  _campaignsListener = firestore
+      .collection('user_data/$email/custom_campaigns')
+      .snapshots()
+      .listen((campaigns) {
+    if (campaigns.docs.isEmpty) {
+      return;
+    }
+    dwStore.dispatch(
+      SetCustomClasses({
+        for (final character in campaigns.docs)
+          character.reference.id: CustomClass(
+            data: character.data(),
+            ref: character.reference,
+          ),
+      }),
+    );
+  });
+  logger.d('Registered db campaigns listener');
+}

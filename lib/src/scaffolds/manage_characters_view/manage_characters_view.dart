@@ -197,7 +197,7 @@ class _ManageCharactersViewState extends State<ManageCharactersView> {
     Get.to(
       EditCharacterView(
         character: char,
-        mode: DialogMode.Edit,
+        mode: DialogMode.edit,
       ),
     );
   }
@@ -237,7 +237,7 @@ class _ManageCharactersViewState extends State<ManageCharactersView> {
     Get.to(
       EditCharacterView(
         character: null,
-        mode: DialogMode.Create,
+        mode: DialogMode.create,
       ),
     );
   }

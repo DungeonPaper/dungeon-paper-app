@@ -42,6 +42,11 @@ class User extends FirebaseEntity {
       features[key] != false &&
       features[key] != null;
 
+  bool featureEnabled(String key) =>
+      features[key] is bool && features[key] == true;
+
+  bool get isDm => featureEnabled('dm_tools_preview');
+
   bool get isTester => hasFeature('tester');
 
   User({

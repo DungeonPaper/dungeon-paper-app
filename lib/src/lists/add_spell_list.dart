@@ -70,7 +70,7 @@ class _AddSpellListState extends State<AddSpellList> {
                 child: SpellCard(
                   index: -1,
                   spell: DbSpell.fromSpell(spell),
-                  mode: SpellCardMode.Addable,
+                  mode: SpellCardMode.addable,
                   onSave: widget.onSave,
                   onDelete: null,
                 ),

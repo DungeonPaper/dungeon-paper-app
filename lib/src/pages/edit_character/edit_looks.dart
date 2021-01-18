@@ -17,7 +17,7 @@ class ChangeLooksDialog extends StatefulWidget {
     Key key,
     @required this.character,
     @required this.onUpdate,
-    this.mode = DialogMode.Edit,
+    this.mode = DialogMode.edit,
   }) : super(key: key);
 
   @override

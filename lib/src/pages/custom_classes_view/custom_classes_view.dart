@@ -89,7 +89,7 @@ class _CustomClassesViewState extends State<CustomClassesView> {
 
   void Function() _add(BuildContext context) {
     return () {
-      Get.to(CustomClassWizard(mode: DialogMode.Create));
+      Get.to(CustomClassWizard(mode: DialogMode.create));
     };
   }
 
@@ -97,7 +97,7 @@ class _CustomClassesViewState extends State<CustomClassesView> {
     return (cls) {
       Get.to(
         CustomClassWizard(
-          mode: DialogMode.Edit,
+          mode: DialogMode.edit,
           customClass: cls,
         ),
       );
@@ -126,7 +126,7 @@ class _CustomClassesViewState extends State<CustomClassesView> {
 
     Get.to(
       CustomClassWizard(
-        mode: DialogMode.Create,
+        mode: DialogMode.create,
         customClass: custCls,
       ),
     );

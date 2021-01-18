@@ -22,7 +22,7 @@ class EditHPDialog extends StatefulWidget {
   _EditHPDialogState createState() => _EditHPDialogState();
 }
 
-enum HPMode { HP, MaxHP }
+enum HPMode { hp, maxHp }
 
 class _EditHPDialogState extends State<EditHPDialog> {
   int currentHP;
@@ -39,15 +39,15 @@ class _EditHPDialogState extends State<EditHPDialog> {
     initialCurrentHP = currentHP;
     initialMaxHP = maxHP;
     useDefaultMaxHP = widget.character.useDefaultMaxHP;
-    mode = HPMode.HP;
+    mode = HPMode.hp;
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
     final hpTitles = {
-      HPMode.HP: 'HP' + (currentHP != widget.character.currentHP ? ' *' : ''),
-      HPMode.MaxHP: 'Max HP' + (maxHP != widget.character.maxHP ? ' *' : ''),
+      HPMode.hp: 'HP' + (currentHP != widget.character.currentHP ? ' *' : ''),
+      HPMode.maxHp: 'Max HP' + (maxHP != widget.character.maxHP ? ' *' : ''),
     };
     final Widget title = Row(
       children: <Widget>[
@@ -166,8 +166,8 @@ class _EditHPDialogState extends State<EditHPDialog> {
     );
   }
 
-  bool get isHP => mode == HPMode.HP;
-  bool get isMaxHP => mode == HPMode.MaxHP;
+  bool get isHP => mode == HPMode.hp;
+  bool get isMaxHP => mode == HPMode.maxHp;
 
   void updateValue(val) {
     setState(() {

@@ -107,7 +107,7 @@ class _AddInventoryItemState extends State<AddInventoryItem> {
                 child: InventoryItemCard(
                   key: PageStorageKey('add-${item.key}'),
                   item: item,
-                  mode: InventoryItemCardMode.Addable,
+                  mode: InventoryItemCardMode.addable,
                   onSave: widget.onSave,
                   onDelete: null,
                   character: widget.character,

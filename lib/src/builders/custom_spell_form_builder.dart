@@ -70,7 +70,7 @@ class CustomSpellFormBuilderState extends State<CustomSpellFormBuilder> {
                 labelText: 'Description',
                 floatingLabelBehavior: FloatingLabelBehavior.always,
               ),
-              autofocus: widget.mode == DialogMode.Edit,
+              autofocus: widget.mode == DialogMode.edit,
               minLines: 6,
               maxLines: null,
               keyboardType: TextInputType.multiline,

@@ -5,6 +5,7 @@ import 'package:dungeon_paper/src/dialogs/dialogs.dart';
 import 'package:dungeon_paper/src/flutter_utils/platform_svg.dart';
 import 'package:dungeon_paper/src/pages/about_view/about_view.dart';
 import 'package:dungeon_paper/src/pages/account_view/account_view.dart';
+import 'package:dungeon_paper/src/pages/campaigns_view/campaigns_view.dart';
 import 'package:dungeon_paper/src/pages/custom_classes_view/custom_classes_view.dart';
 import 'package:dungeon_paper/src/pages/edit_character/edit_character_view.dart';
 import 'package:dungeon_paper/src/pages/settings_view/settings_view.dart';
@@ -84,14 +85,14 @@ class _SidebarState extends State<Sidebar> with SingleTickerProviderStateMixin {
                       padding: EdgeInsets.zero,
                       icon: Icon(Icons.add),
                       tooltip: 'Create new character',
-                      onPressed: () => createNewCharacterScreen(context),
+                      onPressed: createNewCharacterScreen,
                     ),
                     IconButton(
                       color: Get.theme.accentColor,
                       padding: EdgeInsets.zero,
                       icon: Icon(Icons.settings),
                       tooltip: 'Manage characters',
-                      onPressed: () => manageCharactersScreen(context),
+                      onPressed: manageCharactersScreen,
                     ),
                   ],
                 ),
@@ -100,6 +101,13 @@ class _SidebarState extends State<Sidebar> with SingleTickerProviderStateMixin {
               Divider(),
               title('Custom Content', context),
               ListTile(
+                title: Text('Campaigns'),
+                onTap: campaignsScreen,
+                leading: Icon(Icons.group),
+              ),
+              ListTile(
+                title: Text('Custom Classes'),
+                onTap: customClassesScreen,
                 leading: Padding(
                   padding: const EdgeInsets.only(top: 4, left: 4),
                   child: PlatformSvg.asset(
@@ -111,8 +119,6 @@ class _SidebarState extends State<Sidebar> with SingleTickerProviderStateMixin {
                         : Get.theme.accentColor,
                   ),
                 ),
-                title: Text('Custom Classes'),
-                onTap: () => customClassesScreen(context),
               ),
               Divider(),
               title('Application', context),
@@ -125,7 +131,7 @@ class _SidebarState extends State<Sidebar> with SingleTickerProviderStateMixin {
               ListTile(
                 leading: Icon(Icons.info),
                 title: Text('About'),
-                onTap: () => aboutScreen(context),
+                onTap: aboutScreen,
               ),
             ],
           ),
@@ -158,35 +164,43 @@ class _SidebarState extends State<Sidebar> with SingleTickerProviderStateMixin {
     Get.to(page);
   }
 
-  void createNewCharacterScreen(BuildContext context) {
+  void createNewCharacterScreen() {
     Get.back();
     openPage(
       ScreenNames.CharacterScreen,
       EditCharacterView(
         character: null,
-        mode: DialogMode.Create,
+        mode: DialogMode.create,
         onSave: (char) => dwStore.dispatch(SetCurrentChar(char)),
       ),
     );
   }
 
-  void manageCharactersScreen(BuildContext context) {
+  void manageCharactersScreen() {
     Get.back();
     openPage(ScreenNames.ManageCharacters, ManageCharactersView());
   }
 
-  void customClassesScreen(BuildContext context) {
+  void customClassesScreen() {
     Get.back();
     openPage(ScreenNames.CustomClasses, CustomClassesView());
   }
 
-  void aboutScreen(BuildContext context) {
+  void campaignsScreen() {
+    Get.back();
+    openPage(ScreenNames.About, CampaignsView());
+  }
+
+  void aboutScreen() {
     Get.back();
     openPage(ScreenNames.About, AboutView());
   }
 
-  Widget title(String text, BuildContext context, {Widget leading}) {
-    final titleStyle = getTitleStyle(context);
+  Widget title(
+    String text,
+    BuildContext context, {
+    Widget leading,
+  }) {
     Widget title = Padding(
       padding: EdgeInsets.all(8).copyWith(left: 18),
       child: Text(
@@ -213,13 +227,11 @@ class _SidebarState extends State<Sidebar> with SingleTickerProviderStateMixin {
     );
   }
 
-  TextStyle getTitleStyle(BuildContext context) {
-    return TextStyle(
-      color: Get.theme.accentColor,
-      fontWeight: FontWeight.w700,
-      fontSize: 14,
-    );
-  }
+  static final titleStyle = TextStyle(
+    color: Get.theme.accentColor,
+    fontWeight: FontWeight.w700,
+    fontSize: 14,
+  );
 
   List<Widget> characterList(
       Map<String, Character> characters, BuildContext context) {

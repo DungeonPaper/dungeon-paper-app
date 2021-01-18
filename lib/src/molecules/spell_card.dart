@@ -9,7 +9,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_markdown/flutter_markdown.dart';
 import 'package:get/get.dart';
 
-enum SpellCardMode { Addable, Editable, Fixed }
+enum SpellCardMode { addable, editable, fixed }
 
 class SpellCard extends StatefulWidget {
   final num index;
@@ -79,7 +79,7 @@ class SpellCardState extends State<SpellCard> {
               spacing: 6,
               runSpacing: -8,
               children: [
-                if (widget.mode == SpellCardMode.Editable)
+                if (widget.mode == SpellCardMode.editable)
                   FilterChip(
                     visualDensity: VisualDensity.compact,
                     label: Text(spell.prepared ? 'Prepared' : 'Unprepared'),
@@ -94,7 +94,7 @@ class SpellCardState extends State<SpellCard> {
               ],
             ),
           ),
-          widget.mode == SpellCardMode.Editable
+          widget.mode == SpellCardMode.editable
               ? CardBottomControls(
                   onEdit: () => Get.to(
                     AddSpellScaffold(
@@ -106,7 +106,7 @@ class SpellCardState extends State<SpellCard> {
                         }
                         Get.back();
                       },
-                      mode: DialogMode.Edit,
+                      mode: DialogMode.edit,
                     ),
                   ),
                   onDelete: () async {
@@ -124,7 +124,7 @@ class SpellCardState extends State<SpellCard> {
                   },
                   entityTypeName: 'Spell',
                 )
-              : widget.mode == SpellCardMode.Addable
+              : widget.mode == SpellCardMode.addable
                   ? Padding(
                       padding: EdgeInsetsDirectional.fromSTEB(0, 0, 16, 10),
                       child: Align(

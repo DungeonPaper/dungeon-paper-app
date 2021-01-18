@@ -107,7 +107,7 @@ class PhotoAndSummary extends StatelessWidget {
     Get.to(
       EditCharacterView(
         character: character,
-        mode: DialogMode.Edit,
+        mode: DialogMode.edit,
       ),
     );
   }

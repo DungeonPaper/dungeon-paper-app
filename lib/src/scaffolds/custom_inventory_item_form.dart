@@ -85,7 +85,7 @@ class CustomInventoryItemFormState extends State<CustomInventoryItemForm> {
                 labelText: 'Description',
                 floatingLabelBehavior: FloatingLabelBehavior.always,
               ),
-              autofocus: widget.mode == DialogMode.Edit,
+              autofocus: widget.mode == DialogMode.edit,
               maxLines: null,
               minLines: 6,
               keyboardType: TextInputType.multiline,
@@ -112,7 +112,7 @@ class CustomInventoryItemFormState extends State<CustomInventoryItemForm> {
       return widget.builder(
         context,
         form,
-        widget.mode == DialogMode.Create ? _createItem : _updateItem,
+        widget.mode == DialogMode.create ? _createItem : _updateItem,
       );
     }
 

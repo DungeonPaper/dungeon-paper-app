@@ -95,10 +95,10 @@ class AddInventoryItemScaffoldState extends State<AddInventoryItemScaffold>
         );
 
         var list = <Widget>[
-          if (widget.mode == DialogMode.Create) tabBar,
+          if (widget.mode == DialogMode.create) tabBar,
           Expanded(
             child:
-                widget.mode == DialogMode.Create ? tabBarView : formContainer,
+                widget.mode == DialogMode.create ? tabBarView : formContainer,
           ),
         ];
 
@@ -107,8 +107,8 @@ class AddInventoryItemScaffoldState extends State<AddInventoryItemScaffold>
           wrapWithScrollable: false,
           elevation: 0.0,
           title:
-              Text('${widget.mode == DialogMode.Create ? 'Add' : 'Edit'} Item'),
-          actions: tabIdx == texts.length - 1 || widget.mode == DialogMode.Edit
+              Text('${widget.mode == DialogMode.create ? 'Add' : 'Edit'} Item'),
+          actions: tabIdx == texts.length - 1 || widget.mode == DialogMode.edit
               ? actions
               : [],
           body: Column(

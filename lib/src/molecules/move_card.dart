@@ -8,7 +8,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_markdown/flutter_markdown.dart';
 import 'package:get/get.dart';
 
-enum MoveCardMode { Addable, Editable, Fixed }
+enum MoveCardMode { addable, editable, fixed }
 
 class MoveCard extends StatefulWidget {
   final Move move;
@@ -22,7 +22,7 @@ class MoveCard extends StatefulWidget {
     @required this.move,
     @required this.onSave,
     @required this.onDelete,
-    this.mode = MoveCardMode.Fixed,
+    this.mode = MoveCardMode.fixed,
     this.raceMove = false,
   }) : super(key: key);
 
@@ -44,12 +44,12 @@ class MoveCardState extends State<MoveCard> {
           listItemCrossAxisAlignment: MarkdownListItemCrossAxisAlignment.start,
         ),
       ),
-      widget.mode == MoveCardMode.Editable
+      widget.mode == MoveCardMode.editable
           ? CardBottomControls(
               onEdit: () => Get.to(
                 AddMoveScreen(
                   move: widget.move,
-                  mode: DialogMode.Edit,
+                  mode: DialogMode.edit,
                   onSave: (move) {
                     _save(move);
                     Get.back();
@@ -68,7 +68,7 @@ class MoveCardState extends State<MoveCard> {
                   ? _delete()
                   : null,
             )
-          : widget.mode == MoveCardMode.Addable
+          : widget.mode == MoveCardMode.addable
               ? Padding(
                   padding: EdgeInsetsDirectional.fromSTEB(0, 0, 16, 10),
                   child: Align(

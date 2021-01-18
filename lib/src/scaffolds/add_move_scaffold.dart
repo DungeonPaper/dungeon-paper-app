@@ -89,10 +89,10 @@ class AddMoveScreenState extends State<AddMoveScreen>
         var list = <Widget>[
           Expanded(
             child:
-                widget.mode == DialogMode.Create ? tabBarView : formContainer,
+                widget.mode == DialogMode.create ? tabBarView : formContainer,
           ),
         ];
-        if (widget.mode == DialogMode.Create) {
+        if (widget.mode == DialogMode.create) {
           list.insert(0, tabBar);
         }
 
@@ -101,8 +101,8 @@ class AddMoveScreenState extends State<AddMoveScreen>
           wrapWithScrollable: false,
           elevation: 0.0,
           title:
-              Text('${widget.mode == DialogMode.Create ? 'Add' : 'Edit'} Move'),
-          actions: tabIdx == 1 || widget.mode == DialogMode.Edit ? actions : [],
+              Text('${widget.mode == DialogMode.create ? 'Add' : 'Edit'} Move'),
+          actions: tabIdx == 1 || widget.mode == DialogMode.edit ? actions : [],
           body: Column(
             children: list,
           ),
