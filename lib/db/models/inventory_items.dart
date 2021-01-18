@@ -1,37 +1,36 @@
+import 'package:dungeon_paper/db/db.dart';
+import 'package:dungeon_paper/db/models/converters/default_uuid.dart';
+import 'package:dungeon_paper/db/models/converters/tag_converter.dart';
 import 'package:dungeon_paper/src/utils/utils.dart';
 import 'package:dungeon_world_data/equipment.dart';
 import 'package:dungeon_world_data/tag.dart';
-import 'package:uuid/uuid.dart';
+import 'package:freezed_annotation/freezed_annotation.dart';
 
 import 'character.dart';
 
+part 'inventory_items.freezed.dart';
+part 'inventory_items.g.dart';
+
 enum EquipmentKeys { key, item, amount }
 
-class InventoryItem extends Equipment {
-  num amount;
-  bool equipped;
-  bool countWeight;
-  bool countDamage;
-  bool countArmor;
+@freezed
+abstract class InventoryItem with KeyMixin implements _$InventoryItem {
+  const InventoryItem._();
 
-  InventoryItem({
-    String key,
-    String name,
+  const factory InventoryItem({
+    @DefaultUuid() String key,
+    @Default('') String name,
     String pluralName,
-    String description,
-    List<Tag> tags,
-    this.amount,
-    this.equipped = false,
-    this.countWeight = true,
-    this.countDamage = true,
-    this.countArmor = true,
-  }) : super(
-          key: key ?? Uuid().v4(),
-          name: name ?? '',
-          pluralName: pluralName,
-          description: description ?? '',
-          tags: tags ?? [],
-        );
+    @Default('') String description,
+    @TagConverter() @Default([]) List<Tag> tags,
+    @Default(1) num amount,
+    @Default(false) bool equipped,
+    @Default(true) bool countWeight,
+    @Default(true) bool countDamage,
+    @Default(true) bool countArmor,
+  }) = _InventoryItem;
+
+  factory InventoryItem.fromJson(value) => _$InventoryItemFromJson(value);
 
   static InventoryItem fromEquipment(
     Equipment equipment, {
@@ -40,20 +39,15 @@ class InventoryItem extends Equipment {
     bool countWeight = true,
     bool countDamage = true,
     bool countArmor = true,
-  }) {
-    return InventoryItem(
-      key: equipment.key ?? Uuid().v4(),
-      name: equipment.name ?? '',
-      description: equipment.description ?? '',
-      pluralName: equipment.pluralName,
-      tags: equipment.tags ?? [],
-      amount: amount ?? 1,
-      equipped: equipped ?? false,
-      countWeight: countWeight ?? true,
-      countDamage: countDamage ?? true,
-      countArmor: countArmor ?? true,
-    );
-  }
+  }) =>
+      _$InventoryItemFromJson({
+        ...equipment.toJSON(),
+        'amount': amount ?? 1,
+        'equipped': equipped ?? false,
+        'countWeight': countWeight ?? true,
+        'countDamage': countDamage ?? true,
+        'countArmor': countArmor ?? true,
+      });
 
   bool get hasDamage =>
       tags?.firstWhere(
@@ -138,77 +132,50 @@ class InventoryItem extends Equipment {
     }
     return 0;
   }
-
-  factory InventoryItem.fromJSON(Map map) {
-    var orig = Equipment.fromJSON(_getItem(map));
-    return InventoryItem.fromEquipment(
-      orig,
-      amount: map['amount'],
-      equipped: map['equipped'] ?? false,
-      countWeight: map['count_weight'] ?? true,
-      countDamage: map['count_damage'] ?? true,
-      countArmor: map['count_armor'] ?? true,
-    );
-  }
-
-  static R _getItem<R>(Map map) {
-    return map.containsKey('item') && map['item'] != null ? map['item'] : map;
-  }
-
-  @override
-  Map toJSON() => {
-        ...super.toJSON(),
-        'amount': amount,
-        'equipped': equipped ?? false,
-        'count_weight': countWeight ?? true,
-        'count_damage': countDamage ?? true,
-        'count_armor': countArmor ?? true,
-      };
-
-  @override
-  InventoryItem copy({bool regenerateKey = false}) {
-    return InventoryItem.fromJSON({
-      ...toJSON(),
-      if (regenerateKey == true) 'key': Uuid().v4(),
-    });
-  }
 }
 
 ReturnPredicate<InventoryItem> invItemMatcher = matcher(
     (InventoryItem i, InventoryItem o) => i.key != null && i.key == o.key);
 
 Future<void> updateInventoryItem(
-    Character character, InventoryItem item) async {
-  return character.update(json: {
-    'inventory': findAndReplaceInList(character.inventory, item),
-  });
-}
+        Character character, InventoryItem item) async =>
+    character
+        .copyWith(inventory: findAndReplaceInList(character.inventory, item))
+        .update(keys: ['inventory']);
 
 Future<void> deleteInventoryItem(
-    Character character, InventoryItem item) async {
-  return character
-      .update(json: {'inventory': removeFromList(character.inventory, item)});
-}
+        Character character, InventoryItem item) async =>
+    character
+        .copyWith(inventory: removeFromList(character.inventory, item))
+        .update(keys: ['inventory']);
 
 Future<void> createInventoryItem(
     Character character, InventoryItem item) async {
   final found = character.inventory
       .firstWhere((it) => it.name == item.name, orElse: () => null);
   if (found != null) {
-    return character.update(json: {
-      'inventory': findAndReplaceInList(character.inventory, found..amount += 1)
-    });
+    return character
+        .copyWith(
+      inventory: findAndReplaceInList(
+        character.inventory,
+        found.copyWith(amount: found.amount + 1),
+      ),
+    )
+        .update(keys: ['inventory']);
   }
   return character
-      .update(json: {'inventory': addToList(character.inventory, item)});
+      .copyWith(inventory: addToList(character.inventory, item))
+      .update(keys: ['inventory']);
 }
 
 Future<void> incrItemAmount(
-    Character character, InventoryItem item, num amount) async {
-  return await character.update(json: {
-    'inventory': findAndReplaceInList(
-      character.inventory,
-      item..amount = clamp(amount, 0, double.infinity).toInt(),
-    ),
-  });
-}
+  Character character,
+  InventoryItem item,
+  num amount,
+) async =>
+    character.copyWith(
+      inventory: findAndReplaceInList(
+        character.inventory,
+        item.copyWith(amount: item.amount + amount),
+      ),
+    );

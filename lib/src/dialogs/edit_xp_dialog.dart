@@ -35,8 +35,8 @@ class _EditXPDialogState extends State<EditXPDialog> {
 
   @override
   Widget build(BuildContext context) {
-    var screenWidth = MediaQuery.of(context).size.width;
-    int maxXP = widget.character.level + 7;
+    final screenWidth = MediaQuery.of(context).size.width;
+    final maxXP = widget.character.level + 7;
     Widget indicator = Container(
       height: 110,
       child: currentXP < maxXP && currentXP > 0
@@ -128,18 +128,23 @@ class _EditXPDialogState extends State<EditXPDialog> {
 
   void _save(BuildContext context) {
     analytics.logEvent(name: Events.SaveXP);
-    widget.character
-      ..currentXP = currentXP
-      ..update();
+    unawaited(
+      widget.character
+          .copyWith(
+        currentXP: currentXP,
+      )
+          .update(keys: ['currentXP']),
+    );
     Get.back();
   }
 
   void levelUp(BuildContext context) async {
     unawaited(analytics.logEvent(name: Events.LevelUp));
-    final char = widget.character
-      ..currentXP = 0
-      ..level += 1;
-    unawaited(char.update());
+    final char = widget.character.copyWith(
+      currentXP: 0,
+      level: widget.character.level + 1,
+    );
+    unawaited(char.update(keys: ['currentXP', 'level']));
     setState(() {
       currentXP = char.currentXP;
       initialCurrentXP = currentXP;
@@ -152,11 +157,10 @@ class _EditXPDialogState extends State<EditXPDialog> {
 
   void levelDown(BuildContext context) async {
     unawaited(analytics.logEvent(name: Events.LevelDown));
-    final char = widget.character;
-    char
-      ..currentXP = char.level + 5
-      ..level -= 1;
-    unawaited(char.update());
+    final char = widget.character.copyWith(
+        currentXP: widget.character.level + 5,
+        level: widget.character.level - 1);
+    unawaited(char.update(keys: ['currentXP', 'level']));
     setState(() {
       currentXP = char.currentXP;
       initialCurrentXP = currentXP;

@@ -73,8 +73,7 @@ class ClassSelectView extends StatelessWidget {
   void save(BuildContext context, PlayerClass def,
       ChangeClassConfirmationOptions options) {
     var result = options.applyToCharacter(character, def);
-    character.mainClass = def;
-    onUpdate?.call(result.character);
+    onUpdate?.call(result.character.copyWith(playerClasses: [def]));
   }
 
   Function() previewClass(BuildContext context, PlayerClass def) {
@@ -279,21 +278,25 @@ class ChangeClassConfirmationOptions {
   ChangeClassConfirmationResults applyToCharacter(
       Character character, PlayerClass mainClass) {
     if (deleteMoves) {
-      character.moves = [];
+      character = character.copyWith(moves: []);
     }
 
     if (resetXP) {
-      character.level = 1;
-      character.currentXP = 0;
+      character = character.copyWith(
+        level: 1,
+        currentXP: 0,
+      );
     }
 
     if (resetMaxHP) {
-      character.maxHP = character.defaultMaxHP;
-      character.currentHP = character.maxHP;
+      character = character.copyWith(
+        customMaxHP: character.defaultMaxHP,
+        currentHP: character.maxHP,
+      );
     }
 
     if (resetHitDice) {
-      character.damageDice = mainClass.damage;
+      character = character.copyWith(damageDice: mainClass.damage);
     }
 
     return ChangeClassConfirmationResults(character: character);

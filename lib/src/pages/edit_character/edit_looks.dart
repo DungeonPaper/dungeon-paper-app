@@ -147,8 +147,7 @@ class _ChangeLooksDialogState extends State<ChangeLooksDialog> {
   }
 
   void changeLooks(List<String> def) async {
-    var char = widget.character;
-    char.looks = def;
+    var char = widget.character.copyWith(looks: def);
     widget.onUpdate?.call(char);
   }
 

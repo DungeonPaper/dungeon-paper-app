@@ -137,15 +137,21 @@ class CustomClass extends FirebaseEntity {
   }
 
   Future<void> _updateChars() async {
+    final futures = <Future>[];
     for (final char in dwStore.state.characters.all.values) {
       if (char.playerClasses.any((el) => el.key == key)) {
         final _updated = char.playerClasses
             .map((el) => el.key == key ? toPlayerClass() : el)
             .toList();
-        char.playerClasses = _updated;
-        await char.update();
+        futures.add(
+          char.copyWith(playerClasses: _updated).update(
+            keys: ['playerClasses'],
+          ),
+        );
       }
     }
+
+    return Future.wait(futures);
   }
 
   @override

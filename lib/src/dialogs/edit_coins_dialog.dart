@@ -98,9 +98,11 @@ class EditCoinsDialogState extends State<EditCoinsDialog> {
   }
 
   void _saveValue() async {
-    var character = dwStore.state.characters.current;
-    character.coins = value;
-    unawaited(character.update(json: {'coins': value}));
+    unawaited(
+      dwStore.state.characters.current
+          .copyWith(coins: value)
+          .update(keys: ['coins']),
+    );
     Get.back();
   }
 }

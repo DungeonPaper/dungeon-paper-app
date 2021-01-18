@@ -168,44 +168,32 @@ class InventoryItemCard extends StatelessWidget {
                       visualDensity: VisualDensity.compact,
                       label: Text(!item.countWeight ? 'No weight' : 'Weight'),
                       selected: item.countWeight,
-                      onSelected: (val) {
-                        final copy = item.copy();
-                        copy.countWeight = val;
-                        onSave?.call(copy);
-                      },
+                      onSelected: (val) =>
+                          onSave?.call(item.copyWith(countWeight: val)),
                     ),
                   if (item.hasDamage)
                     FilterChip(
                       visualDensity: VisualDensity.compact,
                       label: Text(!item.countDamage ? 'No damage' : 'Damage'),
                       selected: item.countDamage,
-                      onSelected: (val) {
-                        final copy = item.copy();
-                        copy.countDamage = val;
-                        onSave?.call(copy);
-                      },
+                      onSelected: (val) =>
+                          onSave?.call(item.copyWith(countDamage: val)),
                     ),
                   if (item.hasArmor)
                     FilterChip(
                       visualDensity: VisualDensity.compact,
                       label: Text(!item.countArmor ? 'No armor' : 'Armor'),
                       selected: item.countArmor,
-                      onSelected: (val) {
-                        final copy = item.copy();
-                        copy.countArmor = val;
-                        onSave?.call(copy);
-                      },
+                      onSelected: (val) =>
+                          onSave?.call(item.copyWith(countArmor: val)),
                     ),
                   FilterChip(
                     visualDensity: VisualDensity.compact,
                     label: Text(item.equipped ? 'Equipped' : 'Unequiped'),
                     selected: item.equipped,
                     selectedColor: Colors.orange[300],
-                    onSelected: (val) {
-                      final copy = item.copy();
-                      copy.equipped = val;
-                      onSave?.call(copy);
-                    },
+                    onSelected: (val) =>
+                        onSave?.call(item.copyWith(equipped: val)),
                   ),
                 ],
               ),
@@ -303,10 +291,7 @@ class InventoryItemCard extends StatelessWidget {
     }
   }
 
-  InventoryItem _incrAmount(InventoryItem item, num amount) {
-    var copy = item.copy();
-    var amt = clamp(copy.amount + amount, 0, double.infinity);
-    copy.amount = amt.toInt();
-    return copy;
-  }
+  InventoryItem _incrAmount(InventoryItem item, num amount) => item.copyWith(
+        amount: clamp(item.amount + amount, 0, double.infinity).toInt(),
+      );
 }

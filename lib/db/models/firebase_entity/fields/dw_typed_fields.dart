@@ -115,7 +115,7 @@ class DiceField extends Field<Dice> {
         );
 }
 
-class InventoryItemField extends DWEntityField<InventoryItem> {
+class InventoryItemField extends Field<InventoryItem> {
   InventoryItemField({
     FieldsContext context,
     @required String fieldName,
@@ -129,7 +129,8 @@ class InventoryItemField extends DWEntityField<InventoryItem> {
           value: value,
           isSerialized: isSerialized,
           listeners: listeners,
-          create: (value) => InventoryItem.fromJSON(value),
+          fromJSON: (value, _) => InventoryItem.fromJson(value),
+          toJSON: (value, _) => value.toJson(),
           defaultValue: defaultValue ??
               (ctx) => InventoryItem(
                     name: '',
@@ -404,12 +405,12 @@ class CharacterField extends Field<Character> {
           defaultValue: defaultValue ?? (ctx) => Character(),
           fromJSON: (value, ctx) => value is Map &&
                   (value.containsKey('data') || value.containsKey('docIS'))
-              ? Character(
+              ? Character.fromJson(
+                  value['data'],
                   ref: firestore.doc(value['docID']),
-                  data: value['data'],
                 )
-              : Character(data: value),
-          toJSON: (value, ctx) => value.toJSON(),
+              : Character.fromJson(value),
+          toJSON: (value, ctx) => value.toJson(),
         );
 }
 

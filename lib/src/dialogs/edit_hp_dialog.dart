@@ -4,6 +4,7 @@ import 'package:dungeon_paper/src/molecules/status_bars.dart';
 import 'package:dungeon_paper/src/utils/analytics.dart';
 import 'package:dungeon_paper/src/utils/utils.dart';
 import 'package:get/get.dart';
+import 'package:pedantic/pedantic.dart';
 import 'package:wheel_spinner/wheel_spinner.dart';
 import 'package:flutter/material.dart';
 
@@ -38,7 +39,7 @@ class _EditHPDialogState extends State<EditHPDialog> {
     maxHP = widget.character.maxHP ?? 0;
     initialCurrentHP = currentHP;
     initialMaxHP = maxHP;
-    useDefaultMaxHP = widget.character.useDefaultMaxHP;
+    useDefaultMaxHP = widget.character.settings.useDefaultMaxHp;
     mode = HPMode.hp;
     super.initState();
   }
@@ -112,7 +113,7 @@ class _EditHPDialogState extends State<EditHPDialog> {
                   value: useDefaultMaxHP,
                   title: Text('Calculate based on stats'),
                   subtitle: Text(
-                      'Class Base HP (${widget.character.mainClass.baseHP}) + Constitution (${widget.character.con})'),
+                      'Class Base HP (${widget.character.mainClass.baseHP}) + Constitution (${widget.character.constitution})'),
                   onChanged: (val) {
                     if (val) updateValue(widget.character.defaultMaxHP);
                     setState(() {
@@ -184,11 +185,15 @@ class _EditHPDialogState extends State<EditHPDialog> {
 
   void _save(BuildContext context) {
     analytics.logEvent(name: Events.SaveHP);
-    widget.character
-      ..currentHP = currentHP
-      ..maxHP = maxHP
-      ..useDefaultMaxHP = useDefaultMaxHP
-      ..update();
+    unawaited(
+      widget.character
+          .copyWith(
+              currentHP: currentHP,
+              customMaxHP: maxHP,
+              settings: widget.character.settings
+                  .copyWith(useDefaultMaxHp: useDefaultMaxHP))
+          .update(keys: ['currentHP', 'maxHP', 'settings']),
+    );
     Get.back();
   }
 

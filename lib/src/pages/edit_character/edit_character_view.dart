@@ -68,8 +68,8 @@ class _EditCharacterViewState extends State<EditCharacterView>
   void initState() {
     var user = dwStore.state.user.current;
     character = widget.character != null
-        ? Character(
-            data: widget.character.toJSON(),
+        ? Character.fromJson(
+            widget.character.toJson(),
             ref:
                 widget.character.ref ?? user.ref.collection('characters').doc(),
           )
@@ -197,7 +197,7 @@ class _EditCharacterViewState extends State<EditCharacterView>
           mode: DialogMode.create,
           onUpdate: (char) => setState(() {
             dirty = true;
-            character.looks = char.looks;
+            character = character.copyWith(looks: char.looks);
           }),
         ),
         CreateCharacterTab.Stats: EditStats(

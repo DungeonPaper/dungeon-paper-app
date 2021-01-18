@@ -38,8 +38,9 @@ class _EditBasicInfoViewState extends State<EditBasicInfoView> {
         key: _Keys.displayName,
         defaultValue: widget.character.displayName,
         listener: () {
-          var def = widget.character;
-          def.displayName = editingControllers[_Keys.displayName].text.trim();
+          var def = widget.character.copyWith(
+            displayName: editingControllers[_Keys.displayName].text.trim(),
+          );
           updateWith(def);
         },
       ),
@@ -47,8 +48,9 @@ class _EditBasicInfoViewState extends State<EditBasicInfoView> {
         key: _Keys.photoURL,
         defaultValue: widget.character.photoURL,
         listener: () {
-          var def = widget.character;
-          def.photoURL = editingControllers[_Keys.photoURL].text.trim();
+          var def = widget.character.copyWith(
+            photoURL: editingControllers[_Keys.photoURL].text.trim(),
+          );
           updateWith(def);
         },
       ),
@@ -56,8 +58,9 @@ class _EditBasicInfoViewState extends State<EditBasicInfoView> {
         key: _Keys.bio,
         defaultValue: widget.character.bio,
         listener: () {
-          var def = widget.character;
-          def.bio = editingControllers[_Keys.bio].text.trim();
+          var def = widget.character.copyWith(
+            bio: editingControllers[_Keys.bio].text.trim(),
+          );
           updateWith(def);
         },
       ),

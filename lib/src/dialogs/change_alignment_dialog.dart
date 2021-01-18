@@ -40,8 +40,8 @@ class ChangeAlignmentDialog extends StatelessWidget {
 
   Function() changeAlignment(chr.AlignmentName def) {
     return () async {
-      character.alignment = def;
-      onUpdate?.call(character);
+      final char = character.copyWith(alignment: def);
+      onUpdate?.call(char);
     };
   }
 }

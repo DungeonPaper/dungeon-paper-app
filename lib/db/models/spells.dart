@@ -53,16 +53,14 @@ class DbSpell extends Spell {
   DbSpell copy() => DbSpell.fromJSON(toJSON());
 }
 
-Future updateSpell(Character character, DbSpell spell) async {
-  await character
-      .update(json: {'spells': findAndReplaceInList(character.spells, spell)});
-}
+Future<void> updateSpell(Character character, DbSpell spell) => character
+    .copyWith(spells: findAndReplaceInList(character.spells, spell))
+    .update(keys: ['spells']);
 
-Future deleteSpell(Character character, DbSpell spell) async {
-  await character
-      .update(json: {'spells': removeFromList(character.spells, spell)});
-}
+Future<void> deleteSpell(Character character, DbSpell spell) => character
+    .copyWith(spells: removeFromList(character.spells, spell))
+    .update(keys: ['spells']);
 
-Future createSpell(Character character, DbSpell spell) async {
-  await character.update(json: {'spells': addToList(character.spells, spell)});
-}
+Future<void> createSpell(Character character, DbSpell spell) => character
+    .copyWith(spells: addToList(character.spells, spell))
+    .update(keys: ['spells']);

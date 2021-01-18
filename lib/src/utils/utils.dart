@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'dart:math';
+import 'package:dungeon_paper/db/db.dart';
 import 'package:dungeon_paper/src/utils/logger.dart';
 import 'package:dungeon_world_data/dw_data.dart';
 import 'package:flutter/material.dart';
@@ -165,8 +166,15 @@ bool Function(T) keyMatcher<T>(dynamic Function(T) delegate, T object) =>
 bool Function(DWEntity) dwEntityMatcher(DWEntity comp) =>
     keyMatcher((o) => o.key, comp);
 
+bool Function(KeyMixin) keyMixinMatcher(KeyMixin comp) =>
+    keyMatcher((o) => o.key, comp);
+
 bool Function(T) getMatcher<T>(T obj, [bool Function(T) defaultMatcher]) =>
-    obj is DWEntity ? dwEntityMatcher(obj) : defaultMatcher ?? (o) => o == obj;
+    obj is DWEntity
+        ? dwEntityMatcher(obj)
+        : obj is KeyMixin
+            ? keyMixinMatcher(obj)
+            : defaultMatcher ?? (o) => o == obj;
 
 List<T> findAndReplaceInList<T>(List<T> list, T obj,
     [bool Function(T) matcher]) {

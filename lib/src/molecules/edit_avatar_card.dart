@@ -9,6 +9,7 @@ import 'package:dungeon_paper/src/utils/storage.dart';
 import 'package:flutter/material.dart';
 import 'package:icon_shadow/icon_shadow.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:pedantic/pedantic.dart';
 
 class EditAvatarCard extends StatefulWidget {
   final Character character;
@@ -132,8 +133,13 @@ class _EditAvatarCardState extends State<EditAvatarCard> {
 
   void setPhotoAlignment(Alignment align) {
     setState(() {
-      widget.character.settings =
-          widget.character.settings.copyWith(photoAlignment: align);
+      unawaited(
+        widget.character
+            .copyWith(
+                settings:
+                    widget.character.settings.copyWith(photoAlignment: align))
+            .update(keys: ['settings']),
+      );
     });
   }
 
