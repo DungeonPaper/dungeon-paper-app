@@ -222,8 +222,8 @@ class NoteField extends Field<Note> {
           isSerialized: isSerialized,
           listeners: listeners,
           defaultValue: defaultValue ?? (ctx) => Note(),
-          fromJSON: (value, ctx) => Note.fromJSON(value),
-          toJSON: (value, ctx) => value.toJSON(),
+          fromJSON: (value, ctx) => Note.fromJson(value),
+          toJSON: (value, ctx) => value.toJson(),
         );
 }
 

@@ -126,13 +126,11 @@ class NoteFormBuilderState extends State<NoteFormBuilder> {
     Get.back();
   }
 
-  Note _generateNote() {
-    return Note({
-      'key': widget.note.key,
-      'title': _controllers['title'].text,
-      'description': _controllers['description'].text,
-      'category': _controllers['category'].text,
-      'tags': tags.map((t) => t.toJSON()).toList(),
-    });
-  }
+  Note _generateNote() => Note(
+        key: widget.note.key,
+        title: _controllers['title'].text,
+        description: _controllers['description'].text,
+        category: _controllers['category'].text,
+        tags: [...tags],
+      );
 }

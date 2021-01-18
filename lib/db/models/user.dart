@@ -18,7 +18,7 @@ part 'user.freezed.dart';
 part 'user.g.dart';
 
 @freezed
-abstract class User with _$User {
+abstract class User with FirebaseMixin implements _$User {
   const User._();
 
   const factory User({
@@ -31,8 +31,6 @@ abstract class User with _$User {
 
   factory User.fromJson(json, {DocumentReference ref}) =>
       _$UserFromJson(json).copyWith(ref: ref);
-
-  String get documentID => ref.id;
 
   bool hasFeature(String key) =>
       key != null &&
@@ -48,7 +46,7 @@ abstract class User with _$User {
   bool get isTester => hasFeature('tester');
 
   Future<Character> createCharacter(Character character) async {
-    var doc = firestore.collection(ref.path + '/characters').doc();
+    var doc = ref.collection('characters').doc();
     var data = character.toJson();
     logger.d('Creating character: $data');
     await doc.set(data);
@@ -59,7 +57,7 @@ abstract class User with _$User {
   }
 
   Future<CustomClass> createCustomClass(CustomClass cls) async {
-    var doc = firestore.collection(ref.path + '/custom_classes').doc();
+    var doc = ref.collection('custom_classes').doc();
     var data = cls.toJSON();
     logger.d('Creating custom class: $data');
     await doc.set(data);
@@ -69,8 +67,7 @@ abstract class User with _$User {
   }
 
   Future<User> changeEmail(String newEmail) async {
-    final newRef = await helpers.move(
-      ref,
+    final newRef = await move(
       'user_data/$newEmail',
       update: {
         'email': newEmail,
