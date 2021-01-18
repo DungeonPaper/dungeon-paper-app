@@ -18,23 +18,27 @@ Future<User> getDatabaseUser(
       fbUser.providerData
           .firstWhere((element) => element.email?.isNotEmpty == true)
           ?.email;
-  var user = User(
-    ref: firestore.collection('user_data').doc(email),
-    autoLoad: false,
+  final userDoc = await firestore.collection('user_data').doc(email).get();
+  final data = userDoc.data();
+  var user = User.fromJson(
+    data,
+    ref: userDoc.reference,
   );
-  var data = await user.getRemoteData();
   if (data.isEmpty) {
     unawaited(analytics.logSignUp(signUpMethod: signInMethod.name));
-    user
-      ..displayName = fbUser.displayName ?? fbUser.email
-      ..email = fbUser.email
-      ..photoURL = fbUser.photoURL;
-    await user.create();
+    user = user.copyWith(
+      displayName: fbUser.displayName ?? fbUser.email,
+      email: fbUser.email,
+      photoURL: fbUser.photoURL,
+    );
+    await helpers.create(ref: userDoc.reference, json: data);
     await user.createCharacter(Character());
   } else {
     if (user.email?.isEmpty != true) {
-      user.email = email;
-      await user.update();
+      user = user.copyWith(
+        email: email,
+      );
+      await helpers.update(ref: userDoc.reference, json: data);
     }
   }
   return user;

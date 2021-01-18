@@ -1,40 +1,38 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dungeon_paper/db/db.dart';
+import 'package:dungeon_paper/db/models/converters/document_reference_converter.dart';
 import 'package:dungeon_paper/src/redux/characters/characters_store.dart';
 import 'package:dungeon_paper/src/redux/custom_classes/custom_classes_store.dart';
 import 'package:dungeon_paper/src/redux/stores.dart';
-import 'package:dungeon_paper/src/redux/users/user_store.dart';
 import 'package:dungeon_paper/src/utils/auth/auth.dart';
+// import 'package:dungeon_paper/src/redux/users/user_store.dart';
+// import 'package:dungeon_paper/src/utils/auth/auth.dart';
 import 'package:dungeon_paper/src/utils/logger.dart';
 
 import 'character.dart';
 import 'custom_class.dart';
-import 'firebase_entity/fields/fields.dart';
-import 'firebase_entity/firebase_entity.dart';
+import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:flutter/foundation.dart';
 
-FieldsContext userFields = FieldsContext([
-  StringField(fieldName: 'displayName'),
-  StringField(fieldName: 'email'),
-  StringField(fieldName: 'photoURL'),
-  MapOfField<String, dynamic>(
-    fieldName: 'features',
-    field: Field<dynamic>(fieldName: 'features', defaultValue: (ctx) => null),
-  ),
-]);
+part 'user.freezed.dart';
+part 'user.g.dart';
 
-class User extends FirebaseEntity {
-  FieldsContext _fields;
-  @override
-  FieldsContext get fields => _fields ??= userFields.copy();
+@freezed
+abstract class User with _$User {
+  const User._();
 
-  String get displayName => fields.get<String>('displayName').get;
-  set displayName(val) => fields.get<String>('displayName').set(val);
-  String get email => fields.get<String>('email').get;
-  set email(val) => fields.get<String>('email').set(val);
-  String get photoURL => fields.get<String>('photoURL').get;
-  set photoURL(val) => fields.get<String>('photoURL').set(val);
-  Map<String, dynamic> get features =>
-      fields.get<Map<String, dynamic>>('features').get;
+  const factory User({
+    String displayName,
+    String email,
+    String photoURL,
+    @JsonKey(defaultValue: {}) Map<String, dynamic> features,
+    @DocumentReferenceConverter() DocumentReference ref,
+  }) = _User;
+
+  factory User.fromJson(json, {DocumentReference ref}) =>
+      _$UserFromJson(json).copyWith(ref: ref);
+
+  String get documentID => ref.id;
 
   bool hasFeature(String key) =>
       key != null &&
@@ -48,12 +46,6 @@ class User extends FirebaseEntity {
   bool get isDm => featureEnabled('dm_tools_preview');
 
   bool get isTester => hasFeature('tester');
-
-  User({
-    DocumentReference ref,
-    Map<String, dynamic> data,
-    bool autoLoad,
-  }) : super(ref: ref, data: data, autoLoad: autoLoad);
 
   Future<Character> createCharacter(Character character) async {
     var doc = firestore.collection(ref.path + '/characters').doc();
@@ -76,20 +68,16 @@ class User extends FirebaseEntity {
     return cls;
   }
 
-  @override
-  void finalizeUpdate(Map<String, dynamic> json, {bool save = true}) {
-    if (save) {
-      dwStore.dispatch(SetUser(this));
-    }
-    super.finalizeUpdate(json, save: save);
-  }
-
-  @override
-  String toString() => '$displayName ($email)';
-
-  Future<void> changeEmail(String newEmail) async {
-    email = newEmail;
-    await updateEmail(newEmail);
-    return move(newEmail);
+  Future<User> changeEmail(String newEmail) async {
+    final _user = copyWith(email: newEmail);
+    final newRef = await helpers.move(
+      newId: 'user_data/$newEmail',
+      ref: ref,
+      json: _user.toJson(),
+    );
+    await updateFirebaseEmail(newEmail);
+    return _user.copyWith(
+      ref: newRef,
+    );
   }
 }

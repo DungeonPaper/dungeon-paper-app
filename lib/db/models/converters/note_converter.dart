@@ -1,0 +1,17 @@
+import 'package:dungeon_paper/db/models/notes.dart';
+import 'package:freezed_annotation/freezed_annotation.dart';
+
+class NoteConverter implements JsonConverter<Note, Map<String, dynamic>> {
+  const NoteConverter();
+
+  @override
+  Note fromJson(Map<String, dynamic> json) {
+    if (json == null) {
+      return null;
+    }
+    return Note.fromJSON(json);
+  }
+
+  @override
+  Map<String, dynamic> toJson(Note data) => data.toJSON();
+}
