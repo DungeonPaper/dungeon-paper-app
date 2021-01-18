@@ -64,8 +64,6 @@ abstract class Character with FirebaseMixin implements _$Character {
   factory Character.fromJson(value, {DocumentReference ref}) =>
       _$CharacterFromJson(value).copyWith(ref: ref);
 
-  String get documentID => ref.id;
-
   PlayerClass get mainClass => playerClasses.first;
 
   int get maxHP =>

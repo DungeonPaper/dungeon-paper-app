@@ -216,6 +216,9 @@ String snakeToCamel(String string) =>
           (match) => match.group(1).toUpperCase(),
         );
 
+Map<K, List<V>> groupByAlt<K, V>(Iterable<V> list, K Function(V) predicate) =>
+    groupBy(list, predicate);
+
 Map<K, List<V>> groupBy<K, V>(Iterable<V> list, K Function(V) predicate) {
   final out = <K, List<V>>{};
   for (final item in list) {

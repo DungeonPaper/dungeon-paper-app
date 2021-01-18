@@ -1,18 +1,28 @@
-import 'package:dungeon_paper/db/base.dart';
+import 'package:dungeon_paper/db/db.dart';
+import 'package:dungeon_paper/db/models/converters/default_uuid.dart';
+import 'package:dungeon_paper/db/models/converters/tag_converter.dart';
 import 'package:dungeon_paper/src/utils/utils.dart';
 import 'package:dungeon_world_data/tag.dart';
-import 'package:uuid/uuid.dart';
+import 'package:freezed_annotation/freezed_annotation.dart';
 
 import 'character.dart';
 
+part 'notes.freezed.dart';
+part 'notes.g.dart';
+
 enum NoteKeys { key, title, description, category, tags }
 
-class Note with Serializer<NoteKeys> {
-  String category;
-  String key;
-  String title;
-  String description;
-  List<Tag> tags;
+@freezed
+abstract class Note with KeyMixin implements _$Note {
+  const Note._();
+
+  const factory Note({
+    @Default('Misc') String category,
+    @DefaultUuid() String key,
+    @Default('') String title,
+    @Default('') String description,
+    @TagConverter() @Default([]) List<Tag> tags,
+  }) = _Note;
 
   static final defaultCategories = [
     'NPCs',
@@ -22,67 +32,18 @@ class Note with Serializer<NoteKeys> {
     'Misc'
   ];
 
-  Note([Map map]) {
-    map ??= {};
-    initSerializeMap({
-      NoteKeys.key: map['key'],
-      NoteKeys.title: map['title'],
-      NoteKeys.description: map['description'],
-      NoteKeys.category: map['category'],
-      NoteKeys.tags: map['tags'],
-    });
-  }
-
-  factory Note.fromJSON(Map map) => Note(map);
-
-  @override
-  Map<String, dynamic> toJSON() {
-    return {
-      'key': key,
-      'title': title,
-      'category': category,
-      'description': description,
-      'tags': tags.map((t) => t.toJSON()).toList(),
-    };
-  }
-
-  @override
-  dynamic initSerializeMap([Map map]) {
-    serializeMap = {
-      NoteKeys.key: (v) {
-        key = v ?? Uuid().v4();
-      },
-      NoteKeys.title: (v) {
-        title = v ?? '';
-      },
-      NoteKeys.description: (v) {
-        description = v ?? '';
-      },
-      NoteKeys.category: (v) {
-        category = v ?? 'Misc';
-      },
-      NoteKeys.tags: (v) {
-        tags = (v as List ?? [])
-            .map((t) => t is Tag ? t : Tag.fromJSON(t))
-            .toList();
-      },
-    };
-    return serializeAll(map);
-  }
+  factory Note.fromJson(json) => _$NoteFromJson(json);
 }
 
 ReturnPredicate<Note> matchNote =
     matcher<Note>((Note i, Note o) => i.key == o.key);
 
 Future<void> updateNote(Character character, Note note) => character
-    .copyWith(
-        notes: findAndReplaceInList<Note>(
-            character.notes, note, (n) => note.key == n.key))
+    .copyWith(notes: findAndReplaceInList<Note>(character.notes, note))
     .update(keys: ['notes']);
 
 Future<void> deleteNote(Character character, Note note) => character
-    .copyWith(
-        notes: removeFromList(character.notes, note, (n) => note.key == n.key))
+    .copyWith(notes: removeFromList(character.notes, note))
     .update(keys: ['notes']);
 
 Future<void> createNote(Character character, Note note) => character
@@ -95,5 +56,5 @@ List<String> collectCategories(
 }) =>
     {
       if (includeDefault == true) ...Note.defaultCategories,
-      ...groupBy<String, Note>(notes, (note) => note.category).keys
+      ...groupByAlt<String, Note>(notes, (note) => note.category).keys
     }.toList();

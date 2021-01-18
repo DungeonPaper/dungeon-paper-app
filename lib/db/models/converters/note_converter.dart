@@ -9,9 +9,9 @@ class NoteConverter implements JsonConverter<Note, Map<String, dynamic>> {
     if (json == null) {
       return null;
     }
-    return Note.fromJSON(json);
+    return Note.fromJson(json);
   }
 
   @override
-  Map<String, dynamic> toJson(Note data) => data.toJSON();
+  Map<String, dynamic> toJson(Note data) => data.toJson();
 }

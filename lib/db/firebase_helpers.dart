@@ -51,6 +51,8 @@ mixin FirebaseMixin {
   DocumentReference get ref;
   Map<String, dynamic> toJson();
 
+  String get documentID => ref.id;
+
   Future<DocumentReference> create({Iterable<String> keys}) =>
       helpers.create(ref, toJson());
 
@@ -70,6 +72,12 @@ mixin FirebaseMixin {
       );
 
   Future<void> delete() => helpers.delete(ref);
+
+  Future<Iterable<T>> getRefs<T>(
+          Iterable<DocumentReference> list, T Function(dynamic) map) =>
+      Future.wait(
+        list.map((r) => r.get()),
+      ).then((chars) => chars.map(map));
 }
 
 mixin KeyMixin {
