@@ -106,7 +106,7 @@ class CustomClassMoveList extends StatelessWidget {
           child: MoveCard(
               move: moves[i],
               raceMove: cats.keys.elementAt(catI) == MoveCategory.Race,
-              mode: MoveCardMode.Editable,
+              mode: MoveCardMode.editable,
               onSave: (move) => _updateMoveInCat(context, move, cat),
               onDelete: () => _deleteMoveInCat(context, moves[i], cat)),
         );
@@ -125,12 +125,12 @@ class CustomClassMoveList extends StatelessWidget {
     Get.to(
       cat == MoveCategory.Race
           ? AddRaceMoveScaffold(
-              mode: DialogMode.Create,
+              mode: DialogMode.create,
               move: blankMove,
               onSave: (move) => _addMoveToCat(context, move, cat),
             )
           : AddMoveScreen(
-              mode: DialogMode.Create,
+              mode: DialogMode.create,
               move: blankMove,
               onSave: (move) => _addMoveToCat(context, move, cat),
             ),

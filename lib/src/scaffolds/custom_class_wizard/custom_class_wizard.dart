@@ -23,7 +23,7 @@ class CustomClassWizard extends StatefulWidget {
     @required this.mode,
     this.customClass,
     this.onSave,
-  })  : assert(mode == DialogMode.Create || customClass != null),
+  })  : assert(mode == DialogMode.create || customClass != null),
         super(key: key);
 
   @override
@@ -83,7 +83,7 @@ class _CustomClassWizardState extends State<CustomClassWizard>
       child: MainScaffold(
         title: Text(def.name.isEmpty
             ? 'Custom Class'
-            : '${widget.mode == DialogMode.Create ? 'Creat' : 'Edit'}ing: ${def.name}'),
+            : '${widget.mode == DialogMode.create ? 'Creat' : 'Edit'}ing: ${def.name}'),
         actions: [
           IconButton(
             icon: Icon(Icons.save),
@@ -231,7 +231,7 @@ class _CustomClassWizardState extends State<CustomClassWizard>
         'mode': enumName(widget.mode).toLowerCase(),
       },
     ));
-    if (widget.mode == DialogMode.Create) {
+    if (widget.mode == DialogMode.create) {
       await def.create();
     } else {
       await def.update();
@@ -241,7 +241,7 @@ class _CustomClassWizardState extends State<CustomClassWizard>
   }
 
   Future<bool> _confirmExit() async {
-    var verb = widget.mode == DialogMode.Edit ? 'edit' : 'creation';
+    var verb = widget.mode == DialogMode.edit ? 'edit' : 'creation';
     if (!dirty) {
       return true;
     }

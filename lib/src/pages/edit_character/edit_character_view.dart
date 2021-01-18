@@ -98,7 +98,7 @@ class _EditCharacterViewState extends State<EditCharacterView>
       child: MainScaffold(
         title: Text(character.displayName.isEmpty
             ? 'Character'
-            : '${widget.mode == DialogMode.Create ? 'Creat' : 'Edit'}ing: ${character.displayName}'),
+            : '${widget.mode == DialogMode.create ? 'Creat' : 'Edit'}ing: ${character.displayName}'),
         actions: [
           IconButton(
             icon: Icon(Icons.save),
@@ -162,7 +162,7 @@ class _EditCharacterViewState extends State<EditCharacterView>
   Map<CreateCharacterTab, Widget> get _tabs => {
         CreateCharacterTab.BasicInfo: EditBasicInfoView(
           character: character,
-          mode: DialogMode.Create,
+          mode: DialogMode.create,
           onUpdate: (char) => setState(() {
             dirty = true;
             character = char;
@@ -170,7 +170,7 @@ class _EditCharacterViewState extends State<EditCharacterView>
         ),
         CreateCharacterTab.MainClass: ClassSelectView(
           character: character,
-          mode: DialogMode.Create,
+          mode: DialogMode.create,
           onUpdate: (char) => setState(() {
             dirty = true;
             character = char;
@@ -178,7 +178,7 @@ class _EditCharacterViewState extends State<EditCharacterView>
         ),
         CreateCharacterTab.Alignment: ChangeAlignmentDialog(
           character: character,
-          mode: DialogMode.Create,
+          mode: DialogMode.create,
           onUpdate: (char) => setState(() {
             dirty = true;
             character = char;
@@ -186,7 +186,7 @@ class _EditCharacterViewState extends State<EditCharacterView>
         ),
         CreateCharacterTab.Race: ChangeRaceDialog(
           character: character,
-          mode: DialogMode.Create,
+          mode: DialogMode.create,
           onUpdate: (char) => setState(() {
             dirty = true;
             character = char;
@@ -194,7 +194,7 @@ class _EditCharacterViewState extends State<EditCharacterView>
         ),
         CreateCharacterTab.Looks: ChangeLooksDialog(
           character: character,
-          mode: DialogMode.Create,
+          mode: DialogMode.create,
           onUpdate: (char) => setState(() {
             dirty = true;
             character.looks = char.looks;
@@ -243,7 +243,7 @@ class _EditCharacterViewState extends State<EditCharacterView>
         'mode': enumName(widget.mode).toLowerCase(),
       },
     ));
-    if (widget.mode == DialogMode.Create) {
+    if (widget.mode == DialogMode.create) {
       await character.create();
     } else {
       await character.update();
@@ -253,7 +253,7 @@ class _EditCharacterViewState extends State<EditCharacterView>
   }
 
   Future<bool> _confirmExit() async {
-    var verb = widget.mode == DialogMode.Edit ? 'edit' : 'creation';
+    var verb = widget.mode == DialogMode.edit ? 'edit' : 'creation';
     if (!dirty) {
       return true;
     }

@@ -140,7 +140,7 @@ class _InventoryViewState extends State<InventoryView> {
       child: InventoryItemCard(
         key: PageStorageKey(item.key),
         item: item,
-        mode: InventoryItemCardMode.Editable,
+        mode: InventoryItemCardMode.editable,
         onSave: (item) => updateInventoryItem(widget.character, item),
         onDelete: () => deleteInventoryItem(widget.character, item),
         character: widget.character,

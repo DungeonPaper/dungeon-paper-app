@@ -16,7 +16,7 @@ class EditBasicInfoView extends StatefulWidget {
   const EditBasicInfoView({
     Key key,
     @required this.onUpdate,
-    this.mode = DialogMode.Edit,
+    this.mode = DialogMode.edit,
     this.character,
     this.validityNotifier,
   }) : super(key: key);

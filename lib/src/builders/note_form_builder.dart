@@ -73,7 +73,7 @@ class NoteFormBuilderState extends State<NoteFormBuilder> {
               labelText: 'Title',
               floatingLabelBehavior: FloatingLabelBehavior.always,
             ),
-            autofocus: widget.mode == DialogMode.Create,
+            autofocus: widget.mode == DialogMode.create,
             autocorrect: true,
             textCapitalization: TextCapitalization.words,
             controller: _controllers['title'],
@@ -85,7 +85,7 @@ class NoteFormBuilderState extends State<NoteFormBuilder> {
                 labelText: 'Description',
                 floatingLabelBehavior: FloatingLabelBehavior.always,
               ),
-              autofocus: widget.mode == DialogMode.Edit,
+              autofocus: widget.mode == DialogMode.edit,
               minLines: 6,
               maxLines: null,
               keyboardType: TextInputType.multiline,
@@ -106,7 +106,7 @@ class NoteFormBuilderState extends State<NoteFormBuilder> {
     return widget.builder(
       context,
       form,
-      widget.mode == DialogMode.Create ? _createNote : _updateNote,
+      widget.mode == DialogMode.create ? _createNote : _updateNote,
     );
   }
 

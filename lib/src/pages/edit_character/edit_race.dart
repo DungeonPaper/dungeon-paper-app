@@ -14,7 +14,7 @@ class ChangeRaceDialog extends StatelessWidget {
 
   const ChangeRaceDialog({
     Key key,
-    this.mode = DialogMode.Edit,
+    this.mode = DialogMode.edit,
     @required this.character,
     @required this.onUpdate,
   }) : super(key: key);

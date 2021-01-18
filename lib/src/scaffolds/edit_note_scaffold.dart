@@ -35,7 +35,7 @@ class _EditNoteScreenState extends State<EditNoteScreen> {
       builder: (ctx, form, onSave) {
         return MainScaffold(
           title:
-              Text('${widget.mode == DialogMode.Create ? 'Add' : 'Edit'} Note'),
+              Text('${widget.mode == DialogMode.create ? 'Add' : 'Edit'} Note'),
           actions: <Widget>[
             IconButton(
               tooltip: 'Save',

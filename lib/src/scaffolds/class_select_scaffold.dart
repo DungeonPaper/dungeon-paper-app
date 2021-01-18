@@ -21,7 +21,7 @@ class ClassSelectView extends StatelessWidget {
     Key key,
     @required this.character,
     @required this.onUpdate,
-    this.mode = DialogMode.Edit,
+    this.mode = DialogMode.edit,
   }) : super(key: key);
 
   @override
@@ -55,7 +55,7 @@ class ClassSelectView extends StatelessWidget {
   }
 
   void chooseClass(BuildContext context, PlayerClass def) async {
-    if (mode == DialogMode.Create) {
+    if (mode == DialogMode.create) {
       save(context, def, ChangeClassConfirmationOptions.all(true));
       Get.back(result: true);
       return;
@@ -86,7 +86,7 @@ class ClassSelectView extends StatelessWidget {
             onSave: () => chooseClass(context, def),
           ),
         );
-        if (res == true && mode == DialogMode.Edit) {
+        if (res == true && mode == DialogMode.edit) {
           Get.back(result: res);
         }
       } catch (e) {
@@ -156,7 +156,7 @@ class _ConfirmClassChangeDialogState extends State<ConfirmClassChangeDialog> {
 
   @override
   Widget build(BuildContext context) {
-    var isEdit = widget.mode == DialogMode.Edit;
+    var isEdit = widget.mode == DialogMode.edit;
     return ConfirmationDialog(
         title: Text(isEdit ? 'Change Class?' : 'Choose Class?'),
         okButtonText:

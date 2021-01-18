@@ -38,14 +38,14 @@ class _EditTagDialogState extends State<EditTagDialog> {
       ),
     };
     _copyableTags = dungeonWorld.tags..sort((a, b) => a.name.compareTo(b.name));
-    _mode = widget.tag != null ? DialogMode.Edit : DialogMode.Create;
+    _mode = widget.tag != null ? DialogMode.edit : DialogMode.create;
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
-      title: Text((_mode == DialogMode.Edit ? 'Edit' : 'Create') + ' Tag'),
+      title: Text((_mode == DialogMode.edit ? 'Edit' : 'Create') + ' Tag'),
       contentPadding: EdgeInsets.symmetric(horizontal: 24, vertical: 16),
       content: SingleChildScrollView(
         child: Column(

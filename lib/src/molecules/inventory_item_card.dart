@@ -16,7 +16,7 @@ import 'package:flutter_markdown/flutter_markdown.dart';
 import 'package:get/get.dart';
 import 'package:url_launcher/url_launcher.dart';
 
-enum InventoryItemCardMode { Addable, Editable }
+enum InventoryItemCardMode { addable, editable }
 
 class InventoryItemCard extends StatelessWidget {
   final InventoryItem item;
@@ -63,7 +63,7 @@ class InventoryItemCard extends StatelessWidget {
         ),
       ),
     ];
-    if (mode == InventoryItemCardMode.Editable && item.equipped == true) {
+    if (mode == InventoryItemCardMode.editable && item.equipped == true) {
       titleChildren.addAll([
         Chip(
           visualDensity: VisualDensity.compact,
@@ -75,7 +75,7 @@ class InventoryItemCard extends StatelessWidget {
         SizedBox(width: 10),
       ]);
     }
-    if (mode == InventoryItemCardMode.Editable) {
+    if (mode == InventoryItemCardMode.editable) {
       titleChildren.add(Padding(
         padding: const EdgeInsets.symmetric(vertical: 8),
         child: Text('x$amount'),
@@ -146,7 +146,7 @@ class InventoryItemCard extends StatelessWidget {
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16)
                 .copyWith(
-                    bottom: mode == InventoryItemCardMode.Editable ? 0 : 16),
+                    bottom: mode == InventoryItemCardMode.editable ? 0 : 16),
             child: Column(
               mainAxisAlignment: MainAxisAlignment.start,
               crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -154,7 +154,7 @@ class InventoryItemCard extends StatelessWidget {
               children: info,
             ),
           ),
-          if (mode == InventoryItemCardMode.Editable)
+          if (mode == InventoryItemCardMode.editable)
             Padding(
               padding:
                   const EdgeInsets.symmetric(horizontal: 16).copyWith(top: 16),
@@ -210,7 +210,7 @@ class InventoryItemCard extends StatelessWidget {
                 ],
               ),
             ),
-          mode == InventoryItemCardMode.Editable
+          mode == InventoryItemCardMode.editable
               ? Row(
                   mainAxisAlignment: MainAxisAlignment.end,
                   children: <Widget>[
@@ -272,7 +272,7 @@ class InventoryItemCard extends StatelessWidget {
     Get.to(
       AddInventoryItemScaffold(
         item: item,
-        mode: DialogMode.Edit,
+        mode: DialogMode.edit,
         onSave: onSave,
         character: character,
       ),

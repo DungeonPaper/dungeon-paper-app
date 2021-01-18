@@ -162,8 +162,8 @@ class _BattleViewState extends State<BattleView> {
                     key: PageStorageKey(moves[idx].key ?? moves[idx].name),
                     move: moves[idx],
                     mode: key == CategoryKeys.StartingMoves
-                        ? MoveCardMode.Fixed
-                        : MoveCardMode.Editable,
+                        ? MoveCardMode.fixed
+                        : MoveCardMode.editable,
                     raceMove: key == CategoryKeys.StartingMoves && idx == 0,
                     onSave: (move) => updateMove(widget.character, move),
                     onDelete: () => deleteMove(widget.character, moves[idx]),
@@ -171,7 +171,7 @@ class _BattleViewState extends State<BattleView> {
                 : SpellCard(
                     index: idx,
                     spell: moves[idx],
-                    mode: SpellCardMode.Editable,
+                    mode: SpellCardMode.editable,
                     onSave: (spell) => updateSpell(widget.character, spell),
                     onDelete: () => deleteSpell(widget.character, moves[idx]),
                   ),

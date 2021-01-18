@@ -85,7 +85,7 @@ class NoteCardState extends State<NoteCard> {
     Get.to(
       EditNoteScreen(
         note: widget.note,
-        mode: DialogMode.Edit,
+        mode: DialogMode.edit,
         categories: widget.categories,
         onSave: (note) {
           if (widget.onSave != null) {
