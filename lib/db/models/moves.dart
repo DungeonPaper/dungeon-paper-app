@@ -6,17 +6,19 @@ ReturnPredicate<Move> matchMove =
     matcher<Move>((Move i, Move o) => i.key == o.key);
 
 Future updateMove(Character character, Move move) async {
-  num index = character.moves.indexWhere(matchMove(move));
-  character.moves[index] = move;
   await character
-      .update(json: {'moves': findAndReplaceInList(character.moves, move)});
+      .copyWith(moves: findAndReplaceInList(character.moves, move))
+      .update(keys: ['moves']);
 }
 
 Future deleteMove(Character character, Move move) async {
   await character
-      .update(json: {'moves': removeFromList(character.moves, move)});
+      .copyWith(moves: removeFromList(character.moves, move))
+      .update(keys: ['moves']);
 }
 
 Future createMove(Character character, Move move) async {
-  await character.update(json: {'moves': addToList(character.moves, move)});
+  await character
+      .copyWith(moves: addToList(character.moves, move))
+      .update(keys: ['moves']);
 }

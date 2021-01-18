@@ -182,8 +182,8 @@ class _ManageCharactersViewState extends State<ManageCharactersView> {
 
   void _updateChars(List<Character> copy) {
     for (var char in enumerate(copy)) {
-      char.value.order = char.index;
-      unawaited(char.value.update());
+      char = Enumeration(char.index, char.value.copyWith(order: char.index));
+      unawaited(char.value.update(keys: ['order']));
     }
     setState(() {
       characters = [...copy];

@@ -155,10 +155,10 @@ class _ImportViewState extends State<ImportView> {
         if (found == null) {
           added = await user.createCharacter(char);
         } else {
-          await found.update(json: char.toJSON());
-          added = found;
+          added = char.copyWith(order: found.order);
+          finalChars.remove(found);
+          await found.delete();
         }
-        finalChars.remove(found);
         finalChars.add(added);
       }
       for (final cls in _classesToImport) {
@@ -234,7 +234,7 @@ class _ImportViewState extends State<ImportView> {
       final raw = jsonDecode(str);
       final json = raw is List ? {'characters': raw} : raw;
       final chars = Set<Character>.from(
-              json['characters']?.map((v) => Character(data: v))) ??
+              json['characters']?.map((v) => Character.fromJson(v))) ??
           [];
       final customClasses = Set<CustomClass>.from(
             json['classes']?.map(

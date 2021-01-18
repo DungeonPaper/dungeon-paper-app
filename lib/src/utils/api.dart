@@ -31,14 +31,14 @@ Future<User> getDatabaseUser(
       email: fbUser.email,
       photoURL: fbUser.photoURL,
     );
-    await helpers.create(ref: userDoc.reference, json: data);
+    await helpers.create(userDoc.reference, data);
     await user.createCharacter(Character());
   } else {
     if (user.email?.isEmpty != true) {
       user = user.copyWith(
         email: email,
       );
-      await helpers.update(ref: userDoc.reference, json: data);
+      await helpers.update(userDoc.reference, data, keys: ['email']);
     }
   }
   return user;

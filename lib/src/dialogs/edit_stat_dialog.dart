@@ -133,32 +133,32 @@ class EditStatDialogState extends State<EditStatDialog> {
   }
 
   void _saveValue() async {
-    final character = dwStore.state.characters.current;
+    var character = dwStore.state.characters.current;
     String key;
 
     switch (stat) {
       case CharacterKey.int:
-        character.int = value;
+        character = character.copyWith(intelligence: value);
         key = 'int';
         break;
       case CharacterKey.wis:
-        character.wis = value;
+        character = character.copyWith(wisdom: value);
         key = 'wis';
         break;
       case CharacterKey.cha:
-        character.cha = value;
+        character = character.copyWith(charisma: value);
         key = 'cha';
         break;
       case CharacterKey.con:
-        character.con = value;
+        character = character.copyWith(constitution: value);
         key = 'con';
         break;
       case CharacterKey.str:
-        character.str = value;
+        character = character.copyWith(strength: value);
         key = 'str';
         break;
       case CharacterKey.dex:
-        character.dex = value;
+        character = character.copyWith(dexterity: value);
         key = 'dex';
         break;
       default:
@@ -167,7 +167,7 @@ class EditStatDialogState extends State<EditStatDialog> {
     setState(() {
       saving = true;
     });
-    await character.update(json: {key: value});
+    unawaited(character.update(keys: [key]));
     unawaited(analytics.logEvent(name: Events.EditStat));
     Get.back();
   }
@@ -194,5 +194,5 @@ class EditStatDialogState extends State<EditStatDialog> {
     });
   }
 
-  List<Dice> get dice => [Dice(6, 2, CharacterFields.modifierFromValue(value))];
+  List<Dice> get dice => [Dice(6, 2, Character.modifierFromValue(value))];
 }

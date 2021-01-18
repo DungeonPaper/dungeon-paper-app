@@ -1,24 +1,25 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // ignore_for_file: deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies
 
-part of 'character_new.dart';
+part of 'character.dart';
 
 // **************************************************************************
 // FreezedGenerator
 // **************************************************************************
 
 T _$identity<T>(T value) => value;
-CharacterNew _$CharacterNewFromJson(Map<String, dynamic> json) {
-  return _CharacterNew.fromJson(json);
+Character _$CharacterFromJson(Map<String, dynamic> json) {
+  return _Character.fromJson(json);
 }
 
 /// @nodoc
-class _$CharacterNewTearOff {
-  const _$CharacterNewTearOff();
+class _$CharacterTearOff {
+  const _$CharacterTearOff();
 
 // ignore: unused_element
-  _CharacterNew call(
+  _Character call(
       {@DocumentReferenceConverter() DocumentReference ref,
+      @DefaultUuid() String key,
       @JsonKey(name: 'armor', defaultValue: 0) int baseArmor,
       @JsonKey(name: 'str', defaultValue: 8) int strength,
       @JsonKey(name: 'dex', defaultValue: 8) int dexterity,
@@ -28,7 +29,7 @@ class _$CharacterNewTearOff {
       @JsonKey(name: 'cha', defaultValue: 0) int charisma,
       @PlayerClassConverter() List<PlayerClass> playerClasses,
       AlignmentName alignment,
-      int maxHP,
+      @JsonKey(name: 'maxHP') int customMaxHP,
       String displayName = 'Traveler',
       String photoURL,
       int level = 1,
@@ -39,14 +40,16 @@ class _$CharacterNewTearOff {
       @NoteConverter() List<Note> notes,
       @SpellConverter() List<DbSpell> spells,
       @InventoryItemConverter() List<InventoryItem> inventory,
-      @DiceConverter() Dice hitDice,
+      @DiceConverter() @JsonKey(name: 'hitDice') Dice damageDice,
       List<String> looks,
       @DWMoveConverter() Move race,
       double coins = 0,
       int order,
-      @CharacterSettingsConverter() CharacterSettings settings}) {
-    return _CharacterNew(
+      @CharacterSettingsConverter() CharacterSettings settings,
+      @Deprecated('moved to CharacterSettings') bool useDefaultMaxHP}) {
+    return _Character(
       ref: ref,
+      key: key,
       baseArmor: baseArmor,
       strength: strength,
       dexterity: dexterity,
@@ -56,7 +59,7 @@ class _$CharacterNewTearOff {
       charisma: charisma,
       playerClasses: playerClasses,
       alignment: alignment,
-      maxHP: maxHP,
+      customMaxHP: customMaxHP,
       displayName: displayName,
       photoURL: photoURL,
       level: level,
@@ -67,29 +70,32 @@ class _$CharacterNewTearOff {
       notes: notes,
       spells: spells,
       inventory: inventory,
-      hitDice: hitDice,
+      damageDice: damageDice,
       looks: looks,
       race: race,
       coins: coins,
       order: order,
       settings: settings,
+      useDefaultMaxHP: useDefaultMaxHP,
     );
   }
 
 // ignore: unused_element
-  CharacterNew fromJson(Map<String, Object> json) {
-    return CharacterNew.fromJson(json);
+  Character fromJson(Map<String, Object> json) {
+    return Character.fromJson(json);
   }
 }
 
 /// @nodoc
 // ignore: unused_element
-const $CharacterNew = _$CharacterNewTearOff();
+const $Character = _$CharacterTearOff();
 
 /// @nodoc
-mixin _$CharacterNew {
+mixin _$Character {
   @DocumentReferenceConverter()
   DocumentReference get ref;
+  @DefaultUuid()
+  String get key;
   @JsonKey(name: 'armor', defaultValue: 0)
   int get baseArmor;
   @JsonKey(name: 'str', defaultValue: 8)
@@ -107,7 +113,8 @@ mixin _$CharacterNew {
   @PlayerClassConverter()
   List<PlayerClass> get playerClasses;
   AlignmentName get alignment;
-  int get maxHP;
+  @JsonKey(name: 'maxHP')
+  int get customMaxHP;
   String get displayName;
   String get photoURL;
   int get level;
@@ -123,7 +130,8 @@ mixin _$CharacterNew {
   @InventoryItemConverter()
   List<InventoryItem> get inventory;
   @DiceConverter()
-  Dice get hitDice;
+  @JsonKey(name: 'hitDice')
+  Dice get damageDice;
   List<String> get looks;
   @DWMoveConverter()
   Move get race;
@@ -131,19 +139,21 @@ mixin _$CharacterNew {
   int get order;
   @CharacterSettingsConverter()
   CharacterSettings get settings;
+  @Deprecated('moved to CharacterSettings')
+  bool get useDefaultMaxHP;
 
   Map<String, dynamic> toJson();
   @JsonKey(ignore: true)
-  $CharacterNewCopyWith<CharacterNew> get copyWith;
+  $CharacterCopyWith<Character> get copyWith;
 }
 
 /// @nodoc
-abstract class $CharacterNewCopyWith<$Res> {
-  factory $CharacterNewCopyWith(
-          CharacterNew value, $Res Function(CharacterNew) then) =
-      _$CharacterNewCopyWithImpl<$Res>;
+abstract class $CharacterCopyWith<$Res> {
+  factory $CharacterCopyWith(Character value, $Res Function(Character) then) =
+      _$CharacterCopyWithImpl<$Res>;
   $Res call(
       {@DocumentReferenceConverter() DocumentReference ref,
+      @DefaultUuid() String key,
       @JsonKey(name: 'armor', defaultValue: 0) int baseArmor,
       @JsonKey(name: 'str', defaultValue: 8) int strength,
       @JsonKey(name: 'dex', defaultValue: 8) int dexterity,
@@ -153,7 +163,7 @@ abstract class $CharacterNewCopyWith<$Res> {
       @JsonKey(name: 'cha', defaultValue: 0) int charisma,
       @PlayerClassConverter() List<PlayerClass> playerClasses,
       AlignmentName alignment,
-      int maxHP,
+      @JsonKey(name: 'maxHP') int customMaxHP,
       String displayName,
       String photoURL,
       int level,
@@ -164,25 +174,27 @@ abstract class $CharacterNewCopyWith<$Res> {
       @NoteConverter() List<Note> notes,
       @SpellConverter() List<DbSpell> spells,
       @InventoryItemConverter() List<InventoryItem> inventory,
-      @DiceConverter() Dice hitDice,
+      @DiceConverter() @JsonKey(name: 'hitDice') Dice damageDice,
       List<String> looks,
       @DWMoveConverter() Move race,
       double coins,
       int order,
-      @CharacterSettingsConverter() CharacterSettings settings});
+      @CharacterSettingsConverter() CharacterSettings settings,
+      @Deprecated('moved to CharacterSettings') bool useDefaultMaxHP});
 }
 
 /// @nodoc
-class _$CharacterNewCopyWithImpl<$Res> implements $CharacterNewCopyWith<$Res> {
-  _$CharacterNewCopyWithImpl(this._value, this._then);
+class _$CharacterCopyWithImpl<$Res> implements $CharacterCopyWith<$Res> {
+  _$CharacterCopyWithImpl(this._value, this._then);
 
-  final CharacterNew _value;
+  final Character _value;
   // ignore: unused_field
-  final $Res Function(CharacterNew) _then;
+  final $Res Function(Character) _then;
 
   @override
   $Res call({
     Object ref = freezed,
+    Object key = freezed,
     Object baseArmor = freezed,
     Object strength = freezed,
     Object dexterity = freezed,
@@ -192,7 +204,7 @@ class _$CharacterNewCopyWithImpl<$Res> implements $CharacterNewCopyWith<$Res> {
     Object charisma = freezed,
     Object playerClasses = freezed,
     Object alignment = freezed,
-    Object maxHP = freezed,
+    Object customMaxHP = freezed,
     Object displayName = freezed,
     Object photoURL = freezed,
     Object level = freezed,
@@ -203,15 +215,17 @@ class _$CharacterNewCopyWithImpl<$Res> implements $CharacterNewCopyWith<$Res> {
     Object notes = freezed,
     Object spells = freezed,
     Object inventory = freezed,
-    Object hitDice = freezed,
+    Object damageDice = freezed,
     Object looks = freezed,
     Object race = freezed,
     Object coins = freezed,
     Object order = freezed,
     Object settings = freezed,
+    Object useDefaultMaxHP = freezed,
   }) {
     return _then(_value.copyWith(
       ref: ref == freezed ? _value.ref : ref as DocumentReference,
+      key: key == freezed ? _value.key : key as String,
       baseArmor: baseArmor == freezed ? _value.baseArmor : baseArmor as int,
       strength: strength == freezed ? _value.strength : strength as int,
       dexterity: dexterity == freezed ? _value.dexterity : dexterity as int,
@@ -226,7 +240,8 @@ class _$CharacterNewCopyWithImpl<$Res> implements $CharacterNewCopyWith<$Res> {
           : playerClasses as List<PlayerClass>,
       alignment:
           alignment == freezed ? _value.alignment : alignment as AlignmentName,
-      maxHP: maxHP == freezed ? _value.maxHP : maxHP as int,
+      customMaxHP:
+          customMaxHP == freezed ? _value.customMaxHP : customMaxHP as int,
       displayName:
           displayName == freezed ? _value.displayName : displayName as String,
       photoURL: photoURL == freezed ? _value.photoURL : photoURL as String,
@@ -240,26 +255,30 @@ class _$CharacterNewCopyWithImpl<$Res> implements $CharacterNewCopyWith<$Res> {
       inventory: inventory == freezed
           ? _value.inventory
           : inventory as List<InventoryItem>,
-      hitDice: hitDice == freezed ? _value.hitDice : hitDice as Dice,
+      damageDice:
+          damageDice == freezed ? _value.damageDice : damageDice as Dice,
       looks: looks == freezed ? _value.looks : looks as List<String>,
       race: race == freezed ? _value.race : race as Move,
       coins: coins == freezed ? _value.coins : coins as double,
       order: order == freezed ? _value.order : order as int,
       settings:
           settings == freezed ? _value.settings : settings as CharacterSettings,
+      useDefaultMaxHP: useDefaultMaxHP == freezed
+          ? _value.useDefaultMaxHP
+          : useDefaultMaxHP as bool,
     ));
   }
 }
 
 /// @nodoc
-abstract class _$CharacterNewCopyWith<$Res>
-    implements $CharacterNewCopyWith<$Res> {
-  factory _$CharacterNewCopyWith(
-          _CharacterNew value, $Res Function(_CharacterNew) then) =
-      __$CharacterNewCopyWithImpl<$Res>;
+abstract class _$CharacterCopyWith<$Res> implements $CharacterCopyWith<$Res> {
+  factory _$CharacterCopyWith(
+          _Character value, $Res Function(_Character) then) =
+      __$CharacterCopyWithImpl<$Res>;
   @override
   $Res call(
       {@DocumentReferenceConverter() DocumentReference ref,
+      @DefaultUuid() String key,
       @JsonKey(name: 'armor', defaultValue: 0) int baseArmor,
       @JsonKey(name: 'str', defaultValue: 8) int strength,
       @JsonKey(name: 'dex', defaultValue: 8) int dexterity,
@@ -269,7 +288,7 @@ abstract class _$CharacterNewCopyWith<$Res>
       @JsonKey(name: 'cha', defaultValue: 0) int charisma,
       @PlayerClassConverter() List<PlayerClass> playerClasses,
       AlignmentName alignment,
-      int maxHP,
+      @JsonKey(name: 'maxHP') int customMaxHP,
       String displayName,
       String photoURL,
       int level,
@@ -280,27 +299,28 @@ abstract class _$CharacterNewCopyWith<$Res>
       @NoteConverter() List<Note> notes,
       @SpellConverter() List<DbSpell> spells,
       @InventoryItemConverter() List<InventoryItem> inventory,
-      @DiceConverter() Dice hitDice,
+      @DiceConverter() @JsonKey(name: 'hitDice') Dice damageDice,
       List<String> looks,
       @DWMoveConverter() Move race,
       double coins,
       int order,
-      @CharacterSettingsConverter() CharacterSettings settings});
+      @CharacterSettingsConverter() CharacterSettings settings,
+      @Deprecated('moved to CharacterSettings') bool useDefaultMaxHP});
 }
 
 /// @nodoc
-class __$CharacterNewCopyWithImpl<$Res> extends _$CharacterNewCopyWithImpl<$Res>
-    implements _$CharacterNewCopyWith<$Res> {
-  __$CharacterNewCopyWithImpl(
-      _CharacterNew _value, $Res Function(_CharacterNew) _then)
-      : super(_value, (v) => _then(v as _CharacterNew));
+class __$CharacterCopyWithImpl<$Res> extends _$CharacterCopyWithImpl<$Res>
+    implements _$CharacterCopyWith<$Res> {
+  __$CharacterCopyWithImpl(_Character _value, $Res Function(_Character) _then)
+      : super(_value, (v) => _then(v as _Character));
 
   @override
-  _CharacterNew get _value => super._value as _CharacterNew;
+  _Character get _value => super._value as _Character;
 
   @override
   $Res call({
     Object ref = freezed,
+    Object key = freezed,
     Object baseArmor = freezed,
     Object strength = freezed,
     Object dexterity = freezed,
@@ -310,7 +330,7 @@ class __$CharacterNewCopyWithImpl<$Res> extends _$CharacterNewCopyWithImpl<$Res>
     Object charisma = freezed,
     Object playerClasses = freezed,
     Object alignment = freezed,
-    Object maxHP = freezed,
+    Object customMaxHP = freezed,
     Object displayName = freezed,
     Object photoURL = freezed,
     Object level = freezed,
@@ -321,15 +341,17 @@ class __$CharacterNewCopyWithImpl<$Res> extends _$CharacterNewCopyWithImpl<$Res>
     Object notes = freezed,
     Object spells = freezed,
     Object inventory = freezed,
-    Object hitDice = freezed,
+    Object damageDice = freezed,
     Object looks = freezed,
     Object race = freezed,
     Object coins = freezed,
     Object order = freezed,
     Object settings = freezed,
+    Object useDefaultMaxHP = freezed,
   }) {
-    return _then(_CharacterNew(
+    return _then(_Character(
       ref: ref == freezed ? _value.ref : ref as DocumentReference,
+      key: key == freezed ? _value.key : key as String,
       baseArmor: baseArmor == freezed ? _value.baseArmor : baseArmor as int,
       strength: strength == freezed ? _value.strength : strength as int,
       dexterity: dexterity == freezed ? _value.dexterity : dexterity as int,
@@ -344,7 +366,8 @@ class __$CharacterNewCopyWithImpl<$Res> extends _$CharacterNewCopyWithImpl<$Res>
           : playerClasses as List<PlayerClass>,
       alignment:
           alignment == freezed ? _value.alignment : alignment as AlignmentName,
-      maxHP: maxHP == freezed ? _value.maxHP : maxHP as int,
+      customMaxHP:
+          customMaxHP == freezed ? _value.customMaxHP : customMaxHP as int,
       displayName:
           displayName == freezed ? _value.displayName : displayName as String,
       photoURL: photoURL == freezed ? _value.photoURL : photoURL as String,
@@ -358,13 +381,17 @@ class __$CharacterNewCopyWithImpl<$Res> extends _$CharacterNewCopyWithImpl<$Res>
       inventory: inventory == freezed
           ? _value.inventory
           : inventory as List<InventoryItem>,
-      hitDice: hitDice == freezed ? _value.hitDice : hitDice as Dice,
+      damageDice:
+          damageDice == freezed ? _value.damageDice : damageDice as Dice,
       looks: looks == freezed ? _value.looks : looks as List<String>,
       race: race == freezed ? _value.race : race as Move,
       coins: coins == freezed ? _value.coins : coins as double,
       order: order == freezed ? _value.order : order as int,
       settings:
           settings == freezed ? _value.settings : settings as CharacterSettings,
+      useDefaultMaxHP: useDefaultMaxHP == freezed
+          ? _value.useDefaultMaxHP
+          : useDefaultMaxHP as bool,
     ));
   }
 }
@@ -372,9 +399,10 @@ class __$CharacterNewCopyWithImpl<$Res> extends _$CharacterNewCopyWithImpl<$Res>
 @JsonSerializable()
 
 /// @nodoc
-class _$_CharacterNew extends _CharacterNew {
-  const _$_CharacterNew(
+class _$_Character extends _Character {
+  const _$_Character(
       {@DocumentReferenceConverter() this.ref,
+      @DefaultUuid() this.key,
       @JsonKey(name: 'armor', defaultValue: 0) this.baseArmor,
       @JsonKey(name: 'str', defaultValue: 8) this.strength,
       @JsonKey(name: 'dex', defaultValue: 8) this.dexterity,
@@ -384,7 +412,7 @@ class _$_CharacterNew extends _CharacterNew {
       @JsonKey(name: 'cha', defaultValue: 0) this.charisma,
       @PlayerClassConverter() this.playerClasses,
       this.alignment,
-      this.maxHP,
+      @JsonKey(name: 'maxHP') this.customMaxHP,
       this.displayName = 'Traveler',
       this.photoURL,
       this.level = 1,
@@ -395,24 +423,28 @@ class _$_CharacterNew extends _CharacterNew {
       @NoteConverter() this.notes,
       @SpellConverter() this.spells,
       @InventoryItemConverter() this.inventory,
-      @DiceConverter() this.hitDice,
+      @DiceConverter() @JsonKey(name: 'hitDice') this.damageDice,
       this.looks,
       @DWMoveConverter() this.race,
       this.coins = 0,
       this.order,
-      @CharacterSettingsConverter() this.settings})
+      @CharacterSettingsConverter() this.settings,
+      @Deprecated('moved to CharacterSettings') this.useDefaultMaxHP})
       : assert(displayName != null),
         assert(level != null),
         assert(bio != null),
         assert(coins != null),
         super._();
 
-  factory _$_CharacterNew.fromJson(Map<String, dynamic> json) =>
-      _$_$_CharacterNewFromJson(json);
+  factory _$_Character.fromJson(Map<String, dynamic> json) =>
+      _$_$_CharacterFromJson(json);
 
   @override
   @DocumentReferenceConverter()
   final DocumentReference ref;
+  @override
+  @DefaultUuid()
+  final String key;
   @override
   @JsonKey(name: 'armor', defaultValue: 0)
   final int baseArmor;
@@ -440,7 +472,8 @@ class _$_CharacterNew extends _CharacterNew {
   @override
   final AlignmentName alignment;
   @override
-  final int maxHP;
+  @JsonKey(name: 'maxHP')
+  final int customMaxHP;
   @JsonKey(defaultValue: 'Traveler')
   @override
   final String displayName;
@@ -470,7 +503,8 @@ class _$_CharacterNew extends _CharacterNew {
   final List<InventoryItem> inventory;
   @override
   @DiceConverter()
-  final Dice hitDice;
+  @JsonKey(name: 'hitDice')
+  final Dice damageDice;
   @override
   final List<String> looks;
   @override
@@ -484,18 +518,23 @@ class _$_CharacterNew extends _CharacterNew {
   @override
   @CharacterSettingsConverter()
   final CharacterSettings settings;
+  @override
+  @Deprecated('moved to CharacterSettings')
+  final bool useDefaultMaxHP;
 
   @override
   String toString() {
-    return 'CharacterNew(ref: $ref, baseArmor: $baseArmor, strength: $strength, dexterity: $dexterity, constitution: $constitution, wisdom: $wisdom, intelligence: $intelligence, charisma: $charisma, playerClasses: $playerClasses, alignment: $alignment, maxHP: $maxHP, displayName: $displayName, photoURL: $photoURL, level: $level, bio: $bio, currentHP: $currentHP, currentXP: $currentXP, moves: $moves, notes: $notes, spells: $spells, inventory: $inventory, hitDice: $hitDice, looks: $looks, race: $race, coins: $coins, order: $order, settings: $settings)';
+    return 'Character(ref: $ref, key: $key, baseArmor: $baseArmor, strength: $strength, dexterity: $dexterity, constitution: $constitution, wisdom: $wisdom, intelligence: $intelligence, charisma: $charisma, playerClasses: $playerClasses, alignment: $alignment, customMaxHP: $customMaxHP, displayName: $displayName, photoURL: $photoURL, level: $level, bio: $bio, currentHP: $currentHP, currentXP: $currentXP, moves: $moves, notes: $notes, spells: $spells, inventory: $inventory, damageDice: $damageDice, looks: $looks, race: $race, coins: $coins, order: $order, settings: $settings, useDefaultMaxHP: $useDefaultMaxHP)';
   }
 
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
-        (other is _CharacterNew &&
+        (other is _Character &&
             (identical(other.ref, ref) ||
                 const DeepCollectionEquality().equals(other.ref, ref)) &&
+            (identical(other.key, key) ||
+                const DeepCollectionEquality().equals(other.key, key)) &&
             (identical(other.baseArmor, baseArmor) ||
                 const DeepCollectionEquality()
                     .equals(other.baseArmor, baseArmor)) &&
@@ -522,8 +561,9 @@ class _$_CharacterNew extends _CharacterNew {
             (identical(other.alignment, alignment) ||
                 const DeepCollectionEquality()
                     .equals(other.alignment, alignment)) &&
-            (identical(other.maxHP, maxHP) ||
-                const DeepCollectionEquality().equals(other.maxHP, maxHP)) &&
+            (identical(other.customMaxHP, customMaxHP) ||
+                const DeepCollectionEquality()
+                    .equals(other.customMaxHP, customMaxHP)) &&
             (identical(other.displayName, displayName) ||
                 const DeepCollectionEquality()
                     .equals(other.displayName, displayName)) &&
@@ -549,9 +589,9 @@ class _$_CharacterNew extends _CharacterNew {
             (identical(other.inventory, inventory) ||
                 const DeepCollectionEquality()
                     .equals(other.inventory, inventory)) &&
-            (identical(other.hitDice, hitDice) ||
+            (identical(other.damageDice, damageDice) ||
                 const DeepCollectionEquality()
-                    .equals(other.hitDice, hitDice)) &&
+                    .equals(other.damageDice, damageDice)) &&
             (identical(other.looks, looks) ||
                 const DeepCollectionEquality().equals(other.looks, looks)) &&
             (identical(other.race, race) ||
@@ -561,14 +601,15 @@ class _$_CharacterNew extends _CharacterNew {
             (identical(other.order, order) ||
                 const DeepCollectionEquality().equals(other.order, order)) &&
             (identical(other.settings, settings) ||
-                const DeepCollectionEquality()
-                    .equals(other.settings, settings)));
+                const DeepCollectionEquality().equals(other.settings, settings)) &&
+            (identical(other.useDefaultMaxHP, useDefaultMaxHP) || const DeepCollectionEquality().equals(other.useDefaultMaxHP, useDefaultMaxHP)));
   }
 
   @override
   int get hashCode =>
       runtimeType.hashCode ^
       const DeepCollectionEquality().hash(ref) ^
+      const DeepCollectionEquality().hash(key) ^
       const DeepCollectionEquality().hash(baseArmor) ^
       const DeepCollectionEquality().hash(strength) ^
       const DeepCollectionEquality().hash(dexterity) ^
@@ -578,7 +619,7 @@ class _$_CharacterNew extends _CharacterNew {
       const DeepCollectionEquality().hash(charisma) ^
       const DeepCollectionEquality().hash(playerClasses) ^
       const DeepCollectionEquality().hash(alignment) ^
-      const DeepCollectionEquality().hash(maxHP) ^
+      const DeepCollectionEquality().hash(customMaxHP) ^
       const DeepCollectionEquality().hash(displayName) ^
       const DeepCollectionEquality().hash(photoURL) ^
       const DeepCollectionEquality().hash(level) ^
@@ -589,28 +630,30 @@ class _$_CharacterNew extends _CharacterNew {
       const DeepCollectionEquality().hash(notes) ^
       const DeepCollectionEquality().hash(spells) ^
       const DeepCollectionEquality().hash(inventory) ^
-      const DeepCollectionEquality().hash(hitDice) ^
+      const DeepCollectionEquality().hash(damageDice) ^
       const DeepCollectionEquality().hash(looks) ^
       const DeepCollectionEquality().hash(race) ^
       const DeepCollectionEquality().hash(coins) ^
       const DeepCollectionEquality().hash(order) ^
-      const DeepCollectionEquality().hash(settings);
+      const DeepCollectionEquality().hash(settings) ^
+      const DeepCollectionEquality().hash(useDefaultMaxHP);
 
   @JsonKey(ignore: true)
   @override
-  _$CharacterNewCopyWith<_CharacterNew> get copyWith =>
-      __$CharacterNewCopyWithImpl<_CharacterNew>(this, _$identity);
+  _$CharacterCopyWith<_Character> get copyWith =>
+      __$CharacterCopyWithImpl<_Character>(this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$_$_CharacterNewToJson(this);
+    return _$_$_CharacterToJson(this);
   }
 }
 
-abstract class _CharacterNew extends CharacterNew {
-  const _CharacterNew._() : super._();
-  const factory _CharacterNew(
+abstract class _Character extends Character {
+  const _Character._() : super._();
+  const factory _Character(
           {@DocumentReferenceConverter() DocumentReference ref,
+          @DefaultUuid() String key,
           @JsonKey(name: 'armor', defaultValue: 0) int baseArmor,
           @JsonKey(name: 'str', defaultValue: 8) int strength,
           @JsonKey(name: 'dex', defaultValue: 8) int dexterity,
@@ -620,7 +663,7 @@ abstract class _CharacterNew extends CharacterNew {
           @JsonKey(name: 'cha', defaultValue: 0) int charisma,
           @PlayerClassConverter() List<PlayerClass> playerClasses,
           AlignmentName alignment,
-          int maxHP,
+          @JsonKey(name: 'maxHP') int customMaxHP,
           String displayName,
           String photoURL,
           int level,
@@ -631,20 +674,24 @@ abstract class _CharacterNew extends CharacterNew {
           @NoteConverter() List<Note> notes,
           @SpellConverter() List<DbSpell> spells,
           @InventoryItemConverter() List<InventoryItem> inventory,
-          @DiceConverter() Dice hitDice,
+          @DiceConverter() @JsonKey(name: 'hitDice') Dice damageDice,
           List<String> looks,
           @DWMoveConverter() Move race,
           double coins,
           int order,
-          @CharacterSettingsConverter() CharacterSettings settings}) =
-      _$_CharacterNew;
+          @CharacterSettingsConverter() CharacterSettings settings,
+          @Deprecated('moved to CharacterSettings') bool useDefaultMaxHP}) =
+      _$_Character;
 
-  factory _CharacterNew.fromJson(Map<String, dynamic> json) =
-      _$_CharacterNew.fromJson;
+  factory _Character.fromJson(Map<String, dynamic> json) =
+      _$_Character.fromJson;
 
   @override
   @DocumentReferenceConverter()
   DocumentReference get ref;
+  @override
+  @DefaultUuid()
+  String get key;
   @override
   @JsonKey(name: 'armor', defaultValue: 0)
   int get baseArmor;
@@ -672,7 +719,8 @@ abstract class _CharacterNew extends CharacterNew {
   @override
   AlignmentName get alignment;
   @override
-  int get maxHP;
+  @JsonKey(name: 'maxHP')
+  int get customMaxHP;
   @override
   String get displayName;
   @override
@@ -699,7 +747,8 @@ abstract class _CharacterNew extends CharacterNew {
   List<InventoryItem> get inventory;
   @override
   @DiceConverter()
-  Dice get hitDice;
+  @JsonKey(name: 'hitDice')
+  Dice get damageDice;
   @override
   List<String> get looks;
   @override
@@ -713,6 +762,9 @@ abstract class _CharacterNew extends CharacterNew {
   @CharacterSettingsConverter()
   CharacterSettings get settings;
   @override
+  @Deprecated('moved to CharacterSettings')
+  bool get useDefaultMaxHP;
+  @override
   @JsonKey(ignore: true)
-  _$CharacterNewCopyWith<_CharacterNew> get copyWith;
+  _$CharacterCopyWith<_Character> get copyWith;
 }

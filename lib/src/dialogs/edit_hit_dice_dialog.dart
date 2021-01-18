@@ -63,8 +63,9 @@ class EditDamageDiceDialogState extends State<EditDamageDiceDialog> {
   Character get character => widget.character;
 
   void _saveValue() async {
-    character.damageDice = dice;
-    unawaited(character.update());
+    unawaited(
+      character.copyWith(damageDice: dice).update(keys: ['hitDice']),
+    );
     Get.back();
   }
 }

@@ -181,7 +181,7 @@ class _ExportViewState extends State<ExportView> {
   static final Map<ExportFormat, Future<List<int>> Function(ExportData)>
       _dataParsers = {
     ExportFormat.JSON: (data) {
-      final charsData = data.characters.map((char) => char.toJSON()).toList();
+      final charsData = data.characters.map((char) => char.toJson()).toList();
       final classesData =
           data.customClasses.map((char) => char.toJSON()).toList();
       final _strData =

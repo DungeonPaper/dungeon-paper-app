@@ -77,17 +77,17 @@ class StatsSummary extends StatelessWidget {
   int _getStat(CharacterKey stat) {
     switch (stat) {
       case (CharacterKey.str):
-        return character.str;
+        return character.strength;
       case (CharacterKey.dex):
-        return character.dex;
+        return character.dexterity;
       case (CharacterKey.con):
-        return character.con;
+        return character.constitution;
       case (CharacterKey.int):
-        return character.int;
+        return character.intelligence;
       case (CharacterKey.cha):
-        return character.cha;
+        return character.charisma;
       case (CharacterKey.wis):
-        return character.wis;
+        return character.wisdom;
       default:
         return null;
     }

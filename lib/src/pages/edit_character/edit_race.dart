@@ -46,8 +46,8 @@ class ChangeRaceDialog extends StatelessWidget {
 
   Function() changeRace(Move def) {
     return () async {
-      character.race = def;
-      onUpdate?.call(character);
+      final char = character.copyWith(race: def);
+      onUpdate?.call(char);
     };
   }
 }

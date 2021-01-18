@@ -10,9 +10,9 @@ class InventoryItemConverter
     if (json == null) {
       return null;
     }
-    return InventoryItem.fromJSON(json);
+    return InventoryItem.fromJson(json);
   }
 
   @override
-  Map<String, dynamic> toJson(InventoryItem data) => data.toJSON();
+  Map<String, dynamic> toJson(InventoryItem data) => data.toJson();
 }

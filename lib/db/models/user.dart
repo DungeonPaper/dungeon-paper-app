@@ -49,10 +49,10 @@ abstract class User with _$User {
 
   Future<Character> createCharacter(Character character) async {
     var doc = firestore.collection(ref.path + '/characters').doc();
-    var data = character.toJSON();
+    var data = character.toJson();
     logger.d('Creating character: $data');
     await doc.set(data);
-    character..ref = doc;
+    character = character.copyWith(ref: doc);
     dwStore.dispatch(UpsertCharacter(character));
     dwStore.dispatch(SetCurrentChar(character));
     return character;
@@ -69,14 +69,16 @@ abstract class User with _$User {
   }
 
   Future<User> changeEmail(String newEmail) async {
-    final _user = copyWith(email: newEmail);
     final newRef = await helpers.move(
-      newId: 'user_data/$newEmail',
-      ref: ref,
-      json: _user.toJson(),
+      ref,
+      'user_data/$newEmail',
+      update: {
+        'email': newEmail,
+      },
     );
     await updateFirebaseEmail(newEmail);
-    return _user.copyWith(
+    return copyWith(
+      email: newEmail,
       ref: newRef,
     );
   }

@@ -119,32 +119,23 @@ class CustomInventoryItemFormState extends State<CustomInventoryItemForm> {
     return form;
   }
 
-  void _updateItem() async {
-    var item = widget.item;
-    item.name = _controllers['name'].text;
-    item.description = _controllers['description'].text;
-    item.pluralName = _controllers['name'].text + 's';
-    item.amount = int.tryParse(_controllers['amount'].text);
-    item.tags = tags;
-    if (widget.onSave != null) {
-      widget.onSave(item);
-    }
-  }
+  void _updateItem() => widget.onSave?.call(
+        widget.item.copyWith(
+          name: _controllers['name'].text,
+          description: _controllers['description'].text,
+          pluralName: _controllers['name'].text + 's',
+          amount: int.tryParse(_controllers['amount'].text),
+          tags: tags,
+        ),
+      );
 
-  void _createItem() async {
-    var item = InventoryItem(
-      key: _controllers['name']
-          .text
-          .toLowerCase()
-          .replaceAll(RegExp('[^a-z]+'), '_'),
-      name: _controllers['name'].text,
-      description: _controllers['description'].text,
-      tags: tags,
-      pluralName: _controllers['name'].text + 's',
-      amount: int.tryParse(_controllers['amount'].text) ?? 1,
-    );
-    if (widget.onSave != null) {
-      widget.onSave(item);
-    }
-  }
+  void _createItem() => widget.onSave?.call(
+        InventoryItem(
+          name: _controllers['name'].text,
+          description: _controllers['description'].text,
+          tags: tags,
+          pluralName: _controllers['name'].text + 's',
+          amount: int.tryParse(_controllers['amount'].text) ?? 1,
+        ),
+      );
 }

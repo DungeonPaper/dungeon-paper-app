@@ -10,20 +10,20 @@ void main() {
         dungeonWorld.classes.firstWhere((k) => k.key == 'immolator');
 
     test('properly uses class values', () {
-      final char = Character(
-        data: {
+      final char = Character.fromJson(
+        {
           'playerClasses': [wizard.toJSON()],
           'con': 10,
         },
       );
       expect(char.mainClass.key, equals(wizard.key));
-      expect(char.currentHP, equals(wizard.baseHP + char.con));
-      expect(char.maxHP, equals(wizard.baseHP + char.con));
+      expect(char.currentHP, equals(wizard.baseHP + char.constitution));
+      expect(char.maxHP, equals(wizard.baseHP + char.constitution));
     });
 
     test('properly dumps json', () {
-      final char = Character(
-        data: {
+      final char = Character.fromJson(
+        {
           'playerClasses': [druid.toJSON()],
           'displayName': 'Goku',
           'str': 20,
@@ -34,7 +34,7 @@ void main() {
           'cha': 14,
         },
       );
-      final json = char.toJSON();
+      final json = char.toJson();
       expect(json['alignment'], equals('neutral'));
       expect(json['displayName'], equals('Goku'));
       expect(json['playerClasses'][0]['key'], equals('druid'));
@@ -42,8 +42,8 @@ void main() {
     });
 
     test('auto max HP get/set', () {
-      final char1 = Character(
-        data: {
+      var char1 = Character.fromJson(
+        {
           'playerClasses': [immolator.toJSON()], // base HP 6
           'displayName': 'Goku',
           'str': 20,
@@ -52,11 +52,11 @@ void main() {
           'wis': 11,
           'con': 10, // mod = 0
           'cha': 14,
-          'useDefaultMaxHP': true,
+          'settings': {'useDefaultMaxHp': true},
         },
       );
-      final char2 = Character(
-        data: {
+      var char2 = Character.fromJson(
+        {
           'playerClasses': [wizard.toJSON()], // base HP 4
           'displayName': 'Harry Potter',
           'str': 20,
@@ -65,15 +65,16 @@ void main() {
           'wis': 11,
           'con': 16,
           'cha': 14,
-          'useDefaultMaxHP': true,
+          'settings': {'useDefaultMaxHp': true},
         },
       );
-      expect(char1.maxHP, equals(immolator.baseHP + char1.con));
-      expect(char2.maxHP, equals(wizard.baseHP + char2.con));
-      char1.con = 16; // +1 mod
-      char2.con = 10; // 0 mod
-      expect(char1.maxHP, equals(immolator.baseHP + char1.con));
-      expect(char2.maxHP, equals(wizard.baseHP + char2.con));
+      expect(char1.maxHP, equals(immolator.baseHP + char1.constitution));
+      expect(char2.maxHP, equals(wizard.baseHP + char2.constitution));
+
+      char1 = char1.copyWith(constitution: 16); // +1 mod
+      char2 = char2.copyWith(constitution: 10); // 0 mod
+      expect(char1.maxHP, equals(immolator.baseHP + char1.constitution));
+      expect(char2.maxHP, equals(wizard.baseHP + char2.constitution));
     });
   });
 
@@ -81,18 +82,18 @@ void main() {
     group('Settings migration', () {
       group('useDefaultMaxHP', () {
         test('value different from default', () {
-          final char2 = Character(
-            data: {
-              'useDefaultMaxHP': false,
-            },
-          );
+          final char2 = Character.fromJson({
+            'settings': {'useDefaultMaxHp': false},
+          });
+
+          // ignore: deprecated_member_use_from_same_package
           expect(char2.useDefaultMaxHP, equals(false));
           expect(char2.settings.useDefaultMaxHp, equals(false));
         });
 
         test('value set and changed but has lingering old data', () {
-          final char3 = Character(
-            data: {
+          final char3 = Character.fromJson(
+            {
               'useDefaultMaxHP': true,
               'settings': {
                 'useDefaultMaxHp': false,
@@ -100,6 +101,7 @@ void main() {
             },
           );
 
+          // ignore: deprecated_member_use_from_same_package
           expect(char3.useDefaultMaxHP, equals(false));
           expect(char3.settings.useDefaultMaxHp, equals(false));
         });

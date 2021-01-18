@@ -74,22 +74,20 @@ class Note with Serializer<NoteKeys> {
 ReturnPredicate<Note> matchNote =
     matcher<Note>((Note i, Note o) => i.key == o.key);
 
-Future updateNote(Character character, Note note) async {
-  await character.update(json: {
-    'notes': findAndReplaceInList<Note>(
-        character.notes, note, (n) => note.key == n.key)
-  });
-}
+Future<void> updateNote(Character character, Note note) => character
+    .copyWith(
+        notes: findAndReplaceInList<Note>(
+            character.notes, note, (n) => note.key == n.key))
+    .update(keys: ['notes']);
 
-Future deleteNote(Character character, Note note) async {
-  await character.update(json: {
-    'notes': removeFromList(character.notes, note, (n) => note.key == n.key)
-  });
-}
+Future<void> deleteNote(Character character, Note note) => character
+    .copyWith(
+        notes: removeFromList(character.notes, note, (n) => note.key == n.key))
+    .update(keys: ['notes']);
 
-Future createNote(Character character, Note note) async {
-  await character.update(json: {'notes': addToList(character.notes, note)});
-}
+Future<void> createNote(Character character, Note note) => character
+    .copyWith(notes: addToList(character.notes, note))
+    .update(keys: ['notes']);
 
 List<String> collectCategories(
   List<Note> notes, {

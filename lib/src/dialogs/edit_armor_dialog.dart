@@ -91,9 +91,11 @@ class EditArmorDialogState extends State<EditArmorDialog> {
   }
 
   void _saveValue() async {
-    var character = dwStore.state.characters.current;
-    character.baseArmor = value;
-    unawaited(character.update());
+    unawaited(
+      dwStore.state.characters.current
+          .copyWith(baseArmor: value)
+          .update(keys: ['baseArmor']),
+    );
     Get.back();
   }
 }

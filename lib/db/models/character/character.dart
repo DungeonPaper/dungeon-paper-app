@@ -2,8 +2,6 @@ import 'dart:core';
 import 'dart:core' as core;
 import 'dart:math';
 
-import 'package:dungeon_paper/src/redux/characters/characters_store.dart';
-import 'package:dungeon_paper/src/redux/stores.dart';
 import 'package:dungeon_paper/src/utils/utils.dart';
 
 import 'package:dungeon_world_data/dice.dart';
@@ -38,7 +36,7 @@ class Character extends FirebaseEntity with CharacterFields {
   @override
   Future<Map<String, dynamic>> getRemoteData() async {
     var res = await super.getRemoteData();
-    dwStore.dispatch(UpsertCharacter(this));
+    // dwStore.dispatch(UpsertCharacter(this));
     return res;
   }
 
@@ -53,7 +51,7 @@ class Character extends FirebaseEntity with CharacterFields {
   @override
   void finalizeUpdate(Map<String, dynamic> json, {bool save = true}) {
     if (save) {
-      dwStore.dispatch(UpsertCharacter(this));
+      // dwStore.dispatch(UpsertCharacter(this));
     }
     super.finalizeUpdate(json, save: save);
   }

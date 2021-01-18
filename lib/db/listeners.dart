@@ -9,7 +9,6 @@ import 'package:dungeon_paper/src/utils/logger.dart';
 import 'package:firebase_auth/firebase_auth.dart' as fb;
 
 import 'models/character.dart';
-import 'models/character/character_new.dart';
 import 'models/user.dart';
 
 StreamSubscription _fbUserUpdateListener;
@@ -76,23 +75,11 @@ void registerCharactersListener(fb.User firebaseUser) {
       }
       final chars = {
         for (final character in characters.docs)
-          character.reference.id: Character(
-            data: character.data(),
+          character.reference.id: Character.fromJson(
+            character.data(),
             ref: character.reference,
           ),
       };
-      if (chars.isNotEmpty) {
-        final first = characters.docs.first;
-        try {
-          logger.d(CharacterNew.fromJson(
-            first.data(),
-            ref: first.reference,
-          ));
-          logger.d('SUCCESS!');
-        } catch (e, stack) {
-          logger.e('CharacterNew error', e, stack);
-        }
-      }
       dwStore.dispatch(
         SetCharacters(chars),
       );

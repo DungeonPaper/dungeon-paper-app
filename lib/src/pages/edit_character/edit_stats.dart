@@ -30,12 +30,12 @@ class _EditStatsState extends State<EditStats> {
 
   @override
   void initState() {
-    _str = widget.character.str;
-    _dex = widget.character.dex;
-    _con = widget.character.con;
-    _int = widget.character.int;
-    _wis = widget.character.wis;
-    _cha = widget.character.cha;
+    _str = widget.character.strength;
+    _dex = widget.character.dexterity;
+    _con = widget.character.constitution;
+    _int = widget.character.intelligence;
+    _wis = widget.character.wisdom;
+    _cha = widget.character.charisma;
     super.initState();
   }
 
@@ -72,9 +72,9 @@ class _EditStatsState extends State<EditStats> {
     switch (stat) {
       case (CharacterKey.str):
         setter = (val) {
-          widget.character.str = val;
+          final char = widget.character.copyWith(strength: val);
           _str = val;
-          widget?.onUpdate(widget.character);
+          widget?.onUpdate(char);
         };
         errorSetter = (state) {
           errors[CharacterKey.str] = state;
@@ -82,9 +82,9 @@ class _EditStatsState extends State<EditStats> {
         break;
       case (CharacterKey.dex):
         setter = (val) {
-          widget.character.dex = val;
+          final char = widget.character.copyWith(dexterity: val);
           _dex = val;
-          widget?.onUpdate(widget.character);
+          widget?.onUpdate(char);
         };
         errorSetter = (state) {
           errors[CharacterKey.dex] = state;
@@ -92,9 +92,9 @@ class _EditStatsState extends State<EditStats> {
         break;
       case (CharacterKey.con):
         setter = (val) {
-          widget.character.con = val;
+          final char = widget.character.copyWith(constitution: val);
           _con = val;
-          widget?.onUpdate(widget.character);
+          widget?.onUpdate(char);
         };
         errorSetter = (state) {
           errors[CharacterKey.con] = state;
@@ -102,9 +102,9 @@ class _EditStatsState extends State<EditStats> {
         break;
       case (CharacterKey.int):
         setter = (val) {
-          widget.character.int = val;
+          final char = widget.character.copyWith(intelligence: val);
           _int = val;
-          widget?.onUpdate(widget.character);
+          widget?.onUpdate(char);
         };
         errorSetter = (state) {
           errors[CharacterKey.int] = state;
@@ -112,9 +112,9 @@ class _EditStatsState extends State<EditStats> {
         break;
       case (CharacterKey.cha):
         setter = (val) {
-          widget.character.cha = val;
+          final char = widget.character.copyWith(charisma: val);
           _cha = val;
-          widget?.onUpdate(widget.character);
+          widget?.onUpdate(char);
         };
         errorSetter = (state) {
           errors[CharacterKey.cha] = state;
@@ -122,9 +122,9 @@ class _EditStatsState extends State<EditStats> {
         break;
       case (CharacterKey.wis):
         setter = (val) {
-          widget.character.wis = val;
+          final char = widget.character.copyWith(wisdom: val);
           _wis = val;
-          widget?.onUpdate(widget.character);
+          widget?.onUpdate(char);
         };
         errorSetter = (state) {
           errors[CharacterKey.wis] = state;
@@ -185,7 +185,7 @@ class EditStatListTile extends StatelessWidget {
       title: Text(CHARACTER_STAT_LABELS[stat]),
       subtitle: Text(
         '${CHARACTER_STAT_MODIFIER_LABELS[stat]}: '
-        '${CharacterFields.modifierFromValue(value)}',
+        '${Character.modifierFromValue(value)}',
       ),
       trailing: Container(
         width: 230,
