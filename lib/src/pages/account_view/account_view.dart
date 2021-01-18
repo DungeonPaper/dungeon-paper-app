@@ -234,8 +234,7 @@ class _AccountViewState extends State<AccountView> {
         title: Text('Edit Display Name'),
         onSave: (displayName) async {
           unawaited(analytics.logEvent(name: Events.EditDisplayNameConfirm));
-          user.displayName = displayName;
-          await user.update();
+          await user.ref.update({'displayName': displayName});
           Get.back();
         },
         onCancel: () {
@@ -296,7 +295,6 @@ class _AccountViewState extends State<AccountView> {
     setState(() {
       imageFile = null;
     });
-    user.photoURL = downloadURL;
-    unawaited(user.update());
+    await user.ref.update({'photoURL': downloadURL});
   }
 }

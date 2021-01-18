@@ -79,7 +79,7 @@ Future<bool> unlinkFromProvider(String providerId) async {
   );
 }
 
-Future<bool> updateEmail(String email) async {
+Future<bool> updateFirebaseEmail(String email) async {
   return withReauth(
     (user) => user.updateEmail(email),
     errorMessage: 'Could not update email to: $email',
