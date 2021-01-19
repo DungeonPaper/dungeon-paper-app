@@ -2,8 +2,10 @@ import 'package:dungeon_paper/db/models/custom_class.dart';
 import 'package:dungeon_paper/src/atoms/card_list_item.dart';
 import 'package:dungeon_paper/src/flutter_utils/widget_utils.dart';
 import 'package:dungeon_paper/src/redux/connectors.dart';
+import 'package:dungeon_paper/src/redux/custom_classes/custom_classes_store.dart';
 import 'package:dungeon_paper/src/utils/utils.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 class CustomClassesList extends StatelessWidget {
   final SingleChildWidgetBuilder builder;
@@ -28,29 +30,28 @@ class CustomClassesList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var child = DWStoreConnector<List<CustomClass>>(
-      converter: (store) =>
-          store.state.customClasses.customClasses.values.toList(),
-      builder: (context, classes) {
-        return SingleChildScrollView(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              for (var cls in classes)
-                CardListItem(
-                  onTap: () => onEdit?.call(cls),
-                  leading: Icon(Icons.person, size: 40),
-                  trailing: IconButton(
-                    icon: Icon(Icons.delete),
-                    onPressed: () => onDelete?.call(cls),
-                  ),
-                  title: Text(cls.name),
-                  subtitle: Text(_subtitle(cls)),
+    final classes = customClassesController.classes.values.toList();
+
+    // TODO refactor
+    var child = Obx(
+      () => SingleChildScrollView(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            for (var cls in classes)
+              CardListItem(
+                onTap: () => onEdit?.call(cls),
+                leading: Icon(Icons.person, size: 40),
+                trailing: IconButton(
+                  icon: Icon(Icons.delete),
+                  onPressed: () => onDelete?.call(cls),
                 ),
-            ],
-          ),
-        );
-      },
+                title: Text(cls.name),
+                subtitle: Text(_subtitle(cls)),
+              ),
+          ],
+        ),
+      ),
     );
     return _builder(context, child);
   }

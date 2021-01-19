@@ -39,8 +39,7 @@ class _ExportViewState extends State<ExportView> {
     super.initState();
     _format = ExportFormat.JSON;
     _charactersToExport = {};
-    _allCustomClasses =
-        Set.from(dwStore.state.customClasses.customClasses.values);
+    _allCustomClasses = Set.from(dwStore.state.customClasses.classes.values);
   }
 
   @override

@@ -31,7 +31,7 @@ class _CustomClassesViewState extends State<CustomClassesView> {
   Widget build(BuildContext context) {
     return DWStoreConnector<bool>(
       converter: (store) =>
-          store.state.customClasses.customClasses?.isNotEmpty == true,
+          store.state.customClasses.classes?.isNotEmpty == true,
       builder: (context, hasClasses) {
         return MainScaffold(
           title: Text('Custom Classes'),

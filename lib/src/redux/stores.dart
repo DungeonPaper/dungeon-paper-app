@@ -1,19 +1,18 @@
-import 'package:dungeon_paper/db/models/character.dart';
 import 'package:flutter/material.dart';
 import 'package:redux/redux.dart';
 import 'package:redux_logging/redux_logging.dart';
-import 'characters/characters_store.dart';
+import 'characters/characters_controller.dart';
 import 'custom_classes/custom_classes_store.dart';
-import 'loading/loading_store.dart';
+import 'loading/loading_controller.dart';
 import 'shared_preferences/prefs_store.dart';
-import 'users/user_store.dart';
+import 'users/user_controller.dart';
 
 class AppInit {}
 
 class DWStore {
-  final UserStore user;
-  final CharacterStore characters;
-  final CustomClassesStore customClasses;
+  final UserController user;
+  final CharacterController characters;
+  final CustomClassesController customClasses;
   final Map<LoadingKeys, bool> loading;
   final PrefsStore prefs;
 
@@ -37,18 +36,13 @@ DWStore storeReducer(DWStore state, action) => DWStore(
 var initialState = DWStore(
   prefs: PrefsStore(),
   loading: {
-    LoadingKeys.Character: false,
-    LoadingKeys.User: false,
-    LoadingKeys.CustomClasses: false,
+    LoadingKeys.character: false,
+    LoadingKeys.user: false,
+    LoadingKeys.customClasses: false,
   },
-  user: UserStore(current: null, currentUserDocID: null, firebaseUser: null),
-  characters: CharacterStore(
-    current: null,
-    characters: <String, Character>{},
-  ),
-  customClasses: CustomClassesStore(
-    customClasses: {},
-  ),
+  user: UserController(),
+  characters: CharacterController(),
+  customClasses: CustomClassesController(),
 );
 
 Store<DWStore> dwStore = Store<DWStore>(

@@ -2,8 +2,11 @@ import 'package:apple_sign_in/apple_sign_in.dart';
 import 'package:dungeon_paper/db/db.dart';
 import 'package:dungeon_paper/db/listeners.dart';
 import 'package:dungeon_paper/db/models/user.dart';
+import 'package:dungeon_paper/src/redux/auth_controller.dart';
+import 'package:dungeon_paper/src/redux/characters/characters_controller.dart';
+import 'package:dungeon_paper/src/redux/loading/loading_controller.dart';
 import 'package:dungeon_paper/src/redux/stores.dart';
-import 'package:dungeon_paper/src/redux/users/user_store.dart';
+import 'package:dungeon_paper/src/redux/users/user_controller.dart';
 import 'package:dungeon_paper/src/utils/analytics.dart';
 import 'package:dungeon_paper/src/utils/api.dart';
 import 'package:dungeon_paper/src/utils/logger.dart';
@@ -23,7 +26,7 @@ part 'auth_helpers.dart';
 
 Future<UserLogin> signInWithCredentials(AuthCredential creds) async {
   assert(creds != null);
-  dwStore.dispatch(RequestLogin());
+  loadingController.requestLogin();
 
   final res = await auth.signInWithCredential(creds);
   return signInWithFbUser(
@@ -137,7 +140,7 @@ Future<UserLogin> signInWithFbUser(
 }
 
 Future<void> signOutAll() async {
-  dwStore.dispatch(Logout());
+  authController.logout();
   await _getGSignIn();
   unawaited(_gSignIn.disconnect());
   unawaited(auth.signOut());
@@ -148,14 +151,14 @@ void dispatchFinalDataToStore({
   @required User user,
 }) async {
   if ([firebaseUser, user].any((el) => el == null)) {
-    dwStore.dispatch(NoLogin());
+    authController.noLogin();
     return;
   }
 
-  dwStore.dispatch(Login(
+  authController.login(
     user: user,
     firebaseUser: firebaseUser,
-  ));
+  );
 
   _setUserProperties(firebaseUser, user);
   registerAllListeners(firebaseUser);
@@ -180,11 +183,11 @@ void _setUserProperties(fb.User firebaseUser, User user) {
   ));
   unawaited(analytics.setUserProperty(
     name: 'characters_count',
-    value: dwStore.state.characters.all.length.toString(),
+    value: characterController.all.length.toString(),
   ));
   unawaited(analytics.setUserProperty(
     name: 'classes_count',
-    value: dwStore.state.customClasses.customClasses.length.toString(),
+    value: dwStore.state.customClasses.classes.length.toString(),
   ));
   unawaited(analytics.setUserProperty(
     name: 'latest_platform_name',

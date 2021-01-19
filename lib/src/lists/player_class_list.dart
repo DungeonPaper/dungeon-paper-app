@@ -1,8 +1,10 @@
 import 'package:dungeon_paper/src/redux/connectors.dart';
+import 'package:dungeon_paper/src/redux/custom_classes/custom_classes_store.dart';
 import 'package:dungeon_paper/src/redux/stores.dart';
 import 'package:dungeon_world_data/dw_data.dart';
 import 'package:dungeon_world_data/player_class.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 class PlayerClassList extends StatelessWidget {
   final Widget Function(BuildContext, List<PlayerClass>) builder;
@@ -39,17 +41,14 @@ class PlayerClassList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return DWStoreConnector<List<PlayerClass>>(
-      builder: builder,
-      converter: (store) {
-        var _dw = dungeonWorld.classes;
-        var _custom = dwStore.state.customClasses.customClasses.values
-            .map((cls) => cls.toPlayerClass());
-        return [
-          if (includeDefault) ..._dw,
-          if (includeCustom) ..._custom,
-        ];
-      },
+    final _dw = dungeonWorld.classes;
+    final _custom = customClassesController.classes.values
+        .map((cls) => cls.toPlayerClass());
+    return Obx(
+      () => builder(context, [
+        if (includeDefault) ..._dw,
+        if (includeCustom) ..._custom,
+      ]),
     );
   }
 }

@@ -2,7 +2,7 @@ import 'package:dungeon_paper/db/models/character.dart';
 import 'package:dungeon_paper/src/atoms/number_controller.dart';
 import 'package:dungeon_paper/src/dialogs/standard_dialog_controls.dart';
 import 'package:dungeon_paper/src/flutter_utils/input_formatters.dart';
-import 'package:dungeon_paper/src/redux/stores.dart';
+import 'package:dungeon_paper/src/redux/characters/characters_controller.dart';
 import 'package:get/get.dart';
 import 'package:pedantic/pedantic.dart';
 import 'package:flutter/material.dart';
@@ -92,7 +92,7 @@ class EditArmorDialogState extends State<EditArmorDialog> {
 
   void _saveValue() async {
     unawaited(
-      dwStore.state.characters.current
+      characterController.current
           .copyWith(baseArmor: value)
           .update(keys: ['baseArmor']),
     );

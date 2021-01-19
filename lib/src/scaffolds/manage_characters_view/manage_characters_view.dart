@@ -7,7 +7,7 @@ import 'package:dungeon_paper/src/dialogs/confirmation_dialog.dart';
 import 'package:dungeon_paper/src/dialogs/dialogs.dart';
 import 'package:dungeon_paper/src/flutter_utils/widget_utils.dart';
 import 'package:dungeon_paper/src/pages/edit_character/edit_character_view.dart';
-import 'package:dungeon_paper/src/redux/characters/characters_store.dart';
+import 'package:dungeon_paper/src/redux/characters/characters_controller.dart';
 import 'package:dungeon_paper/src/redux/stores.dart';
 import 'package:dungeon_paper/src/scaffolds/main_scaffold.dart';
 import 'package:dungeon_paper/src/utils/analytics.dart';
@@ -31,7 +31,7 @@ class _ManageCharactersViewState extends State<ManageCharactersView> {
   @override
   void initState() {
     subscription = dwStore.onChange.listen(_loadCharsFromState);
-    characters = dwStore.state.characters.all.values.toList()
+    characters = characterController.all.values.toList()
       ..sort((a, b) => a.order - b.order);
     user = dwStore.state.user.current;
     sortMode = false;

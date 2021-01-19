@@ -1,10 +1,11 @@
 import 'dart:async';
 import 'package:dungeon_paper/db/db.dart';
 import 'package:dungeon_paper/db/models/custom_class.dart';
-import 'package:dungeon_paper/src/redux/characters/characters_store.dart';
+import 'package:dungeon_paper/src/redux/auth_controller.dart';
+import 'package:dungeon_paper/src/redux/characters/characters_controller.dart';
 import 'package:dungeon_paper/src/redux/custom_classes/custom_classes_store.dart';
 import 'package:dungeon_paper/src/redux/stores.dart';
-import 'package:dungeon_paper/src/redux/users/user_store.dart';
+import 'package:dungeon_paper/src/redux/users/user_controller.dart';
 import 'package:dungeon_paper/src/utils/logger.dart';
 import 'package:firebase_auth/firebase_auth.dart' as fb;
 
@@ -28,7 +29,7 @@ void registerFirebaseUserListener() {
 
 void _setFbUser(fb.User fbUser) {
   if (fbUser != null) {
-    dwStore.dispatch(SetFirebaseUser(fbUser));
+    authController.setFirebaseUser(fbUser);
     registerUserListener(fbUser);
     registerCharactersListener(fbUser);
     registerCustomClassesListener(fbUser);
@@ -49,11 +50,8 @@ void registerUserListener(fb.User fbUser) {
 
   _userListener = firestore.doc('user_data/${fbUser.email}').snapshots().listen(
     (user) {
-      dwStore.dispatch(
-        SetUser(
-          User.fromJson(user.data()).copyWith(ref: user.reference),
-        ),
-      );
+      userController.current =
+          User.fromJson(user.data()).copyWith(ref: user.reference);
     },
   );
 
@@ -73,20 +71,20 @@ void registerCharactersListener(fb.User firebaseUser) {
       if (characters.docs.isEmpty) {
         return;
       }
-      final chars = {
-        for (final character in characters.docs)
-          character.reference.id: Character.fromJson(
-            character.data(),
-            ref: character.reference,
-          ),
-      };
-      dwStore.dispatch(
-        SetCharacters(chars),
+      final chars = characters.docs.map(
+        (character) => Character.fromJson(
+          character.data(),
+          ref: character.reference,
+        ),
       );
+      characterController.setAll(chars);
       final lastCharId = dwStore.state.prefs.user.lastCharacterId;
-      final matchingChar = chars[lastCharId];
+      final matchingChar = chars.firstWhere(
+        (c) => c.documentID == lastCharId,
+        orElse: () => null,
+      );
       if (lastCharId != null && matchingChar != null) {
-        dwStore.dispatch(SetCurrentChar(matchingChar));
+        characterController.current = matchingChar;
       }
     },
   );
