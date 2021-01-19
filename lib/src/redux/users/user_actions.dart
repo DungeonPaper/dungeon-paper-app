@@ -1,4 +1,4 @@
-part of 'user_store.dart';
+part of 'user_controller.dart';
 
 class Login {
   User user;

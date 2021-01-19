@@ -10,10 +10,10 @@ import 'package:dungeon_paper/src/pages/notes_view/notes_view.dart';
 import 'package:dungeon_paper/src/pages/reference_view/reference_view.dart';
 import 'package:dungeon_paper/src/pages/welcome_view/welcome_view.dart';
 import 'package:dungeon_paper/src/pages/whats_new_view/whats_new_view.dart';
-import 'package:dungeon_paper/src/redux/connectors.dart';
-import 'package:dungeon_paper/src/redux/loading/loading_store.dart';
+import 'package:dungeon_paper/src/redux/characters/characters_controller.dart';
+import 'package:dungeon_paper/src/redux/loading/loading_controller.dart';
 import 'package:dungeon_paper/src/redux/shared_preferences/prefs_store.dart';
-import 'package:dungeon_paper/src/redux/stores.dart';
+import 'package:dungeon_paper/src/redux/users/user_controller.dart';
 import 'package:dungeon_paper/src/scaffolds/main_scaffold.dart';
 import 'package:dungeon_paper/src/utils/analytics.dart';
 import 'package:dungeon_paper/src/utils/logger.dart';
@@ -46,18 +46,14 @@ class MainContainer extends StatelessWidget {
     return GetBuilder<Themes>(
       init: Themes.instance,
       builder: (themes) {
-        return DWStoreConnector<DWStore>(
-          builder: (ctx, state) {
-            final character = state.characters.current;
-            final user = state.user.current;
-            return MainView(
-              character: character,
-              user: user,
-              loading: state.loading[LoadingKeys.Character] ||
-                  state.loading[LoadingKeys.User],
-              pageController: pageController,
-            );
-          },
+        final character = characterController.current;
+        final user = userController.current;
+        return MainView(
+          character: character,
+          user: user,
+          loading: loadingController[LoadingKeys.character] ||
+              loadingController[LoadingKeys.user],
+          pageController: pageController,
         );
       },
     );

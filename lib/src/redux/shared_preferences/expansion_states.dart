@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:dungeon_paper/src/redux/characters/characters_controller.dart';
 import 'package:dungeon_paper/src/redux/shared_preferences/prefs_settings.dart';
 import 'package:dungeon_paper/src/redux/shared_preferences/prefs_store.dart';
 import 'package:dungeon_paper/src/utils/analytics.dart';
@@ -62,7 +63,7 @@ class ExpansionStates {
   bool isExpanded(String key) =>
       key == null || !_charData.containsKey(key) || _charData[key] == true;
 
-  String get charId => dwStore.state.characters.current?.documentID;
+  String get charId => characterController.current?.documentID;
 
   void toggle(String key) {
     if (_charData.containsKey(key)) {

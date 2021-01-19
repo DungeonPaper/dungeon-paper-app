@@ -21,8 +21,8 @@ import '../spells.dart';
 
 part 'character_fields.dart';
 
-class Character extends FirebaseEntity with CharacterFields {
-  Character({
+class _Character extends FirebaseEntity with CharacterFields {
+  _Character({
     Map<String, dynamic> data,
     DocumentReference ref,
     bool autoLoad,

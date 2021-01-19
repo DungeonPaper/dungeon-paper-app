@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dungeon_paper/db/models/firebase_entity/fields/fields.dart';
 import 'package:dungeon_paper/db/models/firebase_entity/firebase_entity.dart';
+import 'package:dungeon_paper/src/redux/characters/characters_controller.dart';
 import 'package:dungeon_paper/src/redux/custom_classes/custom_classes_store.dart';
 import 'package:dungeon_paper/src/redux/stores.dart';
 import 'package:dungeon_paper/src/utils/utils.dart';
@@ -138,7 +139,7 @@ class CustomClass extends FirebaseEntity {
 
   Future<void> _updateChars() async {
     final futures = <Future>[];
-    for (final char in dwStore.state.characters.all.values) {
+    for (final char in characterController.all.values) {
       if (char.playerClasses.any((el) => el.key == key)) {
         final _updated = char.playerClasses
             .map((el) => el.key == key ? toPlayerClass() : el)

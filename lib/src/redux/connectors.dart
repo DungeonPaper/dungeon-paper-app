@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:redux/redux.dart';
 
-import 'loading/loading_store.dart';
+import 'loading/loading_controller.dart';
 import 'stores.dart';
 
 class DWStoreConnector<T> extends StatelessWidget {

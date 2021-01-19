@@ -9,7 +9,7 @@ import 'package:dungeon_paper/src/pages/campaigns_view/campaigns_view.dart';
 import 'package:dungeon_paper/src/pages/custom_classes_view/custom_classes_view.dart';
 import 'package:dungeon_paper/src/pages/edit_character/edit_character_view.dart';
 import 'package:dungeon_paper/src/pages/settings_view/settings_view.dart';
-import 'package:dungeon_paper/src/redux/characters/characters_store.dart';
+import 'package:dungeon_paper/src/redux/characters/characters_controller.dart';
 import 'package:dungeon_paper/src/redux/connectors.dart';
 import 'package:dungeon_paper/src/redux/stores.dart';
 import 'package:dungeon_paper/src/scaffolds/manage_characters_view/manage_characters_view.dart';
@@ -240,7 +240,7 @@ class _SidebarState extends State<Sidebar> with SingleTickerProviderStateMixin {
     }
     return CharacterListTile.list(
       characters.values.toList()..sort((ch1, ch2) => ch1.order - ch2.order),
-      selectedId: dwStore.state.characters.current.documentID,
+      selectedId: characterController.current.documentID,
     );
   }
 }

@@ -1,35 +1,56 @@
 import 'package:dungeon_paper/db/models/custom_class.dart';
-import 'package:dungeon_paper/src/redux/users/user_store.dart';
+import 'package:dungeon_paper/src/redux/users/user_controller.dart';
+import 'package:get/get.dart';
 part 'custom_class_actions.dart';
 
-class CustomClassesStore {
-  Map<String, CustomClass> customClasses;
+class CustomClassesController extends GetxController {
+  final RxMap<String, CustomClass> classes = {}.obs;
 
-  CustomClassesStore({
-    this.customClasses,
-  });
+  void upsert(CustomClass cls) {
+    classes[cls.documentID] = cls;
+    update();
+  }
+
+  void remove(CustomClass cls) {
+    classes.remove(cls.documentID);
+    update();
+  }
+
+  void setAll(Iterable<CustomClass> classes) {
+    clear(false);
+    this.classes.assignAll({
+      for (final cls in classes) cls.documentID: cls,
+    });
+    update();
+  }
+
+  void clear([bool updateCondition = true]) {
+    classes.removeWhere((_, __) => true);
+    update(null, updateCondition);
+  }
 }
 
-CustomClassesStore customClassesReducer(CustomClassesStore state, action) {
+final customClassesController = CustomClassesController();
+
+CustomClassesController customClassesReducer(
+    CustomClassesController state, action) {
   if (action is SetCustomClasses) {
-    state.customClasses = action.classes;
+    state.setAll(action.classes.values);
     return state;
   }
 
   if (action is UpsertCustomClass) {
-    state.customClasses.addAll({
-      action.customClass.documentID: action.customClass,
-    });
+    state.upsert(action.customClass);
     return state;
   }
 
   if (action is RemoveCustomClass) {
-    state.customClasses.remove(action.customClass.documentID);
+    state.remove(action.customClass);
     return state;
   }
 
   if (action is Logout) {
-    state.customClasses = {};
+    state.clear();
     return state;
   }
 

@@ -1,4 +1,4 @@
-part of 'characters_store.dart';
+part of 'characters_controller.dart';
 
 class SetCharacters {
   final Map<String, Character> characters;

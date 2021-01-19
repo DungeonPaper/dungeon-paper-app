@@ -1,5 +1,5 @@
 import 'package:dungeon_paper/db/models/campaign.dart';
-import 'package:dungeon_paper/src/redux/users/user_store.dart';
+import 'package:dungeon_paper/src/redux/users/user_controller.dart';
 part 'campaigns_actions.dart';
 
 class CampaignsStore {
