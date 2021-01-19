@@ -5,7 +5,7 @@ import 'package:dungeon_paper/src/lists/custom_class_moves_list.dart';
 import 'package:dungeon_paper/src/molecules/custom_class_alignments.dart';
 import 'package:dungeon_paper/src/molecules/custom_class_basic_details.dart';
 import 'package:dungeon_paper/src/molecules/custom_class_looks.dart';
-import 'package:dungeon_paper/src/redux/stores.dart';
+import 'package:dungeon_paper/src/redux/users/user_controller.dart';
 import 'package:dungeon_paper/src/scaffolds/main_scaffold.dart';
 import 'package:dungeon_paper/src/utils/analytics.dart';
 import 'package:dungeon_paper/src/utils/utils.dart';
@@ -53,7 +53,7 @@ class _CustomClassWizardState extends State<CustomClassWizard>
 
   @override
   void initState() {
-    var user = dwStore.state.user.current;
+    var user = userController.current;
     def = widget.customClass != null
         ? CustomClass(
             data: widget.customClass.toJSON(),

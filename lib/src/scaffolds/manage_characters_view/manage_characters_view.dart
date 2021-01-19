@@ -8,7 +8,7 @@ import 'package:dungeon_paper/src/dialogs/dialogs.dart';
 import 'package:dungeon_paper/src/flutter_utils/widget_utils.dart';
 import 'package:dungeon_paper/src/pages/edit_character/edit_character_view.dart';
 import 'package:dungeon_paper/src/redux/characters/characters_controller.dart';
-import 'package:dungeon_paper/src/redux/stores.dart';
+import 'package:dungeon_paper/src/redux/users/user_controller.dart';
 import 'package:dungeon_paper/src/scaffolds/main_scaffold.dart';
 import 'package:dungeon_paper/src/utils/analytics.dart';
 import 'package:dungeon_paper/src/utils/logger.dart';
@@ -24,29 +24,30 @@ class ManageCharactersView extends StatefulWidget {
 
 class _ManageCharactersViewState extends State<ManageCharactersView> {
   List<Character> characters;
-  StreamSubscription<DWStore> subscription;
   User user;
   bool sortMode;
+  GetStream _loadCharsSub;
 
   @override
   void initState() {
-    subscription = dwStore.onChange.listen(_loadCharsFromState);
+    _loadCharsSub = GetStream(onListen: _loadCharsFromState);
+    characterController.all..addListener(_loadCharsSub);
     characters = characterController.all.values.toList()
       ..sort((a, b) => a.order - b.order);
-    user = dwStore.state.user.current;
+    user = userController.current;
     sortMode = false;
     super.initState();
   }
 
   @override
   void dispose() {
-    subscription.cancel();
+    _loadCharsSub.close();
     super.dispose();
   }
 
-  void _loadCharsFromState(DWStore state) {
+  void _loadCharsFromState() {
     setState(() {
-      characters = state.characters.all.values.toList()
+      characters = characterController.all.values.toList()
         ..sort((a, b) => a.order - b.order);
     });
   }
@@ -188,9 +189,7 @@ class _ManageCharactersViewState extends State<ManageCharactersView> {
     setState(() {
       characters = [...copy];
     });
-    dwStore.dispatch(
-      SetCharacters.fromIterable(copy),
-    );
+    characterController.setAll(copy);
   }
 
   void _edit(Character char) {
@@ -203,7 +202,7 @@ class _ManageCharactersViewState extends State<ManageCharactersView> {
   }
 
   void _select(Character char) {
-    dwStore.dispatch(SetCurrentChar(char));
+    characterController.setCurrent(char);
     Get.back();
   }
 
@@ -222,7 +221,7 @@ class _ManageCharactersViewState extends State<ManageCharactersView> {
       );
       if (result == true) {
         unawaited(analytics.logEvent(name: Events.DeleteCharacter));
-        dwStore.dispatch(RemoveCharacter(char));
+        characterController.remove(char);
         await char.delete();
         if (mounted) {
           setState(() {
