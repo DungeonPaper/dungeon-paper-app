@@ -21,26 +21,24 @@ class LoginButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Obx(
-      () => Container(
-        width: 220,
-        height: 40,
-        child: RaisedButton.icon(
-          icon: icon,
-          label: Expanded(
-            child: Text(
-              label,
-              textAlign: TextAlign.center,
-              style: TextStyle(
-                fontSize: 14,
-                fontWeight: FontWeight.normal,
-                color: textColor,
-              ),
+    return Container(
+      width: 220,
+      height: 40,
+      child: RaisedButton.icon(
+        icon: icon,
+        label: Expanded(
+          child: Text(
+            label,
+            textAlign: TextAlign.center,
+            style: TextStyle(
+              fontSize: 14,
+              fontWeight: FontWeight.normal,
+              color: textColor,
             ),
           ),
-          color: color ?? Get.theme.accentColor,
-          onPressed: onPressed,
         ),
+        color: color ?? Get.theme.accentColor,
+        onPressed: onPressed,
       ),
     );
   }

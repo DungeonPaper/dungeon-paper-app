@@ -26,7 +26,7 @@ class _EditStatsState extends State<EditStats> {
   int _int;
   int _wis;
   int _cha;
-  Map<CharacterKey, bool> errors = {};
+  Map<CharacterStat, bool> errors = {};
 
   @override
   void initState() {
@@ -46,10 +46,10 @@ class _EditStatsState extends State<EditStats> {
         padding: const EdgeInsets.all(16.0),
         child: Column(
           children: <Widget>[
-            for (CharacterKey stat in ORDERED_STATS)
+            for (final stat in ORDERED_STATS)
               EditStatListTile(
                 stat: stat,
-                value: _getter(stat),
+                value: _stateStatGetter(stat),
                 onChange: _valueUpdateBuilder(_setter(stat)),
               ),
           ],
@@ -66,99 +66,61 @@ class _EditStatsState extends State<EditStats> {
     };
   }
 
-  CallbackDelegate<num, VoidEmptyCallbackDelegate> _setter(CharacterKey stat) {
-    Function(num) setter;
-    Function(bool) errorSetter;
-    switch (stat) {
-      case (CharacterKey.str):
-        setter = (val) {
-          final char = widget.character.copyWith(strength: val);
-          _str = val;
-          widget?.onUpdate(char);
-        };
-        errorSetter = (state) {
-          errors[CharacterKey.str] = state;
-        };
-        break;
-      case (CharacterKey.dex):
-        setter = (val) {
-          final char = widget.character.copyWith(dexterity: val);
-          _dex = val;
-          widget?.onUpdate(char);
-        };
-        errorSetter = (state) {
-          errors[CharacterKey.dex] = state;
-        };
-        break;
-      case (CharacterKey.con):
-        setter = (val) {
-          final char = widget.character.copyWith(constitution: val);
-          _con = val;
-          widget?.onUpdate(char);
-        };
-        errorSetter = (state) {
-          errors[CharacterKey.con] = state;
-        };
-        break;
-      case (CharacterKey.int):
-        setter = (val) {
-          final char = widget.character.copyWith(intelligence: val);
-          _int = val;
-          widget?.onUpdate(char);
-        };
-        errorSetter = (state) {
-          errors[CharacterKey.int] = state;
-        };
-        break;
-      case (CharacterKey.cha):
-        setter = (val) {
-          final char = widget.character.copyWith(charisma: val);
-          _cha = val;
-          widget?.onUpdate(char);
-        };
-        errorSetter = (state) {
-          errors[CharacterKey.cha] = state;
-        };
-        break;
-      case (CharacterKey.wis):
-        setter = (val) {
-          final char = widget.character.copyWith(wisdom: val);
-          _wis = val;
-          widget?.onUpdate(char);
-        };
-        errorSetter = (state) {
-          errors[CharacterKey.wis] = state;
-        };
-        break;
-      default:
-        setter = (val) {};
-    }
+  CallbackDelegate<num, VoidEmptyCallbackDelegate> _setter(CharacterStat stat) {
+    final setter = (int val) {
+      final char = widget.character.copyWithStat(stat, val);
+      _stateStatSetter(stat, val);
+      widget.onUpdate?.call(char);
+    };
 
     return (val) {
       return () {
         if (val == null) {
-          errorSetter(true);
+          errors[stat] = true;
         } else {
-          errorSetter(false);
+          errors[stat] = false;
           setter(val);
         }
       };
     };
   }
 
-  num _getter(CharacterKey stat) {
+  void _stateStatSetter(CharacterStat stat, int val) {
     switch (stat) {
-      case (CharacterKey.str):
+      case CharacterStat.str:
+        _str = val;
+        break;
+      case CharacterStat.dex:
+        _dex = val;
+        break;
+      case CharacterStat.con:
+        _con = val;
+        break;
+      case CharacterStat.int:
+        _int = val;
+        break;
+      case CharacterStat.cha:
+        _cha = val;
+        break;
+      case CharacterStat.wis:
+        _wis = val;
+        break;
+    }
+  }
+
+  num _stateStatGetter(CharacterStat stat) {
+    switch (stat) {
+      case CharacterStat.str:
         return _str;
-      case (CharacterKey.dex):
+      case CharacterStat.dex:
         return _dex;
-      case (CharacterKey.con):
+      case CharacterStat.con:
         return _con;
-      case (CharacterKey.int):
+      case CharacterStat.int:
         return _int;
-      case (CharacterKey.cha):
+      case CharacterStat.cha:
         return _cha;
-      case (CharacterKey.wis):
+      case CharacterStat.wis:
         return _wis;
       default:
         return null;
@@ -167,7 +129,7 @@ class _EditStatsState extends State<EditStats> {
 }
 
 class EditStatListTile extends StatelessWidget {
-  final CharacterKey stat;
+  final CharacterStat stat;
   final int value;
   final Function(int) onChange;
 

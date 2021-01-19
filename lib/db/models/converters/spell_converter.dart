@@ -13,5 +13,6 @@ class SpellConverter implements JsonConverter<DbSpell, Map<String, dynamic>> {
   }
 
   @override
-  Map<String, dynamic> toJson(DbSpell data) => data.toJSON();
+  Map<String, dynamic> toJson(DbSpell data) =>
+      data?.toJSON()?.cast<String, dynamic>();
 }

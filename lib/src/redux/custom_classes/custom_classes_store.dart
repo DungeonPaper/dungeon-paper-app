@@ -4,24 +4,24 @@ import 'package:get/get.dart';
 part 'custom_class_actions.dart';
 
 class CustomClassesController extends GetxController {
-  final RxMap<String, CustomClass> classes = {}.obs;
+  final RxMap<String, CustomClass> classes = <String, CustomClass>{}.obs;
 
-  void upsert(CustomClass cls) {
+  void upsert(CustomClass cls, [bool updateCondition = true]) {
     classes[cls.documentID] = cls;
-    update();
+    update(null, updateCondition);
   }
 
-  void remove(CustomClass cls) {
+  void remove(CustomClass cls, [bool updateCondition = true]) {
     classes.remove(cls.documentID);
-    update();
+    update(null, updateCondition);
   }
 
-  void setAll(Iterable<CustomClass> classes) {
+  void setAll(Iterable<CustomClass> classes, [bool updateCondition = true]) {
     clear(false);
     this.classes.assignAll({
       for (final cls in classes) cls.documentID: cls,
     });
-    update();
+    update(null, updateCondition);
   }
 
   void clear([bool updateCondition = true]) {

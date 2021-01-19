@@ -16,55 +16,56 @@ class UserController extends GetxController {
 
   bool get isLoggedIn => firebaseUser != null && current != null;
 
-  set current(User value) {
+  void setCurrent(User value, [bool updateCondition = true]) {
     _current.value = value;
-    update();
+    update(null, updateCondition);
   }
 
-  set firebaseUser(fb.User value) {
+  void setFirebaseUser(fb.User value, [bool updateCondition = true]) {
     _firebaseUser.value = value;
-    update();
+    update(null, updateCondition);
   }
 
   void login({
     User user,
     fb.User firebaseUser,
+    bool updateCondition = true,
   }) {
-    current = user;
-    firebaseUser = firebaseUser;
-    update();
+    setCurrent(user, false);
+    setFirebaseUser(firebaseUser, false);
+    update(null, updateCondition);
   }
 
-  void clear() {
-    current = null;
-    firebaseUser = null;
-    characterController.clear();
-    update();
+  void clear([bool updateCondition = true]) {
+    setCurrent(null, false);
+    setFirebaseUser(null, false);
+    characterController.clear(false);
+    update(null, updateCondition);
   }
 
-  void logout() => clear();
-  void noLogin() => clear();
+  void logout([bool updateCondition = true]) => clear(updateCondition);
+  void noLogin([bool updateCondition = true]) => clear(updateCondition);
 }
 
 UserController userReducer(UserController state, action) {
   if (action is Login) {
     return state
-      ..current = action.user
-      ..firebaseUser = action.firebaseUser;
+      ..setCurrent(action.user)
+      ..setFirebaseUser(action.firebaseUser);
   }
 
   if (action is SetUser) {
-    return state..current = action.user;
+    return state..setCurrent(action.user);
   }
 
   if (action is SetFirebaseUser) {
-    return state..firebaseUser = action.user;
+    return state..setFirebaseUser(action.user);
   }
 
   if (action is Logout || action is NoLogin) {
     return state
-      ..current = null
-      ..firebaseUser = null;
+      ..setCurrent(null)
+      ..setFirebaseUser(null);
   }
 
   return state;

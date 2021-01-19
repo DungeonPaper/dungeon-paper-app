@@ -4,9 +4,7 @@ import 'package:dungeon_paper/db/listeners.dart';
 import 'package:dungeon_paper/db/models/user.dart';
 import 'package:dungeon_paper/src/redux/auth_controller.dart';
 import 'package:dungeon_paper/src/redux/characters/characters_controller.dart';
-import 'package:dungeon_paper/src/redux/loading/loading_controller.dart';
 import 'package:dungeon_paper/src/redux/stores.dart';
-import 'package:dungeon_paper/src/redux/users/user_controller.dart';
 import 'package:dungeon_paper/src/utils/analytics.dart';
 import 'package:dungeon_paper/src/utils/api.dart';
 import 'package:dungeon_paper/src/utils/logger.dart';
@@ -26,7 +24,7 @@ part 'auth_helpers.dart';
 
 Future<UserLogin> signInWithCredentials(AuthCredential creds) async {
   assert(creds != null);
-  loadingController.requestLogin();
+  authController.requestLogin();
 
   final res = await auth.signInWithCredential(creds);
   return signInWithFbUser(

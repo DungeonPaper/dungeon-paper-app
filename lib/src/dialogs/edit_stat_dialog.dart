@@ -16,7 +16,7 @@ import 'package:pedantic/pedantic.dart';
 import 'package:uuid/uuid.dart';
 
 class EditStatDialog extends StatefulWidget {
-  final CharacterKey stat;
+  final CharacterStat stat;
   final num value;
   final Character character;
 
@@ -33,7 +33,7 @@ class EditStatDialog extends StatefulWidget {
 }
 
 class EditStatDialogState extends State<EditStatDialog> {
-  final CharacterKey stat;
+  final CharacterStat stat;
   final String fullName;
   final String analyticsSource = 'Edit Stat Dialog';
 
@@ -133,41 +133,11 @@ class EditStatDialogState extends State<EditStatDialog> {
   }
 
   void _saveValue() async {
-    var character = characterController.current;
-    String key;
-
-    switch (stat) {
-      case CharacterKey.int:
-        character = character.copyWith(intelligence: value);
-        key = 'int';
-        break;
-      case CharacterKey.wis:
-        character = character.copyWith(wisdom: value);
-        key = 'wis';
-        break;
-      case CharacterKey.cha:
-        character = character.copyWith(charisma: value);
-        key = 'cha';
-        break;
-      case CharacterKey.con:
-        character = character.copyWith(constitution: value);
-        key = 'con';
-        break;
-      case CharacterKey.str:
-        character = character.copyWith(strength: value);
-        key = 'str';
-        break;
-      case CharacterKey.dex:
-        character = character.copyWith(dexterity: value);
-        key = 'dex';
-        break;
-      default:
-        break;
-    }
+    var character = characterController.current.copyWithStat(stat, value);
     setState(() {
       saving = true;
     });
-    unawaited(character.update(keys: [key]));
+    unawaited(character.update(keys: [Character.getStatUpdateKey(stat)]));
     unawaited(analytics.logEvent(name: Events.EditStat));
     Get.back();
   }

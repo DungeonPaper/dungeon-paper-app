@@ -10,8 +10,8 @@ import 'package:dungeon_paper/src/pages/custom_classes_view/custom_classes_view.
 import 'package:dungeon_paper/src/pages/edit_character/edit_character_view.dart';
 import 'package:dungeon_paper/src/pages/settings_view/settings_view.dart';
 import 'package:dungeon_paper/src/redux/characters/characters_controller.dart';
-import 'package:dungeon_paper/src/redux/connectors.dart';
 import 'package:dungeon_paper/src/redux/stores.dart';
+import 'package:dungeon_paper/src/redux/users/user_controller.dart';
 import 'package:dungeon_paper/src/scaffolds/manage_characters_view/manage_characters_view.dart';
 import 'package:dungeon_paper/src/utils/analytics.dart';
 import 'package:dungeon_paper/src/utils/auth/auth.dart';
@@ -45,9 +45,9 @@ class _SidebarState extends State<Sidebar> with SingleTickerProviderStateMixin {
 
   @override
   Widget build(BuildContext context) {
-    return DWStoreConnector<DWStore>(
-      builder: (context, state) {
-        final user = state.user.current;
+    return Obx(
+      () {
+        final user = userController.current;
 
         return Drawer(
           child: ListView(
@@ -97,7 +97,7 @@ class _SidebarState extends State<Sidebar> with SingleTickerProviderStateMixin {
                   ],
                 ),
               ),
-              ...characterList(state.characters.all, context),
+              ...characterList(characterController.all, context),
               Divider(),
               title('Custom Content', context),
               ListTile(
@@ -271,7 +271,7 @@ class CharacterListTile extends StatelessWidget {
             'documentID': character.documentID,
             'order': character.order,
           });
-          dwStore.dispatch(SetCurrentChar(character));
+          characterController.setCurrent(character);
           Get.back();
         },
       ),

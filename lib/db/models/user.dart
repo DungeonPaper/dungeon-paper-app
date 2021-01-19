@@ -28,6 +28,7 @@ abstract class User with FirebaseMixin implements _$User {
     String photoURL,
     @Default({}) Map<String, dynamic> features,
     @DocumentReferenceConverter() DocumentReference ref,
+    String lastCharacterId,
   }) = _User;
 
   factory User.fromJson(json, {DocumentReference ref}) =>

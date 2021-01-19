@@ -53,7 +53,6 @@ _$_Character _$_$_CharacterFromJson(Map<String, dynamic> json) {
     order: json['order'] as int,
     settings: const CharacterSettingsConverter()
         .fromJson(json['settings'] as Map<String, dynamic>),
-    useDefaultMaxHP: json['useDefaultMaxHP'] as bool ?? true,
   );
 }
 
@@ -91,7 +90,6 @@ Map<String, dynamic> _$_$_CharacterToJson(_$_Character instance) =>
       'coins': instance.coins,
       'order': instance.order,
       'settings': const CharacterSettingsConverter().toJson(instance.settings),
-      'useDefaultMaxHP': instance.useDefaultMaxHP,
     };
 
 T _$enumDecode<T>(

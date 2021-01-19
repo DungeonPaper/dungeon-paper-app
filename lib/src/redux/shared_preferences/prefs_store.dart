@@ -1,3 +1,4 @@
+import 'package:dungeon_paper/src/redux/auth_controller.dart';
 import 'package:dungeon_paper/src/redux/characters/characters_controller.dart';
 import 'package:dungeon_paper/src/redux/shared_preferences/prefs_settings.dart';
 import 'package:dungeon_paper/src/redux/stores.dart';
@@ -109,17 +110,17 @@ class PrefsStore {
     );
 
     dwStore.dispatch(SetPrefs(store));
-    dwStore.dispatch(RequestLogin());
+    authController.requestLogin();
     try {
       var user = await signInAutomatically();
       if (user == null) {
         throw SignInError('no_silent_login');
       }
     } on SignInError {
-      dwStore.dispatch(NoLogin());
+      authController.noLogin();
       logger.d('Silent login failed');
     } catch (e) {
-      dwStore.dispatch(NoLogin());
+      authController.noLogin();
       logger.d('Silent login unexpected error:');
       rethrow;
     }
