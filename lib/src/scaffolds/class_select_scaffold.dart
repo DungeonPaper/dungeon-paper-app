@@ -296,7 +296,7 @@ class ChangeClassConfirmationOptions {
     }
 
     if (resetHitDice) {
-      character = character.copyWith(damageDice: mainClass.damage);
+      character = character.copyWith(customDamageDice: mainClass.damage);
     }
 
     return ChangeClassConfirmationResults(character: character);

@@ -7,7 +7,7 @@ class DiceConverter implements JsonConverter<Dice, dynamic> {
   @override
   Dice fromJson(dynamic json) {
     if (json == null) {
-      return null;
+      return Dice.d6;
     }
 
     if (json is Dice) {
@@ -23,5 +23,5 @@ class DiceConverter implements JsonConverter<Dice, dynamic> {
   }
 
   @override
-  dynamic toJson(Dice data) => data;
+  dynamic toJson(Dice data) => data.toString();
 }

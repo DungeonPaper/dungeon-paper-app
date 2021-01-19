@@ -180,9 +180,11 @@ class __$CampaignCopyWithImpl<$Res> extends _$CampaignCopyWithImpl<$Res>
 }
 
 @JsonSerializable()
+@With(FirebaseMixin)
+@With(KeyMixin)
 
 /// @nodoc
-class _$_Campaign extends _Campaign {
+class _$_Campaign extends _Campaign with FirebaseMixin, KeyMixin {
   const _$_Campaign(
       {@DefaultUuid()
           this.key,
@@ -266,7 +268,7 @@ class _$_Campaign extends _Campaign {
   }
 }
 
-abstract class _Campaign extends Campaign {
+abstract class _Campaign extends Campaign implements FirebaseMixin, KeyMixin {
   const _Campaign._() : super._();
   const factory _Campaign(
       {@DefaultUuid()

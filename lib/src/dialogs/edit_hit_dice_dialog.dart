@@ -64,7 +64,7 @@ class EditDamageDiceDialogState extends State<EditDamageDiceDialog> {
 
   void _saveValue() async {
     unawaited(
-      character.copyWith(damageDice: dice).update(keys: ['hitDice']),
+      character.copyWith(customDamageDice: dice).update(keys: ['hitDice']),
     );
     Get.back();
   }

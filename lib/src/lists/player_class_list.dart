@@ -1,6 +1,4 @@
-import 'package:dungeon_paper/src/redux/connectors.dart';
 import 'package:dungeon_paper/src/redux/custom_classes/custom_classes_store.dart';
-import 'package:dungeon_paper/src/redux/stores.dart';
 import 'package:dungeon_world_data/dw_data.dart';
 import 'package:dungeon_world_data/player_class.dart';
 import 'package:flutter/material.dart';
