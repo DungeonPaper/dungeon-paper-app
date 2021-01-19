@@ -12,13 +12,22 @@ enum SettingName {
 }
 
 class PrefsSettings {
-  bool keepScreenOn;
-  ExpansionStates expansionStates;
+  final bool keepScreenOn;
+  final ExpansionStates expansionStates;
 
   PrefsSettings({
     this.keepScreenOn = true,
     ExpansionStates expansionStates,
   }) : expansionStates = expansionStates ?? ExpansionStates();
+
+  PrefsSettings copyWith({
+    bool keepScreenOn = true,
+    ExpansionStates expansionStates,
+  }) =>
+      PrefsSettings(
+        keepScreenOn: keepScreenOn ?? this.keepScreenOn,
+        expansionStates: expansionStates ?? this.expansionStates,
+      );
 
   static final _SETTING_NAME_KEYS = <SettingName, String>{
     SettingName.keepScreenOn: 'KeepScreenOn',
@@ -89,33 +98,8 @@ class PrefsSettings {
     }
   }
 
-  void set<T>(SettingName name, T value) {
-    switch (name) {
-      case SettingName.keepScreenOn:
-        keepScreenOn = value as bool;
-        break;
-      case SettingName.expansionStates:
-        expansionStates = value is ExpansionStates
-            ? value
-            : ExpansionStates.fromPrefsString(value as String);
-        break;
-    }
-    applySetting(name);
-  }
-
-  T get<T>(SettingName name) {
-    switch (name) {
-      case SettingName.keepScreenOn:
-        return keepScreenOn as T;
-      case SettingName.expansionStates:
-        return expansionStates as T;
-    }
-    return null;
-  }
-
   void applySetting<T>(SettingName name) {
-    var value = get<T>(name);
-    logger.d('Applying $name = $value');
+    logger.d('Applying $name');
     switch (name) {
       case SettingName.keepScreenOn:
         Screen.keepOn(keepScreenOn);

@@ -85,14 +85,19 @@ void main() {
   group('Character migrations', () {
     group('Settings migration', () {
       group('useDefaultMaxHP', () {
+        test('no current value', () {
+          final char1 = Character.fromJson(<String, dynamic>{
+            'useDefaultMaxHP': true,
+          });
+
+          expect(char1.settings.useDefaultMaxHp, equals(true));
+        });
         test('value different from default', () {
           final char2 = Character.fromJson(<String, dynamic>{
             'useDefaultMaxHP': true,
             'settings': {'useDefaultMaxHp': false},
           });
 
-          // ignore: deprecated_member_use_from_same_package
-          expect(char2.useDefaultMaxHP, equals(false));
           expect(char2.settings.useDefaultMaxHp, equals(false));
         });
 
@@ -102,8 +107,6 @@ void main() {
             'settings': {'useDefaultMaxHp': false}
           });
 
-          // ignore: deprecated_member_use_from_same_package
-          expect(char3.useDefaultMaxHP, equals(false));
           expect(char3.settings.useDefaultMaxHp, equals(false));
         });
       });

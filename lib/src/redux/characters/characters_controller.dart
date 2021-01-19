@@ -1,4 +1,5 @@
 import 'package:dungeon_paper/src/redux/loading/loading_controller.dart';
+import 'package:dungeon_paper/src/redux/shared_preferences/prefs_store.dart';
 import 'package:get/get.dart';
 import 'package:dungeon_paper/db/models/character.dart';
 
@@ -11,16 +12,9 @@ class CharacterController extends GetxController {
   Character get current => _current.value;
 
   void setCurrent(Character value, [bool updateCondition = true]) {
-    if (current != null) {
-      _current.value = value;
-      update(null, updateCondition);
-      return;
-    }
-
-    if (value == null) {
-      _current.value = all.values.first;
-      update(null, updateCondition);
-    }
+    _current.value = value ?? all[current.documentID] ?? all.values.first;
+    prefsController.user.setLastCharacterId(current.documentID, false);
+    update(null, updateCondition);
   }
 
   void upsert(Character character, [bool updateCondition = true]) {
@@ -40,18 +34,20 @@ class CharacterController extends GetxController {
   }
 
   void setAll(Iterable<Character> characters, [bool updateCondition = true]) {
+    final currentDocId = current?.documentID;
     clear(false);
     all.assignAll({
       for (final char in characters) char.documentID: char,
     });
-    if (current != null) {
-      _current.value = all.values.firstWhere(
-        (c) => c.documentID == current.documentID,
-        orElse: () => null,
-      );
-    } else {
-      _current.value = characters.first;
-    }
+    setCurrent(
+      currentDocId != null
+          ? all.values.firstWhere(
+              (c) => c.documentID == currentDocId,
+              orElse: () => null,
+            )
+          : characters.first,
+      false,
+    );
     loadingController.upsertCharacter(false);
     update(null, updateCondition);
   }

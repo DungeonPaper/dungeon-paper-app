@@ -117,7 +117,23 @@ Future<void> sendPasswordResetLink(String email) async {
 }
 
 Future<UserLogin> signInAutomatically() async {
-  return signInWithFbUser(SignInMethod.firebase, auth.currentUser);
+  authController.requestLogin();
+  try {
+    final user =
+        await signInWithFbUser(SignInMethod.firebase, auth.currentUser);
+    if (user == null) {
+      throw SignInError('no_silent_login');
+    }
+    return user;
+  } on SignInError {
+    authController.noLogin();
+    logger.d('Silent login failed');
+    return null;
+  } catch (e) {
+    authController.noLogin();
+    logger.d('Silent login unexpected error:');
+    rethrow;
+  }
 }
 
 Future<UserLogin> signInWithFbUser(

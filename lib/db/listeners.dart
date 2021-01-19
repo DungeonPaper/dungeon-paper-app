@@ -6,19 +6,22 @@ import 'package:dungeon_paper/src/redux/characters/characters_controller.dart';
 import 'package:dungeon_paper/src/redux/custom_classes/custom_classes_controller.dart';
 import 'package:dungeon_paper/src/redux/users/user_controller.dart';
 import 'package:dungeon_paper/src/utils/logger.dart';
-import 'package:dungeon_paper/src/utils/utils.dart';
 import 'package:firebase_auth/firebase_auth.dart' as fb;
 
-import 'models/character.dart';
+import 'migrations/character_migrations.dart';
 import 'models/user.dart';
 
 StreamSubscription _fbUserUpdateListener;
+StreamSubscription _userListener;
+StreamSubscription _charsListener;
+StreamSubscription _classesListener;
+StreamSubscription _campaignsListener;
 
 void registerFirebaseUserListener() {
   try {
     _fbUserUpdateListener?.cancel();
 
-    _fbUserUpdateListener = auth.userChanges().listen(_setFbUser);
+    _fbUserUpdateListener = auth.userChanges().listen(_onAuthChange);
     logger.d('Registered auth user listener');
   } catch (e) {
     logger.d('error on user listener');
@@ -27,27 +30,32 @@ void registerFirebaseUserListener() {
   }
 }
 
-void _setFbUser(fb.User fbUser) {
-  if (fbUser != null) {
-    authController.setFirebaseUser(fbUser);
-    registerUserListener(fbUser);
-    registerCharactersListener(fbUser);
-    registerCustomClassesListener(fbUser);
+void _onAuthChange(fb.User firebaseUser) {
+  if (firebaseUser != null) {
+    authController.setFirebaseUser(firebaseUser);
+    registerUserListener(firebaseUser);
+    registerCharactersListener(firebaseUser);
+    registerCustomClassesListener(firebaseUser);
+    registerCampaignsListener(firebaseUser);
   } else {
+    _fbUserUpdateListener?.cancel();
+    _userListener?.cancel();
+    _charsListener?.cancel();
+    _classesListener?.cancel();
+    _campaignsListener?.cancel();
     authController.logout();
   }
 }
 
-StreamSubscription _userListener;
-
-void registerUserListener(fb.User fbUser) {
+void registerUserListener(fb.User firebaseUser) {
   _userListener?.cancel();
 
-  if (fbUser == null) {
+  if (firebaseUser == null) {
     return;
   }
 
-  _userListener = firestore.doc('user_data/${fbUser.email}').snapshots().listen(
+  _userListener =
+      firestore.doc('user_data/${firebaseUser.email}').snapshots().listen(
     (user) {
       userController.setCurrent(
         User.fromJson(user.data()).copyWith(ref: user.reference),
@@ -58,10 +66,11 @@ void registerUserListener(fb.User fbUser) {
   logger.d('Registered db user listener');
 }
 
-StreamSubscription _charsListener;
-
 void registerCharactersListener(fb.User firebaseUser) {
   _charsListener?.cancel();
+  if (firebaseUser == null) {
+    return;
+  }
 
   final userEmail = firebaseUser.email;
   final user = firestore.doc('user_data/$userEmail');
@@ -71,46 +80,20 @@ void registerCharactersListener(fb.User firebaseUser) {
       if (characters.docs.isEmpty) {
         return;
       }
-      final chars = <Character>[];
-      characters.docs.forEach(
-        (character) {
-          final data = character.data();
-
-          // TODO move to own migrations manager
-          if (data['useDefaultMaxHP'] != null && data['settings'] == null) {
-            data['settings'] = {
-              'useDefaultMaxHp': data.remove('useDefaultMaxHP')
-            };
-            character.reference.update(
-              pick(data, ['settings', 'useDefaultMaxHP']),
-            );
-          }
-
-          chars.add(
-            Character.fromJson(
-              data,
-              ref: character.reference,
-            ),
-          );
-        },
+      final chars = characters.docs.map(
+        (character) => CharacterMigrations.run(character),
       );
       characterController.setAll(chars);
-      // final lastCharId = userController.current.lastCharacterId;
-      // final matchingChar = chars.firstWhere(
-      //   (c) => c.documentID == lastCharId,
-      //   orElse: () => null,
-      // );
-      // if (lastCharId != null && matchingChar != null) {
-      //   characterController.current = matchingChar;
-      // }
     },
   );
   logger.d('Registered db character listener');
 }
 
-StreamSubscription _classesListener;
 void registerCustomClassesListener(fb.User firebaseUser) {
   _classesListener?.cancel();
+  if (firebaseUser == null) {
+    return;
+  }
   final email = firebaseUser.email;
   _classesListener = firestore
       .collection('user_data/$email/custom_classes')
@@ -131,13 +114,14 @@ void registerCustomClassesListener(fb.User firebaseUser) {
   logger.d('Registered db classes listener');
 }
 
-StreamSubscription _campaignsListener;
-
 void registerCampaignsListener(fb.User firebaseUser) {
   _campaignsListener?.cancel();
+  if (firebaseUser == null) {
+    return;
+  }
   final email = firebaseUser.email;
   _campaignsListener = firestore
-      .collection('user_data/$email/custom_campaigns')
+      .collection('user_data/$email/campaigns')
       .snapshots()
       .listen((campaigns) {
     if (campaigns.docs.isEmpty) {
@@ -145,6 +129,7 @@ void registerCampaignsListener(fb.User firebaseUser) {
     }
     customClassesController.setAll([
       for (final character in campaigns.docs)
+        // TODO update
         CustomClass(
           data: character.data(),
           ref: character.reference,

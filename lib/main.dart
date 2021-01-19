@@ -2,6 +2,7 @@ import 'dart:async';
 import 'package:dungeon_paper/db/db.dart';
 import 'package:dungeon_paper/src/flutter_utils/on_init_caller.dart';
 import 'package:dungeon_paper/src/pages/scaffold/main_view.dart';
+import 'package:dungeon_paper/src/redux/shared_preferences/prefs_store.dart';
 import 'package:dungeon_paper/src/utils/analytics.dart';
 import 'package:dungeon_paper/src/utils/error_reporting.dart';
 import 'package:dungeon_paper/src/utils/logger.dart';
@@ -30,7 +31,7 @@ void withInit(Function() cb) async {
 void main() async {
   await initApp(web: kIsWeb);
   withInit(() {
-    // TODO AppInit
+    prefsController.loadAll();
     runApp(DungeonPaper());
   });
 }
