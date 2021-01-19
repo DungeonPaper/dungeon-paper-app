@@ -18,7 +18,7 @@ class PlayerClassConverter
 
   @override
   Map<String, dynamic> toJson(PlayerClass data) {
-    final json = data.toJSON();
+    final json = data.toJSON().cast<String, dynamic>();
     if (json['looks'] is List) {
       json['looks'] = (json['looks'] as List<List<String>>)
           .asMap()

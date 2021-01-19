@@ -21,7 +21,7 @@ class _$UserTearOff {
       {String displayName,
       String email,
       String photoURL,
-      @JsonKey(defaultValue: const {}) Map<String, dynamic> features,
+      Map<String, dynamic> features = const {},
       @DocumentReferenceConverter() DocumentReference ref}) {
     return _User(
       displayName: displayName,
@@ -47,7 +47,6 @@ mixin _$User {
   String get displayName;
   String get email;
   String get photoURL;
-  @JsonKey(defaultValue: const {})
   Map<String, dynamic> get features;
   @DocumentReferenceConverter()
   DocumentReference get ref;
@@ -65,7 +64,7 @@ abstract class $UserCopyWith<$Res> {
       {String displayName,
       String email,
       String photoURL,
-      @JsonKey(defaultValue: const {}) Map<String, dynamic> features,
+      Map<String, dynamic> features,
       @DocumentReferenceConverter() DocumentReference ref});
 }
 
@@ -107,7 +106,7 @@ abstract class _$UserCopyWith<$Res> implements $UserCopyWith<$Res> {
       {String displayName,
       String email,
       String photoURL,
-      @JsonKey(defaultValue: const {}) Map<String, dynamic> features,
+      Map<String, dynamic> features,
       @DocumentReferenceConverter() DocumentReference ref});
 }
 
@@ -142,16 +141,18 @@ class __$UserCopyWithImpl<$Res> extends _$UserCopyWithImpl<$Res>
 }
 
 @JsonSerializable()
+@With(FirebaseMixin)
 
 /// @nodoc
-class _$_User extends _User with DiagnosticableTreeMixin {
+class _$_User extends _User with DiagnosticableTreeMixin, FirebaseMixin {
   const _$_User(
       {this.displayName,
       this.email,
       this.photoURL,
-      @JsonKey(defaultValue: const {}) this.features,
+      this.features = const {},
       @DocumentReferenceConverter() this.ref})
-      : super._();
+      : assert(features != null),
+        super._();
 
   factory _$_User.fromJson(Map<String, dynamic> json) =>
       _$_$_UserFromJson(json);
@@ -162,8 +163,8 @@ class _$_User extends _User with DiagnosticableTreeMixin {
   final String email;
   @override
   final String photoURL;
-  @override
   @JsonKey(defaultValue: const {})
+  @override
   final Map<String, dynamic> features;
   @override
   @DocumentReferenceConverter()
@@ -225,13 +226,13 @@ class _$_User extends _User with DiagnosticableTreeMixin {
   }
 }
 
-abstract class _User extends User {
+abstract class _User extends User implements FirebaseMixin {
   const _User._() : super._();
   const factory _User(
       {String displayName,
       String email,
       String photoURL,
-      @JsonKey(defaultValue: const {}) Map<String, dynamic> features,
+      Map<String, dynamic> features,
       @DocumentReferenceConverter() DocumentReference ref}) = _$_User;
 
   factory _User.fromJson(Map<String, dynamic> json) = _$_User.fromJson;
@@ -243,7 +244,6 @@ abstract class _User extends User {
   @override
   String get photoURL;
   @override
-  @JsonKey(defaultValue: const {})
   Map<String, dynamic> get features;
   @override
   @DocumentReferenceConverter()

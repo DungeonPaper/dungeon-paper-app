@@ -24,7 +24,7 @@ void main() {
     test('properly dumps json', () {
       final char = Character.fromJson(
         <String, dynamic>{
-          'playerClasses': [druid.toJSON()],
+          'playerClasses': [druid.toJSON().cast<String, dynamic>()],
           'displayName': 'Goku',
           'str': 20,
           'dex': 10,
@@ -44,7 +44,9 @@ void main() {
     test('auto max HP get/set', () {
       var char1 = Character.fromJson(
         <String, dynamic>{
-          'playerClasses': [immolator.toJSON()], // base HP 6
+          'playerClasses': [
+            immolator.toJSON().cast<String, dynamic>()
+          ], // base HP 6
           'displayName': 'Goku',
           'str': 20,
           'dex': 10,
@@ -57,7 +59,9 @@ void main() {
       );
       var char2 = Character.fromJson(
         <String, dynamic>{
-          'playerClasses': [wizard.toJSON()], // base HP 4
+          'playerClasses': [
+            wizard.toJSON().cast<String, dynamic>()
+          ], // base HP 4
           'displayName': 'Harry Potter',
           'str': 20,
           'dex': 10,
@@ -83,6 +87,7 @@ void main() {
       group('useDefaultMaxHP', () {
         test('value different from default', () {
           final char2 = Character.fromJson(<String, dynamic>{
+            'useDefaultMaxHP': false,
             'settings': {'useDefaultMaxHp': false},
           });
 
@@ -92,14 +97,10 @@ void main() {
         });
 
         test('value set and changed but has lingering old data', () {
-          final char3 = Character.fromJson(
-            <String, dynamic>{
-              'useDefaultMaxHP': true,
-              'settings': {
-                'useDefaultMaxHp': false,
-              }
-            },
-          );
+          final char3 = Character.fromJson(<String, dynamic>{
+            'useDefaultMaxHP': false,
+            'settings': {'useDefaultMaxHp': false}
+          });
 
           // ignore: deprecated_member_use_from_same_package
           expect(char3.useDefaultMaxHP, equals(false));

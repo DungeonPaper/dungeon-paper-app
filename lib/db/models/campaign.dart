@@ -10,9 +10,11 @@ part 'campaign.freezed.dart';
 part 'campaign.g.dart';
 
 @freezed
-abstract class Campaign with FirebaseMixin, KeyMixin implements _$Campaign {
+abstract class Campaign with KeyMixin, FirebaseMixin implements _$Campaign {
   const Campaign._();
 
+  @With(FirebaseMixin)
+  @With(KeyMixin)
   const factory Campaign({
     @DefaultUuid() String key,
     @DocumentReferenceConverter() DocumentReference ref,

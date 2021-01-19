@@ -21,13 +21,15 @@ _$_Character _$_$_CharacterFromJson(Map<String, dynamic> json) {
         ?.map((e) =>
             const PlayerClassConverter().fromJson(e as Map<String, dynamic>))
         ?.toList(),
-    alignment: _$enumDecodeNullable(_$AlignmentNameEnumMap, json['alignment']),
+    alignment:
+        _$enumDecodeNullable(_$AlignmentNameEnumMap, json['alignment']) ??
+            AlignmentName.neutral,
     customMaxHP: json['maxHP'] as int,
     displayName: json['displayName'] as String ?? 'Traveler',
     photoURL: json['photoURL'] as String,
     level: json['level'] as int ?? 1,
     bio: json['bio'] as String ?? '',
-    customCurrentHP: json['currentHP'] as int,
+    customCurrentHP: json['currentHP'] as int ?? 100,
     currentXP: json['currentXP'] as int,
     moves: (json['moves'] as List)
         ?.map(
@@ -43,7 +45,7 @@ _$_Character _$_$_CharacterFromJson(Map<String, dynamic> json) {
         ?.map((e) =>
             const InventoryItemConverter().fromJson(e as Map<String, dynamic>))
         ?.toList(),
-    damageDice: const DiceConverter().fromJson(json['hitDice']),
+    customDamageDice: const DiceConverter().fromJson(json['hitDice']),
     looks: (json['looks'] as List)?.map((e) => e as String)?.toList(),
     race:
         const DWMoveConverter().fromJson(json['race'] as Map<String, dynamic>),
@@ -51,7 +53,7 @@ _$_Character _$_$_CharacterFromJson(Map<String, dynamic> json) {
     order: json['order'] as int,
     settings: const CharacterSettingsConverter()
         .fromJson(json['settings'] as Map<String, dynamic>),
-    useDefaultMaxHP: json['useDefaultMaxHP'] as bool,
+    useDefaultMaxHP: json['useDefaultMaxHP'] as bool ?? true,
   );
 }
 
@@ -83,7 +85,7 @@ Map<String, dynamic> _$_$_CharacterToJson(_$_Character instance) =>
       'inventory': instance.inventory
           ?.map(const InventoryItemConverter().toJson)
           ?.toList(),
-      'hitDice': const DiceConverter().toJson(instance.damageDice),
+      'hitDice': const DiceConverter().toJson(instance.customDamageDice),
       'looks': instance.looks,
       'race': const DWMoveConverter().toJson(instance.race),
       'coins': instance.coins,

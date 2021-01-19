@@ -26,9 +26,11 @@ part 'character.freezed.dart';
 part 'character.g.dart';
 
 @freezed
-abstract class Character with FirebaseMixin implements _$Character {
+abstract class Character with FirebaseMixin, KeyMixin implements _$Character {
   const Character._();
 
+  @With(FirebaseMixin)
+  @With(KeyMixin)
   const factory Character({
     @DocumentReferenceConverter() DocumentReference ref,
     @DefaultUuid() String key,
@@ -40,26 +42,30 @@ abstract class Character with FirebaseMixin implements _$Character {
     @JsonKey(name: 'int', defaultValue: 8) int intelligence,
     @JsonKey(name: 'cha', defaultValue: 0) int charisma,
     @PlayerClassConverter() List<PlayerClass> playerClasses,
-    AlignmentName alignment,
+    @Default(AlignmentName.neutral) AlignmentName alignment,
     @JsonKey(name: 'maxHP') int customMaxHP,
     @Default('Traveler') String displayName,
     String photoURL,
     @Default(1) int level,
     @Default('') String bio,
-    @JsonKey(name: 'currentHP') int customCurrentHP,
+    @JsonKey(name: 'currentHP', defaultValue: 100) int customCurrentHP,
     int currentXP,
     @DWMoveConverter() List<Move> moves,
     @NoteConverter() List<Note> notes,
     @SpellConverter() List<DbSpell> spells,
     @InventoryItemConverter() List<InventoryItem> inventory,
-    @DiceConverter() @JsonKey(name: 'hitDice') Dice damageDice,
+    @DiceConverter() @JsonKey(name: 'hitDice') Dice customDamageDice,
     List<String> looks,
     @DWMoveConverter() Move race,
     @Default(0) double coins,
     int order,
     @CharacterSettingsConverter() CharacterSettings settings,
-    @Deprecated('moved to CharacterSettings') bool useDefaultMaxHP,
+    @Default(true)
+    @Deprecated('moved to CharacterSettings')
+        bool useDefaultMaxHP,
   }) = _Character;
+
+  Dice get damageDice => customDamageDice ?? mainClass?.damage ?? Dice.d6;
 
   int get currentHP => clamp<int>(customCurrentHP, 0, maxHP).toInt();
 

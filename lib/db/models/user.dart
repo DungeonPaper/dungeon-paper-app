@@ -21,11 +21,12 @@ part 'user.g.dart';
 abstract class User with FirebaseMixin implements _$User {
   const User._();
 
+  @With(FirebaseMixin)
   const factory User({
     String displayName,
     String email,
     String photoURL,
-    @JsonKey(defaultValue: {}) Map<String, dynamic> features,
+    @Default({}) Map<String, dynamic> features,
     @DocumentReferenceConverter() DocumentReference ref,
   }) = _User;
 

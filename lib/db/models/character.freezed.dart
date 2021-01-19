@@ -28,25 +28,25 @@ class _$CharacterTearOff {
       @JsonKey(name: 'int', defaultValue: 8) int intelligence,
       @JsonKey(name: 'cha', defaultValue: 0) int charisma,
       @PlayerClassConverter() List<PlayerClass> playerClasses,
-      AlignmentName alignment,
+      AlignmentName alignment = AlignmentName.neutral,
       @JsonKey(name: 'maxHP') int customMaxHP,
       String displayName = 'Traveler',
       String photoURL,
       int level = 1,
       String bio = '',
-      @JsonKey(name: 'currentHP') int customCurrentHP,
+      @JsonKey(name: 'currentHP', defaultValue: 100) int customCurrentHP,
       int currentXP,
       @DWMoveConverter() List<Move> moves,
       @NoteConverter() List<Note> notes,
       @SpellConverter() List<DbSpell> spells,
       @InventoryItemConverter() List<InventoryItem> inventory,
-      @DiceConverter() @JsonKey(name: 'hitDice') Dice damageDice,
+      @DiceConverter() @JsonKey(name: 'hitDice') Dice customDamageDice,
       List<String> looks,
       @DWMoveConverter() Move race,
       double coins = 0,
       int order,
       @CharacterSettingsConverter() CharacterSettings settings,
-      @Deprecated('moved to CharacterSettings') bool useDefaultMaxHP}) {
+      @Deprecated('moved to CharacterSettings') bool useDefaultMaxHP = true}) {
     return _Character(
       ref: ref,
       key: key,
@@ -70,7 +70,7 @@ class _$CharacterTearOff {
       notes: notes,
       spells: spells,
       inventory: inventory,
-      damageDice: damageDice,
+      customDamageDice: customDamageDice,
       looks: looks,
       race: race,
       coins: coins,
@@ -119,7 +119,7 @@ mixin _$Character {
   String get photoURL;
   int get level;
   String get bio;
-  @JsonKey(name: 'currentHP')
+  @JsonKey(name: 'currentHP', defaultValue: 100)
   int get customCurrentHP;
   int get currentXP;
   @DWMoveConverter()
@@ -132,7 +132,7 @@ mixin _$Character {
   List<InventoryItem> get inventory;
   @DiceConverter()
   @JsonKey(name: 'hitDice')
-  Dice get damageDice;
+  Dice get customDamageDice;
   List<String> get looks;
   @DWMoveConverter()
   Move get race;
@@ -169,13 +169,13 @@ abstract class $CharacterCopyWith<$Res> {
       String photoURL,
       int level,
       String bio,
-      @JsonKey(name: 'currentHP') int customCurrentHP,
+      @JsonKey(name: 'currentHP', defaultValue: 100) int customCurrentHP,
       int currentXP,
       @DWMoveConverter() List<Move> moves,
       @NoteConverter() List<Note> notes,
       @SpellConverter() List<DbSpell> spells,
       @InventoryItemConverter() List<InventoryItem> inventory,
-      @DiceConverter() @JsonKey(name: 'hitDice') Dice damageDice,
+      @DiceConverter() @JsonKey(name: 'hitDice') Dice customDamageDice,
       List<String> looks,
       @DWMoveConverter() Move race,
       double coins,
@@ -218,7 +218,7 @@ class _$CharacterCopyWithImpl<$Res> implements $CharacterCopyWith<$Res> {
     Object notes = freezed,
     Object spells = freezed,
     Object inventory = freezed,
-    Object damageDice = freezed,
+    Object customDamageDice = freezed,
     Object looks = freezed,
     Object race = freezed,
     Object coins = freezed,
@@ -260,8 +260,9 @@ class _$CharacterCopyWithImpl<$Res> implements $CharacterCopyWith<$Res> {
       inventory: inventory == freezed
           ? _value.inventory
           : inventory as List<InventoryItem>,
-      damageDice:
-          damageDice == freezed ? _value.damageDice : damageDice as Dice,
+      customDamageDice: customDamageDice == freezed
+          ? _value.customDamageDice
+          : customDamageDice as Dice,
       looks: looks == freezed ? _value.looks : looks as List<String>,
       race: race == freezed ? _value.race : race as Move,
       coins: coins == freezed ? _value.coins : coins as double,
@@ -308,13 +309,13 @@ abstract class _$CharacterCopyWith<$Res> implements $CharacterCopyWith<$Res> {
       String photoURL,
       int level,
       String bio,
-      @JsonKey(name: 'currentHP') int customCurrentHP,
+      @JsonKey(name: 'currentHP', defaultValue: 100) int customCurrentHP,
       int currentXP,
       @DWMoveConverter() List<Move> moves,
       @NoteConverter() List<Note> notes,
       @SpellConverter() List<DbSpell> spells,
       @InventoryItemConverter() List<InventoryItem> inventory,
-      @DiceConverter() @JsonKey(name: 'hitDice') Dice damageDice,
+      @DiceConverter() @JsonKey(name: 'hitDice') Dice customDamageDice,
       List<String> looks,
       @DWMoveConverter() Move race,
       double coins,
@@ -359,7 +360,7 @@ class __$CharacterCopyWithImpl<$Res> extends _$CharacterCopyWithImpl<$Res>
     Object notes = freezed,
     Object spells = freezed,
     Object inventory = freezed,
-    Object damageDice = freezed,
+    Object customDamageDice = freezed,
     Object looks = freezed,
     Object race = freezed,
     Object coins = freezed,
@@ -401,8 +402,9 @@ class __$CharacterCopyWithImpl<$Res> extends _$CharacterCopyWithImpl<$Res>
       inventory: inventory == freezed
           ? _value.inventory
           : inventory as List<InventoryItem>,
-      damageDice:
-          damageDice == freezed ? _value.damageDice : damageDice as Dice,
+      customDamageDice: customDamageDice == freezed
+          ? _value.customDamageDice
+          : customDamageDice as Dice,
       looks: looks == freezed ? _value.looks : looks as List<String>,
       race: race == freezed ? _value.race : race as Move,
       coins: coins == freezed ? _value.coins : coins as double,
@@ -417,9 +419,11 @@ class __$CharacterCopyWithImpl<$Res> extends _$CharacterCopyWithImpl<$Res>
 }
 
 @JsonSerializable()
+@With(FirebaseMixin)
+@With(KeyMixin)
 
 /// @nodoc
-class _$_Character extends _Character {
+class _$_Character extends _Character with FirebaseMixin, KeyMixin {
   const _$_Character(
       {@DocumentReferenceConverter() this.ref,
       @DefaultUuid() this.key,
@@ -431,29 +435,31 @@ class _$_Character extends _Character {
       @JsonKey(name: 'int', defaultValue: 8) this.intelligence,
       @JsonKey(name: 'cha', defaultValue: 0) this.charisma,
       @PlayerClassConverter() this.playerClasses,
-      this.alignment,
+      this.alignment = AlignmentName.neutral,
       @JsonKey(name: 'maxHP') this.customMaxHP,
       this.displayName = 'Traveler',
       this.photoURL,
       this.level = 1,
       this.bio = '',
-      @JsonKey(name: 'currentHP') this.customCurrentHP,
+      @JsonKey(name: 'currentHP', defaultValue: 100) this.customCurrentHP,
       this.currentXP,
       @DWMoveConverter() this.moves,
       @NoteConverter() this.notes,
       @SpellConverter() this.spells,
       @InventoryItemConverter() this.inventory,
-      @DiceConverter() @JsonKey(name: 'hitDice') this.damageDice,
+      @DiceConverter() @JsonKey(name: 'hitDice') this.customDamageDice,
       this.looks,
       @DWMoveConverter() this.race,
       this.coins = 0,
       this.order,
       @CharacterSettingsConverter() this.settings,
-      @Deprecated('moved to CharacterSettings') this.useDefaultMaxHP})
-      : assert(displayName != null),
+      @Deprecated('moved to CharacterSettings') this.useDefaultMaxHP = true})
+      : assert(alignment != null),
+        assert(displayName != null),
         assert(level != null),
         assert(bio != null),
         assert(coins != null),
+        assert(useDefaultMaxHP != null),
         super._();
 
   factory _$_Character.fromJson(Map<String, dynamic> json) =>
@@ -489,6 +495,7 @@ class _$_Character extends _Character {
   @override
   @PlayerClassConverter()
   final List<PlayerClass> playerClasses;
+  @JsonKey(defaultValue: AlignmentName.neutral)
   @override
   final AlignmentName alignment;
   @override
@@ -506,7 +513,7 @@ class _$_Character extends _Character {
   @override
   final String bio;
   @override
-  @JsonKey(name: 'currentHP')
+  @JsonKey(name: 'currentHP', defaultValue: 100)
   final int customCurrentHP;
   @override
   final int currentXP;
@@ -525,7 +532,7 @@ class _$_Character extends _Character {
   @override
   @DiceConverter()
   @JsonKey(name: 'hitDice')
-  final Dice damageDice;
+  final Dice customDamageDice;
   @override
   final List<String> looks;
   @override
@@ -539,13 +546,14 @@ class _$_Character extends _Character {
   @override
   @CharacterSettingsConverter()
   final CharacterSettings settings;
+  @JsonKey(defaultValue: true)
   @override
   @Deprecated('moved to CharacterSettings')
   final bool useDefaultMaxHP;
 
   @override
   String toString() {
-    return 'Character(ref: $ref, key: $key, baseArmor: $baseArmor, strength: $strength, dexterity: $dexterity, constitution: $constitution, wisdom: $wisdom, intelligence: $intelligence, charisma: $charisma, playerClasses: $playerClasses, alignment: $alignment, customMaxHP: $customMaxHP, displayName: $displayName, photoURL: $photoURL, level: $level, bio: $bio, customCurrentHP: $customCurrentHP, currentXP: $currentXP, moves: $moves, notes: $notes, spells: $spells, inventory: $inventory, damageDice: $damageDice, looks: $looks, race: $race, coins: $coins, order: $order, settings: $settings, useDefaultMaxHP: $useDefaultMaxHP)';
+    return 'Character(ref: $ref, key: $key, baseArmor: $baseArmor, strength: $strength, dexterity: $dexterity, constitution: $constitution, wisdom: $wisdom, intelligence: $intelligence, charisma: $charisma, playerClasses: $playerClasses, alignment: $alignment, customMaxHP: $customMaxHP, displayName: $displayName, photoURL: $photoURL, level: $level, bio: $bio, customCurrentHP: $customCurrentHP, currentXP: $currentXP, moves: $moves, notes: $notes, spells: $spells, inventory: $inventory, customDamageDice: $customDamageDice, looks: $looks, race: $race, coins: $coins, order: $order, settings: $settings, useDefaultMaxHP: $useDefaultMaxHP)';
   }
 
   @override
@@ -610,9 +618,9 @@ class _$_Character extends _Character {
             (identical(other.inventory, inventory) ||
                 const DeepCollectionEquality()
                     .equals(other.inventory, inventory)) &&
-            (identical(other.damageDice, damageDice) ||
+            (identical(other.customDamageDice, customDamageDice) ||
                 const DeepCollectionEquality()
-                    .equals(other.damageDice, damageDice)) &&
+                    .equals(other.customDamageDice, customDamageDice)) &&
             (identical(other.looks, looks) ||
                 const DeepCollectionEquality().equals(other.looks, looks)) &&
             (identical(other.race, race) ||
@@ -651,7 +659,7 @@ class _$_Character extends _Character {
       const DeepCollectionEquality().hash(notes) ^
       const DeepCollectionEquality().hash(spells) ^
       const DeepCollectionEquality().hash(inventory) ^
-      const DeepCollectionEquality().hash(damageDice) ^
+      const DeepCollectionEquality().hash(customDamageDice) ^
       const DeepCollectionEquality().hash(looks) ^
       const DeepCollectionEquality().hash(race) ^
       const DeepCollectionEquality().hash(coins) ^
@@ -670,7 +678,7 @@ class _$_Character extends _Character {
   }
 }
 
-abstract class _Character extends Character {
+abstract class _Character extends Character implements FirebaseMixin, KeyMixin {
   const _Character._() : super._();
   const factory _Character(
           {@DocumentReferenceConverter() DocumentReference ref,
@@ -689,13 +697,13 @@ abstract class _Character extends Character {
           String photoURL,
           int level,
           String bio,
-          @JsonKey(name: 'currentHP') int customCurrentHP,
+          @JsonKey(name: 'currentHP', defaultValue: 100) int customCurrentHP,
           int currentXP,
           @DWMoveConverter() List<Move> moves,
           @NoteConverter() List<Note> notes,
           @SpellConverter() List<DbSpell> spells,
           @InventoryItemConverter() List<InventoryItem> inventory,
-          @DiceConverter() @JsonKey(name: 'hitDice') Dice damageDice,
+          @DiceConverter() @JsonKey(name: 'hitDice') Dice customDamageDice,
           List<String> looks,
           @DWMoveConverter() Move race,
           double coins,
@@ -751,7 +759,7 @@ abstract class _Character extends Character {
   @override
   String get bio;
   @override
-  @JsonKey(name: 'currentHP')
+  @JsonKey(name: 'currentHP', defaultValue: 100)
   int get customCurrentHP;
   @override
   int get currentXP;
@@ -770,7 +778,7 @@ abstract class _Character extends Character {
   @override
   @DiceConverter()
   @JsonKey(name: 'hitDice')
-  Dice get damageDice;
+  Dice get customDamageDice;
   @override
   List<String> get looks;
   @override
