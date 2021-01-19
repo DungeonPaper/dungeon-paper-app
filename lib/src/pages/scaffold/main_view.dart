@@ -46,14 +46,19 @@ class MainContainer extends StatelessWidget {
     return GetBuilder<Themes>(
       init: Themes.instance,
       builder: (themes) {
-        final character = characterController.current;
-        final user = userController.current;
-        return MainView(
-          character: character,
-          user: user,
-          loading: loadingController[LoadingKeys.character] ||
-              loadingController[LoadingKeys.user],
-          pageController: pageController,
+        return Obx(
+          () {
+            final character = characterController.current;
+            final user = userController.current;
+            final isLoading = loadingController[LoadingKeys.character] ||
+                loadingController[LoadingKeys.user];
+            return MainView(
+              character: character,
+              user: user,
+              loading: isLoading,
+              pageController: pageController,
+            );
+          },
         );
       },
     );

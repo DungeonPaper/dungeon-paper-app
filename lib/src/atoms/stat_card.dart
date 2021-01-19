@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 
 class StatCard extends StatelessWidget {
   final Character character;
-  final CharacterKey stat;
+  final CharacterStat stat;
   final void Function() onTap;
 
   const StatCard({
@@ -49,7 +49,7 @@ class StatCard extends StatelessWidget {
     );
   }
 
-  num getValue(Character character, CharacterKey key) =>
+  num getValue(Character character, CharacterStat key) =>
       character.statValueFromKey(key);
 
   void Function() _edit(BuildContext context) {

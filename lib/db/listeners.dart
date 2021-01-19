@@ -7,6 +7,7 @@ import 'package:dungeon_paper/src/redux/custom_classes/custom_classes_store.dart
 import 'package:dungeon_paper/src/redux/stores.dart';
 import 'package:dungeon_paper/src/redux/users/user_controller.dart';
 import 'package:dungeon_paper/src/utils/logger.dart';
+import 'package:dungeon_paper/src/utils/utils.dart';
 import 'package:firebase_auth/firebase_auth.dart' as fb;
 
 import 'models/character.dart';
@@ -50,8 +51,9 @@ void registerUserListener(fb.User fbUser) {
 
   _userListener = firestore.doc('user_data/${fbUser.email}').snapshots().listen(
     (user) {
-      userController.current =
-          User.fromJson(user.data()).copyWith(ref: user.reference);
+      userController.setCurrent(
+        User.fromJson(user.data()).copyWith(ref: user.reference),
+      );
     },
   );
 
@@ -71,21 +73,38 @@ void registerCharactersListener(fb.User firebaseUser) {
       if (characters.docs.isEmpty) {
         return;
       }
-      final chars = characters.docs.map(
-        (character) => Character.fromJson(
-          character.data(),
-          ref: character.reference,
-        ),
+      final chars = <Character>[];
+      characters.docs.forEach(
+        (character) {
+          final data = character.data();
+
+          // TODO move to own migrations manager
+          if (data['useDefaultMaxHP'] != null && data['settings'] == null) {
+            data['settings'] = {
+              'useDefaultMaxHp': data.remove('useDefaultMaxHP')
+            };
+            character.reference.update(
+              pick(data, ['settings', 'useDefaultMaxHP']),
+            );
+          }
+
+          chars.add(
+            Character.fromJson(
+              data,
+              ref: character.reference,
+            ),
+          );
+        },
       );
       characterController.setAll(chars);
-      final lastCharId = dwStore.state.prefs.user.lastCharacterId;
-      final matchingChar = chars.firstWhere(
-        (c) => c.documentID == lastCharId,
-        orElse: () => null,
-      );
-      if (lastCharId != null && matchingChar != null) {
-        characterController.current = matchingChar;
-      }
+      // final lastCharId = userController.current.lastCharacterId;
+      // final matchingChar = chars.firstWhere(
+      //   (c) => c.documentID == lastCharId,
+      //   orElse: () => null,
+      // );
+      // if (lastCharId != null && matchingChar != null) {
+      //   characterController.current = matchingChar;
+      // }
     },
   );
   logger.d('Registered db character listener');

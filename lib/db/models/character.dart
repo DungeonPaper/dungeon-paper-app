@@ -60,10 +60,29 @@ abstract class Character with FirebaseMixin, KeyMixin implements _$Character {
     @Default(0) double coins,
     int order,
     @CharacterSettingsConverter() CharacterSettings settings,
-    @Default(true)
-    @Deprecated('moved to CharacterSettings')
-        bool useDefaultMaxHP,
   }) = _Character;
+
+  Character copyWithStat(CharacterStat stat, int value) {
+    switch (stat) {
+      case CharacterStat.str:
+        return copyWith(strength: value);
+      case CharacterStat.dex:
+        return copyWith(dexterity: value);
+      case CharacterStat.con:
+        return copyWith(constitution: value);
+      case CharacterStat.int:
+        return copyWith(intelligence: value);
+      case CharacterStat.wis:
+        return copyWith(wisdom: value);
+      case CharacterStat.cha:
+        return copyWith(charisma: value);
+    }
+    throw FormatException(
+        'Stat expected, got ${stat.runtimeType} ($stat)', stat, 0);
+  }
+
+  static String getStatUpdateKey(CharacterStat stat) =>
+      CHARACTER_STAT_KEYS[stat];
 
   Dice get damageDice => customDamageDice ?? mainClass?.damage ?? Dice.d6;
 
@@ -85,40 +104,38 @@ abstract class Character with FirebaseMixin, KeyMixin implements _$Character {
     return (mod >= 0 ? '+' : '') + mod.toString();
   }
 
-  num statValueFromKey(CharacterKey key) {
-    final _key = enumName(key).toLowerCase();
-    switch (_key) {
-      case 'int':
+  num statValueFromKey(CharacterStat key) {
+    switch (key) {
+      case CharacterStat.int:
         return intelligence;
-      case 'dex':
+      case CharacterStat.dex:
         return dexterity;
-      case 'wis':
+      case CharacterStat.wis:
         return wisdom;
-      case 'cha':
+      case CharacterStat.cha:
         return charisma;
-      case 'str':
+      case CharacterStat.str:
         return strength;
-      case 'con':
+      case CharacterStat.con:
         return constitution;
       default:
         throw Exception('Bad modifier provided: $key');
     }
   }
 
-  num modifierFromKey(CharacterKey key) {
-    final _key = enumName(key).toLowerCase();
-    switch (_key) {
-      case 'int':
+  num modifierFromKey(CharacterStat key) {
+    switch (key) {
+      case CharacterStat.int:
         return modifierFromValue(intelligence);
-      case 'dex':
+      case CharacterStat.dex:
         return modifierFromValue(dexterity);
-      case 'wis':
+      case CharacterStat.wis:
         return modifierFromValue(wisdom);
-      case 'cha':
+      case CharacterStat.cha:
         return modifierFromValue(charisma);
-      case 'str':
+      case CharacterStat.str:
         return modifierFromValue(strength);
-      case 'con':
+      case CharacterStat.con:
         return modifierFromValue(constitution);
       default:
         throw Exception('Bad modifier provided: $key');

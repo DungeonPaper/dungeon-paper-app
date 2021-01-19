@@ -87,7 +87,7 @@ void main() {
       group('useDefaultMaxHP', () {
         test('value different from default', () {
           final char2 = Character.fromJson(<String, dynamic>{
-            'useDefaultMaxHP': false,
+            'useDefaultMaxHP': true,
             'settings': {'useDefaultMaxHp': false},
           });
 

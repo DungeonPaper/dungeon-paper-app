@@ -5,6 +5,7 @@ class FirebaseHelpers {
 
   Future<DocumentReference> create(
       DocumentReference ref, Map<String, dynamic> data) async {
+    logger.d('Creating: ${ref.id}\n$data');
     await ref.set(data);
     return ref;
   }
@@ -14,9 +15,8 @@ class FirebaseHelpers {
     Map<String, dynamic> data, {
     Iterable<String> keys,
   }) async {
-    if (keys != null && keys.isNotEmpty) {
-      data.removeWhere((k, v) => !keys.contains(k));
-    }
+    data = pick(data, keys);
+    logger.d('Updating: ${ref.id}\n$data');
     await ref.update(data);
     return ref;
   }
@@ -27,6 +27,11 @@ class FirebaseHelpers {
     Map<String, dynamic> update,
     bool useSameParent = true,
   }) async {
+    logger.d(
+      'Moving: ${ref.id}\n$newId, '
+      'update: $update, '
+      'useSameParent: $useSameParent',
+    );
     final json = {
       ...(await ref.get()).data(),
       ...(update ?? {}),

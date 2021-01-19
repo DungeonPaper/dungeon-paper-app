@@ -10,54 +10,55 @@ enum LoadingKeys {
 }
 
 class LoadingController extends GetxController {
-  final RxMap<LoadingKeys, bool> _data = {}.obs;
+  final RxMap<LoadingKeys, bool> _data = <LoadingKeys, bool>{
+    LoadingKeys.user: true,
+    LoadingKeys.character: true,
+  }.obs;
 
   bool operator [](key) {
     if (key is! LoadingKeys) {
       throw FormatException(
-          'LoadingKeys must be given as property accessor, ${key.runtimeType} give instead',
-          key,
-          0);
+          'Expected LoadingKeys, ${key.runtimeType} given', key, 0);
     }
 
-    return _data[key];
+    return _data[key] == true;
   }
 
-  void requestLogin() {
+  void requestLogin([bool updateCondition = true]) {
     _data[LoadingKeys.character] = true;
     _data[LoadingKeys.user] = true;
-    update();
+    update(null, updateCondition);
   }
 
-  void login() {
+  void login([bool updateCondition = true]) {
     _data[LoadingKeys.user] = false;
-    update();
+    update(null, updateCondition);
   }
 
-  void noLogin() {
+  void noLogin([bool updateCondition = true]) {
     _data[LoadingKeys.character] = false;
     _data[LoadingKeys.user] = false;
-    update();
+    update(null, updateCondition);
   }
 
-  void upsertCharacter() {
+  void upsertCharacter([bool updateCondition = true]) {
     _data[LoadingKeys.character] = false;
-    update();
+    update(null, updateCondition);
   }
 
-  void setUser() {
+  void setUser([bool updateCondition = true]) {
     _data[LoadingKeys.user] = false;
-    update();
+    update(null, updateCondition);
   }
 
-  void getCustomClasses() {
+  void getCustomClasses([bool updateCondition = true]) {
     _data[LoadingKeys.customClasses] = true;
-    update();
+    update(null, updateCondition);
   }
 
-  void setCustomClasses() {
+  void setCustomClasses([bool updateCondition = true]) {
     _data[LoadingKeys.customClasses] = false;
-    update();
+    update(null, updateCondition);
   }
 }
 

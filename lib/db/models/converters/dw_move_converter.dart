@@ -13,5 +13,6 @@ class DWMoveConverter implements JsonConverter<Move, Map<String, dynamic>> {
   }
 
   @override
-  Map<String, dynamic> toJson(Move data) => data?.toJSON();
+  Map<String, dynamic> toJson(Move data) =>
+      data?.toJSON()?.cast<String, dynamic>();
 }

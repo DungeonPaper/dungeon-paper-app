@@ -14,12 +14,7 @@ class TagConverter implements JsonConverter<Tag, dynamic> {
       return json;
     }
 
-    if (json is String) {
-      return Tag.fromJSON(json);
-    }
-
-    throw Exception(
-        'Could not determine the constructor for mapping from JSON');
+    return Tag.fromJSON(json);
   }
 
   @override

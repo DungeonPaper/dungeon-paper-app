@@ -35,18 +35,17 @@ T noopReturn<T>(T a) => a;
 void noopVoid<T>(T a) {}
 
 T numAs<T extends num>(num number) =>
-    T is double ? number.toDouble() : number.toInt();
+    T == double ? number.toDouble() : number.toInt();
 
-T clamp<T extends num>(num number, T low, T high) => max<T>(
+T clamp<T extends num>(num number, num low, num high) => max<T>(
       numAs<T>(low),
-      min(numAs<T>(number), numAs<T>(high)),
+      min<T>(numAs<T>(number), numAs<T>(high)),
     );
 
 double lerp(num t, num minA, num maxA, num minB, num maxB) =>
     (t - minA) / (maxA - minA) * (maxB - minB) + minB;
 
-T clamp01<T extends num>(T number) =>
-    clamp<T>(number, numAs<T>(0), numAs<T>(1));
+T clamp01<T extends num>(T number) => clamp<T>(number, 0, 1);
 
 double lerp01(num t, num minA, num maxA) => lerp(t, minA, maxA, 0, 1);
 
@@ -257,3 +256,14 @@ Set<T> unique<T>(Iterable<T> list, dynamic Function(T) value) {
 
 String prettyDouble(num number) =>
     number == number.ceil() ? number.toStringAsFixed(0) : number.toString();
+
+Map<K, V> pick<K, V>(Map<K, V> map, Iterable<String> keys) {
+  if (keys == null) {
+    return {...map};
+  }
+
+  return <K, V>{
+    for (final entry in map.entries)
+      if (keys.contains(entry.key)) entry.key: entry.value,
+  };
+}

@@ -18,47 +18,54 @@ class AuthController extends GetxController {
   void login({
     User user,
     fb.User firebaseUser,
+    bool updateCondition = true,
   }) {
-    loadingController.login();
+    loadingController.login(false);
     userController.login(user: user, firebaseUser: firebaseUser);
-    update();
+    update(null, updateCondition);
   }
 
-  void noLogin() {
-    loadingController.noLogin();
-    userController.clear();
-    update();
+  void noLogin([bool updateCondition = true]) {
+    loadingController.noLogin(false);
+    userController.clear(false);
+    characterController.clear(false);
+    update(null, updateCondition);
   }
 
-  void upsertCharacter(Character character) {
-    loadingController.upsertCharacter();
-    characterController.upsert(character);
-    update();
+  void upsertCharacter(Character character, [bool updateCondition = true]) {
+    loadingController.upsertCharacter(false);
+    characterController.upsert(character, false);
+    update(null, updateCondition);
   }
 
-  void setUser(User user) {
-    loadingController.setUser();
-    userController.current = user;
-    update();
+  void setUser(User user, [bool updateCondition = true]) {
+    loadingController.setUser(false);
+    userController.setCurrent(user, false);
+    update(null, updateCondition);
   }
 
-  void getCustomClasses() {
-    loadingController.getCustomClasses();
+  void getCustomClasses([bool updateCondition = true]) {
+    loadingController.getCustomClasses(false);
     customClassesController.clear();
-    update();
+    update(null, updateCondition);
   }
 
-  void setCustomClasses(Iterable<CustomClass> classes) {
-    loadingController.setCustomClasses();
-    customClassesController.setAll(classes);
-    update();
+  void setCustomClasses(Iterable<CustomClass> classes,
+      [bool updateCondition = true]) {
+    loadingController.setCustomClasses(false);
+    customClassesController.setAll(classes, false);
+    update(null, updateCondition);
   }
 
-  void setFirebaseUser(fb.User user) {
-    userController.firebaseUser = user;
+  void setFirebaseUser(fb.User user, [bool updateCondition = true]) {
+    userController.setFirebaseUser(user, false);
+    update(null, updateCondition);
   }
 
-  void logout() => noLogin();
+  void logout([bool updateCondition = true]) {
+    noLogin(false);
+    update(null, updateCondition);
+  }
 }
 
 final authController = AuthController();

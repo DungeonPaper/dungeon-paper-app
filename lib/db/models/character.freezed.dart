@@ -45,8 +45,7 @@ class _$CharacterTearOff {
       @DWMoveConverter() Move race,
       double coins = 0,
       int order,
-      @CharacterSettingsConverter() CharacterSettings settings,
-      @Deprecated('moved to CharacterSettings') bool useDefaultMaxHP = true}) {
+      @CharacterSettingsConverter() CharacterSettings settings}) {
     return _Character(
       ref: ref,
       key: key,
@@ -76,7 +75,6 @@ class _$CharacterTearOff {
       coins: coins,
       order: order,
       settings: settings,
-      useDefaultMaxHP: useDefaultMaxHP,
     );
   }
 
@@ -140,8 +138,6 @@ mixin _$Character {
   int get order;
   @CharacterSettingsConverter()
   CharacterSettings get settings;
-  @Deprecated('moved to CharacterSettings')
-  bool get useDefaultMaxHP;
 
   Map<String, dynamic> toJson();
   @JsonKey(ignore: true)
@@ -180,8 +176,7 @@ abstract class $CharacterCopyWith<$Res> {
       @DWMoveConverter() Move race,
       double coins,
       int order,
-      @CharacterSettingsConverter() CharacterSettings settings,
-      @Deprecated('moved to CharacterSettings') bool useDefaultMaxHP});
+      @CharacterSettingsConverter() CharacterSettings settings});
 
   $CharacterSettingsCopyWith<$Res> get settings;
 }
@@ -224,7 +219,6 @@ class _$CharacterCopyWithImpl<$Res> implements $CharacterCopyWith<$Res> {
     Object coins = freezed,
     Object order = freezed,
     Object settings = freezed,
-    Object useDefaultMaxHP = freezed,
   }) {
     return _then(_value.copyWith(
       ref: ref == freezed ? _value.ref : ref as DocumentReference,
@@ -269,9 +263,6 @@ class _$CharacterCopyWithImpl<$Res> implements $CharacterCopyWith<$Res> {
       order: order == freezed ? _value.order : order as int,
       settings:
           settings == freezed ? _value.settings : settings as CharacterSettings,
-      useDefaultMaxHP: useDefaultMaxHP == freezed
-          ? _value.useDefaultMaxHP
-          : useDefaultMaxHP as bool,
     ));
   }
 
@@ -320,8 +311,7 @@ abstract class _$CharacterCopyWith<$Res> implements $CharacterCopyWith<$Res> {
       @DWMoveConverter() Move race,
       double coins,
       int order,
-      @CharacterSettingsConverter() CharacterSettings settings,
-      @Deprecated('moved to CharacterSettings') bool useDefaultMaxHP});
+      @CharacterSettingsConverter() CharacterSettings settings});
 
   @override
   $CharacterSettingsCopyWith<$Res> get settings;
@@ -366,7 +356,6 @@ class __$CharacterCopyWithImpl<$Res> extends _$CharacterCopyWithImpl<$Res>
     Object coins = freezed,
     Object order = freezed,
     Object settings = freezed,
-    Object useDefaultMaxHP = freezed,
   }) {
     return _then(_Character(
       ref: ref == freezed ? _value.ref : ref as DocumentReference,
@@ -411,9 +400,6 @@ class __$CharacterCopyWithImpl<$Res> extends _$CharacterCopyWithImpl<$Res>
       order: order == freezed ? _value.order : order as int,
       settings:
           settings == freezed ? _value.settings : settings as CharacterSettings,
-      useDefaultMaxHP: useDefaultMaxHP == freezed
-          ? _value.useDefaultMaxHP
-          : useDefaultMaxHP as bool,
     ));
   }
 }
@@ -452,14 +438,12 @@ class _$_Character extends _Character with FirebaseMixin, KeyMixin {
       @DWMoveConverter() this.race,
       this.coins = 0,
       this.order,
-      @CharacterSettingsConverter() this.settings,
-      @Deprecated('moved to CharacterSettings') this.useDefaultMaxHP = true})
+      @CharacterSettingsConverter() this.settings})
       : assert(alignment != null),
         assert(displayName != null),
         assert(level != null),
         assert(bio != null),
         assert(coins != null),
-        assert(useDefaultMaxHP != null),
         super._();
 
   factory _$_Character.fromJson(Map<String, dynamic> json) =>
@@ -546,14 +530,10 @@ class _$_Character extends _Character with FirebaseMixin, KeyMixin {
   @override
   @CharacterSettingsConverter()
   final CharacterSettings settings;
-  @JsonKey(defaultValue: true)
-  @override
-  @Deprecated('moved to CharacterSettings')
-  final bool useDefaultMaxHP;
 
   @override
   String toString() {
-    return 'Character(ref: $ref, key: $key, baseArmor: $baseArmor, strength: $strength, dexterity: $dexterity, constitution: $constitution, wisdom: $wisdom, intelligence: $intelligence, charisma: $charisma, playerClasses: $playerClasses, alignment: $alignment, customMaxHP: $customMaxHP, displayName: $displayName, photoURL: $photoURL, level: $level, bio: $bio, customCurrentHP: $customCurrentHP, currentXP: $currentXP, moves: $moves, notes: $notes, spells: $spells, inventory: $inventory, customDamageDice: $customDamageDice, looks: $looks, race: $race, coins: $coins, order: $order, settings: $settings, useDefaultMaxHP: $useDefaultMaxHP)';
+    return 'Character(ref: $ref, key: $key, baseArmor: $baseArmor, strength: $strength, dexterity: $dexterity, constitution: $constitution, wisdom: $wisdom, intelligence: $intelligence, charisma: $charisma, playerClasses: $playerClasses, alignment: $alignment, customMaxHP: $customMaxHP, displayName: $displayName, photoURL: $photoURL, level: $level, bio: $bio, customCurrentHP: $customCurrentHP, currentXP: $currentXP, moves: $moves, notes: $notes, spells: $spells, inventory: $inventory, customDamageDice: $customDamageDice, looks: $looks, race: $race, coins: $coins, order: $order, settings: $settings)';
   }
 
   @override
@@ -630,8 +610,7 @@ class _$_Character extends _Character with FirebaseMixin, KeyMixin {
             (identical(other.order, order) ||
                 const DeepCollectionEquality().equals(other.order, order)) &&
             (identical(other.settings, settings) ||
-                const DeepCollectionEquality().equals(other.settings, settings)) &&
-            (identical(other.useDefaultMaxHP, useDefaultMaxHP) || const DeepCollectionEquality().equals(other.useDefaultMaxHP, useDefaultMaxHP)));
+                const DeepCollectionEquality().equals(other.settings, settings)));
   }
 
   @override
@@ -664,8 +643,7 @@ class _$_Character extends _Character with FirebaseMixin, KeyMixin {
       const DeepCollectionEquality().hash(race) ^
       const DeepCollectionEquality().hash(coins) ^
       const DeepCollectionEquality().hash(order) ^
-      const DeepCollectionEquality().hash(settings) ^
-      const DeepCollectionEquality().hash(useDefaultMaxHP);
+      const DeepCollectionEquality().hash(settings);
 
   @JsonKey(ignore: true)
   @override
@@ -681,36 +659,34 @@ class _$_Character extends _Character with FirebaseMixin, KeyMixin {
 abstract class _Character extends Character implements FirebaseMixin, KeyMixin {
   const _Character._() : super._();
   const factory _Character(
-          {@DocumentReferenceConverter() DocumentReference ref,
-          @DefaultUuid() String key,
-          @JsonKey(name: 'armor', defaultValue: 0) int baseArmor,
-          @JsonKey(name: 'str', defaultValue: 8) int strength,
-          @JsonKey(name: 'dex', defaultValue: 8) int dexterity,
-          @JsonKey(name: 'con', defaultValue: 8) int constitution,
-          @JsonKey(name: 'wis', defaultValue: 8) int wisdom,
-          @JsonKey(name: 'int', defaultValue: 8) int intelligence,
-          @JsonKey(name: 'cha', defaultValue: 0) int charisma,
-          @PlayerClassConverter() List<PlayerClass> playerClasses,
-          AlignmentName alignment,
-          @JsonKey(name: 'maxHP') int customMaxHP,
-          String displayName,
-          String photoURL,
-          int level,
-          String bio,
-          @JsonKey(name: 'currentHP', defaultValue: 100) int customCurrentHP,
-          int currentXP,
-          @DWMoveConverter() List<Move> moves,
-          @NoteConverter() List<Note> notes,
-          @SpellConverter() List<DbSpell> spells,
-          @InventoryItemConverter() List<InventoryItem> inventory,
-          @DiceConverter() @JsonKey(name: 'hitDice') Dice customDamageDice,
-          List<String> looks,
-          @DWMoveConverter() Move race,
-          double coins,
-          int order,
-          @CharacterSettingsConverter() CharacterSettings settings,
-          @Deprecated('moved to CharacterSettings') bool useDefaultMaxHP}) =
-      _$_Character;
+      {@DocumentReferenceConverter() DocumentReference ref,
+      @DefaultUuid() String key,
+      @JsonKey(name: 'armor', defaultValue: 0) int baseArmor,
+      @JsonKey(name: 'str', defaultValue: 8) int strength,
+      @JsonKey(name: 'dex', defaultValue: 8) int dexterity,
+      @JsonKey(name: 'con', defaultValue: 8) int constitution,
+      @JsonKey(name: 'wis', defaultValue: 8) int wisdom,
+      @JsonKey(name: 'int', defaultValue: 8) int intelligence,
+      @JsonKey(name: 'cha', defaultValue: 0) int charisma,
+      @PlayerClassConverter() List<PlayerClass> playerClasses,
+      AlignmentName alignment,
+      @JsonKey(name: 'maxHP') int customMaxHP,
+      String displayName,
+      String photoURL,
+      int level,
+      String bio,
+      @JsonKey(name: 'currentHP', defaultValue: 100) int customCurrentHP,
+      int currentXP,
+      @DWMoveConverter() List<Move> moves,
+      @NoteConverter() List<Note> notes,
+      @SpellConverter() List<DbSpell> spells,
+      @InventoryItemConverter() List<InventoryItem> inventory,
+      @DiceConverter() @JsonKey(name: 'hitDice') Dice customDamageDice,
+      List<String> looks,
+      @DWMoveConverter() Move race,
+      double coins,
+      int order,
+      @CharacterSettingsConverter() CharacterSettings settings}) = _$_Character;
 
   factory _Character.fromJson(Map<String, dynamic> json) =
       _$_Character.fromJson;
@@ -791,9 +767,6 @@ abstract class _Character extends Character implements FirebaseMixin, KeyMixin {
   @override
   @CharacterSettingsConverter()
   CharacterSettings get settings;
-  @override
-  @Deprecated('moved to CharacterSettings')
-  bool get useDefaultMaxHP;
   @override
   @JsonKey(ignore: true)
   _$CharacterCopyWith<_Character> get copyWith;

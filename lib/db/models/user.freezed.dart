@@ -22,13 +22,15 @@ class _$UserTearOff {
       String email,
       String photoURL,
       Map<String, dynamic> features = const {},
-      @DocumentReferenceConverter() DocumentReference ref}) {
+      @DocumentReferenceConverter() DocumentReference ref,
+      String lastCharacterId}) {
     return _User(
       displayName: displayName,
       email: email,
       photoURL: photoURL,
       features: features,
       ref: ref,
+      lastCharacterId: lastCharacterId,
     );
   }
 
@@ -50,6 +52,7 @@ mixin _$User {
   Map<String, dynamic> get features;
   @DocumentReferenceConverter()
   DocumentReference get ref;
+  String get lastCharacterId;
 
   Map<String, dynamic> toJson();
   @JsonKey(ignore: true)
@@ -65,7 +68,8 @@ abstract class $UserCopyWith<$Res> {
       String email,
       String photoURL,
       Map<String, dynamic> features,
-      @DocumentReferenceConverter() DocumentReference ref});
+      @DocumentReferenceConverter() DocumentReference ref,
+      String lastCharacterId});
 }
 
 /// @nodoc
@@ -83,6 +87,7 @@ class _$UserCopyWithImpl<$Res> implements $UserCopyWith<$Res> {
     Object photoURL = freezed,
     Object features = freezed,
     Object ref = freezed,
+    Object lastCharacterId = freezed,
   }) {
     return _then(_value.copyWith(
       displayName:
@@ -93,6 +98,9 @@ class _$UserCopyWithImpl<$Res> implements $UserCopyWith<$Res> {
           ? _value.features
           : features as Map<String, dynamic>,
       ref: ref == freezed ? _value.ref : ref as DocumentReference,
+      lastCharacterId: lastCharacterId == freezed
+          ? _value.lastCharacterId
+          : lastCharacterId as String,
     ));
   }
 }
@@ -107,7 +115,8 @@ abstract class _$UserCopyWith<$Res> implements $UserCopyWith<$Res> {
       String email,
       String photoURL,
       Map<String, dynamic> features,
-      @DocumentReferenceConverter() DocumentReference ref});
+      @DocumentReferenceConverter() DocumentReference ref,
+      String lastCharacterId});
 }
 
 /// @nodoc
@@ -126,6 +135,7 @@ class __$UserCopyWithImpl<$Res> extends _$UserCopyWithImpl<$Res>
     Object photoURL = freezed,
     Object features = freezed,
     Object ref = freezed,
+    Object lastCharacterId = freezed,
   }) {
     return _then(_User(
       displayName:
@@ -136,6 +146,9 @@ class __$UserCopyWithImpl<$Res> extends _$UserCopyWithImpl<$Res>
           ? _value.features
           : features as Map<String, dynamic>,
       ref: ref == freezed ? _value.ref : ref as DocumentReference,
+      lastCharacterId: lastCharacterId == freezed
+          ? _value.lastCharacterId
+          : lastCharacterId as String,
     ));
   }
 }
@@ -150,7 +163,8 @@ class _$_User extends _User with DiagnosticableTreeMixin, FirebaseMixin {
       this.email,
       this.photoURL,
       this.features = const {},
-      @DocumentReferenceConverter() this.ref})
+      @DocumentReferenceConverter() this.ref,
+      this.lastCharacterId})
       : assert(features != null),
         super._();
 
@@ -169,10 +183,12 @@ class _$_User extends _User with DiagnosticableTreeMixin, FirebaseMixin {
   @override
   @DocumentReferenceConverter()
   final DocumentReference ref;
+  @override
+  final String lastCharacterId;
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'User(displayName: $displayName, email: $email, photoURL: $photoURL, features: $features, ref: $ref)';
+    return 'User(displayName: $displayName, email: $email, photoURL: $photoURL, features: $features, ref: $ref, lastCharacterId: $lastCharacterId)';
   }
 
   @override
@@ -184,7 +200,8 @@ class _$_User extends _User with DiagnosticableTreeMixin, FirebaseMixin {
       ..add(DiagnosticsProperty('email', email))
       ..add(DiagnosticsProperty('photoURL', photoURL))
       ..add(DiagnosticsProperty('features', features))
-      ..add(DiagnosticsProperty('ref', ref));
+      ..add(DiagnosticsProperty('ref', ref))
+      ..add(DiagnosticsProperty('lastCharacterId', lastCharacterId));
   }
 
   @override
@@ -203,7 +220,10 @@ class _$_User extends _User with DiagnosticableTreeMixin, FirebaseMixin {
                 const DeepCollectionEquality()
                     .equals(other.features, features)) &&
             (identical(other.ref, ref) ||
-                const DeepCollectionEquality().equals(other.ref, ref)));
+                const DeepCollectionEquality().equals(other.ref, ref)) &&
+            (identical(other.lastCharacterId, lastCharacterId) ||
+                const DeepCollectionEquality()
+                    .equals(other.lastCharacterId, lastCharacterId)));
   }
 
   @override
@@ -213,7 +233,8 @@ class _$_User extends _User with DiagnosticableTreeMixin, FirebaseMixin {
       const DeepCollectionEquality().hash(email) ^
       const DeepCollectionEquality().hash(photoURL) ^
       const DeepCollectionEquality().hash(features) ^
-      const DeepCollectionEquality().hash(ref);
+      const DeepCollectionEquality().hash(ref) ^
+      const DeepCollectionEquality().hash(lastCharacterId);
 
   @JsonKey(ignore: true)
   @override
@@ -233,7 +254,8 @@ abstract class _User extends User implements FirebaseMixin {
       String email,
       String photoURL,
       Map<String, dynamic> features,
-      @DocumentReferenceConverter() DocumentReference ref}) = _$_User;
+      @DocumentReferenceConverter() DocumentReference ref,
+      String lastCharacterId}) = _$_User;
 
   factory _User.fromJson(Map<String, dynamic> json) = _$_User.fromJson;
 
@@ -248,6 +270,8 @@ abstract class _User extends User implements FirebaseMixin {
   @override
   @DocumentReferenceConverter()
   DocumentReference get ref;
+  @override
+  String get lastCharacterId;
   @override
   @JsonKey(ignore: true)
   _$UserCopyWith<_User> get copyWith;

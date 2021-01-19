@@ -94,7 +94,7 @@ class EditArmorDialogState extends State<EditArmorDialog> {
     unawaited(
       characterController.current
           .copyWith(baseArmor: value)
-          .update(keys: ['baseArmor']),
+          .update(keys: ['armor']),
     );
     Get.back();
   }
