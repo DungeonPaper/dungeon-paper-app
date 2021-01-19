@@ -10,7 +10,6 @@ import 'package:dungeon_paper/src/pages/custom_classes_view/custom_classes_view.
 import 'package:dungeon_paper/src/pages/edit_character/edit_character_view.dart';
 import 'package:dungeon_paper/src/pages/settings_view/settings_view.dart';
 import 'package:dungeon_paper/src/redux/characters/characters_controller.dart';
-import 'package:dungeon_paper/src/redux/stores.dart';
 import 'package:dungeon_paper/src/redux/users/user_controller.dart';
 import 'package:dungeon_paper/src/scaffolds/manage_characters_view/manage_characters_view.dart';
 import 'package:dungeon_paper/src/utils/analytics.dart';
@@ -171,7 +170,7 @@ class _SidebarState extends State<Sidebar> with SingleTickerProviderStateMixin {
       EditCharacterView(
         character: null,
         mode: DialogMode.create,
-        onSave: (char) => dwStore.dispatch(SetCurrentChar(char)),
+        onSave: (char) => characterController.setCurrent(char),
       ),
     );
   }

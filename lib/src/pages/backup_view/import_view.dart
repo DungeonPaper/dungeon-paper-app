@@ -7,8 +7,8 @@ import 'package:dungeon_paper/src/dialogs/confirmation_dialog.dart';
 import 'package:dungeon_paper/src/lists/character_select_list.dart';
 import 'package:dungeon_paper/src/lists/custom_class_select_list.dart';
 import 'package:dungeon_paper/src/redux/characters/characters_controller.dart';
-import 'package:dungeon_paper/src/redux/custom_classes/custom_classes_store.dart';
-import 'package:dungeon_paper/src/redux/stores.dart';
+import 'package:dungeon_paper/src/redux/custom_classes/custom_classes_controller.dart';
+import 'package:dungeon_paper/src/redux/users/user_controller.dart';
 import 'package:dungeon_paper/src/utils/analytics.dart';
 import 'package:dungeon_world_data/player_class.dart';
 import 'package:flutter/material.dart';
@@ -142,10 +142,10 @@ class _ImportViewState extends State<ImportView> {
         'characters_count': _charactersToImport.length,
         'classes_count': _classesToImport.length,
       }));
-      final user = dwStore.state.user.current;
+      final user = userController.current;
       final finalChars = Set<Character>.from(characterController.all.values);
       final finalClasses =
-          Set<CustomClass>.from(dwStore.state.customClasses.classes.values);
+          Set<CustomClass>.from(customClassesController.classes.values);
       for (final char in _charactersToImport) {
         final found = finalChars.firstWhere(
             (_char) => _char.displayName == char.displayName,
@@ -179,8 +179,8 @@ class _ImportViewState extends State<ImportView> {
         'classes_count': _classesToImport.length,
       }));
 
-      dwStore.dispatch(SetCharacters.fromIterable(finalChars));
-      dwStore.dispatch(SetCustomClasses.fromIterable(finalClasses));
+      characterController.setAll(finalChars);
+      customClassesController.setAll(finalClasses);
 
       setState(() {
         _loadedCharacters = {};

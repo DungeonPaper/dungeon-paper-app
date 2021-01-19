@@ -2,11 +2,8 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dungeon_paper/db/db.dart';
 import 'package:dungeon_paper/db/models/converters/document_reference_converter.dart';
 import 'package:dungeon_paper/src/redux/characters/characters_controller.dart';
-import 'package:dungeon_paper/src/redux/custom_classes/custom_classes_store.dart';
-import 'package:dungeon_paper/src/redux/stores.dart';
+import 'package:dungeon_paper/src/redux/custom_classes/custom_classes_controller.dart';
 import 'package:dungeon_paper/src/utils/auth/auth.dart';
-// import 'package:dungeon_paper/src/redux/users/user_store.dart';
-// import 'package:dungeon_paper/src/utils/auth/auth.dart';
 import 'package:dungeon_paper/src/utils/logger.dart';
 
 import 'character.dart';
@@ -53,8 +50,7 @@ abstract class User with FirebaseMixin implements _$User {
     logger.d('Creating character: $data');
     await doc.set(data);
     character = character.copyWith(ref: doc);
-    dwStore.dispatch(UpsertCharacter(character));
-    dwStore.dispatch(SetCurrentChar(character));
+    characterController.upsert(character);
     return character;
   }
 
@@ -64,7 +60,7 @@ abstract class User with FirebaseMixin implements _$User {
     logger.d('Creating custom class: $data');
     await doc.set(data);
     cls..ref = doc;
-    dwStore.dispatch(UpsertCustomClass(cls));
+    customClassesController.upsert(cls);
     return cls;
   }
 

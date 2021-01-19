@@ -1,12 +1,9 @@
 import 'dart:convert';
 
 import 'package:dungeon_paper/src/redux/characters/characters_controller.dart';
-import 'package:dungeon_paper/src/redux/shared_preferences/prefs_settings.dart';
 import 'package:dungeon_paper/src/redux/shared_preferences/prefs_store.dart';
 import 'package:dungeon_paper/src/utils/analytics.dart';
 import 'package:pedantic/pedantic.dart';
-
-import '../stores.dart';
 
 class ExpansionStates {
   final Map<String, Map<String, bool>> _data = {};
@@ -93,10 +90,9 @@ class ExpansionStates {
   }
 
   void _save() {
-    dwStore.dispatch(ChangeSetting(
-      name: SettingName.expansionStates,
-      value: toPrefsString(),
-    ));
+    prefsController.updateSettings(
+      prefsController.settings..expansionStates = this,
+    );
   }
 
   String toPrefsString() => jsonEncode(

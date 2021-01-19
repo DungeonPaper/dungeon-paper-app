@@ -1,5 +1,5 @@
 import 'package:dungeon_paper/src/redux/characters/characters_controller.dart';
-import 'package:dungeon_paper/src/redux/custom_classes/custom_classes_store.dart';
+import 'package:dungeon_paper/src/redux/custom_classes/custom_classes_controller.dart';
 import 'package:dungeon_paper/src/redux/users/user_controller.dart';
 import 'package:get/get.dart';
 

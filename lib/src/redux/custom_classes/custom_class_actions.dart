@@ -1,4 +1,4 @@
-part of 'custom_classes_store.dart';
+part of 'custom_classes_controller.dart';
 
 class SetCustomClasses {
   final Map<String, CustomClass> classes;

@@ -1,5 +1,5 @@
 import 'package:dungeon_paper/src/redux/shared_preferences/expansion_states.dart';
-import 'package:dungeon_paper/src/redux/stores.dart';
+import 'package:dungeon_paper/src/redux/shared_preferences/prefs_store.dart';
 import 'package:flutter/material.dart';
 
 class ExpandableList extends StatelessWidget {
@@ -53,5 +53,5 @@ class ExpandableList extends StatelessWidget {
   }
 
   ExpansionStates get expansionStates =>
-      dwStore.state.prefs.settings.expansionStates;
+      prefsController.settings.expansionStates;
 }

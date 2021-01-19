@@ -4,7 +4,8 @@ import 'package:dungeon_paper/db/listeners.dart';
 import 'package:dungeon_paper/db/models/user.dart';
 import 'package:dungeon_paper/src/redux/auth_controller.dart';
 import 'package:dungeon_paper/src/redux/characters/characters_controller.dart';
-import 'package:dungeon_paper/src/redux/stores.dart';
+import 'package:dungeon_paper/src/redux/custom_classes/custom_classes_controller.dart';
+import 'package:dungeon_paper/src/redux/users/user_controller.dart';
 import 'package:dungeon_paper/src/utils/analytics.dart';
 import 'package:dungeon_paper/src/utils/api.dart';
 import 'package:dungeon_paper/src/utils/logger.dart';
@@ -73,7 +74,7 @@ Future<bool> unlinkFromProvider(String providerId) async {
     (user) async {
       await user.unlink(providerId);
       await user.reload();
-      final dbUser = dwStore.state.user.current;
+      final dbUser = userController.current;
       await dbUser.changeEmail(newEmail);
     },
     errorMessage: 'Could not unlink with provider: $providerId',
@@ -185,7 +186,7 @@ void _setUserProperties(fb.User firebaseUser, User user) {
   ));
   unawaited(analytics.setUserProperty(
     name: 'classes_count',
-    value: dwStore.state.customClasses.classes.length.toString(),
+    value: customClassesController.classes.length.toString(),
   ));
   unawaited(analytics.setUserProperty(
     name: 'latest_platform_name',

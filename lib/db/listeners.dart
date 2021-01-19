@@ -3,8 +3,7 @@ import 'package:dungeon_paper/db/db.dart';
 import 'package:dungeon_paper/db/models/custom_class.dart';
 import 'package:dungeon_paper/src/redux/auth_controller.dart';
 import 'package:dungeon_paper/src/redux/characters/characters_controller.dart';
-import 'package:dungeon_paper/src/redux/custom_classes/custom_classes_store.dart';
-import 'package:dungeon_paper/src/redux/stores.dart';
+import 'package:dungeon_paper/src/redux/custom_classes/custom_classes_controller.dart';
 import 'package:dungeon_paper/src/redux/users/user_controller.dart';
 import 'package:dungeon_paper/src/utils/logger.dart';
 import 'package:dungeon_paper/src/utils/utils.dart';
@@ -35,8 +34,7 @@ void _setFbUser(fb.User fbUser) {
     registerCharactersListener(fbUser);
     registerCustomClassesListener(fbUser);
   } else {
-    dwStore.dispatch(Logout());
-    dwStore.dispatch(ClearCharacters());
+    authController.logout();
   }
 }
 
@@ -121,15 +119,14 @@ void registerCustomClassesListener(fb.User firebaseUser) {
     if (classes.docs.isEmpty) {
       return;
     }
-    dwStore.dispatch(
-      SetCustomClasses({
-        for (final character in classes.docs)
-          character.reference.id: CustomClass(
-            data: character.data(),
-            ref: character.reference,
-          ),
-      }),
-    );
+
+    customClassesController.setAll([
+      for (final character in classes.docs)
+        CustomClass(
+          data: character.data(),
+          ref: character.reference,
+        ),
+    ]);
   });
   logger.d('Registered db classes listener');
 }
@@ -146,15 +143,13 @@ void registerCampaignsListener(fb.User firebaseUser) {
     if (campaigns.docs.isEmpty) {
       return;
     }
-    dwStore.dispatch(
-      SetCustomClasses({
-        for (final character in campaigns.docs)
-          character.reference.id: CustomClass(
-            data: character.data(),
-            ref: character.reference,
-          ),
-      }),
-    );
+    customClassesController.setAll([
+      for (final character in campaigns.docs)
+        CustomClass(
+          data: character.data(),
+          ref: character.reference,
+        ),
+    ]);
   });
   logger.d('Registered db campaigns listener');
 }

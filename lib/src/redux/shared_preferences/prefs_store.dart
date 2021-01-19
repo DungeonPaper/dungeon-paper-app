@@ -1,115 +1,98 @@
 import 'package:dungeon_paper/src/redux/auth_controller.dart';
-import 'package:dungeon_paper/src/redux/characters/characters_controller.dart';
 import 'package:dungeon_paper/src/redux/shared_preferences/prefs_settings.dart';
-import 'package:dungeon_paper/src/redux/stores.dart';
-import 'package:dungeon_paper/src/redux/users/user_controller.dart';
 import 'package:dungeon_paper/src/utils/auth/auth.dart';
 import 'package:dungeon_paper/src/utils/logger.dart';
 import 'package:flutter/foundation.dart';
+import 'package:get/get.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:redux/redux.dart';
 
 part 'shared_prefs_middleware.dart';
 part 'pref_actions.dart';
 
 enum SharedPrefKeys {
-  UserEmail,
-  UserId,
-  CharacterId,
+  userEmail,
+  userId,
+  characterId,
   LastOpenedVersion,
 }
 
 Map<SharedPrefKeys, String> sharedPrefsKeyMap = {
-  SharedPrefKeys.CharacterId: 'characterId',
-  SharedPrefKeys.UserId: 'userId',
-  SharedPrefKeys.UserEmail: 'userEmail',
+  SharedPrefKeys.characterId: 'characterId',
+  SharedPrefKeys.userId: 'userId',
+  SharedPrefKeys.userEmail: 'userEmail',
 };
 
-class UserDetails {
-  String email;
-  String id;
-  String lastCharacterId;
+class UserDetails extends GetxController {
+  final _email = RxString();
+  final _id = RxString();
+  final _lastCharacterId = RxString();
 
-  UserDetails({this.id, this.email, this.lastCharacterId});
+  String get id => _id.value;
+  String get email => _email.value;
+  String get lastCharacterId => _lastCharacterId.value;
+
+  void setId(String value, [bool updateCondition = true]) {
+    _id.value = value;
+    update(null, updateCondition);
+  }
+
+  void setEmail(String value, [bool updateCondition = true]) {
+    _email.value = value;
+    update(null, updateCondition);
+  }
+
+  void setLastCharacterId(String value, [bool updateCondition = true]) {
+    _lastCharacterId.value = value;
+    update(null, updateCondition);
+  }
 }
 
-class PrefsStore {
-  UserDetails user;
-  PrefsSettings settings;
+class PrefsStore extends GetxController {
+  final _user = UserDetails().obs;
+  final _settings = PrefsSettings().obs;
+  final _prefs = Rx<SharedPreferences>();
 
-  final Map<SharedPrefKeys, String> _map;
-
-  PrefsStore({
-    Map<SharedPrefKeys, String> map,
-    this.user,
-    this.settings,
-  }) : _map = map ?? {} {
-    settings ??= PrefsSettings();
-    _writeValuesFromMap(_map);
+  PrefsStore() {
+    SharedPreferences.getInstance().then((inst) => _prefs.value = inst);
   }
 
-  void _writeValuesFromMap(Map<SharedPrefKeys, String> map) {
-    _writeUserFromMap(map);
+  UserDetails get user => _user.value;
+  PrefsSettings get settings => _settings.value;
+
+  void setUser(UserDetails user, [bool updateCondition = true]) {
+    _user.value = user;
+    update(null, updateCondition);
   }
 
-  List<SharedPrefKeys> _intersectKeys(
-          List<SharedPrefKeys> source, List<SharedPrefKeys> target) =>
-      source.where((el) => target.contains(el)).toList();
+  void updateSettings(PrefsSettings settings, [bool updateCondition = true]) {
+    _settings.value = settings;
+    settings.applyAllSettings();
+    update(null, updateCondition);
+  }
 
-  void _prefLoader({
-    @required List<SharedPrefKeys> checkList,
-    @required Map<SharedPrefKeys, String> map,
-    @required void Function(Map<SharedPrefKeys, String>) onListFull,
-  }) {
-    var intersect = _intersectKeys(checkList, [...map.keys, ..._map.keys]);
-    if (_allKeysContain(intersect, map)) {
-      onListFull({..._map, ...map});
+  String _getStr(SharedPrefKeys key) {
+    final prefs = _prefs.value;
+    try {
+      if (prefs.containsKey(sharedPrefsKeyMap[key])) {
+        return prefs.getString(sharedPrefsKeyMap[key]);
+      }
+      return null;
+    } catch (_) {
+      return null;
     }
   }
 
-  bool _allKeysContain(List<SharedPrefKeys> checkKeys,
-          Map<SharedPrefKeys, String> existingKeys) =>
-      checkKeys.every((key) => existingKeys.containsKey(key));
-
-  void _writeUserFromMap(Map<SharedPrefKeys, String> map) {
-    _prefLoader(
-      map: map,
-      checkList: [
-        SharedPrefKeys.UserId,
-        SharedPrefKeys.UserEmail,
-        SharedPrefKeys.CharacterId,
-      ],
-      onListFull: (all) {
-        user = UserDetails(
-          id: all[SharedPrefKeys.UserId],
-          email: all[SharedPrefKeys.UserEmail],
-          lastCharacterId: all[SharedPrefKeys.CharacterId],
-        );
-      },
-    );
+  Future<void> loadAll([bool updateCondition = true]) async {
+    final prefs = _prefs.value;
+    user.setId(_getStr(SharedPrefKeys.userId), false);
+    user.setEmail(_getStr(SharedPrefKeys.userEmail), false);
+    user.setLastCharacterId(_getStr(SharedPrefKeys.characterId), false);
+    prefsController.updateSettings(PrefsSettings.loadFromPrefs(prefs), false);
+    await _autoSignIn();
+    update(null, updateCondition);
   }
 
-  static Future<void> loadAll() async {
-    var prefs = await SharedPreferences.getInstance();
-    var _map = <SharedPrefKeys, String>{
-      SharedPrefKeys.UserId:
-          prefs.getString(sharedPrefsKeyMap[SharedPrefKeys.UserId]),
-      SharedPrefKeys.UserEmail:
-          prefs.getString(sharedPrefsKeyMap[SharedPrefKeys.UserEmail]),
-      SharedPrefKeys.CharacterId:
-          prefs.getString(sharedPrefsKeyMap[SharedPrefKeys.CharacterId]),
-    };
-    var store = PrefsStore(
-      user: UserDetails(
-        id: _map[SharedPrefKeys.UserId],
-        email: _map[SharedPrefKeys.UserEmail],
-        lastCharacterId: _map[SharedPrefKeys.CharacterId],
-      ),
-      map: _map,
-      settings: PrefsSettings.loadFromPrefs(prefs)..applyAllSettings(),
-    );
-
-    dwStore.dispatch(SetPrefs(store));
+  static Future _autoSignIn() async {
     authController.requestLogin();
     try {
       var user = await signInAutomatically();
@@ -127,37 +110,4 @@ class PrefsStore {
   }
 }
 
-PrefsStore prefsReducer(PrefsStore state, action) {
-  if (action is SetPrefs) {
-    state = action.prefs;
-  }
-
-  if (action is SetCurrentChar) {
-    state.user.lastCharacterId = action.character.documentID;
-  }
-
-  if (action is ClearCharacters) {
-    state.user.lastCharacterId = null;
-  }
-
-  if (action is Login) {
-    state.user = UserDetails(
-      id: action.user.documentID,
-      email: action.user.email,
-      lastCharacterId: state.user.lastCharacterId,
-    );
-  }
-
-  if (action is Logout) {
-    state = PrefsStore(
-      user: UserDetails(),
-    );
-  }
-
-  if (action is ChangeSetting) {
-    state.settings.set(action.name, action.value);
-    return state;
-  }
-
-  return state;
-}
+final prefsController = PrefsStore();

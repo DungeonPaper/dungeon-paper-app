@@ -2,8 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dungeon_paper/db/models/firebase_entity/fields/fields.dart';
 import 'package:dungeon_paper/db/models/firebase_entity/firebase_entity.dart';
 import 'package:dungeon_paper/src/redux/characters/characters_controller.dart';
-import 'package:dungeon_paper/src/redux/custom_classes/custom_classes_store.dart';
-import 'package:dungeon_paper/src/redux/stores.dart';
+import 'package:dungeon_paper/src/redux/custom_classes/custom_classes_controller.dart';
 import 'package:dungeon_paper/src/utils/utils.dart';
 import 'package:dungeon_world_data/alignment.dart';
 import 'package:dungeon_world_data/dice.dart';
@@ -117,7 +116,7 @@ class CustomClass extends FirebaseEntity {
 
   @override
   void finalizeCreate(Map<String, dynamic> json) async {
-    dwStore.dispatch(UpsertCustomClass(this));
+    customClassesController.upsert(this);
     await _updateChars();
     super.finalizeCreate(json);
   }
@@ -125,7 +124,7 @@ class CustomClass extends FirebaseEntity {
   @override
   void finalizeUpdate(Map<String, dynamic> json, {bool save = true}) async {
     if (save) {
-      dwStore.dispatch(UpsertCustomClass(this));
+      customClassesController.upsert(this);
     }
     await _updateChars();
     super.finalizeUpdate(json, save: save);
@@ -134,7 +133,7 @@ class CustomClass extends FirebaseEntity {
   @override
   Future<void> delete() async {
     unawaited(super.delete());
-    dwStore.dispatch(RemoveCustomClass(this));
+    customClassesController.remove(this);
   }
 
   Future<void> _updateChars() async {

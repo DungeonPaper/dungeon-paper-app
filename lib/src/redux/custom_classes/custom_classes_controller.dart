@@ -4,7 +4,9 @@ import 'package:get/get.dart';
 part 'custom_class_actions.dart';
 
 class CustomClassesController extends GetxController {
-  final RxMap<String, CustomClass> classes = <String, CustomClass>{}.obs;
+  final RxMap<String, CustomClass> _classes = <String, CustomClass>{}.obs;
+
+  Map<String, CustomClass> get classes => _classes;
 
   void upsert(CustomClass cls, [bool updateCondition = true]) {
     classes[cls.documentID] = cls;
@@ -18,14 +20,14 @@ class CustomClassesController extends GetxController {
 
   void setAll(Iterable<CustomClass> classes, [bool updateCondition = true]) {
     clear(false);
-    this.classes.assignAll({
+    _classes.assignAll({
       for (final cls in classes) cls.documentID: cls,
     });
     update(null, updateCondition);
   }
 
   void clear([bool updateCondition = true]) {
-    classes.removeWhere((_, __) => true);
+    _classes.removeWhere((_, __) => true);
     update(null, updateCondition);
   }
 }

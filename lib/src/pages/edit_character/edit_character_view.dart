@@ -2,7 +2,7 @@ import 'package:dungeon_paper/db/models/character.dart';
 import 'package:dungeon_paper/src/dialogs/change_alignment_dialog.dart';
 import 'package:dungeon_paper/src/dialogs/confirmation_dialog.dart';
 import 'package:dungeon_paper/src/dialogs/dialogs.dart';
-import 'package:dungeon_paper/src/redux/stores.dart';
+import 'package:dungeon_paper/src/redux/users/user_controller.dart';
 import 'package:dungeon_paper/src/scaffolds/class_select_scaffold.dart';
 import 'package:dungeon_paper/src/scaffolds/main_scaffold.dart';
 import 'package:dungeon_paper/src/utils/analytics.dart';
@@ -66,7 +66,7 @@ class _EditCharacterViewState extends State<EditCharacterView>
 
   @override
   void initState() {
-    var user = dwStore.state.user.current;
+    final user = userController.current;
     character = widget.character != null
         ? Character.fromJson(
             widget.character.toJson(),

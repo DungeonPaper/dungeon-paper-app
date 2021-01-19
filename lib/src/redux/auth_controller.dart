@@ -2,7 +2,7 @@ import 'package:dungeon_paper/db/models/character.dart';
 import 'package:dungeon_paper/db/models/custom_class.dart';
 import 'package:dungeon_paper/db/models/user.dart';
 import 'package:dungeon_paper/src/redux/characters/characters_controller.dart';
-import 'package:dungeon_paper/src/redux/custom_classes/custom_classes_store.dart';
+import 'package:dungeon_paper/src/redux/custom_classes/custom_classes_controller.dart';
 import 'package:dungeon_paper/src/redux/loading/loading_controller.dart';
 import 'package:dungeon_paper/src/redux/users/user_controller.dart';
 import 'package:firebase_auth/firebase_auth.dart' as fb;
