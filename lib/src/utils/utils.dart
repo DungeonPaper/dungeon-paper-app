@@ -34,13 +34,19 @@ String pluralize(
 T noopReturn<T>(T a) => a;
 void noopVoid<T>(T a) {}
 
-double clamp<T extends num>(T number, T low, T high) =>
-    max(low * 1.0, min(number * 1.0, high * 1.0));
+T numAs<T extends num>(num number) =>
+    T is double ? number.toDouble() : number.toInt();
+
+T clamp<T extends num>(num number, T low, T high) => max<T>(
+      numAs<T>(low),
+      min(numAs<T>(number), numAs<T>(high)),
+    );
 
 double lerp(num t, num minA, num maxA, num minB, num maxB) =>
     (t - minA) / (maxA - minA) * (maxB - minB) + minB;
 
-double clamp01<T extends num>(T number) => clamp(number, 0, 1);
+T clamp01<T extends num>(T number) =>
+    clamp<T>(number, numAs<T>(0), numAs<T>(1));
 
 double lerp01(num t, num minA, num maxA) => lerp(t, minA, maxA, 0, 1);
 

@@ -34,7 +34,7 @@ class _$CharacterTearOff {
       String photoURL,
       int level = 1,
       String bio = '',
-      int currentHP,
+      @JsonKey(name: 'currentHP') int customCurrentHP,
       int currentXP,
       @DWMoveConverter() List<Move> moves,
       @NoteConverter() List<Note> notes,
@@ -64,7 +64,7 @@ class _$CharacterTearOff {
       photoURL: photoURL,
       level: level,
       bio: bio,
-      currentHP: currentHP,
+      customCurrentHP: customCurrentHP,
       currentXP: currentXP,
       moves: moves,
       notes: notes,
@@ -119,7 +119,8 @@ mixin _$Character {
   String get photoURL;
   int get level;
   String get bio;
-  int get currentHP;
+  @JsonKey(name: 'currentHP')
+  int get customCurrentHP;
   int get currentXP;
   @DWMoveConverter()
   List<Move> get moves;
@@ -168,7 +169,7 @@ abstract class $CharacterCopyWith<$Res> {
       String photoURL,
       int level,
       String bio,
-      int currentHP,
+      @JsonKey(name: 'currentHP') int customCurrentHP,
       int currentXP,
       @DWMoveConverter() List<Move> moves,
       @NoteConverter() List<Note> notes,
@@ -181,6 +182,8 @@ abstract class $CharacterCopyWith<$Res> {
       int order,
       @CharacterSettingsConverter() CharacterSettings settings,
       @Deprecated('moved to CharacterSettings') bool useDefaultMaxHP});
+
+  $CharacterSettingsCopyWith<$Res> get settings;
 }
 
 /// @nodoc
@@ -209,7 +212,7 @@ class _$CharacterCopyWithImpl<$Res> implements $CharacterCopyWith<$Res> {
     Object photoURL = freezed,
     Object level = freezed,
     Object bio = freezed,
-    Object currentHP = freezed,
+    Object customCurrentHP = freezed,
     Object currentXP = freezed,
     Object moves = freezed,
     Object notes = freezed,
@@ -247,7 +250,9 @@ class _$CharacterCopyWithImpl<$Res> implements $CharacterCopyWith<$Res> {
       photoURL: photoURL == freezed ? _value.photoURL : photoURL as String,
       level: level == freezed ? _value.level : level as int,
       bio: bio == freezed ? _value.bio : bio as String,
-      currentHP: currentHP == freezed ? _value.currentHP : currentHP as int,
+      customCurrentHP: customCurrentHP == freezed
+          ? _value.customCurrentHP
+          : customCurrentHP as int,
       currentXP: currentXP == freezed ? _value.currentXP : currentXP as int,
       moves: moves == freezed ? _value.moves : moves as List<Move>,
       notes: notes == freezed ? _value.notes : notes as List<Note>,
@@ -267,6 +272,16 @@ class _$CharacterCopyWithImpl<$Res> implements $CharacterCopyWith<$Res> {
           ? _value.useDefaultMaxHP
           : useDefaultMaxHP as bool,
     ));
+  }
+
+  @override
+  $CharacterSettingsCopyWith<$Res> get settings {
+    if (_value.settings == null) {
+      return null;
+    }
+    return $CharacterSettingsCopyWith<$Res>(_value.settings, (value) {
+      return _then(_value.copyWith(settings: value));
+    });
   }
 }
 
@@ -293,7 +308,7 @@ abstract class _$CharacterCopyWith<$Res> implements $CharacterCopyWith<$Res> {
       String photoURL,
       int level,
       String bio,
-      int currentHP,
+      @JsonKey(name: 'currentHP') int customCurrentHP,
       int currentXP,
       @DWMoveConverter() List<Move> moves,
       @NoteConverter() List<Note> notes,
@@ -306,6 +321,9 @@ abstract class _$CharacterCopyWith<$Res> implements $CharacterCopyWith<$Res> {
       int order,
       @CharacterSettingsConverter() CharacterSettings settings,
       @Deprecated('moved to CharacterSettings') bool useDefaultMaxHP});
+
+  @override
+  $CharacterSettingsCopyWith<$Res> get settings;
 }
 
 /// @nodoc
@@ -335,7 +353,7 @@ class __$CharacterCopyWithImpl<$Res> extends _$CharacterCopyWithImpl<$Res>
     Object photoURL = freezed,
     Object level = freezed,
     Object bio = freezed,
-    Object currentHP = freezed,
+    Object customCurrentHP = freezed,
     Object currentXP = freezed,
     Object moves = freezed,
     Object notes = freezed,
@@ -373,7 +391,9 @@ class __$CharacterCopyWithImpl<$Res> extends _$CharacterCopyWithImpl<$Res>
       photoURL: photoURL == freezed ? _value.photoURL : photoURL as String,
       level: level == freezed ? _value.level : level as int,
       bio: bio == freezed ? _value.bio : bio as String,
-      currentHP: currentHP == freezed ? _value.currentHP : currentHP as int,
+      customCurrentHP: customCurrentHP == freezed
+          ? _value.customCurrentHP
+          : customCurrentHP as int,
       currentXP: currentXP == freezed ? _value.currentXP : currentXP as int,
       moves: moves == freezed ? _value.moves : moves as List<Move>,
       notes: notes == freezed ? _value.notes : notes as List<Note>,
@@ -417,7 +437,7 @@ class _$_Character extends _Character {
       this.photoURL,
       this.level = 1,
       this.bio = '',
-      this.currentHP,
+      @JsonKey(name: 'currentHP') this.customCurrentHP,
       this.currentXP,
       @DWMoveConverter() this.moves,
       @NoteConverter() this.notes,
@@ -486,7 +506,8 @@ class _$_Character extends _Character {
   @override
   final String bio;
   @override
-  final int currentHP;
+  @JsonKey(name: 'currentHP')
+  final int customCurrentHP;
   @override
   final int currentXP;
   @override
@@ -524,7 +545,7 @@ class _$_Character extends _Character {
 
   @override
   String toString() {
-    return 'Character(ref: $ref, key: $key, baseArmor: $baseArmor, strength: $strength, dexterity: $dexterity, constitution: $constitution, wisdom: $wisdom, intelligence: $intelligence, charisma: $charisma, playerClasses: $playerClasses, alignment: $alignment, customMaxHP: $customMaxHP, displayName: $displayName, photoURL: $photoURL, level: $level, bio: $bio, currentHP: $currentHP, currentXP: $currentXP, moves: $moves, notes: $notes, spells: $spells, inventory: $inventory, damageDice: $damageDice, looks: $looks, race: $race, coins: $coins, order: $order, settings: $settings, useDefaultMaxHP: $useDefaultMaxHP)';
+    return 'Character(ref: $ref, key: $key, baseArmor: $baseArmor, strength: $strength, dexterity: $dexterity, constitution: $constitution, wisdom: $wisdom, intelligence: $intelligence, charisma: $charisma, playerClasses: $playerClasses, alignment: $alignment, customMaxHP: $customMaxHP, displayName: $displayName, photoURL: $photoURL, level: $level, bio: $bio, customCurrentHP: $customCurrentHP, currentXP: $currentXP, moves: $moves, notes: $notes, spells: $spells, inventory: $inventory, damageDice: $damageDice, looks: $looks, race: $race, coins: $coins, order: $order, settings: $settings, useDefaultMaxHP: $useDefaultMaxHP)';
   }
 
   @override
@@ -574,9 +595,9 @@ class _$_Character extends _Character {
                 const DeepCollectionEquality().equals(other.level, level)) &&
             (identical(other.bio, bio) ||
                 const DeepCollectionEquality().equals(other.bio, bio)) &&
-            (identical(other.currentHP, currentHP) ||
+            (identical(other.customCurrentHP, customCurrentHP) ||
                 const DeepCollectionEquality()
-                    .equals(other.currentHP, currentHP)) &&
+                    .equals(other.customCurrentHP, customCurrentHP)) &&
             (identical(other.currentXP, currentXP) ||
                 const DeepCollectionEquality()
                     .equals(other.currentXP, currentXP)) &&
@@ -624,7 +645,7 @@ class _$_Character extends _Character {
       const DeepCollectionEquality().hash(photoURL) ^
       const DeepCollectionEquality().hash(level) ^
       const DeepCollectionEquality().hash(bio) ^
-      const DeepCollectionEquality().hash(currentHP) ^
+      const DeepCollectionEquality().hash(customCurrentHP) ^
       const DeepCollectionEquality().hash(currentXP) ^
       const DeepCollectionEquality().hash(moves) ^
       const DeepCollectionEquality().hash(notes) ^
@@ -668,7 +689,7 @@ abstract class _Character extends Character {
           String photoURL,
           int level,
           String bio,
-          int currentHP,
+          @JsonKey(name: 'currentHP') int customCurrentHP,
           int currentXP,
           @DWMoveConverter() List<Move> moves,
           @NoteConverter() List<Note> notes,
@@ -730,7 +751,8 @@ abstract class _Character extends Character {
   @override
   String get bio;
   @override
-  int get currentHP;
+  @JsonKey(name: 'currentHP')
+  int get customCurrentHP;
   @override
   int get currentXP;
   @override

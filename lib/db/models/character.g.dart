@@ -27,7 +27,7 @@ _$_Character _$_$_CharacterFromJson(Map<String, dynamic> json) {
     photoURL: json['photoURL'] as String,
     level: json['level'] as int ?? 1,
     bio: json['bio'] as String ?? '',
-    currentHP: json['currentHP'] as int,
+    customCurrentHP: json['currentHP'] as int,
     currentXP: json['currentXP'] as int,
     moves: (json['moves'] as List)
         ?.map(
@@ -75,7 +75,7 @@ Map<String, dynamic> _$_$_CharacterToJson(_$_Character instance) =>
       'photoURL': instance.photoURL,
       'level': instance.level,
       'bio': instance.bio,
-      'currentHP': instance.currentHP,
+      'currentHP': instance.customCurrentHP,
       'currentXP': instance.currentXP,
       'moves': instance.moves?.map(const DWMoveConverter().toJson)?.toList(),
       'notes': instance.notes?.map(const NoteConverter().toJson)?.toList(),

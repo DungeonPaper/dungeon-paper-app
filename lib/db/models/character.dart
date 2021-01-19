@@ -1,7 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dungeon_paper/db/db.dart';
 import 'package:dungeon_paper/db/helpers/character_utils.dart';
-import 'package:dungeon_paper/db/models/character/character_settings.dart';
+import 'package:dungeon_paper/db/models/character_settings.dart';
 import 'package:dungeon_paper/db/models/converters/character_settings_converter.dart';
 import 'package:dungeon_paper/db/models/converters/default_uuid.dart';
 import 'package:dungeon_paper/db/models/converters/dice_converter.dart';
@@ -46,7 +46,7 @@ abstract class Character with FirebaseMixin implements _$Character {
     String photoURL,
     @Default(1) int level,
     @Default('') String bio,
-    int currentHP,
+    @JsonKey(name: 'currentHP') int customCurrentHP,
     int currentXP,
     @DWMoveConverter() List<Move> moves,
     @NoteConverter() List<Note> notes,
@@ -61,13 +61,16 @@ abstract class Character with FirebaseMixin implements _$Character {
     @Deprecated('moved to CharacterSettings') bool useDefaultMaxHP,
   }) = _Character;
 
+  int get currentHP => clamp<int>(customCurrentHP, 0, maxHP).toInt();
+
   factory Character.fromJson(value, {DocumentReference ref}) =>
       _$CharacterFromJson(value).copyWith(ref: ref);
 
   PlayerClass get mainClass => playerClasses.first;
 
   int get maxHP =>
-      settings.useDefaultMaxHp == true ? defaultMaxHP : customMaxHP;
+      (settings.useDefaultMaxHp == true ? defaultMaxHP : customMaxHP) ??
+      defaultMaxHP;
   int get defaultMaxHP => (mainClass?.baseHP ?? 0) + constitution;
   int get maxLoad => mainClass.load + strMod;
 
