@@ -1,4 +1,4 @@
-import 'package:dungeon_paper/db/models/character/character_settings.dart';
+import 'package:dungeon_paper/db/models/character_settings.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 class CharacterSettingsConverter
@@ -8,11 +8,11 @@ class CharacterSettingsConverter
   @override
   CharacterSettings fromJson(Map<String, dynamic> json) {
     if (json == null) {
-      return null;
+      return CharacterSettings();
     }
-    return CharacterSettings.fromJSON(json);
+    return CharacterSettings.fromJson(json);
   }
 
   @override
-  Map<String, dynamic> toJson(CharacterSettings data) => data.toJSON();
+  Map<String, dynamic> toJson(CharacterSettings data) => data.toJson();
 }

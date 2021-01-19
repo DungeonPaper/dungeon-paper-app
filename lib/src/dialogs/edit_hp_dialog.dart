@@ -188,7 +188,7 @@ class _EditHPDialogState extends State<EditHPDialog> {
     unawaited(
       widget.character
           .copyWith(
-              currentHP: currentHP,
+              customCurrentHP: currentHP,
               customMaxHP: maxHP,
               settings: widget.character.settings
                   .copyWith(useDefaultMaxHp: useDefaultMaxHP))

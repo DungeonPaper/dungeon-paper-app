@@ -291,7 +291,7 @@ class ChangeClassConfirmationOptions {
     if (resetMaxHP) {
       character = character.copyWith(
         customMaxHP: character.defaultMaxHP,
-        currentHP: character.maxHP,
+        customCurrentHP: character.maxHP,
       );
     }
 

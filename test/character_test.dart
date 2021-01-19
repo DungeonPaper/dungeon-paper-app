@@ -11,8 +11,8 @@ void main() {
 
     test('properly uses class values', () {
       final char = Character.fromJson(
-        {
-          'playerClasses': [wizard.toJSON()],
+        <String, dynamic>{
+          'playerClasses': [wizard.toJSON().cast<String, dynamic>()],
           'con': 10,
         },
       );
@@ -23,7 +23,7 @@ void main() {
 
     test('properly dumps json', () {
       final char = Character.fromJson(
-        {
+        <String, dynamic>{
           'playerClasses': [druid.toJSON()],
           'displayName': 'Goku',
           'str': 20,
@@ -43,7 +43,7 @@ void main() {
 
     test('auto max HP get/set', () {
       var char1 = Character.fromJson(
-        {
+        <String, dynamic>{
           'playerClasses': [immolator.toJSON()], // base HP 6
           'displayName': 'Goku',
           'str': 20,
@@ -56,7 +56,7 @@ void main() {
         },
       );
       var char2 = Character.fromJson(
-        {
+        <String, dynamic>{
           'playerClasses': [wizard.toJSON()], // base HP 4
           'displayName': 'Harry Potter',
           'str': 20,
@@ -82,7 +82,7 @@ void main() {
     group('Settings migration', () {
       group('useDefaultMaxHP', () {
         test('value different from default', () {
-          final char2 = Character.fromJson({
+          final char2 = Character.fromJson(<String, dynamic>{
             'settings': {'useDefaultMaxHp': false},
           });
 
@@ -93,7 +93,7 @@ void main() {
 
         test('value set and changed but has lingering old data', () {
           final char3 = Character.fromJson(
-            {
+            <String, dynamic>{
               'useDefaultMaxHP': true,
               'settings': {
                 'useDefaultMaxHp': false,

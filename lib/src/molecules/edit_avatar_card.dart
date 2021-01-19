@@ -136,8 +136,8 @@ class _EditAvatarCardState extends State<EditAvatarCard> {
       unawaited(
         widget.character
             .copyWith(
-                settings:
-                    widget.character.settings.copyWith(photoAlignment: align))
+                settings: widget.character.settings
+                    .copyWith(rawPhotoAlignment: align))
             .update(keys: ['settings']),
       );
     });
