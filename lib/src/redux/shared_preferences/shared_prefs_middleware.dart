@@ -1,9 +1,9 @@
 part of 'prefs_store.dart';
 
-// void withPrefs(Function(SharedPreferences inst) fn) async {
-//   var prefs = await SharedPreferences.getInstance();
-//   fn(prefs);
-// }
+void withPrefs(Function(SharedPreferences inst) fn) async {
+  var prefs = await SharedPreferences.getInstance();
+  fn(prefs);
+}
 
 // void sharedPrefsMiddleware(Store<DWStore> store, action, NextDispatcher next) {
 //   if (action is AppInit) {

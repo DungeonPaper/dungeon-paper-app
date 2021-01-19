@@ -3,10 +3,11 @@ import 'dart:convert';
 import 'package:dungeon_paper/src/redux/characters/characters_controller.dart';
 import 'package:dungeon_paper/src/redux/shared_preferences/prefs_store.dart';
 import 'package:dungeon_paper/src/utils/analytics.dart';
+import 'package:dungeon_paper/src/utils/logger.dart';
 import 'package:pedantic/pedantic.dart';
 
 class ExpansionStates {
-  final Map<String, Map<String, bool>> _data = {};
+  final _data = <String, Map<String, bool>>{};
 
   Map<String, bool> get _charData {
     _data[charId] ??= {};
@@ -48,7 +49,7 @@ class ExpansionStates {
 
       _initData(parsed);
     } catch (e) {
-      print(e);
+      logger.w(e);
       _initData({});
     }
   }
@@ -91,7 +92,7 @@ class ExpansionStates {
 
   void _save() {
     prefsController.updateSettings(
-      prefsController.settings..expansionStates = this,
+      prefsController.settings.copyWith(expansionStates: this),
     );
   }
 

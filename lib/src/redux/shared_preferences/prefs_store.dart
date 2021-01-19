@@ -33,16 +33,34 @@ class UserDetails extends GetxController {
 
   void setId(String value, [bool updateCondition = true]) {
     _id.value = value;
+    withPrefs(
+      (prefs) => prefs.setString(
+        sharedPrefsKeyMap[SharedPrefKeys.userId],
+        value,
+      ),
+    );
     update(null, updateCondition);
   }
 
   void setEmail(String value, [bool updateCondition = true]) {
     _email.value = value;
+    withPrefs(
+      (prefs) => prefs.setString(
+        sharedPrefsKeyMap[SharedPrefKeys.userEmail],
+        value,
+      ),
+    );
     update(null, updateCondition);
   }
 
   void setLastCharacterId(String value, [bool updateCondition = true]) {
     _lastCharacterId.value = value;
+    withPrefs(
+      (prefs) => prefs.setString(
+        sharedPrefsKeyMap[SharedPrefKeys.characterId],
+        value,
+      ),
+    );
     update(null, updateCondition);
   }
 }
@@ -53,7 +71,7 @@ class PrefsStore extends GetxController {
   final _prefs = Rx<SharedPreferences>();
 
   PrefsStore() {
-    SharedPreferences.getInstance().then((inst) => _prefs.value = inst);
+    withPrefs((inst) => _prefs.value = inst);
   }
 
   UserDetails get user => _user.value;
