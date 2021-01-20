@@ -120,8 +120,9 @@ class _CustomClassesViewState extends State<CustomClassesView> {
   }
 
   void _copyExisting(PlayerClass cls) {
-    var custCls = CustomClass.fromPlayerClass(cls);
-    custCls.name = custCls.name + ' copy';
+    var custCls = CustomClass.fromPlayerClass(cls).copyWith(
+      name: cls.name + ' copy',
+    );
 
     Get.to(
       CustomClassWizard(

@@ -40,7 +40,7 @@ abstract class User with FirebaseMixin implements _$User {
   bool featureEnabled(String key) =>
       features[key] is bool && features[key] == true;
 
-  bool get isDm => isTester && featureEnabled('dm_tools_preview');
+  bool get isDm => featureEnabled('dm_tools_preview');
 
   bool get isTester => hasFeature('tester');
 
@@ -56,10 +56,10 @@ abstract class User with FirebaseMixin implements _$User {
 
   Future<CustomClass> createCustomClass(CustomClass cls) async {
     var doc = ref.collection('custom_classes').doc();
-    var data = cls.toJSON();
+    var data = cls.toJson();
     logger.d('Creating custom class: $data');
     await doc.set(data);
-    cls..ref = doc;
+    cls = cls.copyWith(ref: doc);
     customClassesController.upsert(cls);
     return cls;
   }

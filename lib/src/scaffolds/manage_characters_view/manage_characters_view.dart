@@ -23,33 +23,14 @@ class ManageCharactersView extends StatefulWidget {
 }
 
 class _ManageCharactersViewState extends State<ManageCharactersView> {
-  List<Character> characters;
   User user;
   bool sortMode;
-  GetStream<Map<String, Character>> _loadCharsSub;
 
   @override
   void initState() {
-    _loadCharsSub = GetStream(onListen: _loadCharsFromState);
-    characterController.all..addListener(_loadCharsSub);
-    characters = characterController.all.values.toList()
-      ..sort((a, b) => a.order - b.order);
     user = userController.current;
     sortMode = false;
     super.initState();
-  }
-
-  @override
-  void dispose() {
-    _loadCharsSub.close();
-    super.dispose();
-  }
-
-  void _loadCharsFromState() {
-    setState(() {
-      characters = characterController.all.values.toList()
-        ..sort((a, b) => a.order - b.order);
-    });
   }
 
   @override
@@ -68,84 +49,89 @@ class _ManageCharactersViewState extends State<ManageCharactersView> {
       body: Padding(
         padding:
             const EdgeInsets.all(8).copyWith(bottom: BOTTOM_SPACER.height + 16),
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: [
-            // Padding(
-            //   padding: const EdgeInsets.all(16.0),
-            //   child: Text('Tip: Hold & drag a character to change its order.'),
-            // ),
-            Row(
-              mainAxisSize: MainAxisSize.max,
-              mainAxisAlignment: MainAxisAlignment.center,
+        child: Obx(
+          () {
+            final characters = characterController.all.values;
+            return Column(
+              mainAxisSize: MainAxisSize.min,
+              crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
-                Container(
-                  width: mq.size.width < 500 ? mq.size.width / 2 : 200,
-                  child: RaisedButton.icon(
-                    icon: Icon(Icons.sort),
-                    onPressed: _toggleSort,
-                    color: theme.colorScheme.secondary,
-                    textColor: theme.colorScheme.onSecondary,
-                    label: Text(!sortMode ? 'Sort' : 'Done'),
-                  ),
+                // Padding(
+                //   padding: const EdgeInsets.all(16.0),
+                //   child: Text('Tip: Hold & drag a character to change its order.'),
+                // ),
+                Row(
+                  mainAxisSize: MainAxisSize.max,
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Container(
+                      width: mq.size.width < 500 ? mq.size.width / 2 : 200,
+                      child: RaisedButton.icon(
+                        icon: Icon(Icons.sort),
+                        onPressed: _toggleSort,
+                        color: theme.colorScheme.secondary,
+                        textColor: theme.colorScheme.onSecondary,
+                        label: Text(!sortMode ? 'Sort' : 'Done'),
+                      ),
+                    ),
+                  ],
                 ),
+                for (var char in enumerate(characters))
+                  CardListItem(
+                    key: Key(char.value.documentID),
+                    width: MediaQuery.of(context).size.width - 22,
+                    title: Text(char.value.displayName),
+                    leading: Icon(Icons.person, size: 40),
+                    onTap: () => _select(char.value),
+                    subtitle: Text('Level ${char.value.level} '
+                        '${capitalize(enumName(char.value.alignment))} '
+                        '${capitalize(char.value.mainClass.name)}'),
+                    trailing: Padding(
+                      padding: const EdgeInsets.symmetric(vertical: 8.0),
+                      child: Column(
+                        mainAxisSize: MainAxisSize.min,
+                        children: !sortMode
+                            ? [
+                                IconButton(
+                                  icon: Icon(Icons.edit),
+                                  tooltip: 'Edit ${char.value.displayName}',
+                                  onPressed: () => _edit(char.value),
+                                  visualDensity: VisualDensity.compact,
+                                ),
+                                IconButton(
+                                  color: Colors.red,
+                                  icon: Icon(Icons.delete_forever),
+                                  tooltip: 'Delete ${char.value.displayName}',
+                                  onPressed: characters.length > 1
+                                      ? _delete(char.value)
+                                      : null,
+                                  visualDensity: VisualDensity.compact,
+                                ),
+                              ]
+                            : [
+                                IconButton(
+                                  icon: Icon(Icons.arrow_upward),
+                                  tooltip: 'Move Up',
+                                  onPressed: char.index > 0
+                                      ? () => _moveUp(char.index)
+                                      : null,
+                                  visualDensity: VisualDensity.compact,
+                                ),
+                                IconButton(
+                                  icon: Icon(Icons.arrow_downward),
+                                  tooltip: 'Move Down',
+                                  onPressed: char.index < characters.length - 1
+                                      ? () => _moveDown(char.index)
+                                      : null,
+                                  visualDensity: VisualDensity.compact,
+                                ),
+                              ],
+                      ),
+                    ),
+                  ),
               ],
-            ),
-            for (var char in enumerate(characters))
-              CardListItem(
-                key: Key(char.value.documentID),
-                width: MediaQuery.of(context).size.width - 22,
-                title: Text(char.value.displayName),
-                leading: Icon(Icons.person, size: 40),
-                onTap: () => _select(char.value),
-                subtitle: Text('Level ${char.value.level} '
-                    '${capitalize(enumName(char.value.alignment))} '
-                    '${capitalize(char.value.mainClass.name)}'),
-                trailing: Padding(
-                  padding: const EdgeInsets.symmetric(vertical: 8.0),
-                  child: Column(
-                    mainAxisSize: MainAxisSize.min,
-                    children: !sortMode
-                        ? [
-                            IconButton(
-                              icon: Icon(Icons.edit),
-                              tooltip: 'Edit ${char.value.displayName}',
-                              onPressed: () => _edit(char.value),
-                              visualDensity: VisualDensity.compact,
-                            ),
-                            IconButton(
-                              color: Colors.red,
-                              icon: Icon(Icons.delete_forever),
-                              tooltip: 'Delete ${char.value.displayName}',
-                              onPressed: characters.length > 1
-                                  ? _delete(char.value)
-                                  : null,
-                              visualDensity: VisualDensity.compact,
-                            ),
-                          ]
-                        : [
-                            IconButton(
-                              icon: Icon(Icons.arrow_upward),
-                              tooltip: 'Move Up',
-                              onPressed: char.index > 0
-                                  ? () => _moveUp(char.index)
-                                  : null,
-                              visualDensity: VisualDensity.compact,
-                            ),
-                            IconButton(
-                              icon: Icon(Icons.arrow_downward),
-                              tooltip: 'Move Down',
-                              onPressed: char.index < characters.length - 1
-                                  ? () => _moveDown(char.index)
-                                  : null,
-                              visualDensity: VisualDensity.compact,
-                            ),
-                          ],
-                  ),
-                ),
-              )
-          ],
+            );
+          },
         ),
       ),
     );
@@ -156,7 +142,7 @@ class _ManageCharactersViewState extends State<ManageCharactersView> {
       analytics.logEvent(
         name: sortMode ? Events.CharactersSortEnd : Events.CharactersSortStart,
         parameters: {
-          'characters_count': characters.length,
+          'characters_count': characterController.all.length,
         },
       ),
     );
@@ -164,7 +150,7 @@ class _ManageCharactersViewState extends State<ManageCharactersView> {
   }
 
   void _moveUp(num oldIdx) {
-    var copy = [...characters];
+    var copy = [...characterController.all.values];
     var char = copy.elementAt(oldIdx);
     copy
       ..removeAt(oldIdx)
@@ -173,7 +159,7 @@ class _ManageCharactersViewState extends State<ManageCharactersView> {
   }
 
   void _moveDown(num oldIdx) {
-    var copy = [...characters];
+    var copy = [...characterController.all.values];
     var char = copy.elementAt(oldIdx);
     copy
       ..removeAt(oldIdx)
@@ -186,9 +172,6 @@ class _ManageCharactersViewState extends State<ManageCharactersView> {
       char = Enumeration(char.index, char.value.copyWith(order: char.index));
       unawaited(char.value.update(keys: ['order']));
     }
-    setState(() {
-      characters = [...copy];
-    });
     characterController.setAll(copy);
   }
 
@@ -221,13 +204,9 @@ class _ManageCharactersViewState extends State<ManageCharactersView> {
       );
       if (result == true) {
         unawaited(analytics.logEvent(name: Events.DeleteCharacter));
+        // TODO move to char model
         characterController.remove(char);
         await char.delete();
-        if (mounted) {
-          setState(() {
-            characters = characters..remove(char);
-          });
-        }
       }
     };
   }

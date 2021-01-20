@@ -14,5 +14,5 @@ class DWAlignmentConverter
   }
 
   @override
-  Map<String, dynamic> toJson(Alignment data) => data.toJSON();
+  Map<String, dynamic> toJson(Alignment data) => data.toJSON().cast<String, dynamic>();
 }
