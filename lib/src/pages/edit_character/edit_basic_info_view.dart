@@ -82,6 +82,13 @@ class _EditBasicInfoViewState extends State<EditBasicInfoView> {
             EditAvatarCard(
               character: widget.character,
               controller: editingControllers[_Keys.photoURL],
+              onSave: (char) {
+                updateWith(
+                  widget.character.copyWith(
+                    settings: char.settings,
+                  ),
+                );
+              },
             ),
             spacer,
             EditBioCard(

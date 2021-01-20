@@ -26,7 +26,7 @@ class _ManageCharactersViewState extends State<ManageCharactersView> {
   List<Character> characters;
   User user;
   bool sortMode;
-  GetStream _loadCharsSub;
+  GetStream<Map<String, Character>> _loadCharsSub;
 
   @override
   void initState() {

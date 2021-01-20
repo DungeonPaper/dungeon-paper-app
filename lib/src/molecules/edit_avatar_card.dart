@@ -9,18 +9,17 @@ import 'package:dungeon_paper/src/utils/storage.dart';
 import 'package:flutter/material.dart';
 import 'package:icon_shadow/icon_shadow.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:pedantic/pedantic.dart';
 
 class EditAvatarCard extends StatefulWidget {
   final Character character;
   final TextEditingController controller;
-  final Function() onSave;
+  final Function(Character) onSave;
 
   const EditAvatarCard({
     Key key,
     @required this.controller,
     @required this.character,
-    this.onSave,
+    @required this.onSave,
   }) : super(key: key);
 
   @override
@@ -29,6 +28,14 @@ class EditAvatarCard extends StatefulWidget {
 
 class _EditAvatarCardState extends State<EditAvatarCard> {
   File imageFile;
+  Alignment photoAlignment;
+
+  @override
+  void initState() {
+    imageFile = null;
+    photoAlignment = widget.character.settings.photoAlignment;
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -131,18 +138,6 @@ class _EditAvatarCardState extends State<EditAvatarCard> {
     );
   }
 
-  void setPhotoAlignment(Alignment align) {
-    setState(() {
-      unawaited(
-        widget.character
-            .copyWith(
-                settings: widget.character.settings
-                    .copyWith(rawPhotoAlignment: align))
-            .update(keys: ['settings']),
-      );
-    });
-  }
-
   String get imageUrl => widget.controller.text;
 
   Widget get avatar {
@@ -184,13 +179,31 @@ class _EditAvatarCardState extends State<EditAvatarCard> {
           borderRadius: BorderRadius.vertical(top: Radius.circular(15)),
           image: DecorationImage(
             fit: BoxFit.fitWidth,
-            alignment: widget.character.settings.photoAlignment,
+            alignment: photoAlignment,
             image: image,
           ),
         ),
       ),
       errorWidget: (context, url, e) => _emptyState(
         "We couldn't load your image, please check the URL and try again.",
+      ),
+    );
+  }
+
+  void setPhotoAlignment(Alignment align) {
+    setState(() {
+      photoAlignment = align;
+    });
+    _onSave();
+  }
+
+  void _onSave() {
+    widget.onSave?.call(
+      widget.character.copyWith(
+        photoURL: widget.controller.text,
+        settings: widget.character.settings.copyWith(
+          rawPhotoAlignment: photoAlignment,
+        ),
       ),
     );
   }
@@ -221,5 +234,6 @@ class _EditAvatarCardState extends State<EditAvatarCard> {
       imageFile = null;
     });
     widget.controller.text = downloadURL;
+    _onSave();
   }
 }
