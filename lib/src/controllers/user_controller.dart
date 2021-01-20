@@ -1,10 +1,7 @@
 import 'package:dungeon_paper/db/models/user.dart';
-import 'package:dungeon_paper/src/redux/characters/characters_controller.dart';
+import 'package:dungeon_paper/src/controllers/characters_controller.dart';
 import 'package:firebase_auth/firebase_auth.dart' as fb;
 import 'package:get/get.dart';
-import 'package:meta/meta.dart';
-
-part 'user_actions.dart';
 
 class UserController extends GetxController {
   final Rx<User> _current = Rx<User>();
@@ -45,30 +42,6 @@ class UserController extends GetxController {
 
   void logout([bool updateCondition = true]) => clear(updateCondition);
   void noLogin([bool updateCondition = true]) => clear(updateCondition);
-}
-
-UserController userReducer(UserController state, action) {
-  if (action is Login) {
-    return state
-      ..setCurrent(action.user)
-      ..setFirebaseUser(action.firebaseUser);
-  }
-
-  if (action is SetUser) {
-    return state..setCurrent(action.user);
-  }
-
-  if (action is SetFirebaseUser) {
-    return state..setFirebaseUser(action.user);
-  }
-
-  if (action is Logout || action is NoLogin) {
-    return state
-      ..setCurrent(null)
-      ..setFirebaseUser(null);
-  }
-
-  return state;
 }
 
 final userController = UserController();

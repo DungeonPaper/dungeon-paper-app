@@ -1,7 +1,7 @@
 import 'dart:io';
 
 import 'package:dungeon_paper/db/db.dart';
-import 'package:dungeon_paper/src/redux/users/user_controller.dart';
+import 'package:dungeon_paper/src/controllers/user_controller.dart';
 import 'package:dungeon_paper/src/utils/analytics.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/foundation.dart';

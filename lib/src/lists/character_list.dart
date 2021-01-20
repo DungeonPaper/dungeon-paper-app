@@ -1,5 +1,5 @@
 import 'package:dungeon_paper/db/models/character.dart';
-import 'package:dungeon_paper/src/redux/characters/characters_controller.dart';
+import 'package:dungeon_paper/src/controllers/characters_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 

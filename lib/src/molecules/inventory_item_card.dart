@@ -210,7 +210,7 @@ class InventoryItemCard extends StatelessWidget {
                             shape: CircleBorder(side: BorderSide.none),
                             child: Text('-'),
                             onPressed: () {
-                              var copy = _incrAmount(item, -1);
+                              final copy = _incrAmount(item, -1);
                               onSave?.call(copy);
                             },
                           ),
@@ -219,7 +219,7 @@ class InventoryItemCard extends StatelessWidget {
                             shape: CircleBorder(side: BorderSide.none),
                             child: Text('+'),
                             onPressed: () {
-                              var copy = _incrAmount(item, 1);
+                              final copy = _incrAmount(item, 1);
                               onSave?.call(copy);
                             },
                           )

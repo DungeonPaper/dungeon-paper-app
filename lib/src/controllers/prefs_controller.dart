@@ -1,13 +1,9 @@
-import 'package:dungeon_paper/src/redux/auth_controller.dart';
-import 'package:dungeon_paper/src/redux/shared_preferences/prefs_settings.dart';
+import 'package:dungeon_paper/db/models/prefs_settings.dart';
+import 'package:dungeon_paper/src/controllers/auth_controller.dart';
 import 'package:dungeon_paper/src/utils/auth/auth.dart';
 import 'package:dungeon_paper/src/utils/logger.dart';
-import 'package:flutter/foundation.dart';
 import 'package:get/get.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-
-part 'shared_prefs_middleware.dart';
-part 'pref_actions.dart';
 
 enum SharedPrefKeys {
   userEmail,
@@ -21,6 +17,11 @@ Map<SharedPrefKeys, String> sharedPrefsKeyMap = {
   SharedPrefKeys.userId: 'userId',
   SharedPrefKeys.userEmail: 'userEmail',
 };
+
+void withPrefs(Function(SharedPreferences inst) fn) async {
+  var prefs = await SharedPreferences.getInstance();
+  fn(prefs);
+}
 
 class UserDetails extends GetxController {
   final _email = RxString();

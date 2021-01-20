@@ -1,5 +1,5 @@
-import 'package:dungeon_paper/src/redux/shared_preferences/expansion_states.dart';
-import 'package:dungeon_paper/src/redux/shared_preferences/prefs_store.dart';
+import 'package:dungeon_paper/db/models/expansion_states.dart';
+import 'package:dungeon_paper/src/controllers/prefs_controller.dart';
 import 'package:flutter/material.dart';
 
 class ExpandableList extends StatelessWidget {

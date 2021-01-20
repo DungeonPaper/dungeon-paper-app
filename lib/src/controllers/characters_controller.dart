@@ -1,9 +1,7 @@
-import 'package:dungeon_paper/src/redux/loading/loading_controller.dart';
-import 'package:dungeon_paper/src/redux/shared_preferences/prefs_store.dart';
+import 'package:dungeon_paper/src/controllers/loading_controller.dart';
+import 'package:dungeon_paper/src/controllers/prefs_controller.dart';
 import 'package:get/get.dart';
 import 'package:dungeon_paper/db/models/character.dart';
-
-part 'character_actions.dart';
 
 class CharacterController extends GetxController {
   final Rx<Character> _current = Rx();
