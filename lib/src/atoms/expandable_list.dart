@@ -24,6 +24,7 @@ class ExpandableList extends StatelessWidget {
       return ListView(
         shrinkWrap: true,
         children: children,
+        physics: NeverScrollableScrollPhysics(),
         // mainAxisAlignment: MainAxisAlignment.start,
         // mainAxisSize: MainAxisSize.min,
         // crossAxisAlignment: CrossAxisAlignment.stretch,

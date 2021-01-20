@@ -167,10 +167,10 @@ class _ImportViewState extends State<ImportView> {
         if (found == null) {
           added = await user.createCustomClass(cls);
         } else {
-          await found.update(json: cls.toJSON());
-          added = found;
+          added = cls.copyWith();
+          finalClasses.remove(found);
+          await found.delete();
         }
-        finalClasses.remove(found);
         finalClasses.add(added);
       }
 

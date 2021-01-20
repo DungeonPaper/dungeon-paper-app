@@ -105,8 +105,8 @@ void registerCustomClassesListener(fb.User firebaseUser) {
 
     customClassesController.setAll([
       for (final character in classes.docs)
-        CustomClass(
-          data: character.data(),
+        CustomClass.fromJson(
+          character.data(),
           ref: character.reference,
         ),
     ]);
@@ -127,14 +127,14 @@ void registerCampaignsListener(fb.User firebaseUser) {
     if (campaigns.docs.isEmpty) {
       return;
     }
-    customClassesController.setAll([
-      for (final character in campaigns.docs)
-        // TODO update
-        CustomClass(
-          data: character.data(),
-          ref: character.reference,
-        ),
-    ]);
+    // TODO implement
+    // customClassesController.setAll([
+    //   for (final character in campaigns.docs)
+    //     CustomClass.fromJson(
+    //       character.data(),
+    //       ref: character.reference,
+    //     ),
+    // ]);
   });
   logger.d('Registered db campaigns listener');
 }

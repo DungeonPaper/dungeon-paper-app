@@ -59,8 +59,7 @@ mixin FirebaseMixin {
 
   String get documentID => ref.id;
 
-  Future<DocumentReference> create({Iterable<String> keys}) =>
-      helpers.create(ref, toJson());
+  Future<DocumentReference> create() => helpers.create(ref, toJson());
 
   Future<DocumentReference> update({Iterable<String> keys}) =>
       helpers.update(ref, toJson(), keys: keys);

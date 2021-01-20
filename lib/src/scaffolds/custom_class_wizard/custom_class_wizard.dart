@@ -55,8 +55,7 @@ class _CustomClassWizardState extends State<CustomClassWizard>
   void initState() {
     var user = userController.current;
     def = widget.customClass != null
-        ? CustomClass(
-            data: widget.customClass.toJSON(),
+        ? widget.customClass.copyWith(
             ref: widget.customClass.ref ??
                 user.ref.collection('custom_classes').doc(),
           )
@@ -183,10 +182,12 @@ class _CustomClassWizardState extends State<CustomClassWizard>
           validityNotifier: looksValid,
           onUpdate: (looks) => setState(() {
             dirty = true;
-            def.looks = Map<String, List<String>>.from(
-              looks.asMap().map(
-                    (k, v) => MapEntry(k.toString(), v),
-                  ),
+            def = def.copyWith(
+              looks: Map<String, List<String>>.from(
+                looks.asMap().map(
+                      (k, v) => MapEntry(k.toString(), v),
+                    ),
+              ),
             );
           }),
         ),
@@ -195,7 +196,7 @@ class _CustomClassWizardState extends State<CustomClassWizard>
           alignments: def.alignments,
           onUpdate: (alignments) => setState(() {
             dirty = true;
-            def.alignments = alignments;
+            def = def.copyWith(alignments: alignments);
           }),
         ),
       };

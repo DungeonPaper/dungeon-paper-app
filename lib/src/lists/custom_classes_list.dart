@@ -29,28 +29,28 @@ class CustomClassesList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final classes = customClassesController.classes.values.toList();
-
-    // TODO refactor
     var child = Obx(
-      () => SingleChildScrollView(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: [
-            for (var cls in classes)
-              CardListItem(
-                onTap: () => onEdit?.call(cls),
-                leading: Icon(Icons.person, size: 40),
-                trailing: IconButton(
-                  icon: Icon(Icons.delete),
-                  onPressed: () => onDelete?.call(cls),
+      () {
+        final classes = customClassesController.classes.values.toList();
+        return SingleChildScrollView(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              for (var cls in classes)
+                CardListItem(
+                  onTap: () => onEdit?.call(cls),
+                  leading: Icon(Icons.person, size: 40),
+                  trailing: IconButton(
+                    icon: Icon(Icons.delete),
+                    onPressed: () => onDelete?.call(cls),
+                  ),
+                  title: Text(cls.name),
+                  subtitle: Text(_subtitle(cls)),
                 ),
-                title: Text(cls.name),
-                subtitle: Text(_subtitle(cls)),
-              ),
-          ],
-        ),
-      ),
+            ],
+          ),
+        );
+      },
     );
     return _builder(context, child);
   }
