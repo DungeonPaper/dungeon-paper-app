@@ -2,7 +2,7 @@ import 'package:dungeon_paper/db/models/character.dart';
 import 'package:dungeon_paper/src/dialogs/change_alignment_dialog.dart';
 import 'package:dungeon_paper/src/dialogs/confirmation_dialog.dart';
 import 'package:dungeon_paper/src/dialogs/dialogs.dart';
-import 'package:dungeon_paper/src/redux/users/user_controller.dart';
+import 'package:dungeon_paper/src/controllers/user_controller.dart';
 import 'package:dungeon_paper/src/scaffolds/class_select_scaffold.dart';
 import 'package:dungeon_paper/src/scaffolds/main_scaffold.dart';
 import 'package:dungeon_paper/src/utils/analytics.dart';
@@ -243,11 +243,11 @@ class _EditCharacterViewState extends State<EditCharacterView>
         'mode': enumName(widget.mode).toLowerCase(),
       },
     ));
-    if (widget.mode == DialogMode.create) {
-      await character.create();
-    } else {
-      await character.update();
-    }
+    unawaited(
+      widget.mode == DialogMode.create
+          ? character.create()
+          : character.update(),
+    );
     widget.onSave?.call(character);
     Get.back();
   }

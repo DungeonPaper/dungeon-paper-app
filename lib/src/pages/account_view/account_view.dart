@@ -6,7 +6,7 @@ import 'package:dungeon_paper/src/dialogs/confirmation_dialog.dart';
 import 'package:dungeon_paper/src/dialogs/single_field_edit_dialog.dart';
 import 'package:dungeon_paper/src/flutter_utils/widget_utils.dart';
 import 'package:dungeon_paper/src/pages/account_view/auth_provider_tile.dart';
-import 'package:dungeon_paper/src/redux/users/user_controller.dart';
+import 'package:dungeon_paper/src/controllers/user_controller.dart';
 import 'package:dungeon_paper/src/scaffolds/main_scaffold.dart';
 import 'package:dungeon_paper/src/utils/analytics.dart';
 import 'package:dungeon_paper/src/utils/auth/auth.dart';

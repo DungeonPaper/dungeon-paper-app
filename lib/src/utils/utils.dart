@@ -34,8 +34,11 @@ String pluralize(
 T noopReturn<T>(T a) => a;
 void noopVoid<T>(T a) {}
 
-T numAs<T extends num>(num number) =>
-    T == double ? number.toDouble() : number.toInt();
+T numAs<T extends num>(num number) => number == double.infinity
+    ? double.infinity
+    : T == double
+        ? number.toDouble()
+        : number.toInt();
 
 T clamp<T extends num>(num number, num low, num high) => max<T>(
       numAs<T>(low),

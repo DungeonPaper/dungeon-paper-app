@@ -12,6 +12,7 @@ class _CampaignsViewState extends State<CampaignsView> {
     return MainScaffold(
       title: Text('Campaigns'),
       body: ListView(
+        shrinkWrap: true,
         children: [
           Text('Managed by you'),
           Text('Participating in'),

@@ -1,5 +1,5 @@
 import 'package:dungeon_paper/src/atoms/expandable_list.dart';
-import 'package:dungeon_paper/src/redux/characters/characters_controller.dart';
+import 'package:dungeon_paper/src/controllers/characters_controller.dart';
 import 'package:dungeon_paper/src/utils/utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';

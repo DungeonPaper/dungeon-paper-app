@@ -1,10 +1,10 @@
 import 'dart:async';
 import 'package:dungeon_paper/db/db.dart';
 import 'package:dungeon_paper/db/models/custom_class.dart';
-import 'package:dungeon_paper/src/redux/auth_controller.dart';
-import 'package:dungeon_paper/src/redux/characters/characters_controller.dart';
-import 'package:dungeon_paper/src/redux/custom_classes/custom_classes_controller.dart';
-import 'package:dungeon_paper/src/redux/users/user_controller.dart';
+import 'package:dungeon_paper/src/controllers/auth_controller.dart';
+import 'package:dungeon_paper/src/controllers/characters_controller.dart';
+import 'package:dungeon_paper/src/controllers/custom_classes_controller.dart';
+import 'package:dungeon_paper/src/controllers/user_controller.dart';
 import 'package:dungeon_paper/src/utils/logger.dart';
 import 'package:firebase_auth/firebase_auth.dart' as fb;
 

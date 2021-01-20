@@ -1,6 +1,6 @@
 import 'package:dungeon_paper/src/pages/backup_view/backup_view.dart';
 import 'package:dungeon_paper/src/pages/settings_view/settings_list_tile.dart';
-import 'package:dungeon_paper/src/redux/shared_preferences/prefs_store.dart';
+import 'package:dungeon_paper/src/controllers/prefs_controller.dart';
 import 'package:dungeon_paper/src/scaffolds/main_scaffold.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';

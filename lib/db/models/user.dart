@@ -1,8 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dungeon_paper/db/db.dart';
 import 'package:dungeon_paper/db/models/converters/document_reference_converter.dart';
-import 'package:dungeon_paper/src/redux/characters/characters_controller.dart';
-import 'package:dungeon_paper/src/redux/custom_classes/custom_classes_controller.dart';
+import 'package:dungeon_paper/src/controllers/characters_controller.dart';
+import 'package:dungeon_paper/src/controllers/custom_classes_controller.dart';
 import 'package:dungeon_paper/src/utils/auth/auth.dart';
 import 'package:dungeon_paper/src/utils/logger.dart';
 
