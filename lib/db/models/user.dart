@@ -40,7 +40,7 @@ abstract class User with FirebaseMixin implements _$User {
   bool featureEnabled(String key) =>
       features[key] is bool && features[key] == true;
 
-  bool get isDm => featureEnabled('dm_tools_preview');
+  bool get isDm => isTester && featureEnabled('dm_tools_preview');
 
   bool get isTester => hasFeature('tester');
 

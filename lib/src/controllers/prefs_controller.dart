@@ -18,10 +18,8 @@ Map<SharedPrefKeys, String> sharedPrefsKeyMap = {
   SharedPrefKeys.userEmail: 'userEmail',
 };
 
-void withPrefs(Function(SharedPreferences inst) fn) async {
-  var prefs = await SharedPreferences.getInstance();
-  fn(prefs);
-}
+void withPrefs(Function(SharedPreferences inst) fn) =>
+    SharedPreferences.getInstance().then(fn);
 
 class UserDetails extends GetxController {
   final _email = RxString();

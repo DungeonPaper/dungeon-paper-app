@@ -50,6 +50,7 @@ class NoteCardState extends State<NoteCard> {
             ? TagList(
                 visualDensity: VisualDensity.compact,
                 tags: widget.note.tags,
+                textScaleFactor: 0.9,
               )
             : null,
         onExpansionChanged: (value) => analytics.logEvent(

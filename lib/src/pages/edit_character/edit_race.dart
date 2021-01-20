@@ -27,15 +27,12 @@ class ChangeRaceDialog extends StatelessWidget {
         child: Column(
           children: character.mainClass.raceMoves
               .map(
-                (move) => Padding(
-                  padding: EdgeInsets.only(bottom: 16.0),
-                  child: RaceDescription(
-                    playerClass: character.mainClass,
-                    race: move,
-                    onTap: changeRace(move),
-                    color: Get.theme.canvasColor
-                        .withOpacity(character.race == move ? 1 : 0.5),
-                  ),
+                (move) => RaceDescription(
+                  playerClass: character.mainClass,
+                  race: move,
+                  onTap: changeRace(move),
+                  color: Get.theme.canvasColor
+                      .withOpacity(character.race == move ? 1 : 0.5),
                 ),
               )
               .toList(),
