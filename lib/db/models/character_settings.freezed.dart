@@ -19,10 +19,10 @@ class _$CharacterSettingsTearOff {
 // ignore: unused_element
   _CharacterSettings call(
       {bool useDefaultMaxHp = true,
-      @FlutterAlignmentConverter() Alignment rawPhotoAlignment}) {
+      @FlutterAlignmentConverter() Alignment photoAlignment}) {
     return _CharacterSettings(
       useDefaultMaxHp: useDefaultMaxHp,
-      rawPhotoAlignment: rawPhotoAlignment,
+      photoAlignment: photoAlignment,
     );
   }
 
@@ -40,7 +40,7 @@ const $CharacterSettings = _$CharacterSettingsTearOff();
 mixin _$CharacterSettings {
   bool get useDefaultMaxHp;
   @FlutterAlignmentConverter()
-  Alignment get rawPhotoAlignment;
+  Alignment get photoAlignment;
 
   Map<String, dynamic> toJson();
   @JsonKey(ignore: true)
@@ -54,7 +54,7 @@ abstract class $CharacterSettingsCopyWith<$Res> {
       _$CharacterSettingsCopyWithImpl<$Res>;
   $Res call(
       {bool useDefaultMaxHp,
-      @FlutterAlignmentConverter() Alignment rawPhotoAlignment});
+      @FlutterAlignmentConverter() Alignment photoAlignment});
 }
 
 /// @nodoc
@@ -69,15 +69,15 @@ class _$CharacterSettingsCopyWithImpl<$Res>
   @override
   $Res call({
     Object useDefaultMaxHp = freezed,
-    Object rawPhotoAlignment = freezed,
+    Object photoAlignment = freezed,
   }) {
     return _then(_value.copyWith(
       useDefaultMaxHp: useDefaultMaxHp == freezed
           ? _value.useDefaultMaxHp
           : useDefaultMaxHp as bool,
-      rawPhotoAlignment: rawPhotoAlignment == freezed
-          ? _value.rawPhotoAlignment
-          : rawPhotoAlignment as Alignment,
+      photoAlignment: photoAlignment == freezed
+          ? _value.photoAlignment
+          : photoAlignment as Alignment,
     ));
   }
 }
@@ -91,7 +91,7 @@ abstract class _$CharacterSettingsCopyWith<$Res>
   @override
   $Res call(
       {bool useDefaultMaxHp,
-      @FlutterAlignmentConverter() Alignment rawPhotoAlignment});
+      @FlutterAlignmentConverter() Alignment photoAlignment});
 }
 
 /// @nodoc
@@ -108,15 +108,15 @@ class __$CharacterSettingsCopyWithImpl<$Res>
   @override
   $Res call({
     Object useDefaultMaxHp = freezed,
-    Object rawPhotoAlignment = freezed,
+    Object photoAlignment = freezed,
   }) {
     return _then(_CharacterSettings(
       useDefaultMaxHp: useDefaultMaxHp == freezed
           ? _value.useDefaultMaxHp
           : useDefaultMaxHp as bool,
-      rawPhotoAlignment: rawPhotoAlignment == freezed
-          ? _value.rawPhotoAlignment
-          : rawPhotoAlignment as Alignment,
+      photoAlignment: photoAlignment == freezed
+          ? _value.photoAlignment
+          : photoAlignment as Alignment,
     ));
   }
 }
@@ -127,7 +127,7 @@ class __$CharacterSettingsCopyWithImpl<$Res>
 class _$_CharacterSettings extends _CharacterSettings {
   const _$_CharacterSettings(
       {this.useDefaultMaxHp = true,
-      @FlutterAlignmentConverter() this.rawPhotoAlignment})
+      @FlutterAlignmentConverter() this.photoAlignment})
       : assert(useDefaultMaxHp != null),
         super._();
 
@@ -139,11 +139,11 @@ class _$_CharacterSettings extends _CharacterSettings {
   final bool useDefaultMaxHp;
   @override
   @FlutterAlignmentConverter()
-  final Alignment rawPhotoAlignment;
+  final Alignment photoAlignment;
 
   @override
   String toString() {
-    return 'CharacterSettings(useDefaultMaxHp: $useDefaultMaxHp, rawPhotoAlignment: $rawPhotoAlignment)';
+    return 'CharacterSettings(useDefaultMaxHp: $useDefaultMaxHp, photoAlignment: $photoAlignment)';
   }
 
   @override
@@ -153,16 +153,16 @@ class _$_CharacterSettings extends _CharacterSettings {
             (identical(other.useDefaultMaxHp, useDefaultMaxHp) ||
                 const DeepCollectionEquality()
                     .equals(other.useDefaultMaxHp, useDefaultMaxHp)) &&
-            (identical(other.rawPhotoAlignment, rawPhotoAlignment) ||
+            (identical(other.photoAlignment, photoAlignment) ||
                 const DeepCollectionEquality()
-                    .equals(other.rawPhotoAlignment, rawPhotoAlignment)));
+                    .equals(other.photoAlignment, photoAlignment)));
   }
 
   @override
   int get hashCode =>
       runtimeType.hashCode ^
       const DeepCollectionEquality().hash(useDefaultMaxHp) ^
-      const DeepCollectionEquality().hash(rawPhotoAlignment);
+      const DeepCollectionEquality().hash(photoAlignment);
 
   @JsonKey(ignore: true)
   @override
@@ -179,7 +179,7 @@ abstract class _CharacterSettings extends CharacterSettings {
   const _CharacterSettings._() : super._();
   const factory _CharacterSettings(
           {bool useDefaultMaxHp,
-          @FlutterAlignmentConverter() Alignment rawPhotoAlignment}) =
+          @FlutterAlignmentConverter() Alignment photoAlignment}) =
       _$_CharacterSettings;
 
   factory _CharacterSettings.fromJson(Map<String, dynamic> json) =
@@ -189,7 +189,7 @@ abstract class _CharacterSettings extends CharacterSettings {
   bool get useDefaultMaxHp;
   @override
   @FlutterAlignmentConverter()
-  Alignment get rawPhotoAlignment;
+  Alignment get photoAlignment;
   @override
   @JsonKey(ignore: true)
   _$CharacterSettingsCopyWith<_CharacterSettings> get copyWith;

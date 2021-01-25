@@ -16,7 +16,7 @@ abstract class Campaign with KeyMixin, FirebaseMixin implements _$Campaign {
   @With(FirebaseMixin)
   @With(KeyMixin)
   const factory Campaign({
-    @DefaultUuid() String key,
+    @required @DefaultUuid() String key,
     @DocumentReferenceConverter() DocumentReference ref,
     @Default('Our Campaign') String name,
     @Default('') String description,

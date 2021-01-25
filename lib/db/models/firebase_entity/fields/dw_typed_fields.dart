@@ -133,6 +133,7 @@ class InventoryItemField extends Field<InventoryItem> {
           toJSON: (value, _) => value.toJson(),
           defaultValue: defaultValue ??
               (ctx) => InventoryItem(
+                    key: Uuid().v4(),
                     name: '',
                     description: '',
                     amount: 1,
@@ -221,7 +222,7 @@ class NoteField extends Field<Note> {
           value: value,
           isSerialized: isSerialized,
           listeners: listeners,
-          defaultValue: defaultValue ?? (ctx) => Note(),
+          defaultValue: defaultValue ?? (ctx) => Note(key: Uuid().v4()),
           fromJSON: (value, ctx) => Note.fromJson(value),
           toJSON: (value, ctx) => value.toJson(),
         );
@@ -402,7 +403,7 @@ class CharacterField extends Field<Character> {
           value: value,
           isSerialized: isSerialized,
           listeners: listeners,
-          defaultValue: defaultValue ?? (ctx) => Character(),
+          defaultValue: defaultValue ?? (ctx) => Character(key: Uuid().v4()),
           fromJSON: (value, ctx) => value is Map &&
                   (value.containsKey('data') || value.containsKey('docIS'))
               ? Character.fromJson(

@@ -18,34 +18,70 @@ class _$CharacterTearOff {
 
 // ignore: unused_element
   _Character call(
-      {@DocumentReferenceConverter() DocumentReference ref,
-      @DefaultUuid() String key,
-      @JsonKey(name: 'armor', defaultValue: 0) int baseArmor,
-      @JsonKey(name: 'str', defaultValue: 8) int strength,
-      @JsonKey(name: 'dex', defaultValue: 8) int dexterity,
-      @JsonKey(name: 'con', defaultValue: 8) int constitution,
-      @JsonKey(name: 'wis', defaultValue: 8) int wisdom,
-      @JsonKey(name: 'int', defaultValue: 8) int intelligence,
-      @JsonKey(name: 'cha', defaultValue: 0) int charisma,
-      @PlayerClassConverter() List<PlayerClass> playerClasses,
-      AlignmentName alignment = AlignmentName.neutral,
-      @JsonKey(name: 'maxHP') int customMaxHP,
-      String displayName = 'Traveler',
-      String photoURL,
-      int level = 1,
+      {@DocumentReferenceConverter()
+          DocumentReference ref,
+      @required
+      @DefaultUuid()
+      @JsonKey()
+          String key,
+      @JsonKey(name: 'armor', defaultValue: 0)
+          int baseArmor = 0,
+      @JsonKey(name: 'str', defaultValue: 8)
+          int strength = 8,
+      @JsonKey(name: 'dex', defaultValue: 8)
+          int dexterity = 8,
+      @JsonKey(name: 'con', defaultValue: 8)
+          int constitution = 8,
+      @JsonKey(name: 'wis', defaultValue: 8)
+          int wisdom = 8,
+      @JsonKey(name: 'int', defaultValue: 8)
+          int intelligence = 8,
+      @JsonKey(name: 'cha', defaultValue: 0)
+          int charisma = 0,
+      @PlayerClassConverter()
+          List<PlayerClass> playerClasses,
+      @JsonKey(defaultValue: AlignmentName.neutral)
+          AlignmentName alignment = AlignmentName.neutral,
+      @JsonKey(name: 'maxHP')
+          int customMaxHP,
+      @JsonKey(defaultValue: 'Traveler')
+          String displayName = 'Traveler',
+      @JsonKey(defaultValue: '')
+          String photoURL = '',
+      @JsonKey(defaultValue: 1)
+          int level = 1,
       String bio = '',
-      @JsonKey(name: 'currentHP', defaultValue: 100) int customCurrentHP,
-      int currentXP,
-      @DWMoveConverter() List<Move> moves,
-      @NoteConverter() List<Note> notes,
-      @SpellConverter() List<DbSpell> spells,
-      @InventoryItemConverter() List<InventoryItem> inventory,
-      @DiceConverter() @JsonKey(name: 'hitDice') Dice customDamageDice,
-      List<String> looks,
-      @DWMoveConverter() Move race,
-      double coins = 0,
-      int order,
-      @CharacterSettingsConverter() CharacterSettings settings}) {
+      @JsonKey(name: 'currentHP', defaultValue: 100)
+          int customCurrentHP = 100,
+      @JsonKey(defaultValue: 0)
+          int currentXP = 0,
+      @DWMoveConverter()
+      @JsonKey(defaultValue: const [])
+          List<Move> moves = const [],
+      @NoteConverter()
+      @JsonKey(defaultValue: const [])
+          List<Note> notes = const [],
+      @SpellConverter()
+      @JsonKey(defaultValue: const [])
+          List<DbSpell> spells = const [],
+      @InventoryItemConverter()
+      @JsonKey(defaultValue: const [])
+          List<InventoryItem> inventory = const [],
+      @DiceConverter()
+      @JsonKey(name: 'hitDice')
+          Dice customDamageDice,
+      @JsonKey(defaultValue: const [])
+          List<String> looks = const [],
+      @DWMoveConverter()
+      @JsonKey(name: 'race')
+          Move raceMove,
+      @JsonKey(defaultValue: 0)
+          double coins = 0,
+      @JsonKey(defaultValue: 0)
+          int order = 0,
+      @JsonKey(name: 'settings')
+      @CharacterSettingsConverter()
+          CharacterSettings customSettings}) {
     return _Character(
       ref: ref,
       key: key,
@@ -71,10 +107,10 @@ class _$CharacterTearOff {
       inventory: inventory,
       customDamageDice: customDamageDice,
       looks: looks,
-      race: race,
+      raceMove: raceMove,
       coins: coins,
       order: order,
-      settings: settings,
+      customSettings: customSettings,
     );
   }
 
@@ -93,6 +129,7 @@ mixin _$Character {
   @DocumentReferenceConverter()
   DocumentReference get ref;
   @DefaultUuid()
+  @JsonKey()
   String get key;
   @JsonKey(name: 'armor', defaultValue: 0)
   int get baseArmor;
@@ -107,37 +144,51 @@ mixin _$Character {
   @JsonKey(name: 'int', defaultValue: 8)
   int get intelligence;
   @JsonKey(name: 'cha', defaultValue: 0)
-  int get charisma;
+  int get charisma; // TODO find solution for non-const default values
   @PlayerClassConverter()
   List<PlayerClass> get playerClasses;
+  @JsonKey(defaultValue: AlignmentName.neutral)
   AlignmentName get alignment;
   @JsonKey(name: 'maxHP')
   int get customMaxHP;
+  @JsonKey(defaultValue: 'Traveler')
   String get displayName;
+  @JsonKey(defaultValue: '')
   String get photoURL;
+  @JsonKey(defaultValue: 1)
   int get level;
   String get bio;
   @JsonKey(name: 'currentHP', defaultValue: 100)
   int get customCurrentHP;
+  @JsonKey(defaultValue: 0)
   int get currentXP;
   @DWMoveConverter()
+  @JsonKey(defaultValue: const [])
   List<Move> get moves;
   @NoteConverter()
+  @JsonKey(defaultValue: const [])
   List<Note> get notes;
   @SpellConverter()
+  @JsonKey(defaultValue: const [])
   List<DbSpell> get spells;
   @InventoryItemConverter()
+  @JsonKey(defaultValue: const [])
   List<InventoryItem> get inventory;
   @DiceConverter()
   @JsonKey(name: 'hitDice')
   Dice get customDamageDice;
+  @JsonKey(defaultValue: const [])
   List<String> get looks;
   @DWMoveConverter()
-  Move get race;
+  @JsonKey(name: 'race')
+  Move get raceMove;
+  @JsonKey(defaultValue: 0)
   double get coins;
-  int get order;
+  @JsonKey(defaultValue: 0)
+  int get order; // TODO find solution for non-const default values
+  @JsonKey(name: 'settings')
   @CharacterSettingsConverter()
-  CharacterSettings get settings;
+  CharacterSettings get customSettings;
 
   Map<String, dynamic> toJson();
   @JsonKey(ignore: true)
@@ -149,36 +200,71 @@ abstract class $CharacterCopyWith<$Res> {
   factory $CharacterCopyWith(Character value, $Res Function(Character) then) =
       _$CharacterCopyWithImpl<$Res>;
   $Res call(
-      {@DocumentReferenceConverter() DocumentReference ref,
-      @DefaultUuid() String key,
-      @JsonKey(name: 'armor', defaultValue: 0) int baseArmor,
-      @JsonKey(name: 'str', defaultValue: 8) int strength,
-      @JsonKey(name: 'dex', defaultValue: 8) int dexterity,
-      @JsonKey(name: 'con', defaultValue: 8) int constitution,
-      @JsonKey(name: 'wis', defaultValue: 8) int wisdom,
-      @JsonKey(name: 'int', defaultValue: 8) int intelligence,
-      @JsonKey(name: 'cha', defaultValue: 0) int charisma,
-      @PlayerClassConverter() List<PlayerClass> playerClasses,
-      AlignmentName alignment,
-      @JsonKey(name: 'maxHP') int customMaxHP,
-      String displayName,
-      String photoURL,
-      int level,
+      {@DocumentReferenceConverter()
+          DocumentReference ref,
+      @DefaultUuid()
+      @JsonKey()
+          String key,
+      @JsonKey(name: 'armor', defaultValue: 0)
+          int baseArmor,
+      @JsonKey(name: 'str', defaultValue: 8)
+          int strength,
+      @JsonKey(name: 'dex', defaultValue: 8)
+          int dexterity,
+      @JsonKey(name: 'con', defaultValue: 8)
+          int constitution,
+      @JsonKey(name: 'wis', defaultValue: 8)
+          int wisdom,
+      @JsonKey(name: 'int', defaultValue: 8)
+          int intelligence,
+      @JsonKey(name: 'cha', defaultValue: 0)
+          int charisma,
+      @PlayerClassConverter()
+          List<PlayerClass> playerClasses,
+      @JsonKey(defaultValue: AlignmentName.neutral)
+          AlignmentName alignment,
+      @JsonKey(name: 'maxHP')
+          int customMaxHP,
+      @JsonKey(defaultValue: 'Traveler')
+          String displayName,
+      @JsonKey(defaultValue: '')
+          String photoURL,
+      @JsonKey(defaultValue: 1)
+          int level,
       String bio,
-      @JsonKey(name: 'currentHP', defaultValue: 100) int customCurrentHP,
-      int currentXP,
-      @DWMoveConverter() List<Move> moves,
-      @NoteConverter() List<Note> notes,
-      @SpellConverter() List<DbSpell> spells,
-      @InventoryItemConverter() List<InventoryItem> inventory,
-      @DiceConverter() @JsonKey(name: 'hitDice') Dice customDamageDice,
-      List<String> looks,
-      @DWMoveConverter() Move race,
-      double coins,
-      int order,
-      @CharacterSettingsConverter() CharacterSettings settings});
+      @JsonKey(name: 'currentHP', defaultValue: 100)
+          int customCurrentHP,
+      @JsonKey(defaultValue: 0)
+          int currentXP,
+      @DWMoveConverter()
+      @JsonKey(defaultValue: const [])
+          List<Move> moves,
+      @NoteConverter()
+      @JsonKey(defaultValue: const [])
+          List<Note> notes,
+      @SpellConverter()
+      @JsonKey(defaultValue: const [])
+          List<DbSpell> spells,
+      @InventoryItemConverter()
+      @JsonKey(defaultValue: const [])
+          List<InventoryItem> inventory,
+      @DiceConverter()
+      @JsonKey(name: 'hitDice')
+          Dice customDamageDice,
+      @JsonKey(defaultValue: const [])
+          List<String> looks,
+      @DWMoveConverter()
+      @JsonKey(name: 'race')
+          Move raceMove,
+      @JsonKey(defaultValue: 0)
+          double coins,
+      @JsonKey(defaultValue: 0)
+          int order,
+      @JsonKey(name: 'settings')
+      @CharacterSettingsConverter()
+          CharacterSettings customSettings});
 
-  $CharacterSettingsCopyWith<$Res> get settings;
+  $CharacterSettingsCopyWith<$Res> get customSettings;
 }
 
 /// @nodoc
@@ -215,10 +301,10 @@ class _$CharacterCopyWithImpl<$Res> implements $CharacterCopyWith<$Res> {
     Object inventory = freezed,
     Object customDamageDice = freezed,
     Object looks = freezed,
-    Object race = freezed,
+    Object raceMove = freezed,
     Object coins = freezed,
     Object order = freezed,
-    Object settings = freezed,
+    Object customSettings = freezed,
   }) {
     return _then(_value.copyWith(
       ref: ref == freezed ? _value.ref : ref as DocumentReference,
@@ -258,21 +344,22 @@ class _$CharacterCopyWithImpl<$Res> implements $CharacterCopyWith<$Res> {
           ? _value.customDamageDice
           : customDamageDice as Dice,
       looks: looks == freezed ? _value.looks : looks as List<String>,
-      race: race == freezed ? _value.race : race as Move,
+      raceMove: raceMove == freezed ? _value.raceMove : raceMove as Move,
       coins: coins == freezed ? _value.coins : coins as double,
       order: order == freezed ? _value.order : order as int,
-      settings:
-          settings == freezed ? _value.settings : settings as CharacterSettings,
+      customSettings: customSettings == freezed
+          ? _value.customSettings
+          : customSettings as CharacterSettings,
     ));
   }
 
   @override
-  $CharacterSettingsCopyWith<$Res> get settings {
-    if (_value.settings == null) {
+  $CharacterSettingsCopyWith<$Res> get customSettings {
+    if (_value.customSettings == null) {
       return null;
     }
-    return $CharacterSettingsCopyWith<$Res>(_value.settings, (value) {
-      return _then(_value.copyWith(settings: value));
+    return $CharacterSettingsCopyWith<$Res>(_value.customSettings, (value) {
+      return _then(_value.copyWith(customSettings: value));
     });
   }
 }
@@ -284,37 +371,72 @@ abstract class _$CharacterCopyWith<$Res> implements $CharacterCopyWith<$Res> {
       __$CharacterCopyWithImpl<$Res>;
   @override
   $Res call(
-      {@DocumentReferenceConverter() DocumentReference ref,
-      @DefaultUuid() String key,
-      @JsonKey(name: 'armor', defaultValue: 0) int baseArmor,
-      @JsonKey(name: 'str', defaultValue: 8) int strength,
-      @JsonKey(name: 'dex', defaultValue: 8) int dexterity,
-      @JsonKey(name: 'con', defaultValue: 8) int constitution,
-      @JsonKey(name: 'wis', defaultValue: 8) int wisdom,
-      @JsonKey(name: 'int', defaultValue: 8) int intelligence,
-      @JsonKey(name: 'cha', defaultValue: 0) int charisma,
-      @PlayerClassConverter() List<PlayerClass> playerClasses,
-      AlignmentName alignment,
-      @JsonKey(name: 'maxHP') int customMaxHP,
-      String displayName,
-      String photoURL,
-      int level,
+      {@DocumentReferenceConverter()
+          DocumentReference ref,
+      @DefaultUuid()
+      @JsonKey()
+          String key,
+      @JsonKey(name: 'armor', defaultValue: 0)
+          int baseArmor,
+      @JsonKey(name: 'str', defaultValue: 8)
+          int strength,
+      @JsonKey(name: 'dex', defaultValue: 8)
+          int dexterity,
+      @JsonKey(name: 'con', defaultValue: 8)
+          int constitution,
+      @JsonKey(name: 'wis', defaultValue: 8)
+          int wisdom,
+      @JsonKey(name: 'int', defaultValue: 8)
+          int intelligence,
+      @JsonKey(name: 'cha', defaultValue: 0)
+          int charisma,
+      @PlayerClassConverter()
+          List<PlayerClass> playerClasses,
+      @JsonKey(defaultValue: AlignmentName.neutral)
+          AlignmentName alignment,
+      @JsonKey(name: 'maxHP')
+          int customMaxHP,
+      @JsonKey(defaultValue: 'Traveler')
+          String displayName,
+      @JsonKey(defaultValue: '')
+          String photoURL,
+      @JsonKey(defaultValue: 1)
+          int level,
       String bio,
-      @JsonKey(name: 'currentHP', defaultValue: 100) int customCurrentHP,
-      int currentXP,
-      @DWMoveConverter() List<Move> moves,
-      @NoteConverter() List<Note> notes,
-      @SpellConverter() List<DbSpell> spells,
-      @InventoryItemConverter() List<InventoryItem> inventory,
-      @DiceConverter() @JsonKey(name: 'hitDice') Dice customDamageDice,
-      List<String> looks,
-      @DWMoveConverter() Move race,
-      double coins,
-      int order,
-      @CharacterSettingsConverter() CharacterSettings settings});
+      @JsonKey(name: 'currentHP', defaultValue: 100)
+          int customCurrentHP,
+      @JsonKey(defaultValue: 0)
+          int currentXP,
+      @DWMoveConverter()
+      @JsonKey(defaultValue: const [])
+          List<Move> moves,
+      @NoteConverter()
+      @JsonKey(defaultValue: const [])
+          List<Note> notes,
+      @SpellConverter()
+      @JsonKey(defaultValue: const [])
+          List<DbSpell> spells,
+      @InventoryItemConverter()
+      @JsonKey(defaultValue: const [])
+          List<InventoryItem> inventory,
+      @DiceConverter()
+      @JsonKey(name: 'hitDice')
+          Dice customDamageDice,
+      @JsonKey(defaultValue: const [])
+          List<String> looks,
+      @DWMoveConverter()
+      @JsonKey(name: 'race')
+          Move raceMove,
+      @JsonKey(defaultValue: 0)
+          double coins,
+      @JsonKey(defaultValue: 0)
+          int order,
+      @JsonKey(name: 'settings')
+      @CharacterSettingsConverter()
+          CharacterSettings customSettings});
 
   @override
-  $CharacterSettingsCopyWith<$Res> get settings;
+  $CharacterSettingsCopyWith<$Res> get customSettings;
 }
 
 /// @nodoc
@@ -352,10 +474,10 @@ class __$CharacterCopyWithImpl<$Res> extends _$CharacterCopyWithImpl<$Res>
     Object inventory = freezed,
     Object customDamageDice = freezed,
     Object looks = freezed,
-    Object race = freezed,
+    Object raceMove = freezed,
     Object coins = freezed,
     Object order = freezed,
-    Object settings = freezed,
+    Object customSettings = freezed,
   }) {
     return _then(_Character(
       ref: ref == freezed ? _value.ref : ref as DocumentReference,
@@ -395,11 +517,12 @@ class __$CharacterCopyWithImpl<$Res> extends _$CharacterCopyWithImpl<$Res>
           ? _value.customDamageDice
           : customDamageDice as Dice,
       looks: looks == freezed ? _value.looks : looks as List<String>,
-      race: race == freezed ? _value.race : race as Move,
+      raceMove: raceMove == freezed ? _value.raceMove : raceMove as Move,
       coins: coins == freezed ? _value.coins : coins as double,
       order: order == freezed ? _value.order : order as int,
-      settings:
-          settings == freezed ? _value.settings : settings as CharacterSettings,
+      customSettings: customSettings == freezed
+          ? _value.customSettings
+          : customSettings as CharacterSettings,
     ));
   }
 }
@@ -410,40 +533,93 @@ class __$CharacterCopyWithImpl<$Res> extends _$CharacterCopyWithImpl<$Res>
 
 /// @nodoc
 class _$_Character extends _Character with FirebaseMixin, KeyMixin {
-  const _$_Character(
-      {@DocumentReferenceConverter() this.ref,
-      @DefaultUuid() this.key,
-      @JsonKey(name: 'armor', defaultValue: 0) this.baseArmor,
-      @JsonKey(name: 'str', defaultValue: 8) this.strength,
-      @JsonKey(name: 'dex', defaultValue: 8) this.dexterity,
-      @JsonKey(name: 'con', defaultValue: 8) this.constitution,
-      @JsonKey(name: 'wis', defaultValue: 8) this.wisdom,
-      @JsonKey(name: 'int', defaultValue: 8) this.intelligence,
-      @JsonKey(name: 'cha', defaultValue: 0) this.charisma,
-      @PlayerClassConverter() this.playerClasses,
-      this.alignment = AlignmentName.neutral,
-      @JsonKey(name: 'maxHP') this.customMaxHP,
-      this.displayName = 'Traveler',
-      this.photoURL,
-      this.level = 1,
+  _$_Character(
+      {@DocumentReferenceConverter()
+          this.ref,
+      @required
+      @DefaultUuid()
+      @JsonKey()
+          this.key,
+      @JsonKey(name: 'armor', defaultValue: 0)
+          this.baseArmor = 0,
+      @JsonKey(name: 'str', defaultValue: 8)
+          this.strength = 8,
+      @JsonKey(name: 'dex', defaultValue: 8)
+          this.dexterity = 8,
+      @JsonKey(name: 'con', defaultValue: 8)
+          this.constitution = 8,
+      @JsonKey(name: 'wis', defaultValue: 8)
+          this.wisdom = 8,
+      @JsonKey(name: 'int', defaultValue: 8)
+          this.intelligence = 8,
+      @JsonKey(name: 'cha', defaultValue: 0)
+          this.charisma = 0,
+      @PlayerClassConverter()
+          this.playerClasses,
+      @JsonKey(defaultValue: AlignmentName.neutral)
+          this.alignment = AlignmentName.neutral,
+      @JsonKey(name: 'maxHP')
+          this.customMaxHP,
+      @JsonKey(defaultValue: 'Traveler')
+          this.displayName = 'Traveler',
+      @JsonKey(defaultValue: '')
+          this.photoURL = '',
+      @JsonKey(defaultValue: 1)
+          this.level = 1,
       this.bio = '',
-      @JsonKey(name: 'currentHP', defaultValue: 100) this.customCurrentHP,
-      this.currentXP,
-      @DWMoveConverter() this.moves,
-      @NoteConverter() this.notes,
-      @SpellConverter() this.spells,
-      @InventoryItemConverter() this.inventory,
-      @DiceConverter() @JsonKey(name: 'hitDice') this.customDamageDice,
-      this.looks,
-      @DWMoveConverter() this.race,
-      this.coins = 0,
-      this.order,
-      @CharacterSettingsConverter() this.settings})
-      : assert(alignment != null),
+      @JsonKey(name: 'currentHP', defaultValue: 100)
+          this.customCurrentHP = 100,
+      @JsonKey(defaultValue: 0)
+          this.currentXP = 0,
+      @DWMoveConverter()
+      @JsonKey(defaultValue: const [])
+          this.moves = const [],
+      @NoteConverter()
+      @JsonKey(defaultValue: const [])
+          this.notes = const [],
+      @SpellConverter()
+      @JsonKey(defaultValue: const [])
+          this.spells = const [],
+      @InventoryItemConverter()
+      @JsonKey(defaultValue: const [])
+          this.inventory = const [],
+      @DiceConverter()
+      @JsonKey(name: 'hitDice')
+          this.customDamageDice,
+      @JsonKey(defaultValue: const [])
+          this.looks = const [],
+      @DWMoveConverter()
+      @JsonKey(name: 'race')
+          this.raceMove,
+      @JsonKey(defaultValue: 0)
+          this.coins = 0,
+      @JsonKey(defaultValue: 0)
+          this.order = 0,
+      @JsonKey(name: 'settings')
+      @CharacterSettingsConverter()
+          this.customSettings})
+      : assert(key != null),
+        assert(baseArmor != null),
+        assert(strength != null),
+        assert(dexterity != null),
+        assert(constitution != null),
+        assert(wisdom != null),
+        assert(intelligence != null),
+        assert(charisma != null),
+        assert(alignment != null),
         assert(displayName != null),
+        assert(photoURL != null),
         assert(level != null),
         assert(bio != null),
+        assert(customCurrentHP != null),
+        assert(currentXP != null),
+        assert(moves != null),
+        assert(notes != null),
+        assert(spells != null),
+        assert(inventory != null),
+        assert(looks != null),
         assert(coins != null),
+        assert(order != null),
         super._();
 
   factory _$_Character.fromJson(Map<String, dynamic> json) =>
@@ -454,6 +630,7 @@ class _$_Character extends _Character with FirebaseMixin, KeyMixin {
   final DocumentReference ref;
   @override
   @DefaultUuid()
+  @JsonKey()
   final String key;
   @override
   @JsonKey(name: 'armor', defaultValue: 0)
@@ -476,22 +653,23 @@ class _$_Character extends _Character with FirebaseMixin, KeyMixin {
   @override
   @JsonKey(name: 'cha', defaultValue: 0)
   final int charisma;
-  @override
+  @override // TODO find solution for non-const default values
   @PlayerClassConverter()
   final List<PlayerClass> playerClasses;
-  @JsonKey(defaultValue: AlignmentName.neutral)
   @override
+  @JsonKey(defaultValue: AlignmentName.neutral)
   final AlignmentName alignment;
   @override
   @JsonKey(name: 'maxHP')
   final int customMaxHP;
-  @JsonKey(defaultValue: 'Traveler')
   @override
+  @JsonKey(defaultValue: 'Traveler')
   final String displayName;
   @override
+  @JsonKey(defaultValue: '')
   final String photoURL;
-  @JsonKey(defaultValue: 1)
   @override
+  @JsonKey(defaultValue: 1)
   final int level;
   @JsonKey(defaultValue: '')
   @override
@@ -500,40 +678,49 @@ class _$_Character extends _Character with FirebaseMixin, KeyMixin {
   @JsonKey(name: 'currentHP', defaultValue: 100)
   final int customCurrentHP;
   @override
+  @JsonKey(defaultValue: 0)
   final int currentXP;
   @override
   @DWMoveConverter()
+  @JsonKey(defaultValue: const [])
   final List<Move> moves;
   @override
   @NoteConverter()
+  @JsonKey(defaultValue: const [])
   final List<Note> notes;
   @override
   @SpellConverter()
+  @JsonKey(defaultValue: const [])
   final List<DbSpell> spells;
   @override
   @InventoryItemConverter()
+  @JsonKey(defaultValue: const [])
   final List<InventoryItem> inventory;
   @override
   @DiceConverter()
   @JsonKey(name: 'hitDice')
   final Dice customDamageDice;
   @override
+  @JsonKey(defaultValue: const [])
   final List<String> looks;
   @override
   @DWMoveConverter()
-  final Move race;
-  @JsonKey(defaultValue: 0)
+  @JsonKey(name: 'race')
+  final Move raceMove;
   @override
+  @JsonKey(defaultValue: 0)
   final double coins;
   @override
+  @JsonKey(defaultValue: 0)
   final int order;
-  @override
+  @override // TODO find solution for non-const default values
+  @JsonKey(name: 'settings')
   @CharacterSettingsConverter()
-  final CharacterSettings settings;
+  final CharacterSettings customSettings;
 
   @override
   String toString() {
-    return 'Character(ref: $ref, key: $key, baseArmor: $baseArmor, strength: $strength, dexterity: $dexterity, constitution: $constitution, wisdom: $wisdom, intelligence: $intelligence, charisma: $charisma, playerClasses: $playerClasses, alignment: $alignment, customMaxHP: $customMaxHP, displayName: $displayName, photoURL: $photoURL, level: $level, bio: $bio, customCurrentHP: $customCurrentHP, currentXP: $currentXP, moves: $moves, notes: $notes, spells: $spells, inventory: $inventory, customDamageDice: $customDamageDice, looks: $looks, race: $race, coins: $coins, order: $order, settings: $settings)';
+    return 'Character(ref: $ref, key: $key, baseArmor: $baseArmor, strength: $strength, dexterity: $dexterity, constitution: $constitution, wisdom: $wisdom, intelligence: $intelligence, charisma: $charisma, playerClasses: $playerClasses, alignment: $alignment, customMaxHP: $customMaxHP, displayName: $displayName, photoURL: $photoURL, level: $level, bio: $bio, customCurrentHP: $customCurrentHP, currentXP: $currentXP, moves: $moves, notes: $notes, spells: $spells, inventory: $inventory, customDamageDice: $customDamageDice, looks: $looks, raceMove: $raceMove, coins: $coins, order: $order, customSettings: $customSettings)';
   }
 
   @override
@@ -603,14 +790,14 @@ class _$_Character extends _Character with FirebaseMixin, KeyMixin {
                     .equals(other.customDamageDice, customDamageDice)) &&
             (identical(other.looks, looks) ||
                 const DeepCollectionEquality().equals(other.looks, looks)) &&
-            (identical(other.race, race) ||
-                const DeepCollectionEquality().equals(other.race, race)) &&
+            (identical(other.raceMove, raceMove) ||
+                const DeepCollectionEquality()
+                    .equals(other.raceMove, raceMove)) &&
             (identical(other.coins, coins) ||
                 const DeepCollectionEquality().equals(other.coins, coins)) &&
             (identical(other.order, order) ||
                 const DeepCollectionEquality().equals(other.order, order)) &&
-            (identical(other.settings, settings) ||
-                const DeepCollectionEquality().equals(other.settings, settings)));
+            (identical(other.customSettings, customSettings) || const DeepCollectionEquality().equals(other.customSettings, customSettings)));
   }
 
   @override
@@ -640,10 +827,10 @@ class _$_Character extends _Character with FirebaseMixin, KeyMixin {
       const DeepCollectionEquality().hash(inventory) ^
       const DeepCollectionEquality().hash(customDamageDice) ^
       const DeepCollectionEquality().hash(looks) ^
-      const DeepCollectionEquality().hash(race) ^
+      const DeepCollectionEquality().hash(raceMove) ^
       const DeepCollectionEquality().hash(coins) ^
       const DeepCollectionEquality().hash(order) ^
-      const DeepCollectionEquality().hash(settings);
+      const DeepCollectionEquality().hash(customSettings);
 
   @JsonKey(ignore: true)
   @override
@@ -657,36 +844,72 @@ class _$_Character extends _Character with FirebaseMixin, KeyMixin {
 }
 
 abstract class _Character extends Character implements FirebaseMixin, KeyMixin {
-  const _Character._() : super._();
-  const factory _Character(
-      {@DocumentReferenceConverter() DocumentReference ref,
-      @DefaultUuid() String key,
-      @JsonKey(name: 'armor', defaultValue: 0) int baseArmor,
-      @JsonKey(name: 'str', defaultValue: 8) int strength,
-      @JsonKey(name: 'dex', defaultValue: 8) int dexterity,
-      @JsonKey(name: 'con', defaultValue: 8) int constitution,
-      @JsonKey(name: 'wis', defaultValue: 8) int wisdom,
-      @JsonKey(name: 'int', defaultValue: 8) int intelligence,
-      @JsonKey(name: 'cha', defaultValue: 0) int charisma,
-      @PlayerClassConverter() List<PlayerClass> playerClasses,
-      AlignmentName alignment,
-      @JsonKey(name: 'maxHP') int customMaxHP,
-      String displayName,
-      String photoURL,
-      int level,
+  _Character._() : super._();
+  factory _Character(
+      {@DocumentReferenceConverter()
+          DocumentReference ref,
+      @required
+      @DefaultUuid()
+      @JsonKey()
+          String key,
+      @JsonKey(name: 'armor', defaultValue: 0)
+          int baseArmor,
+      @JsonKey(name: 'str', defaultValue: 8)
+          int strength,
+      @JsonKey(name: 'dex', defaultValue: 8)
+          int dexterity,
+      @JsonKey(name: 'con', defaultValue: 8)
+          int constitution,
+      @JsonKey(name: 'wis', defaultValue: 8)
+          int wisdom,
+      @JsonKey(name: 'int', defaultValue: 8)
+          int intelligence,
+      @JsonKey(name: 'cha', defaultValue: 0)
+          int charisma,
+      @PlayerClassConverter()
+          List<PlayerClass> playerClasses,
+      @JsonKey(defaultValue: AlignmentName.neutral)
+          AlignmentName alignment,
+      @JsonKey(name: 'maxHP')
+          int customMaxHP,
+      @JsonKey(defaultValue: 'Traveler')
+          String displayName,
+      @JsonKey(defaultValue: '')
+          String photoURL,
+      @JsonKey(defaultValue: 1)
+          int level,
       String bio,
-      @JsonKey(name: 'currentHP', defaultValue: 100) int customCurrentHP,
-      int currentXP,
-      @DWMoveConverter() List<Move> moves,
-      @NoteConverter() List<Note> notes,
-      @SpellConverter() List<DbSpell> spells,
-      @InventoryItemConverter() List<InventoryItem> inventory,
-      @DiceConverter() @JsonKey(name: 'hitDice') Dice customDamageDice,
-      List<String> looks,
-      @DWMoveConverter() Move race,
-      double coins,
-      int order,
-      @CharacterSettingsConverter() CharacterSettings settings}) = _$_Character;
+      @JsonKey(name: 'currentHP', defaultValue: 100)
+          int customCurrentHP,
+      @JsonKey(defaultValue: 0)
+          int currentXP,
+      @DWMoveConverter()
+      @JsonKey(defaultValue: const [])
+          List<Move> moves,
+      @NoteConverter()
+      @JsonKey(defaultValue: const [])
+          List<Note> notes,
+      @SpellConverter()
+      @JsonKey(defaultValue: const [])
+          List<DbSpell> spells,
+      @InventoryItemConverter()
+      @JsonKey(defaultValue: const [])
+          List<InventoryItem> inventory,
+      @DiceConverter()
+      @JsonKey(name: 'hitDice')
+          Dice customDamageDice,
+      @JsonKey(defaultValue: const [])
+          List<String> looks,
+      @DWMoveConverter()
+      @JsonKey(name: 'race')
+          Move raceMove,
+      @JsonKey(defaultValue: 0)
+          double coins,
+      @JsonKey(defaultValue: 0)
+          int order,
+      @JsonKey(name: 'settings')
+      @CharacterSettingsConverter()
+          CharacterSettings customSettings}) = _$_Character;
 
   factory _Character.fromJson(Map<String, dynamic> json) =
       _$_Character.fromJson;
@@ -696,6 +919,7 @@ abstract class _Character extends Character implements FirebaseMixin, KeyMixin {
   DocumentReference get ref;
   @override
   @DefaultUuid()
+  @JsonKey()
   String get key;
   @override
   @JsonKey(name: 'armor', defaultValue: 0)
@@ -718,19 +942,23 @@ abstract class _Character extends Character implements FirebaseMixin, KeyMixin {
   @override
   @JsonKey(name: 'cha', defaultValue: 0)
   int get charisma;
-  @override
+  @override // TODO find solution for non-const default values
   @PlayerClassConverter()
   List<PlayerClass> get playerClasses;
   @override
+  @JsonKey(defaultValue: AlignmentName.neutral)
   AlignmentName get alignment;
   @override
   @JsonKey(name: 'maxHP')
   int get customMaxHP;
   @override
+  @JsonKey(defaultValue: 'Traveler')
   String get displayName;
   @override
+  @JsonKey(defaultValue: '')
   String get photoURL;
   @override
+  @JsonKey(defaultValue: 1)
   int get level;
   @override
   String get bio;
@@ -738,35 +966,45 @@ abstract class _Character extends Character implements FirebaseMixin, KeyMixin {
   @JsonKey(name: 'currentHP', defaultValue: 100)
   int get customCurrentHP;
   @override
+  @JsonKey(defaultValue: 0)
   int get currentXP;
   @override
   @DWMoveConverter()
+  @JsonKey(defaultValue: const [])
   List<Move> get moves;
   @override
   @NoteConverter()
+  @JsonKey(defaultValue: const [])
   List<Note> get notes;
   @override
   @SpellConverter()
+  @JsonKey(defaultValue: const [])
   List<DbSpell> get spells;
   @override
   @InventoryItemConverter()
+  @JsonKey(defaultValue: const [])
   List<InventoryItem> get inventory;
   @override
   @DiceConverter()
   @JsonKey(name: 'hitDice')
   Dice get customDamageDice;
   @override
+  @JsonKey(defaultValue: const [])
   List<String> get looks;
   @override
   @DWMoveConverter()
-  Move get race;
+  @JsonKey(name: 'race')
+  Move get raceMove;
   @override
+  @JsonKey(defaultValue: 0)
   double get coins;
   @override
+  @JsonKey(defaultValue: 0)
   int get order;
-  @override
+  @override // TODO find solution for non-const default values
+  @JsonKey(name: 'settings')
   @CharacterSettingsConverter()
-  CharacterSettings get settings;
+  CharacterSettings get customSettings;
   @override
   @JsonKey(ignore: true)
   _$CharacterCopyWith<_Character> get copyWith;

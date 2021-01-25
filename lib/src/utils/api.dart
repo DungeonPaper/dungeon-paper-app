@@ -6,6 +6,7 @@ import 'package:dungeon_paper/src/utils/auth/auth.dart';
 import 'package:firebase_auth/firebase_auth.dart' as fb;
 import 'package:flutter/foundation.dart';
 import 'package:pedantic/pedantic.dart';
+import 'package:uuid/uuid.dart';
 
 Future<User> getDatabaseUser(
   fb.User fbUser, {
@@ -32,7 +33,7 @@ Future<User> getDatabaseUser(
       photoURL: fbUser.photoURL,
     );
     await helpers.create(userDoc.reference, data);
-    await user.createCharacter(Character());
+    await user.createCharacter(Character(key: Uuid().v4()));
   } else {
     if (user.email?.isEmpty != true) {
       user = user.copyWith(

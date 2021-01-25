@@ -15,6 +15,7 @@ import 'package:dungeon_world_data/move.dart';
 import 'package:dungeon_world_data/player_class.dart';
 import 'package:flutter/foundation.dart';
 import 'package:quiver_hashcode/hashcode.dart';
+import 'package:uuid/uuid.dart';
 part 'field.dart';
 part 'typed_fields.dart';
 part 'dw_typed_fields.dart';

@@ -89,7 +89,7 @@ class _ClassBasicDetailsState extends State<ClassBasicDetails> {
       ],
     );
 
-    dice = widget.customClass.damage;
+    dice = widget.customClass.damage ?? Dice.d6;
 
     widget.validityNotifier.value = _isValid();
   }

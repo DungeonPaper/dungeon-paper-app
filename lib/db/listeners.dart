@@ -76,13 +76,13 @@ void registerCharactersListener(fb.User firebaseUser) {
   final user = firestore.doc('user_data/$userEmail');
 
   _charsListener = user.collection('characters').snapshots().listen(
-    (characters) {
+    (characters) async {
       if (characters.docs.isEmpty) {
         return;
       }
-      final chars = characters.docs.map(
-        (character) => CharacterMigrations.run(character),
-      );
+      final chars = await Future.wait(characters.docs.map(
+        (character) => CharacterMigrations().run(character),
+      ));
       characterController.setAll(chars);
     },
   );

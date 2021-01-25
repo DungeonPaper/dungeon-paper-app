@@ -1,6 +1,7 @@
 import 'package:dungeon_paper/db/models/character.dart';
 import 'package:dungeon_world_data/dw_data.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:uuid/uuid.dart';
 
 void main() {
   group('Character', () {
@@ -8,6 +9,16 @@ void main() {
     final druid = dungeonWorld.classes.firstWhere((k) => k.key == 'druid');
     final immolator =
         dungeonWorld.classes.firstWhere((k) => k.key == 'immolator');
+
+    test('generates default uuid key', () {
+      final char1 = Character(key: Uuid().v4());
+      final char2 = Character.fromJson(<String, dynamic>{});
+
+      expect(char1.key, isNotNull);
+      expect(char2.key, isNotNull);
+      expect(char1.key, isNotEmpty);
+      expect(char2.key, isNotEmpty);
+    });
 
     test('properly uses class values', () {
       final char = Character.fromJson(

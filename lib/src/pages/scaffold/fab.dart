@@ -7,6 +7,7 @@ import 'package:dungeon_paper/src/scaffolds/add_inventory_item_scaffold.dart';
 import 'package:dungeon_paper/src/scaffolds/edit_note_scaffold.dart';
 import 'package:dungeon_paper/src/utils/utils.dart';
 import 'package:get/get.dart';
+import 'package:uuid/uuid.dart';
 
 import 'nav_bar.dart';
 import 'dart:math';
@@ -66,7 +67,7 @@ class FABState extends State<FAB> {
             icon: Icon(Icons.add),
             onPressed: () => Get.to(
               EditNoteScreen(
-                note: Note(),
+                note: Note(key: Uuid().v4()),
                 mode: DialogMode.create,
                 onSave: (note) => createNote(character, note),
                 categories: collectCategories(character.notes),
@@ -77,7 +78,7 @@ class FABState extends State<FAB> {
             icon: Icon(Icons.add),
             onPressed: () => Get.to(
               AddInventoryItemScaffold(
-                item: InventoryItem(),
+                item: InventoryItem(key: Uuid().v4()),
                 mode: DialogMode.create,
                 onSave: (item) => createInventoryItem(character, item),
                 character: character,

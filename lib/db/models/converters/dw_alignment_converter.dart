@@ -2,11 +2,11 @@ import 'package:dungeon_world_data/alignment.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 class DWAlignmentConverter
-    implements JsonConverter<Alignment, Map<String, dynamic>> {
+    implements JsonConverter<Alignment, Map<dynamic, dynamic>> {
   const DWAlignmentConverter();
 
   @override
-  Alignment fromJson(Map<String, dynamic> json) {
+  Alignment fromJson(Map<dynamic, dynamic> json) {
     if (json == null) {
       return null;
     }
@@ -14,5 +14,6 @@ class DWAlignmentConverter
   }
 
   @override
-  Map<String, dynamic> toJson(Alignment data) => data.toJSON().cast<String, dynamic>();
+  Map<dynamic, dynamic> toJson(Alignment data) =>
+      data.toJSON().cast<dynamic, dynamic>();
 }

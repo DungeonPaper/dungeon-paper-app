@@ -18,7 +18,7 @@ abstract class InventoryItem with KeyMixin implements _$InventoryItem {
   const InventoryItem._();
 
   const factory InventoryItem({
-    @DefaultUuid() String key,
+    @required @DefaultUuid() String key,
     @Default('') String name,
     String pluralName,
     @Default('') String description,

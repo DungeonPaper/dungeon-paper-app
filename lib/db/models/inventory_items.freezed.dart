@@ -18,7 +18,7 @@ class _$InventoryItemTearOff {
 
 // ignore: unused_element
   _InventoryItem call(
-      {@DefaultUuid() String key,
+      {@required @DefaultUuid() String key,
       String name = '',
       String pluralName,
       String description = '',
@@ -201,7 +201,7 @@ class __$InventoryItemCopyWithImpl<$Res>
 /// @nodoc
 class _$_InventoryItem extends _InventoryItem {
   const _$_InventoryItem(
-      {@DefaultUuid() this.key,
+      {@required @DefaultUuid() this.key,
       this.name = '',
       this.pluralName,
       this.description = '',
@@ -211,7 +211,8 @@ class _$_InventoryItem extends _InventoryItem {
       this.countWeight = true,
       this.countDamage = true,
       this.countArmor = true})
-      : assert(name != null),
+      : assert(key != null),
+        assert(name != null),
         assert(description != null),
         assert(tags != null),
         assert(amount != null),
@@ -320,7 +321,7 @@ class _$_InventoryItem extends _InventoryItem {
 abstract class _InventoryItem extends InventoryItem {
   const _InventoryItem._() : super._();
   const factory _InventoryItem(
-      {@DefaultUuid() String key,
+      {@required @DefaultUuid() String key,
       String name,
       String pluralName,
       String description,

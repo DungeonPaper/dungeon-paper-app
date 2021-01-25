@@ -9,8 +9,8 @@ part of 'character_settings.dart';
 _$_CharacterSettings _$_$_CharacterSettingsFromJson(Map<String, dynamic> json) {
   return _$_CharacterSettings(
     useDefaultMaxHp: json['useDefaultMaxHp'] as bool ?? true,
-    rawPhotoAlignment: const FlutterAlignmentConverter()
-        .fromJson(json['rawPhotoAlignment'] as String),
+    photoAlignment: const FlutterAlignmentConverter()
+        .fromJson(json['photoAlignment'] as String),
   );
 }
 
@@ -18,6 +18,6 @@ Map<String, dynamic> _$_$_CharacterSettingsToJson(
         _$_CharacterSettings instance) =>
     <String, dynamic>{
       'useDefaultMaxHp': instance.useDefaultMaxHp,
-      'rawPhotoAlignment':
-          const FlutterAlignmentConverter().toJson(instance.rawPhotoAlignment),
+      'photoAlignment':
+          const FlutterAlignmentConverter().toJson(instance.photoAlignment),
     };

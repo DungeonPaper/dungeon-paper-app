@@ -18,7 +18,7 @@ abstract class Note with KeyMixin implements _$Note {
 
   const factory Note({
     @Default('Misc') String category,
-    @DefaultUuid() String key,
+    @required @DefaultUuid() String key,
     @Default('') String title,
     @Default('') String description,
     @TagConverter() @Default([]) List<Tag> tags,

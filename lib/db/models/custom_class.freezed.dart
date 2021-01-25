@@ -18,23 +18,47 @@ class _$CustomClassTearOff {
 
 // ignore: unused_element
   _CustomClass call(
-      {@DefaultUuid() String key,
-      @DocumentReferenceConverter() DocumentReference ref,
-      String name,
-      String description,
-      num load,
-      num baseHP,
-      @DiceConverter() Dice damage,
-      Map<String, List<String>> names,
-      List<String> bonds,
-      Map<String, List<String>> looks,
-      @DWAlignmentConverter() Map<String, Alignment> alignments,
-      @DWMoveConverter() List<Move> raceMoves,
-      @DWMoveConverter() List<Move> startingMoves,
-      @DWMoveConverter() List<Move> advancedMoves1,
-      @DWMoveConverter() List<Move> advancedMoves2,
-      @DWSpellConverter() List<Spell> spells,
-      @DWGearChoiceConverter() List<GearChoice> gearChoices}) {
+      {@required
+      @DefaultUuid()
+          String key,
+      @DocumentReferenceConverter()
+          DocumentReference ref,
+      @JsonKey(defaultValue: '')
+          String name = '',
+      @JsonKey(defaultValue: '')
+          String description = '',
+      @JsonKey(defaultValue: 0)
+          num load = 0,
+      @JsonKey(defaultValue: 0)
+          num baseHP = 0,
+      @DiceConverter()
+          Dice damage,
+      @JsonKey(defaultValue: const {})
+          Map<String, List<String>> names = const {},
+      @JsonKey(defaultValue: const [])
+          List<String> bonds = const [],
+      @JsonKey(defaultValue: const {})
+          Map<String, List<String>> looks = const {},
+      @JsonKey(defaultValue: const {})
+      @DWAlignmentConverter()
+          Map<String, Alignment> alignments = const {},
+      @JsonKey(defaultValue: const [])
+      @DWMoveConverter()
+          List<Move> raceMoves = const [],
+      @JsonKey(defaultValue: const [])
+      @DWMoveConverter()
+          List<Move> startingMoves = const [],
+      @JsonKey(defaultValue: const [])
+      @DWMoveConverter()
+          List<Move> advancedMoves1 = const [],
+      @JsonKey(defaultValue: const [])
+      @DWMoveConverter()
+          List<Move> advancedMoves2 = const [],
+      @DWSpellConverter()
+          List<Spell> spells,
+      @JsonKey(defaultValue: const [])
+      @DWGearChoiceConverter()
+          List<GearChoice> gearChoices = const []}) {
     return _CustomClass(
       key: key,
       ref: ref,
@@ -72,27 +96,40 @@ mixin _$CustomClass {
   String get key;
   @DocumentReferenceConverter()
   DocumentReference get ref;
+  @JsonKey(defaultValue: '')
   String get name;
+  @JsonKey(defaultValue: '')
   String get description;
+  @JsonKey(defaultValue: 0)
   num get load;
+  @JsonKey(defaultValue: 0)
   num get baseHP;
   @DiceConverter()
   Dice get damage;
+  @JsonKey(defaultValue: const {})
   Map<String, List<String>> get names;
+  @JsonKey(defaultValue: const [])
   List<String> get bonds;
+  @JsonKey(defaultValue: const {})
   Map<String, List<String>> get looks;
+  @JsonKey(defaultValue: const {})
   @DWAlignmentConverter()
   Map<String, Alignment> get alignments;
+  @JsonKey(defaultValue: const [])
   @DWMoveConverter()
   List<Move> get raceMoves;
+  @JsonKey(defaultValue: const [])
   @DWMoveConverter()
   List<Move> get startingMoves;
+  @JsonKey(defaultValue: const [])
   @DWMoveConverter()
   List<Move> get advancedMoves1;
+  @JsonKey(defaultValue: const [])
   @DWMoveConverter()
   List<Move> get advancedMoves2;
   @DWSpellConverter()
   List<Spell> get spells;
+  @JsonKey(defaultValue: const [])
   @DWGearChoiceConverter()
   List<GearChoice> get gearChoices;
 
@@ -107,23 +144,46 @@ abstract class $CustomClassCopyWith<$Res> {
           CustomClass value, $Res Function(CustomClass) then) =
       _$CustomClassCopyWithImpl<$Res>;
   $Res call(
-      {@DefaultUuid() String key,
-      @DocumentReferenceConverter() DocumentReference ref,
-      String name,
-      String description,
-      num load,
-      num baseHP,
-      @DiceConverter() Dice damage,
-      Map<String, List<String>> names,
-      List<String> bonds,
-      Map<String, List<String>> looks,
-      @DWAlignmentConverter() Map<String, Alignment> alignments,
-      @DWMoveConverter() List<Move> raceMoves,
-      @DWMoveConverter() List<Move> startingMoves,
-      @DWMoveConverter() List<Move> advancedMoves1,
-      @DWMoveConverter() List<Move> advancedMoves2,
-      @DWSpellConverter() List<Spell> spells,
-      @DWGearChoiceConverter() List<GearChoice> gearChoices});
+      {@DefaultUuid()
+          String key,
+      @DocumentReferenceConverter()
+          DocumentReference ref,
+      @JsonKey(defaultValue: '')
+          String name,
+      @JsonKey(defaultValue: '')
+          String description,
+      @JsonKey(defaultValue: 0)
+          num load,
+      @JsonKey(defaultValue: 0)
+          num baseHP,
+      @DiceConverter()
+          Dice damage,
+      @JsonKey(defaultValue: const {})
+          Map<String, List<String>> names,
+      @JsonKey(defaultValue: const [])
+          List<String> bonds,
+      @JsonKey(defaultValue: const {})
+          Map<String, List<String>> looks,
+      @JsonKey(defaultValue: const {})
+      @DWAlignmentConverter()
+          Map<String, Alignment> alignments,
+      @JsonKey(defaultValue: const [])
+      @DWMoveConverter()
+          List<Move> raceMoves,
+      @JsonKey(defaultValue: const [])
+      @DWMoveConverter()
+          List<Move> startingMoves,
+      @JsonKey(defaultValue: const [])
+      @DWMoveConverter()
+          List<Move> advancedMoves1,
+      @JsonKey(defaultValue: const [])
+      @DWMoveConverter()
+          List<Move> advancedMoves2,
+      @DWSpellConverter()
+          List<Spell> spells,
+      @JsonKey(defaultValue: const [])
+      @DWGearChoiceConverter()
+          List<GearChoice> gearChoices});
 }
 
 /// @nodoc
@@ -198,23 +258,46 @@ abstract class _$CustomClassCopyWith<$Res>
       __$CustomClassCopyWithImpl<$Res>;
   @override
   $Res call(
-      {@DefaultUuid() String key,
-      @DocumentReferenceConverter() DocumentReference ref,
-      String name,
-      String description,
-      num load,
-      num baseHP,
-      @DiceConverter() Dice damage,
-      Map<String, List<String>> names,
-      List<String> bonds,
-      Map<String, List<String>> looks,
-      @DWAlignmentConverter() Map<String, Alignment> alignments,
-      @DWMoveConverter() List<Move> raceMoves,
-      @DWMoveConverter() List<Move> startingMoves,
-      @DWMoveConverter() List<Move> advancedMoves1,
-      @DWMoveConverter() List<Move> advancedMoves2,
-      @DWSpellConverter() List<Spell> spells,
-      @DWGearChoiceConverter() List<GearChoice> gearChoices});
+      {@DefaultUuid()
+          String key,
+      @DocumentReferenceConverter()
+          DocumentReference ref,
+      @JsonKey(defaultValue: '')
+          String name,
+      @JsonKey(defaultValue: '')
+          String description,
+      @JsonKey(defaultValue: 0)
+          num load,
+      @JsonKey(defaultValue: 0)
+          num baseHP,
+      @DiceConverter()
+          Dice damage,
+      @JsonKey(defaultValue: const {})
+          Map<String, List<String>> names,
+      @JsonKey(defaultValue: const [])
+          List<String> bonds,
+      @JsonKey(defaultValue: const {})
+          Map<String, List<String>> looks,
+      @JsonKey(defaultValue: const {})
+      @DWAlignmentConverter()
+          Map<String, Alignment> alignments,
+      @JsonKey(defaultValue: const [])
+      @DWMoveConverter()
+          List<Move> raceMoves,
+      @JsonKey(defaultValue: const [])
+      @DWMoveConverter()
+          List<Move> startingMoves,
+      @JsonKey(defaultValue: const [])
+      @DWMoveConverter()
+          List<Move> advancedMoves1,
+      @JsonKey(defaultValue: const [])
+      @DWMoveConverter()
+          List<Move> advancedMoves2,
+      @DWSpellConverter()
+          List<Spell> spells,
+      @JsonKey(defaultValue: const [])
+      @DWGearChoiceConverter()
+          List<GearChoice> gearChoices});
 }
 
 /// @nodoc
@@ -290,24 +373,62 @@ class __$CustomClassCopyWithImpl<$Res> extends _$CustomClassCopyWithImpl<$Res>
 /// @nodoc
 class _$_CustomClass extends _CustomClass with FirebaseMixin, KeyMixin {
   const _$_CustomClass(
-      {@DefaultUuid() this.key,
-      @DocumentReferenceConverter() this.ref,
-      this.name,
-      this.description,
-      this.load,
-      this.baseHP,
-      @DiceConverter() this.damage,
-      this.names,
-      this.bonds,
-      this.looks,
-      @DWAlignmentConverter() this.alignments,
-      @DWMoveConverter() this.raceMoves,
-      @DWMoveConverter() this.startingMoves,
-      @DWMoveConverter() this.advancedMoves1,
-      @DWMoveConverter() this.advancedMoves2,
-      @DWSpellConverter() this.spells,
-      @DWGearChoiceConverter() this.gearChoices})
-      : super._();
+      {@required
+      @DefaultUuid()
+          this.key,
+      @DocumentReferenceConverter()
+          this.ref,
+      @JsonKey(defaultValue: '')
+          this.name = '',
+      @JsonKey(defaultValue: '')
+          this.description = '',
+      @JsonKey(defaultValue: 0)
+          this.load = 0,
+      @JsonKey(defaultValue: 0)
+          this.baseHP = 0,
+      @DiceConverter()
+          this.damage,
+      @JsonKey(defaultValue: const {})
+          this.names = const {},
+      @JsonKey(defaultValue: const [])
+          this.bonds = const [],
+      @JsonKey(defaultValue: const {})
+          this.looks = const {},
+      @JsonKey(defaultValue: const {})
+      @DWAlignmentConverter()
+          this.alignments = const {},
+      @JsonKey(defaultValue: const [])
+      @DWMoveConverter()
+          this.raceMoves = const [],
+      @JsonKey(defaultValue: const [])
+      @DWMoveConverter()
+          this.startingMoves = const [],
+      @JsonKey(defaultValue: const [])
+      @DWMoveConverter()
+          this.advancedMoves1 = const [],
+      @JsonKey(defaultValue: const [])
+      @DWMoveConverter()
+          this.advancedMoves2 = const [],
+      @DWSpellConverter()
+          this.spells,
+      @JsonKey(defaultValue: const [])
+      @DWGearChoiceConverter()
+          this.gearChoices = const []})
+      : assert(key != null),
+        assert(name != null),
+        assert(description != null),
+        assert(load != null),
+        assert(baseHP != null),
+        assert(names != null),
+        assert(bonds != null),
+        assert(looks != null),
+        assert(alignments != null),
+        assert(raceMoves != null),
+        assert(startingMoves != null),
+        assert(advancedMoves1 != null),
+        assert(advancedMoves2 != null),
+        assert(gearChoices != null),
+        super._();
 
   factory _$_CustomClass.fromJson(Map<String, dynamic> json) =>
       _$_$_CustomClassFromJson(json);
@@ -319,41 +440,54 @@ class _$_CustomClass extends _CustomClass with FirebaseMixin, KeyMixin {
   @DocumentReferenceConverter()
   final DocumentReference ref;
   @override
+  @JsonKey(defaultValue: '')
   final String name;
   @override
+  @JsonKey(defaultValue: '')
   final String description;
   @override
+  @JsonKey(defaultValue: 0)
   final num load;
   @override
+  @JsonKey(defaultValue: 0)
   final num baseHP;
   @override
   @DiceConverter()
   final Dice damage;
   @override
+  @JsonKey(defaultValue: const {})
   final Map<String, List<String>> names;
   @override
+  @JsonKey(defaultValue: const [])
   final List<String> bonds;
   @override
+  @JsonKey(defaultValue: const {})
   final Map<String, List<String>> looks;
   @override
+  @JsonKey(defaultValue: const {})
   @DWAlignmentConverter()
   final Map<String, Alignment> alignments;
   @override
+  @JsonKey(defaultValue: const [])
   @DWMoveConverter()
   final List<Move> raceMoves;
   @override
+  @JsonKey(defaultValue: const [])
   @DWMoveConverter()
   final List<Move> startingMoves;
   @override
+  @JsonKey(defaultValue: const [])
   @DWMoveConverter()
   final List<Move> advancedMoves1;
   @override
+  @JsonKey(defaultValue: const [])
   @DWMoveConverter()
   final List<Move> advancedMoves2;
   @override
   @DWSpellConverter()
   final List<Spell> spells;
   @override
+  @JsonKey(defaultValue: const [])
   @DWGearChoiceConverter()
   final List<GearChoice> gearChoices;
 
@@ -445,23 +579,47 @@ abstract class _CustomClass extends CustomClass
     implements FirebaseMixin, KeyMixin {
   const _CustomClass._() : super._();
   const factory _CustomClass(
-      {@DefaultUuid() String key,
-      @DocumentReferenceConverter() DocumentReference ref,
-      String name,
-      String description,
-      num load,
-      num baseHP,
-      @DiceConverter() Dice damage,
-      Map<String, List<String>> names,
-      List<String> bonds,
-      Map<String, List<String>> looks,
-      @DWAlignmentConverter() Map<String, Alignment> alignments,
-      @DWMoveConverter() List<Move> raceMoves,
-      @DWMoveConverter() List<Move> startingMoves,
-      @DWMoveConverter() List<Move> advancedMoves1,
-      @DWMoveConverter() List<Move> advancedMoves2,
-      @DWSpellConverter() List<Spell> spells,
-      @DWGearChoiceConverter() List<GearChoice> gearChoices}) = _$_CustomClass;
+      {@required
+      @DefaultUuid()
+          String key,
+      @DocumentReferenceConverter()
+          DocumentReference ref,
+      @JsonKey(defaultValue: '')
+          String name,
+      @JsonKey(defaultValue: '')
+          String description,
+      @JsonKey(defaultValue: 0)
+          num load,
+      @JsonKey(defaultValue: 0)
+          num baseHP,
+      @DiceConverter()
+          Dice damage,
+      @JsonKey(defaultValue: const {})
+          Map<String, List<String>> names,
+      @JsonKey(defaultValue: const [])
+          List<String> bonds,
+      @JsonKey(defaultValue: const {})
+          Map<String, List<String>> looks,
+      @JsonKey(defaultValue: const {})
+      @DWAlignmentConverter()
+          Map<String, Alignment> alignments,
+      @JsonKey(defaultValue: const [])
+      @DWMoveConverter()
+          List<Move> raceMoves,
+      @JsonKey(defaultValue: const [])
+      @DWMoveConverter()
+          List<Move> startingMoves,
+      @JsonKey(defaultValue: const [])
+      @DWMoveConverter()
+          List<Move> advancedMoves1,
+      @JsonKey(defaultValue: const [])
+      @DWMoveConverter()
+          List<Move> advancedMoves2,
+      @DWSpellConverter()
+          List<Spell> spells,
+      @JsonKey(defaultValue: const [])
+      @DWGearChoiceConverter()
+          List<GearChoice> gearChoices}) = _$_CustomClass;
 
   factory _CustomClass.fromJson(Map<String, dynamic> json) =
       _$_CustomClass.fromJson;
@@ -473,41 +631,54 @@ abstract class _CustomClass extends CustomClass
   @DocumentReferenceConverter()
   DocumentReference get ref;
   @override
+  @JsonKey(defaultValue: '')
   String get name;
   @override
+  @JsonKey(defaultValue: '')
   String get description;
   @override
+  @JsonKey(defaultValue: 0)
   num get load;
   @override
+  @JsonKey(defaultValue: 0)
   num get baseHP;
   @override
   @DiceConverter()
   Dice get damage;
   @override
+  @JsonKey(defaultValue: const {})
   Map<String, List<String>> get names;
   @override
+  @JsonKey(defaultValue: const [])
   List<String> get bonds;
   @override
+  @JsonKey(defaultValue: const {})
   Map<String, List<String>> get looks;
   @override
+  @JsonKey(defaultValue: const {})
   @DWAlignmentConverter()
   Map<String, Alignment> get alignments;
   @override
+  @JsonKey(defaultValue: const [])
   @DWMoveConverter()
   List<Move> get raceMoves;
   @override
+  @JsonKey(defaultValue: const [])
   @DWMoveConverter()
   List<Move> get startingMoves;
   @override
+  @JsonKey(defaultValue: const [])
   @DWMoveConverter()
   List<Move> get advancedMoves1;
   @override
+  @JsonKey(defaultValue: const [])
   @DWMoveConverter()
   List<Move> get advancedMoves2;
   @override
   @DWSpellConverter()
   List<Spell> get spells;
   @override
+  @JsonKey(defaultValue: const [])
   @DWGearChoiceConverter()
   List<GearChoice> get gearChoices;
   @override

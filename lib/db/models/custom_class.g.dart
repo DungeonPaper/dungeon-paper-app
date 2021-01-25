@@ -10,46 +10,54 @@ _$_CustomClass _$_$_CustomClassFromJson(Map<String, dynamic> json) {
   return _$_CustomClass(
     key: const DefaultUuid().fromJson(json['key'] as String),
     ref: const DocumentReferenceConverter().fromJson(json['ref']),
-    name: json['name'] as String,
-    description: json['description'] as String,
-    load: json['load'] as num,
-    baseHP: json['baseHP'] as num,
+    name: json['name'] as String ?? '',
+    description: json['description'] as String ?? '',
+    load: json['load'] as num ?? 0,
+    baseHP: json['baseHP'] as num ?? 0,
     damage: const DiceConverter().fromJson(json['damage']),
     names: (json['names'] as Map<String, dynamic>)?.map(
-      (k, e) => MapEntry(k, (e as List)?.map((e) => e as String)?.toList()),
-    ),
-    bonds: (json['bonds'] as List)?.map((e) => e as String)?.toList(),
+          (k, e) => MapEntry(k, (e as List)?.map((e) => e as String)?.toList()),
+        ) ??
+        {},
+    bonds: (json['bonds'] as List)?.map((e) => e as String)?.toList() ?? [],
     looks: (json['looks'] as Map<String, dynamic>)?.map(
-      (k, e) => MapEntry(k, (e as List)?.map((e) => e as String)?.toList()),
-    ),
+          (k, e) => MapEntry(k, (e as List)?.map((e) => e as String)?.toList()),
+        ) ??
+        {},
     alignments: (json['alignments'] as Map<String, dynamic>)?.map(
-      (k, e) => MapEntry(
-          k, const DWAlignmentConverter().fromJson(e as Map<String, dynamic>)),
-    ),
+          (k, e) =>
+              MapEntry(k, const DWAlignmentConverter().fromJson(e as Map)),
+        ) ??
+        {},
     raceMoves: (json['raceMoves'] as List)
-        ?.map(
-            (e) => const DWMoveConverter().fromJson(e as Map<String, dynamic>))
-        ?.toList(),
+            ?.map((e) =>
+                const DWMoveConverter().fromJson(e as Map<String, dynamic>))
+            ?.toList() ??
+        [],
     startingMoves: (json['startingMoves'] as List)
-        ?.map(
-            (e) => const DWMoveConverter().fromJson(e as Map<String, dynamic>))
-        ?.toList(),
+            ?.map((e) =>
+                const DWMoveConverter().fromJson(e as Map<String, dynamic>))
+            ?.toList() ??
+        [],
     advancedMoves1: (json['advancedMoves1'] as List)
-        ?.map(
-            (e) => const DWMoveConverter().fromJson(e as Map<String, dynamic>))
-        ?.toList(),
+            ?.map((e) =>
+                const DWMoveConverter().fromJson(e as Map<String, dynamic>))
+            ?.toList() ??
+        [],
     advancedMoves2: (json['advancedMoves2'] as List)
-        ?.map(
-            (e) => const DWMoveConverter().fromJson(e as Map<String, dynamic>))
-        ?.toList(),
+            ?.map((e) =>
+                const DWMoveConverter().fromJson(e as Map<String, dynamic>))
+            ?.toList() ??
+        [],
     spells: (json['spells'] as List)
         ?.map(
             (e) => const DWSpellConverter().fromJson(e as Map<String, dynamic>))
         ?.toList(),
     gearChoices: (json['gearChoices'] as List)
-        ?.map((e) =>
-            const DWGearChoiceConverter().fromJson(e as Map<String, dynamic>))
-        ?.toList(),
+            ?.map((e) => const DWGearChoiceConverter()
+                .fromJson(e as Map<String, dynamic>))
+            ?.toList() ??
+        [],
   );
 }
 

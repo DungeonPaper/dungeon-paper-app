@@ -85,7 +85,7 @@ class _EditBasicInfoViewState extends State<EditBasicInfoView> {
               onSave: (char) {
                 updateWith(
                   widget.character.copyWith(
-                    settings: char.settings,
+                    customSettings: char.settings,
                   ),
                 );
               },
