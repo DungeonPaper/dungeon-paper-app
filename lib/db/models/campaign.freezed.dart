@@ -18,7 +18,8 @@ class _$CampaignTearOff {
 
 // ignore: unused_element
   _Campaign call(
-      {@DefaultUuid()
+      {@required
+      @DefaultUuid()
           String key,
       @DocumentReferenceConverter()
           DocumentReference ref,
@@ -186,7 +187,8 @@ class __$CampaignCopyWithImpl<$Res> extends _$CampaignCopyWithImpl<$Res>
 /// @nodoc
 class _$_Campaign extends _Campaign with FirebaseMixin, KeyMixin {
   const _$_Campaign(
-      {@DefaultUuid()
+      {@required
+      @DefaultUuid()
           this.key,
       @DocumentReferenceConverter()
           this.ref,
@@ -196,7 +198,8 @@ class _$_Campaign extends _Campaign with FirebaseMixin, KeyMixin {
       @DocumentReferenceConverter()
       @JsonKey(name: 'characters')
           this.characterRefs})
-      : assert(name != null),
+      : assert(key != null),
+        assert(name != null),
         assert(description != null),
         super._();
 
@@ -271,7 +274,8 @@ class _$_Campaign extends _Campaign with FirebaseMixin, KeyMixin {
 abstract class _Campaign extends Campaign implements FirebaseMixin, KeyMixin {
   const _Campaign._() : super._();
   const factory _Campaign(
-      {@DefaultUuid()
+      {@required
+      @DefaultUuid()
           String key,
       @DocumentReferenceConverter()
           DocumentReference ref,

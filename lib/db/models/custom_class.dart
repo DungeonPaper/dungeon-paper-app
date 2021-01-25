@@ -30,26 +30,45 @@ abstract class CustomClass
   @With(FirebaseMixin)
   @With(KeyMixin)
   const factory CustomClass({
-    @DefaultUuid() String key,
+    @required @DefaultUuid() String key,
     @DocumentReferenceConverter() DocumentReference ref,
-    String name,
-    String description,
-    num load,
-    num baseHP,
+    @Default('') @JsonKey(defaultValue: '') String name,
+    @Default('') @JsonKey(defaultValue: '') String description,
+    @Default(0) @JsonKey(defaultValue: 0) num load,
+    @Default(0) @JsonKey(defaultValue: 0) num baseHP,
     @DiceConverter() Dice damage,
-    Map<String, List<String>> names,
-    List<String> bonds,
-    Map<String, List<String>> looks,
-    @DWAlignmentConverter() Map<String, Alignment> alignments,
-    @DWMoveConverter() List<Move> raceMoves,
-    @DWMoveConverter() List<Move> startingMoves,
-    @DWMoveConverter() List<Move> advancedMoves1,
-    @DWMoveConverter() List<Move> advancedMoves2,
+    @Default({}) @JsonKey(defaultValue: {}) Map<String, List<String>> names,
+    @Default([]) @JsonKey(defaultValue: []) List<String> bonds,
+    @Default({}) @JsonKey(defaultValue: {}) Map<String, List<String>> looks,
+    @Default({})
+    @JsonKey(defaultValue: {})
+    @DWAlignmentConverter()
+        Map<String, Alignment> alignments,
+    @Default([])
+    @JsonKey(defaultValue: [])
+    @DWMoveConverter()
+        List<Move> raceMoves,
+    @Default([])
+    @JsonKey(defaultValue: [])
+    @DWMoveConverter()
+        List<Move> startingMoves,
+    @Default([])
+    @JsonKey(defaultValue: [])
+    @DWMoveConverter()
+        List<Move> advancedMoves1,
+    @Default([])
+    @JsonKey(defaultValue: [])
+    @DWMoveConverter()
+        List<Move> advancedMoves2,
     @DWSpellConverter() List<Spell> spells,
-    @DWGearChoiceConverter() List<GearChoice> gearChoices,
+    @Default([])
+    @JsonKey(defaultValue: [])
+    @DWGearChoiceConverter()
+        List<GearChoice> gearChoices,
   }) = _CustomClass;
 
-  factory CustomClass.fromJson(json, {DocumentReference ref}) =>
+  factory CustomClass.fromJson(Map<String, dynamic> json,
+          {DocumentReference ref}) =>
       _$CustomClassFromJson(json).copyWith(ref: ref);
 
   static CustomClass fromPlayerClass(
@@ -72,11 +91,30 @@ abstract class CustomClass
             (k, v) => MapEntry(k.toString(), v),
           ),
     );
-    json['baseHP'] = json['baseHp'];
-    json.remove('baseHp');
+    json['baseHP'] = json.remove('baseHp');
     if (!retainKey) {
       json.remove('key');
     }
+    json.forEach((key, value) {
+      if (value is Map) {
+        json[key] = Map<String, dynamic>.from(value);
+        json[key].forEach((key2, value2) {
+          if (value2 is! Map) {
+            return;
+          }
+          json[key][key2] = Map<String, dynamic>.from(value2);
+        });
+      } else if (value is List<Map>) {
+        json[key] = List<Map<String, dynamic>>.from(
+          value.map((e) => e?.cast<String, dynamic>()),
+        );
+        enumerate(json[key]).forEach((value2) {
+          if (value2 is Map) {
+            json[key][value2.index] = Map<String, dynamic>.from(value2.value);
+          }
+        });
+      }
+    });
     return Map<String, dynamic>.from(json);
   }
 

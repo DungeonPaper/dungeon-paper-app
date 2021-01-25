@@ -26,32 +26,38 @@ _$_Character _$_$_CharacterFromJson(Map<String, dynamic> json) {
             AlignmentName.neutral,
     customMaxHP: json['maxHP'] as int,
     displayName: json['displayName'] as String ?? 'Traveler',
-    photoURL: json['photoURL'] as String,
+    photoURL: json['photoURL'] as String ?? '',
     level: json['level'] as int ?? 1,
     bio: json['bio'] as String ?? '',
     customCurrentHP: json['currentHP'] as int ?? 100,
-    currentXP: json['currentXP'] as int,
+    currentXP: json['currentXP'] as int ?? 0,
     moves: (json['moves'] as List)
-        ?.map(
-            (e) => const DWMoveConverter().fromJson(e as Map<String, dynamic>))
-        ?.toList(),
+            ?.map((e) =>
+                const DWMoveConverter().fromJson(e as Map<String, dynamic>))
+            ?.toList() ??
+        [],
     notes: (json['notes'] as List)
-        ?.map((e) => const NoteConverter().fromJson(e as Map<String, dynamic>))
-        ?.toList(),
+            ?.map((e) =>
+                const NoteConverter().fromJson(e as Map<String, dynamic>))
+            ?.toList() ??
+        [],
     spells: (json['spells'] as List)
-        ?.map((e) => const SpellConverter().fromJson(e as Map<String, dynamic>))
-        ?.toList(),
+            ?.map((e) =>
+                const SpellConverter().fromJson(e as Map<String, dynamic>))
+            ?.toList() ??
+        [],
     inventory: (json['inventory'] as List)
-        ?.map((e) =>
-            const InventoryItemConverter().fromJson(e as Map<String, dynamic>))
-        ?.toList(),
+            ?.map((e) => const InventoryItemConverter()
+                .fromJson(e as Map<String, dynamic>))
+            ?.toList() ??
+        [],
     customDamageDice: const DiceConverter().fromJson(json['hitDice']),
-    looks: (json['looks'] as List)?.map((e) => e as String)?.toList(),
-    race:
+    looks: (json['looks'] as List)?.map((e) => e as String)?.toList() ?? [],
+    raceMove:
         const DWMoveConverter().fromJson(json['race'] as Map<String, dynamic>),
     coins: (json['coins'] as num)?.toDouble() ?? 0,
-    order: json['order'] as int,
-    settings: const CharacterSettingsConverter()
+    order: json['order'] as int ?? 0,
+    customSettings: const CharacterSettingsConverter()
         .fromJson(json['settings'] as Map<String, dynamic>),
   );
 }
@@ -86,10 +92,11 @@ Map<String, dynamic> _$_$_CharacterToJson(_$_Character instance) =>
           ?.toList(),
       'hitDice': const DiceConverter().toJson(instance.customDamageDice),
       'looks': instance.looks,
-      'race': const DWMoveConverter().toJson(instance.race),
+      'race': const DWMoveConverter().toJson(instance.raceMove),
       'coins': instance.coins,
       'order': instance.order,
-      'settings': const CharacterSettingsConverter().toJson(instance.settings),
+      'settings':
+          const CharacterSettingsConverter().toJson(instance.customSettings),
     };
 
 T _$enumDecode<T>(

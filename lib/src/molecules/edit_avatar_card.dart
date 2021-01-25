@@ -33,7 +33,8 @@ class _EditAvatarCardState extends State<EditAvatarCard> {
   @override
   void initState() {
     imageFile = null;
-    photoAlignment = widget.character.settings.photoAlignment;
+    photoAlignment =
+        widget.character.settings?.photoAlignment ?? Alignment.topCenter;
     super.initState();
   }
 
@@ -201,8 +202,8 @@ class _EditAvatarCardState extends State<EditAvatarCard> {
     widget.onSave?.call(
       widget.character.copyWith(
         photoURL: widget.controller.text,
-        settings: widget.character.settings.copyWith(
-          rawPhotoAlignment: photoAlignment,
+        customSettings: widget.character.settings.copyWith(
+          photoAlignment: photoAlignment,
         ),
       ),
     );

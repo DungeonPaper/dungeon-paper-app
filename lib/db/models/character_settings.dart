@@ -11,10 +11,8 @@ abstract class CharacterSettings implements _$CharacterSettings {
 
   const factory CharacterSettings({
     @Default(true) bool useDefaultMaxHp,
-    @FlutterAlignmentConverter() Alignment rawPhotoAlignment,
+    @FlutterAlignmentConverter() Alignment photoAlignment,
   }) = _CharacterSettings;
-
-  Alignment get photoAlignment => rawPhotoAlignment ?? Alignment.topCenter;
 
   factory CharacterSettings.fromJson(json) => _$CharacterSettingsFromJson(json);
 }

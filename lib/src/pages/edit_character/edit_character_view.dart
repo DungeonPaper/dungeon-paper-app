@@ -10,6 +10,7 @@ import 'package:dungeon_paper/src/utils/logger.dart';
 import 'package:dungeon_paper/src/utils/utils.dart';
 import 'package:get/get.dart';
 import 'package:pedantic/pedantic.dart';
+import 'package:uuid/uuid.dart';
 import 'edit_basic_info_view.dart';
 import 'edit_race.dart';
 import 'edit_looks.dart';
@@ -74,6 +75,7 @@ class _EditCharacterViewState extends State<EditCharacterView>
                 widget.character.ref ?? user.ref.collection('characters').doc(),
           )
         : Character(
+            key: Uuid().v4(),
             ref: user.ref.collection('characters').doc(),
           );
 

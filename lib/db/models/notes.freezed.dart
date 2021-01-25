@@ -19,7 +19,7 @@ class _$NoteTearOff {
 // ignore: unused_element
   _Note call(
       {String category = 'Misc',
-      @DefaultUuid() String key,
+      @required @DefaultUuid() String key,
       String title = '',
       String description = '',
       @TagConverter() List<Tag> tags = const []}) {
@@ -143,11 +143,12 @@ class __$NoteCopyWithImpl<$Res> extends _$NoteCopyWithImpl<$Res>
 class _$_Note extends _Note {
   const _$_Note(
       {this.category = 'Misc',
-      @DefaultUuid() this.key,
+      @required @DefaultUuid() this.key,
       this.title = '',
       this.description = '',
       @TagConverter() this.tags = const []})
       : assert(category != null),
+        assert(key != null),
         assert(title != null),
         assert(description != null),
         assert(tags != null),
@@ -220,7 +221,7 @@ abstract class _Note extends Note {
   const _Note._() : super._();
   const factory _Note(
       {String category,
-      @DefaultUuid() String key,
+      @required @DefaultUuid() String key,
       String title,
       String description,
       @TagConverter() List<Tag> tags}) = _$_Note;

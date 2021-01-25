@@ -22,7 +22,7 @@ class FlutterAlignmentConverter implements JsonConverter<Alignment, String> {
     if (alignment == null) {
       return Alignment.topCenter;
     }
-    return _alignmentMapping[alignment];
+    return _alignmentMapping[alignment] ?? Alignment.topCenter;
   }
 
   @override

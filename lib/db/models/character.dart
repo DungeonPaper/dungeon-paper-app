@@ -13,6 +13,7 @@ import 'package:dungeon_paper/db/models/converters/player_class_converter.dart';
 import 'package:dungeon_paper/db/models/converters/spell_converter.dart';
 import 'package:dungeon_paper/db/models/inventory_items.dart';
 import 'package:dungeon_paper/db/models/spells.dart';
+import 'package:dungeon_paper/src/controllers/characters_controller.dart';
 import 'package:dungeon_paper/src/utils/utils.dart';
 import 'package:dungeon_world_data/dice.dart';
 import 'package:dungeon_world_data/dw_data.dart';
@@ -31,36 +32,65 @@ abstract class Character with FirebaseMixin, KeyMixin implements _$Character {
 
   @With(FirebaseMixin)
   @With(KeyMixin)
-  const factory Character({
+  factory Character({
     @DocumentReferenceConverter() DocumentReference ref,
-    @DefaultUuid() String key,
-    @JsonKey(name: 'armor', defaultValue: 0) int baseArmor,
-    @JsonKey(name: 'str', defaultValue: 8) int strength,
-    @JsonKey(name: 'dex', defaultValue: 8) int dexterity,
-    @JsonKey(name: 'con', defaultValue: 8) int constitution,
-    @JsonKey(name: 'wis', defaultValue: 8) int wisdom,
-    @JsonKey(name: 'int', defaultValue: 8) int intelligence,
-    @JsonKey(name: 'cha', defaultValue: 0) int charisma,
+    @required @DefaultUuid() @JsonKey() String key,
+    @Default(0) @JsonKey(name: 'armor', defaultValue: 0) int baseArmor,
+    @Default(8) @JsonKey(name: 'str', defaultValue: 8) int strength,
+    @Default(8) @JsonKey(name: 'dex', defaultValue: 8) int dexterity,
+    @Default(8) @JsonKey(name: 'con', defaultValue: 8) int constitution,
+    @Default(8) @JsonKey(name: 'wis', defaultValue: 8) int wisdom,
+    @Default(8) @JsonKey(name: 'int', defaultValue: 8) int intelligence,
+    @Default(0) @JsonKey(name: 'cha', defaultValue: 0) int charisma,
+    // TODO find solution for non-const default values
     @PlayerClassConverter() List<PlayerClass> playerClasses,
-    @Default(AlignmentName.neutral) AlignmentName alignment,
+    @Default(AlignmentName.neutral)
+    @JsonKey(defaultValue: AlignmentName.neutral)
+        AlignmentName alignment,
     @JsonKey(name: 'maxHP') int customMaxHP,
-    @Default('Traveler') String displayName,
-    String photoURL,
-    @Default(1) int level,
+    @Default('Traveler') @JsonKey(defaultValue: 'Traveler') String displayName,
+    @Default('') @JsonKey(defaultValue: '') String photoURL,
+    @Default(1) @JsonKey(defaultValue: 1) int level,
     @Default('') String bio,
-    @JsonKey(name: 'currentHP', defaultValue: 100) int customCurrentHP,
-    int currentXP,
-    @DWMoveConverter() List<Move> moves,
-    @NoteConverter() List<Note> notes,
-    @SpellConverter() List<DbSpell> spells,
-    @InventoryItemConverter() List<InventoryItem> inventory,
+    @Default(100)
+    @JsonKey(name: 'currentHP', defaultValue: 100)
+        int customCurrentHP,
+    @Default(0) @JsonKey(defaultValue: 0) int currentXP,
+    @Default([]) @DWMoveConverter() @JsonKey(defaultValue: []) List<Move> moves,
+    @Default([]) @NoteConverter() @JsonKey(defaultValue: []) List<Note> notes,
+    @Default([])
+    @SpellConverter()
+    @JsonKey(defaultValue: [])
+        List<DbSpell> spells,
+    @Default([])
+    @InventoryItemConverter()
+    @JsonKey(defaultValue: [])
+        List<InventoryItem> inventory,
     @DiceConverter() @JsonKey(name: 'hitDice') Dice customDamageDice,
-    List<String> looks,
-    @DWMoveConverter() Move race,
-    @Default(0) double coins,
-    int order,
-    @CharacterSettingsConverter() CharacterSettings settings,
+    @Default([]) @JsonKey(defaultValue: []) List<String> looks,
+    @DWMoveConverter() @JsonKey(name: 'race') Move raceMove,
+    @Default(0) @JsonKey(defaultValue: 0) double coins,
+    @Default(0) @JsonKey(defaultValue: 0) int order,
+    // TODO find solution for non-const default values
+    @JsonKey(name: 'settings')
+    @CharacterSettingsConverter()
+        CharacterSettings customSettings,
   }) = _Character;
+
+  factory Character.fromJson(value, {DocumentReference ref}) =>
+      _$CharacterFromJson(value).copyWith(ref: ref);
+
+  @override
+  Future<DocumentReference> create() {
+    characterController.upsert(this);
+    return super.create();
+  }
+
+  @override
+  Future<DocumentReference> update({Iterable<String> keys}) {
+    characterController.upsert(this);
+    return super.update(keys: keys);
+  }
 
   Character copyWithStat(CharacterStat stat, int value) {
     switch (stat) {
@@ -85,13 +115,12 @@ abstract class Character with FirebaseMixin, KeyMixin implements _$Character {
       CHARACTER_STAT_KEYS[stat];
 
   Dice get damageDice => customDamageDice ?? mainClass?.damage ?? Dice.d6;
-
+  Move get race => raceMove ?? mainClass.raceMoves.first;
   int get currentHP => clamp<int>(customCurrentHP, 0, maxHP).toInt();
+  CharacterSettings get settings => customSettings ?? CharacterSettings();
 
-  factory Character.fromJson(value, {DocumentReference ref}) =>
-      _$CharacterFromJson(value).copyWith(ref: ref);
-
-  PlayerClass get mainClass => playerClasses.first;
+  PlayerClass get mainClass =>
+      playerClasses?.first ?? dungeonWorld.classes.first;
 
   int get maxHP =>
       (settings.useDefaultMaxHp == true ? defaultMaxHP : customMaxHP) ??
@@ -99,12 +128,12 @@ abstract class Character with FirebaseMixin, KeyMixin implements _$Character {
   int get defaultMaxHP => (mainClass?.baseHP ?? 0) + constitution;
   int get maxLoad => mainClass.load + strMod;
 
-  static String statModifierText(num stat) {
+  static String statModifierText(int stat) {
     var mod = modifierFromValue(stat);
     return (mod >= 0 ? '+' : '') + mod.toString();
   }
 
-  num statValueFromKey(CharacterStat key) {
+  int statValueFromKey(CharacterStat key) {
     switch (key) {
       case CharacterStat.int:
         return intelligence;
@@ -123,7 +152,7 @@ abstract class Character with FirebaseMixin, KeyMixin implements _$Character {
     }
   }
 
-  num modifierFromKey(CharacterStat key) {
+  int modifierFromKey(CharacterStat key) {
     switch (key) {
       case CharacterStat.int:
         return modifierFromValue(intelligence);
@@ -142,12 +171,12 @@ abstract class Character with FirebaseMixin, KeyMixin implements _$Character {
     }
   }
 
-  num get strMod => modifierFromValue(strength);
-  num get dexMod => modifierFromValue(dexterity);
-  num get conMod => modifierFromValue(constitution);
-  num get wisMod => modifierFromValue(wisdom);
-  num get intMod => modifierFromValue(intelligence);
-  num get chaMod => modifierFromValue(charisma);
+  int get strMod => modifierFromValue(strength);
+  int get dexMod => modifierFromValue(dexterity);
+  int get conMod => modifierFromValue(constitution);
+  int get wisMod => modifierFromValue(wisdom);
+  int get intMod => modifierFromValue(intelligence);
+  int get chaMod => modifierFromValue(charisma);
 
   CharacterKey modifierKey(String modifierName) =>
       CharacterKey.values.firstWhere(
@@ -155,7 +184,7 @@ abstract class Character with FirebaseMixin, KeyMixin implements _$Character {
         orElse: () => null,
       );
 
-  static num modifierFromValue(num stat) {
+  static int modifierFromValue(int stat) {
     const modifiers = {1: -3, 4: -2, 6: -1, 9: 0, 13: 1, 16: 2, 18: 3};
 
     if (modifiers.containsKey(stat)) {
@@ -171,13 +200,13 @@ abstract class Character with FirebaseMixin, KeyMixin implements _$Character {
     return -1;
   }
 
-  num get armor => equippedArmor + baseArmor;
+  int get armor => equippedArmor + baseArmor;
 
-  num get load => inventory.fold(0, (count, item) => count += item.weight);
+  double get load => inventory.fold(0, (count, item) => count += item.weight);
 
-  num get equippedArmor => inventory.fold(
+  int get equippedArmor => inventory.fold(
       0, (count, item) => count += (item.equipped ? item.armor : 0));
 
-  num get equippedDamage => inventory.fold(
+  int get equippedDamage => inventory.fold(
       0, (count, item) => count += (item.equipped ? item.damage : 0));
 }

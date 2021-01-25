@@ -190,7 +190,7 @@ class _EditHPDialogState extends State<EditHPDialog> {
           .copyWith(
               customCurrentHP: currentHP,
               customMaxHP: maxHP,
-              settings: widget.character.settings
+              customSettings: widget.character.settings
                   .copyWith(useDefaultMaxHp: useDefaultMaxHP))
           .update(keys: ['currentHP', 'maxHP', 'settings']),
     );

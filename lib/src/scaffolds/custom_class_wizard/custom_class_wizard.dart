@@ -12,6 +12,7 @@ import 'package:dungeon_paper/src/utils/utils.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:pedantic/pedantic.dart';
+import 'package:uuid/uuid.dart';
 
 class CustomClassWizard extends StatefulWidget {
   final DialogMode mode;
@@ -60,6 +61,7 @@ class _CustomClassWizardState extends State<CustomClassWizard>
                 user.ref.collection('custom_classes').doc(),
           )
         : CustomClass(
+            key: Uuid().v4(),
             ref: user.ref.collection('custom_classes').doc(),
           );
 

@@ -131,6 +131,7 @@ class CustomInventoryItemFormState extends State<CustomInventoryItemForm> {
 
   void _createItem() => widget.onSave?.call(
         InventoryItem(
+          key: Uuid().v4(),
           name: _controllers['name'].text,
           description: _controllers['description'].text,
           tags: tags,

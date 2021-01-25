@@ -41,12 +41,9 @@ class ChangeRaceDialog extends StatelessWidget {
     );
   }
 
-  Function() changeRace(Move def) {
-    return () async {
-      final char = character.copyWith(race: def);
-      onUpdate?.call(char);
-    };
-  }
+  Function() changeRace(Move move) => () {
+        onUpdate?.call(character.copyWith(raceMove: move));
+      };
 }
 
 class RaceDescription extends StatelessWidget {
