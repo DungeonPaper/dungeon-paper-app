@@ -23,6 +23,10 @@ class _$CampaignTearOff {
           String key,
       @DocumentReferenceConverter()
           DocumentReference ref,
+      @DateTimeConverter()
+          DateTime createdAt,
+      @DateTimeConverter()
+          DateTime updatedAt,
       String name = 'Our Campaign',
       String description = '',
       User owner,
@@ -32,6 +36,8 @@ class _$CampaignTearOff {
     return _Campaign(
       key: key,
       ref: ref,
+      createdAt: createdAt,
+      updatedAt: updatedAt,
       name: name,
       description: description,
       owner: owner,
@@ -55,6 +61,10 @@ mixin _$Campaign {
   String get key;
   @DocumentReferenceConverter()
   DocumentReference get ref;
+  @DateTimeConverter()
+  DateTime get createdAt;
+  @DateTimeConverter()
+  DateTime get updatedAt;
   String get name;
   String get description;
   User get owner;
@@ -76,6 +86,10 @@ abstract class $CampaignCopyWith<$Res> {
           String key,
       @DocumentReferenceConverter()
           DocumentReference ref,
+      @DateTimeConverter()
+          DateTime createdAt,
+      @DateTimeConverter()
+          DateTime updatedAt,
       String name,
       String description,
       User owner,
@@ -98,6 +112,8 @@ class _$CampaignCopyWithImpl<$Res> implements $CampaignCopyWith<$Res> {
   $Res call({
     Object key = freezed,
     Object ref = freezed,
+    Object createdAt = freezed,
+    Object updatedAt = freezed,
     Object name = freezed,
     Object description = freezed,
     Object owner = freezed,
@@ -106,6 +122,10 @@ class _$CampaignCopyWithImpl<$Res> implements $CampaignCopyWith<$Res> {
     return _then(_value.copyWith(
       key: key == freezed ? _value.key : key as String,
       ref: ref == freezed ? _value.ref : ref as DocumentReference,
+      createdAt:
+          createdAt == freezed ? _value.createdAt : createdAt as DateTime,
+      updatedAt:
+          updatedAt == freezed ? _value.updatedAt : updatedAt as DateTime,
       name: name == freezed ? _value.name : name as String,
       description:
           description == freezed ? _value.description : description as String,
@@ -137,6 +157,10 @@ abstract class _$CampaignCopyWith<$Res> implements $CampaignCopyWith<$Res> {
           String key,
       @DocumentReferenceConverter()
           DocumentReference ref,
+      @DateTimeConverter()
+          DateTime createdAt,
+      @DateTimeConverter()
+          DateTime updatedAt,
       String name,
       String description,
       User owner,
@@ -161,6 +185,8 @@ class __$CampaignCopyWithImpl<$Res> extends _$CampaignCopyWithImpl<$Res>
   $Res call({
     Object key = freezed,
     Object ref = freezed,
+    Object createdAt = freezed,
+    Object updatedAt = freezed,
     Object name = freezed,
     Object description = freezed,
     Object owner = freezed,
@@ -169,6 +195,10 @@ class __$CampaignCopyWithImpl<$Res> extends _$CampaignCopyWithImpl<$Res>
     return _then(_Campaign(
       key: key == freezed ? _value.key : key as String,
       ref: ref == freezed ? _value.ref : ref as DocumentReference,
+      createdAt:
+          createdAt == freezed ? _value.createdAt : createdAt as DateTime,
+      updatedAt:
+          updatedAt == freezed ? _value.updatedAt : updatedAt as DateTime,
       name: name == freezed ? _value.name : name as String,
       description:
           description == freezed ? _value.description : description as String,
@@ -192,6 +222,10 @@ class _$_Campaign extends _Campaign with FirebaseMixin, KeyMixin {
           this.key,
       @DocumentReferenceConverter()
           this.ref,
+      @DateTimeConverter()
+          this.createdAt,
+      @DateTimeConverter()
+          this.updatedAt,
       this.name = 'Our Campaign',
       this.description = '',
       this.owner,
@@ -212,6 +246,12 @@ class _$_Campaign extends _Campaign with FirebaseMixin, KeyMixin {
   @override
   @DocumentReferenceConverter()
   final DocumentReference ref;
+  @override
+  @DateTimeConverter()
+  final DateTime createdAt;
+  @override
+  @DateTimeConverter()
+  final DateTime updatedAt;
   @JsonKey(defaultValue: 'Our Campaign')
   @override
   final String name;
@@ -227,7 +267,7 @@ class _$_Campaign extends _Campaign with FirebaseMixin, KeyMixin {
 
   @override
   String toString() {
-    return 'Campaign(key: $key, ref: $ref, name: $name, description: $description, owner: $owner, characterRefs: $characterRefs)';
+    return 'Campaign(key: $key, ref: $ref, createdAt: $createdAt, updatedAt: $updatedAt, name: $name, description: $description, owner: $owner, characterRefs: $characterRefs)';
   }
 
   @override
@@ -238,6 +278,12 @@ class _$_Campaign extends _Campaign with FirebaseMixin, KeyMixin {
                 const DeepCollectionEquality().equals(other.key, key)) &&
             (identical(other.ref, ref) ||
                 const DeepCollectionEquality().equals(other.ref, ref)) &&
+            (identical(other.createdAt, createdAt) ||
+                const DeepCollectionEquality()
+                    .equals(other.createdAt, createdAt)) &&
+            (identical(other.updatedAt, updatedAt) ||
+                const DeepCollectionEquality()
+                    .equals(other.updatedAt, updatedAt)) &&
             (identical(other.name, name) ||
                 const DeepCollectionEquality().equals(other.name, name)) &&
             (identical(other.description, description) ||
@@ -255,6 +301,8 @@ class _$_Campaign extends _Campaign with FirebaseMixin, KeyMixin {
       runtimeType.hashCode ^
       const DeepCollectionEquality().hash(key) ^
       const DeepCollectionEquality().hash(ref) ^
+      const DeepCollectionEquality().hash(createdAt) ^
+      const DeepCollectionEquality().hash(updatedAt) ^
       const DeepCollectionEquality().hash(name) ^
       const DeepCollectionEquality().hash(description) ^
       const DeepCollectionEquality().hash(owner) ^
@@ -279,6 +327,10 @@ abstract class _Campaign extends Campaign implements FirebaseMixin, KeyMixin {
           String key,
       @DocumentReferenceConverter()
           DocumentReference ref,
+      @DateTimeConverter()
+          DateTime createdAt,
+      @DateTimeConverter()
+          DateTime updatedAt,
       String name,
       String description,
       User owner,
@@ -294,6 +346,12 @@ abstract class _Campaign extends Campaign implements FirebaseMixin, KeyMixin {
   @override
   @DocumentReferenceConverter()
   DocumentReference get ref;
+  @override
+  @DateTimeConverter()
+  DateTime get createdAt;
+  @override
+  @DateTimeConverter()
+  DateTime get updatedAt;
   @override
   String get name;
   @override

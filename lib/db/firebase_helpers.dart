@@ -6,7 +6,7 @@ class FirebaseHelpers {
   Future<DocumentReference> create(
       DocumentReference ref, Map<String, dynamic> data) async {
     logger.d('Creating: ${ref.path}\n$data');
-    await ref.set(data);
+    await ref.set({...data, 'createdAt': DateTime.now()});
     return ref;
   }
 
@@ -17,7 +17,7 @@ class FirebaseHelpers {
   }) async {
     data = pick(data, keys);
     logger.d('Updating: ${ref.path}\n$data');
-    await ref.update(data);
+    await ref.update({...data, 'updatedAt': DateTime.now()});
     return ref;
   }
 
@@ -62,6 +62,9 @@ mixin FirebaseMixin {
 
   DocumentReference get ref;
   Map<String, dynamic> toJson();
+
+  DateTime get createdAt;
+  DateTime get updatedAt;
 
   String get documentID => ref.id;
 

@@ -10,6 +10,8 @@ _$_CustomClass _$_$_CustomClassFromJson(Map<String, dynamic> json) {
   return _$_CustomClass(
     key: const DefaultUuid().fromJson(json['key'] as String),
     ref: const DocumentReferenceConverter().fromJson(json['ref']),
+    createdAt: const DateTimeConverter().fromJson(json['createdAt']),
+    updatedAt: const DateTimeConverter().fromJson(json['updatedAt']),
     name: json['name'] as String ?? '',
     description: json['description'] as String ?? '',
     load: json['load'] as num ?? 0,
@@ -65,6 +67,8 @@ Map<String, dynamic> _$_$_CustomClassToJson(_$_CustomClass instance) =>
     <String, dynamic>{
       'key': const DefaultUuid().toJson(instance.key),
       'ref': const DocumentReferenceConverter().toJson(instance.ref),
+      'createdAt': const DateTimeConverter().toJson(instance.createdAt),
+      'updatedAt': const DateTimeConverter().toJson(instance.updatedAt),
       'name': instance.name,
       'description': instance.description,
       'load': instance.load,

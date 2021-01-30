@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dungeon_paper/db/db.dart';
+import 'package:dungeon_paper/db/models/converters/datetime_converter.dart';
 import 'package:dungeon_paper/db/models/converters/default_uuid.dart';
 import 'package:dungeon_paper/db/models/converters/dice_converter.dart';
 import 'package:dungeon_paper/db/models/converters/document_reference_converter.dart';
@@ -33,6 +34,8 @@ abstract class CustomClass
   const factory CustomClass({
     @required @DefaultUuid() String key,
     @DocumentReferenceConverter() DocumentReference ref,
+    @DateTimeConverter() DateTime createdAt,
+    @DateTimeConverter() DateTime updatedAt,
     @Default('') @JsonKey(defaultValue: '') String name,
     @Default('') @JsonKey(defaultValue: '') String description,
     @Default(0) @JsonKey(defaultValue: 0) num load,

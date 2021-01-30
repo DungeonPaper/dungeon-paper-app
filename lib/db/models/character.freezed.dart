@@ -18,12 +18,15 @@ class _$CharacterTearOff {
 
 // ignore: unused_element
   _Character call(
-      {@DocumentReferenceConverter()
-          DocumentReference ref,
-      @required
+      {@required
       @DefaultUuid()
-      @JsonKey()
           String key,
+      @DocumentReferenceConverter()
+          DocumentReference ref,
+      @DateTimeConverter()
+          DateTime createdAt,
+      @DateTimeConverter()
+          DateTime updatedAt,
       @JsonKey(name: 'armor', defaultValue: 0)
           int baseArmor = 0,
       @JsonKey(name: 'str', defaultValue: 8)
@@ -83,8 +86,10 @@ class _$CharacterTearOff {
       @CharacterSettingsConverter()
           CharacterSettings customSettings}) {
     return _Character(
-      ref: ref,
       key: key,
+      ref: ref,
+      createdAt: createdAt,
+      updatedAt: updatedAt,
       baseArmor: baseArmor,
       strength: strength,
       dexterity: dexterity,
@@ -126,11 +131,14 @@ const $Character = _$CharacterTearOff();
 
 /// @nodoc
 mixin _$Character {
+  @DefaultUuid()
+  String get key;
   @DocumentReferenceConverter()
   DocumentReference get ref;
-  @DefaultUuid()
-  @JsonKey()
-  String get key;
+  @DateTimeConverter()
+  DateTime get createdAt;
+  @DateTimeConverter()
+  DateTime get updatedAt;
   @JsonKey(name: 'armor', defaultValue: 0)
   int get baseArmor;
   @JsonKey(name: 'str', defaultValue: 8)
@@ -200,11 +208,14 @@ abstract class $CharacterCopyWith<$Res> {
   factory $CharacterCopyWith(Character value, $Res Function(Character) then) =
       _$CharacterCopyWithImpl<$Res>;
   $Res call(
-      {@DocumentReferenceConverter()
-          DocumentReference ref,
-      @DefaultUuid()
-      @JsonKey()
+      {@DefaultUuid()
           String key,
+      @DocumentReferenceConverter()
+          DocumentReference ref,
+      @DateTimeConverter()
+          DateTime createdAt,
+      @DateTimeConverter()
+          DateTime updatedAt,
       @JsonKey(name: 'armor', defaultValue: 0)
           int baseArmor,
       @JsonKey(name: 'str', defaultValue: 8)
@@ -277,8 +288,10 @@ class _$CharacterCopyWithImpl<$Res> implements $CharacterCopyWith<$Res> {
 
   @override
   $Res call({
-    Object ref = freezed,
     Object key = freezed,
+    Object ref = freezed,
+    Object createdAt = freezed,
+    Object updatedAt = freezed,
     Object baseArmor = freezed,
     Object strength = freezed,
     Object dexterity = freezed,
@@ -307,8 +320,12 @@ class _$CharacterCopyWithImpl<$Res> implements $CharacterCopyWith<$Res> {
     Object customSettings = freezed,
   }) {
     return _then(_value.copyWith(
-      ref: ref == freezed ? _value.ref : ref as DocumentReference,
       key: key == freezed ? _value.key : key as String,
+      ref: ref == freezed ? _value.ref : ref as DocumentReference,
+      createdAt:
+          createdAt == freezed ? _value.createdAt : createdAt as DateTime,
+      updatedAt:
+          updatedAt == freezed ? _value.updatedAt : updatedAt as DateTime,
       baseArmor: baseArmor == freezed ? _value.baseArmor : baseArmor as int,
       strength: strength == freezed ? _value.strength : strength as int,
       dexterity: dexterity == freezed ? _value.dexterity : dexterity as int,
@@ -371,11 +388,14 @@ abstract class _$CharacterCopyWith<$Res> implements $CharacterCopyWith<$Res> {
       __$CharacterCopyWithImpl<$Res>;
   @override
   $Res call(
-      {@DocumentReferenceConverter()
-          DocumentReference ref,
-      @DefaultUuid()
-      @JsonKey()
+      {@DefaultUuid()
           String key,
+      @DocumentReferenceConverter()
+          DocumentReference ref,
+      @DateTimeConverter()
+          DateTime createdAt,
+      @DateTimeConverter()
+          DateTime updatedAt,
       @JsonKey(name: 'armor', defaultValue: 0)
           int baseArmor,
       @JsonKey(name: 'str', defaultValue: 8)
@@ -450,8 +470,10 @@ class __$CharacterCopyWithImpl<$Res> extends _$CharacterCopyWithImpl<$Res>
 
   @override
   $Res call({
-    Object ref = freezed,
     Object key = freezed,
+    Object ref = freezed,
+    Object createdAt = freezed,
+    Object updatedAt = freezed,
     Object baseArmor = freezed,
     Object strength = freezed,
     Object dexterity = freezed,
@@ -480,8 +502,12 @@ class __$CharacterCopyWithImpl<$Res> extends _$CharacterCopyWithImpl<$Res>
     Object customSettings = freezed,
   }) {
     return _then(_Character(
-      ref: ref == freezed ? _value.ref : ref as DocumentReference,
       key: key == freezed ? _value.key : key as String,
+      ref: ref == freezed ? _value.ref : ref as DocumentReference,
+      createdAt:
+          createdAt == freezed ? _value.createdAt : createdAt as DateTime,
+      updatedAt:
+          updatedAt == freezed ? _value.updatedAt : updatedAt as DateTime,
       baseArmor: baseArmor == freezed ? _value.baseArmor : baseArmor as int,
       strength: strength == freezed ? _value.strength : strength as int,
       dexterity: dexterity == freezed ? _value.dexterity : dexterity as int,
@@ -534,12 +560,15 @@ class __$CharacterCopyWithImpl<$Res> extends _$CharacterCopyWithImpl<$Res>
 /// @nodoc
 class _$_Character extends _Character with FirebaseMixin, KeyMixin {
   _$_Character(
-      {@DocumentReferenceConverter()
-          this.ref,
-      @required
+      {@required
       @DefaultUuid()
-      @JsonKey()
           this.key,
+      @DocumentReferenceConverter()
+          this.ref,
+      @DateTimeConverter()
+          this.createdAt,
+      @DateTimeConverter()
+          this.updatedAt,
       @JsonKey(name: 'armor', defaultValue: 0)
           this.baseArmor = 0,
       @JsonKey(name: 'str', defaultValue: 8)
@@ -626,12 +655,17 @@ class _$_Character extends _Character with FirebaseMixin, KeyMixin {
       _$_$_CharacterFromJson(json);
 
   @override
+  @DefaultUuid()
+  final String key;
+  @override
   @DocumentReferenceConverter()
   final DocumentReference ref;
   @override
-  @DefaultUuid()
-  @JsonKey()
-  final String key;
+  @DateTimeConverter()
+  final DateTime createdAt;
+  @override
+  @DateTimeConverter()
+  final DateTime updatedAt;
   @override
   @JsonKey(name: 'armor', defaultValue: 0)
   final int baseArmor;
@@ -720,17 +754,23 @@ class _$_Character extends _Character with FirebaseMixin, KeyMixin {
 
   @override
   String toString() {
-    return 'Character(ref: $ref, key: $key, baseArmor: $baseArmor, strength: $strength, dexterity: $dexterity, constitution: $constitution, wisdom: $wisdom, intelligence: $intelligence, charisma: $charisma, playerClasses: $playerClasses, alignment: $alignment, customMaxHP: $customMaxHP, displayName: $displayName, photoURL: $photoURL, level: $level, bio: $bio, customCurrentHP: $customCurrentHP, currentXP: $currentXP, moves: $moves, notes: $notes, spells: $spells, inventory: $inventory, customDamageDice: $customDamageDice, looks: $looks, raceMove: $raceMove, coins: $coins, order: $order, customSettings: $customSettings)';
+    return 'Character(key: $key, ref: $ref, createdAt: $createdAt, updatedAt: $updatedAt, baseArmor: $baseArmor, strength: $strength, dexterity: $dexterity, constitution: $constitution, wisdom: $wisdom, intelligence: $intelligence, charisma: $charisma, playerClasses: $playerClasses, alignment: $alignment, customMaxHP: $customMaxHP, displayName: $displayName, photoURL: $photoURL, level: $level, bio: $bio, customCurrentHP: $customCurrentHP, currentXP: $currentXP, moves: $moves, notes: $notes, spells: $spells, inventory: $inventory, customDamageDice: $customDamageDice, looks: $looks, raceMove: $raceMove, coins: $coins, order: $order, customSettings: $customSettings)';
   }
 
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other is _Character &&
-            (identical(other.ref, ref) ||
-                const DeepCollectionEquality().equals(other.ref, ref)) &&
             (identical(other.key, key) ||
                 const DeepCollectionEquality().equals(other.key, key)) &&
+            (identical(other.ref, ref) ||
+                const DeepCollectionEquality().equals(other.ref, ref)) &&
+            (identical(other.createdAt, createdAt) ||
+                const DeepCollectionEquality()
+                    .equals(other.createdAt, createdAt)) &&
+            (identical(other.updatedAt, updatedAt) ||
+                const DeepCollectionEquality()
+                    .equals(other.updatedAt, updatedAt)) &&
             (identical(other.baseArmor, baseArmor) ||
                 const DeepCollectionEquality()
                     .equals(other.baseArmor, baseArmor)) &&
@@ -790,21 +830,19 @@ class _$_Character extends _Character with FirebaseMixin, KeyMixin {
                     .equals(other.customDamageDice, customDamageDice)) &&
             (identical(other.looks, looks) ||
                 const DeepCollectionEquality().equals(other.looks, looks)) &&
-            (identical(other.raceMove, raceMove) ||
-                const DeepCollectionEquality()
-                    .equals(other.raceMove, raceMove)) &&
-            (identical(other.coins, coins) ||
-                const DeepCollectionEquality().equals(other.coins, coins)) &&
-            (identical(other.order, order) ||
-                const DeepCollectionEquality().equals(other.order, order)) &&
+            (identical(other.raceMove, raceMove) || const DeepCollectionEquality().equals(other.raceMove, raceMove)) &&
+            (identical(other.coins, coins) || const DeepCollectionEquality().equals(other.coins, coins)) &&
+            (identical(other.order, order) || const DeepCollectionEquality().equals(other.order, order)) &&
             (identical(other.customSettings, customSettings) || const DeepCollectionEquality().equals(other.customSettings, customSettings)));
   }
 
   @override
   int get hashCode =>
       runtimeType.hashCode ^
-      const DeepCollectionEquality().hash(ref) ^
       const DeepCollectionEquality().hash(key) ^
+      const DeepCollectionEquality().hash(ref) ^
+      const DeepCollectionEquality().hash(createdAt) ^
+      const DeepCollectionEquality().hash(updatedAt) ^
       const DeepCollectionEquality().hash(baseArmor) ^
       const DeepCollectionEquality().hash(strength) ^
       const DeepCollectionEquality().hash(dexterity) ^
@@ -846,12 +884,15 @@ class _$_Character extends _Character with FirebaseMixin, KeyMixin {
 abstract class _Character extends Character implements FirebaseMixin, KeyMixin {
   _Character._() : super._();
   factory _Character(
-      {@DocumentReferenceConverter()
-          DocumentReference ref,
-      @required
+      {@required
       @DefaultUuid()
-      @JsonKey()
           String key,
+      @DocumentReferenceConverter()
+          DocumentReference ref,
+      @DateTimeConverter()
+          DateTime createdAt,
+      @DateTimeConverter()
+          DateTime updatedAt,
       @JsonKey(name: 'armor', defaultValue: 0)
           int baseArmor,
       @JsonKey(name: 'str', defaultValue: 8)
@@ -915,12 +956,17 @@ abstract class _Character extends Character implements FirebaseMixin, KeyMixin {
       _$_Character.fromJson;
 
   @override
+  @DefaultUuid()
+  String get key;
+  @override
   @DocumentReferenceConverter()
   DocumentReference get ref;
   @override
-  @DefaultUuid()
-  @JsonKey()
-  String get key;
+  @DateTimeConverter()
+  DateTime get createdAt;
+  @override
+  @DateTimeConverter()
+  DateTime get updatedAt;
   @override
   @JsonKey(name: 'armor', defaultValue: 0)
   int get baseArmor;
