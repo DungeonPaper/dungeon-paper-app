@@ -1,3 +1,5 @@
+import 'package:dungeon_paper/db/models/character.dart';
+import 'package:dungeon_paper/db/models/moves.dart';
 import 'package:dungeon_paper/src/builders/custom_move_form_builder.dart';
 import 'package:dungeon_paper/src/dialogs/dialogs.dart';
 import 'package:dungeon_paper/src/lists/add_move_list.dart';
@@ -6,6 +8,7 @@ import 'package:dungeon_world_data/player_class.dart';
 import 'package:dungeon_world_data/move.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:uuid/uuid.dart';
 
 class AddMoveScreen extends StatefulWidget {
   const AddMoveScreen({
@@ -23,6 +26,25 @@ class AddMoveScreen extends StatefulWidget {
 
   @override
   AddMoveScreenState createState() => AddMoveScreenState();
+
+  factory AddMoveScreen.createForCharacter({
+    @required Character character,
+  }) =>
+      AddMoveScreen(
+        move: Move(
+          key: Uuid().v4(),
+          name: '',
+          description: '',
+          classes: [],
+          explanation: '',
+        ),
+        mode: DialogMode.create,
+        onSave: (move) {
+          createMove(character, move);
+          Get.back();
+        },
+        defaultClass: character.mainClass,
+      );
 }
 
 class AddMoveScreenState extends State<AddMoveScreen>

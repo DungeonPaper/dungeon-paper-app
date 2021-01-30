@@ -1,8 +1,10 @@
+import 'package:dungeon_paper/db/models/character.dart';
 import 'package:dungeon_paper/db/models/notes.dart';
 import 'package:dungeon_paper/src/builders/note_form_builder.dart';
 import 'package:dungeon_paper/src/dialogs/dialogs.dart';
 import 'package:dungeon_paper/src/scaffolds/main_scaffold.dart';
 import 'package:flutter/material.dart';
+import 'package:uuid/uuid.dart';
 
 class EditNoteScreen extends StatefulWidget {
   const EditNoteScreen({
@@ -20,6 +22,14 @@ class EditNoteScreen extends StatefulWidget {
 
   @override
   _EditNoteScreenState createState() => _EditNoteScreenState();
+
+  factory EditNoteScreen.addForCharacter({@required Character character}) =>
+      EditNoteScreen(
+        note: Note(key: Uuid().v4()),
+        mode: DialogMode.create,
+        onSave: (note) => createNote(character, note),
+        categories: collectCategories(character.notes),
+      );
 }
 
 class _EditNoteScreenState extends State<EditNoteScreen> {

@@ -88,7 +88,7 @@ class _CustomClassesViewState extends State<CustomClassesView> {
 
   void Function() _add(BuildContext context) {
     return () {
-      Get.to(CustomClassWizard(mode: DialogMode.create));
+      Get.toNamed('/create-custom-class');
     };
   }
 

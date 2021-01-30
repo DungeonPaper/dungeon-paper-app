@@ -1,13 +1,7 @@
 import 'package:dungeon_paper/db/models/character.dart';
-import 'package:dungeon_paper/db/models/inventory_items.dart';
-import 'package:dungeon_paper/db/models/notes.dart';
 import 'package:dungeon_paper/src/dialogs/add_move_or_spell_dialog.dart';
-import 'package:dungeon_paper/src/dialogs/dialogs.dart';
-import 'package:dungeon_paper/src/scaffolds/add_inventory_item_scaffold.dart';
-import 'package:dungeon_paper/src/scaffolds/edit_note_scaffold.dart';
 import 'package:dungeon_paper/src/utils/utils.dart';
 import 'package:get/get.dart';
-import 'package:uuid/uuid.dart';
 
 import 'nav_bar.dart';
 import 'dart:math';
@@ -65,25 +59,11 @@ class FABState extends State<FAB> {
     var map = <Pages, FABData Function(BuildContext, Character)>{
       Pages.Notes: (context, character) => FABData(
             icon: Icon(Icons.add),
-            onPressed: () => Get.to(
-              EditNoteScreen(
-                note: Note(key: Uuid().v4()),
-                mode: DialogMode.create,
-                onSave: (note) => createNote(character, note),
-                categories: collectCategories(character.notes),
-              ),
-            ),
+            onPressed: () => Get.toNamed('/add-note'),
           ),
       Pages.Inventory: (context, character) => FABData(
             icon: Icon(Icons.add),
-            onPressed: () => Get.to(
-              AddInventoryItemScaffold(
-                item: InventoryItem(key: Uuid().v4()),
-                mode: DialogMode.create,
-                onSave: (item) => createInventoryItem(character, item),
-                character: character,
-              ),
-            ),
+            onPressed: () => Get.toNamed('/add-item'),
           ),
       Pages.Battle: (context, character) => FABData(
             icon: Icon(Icons.add),
