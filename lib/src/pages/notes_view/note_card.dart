@@ -68,10 +68,6 @@ class NoteCardState extends State<NoteCard> {
                   MarkdownListItemCrossAxisAlignment.start,
             ),
           ),
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 16),
-            child: TagList(tags: widget.note.tags),
-          ),
           CardBottomControls(
             entityTypeName: 'Note',
             onEdit: () => editNote(context),

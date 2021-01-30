@@ -67,7 +67,6 @@ class AddMoveOrSpell extends StatelessWidget {
                         ),
                         mode: DialogMode.create,
                         onSave: (move) {
-                          logger.d('add_move_or_spell.dart onCreateMove');
                           createMove(character, move);
                           Get.back();
                         },
