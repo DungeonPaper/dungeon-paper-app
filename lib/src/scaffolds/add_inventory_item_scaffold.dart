@@ -6,6 +6,7 @@ import 'package:dungeon_paper/src/scaffolds/custom_inventory_item_form.dart';
 import 'package:dungeon_paper/src/scaffolds/main_scaffold.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:uuid/uuid.dart';
 
 class AddInventoryItemScaffold extends StatefulWidget {
   final InventoryItem item;
@@ -24,6 +25,14 @@ class AddInventoryItemScaffold extends StatefulWidget {
   @override
   AddInventoryItemScaffoldState createState() =>
       AddInventoryItemScaffoldState();
+
+  factory AddInventoryItemScaffold.createForCharacter({Character character}) =>
+      AddInventoryItemScaffold(
+        item: InventoryItem(key: Uuid().v4()),
+        mode: DialogMode.create,
+        onSave: (item) => createInventoryItem(character, item),
+        character: character,
+      );
 }
 
 class AddInventoryItemScaffoldState extends State<AddInventoryItemScaffold>

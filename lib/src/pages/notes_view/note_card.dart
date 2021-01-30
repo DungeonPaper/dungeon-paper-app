@@ -85,9 +85,7 @@ class NoteCardState extends State<NoteCard> {
         mode: DialogMode.edit,
         categories: widget.categories,
         onSave: (note) {
-          if (widget.onSave != null) {
-            widget.onSave(note);
-          }
+          widget.onSave?.call(note);
         },
       ),
     );

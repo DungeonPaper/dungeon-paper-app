@@ -1,3 +1,4 @@
+import 'package:dungeon_paper/db/models/character.dart';
 import 'package:dungeon_paper/db/models/spells.dart';
 import 'package:dungeon_paper/src/builders/custom_spell_form_builder.dart';
 import 'package:dungeon_paper/src/dialogs/dialogs.dart';
@@ -5,6 +6,7 @@ import 'package:dungeon_paper/src/lists/add_spell_list.dart';
 import 'package:dungeon_paper/src/scaffolds/main_scaffold.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:uuid/uuid.dart';
 
 class AddSpellScaffold extends StatefulWidget {
   const AddSpellScaffold({
@@ -22,6 +24,24 @@ class AddSpellScaffold extends StatefulWidget {
 
   @override
   AddSpellScaffoldState createState() => AddSpellScaffoldState();
+
+  factory AddSpellScaffold.createForCharacter({
+    @required Character character,
+  }) =>
+      AddSpellScaffold(
+        spell: DbSpell(
+          key: Uuid().v4(),
+          name: '',
+          description: '',
+          tags: [],
+        ),
+        mode: DialogMode.create,
+        index: -1,
+        onSave: (spell) {
+          createSpell(character, spell);
+          Get.back();
+        },
+      );
 }
 
 class AddSpellScaffoldState extends State<AddSpellScaffold>

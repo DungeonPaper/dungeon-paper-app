@@ -210,11 +210,6 @@ class _ManageCharactersViewState extends State<ManageCharactersView> {
   }
 
   void _openCreatePage() {
-    Get.to(
-      EditCharacterView(
-        character: null,
-        mode: DialogMode.create,
-      ),
-    );
+    Get.toNamed('/create-character');
   }
 }
