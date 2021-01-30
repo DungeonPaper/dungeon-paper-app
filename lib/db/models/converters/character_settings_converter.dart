@@ -14,5 +14,6 @@ class CharacterSettingsConverter
   }
 
   @override
-  Map<String, dynamic> toJson(CharacterSettings data) => data.toJson();
+  Map<String, dynamic> toJson(CharacterSettings data) =>
+      (data ?? CharacterSettings()).toJson();
 }

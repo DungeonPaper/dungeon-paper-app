@@ -15,6 +15,9 @@ class DiceConverter implements JsonConverter<Dice, dynamic> {
     }
 
     if (json is String) {
+      if (json == 'null') {
+        return null;
+      }
       return Dice.parse(json);
     }
 
@@ -23,5 +26,5 @@ class DiceConverter implements JsonConverter<Dice, dynamic> {
   }
 
   @override
-  dynamic toJson(Dice data) => data.toString();
+  dynamic toJson(Dice data) => data != null ? data.toString() : null;
 }
