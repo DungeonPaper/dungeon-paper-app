@@ -6,7 +6,7 @@ import 'package:dungeon_paper/src/atoms/card_list_item.dart';
 import 'package:dungeon_paper/src/dialogs/confirmation_dialog.dart';
 import 'package:dungeon_paper/src/dialogs/dialogs.dart';
 import 'package:dungeon_paper/src/flutter_utils/widget_utils.dart';
-import 'package:dungeon_paper/src/pages/edit_character/edit_character_view.dart';
+import 'package:dungeon_paper/src/pages/character/character_view.dart';
 import 'package:dungeon_paper/src/controllers/characters_controller.dart';
 import 'package:dungeon_paper/src/controllers/user_controller.dart';
 import 'package:dungeon_paper/src/scaffolds/main_scaffold.dart';
@@ -177,7 +177,7 @@ class _ManageCharactersViewState extends State<ManageCharactersView> {
 
   void _edit(Character char) {
     Get.to(
-      EditCharacterView(
+      CharacterView(
         character: char,
         mode: DialogMode.edit,
       ),

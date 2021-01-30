@@ -1,6 +1,6 @@
 import 'package:dungeon_paper/db/helpers/character_utils.dart';
 import 'package:dungeon_paper/db/models/character.dart';
-import 'package:dungeon_paper/src/dialogs/edit_stat_dialog.dart';
+import 'package:dungeon_paper/src/dialogs/stat_dialog.dart';
 import 'package:flutter/material.dart';
 
 class StatCard extends StatelessWidget {
@@ -57,7 +57,7 @@ class StatCard extends StatelessWidget {
     return () {
       showDialog(
         context: context,
-        builder: (context) => EditStatDialog(
+        builder: (context) => StatDialog(
           stat: stat,
           value: value,
           character: character,

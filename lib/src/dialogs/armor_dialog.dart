@@ -7,21 +7,21 @@ import 'package:get/get.dart';
 import 'package:pedantic/pedantic.dart';
 import 'package:flutter/material.dart';
 
-class EditArmorDialog extends StatefulWidget {
+class ArmorDialog extends StatefulWidget {
   final Character character;
-  EditArmorDialog({
+  ArmorDialog({
     Key key,
     @required this.character,
   }) : super(key: key);
 
   @override
-  State<StatefulWidget> createState() => EditArmorDialogState();
+  State<StatefulWidget> createState() => ArmorDialogState();
 }
 
-class EditArmorDialogState extends State<EditArmorDialog> {
+class ArmorDialogState extends State<ArmorDialog> {
   num value;
 
-  EditArmorDialogState({
+  ArmorDialogState({
     Key key,
   }) : super();
 

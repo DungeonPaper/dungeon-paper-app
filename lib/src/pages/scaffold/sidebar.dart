@@ -6,7 +6,7 @@ import 'package:dungeon_paper/src/flutter_utils/platform_svg.dart';
 import 'package:dungeon_paper/src/pages/about_view/about_view.dart';
 import 'package:dungeon_paper/src/pages/campaigns_view/campaigns_view.dart';
 import 'package:dungeon_paper/src/pages/custom_classes_view/custom_classes_view.dart';
-import 'package:dungeon_paper/src/pages/edit_character/edit_character_view.dart';
+import 'package:dungeon_paper/src/pages/character/character_view.dart';
 import 'package:dungeon_paper/src/pages/settings_view/settings_view.dart';
 import 'package:dungeon_paper/src/controllers/characters_controller.dart';
 import 'package:dungeon_paper/src/controllers/user_controller.dart';
@@ -177,7 +177,7 @@ class _SidebarState extends State<Sidebar> with SingleTickerProviderStateMixin {
     Get.back();
     openPage(
       ScreenNames.CharacterScreen,
-      EditCharacterView(
+      CharacterView(
         character: null,
         mode: DialogMode.create,
         onSave: (char) => characterController.setCurrent(char),

@@ -7,19 +7,19 @@ import 'package:get/get.dart';
 import 'dialogs.dart';
 import 'standard_dialog_controls.dart';
 
-class EditTagDialog extends StatefulWidget {
+class TagDialog extends StatefulWidget {
   final Tag tag;
   final Function(Tag tag) onSave;
 
-  const EditTagDialog({Key key, this.onSave, this.tag}) : super(key: key);
+  const TagDialog({Key key, this.onSave, this.tag}) : super(key: key);
 
   @override
-  _EditTagDialogState createState() => _EditTagDialogState();
+  _TagDialogState createState() => _TagDialogState();
 }
 
 enum TagValueTypes { number, text, bool }
 
-class _EditTagDialogState extends State<EditTagDialog> {
+class _TagDialogState extends State<TagDialog> {
   Map<String, TextEditingController> _controllers;
   DialogMode _mode;
   List<Tag> _copyableTags;

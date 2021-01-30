@@ -3,8 +3,8 @@ import 'package:dungeon_paper/src/atoms/flexible_columns.dart';
 import 'package:dungeon_paper/src/dialogs/dialogs.dart';
 import 'package:dungeon_paper/src/flutter_utils/widget_utils.dart';
 import 'package:dungeon_paper/src/molecules/move_card.dart';
-import 'package:dungeon_paper/src/scaffolds/add_move_scaffold.dart';
-import 'package:dungeon_paper/src/scaffolds/add_race_move_scaffold.dart';
+import 'package:dungeon_paper/src/scaffolds/move_view.dart';
+import 'package:dungeon_paper/src/scaffolds/race_move_view.dart';
 import 'package:dungeon_paper/src/utils/types.dart';
 import 'package:dungeon_world_data/move.dart';
 import 'package:flutter/material.dart';
@@ -124,12 +124,12 @@ class CustomClassMoveList extends StatelessWidget {
     );
     Get.to(
       cat == MoveCategory.Race
-          ? AddRaceMoveScaffold(
+          ? RaceMoveView(
               mode: DialogMode.create,
               move: blankMove,
               onSave: (move) => _addMoveToCat(context, move, cat),
             )
-          : AddMoveScreen(
+          : MoveView(
               mode: DialogMode.create,
               move: blankMove,
               onSave: (move) => _addMoveToCat(context, move, cat),

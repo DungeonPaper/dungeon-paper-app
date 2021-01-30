@@ -15,12 +15,12 @@ import 'package:get/get.dart';
 import 'package:pedantic/pedantic.dart';
 import 'package:uuid/uuid.dart';
 
-class EditStatDialog extends StatefulWidget {
+class StatDialog extends StatefulWidget {
   final CharacterStat stat;
   final num value;
   final Character character;
 
-  EditStatDialog({
+  StatDialog({
     Key key,
     @required this.stat,
     @required this.value,
@@ -29,10 +29,10 @@ class EditStatDialog extends StatefulWidget {
 
   @override
   State<StatefulWidget> createState() =>
-      EditStatDialogState(stat: stat, value: value);
+      StatDialogState(stat: stat, value: value);
 }
 
-class EditStatDialogState extends State<EditStatDialog> {
+class StatDialogState extends State<StatDialog> {
   final CharacterStat stat;
   final String fullName;
   final String analyticsSource = 'Edit Stat Dialog';
@@ -43,7 +43,7 @@ class EditStatDialogState extends State<EditStatDialog> {
   DiceListController rollingController;
   String rollSession;
 
-  EditStatDialogState({
+  StatDialogState({
     Key key,
     @required this.stat,
     @required this.value,

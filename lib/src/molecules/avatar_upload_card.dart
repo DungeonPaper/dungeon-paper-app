@@ -10,12 +10,12 @@ import 'package:flutter/material.dart';
 import 'package:icon_shadow/icon_shadow.dart';
 import 'package:image_picker/image_picker.dart';
 
-class EditAvatarCard extends StatefulWidget {
+class AvatarUploadCard extends StatefulWidget {
   final Character character;
   final TextEditingController controller;
   final Function(Character) onSave;
 
-  const EditAvatarCard({
+  const AvatarUploadCard({
     Key key,
     @required this.controller,
     @required this.character,
@@ -23,10 +23,10 @@ class EditAvatarCard extends StatefulWidget {
   }) : super(key: key);
 
   @override
-  _EditAvatarCardState createState() => _EditAvatarCardState();
+  _AvatarUploadCardState createState() => _AvatarUploadCardState();
 }
 
-class _EditAvatarCardState extends State<EditAvatarCard> {
+class _AvatarUploadCardState extends State<AvatarUploadCard> {
   File imageFile;
   Alignment photoAlignment;
 

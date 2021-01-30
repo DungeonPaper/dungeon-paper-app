@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-class EditBioCard extends StatelessWidget {
+class BioCard extends StatelessWidget {
   final TextEditingController controller;
 
-  const EditBioCard({Key key, this.controller}) : super(key: key);
+  const BioCard({Key key, this.controller}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

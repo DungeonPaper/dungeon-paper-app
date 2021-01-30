@@ -6,14 +6,15 @@ import 'package:dungeon_paper/src/flutter_utils/on_init_caller.dart';
 import 'package:dungeon_paper/src/pages/account_view/account_view.dart';
 import 'package:dungeon_paper/src/pages/backup_view/backup_view.dart';
 import 'package:dungeon_paper/src/pages/custom_classes_view/custom_classes_view.dart';
-import 'package:dungeon_paper/src/pages/edit_character/edit_character_view.dart';
+import 'package:dungeon_paper/src/pages/character/character_view.dart';
 import 'package:dungeon_paper/src/pages/scaffold/main_view.dart';
 import 'package:dungeon_paper/src/controllers/prefs_controller.dart';
 import 'package:dungeon_paper/src/pages/settings_view/settings_view.dart';
-import 'package:dungeon_paper/src/scaffolds/add_inventory_item_scaffold.dart';
-import 'package:dungeon_paper/src/scaffolds/add_move_scaffold.dart';
-import 'package:dungeon_paper/src/scaffolds/add_spell_scaffold.dart';
-import 'package:dungeon_paper/src/scaffolds/custom_class_wizard/custom_class_wizard.dart';
+import 'package:dungeon_paper/src/scaffolds/inventory_item_view.dart';
+import 'package:dungeon_paper/src/scaffolds/move_view.dart';
+import 'package:dungeon_paper/src/scaffolds/spell_view.dart';
+import 'package:dungeon_paper/src/scaffolds/custom_class_wizard/custom_class_view.dart';
+import 'package:dungeon_paper/src/scaffolds/note_view.dart';
 import 'package:dungeon_paper/src/utils/analytics.dart';
 import 'package:dungeon_paper/src/utils/error_reporting.dart';
 import 'package:dungeon_paper/src/utils/logger.dart';
@@ -61,25 +62,62 @@ class DungeonPaper extends StatelessWidget {
         theme: Themes.currentTheme,
         routes: {
           '/': (ctx) => MainContainer(pageController: _pageController),
-          '/add-move': (ctx) => AddMoveScreen.createForCharacter(
-                character: characterController.current,
-              ),
-          '/add-spell': (ctx) => AddSpellScaffold.createForCharacter(
-                character: characterController.current,
-              ),
-          '/add-item': (ctx) => AddInventoryItemScaffold.createForCharacter(
-                character: characterController.current,
-              ),
-          '/custom-classes': (ctx) => CustomClassesView(),
           '/account': (ctx) => AccountView(),
+          '/settings': (ctx) => SettingsView(),
+          '/settings/backup': (ctx) => BackupView(),
+          '/custom-classes': (ctx) => CustomClassesView(),
           '/create-custom-class': (ctx) =>
-              CustomClassWizard(mode: DialogMode.create),
-          '/create-character': (ctx) => EditCharacterView(
+              CustomClassView(mode: DialogMode.create),
+          '/create-character': (ctx) => CharacterView(
                 character: null,
                 mode: DialogMode.create,
               ),
-          '/settings': (ctx) => SettingsView(),
-          '/settings/backup': (ctx) => BackupView(),
+          '/add-move': (ctx) => MoveView.createForCharacter(
+                character: characterController.current,
+              ),
+          '/edit-move': (ctx) {
+            final MoveViewArguments arguments = Get.arguments;
+            return MoveView(
+              mode: DialogMode.edit,
+              move: arguments.move,
+              onSave: arguments.onSave,
+            );
+          },
+          '/add-spell': (ctx) => SpellView.createForCharacter(
+                character: characterController.current,
+              ),
+          '/edit-spell': (ctx) {
+            final SpellViewArguments arguments = Get.arguments;
+            return SpellView(
+              mode: DialogMode.edit,
+              onSave: arguments.onSave,
+              spell: arguments.spell,
+            );
+          },
+          '/add-item': (ctx) => InventoryItemView.createForCharacter(
+                character: characterController.current,
+              ),
+          '/edit-item': (ctx) {
+            final InventoryItemViewArguments arguments = Get.arguments;
+            return InventoryItemView(
+              character: characterController.current,
+              item: arguments.item,
+              mode: DialogMode.edit,
+              onSave: arguments.onSave,
+            );
+          },
+          '/add-note': (ctx) => NoteView.createForCharacter(
+                character: characterController.current,
+              ),
+          '/edit-note': (ctx) {
+            final NoteViewArguments arguments = Get.arguments;
+            return NoteView(
+              categories: arguments.categories,
+              mode: DialogMode.edit,
+              note: arguments.note,
+              onSave: arguments.onSave,
+            );
+          },
         },
         navigatorObservers: [observer],
       ),

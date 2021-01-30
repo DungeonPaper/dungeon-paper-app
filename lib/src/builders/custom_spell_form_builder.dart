@@ -6,7 +6,6 @@ import 'package:dungeon_world_data/tag.dart';
 import 'package:flutter/material.dart';
 
 class CustomSpellFormBuilder extends StatefulWidget {
-  final num index;
   final DbSpell spell;
   final DialogMode mode;
   final Widget Function(BuildContext context, Widget form, Function() onSave)
@@ -15,7 +14,6 @@ class CustomSpellFormBuilder extends StatefulWidget {
 
   CustomSpellFormBuilder({
     Key key,
-    @required this.index,
     @required this.spell,
     @required this.mode,
     @required this.builder,

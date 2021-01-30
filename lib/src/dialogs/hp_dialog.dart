@@ -10,22 +10,22 @@ import 'package:flutter/material.dart';
 
 import 'standard_dialog_controls.dart';
 
-class EditHPDialog extends StatefulWidget {
+class HpDialog extends StatefulWidget {
   final Character character;
   static const int MIN_ROW_WIDTH = 410;
 
-  const EditHPDialog({
+  const HpDialog({
     Key key,
     @required this.character,
   }) : super(key: key);
 
   @override
-  _EditHPDialogState createState() => _EditHPDialogState();
+  _HpDialogState createState() => _HpDialogState();
 }
 
 enum HPMode { hp, maxHp }
 
-class _EditHPDialogState extends State<EditHPDialog> {
+class _HpDialogState extends State<HpDialog> {
   int currentHP;
   int maxHP;
   int initialCurrentHP;
@@ -134,12 +134,12 @@ class _EditHPDialogState extends State<EditHPDialog> {
             ),
             if (isHP || !useDefaultMaxHP)
               Container(
-                width: screenWidth >= EditHPDialog.MIN_ROW_WIDTH
-                    ? EditHPDialog.MIN_ROW_WIDTH.toDouble()
+                width: screenWidth >= HpDialog.MIN_ROW_WIDTH
+                    ? HpDialog.MIN_ROW_WIDTH.toDouble()
                     : 200.0,
                 // height: screenWidth >= HPEditDialog.MIN_ROW_WIDTH ? null : 250,
                 padding: const EdgeInsets.only(top: 32.0),
-                child: screenWidth >= EditHPDialog.MIN_ROW_WIDTH
+                child: screenWidth >= HpDialog.MIN_ROW_WIDTH
                     ? Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         mainAxisSize: MainAxisSize.max,

@@ -7,12 +7,12 @@ import 'package:dungeon_world_data/player_class.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-class ChangeRaceDialog extends StatelessWidget {
+class RaceMoveView extends StatelessWidget {
   final Character character;
   final DialogMode mode;
   final VoidCallbackDelegate<Character> onUpdate;
 
-  const ChangeRaceDialog({
+  const RaceMoveView({
     Key key,
     this.mode = DialogMode.edit,
     @required this.character,

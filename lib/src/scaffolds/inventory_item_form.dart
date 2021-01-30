@@ -7,14 +7,14 @@ import 'package:uuid/uuid.dart';
 import 'package:dungeon_world_data/tag.dart';
 import 'package:flutter/material.dart';
 
-class CustomInventoryItemForm extends StatefulWidget {
+class InventoryItemForm extends StatefulWidget {
   final InventoryItem item;
   final DialogMode mode;
   final Widget Function(BuildContext context, Widget form, Function() onSave)
       builder;
   final void Function(InventoryItem move) onSave;
 
-  CustomInventoryItemForm({
+  InventoryItemForm({
     Key key,
     this.item,
     @required this.mode,
@@ -23,10 +23,10 @@ class CustomInventoryItemForm extends StatefulWidget {
   }) : super(key: key);
 
   @override
-  State<StatefulWidget> createState() => CustomInventoryItemFormState();
+  State<StatefulWidget> createState() => InventoryItemFormState();
 }
 
-class CustomInventoryItemFormState extends State<CustomInventoryItemForm> {
+class InventoryItemFormState extends State<InventoryItemForm> {
   Map<String, TextEditingController> _controllers;
   List<Tag> tags;
 
