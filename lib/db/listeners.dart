@@ -1,7 +1,9 @@
 import 'dart:async';
 import 'package:dungeon_paper/db/db.dart';
+import 'package:dungeon_paper/db/models/campaign.dart';
 import 'package:dungeon_paper/db/models/custom_class.dart';
 import 'package:dungeon_paper/src/controllers/auth_controller.dart';
+import 'package:dungeon_paper/src/controllers/campaigns_controller.dart';
 import 'package:dungeon_paper/src/controllers/characters_controller.dart';
 import 'package:dungeon_paper/src/controllers/custom_classes_controller.dart';
 import 'package:dungeon_paper/src/controllers/user_controller.dart';
@@ -15,7 +17,8 @@ StreamSubscription _fbUserUpdateListener;
 StreamSubscription _userListener;
 StreamSubscription _charsListener;
 StreamSubscription _classesListener;
-StreamSubscription _campaignsListener;
+StreamSubscription _campaignsOwnedListener;
+StreamSubscription _campaignsParticipatingListener;
 
 void registerFirebaseUserListener() {
   try {
@@ -42,7 +45,8 @@ void _onAuthChange(fb.User firebaseUser) {
     _userListener?.cancel();
     _charsListener?.cancel();
     _classesListener?.cancel();
-    _campaignsListener?.cancel();
+    _campaignsOwnedListener?.cancel();
+    _campaignsParticipatingListener?.cancel();
     authController.logout();
   }
 }
@@ -77,13 +81,10 @@ void registerCharactersListener(fb.User firebaseUser) {
 
   _charsListener = user.collection('characters').snapshots().listen(
     (characters) async {
-      if (characters.docs.isEmpty) {
-        return;
-      }
-      final chars = await Future.wait(characters.docs.map(
-        (character) => CharacterMigrations().run(character),
-      ));
-      characterController.setAll(chars);
+      characterController.setAll(
+        await CharacterMigrations().runAll(characters.docs),
+      );
+      registerCampaignsListener(firebaseUser);
     },
   );
   logger.d('Registered db character listener');
@@ -99,10 +100,6 @@ void registerCustomClassesListener(fb.User firebaseUser) {
       .collection('user_data/$email/custom_classes')
       .snapshots()
       .listen((classes) {
-    if (classes.docs.isEmpty) {
-      return;
-    }
-
     customClassesController.setAll([
       for (final character in classes.docs)
         CustomClass.fromJson(
@@ -115,26 +112,42 @@ void registerCustomClassesListener(fb.User firebaseUser) {
 }
 
 void registerCampaignsListener(fb.User firebaseUser) {
-  _campaignsListener?.cancel();
+  _campaignsOwnedListener?.cancel();
+  _campaignsParticipatingListener?.cancel();
   if (firebaseUser == null) {
     return;
   }
-  final email = firebaseUser.email;
-  _campaignsListener = firestore
-      .collection('user_data/$email/campaigns')
+  _campaignsOwnedListener = firestore
+      .collection('campaigns')
+      .where('owner', isEqualTo: userController.current.ref)
       .snapshots()
       .listen((campaigns) {
-    if (campaigns.docs.isEmpty) {
-      return;
-    }
-    // TODO implement
-    // customClassesController.setAll([
-    //   for (final character in campaigns.docs)
-    //     CustomClass.fromJson(
-    //       character.data(),
-    //       ref: character.reference,
-    //     ),
-    // ]);
+    campaignsController.setAllOwned([
+      for (final campaign in campaigns.docs)
+        Campaign.fromJson(
+          campaign.data(),
+          ref: campaign.reference,
+        ),
+    ]);
   });
+  if (characterController.all.isNotEmpty) {
+    _campaignsParticipatingListener = firestore
+        .collection('campaigns')
+        .where(
+          'characters',
+          arrayContainsAny:
+              characterController.all.values.map((c) => c.ref).toList(),
+        )
+        .snapshots()
+        .listen((campaigns) {
+      campaignsController.setAllParticipating([
+        for (final campaign in campaigns.docs)
+          Campaign.fromJson(
+            campaign.data(),
+            ref: campaign.reference,
+          ),
+      ]);
+    });
+  }
   logger.d('Registered db campaigns listener');
 }

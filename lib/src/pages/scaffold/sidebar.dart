@@ -49,7 +49,7 @@ class _SidebarState extends State<Sidebar> with SingleTickerProviderStateMixin {
         final user = userController.current;
 
         return Drawer(
-          child: ListView(
+          child: Column(
             children: [
               UserDrawerHeader(
                 user: user,
@@ -74,64 +74,71 @@ class _SidebarState extends State<Sidebar> with SingleTickerProviderStateMixin {
                   ],
                 ),
               ),
-              title(
-                'Characters',
-                context,
-                leading: Row(
+              Expanded(
+                child: ListView(
                   children: [
-                    IconButton(
-                      color: Get.theme.accentColor,
-                      padding: EdgeInsets.zero,
-                      icon: Icon(Icons.add),
-                      tooltip: 'Create new character',
-                      onPressed: createNewCharacterScreen,
+                    title(
+                      'Characters',
+                      context,
+                      leading: Row(
+                        children: [
+                          IconButton(
+                            color: Get.theme.accentColor,
+                            padding: EdgeInsets.zero,
+                            icon: Icon(Icons.add),
+                            tooltip: 'Create new character',
+                            onPressed: createNewCharacterScreen,
+                          ),
+                          IconButton(
+                            color: Get.theme.accentColor,
+                            padding: EdgeInsets.zero,
+                            icon: Icon(Icons.settings),
+                            tooltip: 'Manage characters',
+                            onPressed: manageCharactersScreen,
+                          ),
+                        ],
+                      ),
                     ),
-                    IconButton(
-                      color: Get.theme.accentColor,
-                      padding: EdgeInsets.zero,
-                      icon: Icon(Icons.settings),
-                      tooltip: 'Manage characters',
-                      onPressed: manageCharactersScreen,
+                    ...characterList(characterController.all, context),
+                    Divider(),
+                    title('Custom Content', context),
+                    if (user.isDm)
+                      ListTile(
+                        title: Text('Campaigns'),
+                        onTap: campaignsScreen,
+                        leading: Icon(Icons.group),
+                      ),
+                    ListTile(
+                      title: Text('Custom Classes'),
+                      onTap: customClassesScreen,
+                      leading: Padding(
+                        padding: const EdgeInsets.only(top: 4, left: 4),
+                        child: PlatformSvg.asset(
+                          'book-stack.svg',
+                          width: 16,
+                          height: 16,
+                          color: Get.theme.brightness == Brightness.light
+                              ? Colors.black45
+                              : Get.theme.accentColor,
+                        ),
+                      ),
+                    ),
+                    Divider(),
+                    title('Application', context),
+                    ListTile(
+                      leading: Icon(Icons.settings),
+                      title: Text('Settings'),
+                      onTap: () =>
+                          openPage(ScreenNames.Settings, SettingsView()),
+                    ),
+                    // About
+                    ListTile(
+                      leading: Icon(Icons.info),
+                      title: Text('About'),
+                      onTap: aboutScreen,
                     ),
                   ],
                 ),
-              ),
-              ...characterList(characterController.all, context),
-              Divider(),
-              title('Custom Content', context),
-              if (user.isDm)
-                ListTile(
-                  title: Text('Campaigns'),
-                  onTap: campaignsScreen,
-                  leading: Icon(Icons.group),
-                ),
-              ListTile(
-                title: Text('Custom Classes'),
-                onTap: customClassesScreen,
-                leading: Padding(
-                  padding: const EdgeInsets.only(top: 4, left: 4),
-                  child: PlatformSvg.asset(
-                    'book-stack.svg',
-                    width: 16,
-                    height: 16,
-                    color: Get.theme.brightness == Brightness.light
-                        ? Colors.black45
-                        : Get.theme.accentColor,
-                  ),
-                ),
-              ),
-              Divider(),
-              title('Application', context),
-              ListTile(
-                leading: Icon(Icons.settings),
-                title: Text('Settings'),
-                onTap: () => openPage(ScreenNames.Settings, SettingsView()),
-              ),
-              // About
-              ListTile(
-                leading: Icon(Icons.info),
-                title: Text('About'),
-                onTap: aboutScreen,
               ),
             ],
           ),

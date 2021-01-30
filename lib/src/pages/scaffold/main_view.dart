@@ -29,6 +29,7 @@ import 'package:get/get.dart';
 import 'package:flutter/material.dart';
 
 import 'app_bar_title.dart';
+import 'drawer_positioner.dart';
 import 'fab.dart';
 import 'nav_bar.dart';
 import 'sidebar.dart';
@@ -122,20 +123,20 @@ class _MainViewState extends State<MainView> {
   @override
   Widget build(BuildContext context) {
     final useAppBar = widget.character != null;
-    return MainScaffold(
-      // appBar: MainAppBar(
-      // scrollController: _currentScrollController,
-      title: appBarTitle,
-      actions: actions(context),
-      elevation: 0,
-      // ),
-      wrapWithScrollable: false,
-      useAppBar: useAppBar,
+    return DrawerPositioner(
       drawer: drawer,
-      floatingActionButton: fab,
-      floatingActionButtonLocation: fabLocation,
-      bottomNavigationBar: navBar,
-      body: pageView,
+      body: (drawer) => MainScaffold(
+        title: appBarTitle,
+        actions: actions(context),
+        elevation: 0,
+        wrapWithScrollable: false,
+        useAppBar: useAppBar,
+        drawer: drawer,
+        floatingActionButton: fab,
+        floatingActionButtonLocation: fabLocation,
+        bottomNavigationBar: navBar,
+        body: pageView,
+      ),
     );
   }
 

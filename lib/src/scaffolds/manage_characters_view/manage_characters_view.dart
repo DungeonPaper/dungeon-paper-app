@@ -204,8 +204,6 @@ class _ManageCharactersViewState extends State<ManageCharactersView> {
       );
       if (result == true) {
         unawaited(analytics.logEvent(name: Events.DeleteCharacter));
-        // TODO move to char model
-        characterController.remove(char);
         await char.delete();
       }
     };
