@@ -22,7 +22,7 @@ class _$UserTearOff {
       @required String email,
       String photoURL,
       Map<String, dynamic> features = const {},
-      @required @DocumentReferenceConverter() DocumentReference ref,
+      @DocumentReferenceConverter() DocumentReference ref,
       @DateTimeConverter() DateTime createdAt,
       @DateTimeConverter() DateTime updatedAt,
       String lastCharacterId}) {
@@ -187,14 +187,13 @@ class _$_User extends _User with DiagnosticableTreeMixin, FirebaseMixin {
       @required this.email,
       this.photoURL,
       this.features = const {},
-      @required @DocumentReferenceConverter() this.ref,
+      @DocumentReferenceConverter() this.ref,
       @DateTimeConverter() this.createdAt,
       @DateTimeConverter() this.updatedAt,
       this.lastCharacterId})
       : assert(displayName != null),
         assert(email != null),
         assert(features != null),
-        assert(ref != null),
         super._();
 
   factory _$_User.fromJson(Map<String, dynamic> json) =>
@@ -299,7 +298,7 @@ abstract class _User extends User implements FirebaseMixin {
       @required String email,
       String photoURL,
       Map<String, dynamic> features,
-      @required @DocumentReferenceConverter() DocumentReference ref,
+      @DocumentReferenceConverter() DocumentReference ref,
       @DateTimeConverter() DateTime createdAt,
       @DateTimeConverter() DateTime updatedAt,
       String lastCharacterId}) = _$_User;
