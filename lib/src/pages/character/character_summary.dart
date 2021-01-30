@@ -5,7 +5,7 @@ import 'package:dungeon_paper/src/molecules/character_headline.dart';
 import 'package:dungeon_paper/src/molecules/character_photo.dart';
 import 'package:dungeon_paper/src/molecules/stats_summary.dart';
 import 'package:dungeon_paper/src/pages/character/looks_view.dart';
-import 'package:dungeon_paper/src/pages/character/race_move_view.dart';
+import 'package:dungeon_paper/src/pages/character/select_race_move_view.dart';
 import 'package:dungeon_paper/src/utils/types.dart';
 import 'package:dungeon_paper/src/utils/utils.dart';
 import 'package:flutter/material.dart';

@@ -1,7 +1,6 @@
 import 'package:dungeon_paper/db/models/custom_class.dart';
 import 'package:dungeon_paper/src/atoms/empty_state.dart';
 import 'package:dungeon_paper/src/dialogs/confirmation_dialog.dart';
-import 'package:dungeon_paper/src/dialogs/dialogs.dart';
 import 'package:dungeon_paper/src/lists/custom_classes_list.dart';
 import 'package:dungeon_paper/src/lists/player_class_list.dart';
 import 'package:dungeon_paper/src/controllers/custom_classes_controller.dart';
@@ -94,9 +93,9 @@ class _CustomClassesViewState extends State<CustomClassesView> {
 
   void Function(CustomClass) _edit(BuildContext context) {
     return (cls) {
-      Get.to(
-        CustomClassView(
-          mode: DialogMode.edit,
+      Get.toNamed(
+        '/edit-custom-class',
+        arguments: CustomClassViewArguments(
           customClass: cls,
         ),
       );
@@ -124,9 +123,9 @@ class _CustomClassesViewState extends State<CustomClassesView> {
       name: cls.name + ' copy',
     );
 
-    Get.to(
-      CustomClassView(
-        mode: DialogMode.create,
+    Get.toNamed(
+      '/create-custom-class',
+      arguments: CustomClassViewArguments(
         customClass: custCls,
       ),
     );

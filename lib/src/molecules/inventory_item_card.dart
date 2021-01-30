@@ -4,7 +4,6 @@ import 'package:dungeon_paper/src/atoms/card_bottom_controls.dart';
 import 'package:dungeon_paper/src/atoms/dice_icon.dart';
 import 'package:dungeon_paper/src/atoms/icon_chip.dart';
 import 'package:dungeon_paper/src/dialogs/confirmation_dialog.dart';
-import 'package:dungeon_paper/src/dialogs/dialogs.dart';
 import 'package:dungeon_paper/src/flutter_utils/platform_svg.dart';
 import 'package:dungeon_paper/src/flutter_utils/widget_utils.dart';
 import 'package:dungeon_paper/src/lists/tag_list.dart';
@@ -257,10 +256,10 @@ class InventoryItemCard extends StatelessWidget {
   }
 
   void editInventoryItem(BuildContext context) {
-    Get.to(
-      InventoryItemView(
+    Get.toNamed(
+      '/inventory-item',
+      arguments: InventoryItemViewArguments(
         item: item,
-        mode: DialogMode.edit,
         onSave: onSave,
         character: character,
       ),

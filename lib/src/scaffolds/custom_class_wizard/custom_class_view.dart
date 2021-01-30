@@ -14,6 +14,14 @@ import 'package:get/get.dart';
 import 'package:pedantic/pedantic.dart';
 import 'package:uuid/uuid.dart';
 
+class CustomClassViewArguments {
+  final CustomClass customClass;
+
+  CustomClassViewArguments({
+    this.customClass,
+  });
+}
+
 class CustomClassView extends StatefulWidget {
   final DialogMode mode;
   final CustomClass customClass;
