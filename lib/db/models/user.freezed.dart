@@ -18,11 +18,11 @@ class _$UserTearOff {
 
 // ignore: unused_element
   _User call(
-      {String displayName,
-      String email,
+      {@required String displayName,
+      @required String email,
       String photoURL,
       Map<String, dynamic> features = const {},
-      @DocumentReferenceConverter() DocumentReference ref,
+      @required @DocumentReferenceConverter() DocumentReference ref,
       @DateTimeConverter() DateTime createdAt,
       @DateTimeConverter() DateTime updatedAt,
       String lastCharacterId}) {
@@ -183,15 +183,18 @@ class __$UserCopyWithImpl<$Res> extends _$UserCopyWithImpl<$Res>
 /// @nodoc
 class _$_User extends _User with DiagnosticableTreeMixin, FirebaseMixin {
   const _$_User(
-      {this.displayName,
-      this.email,
+      {@required this.displayName,
+      @required this.email,
       this.photoURL,
       this.features = const {},
-      @DocumentReferenceConverter() this.ref,
+      @required @DocumentReferenceConverter() this.ref,
       @DateTimeConverter() this.createdAt,
       @DateTimeConverter() this.updatedAt,
       this.lastCharacterId})
-      : assert(features != null),
+      : assert(displayName != null),
+        assert(email != null),
+        assert(features != null),
+        assert(ref != null),
         super._();
 
   factory _$_User.fromJson(Map<String, dynamic> json) =>
@@ -292,11 +295,11 @@ class _$_User extends _User with DiagnosticableTreeMixin, FirebaseMixin {
 abstract class _User extends User implements FirebaseMixin {
   const _User._() : super._();
   const factory _User(
-      {String displayName,
-      String email,
+      {@required String displayName,
+      @required String email,
       String photoURL,
       Map<String, dynamic> features,
-      @DocumentReferenceConverter() DocumentReference ref,
+      @required @DocumentReferenceConverter() DocumentReference ref,
       @DateTimeConverter() DateTime createdAt,
       @DateTimeConverter() DateTime updatedAt,
       String lastCharacterId}) = _$_User;

@@ -21,11 +21,11 @@ abstract class User with FirebaseMixin implements _$User {
 
   @With(FirebaseMixin)
   const factory User({
-    String displayName,
-    String email,
+    @required String displayName,
+    @required String email,
     String photoURL,
     @Default({}) Map<String, dynamic> features,
-    @DocumentReferenceConverter() DocumentReference ref,
+    @required @DocumentReferenceConverter() DocumentReference ref,
     @DateTimeConverter() DateTime createdAt,
     @DateTimeConverter() DateTime updatedAt,
     String lastCharacterId,

@@ -1,7 +1,7 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // ignore_for_file: deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies
 
-part of 'inventory_items.dart';
+part of 'inventory_item.dart';
 
 // **************************************************************************
 // FreezedGenerator
@@ -19,7 +19,7 @@ class _$InventoryItemTearOff {
 // ignore: unused_element
   _InventoryItem call(
       {@required @DefaultUuid() String key,
-      String name = '',
+      @required String name,
       String pluralName,
       String description = '',
       @TagConverter() List<Tag> tags = const [],
@@ -202,7 +202,7 @@ class __$InventoryItemCopyWithImpl<$Res>
 class _$_InventoryItem extends _InventoryItem {
   const _$_InventoryItem(
       {@required @DefaultUuid() this.key,
-      this.name = '',
+      @required this.name,
       this.pluralName,
       this.description = '',
       @TagConverter() this.tags = const [],
@@ -228,7 +228,6 @@ class _$_InventoryItem extends _InventoryItem {
   @override
   @DefaultUuid()
   final String key;
-  @JsonKey(defaultValue: '')
   @override
   final String name;
   @override
@@ -322,7 +321,7 @@ abstract class _InventoryItem extends InventoryItem {
   const _InventoryItem._() : super._();
   const factory _InventoryItem(
       {@required @DefaultUuid() String key,
-      String name,
+      @required String name,
       String pluralName,
       String description,
       @TagConverter() List<Tag> tags,

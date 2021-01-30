@@ -1,4 +1,4 @@
-import 'package:dungeon_paper/db/models/spells.dart';
+import 'package:dungeon_paper/db/models/spell.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 class SpellConverter implements JsonConverter<DbSpell, Map<String, dynamic>> {
@@ -9,10 +9,10 @@ class SpellConverter implements JsonConverter<DbSpell, Map<String, dynamic>> {
     if (json == null) {
       return null;
     }
-    return DbSpell.fromJSON(json);
+    return DbSpell.fromJson(json);
   }
 
   @override
   Map<String, dynamic> toJson(DbSpell data) =>
-      data?.toJSON()?.cast<String, dynamic>();
+      data?.toJson()?.cast<String, dynamic>();
 }

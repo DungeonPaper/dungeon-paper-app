@@ -1,4 +1,5 @@
 import 'package:dungeon_paper/db/models/character.dart';
+import 'package:dungeon_paper/db/models/inventory_item.dart';
 import 'package:dungeon_world_data/dw_data.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:uuid/uuid.dart';
@@ -90,6 +91,45 @@ void main() {
       char2 = char2.copyWith(constitution: 10); // 0 mod
       expect(char1.maxHP, equals(immolator.baseHP + char1.constitution));
       expect(char2.maxHP, equals(wizard.baseHP + char2.constitution));
+    });
+  });
+
+  group('Character tag calculations', () {
+    test('weight calc', () {
+      final itemWithWeight = InventoryItem(
+        key: Uuid().v4(),
+        name: '',
+        tags: [
+          Tag('weight', 1),
+        ],
+      );
+
+      expect(itemWithWeight.hasWeight, isTrue);
+      expect(itemWithWeight.weight, equals(1));
+    });
+    test('armor calc', () {
+      final itemWithWeight = InventoryItem(
+        key: Uuid().v4(),
+        name: '',
+        tags: [
+          Tag('armor', 1),
+        ],
+      );
+
+      expect(itemWithWeight.hasArmor, isTrue);
+      expect(itemWithWeight.armor, equals(1));
+    });
+    test('damage calc', () {
+      final itemWithWeight = InventoryItem(
+        key: Uuid().v4(),
+        name: '',
+        tags: [
+          Tag('damage', 1),
+        ],
+      );
+
+      expect(itemWithWeight.hasDamage, isTrue);
+      expect(itemWithWeight.damage, equals(1));
     });
   });
 

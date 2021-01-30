@@ -1,5 +1,5 @@
 import 'package:dungeon_paper/db/models/character.dart';
-import 'package:dungeon_paper/db/models/inventory_items.dart';
+import 'package:dungeon_paper/db/models/inventory_item.dart';
 import 'package:dungeon_paper/src/dialogs/dialogs.dart';
 import 'package:dungeon_paper/src/lists/existing_inventory_items_list.dart';
 import 'package:dungeon_paper/src/scaffolds/inventory_item_form.dart';
@@ -35,7 +35,7 @@ class InventoryItemView extends StatefulWidget {
 
   factory InventoryItemView.createForCharacter({Character character}) =>
       InventoryItemView(
-        item: InventoryItem(key: Uuid().v4()),
+        item: InventoryItem(key: Uuid().v4(), name: ''),
         mode: DialogMode.create,
         onSave: (item) => createInventoryItem(character, item),
         character: character,

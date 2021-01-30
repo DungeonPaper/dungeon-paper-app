@@ -1,5 +1,5 @@
 import 'package:dungeon_paper/db/models/character.dart';
-import 'package:dungeon_paper/db/models/notes.dart';
+import 'package:dungeon_paper/db/models/note.dart';
 import 'package:dungeon_paper/src/builders/note_form_builder.dart';
 import 'package:dungeon_paper/src/dialogs/dialogs.dart';
 import 'package:dungeon_paper/src/scaffolds/main_scaffold.dart';
@@ -37,7 +37,7 @@ class NoteView extends StatefulWidget {
 
   factory NoteView.createForCharacter({@required Character character}) =>
       NoteView(
-        note: Note(key: Uuid().v4()),
+        note: Note(key: Uuid().v4(), title: 'New Note'),
         mode: DialogMode.create,
         onSave: (note) => createNote(character, note),
         categories: collectCategories(character.notes),

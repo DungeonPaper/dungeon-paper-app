@@ -1,6 +1,6 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'inventory_items.dart';
+part of 'inventory_item.dart';
 
 // **************************************************************************
 // JsonSerializableGenerator
@@ -9,7 +9,7 @@ part of 'inventory_items.dart';
 _$_InventoryItem _$_$_InventoryItemFromJson(Map<String, dynamic> json) {
   return _$_InventoryItem(
     key: const DefaultUuid().fromJson(json['key'] as String),
-    name: json['name'] as String ?? '',
+    name: json['name'] as String,
     pluralName: json['pluralName'] as String,
     description: json['description'] as String ?? '',
     tags:

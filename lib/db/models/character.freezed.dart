@@ -23,6 +23,10 @@ class _$CharacterTearOff {
           String key,
       @DocumentReferenceConverter()
           DocumentReference ref,
+      @JsonKey(defaultValue: 'Traveler')
+          String displayName = 'Traveler',
+      @JsonKey(defaultValue: '')
+          String photoURL = '',
       @DateTimeConverter()
           DateTime createdAt,
       @DateTimeConverter()
@@ -47,10 +51,6 @@ class _$CharacterTearOff {
           AlignmentName alignment = AlignmentName.neutral,
       @JsonKey(name: 'maxHP')
           int customMaxHP,
-      @JsonKey(defaultValue: 'Traveler')
-          String displayName = 'Traveler',
-      @JsonKey(defaultValue: '')
-          String photoURL = '',
       @JsonKey(defaultValue: 1)
           int level = 1,
       String bio = '',
@@ -88,6 +88,8 @@ class _$CharacterTearOff {
     return _Character(
       key: key,
       ref: ref,
+      displayName: displayName,
+      photoURL: photoURL,
       createdAt: createdAt,
       updatedAt: updatedAt,
       baseArmor: baseArmor,
@@ -100,8 +102,6 @@ class _$CharacterTearOff {
       playerClasses: playerClasses,
       alignment: alignment,
       customMaxHP: customMaxHP,
-      displayName: displayName,
-      photoURL: photoURL,
       level: level,
       bio: bio,
       customCurrentHP: customCurrentHP,
@@ -135,6 +135,10 @@ mixin _$Character {
   String get key;
   @DocumentReferenceConverter()
   DocumentReference get ref;
+  @JsonKey(defaultValue: 'Traveler')
+  String get displayName;
+  @JsonKey(defaultValue: '')
+  String get photoURL;
   @DateTimeConverter()
   DateTime get createdAt;
   @DateTimeConverter()
@@ -152,17 +156,13 @@ mixin _$Character {
   @JsonKey(name: 'int', defaultValue: 8)
   int get intelligence;
   @JsonKey(name: 'cha', defaultValue: 0)
-  int get charisma; // TODO find solution for non-const default values
+  int get charisma;
   @PlayerClassConverter()
   List<PlayerClass> get playerClasses;
   @JsonKey(defaultValue: AlignmentName.neutral)
   AlignmentName get alignment;
   @JsonKey(name: 'maxHP')
   int get customMaxHP;
-  @JsonKey(defaultValue: 'Traveler')
-  String get displayName;
-  @JsonKey(defaultValue: '')
-  String get photoURL;
   @JsonKey(defaultValue: 1)
   int get level;
   String get bio;
@@ -193,7 +193,7 @@ mixin _$Character {
   @JsonKey(defaultValue: 0)
   double get coins;
   @JsonKey(defaultValue: 0)
-  int get order; // TODO find solution for non-const default values
+  int get order;
   @JsonKey(name: 'settings')
   @CharacterSettingsConverter()
   CharacterSettings get customSettings;
@@ -212,6 +212,10 @@ abstract class $CharacterCopyWith<$Res> {
           String key,
       @DocumentReferenceConverter()
           DocumentReference ref,
+      @JsonKey(defaultValue: 'Traveler')
+          String displayName,
+      @JsonKey(defaultValue: '')
+          String photoURL,
       @DateTimeConverter()
           DateTime createdAt,
       @DateTimeConverter()
@@ -236,10 +240,6 @@ abstract class $CharacterCopyWith<$Res> {
           AlignmentName alignment,
       @JsonKey(name: 'maxHP')
           int customMaxHP,
-      @JsonKey(defaultValue: 'Traveler')
-          String displayName,
-      @JsonKey(defaultValue: '')
-          String photoURL,
       @JsonKey(defaultValue: 1)
           int level,
       String bio,
@@ -290,6 +290,8 @@ class _$CharacterCopyWithImpl<$Res> implements $CharacterCopyWith<$Res> {
   $Res call({
     Object key = freezed,
     Object ref = freezed,
+    Object displayName = freezed,
+    Object photoURL = freezed,
     Object createdAt = freezed,
     Object updatedAt = freezed,
     Object baseArmor = freezed,
@@ -302,8 +304,6 @@ class _$CharacterCopyWithImpl<$Res> implements $CharacterCopyWith<$Res> {
     Object playerClasses = freezed,
     Object alignment = freezed,
     Object customMaxHP = freezed,
-    Object displayName = freezed,
-    Object photoURL = freezed,
     Object level = freezed,
     Object bio = freezed,
     Object customCurrentHP = freezed,
@@ -322,6 +322,9 @@ class _$CharacterCopyWithImpl<$Res> implements $CharacterCopyWith<$Res> {
     return _then(_value.copyWith(
       key: key == freezed ? _value.key : key as String,
       ref: ref == freezed ? _value.ref : ref as DocumentReference,
+      displayName:
+          displayName == freezed ? _value.displayName : displayName as String,
+      photoURL: photoURL == freezed ? _value.photoURL : photoURL as String,
       createdAt:
           createdAt == freezed ? _value.createdAt : createdAt as DateTime,
       updatedAt:
@@ -342,9 +345,6 @@ class _$CharacterCopyWithImpl<$Res> implements $CharacterCopyWith<$Res> {
           alignment == freezed ? _value.alignment : alignment as AlignmentName,
       customMaxHP:
           customMaxHP == freezed ? _value.customMaxHP : customMaxHP as int,
-      displayName:
-          displayName == freezed ? _value.displayName : displayName as String,
-      photoURL: photoURL == freezed ? _value.photoURL : photoURL as String,
       level: level == freezed ? _value.level : level as int,
       bio: bio == freezed ? _value.bio : bio as String,
       customCurrentHP: customCurrentHP == freezed
@@ -392,6 +392,10 @@ abstract class _$CharacterCopyWith<$Res> implements $CharacterCopyWith<$Res> {
           String key,
       @DocumentReferenceConverter()
           DocumentReference ref,
+      @JsonKey(defaultValue: 'Traveler')
+          String displayName,
+      @JsonKey(defaultValue: '')
+          String photoURL,
       @DateTimeConverter()
           DateTime createdAt,
       @DateTimeConverter()
@@ -416,10 +420,6 @@ abstract class _$CharacterCopyWith<$Res> implements $CharacterCopyWith<$Res> {
           AlignmentName alignment,
       @JsonKey(name: 'maxHP')
           int customMaxHP,
-      @JsonKey(defaultValue: 'Traveler')
-          String displayName,
-      @JsonKey(defaultValue: '')
-          String photoURL,
       @JsonKey(defaultValue: 1)
           int level,
       String bio,
@@ -472,6 +472,8 @@ class __$CharacterCopyWithImpl<$Res> extends _$CharacterCopyWithImpl<$Res>
   $Res call({
     Object key = freezed,
     Object ref = freezed,
+    Object displayName = freezed,
+    Object photoURL = freezed,
     Object createdAt = freezed,
     Object updatedAt = freezed,
     Object baseArmor = freezed,
@@ -484,8 +486,6 @@ class __$CharacterCopyWithImpl<$Res> extends _$CharacterCopyWithImpl<$Res>
     Object playerClasses = freezed,
     Object alignment = freezed,
     Object customMaxHP = freezed,
-    Object displayName = freezed,
-    Object photoURL = freezed,
     Object level = freezed,
     Object bio = freezed,
     Object customCurrentHP = freezed,
@@ -504,6 +504,9 @@ class __$CharacterCopyWithImpl<$Res> extends _$CharacterCopyWithImpl<$Res>
     return _then(_Character(
       key: key == freezed ? _value.key : key as String,
       ref: ref == freezed ? _value.ref : ref as DocumentReference,
+      displayName:
+          displayName == freezed ? _value.displayName : displayName as String,
+      photoURL: photoURL == freezed ? _value.photoURL : photoURL as String,
       createdAt:
           createdAt == freezed ? _value.createdAt : createdAt as DateTime,
       updatedAt:
@@ -524,9 +527,6 @@ class __$CharacterCopyWithImpl<$Res> extends _$CharacterCopyWithImpl<$Res>
           alignment == freezed ? _value.alignment : alignment as AlignmentName,
       customMaxHP:
           customMaxHP == freezed ? _value.customMaxHP : customMaxHP as int,
-      displayName:
-          displayName == freezed ? _value.displayName : displayName as String,
-      photoURL: photoURL == freezed ? _value.photoURL : photoURL as String,
       level: level == freezed ? _value.level : level as int,
       bio: bio == freezed ? _value.bio : bio as String,
       customCurrentHP: customCurrentHP == freezed
@@ -565,6 +565,10 @@ class _$_Character extends _Character with FirebaseMixin, KeyMixin {
           this.key,
       @DocumentReferenceConverter()
           this.ref,
+      @JsonKey(defaultValue: 'Traveler')
+          this.displayName = 'Traveler',
+      @JsonKey(defaultValue: '')
+          this.photoURL = '',
       @DateTimeConverter()
           this.createdAt,
       @DateTimeConverter()
@@ -589,10 +593,6 @@ class _$_Character extends _Character with FirebaseMixin, KeyMixin {
           this.alignment = AlignmentName.neutral,
       @JsonKey(name: 'maxHP')
           this.customMaxHP,
-      @JsonKey(defaultValue: 'Traveler')
-          this.displayName = 'Traveler',
-      @JsonKey(defaultValue: '')
-          this.photoURL = '',
       @JsonKey(defaultValue: 1)
           this.level = 1,
       this.bio = '',
@@ -628,6 +628,8 @@ class _$_Character extends _Character with FirebaseMixin, KeyMixin {
       @CharacterSettingsConverter()
           this.customSettings})
       : assert(key != null),
+        assert(displayName != null),
+        assert(photoURL != null),
         assert(baseArmor != null),
         assert(strength != null),
         assert(dexterity != null),
@@ -636,8 +638,6 @@ class _$_Character extends _Character with FirebaseMixin, KeyMixin {
         assert(intelligence != null),
         assert(charisma != null),
         assert(alignment != null),
-        assert(displayName != null),
-        assert(photoURL != null),
         assert(level != null),
         assert(bio != null),
         assert(customCurrentHP != null),
@@ -660,6 +660,12 @@ class _$_Character extends _Character with FirebaseMixin, KeyMixin {
   @override
   @DocumentReferenceConverter()
   final DocumentReference ref;
+  @override
+  @JsonKey(defaultValue: 'Traveler')
+  final String displayName;
+  @override
+  @JsonKey(defaultValue: '')
+  final String photoURL;
   @override
   @DateTimeConverter()
   final DateTime createdAt;
@@ -687,7 +693,7 @@ class _$_Character extends _Character with FirebaseMixin, KeyMixin {
   @override
   @JsonKey(name: 'cha', defaultValue: 0)
   final int charisma;
-  @override // TODO find solution for non-const default values
+  @override
   @PlayerClassConverter()
   final List<PlayerClass> playerClasses;
   @override
@@ -696,12 +702,6 @@ class _$_Character extends _Character with FirebaseMixin, KeyMixin {
   @override
   @JsonKey(name: 'maxHP')
   final int customMaxHP;
-  @override
-  @JsonKey(defaultValue: 'Traveler')
-  final String displayName;
-  @override
-  @JsonKey(defaultValue: '')
-  final String photoURL;
   @override
   @JsonKey(defaultValue: 1)
   final int level;
@@ -747,14 +747,14 @@ class _$_Character extends _Character with FirebaseMixin, KeyMixin {
   @override
   @JsonKey(defaultValue: 0)
   final int order;
-  @override // TODO find solution for non-const default values
+  @override
   @JsonKey(name: 'settings')
   @CharacterSettingsConverter()
   final CharacterSettings customSettings;
 
   @override
   String toString() {
-    return 'Character(key: $key, ref: $ref, createdAt: $createdAt, updatedAt: $updatedAt, baseArmor: $baseArmor, strength: $strength, dexterity: $dexterity, constitution: $constitution, wisdom: $wisdom, intelligence: $intelligence, charisma: $charisma, playerClasses: $playerClasses, alignment: $alignment, customMaxHP: $customMaxHP, displayName: $displayName, photoURL: $photoURL, level: $level, bio: $bio, customCurrentHP: $customCurrentHP, currentXP: $currentXP, moves: $moves, notes: $notes, spells: $spells, inventory: $inventory, customDamageDice: $customDamageDice, looks: $looks, raceMove: $raceMove, coins: $coins, order: $order, customSettings: $customSettings)';
+    return 'Character(key: $key, ref: $ref, displayName: $displayName, photoURL: $photoURL, createdAt: $createdAt, updatedAt: $updatedAt, baseArmor: $baseArmor, strength: $strength, dexterity: $dexterity, constitution: $constitution, wisdom: $wisdom, intelligence: $intelligence, charisma: $charisma, playerClasses: $playerClasses, alignment: $alignment, customMaxHP: $customMaxHP, level: $level, bio: $bio, customCurrentHP: $customCurrentHP, currentXP: $currentXP, moves: $moves, notes: $notes, spells: $spells, inventory: $inventory, customDamageDice: $customDamageDice, looks: $looks, raceMove: $raceMove, coins: $coins, order: $order, customSettings: $customSettings)';
   }
 
   @override
@@ -765,6 +765,12 @@ class _$_Character extends _Character with FirebaseMixin, KeyMixin {
                 const DeepCollectionEquality().equals(other.key, key)) &&
             (identical(other.ref, ref) ||
                 const DeepCollectionEquality().equals(other.ref, ref)) &&
+            (identical(other.displayName, displayName) ||
+                const DeepCollectionEquality()
+                    .equals(other.displayName, displayName)) &&
+            (identical(other.photoURL, photoURL) ||
+                const DeepCollectionEquality()
+                    .equals(other.photoURL, photoURL)) &&
             (identical(other.createdAt, createdAt) ||
                 const DeepCollectionEquality()
                     .equals(other.createdAt, createdAt)) &&
@@ -800,12 +806,6 @@ class _$_Character extends _Character with FirebaseMixin, KeyMixin {
             (identical(other.customMaxHP, customMaxHP) ||
                 const DeepCollectionEquality()
                     .equals(other.customMaxHP, customMaxHP)) &&
-            (identical(other.displayName, displayName) ||
-                const DeepCollectionEquality()
-                    .equals(other.displayName, displayName)) &&
-            (identical(other.photoURL, photoURL) ||
-                const DeepCollectionEquality()
-                    .equals(other.photoURL, photoURL)) &&
             (identical(other.level, level) ||
                 const DeepCollectionEquality().equals(other.level, level)) &&
             (identical(other.bio, bio) ||
@@ -841,6 +841,8 @@ class _$_Character extends _Character with FirebaseMixin, KeyMixin {
       runtimeType.hashCode ^
       const DeepCollectionEquality().hash(key) ^
       const DeepCollectionEquality().hash(ref) ^
+      const DeepCollectionEquality().hash(displayName) ^
+      const DeepCollectionEquality().hash(photoURL) ^
       const DeepCollectionEquality().hash(createdAt) ^
       const DeepCollectionEquality().hash(updatedAt) ^
       const DeepCollectionEquality().hash(baseArmor) ^
@@ -853,8 +855,6 @@ class _$_Character extends _Character with FirebaseMixin, KeyMixin {
       const DeepCollectionEquality().hash(playerClasses) ^
       const DeepCollectionEquality().hash(alignment) ^
       const DeepCollectionEquality().hash(customMaxHP) ^
-      const DeepCollectionEquality().hash(displayName) ^
-      const DeepCollectionEquality().hash(photoURL) ^
       const DeepCollectionEquality().hash(level) ^
       const DeepCollectionEquality().hash(bio) ^
       const DeepCollectionEquality().hash(customCurrentHP) ^
@@ -889,6 +889,10 @@ abstract class _Character extends Character implements FirebaseMixin, KeyMixin {
           String key,
       @DocumentReferenceConverter()
           DocumentReference ref,
+      @JsonKey(defaultValue: 'Traveler')
+          String displayName,
+      @JsonKey(defaultValue: '')
+          String photoURL,
       @DateTimeConverter()
           DateTime createdAt,
       @DateTimeConverter()
@@ -913,10 +917,6 @@ abstract class _Character extends Character implements FirebaseMixin, KeyMixin {
           AlignmentName alignment,
       @JsonKey(name: 'maxHP')
           int customMaxHP,
-      @JsonKey(defaultValue: 'Traveler')
-          String displayName,
-      @JsonKey(defaultValue: '')
-          String photoURL,
       @JsonKey(defaultValue: 1)
           int level,
       String bio,
@@ -962,6 +962,12 @@ abstract class _Character extends Character implements FirebaseMixin, KeyMixin {
   @DocumentReferenceConverter()
   DocumentReference get ref;
   @override
+  @JsonKey(defaultValue: 'Traveler')
+  String get displayName;
+  @override
+  @JsonKey(defaultValue: '')
+  String get photoURL;
+  @override
   @DateTimeConverter()
   DateTime get createdAt;
   @override
@@ -988,7 +994,7 @@ abstract class _Character extends Character implements FirebaseMixin, KeyMixin {
   @override
   @JsonKey(name: 'cha', defaultValue: 0)
   int get charisma;
-  @override // TODO find solution for non-const default values
+  @override
   @PlayerClassConverter()
   List<PlayerClass> get playerClasses;
   @override
@@ -997,12 +1003,6 @@ abstract class _Character extends Character implements FirebaseMixin, KeyMixin {
   @override
   @JsonKey(name: 'maxHP')
   int get customMaxHP;
-  @override
-  @JsonKey(defaultValue: 'Traveler')
-  String get displayName;
-  @override
-  @JsonKey(defaultValue: '')
-  String get photoURL;
   @override
   @JsonKey(defaultValue: 1)
   int get level;
@@ -1047,7 +1047,7 @@ abstract class _Character extends Character implements FirebaseMixin, KeyMixin {
   @override
   @JsonKey(defaultValue: 0)
   int get order;
-  @override // TODO find solution for non-const default values
+  @override
   @JsonKey(name: 'settings')
   @CharacterSettingsConverter()
   CharacterSettings get customSettings;
