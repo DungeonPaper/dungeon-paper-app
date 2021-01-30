@@ -1,5 +1,5 @@
 import 'package:dungeon_paper/db/models/character.dart';
-import 'package:dungeon_paper/db/models/moves.dart';
+import 'package:dungeon_paper/db/models/move.dart';
 import 'package:dungeon_paper/src/builders/custom_move_form_builder.dart';
 import 'package:dungeon_paper/src/dialogs/dialogs.dart';
 import 'package:dungeon_paper/src/lists/add_move_list.dart';

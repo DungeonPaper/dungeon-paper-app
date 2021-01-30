@@ -1,4 +1,4 @@
-import 'package:dungeon_paper/db/models/notes.dart';
+import 'package:dungeon_paper/db/models/note.dart';
 import 'package:dungeon_paper/src/atoms/markdown_help.dart';
 import 'package:dungeon_paper/src/dialogs/dialogs.dart';
 import 'package:dungeon_paper/src/molecules/editable_tag_list.dart';

@@ -1,4 +1,4 @@
-import 'package:dungeon_paper/db/models/spells.dart';
+import 'package:dungeon_paper/db/models/spell.dart';
 import 'package:dungeon_paper/src/atoms/flexible_columns.dart';
 import 'package:dungeon_paper/src/atoms/search_bar.dart';
 import 'package:dungeon_paper/src/molecules/spell_card.dart';

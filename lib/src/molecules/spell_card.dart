@@ -1,4 +1,4 @@
-import 'package:dungeon_paper/db/models/spells.dart';
+import 'package:dungeon_paper/db/models/spell.dart';
 import 'package:dungeon_paper/src/atoms/card_bottom_controls.dart';
 import 'package:dungeon_paper/src/dialogs/confirmation_dialog.dart';
 import 'package:dungeon_paper/src/lists/tag_list.dart';
@@ -85,8 +85,7 @@ class SpellCardState extends State<SpellCard> {
                     selected: spell.prepared,
                     selectedColor: Colors.lightBlue[100],
                     onSelected: (val) {
-                      final copy = spell.copy();
-                      copy.prepared = val;
+                      final copy = spell.copyWith(prepared: val);
                       widget.onSave?.call(copy);
                     },
                   ),

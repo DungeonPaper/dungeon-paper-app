@@ -10,6 +10,8 @@ _$_Character _$_$_CharacterFromJson(Map<String, dynamic> json) {
   return _$_Character(
     key: const DefaultUuid().fromJson(json['key'] as String),
     ref: const DocumentReferenceConverter().fromJson(json['ref']),
+    displayName: json['displayName'] as String ?? 'Traveler',
+    photoURL: json['photoURL'] as String ?? '',
     createdAt: const DateTimeConverter().fromJson(json['createdAt']),
     updatedAt: const DateTimeConverter().fromJson(json['updatedAt']),
     baseArmor: json['armor'] as int ?? 0,
@@ -27,8 +29,6 @@ _$_Character _$_$_CharacterFromJson(Map<String, dynamic> json) {
         _$enumDecodeNullable(_$AlignmentNameEnumMap, json['alignment']) ??
             AlignmentName.neutral,
     customMaxHP: json['maxHP'] as int,
-    displayName: json['displayName'] as String ?? 'Traveler',
-    photoURL: json['photoURL'] as String ?? '',
     level: json['level'] as int ?? 1,
     bio: json['bio'] as String ?? '',
     customCurrentHP: json['currentHP'] as int ?? 100,
@@ -68,6 +68,8 @@ Map<String, dynamic> _$_$_CharacterToJson(_$_Character instance) =>
     <String, dynamic>{
       'key': const DefaultUuid().toJson(instance.key),
       'ref': const DocumentReferenceConverter().toJson(instance.ref),
+      'displayName': instance.displayName,
+      'photoURL': instance.photoURL,
       'createdAt': const DateTimeConverter().toJson(instance.createdAt),
       'updatedAt': const DateTimeConverter().toJson(instance.updatedAt),
       'armor': instance.baseArmor,
@@ -82,8 +84,6 @@ Map<String, dynamic> _$_$_CharacterToJson(_$_Character instance) =>
           ?.toList(),
       'alignment': _$AlignmentNameEnumMap[instance.alignment],
       'maxHP': instance.customMaxHP,
-      'displayName': instance.displayName,
-      'photoURL': instance.photoURL,
       'level': instance.level,
       'bio': instance.bio,
       'currentHP': instance.customCurrentHP,

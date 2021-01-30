@@ -1,7 +1,7 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // ignore_for_file: deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies
 
-part of 'notes.dart';
+part of 'note.dart';
 
 // **************************************************************************
 // FreezedGenerator
@@ -20,7 +20,7 @@ class _$NoteTearOff {
   _Note call(
       {String category = 'Misc',
       @required @DefaultUuid() String key,
-      String title = '',
+      @required String title,
       String description = '',
       @TagConverter() List<Tag> tags = const []}) {
     return _Note(
@@ -144,7 +144,7 @@ class _$_Note extends _Note {
   const _$_Note(
       {this.category = 'Misc',
       @required @DefaultUuid() this.key,
-      this.title = '',
+      @required this.title,
       this.description = '',
       @TagConverter() this.tags = const []})
       : assert(category != null),
@@ -163,7 +163,6 @@ class _$_Note extends _Note {
   @override
   @DefaultUuid()
   final String key;
-  @JsonKey(defaultValue: '')
   @override
   final String title;
   @JsonKey(defaultValue: '')
@@ -222,7 +221,7 @@ abstract class _Note extends Note {
   const factory _Note(
       {String category,
       @required @DefaultUuid() String key,
-      String title,
+      @required String title,
       String description,
       @TagConverter() List<Tag> tags}) = _$_Note;
 

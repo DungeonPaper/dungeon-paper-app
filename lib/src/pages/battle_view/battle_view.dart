@@ -1,6 +1,6 @@
 import 'package:dungeon_paper/db/models/character.dart';
-import 'package:dungeon_paper/db/models/moves.dart';
-import 'package:dungeon_paper/db/models/spells.dart';
+import 'package:dungeon_paper/db/models/move.dart';
+import 'package:dungeon_paper/db/models/spell.dart';
 import 'package:dungeon_paper/src/atoms/flexible_columns.dart';
 import 'package:dungeon_paper/src/atoms/empty_state.dart';
 import 'package:dungeon_paper/src/atoms/roll_button_with_edit.dart';

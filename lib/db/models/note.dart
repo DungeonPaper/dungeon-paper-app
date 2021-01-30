@@ -7,8 +7,8 @@ import 'package:freezed_annotation/freezed_annotation.dart';
 
 import 'character.dart';
 
-part 'notes.freezed.dart';
-part 'notes.g.dart';
+part 'note.freezed.dart';
+part 'note.g.dart';
 
 enum NoteKeys { key, title, description, category, tags }
 
@@ -19,7 +19,7 @@ abstract class Note with KeyMixin implements _$Note {
   const factory Note({
     @Default('Misc') String category,
     @required @DefaultUuid() String key,
-    @Default('') String title,
+    @required String title,
     @Default('') String description,
     @TagConverter() @Default([]) List<Tag> tags,
   }) = _Note;

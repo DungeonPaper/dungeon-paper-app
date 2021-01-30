@@ -257,7 +257,7 @@ class _CharacterViewState extends State<CharacterView>
     ));
     unawaited(
       widget.mode == DialogMode.create
-          ? character.create()
+          ? character.copyWith(customCurrentHP: character.defaultMaxHP).create()
           : character.update(),
     );
     widget.onSave?.call(character);

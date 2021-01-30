@@ -8,8 +8,8 @@ import 'package:freezed_annotation/freezed_annotation.dart';
 
 import 'character.dart';
 
-part 'inventory_items.freezed.dart';
-part 'inventory_items.g.dart';
+part 'inventory_item.freezed.dart';
+part 'inventory_item.g.dart';
 
 enum EquipmentKeys { key, item, amount }
 
@@ -19,7 +19,7 @@ abstract class InventoryItem with KeyMixin implements _$InventoryItem {
 
   const factory InventoryItem({
     @required @DefaultUuid() String key,
-    @Default('') String name,
+    @required String name,
     String pluralName,
     @Default('') String description,
     @TagConverter() @Default([]) List<Tag> tags,

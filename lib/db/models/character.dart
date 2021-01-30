@@ -12,8 +12,8 @@ import 'package:dungeon_paper/db/models/converters/inventory_item_converter.dart
 import 'package:dungeon_paper/db/models/converters/note_converter.dart';
 import 'package:dungeon_paper/db/models/converters/player_class_converter.dart';
 import 'package:dungeon_paper/db/models/converters/spell_converter.dart';
-import 'package:dungeon_paper/db/models/inventory_items.dart';
-import 'package:dungeon_paper/db/models/spells.dart';
+import 'package:dungeon_paper/db/models/inventory_item.dart';
+import 'package:dungeon_paper/db/models/spell.dart';
 import 'package:dungeon_paper/src/controllers/characters_controller.dart';
 import 'package:dungeon_paper/src/controllers/user_controller.dart';
 import 'package:dungeon_paper/src/utils/utils.dart';
@@ -23,7 +23,7 @@ import 'package:dungeon_world_data/move.dart';
 import 'package:dungeon_world_data/player_class.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
-import 'notes.dart';
+import 'note.dart';
 
 part 'character.freezed.dart';
 part 'character.g.dart';
@@ -37,6 +37,8 @@ abstract class Character with FirebaseMixin, KeyMixin implements _$Character {
   factory Character({
     @required @DefaultUuid() String key,
     @DocumentReferenceConverter() DocumentReference ref,
+    @Default('Traveler') @JsonKey(defaultValue: 'Traveler') String displayName,
+    @Default('') @JsonKey(defaultValue: '') String photoURL,
     @DateTimeConverter() DateTime createdAt,
     @DateTimeConverter() DateTime updatedAt,
     @Default(0) @JsonKey(name: 'armor', defaultValue: 0) int baseArmor,
@@ -46,14 +48,11 @@ abstract class Character with FirebaseMixin, KeyMixin implements _$Character {
     @Default(8) @JsonKey(name: 'wis', defaultValue: 8) int wisdom,
     @Default(8) @JsonKey(name: 'int', defaultValue: 8) int intelligence,
     @Default(0) @JsonKey(name: 'cha', defaultValue: 0) int charisma,
-    // TODO find solution for non-const default values
     @PlayerClassConverter() List<PlayerClass> playerClasses,
     @Default(AlignmentName.neutral)
     @JsonKey(defaultValue: AlignmentName.neutral)
         AlignmentName alignment,
     @JsonKey(name: 'maxHP') int customMaxHP,
-    @Default('Traveler') @JsonKey(defaultValue: 'Traveler') String displayName,
-    @Default('') @JsonKey(defaultValue: '') String photoURL,
     @Default(1) @JsonKey(defaultValue: 1) int level,
     @Default('') String bio,
     @Default(100)
@@ -75,7 +74,6 @@ abstract class Character with FirebaseMixin, KeyMixin implements _$Character {
     @DWMoveConverter() @JsonKey(name: 'race') Move raceMove,
     @Default(0) @JsonKey(defaultValue: 0) double coins,
     @Default(0) @JsonKey(defaultValue: 0) int order,
-    // TODO find solution for non-const default values
     @JsonKey(name: 'settings')
     @CharacterSettingsConverter()
         CharacterSettings customSettings,

@@ -1,6 +1,6 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'notes.dart';
+part of 'note.dart';
 
 // **************************************************************************
 // JsonSerializableGenerator
@@ -10,7 +10,7 @@ _$_Note _$_$_NoteFromJson(Map<String, dynamic> json) {
   return _$_Note(
     category: json['category'] as String ?? 'Misc',
     key: const DefaultUuid().fromJson(json['key'] as String),
-    title: json['title'] as String ?? '',
+    title: json['title'] as String,
     description: json['description'] as String ?? '',
     tags:
         (json['tags'] as List)?.map(const TagConverter().fromJson)?.toList() ??

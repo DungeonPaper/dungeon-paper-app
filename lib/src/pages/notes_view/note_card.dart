@@ -1,4 +1,4 @@
-import 'package:dungeon_paper/db/models/notes.dart';
+import 'package:dungeon_paper/db/models/note.dart';
 import 'package:dungeon_paper/src/atoms/card_bottom_controls.dart';
 import 'package:dungeon_paper/src/dialogs/confirmation_dialog.dart';
 import 'package:dungeon_paper/src/flutter_utils/widget_utils.dart';

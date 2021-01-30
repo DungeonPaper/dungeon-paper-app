@@ -1,4 +1,4 @@
-import 'package:dungeon_paper/db/models/inventory_items.dart';
+import 'package:dungeon_paper/db/models/inventory_item.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 class InventoryItemConverter
