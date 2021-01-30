@@ -2,19 +2,27 @@ import 'package:dungeon_paper/db/models/character.dart';
 import 'package:dungeon_paper/db/models/inventory_items.dart';
 import 'package:dungeon_paper/src/dialogs/dialogs.dart';
 import 'package:dungeon_paper/src/lists/existing_inventory_items_list.dart';
-import 'package:dungeon_paper/src/scaffolds/custom_inventory_item_form.dart';
+import 'package:dungeon_paper/src/scaffolds/inventory_item_form.dart';
 import 'package:dungeon_paper/src/scaffolds/main_scaffold.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:uuid/uuid.dart';
 
-class AddInventoryItemScaffold extends StatefulWidget {
+class InventoryItemViewArguments {
+  final InventoryItem item;
+  final void Function(InventoryItem) onSave;
+  final Character character;
+
+  InventoryItemViewArguments({this.item, this.onSave, this.character});
+}
+
+class InventoryItemView extends StatefulWidget {
   final InventoryItem item;
   final DialogMode mode;
   final void Function(InventoryItem) onSave;
   final Character character;
 
-  const AddInventoryItemScaffold({
+  const InventoryItemView({
     Key key,
     @required this.item,
     @required this.mode,
@@ -23,11 +31,10 @@ class AddInventoryItemScaffold extends StatefulWidget {
   }) : super(key: key);
 
   @override
-  AddInventoryItemScaffoldState createState() =>
-      AddInventoryItemScaffoldState();
+  InventoryItemViewState createState() => InventoryItemViewState();
 
-  factory AddInventoryItemScaffold.createForCharacter({Character character}) =>
-      AddInventoryItemScaffold(
+  factory InventoryItemView.createForCharacter({Character character}) =>
+      InventoryItemView(
         item: InventoryItem(key: Uuid().v4()),
         mode: DialogMode.create,
         onSave: (item) => createInventoryItem(character, item),
@@ -35,7 +42,7 @@ class AddInventoryItemScaffold extends StatefulWidget {
       );
 }
 
-class AddInventoryItemScaffoldState extends State<AddInventoryItemScaffold>
+class InventoryItemViewState extends State<InventoryItemView>
     with SingleTickerProviderStateMixin {
   TabController _controller;
   String search = '';
@@ -56,7 +63,7 @@ class AddInventoryItemScaffoldState extends State<AddInventoryItemScaffold>
 
   @override
   Widget build(BuildContext context) {
-    return CustomInventoryItemForm(
+    return InventoryItemForm(
       mode: widget.mode,
       item: widget.item,
       onSave: (item) {

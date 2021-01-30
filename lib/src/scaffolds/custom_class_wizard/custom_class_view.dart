@@ -14,12 +14,12 @@ import 'package:get/get.dart';
 import 'package:pedantic/pedantic.dart';
 import 'package:uuid/uuid.dart';
 
-class CustomClassWizard extends StatefulWidget {
+class CustomClassView extends StatefulWidget {
   final DialogMode mode;
   final CustomClass customClass;
   final void Function(CustomClass) onSave;
 
-  const CustomClassWizard({
+  const CustomClassView({
     Key key,
     @required this.mode,
     this.customClass,
@@ -28,12 +28,12 @@ class CustomClassWizard extends StatefulWidget {
         super(key: key);
 
   @override
-  _CustomClassWizardState createState() => _CustomClassWizardState();
+  _CustomClassViewState createState() => _CustomClassViewState();
 }
 
 enum CustomClassWizardTab { BasicInfo, Moves, Races, Looks, Alignments }
 
-class _CustomClassWizardState extends State<CustomClassWizard>
+class _CustomClassViewState extends State<CustomClassView>
     with SingleTickerProviderStateMixin {
   CustomClass def;
   TabController tabController;

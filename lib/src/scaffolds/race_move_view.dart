@@ -4,8 +4,8 @@ import 'package:dungeon_world_data/move.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-class AddRaceMoveScaffold extends StatefulWidget {
-  const AddRaceMoveScaffold({
+class RaceMoveView extends StatefulWidget {
+  const RaceMoveView({
     Key key,
     @required this.move,
     @required this.mode,
@@ -17,10 +17,10 @@ class AddRaceMoveScaffold extends StatefulWidget {
   final void Function(Move move) onSave;
 
   @override
-  AddRaceMoveScaffoldState createState() => AddRaceMoveScaffoldState();
+  RaceMoveViewState createState() => RaceMoveViewState();
 }
 
-class AddRaceMoveScaffoldState extends State<AddRaceMoveScaffold>
+class RaceMoveViewState extends State<RaceMoveView>
     with SingleTickerProviderStateMixin {
   @override
   Widget build(BuildContext context) {

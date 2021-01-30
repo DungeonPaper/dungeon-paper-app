@@ -3,7 +3,7 @@ import 'package:dungeon_paper/src/dialogs/change_alignment_dialog.dart';
 import 'package:dungeon_paper/src/dialogs/confirmation_dialog.dart';
 import 'package:dungeon_paper/src/dialogs/dialogs.dart';
 import 'package:dungeon_paper/src/controllers/user_controller.dart';
-import 'package:dungeon_paper/src/scaffolds/class_select_scaffold.dart';
+import 'package:dungeon_paper/src/scaffolds/class_select_view.dart';
 import 'package:dungeon_paper/src/scaffolds/main_scaffold.dart';
 import 'package:dungeon_paper/src/utils/analytics.dart';
 import 'package:dungeon_paper/src/utils/logger.dart';
@@ -11,13 +11,13 @@ import 'package:dungeon_paper/src/utils/utils.dart';
 import 'package:get/get.dart';
 import 'package:pedantic/pedantic.dart';
 import 'package:uuid/uuid.dart';
-import 'edit_basic_info_view.dart';
-import 'edit_race.dart';
-import 'edit_looks.dart';
+import 'basic_info_view.dart';
+import 'race_move_view.dart';
+import 'looks_view.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 
-import 'edit_stats.dart';
+import 'character_stats.dart';
 
 enum CreateCharacterTab {
   BasicInfo,
@@ -28,12 +28,12 @@ enum CreateCharacterTab {
   Stats,
 }
 
-class EditCharacterView extends StatefulWidget {
+class CharacterView extends StatefulWidget {
   final DialogMode mode;
   final Character character;
   final void Function(Character) onSave;
 
-  const EditCharacterView({
+  const CharacterView({
     Key key,
     @required this.mode,
     @required this.character,
@@ -41,10 +41,10 @@ class EditCharacterView extends StatefulWidget {
   }) : super(key: key);
 
   @override
-  _EditCharacterViewState createState() => _EditCharacterViewState();
+  _CharacterViewState createState() => _CharacterViewState();
 }
 
-class _EditCharacterViewState extends State<EditCharacterView>
+class _CharacterViewState extends State<CharacterView>
     with SingleTickerProviderStateMixin {
   Character character;
   TabController tabController;
@@ -186,7 +186,7 @@ class _EditCharacterViewState extends State<EditCharacterView>
             character = char;
           }),
         ),
-        CreateCharacterTab.Race: ChangeRaceDialog(
+        CreateCharacterTab.Race: RaceMoveView(
           character: character,
           mode: DialogMode.create,
           onUpdate: (char) => setState(() {
@@ -194,7 +194,7 @@ class _EditCharacterViewState extends State<EditCharacterView>
             character = char;
           }),
         ),
-        CreateCharacterTab.Looks: ChangeLooksDialog(
+        CreateCharacterTab.Looks: LooksView(
           character: character,
           mode: DialogMode.create,
           onUpdate: (char) => setState(() {
@@ -202,7 +202,7 @@ class _EditCharacterViewState extends State<EditCharacterView>
             character = character.copyWith(looks: char.looks);
           }),
         ),
-        CreateCharacterTab.Stats: EditStats(
+        CreateCharacterTab.Stats: CharacterStats(
           character: character,
           onUpdate: (char) => setState(() {
             dirty = true;

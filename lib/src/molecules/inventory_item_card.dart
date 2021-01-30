@@ -8,7 +8,7 @@ import 'package:dungeon_paper/src/dialogs/dialogs.dart';
 import 'package:dungeon_paper/src/flutter_utils/platform_svg.dart';
 import 'package:dungeon_paper/src/flutter_utils/widget_utils.dart';
 import 'package:dungeon_paper/src/lists/tag_list.dart';
-import 'package:dungeon_paper/src/scaffolds/add_inventory_item_scaffold.dart';
+import 'package:dungeon_paper/src/scaffolds/inventory_item_view.dart';
 import 'package:dungeon_paper/src/utils/analytics.dart';
 import 'package:dungeon_paper/src/utils/utils.dart';
 import 'package:flutter/material.dart';
@@ -258,7 +258,7 @@ class InventoryItemCard extends StatelessWidget {
 
   void editInventoryItem(BuildContext context) {
     Get.to(
-      AddInventoryItemScaffold(
+      InventoryItemView(
         item: item,
         mode: DialogMode.edit,
         onSave: onSave,

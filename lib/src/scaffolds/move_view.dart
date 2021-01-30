@@ -10,8 +10,18 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:uuid/uuid.dart';
 
-class AddMoveScreen extends StatefulWidget {
-  const AddMoveScreen({
+class MoveViewArguments {
+  final Move move;
+  final void Function(Move move) onSave;
+
+  MoveViewArguments({
+    this.move,
+    this.onSave,
+  });
+}
+
+class MoveView extends StatefulWidget {
+  const MoveView({
     Key key,
     @required this.move,
     @required this.mode,
@@ -25,12 +35,12 @@ class AddMoveScreen extends StatefulWidget {
   final PlayerClass defaultClass;
 
   @override
-  AddMoveScreenState createState() => AddMoveScreenState();
+  MoveViewState createState() => MoveViewState();
 
-  factory AddMoveScreen.createForCharacter({
+  factory MoveView.createForCharacter({
     @required Character character,
   }) =>
-      AddMoveScreen(
+      MoveView(
         move: Move(
           key: Uuid().v4(),
           name: '',
@@ -47,10 +57,10 @@ class AddMoveScreen extends StatefulWidget {
       );
 }
 
-class AddMoveScreenState extends State<AddMoveScreen>
+class MoveViewState extends State<MoveView>
     with SingleTickerProviderStateMixin {
   TabController _controller;
-  AddMoveScreenState() {
+  MoveViewState() {
     _controller = TabController(vsync: this, length: texts.length);
   }
 

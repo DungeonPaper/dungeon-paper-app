@@ -5,21 +5,21 @@ import 'package:dungeon_paper/src/atoms/number_controller.dart';
 import 'package:dungeon_paper/src/utils/types.dart';
 import 'package:flutter/material.dart';
 
-class EditStats extends StatefulWidget {
+class CharacterStats extends StatefulWidget {
   final Character character;
   final VoidCallbackDelegate<Character> onUpdate;
 
-  const EditStats({
+  const CharacterStats({
     Key key,
     @required this.character,
     @required this.onUpdate,
   }) : super(key: key);
 
   @override
-  _EditStatsState createState() => _EditStatsState();
+  _CharacterStatsState createState() => _CharacterStatsState();
 }
 
-class _EditStatsState extends State<EditStats> {
+class _CharacterStatsState extends State<CharacterStats> {
   int _str;
   int _dex;
   int _con;

@@ -3,7 +3,7 @@ import 'package:dungeon_paper/src/atoms/card_bottom_controls.dart';
 import 'package:dungeon_paper/src/dialogs/confirmation_dialog.dart';
 import 'package:dungeon_paper/src/dialogs/dialogs.dart';
 import 'package:dungeon_paper/src/lists/tag_list.dart';
-import 'package:dungeon_paper/src/scaffolds/add_spell_scaffold.dart';
+import 'package:dungeon_paper/src/scaffolds/spell_view.dart';
 import 'package:dungeon_paper/src/utils/analytics.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_markdown/flutter_markdown.dart';
@@ -97,8 +97,7 @@ class SpellCardState extends State<SpellCard> {
           widget.mode == SpellCardMode.editable
               ? CardBottomControls(
                   onEdit: () => Get.to(
-                    AddSpellScaffold(
-                      index: widget.index,
+                    SpellView(
                       spell: widget.spell,
                       onSave: (spell) {
                         if (widget.onSave != null) {

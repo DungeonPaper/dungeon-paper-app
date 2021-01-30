@@ -8,23 +8,23 @@ import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:pedantic/pedantic.dart';
 
-class EditCoinsDialog extends StatefulWidget {
+class CoinsDialog extends StatefulWidget {
   final double value;
-  EditCoinsDialog({
+  CoinsDialog({
     Key key,
     @required this.value,
   }) : super(key: key);
 
   @override
-  State<StatefulWidget> createState() => EditCoinsDialogState(value: value);
+  State<StatefulWidget> createState() => CoinsDialogState(value: value);
 }
 
-class EditCoinsDialogState extends State<EditCoinsDialog> {
+class CoinsDialogState extends State<CoinsDialog> {
   double value;
   final TextEditingController _controller;
   bool valueError = false;
 
-  EditCoinsDialogState({
+  CoinsDialogState({
     Key key,
     @required this.value,
   })  : _controller = TextEditingController(text: value.toString()),

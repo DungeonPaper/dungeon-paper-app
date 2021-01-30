@@ -6,8 +6,20 @@ import 'package:dungeon_paper/src/scaffolds/main_scaffold.dart';
 import 'package:flutter/material.dart';
 import 'package:uuid/uuid.dart';
 
-class EditNoteScreen extends StatefulWidget {
-  const EditNoteScreen({
+class NoteViewArguments {
+  final Note note;
+  final List<String> categories;
+  final void Function(Note) onSave;
+
+  NoteViewArguments({
+    this.note,
+    this.categories,
+    this.onSave,
+  });
+}
+
+class NoteView extends StatefulWidget {
+  const NoteView({
     Key key,
     @required this.note,
     @required this.mode,
@@ -21,10 +33,10 @@ class EditNoteScreen extends StatefulWidget {
   final void Function(Note) onSave;
 
   @override
-  _EditNoteScreenState createState() => _EditNoteScreenState();
+  _NoteViewState createState() => _NoteViewState();
 
-  factory EditNoteScreen.addForCharacter({@required Character character}) =>
-      EditNoteScreen(
+  factory NoteView.createForCharacter({@required Character character}) =>
+      NoteView(
         note: Note(key: Uuid().v4()),
         mode: DialogMode.create,
         onSave: (note) => createNote(character, note),
@@ -32,7 +44,7 @@ class EditNoteScreen extends StatefulWidget {
       );
 }
 
-class _EditNoteScreenState extends State<EditNoteScreen> {
+class _NoteViewState extends State<NoteView> {
   final ScrollController scrollController = ScrollController();
 
   @override

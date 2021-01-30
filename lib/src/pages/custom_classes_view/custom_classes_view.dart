@@ -5,7 +5,7 @@ import 'package:dungeon_paper/src/dialogs/dialogs.dart';
 import 'package:dungeon_paper/src/lists/custom_classes_list.dart';
 import 'package:dungeon_paper/src/lists/player_class_list.dart';
 import 'package:dungeon_paper/src/controllers/custom_classes_controller.dart';
-import 'package:dungeon_paper/src/scaffolds/custom_class_wizard/custom_class_wizard.dart';
+import 'package:dungeon_paper/src/scaffolds/custom_class_wizard/custom_class_view.dart';
 import 'package:dungeon_paper/src/scaffolds/main_scaffold.dart';
 import 'package:dungeon_paper/src/utils/analytics.dart';
 import 'package:dungeon_paper/src/utils/logger.dart';
@@ -95,7 +95,7 @@ class _CustomClassesViewState extends State<CustomClassesView> {
   void Function(CustomClass) _edit(BuildContext context) {
     return (cls) {
       Get.to(
-        CustomClassWizard(
+        CustomClassView(
           mode: DialogMode.edit,
           customClass: cls,
         ),
@@ -125,7 +125,7 @@ class _CustomClassesViewState extends State<CustomClassesView> {
     );
 
     Get.to(
-      CustomClassWizard(
+      CustomClassView(
         mode: DialogMode.create,
         customClass: custCls,
       ),

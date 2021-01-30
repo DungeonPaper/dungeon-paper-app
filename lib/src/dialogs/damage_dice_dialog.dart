@@ -7,11 +7,11 @@ import 'package:pedantic/pedantic.dart';
 import 'package:dungeon_world_data/dice.dart';
 import 'package:flutter/material.dart';
 
-class EditDamageDiceDialog extends StatefulWidget {
+class DamageDiceDialog extends StatefulWidget {
   final Character character;
   final VoidCallbackDelegate<Character> onSave;
 
-  EditDamageDiceDialog({
+  DamageDiceDialog({
     Key key,
     @required this.character,
     this.onSave,
@@ -20,10 +20,10 @@ class EditDamageDiceDialog extends StatefulWidget {
   Dice get dice => character.damageDice;
 
   @override
-  State<StatefulWidget> createState() => EditDamageDiceDialogState();
+  State<StatefulWidget> createState() => DamageDiceDialogState();
 }
 
-class EditDamageDiceDialogState extends State<EditDamageDiceDialog> {
+class DamageDiceDialogState extends State<DamageDiceDialog> {
   Dice dice;
 
   @override

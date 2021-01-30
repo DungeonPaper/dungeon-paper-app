@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-class EditDisplayNameCard extends StatelessWidget {
+class DisplayNameCard extends StatelessWidget {
   final TextEditingController controller;
 
-  const EditDisplayNameCard({
+  const DisplayNameCard({
     Key key,
     @required this.controller,
   }) : super(key: key);

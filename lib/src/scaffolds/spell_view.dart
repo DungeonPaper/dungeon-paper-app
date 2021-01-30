@@ -8,27 +8,35 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:uuid/uuid.dart';
 
-class AddSpellScaffold extends StatefulWidget {
-  const AddSpellScaffold({
+class SpellViewArguments {
+  final DbSpell spell;
+  final void Function(DbSpell move) onSave;
+
+  SpellViewArguments({
+    this.spell,
+    this.onSave,
+  });
+}
+
+class SpellView extends StatefulWidget {
+  const SpellView({
     Key key,
-    @required this.index,
     @required this.spell,
     @required this.mode,
     @required this.onSave,
   }) : super(key: key);
 
-  final num index;
   final DbSpell spell;
   final DialogMode mode;
   final void Function(DbSpell move) onSave;
 
   @override
-  AddSpellScaffoldState createState() => AddSpellScaffoldState();
+  SpellViewState createState() => SpellViewState();
 
-  factory AddSpellScaffold.createForCharacter({
+  factory SpellView.createForCharacter({
     @required Character character,
   }) =>
-      AddSpellScaffold(
+      SpellView(
         spell: DbSpell(
           key: Uuid().v4(),
           name: '',
@@ -36,7 +44,6 @@ class AddSpellScaffold extends StatefulWidget {
           tags: [],
         ),
         mode: DialogMode.create,
-        index: -1,
         onSave: (spell) {
           createSpell(character, spell);
           Get.back();
@@ -44,10 +51,10 @@ class AddSpellScaffold extends StatefulWidget {
       );
 }
 
-class AddSpellScaffoldState extends State<AddSpellScaffold>
+class SpellViewState extends State<SpellView>
     with SingleTickerProviderStateMixin {
   TabController _controller;
-  AddSpellScaffoldState() {
+  SpellViewState() {
     _controller = TabController(vsync: this, length: texts.length);
   }
 
@@ -68,7 +75,6 @@ class AddSpellScaffoldState extends State<AddSpellScaffold>
   Widget build(BuildContext context) {
     return CustomSpellFormBuilder(
       mode: widget.mode,
-      index: widget.index,
       spell: widget.spell,
       onSave: widget.onSave,
       builder: (ctx, form, onSave) {

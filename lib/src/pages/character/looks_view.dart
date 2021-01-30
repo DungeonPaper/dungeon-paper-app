@@ -8,12 +8,12 @@ import 'package:dungeon_world_data/player_class.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-class ChangeLooksDialog extends StatefulWidget {
+class LooksView extends StatefulWidget {
   final Character character;
   final DialogMode mode;
   final VoidCallbackDelegate<Character> onUpdate;
 
-  const ChangeLooksDialog({
+  const LooksView({
     Key key,
     @required this.character,
     @required this.onUpdate,
@@ -21,10 +21,10 @@ class ChangeLooksDialog extends StatefulWidget {
   }) : super(key: key);
 
   @override
-  _ChangeLooksDialogState createState() => _ChangeLooksDialogState();
+  _LooksViewState createState() => _LooksViewState();
 }
 
-class _ChangeLooksDialogState extends State<ChangeLooksDialog> {
+class _LooksViewState extends State<LooksView> {
   List<String> selected;
   List<TextEditingController> _controllers;
   List<List<String>> looksOptions;

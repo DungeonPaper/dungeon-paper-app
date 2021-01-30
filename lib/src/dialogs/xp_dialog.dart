@@ -9,20 +9,20 @@ import 'package:flutter/material.dart';
 
 import 'standard_dialog_controls.dart';
 
-class EditXPDialog extends StatefulWidget {
+class XpDialog extends StatefulWidget {
   final Character character;
   static const int MIN_ROW_WIDTH = 410;
 
-  const EditXPDialog({
+  const XpDialog({
     Key key,
     @required this.character,
   }) : super(key: key);
 
   @override
-  _EditXPDialogState createState() => _EditXPDialogState();
+  _XpDialogState createState() => _XpDialogState();
 }
 
-class _EditXPDialogState extends State<EditXPDialog> {
+class _XpDialogState extends State<XpDialog> {
   int currentXP;
   int initialCurrentXP;
 
@@ -86,11 +86,11 @@ class _EditXPDialogState extends State<EditXPDialog> {
               ),
             ),
             Container(
-              width: screenWidth >= EditXPDialog.MIN_ROW_WIDTH
-                  ? EditXPDialog.MIN_ROW_WIDTH.toDouble()
+              width: screenWidth >= XpDialog.MIN_ROW_WIDTH
+                  ? XpDialog.MIN_ROW_WIDTH.toDouble()
                   : 200.0,
               padding: const EdgeInsets.all(32.0).copyWith(bottom: 0),
-              child: screenWidth >= EditXPDialog.MIN_ROW_WIDTH
+              child: screenWidth >= XpDialog.MIN_ROW_WIDTH
                   ? Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       mainAxisSize: MainAxisSize.max,
