@@ -25,7 +25,7 @@ abstract class User with FirebaseMixin implements _$User {
     @required String email,
     String photoURL,
     @Default({}) Map<String, dynamic> features,
-    @required @DocumentReferenceConverter() DocumentReference ref,
+    @DocumentReferenceConverter() DocumentReference ref,
     @DateTimeConverter() DateTime createdAt,
     @DateTimeConverter() DateTime updatedAt,
     String lastCharacterId,
