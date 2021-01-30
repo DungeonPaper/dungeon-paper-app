@@ -8,8 +8,10 @@ part of 'character.dart';
 
 _$_Character _$_$_CharacterFromJson(Map<String, dynamic> json) {
   return _$_Character(
-    ref: const DocumentReferenceConverter().fromJson(json['ref']),
     key: const DefaultUuid().fromJson(json['key'] as String),
+    ref: const DocumentReferenceConverter().fromJson(json['ref']),
+    createdAt: const DateTimeConverter().fromJson(json['createdAt']),
+    updatedAt: const DateTimeConverter().fromJson(json['updatedAt']),
     baseArmor: json['armor'] as int ?? 0,
     strength: json['str'] as int ?? 8,
     dexterity: json['dex'] as int ?? 8,
@@ -64,8 +66,10 @@ _$_Character _$_$_CharacterFromJson(Map<String, dynamic> json) {
 
 Map<String, dynamic> _$_$_CharacterToJson(_$_Character instance) =>
     <String, dynamic>{
-      'ref': const DocumentReferenceConverter().toJson(instance.ref),
       'key': const DefaultUuid().toJson(instance.key),
+      'ref': const DocumentReferenceConverter().toJson(instance.ref),
+      'createdAt': const DateTimeConverter().toJson(instance.createdAt),
+      'updatedAt': const DateTimeConverter().toJson(instance.updatedAt),
       'armor': instance.baseArmor,
       'str': instance.strength,
       'dex': instance.dexterity,

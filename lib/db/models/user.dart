@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dungeon_paper/db/db.dart';
+import 'package:dungeon_paper/db/models/converters/datetime_converter.dart';
 import 'package:dungeon_paper/db/models/converters/document_reference_converter.dart';
 import 'package:dungeon_paper/src/controllers/characters_controller.dart';
 import 'package:dungeon_paper/src/controllers/custom_classes_controller.dart';
@@ -25,6 +26,8 @@ abstract class User with FirebaseMixin implements _$User {
     String photoURL,
     @Default({}) Map<String, dynamic> features,
     @DocumentReferenceConverter() DocumentReference ref,
+    @DateTimeConverter() DateTime createdAt,
+    @DateTimeConverter() DateTime updatedAt,
     String lastCharacterId,
   }) = _User;
 

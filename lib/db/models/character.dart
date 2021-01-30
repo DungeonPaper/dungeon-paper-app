@@ -3,6 +3,7 @@ import 'package:dungeon_paper/db/db.dart';
 import 'package:dungeon_paper/db/helpers/character_utils.dart';
 import 'package:dungeon_paper/db/models/character_settings.dart';
 import 'package:dungeon_paper/db/models/converters/character_settings_converter.dart';
+import 'package:dungeon_paper/db/models/converters/datetime_converter.dart';
 import 'package:dungeon_paper/db/models/converters/default_uuid.dart';
 import 'package:dungeon_paper/db/models/converters/dice_converter.dart';
 import 'package:dungeon_paper/db/models/converters/document_reference_converter.dart';
@@ -34,8 +35,10 @@ abstract class Character with FirebaseMixin, KeyMixin implements _$Character {
   @With(FirebaseMixin)
   @With(KeyMixin)
   factory Character({
+    @required @DefaultUuid() String key,
     @DocumentReferenceConverter() DocumentReference ref,
-    @required @DefaultUuid() @JsonKey() String key,
+    @DateTimeConverter() DateTime createdAt,
+    @DateTimeConverter() DateTime updatedAt,
     @Default(0) @JsonKey(name: 'armor', defaultValue: 0) int baseArmor,
     @Default(8) @JsonKey(name: 'str', defaultValue: 8) int strength,
     @Default(8) @JsonKey(name: 'dex', defaultValue: 8) int dexterity,

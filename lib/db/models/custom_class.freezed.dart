@@ -23,6 +23,10 @@ class _$CustomClassTearOff {
           String key,
       @DocumentReferenceConverter()
           DocumentReference ref,
+      @DateTimeConverter()
+          DateTime createdAt,
+      @DateTimeConverter()
+          DateTime updatedAt,
       @JsonKey(defaultValue: '')
           String name = '',
       @JsonKey(defaultValue: '')
@@ -62,6 +66,8 @@ class _$CustomClassTearOff {
     return _CustomClass(
       key: key,
       ref: ref,
+      createdAt: createdAt,
+      updatedAt: updatedAt,
       name: name,
       description: description,
       load: load,
@@ -96,6 +102,10 @@ mixin _$CustomClass {
   String get key;
   @DocumentReferenceConverter()
   DocumentReference get ref;
+  @DateTimeConverter()
+  DateTime get createdAt;
+  @DateTimeConverter()
+  DateTime get updatedAt;
   @JsonKey(defaultValue: '')
   String get name;
   @JsonKey(defaultValue: '')
@@ -148,6 +158,10 @@ abstract class $CustomClassCopyWith<$Res> {
           String key,
       @DocumentReferenceConverter()
           DocumentReference ref,
+      @DateTimeConverter()
+          DateTime createdAt,
+      @DateTimeConverter()
+          DateTime updatedAt,
       @JsonKey(defaultValue: '')
           String name,
       @JsonKey(defaultValue: '')
@@ -198,6 +212,8 @@ class _$CustomClassCopyWithImpl<$Res> implements $CustomClassCopyWith<$Res> {
   $Res call({
     Object key = freezed,
     Object ref = freezed,
+    Object createdAt = freezed,
+    Object updatedAt = freezed,
     Object name = freezed,
     Object description = freezed,
     Object load = freezed,
@@ -217,6 +233,10 @@ class _$CustomClassCopyWithImpl<$Res> implements $CustomClassCopyWith<$Res> {
     return _then(_value.copyWith(
       key: key == freezed ? _value.key : key as String,
       ref: ref == freezed ? _value.ref : ref as DocumentReference,
+      createdAt:
+          createdAt == freezed ? _value.createdAt : createdAt as DateTime,
+      updatedAt:
+          updatedAt == freezed ? _value.updatedAt : updatedAt as DateTime,
       name: name == freezed ? _value.name : name as String,
       description:
           description == freezed ? _value.description : description as String,
@@ -262,6 +282,10 @@ abstract class _$CustomClassCopyWith<$Res>
           String key,
       @DocumentReferenceConverter()
           DocumentReference ref,
+      @DateTimeConverter()
+          DateTime createdAt,
+      @DateTimeConverter()
+          DateTime updatedAt,
       @JsonKey(defaultValue: '')
           String name,
       @JsonKey(defaultValue: '')
@@ -314,6 +338,8 @@ class __$CustomClassCopyWithImpl<$Res> extends _$CustomClassCopyWithImpl<$Res>
   $Res call({
     Object key = freezed,
     Object ref = freezed,
+    Object createdAt = freezed,
+    Object updatedAt = freezed,
     Object name = freezed,
     Object description = freezed,
     Object load = freezed,
@@ -333,6 +359,10 @@ class __$CustomClassCopyWithImpl<$Res> extends _$CustomClassCopyWithImpl<$Res>
     return _then(_CustomClass(
       key: key == freezed ? _value.key : key as String,
       ref: ref == freezed ? _value.ref : ref as DocumentReference,
+      createdAt:
+          createdAt == freezed ? _value.createdAt : createdAt as DateTime,
+      updatedAt:
+          updatedAt == freezed ? _value.updatedAt : updatedAt as DateTime,
       name: name == freezed ? _value.name : name as String,
       description:
           description == freezed ? _value.description : description as String,
@@ -378,6 +408,10 @@ class _$_CustomClass extends _CustomClass with FirebaseMixin, KeyMixin {
           this.key,
       @DocumentReferenceConverter()
           this.ref,
+      @DateTimeConverter()
+          this.createdAt,
+      @DateTimeConverter()
+          this.updatedAt,
       @JsonKey(defaultValue: '')
           this.name = '',
       @JsonKey(defaultValue: '')
@@ -440,6 +474,12 @@ class _$_CustomClass extends _CustomClass with FirebaseMixin, KeyMixin {
   @DocumentReferenceConverter()
   final DocumentReference ref;
   @override
+  @DateTimeConverter()
+  final DateTime createdAt;
+  @override
+  @DateTimeConverter()
+  final DateTime updatedAt;
+  @override
   @JsonKey(defaultValue: '')
   final String name;
   @override
@@ -493,7 +533,7 @@ class _$_CustomClass extends _CustomClass with FirebaseMixin, KeyMixin {
 
   @override
   String toString() {
-    return 'CustomClass(key: $key, ref: $ref, name: $name, description: $description, load: $load, baseHP: $baseHP, damage: $damage, names: $names, bonds: $bonds, looks: $looks, alignments: $alignments, raceMoves: $raceMoves, startingMoves: $startingMoves, advancedMoves1: $advancedMoves1, advancedMoves2: $advancedMoves2, spells: $spells, gearChoices: $gearChoices)';
+    return 'CustomClass(key: $key, ref: $ref, createdAt: $createdAt, updatedAt: $updatedAt, name: $name, description: $description, load: $load, baseHP: $baseHP, damage: $damage, names: $names, bonds: $bonds, looks: $looks, alignments: $alignments, raceMoves: $raceMoves, startingMoves: $startingMoves, advancedMoves1: $advancedMoves1, advancedMoves2: $advancedMoves2, spells: $spells, gearChoices: $gearChoices)';
   }
 
   @override
@@ -504,6 +544,12 @@ class _$_CustomClass extends _CustomClass with FirebaseMixin, KeyMixin {
                 const DeepCollectionEquality().equals(other.key, key)) &&
             (identical(other.ref, ref) ||
                 const DeepCollectionEquality().equals(other.ref, ref)) &&
+            (identical(other.createdAt, createdAt) ||
+                const DeepCollectionEquality()
+                    .equals(other.createdAt, createdAt)) &&
+            (identical(other.updatedAt, updatedAt) ||
+                const DeepCollectionEquality()
+                    .equals(other.updatedAt, updatedAt)) &&
             (identical(other.name, name) ||
                 const DeepCollectionEquality().equals(other.name, name)) &&
             (identical(other.description, description) ||
@@ -548,6 +594,8 @@ class _$_CustomClass extends _CustomClass with FirebaseMixin, KeyMixin {
       runtimeType.hashCode ^
       const DeepCollectionEquality().hash(key) ^
       const DeepCollectionEquality().hash(ref) ^
+      const DeepCollectionEquality().hash(createdAt) ^
+      const DeepCollectionEquality().hash(updatedAt) ^
       const DeepCollectionEquality().hash(name) ^
       const DeepCollectionEquality().hash(description) ^
       const DeepCollectionEquality().hash(load) ^
@@ -584,6 +632,10 @@ abstract class _CustomClass extends CustomClass
           String key,
       @DocumentReferenceConverter()
           DocumentReference ref,
+      @DateTimeConverter()
+          DateTime createdAt,
+      @DateTimeConverter()
+          DateTime updatedAt,
       @JsonKey(defaultValue: '')
           String name,
       @JsonKey(defaultValue: '')
@@ -630,6 +682,12 @@ abstract class _CustomClass extends CustomClass
   @override
   @DocumentReferenceConverter()
   DocumentReference get ref;
+  @override
+  @DateTimeConverter()
+  DateTime get createdAt;
+  @override
+  @DateTimeConverter()
+  DateTime get updatedAt;
   @override
   @JsonKey(defaultValue: '')
   String get name;
