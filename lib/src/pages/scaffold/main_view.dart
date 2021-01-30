@@ -229,21 +229,30 @@ class _MainViewState extends State<MainView> {
     unawaited(sharedPrefs.setString(lastVersionKey, packageInfo.version));
   }
 
+  static final screenNames = <String, String>{
+    'Home': 'home_page',
+    'Battle': 'battle_page',
+    'Inventory': 'inventory_page',
+    'Notes': 'notes_page',
+    'Reference': 'reference_page',
+  };
+
   void _pageListener() {
     if (widget.pageController.hasClients) {
       loseAllFocus(context);
       if (widget.pageController.page.round() == widget.pageController.page) {
         if (pageName != lastPageName) {
+          logger.d(
+              'Page View: ${screenNames[pageName]} (from: ${screenNames[lastPageName]})');
           setState(() {
             lastPageName = pageName;
           });
-          logger.d('Page View: $pageName (from: $lastPageName)');
           analytics.setCurrentScreen(
-            screenName: pageName,
+            screenName: screenNames[pageName],
           );
         } else {
           analytics.logEvent(name: Events.ReturnToScreen, parameters: {
-            'screen_name': lastPageName,
+            'screen_name': screenNames[lastPageName],
           });
         }
       }
