@@ -14,5 +14,5 @@ class DefaultUuid implements JsonConverter<String, String> {
   }
 
   @override
-  String toJson(String data) => data;
+  String toJson(String data) => data ?? Uuid().v4();
 }

@@ -14,6 +14,7 @@ import 'package:dungeon_paper/db/models/converters/spell_converter.dart';
 import 'package:dungeon_paper/db/models/inventory_items.dart';
 import 'package:dungeon_paper/db/models/spells.dart';
 import 'package:dungeon_paper/src/controllers/characters_controller.dart';
+import 'package:dungeon_paper/src/controllers/user_controller.dart';
 import 'package:dungeon_paper/src/utils/utils.dart';
 import 'package:dungeon_world_data/dice.dart';
 import 'package:dungeon_world_data/dw_data.dart';
@@ -81,9 +82,9 @@ abstract class Character with FirebaseMixin, KeyMixin implements _$Character {
       _$CharacterFromJson(value).copyWith(ref: ref);
 
   @override
-  Future<DocumentReference> create() {
-    characterController.upsert(this);
-    return super.create();
+  Future<DocumentReference> create() async {
+    final char = await userController.current.createCharacter(this);
+    return char.ref;
   }
 
   @override

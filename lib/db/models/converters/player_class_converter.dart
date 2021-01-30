@@ -1,3 +1,4 @@
+import 'package:dungeon_world_data/dw_data.dart';
 import 'package:dungeon_world_data/player_class.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
@@ -8,7 +9,7 @@ class PlayerClassConverter
   @override
   PlayerClass fromJson(Map<String, dynamic> json) {
     if (json == null) {
-      return null;
+      return dungeonWorld.classes.first;
     }
     if (json['looks'] is Map) {
       json['looks'] = json['looks'].values.toList();

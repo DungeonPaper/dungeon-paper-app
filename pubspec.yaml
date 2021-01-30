@@ -39,7 +39,6 @@ dependencies:
   package_info: ^0.4.3
   path: ^1.7.0
   path_provider: ^1.6.18
-  pedantic: ^1.9.2
   platform: ^2.2.1
   pub_semver: ^1.4.4
   quiver_hashcode: ^2.0.0
@@ -55,10 +54,12 @@ dependencies:
 dev_dependencies:
   flutter_test:
     sdk: flutter
+  args: ^1.5.2
   build_runner: ^1.10.13
   flutter_launcher_icons: ^0.7.5
   freezed: ^0.12.7
   json_serializable: ^3.5.1
+  pedantic: ^1.9.2
 
 flutter_icons:
   android: true

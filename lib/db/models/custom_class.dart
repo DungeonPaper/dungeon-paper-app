@@ -9,6 +9,7 @@ import 'package:dungeon_paper/db/models/converters/dw_move_converter.dart';
 import 'package:dungeon_paper/db/models/converters/dw_spell_converter.dart';
 import 'package:dungeon_paper/src/controllers/characters_controller.dart';
 import 'package:dungeon_paper/src/controllers/custom_classes_controller.dart';
+import 'package:dungeon_paper/src/controllers/user_controller.dart';
 import 'package:dungeon_paper/src/utils/utils.dart';
 import 'package:dungeon_world_data/alignment.dart';
 import 'package:dungeon_world_data/dice.dart';
@@ -128,8 +129,8 @@ abstract class CustomClass
 
   @override
   Future<DocumentReference> create() async {
-    customClassesController.upsert(this);
-    return super.create();
+    final cls = await userController.current.createCustomClass(this);
+    return cls.ref;
   }
 
   @override
