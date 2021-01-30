@@ -4,6 +4,16 @@ import 'package:dungeon_world_data/move.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
+class RaceMoveViewArguments {
+  final Move move;
+  final void Function(Move move) onSave;
+
+  RaceMoveViewArguments({
+    this.move,
+    this.onSave,
+  });
+}
+
 class RaceMoveView extends StatefulWidget {
   const RaceMoveView({
     Key key,

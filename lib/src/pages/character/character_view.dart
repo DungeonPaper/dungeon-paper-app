@@ -12,7 +12,7 @@ import 'package:get/get.dart';
 import 'package:pedantic/pedantic.dart';
 import 'package:uuid/uuid.dart';
 import 'basic_info_view.dart';
-import 'race_move_view.dart';
+import 'select_race_move_view.dart';
 import 'looks_view.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
@@ -26,6 +26,16 @@ enum CreateCharacterTab {
   Race,
   Looks,
   Stats,
+}
+
+class CharacterViewArguments {
+  final Character character;
+  final void Function(Character) onSave;
+
+  CharacterViewArguments({
+    this.character,
+    this.onSave,
+  });
 }
 
 class CharacterView extends StatefulWidget {
@@ -186,7 +196,7 @@ class _CharacterViewState extends State<CharacterView>
             character = char;
           }),
         ),
-        CreateCharacterTab.Race: RaceMoveView(
+        CreateCharacterTab.Race: SelectRaceMoveView(
           character: character,
           mode: DialogMode.create,
           onUpdate: (char) => setState(() {

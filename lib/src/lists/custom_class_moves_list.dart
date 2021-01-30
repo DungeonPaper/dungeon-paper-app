@@ -122,15 +122,14 @@ class CustomClassMoveList extends StatelessWidget {
       explanation: '',
       classes: [],
     );
-    Get.to(
-      cat == MoveCategory.Race
-          ? RaceMoveView(
-              mode: DialogMode.create,
+    Get.toNamed(
+      cat == MoveCategory.Race ? '/add-race-move' : '/add-move',
+      arguments: cat == MoveCategory.Race
+          ? RaceMoveViewArguments(
               move: blankMove,
               onSave: (move) => _addMoveToCat(context, move, cat),
             )
-          : MoveView(
-              mode: DialogMode.create,
+          : MoveViewArguments(
               move: blankMove,
               onSave: (move) => _addMoveToCat(context, move, cat),
             ),

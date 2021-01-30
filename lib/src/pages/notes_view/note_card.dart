@@ -1,7 +1,6 @@
 import 'package:dungeon_paper/db/models/notes.dart';
 import 'package:dungeon_paper/src/atoms/card_bottom_controls.dart';
 import 'package:dungeon_paper/src/dialogs/confirmation_dialog.dart';
-import 'package:dungeon_paper/src/dialogs/dialogs.dart';
 import 'package:dungeon_paper/src/flutter_utils/widget_utils.dart';
 import 'package:dungeon_paper/src/lists/tag_list.dart';
 import 'package:dungeon_paper/src/scaffolds/note_view.dart';
@@ -79,10 +78,10 @@ class NoteCardState extends State<NoteCard> {
   }
 
   void editNote(BuildContext context) {
-    Get.to(
-      NoteView(
+    Get.toNamed(
+      '/edit-note',
+      arguments: NoteViewArguments(
         note: widget.note,
-        mode: DialogMode.edit,
         categories: widget.categories,
         onSave: (note) {
           widget.onSave?.call(note);
