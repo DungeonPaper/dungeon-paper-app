@@ -71,12 +71,15 @@ class _SidebarState extends State<Sidebar> with SingleTickerProviderStateMixin {
                       title: Text('Log out'),
                       onTap: _signOut,
                     ),
+                    Divider(),
                   ],
                 ),
               ),
               Expanded(
                 child: ListView(
+                  padding: EdgeInsets.zero,
                   children: [
+                    SizedBox(height: 8),
                     title(
                       'Characters',
                       context,

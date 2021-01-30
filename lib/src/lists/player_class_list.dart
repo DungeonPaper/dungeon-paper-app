@@ -39,14 +39,16 @@ class PlayerClassList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final _dw = dungeonWorld.classes;
-    final _custom = customClassesController.classes.values
-        .map((cls) => cls.toPlayerClass());
     return Obx(
-      () => builder(context, [
-        if (includeDefault) ..._dw,
-        if (includeCustom) ..._custom,
-      ]),
+      () {
+        final _dw = dungeonWorld.classes;
+        final _custom = customClassesController.classes.values
+            .map((cls) => cls.toPlayerClass());
+        return builder(context, [
+          if (includeDefault) ..._dw,
+          if (includeCustom) ..._custom,
+        ]);
+      },
     );
   }
 }
