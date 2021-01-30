@@ -93,6 +93,12 @@ abstract class Character with FirebaseMixin, KeyMixin implements _$Character {
     return super.update(keys: keys);
   }
 
+  @override
+  Future<void> delete() {
+    characterController.remove(this);
+    return super.delete();
+  }
+
   Character copyWithStat(CharacterStat stat, int value) {
     switch (stat) {
       case CharacterStat.str:

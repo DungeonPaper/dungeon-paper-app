@@ -27,7 +27,8 @@ abstract class Campaign with KeyMixin, FirebaseMixin implements _$Campaign {
   }) = _Campaign;
 
   Future<Iterable<Character>> get characters =>
-      getRefs(characterRefs, (c) => Character.fromJson(c));
+      helpers.getRefs(characterRefs, (c) => Character.fromJson(c));
 
-  factory Campaign.fromJson(json) => _$CampaignFromJson(json);
+  factory Campaign.fromJson(json, {DocumentReference ref}) =>
+      _$CampaignFromJson(json).copyWith(ref: ref);
 }

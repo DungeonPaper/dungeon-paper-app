@@ -49,6 +49,12 @@ class FirebaseHelpers {
     logger.d('Deleting $this');
     return ref.delete();
   }
+
+  Future<Iterable<T>> getRefs<T>(
+          Iterable<DocumentReference> list, T Function(dynamic) map) =>
+      Future.wait(
+        list.map((r) => r.get()),
+      ).then((chars) => chars.map(map));
 }
 
 mixin FirebaseMixin {
@@ -77,12 +83,6 @@ mixin FirebaseMixin {
       );
 
   Future<void> delete() => helpers.delete(ref);
-
-  Future<Iterable<T>> getRefs<T>(
-          Iterable<DocumentReference> list, T Function(dynamic) map) =>
-      Future.wait(
-        list.map((r) => r.get()),
-      ).then((chars) => chars.map(map));
 }
 
 mixin KeyMixin {

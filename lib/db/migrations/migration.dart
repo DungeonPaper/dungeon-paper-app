@@ -18,6 +18,11 @@ abstract class MigrationRunner<T> {
     return fromJson(data, snapshot.reference);
   }
 
+  Future<List<T>> runAll(Iterable<DocumentSnapshot> snapshots) =>
+      Future.wait(snapshots.map(
+        (snapshot) => run(snapshot),
+      ));
+
   Future<Map<String, dynamic>> _prepareData(DocumentSnapshot snapshot) async {
     final data = snapshot.data();
     final updates = <String, dynamic>{};
