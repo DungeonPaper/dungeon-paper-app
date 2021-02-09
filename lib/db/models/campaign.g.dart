@@ -9,7 +9,6 @@ part of 'campaign.dart';
 _$_Campaign _$_$_CampaignFromJson(Map<String, dynamic> json) {
   return _$_Campaign(
     key: const DefaultUuid().fromJson(json['key'] as String),
-    ref: const DocumentReferenceConverter().fromJson(json['ref']),
     createdAt: const DateTimeConverter().fromJson(json['createdAt']),
     updatedAt: const DateTimeConverter().fromJson(json['updatedAt']),
     name: json['name'] as String ?? 'Our Campaign',
@@ -24,7 +23,6 @@ _$_Campaign _$_$_CampaignFromJson(Map<String, dynamic> json) {
 Map<String, dynamic> _$_$_CampaignToJson(_$_Campaign instance) =>
     <String, dynamic>{
       'key': const DefaultUuid().toJson(instance.key),
-      'ref': const DocumentReferenceConverter().toJson(instance.ref),
       'createdAt': const DateTimeConverter().toJson(instance.createdAt),
       'updatedAt': const DateTimeConverter().toJson(instance.updatedAt),
       'name': instance.name,

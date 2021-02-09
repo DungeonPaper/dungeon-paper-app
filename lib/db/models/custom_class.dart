@@ -34,7 +34,7 @@ abstract class CustomClass
   @With(KeyMixin)
   const factory CustomClass({
     @required @DefaultUuid() String key,
-    @DocumentReferenceConverter() DocumentReference ref,
+    @JsonKey(ignore: true) @DocumentReferenceConverter() DocumentReference ref,
     @DateTimeConverter() DateTime createdAt,
     @DateTimeConverter() DateTime updatedAt,
     @Default('') @JsonKey(defaultValue: '') String name,

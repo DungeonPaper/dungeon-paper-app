@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'dart:io';
 
+import 'package:dungeon_paper/db/listeners.dart';
 import 'package:dungeon_paper/db/migrations/character_migrations.dart';
 import 'package:dungeon_paper/db/models/character.dart';
 import 'package:dungeon_paper/db/models/custom_class.dart';
@@ -147,6 +148,7 @@ class _ImportViewState extends State<ImportView> {
       final finalChars = Set<Character>.from(characterController.all.values);
       final finalClasses =
           Set<CustomClass>.from(customClassesController.classes.values);
+      toggleListeners(false);
       for (final char in _charactersToImport) {
         final found = finalChars.firstWhere(
             (_char) => _char.displayName == char.displayName,
@@ -156,13 +158,14 @@ class _ImportViewState extends State<ImportView> {
           added = await user.createCharacter(char);
         } else {
           added = char.copyWith(order: found.order);
-          finalChars.remove(found);
-          await found.delete();
+          finalChars
+              .removeWhere((char) => char.displayName == found.displayName);
         }
         finalChars.add(added);
+        await found?.delete();
       }
       for (final cls in _classesToImport) {
-        final found = finalClasses.firstWhere((_char) => _char.key == cls.key,
+        final found = finalClasses.firstWhere((_cls) => _cls.key == cls.key,
             orElse: () => null);
         CustomClass added;
         if (found == null) {
@@ -175,13 +178,15 @@ class _ImportViewState extends State<ImportView> {
         finalClasses.add(added);
       }
 
+      toggleListeners(false);
+
       unawaited(analytics.logEvent(name: Events.ImportSuccess, parameters: {
         'characters_count': _charactersToImport.length,
         'classes_count': _classesToImport.length,
       }));
 
-      characterController.setAll(finalChars);
-      customClassesController.setAll(finalClasses);
+      // characterController.setAll(finalChars);
+      // customClassesController.setAll(finalClasses);
 
       setState(() {
         _loadedCharacters = {};
@@ -234,9 +239,10 @@ class _ImportViewState extends State<ImportView> {
       final raw = jsonDecode(str);
       final json = raw is List ? {'characters': raw} : raw;
       final chars = <Character>{
-            for (final char in json['characters'] as List<Map<String, dynamic>>)
-              await Character.fromJson(
-                CharacterMigrations().getData(char),
+            for (final char
+                in (json['characters'] as List).cast<Map<String, dynamic>>())
+              Character.fromJson(
+                await CharacterMigrations().getData(char),
               ),
           } ??
           [];

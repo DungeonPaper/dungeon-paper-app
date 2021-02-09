@@ -9,7 +9,6 @@ part of 'character.dart';
 _$_Character _$_$_CharacterFromJson(Map<String, dynamic> json) {
   return _$_Character(
     key: const DefaultUuid().fromJson(json['key'] as String),
-    ref: const DocumentReferenceConverter().fromJson(json['ref']),
     displayName: json['displayName'] as String ?? 'Traveler',
     photoURL: json['photoURL'] as String ?? '',
     createdAt: const DateTimeConverter().fromJson(json['createdAt']),
@@ -65,7 +64,6 @@ _$_Character _$_$_CharacterFromJson(Map<String, dynamic> json) {
 Map<String, dynamic> _$_$_CharacterToJson(_$_Character instance) =>
     <String, dynamic>{
       'key': const DefaultUuid().toJson(instance.key),
-      'ref': const DocumentReferenceConverter().toJson(instance.ref),
       'displayName': instance.displayName,
       'photoURL': instance.photoURL,
       'createdAt': const DateTimeConverter().toJson(instance.createdAt),

@@ -14,6 +14,7 @@ class SelectableList<T> extends StatefulWidget {
   final Widget leading;
   final Widget trailing;
   final TextStyle titleStyle;
+  final dynamic Function(T item) compareValue;
 
   const SelectableList({
     Key key,
@@ -25,6 +26,7 @@ class SelectableList<T> extends StatefulWidget {
     this.leading,
     this.trailing,
     this.titleStyle,
+    this.compareValue,
   }) : super(key: key);
 
   @override
@@ -42,6 +44,7 @@ class SelectableList<T> extends StatefulWidget {
     Widget leading,
     Widget trailing,
     TextStyle selectAllTextStyle,
+    dynamic Function(T item) compareValue,
   }) =>
       SelectableList<T>(
         selected: selected,
@@ -65,6 +68,7 @@ class SelectableList<T> extends StatefulWidget {
         ),
         leading: leading,
         trailing: trailing,
+        compareValue: compareValue,
       );
 }
 
@@ -103,10 +107,14 @@ class _SelectableListState<T> extends State<SelectableList<T>> {
   void Function(bool) _onChecked(T item) {
     return (bool state) {
       setState(() {
+        final _set = {
+          for (final i in selected)
+            if (!_compare(i, item)) i,
+        };
         if (state) {
-          selected.add(item);
+          selected = {..._set, item};
         } else {
-          selected.remove(item);
+          selected = {..._set};
         }
         widget.onChange?.call(selected);
       });
@@ -126,8 +134,14 @@ class _SelectableListState<T> extends State<SelectableList<T>> {
     };
   }
 
-  bool _isChecked(T item, Iterable<T> list) => selected.contains(item);
+  bool _isChecked(T item, Iterable<T> list) =>
+      selected.any((i) => _compare(i, item));
 
   bool _allChecked(Iterable<T> list) =>
-      list.every((item) => selected.contains(item));
+      list.every((item) => _isChecked(item, list));
+
+  bool _compare(T item1, T item2) {
+    final _getValue = widget.compareValue ?? (T obj) => obj;
+    return _getValue(item1) == _getValue(item2);
+  }
 }

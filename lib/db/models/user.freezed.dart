@@ -18,13 +18,19 @@ class _$UserTearOff {
 
 // ignore: unused_element
   _User call(
-      {@required String displayName,
-      @required String email,
+      {@required
+          String displayName,
+      @required
+          String email,
       String photoURL,
       Map<String, dynamic> features = const {},
-      @DocumentReferenceConverter() DocumentReference ref,
-      @DateTimeConverter() DateTime createdAt,
-      @DateTimeConverter() DateTime updatedAt,
+      @JsonKey(ignore: true)
+      @DocumentReferenceConverter()
+          DocumentReference ref,
+      @DateTimeConverter()
+          DateTime createdAt,
+      @DateTimeConverter()
+          DateTime updatedAt,
       String lastCharacterId}) {
     return _User(
       displayName: displayName,
@@ -54,6 +60,7 @@ mixin _$User {
   String get email;
   String get photoURL;
   Map<String, dynamic> get features;
+  @JsonKey(ignore: true)
   @DocumentReferenceConverter()
   DocumentReference get ref;
   @DateTimeConverter()
@@ -76,9 +83,13 @@ abstract class $UserCopyWith<$Res> {
       String email,
       String photoURL,
       Map<String, dynamic> features,
-      @DocumentReferenceConverter() DocumentReference ref,
-      @DateTimeConverter() DateTime createdAt,
-      @DateTimeConverter() DateTime updatedAt,
+      @JsonKey(ignore: true)
+      @DocumentReferenceConverter()
+          DocumentReference ref,
+      @DateTimeConverter()
+          DateTime createdAt,
+      @DateTimeConverter()
+          DateTime updatedAt,
       String lastCharacterId});
 }
 
@@ -131,9 +142,13 @@ abstract class _$UserCopyWith<$Res> implements $UserCopyWith<$Res> {
       String email,
       String photoURL,
       Map<String, dynamic> features,
-      @DocumentReferenceConverter() DocumentReference ref,
-      @DateTimeConverter() DateTime createdAt,
-      @DateTimeConverter() DateTime updatedAt,
+      @JsonKey(ignore: true)
+      @DocumentReferenceConverter()
+          DocumentReference ref,
+      @DateTimeConverter()
+          DateTime createdAt,
+      @DateTimeConverter()
+          DateTime updatedAt,
       String lastCharacterId});
 }
 
@@ -187,7 +202,7 @@ class _$_User extends _User with DiagnosticableTreeMixin, FirebaseMixin {
       @required this.email,
       this.photoURL,
       this.features = const {},
-      @DocumentReferenceConverter() this.ref,
+      @JsonKey(ignore: true) @DocumentReferenceConverter() this.ref,
       @DateTimeConverter() this.createdAt,
       @DateTimeConverter() this.updatedAt,
       this.lastCharacterId})
@@ -209,6 +224,7 @@ class _$_User extends _User with DiagnosticableTreeMixin, FirebaseMixin {
   @override
   final Map<String, dynamic> features;
   @override
+  @JsonKey(ignore: true)
   @DocumentReferenceConverter()
   final DocumentReference ref;
   @override
@@ -294,13 +310,19 @@ class _$_User extends _User with DiagnosticableTreeMixin, FirebaseMixin {
 abstract class _User extends User implements FirebaseMixin {
   const _User._() : super._();
   const factory _User(
-      {@required String displayName,
-      @required String email,
+      {@required
+          String displayName,
+      @required
+          String email,
       String photoURL,
       Map<String, dynamic> features,
-      @DocumentReferenceConverter() DocumentReference ref,
-      @DateTimeConverter() DateTime createdAt,
-      @DateTimeConverter() DateTime updatedAt,
+      @JsonKey(ignore: true)
+      @DocumentReferenceConverter()
+          DocumentReference ref,
+      @DateTimeConverter()
+          DateTime createdAt,
+      @DateTimeConverter()
+          DateTime updatedAt,
       String lastCharacterId}) = _$_User;
 
   factory _User.fromJson(Map<String, dynamic> json) = _$_User.fromJson;
@@ -314,6 +336,7 @@ abstract class _User extends User implements FirebaseMixin {
   @override
   Map<String, dynamic> get features;
   @override
+  @JsonKey(ignore: true)
   @DocumentReferenceConverter()
   DocumentReference get ref;
   @override

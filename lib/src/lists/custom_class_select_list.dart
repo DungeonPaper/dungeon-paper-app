@@ -35,11 +35,12 @@ class CustomClassSelectList extends StatelessWidget {
       child: Row(
         children: [
           Flexible(
-            child: SelectableList.checkboxTile(
+            child: SelectableList<PlayerClass>.checkboxTile(
               list: list,
               selected: selected,
               onChange: onChange,
               titleBuilder: (cls, _idx, context) => Text(cls.name),
+              compareValue: (cls) => cls.key,
             ),
           ),
         ],

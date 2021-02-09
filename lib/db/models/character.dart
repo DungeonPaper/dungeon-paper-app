@@ -39,7 +39,7 @@ abstract class Character
   @With(KeyMixin)
   factory Character({
     @required @DefaultUuid() String key,
-    @DocumentReferenceConverter() DocumentReference ref,
+    @JsonKey(ignore: true) @DocumentReferenceConverter() DocumentReference ref,
     @Default('Traveler') @JsonKey(defaultValue: 'Traveler') String displayName,
     @Default('') @JsonKey(defaultValue: '') String photoURL,
     @DateTimeConverter() DateTime createdAt,

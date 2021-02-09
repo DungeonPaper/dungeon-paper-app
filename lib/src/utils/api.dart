@@ -20,7 +20,7 @@ Future<User> getDatabaseUser(
       fbUser.providerData
           .firstWhere((element) => element.email?.isNotEmpty == true)
           ?.email;
-  final userDoc = await firestore.collection('user_data').doc(email).get();
+  final userDoc = await firestore.doc('user_data/$email').get();
   final data = userDoc.data();
   var user = User.fromJson(
     data,
@@ -46,6 +46,16 @@ Future<User> getDatabaseUser(
         email: email,
       );
       await helpers.update(userDoc.reference, data, keys: ['email']);
+      final chars =
+          await firestore.collection('user_data/$email/characters').get();
+      if (chars.docs.isEmpty) {
+        await user.createCharacter(
+          Character(
+            key: Uuid().v4(),
+            playerClass: dungeonWorld.classes.first,
+          ),
+        );
+      }
     }
   }
   return user;

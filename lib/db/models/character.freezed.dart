@@ -21,6 +21,7 @@ class _$CharacterTearOff {
       {@required
       @DefaultUuid()
           String key,
+      @JsonKey(ignore: true)
       @DocumentReferenceConverter()
           DocumentReference ref,
       @JsonKey(defaultValue: 'Traveler')
@@ -134,6 +135,7 @@ const $Character = _$CharacterTearOff();
 mixin _$Character {
   @DefaultUuid()
   String get key;
+  @JsonKey(ignore: true)
   @DocumentReferenceConverter()
   DocumentReference get ref;
   @JsonKey(defaultValue: 'Traveler')
@@ -211,6 +213,7 @@ abstract class $CharacterCopyWith<$Res> {
   $Res call(
       {@DefaultUuid()
           String key,
+      @JsonKey(ignore: true)
       @DocumentReferenceConverter()
           DocumentReference ref,
       @JsonKey(defaultValue: 'Traveler')
@@ -391,6 +394,7 @@ abstract class _$CharacterCopyWith<$Res> implements $CharacterCopyWith<$Res> {
   $Res call(
       {@DefaultUuid()
           String key,
+      @JsonKey(ignore: true)
       @DocumentReferenceConverter()
           DocumentReference ref,
       @JsonKey(defaultValue: 'Traveler')
@@ -566,6 +570,7 @@ class _$_Character extends _Character
       {@required
       @DefaultUuid()
           this.key,
+      @JsonKey(ignore: true)
       @DocumentReferenceConverter()
           this.ref,
       @JsonKey(defaultValue: 'Traveler')
@@ -663,6 +668,7 @@ class _$_Character extends _Character
   @DefaultUuid()
   final String key;
   @override
+  @JsonKey(ignore: true)
   @DocumentReferenceConverter()
   final DocumentReference ref;
   @override
@@ -893,6 +899,7 @@ abstract class _Character extends Character
       {@required
       @DefaultUuid()
           String key,
+      @JsonKey(ignore: true)
       @DocumentReferenceConverter()
           DocumentReference ref,
       @JsonKey(defaultValue: 'Traveler')
@@ -966,6 +973,7 @@ abstract class _Character extends Character
   @DefaultUuid()
   String get key;
   @override
+  @JsonKey(ignore: true)
   @DocumentReferenceConverter()
   DocumentReference get ref;
   @override

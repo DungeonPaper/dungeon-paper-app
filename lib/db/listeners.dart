@@ -21,6 +21,11 @@ StreamSubscription _charsListener;
 StreamSubscription _classesListener;
 StreamSubscription _campaignsOwnedListener;
 StreamSubscription _campaignsParticipatingListener;
+bool _enabled = true;
+
+void toggleListeners(bool state) {
+  _enabled = state;
+}
 
 void registerFirebaseUserListener() {
   try {
@@ -63,6 +68,9 @@ void registerUserListener(fb.User firebaseUser) {
   _userListener =
       firestore.doc('user_data/${firebaseUser.email}').snapshots().listen(
     (user) {
+      if (!_enabled) {
+        return;
+      }
       userController.setCurrent(
         User.fromJson(user.data()).copyWith(ref: user.reference),
       );
@@ -83,10 +91,12 @@ void registerCharactersListener(fb.User firebaseUser) {
 
   _charsListener = user.collection('characters').snapshots().listen(
     (characters) async {
+      if (!_enabled) {
+        return;
+      }
       characterController.setAll(
         await CharacterMigrations().runAll(characters.docs),
       );
-      registerCampaignsListener(firebaseUser);
     },
   );
   logger.d('Registered db character listener');
@@ -102,6 +112,9 @@ void registerCustomClassesListener(fb.User firebaseUser) {
       .collection('user_data/$email/custom_classes')
       .snapshots()
       .listen((classes) {
+    if (!_enabled) {
+      return;
+    }
     customClassesController.setAll([
       for (final character in classes.docs)
         CustomClass.fromJson(
@@ -125,6 +138,9 @@ void registerCampaignsListener(fb.User firebaseUser) {
       .where('owner', isEqualTo: userController.current.ref)
       .snapshots()
       .listen((campaigns) {
+    if (!_enabled) {
+      return;
+    }
     campaignsController.setAllOwned([
       for (final campaign in campaigns.docs)
         Campaign.fromJson(
@@ -143,6 +159,9 @@ void registerCampaignsListener(fb.User firebaseUser) {
         )
         .snapshots()
         .listen((campaigns) {
+      if (!_enabled) {
+        return;
+      }
       campaignsController.setAllParticipating([
         for (final campaign in campaigns.docs)
           Campaign.fromJson(

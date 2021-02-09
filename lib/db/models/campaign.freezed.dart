@@ -21,6 +21,7 @@ class _$CampaignTearOff {
       {@required
       @DefaultUuid()
           String key,
+      @JsonKey(ignore: true)
       @DocumentReferenceConverter()
           DocumentReference ref,
       @DateTimeConverter()
@@ -59,6 +60,7 @@ const $Campaign = _$CampaignTearOff();
 mixin _$Campaign {
   @DefaultUuid()
   String get key;
+  @JsonKey(ignore: true)
   @DocumentReferenceConverter()
   DocumentReference get ref;
   @DateTimeConverter()
@@ -84,6 +86,7 @@ abstract class $CampaignCopyWith<$Res> {
   $Res call(
       {@DefaultUuid()
           String key,
+      @JsonKey(ignore: true)
       @DocumentReferenceConverter()
           DocumentReference ref,
       @DateTimeConverter()
@@ -155,6 +158,7 @@ abstract class _$CampaignCopyWith<$Res> implements $CampaignCopyWith<$Res> {
   $Res call(
       {@DefaultUuid()
           String key,
+      @JsonKey(ignore: true)
       @DocumentReferenceConverter()
           DocumentReference ref,
       @DateTimeConverter()
@@ -220,6 +224,7 @@ class _$_Campaign extends _Campaign with FirebaseMixin, KeyMixin {
       {@required
       @DefaultUuid()
           this.key,
+      @JsonKey(ignore: true)
       @DocumentReferenceConverter()
           this.ref,
       @DateTimeConverter()
@@ -244,6 +249,7 @@ class _$_Campaign extends _Campaign with FirebaseMixin, KeyMixin {
   @DefaultUuid()
   final String key;
   @override
+  @JsonKey(ignore: true)
   @DocumentReferenceConverter()
   final DocumentReference ref;
   @override
@@ -325,6 +331,7 @@ abstract class _Campaign extends Campaign implements FirebaseMixin, KeyMixin {
       {@required
       @DefaultUuid()
           String key,
+      @JsonKey(ignore: true)
       @DocumentReferenceConverter()
           DocumentReference ref,
       @DateTimeConverter()
@@ -344,6 +351,7 @@ abstract class _Campaign extends Campaign implements FirebaseMixin, KeyMixin {
   @DefaultUuid()
   String get key;
   @override
+  @JsonKey(ignore: true)
   @DocumentReferenceConverter()
   DocumentReference get ref;
   @override

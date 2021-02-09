@@ -270,3 +270,14 @@ Map<K, V> pick<K, V>(Map<K, V> map, Iterable<String> keys) {
       if (keys.contains(entry.key)) entry.key: entry.value,
   };
 }
+
+Map<K, V> exclude<K, V>(Map<K, V> map, Iterable<String> keys) {
+  if (keys == null) {
+    return {...map};
+  }
+
+  return <K, V>{
+    for (final entry in map.entries)
+      if (!keys.contains(entry.key)) entry.key: entry.value,
+  };
+}

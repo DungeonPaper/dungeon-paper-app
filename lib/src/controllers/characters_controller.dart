@@ -27,7 +27,7 @@ class CharacterController extends GetxController {
 
   void upsert(Character character, [bool updateCondition = true]) {
     _all[character.documentID] = character;
-    if (current.documentID == character.documentID) {
+    if (current != null && current.documentID == character.documentID) {
       _current.value = character;
     }
     update(null, updateCondition);

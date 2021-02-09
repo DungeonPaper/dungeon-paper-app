@@ -34,11 +34,12 @@ class CharacterSelectList extends StatelessWidget {
       child: Row(
         children: [
           Flexible(
-            child: SelectableList.checkboxTile(
+            child: SelectableList<Character>.checkboxTile(
               list: list,
               selected: selected,
               onChange: onChange,
               titleBuilder: (char, _idx, context) => Text(char.displayName),
+              compareValue: (char) => char.displayName,
             ),
           ),
         ],

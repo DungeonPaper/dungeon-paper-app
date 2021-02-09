@@ -119,8 +119,8 @@ class _ExportViewState extends State<ExportView> {
 
   void _export() async {
     unawaited(analytics.logEvent(name: Events.ExportStart, parameters: {
-      'characters_count': _charactersToExport.length,
-      'classes_count': _classesToExport.length,
+      'characters_count': _charactersToExport?.length ?? 0,
+      'classes_count': _classesToExport?.length ?? 0,
     }));
     final _strData = await _dumpDataString();
     final tmp = await getTemporaryDirectory();
@@ -141,8 +141,8 @@ class _ExportViewState extends State<ExportView> {
         Get.snackbar('Export Failed', 'Operation canceled');
       } else {
         unawaited(analytics.logEvent(name: Events.ExportSuccess, parameters: {
-          'characters_count': _charactersToExport.length,
-          'classes_count': _classesToExport.length,
+          'characters_count': _charactersToExport?.length ?? 0,
+          'classes_count': _classesToExport?.length ?? 0,
         }));
         Get.snackbar(
           'Export Successful',
@@ -166,9 +166,9 @@ class _ExportViewState extends State<ExportView> {
     final chars = Set<Character>.from(
         _charactersToExport.toList()..sort((a, b) => a.order - b.order));
 
-    final classes = {..._classesToExport};
+    final classes = {...(_classesToExport ?? {})};
 
-    return await _dataParsers[_format]
+    return _dataParsers[_format]
         .call(ExportData(characters: chars, customClasses: classes));
   }
 
@@ -180,9 +180,12 @@ class _ExportViewState extends State<ExportView> {
   static final Map<ExportFormat, Future<List<int>> Function(ExportData)>
       _dataParsers = {
     ExportFormat.JSON: (data) {
-      final charsData = data.characters.map((char) => char.toJson()).toList();
-      final classesData =
-          data.customClasses.map((char) => char.toJSON()).toList();
+      final charsData = data.characters
+          .map((char) => exclude(char.toJson(), ['updatedAt', 'createdAt']))
+          .toList();
+      final classesData = data.customClasses
+          .map((char) => exclude(char.toJSON(), ['updatedAt', 'createdAt']))
+          .toList();
       final _strData =
           jsonEncode({'characters': charsData, 'classes': classesData});
       return Future.value(utf8.encode(_strData));

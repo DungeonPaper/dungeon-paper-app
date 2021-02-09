@@ -21,6 +21,7 @@ class _$CustomClassTearOff {
       {@required
       @DefaultUuid()
           String key,
+      @JsonKey(ignore: true)
       @DocumentReferenceConverter()
           DocumentReference ref,
       @DateTimeConverter()
@@ -100,6 +101,7 @@ const $CustomClass = _$CustomClassTearOff();
 mixin _$CustomClass {
   @DefaultUuid()
   String get key;
+  @JsonKey(ignore: true)
   @DocumentReferenceConverter()
   DocumentReference get ref;
   @DateTimeConverter()
@@ -156,6 +158,7 @@ abstract class $CustomClassCopyWith<$Res> {
   $Res call(
       {@DefaultUuid()
           String key,
+      @JsonKey(ignore: true)
       @DocumentReferenceConverter()
           DocumentReference ref,
       @DateTimeConverter()
@@ -280,6 +283,7 @@ abstract class _$CustomClassCopyWith<$Res>
   $Res call(
       {@DefaultUuid()
           String key,
+      @JsonKey(ignore: true)
       @DocumentReferenceConverter()
           DocumentReference ref,
       @DateTimeConverter()
@@ -408,6 +412,7 @@ class _$_CustomClass extends _CustomClass
       {@required
       @DefaultUuid()
           this.key,
+      @JsonKey(ignore: true)
       @DocumentReferenceConverter()
           this.ref,
       @DateTimeConverter()
@@ -473,6 +478,7 @@ class _$_CustomClass extends _CustomClass
   @DefaultUuid()
   final String key;
   @override
+  @JsonKey(ignore: true)
   @DocumentReferenceConverter()
   final DocumentReference ref;
   @override
@@ -632,6 +638,7 @@ abstract class _CustomClass extends CustomClass
       {@required
       @DefaultUuid()
           String key,
+      @JsonKey(ignore: true)
       @DocumentReferenceConverter()
           DocumentReference ref,
       @DateTimeConverter()
@@ -682,6 +689,7 @@ abstract class _CustomClass extends CustomClass
   @DefaultUuid()
   String get key;
   @override
+  @JsonKey(ignore: true)
   @DocumentReferenceConverter()
   DocumentReference get ref;
   @override
