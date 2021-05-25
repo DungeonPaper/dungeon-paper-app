@@ -92,6 +92,13 @@ class DungeonPaper extends StatelessWidget {
           Routes.characterCreate.path: (ctx) => CharacterView(
                 character: null,
                 mode: DialogMode.create,
+                onSave: (char) {
+                  characterController.setCurrent(
+                    characterController.all.values.firstWhere(
+                        (c) => c.displayName == char.displayName,
+                        orElse: () => characterController.current),
+                  );
+                },
               ),
           Routes.characterEdit.path: (ctx) {
             final CharacterViewArguments arguments = Get.arguments;
