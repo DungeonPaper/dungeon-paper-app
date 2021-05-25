@@ -99,7 +99,7 @@ class _SidebarState extends State<Sidebar> with SingleTickerProviderStateMixin {
                     ...characterList,
                     Divider(),
                     title('Custom Content'),
-                    if (user.isDm)
+                    if (user != null && user.isDm)
                       ListTile(
                         title: Text('Campaigns'),
                         onTap: campaignsScreen,

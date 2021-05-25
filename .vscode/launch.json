@@ -10,7 +10,7 @@
       "request": "launch",
       "program": "lib/main.dart",
       "args": [
-        // "-v"
+        // "-v",
         // "-d518e84af",
         "--web-port",
         "8090"

@@ -157,13 +157,14 @@ class _ImportViewState extends State<ImportView> {
         if (found == null) {
           added = await user.createCharacter(char);
         } else {
-          added = char.copyWith(order: found.order);
+          added = await user.createCharacter(char.copyWith(order: found.order));
           finalChars
               .removeWhere((char) => char.displayName == found.displayName);
         }
-        finalChars.add(added);
         await found?.delete();
+        finalChars.add(added);
       }
+
       for (final cls in _classesToImport) {
         final found = finalClasses.firstWhere((_cls) => _cls.key == cls.key,
             orElse: () => null);
@@ -238,6 +239,11 @@ class _ImportViewState extends State<ImportView> {
     ImportFormat.JSON: (str) async {
       final raw = jsonDecode(str);
       final json = raw is List ? {'characters': raw} : raw;
+      for (final char
+          in (json['characters'] as List).cast<Map<String, dynamic>>()) {
+        final str = await CharacterMigrations().getData(char).toString();
+        debugPrint(str);
+      }
       final chars = <Character>{
             for (final char
                 in (json['characters'] as List).cast<Map<String, dynamic>>())

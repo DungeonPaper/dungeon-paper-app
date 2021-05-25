@@ -3,7 +3,7 @@ description: A Dungeon World character sheet app written with Flutter.
 version: 1.2.6+82
 
 environment:
-  sdk: ">=2.8.0 <3.0.0"
+  sdk: ">=2.7.0 <3.0.0"
 
 dependencies:
   flutter:

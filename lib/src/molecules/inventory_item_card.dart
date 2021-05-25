@@ -189,7 +189,7 @@ class InventoryItemCard extends StatelessWidget {
                     ),
                   FilterChip(
                     visualDensity: VisualDensity.compact,
-                    label: Text(item.equipped ? 'Equipped' : 'Unequiped'),
+                    label: Text(item.equipped ? 'Equipped' : 'Unequipped'),
                     selected: item.equipped,
                     selectedColor: Colors.orange[300],
                     onSelected: (val) =>
