@@ -302,6 +302,9 @@ class UserDrawerHeader extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    if (user == null) {
+      return Container();
+    }
     return Column(
       mainAxisSize: MainAxisSize.min,
       crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -309,7 +312,7 @@ class UserDrawerHeader extends StatelessWidget {
         UserAccountsDrawerHeader(
           decoration: BoxDecoration(color: Get.theme.accentColor),
           accountEmail: Text(
-            user.email,
+            user?.email,
             style: TextStyle(color: Get.theme.colorScheme.onSecondary),
           ),
           accountName: Text(

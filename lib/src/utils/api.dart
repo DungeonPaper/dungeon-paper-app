@@ -21,17 +21,18 @@ Future<User> getDatabaseUser(
           .firstWhere((element) => element.email?.isNotEmpty == true)
           ?.email;
   final userDoc = await firestore.doc('user_data/$email').get();
-  final data = userDoc.data();
-  var user = User.fromJson(
-    data,
-    ref: userDoc.reference,
-  );
-  if (data.isEmpty) {
+  var data = userDoc.data();
+  User user;
+  if (data == null || data.isEmpty) {
+    data = {
+      'displayName': fbUser.displayName ?? fbUser.email,
+      'email': fbUser.email,
+      'photoURL': fbUser.photoURL
+    };
     unawaited(analytics.logSignUp(signUpMethod: signInMethod.name));
-    user = user.copyWith(
-      displayName: fbUser.displayName ?? fbUser.email,
-      email: fbUser.email,
-      photoURL: fbUser.photoURL,
+    user = User.fromJson(
+      data,
+      ref: userDoc.reference,
     );
     await helpers.create(userDoc.reference, data);
     await user.createCharacter(
@@ -41,7 +42,11 @@ Future<User> getDatabaseUser(
       ),
     );
   } else {
-    if (user.email?.isEmpty != true) {
+    user = User.fromJson(
+      data,
+      ref: userDoc.reference,
+    );
+    if (user?.email?.isEmpty != true) {
       user = user.copyWith(
         email: email,
       );
