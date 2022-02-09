@@ -23,6 +23,7 @@ class Character {
     required this.meta,
     required this.key,
     required this.displayName,
+    required this.avatarUrl,
     required this.characterClass,
     required this.moves,
     required this.spells,
@@ -38,6 +39,7 @@ class Character {
   final SharedMeta meta;
   final String key;
   final String displayName;
+  final String avatarUrl;
   final CharacterClass characterClass;
   final List<Move> moves;
   final List<Move> spells;
@@ -53,6 +55,7 @@ class Character {
     SharedMeta? meta,
     String? key,
     String? displayName,
+    String? avatarUrl,
     CharacterClass? characterClass,
     List<Move>? moves,
     List<Move>? spells,
@@ -68,6 +71,7 @@ class Character {
         meta: meta ?? this.meta,
         key: key ?? this.key,
         displayName: displayName ?? this.displayName,
+        avatarUrl: avatarUrl ?? this.avatarUrl,
         characterClass: characterClass ?? this.characterClass,
         moves: moves ?? this.moves,
         spells: spells ?? this.spells,
@@ -88,6 +92,7 @@ class Character {
       key: uuid(),
       meta: SharedMeta.version(1),
       displayName: "",
+      avatarUrl: "",
       items: [],
       bio: Bio(description: "", looks: []),
       bonds: [],
@@ -130,6 +135,7 @@ class Character {
         meta: SharedMeta.fromJson(json["_meta"]),
         key: json["key"],
         displayName: json["displayName"],
+        avatarUrl: json["avatarURL"],
         characterClass: CharacterClass.fromJson(json["class"]),
         moves: List<Move>.from(json["moves"].map((x) => Move.fromJson(x))),
         spells: List<Move>.from(json["spells"].map((x) => Move.fromJson(x))),
@@ -146,6 +152,7 @@ class Character {
         "_meta": meta.toJson(),
         "key": key,
         "displayName": displayName,
+        "avatarURL": avatarUrl,
         "class": characterClass.toJson(),
         "moves": List<dynamic>.from(moves.map((x) => x.toJson())),
         "spells": List<dynamic>.from(spells.map((x) => x.toJson())),

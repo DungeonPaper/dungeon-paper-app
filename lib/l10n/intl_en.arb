@@ -1,0 +1,16 @@
+{
+  "@@locale": "en",
+  "appName": "Dungeon Paper",
+  "@appName": {
+    "description": "The name of the app"
+  },
+  "characterListTitle": "All Characters",
+  "createCharacterTitle": "Create Character",
+  "createCharacterAddButton": "Add Character",
+  "createCharacterNameFieldLabel": "Character Name",
+  "createCharacterNameFieldPlaceholder": "Enter your character's name",
+  "createCharacterDescFieldLabel": "Biography/description",
+  "createCharacterDescFieldPlaceholder": "Enter general information about your character - backstory, goals & ambitions, behavior descriptions, etc",
+  "createCharacterAvatarFieldLabel": "Photo URL",
+  "createCharacterAvatarFieldPlaceholder": "Paste an image URL"
+}

@@ -1,0 +1,42 @@
+{
+    "_meta": {
+        "created": "",
+        "updated": "",
+        "schemaVersion": 2,
+        "originalKey": "1234565432"
+    },
+    "name": "Immolator",
+    "key": "immolator",
+    "description": "",
+    "damageDice": "1d6",
+    "load": 10,
+    "hp": 10,
+    "alignments": {
+        "good": "",
+        "evil": "",
+        "lawful": "",
+        "neutral": "",
+        "chaotic": ""
+    },
+    "bonds": [
+        ""
+    ],
+    "gearChoices": [
+        {
+            "key": "",
+            "description": "Choose one instrument",
+            "selections": [
+                {
+                    "description": "Your father's mandolin, repaired",
+                    "items": [
+                        {
+                            "name": "Mandolin",
+                            "description": "A repaired mandolin"
+                        }
+                    ],
+                    "gold": 100
+                }
+            ]
+        }
+    ]
+}
