@@ -24,11 +24,11 @@ class Tag {
 
   factory Tag.fromJson(Map<String, dynamic> json) => Tag(
         name: json["name"],
-        value: json["value"] == null ? null : json["value"],
+        value: json["value"],
       );
 
   Map<String, dynamic> toJson() => {
         "name": name,
-        "value": value == null ? null : value,
+        "value": value,
       };
 }

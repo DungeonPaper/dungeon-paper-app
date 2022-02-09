@@ -25,7 +25,7 @@ class Move {
     required this.category,
   });
 
-  final Meta meta;
+  final SharedMeta meta;
   final String key;
   final String name;
   final String description;
@@ -36,7 +36,7 @@ class Move {
   final MoveCategory category;
 
   Move copyWith({
-    Meta? meta,
+    SharedMeta? meta,
     String? key,
     String? name,
     String? description,
@@ -63,7 +63,7 @@ class Move {
   String toRawJson() => json.encode(toJson());
 
   factory Move.fromJson(Map<String, dynamic> json) => Move(
-        meta: Meta.fromJson(json["_meta"]),
+        meta: SharedMeta.fromJson(json["_meta"]),
         key: json["key"],
         name: json["name"],
         description: json["description"],

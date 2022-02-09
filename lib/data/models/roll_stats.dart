@@ -6,7 +6,7 @@ class RollStats {
     required this.str,
     required this.wis,
     required this.con,
-    required this.rollStatsInt,
+    required this.intl,
     required this.cha,
   });
 
@@ -14,7 +14,7 @@ class RollStats {
   final int str;
   final int wis;
   final int con;
-  final int rollStatsInt;
+  final int intl;
   final int cha;
 
   RollStats copyWith({
@@ -22,7 +22,7 @@ class RollStats {
     int? str,
     int? wis,
     int? con,
-    int? rollStatsInt,
+    int? intl,
     int? cha,
   }) =>
       RollStats(
@@ -30,7 +30,7 @@ class RollStats {
         str: str ?? this.str,
         wis: wis ?? this.wis,
         con: con ?? this.con,
-        rollStatsInt: rollStatsInt ?? this.rollStatsInt,
+        intl: intl ?? this.intl,
         cha: cha ?? this.cha,
       );
 
@@ -44,7 +44,7 @@ class RollStats {
         str: json["str"],
         wis: json["wis"],
         con: json["con"],
-        rollStatsInt: json["int"],
+        intl: json["int"],
         cha: json["cha"],
       );
 
@@ -53,7 +53,30 @@ class RollStats {
         "str": str,
         "wis": wis,
         "con": con,
-        "int": rollStatsInt,
+        "int": intl,
         "cha": cha,
       };
+
+  int get dexMod => modifierForValue(dex);
+  int get strMod => modifierForValue(str);
+  int get wisMod => modifierForValue(wis);
+  int get conMod => modifierForValue(con);
+  int get intMod => modifierForValue(intl);
+  int get chaMod => modifierForValue(cha);
+
+  static int modifierForValue(int value) {
+    var modifiers = {1: -3, 4: -2, 6: -1, 9: 0, 13: 1, 16: 2, 18: 3};
+
+    if (modifiers.containsKey(value)) {
+      return modifiers[value]!;
+    }
+
+    for (var i = value; i > 0; --i) {
+      if (modifiers.containsKey(i)) {
+        return modifiers[i]!;
+      }
+    }
+
+    return -1;
+  }
 }

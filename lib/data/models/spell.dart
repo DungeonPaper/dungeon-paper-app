@@ -15,7 +15,7 @@ class Spell {
     this.prepared = false,
   });
 
-  final Meta meta;
+  final SharedMeta meta;
   final String key;
   final String name;
   final String description;
@@ -25,7 +25,7 @@ class Spell {
   final bool prepared;
 
   Spell copyWith({
-    Meta? meta,
+    SharedMeta? meta,
     String? key,
     String? name,
     String? description,
@@ -50,7 +50,7 @@ class Spell {
   String toRawJson() => json.encode(toJson());
 
   factory Spell.fromJson(Map<String, dynamic> json) => Spell(
-        meta: Meta.fromJson(json["_meta"]),
+        meta: SharedMeta.fromJson(json["_meta"]),
         key: json["key"],
         name: json["name"],
         description: json["description"],

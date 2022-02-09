@@ -1,8 +1,3 @@
-// To parse this JSON data, do
-//
-//     final character = characterFromJson(jsonString);
-
-import 'package:meta/meta.dart';
 import 'dart:convert';
 
 import 'alignment.dart';
@@ -18,28 +13,31 @@ class CharacterClass {
     required this.description,
     required this.damageDice,
     required this.load,
+    required this.hp,
     required this.alignments,
     required this.bonds,
     required this.gearChoices,
   });
 
-  final Meta meta;
+  final SharedMeta meta;
   final String name;
   final String key;
   final String description;
   final Dice damageDice;
   final int load;
+  final int hp;
   final AlignmentValues alignments;
   final List<String> bonds;
   final List<GearChoice> gearChoices;
 
   CharacterClass copyWith({
-    Meta? meta,
+    SharedMeta? meta,
     String? name,
     String? key,
     String? description,
     Dice? damageDice,
     int? load,
+    int? hp,
     AlignmentValues? alignments,
     List<String>? bonds,
     List<GearChoice>? gearChoices,
@@ -51,6 +49,7 @@ class CharacterClass {
         description: description ?? this.description,
         damageDice: damageDice ?? this.damageDice,
         load: load ?? this.load,
+        hp: hp ?? this.hp,
         alignments: alignments ?? this.alignments,
         bonds: bonds ?? this.bonds,
         gearChoices: gearChoices ?? this.gearChoices,
@@ -62,16 +61,18 @@ class CharacterClass {
   String toRawJson() => json.encode(toJson());
 
   factory CharacterClass.fromJson(Map<String, dynamic> json) => CharacterClass(
-        meta: Meta.fromJson(json["_meta"]),
+        meta: SharedMeta.fromJson(json["_meta"]),
         name: json["name"],
         key: json["key"],
         description: json["description"],
         damageDice: Dice.fromJson(json["damageDice"]),
         load: json["load"],
+        hp: json["hp"],
         alignments: AlignmentValues.fromJson(json["alignments"]),
         bonds: List<String>.from(json["bonds"].map((x) => x)),
         gearChoices: List<GearChoice>.from(
-            json["gearChoices"].map((x) => GearChoice.fromJson(x))),
+          json["gearChoices"].map((x) => GearChoice.fromJson(x)),
+        ),
       );
 
   Map<String, dynamic> toJson() => {
@@ -81,6 +82,7 @@ class CharacterClass {
         "description": description,
         "damageDice": damageDice.toJson(),
         "load": load,
+        "hp": hp,
         "alignments": alignments.toJson(),
         "bonds": List<dynamic>.from(bonds.map((x) => x)),
         "gearChoices": List<dynamic>.from(gearChoices.map((x) => x.toJson())),

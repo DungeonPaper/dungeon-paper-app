@@ -14,7 +14,7 @@ class Race {
     required this.tags,
   });
 
-  final Meta meta;
+  final SharedMeta meta;
   final String key;
   final String name;
   final String description;
@@ -23,7 +23,7 @@ class Race {
   final List<Tag> tags;
 
   Race copyWith({
-    Meta? meta,
+    SharedMeta? meta,
     String? key,
     String? name,
     String? description,
@@ -46,7 +46,7 @@ class Race {
   String toRawJson() => json.encode(toJson());
 
   factory Race.fromJson(Map<String, dynamic> json) => Race(
-        meta: Meta.fromJson(json["_meta"]),
+        meta: SharedMeta.fromJson(json["_meta"]),
         key: json["key"],
         name: json["name"],
         description: json["description"],

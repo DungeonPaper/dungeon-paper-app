@@ -5,7 +5,6 @@
 import 'dart:convert';
 
 import 'package:dungeon_paper/data/models/character_class.dart';
-import 'package:dungeon_paper/data/models/character_stats_settings.dart';
 import 'package:dungeon_paper/data/models/roll_stats.dart';
 
 import '../../core/utils/uuid.dart';
@@ -29,7 +28,6 @@ class Character {
     required this.spells,
     required this.items,
     required this.notes,
-    required this.isShared,
     required this.stats,
     required this.rollStats,
     required this.bonds,
@@ -37,7 +35,7 @@ class Character {
     required this.race,
   });
 
-  final Meta meta;
+  final SharedMeta meta;
   final String key;
   final String displayName;
   final CharacterClass characterClass;
@@ -45,7 +43,6 @@ class Character {
   final List<Move> spells;
   final List<Item> items;
   final List<Note> notes;
-  final bool isShared;
   final CharacterStats stats;
   final RollStats rollStats;
   final List<Bond> bonds;
@@ -53,7 +50,7 @@ class Character {
   final Race race;
 
   Character copyWith({
-    Meta? meta,
+    SharedMeta? meta,
     String? key,
     String? displayName,
     CharacterClass? characterClass,
@@ -61,7 +58,6 @@ class Character {
     List<Move>? spells,
     List<Item>? items,
     List<Note>? notes,
-    bool? isShared,
     CharacterStats? stats,
     RollStats? rollStats,
     List<Bond>? bonds,
@@ -77,7 +73,6 @@ class Character {
         spells: spells ?? this.spells,
         items: items ?? this.items,
         notes: notes ?? this.notes,
-        isShared: isShared ?? this.isShared,
         stats: stats ?? this.stats,
         rollStats: rollStats ?? this.rollStats,
         bonds: bonds ?? this.bonds,
@@ -91,29 +86,28 @@ class Character {
   factory Character.withClass({required CharacterClass characterClass}) {
     return Character(
       key: uuid(),
-      meta: Meta.version(1),
+      meta: SharedMeta.version(1),
       displayName: "",
       items: [],
       bio: Bio(description: "", looks: []),
       bonds: [],
       characterClass: characterClass,
-      isShared: false,
       notes: [],
       stats: CharacterStats(
         level: 1,
         armor: 0,
         currentExp: 0,
         currentHp: 20,
-        hitDice: Dice.fromJson("1d10"),
+        // damageDice: characterClass.damageDice,
         maxHp: 20,
-        settings: CharacterStatsSettings(),
+        // load: characterClass.load,
       ),
       moves: [],
       rollStats: RollStats(
         cha: 10,
         con: 10,
         dex: 10,
-        rollStatsInt: 10,
+        intl: 10,
         str: 10,
         wis: 10,
       ),
@@ -124,7 +118,7 @@ class Character {
         classKeys: [characterClass.key],
         description: "",
         explanation: "",
-        meta: Meta.version(1),
+        meta: SharedMeta.version(1),
         tags: [],
       ),
     );
@@ -133,7 +127,7 @@ class Character {
   String toRawJson() => json.encode(toJson());
 
   factory Character.fromJson(Map<String, dynamic> json) => Character(
-        meta: Meta.fromJson(json["_meta"]),
+        meta: SharedMeta.fromJson(json["_meta"]),
         key: json["key"],
         displayName: json["displayName"],
         characterClass: CharacterClass.fromJson(json["class"]),
@@ -141,7 +135,6 @@ class Character {
         spells: List<Move>.from(json["spells"].map((x) => Move.fromJson(x))),
         items: List<Item>.from(json["items"].map((x) => Item.fromJson(x))),
         notes: List<Note>.from(json["notes"].map((x) => Note.fromJson(x))),
-        isShared: json["isShared"],
         stats: CharacterStats.fromJson(json["stats"]),
         rollStats: RollStats.fromJson(json["rollStats"]),
         bonds: List<Bond>.from(json["bonds"].map((x) => Bond.fromJson(x))),
@@ -158,11 +151,13 @@ class Character {
         "spells": List<dynamic>.from(spells.map((x) => x.toJson())),
         "items": List<dynamic>.from(items.map((x) => x.toJson())),
         "notes": List<dynamic>.from(notes.map((x) => x.toJson())),
-        "isShared": isShared,
         "stats": stats.toJson(),
         "rollStats": rollStats.toJson(),
         "bonds": List<dynamic>.from(bonds.map((x) => x.toJson())),
         "bio": bio.toJson(),
         "race": race.toJson(),
       };
+
+  int get maxHp => stats.maxHp ?? (characterClass.hp + rollStats.con);
+  int get load => stats.load ?? (characterClass.load + rollStats.strMod);
 }

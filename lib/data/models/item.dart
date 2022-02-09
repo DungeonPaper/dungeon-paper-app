@@ -14,7 +14,7 @@ class Item {
     required this.tags,
   });
 
-  final Meta meta;
+  final SharedMeta meta;
   final int amount;
   final String key;
   final String name;
@@ -22,7 +22,7 @@ class Item {
   final List<Tag> tags;
 
   Item copyWith({
-    Meta? meta,
+    SharedMeta? meta,
     int? amount,
     String? key,
     String? name,
@@ -43,7 +43,7 @@ class Item {
   String toRawJson() => json.encode(toJson());
 
   factory Item.fromJson(Map<String, dynamic> json) => Item(
-        meta: Meta.fromJson(json["_meta"]),
+        meta: SharedMeta.fromJson(json["_meta"]),
         amount: json["amount"],
         key: json["key"],
         name: json["name"],
