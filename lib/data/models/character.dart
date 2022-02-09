@@ -4,6 +4,7 @@
 
 import 'dart:convert';
 
+import 'package:dungeon_paper/data/models/character_class.dart';
 import 'package:dungeon_paper/data/models/character_stats_settings.dart';
 import 'package:dungeon_paper/data/models/roll_stats.dart';
 
@@ -15,6 +16,7 @@ import 'item.dart';
 import 'character_stats.dart';
 import 'meta.dart';
 import 'move.dart';
+import 'note.dart';
 import 'race.dart';
 
 class Character {
@@ -22,10 +24,11 @@ class Character {
     required this.meta,
     required this.key,
     required this.displayName,
-    required this.classKey,
+    required this.characterClass,
     required this.moves,
     required this.spells,
     required this.items,
+    required this.notes,
     required this.isShared,
     required this.stats,
     required this.rollStats,
@@ -37,10 +40,11 @@ class Character {
   final Meta meta;
   final String key;
   final String displayName;
-  final String classKey;
+  final CharacterClass characterClass;
   final List<Move> moves;
   final List<Move> spells;
   final List<Item> items;
+  final List<Note> notes;
   final bool isShared;
   final CharacterStats stats;
   final RollStats rollStats;
@@ -52,10 +56,11 @@ class Character {
     Meta? meta,
     String? key,
     String? displayName,
-    String? classKey,
+    CharacterClass? characterClass,
     List<Move>? moves,
     List<Move>? spells,
     List<Item>? items,
+    List<Note>? notes,
     bool? isShared,
     CharacterStats? stats,
     RollStats? rollStats,
@@ -67,10 +72,11 @@ class Character {
         meta: meta ?? this.meta,
         key: key ?? this.key,
         displayName: displayName ?? this.displayName,
-        classKey: classKey ?? this.classKey,
+        characterClass: characterClass ?? this.characterClass,
         moves: moves ?? this.moves,
         spells: spells ?? this.spells,
         items: items ?? this.items,
+        notes: notes ?? this.notes,
         isShared: isShared ?? this.isShared,
         stats: stats ?? this.stats,
         rollStats: rollStats ?? this.rollStats,
@@ -82,16 +88,17 @@ class Character {
   factory Character.fromRawJson(String str) =>
       Character.fromJson(json.decode(str));
 
-  factory Character.withClass({required String classKey}) {
+  factory Character.withClass({required CharacterClass characterClass}) {
     return Character(
       key: uuid(),
-      meta: Meta(schemaVersion: 1),
+      meta: Meta.version(1),
       displayName: "",
       items: [],
       bio: Bio(description: "", looks: []),
       bonds: [],
-      classKey: classKey,
+      characterClass: characterClass,
       isShared: false,
+      notes: [],
       stats: CharacterStats(
         level: 1,
         armor: 0,
@@ -114,10 +121,10 @@ class Character {
       race: Race(
         key: uuid(),
         name: "Human",
-        classKeys: [classKey],
+        classKeys: [characterClass.key],
         description: "",
         explanation: "",
-        meta: Meta(schemaVersion: 1),
+        meta: Meta.version(1),
         tags: [],
       ),
     );
@@ -129,10 +136,11 @@ class Character {
         meta: Meta.fromJson(json["_meta"]),
         key: json["key"],
         displayName: json["displayName"],
-        classKey: json["classKey"],
+        characterClass: CharacterClass.fromJson(json["class"]),
         moves: List<Move>.from(json["moves"].map((x) => Move.fromJson(x))),
         spells: List<Move>.from(json["spells"].map((x) => Move.fromJson(x))),
         items: List<Item>.from(json["items"].map((x) => Item.fromJson(x))),
+        notes: List<Note>.from(json["notes"].map((x) => Note.fromJson(x))),
         isShared: json["isShared"],
         stats: CharacterStats.fromJson(json["stats"]),
         rollStats: RollStats.fromJson(json["rollStats"]),
@@ -145,10 +153,11 @@ class Character {
         "_meta": meta.toJson(),
         "key": key,
         "displayName": displayName,
-        "classKey": classKey,
+        "class": characterClass.toJson(),
         "moves": List<dynamic>.from(moves.map((x) => x.toJson())),
         "spells": List<dynamic>.from(spells.map((x) => x.toJson())),
         "items": List<dynamic>.from(items.map((x) => x.toJson())),
+        "notes": List<dynamic>.from(notes.map((x) => x.toJson())),
         "isShared": isShared,
         "stats": stats.toJson(),
         "rollStats": rollStats.toJson(),
