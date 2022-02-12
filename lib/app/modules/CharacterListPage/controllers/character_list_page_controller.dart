@@ -1,5 +1,6 @@
-import 'package:dungeon_paper/data/models/character.dart';
 import 'package:get/get.dart';
+
+import '../../../data/models/character.dart';
 
 class CharacterListPageController extends GetxController {
   final characters = <Character>[].obs;

@@ -4,13 +4,11 @@
 
 import 'dart:convert';
 
-import 'package:dungeon_paper/data/models/character_class.dart';
-import 'package:dungeon_paper/data/models/roll_stats.dart';
-
-import '../../core/utils/uuid.dart';
+import '../../data/models/character_class.dart';
+import '../../data/models/roll_stats.dart';
+import '../../utils/uuid.dart';
 import 'bio.dart';
 import 'bond.dart';
-import 'dice.dart';
 import 'item.dart';
 import 'character_stats.dart';
 import 'meta.dart';
@@ -87,7 +85,8 @@ class Character {
   factory Character.fromRawJson(String str) =>
       Character.fromJson(json.decode(str));
 
-  factory Character.withClass({required CharacterClass characterClass}) {
+  factory Character.empty() {
+    var characterClass = CharacterClass.empty();
     return Character(
       key: uuid(),
       meta: SharedMeta.version(1),
@@ -117,6 +116,21 @@ class Character {
         wis: 10,
       ),
       spells: [],
+      race: Race(
+        key: uuid(),
+        name: "Human",
+        classKeys: [characterClass.key],
+        description: "",
+        explanation: "",
+        meta: SharedMeta.version(1),
+        tags: [],
+      ),
+    );
+  }
+
+  factory Character.withClass({required CharacterClass characterClass}) {
+    return Character.empty().copyWith(
+      characterClass: characterClass,
       race: Race(
         key: uuid(),
         name: "Human",

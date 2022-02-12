@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import '../../utils/uuid.dart';
 import 'alignment.dart';
 import 'dice.dart';
 import 'gear_choice.dart';
@@ -59,6 +60,25 @@ class CharacterClass {
       CharacterClass.fromJson(json.decode(str));
 
   String toRawJson() => json.encode(toJson());
+
+  factory CharacterClass.empty() => CharacterClass(
+        meta: SharedMeta.version(1),
+        key: uuid(),
+        name: "",
+        bonds: [],
+        damageDice: Dice.fromJson("1d6"),
+        description: "",
+        gearChoices: [],
+        load: 0,
+        hp: 0,
+        alignments: AlignmentValues(
+          neutral: "",
+          chaotic: "",
+          evil: "",
+          good: "",
+          lawful: "",
+        ),
+      );
 
   factory CharacterClass.fromJson(Map<String, dynamic> json) => CharacterClass(
         meta: SharedMeta.fromJson(json["_meta"]),

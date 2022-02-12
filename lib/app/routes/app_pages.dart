@@ -20,7 +20,7 @@ class AppPages {
     ),
     GetPage(
       name: _Paths.createCharacterPage,
-      page: () => CreateCharacterPageView(),
+      page: () => const CreateCharacterPageView(),
       binding: CreateCharacterPageBinding(),
     ),
   ];

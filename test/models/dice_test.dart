@@ -1,4 +1,4 @@
-import 'package:dungeon_paper/data/models/dice.dart';
+import 'package:dungeon_paper/app/data/models/dice.dart';
 import 'package:test/test.dart';
 
 void main() {
