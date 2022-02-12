@@ -1,73 +1,41 @@
 import 'dart:convert';
+import 'package:dungeon_world_data/dungeon_world_data.dart' as dw;
 
-class AlignmentValue {
+class AlignmentValue extends dw.AlignmentValue {
   AlignmentValue({
-    required this.key,
-    required this.description,
-  });
-
-  final String key;
-  final String description;
-
-  AlignmentValue copyWith({
-    String? key,
-    String? description,
-  }) =>
-      AlignmentValue(
-        key: key ?? this.key,
-        description: description ?? this.description,
-      );
+    required String key,
+    required String description,
+  }) : super(key: key, description: description);
 
   factory AlignmentValue.fromRawJson(String str) =>
       AlignmentValue.fromJson(json.decode(str));
 
-  String toRawJson() => json.encode(toJson());
+  factory AlignmentValue.fromDwAlignmentValue(dw.AlignmentValue original) =>
+      AlignmentValue(key: original.key, description: original.description);
 
   factory AlignmentValue.fromJson(Map<String, dynamic> json) => AlignmentValue(
         key: json["key"],
         description: json["description"],
       );
-
-  Map<String, dynamic> toJson() => {
-        "key": key,
-        "description": description,
-      };
 }
 
-class AlignmentValues {
+class AlignmentValues extends dw.AlignmentValues {
   AlignmentValues({
-    required this.good,
-    required this.evil,
-    required this.lawful,
-    required this.neutral,
-    required this.chaotic,
-  });
-
-  final String good;
-  final String evil;
-  final String lawful;
-  final String neutral;
-  final String chaotic;
-
-  AlignmentValues copyWith({
-    String? good,
-    String? evil,
-    String? lawful,
-    String? neutral,
-    String? chaotic,
-  }) =>
-      AlignmentValues(
-        good: good ?? this.good,
-        evil: evil ?? this.evil,
-        lawful: lawful ?? this.lawful,
-        neutral: neutral ?? this.neutral,
-        chaotic: chaotic ?? this.chaotic,
-      );
+    required String good,
+    required String evil,
+    required String lawful,
+    required String neutral,
+    required String chaotic,
+  }) : super(
+          good: good,
+          evil: evil,
+          lawful: lawful,
+          neutral: neutral,
+          chaotic: chaotic,
+        );
 
   factory AlignmentValues.fromRawJson(String str) =>
       AlignmentValues.fromJson(json.decode(str));
-
-  String toRawJson() => json.encode(toJson());
 
   factory AlignmentValues.fromJson(Map<String, dynamic> json) =>
       AlignmentValues(
@@ -78,11 +46,12 @@ class AlignmentValues {
         chaotic: json["chaotic"],
       );
 
-  Map<String, dynamic> toJson() => {
-        "good": good,
-        "evil": evil,
-        "lawful": lawful,
-        "neutral": neutral,
-        "chaotic": chaotic,
-      };
+  factory AlignmentValues.fromDwAlignmentValues(dw.AlignmentValues original) =>
+      AlignmentValues(
+        good: original.good,
+        evil: original.evil,
+        lawful: original.lawful,
+        neutral: original.neutral,
+        chaotic: original.chaotic,
+      );
 }

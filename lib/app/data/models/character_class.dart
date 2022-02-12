@@ -2,41 +2,56 @@ import 'dart:convert';
 
 import '../../utils/uuid.dart';
 import 'alignment.dart';
-import 'dice.dart';
 import 'gear_choice.dart';
 import 'meta.dart';
+import 'package:dungeon_world_data/dungeon_world_data.dart' as dw;
 
-class CharacterClass {
+class CharacterClass extends dw.CharacterClass {
   CharacterClass({
-    required this.meta,
-    required this.name,
-    required this.key,
-    required this.description,
-    required this.damageDice,
-    required this.load,
-    required this.hp,
-    required this.alignments,
-    required this.bonds,
-    required this.gearChoices,
-  });
+    required SharedMeta meta,
+    required String name,
+    required String key,
+    required String description,
+    required dw.Dice damageDice,
+    required int load,
+    required int hp,
+    required AlignmentValues alignments,
+    required List<String> bonds,
+    required List<GearChoice> gearChoices,
+  })  : _meta = meta,
+        _alignments = alignments,
+        _gearChoices = gearChoices,
+        super(
+          meta: meta,
+          name: name,
+          key: key,
+          description: description,
+          damageDice: damageDice,
+          load: load,
+          hp: hp,
+          alignments: alignments,
+          bonds: bonds,
+          gearChoices: gearChoices,
+        );
 
-  final SharedMeta meta;
-  final String name;
-  final String key;
-  final String description;
-  final Dice damageDice;
-  final int load;
-  final int hp;
-  final AlignmentValues alignments;
-  final List<String> bonds;
-  final List<GearChoice> gearChoices;
+  @override
+  SharedMeta get meta => _meta;
+  final SharedMeta _meta;
 
-  CharacterClass copyWith({
+  @override
+  AlignmentValues get alignments => _alignments;
+  final AlignmentValues _alignments;
+
+  @override
+  List<GearChoice> get gearChoices => _gearChoices;
+  final List<GearChoice> _gearChoices;
+
+  CharacterClass copyInheritedWith({
     SharedMeta? meta,
     String? name,
     String? key,
     String? description,
-    Dice? damageDice,
+    dw.Dice? damageDice,
     int? load,
     int? hp,
     AlignmentValues? alignments,
@@ -59,14 +74,12 @@ class CharacterClass {
   factory CharacterClass.fromRawJson(String str) =>
       CharacterClass.fromJson(json.decode(str));
 
-  String toRawJson() => json.encode(toJson());
-
   factory CharacterClass.empty() => CharacterClass(
         meta: SharedMeta.version(1),
         key: uuid(),
         name: "",
         bonds: [],
-        damageDice: Dice.fromJson("1d6"),
+        damageDice: dw.Dice.d6,
         description: "",
         gearChoices: [],
         load: 0,
@@ -80,31 +93,27 @@ class CharacterClass {
         ),
       );
 
-  factory CharacterClass.fromJson(Map<String, dynamic> json) => CharacterClass(
-        meta: SharedMeta.fromJson(json["_meta"]),
-        name: json["name"],
-        key: json["key"],
-        description: json["description"],
-        damageDice: Dice.fromJson(json["damageDice"]),
-        load: json["load"],
-        hp: json["hp"],
-        alignments: AlignmentValues.fromJson(json["alignments"]),
-        bonds: List<String>.from(json["bonds"].map((x) => x)),
-        gearChoices: List<GearChoice>.from(
-          json["gearChoices"].map((x) => GearChoice.fromJson(x)),
-        ),
+  factory CharacterClass.fromDwCharacterClass(dw.CharacterClass cls) =>
+      CharacterClass(
+        meta: SharedMeta.version(1),
+        name: cls.name,
+        key: cls.key,
+        description: cls.description,
+        damageDice: cls.damageDice,
+        load: cls.load,
+        hp: cls.hp,
+        alignments: AlignmentValues.fromDwAlignmentValues(cls.alignments),
+        bonds: cls.bonds,
+        gearChoices:
+            cls.gearChoices.map((c) => GearChoice.fromDwGearChoice(c)).toList(),
       );
 
+  factory CharacterClass.fromJson(Map<String, dynamic> json) =>
+      CharacterClass.fromDwCharacterClass(dw.CharacterClass.fromJson(json));
+
+  @override
   Map<String, dynamic> toJson() => {
+        ...super.toJson(),
         "_meta": meta.toJson(),
-        "name": name,
-        "key": key,
-        "description": description,
-        "damageDice": damageDice.toJson(),
-        "load": load,
-        "hp": hp,
-        "alignments": alignments.toJson(),
-        "bonds": List<dynamic>.from(bonds.map((x) => x)),
-        "gearChoices": List<dynamic>.from(gearChoices.map((x) => x.toJson())),
       };
 }

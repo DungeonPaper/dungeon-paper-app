@@ -1,19 +1,25 @@
 import 'dart:convert';
+import 'package:dungeon_world_data/dungeon_world_data.dart' as dw;
 
 import 'item.dart';
 
-class GearSelection {
+class GearSelection extends dw.GearSelection {
   GearSelection({
-    required this.description,
-    required this.items,
-    required this.gold,
-  });
+    required String description,
+    required List<Item> items,
+    required int gold,
+  })  : _items = items,
+        super(
+          description: description,
+          items: items,
+          gold: gold,
+        );
 
-  final String description;
-  final List<Item> items;
-  final int gold;
+  @override
+  List<Item> get items => _items;
+  final List<Item> _items;
 
-  GearSelection copyWith({
+  GearSelection copyWithInherited({
     String? description,
     List<Item>? items,
     int? gold,
@@ -27,17 +33,12 @@ class GearSelection {
   factory GearSelection.fromRawJson(String str) =>
       GearSelection.fromJson(json.decode(str));
 
-  String toRawJson() => json.encode(toJson());
+  factory GearSelection.fromDwGearSelection(dw.GearSelection gearSelection) =>
+      GearSelection.fromJson(gearSelection.toJson());
 
   factory GearSelection.fromJson(Map<String, dynamic> json) => GearSelection(
         description: json["description"],
         items: List<Item>.from(json["items"].map((x) => Item.fromJson(x))),
         gold: json["gold"],
       );
-
-  Map<String, dynamic> toJson() => {
-        "description": description,
-        "items": List<dynamic>.from(items.map((x) => x.toJson())),
-        "gold": gold,
-      };
 }

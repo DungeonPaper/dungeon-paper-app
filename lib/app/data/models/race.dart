@@ -1,35 +1,40 @@
 import 'dart:convert';
+import 'package:dungeon_world_data/dungeon_world_data.dart' as dw;
 
 import 'meta.dart';
-import 'tag.dart';
 
-class Race {
+class Race extends dw.Race {
   Race({
-    required this.meta,
-    required this.key,
-    required this.name,
-    required this.description,
-    required this.explanation,
-    required this.classKeys,
-    required this.tags,
-  });
+    required SharedMeta meta,
+    required String key,
+    required String name,
+    required String description,
+    required String explanation,
+    required List<String> classKeys,
+    required List<dw.Tag> tags,
+  })  : _meta = meta,
+        super(
+          meta: meta,
+          key: key,
+          name: name,
+          description: description,
+          explanation: explanation,
+          classKeys: classKeys,
+          tags: tags,
+        );
 
-  final SharedMeta meta;
-  final String key;
-  final String name;
-  final String description;
-  final String explanation;
-  final List<String> classKeys;
-  final List<Tag> tags;
+  @override
+  SharedMeta get meta => _meta;
+  final SharedMeta _meta;
 
-  Race copyWith({
+  Race copyWithInherited({
     SharedMeta? meta,
     String? key,
     String? name,
     String? description,
     String? explanation,
     List<String>? classKeys,
-    List<Tag>? tags,
+    List<dw.Tag>? tags,
   }) =>
       Race(
         meta: meta ?? this.meta,
@@ -43,7 +48,17 @@ class Race {
 
   factory Race.fromRawJson(String str) => Race.fromJson(json.decode(str));
 
-  String toRawJson() => json.encode(toJson());
+  factory Race.fromDwRace(dw.Race race, {SharedMeta? meta}) => Race(
+        meta: race.meta != null
+            ? SharedMeta.fromJson(race.meta)
+            : SharedMeta.version(1),
+        key: race.key,
+        name: race.name,
+        description: race.description,
+        explanation: race.explanation,
+        classKeys: race.classKeys,
+        tags: race.tags,
+      );
 
   factory Race.fromJson(Map<String, dynamic> json) => Race(
         meta: SharedMeta.fromJson(json["_meta"]),
@@ -52,16 +67,12 @@ class Race {
         description: json["description"],
         explanation: json["explanation"],
         classKeys: List<String>.from(json["classKeys"].map((x) => x)),
-        tags: List<Tag>.from(json["tags"].map((x) => Tag.fromJson(x))),
+        tags: List<dw.Tag>.from(json["tags"].map((x) => dw.Tag.fromJson(x))),
       );
 
+  @override
   Map<String, dynamic> toJson() => {
+        ...super.toJson(),
         "_meta": meta.toJson(),
-        "key": key,
-        "name": name,
-        "description": description,
-        "explanation": explanation,
-        "classKeys": List<dynamic>.from(classKeys.map((x) => x)),
-        "tags": List<dynamic>.from(tags.map((x) => x.toJson())),
       };
 }

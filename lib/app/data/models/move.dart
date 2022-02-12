@@ -1,50 +1,46 @@
 import 'dart:convert';
+import 'package:dungeon_world_data/dungeon_world_data.dart' as dw;
 
-import 'dice.dart';
 import 'meta.dart';
-import 'tag.dart';
 
-enum MoveCategory {
-  starting,
-  basic,
-  advanced1,
-  advanced2,
-  other,
-}
-
-class Move {
+class Move extends dw.Move {
   Move({
-    required this.meta,
-    required this.key,
-    required this.name,
-    required this.description,
-    required this.explanation,
-    required this.dice,
-    required this.classKeys,
-    required this.tags,
-    required this.category,
-  });
+    required SharedMeta meta,
+    required String key,
+    required String name,
+    required String description,
+    required String explanation,
+    required List<dw.Dice> dice,
+    required List<String> classKeys,
+    required List<dw.Tag> tags,
+    required dw.MoveCategory category,
+  })  : _meta = meta,
+        super(
+          meta: meta,
+          key: key,
+          name: name,
+          description: description,
+          explanation: explanation,
+          dice: dice,
+          classKeys: classKeys,
+          tags: tags,
+          category: category,
+        );
 
-  final SharedMeta meta;
-  final String key;
-  final String name;
-  final String description;
-  final String explanation;
-  final List<Dice> dice;
-  final List<String> classKeys;
-  final List<Tag> tags;
-  final MoveCategory category;
+  @override
+  SharedMeta get meta => _meta;
+  final SharedMeta _meta;
 
-  Move copyWith({
+  Move copyWithInherited({
     SharedMeta? meta,
     String? key,
     String? name,
     String? description,
     String? explanation,
-    List<Dice>? dice,
+    List<dw.Dice>? dice,
     List<String>? classKeys,
-    List<Tag>? tags,
-    MoveCategory? category,
+    List<dw.Tag>? tags,
+    dw.MoveCategory? category,
   }) =>
       Move(
         meta: meta ?? this.meta,
@@ -60,30 +56,24 @@ class Move {
 
   factory Move.fromRawJson(String str) => Move.fromJson(json.decode(str));
 
-  String toRawJson() => json.encode(toJson());
-
-  factory Move.fromJson(Map<String, dynamic> json) => Move(
-        meta: SharedMeta.fromJson(json["_meta"]),
-        key: json["key"],
-        name: json["name"],
-        description: json["description"],
-        explanation: json["explanation"],
-        dice: List<Dice>.from(json["dice"].map((x) => x.toJson())),
-        classKeys: List<String>.from(json["classKeys"].map((x) => x)),
-        tags: List<Tag>.from(json["tags"].map((x) => Tag.fromJson(x))),
-        category: MoveCategory.values
-            .firstWhere((element) => element.name == json["category"]),
+  factory Move.fromDwMove(dw.Move move, {SharedMeta? meta}) => Move(
+        meta: meta ?? SharedMeta.version(1),
+        key: move.key,
+        name: move.name,
+        description: move.description,
+        explanation: move.explanation,
+        dice: move.dice,
+        classKeys: move.classKeys,
+        tags: move.tags,
+        category: move.category,
       );
 
+  factory Move.fromJson(Map<String, dynamic> json) =>
+      Move.fromDwMove(dw.Move.fromJson(json));
+
+  @override
   Map<String, dynamic> toJson() => {
+        ...super.toJson(),
         "_meta": meta.toJson(),
-        "key": key,
-        "name": name,
-        "description": description,
-        "explanation": explanation,
-        "dice": List<String>.from(dice.map((x) => x.toJson())),
-        "classKeys": List<dynamic>.from(classKeys.map((x) => x)),
-        "tags": List<dynamic>.from(tags.map((x) => x.toJson())),
-        "category": category.name,
       };
 }

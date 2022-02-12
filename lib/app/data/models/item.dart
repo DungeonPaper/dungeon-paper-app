@@ -1,33 +1,38 @@
 import 'dart:convert';
+import 'package:dungeon_world_data/dungeon_world_data.dart' as dw;
 
 import 'item_settings.dart';
 import 'meta.dart';
-import 'tag.dart';
 
-class Item {
+class Item extends dw.Item {
   Item({
-    required this.meta,
-    required this.amount,
-    required this.key,
-    required this.name,
+    required SharedMeta meta,
+    required int amount,
+    required String key,
+    required String name,
     required this.settings,
-    required this.tags,
-  });
+    required List<dw.Tag> tags,
+  })  : _meta = meta,
+        super(
+          meta: meta,
+          amount: amount,
+          key: key,
+          name: name,
+          tags: tags,
+        );
 
-  final SharedMeta meta;
-  final int amount;
-  final String key;
-  final String name;
+  @override
+  SharedMeta get meta => _meta;
+  final SharedMeta _meta;
   final ItemSettings settings;
-  final List<Tag> tags;
 
-  Item copyWith({
+  Item copyWithInherited({
     SharedMeta? meta,
     int? amount,
     String? key,
     String? name,
     ItemSettings? settings,
-    List<Tag>? tags,
+    List<dw.Tag>? tags,
   }) =>
       Item(
         meta: meta ?? this.meta,
@@ -40,23 +45,23 @@ class Item {
 
   factory Item.fromRawJson(String str) => Item.fromJson(json.decode(str));
 
-  String toRawJson() => json.encode(toJson());
-
-  factory Item.fromJson(Map<String, dynamic> json) => Item(
-        meta: SharedMeta.fromJson(json["_meta"]),
-        amount: json["amount"],
-        key: json["key"],
-        name: json["name"],
-        settings: ItemSettings.fromJson(json["settings"]),
-        tags: List<Tag>.from(json["tags"].map((x) => Tag.fromJson(x))),
+  factory Item.fromDwItem(dw.Item item, {ItemSettings? settings}) => Item(
+        meta: item.meta != null
+            ? SharedMeta.fromJson(item.meta)
+            : SharedMeta.version(1),
+        amount: item.amount,
+        key: item.key,
+        name: item.name,
+        tags: item.tags,
+        settings: settings ?? ItemSettings(),
       );
 
+  factory Item.fromJson(Map<String, dynamic> json) =>
+      Item.fromDwItem(dw.Item.fromJson(json));
+
+  @override
   Map<String, dynamic> toJson() => {
+        ...super.toJson(),
         "_meta": meta.toJson(),
-        "amount": amount,
-        "key": key,
-        "name": name,
-        "settings": settings.toJson(),
-        "tags": List<dynamic>.from(tags.map((x) => x.toJson())),
       };
 }

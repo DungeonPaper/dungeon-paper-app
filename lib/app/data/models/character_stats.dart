@@ -1,6 +1,5 @@
 import 'dart:convert';
-
-import 'dice.dart';
+import 'package:dungeon_world_data/dungeon_world_data.dart' as dw;
 
 class CharacterStats {
   CharacterStats({
@@ -18,7 +17,7 @@ class CharacterStats {
   final int currentHp;
   final int currentExp;
   final int armor;
-  final Dice? damageDice;
+  final dw.Dice? damageDice;
   final int? load;
 
   CharacterStats copyWith({
@@ -27,7 +26,7 @@ class CharacterStats {
     int? currentHp,
     int? currentExp,
     int? armor,
-    Dice? damageDice,
+    dw.Dice? damageDice,
     int? load,
   }) =>
       CharacterStats(

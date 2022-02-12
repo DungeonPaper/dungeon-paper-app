@@ -1,19 +1,24 @@
 import 'dart:convert';
+import 'package:dungeon_world_data/dungeon_world_data.dart' as dw;
+import '../../data/models/gear_selection.dart';
 
-import 'gear_selection.dart';
-
-class GearChoice {
+class GearChoice extends dw.GearChoice {
   GearChoice({
-    required this.key,
-    required this.description,
-    required this.selections,
-  });
+    required String key,
+    required String description,
+    required List<GearSelection> selections,
+  })  : _selections = selections,
+        super(
+          key: key,
+          description: description,
+          selections: selections,
+        );
 
-  final String key;
-  final String description;
-  final List<GearSelection> selections;
+  @override
+  List<GearSelection> get selections => _selections;
+  final List<GearSelection> _selections;
 
-  GearChoice copyWith({
+  GearChoice copyWithInherited({
     String? key,
     String? description,
     List<GearSelection>? selections,
@@ -27,18 +32,20 @@ class GearChoice {
   factory GearChoice.fromRawJson(String str) =>
       GearChoice.fromJson(json.decode(str));
 
-  String toRawJson() => json.encode(toJson());
-
-  factory GearChoice.fromJson(Map<String, dynamic> json) => GearChoice(
-        key: json["key"],
-        description: json["description"],
-        selections: List<GearSelection>.from(
-            json["selections"].map((x) => GearSelection.fromJson(x))),
+  factory GearChoice.fromDwGearChoice(dw.GearChoice gearChoice) => GearChoice(
+        key: gearChoice.key,
+        description: gearChoice.description,
+        selections: gearChoice.selections
+            .map((s) => GearSelection.fromDwGearSelection(s))
+            .toList(),
       );
 
+  factory GearChoice.fromJson(Map<String, dynamic> json) =>
+      GearChoice.fromDwGearChoice(dw.GearChoice.fromJson(json));
+
+  @override
   Map<String, dynamic> toJson() => {
-        "key": key,
-        "description": description,
+        ...super.toJson(),
         "selections": List<dynamic>.from(selections.map((x) => x.toJson())),
       };
 }

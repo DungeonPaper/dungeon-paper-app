@@ -2,10 +2,10 @@ import 'dart:convert';
 
 class ItemSettings {
   ItemSettings({
-    required this.countArmor,
-    required this.countDamage,
-    required this.countWeight,
-    required this.equipped,
+    this.countArmor = true,
+    this.countDamage = true,
+    this.countWeight = true,
+    this.equipped = false,
   });
 
   final bool countArmor;

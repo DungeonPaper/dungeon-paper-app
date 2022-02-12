@@ -1,40 +1,18 @@
 import 'dart:convert';
+import 'package:dungeon_world_data/dungeon_world_data.dart' as dw;
 
-class Bond {
+class Bond extends dw.Bond {
   Bond({
-    required this.key,
-    required this.description,
-    required this.completed,
-  });
-
-  final String key;
-  final String description;
-  final bool completed;
-
-  Bond copyWith({
-    String? key,
-    String? description,
-    bool? completed,
-  }) =>
-      Bond(
-        key: key ?? this.key,
-        description: description ?? this.description,
-        completed: completed ?? this.completed,
-      );
+    required String key,
+    required String description,
+    required bool completed,
+  }) : super(key: key, description: description, completed: completed);
 
   factory Bond.fromRawJson(String str) => Bond.fromJson(json.decode(str));
-
-  String toRawJson() => json.encode(toJson());
 
   factory Bond.fromJson(Map<String, dynamic> json) => Bond(
         key: json["key"],
         completed: json["completed"],
         description: json["description"],
       );
-
-  Map<String, dynamic> toJson() => {
-        "key": key,
-        "description": description,
-        "completed": completed,
-      };
 }

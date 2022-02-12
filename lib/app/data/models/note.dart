@@ -1,7 +1,7 @@
 import 'dart:convert';
+import 'package:dungeon_world_data/dungeon_world_data.dart' as dw;
 
 import 'meta.dart';
-import 'tag.dart';
 
 class Note {
   Note({
@@ -16,14 +16,14 @@ class Note {
   final String key;
   final String title;
   final String description;
-  final List<Tag> tags;
+  final List<dw.Tag> tags;
 
   Note copyWith({
     Meta? meta,
     String? key,
     String? title,
     String? description,
-    List<Tag>? tags,
+    List<dw.Tag>? tags,
   }) =>
       Note(
         meta: meta ?? this.meta,
@@ -42,7 +42,7 @@ class Note {
         key: json["key"],
         title: json["title"],
         description: json["description"],
-        tags: List<Tag>.from(json["tags"].map((x) => Tag.fromJson(x))),
+        tags: List<dw.Tag>.from(json["tags"].map((x) => dw.Tag.fromJson(x))),
       );
 
   Map<String, dynamic> toJson() => {

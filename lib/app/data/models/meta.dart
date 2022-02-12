@@ -39,10 +39,12 @@ class Meta {
   String toRawJson() => json.encode(toJson());
 
   factory Meta.fromJson(Map<String, dynamic> json) => Meta(
-        created: DateTime.parse(json["created"]),
+        created: json["created"] != null
+            ? DateTime.parse(json["created"])
+            : DateTime.now(),
         updated:
             json["updated"] != null ? DateTime.parse(json["updated"]) : null,
-        schemaVersion: json["schemaVersion"],
+        schemaVersion: json["schemaVersion"] ?? 1,
       );
 
   Map<String, dynamic> toJson() => {
@@ -126,8 +128,8 @@ class SharedMeta extends Meta {
     var meta = Meta.fromJson(json);
     return SharedMeta.fromMeta(
       meta,
-      shared: json["shared"],
-      outOfSync: json["outOfSync"],
+      shared: json["shared"] ?? false,
+      outOfSync: json["outOfSync"] ?? false,
       originalKey: json["originalKey"],
     );
   }
