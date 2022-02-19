@@ -20,6 +20,8 @@ class CharacterStats {
   final dw.Dice? damageDice;
   final int? load;
 
+  int get maxExp => level + 7;
+
   CharacterStats copyWith({
     int? level,
     int? maxHp,
@@ -39,8 +41,7 @@ class CharacterStats {
         load: load ?? this.load,
       );
 
-  factory CharacterStats.fromRawJson(String str) =>
-      CharacterStats.fromJson(json.decode(str));
+  factory CharacterStats.fromRawJson(String str) => CharacterStats.fromJson(json.decode(str));
 
   String toRawJson() => json.encode(toJson());
 

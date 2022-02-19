@@ -1,3 +1,5 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:cloud_firestore/cloud_firestore.dart' as fs;
 import 'package:localstore/localstore.dart';
 
 class StorageHandler implements StorageDelegate {
@@ -14,11 +16,12 @@ class StorageHandler implements StorageDelegate {
   StorageDelegate get delegate => delegates[currentDelegate]!;
 
   @override
-  Future<Map<String, dynamic>?> getItem(String file, String key) => delegate.getItem(file, key);
+  Future<Map<String, dynamic>?> get(String collection, String document) =>
+      delegate.get(collection, document);
 
   @override
-  Future<void> setItem(String file, String key, Map<String, dynamic> value) =>
-      delegate.setItem(file, key, value);
+  Future<void> create(String collection, String document, Map<String, dynamic> value) =>
+      delegate.create(collection, document, value);
 
   @override
   Future<List<Map<String, dynamic>>> getAllItems(String collection) =>
@@ -32,6 +35,13 @@ class StorageHandler implements StorageDelegate {
 
   @override
   String? get collectionPrefix => delegate.collectionPrefix;
+
+  @override
+  Future<void> delete(String collection, String document) => delegate.delete(collection, document);
+
+  @override
+  Future<void> update(String collection, String document, Map<String, dynamic> value) =>
+      delegate.update(collection, document, value);
 }
 
 abstract class StorageDelegate {
@@ -40,26 +50,38 @@ abstract class StorageDelegate {
 
   void setCollectionPrefix(String? prefix) => _collectionPrefix = prefix;
 
-  Future<Map<String, dynamic>?> getItem(String collection, String document);
-  Future<void> setItem(String collection, String document, Map<String, dynamic> value);
+  Future<Map<String, dynamic>?> get(String collection, String document);
+  Future<void> create(String collection, String document, Map<String, dynamic> value);
+  Future<void> update(String collection, String document, Map<String, dynamic> value);
+  Future<void> delete(String collection, String document);
 
   Future<List<Map<String, dynamic>>> getAllItems(String collection);
 }
 
 class FirestoreDelegate extends StorageDelegate {
-  final dynamic storage = null;
+  final storage = FirebaseFirestore.instance;
 
   @override
-  Future<List<Map<String, dynamic>>> getAllItems(String collection) =>
-      storage.collection(collection).get().then((list) => list.docs.map((snap) => snap.data()));
+  Future<List<Map<String, dynamic>>> getAllItems(String collection) => storage
+      .collection(collection)
+      .get()
+      .then((list) => list.docs.map((snap) => snap.data()).toList());
 
   @override
-  Future<Map<String, dynamic>?> getItem(String collection, String document) =>
+  Future<Map<String, dynamic>?> get(String collection, String document) =>
       storage.collection(collection).doc(document).get().then((snap) => snap.data());
 
   @override
-  Future<void> setItem(String collection, String document, Map<String, dynamic> value) =>
-      storage.collection(collection).set(document, merge: true).set(value);
+  Future<void> create(String collection, String document, Map<String, dynamic> value) =>
+      storage.collection(collection).doc(document).set(value, fs.SetOptions(merge: true));
+
+  @override
+  Future<void> delete(String collection, String document) =>
+      storage.collection(collection).doc(document).delete();
+
+  @override
+  Future<void> update(String collection, String document, Map<String, dynamic> value) =>
+      storage.collection(collection).doc(document).update(value);
 }
 
 class LocalStorageDelegate extends StorageDelegate {
@@ -72,10 +94,18 @@ class LocalStorageDelegate extends StorageDelegate {
       .then((map) => map?.values.toList().cast<Map<String, dynamic>>() ?? <Map<String, dynamic>>[]);
 
   @override
-  Future<Map<String, dynamic>?> getItem(String collection, String document) =>
+  Future<Map<String, dynamic>?> get(String collection, String document) =>
       storage.collection(collection).doc(document).get();
 
   @override
-  Future<void> setItem(String collection, String document, Map<String, dynamic> value) =>
+  Future<void> update(String collection, String document, Map<String, dynamic> value) =>
       storage.collection(collection).doc(document).set(value);
+
+  @override
+  Future<void> delete(String collection, String document) =>
+      storage.collection(collection).doc(document).delete();
+
+  @override
+  Future<void> create(String collection, String document, Map<String, dynamic> value) =>
+      update(collection, document, value);
 }

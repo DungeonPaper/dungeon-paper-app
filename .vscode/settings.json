@@ -3,6 +3,7 @@
         "cupertino",
         "dungeonpaper",
         "Getx",
-        "localstorage"
+        "localstorage",
+        "Localstore"
     ]
 }

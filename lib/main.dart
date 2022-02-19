@@ -3,13 +3,17 @@ import 'package:dungeon_paper/generated/intl/messages_all.dart';
 import 'package:dungeon_paper/generated/l10n.dart';
 import 'package:flutter/material.dart';
 import 'package:get/route_manager.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
+import 'firebase_options.dart';
 import 'core/storage_handler/storage_handler.dart';
 
 void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
   await initializeMessages('en');
   await S.load(const Locale("en", "US"));
-  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
   runApp(const MyApp());
 }
 

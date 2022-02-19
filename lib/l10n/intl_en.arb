@@ -12,5 +12,22 @@
   "createCharacterDescFieldLabel": "Biography/description",
   "createCharacterDescFieldPlaceholder": "Enter general information about your character - backstory, goals & ambitions, behavior descriptions, etc",
   "createCharacterAvatarFieldLabel": "Photo URL",
-  "createCharacterAvatarFieldPlaceholder": "Paste an image URL"
+  "createCharacterAvatarFieldPlaceholder": "Paste an image URL",
+  "characterHeaderSubtitle": "Level {level} ∙ {charClass} ∙ {alignment}",
+  "@characterHeaderSubtitle": {
+    "placeholders": {
+      "level": {
+        "type": "int"
+      },
+      "charClass": {
+        "type": "String"
+      },
+      "alignment": {
+        "type": "String"
+      }
+    }
+  },
+  "alignment": "{alignment, select, chaotic {Chaotic} evil {Evil} good {Good} lawful {Lawful} neutral {Neutral}}",
+  "characterBarHp": "HP",
+  "characterBarXp": "XP"
 }

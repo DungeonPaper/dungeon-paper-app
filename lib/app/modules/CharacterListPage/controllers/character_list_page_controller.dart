@@ -24,7 +24,7 @@ class CharacterListPageController extends GetxController {
 
   void addCharacter(Character char) {
     characters.add(char);
-    StorageHandler.instance.setItem("characters", char.key, char.toJson());
+    StorageHandler.instance.create("characters", char.key, char.toJson());
     characters.refresh();
   }
 }

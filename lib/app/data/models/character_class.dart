@@ -84,6 +84,7 @@ class CharacterClass extends dw.CharacterClass {
         load: 0,
         hp: 0,
         alignments: AlignmentValues(
+          meta: Meta.version(1),
           neutral: "",
           chaotic: "",
           evil: "",

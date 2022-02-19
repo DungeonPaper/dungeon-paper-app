@@ -20,9 +20,24 @@ typedef String MessageIfAbsent(String messageStr, List<dynamic> args);
 class MessageLookup extends MessageLookupByLibrary {
   String get localeName => 'en';
 
+  static String m0(alignment) => "${Intl.select(alignment, {
+            'chaotic': 'Chaotic',
+            'evil': 'Evil',
+            'good': 'Good',
+            'lawful': 'Lawful',
+            'neutral': 'Neutral',
+          })}";
+
+  static String m1(level, charClass, alignment) =>
+      "Level ${level} ∙ ${charClass} ∙ ${alignment}";
+
   final messages = _notInlinedMessages(_notInlinedMessages);
   static Map<String, Function> _notInlinedMessages(_) => <String, Function>{
+        "alignment": m0,
         "appName": MessageLookupByLibrary.simpleMessage("Dungeon Paper"),
+        "characterBarHp": MessageLookupByLibrary.simpleMessage("HP"),
+        "characterBarXp": MessageLookupByLibrary.simpleMessage("XP"),
+        "characterHeaderSubtitle": m1,
         "characterListTitle":
             MessageLookupByLibrary.simpleMessage("All Characters"),
         "createCharacterAddButton":

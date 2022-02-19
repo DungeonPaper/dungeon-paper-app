@@ -4,6 +4,8 @@
 
 import 'dart:convert';
 
+import 'package:dungeon_paper/app/data/models/alignment.dart';
+
 import '../../data/models/character_class.dart';
 import '../../data/models/roll_stats.dart';
 import '../../utils/uuid.dart';
@@ -92,7 +94,12 @@ class Character {
       displayName: "",
       avatarUrl: "",
       items: [],
-      bio: Bio(description: "", looks: []),
+      bio: Bio(
+        description: "",
+        looks: [],
+        alignment:
+            AlignmentValue(meta: Meta.version(1), key: 'good', description: 'Do something good'),
+      ),
       bonds: [],
       characterClass: characterClass,
       notes: [],
@@ -178,6 +185,11 @@ class Character {
         "race": race.toJson(),
       };
 
+  int get currentHp => stats.currentHp;
   int get maxHp => stats.maxHp ?? (characterClass.hp + rollStats.con);
+  int get currentExp => stats.currentExp;
+  int get maxExp => stats.maxExp;
+  double get currentHpPercent => stats.currentHp / maxHp;
+  double get currentExpPercent => stats.currentExp / maxExp;
   int get load => stats.load ?? (characterClass.load + rollStats.strMod);
 }

@@ -149,6 +149,54 @@ class S {
       args: [],
     );
   }
+
+  /// `Level {level} ∙ {charClass} ∙ {alignment}`
+  String characterHeaderSubtitle(
+      int level, String charClass, String alignment) {
+    return Intl.message(
+      'Level $level ∙ $charClass ∙ $alignment',
+      name: 'characterHeaderSubtitle',
+      desc: '',
+      args: [level, charClass, alignment],
+    );
+  }
+
+  /// `{alignment, select, chaotic {Chaotic} evil {Evil} good {Good} lawful {Lawful} neutral {Neutral}}`
+  String alignment(Object alignment) {
+    return Intl.select(
+      alignment,
+      {
+        'chaotic': 'Chaotic',
+        'evil': 'Evil',
+        'good': 'Good',
+        'lawful': 'Lawful',
+        'neutral': 'Neutral',
+      },
+      name: 'alignment',
+      desc: '',
+      args: [alignment],
+    );
+  }
+
+  /// `HP`
+  String get characterBarHp {
+    return Intl.message(
+      'HP',
+      name: 'characterBarHp',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `XP`
+  String get characterBarXp {
+    return Intl.message(
+      'XP',
+      name: 'characterBarXp',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {
