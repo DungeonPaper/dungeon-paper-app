@@ -30,7 +30,7 @@ class CharacterListPageView extends GetView<CharacterListPageController> {
             ),
             ElevatedButton(
               onPressed: () => controller.addCharacter(Character.empty()),
-              child: Text(S.current.createCharacterAddButton),
+              child: Text(S.current.createCharacterAddButton + " (Empty)"),
             ),
           ],
         ),

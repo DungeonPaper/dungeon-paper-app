@@ -4,12 +4,13 @@ import 'package:dungeon_paper/generated/l10n.dart';
 import 'package:flutter/material.dart';
 import 'package:get/route_manager.dart';
 
-void main() {
-  initializeMessages('en').then((loaded) {
-    S.load(const Locale("en", "US")).then((s) {
-      runApp(const MyApp());
-    });
-  });
+import 'core/storage_handler/storage_handler.dart';
+
+void main() async {
+  await initializeMessages('en');
+  await S.load(const Locale("en", "US"));
+  WidgetsFlutterBinding.ensureInitialized();
+  runApp(const MyApp());
 }
 
 class MyApp extends StatelessWidget {

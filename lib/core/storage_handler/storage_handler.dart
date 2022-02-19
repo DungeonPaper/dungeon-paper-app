@@ -1,51 +1,81 @@
-import 'package:localstorage/localstorage.dart';
+import 'package:localstore/localstore.dart';
 
 class StorageHandler implements StorageDelegate {
+  static StorageHandler? _instance;
+  static StorageHandler get instance => _instance ??= StorageHandler();
+
   String currentDelegate = 'local';
 
   final delegates = <String, StorageDelegate>{
     'local': LocalStorageDelegate(),
+    'firestore': FirestoreDelegate(),
   };
 
   StorageDelegate get delegate => delegates[currentDelegate]!;
 
   @override
-  Future<T> getItem<T>(String file, String key) => delegate.getItem(file, key);
+  Future<Map<String, dynamic>?> getItem(String file, String key) => delegate.getItem(file, key);
 
   @override
-  Future<void> setItem<T>(String file, String key, T value) => delegate.setItem(file, key, value);
+  Future<void> setItem(String file, String key, Map<String, dynamic> value) =>
+      delegate.setItem(file, key, value);
+
+  @override
+  Future<List<Map<String, dynamic>>> getAllItems(String collection) =>
+      delegate.getAllItems(collection);
+
+  @override
+  String? _collectionPrefix;
+
+  @override
+  void setCollectionPrefix(String? prefix) => delegate.setCollectionPrefix(prefix);
+
+  @override
+  String? get collectionPrefix => delegate.collectionPrefix;
 }
 
 abstract class StorageDelegate {
-  Future<T> getItem<T>(String file, String key);
-  Future<void> setItem<T>(String file, String key, T value);
+  String? _collectionPrefix;
+  String? get collectionPrefix => _collectionPrefix;
+
+  void setCollectionPrefix(String? prefix) => _collectionPrefix = prefix;
+
+  Future<Map<String, dynamic>?> getItem(String collection, String document);
+  Future<void> setItem(String collection, String document, Map<String, dynamic> value);
+
+  Future<List<Map<String, dynamic>>> getAllItems(String collection);
 }
 
-class LocalStorageDelegate implements StorageDelegate {
-  @override
-  Future<T> getItem<T>(String file, String key) => LocalStorage(file).getItem(key);
+class FirestoreDelegate extends StorageDelegate {
+  final dynamic storage = null;
 
   @override
-  Future<void> setItem<T>(String file, String key, T value) =>
-      LocalStorage(file).setItem(key, value);
+  Future<List<Map<String, dynamic>>> getAllItems(String collection) =>
+      storage.collection(collection).get().then((list) => list.docs.map((snap) => snap.data()));
+
+  @override
+  Future<Map<String, dynamic>?> getItem(String collection, String document) =>
+      storage.collection(collection).doc(document).get().then((snap) => snap.data());
+
+  @override
+  Future<void> setItem(String collection, String document, Map<String, dynamic> value) =>
+      storage.collection(collection).set(document, merge: true).set(value);
 }
 
-class FirebaseDelegate implements StorageDelegate {
-  final dynamic _fb = null;
-  String? _pathPrefix;
-
-  void setPathPrefix(String? prefix) => _pathPrefix = prefix;
+class LocalStorageDelegate extends StorageDelegate {
+  final storage = Localstore.instance;
 
   @override
-  Future<T> getItem<T>(String file, String key) =>
-      _fb.doc((_pathPrefix ?? "") + file).get().then((snap) => snap.data());
+  Future<List<Map<String, dynamic>>> getAllItems(String collection) => storage
+      .collection(collection)
+      .get()
+      .then((map) => map?.values.toList().cast<Map<String, dynamic>>() ?? <Map<String, dynamic>>[]);
 
   @override
-  Future<void> setItem<T>(String file, String key, T value) async {
-    var doc = await _fb.doc((_pathPrefix ?? "") + file).get();
-    if (!doc.exists) {
-      return doc.set(value);
-    }
-    return doc.update(value);
-  }
+  Future<Map<String, dynamic>?> getItem(String collection, String document) =>
+      storage.collection(collection).doc(document).get();
+
+  @override
+  Future<void> setItem(String collection, String document, Map<String, dynamic> value) =>
+      storage.collection(collection).doc(document).set(value);
 }

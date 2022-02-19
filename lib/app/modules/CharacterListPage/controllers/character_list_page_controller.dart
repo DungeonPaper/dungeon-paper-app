@@ -1,3 +1,4 @@
+import 'package:dungeon_paper/core/storage_handler/storage_handler.dart';
 import 'package:get/get.dart';
 
 import '../../../data/models/character.dart';
@@ -5,10 +6,13 @@ import '../../../data/models/character.dart';
 class CharacterListPageController extends GetxController {
   final characters = <Character>[].obs;
 
-  // @override
-  // void onInit() {
-  //   super.onInit();
-  // }
+  @override
+  void onInit() async {
+    super.onInit();
+    characters.addAll((await StorageHandler.instance.getAllItems("characters"))
+        .map((c) => Character.fromJson(c)));
+    characters.refresh();
+  }
 
   // @override
   // void onReady() {
@@ -20,6 +24,7 @@ class CharacterListPageController extends GetxController {
 
   void addCharacter(Character char) {
     characters.add(char);
+    StorageHandler.instance.setItem("characters", char.key, char.toJson());
     characters.refresh();
   }
 }
