@@ -5,33 +5,38 @@ class Meta {
     DateTime? created,
     this.updated,
     required this.schemaVersion,
-  }) {
-    this.created = created ?? DateTime.now();
-  }
+    this.sharing,
+  }) : created = created ?? DateTime.now();
 
   late final DateTime created;
   final DateTime? updated;
   final int schemaVersion;
+  final MetaSharing? sharing;
 
   factory Meta.version(
     int schemaVersion, {
     DateTime? created,
     DateTime? updated,
+    MetaSharing? sharing,
   }) =>
       Meta(
         schemaVersion: schemaVersion,
         created: created,
         updated: updated,
+        sharing: sharing,
       );
+
   Meta copyWith({
     DateTime? created,
     DateTime? updated,
     int? schemaVersion,
+    MetaSharing? sharing,
   }) =>
       Meta(
         created: created ?? this.created,
         updated: updated ?? this.updated,
         schemaVersion: schemaVersion ?? this.schemaVersion,
+        sharing: sharing ?? this.sharing,
       );
 
   factory Meta.fromRawJson(String str) => Meta.fromJson(json.decode(str));
@@ -39,106 +44,63 @@ class Meta {
   String toRawJson() => json.encode(toJson());
 
   factory Meta.fromJson(Map<String, dynamic> json) => Meta(
-        created: json["created"] != null
-            ? DateTime.parse(json["created"])
-            : DateTime.now(),
-        updated:
-            json["updated"] != null ? DateTime.parse(json["updated"]) : null,
+        created: json["created"] != null ? DateTime.parse(json["created"]) : DateTime.now(),
+        updated: json["updated"] != null ? DateTime.parse(json["updated"]) : null,
         schemaVersion: json["schemaVersion"] ?? 1,
+        sharing: json['sharing'] != null ? MetaSharing.fromJson(json["sharing"]) : null,
       );
 
   Map<String, dynamic> toJson() => {
         "created": created.toString(),
         "updated": updated?.toString(),
         "schemaVersion": schemaVersion,
+        "sharing": sharing?.toJson(),
       };
 }
 
-class SharedMeta extends Meta {
-  SharedMeta({
-    DateTime? created,
-    DateTime? updated,
-    required int schemaVersion,
+class MetaSharing {
+  MetaSharing({
     this.shared = false,
     this.originalKey,
+    this.createdBy,
     this.outOfSync = false,
-  }) : super(created: created, updated: updated, schemaVersion: schemaVersion);
+  });
 
   final bool shared;
   final bool outOfSync;
   final String? originalKey;
+  final String? createdBy;
 
-  factory SharedMeta.version(
-    int schemaVersion, {
-    DateTime? created,
-    DateTime? updated,
-    bool shared = false,
-    bool outOfSync = false,
-    String? originalKey,
-  }) =>
-      SharedMeta(
-        schemaVersion: schemaVersion,
-        created: created,
-        updated: updated,
-        shared: shared,
-        outOfSync: outOfSync,
-        originalKey: originalKey,
-      );
-
-  @override
-  SharedMeta copyWith({
-    DateTime? created,
-    DateTime? updated,
-    int? schemaVersion,
+  MetaSharing copyWith({
     bool? shared,
     bool? outOfSync,
     String? originalKey,
+    String? createdBy,
   }) =>
-      SharedMeta(
-        created: created ?? this.created,
-        updated: updated ?? this.updated,
-        schemaVersion: schemaVersion ?? this.schemaVersion,
+      MetaSharing(
         shared: shared ?? this.shared,
         outOfSync: outOfSync ?? this.outOfSync,
         originalKey: originalKey ?? this.originalKey,
+        createdBy: createdBy ?? this.createdBy,
       );
 
-  factory SharedMeta.fromRawJson(String str) =>
-      SharedMeta.fromJson(json.decode(str));
+  factory MetaSharing.fromRawJson(String str) => MetaSharing.fromJson(json.decode(str));
 
-  @override
   String toRawJson() => json.encode(toJson());
 
-  factory SharedMeta.fromMeta(
-    Meta meta, {
-    bool? shared,
-    bool? outOfSync,
-    String? originalKey,
-  }) =>
-      SharedMeta(
-        schemaVersion: meta.schemaVersion,
-        created: meta.created,
-        updated: meta.updated,
-        shared: shared ?? false,
-        outOfSync: outOfSync ?? false,
-        originalKey: originalKey,
-      );
-
-  factory SharedMeta.fromJson(Map<String, dynamic> json) {
-    var meta = Meta.fromJson(json);
-    return SharedMeta.fromMeta(
-      meta,
+  factory MetaSharing.fromJson(Map<String, dynamic> json) {
+    return MetaSharing(
       shared: json["shared"] ?? false,
       outOfSync: json["outOfSync"] ?? false,
       originalKey: json["originalKey"],
+      createdBy: json["createdBy"],
     );
   }
 
-  @override
   Map<String, dynamic> toJson() => {
-        ...super.toJson(),
-        "originalKey": originalKey,
         "shared": shared,
         "outOfSync": outOfSync,
+        "originalKey": originalKey,
+        "createdBy": createdBy,
       };
 }

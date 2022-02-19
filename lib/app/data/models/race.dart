@@ -5,7 +5,7 @@ import 'meta.dart';
 
 class Race extends dw.Race {
   Race({
-    required SharedMeta meta,
+    required Meta meta,
     required String key,
     required String name,
     required String description,
@@ -24,11 +24,11 @@ class Race extends dw.Race {
         );
 
   @override
-  SharedMeta get meta => _meta;
-  final SharedMeta _meta;
+  Meta get meta => _meta;
+  final Meta _meta;
 
   Race copyWithInherited({
-    SharedMeta? meta,
+    Meta? meta,
     String? key,
     String? name,
     String? description,
@@ -48,10 +48,8 @@ class Race extends dw.Race {
 
   factory Race.fromRawJson(String str) => Race.fromJson(json.decode(str));
 
-  factory Race.fromDwRace(dw.Race race, {SharedMeta? meta}) => Race(
-        meta: race.meta != null
-            ? SharedMeta.fromJson(race.meta)
-            : SharedMeta.version(1),
+  factory Race.fromDwRace(dw.Race race, {Meta? meta}) => Race(
+        meta: race.meta != null ? Meta.fromJson(race.meta) : Meta.version(1),
         key: race.key,
         name: race.name,
         description: race.description,
@@ -61,7 +59,7 @@ class Race extends dw.Race {
       );
 
   factory Race.fromJson(Map<String, dynamic> json) => Race(
-        meta: SharedMeta.fromJson(json["_meta"]),
+        meta: Meta.fromJson(json["_meta"]),
         key: json["key"],
         name: json["name"],
         description: json["description"],

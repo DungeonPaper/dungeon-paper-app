@@ -5,7 +5,7 @@ import 'meta.dart';
 
 class Spell extends dw.Spell {
   Spell({
-    required SharedMeta meta,
+    required Meta meta,
     required String key,
     required String name,
     required String description,
@@ -25,12 +25,12 @@ class Spell extends dw.Spell {
         );
 
   @override
-  SharedMeta get meta => _meta;
-  final SharedMeta _meta;
+  Meta get meta => _meta;
+  final Meta _meta;
   final bool prepared;
 
   Spell copyWithInherited({
-    SharedMeta? meta,
+    Meta? meta,
     String? key,
     String? name,
     String? description,
@@ -53,9 +53,7 @@ class Spell extends dw.Spell {
   factory Spell.fromRawJson(String str) => Spell.fromJson(json.decode(str));
 
   factory Spell.fromDwSpell(dw.Spell spell) => Spell(
-        meta: spell.meta != null
-            ? SharedMeta.fromJson(spell.meta)
-            : SharedMeta.version(1),
+        meta: spell.meta != null ? Meta.fromJson(spell.meta) : Meta.version(1),
         key: spell.key,
         name: spell.name,
         description: spell.description,
@@ -65,8 +63,7 @@ class Spell extends dw.Spell {
         prepared: false,
       );
 
-  factory Spell.fromJson(Map<String, dynamic> json) =>
-      Spell.fromDwSpell(dw.Spell.fromJson(json));
+  factory Spell.fromJson(Map<String, dynamic> json) => Spell.fromDwSpell(dw.Spell.fromJson(json));
 
   @override
   Map<String, dynamic> toJson() => {

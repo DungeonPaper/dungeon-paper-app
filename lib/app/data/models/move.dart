@@ -5,7 +5,7 @@ import 'meta.dart';
 
 class Move extends dw.Move {
   Move({
-    required SharedMeta meta,
+    required Meta meta,
     required String key,
     required String name,
     required String description,
@@ -28,11 +28,11 @@ class Move extends dw.Move {
         );
 
   @override
-  SharedMeta get meta => _meta;
-  final SharedMeta _meta;
+  Meta get meta => _meta;
+  final Meta _meta;
 
   Move copyWithInherited({
-    SharedMeta? meta,
+    Meta? meta,
     String? key,
     String? name,
     String? description,
@@ -56,8 +56,8 @@ class Move extends dw.Move {
 
   factory Move.fromRawJson(String str) => Move.fromJson(json.decode(str));
 
-  factory Move.fromDwMove(dw.Move move, {SharedMeta? meta}) => Move(
-        meta: meta ?? SharedMeta.version(1),
+  factory Move.fromDwMove(dw.Move move, {Meta? meta}) => Move(
+        meta: meta ?? Meta.version(1),
         key: move.key,
         name: move.name,
         description: move.description,
@@ -68,8 +68,7 @@ class Move extends dw.Move {
         category: move.category,
       );
 
-  factory Move.fromJson(Map<String, dynamic> json) =>
-      Move.fromDwMove(dw.Move.fromJson(json));
+  factory Move.fromJson(Map<String, dynamic> json) => Move.fromDwMove(dw.Move.fromJson(json));
 
   @override
   Map<String, dynamic> toJson() => {

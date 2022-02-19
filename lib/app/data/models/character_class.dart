@@ -8,7 +8,7 @@ import 'package:dungeon_world_data/dungeon_world_data.dart' as dw;
 
 class CharacterClass extends dw.CharacterClass {
   CharacterClass({
-    required SharedMeta meta,
+    required Meta meta,
     required String name,
     required String key,
     required String description,
@@ -35,8 +35,8 @@ class CharacterClass extends dw.CharacterClass {
         );
 
   @override
-  SharedMeta get meta => _meta;
-  final SharedMeta _meta;
+  Meta get meta => _meta;
+  final Meta _meta;
 
   @override
   AlignmentValues get alignments => _alignments;
@@ -47,7 +47,7 @@ class CharacterClass extends dw.CharacterClass {
   final List<GearChoice> _gearChoices;
 
   CharacterClass copyInheritedWith({
-    SharedMeta? meta,
+    Meta? meta,
     String? name,
     String? key,
     String? description,
@@ -71,11 +71,10 @@ class CharacterClass extends dw.CharacterClass {
         gearChoices: gearChoices ?? this.gearChoices,
       );
 
-  factory CharacterClass.fromRawJson(String str) =>
-      CharacterClass.fromJson(json.decode(str));
+  factory CharacterClass.fromRawJson(String str) => CharacterClass.fromJson(json.decode(str));
 
   factory CharacterClass.empty() => CharacterClass(
-        meta: SharedMeta.version(1),
+        meta: Meta.version(1),
         key: uuid(),
         name: "",
         bonds: [],
@@ -93,9 +92,8 @@ class CharacterClass extends dw.CharacterClass {
         ),
       );
 
-  factory CharacterClass.fromDwCharacterClass(dw.CharacterClass cls) =>
-      CharacterClass(
-        meta: SharedMeta.version(1),
+  factory CharacterClass.fromDwCharacterClass(dw.CharacterClass cls) => CharacterClass(
+        meta: Meta.version(1),
         name: cls.name,
         key: cls.key,
         description: cls.description,
@@ -104,8 +102,7 @@ class CharacterClass extends dw.CharacterClass {
         hp: cls.hp,
         alignments: AlignmentValues.fromDwAlignmentValues(cls.alignments),
         bonds: cls.bonds,
-        gearChoices:
-            cls.gearChoices.map((c) => GearChoice.fromDwGearChoice(c)).toList(),
+        gearChoices: cls.gearChoices.map((c) => GearChoice.fromDwGearChoice(c)).toList(),
       );
 
   factory CharacterClass.fromJson(Map<String, dynamic> json) =>

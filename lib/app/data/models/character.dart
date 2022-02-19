@@ -34,7 +34,7 @@ class Character {
     required this.race,
   });
 
-  final SharedMeta meta;
+  final Meta meta;
   final String key;
   final String displayName;
   final String avatarUrl;
@@ -50,7 +50,7 @@ class Character {
   final Race race;
 
   Character copyWith({
-    SharedMeta? meta,
+    Meta? meta,
     String? key,
     String? displayName,
     String? avatarUrl,
@@ -82,14 +82,13 @@ class Character {
         race: race ?? this.race,
       );
 
-  factory Character.fromRawJson(String str) =>
-      Character.fromJson(json.decode(str));
+  factory Character.fromRawJson(String str) => Character.fromJson(json.decode(str));
 
   factory Character.empty() {
     var characterClass = CharacterClass.empty();
     return Character(
       key: uuid(),
-      meta: SharedMeta.version(1),
+      meta: Meta.version(1),
       displayName: "",
       avatarUrl: "",
       items: [],
@@ -122,7 +121,7 @@ class Character {
         classKeys: [characterClass.key],
         description: "",
         explanation: "",
-        meta: SharedMeta.version(1),
+        meta: Meta.version(1),
         tags: [],
       ),
     );
@@ -137,7 +136,7 @@ class Character {
         classKeys: [characterClass.key],
         description: "",
         explanation: "",
-        meta: SharedMeta.version(1),
+        meta: Meta.version(1),
         tags: [],
       ),
     );
@@ -146,7 +145,7 @@ class Character {
   String toRawJson() => json.encode(toJson());
 
   factory Character.fromJson(Map<String, dynamic> json) => Character(
-        meta: SharedMeta.fromJson(json["_meta"]),
+        meta: Meta.fromJson(json["_meta"]),
         key: json["key"],
         displayName: json["displayName"],
         avatarUrl: json["avatarURL"],

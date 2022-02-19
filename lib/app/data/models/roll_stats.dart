@@ -34,10 +34,28 @@ class RollStats {
         cha: cha ?? this.cha,
       );
 
-  factory RollStats.fromRawJson(String str) =>
-      RollStats.fromJson(json.decode(str));
+  factory RollStats.fromRawJson(String str) => RollStats.fromJson(json.decode(str));
 
   String toRawJson() => json.encode(toJson());
+
+  int getStatByName(String stat) {
+    switch (stat.trim().toLowerCase()) {
+      case "dex":
+        return dex;
+      case "str":
+        return str;
+      case "wis":
+        return wis;
+      case "con":
+        return con;
+      case "int":
+        return intl;
+      case "cha":
+        return cha;
+      default:
+        throw Exception("Stat '$stat' is not a valid stat");
+    }
+  }
 
   factory RollStats.fromJson(Map<String, dynamic> json) => RollStats(
         dex: json["dex"],

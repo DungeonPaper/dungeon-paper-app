@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import '../../../../generated/l10n.dart';
+import '../../../data/models/character.dart';
 import '../controllers/character_list_page_controller.dart';
 
 class CharacterListPageView extends GetView<CharacterListPageController> {
@@ -26,7 +27,11 @@ class CharacterListPageView extends GetView<CharacterListPageController> {
             ElevatedButton(
               onPressed: () => Get.toNamed(Routes.createCharacterPage),
               child: Text(S.current.createCharacterAddButton),
-            )
+            ),
+            ElevatedButton(
+              onPressed: () => controller.addCharacter(Character.empty()),
+              child: Text(S.current.createCharacterAddButton),
+            ),
           ],
         ),
       ),
