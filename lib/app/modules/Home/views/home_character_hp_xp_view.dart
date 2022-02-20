@@ -4,16 +4,16 @@ import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
 
-import '../../../widgets/atoms/xp_bar.dart';
+import '../../../widgets/atoms/exp_bar.dart';
 
-class HomeCharacterHpXpView extends GetView<HomeController> {
+class HomeCharacterHpExpView extends GetView<HomeController> {
   @override
   Widget build(BuildContext context) {
     return Row(
       children: const [
         Expanded(child: HpBar()),
         SizedBox(width: 24),
-        Expanded(child: XpBar()),
+        Expanded(child: ExpBar()),
       ],
     );
   }

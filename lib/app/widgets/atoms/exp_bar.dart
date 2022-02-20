@@ -4,8 +4,8 @@ import 'package:get/get.dart';
 
 import '../../../generated/l10n.dart';
 
-class HpBar extends StatelessWidget {
-  const HpBar({Key? key}) : super(key: key);
+class ExpBar extends StatelessWidget {
+  const ExpBar({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -18,23 +18,23 @@ class HpBar extends StatelessWidget {
           ClipRRect(
             borderRadius: BorderRadius.circular(10),
             child: LinearProgressIndicator(
-              value: char != null ? char.currentHpPercent : 1,
+              value: char != null ? char.currentExpPercent : 1,
               minHeight: 17.5,
-              color: Colors.red,
-              backgroundColor: Colors.black,
+              color: const Color(0xff1e88e5),
+              backgroundColor: Colors.blue[100],
             ),
           ),
           const SizedBox(height: 4),
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Text(S.current.characterBarHp),
+              Text(S.current.characterBarXp),
               const SizedBox(width: 8),
               Text(
-                char?.currentHp.toString() ?? '-',
-                style: const TextStyle(fontWeight: FontWeight.bold),
+                char?.currentExp.toString() ?? '-',
+                style: TextStyle(fontWeight: FontWeight.bold),
               ),
-              Text('/' + (char?.maxHp.toString() ?? '-')),
+              Text('/' + (char?.maxExp.toString() ?? '-')),
             ],
           )
         ],
