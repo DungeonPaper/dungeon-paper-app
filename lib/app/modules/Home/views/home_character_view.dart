@@ -4,6 +4,7 @@ import 'package:dungeon_paper/app/data/models/character_class.dart';
 import 'package:dungeon_paper/app/data/models/character_stats.dart';
 import 'package:dungeon_paper/app/modules/Home/views/home_character_header_view.dart';
 import 'package:dungeon_paper/app/modules/Home/views/home_character_hp_xp_view.dart';
+import 'package:dungeon_paper/app/modules/Home/views/home_character_roll_stat_chip.dart';
 import 'package:dungeon_paper/app/widgets/atoms/character_avatar.dart';
 import 'package:dynamic_themes/dynamic_themes.dart';
 import 'package:flutter/material.dart';
@@ -45,6 +46,25 @@ class HomeCharacterView extends GetView<HomeController> {
             ),
             const SizedBox(height: 8),
             HomeCharacterHpExpView(),
+            const SizedBox(height: 16),
+            Center(
+              child: SizedBox(
+                width: 320,
+                child: GridView.count(
+                  crossAxisCount: 3,
+                  shrinkWrap: true,
+                  physics: const NeverScrollableScrollPhysics(),
+                  childAspectRatio: 2.7,
+                  mainAxisSpacing: 4,
+                  crossAxisSpacing: 4,
+                  children: [
+                    for (var stat in char?.rollStats.stats ?? [])
+                      HomeCharacterRollStatChip(stat: stat),
+                  ],
+                ),
+              ),
+            ),
+            const SizedBox(height: 16),
             ElevatedButton(
               style: ButtonThemes.primaryElevated(context),
               onPressed: () {

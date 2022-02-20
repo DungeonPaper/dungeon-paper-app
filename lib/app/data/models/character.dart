@@ -3,6 +3,7 @@
 //     final character = characterFromJson(jsonString);
 
 import 'dart:convert';
+import 'dart:math';
 
 import 'package:dungeon_paper/app/data/models/alignment.dart';
 
@@ -87,6 +88,7 @@ class Character {
   factory Character.fromRawJson(String str) => Character.fromJson(json.decode(str));
 
   factory Character.empty() {
+    final rand = Random();
     var characterClass = CharacterClass.empty();
     return Character(
       key: uuid(),
@@ -113,13 +115,13 @@ class Character {
         // load: characterClass.load,
       ),
       moves: [],
-      rollStats: RollStats(
-        cha: 10,
-        con: 10,
-        dex: 10,
-        intl: 10,
-        str: 10,
-        wis: 10,
+      rollStats: RollStats.dungeonWorld(
+        cha: rand.nextInt(20),
+        con: rand.nextInt(20),
+        dex: rand.nextInt(20),
+        intl: rand.nextInt(20),
+        str: rand.nextInt(20),
+        wis: rand.nextInt(20),
       ),
       spells: [],
       race: Race(
@@ -186,7 +188,7 @@ class Character {
       };
 
   int get currentHp => stats.currentHp;
-  int get maxHp => stats.maxHp ?? (characterClass.hp + rollStats.con);
+  int get maxHp => stats.maxHp ?? (characterClass.hp + rollStats.con.value);
   int get currentExp => stats.currentExp;
   int get maxExp => stats.maxExp;
   double get currentHpPercent => stats.currentHp / maxHp;

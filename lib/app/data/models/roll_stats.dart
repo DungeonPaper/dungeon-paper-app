@@ -1,86 +1,96 @@
 import 'dart:convert';
 
+import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
+
 class RollStats {
   RollStats({
-    required this.dex,
-    required this.str,
-    required this.wis,
-    required this.con,
-    required this.intl,
-    required this.cha,
-  });
+    required Iterable<RollStat> stats,
+  }) : stats = stats.toList();
 
-  final int dex;
-  final int str;
-  final int wis;
-  final int con;
-  final int intl;
-  final int cha;
+  factory RollStats.dungeonWorld({
+    required int dex,
+    required int str,
+    required int wis,
+    required int con,
+    required int intl,
+    required int cha,
+  }) =>
+      RollStats(stats: [
+        RollStat(key: "CHA", name: "Charisma", value: cha),
+        RollStat(key: "CON", name: "Constitution", value: con),
+        RollStat(key: "DEX", name: "Dexterity", value: dex),
+        RollStat(key: "INT", name: "Intelligence", value: intl),
+        RollStat(key: "STR", name: "Strength", value: str),
+        RollStat(key: "WIS", name: "Wisdom", value: wis),
+      ]);
+
+  final List<RollStat> stats;
+
+  Map<String, RollStat> get statsMap => Map.fromIterable(stats, key: (s) => s.key);
 
   RollStats copyWith({
-    int? dex,
-    int? str,
-    int? wis,
-    int? con,
-    int? intl,
-    int? cha,
+    Iterable<RollStat>? stats,
   }) =>
-      RollStats(
-        dex: dex ?? this.dex,
-        str: str ?? this.str,
-        wis: wis ?? this.wis,
-        con: con ?? this.con,
-        intl: intl ?? this.intl,
-        cha: cha ?? this.cha,
-      );
+      RollStats(stats: stats ?? this.stats.toList());
 
   factory RollStats.fromRawJson(String str) => RollStats.fromJson(json.decode(str));
 
   String toRawJson() => json.encode(toJson());
 
-  int getStatByName(String stat) {
-    switch (stat.trim().toLowerCase()) {
-      case "dex":
-        return dex;
-      case "str":
-        return str;
-      case "wis":
-        return wis;
-      case "con":
-        return con;
-      case "int":
-        return intl;
-      case "cha":
-        return cha;
-      default:
-        throw Exception("Stat '$stat' is not a valid stat");
+  RollStat getStat(String statKey) {
+    statKey = statKey.trim().toUpperCase();
+    if (!statsMap.containsKey(statKey)) {
+      throw Exception("Stat $statKey not found, available: ${statsMap.keys}");
     }
+    return statsMap[statKey]!;
   }
 
+  RollStat get dex => getStat("dex");
+  RollStat get str => getStat("str");
+  RollStat get wis => getStat("wis");
+  RollStat get con => getStat("con");
+  RollStat get intl => getStat("int");
+  RollStat get cha => getStat("cha");
+
+  int get dexMod => dex.modifier;
+  int get strMod => str.modifier;
+  int get wisMod => wis.modifier;
+  int get conMod => con.modifier;
+  int get intMod => intl.modifier;
+  int get chaMod => cha.modifier;
+
   factory RollStats.fromJson(Map<String, dynamic> json) => RollStats(
-        dex: json["dex"],
-        str: json["str"],
-        wis: json["wis"],
-        con: json["con"],
-        intl: json["int"],
-        cha: json["cha"],
+        stats: json['stats'].map((x) => RollStat.fromJson(x)),
       );
 
   Map<String, dynamic> toJson() => {
-        "dex": dex,
-        "str": str,
-        "wis": wis,
-        "con": con,
-        "int": intl,
-        "cha": cha,
+        "stats": stats.map((s) => s.toJson()).toList(),
+      };
+}
+
+class RollStat {
+  final String key;
+  final String name;
+  final int value;
+
+  RollStat({required String key, required this.name, required this.value})
+      : key = key.trim().toUpperCase();
+
+  factory RollStat.fromJson(Map<String, dynamic> json) => RollStat(
+        key: json['key'],
+        name: json['name'],
+        value: json['value'],
+      );
+
+  Map<String, dynamic> toJson() => {
+        "key": key,
+        "name": name,
+        "value": value,
       };
 
-  int get dexMod => modifierForValue(dex);
-  int get strMod => modifierForValue(str);
-  int get wisMod => modifierForValue(wis);
-  int get conMod => modifierForValue(con);
-  int get intMod => modifierForValue(intl);
-  int get chaMod => modifierForValue(cha);
+  int get modifier => modifierForValue(value);
+  Widget get icon => _icons[key.toLowerCase()] ?? _icons["_other"]!;
 
   static int modifierForValue(int value) {
     var modifiers = {1: -3, 4: -2, 6: -1, 9: 0, 13: 1, 16: 2, 18: 3};
@@ -97,4 +107,14 @@ class RollStats {
 
     return -1;
   }
+
+  static const _icons = <String, Widget>{
+    "dex": Icon(Icons.help),
+    "str": Icon(Icons.help),
+    "wis": Icon(Icons.help),
+    "con": Icon(Icons.help),
+    "int": Icon(Icons.help),
+    "cha": Icon(Icons.help),
+    "_other": Icon(Icons.help),
+  };
 }
