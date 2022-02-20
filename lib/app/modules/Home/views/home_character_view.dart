@@ -5,6 +5,7 @@ import 'package:dungeon_paper/app/data/models/character_stats.dart';
 import 'package:dungeon_paper/app/modules/Home/views/home_character_header_view.dart';
 import 'package:dungeon_paper/app/modules/Home/views/home_character_hp_xp_view.dart';
 import 'package:dungeon_paper/app/widgets/atoms/character_avatar.dart';
+import 'package:dynamic_themes/dynamic_themes.dart';
 import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
@@ -12,6 +13,7 @@ import 'package:get/get.dart';
 import '../../../../generated/l10n.dart';
 import '../../../data/models/character.dart';
 import '../../../themes/button_themes.dart';
+import '../../../themes/themes.dart';
 import '../../../widgets/atoms/labeled_icon_button.dart';
 import '../controllers/home_controller.dart';
 
@@ -21,8 +23,9 @@ class HomeCharacterView extends GetView<HomeController> {
     return Obx(
       () {
         var char = controller.current;
-        return Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
+        return ListView(
+          padding: const EdgeInsets.all(16).copyWith(top: 0),
+          // crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             HomeCharacterHeaderView(),
             Text(
@@ -43,7 +46,17 @@ class HomeCharacterView extends GetView<HomeController> {
             const SizedBox(height: 8),
             HomeCharacterHpExpView(),
             ElevatedButton(
-              style: ButtonThemes.primaryElevated,
+              style: ButtonThemes.primaryElevated(context),
+              onPressed: () {
+                var theme = DynamicTheme.of(context)!;
+                theme.setTheme(
+                    theme.themeId == AppThemes.dark ? AppThemes.parchment : AppThemes.dark);
+                // .then((_) => Restart.restartApp());
+              },
+              child: Text("Toggle dark mode"),
+            ),
+            ElevatedButton(
+              style: ButtonThemes.primaryElevated(context),
               onPressed: () => controller.updateCharacter(
                 Character.empty().copyWith(
                   key: char?.key,

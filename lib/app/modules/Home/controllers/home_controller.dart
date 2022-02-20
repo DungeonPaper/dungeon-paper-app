@@ -1,4 +1,5 @@
 import 'package:dungeon_paper/core/storage_handler/storage_handler.dart';
+import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
 
 import '../../../data/models/character.dart';
@@ -7,11 +8,18 @@ class HomeController extends GetxController {
   final all = <String, Character>{}.obs;
   final _current = Rx<String?>(null);
 
+  final _pageController = PageController(initialPage: 1).obs;
+
+  PageController get pageController => _pageController.value;
+
   Character? get current => _current.value != null ? all[_current.value] : null;
 
   @override
   void onInit() async {
     super.onInit();
+    pageController.addListener(() {
+      update();
+    });
     var json = await StorageHandler.instance.getAllItems('characters');
     var list = json.map((c) => Character.fromJson(c));
 
