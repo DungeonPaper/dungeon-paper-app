@@ -1,14 +1,18 @@
-import 'package:dungeon_paper/app/modules/CreateCharacterPage/controllers/create_character_page_controller.dart';
+import 'package:dungeon_paper/app/modules/UpsertCharacterPages/controllers/char_info_controller.dart';
+import 'package:dungeon_paper/app/modules/UpsertCharacterPages/controllers/create_character_page_controller.dart';
 import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
 
 import '../../../../generated/l10n.dart';
 
-class CharacterInformationView extends GetView<CreateCharacterPageController> {
+class CharacterInformationView extends GetView<CharInfoController> {
   CharacterInformationView({
     Key? key,
+    required this.onValidate,
   }) : super(key: key);
+
+  final void Function(bool valid) onValidate;
 
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
 
@@ -23,14 +27,7 @@ class CharacterInformationView extends GetView<CreateCharacterPageController> {
   )..addListener(validate);
 
   void validate() {
-    controller.setValid(
-      CreateCharStep.information,
-      CreateCharacterPageController.isCharInfoValid(
-        displayName: displayName.text,
-        bioDesc: bioDesc.text,
-        avatarUrl: avatarUrl.text,
-      ),
-    );
+    onValidate(controller.isValid);
   }
 
   @override
@@ -42,7 +39,7 @@ class CharacterInformationView extends GetView<CreateCharacterPageController> {
         shrinkWrap: true,
         children: [
           Obx(
-            () => Text('Valid: ${controller.isValid[CreateCharStep.information]}'),
+            () => Text('Valid: ${controller.isValid}'),
           ),
           TextFormField(
             autovalidateMode: AutovalidateMode.onUserInteraction,

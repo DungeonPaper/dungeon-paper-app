@@ -1,5 +1,5 @@
 import 'package:dungeon_paper/app/routes/app_pages.dart';
-import 'package:dungeon_paper/core/services/services.dart';
+import 'package:dungeon_paper/app/data/services/services.dart';
 import 'package:dungeon_paper/core/shared_preferences.dart';
 import 'package:dungeon_paper/generated/intl/messages_all.dart';
 import 'package:dungeon_paper/generated/l10n.dart';

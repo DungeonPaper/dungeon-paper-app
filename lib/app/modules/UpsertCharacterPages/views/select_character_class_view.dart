@@ -1,4 +1,4 @@
-import 'package:dungeon_paper/app/modules/CreateCharacterPage/controllers/create_character_page_controller.dart';
+import 'package:dungeon_paper/app/modules/UpsertCharacterPages/controllers/create_character_page_controller.dart';
 import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';

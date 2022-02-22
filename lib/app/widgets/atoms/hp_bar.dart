@@ -1,4 +1,4 @@
-import 'package:dungeon_paper/core/services/character_service.dart';
+import 'package:dungeon_paper/app/data/services/character_service.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 

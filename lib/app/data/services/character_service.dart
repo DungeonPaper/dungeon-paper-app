@@ -5,12 +5,12 @@ import 'package:dungeon_world_data/dungeon_world_data.dart' as dw;
 import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
 
-import '../../app/data/models/character.dart';
-import '../../app/data/models/character_class.dart';
-import '../../app/data/models/character_stats.dart';
-import '../../app/data/models/meta.dart';
-import '../../app/data/models/move.dart';
-import '../../app/data/models/spell.dart';
+import '../models/character.dart';
+import '../models/character_class.dart';
+import '../models/character_stats.dart';
+import '../models/meta.dart';
+import '../models/move.dart';
+import '../models/spell.dart';
 
 class CharacterService extends GetxService {
   final all = <String, Character>{}.obs;

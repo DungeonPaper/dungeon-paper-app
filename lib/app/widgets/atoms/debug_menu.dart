@@ -1,4 +1,5 @@
-import 'package:dungeon_paper/core/services/character_service.dart';
+import 'package:dungeon_paper/app/routes/app_pages.dart';
+import 'package:dungeon_paper/app/data/services/character_service.dart';
 import 'package:dynamic_themes/dynamic_themes.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -18,21 +19,22 @@ class DebugMenu extends StatelessWidget {
       itemBuilder: (context) => [
         const PopupMenuItem(child: Text('Toggle dark mode'), value: 'toggleDarkMode'),
         const PopupMenuItem(child: Text('Randomize Char Data'), value: 'updateChar'),
+        const PopupMenuItem(child: Text('Open create char page'), value: 'createChar'),
       ],
       onSelected: (value) {
-        switch (value) {
-          case 'toggleDarkMode':
-            toggleTheme();
-            return;
-          case 'updateChar':
-            updateChar();
-            return;
-          default:
-            throw Exception('Unsupported');
+        if (actionMap[value] == null) {
+          throw Exception('Unsupported');
         }
+        actionMap[value]!.call();
       },
     );
   }
+
+  Map<String, void Function()> get actionMap => {
+        'toggleDarkMode': toggleTheme,
+        'updateChar': updateChar,
+        'createChar': createChar,
+      };
 
   void toggleTheme() {
     var theme = DynamicTheme.of(Get.context!)!;
@@ -42,5 +44,9 @@ class DebugMenu extends StatelessWidget {
   void updateChar() {
     final CharacterService controller = Get.find();
     controller.debugUpdateCharData();
+  }
+
+  void createChar() {
+    Get.toNamed(Routes.createCharacterPage);
   }
 }

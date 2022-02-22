@@ -4,7 +4,7 @@ import 'package:get/get.dart';
 
 import '../../../../generated/l10n.dart';
 import '../../../widgets/atoms/debug_menu.dart';
-import '../../../../core/services/character_service.dart';
+import '../../../data/services/character_service.dart';
 import 'home_character_view.dart';
 
 class HomeView extends GetView<CharacterService> {

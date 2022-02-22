@@ -1,16 +1,16 @@
-import 'package:dungeon_paper/app/modules/Home/views/home_character_dynamic_cards.dart';
 import 'package:dungeon_paper/app/widgets/atoms/svg_icon.dart';
 import 'package:dungeon_paper/core/dw_icons.dart';
 import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
 
-import '../../../modules/Home/views/home_character_header_view.dart';
-import '../../../modules/Home/views/home_character_hp_xp_view.dart';
-import '../../../modules/Home/views/home_character_roll_stat_chip.dart';
 import '../../../../generated/l10n.dart';
 import '../../../themes/button_themes.dart';
-import '../../../../core/services/character_service.dart';
+import '../../../data/services/character_service.dart';
+import 'local_widgets/home_character_dynamic_cards.dart';
+import 'local_widgets/home_character_header_view.dart';
+import 'local_widgets/home_character_hp_xp_view.dart';
+import 'local_widgets/home_character_roll_stat_chip.dart';
 
 class HomeCharacterView extends GetView<CharacterService> {
   const HomeCharacterView({Key? key}) : super(key: key);

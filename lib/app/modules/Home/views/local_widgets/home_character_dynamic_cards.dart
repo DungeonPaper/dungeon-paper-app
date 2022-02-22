@@ -1,13 +1,12 @@
+import 'package:dungeon_paper/generated/l10n.dart';
+import 'package:dungeon_paper/app/data/models/move.dart';
+import 'package:dungeon_paper/app/data/models/spell.dart';
+import 'package:dungeon_paper/app/data/services/character_service.dart';
 import 'package:dungeon_paper/app/utils/list_utils.dart';
+import 'package:dungeon_paper/app/widgets/cards/move_card_mini.dart';
+import 'package:dungeon_paper/app/widgets/cards/spell_card_mini.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get_state_manager/get_state_manager.dart';
-
-import '../../../../generated/l10n.dart';
-import '../../../data/models/move.dart';
-import '../../../data/models/spell.dart';
-import '../../../widgets/cards/move_card_mini.dart';
-import '../../../widgets/cards/spell_card_mini.dart';
-import '../../../../core/services/character_service.dart';
 
 class HomeCharacterDynamicCards extends GetView<CharacterService> {
   const HomeCharacterDynamicCards({Key? key}) : super(key: key);
