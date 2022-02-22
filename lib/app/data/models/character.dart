@@ -189,7 +189,7 @@ class Character {
         "race": race.toJson(),
       };
 
-  int get currentHp => stats.currentHp;
+  int get currentHp => clamp(stats.currentHp, 0, maxHp);
   int get maxHp => stats.maxHp ?? (characterClass.hp + rollStats.con.value);
   int get currentExp => stats.currentExp;
   int get maxExp => stats.maxExp;
