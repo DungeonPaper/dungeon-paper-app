@@ -38,6 +38,7 @@ dependencies:
   firebase_crashlytics: ^2.5.1
   flutter:
     sdk: flutter
+  flutter_svg: ^1.0.3
   get: ^4.6.1
   intl: ^0.17.0
   intl_generator: ^0.2.1
@@ -60,10 +61,20 @@ flutter:
   # included with your application, so that you can use the icons in
   # the material Icons class.
   uses-material-design: true
-  # To add assets to your application, add an assets section, like this:
-  # assets:
-  #   - images/a_dot_burr.jpeg
-  #   - images/a_dot_ham.jpeg
+  assets:
+    - assets/icons/armor.svg
+    - assets/icons/book_cover.svg
+    - assets/icons/dice_d6.svg
+    - assets/icons/hand_rock.svg
+    - assets/icons/knapsack.svg
+    - assets/icons/riposte.svg
+    - assets/icons/scroll_quill.svg
+    - assets/icons/stats/cha.svg
+    - assets/icons/stats/con.svg
+    - assets/icons/stats/dex.svg
+    - assets/icons/stats/int.svg
+    - assets/icons/stats/str.svg
+    - assets/icons/stats/wis.svg
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.
   # For details regarding adding assets from package dependencies, see
@@ -87,5 +98,43 @@ flutter:
   #
   # For details regarding fonts from package dependencies,
   # see https://flutter.dev/custom-fonts/#from-packages
+  fonts:
+    - family: Nunito
+      fonts:
+        - asset: assets/fonts/Nunito/Nunito-Black.ttf
+          weight: 900
+        - asset: assets/fonts/Nunito/Nunito-BlackItalic.ttf
+          weight: 900
+          style: italic
+        - asset: assets/fonts/Nunito/Nunito-ExtraBold.ttf
+          weight: 800
+        - asset: assets/fonts/Nunito/Nunito-ExtraBoldItalic.ttf
+          weight: 800
+          style: italic
+        - asset: assets/fonts/Nunito/Nunito-Bold.ttf
+          weight: 700
+        - asset: assets/fonts/Nunito/Nunito-BoldItalic.ttf
+          weight: 700
+          style: italic
+        - asset: assets/fonts/Nunito/Nunito-SemiBold.ttf
+          weight: 600
+        - asset: assets/fonts/Nunito/Nunito-SemiBoldItalic.ttf
+          weight: 600
+          style: italic
+        - asset: assets/fonts/Nunito/Nunito-Regular.ttf
+          weight: 400
+        # - asset: assets/fonts/Nunito/Nunito-RegularItalic.ttf
+        #   weight: 400
+        #   style: italic
+        - asset: assets/fonts/Nunito/Nunito-Light.ttf
+          weight: 300
+        - asset: assets/fonts/Nunito/Nunito-LightItalic.ttf
+          weight: 300
+          style: italic
+        - asset: assets/fonts/Nunito/Nunito-ExtraLight.ttf
+          weight: 200
+        - asset: assets/fonts/Nunito/Nunito-ExtraLightItalic.ttf
+          weight: 200
+          style: italic
 flutter_intl:
   enabled: true

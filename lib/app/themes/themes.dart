@@ -1,8 +1,12 @@
 import 'package:dynamic_themes/dynamic_themes.dart';
 import 'package:flutter/material.dart';
+import 'theme_utils.dart';
 
 const scaffoldBackgroundColor = Color(0xfffcf5e5);
 const primaryColor = Color(0xff8d775f);
+final borderRadius = BorderRadius.circular(10);
+final rRectShape = RoundedRectangleBorder(borderRadius: borderRadius);
+final baseCardTheme = CardTheme(shape: rRectShape);
 
 final parchmentTheme = ThemeData(
   primaryColor: primaryColor,
@@ -13,14 +17,20 @@ final parchmentTheme = ThemeData(
     elevation: 0,
     centerTitle: true,
   ),
+  cardTheme: baseCardTheme,
+  fontFamily: "Nunito",
 );
-final darkTheme = ThemeData.dark().copyWith(
+final _dark = ThemeData.dark();
+final darkTheme = _dark.copyWith(
   // primaryColor: primaryColor,
+  textTheme: copyTextThemeWith(_dark.textTheme, fontFamily: "Nunito"),
+  primaryTextTheme: copyTextThemeWith(_dark.primaryTextTheme, fontFamily: "Nunito"),
   appBarTheme: AppBarTheme(
-    backgroundColor: ThemeData.dark().scaffoldBackgroundColor,
+    backgroundColor: _dark.scaffoldBackgroundColor,
     elevation: 0,
     centerTitle: true,
   ),
+  cardTheme: baseCardTheme,
 );
 
 class AppThemes {

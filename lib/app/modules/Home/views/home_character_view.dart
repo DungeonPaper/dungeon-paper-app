@@ -1,21 +1,25 @@
 import 'dart:math';
 
-import 'package:dungeon_paper/app/data/models/character_class.dart';
-import 'package:dungeon_paper/app/data/models/character_stats.dart';
-import 'package:dungeon_paper/app/modules/Home/views/home_character_header_view.dart';
-import 'package:dungeon_paper/app/modules/Home/views/home_character_hp_xp_view.dart';
-import 'package:dungeon_paper/app/modules/Home/views/home_character_roll_stat_chip.dart';
-import 'package:dungeon_paper/app/widgets/atoms/character_avatar.dart';
+import 'package:dungeon_paper/app/modules/Home/views/home_character_dynamic_cards.dart';
+import 'package:dungeon_paper/app/widgets/atoms/svg_icon.dart';
+import 'package:dungeon_paper/core/dw_icons.dart';
+import 'package:dungeon_world_data/dungeon_world_data.dart' as dw;
 import 'package:dynamic_themes/dynamic_themes.dart';
 import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
 
+import '../../../data/models/character_class.dart';
+import '../../../data/models/character_stats.dart';
+import '../../../data/models/move.dart';
+import '../../../modules/Home/views/home_character_header_view.dart';
+import '../../../modules/Home/views/home_character_hp_xp_view.dart';
+import '../../../modules/Home/views/home_character_roll_stat_chip.dart';
 import '../../../../generated/l10n.dart';
 import '../../../data/models/character.dart';
+import '../../../data/models/meta.dart';
 import '../../../themes/button_themes.dart';
 import '../../../themes/themes.dart';
-import '../../../widgets/atoms/labeled_icon_button.dart';
 import '../controllers/home_controller.dart';
 
 class HomeCharacterView extends GetView<HomeController> {
@@ -25,16 +29,16 @@ class HomeCharacterView extends GetView<HomeController> {
       () {
         var char = controller.current;
         return ListView(
-          padding: const EdgeInsets.all(16).copyWith(top: 0),
+          padding: const EdgeInsets.only(bottom: 0),
           // crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            HomeCharacterHeaderView(),
-            Text(
+            p(HomeCharacterHeaderView()),
+            p(Text(
               char?.displayName ?? "...",
               textScaleFactor: 1.4,
               textAlign: TextAlign.center,
-            ),
-            Text(
+            )),
+            p(Text(
               S.current.characterHeaderSubtitle(
                 char?.stats.level ?? 0,
                 char?.characterClass.name ?? "...",
@@ -43,11 +47,11 @@ class HomeCharacterView extends GetView<HomeController> {
                 S.current.alignment(char?.bio.alignment.key ?? 'good'),
               ),
               textAlign: TextAlign.center,
-            ),
-            const SizedBox(height: 8),
-            HomeCharacterHpExpView(),
-            const SizedBox(height: 16),
-            Center(
+            )),
+            p(const SizedBox(height: 8)),
+            p(HomeCharacterHpExpView()),
+            p(const SizedBox(height: 16)),
+            p(Center(
               child: SizedBox(
                 width: 320,
                 child: GridView.count(
@@ -63,36 +67,42 @@ class HomeCharacterView extends GetView<HomeController> {
                   ],
                 ),
               ),
-            ),
-            const SizedBox(height: 16),
-            ElevatedButton(
-              style: ButtonThemes.primaryElevated(context),
-              onPressed: () {
-                var theme = DynamicTheme.of(context)!;
-                theme.setTheme(
-                    theme.themeId == AppThemes.dark ? AppThemes.parchment : AppThemes.dark);
-                // .then((_) => Restart.restartApp());
-              },
-              child: Text("Toggle dark mode"),
-            ),
-            ElevatedButton(
-              style: ButtonThemes.primaryElevated(context),
-              onPressed: () => controller.updateCharacter(
-                Character.empty().copyWith(
-                  key: char?.key,
-                  displayName: "Traveler",
-                  characterClass: (char?.characterClass ?? CharacterClass.empty())
-                      .copyInheritedWith(name: "Druid"),
-                  stats: (char?.stats ??
-                          CharacterStats(level: 1, currentHp: 20, currentExp: 0, armor: 0))
-                      .copyWith(currentExp: Random().nextInt(7)),
-                ),
+            )),
+            p(const SizedBox(height: 16)),
+            p(IconTheme(
+              data: IconTheme.of(context).copyWith(size: 16),
+              child: Row(
+                children: [
+                  Expanded(
+                    child: ElevatedButton.icon(
+                      onPressed: () => null,
+                      style: ButtonThemes.primaryElevated(context),
+                      label: Text(S.current.rollBasicActionButton),
+                      icon: SvgIcon(DwIcons.dice_d6),
+                    ),
+                  ),
+                  const SizedBox(width: 16),
+                  Expanded(
+                    child: ElevatedButton.icon(
+                      onPressed: () => null,
+                      style: ButtonThemes.primaryElevated(context),
+                      label: Text(S.current.rollAttackDamageButton),
+                      icon: SvgIcon(DwIcons.dice_d6),
+                    ),
+                  ),
+                ],
               ),
-              child: Text("Update data"),
-            )
+            )),
+            p(const SizedBox(height: 12)),
+            const HomeCharacterDynamicCards(),
           ],
         );
       },
     );
   }
+
+  Widget p(Widget child) => Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 16),
+        child: child,
+      );
 }

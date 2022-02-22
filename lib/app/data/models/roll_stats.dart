@@ -3,6 +3,9 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 
+import '../../../core/dw_icons.dart';
+import '../../widgets/atoms/svg_icon.dart';
+
 class RollStats {
   RollStats({
     required Iterable<RollStat> stats,
@@ -17,12 +20,12 @@ class RollStats {
     required int cha,
   }) =>
       RollStats(stats: [
-        RollStat(key: "CHA", name: "Charisma", value: cha),
-        RollStat(key: "CON", name: "Constitution", value: con),
-        RollStat(key: "DEX", name: "Dexterity", value: dex),
-        RollStat(key: "INT", name: "Intelligence", value: intl),
         RollStat(key: "STR", name: "Strength", value: str),
+        RollStat(key: "DEX", name: "Dexterity", value: dex),
+        RollStat(key: "CON", name: "Constitution", value: con),
+        RollStat(key: "INT", name: "Intelligence", value: intl),
         RollStat(key: "WIS", name: "Wisdom", value: wis),
+        RollStat(key: "CHA", name: "Charisma", value: cha),
       ]);
 
   final List<RollStat> stats;
@@ -61,7 +64,7 @@ class RollStats {
   int get chaMod => cha.modifier;
 
   factory RollStats.fromJson(Map<String, dynamic> json) => RollStats(
-        stats: json['stats'].map((x) => RollStat.fromJson(x)),
+        stats: List<RollStat>.from(json['stats'].map((x) => RollStat.fromJson(x))),
       );
 
   Map<String, dynamic> toJson() => {
@@ -108,13 +111,13 @@ class RollStat {
     return -1;
   }
 
-  static const _icons = <String, Widget>{
-    "dex": Icon(Icons.help),
-    "str": Icon(Icons.help),
-    "wis": Icon(Icons.help),
-    "con": Icon(Icons.help),
-    "int": Icon(Icons.help),
-    "cha": Icon(Icons.help),
+  static final _icons = <String, Widget>{
+    "dex": SvgIcon(DwIcons.stat_dex),
+    "str": SvgIcon(DwIcons.stat_str),
+    "wis": SvgIcon(DwIcons.stat_wis),
+    "con": SvgIcon(DwIcons.stat_con),
+    "int": SvgIcon(DwIcons.stat_int),
+    "cha": SvgIcon(DwIcons.stat_cha),
     "_other": Icon(Icons.help),
   };
 }

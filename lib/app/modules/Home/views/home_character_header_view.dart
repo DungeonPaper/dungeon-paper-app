@@ -1,10 +1,12 @@
 import 'package:dungeon_paper/app/modules/Home/controllers/home_controller.dart';
+import 'package:dungeon_paper/core/dw_icons.dart';
 import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
 
 import '../../../widgets/atoms/character_avatar.dart';
 import '../../../widgets/atoms/labeled_icon_button.dart';
+import '../../../widgets/atoms/svg_icon.dart';
 
 class HomeCharacterHeaderView extends GetView<HomeController> {
   @override
@@ -16,14 +18,16 @@ class HomeCharacterHeaderView extends GetView<HomeController> {
           children: [
             LabeledIconButton(
               onPressed: () => null,
-              icon: const Icon(Icons.note_add),
-              label: "+ Note",
+              icon: SvgIcon(DwIcons.knapsack),
+              label: "Items",
+              shadowOffset: const Offset(-2, -2),
             ),
             const SizedBox(height: 16),
             LabeledIconButton(
               onPressed: () => null,
-              icon: const Icon(Icons.note_add),
+              icon: SvgIcon(DwIcons.scroll_quill),
               label: "+ Note",
+              shadowOffset: const Offset(-2, 2),
             ),
           ],
         ),
@@ -34,14 +38,16 @@ class HomeCharacterHeaderView extends GetView<HomeController> {
           children: [
             LabeledIconButton(
               onPressed: () => null,
-              icon: const Icon(Icons.note_add),
-              label: "+ Note",
+              icon: SvgIcon(DwIcons.hand_rock),
+              label: "Moves",
+              shadowOffset: const Offset(2, -2),
             ),
             const SizedBox(height: 16),
             LabeledIconButton(
               onPressed: () => null,
-              icon: const Icon(Icons.note_add),
-              label: "+ Note",
+              icon: SvgIcon(DwIcons.book_cover),
+              label: "Spells",
+              shadowOffset: const Offset(2, 2),
             ),
           ],
         ),

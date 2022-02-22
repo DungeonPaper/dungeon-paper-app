@@ -29,5 +29,20 @@
   },
   "alignment": "{alignment, select, chaotic {Chaotic} evil {Evil} good {Good} lawful {Lawful} neutral {Neutral}}",
   "characterBarHp": "HP",
-  "characterBarXp": "XP"
+  "characterBarXp": "XP",
+  "dynamicCategoriesMoves": "Favorite Moves",
+  "dynamicCategoriesSpells": "Prepared Spells",
+  "dynamicCategoriesItems": "Equipped Items",
+  "dynamicCategoriesNotes": "Favorite Notes",
+  "moveCategory": "{category, select, starting {Starting} basic {Basic} special {Special} advanced1 {Advanced} advanced2 {Advanced} other {Other}}",
+  "rollStatButtonTooltip": "Roll +{stat}",
+  "@rollStatButtonTooltip": {
+    "placeholders": {
+      "stat": {
+        "type": "String"
+      }
+    }
+  },
+  "rollBasicActionButton": "Basic Action",
+  "rollAttackDamageButton": "Attack + Damage"
 }

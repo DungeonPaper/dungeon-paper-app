@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import '../../../../generated/l10n.dart';
+import '../../../widgets/atoms/debug_menu.dart';
 import '../controllers/home_controller.dart';
 import 'home_character_view.dart';
 
@@ -12,7 +13,10 @@ class HomeView extends GetView<HomeController> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text(S.current.appName)),
+      appBar: AppBar(
+        title: Text(S.current.appName),
+        actions: [DebugMenu()],
+      ),
       body: PageView(
         controller: controller.pageController,
         children: [

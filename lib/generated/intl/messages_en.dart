@@ -31,6 +31,17 @@ class MessageLookup extends MessageLookupByLibrary {
   static String m1(level, charClass, alignment) =>
       "Level ${level} ∙ ${charClass} ∙ ${alignment}";
 
+  static String m2(category) => "${Intl.select(category, {
+            'starting': 'Starting',
+            'basic': 'Basic',
+            'special': 'Special',
+            'advanced1': 'Advanced',
+            'advanced2': 'Advanced',
+            'other': 'Other',
+          })}";
+
+  static String m3(stat) => "Roll +${stat}";
+
   final messages = _notInlinedMessages(_notInlinedMessages);
   static Map<String, Function> _notInlinedMessages(_) => <String, Function>{
         "alignment": m0,
@@ -56,6 +67,20 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage(
                 "Enter your character\'s name"),
         "createCharacterTitle":
-            MessageLookupByLibrary.simpleMessage("Create Character")
+            MessageLookupByLibrary.simpleMessage("Create Character"),
+        "dynamicCategoriesItems":
+            MessageLookupByLibrary.simpleMessage("Equipped Items"),
+        "dynamicCategoriesMoves":
+            MessageLookupByLibrary.simpleMessage("Favorite Moves"),
+        "dynamicCategoriesNotes":
+            MessageLookupByLibrary.simpleMessage("Favorite Notes"),
+        "dynamicCategoriesSpells":
+            MessageLookupByLibrary.simpleMessage("Prepared Spells"),
+        "moveCategory": m2,
+        "rollAttackDamageButton":
+            MessageLookupByLibrary.simpleMessage("Attack + Damage"),
+        "rollBasicActionButton":
+            MessageLookupByLibrary.simpleMessage("Basic Action"),
+        "rollStatButtonTooltip": m3
       };
 }

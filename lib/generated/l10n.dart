@@ -197,6 +197,94 @@ class S {
       args: [],
     );
   }
+
+  /// `Favorite Moves`
+  String get dynamicCategoriesMoves {
+    return Intl.message(
+      'Favorite Moves',
+      name: 'dynamicCategoriesMoves',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Prepared Spells`
+  String get dynamicCategoriesSpells {
+    return Intl.message(
+      'Prepared Spells',
+      name: 'dynamicCategoriesSpells',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Equipped Items`
+  String get dynamicCategoriesItems {
+    return Intl.message(
+      'Equipped Items',
+      name: 'dynamicCategoriesItems',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Favorite Notes`
+  String get dynamicCategoriesNotes {
+    return Intl.message(
+      'Favorite Notes',
+      name: 'dynamicCategoriesNotes',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `{category, select, starting {Starting} basic {Basic} special {Special} advanced1 {Advanced} advanced2 {Advanced} other {Other}}`
+  String moveCategory(Object category) {
+    return Intl.select(
+      category,
+      {
+        'starting': 'Starting',
+        'basic': 'Basic',
+        'special': 'Special',
+        'advanced1': 'Advanced',
+        'advanced2': 'Advanced',
+        'other': 'Other',
+      },
+      name: 'moveCategory',
+      desc: '',
+      args: [category],
+    );
+  }
+
+  /// `Roll +{stat}`
+  String rollStatButtonTooltip(String stat) {
+    return Intl.message(
+      'Roll +$stat',
+      name: 'rollStatButtonTooltip',
+      desc: '',
+      args: [stat],
+    );
+  }
+
+  /// `Basic Action`
+  String get rollBasicActionButton {
+    return Intl.message(
+      'Basic Action',
+      name: 'rollBasicActionButton',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Attack + Damage`
+  String get rollAttackDamageButton {
+    return Intl.message(
+      'Attack + Damage',
+      name: 'rollAttackDamageButton',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

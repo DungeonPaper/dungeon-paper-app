@@ -9,6 +9,7 @@ import 'package:dungeon_paper/app/data/models/alignment.dart';
 
 import '../../data/models/character_class.dart';
 import '../../data/models/roll_stats.dart';
+import '../../utils/math_utils.dart';
 import '../../utils/uuid.dart';
 import 'bio.dart';
 import 'bond.dart';
@@ -191,7 +192,7 @@ class Character {
   int get maxHp => stats.maxHp ?? (characterClass.hp + rollStats.con.value);
   int get currentExp => stats.currentExp;
   int get maxExp => stats.maxExp;
-  double get currentHpPercent => stats.currentHp / maxHp;
-  double get currentExpPercent => stats.currentExp / maxExp;
+  double get currentHpPercent => clamp(stats.currentHp / maxHp, 0, 1);
+  double get currentExpPercent => clamp(stats.currentExp / maxExp, 0, 1);
   int get load => stats.load ?? (characterClass.load + rollStats.strMod);
 }

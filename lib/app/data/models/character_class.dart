@@ -82,7 +82,7 @@ class CharacterClass extends dw.CharacterClass {
         description: "",
         gearChoices: [],
         load: 0,
-        hp: 0,
+        hp: 20,
         alignments: AlignmentValues(
           meta: Meta.version(1),
           neutral: "",
