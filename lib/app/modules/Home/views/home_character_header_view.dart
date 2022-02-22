@@ -1,4 +1,4 @@
-import 'package:dungeon_paper/app/modules/Home/controllers/home_controller.dart';
+import 'package:dungeon_paper/core/services/character_service.dart';
 import 'package:dungeon_paper/core/dw_icons.dart';
 import 'package:flutter/material.dart';
 
@@ -8,7 +8,7 @@ import '../../../widgets/atoms/character_avatar.dart';
 import '../../../widgets/atoms/labeled_icon_button.dart';
 import '../../../widgets/atoms/svg_icon.dart';
 
-class HomeCharacterHeaderView extends GetView<HomeController> {
+class HomeCharacterHeaderView extends GetView<CharacterService> {
   @override
   Widget build(BuildContext context) {
     return Row(

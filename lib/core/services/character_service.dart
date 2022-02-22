@@ -5,14 +5,14 @@ import 'package:dungeon_world_data/dungeon_world_data.dart' as dw;
 import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
 
-import '../../../data/models/character.dart';
-import '../../../data/models/character_class.dart';
-import '../../../data/models/character_stats.dart';
-import '../../../data/models/meta.dart';
-import '../../../data/models/move.dart';
-import '../../../data/models/spell.dart';
+import '../../app/data/models/character.dart';
+import '../../app/data/models/character_class.dart';
+import '../../app/data/models/character_stats.dart';
+import '../../app/data/models/meta.dart';
+import '../../app/data/models/move.dart';
+import '../../app/data/models/spell.dart';
 
-class HomeController extends GetxController {
+class CharacterService extends GetxService {
   final all = <String, Character>{}.obs;
   final _current = Rx<String?>(null);
 
@@ -25,8 +25,12 @@ class HomeController extends GetxController {
   @override
   void onInit() async {
     super.onInit();
+    init();
+  }
+
+  Future<CharacterService> init() async {
     pageController.addListener(() {
-      update();
+      _current.refresh();
     });
     var json = await StorageHandler.instance.getAllItems('characters');
     var list = json.map((c) => Character.fromJson(c));
@@ -34,14 +38,17 @@ class HomeController extends GetxController {
     all.addAll(Map.fromIterable(list, key: (c) => c.key));
 
     if (all.isNotEmpty) {
+      // TODO use value from user or shared prefs
       _current.value = all.keys.first;
     }
+
+    return this;
   }
 
-  @override
-  void onReady() {
-    super.onReady();
-  }
+  // @override
+  // void onReady() {
+  //   super.onReady();
+  // }
 
   @override
   void onClose() {}
@@ -52,8 +59,8 @@ class HomeController extends GetxController {
       all[character.key] = character;
       StorageHandler.instance.create('characters', character.key, character.toJson());
       _current.value ??= character.key;
-      print("Updated char: ${character.key}");
-      print(character.toRawJson());
+      debugPrint("Updated char: ${character.key}");
+      debugPrint(character.toRawJson());
     }
   }
 

@@ -7,9 +7,9 @@ import '../../../data/models/move.dart';
 import '../../../data/models/spell.dart';
 import '../../../widgets/cards/move_card_mini.dart';
 import '../../../widgets/cards/spell_card_mini.dart';
-import '../controllers/home_controller.dart';
+import '../../../../core/services/character_service.dart';
 
-class HomeCharacterDynamicCards extends GetView<HomeController> {
+class HomeCharacterDynamicCards extends GetView<CharacterService> {
   const HomeCharacterDynamicCards({Key? key}) : super(key: key);
 
   @override

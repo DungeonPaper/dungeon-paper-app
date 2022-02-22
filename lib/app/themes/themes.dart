@@ -7,9 +7,12 @@ const primaryColor = Color(0xff8d775f);
 final borderRadius = BorderRadius.circular(10);
 final rRectShape = RoundedRectangleBorder(borderRadius: borderRadius);
 final baseCardTheme = CardTheme(shape: rRectShape);
+final _dark = ThemeData.dark();
+final _light = ThemeData.light();
 
 final parchmentTheme = ThemeData(
   primaryColor: primaryColor,
+  colorScheme: _light.colorScheme.copyWith(secondary: primaryColor),
   scaffoldBackgroundColor: scaffoldBackgroundColor,
   appBarTheme: AppBarTheme(
     backgroundColor: scaffoldBackgroundColor,
@@ -19,8 +22,12 @@ final parchmentTheme = ThemeData(
   ),
   cardTheme: baseCardTheme,
   fontFamily: "Nunito",
+  bottomNavigationBarTheme: _light.bottomNavigationBarTheme.copyWith(
+    backgroundColor: scaffoldBackgroundColor,
+    // selectedItemColor: primaryColor,
+    // showSelectedLabels: false,
+  ),
 );
-final _dark = ThemeData.dark();
 final darkTheme = _dark.copyWith(
   // primaryColor: primaryColor,
   textTheme: copyTextThemeWith(_dark.textTheme, fontFamily: "Nunito"),

@@ -1,4 +1,4 @@
-import 'package:dungeon_paper/app/modules/Home/controllers/home_controller.dart';
+import 'package:dungeon_paper/core/services/character_service.dart';
 import 'package:dynamic_themes/dynamic_themes.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -40,7 +40,7 @@ class DebugMenu extends StatelessWidget {
   }
 
   void updateChar() {
-    final HomeController controller = Get.find();
+    final CharacterService controller = Get.find();
     controller.debugUpdateCharData();
   }
 }

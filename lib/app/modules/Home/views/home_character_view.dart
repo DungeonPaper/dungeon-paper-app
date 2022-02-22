@@ -10,14 +10,15 @@ import '../../../modules/Home/views/home_character_hp_xp_view.dart';
 import '../../../modules/Home/views/home_character_roll_stat_chip.dart';
 import '../../../../generated/l10n.dart';
 import '../../../themes/button_themes.dart';
-import '../controllers/home_controller.dart';
+import '../../../../core/services/character_service.dart';
 
-class HomeCharacterView extends GetView<HomeController> {
+class HomeCharacterView extends GetView<CharacterService> {
   @override
   Widget build(BuildContext context) {
     return Obx(
       () {
-        var char = controller.current;
+        final char = controller.current;
+        final rollStats = char?.rollStats.stats ?? [];
         return ListView(
           padding: const EdgeInsets.only(bottom: 0),
           // crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -43,17 +44,16 @@ class HomeCharacterView extends GetView<HomeController> {
             p(const SizedBox(height: 16)),
             p(Center(
               child: SizedBox(
-                width: 320,
+                width: 340,
                 child: GridView.count(
                   crossAxisCount: 3,
                   shrinkWrap: true,
                   physics: const NeverScrollableScrollPhysics(),
-                  childAspectRatio: 2.7,
+                  childAspectRatio: 2.98,
                   mainAxisSpacing: 4,
                   crossAxisSpacing: 4,
                   children: [
-                    for (var stat in char?.rollStats.stats ?? [])
-                      HomeCharacterRollStatChip(stat: stat),
+                    for (var stat in rollStats) HomeCharacterRollStatChip(stat: stat),
                   ],
                 ),
               ),

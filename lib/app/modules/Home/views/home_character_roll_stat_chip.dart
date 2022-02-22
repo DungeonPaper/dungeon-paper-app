@@ -34,7 +34,6 @@ class HomeCharacterRollStatChip extends StatelessWidget {
             onTap: () => null,
             borderRadius: BorderRadius.circular(10),
             child: Container(
-              width: 104,
               height: 38,
               padding: const EdgeInsets.symmetric(horizontal: 8),
               child: Row(
@@ -71,10 +70,11 @@ class HomeCharacterRollStatChip extends StatelessWidget {
           ),
           Positioned.directional(
             textDirection: m.TextDirection.ltr,
-            end: 0,
+            end: 2,
+            top: 2,
             child: Material(
               color: theme.primaryColor.withOpacity(rollBadgeBgOpacity),
-              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5)),
+              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
               child: Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 3, vertical: 0.5),
                 child: Row(

@@ -1,4 +1,4 @@
-import 'package:dungeon_paper/app/modules/Home/controllers/home_controller.dart';
+import 'package:dungeon_paper/core/services/character_service.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -10,7 +10,7 @@ class HpBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Obx(() {
-      final HomeController controller = Get.find();
+      final CharacterService controller = Get.find();
       var char = controller.current;
       return Column(
         mainAxisSize: MainAxisSize.min,

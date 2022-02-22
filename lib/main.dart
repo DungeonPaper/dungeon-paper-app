@@ -1,5 +1,6 @@
 import 'package:dungeon_paper/app/routes/app_pages.dart';
 import 'package:dungeon_paper/app/widgets/atoms/value_notifier_builder.dart';
+import 'package:dungeon_paper/core/services/services.dart';
 import 'package:dungeon_paper/core/shared_preferences.dart';
 import 'package:dungeon_paper/generated/intl/messages_all.dart';
 import 'package:dungeon_paper/generated/l10n.dart';
@@ -22,6 +23,7 @@ void main() async {
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
   await loadSharedPrefs();
   Wakelock.toggle(enable: true);
+  await initServices();
   runApp(MyApp());
 }
 
