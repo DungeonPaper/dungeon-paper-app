@@ -1,25 +1,15 @@
-import 'dart:math';
-
 import 'package:dungeon_paper/app/modules/Home/views/home_character_dynamic_cards.dart';
 import 'package:dungeon_paper/app/widgets/atoms/svg_icon.dart';
 import 'package:dungeon_paper/core/dw_icons.dart';
-import 'package:dungeon_world_data/dungeon_world_data.dart' as dw;
-import 'package:dynamic_themes/dynamic_themes.dart';
 import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
 
-import '../../../data/models/character_class.dart';
-import '../../../data/models/character_stats.dart';
-import '../../../data/models/move.dart';
 import '../../../modules/Home/views/home_character_header_view.dart';
 import '../../../modules/Home/views/home_character_hp_xp_view.dart';
 import '../../../modules/Home/views/home_character_roll_stat_chip.dart';
 import '../../../../generated/l10n.dart';
-import '../../../data/models/character.dart';
-import '../../../data/models/meta.dart';
 import '../../../themes/button_themes.dart';
-import '../../../themes/themes.dart';
 import '../controllers/home_controller.dart';
 
 class HomeCharacterView extends GetView<HomeController> {

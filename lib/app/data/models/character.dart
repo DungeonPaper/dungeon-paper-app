@@ -19,6 +19,7 @@ import 'meta.dart';
 import 'move.dart';
 import 'note.dart';
 import 'race.dart';
+import 'spell.dart';
 
 class Character {
   Character({
@@ -44,7 +45,7 @@ class Character {
   final String avatarUrl;
   final CharacterClass characterClass;
   final List<Move> moves;
-  final List<Move> spells;
+  final List<Spell> spells;
   final List<Item> items;
   final List<Note> notes;
   final CharacterStats stats;
@@ -60,7 +61,7 @@ class Character {
     String? avatarUrl,
     CharacterClass? characterClass,
     List<Move>? moves,
-    List<Move>? spells,
+    List<Spell>? spells,
     List<Item>? items,
     List<Note>? notes,
     CharacterStats? stats,
@@ -161,7 +162,7 @@ class Character {
         avatarUrl: json["avatarURL"],
         characterClass: CharacterClass.fromJson(json["class"]),
         moves: List<Move>.from(json["moves"].map((x) => Move.fromJson(x))),
-        spells: List<Move>.from(json["spells"].map((x) => Move.fromJson(x))),
+        spells: List<Spell>.from(json["spells"].map((x) => Spell.fromJson(x))),
         items: List<Item>.from(json["items"].map((x) => Item.fromJson(x))),
         notes: List<Note>.from(json["notes"].map((x) => Note.fromJson(x))),
         stats: CharacterStats.fromJson(json["stats"]),

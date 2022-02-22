@@ -10,10 +10,22 @@ class HomeCharacterHpExpView extends GetView<HomeController> {
   @override
   Widget build(BuildContext context) {
     return Row(
-      children: const [
-        Expanded(child: HpBar()),
+      children: [
+        Expanded(
+          child: InkWell(
+            child: HpBar(),
+            borderRadius: BorderRadius.circular(10),
+            onTap: () => null,
+          ),
+        ),
         SizedBox(width: 24),
-        Expanded(child: ExpBar()),
+        Expanded(
+          child: InkWell(
+            child: ExpBar(),
+            borderRadius: BorderRadius.circular(10),
+            onTap: () => null,
+          ),
+        ),
       ],
     );
   }

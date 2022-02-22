@@ -10,6 +10,7 @@ import '../../../data/models/character_class.dart';
 import '../../../data/models/character_stats.dart';
 import '../../../data/models/meta.dart';
 import '../../../data/models/move.dart';
+import '../../../data/models/spell.dart';
 
 class HomeController extends GetxController {
   final all = <String, Character>{}.obs;
@@ -51,6 +52,8 @@ class HomeController extends GetxController {
       all[character.key] = character;
       StorageHandler.instance.create('characters', character.key, character.toJson());
       _current.value ??= character.key;
+      print("Updated char: ${character.key}");
+      print(character.toRawJson());
     }
   }
 
@@ -107,13 +110,102 @@ class HomeController extends GetxController {
                 "pharetra tristique etiam mollis faucibus quam donec enim, ipsum ridiculus augue "
                 "laoreet commodo lacinia placerat bibendum curabitur, porttitor purus nascetur "
                 "vestibulum dis lobortis et.",
-            dice: [dw.Dice.fromJson("2d6+DEX")],
+            dice: [],
             classKeys: ["druid"],
             tags: [
               dw.Tag.fromJson({'name': "source", "value": "casraf"}),
               dw.Tag.fromJson({'name': "language", "value": "EN"})
             ],
-            category: MoveCategory.basic,
+            category: MoveCategory.advanced1,
+          ),
+          Move(
+            meta: Meta.version(1),
+            favorited: true,
+            key: 'test_move_3',
+            name: "Test Move 3",
+            description:
+                "Magna habitasse vitae netus mattis bibendum pulvinar, feugiat tortor etiam lorem "
+                "ultricies at eget, risus volutpat tellus ornare pharetra. Mi parturient sapien "
+                "sollicitudin proin tincidunt purus duis dictumst, quis dis metus ad nisl tortor "
+                "consequat justo, imperdiet quam felis fermentum class placerat cursus, senectus "
+                "viverra suspendisse lobortis enim nibh pellentesque.",
+            explanation:
+                "Fermentum conubia sit maximus torquent nunc cras primis tempor, eget efficitur "
+                "lobortis convallis libero turpis commodo laoreet praesent, phasellus imperdiet "
+                "elit facilisi hendrerit est lacinia. Eget condimentum nulla diam nullam mauris "
+                "magnis odio, sodales dolor bibendum quam porta adipiscing.",
+            dice: [],
+            classKeys: ["druid"],
+            tags: [
+              dw.Tag.fromJson({'name': "source", "value": "casraf"}),
+              dw.Tag.fromJson({'name': "language", "value": "EN"})
+            ],
+            category: MoveCategory.special,
+          ),
+        ],
+        spells: [
+          Spell(
+            key: "test_spell_1",
+            name: "Test Spell 1",
+            meta: Meta.version(1),
+            description: "Facilisis tincidunt inceptos habitant dis aptent mattis hendrerit nisi "
+                "cursus, maximus at hac sem aliquet dui fringilla platea fames tortor, dictum integer "
+                "mauris erat sagittis magna accumsan morbi. Ornare class viverra cubilia ridiculus "
+                "cras inceptos montes nisl congue maecenas rutrum, nascetur mattis dignissim porttitor "
+                "praesent adipiscing sed odio non auctor.",
+            explanation: "Per elementum quisque habitasse malesuada eleifend porttitor "
+                "tincidunt pellentesque est, nisi felis class habitant tristique metus finibus. "
+                "Lobortis nullam egestas arcu faucibus malesuada nunc congue, luctus pharetra leo "
+                "hendrerit cubilia purus libero nisl, habitant in duis diam inceptos nec.",
+            tags: [
+              dw.Tag.fromJson({'name': "source", "value": "casraf"}),
+              dw.Tag.fromJson({'name': "language", "value": "EN"})
+            ],
+            dice: [dw.Dice.fromJson("1d4")],
+            classKeys: ['druid'],
+            prepared: true,
+          ),
+          Spell(
+            key: "test_spell_2",
+            name: "Test Spell 2",
+            meta: Meta.version(1),
+            description: "Facilisis tincidunt inceptos habitant dis aptent mattis hendrerit nisi "
+                "cursus, maximus at hac sem aliquet dui fringilla platea fames tortor, dictum integer "
+                "mauris erat sagittis magna accumsan morbi. Ornare class viverra cubilia ridiculus "
+                "cras inceptos montes nisl congue maecenas rutrum, nascetur mattis dignissim porttitor "
+                "praesent adipiscing sed odio non auctor.",
+            explanation: "Per elementum quisque habitasse malesuada eleifend porttitor "
+                "tincidunt pellentesque est, nisi felis class habitant tristique metus finibus. "
+                "Lobortis nullam egestas arcu faucibus malesuada nunc congue, luctus pharetra leo "
+                "hendrerit cubilia purus libero nisl, habitant in duis diam inceptos nec.",
+            tags: [
+              dw.Tag.fromJson({'name': "source", "value": "casraf"}),
+              dw.Tag.fromJson({'name': "language", "value": "EN"})
+            ],
+            dice: [],
+            classKeys: ['druid'],
+            prepared: true,
+          ),
+          Spell(
+            key: "test_spell_3",
+            name: "Test Spell 3",
+            meta: Meta.version(1),
+            description: "Facilisis tincidunt inceptos habitant dis aptent mattis hendrerit nisi "
+                "cursus, maximus at hac sem aliquet dui fringilla platea fames tortor, dictum integer "
+                "mauris erat sagittis magna accumsan morbi. Ornare class viverra cubilia ridiculus "
+                "cras inceptos montes nisl congue maecenas rutrum, nascetur mattis dignissim porttitor "
+                "praesent adipiscing sed odio non auctor.",
+            explanation: "Per elementum quisque habitasse malesuada eleifend porttitor "
+                "tincidunt pellentesque est, nisi felis class habitant tristique metus finibus. "
+                "Lobortis nullam egestas arcu faucibus malesuada nunc congue, luctus pharetra leo "
+                "hendrerit cubilia purus libero nisl, habitant in duis diam inceptos nec.",
+            tags: [
+              dw.Tag.fromJson({'name': "source", "value": "casraf"}),
+              dw.Tag.fromJson({'name': "language", "value": "EN"})
+            ],
+            dice: [dw.Dice.fromJson("1d4")],
+            classKeys: ['druid'],
+            prepared: true,
           ),
         ],
       ),
