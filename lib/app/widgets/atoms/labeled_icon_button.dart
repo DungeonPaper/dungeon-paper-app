@@ -1,6 +1,5 @@
 import 'package:dungeon_paper/app/widgets/atoms/background_icon_button.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 
 class LabeledIconButton extends StatelessWidget {
   const LabeledIconButton({

@@ -46,22 +46,22 @@ class CharacterStats {
   String toRawJson() => json.encode(toJson());
 
   factory CharacterStats.fromJson(Map<String, dynamic> json) => CharacterStats(
-        level: json["level"],
-        maxHp: json["maxHP"],
-        currentHp: json["currentHP"],
-        currentExp: json["currentEXP"],
-        armor: json["armor"],
-        damageDice: json["damageDice"],
-        load: json["load"],
+        level: json['level'],
+        maxHp: json['maxHP'],
+        currentHp: json['currentHP'],
+        currentExp: json['currentEXP'],
+        armor: json['armor'],
+        damageDice: json['damageDice'],
+        load: json['load'],
       );
 
   Map<String, dynamic> toJson() => {
-        "level": level,
-        "maxHP": maxHp,
-        "currentHP": currentHp,
-        "currentEXP": currentExp,
-        "armor": armor,
-        "damageDice": damageDice?.toJson(),
-        "load": load,
+        'level': level,
+        'maxHP': maxHp,
+        'currentHP': currentHp,
+        'currentEXP': currentExp,
+        'armor': armor,
+        'damageDice': damageDice?.toJson(),
+        'load': load,
       };
 }

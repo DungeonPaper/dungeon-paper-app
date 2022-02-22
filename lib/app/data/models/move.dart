@@ -86,8 +86,8 @@ class Move extends dw.Move {
   @override
   Map<String, dynamic> toJson() => {
         ...super.toJson(),
-        "_meta": meta.toJson(),
-        "favorited": favorited,
+        '_meta': meta.toJson(),
+        'favorited': favorited,
       };
 
   Widget get icon => SvgIcon(DwIcons.riposte);

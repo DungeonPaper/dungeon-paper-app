@@ -9,7 +9,7 @@ class CharacterListPageController extends GetxController {
   @override
   void onInit() async {
     super.onInit();
-    characters.addAll((await StorageHandler.instance.getAllItems("characters"))
+    characters.addAll((await StorageHandler.instance.getAllItems('characters'))
         .map((c) => Character.fromJson(c)));
     characters.refresh();
   }
@@ -24,7 +24,7 @@ class CharacterListPageController extends GetxController {
 
   void addCharacter(Character char) {
     characters.add(char);
-    StorageHandler.instance.create("characters", char.key, char.toJson());
+    StorageHandler.instance.create('characters', char.key, char.toJson());
     characters.refresh();
   }
 }

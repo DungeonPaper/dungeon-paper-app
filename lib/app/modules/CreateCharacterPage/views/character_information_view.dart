@@ -42,15 +42,13 @@ class CharacterInformationView extends GetView<CreateCharacterPageController> {
         shrinkWrap: true,
         children: [
           Obx(
-            () => Text(
-                "Valid: ${controller.isValid[CreateCharStep.information]}"),
+            () => Text('Valid: ${controller.isValid[CreateCharStep.information]}'),
           ),
           TextFormField(
             autovalidateMode: AutovalidateMode.onUserInteraction,
             controller: displayName,
             textInputAction: TextInputAction.next,
-            validator: (val) =>
-                val == null || val.isEmpty ? "Cannot be empty" : null,
+            validator: (val) => val == null || val.isEmpty ? 'Cannot be empty' : null,
             decoration: InputDecoration(
               labelText: S.current.createCharacterNameFieldLabel,
               hintText: S.current.createCharacterNameFieldPlaceholder,

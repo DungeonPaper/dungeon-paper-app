@@ -21,7 +21,7 @@ final parchmentTheme = ThemeData(
     centerTitle: true,
   ),
   cardTheme: baseCardTheme,
-  fontFamily: "Nunito",
+  fontFamily: 'Nunito',
   bottomNavigationBarTheme: _light.bottomNavigationBarTheme.copyWith(
     backgroundColor: scaffoldBackgroundColor,
     // selectedItemColor: primaryColor,
@@ -30,8 +30,8 @@ final parchmentTheme = ThemeData(
 );
 final darkTheme = _dark.copyWith(
   // primaryColor: primaryColor,
-  textTheme: copyTextThemeWith(_dark.textTheme, fontFamily: "Nunito"),
-  primaryTextTheme: copyTextThemeWith(_dark.primaryTextTheme, fontFamily: "Nunito"),
+  textTheme: copyTextThemeWith(_dark.textTheme, fontFamily: 'Nunito'),
+  primaryTextTheme: copyTextThemeWith(_dark.primaryTextTheme, fontFamily: 'Nunito'),
   appBarTheme: AppBarTheme(
     backgroundColor: _dark.scaffoldBackgroundColor,
     elevation: 0,

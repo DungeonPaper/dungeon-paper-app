@@ -1,5 +1,6 @@
 {
     "cSpell.words": [
+        "autovalidate",
         "cupertino",
         "dungeonpaper",
         "favorited",
@@ -7,6 +8,9 @@
         "localstorage",
         "Localstore",
         "Nunito",
-        "vsync"
+        "prefs",
+        "Schyler",
+        "vsync",
+        "wakelock"
     ]
 }

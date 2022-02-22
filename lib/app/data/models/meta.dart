@@ -44,17 +44,17 @@ class Meta {
   String toRawJson() => json.encode(toJson());
 
   factory Meta.fromJson(Map<String, dynamic> json) => Meta(
-        created: json["created"] != null ? DateTime.parse(json["created"]) : DateTime.now(),
-        updated: json["updated"] != null ? DateTime.parse(json["updated"]) : null,
-        schemaVersion: json["schemaVersion"] ?? 1,
-        sharing: json['sharing'] != null ? MetaSharing.fromJson(json["sharing"]) : null,
+        created: json['created'] != null ? DateTime.parse(json['created']) : DateTime.now(),
+        updated: json['updated'] != null ? DateTime.parse(json['updated']) : null,
+        schemaVersion: json['schemaVersion'] ?? 1,
+        sharing: json['sharing'] != null ? MetaSharing.fromJson(json['sharing']) : null,
       );
 
   Map<String, dynamic> toJson() => {
-        "created": created.toString(),
-        "updated": updated?.toString(),
-        "schemaVersion": schemaVersion,
-        "sharing": sharing?.toJson(),
+        'created': created.toString(),
+        'updated': updated?.toString(),
+        'schemaVersion': schemaVersion,
+        'sharing': sharing?.toJson(),
       };
 }
 
@@ -90,17 +90,17 @@ class MetaSharing {
 
   factory MetaSharing.fromJson(Map<String, dynamic> json) {
     return MetaSharing(
-      shared: json["shared"] ?? false,
-      outOfSync: json["outOfSync"] ?? false,
-      originalKey: json["originalKey"],
-      createdBy: json["createdBy"],
+      shared: json['shared'] ?? false,
+      outOfSync: json['outOfSync'] ?? false,
+      originalKey: json['originalKey'],
+      createdBy: json['createdBy'],
     );
   }
 
   Map<String, dynamic> toJson() => {
-        "shared": shared,
-        "outOfSync": outOfSync,
-        "originalKey": originalKey,
-        "createdBy": createdBy,
+        'shared': shared,
+        'outOfSync': outOfSync,
+        'originalKey': originalKey,
+        'createdBy': createdBy,
       };
 }

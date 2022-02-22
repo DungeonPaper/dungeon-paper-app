@@ -77,8 +77,8 @@ class Spell extends dw.Spell {
   @override
   Map<String, dynamic> toJson() => {
         ...super.toJson(),
-        "_meta": meta.toJson(),
-        "prepared": prepared,
+        '_meta': meta.toJson(),
+        'prepared': prepared,
       };
 
   Widget get icon => SvgIcon(DwIcons.book_cover);

@@ -16,8 +16,8 @@ class DebugMenu extends StatelessWidget {
         child: Icon(Icons.bug_report),
       ),
       itemBuilder: (context) => [
-        const PopupMenuItem(child: Text("Toggle dark mode"), value: "toggleDarkMode"),
-        const PopupMenuItem(child: Text("Randomize Char Data"), value: "updateChar"),
+        const PopupMenuItem(child: Text('Toggle dark mode'), value: 'toggleDarkMode'),
+        const PopupMenuItem(child: Text('Randomize Char Data'), value: 'updateChar'),
       ],
       onSelected: (value) {
         switch (value) {
@@ -28,7 +28,7 @@ class DebugMenu extends StatelessWidget {
             updateChar();
             return;
           default:
-            throw Exception("Unsupported");
+            throw Exception('Unsupported');
         }
       },
     );

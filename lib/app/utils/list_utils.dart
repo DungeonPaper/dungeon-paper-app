@@ -1,6 +1,7 @@
 import 'dart:math';
 
 extension<T> on List<T> {
+  // ignore: unused_element
   T sample() {
     final rnd = Random().nextInt(length);
     return elementAt(rnd);

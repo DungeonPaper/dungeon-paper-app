@@ -38,18 +38,18 @@ class Note {
   String toRawJson() => json.encode(toJson());
 
   factory Note.fromJson(Map<String, dynamic> json) => Note(
-        meta: Meta.fromJson(json["_meta"]),
-        key: json["key"],
-        title: json["title"],
-        description: json["description"],
-        tags: List<dw.Tag>.from(json["tags"].map((x) => dw.Tag.fromJson(x))),
+        meta: Meta.fromJson(json['_meta']),
+        key: json['key'],
+        title: json['title'],
+        description: json['description'],
+        tags: List<dw.Tag>.from(json['tags'].map((x) => dw.Tag.fromJson(x))),
       );
 
   Map<String, dynamic> toJson() => {
-        "_meta": meta.toJson(),
-        "key": key,
-        "title": title,
-        "description": description,
-        "tags": List<dynamic>.from(tags.map((x) => x.toJson())),
+        '_meta': meta.toJson(),
+        'key': key,
+        'title': title,
+        'description': description,
+        'tags': List<dynamic>.from(tags.map((x) => x.toJson())),
       };
 }

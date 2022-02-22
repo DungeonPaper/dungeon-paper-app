@@ -1,7 +1,6 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 
 import '../../../core/dw_icons.dart';
 import '../../widgets/atoms/svg_icon.dart';
@@ -20,12 +19,12 @@ class RollStats {
     required int cha,
   }) =>
       RollStats(stats: [
-        RollStat(key: "STR", name: "Strength", value: str),
-        RollStat(key: "DEX", name: "Dexterity", value: dex),
-        RollStat(key: "CON", name: "Constitution", value: con),
-        RollStat(key: "INT", name: "Intelligence", value: intl),
-        RollStat(key: "WIS", name: "Wisdom", value: wis),
-        RollStat(key: "CHA", name: "Charisma", value: cha),
+        RollStat(key: 'STR', name: 'Strength', value: str),
+        RollStat(key: 'DEX', name: 'Dexterity', value: dex),
+        RollStat(key: 'CON', name: 'Constitution', value: con),
+        RollStat(key: 'INT', name: 'Intelligence', value: intl),
+        RollStat(key: 'WIS', name: 'Wisdom', value: wis),
+        RollStat(key: 'CHA', name: 'Charisma', value: cha),
       ]);
 
   final List<RollStat> stats;
@@ -44,17 +43,17 @@ class RollStats {
   RollStat getStat(String statKey) {
     statKey = statKey.trim().toUpperCase();
     if (!statsMap.containsKey(statKey)) {
-      throw Exception("Stat $statKey not found, available: ${statsMap.keys}");
+      throw Exception('Stat $statKey not found, available: ${statsMap.keys}');
     }
     return statsMap[statKey]!;
   }
 
-  RollStat get dex => getStat("dex");
-  RollStat get str => getStat("str");
-  RollStat get wis => getStat("wis");
-  RollStat get con => getStat("con");
-  RollStat get intl => getStat("int");
-  RollStat get cha => getStat("cha");
+  RollStat get dex => getStat('dex');
+  RollStat get str => getStat('str');
+  RollStat get wis => getStat('wis');
+  RollStat get con => getStat('con');
+  RollStat get intl => getStat('int');
+  RollStat get cha => getStat('cha');
 
   int get dexMod => dex.modifier;
   int get strMod => str.modifier;
@@ -68,7 +67,7 @@ class RollStats {
       );
 
   Map<String, dynamic> toJson() => {
-        "stats": stats.map((s) => s.toJson()).toList(),
+        'stats': stats.map((s) => s.toJson()).toList(),
       };
 }
 
@@ -87,13 +86,13 @@ class RollStat {
       );
 
   Map<String, dynamic> toJson() => {
-        "key": key,
-        "name": name,
-        "value": value,
+        'key': key,
+        'name': name,
+        'value': value,
       };
 
   int get modifier => modifierForValue(value);
-  Widget get icon => _icons[key.toLowerCase()] ?? _icons["_other"]!;
+  Widget get icon => _icons[key.toLowerCase()] ?? _icons['_other']!;
 
   static int modifierForValue(int value) {
     var modifiers = {1: -3, 4: -2, 6: -1, 9: 0, 13: 1, 16: 2, 18: 3};
@@ -112,12 +111,12 @@ class RollStat {
   }
 
   static final _icons = <String, Widget>{
-    "dex": SvgIcon(DwIcons.stat_dex),
-    "str": SvgIcon(DwIcons.stat_str),
-    "wis": SvgIcon(DwIcons.stat_wis),
-    "con": SvgIcon(DwIcons.stat_con),
-    "int": SvgIcon(DwIcons.stat_int),
-    "cha": SvgIcon(DwIcons.stat_cha),
-    "_other": Icon(Icons.help),
+    'dex': SvgIcon(DwIcons.stat_dex),
+    'str': SvgIcon(DwIcons.stat_str),
+    'wis': SvgIcon(DwIcons.stat_wis),
+    'con': SvgIcon(DwIcons.stat_con),
+    'int': SvgIcon(DwIcons.stat_int),
+    'cha': SvgIcon(DwIcons.stat_cha),
+    '_other': const Icon(Icons.help),
   };
 }

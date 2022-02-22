@@ -11,8 +11,8 @@ class Bond extends dw.Bond {
   factory Bond.fromRawJson(String str) => Bond.fromJson(json.decode(str));
 
   factory Bond.fromJson(Map<String, dynamic> json) => Bond(
-        key: json["key"],
-        completed: json["completed"],
-        description: json["description"],
+        key: json['key'],
+        completed: json['completed'],
+        description: json['description'],
       );
 }

@@ -77,6 +77,10 @@ class MessageLookup extends MessageLookupByLibrary {
         "dynamicCategoriesSpells":
             MessageLookupByLibrary.simpleMessage("Prepared Spells"),
         "moveCategory": m2,
+        "quickIconsItems": MessageLookupByLibrary.simpleMessage("Items"),
+        "quickIconsMoves": MessageLookupByLibrary.simpleMessage("Moves"),
+        "quickIconsNote": MessageLookupByLibrary.simpleMessage("+ Note"),
+        "quickIconsSpells": MessageLookupByLibrary.simpleMessage("Spells"),
         "rollAttackDamageButton":
             MessageLookupByLibrary.simpleMessage("Attack + Damage"),
         "rollBasicActionButton":

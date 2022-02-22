@@ -29,15 +29,12 @@ class GearChoice extends dw.GearChoice {
         selections: selections ?? this.selections,
       );
 
-  factory GearChoice.fromRawJson(String str) =>
-      GearChoice.fromJson(json.decode(str));
+  factory GearChoice.fromRawJson(String str) => GearChoice.fromJson(json.decode(str));
 
   factory GearChoice.fromDwGearChoice(dw.GearChoice gearChoice) => GearChoice(
         key: gearChoice.key,
         description: gearChoice.description,
-        selections: gearChoice.selections
-            .map((s) => GearSelection.fromDwGearSelection(s))
-            .toList(),
+        selections: gearChoice.selections.map((s) => GearSelection.fromDwGearSelection(s)).toList(),
       );
 
   factory GearChoice.fromJson(Map<String, dynamic> json) =>
@@ -46,6 +43,6 @@ class GearChoice extends dw.GearChoice {
   @override
   Map<String, dynamic> toJson() => {
         ...super.toJson(),
-        "selections": List<dynamic>.from(selections.map((x) => x.toJson())),
+        'selections': List<dynamic>.from(selections.map((x) => x.toJson())),
       };
 }

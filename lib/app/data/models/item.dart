@@ -70,7 +70,7 @@ class Item extends dw.Item {
   @override
   Map<String, dynamic> toJson() => {
         ...super.toJson(),
-        "_meta": meta.toJson(),
-        "amount": amount,
+        '_meta': meta.toJson(),
+        'amount': amount,
       };
 }

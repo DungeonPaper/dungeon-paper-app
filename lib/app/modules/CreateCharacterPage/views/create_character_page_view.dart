@@ -25,7 +25,7 @@ class CreateCharacterPageView extends GetView<CreateCharacterPageController> {
         controller: controller.currentStep,
         children: [
           CharacterInformationView(),
-          SelectCharacterClassView(),
+          const SelectCharacterClassView(),
         ],
       ),
       bottomNavigationBar: Container(

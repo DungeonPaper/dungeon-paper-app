@@ -8,21 +8,21 @@ import '../../../../core/services/character_service.dart';
 import 'home_character_view.dart';
 
 class HomeView extends GetView<CharacterService> {
-  HomeView({Key? key}) : super(key: key);
+  const HomeView({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: Text(S.current.appName),
-        actions: [DebugMenu()],
+        actions: const [DebugMenu()],
       ),
       body: PageView(
         controller: controller.pageController,
-        children: [
-          const Center(child: Text("Actions")),
+        children: const [
+          Center(child: Text('Actions')),
           HomeCharacterView(),
-          const Center(child: Text("Journal")),
+          Center(child: Text('Journal')),
         ],
       ),
       bottomNavigationBar: Obx(
@@ -65,15 +65,15 @@ class _CharacterHomeNavBarState extends State<CharacterHomeNavBar> {
       items: const [
         BottomNavigationBarItem(
           icon: Icon(Icons.person),
-          label: "Actions",
+          label: 'Actions',
         ),
         BottomNavigationBarItem(
           icon: Icon(Icons.person),
-          label: "Character",
+          label: 'Character',
         ),
         BottomNavigationBarItem(
           icon: Icon(Icons.person),
-          label: "Journal",
+          label: 'Journal',
         ),
       ],
     );

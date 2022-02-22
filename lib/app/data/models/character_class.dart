@@ -76,20 +76,20 @@ class CharacterClass extends dw.CharacterClass {
   factory CharacterClass.empty() => CharacterClass(
         meta: Meta.version(1),
         key: uuid(),
-        name: "",
+        name: '',
         bonds: [],
         damageDice: dw.Dice.d6,
-        description: "",
+        description: '',
         gearChoices: [],
         load: 0,
         hp: 20,
         alignments: AlignmentValues(
           meta: Meta.version(1),
-          neutral: "",
-          chaotic: "",
-          evil: "",
-          good: "",
-          lawful: "",
+          neutral: '',
+          chaotic: '',
+          evil: '',
+          good: '',
+          lawful: '',
         ),
       );
 
@@ -112,6 +112,6 @@ class CharacterClass extends dw.CharacterClass {
   @override
   Map<String, dynamic> toJson() => {
         ...super.toJson(),
-        "_meta": meta.toJson(),
+        '_meta': meta.toJson(),
       };
 }

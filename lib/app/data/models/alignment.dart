@@ -19,8 +19,8 @@ class AlignmentValue extends dw.AlignmentValue {
 
   factory AlignmentValue.fromJson(Map<String, dynamic> json) => AlignmentValue(
         meta: Meta.fromJson(json['_meta']),
-        key: json["key"],
-        description: json["description"],
+        key: json['key'],
+        description: json['description'],
       );
 
   @override
@@ -51,12 +51,12 @@ class AlignmentValues extends dw.AlignmentValues {
   factory AlignmentValues.fromRawJson(String str) => AlignmentValues.fromJson(json.decode(str));
 
   factory AlignmentValues.fromJson(Map<String, dynamic> json) => AlignmentValues(
-        meta: Meta.fromJson(json["_meta"]),
-        good: json["good"],
-        evil: json["evil"],
-        lawful: json["lawful"],
-        neutral: json["neutral"],
-        chaotic: json["chaotic"],
+        meta: Meta.fromJson(json['_meta']),
+        good: json['good'],
+        evil: json['evil'],
+        lawful: json['lawful'],
+        neutral: json['neutral'],
+        chaotic: json['chaotic'],
       );
 
   factory AlignmentValues.fromDwAlignmentValues(dw.AlignmentValues original) => AlignmentValues(

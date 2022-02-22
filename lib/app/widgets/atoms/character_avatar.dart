@@ -5,6 +5,8 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class CharacterAvatar extends GetView {
+  const CharacterAvatar({Key? key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     return Obx(() {
@@ -14,7 +16,7 @@ class CharacterAvatar extends GetView {
         child: CachedNetworkImage(
           imageUrl: controller.current?.avatarUrl.isNotEmpty == true
               ? controller.current!.avatarUrl
-              : "https://via.placeholder.com/704.png?text=Avatar",
+              : 'https://via.placeholder.com/704.png?text=Avatar',
           width: 176,
           height: 176,
         ),

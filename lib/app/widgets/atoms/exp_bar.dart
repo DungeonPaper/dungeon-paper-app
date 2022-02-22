@@ -32,7 +32,7 @@ class ExpBar extends StatelessWidget {
               const SizedBox(width: 8),
               Text(
                 char?.currentExp.toString() ?? '-',
-                style: TextStyle(fontWeight: FontWeight.bold),
+                style: const TextStyle(fontWeight: FontWeight.bold),
               ),
               Text('/' + (char?.maxExp.toString() ?? '-')),
             ],

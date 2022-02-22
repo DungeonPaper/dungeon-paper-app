@@ -4,11 +4,14 @@ import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
 
+import '../../../../generated/l10n.dart';
 import '../../../widgets/atoms/character_avatar.dart';
 import '../../../widgets/atoms/labeled_icon_button.dart';
 import '../../../widgets/atoms/svg_icon.dart';
 
 class HomeCharacterHeaderView extends GetView<CharacterService> {
+  const HomeCharacterHeaderView({Key? key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     return Row(
@@ -19,14 +22,14 @@ class HomeCharacterHeaderView extends GetView<CharacterService> {
             LabeledIconButton(
               onPressed: () => null,
               icon: SvgIcon(DwIcons.knapsack),
-              label: "Items",
+              label: S.current.quickIconsItems,
               shadowOffset: const Offset(-2, -2),
             ),
             const SizedBox(height: 16),
             LabeledIconButton(
               onPressed: () => null,
               icon: SvgIcon(DwIcons.scroll_quill),
-              label: "+ Note",
+              label: S.current.quickIconsNote,
               shadowOffset: const Offset(-2, 2),
             ),
           ],
@@ -39,14 +42,14 @@ class HomeCharacterHeaderView extends GetView<CharacterService> {
             LabeledIconButton(
               onPressed: () => null,
               icon: SvgIcon(DwIcons.hand_rock),
-              label: "Moves",
+              label: S.current.quickIconsMoves,
               shadowOffset: const Offset(2, -2),
             ),
             const SizedBox(height: 16),
             LabeledIconButton(
               onPressed: () => null,
               icon: SvgIcon(DwIcons.book_cover),
-              label: "Spells",
+              label: S.current.quickIconsSpells,
               shadowOffset: const Offset(2, 2),
             ),
           ],

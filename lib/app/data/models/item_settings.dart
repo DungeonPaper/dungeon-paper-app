@@ -26,22 +26,21 @@ class ItemSettings {
         equipped: equipped ?? this.equipped,
       );
 
-  factory ItemSettings.fromRawJson(String str) =>
-      ItemSettings.fromJson(json.decode(str));
+  factory ItemSettings.fromRawJson(String str) => ItemSettings.fromJson(json.decode(str));
 
   String toRawJson() => json.encode(toJson());
 
   factory ItemSettings.fromJson(Map<String, dynamic> json) => ItemSettings(
-        countArmor: json["countArmor"],
-        countDamage: json["countDamage"],
-        countWeight: json["countWeight"],
-        equipped: json["equipped"],
+        countArmor: json['countArmor'],
+        countDamage: json['countDamage'],
+        countWeight: json['countWeight'],
+        equipped: json['equipped'],
       );
 
   Map<String, dynamic> toJson() => {
-        "countArmor": countArmor,
-        "countDamage": countDamage,
-        "countWeight": countWeight,
-        "equipped": equipped,
+        'countArmor': countArmor,
+        'countDamage': countDamage,
+        'countWeight': countWeight,
+        'equipped': equipped,
       };
 }

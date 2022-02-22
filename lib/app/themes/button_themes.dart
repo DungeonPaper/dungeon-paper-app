@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 
 class ButtonThemes {
   static final borderRadius = BorderRadius.circular(10);

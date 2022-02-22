@@ -17,7 +17,7 @@ class SvgIcon extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final theme = Theme.of(context);
+    // final theme = Theme.of(context);
     final iconTheme = IconTheme.of(context);
 
     return SvgPicture.asset(

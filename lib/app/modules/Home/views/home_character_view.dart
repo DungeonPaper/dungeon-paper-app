@@ -13,6 +13,8 @@ import '../../../themes/button_themes.dart';
 import '../../../../core/services/character_service.dart';
 
 class HomeCharacterView extends GetView<CharacterService> {
+  const HomeCharacterView({Key? key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     return Obx(
@@ -23,16 +25,16 @@ class HomeCharacterView extends GetView<CharacterService> {
           padding: const EdgeInsets.only(bottom: 0),
           // crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            p(HomeCharacterHeaderView()),
+            p(const HomeCharacterHeaderView()),
             p(Text(
-              char?.displayName ?? "...",
+              char?.displayName ?? '...',
               textScaleFactor: 1.4,
               textAlign: TextAlign.center,
             )),
             p(Text(
               S.current.characterHeaderSubtitle(
                 char?.stats.level ?? 0,
-                char?.characterClass.name ?? "...",
+                char?.characterClass.name ?? '...',
                 // "test",
                 // char?.bio.toRawJson() ?? 'test',
                 S.current.alignment(char?.bio.alignment.key ?? 'good'),
@@ -40,7 +42,7 @@ class HomeCharacterView extends GetView<CharacterService> {
               textAlign: TextAlign.center,
             )),
             p(const SizedBox(height: 8)),
-            p(HomeCharacterHpExpView()),
+            p(const HomeCharacterHpExpView()),
             p(const SizedBox(height: 16)),
             p(Center(
               child: SizedBox(

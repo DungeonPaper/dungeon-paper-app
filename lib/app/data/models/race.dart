@@ -59,18 +59,18 @@ class Race extends dw.Race {
       );
 
   factory Race.fromJson(Map<String, dynamic> json) => Race(
-        meta: Meta.fromJson(json["_meta"]),
-        key: json["key"],
-        name: json["name"],
-        description: json["description"],
-        explanation: json["explanation"],
-        classKeys: List<String>.from(json["classKeys"].map((x) => x)),
-        tags: List<dw.Tag>.from(json["tags"].map((x) => dw.Tag.fromJson(x))),
+        meta: Meta.fromJson(json['_meta']),
+        key: json['key'],
+        name: json['name'],
+        description: json['description'],
+        explanation: json['explanation'],
+        classKeys: List<String>.from(json['classKeys'].map((x) => x)),
+        tags: List<dw.Tag>.from(json['tags'].map((x) => dw.Tag.fromJson(x))),
       );
 
   @override
   Map<String, dynamic> toJson() => {
         ...super.toJson(),
-        "_meta": meta.toJson(),
+        '_meta': meta.toJson(),
       };
 }

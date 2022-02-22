@@ -13,7 +13,7 @@ class SpellCardMini extends StatelessWidget {
     return DynamicActionCardMini(
       title: spell.name,
       description: spell.description,
-      chips: [],
+      chips: const [],
       dice: spell.dice,
       icon: spell.icon,
       starred: spell.prepared,

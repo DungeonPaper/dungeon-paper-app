@@ -2,7 +2,6 @@ import 'package:dungeon_paper/app/widgets/atoms/svg_icon.dart';
 import 'package:dungeon_paper/core/dw_icons.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/material.dart' as m show TextDirection;
-import 'package:intl/intl.dart';
 
 import '../../../data/models/roll_stats.dart';
 
@@ -15,8 +14,8 @@ class HomeCharacterRollStatChip extends StatelessWidget {
   Widget build(BuildContext context) {
     final valStr = stat.value.toString();
     final statKey = stat.key;
-    final statName = stat.name;
-    final modSign = stat.modifier >= 0 ? "+" : "-";
+    // final statName = stat.name;
+    final modSign = stat.modifier >= 0 ? '+' : '-';
     final modStr = stat.modifier.abs().toString();
     final theme = Theme.of(context);
     final brightness = ThemeData.estimateBrightnessForColor(theme.canvasColor);
@@ -54,7 +53,7 @@ class HomeCharacterRollStatChip extends StatelessWidget {
                         text: TextSpan(
                           style: theme.textTheme.bodyText2,
                           children: [
-                            TextSpan(text: statKey + ": "),
+                            TextSpan(text: statKey + ': '),
                             TextSpan(
                               text: valStr,
                               style: const TextStyle(fontWeight: FontWeight.bold),
@@ -89,7 +88,7 @@ class HomeCharacterRollStatChip extends StatelessWidget {
                     ),
                     const SizedBox(width: 2),
                     Text(
-                      "$modSign$modStr",
+                      '$modSign$modStr',
                       textScaleFactor: 0.7,
                       style: TextStyle(
                         color: theme.colorScheme.onSurface.withOpacity(rollBadgeTextOpacity),

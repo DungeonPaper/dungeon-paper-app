@@ -29,14 +29,14 @@ class Bio {
   String toRawJson() => json.encode(toJson());
 
   factory Bio.fromJson(Map<String, dynamic> json) => Bio(
-        looks: List<String>.from(json["looks"].map((x) => x)),
-        description: json["description"],
-        alignment: AlignmentValue.fromJson(json["alignment"]),
+        looks: List<String>.from(json['looks'].map((x) => x)),
+        description: json['description'],
+        alignment: AlignmentValue.fromJson(json['alignment']),
       );
 
   Map<String, dynamic> toJson() => {
-        "looks": List<dynamic>.from(looks.map((x) => x)),
-        "description": description,
-        "alignment": alignment.toJson(),
+        'looks': List<dynamic>.from(looks.map((x) => x)),
+        'description': description,
+        'alignment': alignment.toJson(),
       };
 }

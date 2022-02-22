@@ -40,8 +40,6 @@ class BackgroundIconButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     if (elevation != null) {
-      final buttonTheme = ElevatedButtonTheme.of(context);
-      final theme = Theme.of(context);
       return PhysicalModel(
         borderRadius: BorderRadius.circular(100),
         color: bgColor(context),

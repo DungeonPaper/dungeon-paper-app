@@ -2,8 +2,6 @@ import 'dart:convert';
 import 'package:dungeon_world_data/dungeon_world_data.dart' as dw;
 import 'package:dungeon_world_data/gear_option.dart';
 
-import 'item.dart';
-
 class GearSelection extends dw.GearSelection {
   GearSelection({
     required String description,
@@ -37,8 +35,8 @@ class GearSelection extends dw.GearSelection {
       GearSelection.fromJson(gearSelection.toJson());
 
   factory GearSelection.fromJson(Map<String, dynamic> json) => GearSelection(
-        description: json["description"],
-        items: List<GearOption>.from(json["items"].map((x) => GearSelection.fromJson(x))),
-        gold: json["gold"],
+        description: json['description'],
+        items: List<GearOption>.from(json['items'].map((x) => GearSelection.fromJson(x))),
+        gold: json['gold'],
       );
 }

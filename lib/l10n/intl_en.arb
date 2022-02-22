@@ -27,6 +27,10 @@
       }
     }
   },
+  "quickIconsItems": "Items",
+  "quickIconsSpells": "Spells",
+  "quickIconsMoves": "Moves",
+  "quickIconsNote": "+ Note",
   "alignment": "{alignment, select, chaotic {Chaotic} evil {Evil} good {Good} lawful {Lawful} neutral {Neutral}}",
   "characterBarHp": "HP",
   "characterBarXp": "XP",

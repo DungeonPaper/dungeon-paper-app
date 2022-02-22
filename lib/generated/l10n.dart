@@ -161,6 +161,46 @@ class S {
     );
   }
 
+  /// `Items`
+  String get quickIconsItems {
+    return Intl.message(
+      'Items',
+      name: 'quickIconsItems',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Spells`
+  String get quickIconsSpells {
+    return Intl.message(
+      'Spells',
+      name: 'quickIconsSpells',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Moves`
+  String get quickIconsMoves {
+    return Intl.message(
+      'Moves',
+      name: 'quickIconsMoves',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `+ Note`
+  String get quickIconsNote {
+    return Intl.message(
+      '+ Note',
+      name: 'quickIconsNote',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `{alignment, select, chaotic {Chaotic} evil {Evil} good {Good} lawful {Lawful} neutral {Neutral}}`
   String alignment(Object alignment) {
     return Intl.select(

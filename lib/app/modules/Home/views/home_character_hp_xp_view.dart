@@ -7,21 +7,23 @@ import 'package:get/get.dart';
 import '../../../widgets/atoms/exp_bar.dart';
 
 class HomeCharacterHpExpView extends GetView<CharacterService> {
+  const HomeCharacterHpExpView({Key? key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     return Row(
       children: [
         Expanded(
           child: InkWell(
-            child: HpBar(),
+            child: const HpBar(),
             borderRadius: BorderRadius.circular(10),
             onTap: () => null,
           ),
         ),
-        SizedBox(width: 24),
+        const SizedBox(width: 24),
         Expanded(
           child: InkWell(
-            child: ExpBar(),
+            child: const ExpBar(),
             borderRadius: BorderRadius.circular(10),
             onTap: () => null,
           ),
