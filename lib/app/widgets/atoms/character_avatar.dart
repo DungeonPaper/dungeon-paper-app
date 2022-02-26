@@ -16,7 +16,7 @@ class CharacterAvatar extends GetView {
         child: CachedNetworkImage(
           imageUrl: controller.current?.avatarUrl.isNotEmpty == true
               ? controller.current!.avatarUrl
-              : 'https://via.placeholder.com/704.png?text=Avatar',
+              : 'https://placeholder.photo/img/704.png?text=Avatar',
           width: 176,
           height: 176,
         ),

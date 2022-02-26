@@ -8,6 +8,7 @@ class DwIcons {
   static final knapsack = DwIconData.svgIcon(name: 'knapsack', fileName: 'knapsack');
   static final riposte = DwIconData.svgIcon(name: 'riposte', fileName: 'riposte');
   static final scroll_quill = DwIconData.svgIcon(name: 'scroll_quill', fileName: 'scroll_quill');
+  static final exclamation = DwIconData.svgIcon(name: 'exclamation', fileName: 'exclamation');
 
   // Stats
   static final stat_cha = DwIconData.svgIcon(name: 'stat_cha', fileName: 'stats/cha');

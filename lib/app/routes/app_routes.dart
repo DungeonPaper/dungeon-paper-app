@@ -11,6 +11,6 @@ abstract class Routes {
 abstract class _Paths {
   _Paths._();
   static const home = '/';
-  static const characterListPage = '/character-list-page';
-  static const createCharacterPage = '/create-character-page';
+  static const characterListPage = '/character-list';
+  static const createCharacterPage = '/create-character';
 }

@@ -1,5 +1,6 @@
+import 'package:dungeon_paper/app/modules/UpsertCharacterPages/views/character_class_select_view.dart';
 import 'package:dungeon_paper/app/modules/UpsertCharacterPages/views/character_information_view.dart';
-import 'package:dungeon_paper/app/modules/UpsertCharacterPages/views/select_character_class_view.dart';
+import 'package:dungeon_paper/app/themes/colors.dart';
 import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
@@ -23,38 +24,52 @@ class CreateCharacterPageView extends GetView<CreateCharacterPageController> {
         centerTitle: true,
       ),
       body: PageView(
-        controller: controller.currentStep,
+        controller: controller.pageController.value,
         children: [
           CharacterInformationView(
-              onValidate: (valid) => controller.setValid(CreateCharStep.information, valid)),
-          const SelectCharacterClassView(),
+            onValidate: (valid, info) =>
+                controller.setValid(CreateCharStep.information, valid, info),
+          ),
+          CharacterClassSelectView(
+            onValidate: (valid, cls) => controller.setValid(CreateCharStep.charClass, valid, cls),
+          ),
         ],
       ),
-      bottomNavigationBar: Container(
-        color: theme.scaffoldBackgroundColor,
-        child: Row(
-          children: [
-            NavItem(
-              icon: Icons.person,
-              onTap: () => goToPage(0),
-              disabled: false,
-              valid: controller.isValid[CreateCharStep.information] ?? false,
-            ),
-            NavItem(
-              icon: Icons.access_time, // TODO find char class icon
-              onTap: () => goToPage(1),
-              disabled: false,
-              valid: controller.isValid[CreateCharStep.charClass] ?? false,
-            ),
-          ],
+      floatingActionButton: Obx(
+        () => FloatingActionButton(
+          backgroundColor: controller.canProceed ? DwColors.success : Colors.grey,
+          onPressed: controller.canProceed ? () => controller.proceed() : null,
+          child: const Icon(Icons.arrow_forward),
         ),
+      ),
+      bottomNavigationBar: Obx(
+        () {
+          return Container(
+            color: theme.scaffoldBackgroundColor,
+            child: Row(
+              children: [
+                NavItem(
+                  icon: const Icon(Icons.person),
+                  onTap: () => goToPage(0),
+                  disabled: false,
+                  valid: controller.isValid[CreateCharStep.information] ?? false,
+                  active: controller.pageController.value.page == null ||
+                      controller.pageController.value.page?.round() == 0,
+                ),
+                NavItem(
+                  icon: const Icon(Icons.access_time), // TODO find char class icon
+                  onTap: () => goToPage(1),
+                  disabled: controller.lastAvailablePage.value < 1,
+                  valid: controller.isValid[CreateCharStep.charClass] ?? false,
+                  active: controller.pageController.value.page?.round() == 1,
+                ),
+              ],
+            ),
+          );
+        },
       ),
     );
   }
 
-  void goToPage(int page) => controller.currentStep.animateToPage(
-        page,
-        duration: const Duration(milliseconds: 500),
-        curve: Curves.easeOut,
-      );
+  void goToPage(int page) => controller.goToPage(page);
 }

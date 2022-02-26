@@ -1,5 +1,6 @@
 import 'package:dungeon_paper/app/routes/app_pages.dart';
 import 'package:dungeon_paper/app/data/services/services.dart';
+import 'package:dungeon_paper/core/multi_platform_scroll_behavior.dart';
 import 'package:dungeon_paper/core/shared_preferences.dart';
 import 'package:dungeon_paper/generated/intl/messages_all.dart';
 import 'package:dungeon_paper/generated/l10n.dart';
@@ -31,10 +32,11 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return DynamicTheme(
       themeCollection: themeCollection,
-      defaultThemeId: prefs.getInt('selectedThemeId')!,
+      defaultThemeId: prefs.getInt('selectedThemeId') ?? AppThemes.parchment,
       builder: (context, value) {
         // key: Key(DynamicTheme.of(context)?.themeId.toString() ?? 'none'),
         return GetMaterialApp(
+          scrollBehavior: MultiPlatformScrollBehavior(),
           // key: Key(DynamicTheme.of(context)?.themeId.toString() ?? ""),
           title: S.current.appName,
           theme: value,

@@ -65,6 +65,7 @@ flutter:
     - assets/icons/armor.svg
     - assets/icons/book_cover.svg
     - assets/icons/dice_d6.svg
+    - assets/icons/exclamation.svg
     - assets/icons/hand_rock.svg
     - assets/icons/knapsack.svg
     - assets/icons/riposte.svg

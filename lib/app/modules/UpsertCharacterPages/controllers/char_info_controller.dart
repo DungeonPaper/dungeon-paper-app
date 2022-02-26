@@ -1,31 +1,40 @@
+import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
 
 class CharInfoController extends GetxController {
-  final displayName = ''.obs;
-  final bioDesc = ''.obs;
-  final avatarUrl = ''.obs;
+  final formKey = GlobalKey<FormState>();
+  final displayName = TextEditingController().obs;
+  final avatarUrl = TextEditingController().obs;
+  final _validCache = false.obs;
+  bool get _isValid => formKey.currentState?.validate() ?? false;
+  bool get isValid => _validCache.value;
 
-  bool get isValid => isCharInfoValid(
-        displayName: displayName.value,
-        bioDesc: bioDesc.value,
-        avatarUrl: avatarUrl.value,
+  CharInfo get charInfo => CharInfo(
+        displayName: displayName.value.text,
+        avatarUrl: avatarUrl.value.text,
       );
 
-  void updateCharInfo({
-    required String displayName,
-    required String bioDesc,
-    required String avatarUrl,
-  }) {
-    this.displayName.value = displayName;
-    this.bioDesc.value = bioDesc;
-    this.avatarUrl.value = avatarUrl;
+  void setCharInfo(CharInfo info) {
+    displayName.value.text = info.displayName;
+    avatarUrl.value.text = info.avatarUrl;
+    validate();
   }
 
-  static bool isCharInfoValid({
-    required String displayName,
-    required String bioDesc,
-    required String avatarUrl,
-  }) {
-    return displayName.isNotEmpty;
+  static bool isCharInfoValid(CharInfo info) => info.isValid;
+
+  bool validate() {
+    return _validCache.value = _isValid;
   }
+}
+
+class CharInfo {
+  final String displayName;
+  final String avatarUrl;
+
+  CharInfo({
+    required this.displayName,
+    required this.avatarUrl,
+  });
+
+  bool get isValid => displayName.isNotEmpty;
 }
