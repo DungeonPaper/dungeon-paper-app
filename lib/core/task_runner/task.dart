@@ -70,7 +70,7 @@ class TaskGroup extends Task<ArgOptions> {
     return _runTasks(tasks, options ?? this.options!, condition).call(options ?? this.options!);
   }
 
-  static Future<void> Function(ArgOptions) _runTasks(
+  static Future<void> Function(ArgOptions?) _runTasks(
     List<Task<ArgOptions>> tasks,
     ArgOptions? options,
     bool Function(ArgOptions)? condition,
@@ -79,8 +79,8 @@ class TaskGroup extends Task<ArgOptions> {
       assert(options != null || overrideOptions != null,
           'Options must be passed either in constructor or to run options.');
       for (final task in tasks) {
-        if (condition?.call(options ?? overrideOptions) != false &&
-            task.condition?.call(options ?? overrideOptions) != false) {
+        if (condition?.call(options ?? overrideOptions!) != false &&
+            task.condition?.call(options ?? overrideOptions!) != false) {
           await task.run(options);
         }
       }
@@ -169,12 +169,12 @@ class ProcessTask extends Task<ArgOptions> {
         final _process = await process(o);
         final _args = await (args?.call(o) ?? <String>[]);
         final _argsStr = _args.map((a) => a.contains(' ') ? '"$a"' : a).join(' ');
-        print('\n\nRunning process: $_process ${_argsStr}\n\n');
+        print('\n\nRunning process: $_process $_argsStr\n\n');
         try {
           final result = await Process.run(_process, _args);
           stdout.write(result.stdout);
           stdout.write(result.stderr);
-          final exitCode = await result.exitCode;
+          final exitCode = result.exitCode;
           if (exitCode != 0) {
             final stack = StackTrace.current;
             final e = ProcessException(

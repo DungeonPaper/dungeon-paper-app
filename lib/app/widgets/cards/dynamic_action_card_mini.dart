@@ -73,7 +73,7 @@ class DynamicActionCardMini extends StatelessWidget {
                 if (dice.isNotEmpty)
                   BackgroundIconButton(
                     elevation: 1.5,
-                    icon: SvgIcon(DwIcons.dice_d6, size: 20),
+                    icon: const SvgIcon(DwIcons.dice_d6, size: 20),
                     iconColor: Theme.of(context).colorScheme.onPrimary,
                     color: Theme.of(context).primaryColor,
                     size: 40,

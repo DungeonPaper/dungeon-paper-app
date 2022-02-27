@@ -1,6 +1,7 @@
 {
     "cSpell.words": [
         "Actionables",
+        "appbundle",
         "autovalidate",
         "cupertino",
         "dungeonpaper",
@@ -12,6 +13,7 @@
         "prefs",
         "pubspec",
         "schyler",
+        "sdcard",
         "upsert",
         "vsync",
         "wakelock"

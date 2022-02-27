@@ -90,5 +90,5 @@ class Move extends dw.Move {
         'favorited': favorited,
       };
 
-  Widget get icon => SvgIcon(DwIcons.riposte);
+  Widget get icon => const SvgIcon(DwIcons.riposte);
 }

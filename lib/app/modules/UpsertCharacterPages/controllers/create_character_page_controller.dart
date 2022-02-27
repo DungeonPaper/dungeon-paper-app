@@ -1,6 +1,5 @@
 import 'package:dungeon_paper/app/data/models/character.dart';
 import 'package:dungeon_paper/app/data/models/character_class.dart';
-import 'package:dungeon_paper/core/request_notifier.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 

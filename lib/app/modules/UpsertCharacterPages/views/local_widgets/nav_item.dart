@@ -68,7 +68,7 @@ class NavItem extends StatelessWidget {
                           data: IconTheme.of(context).copyWith(color: Colors.white),
                           child: valid
                               ? const Icon(Icons.check, size: 8)
-                              : SvgIcon(DwIcons.exclamation, size: 8),
+                              : const SvgIcon(DwIcons.exclamation, size: 8),
                         ),
                       ),
                     ),

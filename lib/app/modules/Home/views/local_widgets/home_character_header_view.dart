@@ -19,14 +19,14 @@ class HomeCharacterHeaderView extends GetView<CharacterService> {
           children: [
             LabeledIconButton(
               onPressed: () => null,
-              icon: SvgIcon(DwIcons.knapsack),
+              icon: const SvgIcon(DwIcons.knapsack),
               label: S.current.quickIconsItems,
               shadowOffset: const Offset(-2, -2),
             ),
             const SizedBox(height: 16),
             LabeledIconButton(
               onPressed: () => null,
-              icon: SvgIcon(DwIcons.scroll_quill),
+              icon: const SvgIcon(DwIcons.scroll_quill),
               label: S.current.quickIconsNote,
               shadowOffset: const Offset(-2, 2),
             ),
@@ -39,14 +39,14 @@ class HomeCharacterHeaderView extends GetView<CharacterService> {
           children: [
             LabeledIconButton(
               onPressed: () => null,
-              icon: SvgIcon(DwIcons.hand_rock),
+              icon: const SvgIcon(DwIcons.hand_rock),
               label: S.current.quickIconsMoves,
               shadowOffset: const Offset(2, -2),
             ),
             const SizedBox(height: 16),
             LabeledIconButton(
               onPressed: () => null,
-              icon: SvgIcon(DwIcons.book_cover),
+              icon: const SvgIcon(DwIcons.book_cover),
               label: S.current.quickIconsSpells,
               shadowOffset: const Offset(2, 2),
             ),

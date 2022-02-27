@@ -79,7 +79,7 @@ class HomeCharacterRollStatChip extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
                     IconTheme(
-                      child: SvgIcon(DwIcons.dice_d6),
+                      child: const SvgIcon(DwIcons.dice_d6),
                       data: IconTheme.of(context).copyWith(
                         size: 10,
                         color: theme.colorScheme.onSurface.withOpacity(rollBadgeTextOpacity),

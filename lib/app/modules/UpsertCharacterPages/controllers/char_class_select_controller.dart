@@ -1,4 +1,3 @@
-import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
 
 import '../../../data/models/character_class.dart';
@@ -24,15 +23,9 @@ class CharClassSelectController extends GetxController {
   void getClasses() async {
     await Future.delayed(const Duration(milliseconds: 300));
     _availableClasses.value = [
-      CharacterClass.empty().copyInheritedWith(
-        name: "Druid",
-      ),
-      CharacterClass.empty().copyInheritedWith(
-        name: "Immolator",
-      ),
-      CharacterClass.empty().copyInheritedWith(
-        name: "Fighter",
-      ),
+      CharacterClass.empty().copyInheritedWith(name: 'Druid'),
+      CharacterClass.empty().copyInheritedWith(name: 'Immolator'),
+      CharacterClass.empty().copyInheritedWith(name: 'Fighter'),
     ];
     _loading.value = false;
   }
