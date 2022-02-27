@@ -56,6 +56,17 @@
             ],
             "problemMatcher": []
         },
+        {
+            "label": "Getx Generate",
+            "type": "shell",
+            "command": "${HOME}/.pub-cache/bin/get create ${input:tplType} ${input:tplName}"
+        },
+        {
+            "label": "Getx Generate on module",
+            "type": "shell",
+            "command": "${HOME}/.pub-cache/bin/get create ${input:tplType} ${input:tplName} on ${input:tplSub}",
+            "problemMatcher": []
+        }
     ],
     "inputs": [
         {
@@ -81,6 +92,43 @@
                     "label": "All"
                 }
             ]
-        }
-    ]
+        },
+        {
+            "id": "tplType",
+            "type": "pickString",
+            "description": "Pick template type",
+            "options": [
+                {
+                    "value": "controller",
+                    "label": "Controller"
+                },
+                {
+                    "value": "page",
+                    "label": "Page"
+                },
+                {
+                    "value": "provider",
+                    "label": "Provider"
+                },
+                {
+                    "value": "screen",
+                    "label": "Screen"
+                },
+                {
+                    "value": "view",
+                    "label": "View"
+                },
+            ]
+        },
+        {
+            "id": "tplSub",
+            "type": "promptString",
+            "description": "Create on",
+        },
+        {
+            "id": "tplName",
+            "type": "promptString",
+            "description": "Component name",
+        },
+    ],
 }

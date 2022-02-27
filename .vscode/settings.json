@@ -12,8 +12,11 @@
         "nunito",
         "prefs",
         "pubspec",
+        "Reorderable",
         "schyler",
         "sdcard",
+        "sublist",
+        "unfocus",
         "upsert",
         "vsync",
         "wakelock"

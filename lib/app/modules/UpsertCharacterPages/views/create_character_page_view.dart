@@ -1,5 +1,6 @@
 import 'package:dungeon_paper/app/modules/UpsertCharacterPages/views/character_class_select_view.dart';
 import 'package:dungeon_paper/app/modules/UpsertCharacterPages/views/character_info_view.dart';
+import 'package:dungeon_paper/app/modules/UpsertCharacterPages/views/character_moves_spells_view.dart';
 import 'package:dungeon_paper/app/modules/UpsertCharacterPages/views/character_roll_stats_view.dart';
 import 'package:dungeon_paper/app/themes/colors.dart';
 import 'package:flutter/material.dart';
@@ -24,25 +25,30 @@ class CreateCharacterPageView extends GetView<CreateCharacterPageController> {
         title: Text(S.current.createCharacterTitle),
         centerTitle: true,
       ),
-      body: PageView(
-        controller: controller.pageController.value,
-        children: [
-          CharacterInfoView(
-            onValidate: (valid, info) =>
-                controller.setValid(CreateCharStep.information, valid, info),
-          ),
-          CharacterClassSelectView(
-            onValidate: (valid, cls) => controller.setValid(CreateCharStep.charClass, valid, cls),
-          ),
-          CharacterRollStatsView(
-            onValidate: (valid, stats) => controller.setValid(CreateCharStep.stats, valid, stats),
-          ),
-        ],
+      body: Obx(
+        () => PageView(
+          controller: controller.pageController.value,
+          children: [
+            CharacterInfoView(
+              onValidate: (valid, info) =>
+                  controller.setValid(CreateCharStep.information, valid, info),
+            ),
+            CharacterClassSelectView(
+              onValidate: (valid, cls) => controller.setValid(CreateCharStep.charClass, valid, cls),
+            ),
+            CharacterRollStatsView(
+              onValidate: (valid, stats) => controller.setValid(CreateCharStep.stats, valid, stats),
+            ),
+            CharacterMovesSpellsView(
+              onValidate: (valid, stats) => controller.setValid(CreateCharStep.stats, valid, stats),
+            ),
+          ].sublist(0, controller.lastAvailablePage.value + 1),
+        ),
       ),
       floatingActionButton: Obx(
         () => FloatingActionButton(
           backgroundColor: controller.canProceed ? DwColors.success : Colors.grey,
-          onPressed: controller.canProceed ? () => controller.proceed() : null,
+          onPressed: controller.canProceed ? () => controller.proceed(context) : null,
           child: const Icon(Icons.arrow_forward),
         ),
       ),

@@ -1,5 +1,7 @@
 import 'dart:math';
 
+import 'package:flutter/foundation.dart';
+
 extension<T> on List<T> {
   // ignore: unused_element
   T sample() {
@@ -26,3 +28,32 @@ class Enumerated<T> {
 }
 
 List<Enumerated<T>> enumerate<T>(Iterable<T> list) => Enumerated.listFrom(list);
+
+List<T> reorder<T>(List<T> list, int oldIndex, int newIndex) {
+  if (newIndex > oldIndex) {
+    newIndex = newIndex - 1;
+  }
+  final removed = list.removeAt(oldIndex);
+  list.insert(newIndex, removed);
+  return list;
+}
+
+List<T> sortByPredefined<T>(
+  List<T> list, {
+  bool prependRest = false,
+  required List<T> order,
+}) {
+  final out = <T>[];
+  for (final item in order) {
+    out.add(item);
+  }
+  if (order.length > list.length) {
+    final rest = list.where((item) => !out.contains(item));
+    if (prependRest) {
+      out.insertAll(0, rest);
+    } else {
+      out.addAll(rest);
+    }
+  }
+  return out;
+}

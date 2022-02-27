@@ -22,7 +22,6 @@ class _ValueNotifierBuilderState extends State<ValueNotifierBuilder> {
   void initState() {
     super.initState();
     widget.value.addListener(() {
-      debugPrint('value: ' + widget.value.toString());
       setState(() {});
     });
   }

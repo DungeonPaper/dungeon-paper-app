@@ -31,9 +31,7 @@ class CharacterService extends GetxService {
   }
 
   Future<CharacterService> init() async {
-    pageController.addListener(() {
-      _current.refresh();
-    });
+    pageController.addListener(refreshPage);
     var json = await StorageHandler.instance.getAllItems('characters');
     var list = json.map((c) => Character.fromJson(c));
 
@@ -49,10 +47,17 @@ class CharacterService extends GetxService {
           _current.value = all.keys.first;
           prefs.setString(PrefKeys.lastLoadedCharacter, _current.value!);
         }
+      } else {
+        _current.value = all.keys.first;
+        prefs.setString(PrefKeys.lastLoadedCharacter, _current.value!);
       }
     }
 
     return this;
+  }
+
+  void refreshPage() {
+    _current.refresh();
   }
 
   // @override
@@ -61,7 +66,9 @@ class CharacterService extends GetxService {
   // }
 
   @override
-  void onClose() {}
+  void onClose() {
+    pageController.removeListener(refreshPage);
+  }
 
   void updateCharacter(Character? character) {
     // (StorageHandler.instance.delegate as LocalStorageDelegate).storage.collection('characters');

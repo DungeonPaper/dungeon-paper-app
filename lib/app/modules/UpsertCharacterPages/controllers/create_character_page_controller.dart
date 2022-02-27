@@ -1,5 +1,6 @@
 import 'package:dungeon_paper/app/data/models/character.dart';
 import 'package:dungeon_paper/app/data/models/character_class.dart';
+import 'package:dungeon_paper/core/utils/input_utils.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -16,16 +17,10 @@ enum CreateCharStep {
 }
 
 class CreateCharacterPageController extends GetxController {
-  final pageController = PageController(
-    initialPage: 0,
-  ).obs;
-
+  final pageController = PageController(initialPage: 0).obs;
   final lastAvailablePage = 0.obs;
-  CreateCharStep get lastAvailableStep => CreateCharStep.values.elementAt(lastAvailablePage.value);
-
   final Rx<CharInfo?> info = Rx(null);
   final Rx<CharacterClass?> charClass = Rx(null);
-
   final isValid = <CreateCharStep, bool>{
     CreateCharStep.information: false,
     CreateCharStep.charClass: false,
@@ -36,64 +31,31 @@ class CreateCharacterPageController extends GetxController {
     CreateCharStep.review: true,
   }.obs;
 
-  // final notifiers = <CreateCharStep, RequestNotifier?>{
-  //   CreateCharStep.information: null,
-  //   CreateCharStep.charClass: null,
-  //   CreateCharStep.stats: null,
-  //   CreateCharStep.moves: null,
-  //   CreateCharStep.background: null,
-  //   CreateCharStep.gear: null,
-  //   CreateCharStep.review: null,
-  // }.obs;
-
   int get page => pageController.value.page?.round() ?? 0;
-  CreateCharStep get step => CreateCharStep.values.elementAt(page);
+  CreateCharStep get step => stepAt(page);
+  CreateCharStep get lastAvailableStep => stepAt(lastAvailablePage.value);
+  CreateCharStep stepAt(int index) => CreateCharStep.values.elementAt(index);
+  int get firstInvalidPage => CreateCharStep.values.indexWhere((s) => isValid[s] == false);
+  CreateCharStep get firstInvalidStep => stepAt(firstInvalidPage);
+  bool get allValid => isValid.values.every((v) => v);
+  bool get canProceed => firstInvalidPage > lastAvailablePage.value;
 
-  bool get canProceed {
-    return isValid[step]!;
-  }
-
-  void proceed() {
-    // final notifier = notifiers[step];
-    // if (notifier != null) {
-    //   final map = <CreateCharStep, void Function(dynamic data)>{
-    //     CreateCharStep.information: (data) => info.value = data,
-    //   };
-    //   debugPrint('requesting data from RequestNotifier for $step');
-    //   final data = notifier.request();
-    //   debugPrint('got: $data');
-    //   map[step]?.call(data);
-    // }
-    final firstInvalid = CreateCharStep.values.indexWhere((s) => isValid[s] == false);
-    if (firstInvalid > lastAvailablePage.value) {
+  void proceed(BuildContext context) {
+    hideKeyboard(context);
+    if (firstInvalidPage > lastAvailablePage.value) {
       lastAvailablePage.value += 1;
     }
     goToPage(lastAvailablePage.value);
   }
 
-  @override
-  void onInit() {
-    super.onInit();
-    pageController.value.addListener(updatePage);
-    // currentStep.value.jumpToPage(0);
-  }
-
   setValid(CreateCharStep step, bool valid, dynamic dataToSave) {
     isValid[step] = valid;
-    // if (valid) {
     final map = <CreateCharStep, void Function()>{
       CreateCharStep.information: () => info.value = dataToSave,
       CreateCharStep.charClass: () => charClass.value = dataToSave,
     };
     map[step]?.call();
-    // }
   }
-
-  // setNotifier(CreateCharStep step, RequestNotifier notifier) {
-  //   notifiers[step] = notifier;
-  // }
-
-  bool get allValid => isValid.values.every((v) => v);
 
   Character createChar() {
     return Character.empty().copyWith(
@@ -113,5 +75,11 @@ class CreateCharacterPageController extends GetxController {
 
   void updatePage() {
     pageController.refresh();
+  }
+
+  @override
+  void onInit() {
+    super.onInit();
+    pageController.value.addListener(updatePage);
   }
 }
