@@ -8,6 +8,79 @@
             "type": "shell",
             "command": "flutter pub pub run intl_generator:generate_from_arb lib/generated/intl/*.dart lib/l10n/*.arb",
             "problemMatcher": []
+        },
+        {
+            "label": "Build (pick platform)",
+            "type": "dart",
+            "command": "dart",
+            "args": [
+                "lib/core/task_runner/deploy.dart",
+                "--build",
+                "-l",
+                "${input:platform}"
+            ],
+            "problemMatcher": []
+        },
+        {
+            "label": "Build (pick platform) + Full-push to Android",
+            "type": "dart",
+            "command": "dart",
+            "args": [
+                "lib/core/task_runner/deploy.dart",
+                "--build",
+                "-l",
+                "${input:platform}",
+                "--push",
+                "--install"
+            ],
+            "problemMatcher": []
+        },
+        {
+            "label": "Push & Install Existing APK",
+            "type": "shell",
+            "command": "dart",
+            "args": [
+                "lib/core/task_runner/deploy.dart",
+                "--push",
+                "--install"
+            ],
+            "problemMatcher": []
+        },
+        {
+            "label": "Test",
+            "type": "shell",
+            "command": "dart",
+            "args": [
+                "lib/core/task_runner/deploy.dart",
+                "--test"
+            ],
+            "problemMatcher": []
+        },
+    ],
+    "inputs": [
+        {
+            "id": "platform",
+            "type": "pickString",
+            "default": "android",
+            "description": "Pick a platform to deploy on",
+            "options": [
+                {
+                    "value": "android",
+                    "label": "Android"
+                },
+                {
+                    "value": "ios",
+                    "label": "iOS",
+                },
+                {
+                    "value": "web",
+                    "label": "Web",
+                },
+                {
+                    "value": "all",
+                    "label": "All"
+                }
+            ]
         }
     ]
 }

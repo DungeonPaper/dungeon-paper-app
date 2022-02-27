@@ -1,5 +1,6 @@
 {
     "cSpell.words": [
+        "Actionables",
         "autovalidate",
         "cupertino",
         "dungeonpaper",
@@ -9,9 +10,11 @@
         "localstore",
         "nunito",
         "prefs",
+        "pubspec",
         "schyler",
         "upsert",
         "vsync",
         "wakelock"
-    ]
+    ],
+    "dart.sdkPath": "/Users/chen/.flutter-src/bin/cache/dart-sdk"
 }

@@ -48,9 +48,11 @@ dependencies:
   wakelock: ^0.6.1+1
 
 dev_dependencies:
+  args: ^2.3.0
   flutter_lints: ^1.0.0
   flutter_test:
     sdk: flutter
+  pub_semver: ^2.1.0
   test: ^1.19.5
 
 # For information on the generic Dart part of this file, see the
