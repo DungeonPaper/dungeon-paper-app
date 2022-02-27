@@ -65,7 +65,10 @@ class CreateCharacterPageController extends GetxController {
     //   debugPrint('got: $data');
     //   map[step]?.call(data);
     // }
-    lastAvailablePage.value += 1;
+    final firstInvalid = CreateCharStep.values.indexWhere((s) => isValid[s] == false);
+    if (firstInvalid > lastAvailablePage.value) {
+      lastAvailablePage.value += 1;
+    }
     goToPage(lastAvailablePage.value);
   }
 
@@ -104,7 +107,7 @@ class CreateCharacterPageController extends GetxController {
   void goToPage(int page) {
     pageController.value.animateToPage(
       page,
-      duration: const Duration(milliseconds: 500),
+      duration: const Duration(milliseconds: 300),
       curve: Curves.easeOut,
     );
   }

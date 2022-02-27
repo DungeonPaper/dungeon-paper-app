@@ -325,6 +325,45 @@ class S {
       args: [],
     );
   }
+
+  /// `{step, select, information {Basic Information} charClass {Class} stats {Roll Stats} moves {Moves & Spells} background {Background & Bonds} gear {Starting Gear} review {Review & Finish}}`
+  String createCharacterStep(Object step) {
+    return Intl.select(
+      step,
+      {
+        'information': 'Basic Information',
+        'charClass': 'Class',
+        'stats': 'Roll Stats',
+        'moves': 'Moves & Spells',
+        'background': 'Background & Bonds',
+        'gear': 'Starting Gear',
+        'review': 'Review & Finish',
+      },
+      name: 'createCharacterStep',
+      desc: '',
+      args: [step],
+    );
+  }
+
+  /// `{step} - Changes Required`
+  String createCharacterStepInvalidTooltip(Object step) {
+    return Intl.message(
+      '$step - Changes Required',
+      name: 'createCharacterStepInvalidTooltip',
+      desc: '',
+      args: [step],
+    );
+  }
+
+  /// `Continue`
+  String get createCharacterProceedTooltip {
+    return Intl.message(
+      'Continue',
+      name: 'createCharacterProceedTooltip',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

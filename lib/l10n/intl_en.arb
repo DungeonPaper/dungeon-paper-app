@@ -48,5 +48,8 @@
     }
   },
   "rollBasicActionButton": "Basic Action",
-  "rollAttackDamageButton": "Attack + Damage"
+  "rollAttackDamageButton": "Attack + Damage",
+  "createCharacterStep": "{step, select, information {Basic Information} charClass {Class} stats {Roll Stats} moves {Moves & Spells} background {Background & Bonds} gear {Starting Gear} review {Review & Finish}}",
+  "createCharacterStepInvalidTooltip": "{step} - Changes Required",
+  "createCharacterProceedTooltip": "Continue"
 }

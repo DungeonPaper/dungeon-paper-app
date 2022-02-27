@@ -6,19 +6,19 @@ import 'dart:convert';
 import 'dart:math';
 
 import 'package:dungeon_paper/app/data/models/alignment.dart';
+import 'package:dungeon_paper/core/utils/math_utils.dart';
+import 'package:dungeon_paper/core/utils/uuid.dart';
 
-import '../../data/models/character_class.dart';
-import '../../data/models/roll_stats.dart';
-import '../../utils/math_utils.dart';
-import '../../utils/uuid.dart';
 import 'bio.dart';
 import 'bond.dart';
+import 'character_class.dart';
 import 'item.dart';
 import 'character_stats.dart';
 import 'meta.dart';
 import 'move.dart';
 import 'note.dart';
 import 'race.dart';
+import 'roll_stats.dart';
 import 'spell.dart';
 
 class Character {

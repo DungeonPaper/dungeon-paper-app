@@ -1,6 +1,7 @@
 import 'dart:convert';
 
-import '../../utils/uuid.dart';
+import 'package:dungeon_paper/core/utils/uuid.dart';
+
 import 'alignment.dart';
 import 'gear_choice.dart';
 import 'meta.dart';

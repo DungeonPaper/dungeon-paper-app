@@ -33,6 +33,7 @@ class CreateCharacterPageView extends GetView<CreateCharacterPageController> {
           CharacterClassSelectView(
             onValidate: (valid, cls) => controller.setValid(CreateCharStep.charClass, valid, cls),
           ),
+          Center(child: Text("Stats"))
         ],
       ),
       floatingActionButton: Obx(
@@ -44,32 +45,41 @@ class CreateCharacterPageView extends GetView<CreateCharacterPageController> {
       ),
       bottomNavigationBar: Obx(
         () {
-          return Container(
+          return Material(
             color: theme.scaffoldBackgroundColor,
+            elevation: 1,
             child: Row(
-              children: [
-                NavItem(
-                  icon: const Icon(Icons.person),
-                  onTap: () => goToPage(0),
-                  disabled: false,
-                  valid: controller.isValid[CreateCharStep.information] ?? false,
-                  active: controller.pageController.value.page == null ||
-                      controller.pageController.value.page?.round() == 0,
-                ),
-                NavItem(
-                  icon: const Icon(Icons.access_time), // TODO find char class icon
-                  onTap: () => goToPage(1),
-                  disabled: controller.lastAvailablePage.value < 1,
-                  valid: controller.isValid[CreateCharStep.charClass] ?? false,
-                  active: controller.pageController.value.page?.round() == 1,
-                ),
-              ],
+              children: navItems
+                  .map(
+                    (item) => NavItem(
+                      icon: item.icon,
+                      onTap: () => goToPage(CreateCharStep.values.indexOf(item.step)),
+                      disabled:
+                          controller.lastAvailablePage < CreateCharStep.values.indexOf(item.step),
+                      valid: controller.isValid[item.step] ?? false,
+                      active: controller.step == item.step,
+                      tooltip: controller.isValid[item.step] == true ||
+                              controller.lastAvailablePage <
+                                  CreateCharStep.values.indexOf(item.step)
+                          ? S.current.createCharacterStep(item.step.name)
+                          : S.current.createCharacterStepInvalidTooltip(
+                              S.current.createCharacterStep(item.step.name),
+                            ),
+                    ),
+                  )
+                  .toList(),
             ),
           );
         },
       ),
     );
   }
+
+  static const navItems = <NavItemData>[
+    NavItemData(icon: Icon(Icons.person), step: CreateCharStep.information),
+    NavItemData(icon: Icon(Icons.access_time), step: CreateCharStep.charClass),
+    NavItemData(icon: Icon(Icons.list_alt_rounded), step: CreateCharStep.stats),
+  ];
 
   void goToPage(int page) => controller.goToPage(page);
 }

@@ -19,12 +19,43 @@ class RollStats {
     required int cha,
   }) =>
       RollStats(stats: [
-        RollStat(key: 'STR', name: 'Strength', value: str),
-        RollStat(key: 'DEX', name: 'Dexterity', value: dex),
-        RollStat(key: 'CON', name: 'Constitution', value: con),
-        RollStat(key: 'INT', name: 'Intelligence', value: intl),
-        RollStat(key: 'WIS', name: 'Wisdom', value: wis),
-        RollStat(key: 'CHA', name: 'Charisma', value: cha),
+        RollStat(
+          key: 'STR',
+          name: 'Strength',
+          description: 'Measures muscle and physical power',
+          value: str,
+        ),
+        RollStat(
+          key: 'DEX',
+          name: 'Dexterity',
+          description: 'Measures agility, reflexes and balance',
+          value: dex,
+        ),
+        RollStat(
+          key: 'CON',
+          name: 'Constitution',
+          description: "Represents your character's health and stamina",
+          value: con,
+        ),
+        RollStat(
+          key: 'INT',
+          name: 'Intelligence',
+          description: 'Determines how well your character learns and reasons',
+          value: intl,
+        ),
+        RollStat(
+          key: 'WIS',
+          name: 'Wisdom',
+          description: "Describes a character's willpower, common sense, awareness, and intuition",
+          value: wis,
+        ),
+        RollStat(
+          key: 'CHA',
+          name: 'Charisma',
+          description:
+              "Measures a character's personality, personal magnetism, ability to lead, and appearance",
+          value: cha,
+        ),
       ]);
 
   final List<RollStat> stats;
@@ -74,21 +105,24 @@ class RollStats {
 class RollStat {
   final String key;
   final String name;
+  final String description;
   final int value;
 
-  RollStat({required String key, required this.name, required this.value})
-      : key = key.trim().toUpperCase();
+  RollStat({
+    required String key,
+    required this.name,
+    required this.value,
+    required this.description,
+  }) : key = key.trim().toUpperCase();
 
   factory RollStat.fromJson(Map<String, dynamic> json) => RollStat(
-        key: json['key'],
-        name: json['name'],
-        value: json['value'],
-      );
+      key: json['key'], name: json['name'], value: json['value'], description: json['description']);
 
   Map<String, dynamic> toJson() => {
         'key': key,
         'name': name,
         'value': value,
+        'description': description,
       };
 
   int get modifier => modifierForValue(value);

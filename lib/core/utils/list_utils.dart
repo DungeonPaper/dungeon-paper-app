@@ -24,3 +24,5 @@ class Enumerated<T> {
     return out;
   }
 }
+
+List<Enumerated<T>> enumerate<T>(Iterable<T> list) => Enumerated.listFrom(list);
