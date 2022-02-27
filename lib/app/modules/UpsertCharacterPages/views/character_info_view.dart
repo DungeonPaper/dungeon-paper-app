@@ -1,4 +1,4 @@
-import 'package:dungeon_paper/app/modules/UpsertCharacterPages/controllers/char_info_controller.dart';
+import 'package:dungeon_paper/app/modules/UpsertCharacterPages/controllers/character_info_controller.dart';
 import 'package:dungeon_paper/app/widgets/atoms/on_init_builder.dart';
 import 'package:dungeon_paper/core/request_notifier.dart';
 import 'package:flutter/material.dart';
@@ -7,11 +7,11 @@ import 'package:get/get.dart';
 
 import '../../../../generated/l10n.dart';
 
-class CharacterInformationView extends GetView<CharInfoController> {
-  CharacterInformationView({
+class CharacterInfoView extends GetView<CharacterInfoController> {
+  const CharacterInfoView({
     Key? key,
     required this.onValidate,
-  }) : super(key: key) {}
+  }) : super(key: key);
 
   final void Function(bool valid, CharInfo? info) onValidate;
 

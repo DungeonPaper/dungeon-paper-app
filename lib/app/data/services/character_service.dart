@@ -1,5 +1,7 @@
 import 'dart:math';
 
+import 'package:dungeon_paper/core/pref_keys.dart';
+import 'package:dungeon_paper/core/shared_preferences.dart';
 import 'package:dungeon_paper/core/storage_handler/storage_handler.dart';
 import 'package:dungeon_world_data/dungeon_world_data.dart' as dw;
 import 'package:flutter/widgets.dart';
@@ -38,8 +40,16 @@ class CharacterService extends GetxService {
     all.addAll(Map.fromIterable(list, key: (c) => c.key));
 
     if (all.isNotEmpty) {
-      // TODO use value from user or shared prefs
-      _current.value = all.keys.first;
+      final hasLastChar = prefs.containsKey(PrefKeys.lastLoadedCharacter);
+      if (hasLastChar) {
+        final lastChar = prefs.getString(PrefKeys.lastLoadedCharacter);
+        if (all.containsKey(lastChar)) {
+          _current.value = lastChar;
+        } else {
+          _current.value = all.keys.first;
+          prefs.setString(PrefKeys.lastLoadedCharacter, _current.value!);
+        }
+      }
     }
 
     return this;

@@ -22,38 +22,38 @@ class RollStats {
         RollStat(
           key: 'STR',
           name: 'Strength',
-          description: 'Measures muscle and physical power',
+          description: 'Measures muscle and physical power.',
           value: str,
         ),
         RollStat(
           key: 'DEX',
           name: 'Dexterity',
-          description: 'Measures agility, reflexes and balance',
+          description: 'Measures agility, reflexes and balance.',
           value: dex,
         ),
         RollStat(
           key: 'CON',
           name: 'Constitution',
-          description: "Represents your character's health and stamina",
+          description: "Represents your character's health and stamina.",
           value: con,
         ),
         RollStat(
           key: 'INT',
           name: 'Intelligence',
-          description: 'Determines how well your character learns and reasons',
+          description: 'Determines how well your character learns and reasons.',
           value: intl,
         ),
         RollStat(
           key: 'WIS',
           name: 'Wisdom',
-          description: "Describes a character's willpower, common sense, awareness, and intuition",
+          description: "Describes a character's willpower, common sense, awareness, and intuition.",
           value: wis,
         ),
         RollStat(
           key: 'CHA',
           name: 'Charisma',
           description:
-              "Measures a character's personality, personal magnetism, ability to lead, and appearance",
+              "Measures a character's personality, personal magnetism, ability to lead, and appearance.",
           value: cha,
         ),
       ]);
@@ -79,12 +79,12 @@ class RollStats {
     return statsMap[statKey]!;
   }
 
-  RollStat get dex => getStat('dex');
-  RollStat get str => getStat('str');
-  RollStat get wis => getStat('wis');
-  RollStat get con => getStat('con');
-  RollStat get intl => getStat('int');
-  RollStat get cha => getStat('cha');
+  RollStat get dex => getStat('DEX');
+  RollStat get str => getStat('STR');
+  RollStat get wis => getStat('WIS');
+  RollStat get con => getStat('CON');
+  RollStat get intl => getStat('INT');
+  RollStat get cha => getStat('CHA');
 
   int get dexMod => dex.modifier;
   int get strMod => str.modifier;
@@ -116,7 +116,11 @@ class RollStat {
   }) : key = key.trim().toUpperCase();
 
   factory RollStat.fromJson(Map<String, dynamic> json) => RollStat(
-      key: json['key'], name: json['name'], value: json['value'], description: json['description']);
+        key: json['key'],
+        name: json['name'],
+        value: json['value'],
+        description: json['description'] ?? '',
+      );
 
   Map<String, dynamic> toJson() => {
         'key': key,
@@ -144,13 +148,13 @@ class RollStat {
     return -1;
   }
 
-  static final _icons = <String, Widget>{
+  static const _icons = <String, Widget>{
     'dex': SvgIcon(DwIcons.stat_dex),
     'str': SvgIcon(DwIcons.stat_str),
     'wis': SvgIcon(DwIcons.stat_wis),
     'con': SvgIcon(DwIcons.stat_con),
     'int': SvgIcon(DwIcons.stat_int),
     'cha': SvgIcon(DwIcons.stat_cha),
-    '_other': const Icon(Icons.help),
+    '_other': Icon(Icons.help),
   };
 }

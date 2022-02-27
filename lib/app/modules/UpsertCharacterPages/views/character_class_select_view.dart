@@ -1,4 +1,4 @@
-import 'package:dungeon_paper/app/modules/UpsertCharacterPages/controllers/char_info_controller.dart';
+import 'package:dungeon_paper/app/modules/UpsertCharacterPages/controllers/character_info_controller.dart';
 import 'package:dungeon_paper/app/themes/colors.dart';
 import 'package:dungeon_paper/app/widgets/atoms/on_init_builder.dart';
 import 'package:dungeon_paper/core/request_notifier.dart';

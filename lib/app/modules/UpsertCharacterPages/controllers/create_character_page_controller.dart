@@ -4,7 +4,7 @@ import 'package:dungeon_paper/core/request_notifier.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-import 'char_info_controller.dart';
+import 'character_info_controller.dart';
 
 enum CreateCharStep {
   information,
@@ -30,7 +30,7 @@ class CreateCharacterPageController extends GetxController {
   final isValid = <CreateCharStep, bool>{
     CreateCharStep.information: false,
     CreateCharStep.charClass: false,
-    CreateCharStep.stats: false,
+    CreateCharStep.stats: true,
     CreateCharStep.moves: false,
     CreateCharStep.background: false,
     CreateCharStep.gear: false,

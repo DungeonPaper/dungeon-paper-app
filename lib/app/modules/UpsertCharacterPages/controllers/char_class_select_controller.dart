@@ -22,7 +22,7 @@ class CharClassSelectController extends GetxController {
   }
 
   void getClasses() async {
-    await Future.delayed(const Duration(seconds: 2));
+    await Future.delayed(const Duration(milliseconds: 300));
     _availableClasses.value = [
       CharacterClass.empty().copyInheritedWith(
         name: "Druid",

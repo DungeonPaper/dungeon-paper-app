@@ -81,5 +81,5 @@ class Spell extends dw.Spell {
         'prepared': prepared,
       };
 
-  Widget get icon => SvgIcon(DwIcons.book_cover);
+  Widget get icon => const SvgIcon(DwIcons.book_cover);
 }

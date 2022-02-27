@@ -1,7 +1,7 @@
 import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
 
-class CharInfoController extends GetxController {
+class CharacterInfoController extends GetxController {
   final formKey = GlobalKey<FormState>();
   final displayName = TextEditingController().obs;
   final avatarUrl = TextEditingController().obs;
