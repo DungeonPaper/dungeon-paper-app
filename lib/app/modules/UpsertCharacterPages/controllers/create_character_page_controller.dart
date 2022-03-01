@@ -10,10 +10,9 @@ enum CreateCharStep {
   information,
   charClass,
   stats,
-  moves,
+  movesSpells,
   background,
   gear,
-  review,
 }
 
 class CreateCharacterPageController extends GetxController {
@@ -25,10 +24,9 @@ class CreateCharacterPageController extends GetxController {
     CreateCharStep.information: false,
     CreateCharStep.charClass: false,
     CreateCharStep.stats: true,
-    CreateCharStep.moves: false,
+    CreateCharStep.movesSpells: true,
     CreateCharStep.background: false,
     CreateCharStep.gear: false,
-    CreateCharStep.review: true,
   }.obs;
 
   int get page => pageController.value.page?.round() ?? 0;

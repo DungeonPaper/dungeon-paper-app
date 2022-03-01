@@ -42,7 +42,12 @@ class HomeCharacterView extends GetView<CharacterService> {
               textAlign: TextAlign.center,
             )),
             p(const SizedBox(height: 8)),
-            p(const HomeCharacterHpExpView()),
+            p(const Center(
+              child: SizedBox(
+                width: 500,
+                child: HomeCharacterHpExpView(),
+              ),
+            )),
             p(const SizedBox(height: 16)),
             p(Center(
               child: SizedBox(
@@ -61,28 +66,33 @@ class HomeCharacterView extends GetView<CharacterService> {
               ),
             )),
             p(const SizedBox(height: 16)),
-            p(IconTheme(
-              data: IconTheme.of(context).copyWith(size: 16),
-              child: Row(
-                children: [
-                  Expanded(
-                    child: ElevatedButton.icon(
-                      onPressed: () => null,
-                      style: ButtonThemes.primaryElevated(context),
-                      label: Text(S.current.rollBasicActionButton),
-                      icon: const SvgIcon(DwIcons.dice_d6),
-                    ),
+            p(Center(
+              child: SizedBox(
+                width: 500,
+                child: IconTheme(
+                  data: IconTheme.of(context).copyWith(size: 16),
+                  child: Row(
+                    children: [
+                      Expanded(
+                        child: ElevatedButton.icon(
+                          onPressed: () => null,
+                          style: ButtonThemes.primaryElevated(context),
+                          label: Text(S.current.rollBasicActionButton),
+                          icon: const SvgIcon(DwIcons.dice_d6),
+                        ),
+                      ),
+                      const SizedBox(width: 16),
+                      Expanded(
+                        child: ElevatedButton.icon(
+                          onPressed: () => null,
+                          style: ButtonThemes.primaryElevated(context),
+                          label: Text(S.current.rollAttackDamageButton),
+                          icon: const SvgIcon(DwIcons.dice_d6),
+                        ),
+                      ),
+                    ],
                   ),
-                  const SizedBox(width: 16),
-                  Expanded(
-                    child: ElevatedButton.icon(
-                      onPressed: () => null,
-                      style: ButtonThemes.primaryElevated(context),
-                      label: Text(S.current.rollAttackDamageButton),
-                      icon: const SvgIcon(DwIcons.dice_d6),
-                    ),
-                  ),
-                ],
+                ),
               ),
             )),
             p(const SizedBox(height: 12)),

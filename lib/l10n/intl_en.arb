@@ -49,7 +49,16 @@
   },
   "rollBasicActionButton": "Basic Action",
   "rollAttackDamageButton": "Attack + Damage",
-  "createCharacterStep": "{step, select, information {Basic Information} charClass {Class} stats {Roll Stats} moves {Moves & Spells} background {Background & Bonds} gear {Starting Gear} review {Review & Finish}}",
+  "createCharacterStep": "{step, select, information {Basic Information} charClass {Class} stats {Roll Stats} movesSpells {Moves & Spells} background {Background & Bonds} gear {Starting Gear}}",
   "createCharacterStepInvalidTooltip": "{step} - Changes Required",
-  "createCharacterProceedTooltip": "Continue"
+  "createCharacterProceedTooltip": "Continue",
+  "createCharacterFinishTooltip": "Review & Save",
+  "addMoves": "Add Moves",
+  "addSpells": "Add Spells",
+  "createCharacterBioFieldLabel": "Biography",
+  "createCharacterBioFieldPlaceholder": "Describe your character as shortly or thoroughly as you want here.\nPut your backstory, a visual description, some personality traits, etc. to help you keep in character.",
+  "createCharacterRaceNameFieldLabel": "Race",
+  "createCharacterRaceNameFieldPlaceholder": "Race name",
+  "createCharacterRaceDescFieldLabel": "Race description",
+  "createCharacterRaceDescFieldPlaceholder": "Describe a special move usable by your race. It will appear alongside the rest of the moves."
 }

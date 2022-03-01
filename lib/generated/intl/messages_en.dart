@@ -35,10 +35,9 @@ class MessageLookup extends MessageLookupByLibrary {
             'information': 'Basic Information',
             'charClass': 'Class',
             'stats': 'Roll Stats',
-            'moves': 'Moves & Spells',
+            'movesSpells': 'Moves & Spells',
             'background': 'Background & Bonds',
             'gear': 'Starting Gear',
-            'review': 'Review & Finish',
           })}";
 
   static String m3(step) => "${step} - Changes Required";
@@ -56,6 +55,8 @@ class MessageLookup extends MessageLookupByLibrary {
 
   final messages = _notInlinedMessages(_notInlinedMessages);
   static Map<String, Function> _notInlinedMessages(_) => <String, Function>{
+        "addMoves": MessageLookupByLibrary.simpleMessage("Add Moves"),
+        "addSpells": MessageLookupByLibrary.simpleMessage("Add Spells"),
         "alignment": m0,
         "appName": MessageLookupByLibrary.simpleMessage("Dungeon Paper"),
         "characterBarHp": MessageLookupByLibrary.simpleMessage("HP"),
@@ -69,10 +70,16 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Photo URL"),
         "createCharacterAvatarFieldPlaceholder":
             MessageLookupByLibrary.simpleMessage("Paste an image URL"),
+        "createCharacterBioFieldLabel":
+            MessageLookupByLibrary.simpleMessage("Biography"),
+        "createCharacterBioFieldPlaceholder": MessageLookupByLibrary.simpleMessage(
+            "Describe your character as shortly or thoroughly as you want here.\nPut your backstory, a visual description, some personality traits, etc. to help you keep in character."),
         "createCharacterDescFieldLabel":
             MessageLookupByLibrary.simpleMessage("Biography/description"),
         "createCharacterDescFieldPlaceholder": MessageLookupByLibrary.simpleMessage(
             "Enter general information about your character - backstory, goals & ambitions, behavior descriptions, etc"),
+        "createCharacterFinishTooltip":
+            MessageLookupByLibrary.simpleMessage("Review & Save"),
         "createCharacterNameFieldLabel":
             MessageLookupByLibrary.simpleMessage("Character Name"),
         "createCharacterNameFieldPlaceholder":
@@ -80,6 +87,15 @@ class MessageLookup extends MessageLookupByLibrary {
                 "Enter your character\'s name"),
         "createCharacterProceedTooltip":
             MessageLookupByLibrary.simpleMessage("Continue"),
+        "createCharacterRaceDescFieldLabel":
+            MessageLookupByLibrary.simpleMessage("Race description"),
+        "createCharacterRaceDescFieldPlaceholder":
+            MessageLookupByLibrary.simpleMessage(
+                "Describe a special move usable by your race. It will appear alongside the rest of the moves."),
+        "createCharacterRaceNameFieldLabel":
+            MessageLookupByLibrary.simpleMessage("Race"),
+        "createCharacterRaceNameFieldPlaceholder":
+            MessageLookupByLibrary.simpleMessage("Race name"),
         "createCharacterStep": m2,
         "createCharacterStepInvalidTooltip": m3,
         "createCharacterTitle":

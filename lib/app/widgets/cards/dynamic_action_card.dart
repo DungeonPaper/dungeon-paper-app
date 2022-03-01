@@ -5,14 +5,14 @@ import '../../../core/dw_icons.dart';
 import '../atoms/background_icon_button.dart';
 import '../atoms/svg_icon.dart';
 
-class DynamicActionCardMini extends StatelessWidget {
-  const DynamicActionCardMini({
+class DynamicActionCard extends StatelessWidget {
+  const DynamicActionCard({
     Key? key,
     required this.title,
     required this.icon,
     required this.starred,
     required this.dice,
-    required this.description,
+    required this.body,
     this.chips = const [],
   }) : super(key: key);
 
@@ -20,7 +20,7 @@ class DynamicActionCardMini extends StatelessWidget {
   final Widget icon;
   final bool starred;
   final List<Dice> dice;
-  final String description;
+  final List<Widget> body;
   final Iterable<Widget> chips;
 
   @override
@@ -56,13 +56,7 @@ class DynamicActionCardMini extends StatelessWidget {
               ],
             ),
             const SizedBox(height: 6),
-            Text(
-              description,
-              overflow: TextOverflow.ellipsis,
-              maxLines: dice.isNotEmpty ? 3 : 4,
-              textScaleFactor: 0.9,
-              style: const TextStyle(fontWeight: FontWeight.w200),
-            ),
+            ...body,
             const SizedBox(height: 4),
             Row(
               crossAxisAlignment: CrossAxisAlignment.end,

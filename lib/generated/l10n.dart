@@ -326,7 +326,7 @@ class S {
     );
   }
 
-  /// `{step, select, information {Basic Information} charClass {Class} stats {Roll Stats} moves {Moves & Spells} background {Background & Bonds} gear {Starting Gear} review {Review & Finish}}`
+  /// `{step, select, information {Basic Information} charClass {Class} stats {Roll Stats} movesSpells {Moves & Spells} background {Background & Bonds} gear {Starting Gear}}`
   String createCharacterStep(Object step) {
     return Intl.select(
       step,
@@ -334,10 +334,9 @@ class S {
         'information': 'Basic Information',
         'charClass': 'Class',
         'stats': 'Roll Stats',
-        'moves': 'Moves & Spells',
+        'movesSpells': 'Moves & Spells',
         'background': 'Background & Bonds',
         'gear': 'Starting Gear',
-        'review': 'Review & Finish',
       },
       name: 'createCharacterStep',
       desc: '',
@@ -360,6 +359,96 @@ class S {
     return Intl.message(
       'Continue',
       name: 'createCharacterProceedTooltip',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Review & Save`
+  String get createCharacterFinishTooltip {
+    return Intl.message(
+      'Review & Save',
+      name: 'createCharacterFinishTooltip',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Add Moves`
+  String get addMoves {
+    return Intl.message(
+      'Add Moves',
+      name: 'addMoves',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Add Spells`
+  String get addSpells {
+    return Intl.message(
+      'Add Spells',
+      name: 'addSpells',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Biography`
+  String get createCharacterBioFieldLabel {
+    return Intl.message(
+      'Biography',
+      name: 'createCharacterBioFieldLabel',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Describe your character as shortly or thoroughly as you want here.\nPut your backstory, a visual description, some personality traits, etc. to help you keep in character.`
+  String get createCharacterBioFieldPlaceholder {
+    return Intl.message(
+      'Describe your character as shortly or thoroughly as you want here.\nPut your backstory, a visual description, some personality traits, etc. to help you keep in character.',
+      name: 'createCharacterBioFieldPlaceholder',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Race`
+  String get createCharacterRaceNameFieldLabel {
+    return Intl.message(
+      'Race',
+      name: 'createCharacterRaceNameFieldLabel',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Race name`
+  String get createCharacterRaceNameFieldPlaceholder {
+    return Intl.message(
+      'Race name',
+      name: 'createCharacterRaceNameFieldPlaceholder',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Race description`
+  String get createCharacterRaceDescFieldLabel {
+    return Intl.message(
+      'Race description',
+      name: 'createCharacterRaceDescFieldLabel',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Describe a special move usable by your race. It will appear alongside the rest of the moves.`
+  String get createCharacterRaceDescFieldPlaceholder {
+    return Intl.message(
+      'Describe a special move usable by your race. It will appear alongside the rest of the moves.',
+      name: 'createCharacterRaceDescFieldPlaceholder',
       desc: '',
       args: [],
     );

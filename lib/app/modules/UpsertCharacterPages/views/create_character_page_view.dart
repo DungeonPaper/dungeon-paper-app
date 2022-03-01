@@ -1,14 +1,17 @@
 import 'package:dungeon_paper/app/modules/UpsertCharacterPages/views/character_class_select_view.dart';
+import 'package:dungeon_paper/app/modules/UpsertCharacterPages/views/character_gear_view.dart';
 import 'package:dungeon_paper/app/modules/UpsertCharacterPages/views/character_info_view.dart';
 import 'package:dungeon_paper/app/modules/UpsertCharacterPages/views/character_moves_spells_view.dart';
 import 'package:dungeon_paper/app/modules/UpsertCharacterPages/views/character_roll_stats_view.dart';
 import 'package:dungeon_paper/app/themes/colors.dart';
+import 'package:dungeon_paper/core/utils/math_utils.dart';
 import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
 
 import '../../../../generated/l10n.dart';
 import '../controllers/create_character_page_controller.dart';
+import 'character_background_view.dart';
 import 'local_widgets/nav_item.dart';
 
 class CreateCharacterPageView extends GetView<CreateCharacterPageController> {
@@ -40,15 +43,26 @@ class CreateCharacterPageView extends GetView<CreateCharacterPageController> {
               onValidate: (valid, stats) => controller.setValid(CreateCharStep.stats, valid, stats),
             ),
             CharacterMovesSpellsView(
-              onValidate: (valid, stats) => controller.setValid(CreateCharStep.stats, valid, stats),
+              onValidate: (valid, movesSpells) =>
+                  controller.setValid(CreateCharStep.movesSpells, valid, movesSpells),
             ),
-          ].sublist(0, controller.lastAvailablePage.value + 1),
+            CharacterBackgroundView(
+              onValidate: (valid, background) =>
+                  controller.setValid(CreateCharStep.background, valid, background),
+            ),
+            CharacterGearView(
+              onValidate: (valid, background) =>
+                  controller.setValid(CreateCharStep.background, valid, background),
+            ),
+          ].sublist(
+              0, clamp(controller.lastAvailablePage.value + 1, 0, CreateCharStep.values.length)),
         ),
       ),
       floatingActionButton: Obx(
         () => FloatingActionButton(
           backgroundColor: controller.canProceed ? DwColors.success : Colors.grey,
           onPressed: controller.canProceed ? () => controller.proceed(context) : null,
+          tooltip: S.current.createCharacterProceedTooltip,
           child: const Icon(Icons.arrow_forward),
         ),
       ),
@@ -88,6 +102,9 @@ class CreateCharacterPageView extends GetView<CreateCharacterPageController> {
     NavItemData(icon: Icon(Icons.person), step: CreateCharStep.information),
     NavItemData(icon: Icon(Icons.access_time), step: CreateCharStep.charClass),
     NavItemData(icon: Icon(Icons.list_alt_rounded), step: CreateCharStep.stats),
+    NavItemData(icon: Icon(Icons.handshake), step: CreateCharStep.movesSpells),
+    NavItemData(icon: Icon(Icons.fireplace_outlined), step: CreateCharStep.background),
+    NavItemData(icon: Icon(Icons.personal_injury_rounded), step: CreateCharStep.gear),
   ];
 
   void goToPage(int page) => controller.goToPage(page);

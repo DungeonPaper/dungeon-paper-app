@@ -40,7 +40,7 @@ class CharacterInfoView extends GetView<CharacterInfoController> {
           ),
           TextFormField(
             controller: controller.avatarUrl.value,
-            textInputAction: TextInputAction.next,
+            textInputAction: TextInputAction.done,
             onChanged: (val) => updateControllers(),
             decoration: InputDecoration(
               labelText: S.current.createCharacterAvatarFieldLabel,

@@ -4,28 +4,32 @@ import 'package:dungeon_world_data/gear_option.dart';
 
 class GearSelection extends dw.GearSelection {
   GearSelection({
+    required String key,
     required String description,
-    required List<GearOption> items,
+    required List<GearOption> options,
     required int gold,
-  })  : _items = items,
+  })  : _options = options,
         super(
+          key: key,
           description: description,
-          items: items,
+          options: options,
           gold: gold,
         );
 
   @override
-  List<GearOption> get items => _items;
-  final List<GearOption> _items;
+  List<GearOption> get options => _options;
+  final List<GearOption> _options;
 
   GearSelection copyWithInherited({
+    String? key,
     String? description,
-    List<GearOption>? items,
+    List<GearOption>? options,
     int? gold,
   }) =>
       GearSelection(
+        key: key ?? this.key,
         description: description ?? this.description,
-        items: items ?? this.items,
+        options: options ?? this.options,
         gold: gold ?? this.gold,
       );
 
@@ -35,8 +39,9 @@ class GearSelection extends dw.GearSelection {
       GearSelection.fromJson(gearSelection.toJson());
 
   factory GearSelection.fromJson(Map<String, dynamic> json) => GearSelection(
+        key: json['key'],
         description: json['description'],
-        items: List<GearOption>.from(json['items'].map((x) => GearSelection.fromJson(x))),
+        options: List<GearOption>.from(json['options'].map((x) => GearSelection.fromJson(x))),
         gold: json['gold'],
       );
 }
