@@ -15,11 +15,11 @@ class CharacterMovesSpellsController extends GetxController {
   }
 }
 
-class CharacterMovesSpells {
+class CharMovesSpells {
   final List<Move> moves;
   final List<Spell> spells;
 
-  CharacterMovesSpells({
+  CharMovesSpells({
     required this.moves,
     required this.spells,
   });

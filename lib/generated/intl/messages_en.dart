@@ -31,7 +31,9 @@ class MessageLookup extends MessageLookupByLibrary {
   static String m1(level, charClass, alignment) =>
       "Level ${level} ∙ ${charClass} ∙ ${alignment}";
 
-  static String m2(step) => "${Intl.select(step, {
+  static String m2(hp) => "Max HP: ${hp}";
+
+  static String m3(step) => "${Intl.select(step, {
             'information': 'Basic Information',
             'charClass': 'Class',
             'stats': 'Roll Stats',
@@ -40,9 +42,9 @@ class MessageLookup extends MessageLookupByLibrary {
             'gear': 'Starting Gear',
           })}";
 
-  static String m3(step) => "${step} - Changes Required";
+  static String m4(step) => "${step} - Changes Required";
 
-  static String m4(category) => "${Intl.select(category, {
+  static String m5(category) => "${Intl.select(category, {
             'starting': 'Starting',
             'basic': 'Basic',
             'special': 'Special',
@@ -51,7 +53,7 @@ class MessageLookup extends MessageLookupByLibrary {
             'other': 'Other',
           })}";
 
-  static String m5(stat) => "Roll +${stat}";
+  static String m6(stat) => "Roll +${stat}";
 
   final messages = _notInlinedMessages(_notInlinedMessages);
   static Map<String, Function> _notInlinedMessages(_) => <String, Function>{
@@ -85,6 +87,9 @@ class MessageLookup extends MessageLookupByLibrary {
         "createCharacterNameFieldPlaceholder":
             MessageLookupByLibrary.simpleMessage(
                 "Enter your character\'s name"),
+        "createCharacterPreviewPageMaxHp": m2,
+        "createCharacterPreviewPageTitle":
+            MessageLookupByLibrary.simpleMessage("Preview Character"),
         "createCharacterProceedTooltip":
             MessageLookupByLibrary.simpleMessage("Continue"),
         "createCharacterRaceDescFieldLabel":
@@ -96,8 +101,8 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Race"),
         "createCharacterRaceNameFieldPlaceholder":
             MessageLookupByLibrary.simpleMessage("Race name"),
-        "createCharacterStep": m2,
-        "createCharacterStepInvalidTooltip": m3,
+        "createCharacterStep": m3,
+        "createCharacterStepInvalidTooltip": m4,
         "createCharacterTitle":
             MessageLookupByLibrary.simpleMessage("Create Character"),
         "dynamicCategoriesItems":
@@ -108,7 +113,7 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Favorite Notes"),
         "dynamicCategoriesSpells":
             MessageLookupByLibrary.simpleMessage("Prepared Spells"),
-        "moveCategory": m4,
+        "moveCategory": m5,
         "quickIconsItems": MessageLookupByLibrary.simpleMessage("Items"),
         "quickIconsMoves": MessageLookupByLibrary.simpleMessage("Moves"),
         "quickIconsNote": MessageLookupByLibrary.simpleMessage("+ Note"),
@@ -117,6 +122,6 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Attack + Damage"),
         "rollBasicActionButton":
             MessageLookupByLibrary.simpleMessage("Basic Action"),
-        "rollStatButtonTooltip": m5
+        "rollStatButtonTooltip": m6
       };
 }

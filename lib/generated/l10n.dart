@@ -453,6 +453,26 @@ class S {
       args: [],
     );
   }
+
+  /// `Preview Character`
+  String get createCharacterPreviewPageTitle {
+    return Intl.message(
+      'Preview Character',
+      name: 'createCharacterPreviewPageTitle',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Max HP: {hp}`
+  String createCharacterPreviewPageMaxHp(int hp) {
+    return Intl.message(
+      'Max HP: $hp',
+      name: 'createCharacterPreviewPageMaxHp',
+      desc: '',
+      args: [hp],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

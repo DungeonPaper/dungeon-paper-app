@@ -60,5 +60,14 @@
   "createCharacterRaceNameFieldLabel": "Race",
   "createCharacterRaceNameFieldPlaceholder": "Race name",
   "createCharacterRaceDescFieldLabel": "Race description",
-  "createCharacterRaceDescFieldPlaceholder": "Describe a special move usable by your race. It will appear alongside the rest of the moves."
+  "createCharacterRaceDescFieldPlaceholder": "Describe a special move usable by your race. It will appear alongside the rest of the moves.",
+  "createCharacterPreviewPageTitle": "Preview Character",
+  "createCharacterPreviewPageMaxHp": "Max HP: {hp}",
+  "@createCharacterPreviewPageMaxHp": {
+    "placeholders": {
+      "hp": {
+        "type": "int"
+      }
+    }
+  }
 }

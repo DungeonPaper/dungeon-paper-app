@@ -15,7 +15,7 @@ class CharacterClassSelectView extends GetView<CharClassSelectController> {
   final void Function(bool valid, CharacterClass? cls) onValidate;
 
   void updateControllers() {
-    onValidate(controller.validate(), controller.isValid ? controller.selectedClass : null);
+    onValidate(controller.validate(), controller.isValid ? controller.selectedClass.value : null);
   }
 
   @override
@@ -40,7 +40,7 @@ class CharacterClassSelectView extends GetView<CharClassSelectController> {
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(10),
                         border: Border.all(
-                          color: controller.selectedClass?.key == cls.key
+                          color: controller.selectedClass.value?.key == cls.key
                               ? DwColors.success
                               : Colors.transparent,
                           style: BorderStyle.solid,

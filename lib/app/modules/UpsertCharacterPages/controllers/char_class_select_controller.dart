@@ -8,16 +8,13 @@ import 'package:get/get.dart';
 import '../../../data/models/character_class.dart';
 
 class CharClassSelectController extends GetxController {
-  final _selectedClass = Rx<CharacterClass?>(null);
-  final _availableClasses = <CharacterClass>[].obs;
+  final selectedClass = Rx<CharacterClass?>(null);
+  final availableClasses = <CharacterClass>[].obs;
   final _validCache = false.obs;
-  final _loading = true.obs;
+  final loading = true.obs;
 
-  CharacterClass? get selectedClass => _selectedClass.value;
-  List<CharacterClass> get availableClasses => _availableClasses;
   bool get _isValid => selectedClass != null;
   bool get isValid => _validCache.value;
-  bool get loading => _loading.value;
 
   @override
   void onInit() {
@@ -33,7 +30,7 @@ class CharClassSelectController extends GetxController {
         description: 'Choose your own gear that you bought:',
         selections: [
           GearSelection(
-            key: 'chain_shirt',
+            key: 'chain_shirt_and_leather_pants_10_gold',
             description: 'Chain shirt and leather pants + 10 gold',
             options: [
               GearOption(
@@ -62,7 +59,7 @@ class CharClassSelectController extends GetxController {
             gold: 10,
           ),
           GearSelection(
-            key: 'chain_shirt',
+            key: 'wooden_shield_and_cloth_pants_20_gold',
             description: 'Wooden shield and cloth pants + 20 gold',
             options: [
               GearOption(
@@ -153,7 +150,7 @@ class CharClassSelectController extends GetxController {
         ],
       ),
     ];
-    _availableClasses.value = [
+    availableClasses.value = [
       CharacterClass.empty().copyInheritedWith(
         name: 'Druid',
         gearChoices: gearChoices,
@@ -167,11 +164,11 @@ class CharClassSelectController extends GetxController {
         gearChoices: gearChoices,
       ),
     ];
-    _loading.value = false;
+    loading.value = false;
   }
 
   void setCharClass(CharacterClass cls) {
-    _selectedClass.value = cls;
+    selectedClass.value = cls;
   }
 
   bool validate() {

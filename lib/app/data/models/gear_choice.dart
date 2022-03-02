@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'package:dungeon_world_data/dungeon_world_data.dart' as dw;
 import '../../data/models/gear_selection.dart';
+import 'item.dart';
 
 class GearChoice extends dw.GearChoice {
   GearChoice({
@@ -45,4 +46,14 @@ class GearChoice extends dw.GearChoice {
         ...super.toJson(),
         'selections': List<dynamic>.from(selections.map((x) => x.toJson())),
       };
+
+  static List<Item> selectionToItems(List<GearSelection> selections) =>
+      selections.fold<List<Item>>([], (acc, sel) {
+        return [
+          ...acc,
+          ...sel.options.map(
+            (opt) => Item.fromDwItem(opt.item, amount: opt.amount),
+          )
+        ];
+      });
 }

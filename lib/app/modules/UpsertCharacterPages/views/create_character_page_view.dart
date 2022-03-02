@@ -59,12 +59,20 @@ class CreateCharacterPageView extends GetView<CreateCharacterPageController> {
         ),
       ),
       floatingActionButton: Obx(
-        () => FloatingActionButton(
-          backgroundColor: controller.canProceed ? DwColors.success : Colors.grey,
-          onPressed: controller.canProceed ? () => controller.proceed(context) : null,
-          tooltip: S.current.createCharacterProceedTooltip,
-          child: const Icon(Icons.arrow_forward),
-        ),
+        () => !controller.allStepsDone
+            ? FloatingActionButton(
+                backgroundColor: controller.canProceed ? DwColors.success : Colors.grey,
+                onPressed: controller.canProceed ? () => controller.proceed(context) : null,
+                tooltip: S.current.createCharacterProceedTooltip,
+                child: const Icon(Icons.arrow_forward),
+              )
+            : FloatingActionButton.extended(
+                backgroundColor: controller.canProceed ? DwColors.success : Colors.grey,
+                onPressed: () => controller.openPreview(context),
+                tooltip: !controller.isLastStep ? S.current.createCharacterProceedTooltip : null,
+                label: Text(S.current.createCharacterFinishTooltip),
+                icon: const Icon(Icons.arrow_forward),
+              ),
       ),
       bottomNavigationBar: Obx(
         () {

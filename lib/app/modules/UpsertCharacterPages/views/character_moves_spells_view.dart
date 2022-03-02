@@ -11,7 +11,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class CharacterMovesSpellsView extends GetView<CharacterMovesSpellsController> {
-  final void Function(bool valid, CharacterMovesSpells? movesSpells) onValidate;
+  final void Function(bool valid, CharMovesSpells? movesSpells) onValidate;
 
   const CharacterMovesSpellsView({
     Key? key,

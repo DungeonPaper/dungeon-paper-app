@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'package:dungeon_paper/core/utils/uuid.dart';
 import 'package:dungeon_world_data/dungeon_world_data.dart' as dw;
 
 import 'meta.dart';
@@ -66,6 +67,16 @@ class Race extends dw.Race {
         explanation: json['explanation'],
         classKeys: List<String>.from(json['classKeys'].map((x) => x)),
         tags: List<dw.Tag>.from(json['tags'].map((x) => dw.Tag.fromJson(x))),
+      );
+
+  factory Race.empty() => Race(
+        classKeys: [],
+        description: '',
+        explanation: '',
+        key: uuid(),
+        meta: Meta.version(1),
+        name: '',
+        tags: [],
       );
 
   @override

@@ -27,8 +27,7 @@ class CharacterBackgroundView extends GetView<CharacterBackgroundController> {
         children: [
           Obx(() => Text('Valid: ${controller.isValid}')),
           TextFormField(
-            autovalidateMode: AutovalidateMode.onUserInteraction,
-            controller: controller.bio.value,
+            controller: controller.bioDesc.value,
             textInputAction: TextInputAction.next,
             onChanged: (val) => updateControllers(),
             maxLines: 5,
@@ -41,6 +40,8 @@ class CharacterBackgroundView extends GetView<CharacterBackgroundController> {
           TextFormField(
             controller: controller.raceName.value,
             textInputAction: TextInputAction.next,
+            autovalidateMode: AutovalidateMode.onUserInteraction,
+            validator: (val) => val == null || val.isEmpty ? 'Cannot be empty' : null,
             onChanged: (val) => updateControllers(),
             decoration: InputDecoration(
               labelText: S.current.createCharacterRaceNameFieldLabel,

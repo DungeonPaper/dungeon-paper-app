@@ -4,10 +4,10 @@ import 'package:get/get.dart';
 
 import '../modules/CharacterListPage/bindings/character_list_page_binding.dart';
 import '../modules/CharacterListPage/views/character_list_page_view.dart';
-import '../modules/UpsertCharacterPages/bindings/create_character_page_binding.dart';
-import '../modules/UpsertCharacterPages/views/create_character_page_view.dart';
 import '../modules/Home/bindings/home_binding.dart';
 import '../modules/Home/views/home_view.dart';
+import '../modules/UpsertCharacterPages/bindings/create_character_page_binding.dart';
+import '../modules/UpsertCharacterPages/views/create_character_page_view.dart';
 
 part 'app_routes.dart';
 

@@ -2,6 +2,7 @@ import 'package:dungeon_paper/app/modules/UpsertCharacterPages/controllers/chara
 import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
+import 'package:intl/intl.dart';
 
 class CharacterGearView extends GetView<CharacterGearController> {
   final void Function(bool valid, CharGear? info) onValidate;
@@ -13,10 +14,39 @@ class CharacterGearView extends GetView<CharacterGearController> {
 
   @override
   Widget build(BuildContext context) {
-    return const Center(
-      child: Text(
-        'CharacterGearView is working',
-        style: TextStyle(fontSize: 20),
+    return Obx(
+      () => ListView(
+        children: controller.availableGear
+            .map((choice) => Card(
+                  child: Padding(
+                    padding: const EdgeInsets.all(8),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.stretch,
+                      children: [
+                        Text(choice.description),
+                        ...choice.selections.map(
+                          (sel) => ListTile(
+                            onTap: () => controller.toggleSelect(sel),
+                            leading: Checkbox(
+                              value: controller.isSelected(sel),
+                              onChanged: (val) => controller.toggleSelect(sel),
+                            ),
+                            title: Text(sel.description, maxLines: 1),
+                            subtitle: Text(
+                              sel.options
+                                  .map((opt) =>
+                                      '${NumberFormat('#0.#').format(opt.amount)}x ${opt.item.name}')
+                                  .join(', '),
+                            ),
+                            dense: true,
+                            visualDensity: VisualDensity.compact,
+                          ),
+                        )
+                      ],
+                    ),
+                  ),
+                ))
+            .toList(),
       ),
     );
   }
