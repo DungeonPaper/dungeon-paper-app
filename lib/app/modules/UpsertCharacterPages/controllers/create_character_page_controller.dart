@@ -69,17 +69,23 @@ class CreateCharacterPageController extends GetxController {
     if (firstInvalidPage == -1 || firstInvalidPage > lastAvailablePage.value) {
       lastAvailablePage.value += 1;
     }
+    char.value = createChar();
     goToPage(lastAvailablePage.value);
   }
 
   void openPreview(BuildContext context) {
     hideKeyboard(context);
+    char.value = createChar();
     Get.lazyPut<CreateCharacterPreviewController>(() => CreateCharacterPreviewController());
     Get.to(const CreateCharacterPreviewView());
   }
 
   setValid(CreateCharStep step, bool valid, dynamic dataToSave) {
     isValid[step] = valid;
+    _updateData(dataToSave);
+  }
+
+  void _updateData(dynamic dataToSave) {
     final map = <CreateCharStep, void Function()>{
       CreateCharStep.information: () => info.value = dataToSave,
       CreateCharStep.charClass: () => charClass.value = dataToSave,
@@ -102,6 +108,7 @@ class CreateCharacterPageController extends GetxController {
       items: GearChoice.selectionToItems(gear.value?.selections ?? []),
       moves: movesSpells.value?.moves,
       spells: movesSpells.value?.spells,
+      rollStats: stats.value,
       // TODO add all race fields to create?
       race: Race.empty().copyWithInherited(
         description: background.value?.raceDesc,

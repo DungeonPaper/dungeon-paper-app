@@ -31,6 +31,7 @@ class CharacterBackgroundView extends GetView<CharacterBackgroundController> {
             textInputAction: TextInputAction.next,
             onChanged: (val) => updateControllers(),
             maxLines: 5,
+            textCapitalization: TextCapitalization.sentences,
             decoration: InputDecoration(
               labelText: S.current.createCharacterBioFieldLabel,
               hintText: S.current.createCharacterBioFieldPlaceholder,
@@ -42,6 +43,7 @@ class CharacterBackgroundView extends GetView<CharacterBackgroundController> {
             textInputAction: TextInputAction.next,
             autovalidateMode: AutovalidateMode.onUserInteraction,
             validator: (val) => val == null || val.isEmpty ? 'Cannot be empty' : null,
+            textCapitalization: TextCapitalization.words,
             onChanged: (val) => updateControllers(),
             decoration: InputDecoration(
               labelText: S.current.createCharacterRaceNameFieldLabel,
@@ -53,6 +55,7 @@ class CharacterBackgroundView extends GetView<CharacterBackgroundController> {
             controller: controller.raceDesc.value,
             textInputAction: TextInputAction.done,
             onChanged: (val) => updateControllers(),
+            textCapitalization: TextCapitalization.sentences,
             maxLines: 3,
             decoration: InputDecoration(
               labelText: S.current.createCharacterRaceDescFieldLabel,

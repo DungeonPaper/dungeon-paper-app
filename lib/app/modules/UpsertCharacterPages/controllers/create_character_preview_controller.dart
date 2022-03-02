@@ -4,4 +4,6 @@ import 'package:get/get.dart';
 
 class CreateCharacterPreviewController extends GetxController {
   Character get char => Get.find<CreateCharacterPageController>().char.value;
+
+  final expansions = List.filled(1, false).obs;
 }

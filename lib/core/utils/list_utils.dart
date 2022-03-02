@@ -10,6 +10,11 @@ extension<T> on List<T> {
   }
 }
 
+T sample<T>(Iterable<T> list) {
+  final rnd = Random().nextInt(list.length);
+  return list.elementAt(rnd);
+}
+
 class Enumerated<T> {
   final T value;
   final int index;

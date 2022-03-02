@@ -4,10 +4,11 @@ import 'package:dungeon_paper/core/dw_icons.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/material.dart' as m show TextDirection;
 
-class HomeCharacterRollStatChip extends StatelessWidget {
+class RollStatChip extends StatelessWidget {
   final RollStat stat;
+  final bool showDice;
 
-  const HomeCharacterRollStatChip({Key? key, required this.stat}) : super(key: key);
+  const RollStatChip({Key? key, required this.stat, this.showDice = true}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -66,38 +67,39 @@ class HomeCharacterRollStatChip extends StatelessWidget {
               ),
             ),
           ),
-          Positioned.directional(
-            textDirection: m.TextDirection.ltr,
-            end: 2,
-            top: 2,
-            child: Material(
-              color: theme.primaryColor.withOpacity(rollBadgeBgOpacity),
-              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
-              child: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 3, vertical: 0.5),
-                child: Row(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    IconTheme(
-                      child: const SvgIcon(DwIcons.dice_d6),
-                      data: IconTheme.of(context).copyWith(
-                        size: 10,
-                        color: theme.colorScheme.onSurface.withOpacity(rollBadgeTextOpacity),
+          if (showDice)
+            Positioned.directional(
+              textDirection: m.TextDirection.ltr,
+              end: 2,
+              top: 2,
+              child: Material(
+                color: theme.primaryColor.withOpacity(rollBadgeBgOpacity),
+                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 3, vertical: 0.5),
+                  child: Row(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      IconTheme(
+                        child: const SvgIcon(DwIcons.dice_d6),
+                        data: IconTheme.of(context).copyWith(
+                          size: 10,
+                          color: theme.colorScheme.onSurface.withOpacity(rollBadgeTextOpacity),
+                        ),
                       ),
-                    ),
-                    const SizedBox(width: 2),
-                    Text(
-                      '$modSign$modStr',
-                      textScaleFactor: 0.7,
-                      style: TextStyle(
-                        color: theme.colorScheme.onSurface.withOpacity(rollBadgeTextOpacity),
+                      const SizedBox(width: 2),
+                      Text(
+                        '$modSign$modStr',
+                        textScaleFactor: 0.7,
+                        style: TextStyle(
+                          color: theme.colorScheme.onSurface.withOpacity(rollBadgeTextOpacity),
+                        ),
                       ),
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
               ),
             ),
-          ),
         ],
       ),
     );

@@ -473,6 +473,70 @@ class S {
       args: [hp],
     );
   }
+
+  /// `Tap to generate a random name`
+  String get createCharRandomizeNameTooltipTouch {
+    return Intl.message(
+      'Tap to generate a random name',
+      name: 'createCharRandomizeNameTooltipTouch',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Click to generate a random name`
+  String get createCharRandomizeNameTooltipClick {
+    return Intl.message(
+      'Click to generate a random name',
+      name: 'createCharRandomizeNameTooltipClick',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Moves`
+  String get moves {
+    return Intl.message(
+      'Moves',
+      name: 'moves',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `{count, plural, one {{count} Move} other {{count} Moves}}`
+  String movesWithCount(num count) {
+    return Intl.plural(
+      count,
+      one: '$count Move',
+      other: '$count Moves',
+      name: 'movesWithCount',
+      desc: '',
+      args: [count],
+    );
+  }
+
+  /// `Spells`
+  String get spells {
+    return Intl.message(
+      'Spells',
+      name: 'spells',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `{count, plural, one {{count} Spell} other {{count} Spells}}`
+  String spellsWithCount(num count) {
+    return Intl.plural(
+      count,
+      one: '$count Spell',
+      other: '$count Spells',
+      name: 'spellsWithCount',
+      desc: '',
+      args: [count],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

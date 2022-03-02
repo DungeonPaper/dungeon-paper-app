@@ -13,6 +13,8 @@ class CharacterMovesSpellsController extends GetxController {
     final CharClassSelectController ctrl = Get.find();
     // moves.value = ctrl.selectedClass.
   }
+
+  CharMovesSpells get movesSpells => CharMovesSpells(moves: moves, spells: spells);
 }
 
 class CharMovesSpells {

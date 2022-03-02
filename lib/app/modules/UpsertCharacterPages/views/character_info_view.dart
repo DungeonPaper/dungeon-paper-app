@@ -1,4 +1,8 @@
 import 'package:dungeon_paper/app/modules/UpsertCharacterPages/controllers/character_info_controller.dart';
+import 'package:dungeon_paper/app/widgets/atoms/svg_icon.dart';
+import 'package:dungeon_paper/core/dw_icons.dart';
+import 'package:dungeon_paper/core/utils/content_generators/character_name_generator.dart';
+import 'package:dungeon_paper/core/utils/platform_string.dart';
 import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
@@ -32,10 +36,22 @@ class CharacterInfoView extends GetView<CharacterInfoController> {
             textInputAction: TextInputAction.next,
             validator: (val) => val == null || val.isEmpty ? 'Cannot be empty' : null,
             onChanged: (val) => updateControllers(),
+            textCapitalization: TextCapitalization.words,
             decoration: InputDecoration(
               labelText: S.current.createCharacterNameFieldLabel,
               hintText: S.current.createCharacterNameFieldPlaceholder,
               floatingLabelBehavior: FloatingLabelBehavior.always,
+              suffixIcon: IconButton(
+                tooltip: PlatformString.byInteractionType(
+                  touch: S.current.createCharRandomizeNameTooltipTouch,
+                  mouse: S.current.createCharRandomizeNameTooltipClick,
+                ),
+                icon: const SvgIcon(DwIcons.dice_d6),
+                onPressed: () {
+                  controller.displayName.value.text = CharacterNameGenerator().generate();
+                  updateControllers();
+                },
+              ),
             ),
           ),
           TextFormField(

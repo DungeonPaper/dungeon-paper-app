@@ -18,6 +18,10 @@ class CharacterMovesSpellsView extends GetView<CharacterMovesSpellsController> {
     required this.onValidate,
   }) : super(key: key);
 
+  void updateControllers() {
+    onValidate(true, controller.movesSpells);
+  }
+
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
@@ -44,7 +48,7 @@ class CharacterMovesSpellsView extends GetView<CharacterMovesSpellsController> {
           SizedBox(
             height: 40,
             child: OutlinedButton.icon(
-              onPressed: _debugAddMoves, // TODO CHANGE!
+              onPressed: withValidate(_debugAddMoves), // TODO CHANGE!
               label: Text(S.current.addMoves),
               icon: const Icon(Icons.add),
             ),
@@ -68,7 +72,7 @@ class CharacterMovesSpellsView extends GetView<CharacterMovesSpellsController> {
           SizedBox(
             height: 40,
             child: OutlinedButton.icon(
-              onPressed: _debugAddSpells, // TODO CHANGE!
+              onPressed: withValidate(_debugAddSpells), // TODO CHANGE!
               label: Text(S.current.addSpells),
               icon: const Icon(Icons.add),
             ),
@@ -76,6 +80,13 @@ class CharacterMovesSpellsView extends GetView<CharacterMovesSpellsController> {
         ],
       ),
     );
+  }
+
+  void Function() withValidate(void Function() cb) {
+    return () {
+      cb();
+      updateControllers();
+    };
   }
 
   _debugAddMoves() {

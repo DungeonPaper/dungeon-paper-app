@@ -103,8 +103,8 @@ class CharClassSelectController extends GetxController {
                 item: Item(
                   meta: Meta.version(1),
                   key: 'your_friends_sword',
-                  description: "Your friend's sword",
-                  name: 'A sword given to you by a loyal friend. It was their own before.',
+                  name: "Your friend's sword",
+                  description: 'A sword given to you by a loyal friend. It was their own before.',
                   tags: [],
                 ),
               )
@@ -121,8 +121,8 @@ class CharClassSelectController extends GetxController {
                 item: Item(
                   meta: Meta.version(1),
                   key: 'your_friends_axe',
-                  description: "Your friend's axe",
-                  name: 'A axe given to you by a loyal friend. It was their own before.',
+                  name: "Your friend's axe",
+                  description: 'A axe given to you by a loyal friend. It was their own before.',
                   tags: [],
                 ),
               )
@@ -139,8 +139,8 @@ class CharClassSelectController extends GetxController {
                 item: Item(
                   meta: Meta.version(1),
                   key: 'your_friends_bow',
-                  description: "Your friend's bow",
-                  name: 'A bow given to you by a loyal friend. It was their own before.',
+                  name: "Your friend's bow",
+                  description: 'A bow given to you by a loyal friend. It was their own before.',
                   tags: [],
                 ),
               )

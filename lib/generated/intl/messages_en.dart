@@ -53,7 +53,13 @@ class MessageLookup extends MessageLookupByLibrary {
             'other': 'Other',
           })}";
 
-  static String m6(stat) => "Roll +${stat}";
+  static String m6(count) =>
+      "${Intl.plural(count, one: '${count} Move', other: '${count} Moves')}";
+
+  static String m7(stat) => "Roll +${stat}";
+
+  static String m8(count) =>
+      "${Intl.plural(count, one: '${count} Spell', other: '${count} Spells')}";
 
   final messages = _notInlinedMessages(_notInlinedMessages);
   static Map<String, Function> _notInlinedMessages(_) => <String, Function>{
@@ -66,6 +72,12 @@ class MessageLookup extends MessageLookupByLibrary {
         "characterHeaderSubtitle": m1,
         "characterListTitle":
             MessageLookupByLibrary.simpleMessage("All Characters"),
+        "createCharRandomizeNameTooltipClick":
+            MessageLookupByLibrary.simpleMessage(
+                "Click to generate a random name"),
+        "createCharRandomizeNameTooltipTouch":
+            MessageLookupByLibrary.simpleMessage(
+                "Tap to generate a random name"),
         "createCharacterAddButton":
             MessageLookupByLibrary.simpleMessage("Add Character"),
         "createCharacterAvatarFieldLabel":
@@ -114,6 +126,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "dynamicCategoriesSpells":
             MessageLookupByLibrary.simpleMessage("Prepared Spells"),
         "moveCategory": m5,
+        "moves": MessageLookupByLibrary.simpleMessage("Moves"),
+        "movesWithCount": m6,
         "quickIconsItems": MessageLookupByLibrary.simpleMessage("Items"),
         "quickIconsMoves": MessageLookupByLibrary.simpleMessage("Moves"),
         "quickIconsNote": MessageLookupByLibrary.simpleMessage("+ Note"),
@@ -122,6 +136,8 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Attack + Damage"),
         "rollBasicActionButton":
             MessageLookupByLibrary.simpleMessage("Basic Action"),
-        "rollStatButtonTooltip": m6
+        "rollStatButtonTooltip": m7,
+        "spells": MessageLookupByLibrary.simpleMessage("Spells"),
+        "spellsWithCount": m8
       };
 }

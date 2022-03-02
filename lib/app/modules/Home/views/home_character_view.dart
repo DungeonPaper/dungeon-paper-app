@@ -1,16 +1,14 @@
+import 'package:dungeon_paper/app/data/services/character_service.dart';
+import 'package:dungeon_paper/app/themes/button_themes.dart';
 import 'package:dungeon_paper/app/widgets/atoms/svg_icon.dart';
+import 'package:dungeon_paper/app/widgets/roll_stats_grid.dart';
 import 'package:dungeon_paper/core/dw_icons.dart';
+import 'package:dungeon_paper/generated/l10n.dart';
 import 'package:flutter/material.dart';
-
 import 'package:get/get.dart';
-
-import '../../../../generated/l10n.dart';
-import '../../../themes/button_themes.dart';
-import '../../../data/services/character_service.dart';
 import 'local_widgets/home_character_dynamic_cards.dart';
 import 'local_widgets/home_character_header_view.dart';
 import 'local_widgets/home_character_hp_xp_view.dart';
-import 'local_widgets/home_character_roll_stat_chip.dart';
 
 class HomeCharacterView extends GetView<CharacterService> {
   const HomeCharacterView({Key? key}) : super(key: key);
@@ -52,17 +50,7 @@ class HomeCharacterView extends GetView<CharacterService> {
             p(Center(
               child: SizedBox(
                 width: 340,
-                child: GridView.count(
-                  crossAxisCount: 3,
-                  shrinkWrap: true,
-                  physics: const NeverScrollableScrollPhysics(),
-                  childAspectRatio: 2.98,
-                  mainAxisSpacing: 4,
-                  crossAxisSpacing: 4,
-                  children: [
-                    for (var stat in rollStats) HomeCharacterRollStatChip(stat: stat),
-                  ],
-                ),
+                child: RollStatsGrid(rollStats: rollStats),
               ),
             )),
             p(const SizedBox(height: 16)),

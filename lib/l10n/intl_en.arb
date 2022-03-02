@@ -69,5 +69,11 @@
         "type": "int"
       }
     }
-  }
+  },
+  "createCharRandomizeNameTooltipTouch": "Tap to generate a random name",
+  "createCharRandomizeNameTooltipClick": "Click to generate a random name",
+  "moves": "Moves",
+  "movesWithCount": "{count, plural, one {{count} Move} other {{count} Moves}}",
+  "spells": "Spells",
+  "spellsWithCount": "{count, plural, one {{count} Spell} other {{count} Spells}}"
 }

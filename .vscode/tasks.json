@@ -5,8 +5,14 @@
     "tasks": [
         {
             "label": "Generate translations from ARB files",
-            "type": "shell",
-            "command": "flutter pub pub run intl_generator:generate_from_arb lib/generated/intl/*.dart lib/l10n/*.arb",
+            "type": "dart",
+            "command": "flutter",
+            "args": [
+                "pub",
+                "run",
+                "intl_generator:generate_from_arb",
+                "lib/generated/intl/*.dart lib/l10n/*.arb",
+            ],
             "problemMatcher": []
         },
         {
