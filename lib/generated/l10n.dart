@@ -364,11 +364,21 @@ class S {
     );
   }
 
-  /// `Review & Save`
-  String get createCharacterFinishTooltip {
+  /// `Review`
+  String get createCharacterFinishButton {
     return Intl.message(
-      'Review & Save',
-      name: 'createCharacterFinishTooltip',
+      'Review',
+      name: 'createCharacterFinishButton',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Create Character`
+  String get createCharacterSaveButton {
+    return Intl.message(
+      'Create Character',
+      name: 'createCharacterSaveButton',
       desc: '',
       args: [],
     );
@@ -504,11 +514,11 @@ class S {
     );
   }
 
-  /// `{count, plural, one {{count} Move} other {{count} Moves}}`
+  /// `{count, plural, one {One Move} other {{count} Moves}}`
   String movesWithCount(num count) {
     return Intl.plural(
       count,
-      one: '$count Move',
+      one: 'One Move',
       other: '$count Moves',
       name: 'movesWithCount',
       desc: '',
@@ -526,15 +536,59 @@ class S {
     );
   }
 
-  /// `{count, plural, one {{count} Spell} other {{count} Spells}}`
+  /// `{count, plural, one {One Spell} other {{count} Spells}}`
   String spellsWithCount(num count) {
     return Intl.plural(
       count,
-      one: '$count Spell',
+      one: 'One Spell',
       other: '$count Spells',
       name: 'spellsWithCount',
       desc: '',
       args: [count],
+    );
+  }
+
+  /// `Items`
+  String get items {
+    return Intl.message(
+      'Items',
+      name: 'items',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `{count, plural, one {One Item} other {{count} Items}}`
+  String itemsWithCount(num count) {
+    return Intl.plural(
+      count,
+      one: 'One Item',
+      other: '$count Items',
+      name: 'itemsWithCount',
+      desc: '',
+      args: [count],
+    );
+  }
+
+  /// `Coins`
+  String get coins {
+    return Intl.message(
+      'Coins',
+      name: 'coins',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `{count, plural, one {One Coin} other {{fmtCount} Coins}}`
+  String coinsWithCount(num count, Object fmtCount) {
+    return Intl.plural(
+      count,
+      one: 'One Coin',
+      other: '$fmtCount Coins',
+      name: 'coinsWithCount',
+      desc: '',
+      args: [count, fmtCount],
     );
   }
 }

@@ -13,7 +13,7 @@ class CharClassSelectController extends GetxController {
   final _validCache = false.obs;
   final loading = true.obs;
 
-  bool get _isValid => selectedClass != null;
+  bool get _isValid => selectedClass.value != null;
   bool get isValid => _validCache.value;
 
   @override
@@ -31,7 +31,7 @@ class CharClassSelectController extends GetxController {
         selections: [
           GearSelection(
             key: 'chain_shirt_and_leather_pants_10_gold',
-            description: 'Chain shirt and leather pants + 10 gold',
+            description: 'Chain shirt and leather pants + 10 coins',
             options: [
               GearOption(
                 key: 'chain_shirt',
@@ -56,11 +56,11 @@ class CharClassSelectController extends GetxController {
                 amount: 1,
               ),
             ],
-            gold: 10,
+            coins: 10,
           ),
           GearSelection(
             key: 'wooden_shield_and_cloth_pants_20_gold',
-            description: 'Wooden shield and cloth pants + 20 gold',
+            description: 'Wooden shield and cloth pants + 20 coins',
             options: [
               GearOption(
                 key: 'wooden_shield',
@@ -85,7 +85,7 @@ class CharClassSelectController extends GetxController {
                 amount: 1,
               ),
             ],
-            gold: 10,
+            coins: 10,
           ),
         ],
       ),
@@ -109,7 +109,7 @@ class CharClassSelectController extends GetxController {
                 ),
               )
             ],
-            gold: 0,
+            coins: 0,
           ),
           GearSelection(
             key: 'your_friends_axe',
@@ -127,7 +127,7 @@ class CharClassSelectController extends GetxController {
                 ),
               )
             ],
-            gold: 0,
+            coins: 0,
           ),
           GearSelection(
             key: 'your_friends_bow',
@@ -145,7 +145,7 @@ class CharClassSelectController extends GetxController {
                 ),
               )
             ],
-            gold: 0,
+            coins: 0,
           ),
         ],
       ),

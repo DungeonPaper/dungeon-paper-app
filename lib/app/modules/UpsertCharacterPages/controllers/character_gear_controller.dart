@@ -43,6 +43,8 @@ class CharacterGearController extends GetxController {
   bool isSelected(GearSelection selection) =>
       selectedOptions.indexWhere((item) => item.key == selection.key) != -1;
 
+  CharGear get charGear => CharGear(selections: selectedOptions);
+
   @override
   void onClose() {
     sub.value?.cancel();

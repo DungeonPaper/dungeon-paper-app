@@ -11,6 +11,9 @@ class DynamicActionCardMini extends StatelessWidget {
     required this.title,
     required this.icon,
     required this.starred,
+    this.showStar = true,
+    this.starredIcon,
+    this.unstarredIcon,
     required this.dice,
     required this.description,
     this.chips = const [],
@@ -18,7 +21,10 @@ class DynamicActionCardMini extends StatelessWidget {
 
   final String title;
   final Widget icon;
+  final Widget? starredIcon;
+  final Widget? unstarredIcon;
   final bool starred;
+  final bool showStar;
   final List<Dice> dice;
   final String description;
   final Iterable<Widget> chips;
@@ -39,20 +45,22 @@ class DynamicActionCardMini extends StatelessWidget {
                 const SizedBox(width: 8),
                 Text(title),
                 Expanded(child: Container()),
-                SizedBox(
-                  width: 20,
-                  height: 20,
-                  child: IconButton(
-                    visualDensity: VisualDensity.compact,
-                    padding: EdgeInsets.zero,
-                    iconSize: 16,
-                    icon: Icon(
-                      starred ? Icons.star_rounded : Icons.star_border_rounded,
-                      color: Theme.of(context).colorScheme.onSurface.withOpacity(0.3),
-                    ),
-                    onPressed: () => null,
-                  ),
-                ),
+                showStar
+                    ? SizedBox(
+                        width: 20,
+                        height: 20,
+                        child: IconButton(
+                          visualDensity: VisualDensity.compact,
+                          padding: EdgeInsets.zero,
+                          iconSize: 16,
+                          icon: Icon(
+                            starred ? Icons.star_rounded : Icons.star_border_rounded,
+                            color: Theme.of(context).colorScheme.onSurface.withOpacity(0.3),
+                          ),
+                          onPressed: () => null,
+                        ),
+                      )
+                    : const SizedBox.shrink(),
               ],
             ),
             const SizedBox(height: 6),

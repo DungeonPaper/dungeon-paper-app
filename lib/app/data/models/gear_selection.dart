@@ -7,13 +7,13 @@ class GearSelection extends dw.GearSelection {
     required String key,
     required String description,
     required List<GearOption> options,
-    required int gold,
+    required double coins,
   })  : _options = options,
         super(
           key: key,
           description: description,
           options: options,
-          gold: gold,
+          coins: coins,
         );
 
   @override
@@ -24,13 +24,13 @@ class GearSelection extends dw.GearSelection {
     String? key,
     String? description,
     List<GearOption>? options,
-    int? gold,
+    double? coins,
   }) =>
       GearSelection(
         key: key ?? this.key,
         description: description ?? this.description,
         options: options ?? this.options,
-        gold: gold ?? this.gold,
+        coins: coins ?? this.coins,
       );
 
   factory GearSelection.fromRawJson(String str) => GearSelection.fromJson(json.decode(str));
@@ -42,6 +42,6 @@ class GearSelection extends dw.GearSelection {
         key: json['key'],
         description: json['description'],
         options: List<GearOption>.from(json['options'].map((x) => GearSelection.fromJson(x))),
-        gold: json['gold'],
+        coins: json['coins'],
       );
 }

@@ -1,15 +1,5 @@
 import 'dart:math';
 
-import 'package:flutter/foundation.dart';
-
-extension<T> on List<T> {
-  // ignore: unused_element
-  T sample() {
-    final rnd = Random().nextInt(length);
-    return elementAt(rnd);
-  }
-}
-
 T sample<T>(Iterable<T> list) {
   final rnd = Random().nextInt(list.length);
   return list.elementAt(rnd);

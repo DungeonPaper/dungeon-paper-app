@@ -70,7 +70,7 @@ class CreateCharacterPageView extends GetView<CreateCharacterPageController> {
                 backgroundColor: controller.canProceed ? DwColors.success : Colors.grey,
                 onPressed: () => controller.openPreview(context),
                 tooltip: !controller.isLastStep ? S.current.createCharacterProceedTooltip : null,
-                label: Text(S.current.createCharacterFinishTooltip),
+                label: Text(S.current.createCharacterFinishButton),
                 icon: const Icon(Icons.arrow_forward),
               ),
       ),

@@ -31,6 +31,7 @@ class Character {
     required this.moves,
     required this.spells,
     required this.items,
+    this.coins = 0,
     required this.notes,
     required this.stats,
     required this.rollStats,
@@ -47,6 +48,7 @@ class Character {
   final List<Move> moves;
   final List<Spell> spells;
   final List<Item> items;
+  final double coins;
   final List<Note> notes;
   final CharacterStats stats;
   final RollStats rollStats;
@@ -63,6 +65,7 @@ class Character {
     List<Move>? moves,
     List<Spell>? spells,
     List<Item>? items,
+    double? coins,
     List<Note>? notes,
     CharacterStats? stats,
     RollStats? rollStats,
@@ -79,6 +82,7 @@ class Character {
         moves: moves ?? this.moves,
         spells: spells ?? this.spells,
         items: items ?? this.items,
+        coins: coins ?? this.coins,
         notes: notes ?? this.notes,
         stats: stats ?? this.stats,
         rollStats: rollStats ?? this.rollStats,
@@ -98,6 +102,7 @@ class Character {
       displayName: '',
       avatarUrl: '',
       items: [],
+      coins: 0,
       bio: Bio(
         description: '',
         looks: [],
@@ -164,6 +169,7 @@ class Character {
         moves: List<Move>.from(json['moves'].map((x) => Move.fromJson(x))),
         spells: List<Spell>.from(json['spells'].map((x) => Spell.fromJson(x))),
         items: List<Item>.from(json['items'].map((x) => Item.fromJson(x))),
+        coins: json['coins'],
         notes: List<Note>.from(json['notes'].map((x) => Note.fromJson(x))),
         stats: CharacterStats.fromJson(json['stats']),
         rollStats: RollStats.fromJson(json['rollStats']),
@@ -181,6 +187,7 @@ class Character {
         'moves': List<dynamic>.from(moves.map((x) => x.toJson())),
         'spells': List<dynamic>.from(spells.map((x) => x.toJson())),
         'items': List<dynamic>.from(items.map((x) => x.toJson())),
+        'coins': coins,
         'notes': List<dynamic>.from(notes.map((x) => x.toJson())),
         'stats': stats.toJson(),
         'rollStats': rollStats.toJson(),

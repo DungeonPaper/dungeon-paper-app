@@ -52,7 +52,8 @@
   "createCharacterStep": "{step, select, information {Basic Information} charClass {Class} stats {Roll Stats} movesSpells {Moves & Spells} background {Background & Bonds} gear {Starting Gear}}",
   "createCharacterStepInvalidTooltip": "{step} - Changes Required",
   "createCharacterProceedTooltip": "Continue",
-  "createCharacterFinishTooltip": "Review & Save",
+  "createCharacterFinishButton": "Review",
+  "createCharacterSaveButton": "Create Character",
   "addMoves": "Add Moves",
   "addSpells": "Add Spells",
   "createCharacterBioFieldLabel": "Biography",
@@ -73,7 +74,11 @@
   "createCharRandomizeNameTooltipTouch": "Tap to generate a random name",
   "createCharRandomizeNameTooltipClick": "Click to generate a random name",
   "moves": "Moves",
-  "movesWithCount": "{count, plural, one {{count} Move} other {{count} Moves}}",
+  "movesWithCount": "{count, plural, one {One Move} other {{count} Moves}}",
   "spells": "Spells",
-  "spellsWithCount": "{count, plural, one {{count} Spell} other {{count} Spells}}"
+  "spellsWithCount": "{count, plural, one {One Spell} other {{count} Spells}}",
+  "items": "Items",
+  "itemsWithCount": "{count, plural, one {One Item} other {{count} Items}}",
+  "coins": "Coins",
+  "coinsWithCount": "{count, plural, one {One Coin} other {{fmtCount} Coins}}"
 }

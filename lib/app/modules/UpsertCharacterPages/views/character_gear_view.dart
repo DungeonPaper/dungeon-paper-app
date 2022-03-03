@@ -12,6 +12,10 @@ class CharacterGearView extends GetView<CharacterGearController> {
     required this.onValidate,
   }) : super(key: key);
 
+  void updateControllers() {
+    onValidate(true, controller.charGear);
+  }
+
   @override
   Widget build(BuildContext context) {
     return Obx(
@@ -26,10 +30,16 @@ class CharacterGearView extends GetView<CharacterGearController> {
                         Text(choice.description),
                         ...choice.selections.map(
                           (sel) => ListTile(
-                            onTap: () => controller.toggleSelect(sel),
+                            onTap: () {
+                              controller.toggleSelect(sel);
+                              updateControllers();
+                            },
                             leading: Checkbox(
                               value: controller.isSelected(sel),
-                              onChanged: (val) => controller.toggleSelect(sel),
+                              onChanged: (val) {
+                                controller.toggleSelect(sel);
+                                updateControllers();
+                              },
                             ),
                             title: Text(sel.description, maxLines: 1),
                             subtitle: Text(

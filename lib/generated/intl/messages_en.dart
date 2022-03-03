@@ -31,9 +31,12 @@ class MessageLookup extends MessageLookupByLibrary {
   static String m1(level, charClass, alignment) =>
       "Level ${level} ∙ ${charClass} ∙ ${alignment}";
 
-  static String m2(hp) => "Max HP: ${hp}";
+  static String m2(count, fmtCount) =>
+      "${Intl.plural(count, one: 'One Coin', other: '${fmtCount} Coins')}";
 
-  static String m3(step) => "${Intl.select(step, {
+  static String m3(hp) => "Max HP: ${hp}";
+
+  static String m4(step) => "${Intl.select(step, {
             'information': 'Basic Information',
             'charClass': 'Class',
             'stats': 'Roll Stats',
@@ -42,9 +45,12 @@ class MessageLookup extends MessageLookupByLibrary {
             'gear': 'Starting Gear',
           })}";
 
-  static String m4(step) => "${step} - Changes Required";
+  static String m5(step) => "${step} - Changes Required";
 
-  static String m5(category) => "${Intl.select(category, {
+  static String m6(count) =>
+      "${Intl.plural(count, one: 'One Item', other: '${count} Items')}";
+
+  static String m7(category) => "${Intl.select(category, {
             'starting': 'Starting',
             'basic': 'Basic',
             'special': 'Special',
@@ -53,13 +59,13 @@ class MessageLookup extends MessageLookupByLibrary {
             'other': 'Other',
           })}";
 
-  static String m6(count) =>
-      "${Intl.plural(count, one: '${count} Move', other: '${count} Moves')}";
-
-  static String m7(stat) => "Roll +${stat}";
-
   static String m8(count) =>
-      "${Intl.plural(count, one: '${count} Spell', other: '${count} Spells')}";
+      "${Intl.plural(count, one: 'One Move', other: '${count} Moves')}";
+
+  static String m9(stat) => "Roll +${stat}";
+
+  static String m10(count) =>
+      "${Intl.plural(count, one: 'One Spell', other: '${count} Spells')}";
 
   final messages = _notInlinedMessages(_notInlinedMessages);
   static Map<String, Function> _notInlinedMessages(_) => <String, Function>{
@@ -72,6 +78,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "characterHeaderSubtitle": m1,
         "characterListTitle":
             MessageLookupByLibrary.simpleMessage("All Characters"),
+        "coins": MessageLookupByLibrary.simpleMessage("Coins"),
+        "coinsWithCount": m2,
         "createCharRandomizeNameTooltipClick":
             MessageLookupByLibrary.simpleMessage(
                 "Click to generate a random name"),
@@ -92,14 +100,14 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Biography/description"),
         "createCharacterDescFieldPlaceholder": MessageLookupByLibrary.simpleMessage(
             "Enter general information about your character - backstory, goals & ambitions, behavior descriptions, etc"),
-        "createCharacterFinishTooltip":
-            MessageLookupByLibrary.simpleMessage("Review & Save"),
+        "createCharacterFinishButton":
+            MessageLookupByLibrary.simpleMessage("Review"),
         "createCharacterNameFieldLabel":
             MessageLookupByLibrary.simpleMessage("Character Name"),
         "createCharacterNameFieldPlaceholder":
             MessageLookupByLibrary.simpleMessage(
                 "Enter your character\'s name"),
-        "createCharacterPreviewPageMaxHp": m2,
+        "createCharacterPreviewPageMaxHp": m3,
         "createCharacterPreviewPageTitle":
             MessageLookupByLibrary.simpleMessage("Preview Character"),
         "createCharacterProceedTooltip":
@@ -113,8 +121,10 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Race"),
         "createCharacterRaceNameFieldPlaceholder":
             MessageLookupByLibrary.simpleMessage("Race name"),
-        "createCharacterStep": m3,
-        "createCharacterStepInvalidTooltip": m4,
+        "createCharacterSaveButton":
+            MessageLookupByLibrary.simpleMessage("Create Character"),
+        "createCharacterStep": m4,
+        "createCharacterStepInvalidTooltip": m5,
         "createCharacterTitle":
             MessageLookupByLibrary.simpleMessage("Create Character"),
         "dynamicCategoriesItems":
@@ -125,9 +135,11 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Favorite Notes"),
         "dynamicCategoriesSpells":
             MessageLookupByLibrary.simpleMessage("Prepared Spells"),
-        "moveCategory": m5,
+        "items": MessageLookupByLibrary.simpleMessage("Items"),
+        "itemsWithCount": m6,
+        "moveCategory": m7,
         "moves": MessageLookupByLibrary.simpleMessage("Moves"),
-        "movesWithCount": m6,
+        "movesWithCount": m8,
         "quickIconsItems": MessageLookupByLibrary.simpleMessage("Items"),
         "quickIconsMoves": MessageLookupByLibrary.simpleMessage("Moves"),
         "quickIconsNote": MessageLookupByLibrary.simpleMessage("+ Note"),
@@ -136,8 +148,8 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Attack + Damage"),
         "rollBasicActionButton":
             MessageLookupByLibrary.simpleMessage("Basic Action"),
-        "rollStatButtonTooltip": m7,
+        "rollStatButtonTooltip": m9,
         "spells": MessageLookupByLibrary.simpleMessage("Spells"),
-        "spellsWithCount": m8
+        "spellsWithCount": m10
       };
 }

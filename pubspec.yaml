@@ -64,6 +64,7 @@ flutter:
   # the material Icons class.
   uses-material-design: true
   assets:
+    # General Icons
     - assets/icons/armor.svg
     - assets/icons/book_cover.svg
     - assets/icons/dice_d6.svg
@@ -72,6 +73,8 @@ flutter:
     - assets/icons/knapsack.svg
     - assets/icons/riposte.svg
     - assets/icons/scroll_quill.svg
+    - assets/icons/swap_bag.svg
+    #  Stat Icons
     - assets/icons/stats/cha.svg
     - assets/icons/stats/con.svg
     - assets/icons/stats/dex.svg

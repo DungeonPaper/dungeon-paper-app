@@ -50,6 +50,12 @@ class Meta {
         sharing: json['sharing'] != null ? MetaSharing.fromJson(json['sharing']) : null,
       );
 
+  factory Meta.tryParse(dynamic meta) => meta != null
+      ? meta is Meta
+          ? meta
+          : Meta.fromJson(meta)
+      : Meta.version(1);
+
   Map<String, dynamic> toJson() => {
         'created': created.toString(),
         'updated': updated?.toString(),

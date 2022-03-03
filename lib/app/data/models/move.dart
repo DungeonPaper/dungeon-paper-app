@@ -8,18 +8,18 @@ import '../../widgets/atoms/svg_icon.dart';
 import 'meta.dart';
 
 class Move extends dw.Move {
-  Move(
-      {required Meta meta,
-      required String key,
-      required String name,
-      required String description,
-      required String explanation,
-      required List<dw.Dice> dice,
-      required List<String> classKeys,
-      required List<dw.Tag> tags,
-      required dw.MoveCategory category,
-      this.favorited = false})
-      : _meta = meta,
+  Move({
+    required Meta meta,
+    required String key,
+    required String name,
+    required String description,
+    required String explanation,
+    required List<dw.Dice> dice,
+    required List<String> classKeys,
+    required List<dw.Tag> tags,
+    required dw.MoveCategory category,
+    this.favorited = false,
+  })  : _meta = meta,
         super(
           meta: meta,
           key: key,
@@ -90,5 +90,6 @@ class Move extends dw.Move {
         'favorited': favorited,
       };
 
-  Widget get icon => const SvgIcon(DwIcons.riposte);
+  DwIconData get icon => DwIcons.riposte;
+  static DwIconData get genericIcon => DwIcons.riposte;
 }

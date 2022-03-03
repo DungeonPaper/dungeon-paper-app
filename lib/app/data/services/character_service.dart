@@ -24,6 +24,11 @@ class CharacterService extends GetxService {
 
   Character? get current => _current.value != null ? all[_current.value] : null;
 
+  void clear() {
+    all.clear();
+    _current.value = null;
+  }
+
   @override
   void onInit() async {
     super.onInit();
