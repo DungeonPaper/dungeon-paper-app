@@ -1,9 +1,15 @@
 import 'dart:math';
 
+extension IterableUtils<T> on Iterable<T> {
+  T sample() => _sample(this);
+}
+
 T sample<T>(Iterable<T> list) {
   final rnd = Random().nextInt(list.length);
   return list.elementAt(rnd);
 }
+
+const _sample = sample;
 
 class Enumerated<T> {
   final T value;

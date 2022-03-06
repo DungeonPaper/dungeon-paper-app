@@ -26,6 +26,7 @@ class Character {
     required this.meta,
     required this.key,
     required this.displayName,
+    required this.category,
     required this.avatarUrl,
     required this.characterClass,
     required this.moves,
@@ -43,6 +44,7 @@ class Character {
   final Meta meta;
   final String key;
   final String displayName;
+  final String category;
   final String avatarUrl;
   final CharacterClass characterClass;
   final List<Move> moves;
@@ -60,6 +62,7 @@ class Character {
     Meta? meta,
     String? key,
     String? displayName,
+    String? category,
     String? avatarUrl,
     CharacterClass? characterClass,
     List<Move>? moves,
@@ -77,6 +80,7 @@ class Character {
         meta: meta ?? this.meta,
         key: key ?? this.key,
         displayName: displayName ?? this.displayName,
+        category: category ?? this.category,
         avatarUrl: avatarUrl ?? this.avatarUrl,
         characterClass: characterClass ?? this.characterClass,
         moves: moves ?? this.moves,
@@ -100,6 +104,7 @@ class Character {
       key: uuid(),
       meta: Meta.version(1),
       displayName: '',
+      category: '',
       avatarUrl: '',
       items: [],
       coins: 0,
@@ -164,6 +169,7 @@ class Character {
         meta: Meta.fromJson(json['_meta']),
         key: json['key'],
         displayName: json['displayName'],
+        category: json['category'] ?? '',
         avatarUrl: json['avatarURL'],
         characterClass: CharacterClass.fromJson(json['class']),
         moves: List<Move>.from(json['moves'].map((x) => Move.fromJson(x))),
@@ -183,6 +189,7 @@ class Character {
         'key': key,
         'displayName': displayName,
         'avatarURL': avatarUrl,
+        'category': category,
         'class': characterClass.toJson(),
         'moves': List<dynamic>.from(moves.map((x) => x.toJson())),
         'spells': List<dynamic>.from(spells.map((x) => x.toJson())),

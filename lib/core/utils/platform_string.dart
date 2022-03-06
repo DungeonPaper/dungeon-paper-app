@@ -37,6 +37,15 @@ class PlatformString {
       tablet: tablet,
       fallback: fallback,
     );
+    if (kIsWeb) {
+      if (MediaQuery.of(context).size.shortestSide < 800) {
+        return mobile ?? _fallback;
+      }
+      if (MediaQuery.of(context).size.shortestSide < 1100) {
+        return tablet ?? _fallback;
+      }
+      return desktop ?? _fallback;
+    }
     if (Platform.isAndroid || Platform.isIOS || Platform.isFuchsia) {
       if (MediaQuery.of(context).size.shortestSide < 800) {
         return mobile ?? _fallback;
@@ -82,7 +91,8 @@ class PlatformString {
     }
   }
 
-  static String byInteractionType({
+  static String byInteractionType(
+    BuildContext context, {
     String? touch,
     String? mouse,
     InteractionType fallback = InteractionType.touch,
@@ -92,6 +102,12 @@ class PlatformString {
       mouse: mouse,
       fallback: fallback,
     );
+    if (kIsWeb) {
+      if (MediaQuery.of(context).size.shortestSide < 800) {
+        return touch ?? _fallback;
+      }
+      return mouse ?? _fallback;
+    }
     if (Platform.isAndroid || Platform.isIOS || Platform.isFuchsia) {
       return touch ?? _fallback;
     } else {

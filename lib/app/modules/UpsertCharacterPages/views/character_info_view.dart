@@ -43,6 +43,7 @@ class CharacterInfoView extends GetView<CharacterInfoController> {
               floatingLabelBehavior: FloatingLabelBehavior.always,
               suffixIcon: IconButton(
                 tooltip: PlatformString.byInteractionType(
+                  context,
                   touch: S.current.createCharRandomizeNameTooltipTouch,
                   mouse: S.current.createCharRandomizeNameTooltipClick,
                 ),
