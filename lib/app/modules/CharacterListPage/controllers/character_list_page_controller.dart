@@ -9,7 +9,7 @@ class CharacterListPageController extends GetxController {
   @override
   void onInit() async {
     super.onInit();
-    characters.addAll((await StorageHandler.instance.getAllItems('characters'))
+    characters.addAll((await StorageHandler.instance.getCollection('characters'))
         .map((c) => Character.fromJson(c)));
     characters.refresh();
   }

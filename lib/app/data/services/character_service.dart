@@ -37,7 +37,7 @@ class CharacterService extends GetxService {
 
   Future<CharacterService> init() async {
     pageController.addListener(refreshPage);
-    var json = await StorageHandler.instance.getAllItems('characters');
+    var json = await StorageHandler.instance.getCollection('characters');
     var list = json.map((c) => Character.fromJson(c));
 
     all.addAll(Map.fromIterable(list, key: (c) => c.key));
