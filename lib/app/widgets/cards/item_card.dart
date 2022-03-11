@@ -1,4 +1,5 @@
 import 'package:dungeon_paper/app/widgets/atoms/svg_icon.dart';
+import 'package:dungeon_paper/app/widgets/chips/tag_chip.dart';
 import 'package:flutter/material.dart';
 
 import '../../data/models/item.dart';
@@ -19,7 +20,7 @@ class ItemCard extends StatelessWidget {
     return DynamicActionCard(
       title: item.name,
       body: [Text(item.description)],
-      chips: [],
+      chips: item.tags.map((t) => TagChip(tag: t)),
       dice: [],
       icon: SvgIcon(item.icon, size: 16),
       starred: item.equipped,

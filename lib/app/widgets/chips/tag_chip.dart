@@ -14,16 +14,15 @@ class TagChip extends StatelessWidget {
     final theme = Theme.of(context);
     return Container(
       child: Text(
-        '${tag.name}: ${tag.value}',
+        tag.value != null ? '${tag.name}: ${tag.value}' : tag.name,
         style: TextStyle(
-          fontSize: 10,
           color: theme.colorScheme.onPrimary,
         ),
       ),
-      padding: const EdgeInsets.symmetric(horizontal: 4, vertical: 2),
+      padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
       decoration: ShapeDecoration(
         color: theme.primaryColor.withOpacity(0.5),
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(4)),
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
       ),
       // labelPadding: EdgeInsets.zero,
     );

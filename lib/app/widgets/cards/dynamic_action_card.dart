@@ -19,6 +19,7 @@ class DynamicActionCard extends StatelessWidget {
     this.starredIcon,
     this.unstarredIcon,
     this.chips = const [],
+    this.chipsSpacing = 4,
   }) : super(key: key);
 
   final String title;
@@ -30,6 +31,7 @@ class DynamicActionCard extends StatelessWidget {
   final List<Dice> dice;
   final List<Widget> body;
   final Iterable<Widget> chips;
+  final double chipsSpacing;
 
   @override
   Widget build(BuildContext context) {
@@ -64,12 +66,15 @@ class DynamicActionCard extends StatelessWidget {
             : const SizedBox.shrink(),
         children: [
           ...body,
-          const SizedBox(height: 4),
+          if (body.isNotEmpty) const SizedBox(height: 4),
           Row(
             crossAxisAlignment: CrossAxisAlignment.end,
             mainAxisSize: MainAxisSize.max,
             children: [
-              ...chips,
+              ...chips.map((c) => Padding(
+                    padding: EdgeInsets.only(right: chipsSpacing),
+                    child: c,
+                  )),
               Expanded(child: Container()),
               if (dice.isNotEmpty)
                 BackgroundIconButton(
