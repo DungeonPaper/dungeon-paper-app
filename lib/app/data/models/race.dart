@@ -68,7 +68,7 @@ class Race extends dw.Race {
       );
 
   factory Race.fromJson(Map<String, dynamic> json) => Race(
-      meta: Meta.fromJson(json['_meta']),
+      meta: Meta.tryParse(json['_meta']),
       key: json['key'],
       name: json['name'],
       description: json['description'],

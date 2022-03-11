@@ -1,6 +1,7 @@
 import 'package:dungeon_paper/app/routes/app_pages.dart';
 import 'package:dungeon_paper/app/data/services/character_service.dart';
 import 'package:dungeon_paper/app/widgets/atoms/debug_dialog.dart';
+import 'package:dungeon_paper/app/widgets/atoms/user_avatar.dart';
 import 'package:dungeon_paper/core/http/api.dart';
 import 'package:dungeon_paper/core/http/api_requests/search.dart';
 import 'package:dungeon_paper/core/storage_handler/storage_handler.dart';
@@ -18,43 +19,68 @@ class UserMenu extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return PopupMenuButton(
-      child: const Padding(
-        padding: EdgeInsets.all(8),
-        child: Icon(Icons.person),
-      ),
-      itemBuilder: (context) => [
-        PopupMenuItem(
-          child: SizedBox(
-            width: 190,
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Row(
-                  children: const [
-                    Expanded(child: Text('User')),
-                    SizedBox(width: 16),
-                    CircleAvatar(backgroundColor: Colors.grey),
-                  ],
-                ),
-                Padding(
-                  padding: const EdgeInsets.only(top: 16),
-                  child: Wrap(
-                    direction: Axis.horizontal,
-                    spacing: 4,
-                    runSpacing: 4,
-                    children: [
-                      for (final char in controller.all.values.take(5))
+    return Material(
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(28)),
+      clipBehavior: Clip.antiAlias,
+      child: PopupMenuButton(
+        child: const Padding(
+          padding: EdgeInsets.symmetric(horizontal: 8),
+          child: UserAvatar(),
+        ),
+        itemBuilder: (context) => [
+          PopupMenuItem(
+            child: SizedBox(
+              width: 190,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Row(
+                    children: const [
+                      Expanded(child: Text('User')),
+                      SizedBox(width: 16),
+                      UserAvatar(),
+                    ],
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.only(top: 16),
+                    child: Wrap(
+                      direction: Axis.horizontal,
+                      spacing: 4,
+                      runSpacing: 4,
+                      children: [
+                        for (final char in controller.all.values.take(5))
+                          InkWell(
+                            borderRadius: BorderRadius.circular(8),
+                            onTap: () => controller.setCurrent(char.key),
+                            child: SizedBox(
+                              width: 60,
+                              child: Column(
+                                children: [
+                                  CharacterAvatar.circle(character: char, size: 48),
+                                  Text(
+                                    char.displayName,
+                                    overflow: TextOverflow.ellipsis,
+                                    textScaleFactor: 0.8,
+                                    textAlign: TextAlign.center,
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ),
                         InkWell(
                           borderRadius: BorderRadius.circular(8),
-                          onTap: () => controller.setCurrent(char.key),
+                          onTap: () => null,
                           child: SizedBox(
                             width: 60,
                             child: Column(
                               children: [
-                                CharacterAvatar.circle(character: char, size: 48),
-                                Text(
-                                  char.displayName,
+                                CircleAvatar(
+                                  child: const Icon(Icons.more_horiz),
+                                  radius: 24,
+                                  backgroundColor: Theme.of(context).colorScheme.background,
+                                ),
+                                const Text(
+                                  'More',
                                   overflow: TextOverflow.ellipsis,
                                   textScaleFactor: 0.8,
                                   textAlign: TextAlign.center,
@@ -63,44 +89,23 @@ class UserMenu extends StatelessWidget {
                             ),
                           ),
                         ),
-                      InkWell(
-                        borderRadius: BorderRadius.circular(8),
-                        onTap: () => null,
-                        child: SizedBox(
-                          width: 60,
-                          child: Column(
-                            children: [
-                              CircleAvatar(
-                                child: Icon(Icons.more_horiz),
-                                radius: 24,
-                                backgroundColor: Theme.of(context).colorScheme.background,
-                              ),
-                              Text(
-                                'More',
-                                overflow: TextOverflow.ellipsis,
-                                textScaleFactor: 0.8,
-                                textAlign: TextAlign.center,
-                              ),
-                            ],
-                          ),
-                        ),
-                      ),
-                    ],
+                      ],
+                    ),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
+            value: 'user',
+            enabled: false,
           ),
-          value: 'user',
-          enabled: false,
-        ),
-      ],
-      onSelected: (value) {
-        if (actionMap[value] == null) {
-          throw Exception('Unsupported');
-        }
-        actionMap[value]!.call();
-      },
+        ],
+        onSelected: (value) {
+          if (actionMap[value] == null) {
+            throw Exception('Unsupported');
+          }
+          actionMap[value]!.call();
+        },
+      ),
     );
   }
 

@@ -14,7 +14,7 @@ class DynamicActionCard extends StatelessWidget {
     required this.icon,
     required this.starred,
     required this.dice,
-    required this.body,
+    required this.children,
     this.showStar = true,
     this.starredIcon,
     this.unstarredIcon,
@@ -29,7 +29,7 @@ class DynamicActionCard extends StatelessWidget {
   final bool starred;
   final bool showStar;
   final List<Dice> dice;
-  final List<Widget> body;
+  final List<Widget> children;
   final Iterable<Widget> chips;
   final double chipsSpacing;
 
@@ -65,8 +65,8 @@ class DynamicActionCard extends StatelessWidget {
               )
             : const SizedBox.shrink(),
         children: [
-          ...body,
-          if (body.isNotEmpty) const SizedBox(height: 4),
+          ...children,
+          if (children.isNotEmpty) const SizedBox(height: 4),
           Row(
             crossAxisAlignment: CrossAxisAlignment.end,
             mainAxisSize: MainAxisSize.max,

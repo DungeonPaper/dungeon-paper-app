@@ -21,7 +21,7 @@ class RaceCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return DynamicActionCard(
       title: race.name,
-      body: [Text(race.description)],
+      children: [Text(race.description)],
       chips: race.tags.map((t) => TagChip(tag: t)),
       dice: [],
       icon: SvgIcon(race.icon, size: 16),

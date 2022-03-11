@@ -16,7 +16,10 @@ class HomeView extends GetView<CharacterService> {
     return Scaffold(
       appBar: AppBar(
         title: Text(S.current.appName),
-        actions: const [UserMenu(), DebugMenu()],
+        actions: const [
+          DebugMenu(),
+          UserMenu(),
+        ],
       ),
       body: PageView(
         controller: controller.pageController,
@@ -49,9 +52,17 @@ class _CharacterHomeNavBarState extends State<CharacterHomeNavBar> {
   @override
   void initState() {
     super.initState();
-    widget.pageController.addListener(() {
-      setState(() {});
-    });
+    widget.pageController.addListener(_refreshState);
+  }
+
+  void _refreshState() {
+    setState(() {});
+  }
+
+  @override
+  void dispose() {
+    widget.pageController.removeListener(_refreshState);
+    super.dispose();
   }
 
   @override

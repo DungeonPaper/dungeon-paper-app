@@ -22,7 +22,7 @@ class MoveCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return DynamicActionCard(
       title: move.name,
-      body: [Text(move.description)],
+      children: [Text(move.description)],
       chips: [MoveCategoryChip(category: move.category), ...move.tags.map((t) => TagChip(tag: t))],
       dice: showDice ? move.dice : [],
       icon: SvgIcon(move.icon, size: 16),

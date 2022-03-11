@@ -19,7 +19,7 @@ class ItemCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return DynamicActionCard(
       title: item.name,
-      body: [Text(item.description)],
+      children: [Text(item.description)],
       chips: item.tags.map((t) => TagChip(tag: t)),
       dice: [],
       icon: SvgIcon(item.icon, size: 16),

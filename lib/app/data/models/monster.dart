@@ -56,6 +56,6 @@ class Monster extends dw.Monster {
         description: json['description'],
         instinct: json['instinct'],
         tags: List<dw.Tag>.from(json['tags'].map((x) => dw.Tag.fromJson(x))),
-        moves: json['moves'].map((x) => x),
+        moves: List<String>.from(json['moves'].map((x) => x)),
       );
 }

@@ -74,6 +74,6 @@ class SearchResponse {
         races: json['Races'] != null ? List.from(json['Races'].map((x) => Race.fromJson(x))) : null,
         spells:
             json['Spells'] != null ? List.from(json['Spells'].map((x) => Spell.fromJson(x))) : null,
-        tags: json['gs'] != null ? List.from(json['Tags'].map((x) => dw.Tag.fromJson(x))) : null,
+        tags: json['Tags'] != null ? List.from(json['Tags'].map((x) => dw.Tag.fromJson(x))) : null,
       );
 }
