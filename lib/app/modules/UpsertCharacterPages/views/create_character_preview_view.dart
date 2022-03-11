@@ -1,5 +1,6 @@
 import 'package:dungeon_paper/app/data/models/item.dart';
 import 'package:dungeon_paper/app/data/models/move.dart';
+import 'package:dungeon_paper/app/data/models/race.dart';
 import 'package:dungeon_paper/app/data/models/spell.dart';
 import 'package:dungeon_paper/app/modules/UpsertCharacterPages/controllers/create_character_preview_controller.dart';
 import 'package:dungeon_paper/app/themes/colors.dart';
@@ -8,6 +9,7 @@ import 'package:dungeon_paper/app/widgets/atoms/expansion_row.dart';
 import 'package:dungeon_paper/app/widgets/atoms/svg_icon.dart';
 import 'package:dungeon_paper/app/widgets/cards/item_card.dart';
 import 'package:dungeon_paper/app/widgets/cards/move_card.dart';
+import 'package:dungeon_paper/app/widgets/cards/race_card.dart';
 import 'package:dungeon_paper/app/widgets/cards/spell_card.dart';
 import 'package:dungeon_paper/app/widgets/roll_stats_grid.dart';
 import 'package:dungeon_paper/generated/l10n.dart';
@@ -30,7 +32,7 @@ class CreateCharacterPreviewView extends GetView<CreateCharacterPreviewControlle
       ),
       body: ListView(
         children: [
-          Center(child: CharacterAvatar(character: char)),
+          Center(child: CharacterAvatar.roundedRect(character: char, size: 176)),
           Text(
             char.displayName,
             textScaleFactor: 1.4,
@@ -60,12 +62,19 @@ class CreateCharacterPreviewView extends GetView<CreateCharacterPreviewControlle
           ),
           const SizedBox(height: 8),
           ExpansionRow(
-            title: Text(S.current.movesWithCount(char.moves.length)),
+            title: Text(S.current.movesWithCount(char.moves.length + 1)),
             leading: SvgIcon(Move.genericIcon),
-            children: char.moves
+            children: [char.race, ...char.moves]
                 .map((move) => Padding(
                       padding: const EdgeInsets.only(bottom: 8.0),
-                      child: MoveCard(move: move, showDice: false, showStar: false),
+                      child: move is Move
+                          ? MoveCard(move: move, showDice: false, showStar: false)
+                          : move is Race
+                              ? RaceCard(
+                                  race: move,
+                                  showStar: false,
+                                )
+                              : Container(),
                     ))
                 .toList(),
           ),
@@ -97,7 +106,7 @@ class CreateCharacterPreviewView extends GetView<CreateCharacterPreviewControlle
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
       floatingActionButton: FloatingActionButton.extended(
         backgroundColor: DwColors.success,
-        onPressed: () => null,
+        onPressed: () => controller.createChar(),
         label: Text(S.current.createCharacterSaveButton),
         icon: const Icon(Icons.check),
       ),

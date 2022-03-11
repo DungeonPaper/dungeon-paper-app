@@ -1,6 +1,8 @@
 import 'dart:convert';
+import 'package:dungeon_paper/core/dw_icons.dart';
 import 'package:dungeon_paper/core/utils/uuid.dart';
 import 'package:dungeon_world_data/dungeon_world_data.dart' as dw;
+import 'package:flutter/material.dart';
 
 import 'meta.dart';
 
@@ -13,6 +15,7 @@ class Race extends dw.Race {
     required String explanation,
     required List<String> classKeys,
     required List<dw.Tag> tags,
+    this.favorited = false,
   })  : _meta = meta,
         super(
           meta: meta,
@@ -28,6 +31,8 @@ class Race extends dw.Race {
   Meta get meta => _meta;
   final Meta _meta;
 
+  final bool favorited;
+
   Race copyWithInherited({
     Meta? meta,
     String? key,
@@ -36,6 +41,7 @@ class Race extends dw.Race {
     String? explanation,
     List<String>? classKeys,
     List<dw.Tag>? tags,
+    bool? favorited,
   }) =>
       Race(
         meta: meta ?? this.meta,
@@ -45,11 +51,12 @@ class Race extends dw.Race {
         explanation: explanation ?? this.explanation,
         classKeys: classKeys ?? this.classKeys,
         tags: tags ?? this.tags,
+        favorited: favorited ?? this.favorited,
       );
 
   factory Race.fromRawJson(String str) => Race.fromJson(json.decode(str));
 
-  factory Race.fromDwRace(dw.Race race, {Meta? meta}) => Race(
+  factory Race.fromDwRace(dw.Race race, {Meta? meta, bool favorited = false}) => Race(
         meta: race.meta != null ? Meta.fromJson(race.meta) : Meta.version(1),
         key: race.key,
         name: race.name,
@@ -57,17 +64,18 @@ class Race extends dw.Race {
         explanation: race.explanation,
         classKeys: race.classKeys,
         tags: race.tags,
+        favorited: favorited,
       );
 
   factory Race.fromJson(Map<String, dynamic> json) => Race(
-        meta: Meta.fromJson(json['_meta']),
-        key: json['key'],
-        name: json['name'],
-        description: json['description'],
-        explanation: json['explanation'],
-        classKeys: List<String>.from(json['classKeys'].map((x) => x)),
-        tags: List<dw.Tag>.from(json['tags'].map((x) => dw.Tag.fromJson(x))),
-      );
+      meta: Meta.fromJson(json['_meta']),
+      key: json['key'],
+      name: json['name'],
+      description: json['description'],
+      explanation: json['explanation'],
+      classKeys: List<String>.from(json['classKeys'].map((x) => x)),
+      tags: List<dw.Tag>.from(json['tags'].map((x) => dw.Tag.fromJson(x))),
+      favorited: json['favorited'] ?? false);
 
   factory Race.empty() => Race(
         classKeys: [],
@@ -79,9 +87,13 @@ class Race extends dw.Race {
         tags: [],
       );
 
+  DwIconData get icon => DwIcons.riposte;
+  static DwIconData get genericIcon => DwIcons.riposte;
+
   @override
   Map<String, dynamic> toJson() => {
         ...super.toJson(),
         '_meta': meta.toJson(),
+        'favorited': favorited,
       };
 }

@@ -7,8 +7,37 @@ import 'package:get/get.dart';
 
 class CharacterAvatar extends GetView {
   final Character? character;
+  final Widget Function(String avatarUrl, double size) builder;
+  final double size;
 
-  const CharacterAvatar({Key? key, this.character}) : super(key: key);
+  const CharacterAvatar._({
+    Key? key,
+    this.character,
+    required this.size,
+    required this.builder,
+  }) : super(key: key);
+
+  factory CharacterAvatar({
+    Key? key,
+    Character? character,
+    required double size,
+    required final Widget Function(String avatarUrl, double size) builder,
+  }) =>
+      CharacterAvatar._(key: key, character: character, size: size, builder: builder);
+
+  factory CharacterAvatar.roundedRect({
+    Key? key,
+    Character? character,
+    required double size,
+  }) =>
+      CharacterAvatar._(key: key, character: character, size: size, builder: _rRectBuilder);
+
+  factory CharacterAvatar.circle({
+    Key? key,
+    Character? character,
+    required double size,
+  }) =>
+      CharacterAvatar._(key: key, character: character, size: size, builder: _circleBuilder);
 
   @override
   Widget build(BuildContext context) {
@@ -21,18 +50,28 @@ class CharacterAvatar extends GetView {
     });
   }
 
+  static Widget _rRectBuilder(String url, double size) => ClipRRect(
+        borderRadius: BorderRadius.circular(20),
+        child: CachedNetworkImage(
+          imageUrl: url,
+          width: size,
+          height: size,
+          fit: BoxFit.cover,
+        ),
+      );
+
+  static Widget _circleBuilder(String url, double size) => CircleAvatar(
+        // clipBehavior: Clip.hardEdge,
+        foregroundImage: CachedNetworkImageProvider(url),
+        radius: size / 2,
+      );
+
   Widget renderForChar(Character? char) {
-    return ClipRRect(
-      borderRadius: BorderRadius.circular(20),
-      // clipBehavior: Clip.hardEdge,
-      child: CachedNetworkImage(
-        imageUrl: char?.avatarUrl.isNotEmpty == true
-            ? char!.avatarUrl
-            : 'https://placeholder.photo/img/704.png?text=Avatar',
-        width: 176,
-        height: 176,
-        fit: BoxFit.cover,
-      ),
+    return builder(
+      char?.avatarUrl.isNotEmpty == true
+          ? char!.avatarUrl
+          : 'https://placeholder.photo/img/704.png?text=Avatar',
+      size,
     );
   }
 }

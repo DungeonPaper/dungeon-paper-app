@@ -29,6 +29,12 @@ class CharacterService extends GetxService {
     _current.value = null;
   }
 
+  void setCurrent(String key) {
+    if (all.containsKey(key)) {
+      _current.value = key;
+    }
+  }
+
   @override
   void onInit() async {
     super.onInit();
@@ -75,15 +81,25 @@ class CharacterService extends GetxService {
     pageController.removeListener(refreshPage);
   }
 
-  void updateCharacter(Character? character) {
+  void updateCharacter(Character character, {bool switchToCharacter = false}) {
     // (StorageHandler.instance.delegate as LocalStorageDelegate).storage.collection('characters');
-    if (character != null) {
-      all[character.key] = character;
-      StorageHandler.instance.create('characters', character.key, character.toJson());
-      _current.value ??= character.key;
-      debugPrint('Updated char: ${character.key}');
-      debugPrint(character.toRawJson());
+    all[character.key] = character;
+    StorageHandler.instance.update('characters', character.key, character.toJson());
+    if (switchToCharacter || _current.value == null) {
+      _current.value = character.key;
     }
+    debugPrint('Updated char: ${character.key}');
+    debugPrint(character.toRawJson());
+  }
+
+  void createCharacter(Character character, {bool switchToCharacter = false}) {
+    all[character.key] = character;
+    StorageHandler.instance.create('characters', character.key, character.toJson());
+    if (switchToCharacter || _current.value == null) {
+      _current.value = character.key;
+    }
+    debugPrint('Created char: ${character.key}');
+    debugPrint(character.toRawJson());
   }
 
   debugUpdateCharData() {

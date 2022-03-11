@@ -69,6 +69,11 @@ class StorageHandler implements StorageDelegate {
           onError: onError, onDone: onDone, cancelOnError: cancelOnError);
 }
 
+class CacheHandler extends StorageHandler {
+  @override
+  String get currentDelegate => 'firestore';
+}
+
 abstract class StorageDelegate {
   String? _collectionPrefix;
   String? get collectionPrefix => _collectionPrefix;

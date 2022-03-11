@@ -36,8 +36,16 @@ class CreateCharacterPageView extends GetView<CreateCharacterPageController> {
               onValidate: (valid, info) =>
                   controller.setValid(CreateCharStep.information, valid, info),
             ),
+            CharacterBackgroundView(
+              onValidate: (valid, background) =>
+                  controller.setValid(CreateCharStep.background, valid, background),
+            ),
             CharacterClassSelectView(
               onValidate: (valid, cls) => controller.setValid(CreateCharStep.charClass, valid, cls),
+            ),
+            CharacterGearView(
+              onValidate: (valid, background) =>
+                  controller.setValid(CreateCharStep.background, valid, background),
             ),
             CharacterRollStatsView(
               onValidate: (valid, stats) => controller.setValid(CreateCharStep.stats, valid, stats),
@@ -45,14 +53,6 @@ class CreateCharacterPageView extends GetView<CreateCharacterPageController> {
             CharacterMovesSpellsView(
               onValidate: (valid, movesSpells) =>
                   controller.setValid(CreateCharStep.movesSpells, valid, movesSpells),
-            ),
-            CharacterBackgroundView(
-              onValidate: (valid, background) =>
-                  controller.setValid(CreateCharStep.background, valid, background),
-            ),
-            CharacterGearView(
-              onValidate: (valid, background) =>
-                  controller.setValid(CreateCharStep.background, valid, background),
             ),
           ].sublist(
               0, clamp(controller.lastAvailablePage.value + 1, 0, CreateCharStep.values.length)),
@@ -108,11 +108,11 @@ class CreateCharacterPageView extends GetView<CreateCharacterPageController> {
 
   static const navItems = <NavItemData>[
     NavItemData(icon: Icon(Icons.person), step: CreateCharStep.information),
+    NavItemData(icon: Icon(Icons.fireplace_outlined), step: CreateCharStep.background),
     NavItemData(icon: Icon(Icons.access_time), step: CreateCharStep.charClass),
+    NavItemData(icon: Icon(Icons.personal_injury_rounded), step: CreateCharStep.gear),
     NavItemData(icon: Icon(Icons.list_alt_rounded), step: CreateCharStep.stats),
     NavItemData(icon: Icon(Icons.handshake), step: CreateCharStep.movesSpells),
-    NavItemData(icon: Icon(Icons.fireplace_outlined), step: CreateCharStep.background),
-    NavItemData(icon: Icon(Icons.personal_injury_rounded), step: CreateCharStep.gear),
   ];
 
   void goToPage(int page) => controller.goToPage(page);

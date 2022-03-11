@@ -51,7 +51,18 @@ class CharacterClassSelectView extends GetView<CharClassSelectController> {
                         margin: EdgeInsets.zero,
                         child: Padding(
                           padding: const EdgeInsets.all(16),
-                          child: Text(cls.key + ': ' + cls.name),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(cls.name),
+                              if (cls.description.isNotEmpty)
+                                Text(
+                                  cls.description,
+                                  maxLines: 1,
+                                  overflow: TextOverflow.ellipsis,
+                                ),
+                            ],
+                          ),
                         ),
                       ),
                     ),

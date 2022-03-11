@@ -67,6 +67,12 @@ class RollStats {
   }) =>
       RollStats(stats: stats ?? this.stats.toList());
 
+  RollStats copyWithStatValues(Map<String, int> map) => copyWith(
+        stats: stats.map(
+          (stat) => map.containsKey(stat.key) ? stat.copyWith(value: map[stat.key]) : stat,
+        ),
+      );
+
   factory RollStats.fromRawJson(String str) => RollStats.fromJson(json.decode(str));
 
   String toRawJson() => json.encode(toJson());
@@ -79,19 +85,29 @@ class RollStats {
     return statsMap[statKey]!;
   }
 
-  RollStat get dex => getStat('DEX');
-  RollStat get str => getStat('STR');
-  RollStat get wis => getStat('WIS');
-  RollStat get con => getStat('CON');
-  RollStat get intl => getStat('INT');
-  RollStat get cha => getStat('CHA');
+  RollStat? get dex => getStat('DEX');
+  RollStat? get str => getStat('STR');
+  RollStat? get wis => getStat('WIS');
+  RollStat? get con => getStat('CON');
+  RollStat? get intl => getStat('INT');
+  RollStat? get cha => getStat('CHA');
 
-  int get dexMod => dex.modifier;
-  int get strMod => str.modifier;
-  int get wisMod => wis.modifier;
-  int get conMod => con.modifier;
-  int get intMod => intl.modifier;
-  int get chaMod => cha.modifier;
+  int? get dexMod => dex?.modifier;
+  int? get strMod => str?.modifier;
+  int? get wisMod => wis?.modifier;
+  int? get conMod => con?.modifier;
+  int? get intMod => intl?.modifier;
+  int? get chaMod => cha?.modifier;
+
+  int? get dexValue => dex?.value;
+  int? get strValue => str?.value;
+  int? get wisValue => wis?.value;
+  int? get conValue => con?.value;
+  int? get intValue => intl?.value;
+  int? get chaValue => cha?.value;
+
+  int get hpBaseValue => con?.value ?? 0;
+  int get loadBaseValue => str?.value ?? 0;
 
   factory RollStats.fromJson(Map<String, dynamic> json) => RollStats(
         stats: List<RollStat>.from(json['stats'].map((x) => RollStat.fromJson(x))),
@@ -128,6 +144,19 @@ class RollStat {
         'value': value,
         'description': description,
       };
+
+  RollStat copyWith({
+    String? key,
+    String? name,
+    String? description,
+    int? value,
+  }) =>
+      RollStat(
+        key: key ?? this.key,
+        name: name ?? this.name,
+        description: description ?? this.description,
+        value: value ?? this.value,
+      );
 
   int get modifier => modifierForValue(value);
   Widget get icon => _icons[key.toLowerCase()] ?? _icons['_other']!;

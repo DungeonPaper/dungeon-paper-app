@@ -33,7 +33,7 @@ class HomeCharacterHeaderView extends GetView<CharacterService> {
           ],
         ),
         const SizedBox(width: 8),
-        const CharacterAvatar(),
+        CharacterAvatar.roundedRect(size: 176),
         const SizedBox(width: 8),
         Column(
           children: [

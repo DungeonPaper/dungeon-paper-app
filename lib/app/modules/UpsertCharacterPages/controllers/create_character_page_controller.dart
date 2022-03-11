@@ -20,11 +20,11 @@ import 'character_info_controller.dart';
 
 enum CreateCharStep {
   information,
+  background,
   charClass,
+  gear,
   stats,
   movesSpells,
-  background,
-  gear,
 }
 
 class CreateCharacterPageController extends GetxController {
@@ -33,20 +33,22 @@ class CreateCharacterPageController extends GetxController {
 
   final info = Rx<CharInfo?>(null);
   final charClass = Rx<CharacterClass?>(null);
-  final stats = Rx<RollStats?>(null);
+  final rollStats =
+      Rx<RollStats?>(RollStats.dungeonWorld(dex: 10, str: 10, wis: 10, con: 10, intl: 10, cha: 10));
   final movesSpells = Rx<CharMovesSpells?>(null);
-  final background = Rx<CharBackground?>(null);
+  final background =
+      Rx<CharBackground?>(CharBackground(bioDesc: '', bonds: [], raceDesc: '', raceName: 'Human'));
   final gear = Rx<CharGear?>(null);
 
   final char = Character.empty().obs;
 
   final isValid = <CreateCharStep, bool>{
     CreateCharStep.information: false,
+    CreateCharStep.background: true,
     CreateCharStep.charClass: false,
+    CreateCharStep.gear: true,
     CreateCharStep.stats: true,
     CreateCharStep.movesSpells: true,
-    CreateCharStep.background: false,
-    CreateCharStep.gear: true,
   }.obs;
 
   int get page => pageController.value.page?.round() ?? 0;
@@ -77,7 +79,7 @@ class CreateCharacterPageController extends GetxController {
     hideKeyboard(context);
     char.value = createChar();
     Get.lazyPut<CreateCharacterPreviewController>(() => CreateCharacterPreviewController());
-    Get.to(const CreateCharacterPreviewView());
+    Get.to(() => const CreateCharacterPreviewView());
   }
 
   setValid(CreateCharStep step, bool valid, dynamic dataToSave) {
@@ -89,7 +91,7 @@ class CreateCharacterPageController extends GetxController {
     final map = <CreateCharStep, void Function()>{
       CreateCharStep.information: () => info.value = dataToSave,
       CreateCharStep.charClass: () => charClass.value = dataToSave,
-      CreateCharStep.stats: () => stats.value = dataToSave,
+      CreateCharStep.stats: () => rollStats.value = dataToSave,
       CreateCharStep.movesSpells: () => movesSpells.value = dataToSave,
       CreateCharStep.background: () => background.value = dataToSave,
       CreateCharStep.gear: () => gear.value = dataToSave,
@@ -99,7 +101,7 @@ class CreateCharacterPageController extends GetxController {
   }
 
   Character createChar() {
-    return Character.empty().copyWith(
+    return char.value.copyWith(
       displayName: info.value?.displayName,
       avatarUrl: info.value?.avatarUrl,
       characterClass: charClass.value,
@@ -109,7 +111,7 @@ class CreateCharacterPageController extends GetxController {
       coins: GearChoice.selectionToCoins(gear.value?.selections ?? []),
       moves: movesSpells.value?.moves,
       spells: movesSpells.value?.spells,
-      rollStats: stats.value,
+      rollStats: rollStats.value,
       // TODO add all race fields to create?
       race: Race.empty().copyWithInherited(
         description: background.value?.raceDesc,

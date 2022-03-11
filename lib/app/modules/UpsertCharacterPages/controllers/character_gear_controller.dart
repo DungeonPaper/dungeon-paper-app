@@ -17,11 +17,12 @@ class CharacterGearController extends GetxController {
   void onInit() {
     super.onInit();
     getGear();
-    sub.value = Get.find<CharClassSelectController>().selectedClass.listen(clearSelection);
+    sub.value = Get.find<CharClassSelectController>().selectedClass.listen(onChangeClass);
   }
 
-  void clearSelection(dynamic cls) {
+  void onChangeClass(cls) {
     selectedOptions.clear();
+    getGear();
   }
 
   void getGear() async {

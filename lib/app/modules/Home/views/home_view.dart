@@ -1,3 +1,4 @@
+import 'package:dungeon_paper/app/widgets/atoms/user_menu.dart';
 import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
@@ -15,7 +16,7 @@ class HomeView extends GetView<CharacterService> {
     return Scaffold(
       appBar: AppBar(
         title: Text(S.current.appName),
-        actions: const [DebugMenu()],
+        actions: const [UserMenu(), DebugMenu()],
       ),
       body: PageView(
         controller: controller.pageController,
@@ -56,7 +57,9 @@ class _CharacterHomeNavBarState extends State<CharacterHomeNavBar> {
   @override
   Widget build(BuildContext context) {
     return BottomNavigationBar(
-      currentIndex: widget.pageController.hasClients ? widget.pageController.page?.round() ?? 1 : 1,
+      currentIndex: widget.pageController.positions.length == 1
+          ? widget.pageController.page?.round() ?? 1
+          : 1,
       onTap: (page) => widget.pageController.animateToPage(
         page,
         duration: const Duration(milliseconds: 500),

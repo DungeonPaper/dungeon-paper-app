@@ -204,10 +204,10 @@ class Character {
       };
 
   int get currentHp => clamp(stats.currentHp, 0, maxHp);
-  int get maxHp => stats.maxHp ?? (characterClass.hp + rollStats.con.value);
+  int get maxHp => stats.maxHp ?? (characterClass.hp + rollStats.hpBaseValue);
   int get currentExp => stats.currentExp;
   int get maxExp => stats.maxExp;
   double get currentHpPercent => clamp(stats.currentHp / maxHp, 0, 1);
   double get currentExpPercent => clamp(stats.currentExp / maxExp, 0, 1);
-  int get load => stats.load ?? (characterClass.load + rollStats.strMod);
+  int get load => stats.load ?? (characterClass.load + rollStats.loadBaseValue);
 }

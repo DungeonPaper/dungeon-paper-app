@@ -40,8 +40,8 @@ class GearSelection extends dw.GearSelection {
 
   factory GearSelection.fromJson(Map<String, dynamic> json) => GearSelection(
         key: json['key'],
-        description: json['description'],
-        options: List<GearOption>.from(json['options'].map((x) => GearSelection.fromJson(x))),
-        coins: json['coins'],
+        description: json['description'] ?? '',
+        options: List<GearOption>.from((json['options'] ?? []).map((x) => GearOption.fromJson(x))),
+        coins: json['coins'] ?? 0,
       );
 }

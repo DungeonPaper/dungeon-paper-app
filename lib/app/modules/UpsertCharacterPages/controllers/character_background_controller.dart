@@ -8,7 +8,7 @@ import 'package:get/get.dart';
 class CharacterBackgroundController extends GetxController {
   final formKey = GlobalKey<FormState>();
   final bioDesc = TextEditingController().obs;
-  final raceName = TextEditingController().obs;
+  final raceName = TextEditingController(text: 'Human').obs;
   final raceDesc = TextEditingController().obs;
   final _validCache = false.obs;
   bool get _isValid => formKey.currentState?.validate() ?? false;

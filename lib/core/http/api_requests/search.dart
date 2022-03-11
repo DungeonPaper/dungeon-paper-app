@@ -1,5 +1,3 @@
-import 'dart:html';
-
 import 'package:dungeon_paper/app/data/models/character_class.dart';
 import 'package:dungeon_paper/app/data/models/item.dart';
 import 'package:dungeon_paper/app/data/models/monster.dart';
