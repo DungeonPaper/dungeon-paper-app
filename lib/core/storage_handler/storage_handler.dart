@@ -70,8 +70,11 @@ class StorageHandler implements StorageDelegate {
 }
 
 class CacheHandler extends StorageHandler {
+  static LocalStorageDelegate? _instance;
+  static LocalStorageDelegate get instance => _instance ??= LocalStorageDelegate();
+
   @override
-  String get currentDelegate => 'firestore';
+  String get currentDelegate => 'local';
 }
 
 abstract class StorageDelegate {

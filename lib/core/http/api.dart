@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'package:dungeon_paper/core/http/api_requests/search.dart';
+import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
 part 'requests.dart';
@@ -13,6 +14,7 @@ class Api {
     bool parse = true,
     Map<String, String>? headers,
   }) async {
+    debugPrint(url);
     final resp = await http.get(Uri.parse(baseUrl + url), headers: headers);
     return Response.fromHttp(resp);
   }
@@ -24,6 +26,7 @@ class Api {
     Object? body,
     Encoding? encoding,
   }) async {
+    debugPrint(url + '\n' + body.toString());
     final resp =
         await http.post(Uri.parse(baseUrl + url), headers: headers, body: body, encoding: encoding);
     return Response.fromHttp(resp);
