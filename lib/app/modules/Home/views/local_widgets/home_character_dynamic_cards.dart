@@ -1,4 +1,6 @@
+import 'package:dungeon_paper/app/data/models/item.dart';
 import 'package:dungeon_paper/app/model_utils/character_utils.dart';
+import 'package:dungeon_paper/app/widgets/cards/item_card_mini.dart';
 import 'package:dungeon_paper/core/utils/list_utils.dart';
 import 'package:dungeon_paper/generated/l10n.dart';
 import 'package:dungeon_paper/app/data/models/move.dart';
@@ -19,6 +21,7 @@ class HomeCharacterDynamicCards extends GetView<CharacterService> {
     return Obx(() {
       final moves = (controller.current?.moves ?? <Move>[]).where((m) => m.favorited);
       final spells = (controller.current?.spells ?? <Spell>[]).where((m) => m.prepared);
+      final items = (controller.current?.items ?? <Item>[]).where((m) => m.equipped);
 
       return Column(
         mainAxisSize: MainAxisSize.min,
@@ -50,6 +53,21 @@ class HomeCharacterDynamicCards extends GetView<CharacterService> {
               spell: spell,
               onSave: (s) => controller.updateCharacter(
                 CharacterUtils.updateSpell(controller.current!, s),
+              ),
+            ),
+          ),
+          const SizedBox(height: 10),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 16),
+            child: Text(S.current.dynamicCategoriesItems),
+          ),
+          _HorizontalCardListView<Item>(
+            cardSize: cardSize,
+            items: items,
+            cardBuilder: (item, _) => ItemCardMini(
+              item: item,
+              onSave: (i) => controller.updateCharacter(
+                CharacterUtils.updateItem(controller.current!, i),
               ),
             ),
           ),

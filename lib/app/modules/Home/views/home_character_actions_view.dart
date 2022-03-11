@@ -1,6 +1,7 @@
 import 'package:dungeon_paper/app/data/services/character_service.dart';
 import 'package:dungeon_paper/app/model_utils/character_utils.dart';
 import 'package:dungeon_paper/app/widgets/atoms/expansion_row.dart';
+import 'package:dungeon_paper/app/widgets/cards/item_card.dart';
 import 'package:dungeon_paper/app/widgets/cards/move_card.dart';
 import 'package:dungeon_paper/app/widgets/cards/spell_card.dart';
 import 'package:dungeon_paper/core/utils/list_utils.dart';
@@ -48,6 +49,23 @@ class HomeCharacterActionsView extends GetView<CharacterService> {
                       spell: spell,
                       onSave: (s) => controller.updateCharacter(
                         CharacterUtils.updateSpell(controller.current!, s),
+                      ),
+                    ),
+                  ),
+                )
+                .toList(),
+          ),
+          ExpansionRow(
+            initiallyExpanded: true,
+            title: Text(S.current.items),
+            children: (controller.current?.items ?? [])
+                .map(
+                  (item) => Padding(
+                    padding: const EdgeInsets.only(bottom: 8),
+                    child: ItemCard(
+                      item: item,
+                      onSave: (i) => controller.updateCharacter(
+                        CharacterUtils.updateItem(controller.current!, i),
                       ),
                     ),
                   ),

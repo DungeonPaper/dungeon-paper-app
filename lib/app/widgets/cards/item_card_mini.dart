@@ -1,33 +1,35 @@
+import 'package:dungeon_paper/app/data/models/item.dart';
 import 'package:dungeon_paper/app/widgets/atoms/svg_icon.dart';
 import 'package:dungeon_paper/app/widgets/chips/move_category_chip.dart';
+import 'package:dungeon_paper/app/widgets/chips/tag_chip.dart';
 import 'package:flutter/material.dart';
 
 import '../../data/models/move.dart';
 import 'dynamic_action_card_mini.dart';
 
-class MoveCardMini extends StatelessWidget {
-  const MoveCardMini({
+class ItemCardMini extends StatelessWidget {
+  const ItemCardMini({
     Key? key,
-    required this.move,
-    this.showDice = true,
+    required this.item,
     this.showStar = true,
+    this.onSave,
   }) : super(key: key);
 
-  final Move move;
-  final bool showDice;
+  final Item item;
   final bool showStar;
+  final void Function(Item item)? onSave;
 
   @override
   Widget build(BuildContext context) {
     return DynamicActionCardMini(
-      title: move.name,
-      description: move.description,
-      chips: [MoveCategoryChip(category: move.category)],
-      dice: showDice ? move.dice : [],
-      icon: SvgIcon(move.icon, size: 16),
-      starred: move.favorited,
+      title: item.name,
+      description: item.description,
+      chips: const [], // item.tags.map((t) => TagChip(tag: t)),
+      dice: const [],
+      icon: SvgIcon(item.icon, size: 16),
+      starred: item.equipped,
       showStar: showStar,
-      onStarChanged: (favorited) => null,
+      onStarChanged: (equipped) => onSave?.call(item.copyWithInherited(equipped: equipped)),
     );
   }
 }

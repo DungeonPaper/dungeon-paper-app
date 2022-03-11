@@ -70,7 +70,11 @@ class DynamicActionCardMini extends StatelessWidget {
               child: Text(
                 description,
                 overflow: TextOverflow.ellipsis,
-                maxLines: dice.isNotEmpty ? 3 : 4,
+                maxLines: dice.isNotEmpty
+                    ? 3
+                    : chips.isNotEmpty
+                        ? 4
+                        : 5,
                 textScaleFactor: 0.9,
                 style: const TextStyle(fontWeight: FontWeight.w200),
               ),

@@ -1,3 +1,4 @@
+import 'package:dungeon_paper/app/data/models/item.dart';
 import 'package:dungeon_paper/app/data/models/move.dart';
 import 'package:dungeon_paper/app/data/models/character.dart';
 import 'package:dungeon_paper/app/data/models/spell.dart';
@@ -15,5 +16,11 @@ class CharacterUtils {
       );
   static Character removeSpell(Character char, Spell spell) => char.copyWith(
         spells: removeByKey(char.spells, spell),
+      );
+  static Character updateItem(Character char, Item item) => char.copyWith(
+        items: updateByKey(char.items, item),
+      );
+  static Character removeItem(Character char, Item item) => char.copyWith(
+        items: removeByKey(char.items, item),
       );
 }
