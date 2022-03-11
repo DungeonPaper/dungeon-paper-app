@@ -126,10 +126,10 @@ class UserMenu extends StatelessWidget {
   void clearChars() async {
     final CharacterService controller = Get.find();
     controller.clear();
-    final all = await StorageHandler.instance.getCollection('characters');
+    final all = await StorageHandler.instance.getCollection('Characters');
     for (var c in all) {
       debugPrint("Deleting ${c['key']}");
-      StorageHandler.instance.delete('characters', c['key']);
+      StorageHandler.instance.delete('Characters', c['key']);
     }
   }
 

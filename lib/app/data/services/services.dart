@@ -10,6 +10,6 @@ Future<void> initServices() async {
   /// Here is where you put get_storage, hive, shared_pref initialization.
   /// or moor connection, or whatever that's async.
   await Get.putAsync(() => Future.value(CharacterService().init()));
-  await Get.putAsync(() => Future.value(ClassService().init()));
+  await Get.putAsync(() => Future.value(RepositoryService().init()));
   debugPrint('All services started');
 }

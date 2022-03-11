@@ -23,8 +23,8 @@ class CharClassSelectController extends GetxController {
   void onInit() {
     super.onInit();
 
-    final ctrl = Get.find<ClassService>();
-    ctrl.all.listen((map) => getClasses());
+    final ctrl = Get.find<RepositoryService>();
+    ctrl.classes.listen((map) => getClasses());
     getClasses();
   }
 
@@ -35,8 +35,8 @@ class CharClassSelectController extends GetxController {
 
   void getClasses() async {
     loading.value = true;
-    final ctrl = Get.find<ClassService>();
-    updateClasses(ctrl.all);
+    final ctrl = Get.find<RepositoryService>();
+    updateClasses(ctrl.classes);
     loading.value = false;
   }
 

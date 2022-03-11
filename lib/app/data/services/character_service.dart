@@ -43,7 +43,7 @@ class CharacterService extends GetxService {
 
   Future<CharacterService> init() async {
     pageController.addListener(refreshPage);
-    var json = await StorageHandler.instance.getCollection('characters');
+    var json = await StorageHandler.instance.getCollection('Characters');
     var list = json.map((c) => Character.fromJson(c));
 
     all.addAll(Map.fromIterable(list, key: (c) => c.key));
@@ -82,9 +82,9 @@ class CharacterService extends GetxService {
   }
 
   void updateCharacter(Character character, {bool switchToCharacter = false}) {
-    // (StorageHandler.instance.delegate as LocalStorageDelegate).storage.collection('characters');
+    // (StorageHandler.instance.delegate as LocalStorageDelegate).storage.collection('Characters');
     all[character.key] = character;
-    StorageHandler.instance.update('characters', character.key, character.toJson());
+    StorageHandler.instance.update('Characters', character.key, character.toJson());
     if (switchToCharacter || _current.value == null) {
       _current.value = character.key;
     }
@@ -94,7 +94,7 @@ class CharacterService extends GetxService {
 
   void createCharacter(Character character, {bool switchToCharacter = false}) {
     all[character.key] = character;
-    StorageHandler.instance.create('characters', character.key, character.toJson());
+    StorageHandler.instance.create('Characters', character.key, character.toJson());
     if (switchToCharacter || _current.value == null) {
       _current.value = character.key;
     }
