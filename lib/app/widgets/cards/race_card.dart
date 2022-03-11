@@ -27,6 +27,7 @@ class RaceCard extends StatelessWidget {
       icon: SvgIcon(race.icon, size: 16),
       starred: race.favorited,
       showStar: showStar,
+      onStarChanged: (favorited) => null,
     );
   }
 }

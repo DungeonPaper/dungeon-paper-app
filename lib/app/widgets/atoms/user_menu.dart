@@ -20,6 +20,7 @@ class UserMenu extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Material(
+      color: Colors.transparent,
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(28)),
       clipBehavior: Clip.antiAlias,
       child: PopupMenuButton(
@@ -27,78 +28,90 @@ class UserMenu extends StatelessWidget {
           padding: EdgeInsets.symmetric(horizontal: 8),
           child: UserAvatar(),
         ),
-        itemBuilder: (context) => [
-          PopupMenuItem(
-            child: SizedBox(
-              width: 190,
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Row(
-                    children: const [
-                      Expanded(child: Text('User')),
-                      SizedBox(width: 16),
-                      UserAvatar(),
-                    ],
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.only(top: 16),
-                    child: Wrap(
-                      direction: Axis.horizontal,
-                      spacing: 4,
-                      runSpacing: 4,
+        itemBuilder: (context) {
+          final textStyle = TextStyle(color: Theme.of(context).colorScheme.onSurface);
+          return [
+            PopupMenuItem(
+              child: SizedBox(
+                width: 190,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Row(
                       children: [
-                        for (final char in controller.all.values.take(5))
+                        Expanded(child: Text('User', style: textStyle)),
+                        const SizedBox(width: 16),
+                        const UserAvatar(),
+                      ],
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.only(top: 16),
+                      child: Wrap(
+                        direction: Axis.horizontal,
+                        spacing: 4,
+                        runSpacing: 4,
+                        children: [
+                          for (final char in controller.all.values.take(5))
+                            InkWell(
+                              borderRadius: BorderRadius.circular(8),
+                              onTap: () => controller.setCurrent(char.key),
+                              child: SizedBox(
+                                width: 60,
+                                child: Column(
+                                  children: [
+                                    CharacterAvatar.circle(character: char, size: 48),
+                                    Text(
+                                      char.displayName,
+                                      overflow: TextOverflow.ellipsis,
+                                      textScaleFactor: 0.8,
+                                      textAlign: TextAlign.center,
+                                      style: textStyle,
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ),
                           InkWell(
                             borderRadius: BorderRadius.circular(8),
-                            onTap: () => controller.setCurrent(char.key),
+                            onTap: () => null,
                             child: SizedBox(
                               width: 60,
                               child: Column(
                                 children: [
-                                  CharacterAvatar.circle(character: char, size: 48),
+                                  CircleAvatar(
+                                    child: const Icon(Icons.more_horiz),
+                                    radius: 24,
+                                    backgroundColor: Theme.of(context).colorScheme.background,
+                                  ),
                                   Text(
-                                    char.displayName,
+                                    'More',
                                     overflow: TextOverflow.ellipsis,
                                     textScaleFactor: 0.8,
                                     textAlign: TextAlign.center,
+                                    style: textStyle,
                                   ),
                                 ],
                               ),
                             ),
                           ),
-                        InkWell(
-                          borderRadius: BorderRadius.circular(8),
-                          onTap: () => null,
-                          child: SizedBox(
-                            width: 60,
-                            child: Column(
-                              children: [
-                                CircleAvatar(
-                                  child: const Icon(Icons.more_horiz),
-                                  radius: 24,
-                                  backgroundColor: Theme.of(context).colorScheme.background,
-                                ),
-                                const Text(
-                                  'More',
-                                  overflow: TextOverflow.ellipsis,
-                                  textScaleFactor: 0.8,
-                                  textAlign: TextAlign.center,
-                                ),
-                              ],
-                            ),
-                          ),
-                        ),
-                      ],
+                        ],
+                      ),
                     ),
-                  ),
-                ],
+                    ListTile(
+                      title: const Text('Add Character'),
+                      leading: const Icon(Icons.add),
+                      onTap: () => Get.toNamed(Routes.createCharacterPage),
+                      dense: true,
+                      minLeadingWidth: 20,
+                    )
+                  ],
+                ),
               ),
+              value: 'user',
+              enabled: false,
             ),
-            value: 'user',
-            enabled: false,
-          ),
-        ],
+          ];
+        },
         onSelected: (value) {
           if (actionMap[value] == null) {
             throw Exception('Unsupported');

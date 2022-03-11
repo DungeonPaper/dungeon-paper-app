@@ -102,6 +102,8 @@ class CharacterService extends GetxService {
     debugPrint(character.toRawJson());
   }
 
+  static CharacterService find() => Get.find();
+
   debugUpdateCharData() {
     final char = current;
     updateCharacter(

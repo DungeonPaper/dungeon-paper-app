@@ -10,11 +10,13 @@ class MoveCard extends StatelessWidget {
   const MoveCard({
     Key? key,
     required this.move,
+    this.onSave,
     this.showDice = true,
     this.showStar = true,
   }) : super(key: key);
 
   final Move move;
+  final void Function(Move move)? onSave;
   final bool showDice;
   final bool showStar;
 
@@ -28,6 +30,7 @@ class MoveCard extends StatelessWidget {
       icon: SvgIcon(move.icon, size: 16),
       starred: move.favorited,
       showStar: showStar,
+      onStarChanged: (favorited) => onSave?.call(move.copyWithInherited(favorited: favorited)),
     );
   }
 }

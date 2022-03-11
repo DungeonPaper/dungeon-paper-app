@@ -6,6 +6,7 @@ class ExpansionRow extends StatelessWidget {
   final Widget title;
   final List<Widget> children;
   final bool? expanded;
+  final bool? initiallyExpanded;
   final void Function(bool)? onExpansion;
   final bool showArrow;
   final EdgeInsets? titlePadding;
@@ -20,6 +21,7 @@ class ExpansionRow extends StatelessWidget {
     required this.title,
     required this.children,
     this.expanded,
+    this.initiallyExpanded,
     this.titlePadding,
     this.childrenPadding,
     this.leading,
@@ -38,6 +40,7 @@ class ExpansionRow extends StatelessWidget {
           minLeadingWidth: 36,
         ),
         child: CustomExpansionTile(
+          initiallyExpanded: initiallyExpanded ?? false,
           onExpansionChanged: (state) => onExpansion?.call(!state),
           title: Row(
             children: [

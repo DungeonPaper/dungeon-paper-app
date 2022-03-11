@@ -1,4 +1,4 @@
-import 'package:dungeon_paper/app/data/services/class_service.dart';
+import 'package:dungeon_paper/app/data/services/repository_service.dart';
 import 'package:flutter/foundation.dart';
 import 'package:get/get.dart';
 

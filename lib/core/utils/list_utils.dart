@@ -1,5 +1,7 @@
 import 'dart:math';
 
+import 'package:dungeon_paper/app/model_utils/model_key.dart';
+
 extension IterableUtils<T> on Iterable<T> {
   T sample() => _sample(this);
 }
@@ -57,4 +59,14 @@ List<T> sortByPredefined<T>(
     }
   }
   return out;
+}
+
+List<T> updateByKey<T>(List<T> list, T item, {dynamic Function(T item)? key}) {
+  final keyGetter = key ?? keyFor;
+  return list.map((x) => keyGetter(x) == keyGetter(item) ? item : x).toList();
+}
+
+List<T> removeByKey<T>(List<T> list, T item, {dynamic Function(T item)? key}) {
+  final keyGetter = key ?? keyFor;
+  return list..removeWhere((x) => keyGetter(x) == keyGetter(item));
 }

@@ -1,3 +1,4 @@
+import 'package:dungeon_paper/app/model_utils/character_utils.dart';
 import 'package:dungeon_paper/core/utils/list_utils.dart';
 import 'package:dungeon_paper/generated/l10n.dart';
 import 'package:dungeon_paper/app/data/models/move.dart';
@@ -30,7 +31,12 @@ class HomeCharacterDynamicCards extends GetView<CharacterService> {
           _HorizontalCardListView<Move>(
             cardSize: cardSize,
             items: moves,
-            cardBuilder: (move, _) => MoveCardMini(move: move),
+            cardBuilder: (move, _) => MoveCardMini(
+              move: move,
+              onSave: (m) => controller.updateCharacter(
+                CharacterUtils.updateMove(controller.current!, m),
+              ),
+            ),
           ),
           const SizedBox(height: 10),
           Padding(
@@ -40,7 +46,12 @@ class HomeCharacterDynamicCards extends GetView<CharacterService> {
           _HorizontalCardListView<Spell>(
             cardSize: cardSize,
             items: spells,
-            cardBuilder: (spell, _) => SpellCardMini(spell: spell),
+            cardBuilder: (spell, _) => SpellCardMini(
+              spell: spell,
+              onSave: (s) => controller.updateCharacter(
+                CharacterUtils.updateSpell(controller.current!, s),
+              ),
+            ),
           ),
         ],
       );

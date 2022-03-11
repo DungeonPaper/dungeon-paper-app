@@ -17,6 +17,7 @@ class DynamicActionCardMini extends StatelessWidget {
     required this.dice,
     required this.description,
     this.chips = const [],
+    required this.onStarChanged,
   }) : super(key: key);
 
   final String title;
@@ -28,6 +29,7 @@ class DynamicActionCardMini extends StatelessWidget {
   final List<Dice> dice;
   final String description;
   final Iterable<Widget> chips;
+  final void Function(bool starred) onStarChanged;
 
   @override
   Widget build(BuildContext context) {
@@ -57,19 +59,21 @@ class DynamicActionCardMini extends StatelessWidget {
                             starred ? Icons.star_rounded : Icons.star_border_rounded,
                             color: Theme.of(context).colorScheme.onSurface.withOpacity(0.3),
                           ),
-                          onPressed: () => null,
+                          onPressed: () => onStarChanged(!starred),
                         ),
                       )
                     : const SizedBox.shrink(),
               ],
             ),
             const SizedBox(height: 6),
-            Text(
-              description,
-              overflow: TextOverflow.ellipsis,
-              maxLines: dice.isNotEmpty ? 3 : 4,
-              textScaleFactor: 0.9,
-              style: const TextStyle(fontWeight: FontWeight.w200),
+            Expanded(
+              child: Text(
+                description,
+                overflow: TextOverflow.ellipsis,
+                maxLines: dice.isNotEmpty ? 3 : 4,
+                textScaleFactor: 0.9,
+                style: const TextStyle(fontWeight: FontWeight.w200),
+              ),
             ),
             const SizedBox(height: 4),
             Row(

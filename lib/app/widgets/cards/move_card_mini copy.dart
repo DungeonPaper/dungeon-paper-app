@@ -19,6 +19,7 @@ class MoveCardMini extends StatelessWidget {
       dice: move.dice,
       icon: SvgIcon(move.icon, size: 16),
       starred: move.favorited,
+      onStarChanged: (favorited) => null,
     );
   }
 }

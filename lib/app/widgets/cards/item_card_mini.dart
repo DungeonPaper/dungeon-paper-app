@@ -27,6 +27,7 @@ class MoveCardMini extends StatelessWidget {
       icon: SvgIcon(move.icon, size: 16),
       starred: move.favorited,
       showStar: showStar,
+      onStarChanged: (favorited) => null,
     );
   }
 }

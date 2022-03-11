@@ -20,6 +20,7 @@ class DynamicActionCard extends StatelessWidget {
     this.unstarredIcon,
     this.chips = const [],
     this.chipsSpacing = 4,
+    required this.onStarChanged,
   }) : super(key: key);
 
   final String title;
@@ -32,6 +33,7 @@ class DynamicActionCard extends StatelessWidget {
   final List<Widget> children;
   final Iterable<Widget> chips;
   final double chipsSpacing;
+  final void Function(bool starred) onStarChanged;
 
   @override
   Widget build(BuildContext context) {
@@ -60,7 +62,7 @@ class DynamicActionCard extends StatelessWidget {
                         ? starredIcon ?? const Icon(Icons.star_rounded)
                         : unstarredIcon ?? const Icon(Icons.star_border_rounded),
                   ),
-                  onPressed: () => null,
+                  onPressed: () => onStarChanged(!starred),
                 ),
               )
             : const SizedBox.shrink(),
@@ -71,10 +73,16 @@ class DynamicActionCard extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.end,
             mainAxisSize: MainAxisSize.max,
             children: [
-              ...chips.map((c) => Padding(
-                    padding: EdgeInsets.only(right: chipsSpacing),
-                    child: c,
-                  )),
+              Wrap(
+                children: chips
+                    .map(
+                      (c) => Padding(
+                        padding: EdgeInsets.only(right: chipsSpacing),
+                        child: c,
+                      ),
+                    )
+                    .toList(),
+              ),
               Expanded(child: Container()),
               if (dice.isNotEmpty)
                 BackgroundIconButton(

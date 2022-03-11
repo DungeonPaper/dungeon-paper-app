@@ -9,11 +9,13 @@ class MoveCardMini extends StatelessWidget {
   const MoveCardMini({
     Key? key,
     required this.move,
+    this.onSave,
     this.showStar = true,
   }) : super(key: key);
 
   final Move move;
   final bool showStar;
+  final void Function(Move move)? onSave;
 
   @override
   Widget build(BuildContext context) {
@@ -25,6 +27,7 @@ class MoveCardMini extends StatelessWidget {
       icon: SvgIcon(move.icon, size: 16),
       starred: move.favorited,
       showStar: showStar,
+      onStarChanged: (favorited) => onSave?.call(move.copyWithInherited(favorited: favorited)),
     );
   }
 }

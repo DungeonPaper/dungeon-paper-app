@@ -25,6 +25,7 @@ class ItemCard extends StatelessWidget {
       icon: SvgIcon(item.icon, size: 16),
       starred: item.equipped,
       showStar: showStar,
+      onStarChanged: (equipped) => null,
     );
   }
 }

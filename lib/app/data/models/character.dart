@@ -58,6 +58,14 @@ class Character {
   final Bio bio;
   final Race race;
 
+  int get currentHp => clamp(stats.currentHp, 0, maxHp);
+  int get maxHp => stats.maxHp ?? (characterClass.hp + rollStats.hpBaseValue);
+  int get currentExp => stats.currentExp;
+  int get maxExp => stats.maxExp;
+  double get currentHpPercent => clamp(stats.currentHp / maxHp, 0, 1);
+  double get currentExpPercent => clamp(stats.currentExp / maxExp, 0, 1);
+  int get load => stats.load ?? (characterClass.load + rollStats.loadBaseValue);
+
   Character copyWith({
     Meta? meta,
     String? key,
@@ -202,12 +210,4 @@ class Character {
         'bio': bio.toJson(),
         'race': race.toJson(),
       };
-
-  int get currentHp => clamp(stats.currentHp, 0, maxHp);
-  int get maxHp => stats.maxHp ?? (characterClass.hp + rollStats.hpBaseValue);
-  int get currentExp => stats.currentExp;
-  int get maxExp => stats.maxExp;
-  double get currentHpPercent => clamp(stats.currentHp / maxHp, 0, 1);
-  double get currentExpPercent => clamp(stats.currentExp / maxExp, 0, 1);
-  int get load => stats.load ?? (characterClass.load + rollStats.loadBaseValue);
 }

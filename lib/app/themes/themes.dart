@@ -27,6 +27,9 @@ final parchmentTheme = ThemeData(
     // selectedItemColor: primaryColor,
     // showSelectedLabels: false,
   ),
+  popupMenuTheme: PopupMenuThemeData(
+    shape: rRectShape,
+  ),
 );
 final darkTheme = _dark.copyWith(
   // primaryColor: primaryColor,
@@ -38,6 +41,9 @@ final darkTheme = _dark.copyWith(
     centerTitle: true,
   ),
   cardTheme: baseCardTheme,
+  popupMenuTheme: PopupMenuThemeData(
+    shape: rRectShape,
+  ),
 );
 
 class AppThemes {

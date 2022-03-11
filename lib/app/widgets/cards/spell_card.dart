@@ -10,11 +10,13 @@ class SpellCard extends StatelessWidget {
     required this.spell,
     this.showDice = true,
     this.showStar = true,
+    this.onSave,
   }) : super(key: key);
 
   final Spell spell;
   final bool showDice;
   final bool showStar;
+  final void Function(Spell spell)? onSave;
 
   @override
   Widget build(BuildContext context) {
@@ -26,6 +28,7 @@ class SpellCard extends StatelessWidget {
       icon: SvgIcon(spell.icon, size: 16),
       starred: spell.prepared,
       showStar: showStar,
+      onStarChanged: (prepared) => onSave?.call(spell.copyWithInherited(prepared: prepared)),
     );
   }
 }
