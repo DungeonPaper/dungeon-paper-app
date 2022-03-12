@@ -144,7 +144,7 @@ class CharacterMovesSpellsView extends GetView<CharacterMovesSpellsController> {
         key: 'added_move_1',
         meta: Meta.version(1),
         tags: [],
-        favorited: false,
+        favorited: true,
       ),
       Move(
         category: MoveCategory.advanced1,
@@ -156,7 +156,7 @@ class CharacterMovesSpellsView extends GetView<CharacterMovesSpellsController> {
         key: 'added_move_2',
         meta: Meta.version(1),
         tags: [],
-        favorited: false,
+        favorited: true,
       ),
     ]);
   }
@@ -172,7 +172,7 @@ class CharacterMovesSpellsView extends GetView<CharacterMovesSpellsController> {
         key: 'added_spell_1',
         meta: Meta.version(1),
         tags: [],
-        prepared: false,
+        prepared: true,
       ),
       Spell(
         name: 'Spell 2',
@@ -183,7 +183,7 @@ class CharacterMovesSpellsView extends GetView<CharacterMovesSpellsController> {
         key: 'added_spell_2',
         meta: Meta.version(1),
         tags: [],
-        prepared: false,
+        prepared: true,
       ),
     ]);
   }

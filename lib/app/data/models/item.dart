@@ -73,8 +73,12 @@ class Item extends dw.Item {
         settings: settings != null ? ItemSettings.fromJson(settings) : ItemSettings(),
       );
 
-  factory Item.fromJson(Map<String, dynamic> json) =>
-      Item.fromDwItem(dw.Item.fromJson(json), amount: json['amount'], settings: json['settings']);
+  factory Item.fromJson(Map<String, dynamic> json) => Item.fromDwItem(
+        dw.Item.fromJson(json),
+        amount: json['amount'],
+        settings: json['settings'],
+        equipped: json['equipped'],
+      );
 
   @override
   Map<String, dynamic> toJson() => {

@@ -17,6 +17,7 @@ class DynamicActionCard extends StatelessWidget {
     required this.starred,
     required this.dice,
     required this.description,
+    this.initiallyExpanded,
     this.showStar = true,
     this.starredIcon,
     this.unstarredIcon,
@@ -32,6 +33,7 @@ class DynamicActionCard extends StatelessWidget {
   final Widget? starredIcon;
   final Widget? unstarredIcon;
   final bool starred;
+  final bool? initiallyExpanded;
   final bool showStar;
   final List<Dice> dice;
   final Iterable<Widget> chips;
@@ -49,6 +51,7 @@ class DynamicActionCard extends StatelessWidget {
         expansionKey: expansionKey,
         onExpansion: (state) => expanded.value = !state,
         leading: icon,
+        initiallyExpanded: initiallyExpanded,
         childrenPadding: const EdgeInsets.all(8).copyWith(top: 0),
         trailing: showStar
             ? SizedBox(
@@ -77,17 +80,18 @@ class DynamicActionCard extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.end,
             mainAxisSize: MainAxisSize.max,
             children: [
-              Wrap(
-                children: chips
-                    .map(
-                      (c) => Padding(
-                        padding: EdgeInsets.only(right: chipsSpacing),
-                        child: c,
-                      ),
-                    )
-                    .toList(),
+              Expanded(
+                child: Wrap(
+                  children: chips
+                      .map(
+                        (c) => Padding(
+                          padding: EdgeInsets.only(right: chipsSpacing),
+                          child: c,
+                        ),
+                      )
+                      .toList(),
+                ),
               ),
-              Expanded(child: Container()),
               if (dice.isNotEmpty)
                 BackgroundIconButton(
                   elevation: 1.5,

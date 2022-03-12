@@ -11,11 +11,13 @@ class MoveCardMini extends StatelessWidget {
     required this.move,
     this.onSave,
     this.showStar = true,
+    this.onTap,
   }) : super(key: key);
 
   final Move move;
   final bool showStar;
   final void Function(Move move)? onSave;
+  final void Function()? onTap;
 
   @override
   Widget build(BuildContext context) {
@@ -28,6 +30,7 @@ class MoveCardMini extends StatelessWidget {
       starred: move.favorited,
       showStar: showStar,
       onStarChanged: (favorited) => onSave?.call(move.copyWithInherited(favorited: favorited)),
+      onTap: onTap,
     );
   }
 }

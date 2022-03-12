@@ -309,8 +309,8 @@ class _CustomExpansionTileState extends State<CustomExpansionTile>
           bottom: BorderSide(color: borderSideColor),
         ),
       ),
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
+      child: Wrap(
+        // mainAxisSize: MainAxisSize.min,
         children: <Widget>[
           ListTileTheme.merge(
             iconColor: _iconColor.value,

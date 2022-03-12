@@ -1,6 +1,11 @@
 import 'package:dungeon_paper/app/data/models/item.dart';
 import 'package:dungeon_paper/app/model_utils/character_utils.dart';
+import 'package:dungeon_paper/app/model_utils/model_key.dart';
+import 'package:dungeon_paper/app/modules/Home/views/expanded_card_dialog_view.dart';
+import 'package:dungeon_paper/app/widgets/cards/item_card.dart';
 import 'package:dungeon_paper/app/widgets/cards/item_card_mini.dart';
+import 'package:dungeon_paper/app/widgets/cards/move_card.dart';
+import 'package:dungeon_paper/app/widgets/cards/spell_card.dart';
 import 'package:dungeon_paper/core/utils/list_utils.dart';
 import 'package:dungeon_paper/generated/l10n.dart';
 import 'package:dungeon_paper/app/data/models/move.dart';
@@ -9,6 +14,7 @@ import 'package:dungeon_paper/app/data/services/character_service.dart';
 import 'package:dungeon_paper/app/widgets/cards/move_card_mini.dart';
 import 'package:dungeon_paper/app/widgets/cards/spell_card_mini.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:get/get_state_manager/get_state_manager.dart';
 
 class HomeCharacterDynamicCards extends GetView<CharacterService> {
@@ -34,7 +40,15 @@ class HomeCharacterDynamicCards extends GetView<CharacterService> {
           _HorizontalCardListView<Move>(
             cardSize: cardSize,
             items: moves,
-            cardBuilder: (move, _) => MoveCardMini(
+            cardBuilder: (move, _, onTap) => MoveCardMini(
+              move: move,
+              onTap: onTap,
+              onSave: (_move) => controller.updateCharacter(
+                CharacterUtils.updateMoves(controller.current!, [_move]),
+              ),
+            ),
+            expandedCardBuilder: (move, _) => MoveCard(
+              initiallyExpanded: true,
               move: move,
               onSave: (_move) => controller.updateCharacter(
                 CharacterUtils.updateMoves(controller.current!, [_move]),
@@ -49,7 +63,15 @@ class HomeCharacterDynamicCards extends GetView<CharacterService> {
           _HorizontalCardListView<Spell>(
             cardSize: cardSize,
             items: spells,
-            cardBuilder: (spell, _) => SpellCardMini(
+            cardBuilder: (spell, _, onTap) => SpellCardMini(
+              spell: spell,
+              onSave: (_spell) => controller.updateCharacter(
+                CharacterUtils.updateSpells(controller.current!, [_spell]),
+              ),
+              onTap: onTap,
+            ),
+            expandedCardBuilder: (spell, _) => SpellCard(
+              initiallyExpanded: true,
               spell: spell,
               onSave: (_spell) => controller.updateCharacter(
                 CharacterUtils.updateSpells(controller.current!, [_spell]),
@@ -64,7 +86,15 @@ class HomeCharacterDynamicCards extends GetView<CharacterService> {
           _HorizontalCardListView<Item>(
             cardSize: cardSize,
             items: items,
-            cardBuilder: (item, _) => ItemCardMini(
+            cardBuilder: (item, _, onTap) => ItemCardMini(
+              item: item,
+              onTap: onTap,
+              onSave: (_item) => controller.updateCharacter(
+                CharacterUtils.updateItems(controller.current!, [_item]),
+              ),
+            ),
+            expandedCardBuilder: (item, _) => ItemCard(
+              initiallyExpanded: true,
               item: item,
               onSave: (_item) => controller.updateCharacter(
                 CharacterUtils.updateItems(controller.current!, [_item]),
@@ -83,10 +113,12 @@ class _HorizontalCardListView<T> extends StatelessWidget {
     required this.cardSize,
     required this.items,
     required this.cardBuilder,
+    required this.expandedCardBuilder,
   }) : super(key: key);
 
   final Size cardSize;
-  final Widget Function(T item, int index) cardBuilder;
+  final Widget Function(T item, int index, void Function() onTap) cardBuilder;
+  final Widget Function(T item, int index) expandedCardBuilder;
   final Iterable<T> items;
 
   @override
@@ -106,11 +138,26 @@ class _HorizontalCardListView<T> extends StatelessWidget {
               padding: EdgeInsets.only(right: item.index == items.length - 1 ? 0 : 8),
               child: SizedBox(
                 width: cardSize.width,
-                child: cardBuilder(item.value, item.index),
+                child: Hero(
+                  tag: getKeyFor(item.value),
+                  child: cardBuilder(
+                    item.value,
+                    item.index,
+                    () => Get.to(
+                      () => ExpandedCardDialogView(
+                        heroTag: getKeyFor(item.value),
+                        builder: () => expandedCardBuilder(item.value, item.index),
+                      ),
+                      opaque: false,
+                    ),
+                  ),
+                ),
               ),
             ),
         ],
       ),
     );
   }
+
+  String getKeyFor(T item) => [item.runtimeType, keyFor(item)].join('-');
 }

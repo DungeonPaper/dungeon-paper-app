@@ -11,15 +11,18 @@ class ItemCard extends StatelessWidget {
     required this.item,
     this.showStar = true,
     this.onSave,
+    this.initiallyExpanded,
   }) : super(key: key);
 
   final Item item;
   final bool showStar;
+  final bool? initiallyExpanded;
   final void Function(Item item)? onSave;
 
   @override
   Widget build(BuildContext context) {
     return DynamicActionCard(
+      initiallyExpanded: initiallyExpanded,
       title: item.name,
       description: item.description,
       chips: item.tags.map((t) => TagChip(tag: t)),

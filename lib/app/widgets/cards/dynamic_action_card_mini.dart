@@ -19,6 +19,7 @@ class DynamicActionCardMini extends StatelessWidget {
     required this.description,
     this.chips = const [],
     required this.onStarChanged,
+    this.onTap,
   }) : super(key: key);
 
   final String title;
@@ -31,10 +32,23 @@ class DynamicActionCardMini extends StatelessWidget {
   final String description;
   final Iterable<Widget> chips;
   final void Function(bool starred) onStarChanged;
+  final void Function()? onTap;
 
   @override
   Widget build(BuildContext context) {
-    final markdownStyleSheet = MarkdownStyleSheet(textScaleFactor: 0.9);
+    if (onTap != null) {
+      return Material(
+        color: Colors.transparent,
+        child: InkWell(
+          onTap: onTap,
+          child: buildCard(context),
+        ),
+      );
+    }
+    return buildCard(context);
+  }
+
+  Widget buildCard(BuildContext context) {
     return Card(
       margin: EdgeInsets.zero,
       child: Padding(

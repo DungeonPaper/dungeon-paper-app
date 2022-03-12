@@ -11,12 +11,14 @@ class SpellCardMini extends StatelessWidget {
     this.showDice = true,
     this.showStar = true,
     this.onSave,
+    this.onTap,
   }) : super(key: key);
 
   final Spell spell;
   final bool showDice;
   final bool showStar;
   final void Function(Spell spell)? onSave;
+  final void Function()? onTap;
 
   @override
   Widget build(BuildContext context) {
@@ -29,6 +31,7 @@ class SpellCardMini extends StatelessWidget {
       starred: spell.prepared,
       showStar: showStar,
       onStarChanged: (prepared) => onSave?.call(spell.copyWithInherited(prepared: prepared)),
+      onTap: onTap,
     );
   }
 }

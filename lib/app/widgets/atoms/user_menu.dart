@@ -54,7 +54,10 @@ class UserMenu extends StatelessWidget {
                           for (final char in controller.all.values.take(5))
                             InkWell(
                               borderRadius: BorderRadius.circular(8),
-                              onTap: () => controller.setCurrent(char.key),
+                              onTap: () {
+                                controller.setCurrent(char.key);
+                                Get.back();
+                              },
                               child: SizedBox(
                                 width: 60,
                                 child: Column(

@@ -13,11 +13,13 @@ class ItemCardMini extends StatelessWidget {
     required this.item,
     this.showStar = true,
     this.onSave,
+    this.onTap,
   }) : super(key: key);
 
   final Item item;
   final bool showStar;
   final void Function(Item item)? onSave;
+  final void Function()? onTap;
 
   @override
   Widget build(BuildContext context) {
@@ -30,6 +32,7 @@ class ItemCardMini extends StatelessWidget {
       starred: item.equipped,
       showStar: showStar,
       onStarChanged: (equipped) => onSave?.call(item.copyWithInherited(equipped: equipped)),
+      onTap: onTap,
     );
   }
 }

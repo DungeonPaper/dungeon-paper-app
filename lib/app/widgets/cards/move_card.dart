@@ -14,12 +14,14 @@ class MoveCard extends StatelessWidget {
     this.onSave,
     this.showDice = true,
     this.showStar = true,
+    this.initiallyExpanded,
   }) : super(key: key);
 
   final Move move;
   final void Function(Move move)? onSave;
   final bool showDice;
   final bool showStar;
+  final bool? initiallyExpanded;
 
   @override
   Widget build(BuildContext context) {
@@ -36,6 +38,7 @@ class MoveCard extends StatelessWidget {
       starred: move.favorited,
       showStar: showStar,
       onStarChanged: (favorited) => onSave?.call(move.copyWithInherited(favorited: favorited)),
+      initiallyExpanded: initiallyExpanded,
     );
   }
 }
