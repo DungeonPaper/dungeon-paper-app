@@ -1,3 +1,4 @@
+import 'package:dungeon_paper/app/model_utils/tag_utils.dart';
 import 'package:dungeon_paper/app/widgets/atoms/svg_icon.dart';
 import 'package:dungeon_paper/app/widgets/chips/move_category_chip.dart';
 import 'package:dungeon_paper/app/widgets/chips/tag_chip.dart';
@@ -24,9 +25,12 @@ class MoveCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return DynamicActionCard(
       title: move.name,
-      children: [Text(move.description)],
+      description: move.description,
       expansionKey: PageStorageKey(move.key),
-      chips: [MoveCategoryChip(category: move.category), ...move.tags.map((t) => TagChip(tag: t))],
+      chips: [
+        MoveCategoryChip(category: move.category),
+        ...TagUtils.excludeMetaTags(move.tags).map((t) => TagChip(tag: t))
+      ],
       dice: showDice ? move.dice : [],
       icon: SvgIcon(move.icon, size: 16),
       starred: move.favorited,

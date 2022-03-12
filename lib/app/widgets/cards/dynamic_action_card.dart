@@ -1,6 +1,7 @@
 import 'package:dungeon_paper/app/widgets/atoms/expansion_row.dart';
 import 'package:dungeon_world_data/dice.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_markdown/flutter_markdown.dart';
 import 'package:get/get.dart';
 
 import '../../../core/dw_icons.dart';
@@ -15,7 +16,7 @@ class DynamicActionCard extends StatelessWidget {
     required this.icon,
     required this.starred,
     required this.dice,
-    required this.children,
+    required this.description,
     this.showStar = true,
     this.starredIcon,
     this.unstarredIcon,
@@ -24,6 +25,7 @@ class DynamicActionCard extends StatelessWidget {
     required this.onStarChanged,
   }) : super(key: key);
 
+  final String description;
   final Key? expansionKey;
   final String title;
   final Widget icon;
@@ -32,7 +34,6 @@ class DynamicActionCard extends StatelessWidget {
   final bool starred;
   final bool showStar;
   final List<Dice> dice;
-  final List<Widget> children;
   final Iterable<Widget> chips;
   final double chipsSpacing;
   final void Function(bool starred) onStarChanged;
@@ -70,8 +71,8 @@ class DynamicActionCard extends StatelessWidget {
               )
             : const SizedBox.shrink(),
         children: [
-          ...children,
-          if (children.isNotEmpty) const SizedBox(height: 4),
+          MarkdownBody(data: description),
+          if (description.isNotEmpty) const SizedBox(height: 4),
           Row(
             crossAxisAlignment: CrossAxisAlignment.end,
             mainAxisSize: MainAxisSize.max,

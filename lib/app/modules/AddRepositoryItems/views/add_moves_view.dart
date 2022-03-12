@@ -18,7 +18,7 @@ class AddMovesView extends GetView {
   Widget build(BuildContext context) {
     return AddRepositoryItemsView<Move>(
       title: Text(S.current.addMoves),
-      cardBuilder: (ctx, move) => MoveCard(move: move),
+      cardBuilder: (ctx, move) => MoveCard(move: move, showDice: false, showStar: false),
       onAdd: onAdd,
     );
   }

@@ -22,7 +22,7 @@ class SpellCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return DynamicActionCard(
       title: spell.name,
-      children: [Text(spell.description)],
+      description: spell.description,
       chips: const [],
       dice: showDice ? spell.dice : [],
       icon: SvgIcon(spell.icon, size: 16),

@@ -1,5 +1,6 @@
 import 'package:dungeon_world_data/dice.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_markdown/flutter_markdown.dart';
 
 import '../../../core/dw_icons.dart';
 import '../atoms/background_icon_button.dart';
@@ -33,6 +34,7 @@ class DynamicActionCardMini extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final markdownStyleSheet = MarkdownStyleSheet(textScaleFactor: 0.9);
     return Card(
       margin: EdgeInsets.zero,
       child: Padding(
@@ -67,6 +69,26 @@ class DynamicActionCardMini extends StatelessWidget {
             ),
             const SizedBox(height: 6),
             Expanded(
+              // child: Container(),
+              // child: ConstrainedBox(
+              //   constraints: BoxConstraints(minHeight: 20, maxHeight: 20),
+              //   child: Stack(
+              //     children: [
+              //       Positioned(
+              //         top: 0,
+              //         bottom: 0,
+              //         left: 0,
+              //         right: 0,
+              //         child: MarkdownBody(
+              //           data: description,
+              //           // fitContent: true,
+              //           // shrinkWrap: false,
+              //           styleSheet: markdownStyleSheet,
+              //         ),
+              //       ),
+              //     ],
+              //   ),
+              // ),
               child: Text(
                 description,
                 overflow: TextOverflow.ellipsis,
@@ -102,4 +124,22 @@ class DynamicActionCardMini extends StatelessWidget {
       ),
     );
   }
+}
+
+class RectClipper extends CustomClipper<Rect> {
+  final Size size;
+
+  RectClipper([
+    double width = double.infinity,
+    double height = double.infinity,
+  ]) : size = Size(width, height);
+
+  RectClipper.fromSize(this.size);
+
+  @override
+  Rect getClip(Size size) => Rect.fromLTWH(0, 0, size.width, size.height);
+
+  @override
+  bool shouldReclip(covariant RectClipper oldClipper) =>
+      oldClipper.size.width != size.width || oldClipper.size.height != size.height;
 }
