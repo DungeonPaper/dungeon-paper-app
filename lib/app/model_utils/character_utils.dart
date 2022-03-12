@@ -5,22 +5,31 @@ import 'package:dungeon_paper/app/data/models/spell.dart';
 import 'package:dungeon_paper/core/utils/list_utils.dart';
 
 class CharacterUtils {
-  static Character updateMove(Character char, Move move) => char.copyWith(
-        moves: updateByKey(char.moves, move),
+  static Character updateMoves(Character char, Iterable<Move> moves) => char.copyWith(
+        moves: updateByKey(char.moves, moves),
       );
-  static Character removeMove(Character char, Move move) => char.copyWith(
+  static Character addMoves(Character char, Iterable<Move> moves) => char.copyWith(
+        moves: addByKey(char.moves, moves),
+      );
+  static Character removeMoves(Character char, Iterable<Move> move) => char.copyWith(
         moves: removeByKey(char.moves, move),
       );
-  static Character updateSpell(Character char, Spell spell) => char.copyWith(
-        spells: updateByKey(char.spells, spell),
+  static Character updateSpells(Character char, Iterable<Spell> spells) => char.copyWith(
+        spells: updateByKey(char.spells, spells),
       );
-  static Character removeSpell(Character char, Spell spell) => char.copyWith(
+  static Character addSpells(Character char, Iterable<Spell> spells) => char.copyWith(
+        spells: addByKey(char.spells, spells),
+      );
+  static Character removeSpells(Character char, Iterable<Spell> spell) => char.copyWith(
         spells: removeByKey(char.spells, spell),
       );
-  static Character updateItem(Character char, Item item) => char.copyWith(
-        items: updateByKey(char.items, item),
+  static Character updateItems(Character char, Iterable<Item> items) => char.copyWith(
+        items: updateByKey(char.items, items),
       );
-  static Character removeItem(Character char, Item item) => char.copyWith(
+  static Character addItems(Character char, Iterable<Item> items) => char.copyWith(
+        items: addByKey(char.items, items),
+      );
+  static Character removeItems(Character char, Iterable<Item> item) => char.copyWith(
         items: removeByKey(char.items, item),
       );
 }

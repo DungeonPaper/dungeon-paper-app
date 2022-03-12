@@ -36,8 +36,8 @@ class HomeCharacterDynamicCards extends GetView<CharacterService> {
             items: moves,
             cardBuilder: (move, _) => MoveCardMini(
               move: move,
-              onSave: (m) => controller.updateCharacter(
-                CharacterUtils.updateMove(controller.current!, m),
+              onSave: (_move) => controller.updateCharacter(
+                CharacterUtils.updateMoves(controller.current!, [_move]),
               ),
             ),
           ),
@@ -51,8 +51,8 @@ class HomeCharacterDynamicCards extends GetView<CharacterService> {
             items: spells,
             cardBuilder: (spell, _) => SpellCardMini(
               spell: spell,
-              onSave: (s) => controller.updateCharacter(
-                CharacterUtils.updateSpell(controller.current!, s),
+              onSave: (_spell) => controller.updateCharacter(
+                CharacterUtils.updateSpells(controller.current!, [_spell]),
               ),
             ),
           ),
@@ -66,8 +66,8 @@ class HomeCharacterDynamicCards extends GetView<CharacterService> {
             items: items,
             cardBuilder: (item, _) => ItemCardMini(
               item: item,
-              onSave: (i) => controller.updateCharacter(
-                CharacterUtils.updateItem(controller.current!, i),
+              onSave: (_item) => controller.updateCharacter(
+                CharacterUtils.updateItems(controller.current!, [_item]),
               ),
             ),
           ),

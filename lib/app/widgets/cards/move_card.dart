@@ -25,6 +25,7 @@ class MoveCard extends StatelessWidget {
     return DynamicActionCard(
       title: move.name,
       children: [Text(move.description)],
+      expansionKey: PageStorageKey(move.key),
       chips: [MoveCategoryChip(category: move.category), ...move.tags.map((t) => TagChip(tag: t))],
       dice: showDice ? move.dice : [],
       icon: SvgIcon(move.icon, size: 16),

@@ -70,7 +70,14 @@ class MessageLookup extends MessageLookupByLibrary {
   final messages = _notInlinedMessages(_notInlinedMessages);
   static Map<String, Function> _notInlinedMessages(_) => <String, Function>{
         "addMoves": MessageLookupByLibrary.simpleMessage("Add Moves"),
+        "addMovesCustom": MessageLookupByLibrary.simpleMessage("Add New Move"),
+        "addMovesExisting":
+            MessageLookupByLibrary.simpleMessage("Add Existing Moves"),
         "addSpells": MessageLookupByLibrary.simpleMessage("Add Spells"),
+        "addSpellsCustom":
+            MessageLookupByLibrary.simpleMessage("Add New Spell"),
+        "addSpellsExisting":
+            MessageLookupByLibrary.simpleMessage("Add Existing Spells"),
         "alignment": m0,
         "appName": MessageLookupByLibrary.simpleMessage("Dungeon Paper"),
         "characterBarHp": MessageLookupByLibrary.simpleMessage("HP"),

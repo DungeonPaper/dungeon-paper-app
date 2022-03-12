@@ -30,8 +30,8 @@ class HomeCharacterActionsView extends GetView<CharacterService> {
                     padding: const EdgeInsets.only(bottom: 8),
                     child: MoveCard(
                       move: move,
-                      onSave: (m) => controller.updateCharacter(
-                        CharacterUtils.updateMove(controller.current!, m),
+                      onSave: (_move) => controller.updateCharacter(
+                        CharacterUtils.updateMoves(controller.current!, [_move]),
                       ),
                     ),
                   ),
@@ -47,8 +47,8 @@ class HomeCharacterActionsView extends GetView<CharacterService> {
                     padding: const EdgeInsets.only(bottom: 8),
                     child: SpellCard(
                       spell: spell,
-                      onSave: (s) => controller.updateCharacter(
-                        CharacterUtils.updateSpell(controller.current!, s),
+                      onSave: (_spell) => controller.updateCharacter(
+                        CharacterUtils.updateSpells(controller.current!, [_spell]),
                       ),
                     ),
                   ),
@@ -64,8 +64,8 @@ class HomeCharacterActionsView extends GetView<CharacterService> {
                     padding: const EdgeInsets.only(bottom: 8),
                     child: ItemCard(
                       item: item,
-                      onSave: (i) => controller.updateCharacter(
-                        CharacterUtils.updateItem(controller.current!, i),
+                      onSave: (_item) => controller.updateCharacter(
+                        CharacterUtils.updateItems(controller.current!, [_item]),
                       ),
                     ),
                   ),

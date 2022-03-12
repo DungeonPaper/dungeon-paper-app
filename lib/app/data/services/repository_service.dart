@@ -31,6 +31,26 @@ class RepositoryService extends GetxService {
     init();
   }
 
+  RxMap<String, T> listByType<T>() {
+    switch (T) {
+      case CharacterClass:
+        return classes as RxMap<String, T>;
+      case Item:
+        return items as RxMap<String, T>;
+      case Monster:
+        return monsters as RxMap<String, T>;
+      case Move:
+        return moves as RxMap<String, T>;
+      case Race:
+        return races as RxMap<String, T>;
+      case Spell:
+        return spells as RxMap<String, T>;
+      case dw.Tag:
+        return tags as RxMap<String, T>;
+    }
+    throw TypeError();
+  }
+
   Future<RepositoryService> init() async {
     var cachedClasses = await CacheHandler.instance.getCollection('Classes');
     var cachedItems = await CacheHandler.instance.getCollection('Items');

@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'custom_expansion_tile.dart';
 
 class ExpansionRow extends StatelessWidget {
+  final Key? expansionKey;
   final Widget title;
   final List<Widget> children;
   final bool? expanded;
@@ -18,6 +19,7 @@ class ExpansionRow extends StatelessWidget {
 
   const ExpansionRow({
     Key? key,
+    this.expansionKey,
     required this.title,
     required this.children,
     this.expanded,
@@ -40,6 +42,7 @@ class ExpansionRow extends StatelessWidget {
           minLeadingWidth: 36,
         ),
         child: CustomExpansionTile(
+          key: expansionKey,
           initiallyExpanded: initiallyExpanded ?? false,
           onExpansionChanged: (state) => onExpansion?.call(!state),
           title: Row(

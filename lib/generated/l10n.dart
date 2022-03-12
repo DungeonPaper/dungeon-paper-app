@@ -394,11 +394,51 @@ class S {
     );
   }
 
+  /// `Add New Move`
+  String get addMovesCustom {
+    return Intl.message(
+      'Add New Move',
+      name: 'addMovesCustom',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Add Existing Moves`
+  String get addMovesExisting {
+    return Intl.message(
+      'Add Existing Moves',
+      name: 'addMovesExisting',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `Add Spells`
   String get addSpells {
     return Intl.message(
       'Add Spells',
       name: 'addSpells',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Add New Spell`
+  String get addSpellsCustom {
+    return Intl.message(
+      'Add New Spell',
+      name: 'addSpellsCustom',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Add Existing Spells`
+  String get addSpellsExisting {
+    return Intl.message(
+      'Add Existing Spells',
+      name: 'addSpellsExisting',
       desc: '',
       args: [],
     );

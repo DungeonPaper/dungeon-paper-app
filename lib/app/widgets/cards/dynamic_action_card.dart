@@ -10,6 +10,7 @@ import '../atoms/svg_icon.dart';
 class DynamicActionCard extends StatelessWidget {
   const DynamicActionCard({
     Key? key,
+    this.expansionKey,
     required this.title,
     required this.icon,
     required this.starred,
@@ -23,6 +24,7 @@ class DynamicActionCard extends StatelessWidget {
     required this.onStarChanged,
   }) : super(key: key);
 
+  final Key? expansionKey;
   final String title;
   final Widget icon;
   final Widget? starredIcon;
@@ -43,6 +45,7 @@ class DynamicActionCard extends StatelessWidget {
       margin: EdgeInsets.zero,
       child: ExpansionRow(
         title: Text(title),
+        expansionKey: expansionKey,
         onExpansion: (state) => expanded.value = !state,
         leading: icon,
         childrenPadding: const EdgeInsets.all(8).copyWith(top: 0),

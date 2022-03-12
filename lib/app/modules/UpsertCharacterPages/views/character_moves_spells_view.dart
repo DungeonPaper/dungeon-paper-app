@@ -1,7 +1,9 @@
 import 'package:dungeon_paper/app/data/models/meta.dart';
 import 'package:dungeon_paper/app/data/models/move.dart';
 import 'package:dungeon_paper/app/data/models/spell.dart';
+import 'package:dungeon_paper/app/modules/AddRepositoryItems/views/add_moves_view.dart';
 import 'package:dungeon_paper/app/modules/UpsertCharacterPages/controllers/character_moves_spells_controller.dart';
+import 'package:dungeon_paper/app/routes/app_pages.dart';
 import 'package:dungeon_paper/app/widgets/cards/move_card.dart';
 import 'package:dungeon_paper/app/widgets/cards/spell_card.dart';
 import 'package:dungeon_paper/generated/l10n.dart';
@@ -45,12 +47,35 @@ class CharacterMovesSpellsView extends GetView<CharacterMovesSpellsController> {
                   .toList(),
             ),
           ),
-          SizedBox(
-            height: 40,
-            child: OutlinedButton.icon(
-              onPressed: withValidate(_debugAddMoves), // TODO CHANGE!
-              label: Text(S.current.addMoves),
-              icon: const Icon(Icons.add),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 8),
+            child: SizedBox(
+              height: 48,
+              child: Row(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  Expanded(
+                    child: OutlinedButton.icon(
+                      onPressed: () => Get.to(
+                        () => AddMovesView(
+                          onAdd: (moves) =>
+                              withUpdateController(() => controller.moves.addAll(moves)),
+                        ),
+                      ),
+                      label: Text(S.current.addMovesExisting),
+                      icon: const Icon(Icons.add),
+                    ),
+                  ),
+                  const SizedBox(width: 8),
+                  Expanded(
+                    child: OutlinedButton.icon(
+                      onPressed: withUpdateController(_debugAddMoves), // TODO CHANGE!
+                      label: Text(S.current.addMovesCustom),
+                      icon: const Icon(Icons.add),
+                    ),
+                  ),
+                ],
+              ),
             ),
           ),
           Obx(
@@ -69,12 +94,30 @@ class CharacterMovesSpellsView extends GetView<CharacterMovesSpellsController> {
                   .toList(),
             ),
           ),
-          SizedBox(
-            height: 40,
-            child: OutlinedButton.icon(
-              onPressed: withValidate(_debugAddSpells), // TODO CHANGE!
-              label: Text(S.current.addSpells),
-              icon: const Icon(Icons.add),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 8),
+            child: SizedBox(
+              height: 48,
+              child: Row(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  Expanded(
+                    child: OutlinedButton.icon(
+                      onPressed: withUpdateController(_debugAddSpells), // TODO CHANGE!
+                      label: Text(S.current.addSpellsExisting),
+                      icon: const Icon(Icons.add),
+                    ),
+                  ),
+                  const SizedBox(width: 8),
+                  Expanded(
+                    child: OutlinedButton.icon(
+                      onPressed: withUpdateController(_debugAddSpells), // TODO CHANGE!
+                      label: Text(S.current.addSpellsCustom),
+                      icon: const Icon(Icons.add),
+                    ),
+                  ),
+                ],
+              ),
             ),
           ),
         ],
@@ -82,7 +125,7 @@ class CharacterMovesSpellsView extends GetView<CharacterMovesSpellsController> {
     );
   }
 
-  void Function() withValidate(void Function() cb) {
+  void Function() withUpdateController(void Function() cb) {
     return () {
       cb();
       updateControllers();
