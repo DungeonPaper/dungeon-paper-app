@@ -149,6 +149,7 @@ class _HorizontalCardListView<T> extends StatelessWidget {
                         builder: () => expandedCardBuilder(item.value, item.index),
                       ),
                       opaque: false,
+                      transition: Transition.fadeIn,
                     ),
                   ),
                 ),

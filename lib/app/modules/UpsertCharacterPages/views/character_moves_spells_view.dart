@@ -1,6 +1,7 @@
 import 'package:dungeon_paper/app/data/models/meta.dart';
 import 'package:dungeon_paper/app/data/models/move.dart';
 import 'package:dungeon_paper/app/data/models/spell.dart';
+import 'package:dungeon_paper/app/modules/AddRepositoryItems/bindings/add_repository_items_binding.dart';
 import 'package:dungeon_paper/app/modules/AddRepositoryItems/views/add_moves_view.dart';
 import 'package:dungeon_paper/app/modules/UpsertCharacterPages/controllers/character_moves_spells_controller.dart';
 import 'package:dungeon_paper/app/routes/app_pages.dart';
@@ -57,11 +58,14 @@ class CharacterMovesSpellsView extends GetView<CharacterMovesSpellsController> {
                   Expanded(
                     child: OutlinedButton.icon(
                       onPressed: () => Get.to(
-                        () => AddMovesView(
-                          onAdd: (moves) =>
-                              withUpdateController(() => controller.moves.addAll(moves)),
-                        ),
-                      ),
+                          () => AddMovesView(
+                                onAdd: (moves) => withUpdateController(
+                                  () => controller.moves.addAll(moves.map(
+                                    (m) => m.copyWithInherited(favorited: true),
+                                  )),
+                                )(),
+                              ),
+                          binding: AddRepositoryItemsBinding()),
                       label: Text(S.current.addMovesExisting),
                       icon: const Icon(Icons.add),
                     ),

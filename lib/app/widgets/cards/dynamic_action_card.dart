@@ -24,6 +24,7 @@ class DynamicActionCard extends StatelessWidget {
     this.chips = const [],
     this.chipsSpacing = 4,
     required this.onStarChanged,
+    this.actions = const [],
   }) : super(key: key);
 
   final String description;
@@ -39,6 +40,7 @@ class DynamicActionCard extends StatelessWidget {
   final Iterable<Widget> chips;
   final double chipsSpacing;
   final void Function(bool starred) onStarChanged;
+  final Iterable<Widget> actions;
 
   @override
   Widget build(BuildContext context) {
@@ -50,7 +52,6 @@ class DynamicActionCard extends StatelessWidget {
         title: Text(title),
         expansionKey: expansionKey,
         onExpansion: (state) => expanded.value = !state,
-        leading: icon,
         initiallyExpanded: initiallyExpanded,
         childrenPadding: const EdgeInsets.all(8).copyWith(top: 0),
         trailing: showStar
@@ -92,6 +93,7 @@ class DynamicActionCard extends StatelessWidget {
                       .toList(),
                 ),
               ),
+              ...actions,
               if (dice.isNotEmpty)
                 BackgroundIconButton(
                   elevation: 1.5,

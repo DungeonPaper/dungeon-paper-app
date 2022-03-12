@@ -21,19 +21,11 @@ class ExpandedCardDialogView extends GetView {
           color: Colors.black.withOpacity(0.75),
           padding: const EdgeInsets.all(32),
           child: Center(
-            child: ConstrainedBox(
-              constraints: BoxConstraints(
-                  // minHeight: 200,
-                  // maxHeight: MediaQuery.of(context).size.height / 2,
-                  // minWidth: MediaQuery.of(context).size.width,
-                  // maxWidth: MediaQuery.of(context).size.width,
-                  ),
-              child: Hero(
-                tag: heroTag,
-                child: Material(
-                  type: MaterialType.transparency,
-                  child: builder(),
-                ),
+            child: Hero(
+              tag: heroTag,
+              child: Material(
+                type: MaterialType.transparency,
+                child: builder(),
               ),
             ),
           ),

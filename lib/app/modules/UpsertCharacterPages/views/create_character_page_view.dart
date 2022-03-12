@@ -61,13 +61,15 @@ class CreateCharacterPageView extends GetView<CreateCharacterPageController> {
       floatingActionButton: Obx(
         () => !controller.allStepsDone
             ? FloatingActionButton(
-                backgroundColor: controller.canProceed ? DwColors.success : Colors.grey,
+                backgroundColor:
+                    controller.canProceed ? DwColors.success : Theme.of(context).disabledColor,
                 onPressed: controller.canProceed ? () => controller.proceed(context) : null,
                 tooltip: S.current.createCharacterProceedTooltip,
                 child: const Icon(Icons.arrow_forward),
               )
             : FloatingActionButton.extended(
-                backgroundColor: controller.canProceed ? DwColors.success : Colors.grey,
+                backgroundColor:
+                    controller.canProceed ? DwColors.success : Theme.of(context).disabledColor,
                 onPressed: () => controller.openPreview(context),
                 tooltip: !controller.isLastStep ? S.current.createCharacterProceedTooltip : null,
                 label: Text(S.current.createCharacterFinishButton),

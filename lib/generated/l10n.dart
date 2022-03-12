@@ -544,6 +544,98 @@ class S {
     );
   }
 
+  /// `{runtimeType, select, CharacterClass {Class} Item {Item} Monster {Monster} Move {Move} Race {Race} Spell {Spell} Tag {Tag} other {{runtimeType}}}`
+  String entity(Object runtimeType) {
+    return Intl.select(
+      runtimeType,
+      {
+        'CharacterClass': 'Class',
+        'Item': 'Item',
+        'Monster': 'Monster',
+        'Move': 'Move',
+        'Race': 'Race',
+        'Spell': 'Spell',
+        'Tag': 'Tag',
+        'other': '$runtimeType',
+      },
+      name: 'entity',
+      desc: '',
+      args: [runtimeType],
+    );
+  }
+
+  /// `{runtimeType, select, CharacterClass {Classes} Item {Items} Monster {Monsters} Move {Moves} Race {Races} Spell {Spells} Tag {Tags} other {{runtimeType}s}}`
+  String entityPlural(Object runtimeType) {
+    return Intl.select(
+      runtimeType,
+      {
+        'CharacterClass': 'Classes',
+        'Item': 'Items',
+        'Monster': 'Monsters',
+        'Move': 'Moves',
+        'Race': 'Races',
+        'Spell': 'Spells',
+        'Tag': 'Tags',
+        'other': '${runtimeType}s',
+      },
+      name: 'entityPlural',
+      desc: '',
+      args: [runtimeType],
+    );
+  }
+
+  /// `{count, plural, one {{count} {singular}} other {{count} {plural}}}`
+  String pluralize(num count, Object singular, Object plural) {
+    return Intl.plural(
+      count,
+      one: '$count $singular',
+      other: '$count $plural',
+      name: 'pluralize',
+      desc: '',
+      args: [count, singular, plural],
+    );
+  }
+
+  /// `Select`
+  String get select {
+    return Intl.message(
+      'Select',
+      name: 'select',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Select {string} to add`
+  String selectToAdd(Object string) {
+    return Intl.message(
+      'Select $string to add',
+      name: 'selectToAdd',
+      desc: '',
+      args: [string],
+    );
+  }
+
+  /// `Remove`
+  String get remove {
+    return Intl.message(
+      'Remove',
+      name: 'remove',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Add {string}`
+  String addWithCount(Object string) {
+    return Intl.message(
+      'Add $string',
+      name: 'addWithCount',
+      desc: '',
+      args: [string],
+    );
+  }
+
   /// `Moves`
   String get moves {
     return Intl.message(

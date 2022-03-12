@@ -100,12 +100,18 @@ class UserMenu extends StatelessWidget {
                         ],
                       ),
                     ),
-                    ListTile(
-                      title: const Text('Add Character'),
-                      leading: const Icon(Icons.add),
-                      onTap: () => Get.toNamed(Routes.createCharacterPage),
-                      dense: true,
-                      minLeadingWidth: 20,
+                    Padding(
+                      padding: const EdgeInsets.only(top: 8),
+                      child: ListTileTheme.merge(
+                        minLeadingWidth: 10,
+                        dense: true,
+                        contentPadding: EdgeInsets.zero,
+                        child: ListTile(
+                          title: const Text('Add Character'),
+                          leading: const Icon(Icons.add),
+                          onTap: () => Get.toNamed(Routes.createCharacterPage),
+                        ),
+                      ),
                     )
                   ],
                 ),
