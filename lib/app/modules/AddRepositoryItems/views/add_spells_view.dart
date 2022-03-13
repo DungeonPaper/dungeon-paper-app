@@ -1,27 +1,27 @@
-import 'package:dungeon_paper/app/data/models/move.dart';
+import 'package:dungeon_paper/app/data/models/spell.dart';
 import 'package:dungeon_paper/app/modules/AddRepositoryItems/controllers/add_repository_items_controller.dart';
 import 'package:dungeon_paper/app/modules/AddRepositoryItems/views/add_repository_items_view.dart';
 import 'package:dungeon_paper/app/themes/button_themes.dart';
-import 'package:dungeon_paper/app/widgets/cards/move_card.dart';
+import 'package:dungeon_paper/app/widgets/cards/spell_card.dart';
 import 'package:dungeon_paper/generated/l10n.dart';
 import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
 
-class AddMovesView extends GetView<AddRepositoryItemsController<Move>> {
-  const AddMovesView({
+class AddSpellsView extends GetView<AddRepositoryItemsController<Spell>> {
+  const AddSpellsView({
     Key? key,
     required this.onAdd,
   }) : super(key: key);
 
-  final void Function(List<Move> moves) onAdd;
+  final void Function(List<Spell> spells) onAdd;
 
   @override
   Widget build(BuildContext context) {
-    return AddRepositoryItemsView<Move>(
-      title: Text(S.current.addMoves),
-      cardBuilder: (ctx, move, {required onSelect, required selected}) => MoveCard(
-        move: move,
+    return AddRepositoryItemsView<Spell>(
+      title: Text(S.current.addSpells),
+      cardBuilder: (ctx, spell, {required onSelect, required selected}) => SpellCard(
+        spell: spell,
         showDice: false,
         showStar: false,
         actions: [

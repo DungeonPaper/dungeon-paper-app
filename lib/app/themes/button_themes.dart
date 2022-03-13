@@ -8,4 +8,9 @@ class ButtonThemes {
         primary: Theme.of(context).primaryColor,
         shape: rRectShape,
       );
+
+  static ButtonStyle primaryOutlined(BuildContext context) => OutlinedButton.styleFrom(
+        primary: Theme.of(context).primaryColor,
+        shape: rRectShape,
+      );
 }

@@ -21,6 +21,7 @@ class HomeView extends GetView<CharacterService> {
           DebugMenu(),
           UserMenu(),
         ],
+        automaticallyImplyLeading: false,
       ),
       body: PageView(
         controller: controller.pageController,

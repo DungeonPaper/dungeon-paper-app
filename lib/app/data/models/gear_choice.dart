@@ -47,12 +47,12 @@ class GearChoice extends dw.GearChoice {
         'selections': List<dynamic>.from(selections.map((x) => x.toJson())),
       };
 
-  static List<Item> selectionToItems(List<GearSelection> selections) =>
+  static List<Item> selectionToItems(List<GearSelection> selections, {bool equipped = false}) =>
       selections.fold<List<Item>>([], (acc, sel) {
         return [
           ...acc,
           ...sel.options.map(
-            (opt) => Item.fromDwItem(opt.item, amount: opt.amount),
+            (opt) => Item.fromDwItem(opt.item, amount: opt.amount, equipped: equipped),
           )
         ];
       });

@@ -3,10 +3,13 @@ import 'package:dungeon_paper/app/data/models/move.dart';
 import 'package:dungeon_paper/app/data/models/spell.dart';
 import 'package:dungeon_paper/app/modules/AddRepositoryItems/bindings/add_repository_items_binding.dart';
 import 'package:dungeon_paper/app/modules/AddRepositoryItems/views/add_moves_view.dart';
+import 'package:dungeon_paper/app/modules/AddRepositoryItems/views/add_spells_view.dart';
 import 'package:dungeon_paper/app/modules/UpsertCharacterPages/controllers/character_moves_spells_controller.dart';
 import 'package:dungeon_paper/app/routes/app_pages.dart';
+import 'package:dungeon_paper/app/themes/button_themes.dart';
 import 'package:dungeon_paper/app/widgets/cards/move_card.dart';
 import 'package:dungeon_paper/app/widgets/cards/spell_card.dart';
+import 'package:dungeon_paper/core/utils/list_utils.dart';
 import 'package:dungeon_paper/generated/l10n.dart';
 import 'package:dungeon_world_data/dungeon_world_data.dart' as dw;
 import 'package:flutter/material.dart';
@@ -27,15 +30,20 @@ class CharacterMovesSpellsView extends GetView<CharacterMovesSpellsController> {
 
   @override
   Widget build(BuildContext context) {
+    var titleStyle = Theme.of(context).textTheme.headline6;
     return SingleChildScrollView(
       child: Column(
         mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
+          Obx(() => Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                child: Text(S.current.movesWithCount(controller.moves.length), style: titleStyle),
+              )),
           Obx(
             () => ListView(
               shrinkWrap: true,
-              padding: const EdgeInsets.all(16),
+              padding: const EdgeInsets.all(8),
               physics: const NeverScrollableScrollPhysics(),
               children: controller.moves
                   .map((move) => Padding(
@@ -43,6 +51,14 @@ class CharacterMovesSpellsView extends GetView<CharacterMovesSpellsController> {
                         child: MoveCard(
                           move: move,
                           showDice: false,
+                          actions: [
+                            ElevatedButton.icon(
+                              style: ButtonThemes.primaryElevated(context),
+                              onPressed: () => removeByKey(controller.moves, [move]),
+                              label: Text(S.current.remove),
+                              icon: const Icon(Icons.remove),
+                            )
+                          ],
                         ),
                       ))
                   .toList(),
@@ -58,14 +74,17 @@ class CharacterMovesSpellsView extends GetView<CharacterMovesSpellsController> {
                   Expanded(
                     child: OutlinedButton.icon(
                       onPressed: () => Get.to(
-                          () => AddMovesView(
-                                onAdd: (moves) => withUpdateController(
-                                  () => controller.moves.addAll(moves.map(
-                                    (m) => m.copyWithInherited(favorited: true),
-                                  )),
-                                )(),
-                              ),
-                          binding: AddRepositoryItemsBinding()),
+                        () => AddMovesView(
+                          onAdd: (moves) {
+                            controller.moves.value = addByKey(
+                              controller.moves,
+                              moves.map((m) => m.copyWithInherited(favorited: true)),
+                            );
+                            updateControllers();
+                          },
+                        ),
+                        binding: AddRepositoryItemsBinding(),
+                      ),
                       label: Text(S.current.addMovesExisting),
                       icon: const Icon(Icons.add),
                     ),
@@ -82,10 +101,14 @@ class CharacterMovesSpellsView extends GetView<CharacterMovesSpellsController> {
               ),
             ),
           ),
+          Obx(() => Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8).copyWith(top: 24),
+                child: Text(S.current.spellsWithCount(controller.spells.length), style: titleStyle),
+              )),
           Obx(
             () => ListView(
               shrinkWrap: true,
-              padding: const EdgeInsets.all(16),
+              padding: const EdgeInsets.all(8),
               physics: const NeverScrollableScrollPhysics(),
               children: controller.spells
                   .map((spell) => Padding(
@@ -93,6 +116,14 @@ class CharacterMovesSpellsView extends GetView<CharacterMovesSpellsController> {
                         child: SpellCard(
                           spell: spell,
                           showDice: false,
+                          actions: [
+                            ElevatedButton.icon(
+                              style: ButtonThemes.primaryElevated(context),
+                              onPressed: () => removeByKey(controller.spells, [spell]),
+                              label: Text(S.current.remove),
+                              icon: const Icon(Icons.remove),
+                            )
+                          ],
                         ),
                       ))
                   .toList(),
@@ -107,7 +138,18 @@ class CharacterMovesSpellsView extends GetView<CharacterMovesSpellsController> {
                 children: [
                   Expanded(
                     child: OutlinedButton.icon(
-                      onPressed: withUpdateController(_debugAddSpells), // TODO CHANGE!
+                      onPressed: () => Get.to(
+                        () => AddSpellsView(
+                          onAdd: (spells) {
+                            controller.spells.value = addByKey(
+                              controller.spells,
+                              spells.map((s) => s.copyWithInherited(prepared: true)),
+                            );
+                            updateControllers();
+                          },
+                        ),
+                        binding: AddRepositoryItemsBinding(),
+                      ),
                       label: Text(S.current.addSpellsExisting),
                       icon: const Icon(Icons.add),
                     ),

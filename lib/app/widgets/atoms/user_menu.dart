@@ -1,3 +1,4 @@
+import 'package:dungeon_paper/app/data/models/character.dart';
 import 'package:dungeon_paper/app/routes/app_pages.dart';
 import 'package:dungeon_paper/app/data/services/character_service.dart';
 import 'package:dungeon_paper/app/widgets/atoms/debug_dialog.dart';
@@ -5,6 +6,8 @@ import 'package:dungeon_paper/app/widgets/atoms/user_avatar.dart';
 import 'package:dungeon_paper/core/http/api.dart';
 import 'package:dungeon_paper/core/http/api_requests/search.dart';
 import 'package:dungeon_paper/core/storage_handler/storage_handler.dart';
+import 'package:dungeon_paper/core/utils/date_utils.dart';
+import 'package:dungeon_paper/generated/l10n.dart';
 import 'package:dynamic_themes/dynamic_themes.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -51,7 +54,7 @@ class UserMenu extends StatelessWidget {
                         spacing: 4,
                         runSpacing: 4,
                         children: [
-                          for (final char in controller.all.values.take(5))
+                          for (final char in controller.charsByLastUsed.take(5))
                             InkWell(
                               borderRadius: BorderRadius.circular(8),
                               onTap: () {
@@ -76,7 +79,7 @@ class UserMenu extends StatelessWidget {
                             ),
                           InkWell(
                             borderRadius: BorderRadius.circular(8),
-                            onTap: () => null,
+                            onTap: () => Get.toNamed(Routes.characterListPage),
                             child: SizedBox(
                               width: 60,
                               child: Column(
@@ -87,7 +90,7 @@ class UserMenu extends StatelessWidget {
                                     backgroundColor: Theme.of(context).colorScheme.background,
                                   ),
                                   Text(
-                                    'More',
+                                    S.current.userMenuMoreChars,
                                     overflow: TextOverflow.ellipsis,
                                     textScaleFactor: 0.8,
                                     textAlign: TextAlign.center,

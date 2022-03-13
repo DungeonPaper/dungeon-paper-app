@@ -79,17 +79,18 @@
   "createCharRandomizeNameTooltipClick": "Click to generate a random name",
   "entity": "{runtimeType, select, CharacterClass {Class} Item {Item} Monster {Monster} Move {Move} Race {Race} Spell {Spell} Tag {Tag} other {{runtimeType}}}",
   "entityPlural": "{runtimeType, select, CharacterClass {Classes} Item {Items} Monster {Monsters} Move {Moves} Race {Races} Spell {Spells} Tag {Tags} other {{runtimeType}s}}",
-  "pluralize": "{count, plural, one {{count} {singular}} other {{count} {plural}}}",
+  "pluralize": "{count, plural, one {One {singular}} other {{count} {plural}}}",
   "select": "Select",
   "selectToAdd": "Select {string} to add",
   "remove": "Remove",
   "addWithCount": "Add {string}",
   "moves": "Moves",
-  "movesWithCount": "{count, plural, one {One Move} other {{count} Moves}}",
+  "movesWithCount": "{count, plural, =0 {No moves} one {One move} other {{count} moves}}",
   "spells": "Spells",
-  "spellsWithCount": "{count, plural, one {One Spell} other {{count} Spells}}",
+  "spellsWithCount": "{count, plural, =0 {No spells} one {One spell} other {{count} spells}}",
   "items": "Items",
-  "itemsWithCount": "{count, plural, one {One Item} other {{count} Items}}",
+  "itemsWithCount": "{count, plural, =0 {No items} one {One item} other {{count} items}}",
   "coins": "Coins",
-  "coinsWithCount": "{count, plural, one {One Coin} other {{fmtCount} Coins}}"
+  "coinsWithCount": "{count, plural, =0 {No coins} one {One coin} other {{fmtCount} coins}}",
+  "userMenuMoreChars": "More"
 }

@@ -107,7 +107,7 @@ class CreateCharacterPageController extends GetxController {
       characterClass: charClass.value,
       bio: background.value?.bio,
       bonds: background.value?.bonds,
-      items: GearChoice.selectionToItems(gear.value?.selections ?? []),
+      items: GearChoice.selectionToItems(gear.value?.selections ?? [], equipped: true),
       coins: GearChoice.selectionToCoins(gear.value?.selections ?? []),
       moves: movesSpells.value?.moves,
       spells: movesSpells.value?.spells,

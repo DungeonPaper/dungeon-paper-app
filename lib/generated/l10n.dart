@@ -584,11 +584,11 @@ class S {
     );
   }
 
-  /// `{count, plural, one {{count} {singular}} other {{count} {plural}}}`
+  /// `{count, plural, one {One {singular}} other {{count} {plural}}}`
   String pluralize(num count, Object singular, Object plural) {
     return Intl.plural(
       count,
-      one: '$count $singular',
+      one: 'One $singular',
       other: '$count $plural',
       name: 'pluralize',
       desc: '',
@@ -646,12 +646,13 @@ class S {
     );
   }
 
-  /// `{count, plural, one {One Move} other {{count} Moves}}`
+  /// `{count, plural, =0 {No moves} one {One move} other {{count} moves}}`
   String movesWithCount(num count) {
     return Intl.plural(
       count,
-      one: 'One Move',
-      other: '$count Moves',
+      zero: 'No moves',
+      one: 'One move',
+      other: '$count moves',
       name: 'movesWithCount',
       desc: '',
       args: [count],
@@ -668,12 +669,13 @@ class S {
     );
   }
 
-  /// `{count, plural, one {One Spell} other {{count} Spells}}`
+  /// `{count, plural, =0 {No spells} one {One spell} other {{count} spells}}`
   String spellsWithCount(num count) {
     return Intl.plural(
       count,
-      one: 'One Spell',
-      other: '$count Spells',
+      zero: 'No spells',
+      one: 'One spell',
+      other: '$count spells',
       name: 'spellsWithCount',
       desc: '',
       args: [count],
@@ -690,12 +692,13 @@ class S {
     );
   }
 
-  /// `{count, plural, one {One Item} other {{count} Items}}`
+  /// `{count, plural, =0 {No items} one {One item} other {{count} items}}`
   String itemsWithCount(num count) {
     return Intl.plural(
       count,
-      one: 'One Item',
-      other: '$count Items',
+      zero: 'No items',
+      one: 'One item',
+      other: '$count items',
       name: 'itemsWithCount',
       desc: '',
       args: [count],
@@ -712,15 +715,26 @@ class S {
     );
   }
 
-  /// `{count, plural, one {One Coin} other {{fmtCount} Coins}}`
+  /// `{count, plural, =0 {No coins} one {One coin} other {{fmtCount} coins}}`
   String coinsWithCount(num count, Object fmtCount) {
     return Intl.plural(
       count,
-      one: 'One Coin',
-      other: '$fmtCount Coins',
+      zero: 'No coins',
+      one: 'One coin',
+      other: '$fmtCount coins',
       name: 'coinsWithCount',
       desc: '',
       args: [count, fmtCount],
+    );
+  }
+
+  /// `More`
+  String get userMenuMoreChars {
+    return Intl.message(
+      'More',
+      name: 'userMenuMoreChars',
+      desc: '',
+      args: [],
     );
   }
 }

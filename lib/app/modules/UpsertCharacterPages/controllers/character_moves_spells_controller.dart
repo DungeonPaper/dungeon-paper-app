@@ -1,4 +1,8 @@
+import 'dart:async';
+
+import 'package:dungeon_paper/app/data/services/repository_service.dart';
 import 'package:dungeon_paper/app/modules/UpsertCharacterPages/controllers/char_class_select_controller.dart';
+import 'package:dungeon_paper/app/modules/UpsertCharacterPages/controllers/create_character_page_controller.dart';
 import 'package:get/get.dart';
 import 'package:dungeon_paper/app/data/models/move.dart';
 import 'package:dungeon_paper/app/data/models/spell.dart';
@@ -7,11 +11,33 @@ class CharacterMovesSpellsController extends GetxController {
   final moves = <Move>[].obs;
   final spells = <Spell>[].obs;
 
+  final service = Get.find<RepositoryService>();
+  final ctrl = Get.find<CreateCharacterPageController>();
+  late StreamSubscription sub;
+
   @override
   void onInit() {
     super.onInit();
-    final CharClassSelectController ctrl = Get.find();
-    // moves.value = ctrl.selectedClass.
+    addStartingMoves();
+    sub = ctrl.charClass.listen((v) => addStartingMoves());
+    Future.delayed(const Duration(milliseconds: 200))
+        .then((_) => ctrl.setValid(CreateCharStep.movesSpells, true, movesSpells));
+  }
+
+  @override
+  void dispose() {
+    sub.cancel();
+    super.dispose();
+  }
+
+  addStartingMoves() {
+    moves.clear();
+    moves.addAll(
+      service.moves.values.where(
+        (m) =>
+            m.classKeys.contains(ctrl.charClass.value!.key) && m.category == MoveCategory.starting,
+      ),
+    );
   }
 
   CharMovesSpells get movesSpells => CharMovesSpells(moves: moves, spells: spells);

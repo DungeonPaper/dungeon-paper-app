@@ -41,7 +41,7 @@ class Character {
     required this.race,
   });
 
-  final Meta meta;
+  final Meta<CharacterMeta> meta;
   final String key;
   final String displayName;
   final String category;
@@ -67,7 +67,7 @@ class Character {
   int get load => stats.load ?? (characterClass.load + rollStats.loadBaseValue);
 
   Character copyWith({
-    Meta? meta,
+    Meta<CharacterMeta>? meta,
     String? key,
     String? displayName,
     String? category,
@@ -174,7 +174,7 @@ class Character {
   String toRawJson() => json.encode(toJson());
 
   factory Character.fromJson(Map<String, dynamic> json) => Character(
-        meta: Meta.fromJson(json['_meta']),
+        meta: Meta.tryParse(json['_meta'], (data) => CharacterMeta.fromJson(data)),
         key: json['key'],
         displayName: json['displayName'],
         category: json['category'] ?? '',
@@ -193,7 +193,7 @@ class Character {
       );
 
   Map<String, dynamic> toJson() => {
-        '_meta': meta.toJson(),
+        '_meta': meta.toJson((data) => data?.toJson()),
         'key': key,
         'displayName': displayName,
         'avatarURL': avatarUrl,
@@ -209,5 +209,26 @@ class Character {
         'bonds': List<dynamic>.from(bonds.map((x) => x.toJson())),
         'bio': bio.toJson(),
         'race': race.toJson(),
+      };
+}
+
+class CharacterMeta {
+  final DateTime? lastUsed;
+
+  CharacterMeta({this.lastUsed});
+
+  factory CharacterMeta.fromJson(Map<String, dynamic> json) => CharacterMeta(
+        lastUsed: json['lastUsed'] != null ? DateTime.parse(json['lastUsed']) : null,
+      );
+
+  CharacterMeta copyWith({
+    DateTime? lastUsed,
+  }) =>
+      CharacterMeta(
+        lastUsed: lastUsed ?? this.lastUsed,
+      );
+
+  Map<String, dynamic> toJson() => {
+        'lastUsed': lastUsed?.toString(),
       };
 }

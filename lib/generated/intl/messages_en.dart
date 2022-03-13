@@ -34,7 +34,7 @@ class MessageLookup extends MessageLookupByLibrary {
       "Level ${level} ∙ ${charClass} ∙ ${alignment}";
 
   static String m3(count, fmtCount) =>
-      "${Intl.plural(count, one: 'One Coin', other: '${fmtCount} Coins')}";
+      "${Intl.plural(count, zero: 'No coins', one: 'One coin', other: '${fmtCount} coins')}";
 
   static String m4(hp) => "Max HP: ${hp}";
 
@@ -72,7 +72,7 @@ class MessageLookup extends MessageLookupByLibrary {
           })}";
 
   static String m9(count) =>
-      "${Intl.plural(count, one: 'One Item', other: '${count} Items')}";
+      "${Intl.plural(count, zero: 'No items', one: 'One item', other: '${count} items')}";
 
   static String m10(category) => "${Intl.select(category, {
             'starting': 'Starting',
@@ -84,17 +84,17 @@ class MessageLookup extends MessageLookupByLibrary {
           })}";
 
   static String m11(count) =>
-      "${Intl.plural(count, one: 'One Move', other: '${count} Moves')}";
+      "${Intl.plural(count, zero: 'No moves', one: 'One move', other: '${count} moves')}";
 
   static String m12(count, singular, plural) =>
-      "${Intl.plural(count, one: '${count} ${singular}', other: '${count} ${plural}')}";
+      "${Intl.plural(count, one: 'One ${singular}', other: '${count} ${plural}')}";
 
   static String m13(stat) => "Roll +${stat}";
 
   static String m14(string) => "Select ${string} to add";
 
   static String m15(count) =>
-      "${Intl.plural(count, one: 'One Spell', other: '${count} Spells')}";
+      "${Intl.plural(count, zero: 'No spells', one: 'One spell', other: '${count} spells')}";
 
   final messages = _notInlinedMessages(_notInlinedMessages);
   static Map<String, Function> _notInlinedMessages(_) => <String, Function>{
@@ -193,6 +193,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "select": MessageLookupByLibrary.simpleMessage("Select"),
         "selectToAdd": m14,
         "spells": MessageLookupByLibrary.simpleMessage("Spells"),
-        "spellsWithCount": m15
+        "spellsWithCount": m15,
+        "userMenuMoreChars": MessageLookupByLibrary.simpleMessage("More")
       };
 }

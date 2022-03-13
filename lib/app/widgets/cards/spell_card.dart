@@ -12,6 +12,7 @@ class SpellCard extends StatelessWidget {
     this.showStar = true,
     this.onSave,
     this.initiallyExpanded,
+    this.actions = const [],
   }) : super(key: key);
 
   final Spell spell;
@@ -19,6 +20,7 @@ class SpellCard extends StatelessWidget {
   final bool showStar;
   final bool? initiallyExpanded;
   final void Function(Spell spell)? onSave;
+  final Iterable<Widget> actions;
 
   @override
   Widget build(BuildContext context) {
@@ -32,6 +34,7 @@ class SpellCard extends StatelessWidget {
       showStar: showStar,
       onStarChanged: (prepared) => onSave?.call(spell.copyWithInherited(prepared: prepared)),
       initiallyExpanded: initiallyExpanded,
+      actions: actions,
     );
   }
 }
