@@ -41,7 +41,7 @@ class CharacterMovesSpellsController extends GetxController {
                 m.category == MoveCategory.basic,
           )
           .map(
-            (move) => Move.fromDwMove(move, favorited: true),
+            (move) => Move.fromDwMove(move, favorited: move.category != MoveCategory.basic),
           )
           .toList(),
     );

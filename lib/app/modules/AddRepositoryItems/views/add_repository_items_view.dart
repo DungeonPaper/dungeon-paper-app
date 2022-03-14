@@ -21,14 +21,14 @@ class AddRepositoryItemsView<T, F extends EntityFilters<T>>
       {required void Function(bool state) onSelect, required bool selected}) cardBuilder;
   final void Function(Iterable<T> items) onAdd;
   final pageStorageBucket = PageStorageBucket();
-  final Widget Function(F? filters, void Function(F? filters) update)? filtersBuilder;
+  final Widget Function(F filters, void Function(F filters) update)? filtersBuilder;
   final bool Function(T item, F filters)? filterFn;
 
   Iterable<T> get list =>
       controller.filterList(controller.repo.listByType<T>().values.toList(), filterFn);
 
   bool get useFilters => filtersBuilder != null;
-  F? get filters => controller.filters.value;
+  F get filters => controller.filters.value!;
 
   @override
   Widget build(BuildContext context) {

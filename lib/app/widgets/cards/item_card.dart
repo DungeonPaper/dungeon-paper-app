@@ -14,6 +14,7 @@ class ItemCard extends StatelessWidget {
     this.onSave,
     this.initiallyExpanded,
     this.actions = const [],
+    this.expansionKey,
   }) : super(key: key);
 
   final Item item;
@@ -22,6 +23,7 @@ class ItemCard extends StatelessWidget {
   final bool? initiallyExpanded;
   final void Function(Item item)? onSave;
   final Iterable<Widget> actions;
+  final PageStorageKey? expansionKey;
 
   @override
   Widget build(BuildContext context) {
@@ -36,6 +38,7 @@ class ItemCard extends StatelessWidget {
       showStar: showStar,
       onStarChanged: (equipped) => onSave?.call(item.copyWithInherited(equipped: equipped)),
       actions: actions,
+      expansionKey: expansionKey ?? PageStorageKey(item.key),
     );
   }
 }

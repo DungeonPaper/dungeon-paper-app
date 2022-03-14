@@ -11,11 +11,15 @@ class RaceCard extends StatelessWidget {
     required this.race,
     this.showStar = true,
     this.showIcon = true,
+    this.initiallyExpanded = false,
+    this.expansionKey,
   }) : super(key: key);
 
   final Race race;
   final bool showStar;
   final bool showIcon;
+  final bool initiallyExpanded;
+  final PageStorageKey? expansionKey;
 
   @override
   Widget build(BuildContext context) {
@@ -28,6 +32,8 @@ class RaceCard extends StatelessWidget {
       starred: race.favorited,
       showStar: showStar,
       onStarChanged: (favorited) => null,
+      initiallyExpanded: initiallyExpanded,
+      expansionKey: expansionKey ?? PageStorageKey(race.key),
     );
   }
 }

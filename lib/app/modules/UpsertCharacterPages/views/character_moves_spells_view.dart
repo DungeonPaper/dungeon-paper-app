@@ -4,6 +4,8 @@ import 'package:dungeon_paper/app/data/models/spell.dart';
 import 'package:dungeon_paper/app/modules/AddRepositoryItems/bindings/add_repository_items_binding.dart';
 import 'package:dungeon_paper/app/modules/AddRepositoryItems/views/add_moves_view.dart';
 import 'package:dungeon_paper/app/modules/AddRepositoryItems/views/add_spells_view.dart';
+import 'package:dungeon_paper/app/modules/AddRepositoryItems/views/filters/move_filters.dart';
+import 'package:dungeon_paper/app/modules/AddRepositoryItems/views/filters/spell_filters.dart';
 import 'package:dungeon_paper/app/modules/UpsertCharacterPages/controllers/character_moves_spells_controller.dart';
 import 'package:dungeon_paper/app/themes/button_themes.dart';
 import 'package:dungeon_paper/app/widgets/cards/move_card.dart';
@@ -154,6 +156,7 @@ class CharacterMovesSpellsView extends GetView<CharacterMovesSpellsController> {
                           },
                         ),
                         binding: AddRepositoryItemsBinding(),
+                        arguments: SpellFilters(),
                       ),
                       label: Text(S.current.addSpellsExisting),
                       icon: const Icon(Icons.add),

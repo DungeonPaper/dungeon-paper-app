@@ -30,78 +30,99 @@ class CreateCharacterPreviewView extends GetView<CreateCharacterPreviewControlle
         title: Text(S.current.createCharacterPreviewPageTitle),
         centerTitle: true,
       ),
-      body: ListView(
-        children: [
-          Center(child: CharacterAvatar.roundedRect(character: char, size: 176)),
-          Text(
-            char.displayName,
-            textScaleFactor: 1.4,
-            textAlign: TextAlign.center,
-          ),
-          Text(
-            S.current.characterHeaderSubtitle(
-              1,
-              char.characterClass.name,
-              S.current.alignment(char.bio.alignment.key),
+      body: PageStorage(
+        bucket: PageStorageBucket(),
+        child: ListView(
+          children: [
+            Center(child: CharacterAvatar.roundedRect(character: char, size: 176)),
+            Text(
+              char.displayName,
+              textScaleFactor: 1.4,
+              textAlign: TextAlign.center,
             ),
-            textAlign: TextAlign.center,
-          ),
-          Text(
-            S.current.createCharacterPreviewPageMaxHp(char.maxHp),
-            textAlign: TextAlign.center,
-          ),
-          const SizedBox(height: 16),
-          Center(
-            child: SizedBox(
-              width: 340,
-              child: RollStatsGrid(
-                rollStats: char.rollStats.stats,
-                showDice: false,
+            Text(
+              S.current.characterHeaderSubtitle(
+                1,
+                char.characterClass.name,
+                S.current.alignment(char.bio.alignment.key),
+              ),
+              textAlign: TextAlign.center,
+            ),
+            Text(
+              S.current.createCharacterPreviewPageMaxHp(char.maxHp),
+              textAlign: TextAlign.center,
+            ),
+            const SizedBox(height: 16),
+            Center(
+              child: SizedBox(
+                width: 340,
+                child: RollStatsGrid(
+                  rollStats: char.rollStats.stats,
+                  showDice: false,
+                ),
               ),
             ),
-          ),
-          const SizedBox(height: 8),
-          ExpansionRow(
-            title: Text(S.current.movesWithCount(char.moves.length + 1)),
-            leading: [SvgIcon(Move.genericIcon)],
-            children: [char.race, ...char.moves]
-                .map((move) => Padding(
-                      padding: const EdgeInsets.only(bottom: 8.0),
-                      child: move is Move
-                          ? MoveCard(move: move, showDice: false, showStar: false)
-                          : move is Race
-                              ? RaceCard(
-                                  race: move,
-                                  showStar: false,
-                                )
-                              : Container(),
-                    ))
-                .toList(),
-          ),
-          ExpansionRow(
-            title: Text(S.current.spellsWithCount(char.spells.length)),
-            leading: [SvgIcon(Spell.genericIcon)],
-            children: char.spells
-                .map((spell) => Padding(
-                      padding: const EdgeInsets.only(bottom: 8.0),
-                      child: SpellCard(spell: spell, showDice: false, showStar: false),
-                    ))
-                .toList(),
-          ),
-          ExpansionRow(
-            title: Text(S.current.itemsWithCount(char.items.length) +
-                ' + ' +
-                S.current.coinsWithCount(char.coins, NumberFormat('##0.#').format(char.coins))),
-            leading: [SvgIcon(Item.genericIcon)],
-            children: char.items
-                .map((item) => Padding(
-                      padding: const EdgeInsets.only(bottom: 8.0),
-                      child: ItemCard(item: item, showStar: false),
-                    ))
-                .toList(),
-          ),
-          const SizedBox(height: 72),
-        ],
+            const SizedBox(height: 8),
+            ExpansionRow(
+              title: Text(S.current.movesWithCount(char.moves.length + 1)),
+              icon: SvgIcon(Move.genericIcon),
+              expansionKey: const PageStorageKey('moves'),
+              children: [char.race, ...char.moves]
+                  .map((move) => Padding(
+                        padding: const EdgeInsets.only(bottom: 8.0),
+                        child: move is Move
+                            ? MoveCard(
+                                move: move,
+                                showDice: false,
+                                showStar: false,
+                                initiallyExpanded: false,
+                              )
+                            : move is Race
+                                ? RaceCard(
+                                    race: move,
+                                    showStar: false,
+                                    initiallyExpanded: false,
+                                  )
+                                : Container(),
+                      ))
+                  .toList(),
+            ),
+            ExpansionRow(
+              title: Text(S.current.spellsWithCount(char.spells.length)),
+              icon: SvgIcon(Spell.genericIcon),
+              expansionKey: const PageStorageKey('spells'),
+              children: char.spells
+                  .map((spell) => Padding(
+                        padding: const EdgeInsets.only(bottom: 8.0),
+                        child: SpellCard(
+                          spell: spell,
+                          showDice: false,
+                          showStar: false,
+                          initiallyExpanded: false,
+                        ),
+                      ))
+                  .toList(),
+            ),
+            ExpansionRow(
+              title: Text(S.current.itemsWithCount(char.items.length) +
+                  ' + ' +
+                  S.current.coinsWithCount(char.coins, NumberFormat('##0.#').format(char.coins))),
+              icon: SvgIcon(Item.genericIcon),
+              expansionKey: const PageStorageKey('items'),
+              children: char.items
+                  .map((item) => Padding(
+                        padding: const EdgeInsets.only(bottom: 8.0),
+                        child: ItemCard(
+                          item: item,
+                          showStar: false,
+                          initiallyExpanded: false,
+                        ),
+                      ))
+                  .toList(),
+            ),
+            const SizedBox(height: 72),
+          ],
+        ),
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
       floatingActionButton: FloatingActionButton.extended(

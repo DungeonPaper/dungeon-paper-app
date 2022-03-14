@@ -5,9 +5,9 @@ import 'package:get/get.dart';
 
 import 'package:dungeon_paper/app/modules/AddRepositoryItems/controllers/add_repository_items_controller.dart';
 
-import '../views/add_items_view.dart';
-import '../views/add_moves_view.dart';
-import '../views/add_spells_view.dart';
+import '../views/filters/item_filters.dart';
+import '../views/filters/move_filters.dart';
+import '../views/filters/spell_filters.dart';
 
 class AddRepositoryItemsBinding extends Bindings {
   @override
@@ -21,6 +21,5 @@ class AddRepositoryItemsBinding extends Bindings {
     Get.lazyPut<AddRepositoryItemsController<Item, ItemFilters>>(
       () => AddRepositoryItemsController<Item, ItemFilters>(),
     );
-    //
   }
 }

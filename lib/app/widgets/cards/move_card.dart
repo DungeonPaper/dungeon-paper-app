@@ -17,6 +17,7 @@ class MoveCard extends StatelessWidget {
     this.showIcon = true,
     this.initiallyExpanded,
     this.actions = const [],
+    this.expansionKey,
   }) : super(key: key);
 
   final Move move;
@@ -26,13 +27,14 @@ class MoveCard extends StatelessWidget {
   final bool showIcon;
   final bool? initiallyExpanded;
   final Iterable<Widget> actions;
+  final PageStorageKey? expansionKey;
 
   @override
   Widget build(BuildContext context) {
     return DynamicActionCard(
       title: move.name,
       description: move.description,
-      expansionKey: PageStorageKey(move.key),
+      expansionKey: expansionKey ?? PageStorageKey(move.key),
       chips: [
         MoveCategoryChip(category: move.category),
         ...TagUtils.excludeMetaTags(move.tags).map((t) => TagChip(tag: t))

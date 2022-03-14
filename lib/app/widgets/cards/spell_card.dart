@@ -14,6 +14,7 @@ class SpellCard extends StatelessWidget {
     this.onSave,
     this.initiallyExpanded,
     this.actions = const [],
+    this.expansionKey,
   }) : super(key: key);
 
   final Spell spell;
@@ -23,6 +24,7 @@ class SpellCard extends StatelessWidget {
   final bool? initiallyExpanded;
   final void Function(Spell spell)? onSave;
   final Iterable<Widget> actions;
+  final PageStorageKey? expansionKey;
 
   @override
   Widget build(BuildContext context) {
@@ -37,6 +39,7 @@ class SpellCard extends StatelessWidget {
       onStarChanged: (prepared) => onSave?.call(spell.copyWithInherited(prepared: prepared)),
       initiallyExpanded: initiallyExpanded,
       actions: actions,
+      expansionKey: expansionKey ?? PageStorageKey(spell.key),
     );
   }
 }

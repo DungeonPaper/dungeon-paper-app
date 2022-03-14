@@ -8,6 +8,8 @@ import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
 
+import 'filters/item_filters.dart';
+
 class AddItemsView extends GetView<AddRepositoryItemsController<Item, ItemFilters>> {
   const AddItemsView({
     Key? key,
@@ -20,6 +22,12 @@ class AddItemsView extends GetView<AddRepositoryItemsController<Item, ItemFilter
   Widget build(BuildContext context) {
     return AddRepositoryItemsView<Item, ItemFilters>(
       title: Text(S.current.addItems),
+      filterFn: (item, filters) => filters.filter(item),
+      filtersBuilder: (filters, update) => ItemFiltersView(
+        filters: filters,
+        onChange: controller.setFilters,
+        searchController: controller.search,
+      ),
       cardBuilder: (ctx, item, {required onSelect, required selected}) => ItemCard(
         item: item,
         showStar: false,
@@ -34,18 +42,5 @@ class AddItemsView extends GetView<AddRepositoryItemsController<Item, ItemFilter
       ),
       onAdd: onAdd,
     );
-  }
-}
-
-class ItemFilters extends EntityFilters<Item> {
-  @override
-  bool filter(Item item) {
-    // TODO: implement filter
-    throw UnimplementedError();
-  }
-
-  @override
-  void setSearch(String search) {
-    // TODO: implement setSearch
   }
 }
