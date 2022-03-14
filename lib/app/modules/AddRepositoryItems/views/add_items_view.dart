@@ -8,8 +8,6 @@ import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
 
-typedef ItemFilters = dynamic;
-
 class AddItemsView extends GetView<AddRepositoryItemsController<Item, ItemFilters>> {
   const AddItemsView({
     Key? key,
@@ -36,5 +34,18 @@ class AddItemsView extends GetView<AddRepositoryItemsController<Item, ItemFilter
       ),
       onAdd: onAdd,
     );
+  }
+}
+
+class ItemFilters extends EntityFilters<Item> {
+  @override
+  bool filter(Item item) {
+    // TODO: implement filter
+    throw UnimplementedError();
+  }
+
+  @override
+  void setSearch(String search) {
+    // TODO: implement setSearch
   }
 }

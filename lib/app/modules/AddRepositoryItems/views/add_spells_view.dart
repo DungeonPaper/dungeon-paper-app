@@ -3,12 +3,11 @@ import 'package:dungeon_paper/app/modules/AddRepositoryItems/controllers/add_rep
 import 'package:dungeon_paper/app/modules/AddRepositoryItems/views/add_repository_items_view.dart';
 import 'package:dungeon_paper/app/themes/button_themes.dart';
 import 'package:dungeon_paper/app/widgets/cards/spell_card.dart';
+import 'package:dungeon_paper/core/utils/string_utils.dart';
 import 'package:dungeon_paper/generated/l10n.dart';
 import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
-
-typedef SpellFilters = dynamic;
 
 class AddSpellsView extends GetView<AddRepositoryItemsController<Spell, SpellFilters>> {
   const AddSpellsView({
@@ -38,4 +37,40 @@ class AddSpellsView extends GetView<AddRepositoryItemsController<Spell, SpellFil
       onAdd: onAdd,
     );
   }
+}
+
+class SpellFilters extends EntityFilters<Spell> {
+  String? search;
+  String? classKey;
+
+  SpellFilters({
+    this.search,
+    this.classKey,
+  });
+
+  @override
+  // ignore: avoid_renaming_method_parameters
+  bool filter(Spell spell) {
+    if (search != null && search!.isNotEmpty) {
+      if (![
+        spell.name,
+        spell.description,
+        spell.explanation,
+        ...spell.tags.map((t) => t.name),
+        ...spell.tags.map((t) => t.value),
+      ].any((el) => cleanStr(el).contains(cleanStr(search!)))) {
+        return false;
+      }
+    }
+
+    if (classKey != null) {
+      if (!spell.classKeys.map(cleanStr).contains(cleanStr(classKey!))) {
+        return false;
+      }
+    }
+    return true;
+  }
+
+  @override
+  void setSearch(String search) => this.search = search;
 }

@@ -81,8 +81,8 @@
   },
   "createCharRandomizeNameTooltipTouch": "Tap to generate a random name",
   "createCharRandomizeNameTooltipClick": "Click to generate a random name",
-  "entity": "{runtimeType, select, CharacterClass {Class} Item {Item} Monster {Monster} Move {Move} Race {Race} Spell {Spell} Tag {Tag} other {{runtimeType}}}",
-  "entityPlural": "{runtimeType, select, CharacterClass {Classes} Item {Items} Monster {Monsters} Move {Moves} Race {Races} Spell {Spells} Tag {Tags} other {{runtimeType}s}}",
+  "entity": "{runtimeType, select, CharacterClass {Class} Item {Item} Monster {Monster} Move {Move} Race {Race} Spell {Spell} Tag {Tag} MoveCategory {Category} other {{runtimeType}}}",
+  "entityPlural": "{runtimeType, select, CharacterClass {Classes} Item {Items} Monster {Monsters} Move {Moves} Race {Races} Spell {Spells} Tag {Tags} MoveCategory {Categories} other {{runtimeType}s}}",
   "pluralize": "{count, plural, one {One {singular}} other {{count} {plural}}}",
   "select": "Select",
   "selectToAdd": "Select {string} to add",
@@ -97,5 +97,8 @@
   "coins": "Coins",
   "coinsWithCount": "{count, plural, =0 {No coins} one {One coin} other {{fmtCount} coins}}",
   "userMenuMoreChars": "More",
-  "all": "All"
+  "all": "All",
+  "allEntity": "All {entity}",
+  "searchPlaceholder": "Type to search",
+  "searchPlaceholderEntity": "Type to search {entity}"
 }

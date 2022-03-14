@@ -31,7 +31,6 @@ class HomeCharacterActionsView extends GetView<CharacterService> {
               TextButton.icon(
                 onPressed: () => Get.to(
                   () => AddMovesView(
-                    defaultFilters: MoveFilters(classKey: controller.current!.characterClass.key),
                     onAdd: (moves) => controller.updateCharacter(
                       controller.current!.copyWith(
                         moves: addByKey(controller.current!.moves, moves),
@@ -39,6 +38,7 @@ class HomeCharacterActionsView extends GetView<CharacterService> {
                     ),
                   ),
                   binding: AddRepositoryItemsBinding(),
+                  arguments: MoveFilters(classKey: controller.current!.characterClass.key),
                 ),
                 label: Text(S.current.addMoves),
                 icon: const Icon(Icons.add),

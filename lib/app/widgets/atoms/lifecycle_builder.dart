@@ -1,21 +1,24 @@
 import 'package:flutter/material.dart';
 
-class OnInit extends StatefulWidget {
-  final void Function() onInit;
+class LifecycleView extends StatefulWidget {
+  final void Function()? onInit;
+  final void Function()? onDispose;
   final Widget Function(BuildContext) builder;
   final Widget? child;
 
-  OnInit({
+  LifecycleView({
     Key? key,
-    required this.onInit,
+    this.onInit,
+    this.onDispose,
     required this.child,
   })  : assert(child != null),
         builder = childBuilder(child!),
         super(key: key);
 
-  const OnInit.builder({
+  const LifecycleView.builder({
     Key? key,
-    required this.onInit,
+    this.onInit,
+    this.onDispose,
     required this.builder,
   })  : child = null,
         super(key: key);
@@ -26,11 +29,17 @@ class OnInit extends StatefulWidget {
   _OnInitBuilderState createState() => _OnInitBuilderState();
 }
 
-class _OnInitBuilderState extends State<OnInit> {
+class _OnInitBuilderState extends State<LifecycleView> {
   @override
   void initState() {
     super.initState();
-    widget.onInit();
+    widget.onInit?.call();
+  }
+
+  @override
+  void dispose() {
+    widget.onDispose?.call();
+    super.dispose();
   }
 
   @override

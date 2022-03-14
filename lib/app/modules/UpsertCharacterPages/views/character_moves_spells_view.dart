@@ -44,16 +44,18 @@ class CharacterMovesSpellsView extends GetView<CharacterMovesSpellsController> {
               shrinkWrap: true,
               padding: const EdgeInsets.all(8),
               physics: const NeverScrollableScrollPhysics(),
-              children: controller.moves
+              children: controller.sortedMoves
                   .map((move) => Padding(
                         padding: const EdgeInsets.only(bottom: 8),
                         child: MoveCard(
                           move: move,
                           showDice: false,
+                          showStar: false,
                           actions: [
                             ElevatedButton.icon(
                               style: ButtonThemes.primaryElevated(context),
-                              onPressed: () => removeByKey(controller.moves, [move]),
+                              onPressed: () =>
+                                  controller.moves.value = removeByKey(controller.moves, [move]),
                               label: Text(S.current.remove),
                               icon: const Icon(Icons.remove),
                             )
@@ -74,9 +76,6 @@ class CharacterMovesSpellsView extends GetView<CharacterMovesSpellsController> {
                     child: OutlinedButton.icon(
                       onPressed: () => Get.to(
                         () => AddMovesView(
-                          defaultFilters: MoveFilters(
-                            classKey: controller.ctrl.charClass.value!.key,
-                          ),
                           onAdd: (moves) {
                             controller.moves.value = addByKey(
                               controller.moves,
@@ -86,6 +85,9 @@ class CharacterMovesSpellsView extends GetView<CharacterMovesSpellsController> {
                           },
                         ),
                         binding: AddRepositoryItemsBinding(),
+                        arguments: MoveFilters(
+                          classKey: controller.ctrl.charClass.value!.key,
+                        ),
                       ),
                       label: Text(S.current.addMovesExisting),
                       icon: const Icon(Icons.add),
@@ -118,6 +120,7 @@ class CharacterMovesSpellsView extends GetView<CharacterMovesSpellsController> {
                         child: SpellCard(
                           spell: spell,
                           showDice: false,
+                          showStar: false,
                           actions: [
                             ElevatedButton.icon(
                               style: ButtonThemes.primaryElevated(context),

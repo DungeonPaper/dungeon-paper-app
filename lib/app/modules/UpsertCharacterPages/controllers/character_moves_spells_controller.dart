@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:dungeon_paper/app/data/services/repository_service.dart';
 import 'package:dungeon_paper/app/modules/UpsertCharacterPages/controllers/create_character_page_controller.dart';
+import 'package:dungeon_paper/core/utils/string_utils.dart';
 import 'package:get/get.dart';
 import 'package:dungeon_paper/app/data/models/move.dart';
 import 'package:dungeon_paper/app/data/models/spell.dart';
@@ -32,12 +33,27 @@ class CharacterMovesSpellsController extends GetxController {
   addStartingMoves() {
     moves.clear();
     moves.addAll(
-      service.moves.values.where(
-        (m) =>
-            m.classKeys.contains(ctrl.charClass.value!.key) && m.category == MoveCategory.starting,
-      ),
+      service.moves.values
+          .where(
+            (m) =>
+                (m.classKeys.contains(ctrl.charClass.value!.key) &&
+                    m.category == MoveCategory.starting) ||
+                m.category == MoveCategory.basic,
+          )
+          .map(
+            (move) => Move.fromDwMove(move, favorited: true),
+          )
+          .toList(),
     );
   }
+
+  Iterable<Move> get sortedMoves => [...moves]..sort((a, b) => a.category == b.category
+      ? cleanStr(a.name).compareTo(cleanStr(b.name))
+      : a.category == MoveCategory.basic
+          ? -1
+          : b.category == MoveCategory.basic
+              ? 1
+              : 0);
 
   CharMovesSpells get movesSpells => CharMovesSpells(moves: moves, spells: spells);
 }

@@ -1,9 +1,11 @@
+import 'package:dungeon_paper/app/data/models/character_class.dart';
 import 'package:dungeon_paper/app/data/models/move.dart';
 import 'package:dungeon_paper/app/data/services/repository_service.dart';
 import 'package:dungeon_paper/app/modules/AddRepositoryItems/controllers/add_repository_items_controller.dart';
 import 'package:dungeon_paper/app/modules/AddRepositoryItems/views/add_repository_items_view.dart';
 import 'package:dungeon_paper/app/themes/button_themes.dart';
 import 'package:dungeon_paper/app/widgets/cards/move_card.dart';
+import 'package:dungeon_paper/core/utils/string_utils.dart';
 import 'package:dungeon_paper/generated/l10n.dart';
 import 'package:flutter/material.dart';
 
@@ -13,11 +15,9 @@ class AddMovesView extends GetView<AddRepositoryItemsController<Move, MoveFilter
   const AddMovesView({
     Key? key,
     required this.onAdd,
-    this.defaultFilters,
   }) : super(key: key);
 
   final void Function(Iterable<Move> moves) onAdd;
-  final MoveFilters? defaultFilters;
 
   RepositoryService get service => controller.repo;
 
@@ -25,42 +25,10 @@ class AddMovesView extends GetView<AddRepositoryItemsController<Move, MoveFilter
   Widget build(BuildContext context) {
     return AddRepositoryItemsView<Move, MoveFilters>(
       title: Text(S.current.addMoves),
-      initialFilters: defaultFilters,
-      filtersBuilder: (filters, update) => Row(
-        children: [
-          DropdownButton<MoveCategory?>(
-            value: filters?.category,
-            items: [
-              DropdownMenuItem<MoveCategory?>(
-                child: Text(S.current.all),
-                value: null,
-              ),
-              ...MoveCategory.values.map(
-                (cat) => DropdownMenuItem<MoveCategory?>(
-                  child: Text(S.current.moveCategory(cat)),
-                  value: cat,
-                ),
-              ),
-            ],
-            onChanged: (cat) => update((filters ?? MoveFilters())..category = cat),
-          ),
-          DropdownButton<String>(
-            value: filters?.classKey,
-            items: [
-              DropdownMenuItem<String>(
-                child: Text(S.current.all),
-                value: null,
-              ),
-              ...service.classes.values.map(
-                (cls) => DropdownMenuItem<String>(
-                  child: Text(cls.name),
-                  value: cls.key,
-                ),
-              ),
-            ],
-            onChanged: (key) => update((filters ?? MoveFilters())..classKey = key),
-          ),
-        ],
+      filtersBuilder: (filters, update) => MoveFiltersView(
+        filters: filters,
+        onChange: update,
+        searchController: controller.search,
       ),
       filterFn: (moves, filters) => filters.filter(moves),
       cardBuilder: (ctx, move, {required onSelect, required selected}) => MoveCard(
@@ -81,7 +49,70 @@ class AddMovesView extends GetView<AddRepositoryItemsController<Move, MoveFilter
   }
 }
 
-class MoveFilters {
+class MoveFiltersView extends StatelessWidget {
+  MoveFiltersView(
+      {Key? key, required this.filters, required this.onChange, required this.searchController})
+      : super(key: key);
+
+  final MoveFilters? filters;
+  final service = Get.find<RepositoryService>();
+  final void Function(MoveFilters) onChange;
+  final TextEditingController searchController;
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children: [
+        TextField(
+          controller: searchController,
+          decoration: InputDecoration(
+            hintText: S.current.searchPlaceholderEntity(S.current.entity(Move)),
+          ),
+        ),
+        Row(
+          crossAxisAlignment: CrossAxisAlignment.end,
+          children: [
+            DropdownButton<MoveCategory?>(
+              value: filters?.category,
+              items: [
+                DropdownMenuItem<MoveCategory?>(
+                  child: Text(S.current.allEntity(S.current.entityPlural(MoveCategory))),
+                  value: null,
+                ),
+                ...MoveCategory.values.map(
+                  (cat) => DropdownMenuItem<MoveCategory?>(
+                    child: Text(S.current.moveCategory(cat)),
+                    value: cat,
+                  ),
+                ),
+              ],
+              onChanged: (cat) => onChange((filters ?? MoveFilters())..category = cat),
+            ),
+            const SizedBox(width: 8),
+            DropdownButton<String>(
+              value: filters?.classKey,
+              items: [
+                DropdownMenuItem<String>(
+                  child: Text(S.current.allEntity(S.current.entityPlural(CharacterClass))),
+                  value: null,
+                ),
+                ...service.classes.values.map(
+                  (cls) => DropdownMenuItem<String>(
+                    child: Text(cls.name),
+                    value: cls.key,
+                  ),
+                ),
+              ],
+              onChanged: (key) => onChange((filters ?? MoveFilters())..classKey = key),
+            ),
+          ],
+        ),
+      ],
+    );
+  }
+}
+
+class MoveFilters extends EntityFilters<Move> {
   MoveCategory? category;
   String? search;
   String? classKey;
@@ -92,8 +123,9 @@ class MoveFilters {
     this.classKey,
   });
 
+  @override
+  // ignore: avoid_renaming_method_parameters
   bool filter(Move move) {
-    String clean(String str) => str.toLowerCase().trim();
     if (category != null) {
       if (move.category != category) {
         return false;
@@ -107,16 +139,21 @@ class MoveFilters {
         move.explanation,
         ...move.tags.map((t) => t.name),
         ...move.tags.map((t) => t.value),
-      ].any((el) => clean(el).contains(clean(search!)))) {
+      ].any((el) => cleanStr(el).contains(cleanStr(search!)))) {
         return false;
       }
     }
 
     if (classKey != null) {
-      if (!move.classKeys.map(clean).contains(clean(classKey!))) {
+      if (!move.classKeys.map(cleanStr).contains(cleanStr(classKey!))) {
         return false;
       }
     }
     return true;
+  }
+
+  @override
+  void setSearch(String search) {
+    this.search = search;
   }
 }

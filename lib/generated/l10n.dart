@@ -584,7 +584,7 @@ class S {
     );
   }
 
-  /// `{runtimeType, select, CharacterClass {Class} Item {Item} Monster {Monster} Move {Move} Race {Race} Spell {Spell} Tag {Tag} other {{runtimeType}}}`
+  /// `{runtimeType, select, CharacterClass {Class} Item {Item} Monster {Monster} Move {Move} Race {Race} Spell {Spell} Tag {Tag} MoveCategory {Category} other {{runtimeType}}}`
   String entity(Object runtimeType) {
     return Intl.select(
       runtimeType,
@@ -596,6 +596,7 @@ class S {
         'Race': 'Race',
         'Spell': 'Spell',
         'Tag': 'Tag',
+        'MoveCategory': 'Category',
         'other': '$runtimeType',
       },
       name: 'entity',
@@ -604,7 +605,7 @@ class S {
     );
   }
 
-  /// `{runtimeType, select, CharacterClass {Classes} Item {Items} Monster {Monsters} Move {Moves} Race {Races} Spell {Spells} Tag {Tags} other {{runtimeType}s}}`
+  /// `{runtimeType, select, CharacterClass {Classes} Item {Items} Monster {Monsters} Move {Moves} Race {Races} Spell {Spells} Tag {Tags} MoveCategory {Categories} other {{runtimeType}s}}`
   String entityPlural(Object runtimeType) {
     return Intl.select(
       runtimeType,
@@ -616,6 +617,7 @@ class S {
         'Race': 'Races',
         'Spell': 'Spells',
         'Tag': 'Tags',
+        'MoveCategory': 'Categories',
         'other': '${runtimeType}s',
       },
       name: 'entityPlural',
@@ -785,6 +787,36 @@ class S {
       name: 'all',
       desc: '',
       args: [],
+    );
+  }
+
+  /// `All {entity}`
+  String allEntity(Object entity) {
+    return Intl.message(
+      'All $entity',
+      name: 'allEntity',
+      desc: '',
+      args: [entity],
+    );
+  }
+
+  /// `Type to search`
+  String get searchPlaceholder {
+    return Intl.message(
+      'Type to search',
+      name: 'searchPlaceholder',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Type to search {entity}`
+  String searchPlaceholderEntity(Object entity) {
+    return Intl.message(
+      'Type to search $entity',
+      name: 'searchPlaceholderEntity',
+      desc: '',
+      args: [entity],
     );
   }
 }
