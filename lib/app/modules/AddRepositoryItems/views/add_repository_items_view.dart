@@ -1,4 +1,3 @@
-import 'package:dungeon_paper/app/data/services/repository_service.dart';
 import 'package:dungeon_paper/app/modules/AddRepositoryItems/controllers/add_repository_items_controller.dart';
 import 'package:dungeon_paper/app/themes/colors.dart';
 import 'package:dungeon_paper/generated/l10n.dart';
@@ -6,21 +5,31 @@ import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
 
-class AddRepositoryItemsView<T> extends GetView<AddRepositoryItemsController<T>> {
+class AddRepositoryItemsView<T, F> extends GetView<AddRepositoryItemsController<T, F>> {
   AddRepositoryItemsView({
     Key? key,
     required this.title,
     required this.cardBuilder,
     required this.onAdd,
+    this.filtersBuilder,
+    this.filterFn,
+    this.initialFilters,
   }) : super(key: key);
 
   final Widget title;
   final Widget Function(BuildContext context, T item,
       {required void Function(bool state) onSelect, required bool selected}) cardBuilder;
-  final void Function(List<T> items) onAdd;
+  final void Function(Iterable<T> items) onAdd;
   final pageStorageBucket = PageStorageBucket();
+  final Widget Function(F? filters, void Function(F? filters) update)? filtersBuilder;
+  final bool Function(T item, F filters)? filterFn;
+  final F? initialFilters;
 
-  List<T> get list => controller.service.listByType<T>().values.toList();
+  Iterable<T> get list => controller.filterList(
+      controller.repo.listByType<T>().values.toList(), filterFn, initialFilters);
+
+  bool get useFilters => filtersBuilder != null;
+  F? get filters => controller.filters.value;
 
   @override
   Widget build(BuildContext context) {
@@ -32,30 +41,27 @@ class AddRepositoryItemsView<T> extends GetView<AddRepositoryItemsController<T>>
       body: PageStorage(
         bucket: pageStorageBucket,
         child: Obx(
-          () => ListView(
-            padding: const EdgeInsets.all(8).copyWith(top: 0),
-            children: list
-                .map((item) => Padding(
-                      padding: const EdgeInsets.only(bottom: 8),
-                      child: Container(
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(10),
-                          border: Border.all(
-                            width: 2,
-                            color:
-                                controller.isSelected(item) ? DwColors.success : Colors.transparent,
-                          ),
-                        ),
-                        child: cardBuilder(
-                          context,
-                          item,
-                          onSelect: (state) => controller.toggle(item, state),
-                          selected: controller.isSelected(item),
-                        ),
+          () => ListView(padding: const EdgeInsets.all(8).copyWith(top: 0), children: [
+            if (useFilters) filtersBuilder!(filters ?? initialFilters, controller.setFilters),
+            ...list.map((item) => Padding(
+                  padding: const EdgeInsets.only(bottom: 8),
+                  child: Container(
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(10),
+                      border: Border.all(
+                        width: 2,
+                        color: controller.isSelected(item) ? DwColors.success : Colors.transparent,
                       ),
-                    ))
-                .toList(),
-          ),
+                    ),
+                    child: cardBuilder(
+                      context,
+                      item,
+                      onSelect: (state) => controller.toggle(item, state),
+                      selected: controller.isSelected(item),
+                    ),
+                  ),
+                )),
+          ]),
         ),
       ),
       floatingActionButton: Obx(

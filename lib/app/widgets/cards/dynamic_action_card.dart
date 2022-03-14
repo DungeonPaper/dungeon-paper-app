@@ -25,6 +25,8 @@ class DynamicActionCard extends StatelessWidget {
     this.chipsSpacing = 4,
     required this.onStarChanged,
     this.actions = const [],
+    this.leading = const [],
+    this.trailing = const [],
   }) : super(key: key);
 
   final String description;
@@ -41,6 +43,8 @@ class DynamicActionCard extends StatelessWidget {
   final double chipsSpacing;
   final void Function(bool starred) onStarChanged;
   final Iterable<Widget> actions;
+  final Iterable<Widget> trailing;
+  final Iterable<Widget> leading;
 
   @override
   Widget build(BuildContext context) {
@@ -57,9 +61,14 @@ class DynamicActionCard extends StatelessWidget {
         icon: icon,
         trailing: showStar
             ? [
-                SizedBox(
+                ...leading,
+                Container(
                   width: 20,
                   height: 20,
+                  padding: EdgeInsets.only(
+                    left: leading.isNotEmpty ? 8 : 0,
+                    right: trailing.isNotEmpty ? 8 : 0,
+                  ),
                   child: IconButton(
                     visualDensity: VisualDensity.compact,
                     padding: EdgeInsets.zero,
@@ -75,8 +84,9 @@ class DynamicActionCard extends StatelessWidget {
                     onPressed: () => onStarChanged(!starred),
                   ),
                 ),
+                ...trailing
               ]
-            : [const SizedBox.shrink()],
+            : [...leading, const SizedBox.shrink(), ...trailing],
         children: [
           MarkdownBody(data: description),
           if (description.isNotEmpty) const SizedBox(height: 4),

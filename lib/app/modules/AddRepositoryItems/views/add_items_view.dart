@@ -8,17 +8,19 @@ import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
 
-class AddItemsView extends GetView<AddRepositoryItemsController<Item>> {
+typedef ItemFilters = dynamic;
+
+class AddItemsView extends GetView<AddRepositoryItemsController<Item, ItemFilters>> {
   const AddItemsView({
     Key? key,
     required this.onAdd,
   }) : super(key: key);
 
-  final void Function(List<Item> items) onAdd;
+  final void Function(Iterable<Item> items) onAdd;
 
   @override
   Widget build(BuildContext context) {
-    return AddRepositoryItemsView<Item>(
+    return AddRepositoryItemsView<Item, ItemFilters>(
       title: Text(S.current.addItems),
       cardBuilder: (ctx, item, {required onSelect, required selected}) => ItemCard(
         item: item,

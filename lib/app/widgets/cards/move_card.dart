@@ -44,6 +44,7 @@ class MoveCard extends StatelessWidget {
       onStarChanged: (favorited) => onSave?.call(move.copyWithInherited(favorited: favorited)),
       initiallyExpanded: initiallyExpanded,
       actions: actions,
+      leading: [MoveCategoryChip(category: move.category)],
     );
   }
 }

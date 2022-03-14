@@ -62,7 +62,7 @@ class ExpansionRow extends StatelessWidget {
           tilePadding: titlePadding ?? defaultPadding,
           childrenPadding: childrenPadding ?? defaultPadding,
           expandedCrossAxisAlignment: CrossAxisAlignment.stretch,
-          trailing: showArrow ? (!showArrow ? const SizedBox.shrink() : null) : null,
+          trailing: !showArrow ? const SizedBox.shrink() : null,
           visualDensity: VisualDensity.compact,
         ),
       ),

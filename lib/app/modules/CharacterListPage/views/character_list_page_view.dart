@@ -1,6 +1,4 @@
 import 'package:dungeon_paper/app/data/services/character_service.dart';
-import 'package:dungeon_paper/app/modules/Home/bindings/home_binding.dart';
-import 'package:dungeon_paper/app/modules/Home/views/home_view.dart';
 import 'package:dungeon_paper/app/routes/app_pages.dart';
 import 'package:dungeon_paper/app/themes/button_themes.dart';
 import 'package:dungeon_paper/app/widgets/atoms/character_avatar.dart';
@@ -9,7 +7,6 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import '../../../../generated/l10n.dart';
-import '../../../data/models/character.dart';
 
 class CharacterListPageView extends GetView<CharacterService> {
   const CharacterListPageView({Key? key}) : super(key: key);

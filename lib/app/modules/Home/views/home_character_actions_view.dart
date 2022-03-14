@@ -3,7 +3,6 @@ import 'package:dungeon_paper/app/model_utils/character_utils.dart';
 import 'package:dungeon_paper/app/modules/AddRepositoryItems/bindings/add_repository_items_binding.dart';
 import 'package:dungeon_paper/app/modules/AddRepositoryItems/views/add_items_view.dart';
 import 'package:dungeon_paper/app/modules/AddRepositoryItems/views/add_moves_view.dart';
-import 'package:dungeon_paper/app/modules/AddRepositoryItems/views/add_spells_view.dart';
 import 'package:dungeon_paper/app/widgets/atoms/expansion_row.dart';
 import 'package:dungeon_paper/app/widgets/cards/item_card.dart';
 import 'package:dungeon_paper/app/widgets/cards/move_card.dart';
@@ -32,6 +31,7 @@ class HomeCharacterActionsView extends GetView<CharacterService> {
               TextButton.icon(
                 onPressed: () => Get.to(
                   () => AddMovesView(
+                    defaultFilters: MoveFilters(classKey: controller.current!.characterClass.key),
                     onAdd: (moves) => controller.updateCharacter(
                       controller.current!.copyWith(
                         moves: addByKey(controller.current!.moves, moves),

@@ -1,6 +1,5 @@
 import 'package:dungeon_world_data/dice.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_markdown/flutter_markdown.dart';
 
 import '../../../core/dw_icons.dart';
 import '../atoms/background_icon_button.dart';

@@ -1,7 +1,6 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
+import 'enums.dart';
 
-enum SortOrder { asc, desc }
-
+// TODO use createSorter
 int Function(T? date1, T? date2) dateComparator<T>({
   SortOrder order = SortOrder.asc,
   DateTime? Function(T? object)? parse,

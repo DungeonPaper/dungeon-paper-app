@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 
-import '../../../generated/l10n.dart';
-import '../../data/models/move.dart';
 import 'package:dungeon_world_data/dungeon_world_data.dart' as dw;
 
 class TagChip extends StatelessWidget {

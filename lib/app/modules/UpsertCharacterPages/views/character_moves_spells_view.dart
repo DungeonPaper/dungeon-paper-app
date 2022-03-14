@@ -5,7 +5,6 @@ import 'package:dungeon_paper/app/modules/AddRepositoryItems/bindings/add_reposi
 import 'package:dungeon_paper/app/modules/AddRepositoryItems/views/add_moves_view.dart';
 import 'package:dungeon_paper/app/modules/AddRepositoryItems/views/add_spells_view.dart';
 import 'package:dungeon_paper/app/modules/UpsertCharacterPages/controllers/character_moves_spells_controller.dart';
-import 'package:dungeon_paper/app/routes/app_pages.dart';
 import 'package:dungeon_paper/app/themes/button_themes.dart';
 import 'package:dungeon_paper/app/widgets/cards/move_card.dart';
 import 'package:dungeon_paper/app/widgets/cards/spell_card.dart';
@@ -75,6 +74,9 @@ class CharacterMovesSpellsView extends GetView<CharacterMovesSpellsController> {
                     child: OutlinedButton.icon(
                       onPressed: () => Get.to(
                         () => AddMovesView(
+                          defaultFilters: MoveFilters(
+                            classKey: controller.ctrl.charClass.value!.key,
+                          ),
                           onAdd: (moves) {
                             controller.moves.value = addByKey(
                               controller.moves,

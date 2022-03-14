@@ -1,10 +1,7 @@
 import 'package:dungeon_paper/app/data/models/item.dart';
 import 'package:dungeon_paper/app/widgets/atoms/svg_icon.dart';
-import 'package:dungeon_paper/app/widgets/chips/move_category_chip.dart';
-import 'package:dungeon_paper/app/widgets/chips/tag_chip.dart';
 import 'package:flutter/material.dart';
 
-import '../../data/models/move.dart';
 import 'dynamic_action_card_mini.dart';
 
 class ItemCardMini extends StatelessWidget {

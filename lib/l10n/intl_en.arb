@@ -96,5 +96,6 @@
   "itemsWithCount": "{count, plural, =0 {No items} one {One item} other {{count} items}}",
   "coins": "Coins",
   "coinsWithCount": "{count, plural, =0 {No coins} one {One coin} other {{fmtCount} coins}}",
-  "userMenuMoreChars": "More"
+  "userMenuMoreChars": "More",
+  "all": "All"
 }

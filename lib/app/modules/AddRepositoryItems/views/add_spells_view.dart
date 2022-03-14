@@ -8,17 +8,19 @@ import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
 
-class AddSpellsView extends GetView<AddRepositoryItemsController<Spell>> {
+typedef SpellFilters = dynamic;
+
+class AddSpellsView extends GetView<AddRepositoryItemsController<Spell, SpellFilters>> {
   const AddSpellsView({
     Key? key,
     required this.onAdd,
   }) : super(key: key);
 
-  final void Function(List<Spell> spells) onAdd;
+  final void Function(Iterable<Spell> spells) onAdd;
 
   @override
   Widget build(BuildContext context) {
-    return AddRepositoryItemsView<Spell>(
+    return AddRepositoryItemsView<Spell, SpellFilters>(
       title: Text(S.current.addSpells),
       cardBuilder: (ctx, spell, {required onSelect, required selected}) => SpellCard(
         spell: spell,

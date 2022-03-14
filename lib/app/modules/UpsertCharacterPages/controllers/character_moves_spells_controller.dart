@@ -1,7 +1,6 @@
 import 'dart:async';
 
 import 'package:dungeon_paper/app/data/services/repository_service.dart';
-import 'package:dungeon_paper/app/modules/UpsertCharacterPages/controllers/char_class_select_controller.dart';
 import 'package:dungeon_paper/app/modules/UpsertCharacterPages/controllers/create_character_page_controller.dart';
 import 'package:get/get.dart';
 import 'package:dungeon_paper/app/data/models/move.dart';

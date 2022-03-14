@@ -5,17 +5,21 @@ import 'package:get/get.dart';
 
 import 'package:dungeon_paper/app/modules/AddRepositoryItems/controllers/add_repository_items_controller.dart';
 
+import '../views/add_items_view.dart';
+import '../views/add_moves_view.dart';
+import '../views/add_spells_view.dart';
+
 class AddRepositoryItemsBinding extends Bindings {
   @override
   void dependencies() {
-    Get.lazyPut<AddRepositoryItemsController<Move>>(
-      () => AddRepositoryItemsController<Move>(),
+    Get.lazyPut<AddRepositoryItemsController<Move, MoveFilters>>(
+      () => AddRepositoryItemsController<Move, MoveFilters>(),
     );
-    Get.lazyPut<AddRepositoryItemsController<Spell>>(
-      () => AddRepositoryItemsController<Spell>(),
+    Get.lazyPut<AddRepositoryItemsController<Spell, SpellFilters>>(
+      () => AddRepositoryItemsController<Spell, SpellFilters>(),
     );
-    Get.lazyPut<AddRepositoryItemsController<Item>>(
-      () => AddRepositoryItemsController<Item>(),
+    Get.lazyPut<AddRepositoryItemsController<Item, ItemFilters>>(
+      () => AddRepositoryItemsController<Item, ItemFilters>(),
     );
     //
   }

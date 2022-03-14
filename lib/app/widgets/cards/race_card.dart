@@ -1,10 +1,8 @@
 import 'package:dungeon_paper/app/data/models/race.dart';
 import 'package:dungeon_paper/app/widgets/atoms/svg_icon.dart';
-import 'package:dungeon_paper/app/widgets/chips/move_category_chip.dart';
 import 'package:dungeon_paper/app/widgets/chips/tag_chip.dart';
 import 'package:flutter/material.dart';
 
-import '../../data/models/move.dart';
 import 'dynamic_action_card.dart';
 
 class RaceCard extends StatelessWidget {
@@ -25,7 +23,7 @@ class RaceCard extends StatelessWidget {
       title: race.name,
       description: race.description,
       chips: race.tags.map((t) => TagChip(tag: t)),
-      dice: [],
+      dice: const [],
       icon: showIcon ? SvgIcon(race.icon, size: 16) : null,
       starred: race.favorited,
       showStar: showStar,
