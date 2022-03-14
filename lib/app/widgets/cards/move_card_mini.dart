@@ -11,11 +11,13 @@ class MoveCardMini extends StatelessWidget {
     required this.move,
     this.onSave,
     this.showStar = true,
+    this.showIcon = true,
     this.onTap,
   }) : super(key: key);
 
   final Move move;
   final bool showStar;
+  final bool showIcon;
   final void Function(Move move)? onSave;
   final void Function()? onTap;
 
@@ -26,7 +28,7 @@ class MoveCardMini extends StatelessWidget {
       description: move.description,
       chips: [MoveCategoryChip(category: move.category)],
       dice: move.dice,
-      icon: SvgIcon(move.icon, size: 16),
+      icon: showIcon ? SvgIcon(move.icon, size: 16) : null,
       starred: move.favorited,
       showStar: showStar,
       onStarChanged: (favorited) => onSave?.call(move.copyWithInherited(favorited: favorited)),

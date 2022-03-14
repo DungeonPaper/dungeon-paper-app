@@ -14,6 +14,7 @@ class MoveCard extends StatelessWidget {
     this.onSave,
     this.showDice = true,
     this.showStar = true,
+    this.showIcon = true,
     this.initiallyExpanded,
     this.actions = const [],
   }) : super(key: key);
@@ -22,6 +23,7 @@ class MoveCard extends StatelessWidget {
   final void Function(Move move)? onSave;
   final bool showDice;
   final bool showStar;
+  final bool showIcon;
   final bool? initiallyExpanded;
   final Iterable<Widget> actions;
 
@@ -36,7 +38,7 @@ class MoveCard extends StatelessWidget {
         ...TagUtils.excludeMetaTags(move.tags).map((t) => TagChip(tag: t))
       ],
       dice: showDice ? move.dice : [],
-      icon: SvgIcon(move.icon, size: 16),
+      icon: showIcon ? SvgIcon(move.icon, size: 16) : null,
       starred: move.favorited,
       showStar: showStar,
       onStarChanged: (favorited) => onSave?.call(move.copyWithInherited(favorited: favorited)),

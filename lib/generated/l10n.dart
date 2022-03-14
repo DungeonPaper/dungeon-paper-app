@@ -60,6 +60,36 @@ class S {
     );
   }
 
+  /// `Character`
+  String get navCharacter {
+    return Intl.message(
+      'Character',
+      name: 'navCharacter',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Use`
+  String get navActions {
+    return Intl.message(
+      'Use',
+      name: 'navActions',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Journal`
+  String get navJournal {
+    return Intl.message(
+      'Journal',
+      name: 'navJournal',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `All Characters`
   String get characterListTitle {
     return Intl.message(
@@ -439,6 +469,16 @@ class S {
     return Intl.message(
       'Add Existing Spells',
       name: 'addSpellsExisting',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Add Items`
+  String get addItems {
+    return Intl.message(
+      'Add Items',
+      name: 'addItems',
       desc: '',
       args: [],
     );

@@ -1,5 +1,9 @@
 import 'package:dungeon_paper/app/data/services/character_service.dart';
 import 'package:dungeon_paper/app/model_utils/character_utils.dart';
+import 'package:dungeon_paper/app/modules/AddRepositoryItems/bindings/add_repository_items_binding.dart';
+import 'package:dungeon_paper/app/modules/AddRepositoryItems/views/add_items_view.dart';
+import 'package:dungeon_paper/app/modules/AddRepositoryItems/views/add_moves_view.dart';
+import 'package:dungeon_paper/app/modules/AddRepositoryItems/views/add_spells_view.dart';
 import 'package:dungeon_paper/app/widgets/atoms/expansion_row.dart';
 import 'package:dungeon_paper/app/widgets/cards/item_card.dart';
 import 'package:dungeon_paper/app/widgets/cards/move_card.dart';
@@ -24,6 +28,22 @@ class HomeCharacterActionsView extends GetView<CharacterService> {
           ExpansionRow(
             initiallyExpanded: true,
             title: Text(S.current.moves),
+            trailing: [
+              TextButton.icon(
+                onPressed: () => Get.to(
+                  () => AddMovesView(
+                    onAdd: (moves) => controller.updateCharacter(
+                      controller.current!.copyWith(
+                        moves: addByKey(controller.current!.moves, moves),
+                      ),
+                    ),
+                  ),
+                  binding: AddRepositoryItemsBinding(),
+                ),
+                label: Text(S.current.addMoves),
+                icon: const Icon(Icons.add),
+              )
+            ],
             children: (controller.current?.moves ?? [])
                 .map(
                   (move) => Padding(
@@ -41,6 +61,22 @@ class HomeCharacterActionsView extends GetView<CharacterService> {
           ExpansionRow(
             initiallyExpanded: true,
             title: Text(S.current.spells),
+            trailing: [
+              TextButton.icon(
+                onPressed: () => Get.to(
+                  () => AddMovesView(
+                    onAdd: (moves) => controller.updateCharacter(
+                      controller.current!.copyWith(
+                        moves: addByKey(controller.current!.moves, moves),
+                      ),
+                    ),
+                  ),
+                  binding: AddRepositoryItemsBinding(),
+                ),
+                label: Text(S.current.addSpells),
+                icon: const Icon(Icons.add),
+              )
+            ],
             children: (controller.current?.spells ?? [])
                 .map(
                   (spell) => Padding(
@@ -58,6 +94,22 @@ class HomeCharacterActionsView extends GetView<CharacterService> {
           ExpansionRow(
             initiallyExpanded: true,
             title: Text(S.current.items),
+            trailing: [
+              TextButton.icon(
+                onPressed: () => Get.to(
+                  () => AddItemsView(
+                    onAdd: (items) => controller.updateCharacter(
+                      controller.current!.copyWith(
+                        items: addByKey(controller.current!.items, items),
+                      ),
+                    ),
+                  ),
+                  binding: AddRepositoryItemsBinding(),
+                ),
+                label: Text(S.current.addItems),
+                icon: const Icon(Icons.add),
+              )
+            ],
             children: (controller.current?.items ?? [])
                 .map(
                   (item) => Padding(

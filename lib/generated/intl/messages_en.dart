@@ -98,6 +98,7 @@ class MessageLookup extends MessageLookupByLibrary {
 
   final messages = _notInlinedMessages(_notInlinedMessages);
   static Map<String, Function> _notInlinedMessages(_) => <String, Function>{
+        "addItems": MessageLookupByLibrary.simpleMessage("Add Items"),
         "addMoves": MessageLookupByLibrary.simpleMessage("Add Moves"),
         "addMovesCustom": MessageLookupByLibrary.simpleMessage("Add New Move"),
         "addMovesExisting":
@@ -179,6 +180,9 @@ class MessageLookup extends MessageLookupByLibrary {
         "moveCategory": m10,
         "moves": MessageLookupByLibrary.simpleMessage("Moves"),
         "movesWithCount": m11,
+        "navActions": MessageLookupByLibrary.simpleMessage("Use"),
+        "navCharacter": MessageLookupByLibrary.simpleMessage("Character"),
+        "navJournal": MessageLookupByLibrary.simpleMessage("Journal"),
         "pluralize": m12,
         "quickIconsItems": MessageLookupByLibrary.simpleMessage("Items"),
         "quickIconsMoves": MessageLookupByLibrary.simpleMessage("Moves"),

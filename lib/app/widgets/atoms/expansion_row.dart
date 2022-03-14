@@ -12,8 +12,9 @@ class ExpansionRow extends StatelessWidget {
   final bool showArrow;
   final EdgeInsets? titlePadding;
   final EdgeInsets? childrenPadding;
-  final Widget? leading;
-  final Widget? trailing;
+  final Iterable<Widget> leading;
+  final Iterable<Widget> trailing;
+  final Widget? icon;
 
   static const defaultPadding = EdgeInsets.symmetric(horizontal: 8);
 
@@ -22,12 +23,13 @@ class ExpansionRow extends StatelessWidget {
     this.expansionKey,
     required this.title,
     required this.children,
+    this.icon,
     this.expanded,
     this.initiallyExpanded,
     this.titlePadding,
     this.childrenPadding,
-    this.leading,
-    this.trailing,
+    this.leading = const [],
+    this.trailing = const [],
     this.onExpansion,
     this.showArrow = true,
   }) : super(key: key);
@@ -47,8 +49,13 @@ class ExpansionRow extends StatelessWidget {
           onExpansionChanged: (state) => onExpansion?.call(!state),
           title: Row(
             children: [
+              if (icon != null) ...[
+                IconTheme(data: IconTheme.of(context).copyWith(size: 20), child: icon!),
+                const SizedBox(width: 8),
+              ],
+              ...leading,
               Expanded(child: title),
-              if (trailing != null) trailing!,
+              ...trailing,
             ],
           ),
           children: children,
@@ -56,7 +63,6 @@ class ExpansionRow extends StatelessWidget {
           childrenPadding: childrenPadding ?? defaultPadding,
           expandedCrossAxisAlignment: CrossAxisAlignment.stretch,
           trailing: showArrow ? (!showArrow ? const SizedBox.shrink() : null) : null,
-          leading: leading,
           visualDensity: VisualDensity.compact,
         ),
       ),

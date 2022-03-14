@@ -78,18 +78,18 @@ class _CharacterHomeNavBarState extends State<CharacterHomeNavBar> {
         duration: const Duration(milliseconds: 500),
         curve: Curves.easeOutQuad,
       ),
-      items: const [
+      items: [
         BottomNavigationBarItem(
-          icon: Icon(Icons.person),
-          label: 'Actions',
+          icon: const Icon(Icons.person),
+          label: S.current.navActions,
         ),
         BottomNavigationBarItem(
-          icon: Icon(Icons.person),
-          label: 'Character',
+          icon: const Icon(Icons.person),
+          label: S.current.navCharacter,
         ),
         BottomNavigationBarItem(
-          icon: Icon(Icons.person),
-          label: 'Journal',
+          icon: const Icon(Icons.person),
+          label: S.current.navJournal,
         ),
       ],
     );

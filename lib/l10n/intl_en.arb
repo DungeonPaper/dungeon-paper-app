@@ -4,6 +4,9 @@
   "@appName": {
     "description": "The name of the app"
   },
+  "navCharacter": "Character",
+  "navActions": "Use",
+  "navJournal": "Journal",
   "characterListTitle": "All Characters",
   "createCharacterTitle": "Create Character",
   "createCharacterAddButton": "Add Character",
@@ -60,6 +63,7 @@
   "addSpells": "Add Spells",
   "addSpellsCustom": "Add New Spell",
   "addSpellsExisting": "Add Existing Spells",
+  "addItems": "Add Items",
   "createCharacterBioFieldLabel": "Biography",
   "createCharacterBioFieldPlaceholder": "Describe your character as shortly or thoroughly as you want here.\nPut your backstory, a visual description, some personality traits, etc. to help you keep in character.",
   "createCharacterRaceNameFieldLabel": "Race",

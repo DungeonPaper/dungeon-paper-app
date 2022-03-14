@@ -23,7 +23,7 @@ class DynamicActionCardMini extends StatelessWidget {
   }) : super(key: key);
 
   final String title;
-  final Widget icon;
+  final Widget? icon;
   final Widget? starredIcon;
   final Widget? unstarredIcon;
   final bool starred;
@@ -59,8 +59,10 @@ class DynamicActionCardMini extends StatelessWidget {
             Row(
               mainAxisSize: MainAxisSize.max,
               children: [
-                IconTheme(data: IconTheme.of(context).copyWith(size: 20), child: icon),
-                const SizedBox(width: 8),
+                if (icon != null) ...[
+                  IconTheme(data: IconTheme.of(context).copyWith(size: 20), child: icon!),
+                  const SizedBox(width: 8),
+                ],
                 Text(title),
                 Expanded(child: Container()),
                 showStar

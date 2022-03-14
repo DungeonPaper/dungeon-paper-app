@@ -63,7 +63,7 @@ class CreateCharacterPreviewView extends GetView<CreateCharacterPreviewControlle
           const SizedBox(height: 8),
           ExpansionRow(
             title: Text(S.current.movesWithCount(char.moves.length + 1)),
-            leading: SvgIcon(Move.genericIcon),
+            leading: [SvgIcon(Move.genericIcon)],
             children: [char.race, ...char.moves]
                 .map((move) => Padding(
                       padding: const EdgeInsets.only(bottom: 8.0),
@@ -80,7 +80,7 @@ class CreateCharacterPreviewView extends GetView<CreateCharacterPreviewControlle
           ),
           ExpansionRow(
             title: Text(S.current.spellsWithCount(char.spells.length)),
-            leading: SvgIcon(Spell.genericIcon),
+            leading: [SvgIcon(Spell.genericIcon)],
             children: char.spells
                 .map((spell) => Padding(
                       padding: const EdgeInsets.only(bottom: 8.0),
@@ -92,7 +92,7 @@ class CreateCharacterPreviewView extends GetView<CreateCharacterPreviewControlle
             title: Text(S.current.itemsWithCount(char.items.length) +
                 ' + ' +
                 S.current.coinsWithCount(char.coins, NumberFormat('##0.#').format(char.coins))),
-            leading: SvgIcon(Item.genericIcon),
+            leading: [SvgIcon(Item.genericIcon)],
             children: char.items
                 .map((item) => Padding(
                       padding: const EdgeInsets.only(bottom: 8.0),

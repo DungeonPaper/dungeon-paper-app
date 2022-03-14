@@ -10,14 +10,18 @@ class ItemCard extends StatelessWidget {
     Key? key,
     required this.item,
     this.showStar = true,
+    this.showIcon = true,
     this.onSave,
     this.initiallyExpanded,
+    this.actions = const [],
   }) : super(key: key);
 
   final Item item;
   final bool showStar;
+  final bool showIcon;
   final bool? initiallyExpanded;
   final void Function(Item item)? onSave;
+  final Iterable<Widget> actions;
 
   @override
   Widget build(BuildContext context) {
@@ -27,10 +31,11 @@ class ItemCard extends StatelessWidget {
       description: item.description,
       chips: item.tags.map((t) => TagChip(tag: t)),
       dice: const [],
-      icon: SvgIcon(item.icon, size: 16),
+      icon: showIcon ? SvgIcon(item.icon, size: 16) : null,
       starred: item.equipped,
       showStar: showStar,
       onStarChanged: (equipped) => onSave?.call(item.copyWithInherited(equipped: equipped)),
+      actions: actions,
     );
   }
 }

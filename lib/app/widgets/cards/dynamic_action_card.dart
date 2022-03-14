@@ -30,7 +30,7 @@ class DynamicActionCard extends StatelessWidget {
   final String description;
   final Key? expansionKey;
   final String title;
-  final Widget icon;
+  final Widget? icon;
   final Widget? starredIcon;
   final Widget? unstarredIcon;
   final bool starred;
@@ -54,26 +54,29 @@ class DynamicActionCard extends StatelessWidget {
         onExpansion: (state) => expanded.value = !state,
         initiallyExpanded: initiallyExpanded,
         childrenPadding: const EdgeInsets.all(8).copyWith(top: 0),
+        icon: icon,
         trailing: showStar
-            ? SizedBox(
-                width: 20,
-                height: 20,
-                child: IconButton(
-                  visualDensity: VisualDensity.compact,
-                  padding: EdgeInsets.zero,
-                  icon: IconTheme(
-                    data: IconTheme.of(context).copyWith(
-                      size: 16,
-                      color: Theme.of(context).colorScheme.onSurface.withOpacity(0.3),
+            ? [
+                SizedBox(
+                  width: 20,
+                  height: 20,
+                  child: IconButton(
+                    visualDensity: VisualDensity.compact,
+                    padding: EdgeInsets.zero,
+                    icon: IconTheme(
+                      data: IconTheme.of(context).copyWith(
+                        size: 16,
+                        color: Theme.of(context).colorScheme.onSurface.withOpacity(0.3),
+                      ),
+                      child: starred
+                          ? starredIcon ?? const Icon(Icons.star_rounded)
+                          : unstarredIcon ?? const Icon(Icons.star_border_rounded),
                     ),
-                    child: starred
-                        ? starredIcon ?? const Icon(Icons.star_rounded)
-                        : unstarredIcon ?? const Icon(Icons.star_border_rounded),
+                    onPressed: () => onStarChanged(!starred),
                   ),
-                  onPressed: () => onStarChanged(!starred),
                 ),
-              )
-            : const SizedBox.shrink(),
+              ]
+            : [const SizedBox.shrink()],
         children: [
           MarkdownBody(data: description),
           if (description.isNotEmpty) const SizedBox(height: 4),

@@ -79,5 +79,5 @@ List<T> addByKey<T>(List<T> list, Iterable<T> items, {dynamic Function(T item)? 
 List<T> removeByKey<T>(List<T> list, Iterable<T> items, {dynamic Function(T item)? key}) {
   final keyGetter = key ?? keyFor;
   final keys = items.map(keyGetter).toList();
-  return list..removeWhere((x) => keys.contains(keyGetter(x)));
+  return [...list]..removeWhere((x) => keys.contains(keyGetter(x)));
 }

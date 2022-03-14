@@ -12,12 +12,14 @@ class ItemCardMini extends StatelessWidget {
     Key? key,
     required this.item,
     this.showStar = true,
+    this.showIcon = true,
     this.onSave,
     this.onTap,
   }) : super(key: key);
 
   final Item item;
   final bool showStar;
+  final bool showIcon;
   final void Function(Item item)? onSave;
   final void Function()? onTap;
 
@@ -28,7 +30,7 @@ class ItemCardMini extends StatelessWidget {
       description: item.description,
       chips: const [], // item.tags.map((t) => TagChip(tag: t)),
       dice: const [],
-      icon: SvgIcon(item.icon, size: 16),
+      icon: showIcon ? SvgIcon(item.icon, size: 16) : null,
       starred: item.equipped,
       showStar: showStar,
       onStarChanged: (equipped) => onSave?.call(item.copyWithInherited(equipped: equipped)),
