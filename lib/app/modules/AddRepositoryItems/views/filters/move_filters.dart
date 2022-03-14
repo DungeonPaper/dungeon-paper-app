@@ -32,38 +32,48 @@ class MoveFiltersView extends StatelessWidget {
         Row(
           crossAxisAlignment: CrossAxisAlignment.end,
           children: [
-            DropdownButton<MoveCategory?>(
-              value: filters.category,
-              items: [
-                DropdownMenuItem<MoveCategory?>(
-                  child: Text(S.current.allEntity(S.current.entityPlural(MoveCategory))),
-                  value: null,
-                ),
-                ...MoveCategory.values.map(
-                  (cat) => DropdownMenuItem<MoveCategory?>(
-                    child: Text(S.current.moveCategory(cat)),
-                    value: cat,
+            Expanded(
+              child: DropdownButton<MoveCategory?>(
+                isExpanded: true,
+                value: filters.category,
+                items: [
+                  DropdownMenuItem<MoveCategory?>(
+                    child: Text(S.current.allEntity(S.current.entityPlural(MoveCategory))),
+                    value: null,
                   ),
-                ),
-              ],
-              onChanged: (cat) => onChange(filters..category = cat),
+                  ...MoveCategory.values.map(
+                    (cat) => DropdownMenuItem<MoveCategory?>(
+                      child: Text(
+                        ![MoveCategory.advanced1, MoveCategory.advanced2].contains(cat)
+                            ? S.current.moveCategory(cat)
+                            : S.current.moveCategoryWithLevel(cat),
+                      ),
+                      value: cat,
+                    ),
+                  ),
+                ],
+                onChanged: (cat) => onChange(filters..category = cat),
+              ),
             ),
-            const SizedBox(width: 8),
-            DropdownButton<String>(
-              value: filters.classKey,
-              items: [
-                DropdownMenuItem<String>(
-                  child: Text(S.current.allEntity(S.current.entityPlural(CharacterClass))),
-                  value: null,
-                ),
-                ...service.classes.values.map(
-                  (cls) => DropdownMenuItem<String>(
-                    child: Text(cls.name),
-                    value: cls.key,
+            const SizedBox(width: 16),
+            Expanded(
+              child: DropdownButton<String>(
+                isExpanded: true,
+                value: filters.classKey,
+                items: [
+                  DropdownMenuItem<String>(
+                    child: Text(S.current.allEntity(S.current.entityPlural(CharacterClass))),
+                    value: null,
                   ),
-                ),
-              ],
-              onChanged: (key) => onChange(filters..classKey = key),
+                  ...service.classes.values.map(
+                    (cls) => DropdownMenuItem<String>(
+                      child: Text(cls.name),
+                      value: cls.key,
+                    ),
+                  ),
+                ],
+                onChanged: (key) => onChange(filters..classKey = key),
+              ),
             ),
           ],
         ),

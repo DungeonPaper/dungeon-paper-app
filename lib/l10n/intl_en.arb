@@ -42,6 +42,7 @@
   "dynamicCategoriesItems": "Equipped Items",
   "dynamicCategoriesNotes": "Favorite Notes",
   "moveCategory": "{category, select, starting {Starting} basic {Basic} special {Special} advanced1 {Advanced} advanced2 {Advanced} other {Other}}",
+  "moveCategoryWithLevel": "{category, select, advanced1 {Advanced (level 1-5)} advanced2 {Advanced (level 6-10)} other {}}",
   "rollStatButtonTooltip": "Roll +{stat}",
   "@rollStatButtonTooltip": {
     "placeholders": {

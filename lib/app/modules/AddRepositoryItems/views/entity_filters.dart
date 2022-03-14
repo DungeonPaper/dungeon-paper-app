@@ -27,12 +27,14 @@ class EntityFiltersView<T, F extends EntityFilters<T>> extends StatelessWidget {
     return Column(
       children: [
         ...leading,
+        if (leading.isNotEmpty) const SizedBox(height: 8),
         TextField(
           controller: searchController,
           decoration: InputDecoration(
             hintText: S.current.searchPlaceholderEntity(S.current.entity(Move)),
           ),
         ),
+        if (trailing.isNotEmpty) const SizedBox(height: 8),
         ...trailing,
       ],
     );

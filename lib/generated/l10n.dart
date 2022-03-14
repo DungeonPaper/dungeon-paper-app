@@ -326,6 +326,21 @@ class S {
     );
   }
 
+  /// `{category, select, advanced1 {Advanced (level 1-5)} advanced2 {Advanced (level 6-10)} other {}}`
+  String moveCategoryWithLevel(Object category) {
+    return Intl.select(
+      category,
+      {
+        'advanced1': 'Advanced (level 1-5)',
+        'advanced2': 'Advanced (level 6-10)',
+        'other': '',
+      },
+      name: 'moveCategoryWithLevel',
+      desc: '',
+      args: [category],
+    );
+  }
+
   /// `Roll +{stat}`
   String rollStatButtonTooltip(String stat) {
     return Intl.message(

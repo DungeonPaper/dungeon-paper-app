@@ -87,19 +87,25 @@ class MessageLookup extends MessageLookupByLibrary {
             'other': 'Other',
           })}";
 
-  static String m12(count) =>
+  static String m12(category) => "${Intl.select(category, {
+            'advanced1': 'Advanced (level 1-5)',
+            'advanced2': 'Advanced (level 6-10)',
+            'other': '',
+          })}";
+
+  static String m13(count) =>
       "${Intl.plural(count, zero: 'No moves', one: 'One move', other: '${count} moves')}";
 
-  static String m13(count, singular, plural) =>
+  static String m14(count, singular, plural) =>
       "${Intl.plural(count, one: 'One ${singular}', other: '${count} ${plural}')}";
 
-  static String m14(stat) => "Roll +${stat}";
+  static String m15(stat) => "Roll +${stat}";
 
-  static String m15(entity) => "Type to search ${entity}";
+  static String m16(entity) => "Type to search ${entity}";
 
-  static String m16(string) => "Select ${string} to add";
+  static String m17(string) => "Select ${string} to add";
 
-  static String m17(count) =>
+  static String m18(count) =>
       "${Intl.plural(count, zero: 'No spells', one: 'One spell', other: '${count} spells')}";
 
   final messages = _notInlinedMessages(_notInlinedMessages);
@@ -186,12 +192,13 @@ class MessageLookup extends MessageLookupByLibrary {
         "items": MessageLookupByLibrary.simpleMessage("Items"),
         "itemsWithCount": m10,
         "moveCategory": m11,
+        "moveCategoryWithLevel": m12,
         "moves": MessageLookupByLibrary.simpleMessage("Moves"),
-        "movesWithCount": m12,
+        "movesWithCount": m13,
         "navActions": MessageLookupByLibrary.simpleMessage("Use"),
         "navCharacter": MessageLookupByLibrary.simpleMessage("Character"),
         "navJournal": MessageLookupByLibrary.simpleMessage("Journal"),
-        "pluralize": m13,
+        "pluralize": m14,
         "quickIconsItems": MessageLookupByLibrary.simpleMessage("Items"),
         "quickIconsMoves": MessageLookupByLibrary.simpleMessage("Moves"),
         "quickIconsNote": MessageLookupByLibrary.simpleMessage("+ Note"),
@@ -201,14 +208,14 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Attack + Damage"),
         "rollBasicActionButton":
             MessageLookupByLibrary.simpleMessage("Basic Action"),
-        "rollStatButtonTooltip": m14,
+        "rollStatButtonTooltip": m15,
         "searchPlaceholder":
             MessageLookupByLibrary.simpleMessage("Type to search"),
-        "searchPlaceholderEntity": m15,
+        "searchPlaceholderEntity": m16,
         "select": MessageLookupByLibrary.simpleMessage("Select"),
-        "selectToAdd": m16,
+        "selectToAdd": m17,
         "spells": MessageLookupByLibrary.simpleMessage("Spells"),
-        "spellsWithCount": m17,
+        "spellsWithCount": m18,
         "userMenuMoreChars": MessageLookupByLibrary.simpleMessage("More")
       };
 }
