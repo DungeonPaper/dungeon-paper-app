@@ -1,7 +1,7 @@
 import 'package:dungeon_paper/app/data/services/character_service.dart';
 import 'package:dungeon_paper/app/themes/button_themes.dart';
 import 'package:dungeon_paper/app/widgets/atoms/svg_icon.dart';
-import 'package:dungeon_paper/app/widgets/roll_stats_grid.dart';
+import 'package:dungeon_paper/app/widgets/molecules/roll_stats_grid.dart';
 import 'package:dungeon_paper/core/dw_icons.dart';
 import 'package:dungeon_paper/generated/l10n.dart';
 import 'package:flutter/material.dart';

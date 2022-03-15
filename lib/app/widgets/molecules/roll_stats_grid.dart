@@ -1,7 +1,7 @@
 import 'package:dungeon_paper/app/data/models/roll_stats.dart';
 import 'package:flutter/material.dart';
 
-import 'chips/roll_stat_chip.dart';
+import '../chips/roll_stat_chip.dart';
 
 class RollStatsGrid extends StatelessWidget {
   const RollStatsGrid({

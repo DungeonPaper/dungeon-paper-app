@@ -11,7 +11,7 @@ import 'package:dungeon_paper/app/widgets/cards/item_card.dart';
 import 'package:dungeon_paper/app/widgets/cards/move_card.dart';
 import 'package:dungeon_paper/app/widgets/cards/race_card.dart';
 import 'package:dungeon_paper/app/widgets/cards/spell_card.dart';
-import 'package:dungeon_paper/app/widgets/roll_stats_grid.dart';
+import 'package:dungeon_paper/app/widgets/molecules/roll_stats_grid.dart';
 import 'package:dungeon_paper/generated/l10n.dart';
 import 'package:flutter/material.dart';
 

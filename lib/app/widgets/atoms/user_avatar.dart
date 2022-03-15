@@ -1,12 +1,18 @@
 import 'package:flutter/material.dart';
 
 class UserAvatar extends StatelessWidget {
-  const UserAvatar({Key? key}) : super(key: key);
+  const UserAvatar({
+    Key? key,
+    this.size,
+  }) : super(key: key);
+
+  final double? size;
 
   @override
   Widget build(BuildContext context) {
-    return const CircleAvatar(
-      child: Icon(Icons.person),
+    return CircleAvatar(
+      radius: size != null ? size! / 2 : null,
+      child: const Icon(Icons.person),
     );
   }
 }
