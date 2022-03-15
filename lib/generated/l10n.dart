@@ -683,6 +683,16 @@ class S {
     );
   }
 
+  /// `Edit`
+  String get edit {
+    return Intl.message(
+      'Edit',
+      name: 'edit',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `Add {string}`
   String addWithCount(Object string) {
     return Intl.message(
@@ -832,6 +842,56 @@ class S {
       name: 'searchPlaceholderEntity',
       desc: '',
       args: [entity],
+    );
+  }
+
+  /// `Delete {entity}?`
+  String confirmDeleteTitle(Object entity) {
+    return Intl.message(
+      'Delete $entity?',
+      name: 'confirmDeleteTitle',
+      desc: '',
+      args: [entity],
+    );
+  }
+
+  /// `Are you sure you want to remove the {entity} "{name}" from the list?`
+  String confirmDeleteBody(Object entity, Object name) {
+    return Intl.message(
+      'Are you sure you want to remove the $entity "$name" from the list?',
+      name: 'confirmDeleteBody',
+      desc: '',
+      args: [entity, name],
+    );
+  }
+
+  /// `Cancel`
+  String get cancel {
+    return Intl.message(
+      'Cancel',
+      name: 'cancel',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Confirm`
+  String get confirm {
+    return Intl.message(
+      'Confirm',
+      name: 'confirm',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `OK`
+  String get ok {
+    return Intl.message(
+      'OK',
+      name: 'ok',
+      desc: '',
+      args: [],
     );
   }
 }

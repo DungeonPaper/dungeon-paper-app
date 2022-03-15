@@ -88,6 +88,7 @@
   "select": "Select",
   "selectToAdd": "Select {string} to add",
   "remove": "Remove",
+  "edit": "Edit",
   "addWithCount": "Add {string}",
   "moves": "Moves",
   "movesWithCount": "{count, plural, =0 {No moves} one {One move} other {{count} moves}}",
@@ -101,5 +102,10 @@
   "all": "All",
   "allEntity": "All {entity}",
   "searchPlaceholder": "Type to search",
-  "searchPlaceholderEntity": "Type to search {entity}"
+  "searchPlaceholderEntity": "Type to search {entity}",
+  "confirmDeleteTitle": "Delete {entity}?",
+  "confirmDeleteBody": "Are you sure you want to remove the {entity} \"{name}\" from the list?",
+  "cancel": "Cancel",
+  "confirm": "Confirm",
+  "ok": "OK"
 }

@@ -107,14 +107,18 @@ class DynamicActionCard extends StatelessWidget {
                 ),
               ),
               ...actions,
+              if (actions.isNotEmpty && dice.isNotEmpty) const SizedBox(width: 8),
               if (dice.isNotEmpty)
-                BackgroundIconButton(
-                  elevation: 1.5,
-                  icon: const SvgIcon(DwIcons.dice_d6, size: 20),
-                  iconColor: Theme.of(context).colorScheme.onPrimary,
-                  color: Theme.of(context).primaryColor,
-                  size: 40,
-                  onPressed: () => null,
+                Padding(
+                  padding: const EdgeInsets.only(bottom: 2.5),
+                  child: BackgroundIconButton(
+                    elevation: 1.5,
+                    icon: const SvgIcon(DwIcons.dice_d6, size: 20),
+                    iconColor: Theme.of(context).colorScheme.onPrimary,
+                    color: Theme.of(context).primaryColor,
+                    size: 40,
+                    onPressed: () => null,
+                  ),
                 ),
             ],
           )
