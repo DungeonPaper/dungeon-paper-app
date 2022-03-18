@@ -12,7 +12,7 @@ final _light = ThemeData.light();
 
 final parchmentTheme = ThemeData(
   primaryColor: primaryColor,
-  colorScheme: _light.colorScheme.copyWith(secondary: primaryColor),
+  colorScheme: _light.colorScheme.copyWith(secondary: primaryColor, tertiary: primaryColor),
   scaffoldBackgroundColor: scaffoldBackgroundColor,
   appBarTheme: AppBarTheme(
     backgroundColor: scaffoldBackgroundColor,
