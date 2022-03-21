@@ -11,7 +11,7 @@ class CharacterMovesSpellsController extends GetxController {
   final moves = <Move>[].obs;
   final spells = <Spell>[].obs;
 
-  final service = Get.find<RepositoryService>();
+  final repo = Get.find<RepositoryService>();
   final ctrl = Get.find<CreateCharacterPageController>();
   late StreamSubscription sub;
 
@@ -33,7 +33,7 @@ class CharacterMovesSpellsController extends GetxController {
   addStartingMoves() {
     moves.clear();
     moves.addAll(
-      service.moves.values
+      [...repo.builtIn.moves.values, ...repo.my.moves.values]
           .where(
             (m) =>
                 (m.classKeys.contains(ctrl.charClass.value!.key) &&

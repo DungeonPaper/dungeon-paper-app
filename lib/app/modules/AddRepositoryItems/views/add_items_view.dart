@@ -14,33 +14,41 @@ class AddItemsView extends GetView<AddRepositoryItemsController<Item, ItemFilter
   const AddItemsView({
     Key? key,
     required this.onAdd,
+    required this.selections,
   }) : super(key: key);
 
   final void Function(Iterable<Item> items) onAdd;
+  final Iterable<Item> selections;
 
   @override
   Widget build(BuildContext context) {
     return AddRepositoryItemsView<Item, ItemFilters>(
-      title: Text(S.current.addItems),
+      title: Text(S.current.addGeneric(S.current.entityPlural(Item))),
       filterFn: (item, filters) => filters.filter(item),
       filtersBuilder: (filters, update) => ItemFiltersView(
         filters: filters,
         onChange: controller.setFilters,
         searchController: controller.search,
       ),
-      cardBuilder: (ctx, item, {required onSelect, required selected}) => ItemCard(
+      cardBuilder: (ctx, item, {required onSelect, required selected, required selectable}) =>
+          ItemCard(
         item: item,
         showStar: false,
         actions: [
           ElevatedButton.icon(
             style: ButtonThemes.primaryElevated(context),
-            onPressed: () => onSelect(!selected),
-            label: Text(!selected ? S.current.select : S.current.remove),
+            onPressed: selectable ? () => onSelect(!selected) : null,
+            label: Text(selectable
+                ? !selected
+                    ? S.current.select
+                    : S.current.remove
+                : S.current.alreadyAdded),
             icon: Icon(!selected ? Icons.add : Icons.remove),
           )
         ],
       ),
       onAdd: onAdd,
+      selections: selections,
     );
   }
 }

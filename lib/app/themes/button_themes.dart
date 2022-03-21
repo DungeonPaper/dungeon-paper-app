@@ -15,7 +15,9 @@ class ButtonThemes {
       );
 
   static ButtonStyle primaryOutlined(BuildContext context) => OutlinedButton.styleFrom(
-        primary: Theme.of(context).primaryColor,
+        primary: Theme.of(context).scaffoldBackgroundColor.computeLuminance() > 0.5
+            ? Theme.of(context).primaryColor
+            : Theme.of(context).colorScheme.onSurface,
         shape: rRectShape,
       );
 }

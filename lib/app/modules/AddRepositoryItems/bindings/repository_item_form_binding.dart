@@ -10,17 +10,11 @@ import '../views/filters/item_filters.dart';
 import '../views/filters/move_filters.dart';
 import '../views/filters/spell_filters.dart';
 
-class AddRepositoryItemsBinding extends Bindings {
+class RepositoryItemFormBinding extends Bindings {
   @override
   void dependencies() {
-    Get.lazyPut<AddRepositoryItemsController<Move, MoveFilters>>(
-      () => AddRepositoryItemsController<Move, MoveFilters>(),
-    );
-    Get.lazyPut<AddRepositoryItemsController<Spell, SpellFilters>>(
-      () => AddRepositoryItemsController<Spell, SpellFilters>(),
-    );
-    Get.lazyPut<AddRepositoryItemsController<Item, ItemFilters>>(
-      () => AddRepositoryItemsController<Item, ItemFilters>(),
+    Get.lazyPut<AddMoveFormController>(
+      () => AddMoveFormController(),
     );
   }
 }

@@ -20,9 +20,15 @@ typedef String MessageIfAbsent(String messageStr, List<dynamic> args);
 class MessageLookup extends MessageLookupByLibrary {
   String get localeName => 'en';
 
-  static String m0(string) => "Add ${string}";
+  static String m0(entity) => "Add New ${entity}";
 
-  static String m1(alignment) => "${Intl.select(alignment, {
+  static String m1(entity) => "Add Existing ${entity}";
+
+  static String m2(entity) => "Add ${entity}";
+
+  static String m3(string) => "Add ${string}";
+
+  static String m4(alignment) => "${Intl.select(alignment, {
             'chaotic': 'Chaotic',
             'evil': 'Evil',
             'good': 'Good',
@@ -30,22 +36,22 @@ class MessageLookup extends MessageLookupByLibrary {
             'neutral': 'Neutral',
           })}";
 
-  static String m2(entity) => "All ${entity}";
+  static String m5(entity) => "All ${entity}";
 
-  static String m3(level, charClass, alignment) =>
+  static String m6(level, charClass, alignment) =>
       "Level ${level} ∙ ${charClass} ∙ ${alignment}";
 
-  static String m4(count, fmtCount) =>
+  static String m7(count, fmtCount) =>
       "${Intl.plural(count, zero: 'No coins', one: 'One coin', other: '${fmtCount} coins')}";
 
-  static String m5(entity, name) =>
+  static String m8(entity, name) =>
       "Are you sure you want to remove the ${entity} \"${name}\" from the list?";
 
-  static String m6(entity) => "Delete ${entity}?";
+  static String m9(entity) => "Delete ${entity}?";
 
-  static String m7(hp) => "Max HP: ${hp}";
+  static String m10(hp) => "Max HP: ${hp}";
 
-  static String m8(step) => "${Intl.select(step, {
+  static String m11(step) => "${Intl.select(step, {
             'information': 'Basic Information',
             'charClass': 'Class',
             'stats': 'Roll Stats',
@@ -54,9 +60,9 @@ class MessageLookup extends MessageLookupByLibrary {
             'gear': 'Starting Gear',
           })}";
 
-  static String m9(step) => "${step} - Changes Required";
+  static String m12(step) => "${step} - Changes Required";
 
-  static String m10(runtimeType) => "${Intl.select(runtimeType, {
+  static String m13(runtimeType) => "${Intl.select(runtimeType, {
             'CharacterClass': 'Class',
             'Item': 'Item',
             'Monster': 'Monster',
@@ -68,7 +74,7 @@ class MessageLookup extends MessageLookupByLibrary {
             'other': '${runtimeType}',
           })}";
 
-  static String m11(runtimeType) => "${Intl.select(runtimeType, {
+  static String m14(runtimeType) => "${Intl.select(runtimeType, {
             'CharacterClass': 'Classes',
             'Item': 'Items',
             'Monster': 'Monsters',
@@ -80,10 +86,13 @@ class MessageLookup extends MessageLookupByLibrary {
             'other': '${runtimeType}s',
           })}";
 
-  static String m12(count) =>
+  static String m15(count, entPlural, ent) =>
+      "${Intl.plural(count, zero: 'No ${entPlural}', one: 'One ${ent}', other: '${count} ${entPlural}')}";
+
+  static String m16(count) =>
       "${Intl.plural(count, zero: 'No items', one: 'One item', other: '${count} items')}";
 
-  static String m13(category) => "${Intl.select(category, {
+  static String m17(category) => "${Intl.select(category, {
             'starting': 'Starting',
             'basic': 'Basic',
             'special': 'Special',
@@ -92,55 +101,52 @@ class MessageLookup extends MessageLookupByLibrary {
             'other': 'Other',
           })}";
 
-  static String m14(category) => "${Intl.select(category, {
+  static String m18(category) => "${Intl.select(category, {
             'advanced1': 'Advanced (level 1-5)',
             'advanced2': 'Advanced (level 6-10)',
             'other': '',
           })}";
 
-  static String m15(count) =>
+  static String m19(count) =>
       "${Intl.plural(count, zero: 'No moves', one: 'One move', other: '${count} moves')}";
 
-  static String m16(count, singular, plural) =>
+  static String m20(count) =>
+      "${Intl.plural(count, zero: 'No notes', one: 'One note', other: '${count} notes')}";
+
+  static String m21(count, singular, plural) =>
       "${Intl.plural(count, one: 'One ${singular}', other: '${count} ${plural}')}";
 
-  static String m17(stat) => "Roll +${stat}";
+  static String m22(stat) => "Roll +${stat}";
 
-  static String m18(entity) => "Type to search ${entity}";
+  static String m23(entity) => "Type to search ${entity}";
 
-  static String m19(string) => "Select ${string} to add";
+  static String m24(string) => "Select ${string} to add";
 
-  static String m20(count) =>
+  static String m25(count) =>
       "${Intl.plural(count, zero: 'No spells', one: 'One spell', other: '${count} spells')}";
 
   final messages = _notInlinedMessages(_notInlinedMessages);
   static Map<String, Function> _notInlinedMessages(_) => <String, Function>{
-        "addItems": MessageLookupByLibrary.simpleMessage("Add Items"),
-        "addMoves": MessageLookupByLibrary.simpleMessage("Add Moves"),
-        "addMovesCustom": MessageLookupByLibrary.simpleMessage("Add New Move"),
-        "addMovesExisting":
-            MessageLookupByLibrary.simpleMessage("Add Existing Moves"),
-        "addSpells": MessageLookupByLibrary.simpleMessage("Add Spells"),
-        "addSpellsCustom":
-            MessageLookupByLibrary.simpleMessage("Add New Spell"),
-        "addSpellsExisting":
-            MessageLookupByLibrary.simpleMessage("Add Existing Spells"),
-        "addWithCount": m0,
-        "alignment": m1,
+        "addCustomGeneric": m0,
+        "addExistingGeneric": m1,
+        "addGeneric": m2,
+        "addWithCount": m3,
+        "alignment": m4,
         "all": MessageLookupByLibrary.simpleMessage("All"),
-        "allEntity": m2,
+        "allEntity": m5,
+        "alreadyAdded": MessageLookupByLibrary.simpleMessage("Already added"),
         "appName": MessageLookupByLibrary.simpleMessage("Dungeon Paper"),
         "cancel": MessageLookupByLibrary.simpleMessage("Cancel"),
         "characterBarHp": MessageLookupByLibrary.simpleMessage("HP"),
         "characterBarXp": MessageLookupByLibrary.simpleMessage("XP"),
-        "characterHeaderSubtitle": m3,
+        "characterHeaderSubtitle": m6,
         "characterListTitle":
             MessageLookupByLibrary.simpleMessage("All Characters"),
         "coins": MessageLookupByLibrary.simpleMessage("Coins"),
-        "coinsWithCount": m4,
+        "coinsWithCount": m7,
         "confirm": MessageLookupByLibrary.simpleMessage("Confirm"),
-        "confirmDeleteBody": m5,
-        "confirmDeleteTitle": m6,
+        "confirmDeleteBody": m8,
+        "confirmDeleteTitle": m9,
         "createCharRandomizeNameTooltipClick":
             MessageLookupByLibrary.simpleMessage(
                 "Click to generate a random name"),
@@ -168,7 +174,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "createCharacterNameFieldPlaceholder":
             MessageLookupByLibrary.simpleMessage(
                 "Enter your character\'s name"),
-        "createCharacterPreviewPageMaxHp": m7,
+        "createCharacterPreviewPageMaxHp": m10,
         "createCharacterPreviewPageTitle":
             MessageLookupByLibrary.simpleMessage("Preview Character"),
         "createCharacterProceedTooltip":
@@ -184,8 +190,8 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Race name"),
         "createCharacterSaveButton":
             MessageLookupByLibrary.simpleMessage("Create Character"),
-        "createCharacterStep": m8,
-        "createCharacterStepInvalidTooltip": m9,
+        "createCharacterStep": m11,
+        "createCharacterStepInvalidTooltip": m12,
         "createCharacterTitle":
             MessageLookupByLibrary.simpleMessage("Create Character"),
         "dynamicCategoriesItems":
@@ -197,19 +203,22 @@ class MessageLookup extends MessageLookupByLibrary {
         "dynamicCategoriesSpells":
             MessageLookupByLibrary.simpleMessage("Prepared Spells"),
         "edit": MessageLookupByLibrary.simpleMessage("Edit"),
-        "entity": m10,
-        "entityPlural": m11,
+        "entity": m13,
+        "entityPlural": m14,
+        "entityWithCount": m15,
         "items": MessageLookupByLibrary.simpleMessage("Items"),
-        "itemsWithCount": m12,
-        "moveCategory": m13,
-        "moveCategoryWithLevel": m14,
+        "itemsWithCount": m16,
+        "moveCategory": m17,
+        "moveCategoryWithLevel": m18,
         "moves": MessageLookupByLibrary.simpleMessage("Moves"),
-        "movesWithCount": m15,
+        "movesWithCount": m19,
         "navActions": MessageLookupByLibrary.simpleMessage("Use"),
         "navCharacter": MessageLookupByLibrary.simpleMessage("Character"),
         "navJournal": MessageLookupByLibrary.simpleMessage("Journal"),
+        "notes": MessageLookupByLibrary.simpleMessage("Notes"),
+        "notesWithCount": m20,
         "ok": MessageLookupByLibrary.simpleMessage("OK"),
-        "pluralize": m16,
+        "pluralize": m21,
         "quickIconsItems": MessageLookupByLibrary.simpleMessage("Items"),
         "quickIconsMoves": MessageLookupByLibrary.simpleMessage("Moves"),
         "quickIconsNote": MessageLookupByLibrary.simpleMessage("+ Note"),
@@ -219,14 +228,14 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Attack + Damage"),
         "rollBasicActionButton":
             MessageLookupByLibrary.simpleMessage("Basic Action"),
-        "rollStatButtonTooltip": m17,
+        "rollStatButtonTooltip": m22,
         "searchPlaceholder":
             MessageLookupByLibrary.simpleMessage("Type to search"),
-        "searchPlaceholderEntity": m18,
+        "searchPlaceholderEntity": m23,
         "select": MessageLookupByLibrary.simpleMessage("Select"),
-        "selectToAdd": m19,
+        "selectToAdd": m24,
         "spells": MessageLookupByLibrary.simpleMessage("Spells"),
-        "spellsWithCount": m20,
+        "spellsWithCount": m25,
         "userMenuMoreChars": MessageLookupByLibrary.simpleMessage("More")
       };
 }

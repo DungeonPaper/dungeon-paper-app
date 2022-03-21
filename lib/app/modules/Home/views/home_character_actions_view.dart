@@ -8,6 +8,7 @@ import 'package:dungeon_paper/app/modules/AddRepositoryItems/bindings/add_reposi
 import 'package:dungeon_paper/app/modules/AddRepositoryItems/views/add_items_view.dart';
 import 'package:dungeon_paper/app/modules/AddRepositoryItems/views/add_moves_view.dart';
 import 'package:dungeon_paper/app/modules/AddRepositoryItems/views/add_spells_view.dart';
+import 'package:dungeon_paper/app/modules/AddRepositoryItems/views/filters/item_filters.dart';
 import 'package:dungeon_paper/app/modules/AddRepositoryItems/views/filters/move_filters.dart';
 import 'package:dungeon_paper/app/modules/AddRepositoryItems/views/filters/spell_filters.dart';
 import 'package:dungeon_paper/app/themes/button_themes.dart';
@@ -49,11 +50,12 @@ class HomeCharacterActionsView extends GetView<CharacterService> {
                           moves: addByKey(char.moves, moves),
                         ),
                       ),
+                      selections: char.moves,
                     ),
                     binding: AddRepositoryItemsBinding(),
                     arguments: MoveFilters(classKey: char.characterClass.key),
                   ),
-                  label: Text(S.current.addMoves),
+                  label: Text(S.current.addGeneric(S.current.entityPlural(Move))),
                   icon: const Icon(Icons.add),
                 )
               ],
@@ -89,11 +91,12 @@ class HomeCharacterActionsView extends GetView<CharacterService> {
                           spells: addByKey(char.spells, spells),
                         ),
                       ),
+                      selections: char.spells,
                     ),
                     binding: AddRepositoryItemsBinding(),
                     arguments: SpellFilters(),
                   ),
-                  label: Text(S.current.addSpells),
+                  label: Text(S.current.addGeneric(S.current.entityPlural(Spell))),
                   icon: const Icon(Icons.add),
                 )
               ],
@@ -123,10 +126,12 @@ class HomeCharacterActionsView extends GetView<CharacterService> {
                           items: addByKey(char.items, items),
                         ),
                       ),
+                      selections: char.items,
                     ),
                     binding: AddRepositoryItemsBinding(),
+                    arguments: ItemFilters(),
                   ),
-                  label: Text(S.current.addItems),
+                  label: Text(S.current.addGeneric(S.current.entityPlural(Item))),
                   icon: const Icon(Icons.add),
                 )
               ],

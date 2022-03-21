@@ -12,46 +12,52 @@ class HomeCharacterHeaderView extends GetView<CharacterService> {
 
   @override
   Widget build(BuildContext context) {
+    const showButtons = 1 == 0 - 0;
+
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        Column(
-          children: [
-            LabeledIconButton(
-              onPressed: () => null,
-              icon: const SvgIcon(DwIcons.knapsack),
-              label: S.current.quickIconsItems,
-              shadowOffset: const Offset(-2, -2),
-            ),
-            const SizedBox(height: 16),
-            LabeledIconButton(
-              onPressed: () => null,
-              icon: const SvgIcon(DwIcons.scroll_quill),
-              label: S.current.quickIconsNote,
-              shadowOffset: const Offset(-2, 2),
-            ),
-          ],
-        ),
-        const SizedBox(width: 8),
+        if (showButtons) ...[
+          Column(
+            children: [
+              LabeledIconButton(
+                onPressed: () => null,
+                icon: const SvgIcon(DwIcons.knapsack),
+                label: S.current.quickIconsItems,
+                shadowOffset: const Offset(-2, -2),
+              ),
+              const SizedBox(height: 16),
+              LabeledIconButton(
+                onPressed: () => null,
+                icon: const SvgIcon(DwIcons.scroll_quill),
+                label: S.current.quickIconsNote,
+                shadowOffset: const Offset(-2, 2),
+              ),
+            ],
+          ),
+          const SizedBox(width: 8),
+        ],
         CharacterAvatar.roundedRect(size: 176),
-        const SizedBox(width: 8),
-        Column(
-          children: [
-            LabeledIconButton(
-              onPressed: () => null,
-              icon: const SvgIcon(DwIcons.hand_rock),
-              label: S.current.quickIconsMoves,
-              shadowOffset: const Offset(2, -2),
-            ),
-            const SizedBox(height: 16),
-            LabeledIconButton(
-              onPressed: () => null,
-              icon: const SvgIcon(DwIcons.book_cover),
-              label: S.current.quickIconsSpells,
-              shadowOffset: const Offset(2, 2),
-            ),
-          ],
-        ),
+        if (showButtons) ...[
+          const SizedBox(width: 8),
+          Column(
+            children: [
+              LabeledIconButton(
+                onPressed: () => null,
+                icon: const SvgIcon(DwIcons.hand_rock),
+                label: S.current.quickIconsMoves,
+                shadowOffset: const Offset(2, -2),
+              ),
+              const SizedBox(height: 16),
+              LabeledIconButton(
+                onPressed: () => null,
+                icon: const SvgIcon(DwIcons.book_cover),
+                label: S.current.quickIconsSpells,
+                shadowOffset: const Offset(2, 2),
+              ),
+            ],
+          ),
+        ],
       ],
     );
   }

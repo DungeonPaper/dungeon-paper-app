@@ -1,4 +1,5 @@
 import 'package:dungeon_paper/app/modules/Home/views/home_character_actions_view.dart';
+import 'package:dungeon_paper/app/modules/Home/views/home_character_journal_view.dart';
 import 'package:dungeon_paper/app/widgets/atoms/user_menu.dart';
 import 'package:flutter/material.dart';
 
@@ -28,7 +29,7 @@ class HomeView extends GetView<CharacterService> {
         children: const [
           HomeCharacterActionsView(),
           HomeCharacterView(),
-          Center(child: Text('Journal')),
+          HomeCharacterJournalView(),
         ],
       ),
       bottomNavigationBar: Obx(

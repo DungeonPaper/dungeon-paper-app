@@ -17,7 +17,7 @@ class SpellFiltersView extends StatelessWidget {
   }) : super(key: key);
 
   final SpellFilters filters;
-  final service = Get.find<RepositoryService>();
+  final repo = Get.find<RepositoryService>();
   final void Function(SpellFilters) onChange;
   final TextEditingController searchController;
 
@@ -38,7 +38,7 @@ class SpellFiltersView extends StatelessWidget {
                   child: Text(S.current.allEntity(S.current.entityPlural(CharacterClass))),
                   value: null,
                 ),
-                ...service.classes.values.map(
+                ...<CharacterClass>{...repo.builtIn.classes.values, ...repo.my.classes.values}.map(
                   (cls) => DropdownMenuItem<String>(
                     child: Text(cls.name),
                     value: cls.key,

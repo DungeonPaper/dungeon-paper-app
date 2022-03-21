@@ -76,6 +76,7 @@ class CharacterMovesSpellsView extends GetView<CharacterMovesSpellsController> {
                 children: [
                   Expanded(
                     child: OutlinedButton.icon(
+                      style: ButtonThemes.primaryOutlined(context),
                       onPressed: () => Get.to(
                         () => AddMovesView(
                           onAdd: (moves) {
@@ -85,21 +86,23 @@ class CharacterMovesSpellsView extends GetView<CharacterMovesSpellsController> {
                             );
                             updateControllers();
                           },
+                          selections: controller.moves,
                         ),
                         binding: AddRepositoryItemsBinding(),
                         arguments: MoveFilters(
                           classKey: controller.ctrl.charClass.value!.key,
                         ),
                       ),
-                      label: Text(S.current.addMovesExisting),
+                      label: Text(S.current.addExistingGeneric(S.current.entityPlural(Move))),
                       icon: const Icon(Icons.add),
                     ),
                   ),
                   const SizedBox(width: 8),
                   Expanded(
                     child: OutlinedButton.icon(
+                      style: ButtonThemes.primaryOutlined(context),
                       onPressed: withUpdateController(_debugAddMoves), // TODO CHANGE!
-                      label: Text(S.current.addMovesCustom),
+                      label: Text(S.current.addCustomGeneric(S.current.entityPlural(Move))),
                       icon: const Icon(Icons.add),
                     ),
                   ),
@@ -145,6 +148,7 @@ class CharacterMovesSpellsView extends GetView<CharacterMovesSpellsController> {
                 children: [
                   Expanded(
                     child: OutlinedButton.icon(
+                      style: ButtonThemes.primaryOutlined(context),
                       onPressed: () => Get.to(
                         () => AddSpellsView(
                           onAdd: (spells) {
@@ -154,19 +158,21 @@ class CharacterMovesSpellsView extends GetView<CharacterMovesSpellsController> {
                             );
                             updateControllers();
                           },
+                          selections: controller.spells,
                         ),
                         binding: AddRepositoryItemsBinding(),
                         arguments: SpellFilters(),
                       ),
-                      label: Text(S.current.addSpellsExisting),
+                      label: Text(S.current.addExistingGeneric(S.current.entityPlural(Spell))),
                       icon: const Icon(Icons.add),
                     ),
                   ),
                   const SizedBox(width: 8),
                   Expanded(
                     child: OutlinedButton.icon(
+                      style: ButtonThemes.primaryOutlined(context),
                       onPressed: withUpdateController(_debugAddSpells), // TODO CHANGE!
-                      label: Text(S.current.addSpellsCustom),
+                      label: Text(S.current.addCustomGeneric(S.current.entityPlural(Spell))),
                       icon: const Icon(Icons.add),
                     ),
                   ),

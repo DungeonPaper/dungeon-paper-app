@@ -429,73 +429,33 @@ class S {
     );
   }
 
-  /// `Add Moves`
-  String get addMoves {
+  /// `Add {entity}`
+  String addGeneric(Object entity) {
     return Intl.message(
-      'Add Moves',
-      name: 'addMoves',
+      'Add $entity',
+      name: 'addGeneric',
       desc: '',
-      args: [],
+      args: [entity],
     );
   }
 
-  /// `Add New Move`
-  String get addMovesCustom {
+  /// `Add New {entity}`
+  String addCustomGeneric(Object entity) {
     return Intl.message(
-      'Add New Move',
-      name: 'addMovesCustom',
+      'Add New $entity',
+      name: 'addCustomGeneric',
       desc: '',
-      args: [],
+      args: [entity],
     );
   }
 
-  /// `Add Existing Moves`
-  String get addMovesExisting {
+  /// `Add Existing {entity}`
+  String addExistingGeneric(Object entity) {
     return Intl.message(
-      'Add Existing Moves',
-      name: 'addMovesExisting',
+      'Add Existing $entity',
+      name: 'addExistingGeneric',
       desc: '',
-      args: [],
-    );
-  }
-
-  /// `Add Spells`
-  String get addSpells {
-    return Intl.message(
-      'Add Spells',
-      name: 'addSpells',
-      desc: '',
-      args: [],
-    );
-  }
-
-  /// `Add New Spell`
-  String get addSpellsCustom {
-    return Intl.message(
-      'Add New Spell',
-      name: 'addSpellsCustom',
-      desc: '',
-      args: [],
-    );
-  }
-
-  /// `Add Existing Spells`
-  String get addSpellsExisting {
-    return Intl.message(
-      'Add Existing Spells',
-      name: 'addSpellsExisting',
-      desc: '',
-      args: [],
-    );
-  }
-
-  /// `Add Items`
-  String get addItems {
-    return Intl.message(
-      'Add Items',
-      name: 'addItems',
-      desc: '',
-      args: [],
+      args: [entity],
     );
   }
 
@@ -703,6 +663,42 @@ class S {
     );
   }
 
+  /// `{count, plural, =0 {No {entPlural}} one {One {ent}} other {{count} {entPlural}}}`
+  String entityWithCount(num count, Object entPlural, Object ent) {
+    return Intl.plural(
+      count,
+      zero: 'No $entPlural',
+      one: 'One $ent',
+      other: '$count $entPlural',
+      name: 'entityWithCount',
+      desc: '',
+      args: [count, entPlural, ent],
+    );
+  }
+
+  /// `Notes`
+  String get notes {
+    return Intl.message(
+      'Notes',
+      name: 'notes',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `{count, plural, =0 {No notes} one {One note} other {{count} notes}}`
+  String notesWithCount(num count) {
+    return Intl.plural(
+      count,
+      zero: 'No notes',
+      one: 'One note',
+      other: '$count notes',
+      name: 'notesWithCount',
+      desc: '',
+      args: [count],
+    );
+  }
+
   /// `Moves`
   String get moves {
     return Intl.message(
@@ -890,6 +886,16 @@ class S {
     return Intl.message(
       'OK',
       name: 'ok',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Already added`
+  String get alreadyAdded {
+    return Intl.message(
+      'Already added',
+      name: 'alreadyAdded',
       desc: '',
       args: [],
     );

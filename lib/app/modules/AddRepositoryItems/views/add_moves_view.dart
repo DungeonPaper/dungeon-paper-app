@@ -15,36 +15,44 @@ class AddMovesView extends GetView<AddRepositoryItemsController<Move, MoveFilter
   const AddMovesView({
     Key? key,
     required this.onAdd,
+    required this.selections,
   }) : super(key: key);
 
   final void Function(Iterable<Move> moves) onAdd;
+  final Iterable<Move> selections;
 
   RepositoryService get service => controller.repo;
 
   @override
   Widget build(BuildContext context) {
     return AddRepositoryItemsView<Move, MoveFilters>(
-      title: Text(S.current.addMoves),
+      title: Text(S.current.addGeneric(S.current.entityPlural(Move))),
       filtersBuilder: (filters, update) => MoveFiltersView(
         filters: filters,
         onChange: update,
         searchController: controller.search,
       ),
       filterFn: (moves, filters) => filters.filter(moves),
-      cardBuilder: (ctx, move, {required onSelect, required selected}) => MoveCard(
+      cardBuilder: (ctx, move, {required onSelect, required selected, required selectable}) =>
+          MoveCard(
         move: move,
         showDice: false,
         showStar: false,
         actions: [
           ElevatedButton.icon(
             style: ButtonThemes.primaryElevated(context),
-            onPressed: () => onSelect(!selected),
-            label: Text(!selected ? S.current.select : S.current.remove),
+            onPressed: selectable ? () => onSelect(!selected) : null,
+            label: Text(selectable
+                ? !selected
+                    ? S.current.select
+                    : S.current.remove
+                : S.current.alreadyAdded),
             icon: Icon(!selected ? Icons.add : Icons.remove),
           ),
         ],
       ),
       onAdd: onAdd,
+      selections: selections,
     );
   }
 }

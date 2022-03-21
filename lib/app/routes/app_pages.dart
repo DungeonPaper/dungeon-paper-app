@@ -46,6 +46,7 @@ class AppPages {
         onAdd: (moves) => characterService.updateCharacter(
           CharacterUtils.updateMoves(characterService.current!, moves),
         ),
+        selections: characterService.current!.moves,
       ),
       binding: AddRepositoryItemsBinding(),
     ),

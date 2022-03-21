@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:dungeon_paper/app/data/services/repository_service.dart';
 import 'package:get/get.dart';
 
@@ -8,6 +10,8 @@ class CharClassSelectController extends GetxController {
   final availableClasses = <CharacterClass>[].obs;
   final _validCache = false.obs;
   final loading = true.obs;
+  late final StreamSubscription builtInListener;
+  late final StreamSubscription myListener;
 
   bool get _isValid => selectedClass.value != null;
   bool get isValid => _validCache.value;
@@ -17,8 +21,16 @@ class CharClassSelectController extends GetxController {
     super.onInit();
 
     final ctrl = Get.find<RepositoryService>();
-    ctrl.classes.listen((map) => getClasses());
+    builtInListener = ctrl.builtIn.classes.listen((map) => getClasses());
+    myListener = ctrl.my.classes.listen((map) => getClasses());
     getClasses();
+  }
+
+  @override
+  void dispose() {
+    builtInListener.cancel();
+    myListener.cancel();
+    super.dispose();
   }
 
   void updateClasses(Map<String, CharacterClass> classes) {
@@ -29,7 +41,7 @@ class CharClassSelectController extends GetxController {
   void getClasses() async {
     loading.value = true;
     final ctrl = Get.find<RepositoryService>();
-    updateClasses(ctrl.classes);
+    updateClasses({...ctrl.builtIn.classes, ...ctrl.my.classes});
     loading.value = false;
   }
 

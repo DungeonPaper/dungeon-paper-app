@@ -4,18 +4,21 @@ import 'package:dungeon_paper/app/model_utils/model_key.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-class AddRepositoryItemsController<T, F extends EntityFilters> extends GetxController {
+class AddRepositoryItemsController<T, F extends EntityFilters> extends GetxController
+    with GetSingleTickerProviderStateMixin {
   final repo = Get.find<RepositoryService>();
   final chars = Get.find<CharacterService>();
   final selected = <T>[].obs;
   final filters = Rx<F?>(null);
   final search = TextEditingController();
+  late final TabController tabController;
 
   @override
   void onInit() {
     super.onInit();
     filters.value = Get.arguments;
     search.addListener(_updateSearch);
+    tabController = TabController(length: 3, vsync: this);
   }
 
   @override
@@ -40,6 +43,9 @@ class AddRepositoryItemsController<T, F extends EntityFilters> extends GetxContr
 
   bool isSelected(T item) =>
       selected.firstWhereOrNull((element) => keyFor(element) == keyFor(item)) != null;
+
+  bool isSelectable(T item, Iterable<T> selections) =>
+      selections.toList().firstWhereOrNull((element) => keyFor(element) == keyFor(item)) == null;
 
   Iterable<T> filterList(
     Iterable<T> list,

@@ -18,7 +18,7 @@ class MoveFiltersView extends StatelessWidget {
   }) : super(key: key);
 
   final MoveFilters filters;
-  final service = Get.find<RepositoryService>();
+  final repo = Get.find<RepositoryService>();
   final void Function(MoveFilters) onChange;
   final TextEditingController searchController;
 
@@ -65,7 +65,8 @@ class MoveFiltersView extends StatelessWidget {
                     child: Text(S.current.allEntity(S.current.entityPlural(CharacterClass))),
                     value: null,
                   ),
-                  ...service.classes.values.map(
+                  ...<CharacterClass>{...repo.builtIn.classes.values, ...repo.my.classes.values}
+                      .map(
                     (cls) => DropdownMenuItem<String>(
                       child: Text(cls.name),
                       value: cls.key,
