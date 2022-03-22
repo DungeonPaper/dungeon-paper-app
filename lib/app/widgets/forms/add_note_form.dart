@@ -1,4 +1,5 @@
-import 'package:dungeon_paper/app/widgets/forms/dynamic_form.dart';
+import 'package:dungeon_paper/app/widgets/forms/dynamic_form/dynamic_form.dart';
+import 'package:dungeon_paper/app/widgets/forms/dynamic_form/form_input_data.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -7,7 +8,10 @@ class AddNoteForm extends GetView<AddNoteController> {
 
   @override
   Widget build(BuildContext context) {
-    return DynamicForm(inputs: controller.inputs);
+    return DynamicForm(
+      inputs: controller.inputs,
+      onChange: (d) => debugPrint('addNoteForm onChange $d'),
+    );
   }
 }
 

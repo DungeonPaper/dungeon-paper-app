@@ -178,7 +178,7 @@ class AddRepositoryItemCardList<T, F extends EntityFilters>
                 OutlinedButton.icon(
                   style: ButtonThemes.primaryOutlined(context),
                   onPressed: () => Get.to(
-                    RepositoryItemForm<T>(
+                    () => RepositoryItemForm<T>(
                       onSave: (item) => debugPrint('onSave $item'),
                     ),
                     binding: RepositoryItemFormBinding(),

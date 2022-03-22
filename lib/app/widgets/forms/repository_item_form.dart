@@ -24,7 +24,7 @@ class RepositoryItemForm<T> extends StatelessWidget {
   Widget buildForm(BuildContext context) {
     switch (T) {
       case Move:
-        return AddMoveForm(onSave: (move) => onSave(move as T));
+        return AddMoveForm(onChange: (move) => debugPrint('Updated: $move'));
       default:
         throw UnsupportedError('Unsupported type: $T');
     }
