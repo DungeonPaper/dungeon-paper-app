@@ -84,7 +84,7 @@ class AddRepositoryItemsView<T, F extends EntityFilters<T>>
                     ),
                     Container(),
                     AddRepositoryItemCardList<T, F>(
-                      onSave: (item) => null,
+                      onSave: (item) => onAdd([item]), // TODO add to myList
                       useFilters: useFilters,
                       filtersBuilder: filtersBuilder,
                       filters: filters,
@@ -178,9 +178,7 @@ class AddRepositoryItemCardList<T, F extends EntityFilters>
                 OutlinedButton.icon(
                   style: ButtonThemes.primaryOutlined(context),
                   onPressed: () => Get.to(
-                    () => RepositoryItemForm<T>(
-                      onSave: (item) => debugPrint('onSave $item'),
-                    ),
+                    () => RepositoryItemForm<T>(onSave: onSave!),
                     binding: RepositoryItemFormBinding(),
                   ),
                   label: Text(S.current.addCustomGeneric(S.current.entity(T))),

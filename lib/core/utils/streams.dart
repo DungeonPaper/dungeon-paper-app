@@ -23,8 +23,12 @@ class ValueNotifierStream<T> extends Stream<T> {
   }
 
   @override
-  StreamSubscription<T> listen(void Function(T event)? onData,
-          {Function? onError, void Function()? onDone, bool? cancelOnError}) =>
+  StreamSubscription<T> listen(
+    void Function(T event)? onData, {
+    Function? onError,
+    void Function()? onDone,
+    bool? cancelOnError,
+  }) =>
       controller.stream
           .asBroadcastStream()
           .listen(onData, onError: onError, onDone: onDone, cancelOnError: cancelOnError);
@@ -39,8 +43,12 @@ class TextEditingControllerStream extends Stream<String> {
   }
 
   @override
-  StreamSubscription<String> listen(void Function(String event)? onData,
-      {Function? onError, void Function()? onDone, bool? cancelOnError}) {
+  StreamSubscription<String> listen(
+    void Function(String event)? onData, {
+    Function? onError,
+    void Function()? onDone,
+    bool? cancelOnError,
+  }) {
     return controller.stream
         .asBroadcastStream()
         .listen(onData, onError: onError, onDone: onDone, cancelOnError: cancelOnError);

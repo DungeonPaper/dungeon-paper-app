@@ -28,6 +28,8 @@ class FormTextInputData extends BaseInputData<String> {
     required this.label,
     required this.text,
     this.hintText,
+    this.minLines,
+    this.maxLines,
   }) {
     init();
   }
@@ -35,6 +37,9 @@ class FormTextInputData extends BaseInputData<String> {
   final String label;
   final String text;
   final String? hintText;
+  final int? minLines;
+  final int? maxLines;
+
   late final TextEditingController controller;
   late final TextEditingControllerStream stream;
   late final StreamSubscription subscription;
@@ -72,21 +77,23 @@ class FormDropdownInputData<T> extends BaseInputData {
   final T value;
 
   final Iterable<DropdownMenuItem<T>> items;
-  late final controller = ValueNotifier<T>(value);
+
+  late final ValueNotifier<T> controller;
+  late final ValueNotifierStream<T> stream;
+  late final StreamSubscription subscription;
+
+  void init() {
+    controller = ValueNotifier(value);
+    stream = ValueNotifierStream<T>(controller);
+  }
 
   @override
   StreamSubscription listen(void Function(dynamic event)? onData,
-      {Function? onError, void Function()? onDone, bool? cancelOnError}) {
-    // TODO: implement listen
-    throw UnimplementedError();
-  }
-
-  void _onChange(T value) {
-    controller.value = value;
-  }
+          {Function? onError, void Function()? onDone, bool? cancelOnError}) =>
+      stream.listen(onData, onError: onError, onDone: onDone, cancelOnError: cancelOnError);
 
   @override
   void dispose() {
-    // TODO: implement dispose
+    stream.dispose();
   }
 }

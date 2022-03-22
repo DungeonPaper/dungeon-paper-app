@@ -16,16 +16,40 @@ class AddMoveForm extends GetView<AddMoveFormController> {
   Widget build(BuildContext context) {
     return DynamicForm(
       inputs: controller.inputs,
-      onChange: (d) => debugPrint('addMoveForm onChange $d'),
+      onChange: (d) => onChange(controller.setData(d)),
     );
   }
 }
 
-class AddMoveFormController extends GetxController {
+class AddMoveFormController extends DynamicFormController<Move> {
+  @override
+  final entity = Move.empty().obs;
+
+  @override
+  Move setData(Map<String, dynamic> data) {
+    entity.value = entity.value.copyWithInherited(
+      name: data['name'],
+      // category: data['category'],
+      description: data['description'],
+      explanation: data['explanation'],
+    );
+
+    return entity.value;
+  }
+
+  @override
   final inputs = <FormInputData>[
     FormInputData<FormTextInputData>(
       name: 'name',
       data: FormTextInputData(label: 'Move name', text: ''),
+    ),
+    FormInputData<FormTextInputData>(
+      name: 'description',
+      data: FormTextInputData(label: 'Move description', text: '', minLines: 5),
+    ),
+    FormInputData<FormTextInputData>(
+      name: 'explanation',
+      data: FormTextInputData(label: 'Move explanation', text: '', minLines: 5),
     ),
   ].obs;
 }

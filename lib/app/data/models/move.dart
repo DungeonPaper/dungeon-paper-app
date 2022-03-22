@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 export 'package:dungeon_world_data/move.dart' show MoveCategory;
 
 import '../../../core/dw_icons.dart';
+import '../../../core/utils/uuid.dart';
 import '../../widgets/atoms/svg_icon.dart';
 import 'meta.dart';
 
@@ -83,12 +84,28 @@ class Move extends dw.Move {
         favorited: json['favorited'],
       );
 
+  factory Move.empty() => Move(
+        key: uuid(),
+        category: dw.MoveCategory.other,
+        classKeys: [],
+        description: '',
+        dice: [],
+        explanation: '',
+        meta: Meta.version(1),
+        name: '',
+        tags: [],
+        favorited: false,
+      );
+
   @override
   Map<String, dynamic> toJson() => {
         ...super.toJson(),
         '_meta': meta.toJson(),
         'favorited': favorited,
       };
+
+  @override
+  String toString() => 'Move(key: $key, name: $name)';
 
   DwIconData get icon => DwIcons.riposte;
   static DwIconData get genericIcon => DwIcons.riposte;

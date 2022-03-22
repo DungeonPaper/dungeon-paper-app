@@ -53,7 +53,8 @@ class _DynamicFormState extends State<DynamicForm> {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
+    return ListView(
+      padding: const EdgeInsets.symmetric(horizontal: 8).copyWith(bottom: 8),
       children: [
         for (final input in widget.inputs) buildInput(context, input),
       ],
@@ -67,6 +68,8 @@ class _DynamicFormState extends State<DynamicForm> {
 
         return TextFormField(
           controller: data.controller,
+          minLines: data.minLines,
+          maxLines: data.maxLines,
           decoration: InputDecoration(
             hintText: data.hintText,
             label: Text(data.label),
@@ -77,7 +80,7 @@ class _DynamicFormState extends State<DynamicForm> {
         return DropdownButton<dynamic>(
           value: data.value,
           items: data.items.toList(),
-          onChanged: (_) => null, // data.onChange,
+          onChanged: (value) => data.controller.value = value, // data.onChange,
         );
       default:
         throw UnsupportedError('Form input type `$T` is not supported.');
@@ -85,6 +88,8 @@ class _DynamicFormState extends State<DynamicForm> {
   }
 }
 
-abstract class DynamicFormController extends GetxController {
-  abstract final RxList<FormInputData> inputs;
+abstract class DynamicFormController<T> extends GetxController {
+  abstract final Rx<T> entity;
+  T setData(Map<String, dynamic> data);
+  abstract final List<FormInputData> inputs;
 }

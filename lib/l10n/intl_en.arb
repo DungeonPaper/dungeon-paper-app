@@ -99,13 +99,16 @@
   "coinsWithCount": "{count, plural, =0 {No coins} one {One coin} other {{fmtCount} coins}}",
   "userMenuMoreChars": "More",
   "all": "All",
-  "allEntity": "All {entity}",
+  "allGeneric": "All {entity}",
   "searchPlaceholder": "Type to search",
-  "searchPlaceholderEntity": "Type to search {entity}",
+  "searchPlaceholderGeneric": "Type to search {entity}",
   "confirmDeleteTitle": "Delete {entity}?",
   "confirmDeleteBody": "Are you sure you want to remove the {entity} \"{name}\" from the list?",
   "cancel": "Cancel",
   "confirm": "Confirm",
   "ok": "OK",
-  "alreadyAdded": "Already added"
+  "alreadyAdded": "Already added",
+  "saveGeneric": "Save {entity}",
+  "save": "Save",
+  "myGeneric": "My {entity}"
 }

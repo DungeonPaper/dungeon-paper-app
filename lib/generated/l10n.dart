@@ -812,10 +812,10 @@ class S {
   }
 
   /// `All {entity}`
-  String allEntity(Object entity) {
+  String allGeneric(Object entity) {
     return Intl.message(
       'All $entity',
-      name: 'allEntity',
+      name: 'allGeneric',
       desc: '',
       args: [entity],
     );
@@ -832,10 +832,10 @@ class S {
   }
 
   /// `Type to search {entity}`
-  String searchPlaceholderEntity(Object entity) {
+  String searchPlaceholderGeneric(Object entity) {
     return Intl.message(
       'Type to search $entity',
-      name: 'searchPlaceholderEntity',
+      name: 'searchPlaceholderGeneric',
       desc: '',
       args: [entity],
     );
@@ -898,6 +898,36 @@ class S {
       name: 'alreadyAdded',
       desc: '',
       args: [],
+    );
+  }
+
+  /// `Save {entity}`
+  String saveGeneric(Object entity) {
+    return Intl.message(
+      'Save $entity',
+      name: 'saveGeneric',
+      desc: '',
+      args: [entity],
+    );
+  }
+
+  /// `Save`
+  String get save {
+    return Intl.message(
+      'Save',
+      name: 'save',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `My {entity}`
+  String myGeneric(Object entity) {
+    return Intl.message(
+      'My $entity',
+      name: 'myGeneric',
+      desc: '',
+      args: [entity],
     );
   }
 }

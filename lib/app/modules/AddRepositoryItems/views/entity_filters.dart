@@ -31,7 +31,7 @@ class EntityFiltersView<T, F extends EntityFilters<T>> extends StatelessWidget {
         TextField(
           controller: searchController,
           decoration: InputDecoration(
-            hintText: S.current.searchPlaceholderEntity(S.current.entity(Move)),
+            hintText: S.current.searchPlaceholderGeneric(S.current.entity(Move)),
           ),
         ),
         if (trailing.isNotEmpty) const SizedBox(height: 8),

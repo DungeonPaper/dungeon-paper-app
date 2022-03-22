@@ -38,7 +38,7 @@ class MoveFiltersView extends StatelessWidget {
                 value: filters.category,
                 items: [
                   DropdownMenuItem<MoveCategory?>(
-                    child: Text(S.current.allEntity(S.current.entityPlural(MoveCategory))),
+                    child: Text(S.current.allGeneric(S.current.entityPlural(MoveCategory))),
                     value: null,
                   ),
                   ...MoveCategory.values.map(
@@ -62,7 +62,7 @@ class MoveFiltersView extends StatelessWidget {
                 value: filters.classKey,
                 items: [
                   DropdownMenuItem<String>(
-                    child: Text(S.current.allEntity(S.current.entityPlural(CharacterClass))),
+                    child: Text(S.current.allGeneric(S.current.entityPlural(CharacterClass))),
                     value: null,
                   ),
                   ...<CharacterClass>{...repo.builtIn.classes.values, ...repo.my.classes.values}

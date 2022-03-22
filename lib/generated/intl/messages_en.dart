@@ -110,19 +110,23 @@ class MessageLookup extends MessageLookupByLibrary {
   static String m19(count) =>
       "${Intl.plural(count, zero: 'No moves', one: 'One move', other: '${count} moves')}";
 
-  static String m20(count) =>
+  static String m20(entity) => "My ${entity}";
+
+  static String m21(count) =>
       "${Intl.plural(count, zero: 'No notes', one: 'One note', other: '${count} notes')}";
 
-  static String m21(count, singular, plural) =>
+  static String m22(count, singular, plural) =>
       "${Intl.plural(count, one: 'One ${singular}', other: '${count} ${plural}')}";
 
-  static String m22(stat) => "Roll +${stat}";
+  static String m23(stat) => "Roll +${stat}";
 
-  static String m23(entity) => "Type to search ${entity}";
+  static String m24(entity) => "Save ${entity}";
 
-  static String m24(string) => "Select ${string} to add";
+  static String m25(entity) => "Type to search ${entity}";
 
-  static String m25(count) =>
+  static String m26(string) => "Select ${string} to add";
+
+  static String m27(count) =>
       "${Intl.plural(count, zero: 'No spells', one: 'One spell', other: '${count} spells')}";
 
   final messages = _notInlinedMessages(_notInlinedMessages);
@@ -133,7 +137,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "addWithCount": m3,
         "alignment": m4,
         "all": MessageLookupByLibrary.simpleMessage("All"),
-        "allEntity": m5,
+        "allGeneric": m5,
         "alreadyAdded": MessageLookupByLibrary.simpleMessage("Already added"),
         "appName": MessageLookupByLibrary.simpleMessage("Dungeon Paper"),
         "cancel": MessageLookupByLibrary.simpleMessage("Cancel"),
@@ -212,13 +216,14 @@ class MessageLookup extends MessageLookupByLibrary {
         "moveCategoryWithLevel": m18,
         "moves": MessageLookupByLibrary.simpleMessage("Moves"),
         "movesWithCount": m19,
+        "myGeneric": m20,
         "navActions": MessageLookupByLibrary.simpleMessage("Use"),
         "navCharacter": MessageLookupByLibrary.simpleMessage("Character"),
         "navJournal": MessageLookupByLibrary.simpleMessage("Journal"),
         "notes": MessageLookupByLibrary.simpleMessage("Notes"),
-        "notesWithCount": m20,
+        "notesWithCount": m21,
         "ok": MessageLookupByLibrary.simpleMessage("OK"),
-        "pluralize": m21,
+        "pluralize": m22,
         "quickIconsItems": MessageLookupByLibrary.simpleMessage("Items"),
         "quickIconsMoves": MessageLookupByLibrary.simpleMessage("Moves"),
         "quickIconsNote": MessageLookupByLibrary.simpleMessage("+ Note"),
@@ -228,14 +233,16 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Attack + Damage"),
         "rollBasicActionButton":
             MessageLookupByLibrary.simpleMessage("Basic Action"),
-        "rollStatButtonTooltip": m22,
+        "rollStatButtonTooltip": m23,
+        "save": MessageLookupByLibrary.simpleMessage("Save"),
+        "saveGeneric": m24,
         "searchPlaceholder":
             MessageLookupByLibrary.simpleMessage("Type to search"),
-        "searchPlaceholderEntity": m23,
+        "searchPlaceholderGeneric": m25,
         "select": MessageLookupByLibrary.simpleMessage("Select"),
-        "selectToAdd": m24,
+        "selectToAdd": m26,
         "spells": MessageLookupByLibrary.simpleMessage("Spells"),
-        "spellsWithCount": m25,
+        "spellsWithCount": m27,
         "userMenuMoreChars": MessageLookupByLibrary.simpleMessage("More")
       };
 }
