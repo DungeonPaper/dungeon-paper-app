@@ -35,10 +35,7 @@ class MoveCard extends StatelessWidget {
       title: move.name,
       description: move.description,
       expansionKey: expansionKey ?? PageStorageKey(move.key),
-      chips: [
-        MoveCategoryChip(category: move.category),
-        ...TagUtils.excludeMetaTags(move.tags).map((t) => TagChip(tag: t))
-      ],
+      chips: TagUtils.excludeMetaTags(move.tags).map((t) => TagChip(tag: t)),
       dice: showDice ? move.dice : [],
       icon: showIcon ? SvgIcon(move.icon, size: 16) : null,
       starred: move.favorited,

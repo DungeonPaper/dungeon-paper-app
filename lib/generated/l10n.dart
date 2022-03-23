@@ -326,16 +326,37 @@ class S {
     );
   }
 
-  /// `{category, select, advanced1 {Advanced (level 1-5)} advanced2 {Advanced (level 6-10)} other {}}`
+  /// `{category, select, starting {Starting} basic {Basic} special {Special} advanced1 {Advanced (level 1-5)} advanced2 {Advanced (level 6-10)} other {Other}}`
   String moveCategoryWithLevel(Object category) {
     return Intl.select(
       category,
       {
+        'starting': 'Starting',
+        'basic': 'Basic',
+        'special': 'Special',
         'advanced1': 'Advanced (level 1-5)',
         'advanced2': 'Advanced (level 6-10)',
-        'other': '',
+        'other': 'Other',
       },
       name: 'moveCategoryWithLevel',
+      desc: '',
+      args: [category],
+    );
+  }
+
+  /// `{category, select, starting {Starting} basic {Basic} special {Special} advanced1 {Advanced (1-5)} advanced2 {Advanced (6-10)} other {Other}}`
+  String moveCategoryWithLevelShort(Object category) {
+    return Intl.select(
+      category,
+      {
+        'starting': 'Starting',
+        'basic': 'Basic',
+        'special': 'Special',
+        'advanced1': 'Advanced (1-5)',
+        'advanced2': 'Advanced (6-10)',
+        'other': 'Other',
+      },
+      name: 'moveCategoryWithLevelShort',
       desc: '',
       args: [category],
     );
@@ -454,6 +475,16 @@ class S {
     return Intl.message(
       'Add Existing $entity',
       name: 'addExistingGeneric',
+      desc: '',
+      args: [entity],
+    );
+  }
+
+  /// `Create {entity}`
+  String createGeneric(Object entity) {
+    return Intl.message(
+      'Create $entity',
+      name: 'createGeneric',
       desc: '',
       args: [entity],
     );
@@ -928,6 +959,26 @@ class S {
       name: 'myGeneric',
       desc: '',
       args: [entity],
+    );
+  }
+
+  /// `Playbook`
+  String get addRepoItemTabPlaybook {
+    return Intl.message(
+      'Playbook',
+      name: 'addRepoItemTabPlaybook',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Online`
+  String get addRepoItemTabOnline {
+    return Intl.message(
+      'Online',
+      name: 'addRepoItemTabOnline',
+      desc: '',
+      args: [],
     );
   }
 }

@@ -28,12 +28,18 @@ class _RepositoryItemFormState<T> extends State<RepositoryItemForm<T>> {
       appBar: AppBar(
         title: title,
         actions: [
-          ElevatedButton(
-            onPressed: () {
-              widget.onSave(data);
-              Get.back();
-            },
-            child: Text(S.current.saveGeneric(S.current.entity(T))),
+          Padding(
+            padding: const EdgeInsets.all(8),
+            child: SizedBox(
+              width: 100,
+              child: ElevatedButton(
+                onPressed: () {
+                  widget.onSave(data);
+                  Get.back();
+                },
+                child: Text(S.current.save),
+              ),
+            ),
           )
         ],
       ),

@@ -55,11 +55,13 @@ class HomeCharacterView extends GetView<CharacterService> {
             )),
             p(const SizedBox(height: 16)),
             p(Center(
-              child: SizedBox(
-                width: 500,
-                child: IconTheme(
-                  data: IconTheme.of(context).copyWith(size: 16),
+              child: IconTheme(
+                data: IconTheme.of(context).copyWith(size: 16),
+                child: SizedBox(
+                  width: 500,
+                  height: 48,
                   child: Row(
+                    crossAxisAlignment: CrossAxisAlignment.stretch,
                     children: [
                       Expanded(
                         child: ElevatedButton.icon(

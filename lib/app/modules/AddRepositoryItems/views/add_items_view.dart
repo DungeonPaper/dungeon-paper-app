@@ -44,7 +44,11 @@ class AddItemsView extends GetView<AddRepositoryItemsController<Item, ItemFilter
                     ? S.current.select
                     : S.current.remove
                 : S.current.alreadyAdded),
-            icon: Icon(!selected ? Icons.add : Icons.remove),
+            icon: Icon(selectable
+                ? !selected
+                    ? Icons.add
+                    : Icons.remove
+                : Icons.check),
           )
         ],
       ),

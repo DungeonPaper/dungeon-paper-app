@@ -42,7 +42,8 @@
   "dynamicCategoriesItems": "Equipped Items",
   "dynamicCategoriesNotes": "Favorite Notes",
   "moveCategory": "{category, select, starting {Starting} basic {Basic} special {Special} advanced1 {Advanced} advanced2 {Advanced} other {Other}}",
-  "moveCategoryWithLevel": "{category, select, advanced1 {Advanced (level 1-5)} advanced2 {Advanced (level 6-10)} other {}}",
+  "moveCategoryWithLevel": "{category, select, starting {Starting} basic {Basic} special {Special} advanced1 {Advanced (level 1-5)} advanced2 {Advanced (level 6-10)} other {Other}}",
+  "moveCategoryWithLevelShort": "{category, select, starting {Starting} basic {Basic} special {Special} advanced1 {Advanced (1-5)} advanced2 {Advanced (6-10)} other {Other}}",
   "rollStatButtonTooltip": "Roll +{stat}",
   "@rollStatButtonTooltip": {
     "placeholders": {
@@ -61,6 +62,7 @@
   "addGeneric": "Add {entity}",
   "addCustomGeneric": "Add New {entity}",
   "addExistingGeneric": "Add Existing {entity}",
+  "createGeneric": "Create {entity}",
   "createCharacterBioFieldLabel": "Biography",
   "createCharacterBioFieldPlaceholder": "Describe your character as shortly or thoroughly as you want here.\nPut your backstory, a visual description, some personality traits, etc. to help you keep in character.",
   "createCharacterRaceNameFieldLabel": "Race",
@@ -110,5 +112,7 @@
   "alreadyAdded": "Already added",
   "saveGeneric": "Save {entity}",
   "save": "Save",
-  "myGeneric": "My {entity}"
+  "myGeneric": "My {entity}",
+  "addRepoItemTabPlaybook": "Playbook",
+  "addRepoItemTabOnline": "Online"
 }

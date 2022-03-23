@@ -36,7 +36,8 @@ class ValueNotifierStream<T> extends Stream<T> {
 
 class TextEditingControllerStream extends Stream<String> {
   final TextEditingController textController;
-  final controller = StreamController<String>();
+  late final StreamController<String> controller;
+  late final Stream<String> stream;
 
   TextEditingControllerStream(this.textController) {
     init();
@@ -49,12 +50,12 @@ class TextEditingControllerStream extends Stream<String> {
     void Function()? onDone,
     bool? cancelOnError,
   }) {
-    return controller.stream
-        .asBroadcastStream()
-        .listen(onData, onError: onError, onDone: onDone, cancelOnError: cancelOnError);
+    return stream.listen(onData, onError: onError, onDone: onDone, cancelOnError: cancelOnError);
   }
 
   void init() {
+    controller = StreamController();
+    stream = controller.stream.asBroadcastStream();
     textController.addListener(listener);
   }
 
@@ -63,6 +64,7 @@ class TextEditingControllerStream extends Stream<String> {
   }
 
   void listener() {
+    debugPrint('Sending: ${textController.text}');
     controller.add(textController.text);
   }
 }

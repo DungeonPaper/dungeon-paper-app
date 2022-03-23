@@ -10,6 +10,11 @@ final baseCardTheme = CardTheme(shape: rRectShape);
 final _dark = ThemeData.dark();
 final _light = ThemeData.light();
 
+const _inputDecorationTheme = InputDecorationTheme(
+  floatingLabelBehavior: FloatingLabelBehavior.always,
+  filled: true,
+);
+
 final parchmentTheme = ThemeData(
   primaryColor: primaryColor,
   colorScheme: _light.colorScheme.copyWith(secondary: primaryColor, tertiary: primaryColor),
@@ -30,6 +35,13 @@ final parchmentTheme = ThemeData(
   popupMenuTheme: PopupMenuThemeData(
     shape: rRectShape,
   ),
+  inputDecorationTheme: _inputDecorationTheme,
+  elevatedButtonTheme: ElevatedButtonThemeData(
+    style: ElevatedButton.styleFrom(
+      primary: primaryColor,
+      shape: rRectShape,
+    ),
+  ),
 );
 final darkTheme = _dark.copyWith(
   // primaryColor: primaryColor,
@@ -43,6 +55,13 @@ final darkTheme = _dark.copyWith(
   cardTheme: baseCardTheme,
   popupMenuTheme: PopupMenuThemeData(
     shape: rRectShape,
+  ),
+  inputDecorationTheme: _inputDecorationTheme,
+  elevatedButtonTheme: ElevatedButtonThemeData(
+    style: ElevatedButton.styleFrom(
+      primary: _dark.primaryColor,
+      shape: rRectShape,
+    ),
   ),
 );
 

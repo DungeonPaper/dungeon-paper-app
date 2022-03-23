@@ -71,43 +71,27 @@ class CharacterMovesSpellsView extends GetView<CharacterMovesSpellsController> {
             padding: const EdgeInsets.symmetric(horizontal: 8),
             child: SizedBox(
               height: 48,
-              child: Row(
-                crossAxisAlignment: CrossAxisAlignment.stretch,
-                children: [
-                  Expanded(
-                    child: OutlinedButton.icon(
-                      style: ButtonThemes.primaryOutlined(context),
-                      onPressed: () => Get.to(
-                        () => AddMovesView(
-                          onAdd: (moves) {
-                            controller.moves.value = addByKey(
-                              controller.moves,
-                              moves.map((m) => m.copyWithInherited(favorited: true)),
-                            );
-                            updateControllers();
-                          },
-                          classKey: controller.ctrl.charClass.value!.key,
-                          selections: controller.moves,
-                        ),
-                        binding: AddRepositoryItemsBinding(),
-                        arguments: MoveFilters(
-                          classKey: controller.ctrl.charClass.value!.key,
-                        ),
-                      ),
-                      label: Text(S.current.addExistingGeneric(S.current.entityPlural(Move))),
-                      icon: const Icon(Icons.add),
-                    ),
+              child: OutlinedButton.icon(
+                style: ButtonThemes.primaryOutlined(context),
+                onPressed: () => Get.to(
+                  () => AddMovesView(
+                    onAdd: (moves) {
+                      controller.moves.value = addByKey(
+                        controller.moves,
+                        moves.map((m) => m.copyWithInherited(favorited: true)),
+                      );
+                      updateControllers();
+                    },
+                    classKey: controller.ctrl.charClass.value!.key,
+                    selections: controller.moves,
                   ),
-                  const SizedBox(width: 8),
-                  Expanded(
-                    child: OutlinedButton.icon(
-                      style: ButtonThemes.primaryOutlined(context),
-                      onPressed: withUpdateController(_debugAddMoves), // TODO CHANGE!
-                      label: Text(S.current.addCustomGeneric(S.current.entityPlural(Move))),
-                      icon: const Icon(Icons.add),
-                    ),
+                  binding: AddRepositoryItemsBinding(),
+                  arguments: MoveFilters(
+                    classKey: controller.ctrl.charClass.value!.key,
                   ),
-                ],
+                ),
+                label: Text(S.current.addGeneric(S.current.entityPlural(Move))),
+                icon: const Icon(Icons.add),
               ),
             ),
           ),
@@ -144,40 +128,24 @@ class CharacterMovesSpellsView extends GetView<CharacterMovesSpellsController> {
             padding: const EdgeInsets.symmetric(horizontal: 8),
             child: SizedBox(
               height: 48,
-              child: Row(
-                crossAxisAlignment: CrossAxisAlignment.stretch,
-                children: [
-                  Expanded(
-                    child: OutlinedButton.icon(
-                      style: ButtonThemes.primaryOutlined(context),
-                      onPressed: () => Get.to(
-                        () => AddSpellsView(
-                          onAdd: (spells) {
-                            controller.spells.value = addByKey(
-                              controller.spells,
-                              spells.map((s) => s.copyWithInherited(prepared: true)),
-                            );
-                            updateControllers();
-                          },
-                          selections: controller.spells,
-                        ),
-                        binding: AddRepositoryItemsBinding(),
-                        arguments: SpellFilters(),
-                      ),
-                      label: Text(S.current.addExistingGeneric(S.current.entityPlural(Spell))),
-                      icon: const Icon(Icons.add),
-                    ),
+              child: OutlinedButton.icon(
+                style: ButtonThemes.primaryOutlined(context),
+                onPressed: () => Get.to(
+                  () => AddSpellsView(
+                    onAdd: (spells) {
+                      controller.spells.value = addByKey(
+                        controller.spells,
+                        spells.map((s) => s.copyWithInherited(prepared: true)),
+                      );
+                      updateControllers();
+                    },
+                    selections: controller.spells,
                   ),
-                  const SizedBox(width: 8),
-                  Expanded(
-                    child: OutlinedButton.icon(
-                      style: ButtonThemes.primaryOutlined(context),
-                      onPressed: withUpdateController(_debugAddSpells), // TODO CHANGE!
-                      label: Text(S.current.addCustomGeneric(S.current.entityPlural(Spell))),
-                      icon: const Icon(Icons.add),
-                    ),
-                  ),
-                ],
+                  binding: AddRepositoryItemsBinding(),
+                  arguments: SpellFilters(),
+                ),
+                label: Text(S.current.addGeneric(S.current.entityPlural(Spell))),
+                icon: const Icon(Icons.add),
               ),
             ),
           ),

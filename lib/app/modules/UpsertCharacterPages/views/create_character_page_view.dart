@@ -79,28 +79,34 @@ class CreateCharacterPageView extends GetView<CreateCharacterPageController> {
       bottomNavigationBar: Obx(
         () {
           return Material(
+            // color: Colors.red,
             color: theme.scaffoldBackgroundColor,
             elevation: 1,
-            child: Row(
-              children: navItems
-                  .map(
-                    (item) => NavItem(
-                      icon: item.icon,
-                      onTap: () => goToPage(CreateCharStep.values.indexOf(item.step)),
-                      disabled:
-                          controller.lastAvailablePage < CreateCharStep.values.indexOf(item.step),
-                      valid: controller.isValid[item.step] ?? false,
-                      active: controller.step == item.step,
-                      tooltip: controller.isValid[item.step] == true ||
-                              controller.lastAvailablePage <
-                                  CreateCharStep.values.indexOf(item.step)
-                          ? S.current.createCharacterStep(item.step.name)
-                          : S.current.createCharacterStepInvalidTooltip(
-                              S.current.createCharacterStep(item.step.name),
-                            ),
-                    ),
-                  )
-                  .toList(),
+            child: SizedBox(
+              height: 72,
+              child: Row(
+                // mainAxisSize: MainAxisSize.min,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: navItems
+                    .map(
+                      (item) => NavItem(
+                        icon: item.icon,
+                        onTap: () => goToPage(CreateCharStep.values.indexOf(item.step)),
+                        disabled:
+                            controller.lastAvailablePage < CreateCharStep.values.indexOf(item.step),
+                        valid: controller.isValid[item.step] ?? false,
+                        active: controller.step == item.step,
+                        tooltip: controller.isValid[item.step] == true ||
+                                controller.lastAvailablePage <
+                                    CreateCharStep.values.indexOf(item.step)
+                            ? S.current.createCharacterStep(item.step.name)
+                            : S.current.createCharacterStepInvalidTooltip(
+                                S.current.createCharacterStep(item.step.name),
+                              ),
+                      ),
+                    )
+                    .toList(),
+              ),
             ),
           );
         },

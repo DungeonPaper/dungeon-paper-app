@@ -38,16 +38,21 @@ class AddRepositoryItemCardList<T, F extends EntityFilters>
           child: ListView(
             padding: const EdgeInsets.all(8).copyWith(top: 0),
             children: [
-              if (onSave != null)
-                OutlinedButton.icon(
-                  style: ButtonThemes.primaryOutlined(context),
-                  onPressed: () => Get.to(
-                    () => RepositoryItemForm<T>(onSave: onSave!, extraData: extraData),
-                    binding: RepositoryItemFormBinding(),
+              if (onSave != null) ...[
+                SizedBox(
+                  height: 48,
+                  child: ElevatedButton.icon(
+                    style: ButtonThemes.primaryElevated(context),
+                    onPressed: () => Get.to(
+                      () => RepositoryItemForm<T>(onSave: onSave!, extraData: extraData),
+                      binding: RepositoryItemFormBinding(),
+                    ),
+                    label: Text(S.current.createGeneric(S.current.entity(T))),
+                    icon: const Icon(Icons.add),
                   ),
-                  label: Text(S.current.addCustomGeneric(S.current.entity(T))),
-                  icon: const Icon(Icons.add),
                 ),
+                const Divider(height: 32),
+              ],
               ...children.map(
                 (child) => Padding(
                   padding: const EdgeInsets.only(bottom: 8),

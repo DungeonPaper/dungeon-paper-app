@@ -45,7 +45,11 @@ class AddSpellsView extends GetView<AddRepositoryItemsController<Spell, SpellFil
                     ? S.current.select
                     : S.current.remove
                 : S.current.alreadyAdded),
-            icon: Icon(!selected ? Icons.add : Icons.remove),
+            icon: Icon(selectable
+                ? !selected
+                    ? Icons.add
+                    : Icons.remove
+                : Icons.check),
           )
         ],
       ),

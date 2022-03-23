@@ -34,12 +34,10 @@ class CharacterMovesSpellsController extends GetxController {
     moves.clear();
     moves.addAll(
       [...repo.builtIn.moves.values, ...repo.my.moves.values]
-          .where(
-            (m) =>
-                (m.classKeys.contains(ctrl.charClass.value!.key) &&
-                    m.category == MoveCategory.starting) ||
-                m.category == MoveCategory.basic,
-          )
+          .where((m) => (m.classKeys.contains(ctrl.charClass.value!.key) &&
+                  m.category == MoveCategory.starting)
+              //  || m.category == MoveCategory.basic,
+              )
           .map(
             (move) => Move.fromDwMove(move, favorited: move.category != MoveCategory.basic),
           )

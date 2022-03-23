@@ -64,10 +64,12 @@ class AddRepositoryItemsView<T, F extends EntityFilters<T>>
             children: [
               TabBar(
                 controller: controller.tabController,
+                labelColor: Theme.of(context).colorScheme.onSurface,
+                unselectedLabelColor: Theme.of(context).colorScheme.onSurface,
                 tabs: [
-                  const Tab(child: Text('Playbook')),
-                  const Tab(child: Text('Online')),
-                  Tab(child: Text('My ${T}s')),
+                  Tab(child: Text(S.current.addRepoItemTabPlaybook)),
+                  Tab(child: Text(S.current.myGeneric(S.current.entityPlural(T)))),
+                  Tab(child: Text(S.current.addRepoItemTabOnline)),
                 ],
               ),
               Expanded(
@@ -82,7 +84,6 @@ class AddRepositoryItemsView<T, F extends EntityFilters<T>>
                         (item) => _wrapWithSelection(context, item),
                       ),
                     ),
-                    Container(),
                     AddRepositoryItemCardList<T, F>(
                       onSave: (item) {
                         controller.toggle(item, true);
@@ -98,6 +99,7 @@ class AddRepositoryItemsView<T, F extends EntityFilters<T>>
                         (item) => _wrapWithSelection(context, item),
                       ),
                     ),
+                    Container(),
                   ],
                 ),
               ),
@@ -116,10 +118,15 @@ class AddRepositoryItemsView<T, F extends EntityFilters<T>>
                   Get.back();
                 }
               : null,
-          label: Text(controller.selected.isNotEmpty
-              ? S.current.addWithCount(S.current.pluralize(controller.selected.length,
-                  S.current.entity(T.toString()), S.current.entityPlural(T.toString())))
-              : S.current.selectToAdd(S.current.entityPlural(T.toString()))),
+          label: Text(
+            controller.selected.isNotEmpty
+                ? S.current.addWithCount(S.current.pluralize(
+                    controller.selected.length,
+                    S.current.entity(T),
+                    S.current.entityPlural(T),
+                  ))
+                : S.current.selectToAdd(S.current.entityPlural(T)),
+          ),
         ),
       ),
     );

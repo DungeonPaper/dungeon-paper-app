@@ -11,10 +11,20 @@ class DynamicForm extends StatefulWidget {
     Key? key,
     required this.inputs,
     required this.onChange,
+    this.builder = _defaultBuilder,
   }) : super(key: key);
 
   final Iterable<FormInputData> inputs;
   final void Function(Map<String, dynamic> data) onChange;
+  final Widget Function(BuildContext context, List<Widget> inputs) builder;
+
+  static Widget _defaultBuilder(BuildContext context, List<Widget> inputs) => ListView(
+        padding: const EdgeInsets.symmetric(horizontal: 8).copyWith(bottom: 8),
+        children: [
+          for (final input in inputs)
+            Padding(padding: const EdgeInsets.only(bottom: 8), child: input),
+        ],
+      );
 
   @override
   State<DynamicForm> createState() => _DynamicFormState();
@@ -28,6 +38,7 @@ class _DynamicFormState extends State<DynamicForm> {
   void initState() {
     listeners = [];
     for (final input in widget.inputs) {
+      debugPrint('listener for ${input.name}');
       listeners.add(input.data.listen(_sendUpdate(input.name)));
     }
     data = {
@@ -48,16 +59,15 @@ class _DynamicFormState extends State<DynamicForm> {
         setState(() {
           data[name] = item;
         });
+        debugPrint('sending $data');
         widget.onChange(data);
       };
 
   @override
   Widget build(BuildContext context) {
-    return ListView(
-      padding: const EdgeInsets.symmetric(horizontal: 8).copyWith(bottom: 8),
-      children: [
-        for (final input in widget.inputs) input.build(context),
-      ],
+    return widget.builder(
+      context,
+      widget.inputs.map((input) => input.build(context)).toList(),
     );
   }
 }
