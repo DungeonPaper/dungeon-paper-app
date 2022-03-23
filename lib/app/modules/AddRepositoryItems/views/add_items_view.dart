@@ -23,6 +23,7 @@ class AddItemsView extends GetView<AddRepositoryItemsController<Item, ItemFilter
   @override
   Widget build(BuildContext context) {
     return AddRepositoryItemsView<Item, ItemFilters>(
+      storageKey: 'Items',
       title: Text(S.current.addGeneric(S.current.entityPlural(Item))),
       filterFn: (item, filters) => filters.filter(item),
       filtersBuilder: (filters, update) => ItemFiltersView(

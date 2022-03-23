@@ -180,6 +180,8 @@ class FirestoreDelegate extends StorageDelegate {
 
 class LocalStorageDelegate extends StorageDelegate {
   final storage = Localstore.instance;
+  final docStreams = <String, StreamController<Map<String, dynamic>?>>{};
+  final colStreams = <String, StreamController<List<Map<String, dynamic>>>>{};
 
   @override
   Future<List<Map<String, dynamic>>> getCollection(String collection) => storage
@@ -192,16 +194,29 @@ class LocalStorageDelegate extends StorageDelegate {
       storage.collection(collection).doc(document).get();
 
   @override
-  Future<void> update(String collection, String document, Map<String, dynamic> value) =>
-      storage.collection(collection).doc(document).set(value);
+  Future<void> update(String collection, String document, Map<String, dynamic> value) async {
+    docStreams['$collection/$document']?.add(value);
+    colStreams[collection]?.add((await getCollection(collection))
+        .map((e) => (e['key'] ?? e['name']) == document ? value : e)
+        .toList());
+    return storage.collection(collection).doc(document).set(value);
+  }
 
   @override
-  Future<void> delete(String collection, String document) =>
-      storage.collection(collection).doc(document).delete();
+  Future<void> delete(String collection, String document) async {
+    docStreams['$collection/$document']?.add(null);
+    colStreams[collection]?.add((await getCollection(collection))
+        .where((e) => (e['key'] ?? e['name']) != document)
+        .toList());
+    return storage.collection(collection).doc(document).delete();
+  }
 
   @override
-  Future<void> create(String collection, String document, Map<String, dynamic> value) =>
-      update(collection, document, value);
+  Future<void> create(String collection, String document, Map<String, dynamic> value) async {
+    docStreams['$collection/$document']?.add(value);
+    colStreams[collection]?.add((await getCollection(collection))..add(value));
+    return update(collection, document, value);
+  }
 
   @override
   StreamSubscription<List<Map<String, dynamic>>> collectionListener(
@@ -211,7 +226,7 @@ class LocalStorageDelegate extends StorageDelegate {
     void Function()? onDone,
     bool? cancelOnError,
   }) {
-    return asCollectionStream(getCollection(collection)).listen(
+    return getCollectionStream(collection).listen(
       onData,
       onError: onError,
       onDone: onDone,
@@ -228,7 +243,7 @@ class LocalStorageDelegate extends StorageDelegate {
     void Function()? onDone,
     bool? cancelOnError,
   }) {
-    return asDocumentStream(getDocument(collection, document)).listen(
+    return asDocumentStream(collection, document).listen(
       onData,
       onError: onError,
       onDone: onDone,
@@ -236,14 +251,20 @@ class LocalStorageDelegate extends StorageDelegate {
     );
   }
 
-  Stream<Map<String, dynamic>?> asDocumentStream(Future<Map<String, dynamic>?> source) async* {
-    final resp = await source;
-    yield resp;
+  Stream<Map<String, dynamic>?> asDocumentStream(String collection, String document) {
+    final key = '$collection/$document';
+    if (!docStreams.containsKey(key)) {
+      docStreams[key] = StreamController();
+      getDocument(collection, document).then((d) => docStreams[key]!.add(d));
+    }
+    return docStreams[key]!.stream.asBroadcastStream();
   }
 
-  Stream<List<Map<String, dynamic>>> asCollectionStream(
-      Future<List<Map<String, dynamic>>> source) async* {
-    final resp = await source;
-    yield resp;
+  Stream<List<Map<String, dynamic>>> getCollectionStream(String collection) {
+    if (!colStreams.containsKey(collection)) {
+      colStreams[collection] = StreamController();
+      getCollection(collection).then((d) => colStreams[collection]!.add(d));
+    }
+    return colStreams[collection]!.stream.asBroadcastStream();
   }
 }

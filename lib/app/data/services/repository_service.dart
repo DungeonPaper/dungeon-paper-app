@@ -1,21 +1,26 @@
 // ignore_for_file: curly_braces_in_flow_control_structures
 
+import 'dart:async';
+
 import 'package:dungeon_paper/app/data/models/character_class.dart';
 import 'package:dungeon_paper/app/data/models/item.dart';
 import 'package:dungeon_paper/app/data/models/monster.dart';
 import 'package:dungeon_paper/app/data/models/move.dart';
 import 'package:dungeon_paper/app/data/models/race.dart';
 import 'package:dungeon_paper/app/data/models/spell.dart';
+import 'package:dungeon_paper/app/model_utils/model_json.dart';
+import 'package:dungeon_paper/app/model_utils/model_key.dart';
 import 'package:dungeon_paper/core/http/api.dart';
 import 'package:dungeon_paper/core/http/api_requests/search.dart';
 import 'package:dungeon_paper/core/storage_handler/storage_handler.dart';
 
 import 'package:dungeon_world_data/dungeon_world_data.dart' as dw;
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class RepositoryService extends GetxService {
-  final builtIn = RepositoryData();
-  final my = RepositoryData();
+  final builtIn = RepositoryCache();
+  final my = RepositoryCache(prefix: 'my');
 
   void clear() {
     builtIn.clear();
@@ -23,137 +28,36 @@ class RepositoryService extends GetxService {
   }
 
   @override
-  void onInit() async {
-    super.onInit();
-    init();
+  void onClose() async {
+    super.onClose();
+    builtIn.dispose();
+    my.dispose();
   }
 
   Future<RepositoryService> init() async {
-    await _initBuiltInRepo();
-    await _initMyRepo();
+    await builtIn.init(Future(() => api.requests.getDefaultRepository()));
+    await my.init(
+      Future(
+        () async => SearchResponse.fromJson({
+          'classes': await StorageHandler.instance.getCollection('myClasses'),
+          'items': await StorageHandler.instance.getCollection('myItems'),
+          'monsters': await StorageHandler.instance.getCollection('myMonsters'),
+          'moves': await StorageHandler.instance.getCollection('myMoves'),
+          'races': await StorageHandler.instance.getCollection('myRaces'),
+          'spells': await StorageHandler.instance.getCollection('mySpells'),
+          'tags': await StorageHandler.instance.getCollection('myTags'),
+        }),
+      ),
+    );
     return this;
-  }
-
-  Future<void> _initBuiltInRepo() async {
-    final repo = builtIn;
-    var cachedClasses = await CacheHandler.instance.getCollection('Classes');
-    var cachedItems = await CacheHandler.instance.getCollection('Items');
-    var cachedMonsters = await CacheHandler.instance.getCollection('Monsters');
-    var cachedMoves = await CacheHandler.instance.getCollection('Moves');
-    var cachedRaces = await CacheHandler.instance.getCollection('Races');
-    var cachedSpells = await CacheHandler.instance.getCollection('Spells');
-    var cachedTags = await CacheHandler.instance.getCollection('Tags');
-
-    if ([
-      cachedClasses,
-      cachedItems,
-      cachedMonsters,
-      cachedMoves,
-      cachedRaces,
-      cachedSpells,
-      cachedTags,
-    ].any((l) => l.isEmpty)) {
-      final resp = await api.requests.getDefaultRepository();
-
-      repo.updateList<CharacterClass>('Classes', repo.classes, resp.classes,
-          key: (x) => x.key, toJson: (x) => x.toJson());
-      repo.updateList<Item>('Items', repo.items, resp.items,
-          key: (x) => x.key, toJson: (x) => x.toJson());
-      repo.updateList<Monster>('Monsters', repo.monsters, resp.monsters,
-          key: (x) => x.key, toJson: (x) => x.toJson());
-      repo.updateList<Move>('Moves', repo.moves, resp.moves,
-          key: (x) => x.key, toJson: (x) => x.toJson());
-      repo.updateList<Race>('Races', repo.races, resp.races,
-          key: (x) => x.key, toJson: (x) => x.toJson());
-      repo.updateList<Spell>('Spells', repo.spells, resp.spells,
-          key: (x) => x.key, toJson: (x) => x.toJson());
-      repo.updateList<dw.Tag>('Tags', repo.tags, resp.tags,
-          key: (x) => x.name, toJson: (x) => x.toJson());
-    } else {
-      repo.updateList<CharacterClass>(
-          'Classes', repo.classes, cachedClasses.map((x) => CharacterClass.fromJson(x)),
-          key: (x) => x.key, toJson: (x) => x.toJson(), saveIntoCache: false);
-      repo.updateList<Item>('Items', repo.items, cachedItems.map((x) => Item.fromJson(x)),
-          key: (x) => x.key, toJson: (x) => x.toJson(), saveIntoCache: false);
-      repo.updateList<Monster>(
-          'Monsters', repo.monsters, cachedMonsters.map((x) => Monster.fromJson(x)),
-          key: (x) => x.key, toJson: (x) => x.toJson(), saveIntoCache: false);
-      repo.updateList<Move>('Moves', repo.moves, cachedMoves.map((x) => Move.fromJson(x)),
-          key: (x) => x.key, toJson: (x) => x.toJson(), saveIntoCache: false);
-      repo.updateList<Race>('Races', repo.races, cachedRaces.map((x) => Race.fromJson(x)),
-          key: (x) => x.key, toJson: (x) => x.toJson(), saveIntoCache: false);
-      repo.updateList<Spell>('Spells', repo.spells, cachedSpells.map((x) => Spell.fromJson(x)),
-          key: (x) => x.key, toJson: (x) => x.toJson(), saveIntoCache: false);
-      repo.updateList<dw.Tag>('Tags', repo.tags, cachedTags.map((x) => dw.Tag.fromJson(x)),
-          key: (x) => x.name, toJson: (x) => x.toJson(), saveIntoCache: false);
-    }
-  }
-
-  Future<void> _initMyRepo() async {
-    final repo = builtIn;
-    var cachedClasses = await CacheHandler.instance.getCollection('myClasses');
-    var cachedItems = await CacheHandler.instance.getCollection('myItems');
-    var cachedMonsters = await CacheHandler.instance.getCollection('myMonsters');
-    var cachedMoves = await CacheHandler.instance.getCollection('myMoves');
-    var cachedRaces = await CacheHandler.instance.getCollection('myRaces');
-    var cachedSpells = await CacheHandler.instance.getCollection('mySpells');
-    var cachedTags = await CacheHandler.instance.getCollection('myTags');
-
-    if ([
-      cachedClasses,
-      cachedItems,
-      cachedMonsters,
-      cachedMoves,
-      cachedRaces,
-      cachedSpells,
-      cachedTags,
-    ].any((l) => l.isEmpty)) {
-      final resp = SearchResponse.fromJson({
-        'classes': await StorageHandler.instance.getCollection('myClasses'),
-        'items': await StorageHandler.instance.getCollection('myItems'),
-        'monsters': await StorageHandler.instance.getCollection('myMonsters'),
-        'moves': await StorageHandler.instance.getCollection('myMoves'),
-        'races': await StorageHandler.instance.getCollection('myRaces'),
-        'spells': await StorageHandler.instance.getCollection('mySpells'),
-        'tags': await StorageHandler.instance.getCollection('myTags'),
-      });
-
-      repo.updateList<CharacterClass>('Classes', repo.classes, resp.classes,
-          key: (x) => x.key, toJson: (x) => x.toJson());
-      repo.updateList<Item>('Items', repo.items, resp.items,
-          key: (x) => x.key, toJson: (x) => x.toJson());
-      repo.updateList<Monster>('Monsters', repo.monsters, resp.monsters,
-          key: (x) => x.key, toJson: (x) => x.toJson());
-      repo.updateList<Move>('Moves', repo.moves, resp.moves,
-          key: (x) => x.key, toJson: (x) => x.toJson());
-      repo.updateList<Race>('Races', repo.races, resp.races,
-          key: (x) => x.key, toJson: (x) => x.toJson());
-      repo.updateList<Spell>('Spells', repo.spells, resp.spells,
-          key: (x) => x.key, toJson: (x) => x.toJson());
-      repo.updateList<dw.Tag>('Tags', repo.tags, resp.tags,
-          key: (x) => x.name, toJson: (x) => x.toJson());
-    } else {
-      repo.updateList<CharacterClass>(
-          'Classes', repo.classes, cachedClasses.map((x) => CharacterClass.fromJson(x)),
-          key: (x) => x.key, toJson: (x) => x.toJson(), saveIntoCache: false);
-      repo.updateList<Item>('Items', repo.items, cachedItems.map((x) => Item.fromJson(x)),
-          key: (x) => x.key, toJson: (x) => x.toJson(), saveIntoCache: false);
-      repo.updateList<Monster>(
-          'Monsters', repo.monsters, cachedMonsters.map((x) => Monster.fromJson(x)),
-          key: (x) => x.key, toJson: (x) => x.toJson(), saveIntoCache: false);
-      repo.updateList<Move>('Moves', repo.moves, cachedMoves.map((x) => Move.fromJson(x)),
-          key: (x) => x.key, toJson: (x) => x.toJson(), saveIntoCache: false);
-      repo.updateList<Race>('Races', repo.races, cachedRaces.map((x) => Race.fromJson(x)),
-          key: (x) => x.key, toJson: (x) => x.toJson(), saveIntoCache: false);
-      repo.updateList<Spell>('Spells', repo.spells, cachedSpells.map((x) => Spell.fromJson(x)),
-          key: (x) => x.key, toJson: (x) => x.toJson(), saveIntoCache: false);
-      repo.updateList<dw.Tag>('Tags', repo.tags, cachedTags.map((x) => dw.Tag.fromJson(x)),
-          key: (x) => x.name, toJson: (x) => x.toJson(), saveIntoCache: false);
-    }
   }
 }
 
-class RepositoryData {
+class RepositoryCache {
+  RepositoryCache({this.prefix});
+
+  final String? prefix;
+
   final classes = <String, CharacterClass>{}.obs;
   final items = <String, Item>{}.obs;
   final monsters = <String, Monster>{}.obs;
@@ -162,8 +66,92 @@ class RepositoryData {
   final spells = <String, Spell>{}.obs;
   final tags = <String, dw.Tag>{}.obs;
 
+  final subs = <StreamSubscription>[];
+
+  Future<void> init(Future<SearchResponse> getFromRemote) async {
+    final cache = SearchResponse.fromJson({
+      'classes': await CacheHandler.instance.getCollection(keyClasses),
+      'items': await CacheHandler.instance.getCollection(keyItems),
+      'monsters': await CacheHandler.instance.getCollection(keyMonsters),
+      'moves': await CacheHandler.instance.getCollection(keyMoves),
+      'races': await CacheHandler.instance.getCollection(keyRaces),
+      'spells': await CacheHandler.instance.getCollection(keySpells),
+      'tags': await CacheHandler.instance.getCollection(keyTags),
+    });
+
+    if (cache.isAnyEmpty) {
+      await setAllFrom(await getFromRemote);
+    } else {
+      await setAllFrom(cache, saveIntoCache: false);
+    }
+
+    registerListeners();
+  }
+
+  void registerListeners() {
+    subs.addAll([
+      StorageHandler.instance.collectionListener(keyClasses,
+          (d) => classes.value = {for (var x in d) x['key']: CharacterClass.fromJson(x)}),
+      StorageHandler.instance.collectionListener(
+          keyItems, (d) => items.value = {for (var x in d) x['key']: Item.fromJson(x)}),
+      StorageHandler.instance.collectionListener(
+          keyMonsters, (d) => monsters.value = {for (var x in d) x['key']: Monster.fromJson(x)}),
+      StorageHandler.instance.collectionListener(keyMoves, (d) {
+        debugPrint('RepositoryCache.listener(Move) $d');
+        moves.value = {for (var x in d) x['key']: Move.fromJson(x)};
+      }),
+      StorageHandler.instance.collectionListener(
+          keyRaces, (d) => races.value = {for (var x in d) x['key']: Race.fromJson(x)}),
+      StorageHandler.instance.collectionListener(
+          keySpells, (d) => spells.value = {for (var x in d) x['key']: Spell.fromJson(x)}),
+      StorageHandler.instance.collectionListener(
+          keyTags, (d) => tags.value = {for (var x in d) x['name']: dw.Tag.fromJson(x)}),
+    ]);
+  }
+
+  void clearListeners() {
+    for (var sub in subs) {
+      sub.cancel();
+    }
+  }
+
+  void dispose() {
+    clear();
+    clearListeners();
+  }
+
+  Future<void> setAllFrom(
+    SearchResponse resp, {
+    bool saveIntoCache = true,
+  }) async {
+    await Future.wait([
+      updateList<CharacterClass>(keyClasses, classes, resp.classes, saveIntoCache: saveIntoCache),
+      updateList<Item>(keyItems, items, resp.items, saveIntoCache: saveIntoCache),
+      updateList<Monster>(keyMonsters, monsters, resp.monsters, saveIntoCache: saveIntoCache),
+      updateList<Move>(keyMoves, moves, resp.moves, saveIntoCache: saveIntoCache),
+      updateList<Race>(keyRaces, races, resp.races, saveIntoCache: saveIntoCache),
+      updateList<Spell>(keySpells, spells, resp.spells, saveIntoCache: saveIntoCache),
+      updateList<dw.Tag>(keyTags, tags, resp.tags, saveIntoCache: saveIntoCache),
+    ]);
+  }
+
+  String _key(String key) => (prefix ?? '') + key;
+  String get keyClasses => _key('Classes');
+  String get keyItems => _key('Items');
+  String get keyMonsters => _key('Monsters');
+  String get keyMoves => _key('Moves');
+  String get keyRaces => _key('Races');
+  String get keySpells => _key('Spells');
+  String get keyTags => _key('Tags');
+
   void clear() {
     classes.clear();
+    items.clear();
+    monsters.clear();
+    moves.clear();
+    races.clear();
+    spells.clear();
+    tags.clear();
   }
 
   RxMap<String, T> listByType<T>() {
@@ -186,23 +174,21 @@ class RepositoryData {
     throw TypeError();
   }
 
-  updateList<T>(
+  Future<void> updateList<T>(
     String collectionName,
     RxMap<String, T> list,
     Iterable<T>? resp, {
-    required String Function(T item) key,
-    required dynamic Function(T item) toJson,
     bool saveIntoCache = true,
-  }) {
+  }) async {
     if (resp == null) {
       return;
     }
-    list
-      ..clear()
-      ..addAll(Map.fromIterable(resp, key: (x) => key(x)));
+
+    list.addAll(Map.fromIterable(resp, key: (x) => keyFor(x as T)));
 
     if (saveIntoCache) {
-      for (final x in list.values) CacheHandler.instance.create(collectionName, key(x), toJson(x));
+      for (final x in list.values)
+        await CacheHandler.instance.create(collectionName, keyFor(x), toJsonFor(x));
     }
   }
 }

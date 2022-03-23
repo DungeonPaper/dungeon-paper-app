@@ -23,6 +23,7 @@ class AddSpellsView extends GetView<AddRepositoryItemsController<Spell, SpellFil
   @override
   Widget build(BuildContext context) {
     return AddRepositoryItemsView<Spell, SpellFilters>(
+      storageKey: 'Spells',
       title: Text(S.current.addGeneric(S.current.entityPlural(Spell))),
       filterFn: (spell, filters) => filters.filter(spell),
       filtersBuilder: (filters, update) => SpellFiltersView(

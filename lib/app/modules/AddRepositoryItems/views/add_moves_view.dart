@@ -26,6 +26,7 @@ class AddMovesView extends GetView<AddRepositoryItemsController<Move, MoveFilter
   @override
   Widget build(BuildContext context) {
     return AddRepositoryItemsView<Move, MoveFilters>(
+      storageKey: 'Moves',
       title: Text(S.current.addGeneric(S.current.entityPlural(Move))),
       filtersBuilder: (filters, update) => MoveFiltersView(
         filters: filters,

@@ -76,4 +76,14 @@ class SearchResponse {
             json['Spells'] != null ? List.from(json['Spells'].map((x) => Spell.fromJson(x))) : null,
         tags: json['Tags'] != null ? List.from(json['Tags'].map((x) => dw.Tag.fromJson(x))) : null,
       );
+
+  bool get isAnyEmpty => [
+        classes,
+        items,
+        monsters,
+        moves,
+        races,
+        spells,
+        tags,
+      ].any((l) => l == null || l.isEmpty);
 }
