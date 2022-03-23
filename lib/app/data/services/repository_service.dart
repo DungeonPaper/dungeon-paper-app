@@ -96,10 +96,8 @@ class RepositoryCache {
           keyItems, (d) => items.value = {for (var x in d) x['key']: Item.fromJson(x)}),
       StorageHandler.instance.collectionListener(
           keyMonsters, (d) => monsters.value = {for (var x in d) x['key']: Monster.fromJson(x)}),
-      StorageHandler.instance.collectionListener(keyMoves, (d) {
-        debugPrint('RepositoryCache.listener(Move) $d');
-        moves.value = {for (var x in d) x['key']: Move.fromJson(x)};
-      }),
+      StorageHandler.instance.collectionListener(
+          keyMoves, (d) => moves.value = {for (var x in d) x['key']: Move.fromJson(x)}),
       StorageHandler.instance.collectionListener(
           keyRaces, (d) => races.value = {for (var x in d) x['key']: Race.fromJson(x)}),
       StorageHandler.instance.collectionListener(

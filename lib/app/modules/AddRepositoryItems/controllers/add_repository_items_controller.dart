@@ -57,7 +57,6 @@ class AddRepositoryItemsController<T, F extends EntityFilters> extends GetxContr
           : list;
 
   void _updateSearch() {
-    debugPrint('Updating search ${search.text}');
     filters.value?.setSearch(search.text);
     selected.refresh();
   }

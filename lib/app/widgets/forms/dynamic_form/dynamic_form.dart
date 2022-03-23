@@ -56,35 +56,9 @@ class _DynamicFormState extends State<DynamicForm> {
     return ListView(
       padding: const EdgeInsets.symmetric(horizontal: 8).copyWith(bottom: 8),
       children: [
-        for (final input in widget.inputs) buildInput(context, input),
+        for (final input in widget.inputs) input.build(context),
       ],
     );
-  }
-
-  Widget buildInput<T extends BaseInputData>(BuildContext context, FormInputData<T> input) {
-    switch (input.data.runtimeType) {
-      case FormTextInputData:
-        final data = input.data as FormTextInputData;
-
-        return TextFormField(
-          controller: data.controller,
-          minLines: data.minLines,
-          maxLines: data.maxLines,
-          decoration: InputDecoration(
-            hintText: data.hintText,
-            label: Text(data.label),
-          ),
-        );
-      case FormDropdownInputData:
-        final data = input.data as FormDropdownInputData;
-        return DropdownButton<dynamic>(
-          value: data.value,
-          items: data.items.toList(),
-          onChanged: (value) => data.controller.value = value, // data.onChange,
-        );
-      default:
-        throw UnsupportedError('Form input type `$T` is not supported.');
-    }
   }
 }
 

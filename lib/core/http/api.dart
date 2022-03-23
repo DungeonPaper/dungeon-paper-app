@@ -14,7 +14,6 @@ class Api {
     bool parse = true,
     Map<String, String>? headers,
   }) async {
-    debugPrint(url);
     final resp = await http.get(Uri.parse(baseUrl + url), headers: headers);
     return Response.fromHttp(resp);
   }
@@ -26,7 +25,6 @@ class Api {
     Object? body,
     Encoding? encoding,
   }) async {
-    debugPrint(url + '\n' + body.toString());
     final resp =
         await http.post(Uri.parse(baseUrl + url), headers: headers, body: body, encoding: encoding);
     return Response.fromHttp(resp);

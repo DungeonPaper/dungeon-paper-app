@@ -16,10 +16,12 @@ class AddMovesView extends GetView<AddRepositoryItemsController<Move, MoveFilter
     Key? key,
     required this.onAdd,
     required this.selections,
+    required this.classKey,
   }) : super(key: key);
 
   final void Function(Iterable<Move> moves) onAdd;
   final Iterable<Move> selections;
+  final String classKey;
 
   RepositoryService get service => controller.repo;
 
@@ -28,6 +30,7 @@ class AddMovesView extends GetView<AddRepositoryItemsController<Move, MoveFilter
     return AddRepositoryItemsView<Move, MoveFilters>(
       storageKey: 'Moves',
       title: Text(S.current.addGeneric(S.current.entityPlural(Move))),
+      extraData: {'classKey': classKey},
       filtersBuilder: (filters, update) => MoveFiltersView(
         filters: filters,
         onChange: update,

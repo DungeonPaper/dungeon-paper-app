@@ -3,14 +3,17 @@ import 'package:dungeon_paper/app/widgets/forms/add_move_form.dart';
 import 'package:dungeon_paper/core/utils/uuid.dart';
 import 'package:dungeon_paper/generated/l10n.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 class RepositoryItemForm<T> extends StatefulWidget {
   const RepositoryItemForm({
     Key? key,
     required this.onSave,
+    this.extraData = const {},
   }) : super(key: key);
 
   final void Function(T item) onSave;
+  final Map<String, dynamic> extraData;
 
   @override
   State<RepositoryItemForm<T>> createState() => _RepositoryItemFormState<T>();
@@ -26,7 +29,10 @@ class _RepositoryItemFormState<T> extends State<RepositoryItemForm<T>> {
         title: title,
         actions: [
           ElevatedButton(
-            onPressed: () => widget.onSave(data),
+            onPressed: () {
+              widget.onSave(data);
+              Get.back();
+            },
             child: Text(S.current.saveGeneric(S.current.entity(T))),
           )
         ],
@@ -46,7 +52,7 @@ class _RepositoryItemFormState<T> extends State<RepositoryItemForm<T>> {
   Widget buildForm(BuildContext context) {
     switch (T) {
       case Move:
-        return AddMoveForm(onChange: setEntity);
+        return AddMoveForm(onChange: setEntity, classKey: widget.extraData['classKey'] ?? '');
       default:
         throw UnsupportedError('Unsupported type: $T');
     }

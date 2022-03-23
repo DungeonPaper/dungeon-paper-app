@@ -11,6 +11,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import '../../../themes/button_themes.dart';
+import 'add_repository_item_card_list.dart';
 
 typedef CardBuilder<T> = Widget Function(BuildContext context, T item,
     {required void Function(bool state) onSelect,
@@ -28,6 +29,7 @@ class AddRepositoryItemsView<T, F extends EntityFilters<T>>
     required this.storageKey,
     this.filtersBuilder,
     this.filterFn,
+    this.extraData = const {},
   }) : super(key: key);
 
   final Widget title;
@@ -38,7 +40,7 @@ class AddRepositoryItemsView<T, F extends EntityFilters<T>>
   final bool Function(T item, F filters)? filterFn;
   final Iterable<T> selections;
   final String storageKey;
-
+  final Map<String, dynamic> extraData;
   Iterable<T> get builtInList =>
       controller.filterList(controller.repo.builtIn.listByType<T>().values.toList(), filterFn);
   Iterable<T> get myList =>
@@ -63,8 +65,8 @@ class AddRepositoryItemsView<T, F extends EntityFilters<T>>
               TabBar(
                 controller: controller.tabController,
                 tabs: [
-                  Tab(child: Text('Rulebook')),
-                  Tab(child: Text('Online')),
+                  const Tab(child: Text('Playbook')),
+                  const Tab(child: Text('Online')),
                   Tab(child: Text('My ${T}s')),
                 ],
               ),
@@ -83,10 +85,12 @@ class AddRepositoryItemsView<T, F extends EntityFilters<T>>
                     Container(),
                     AddRepositoryItemCardList<T, F>(
                       onSave: (item) {
+                        controller.toggle(item, true);
+                        debugPrint('Saving $item');
                         StorageHandler.instance
                             .create('my$storageKey', keyFor(item), toJsonFor(item));
-                        onAdd([item]);
-                      }, // TODO add to myList
+                      },
+                      extraData: extraData,
                       useFilters: useFilters,
                       filtersBuilder: filtersBuilder,
                       filters: filters,
@@ -143,58 +147,4 @@ class AddRepositoryItemsView<T, F extends EntityFilters<T>>
           selectable: controller.isSelectable(item, selections),
         ),
       ));
-}
-
-class AddRepositoryItemCardList<T, F extends EntityFilters>
-    extends GetView<AddRepositoryItemsController<T, F>> {
-  const AddRepositoryItemCardList({
-    Key? key,
-    required this.useFilters,
-    required this.filtersBuilder,
-    required this.filters,
-    required this.children,
-    this.onSave,
-  }) : super(key: key);
-
-  final bool useFilters;
-  final Widget Function(F filters, void Function(F filters) update)? filtersBuilder;
-  final F filters;
-  final Iterable<Widget> children;
-  final void Function(T item)? onSave;
-
-  @override
-  Widget build(BuildContext context) {
-    return Column(
-      children: [
-        if (useFilters)
-          Padding(
-            padding: const EdgeInsets.all(8),
-            child: filtersBuilder!(filters, controller.setFilters),
-          ),
-        Expanded(
-          child: ListView(
-            padding: const EdgeInsets.all(8).copyWith(top: 0),
-            children: [
-              if (onSave != null)
-                OutlinedButton.icon(
-                  style: ButtonThemes.primaryOutlined(context),
-                  onPressed: () => Get.to(
-                    () => RepositoryItemForm<T>(onSave: onSave!),
-                    binding: RepositoryItemFormBinding(),
-                  ),
-                  label: Text(S.current.addCustomGeneric(S.current.entity(T))),
-                  icon: const Icon(Icons.add),
-                ),
-              ...children.map(
-                (child) => Padding(
-                  padding: const EdgeInsets.only(bottom: 8),
-                  child: child,
-                ),
-              ),
-            ],
-          ),
-        ),
-      ],
-    );
-  }
 }

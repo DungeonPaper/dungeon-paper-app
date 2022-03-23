@@ -51,6 +51,7 @@ class HomeCharacterActionsView extends GetView<CharacterService> {
                         ),
                       ),
                       selections: char.moves,
+                      classKey: controller.current!.characterClass.key,
                     ),
                     binding: AddRepositoryItemsBinding(),
                     arguments: MoveFilters(classKey: char.characterClass.key),

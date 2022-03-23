@@ -61,7 +61,6 @@ class DebugMenu extends StatelessWidget {
     controller.clear();
     final all = await StorageHandler.instance.getCollection('Characters');
     for (var c in all) {
-      debugPrint("Deleting ${c['key']}");
       StorageHandler.instance.delete('Characters', c['key']);
     }
   }
@@ -79,8 +78,5 @@ class DebugMenu extends StatelessWidget {
   void search() async {
     final resp = await api.requests
         .search(SearchRequest(types: {SearchType.moves, SearchType.spells}, query: 'magic'));
-
-    debugPrint(resp.moves?.toString());
-    debugPrint(resp.spells?.toString());
   }
 }
