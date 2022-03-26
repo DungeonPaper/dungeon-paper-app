@@ -12,8 +12,8 @@ enum FiltersGroup {
 
 class AddRepositoryItemsController<T, F extends EntityFilters> extends GetxController
     with GetSingleTickerProviderStateMixin {
-  final repo = Get.find<RepositoryService>();
-  final chars = Get.find<CharacterService>();
+  final repo = Get.find<RepositoryService>().obs;
+  final chars = Get.find<CharacterService>().obs;
   final selected = <T>[].obs;
   final filters = <FiltersGroup, F?>{}.obs;
   final search = <FiltersGroup, TextEditingController>{}.obs;
@@ -45,7 +45,9 @@ class AddRepositoryItemsController<T, F extends EntityFilters> extends GetxContr
   void toggle(T item, bool state) {
     if (state) {
       selected.addIf(
-          selected.firstWhereOrNull((element) => keyFor(element) == keyFor(item)) == null, item);
+        selected.firstWhereOrNull((element) => keyFor(element) == keyFor(item)) == null,
+        item,
+      );
     } else {
       selected.removeWhere((element) => keyFor(element) == keyFor(item));
     }
@@ -69,12 +71,14 @@ class AddRepositoryItemsController<T, F extends EntityFilters> extends GetxContr
 
   void _updatePlaybookSearch() {
     filters[FiltersGroup.playbook]?.setSearch(search[FiltersGroup.playbook]!.text);
-    selected.refresh();
+    search.refresh();
+    repo.refresh();
   }
 
   void _updateMySearch() {
     filters[FiltersGroup.my]?.setSearch(search[FiltersGroup.my]!.text);
-    selected.refresh();
+    search.refresh();
+    repo.refresh();
   }
 }
 

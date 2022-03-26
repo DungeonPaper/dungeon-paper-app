@@ -23,7 +23,7 @@ class AddMovesView extends GetView<AddRepositoryItemsController<Move, MoveFilter
   final Iterable<Move> selections;
   final String classKey;
 
-  RepositoryService get service => controller.repo;
+  RepositoryService get service => controller.repo.value;
 
   @override
   Widget build(BuildContext context) {

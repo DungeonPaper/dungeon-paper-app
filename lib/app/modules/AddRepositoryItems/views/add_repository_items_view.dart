@@ -50,9 +50,11 @@ class AddRepositoryItemsView<T extends WithMeta, F extends EntityFilters<T>>
   final String storageKey;
   final Map<String, dynamic> extraData;
   Iterable<T> get builtInList => controller.filterList(
-      controller.repo.builtIn.listByType<T>().values.toList(), FiltersGroup.playbook, filterFn);
+      controller.repo.value.builtIn.listByType<T>().values.toList(),
+      FiltersGroup.playbook,
+      filterFn);
   Iterable<T> get myList => controller.filterList(
-      controller.repo.my.listByType<T>().values.toList(), FiltersGroup.my, filterFn);
+      controller.repo.value.my.listByType<T>().values.toList(), FiltersGroup.my, filterFn);
 
   bool get useFilters => filtersBuilder != null;
   F get playbookFilters => controller.filters[FiltersGroup.playbook]!;
