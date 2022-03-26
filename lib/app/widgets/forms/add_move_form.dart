@@ -55,7 +55,7 @@ class AddMoveFormController extends DynamicFormController<Move> {
   Move setData(Map<String, dynamic> data, [Iterable<String>? classKeys]) {
     entity.value = entity.value.copyWithInherited(
       name: data['name'],
-      // category: data['category'],
+      category: data['category'],
       description: data['description'],
       explanation: data['explanation'],
       classKeys: [
@@ -83,6 +83,7 @@ class AddMoveFormController extends DynamicFormController<Move> {
         name: 'category',
         data: FormDropdownInputData(
           value: entity.value.category,
+          label: const Text('Category'),
           items: MoveCategory.values.map(
             (cat) => DropdownMenuItem(
               child: Text(S.current.moveCategoryWithLevelShort(cat.name)),

@@ -4,6 +4,7 @@ class FormDropdownInputData<T> extends BaseInputData {
   FormDropdownInputData({
     required this.value,
     required this.items,
+    this.label,
   }) {
     init();
   }
@@ -12,6 +13,7 @@ class FormDropdownInputData<T> extends BaseInputData {
   final T value;
 
   final Iterable<DropdownMenuItem<T>> items;
+  final Widget? label;
 
   late final ValueNotifier<T> controller;
   late final ValueNotifierStream<T> stream;
@@ -34,7 +36,8 @@ class FormDropdownInputData<T> extends BaseInputData {
 
   @override
   Widget build(BuildContext context) {
-    return DropdownButton<dynamic>(
+    return SelectBox<dynamic>(
+      label: label,
       value: controller.value,
       items: items.toList(),
       onChanged: (value) => controller.value = value, // data.onChange,
