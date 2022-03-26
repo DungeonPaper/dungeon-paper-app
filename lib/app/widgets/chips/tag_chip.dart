@@ -1,3 +1,4 @@
+import 'package:dungeon_paper/core/utils/string_utils.dart';
 import 'package:flutter/material.dart';
 
 import 'package:dungeon_world_data/dungeon_world_data.dart' as dw;
@@ -10,9 +11,10 @@ class TagChip extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
+    final name = toTitleCase(tag.name);
     return Container(
       child: Text(
-        tag.value != null ? '${tag.name}: ${tag.value}' : tag.name,
+        tag.value != null ? '${name}: ${tag.value}' : name,
         style: TextStyle(
           color: theme.colorScheme.onPrimary,
         ),

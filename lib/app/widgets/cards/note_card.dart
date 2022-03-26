@@ -30,6 +30,7 @@ class NoteCard extends StatelessWidget {
       initiallyExpanded: initiallyExpanded,
       title: note.title,
       description: note.description,
+      explanation: '',
       chips: note.tags.map((t) => TagChip(tag: t)),
       dice: const [],
       icon: showIcon ? Icon(note.icon, size: 16) : null,

@@ -3,6 +3,7 @@ import 'package:dungeon_paper/app/data/models/move.dart';
 import 'package:dungeon_paper/app/data/services/repository_service.dart';
 import 'package:dungeon_paper/app/modules/AddRepositoryItems/controllers/add_repository_items_controller.dart';
 import 'package:dungeon_paper/app/modules/AddRepositoryItems/views/entity_filters.dart';
+import 'package:dungeon_paper/app/widgets/atoms/select_box.dart';
 import 'package:dungeon_paper/core/utils/string_utils.dart';
 import 'package:dungeon_paper/generated/l10n.dart';
 import 'package:flutter/material.dart';
@@ -35,7 +36,7 @@ class MoveFiltersView extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.end,
           children: [
             Expanded(
-              child: DropdownButton<MoveCategory?>(
+              child: SelectBox<MoveCategory?>(
                 isExpanded: true,
                 value: filters.category,
                 items: [
@@ -59,7 +60,7 @@ class MoveFiltersView extends StatelessWidget {
             ),
             const SizedBox(width: 16),
             Expanded(
-              child: DropdownButton<String>(
+              child: SelectBox<String>(
                 isExpanded: true,
                 value: filters.classKey,
                 items: [
@@ -120,7 +121,8 @@ class MoveFilters extends EntityFilters<Move> {
     }
 
     if (classKey != null) {
-      if (!move.classKeys.map(cleanStr).contains(cleanStr(classKey!))) {
+      if (![MoveCategory.basic, MoveCategory.special].contains(category) &&
+          !move.classKeys.map(cleanStr).contains(cleanStr(classKey!))) {
         return false;
       }
     }

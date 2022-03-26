@@ -48,7 +48,7 @@ class ExpansionRow extends StatelessWidget {
         child: CustomExpansionTile(
           key: expansionKey,
           initiallyExpanded: initiallyExpanded ?? false,
-          onExpansionChanged: (state) => onExpansion?.call(!state),
+          onExpansionChanged: (state) => onExpansion?.call(state),
           title: Row(
             children: [
               if (icon != null) ...[

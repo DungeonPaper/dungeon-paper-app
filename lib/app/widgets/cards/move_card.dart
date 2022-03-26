@@ -34,6 +34,7 @@ class MoveCard extends StatelessWidget {
     return DynamicActionCard(
       title: move.name,
       description: move.description,
+      explanation: move.explanation,
       expansionKey: expansionKey ?? PageStorageKey(move.key),
       chips: TagUtils.excludeMetaTags(move.tags).map((t) => TagChip(tag: t)),
       dice: showDice ? move.dice : [],

@@ -981,6 +981,26 @@ class S {
       args: [],
     );
   }
+
+  /// `‹No description provided›`
+  String get noDescription {
+    return Intl.message(
+      '‹No description provided›',
+      name: 'noDescription',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Further details`
+  String get explanation {
+    return Intl.message(
+      'Further details',
+      name: 'explanation',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

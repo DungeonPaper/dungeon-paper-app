@@ -93,6 +93,7 @@ class SelectBox<T> extends StatelessWidget {
 
     return _Container(
       disabled: !enabled,
+      label: true,
       // color: Colors.red,
       child: Stack(
         children: [
@@ -137,10 +138,12 @@ class SelectBox<T> extends StatelessWidget {
 }
 
 class _Container extends StatelessWidget {
-  const _Container({Key? key, this.disabled = false, required this.child}) : super(key: key);
+  const _Container({Key? key, this.disabled = false, required this.child, this.label = false})
+      : super(key: key);
 
   final bool disabled;
   final Widget child;
+  final bool label;
 
   @override
   Widget build(BuildContext context) {
@@ -150,6 +153,8 @@ class _Container extends StatelessWidget {
     const Color darkDisabled = Color(0x0DFFFFFF);
     const Color lightEnabled = Color(0x0A000000);
     const Color lightDisabled = Color(0x05000000);
+
+    final height = label ? 61.0 : 48.0;
 
     final fill = theme.brightness == Brightness.dark
         ? !disabled
@@ -161,7 +166,7 @@ class _Container extends StatelessWidget {
 
     final borderColor = theme.brightness == Brightness.dark
         ? Colors.white.withOpacity(0.55)
-        : Colors.white.withOpacity(0.5);
+        : Colors.black.withOpacity(0.55);
 
     return Container(
       decoration: BoxDecoration(
@@ -174,7 +179,7 @@ class _Container extends StatelessWidget {
         ),
       ),
       child: Container(
-        height: 61,
+        height: height,
         decoration: BoxDecoration(
           border: Border(
             bottom: BorderSide(
@@ -185,7 +190,7 @@ class _Container extends StatelessWidget {
           ),
         ),
         child: Padding(
-          padding: const EdgeInsets.all(8.0).copyWith(bottom: 0),
+          padding: const EdgeInsets.all(8.0).copyWith(bottom: label ? 0.0 : 8.0),
           child: child,
         ),
       ),

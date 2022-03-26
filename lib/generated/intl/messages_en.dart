@@ -228,6 +228,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "entity": m14,
         "entityPlural": m15,
         "entityWithCount": m16,
+        "explanation": MessageLookupByLibrary.simpleMessage("Further details"),
         "items": MessageLookupByLibrary.simpleMessage("Items"),
         "itemsWithCount": m17,
         "moveCategory": m18,
@@ -239,6 +240,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "navActions": MessageLookupByLibrary.simpleMessage("Use"),
         "navCharacter": MessageLookupByLibrary.simpleMessage("Character"),
         "navJournal": MessageLookupByLibrary.simpleMessage("Journal"),
+        "noDescription":
+            MessageLookupByLibrary.simpleMessage("‹No description provided›"),
         "notes": MessageLookupByLibrary.simpleMessage("Notes"),
         "notesWithCount": m23,
         "ok": MessageLookupByLibrary.simpleMessage("OK"),

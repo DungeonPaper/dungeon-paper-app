@@ -31,6 +31,7 @@ class SpellCard extends StatelessWidget {
     return DynamicActionCard(
       title: spell.name,
       description: spell.description,
+      explanation: spell.explanation,
       chips: const [],
       dice: showDice ? spell.dice : [],
       icon: showIcon ? SvgIcon(spell.icon, size: 16) : null,

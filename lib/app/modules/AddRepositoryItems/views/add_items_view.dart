@@ -31,24 +31,24 @@ class AddItemsView extends GetView<AddRepositoryItemsController<Item, ItemFilter
         onChange: (f) => onChange(group, f),
         searchController: controller.search[group]!,
       ),
-      cardBuilder: (ctx, item, {required onSelect, required selected, required selectable}) =>
+      cardBuilder: (
+        ctx,
+        item, {
+        required selected,
+        required selectable,
+        required onToggle,
+        required label,
+        required icon,
+      }) =>
           ItemCard(
         item: item,
         showStar: false,
         actions: [
           ElevatedButton.icon(
             style: ButtonThemes.primaryElevated(context),
-            onPressed: selectable ? () => onSelect(!selected) : null,
-            label: Text(selectable
-                ? !selected
-                    ? S.current.select
-                    : S.current.remove
-                : S.current.alreadyAdded),
-            icon: Icon(selectable
-                ? !selected
-                    ? Icons.add
-                    : Icons.remove
-                : Icons.check),
+            onPressed: onToggle,
+            label: label,
+            icon: icon,
           )
         ],
       ),

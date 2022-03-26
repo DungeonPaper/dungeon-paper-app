@@ -1,3 +1,4 @@
+import 'package:dungeon_paper/generated/l10n.dart';
 import 'package:dungeon_world_data/dice.dart';
 import 'package:flutter/material.dart';
 
@@ -105,7 +106,7 @@ class DynamicActionCardMini extends StatelessWidget {
               //   ),
               // ),
               child: Text(
-                description,
+                description.isNotEmpty ? description : S.current.noDescription,
                 overflow: TextOverflow.ellipsis,
                 maxLines: dice.isNotEmpty
                     ? 3

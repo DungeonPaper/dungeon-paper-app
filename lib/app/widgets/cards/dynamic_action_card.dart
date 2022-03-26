@@ -1,4 +1,5 @@
 import 'package:dungeon_paper/app/widgets/atoms/expansion_row.dart';
+import 'package:dungeon_paper/generated/l10n.dart';
 import 'package:dungeon_world_data/dice.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_markdown/flutter_markdown.dart';
@@ -17,6 +18,7 @@ class DynamicActionCard extends StatelessWidget {
     required this.starred,
     required this.dice,
     required this.description,
+    required this.explanation,
     this.initiallyExpanded,
     this.showStar = true,
     this.starredIcon,
@@ -30,6 +32,7 @@ class DynamicActionCard extends StatelessWidget {
   }) : super(key: key);
 
   final String description;
+  final String explanation;
   final Key? expansionKey;
   final String title;
   final Widget? icon;
@@ -50,79 +53,92 @@ class DynamicActionCard extends StatelessWidget {
   Widget build(BuildContext context) {
     final expanded = false.obs;
 
-    return Card(
-      margin: EdgeInsets.zero,
-      child: ExpansionRow(
-        title: Text(title),
-        expansionKey: expansionKey,
-        onExpansion: (state) => expanded.value = !state,
-        initiallyExpanded: initiallyExpanded,
-        childrenPadding: const EdgeInsets.all(8).copyWith(top: 0),
-        icon: icon,
-        trailing: showStar
-            ? [
-                ...leading,
-                Container(
-                  width: 20,
-                  height: 20,
-                  padding: EdgeInsets.only(
-                    left: leading.isNotEmpty ? 8 : 0,
-                    right: trailing.isNotEmpty ? 8 : 0,
-                  ),
-                  child: IconButton(
-                    visualDensity: VisualDensity.compact,
-                    padding: EdgeInsets.zero,
-                    icon: IconTheme(
-                      data: IconTheme.of(context).copyWith(
-                        size: 16,
-                        color: Theme.of(context).colorScheme.onSurface.withOpacity(0.3),
-                      ),
-                      child: starred
-                          ? starredIcon ?? const Icon(Icons.star_rounded)
-                          : unstarredIcon ?? const Icon(Icons.star_border_rounded),
+    var dividerColor = Theme.of(context).colorScheme.onBackground.withOpacity(0.3);
+    return Obx(
+      () => Card(
+        margin: EdgeInsets.zero,
+        elevation: expanded.value == true ? 5 : 1,
+        child: ExpansionRow(
+          title: Text(title),
+          expansionKey: expansionKey,
+          onExpansion: (state) => expanded.value = state,
+          initiallyExpanded: initiallyExpanded,
+          childrenPadding: const EdgeInsets.all(8).copyWith(top: 0),
+          icon: icon,
+          trailing: showStar
+              ? [
+                  ...leading,
+                  Container(
+                    width: 20,
+                    height: 20,
+                    padding: EdgeInsets.only(
+                      left: leading.isNotEmpty ? 8 : 0,
+                      right: trailing.isNotEmpty ? 8 : 0,
                     ),
-                    onPressed: () => onStarChanged(!starred),
-                  ),
-                ),
-                ...trailing
-              ]
-            : [...leading, const SizedBox.shrink(), ...trailing],
-        children: [
-          MarkdownBody(data: description),
-          if (description.isNotEmpty) const SizedBox(height: 4),
-          Row(
-            crossAxisAlignment: CrossAxisAlignment.end,
-            mainAxisSize: MainAxisSize.max,
-            children: [
-              Expanded(
-                child: Wrap(
-                  children: chips
-                      .map(
-                        (c) => Padding(
-                          padding: EdgeInsets.only(right: chipsSpacing),
-                          child: c,
+                    child: IconButton(
+                      visualDensity: VisualDensity.compact,
+                      padding: EdgeInsets.zero,
+                      icon: IconTheme(
+                        data: IconTheme.of(context).copyWith(
+                          size: 16,
+                          color: Theme.of(context).colorScheme.onSurface.withOpacity(0.3),
                         ),
-                      )
-                      .toList(),
-                ),
+                        child: starred
+                            ? starredIcon ?? const Icon(Icons.star_rounded)
+                            : unstarredIcon ?? const Icon(Icons.star_border_rounded),
+                      ),
+                      onPressed: () => onStarChanged(!starred),
+                    ),
+                  ),
+                  ...trailing
+                ]
+              : [...leading, const SizedBox.shrink(), ...trailing],
+          children: [
+            // Divider(height: 16, color: dividerColor),
+            description.isNotEmpty
+                ? MarkdownBody(data: description)
+                : Text(
+                    S.current.noDescription,
+                    style: Theme.of(context).textTheme.bodyText1,
+                  ),
+            // Divider(height: 32, color: dividerColor),
+            if (explanation.isNotEmpty) ...[
+              Padding(
+                padding: const EdgeInsets.only(top: 16, bottom: 4),
+                child: Text(S.current.explanation, style: Theme.of(context).textTheme.caption),
               ),
-              ...actions,
-              if (actions.isNotEmpty && dice.isNotEmpty) const SizedBox(width: 8),
-              if (dice.isNotEmpty)
-                Padding(
-                  padding: const EdgeInsets.only(bottom: 2.5),
-                  child: BackgroundIconButton(
-                    elevation: 1.5,
-                    icon: const SvgIcon(DwIcons.dice_d6, size: 20),
-                    iconColor: Theme.of(context).colorScheme.onPrimary,
-                    color: Theme.of(context).primaryColor,
-                    size: 40,
-                    onPressed: () => null,
+              MarkdownBody(data: explanation),
+            ],
+            Divider(height: 32, color: dividerColor),
+            Row(
+              crossAxisAlignment: CrossAxisAlignment.end,
+              mainAxisSize: MainAxisSize.max,
+              children: [
+                Expanded(
+                  child: Wrap(
+                    spacing: chipsSpacing,
+                    runSpacing: chipsSpacing,
+                    children: chips.toList(),
                   ),
                 ),
-            ],
-          )
-        ],
+                ...actions,
+                if (actions.isNotEmpty && dice.isNotEmpty) const SizedBox(width: 8),
+                if (dice.isNotEmpty)
+                  Padding(
+                    padding: const EdgeInsets.only(bottom: 2.5),
+                    child: BackgroundIconButton(
+                      elevation: 1.5,
+                      icon: const SvgIcon(DwIcons.dice_d6, size: 20),
+                      iconColor: Theme.of(context).colorScheme.onPrimary,
+                      color: Theme.of(context).primaryColor,
+                      size: 40,
+                      onPressed: () => null,
+                    ),
+                  ),
+              ],
+            )
+          ],
+        ),
       ),
     );
   }

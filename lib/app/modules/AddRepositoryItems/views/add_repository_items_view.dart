@@ -13,10 +13,15 @@ import 'package:get/get.dart';
 import '../../../themes/button_themes.dart';
 import 'add_repository_item_card_list.dart';
 
-typedef CardBuilder<T> = Widget Function(BuildContext context, T item,
-    {required void Function(bool state) onSelect,
-    required bool selected,
-    required bool selectable});
+typedef CardBuilder<T> = Widget Function(
+  BuildContext context,
+  T item, {
+  required bool selected,
+  required bool selectable,
+  required Widget label,
+  required Widget icon,
+  required void Function()? onToggle,
+});
 
 class AddRepositoryItemsView<T, F extends EntityFilters<T>>
     extends GetView<AddRepositoryItemsController<T, F>> {
@@ -137,26 +142,43 @@ class AddRepositoryItemsView<T, F extends EntityFilters<T>>
     );
   }
 
-  Widget _wrapWithSelection(BuildContext context, T item) => Obx(() => Container(
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(10),
-          border: Border.all(
-            width: 2,
-            color: controller.isSelected(item)
-                ? DwColors.success
-                : !controller.isSelectable(item, selections)
-                    ? Colors.grey
-                    : Colors.transparent,
-          ),
-        ),
-        child: cardBuilder(
-          context,
-          item,
-          onSelect: (state) {
-            controller.toggle(item, state);
-          },
-          selected: controller.isSelected(item),
-          selectable: controller.isSelectable(item, selections),
-        ),
-      ));
+  Widget _wrapWithSelection(BuildContext context, T item) => Obx(
+        () {
+          var selected = controller.isSelected(item);
+          var selectable = controller.isSelectable(item, selections);
+          var onToggle = selectable ? () => controller.toggle(item, !selected) : null;
+          return Container(
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(10),
+              border: Border.all(
+                width: 2,
+                color: controller.isSelected(item)
+                    ? DwColors.success
+                    : !controller.isSelectable(item, selections)
+                        ? Colors.grey
+                        : Colors.transparent,
+              ),
+            ),
+            child: cardBuilder(
+              context,
+              item,
+              selected: selected,
+              selectable: selectable,
+              onToggle: onToggle,
+              label: Text(selectable
+                  ? !selected
+                      ? S.current.select
+                      : S.current.remove
+                  : S.current.alreadyAdded),
+              icon: Icon(
+                selectable
+                    ? !selected
+                        ? Icons.add
+                        : Icons.remove
+                    : Icons.check,
+              ),
+            ),
+          );
+        },
+      );
 }

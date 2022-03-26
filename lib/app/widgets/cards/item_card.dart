@@ -31,6 +31,7 @@ class ItemCard extends StatelessWidget {
       initiallyExpanded: initiallyExpanded,
       title: item.name,
       description: item.description,
+      explanation: '',
       chips: item.tags.map((t) => TagChip(tag: t)),
       dice: const [],
       icon: showIcon ? SvgIcon(item.icon, size: 16) : null,

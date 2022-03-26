@@ -114,5 +114,7 @@
   "save": "Save",
   "myGeneric": "My {entity}",
   "addRepoItemTabPlaybook": "Playbook",
-  "addRepoItemTabOnline": "Online"
+  "addRepoItemTabOnline": "Online",
+  "noDescription": "‹No description provided›",
+  "explanation": "Further details"
 }
