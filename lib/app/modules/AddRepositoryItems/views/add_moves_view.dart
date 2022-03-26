@@ -31,10 +31,11 @@ class AddMovesView extends GetView<AddRepositoryItemsController<Move, MoveFilter
       storageKey: 'Moves',
       title: Text(S.current.addGeneric(S.current.entityPlural(Move))),
       extraData: {'classKey': classKey},
-      filtersBuilder: (filters, update) => MoveFiltersView(
+      filtersBuilder: (group, filters, onChange) => MoveFiltersView(
+        group: group,
         filters: filters,
-        onChange: update,
-        searchController: controller.search,
+        onChange: (f) => onChange(group, f),
+        searchController: controller.search[group]!,
       ),
       filterFn: (moves, filters) => filters.filter(moves),
       cardBuilder: (ctx, move, {required onSelect, required selected, required selectable}) =>

@@ -13,14 +13,17 @@ class AddRepositoryItemCardList<T, F extends EntityFilters>
     required this.useFilters,
     required this.filtersBuilder,
     required this.filters,
+    required this.group,
     required this.children,
     this.extraData = const {},
     this.onSave,
   }) : super(key: key);
 
   final bool useFilters;
-  final Widget Function(F filters, void Function(F filters) update)? filtersBuilder;
+  final Widget Function(
+      FiltersGroup, F filters, void Function(FiltersGroup group, F filters) update)? filtersBuilder;
   final F filters;
+  final FiltersGroup group;
   final Iterable<Widget> children;
   final void Function(T item)? onSave;
   final Map<String, dynamic> extraData;
@@ -32,7 +35,7 @@ class AddRepositoryItemCardList<T, F extends EntityFilters>
         if (useFilters)
           Padding(
             padding: const EdgeInsets.all(8),
-            child: filtersBuilder!(filters, controller.setFilters),
+            child: filtersBuilder!(group, filters, controller.setFilters),
           ),
         Expanded(
           child: ListView(

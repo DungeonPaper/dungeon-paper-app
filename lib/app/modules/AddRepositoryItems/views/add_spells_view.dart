@@ -26,10 +26,11 @@ class AddSpellsView extends GetView<AddRepositoryItemsController<Spell, SpellFil
       storageKey: 'Spells',
       title: Text(S.current.addGeneric(S.current.entityPlural(Spell))),
       filterFn: (spell, filters) => filters.filter(spell),
-      filtersBuilder: (filters, update) => SpellFiltersView(
+      filtersBuilder: (group, filters, onChange) => SpellFiltersView(
+        group: group,
         filters: filters,
-        onChange: controller.setFilters,
-        searchController: controller.search,
+        onChange: (f) => onChange(group, f),
+        searchController: controller.search[group]!,
       ),
       cardBuilder: (ctx, spell, {required onSelect, required selected, required selectable}) =>
           SpellCard(

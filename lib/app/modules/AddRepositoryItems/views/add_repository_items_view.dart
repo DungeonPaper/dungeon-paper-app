@@ -36,18 +36,21 @@ class AddRepositoryItemsView<T, F extends EntityFilters<T>>
   final CardBuilder<T> cardBuilder;
   final void Function(Iterable<T> items) onAdd;
   final pageStorageBucket = PageStorageBucket();
-  final Widget Function(F filters, void Function(F filters) update)? filtersBuilder;
+  final Widget Function(
+          FiltersGroup group, F filters, void Function(FiltersGroup group, F filters) update)?
+      filtersBuilder;
   final bool Function(T item, F filters)? filterFn;
   final Iterable<T> selections;
   final String storageKey;
   final Map<String, dynamic> extraData;
-  Iterable<T> get builtInList =>
-      controller.filterList(controller.repo.builtIn.listByType<T>().values.toList(), filterFn);
-  Iterable<T> get myList =>
-      controller.filterList(controller.repo.my.listByType<T>().values.toList(), filterFn);
+  Iterable<T> get builtInList => controller.filterList(
+      controller.repo.builtIn.listByType<T>().values.toList(), FiltersGroup.playbook, filterFn);
+  Iterable<T> get myList => controller.filterList(
+      controller.repo.my.listByType<T>().values.toList(), FiltersGroup.my, filterFn);
 
   bool get useFilters => filtersBuilder != null;
-  F get filters => controller.filters.value!;
+  F get playbookFilters => controller.filters[FiltersGroup.playbook]!;
+  F get myFilters => controller.filters[FiltersGroup.my]!;
 
   @override
   Widget build(BuildContext context) {
@@ -77,14 +80,16 @@ class AddRepositoryItemsView<T, F extends EntityFilters<T>>
                   controller: controller.tabController,
                   children: [
                     AddRepositoryItemCardList<T, F>(
+                      group: FiltersGroup.playbook,
                       useFilters: useFilters,
                       filtersBuilder: filtersBuilder,
-                      filters: filters,
+                      filters: playbookFilters,
                       children: builtInList.map(
                         (item) => _wrapWithSelection(context, item),
                       ),
                     ),
                     AddRepositoryItemCardList<T, F>(
+                      group: FiltersGroup.my,
                       onSave: (item) {
                         controller.toggle(item, true);
                         debugPrint('Saving $item');
@@ -94,7 +99,7 @@ class AddRepositoryItemsView<T, F extends EntityFilters<T>>
                       extraData: extraData,
                       useFilters: useFilters,
                       filtersBuilder: filtersBuilder,
-                      filters: filters,
+                      filters: myFilters,
                       children: myList.map(
                         (item) => _wrapWithSelection(context, item),
                       ),

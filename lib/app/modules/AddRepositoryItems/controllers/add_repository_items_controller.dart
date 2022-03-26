@@ -4,31 +4,41 @@ import 'package:dungeon_paper/app/model_utils/model_key.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
+enum FiltersGroup {
+  playbook,
+  my,
+  // online,
+}
+
 class AddRepositoryItemsController<T, F extends EntityFilters> extends GetxController
     with GetSingleTickerProviderStateMixin {
   final repo = Get.find<RepositoryService>();
   final chars = Get.find<CharacterService>();
   final selected = <T>[].obs;
-  final filters = Rx<F?>(null);
-  final search = TextEditingController();
+  final filters = <FiltersGroup, F?>{}.obs;
+  final search = <FiltersGroup, TextEditingController>{}.obs;
   late final TabController tabController;
 
   @override
   void onInit() {
     super.onInit();
-    filters.value = Get.arguments;
-    search.addListener(_updateSearch);
+    filters.addAll(Get.arguments);
+    search[FiltersGroup.playbook] ??= TextEditingController();
+    search[FiltersGroup.playbook]!.addListener(_updatePlaybookSearch);
+    search[FiltersGroup.my] ??= TextEditingController();
+    search[FiltersGroup.my]!.addListener(_updateMySearch);
     tabController = TabController(length: 3, vsync: this);
   }
 
   @override
   void dispose() {
-    search.removeListener(_updateSearch);
+    search[FiltersGroup.playbook]!.removeListener(_updatePlaybookSearch);
+    search[FiltersGroup.my]!.removeListener(_updateMySearch);
     super.dispose();
   }
 
-  void setFilters(F? filters) {
-    this.filters.value = filters;
+  void setFilters(FiltersGroup group, F? filters) {
+    this.filters[group] = filters;
     this.filters.refresh();
   }
 
@@ -49,15 +59,21 @@ class AddRepositoryItemsController<T, F extends EntityFilters> extends GetxContr
 
   Iterable<T> filterList(
     Iterable<T> list,
+    FiltersGroup group,
     bool Function(T item, F filters)? filterFn, [
     F? initialFilters,
   ]) =>
-      filterFn != null && (filters.value != null || initialFilters != null)
-          ? list.where((x) => filterFn(x, filters.value ?? initialFilters!))
+      filterFn != null && (filters[group] != null || initialFilters != null)
+          ? list.where((x) => filterFn(x, filters[group] ?? initialFilters!))
           : list;
 
-  void _updateSearch() {
-    filters.value?.setSearch(search.text);
+  void _updatePlaybookSearch() {
+    filters[FiltersGroup.playbook]?.setSearch(search[FiltersGroup.playbook]!.text);
+    selected.refresh();
+  }
+
+  void _updateMySearch() {
+    filters[FiltersGroup.my]?.setSearch(search[FiltersGroup.my]!.text);
     selected.refresh();
   }
 }

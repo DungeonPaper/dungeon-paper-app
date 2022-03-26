@@ -2,6 +2,7 @@ import 'package:dungeon_paper/app/data/models/meta.dart';
 import 'package:dungeon_paper/app/data/models/move.dart';
 import 'package:dungeon_paper/app/data/models/spell.dart';
 import 'package:dungeon_paper/app/modules/AddRepositoryItems/bindings/add_repository_items_binding.dart';
+import 'package:dungeon_paper/app/modules/AddRepositoryItems/controllers/add_repository_items_controller.dart';
 import 'package:dungeon_paper/app/modules/AddRepositoryItems/views/add_moves_view.dart';
 import 'package:dungeon_paper/app/modules/AddRepositoryItems/views/add_spells_view.dart';
 import 'package:dungeon_paper/app/modules/AddRepositoryItems/views/filters/move_filters.dart';
@@ -86,9 +87,14 @@ class CharacterMovesSpellsView extends GetView<CharacterMovesSpellsController> {
                     selections: controller.moves,
                   ),
                   binding: AddRepositoryItemsBinding(),
-                  arguments: MoveFilters(
-                    classKey: controller.ctrl.charClass.value!.key,
-                  ),
+                  arguments: {
+                    FiltersGroup.playbook: MoveFilters(
+                      classKey: controller.ctrl.charClass.value!.key,
+                    ),
+                    FiltersGroup.my: MoveFilters(
+                      classKey: controller.ctrl.charClass.value!.key,
+                    )
+                  },
                 ),
                 label: Text(S.current.addGeneric(S.current.entityPlural(Move))),
                 icon: const Icon(Icons.add),
@@ -142,7 +148,10 @@ class CharacterMovesSpellsView extends GetView<CharacterMovesSpellsController> {
                     selections: controller.spells,
                   ),
                   binding: AddRepositoryItemsBinding(),
-                  arguments: SpellFilters(),
+                  arguments: {
+                    FiltersGroup.playbook: SpellFilters(),
+                    FiltersGroup.my: SpellFilters()
+                  },
                 ),
                 label: Text(S.current.addGeneric(S.current.entityPlural(Spell))),
                 icon: const Icon(Icons.add),

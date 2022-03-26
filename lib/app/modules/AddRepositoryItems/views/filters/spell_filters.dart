@@ -11,12 +11,14 @@ import 'package:get/get.dart';
 class SpellFiltersView extends StatelessWidget {
   SpellFiltersView({
     Key? key,
+    required this.group,
     required this.filters,
     required this.onChange,
     required this.searchController,
   }) : super(key: key);
 
   final SpellFilters filters;
+  final FiltersGroup group;
   final repo = Get.find<RepositoryService>();
   final void Function(SpellFilters) onChange;
   final TextEditingController searchController;

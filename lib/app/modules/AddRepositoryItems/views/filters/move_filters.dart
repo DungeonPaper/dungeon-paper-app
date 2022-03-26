@@ -13,11 +13,13 @@ class MoveFiltersView extends StatelessWidget {
   MoveFiltersView({
     Key? key,
     required this.filters,
+    required this.group,
     required this.onChange,
     required this.searchController,
   }) : super(key: key);
 
   final MoveFilters filters;
+  final FiltersGroup group;
   final repo = Get.find<RepositoryService>();
   final void Function(MoveFilters) onChange;
   final TextEditingController searchController;
@@ -73,7 +75,9 @@ class MoveFiltersView extends StatelessWidget {
                     ),
                   ),
                 ],
-                onChanged: (key) => onChange(filters..classKey = key),
+                onChanged: (key) {
+                  onChange(filters..classKey = key);
+                },
               ),
             ),
           ],

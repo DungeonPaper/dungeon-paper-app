@@ -26,10 +26,10 @@ class AddItemsView extends GetView<AddRepositoryItemsController<Item, ItemFilter
       storageKey: 'Items',
       title: Text(S.current.addGeneric(S.current.entityPlural(Item))),
       filterFn: (item, filters) => filters.filter(item),
-      filtersBuilder: (filters, update) => ItemFiltersView(
+      filtersBuilder: (group, filters, onChange) => ItemFiltersView(
         filters: filters,
-        onChange: controller.setFilters,
-        searchController: controller.search,
+        onChange: (f) => onChange(group, f),
+        searchController: controller.search[group]!,
       ),
       cardBuilder: (ctx, item, {required onSelect, required selected, required selectable}) =>
           ItemCard(
