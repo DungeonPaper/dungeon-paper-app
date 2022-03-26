@@ -9,8 +9,8 @@ class ExpandedCardDialogView extends GetView {
     required this.heroTag,
   }) : super(key: key);
 
-  final Widget Function() builder;
-  final String heroTag;
+  final Widget Function(BuildContext context) builder;
+  final String? heroTag;
 
   @override
   Widget build(BuildContext context) {
@@ -18,16 +18,18 @@ class ExpandedCardDialogView extends GetView {
       child: GestureDetector(
         onTap: () => Get.back(),
         child: Container(
-          color: Colors.black.withOpacity(0.75),
+          // color: Colors.black.withOpacity(0.75),
           padding: const EdgeInsets.all(32),
           child: Center(
-            child: Hero(
-              tag: heroTag,
-              child: Material(
-                type: MaterialType.transparency,
-                child: builder(),
-              ),
-            ),
+            child: heroTag != null
+                ? Hero(
+                    tag: heroTag!,
+                    child: Material(
+                      type: MaterialType.transparency,
+                      child: builder(context),
+                    ),
+                  )
+                : builder(context),
           ),
         ),
       ),

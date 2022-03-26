@@ -15,6 +15,8 @@ class ItemCard extends StatelessWidget {
     this.initiallyExpanded,
     this.actions = const [],
     this.expansionKey,
+    this.maxContentHeight,
+    this.expandable = true,
   }) : super(key: key);
 
   final Item item;
@@ -24,6 +26,8 @@ class ItemCard extends StatelessWidget {
   final void Function(Item item)? onSave;
   final Iterable<Widget> actions;
   final PageStorageKey? expansionKey;
+  final double? maxContentHeight;
+  final bool expandable;
 
   @override
   Widget build(BuildContext context) {
@@ -31,6 +35,8 @@ class ItemCard extends StatelessWidget {
       initiallyExpanded: initiallyExpanded,
       title: item.name,
       description: item.description,
+      maxContentHeight: maxContentHeight,
+      expandable: expandable,
       explanation: '',
       chips: item.tags.map((t) => TagChip(tag: t)),
       dice: const [],

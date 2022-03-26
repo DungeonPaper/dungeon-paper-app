@@ -15,6 +15,8 @@ class SpellCard extends StatelessWidget {
     this.initiallyExpanded,
     this.actions = const [],
     this.expansionKey,
+    this.maxContentHeight,
+    this.expandable = true,
   }) : super(key: key);
 
   final Spell spell;
@@ -25,6 +27,8 @@ class SpellCard extends StatelessWidget {
   final void Function(Spell spell)? onSave;
   final Iterable<Widget> actions;
   final PageStorageKey? expansionKey;
+  final double? maxContentHeight;
+  final bool expandable;
 
   @override
   Widget build(BuildContext context) {
@@ -32,6 +36,8 @@ class SpellCard extends StatelessWidget {
       title: spell.name,
       description: spell.description,
       explanation: spell.explanation,
+      maxContentHeight: maxContentHeight,
+      expandable: expandable,
       chips: const [],
       dice: showDice ? spell.dice : [],
       icon: showIcon ? SvgIcon(spell.icon, size: 16) : null,

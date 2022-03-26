@@ -32,6 +32,7 @@ class HomeCharacterDynamicCards extends GetView<CharacterService> {
       final spells = (controller.current?.spells ?? <Spell>[]).where((m) => m.prepared);
       final items = (controller.current?.items ?? <Item>[]).where((m) => m.equipped);
       final notes = (controller.current?.notes ?? <Note>[]).where((n) => n.favorited);
+      final maxContentHeight = MediaQuery.of(context).size.height - 250;
 
       return Column(
           mainAxisSize: MainAxisSize.min,
@@ -45,14 +46,16 @@ class HomeCharacterDynamicCards extends GetView<CharacterService> {
             _HorizontalCardListView<Move>(
               cardSize: cardSize,
               items: moves,
-              cardBuilder: (move, _, onTap) => MoveCardMini(
+              cardBuilder: (context, move, _, onTap) => MoveCardMini(
                 move: move,
                 onTap: onTap,
                 onSave: (_move) => controller.updateCharacter(
                   CharacterUtils.updateMoves(controller.current!, [_move]),
                 ),
               ),
-              expandedCardBuilder: (move, _) => MoveCard(
+              expandedCardBuilder: (context, move, _) => MoveCard(
+                maxContentHeight: maxContentHeight,
+                expandable: false,
                 initiallyExpanded: true,
                 move: move,
                 actions: [
@@ -80,14 +83,16 @@ class HomeCharacterDynamicCards extends GetView<CharacterService> {
             _HorizontalCardListView<Spell>(
               cardSize: cardSize,
               items: spells,
-              cardBuilder: (spell, _, onTap) => SpellCardMini(
+              cardBuilder: (context, spell, _, onTap) => SpellCardMini(
                 spell: spell,
                 onSave: (_spell) => controller.updateCharacter(
                   CharacterUtils.updateSpells(controller.current!, [_spell]),
                 ),
                 onTap: onTap,
               ),
-              expandedCardBuilder: (spell, _) => SpellCard(
+              expandedCardBuilder: (context, spell, _) => SpellCard(
+                maxContentHeight: maxContentHeight,
+                expandable: false,
                 initiallyExpanded: true,
                 spell: spell,
                 actions: [
@@ -115,14 +120,16 @@ class HomeCharacterDynamicCards extends GetView<CharacterService> {
             _HorizontalCardListView<Item>(
               cardSize: cardSize,
               items: items,
-              cardBuilder: (item, _, onTap) => ItemCardMini(
+              cardBuilder: (context, item, _, onTap) => ItemCardMini(
                 item: item,
                 onTap: onTap,
                 onSave: (_item) => controller.updateCharacter(
                   CharacterUtils.updateItems(controller.current!, [_item]),
                 ),
               ),
-              expandedCardBuilder: (item, _) => ItemCard(
+              expandedCardBuilder: (context, item, _) => ItemCard(
+                maxContentHeight: maxContentHeight,
+                expandable: false,
                 initiallyExpanded: true,
                 item: item,
                 actions: [
@@ -150,14 +157,16 @@ class HomeCharacterDynamicCards extends GetView<CharacterService> {
             _HorizontalCardListView<Note>(
               cardSize: cardSize,
               items: notes,
-              cardBuilder: (note, _, onTap) => NoteCardMini(
+              cardBuilder: (context, note, _, onTap) => NoteCardMini(
                 note: note,
                 onTap: onTap,
                 onSave: (_note) => controller.updateCharacter(
                   CharacterUtils.updateNotes(controller.current!, [_note]),
                 ),
               ),
-              expandedCardBuilder: (note, _) => NoteCard(
+              expandedCardBuilder: (context, note, _) => NoteCard(
+                maxContentHeight: maxContentHeight,
+                expandable: false,
                 initiallyExpanded: true,
                 note: note,
                 actions: [
@@ -190,8 +199,8 @@ class _HorizontalCardListView<T> extends StatelessWidget {
   }) : super(key: key);
 
   final Size cardSize;
-  final Widget Function(T item, int index, void Function() onTap) cardBuilder;
-  final Widget Function(T item, int index) expandedCardBuilder;
+  final Widget Function(BuildContext context, T item, int index, void Function() onTap) cardBuilder;
+  final Widget Function(BuildContext context, T item, int index) expandedCardBuilder;
   final Iterable<T> items;
 
   @override
@@ -217,15 +226,18 @@ class _HorizontalCardListView<T> extends StatelessWidget {
                 child: Hero(
                   tag: getKeyFor(item.value),
                   child: cardBuilder(
+                    context,
                     item.value,
                     item.index,
-                    () => Get.to(
-                      () => ExpandedCardDialogView(
-                        heroTag: getKeyFor(item.value),
-                        builder: () => expandedCardBuilder(item.value, item.index),
+                    () => Get.dialog(
+                      ExpandedCardDialogView(
+                        // heroTag: getKeyFor(item.value),
+                        heroTag: null,
+                        builder: (context) => expandedCardBuilder(context, item.value, item.index),
                       ),
-                      opaque: false,
-                      transition: Transition.fadeIn,
+                      // opaque: false,
+                      // transition: Transition.downToUp,
+                      // duration: Duration(milliseconds: 500),
                     ),
                   ),
                 ),

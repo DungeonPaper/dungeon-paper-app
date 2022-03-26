@@ -18,6 +18,8 @@ class MoveCard extends StatelessWidget {
     this.initiallyExpanded,
     this.actions = const [],
     this.expansionKey,
+    this.maxContentHeight,
+    this.expandable = true,
   }) : super(key: key);
 
   final Move move;
@@ -28,6 +30,8 @@ class MoveCard extends StatelessWidget {
   final bool? initiallyExpanded;
   final Iterable<Widget> actions;
   final PageStorageKey? expansionKey;
+  final double? maxContentHeight;
+  final bool expandable;
 
   @override
   Widget build(BuildContext context) {
@@ -35,6 +39,8 @@ class MoveCard extends StatelessWidget {
       title: move.name,
       description: move.description,
       explanation: move.explanation,
+      maxContentHeight: maxContentHeight,
+      expandable: expandable,
       expansionKey: expansionKey ?? PageStorageKey(move.key),
       chips: TagUtils.excludeMetaTags(move.tags).map((t) => TagChip(tag: t)),
       dice: showDice ? move.dice : [],

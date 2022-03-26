@@ -42,6 +42,7 @@ class CustomExpansionTile extends StatefulWidget {
   /// be non-null.
   const CustomExpansionTile({
     Key? key,
+    this.expandable = true,
     this.leading,
     required this.title,
     this.subtitle,
@@ -73,6 +74,9 @@ class CustomExpansionTile extends StatefulWidget {
           'are aligned in a column, not a row. Try to use another constant.',
         ),
         super(key: key);
+
+  /// CUSTOM - is expansion even enabled?
+  final bool expandable;
 
   /// A widget to display before the title.
   ///
@@ -291,12 +295,14 @@ class _CustomExpansionTileState extends State<CustomExpansionTile>
   }
 
   Widget? _buildLeadingIcon(BuildContext context) {
-    if (_effectiveAffinity(widget.controlAffinity) != ListTileControlAffinity.leading) return null;
+    if (!widget.expandable ||
+        _effectiveAffinity(widget.controlAffinity) != ListTileControlAffinity.leading) return null;
     return _buildIcon(context);
   }
 
   Widget? _buildTrailingIcon(BuildContext context) {
-    if (_effectiveAffinity(widget.controlAffinity) != ListTileControlAffinity.trailing) return null;
+    if (!widget.expandable ||
+        _effectiveAffinity(widget.controlAffinity) != ListTileControlAffinity.trailing) return null;
     return _buildIcon(context);
   }
 
@@ -318,7 +324,7 @@ class _CustomExpansionTileState extends State<CustomExpansionTile>
             iconColor: _iconColor.value,
             textColor: _headerColor.value,
             child: ListTile(
-              onTap: _handleTap,
+              onTap: widget.expandable ? _handleTap : null,
               contentPadding: widget.tilePadding,
               leading: widget.leading ?? _buildLeadingIcon(context),
               title: widget.title,

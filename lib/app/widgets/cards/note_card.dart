@@ -14,6 +14,8 @@ class NoteCard extends StatelessWidget {
     this.initiallyExpanded,
     this.actions = const [],
     this.expansionKey,
+    this.maxContentHeight,
+    this.expandable = true,
   }) : super(key: key);
 
   final Note note;
@@ -23,6 +25,8 @@ class NoteCard extends StatelessWidget {
   final void Function(Note note)? onSave;
   final Iterable<Widget> actions;
   final PageStorageKey? expansionKey;
+  final double? maxContentHeight;
+  final bool expandable;
 
   @override
   Widget build(BuildContext context) {
@@ -31,6 +35,8 @@ class NoteCard extends StatelessWidget {
       title: note.title,
       description: note.description,
       explanation: '',
+      maxContentHeight: maxContentHeight,
+      expandable: expandable,
       chips: note.tags.map((t) => TagChip(tag: t)),
       dice: const [],
       icon: showIcon ? Icon(note.icon, size: 16) : null,
