@@ -8,7 +8,7 @@ import '../../../core/utils/uuid.dart';
 import '../../widgets/atoms/svg_icon.dart';
 import 'meta.dart';
 
-class Move extends dw.Move {
+class Move extends dw.Move implements WithMeta {
   Move({
     required Meta meta,
     required String key,

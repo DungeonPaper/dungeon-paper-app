@@ -5,6 +5,7 @@ import 'package:dungeon_paper/app/data/models/spell.dart';
 import 'package:dungeon_paper/app/data/services/character_service.dart';
 import 'package:dungeon_paper/app/model_utils/character_utils.dart';
 import 'package:dungeon_paper/app/modules/AddRepositoryItems/bindings/add_repository_items_binding.dart';
+import 'package:dungeon_paper/app/modules/AddRepositoryItems/bindings/repository_item_form_binding.dart';
 import 'package:dungeon_paper/app/modules/AddRepositoryItems/controllers/add_repository_items_controller.dart';
 import 'package:dungeon_paper/app/modules/AddRepositoryItems/views/add_items_view.dart';
 import 'package:dungeon_paper/app/modules/AddRepositoryItems/views/add_moves_view.dart';
@@ -17,6 +18,7 @@ import 'package:dungeon_paper/app/widgets/atoms/expansion_row.dart';
 import 'package:dungeon_paper/app/widgets/cards/item_card.dart';
 import 'package:dungeon_paper/app/widgets/cards/move_card.dart';
 import 'package:dungeon_paper/app/widgets/cards/spell_card.dart';
+import 'package:dungeon_paper/app/widgets/forms/repository_item_form.dart';
 import 'package:dungeon_paper/app/widgets/menus/entity_edit_menu.dart';
 import 'package:dungeon_paper/core/utils/list_utils.dart';
 import 'package:dungeon_paper/generated/l10n.dart';
@@ -73,7 +75,18 @@ class HomeCharacterActionsView extends GetView<CharacterService> {
                         actions: [
                           EntityEditMenu(
                             onDelete: confirmDelete(context, move, move.name),
-                            onEdit: () => null,
+                            onEdit: () => Get.to(
+                              () => RepositoryItemForm<Move>(
+                                onSave: (_move) => controller.updateCharacter(
+                                  char.copyWith(
+                                    moves: updateByKey(char.moves, [_move]),
+                                  ),
+                                ),
+                                type: ItemFormType.create,
+                              ),
+                              arguments: move,
+                              binding: RepositoryItemFormBinding(),
+                            ),
                           ),
                         ],
                         onSave: (_move) => controller.updateCharacter(

@@ -1,3 +1,4 @@
+import 'package:dungeon_paper/app/data/models/meta.dart';
 import 'package:dungeon_paper/app/data/models/move.dart';
 import 'package:dungeon_paper/app/widgets/forms/dynamic_form/dynamic_form.dart';
 import 'package:dungeon_paper/app/widgets/forms/dynamic_form/form_input_data.dart';
@@ -44,6 +45,14 @@ class AddMoveForm extends GetView<AddMoveFormController> {
 class AddMoveFormController extends DynamicFormController<Move> {
   @override
   void onInit() {
+    if (Get.arguments.runtimeType == Move) {
+      final move = Get.arguments as Move;
+      entity.value = move.copyWithInherited(
+        meta: move.meta.copyWith(
+          sharing: MetaSharing.createFork(move.key, move.meta.sharing, outOfSync: true),
+        ),
+      );
+    }
     createInputs();
     super.onInit();
   }

@@ -6,7 +6,7 @@ import '../../../core/dw_icons.dart';
 import '../../widgets/atoms/svg_icon.dart';
 import 'meta.dart';
 
-class Spell extends dw.Spell {
+class Spell extends dw.Spell implements WithMeta {
   Spell({
     required Meta meta,
     required String key,

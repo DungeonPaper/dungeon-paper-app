@@ -1,3 +1,4 @@
+import 'package:dungeon_paper/app/data/models/meta.dart';
 import 'package:dungeon_paper/app/modules/AddRepositoryItems/bindings/repository_item_form_binding.dart';
 import 'package:dungeon_paper/app/modules/AddRepositoryItems/controllers/add_repository_items_controller.dart';
 import 'package:dungeon_paper/app/themes/button_themes.dart';
@@ -6,7 +7,7 @@ import 'package:dungeon_paper/generated/l10n.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-class AddRepositoryItemCardList<T, F extends EntityFilters>
+class AddRepositoryItemCardList<T extends WithMeta, F extends EntityFilters>
     extends GetView<AddRepositoryItemsController<T, F>> {
   const AddRepositoryItemCardList({
     Key? key,
@@ -47,7 +48,11 @@ class AddRepositoryItemCardList<T, F extends EntityFilters>
                   child: ElevatedButton.icon(
                     style: ButtonThemes.primaryElevated(context),
                     onPressed: () => Get.to(
-                      () => RepositoryItemForm<T>(onSave: onSave!, extraData: extraData),
+                      () => RepositoryItemForm<T>(
+                        onSave: onSave!,
+                        extraData: extraData,
+                        type: ItemFormType.create,
+                      ),
                       binding: RepositoryItemFormBinding(),
                     ),
                     label: Text(S.current.createGeneric(S.current.entity(T))),

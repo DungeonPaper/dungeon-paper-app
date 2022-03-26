@@ -21,7 +21,7 @@ import 'race.dart';
 import 'roll_stats.dart';
 import 'spell.dart';
 
-class Character {
+class Character implements WithMeta {
   Character({
     required this.meta,
     required this.key,

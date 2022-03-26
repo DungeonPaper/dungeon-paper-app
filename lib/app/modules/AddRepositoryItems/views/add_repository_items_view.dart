@@ -1,3 +1,4 @@
+import 'package:dungeon_paper/app/data/models/meta.dart';
 import 'package:dungeon_paper/app/model_utils/model_json.dart';
 import 'package:dungeon_paper/app/model_utils/model_key.dart';
 import 'package:dungeon_paper/app/modules/AddRepositoryItems/bindings/repository_item_form_binding.dart';
@@ -23,7 +24,7 @@ typedef CardBuilder<T> = Widget Function(
   required void Function()? onToggle,
 });
 
-class AddRepositoryItemsView<T, F extends EntityFilters<T>>
+class AddRepositoryItemsView<T extends WithMeta, F extends EntityFilters<T>>
     extends GetView<AddRepositoryItemsController<T, F>> {
   AddRepositoryItemsView({
     Key? key,

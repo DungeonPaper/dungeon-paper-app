@@ -7,7 +7,7 @@ import 'package:flutter/material.dart';
 import 'item_settings.dart';
 import 'meta.dart';
 
-class Item extends dw.Item {
+class Item extends dw.Item implements WithMeta {
   Item({
     required Meta meta,
     this.amount = 1,

@@ -115,10 +115,23 @@ class MetaSharing {
     );
   }
 
+  factory MetaSharing.createFork(String originalKey, MetaSharing? meta, {bool? outOfSync}) {
+    final _m = meta ?? MetaSharing();
+    return _m.copyWith(
+      originalKey: _m.originalKey ?? originalKey,
+      outOfSync: outOfSync,
+      // TODO created by
+    );
+  }
+
   Map<String, dynamic> toJson() => {
         'shared': shared,
         'outOfSync': outOfSync,
         'originalKey': originalKey,
         'createdBy': createdBy,
       };
+}
+
+abstract class WithMeta {
+  abstract final Meta meta;
 }
