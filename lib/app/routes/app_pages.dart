@@ -47,7 +47,7 @@ class AppPages {
           CharacterUtils.updateMoves(characterService.current!, moves),
         ),
         selections: characterService.current!.moves,
-        classKey: characterService.current!.characterClass.key,
+        classKeys: [characterService.current!.characterClass.key],
       ),
       binding: AddRepositoryItemsBinding(),
     ),

@@ -54,7 +54,7 @@ class HomeCharacterActionsView extends GetView<CharacterService> {
                         ),
                       ),
                       selections: char.moves,
-                      classKey: controller.current!.characterClass.key,
+                      classKeys: [controller.current!.characterClass.key],
                     ),
                     binding: AddRepositoryItemsBinding(),
                     arguments: {
@@ -84,8 +84,7 @@ class HomeCharacterActionsView extends GetView<CharacterService> {
                                 ),
                                 type: ItemFormType.create,
                               ),
-                              arguments: move,
-                              binding: RepositoryItemFormBinding(),
+                              binding: RepositoryItemFormBinding(item: move),
                             ),
                           ),
                         ],

@@ -2,6 +2,7 @@ import 'package:dungeon_paper/app/data/models/meta.dart';
 import 'package:dungeon_paper/app/data/models/move.dart';
 import 'package:dungeon_paper/app/data/models/spell.dart';
 import 'package:dungeon_paper/app/widgets/forms/add_move_form.dart';
+import 'package:dungeon_paper/core/utils/list_utils.dart';
 import 'package:dungeon_paper/core/utils/uuid.dart';
 import 'package:dungeon_paper/generated/l10n.dart';
 import 'package:flutter/material.dart';
@@ -96,7 +97,7 @@ class _RepositoryItemFormState<T extends WithMeta> extends State<RepositoryItemF
   Widget buildForm(BuildContext context) {
     switch (T) {
       case Move:
-        return AddMoveForm(onChange: setEntity, classKey: widget.extraData['classKey'] ?? '');
+        return AddMoveForm(onChange: setEntity, classKey: asList(widget.extraData['classKeys']));
       default:
         throw UnsupportedError('Unsupported type: $T');
     }

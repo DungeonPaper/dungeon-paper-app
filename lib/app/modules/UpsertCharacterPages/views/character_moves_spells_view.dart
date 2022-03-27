@@ -83,7 +83,7 @@ class CharacterMovesSpellsView extends GetView<CharacterMovesSpellsController> {
                       );
                       updateControllers();
                     },
-                    classKey: controller.ctrl.charClass.value!.key,
+                    classKeys: [controller.ctrl.charClass.value!.key],
                     selections: controller.moves,
                   ),
                   binding: AddRepositoryItemsBinding(),

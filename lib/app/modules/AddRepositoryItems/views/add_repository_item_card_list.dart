@@ -1,4 +1,5 @@
 import 'package:dungeon_paper/app/data/models/meta.dart';
+import 'package:dungeon_paper/app/data/models/move.dart';
 import 'package:dungeon_paper/app/modules/AddRepositoryItems/bindings/repository_item_form_binding.dart';
 import 'package:dungeon_paper/app/modules/AddRepositoryItems/controllers/add_repository_items_controller.dart';
 import 'package:dungeon_paper/app/themes/button_themes.dart';
@@ -53,7 +54,7 @@ class AddRepositoryItemCardList<T extends WithMeta, F extends EntityFilters>
                         extraData: extraData,
                         type: ItemFormType.create,
                       ),
-                      binding: RepositoryItemFormBinding(),
+                      binding: RepositoryItemFormBinding(item: _createEmpty()),
                     ),
                     label: Text(S.current.createGeneric(S.current.entity(T))),
                     icon: const Icon(Icons.add),
@@ -73,5 +74,16 @@ class AddRepositoryItemCardList<T extends WithMeta, F extends EntityFilters>
         ),
       ],
     );
+  }
+
+  T _createEmpty() {
+    switch (T) {
+      case Move:
+        return Move.empty().copyWithInherited(
+          classKeys: extraData['classKeys'],
+        ) as T;
+      default:
+        throw UnsupportedError('createEmpty: Type $T is not supported');
+    }
   }
 }

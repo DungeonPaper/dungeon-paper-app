@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:dungeon_paper/app/data/services/repository_service.dart';
 import 'package:dungeon_paper/core/utils/streams.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -73,6 +74,8 @@ class _DynamicFormState extends State<DynamicForm> {
 }
 
 abstract class DynamicFormController<T> extends GetxController {
+  final repo = Get.find<RepositoryService>();
+
   abstract final Rx<T> entity;
   T setData(Map<String, dynamic> data);
   abstract final List<FormInputData> inputs;

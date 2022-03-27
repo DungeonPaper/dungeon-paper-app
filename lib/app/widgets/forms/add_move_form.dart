@@ -14,26 +14,28 @@ class AddMoveForm extends GetView<AddMoveFormController> {
   }) : super(key: key);
 
   final void Function(Move move) onChange;
-  final String classKey;
+  final List<String> classKey;
 
   @override
   Widget build(BuildContext context) {
     return DynamicForm(
       inputs: controller.inputs,
-      onChange: (d) => onChange(controller.setData(d, [classKey])),
+      onChange: (d) => onChange(controller.setData(d)),
       builder: (context, inputs) {
         return ListView(
           padding: const EdgeInsets.symmetric(horizontal: 8).copyWith(bottom: 8),
           children: [
+            Expanded(child: inputs[0], flex: 2),
+            const SizedBox(height: 8),
             Row(
               children: [
-                Expanded(child: inputs[0], flex: 2),
-                const SizedBox(width: 16),
-                inputs[1],
+                Expanded(child: inputs[1]),
+                const SizedBox(width: 8),
+                Expanded(child: inputs[2]),
               ],
             ),
             const SizedBox(height: 8),
-            for (final input in inputs.sublist(2))
+            for (final input in inputs.sublist(3))
               Padding(padding: const EdgeInsets.only(bottom: 8), child: input),
           ],
         );
@@ -43,15 +45,26 @@ class AddMoveForm extends GetView<AddMoveFormController> {
 }
 
 class AddMoveFormController extends DynamicFormController<Move> {
+  AddMoveFormController({required this.move});
+
+  final Move? move;
+
   @override
   void onInit() {
-    if (Get.arguments.runtimeType == Move) {
-      final move = Get.arguments as Move;
-      entity.value = move.copyWithInherited(
-        meta: move.meta.copyWith(
-          sharing: MetaSharing.createFork(move.key, move.meta.sharing, outOfSync: true),
+    if (move != null) {
+      entity.value = move!.copyWithInherited(
+        meta: move!.meta.copyWith(
+          sharing: MetaSharing.createFork(move!.key, move!.meta.sharing, outOfSync: false),
         ),
       );
+      setData({
+        'name': move!.name,
+        'category': move!.category,
+        'description': move!.description,
+        'explanation': move!.explanation,
+        'tags': move!.tags,
+        'classKeys': move!.classKeys,
+      });
     }
     createInputs();
     super.onInit();
@@ -61,16 +74,17 @@ class AddMoveFormController extends DynamicFormController<Move> {
   final entity = Move.empty().obs;
 
   @override
-  Move setData(Map<String, dynamic> data, [Iterable<String>? classKeys]) {
+  Move setData(Map<String, dynamic> data) {
     entity.value = entity.value.copyWithInherited(
+      meta: entity.value.meta.copyWith(
+        sharing: MetaSharing.createFork(move!.key, move!.meta.sharing, outOfSync: true),
+      ),
       name: data['name'],
       category: data['category'],
       description: data['description'],
       explanation: data['explanation'],
       tags: data['tags'],
-      classKeys: [
-        ...<String>{...entity.value.classKeys, ...(classKeys ?? [])}
-      ],
+      classKeys: data['classKeys'] is List ? data['classKeys'] : [data['classKeys']],
     );
 
     return entity.value;
@@ -98,6 +112,20 @@ class AddMoveFormController extends DynamicFormController<Move> {
             (cat) => DropdownMenuItem(
               child: Text(S.current.moveCategoryWithLevelShort(cat.name)),
               value: cat,
+            ),
+          ),
+        ),
+      ),
+      FormInputData(
+        name: 'classKeys',
+        data: FormDropdownInputData(
+          isExpanded: true,
+          value: entity.value.classKeys.isNotEmpty ? entity.value.classKeys[0] : null,
+          label: const Text('Class'),
+          items: {...repo.builtIn.classes.values, ...repo.my.classes.values}.map(
+            (cls) => DropdownMenuItem(
+              child: Text(cls.name),
+              value: cls.key,
             ),
           ),
         ),
