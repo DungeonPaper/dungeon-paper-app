@@ -13,23 +13,28 @@ class UserMenu extends StatelessWidget {
   Widget build(BuildContext context) {
     return Material(
       color: Colors.transparent,
-      child: Hero(
-        tag: 'userMenu',
-        child: Material(
-          color: Colors.transparent,
-          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(28)),
-          clipBehavior: Clip.antiAlias,
-          child: InkWell(
-            onTap: () => Get.to(
-              () => const UserMenuPopover(),
-              opaque: false,
-              transition: Transition.fadeIn,
-            ),
-            child: const Padding(
-              padding: EdgeInsets.symmetric(horizontal: 8),
-              child: UserAvatar(size: 40),
-            ),
-          ),
+      // child: Hero(
+      //   tag: 'userMenu',
+      //   child: _buildChild(),
+      // ),
+      child: _buildChild(),
+    );
+  }
+
+  Material _buildChild() {
+    return Material(
+      color: Colors.transparent,
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(28)),
+      clipBehavior: Clip.antiAlias,
+      child: InkWell(
+        onTap: () => Get.dialog(
+          const UserMenuPopover(),
+          // opaque: false,
+          // transition: Transition.fadeIn,
+        ),
+        child: const Padding(
+          padding: EdgeInsets.symmetric(horizontal: 8),
+          child: UserAvatar(size: 40),
         ),
       ),
     );

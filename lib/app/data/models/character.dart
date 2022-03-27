@@ -41,6 +41,7 @@ class Character implements WithMeta {
     required this.race,
   });
 
+  @override
   final Meta<CharacterMeta> meta;
   final String key;
   final String displayName;

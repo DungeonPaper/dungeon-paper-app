@@ -1,27 +1,31 @@
 part of 'form_input_data.dart';
 
-class FormTagsInputData extends BaseInputData {
+class FormTagsInputData extends BaseInputData<List<dw.Tag>> {
   FormTagsInputData({
-    required this.value,
+    required List<dw.Tag> value,
   }) {
-    init();
+    init(value);
   }
 
   @override
-  final List<dw.Tag> value;
+  List<dw.Tag> get value => controller.value;
 
   late final ValueNotifier<List<dw.Tag>> controller;
   late final ValueNotifierStream<List<dw.Tag>> stream;
   late final StreamSubscription subscription;
 
-  void init() {
+  void init(List<dw.Tag> value) {
     controller = ValueNotifier(value);
     stream = ValueNotifierStream<List<dw.Tag>>(controller);
   }
 
   @override
-  StreamSubscription listen(void Function(dynamic event)? onData,
-          {Function? onError, void Function()? onDone, bool? cancelOnError}) =>
+  StreamSubscription<List<dw.Tag>> listen(
+    void Function(List<dw.Tag> event)? onData, {
+    Function? onError,
+    void Function()? onDone,
+    bool? cancelOnError,
+  }) =>
       stream.listen(onData, onError: onError, onDone: onDone, cancelOnError: cancelOnError);
 
   @override
@@ -32,9 +36,33 @@ class FormTagsInputData extends BaseInputData {
   @override
   Widget build(BuildContext context) {
     return Wrap(
+      spacing: 8,
       children: [
-        for (final tag in value) TagChip(tag: tag),
-        TagChip(tag: dw.Tag(name: S.current.createGeneric(dw.Tag), value: null)),
+        for (final tag in TagUtils.excludeMetaTags(value))
+          TagChip(
+            tag: tag,
+            onPressed: () => Get.dialog(
+              AddTagDialog(
+                tag: tag,
+                onSave: (tag) {
+                  controller.value = updateByKey(controller.value, [tag]);
+                },
+              ),
+            ),
+            onDeleted: () => controller.value = removeByKey(controller.value, [tag]),
+          ),
+        TagChip(
+          tag: dw.Tag(name: S.current.addGeneric(dw.Tag), value: null),
+          icon: const Icon(Icons.add),
+          backgroundColor: Theme.of(context).primaryColor,
+          onPressed: () => Get.dialog(
+            AddTagDialog(
+              onSave: (tag) {
+                controller.value = [...controller.value, tag];
+              },
+            ),
+          ),
+        ),
       ],
     );
   }

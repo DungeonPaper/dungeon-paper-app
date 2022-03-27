@@ -52,7 +52,7 @@ class MoveCard extends StatelessWidget {
       actions: actions,
       leading: [
         MoveCategoryChip(category: move.category),
-        ...TagUtils.excludeMetaTags(move.tags).map((t) => TagChip(tag: t)),
+        // ...TagUtils.excludeMetaTags(move.tags).map((t) => TagChip(tag: t)),
       ],
     );
   }

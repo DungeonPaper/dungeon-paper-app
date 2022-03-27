@@ -116,5 +116,9 @@
   "addRepoItemTabPlaybook": "Playbook",
   "addRepoItemTabOnline": "Online",
   "noDescription": "‹No description provided›",
-  "explanation": "Further details"
+  "explanation": "Further details",
+  "genericNameField": "{entity} name",
+  "genericDescriptionField": "{entity} description",
+  "genericValueField": "{entity} value",
+  "tagCopyFrom": "Copy from: {tag}"
 }

@@ -1001,6 +1001,46 @@ class S {
       args: [],
     );
   }
+
+  /// `{entity} name`
+  String genericNameField(Object entity) {
+    return Intl.message(
+      '$entity name',
+      name: 'genericNameField',
+      desc: '',
+      args: [entity],
+    );
+  }
+
+  /// `{entity} description`
+  String genericDescriptionField(Object entity) {
+    return Intl.message(
+      '$entity description',
+      name: 'genericDescriptionField',
+      desc: '',
+      args: [entity],
+    );
+  }
+
+  /// `{entity} value`
+  String genericValueField(Object entity) {
+    return Intl.message(
+      '$entity value',
+      name: 'genericValueField',
+      desc: '',
+      args: [entity],
+    );
+  }
+
+  /// `Copy from: {tag}`
+  String tagCopyFrom(Object tag) {
+    return Intl.message(
+      'Copy from: $tag',
+      name: 'tagCopyFrom',
+      desc: '',
+      args: [tag],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

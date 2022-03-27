@@ -67,6 +67,7 @@ class AddMoveFormController extends DynamicFormController<Move> {
       category: data['category'],
       description: data['description'],
       explanation: data['explanation'],
+      tags: data['tags'],
       classKeys: [
         ...<String>{...entity.value.classKeys, ...(classKeys ?? [])}
       ],
