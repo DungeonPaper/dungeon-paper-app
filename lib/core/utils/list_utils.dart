@@ -82,4 +82,8 @@ List<T> removeByKey<T>(List<T> list, Iterable<T> items, {dynamic Function(T item
   return [...list]..removeWhere((x) => keys.contains(keyGetter(x)));
 }
 
-List<T> asList<T>(dynamic item) => item is List ? item.cast<T>() : <T>[item];
+List<T> asList<T>(dynamic item) => item == null
+    ? []
+    : item is List
+        ? item.cast<T>()
+        : <T>[item];

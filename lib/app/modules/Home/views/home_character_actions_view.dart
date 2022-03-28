@@ -18,6 +18,7 @@ import 'package:dungeon_paper/app/widgets/atoms/expansion_row.dart';
 import 'package:dungeon_paper/app/widgets/cards/item_card.dart';
 import 'package:dungeon_paper/app/widgets/cards/move_card.dart';
 import 'package:dungeon_paper/app/widgets/cards/spell_card.dart';
+import 'package:dungeon_paper/app/widgets/dialogs/confirm_delete_dialog.dart';
 import 'package:dungeon_paper/app/widgets/forms/repository_item_form.dart';
 import 'package:dungeon_paper/app/widgets/menus/entity_edit_menu.dart';
 import 'package:dungeon_paper/core/utils/list_utils.dart';
@@ -74,7 +75,7 @@ class HomeCharacterActionsView extends GetView<CharacterService> {
                         move: move,
                         actions: [
                           EntityEditMenu(
-                            onDelete: confirmDelete(context, move, move.name),
+                            onDelete: confirmDeleteDlg(context, move, move.name),
                             onEdit: () => Get.to(
                               () => RepositoryItemForm<Move>(
                                 onSave: (_move) => controller.updateCharacter(
@@ -178,30 +179,9 @@ class HomeCharacterActionsView extends GetView<CharacterService> {
     );
   }
 
-  void Function() confirmDelete<T>(BuildContext context, T object, String name) {
+  void Function() confirmDeleteDlg<T>(BuildContext context, T object, String name) {
     return () async {
-      final result = await Get.dialog<bool>(
-        AlertDialog(
-          title: Text(S.current.confirmDeleteTitle(S.current.entity(T))),
-          content: Text(S.current.confirmDeleteBody(S.current.entity(T), name)),
-          actions: [
-            ElevatedButton.icon(
-              icon: const Icon(Icons.close),
-              label: Text(S.current.cancel),
-              onPressed: () => Get.back(result: false),
-              style: ButtonThemes.primaryElevated(context),
-            ),
-            // const SizedBox(width: 8),
-            ElevatedButton.icon(
-              icon: const Icon(Icons.delete),
-              label: Text(S.current.remove),
-              onPressed: () => Get.back(result: true),
-              style: ButtonThemes.errorElevated(context),
-            ),
-            const SizedBox(width: 0),
-          ],
-        ),
-      );
+      final result = await confirmDelete(context, name);
 
       if (result == true) {
         switch (T) {

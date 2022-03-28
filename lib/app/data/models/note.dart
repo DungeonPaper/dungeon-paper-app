@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 
 import 'meta.dart';
 
-class Note {
+class Note implements WithMeta {
   Note({
     required this.meta,
     required this.key,
@@ -14,6 +14,7 @@ class Note {
     required this.favorited,
   });
 
+  @override
   final Meta meta;
   final String key;
   final String title;

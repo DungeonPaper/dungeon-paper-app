@@ -9,6 +9,8 @@ import 'package:dungeon_paper/app/widgets/cards/move_card.dart';
 import 'package:dungeon_paper/app/widgets/cards/note_card.dart';
 import 'package:dungeon_paper/app/widgets/cards/note_card_mini.dart';
 import 'package:dungeon_paper/app/widgets/cards/spell_card.dart';
+import 'package:dungeon_paper/app/widgets/dialogs/confirm_delete_dialog.dart';
+import 'package:dungeon_paper/app/widgets/forms/repository_item_form.dart';
 import 'package:dungeon_paper/app/widgets/menus/entity_edit_menu.dart';
 import 'package:dungeon_paper/core/utils/list_utils.dart';
 import 'package:dungeon_paper/generated/l10n.dart';
@@ -38,6 +40,9 @@ class HomeCharacterDynamicCards extends GetView<CharacterService> {
           mainAxisSize: MainAxisSize.min,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
+            //
+            // MOVES
+            //
             if (moves.isNotEmpty)
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 16),
@@ -60,11 +65,22 @@ class HomeCharacterDynamicCards extends GetView<CharacterService> {
                 move: move,
                 actions: [
                   EntityEditMenu(
-                    onEdit: () => controller.updateCharacter(
-                      CharacterUtils.updateMoves(controller.current!, [move]),
+                    onEdit: () => Get.to(
+                      () => RepositoryItemForm<Move>(
+                        onSave: (move) => controller.updateCharacter(
+                          CharacterUtils.updateMoves(controller.current!, [move]),
+                        ),
+                        type: ItemFormType.edit,
+                      ),
                     ),
-                    onDelete: () => controller.updateCharacter(
-                      CharacterUtils.removeMoves(controller.current!, [move]),
+                    onDelete: () => awaitConfirmation(
+                      confirmDelete<Move>(context, move.name),
+                      () {
+                        controller.updateCharacter(
+                          CharacterUtils.removeMoves(controller.current!, [move]),
+                        );
+                        Get.back();
+                      },
                     ),
                   ),
                 ],
@@ -73,6 +89,9 @@ class HomeCharacterDynamicCards extends GetView<CharacterService> {
                 ),
               ),
             ),
+            //
+            // SPELLS
+            //
             if (spells.isNotEmpty) ...[
               const SizedBox(height: 10),
               Padding(
@@ -97,11 +116,22 @@ class HomeCharacterDynamicCards extends GetView<CharacterService> {
                 spell: spell,
                 actions: [
                   EntityEditMenu(
-                    onEdit: () => controller.updateCharacter(
-                      CharacterUtils.updateSpells(controller.current!, [spell]),
+                    onEdit: () => Get.to(
+                      () => RepositoryItemForm<Spell>(
+                        onSave: (spell) => controller.updateCharacter(
+                          CharacterUtils.updateSpells(controller.current!, [spell]),
+                        ),
+                        type: ItemFormType.edit,
+                      ),
                     ),
-                    onDelete: () => controller.updateCharacter(
-                      CharacterUtils.removeSpells(controller.current!, [spell]),
+                    onDelete: () => awaitConfirmation(
+                      confirmDelete<Spell>(context, spell.name),
+                      () {
+                        controller.updateCharacter(
+                          CharacterUtils.removeSpells(controller.current!, [spell]),
+                        );
+                        Get.back();
+                      },
                     ),
                   ),
                 ],
@@ -110,6 +140,9 @@ class HomeCharacterDynamicCards extends GetView<CharacterService> {
                 ),
               ),
             ),
+            //
+            // ITEMS
+            //
             if (items.isNotEmpty) ...[
               const SizedBox(height: 10),
               Padding(
@@ -134,11 +167,22 @@ class HomeCharacterDynamicCards extends GetView<CharacterService> {
                 item: item,
                 actions: [
                   EntityEditMenu(
-                    onEdit: () => controller.updateCharacter(
-                      CharacterUtils.updateItems(controller.current!, [item]),
+                    onEdit: () => Get.to(
+                      () => RepositoryItemForm<Item>(
+                        onSave: (item) => controller.updateCharacter(
+                          CharacterUtils.updateItems(controller.current!, [item]),
+                        ),
+                        type: ItemFormType.edit,
+                      ),
                     ),
-                    onDelete: () => controller.updateCharacter(
-                      CharacterUtils.removeItems(controller.current!, [item]),
+                    onDelete: () => awaitConfirmation(
+                      confirmDelete<Item>(context, item.name),
+                      () {
+                        controller.updateCharacter(
+                          CharacterUtils.removeItems(controller.current!, [item]),
+                        );
+                        Get.back();
+                      },
                     ),
                   ),
                 ],
@@ -147,6 +191,9 @@ class HomeCharacterDynamicCards extends GetView<CharacterService> {
                 ),
               ),
             ),
+            //
+            // NOTES
+            //
             if (notes.isNotEmpty) ...[
               const SizedBox(height: 10),
               Padding(
@@ -171,11 +218,22 @@ class HomeCharacterDynamicCards extends GetView<CharacterService> {
                 note: note,
                 actions: [
                   EntityEditMenu(
-                    onEdit: () => controller.updateCharacter(
-                      CharacterUtils.updateNotes(controller.current!, [note]),
+                    onEdit: () => Get.to(
+                      () => RepositoryItemForm<Note>(
+                        onSave: (note) => controller.updateCharacter(
+                          CharacterUtils.updateNotes(controller.current!, [note]),
+                        ),
+                        type: ItemFormType.edit,
+                      ),
                     ),
-                    onDelete: () => controller.updateCharacter(
-                      CharacterUtils.removeNotes(controller.current!, [note]),
+                    onDelete: () => awaitConfirmation(
+                      confirmDelete<Note>(context, note.title),
+                      () {
+                        controller.updateCharacter(
+                          CharacterUtils.removeNotes(controller.current!, [note]),
+                        );
+                        Get.back();
+                      },
                     ),
                   ),
                 ],
