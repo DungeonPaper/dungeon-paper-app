@@ -3,6 +3,7 @@ part of 'form_input_data.dart';
 class FormTextInputData extends BaseInputData<String> {
   FormTextInputData({
     required this.label,
+    this.rich = false,
     this.text = '',
     this.hintText,
     this.initialValue,
@@ -61,6 +62,7 @@ class FormTextInputData extends BaseInputData<String> {
   final String label;
   final String text;
   final String? hintText;
+  final bool rich;
 
   final String? initialValue;
   final FocusNode? focusNode;
@@ -116,6 +118,8 @@ class FormTextInputData extends BaseInputData<String> {
   late final TextEditingControllerStream stream;
   // late final StreamSubscription subscription;
 
+  static double buttonSize = 40;
+
   void init() {
     controller = TextEditingController(text: text);
     stream = TextEditingControllerStream(controller);
@@ -140,6 +144,22 @@ class FormTextInputData extends BaseInputData<String> {
 
   @override
   Widget build(BuildContext context) {
+    if (!rich) {
+      return _buildInput(context);
+    }
+
+    return Column(
+      mainAxisSize: MainAxisSize.min,
+      mainAxisAlignment: MainAxisAlignment.start,
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        _buildRichControls(context),
+        _buildInput(context),
+      ],
+    );
+  }
+
+  Widget _buildInput(BuildContext context) {
     return TextFormField(
       controller: controller,
       initialValue: initialValue,
@@ -194,6 +214,130 @@ class FormTextInputData extends BaseInputData<String> {
       scrollController: scrollController,
       restorationId: restorationId,
       enableIMEPersonalizedLearning: enableIMEPersonalizedLearning,
+    );
+  }
+
+  SizedBox _buildRichControls(BuildContext context) {
+    return SizedBox(
+      height: buttonSize,
+      child: ListView(
+        scrollDirection: Axis.horizontal,
+        shrinkWrap: true,
+        children: [
+          RichButton(
+            icon: const Icon(Icons.format_bold),
+            tooltip: 'Bold',
+            onTap: _wrapOrAppendCb('**bold**', '**'),
+          ),
+          RichButton(
+            icon: const Icon(Icons.format_italic),
+            tooltip: 'Italic',
+            onTap: _wrapOrAppendCb('*italic*', '*'),
+          ),
+          RichButton(
+            icon: const Icon(Icons.format_list_bulleted),
+            tooltip: 'Bullet List',
+            onTap: _wrapOrAppendCb('\n* ', '\n* '),
+          ),
+          RichButton(
+            icon: const Icon(Icons.format_list_numbered),
+            tooltip: 'Number List',
+            onTap: _wrapOrAppendCb('\n1. ', '\n1. '),
+          ),
+          RichButton(
+            icon: const Icon(Icons.link),
+            tooltip: 'URL',
+            onTap: _wrapOrAppendCb('[text](url)', '[', '](url)'),
+          ),
+          RichButton(
+            icon: const Icon(Icons.image),
+            tooltip: 'Image URL',
+            onTap: _wrapOrAppendCb('![alt](url)', '![alt][', ']'),
+          ),
+        ],
+      ),
+    );
+  }
+
+  void _wrapWith(String prefix, [String? suffix]) {
+    if (controller.selection.isValid) {
+      final selection = controller.selection.copyWith(
+        baseOffset: controller.selection.baseOffset + prefix.length,
+        extentOffset: controller.selection.extentOffset + prefix.length,
+      );
+      // final start =
+      controller.text = [
+        if (controller.selection.start > 0)
+          controller.text.substring(0, controller.selection.start),
+        prefix,
+        controller.text.substring(controller.selection.start, controller.selection.end),
+        suffix ?? prefix,
+        if (controller.selection.end < controller.text.length)
+          controller.text.substring(controller.selection.end, controller.text.length),
+      ].join('');
+      controller.selection = selection;
+    }
+  }
+
+  void _append(String text) {
+    final selection = controller.selection.copyWith(
+      baseOffset: controller.selection.baseOffset + text.length,
+      extentOffset: controller.selection.extentOffset + text.length,
+    );
+    if (controller.selection.isValid) {
+      controller.text = [
+        controller.text.substring(0, controller.selection.start),
+        text,
+        controller.text.substring(controller.selection.start, controller.text.length),
+      ].join('');
+    } else {
+      controller.text += text;
+    }
+    controller.selection = selection;
+  }
+
+  void Function() _wrapOrAppendCb(String text, String prefix, [String? suffix]) {
+    var _suffix = suffix ?? prefix;
+    if (controller.text.trim().isEmpty) {
+      text = text.replaceAll('\n', '');
+      prefix = prefix.replaceAll('\n', '');
+      _suffix = _suffix.replaceAll('\n', '');
+    }
+    return () {
+      if (!controller.selection.isCollapsed) {
+        _wrapWith(prefix, suffix);
+      } else {
+        _append(text);
+      }
+    };
+  }
+}
+
+class RichButton extends StatelessWidget {
+  const RichButton({
+    Key? key,
+    required this.icon,
+    required this.tooltip,
+    required this.onTap,
+  }) : super(key: key);
+
+  final Widget icon;
+  final String tooltip;
+  final void Function() onTap;
+
+  @override
+  Widget build(BuildContext context) {
+    return SizedBox(
+      width: FormTextInputData.buttonSize,
+      height: FormTextInputData.buttonSize,
+      child: Tooltip(
+        message: tooltip,
+        child: InkWell(
+          borderRadius: BorderRadius.circular(4),
+          onTap: onTap,
+          child: icon,
+        ),
+      ),
     );
   }
 }

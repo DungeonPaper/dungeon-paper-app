@@ -25,7 +25,7 @@ class AddMoveForm extends GetView<AddMoveFormController> {
         return ListView(
           padding: const EdgeInsets.symmetric(horizontal: 8).copyWith(bottom: 8),
           children: [
-            Expanded(child: inputs[0], flex: 2),
+            inputs[0],
             const SizedBox(height: 8),
             Row(
               children: [
@@ -136,6 +136,7 @@ class AddMoveFormController extends DynamicFormController<Move> {
           label: 'Move description',
           maxLines: 5,
           minLines: 5,
+          rich: true,
           textCapitalization: TextCapitalization.sentences,
           text: entity.value.description,
         ),
@@ -146,6 +147,7 @@ class AddMoveFormController extends DynamicFormController<Move> {
           label: 'Move explanation',
           maxLines: 5,
           minLines: 5,
+          rich: true,
           textCapitalization: TextCapitalization.sentences,
           text: entity.value.explanation,
         ),
