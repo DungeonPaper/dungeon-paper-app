@@ -1,4 +1,5 @@
 import 'package:dungeon_paper/app/data/models/move.dart';
+import 'package:dungeon_paper/app/data/models/roll_stats.dart';
 import 'package:dungeon_paper/app/data/services/repository_service.dart';
 import 'package:dungeon_paper/app/modules/AddRepositoryItems/controllers/add_repository_items_controller.dart';
 import 'package:dungeon_paper/app/modules/AddRepositoryItems/views/add_repository_items_view.dart';
@@ -17,11 +18,13 @@ class AddMovesView extends GetView<AddRepositoryItemsController<Move, MoveFilter
     required this.onAdd,
     required this.selections,
     required this.classKeys,
+    required this.rollStats,
   }) : super(key: key);
 
   final void Function(Iterable<Move> moves) onAdd;
   final Iterable<Move> selections;
   final List<String> classKeys;
+  final RollStats rollStats;
 
   RepositoryService get service => controller.repo.value;
 
@@ -30,7 +33,7 @@ class AddMovesView extends GetView<AddRepositoryItemsController<Move, MoveFilter
     return AddRepositoryItemsView<Move, MoveFilters>(
       storageKey: 'Moves',
       title: Text(S.current.addGeneric(S.current.entityPlural(Move))),
-      extraData: {'classKeys': classKeys},
+      extraData: {'classKeys': classKeys, 'rollStats': rollStats},
       filtersBuilder: (group, filters, onChange) => MoveFiltersView(
         group: group,
         filters: filters,

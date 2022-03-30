@@ -102,6 +102,7 @@ class _RepositoryItemFormState<T extends WithMeta> extends State<RepositoryItemF
     switch (T) {
       case Move:
         return AddMoveForm(
+          rollStats: widget.extraData['rollStats'],
           onChange: setEntity,
           classKey: asList(widget.extraData['classKeys']),
           type: widget.type,

@@ -1,8 +1,9 @@
 part of 'form_input_data.dart';
 
-class FormDicesInputData extends BaseInputData<List<dw.Dice>> {
-  FormDicesInputData({
+class FormDiceInputData extends BaseInputData<List<dw.Dice>> {
+  FormDiceInputData({
     required List<dw.Dice> value,
+    required this.rollStats,
   }) {
     init(value);
   }
@@ -13,6 +14,8 @@ class FormDicesInputData extends BaseInputData<List<dw.Dice>> {
   late final ValueNotifier<List<dw.Dice>> controller;
   late final ValueNotifierStream<List<dw.Dice>> stream;
   late final StreamSubscription subscription;
+
+  final RollStats rollStats;
 
   void init(List<dw.Dice> value) {
     controller = ValueNotifier(value);
@@ -49,12 +52,13 @@ class FormDicesInputData extends BaseInputData<List<dw.Dice>> {
                 onPressed: () => Get.dialog(
                   AddDiceDialog(
                     dice: dice.value,
+                    rollStats: rollStats,
                     onSave: (_dice) {
                       controller.value = updateByIndex(controller.value, _dice, dice.index);
                     },
                   ),
                 ),
-                onDeleted: () => controller.value = controller.value..removeAt(dice.index),
+                onDeleted: () => controller.value = [...controller.value..removeAt(dice.index)],
               ),
             TagChip(
               tag: dw.Tag(name: S.current.addGeneric(dw.Dice), value: null),
@@ -62,6 +66,7 @@ class FormDicesInputData extends BaseInputData<List<dw.Dice>> {
               backgroundColor: Theme.of(context).primaryColor,
               onPressed: () => Get.dialog(
                 AddDiceDialog(
+                  rollStats: rollStats,
                   onSave: (dice) {
                     controller.value = [...controller.value, dice];
                   },

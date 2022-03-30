@@ -1,6 +1,8 @@
 import 'package:dungeon_paper/generated/l10n.dart';
 import 'package:dungeon_world_data/dice.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_markdown/flutter_markdown.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 import '../../../core/dw_icons.dart';
 import '../atoms/background_icon_button.dart';
@@ -85,36 +87,31 @@ class DynamicActionCardMini extends StatelessWidget {
             const SizedBox(height: 6),
             Expanded(
               // child: Container(),
-              // child: ConstrainedBox(
-              //   constraints: BoxConstraints(minHeight: 20, maxHeight: 20),
-              //   child: Stack(
-              //     children: [
-              //       Positioned(
-              //         top: 0,
-              //         bottom: 0,
-              //         left: 0,
-              //         right: 0,
-              //         child: MarkdownBody(
-              //           data: description,
-              //           // fitContent: true,
-              //           // shrinkWrap: false,
-              //           styleSheet: markdownStyleSheet,
-              //         ),
-              //       ),
-              //     ],
-              //   ),
+              child: LayoutBuilder(builder: (context, constraints) {
+                return ClipRect(
+                  // clipper: RectClipper(constraints.maxWidth, constraints.maxHeight),
+                  child: Markdown(
+                    padding: EdgeInsets.zero,
+                    data: description,
+                    // fitContent: true,
+                    // shrinkWrap: true,
+                    // fitContent: true,
+                    styleSheet: MarkdownStyleSheet.fromTheme(Theme.of(context)),
+                    onTapLink: (text, href, title) => launch(href!),
+                  ),
+                );
+              }),
+              // child: Text(
+              //   description.isNotEmpty ? description : S.current.noDescription,
+              //   overflow: TextOverflow.ellipsis,
+              //   maxLines: dice.isNotEmpty
+              //       ? 3
+              //       : chips.isNotEmpty
+              //           ? 4
+              //           : 5,
+              //   textScaleFactor: 0.9,
+              //   style: const TextStyle(fontWeight: FontWeight.w200),
               // ),
-              child: Text(
-                description.isNotEmpty ? description : S.current.noDescription,
-                overflow: TextOverflow.ellipsis,
-                maxLines: dice.isNotEmpty
-                    ? 3
-                    : chips.isNotEmpty
-                        ? 4
-                        : 5,
-                textScaleFactor: 0.9,
-                style: const TextStyle(fontWeight: FontWeight.w200),
-              ),
             ),
             const SizedBox(height: 4),
             Row(

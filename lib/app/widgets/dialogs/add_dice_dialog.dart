@@ -1,33 +1,38 @@
 import 'package:dungeon_paper/app/data/models/roll_stats.dart';
 import 'package:dungeon_paper/app/data/services/repository_service.dart';
+import 'package:dungeon_paper/app/themes/button_themes.dart';
+import 'package:dungeon_paper/app/themes/themes.dart';
+import 'package:dungeon_paper/app/widgets/atoms/select_box.dart';
 import 'package:dungeon_paper/core/utils/string_utils.dart';
 import 'package:dungeon_paper/generated/l10n.dart';
 import 'package:flutter/material.dart';
 import 'package:dungeon_world_data/dungeon_world_data.dart' as dw;
 import 'package:get/get.dart';
 
+enum ModifierType { stat, fixed }
+
 class AddDiceDialog extends StatefulWidget {
   const AddDiceDialog({
     Key? key,
     this.dice,
     this.onSave,
+    required this.rollStats,
   }) : super(key: key);
 
   final dw.Dice? dice;
   final void Function(dw.Dice dice)? onSave;
+  final RollStats rollStats;
 
   @override
   State<AddDiceDialog> createState() => _AddDiceDialogState();
 }
-
-enum ModifierType { stat, fixed }
 
 class _AddDiceDialogState extends State<AddDiceDialog> {
   final RepositoryService repo = Get.find();
   // late int amount;
   late final TextEditingController amount;
   late int sides;
-  late int? modifierNum;
+  late final TextEditingController modifierNum;
   late String? modifierStat;
   late ModifierType modifierType;
 
@@ -37,7 +42,7 @@ class _AddDiceDialogState extends State<AddDiceDialog> {
     // amount = widget.dice?.amount ?? 2;
     amount = TextEditingController(text: widget.dice?.amount.toString() ?? '2');
     sides = widget.dice?.sides ?? 6;
-    modifierNum = widget.dice?.modifierValue;
+    modifierNum = TextEditingController(text: (widget.dice?.modifierValue ?? 0).toString());
     modifierStat = widget.dice?.modifierStat;
     modifierType = widget.dice?.modifierStat != null ? ModifierType.stat : ModifierType.fixed;
   }
@@ -49,30 +54,113 @@ class _AddDiceDialogState extends State<AddDiceDialog> {
       content: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
-          TextFormField(
-            controller: amount,
-            inputFormatters: [],
-            textCapitalization: TextCapitalization.words,
-            decoration: InputDecoration(
-              filled: true,
-              label: Text(S.current.diceAmount),
-            ),
-          ),
-          const SizedBox(height: 8),
-          const Text('d'),
-          const SizedBox(height: 24),
-          DropdownButton<int>(
-            value: sides,
-            items: [
-              for (final i in [4, 6, 8, 10, 12, 20, 100])
-                DropdownMenuItem<int>(child: Text(i.toString()), value: i)
+          Row(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Expanded(
+                child: TextFormField(
+                  controller: amount,
+                  keyboardType: TextInputType.numberWithOptions(decimal: false),
+                  decoration: InputDecoration(
+                    filled: true,
+                    label: Text(S.current.diceAmount),
+                  ),
+                ),
+              ),
+              const SizedBox(width: 8),
+              const Text('d'),
+              const SizedBox(width: 8),
+              Expanded(
+                child: SelectBox<int>(
+                  value: sides,
+                  // ignore: unnecessary_null_comparison
+                  // selectedItemBuilder: (value) => [Text(value == null ? 'Select Stat' : value!)],
+                  label: Text(S.current.diceSides),
+                  items: [
+                    for (final i in [4, 6, 8, 10, 12, 20, 100])
+                      DropdownMenuItem<int>(child: Text(i.toString()), value: i)
+                  ],
+                  onChanged: (value) => setState(() {
+                    if (value != null) {
+                      sides = value;
+                    }
+                  }),
+                ),
+              ),
             ],
-            onChanged: (value) => setState(() {
-              if (value != null) {
-                sides = value;
-              }
-            }),
           ),
+          const SizedBox(height: 16),
+          Row(
+            children: [
+              Expanded(
+                child: ElevatedButton(
+                  style: ButtonThemes.primaryElevated(
+                    context,
+                    backgroundOpacity: modifierType == ModifierType.fixed ? 1 : 0.4,
+                  ).copyWith(
+                    shape: MaterialStateProperty.resolveWith(
+                      (_) => rRectShape.copyWith(
+                        borderRadius: const BorderRadius.horizontal(
+                          left: Radius.circular(8),
+                          right: Radius.circular(0),
+                        ),
+                      ),
+                    ),
+                  ),
+                  onPressed: () => setState(() => modifierType = ModifierType.fixed),
+                  child: Text('Fixed Value'),
+                ),
+              ),
+              Expanded(
+                child: ElevatedButton(
+                  style: ButtonThemes.primaryElevated(
+                    context,
+                    backgroundOpacity: modifierType == ModifierType.stat ? 1 : 0.4,
+                  ).copyWith(
+                    shape: MaterialStateProperty.resolveWith(
+                      (_) => rRectShape.copyWith(
+                        borderRadius: const BorderRadius.horizontal(
+                          left: Radius.circular(0),
+                          right: Radius.circular(8),
+                        ),
+                      ),
+                    ),
+                  ),
+                  onPressed: () => setState(() => modifierType = ModifierType.stat),
+                  child: Text('Stat'),
+                ),
+              ),
+            ],
+          ),
+          if (modifierType == ModifierType.fixed)
+            Padding(
+              padding: const EdgeInsets.only(top: 4),
+              child: TextFormField(
+                decoration: InputDecoration(
+                  filled: true,
+                  hintText: 'Number, e.g. 2 or -1',
+                  label: Text('Modifier value'),
+                ),
+                controller: modifierNum,
+                keyboardType: TextInputType.numberWithOptions(decimal: false),
+              ),
+            ),
+          if (modifierType == ModifierType.stat)
+            Padding(
+              padding: const EdgeInsets.only(top: 4),
+              child: SelectBox<String>(
+                value: modifierStat,
+                hint: Text('Select Stat'),
+                onChanged: (value) => setState(() => modifierStat = value),
+                items: [
+                  for (final stat in widget.rollStats.stats)
+                    DropdownMenuItem<String>(
+                      child: Text('${stat.name} (${stat.key})'),
+                      value: stat.key,
+                    )
+                ],
+              ),
+            ),
         ],
       ),
       actions: [
@@ -90,6 +178,9 @@ class _AddDiceDialogState extends State<AddDiceDialog> {
   dw.Dice createDice() => dw.Dice(
         amount: int.tryParse(amount.text) ?? 1,
         sides: sides,
+        modifierStat: modifierType == ModifierType.stat ? modifierStat : null,
+        modifierValue:
+            modifierType == ModifierType.fixed ? int.tryParse(modifierNum.text) ?? 0 : null,
       );
 
   dynamic tryParse(String text) {

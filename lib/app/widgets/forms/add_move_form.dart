@@ -1,5 +1,6 @@
 import 'package:dungeon_paper/app/data/models/meta.dart';
 import 'package:dungeon_paper/app/data/models/move.dart';
+import 'package:dungeon_paper/app/data/models/roll_stats.dart';
 import 'package:dungeon_paper/app/widgets/forms/dynamic_form/dynamic_form.dart';
 import 'package:dungeon_paper/app/widgets/forms/dynamic_form/form_input_data.dart';
 import 'package:dungeon_paper/app/widgets/forms/repository_item_form.dart';
@@ -13,11 +14,13 @@ class AddMoveForm extends GetView<AddMoveFormController> {
     required this.onChange,
     required this.classKey,
     required this.type,
+    required this.rollStats,
   }) : super(key: key);
 
   final void Function(Move move) onChange;
   final List<String> classKey;
   final ItemFormType type;
+  final RollStats rollStats;
 
   @override
   Widget build(BuildContext context) {
@@ -48,9 +51,10 @@ class AddMoveForm extends GetView<AddMoveFormController> {
 }
 
 class AddMoveFormController extends DynamicFormController<Move> {
-  AddMoveFormController({required this.move});
+  AddMoveFormController({required this.move, required this.rollStats});
 
   final Move? move;
+  final RollStats rollStats;
 
   @override
   void onInit() {
@@ -157,9 +161,9 @@ class AddMoveFormController extends DynamicFormController<Move> {
           text: entity.value.explanation,
         ),
       ),
-      FormInputData<FormDicesInputData>(
+      FormInputData<FormDiceInputData>(
         name: 'dice',
-        data: FormDicesInputData(value: entity.value.dice),
+        data: FormDiceInputData(value: entity.value.dice, rollStats: rollStats),
       ),
       FormInputData<FormTagsInputData>(
         name: 'tags',

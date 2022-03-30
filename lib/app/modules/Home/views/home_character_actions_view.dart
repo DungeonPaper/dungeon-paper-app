@@ -54,6 +54,7 @@ class HomeCharacterActionsView extends GetView<CharacterService> {
                           moves: addByKey(char.moves, moves),
                         ),
                       ),
+                      rollStats: char.rollStats,
                       selections: char.moves,
                       classKeys: [controller.current!.characterClass.key],
                     ),
@@ -83,9 +84,19 @@ class HomeCharacterActionsView extends GetView<CharacterService> {
                                     moves: updateByKey(char.moves, [_move]),
                                   ),
                                 ),
+                                extraData: {
+                                  'rollStats': controller.current!.rollStats,
+                                  'classKeys': move.classKeys,
+                                },
                                 type: ItemFormType.create,
                               ),
-                              binding: RepositoryItemFormBinding(item: move),
+                              binding: RepositoryItemFormBinding(
+                                item: move,
+                                extraData: {
+                                  'rollStats': controller.current!.rollStats,
+                                  'classKeys': move.classKeys,
+                                },
+                              ),
                             ),
                           ),
                         ],

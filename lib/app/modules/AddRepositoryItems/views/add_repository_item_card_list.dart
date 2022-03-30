@@ -54,7 +54,10 @@ class AddRepositoryItemCardList<T extends WithMeta, F extends EntityFilters>
                         extraData: extraData,
                         type: ItemFormType.create,
                       ),
-                      binding: RepositoryItemFormBinding(item: _createEmpty()),
+                      binding: RepositoryItemFormBinding(
+                        item: _createEmpty(),
+                        extraData: extraData,
+                      ),
                     ),
                     label: Text(S.current.createGeneric(S.current.entity(T))),
                     icon: const Icon(Icons.add),

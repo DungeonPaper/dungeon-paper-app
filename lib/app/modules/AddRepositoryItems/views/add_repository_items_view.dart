@@ -92,6 +92,7 @@ class AddRepositoryItemsView<T extends WithMeta, F extends EntityFilters<T>>
                       useFilters: useFilters,
                       filtersBuilder: filtersBuilder,
                       filters: playbookFilters,
+                      extraData: extraData,
                       children: builtInList.map(
                         (item) => _wrapWithSelection(context, item),
                       ),

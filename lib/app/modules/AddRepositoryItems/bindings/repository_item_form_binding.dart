@@ -2,14 +2,18 @@ import 'package:dungeon_paper/app/widgets/forms/add_move_form.dart';
 import 'package:get/get.dart';
 
 class RepositoryItemFormBinding extends Bindings {
-  RepositoryItemFormBinding({required this.item});
+  RepositoryItemFormBinding({
+    required this.item,
+    this.extraData = const {},
+  });
 
   final dynamic item;
+  final Map<String, dynamic> extraData;
 
   @override
   void dependencies() {
     Get.lazyPut<AddMoveFormController>(
-      () => AddMoveFormController(move: item),
+      () => AddMoveFormController(move: item, rollStats: extraData['rollStats']),
     );
   }
 }

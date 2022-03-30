@@ -4,8 +4,9 @@ class ButtonThemes {
   static final borderRadius = BorderRadius.circular(10);
   static final rRectShape = RoundedRectangleBorder(borderRadius: borderRadius);
 
-  static ButtonStyle primaryElevated(BuildContext context) => ElevatedButton.styleFrom(
-        primary: Theme.of(context).primaryColor,
+  static ButtonStyle primaryElevated(BuildContext context, {double? backgroundOpacity}) =>
+      ElevatedButton.styleFrom(
+        primary: Theme.of(context).primaryColor.withOpacity(backgroundOpacity ?? 1),
         shape: rRectShape,
       );
 

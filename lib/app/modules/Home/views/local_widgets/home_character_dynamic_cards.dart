@@ -28,7 +28,7 @@ class HomeCharacterDynamicCards extends GetView<CharacterService> {
 
   @override
   Widget build(BuildContext context) {
-    const cardSize = Size(210, 153);
+    const cardSize = Size(210, 157);
 
     return Obx(() {
       final moves = (controller.current?.moves ?? <Move>[]).where((m) => m.favorited);
@@ -71,9 +71,19 @@ class HomeCharacterDynamicCards extends GetView<CharacterService> {
                         onSave: (move) => controller.updateCharacter(
                           CharacterUtils.updateMoves(controller.current!, [move]),
                         ),
+                        extraData: {
+                          'rollStats': controller.current!.rollStats,
+                          'classKeys': move.classKeys,
+                        },
                         type: ItemFormType.edit,
                       ),
-                      binding: RepositoryItemFormBinding(item: move),
+                      binding: RepositoryItemFormBinding(
+                        item: move,
+                        extraData: {
+                          'rollStats': controller.current!.rollStats,
+                          'classKeys': move.classKeys,
+                        },
+                      ),
                     ),
                     onDelete: () => awaitConfirmation(
                       confirmDelete<Move>(context, move.name),

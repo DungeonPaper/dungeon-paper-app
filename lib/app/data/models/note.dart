@@ -44,7 +44,7 @@ class Note implements WithMeta {
   String toRawJson() => json.encode(toJson());
 
   factory Note.fromJson(Map<String, dynamic> json) => Note(
-        meta: Meta.fromJson(json['_meta']),
+        meta: Meta.tryParse(json['_meta']),
         key: json['key'],
         title: json['title'],
         description: json['description'],

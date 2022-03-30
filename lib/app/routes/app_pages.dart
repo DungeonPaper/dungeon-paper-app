@@ -43,6 +43,7 @@ class AppPages {
     GetPage(
       name: _Paths.addMoves,
       page: () => AddMovesView(
+        rollStats: characterService.current!.rollStats,
         onAdd: (moves) => characterService.updateCharacter(
           CharacterUtils.updateMoves(characterService.current!, moves),
         ),

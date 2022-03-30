@@ -66,8 +66,18 @@ class CharacterMovesSpellsView extends GetView<CharacterMovesSpellsController> {
                                   onSave: (move) => controller.moves.value =
                                       updateByKey(controller.moves, [move]),
                                   type: ItemFormType.edit,
+                                  extraData: {
+                                    'rollStats': controller.ctrl.rollStats.value!,
+                                    'classKeys': move.classKeys,
+                                  },
                                 ),
-                                binding: RepositoryItemFormBinding(item: move),
+                                binding: RepositoryItemFormBinding(
+                                  item: move,
+                                  extraData: {
+                                    'rollStats': controller.ctrl.rollStats.value!,
+                                    'classKeys': move.classKeys,
+                                  },
+                                ),
                               ),
                               onDelete: () =>
                                   controller.moves.value = removeByKey(controller.moves, [move]),
@@ -94,6 +104,7 @@ class CharacterMovesSpellsView extends GetView<CharacterMovesSpellsController> {
                       );
                       updateControllers();
                     },
+                    rollStats: controller.ctrl.rollStats.value!,
                     classKeys: [controller.ctrl.charClass.value!.key],
                     selections: controller.moves,
                   ),
