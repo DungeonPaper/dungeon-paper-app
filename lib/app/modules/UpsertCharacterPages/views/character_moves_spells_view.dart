@@ -2,6 +2,7 @@ import 'package:dungeon_paper/app/data/models/meta.dart';
 import 'package:dungeon_paper/app/data/models/move.dart';
 import 'package:dungeon_paper/app/data/models/spell.dart';
 import 'package:dungeon_paper/app/modules/AddRepositoryItems/bindings/add_repository_items_binding.dart';
+import 'package:dungeon_paper/app/modules/AddRepositoryItems/bindings/repository_item_form_binding.dart';
 import 'package:dungeon_paper/app/modules/AddRepositoryItems/controllers/add_repository_items_controller.dart';
 import 'package:dungeon_paper/app/modules/AddRepositoryItems/views/add_moves_view.dart';
 import 'package:dungeon_paper/app/modules/AddRepositoryItems/views/add_spells_view.dart';
@@ -11,6 +12,8 @@ import 'package:dungeon_paper/app/modules/UpsertCharacterPages/controllers/chara
 import 'package:dungeon_paper/app/themes/button_themes.dart';
 import 'package:dungeon_paper/app/widgets/cards/move_card.dart';
 import 'package:dungeon_paper/app/widgets/cards/spell_card.dart';
+import 'package:dungeon_paper/app/widgets/forms/repository_item_form.dart';
+import 'package:dungeon_paper/app/widgets/menus/entity_edit_menu.dart';
 import 'package:dungeon_paper/core/utils/list_utils.dart';
 import 'package:dungeon_paper/generated/l10n.dart';
 import 'package:dungeon_world_data/dungeon_world_data.dart' as dw;
@@ -38,10 +41,12 @@ class CharacterMovesSpellsView extends GetView<CharacterMovesSpellsController> {
         mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
+          // MOVES TITLE
           Obx(() => Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
                 child: Text(S.current.movesWithCount(controller.moves.length), style: titleStyle),
               )),
+          // MOVES CARDS
           Obx(
             () => ListView(
               shrinkWrap: true,
@@ -55,19 +60,25 @@ class CharacterMovesSpellsView extends GetView<CharacterMovesSpellsController> {
                           showDice: false,
                           showStar: false,
                           actions: [
-                            ElevatedButton.icon(
-                              style: ButtonThemes.primaryElevated(context),
-                              onPressed: () =>
+                            EntityEditMenu(
+                              onEdit: () => Get.to(
+                                () => RepositoryItemForm<Move>(
+                                  onSave: (move) => controller.moves.value =
+                                      updateByKey(controller.moves, [move]),
+                                  type: ItemFormType.edit,
+                                ),
+                                binding: RepositoryItemFormBinding(item: move),
+                              ),
+                              onDelete: () =>
                                   controller.moves.value = removeByKey(controller.moves, [move]),
-                              label: Text(S.current.remove),
-                              icon: const Icon(Icons.remove),
-                            )
+                            ),
                           ],
                         ),
                       ))
                   .toList(),
             ),
           ),
+          // ADD MOVES
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 8),
             child: SizedBox(
@@ -101,10 +112,12 @@ class CharacterMovesSpellsView extends GetView<CharacterMovesSpellsController> {
               ),
             ),
           ),
+          // SPELLS TITLE
           Obx(() => Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8).copyWith(top: 24),
                 child: Text(S.current.spellsWithCount(controller.spells.length), style: titleStyle),
               )),
+          // SPELL CARDS
           Obx(
             () => ListView(
               shrinkWrap: true,
@@ -130,6 +143,7 @@ class CharacterMovesSpellsView extends GetView<CharacterMovesSpellsController> {
                   .toList(),
             ),
           ),
+          // ADD SPELLS
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 8),
             child: SizedBox(

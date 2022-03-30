@@ -40,8 +40,9 @@ class ExpansionRow extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    var originalTheme = Theme.of(context);
     return Theme(
-      data: Theme.of(context).copyWith(dividerColor: Colors.transparent),
+      data: originalTheme.copyWith(dividerColor: Colors.transparent),
       child: ListTileTheme(
         data: ListTileTheme.of(context).copyWith(
           horizontalTitleGap: 0,
@@ -66,7 +67,7 @@ class ExpansionRow extends StatelessWidget {
               ...trailing,
             ],
           ),
-          children: children,
+          children: children.map((child) => Theme(data: originalTheme, child: child)).toList(),
           tilePadding: titlePadding ?? defaultPadding,
           childrenPadding: childrenPadding ?? defaultPadding,
           expandedCrossAxisAlignment: CrossAxisAlignment.stretch,

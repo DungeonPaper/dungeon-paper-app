@@ -60,6 +60,7 @@
   "createCharacterFinishButton": "Review",
   "createCharacterSaveButton": "Create Character",
   "addGeneric": "Add {entity}",
+  "editGeneric": "Edit {entity}",
   "addCustomGeneric": "Add New {entity}",
   "addExistingGeneric": "Add Existing {entity}",
   "createGeneric": "Create {entity}",
@@ -120,5 +121,19 @@
   "genericNameField": "{entity} name",
   "genericDescriptionField": "{entity} description",
   "genericValueField": "{entity} value",
-  "tagCopyFrom": "Copy from: {tag}"
+  "tagCopyFrom": "Copy from: {tag}",
+  "formatBold": "Bold",
+  "formatItalic": "Italic",
+  "formatHeading": "Heading {n}",
+  "formatHeader": "Header {n}",
+  "formatHeaderNoNum": "Header {n}",
+  "formatCell": "Cell {n}",
+  "formatHeadings": "Headings",
+  "formatBulletList": "Bullet List",
+  "formatNumberedList": "Numbered List",
+  "formatURL": "URL",
+  "formatImageURL": "Image URL",
+  "formatTable": "Table",
+  "formatHelp": "Formatting Help",
+  "formatPreview": "Preview"
 }

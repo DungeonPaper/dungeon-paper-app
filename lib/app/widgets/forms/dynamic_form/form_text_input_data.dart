@@ -218,6 +218,16 @@ class FormTextInputData extends BaseInputData<String> {
   }
 
   SizedBox _buildRichControls(BuildContext context) {
+    final theme = Theme.of(context);
+    final textTheme = theme.textTheme;
+    final mdTheme = MarkdownStyleSheet.fromTheme(theme);
+    const divider = Padding(padding: EdgeInsets.symmetric(vertical: 8), child: VerticalDivider());
+    const thinDivider = Padding(
+      padding: EdgeInsets.symmetric(vertical: 8),
+      child: VerticalDivider(
+        width: 4,
+      ),
+    );
     return SizedBox(
       height: buttonSize,
       child: ListView(
@@ -225,34 +235,94 @@ class FormTextInputData extends BaseInputData<String> {
         shrinkWrap: true,
         children: [
           RichButton(
+            color: Theme.of(context).colorScheme.secondary,
+            icon: const Icon(Icons.preview_outlined),
+            tooltip: S.current.formatPreview,
+            onTap: () => _openPreview(context),
+          ),
+          RichButton(
+            color: Theme.of(context).colorScheme.secondary,
+            icon: const Icon(Icons.help),
+            tooltip: S.current.formatHelp,
+            onTap: () => launch('https://www.markdownguide.org/basic-syntax'),
+          ),
+          thinDivider,
+          RichButton(
             icon: const Icon(Icons.format_bold),
-            tooltip: 'Bold',
-            onTap: _wrapOrAppendCb('**bold**', '**'),
+            tooltip: S.current.formatBold,
+            onTap: _wrapOrAppendCb('**bold**', '**', null, 2, -2),
           ),
           RichButton(
             icon: const Icon(Icons.format_italic),
-            tooltip: 'Italic',
-            onTap: _wrapOrAppendCb('*italic*', '*'),
+            tooltip: S.current.formatItalic,
+            onTap: _wrapOrAppendCb('*italic*', '*', null, 1, -1),
           ),
+          PopupMenuButton(
+            itemBuilder: (context) => [
+              PopupMenuItem(
+                  child: Text(S.current.formatHeading(1), style: mdTheme.h1), value: 'h1'),
+              PopupMenuItem(
+                  child: Text(S.current.formatHeading(2), style: mdTheme.h2), value: 'h2'),
+              PopupMenuItem(
+                  child: Text(S.current.formatHeading(3), style: mdTheme.h3), value: 'h3'),
+              PopupMenuItem(
+                  child: Text(S.current.formatHeading(4), style: mdTheme.h4), value: 'h4'),
+              PopupMenuItem(
+                  child: Text(S.current.formatHeading(5), style: mdTheme.h5), value: 'h5'),
+              PopupMenuItem(
+                  child: Text(S.current.formatHeading(6), style: mdTheme.h6), value: 'h6'),
+            ],
+            onSelected: (value) => {
+              for (var i = 1; i <= 6; i++)
+                'h$i': _wrapOrAppendCb(
+                  '\n${List.filled(i, "#").join("")} ${S.current.formatHeading(i)}\n',
+                  '\n${List.filled(i, "#").join("")} ',
+                  '\n',
+                  2 + i,
+                  -1,
+                ),
+            }[value]
+                ?.call(),
+            child: RichButton(
+              icon: Icon(Icons.format_size),
+              tooltip: S.current.formatHeadings,
+            ),
+          ),
+          divider,
           RichButton(
             icon: const Icon(Icons.format_list_bulleted),
-            tooltip: 'Bullet List',
+            tooltip: S.current.formatBulletList,
             onTap: _wrapOrAppendCb('\n* ', '\n* '),
           ),
           RichButton(
             icon: const Icon(Icons.format_list_numbered),
-            tooltip: 'Number List',
+            tooltip: S.current.formatNumberedList,
             onTap: _wrapOrAppendCb('\n1. ', '\n1. '),
           ),
+          divider,
           RichButton(
             icon: const Icon(Icons.link),
-            tooltip: 'URL',
-            onTap: _wrapOrAppendCb('[text](url)', '[', '](url)'),
+            tooltip: S.current.formatURL,
+            onTap: _wrapOrAppendCb('[text](url)', '[', '](url)', 7, -1),
           ),
           RichButton(
             icon: const Icon(Icons.image),
-            tooltip: 'Image URL',
-            onTap: _wrapOrAppendCb('![alt](url)', '![alt][', ']'),
+            tooltip: S.current.formatImageURL,
+            onTap: _wrapOrAppendCb('![alt](url)', '![alt][', ']', 7, -1),
+          ),
+          RichButton(
+            icon: const Icon(Icons.table_chart_outlined),
+            tooltip: S.current.formatTable,
+            onTap: _wrapOrAppendCb(
+                '| ${S.current.formatHeader(1)} '
+                    '| ${S.current.formatHeader(2)} '
+                    '|\n|---|---|\n'
+                    '| ${S.current.formatCell(1)} '
+                    '| ${S.current.formatCell(2)} |',
+                '| ${S.current.formatHeader(' ')}|\n|---|\n| ',
+                ' |',
+                2,
+                -43),
           ),
         ],
       ),
@@ -261,11 +331,11 @@ class FormTextInputData extends BaseInputData<String> {
 
   void _wrapWith(String prefix, [String? suffix]) {
     if (controller.selection.isValid) {
+      // has selection - wrap current cursor positions
       final selection = controller.selection.copyWith(
         baseOffset: controller.selection.baseOffset + prefix.length,
         extentOffset: controller.selection.extentOffset + prefix.length,
       );
-      // final start =
       controller.text = [
         if (controller.selection.start > 0)
           controller.text.substring(0, controller.selection.start),
@@ -275,41 +345,112 @@ class FormTextInputData extends BaseInputData<String> {
         if (controller.selection.end < controller.text.length)
           controller.text.substring(controller.selection.end, controller.text.length),
       ].join('');
-      controller.selection = selection;
+      try {
+        controller.selection = selection;
+      } catch (e) {
+        // don't crash when selection is invalid
+      }
     }
   }
 
-  void _append(String text) {
-    final selection = controller.selection.copyWith(
-      baseOffset: controller.selection.baseOffset + text.length,
-      extentOffset: controller.selection.extentOffset + text.length,
-    );
+  void _append(String text, [int? selectionStartOffset, int? selectionEndOffset]) {
     if (controller.selection.isValid) {
+      // has cursor - append at cursor position
+      final selection = controller.selection.copyWith(
+        baseOffset: controller.selection.baseOffset + (selectionStartOffset ?? 0),
+        extentOffset: controller.selection.extentOffset + text.length + (selectionEndOffset ?? 0),
+      );
       controller.text = [
         controller.text.substring(0, controller.selection.start),
         text,
         controller.text.substring(controller.selection.start, controller.text.length),
       ].join('');
+      try {
+        controller.selection = selection;
+      } catch (e) {
+        // don't crash when selection is invalid
+      }
     } else {
+      // no cursor - append to end of text
+      final selection = controller.selection.copyWith(
+        baseOffset: selectionStartOffset ?? 0,
+        extentOffset: text.length + (selectionEndOffset ?? 0),
+      );
       controller.text += text;
+      try {
+        controller.selection = selection;
+      } catch (e) {
+        // don't crash when selection is invalid
+      }
     }
-    controller.selection = selection;
   }
 
-  void Function() _wrapOrAppendCb(String text, String prefix, [String? suffix]) {
+  void Function() _wrapOrAppendCb(String text, String prefix,
+      [String? suffix, int? selectionStartOffset, int? selectionEndOffset]) {
     var _suffix = suffix ?? prefix;
-    if (controller.text.trim().isEmpty) {
+
+    // if text is empty, or selection starts directly after newline - remove prefix newlines
+    if (controller.text.trim().isEmpty ||
+        (controller.selection.isValid &&
+            controller.text.substring(
+                    max(controller.selection.start - 1, 0), controller.selection.start) ==
+                '\n')) {
+      final originalText = text;
       text = text.replaceAll('\n', '');
       prefix = prefix.replaceAll('\n', '');
       _suffix = _suffix.replaceAll('\n', '');
+      if (originalText.startsWith('\n') && selectionStartOffset != null) {
+        selectionStartOffset -= 1;
+      }
+      if (originalText.endsWith('\n') && selectionEndOffset != null) {
+        selectionEndOffset += 1;
+      }
     }
     return () {
       if (!controller.selection.isCollapsed) {
         _wrapWith(prefix, suffix);
       } else {
-        _append(text);
+        _append(text, selectionStartOffset, selectionEndOffset);
       }
     };
+  }
+
+  void _openPreview(BuildContext context) {
+    Get.dialog(
+      MarkdownPreviewDialog(text: controller.text),
+    );
+  }
+}
+
+class MarkdownPreviewDialog extends StatelessWidget {
+  const MarkdownPreviewDialog({
+    Key? key,
+    required this.text,
+  }) : super(key: key);
+
+  final String text;
+
+  @override
+  Widget build(BuildContext context) {
+    return OrientationBuilder(builder: (context, orient) {
+      return AlertDialog(
+        title: const Text('Preview'),
+        content: ConstrainedBox(
+          constraints: BoxConstraints(
+            minWidth: MediaQuery.of(context).size.width - 100,
+            maxWidth: MediaQuery.of(context).size.width - 100,
+            maxHeight: MediaQuery.of(context).size.height - 100,
+            minHeight: 10,
+          ),
+          child: Markdown(
+            data: text.trim().isNotEmpty ? text : S.current.noDescription,
+            padding: const EdgeInsets.all(0),
+            onTapLink: (text, href, title) => launch(href!),
+            shrinkWrap: true,
+          ),
+        ),
+      );
+    });
   }
 }
 
@@ -318,25 +459,30 @@ class RichButton extends StatelessWidget {
     Key? key,
     required this.icon,
     required this.tooltip,
-    required this.onTap,
+    this.onTap,
+    this.color,
   }) : super(key: key);
 
   final Widget icon;
   final String tooltip;
-  final void Function() onTap;
+  final void Function()? onTap;
+  final Color? color;
 
   @override
   Widget build(BuildContext context) {
+    var child = IconTheme.merge(data: IconThemeData(color: color), child: icon);
     return SizedBox(
       width: FormTextInputData.buttonSize,
       height: FormTextInputData.buttonSize,
       child: Tooltip(
         message: tooltip,
-        child: InkWell(
-          borderRadius: BorderRadius.circular(4),
-          onTap: onTap,
-          child: icon,
-        ),
+        child: onTap != null
+            ? InkWell(
+                borderRadius: BorderRadius.circular(4),
+                onTap: onTap,
+                child: child,
+              )
+            : child,
       ),
     );
   }

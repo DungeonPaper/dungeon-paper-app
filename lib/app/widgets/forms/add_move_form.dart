@@ -99,6 +99,7 @@ class AddMoveFormController extends DynamicFormController<Move> {
         name: 'name',
         data: FormTextInputData(
           label: 'Move name',
+          autofocus: true,
           textCapitalization: TextCapitalization.words,
           text: entity.value.name,
         ),
@@ -134,7 +135,7 @@ class AddMoveFormController extends DynamicFormController<Move> {
         name: 'description',
         data: FormTextInputData(
           label: 'Move description',
-          maxLines: 5,
+          maxLines: 10,
           minLines: 5,
           rich: true,
           textCapitalization: TextCapitalization.sentences,
@@ -145,7 +146,7 @@ class AddMoveFormController extends DynamicFormController<Move> {
         name: 'explanation',
         data: FormTextInputData(
           label: 'Move explanation',
-          maxLines: 5,
+          maxLines: 10,
           minLines: 5,
           rich: true,
           textCapitalization: TextCapitalization.sentences,

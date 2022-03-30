@@ -2,6 +2,7 @@ import 'package:dungeon_paper/app/data/models/item.dart';
 import 'package:dungeon_paper/app/data/models/note.dart';
 import 'package:dungeon_paper/app/model_utils/character_utils.dart';
 import 'package:dungeon_paper/app/model_utils/model_key.dart';
+import 'package:dungeon_paper/app/modules/AddRepositoryItems/bindings/repository_item_form_binding.dart';
 import 'package:dungeon_paper/app/modules/Home/views/expanded_card_dialog_view.dart';
 import 'package:dungeon_paper/app/widgets/cards/item_card.dart';
 import 'package:dungeon_paper/app/widgets/cards/item_card_mini.dart';
@@ -72,6 +73,7 @@ class HomeCharacterDynamicCards extends GetView<CharacterService> {
                         ),
                         type: ItemFormType.edit,
                       ),
+                      binding: RepositoryItemFormBinding(item: move),
                     ),
                     onDelete: () => awaitConfirmation(
                       confirmDelete<Move>(context, move.name),

@@ -4,6 +4,7 @@ import 'package:dungeon_world_data/dice.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_markdown/flutter_markdown.dart';
 import 'package:get/get.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 import '../../../core/dw_icons.dart';
 import '../atoms/background_icon_button.dart';
@@ -133,7 +134,7 @@ class DynamicActionCard extends StatelessWidget {
     return [
       // Divider(height: 16, color: dividerColor),
       description.isNotEmpty
-          ? MarkdownBody(data: description)
+          ? MarkdownBody(data: description, onTapLink: (text, href, title) => launch(href!))
           : Text(
               S.current.noDescription,
               style: Theme.of(context).textTheme.bodyText1,
@@ -144,7 +145,7 @@ class DynamicActionCard extends StatelessWidget {
           padding: const EdgeInsets.only(top: 16, bottom: 4),
           child: Text(S.current.explanation, style: Theme.of(context).textTheme.caption),
         ),
-        MarkdownBody(data: explanation),
+        MarkdownBody(data: explanation, onTapLink: (text, href, title) => launch(href!)),
       ],
       Divider(height: 32, color: dividerColor),
       Row(

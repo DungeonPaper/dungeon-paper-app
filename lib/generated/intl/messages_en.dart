@@ -64,7 +64,9 @@ class MessageLookup extends MessageLookupByLibrary {
 
   static String m13(entity) => "Create ${entity}";
 
-  static String m14(runtimeType) => "${Intl.select(runtimeType, {
+  static String m14(entity) => "Edit ${entity}";
+
+  static String m15(runtimeType) => "${Intl.select(runtimeType, {
             'CharacterClass': 'Class',
             'Item': 'Item',
             'Monster': 'Monster',
@@ -76,7 +78,7 @@ class MessageLookup extends MessageLookupByLibrary {
             'other': '${runtimeType}',
           })}";
 
-  static String m15(runtimeType) => "${Intl.select(runtimeType, {
+  static String m16(runtimeType) => "${Intl.select(runtimeType, {
             'CharacterClass': 'Classes',
             'Item': 'Items',
             'Monster': 'Monsters',
@@ -88,19 +90,27 @@ class MessageLookup extends MessageLookupByLibrary {
             'other': '${runtimeType}s',
           })}";
 
-  static String m16(count, entPlural, ent) =>
+  static String m17(count, entPlural, ent) =>
       "${Intl.plural(count, zero: 'No ${entPlural}', one: 'One ${ent}', other: '${count} ${entPlural}')}";
 
-  static String m17(entity) => "${entity} description";
+  static String m18(n) => "Cell ${n}";
 
-  static String m18(entity) => "${entity} name";
+  static String m19(n) => "Header ${n}";
 
-  static String m19(entity) => "${entity} value";
+  static String m20(n) => "Header ${n}";
 
-  static String m20(count) =>
+  static String m21(n) => "Heading ${n}";
+
+  static String m22(entity) => "${entity} description";
+
+  static String m23(entity) => "${entity} name";
+
+  static String m24(entity) => "${entity} value";
+
+  static String m25(count) =>
       "${Intl.plural(count, zero: 'No items', one: 'One item', other: '${count} items')}";
 
-  static String m21(category) => "${Intl.select(category, {
+  static String m26(category) => "${Intl.select(category, {
             'starting': 'Starting',
             'basic': 'Basic',
             'special': 'Special',
@@ -109,7 +119,7 @@ class MessageLookup extends MessageLookupByLibrary {
             'other': 'Other',
           })}";
 
-  static String m22(category) => "${Intl.select(category, {
+  static String m27(category) => "${Intl.select(category, {
             'starting': 'Starting',
             'basic': 'Basic',
             'special': 'Special',
@@ -118,7 +128,7 @@ class MessageLookup extends MessageLookupByLibrary {
             'other': 'Other',
           })}";
 
-  static String m23(category) => "${Intl.select(category, {
+  static String m28(category) => "${Intl.select(category, {
             'starting': 'Starting',
             'basic': 'Basic',
             'special': 'Special',
@@ -127,29 +137,29 @@ class MessageLookup extends MessageLookupByLibrary {
             'other': 'Other',
           })}";
 
-  static String m24(count) =>
+  static String m29(count) =>
       "${Intl.plural(count, zero: 'No moves', one: 'One move', other: '${count} moves')}";
 
-  static String m25(entity) => "My ${entity}";
+  static String m30(entity) => "My ${entity}";
 
-  static String m26(count) =>
+  static String m31(count) =>
       "${Intl.plural(count, zero: 'No notes', one: 'One note', other: '${count} notes')}";
 
-  static String m27(count, singular, plural) =>
+  static String m32(count, singular, plural) =>
       "${Intl.plural(count, one: 'One ${singular}', other: '${count} ${plural}')}";
 
-  static String m28(stat) => "Roll +${stat}";
+  static String m33(stat) => "Roll +${stat}";
 
-  static String m29(entity) => "Save ${entity}";
+  static String m34(entity) => "Save ${entity}";
 
-  static String m30(entity) => "Type to search ${entity}";
+  static String m35(entity) => "Type to search ${entity}";
 
-  static String m31(string) => "Select ${string} to add";
+  static String m36(string) => "Select ${string} to add";
 
-  static String m32(count) =>
+  static String m37(count) =>
       "${Intl.plural(count, zero: 'No spells', one: 'One spell', other: '${count} spells')}";
 
-  static String m33(tag) => "Copy from: ${tag}";
+  static String m38(tag) => "Copy from: ${tag}";
 
   final messages = _notInlinedMessages(_notInlinedMessages);
   static Map<String, Function> _notInlinedMessages(_) => <String, Function>{
@@ -233,30 +243,46 @@ class MessageLookup extends MessageLookupByLibrary {
         "dynamicCategoriesSpells":
             MessageLookupByLibrary.simpleMessage("Prepared Spells"),
         "edit": MessageLookupByLibrary.simpleMessage("Edit"),
-        "entity": m14,
-        "entityPlural": m15,
-        "entityWithCount": m16,
+        "editGeneric": m14,
+        "entity": m15,
+        "entityPlural": m16,
+        "entityWithCount": m17,
         "explanation": MessageLookupByLibrary.simpleMessage("Further details"),
-        "genericDescriptionField": m17,
-        "genericNameField": m18,
-        "genericValueField": m19,
+        "formatBold": MessageLookupByLibrary.simpleMessage("Bold"),
+        "formatBulletList": MessageLookupByLibrary.simpleMessage("Bullet List"),
+        "formatCell": m18,
+        "formatHeader": m19,
+        "formatHeaderNoNum": m20,
+        "formatHeading": m21,
+        "formatHeadings": MessageLookupByLibrary.simpleMessage("Headings"),
+        "formatHelp": MessageLookupByLibrary.simpleMessage("Formatting Help"),
+        "formatImageURL": MessageLookupByLibrary.simpleMessage("Image URL"),
+        "formatItalic": MessageLookupByLibrary.simpleMessage("Italic"),
+        "formatNumberedList":
+            MessageLookupByLibrary.simpleMessage("Numbered List"),
+        "formatPreview": MessageLookupByLibrary.simpleMessage("Preview"),
+        "formatTable": MessageLookupByLibrary.simpleMessage("Table"),
+        "formatURL": MessageLookupByLibrary.simpleMessage("URL"),
+        "genericDescriptionField": m22,
+        "genericNameField": m23,
+        "genericValueField": m24,
         "items": MessageLookupByLibrary.simpleMessage("Items"),
-        "itemsWithCount": m20,
-        "moveCategory": m21,
-        "moveCategoryWithLevel": m22,
-        "moveCategoryWithLevelShort": m23,
+        "itemsWithCount": m25,
+        "moveCategory": m26,
+        "moveCategoryWithLevel": m27,
+        "moveCategoryWithLevelShort": m28,
         "moves": MessageLookupByLibrary.simpleMessage("Moves"),
-        "movesWithCount": m24,
-        "myGeneric": m25,
+        "movesWithCount": m29,
+        "myGeneric": m30,
         "navActions": MessageLookupByLibrary.simpleMessage("Use"),
         "navCharacter": MessageLookupByLibrary.simpleMessage("Character"),
         "navJournal": MessageLookupByLibrary.simpleMessage("Journal"),
         "noDescription":
             MessageLookupByLibrary.simpleMessage("‹No description provided›"),
         "notes": MessageLookupByLibrary.simpleMessage("Notes"),
-        "notesWithCount": m26,
+        "notesWithCount": m31,
         "ok": MessageLookupByLibrary.simpleMessage("OK"),
-        "pluralize": m27,
+        "pluralize": m32,
         "quickIconsItems": MessageLookupByLibrary.simpleMessage("Items"),
         "quickIconsMoves": MessageLookupByLibrary.simpleMessage("Moves"),
         "quickIconsNote": MessageLookupByLibrary.simpleMessage("+ Note"),
@@ -266,17 +292,17 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Attack + Damage"),
         "rollBasicActionButton":
             MessageLookupByLibrary.simpleMessage("Basic Action"),
-        "rollStatButtonTooltip": m28,
+        "rollStatButtonTooltip": m33,
         "save": MessageLookupByLibrary.simpleMessage("Save"),
-        "saveGeneric": m29,
+        "saveGeneric": m34,
         "searchPlaceholder":
             MessageLookupByLibrary.simpleMessage("Type to search"),
-        "searchPlaceholderGeneric": m30,
+        "searchPlaceholderGeneric": m35,
         "select": MessageLookupByLibrary.simpleMessage("Select"),
-        "selectToAdd": m31,
+        "selectToAdd": m36,
         "spells": MessageLookupByLibrary.simpleMessage("Spells"),
-        "spellsWithCount": m32,
-        "tagCopyFrom": m33,
+        "spellsWithCount": m37,
+        "tagCopyFrom": m38,
         "userMenuMoreChars": MessageLookupByLibrary.simpleMessage("More")
       };
 }

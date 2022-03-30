@@ -63,8 +63,7 @@ class DynamicActionCardMini extends StatelessWidget {
                   IconTheme(data: IconTheme.of(context).copyWith(size: 20), child: icon!),
                   const SizedBox(width: 8),
                 ],
-                Text(title),
-                Expanded(child: Container()),
+                Expanded(child: Text(title, overflow: TextOverflow.ellipsis, maxLines: 1)),
                 showStar
                     ? SizedBox(
                         width: 20,

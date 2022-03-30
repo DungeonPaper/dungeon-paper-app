@@ -86,7 +86,11 @@ class _RepositoryItemFormState<T extends WithMeta> extends State<RepositoryItemF
     ),
   ];
 
-  Widget get title => Text(S.current.addGeneric(S.current.entity(T)));
+  Widget get title => Text(
+        widget.type == ItemFormType.create
+            ? S.current.addGeneric(S.current.entity(T))
+            : S.current.editGeneric(S.current.entity(T)),
+      );
 
   void setEntity(dynamic item) {
     setState(() {

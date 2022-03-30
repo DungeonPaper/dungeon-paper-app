@@ -460,6 +460,16 @@ class S {
     );
   }
 
+  /// `Edit {entity}`
+  String editGeneric(Object entity) {
+    return Intl.message(
+      'Edit $entity',
+      name: 'editGeneric',
+      desc: '',
+      args: [entity],
+    );
+  }
+
   /// `Add New {entity}`
   String addCustomGeneric(Object entity) {
     return Intl.message(
@@ -1039,6 +1049,146 @@ class S {
       name: 'tagCopyFrom',
       desc: '',
       args: [tag],
+    );
+  }
+
+  /// `Bold`
+  String get formatBold {
+    return Intl.message(
+      'Bold',
+      name: 'formatBold',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Italic`
+  String get formatItalic {
+    return Intl.message(
+      'Italic',
+      name: 'formatItalic',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Heading {n}`
+  String formatHeading(Object n) {
+    return Intl.message(
+      'Heading $n',
+      name: 'formatHeading',
+      desc: '',
+      args: [n],
+    );
+  }
+
+  /// `Header {n}`
+  String formatHeader(Object n) {
+    return Intl.message(
+      'Header $n',
+      name: 'formatHeader',
+      desc: '',
+      args: [n],
+    );
+  }
+
+  /// `Header {n}`
+  String formatHeaderNoNum(Object n) {
+    return Intl.message(
+      'Header $n',
+      name: 'formatHeaderNoNum',
+      desc: '',
+      args: [n],
+    );
+  }
+
+  /// `Cell {n}`
+  String formatCell(Object n) {
+    return Intl.message(
+      'Cell $n',
+      name: 'formatCell',
+      desc: '',
+      args: [n],
+    );
+  }
+
+  /// `Headings`
+  String get formatHeadings {
+    return Intl.message(
+      'Headings',
+      name: 'formatHeadings',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Bullet List`
+  String get formatBulletList {
+    return Intl.message(
+      'Bullet List',
+      name: 'formatBulletList',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Numbered List`
+  String get formatNumberedList {
+    return Intl.message(
+      'Numbered List',
+      name: 'formatNumberedList',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `URL`
+  String get formatURL {
+    return Intl.message(
+      'URL',
+      name: 'formatURL',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Image URL`
+  String get formatImageURL {
+    return Intl.message(
+      'Image URL',
+      name: 'formatImageURL',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Table`
+  String get formatTable {
+    return Intl.message(
+      'Table',
+      name: 'formatTable',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Formatting Help`
+  String get formatHelp {
+    return Intl.message(
+      'Formatting Help',
+      name: 'formatHelp',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Preview`
+  String get formatPreview {
+    return Intl.message(
+      'Preview',
+      name: 'formatPreview',
+      desc: '',
+      args: [],
     );
   }
 }
