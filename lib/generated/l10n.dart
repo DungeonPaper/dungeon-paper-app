@@ -621,7 +621,7 @@ class S {
     );
   }
 
-  /// `{runtimeType, select, CharacterClass {Classes} Item {Items} Monster {Monsters} Move {Moves} Race {Races} Spell {Spells} Tag {Tags} MoveCategory {Categories} other {{runtimeType}s}}`
+  /// `{runtimeType, select, CharacterClass {Classes} Item {Items} Monster {Monsters} Move {Moves} Race {Races} Spell {Spells} Tag {Tags} MoveCategory {Categories} Dice {Dice} other {{runtimeType}s}}`
   String entityPlural(Object runtimeType) {
     return Intl.select(
       runtimeType,
@@ -634,6 +634,7 @@ class S {
         'Spell': 'Spells',
         'Tag': 'Tags',
         'MoveCategory': 'Categories',
+        'Dice': 'Dice',
         'other': '${runtimeType}s',
       },
       name: 'entityPlural',
@@ -1187,6 +1188,26 @@ class S {
     return Intl.message(
       'Preview',
       name: 'formatPreview',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Sides`
+  String get diceSides {
+    return Intl.message(
+      'Sides',
+      name: 'diceSides',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Amount`
+  String get diceAmount {
+    return Intl.message(
+      'Amount',
+      name: 'diceAmount',
       desc: '',
       args: [],
     );

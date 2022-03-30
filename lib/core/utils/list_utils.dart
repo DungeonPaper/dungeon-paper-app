@@ -70,6 +70,9 @@ List<T> updateByKey<T>(List<T> list, Iterable<T> items, {dynamic Function(T item
       .toList();
 }
 
+List<T> updateByIndex<T>(List<T> list, T item, int index) =>
+    enumerate<T>(list).map((x) => x.index == index ? item : x.value).toList();
+
 List<T> addByKey<T>(List<T> list, Iterable<T> items, {dynamic Function(T item)? key}) {
   final keyGetter = key ?? keyFor;
   final keys = items.map(keyGetter).toList();

@@ -35,33 +35,40 @@ class FormTagsInputData extends BaseInputData<List<dw.Tag>> {
 
   @override
   Widget build(BuildContext context) {
-    return Wrap(
-      spacing: 8,
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        for (final tag in TagUtils.excludeMetaTags(value))
-          TagChip(
-            tag: tag,
-            onPressed: () => Get.dialog(
-              AddTagDialog(
+        Text(S.current.entityPlural(dw.Tag), style: Theme.of(context).textTheme.caption),
+        Wrap(
+          spacing: 8,
+          crossAxisAlignment: WrapCrossAlignment.center,
+          children: [
+            for (final tag in TagUtils.excludeMetaTags(value))
+              TagChip(
                 tag: tag,
-                onSave: (tag) {
-                  controller.value = updateByKey(controller.value, [tag]);
-                },
+                onPressed: () => Get.dialog(
+                  AddTagDialog(
+                    tag: tag,
+                    onSave: (tag) {
+                      controller.value = updateByKey(controller.value, [tag]);
+                    },
+                  ),
+                ),
+                onDeleted: () => controller.value = removeByKey(controller.value, [tag]),
+              ),
+            TagChip(
+              tag: dw.Tag(name: S.current.addGeneric(dw.Tag), value: null),
+              icon: const Icon(Icons.add),
+              backgroundColor: Theme.of(context).primaryColor,
+              onPressed: () => Get.dialog(
+                AddTagDialog(
+                  onSave: (tag) {
+                    controller.value = [...controller.value, tag];
+                  },
+                ),
               ),
             ),
-            onDeleted: () => controller.value = removeByKey(controller.value, [tag]),
-          ),
-        TagChip(
-          tag: dw.Tag(name: S.current.addGeneric(dw.Tag), value: null),
-          icon: const Icon(Icons.add),
-          backgroundColor: Theme.of(context).primaryColor,
-          onPressed: () => Get.dialog(
-            AddTagDialog(
-              onSave: (tag) {
-                controller.value = [...controller.value, tag];
-              },
-            ),
-          ),
+          ],
         ),
       ],
     );

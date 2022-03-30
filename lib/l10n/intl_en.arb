@@ -82,7 +82,7 @@
   "createCharRandomizeNameTooltipTouch": "Tap to generate a random name",
   "createCharRandomizeNameTooltipClick": "Click to generate a random name",
   "entity": "{runtimeType, select, CharacterClass {Class} Item {Item} Monster {Monster} Move {Move} Race {Race} Spell {Spell} Tag {Tag} MoveCategory {Category} other {{runtimeType}}}",
-  "entityPlural": "{runtimeType, select, CharacterClass {Classes} Item {Items} Monster {Monsters} Move {Moves} Race {Races} Spell {Spells} Tag {Tags} MoveCategory {Categories} other {{runtimeType}s}}",
+  "entityPlural": "{runtimeType, select, CharacterClass {Classes} Item {Items} Monster {Monsters} Move {Moves} Race {Races} Spell {Spells} Tag {Tags} MoveCategory {Categories} Dice {Dice} other {{runtimeType}s}}",
   "pluralize": "{count, plural, one {One {singular}} other {{count} {plural}}}",
   "select": "Select",
   "selectToAdd": "Select {string} to add",
@@ -135,5 +135,7 @@
   "formatImageURL": "Image URL",
   "formatTable": "Table",
   "formatHelp": "Formatting Help",
-  "formatPreview": "Preview"
+  "formatPreview": "Preview",
+  "diceSides": "Sides",
+  "diceAmount": "Amount"
 }

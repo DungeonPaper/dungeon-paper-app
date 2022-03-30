@@ -101,7 +101,11 @@ class _RepositoryItemFormState<T extends WithMeta> extends State<RepositoryItemF
   Widget buildForm(BuildContext context) {
     switch (T) {
       case Move:
-        return AddMoveForm(onChange: setEntity, classKey: asList(widget.extraData['classKeys']));
+        return AddMoveForm(
+          onChange: setEntity,
+          classKey: asList(widget.extraData['classKeys']),
+          type: widget.type,
+        );
       default:
         throw UnsupportedError('Unsupported type: $T');
     }

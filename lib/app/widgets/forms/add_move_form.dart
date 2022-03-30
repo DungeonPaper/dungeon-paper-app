@@ -2,6 +2,7 @@ import 'package:dungeon_paper/app/data/models/meta.dart';
 import 'package:dungeon_paper/app/data/models/move.dart';
 import 'package:dungeon_paper/app/widgets/forms/dynamic_form/dynamic_form.dart';
 import 'package:dungeon_paper/app/widgets/forms/dynamic_form/form_input_data.dart';
+import 'package:dungeon_paper/app/widgets/forms/repository_item_form.dart';
 import 'package:dungeon_paper/generated/l10n.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -11,10 +12,12 @@ class AddMoveForm extends GetView<AddMoveFormController> {
     Key? key,
     required this.onChange,
     required this.classKey,
+    required this.type,
   }) : super(key: key);
 
   final void Function(Move move) onChange;
   final List<String> classKey;
+  final ItemFormType type;
 
   @override
   Widget build(BuildContext context) {
@@ -23,20 +26,20 @@ class AddMoveForm extends GetView<AddMoveFormController> {
       onChange: (d) => onChange(controller.setData(d)),
       builder: (context, inputs) {
         return ListView(
-          padding: const EdgeInsets.symmetric(horizontal: 8).copyWith(bottom: 8),
+          padding: const EdgeInsets.symmetric(horizontal: 16).copyWith(bottom: 70),
           children: [
             inputs[0],
-            const SizedBox(height: 8),
+            const SizedBox(height: 16),
             Row(
               children: [
                 Expanded(child: inputs[1]),
-                const SizedBox(width: 8),
+                const SizedBox(width: 16),
                 Expanded(child: inputs[2]),
               ],
             ),
-            const SizedBox(height: 8),
+            const SizedBox(height: 16),
             for (final input in inputs.sublist(3))
-              Padding(padding: const EdgeInsets.only(bottom: 8), child: input),
+              Padding(padding: const EdgeInsets.only(bottom: 16), child: input),
           ],
         );
       },
@@ -63,6 +66,7 @@ class AddMoveFormController extends DynamicFormController<Move> {
         'description': move!.description,
         'explanation': move!.explanation,
         'tags': move!.tags,
+        'dice': move!.dice,
         'classKeys': move!.classKeys,
       });
     }
@@ -84,6 +88,7 @@ class AddMoveFormController extends DynamicFormController<Move> {
       description: data['description'],
       explanation: data['explanation'],
       tags: data['tags'],
+      dice: data['dice'],
       classKeys: data['classKeys'] is List ? data['classKeys'] : [data['classKeys']],
     );
 
@@ -99,7 +104,6 @@ class AddMoveFormController extends DynamicFormController<Move> {
         name: 'name',
         data: FormTextInputData(
           label: 'Move name',
-          autofocus: true,
           textCapitalization: TextCapitalization.words,
           text: entity.value.name,
         ),
@@ -152,6 +156,10 @@ class AddMoveFormController extends DynamicFormController<Move> {
           textCapitalization: TextCapitalization.sentences,
           text: entity.value.explanation,
         ),
+      ),
+      FormInputData<FormDicesInputData>(
+        name: 'dice',
+        data: FormDicesInputData(value: entity.value.dice),
       ),
       FormInputData<FormTagsInputData>(
         name: 'tags',

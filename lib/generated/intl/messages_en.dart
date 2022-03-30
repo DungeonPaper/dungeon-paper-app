@@ -87,6 +87,7 @@ class MessageLookup extends MessageLookupByLibrary {
             'Spell': 'Spells',
             'Tag': 'Tags',
             'MoveCategory': 'Categories',
+            'Dice': 'Dice',
             'other': '${runtimeType}s',
           })}";
 
@@ -234,6 +235,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "createCharacterTitle":
             MessageLookupByLibrary.simpleMessage("Create Character"),
         "createGeneric": m13,
+        "diceAmount": MessageLookupByLibrary.simpleMessage("Amount"),
+        "diceSides": MessageLookupByLibrary.simpleMessage("Sides"),
         "dynamicCategoriesItems":
             MessageLookupByLibrary.simpleMessage("Equipped Items"),
         "dynamicCategoriesMoves":
