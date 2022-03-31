@@ -2,7 +2,6 @@ import 'dart:async';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:cloud_firestore/cloud_firestore.dart' as fs;
-import 'package:flutter/material.dart';
 import 'package:localstore/localstore.dart';
 
 typedef DocData = Map<String, dynamic>;

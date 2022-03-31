@@ -1,11 +1,9 @@
 import 'dart:convert';
 import 'package:dungeon_world_data/dungeon_world_data.dart' as dw;
-import 'package:flutter/material.dart';
 export 'package:dungeon_world_data/move.dart' show MoveCategory;
 
 import '../../../core/dw_icons.dart';
 import '../../../core/utils/uuid.dart';
-import '../../widgets/atoms/svg_icon.dart';
 import 'meta.dart';
 
 class Move extends dw.Move implements WithMeta {

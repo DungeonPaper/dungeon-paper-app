@@ -10,7 +10,6 @@ import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
 
 import '../models/character.dart';
-import '../models/character_class.dart';
 import '../models/character_stats.dart';
 import '../models/meta.dart';
 import '../models/move.dart';

@@ -284,7 +284,7 @@ class FormTextInputData extends BaseInputData<String> {
             }[value]
                 ?.call(),
             child: RichButton(
-              icon: Icon(Icons.format_size),
+              icon: const Icon(Icons.format_size),
               tooltip: S.current.formatHeadings,
             ),
           ),

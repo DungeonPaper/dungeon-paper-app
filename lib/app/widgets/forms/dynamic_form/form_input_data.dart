@@ -6,7 +6,6 @@ import 'package:dungeon_paper/app/model_utils/dice_utils.dart';
 import 'package:dungeon_paper/app/model_utils/tag_utils.dart';
 import 'package:dungeon_paper/app/themes/themes.dart';
 import 'package:dungeon_paper/app/widgets/atoms/select_box.dart';
-import 'package:dungeon_paper/app/widgets/chips/advanced_chip.dart';
 import 'package:dungeon_paper/app/widgets/chips/dice_chip.dart';
 import 'package:dungeon_paper/app/widgets/chips/tag_chip.dart';
 import 'package:dungeon_paper/app/widgets/dialogs/add_dice_dialog.dart';

@@ -3,7 +3,6 @@ import 'package:dungeon_paper/app/data/services/repository_service.dart';
 import 'package:dungeon_paper/app/themes/button_themes.dart';
 import 'package:dungeon_paper/app/themes/themes.dart';
 import 'package:dungeon_paper/app/widgets/atoms/select_box.dart';
-import 'package:dungeon_paper/core/utils/string_utils.dart';
 import 'package:dungeon_paper/generated/l10n.dart';
 import 'package:flutter/material.dart';
 import 'package:dungeon_world_data/dungeon_world_data.dart' as dw;
@@ -106,7 +105,7 @@ class _AddDiceDialogState extends State<AddDiceDialog> {
                     ),
                   ),
                   onPressed: () => setState(() => modifierType = ModifierType.fixed),
-                  child: Text('Fixed Value'),
+                  child: const Text('Fixed Value'),
                 ),
               ),
               Expanded(
@@ -125,7 +124,7 @@ class _AddDiceDialogState extends State<AddDiceDialog> {
                     ),
                   ),
                   onPressed: () => setState(() => modifierType = ModifierType.stat),
-                  child: Text('Stat'),
+                  child: const Text('Stat'),
                 ),
               ),
             ],
@@ -134,14 +133,14 @@ class _AddDiceDialogState extends State<AddDiceDialog> {
             Padding(
               padding: const EdgeInsets.only(top: 4),
               child: TextFormField(
-                decoration: InputDecoration(
+                decoration: const InputDecoration(
                   filled: true,
                   // TODO intl
                   hintText: 'Number, e.g. 2 or -1',
                   label: Text('Modifier value'),
                 ),
                 controller: modifierNum,
-                keyboardType: TextInputType.numberWithOptions(decimal: false),
+                keyboardType: const TextInputType.numberWithOptions(decimal: false),
               ),
             ),
           if (modifierType == ModifierType.stat)
@@ -149,7 +148,7 @@ class _AddDiceDialogState extends State<AddDiceDialog> {
               padding: const EdgeInsets.only(top: 4),
               child: SelectBox<String>(
                 value: modifierStat,
-                hint: Text('Select Stat'),
+                hint: const Text('Select Stat'),
                 onChanged: (value) => setState(() => modifierStat = value),
                 items: [
                   for (final stat in widget.rollStats.stats)

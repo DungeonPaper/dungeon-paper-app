@@ -8,7 +8,7 @@ class AdvancedChip extends StatelessWidget
         CheckmarkableChipAttributes,
         DisabledChipAttributes,
         TappableChipAttributes {
-  AdvancedChip({
+  const AdvancedChip({
     Key? key,
     required this.label,
     this.avatar,
@@ -106,6 +106,7 @@ class AdvancedChip extends StatelessWidget
   @override
   final ShapeBorder avatarBorder;
 
+  @override
   bool get useDeleteButtonTooltip => false;
 
   @override
@@ -143,6 +144,5 @@ class AdvancedChip extends StatelessWidget
       isEnabled: isEnabled, // && (onSelected != null || onDeleted != null || onPressed != null),
       avatarBorder: avatarBorder,
     );
-    ;
   }
 }

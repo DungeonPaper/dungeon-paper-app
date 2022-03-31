@@ -15,7 +15,6 @@ import 'package:dungeon_paper/core/http/api_requests/search.dart';
 import 'package:dungeon_paper/core/storage_handler/storage_handler.dart';
 
 import 'package:dungeon_world_data/dungeon_world_data.dart' as dw;
-import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class RepositoryService extends GetxService {
