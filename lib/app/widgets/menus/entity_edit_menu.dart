@@ -8,11 +8,15 @@ class EntityEditMenu extends StatelessWidget {
     required this.onDelete,
   }) : super(key: key);
 
-  final void Function() onEdit;
-  final void Function() onDelete;
+  final void Function()? onEdit;
+  final void Function()? onDelete;
 
   @override
   Widget build(BuildContext context) {
+    if (onEdit == null && onDelete == null) {
+      return Container();
+    }
+
     return Material(
       type: MaterialType.transparency,
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
@@ -22,48 +26,50 @@ class EntityEditMenu extends StatelessWidget {
           padding: EdgeInsets.all(8),
           child: Icon(Icons.more_vert),
         ),
-        onSelected: (value) => <String, void Function()>{
+        onSelected: (value) => <String, void Function()?>{
           'remove': onDelete,
           'edit': onEdit,
         }[value]
             ?.call(),
         itemBuilder: (context) => [
-          PopupMenuItem(
-            child: Row(
-              children: [
-                const SizedBox(
-                  width: 40,
-                  child: Align(
-                    alignment: Alignment.centerLeft,
-                    child: Icon(Icons.edit),
+          if (onEdit != null)
+            PopupMenuItem(
+              child: Row(
+                children: [
+                  const SizedBox(
+                    width: 40,
+                    child: Align(
+                      alignment: Alignment.centerLeft,
+                      child: Icon(Icons.edit),
+                    ),
+                  ),
+                  Text(S.current.edit),
+                ],
+              ),
+              value: 'edit',
+            ),
+          if (onDelete != null)
+            PopupMenuItem(
+              child: DefaultTextStyle.merge(
+                style: TextStyle(color: Theme.of(context).errorColor),
+                child: IconTheme(
+                  data: IconThemeData(color: Theme.of(context).errorColor),
+                  child: Row(
+                    children: [
+                      const SizedBox(
+                        width: 40,
+                        child: Align(
+                          alignment: Alignment.centerLeft,
+                          child: Icon(Icons.delete),
+                        ),
+                      ),
+                      Text(S.current.remove),
+                    ],
                   ),
                 ),
-                Text(S.current.edit),
-              ],
-            ),
-            value: 'edit',
-          ),
-          PopupMenuItem(
-            child: DefaultTextStyle.merge(
-              style: TextStyle(color: Theme.of(context).errorColor),
-              child: IconTheme(
-                data: IconThemeData(color: Theme.of(context).errorColor),
-                child: Row(
-                  children: [
-                    const SizedBox(
-                      width: 40,
-                      child: Align(
-                        alignment: Alignment.centerLeft,
-                        child: Icon(Icons.delete),
-                      ),
-                    ),
-                    Text(S.current.remove),
-                  ],
-                ),
               ),
+              value: 'remove',
             ),
-            value: 'remove',
-          ),
         ],
       ),
     );

@@ -2,7 +2,6 @@ import 'package:dungeon_paper/app/data/models/roll_stats.dart';
 import 'package:dungeon_paper/app/widgets/atoms/svg_icon.dart';
 import 'package:dungeon_paper/core/dw_icons.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/material.dart' as m show TextDirection;
 
 class RollStatChip extends StatelessWidget {
   final RollStat stat;

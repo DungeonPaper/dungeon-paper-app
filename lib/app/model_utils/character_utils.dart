@@ -123,4 +123,35 @@ class CharacterUtils {
               extraData: const {},
             ),
           );
+
+  // COMBINED
+
+  static Character updateByType<T>(Character char, Iterable<T> items) => char.copyWith(
+        moves: T == Move ? updateByKey(listByType<Move>(char).toList(), items.cast<Move>()) : null,
+        spells:
+            T == Spell ? updateByKey(listByType<Spell>(char).toList(), items.cast<Spell>()) : null,
+        items: T == Item ? updateByKey(listByType<Item>(char).toList(), items.cast<Item>()) : null,
+        notes: T == Note ? updateByKey(listByType<Note>(char).toList(), items.cast<Note>()) : null,
+      );
+  static Character addByType<T>(Character char, Iterable<T> items) => char.copyWith(
+        moves: T == Move ? addByKey(listByType<Move>(char).toList(), items.cast<Move>()) : null,
+        spells: T == Spell ? addByKey(listByType<Spell>(char).toList(), items.cast<Spell>()) : null,
+        items: T == Item ? addByKey(listByType<Item>(char).toList(), items.cast<Item>()) : null,
+        notes: T == Note ? addByKey(listByType<Note>(char).toList(), items.cast<Note>()) : null,
+      );
+  static Character removeByType<T>(Character char, Iterable<T> items) => char.copyWith(
+        moves: T == Move ? removeByKey(listByType<Move>(char).toList(), items.cast<Move>()) : null,
+        spells:
+            T == Spell ? removeByKey(listByType<Spell>(char).toList(), items.cast<Spell>()) : null,
+        items: T == Item ? removeByKey(listByType<Item>(char).toList(), items.cast<Item>()) : null,
+        notes: T == Note ? removeByKey(listByType<Note>(char).toList(), items.cast<Note>()) : null,
+      );
+
+  static Iterable<T> listByType<T>(Character char) => {
+        Move: char.moves,
+        Spell: char.spells,
+        Item: char.items,
+        Note: char.notes,
+      }[T]!
+          .cast<T>();
 }

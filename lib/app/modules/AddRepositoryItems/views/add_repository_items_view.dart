@@ -18,7 +18,9 @@ typedef CardBuilder<T> = Widget Function(
   required bool selectable,
   required Widget label,
   required Widget icon,
-  required void Function()? onToggle,
+  void Function()? onToggle,
+  void Function(T item)? onUpdate,
+  void Function(T item)? onDelete,
 });
 
 class AddRepositoryItemsView<T extends WithMeta, F extends EntityFilters<T>>
@@ -91,23 +93,18 @@ class AddRepositoryItemsView<T extends WithMeta, F extends EntityFilters<T>>
                       filters: playbookFilters,
                       extraData: extraData,
                       children: builtInList.map(
-                        (item) => _wrapWithSelection(context, item),
+                        (item) => _wrapWithSelection(context, item, FiltersGroup.playbook),
                       ),
                     ),
                     AddRepositoryItemCardList<T, F>(
                       group: FiltersGroup.my,
-                      onSave: (item) {
-                        controller.toggle(item, true);
-                        debugPrint('Saving $item');
-                        StorageHandler.instance
-                            .create('my$storageKey', keyFor(item), toJsonFor(item));
-                      },
+                      onSave: _onSave,
                       extraData: extraData,
                       useFilters: useFilters,
                       filtersBuilder: filtersBuilder,
                       filters: myFilters,
                       children: myList.map(
-                        (item) => _wrapWithSelection(context, item),
+                        (item) => _wrapWithSelection(context, item, FiltersGroup.my),
                       ),
                     ),
                     Container(),
@@ -143,7 +140,19 @@ class AddRepositoryItemsView<T extends WithMeta, F extends EntityFilters<T>>
     );
   }
 
-  Widget _wrapWithSelection(BuildContext context, T item) => Obx(
+  void _onSave(T item) {
+    controller.toggle(item, true);
+    debugPrint('Saving $item');
+    StorageHandler.instance.create('my$storageKey', keyFor(item), toJsonFor(item));
+  }
+
+  void _onDelete(T item) {
+    controller.toggle(item, true);
+    debugPrint('Saving $item');
+    StorageHandler.instance.delete('my$storageKey', keyFor(item));
+  }
+
+  Widget _wrapWithSelection(BuildContext context, T item, FiltersGroup group) => Obx(
         () {
           var selected = controller.isSelected(item);
           var selectable = controller.isSelectable(item, selections);
@@ -178,6 +187,8 @@ class AddRepositoryItemsView<T extends WithMeta, F extends EntityFilters<T>>
                         : Icons.remove
                     : Icons.check,
               ),
+              onUpdate: group == FiltersGroup.my ? _onSave : null,
+              onDelete: group == FiltersGroup.my ? _onDelete : null,
             ),
           );
         },

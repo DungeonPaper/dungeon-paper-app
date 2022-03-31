@@ -1,8 +1,11 @@
+import 'package:dungeon_paper/app/data/models/character.dart';
 import 'package:dungeon_paper/app/data/models/item.dart';
+import 'package:dungeon_paper/app/model_utils/character_utils.dart';
 import 'package:dungeon_paper/app/modules/AddRepositoryItems/controllers/add_repository_items_controller.dart';
 import 'package:dungeon_paper/app/modules/AddRepositoryItems/views/add_repository_items_view.dart';
 import 'package:dungeon_paper/app/themes/button_themes.dart';
 import 'package:dungeon_paper/app/widgets/cards/item_card.dart';
+import 'package:dungeon_paper/app/widgets/menus/entity_edit_menu.dart';
 import 'package:dungeon_paper/generated/l10n.dart';
 import 'package:flutter/material.dart';
 
@@ -19,6 +22,7 @@ class AddItemsView extends GetView<AddRepositoryItemsController<Item, ItemFilter
 
   final void Function(Iterable<Item> items) onAdd;
   final Iterable<Item> selections;
+  Character get char => controller.chars.value.current!;
 
   @override
   Widget build(BuildContext context) {
@@ -36,7 +40,9 @@ class AddItemsView extends GetView<AddRepositoryItemsController<Item, ItemFilter
         item, {
         required selected,
         required selectable,
-        required onToggle,
+        onToggle,
+        onUpdate,
+        onDelete,
         required label,
         required icon,
       }) =>
@@ -44,6 +50,15 @@ class AddItemsView extends GetView<AddRepositoryItemsController<Item, ItemFilter
         item: item,
         showStar: false,
         actions: [
+          EntityEditMenu(
+            onEdit: onUpdate != null
+                ? CharacterUtils.openItemPage(
+                    item: item,
+                    onSave: onUpdate,
+                  )
+                : null,
+            onDelete: onDelete != null ? () => onDelete(item) : null,
+          ),
           ElevatedButton.icon(
             style: ButtonThemes.primaryElevated(context),
             onPressed: onToggle,
