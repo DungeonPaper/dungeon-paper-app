@@ -20,10 +20,10 @@ class DynamicForm extends StatefulWidget {
   final Widget Function(BuildContext context, List<Widget> inputs) builder;
 
   static Widget _defaultBuilder(BuildContext context, List<Widget> inputs) => ListView(
-        padding: const EdgeInsets.symmetric(horizontal: 8).copyWith(bottom: 8),
+        padding: const EdgeInsets.symmetric(horizontal: 16).copyWith(bottom: 70),
         children: [
           for (final input in inputs)
-            Padding(padding: const EdgeInsets.only(bottom: 8), child: input),
+            Padding(padding: const EdgeInsets.only(bottom: 16), child: input),
         ],
       );
 
@@ -84,5 +84,13 @@ abstract class DynamicFormController<T> extends GetxController {
 
   abstract final Rx<T> entity;
   T setData(Map<String, dynamic> data);
-  abstract final List<FormInputData> inputs;
+  late final List<FormInputData> inputs;
+
+  FutureOr<void> init();
+
+  @override
+  void onInit() {
+    super.onInit();
+    init();
+  }
 }

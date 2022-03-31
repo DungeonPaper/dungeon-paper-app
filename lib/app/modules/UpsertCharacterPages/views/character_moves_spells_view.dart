@@ -170,6 +170,8 @@ class CharacterMovesSpellsView extends GetView<CharacterMovesSpellsController> {
                       );
                       updateControllers();
                     },
+                    rollStats: controller.ctrl.rollStats.value!,
+                    classKeys: [controller.ctrl.charClass.value!.key],
                     selections: controller.spells,
                   ),
                   binding: AddRepositoryItemsBinding(),

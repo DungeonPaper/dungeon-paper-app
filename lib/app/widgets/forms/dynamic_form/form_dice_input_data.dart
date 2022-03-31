@@ -115,13 +115,11 @@ class FormDiceInputData extends BaseInputData<List<dw.Dice>> {
   void _refreshGuess() {
     final guessStr = guessInputs.map((i) => i.data.value).join(' ');
     guesses = DiceUtils.guessFromString(guessStr);
-    debugPrint('Guesses: $guesses');
     controller.value = [...controller.value];
   }
 
   void Function(dynamic event) _listen(String name) {
     return (data) {
-      debugPrint('guess listener $name: $data');
       _resultsCache[name] = data;
       _refreshGuess();
     };

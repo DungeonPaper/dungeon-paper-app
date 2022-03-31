@@ -1,3 +1,4 @@
+import 'package:dungeon_paper/app/data/models/roll_stats.dart';
 import 'package:dungeon_paper/app/data/models/spell.dart';
 import 'package:dungeon_paper/app/modules/AddRepositoryItems/controllers/add_repository_items_controller.dart';
 import 'package:dungeon_paper/app/modules/AddRepositoryItems/views/add_repository_items_view.dart';
@@ -15,10 +16,14 @@ class AddSpellsView extends GetView<AddRepositoryItemsController<Spell, SpellFil
     Key? key,
     required this.onAdd,
     required this.selections,
+    required this.classKeys,
+    required this.rollStats,
   }) : super(key: key);
 
   final void Function(Iterable<Spell> spells) onAdd;
   final Iterable<Spell> selections;
+  final List<String> classKeys;
+  final RollStats rollStats;
 
   @override
   Widget build(BuildContext context) {
@@ -32,6 +37,7 @@ class AddSpellsView extends GetView<AddRepositoryItemsController<Spell, SpellFil
         onChange: (f) => onChange(group, f),
         searchController: controller.search[group]!,
       ),
+      extraData: {'classKeys': classKeys, 'rollStats': rollStats},
       cardBuilder: (
         ctx,
         spell, {

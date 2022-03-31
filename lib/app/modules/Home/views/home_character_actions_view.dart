@@ -42,6 +42,7 @@ class HomeCharacterActionsView extends GetView<CharacterService> {
         }
         return ListView(
           children: [
+            // MOVES LIST
             ExpansionRow(
               initiallyExpanded: true,
               title: Text(S.current.moves),
@@ -56,7 +57,7 @@ class HomeCharacterActionsView extends GetView<CharacterService> {
                       ),
                       rollStats: char.rollStats,
                       selections: char.moves,
-                      classKeys: [controller.current!.characterClass.key],
+                      classKeys: [char.characterClass.key],
                     ),
                     binding: AddRepositoryItemsBinding(),
                     arguments: {
@@ -108,6 +109,8 @@ class HomeCharacterActionsView extends GetView<CharacterService> {
                   )
                   .toList(),
             ),
+
+            // SPELLS LIST
             ExpansionRow(
               initiallyExpanded: true,
               title: Text(S.current.spells),
@@ -120,6 +123,8 @@ class HomeCharacterActionsView extends GetView<CharacterService> {
                           spells: addByKey(char.spells, spells),
                         ),
                       ),
+                      classKeys: [char.characterClass.key],
+                      rollStats: char.rollStats,
                       selections: char.spells,
                     ),
                     binding: AddRepositoryItemsBinding(),
@@ -138,6 +143,32 @@ class HomeCharacterActionsView extends GetView<CharacterService> {
                       padding: const EdgeInsets.only(bottom: 8),
                       child: SpellCard(
                         spell: spell,
+                        actions: [
+                          EntityEditMenu(
+                            onDelete: confirmDeleteDlg(context, spell, spell.name),
+                            onEdit: () => Get.to(
+                              () => RepositoryItemForm<Spell>(
+                                onSave: (_spell) => controller.updateCharacter(
+                                  char.copyWith(
+                                    spells: updateByKey(char.spells, [_spell]),
+                                  ),
+                                ),
+                                extraData: {
+                                  'rollStats': controller.current!.rollStats,
+                                  'classKeys': spell.classKeys,
+                                },
+                                type: ItemFormType.create,
+                              ),
+                              binding: RepositoryItemFormBinding(
+                                item: spell,
+                                extraData: {
+                                  'rollStats': controller.current!.rollStats,
+                                  'classKeys': spell.classKeys,
+                                },
+                              ),
+                            ),
+                          ),
+                        ],
                         onSave: (_spell) => controller.updateCharacter(
                           CharacterUtils.updateSpells(char, [_spell]),
                         ),
@@ -146,6 +177,8 @@ class HomeCharacterActionsView extends GetView<CharacterService> {
                   )
                   .toList(),
             ),
+
+            // ITEMS LIST
             ExpansionRow(
               initiallyExpanded: true,
               title: Text(S.current.items),
@@ -176,6 +209,30 @@ class HomeCharacterActionsView extends GetView<CharacterService> {
                       padding: const EdgeInsets.only(bottom: 8),
                       child: ItemCard(
                         item: item,
+                        actions: [
+                          EntityEditMenu(
+                            onDelete: confirmDeleteDlg(context, item, item.name),
+                            onEdit: () => Get.to(
+                              () => RepositoryItemForm<Item>(
+                                onSave: (_item) => controller.updateCharacter(
+                                  char.copyWith(
+                                    items: updateByKey(char.items, [_item]),
+                                  ),
+                                ),
+                                extraData: {
+                                  'rollStats': controller.current!.rollStats,
+                                },
+                                type: ItemFormType.create,
+                              ),
+                              binding: RepositoryItemFormBinding(
+                                item: item,
+                                extraData: {
+                                  'rollStats': controller.current!.rollStats,
+                                },
+                              ),
+                            ),
+                          ),
+                        ],
                         onSave: (_item) => controller.updateCharacter(
                           CharacterUtils.updateItems(char, [_item]),
                         ),

@@ -1,4 +1,7 @@
+import 'package:dungeon_paper/app/data/models/move.dart';
+import 'package:dungeon_paper/app/data/models/spell.dart';
 import 'package:dungeon_paper/app/widgets/forms/add_move_form.dart';
+import 'package:dungeon_paper/app/widgets/forms/add_spell_form.dart';
 import 'package:get/get.dart';
 
 class RepositoryItemFormBinding extends Bindings {
@@ -12,8 +15,17 @@ class RepositoryItemFormBinding extends Bindings {
 
   @override
   void dependencies() {
-    Get.put<AddMoveFormController>(
-      AddMoveFormController(move: item, rollStats: extraData['rollStats']),
-    );
+    switch (item.runtimeType) {
+      case Move:
+        Get.put<AddMoveFormController>(
+          AddMoveFormController(move: item, rollStats: extraData['rollStats']),
+        );
+        break;
+      case Spell:
+        Get.put<AddSpellFormController>(
+          AddSpellFormController(spell: item, rollStats: extraData['rollStats']),
+        );
+        break;
+    }
   }
 }

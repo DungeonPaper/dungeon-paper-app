@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'package:dungeon_paper/core/utils/uuid.dart';
 import 'package:dungeon_world_data/dungeon_world_data.dart' as dw;
 import 'package:flutter/material.dart';
 
@@ -73,6 +74,18 @@ class Spell extends dw.Spell implements WithMeta {
 
   factory Spell.fromJson(Map<String, dynamic> json) =>
       Spell.fromDwSpell(dw.Spell.fromJson(json), prepared: json['prepared']);
+
+  factory Spell.empty() => Spell(
+        meta: Meta.version(1),
+        classKeys: [],
+        description: '',
+        dice: [],
+        explanation: '',
+        key: uuid(),
+        name: '',
+        tags: [],
+        prepared: false,
+      );
 
   @override
   Map<String, dynamic> toJson() => {

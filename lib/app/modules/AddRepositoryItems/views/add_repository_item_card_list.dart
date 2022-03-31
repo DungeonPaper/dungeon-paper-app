@@ -1,5 +1,6 @@
 import 'package:dungeon_paper/app/data/models/meta.dart';
 import 'package:dungeon_paper/app/data/models/move.dart';
+import 'package:dungeon_paper/app/data/models/spell.dart';
 import 'package:dungeon_paper/app/modules/AddRepositoryItems/bindings/repository_item_form_binding.dart';
 import 'package:dungeon_paper/app/modules/AddRepositoryItems/controllers/add_repository_items_controller.dart';
 import 'package:dungeon_paper/app/themes/button_themes.dart';
@@ -83,6 +84,10 @@ class AddRepositoryItemCardList<T extends WithMeta, F extends EntityFilters>
     switch (T) {
       case Move:
         return Move.empty().copyWithInherited(
+          classKeys: extraData['classKeys'],
+        ) as T;
+      case Spell:
+        return Spell.empty().copyWithInherited(
           classKeys: extraData['classKeys'],
         ) as T;
       default:

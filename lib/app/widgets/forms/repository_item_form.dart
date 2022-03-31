@@ -2,6 +2,7 @@ import 'package:dungeon_paper/app/data/models/meta.dart';
 import 'package:dungeon_paper/app/data/models/move.dart';
 import 'package:dungeon_paper/app/data/models/spell.dart';
 import 'package:dungeon_paper/app/widgets/forms/add_move_form.dart';
+import 'package:dungeon_paper/app/widgets/forms/add_spell_form.dart';
 import 'package:dungeon_paper/core/utils/list_utils.dart';
 import 'package:dungeon_paper/core/utils/uuid.dart';
 import 'package:dungeon_paper/generated/l10n.dart';
@@ -102,6 +103,13 @@ class _RepositoryItemFormState<T extends WithMeta> extends State<RepositoryItemF
     switch (T) {
       case Move:
         return AddMoveForm(
+          rollStats: widget.extraData['rollStats'],
+          onChange: setEntity,
+          classKey: asList(widget.extraData['classKeys']),
+          type: widget.type,
+        );
+      case Spell:
+        return AddSpellForm(
           rollStats: widget.extraData['rollStats'],
           onChange: setEntity,
           classKey: asList(widget.extraData['classKeys']),
