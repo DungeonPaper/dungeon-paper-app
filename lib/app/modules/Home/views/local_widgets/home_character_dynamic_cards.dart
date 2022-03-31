@@ -133,7 +133,18 @@ class HomeCharacterDynamicCards extends GetView<CharacterService> {
                         onSave: (spell) => controller.updateCharacter(
                           CharacterUtils.updateSpells(controller.current!, [spell]),
                         ),
+                        extraData: {
+                          'rollStats': controller.current!.rollStats,
+                          'classKeys': spell.classKeys,
+                        },
                         type: ItemFormType.edit,
+                      ),
+                      binding: RepositoryItemFormBinding(
+                        item: spell,
+                        extraData: {
+                          'rollStats': controller.current!.rollStats,
+                          'classKeys': spell.classKeys,
+                        },
                       ),
                     ),
                     onDelete: () => awaitConfirmation(
@@ -184,8 +195,10 @@ class HomeCharacterDynamicCards extends GetView<CharacterService> {
                         onSave: (item) => controller.updateCharacter(
                           CharacterUtils.updateItems(controller.current!, [item]),
                         ),
+                        extraData: const {},
                         type: ItemFormType.edit,
                       ),
+                      binding: RepositoryItemFormBinding(item: item),
                     ),
                     onDelete: () => awaitConfirmation(
                       confirmDelete<Item>(context, item.name),
@@ -235,6 +248,7 @@ class HomeCharacterDynamicCards extends GetView<CharacterService> {
                         onSave: (note) => controller.updateCharacter(
                           CharacterUtils.updateNotes(controller.current!, [note]),
                         ),
+                        extraData: const {},
                         type: ItemFormType.edit,
                       ),
                     ),

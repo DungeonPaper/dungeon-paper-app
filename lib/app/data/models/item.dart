@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'package:dungeon_paper/app/widgets/atoms/svg_icon.dart';
 import 'package:dungeon_paper/core/dw_icons.dart';
+import 'package:dungeon_paper/core/utils/uuid.dart';
 import 'package:dungeon_world_data/dungeon_world_data.dart' as dw;
 import 'package:flutter/material.dart';
 
@@ -78,6 +79,17 @@ class Item extends dw.Item implements WithMeta {
         amount: json['amount'],
         settings: json['settings'],
         equipped: json['equipped'],
+      );
+
+  factory Item.empty() => Item(
+        description: '',
+        key: uuid(),
+        meta: Meta.version(1),
+        name: '',
+        settings: ItemSettings(),
+        tags: [],
+        amount: 1,
+        equipped: false,
       );
 
   @override

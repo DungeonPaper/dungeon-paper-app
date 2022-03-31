@@ -1,6 +1,8 @@
+import 'package:dungeon_paper/app/data/models/item.dart';
 import 'package:dungeon_paper/app/data/models/meta.dart';
 import 'package:dungeon_paper/app/data/models/move.dart';
 import 'package:dungeon_paper/app/data/models/spell.dart';
+import 'package:dungeon_paper/app/widgets/forms/add_item_form.dart';
 import 'package:dungeon_paper/app/widgets/forms/add_move_form.dart';
 import 'package:dungeon_paper/app/widgets/forms/add_spell_form.dart';
 import 'package:dungeon_paper/core/utils/list_utils.dart';
@@ -18,7 +20,7 @@ class RepositoryItemForm<T extends WithMeta> extends StatefulWidget {
   const RepositoryItemForm({
     Key? key,
     required this.onSave,
-    this.extraData = const {},
+    required this.extraData,
     required this.type,
   }) : super(key: key);
 
@@ -115,6 +117,8 @@ class _RepositoryItemFormState<T extends WithMeta> extends State<RepositoryItemF
           classKey: asList(widget.extraData['classKeys']),
           type: widget.type,
         );
+      case Item:
+        return AddItemForm(onChange: setEntity, type: widget.type);
       default:
         throw UnsupportedError('Unsupported type: $T');
     }
