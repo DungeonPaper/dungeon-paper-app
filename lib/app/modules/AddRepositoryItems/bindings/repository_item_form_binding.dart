@@ -12,8 +12,8 @@ class RepositoryItemFormBinding extends Bindings {
 
   @override
   void dependencies() {
-    Get.lazyPut<AddMoveFormController>(
-      () => AddMoveFormController(move: item, rollStats: extraData['rollStats']),
+    Get.put<AddMoveFormController>(
+      AddMoveFormController(move: item, rollStats: extraData['rollStats']),
     );
   }
 }

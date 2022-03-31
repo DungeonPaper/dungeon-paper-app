@@ -4,7 +4,7 @@ import 'package:flutter/widgets.dart';
 
 class ValueNotifierStream<T> extends Stream<T> {
   final ValueNotifier<T> notifier;
-  final controller = StreamController<T>();
+  final controller = StreamController<T>.broadcast();
 
   ValueNotifierStream(this.notifier) {
     init();
@@ -54,7 +54,7 @@ class TextEditingControllerStream extends Stream<String> {
   }
 
   void init() {
-    controller = StreamController();
+    controller = StreamController.broadcast();
     stream = controller.stream.asBroadcastStream();
     textController.addListener(listener);
   }
@@ -64,7 +64,7 @@ class TextEditingControllerStream extends Stream<String> {
   }
 
   void listener() {
-    debugPrint('Sending: ${textController.text}');
+    // debugPrint('Sending: ${textController.text}');
     controller.add(textController.text);
   }
 }

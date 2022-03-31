@@ -60,7 +60,7 @@ class _AddDiceDialogState extends State<AddDiceDialog> {
               Expanded(
                 child: TextFormField(
                   controller: amount,
-                  keyboardType: TextInputType.numberWithOptions(decimal: false),
+                  keyboardType: const TextInputType.numberWithOptions(decimal: false),
                   decoration: InputDecoration(
                     filled: true,
                     label: Text(S.current.diceAmount),
@@ -73,8 +73,6 @@ class _AddDiceDialogState extends State<AddDiceDialog> {
               Expanded(
                 child: SelectBox<int>(
                   value: sides,
-                  // ignore: unnecessary_null_comparison
-                  // selectedItemBuilder: (value) => [Text(value == null ? 'Select Stat' : value!)],
                   label: Text(S.current.diceSides),
                   items: [
                     for (final i in [4, 6, 8, 10, 12, 20, 100])
@@ -138,6 +136,7 @@ class _AddDiceDialogState extends State<AddDiceDialog> {
               child: TextFormField(
                 decoration: InputDecoration(
                   filled: true,
+                  // TODO intl
                   hintText: 'Number, e.g. 2 or -1',
                   label: Text('Modifier value'),
                 ),

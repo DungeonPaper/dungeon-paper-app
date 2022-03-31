@@ -28,30 +28,36 @@ class DynamicForm extends StatefulWidget {
       );
 
   @override
-  State<DynamicForm> createState() => _DynamicFormState();
+  State<DynamicForm> createState() => DynamicFormState();
 }
 
-class _DynamicFormState extends State<DynamicForm> {
+class DynamicFormState extends State<DynamicForm> {
   late List<StreamSubscription> listeners;
   late Map<String, dynamic> data;
 
   @override
   void initState() {
     listeners = [];
+    data = {};
     for (final input in widget.inputs) {
-      debugPrint('listener for ${input.name}');
+      debugPrint('init form data ${input.name}');
+      input.data.form = this;
       listeners.add(input.data.listen(_sendUpdate(input.name)));
+      data[input.name] = input.data.value;
     }
-    data = {
-      for (final input in widget.inputs) input.name: input.data.value,
-    };
     super.initState();
+    for (final input in widget.inputs) {
+      input.data.onFormInit();
+    }
   }
 
   @override
   void dispose() {
     for (final listener in listeners) {
       listener.cancel();
+    }
+    for (final input in widget.inputs) {
+      input.dispose();
     }
     super.dispose();
   }
@@ -60,7 +66,7 @@ class _DynamicFormState extends State<DynamicForm> {
         setState(() {
           data[name] = item;
         });
-        debugPrint('sending $data');
+        // debugPrint('sending $data');
         widget.onChange(data);
       };
 

@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:math';
 
 import 'package:dungeon_paper/app/data/models/roll_stats.dart';
+import 'package:dungeon_paper/app/model_utils/dice_utils.dart';
 import 'package:dungeon_paper/app/model_utils/tag_utils.dart';
 import 'package:dungeon_paper/app/themes/themes.dart';
 import 'package:dungeon_paper/app/widgets/atoms/select_box.dart';
@@ -10,6 +11,7 @@ import 'package:dungeon_paper/app/widgets/chips/dice_chip.dart';
 import 'package:dungeon_paper/app/widgets/chips/tag_chip.dart';
 import 'package:dungeon_paper/app/widgets/dialogs/add_dice_dialog.dart';
 import 'package:dungeon_paper/app/widgets/dialogs/add_tag_dialog.dart';
+import 'package:dungeon_paper/app/widgets/forms/dynamic_form/dynamic_form.dart';
 import 'package:dungeon_paper/core/utils/list_utils.dart';
 import 'package:dungeon_paper/core/utils/streams.dart';
 import 'package:dungeon_paper/generated/l10n.dart';
@@ -31,9 +33,13 @@ enum FormInputType {
 }
 
 abstract class BaseInputData<T> extends Stream<T> {
+  late DynamicFormState form;
+
   void dispose();
   T get value;
   Widget build(BuildContext context);
+
+  void onFormInit() {}
 }
 
 class FormInputData<T extends BaseInputData> {
@@ -45,4 +51,8 @@ class FormInputData<T extends BaseInputData> {
   final String name;
   final T data;
   Widget build(BuildContext context) => data.build(context);
+
+  void dispose() {
+    data.dispose();
+  }
 }

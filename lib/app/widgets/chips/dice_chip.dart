@@ -13,6 +13,7 @@ class DiceChip extends StatelessWidget {
     this.onDeleted,
     this.icon,
     this.backgroundColor,
+    this.label,
   }) : super(key: key);
 
   final dw.Dice dice;
@@ -20,6 +21,7 @@ class DiceChip extends StatelessWidget {
   final void Function()? onDeleted;
   final Widget? icon;
   final Color? backgroundColor;
+  final Widget? label;
 
   @override
   Widget build(BuildContext context) {
@@ -34,11 +36,9 @@ class DiceChip extends StatelessWidget {
         ),
         child: icon != null ? icon! : DiceUtils.iconOf(dice),
       ),
-      label: Text(
-        dice.toString(),
-        style: TextStyle(
-          color: theme.colorScheme.onPrimary,
-        ),
+      label: DefaultTextStyle.merge(
+        style: TextStyle(color: theme.colorScheme.onPrimary),
+        child: label ?? Text(dice.toString()),
       ),
       backgroundColor: backgroundColor ?? theme.primaryColor.withOpacity(0.7),
       labelPadding: const EdgeInsets.symmetric(horizontal: 8, vertical: 0),

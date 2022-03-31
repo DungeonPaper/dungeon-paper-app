@@ -4,6 +4,7 @@ class FormDiceInputData extends BaseInputData<List<dw.Dice>> {
   FormDiceInputData({
     required List<dw.Dice> value,
     required this.rollStats,
+    required this.guessFrom,
   }) {
     init(value);
   }
@@ -14,13 +15,31 @@ class FormDiceInputData extends BaseInputData<List<dw.Dice>> {
   late final ValueNotifier<List<dw.Dice>> controller;
   late final ValueNotifierStream<List<dw.Dice>> stream;
   late final StreamSubscription subscription;
+  late List<StreamSubscription> guessListeners;
+  late Map<String, String> _resultsCache;
+  late Set<dw.Dice> guesses;
 
   final RollStats rollStats;
+  final Set<String> guessFrom;
 
   void init(List<dw.Dice> value) {
     controller = ValueNotifier(value);
     stream = ValueNotifierStream<List<dw.Dice>>(controller);
+    guessListeners = [];
+    guesses = {};
+    _resultsCache = {};
   }
+
+  @override
+  void onFormInit() {
+    for (final field in guessInputs) {
+      debugPrint('adding listener for ${field.name}');
+      guessListeners.add(field.data.listen(_listen(field.name)));
+    }
+  }
+
+  Iterable<FormInputData<BaseInputData<dynamic>>> get guessInputs =>
+      form.widget.inputs.where((i) => guessFrom.contains(i.name));
 
   @override
   StreamSubscription<List<dw.Dice>> listen(
@@ -29,11 +48,17 @@ class FormDiceInputData extends BaseInputData<List<dw.Dice>> {
     void Function()? onDone,
     bool? cancelOnError,
   }) =>
-      stream.listen(onData, onError: onError, onDone: onDone, cancelOnError: cancelOnError);
+      stream
+          .asBroadcastStream()
+          .listen(onData, onError: onError, onDone: onDone, cancelOnError: cancelOnError);
 
   @override
   void dispose() {
     stream.dispose();
+    for (final listener in guessListeners) {
+      listener.cancel();
+    }
+    guessListeners = [];
   }
 
   @override
@@ -60,8 +85,9 @@ class FormDiceInputData extends BaseInputData<List<dw.Dice>> {
                 ),
                 onDeleted: () => controller.value = [...controller.value..removeAt(dice.index)],
               ),
-            TagChip(
-              tag: dw.Tag(name: S.current.addGeneric(dw.Dice), value: null),
+            DiceChip(
+              dice: dw.Dice.d6,
+              label: Text(S.current.addGeneric(dw.Dice)),
               icon: const Icon(Icons.add),
               backgroundColor: Theme.of(context).primaryColor,
               onPressed: () => Get.dialog(
@@ -73,9 +99,31 @@ class FormDiceInputData extends BaseInputData<List<dw.Dice>> {
                 ),
               ),
             ),
+            for (final dice in guesses
+                .where((guess) => !value.map((d) => d.toString()).contains(guess.toString())))
+              DiceChip(
+                dice: dice,
+                label: Text('Suggested: ${dice}'),
+                onPressed: () => controller.value = [...controller.value, dice],
+              ),
           ],
         ),
       ],
     );
+  }
+
+  void _refreshGuess() {
+    final guessStr = guessInputs.map((i) => i.data.value).join(' ');
+    guesses = DiceUtils.guessFromString(guessStr);
+    debugPrint('Guesses: $guesses');
+    controller.value = [...controller.value];
+  }
+
+  void Function(dynamic event) _listen(String name) {
+    return (data) {
+      debugPrint('guess listener $name: $data');
+      _resultsCache[name] = data;
+      _refreshGuess();
+    };
   }
 }

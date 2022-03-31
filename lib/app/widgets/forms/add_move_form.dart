@@ -163,7 +163,11 @@ class AddMoveFormController extends DynamicFormController<Move> {
       ),
       FormInputData<FormDiceInputData>(
         name: 'dice',
-        data: FormDiceInputData(value: entity.value.dice, rollStats: rollStats),
+        data: FormDiceInputData(
+          value: entity.value.dice,
+          rollStats: rollStats,
+          guessFrom: {'description', 'explanation'},
+        ),
       ),
       FormInputData<FormTagsInputData>(
         name: 'tags',

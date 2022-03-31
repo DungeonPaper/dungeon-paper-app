@@ -26,7 +26,9 @@ class FormTagsInputData extends BaseInputData<List<dw.Tag>> {
     void Function()? onDone,
     bool? cancelOnError,
   }) =>
-      stream.listen(onData, onError: onError, onDone: onDone, cancelOnError: cancelOnError);
+      stream
+          .asBroadcastStream()
+          .listen(onData, onError: onError, onDone: onDone, cancelOnError: cancelOnError);
 
   @override
   void dispose() {

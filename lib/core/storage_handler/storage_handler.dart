@@ -256,7 +256,7 @@ class LocalStorageDelegate extends StorageDelegate {
   Stream<DocData?> getDocumentStream(String collection, String document) {
     final key = '$collection/$document';
     if (!docStreams.containsKey(key)) {
-      docStreams[key] = StreamController();
+      docStreams[key] = StreamController.broadcast();
       getDocument(collection, document).then((d) => docStreams[key]!.add(d));
     }
     return docStreams[key]!.stream.asBroadcastStream();
@@ -264,7 +264,7 @@ class LocalStorageDelegate extends StorageDelegate {
 
   Stream<List<DocData>> getCollectionStream(String collection) {
     if (!colStreams.containsKey(collection)) {
-      colStreams[collection] = StreamController();
+      colStreams[collection] = StreamController.broadcast();
       getCollection(collection).then((d) => colStreams[collection]!.add(d));
     }
     return colStreams[collection]!.stream.asBroadcastStream();
