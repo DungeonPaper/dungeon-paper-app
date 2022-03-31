@@ -98,7 +98,7 @@ class AddRepositoryItemsView<T extends WithMeta, F extends EntityFilters<T>>
                     ),
                     AddRepositoryItemCardList<T, F>(
                       group: FiltersGroup.my,
-                      onSave: _onSave,
+                      onSave: (item) => controller.saveCustomItem(storageKey, item),
                       extraData: extraData,
                       useFilters: useFilters,
                       filtersBuilder: filtersBuilder,
@@ -140,23 +140,11 @@ class AddRepositoryItemsView<T extends WithMeta, F extends EntityFilters<T>>
     );
   }
 
-  void _onSave(T item) {
-    controller.toggle(item, true);
-    debugPrint('Saving $item');
-    StorageHandler.instance.create('my$storageKey', keyFor(item), toJsonFor(item));
-  }
-
-  void _onDelete(T item) {
-    controller.toggle(item, true);
-    debugPrint('Saving $item');
-    StorageHandler.instance.delete('my$storageKey', keyFor(item));
-  }
-
   Widget _wrapWithSelection(BuildContext context, T item, FiltersGroup group) => Obx(
         () {
           var selected = controller.isSelected(item);
           var selectable = controller.isSelectable(item, selections);
-          var onToggle = selectable ? () => controller.toggle(item, !selected) : null;
+          var onToggle = selectable ? () => controller.toggleItem(item, !selected) : null;
           return Container(
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(10),
@@ -187,8 +175,12 @@ class AddRepositoryItemsView<T extends WithMeta, F extends EntityFilters<T>>
                         : Icons.remove
                     : Icons.check,
               ),
-              onUpdate: group == FiltersGroup.my ? _onSave : null,
-              onDelete: group == FiltersGroup.my ? _onDelete : null,
+              onUpdate: group == FiltersGroup.my
+                  ? (item) => controller.saveCustomItem(storageKey, item)
+                  : null,
+              onDelete: group == FiltersGroup.my
+                  ? (item) => controller.deleteCustomItem(storageKey, item)
+                  : null,
             ),
           );
         },

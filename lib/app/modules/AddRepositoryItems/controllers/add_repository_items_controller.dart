@@ -1,6 +1,8 @@
 import 'package:dungeon_paper/app/data/services/character_service.dart';
 import 'package:dungeon_paper/app/data/services/repository_service.dart';
+import 'package:dungeon_paper/app/model_utils/model_json.dart';
 import 'package:dungeon_paper/app/model_utils/model_key.dart';
+import 'package:dungeon_paper/core/storage_handler/storage_handler.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -42,7 +44,7 @@ class AddRepositoryItemsController<T, F extends EntityFilters> extends GetxContr
     this.filters.refresh();
   }
 
-  void toggle(T item, bool state) {
+  void toggleItem(T item, bool state) {
     if (state) {
       selected.addIf(
         selected.firstWhereOrNull((element) => keyFor(element) == keyFor(item)) == null,
@@ -51,6 +53,18 @@ class AddRepositoryItemsController<T, F extends EntityFilters> extends GetxContr
     } else {
       selected.removeWhere((element) => keyFor(element) == keyFor(item));
     }
+  }
+
+  void saveCustomItem(String storageKey, T item) {
+    toggleItem(item, true);
+    debugPrint('Saving $item');
+    StorageHandler.instance.create('my$storageKey', keyFor(item), toJsonFor(item));
+  }
+
+  void deleteCustomItem(String storageKey, T item) {
+    toggleItem(item, false);
+    debugPrint('Deleting $item');
+    StorageHandler.instance.delete('my$storageKey', keyFor(item));
   }
 
   bool isSelected(T item) =>

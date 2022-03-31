@@ -4,6 +4,7 @@ import 'package:dungeon_paper/app/data/models/spell.dart';
 import 'package:dungeon_paper/app/widgets/forms/add_item_form.dart';
 import 'package:dungeon_paper/app/widgets/forms/add_move_form.dart';
 import 'package:dungeon_paper/app/widgets/forms/add_spell_form.dart';
+import 'package:dungeon_paper/app/widgets/forms/dynamic_form/dynamic_form.dart';
 import 'package:get/get.dart';
 
 class RepositoryItemFormBinding extends Bindings {
@@ -19,17 +20,17 @@ class RepositoryItemFormBinding extends Bindings {
   void dependencies() {
     switch (item.runtimeType) {
       case Move:
-        Get.put<AddMoveFormController>(
+        Get.put<DynamicFormController<Move>>(
           AddMoveFormController(move: item, rollStats: extraData['rollStats']),
         );
         break;
       case Spell:
-        Get.put<AddSpellFormController>(
+        Get.put<DynamicFormController<Spell>>(
           AddSpellFormController(spell: item, rollStats: extraData['rollStats']),
         );
         break;
       case Item:
-        Get.put<AddItemFormController>(AddItemFormController(item: item));
+        Get.put<DynamicFormController<Item>>(AddItemFormController(item: item));
         break;
     }
   }

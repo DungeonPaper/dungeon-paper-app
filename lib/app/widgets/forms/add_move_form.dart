@@ -9,7 +9,7 @@ import 'package:dungeon_paper/generated/l10n.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-class AddMoveForm extends GetView<AddMoveFormController> {
+class AddMoveForm extends GetView<DynamicFormController<Move>> {
   const AddMoveForm({
     Key? key,
     required this.onChange,

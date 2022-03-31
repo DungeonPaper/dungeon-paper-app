@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'package:dungeon_paper/core/utils/uuid.dart';
 import 'package:dungeon_world_data/dungeon_world_data.dart' as dw;
 import 'package:flutter/material.dart';
 
@@ -50,6 +51,15 @@ class Note implements WithMeta {
         description: json['description'],
         tags: List<dw.Tag>.from(json['tags'].map((x) => dw.Tag.fromJson(x))),
         favorited: json['favorited'] ?? false,
+      );
+
+  factory Note.empty() => Note(
+        description: '',
+        favorited: false,
+        key: uuid(),
+        meta: Meta.version(1),
+        tags: [],
+        title: '',
       );
 
   Map<String, dynamic> toJson() => {

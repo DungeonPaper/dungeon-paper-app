@@ -8,7 +8,7 @@ import 'package:dungeon_paper/core/utils/list_utils.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-class AddSpellForm extends GetView<AddSpellFormController> {
+class AddSpellForm extends GetView<DynamicFormController<Spell>> {
   const AddSpellForm({
     Key? key,
     required this.onChange,

@@ -6,7 +6,7 @@ import 'package:dungeon_paper/app/widgets/forms/repository_item_form.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-class AddItemForm extends GetView<AddItemFormController> {
+class AddItemForm extends GetView<DynamicFormController<Item>> {
   const AddItemForm({
     Key? key,
     required this.onChange,
