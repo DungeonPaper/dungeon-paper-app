@@ -14,28 +14,30 @@ class RollStatChip extends StatelessWidget {
   Widget build(BuildContext context) {
     final valStr = stat.value.toString();
     final statKey = stat.key;
-    // final statName = stat.name;
+    final statName = stat.name;
     final modSign = stat.modifier >= 0 ? '+' : '-';
     final modStr = stat.modifier.abs().toString();
     final theme = Theme.of(context);
     final brightness = ThemeData.estimateBrightnessForColor(theme.canvasColor);
     final isDark = brightness == Brightness.dark;
-    final rollBadgeTextOpacity = isDark ? 0.5 : 0.5;
+    final rollBadgeTextOpacity = isDark ? 0.5 : 0.6;
     final rollBadgeBgOpacity = isDark ? 0.8 : 0.1;
 
-    return Material(
+    return InkWell(
+      onTap: () => null,
       borderRadius: BorderRadius.circular(10),
-      color: theme.cardColor.withOpacity(0.5),
-      clipBehavior: Clip.none,
-      child: Stack(
-        children: [
-          InkWell(
-            onTap: () => null,
-            borderRadius: BorderRadius.circular(10),
-            child: Container(
-              height: 38,
-              padding: const EdgeInsets.symmetric(horizontal: 8),
-              child: Row(
+      child: Material(
+        borderRadius: BorderRadius.circular(10),
+        color: theme.cardColor.withOpacity(0.5),
+        clipBehavior: Clip.none,
+        child: Container(
+          // height: 48,
+          width: (MediaQuery.of(context).size.width - 32) / 3 - 16,
+          padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 8),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              Row(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
@@ -44,63 +46,66 @@ class RollStatChip extends StatelessWidget {
                     data: IconThemeData(size: 16, color: theme.colorScheme.onSurface),
                   ),
                   // const SizedBox(width: 0),
+                  const SizedBox(width: 4),
+                  Text(
+                    valStr,
+                    textScaleFactor: 1.5,
+                    style: const TextStyle(fontWeight: FontWeight.bold),
+                  ),
                   const SizedBox(width: 6),
                   Expanded(
-                    child: Padding(
-                      padding: const EdgeInsets.only(top: 2),
-                      child: RichText(
-                        textScaleFactor: 0.8,
-                        text: TextSpan(
-                          style: theme.textTheme.bodyText2,
-                          children: [
-                            TextSpan(text: statKey + ': '),
-                            TextSpan(
-                              text: valStr,
-                              style: const TextStyle(fontWeight: FontWeight.bold),
-                            )
-                          ],
-                        ),
-                      ),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(statKey),
+                        // Padding(
+                        //   padding: const EdgeInsets.only(top: 2),
+                        //   child: RichText(
+                        //     textScaleFactor: 0.8,
+                        //     text: TextSpan(
+                        //       style: theme.textTheme.bodyText2,
+                        //       children: [
+                        //         TextSpan(
+                        //           text: valStr,
+                        //           style: const TextStyle(fontWeight: FontWeight.bold),
+                        //         ),
+                        //         TextSpan(text: statKey + ': '),
+                        //       ],
+                        //     ),
+                        //   ),
+                        // ),
+                        if (showDice)
+                          Row(
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            mainAxisSize: MainAxisSize.min,
+                            children: [
+                              IconTheme(
+                                child: const SvgIcon(DwIcons.dice_d6),
+                                data: IconTheme.of(context).copyWith(
+                                  size: 10,
+                                  color:
+                                      theme.colorScheme.onSurface.withOpacity(rollBadgeTextOpacity),
+                                ),
+                              ),
+                              const SizedBox(width: 2),
+                              Text(
+                                '$modSign$modStr',
+                                textScaleFactor: 0.7,
+                                style: TextStyle(
+                                  color:
+                                      theme.colorScheme.onSurface.withOpacity(rollBadgeTextOpacity),
+                                ),
+                              ),
+                            ],
+                          ),
+                      ],
                     ),
                   ),
                 ],
               ),
-            ),
+            ],
           ),
-          if (showDice)
-            Positioned.directional(
-              textDirection: m.TextDirection.ltr,
-              end: 2,
-              top: 2,
-              child: Material(
-                color: theme.primaryColor.withOpacity(rollBadgeBgOpacity),
-                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
-                child: Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 3, vertical: 0.5),
-                  child: Row(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      IconTheme(
-                        child: const SvgIcon(DwIcons.dice_d6),
-                        data: IconTheme.of(context).copyWith(
-                          size: 10,
-                          color: theme.colorScheme.onSurface.withOpacity(rollBadgeTextOpacity),
-                        ),
-                      ),
-                      const SizedBox(width: 2),
-                      Text(
-                        '$modSign$modStr',
-                        textScaleFactor: 0.7,
-                        style: TextStyle(
-                          color: theme.colorScheme.onSurface.withOpacity(rollBadgeTextOpacity),
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-              ),
-            ),
-        ],
+        ),
       ),
     );
   }

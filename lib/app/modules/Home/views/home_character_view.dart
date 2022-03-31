@@ -48,10 +48,7 @@ class HomeCharacterView extends GetView<CharacterService> {
             )),
             p(const SizedBox(height: 16)),
             p(Center(
-              child: SizedBox(
-                width: 340,
-                child: RollStatsGrid(rollStats: rollStats),
-              ),
+              child: RollStatsGrid(rollStats: rollStats),
             )),
             p(const SizedBox(height: 16)),
             p(Center(

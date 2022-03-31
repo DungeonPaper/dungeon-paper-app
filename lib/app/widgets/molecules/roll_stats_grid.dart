@@ -15,13 +15,9 @@ class RollStatsGrid extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return GridView.count(
-      crossAxisCount: 3,
-      shrinkWrap: true,
-      physics: const NeverScrollableScrollPhysics(),
-      childAspectRatio: 2.98,
-      mainAxisSpacing: 4,
-      crossAxisSpacing: 4,
+    return Wrap(
+      spacing: 4,
+      runSpacing: 4,
       children: [
         for (var stat in rollStats)
           RollStatChip(
