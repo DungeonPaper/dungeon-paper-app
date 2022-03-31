@@ -52,7 +52,6 @@ class AddRepositoryItemCardList<T extends WithMeta, F extends EntityFilters>
                     onPressed: () => Get.to(
                       () => RepositoryItemForm<T>(
                         onSave: onSave!,
-                        extraData: extraData,
                         type: ItemFormType.create,
                       ),
                       binding: RepositoryItemFormBinding(

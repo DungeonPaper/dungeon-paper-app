@@ -78,25 +78,12 @@ class HomeCharacterActionsView extends GetView<CharacterService> {
                         actions: [
                           EntityEditMenu(
                             onDelete: confirmDeleteDlg(context, move, move.name),
-                            onEdit: () => Get.to(
-                              () => RepositoryItemForm<Move>(
-                                onSave: (_move) => controller.updateCharacter(
-                                  char.copyWith(
-                                    moves: updateByKey(char.moves, [_move]),
-                                  ),
-                                ),
-                                extraData: {
-                                  'rollStats': controller.current!.rollStats,
-                                  'classKeys': move.classKeys,
-                                },
-                                type: ItemFormType.create,
-                              ),
-                              binding: RepositoryItemFormBinding(
-                                item: move,
-                                extraData: {
-                                  'rollStats': controller.current!.rollStats,
-                                  'classKeys': move.classKeys,
-                                },
+                            onEdit: CharacterUtils.openMovePage(
+                              rollStats: char.rollStats,
+                              classKeys: move.classKeys,
+                              move: move,
+                              onSave: (_move) => controller.updateCharacter(
+                                CharacterUtils.updateMoves(char, [_move]),
                               ),
                             ),
                           ),
@@ -146,25 +133,12 @@ class HomeCharacterActionsView extends GetView<CharacterService> {
                         actions: [
                           EntityEditMenu(
                             onDelete: confirmDeleteDlg(context, spell, spell.name),
-                            onEdit: () => Get.to(
-                              () => RepositoryItemForm<Spell>(
-                                onSave: (_spell) => controller.updateCharacter(
-                                  char.copyWith(
-                                    spells: updateByKey(char.spells, [_spell]),
-                                  ),
-                                ),
-                                extraData: {
-                                  'rollStats': controller.current!.rollStats,
-                                  'classKeys': spell.classKeys,
-                                },
-                                type: ItemFormType.create,
-                              ),
-                              binding: RepositoryItemFormBinding(
-                                item: spell,
-                                extraData: {
-                                  'rollStats': controller.current!.rollStats,
-                                  'classKeys': spell.classKeys,
-                                },
+                            onEdit: CharacterUtils.openSpellPage(
+                              rollStats: char.rollStats,
+                              classKeys: spell.classKeys,
+                              spell: spell,
+                              onSave: (_spell) => controller.updateCharacter(
+                                CharacterUtils.updateSpells(char, [_spell]),
                               ),
                             ),
                           ),
@@ -212,23 +186,10 @@ class HomeCharacterActionsView extends GetView<CharacterService> {
                         actions: [
                           EntityEditMenu(
                             onDelete: confirmDeleteDlg(context, item, item.name),
-                            onEdit: () => Get.to(
-                              () => RepositoryItemForm<Item>(
-                                onSave: (_item) => controller.updateCharacter(
-                                  char.copyWith(
-                                    items: updateByKey(char.items, [_item]),
-                                  ),
-                                ),
-                                extraData: {
-                                  'rollStats': controller.current!.rollStats,
-                                },
-                                type: ItemFormType.create,
-                              ),
-                              binding: RepositoryItemFormBinding(
-                                item: item,
-                                extraData: {
-                                  'rollStats': controller.current!.rollStats,
-                                },
+                            onEdit: CharacterUtils.openItemPage(
+                              item: item,
+                              onSave: (_item) => controller.updateCharacter(
+                                CharacterUtils.updateItems(char, [_item]),
                               ),
                             ),
                           ),

@@ -13,15 +13,11 @@ class AddMoveForm extends GetView<AddMoveFormController> {
   const AddMoveForm({
     Key? key,
     required this.onChange,
-    required this.classKey,
     required this.type,
-    required this.rollStats,
   }) : super(key: key);
 
   final void Function(Move move) onChange;
-  final List<String> classKey;
   final ItemFormType type;
-  final RollStats rollStats;
 
   @override
   Widget build(BuildContext context) {

@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
 
-class ExpandedCardDialogView extends GetView {
+class ExpandedCardDialogView<T> extends GetView {
   const ExpandedCardDialogView({
     Key? key,
     required this.builder,

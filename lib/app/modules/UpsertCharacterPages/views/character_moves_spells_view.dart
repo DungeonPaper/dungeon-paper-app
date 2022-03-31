@@ -1,6 +1,7 @@
 import 'package:dungeon_paper/app/data/models/meta.dart';
 import 'package:dungeon_paper/app/data/models/move.dart';
 import 'package:dungeon_paper/app/data/models/spell.dart';
+import 'package:dungeon_paper/app/model_utils/character_utils.dart';
 import 'package:dungeon_paper/app/modules/AddRepositoryItems/bindings/add_repository_items_binding.dart';
 import 'package:dungeon_paper/app/modules/AddRepositoryItems/bindings/repository_item_form_binding.dart';
 import 'package:dungeon_paper/app/modules/AddRepositoryItems/controllers/add_repository_items_controller.dart';
@@ -61,23 +62,12 @@ class CharacterMovesSpellsView extends GetView<CharacterMovesSpellsController> {
                           showStar: false,
                           actions: [
                             EntityEditMenu(
-                              onEdit: () => Get.to(
-                                () => RepositoryItemForm<Move>(
-                                  onSave: (move) => controller.moves.value =
-                                      updateByKey(controller.moves, [move]),
-                                  type: ItemFormType.edit,
-                                  extraData: {
-                                    'rollStats': controller.ctrl.rollStats.value!,
-                                    'classKeys': move.classKeys,
-                                  },
-                                ),
-                                binding: RepositoryItemFormBinding(
-                                  item: move,
-                                  extraData: {
-                                    'rollStats': controller.ctrl.rollStats.value!,
-                                    'classKeys': move.classKeys,
-                                  },
-                                ),
+                              onEdit: CharacterUtils.openMovePage(
+                                rollStats: controller.ctrl.rollStats.value!,
+                                classKeys: move.classKeys,
+                                move: move,
+                                onSave: (_move) =>
+                                    controller.moves.value = updateByKey(controller.moves, [_move]),
                               ),
                               onDelete: () =>
                                   controller.moves.value = removeByKey(controller.moves, [move]),

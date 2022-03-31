@@ -20,12 +20,10 @@ class RepositoryItemForm<T extends WithMeta> extends StatefulWidget {
   const RepositoryItemForm({
     Key? key,
     required this.onSave,
-    required this.extraData,
     required this.type,
   }) : super(key: key);
 
   final void Function(T item) onSave;
-  final Map<String, dynamic> extraData;
   final ItemFormType type;
 
   @override
@@ -105,16 +103,12 @@ class _RepositoryItemFormState<T extends WithMeta> extends State<RepositoryItemF
     switch (T) {
       case Move:
         return AddMoveForm(
-          rollStats: widget.extraData['rollStats'],
           onChange: setEntity,
-          classKey: asList(widget.extraData['classKeys']),
           type: widget.type,
         );
       case Spell:
         return AddSpellForm(
-          rollStats: widget.extraData['rollStats'],
           onChange: setEntity,
-          classKey: asList(widget.extraData['classKeys']),
           type: widget.type,
         );
       case Item:
