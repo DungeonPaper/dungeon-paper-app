@@ -136,6 +136,8 @@
   "formatTable": "Table",
   "formatHelp": "Formatting Help",
   "formatPreview": "Preview",
+  "formatCheckboxList": "Check List (Checked)",
+  "formatCheckboxListUnchecked": "Check List (Unchecked)",
   "diceSides": "Sides",
   "diceAmount": "Amount"
 }

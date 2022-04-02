@@ -95,7 +95,9 @@ class DynamicActionCardMini extends StatelessWidget {
                     // fitContent: true,
                     // shrinkWrap: true,
                     // fitContent: true,
-                    styleSheet: MarkdownStyleSheet.fromTheme(Theme.of(context)),
+                    styleSheet: MarkdownStyleSheet.fromTheme(Theme.of(context))
+                        .copyWith(textScaleFactor: 0.9),
+                    physics: const NeverScrollableScrollPhysics(),
                     onTapLink: (text, href, title) => launch(href!),
                   ),
                 );

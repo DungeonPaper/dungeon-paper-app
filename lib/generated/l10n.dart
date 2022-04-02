@@ -1193,6 +1193,26 @@ class S {
     );
   }
 
+  /// `Check List (Checked)`
+  String get formatCheckboxList {
+    return Intl.message(
+      'Check List (Checked)',
+      name: 'formatCheckboxList',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Check List (Unchecked)`
+  String get formatCheckboxListUnchecked {
+    return Intl.message(
+      'Check List (Unchecked)',
+      name: 'formatCheckboxListUnchecked',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `Sides`
   String get diceSides {
     return Intl.message(

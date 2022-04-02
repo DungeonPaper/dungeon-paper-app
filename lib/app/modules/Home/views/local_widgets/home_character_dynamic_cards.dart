@@ -33,7 +33,7 @@ class HomeCharacterDynamicCards extends GetView<CharacterService> {
 
   @override
   Widget build(BuildContext context) {
-    const cardSize = Size(210, 157);
+    const cardSize = Size(210, 151);
     final maxContentHeight = MediaQuery.of(context).size.height - 250;
     return Obx(
       () => Column(

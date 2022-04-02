@@ -292,12 +292,22 @@ class FormTextInputData extends BaseInputData<String> {
           RichButton(
             icon: const Icon(Icons.format_list_bulleted),
             tooltip: S.current.formatBulletList,
-            onTap: _wrapOrAppendCb('\n* ', '\n* '),
+            onTap: _wrapOrAppendCb('\n- ', '\n- '),
           ),
           RichButton(
             icon: const Icon(Icons.format_list_numbered),
             tooltip: S.current.formatNumberedList,
             onTap: _wrapOrAppendCb('\n1. ', '\n1. '),
+          ),
+          RichButton(
+            icon: const Icon(Icons.check_box_outline_blank),
+            tooltip: S.current.formatCheckboxListUnchecked,
+            onTap: _wrapOrAppendCb('\n- [ ] ', '\n- [ ] ', null, 7),
+          ),
+          RichButton(
+            icon: const Icon(Icons.check_box_outlined),
+            tooltip: S.current.formatCheckboxList,
+            onTap: _wrapOrAppendCb('\n- [x] ', '\n- [x] ', null, 7),
           ),
           divider,
           RichButton(

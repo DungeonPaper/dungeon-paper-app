@@ -254,6 +254,10 @@ class MessageLookup extends MessageLookupByLibrary {
         "formatBold": MessageLookupByLibrary.simpleMessage("Bold"),
         "formatBulletList": MessageLookupByLibrary.simpleMessage("Bullet List"),
         "formatCell": m18,
+        "formatCheckboxList":
+            MessageLookupByLibrary.simpleMessage("Check List (Checked)"),
+        "formatCheckboxListUnchecked":
+            MessageLookupByLibrary.simpleMessage("Check List (Unchecked)"),
         "formatHeader": m19,
         "formatHeaderNoNum": m20,
         "formatHeading": m21,
