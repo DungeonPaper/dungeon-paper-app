@@ -33,6 +33,7 @@ class CategorizedList extends StatelessWidget {
                 children: children,
                 onReorder: onReorder!,
                 shrinkWrap: true,
+                physics: const NeverScrollableScrollPhysics(),
                 // buildDefaultDragHandles: true,
                 // padding: itemPadding,
               )
