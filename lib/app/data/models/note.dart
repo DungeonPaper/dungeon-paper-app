@@ -81,6 +81,6 @@ class Note implements WithMeta {
         'favorited': favorited,
       };
 
-  IconData get icon => Icons.note;
-  static IconData get genericIcon => Icons.note;
+  IconData get icon => Icons.speaker_notes;
+  static IconData get genericIcon => Icons.speaker_notes;
 }

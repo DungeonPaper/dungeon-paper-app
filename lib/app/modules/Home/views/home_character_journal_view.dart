@@ -86,7 +86,8 @@ class HomeCharacterJournalView extends GetView<CharacterService> {
                   ),
                 ],
                 onReorder: (oldIndex, newIndex) => controller.updateCharacter(
-                  CharacterUtils.reorderByType<Note>(char, oldIndex, newIndex, extraData: cat),
+                  CharacterUtils.reorderByType<Note>(char, oldIndex, newIndex,
+                      extraData: cat.value),
                 ),
                 children: char.notes
                     .where((note) => note.localizedCategory == cat.value)
