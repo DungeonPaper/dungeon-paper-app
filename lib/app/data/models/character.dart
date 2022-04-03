@@ -6,7 +6,9 @@ import 'dart:convert';
 import 'dart:math';
 
 import 'package:dungeon_paper/app/data/models/alignment.dart';
+import 'package:dungeon_paper/core/utils/enums.dart';
 import 'package:dungeon_paper/core/utils/math_utils.dart';
+import 'package:dungeon_paper/core/utils/string_utils.dart';
 import 'package:dungeon_paper/core/utils/uuid.dart';
 
 import 'bio.dart';
@@ -66,6 +68,10 @@ class Character implements WithMeta {
   double get currentHpPercent => clamp(stats.currentHp / maxHp, 0, 1);
   double get currentExpPercent => clamp(stats.currentExp / maxExp, 0, 1);
   int get load => stats.load ?? (characterClass.load + rollStats.loadBaseValue);
+  Set<String> get noteCategories => Set.from(
+        notes.map((note) => note.localizedCategory).toList()
+          ..sort(stringSorter(order: SortOrder.asc)),
+      );
 
   Character copyWith({
     Meta<CharacterMeta>? meta,

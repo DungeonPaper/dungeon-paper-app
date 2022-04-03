@@ -39,14 +39,23 @@ class HomeView extends GetView<CharacterService> {
       floatingActionButton: Obx(
         () {
           const pageNum = 2;
-          final inPageRange = controller.page <= pageNum && controller.page > pageNum - 1;
-          const duration = Duration(milliseconds: 300);
+
+          /// negative = page is going down
+          /// positive = page is going up
+          final direction = controller.page - controller.lastIntPage.toDouble();
+          final distance = direction.abs();
+          final inPageRange = direction >= 0.0
+              ? controller.page <= pageNum &&
+                  controller.page > pageNum - 1 &&
+                  (distance == 0.0 || distance >= 0.5)
+              : controller.page >= pageNum - 1 && (distance == 0.0 || distance <= 0.5);
+          const duration = Duration(milliseconds: 250);
 
           return AnimatedScale(
-            scale: inPageRange ? 1 : 0,
+            scale: inPageRange ? 1.0 : 0.0,
             duration: duration,
             child: AnimatedOpacity(
-              opacity: inPageRange ? 1 : 0,
+              opacity: inPageRange ? 1.0 : 0.0,
               duration: duration,
               child: FloatingActionButton.extended(
                 label: Text(S.current.createGeneric(Note)),

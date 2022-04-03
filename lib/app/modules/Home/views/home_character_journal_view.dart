@@ -31,37 +31,40 @@ class HomeCharacterJournalView extends GetView<CharacterService> {
         }
         return ListView(
           children: [
-            CategorizedList(
-              initiallyExpanded: true,
-              title: Text(S.current.notes),
-              onReorder: (oldIndex, newIndex) =>
-                  CharacterUtils.reorderByType<Note>(char, oldIndex, newIndex),
-              children: char.notes
-                  .map(
-                    (note) => Padding(
-                      key: Key('note-' + keyFor(note)),
-                      padding: const EdgeInsets.symmetric(vertical: 4),
-                      child: NoteCard(
-                        note: note,
-                        actions: [
-                          EntityEditMenu(
-                            onDelete: confirmDelete(context, note, note.title),
-                            onEdit: CharacterUtils.openNotePage(
-                              note: note,
-                              onSave: (note) => controller.updateCharacter(
-                                CharacterUtils.updateByType<Note>(char, [note]),
+            for (final cat in char.noteCategories)
+              CategorizedList(
+                initiallyExpanded: true,
+                title: Text(cat.isEmpty ? S.current.noCategory : cat),
+                onReorder: (oldIndex, newIndex) => controller.updateCharacter(
+                  CharacterUtils.reorderByType<Note>(char, oldIndex, newIndex, extraData: cat),
+                ),
+                children: char.notes
+                    .where((note) => note.localizedCategory == cat)
+                    .map(
+                      (note) => Padding(
+                        key: Key('note-' + keyFor(note)),
+                        padding: const EdgeInsets.symmetric(vertical: 4),
+                        child: NoteCard(
+                          note: note,
+                          actions: [
+                            EntityEditMenu(
+                              onDelete: confirmDelete(context, note, note.title),
+                              onEdit: CharacterUtils.openNotePage(
+                                note: note,
+                                onSave: (note) => controller.updateCharacter(
+                                  CharacterUtils.updateByType<Note>(char, [note]),
+                                ),
                               ),
                             ),
+                          ],
+                          onSave: (_note) => controller.updateCharacter(
+                            CharacterUtils.updateNotes(char, [_note]),
                           ),
-                        ],
-                        onSave: (_note) => controller.updateCharacter(
-                          CharacterUtils.updateNotes(char, [_note]),
                         ),
                       ),
-                    ),
-                  )
-                  .toList(),
-            ),
+                    )
+                    .toList(),
+              ),
           ],
         );
       }),

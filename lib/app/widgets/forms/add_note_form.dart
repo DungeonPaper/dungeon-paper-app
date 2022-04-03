@@ -4,6 +4,7 @@ import 'package:dungeon_paper/app/data/models/roll_stats.dart';
 import 'package:dungeon_paper/app/widgets/forms/dynamic_form/dynamic_form.dart';
 import 'package:dungeon_paper/app/widgets/forms/dynamic_form/form_input_data.dart';
 import 'package:dungeon_paper/app/widgets/forms/repository_item_form.dart';
+import 'package:dungeon_paper/generated/l10n.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -50,6 +51,7 @@ class AddNoteFormController extends DynamicFormController<Note> {
   Note setFromEntity(Note note) => setData({
         'title': note.title,
         'description': note.description,
+        'category': note.category,
         'tags': note.tags,
       });
 
@@ -58,10 +60,11 @@ class AddNoteFormController extends DynamicFormController<Note> {
     entity.value = entity.value.copyWith(
       meta: entity.value.meta.copyWith(
         sharing:
-            MetaSharing.createFork(entity.value!.key, entity.value!.meta.sharing, outOfSync: true),
+            MetaSharing.createFork(entity.value.key, entity.value.meta.sharing, outOfSync: true),
       ),
       title: data['title'],
       description: data['description'],
+      category: data['category'],
       tags: data['tags'],
     );
 
@@ -80,11 +83,21 @@ class AddNoteFormController extends DynamicFormController<Note> {
         ),
       ),
       FormInputData<FormTextInputData>(
+        name: 'category',
+        // TODO intl + hint text
+        data: FormTextInputData(
+          label: 'Note category',
+          textCapitalization: TextCapitalization.words,
+          text: entity.value.category,
+          hintText: S.current.noCategory,
+        ),
+      ),
+      FormInputData<FormTextInputData>(
         name: 'description',
         // TODO intl + hint text
         data: FormTextInputData(
           label: 'Note description',
-          maxLines: 10,
+          maxLines: 20,
           minLines: 5,
           rich: true,
           textCapitalization: TextCapitalization.sentences,

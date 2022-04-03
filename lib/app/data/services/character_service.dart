@@ -20,6 +20,7 @@ class CharacterService extends GetxService {
   final _current = Rx<String?>(null);
 
   final _pageController = PageController(initialPage: 1).obs;
+  final lastIntPage = 0.obs;
 
   PageController get pageController => _pageController.value;
   double get page => pageController.hasClients && pageController.positions.isNotEmpty
@@ -86,6 +87,9 @@ class CharacterService extends GetxService {
   void refreshPage() {
     _current.refresh();
     _pageController.refresh();
+    if (page == page.toInt()) {
+      lastIntPage.value = page.toInt();
+    }
   }
 
   // @override

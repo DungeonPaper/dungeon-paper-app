@@ -139,5 +139,6 @@
   "formatCheckboxList": "Check List (Checked)",
   "formatCheckboxListUnchecked": "Check List (Unchecked)",
   "diceSides": "Sides",
-  "diceAmount": "Amount"
+  "diceAmount": "Amount",
+  "noCategory": "General"
 }

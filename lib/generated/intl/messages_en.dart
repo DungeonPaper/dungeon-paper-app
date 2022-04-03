@@ -284,6 +284,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "navActions": MessageLookupByLibrary.simpleMessage("Use"),
         "navCharacter": MessageLookupByLibrary.simpleMessage("Character"),
         "navJournal": MessageLookupByLibrary.simpleMessage("Journal"),
+        "noCategory": MessageLookupByLibrary.simpleMessage("General"),
         "noDescription":
             MessageLookupByLibrary.simpleMessage("‹No description provided›"),
         "notes": MessageLookupByLibrary.simpleMessage("Notes"),

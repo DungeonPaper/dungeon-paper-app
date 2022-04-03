@@ -161,12 +161,25 @@ class CharacterUtils {
         notes: T == Note ? removeByKey(listByType<Note>(char).toList(), items.cast<Note>()) : null,
       );
 
-  static Character reorderByType<T>(Character char, int oldIndex, int newIndex) => char.copyWith(
+  static Character reorderByType<T>(Character char, int oldIndex, int newIndex,
+          {dynamic extraData}) =>
+      char.copyWith(
         moves: T == Move ? reorder(listByType<Move>(char).toList(), oldIndex, newIndex) : null,
         spells: T == Spell ? reorder(listByType<Spell>(char).toList(), oldIndex, newIndex) : null,
         items: T == Item ? reorder(listByType<Item>(char).toList(), oldIndex, newIndex) : null,
-        notes: T == Note ? reorder(listByType<Note>(char).toList(), oldIndex, newIndex) : null,
+        notes: T == Note
+            ? _reorderNotes(
+                listByType<Note>(char).toList(), oldIndex, newIndex, extraData as String)
+            : null,
       );
+
+  static List<Note> _reorderNotes(List<Note> notes, int oldIndex, int newIndex, String category) {
+    final sortedInCat = reorder(
+        notes.where((note) => note.localizedCategory == category).toList(), oldIndex, newIndex);
+    final otherCats = notes.where((note) => note.localizedCategory != category);
+
+    return [...sortedInCat, ...otherCats];
+  }
 
   static Iterable<T> listByType<T>(Character char) => {
         Move: char.moves,
