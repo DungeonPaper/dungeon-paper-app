@@ -22,6 +22,9 @@ class CharacterService extends GetxService {
   final _pageController = PageController(initialPage: 1).obs;
 
   PageController get pageController => _pageController.value;
+  double get page => pageController.hasClients && pageController.positions.isNotEmpty
+      ? pageController.page ?? 0
+      : 0;
 
   Character? get current => _current.value != null ? all[_current.value] : null;
 
@@ -82,6 +85,7 @@ class CharacterService extends GetxService {
 
   void refreshPage() {
     _current.refresh();
+    _pageController.refresh();
   }
 
   // @override

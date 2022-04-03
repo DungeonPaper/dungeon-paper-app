@@ -33,9 +33,9 @@ class CharacterUtils {
       () => Get.to(
             () => RepositoryItemForm<Move>(
               onSave: onSave,
-              type: ItemFormType.edit,
+              type: move == null ? ItemFormType.create : ItemFormType.edit,
             ),
-            binding: RepositoryItemFormBinding(
+            binding: RepositoryItemFormBinding<Move>(
               item: move,
               extraData: {
                 'rollStats': rollStats,
@@ -67,9 +67,9 @@ class CharacterUtils {
       () => Get.to(
             () => RepositoryItemForm<Spell>(
               onSave: onSave,
-              type: ItemFormType.edit,
+              type: spell == null ? ItemFormType.create : ItemFormType.edit,
             ),
-            binding: RepositoryItemFormBinding(
+            binding: RepositoryItemFormBinding<Spell>(
               item: spell,
               extraData: {
                 'rollStats': rollStats,
@@ -99,9 +99,9 @@ class CharacterUtils {
       () => Get.to(
             () => RepositoryItemForm<Item>(
               onSave: onSave,
-              type: ItemFormType.edit,
+              type: item == null ? ItemFormType.create : ItemFormType.edit,
             ),
-            binding: RepositoryItemFormBinding(
+            binding: RepositoryItemFormBinding<Item>(
               item: item,
               extraData: const {},
             ),
@@ -128,9 +128,9 @@ class CharacterUtils {
       () => Get.to(
             () => RepositoryItemForm<Note>(
               onSave: onSave,
-              type: ItemFormType.edit,
+              type: note == null ? ItemFormType.create : ItemFormType.edit,
             ),
-            binding: RepositoryItemFormBinding(
+            binding: RepositoryItemFormBinding<Note>(
               item: note,
               extraData: const {},
             ),

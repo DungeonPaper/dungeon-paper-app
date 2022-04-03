@@ -4,10 +4,12 @@ import 'package:dungeon_paper/app/data/models/note.dart';
 import 'package:dungeon_paper/app/data/models/spell.dart';
 import 'package:dungeon_paper/app/data/services/character_service.dart';
 import 'package:dungeon_paper/app/model_utils/character_utils.dart';
+import 'package:dungeon_paper/app/model_utils/model_key.dart';
 import 'package:dungeon_paper/app/themes/button_themes.dart';
 import 'package:dungeon_paper/app/widgets/atoms/expansion_row.dart';
 import 'package:dungeon_paper/app/widgets/cards/note_card.dart';
 import 'package:dungeon_paper/app/widgets/menus/entity_edit_menu.dart';
+import 'package:dungeon_paper/app/widgets/molecules/categorized_list.dart';
 import 'package:dungeon_paper/core/utils/list_utils.dart';
 import 'package:dungeon_paper/generated/l10n.dart';
 import 'package:flutter/material.dart';
@@ -29,19 +31,27 @@ class HomeCharacterJournalView extends GetView<CharacterService> {
         }
         return ListView(
           children: [
-            ExpansionRow(
+            CategorizedList(
               initiallyExpanded: true,
               title: Text(S.current.notes),
+              onReorder: (oldIndex, newIndex) =>
+                  CharacterUtils.reorderByType<Note>(char, oldIndex, newIndex),
               children: char.notes
                   .map(
                     (note) => Padding(
-                      padding: const EdgeInsets.only(bottom: 8),
+                      key: Key('note-' + keyFor(note)),
+                      padding: const EdgeInsets.symmetric(vertical: 4),
                       child: NoteCard(
                         note: note,
                         actions: [
                           EntityEditMenu(
                             onDelete: confirmDelete(context, note, note.title),
-                            onEdit: () => null,
+                            onEdit: CharacterUtils.openNotePage(
+                              note: note,
+                              onSave: (note) => controller.updateCharacter(
+                                CharacterUtils.updateByType<Note>(char, [note]),
+                              ),
+                            ),
                           ),
                         ],
                         onSave: (_note) => controller.updateCharacter(

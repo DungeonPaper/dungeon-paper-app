@@ -1,9 +1,11 @@
 import 'package:dungeon_paper/app/data/models/item.dart';
 import 'package:dungeon_paper/app/data/models/meta.dart';
 import 'package:dungeon_paper/app/data/models/move.dart';
+import 'package:dungeon_paper/app/data/models/note.dart';
 import 'package:dungeon_paper/app/data/models/spell.dart';
 import 'package:dungeon_paper/app/widgets/forms/add_item_form.dart';
 import 'package:dungeon_paper/app/widgets/forms/add_move_form.dart';
+import 'package:dungeon_paper/app/widgets/forms/add_note_form.dart';
 import 'package:dungeon_paper/app/widgets/forms/add_spell_form.dart';
 import 'package:dungeon_paper/app/widgets/forms/dynamic_form/dynamic_form.dart';
 import 'package:dungeon_paper/generated/l10n.dart';
@@ -105,6 +107,8 @@ class RepositoryItemForm<T extends WithMeta> extends GetView<DynamicFormControll
         );
       case Item:
         return AddItemForm(onChange: setEntity, type: type);
+      case Note:
+        return AddNoteForm(onChange: setEntity, type: type);
       default:
         throw UnsupportedError('Unsupported type: $T');
     }

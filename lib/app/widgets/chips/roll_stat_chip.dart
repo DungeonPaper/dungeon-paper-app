@@ -31,7 +31,7 @@ class RollStatChip extends StatelessWidget {
         clipBehavior: Clip.none,
         child: Container(
           // height: 48,
-          width: (MediaQuery.of(context).size.width - 32) / 3 - 16,
+          // width: (MediaQuery.of(context).size.width - 32) / 3 - 16,
           padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 8),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,

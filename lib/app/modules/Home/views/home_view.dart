@@ -1,6 +1,10 @@
+import 'package:dungeon_paper/app/data/models/note.dart';
+import 'package:dungeon_paper/app/model_utils/character_utils.dart';
 import 'package:dungeon_paper/app/modules/Home/views/home_character_actions_view.dart';
 import 'package:dungeon_paper/app/modules/Home/views/home_character_journal_view.dart';
+import 'package:dungeon_paper/app/themes/colors.dart';
 import 'package:dungeon_paper/app/widgets/atoms/user_menu.dart';
+import 'package:dungeon_paper/app/widgets/forms/repository_item_form.dart';
 import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
@@ -31,6 +35,35 @@ class HomeView extends GetView<CharacterService> {
           HomeCharacterView(),
           HomeCharacterJournalView(),
         ],
+      ),
+      floatingActionButton: Obx(
+        () {
+          const pageNum = 2;
+          final inPageRange = controller.page <= pageNum && controller.page > pageNum - 1;
+          const duration = Duration(milliseconds: 300);
+
+          return AnimatedScale(
+            scale: inPageRange ? 1 : 0,
+            duration: duration,
+            child: AnimatedOpacity(
+              opacity: inPageRange ? 1 : 0,
+              duration: duration,
+              child: FloatingActionButton.extended(
+                label: Text(S.current.createGeneric(Note)),
+                icon: const Icon(Icons.add),
+                backgroundColor: DwColors.success,
+                onPressed: inPageRange
+                    ? CharacterUtils.openNotePage(
+                        note: null,
+                        onSave: (note) => controller.updateCharacter(
+                          CharacterUtils.addByType<Note>(controller.current!, [note]),
+                        ),
+                      )
+                    : null,
+              ),
+            ),
+          );
+        },
       ),
       bottomNavigationBar: Obx(
         () => CharacterHomeNavBar(pageController: controller.pageController),

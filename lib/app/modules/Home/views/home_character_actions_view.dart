@@ -42,13 +42,13 @@ class HomeCharacterActionsView extends GetView<CharacterService> {
             // MOVES LIST
             ActionsCardList<Move>(
               list: char.moves,
-              pageBuilder: ({required onAdd}) => AddMovesView(
+              addPageBuilder: ({required onAdd}) => AddMovesView(
                 onAdd: onAdd,
                 rollStats: char.rollStats,
                 selections: char.moves,
                 classKeys: [char.characterClass.key],
               ),
-              arguments: {
+              addPageArguments: {
                 FiltersGroup.playbook: MoveFilters(classKey: char.characterClass.key),
                 FiltersGroup.my: MoveFilters(classKey: char.characterClass.key),
               },
@@ -72,13 +72,13 @@ class HomeCharacterActionsView extends GetView<CharacterService> {
             // SPELLS LIST
             ActionsCardList<Spell>(
               list: char.spells,
-              pageBuilder: ({required onAdd}) => AddSpellsView(
+              addPageBuilder: ({required onAdd}) => AddSpellsView(
                 onAdd: onAdd,
                 rollStats: char.rollStats,
                 selections: char.spells,
                 classKeys: [char.characterClass.key],
               ),
-              arguments: {
+              addPageArguments: {
                 FiltersGroup.playbook: SpellFilters(classKey: char.characterClass.key),
                 FiltersGroup.my: SpellFilters(classKey: char.characterClass.key),
               },
@@ -102,11 +102,11 @@ class HomeCharacterActionsView extends GetView<CharacterService> {
             // ITEMS LIST
             ActionsCardList<Item>(
               list: char.items,
-              pageBuilder: ({required onAdd}) => AddItemsView(
+              addPageBuilder: ({required onAdd}) => AddItemsView(
                 onAdd: onAdd,
                 selections: char.items,
               ),
-              arguments: {
+              addPageArguments: {
                 FiltersGroup.playbook: ItemFilters(),
                 FiltersGroup.my: ItemFilters(),
               },
@@ -134,16 +134,16 @@ class HomeCharacterActionsView extends GetView<CharacterService> {
 class ActionsCardList<T> extends GetView<CharacterService> {
   const ActionsCardList({
     Key? key,
-    required this.pageBuilder,
+    required this.addPageBuilder,
+    this.addPageArguments,
     required this.cardBuilder,
     required this.list,
-    this.arguments,
   }) : super(key: key);
 
   final Widget Function({
     required void Function(Iterable<T> obj) onAdd,
-  }) pageBuilder;
-  final dynamic arguments;
+  }) addPageBuilder;
+  final dynamic addPageArguments;
   final Widget Function(
     T object, {
     required void Function() onDelete,
@@ -163,13 +163,13 @@ class ActionsCardList<T> extends GetView<CharacterService> {
       trailing: [
         TextButton.icon(
           onPressed: () => Get.to(
-            () => pageBuilder(
+            () => addPageBuilder(
               onAdd: (objects) => controller.updateCharacter(
                 CharacterUtils.addByType<T>(char, objects),
               ),
             ),
             binding: AddRepositoryItemsBinding(),
-            arguments: arguments,
+            arguments: addPageArguments,
           ),
           label: Text(S.current.addGeneric(S.current.entityPlural(T))),
           icon: const Icon(Icons.add),

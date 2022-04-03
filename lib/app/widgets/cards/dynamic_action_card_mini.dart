@@ -1,3 +1,4 @@
+import 'package:dungeon_paper/generated/l10n.dart';
 import 'package:dungeon_world_data/dice.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_markdown/flutter_markdown.dart';
@@ -91,7 +92,7 @@ class DynamicActionCardMini extends StatelessWidget {
                   // clipper: RectClipper(constraints.maxWidth, constraints.maxHeight),
                   child: Markdown(
                     padding: EdgeInsets.zero,
-                    data: description,
+                    data: description.isNotEmpty ? description : S.current.noDescription,
                     // fitContent: true,
                     // shrinkWrap: true,
                     // fitContent: true,

@@ -41,6 +41,58 @@ class HomeCharacterDynamicCards extends GetView<CharacterService> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             //
+            // NOTES
+            //
+            if (notes.isNotEmpty) ...[
+              const SizedBox(height: 10),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 16),
+                child: Text(S.current.dynamicCategoriesNotes),
+              ),
+            ],
+            HorizontalCardListView<Note>(
+              cardSize: cardSize,
+              items: notes,
+              cardBuilder: (context, note, index, onTap) => Obx(
+                () => NoteCardMini(
+                  note: notes[index],
+                  onTap: onTap,
+                  onSave: (_note) => controller.updateCharacter(
+                    CharacterUtils.updateNotes(controller.current!, [_note]),
+                  ),
+                ),
+              ),
+              expandedCardBuilder: (context, note, index) => Obx(
+                () => NoteCard(
+                  maxContentHeight: maxContentHeight,
+                  expandable: false,
+                  initiallyExpanded: true,
+                  note: notes[index],
+                  actions: [
+                    EntityEditMenu(
+                      onEdit: CharacterUtils.openNotePage(
+                        note: notes[index],
+                        onSave: (note) => controller.updateCharacter(
+                          CharacterUtils.updateNotes(controller.current!, [note]),
+                        ),
+                      ),
+                      onDelete: _delete(
+                        context,
+                        note,
+                        note.title,
+                        () => controller.updateCharacter(
+                          CharacterUtils.removeNotes(controller.current!, [note]),
+                        ),
+                      ),
+                    ),
+                  ],
+                  onSave: (_note) => controller.updateCharacter(
+                    CharacterUtils.updateNotes(controller.current!, [_note]),
+                  ),
+                ),
+              ),
+            ),
+            //
             // MOVES
             //
             if (moves.isNotEmpty)
@@ -194,58 +246,6 @@ class HomeCharacterDynamicCards extends GetView<CharacterService> {
                   ],
                   onSave: (_item) => controller.updateCharacter(
                     CharacterUtils.updateItems(controller.current!, [_item]),
-                  ),
-                ),
-              ),
-            ),
-            //
-            // NOTES
-            //
-            if (notes.isNotEmpty) ...[
-              const SizedBox(height: 10),
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 16),
-                child: Text(S.current.dynamicCategoriesNotes),
-              ),
-            ],
-            HorizontalCardListView<Note>(
-              cardSize: cardSize,
-              items: notes,
-              cardBuilder: (context, note, index, onTap) => Obx(
-                () => NoteCardMini(
-                  note: notes[index],
-                  onTap: onTap,
-                  onSave: (_note) => controller.updateCharacter(
-                    CharacterUtils.updateNotes(controller.current!, [_note]),
-                  ),
-                ),
-              ),
-              expandedCardBuilder: (context, note, index) => Obx(
-                () => NoteCard(
-                  maxContentHeight: maxContentHeight,
-                  expandable: false,
-                  initiallyExpanded: true,
-                  note: notes[index],
-                  actions: [
-                    EntityEditMenu(
-                      onEdit: CharacterUtils.openNotePage(
-                        note: notes[index],
-                        onSave: (note) => controller.updateCharacter(
-                          CharacterUtils.updateNotes(controller.current!, [note]),
-                        ),
-                      ),
-                      onDelete: _delete(
-                        context,
-                        note,
-                        note.title,
-                        () => controller.updateCharacter(
-                          CharacterUtils.removeNotes(controller.current!, [note]),
-                        ),
-                      ),
-                    ),
-                  ],
-                  onSave: (_note) => controller.updateCharacter(
-                    CharacterUtils.updateNotes(controller.current!, [_note]),
                   ),
                 ),
               ),

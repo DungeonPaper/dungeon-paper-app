@@ -15,16 +15,24 @@ class RollStatsGrid extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Wrap(
-      spacing: 4,
-      runSpacing: 4,
-      children: [
-        for (var stat in rollStats)
-          RollStatChip(
-            stat: stat,
-            showDice: showDice,
-          ),
-      ],
+    return ConstrainedBox(
+      constraints: const BoxConstraints(maxWidth: 600),
+      child: LayoutBuilder(builder: (context, constraints) {
+        return Wrap(
+          spacing: 4,
+          runSpacing: 4,
+          children: [
+            for (var stat in rollStats)
+              SizedBox(
+                width: constraints.maxWidth / 3 - 8,
+                child: RollStatChip(
+                  stat: stat,
+                  showDice: showDice,
+                ),
+              ),
+          ],
+        );
+      }),
     );
   }
 }

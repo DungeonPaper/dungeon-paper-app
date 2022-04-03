@@ -27,10 +27,9 @@ class AddNoteForm extends GetView<DynamicFormController<Note>> {
 }
 
 class AddNoteFormController extends DynamicFormController<Note> {
-  AddNoteFormController({required this.note, required this.rollStats});
+  AddNoteFormController({required this.note});
 
   final Note? note;
-  final RollStats rollStats;
 
   @override
   void init() {
@@ -58,7 +57,8 @@ class AddNoteFormController extends DynamicFormController<Note> {
   Note setData(Map<String, dynamic> data) {
     entity.value = entity.value.copyWith(
       meta: entity.value.meta.copyWith(
-        sharing: MetaSharing.createFork(note!.key, note!.meta.sharing, outOfSync: true),
+        sharing:
+            MetaSharing.createFork(entity.value!.key, entity.value!.meta.sharing, outOfSync: true),
       ),
       title: data['title'],
       description: data['description'],
