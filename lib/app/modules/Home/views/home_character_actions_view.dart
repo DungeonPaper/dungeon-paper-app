@@ -4,6 +4,7 @@ import 'package:dungeon_paper/app/data/models/move.dart';
 import 'package:dungeon_paper/app/data/models/spell.dart';
 import 'package:dungeon_paper/app/data/services/character_service.dart';
 import 'package:dungeon_paper/app/model_utils/character_utils.dart';
+import 'package:dungeon_paper/app/model_utils/model_key.dart';
 import 'package:dungeon_paper/app/modules/AddRepositoryItems/bindings/add_repository_items_binding.dart';
 import 'package:dungeon_paper/app/modules/AddRepositoryItems/controllers/add_repository_items_controller.dart';
 import 'package:dungeon_paper/app/modules/AddRepositoryItems/views/add_items_view.dart';
@@ -12,13 +13,12 @@ import 'package:dungeon_paper/app/modules/AddRepositoryItems/views/add_spells_vi
 import 'package:dungeon_paper/app/modules/AddRepositoryItems/views/filters/item_filters.dart';
 import 'package:dungeon_paper/app/modules/AddRepositoryItems/views/filters/move_filters.dart';
 import 'package:dungeon_paper/app/modules/AddRepositoryItems/views/filters/spell_filters.dart';
-import 'package:dungeon_paper/app/widgets/atoms/expansion_row.dart';
 import 'package:dungeon_paper/app/widgets/cards/item_card.dart';
 import 'package:dungeon_paper/app/widgets/cards/move_card.dart';
 import 'package:dungeon_paper/app/widgets/cards/spell_card.dart';
 import 'package:dungeon_paper/app/widgets/dialogs/confirm_delete_dialog.dart';
 import 'package:dungeon_paper/app/widgets/menus/entity_edit_menu.dart';
-import 'package:dungeon_paper/core/utils/list_utils.dart';
+import 'package:dungeon_paper/app/widgets/molecules/categorized_list.dart';
 import 'package:dungeon_paper/generated/l10n.dart';
 import 'package:flutter/material.dart';
 
@@ -40,195 +40,167 @@ class HomeCharacterActionsView extends GetView<CharacterService> {
         return ListView(
           children: [
             // MOVES LIST
-            ExpansionRow(
-              initiallyExpanded: true,
-              title: Text(S.current.moves),
-              trailing: [
-                TextButton.icon(
-                  onPressed: () => Get.to(
-                    () => AddMovesView(
-                      onAdd: (moves) => controller.updateCharacter(
-                        char.copyWith(
-                          moves: addByKey(char.moves, moves),
-                        ),
-                      ),
+            ActionsCardList<Move>(
+              list: char.moves,
+              pageBuilder: ({required onAdd}) => AddMovesView(
+                onAdd: onAdd,
+                rollStats: char.rollStats,
+                selections: char.moves,
+                classKeys: [char.characterClass.key],
+              ),
+              arguments: {
+                FiltersGroup.playbook: MoveFilters(classKey: char.characterClass.key),
+                FiltersGroup.my: MoveFilters(classKey: char.characterClass.key),
+              },
+              cardBuilder: (move, {required onSave, required onDelete}) => MoveCard(
+                move: move,
+                actions: [
+                  EntityEditMenu(
+                    onDelete: onDelete,
+                    onEdit: CharacterUtils.openMovePage(
+                      move: move,
+                      classKeys: move.classKeys,
                       rollStats: char.rollStats,
-                      selections: char.moves,
-                      classKeys: [char.characterClass.key],
+                      onSave: onSave,
                     ),
-                    binding: AddRepositoryItemsBinding(),
-                    arguments: {
-                      FiltersGroup.playbook: MoveFilters(classKey: char.characterClass.key),
-                      FiltersGroup.my: MoveFilters(classKey: char.characterClass.key),
-                    },
                   ),
-                  label: Text(S.current.addGeneric(S.current.entityPlural(Move))),
-                  icon: const Icon(Icons.add),
-                )
-              ],
-              children: char.moves
-                  .map(
-                    (move) => Padding(
-                      padding: const EdgeInsets.only(bottom: 8),
-                      child: MoveCard(
-                        move: move,
-                        actions: [
-                          EntityEditMenu(
-                            onDelete: confirmDeleteDlg(context, move, move.name),
-                            onEdit: CharacterUtils.openMovePage(
-                              rollStats: char.rollStats,
-                              classKeys: move.classKeys,
-                              move: move,
-                              onSave: (_move) => controller.updateCharacter(
-                                CharacterUtils.updateMoves(char, [_move]),
-                              ),
-                            ),
-                          ),
-                        ],
-                        onSave: (_move) => controller.updateCharacter(
-                          CharacterUtils.updateMoves(char, [_move]),
-                        ),
-                      ),
-                    ),
-                  )
-                  .toList(),
+                ],
+                onSave: onSave,
+              ),
             ),
 
             // SPELLS LIST
-            ExpansionRow(
-              initiallyExpanded: true,
-              title: Text(S.current.spells),
-              trailing: [
-                TextButton.icon(
-                  onPressed: () => Get.to(
-                    () => AddSpellsView(
-                      onAdd: (spells) => controller.updateCharacter(
-                        char.copyWith(
-                          spells: addByKey(char.spells, spells),
-                        ),
-                      ),
-                      classKeys: [char.characterClass.key],
+            ActionsCardList<Spell>(
+              list: char.spells,
+              pageBuilder: ({required onAdd}) => AddSpellsView(
+                onAdd: onAdd,
+                rollStats: char.rollStats,
+                selections: char.spells,
+                classKeys: [char.characterClass.key],
+              ),
+              arguments: {
+                FiltersGroup.playbook: SpellFilters(classKey: char.characterClass.key),
+                FiltersGroup.my: SpellFilters(classKey: char.characterClass.key),
+              },
+              cardBuilder: (spell, {required onSave, required onDelete}) => SpellCard(
+                spell: spell,
+                actions: [
+                  EntityEditMenu(
+                    onDelete: onDelete,
+                    onEdit: CharacterUtils.openSpellPage(
+                      spell: spell,
+                      classKeys: spell.classKeys,
                       rollStats: char.rollStats,
-                      selections: char.spells,
+                      onSave: onSave,
                     ),
-                    binding: AddRepositoryItemsBinding(),
-                    arguments: {
-                      FiltersGroup.playbook: SpellFilters(),
-                      FiltersGroup.my: SpellFilters()
-                    },
                   ),
-                  label: Text(S.current.addGeneric(S.current.entityPlural(Spell))),
-                  icon: const Icon(Icons.add),
-                )
-              ],
-              children: char.spells
-                  .map(
-                    (spell) => Padding(
-                      padding: const EdgeInsets.only(bottom: 8),
-                      child: SpellCard(
-                        spell: spell,
-                        actions: [
-                          EntityEditMenu(
-                            onDelete: confirmDeleteDlg(context, spell, spell.name),
-                            onEdit: CharacterUtils.openSpellPage(
-                              rollStats: char.rollStats,
-                              classKeys: spell.classKeys,
-                              spell: spell,
-                              onSave: (_spell) => controller.updateCharacter(
-                                CharacterUtils.updateSpells(char, [_spell]),
-                              ),
-                            ),
-                          ),
-                        ],
-                        onSave: (_spell) => controller.updateCharacter(
-                          CharacterUtils.updateSpells(char, [_spell]),
-                        ),
-                      ),
-                    ),
-                  )
-                  .toList(),
+                ],
+                onSave: onSave,
+              ),
             ),
 
             // ITEMS LIST
-            ExpansionRow(
-              initiallyExpanded: true,
-              title: Text(S.current.items),
-              trailing: [
-                TextButton.icon(
-                  onPressed: () => Get.to(
-                    () => AddItemsView(
-                      onAdd: (items) => controller.updateCharacter(
-                        char.copyWith(
-                          items: addByKey(char.items, items),
-                        ),
-                      ),
-                      selections: char.items,
+            ActionsCardList<Item>(
+              list: char.items,
+              pageBuilder: ({required onAdd}) => AddItemsView(
+                onAdd: onAdd,
+                selections: char.items,
+              ),
+              arguments: {
+                FiltersGroup.playbook: ItemFilters(),
+                FiltersGroup.my: ItemFilters(),
+              },
+              cardBuilder: (item, {required onSave, required onDelete}) => ItemCard(
+                item: item,
+                actions: [
+                  EntityEditMenu(
+                    onDelete: onDelete,
+                    onEdit: CharacterUtils.openItemPage(
+                      item: item,
+                      onSave: onSave,
                     ),
-                    binding: AddRepositoryItemsBinding(),
-                    arguments: {
-                      FiltersGroup.playbook: ItemFilters(),
-                      FiltersGroup.my: ItemFilters()
-                    },
                   ),
-                  label: Text(S.current.addGeneric(S.current.entityPlural(Item))),
-                  icon: const Icon(Icons.add),
-                )
-              ],
-              children: char.items
-                  .map(
-                    (item) => Padding(
-                      padding: const EdgeInsets.only(bottom: 8),
-                      child: ItemCard(
-                        item: item,
-                        actions: [
-                          EntityEditMenu(
-                            onDelete: confirmDeleteDlg(context, item, item.name),
-                            onEdit: CharacterUtils.openItemPage(
-                              item: item,
-                              onSave: (_item) => controller.updateCharacter(
-                                CharacterUtils.updateItems(char, [_item]),
-                              ),
-                            ),
-                          ),
-                        ],
-                        onSave: (_item) => controller.updateCharacter(
-                          CharacterUtils.updateItems(char, [_item]),
-                        ),
-                      ),
-                    ),
-                  )
-                  .toList(),
+                ],
+                onSave: onSave,
+              ),
             ),
           ],
         );
       }),
     );
   }
+}
 
-  void Function() confirmDeleteDlg<T>(BuildContext context, T object, String name) {
+class ActionsCardList<T> extends GetView<CharacterService> {
+  const ActionsCardList({
+    Key? key,
+    required this.pageBuilder,
+    required this.cardBuilder,
+    required this.list,
+    this.arguments,
+  }) : super(key: key);
+
+  final Widget Function({
+    required void Function(Iterable<T> obj) onAdd,
+  }) pageBuilder;
+  final dynamic arguments;
+  final Widget Function(
+    T object, {
+    required void Function() onDelete,
+    required void Function(T object) onSave,
+    // required void Function() onEdit,
+  }) cardBuilder;
+  final List<T> list;
+
+  Character get char => controller.current!;
+
+  @override
+  Widget build(BuildContext context) {
+    return CategorizedList(
+      initiallyExpanded: true,
+      title: Text(S.current.entityPlural(T)),
+      itemPadding: const EdgeInsets.only(bottom: 8),
+      trailing: [
+        TextButton.icon(
+          onPressed: () => Get.to(
+            () => pageBuilder(
+              onAdd: (objects) => controller.updateCharacter(
+                CharacterUtils.addByType<T>(char, objects),
+              ),
+            ),
+            binding: AddRepositoryItemsBinding(),
+            arguments: arguments,
+          ),
+          label: Text(S.current.addGeneric(S.current.entityPlural(T))),
+          icon: const Icon(Icons.add),
+        ),
+      ],
+      children: list
+          .map(
+            (obj) => Padding(
+              key: Key('type-$T-' + keyFor<T>(obj)),
+              padding: const EdgeInsets.symmetric(vertical: 4),
+              child: cardBuilder(
+                obj,
+                onDelete: _confirmDeleteDlg(context, obj, nameFor(obj)),
+                onSave: (_obj) => controller.updateCharacter(
+                  CharacterUtils.updateByType<T>(char, [_obj]),
+                ),
+              ),
+            ),
+          )
+          .toList(),
+      onReorder: (oldIndex, newIndex) =>
+          controller.updateCharacter(CharacterUtils.reorderByType<T>(char, oldIndex, newIndex)),
+    );
+  }
+
+  void Function() _confirmDeleteDlg(BuildContext context, T object, String name) {
     return () async {
-      final result = await confirmDelete(context, name);
+      final result = await confirmDelete<T>(context, name);
 
       if (result == true) {
-        switch (T) {
-          case Move:
-            controller.updateCharacter(
-              char.copyWith(moves: removeByKey(char.moves, [object as Move])),
-            );
-            break;
-          case Spell:
-            controller.updateCharacter(
-              char.copyWith(spells: removeByKey(char.spells, [object as Spell])),
-            );
-            break;
-          case Item:
-            controller.updateCharacter(
-              char.copyWith(items: removeByKey(char.items, [object as Item])),
-            );
-            break;
-          default:
-            throw TypeError();
-        }
+        controller.updateCharacter(CharacterUtils.removeByType<T>(char, [object]));
       }
     };
   }

@@ -20,6 +20,9 @@ class CharacterUtils {
   static Character removeMoves(Character char, Iterable<Move> move) => char.copyWith(
         moves: removeByKey(char.moves, move),
       );
+  static Character reorderMoves(Character char, int oldIndex, int newIndex) => char.copyWith(
+        moves: reorder(char.moves, oldIndex, newIndex),
+      );
 
   static void Function() openMovePage({
     required Move? move,
@@ -50,6 +53,9 @@ class CharacterUtils {
       );
   static Character removeSpells(Character char, Iterable<Spell> spell) => char.copyWith(
         spells: removeByKey(char.spells, spell),
+      );
+  static Character reorderSpells(Character char, int oldIndex, int newIndex) => char.copyWith(
+        spells: reorder(char.spells, oldIndex, newIndex),
       );
 
   static void Function() openSpellPage({
@@ -82,6 +88,9 @@ class CharacterUtils {
   static Character removeItems(Character char, Iterable<Item> item) => char.copyWith(
         items: removeByKey(char.items, item),
       );
+  static Character reorderItems(Character char, int oldIndex, int newIndex) => char.copyWith(
+        items: reorder(char.items, oldIndex, newIndex),
+      );
 
   static void Function() openItemPage({
     required Item? item,
@@ -108,6 +117,9 @@ class CharacterUtils {
   static Character removeNotes(Character char, Iterable<Note> note) => char.copyWith(
         notes: removeByKey(char.notes, note),
       );
+  static Character reorderNotes(Character char, int oldIndex, int newIndex) => char.copyWith(
+        notes: reorder(char.notes, oldIndex, newIndex),
+      );
 
   static void Function() openNotePage({
     required Note? note,
@@ -133,18 +145,27 @@ class CharacterUtils {
         items: T == Item ? updateByKey(listByType<Item>(char).toList(), items.cast<Item>()) : null,
         notes: T == Note ? updateByKey(listByType<Note>(char).toList(), items.cast<Note>()) : null,
       );
+
   static Character addByType<T>(Character char, Iterable<T> items) => char.copyWith(
         moves: T == Move ? addByKey(listByType<Move>(char).toList(), items.cast<Move>()) : null,
         spells: T == Spell ? addByKey(listByType<Spell>(char).toList(), items.cast<Spell>()) : null,
         items: T == Item ? addByKey(listByType<Item>(char).toList(), items.cast<Item>()) : null,
         notes: T == Note ? addByKey(listByType<Note>(char).toList(), items.cast<Note>()) : null,
       );
+
   static Character removeByType<T>(Character char, Iterable<T> items) => char.copyWith(
         moves: T == Move ? removeByKey(listByType<Move>(char).toList(), items.cast<Move>()) : null,
         spells:
             T == Spell ? removeByKey(listByType<Spell>(char).toList(), items.cast<Spell>()) : null,
         items: T == Item ? removeByKey(listByType<Item>(char).toList(), items.cast<Item>()) : null,
         notes: T == Note ? removeByKey(listByType<Note>(char).toList(), items.cast<Note>()) : null,
+      );
+
+  static Character reorderByType<T>(Character char, int oldIndex, int newIndex) => char.copyWith(
+        moves: T == Move ? reorder(listByType<Move>(char).toList(), oldIndex, newIndex) : null,
+        spells: T == Spell ? reorder(listByType<Spell>(char).toList(), oldIndex, newIndex) : null,
+        items: T == Item ? reorder(listByType<Item>(char).toList(), oldIndex, newIndex) : null,
+        notes: T == Note ? reorder(listByType<Note>(char).toList(), oldIndex, newIndex) : null,
       );
 
   static Iterable<T> listByType<T>(Character char) => {

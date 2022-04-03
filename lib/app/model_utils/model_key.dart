@@ -35,3 +35,23 @@ String keyFor<T>(T object) {
   }
   throw TypeError();
 }
+
+String nameFor<T>(T object) {
+  final dyn = object as dynamic;
+  switch (T) {
+    case CharacterClass:
+    case Character:
+    case Item:
+    case Monster:
+    case Move:
+    case Race:
+    case Spell:
+    case dw.Tag:
+      return dyn.name;
+    case AlignmentValue:
+      return dyn.description;
+    case Note:
+      return dyn.title;
+  }
+  throw TypeError();
+}
