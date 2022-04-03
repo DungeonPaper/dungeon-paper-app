@@ -8,6 +8,7 @@ import 'package:dungeon_paper/app/model_utils/model_key.dart';
 import 'package:dungeon_paper/app/themes/button_themes.dart';
 import 'package:dungeon_paper/app/widgets/cards/note_card.dart';
 import 'package:dungeon_paper/app/widgets/menus/entity_edit_menu.dart';
+import 'package:dungeon_paper/app/widgets/menus/group_sort_menu.dart';
 import 'package:dungeon_paper/app/widgets/molecules/categorized_list.dart';
 import 'package:dungeon_paper/core/utils/list_utils.dart';
 import 'package:dungeon_paper/generated/l10n.dart';
@@ -51,37 +52,10 @@ class HomeCharacterJournalView extends GetView<CharacterService> {
                 trailing: [
                   IconTheme.merge(
                     data: IconThemeData(color: Theme.of(context).colorScheme.secondaryContainer),
-                    child: PopupMenuButton(
-                      iconSize: 20,
-                      itemBuilder: (ctx) => [
-                        PopupMenuItem(
-                          enabled: cat.index > 0,
-                          value: 'up',
-                          child: Row(
-                            children: const [
-                              Icon(Icons.move_up),
-                              SizedBox(width: 8),
-                              Text('Move up'),
-                            ],
-                          ),
-                        ),
-                        PopupMenuItem(
-                          enabled: cat.index < char.noteCategories.length - 1,
-                          value: 'down',
-                          child: Row(
-                            children: const [
-                              Icon(Icons.move_down),
-                              SizedBox(width: 8),
-                              Text('Move down'),
-                            ],
-                          ),
-                        ),
-                      ],
-                      onSelected: (value) => {
-                        'up': _moveUp(cat.index),
-                        'down': _moveDown(cat.index),
-                      }[value]
-                          ?.call(),
+                    child: GroupSortMenu(
+                      index: cat.index,
+                      maxIndex: char.noteCategories.length - 1,
+                      onReorder: _move,
                     ),
                   ),
                 ],
@@ -171,37 +145,20 @@ class HomeCharacterJournalView extends GetView<CharacterService> {
     };
   }
 
-  void Function() _moveUp(int index) {
-    return () => controller.updateCharacter(
-          char.copyWith(
-            settings: char.settings.copyWith(
-              noteCategoriesSort: Set.from(
-                reorder(
-                  char.noteCategories.toList(),
-                  index,
-                  index - 1,
-                  useReorderableOffset: false,
-                ),
-              ),
+  void _move(int oldIndex, int newIndex) {
+    return controller.updateCharacter(
+      char.copyWith(
+        settings: char.settings.copyWith(
+          noteCategoriesSort: Set.from(
+            reorder(
+              char.noteCategories.toList(),
+              oldIndex,
+              newIndex,
+              useReorderableOffset: false,
             ),
           ),
-        );
-  }
-
-  void Function() _moveDown(int index) {
-    return () => controller.updateCharacter(
-          char.copyWith(
-            settings: char.settings.copyWith(
-              noteCategoriesSort: Set.from(
-                reorder(
-                  char.noteCategories.toList(),
-                  index,
-                  index + 1,
-                  useReorderableOffset: false,
-                ),
-              ),
-            ),
-          ),
-        );
+        ),
+      ),
+    );
   }
 }
