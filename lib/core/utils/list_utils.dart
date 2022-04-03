@@ -32,8 +32,8 @@ class Enumerated<T> {
 
 List<Enumerated<T>> enumerate<T>(Iterable<T> list) => Enumerated.listFrom(list);
 
-List<T> reorder<T>(List<T> list, int oldIndex, int newIndex) {
-  if (newIndex > oldIndex) {
+List<T> reorder<T>(List<T> list, int oldIndex, int newIndex, {bool useReorderableOffset = true}) {
+  if (useReorderableOffset && newIndex > oldIndex) {
     newIndex = newIndex - 1;
   }
   final removed = list.removeAt(oldIndex);

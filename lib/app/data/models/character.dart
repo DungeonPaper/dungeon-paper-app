@@ -14,6 +14,7 @@ import 'package:dungeon_paper/core/utils/uuid.dart';
 import 'bio.dart';
 import 'bond.dart';
 import 'character_class.dart';
+import 'character_settings.dart';
 import 'item.dart';
 import 'character_stats.dart';
 import 'meta.dart';
@@ -41,6 +42,7 @@ class Character implements WithMeta {
     required this.bonds,
     required this.bio,
     required this.race,
+    required this.settings,
   });
 
   @override
@@ -60,6 +62,7 @@ class Character implements WithMeta {
   final List<Bond> bonds;
   final Bio bio;
   final Race race;
+  final CharacterSettings settings;
 
   int get currentHp => clamp(stats.currentHp, 0, maxHp);
   int get maxHp => stats.maxHp ?? (characterClass.hp + rollStats.hpBaseValue);
@@ -69,14 +72,18 @@ class Character implements WithMeta {
   double get currentExpPercent => clamp(stats.currentExp / maxExp, 0, 1);
   int get load => stats.load ?? (characterClass.load + rollStats.loadBaseValue);
   Set<String> get noteCategories => Set.from(
-        notes.map((note) => note.localizedCategory).toList()
-          ..sort(stringSorter(order: SortOrder.asc)),
+        (<String>[
+          ...settings.noteCategoriesSort,
+          ...(notes.map((note) => note.localizedCategory).toList()
+            ..sort(stringSorter(order: SortOrder.asc))),
+        ]),
       );
 
   Character copyWith({
     Meta<CharacterMeta>? meta,
     String? key,
     String? displayName,
+    CharacterSettings? settings,
     String? category,
     String? avatarUrl,
     CharacterClass? characterClass,
@@ -95,6 +102,7 @@ class Character implements WithMeta {
         meta: meta ?? this.meta,
         key: key ?? this.key,
         displayName: displayName ?? this.displayName,
+        settings: settings ?? this.settings,
         category: category ?? this.category,
         avatarUrl: avatarUrl ?? this.avatarUrl,
         characterClass: characterClass ?? this.characterClass,
@@ -119,6 +127,7 @@ class Character implements WithMeta {
       key: uuid(),
       meta: Meta.version(1),
       displayName: '',
+      settings: CharacterSettings(noteCategoriesSort: {}),
       category: '',
       avatarUrl: '',
       items: [],
@@ -186,6 +195,9 @@ class Character implements WithMeta {
         displayName: json['displayName'],
         category: json['category'] ?? '',
         avatarUrl: json['avatarURL'],
+        settings: json['settings'] != null
+            ? CharacterSettings.fromJson(json['settings'])
+            : CharacterSettings(noteCategoriesSort: {}),
         characterClass: CharacterClass.fromJson(json['class']),
         moves: List<Move>.from(json['moves'].map((x) => Move.fromJson(x))),
         spells: List<Spell>.from(json['spells'].map((x) => Spell.fromJson(x))),
@@ -204,6 +216,7 @@ class Character implements WithMeta {
         'key': key,
         'displayName': displayName,
         'avatarURL': avatarUrl,
+        'settings': settings.toJson(),
         'category': category,
         'class': characterClass.toJson(),
         'moves': List<dynamic>.from(moves.map((x) => x.toJson())),

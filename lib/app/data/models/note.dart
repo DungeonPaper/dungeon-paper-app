@@ -75,6 +75,7 @@ class Note implements WithMeta {
         '_meta': meta.toJson(),
         'key': key,
         'title': title,
+        'category': category,
         'description': description,
         'tags': List<dynamic>.from(tags.map((x) => x.toJson())),
         'favorited': favorited,

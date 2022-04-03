@@ -28,17 +28,68 @@ class HomeCharacterJournalView extends GetView<CharacterService> {
         if (controller.current == null) {
           return Container();
         }
+        // return ReorderableListView(
         return ListView(
+          // physics: const NeverScrollableScrollPhysics(),
+          padding: const EdgeInsets.only(bottom: 70),
+          // shrinkWrap: true,
+          // onReorder: (oldIndex, newIndex) => controller.updateCharacter(
+          //   char.copyWith(
+          //     settings: char.settings.copyWith(
+          //       noteCategoriesSort: Set.from(
+          //         reorder(char.noteCategories.toList(), oldIndex, newIndex),
+          //       ),
+          //     ),
+          //   ),
+          // ),
           children: [
-            for (final cat in char.noteCategories)
+            for (final cat in enumerate(char.noteCategories))
               CategorizedList(
+                key: Key('note-category-' + cat.value),
                 initiallyExpanded: true,
-                title: Text(cat.isEmpty ? S.current.noCategory : cat),
+                title: Text(cat.value.isEmpty ? S.current.noCategory : cat.value),
+                trailing: [
+                  IconTheme.merge(
+                    data: IconThemeData(color: Theme.of(context).colorScheme.secondaryContainer),
+                    child: PopupMenuButton(
+                      iconSize: 20,
+                      itemBuilder: (ctx) => [
+                        PopupMenuItem(
+                          enabled: cat.index > 0,
+                          value: 'up',
+                          child: Row(
+                            children: const [
+                              Icon(Icons.move_up),
+                              SizedBox(width: 8),
+                              Text('Move up'),
+                            ],
+                          ),
+                        ),
+                        PopupMenuItem(
+                          enabled: cat.index < char.noteCategories.length - 1,
+                          value: 'down',
+                          child: Row(
+                            children: const [
+                              Icon(Icons.move_down),
+                              SizedBox(width: 8),
+                              Text('Move down'),
+                            ],
+                          ),
+                        ),
+                      ],
+                      onSelected: (value) => {
+                        'up': _moveUp(cat.index),
+                        'down': _moveDown(cat.index),
+                      }[value]
+                          ?.call(),
+                    ),
+                  ),
+                ],
                 onReorder: (oldIndex, newIndex) => controller.updateCharacter(
                   CharacterUtils.reorderByType<Note>(char, oldIndex, newIndex, extraData: cat),
                 ),
                 children: char.notes
-                    .where((note) => note.localizedCategory == cat)
+                    .where((note) => note.localizedCategory == cat.value)
                     .map(
                       (note) => Padding(
                         key: Key('note-' + keyFor(note)),
@@ -50,8 +101,8 @@ class HomeCharacterJournalView extends GetView<CharacterService> {
                               onDelete: confirmDelete(context, note, note.title),
                               onEdit: CharacterUtils.openNotePage(
                                 note: note,
-                                onSave: (note) => controller.updateCharacter(
-                                  CharacterUtils.updateByType<Note>(char, [note]),
+                                onSave: (_note) => controller.updateCharacter(
+                                  CharacterUtils.updateByType<Note>(char, [_note]),
                                 ),
                               ),
                             ),
@@ -117,5 +168,39 @@ class HomeCharacterJournalView extends GetView<CharacterService> {
         }
       }
     };
+  }
+
+  void Function() _moveUp(int index) {
+    return () => controller.updateCharacter(
+          char.copyWith(
+            settings: char.settings.copyWith(
+              noteCategoriesSort: Set.from(
+                reorder(
+                  char.noteCategories.toList(),
+                  index,
+                  index - 1,
+                  useReorderableOffset: false,
+                ),
+              ),
+            ),
+          ),
+        );
+  }
+
+  void Function() _moveDown(int index) {
+    return () => controller.updateCharacter(
+          char.copyWith(
+            settings: char.settings.copyWith(
+              noteCategoriesSort: Set.from(
+                reorder(
+                  char.noteCategories.toList(),
+                  index,
+                  index + 1,
+                  useReorderableOffset: false,
+                ),
+              ),
+            ),
+          ),
+        );
   }
 }
