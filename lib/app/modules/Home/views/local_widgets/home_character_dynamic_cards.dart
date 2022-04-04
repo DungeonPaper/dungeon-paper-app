@@ -256,8 +256,9 @@ class HomeCharacterDynamicCards extends GetView<CharacterService> {
 
   void Function() _delete<T>(
       BuildContext context, T item, String itemName, void Function() onRemove) {
-    return () => awaitConfirmation(
-          confirmDelete<T>(context, itemName),
+    return () => awaitDeleteConfirmation<T>(
+          context,
+          itemName,
           () {
             onRemove();
             Get.back();

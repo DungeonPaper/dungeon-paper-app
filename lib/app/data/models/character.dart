@@ -79,7 +79,9 @@ class Character implements WithMeta {
         ]),
       );
   Set<String> get actionCategories => Set.from(
-        (<String>[...settings.actionCategoriesSort, ...allActionCategories]),
+        <String>[...settings.actionCategoriesSort, ...allActionCategories].where(
+          (cat) => !settings.actionCategoriesHide.contains(cat),
+        ),
       );
 
   static const allActionCategories = {'Move', 'Spell', 'Item'};

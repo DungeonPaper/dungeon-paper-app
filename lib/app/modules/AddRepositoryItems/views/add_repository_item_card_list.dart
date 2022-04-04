@@ -55,7 +55,7 @@ class AddRepositoryItemCardList<T extends WithMeta, F extends EntityFilters>
                         onSave: onSave!,
                         type: ItemFormType.create,
                       ),
-                      binding: RepositoryItemFormBinding(
+                      binding: RepositoryItemFormBinding<T>(
                         item: _createEmpty(),
                         extraData: extraData,
                       ),

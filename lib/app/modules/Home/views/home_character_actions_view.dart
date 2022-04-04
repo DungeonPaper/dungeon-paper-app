@@ -260,12 +260,12 @@ class ActionsCardList<T> extends GetView<CharacterService> {
   }
 
   void Function() _confirmDeleteDlg(BuildContext context, T object, String name) {
-    return () async {
-      final result = await confirmDelete<T>(context, name);
-
-      if (result == true) {
-        controller.updateCharacter(CharacterUtils.removeByType<T>(char, [object]));
-      }
-    };
+    return () => awaitDeleteConfirmation<T>(
+          context,
+          name,
+          () => controller.updateCharacter(
+            CharacterUtils.removeByType<T>(char, [object]),
+          ),
+        );
   }
 }

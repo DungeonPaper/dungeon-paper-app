@@ -32,3 +32,7 @@ Future<void> awaitConfirmation(Future<bool> confirmation, void Function() callba
     confirmation.then((res) {
       if (res) callback();
     });
+
+Future<void> awaitDeleteConfirmation<T>(
+        BuildContext context, String name, void Function() callback) =>
+    awaitConfirmation(confirmDelete<T>(context, name), callback);

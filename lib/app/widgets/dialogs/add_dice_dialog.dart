@@ -52,6 +52,7 @@ class _AddDiceDialogState extends State<AddDiceDialog> {
       title: Text(S.current.createGeneric(dw.Dice)),
       content: Column(
         mainAxisSize: MainAxisSize.min,
+        crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           Row(
             mainAxisSize: MainAxisSize.min,
@@ -95,6 +96,9 @@ class _AddDiceDialogState extends State<AddDiceDialog> {
                     context,
                     backgroundOpacity: modifierType == ModifierType.fixed ? 1 : 0.4,
                   ).copyWith(
+                    elevation: MaterialStateProperty.resolveWith(
+                      (_) => modifierType == ModifierType.fixed ? 1 : 0,
+                    ),
                     shape: MaterialStateProperty.resolveWith(
                       (_) => rRectShape.copyWith(
                         borderRadius: const BorderRadius.horizontal(
@@ -114,6 +118,9 @@ class _AddDiceDialogState extends State<AddDiceDialog> {
                     context,
                     backgroundOpacity: modifierType == ModifierType.stat ? 1 : 0.4,
                   ).copyWith(
+                    elevation: MaterialStateProperty.resolveWith(
+                      (_) => modifierType == ModifierType.stat ? 1 : 0,
+                    ),
                     shape: MaterialStateProperty.resolveWith(
                       (_) => rRectShape.copyWith(
                         borderRadius: const BorderRadius.horizontal(
@@ -148,6 +155,8 @@ class _AddDiceDialogState extends State<AddDiceDialog> {
               padding: const EdgeInsets.only(top: 4),
               child: SelectBox<String>(
                 value: modifierStat,
+                isExpanded: true,
+                label: const Text('Stat'),
                 hint: const Text('Select Stat'),
                 onChanged: (value) => setState(() => modifierStat = value),
                 items: [

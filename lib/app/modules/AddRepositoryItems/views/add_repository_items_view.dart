@@ -1,6 +1,8 @@
 import 'package:dungeon_paper/app/data/models/meta.dart';
+import 'package:dungeon_paper/app/model_utils/model_key.dart';
 import 'package:dungeon_paper/app/modules/AddRepositoryItems/controllers/add_repository_items_controller.dart';
 import 'package:dungeon_paper/app/themes/colors.dart';
+import 'package:dungeon_paper/app/widgets/dialogs/confirm_delete_dialog.dart';
 import 'package:dungeon_paper/generated/l10n.dart';
 import 'package:flutter/material.dart';
 
@@ -176,7 +178,8 @@ class AddRepositoryItemsView<T extends WithMeta, F extends EntityFilters<T>>
                   ? (item) => controller.saveCustomItem(storageKey, item)
                   : null,
               onDelete: group == FiltersGroup.my
-                  ? (item) => controller.deleteCustomItem(storageKey, item)
+                  ? (item) => awaitDeleteConfirmation<T>(
+                      context, nameFor(item), () => controller.deleteCustomItem(storageKey, item))
                   : null,
             ),
           );
