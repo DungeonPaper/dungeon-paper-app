@@ -50,13 +50,10 @@ class HomeCharacterJournalView extends GetView<CharacterService> {
                 initiallyExpanded: true,
                 title: Text(cat.value.isEmpty ? S.current.noCategory : cat.value),
                 trailing: [
-                  IconTheme.merge(
-                    data: IconThemeData(color: Theme.of(context).colorScheme.secondaryContainer),
-                    child: GroupSortMenu(
-                      index: cat.index,
-                      maxIndex: char.noteCategories.length - 1,
-                      onReorder: _move,
-                    ),
+                  GroupSortMenu(
+                    index: cat.index,
+                    maxIndex: char.noteCategories.length - 1,
+                    onReorder: _move,
                   ),
                 ],
                 onReorder: (oldIndex, newIndex) => controller.updateCharacter(

@@ -1242,6 +1242,16 @@ class S {
       args: [],
     );
   }
+
+  /// `Show`
+  String get actionsViewVisibleLabel {
+    return Intl.message(
+      'Show',
+      name: 'actionsViewVisibleLabel',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

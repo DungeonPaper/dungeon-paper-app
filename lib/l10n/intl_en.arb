@@ -140,5 +140,6 @@
   "formatCheckboxListUnchecked": "Check List (Unchecked)",
   "diceSides": "Sides",
   "diceAmount": "Amount",
-  "noCategory": "General"
+  "noCategory": "General",
+  "actionsViewVisibleLabel": "Show"
 }

@@ -78,6 +78,11 @@ class Character implements WithMeta {
             ..sort(stringSorter(order: SortOrder.asc))),
         ]),
       );
+  Set<String> get actionCategories => Set.from(
+        (<String>[...settings.actionCategoriesSort, ...allActionCategories]),
+      );
+
+  static const allActionCategories = {'Move', 'Spell', 'Item'};
 
   Character copyWith({
     Meta<CharacterMeta>? meta,
@@ -127,7 +132,7 @@ class Character implements WithMeta {
       key: uuid(),
       meta: Meta.version(1),
       displayName: '',
-      settings: CharacterSettings(noteCategoriesSort: {}),
+      settings: CharacterSettings.empty(),
       category: '',
       avatarUrl: '',
       items: [],
@@ -197,7 +202,7 @@ class Character implements WithMeta {
         avatarUrl: json['avatarURL'],
         settings: json['settings'] != null
             ? CharacterSettings.fromJson(json['settings'])
-            : CharacterSettings(noteCategoriesSort: {}),
+            : CharacterSettings.empty(),
         characterClass: CharacterClass.fromJson(json['class']),
         moves: List<Move>.from(json['moves'].map((x) => Move.fromJson(x))),
         spells: List<Spell>.from(json['spells'].map((x) => Spell.fromJson(x))),

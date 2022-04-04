@@ -13,12 +13,15 @@ import 'package:dungeon_paper/app/modules/AddRepositoryItems/views/add_spells_vi
 import 'package:dungeon_paper/app/modules/AddRepositoryItems/views/filters/item_filters.dart';
 import 'package:dungeon_paper/app/modules/AddRepositoryItems/views/filters/move_filters.dart';
 import 'package:dungeon_paper/app/modules/AddRepositoryItems/views/filters/spell_filters.dart';
+import 'package:dungeon_paper/app/modules/Home/views/local_widgets/home_character_actions_filters.dart';
 import 'package:dungeon_paper/app/widgets/cards/item_card.dart';
 import 'package:dungeon_paper/app/widgets/cards/move_card.dart';
 import 'package:dungeon_paper/app/widgets/cards/spell_card.dart';
 import 'package:dungeon_paper/app/widgets/dialogs/confirm_delete_dialog.dart';
 import 'package:dungeon_paper/app/widgets/menus/entity_edit_menu.dart';
+import 'package:dungeon_paper/app/widgets/menus/group_sort_menu.dart';
 import 'package:dungeon_paper/app/widgets/molecules/categorized_list.dart';
+import 'package:dungeon_paper/core/utils/list_utils.dart';
 import 'package:dungeon_paper/generated/l10n.dart';
 import 'package:flutter/material.dart';
 
@@ -39,94 +42,149 @@ class HomeCharacterActionsView extends GetView<CharacterService> {
         }
         return ListView(
           children: [
-            // MOVES LIST
-            ActionsCardList<Move>(
-              list: char.moves,
-              addPageBuilder: ({required onAdd}) => AddMovesView(
-                onAdd: onAdd,
-                rollStats: char.rollStats,
-                selections: char.moves,
-                classKeys: [char.characterClass.key],
-              ),
-              addPageArguments: {
-                FiltersGroup.playbook: MoveFilters(classKey: char.characterClass.key),
-                FiltersGroup.my: MoveFilters(classKey: char.characterClass.key),
-              },
-              cardBuilder: (move, {required onSave, required onDelete}) => MoveCard(
-                move: move,
-                actions: [
-                  EntityEditMenu(
-                    onDelete: onDelete,
-                    onEdit: CharacterUtils.openMovePage(
-                      move: move,
-                      classKeys: move.classKeys,
-                      rollStats: char.rollStats,
-                      onSave: onSave,
+            Obx(
+              () => HomeCharacterActionsFiltersView(
+                hidden: char.settings.actionCategoriesHide,
+                onUpdateHidden: (filters) {
+                  debugPrint('saving hide: $filters');
+                  controller.updateCharacter(
+                    char.copyWith(
+                      settings: char.settings.copyWith(actionCategoriesHide: filters),
                     ),
-                  ),
-                ],
-                onSave: onSave,
+                  );
+                },
               ),
             ),
-
-            // SPELLS LIST
-            ActionsCardList<Spell>(
-              list: char.spells,
-              addPageBuilder: ({required onAdd}) => AddSpellsView(
-                onAdd: onAdd,
-                rollStats: char.rollStats,
-                selections: char.spells,
-                classKeys: [char.characterClass.key],
-              ),
-              addPageArguments: {
-                FiltersGroup.playbook: SpellFilters(classKey: char.characterClass.key),
-                FiltersGroup.my: SpellFilters(classKey: char.characterClass.key),
-              },
-              cardBuilder: (spell, {required onSave, required onDelete}) => SpellCard(
-                spell: spell,
-                actions: [
-                  EntityEditMenu(
-                    onDelete: onDelete,
-                    onEdit: CharacterUtils.openSpellPage(
-                      spell: spell,
-                      classKeys: spell.classKeys,
-                      rollStats: char.rollStats,
-                      onSave: onSave,
-                    ),
-                  ),
-                ],
-                onSave: onSave,
-              ),
-            ),
-
-            // ITEMS LIST
-            ActionsCardList<Item>(
-              list: char.items,
-              addPageBuilder: ({required onAdd}) => AddItemsView(
-                onAdd: onAdd,
-                selections: char.items,
-              ),
-              addPageArguments: {
-                FiltersGroup.playbook: ItemFilters(),
-                FiltersGroup.my: ItemFilters(),
-              },
-              cardBuilder: (item, {required onSave, required onDelete}) => ItemCard(
-                item: item,
-                actions: [
-                  EntityEditMenu(
-                    onDelete: onDelete,
-                    onEdit: CharacterUtils.openItemPage(
-                      item: item,
-                      onSave: onSave,
-                    ),
-                  ),
-                ],
-                onSave: onSave,
-              ),
-            ),
-          ],
+            for (final cat in char.actionCategories)
+              {
+                'Move': movesList,
+                'Spell': spellsList,
+                'Item': itemsList,
+              }[cat],
+          ].whereType<Widget>().toList(),
         );
       }),
+    );
+  }
+
+  Widget? get movesList {
+    if (char.settings.actionCategoriesHide.contains('Move')) {
+      return null;
+    }
+    return ActionsCardList<Move>(
+      index: char.actionCategories.toList().indexOf('Move'),
+      onReorder: _onReorder,
+      list: char.moves,
+      addPageBuilder: ({required onAdd}) => AddMovesView(
+        onAdd: onAdd,
+        rollStats: char.rollStats,
+        selections: char.moves,
+        classKeys: [char.characterClass.key],
+      ),
+      addPageArguments: {
+        FiltersGroup.playbook: MoveFilters(classKey: char.characterClass.key),
+        FiltersGroup.my: MoveFilters(classKey: char.characterClass.key),
+      },
+      cardBuilder: (move, {required onSave, required onDelete}) => MoveCard(
+        move: move,
+        actions: [
+          EntityEditMenu(
+            onDelete: onDelete,
+            onEdit: CharacterUtils.openMovePage(
+              move: move,
+              classKeys: move.classKeys,
+              rollStats: char.rollStats,
+              onSave: onSave,
+            ),
+          ),
+        ],
+        onSave: onSave,
+      ),
+    );
+  }
+
+  Widget? get spellsList {
+    if (char.settings.actionCategoriesHide.contains('Spell')) {
+      return null;
+    }
+    return ActionsCardList<Spell>(
+      index: char.actionCategories.toList().indexOf('Spell'),
+      onReorder: _onReorder,
+      list: char.spells,
+      addPageBuilder: ({required onAdd}) => AddSpellsView(
+        onAdd: onAdd,
+        rollStats: char.rollStats,
+        selections: char.spells,
+        classKeys: [char.characterClass.key],
+      ),
+      addPageArguments: {
+        FiltersGroup.playbook: SpellFilters(classKey: char.characterClass.key),
+        FiltersGroup.my: SpellFilters(classKey: char.characterClass.key),
+      },
+      cardBuilder: (spell, {required onSave, required onDelete}) => SpellCard(
+        spell: spell,
+        actions: [
+          EntityEditMenu(
+            onDelete: onDelete,
+            onEdit: CharacterUtils.openSpellPage(
+              spell: spell,
+              classKeys: spell.classKeys,
+              rollStats: char.rollStats,
+              onSave: onSave,
+            ),
+          ),
+        ],
+        onSave: onSave,
+      ),
+    );
+  }
+
+  Widget? get itemsList {
+    if (char.settings.actionCategoriesHide.contains('Item')) {
+      return null;
+    }
+    return ActionsCardList<Item>(
+      index: char.actionCategories.toList().indexOf('Item'),
+      onReorder: _onReorder,
+      list: char.items,
+      addPageBuilder: ({required onAdd}) => AddItemsView(
+        onAdd: onAdd,
+        selections: char.items,
+      ),
+      addPageArguments: {
+        FiltersGroup.playbook: ItemFilters(),
+        FiltersGroup.my: ItemFilters(),
+      },
+      cardBuilder: (item, {required onSave, required onDelete}) => ItemCard(
+        item: item,
+        actions: [
+          EntityEditMenu(
+            onDelete: onDelete,
+            onEdit: CharacterUtils.openItemPage(
+              item: item,
+              onSave: onSave,
+            ),
+          ),
+        ],
+        onSave: onSave,
+      ),
+    );
+  }
+
+  void _onReorder(int oldIndex, int newIndex) {
+    controller.updateCharacter(
+      char.copyWith(
+        settings: char.settings.copyWith(
+          actionCategoriesSort: Set.from(
+            reorder(
+              char.actionCategories.toList(),
+              oldIndex,
+              newIndex,
+              useReorderableOffset: false,
+            ),
+          ),
+        ),
+      ),
     );
   }
 }
@@ -138,6 +196,8 @@ class ActionsCardList<T> extends GetView<CharacterService> {
     this.addPageArguments,
     required this.cardBuilder,
     required this.list,
+    required this.index,
+    required this.onReorder,
   }) : super(key: key);
 
   final Widget Function({
@@ -151,6 +211,8 @@ class ActionsCardList<T> extends GetView<CharacterService> {
     // required void Function() onEdit,
   }) cardBuilder;
   final List<T> list;
+  final int index;
+  final void Function(int oldIndex, int newIndex) onReorder;
 
   Character get char => controller.current!;
 
@@ -174,6 +236,8 @@ class ActionsCardList<T> extends GetView<CharacterService> {
           label: Text(S.current.addGeneric(S.current.entityPlural(T))),
           icon: const Icon(Icons.add),
         ),
+        GroupSortMenu(
+            index: index, maxIndex: Character.allActionCategories.length, onReorder: onReorder)
       ],
       children: list
           .map(

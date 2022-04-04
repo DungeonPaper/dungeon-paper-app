@@ -327,7 +327,10 @@ class _CustomExpansionTileState extends State<CustomExpansionTile>
               onTap: widget.expandable ? _handleTap : null,
               contentPadding: widget.tilePadding,
               leading: widget.leading ?? _buildLeadingIcon(context),
-              title: widget.title,
+              title: IconTheme(
+                child: widget.title,
+                data: IconThemeData(color: _iconColor.value),
+              ),
               subtitle: widget.subtitle,
               trailing: widget.trailing ?? _buildTrailingIcon(context),
               visualDensity: widget.visualDensity,
