@@ -81,7 +81,7 @@ class RollStatChip extends StatelessWidget {
                               IconTheme(
                                 child: const SvgIcon(DwIcons.dice_d6),
                                 data: IconTheme.of(context).copyWith(
-                                  size: 10,
+                                  size: 12,
                                   color:
                                       theme.colorScheme.onSurface.withOpacity(rollBadgeTextOpacity),
                                 ),
@@ -89,7 +89,7 @@ class RollStatChip extends StatelessWidget {
                               const SizedBox(width: 2),
                               Text(
                                 '$modSign$modStr',
-                                textScaleFactor: 0.7,
+                                textScaleFactor: 0.8,
                                 style: TextStyle(
                                   color:
                                       theme.colorScheme.onSurface.withOpacity(rollBadgeTextOpacity),

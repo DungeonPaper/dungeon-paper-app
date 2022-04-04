@@ -1,4 +1,8 @@
+import 'dart:math';
+
+import 'package:dungeon_paper/app/data/models/character.dart';
 import 'package:dungeon_paper/app/data/services/character_service.dart';
+import 'package:dungeon_paper/app/data/services/user_service.dart';
 import 'package:dungeon_paper/app/routes/app_pages.dart';
 import 'package:dungeon_paper/app/widgets/atoms/popover_builder.dart';
 import 'package:dungeon_paper/generated/l10n.dart';
@@ -9,7 +13,9 @@ import '../atoms/character_avatar.dart';
 import '../atoms/user_avatar.dart';
 
 class UserMenuPopover extends GetView<CharacterService> {
-  const UserMenuPopover({Key? key}) : super(key: key);
+  UserMenuPopover({Key? key}) : super(key: key);
+
+  final UserService userService = Get.find();
 
   @override
   Widget build(BuildContext context) {
@@ -18,105 +24,111 @@ class UserMenuPopover extends GetView<CharacterService> {
       padding: const EdgeInsets.all(16),
       builder: () {
         final textStyle = TextStyle(color: Theme.of(context).colorScheme.onSurface);
-        final maxW = MediaQuery.of(context).size.width - 100;
+        final maxW = min(350, MediaQuery.of(context).size.width - 100).toDouble();
         const avatarSize = 64.0;
 
-        return Stack(
-          children: [
-            Positioned(
-              right: 0,
-              top: 0,
-              child: Card(
-                child: Padding(
-                  padding: const EdgeInsets.all(16),
-                  child: SizedBox(
-                    width: maxW,
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        Row(
-                          children: [
-                            Expanded(child: Text('User', style: textStyle)),
-                            const SizedBox(width: 16),
-                            const UserAvatar(),
-                          ],
-                        ),
-                        const Divider(),
-                        Padding(
-                          padding: const EdgeInsets.only(top: 8),
-                          child: GridView.count(
-                            crossAxisCount: 4,
-                            childAspectRatio: (maxW / 4) / (maxW / 4 + 10),
-                            padding: EdgeInsets.zero,
-                            shrinkWrap: true,
-                            mainAxisSpacing: 4,
-                            crossAxisSpacing: 4,
-                            children: [
-                              for (final char in controller.charsByLastUsed.take(5))
-                                InkWell(
-                                  borderRadius: BorderRadius.circular(8),
-                                  onTap: () {
-                                    controller.setCurrent(char.key);
-                                    Get.back();
-                                  },
-                                  child: Column(
-                                    children: [
-                                      CharacterAvatar.circle(character: char, size: avatarSize),
-                                      const SizedBox(height: 4),
-                                      Text(
-                                        char.displayName,
-                                        overflow: TextOverflow.ellipsis,
-                                        textScaleFactor: 0.8,
-                                        textAlign: TextAlign.center,
-                                        style: textStyle,
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                              InkWell(
-                                borderRadius: BorderRadius.circular(8),
-                                onTap: () => Get.toNamed(Routes.characterListPage),
-                                child: Column(
-                                  children: [
-                                    CircleAvatar(
-                                      child: const Icon(Icons.more_horiz),
-                                      radius: avatarSize / 2,
-                                      backgroundColor: Theme.of(context).colorScheme.background,
-                                    ),
-                                    const SizedBox(height: 4),
-                                    Text(
-                                      S.current.userMenuMoreChars,
-                                      overflow: TextOverflow.ellipsis,
-                                      textScaleFactor: 0.8,
-                                      textAlign: TextAlign.center,
-                                      style: textStyle,
-                                    ),
-                                  ],
-                                ),
-                              ),
-                            ],
+        return ListTileTheme.merge(
+          minLeadingWidth: 10,
+          dense: true,
+          contentPadding: EdgeInsets.zero,
+          child: Stack(
+            children: [
+              Positioned(
+                right: 0,
+                top: 0,
+                child: Card(
+                  child: Padding(
+                    padding: const EdgeInsets.all(16),
+                    child: SizedBox(
+                      width: maxW,
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          ListTile(
+                            visualDensity: VisualDensity.compact,
+                            title: Text(userService.current.displayName, style: textStyle),
+                            subtitle: Text(userService.current.email.isNotEmpty
+                                ? userService.current.email
+                                : S.current.userUnregistered),
+                            trailing: const UserAvatar(),
                           ),
-                        ),
-                        const SizedBox(height: 8),
-                        const Divider(),
-                        ListTileTheme.merge(
-                          minLeadingWidth: 10,
-                          dense: true,
-                          contentPadding: EdgeInsets.zero,
-                          child: ListTile(
+                          const Divider(),
+                          const SizedBox(height: 8),
+                          Text(
+                            S.current.userMenuRecentCharacters,
+                            style: Theme.of(context).textTheme.caption,
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.only(top: 8),
+                            child: Wrap(
+                              spacing: 4,
+                              runSpacing: 4,
+                              children: [
+                                for (final char in controller.charsByLastUsed.take(4))
+                                  InkWell(
+                                    borderRadius: BorderRadius.circular(8),
+                                    onTap: () {
+                                      controller.setCurrent(char.key);
+                                      Get.back();
+                                    },
+                                    child: Padding(
+                                      padding: const EdgeInsets.all(4),
+                                      child: Column(
+                                        children: [
+                                          CharacterAvatar.squircle(
+                                              character: char, size: avatarSize),
+                                          const SizedBox(height: 4),
+                                          Text(
+                                            char.displayName,
+                                            overflow: TextOverflow.ellipsis,
+                                            textScaleFactor: 0.8,
+                                            textAlign: TextAlign.center,
+                                            style: textStyle,
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                  ),
+                              ],
+                            ),
+                          ),
+                          const SizedBox(height: 8),
+                          const Divider(),
+                          ListTile(
+                            visualDensity: VisualDensity.compact,
                             title: const Text('Add Character'),
-                            leading: const Icon(Icons.add),
+                            leading: const Icon(Icons.person_add),
                             onTap: () => Get.toNamed(Routes.createCharacterPage),
                           ),
-                        )
-                      ],
+                          ListTile(
+                            visualDensity: VisualDensity.compact,
+                            dense: true,
+                            title: Text(S.current.allGeneric(S.current.entityPlural(Character))),
+                            leading: const Icon(Icons.group),
+                            onTap: () => Get.toNamed(Routes.characterListPage),
+                          ),
+                          const Divider(),
+                          ListTile(
+                            visualDensity: VisualDensity.compact,
+                            title: const Text('Settings'),
+                            leading: const Icon(Icons.settings),
+                            onTap: () => null,
+                          ),
+                          ListTile(
+                            visualDensity: VisualDensity.compact,
+                            title: const Text('About'),
+                            leading: const Icon(Icons.info),
+                            onTap: () => null,
+                          ),
+                        ],
+                      ),
                     ),
                   ),
                 ),
               ),
-            ),
-          ],
+            ],
+          ),
         );
       },
     );

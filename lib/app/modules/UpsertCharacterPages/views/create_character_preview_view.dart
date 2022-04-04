@@ -34,7 +34,7 @@ class CreateCharacterPreviewView extends GetView<CreateCharacterPreviewControlle
         bucket: PageStorageBucket(),
         child: ListView(
           children: [
-            Center(child: CharacterAvatar.roundedRect(character: char, size: 176)),
+            Center(child: CharacterAvatar.squircle(character: char, size: 176)),
             Text(
               char.displayName,
               textScaleFactor: 1.4,

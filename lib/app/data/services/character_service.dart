@@ -23,7 +23,7 @@ class CharacterService extends GetxService {
   final lastIntPage = 0.obs;
 
   PageController get pageController => _pageController.value;
-  double get page => pageController.hasClients && pageController.positions.isNotEmpty
+  double get page => pageController.hasClients && pageController.positions.length == 1
       ? pageController.page ?? 0
       : 0;
 
@@ -280,4 +280,8 @@ class CharacterService extends GetxService {
       ),
     );
   }
+}
+
+mixin CharacterServiceMixin {
+  CharacterService get characterService => Get.find();
 }

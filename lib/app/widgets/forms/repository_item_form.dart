@@ -41,7 +41,7 @@ class RepositoryItemForm<T extends WithMeta> extends GetView<DynamicFormControll
               onSelected: (value) => _handleMenu(value),
               icon: Stack(children: [
                 const Icon(Icons.more_vert),
-                if (data.meta.sharing?.outOfSync == true)
+                if (data.meta.sharing?.dirty == true)
                   Positioned(
                     top: 0,
                     left: 0,

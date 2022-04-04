@@ -1,4 +1,5 @@
 import 'package:dungeon_paper/app/data/services/character_service.dart';
+import 'package:dungeon_paper/app/data/services/user_service.dart';
 import 'package:dungeon_paper/app/widgets/atoms/user_avatar.dart';
 import 'package:dungeon_paper/app/widgets/molecules/user_menu_popover.dart';
 import 'package:flutter/material.dart';
@@ -6,8 +7,6 @@ import 'package:get/get.dart';
 
 class UserMenu extends StatelessWidget {
   const UserMenu({Key? key}) : super(key: key);
-
-  CharacterService get controller => Get.find<CharacterService>();
 
   @override
   Widget build(BuildContext context) {
@@ -28,7 +27,7 @@ class UserMenu extends StatelessWidget {
       clipBehavior: Clip.antiAlias,
       child: InkWell(
         onTap: () => Get.dialog(
-          const UserMenuPopover(),
+          UserMenuPopover(),
           // opaque: false,
           // transition: Transition.fadeIn,
         ),

@@ -1,5 +1,9 @@
 import 'dart:convert';
 
+import 'package:dungeon_paper/app/data/services/character_service.dart';
+import 'package:dungeon_paper/app/data/services/user_service.dart';
+import 'package:get/instance_manager.dart';
+
 class Meta<T> {
   Meta({
     DateTime? created,
@@ -7,24 +11,28 @@ class Meta<T> {
     required this.schemaVersion,
     this.sharing,
     this.data,
+    required this.owner,
   }) : created = created ?? DateTime.now();
 
   late final DateTime created;
   final DateTime? updated;
   final int schemaVersion;
   final MetaSharing? sharing;
+  final String owner;
   final T? data;
 
   factory Meta.version(
     int schemaVersion, {
+    String? owner,
     DateTime? created,
     DateTime? updated,
     MetaSharing? sharing,
     T? data,
   }) =>
       Meta(
+        owner: owner ?? Get.find<UserService>().current.displayName,
         schemaVersion: schemaVersion,
-        created: created,
+        created: created ?? DateTime.now(),
         updated: updated,
         sharing: sharing,
         data: data,
@@ -35,9 +43,11 @@ class Meta<T> {
     DateTime? updated,
     int? schemaVersion,
     MetaSharing? sharing,
+    String? owner,
     T? data,
   }) =>
       Meta(
+        owner: owner ?? this.owner,
         created: created ?? this.created,
         updated: updated ?? this.updated,
         schemaVersion: schemaVersion ?? this.schemaVersion,
@@ -50,6 +60,7 @@ class Meta<T> {
   String toRawJson() => json.encode(toJson());
 
   factory Meta.fromJson(Map<String, dynamic> json, [T Function(dynamic json)? parseData]) => Meta(
+        owner: json['owner'] ?? 'Guest',
         created: json['created'] != null ? DateTime.parse(json['created']) : DateTime.now(),
         updated: json['updated'] != null ? DateTime.parse(json['updated']) : null,
         schemaVersion: json['schemaVersion'] ?? 1,
@@ -61,11 +72,12 @@ class Meta<T> {
             : null,
       );
 
-  factory Meta.tryParse(dynamic meta, [T Function(dynamic json)? parseData]) => meta != null
-      ? meta is Meta<T>
-          ? meta
-          : Meta.fromJson(meta, parseData)
-      : Meta.version(1);
+  factory Meta.tryParse(dynamic meta, {String? owner, T Function(dynamic json)? parseData}) =>
+      meta != null
+          ? meta is Meta<T>
+              ? meta
+              : Meta.fromJson(meta, parseData)
+          : Meta.version(1, owner: owner);
 
   Map<String, dynamic> toJson([dynamic Function(T? data)? dumpData]) => {
         'created': created.toString(),
@@ -77,29 +89,44 @@ class Meta<T> {
 }
 
 class MetaSharing {
-  MetaSharing({
+  MetaSharing._({
     this.shared = false,
-    this.originalKey,
-    this.createdBy,
-    this.outOfSync = false,
+    this.sourceKey,
+    this.sourceOwner,
+    this.dirty = false,
   });
 
+  MetaSharing.source({
+    this.shared = false,
+    this.sourceOwner,
+  })  : dirty = false,
+        sourceKey = null;
+
+  MetaSharing.fork({
+    this.sourceKey,
+    this.sourceOwner,
+    this.dirty = false,
+  }) : shared = false;
+
   final bool shared;
-  final bool outOfSync;
-  final String? originalKey;
-  final String? createdBy;
+  final bool dirty;
+  final String? sourceKey;
+  final String? sourceOwner;
+
+  bool get isSource => sourceOwner?.isNotEmpty == true && sourceKey?.isNotEmpty == true;
+  bool get isFork => !isSource;
 
   MetaSharing copyWith({
     bool? shared,
-    bool? outOfSync,
-    String? originalKey,
-    String? createdBy,
+    bool? dirty,
+    String? sourceKey,
+    String? sourceOwner,
   }) =>
-      MetaSharing(
+      MetaSharing._(
         shared: shared ?? this.shared,
-        outOfSync: outOfSync ?? this.outOfSync,
-        originalKey: originalKey ?? this.originalKey,
-        createdBy: createdBy ?? this.createdBy,
+        dirty: dirty ?? this.dirty,
+        sourceKey: sourceKey ?? this.sourceKey,
+        sourceOwner: sourceOwner ?? this.sourceOwner,
       );
 
   factory MetaSharing.fromRawJson(String str) => MetaSharing.fromJson(json.decode(str));
@@ -107,28 +134,33 @@ class MetaSharing {
   String toRawJson() => json.encode(toJson());
 
   factory MetaSharing.fromJson(Map<String, dynamic> json) {
-    return MetaSharing(
+    return MetaSharing._(
       shared: json['shared'] ?? false,
-      outOfSync: json['outOfSync'] ?? false,
-      originalKey: json['originalKey'],
-      createdBy: json['createdBy'],
+      dirty: json['dirty'] ?? false,
+      sourceKey: json['sourceKey'],
+      sourceOwner: json['sourceOwner'],
     );
   }
 
-  factory MetaSharing.createFork(String originalKey, MetaSharing? meta, {bool? outOfSync}) {
-    final _m = meta ?? MetaSharing();
+  factory MetaSharing.createFork(
+    String sourceKey, {
+    MetaSharing? meta,
+    bool? dirty,
+    String? owner,
+  }) {
+    final _m = meta ?? MetaSharing.fork();
     return _m.copyWith(
-      originalKey: _m.originalKey ?? originalKey,
-      outOfSync: outOfSync,
-      // TODO created by
+      sourceKey: _m.sourceKey ?? sourceKey,
+      sourceOwner: owner,
+      dirty: dirty,
     );
   }
 
   Map<String, dynamic> toJson() => {
         'shared': shared,
-        'outOfSync': outOfSync,
-        'originalKey': originalKey,
-        'createdBy': createdBy,
+        'outOfSync': dirty,
+        'originalKey': sourceKey,
+        'createdBy': sourceOwner,
       };
 }
 

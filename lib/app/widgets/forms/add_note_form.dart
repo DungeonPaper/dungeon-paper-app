@@ -36,7 +36,7 @@ class AddNoteFormController extends DynamicFormController<Note> {
     if (note != null) {
       entity.value = note!.copyWith(
         meta: note!.meta.copyWith(
-          sharing: MetaSharing.createFork(note!.key, note!.meta.sharing, outOfSync: false),
+          sharing: MetaSharing.createFork(note!.key, meta: note!.meta.sharing, dirty: false),
         ),
       );
       setFromEntity(note!);
@@ -59,7 +59,7 @@ class AddNoteFormController extends DynamicFormController<Note> {
     entity.value = entity.value.copyWith(
       meta: entity.value.meta.copyWith(
         sharing:
-            MetaSharing.createFork(entity.value.key, entity.value.meta.sharing, outOfSync: true),
+            MetaSharing.createFork(entity.value.key, meta: entity.value.meta.sharing, dirty: true),
       ),
       title: data['title'],
       description: data['description'],

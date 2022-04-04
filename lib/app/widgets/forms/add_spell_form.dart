@@ -38,7 +38,7 @@ class AddSpellFormController extends DynamicFormController<Spell> {
     if (spell != null) {
       entity.value = spell!.copyWithInherited(
         meta: spell!.meta.copyWith(
-          sharing: MetaSharing.createFork(spell!.key, spell!.meta.sharing, outOfSync: false),
+          sharing: MetaSharing.createFork(spell!.key, meta: spell!.meta.sharing, dirty: false),
         ),
       );
       setFromEntity(spell!);
@@ -62,7 +62,7 @@ class AddSpellFormController extends DynamicFormController<Spell> {
   Spell setData(Map<String, dynamic> data) {
     entity.value = entity.value.copyWithInherited(
       meta: entity.value.meta.copyWith(
-        sharing: MetaSharing.createFork(spell!.key, spell!.meta.sharing, outOfSync: true),
+        sharing: MetaSharing.createFork(spell!.key, meta: spell!.meta.sharing, dirty: true),
       ),
       name: data['name'],
       description: data['description'],

@@ -58,7 +58,7 @@ class AddMoveFormController extends DynamicFormController<Move> {
     if (move != null) {
       entity.value = move!.copyWithInherited(
         meta: move!.meta.copyWith(
-          sharing: MetaSharing.createFork(move!.key, move!.meta.sharing, outOfSync: false),
+          sharing: MetaSharing.createFork(move!.key, meta: move!.meta.sharing, dirty: false),
         ),
       );
       setFromEntity(move!);
@@ -83,7 +83,7 @@ class AddMoveFormController extends DynamicFormController<Move> {
   Move setData(Map<String, dynamic> data) {
     entity.value = entity.value.copyWithInherited(
       meta: entity.value.meta.copyWith(
-        sharing: MetaSharing.createFork(move!.key, move!.meta.sharing, outOfSync: true),
+        sharing: MetaSharing.createFork(move!.key, meta: move!.meta.sharing, dirty: true),
       ),
       name: data['name'],
       category: data['category'],

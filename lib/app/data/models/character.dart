@@ -197,7 +197,7 @@ class Character implements WithMeta {
   String toRawJson() => json.encode(toJson());
 
   factory Character.fromJson(Map<String, dynamic> json) => Character(
-        meta: Meta.tryParse(json['_meta'], (data) => CharacterMeta.fromJson(data)),
+        meta: Meta.tryParse(json['_meta'], parseData: (data) => CharacterMeta.fromJson(data)),
         key: json['key'],
         displayName: json['displayName'],
         category: json['category'] ?? '',

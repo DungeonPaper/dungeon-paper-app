@@ -141,5 +141,7 @@
   "diceSides": "Sides",
   "diceAmount": "Amount",
   "noCategory": "General",
-  "actionsViewVisibleLabel": "Show"
+  "actionsViewVisibleLabel": "Show",
+  "userUnregistered": "Not registered",
+  "userMenuRecentCharacters": "Recent Characters"
 }

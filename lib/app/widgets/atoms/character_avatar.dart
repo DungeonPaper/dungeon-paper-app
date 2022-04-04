@@ -39,6 +39,13 @@ class CharacterAvatar extends GetView {
   }) =>
       CharacterAvatar._(key: key, character: character, size: size, builder: _circleBuilder);
 
+  factory CharacterAvatar.squircle({
+    Key? key,
+    Character? character,
+    required double size,
+  }) =>
+      CharacterAvatar._(key: key, character: character, size: size, builder: _squircleBuilder);
+
   @override
   Widget build(BuildContext context) {
     if (character != null) {
@@ -51,7 +58,7 @@ class CharacterAvatar extends GetView {
   }
 
   static Widget _rRectBuilder(String url, double size) => ClipRRect(
-        borderRadius: BorderRadius.circular(20),
+        borderRadius: BorderRadius.circular(size / 8),
         child: CachedNetworkImage(
           imageUrl: url,
           width: size,
@@ -64,6 +71,17 @@ class CharacterAvatar extends GetView {
         // clipBehavior: Clip.hardEdge,
         foregroundImage: CachedNetworkImageProvider(url),
         radius: size / 2,
+      );
+
+  static Widget _squircleBuilder(String url, double size) => Material(
+        shape: ContinuousRectangleBorder(borderRadius: BorderRadius.circular(size / 2)),
+        clipBehavior: Clip.antiAlias,
+        child: CachedNetworkImage(
+          imageUrl: url,
+          width: size,
+          height: size,
+          fit: BoxFit.cover,
+        ),
       );
 
   Widget renderForChar(Character? char) {

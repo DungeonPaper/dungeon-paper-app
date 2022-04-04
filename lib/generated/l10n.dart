@@ -1252,6 +1252,26 @@ class S {
       args: [],
     );
   }
+
+  /// `Not registered`
+  String get userUnregistered {
+    return Intl.message(
+      'Not registered',
+      name: 'userUnregistered',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Recent Characters`
+  String get userMenuRecentCharacters {
+    return Intl.message(
+      'Recent Characters',
+      name: 'userMenuRecentCharacters',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

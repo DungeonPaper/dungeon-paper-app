@@ -312,6 +312,10 @@ class MessageLookup extends MessageLookupByLibrary {
         "spells": MessageLookupByLibrary.simpleMessage("Spells"),
         "spellsWithCount": m37,
         "tagCopyFrom": m38,
-        "userMenuMoreChars": MessageLookupByLibrary.simpleMessage("More")
+        "userMenuMoreChars": MessageLookupByLibrary.simpleMessage("More"),
+        "userMenuRecentCharacters":
+            MessageLookupByLibrary.simpleMessage("Recent Characters"),
+        "userUnregistered":
+            MessageLookupByLibrary.simpleMessage("Not registered")
       };
 }
