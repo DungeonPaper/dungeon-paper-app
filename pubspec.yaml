@@ -77,6 +77,7 @@ flutter:
     - assets/icons/riposte.svg
     - assets/icons/scroll_quill.svg
     - assets/icons/swap_bag.svg
+
     #  Stat Icons
     - assets/icons/stats/cha.svg
     - assets/icons/stats/con.svg
@@ -84,6 +85,14 @@ flutter:
     - assets/icons/stats/int.svg
     - assets/icons/stats/str.svg
     - assets/icons/stats/wis.svg
+
+    # Dice icons
+    - assets/icons/dice/d4.svg
+    - assets/icons/dice/d6.svg
+    - assets/icons/dice/d8.svg
+    - assets/icons/dice/d10.svg
+    - assets/icons/dice/d12.svg
+    - assets/icons/dice/d20.svg
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.
   # For details regarding adding assets from package dependencies, see
