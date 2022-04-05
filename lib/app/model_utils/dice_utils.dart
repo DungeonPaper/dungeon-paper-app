@@ -1,7 +1,9 @@
+import 'package:dungeon_paper/app/routes/app_pages.dart';
 import 'package:dungeon_paper/app/widgets/atoms/svg_icon.dart';
 import 'package:dungeon_paper/core/dw_icons.dart';
 import 'package:dungeon_world_data/dungeon_world_data.dart' as dw;
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 class DiceUtils {
   static Widget iconOf(dw.Dice? tag) => const SvgIcon(DwIcons.dice_d6);
@@ -20,4 +22,6 @@ class DiceUtils {
     }
     return found;
   }
+
+  static void openRollDialog(List<dw.Dice> dice) => Get.toNamed(Routes.rollDice, arguments: dice);
 }

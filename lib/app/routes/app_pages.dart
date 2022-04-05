@@ -1,15 +1,17 @@
-import 'package:dungeon_paper/app/data/services/character_service.dart';
-import 'package:dungeon_paper/app/model_utils/character_utils.dart';
-import 'package:dungeon_paper/app/modules/AddRepositoryItems/views/add_moves_view.dart';
 import 'package:flutter/widgets.dart';
 
 import 'package:get/get.dart';
 
+import '../data/services/character_service.dart';
+import '../model_utils/character_utils.dart';
 import '../modules/AddRepositoryItems/bindings/add_repository_items_binding.dart';
+import '../modules/AddRepositoryItems/views/add_moves_view.dart';
 import '../modules/CharacterListPage/bindings/character_list_page_binding.dart';
 import '../modules/CharacterListPage/views/character_list_page_view.dart';
 import '../modules/Home/bindings/home_binding.dart';
 import '../modules/Home/views/home_view.dart';
+import '../modules/RollDice/bindings/roll_dice_binding.dart';
+import '../modules/RollDice/views/roll_dice_view.dart';
 import '../modules/UpsertCharacterPages/bindings/create_character_page_binding.dart';
 import '../modules/UpsertCharacterPages/views/create_character_page_view.dart';
 
@@ -51,6 +53,12 @@ class AppPages {
         classKeys: [characterService.current!.characterClass.key],
       ),
       binding: AddRepositoryItemsBinding(),
+    ),
+    GetPage(
+      name: _Paths.rollDice,
+      page: () => const RollDiceView(),
+      binding: RollDiceBinding(),
+      opaque: false,
     ),
   ];
 }

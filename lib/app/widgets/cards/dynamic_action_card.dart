@@ -1,3 +1,4 @@
+import 'package:dungeon_paper/app/model_utils/dice_utils.dart';
 import 'package:dungeon_paper/app/widgets/atoms/expansion_row.dart';
 import 'package:dungeon_paper/generated/l10n.dart';
 import 'package:dungeon_world_data/dice.dart';
@@ -170,7 +171,7 @@ class DynamicActionCard extends StatelessWidget {
                 iconColor: Theme.of(context).colorScheme.onPrimary,
                 color: Theme.of(context).primaryColor,
                 size: 40,
-                onPressed: () => null,
+                onPressed: () => DiceUtils.openRollDialog(dice),
               ),
             ),
         ],

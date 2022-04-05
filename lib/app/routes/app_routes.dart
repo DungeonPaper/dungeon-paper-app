@@ -7,6 +7,7 @@ abstract class Routes {
   static const characterListPage = _Paths.characterListPage;
   static const createCharacterPage = _Paths.createCharacterPage;
   static const addMoves = _Paths.addMoves;
+  static const rollDice = _Paths.rollDice;
 }
 
 abstract class _Paths {
@@ -15,4 +16,5 @@ abstract class _Paths {
   static const characterListPage = '/character-list';
   static const createCharacterPage = '/create-character';
   static const addMoves = '/add-moves';
+  static const rollDice = '/roll-dice';
 }

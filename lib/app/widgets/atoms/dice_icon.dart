@@ -15,10 +15,13 @@ class DiceIcon extends StatelessWidget {
   final double? size;
   final Color? color;
 
-  factory DiceIcon.dice(dw.Dice dice, {Key? key}) => DiceIcon(
-        key: key,
-        sides: dice.sides,
-      );
+  DiceIcon.from(
+    dw.Dice dice, {
+    Key? key,
+    this.size,
+    this.color,
+  })  : sides = dice.sides,
+        super(key: key);
 
   @override
   Widget build(BuildContext context) {

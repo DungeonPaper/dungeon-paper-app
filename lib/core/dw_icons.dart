@@ -26,7 +26,7 @@ abstract class DwIcons {
 
   // Dice
   static DwIconData diceIcon(int sides) =>
-      DwIconData.svgIcon(name: 'dice_d$sides', fileName: 'dice/dice_d$sides');
+      DwIconData.svgIcon(name: 'dice_d$sides', fileName: 'dice/d$sides');
   static const dice_d4 = DwIconData.svgIcon(name: 'dice_d4', fileName: 'dice/d4');
   static const dice_d6 = DwIconData.svgIcon(name: 'dice_d6', fileName: 'dice/d6');
   static const dice_d8 = DwIconData.svgIcon(name: 'dice_d8', fileName: 'dice/d8');
