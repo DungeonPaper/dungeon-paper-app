@@ -1,7 +1,9 @@
 import 'package:dungeon_paper/app/data/models/roll_stats.dart';
+import 'package:dungeon_paper/app/model_utils/dice_utils.dart';
 import 'package:dungeon_paper/app/widgets/atoms/svg_icon.dart';
 import 'package:dungeon_paper/core/dw_icons.dart';
 import 'package:flutter/material.dart';
+import 'package:dungeon_world_data/dungeon_world_data.dart' as dw;
 
 class RollStatChip extends StatelessWidget {
   final RollStat stat;
@@ -23,15 +25,13 @@ class RollStatChip extends StatelessWidget {
     final rollBadgeBgOpacity = isDark ? 0.8 : 0.1;
 
     return InkWell(
-      onTap: () => null,
+      onTap: () => DiceUtils.openRollDialog([dw.Dice(amount: 2, sides: 6, modifierStat: stat.key)]),
       borderRadius: BorderRadius.circular(10),
       child: Material(
         borderRadius: BorderRadius.circular(10),
         color: theme.cardColor.withOpacity(0.5),
         clipBehavior: Clip.none,
         child: Container(
-          // height: 48,
-          // width: (MediaQuery.of(context).size.width - 32) / 3 - 16,
           padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 8),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
@@ -44,7 +44,6 @@ class RollStatChip extends StatelessWidget {
                     child: stat.icon,
                     data: IconThemeData(size: 16, color: theme.colorScheme.onSurface),
                   ),
-                  // const SizedBox(width: 0),
                   const SizedBox(width: 4),
                   Text(
                     valStr,
@@ -57,22 +56,6 @@ class RollStatChip extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(statKey),
-                        // Padding(
-                        //   padding: const EdgeInsets.only(top: 2),
-                        //   child: RichText(
-                        //     textScaleFactor: 0.8,
-                        //     text: TextSpan(
-                        //       style: theme.textTheme.bodyText2,
-                        //       children: [
-                        //         TextSpan(
-                        //           text: valStr,
-                        //           style: const TextStyle(fontWeight: FontWeight.bold),
-                        //         ),
-                        //         TextSpan(text: statKey + ': '),
-                        //       ],
-                        //     ),
-                        //   ),
-                        // ),
                         if (showDice)
                           Row(
                             crossAxisAlignment: CrossAxisAlignment.center,

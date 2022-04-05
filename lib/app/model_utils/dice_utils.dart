@@ -23,5 +23,13 @@ class DiceUtils {
     return found;
   }
 
-  static void openRollDialog(List<dw.Dice> dice) => Get.toNamed(Routes.rollDice, arguments: dice);
+  static void openRollDialog(List<dw.Dice> dice) {
+    Get.toNamed(Routes.rollDice, arguments: dice);
+  }
+
+  static Offset iconCenterOffset(dw.Dice dice) =>
+      {
+        4: const Offset(0, 8),
+      }[dice.sides] ??
+      Offset.zero;
 }

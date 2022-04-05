@@ -10,8 +10,7 @@ import '../modules/CharacterListPage/bindings/character_list_page_binding.dart';
 import '../modules/CharacterListPage/views/character_list_page_view.dart';
 import '../modules/Home/bindings/home_binding.dart';
 import '../modules/Home/views/home_view.dart';
-import '../modules/RollDice/bindings/roll_dice_binding.dart';
-import '../modules/RollDice/views/roll_dice_view.dart';
+import '../widgets/views/roll_dice_view.dart';
 import '../modules/UpsertCharacterPages/bindings/create_character_page_binding.dart';
 import '../modules/UpsertCharacterPages/views/create_character_page_view.dart';
 
@@ -56,8 +55,7 @@ class AppPages {
     ),
     GetPage(
       name: _Paths.rollDice,
-      page: () => const RollDiceView(),
-      binding: RollDiceBinding(),
+      page: () => RollDiceView(dice: Get.arguments),
       opaque: false,
     ),
   ];
