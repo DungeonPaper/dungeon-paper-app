@@ -19,8 +19,8 @@ class RollDiceView extends StatefulWidget {
     required this.dice,
   }) : super(key: key);
 
-  static const rollAnimDuration = Duration(milliseconds: 1000);
-  static const rollAnimResetDuration = Duration(milliseconds: 500);
+  static const rollAnimDuration = Duration(milliseconds: 1500);
+  static const rollAnimResetDuration = Duration(milliseconds: 700);
 
   @override
   State<RollDiceView> createState() => _RollDiceViewState();
@@ -73,105 +73,109 @@ class _RollDiceViewState extends State<RollDiceView> with TickerProviderStateMix
           final maxHeight = MediaQuery.of(context).size.height;
 
           return Center(
-            child: SingleChildScrollView(
-              child: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 24),
-                child: Column(
-                  // mainAxisAlignment: MainAxisAlignment.start,
-                  crossAxisAlignment: CrossAxisAlignment.stretch,
-                  children: [
-                    for (final group in enumerate(dice))
-                      Padding(
-                        padding: group.index != dice.length - 1
-                            ? const EdgeInsets.only(bottom: 24)
-                            : EdgeInsets.zero,
-                        child: Material(
-                          color: cardColor.withOpacity(
-                              cardColor.opacity * animations[group.index].first.opacity.value),
-                          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
-                          child: Padding(
-                            padding: const EdgeInsets.all(8),
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Opacity(
-                                  opacity: animations[group.index].first.opacity.value,
-                                  child: Transform.translate(
-                                    offset: Offset(
-                                      0,
-                                      animations[group.index].first.y.value * maxHeight,
-                                    ),
-                                    child: Column(
-                                      mainAxisSize: MainAxisSize.min,
-                                      crossAxisAlignment: CrossAxisAlignment.start,
-                                      children: [
-                                        Text(
-                                          'Total: ${results[group.index].total}',
-                                          style: textTheme.headline6!.copyWith(color: Colors.white),
-                                        ),
-                                        Text(
-                                          'Dice: ' +
-                                              (withoutModDice[group.index]).toString() +
-                                              ' | '
-                                                  'Modifier: ' +
-                                              (group.value.modifierWithSign.isEmpty
-                                                  ? '+0'
-                                                  : group.value.modifierWithSign),
-                                          style: textTheme.bodyText2!
-                                              .copyWith(color: Colors.white.withOpacity(0.75)),
-                                        ),
-                                      ],
+            child: Padding(
+              padding: const EdgeInsets.only(bottom: 80),
+              child: SingleChildScrollView(
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 24),
+                  child: Column(
+                    // mainAxisAlignment: MainAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                    children: [
+                      for (final group in enumerate(dice))
+                        Padding(
+                          padding: group.index != dice.length - 1
+                              ? const EdgeInsets.only(bottom: 24)
+                              : EdgeInsets.zero,
+                          child: Material(
+                            color: cardColor.withOpacity(
+                                cardColor.opacity * animations[group.index].first.opacity.value),
+                            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+                            child: Padding(
+                              padding: const EdgeInsets.all(8),
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Opacity(
+                                    opacity: animations[group.index].first.opacity.value,
+                                    child: Transform.translate(
+                                      offset: Offset(
+                                        0,
+                                        animations[group.index].first.y.value * maxHeight,
+                                      ),
+                                      child: Column(
+                                        mainAxisSize: MainAxisSize.min,
+                                        crossAxisAlignment: CrossAxisAlignment.start,
+                                        children: [
+                                          Text(
+                                            'Total: ${results[group.index].total}',
+                                            style:
+                                                textTheme.headline6!.copyWith(color: Colors.white),
+                                          ),
+                                          Text(
+                                            'Dice: ' +
+                                                (withoutModDice[group.index]).toString() +
+                                                ' | '
+                                                    'Modifier: ' +
+                                                (group.value.modifierWithSign.isEmpty
+                                                    ? '+0'
+                                                    : group.value.modifierWithSign),
+                                            style: textTheme.bodyText2!
+                                                .copyWith(color: Colors.white.withOpacity(0.75)),
+                                          ),
+                                        ],
+                                      ),
                                     ),
                                   ),
-                                ),
-                                const SizedBox(height: 8),
-                                Wrap(
-                                  alignment: WrapAlignment.start,
-                                  crossAxisAlignment: WrapCrossAlignment.center,
-                                  runSpacing: diceSpacing,
-                                  spacing: diceSpacing,
-                                  children: [
-                                    for (final d in enumerate(dw.Dice.flatten([group.value])))
-                                      Transform.translate(
-                                        offset: Offset(
-                                          0,
-                                          animations[group.index][d.index].y.value * maxHeight,
-                                        ),
-                                        child: Transform.rotate(
-                                          angle: degToRad(360 *
-                                              3 *
-                                              animations[group.index][d.index].angle.value),
-                                          child: Stack(
-                                            children: [
-                                              DiceIcon.from(
-                                                group.value,
-                                                size: diceSize,
-                                                color: Colors.white,
-                                              ),
-                                              Positioned.fill(
-                                                child: Opacity(
-                                                  opacity: animations[group.index][d.index]
-                                                      .opacity
-                                                      .value,
-                                                  child: Center(
-                                                    child: Transform.translate(
-                                                      offset:
-                                                          DiceUtils.iconCenterOffset(group.value),
-                                                      child: SizedBox(
-                                                        width: 30,
-                                                        height: 30,
-                                                        child: Material(
-                                                          type: MaterialType.circle,
-                                                          color: Colors.black,
-                                                          child: Center(
-                                                            child: Text(
-                                                              results[group.index]
-                                                                  .results[d.index]
-                                                                  .toString(),
-                                                              style: const TextStyle(
-                                                                color: Colors.white,
+                                  const SizedBox(height: 8),
+                                  Wrap(
+                                    alignment: WrapAlignment.start,
+                                    crossAxisAlignment: WrapCrossAlignment.center,
+                                    runSpacing: diceSpacing,
+                                    spacing: diceSpacing,
+                                    children: [
+                                      for (final d in enumerate(dw.Dice.flatten([group.value])))
+                                        Transform.translate(
+                                          offset: Offset(
+                                            0,
+                                            animations[group.index][d.index].y.value * maxHeight,
+                                          ),
+                                          child: Transform.rotate(
+                                            angle: degToRad(360 *
+                                                3 *
+                                                animations[group.index][d.index].angle.value),
+                                            child: Stack(
+                                              children: [
+                                                DiceIcon.from(
+                                                  group.value,
+                                                  size: diceSize,
+                                                  color: Colors.white,
+                                                ),
+                                                Positioned.fill(
+                                                  child: Opacity(
+                                                    opacity: animations[group.index][d.index]
+                                                        .opacity
+                                                        .value,
+                                                    child: Center(
+                                                      child: Transform.translate(
+                                                        offset:
+                                                            DiceUtils.iconCenterOffset(group.value),
+                                                        child: SizedBox(
+                                                          width: 30,
+                                                          height: 30,
+                                                          child: Material(
+                                                            type: MaterialType.circle,
+                                                            color: Colors.black,
+                                                            child: Center(
+                                                              child: Text(
+                                                                results[group.index]
+                                                                    .results[d.index]
+                                                                    .toString(),
+                                                                style: const TextStyle(
+                                                                  color: Colors.white,
+                                                                ),
+                                                                textScaleFactor: 1.5,
                                                               ),
-                                                              textScaleFactor: 1.5,
                                                             ),
                                                           ),
                                                         ),
@@ -179,19 +183,19 @@ class _RollDiceViewState extends State<RollDiceView> with TickerProviderStateMix
                                                     ),
                                                   ),
                                                 ),
-                                              ),
-                                            ],
+                                              ],
+                                            ),
                                           ),
                                         ),
-                                      ),
-                                  ],
-                                ),
-                              ],
+                                    ],
+                                  ),
+                                ],
+                              ),
                             ),
                           ),
                         ),
-                      ),
-                  ],
+                    ],
+                  ),
                 ),
               ),
             ),
