@@ -19,6 +19,9 @@ class RollDiceView extends StatefulWidget {
     required this.dice,
   }) : super(key: key);
 
+  static const rollAnimDuration = Duration(milliseconds: 1000);
+  static const rollAnimResetDuration = Duration(milliseconds: 500);
+
   @override
   State<RollDiceView> createState() => _RollDiceViewState();
 }
@@ -49,6 +52,9 @@ class _RollDiceViewState extends State<RollDiceView> with TickerProviderStateMix
   @override
   Widget build(BuildContext context) {
     final bgColor = Colors.black.withOpacity(0.85);
+    final cardColor = Theme.of(context).brightness == Brightness.light
+        ? Colors.black.withOpacity(0.4)
+        : Colors.white.withOpacity(0.1);
     final textTheme = Theme.of(context).textTheme;
     return BackdropFilter(
       filter: ImageFilter.blur(sigmaX: 5, sigmaY: 5),
@@ -80,8 +86,8 @@ class _RollDiceViewState extends State<RollDiceView> with TickerProviderStateMix
                             ? const EdgeInsets.only(bottom: 24)
                             : EdgeInsets.zero,
                         child: Material(
-                          color: Colors.black
-                              .withOpacity(0.4 * animations[group.index].first.opacity.value),
+                          color: cardColor.withOpacity(
+                              cardColor.opacity * animations[group.index].first.opacity.value),
                           shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
                           child: Padding(
                             padding: const EdgeInsets.all(8),
@@ -221,15 +227,15 @@ class _RollDiceViewState extends State<RollDiceView> with TickerProviderStateMix
   _reRoll() async {
     // play back quickly
     await _walkAnimations((animation, groupIndex, animIndex) {
-      animation.controller.duration = const Duration(milliseconds: 1000);
+      animation.controller.duration = RollDiceView.rollAnimResetDuration;
       animation.controller.reverse();
     });
     // wait for animation
-    await Future.delayed(Duration(milliseconds: 800 + (animations.length * 30)));
+    await Future.delayed(RollDiceView.rollAnimResetDuration);
 
     // revert duration change
     await _walkAnimations((animation, groupIndex, animIndex) {
-      animation.controller.duration = const Duration(milliseconds: 2500);
+      animation.controller.duration = RollDiceView.rollAnimDuration;
     });
 
     _roll();
@@ -238,7 +244,7 @@ class _RollDiceViewState extends State<RollDiceView> with TickerProviderStateMix
 
   void _runAnimations() async {
     _walkAnimations((anim, groupIndex, animIndex) async {
-      await Future.delayed(Duration(milliseconds: (groupIndex * 30) + (animIndex * 15)));
+      await Future.delayed(Duration(milliseconds: (groupIndex * 30) + (animIndex * 30)));
       anim.controller.forward();
     });
   }
@@ -260,25 +266,25 @@ class _RollDiceViewState extends State<RollDiceView> with TickerProviderStateMix
         (index) => _AnimSet(vsync: this),
       ),
     );
-    animations.first.first.controller.addListener(_setEmptyState);
-    animations.last.last.controller.addListener(_setEmptyState);
-    animations.last.last.controller.addStatusListener(_setStatus);
+    animations.first.first.controller.addListener(_updateAnimStatus);
+    animations.last.last.controller.addListener(_updateAnimStatus);
     _runAnimations();
     // animController.forward();
   }
 
-  void _setEmptyState() {
-    setState(() {});
-  }
-
-  void _setStatus(status) {
+  void _updateAnimStatus() {
     setState(() {
-      rollStatus = status;
+      rollStatus = animations.first.first.controller.status != AnimationStatus.completed ||
+              animations.last.last.controller.status != AnimationStatus.completed
+          ? AnimationStatus.forward
+          : AnimationStatus.completed;
     });
   }
 
   @override
   void dispose() {
+    animations.first.first.controller.removeListener(_updateAnimStatus);
+    animations.last.last.controller.removeListener(_updateAnimStatus);
     for (final group in animations) {
       for (final animation in group) {
         animation.dispose();
@@ -304,7 +310,7 @@ class _AnimSet {
     final forwardTween = Tween<double>(begin: 0, end: 1);
     final reverseTween = Tween<double>(begin: 1, end: 0);
 
-    controller = AnimationController(vsync: vsync, duration: const Duration(milliseconds: 2500));
+    controller = AnimationController(vsync: vsync, duration: RollDiceView.rollAnimDuration);
     angle = reverseTween.animate(CurvedAnimation(
       parent: controller,
       curve: const Interval(0, 0.75, curve: Curves.easeOutQuad),
