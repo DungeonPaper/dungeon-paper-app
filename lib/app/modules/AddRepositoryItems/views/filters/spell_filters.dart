@@ -30,27 +30,26 @@ class SpellFiltersView extends StatelessWidget {
       filters: filters,
       onChange: onChange,
       searchController: searchController,
-      trailing: [
-        Row(
-          crossAxisAlignment: CrossAxisAlignment.end,
-          children: [
-            SelectBox<String>(
-              value: filters.classKey,
-              items: [
-                DropdownMenuItem<String>(
-                  child: Text(S.current.allGeneric(S.current.entityPlural(CharacterClass))),
-                  value: null,
-                ),
-                ...<CharacterClass>{...repo.builtIn.classes.values, ...repo.my.classes.values}.map(
-                  (cls) => DropdownMenuItem<String>(
-                    child: Text(cls.name),
-                    value: cls.key,
-                  ),
-                ),
-              ],
-              onChanged: (key) => onChange(filters..classKey = key),
+      filterWidgetsBuilder: (context, f) => [
+        SelectBox<String>(
+          label: Text(S.current.entityPlural(Spell)),
+          value: f.classKey,
+          items: [
+            DropdownMenuItem<String>(
+              child: Text(S.current.allGeneric(S.current.entityPlural(CharacterClass))),
+              value: null,
+            ),
+            ...<CharacterClass>{...repo.builtIn.classes.values, ...repo.my.classes.values}.map(
+              (cls) => DropdownMenuItem<String>(
+                child: Text(cls.name),
+                value: cls.key,
+              ),
             ),
           ],
+          onChanged: (key) {
+            onChange(f..classKey = key);
+            f.controller.add(f);
+          },
         ),
       ],
     );
@@ -91,4 +90,7 @@ class SpellFilters extends EntityFilters<Spell> {
 
   @override
   void setSearch(String search) => this.search = search;
+
+  @override
+  List<bool?> get filterActiveList => [classKey?.isNotEmpty];
 }

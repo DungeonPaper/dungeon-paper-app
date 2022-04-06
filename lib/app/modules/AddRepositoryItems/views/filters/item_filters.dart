@@ -54,4 +54,7 @@ class ItemFilters extends EntityFilters<Item> {
 
   @override
   void setSearch(String search) => this.search = search;
+
+  @override
+  List<bool?> get filterActiveList => [];
 }

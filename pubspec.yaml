@@ -46,6 +46,7 @@ dependencies:
   intl: ^0.17.0
   intl_generator: ^0.2.1
   localstore: ^1.2.1
+  popover: ^0.2.6+3
   shared_preferences: ^2.0.13
   url_launcher: ^6.0.20
   uuid: ^3.0.5

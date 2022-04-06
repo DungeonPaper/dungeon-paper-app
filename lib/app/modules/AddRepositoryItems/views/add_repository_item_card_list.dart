@@ -34,48 +34,52 @@ class AddRepositoryItemCardList<T extends WithMeta, F extends EntityFilters>
 
   @override
   Widget build(BuildContext context) {
-    return Column(
+    return Stack(
       children: [
+        Positioned.fill(
+          child: Padding(
+            padding: const EdgeInsets.only(top: 32),
+            child: ListView(
+              padding: const EdgeInsets.all(8).copyWith(top: 0),
+              children: [
+                const SizedBox(height: 40),
+                if (onSave != null) ...[
+                  SizedBox(
+                    height: 48,
+                    child: ElevatedButton.icon(
+                      style: ButtonThemes.primaryElevated(context),
+                      onPressed: () => Get.to(
+                        () => RepositoryItemForm<T>(
+                          onSave: onSave!,
+                          type: ItemFormType.create,
+                        ),
+                        binding: RepositoryItemFormBinding<T>(
+                          item: _createEmpty(),
+                          extraData: extraData,
+                        ),
+                      ),
+                      label: Text(S.current.createGeneric(S.current.entity(T))),
+                      icon: const Icon(Icons.add),
+                    ),
+                  ),
+                  const Divider(height: 32),
+                ],
+                ...children.map(
+                  (child) => Padding(
+                    padding: const EdgeInsets.only(bottom: 8),
+                    child: child,
+                  ),
+                ),
+                const SizedBox(height: 80),
+              ],
+            ),
+          ),
+        ),
         if (useFilters)
           Padding(
             padding: const EdgeInsets.all(8),
             child: filtersBuilder!(group, filters, controller.setFilters),
           ),
-        Expanded(
-          child: ListView(
-            padding: const EdgeInsets.all(8).copyWith(top: 0),
-            children: [
-              if (onSave != null) ...[
-                SizedBox(
-                  height: 48,
-                  child: ElevatedButton.icon(
-                    style: ButtonThemes.primaryElevated(context),
-                    onPressed: () => Get.to(
-                      () => RepositoryItemForm<T>(
-                        onSave: onSave!,
-                        type: ItemFormType.create,
-                      ),
-                      binding: RepositoryItemFormBinding<T>(
-                        item: _createEmpty(),
-                        extraData: extraData,
-                      ),
-                    ),
-                    label: Text(S.current.createGeneric(S.current.entity(T))),
-                    icon: const Icon(Icons.add),
-                  ),
-                ),
-                const Divider(height: 32),
-              ],
-              ...children.map(
-                (child) => Padding(
-                  padding: const EdgeInsets.only(bottom: 8),
-                  child: child,
-                ),
-              ),
-              const SizedBox(height: 80),
-            ],
-          ),
-        ),
       ],
     );
   }

@@ -31,57 +31,52 @@ class MoveFiltersView extends StatelessWidget {
       filters: filters,
       onChange: onChange,
       searchController: searchController,
-      trailing: [
-        Row(
-          crossAxisAlignment: CrossAxisAlignment.end,
-          children: [
-            Expanded(
-              child: SelectBox<MoveCategory?>(
-                isExpanded: true,
-                value: filters.category,
-                items: [
-                  DropdownMenuItem<MoveCategory?>(
-                    child: Text(S.current.allGeneric(S.current.entityPlural(MoveCategory))),
-                    value: null,
-                  ),
-                  ...MoveCategory.values.map(
-                    (cat) => DropdownMenuItem<MoveCategory?>(
-                      child: Text(
-                        ![MoveCategory.advanced1, MoveCategory.advanced2].contains(cat)
-                            ? S.current.moveCategory(cat)
-                            : S.current.moveCategoryWithLevel(cat),
-                      ),
-                      value: cat,
-                    ),
-                  ),
-                ],
-                onChanged: (cat) => onChange(filters..category = cat),
-              ),
+      filterWidgetsBuilder: (context, f) => [
+        SelectBox<MoveCategory?>(
+          isExpanded: true,
+          label: Text(S.current.entityPlural(MoveCategory)),
+          value: f.category,
+          items: [
+            DropdownMenuItem<MoveCategory?>(
+              child: Text(S.current.allGeneric(S.current.entityPlural(MoveCategory))),
+              value: null,
             ),
-            const SizedBox(width: 16),
-            Expanded(
-              child: SelectBox<String>(
-                isExpanded: true,
-                value: filters.classKey,
-                items: [
-                  DropdownMenuItem<String>(
-                    child: Text(S.current.allGeneric(S.current.entityPlural(CharacterClass))),
-                    value: null,
-                  ),
-                  ...<CharacterClass>{...repo.builtIn.classes.values, ...repo.my.classes.values}
-                      .map(
-                    (cls) => DropdownMenuItem<String>(
-                      child: Text(cls.name),
-                      value: cls.key,
-                    ),
-                  ),
-                ],
-                onChanged: (key) {
-                  onChange(filters..classKey = key);
-                },
+            ...MoveCategory.values.map(
+              (cat) => DropdownMenuItem<MoveCategory?>(
+                child: Text(
+                  ![MoveCategory.advanced1, MoveCategory.advanced2].contains(cat)
+                      ? S.current.moveCategory(cat)
+                      : S.current.moveCategoryWithLevel(cat),
+                ),
+                value: cat,
               ),
             ),
           ],
+          onChanged: (cat) {
+            onChange(f..category = cat);
+            f.controller.add(f);
+          },
+        ),
+        SelectBox<String>(
+          label: Text(S.current.entityPlural(CharacterClass)),
+          isExpanded: true,
+          value: f.classKey,
+          items: [
+            DropdownMenuItem<String>(
+              child: Text(S.current.allGeneric(S.current.entityPlural(CharacterClass))),
+              value: null,
+            ),
+            ...<CharacterClass>{...repo.builtIn.classes.values, ...repo.my.classes.values}.map(
+              (cls) => DropdownMenuItem<String>(
+                child: Text(cls.name),
+                value: cls.key,
+              ),
+            ),
+          ],
+          onChanged: (key) {
+            onChange(f..classKey = key);
+            f.controller.add(f);
+          },
         ),
       ],
     );
@@ -133,4 +128,7 @@ class MoveFilters extends EntityFilters<Move> {
   void setSearch(String search) {
     this.search = search;
   }
+
+  @override
+  List<bool?> get filterActiveList => [category != null, classKey?.isNotEmpty];
 }

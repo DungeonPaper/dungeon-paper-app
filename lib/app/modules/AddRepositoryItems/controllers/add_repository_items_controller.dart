@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:dungeon_paper/app/data/services/character_service.dart';
 import 'package:dungeon_paper/app/data/services/repository_service.dart';
 import 'package:dungeon_paper/app/model_utils/model_json.dart';
@@ -99,4 +101,14 @@ class AddRepositoryItemsController<T, F extends EntityFilters> extends GetxContr
 abstract class EntityFilters<T> {
   void setSearch(String search);
   bool filter(T item);
+
+  final controller = StreamController<EntityFilters<T>>.broadcast();
+
+  Stream get onChanged => controller.stream;
+
+  List<bool?> get filterActiveList;
+
+  int get activeFilterCount => filterActiveList.where((element) => element == true).length;
+
+  int get totalFilterCount => filterActiveList.length;
 }
