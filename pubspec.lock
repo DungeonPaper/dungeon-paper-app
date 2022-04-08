@@ -265,6 +265,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "3.3.0"
+  flutter_file_dialog:
+    dependency: "direct main"
+    description:
+      name: flutter_file_dialog
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "2.3.0"
   flutter_lints:
     dependency: "direct dev"
     description:
@@ -444,7 +451,7 @@ packages:
     source: hosted
     version: "2.0.2"
   path:
-    dependency: transitive
+    dependency: "direct main"
     description:
       name: path
       url: "https://pub.dartlang.org"
@@ -465,7 +472,7 @@ packages:
     source: hosted
     version: "1.0.0"
   path_provider:
-    dependency: transitive
+    dependency: "direct main"
     description:
       name: path_provider
       url: "https://pub.dartlang.org"

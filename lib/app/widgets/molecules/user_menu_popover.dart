@@ -111,9 +111,15 @@ class UserMenuPopover extends GetView<CharacterService> {
                           const Divider(),
                           ListTile(
                             visualDensity: VisualDensity.compact,
+                            title: Text(S.current.importExportTitle),
+                            leading: const Icon(Icons.import_export),
+                            onTap: () => Get.toNamed(Routes.importExport),
+                          ),
+                          ListTile(
+                            visualDensity: VisualDensity.compact,
                             title: const Text('Settings'),
                             leading: const Icon(Icons.settings),
-                            onTap: () => null,
+                            onTap: () => Get.toNamed(Routes.settings),
                           ),
                           ListTile(
                             visualDensity: VisualDensity.compact,

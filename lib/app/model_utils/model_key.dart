@@ -39,8 +39,9 @@ String keyFor<T>(T object) {
 String nameFor<T>(T object) {
   final dyn = object as dynamic;
   switch (T) {
-    case CharacterClass:
     case Character:
+      return dyn.displayName;
+    case CharacterClass:
     case Item:
     case Monster:
     case Move:

@@ -103,6 +103,7 @@
   "userMenuMoreChars": "More",
   "all": "All",
   "allGeneric": "All {entity}",
+  "noGeneric": "No {entity}",
   "searchPlaceholder": "Type to search",
   "searchPlaceholderGeneric": "Type to search {entity}",
   "confirmDeleteTitle": "Delete {entity}?",
@@ -143,5 +144,10 @@
   "noCategory": "General",
   "actionsViewVisibleLabel": "Show",
   "userUnregistered": "Not registered",
-  "userMenuRecentCharacters": "Recent Characters"
+  "userMenuRecentCharacters": "Recent Characters",
+  "importExportTitle": "Import/Export",
+  "import": "Import",
+  "export": "Export",
+  "selectAll": "Select All",
+  "selectNone": "Select None"
 }

@@ -863,6 +863,16 @@ class S {
     );
   }
 
+  /// `No {entity}`
+  String noGeneric(Object entity) {
+    return Intl.message(
+      'No $entity',
+      name: 'noGeneric',
+      desc: '',
+      args: [entity],
+    );
+  }
+
   /// `Type to search`
   String get searchPlaceholder {
     return Intl.message(
@@ -1268,6 +1278,56 @@ class S {
     return Intl.message(
       'Recent Characters',
       name: 'userMenuRecentCharacters',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Import/Export`
+  String get importExportTitle {
+    return Intl.message(
+      'Import/Export',
+      name: 'importExportTitle',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Import`
+  String get import {
+    return Intl.message(
+      'Import',
+      name: 'import',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Export`
+  String get export {
+    return Intl.message(
+      'Export',
+      name: 'export',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Select All`
+  String get selectAll {
+    return Intl.message(
+      'Select All',
+      name: 'selectAll',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Select None`
+  String get selectNone {
+    return Intl.message(
+      'Select None',
+      name: 'selectNone',
       desc: '',
       args: [],
     );

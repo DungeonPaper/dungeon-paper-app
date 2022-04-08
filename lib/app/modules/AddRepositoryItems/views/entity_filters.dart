@@ -96,6 +96,7 @@ class _FiltersWidgetsBuilder<F extends EntityFilters> extends StatelessWidget {
           height:
               max(96, filters.totalFilterCount * 64 + 32 + (16 * (filters.totalFilterCount - 1))),
           width: 300,
+          backgroundColor: Theme.of(context).cardColor,
           // direction: PopoverDirection.right,
           bodyBuilder: (context) => _FiltersPopover<F>(
             filterWidgetsBuilder: filterWidgetsBuilder,

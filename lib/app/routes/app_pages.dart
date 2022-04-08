@@ -10,9 +10,13 @@ import '../modules/CharacterListPage/bindings/character_list_page_binding.dart';
 import '../modules/CharacterListPage/views/character_list_page_view.dart';
 import '../modules/Home/bindings/home_binding.dart';
 import '../modules/Home/views/home_view.dart';
-import '../widgets/views/roll_dice_view.dart';
+import '../modules/ImportExport/bindings/import_export_binding.dart';
+import '../modules/ImportExport/views/import_export_view.dart';
+import '../modules/Settings/bindings/settings_binding.dart';
+import '../modules/Settings/views/settings_view.dart';
 import '../modules/UpsertCharacterPages/bindings/create_character_page_binding.dart';
 import '../modules/UpsertCharacterPages/views/create_character_page_view.dart';
+import '../widgets/views/roll_dice_view.dart';
 
 part 'app_routes.dart';
 
@@ -57,6 +61,16 @@ class AppPages {
       name: _Paths.rollDice,
       page: () => RollDiceView(dice: Get.arguments),
       opaque: false,
+    ),
+    GetPage(
+      name: _Paths.settings,
+      page: () => SettingsView(),
+      binding: SettingsBinding(),
+    ),
+    GetPage(
+      name: _Paths.importExport,
+      page: () => ImportExportView(),
+      binding: ImportExportBinding(),
     ),
   ];
 }

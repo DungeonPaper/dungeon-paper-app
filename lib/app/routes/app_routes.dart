@@ -8,6 +8,8 @@ abstract class Routes {
   static const createCharacterPage = _Paths.createCharacterPage;
   static const addMoves = _Paths.addMoves;
   static const rollDice = _Paths.rollDice;
+  static const settings = _Paths.settings;
+  static const importExport = _Paths.importExport;
 }
 
 abstract class _Paths {
@@ -17,4 +19,6 @@ abstract class _Paths {
   static const createCharacterPage = '/create-character';
   static const addMoves = '/add-moves';
   static const rollDice = '/roll-dice';
+  static const settings = '/settings';
+  static const importExport = '/import-export';
 }

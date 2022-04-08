@@ -143,24 +143,26 @@ class MessageLookup extends MessageLookupByLibrary {
 
   static String m30(entity) => "My ${entity}";
 
-  static String m31(count) =>
+  static String m31(entity) => "No ${entity}";
+
+  static String m32(count) =>
       "${Intl.plural(count, zero: 'No notes', one: 'One note', other: '${count} notes')}";
 
-  static String m32(count, singular, plural) =>
+  static String m33(count, singular, plural) =>
       "${Intl.plural(count, one: 'One ${singular}', other: '${count} ${plural}')}";
 
-  static String m33(stat) => "Roll +${stat}";
+  static String m34(stat) => "Roll +${stat}";
 
-  static String m34(entity) => "Save ${entity}";
+  static String m35(entity) => "Save ${entity}";
 
-  static String m35(entity) => "Type to search ${entity}";
+  static String m36(entity) => "Type to search ${entity}";
 
-  static String m36(string) => "Select ${string} to add";
+  static String m37(string) => "Select ${string} to add";
 
-  static String m37(count) =>
+  static String m38(count) =>
       "${Intl.plural(count, zero: 'No spells', one: 'One spell', other: '${count} spells')}";
 
-  static String m38(tag) => "Copy from: ${tag}";
+  static String m39(tag) => "Copy from: ${tag}";
 
   final messages = _notInlinedMessages(_notInlinedMessages);
   static Map<String, Function> _notInlinedMessages(_) => <String, Function>{
@@ -252,6 +254,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "entityPlural": m16,
         "entityWithCount": m17,
         "explanation": MessageLookupByLibrary.simpleMessage("Further details"),
+        "export": MessageLookupByLibrary.simpleMessage("Export"),
         "formatBold": MessageLookupByLibrary.simpleMessage("Bold"),
         "formatBulletList": MessageLookupByLibrary.simpleMessage("Bullet List"),
         "formatCell": m18,
@@ -274,6 +277,9 @@ class MessageLookup extends MessageLookupByLibrary {
         "genericDescriptionField": m22,
         "genericNameField": m23,
         "genericValueField": m24,
+        "import": MessageLookupByLibrary.simpleMessage("Import"),
+        "importExportTitle":
+            MessageLookupByLibrary.simpleMessage("Import/Export"),
         "items": MessageLookupByLibrary.simpleMessage("Items"),
         "itemsWithCount": m25,
         "moveCategory": m26,
@@ -288,10 +294,11 @@ class MessageLookup extends MessageLookupByLibrary {
         "noCategory": MessageLookupByLibrary.simpleMessage("General"),
         "noDescription":
             MessageLookupByLibrary.simpleMessage("‹No description provided›"),
+        "noGeneric": m31,
         "notes": MessageLookupByLibrary.simpleMessage("Notes"),
-        "notesWithCount": m31,
+        "notesWithCount": m32,
         "ok": MessageLookupByLibrary.simpleMessage("OK"),
-        "pluralize": m32,
+        "pluralize": m33,
         "quickIconsItems": MessageLookupByLibrary.simpleMessage("Items"),
         "quickIconsMoves": MessageLookupByLibrary.simpleMessage("Moves"),
         "quickIconsNote": MessageLookupByLibrary.simpleMessage("+ Note"),
@@ -301,17 +308,19 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Attack + Damage"),
         "rollBasicActionButton":
             MessageLookupByLibrary.simpleMessage("Basic Action"),
-        "rollStatButtonTooltip": m33,
+        "rollStatButtonTooltip": m34,
         "save": MessageLookupByLibrary.simpleMessage("Save"),
-        "saveGeneric": m34,
+        "saveGeneric": m35,
         "searchPlaceholder":
             MessageLookupByLibrary.simpleMessage("Type to search"),
-        "searchPlaceholderGeneric": m35,
+        "searchPlaceholderGeneric": m36,
         "select": MessageLookupByLibrary.simpleMessage("Select"),
-        "selectToAdd": m36,
+        "selectAll": MessageLookupByLibrary.simpleMessage("Select All"),
+        "selectNone": MessageLookupByLibrary.simpleMessage("Select None"),
+        "selectToAdd": m37,
         "spells": MessageLookupByLibrary.simpleMessage("Spells"),
-        "spellsWithCount": m37,
-        "tagCopyFrom": m38,
+        "spellsWithCount": m38,
+        "tagCopyFrom": m39,
         "userMenuMoreChars": MessageLookupByLibrary.simpleMessage("More"),
         "userMenuRecentCharacters":
             MessageLookupByLibrary.simpleMessage("Recent Characters"),

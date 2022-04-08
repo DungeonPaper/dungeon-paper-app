@@ -12,10 +12,6 @@ class UserMenu extends StatelessWidget {
   Widget build(BuildContext context) {
     return Material(
       color: Colors.transparent,
-      // child: Hero(
-      //   tag: 'userMenu',
-      //   child: _buildChild(),
-      // ),
       child: _buildChild(),
     );
   }
@@ -26,11 +22,7 @@ class UserMenu extends StatelessWidget {
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(28)),
       clipBehavior: Clip.antiAlias,
       child: InkWell(
-        onTap: () => Get.dialog(
-          UserMenuPopover(),
-          // opaque: false,
-          // transition: Transition.fadeIn,
-        ),
+        onTap: () => Get.dialog(UserMenuPopover()),
         child: const Padding(
           padding: EdgeInsets.symmetric(horizontal: 8),
           child: UserAvatar(size: 40),
