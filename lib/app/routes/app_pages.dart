@@ -69,7 +69,7 @@ class AppPages {
     ),
     GetPage(
       name: _Paths.importExport,
-      page: () => ImportExportView(),
+      page: () => const ImportExportView(),
       binding: ImportExportBinding(),
     ),
   ];

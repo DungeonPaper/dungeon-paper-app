@@ -1,4 +1,3 @@
-import 'package:dungeon_paper/app/modules/ImportExport/views/export_view.dart';
 import 'package:dungeon_paper/app/themes/colors.dart';
 import 'package:dungeon_paper/generated/l10n.dart';
 import 'package:flutter/material.dart';
@@ -6,6 +5,8 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import '../controllers/import_export_controller.dart';
+import 'export_view.dart';
+import 'import_view.dart';
 
 class ImportExportView extends GetView<ImportExportController> {
   const ImportExportView({Key? key}) : super(key: key);
@@ -22,7 +23,7 @@ class ImportExportView extends GetView<ImportExportController> {
       body: Column(
         children: [
           TabBar(
-            controller: controller.tab,
+            controller: controller.tab.value,
             tabs: [
               Tab(child: Text(S.current.export, style: textStyle)),
               Tab(child: Text(S.current.import, style: textStyle)),
@@ -30,20 +31,25 @@ class ImportExportView extends GetView<ImportExportController> {
           ),
           Expanded(
             child: TabBarView(
-              controller: controller.tab,
-              children: [
-                const ExportView(),
-                Center(child: Text(S.current.import)),
+              controller: controller.tab.value,
+              children: const [
+                ExportView(),
+                ImportView(),
               ],
             ),
           )
         ],
       ),
-      floatingActionButton: FloatingActionButton.extended(
-        label: Text(controller.tab.index == 0 ? S.current.export : S.current.import),
-        backgroundColor: DwColors.success,
-        icon: Icon(controller.tab.index == 0 ? Icons.upload : Icons.download),
-        onPressed: controller.tab.index == 0 ? controller.doExport : controller.doImport,
+      floatingActionButton: Obx(
+        () => FloatingActionButton.extended(
+          label: Text(controller.tab.value.index == 0 ? S.current.export : S.current.import),
+          backgroundColor:
+              (controller.tab.value.index == 0 ? controller.doExport : controller.doImport) != null
+                  ? DwColors.success
+                  : Theme.of(context).disabledColor,
+          icon: Icon(controller.tab.value.index == 0 ? Icons.upload : Icons.download),
+          onPressed: controller.tab.value.index == 0 ? controller.doExport : controller.doImport,
+        ),
       ),
     );
   }

@@ -1,5 +1,3 @@
-import 'package:dungeon_paper/app/data/services/character_service.dart';
-import 'package:dungeon_paper/app/data/services/user_service.dart';
 import 'package:dungeon_paper/app/widgets/atoms/user_avatar.dart';
 import 'package:dungeon_paper/app/widgets/molecules/user_menu_popover.dart';
 import 'package:flutter/material.dart';

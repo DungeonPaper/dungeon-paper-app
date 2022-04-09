@@ -1,140 +1,151 @@
 {
-    // See https://go.microsoft.com/fwlink/?LinkId=733558
-    // for the documentation about the tasks.json format
-    "version": "2.0.0",
-    "tasks": [
+  // See https://go.microsoft.com/fwlink/?LinkId=733558
+  // for the documentation about the tasks.json format
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "Generate translations from ARB files",
+      "type": "dart",
+      "command": "flutter",
+      "args": [
+        "pub",
+        "run",
+        "intl_generator:generate_from_arb",
+        "lib/generated/intl/*.dart lib/l10n/*.arb",
+      ],
+      "problemMatcher": []
+    },
+    {
+      "label": "Build (pick platform)",
+      "type": "dart",
+      "command": "dart",
+      "args": [
+        "lib/core/task_runner/deploy.dart",
+        "--build",
+        "-l",
+        "${input:platform}"
+      ],
+      "problemMatcher": []
+    },
+    {
+      "label": "Build (pick platform) + Full-push to Android",
+      "type": "dart",
+      "command": "dart",
+      "args": [
+        "lib/core/task_runner/deploy.dart",
+        "--build",
+        "-l",
+        "${input:platform}",
+        "--push",
+        "--install"
+      ],
+      "problemMatcher": []
+    },
+    {
+      "label": "Auto-fix all fixable problems",
+      "type": "dart",
+      "command": "dart",
+      "detail": "dart fix --apply",
+      "args": [
+        "fix",
+        "--apply"
+      ],
+      "problemMatcher": []
+    },
+    {
+      "label": "Push & Install Existing APK",
+      "type": "shell",
+      "command": "dart",
+      "args": [
+        "lib/core/task_runner/deploy.dart",
+        "--push",
+        "--install"
+      ],
+      "problemMatcher": []
+    },
+    {
+      "label": "Test",
+      "type": "shell",
+      "command": "dart",
+      "args": [
+        "lib/core/task_runner/deploy.dart",
+        "--test"
+      ],
+      "problemMatcher": []
+    },
+    {
+      "label": "Getx Generate",
+      "type": "shell",
+      "command": "${HOME}/.pub-cache/bin/get create ${input:tplType} ${input:tplName}"
+    },
+    {
+      "label": "Getx Generate on module",
+      "type": "shell",
+      "command": "${HOME}/.pub-cache/bin/get create ${input:tplType} ${input:tplName} on ${input:tplSub}",
+      "problemMatcher": []
+    }
+  ],
+  "inputs": [
+    {
+      "id": "platform",
+      "type": "pickString",
+      "default": "android",
+      "description": "Pick a platform to deploy on",
+      "options": [
         {
-            "label": "Generate translations from ARB files",
-            "type": "dart",
-            "command": "flutter",
-            "args": [
-                "pub",
-                "run",
-                "intl_generator:generate_from_arb",
-                "lib/generated/intl/*.dart lib/l10n/*.arb",
-            ],
-            "problemMatcher": []
+          "value": "android",
+          "label": "Android"
         },
         {
-            "label": "Build (pick platform)",
-            "type": "dart",
-            "command": "dart",
-            "args": [
-                "lib/core/task_runner/deploy.dart",
-                "--build",
-                "-l",
-                "${input:platform}"
-            ],
-            "problemMatcher": []
+          "value": "ios",
+          "label": "iOS",
         },
         {
-            "label": "Build (pick platform) + Full-push to Android",
-            "type": "dart",
-            "command": "dart",
-            "args": [
-                "lib/core/task_runner/deploy.dart",
-                "--build",
-                "-l",
-                "${input:platform}",
-                "--push",
-                "--install"
-            ],
-            "problemMatcher": []
+          "value": "web",
+          "label": "Web",
         },
         {
-            "label": "Push & Install Existing APK",
-            "type": "shell",
-            "command": "dart",
-            "args": [
-                "lib/core/task_runner/deploy.dart",
-                "--push",
-                "--install"
-            ],
-            "problemMatcher": []
-        },
-        {
-            "label": "Test",
-            "type": "shell",
-            "command": "dart",
-            "args": [
-                "lib/core/task_runner/deploy.dart",
-                "--test"
-            ],
-            "problemMatcher": []
-        },
-        {
-            "label": "Getx Generate",
-            "type": "shell",
-            "command": "${HOME}/.pub-cache/bin/get create ${input:tplType} ${input:tplName}"
-        },
-        {
-            "label": "Getx Generate on module",
-            "type": "shell",
-            "command": "${HOME}/.pub-cache/bin/get create ${input:tplType} ${input:tplName} on ${input:tplSub}",
-            "problemMatcher": []
+          "value": "all",
+          "label": "All"
         }
-    ],
-    "inputs": [
+      ]
+    },
+    {
+      "id": "tplType",
+      "type": "pickString",
+      "description": "Pick template type",
+      "options": [
         {
-            "id": "platform",
-            "type": "pickString",
-            "default": "android",
-            "description": "Pick a platform to deploy on",
-            "options": [
-                {
-                    "value": "android",
-                    "label": "Android"
-                },
-                {
-                    "value": "ios",
-                    "label": "iOS",
-                },
-                {
-                    "value": "web",
-                    "label": "Web",
-                },
-                {
-                    "value": "all",
-                    "label": "All"
-                }
-            ]
+          "value": "controller",
+          "label": "Controller"
         },
         {
-            "id": "tplType",
-            "type": "pickString",
-            "description": "Pick template type",
-            "options": [
-                {
-                    "value": "controller",
-                    "label": "Controller"
-                },
-                {
-                    "value": "page",
-                    "label": "Page"
-                },
-                {
-                    "value": "provider",
-                    "label": "Provider"
-                },
-                {
-                    "value": "screen",
-                    "label": "Screen"
-                },
-                {
-                    "value": "view",
-                    "label": "View"
-                },
-            ]
+          "value": "page",
+          "label": "Page"
         },
         {
-            "id": "tplSub",
-            "type": "promptString",
-            "description": "Create on",
+          "value": "provider",
+          "label": "Provider"
         },
         {
-            "id": "tplName",
-            "type": "promptString",
-            "description": "Component name",
+          "value": "screen",
+          "label": "Screen"
         },
-    ],
+        {
+          "value": "view",
+          "label": "View"
+        },
+      ]
+    },
+    {
+      "id": "tplSub",
+      "type": "promptString",
+      "description": "Create on",
+    },
+    {
+      "id": "tplName",
+      "type": "promptString",
+      "description": "Component name",
+    },
+  ],
 }

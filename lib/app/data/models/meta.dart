@@ -1,6 +1,5 @@
 import 'dart:convert';
 
-import 'package:dungeon_paper/app/data/services/character_service.dart';
 import 'package:dungeon_paper/app/data/services/user_service.dart';
 import 'package:get/instance_manager.dart';
 
