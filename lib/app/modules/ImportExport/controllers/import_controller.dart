@@ -142,22 +142,22 @@ class ImportController extends GetxController
       }
       importStep.value = CharacterClass;
       for (final cls in classes) {
-        await StorageHandler.instance.create('myClasses', cls.key, cls.toJson());
+        await StorageHandler.instance.create('Classes', cls.key, cls.toJson());
         leftCount.value -= 1;
       }
       importStep.value = Move;
       for (final move in moves) {
-        await StorageHandler.instance.create('myMoves', move.key, move.toJson());
+        await StorageHandler.instance.create('Moves', move.key, move.toJson());
         leftCount.value -= 1;
       }
       importStep.value = Spell;
       for (final spell in spells) {
-        await StorageHandler.instance.create('mySpells', spell.key, spell.toJson());
+        await StorageHandler.instance.create('Spells', spell.key, spell.toJson());
         leftCount.value -= 1;
       }
       importStep.value = Item;
       for (final items in items) {
-        await StorageHandler.instance.create('myItems', items.key, items.toJson());
+        await StorageHandler.instance.create('Items', items.key, items.toJson());
         leftCount.value -= 1;
       }
       Get.back();

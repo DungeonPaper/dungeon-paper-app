@@ -18,8 +18,9 @@ import 'package:dungeon_world_data/dungeon_world_data.dart' as dw;
 import 'package:get/get.dart';
 
 class RepositoryService extends GetxService {
-  final builtIn = RepositoryCache();
-  final my = RepositoryCache(prefix: 'my');
+  final builtIn = RepositoryCache(prefix: 'repo');
+  final my = RepositoryCache();
+  StorageDelegate get storage => StorageHandler.instance;
 
   void clear() {
     builtIn.clear();
@@ -38,13 +39,13 @@ class RepositoryService extends GetxService {
     await my.init(
       Future(
         () async => SearchResponse.fromJson({
-          'classes': await StorageHandler.instance.getCollection('myClasses'),
-          'items': await StorageHandler.instance.getCollection('myItems'),
-          'monsters': await StorageHandler.instance.getCollection('myMonsters'),
-          'moves': await StorageHandler.instance.getCollection('myMoves'),
-          'races': await StorageHandler.instance.getCollection('myRaces'),
-          'spells': await StorageHandler.instance.getCollection('mySpells'),
-          'tags': await StorageHandler.instance.getCollection('myTags'),
+          'classes': await storage.getCollection('Classes'),
+          'items': await storage.getCollection('Items'),
+          'monsters': await storage.getCollection('Monsters'),
+          'moves': await storage.getCollection('Moves'),
+          'races': await storage.getCollection('Races'),
+          'spells': await storage.getCollection('Spells'),
+          'tags': await storage.getCollection('Tags'),
         }),
       ),
     );
@@ -67,21 +68,24 @@ class RepositoryCache {
 
   final subs = <StreamSubscription>[];
 
+  StorageDelegate get storage => StorageHandler.instance;
+  StorageDelegate get cache => CacheHandler.instance;
+
   Future<void> init(Future<SearchResponse> getFromRemote) async {
-    final cache = SearchResponse.fromJson({
-      'classes': await CacheHandler.instance.getCollection(keyClasses),
-      'items': await CacheHandler.instance.getCollection(keyItems),
-      'monsters': await CacheHandler.instance.getCollection(keyMonsters),
-      'moves': await CacheHandler.instance.getCollection(keyMoves),
-      'races': await CacheHandler.instance.getCollection(keyRaces),
-      'spells': await CacheHandler.instance.getCollection(keySpells),
-      'tags': await CacheHandler.instance.getCollection(keyTags),
+    final cacheRes = SearchResponse.fromJson({
+      'classes': await cache.getCollection(keyClasses),
+      'items': await cache.getCollection(keyItems),
+      'monsters': await cache.getCollection(keyMonsters),
+      'moves': await cache.getCollection(keyMoves),
+      'races': await cache.getCollection(keyRaces),
+      'spells': await cache.getCollection(keySpells),
+      'tags': await cache.getCollection(keyTags),
     });
 
-    if (cache.isAnyEmpty) {
+    if (cacheRes.isAnyEmpty) {
       await setAllFrom(await getFromRemote);
     } else {
-      await setAllFrom(cache, saveIntoCache: false);
+      await setAllFrom(cacheRes, saveIntoCache: false);
     }
 
     registerListeners();
@@ -89,19 +93,19 @@ class RepositoryCache {
 
   void registerListeners() {
     subs.addAll([
-      StorageHandler.instance.collectionListener(keyClasses,
+      storage.collectionListener(keyClasses,
           (d) => classes.value = {for (var x in d) x['key']: CharacterClass.fromJson(x)}),
-      StorageHandler.instance.collectionListener(
+      storage.collectionListener(
           keyItems, (d) => items.value = {for (var x in d) x['key']: Item.fromJson(x)}),
-      StorageHandler.instance.collectionListener(
+      storage.collectionListener(
           keyMonsters, (d) => monsters.value = {for (var x in d) x['key']: Monster.fromJson(x)}),
-      StorageHandler.instance.collectionListener(
+      storage.collectionListener(
           keyMoves, (d) => moves.value = {for (var x in d) x['key']: Move.fromJson(x)}),
-      StorageHandler.instance.collectionListener(
+      storage.collectionListener(
           keyRaces, (d) => races.value = {for (var x in d) x['key']: Race.fromJson(x)}),
-      StorageHandler.instance.collectionListener(
+      storage.collectionListener(
           keySpells, (d) => spells.value = {for (var x in d) x['key']: Spell.fromJson(x)}),
-      StorageHandler.instance.collectionListener(
+      storage.collectionListener(
           keyTags, (d) => tags.value = {for (var x in d) x['name']: dw.Tag.fromJson(x)}),
     ]);
   }
@@ -184,8 +188,7 @@ class RepositoryCache {
     list.addAll(Map.fromIterable(resp, key: (x) => keyFor(x as T)));
 
     if (saveIntoCache) {
-      for (final x in list.values)
-        await CacheHandler.instance.create(collectionName, keyFor(x), toJsonFor(x));
+      for (final x in list.values) await cache.create(collectionName, keyFor(x), toJsonFor(x));
     }
   }
 }

@@ -60,13 +60,13 @@ class AddRepositoryItemsController<T, F extends EntityFilters> extends GetxContr
   void saveCustomItem(String storageKey, T item) {
     toggleItem(item, true);
     debugPrint('Saving $item');
-    StorageHandler.instance.create('my$storageKey', keyFor(item), toJsonFor(item));
+    StorageHandler.instance.create(storageKey, keyFor(item), toJsonFor(item));
   }
 
   void deleteCustomItem(String storageKey, T item) {
     toggleItem(item, false);
     debugPrint('Deleting $item');
-    StorageHandler.instance.delete('my$storageKey', keyFor(item));
+    StorageHandler.instance.delete(storageKey, keyFor(item));
   }
 
   bool isSelected(T item) =>
