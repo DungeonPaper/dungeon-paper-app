@@ -160,6 +160,7 @@ class ImportController extends GetxController
         await StorageHandler.instance.create('Items', items.key, items.toJson());
         leftCount.value -= 1;
       }
+      await Future.delayed(const Duration(seconds: 1));
       Get.back();
 
       Get.rawSnackbar(

@@ -39,7 +39,6 @@ class DebugMenu extends StatelessWidget {
 
   Map<String, void Function()> get actionMap => {
         'toggleDarkMode': toggleTheme,
-        'updateChar': updateChar,
         'createChar': createChar,
         'clearChars': clearChars,
         'viewCharJson': viewCharJson,
@@ -49,11 +48,6 @@ class DebugMenu extends StatelessWidget {
   void toggleTheme() {
     var theme = DynamicTheme.of(Get.context!)!;
     theme.setTheme(theme.themeId == AppThemes.dark ? AppThemes.parchment : AppThemes.dark);
-  }
-
-  void updateChar() {
-    final CharacterService controller = Get.find();
-    controller.debugUpdateCharData();
   }
 
   void clearChars() async {

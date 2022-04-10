@@ -18,7 +18,7 @@ class AlignmentValue extends dw.AlignmentValue {
       AlignmentValue(meta: Meta.version(1), key: original.key, description: original.description);
 
   factory AlignmentValue.fromJson(Map<String, dynamic> json) => AlignmentValue(
-        meta: Meta.fromJson(json['_meta']),
+        meta: Meta.tryParse(json['_meta']),
         key: json['key'],
         description: json['description'],
       );
