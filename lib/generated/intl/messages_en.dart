@@ -185,6 +185,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "characterHeaderSubtitle": m6,
         "characterListTitle":
             MessageLookupByLibrary.simpleMessage("All Characters"),
+        "characterNoCategory":
+            MessageLookupByLibrary.simpleMessage("No Category"),
         "coins": MessageLookupByLibrary.simpleMessage("Coins"),
         "coinsWithCount": m7,
         "confirm": MessageLookupByLibrary.simpleMessage("Confirm"),
@@ -291,10 +293,10 @@ class MessageLookup extends MessageLookupByLibrary {
         "navActions": MessageLookupByLibrary.simpleMessage("Use"),
         "navCharacter": MessageLookupByLibrary.simpleMessage("Character"),
         "navJournal": MessageLookupByLibrary.simpleMessage("Journal"),
-        "noCategory": MessageLookupByLibrary.simpleMessage("General"),
         "noDescription":
             MessageLookupByLibrary.simpleMessage("‹No description provided›"),
         "noGeneric": m31,
+        "noteNoCategory": MessageLookupByLibrary.simpleMessage("General"),
         "notes": MessageLookupByLibrary.simpleMessage("Notes"),
         "notesWithCount": m32,
         "ok": MessageLookupByLibrary.simpleMessage("OK"),

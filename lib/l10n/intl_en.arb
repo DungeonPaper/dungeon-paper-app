@@ -141,7 +141,7 @@
   "formatCheckboxListUnchecked": "Check List (Unchecked)",
   "diceSides": "Sides",
   "diceAmount": "Amount",
-  "noCategory": "General",
+  "noteNoCategory": "General",
   "actionsViewVisibleLabel": "Show",
   "userUnregistered": "Not registered",
   "userMenuRecentCharacters": "Recent Characters",
@@ -149,5 +149,6 @@
   "import": "Import",
   "export": "Export",
   "selectAll": "Select All",
-  "selectNone": "Select None"
+  "selectNone": "Select None",
+  "characterNoCategory": "No Category"
 }

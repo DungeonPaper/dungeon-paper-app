@@ -26,7 +26,7 @@ class Note implements WithMeta {
   final List<dw.Tag> tags;
   final bool favorited;
 
-  String get localizedCategory => category.isEmpty ? S.current.noCategory : category;
+  String get localizedCategory => category.isEmpty ? S.current.noteNoCategory : category;
 
   Note copyWith({
     Meta? meta,

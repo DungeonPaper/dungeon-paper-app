@@ -16,7 +16,7 @@ import '../models/move.dart';
 import '../models/spell.dart';
 
 class CharacterService extends GetxService {
-  final all = <String, Character>{}.obs;
+  final _all = <String, Character>{}.obs;
   final _current = Rx<String?>(null);
 
   final _pageController = PageController(initialPage: 1).obs;
@@ -27,15 +27,30 @@ class CharacterService extends GetxService {
       ? pageController.page ?? 0
       : 0;
 
-  Character? get current => _current.value != null ? all[_current.value] : null;
+  Character? get current => _current.value != null ? _all[_current.value] : null;
+
+  List<Character> get all => _all.values.toList();
+
+  Map<String, List<Character>> get charsByCategory {
+    final out = <String, List<Character>>{};
+    for (final char in _all.values) {
+      out[char.settings.category ?? ''] ??= [];
+      out[char.settings.category ?? '']!.add(char);
+    }
+    for (final key in out.keys) {
+      out[key]!.sort((a, b) => (a.settings.sortOrder ?? double.infinity)
+          .compareTo(b.settings.sortOrder ?? double.infinity));
+    }
+    return out;
+  }
 
   void clear() {
-    all.clear();
+    _all.clear();
     _current.value = null;
   }
 
   void setCurrent(String key) {
-    if (all.containsKey(key)) {
+    if (_all.containsKey(key)) {
       _current.value = key;
       updateCharacter(
         current!.copyWith(
@@ -47,7 +62,7 @@ class CharacterService extends GetxService {
   }
 
   Iterable<Character> get charsByLastUsed {
-    final copy = [...all.values];
+    final copy = [..._all.values];
     copy.sort(dateComparator(order: SortOrder.desc, parse: (char) => char?.meta.data?.lastUsed));
     return copy;
   }
@@ -63,20 +78,20 @@ class CharacterService extends GetxService {
     var json = await StorageHandler.instance.getCollection('Characters');
     var list = json.map((c) => Character.fromJson(c));
 
-    all.addAll(Map.fromIterable(list, key: (c) => c.key));
+    _all.addAll(Map.fromIterable(list, key: (c) => c.key));
 
-    if (all.isNotEmpty) {
+    if (_all.isNotEmpty) {
       final hasLastChar = prefs.containsKey(PrefKeys.lastLoadedCharacter);
       if (hasLastChar) {
         final lastChar = prefs.getString(PrefKeys.lastLoadedCharacter);
-        if (all.containsKey(lastChar)) {
+        if (_all.containsKey(lastChar)) {
           _current.value = lastChar;
         } else {
-          _current.value = all.keys.first;
+          _current.value = _all.keys.first;
           prefs.setString(PrefKeys.lastLoadedCharacter, _current.value!);
         }
       } else {
-        _current.value = all.keys.first;
+        _current.value = _all.keys.first;
         prefs.setString(PrefKeys.lastLoadedCharacter, _current.value!);
       }
     }
@@ -104,22 +119,22 @@ class CharacterService extends GetxService {
 
   void updateCharacter(Character character, {bool switchToCharacter = false}) {
     // (StorageHandler.instance.delegate as LocalStorageDelegate).storage.collection('Characters');
-    all[character.key] = character;
+    _all[character.key] = character;
     StorageHandler.instance.update('Characters', character.key, character.toJson());
     if (switchToCharacter || _current.value == null) {
       _current.value = character.key;
     }
-    debugPrint('Updated char: ${character.key}');
+    debugPrint('Updated char: ${character.key} (${character.displayName})');
     debugPrint(character.toRawJson());
   }
 
   void createCharacter(Character character, {bool switchToCharacter = false}) {
-    all[character.key] = character;
+    _all[character.key] = character;
     StorageHandler.instance.create('Characters', character.key, character.toJson());
     if (switchToCharacter || _current.value == null) {
       _current.value = character.key;
     }
-    debugPrint('Created char: ${character.key}');
+    debugPrint('Created char: ${character.key} (${character.displayName})');
     debugPrint(character.toRawJson());
   }
 
@@ -279,6 +294,12 @@ class CharacterService extends GetxService {
             ],
       ),
     );
+  }
+
+  void updateAll(Iterable<Character> chars) {
+    for (final char in chars) {
+      updateCharacter(char);
+    }
   }
 }
 

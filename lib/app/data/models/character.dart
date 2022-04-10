@@ -29,7 +29,6 @@ class Character implements WithMeta {
     required this.meta,
     required this.key,
     required this.displayName,
-    required this.category,
     required this.avatarUrl,
     required this.characterClass,
     required this.moves,
@@ -49,7 +48,6 @@ class Character implements WithMeta {
   final Meta<CharacterMeta> meta;
   final String key;
   final String displayName;
-  final String category;
   final String avatarUrl;
   final CharacterClass characterClass;
   final List<Move> moves;
@@ -91,7 +89,6 @@ class Character implements WithMeta {
     String? key,
     String? displayName,
     CharacterSettings? settings,
-    String? category,
     String? avatarUrl,
     CharacterClass? characterClass,
     List<Move>? moves,
@@ -110,7 +107,6 @@ class Character implements WithMeta {
         key: key ?? this.key,
         displayName: displayName ?? this.displayName,
         settings: settings ?? this.settings,
-        category: category ?? this.category,
         avatarUrl: avatarUrl ?? this.avatarUrl,
         characterClass: characterClass ?? this.characterClass,
         moves: moves ?? this.moves,
@@ -135,7 +131,6 @@ class Character implements WithMeta {
       meta: Meta.version(1),
       displayName: '',
       settings: CharacterSettings.empty(),
-      category: '',
       avatarUrl: '',
       items: [],
       coins: 0,
@@ -200,7 +195,6 @@ class Character implements WithMeta {
         meta: Meta.tryParse(json['_meta'], parseData: (data) => CharacterMeta.fromJson(data)),
         key: json['key'],
         displayName: json['displayName'],
-        category: json['category'] ?? '',
         avatarUrl: json['avatarURL'],
         settings: json['settings'] != null
             ? CharacterSettings.fromJson(json['settings'])
@@ -224,7 +218,6 @@ class Character implements WithMeta {
         'displayName': displayName,
         'avatarURL': avatarUrl,
         'settings': settings.toJson(),
-        'category': category,
         'class': characterClass.toJson(),
         'moves': List<dynamic>.from(moves.map((x) => x.toJson())),
         'spells': List<dynamic>.from(spells.map((x) => x.toJson())),

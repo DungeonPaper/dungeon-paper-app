@@ -1244,10 +1244,10 @@ class S {
   }
 
   /// `General`
-  String get noCategory {
+  String get noteNoCategory {
     return Intl.message(
       'General',
-      name: 'noCategory',
+      name: 'noteNoCategory',
       desc: '',
       args: [],
     );
@@ -1328,6 +1328,16 @@ class S {
     return Intl.message(
       'Select None',
       name: 'selectNone',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `No Category`
+  String get characterNoCategory {
+    return Intl.message(
+      'No Category',
+      name: 'characterNoCategory',
       desc: '',
       args: [],
     );

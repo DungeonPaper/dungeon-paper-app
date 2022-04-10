@@ -26,7 +26,7 @@ class ExportController extends GetxController
   CharacterService get characterService => Get.find();
   RepositoryService get repoService => Get.find();
 
-  List<Character> get characters => characterService.all.values.toList();
+  List<Character> get characters => characterService.all;
   List<Move> get moves => repoService.my.moves.values.toList();
   List<Spell> get spells => repoService.my.spells.values.toList();
   List<Item> get items => repoService.my.items.values.toList();

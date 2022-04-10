@@ -88,7 +88,7 @@ class AddNoteFormController extends DynamicFormController<Note> {
           label: 'Note category',
           textCapitalization: TextCapitalization.words,
           text: entity.value.category,
-          hintText: S.current.noCategory,
+          hintText: S.current.noteNoCategory,
         ),
       ),
       FormInputData<FormTextInputData>(

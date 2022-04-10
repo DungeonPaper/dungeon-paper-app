@@ -48,7 +48,7 @@ class HomeCharacterJournalView extends GetView<CharacterService> {
               CategorizedList(
                 key: Key('note-category-' + cat.value),
                 initiallyExpanded: true,
-                title: Text(cat.value.isEmpty ? S.current.noCategory : cat.value),
+                title: Text(cat.value.isEmpty ? S.current.noteNoCategory : cat.value),
                 trailing: [
                   GroupSortMenu(
                     index: cat.index,

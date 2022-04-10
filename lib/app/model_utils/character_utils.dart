@@ -188,4 +188,16 @@ class CharacterUtils {
         Note: char.notes,
       }[T]!
           .cast<T>();
+
+  static List<Character> Function(int oldIndex, int newIndex) reorderCharacters(
+    Iterable<Character> list,
+  ) {
+    return (oldIndex, newIndex) => enumerate(reorder(list.toList(), oldIndex, newIndex))
+        .map(
+          (e) => e.value.copyWith(
+            settings: e.value.settings.copyWith(sortOrder: e.index),
+          ),
+        )
+        .toList();
+  }
 }
