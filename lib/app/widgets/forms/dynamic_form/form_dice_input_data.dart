@@ -103,6 +103,7 @@ class FormDiceInputData extends BaseInputData<List<dw.Dice>> {
                 .where((guess) => !value.map((d) => d.toString()).contains(guess.toString())))
               DiceChip(
                 dice: dice,
+                // TODO intl
                 label: Text('Suggested: $dice'),
                 onPressed: () => controller.value = [...controller.value, dice],
               ),

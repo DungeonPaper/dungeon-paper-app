@@ -29,7 +29,6 @@ class CharacterInfoView extends GetView<CharacterInfoController> {
         padding: const EdgeInsets.all(16),
         shrinkWrap: true,
         children: [
-          Obx(() => Text('Valid: ${controller.isValid}')),
           TextFormField(
             autovalidateMode: AutovalidateMode.onUserInteraction,
             controller: controller.displayName.value,

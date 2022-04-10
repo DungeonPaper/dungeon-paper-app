@@ -25,7 +25,6 @@ class CharacterBackgroundView extends GetView<CharacterBackgroundController> {
         padding: const EdgeInsets.all(16),
         shrinkWrap: true,
         children: [
-          Obx(() => Text('Valid: ${controller.isValid}')),
           TextFormField(
             controller: controller.bioDesc.value,
             textInputAction: TextInputAction.next,

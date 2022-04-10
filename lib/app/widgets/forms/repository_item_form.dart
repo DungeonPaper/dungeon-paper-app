@@ -75,10 +75,12 @@ class RepositoryItemForm<T extends WithMeta> extends GetView<DynamicFormControll
 
   final items = const <PopupMenuItem<String>>[
     PopupMenuItem(
+      // TODO intl
       child: Text('Update original'),
       value: 'push',
     ),
     PopupMenuItem(
+      // TODO intl
       child: Text('Revert changes'),
       value: 'pull',
     ),

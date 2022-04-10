@@ -26,7 +26,6 @@ class CharacterClassSelectView extends GetView<CharClassSelectController> {
         padding: const EdgeInsets.all(16),
         shrinkWrap: true,
         children: [
-          Text('Valid: ${controller.isValid}'),
           ...controller.availableClasses
               .map(
                 (cls) => Padding(

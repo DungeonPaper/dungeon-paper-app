@@ -68,6 +68,7 @@ class _AddDiceDialogState extends State<AddDiceDialog> {
                 ),
               ),
               const SizedBox(width: 8),
+              // TODO intl?
               const Text('d'),
               const SizedBox(width: 8),
               Expanded(
@@ -109,6 +110,7 @@ class _AddDiceDialogState extends State<AddDiceDialog> {
                     ),
                   ),
                   onPressed: () => setState(() => modifierType = ModifierType.fixed),
+                  // TODO intl
                   child: const Text('Fixed Value'),
                 ),
               ),
@@ -131,6 +133,7 @@ class _AddDiceDialogState extends State<AddDiceDialog> {
                     ),
                   ),
                   onPressed: () => setState(() => modifierType = ModifierType.stat),
+                  // TODO intl
                   child: const Text('Stat'),
                 ),
               ),
@@ -144,6 +147,7 @@ class _AddDiceDialogState extends State<AddDiceDialog> {
                   filled: true,
                   // TODO intl
                   hintText: 'Number, e.g. 2 or -1',
+                  // TODO intl
                   label: Text('Modifier value'),
                 ),
                 controller: modifierNum,
@@ -156,12 +160,15 @@ class _AddDiceDialogState extends State<AddDiceDialog> {
               child: SelectBox<String>(
                 value: modifierStat,
                 isExpanded: true,
+                // TODO intl
                 label: const Text('Stat'),
+                // TODO intl
                 hint: const Text('Select Stat'),
                 onChanged: (value) => setState(() => modifierStat = value),
                 items: [
                   for (final stat in widget.rollStats.stats)
                     DropdownMenuItem<String>(
+                      // TODO intl
                       child: Text('${stat.name} (${stat.key})'),
                       value: stat.key,
                     )

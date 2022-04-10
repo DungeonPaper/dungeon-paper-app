@@ -203,6 +203,7 @@ class _RollDiceViewState extends State<RollDiceView> with TickerProviderStateMix
         }),
         floatingActionButton: FloatingActionButton.extended(
           backgroundColor: DwColors.success,
+          // TODO intl
           label: const Text('Roll again'),
           icon: const Icon(Icons.refresh),
           onPressed: _reRoll,

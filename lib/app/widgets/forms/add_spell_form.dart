@@ -91,6 +91,7 @@ class AddSpellFormController extends DynamicFormController<Spell> {
         data: FormDropdownInputData(
           isExpanded: true,
           value: entity.value.classKeys.isNotEmpty ? entity.value.classKeys[0] : null,
+          // TODO intl
           label: const Text('Class'),
           items: {...repo.builtIn.classes.values, ...repo.my.classes.values}.map(
             (cls) => DropdownMenuItem(

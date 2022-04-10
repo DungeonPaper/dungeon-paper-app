@@ -97,6 +97,7 @@ class UserMenuPopover extends GetView<CharacterService> {
                           const Divider(),
                           ListTile(
                             visualDensity: VisualDensity.compact,
+                            // TODO intl
                             title: const Text('Add Character'),
                             leading: const Icon(Icons.person_add),
                             onTap: () => Get.toNamed(Routes.createCharacterPage),
@@ -117,12 +118,14 @@ class UserMenuPopover extends GetView<CharacterService> {
                           ),
                           ListTile(
                             visualDensity: VisualDensity.compact,
+                            // TODO intl
                             title: const Text('Settings'),
                             leading: const Icon(Icons.settings),
                             onTap: () => Get.toNamed(Routes.settings),
                           ),
                           ListTile(
                             visualDensity: VisualDensity.compact,
+                            // TODO intl
                             title: const Text('About'),
                             leading: const Icon(Icons.info),
                             onTap: () => null,

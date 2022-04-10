@@ -9,6 +9,7 @@ class SettingsView extends GetView<SettingsController> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        // TODO intl
         title: const Text('SettingsView'),
         centerTitle: true,
       ),

@@ -44,6 +44,7 @@ class GroupSortMenu extends StatelessWidget {
           children: const [
             Icon(Icons.move_up),
             SizedBox(width: 8),
+            // TODO intl
             Text('Move up'),
           ],
         ),
@@ -55,6 +56,7 @@ class GroupSortMenu extends StatelessWidget {
           children: const [
             Icon(Icons.move_down),
             SizedBox(width: 8),
+            // TODO intl
             Text('Move down'),
           ],
         ),

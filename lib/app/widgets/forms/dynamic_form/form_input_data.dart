@@ -11,6 +11,7 @@ import 'package:dungeon_paper/app/widgets/chips/tag_chip.dart';
 import 'package:dungeon_paper/app/widgets/dialogs/add_dice_dialog.dart';
 import 'package:dungeon_paper/app/widgets/dialogs/add_tag_dialog.dart';
 import 'package:dungeon_paper/app/widgets/forms/dynamic_form/dynamic_form.dart';
+import 'package:dungeon_paper/core/utils/interfaces.dart';
 import 'package:dungeon_paper/core/utils/list_utils.dart';
 import 'package:dungeon_paper/core/utils/streams.dart';
 import 'package:dungeon_paper/generated/l10n.dart';
@@ -31,10 +32,9 @@ enum FormInputType {
   dropdown,
 }
 
-abstract class BaseInputData<T> extends Stream<T> {
+abstract class BaseInputData<T> extends Stream<T> implements Disposable {
   late DynamicFormState form;
 
-  void dispose();
   T get value;
   Widget build(BuildContext context);
 
