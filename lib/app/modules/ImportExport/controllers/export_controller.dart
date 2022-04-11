@@ -10,6 +10,7 @@ import 'package:dungeon_paper/app/data/services/character_service.dart';
 import 'package:dungeon_paper/app/data/services/repository_service.dart';
 import 'package:dungeon_paper/app/model_utils/model_key.dart';
 import 'package:dungeon_paper/core/utils/list_utils.dart';
+import 'package:dungeon_paper/generated/l10n.dart';
 import 'package:flutter_file_dialog/flutter_file_dialog.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
@@ -96,32 +97,32 @@ class ExportController extends GetxController
 
       final params = SaveFileDialogParams(sourceFilePath: _tmpFile.path);
       try {
-        final path = await FlutterFileDialog.saveFile(params: params);
-        if (path == null) {
+        final _path = await FlutterFileDialog.saveFile(params: params);
+        if (_path == null) {
           // unawaited(analytics.logEvent(name: Events.ExportFail, parameters: {
           //   'reason': 'user_canceled',
           // }));
-          // TODO intl
-          Get.rawSnackbar(title: 'Export Failed', message: 'Operation canceled');
+          Get.rawSnackbar(
+            title: S.current.exportFailedTitle,
+            message: S.current.exportCanceledMessage,
+          );
         } else {
           // unawaited(analytics.logEvent(name: Events.ExportSuccess, parameters: {
           //   'characters_count': _charactersToExport?.length ?? 0,
           //   'classes_count': _classesToExport?.length ?? 0,
           // }));
-          // TODO intl
           Get.rawSnackbar(
-            title: 'Export Successful',
-            message: 'Your data was exported without problems.',
+            title: S.current.exportSuccessfulTitle,
+            message: S.current.exportSuccessfulMessage(path.basename(_tmpFile.path)),
           );
         }
       } catch (e) {
         // unawaited(analytics.logEvent(name: Events.ExportFail, parameters: {
         //   'reason': e.toString(),
         // }));
-        // TODO intl
         Get.rawSnackbar(
-          title: 'Export Failed',
-          message: 'Something went wrong.\nTry again or contact support if this persists.',
+          title: S.current.exportFailedTitle,
+          message: S.current.exportFailedMessage,
         );
         rethrow;
       }

@@ -1,3 +1,4 @@
+import 'package:dungeon_paper/generated/l10n.dart';
 import 'package:flutter/material.dart';
 
 class GroupSortMenu extends StatelessWidget {
@@ -41,11 +42,10 @@ class GroupSortMenu extends StatelessWidget {
         enabled: index > 0,
         value: 'up',
         child: Row(
-          children: const [
-            Icon(Icons.move_up),
-            SizedBox(width: 8),
-            // TODO intl
-            Text('Move up'),
+          children: [
+            const Icon(Icons.move_up),
+            const SizedBox(width: 8),
+            Text(S.current.sortMoveUp),
           ],
         ),
       ),
@@ -53,11 +53,10 @@ class GroupSortMenu extends StatelessWidget {
         enabled: index < maxIndex,
         value: 'down',
         child: Row(
-          children: const [
-            Icon(Icons.move_down),
-            SizedBox(width: 8),
-            // TODO intl
-            Text('Move down'),
+          children: [
+            const Icon(Icons.move_down),
+            const SizedBox(width: 8),
+            Text(S.current.sortMoveDown),
           ],
         ),
       ),

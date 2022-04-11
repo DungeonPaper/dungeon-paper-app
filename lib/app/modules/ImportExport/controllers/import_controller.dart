@@ -12,6 +12,7 @@ import 'package:dungeon_paper/app/model_utils/model_key.dart';
 import 'package:dungeon_paper/app/modules/ImportExport/local_widgets/import_progress_dialog.dart';
 import 'package:dungeon_paper/core/storage_handler/storage_handler.dart';
 import 'package:dungeon_paper/core/utils/list_utils.dart';
+import 'package:dungeon_paper/generated/l10n.dart';
 import 'package:flutter_file_dialog/flutter_file_dialog.dart';
 import 'package:get/get.dart';
 
@@ -118,9 +119,8 @@ class ImportController extends GetxController
       //   'reason': e.toString(),
       // }));
       Get.rawSnackbar(
-        // TODO intl
-        title: 'Import Failed',
-        message: 'Something went wrong.\nTry again or contact support if this persists.',
+        title: S.current.importFailedTitle,
+        message: S.current.importFailedMessage,
       );
       rethrow;
     }
@@ -165,9 +165,8 @@ class ImportController extends GetxController
       Get.back();
 
       Get.rawSnackbar(
-        // TODO intl
-        title: 'Import Successful',
-        message: 'Your data was imported without problems.',
+        title: S.current.importFailedTitle,
+        message: S.current.importFailedMessage,
       );
     };
   }

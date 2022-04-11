@@ -4,6 +4,7 @@ import 'package:dungeon_paper/app/data/models/item.dart';
 import 'package:dungeon_paper/app/data/models/move.dart';
 import 'package:dungeon_paper/app/data/models/spell.dart';
 import 'package:dungeon_paper/app/modules/ImportExport/controllers/import_controller.dart';
+import 'package:dungeon_paper/generated/l10n.dart';
 import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
@@ -25,8 +26,7 @@ class ImportView extends GetView<ImportController> {
                   ElevatedButton.icon(
                     onPressed: () => controller.toImport.value = null,
                     icon: const Icon(Icons.clear),
-                    // TODO intl
-                    label: const Text('Clear current lists'),
+                    label: Text(S.current.importClearFile),
                   ),
                   const ListCard<Character, ImportController>(),
                   const ListCard<CharacterClass, ImportController>(),
@@ -35,14 +35,11 @@ class ImportView extends GetView<ImportController> {
                   const ListCard<Item, ImportController>(),
                 ]
               : [
-                  // TODO intl
-                  const Text('To start importing, pick the file you want to import from.\n'
-                      'You will then be able to select what to save and what to leave out.'),
+                  Text(S.current.importBrowseHelp),
                   ElevatedButton.icon(
                     onPressed: controller.pickImportFile,
                     icon: const Icon(Icons.file_open),
-                    // TODO intl
-                    label: const Text('Browse file...'),
+                    label: Text(S.current.importBrowseFile),
                   ),
                 ],
         ),

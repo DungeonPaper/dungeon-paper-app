@@ -13,12 +13,11 @@ class ImportProgressDialog extends GetView<ImportController> {
       onWillPop: () async => false,
       child: Obx(
         () => SimpleDialog(
-          // TODO intl
-          title: const Text('Importing'),
+          title: Text(S.current.importProgressTitle),
           contentPadding: const EdgeInsets.symmetric(horizontal: 24, vertical: 32).copyWith(top: 8),
           children: [
-            // TODO intl
-            Text('Processing ' + S.current.entityPlural(controller.importStep.value!) + '...'),
+            Text(S.current
+                .importProgressProcessing(S.current.entityPlural(controller.importStep.value!))),
             const SizedBox(height: 8),
             Row(
               children: [

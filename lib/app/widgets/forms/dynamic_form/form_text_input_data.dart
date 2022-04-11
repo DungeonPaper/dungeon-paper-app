@@ -444,8 +444,7 @@ class MarkdownPreviewDialog extends StatelessWidget {
   Widget build(BuildContext context) {
     return OrientationBuilder(builder: (context, orient) {
       return AlertDialog(
-        // TODO intl
-        title: const Text('Preview'),
+        title: Text(S.current.markdownPreview),
         content: ConstrainedBox(
           constraints: BoxConstraints(
             minWidth: MediaQuery.of(context).size.width - 100,

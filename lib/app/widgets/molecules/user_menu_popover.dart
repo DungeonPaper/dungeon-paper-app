@@ -97,8 +97,7 @@ class UserMenuPopover extends GetView<CharacterService> {
                           const Divider(),
                           ListTile(
                             visualDensity: VisualDensity.compact,
-                            // TODO intl
-                            title: const Text('Add Character'),
+                            title: Text(S.current.addGeneric(S.current.entity(Character))),
                             leading: const Icon(Icons.person_add),
                             onTap: () {
                               Get.back();
@@ -127,8 +126,7 @@ class UserMenuPopover extends GetView<CharacterService> {
                           ),
                           ListTile(
                             visualDensity: VisualDensity.compact,
-                            // TODO intl
-                            title: const Text('Settings'),
+                            title: Text(S.current.settingsTitle),
                             leading: const Icon(Icons.settings),
                             onTap: () {
                               Get.back();
@@ -137,8 +135,7 @@ class UserMenuPopover extends GetView<CharacterService> {
                           ),
                           ListTile(
                             visualDensity: VisualDensity.compact,
-                            // TODO intl
-                            title: const Text('About'),
+                            title: Text(S.current.aboutTitle),
                             leading: const Icon(Icons.info),
                             onTap: () => null,
                           ),

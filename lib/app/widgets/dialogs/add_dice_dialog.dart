@@ -68,8 +68,7 @@ class _AddDiceDialogState extends State<AddDiceDialog> {
                 ),
               ),
               const SizedBox(width: 8),
-              // TODO intl?
-              const Text('d'),
+              Text(S.current.diceSeparator),
               const SizedBox(width: 8),
               Expanded(
                 child: SelectBox<int>(
@@ -110,8 +109,7 @@ class _AddDiceDialogState extends State<AddDiceDialog> {
                     ),
                   ),
                   onPressed: () => setState(() => modifierType = ModifierType.fixed),
-                  // TODO intl
-                  child: const Text('Fixed Value'),
+                  child: Text(S.current.diceUseValue),
                 ),
               ),
               Expanded(
@@ -133,8 +131,7 @@ class _AddDiceDialogState extends State<AddDiceDialog> {
                     ),
                   ),
                   onPressed: () => setState(() => modifierType = ModifierType.stat),
-                  // TODO intl
-                  child: const Text('Stat'),
+                  child: Text(S.current.diceUseStat),
                 ),
               ),
             ],
@@ -143,12 +140,10 @@ class _AddDiceDialogState extends State<AddDiceDialog> {
             Padding(
               padding: const EdgeInsets.only(top: 4),
               child: TextFormField(
-                decoration: const InputDecoration(
+                decoration: InputDecoration(
                   filled: true,
-                  // TODO intl
-                  hintText: 'Number, e.g. 2 or -1',
-                  // TODO intl
-                  label: Text('Modifier value'),
+                  hintText: S.current.diceUseValuePlaceholder,
+                  label: Text(S.current.diceUseValueLabel),
                 ),
                 controller: modifierNum,
                 keyboardType: const TextInputType.numberWithOptions(decimal: false),
@@ -160,16 +155,13 @@ class _AddDiceDialogState extends State<AddDiceDialog> {
               child: SelectBox<String>(
                 value: modifierStat,
                 isExpanded: true,
-                // TODO intl
-                label: const Text('Stat'),
-                // TODO intl
-                hint: const Text('Select Stat'),
+                label: Text(S.current.diceUseStatPlaceholder),
+                hint: Text(S.current.diceUseStatLabel),
                 onChanged: (value) => setState(() => modifierStat = value),
                 items: [
                   for (final stat in widget.rollStats.stats)
                     DropdownMenuItem<String>(
-                      // TODO intl
-                      child: Text('${stat.name} (${stat.key})'),
+                      child: Text(S.current.diceUseStatValue(stat.name, stat.key)),
                       value: stat.key,
                     )
                 ],
