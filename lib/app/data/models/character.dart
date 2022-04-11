@@ -137,12 +137,7 @@ class Character implements WithMeta {
       avatarUrl: '',
       items: [],
       coins: 0,
-      bio: Bio(
-        description: '',
-        looks: [],
-        alignment:
-            AlignmentValue(meta: Meta.version(1), key: 'good', description: 'Do something good'),
-      ),
+      bio: Bio.empty(),
       bonds: [],
       characterClass: characterClass,
       notes: [],

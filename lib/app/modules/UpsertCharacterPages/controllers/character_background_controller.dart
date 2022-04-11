@@ -50,9 +50,7 @@ class CharBackground {
 
   bool get isValid => raceDesc.isNotEmpty;
 
-  Bio get bio => Bio(
+  Bio get bio => Bio.empty().copyWith(
         description: bioDesc,
-        alignment: AlignmentValue(key: 'good', description: '', meta: Meta.version(1)),
-        looks: [],
       );
 }

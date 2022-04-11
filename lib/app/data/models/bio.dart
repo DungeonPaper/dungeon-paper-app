@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:dungeon_paper/app/data/models/alignment.dart';
+import 'package:dungeon_paper/app/data/models/meta.dart';
 
 class Bio {
   Bio({
@@ -9,12 +10,12 @@ class Bio {
     required this.alignment,
   });
 
-  final List<String> looks;
+  final String looks;
   final String description;
   final AlignmentValue alignment;
 
   Bio copyWith({
-    List<String>? looks,
+    String? looks,
     String? description,
     AlignmentValue? alignment,
   }) =>
@@ -29,13 +30,23 @@ class Bio {
   String toRawJson() => json.encode(toJson());
 
   factory Bio.fromJson(Map<String, dynamic> json) => Bio(
-        looks: List<String>.from(json['looks'].map((x) => x)),
-        description: json['description'],
+        looks: json['looks']?.toString() ?? '',
+        description: json['description'] ?? '',
         alignment: AlignmentValue.fromJson(json['alignment']),
       );
 
+  factory Bio.empty() => Bio(
+        description: '',
+        looks: '',
+        alignment: AlignmentValue(
+          meta: Meta.version(1),
+          key: 'good',
+          description: 'Do something good',
+        ),
+      );
+
   Map<String, dynamic> toJson() => {
-        'looks': List<dynamic>.from(looks.map((x) => x)),
+        'looks': looks,
         'description': description,
         'alignment': alignment.toJson(),
       };

@@ -237,6 +237,106 @@ class S {
     );
   }
 
+  /// `Character Biography`
+  String get characterBioDialogTitle {
+    return Intl.message(
+      'Character Biography',
+      name: 'characterBioDialogTitle',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Character & background description`
+  String get characterBioDialogDescLabel {
+    return Intl.message(
+      'Character & background description',
+      name: 'characterBioDialogDescLabel',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Describe your character's background, personality, goals, etc.`
+  String get characterBioDialogDescPlaceholder {
+    return Intl.message(
+      'Describe your character\'s background, personality, goals, etc.',
+      name: 'characterBioDialogDescPlaceholder',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Looks`
+  String get characterBioDialogLooksLabel {
+    return Intl.message(
+      'Looks',
+      name: 'characterBioDialogLooksLabel',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Describe your character's appearance. You may use the presets from the buttons above.`
+  String get characterBioDialogLooksPlaceholder {
+    return Intl.message(
+      'Describe your character\'s appearance. You may use the presets from the buttons above.',
+      name: 'characterBioDialogLooksPlaceholder',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Alignment`
+  String get characterBioDialogAlignmentNameLabel {
+    return Intl.message(
+      'Alignment',
+      name: 'characterBioDialogAlignmentNameLabel',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Alignment: {alignment}`
+  String characterBioDialogAlignmentNameDisplayLabel(Object alignment) {
+    return Intl.message(
+      'Alignment: $alignment',
+      name: 'characterBioDialogAlignmentNameDisplayLabel',
+      desc: '',
+      args: [alignment],
+    );
+  }
+
+  /// `Select alignment`
+  String get characterBioDialogAlignmentNamePlaceholder {
+    return Intl.message(
+      'Select alignment',
+      name: 'characterBioDialogAlignmentNamePlaceholder',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Alignment Description`
+  String get characterBioDialogAlignmentDescriptionLabel {
+    return Intl.message(
+      'Alignment Description',
+      name: 'characterBioDialogAlignmentDescriptionLabel',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Alignment is your character's way of thinking and moral compass. This can center on an ethical ideal, religious strictures or early life events. It reflects what your character values and aspires to protect or create.`
+  String get characterBioDialogAlignmentDescriptionPlaceholder {
+    return Intl.message(
+      'Alignment is your character\'s way of thinking and moral compass. This can center on an ethical ideal, religious strictures or early life events. It reflects what your character values and aspires to protect or create.',
+      name: 'characterBioDialogAlignmentDescriptionPlaceholder',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `Level {level} ∙ {charClass} ∙ {alignment}`
   String characterHeaderSubtitle(
       Object level, Object charClass, Object alignment) {
@@ -1150,6 +1250,26 @@ class S {
     return Intl.message(
       'Importing...',
       name: 'importProgressTitle',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Your data was imported from file successfully`
+  String get importSuccessMessage {
+    return Intl.message(
+      'Your data was imported from file successfully',
+      name: 'importSuccessMessage',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Successful`
+  String get importSuccessTitle {
+    return Intl.message(
+      'Successful',
+      name: 'importSuccessTitle',
       desc: '',
       args: [],
     );

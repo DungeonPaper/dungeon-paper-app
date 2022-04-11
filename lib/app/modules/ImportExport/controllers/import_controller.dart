@@ -134,7 +134,7 @@ class ImportController extends GetxController
     return () async {
       leftCount.value = selectionsCount;
 
-      Get.dialog(const ImportProgressDialog());
+      Get.dialog(const ImportProgressDialog(), barrierDismissible: false);
 
       importStep.value = Character;
       for (final char in characters) {
@@ -165,8 +165,8 @@ class ImportController extends GetxController
       Get.back();
 
       Get.rawSnackbar(
-        title: S.current.importFailedTitle,
-        message: S.current.importFailedMessage,
+        title: S.current.importSuccessTitle,
+        message: S.current.importSuccessMessage,
       );
     };
   }

@@ -2,6 +2,7 @@ import 'package:dungeon_paper/app/data/services/character_service.dart';
 import 'package:dungeon_paper/app/model_utils/dice_utils.dart';
 import 'package:dungeon_paper/app/themes/button_themes.dart';
 import 'package:dungeon_paper/app/widgets/atoms/svg_icon.dart';
+import 'package:dungeon_paper/app/widgets/dialogs/character_bio_dialog.dart';
 import 'package:dungeon_paper/app/widgets/molecules/roll_stats_grid.dart';
 import 'package:dungeon_paper/core/dw_icons.dart';
 import 'package:dungeon_paper/generated/l10n.dart';
@@ -29,20 +30,42 @@ class HomeCharacterView extends GetView<CharacterService> {
           // crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             p(const HomeCharacterHeaderView()),
-            p(Text(
-              char.displayName,
-              textScaleFactor: 1.4,
-              textAlign: TextAlign.center,
-            )),
-            p(Text(
-              S.current.characterHeaderSubtitle(
-                char.stats.level,
-                char.characterClass.name,
-                // "test",
-                // char.bio.toRawJson() ?? 'test',
-                S.current.alignment(char.bio.alignment.key),
-              ),
-              textAlign: TextAlign.center,
+            p(Row(
+              mainAxisSize: MainAxisSize.min,
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                IconButton(
+                  iconSize: 20,
+                  icon: const Icon(Icons.library_books),
+                  onPressed: () => Get.dialog(const CharacterBioDialog()),
+                ),
+                Column(
+                  mainAxisSize: MainAxisSize.min,
+                  // crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      char.displayName,
+                      textScaleFactor: 1.4,
+                      textAlign: TextAlign.center,
+                    ),
+                    Text(
+                      S.current.characterHeaderSubtitle(
+                        char.stats.level,
+                        char.characterClass.name,
+                        // "test",
+                        // char.bio.toRawJson() ?? 'test',
+                        S.current.alignment(char.bio.alignment.key),
+                      ),
+                      textAlign: TextAlign.center,
+                    ),
+                  ],
+                ),
+                IconButton(
+                  iconSize: 20,
+                  icon: const Icon(Icons.edit),
+                  onPressed: () => null,
+                ),
+              ],
             )),
             p(const SizedBox(height: 8)),
             p(const Center(
