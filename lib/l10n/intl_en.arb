@@ -150,5 +150,7 @@
   "export": "Export",
   "selectAll": "Select All",
   "selectNone": "Select None",
-  "characterNoCategory": "No Category"
+  "characterNoCategory": "No Category",
+  "actionSummaryChipLoad": "Load: {load}/{maxLoad}",
+  "actionSummaryChipCoins": "{coins} G"
 }

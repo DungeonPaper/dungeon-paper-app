@@ -1342,6 +1342,26 @@ class S {
       args: [],
     );
   }
+
+  /// `Load: {load}/{maxLoad}`
+  String actionSummaryChipLoad(Object load, Object maxLoad) {
+    return Intl.message(
+      'Load: $load/$maxLoad',
+      name: 'actionSummaryChipLoad',
+      desc: '',
+      args: [load, maxLoad],
+    );
+  }
+
+  /// `{coins} G`
+  String actionSummaryChipCoins(Object coins) {
+    return Intl.message(
+      '$coins G',
+      name: 'actionSummaryChipCoins',
+      desc: '',
+      args: [coins],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

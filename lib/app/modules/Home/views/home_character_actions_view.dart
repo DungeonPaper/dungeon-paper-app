@@ -14,6 +14,7 @@ import 'package:dungeon_paper/app/modules/AddRepositoryItems/views/filters/item_
 import 'package:dungeon_paper/app/modules/AddRepositoryItems/views/filters/move_filters.dart';
 import 'package:dungeon_paper/app/modules/AddRepositoryItems/views/filters/spell_filters.dart';
 import 'package:dungeon_paper/app/modules/Home/views/local_widgets/home_character_actions_filters.dart';
+import 'package:dungeon_paper/app/modules/Home/views/local_widgets/home_character_actions_summary.dart';
 import 'package:dungeon_paper/app/widgets/cards/item_card.dart';
 import 'package:dungeon_paper/app/widgets/cards/move_card.dart';
 import 'package:dungeon_paper/app/widgets/cards/spell_card.dart';
@@ -55,6 +56,7 @@ class HomeCharacterActionsView extends GetView<CharacterService> {
                 },
               ),
             ),
+            HomeCharacterActionsSummaryView(),
             for (final cat in char.actionCategories)
               {
                 'Move': movesList,

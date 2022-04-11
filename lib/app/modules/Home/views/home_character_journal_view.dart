@@ -10,6 +10,7 @@ import 'package:dungeon_paper/app/widgets/cards/note_card.dart';
 import 'package:dungeon_paper/app/widgets/menus/entity_edit_menu.dart';
 import 'package:dungeon_paper/app/widgets/menus/group_sort_menu.dart';
 import 'package:dungeon_paper/app/widgets/molecules/categorized_list.dart';
+import 'package:dungeon_paper/core/storage_handler/storage_handler.dart';
 import 'package:dungeon_paper/core/utils/list_utils.dart';
 import 'package:dungeon_paper/generated/l10n.dart';
 import 'package:flutter/material.dart';
@@ -73,9 +74,12 @@ class HomeCharacterJournalView extends GetView<CharacterService> {
                               onDelete: confirmDelete(context, note, note.title),
                               onEdit: CharacterUtils.openNotePage(
                                 note: note,
-                                onSave: (_note) => controller.updateCharacter(
-                                  CharacterUtils.updateByType<Note>(char, [_note]),
-                                ),
+                                onSave: (_note) {
+                                  controller.updateCharacter(
+                                    CharacterUtils.updateByType<Note>(char, [_note]),
+                                  );
+                                  StorageHandler.instance.create('Notes', note.key, note.toJson());
+                                },
                               ),
                             ),
                           ],

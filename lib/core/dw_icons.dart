@@ -13,6 +13,10 @@ abstract class DwIcons {
   static const riposte = DwIconData.svgIcon(name: 'riposte', fileName: 'riposte');
   static const scroll_quill = DwIconData.svgIcon(name: 'scroll_quill', fileName: 'scroll_quill');
   static const swap_bag = DwIconData.svgIcon(name: 'swap_bag', fileName: 'swap_bag');
+  static const coin_stack = DwIconData.svgIcon(name: 'coin_stack', fileName: 'coin_stack');
+  static const dumbbell = DwIconData.svgIcon(name: 'dumbbell', fileName: 'dumbbell');
+  static const quill = DwIconData.svgIcon(name: 'quill', fileName: 'quill');
+  static const swords = DwIconData.svgIcon(name: 'swords', fileName: 'swords');
 
   // Stats
   static DwIconData statIcon(String stat) =>

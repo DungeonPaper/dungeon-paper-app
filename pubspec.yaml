@@ -82,6 +82,10 @@ flutter:
     - assets/icons/riposte.svg
     - assets/icons/scroll_quill.svg
     - assets/icons/swap_bag.svg
+    - assets/icons/coin_stack.svg
+    - assets/icons/dumbbell.svg
+    - assets/icons/quill.svg
+    - assets/icons/swords.svg
 
     #  Stat Icons
     - assets/icons/stats/cha.svg

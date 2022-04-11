@@ -2,6 +2,7 @@ import 'package:dungeon_paper/app/data/models/character_class.dart';
 import 'package:dungeon_paper/app/data/models/item.dart';
 import 'package:dungeon_paper/app/data/models/monster.dart';
 import 'package:dungeon_paper/app/data/models/move.dart';
+import 'package:dungeon_paper/app/data/models/note.dart';
 import 'package:dungeon_paper/app/data/models/race.dart';
 import 'package:dungeon_paper/app/data/models/spell.dart';
 import 'package:dungeon_paper/core/utils/map_utils.dart';
@@ -14,6 +15,7 @@ enum SearchType {
   moves,
   races,
   spells,
+  notes,
   tags,
 }
 
@@ -25,6 +27,7 @@ final searchTypeToString = <SearchType, String>{
   SearchType.races: 'Races',
   SearchType.spells: 'Spells',
   SearchType.tags: 'Tags',
+  SearchType.notes: 'Notes',
 };
 
 final stringTypeToSearchType = searchTypeToString.inverse;
@@ -50,6 +53,7 @@ class SearchResponse {
   final List<Move>? moves;
   final List<Race>? races;
   final List<Spell>? spells;
+  final List<Note>? notes;
   final List<dw.Tag>? tags;
 
   SearchResponse({
@@ -59,6 +63,7 @@ class SearchResponse {
     this.moves,
     this.races,
     this.spells,
+    this.notes,
     this.tags,
   });
 
@@ -74,6 +79,7 @@ class SearchResponse {
         races: json['Races'] != null ? List.from(json['Races'].map((x) => Race.fromJson(x))) : null,
         spells:
             json['Spells'] != null ? List.from(json['Spells'].map((x) => Spell.fromJson(x))) : null,
+        notes: json['Notes'] != null ? List.from(json['Notes'].map((x) => Note.fromJson(x))) : null,
         tags: json['Tags'] != null ? List.from(json['Tags'].map((x) => dw.Tag.fromJson(x))) : null,
       );
 
@@ -85,5 +91,7 @@ class SearchResponse {
         races,
         spells,
         tags,
+        // ignore notes
+        // notes,
       ].any((l) => l == null || l.isEmpty);
 }

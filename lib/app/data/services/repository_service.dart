@@ -6,6 +6,7 @@ import 'package:dungeon_paper/app/data/models/character_class.dart';
 import 'package:dungeon_paper/app/data/models/item.dart';
 import 'package:dungeon_paper/app/data/models/monster.dart';
 import 'package:dungeon_paper/app/data/models/move.dart';
+import 'package:dungeon_paper/app/data/models/note.dart';
 import 'package:dungeon_paper/app/data/models/race.dart';
 import 'package:dungeon_paper/app/data/models/spell.dart';
 import 'package:dungeon_paper/app/model_utils/model_json.dart';
@@ -46,6 +47,7 @@ class RepositoryService extends GetxService {
           'races': await storage.getCollection('Races'),
           'spells': await storage.getCollection('Spells'),
           'tags': await storage.getCollection('Tags'),
+          'notes': await storage.getCollection('Notes'),
         }),
       ),
     );
@@ -65,6 +67,7 @@ class RepositoryCache {
   final races = <String, Race>{}.obs;
   final spells = <String, Spell>{}.obs;
   final tags = <String, dw.Tag>{}.obs;
+  final notes = <String, Note>{}.obs;
 
   final subs = <StreamSubscription>[];
 
@@ -80,6 +83,7 @@ class RepositoryCache {
       'races': await cache.getCollection(keyRaces),
       'spells': await cache.getCollection(keySpells),
       'tags': await cache.getCollection(keyTags),
+      'notes': await cache.getCollection(keyNotes),
     });
 
     if (cacheRes.isAnyEmpty) {
@@ -107,6 +111,8 @@ class RepositoryCache {
           keySpells, (d) => spells.value = {for (var x in d) x['key']: Spell.fromJson(x)}),
       storage.collectionListener(
           keyTags, (d) => tags.value = {for (var x in d) x['name']: dw.Tag.fromJson(x)}),
+      storage.collectionListener(
+          keyNotes, (d) => notes.value = {for (var x in d) x['key']: Note.fromJson(x)}),
     ]);
   }
 
@@ -132,6 +138,7 @@ class RepositoryCache {
       updateList<Move>(keyMoves, moves, resp.moves, saveIntoCache: saveIntoCache),
       updateList<Race>(keyRaces, races, resp.races, saveIntoCache: saveIntoCache),
       updateList<Spell>(keySpells, spells, resp.spells, saveIntoCache: saveIntoCache),
+      updateList<Note>(keyTags, notes, resp.notes, saveIntoCache: saveIntoCache),
       updateList<dw.Tag>(keyTags, tags, resp.tags, saveIntoCache: saveIntoCache),
     ]);
   }
@@ -144,6 +151,7 @@ class RepositoryCache {
   String get keyRaces => _key('Races');
   String get keySpells => _key('Spells');
   String get keyTags => _key('Tags');
+  String get keyNotes => _key('Notes');
 
   void clear() {
     classes.clear();
@@ -152,6 +160,7 @@ class RepositoryCache {
     moves.clear();
     races.clear();
     spells.clear();
+    notes.clear();
     tags.clear();
   }
 
@@ -169,6 +178,8 @@ class RepositoryCache {
         return races as RxMap<String, T>;
       case Spell:
         return spells as RxMap<String, T>;
+      case Note:
+        return notes as RxMap<String, T>;
       case dw.Tag:
         return tags as RxMap<String, T>;
     }

@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'package:dungeon_paper/core/dw_icons.dart';
+import 'package:dungeon_paper/core/utils/string_utils.dart';
 import 'package:dungeon_paper/core/utils/uuid.dart';
 import 'package:dungeon_world_data/dungeon_world_data.dart' as dw;
 
@@ -31,6 +32,14 @@ class Item extends dw.Item implements WithMeta {
   final ItemSettings settings;
   final double amount;
   final bool equipped;
+
+  int get weight => settings.countWeight
+      ? tags
+              .cast<dw.Tag?>()
+              .firstWhere((tag) => cleanStr(tag?.name ?? '') == 'weight', orElse: () => null)
+              ?.value ??
+          0
+      : 0;
 
   Item copyWithInherited({
     Meta? meta,
