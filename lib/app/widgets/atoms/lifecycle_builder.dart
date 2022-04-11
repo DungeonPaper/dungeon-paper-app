@@ -26,10 +26,10 @@ class LifecycleView extends StatefulWidget {
   static Widget Function(BuildContext context) childBuilder(Widget child) => (_) => child;
 
   @override
-  _OnInitBuilderState createState() => _OnInitBuilderState();
+  _LifecycleBuilderState createState() => _LifecycleBuilderState();
 }
 
-class _OnInitBuilderState extends State<LifecycleView> {
+class _LifecycleBuilderState extends State<LifecycleView> {
   @override
   void initState() {
     super.initState();
@@ -44,6 +44,6 @@ class _OnInitBuilderState extends State<LifecycleView> {
 
   @override
   Widget build(BuildContext context) {
-    return widget.builder(context);
+    return Builder(builder: widget.builder);
   }
 }

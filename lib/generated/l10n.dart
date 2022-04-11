@@ -709,10 +709,10 @@ class S {
     );
   }
 
-  /// `Favorite Notes`
+  /// `Bookmarked Notes`
   String get dynamicCategoriesNotes {
     return Intl.message(
-      'Favorite Notes',
+      'Bookmarked Notes',
       name: 'dynamicCategoriesNotes',
       desc: '',
       args: [],
@@ -1430,10 +1430,10 @@ class S {
     );
   }
 
-  /// `Attack + Damage`
+  /// `Hack & Slash`
   String get rollAttackDamageButton {
     return Intl.message(
-      'Attack + Damage',
+      'Hack & Slash',
       name: 'rollAttackDamageButton',
       desc: '',
       args: [],

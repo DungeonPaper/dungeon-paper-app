@@ -22,31 +22,29 @@ class HomeCharacterActionsFilters extends StatelessWidget {
             : {...hidden.where((element) => element != type)},
       ),
       itemBuilder: (context) => ['Move', 'Spell', 'Item']
-          .map((type) => PopupMenuItem<String>(
-                value: type,
-                child: Row(
-                  children: [
-                    SizedBox(
-                      width: 30,
-                      child: Checkbox(
-                        value: !hidden.contains(type),
-                        onChanged: (show) {
-                          onUpdateHidden(!show!
-                              ? {...hidden, type}
-                              : {...hidden.where((element) => element != type)});
-                          Get.back();
-                        },
-                      ),
+          .map(
+            (type) => PopupMenuItem<String>(
+              value: type,
+              child: Row(
+                children: [
+                  SizedBox(
+                    width: 30,
+                    child: Checkbox(
+                      value: !hidden.contains(type),
+                      onChanged: (show) {
+                        onUpdateHidden(!show!
+                            ? {...hidden, type}
+                            : {...hidden.where((element) => element != type)});
+                        Get.back();
+                      },
                     ),
-                    const SizedBox(width: 8),
-                    Expanded(child: Text(S.current.entityPlural(type))),
-                  ],
-                ),
-                // selected: !hidden.contains(type),
-                // onSelected: (show) => onUpdateHidden(!show
-                //     ? {...hidden, type}
-                //     : {...hidden.where((element) => element != type)}),
-              ))
+                  ),
+                  const SizedBox(width: 8),
+                  Expanded(child: Text(S.current.entityPlural(type))),
+                ],
+              ),
+            ),
+          )
           .toList(),
     );
   }

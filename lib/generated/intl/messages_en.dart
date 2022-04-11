@@ -273,7 +273,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "dynamicCategoriesMoves":
             MessageLookupByLibrary.simpleMessage("Favorite Moves"),
         "dynamicCategoriesNotes":
-            MessageLookupByLibrary.simpleMessage("Favorite Notes"),
+            MessageLookupByLibrary.simpleMessage("Bookmarked Notes"),
         "dynamicCategoriesSpells":
             MessageLookupByLibrary.simpleMessage("Prepared Spells"),
         "edit": MessageLookupByLibrary.simpleMessage("Edit"),
@@ -357,7 +357,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "quickIconsSpells": MessageLookupByLibrary.simpleMessage("Spells"),
         "remove": MessageLookupByLibrary.simpleMessage("Remove"),
         "rollAttackDamageButton":
-            MessageLookupByLibrary.simpleMessage("Attack + Damage"),
+            MessageLookupByLibrary.simpleMessage("Hack & Slash"),
         "rollBasicActionButton":
             MessageLookupByLibrary.simpleMessage("Basic Action"),
         "rollStatButtonTooltip": m39,

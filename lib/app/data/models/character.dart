@@ -10,6 +10,7 @@ import 'package:dungeon_paper/core/utils/enums.dart';
 import 'package:dungeon_paper/core/utils/math_utils.dart';
 import 'package:dungeon_paper/core/utils/string_utils.dart';
 import 'package:dungeon_paper/core/utils/uuid.dart';
+import 'package:dungeon_world_data/dungeon_world_data.dart' as dw;
 
 import 'bio.dart';
 import 'bond.dart';
@@ -82,6 +83,7 @@ class Character implements WithMeta {
           (cat) => !settings.actionCategoriesHide.contains(cat),
         ),
       );
+  dw.Dice get damageDice => stats.damageDice ?? characterClass.damageDice;
 
   static const allActionCategories = {'Move', 'Spell', 'Item'};
 

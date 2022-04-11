@@ -20,24 +20,27 @@ class HomeCharacterView extends GetView<CharacterService> {
     return Obx(
       () {
         final char = controller.current;
-        final rollStats = char?.rollStats.stats ?? [];
+        if (char == null) {
+          return Container();
+        }
+        final rollStats = char.rollStats.stats;
         return ListView(
           padding: const EdgeInsets.only(bottom: 0),
           // crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             p(const HomeCharacterHeaderView()),
             p(Text(
-              char?.displayName ?? '...',
+              char.displayName,
               textScaleFactor: 1.4,
               textAlign: TextAlign.center,
             )),
             p(Text(
               S.current.characterHeaderSubtitle(
-                char?.stats.level ?? 0,
-                char?.characterClass.name ?? '...',
+                char.stats.level,
+                char.characterClass.name,
                 // "test",
-                // char?.bio.toRawJson() ?? 'test',
-                S.current.alignment(char?.bio.alignment.key ?? 'good'),
+                // char.bio.toRawJson() ?? 'test',
+                S.current.alignment(char.bio.alignment.key),
               ),
               textAlign: TextAlign.center,
             )),
@@ -73,7 +76,8 @@ class HomeCharacterView extends GetView<CharacterService> {
                       const SizedBox(width: 16),
                       Expanded(
                         child: ElevatedButton.icon(
-                          onPressed: () => null,
+                          onPressed: () => DiceUtils.openRollDialog(
+                              [dw.Dice(sides: 6, amount: 2, modifierStat: 'STR'), char.damageDice]),
                           style: ButtonThemes.primaryElevated(context),
                           label: Text(S.current.rollAttackDamageButton),
                           icon: const SvgIcon(DwIcons.dice_d6),
