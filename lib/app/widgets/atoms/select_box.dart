@@ -97,10 +97,14 @@ class SelectBox<T> extends StatelessWidget {
       // color: Colors.red,
       child: Stack(
         children: [
-          DefaultTextStyle(
-              style: theme.textTheme.caption!.copyWith(fontSize: 11, fontWeight: FontWeight.w600),
-              child: label!),
-          Padding(padding: const EdgeInsets.only(top: 16), child: buildDropdown()),
+          Padding(
+            padding: const EdgeInsets.only(top: 1, left: 3),
+            child: DefaultTextStyle(style: theme.textTheme.caption!, child: label!),
+          ),
+          Padding(
+            padding: const EdgeInsets.only(top: 12, left: 3, bottom: 2),
+            child: buildDropdown(),
+          ),
         ],
       ),
     );
@@ -154,7 +158,7 @@ class _Container extends StatelessWidget {
     const Color lightEnabled = Color(0x0A000000);
     const Color lightDisabled = Color(0x05000000);
 
-    final height = label ? 61.0 : 48.0;
+    final height = label ? 62.5 : 48.0;
 
     final fill = theme.brightness == Brightness.dark
         ? !disabled
