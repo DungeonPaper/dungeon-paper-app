@@ -76,7 +76,7 @@
   "exportCanceledMessage": "Operation was canceled",
   "exportFailedMessage": "Something went wrong.\nTry again or contact support if this persists",
   "exportFailedTitle": "Export Failed",
-  "exportSuccessfulMessage": "Your data was exported to '{file}' successfully",
+  "exportSuccessfulMessage": "Your data was exported to file successfully",
   "exportSuccessfulTitle": "Export Successful",
   "formatBold": "Bold",
   "formatBulletList": "Bullet List",

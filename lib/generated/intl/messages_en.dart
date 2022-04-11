@@ -102,29 +102,26 @@ class MessageLookup extends MessageLookupByLibrary {
   static String m21(count, entPlural, ent) =>
       "${Intl.plural(count, zero: 'No ${entPlural}', one: 'One ${ent}', other: '${count} ${entPlural}')}";
 
-  static String m22(file) =>
-      "Your data was exported to \'${file}\' successfully";
+  static String m22(n) => "Cell ${n}";
 
-  static String m23(n) => "Cell ${n}";
+  static String m23(n) => "Header ${n}";
 
   static String m24(n) => "Header ${n}";
 
-  static String m25(n) => "Header ${n}";
+  static String m25(n) => "Heading ${n}";
 
-  static String m26(n) => "Heading ${n}";
+  static String m26(entity) => "${entity} description";
 
-  static String m27(entity) => "${entity} description";
+  static String m27(entity) => "${entity} name";
 
-  static String m28(entity) => "${entity} name";
+  static String m28(entity) => "${entity} value";
 
-  static String m29(entity) => "${entity} value";
+  static String m29(entity) => "Processing ${entity}...";
 
-  static String m30(entity) => "Processing ${entity}...";
-
-  static String m31(count) =>
+  static String m30(count) =>
       "${Intl.plural(count, zero: 'No items', one: 'One item', other: '${count} items')}";
 
-  static String m32(category) => "${Intl.select(category, {
+  static String m31(category) => "${Intl.select(category, {
             'starting': 'Starting',
             'basic': 'Basic',
             'special': 'Special',
@@ -133,7 +130,7 @@ class MessageLookup extends MessageLookupByLibrary {
             'other': 'Other',
           })}";
 
-  static String m33(category) => "${Intl.select(category, {
+  static String m32(category) => "${Intl.select(category, {
             'starting': 'Starting',
             'basic': 'Basic',
             'special': 'Special',
@@ -142,7 +139,7 @@ class MessageLookup extends MessageLookupByLibrary {
             'other': 'Other',
           })}";
 
-  static String m34(category) => "${Intl.select(category, {
+  static String m33(category) => "${Intl.select(category, {
             'starting': 'Starting',
             'basic': 'Basic',
             'special': 'Special',
@@ -151,31 +148,31 @@ class MessageLookup extends MessageLookupByLibrary {
             'other': 'Other',
           })}";
 
-  static String m35(count) =>
+  static String m34(count) =>
       "${Intl.plural(count, zero: 'No moves', one: 'One move', other: '${count} moves')}";
 
-  static String m36(entity) => "My ${entity}";
+  static String m35(entity) => "My ${entity}";
 
-  static String m37(entity) => "No ${entity}";
+  static String m36(entity) => "No ${entity}";
 
-  static String m38(count) =>
+  static String m37(count) =>
       "${Intl.plural(count, zero: 'No notes', one: 'One note', other: '${count} notes')}";
 
-  static String m39(count, singular, plural) =>
+  static String m38(count, singular, plural) =>
       "${Intl.plural(count, one: 'One ${singular}', other: '${count} ${plural}')}";
 
-  static String m40(stat) => "Roll +${stat}";
+  static String m39(stat) => "Roll +${stat}";
 
-  static String m41(entity) => "Save ${entity}";
+  static String m40(entity) => "Save ${entity}";
 
-  static String m42(entity) => "Type to search ${entity}";
+  static String m41(entity) => "Type to search ${entity}";
 
-  static String m43(string) => "Select ${string} to add";
+  static String m42(string) => "Select ${string} to add";
 
-  static String m44(count) =>
+  static String m43(count) =>
       "${Intl.plural(count, zero: 'No spells', one: 'One spell', other: '${count} spells')}";
 
-  static String m45(tag) => "Copy from: ${tag}";
+  static String m44(tag) => "Copy from: ${tag}";
 
   final messages = _notInlinedMessages(_notInlinedMessages);
   static Map<String, Function> _notInlinedMessages(_) => <String, Function>{
@@ -292,19 +289,20 @@ class MessageLookup extends MessageLookupByLibrary {
             "Something went wrong.\nTry again or contact support if this persists"),
         "exportFailedTitle":
             MessageLookupByLibrary.simpleMessage("Export Failed"),
-        "exportSuccessfulMessage": m22,
+        "exportSuccessfulMessage": MessageLookupByLibrary.simpleMessage(
+            "Your data was exported to file successfully"),
         "exportSuccessfulTitle":
             MessageLookupByLibrary.simpleMessage("Export Successful"),
         "formatBold": MessageLookupByLibrary.simpleMessage("Bold"),
         "formatBulletList": MessageLookupByLibrary.simpleMessage("Bullet List"),
-        "formatCell": m23,
+        "formatCell": m22,
         "formatCheckboxList":
             MessageLookupByLibrary.simpleMessage("Check List (Checked)"),
         "formatCheckboxListUnchecked":
             MessageLookupByLibrary.simpleMessage("Check List (Unchecked)"),
-        "formatHeader": m24,
-        "formatHeaderNoNum": m25,
-        "formatHeading": m26,
+        "formatHeader": m23,
+        "formatHeaderNoNum": m24,
+        "formatHeading": m25,
         "formatHeadings": MessageLookupByLibrary.simpleMessage("Headings"),
         "formatHelp": MessageLookupByLibrary.simpleMessage("Formatting Help"),
         "formatImageURL": MessageLookupByLibrary.simpleMessage("Image URL"),
@@ -314,9 +312,9 @@ class MessageLookup extends MessageLookupByLibrary {
         "formatPreview": MessageLookupByLibrary.simpleMessage("Preview"),
         "formatTable": MessageLookupByLibrary.simpleMessage("Table"),
         "formatURL": MessageLookupByLibrary.simpleMessage("URL"),
-        "genericDescriptionField": m27,
-        "genericNameField": m28,
-        "genericValueField": m29,
+        "genericDescriptionField": m26,
+        "genericNameField": m27,
+        "genericValueField": m28,
         "import": MessageLookupByLibrary.simpleMessage("Import"),
         "importBrowseFile": MessageLookupByLibrary.simpleMessage("Browse..."),
         "importBrowseHelp": MessageLookupByLibrary.simpleMessage(
@@ -329,30 +327,30 @@ class MessageLookup extends MessageLookupByLibrary {
             "Something went wrong.\nTry again or contact support if this persists"),
         "importFailedTitle":
             MessageLookupByLibrary.simpleMessage("Import Failed"),
-        "importProgressProcessing": m30,
+        "importProgressProcessing": m29,
         "importProgressTitle":
             MessageLookupByLibrary.simpleMessage("Importing..."),
         "items": MessageLookupByLibrary.simpleMessage("Items"),
-        "itemsWithCount": m31,
+        "itemsWithCount": m30,
         "markdownPreview":
             MessageLookupByLibrary.simpleMessage("Content Preview"),
-        "moveCategory": m32,
-        "moveCategoryWithLevel": m33,
-        "moveCategoryWithLevelShort": m34,
+        "moveCategory": m31,
+        "moveCategoryWithLevel": m32,
+        "moveCategoryWithLevelShort": m33,
         "moves": MessageLookupByLibrary.simpleMessage("Moves"),
-        "movesWithCount": m35,
-        "myGeneric": m36,
+        "movesWithCount": m34,
+        "myGeneric": m35,
         "navActions": MessageLookupByLibrary.simpleMessage("Use"),
         "navCharacter": MessageLookupByLibrary.simpleMessage("Character"),
         "navJournal": MessageLookupByLibrary.simpleMessage("Journal"),
         "noDescription":
             MessageLookupByLibrary.simpleMessage("‹No description provided›"),
-        "noGeneric": m37,
+        "noGeneric": m36,
         "noteNoCategory": MessageLookupByLibrary.simpleMessage("General"),
         "notes": MessageLookupByLibrary.simpleMessage("Notes"),
-        "notesWithCount": m38,
+        "notesWithCount": m37,
         "ok": MessageLookupByLibrary.simpleMessage("OK"),
-        "pluralize": m39,
+        "pluralize": m38,
         "quickIconsItems": MessageLookupByLibrary.simpleMessage("Items"),
         "quickIconsMoves": MessageLookupByLibrary.simpleMessage("Moves"),
         "quickIconsNote": MessageLookupByLibrary.simpleMessage("+ Note"),
@@ -362,22 +360,22 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Attack + Damage"),
         "rollBasicActionButton":
             MessageLookupByLibrary.simpleMessage("Basic Action"),
-        "rollStatButtonTooltip": m40,
+        "rollStatButtonTooltip": m39,
         "save": MessageLookupByLibrary.simpleMessage("Save"),
-        "saveGeneric": m41,
+        "saveGeneric": m40,
         "searchPlaceholder":
             MessageLookupByLibrary.simpleMessage("Type to search"),
-        "searchPlaceholderGeneric": m42,
+        "searchPlaceholderGeneric": m41,
         "select": MessageLookupByLibrary.simpleMessage("Select"),
         "selectAll": MessageLookupByLibrary.simpleMessage("Select All"),
         "selectNone": MessageLookupByLibrary.simpleMessage("Select None"),
-        "selectToAdd": m43,
+        "selectToAdd": m42,
         "settingsTitle": MessageLookupByLibrary.simpleMessage("Settings"),
         "sortMoveDown": MessageLookupByLibrary.simpleMessage("Move down"),
         "sortMoveUp": MessageLookupByLibrary.simpleMessage("Move up"),
         "spells": MessageLookupByLibrary.simpleMessage("Spells"),
-        "spellsWithCount": m44,
-        "tagCopyFrom": m45,
+        "spellsWithCount": m43,
+        "tagCopyFrom": m44,
         "userMenuMoreChars": MessageLookupByLibrary.simpleMessage("More"),
         "userMenuRecentCharacters":
             MessageLookupByLibrary.simpleMessage("Recent Characters"),

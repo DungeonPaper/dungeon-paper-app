@@ -43,20 +43,7 @@ class HomeCharacterActionsView extends GetView<CharacterService> {
         }
         return ListView(
           children: [
-            Obx(
-              () => HomeCharacterActionsFiltersView(
-                hidden: char.settings.actionCategoriesHide,
-                onUpdateHidden: (filters) {
-                  debugPrint('saving hide: $filters');
-                  controller.updateCharacter(
-                    char.copyWith(
-                      settings: char.settings.copyWith(actionCategoriesHide: filters),
-                    ),
-                  );
-                },
-              ),
-            ),
-            HomeCharacterActionsSummaryView(),
+            const HomeCharacterActionsSummary(),
             for (final cat in char.actionCategories)
               {
                 'Move': movesList,

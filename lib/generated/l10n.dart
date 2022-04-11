@@ -855,13 +855,13 @@ class S {
     );
   }
 
-  /// `Your data was exported to '{file}' successfully`
-  String exportSuccessfulMessage(Object file) {
+  /// `Your data was exported to file successfully`
+  String get exportSuccessfulMessage {
     return Intl.message(
-      'Your data was exported to \'$file\' successfully',
+      'Your data was exported to file successfully',
       name: 'exportSuccessfulMessage',
       desc: '',
-      args: [file],
+      args: [],
     );
   }
 

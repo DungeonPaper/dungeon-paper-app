@@ -113,7 +113,7 @@ class ExportController extends GetxController
           // }));
           Get.rawSnackbar(
             title: S.current.exportSuccessfulTitle,
-            message: S.current.exportSuccessfulMessage(path.basename(_tmpFile.path)),
+            message: S.current.exportSuccessfulMessage,
           );
         }
       } catch (e) {
