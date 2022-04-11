@@ -100,28 +100,40 @@ class UserMenuPopover extends GetView<CharacterService> {
                             // TODO intl
                             title: const Text('Add Character'),
                             leading: const Icon(Icons.person_add),
-                            onTap: () => Get.toNamed(Routes.createCharacterPage),
+                            onTap: () {
+                              Get.back();
+                              Get.toNamed(Routes.createCharacterPage);
+                            },
                           ),
                           ListTile(
                             visualDensity: VisualDensity.compact,
                             dense: true,
                             title: Text(S.current.allGeneric(S.current.entityPlural(Character))),
                             leading: const Icon(Icons.group),
-                            onTap: () => Get.toNamed(Routes.characterListPage),
+                            onTap: () {
+                              Get.back();
+                              Get.toNamed(Routes.characterListPage);
+                            },
                           ),
                           const Divider(),
                           ListTile(
                             visualDensity: VisualDensity.compact,
                             title: Text(S.current.importExportTitle),
                             leading: const Icon(Icons.import_export),
-                            onTap: () => Get.toNamed(Routes.importExport),
+                            onTap: () {
+                              Get.back();
+                              Get.toNamed(Routes.importExport);
+                            },
                           ),
                           ListTile(
                             visualDensity: VisualDensity.compact,
                             // TODO intl
                             title: const Text('Settings'),
                             leading: const Icon(Icons.settings),
-                            onTap: () => Get.toNamed(Routes.settings),
+                            onTap: () {
+                              Get.back();
+                              Get.toNamed(Routes.settings);
+                            },
                           ),
                           ListTile(
                             visualDensity: VisualDensity.compact,

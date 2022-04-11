@@ -281,7 +281,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "genericValueField": m24,
         "import": MessageLookupByLibrary.simpleMessage("Import"),
         "importExportTitle":
-            MessageLookupByLibrary.simpleMessage("Import/Export"),
+            MessageLookupByLibrary.simpleMessage("Export/Import"),
         "items": MessageLookupByLibrary.simpleMessage("Items"),
         "itemsWithCount": m25,
         "moveCategory": m26,

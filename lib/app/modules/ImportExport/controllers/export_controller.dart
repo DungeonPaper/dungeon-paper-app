@@ -101,12 +101,14 @@ class ExportController extends GetxController
           // unawaited(analytics.logEvent(name: Events.ExportFail, parameters: {
           //   'reason': 'user_canceled',
           // }));
+          // TODO intl
           Get.rawSnackbar(title: 'Export Failed', message: 'Operation canceled');
         } else {
           // unawaited(analytics.logEvent(name: Events.ExportSuccess, parameters: {
           //   'characters_count': _charactersToExport?.length ?? 0,
           //   'classes_count': _classesToExport?.length ?? 0,
           // }));
+          // TODO intl
           Get.rawSnackbar(
             title: 'Export Successful',
             message: 'Your data was exported without problems.',
@@ -116,6 +118,7 @@ class ExportController extends GetxController
         // unawaited(analytics.logEvent(name: Events.ExportFail, parameters: {
         //   'reason': e.toString(),
         // }));
+        // TODO intl
         Get.rawSnackbar(
           title: 'Export Failed',
           message: 'Something went wrong.\nTry again or contact support if this persists.',

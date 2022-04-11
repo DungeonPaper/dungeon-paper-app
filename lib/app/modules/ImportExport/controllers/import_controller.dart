@@ -118,6 +118,7 @@ class ImportController extends GetxController
       //   'reason': e.toString(),
       // }));
       Get.rawSnackbar(
+        // TODO intl
         title: 'Import Failed',
         message: 'Something went wrong.\nTry again or contact support if this persists.',
       );
@@ -164,6 +165,7 @@ class ImportController extends GetxController
       Get.back();
 
       Get.rawSnackbar(
+        // TODO intl
         title: 'Import Successful',
         message: 'Your data was imported without problems.',
       );

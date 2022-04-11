@@ -1283,10 +1283,10 @@ class S {
     );
   }
 
-  /// `Import/Export`
+  /// `Export/Import`
   String get importExportTitle {
     return Intl.message(
-      'Import/Export',
+      'Export/Import',
       name: 'importExportTitle',
       desc: '',
       args: [],

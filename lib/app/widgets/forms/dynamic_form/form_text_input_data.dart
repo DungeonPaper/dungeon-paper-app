@@ -406,9 +406,9 @@ class FormTextInputData extends BaseInputData<String> {
                     max(controller.selection.start - 1, 0), controller.selection.start) ==
                 '\n')) {
       final originalText = text;
-      text = text.replaceAll('\n', '');
-      prefix = prefix.replaceAll('\n', '');
-      _suffix = _suffix.replaceAll('\n', '');
+      text = text.trimLeft();
+      prefix = prefix.trimLeft();
+      // _suffix = _suffix.trimLeft();
       if (originalText.startsWith('\n') && selectionStartOffset != null) {
         selectionStartOffset -= 1;
       }
@@ -418,7 +418,7 @@ class FormTextInputData extends BaseInputData<String> {
     }
     return () {
       if (!controller.selection.isCollapsed) {
-        _wrapWith(prefix, suffix);
+        _wrapWith(prefix, _suffix);
       } else {
         _append(text, selectionStartOffset, selectionEndOffset);
       }
