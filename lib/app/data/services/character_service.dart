@@ -91,7 +91,7 @@ class CharacterService extends GetxService {
 
     _all.addAll(Map.fromIterable(list, key: (c) => c.key));
 
-    if (_all.isNotEmpty) {
+    if (_all.isNotEmpty && _current.value == null) {
       final hasLastChar = prefs.containsKey(PrefKeys.lastLoadedCharacter);
       if (hasLastChar) {
         final lastChar = prefs.getString(PrefKeys.lastLoadedCharacter);
@@ -140,6 +140,15 @@ class CharacterService extends GetxService {
     }
     debugPrint('Created char: ${character.key} (${character.displayName})');
     debugPrint(character.toRawJson());
+  }
+
+  void deleteCharacter(Character character) {
+    _all.remove(character.key);
+    StorageHandler.instance.delete('Characters', character.key);
+    if (character.key == _current.value) {
+      _current.value = _all.keys.first;
+    }
+    debugPrint('Deleted char: ${character.key} (${character.displayName})');
   }
 
   static CharacterService find() => Get.find();

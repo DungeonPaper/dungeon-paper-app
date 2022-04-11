@@ -1,8 +1,11 @@
+import 'package:dungeon_paper/app/data/models/character.dart';
 import 'package:dungeon_paper/app/data/services/character_service.dart';
 import 'package:dungeon_paper/app/model_utils/character_utils.dart';
 import 'package:dungeon_paper/app/routes/app_pages.dart';
 import 'package:dungeon_paper/app/themes/button_themes.dart';
 import 'package:dungeon_paper/app/widgets/atoms/character_avatar.dart';
+import 'package:dungeon_paper/app/widgets/dialogs/confirm_delete_dialog.dart';
+import 'package:dungeon_paper/app/widgets/menus/entity_edit_menu.dart';
 import 'package:dungeon_paper/app/widgets/molecules/categorized_list.dart';
 import 'package:flutter/material.dart';
 
@@ -37,19 +40,30 @@ class CharacterListPageView extends GetView<CharacterService> {
                       padding: const EdgeInsets.symmetric(vertical: 4),
                       child: Card(
                         margin: EdgeInsets.zero,
-                        child: InkWell(
-                          onTap: () {
-                            controller.setCurrent(char.key);
-                            Get.offAllNamed(Routes.home);
-                          },
-                          child: ListTile(
-                            leading: CharacterAvatar.circle(character: char, size: 48),
-                            title: Text(char.displayName),
-                            subtitle: Text(S.current.characterHeaderSubtitle(
-                              char.stats.level,
-                              char.characterClass.name,
-                              S.current.alignment(char.bio.alignment.key),
-                            )),
+                        child: ListTileTheme.merge(
+                          minLeadingWidth: 60,
+                          child: InkWell(
+                            onTap: () {
+                              controller.setCurrent(char.key);
+                              Get.offAllNamed(Routes.home);
+                            },
+                            child: ListTile(
+                              leading: CharacterAvatar.squircle(character: char, size: 48),
+                              title: Text(char.displayName),
+                              trailing: EntityEditMenu(
+                                onEdit: null,
+                                onDelete: () => awaitDeleteConfirmation<Character>(
+                                  context,
+                                  char.displayName,
+                                  () => controller.deleteCharacter(char),
+                                ),
+                              ),
+                              subtitle: Text(S.current.characterHeaderSubtitle(
+                                char.stats.level,
+                                char.characterClass.name,
+                                S.current.alignment(char.bio.alignment.key),
+                              )),
+                            ),
                           ),
                         ),
                       ),
