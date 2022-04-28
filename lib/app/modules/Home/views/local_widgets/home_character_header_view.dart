@@ -1,3 +1,4 @@
+import 'package:dungeon_paper/app/widgets/dialogs/character_bio_dialog.dart';
 import 'package:dungeon_paper/generated/l10n.dart';
 import 'package:dungeon_paper/app/data/services/character_service.dart';
 import 'package:dungeon_paper/app/widgets/atoms/character_avatar.dart';
@@ -12,53 +13,51 @@ class HomeCharacterHeaderView extends GetView<CharacterService> {
 
   @override
   Widget build(BuildContext context) {
-    const showButtons = 1 == 0 - 0;
-
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: [
-        if (showButtons) ...[
-          Column(
-            children: [
-              LabeledIconButton(
-                onPressed: () => null,
-                icon: const SvgIcon(DwIcons.knapsack),
-                label: S.current.quickIconsItems,
-                shadowOffset: const Offset(-2, -2),
-              ),
-              const SizedBox(height: 16),
-              LabeledIconButton(
-                onPressed: () => null,
-                icon: const SvgIcon(DwIcons.scroll_quill),
-                label: S.current.quickIconsNote,
-                shadowOffset: const Offset(-2, 2),
-              ),
-            ],
-          ),
-          const SizedBox(width: 8),
-        ],
-        CharacterAvatar.squircle(size: 176),
-        if (showButtons) ...[
-          const SizedBox(width: 8),
-          Column(
-            children: [
-              LabeledIconButton(
-                onPressed: () => null,
-                icon: const SvgIcon(DwIcons.hand_rock),
-                label: S.current.quickIconsMoves,
-                shadowOffset: const Offset(2, -2),
-              ),
-              const SizedBox(height: 16),
-              LabeledIconButton(
-                onPressed: () => null,
-                icon: const SvgIcon(DwIcons.book_cover),
-                label: S.current.quickIconsSpells,
-                shadowOffset: const Offset(2, 2),
-              ),
-            ],
+    return Center(
+      child: Stack(
+        children: [
+          CharacterAvatar.squircle(size: 176),
+          Positioned(
+            right: 0,
+            bottom: 0,
+            child: PopupMenuButton(
+              itemBuilder: (context) => [
+                _MenuItem(
+                    id: 'bio',
+                    text: S.current.characterBioDialogTitle,
+                    icon: const Icon(Icons.library_books))
+              ]
+                  .map((e) => PopupMenuItem(
+                      child: Row(
+                        children: [
+                          e.icon,
+                          const SizedBox(width: 12),
+                          Expanded(child: Text(e.text)),
+                        ],
+                      ),
+                      value: e.id))
+                  .toList(),
+              onSelected: (value) {
+                switch (value) {
+                  case 'bio':
+                    Get.dialog(const CharacterBioDialog());
+                    return;
+                  default:
+                    throw UnsupportedError('Menu value: $value not supported');
+                }
+              },
+            ),
           ),
         ],
-      ],
+      ),
     );
   }
+}
+
+class _MenuItem {
+  final String id;
+  final String text;
+  final Widget icon;
+
+  _MenuItem({required this.id, required this.text, required this.icon});
 }
