@@ -26,6 +26,7 @@ enum CreateCharStep {
 class CreateCharacterPageController extends GetxController {
   final pageController = PageController(initialPage: 0).obs;
   final lastAvailablePage = 0.obs;
+  final dirty = false.obs;
 
   final info = Rx<CharInfo?>(null);
   final charClass = Rx<CharacterClass?>(null);
@@ -78,12 +79,15 @@ class CreateCharacterPageController extends GetxController {
     Get.to(() => const CreateCharacterPreviewView());
   }
 
-  setValid(CreateCharStep step, bool valid, dynamic dataToSave) {
+  setValid(CreateCharStep step, bool valid, dynamic dataToSave, {bool setDirty = true}) {
     isValid[step] = valid;
-    _updateData(dataToSave);
+    _updateData(dataToSave, setDirty: setDirty);
   }
 
-  void _updateData(dynamic dataToSave) {
+  void _updateData(dynamic dataToSave, {bool setDirty = true}) {
+    if (setDirty) {
+      dirty.value = true;
+    }
     final map = <CreateCharStep, void Function()>{
       CreateCharStep.information: () => info.value = dataToSave,
       CreateCharStep.charClass: () => charClass.value = dataToSave,

@@ -20,8 +20,14 @@ class CharacterMovesSpellsController extends GetxController {
     super.onInit();
     addStartingMoves();
     sub = ctrl.charClass.listen((v) => addStartingMoves());
-    Future.delayed(const Duration(milliseconds: 200))
-        .then((_) => ctrl.setValid(CreateCharStep.movesSpells, true, movesSpells));
+    Future.delayed(const Duration(milliseconds: 200)).then(
+      (_) => ctrl.setValid(
+        CreateCharStep.movesSpells,
+        true,
+        movesSpells,
+        setDirty: false,
+      ),
+    );
   }
 
   @override

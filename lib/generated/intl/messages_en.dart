@@ -228,6 +228,14 @@ class MessageLookup extends MessageLookupByLibrary {
         "confirm": MessageLookupByLibrary.simpleMessage("Confirm"),
         "confirmDeleteBody": m11,
         "confirmDeleteTitle": m12,
+        "confirmExitDefaultCancelLabel":
+            MessageLookupByLibrary.simpleMessage("Continue editing"),
+        "confirmExitDefaultOkLabel":
+            MessageLookupByLibrary.simpleMessage("Exit & Discard"),
+        "confirmExitDefaultText": MessageLookupByLibrary.simpleMessage(
+            "Going back will lose any unsaved changes.\nAre you sure you want to go back?"),
+        "confirmExitDefaultTitle":
+            MessageLookupByLibrary.simpleMessage("Are you sure?"),
         "createCharRandomizeNameTooltipClick":
             MessageLookupByLibrary.simpleMessage(
                 "Click to generate a random name"),

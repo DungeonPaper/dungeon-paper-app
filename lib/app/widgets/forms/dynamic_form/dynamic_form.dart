@@ -39,7 +39,7 @@ class DynamicFormState extends State<DynamicForm> {
     listeners = [];
     data = {};
     for (final input in widget.inputs) {
-      debugPrint('init form data ${input.name}');
+      // debugPrint('init form data ${input.name}');
       input.data.form = this;
       listeners.add(input.data.listen(_sendUpdate(input.name)));
       data[input.name] = input.data.value;
@@ -82,6 +82,8 @@ abstract class DynamicFormController<T> extends GetxController {
   final repo = Get.find<RepositoryService>();
 
   abstract final Rx<T> entity;
+  final dirty = false.obs;
+
   T setData(Map<String, dynamic> data);
   late final List<FormInputData> inputs;
 

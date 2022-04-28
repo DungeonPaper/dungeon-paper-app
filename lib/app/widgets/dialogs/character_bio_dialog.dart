@@ -23,7 +23,9 @@ class CharacterBioDialog extends GetView<CharacterService> {
         children: [
           Expanded(child: Text(S.current.characterBioDialogTitle)),
           IconButton(
-            onPressed: () => Get.to(() => const CharacterBioForm()),
+            onPressed: () {
+              Get.to(() => const CharacterBioForm(), preventDuplicates: false);
+            },
             icon: const Icon(Icons.edit, size: 20),
           )
         ],

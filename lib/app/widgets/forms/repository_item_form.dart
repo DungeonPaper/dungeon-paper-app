@@ -4,6 +4,7 @@ import 'package:dungeon_paper/app/data/models/move.dart';
 import 'package:dungeon_paper/app/data/models/note.dart';
 import 'package:dungeon_paper/app/data/models/spell.dart';
 import 'package:dungeon_paper/app/themes/colors.dart';
+import 'package:dungeon_paper/app/widgets/atoms/confirm_exit_view.dart';
 import 'package:dungeon_paper/app/widgets/forms/add_item_form.dart';
 import 'package:dungeon_paper/app/widgets/forms/add_move_form.dart';
 import 'package:dungeon_paper/app/widgets/forms/add_note_form.dart';
@@ -32,42 +33,45 @@ class RepositoryItemForm<T extends WithMeta> extends GetView<DynamicFormControll
   @override
   Widget build(BuildContext context) {
     return Obx(
-      () => Scaffold(
-        appBar: AppBar(
-          title: title,
-          actions: [
-            PopupMenuButton<String>(
-              itemBuilder: (ctx) => items,
-              onSelected: (value) => _handleMenu(value),
-              icon: Stack(children: [
-                const Icon(Icons.more_vert),
-                if (data.meta.sharing?.dirty == true)
-                  Positioned(
-                    top: 0,
-                    left: 0,
-                    child: Container(
-                      width: 8,
-                      height: 8,
-                      decoration: BoxDecoration(
-                        shape: BoxShape.circle,
-                        color: Colors.orange[400],
+      () => ConfirmExitView(
+        dirty: controller.dirty.value,
+        child: Scaffold(
+          appBar: AppBar(
+            title: title,
+            actions: [
+              PopupMenuButton<String>(
+                itemBuilder: (ctx) => items,
+                onSelected: (value) => _handleMenu(value),
+                icon: Stack(children: [
+                  const Icon(Icons.more_vert),
+                  if (data.meta.sharing?.dirty == true)
+                    Positioned(
+                      top: 0,
+                      left: 0,
+                      child: Container(
+                        width: 8,
+                        height: 8,
+                        decoration: BoxDecoration(
+                          shape: BoxShape.circle,
+                          color: Colors.orange[400],
+                        ),
                       ),
                     ),
-                  ),
-              ]),
-            ),
-          ],
-        ),
-        body: buildForm(context),
-        floatingActionButton: FloatingActionButton.extended(
-          backgroundColor: DwColors.success,
-          foregroundColor: Theme.of(context).colorScheme.onPrimary,
-          onPressed: () {
-            onSave(data);
-            Get.back();
-          },
-          label: Text(S.current.save),
-          icon: const Icon(Icons.save),
+                ]),
+              ),
+            ],
+          ),
+          body: buildForm(context),
+          floatingActionButton: FloatingActionButton.extended(
+            backgroundColor: DwColors.success,
+            foregroundColor: Theme.of(context).colorScheme.onPrimary,
+            onPressed: () {
+              onSave(data);
+              Get.back();
+            },
+            label: Text(S.current.save),
+            icon: const Icon(Icons.save),
+          ),
         ),
       ),
     );
@@ -94,6 +98,7 @@ class RepositoryItemForm<T extends WithMeta> extends GetView<DynamicFormControll
 
   void setEntity(dynamic item) {
     controller.entity.value = item as T;
+    controller.dirty.value = true;
   }
 
   Widget buildForm(BuildContext context) {

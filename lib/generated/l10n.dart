@@ -431,6 +431,46 @@ class S {
     );
   }
 
+  /// `Continue editing`
+  String get confirmExitDefaultCancelLabel {
+    return Intl.message(
+      'Continue editing',
+      name: 'confirmExitDefaultCancelLabel',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Exit & Discard`
+  String get confirmExitDefaultOkLabel {
+    return Intl.message(
+      'Exit & Discard',
+      name: 'confirmExitDefaultOkLabel',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Going back will lose any unsaved changes.\nAre you sure you want to go back?`
+  String get confirmExitDefaultText {
+    return Intl.message(
+      'Going back will lose any unsaved changes.\nAre you sure you want to go back?',
+      name: 'confirmExitDefaultText',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Are you sure?`
+  String get confirmExitDefaultTitle {
+    return Intl.message(
+      'Are you sure?',
+      name: 'confirmExitDefaultTitle',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `Add Character`
   String get createCharacterAddButton {
     return Intl.message(
