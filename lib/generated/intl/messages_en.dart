@@ -171,10 +171,16 @@ class MessageLookup extends MessageLookupByLibrary {
 
   static String m43(string) => "Select ${string} to add";
 
-  static String m44(count) =>
+  static String m44(level) => "${Intl.select(level, {
+            'cantrip': 'Cantrip',
+            'rote': 'Rote',
+            'other': 'Level ${level}',
+          })}";
+
+  static String m45(count) =>
       "${Intl.plural(count, zero: 'No spells', one: 'One spell', other: '${count} spells')}";
 
-  static String m45(tag) => "Copy from: ${tag}";
+  static String m46(tag) => "Copy from: ${tag}";
 
   final messages = _notInlinedMessages(_notInlinedMessages);
   static Map<String, Function> _notInlinedMessages(_) => <String, Function>{
@@ -408,9 +414,10 @@ class MessageLookup extends MessageLookupByLibrary {
         "settingsTitle": MessageLookupByLibrary.simpleMessage("Settings"),
         "sortMoveDown": MessageLookupByLibrary.simpleMessage("Move down"),
         "sortMoveUp": MessageLookupByLibrary.simpleMessage("Move up"),
+        "spellLevel": m44,
         "spells": MessageLookupByLibrary.simpleMessage("Spells"),
-        "spellsWithCount": m44,
-        "tagCopyFrom": m45,
+        "spellsWithCount": m45,
+        "tagCopyFrom": m46,
         "tagDetails": MessageLookupByLibrary.simpleMessage("Tag Information"),
         "userMenuMoreChars": MessageLookupByLibrary.simpleMessage("More"),
         "userMenuRecentCharacters":

@@ -1740,6 +1740,21 @@ class S {
     );
   }
 
+  /// `{level, select, cantrip {Cantrip} rote {Rote} other {Level {level}}}`
+  String spellLevel(Object level) {
+    return Intl.select(
+      level,
+      {
+        'cantrip': 'Cantrip',
+        'rote': 'Rote',
+        'other': 'Level $level',
+      },
+      name: 'spellLevel',
+      desc: '',
+      args: [level],
+    );
+  }
+
   /// `Spells`
   String get spells {
     return Intl.message(
