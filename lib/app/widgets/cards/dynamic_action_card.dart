@@ -130,7 +130,7 @@ class DynamicActionCard extends StatelessWidget {
   }
 
   List<Widget> _buildChildren(BuildContext context) {
-    final dividerColor = Theme.of(context).colorScheme.onBackground.withOpacity(0.3);
+    final dividerColor = Theme.of(context).dividerColor;
 
     return [
       // Divider(height: 16, color: dividerColor),
@@ -148,7 +148,7 @@ class DynamicActionCard extends StatelessWidget {
         ),
         MarkdownBody(data: explanation, onTapLink: (text, href, title) => launch(href!)),
       ],
-      Divider(height: 32, color: dividerColor),
+      Divider(height: 24, color: dividerColor),
       Row(
         crossAxisAlignment: CrossAxisAlignment.end,
         mainAxisSize: MainAxisSize.max,

@@ -4,37 +4,41 @@ import 'package:dungeon_paper/app/data/services/user_service.dart';
 import 'package:get/instance_manager.dart';
 
 class Meta<T> {
-  Meta({
+  Meta._({
+    required this.schemaVersion,
     DateTime? created,
     this.updated,
-    required this.schemaVersion,
     this.sharing,
     this.data,
-    required this.owner,
+    this.language,
+    required this.createdBy,
   }) : created = created ?? DateTime.now();
 
+  final String createdBy;
   late final DateTime created;
-  final DateTime? updated;
+  final T? data;
+  final String? language;
   final int schemaVersion;
   final MetaSharing? sharing;
-  final String owner;
-  final T? data;
+  final DateTime? updated;
 
   factory Meta.version(
     int schemaVersion, {
-    String? owner,
+    String? createdBy,
     DateTime? created,
     DateTime? updated,
     MetaSharing? sharing,
     T? data,
+    String? language,
   }) =>
-      Meta(
-        owner: owner ?? Get.find<UserService>().current.displayName,
+      Meta._(
+        createdBy: createdBy ?? Get.find<UserService>().current.displayName,
         schemaVersion: schemaVersion,
         created: created ?? DateTime.now(),
         updated: updated,
         sharing: sharing,
         data: data,
+        language: language,
       );
 
   Meta<T> copyWith({
@@ -42,33 +46,36 @@ class Meta<T> {
     DateTime? updated,
     int? schemaVersion,
     MetaSharing? sharing,
-    String? owner,
+    String? createdBy,
     T? data,
+    String? language,
   }) =>
-      Meta(
-        owner: owner ?? this.owner,
+      Meta._(
+        createdBy: createdBy ?? this.createdBy,
         created: created ?? this.created,
         updated: updated ?? this.updated,
         schemaVersion: schemaVersion ?? this.schemaVersion,
         sharing: sharing ?? this.sharing,
         data: data ?? this.data,
+        language: language ?? this.language,
       );
 
   factory Meta.fromRawJson(String str) => Meta.fromJson(json.decode(str));
 
   String toRawJson() => json.encode(toJson());
 
-  factory Meta.fromJson(Map<String, dynamic> json, [T Function(dynamic json)? parseData]) => Meta(
-        owner: json['owner'] ?? 'Guest',
+  factory Meta.fromJson(Map<String, dynamic> json, [T Function(dynamic json)? parseData]) => Meta._(
         created: json['created'] != null ? DateTime.parse(json['created']) : DateTime.now(),
-        updated: json['updated'] != null ? DateTime.parse(json['updated']) : null,
-        schemaVersion: json['schemaVersion'] ?? 1,
-        sharing: json['sharing'] != null ? MetaSharing.fromJson(json['sharing']) : null,
+        createdBy: json['createdBy'] ?? 'Guest',
         data: json['data'] != null
             ? parseData != null
                 ? parseData(json['data'])
                 : json['data']
             : null,
+        language: json['language'],
+        schemaVersion: json['schemaVersion'] ?? 1,
+        sharing: json['sharing'] != null ? MetaSharing.fromJson(json['sharing']) : null,
+        updated: json['updated'] != null ? DateTime.parse(json['updated']) : null,
       );
 
   factory Meta.tryParse(dynamic meta, {String? owner, T Function(dynamic json)? parseData}) =>
@@ -76,14 +83,16 @@ class Meta<T> {
           ? meta is Meta<T>
               ? meta
               : Meta.fromJson(meta, parseData)
-          : Meta.version(1, owner: owner);
+          : Meta.version(1, createdBy: owner);
 
   Map<String, dynamic> toJson([dynamic Function(T? data)? dumpData]) => {
         'created': created.toString(),
-        'updated': updated?.toString(),
+        'createdBy': createdBy,
+        'data': dumpData != null ? dumpData(data) : data,
+        'language': language,
         'schemaVersion': schemaVersion,
         'sharing': sharing?.toJson(),
-        'data': dumpData != null ? dumpData(data) : data,
+        'updated': updated?.toString(),
       };
 }
 

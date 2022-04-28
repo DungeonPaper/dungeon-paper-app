@@ -3,7 +3,7 @@ import 'package:dungeon_world_data/dungeon_world_data.dart' as dw;
 
 import 'meta.dart';
 
-class AlignmentValue extends dw.AlignmentValue {
+class AlignmentValue extends dw.Alignment {
   AlignmentValue({
     required this.meta,
     required String key,
@@ -14,7 +14,7 @@ class AlignmentValue extends dw.AlignmentValue {
 
   factory AlignmentValue.fromRawJson(String str) => AlignmentValue.fromJson(json.decode(str));
 
-  factory AlignmentValue.fromDwAlignmentValue(dw.AlignmentValue original) =>
+  factory AlignmentValue.fromDwAlignmentValue(dw.Alignment original) =>
       AlignmentValue(meta: Meta.version(1), key: original.key, description: original.description);
 
   factory AlignmentValue.fromJson(Map<String, dynamic> json) => AlignmentValue(
@@ -51,7 +51,7 @@ class AlignmentValues extends dw.AlignmentValues {
   factory AlignmentValues.fromRawJson(String str) => AlignmentValues.fromJson(json.decode(str));
 
   factory AlignmentValues.fromJson(Map<String, dynamic> json) => AlignmentValues(
-        meta: Meta.fromJson(json['_meta']),
+        meta: Meta.tryParse(json['_meta']),
         good: json['good'],
         evil: json['evil'],
         lawful: json['lawful'],

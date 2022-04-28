@@ -16,11 +16,13 @@ import 'package:dungeon_paper/core/http/api_requests/search.dart';
 import 'package:dungeon_paper/core/storage_handler/storage_handler.dart';
 
 import 'package:dungeon_world_data/dungeon_world_data.dart' as dw;
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class RepositoryService extends GetxService {
-  final builtIn = RepositoryCache(prefix: 'repo');
-  final my = RepositoryCache();
+  final builtIn =
+      RepositoryCache(id: 'playbook', cachePrefix: 'repo', loadRemote: RemoteBehavior.whenAnyEmpty);
+  final my = RepositoryCache(id: 'personal', loadRemote: RemoteBehavior.always);
   StorageDelegate get storage => StorageHandler.instance;
 
   void clear() {
@@ -36,7 +38,7 @@ class RepositoryService extends GetxService {
   }
 
   Future<RepositoryService> init() async {
-    await builtIn.init(Future(() => api.requests.getDefaultRepository()));
+    await builtIn.init(Future(() => api.requests.getDefaultRepository(ignoreCache: true)));
     await my.init(
       Future(
         () async => SearchResponse.fromJson({
@@ -55,10 +57,19 @@ class RepositoryService extends GetxService {
   }
 }
 
-class RepositoryCache {
-  RepositoryCache({this.prefix});
+enum RemoteBehavior {
+  whenAllEmpty,
+  whenAnyEmpty,
+  always,
+  never,
+}
 
-  final String? prefix;
+class RepositoryCache {
+  RepositoryCache({required this.id, this.cachePrefix, required this.loadRemote});
+
+  final String? cachePrefix;
+  final String id;
+  final RemoteBehavior loadRemote;
 
   final classes = <String, CharacterClass>{}.obs;
   final items = <String, Item>{}.obs;
@@ -75,20 +86,33 @@ class RepositoryCache {
   StorageDelegate get cache => CacheHandler.instance;
 
   Future<void> init(Future<SearchResponse> getFromRemote) async {
+    debugPrint('Initializing repo: $id');
+
     final cacheRes = SearchResponse.fromJson({
-      'classes': await cache.getCollection(keyClasses),
-      'items': await cache.getCollection(keyItems),
-      'monsters': await cache.getCollection(keyMonsters),
-      'moves': await cache.getCollection(keyMoves),
-      'races': await cache.getCollection(keyRaces),
-      'spells': await cache.getCollection(keySpells),
-      'tags': await cache.getCollection(keyTags),
-      'notes': await cache.getCollection(keyNotes),
+      'Classes': await cache.getCollection(keyClasses),
+      'Items': await cache.getCollection(keyItems),
+      'Monsters': await cache.getCollection(keyMonsters),
+      'Moves': await cache.getCollection(keyMoves),
+      'Races': await cache.getCollection(keyRaces),
+      'Spells': await cache.getCollection(keySpells),
+      'Tags': await cache.getCollection(keyTags),
+      'Notes': await cache.getCollection(keyNotes),
     });
 
-    if (cacheRes.isAnyEmpty) {
-      await setAllFrom(await getFromRemote);
+    final behaviorMap = <RemoteBehavior, bool>{
+      RemoteBehavior.whenAnyEmpty: cacheRes.isAnyEmpty,
+      RemoteBehavior.whenAllEmpty: cacheRes.isAllEmpty,
+      RemoteBehavior.always: true,
+      RemoteBehavior.never: false,
+    };
+
+    final shouldLoadFromRemote = behaviorMap[loadRemote]!;
+
+    if (shouldLoadFromRemote) {
+      debugPrint('Cache invalid for $id, loading from remote');
+      await setAllFrom(await getFromRemote, saveIntoCache: true);
     } else {
+      debugPrint('Cache valid for $id, loading from cache');
       await setAllFrom(cacheRes, saveIntoCache: false);
     }
 
@@ -129,7 +153,7 @@ class RepositoryCache {
 
   Future<void> setAllFrom(
     SearchResponse resp, {
-    bool saveIntoCache = true,
+    required bool saveIntoCache,
   }) async {
     await Future.wait([
       updateList<CharacterClass>(keyClasses, classes, resp.classes, saveIntoCache: saveIntoCache),
@@ -143,7 +167,7 @@ class RepositoryCache {
     ]);
   }
 
-  String _key(String key) => (prefix ?? '') + key;
+  String _key(String key) => (cachePrefix ?? '') + key;
   String get keyClasses => _key('Classes');
   String get keyItems => _key('Items');
   String get keyMonsters => _key('Monsters');
@@ -190,7 +214,7 @@ class RepositoryCache {
     String collectionName,
     RxMap<String, T> list,
     Iterable<T>? resp, {
-    bool saveIntoCache = true,
+    required bool saveIntoCache,
   }) async {
     if (resp == null) {
       return;

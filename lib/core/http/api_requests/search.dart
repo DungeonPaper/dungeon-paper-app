@@ -94,4 +94,16 @@ class SearchResponse {
         // ignore notes
         // notes,
       ].any((l) => l == null || l.isEmpty);
+
+  bool get isAllEmpty => [
+        classes,
+        items,
+        monsters,
+        moves,
+        races,
+        spells,
+        tags,
+        // ignore notes
+        // notes,
+      ].every((l) => l == null || l.isEmpty);
 }

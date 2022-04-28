@@ -1,8 +1,9 @@
 part of 'api.dart';
 
 class Requests {
-  Future<SearchResponse> getDefaultRepository() async {
-    final resp = await api.get('/get_default_repository');
+  Future<SearchResponse> getDefaultRepository({bool ignoreCache = false}) async {
+    final resp = await api
+        .get('/get_default_repository' + (ignoreCache ? '?_v=${Random().nextInt(100000)}' : ''));
     return SearchResponse.fromJson(resp.json);
   }
 
