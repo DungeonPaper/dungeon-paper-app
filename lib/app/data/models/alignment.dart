@@ -12,6 +12,8 @@ class AlignmentValue extends dw.Alignment {
 
   final Meta meta;
 
+  static final allKeys = <String>['good', 'evil', 'lawful', 'neutral', 'chaotic'];
+
   factory AlignmentValue.fromRawJson(String str) => AlignmentValue.fromJson(json.decode(str));
 
   factory AlignmentValue.fromDwAlignmentValue(dw.Alignment original) =>
@@ -21,6 +23,18 @@ class AlignmentValue extends dw.Alignment {
         meta: Meta.tryParse(json['_meta']),
         key: json['key'],
         description: json['description'],
+      );
+
+  @override
+  AlignmentValue copyWith({
+    Meta? meta,
+    String? key,
+    String? description,
+  }) =>
+      AlignmentValue(
+        meta: meta ?? this.meta,
+        key: key ?? this.key,
+        description: description ?? this.description,
       );
 
   @override

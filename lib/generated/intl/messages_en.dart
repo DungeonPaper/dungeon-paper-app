@@ -190,6 +190,7 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Playbook"),
         "addWithCount": m5,
         "alignment": m6,
+        "alignmentLabel": MessageLookupByLibrary.simpleMessage("Alignment"),
         "all": MessageLookupByLibrary.simpleMessage("All"),
         "allGeneric": m7,
         "alreadyAdded": MessageLookupByLibrary.simpleMessage("Already added"),

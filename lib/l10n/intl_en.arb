@@ -11,6 +11,7 @@
   "addRepoItemTabPlaybook": "Playbook",
   "addWithCount": "Add {string}",
   "alignment": "{alignment, select, chaotic {Chaotic} evil {Evil} good {Good} lawful {Lawful} neutral {Neutral}}",
+  "alignmentLabel": "Alignment",
   "all": "All",
   "allGeneric": "All {entity}",
   "alreadyAdded": "Already added",

@@ -167,6 +167,16 @@ class S {
     );
   }
 
+  /// `Alignment`
+  String get alignmentLabel {
+    return Intl.message(
+      'Alignment',
+      name: 'alignmentLabel',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `All`
   String get all {
     return Intl.message(
