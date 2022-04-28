@@ -38,7 +38,7 @@ class ItemCard extends StatelessWidget {
       maxContentHeight: maxContentHeight,
       expandable: expandable,
       explanation: '',
-      chips: item.tags.map((t) => TagChip(tag: t)),
+      chips: item.tags.map((t) => TagChip.openDescription(tag: t)),
       dice: const [],
       icon: showIcon ? SvgIcon(item.icon, size: 16) : null,
       starred: item.equipped,

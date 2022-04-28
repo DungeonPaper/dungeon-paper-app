@@ -164,6 +164,7 @@
   "spells": "Spells",
   "spellsWithCount": "{count, plural, =0 {No spells} one {One spell} other {{count} spells}}",
   "tagCopyFrom": "Copy from: {tag}",
+  "tagDetails": "Tag Information",
   "userMenuMoreChars": "More",
   "userMenuRecentCharacters": "Recent Characters",
   "userUnregistered": "Not registered"

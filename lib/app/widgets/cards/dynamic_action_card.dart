@@ -156,7 +156,7 @@ class DynamicActionCard extends StatelessWidget {
           Expanded(
             child: Wrap(
               spacing: chipsSpacing,
-              runSpacing: chipsSpacing,
+              runSpacing: 0,
               children: chips.toList(),
             ),
           ),

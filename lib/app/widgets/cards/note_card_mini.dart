@@ -24,7 +24,7 @@ class NoteCardMini extends StatelessWidget {
     return DynamicActionCardMini(
       title: note.title,
       description: note.description,
-      chips: const [], // note.tags.map((t) => TagChip(tag: t)),
+      chips: const [],
       dice: const [],
       icon: showIcon ? Icon(note.icon, size: 16) : null,
       starred: note.favorited,

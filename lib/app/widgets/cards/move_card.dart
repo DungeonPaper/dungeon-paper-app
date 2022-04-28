@@ -42,7 +42,7 @@ class MoveCard extends StatelessWidget {
       maxContentHeight: maxContentHeight,
       expandable: expandable,
       expansionKey: expansionKey ?? PageStorageKey(move.key),
-      chips: TagUtils.excludeMetaTags(move.tags).map((t) => TagChip(tag: t)),
+      chips: move.tags.map((t) => TagChip.openDescription(tag: t)),
       dice: showDice ? move.dice : [],
       icon: showIcon ? SvgIcon(move.icon, size: 16) : null,
       starred: move.favorited,
@@ -52,7 +52,6 @@ class MoveCard extends StatelessWidget {
       actions: actions,
       leading: [
         MoveCategoryChip(category: move.category),
-        // ...TagUtils.excludeMetaTags(move.tags).map((t) => TagChip(tag: t)),
       ],
     );
   }

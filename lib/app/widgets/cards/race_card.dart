@@ -27,7 +27,7 @@ class RaceCard extends StatelessWidget {
       title: race.name,
       description: race.description,
       explanation: race.explanation,
-      chips: race.tags.map((t) => TagChip(tag: t)),
+      chips: race.tags.map((t) => TagChip.openDescription(tag: t)),
       dice: const [],
       icon: showIcon ? SvgIcon(race.icon, size: 16) : null,
       starred: race.favorited,

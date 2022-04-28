@@ -1773,6 +1773,16 @@ class S {
     );
   }
 
+  /// `Tag Information`
+  String get tagDetails {
+    return Intl.message(
+      'Tag Information',
+      name: 'tagDetails',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `More`
   String get userMenuMoreChars {
     return Intl.message(

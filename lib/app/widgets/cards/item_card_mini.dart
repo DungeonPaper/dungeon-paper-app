@@ -25,7 +25,7 @@ class ItemCardMini extends StatelessWidget {
     return DynamicActionCardMini(
       title: item.name,
       description: item.description,
-      chips: const [], // item.tags.map((t) => TagChip(tag: t)),
+      chips: const [],
       dice: const [],
       icon: showIcon ? SvgIcon(item.icon, size: 16) : null,
       starred: item.equipped,

@@ -411,6 +411,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "spells": MessageLookupByLibrary.simpleMessage("Spells"),
         "spellsWithCount": m44,
         "tagCopyFrom": m45,
+        "tagDetails": MessageLookupByLibrary.simpleMessage("Tag Information"),
         "userMenuMoreChars": MessageLookupByLibrary.simpleMessage("More"),
         "userMenuRecentCharacters":
             MessageLookupByLibrary.simpleMessage("Recent Characters"),
