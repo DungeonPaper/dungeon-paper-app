@@ -3,6 +3,7 @@ import 'package:dungeon_paper/app/data/models/character.dart';
 import 'package:dungeon_paper/app/data/services/character_service.dart';
 import 'package:dungeon_paper/app/themes/colors.dart';
 import 'package:dungeon_paper/app/widgets/atoms/confirm_exit_view.dart';
+import 'package:dungeon_paper/app/widgets/atoms/rich_text_field.dart';
 import 'package:dungeon_paper/app/widgets/atoms/select_box.dart';
 import 'package:dungeon_paper/generated/l10n.dart';
 import 'package:flutter/material.dart';
@@ -24,6 +25,7 @@ class _CharacterBioFormState extends State<CharacterBioForm> {
   late final String alignmentName;
   late final TextEditingController alignmentValue;
   late List<TextEditingController> bonds;
+  late bool dirty;
 
   @override
   void initState() {
@@ -33,6 +35,7 @@ class _CharacterBioFormState extends State<CharacterBioForm> {
     alignmentName = char.bio.alignment.key;
     alignmentValue = TextEditingController();
     bonds = [];
+    dirty = false;
   }
 
   @override
@@ -40,6 +43,7 @@ class _CharacterBioFormState extends State<CharacterBioForm> {
     final textTheme = Theme.of(context).textTheme;
 
     return ConfirmExitView(
+      dirty: dirty,
       child: Scaffold(
         appBar: AppBar(
           title: Text(S.current.characterBioDialogTitle),
@@ -50,57 +54,64 @@ class _CharacterBioFormState extends State<CharacterBioForm> {
           label: Text(S.current.save),
           icon: const Icon(Icons.save),
         ),
-        body: ListView(padding: const EdgeInsets.all(16), children: [
-          TextFormField(
-            controller: bioDesc,
-            minLines: 5,
-            maxLines: 10,
-            textCapitalization: TextCapitalization.sentences,
-            decoration: InputDecoration(
-              label: Text(S.current.characterBioDialogDescLabel),
-              hintText: S.current.characterBioDialogDescPlaceholder,
+        body: ListView(
+          padding: const EdgeInsets.all(16),
+          children: [
+            RichTextField(
+              controller: bioDesc,
+              minLines: 5,
+              maxLines: 10,
+              textCapitalization: TextCapitalization.sentences,
+              onChanged: _setDirty,
+              decoration: InputDecoration(
+                label: Text(S.current.characterBioDialogDescLabel),
+                hintText: S.current.characterBioDialogDescPlaceholder,
+              ),
             ),
-          ),
-          const SizedBox(height: 8),
-          TextFormField(
-            controller: looks,
-            minLines: 4,
-            maxLines: 8,
-            textCapitalization: TextCapitalization.sentences,
-            decoration: InputDecoration(
-              label: Text(S.current.characterBioDialogLooksLabel),
-              hintText: S.current.characterBioDialogLooksPlaceholder,
+            const SizedBox(height: 8),
+            RichTextField(
+              controller: looks,
+              minLines: 4,
+              maxLines: 8,
+              textCapitalization: TextCapitalization.sentences,
+              onChanged: _setDirty,
+              decoration: InputDecoration(
+                label: Text(S.current.characterBioDialogLooksLabel),
+                hintText: S.current.characterBioDialogLooksPlaceholder,
+              ),
             ),
-          ),
-          const SizedBox(height: 24),
-          SelectBox<String>(
-            value: alignmentName,
-            items: AlignmentValue.allKeys
-                .map(
-                  (a) => DropdownMenuItem<String>(
-                    value: a,
-                    child: Text(S.current.alignment(a)),
-                  ),
-                )
-                .toList(),
-            onChanged: (v) => setState(() {
-              alignmentName = v!;
-            }),
-            isExpanded: true,
-            label: Text(S.current.characterBioDialogAlignmentNameLabel),
-          ),
-          const SizedBox(height: 8),
-          TextFormField(
-            controller: alignmentValue,
-            minLines: 4,
-            maxLines: 8,
-            textCapitalization: TextCapitalization.sentences,
-            decoration: InputDecoration(
-              label: Text(S.current.characterBioDialogAlignmentDescriptionLabel),
-              hintText: S.current.characterBioDialogAlignmentDescriptionPlaceholder,
+            const SizedBox(height: 24),
+            SelectBox<String>(
+              value: alignmentName,
+              items: AlignmentValue.allKeys
+                  .map(
+                    (a) => DropdownMenuItem<String>(
+                      value: a,
+                      child: Text(S.current.alignment(a)),
+                    ),
+                  )
+                  .toList(),
+              onChanged: (v) => setState(() {
+                _setDirty();
+                alignmentName = v!;
+              }),
+              isExpanded: true,
+              label: Text(S.current.characterBioDialogAlignmentNameLabel),
             ),
-          ),
-        ]),
+            const SizedBox(height: 8),
+            RichTextField(
+              controller: alignmentValue,
+              minLines: 4,
+              maxLines: 8,
+              textCapitalization: TextCapitalization.sentences,
+              onChanged: _setDirty,
+              decoration: InputDecoration(
+                label: Text(S.current.characterBioDialogAlignmentDescriptionLabel),
+                hintText: S.current.characterBioDialogAlignmentDescriptionPlaceholder,
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }
@@ -118,5 +129,13 @@ class _CharacterBioFormState extends State<CharacterBioForm> {
       ),
     ));
     Get.back();
+  }
+
+  void _setDirty([String? value]) {
+    if (!dirty) {
+      setState(() {
+        dirty = true;
+      });
+    }
   }
 }
