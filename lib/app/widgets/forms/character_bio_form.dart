@@ -58,6 +58,7 @@ class _CharacterBioFormState extends State<CharacterBioForm> {
             controller: bioDesc,
             minLines: 5,
             maxLines: 10,
+            textCapitalization: TextCapitalization.sentences,
             decoration: InputDecoration(
               label: Text(S.current.characterBioDialogDescLabel),
               hintText: S.current.characterBioDialogDescPlaceholder,
@@ -68,6 +69,7 @@ class _CharacterBioFormState extends State<CharacterBioForm> {
             controller: looks,
             minLines: 4,
             maxLines: 8,
+            textCapitalization: TextCapitalization.sentences,
             decoration: InputDecoration(
               label: Text(S.current.characterBioDialogLooksLabel),
               hintText: S.current.characterBioDialogLooksPlaceholder,
@@ -95,6 +97,7 @@ class _CharacterBioFormState extends State<CharacterBioForm> {
             controller: alignmentValue,
             minLines: 4,
             maxLines: 8,
+            textCapitalization: TextCapitalization.sentences,
             decoration: InputDecoration(
               label: Text(S.current.characterBioDialogAlignmentDescriptionLabel),
               hintText: S.current.characterBioDialogAlignmentDescriptionPlaceholder,
@@ -110,7 +113,7 @@ class _CharacterBioFormState extends State<CharacterBioForm> {
     charService.updateCharacter(char.copyWith(
       bio: char.bio.copyWith(
         description: bioDesc.text,
-        looks: looks.text,
+        looks: looks.text.replaceAll(RegExp('\\s*\n'), '  \n'),
         alignment: char.bio.alignment.copyWith(
           description: alignmentValue.text,
           key: alignmentName,
