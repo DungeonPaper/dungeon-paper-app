@@ -4,11 +4,26 @@ class BackgroundIconButton extends StatelessWidget {
   const BackgroundIconButton({
     Key? key,
     required this.icon,
-    this.iconColor,
-    this.color,
     required this.onPressed,
-    this.size,
     this.iconSize,
+    this.visualDensity,
+    this.padding = const EdgeInsets.all(8.0),
+    this.alignment = Alignment.center,
+    this.splashRadius,
+    this.color,
+    this.focusColor,
+    this.hoverColor,
+    this.highlightColor,
+    this.splashColor,
+    this.disabledColor,
+    this.mouseCursor,
+    this.focusNode,
+    this.autofocus = false,
+    this.tooltip,
+    this.enableFeedback = true,
+    this.constraints,
+    this.iconColor,
+    this.size,
     this.decoration,
     this.shadows,
     this.elevation,
@@ -36,6 +51,22 @@ class BackgroundIconButton extends StatelessWidget {
 
   /// overrides `shadows`, overridden by `decoration`
   final double? elevation;
+
+  final VisualDensity? visualDensity;
+  final EdgeInsetsGeometry padding;
+  final AlignmentGeometry alignment;
+  final double? splashRadius;
+  final Color? focusColor;
+  final Color? hoverColor;
+  final Color? splashColor;
+  final Color? highlightColor;
+  final Color? disabledColor;
+  final MouseCursor? mouseCursor;
+  final FocusNode? focusNode;
+  final bool autofocus;
+  final String? tooltip;
+  final bool enableFeedback;
+  final BoxConstraints? constraints;
 
   @override
   Widget build(BuildContext context) {
@@ -67,6 +98,21 @@ class BackgroundIconButton extends StatelessWidget {
         iconSize: iconSize ?? iconTheme.size,
         color: iconColor ?? iconTheme.color,
         onPressed: onPressed,
+        visualDensity: visualDensity,
+        padding: padding,
+        alignment: alignment,
+        splashRadius: splashRadius,
+        focusColor: focusColor,
+        hoverColor: hoverColor,
+        splashColor: splashColor,
+        highlightColor: highlightColor,
+        disabledColor: disabledColor,
+        mouseCursor: mouseCursor,
+        focusNode: focusNode,
+        autofocus: autofocus,
+        tooltip: tooltip,
+        enableFeedback: enableFeedback,
+        constraints: constraints,
       ),
     );
   }

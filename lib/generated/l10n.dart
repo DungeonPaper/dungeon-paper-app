@@ -247,11 +247,51 @@ class S {
     );
   }
 
-  /// `Character Biography`
-  String get characterBioDialogTitle {
+  /// `Alignment Description`
+  String get characterBioDialogAlignmentDescriptionLabel {
     return Intl.message(
-      'Character Biography',
-      name: 'characterBioDialogTitle',
+      'Alignment Description',
+      name: 'characterBioDialogAlignmentDescriptionLabel',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Alignment is your character's way of thinking and moral compass. This can center on an ethical ideal, religious strictures or early life events. It reflects what your character values and aspires to protect or create.`
+  String get characterBioDialogAlignmentDescriptionPlaceholder {
+    return Intl.message(
+      'Alignment is your character\'s way of thinking and moral compass. This can center on an ethical ideal, religious strictures or early life events. It reflects what your character values and aspires to protect or create.',
+      name: 'characterBioDialogAlignmentDescriptionPlaceholder',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Alignment: {alignment}`
+  String characterBioDialogAlignmentNameDisplayLabel(Object alignment) {
+    return Intl.message(
+      'Alignment: $alignment',
+      name: 'characterBioDialogAlignmentNameDisplayLabel',
+      desc: '',
+      args: [alignment],
+    );
+  }
+
+  /// `Alignment`
+  String get characterBioDialogAlignmentNameLabel {
+    return Intl.message(
+      'Alignment',
+      name: 'characterBioDialogAlignmentNameLabel',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Select alignment`
+  String get characterBioDialogAlignmentNamePlaceholder {
+    return Intl.message(
+      'Select alignment',
+      name: 'characterBioDialogAlignmentNamePlaceholder',
       desc: '',
       args: [],
     );
@@ -297,51 +337,31 @@ class S {
     );
   }
 
-  /// `Alignment`
-  String get characterBioDialogAlignmentNameLabel {
+  /// `Character Biography`
+  String get characterBioDialogTitle {
     return Intl.message(
-      'Alignment',
-      name: 'characterBioDialogAlignmentNameLabel',
+      'Character Biography',
+      name: 'characterBioDialogTitle',
       desc: '',
       args: [],
     );
   }
 
-  /// `Alignment: {alignment}`
-  String characterBioDialogAlignmentNameDisplayLabel(Object alignment) {
+  /// `Bonds/Flags`
+  String get characterBondsDialogTitle {
     return Intl.message(
-      'Alignment: $alignment',
-      name: 'characterBioDialogAlignmentNameDisplayLabel',
-      desc: '',
-      args: [alignment],
-    );
-  }
-
-  /// `Select alignment`
-  String get characterBioDialogAlignmentNamePlaceholder {
-    return Intl.message(
-      'Select alignment',
-      name: 'characterBioDialogAlignmentNamePlaceholder',
+      'Bonds/Flags',
+      name: 'characterBondsDialogTitle',
       desc: '',
       args: [],
     );
   }
 
-  /// `Alignment Description`
-  String get characterBioDialogAlignmentDescriptionLabel {
+  /// `Debilities`
+  String get characterDebilitiesDialogTitle {
     return Intl.message(
-      'Alignment Description',
-      name: 'characterBioDialogAlignmentDescriptionLabel',
-      desc: '',
-      args: [],
-    );
-  }
-
-  /// `Alignment is your character's way of thinking and moral compass. This can center on an ethical ideal, religious strictures or early life events. It reflects what your character values and aspires to protect or create.`
-  String get characterBioDialogAlignmentDescriptionPlaceholder {
-    return Intl.message(
-      'Alignment is your character\'s way of thinking and moral compass. This can center on an ethical ideal, religious strictures or early life events. It reflects what your character values and aspires to protect or create.',
-      name: 'characterBioDialogAlignmentDescriptionPlaceholder',
+      'Debilities',
+      name: 'characterDebilitiesDialogTitle',
       desc: '',
       args: [],
     );
@@ -373,6 +393,16 @@ class S {
     return Intl.message(
       'No Category',
       name: 'characterNoCategory',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Stats/Rolls`
+  String get characterRollsTitle {
+    return Intl.message(
+      'Stats/Rolls',
+      name: 'characterRollsTitle',
       desc: '',
       args: [],
     );
@@ -729,6 +759,16 @@ class S {
     );
   }
 
+  /// `Roll again`
+  String get diceRollAgain {
+    return Intl.message(
+      'Roll again',
+      name: 'diceRollAgain',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `d`
   String get diceSeparator {
     return Intl.message(
@@ -744,16 +784,6 @@ class S {
     return Intl.message(
       'Sides',
       name: 'diceSides',
-      desc: '',
-      args: [],
-    );
-  }
-
-  /// `Roll again`
-  String get diceRollAgain {
-    return Intl.message(
-      'Roll again',
-      name: 'diceRollAgain',
       desc: '',
       args: [],
     );
@@ -1793,6 +1823,26 @@ class S {
     return Intl.message(
       'Tag Information',
       name: 'tagDetails',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Switch to Dark Mode`
+  String get themeTurnDark {
+    return Intl.message(
+      'Switch to Dark Mode',
+      name: 'themeTurnDark',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Switch to Light Mode`
+  String get themeTurnLight {
+    return Intl.message(
+      'Switch to Light Mode',
+      name: 'themeTurnLight',
       desc: '',
       args: [],
     );

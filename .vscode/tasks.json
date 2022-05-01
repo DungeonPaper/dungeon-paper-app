@@ -54,12 +54,14 @@
     },
     {
       "label": "Push & Install Existing APK",
-      "type": "shell",
+      "type": "dart ",
       "command": "dart",
       "args": [
         "lib/core/task_runner/deploy.dart",
         "--push",
-        "--install"
+        "--install",
+        "-l",
+        "android"
       ],
       "problemMatcher": []
     },

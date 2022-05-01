@@ -224,11 +224,17 @@ class MessageLookup extends MessageLookupByLibrary {
             "Describe your character\'s appearance. You may use the presets from the buttons above."),
         "characterBioDialogTitle":
             MessageLookupByLibrary.simpleMessage("Character Biography"),
+        "characterBondsDialogTitle":
+            MessageLookupByLibrary.simpleMessage("Bonds/Flags"),
+        "characterDebilitiesDialogTitle":
+            MessageLookupByLibrary.simpleMessage("Debilities"),
         "characterHeaderSubtitle": m9,
         "characterListTitle":
             MessageLookupByLibrary.simpleMessage("All Characters"),
         "characterNoCategory":
             MessageLookupByLibrary.simpleMessage("No Category"),
+        "characterRollsTitle":
+            MessageLookupByLibrary.simpleMessage("Stats/Rolls"),
         "coins": MessageLookupByLibrary.simpleMessage("Coins"),
         "coinsWithCount": m10,
         "confirm": MessageLookupByLibrary.simpleMessage("Confirm"),
@@ -419,6 +425,10 @@ class MessageLookup extends MessageLookupByLibrary {
         "spellsWithCount": m45,
         "tagCopyFrom": m46,
         "tagDetails": MessageLookupByLibrary.simpleMessage("Tag Information"),
+        "themeTurnDark":
+            MessageLookupByLibrary.simpleMessage("Switch to Dark Mode"),
+        "themeTurnLight":
+            MessageLookupByLibrary.simpleMessage("Switch to Light Mode"),
         "userMenuMoreChars": MessageLookupByLibrary.simpleMessage("More"),
         "userMenuRecentCharacters":
             MessageLookupByLibrary.simpleMessage("Recent Characters"),

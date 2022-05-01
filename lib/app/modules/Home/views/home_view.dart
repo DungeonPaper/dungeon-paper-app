@@ -3,9 +3,11 @@ import 'package:dungeon_paper/app/model_utils/character_utils.dart';
 import 'package:dungeon_paper/app/modules/Home/views/home_character_actions_view.dart';
 import 'package:dungeon_paper/app/modules/Home/views/home_character_journal_view.dart';
 import 'package:dungeon_paper/app/themes/colors.dart';
+import 'package:dungeon_paper/app/themes/themes.dart';
 import 'package:dungeon_paper/app/widgets/atoms/svg_icon.dart';
 import 'package:dungeon_paper/app/widgets/atoms/user_menu.dart';
 import 'package:dungeon_paper/core/dw_icons.dart';
+import 'package:dynamic_themes/dynamic_themes.dart';
 import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
@@ -22,6 +24,17 @@ class HomeView extends GetView<CharacterService> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        leading: IconButton(
+          icon: Icon(
+            Theme.of(context).brightness == Brightness.dark
+                ? Icons.light_mode
+                : Icons.light_mode_outlined,
+          ),
+          onPressed: toggleTheme,
+          tooltip: Theme.of(context).brightness == Brightness.light
+              ? S.current.themeTurnDark
+              : S.current.themeTurnLight,
+        ),
         title: Text(S.current.appName),
         actions: const [
           DebugMenu(),
@@ -79,6 +92,11 @@ class HomeView extends GetView<CharacterService> {
         () => CharacterHomeNavBar(pageController: controller.pageController),
       ),
     );
+  }
+
+  void toggleTheme() {
+    var theme = DynamicTheme.of(Get.context!)!;
+    theme.setTheme(theme.themeId == AppThemes.dark ? AppThemes.parchment : AppThemes.dark);
   }
 }
 

@@ -162,8 +162,12 @@ class CharacterMovesSpellsView extends GetView<CharacterMovesSpellsController> {
                   ),
                   binding: AddRepositoryItemsBinding(),
                   arguments: {
-                    FiltersGroup.playbook: SpellFilters(),
-                    FiltersGroup.my: SpellFilters(),
+                    FiltersGroup.playbook: SpellFilters(
+                      classKey: controller.ctrl.charClass.value!.key,
+                    ),
+                    FiltersGroup.my: SpellFilters(
+                      classKey: controller.ctrl.charClass.value!.key,
+                    ),
                   },
                 ),
                 label: Text(S.current.addGeneric(S.current.entityPlural(Spell))),
