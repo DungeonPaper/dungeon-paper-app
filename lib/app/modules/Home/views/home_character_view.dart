@@ -1,8 +1,10 @@
+import 'package:dungeon_paper/app/data/models/character.dart';
 import 'package:dungeon_paper/app/data/services/character_service.dart';
 import 'package:dungeon_paper/app/model_utils/dice_utils.dart';
 import 'package:dungeon_paper/app/modules/Home/views/local_widgets/home_character_extras.dart';
 import 'package:dungeon_paper/app/themes/button_themes.dart';
 import 'package:dungeon_paper/app/widgets/atoms/svg_icon.dart';
+import 'package:dungeon_paper/app/widgets/molecules/character_subtitle.dart';
 import 'package:dungeon_paper/app/widgets/molecules/roll_stats_grid.dart';
 import 'package:dungeon_paper/core/dw_icons.dart';
 import 'package:dungeon_paper/generated/l10n.dart';
@@ -36,16 +38,8 @@ class HomeCharacterView extends GetView<CharacterService> {
               textScaleFactor: 1.4,
               textAlign: TextAlign.center,
             ),
-            Text(
-              S.current.characterHeaderSubtitle(
-                char.stats.level,
-                char.characterClass.name,
-                // "test",
-                // char.bio.toRawJson() ?? 'test',
-                S.current.alignment(char.bio.alignment.key),
-              ),
-              textAlign: TextAlign.center,
-            ),
+            CharacterSubtitle(character: char),
+            const SizedBox(height: 4),
             p(const HomeCharacterExtras()),
             // p(Row(
             //   mainAxisSize: MainAxisSize.min,

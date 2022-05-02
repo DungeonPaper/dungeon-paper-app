@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'package:dungeon_world_data/dungeon_world_data.dart' as dw;
+import 'package:flutter/material.dart';
 
 import 'meta.dart';
 
@@ -12,7 +13,7 @@ class AlignmentValue extends dw.Alignment {
 
   final Meta meta;
 
-  static final allKeys = <String>['good', 'evil', 'lawful', 'neutral', 'chaotic'];
+  static final allKeys = <String>['good', 'lawful', 'neutral', 'chaotic', 'evil'];
 
   factory AlignmentValue.fromRawJson(String str) => AlignmentValue.fromJson(json.decode(str));
 
@@ -24,6 +25,16 @@ class AlignmentValue extends dw.Alignment {
         key: json['key'],
         description: json['description'],
       );
+
+  static final iconMap = <String, Widget?>{
+    'good': const Icon(Icons.mood),
+    'lawful': const Icon(Icons.sentiment_satisfied),
+    'neutral': const Icon(Icons.sentiment_neutral),
+    'chaotic': const Icon(Icons.sentiment_dissatisfied),
+    'evil': const Icon(Icons.mood_bad),
+  };
+
+  Widget get icon => iconMap[key]!;
 
   @override
   AlignmentValue copyWith({

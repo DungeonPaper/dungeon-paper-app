@@ -22,7 +22,7 @@ class _CharacterBioFormState extends State<CharacterBioForm> {
 
   late final TextEditingController bioDesc;
   late final TextEditingController looks;
-  late final String alignmentName;
+  late String alignmentName;
   late final TextEditingController alignmentValue;
   late List<TextEditingController> bonds;
   late bool dirty;
@@ -83,18 +83,37 @@ class _CharacterBioFormState extends State<CharacterBioForm> {
             const SizedBox(height: 24),
             SelectBox<String>(
               value: alignmentName,
+              // selectedItemBuilder: (context) => AlignmentValue.allKeys
+              //     .map(
+              //       (a) => Row(
+              //         children: [
+              //           AlignmentValue.iconMap[a]!,
+              //           const SizedBox(width: 4),
+              //           Text(S.current.alignment(a)),
+              //         ],
+              //       ),
+              //     )
+              //     .toList(),
               items: AlignmentValue.allKeys
                   .map(
                     (a) => DropdownMenuItem<String>(
                       value: a,
-                      child: Text(S.current.alignment(a)),
+                      child: Row(
+                        children: [
+                          AlignmentValue.iconMap[a]!,
+                          const SizedBox(width: 4),
+                          Text(S.current.alignment(a)),
+                        ],
+                      ),
                     ),
                   )
                   .toList(),
-              onChanged: (v) => setState(() {
+              onChanged: (v) {
                 _setDirty();
-                alignmentName = v!;
-              }),
+                setState(() {
+                  alignmentName = v!;
+                });
+              },
               isExpanded: true,
               label: Text(S.current.characterBioDialogAlignmentNameLabel),
             ),

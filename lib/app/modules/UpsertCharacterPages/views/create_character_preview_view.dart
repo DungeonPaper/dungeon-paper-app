@@ -11,6 +11,7 @@ import 'package:dungeon_paper/app/widgets/cards/item_card.dart';
 import 'package:dungeon_paper/app/widgets/cards/move_card.dart';
 import 'package:dungeon_paper/app/widgets/cards/race_card.dart';
 import 'package:dungeon_paper/app/widgets/cards/spell_card.dart';
+import 'package:dungeon_paper/app/widgets/molecules/character_subtitle.dart';
 import 'package:dungeon_paper/app/widgets/molecules/roll_stats_grid.dart';
 import 'package:dungeon_paper/generated/l10n.dart';
 import 'package:flutter/material.dart';
@@ -40,14 +41,7 @@ class CreateCharacterPreviewView extends GetView<CreateCharacterPreviewControlle
               textScaleFactor: 1.4,
               textAlign: TextAlign.center,
             ),
-            Text(
-              S.current.characterHeaderSubtitle(
-                1,
-                char.characterClass.name,
-                S.current.alignment(char.bio.alignment.key),
-              ),
-              textAlign: TextAlign.center,
-            ),
+            Center(child: CharacterSubtitle(character: char)),
             Text(
               S.current.createCharacterPreviewPageMaxHp(char.maxHp),
               textAlign: TextAlign.center,

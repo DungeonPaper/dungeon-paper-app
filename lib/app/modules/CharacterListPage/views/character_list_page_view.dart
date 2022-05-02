@@ -7,6 +7,7 @@ import 'package:dungeon_paper/app/widgets/atoms/character_avatar.dart';
 import 'package:dungeon_paper/app/widgets/dialogs/confirm_delete_dialog.dart';
 import 'package:dungeon_paper/app/widgets/menus/entity_edit_menu.dart';
 import 'package:dungeon_paper/app/widgets/molecules/categorized_list.dart';
+import 'package:dungeon_paper/app/widgets/molecules/character_subtitle.dart';
 import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
@@ -58,11 +59,7 @@ class CharacterListPageView extends GetView<CharacterService> {
                                   () => controller.deleteCharacter(char),
                                 ),
                               ),
-                              subtitle: Text(S.current.characterHeaderSubtitle(
-                                char.stats.level,
-                                char.characterClass.name,
-                                S.current.alignment(char.bio.alignment.key),
-                              )),
+                              subtitle: CharacterSubtitle(character: char),
                             ),
                           ),
                         ),

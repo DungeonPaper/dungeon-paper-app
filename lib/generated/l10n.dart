@@ -267,13 +267,13 @@ class S {
     );
   }
 
-  /// `Alignment: {alignment}`
-  String characterBioDialogAlignmentNameDisplayLabel(Object alignment) {
+  /// `Alignment:`
+  String get characterBioDialogAlignmentNameDisplayLabel {
     return Intl.message(
-      'Alignment: $alignment',
+      'Alignment:',
       name: 'characterBioDialogAlignmentNameDisplayLabel',
       desc: '',
-      args: [alignment],
+      args: [],
     );
   }
 
@@ -367,14 +367,13 @@ class S {
     );
   }
 
-  /// `Level {level} ∙ {charClass} ∙ {alignment}`
-  String characterHeaderSubtitle(
-      Object level, Object charClass, Object alignment) {
+  /// `Level {level} ∙ {charClass} ∙ {race} ∙`
+  String characterHeaderSubtitle(Object level, Object charClass, Object race) {
     return Intl.message(
-      'Level $level ∙ $charClass ∙ $alignment',
+      'Level $level ∙ $charClass ∙ $race ∙',
       name: 'characterHeaderSubtitle',
       desc: '',
-      args: [level, charClass, alignment],
+      args: [level, charClass, race],
     );
   }
 

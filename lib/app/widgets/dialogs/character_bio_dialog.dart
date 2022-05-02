@@ -61,11 +61,24 @@ class CharacterBioDialog extends GetView<CharacterService> {
                     )
                   : Text(S.current.noDescription),
               const SizedBox(height: 16),
-              Text(
-                  S.current.characterBioDialogAlignmentNameDisplayLabel(
-                    S.current.alignment(char.bio.alignment.key),
+              Row(
+                children: [
+                  Text(
+                    S.current.characterBioDialogAlignmentNameDisplayLabel,
+                    style: textTheme.caption,
                   ),
-                  style: textTheme.caption),
+                  const SizedBox(width: 4),
+                  IconTheme.merge(
+                    data: IconThemeData(size: 14, color: textTheme.caption!.color!),
+                    child: char.bio.alignment.icon,
+                  ),
+                  const SizedBox(width: 4),
+                  Text(
+                    S.current.alignment(char.bio.alignment.key),
+                    style: textTheme.caption,
+                  ),
+                ],
+              ),
               char.bio.alignment.description.isNotEmpty
                   ? MarkdownBody(
                       data: char.bio.alignment.description,
