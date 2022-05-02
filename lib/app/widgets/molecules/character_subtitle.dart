@@ -6,14 +6,16 @@ class CharacterSubtitle extends StatelessWidget {
   const CharacterSubtitle({
     Key? key,
     required this.character,
+    this.wrapAlignment = WrapAlignment.center,
   }) : super(key: key);
 
   final Character character;
+  final WrapAlignment wrapAlignment;
 
   @override
   Widget build(BuildContext context) {
     return Wrap(
-      alignment: WrapAlignment.center,
+      alignment: wrapAlignment,
       runAlignment: WrapAlignment.start,
       spacing: 4,
       children: [

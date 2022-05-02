@@ -65,12 +65,17 @@ class RollStats {
   RollStats copyWith({
     Iterable<RollStat>? stats,
   }) =>
-      RollStats(stats: stats ?? this.stats.toList());
+      RollStats(stats: stats ?? this.stats);
 
   RollStats copyWithStatValues(Map<String, int> map) => copyWith(
         stats: stats.map(
           (stat) => map.containsKey(stat.key) ? stat.copyWith(value: map[stat.key]) : stat,
         ),
+      );
+
+  RollStats copyWithDebilities(Iterable<String> keys, {required bool isDebilitated}) => copyWith(
+        stats:
+            stats.map((e) => keys.contains(e.key) ? e.copyWith(isDebilitated: isDebilitated) : e),
       );
 
   factory RollStats.fromRawJson(String str) => RollStats.fromJson(json.decode(str));
@@ -123,19 +128,22 @@ class RollStat {
   final String name;
   final String description;
   final int value;
+  final bool isDebilitated;
 
   RollStat({
     required String key,
     required this.name,
     required this.value,
     required this.description,
+    this.isDebilitated = false,
   }) : key = key.trim().toUpperCase();
 
   factory RollStat.fromJson(Map<String, dynamic> json) => RollStat(
         key: json['key'],
         name: json['name'],
         value: json['value'],
-        description: json['description'] ?? '',
+        description: json['description'],
+        isDebilitated: json['isDebilitated'],
       );
 
   Map<String, dynamic> toJson() => {
@@ -143,6 +151,7 @@ class RollStat {
         'name': name,
         'value': value,
         'description': description,
+        'isDebilitated': isDebilitated,
       };
 
   RollStat copyWith({
@@ -150,12 +159,14 @@ class RollStat {
     String? name,
     String? description,
     int? value,
+    bool? isDebilitated,
   }) =>
       RollStat(
         key: key ?? this.key,
         name: name ?? this.name,
         description: description ?? this.description,
         value: value ?? this.value,
+        isDebilitated: isDebilitated ?? this.isDebilitated,
       );
 
   int get modifier => modifierForValue(value);
