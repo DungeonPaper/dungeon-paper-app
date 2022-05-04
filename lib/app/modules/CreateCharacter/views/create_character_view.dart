@@ -57,7 +57,7 @@ class CreateCharacterView extends GetView<CreateCharacterController> {
                                 : Text(controller.name.value),
                             subtitle: controller.name.isEmpty
                                 ? const Text('Select name & picture (required)')
-                                : Text('Level 1 ${cls?.name}'),
+                                : Text('Level 1 ${cls?.name ?? ''}'),
                             valid: controller.name.isNotEmpty,
                             onTap: () => Get.to(
                               () => BasicInfoFormView(

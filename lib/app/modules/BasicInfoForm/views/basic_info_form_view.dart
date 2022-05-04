@@ -59,11 +59,11 @@ class BasicInfoFormView extends GetView<BasicInfoFormController> {
                   icon: const SvgIcon(DwIcons.dice_d6_numbered),
                   onPressed: () {
                     controller.name.value.text = CharacterNameGenerator().generate();
-                    _save();
                   },
                 ),
               ),
             ),
+            const SizedBox(height: 8),
             TextFormField(
               controller: controller.avatarUrl.value,
               textInputAction: TextInputAction.done,

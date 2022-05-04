@@ -13,7 +13,10 @@ class BasicInfoFormBinding extends Bindings {
   @override
   void dependencies() {
     Get.lazyPut<BasicInfoFormController>(
-      () => BasicInfoFormController(),
+      () => BasicInfoFormController(
+        name: name,
+        avatarUrl: avatarUrl,
+      ),
     );
   }
 }
