@@ -90,10 +90,10 @@ class ExportController extends GetxController
       final _strData = utf8.encode(json.encode(toExport.value.toJson()));
       final tmp = await getTemporaryDirectory();
       final dt = DateFormat('yy-MM-dd_HH.mm.ss').format(DateTime.now());
-      final fileName = 'DungeonPaperV2-$dt.json';
+      final fileName = 'DungeonPaperV2_$dt.json';
 
       final _tmpFile = File(path.join(tmp.path, fileName));
-      await _tmpFile.writeAsBytes(_strData);
+      await _tmpFile.writeAsBytes(_strData, mode: FileMode.writeOnly);
 
       final params = SaveFileDialogParams(sourceFilePath: _tmpFile.path);
       try {

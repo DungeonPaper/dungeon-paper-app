@@ -1,4 +1,3 @@
-import 'package:dungeon_paper/app/widgets/atoms/background_icon_button.dart';
 import 'package:dungeon_paper/app/widgets/atoms/svg_icon.dart';
 import 'package:dungeon_paper/app/widgets/dialogs/character_bio_dialog.dart';
 import 'package:dungeon_paper/core/dw_icons.dart';
@@ -38,14 +37,14 @@ class HomeCharacterExtras extends StatelessWidget {
           tooltip: S.current.characterDebilitiesDialogTitle,
           // visualDensity: VisualDensity.compact,
         ),
-        BackgroundIconButton(
+        IconButton(
           onPressed: null,
           icon: const Icon(Icons.groups),
           // TODO update intl - use model when exists
           tooltip: S.current.entity('Campaign'),
           // visualDensity: VisualDensity.compact,
-          iconColor: Theme.of(context).colorScheme.onPrimary,
-          disabledColor: Theme.of(context).colorScheme.onPrimary.withOpacity(0.5),
+          // iconColor: Theme.of(context).colorScheme.onPrimary,
+          // disabledColor: Theme.of(context).colorScheme.onPrimary.withOpacity(0.5),
         ),
       ],
     );

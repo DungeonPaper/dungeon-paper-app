@@ -1,4 +1,3 @@
-import 'package:dungeon_paper/app/model_utils/tag_utils.dart';
 import 'package:dungeon_paper/app/widgets/atoms/svg_icon.dart';
 import 'package:dungeon_paper/app/widgets/chips/move_category_chip.dart';
 import 'package:dungeon_paper/app/widgets/chips/tag_chip.dart';

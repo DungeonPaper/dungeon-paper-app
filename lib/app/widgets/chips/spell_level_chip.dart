@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 
 import '../../../generated/l10n.dart';
-import '../../data/models/move.dart';
 
 class SpellLevelChip extends StatelessWidget {
   const SpellLevelChip({Key? key, required this.level}) : super(key: key);

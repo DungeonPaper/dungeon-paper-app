@@ -1,4 +1,3 @@
-import 'package:dungeon_paper/app/data/models/character.dart';
 import 'package:dungeon_paper/app/data/services/character_service.dart';
 import 'package:dungeon_paper/app/model_utils/dice_utils.dart';
 import 'package:dungeon_paper/app/modules/Home/views/local_widgets/home_character_extras.dart';
