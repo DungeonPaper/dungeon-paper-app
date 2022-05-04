@@ -8,7 +8,6 @@ import 'package:dungeon_paper/app/modules/AddRepositoryItems/views/add_character
 import 'package:dungeon_paper/app/modules/AddRepositoryItems/views/filters/character_class_filters.dart';
 import 'package:dungeon_paper/app/modules/BasicInfoForm/bindings/basic_info_form_binding.dart';
 import 'package:dungeon_paper/app/modules/BasicInfoForm/views/basic_info_form_view.dart';
-import 'package:dungeon_paper/app/routes/app_pages.dart';
 import 'package:dungeon_paper/app/themes/colors.dart';
 import 'package:dungeon_paper/app/widgets/atoms/character_avatar.dart';
 import 'package:dungeon_paper/app/widgets/atoms/confirm_exit_view.dart';
@@ -24,6 +23,7 @@ class CreateCharacterView extends GetView<CreateCharacterController> {
   @override
   Widget build(BuildContext context) {
     return ConfirmExitView(
+      dirty: controller.dirty.value,
       child: BackdropFilter(
         filter: ImageFilter.blur(sigmaX: 5, sigmaY: 5),
         // blendMode: BlendMode.darken,
@@ -61,10 +61,7 @@ class CreateCharacterView extends GetView<CreateCharacterController> {
                             valid: controller.name.isNotEmpty,
                             onTap: () => Get.to(
                               () => BasicInfoFormView(
-                                onChanged: (name, avatar) {
-                                  controller.name.value = name;
-                                  controller.avatarUrl.value = avatar;
-                                },
+                                onChanged: controller.setBasicInfo,
                               ),
                               binding: BasicInfoFormBinding(
                                 name: controller.name.value,
@@ -84,7 +81,7 @@ class CreateCharacterView extends GetView<CreateCharacterController> {
                             onTap: () => Get.to(
                               () => AddCharacterClassesView(
                                 selection: controller.characterClass.value,
-                                onAdd: (cls) => controller.characterClass.value = cls,
+                                onChanged: (cls) => controller.setClass(cls),
                               ),
                               binding: AddRepositoryItemsBinding(),
                               arguments: {

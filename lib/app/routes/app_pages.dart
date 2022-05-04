@@ -6,8 +6,6 @@ import '../data/services/character_service.dart';
 import '../model_utils/character_utils.dart';
 import '../modules/AddRepositoryItems/bindings/add_repository_items_binding.dart';
 import '../modules/AddRepositoryItems/views/add_moves_view.dart';
-import '../modules/BasicInfoForm/bindings/basic_info_form_binding.dart';
-import '../modules/BasicInfoForm/views/basic_info_form_view.dart';
 import '../modules/CharacterList/bindings/character_list_binding.dart';
 import '../modules/CharacterList/views/character_list_view.dart';
 import '../modules/CreateCharacter/bindings/create_character_binding.dart';

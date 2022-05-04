@@ -18,11 +18,11 @@ class AddCharacterClassesView
     extends GetView<AddRepositoryItemsController<CharacterClass, CharacterClassFilters>> {
   const AddCharacterClassesView({
     Key? key,
-    required this.onAdd,
+    required this.onChanged,
     required this.selection,
   }) : super(key: key);
 
-  final void Function(CharacterClass characterClass) onAdd;
+  final void Function(CharacterClass characterClass) onChanged;
   final CharacterClass? selection;
 
   RepositoryService get service => controller.repo.value;
@@ -31,7 +31,7 @@ class AddCharacterClassesView
   @override
   Widget build(BuildContext context) {
     return AddRepositoryItemsView<CharacterClass, CharacterClassFilters>(
-      storageKey: 'CharacterClasses',
+      storageKey: 'Classes',
       title: Text(S.current.addGeneric(S.current.entityPlural(CharacterClass))),
       multiple: false,
       filtersBuilder: (group, filters, onChange) => CharacterClassFiltersView(
@@ -74,7 +74,7 @@ class AddCharacterClassesView
           ),
         ],
       ),
-      onAdd: (list) => onAdd(list.first),
+      onAdd: (list) => onChanged(list.first),
       preSelections: selection != null ? [selection!] : [],
     );
   }

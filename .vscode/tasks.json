@@ -42,6 +42,20 @@
       "problemMatcher": []
     },
     {
+      "label": "Build + Full-push (Android)",
+      "type": "dart",
+      "command": "dart",
+      "args": [
+        "lib/core/task_runner/deploy.dart",
+        "--build",
+        "-l",
+        "android",
+        "--push",
+        "--install"
+      ],
+      "problemMatcher": []
+    },
+    {
       "label": "Auto-fix all fixable problems",
       "type": "dart",
       "command": "dart",
