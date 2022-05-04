@@ -4,23 +4,23 @@ part of 'app_pages.dart';
 abstract class Routes {
   Routes._();
   static const home = _Paths.home;
-  static const characterListPage = _Paths.characterListPage;
+  static const characterList = _Paths.characterList;
   static const addMoves = _Paths.addMoves;
   static const rollDice = _Paths.rollDice;
   static const settings = _Paths.settings;
   static const importExport = _Paths.importExport;
   static const createCharacter = _Paths.createCharacter;
-  static const BASIC_INFO_FORM = _Paths.BASIC_INFO_FORM;
+  static const editBasicInfo = _Paths.editBasicInfo;
 }
 
 abstract class _Paths {
   _Paths._();
   static const home = '/';
-  static const characterListPage = '/character-list';
+  static const characterList = '/character-list';
   static const addMoves = '/add-moves';
   static const rollDice = '/roll-dice';
   static const settings = '/settings';
   static const importExport = '/import-export';
   static const createCharacter = '/create-character';
-  static const BASIC_INFO_FORM = '/basic-info-form';
+  static const editBasicInfo = '/edit-basic-info';
 }

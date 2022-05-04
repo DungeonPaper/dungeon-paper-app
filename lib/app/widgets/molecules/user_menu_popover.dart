@@ -111,7 +111,7 @@ class UserMenuPopover extends GetView<CharacterService> {
                             leading: const Icon(Icons.group),
                             onTap: () {
                               Get.back();
-                              Get.toNamed(Routes.characterListPage);
+                              Get.toNamed(Routes.characterList);
                             },
                           ),
                           const Divider(),

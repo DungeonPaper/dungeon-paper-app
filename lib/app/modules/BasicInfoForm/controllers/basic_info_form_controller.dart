@@ -1,20 +1,13 @@
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class BasicInfoFormController extends GetxController {
-  //TODO: Implement BasicInfoFormController
+  BasicInfoFormController({
+    String name = '',
+    String avatarUrl = '',
+  })  : name = TextEditingController(text: name).obs,
+        avatarUrl = TextEditingController(text: avatarUrl).obs;
 
-  final count = 0.obs;
-  @override
-  void onInit() {
-    super.onInit();
-  }
-
-  @override
-  void onReady() {
-    super.onReady();
-  }
-
-  @override
-  void onClose() {}
-  void increment() => count.value++;
+  final Rx<TextEditingController> name;
+  final Rx<TextEditingController> avatarUrl;
 }

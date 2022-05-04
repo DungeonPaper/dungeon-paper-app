@@ -38,7 +38,7 @@ class AppPages {
       binding: HomeBinding(),
     ),
     GetPage(
-      name: _Paths.characterListPage,
+      name: _Paths.characterList,
       page: () => const CharacterListPageView(),
       binding: CharacterListPageBinding(),
     ),
@@ -77,10 +77,10 @@ class AppPages {
       fullscreenDialog: true,
       preventDuplicates: false,
     ),
-    GetPage(
-      name: _Paths.BASIC_INFO_FORM,
-      page: () => BasicInfoFormView(),
-      binding: BasicInfoFormBinding(),
-    ),
+    // GetPage(
+    //   name: _Paths.editBasicInfo,
+    //   page: () => BasicInfoFormView(),
+    //   binding: BasicInfoFormBinding(),
+    // ),
   ];
 }

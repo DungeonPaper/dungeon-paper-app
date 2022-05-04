@@ -2,11 +2,13 @@ import 'dart:ui';
 
 import 'package:dungeon_paper/app/data/models/character.dart';
 import 'package:dungeon_paper/app/data/models/character_class.dart';
-import 'package:dungeon_paper/app/model_utils/character_utils.dart';
 import 'package:dungeon_paper/app/modules/AddRepositoryItems/bindings/add_repository_items_binding.dart';
 import 'package:dungeon_paper/app/modules/AddRepositoryItems/controllers/add_repository_items_controller.dart';
 import 'package:dungeon_paper/app/modules/AddRepositoryItems/views/add_character_classes_view.dart';
 import 'package:dungeon_paper/app/modules/AddRepositoryItems/views/filters/character_class_filters.dart';
+import 'package:dungeon_paper/app/modules/BasicInfoForm/bindings/basic_info_form_binding.dart';
+import 'package:dungeon_paper/app/modules/BasicInfoForm/views/basic_info_form_view.dart';
+import 'package:dungeon_paper/app/routes/app_pages.dart';
 import 'package:dungeon_paper/app/themes/colors.dart';
 import 'package:dungeon_paper/app/widgets/atoms/character_avatar.dart';
 import 'package:dungeon_paper/app/widgets/atoms/confirm_exit_view.dart';
@@ -44,13 +46,32 @@ class CreateCharacterView extends GetView<CreateCharacterController> {
                         mainAxisSize: MainAxisSize.min,
                         children: [
                           _Card(
-                            leading:
-                                CharacterAvatar.squircle(size: 48, character: Character.empty()),
+                            leading: CharacterAvatar.squircle(
+                              size: 48,
+                              character:
+                                  Character.empty().copyWith(avatarUrl: controller.avatarUrl.value),
+                            ),
                             // TODO intl
-                            title: const Text('Unnamed Traveler'),
-                            subtitle: const Text('Select name & picture (required)'),
-                            valid: false,
-                            onTap: () => null,
+                            title: controller.name.isEmpty
+                                ? const Text('Unnamed Traveler')
+                                : Text(controller.name.value),
+                            subtitle: controller.name.isEmpty
+                                ? const Text('Select name & picture (required)')
+                                : Text('Level 1 ${cls?.name}'),
+                            valid: controller.name.isNotEmpty,
+                            onTap: () => Get.to(
+                              () => BasicInfoFormView(
+                                onChanged: (name, avatar) {
+                                  controller.name.value = name;
+                                  controller.avatarUrl.value = avatar;
+                                },
+                              ),
+                              binding: BasicInfoFormBinding(
+                                name: controller.name.value,
+                                avatarUrl: controller.avatarUrl.value,
+                              ),
+                              preventDuplicates: false,
+                            ),
                           ),
                           _Card(
                             // TODO intl
@@ -119,7 +140,7 @@ class CreateCharacterView extends GetView<CreateCharacterController> {
 }
 
 class _MissingInfoIcon extends StatelessWidget {
-  _MissingInfoIcon({
+  const _MissingInfoIcon({
     Key? key,
   }) : super(key: key);
 
@@ -133,7 +154,7 @@ class _MissingInfoIcon extends StatelessWidget {
         color: Colors.black,
       ),
       decoration: const ShapeDecoration(
-        shape: const CircleBorder(),
+        shape: CircleBorder(),
         color: DwColors.warning,
       ),
     );
@@ -141,7 +162,7 @@ class _MissingInfoIcon extends StatelessWidget {
 }
 
 class _Card extends StatelessWidget {
-  _Card({
+  const _Card({
     Key? key,
     this.contentPadding,
     this.leading,
