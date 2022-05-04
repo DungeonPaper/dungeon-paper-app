@@ -76,7 +76,7 @@ class AddNotesView extends GetView<AddRepositoryItemsController<Note, NoteFilter
         ],
       ),
       onAdd: onAdd,
-      selections: selections,
+      preSelections: selections,
     );
   }
 }

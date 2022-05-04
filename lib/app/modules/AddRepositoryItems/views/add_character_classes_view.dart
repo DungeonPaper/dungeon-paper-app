@@ -20,15 +20,11 @@ class AddCharacterClassesView
   const AddCharacterClassesView({
     Key? key,
     required this.onAdd,
-    required this.selections,
-    required this.classKeys,
-    required this.rollStats,
+    required this.selection,
   }) : super(key: key);
 
-  final void Function(Iterable<CharacterClass> characterClass) onAdd;
-  final Iterable<CharacterClass> selections;
-  final List<String> classKeys;
-  final RollStats rollStats;
+  final void Function(CharacterClass characterClass) onAdd;
+  final CharacterClass? selection;
 
   RepositoryService get service => controller.repo.value;
   Character get char => controller.chars.value.current!;
@@ -38,7 +34,7 @@ class AddCharacterClassesView
     return AddRepositoryItemsView<CharacterClass, CharacterClassFilters>(
       storageKey: 'CharacterClasses',
       title: Text(S.current.addGeneric(S.current.entityPlural(CharacterClass))),
-      extraData: {'classKeys': classKeys, 'rollStats': rollStats},
+      multiple: false,
       filtersBuilder: (group, filters, onChange) => CharacterClassFiltersView(
         group: group,
         filters: filters,
@@ -79,8 +75,8 @@ class AddCharacterClassesView
           ),
         ],
       ),
-      onAdd: onAdd,
-      selections: selections,
+      onAdd: (list) => onAdd(list.first),
+      preSelections: selection != null ? [selection!] : [],
     );
   }
 }

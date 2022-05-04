@@ -68,7 +68,7 @@ class AddItemsView extends GetView<AddRepositoryItemsController<Item, ItemFilter
         ],
       ),
       onAdd: onAdd,
-      selections: selections,
+      preSelections: selections,
     );
   }
 }

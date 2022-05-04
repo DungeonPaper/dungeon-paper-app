@@ -1,3 +1,4 @@
+import 'package:dungeon_paper/app/data/models/character_class.dart';
 import 'package:dungeon_paper/app/data/models/item.dart';
 import 'package:dungeon_paper/app/data/models/meta.dart';
 import 'package:dungeon_paper/app/data/models/move.dart';
@@ -96,6 +97,8 @@ class AddRepositoryItemCardList<T extends WithMeta, F extends EntityFilters>
         ) as T;
       case Item:
         return Item.empty().copyWithInherited() as T;
+      case CharacterClass:
+        return CharacterClass.empty().copyWithInherited() as T;
       default:
         throw UnsupportedError('createEmpty: Type $T is not supported');
     }

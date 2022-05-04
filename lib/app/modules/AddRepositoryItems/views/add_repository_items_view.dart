@@ -29,11 +29,12 @@ class AddRepositoryItemsView<T extends WithMeta, F extends EntityFilters<T>>
     required this.title,
     required this.cardBuilder,
     required this.onAdd,
-    required this.selections,
+    required this.preSelections,
     required this.storageKey,
     this.filtersBuilder,
     this.filterFn,
     this.extraData = const {},
+    this.multiple = true,
   }) : super(key: key);
 
   final Widget title;
@@ -44,7 +45,8 @@ class AddRepositoryItemsView<T extends WithMeta, F extends EntityFilters<T>>
           FiltersGroup group, F filters, void Function(FiltersGroup group, F filters) update)?
       filtersBuilder;
   final bool Function(T item, F filters)? filterFn;
-  final Iterable<T> selections;
+  final bool multiple;
+  final Iterable<T> preSelections;
   final String storageKey;
   final Map<String, dynamic> extraData;
   Iterable<T> get builtInList => controller.filterList(
@@ -97,7 +99,8 @@ class AddRepositoryItemsView<T extends WithMeta, F extends EntityFilters<T>>
                     ),
                     AddRepositoryItemCardList<T, F>(
                       group: FiltersGroup.my,
-                      onSave: (item) => controller.saveCustomItem(storageKey, item),
+                      onSave: (item) =>
+                          controller.saveCustomItem(storageKey, item, preSelections, multiple),
                       extraData: extraData,
                       useFilters: useFilters,
                       filtersBuilder: filtersBuilder,
@@ -116,7 +119,11 @@ class AddRepositoryItemsView<T extends WithMeta, F extends EntityFilters<T>>
       ),
       floatingActionButton: Obx(
         () => FloatingActionButton.extended(
-          icon: controller.selected.isNotEmpty ? const Icon(Icons.add) : null,
+          icon: controller.selected.isNotEmpty
+              ? multiple
+                  ? const Icon(Icons.add)
+                  : const Icon(Icons.check)
+              : null,
           backgroundColor:
               controller.selected.isNotEmpty ? DwColors.success : Theme.of(context).disabledColor,
           onPressed: controller.selected.isNotEmpty
@@ -127,12 +134,14 @@ class AddRepositoryItemsView<T extends WithMeta, F extends EntityFilters<T>>
               : null,
           label: Text(
             controller.selected.isNotEmpty
-                ? S.current.addWithCount(S.current.pluralize(
-                    controller.selected.length,
-                    S.current.entity(T),
-                    S.current.entityPlural(T),
-                  ))
-                : S.current.selectToAdd(S.current.entityPlural(T)),
+                ? multiple
+                    ? S.current.addWithCount(S.current.pluralize(
+                        controller.selected.length,
+                        S.current.entity(T),
+                        S.current.entityPlural(T),
+                      ))
+                    : S.current.selectGeneric(nameFor(controller.selected.first))
+                : S.current.selectToAdd(multiple ? S.current.entityPlural(T) : S.current.entity(T)),
           ),
         ),
       ),
@@ -141,17 +150,22 @@ class AddRepositoryItemsView<T extends WithMeta, F extends EntityFilters<T>>
 
   Widget _wrapWithSelection(BuildContext context, T item, FiltersGroup group) => Obx(
         () {
-          var selected = controller.isSelected(item);
-          var selectable = controller.isSelectable(item, selections);
-          var onToggle = selectable ? () => controller.toggleItem(item, !selected) : null;
+          var isPreSelected = controller.isPreSelected(item, preSelections, multiple);
+          var selected = controller.isSelected(item, preSelections, multiple);
+          var enabled = controller.isEnabled(item, preSelections, multiple);
+          var onToggle = enabled
+              ? () => controller.toggleItem(item, !selected, preSelections, multiple)
+              : null;
           return Container(
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(10),
               border: Border.all(
                 width: 2,
-                color: controller.isSelected(item)
-                    ? DwColors.success
-                    : !controller.isSelectable(item, selections)
+                color: selected
+                    ? multiple && isPreSelected
+                        ? Colors.grey
+                        : DwColors.success
+                    : multiple && !controller.isEnabled(item, preSelections, multiple)
                         ? Colors.grey
                         : Colors.transparent,
               ),
@@ -160,26 +174,36 @@ class AddRepositoryItemsView<T extends WithMeta, F extends EntityFilters<T>>
               context,
               item,
               selected: selected,
-              selectable: selectable,
+              selectable: enabled,
               onToggle: onToggle,
-              label: Text(selectable
-                  ? !selected
-                      ? S.current.select
-                      : S.current.remove
-                  : S.current.alreadyAdded),
-              icon: Icon(
-                selectable
+              label: Text(
+                enabled
                     ? !selected
-                        ? Icons.add
+                        ? S.current.select
+                        : multiple
+                            ? S.current.remove
+                            : S.current.unselect
+                    : multiple
+                        ? S.current.alreadyAdded
+                        : S.current.select,
+              ),
+              icon: Icon(
+                enabled
+                    ? !selected
+                        ? multiple
+                            ? Icons.add
+                            : Icons.check
                         : Icons.remove
-                    : Icons.check,
+                    : multiple
+                        ? Icons.add
+                        : Icons.check,
               ),
               onUpdate: group == FiltersGroup.my
-                  ? (item) => controller.saveCustomItem(storageKey, item)
+                  ? (item) => controller.saveCustomItem(storageKey, item, preSelections, multiple)
                   : null,
               onDelete: group == FiltersGroup.my
-                  ? (item) => awaitDeleteConfirmation<T>(
-                      context, nameFor(item), () => controller.deleteCustomItem(storageKey, item))
+                  ? (item) => awaitDeleteConfirmation<T>(context, nameFor(item),
+                      () => controller.deleteCustomItem(storageKey, item, preSelections, multiple))
                   : null,
             ),
           );

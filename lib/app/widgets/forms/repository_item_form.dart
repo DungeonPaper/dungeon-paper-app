@@ -1,3 +1,4 @@
+import 'package:dungeon_paper/app/data/models/character_class.dart';
 import 'package:dungeon_paper/app/data/models/item.dart';
 import 'package:dungeon_paper/app/data/models/meta.dart';
 import 'package:dungeon_paper/app/data/models/move.dart';
@@ -13,6 +14,8 @@ import 'package:dungeon_paper/app/widgets/forms/dynamic_form/dynamic_form.dart';
 import 'package:dungeon_paper/generated/l10n.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+
+import 'add_character_class_form.dart';
 
 enum ItemFormType {
   edit,
@@ -117,6 +120,8 @@ class RepositoryItemForm<T extends WithMeta> extends GetView<DynamicFormControll
         return AddItemForm(onChange: setEntity, type: type);
       case Note:
         return AddNoteForm(onChange: setEntity, type: type);
+      case CharacterClass:
+        return AddCharacterClassForm(onChange: setEntity, type: type);
       default:
         throw UnsupportedError('Unsupported type: $T');
     }

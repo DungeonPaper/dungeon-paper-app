@@ -159,6 +159,7 @@
   "searchPlaceholderGeneric": "Type to search {entity}",
   "select": "Select",
   "selectAll": "Select All",
+  "selectGeneric": "Select {entity}",
   "selectNone": "Select None",
   "selectToAdd": "Select {string} to add",
   "settingsTitle": "Settings",
@@ -171,6 +172,7 @@
   "tagDetails": "Tag Information",
   "themeTurnDark": "Switch to Dark Mode",
   "themeTurnLight": "Switch to Light Mode",
+  "unselect": "Unselect",
   "userMenuMoreChars": "More",
   "userMenuRecentCharacters": "Recent Characters",
   "userUnregistered": "Not registered"

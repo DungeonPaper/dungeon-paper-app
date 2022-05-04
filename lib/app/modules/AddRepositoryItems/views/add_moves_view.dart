@@ -81,7 +81,7 @@ class AddMovesView extends GetView<AddRepositoryItemsController<Move, MoveFilter
         ],
       ),
       onAdd: onAdd,
-      selections: selections,
+      preSelections: selections,
     );
   }
 }

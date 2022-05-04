@@ -108,21 +108,6 @@ class CharacterUtils {
             ),
           );
 
-  static void Function() openCharacterClassPage({
-    required CharacterClass? characterClass,
-    required void Function(CharacterClass item) onSave,
-  }) =>
-      () => Get.to(
-            () => RepositoryItemForm<CharacterClass>(
-              onSave: onSave,
-              type: characterClass == null ? ItemFormType.create : ItemFormType.edit,
-            ),
-            binding: RepositoryItemFormBinding<CharacterClass>(
-              item: characterClass,
-              extraData: const {},
-            ),
-          );
-
   // Notes
   static Character updateNotes(Character char, Iterable<Note> notes) => char.copyWith(
         notes: updateByKey(char.notes, notes),
@@ -148,6 +133,23 @@ class CharacterUtils {
             ),
             binding: RepositoryItemFormBinding<Note>(
               item: note,
+              extraData: const {},
+            ),
+          );
+
+  // CHARACTER CLASS
+
+  static void Function() openCharacterClassPage({
+    required CharacterClass? characterClass,
+    required void Function(CharacterClass item) onSave,
+  }) =>
+      () => Get.to(
+            () => RepositoryItemForm<CharacterClass>(
+              onSave: onSave,
+              type: characterClass == null ? ItemFormType.create : ItemFormType.edit,
+            ),
+            binding: RepositoryItemFormBinding<CharacterClass>(
+              item: characterClass,
               extraData: const {},
             ),
           );

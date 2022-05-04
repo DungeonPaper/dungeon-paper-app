@@ -75,6 +75,7 @@ class AppPages {
       binding: CreateCharacterBinding(),
       opaque: false,
       fullscreenDialog: true,
+      preventDuplicates: false,
     ),
     GetPage(
       name: _Paths.BASIC_INFO_FORM,

@@ -79,7 +79,7 @@ class AddSpellsView extends GetView<AddRepositoryItemsController<Spell, SpellFil
         ],
       ),
       onAdd: onAdd,
-      selections: selections,
+      preSelections: selections,
     );
   }
 }

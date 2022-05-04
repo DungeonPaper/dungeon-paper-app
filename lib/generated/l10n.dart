@@ -1719,6 +1719,16 @@ class S {
     );
   }
 
+  /// `Select {entity}`
+  String selectGeneric(Object entity) {
+    return Intl.message(
+      'Select $entity',
+      name: 'selectGeneric',
+      desc: '',
+      args: [entity],
+    );
+  }
+
   /// `Select None`
   String get selectNone {
     return Intl.message(
@@ -1842,6 +1852,16 @@ class S {
     return Intl.message(
       'Switch to Light Mode',
       name: 'themeTurnLight',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Unselect`
+  String get unselect {
+    return Intl.message(
+      'Unselect',
+      name: 'unselect',
       desc: '',
       args: [],
     );

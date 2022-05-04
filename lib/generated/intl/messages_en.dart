@@ -167,18 +167,20 @@ class MessageLookup extends MessageLookupByLibrary {
 
   static String m41(entity) => "Type to search ${entity}";
 
-  static String m42(string) => "Select ${string} to add";
+  static String m42(entity) => "Select ${entity}";
 
-  static String m43(level) => "${Intl.select(level, {
+  static String m43(string) => "Select ${string} to add";
+
+  static String m44(level) => "${Intl.select(level, {
             'cantrip': 'Cantrip',
             'rote': 'Rote',
             'other': 'Level ${level}',
           })}";
 
-  static String m44(count) =>
+  static String m45(count) =>
       "${Intl.plural(count, zero: 'No spells', one: 'One spell', other: '${count} spells')}";
 
-  static String m45(tag) => "Copy from: ${tag}";
+  static String m46(tag) => "Copy from: ${tag}";
 
   final messages = _notInlinedMessages(_notInlinedMessages);
   static Map<String, Function> _notInlinedMessages(_) => <String, Function>{
@@ -414,20 +416,22 @@ class MessageLookup extends MessageLookupByLibrary {
         "searchPlaceholderGeneric": m41,
         "select": MessageLookupByLibrary.simpleMessage("Select"),
         "selectAll": MessageLookupByLibrary.simpleMessage("Select All"),
+        "selectGeneric": m42,
         "selectNone": MessageLookupByLibrary.simpleMessage("Select None"),
-        "selectToAdd": m42,
+        "selectToAdd": m43,
         "settingsTitle": MessageLookupByLibrary.simpleMessage("Settings"),
         "sortMoveDown": MessageLookupByLibrary.simpleMessage("Move down"),
         "sortMoveUp": MessageLookupByLibrary.simpleMessage("Move up"),
-        "spellLevel": m43,
+        "spellLevel": m44,
         "spells": MessageLookupByLibrary.simpleMessage("Spells"),
-        "spellsWithCount": m44,
-        "tagCopyFrom": m45,
+        "spellsWithCount": m45,
+        "tagCopyFrom": m46,
         "tagDetails": MessageLookupByLibrary.simpleMessage("Tag Information"),
         "themeTurnDark":
             MessageLookupByLibrary.simpleMessage("Switch to Dark Mode"),
         "themeTurnLight":
             MessageLookupByLibrary.simpleMessage("Switch to Light Mode"),
+        "unselect": MessageLookupByLibrary.simpleMessage("Unselect"),
         "userMenuMoreChars": MessageLookupByLibrary.simpleMessage("More"),
         "userMenuRecentCharacters":
             MessageLookupByLibrary.simpleMessage("Recent Characters"),

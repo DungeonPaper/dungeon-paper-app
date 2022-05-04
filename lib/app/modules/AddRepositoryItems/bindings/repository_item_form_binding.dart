@@ -1,7 +1,9 @@
+import 'package:dungeon_paper/app/data/models/character_class.dart';
 import 'package:dungeon_paper/app/data/models/item.dart';
 import 'package:dungeon_paper/app/data/models/move.dart';
 import 'package:dungeon_paper/app/data/models/note.dart';
 import 'package:dungeon_paper/app/data/models/spell.dart';
+import 'package:dungeon_paper/app/widgets/forms/add_character_class_form.dart';
 import 'package:dungeon_paper/app/widgets/forms/add_item_form.dart';
 import 'package:dungeon_paper/app/widgets/forms/add_move_form.dart';
 import 'package:dungeon_paper/app/widgets/forms/add_note_form.dart';
@@ -36,6 +38,10 @@ class RepositoryItemFormBinding<T> extends Bindings {
         break;
       case Note:
         Get.put<DynamicFormController<Note>>(AddNoteFormController(note: item));
+        break;
+      case CharacterClass:
+        Get.put<DynamicFormController<CharacterClass>>(
+            AddCharacterClassFormController(characterClass: item));
         break;
       default:
         throw UnsupportedError('Type $T is unsupported');
