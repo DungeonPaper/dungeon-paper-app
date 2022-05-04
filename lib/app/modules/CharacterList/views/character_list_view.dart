@@ -74,7 +74,7 @@ class CharacterListPageView extends GetView<CharacterService> {
                 padding: const EdgeInsets.symmetric(horizontal: 8),
                 child: ElevatedButton.icon(
                   style: ButtonThemes.primaryElevated(context),
-                  onPressed: () => Get.toNamed(Routes.createCharacterPage),
+                  onPressed: () => Get.toNamed(Routes.createCharacter),
                   label: Text(S.current.createCharacterAddButton),
                   icon: const Icon(Icons.add),
                 ),

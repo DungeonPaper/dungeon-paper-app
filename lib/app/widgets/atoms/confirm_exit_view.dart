@@ -58,13 +58,13 @@ Future<bool> confirmExit<T>(
       title: title ?? ConfirmExitView._defaultTitle,
       content: text ?? ConfirmExitView._defaultText,
       actions: [
-        ElevatedButton.icon(
+        TextButton.icon(
           icon: const Icon(Icons.close),
           label: okLabel ?? ConfirmExitView._defaultOkLabel,
           onPressed: () => Get.back(result: true),
-          style: ButtonThemes.errorElevated(context),
+          style: ButtonThemes.errorText(context),
         ),
-        TextButton(
+        ElevatedButton(
           // icon: const Icon(Icons.close),
           child: cancelLabel ?? ConfirmExitView._defaultCancelLabel,
           onPressed: () => Get.back(result: false),

@@ -1,3 +1,4 @@
+import 'package:dungeon_paper/app/data/models/character_class.dart';
 import 'package:dungeon_paper/app/data/models/item.dart';
 import 'package:dungeon_paper/app/data/models/note.dart';
 import 'package:dungeon_paper/app/data/models/move.dart';
@@ -103,6 +104,21 @@ class CharacterUtils {
             ),
             binding: RepositoryItemFormBinding<Item>(
               item: item,
+              extraData: const {},
+            ),
+          );
+
+  static void Function() openCharacterClassPage({
+    required CharacterClass? characterClass,
+    required void Function(CharacterClass item) onSave,
+  }) =>
+      () => Get.to(
+            () => RepositoryItemForm<CharacterClass>(
+              onSave: onSave,
+              type: characterClass == null ? ItemFormType.create : ItemFormType.edit,
+            ),
+            binding: RepositoryItemFormBinding<CharacterClass>(
+              item: characterClass,
               extraData: const {},
             ),
           );

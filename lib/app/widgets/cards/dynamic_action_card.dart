@@ -17,10 +17,10 @@ class DynamicActionCard extends StatelessWidget {
     this.expansionKey,
     required this.title,
     required this.icon,
-    required this.starred,
-    required this.dice,
+    this.starred = false,
+    this.dice = const [],
     required this.description,
-    required this.explanation,
+    this.explanation,
     this.maxContentHeight,
     this.initiallyExpanded,
     this.showStar = true,
@@ -28,7 +28,7 @@ class DynamicActionCard extends StatelessWidget {
     this.unstarredIcon,
     this.chips = const [],
     this.chipsSpacing = 4,
-    required this.onStarChanged,
+    this.onStarChanged,
     this.actions = const [],
     this.leading = const [],
     this.trailing = const [],
@@ -38,7 +38,7 @@ class DynamicActionCard extends StatelessWidget {
   final bool expandable;
   final double? maxContentHeight;
   final String description;
-  final String explanation;
+  final String? explanation;
   final Key? expansionKey;
   final String title;
   final Widget? icon;
@@ -50,7 +50,7 @@ class DynamicActionCard extends StatelessWidget {
   final List<Dice> dice;
   final Iterable<Widget> chips;
   final double chipsSpacing;
-  final void Function(bool starred) onStarChanged;
+  final void Function(bool starred)? onStarChanged;
   final Iterable<Widget> actions;
   final Iterable<Widget> trailing;
   final Iterable<Widget> leading;
@@ -83,7 +83,7 @@ class DynamicActionCard extends StatelessWidget {
                     ? starredIcon ?? const Icon(Icons.star_rounded)
                     : unstarredIcon ?? const Icon(Icons.star_border_rounded),
               ),
-              onPressed: () => onStarChanged(!starred),
+              onPressed: () => onStarChanged?.call(!starred),
             ),
           );
 
@@ -141,12 +141,12 @@ class DynamicActionCard extends StatelessWidget {
               style: Theme.of(context).textTheme.bodyText1,
             ),
       // Divider(height: 32, color: dividerColor),
-      if (explanation.isNotEmpty) ...[
+      if (explanation != null && explanation!.isNotEmpty) ...[
         Padding(
           padding: const EdgeInsets.only(top: 16, bottom: 4),
           child: Text(S.current.explanation, style: Theme.of(context).textTheme.caption),
         ),
-        MarkdownBody(data: explanation, onTapLink: (text, href, title) => launch(href!)),
+        MarkdownBody(data: explanation!, onTapLink: (text, href, title) => launch(href!)),
       ],
       Divider(height: 24, color: dividerColor),
       Row(

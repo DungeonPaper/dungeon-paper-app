@@ -11,7 +11,7 @@
         "pub",
         "run",
         "intl_generator:generate_from_arb",
-        "lib/generated/intl/*.dart lib/l10n/*.arb",
+        "lib/generated/intl/*.dart lib/l10n/*.arb"
       ],
       "problemMatcher": []
     },
@@ -54,7 +54,7 @@
     },
     {
       "label": "Push & Install Existing APK",
-      "type": "dart ",
+      "type": "dart",
       "command": "dart",
       "args": [
         "lib/core/task_runner/deploy.dart",
@@ -67,7 +67,7 @@
     },
     {
       "label": "Test",
-      "type": "shell",
+      "type": "dart",
       "command": "dart",
       "args": [
         "lib/core/task_runner/deploy.dart",
@@ -78,7 +78,8 @@
     {
       "label": "Getx Generate",
       "type": "shell",
-      "command": "${HOME}/.pub-cache/bin/get create ${input:tplType} ${input:tplName}"
+      "command": "${HOME}/.pub-cache/bin/get create ${input:tplType} ${input:tplName}",
+      "problemMatcher": []
     },
     {
       "label": "Getx Generate on module",

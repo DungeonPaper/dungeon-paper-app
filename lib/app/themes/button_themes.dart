@@ -15,6 +15,11 @@ class ButtonThemes {
         shape: rRectShape,
       );
 
+  static ButtonStyle errorText(BuildContext context) => TextButton.styleFrom(
+        primary: Theme.of(context).errorColor,
+        shape: rRectShape,
+      );
+
   static ButtonStyle primaryOutlined(BuildContext context) => OutlinedButton.styleFrom(
         primary: Theme.of(context).scaffoldBackgroundColor.computeLuminance() > 0.5
             ? Theme.of(context).primaryColor

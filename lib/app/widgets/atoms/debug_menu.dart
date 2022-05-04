@@ -60,7 +60,7 @@ class DebugMenu extends StatelessWidget {
   }
 
   void createChar() {
-    Get.toNamed(Routes.createCharacterPage);
+    Get.toNamed(Routes.createCharacter);
   }
 
   void viewCharJson() {

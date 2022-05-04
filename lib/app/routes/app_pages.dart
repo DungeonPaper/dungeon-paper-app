@@ -6,16 +6,18 @@ import '../data/services/character_service.dart';
 import '../model_utils/character_utils.dart';
 import '../modules/AddRepositoryItems/bindings/add_repository_items_binding.dart';
 import '../modules/AddRepositoryItems/views/add_moves_view.dart';
-import '../modules/CharacterListPage/bindings/character_list_page_binding.dart';
-import '../modules/CharacterListPage/views/character_list_page_view.dart';
+import '../modules/BasicInfoForm/bindings/basic_info_form_binding.dart';
+import '../modules/BasicInfoForm/views/basic_info_form_view.dart';
+import '../modules/CharacterList/bindings/character_list_binding.dart';
+import '../modules/CharacterList/views/character_list_view.dart';
+import '../modules/CreateCharacter/bindings/create_character_binding.dart';
+import '../modules/CreateCharacter/views/create_character_view.dart';
 import '../modules/Home/bindings/home_binding.dart';
 import '../modules/Home/views/home_view.dart';
 import '../modules/ImportExport/bindings/import_export_binding.dart';
 import '../modules/ImportExport/views/import_export_view.dart';
 import '../modules/Settings/bindings/settings_binding.dart';
 import '../modules/Settings/views/settings_view.dart';
-import '../modules/UpsertCharacterPages/bindings/create_character_page_binding.dart';
-import '../modules/UpsertCharacterPages/views/create_character_page_view.dart';
 import '../widgets/views/roll_dice_view.dart';
 
 part 'app_routes.dart';
@@ -39,11 +41,6 @@ class AppPages {
       name: _Paths.characterListPage,
       page: () => const CharacterListPageView(),
       binding: CharacterListPageBinding(),
-    ),
-    GetPage(
-      name: _Paths.createCharacterPage,
-      page: () => const CreateCharacterPageView(),
-      binding: CreateCharacterPageBinding(),
     ),
     GetPage(
       name: _Paths.addMoves,
@@ -71,6 +68,18 @@ class AppPages {
       name: _Paths.importExport,
       page: () => const ImportExportView(),
       binding: ImportExportBinding(),
+    ),
+    GetPage(
+      name: _Paths.createCharacter,
+      page: () => CreateCharacterView(),
+      binding: CreateCharacterBinding(),
+      opaque: false,
+      fullscreenDialog: true,
+    ),
+    GetPage(
+      name: _Paths.BASIC_INFO_FORM,
+      page: () => BasicInfoFormView(),
+      binding: BasicInfoFormBinding(),
     ),
   ];
 }

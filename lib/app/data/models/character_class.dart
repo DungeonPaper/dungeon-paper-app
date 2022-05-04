@@ -1,13 +1,14 @@
 import 'dart:convert';
 
 import 'package:dungeon_paper/core/utils/uuid.dart';
+import 'package:flutter/material.dart';
 
 import 'alignment.dart';
 import 'gear_choice.dart';
 import 'meta.dart';
 import 'package:dungeon_world_data/dungeon_world_data.dart' as dw;
 
-class CharacterClass extends dw.CharacterClass {
+class CharacterClass extends dw.CharacterClass with WithMeta {
   CharacterClass({
     required Meta meta,
     required String name,
@@ -115,4 +116,7 @@ class CharacterClass extends dw.CharacterClass {
         ...super.toJson(),
         '_meta': meta.toJson(),
       };
+
+  IconData get icon => Icons.person_outline;
+  static IconData get genericIcon => Icons.person_outline;
 }
