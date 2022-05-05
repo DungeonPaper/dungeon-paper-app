@@ -73,8 +73,10 @@ class AdvancedFloatingActionButton extends StatelessWidget {
         key: key,
         child: child,
         tooltip: tooltip,
-        foregroundColor: foregroundColor,
-        backgroundColor: backgroundColor,
+        foregroundColor: onPressed != null
+            ? foregroundColor ?? (backgroundColor == DwColors.success ? Colors.white : null)
+            : null,
+        backgroundColor: onPressed == null ? null : backgroundColor,
         focusColor: focusColor,
         hoverColor: hoverColor,
         splashColor: splashColor,
@@ -131,8 +133,10 @@ class AdvancedFloatingActionButton extends StatelessWidget {
         key: key,
         child: child,
         tooltip: tooltip,
-        foregroundColor: foregroundColor,
-        backgroundColor: backgroundColor,
+        foregroundColor: onPressed != null
+            ? foregroundColor ?? (backgroundColor == DwColors.success ? Colors.white : null)
+            : null,
+        backgroundColor: onPressed == null ? null : backgroundColor,
         focusColor: focusColor,
         hoverColor: hoverColor,
         splashColor: splashColor,
@@ -192,8 +196,10 @@ class AdvancedFloatingActionButton extends StatelessWidget {
         label: label,
         icon: icon,
         tooltip: tooltip,
-        foregroundColor: foregroundColor,
-        backgroundColor: backgroundColor,
+        foregroundColor: onPressed != null
+            ? foregroundColor ?? (backgroundColor == DwColors.success ? Colors.white : null)
+            : null,
+        backgroundColor: onPressed == null ? null : backgroundColor,
         focusColor: focusColor,
         hoverColor: hoverColor,
         splashColor: splashColor,

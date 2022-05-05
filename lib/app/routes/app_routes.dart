@@ -11,6 +11,7 @@ abstract class Routes {
   static const importExport = _Paths.importExport;
   static const createCharacter = _Paths.createCharacter;
   static const editBasicInfo = _Paths.editBasicInfo;
+  static const ROLL_STATS_FORM = _Paths.ROLL_STATS_FORM;
 }
 
 abstract class _Paths {
@@ -23,4 +24,5 @@ abstract class _Paths {
   static const importExport = '/import-export';
   static const createCharacter = '/create-character';
   static const editBasicInfo = '/edit-basic-info';
+  static const ROLL_STATS_FORM = '/roll-stats-form';
 }

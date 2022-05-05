@@ -14,6 +14,8 @@ import '../modules/Home/bindings/home_binding.dart';
 import '../modules/Home/views/home_view.dart';
 import '../modules/ImportExport/bindings/import_export_binding.dart';
 import '../modules/ImportExport/views/import_export_view.dart';
+import '../modules/RollStatsForm/bindings/roll_stats_form_binding.dart';
+import '../modules/RollStatsForm/views/roll_stats_form_view.dart';
 import '../modules/Settings/bindings/settings_binding.dart';
 import '../modules/Settings/views/settings_view.dart';
 import '../widgets/views/roll_dice_view.dart';
@@ -79,6 +81,11 @@ class AppPages {
     //   name: _Paths.editBasicInfo,
     //   page: () => BasicInfoFormView(),
     //   binding: BasicInfoFormBinding(),
+    // ),
+    // GetPage(
+    //   name: _Paths.ROLL_STATS_FORM,
+    //   page: () => RollStatsFormView(),
+    //   binding: RollStatsFormBinding(),
     // ),
   ];
 }

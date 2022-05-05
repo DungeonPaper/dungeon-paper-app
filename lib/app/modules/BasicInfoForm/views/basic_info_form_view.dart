@@ -23,6 +23,7 @@ class BasicInfoFormView extends GetView<BasicInfoFormController> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        // TODO intl
         title: const Text('Basic Information'),
         centerTitle: true,
       ),

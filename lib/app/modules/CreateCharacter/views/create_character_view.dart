@@ -8,6 +8,8 @@ import 'package:dungeon_paper/app/modules/AddRepositoryItems/views/add_character
 import 'package:dungeon_paper/app/modules/AddRepositoryItems/views/filters/character_class_filters.dart';
 import 'package:dungeon_paper/app/modules/BasicInfoForm/bindings/basic_info_form_binding.dart';
 import 'package:dungeon_paper/app/modules/BasicInfoForm/views/basic_info_form_view.dart';
+import 'package:dungeon_paper/app/modules/RollStatsForm/bindings/roll_stats_form_binding.dart';
+import 'package:dungeon_paper/app/modules/RollStatsForm/views/roll_stats_form_view.dart';
 import 'package:dungeon_paper/app/themes/colors.dart';
 import 'package:dungeon_paper/app/widgets/atoms/advanced_floating_action_button.dart';
 import 'package:dungeon_paper/app/widgets/atoms/character_avatar.dart';
@@ -96,9 +98,18 @@ class CreateCharacterView extends GetView<CreateCharacterController> {
                             contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
                             // TODO intl
                             title: const Text('Select Roll Stats'),
-                            subtitle:
-                                const Text('DEX: 10, CHA: 10, WIS: 10, INT: 10, STR: 10, CON: 10'),
-                            onTap: () => null,
+                            subtitle: Text(
+                              controller.rollStats.value.stats
+                                  .map((stat) => '${stat.key}: ${stat.value}')
+                                  .join(', '),
+                            ),
+                            onTap: () => Get.to(
+                              () => RollStatsFormView(
+                                onChanged: (rollStats) => controller.setRollStats(rollStats),
+                              ),
+                              binding: RollStatsFormBinding(rollStats: controller.rollStats.value),
+                              preventDuplicates: false,
+                            ),
                           ),
                           _Card(
                             contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
