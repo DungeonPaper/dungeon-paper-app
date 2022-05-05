@@ -2,6 +2,7 @@ import 'package:dungeon_paper/app/data/models/alignment.dart';
 import 'package:dungeon_paper/app/data/models/character.dart';
 import 'package:dungeon_paper/app/data/services/character_service.dart';
 import 'package:dungeon_paper/app/themes/colors.dart';
+import 'package:dungeon_paper/app/widgets/atoms/advanced_floating_action_button.dart';
 import 'package:dungeon_paper/app/widgets/atoms/confirm_exit_view.dart';
 import 'package:dungeon_paper/app/widgets/atoms/rich_text_field.dart';
 import 'package:dungeon_paper/app/widgets/atoms/select_box.dart';
@@ -48,8 +49,7 @@ class _CharacterBioFormState extends State<CharacterBioForm> {
         appBar: AppBar(
           title: Text(S.current.characterBioDialogTitle),
         ),
-        floatingActionButton: FloatingActionButton.extended(
-          backgroundColor: DwColors.success,
+        floatingActionButton: AdvancedFloatingActionButton.extended(
           onPressed: _save,
           label: Text(S.current.save),
           icon: const Icon(Icons.save),

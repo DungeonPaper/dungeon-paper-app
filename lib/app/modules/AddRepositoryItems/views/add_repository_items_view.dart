@@ -2,6 +2,7 @@ import 'package:dungeon_paper/app/data/models/meta.dart';
 import 'package:dungeon_paper/app/model_utils/model_key.dart';
 import 'package:dungeon_paper/app/modules/AddRepositoryItems/controllers/add_repository_items_controller.dart';
 import 'package:dungeon_paper/app/themes/colors.dart';
+import 'package:dungeon_paper/app/widgets/atoms/advanced_floating_action_button.dart';
 import 'package:dungeon_paper/app/widgets/dialogs/confirm_delete_dialog.dart';
 import 'package:dungeon_paper/generated/l10n.dart';
 import 'package:flutter/material.dart';
@@ -118,14 +119,12 @@ class AddRepositoryItemsView<T extends WithMeta, F extends EntityFilters<T>>
         ),
       ),
       floatingActionButton: Obx(
-        () => FloatingActionButton.extended(
+        () => AdvancedFloatingActionButton.extended(
           icon: controller.selected.isNotEmpty
               ? multiple
                   ? const Icon(Icons.add)
                   : const Icon(Icons.check)
               : null,
-          backgroundColor:
-              controller.selected.isNotEmpty ? DwColors.success : Theme.of(context).disabledColor,
           onPressed: controller.selected.isNotEmpty
               ? () {
                   onAdd(controller.selected);

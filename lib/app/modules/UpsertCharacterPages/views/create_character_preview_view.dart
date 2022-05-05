@@ -4,6 +4,7 @@ import 'package:dungeon_paper/app/data/models/race.dart';
 import 'package:dungeon_paper/app/data/models/spell.dart';
 import 'package:dungeon_paper/app/modules/UpsertCharacterPages/controllers/create_character_preview_controller.dart';
 import 'package:dungeon_paper/app/themes/colors.dart';
+import 'package:dungeon_paper/app/widgets/atoms/advanced_floating_action_button.dart';
 import 'package:dungeon_paper/app/widgets/atoms/character_avatar.dart';
 import 'package:dungeon_paper/app/widgets/atoms/expansion_row.dart';
 import 'package:dungeon_paper/app/widgets/atoms/svg_icon.dart';
@@ -119,8 +120,7 @@ class CreateCharacterPreviewView extends GetView<CreateCharacterPreviewControlle
         ),
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
-      floatingActionButton: FloatingActionButton.extended(
-        backgroundColor: DwColors.success,
+      floatingActionButton: AdvancedFloatingActionButton.extended(
         onPressed: () => controller.createChar(),
         label: Text(S.current.createCharacterSaveButton),
         icon: const Icon(Icons.check),

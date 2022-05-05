@@ -1,4 +1,5 @@
 import 'package:dungeon_paper/app/themes/colors.dart';
+import 'package:dungeon_paper/app/widgets/atoms/advanced_floating_action_button.dart';
 import 'package:dungeon_paper/app/widgets/atoms/svg_icon.dart';
 import 'package:dungeon_paper/core/dw_icons.dart';
 import 'package:dungeon_paper/core/utils/content_generators/character_name_generator.dart';
@@ -25,12 +26,10 @@ class BasicInfoFormView extends GetView<BasicInfoFormController> {
         title: const Text('Basic Information'),
         centerTitle: true,
       ),
-      floatingActionButton: FloatingActionButton.extended(
+      floatingActionButton: AdvancedFloatingActionButton.extended(
         onPressed: _save,
         label: Text(S.current.save),
         icon: const Icon(Icons.save),
-        backgroundColor: DwColors.success,
-        foregroundColor: Colors.white,
       ),
       body: Form(
         //   // key: controller.formKey,

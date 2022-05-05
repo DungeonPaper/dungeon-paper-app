@@ -4,6 +4,7 @@ import 'package:dungeon_paper/app/modules/UpsertCharacterPages/views/character_i
 import 'package:dungeon_paper/app/modules/UpsertCharacterPages/views/character_moves_spells_view.dart';
 import 'package:dungeon_paper/app/modules/UpsertCharacterPages/views/character_roll_stats_view.dart';
 import 'package:dungeon_paper/app/themes/colors.dart';
+import 'package:dungeon_paper/app/widgets/atoms/advanced_floating_action_button.dart';
 import 'package:dungeon_paper/app/widgets/atoms/confirm_exit_view.dart';
 import 'package:dungeon_paper/core/utils/math_utils.dart';
 import 'package:flutter/material.dart';
@@ -71,10 +72,8 @@ class CreateCharacterPageView extends GetView<CreateCharacterPageController> {
                     tooltip: S.current.createCharacterProceedTooltip,
                     child: const Icon(Icons.arrow_forward),
                   )
-                : FloatingActionButton.extended(
-                    backgroundColor:
-                        controller.canProceed ? DwColors.success : Theme.of(context).disabledColor,
-                    onPressed: () => controller.openPreview(context),
+                : AdvancedFloatingActionButton.extended(
+                    onPressed: controller.canProceed ? () => controller.openPreview(context) : null,
                     tooltip:
                         !controller.isLastStep ? S.current.createCharacterProceedTooltip : null,
                     label: Text(S.current.createCharacterFinishButton),

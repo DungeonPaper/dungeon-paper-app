@@ -4,6 +4,7 @@ import 'package:dungeon_paper/app/modules/Home/views/home_character_actions_view
 import 'package:dungeon_paper/app/modules/Home/views/home_character_journal_view.dart';
 import 'package:dungeon_paper/app/themes/colors.dart';
 import 'package:dungeon_paper/app/themes/themes.dart';
+import 'package:dungeon_paper/app/widgets/atoms/advanced_floating_action_button.dart';
 import 'package:dungeon_paper/app/widgets/atoms/svg_icon.dart';
 import 'package:dungeon_paper/app/widgets/atoms/user_menu.dart';
 import 'package:dungeon_paper/core/dw_icons.dart';
@@ -71,10 +72,9 @@ class HomeView extends GetView<CharacterService> {
             child: AnimatedOpacity(
               opacity: inPageRange ? 1.0 : 0.0,
               duration: duration,
-              child: FloatingActionButton.extended(
+              child: AdvancedFloatingActionButton.extended(
                 label: Text(S.current.createGeneric(Note)),
                 icon: const Icon(Icons.add),
-                backgroundColor: DwColors.success,
                 onPressed: inPageRange
                     ? CharacterUtils.openNotePage(
                         note: null,

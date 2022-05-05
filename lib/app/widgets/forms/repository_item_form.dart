@@ -5,6 +5,7 @@ import 'package:dungeon_paper/app/data/models/move.dart';
 import 'package:dungeon_paper/app/data/models/note.dart';
 import 'package:dungeon_paper/app/data/models/spell.dart';
 import 'package:dungeon_paper/app/themes/colors.dart';
+import 'package:dungeon_paper/app/widgets/atoms/advanced_floating_action_button.dart';
 import 'package:dungeon_paper/app/widgets/atoms/confirm_exit_view.dart';
 import 'package:dungeon_paper/app/widgets/forms/add_item_form.dart';
 import 'package:dungeon_paper/app/widgets/forms/add_move_form.dart';
@@ -65,9 +66,7 @@ class RepositoryItemForm<T extends WithMeta> extends GetView<DynamicFormControll
             ],
           ),
           body: buildForm(context),
-          floatingActionButton: FloatingActionButton.extended(
-            backgroundColor: DwColors.success,
-            foregroundColor: Theme.of(context).colorScheme.onPrimary,
+          floatingActionButton: AdvancedFloatingActionButton.extended(
             onPressed: () {
               onSave(data);
               Get.back();

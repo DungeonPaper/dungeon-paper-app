@@ -1,4 +1,5 @@
 import 'package:dungeon_paper/app/themes/colors.dart';
+import 'package:dungeon_paper/app/widgets/atoms/advanced_floating_action_button.dart';
 import 'package:dungeon_paper/generated/l10n.dart';
 import 'package:flutter/material.dart';
 
@@ -41,12 +42,8 @@ class ImportExportView extends GetView<ImportExportController> {
         ],
       ),
       floatingActionButton: Obx(
-        () => FloatingActionButton.extended(
+        () => AdvancedFloatingActionButton.extended(
           label: Text(controller.tab.value.index == 0 ? S.current.export : S.current.import),
-          backgroundColor:
-              (controller.tab.value.index == 0 ? controller.doExport : controller.doImport) != null
-                  ? DwColors.success
-                  : Theme.of(context).disabledColor,
           icon: Icon(controller.tab.value.index == 0 ? Icons.upload : Icons.download),
           onPressed: controller.tab.value.index == 0 ? controller.doExport : controller.doImport,
         ),

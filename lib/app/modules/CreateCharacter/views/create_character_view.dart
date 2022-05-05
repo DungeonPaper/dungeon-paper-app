@@ -9,6 +9,7 @@ import 'package:dungeon_paper/app/modules/AddRepositoryItems/views/filters/chara
 import 'package:dungeon_paper/app/modules/BasicInfoForm/bindings/basic_info_form_binding.dart';
 import 'package:dungeon_paper/app/modules/BasicInfoForm/views/basic_info_form_view.dart';
 import 'package:dungeon_paper/app/themes/colors.dart';
+import 'package:dungeon_paper/app/widgets/atoms/advanced_floating_action_button.dart';
 import 'package:dungeon_paper/app/widgets/atoms/character_avatar.dart';
 import 'package:dungeon_paper/app/widgets/atoms/confirm_exit_view.dart';
 import 'package:dungeon_paper/generated/l10n.dart';
@@ -122,8 +123,7 @@ class CreateCharacterView extends GetView<CreateCharacterController> {
               ),
             ),
           ),
-          floatingActionButton: FloatingActionButton.extended(
-            backgroundColor: DwColors.success,
+          floatingActionButton: AdvancedFloatingActionButton.extended(
             onPressed: () => null,
             icon: const Icon(Icons.person_add),
             label: Text(
