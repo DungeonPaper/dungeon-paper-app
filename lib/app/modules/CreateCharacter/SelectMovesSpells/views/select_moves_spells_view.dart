@@ -144,7 +144,10 @@ class SelectMovesSpellsView extends GetView<SelectMovesSpellsController> {
                               actions: [
                                 ElevatedButton.icon(
                                   style: ButtonThemes.primaryElevated(context),
-                                  onPressed: () => removeByKey(controller.spells, [spell]),
+                                  onPressed: () {
+                                    controller.spells.value =
+                                        removeByKey(controller.spells, [spell]);
+                                  },
                                   label: Text(S.current.remove),
                                   icon: const Icon(Icons.remove),
                                 )
@@ -189,6 +192,7 @@ class SelectMovesSpellsView extends GetView<SelectMovesSpellsController> {
                   ),
                 ),
               ),
+              const SizedBox(height: 64),
             ],
           ),
         ),

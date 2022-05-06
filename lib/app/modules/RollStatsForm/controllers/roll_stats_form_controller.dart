@@ -5,6 +5,7 @@ import 'package:get/get.dart';
 class RollStatsFormController extends GetxController {
   final Rx<RollStats> rollStats;
   final textControllers = <String, TextEditingController>{};
+  final dirty = false.obs;
 
   RollStatsFormController({
     RollStats? rollStats,
@@ -26,6 +27,7 @@ class RollStatsFormController extends GetxController {
   }
 
   void validate() {
+    dirty.value = true;
     rollStats.value = rollStats.value.copyWithStatValues({
       for (final stat in rollStats.value.stats)
         stat.key: int.tryParse(textControllers[stat.key]!.text) ?? stat.value

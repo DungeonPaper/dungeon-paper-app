@@ -1,6 +1,7 @@
 import 'package:dungeon_paper/app/data/models/roll_stats.dart';
 import 'package:dungeon_paper/app/modules/RollStatsForm/controllers/roll_stats_form_controller.dart';
 import 'package:dungeon_paper/app/widgets/atoms/advanced_floating_action_button.dart';
+import 'package:dungeon_paper/app/widgets/atoms/confirm_exit_view.dart';
 import 'package:dungeon_paper/app/widgets/atoms/number_text_field.dart';
 import 'package:dungeon_paper/core/utils/list_utils.dart';
 import 'package:dungeon_paper/generated/l10n.dart';
@@ -18,21 +19,21 @@ class RollStatsFormView extends GetView<RollStatsFormController> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        // TODO intl
-        title: const Text('Basic Information'),
-        centerTitle: true,
-      ),
-      floatingActionButton: AdvancedFloatingActionButton.extended(
-        onPressed: _save,
-        label: Text(S.current.save),
-        icon: const Icon(Icons.save),
-      ),
-      body: Obx(
-        () {
-          // final theme = Theme.of(context);
-          return ReorderableListView(
+    return Obx(
+      () => ConfirmExitView(
+        dirty: controller.dirty.value,
+        child: Scaffold(
+          appBar: AppBar(
+            // TODO intl
+            title: const Text('Basic Information'),
+            centerTitle: true,
+          ),
+          floatingActionButton: AdvancedFloatingActionButton.extended(
+            onPressed: _save,
+            label: Text(S.current.save),
+            icon: const Icon(Icons.save),
+          ),
+          body: ReorderableListView(
             padding: const EdgeInsets.all(16),
             shrinkWrap: true,
             onReorder: (int oldIndex, int newIndex) {
@@ -84,8 +85,8 @@ class RollStatsFormView extends GetView<RollStatsFormController> {
                 );
               },
             ).toList(),
-          );
-        },
+          ),
+        ),
       ),
     );
   }

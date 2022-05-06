@@ -108,6 +108,7 @@ class _RollDiceViewState extends State<RollDiceView> with TickerProviderStateMix
                                         mainAxisSize: MainAxisSize.min,
                                         crossAxisAlignment: CrossAxisAlignment.start,
                                         children: [
+                                          // TODO intl
                                           Text(
                                             'Total: ${results[group.index].total}',
                                             style:

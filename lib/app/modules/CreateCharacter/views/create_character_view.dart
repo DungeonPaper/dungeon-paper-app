@@ -31,37 +31,37 @@ class CreateCharacterView extends GetView<CreateCharacterController> {
   CharacterClass? get cls => controller.characterClass.value;
   @override
   Widget build(BuildContext context) {
-    return ConfirmExitView(
-      dirty: controller.dirty.value,
-      child: BackdropFilter(
-        filter: ImageFilter.blur(sigmaX: 5, sigmaY: 5),
-        // blendMode: BlendMode.darken,
-        child: Scaffold(
-          backgroundColor: Colors.black.withOpacity(0.85),
-          appBar: AppBar(
-            title: Container(),
-            backgroundColor: Colors.transparent,
-            foregroundColor: Colors.white,
-          ),
-          floatingActionButton: Obx(
-            () => AdvancedFloatingActionButton.extended(
-              onPressed: controller.isValid
-                  ? () {
-                      Get.find<CharacterService>().createCharacter(
-                        controller.getAsCharacter(),
-                        switchToCharacter: true,
-                      );
-                      Get.back();
-                    }
-                  : null,
-              icon: const Icon(Icons.person_add),
-              label: Text(
-                S.current.createGeneric(Character),
+    return Obx(
+      () => ConfirmExitView(
+        dirty: controller.dirty.value,
+        child: BackdropFilter(
+          filter: ImageFilter.blur(sigmaX: 5, sigmaY: 5),
+          // blendMode: BlendMode.darken,
+          child: Scaffold(
+            backgroundColor: Colors.black.withOpacity(0.85),
+            appBar: AppBar(
+              title: Container(),
+              backgroundColor: Colors.transparent,
+              foregroundColor: Colors.white,
+            ),
+            floatingActionButton: Obx(
+              () => AdvancedFloatingActionButton.extended(
+                onPressed: controller.isValid
+                    ? () {
+                        Get.find<CharacterService>().createCharacter(
+                          controller.getAsCharacter(),
+                          switchToCharacter: true,
+                        );
+                        Get.back();
+                      }
+                    : null,
+                icon: const Icon(Icons.person_add),
+                label: Text(
+                  S.current.createGeneric(Character),
+                ),
               ),
             ),
-          ),
-          body: Obx(
-            () => Center(
+            body: Center(
               child: SingleChildScrollView(
                 child: ConstrainedBox(
                   constraints: const BoxConstraints(maxWidth: 340),
