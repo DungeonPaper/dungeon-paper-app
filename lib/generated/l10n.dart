@@ -680,14 +680,14 @@ class S {
     );
   }
 
-  /// `{step, select, information {Basic Information} charClass {Class} stats {Roll Stats} movesSpells {Moves & Spells} background {Background & Bonds} gear {Starting Gear}}`
+  /// `{step, select, information {Basic Information} charClass {Class} stats {Ability Scores} movesSpells {Moves & Spells} background {Background & Bonds} gear {Starting Gear}}`
   String createCharacterStep(Object step) {
     return Intl.select(
       step,
       {
         'information': 'Basic Information',
         'charClass': 'Class',
-        'stats': 'Roll Stats',
+        'stats': 'Ability Scores',
         'movesSpells': 'Moves & Spells',
         'background': 'Background & Bonds',
         'gear': 'Starting Gear',

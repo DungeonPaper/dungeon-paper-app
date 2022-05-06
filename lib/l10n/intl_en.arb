@@ -62,7 +62,7 @@
   "createCharacterRaceNameFieldLabel": "Race",
   "createCharacterRaceNameFieldPlaceholder": "Race name",
   "createCharacterSaveButton": "Create Character",
-  "createCharacterStep": "{step, select, information {Basic Information} charClass {Class} stats {Roll Stats} movesSpells {Moves & Spells} background {Background & Bonds} gear {Starting Gear}}",
+  "createCharacterStep": "{step, select, information {Basic Information} charClass {Class} stats {Ability Scores} movesSpells {Moves & Spells} background {Background & Bonds} gear {Starting Gear}}",
   "createCharacterStepInvalidTooltip": "{step} - Changes Required",
   "createCharacterTitle": "Create Character",
   "createCharRandomizeNameTooltipClick": "Click to generate a random name",

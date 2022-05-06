@@ -3,6 +3,7 @@ import 'package:dungeon_paper/app/modules/RollStatsForm/controllers/roll_stats_f
 import 'package:dungeon_paper/app/widgets/atoms/advanced_floating_action_button.dart';
 import 'package:dungeon_paper/app/widgets/atoms/confirm_exit_view.dart';
 import 'package:dungeon_paper/app/widgets/atoms/number_text_field.dart';
+import 'package:dungeon_paper/app/widgets/menus/entity_edit_menu.dart';
 import 'package:dungeon_paper/core/utils/list_utils.dart';
 import 'package:dungeon_paper/generated/l10n.dart';
 import 'package:flutter/material.dart';
@@ -19,13 +20,14 @@ class RollStatsFormView extends GetView<RollStatsFormController> {
 
   @override
   Widget build(BuildContext context) {
+    final textTheme = Theme.of(context).textTheme;
     return Obx(
       () => ConfirmExitView(
         dirty: controller.dirty.value,
         child: Scaffold(
           appBar: AppBar(
             // TODO intl
-            title: const Text('Basic Information'),
+            title: const Text('Ability Scores'),
             centerTitle: true,
           ),
           floatingActionButton: AdvancedFloatingActionButton.extended(
@@ -53,32 +55,37 @@ class RollStatsFormView extends GetView<RollStatsFormController> {
                   child: Card(
                     margin: EdgeInsets.zero,
                     child: Padding(
-                      padding: const EdgeInsets.all(8),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Expanded(
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              mainAxisSize: MainAxisSize.min,
-                              children: [
-                                Text(stat.name),
-                                Text(stat.description),
-                              ],
+                      padding: const EdgeInsets.symmetric(vertical: 8),
+                      child: ListTile(
+                        visualDensity: VisualDensity.compact,
+                        title: Row(
+                          children: [
+                            IconTheme.merge(
+                              data: const IconThemeData(size: 16),
+                              child: RollStat.iconFor(statKey),
                             ),
-                          ),
-                          SizedBox(
-                            width: 150,
-                            child: NumberTextField(
-                              controller: controller.textControllers[stat.key],
-                              minValue: 1,
-                              maxValue: 20,
-                              numberType: NumberType.int,
-                              // onChanged: (val) => updateControllers(),
+                            const SizedBox(width: 8),
+                            Text(stat.name),
+                          ],
+                        ),
+                        subtitle: Text(stat.description, style: textTheme.caption),
+                        trailing: Row(
+                          mainAxisSize: MainAxisSize.min,
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            SizedBox(
+                              width: 150,
+                              child: NumberTextField(
+                                controller: controller.textControllers[stat.key],
+                                minValue: 1,
+                                maxValue: 20,
+                                numberType: NumberType.int,
+                                // onChanged: (val) => updateControllers(),
+                              ),
                             ),
-                          ),
-                        ],
+                            EntityEditMenu(onEdit: () => null, onDelete: () => null),
+                          ],
+                        ),
                       ),
                     ),
                   ),

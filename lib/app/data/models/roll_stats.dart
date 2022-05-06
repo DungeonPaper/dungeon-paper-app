@@ -170,7 +170,8 @@ class RollStat {
       );
 
   int get modifier => modifierForValue(value);
-  Widget get icon => _icons[key.toLowerCase()] ?? _icons['_other']!;
+  Widget get icon => iconFor(key);
+  static iconFor(String key) => _icons[key.toLowerCase()] ?? _icons['_other']!;
 
   static int modifierForValue(int value) {
     var modifiers = {1: -3, 4: -2, 6: -1, 9: 0, 13: 1, 16: 2, 18: 3};

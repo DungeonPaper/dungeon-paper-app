@@ -192,7 +192,7 @@ class SelectMovesSpellsView extends GetView<SelectMovesSpellsController> {
                   ),
                 ),
               ),
-              const SizedBox(height: 64),
+              const SizedBox(height: 80),
             ],
           ),
         ),

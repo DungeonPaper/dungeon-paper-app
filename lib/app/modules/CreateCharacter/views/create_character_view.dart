@@ -120,7 +120,7 @@ class CreateCharacterView extends GetView<CreateCharacterController> {
                           _Card(
                             contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
                             // TODO intl
-                            title: const Text('Select Roll Stats'),
+                            title: const Text('Select Ability Scores'),
                             subtitle: Text(
                               controller.rollStats.value.stats
                                   .map((stat) => '${stat.key}: ${stat.value}')

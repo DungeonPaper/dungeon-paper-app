@@ -58,7 +58,7 @@ class MessageLookup extends MessageLookupByLibrary {
   static String m13(step) => "${Intl.select(step, {
             'information': 'Basic Information',
             'charClass': 'Class',
-            'stats': 'Roll Stats',
+            'stats': 'Ability Scores',
             'movesSpells': 'Moves & Spells',
             'background': 'Background & Bonds',
             'gear': 'Starting Gear',

@@ -13,7 +13,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import '../../../../generated/l10n.dart';
-import '../../../widgets/atoms/debug_menu.dart';
+// import '../../../widgets/atoms/debug_menu.dart';
 import '../../../data/services/character_service.dart';
 import 'home_character_view.dart';
 
@@ -37,7 +37,7 @@ class HomeView extends GetView<CharacterService> {
         ),
         title: Text(S.current.appName),
         actions: const [
-          DebugMenu(),
+          // DebugMenu(),
           UserMenu(),
         ],
         automaticallyImplyLeading: false,
