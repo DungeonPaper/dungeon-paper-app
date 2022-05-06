@@ -19,6 +19,7 @@ class MoveCard extends StatelessWidget {
     this.expansionKey,
     this.maxContentHeight,
     this.expandable = true,
+    this.advancedLevelDisplay = AdvancedLevelDisplay.short,
   }) : super(key: key);
 
   final Move move;
@@ -31,6 +32,7 @@ class MoveCard extends StatelessWidget {
   final PageStorageKey? expansionKey;
   final double? maxContentHeight;
   final bool expandable;
+  final AdvancedLevelDisplay advancedLevelDisplay;
 
   @override
   Widget build(BuildContext context) {
@@ -50,7 +52,7 @@ class MoveCard extends StatelessWidget {
       initiallyExpanded: initiallyExpanded,
       actions: actions,
       leading: [
-        MoveCategoryChip(category: move.category),
+        MoveCategoryChip(category: move.category, advancedLevelDisplay: advancedLevelDisplay),
       ],
     );
   }

@@ -3,7 +3,6 @@ import 'dart:ui';
 
 import 'package:dungeon_paper/app/data/services/character_service.dart';
 import 'package:dungeon_paper/app/model_utils/dice_utils.dart';
-import 'package:dungeon_paper/app/themes/colors.dart';
 import 'package:dungeon_paper/app/widgets/atoms/advanced_floating_action_button.dart';
 import 'package:dungeon_paper/app/widgets/atoms/dice_icon.dart';
 import 'package:dungeon_paper/core/utils/list_utils.dart';

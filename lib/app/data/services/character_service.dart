@@ -119,8 +119,8 @@ class CharacterService extends GetxService {
     // (StorageHandler.instance.delegate as LocalStorageDelegate).storage.collection('Characters');
     _all[character.key] = character;
     StorageHandler.instance.update('Characters', character.key, character.toJson());
-    if (switchToCharacter || _current.value == null) {
-      _current.value = character.key;
+    if (switchToCharacter || _current.value == null || !_all.containsKey(_current.value)) {
+      setCurrent(character.key);
     }
     debugPrint('Updated char: ${character.key} (${character.displayName})');
     debugPrint(character.toRawJson());

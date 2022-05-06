@@ -30,6 +30,7 @@ class AddItemsView extends GetView<AddRepositoryItemsController<Item, ItemFilter
       storageKey: 'Items',
       title: Text(S.current.addGeneric(S.current.entityPlural(Item))),
       filterFn: (item, filters) => filters.filter(item),
+      sortFn: (filters) => Item.sorter(filters),
       filtersBuilder: (group, filters, onChange) => ItemFiltersView(
         filters: filters,
         onChange: (f) => onChange(group, f),

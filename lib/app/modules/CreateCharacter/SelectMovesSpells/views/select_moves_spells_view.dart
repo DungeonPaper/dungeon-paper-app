@@ -71,7 +71,7 @@ class SelectMovesSpellsView extends GetView<SelectMovesSpellsController> {
                               actions: [
                                 EntityEditMenu(
                                   onEdit: CharacterUtils.openMovePage(
-                                    rollStats: controller.rollStats.value!,
+                                    rollStats: controller.rollStats.value,
                                     classKeys: move.classKeys,
                                     move: move,
                                     onSave: (_move) => controller.moves.value =
@@ -102,17 +102,17 @@ class SelectMovesSpellsView extends GetView<SelectMovesSpellsController> {
                             moves.map((m) => m.copyWithInherited(favorited: true)),
                           );
                         },
-                        rollStats: controller.rollStats.value!,
-                        classKeys: [controller.characterClass.value!.key],
+                        rollStats: controller.rollStats.value,
+                        classKeys: [controller.characterClass.value.key],
                         selections: controller.moves,
                       ),
                       binding: AddRepositoryItemsBinding(),
                       arguments: {
                         FiltersGroup.playbook: MoveFilters(
-                          classKey: controller.characterClass.value!.key,
+                          classKey: controller.characterClass.value.key,
                         ),
                         FiltersGroup.my: MoveFilters(
-                          classKey: controller.characterClass.value!.key,
+                          classKey: controller.characterClass.value.key,
                         )
                       },
                     ),
@@ -170,17 +170,17 @@ class SelectMovesSpellsView extends GetView<SelectMovesSpellsController> {
                             spells.map((s) => s.copyWithInherited(prepared: true)),
                           );
                         },
-                        rollStats: controller.rollStats.value!,
-                        classKeys: [controller.characterClass.value!.key],
+                        rollStats: controller.rollStats.value,
+                        classKeys: [controller.characterClass.value.key],
                         selections: controller.spells,
                       ),
                       binding: AddRepositoryItemsBinding(),
                       arguments: {
                         FiltersGroup.playbook: SpellFilters(
-                          classKey: controller.characterClass.value!.key,
+                          classKey: controller.characterClass.value.key,
                         ),
                         FiltersGroup.my: SpellFilters(
-                          classKey: controller.characterClass.value!.key,
+                          classKey: controller.characterClass.value.key,
                         ),
                       },
                     ),

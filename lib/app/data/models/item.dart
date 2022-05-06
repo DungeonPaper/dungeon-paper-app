@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'package:dungeon_paper/app/modules/AddRepositoryItems/views/filters/item_filters.dart';
 import 'package:dungeon_paper/core/dw_icons.dart';
 import 'package:dungeon_paper/core/utils/string_utils.dart';
 import 'package:dungeon_paper/core/utils/uuid.dart';
@@ -109,4 +110,6 @@ class Item extends dw.Item implements WithMeta {
 
   DwIconData get icon => DwIcons.swap_bag;
   static DwIconData get genericIcon => DwIcons.swap_bag;
+  static int Function(Item a, Item b) sorter(ItemFilters filters) =>
+      (a, b) => a.name.toLowerCase().compareTo(b.name.toLowerCase());
 }

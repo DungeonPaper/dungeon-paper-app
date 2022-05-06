@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'package:dungeon_paper/app/modules/AddRepositoryItems/views/filters/move_filters.dart';
 import 'package:dungeon_world_data/dungeon_world_data.dart' as dw;
 export 'package:dungeon_world_data/move.dart' show MoveCategory;
 
@@ -107,4 +108,11 @@ class Move extends dw.Move implements WithMeta {
 
   DwIconData get icon => DwIcons.riposte;
   static DwIconData get genericIcon => DwIcons.riposte;
+  static int Function(Move a, Move b) sorter(MoveFilters filters) => (a, b) {
+        final cat = a.category.index.compareTo(b.category.index);
+        if (cat != 0) {
+          return cat;
+        }
+        return a.name.toLowerCase().compareTo(b.name.toLowerCase());
+      };
 }

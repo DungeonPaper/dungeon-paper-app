@@ -3,7 +3,6 @@ import 'dart:async';
 import 'package:dungeon_paper/app/data/models/character_class.dart';
 import 'package:dungeon_paper/app/data/models/roll_stats.dart';
 import 'package:dungeon_paper/app/data/services/repository_service.dart';
-import 'package:dungeon_paper/app/modules/UpsertCharacterPages/controllers/create_character_page_controller.dart';
 import 'package:dungeon_paper/core/utils/string_utils.dart';
 import 'package:get/get.dart';
 import 'package:dungeon_paper/app/data/models/move.dart';

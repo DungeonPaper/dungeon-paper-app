@@ -34,6 +34,7 @@ class AddRepositoryItemsView<T extends WithMeta, F extends EntityFilters<T>>
     required this.storageKey,
     this.filtersBuilder,
     this.filterFn,
+    this.sortFn,
     this.extraData = const {},
     this.multiple = true,
   }) : super(key: key);
@@ -46,6 +47,7 @@ class AddRepositoryItemsView<T extends WithMeta, F extends EntityFilters<T>>
           FiltersGroup group, F filters, void Function(FiltersGroup group, F filters) update)?
       filtersBuilder;
   final bool Function(T item, F filters)? filterFn;
+  final int Function(T a, T b) Function(F filters)? sortFn;
   final bool multiple;
   final Iterable<T> preSelections;
   final String storageKey;
@@ -53,9 +55,10 @@ class AddRepositoryItemsView<T extends WithMeta, F extends EntityFilters<T>>
   Iterable<T> get builtInList => controller.filterList(
       controller.repo.value.builtIn.listByType<T>().values.toList(),
       FiltersGroup.playbook,
-      filterFn);
+      filterFn,
+      sortFn);
   Iterable<T> get myList => controller.filterList(
-      controller.repo.value.my.listByType<T>().values.toList(), FiltersGroup.my, filterFn);
+      controller.repo.value.my.listByType<T>().values.toList(), FiltersGroup.my, filterFn, sortFn);
 
   bool get useFilters => filtersBuilder != null;
   F get playbookFilters => controller.filters[FiltersGroup.playbook]!;

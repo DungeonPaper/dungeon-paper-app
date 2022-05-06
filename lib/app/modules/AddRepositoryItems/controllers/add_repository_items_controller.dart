@@ -117,11 +117,14 @@ class AddRepositoryItemsController<T, F extends EntityFilters> extends GetxContr
     Iterable<T> list,
     FiltersGroup group,
     bool Function(T item, F filters)? filterFn, [
+    int Function(T a, T b) Function(F filters)? sortFn,
     F? initialFilters,
-  ]) =>
-      filterFn != null && (filters[group] != null || initialFilters != null)
-          ? list.where((x) => filterFn(x, filters[group] ?? initialFilters!))
-          : list;
+  ]) {
+    final filtered = filterFn != null && (filters[group] != null || initialFilters != null)
+        ? list.where((x) => filterFn(x, filters[group] ?? initialFilters!)).toList()
+        : list.toList();
+    return sortFn != null ? (filtered..sort(sortFn(filters[group] ?? initialFilters!))) : filtered;
+  }
 
   void _updatePlaybookSearch() {
     filters[FiltersGroup.playbook]?.setSearch(search[FiltersGroup.playbook]!.text);

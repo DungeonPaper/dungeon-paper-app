@@ -13,6 +13,7 @@ class MoveCardMini extends StatelessWidget {
     this.showStar = true,
     this.showIcon = true,
     this.onTap,
+    this.advancedLevelDisplay = AdvancedLevelDisplay.short,
   }) : super(key: key);
 
   final Move move;
@@ -20,13 +21,19 @@ class MoveCardMini extends StatelessWidget {
   final bool showIcon;
   final void Function(Move move)? onSave;
   final void Function()? onTap;
+  final AdvancedLevelDisplay advancedLevelDisplay;
 
   @override
   Widget build(BuildContext context) {
     return DynamicActionCardMini(
       title: move.name,
       description: move.description,
-      chips: [MoveCategoryChip(category: move.category)],
+      chips: [
+        MoveCategoryChip(
+          category: move.category,
+          advancedLevelDisplay: advancedLevelDisplay,
+        )
+      ],
       dice: move.dice,
       icon: showIcon ? SvgIcon(move.icon, size: 16) : null,
       starred: move.favorited,

@@ -1,8 +1,7 @@
+// ignore_for_file: unnecessary_null_comparison
+
 import 'package:dungeon_paper/app/themes/colors.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/src/foundation/key.dart';
-import 'package:flutter/src/widgets/framework.dart';
-import 'package:get/get.dart';
 
 class AdvancedFloatingActionButton extends StatelessWidget {
   /// Creates a circular floating action button.

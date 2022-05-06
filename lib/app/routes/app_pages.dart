@@ -8,20 +8,14 @@ import '../modules/AddRepositoryItems/bindings/add_repository_items_binding.dart
 import '../modules/AddRepositoryItems/views/add_moves_view.dart';
 import '../modules/CharacterList/bindings/character_list_binding.dart';
 import '../modules/CharacterList/views/character_list_view.dart';
-import '../modules/CreateCharacter/SelectMovesSpells/bindings/select_moves_spells_binding.dart';
-import '../modules/CreateCharacter/SelectMovesSpells/views/select_moves_spells_view.dart';
 import '../modules/CreateCharacter/bindings/create_character_binding.dart';
 import '../modules/CreateCharacter/views/create_character_view.dart';
 import '../modules/Home/bindings/home_binding.dart';
 import '../modules/Home/views/home_view.dart';
 import '../modules/ImportExport/bindings/import_export_binding.dart';
 import '../modules/ImportExport/views/import_export_view.dart';
-import '../modules/RollStatsForm/bindings/roll_stats_form_binding.dart';
-import '../modules/RollStatsForm/views/roll_stats_form_view.dart';
 import '../modules/Settings/bindings/settings_binding.dart';
 import '../modules/Settings/views/settings_view.dart';
-import '../modules/StartingGearForm/bindings/starting_gear_form_binding.dart';
-import '../modules/StartingGearForm/views/starting_gear_form_view.dart';
 import '../widgets/views/roll_dice_view.dart';
 
 part 'app_routes.dart';

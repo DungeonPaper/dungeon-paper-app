@@ -36,6 +36,7 @@ class AddSpellsView extends GetView<AddRepositoryItemsController<Spell, SpellFil
       storageKey: 'Spells',
       title: Text(S.current.addGeneric(S.current.entityPlural(Spell))),
       filterFn: (spell, filters) => filters.filter(spell),
+      sortFn: (filters) => Spell.sorter(filters),
       filtersBuilder: (group, filters, onChange) => SpellFiltersView(
         group: group,
         filters: filters,

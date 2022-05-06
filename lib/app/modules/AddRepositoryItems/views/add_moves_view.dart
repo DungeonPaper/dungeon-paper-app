@@ -44,7 +44,8 @@ class AddMovesView extends GetView<AddRepositoryItemsController<Move, MoveFilter
         onChange: (f) => onChange(group, f),
         searchController: controller.search[group]!,
       ),
-      filterFn: (moves, filters) => filters.filter(moves),
+      filterFn: (move, filters) => filters.filter(move),
+      sortFn: (filters) => Move.sorter(filters),
       cardBuilder: (
         ctx,
         move, {

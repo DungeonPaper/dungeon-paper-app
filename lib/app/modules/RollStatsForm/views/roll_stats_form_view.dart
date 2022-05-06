@@ -1,6 +1,7 @@
 import 'package:dungeon_paper/app/data/models/roll_stats.dart';
 import 'package:dungeon_paper/app/modules/RollStatsForm/controllers/roll_stats_form_controller.dart';
 import 'package:dungeon_paper/app/widgets/atoms/advanced_floating_action_button.dart';
+import 'package:dungeon_paper/app/widgets/atoms/number_text_field.dart';
 import 'package:dungeon_paper/core/utils/list_utils.dart';
 import 'package:dungeon_paper/generated/l10n.dart';
 import 'package:flutter/material.dart';
@@ -68,8 +69,11 @@ class RollStatsFormView extends GetView<RollStatsFormController> {
                           ),
                           SizedBox(
                             width: 150,
-                            child: TextFormField(
+                            child: NumberTextField(
                               controller: controller.textControllers[stat.key],
+                              minValue: 1,
+                              maxValue: 20,
+                              numberType: NumberType.int,
                               // onChanged: (val) => updateControllers(),
                             ),
                           ),

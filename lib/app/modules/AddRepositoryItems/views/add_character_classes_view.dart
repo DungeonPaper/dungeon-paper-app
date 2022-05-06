@@ -41,6 +41,7 @@ class AddCharacterClassesView
         searchController: controller.search[group]!,
       ),
       filterFn: (characterClass, filters) => filters.filter(characterClass),
+      sortFn: (filters) => CharacterClass.sorter(filters),
       cardBuilder: (
         ctx,
         characterClass, {

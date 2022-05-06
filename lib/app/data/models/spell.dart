@@ -1,4 +1,6 @@
 import 'dart:convert';
+import 'package:dungeon_paper/app/modules/AddRepositoryItems/views/filters/spell_filters.dart';
+import 'package:dungeon_paper/core/utils/list_utils.dart';
 import 'package:dungeon_paper/core/utils/uuid.dart';
 import 'package:dungeon_world_data/dungeon_world_data.dart' as dw;
 
@@ -100,4 +102,12 @@ class Spell extends dw.Spell implements WithMeta {
 
   DwIconData get icon => DwIcons.book_cover;
   static DwIconData get genericIcon => DwIcons.book_cover;
+  static int Function(Spell a, Spell b) sorter(SpellFilters filters) => (a, b) {
+        final levelOrder = ['cantrip', 'rote', ...List.generate(9, (i) => '${i + 1}')];
+        final level = levelOrder.indexOf(a.level).compareTo(levelOrder.indexOf(b.level));
+        if (level != 0) {
+          return level;
+        }
+        return a.name.toLowerCase().compareTo(b.name.toLowerCase());
+      };
 }

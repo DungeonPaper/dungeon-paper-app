@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:dungeon_paper/app/modules/AddRepositoryItems/views/filters/character_class_filters.dart';
 import 'package:dungeon_paper/core/utils/uuid.dart';
 import 'package:flutter/material.dart';
 
@@ -119,4 +120,7 @@ class CharacterClass extends dw.CharacterClass with WithMeta {
 
   IconData get icon => Icons.person_outline;
   static IconData get genericIcon => Icons.person_outline;
+
+  static int Function(CharacterClass a, CharacterClass b) sorter(CharacterClassFilters filters) =>
+      (a, b) => a.name.toLowerCase().compareTo(b.name.toLowerCase());
 }
