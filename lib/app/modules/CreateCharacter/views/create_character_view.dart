@@ -11,6 +11,8 @@ import 'package:dungeon_paper/app/modules/BasicInfoForm/bindings/basic_info_form
 import 'package:dungeon_paper/app/modules/BasicInfoForm/views/basic_info_form_view.dart';
 import 'package:dungeon_paper/app/modules/RollStatsForm/bindings/roll_stats_form_binding.dart';
 import 'package:dungeon_paper/app/modules/RollStatsForm/views/roll_stats_form_view.dart';
+import 'package:dungeon_paper/app/modules/StartingGearForm/bindings/starting_gear_form_binding.dart';
+import 'package:dungeon_paper/app/modules/StartingGearForm/views/starting_gear_form_view.dart';
 import 'package:dungeon_paper/app/themes/colors.dart';
 import 'package:dungeon_paper/app/widgets/atoms/advanced_floating_action_button.dart';
 import 'package:dungeon_paper/app/widgets/atoms/character_avatar.dart';
@@ -19,7 +21,10 @@ import 'package:dungeon_paper/generated/l10n.dart';
 import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
+import 'package:intl/intl.dart';
 
+import '../SelectMovesSpells/bindings/select_moves_spells_binding.dart';
+import '../SelectMovesSpells/views/select_moves_spells_view.dart';
 import '../controllers/create_character_controller.dart';
 
 class CreateCharacterView extends GetView<CreateCharacterController> {
@@ -133,16 +138,50 @@ class CreateCharacterView extends GetView<CreateCharacterController> {
                             contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
                             // TODO intl
                             title: const Text('Select Starting Gear'),
-                            subtitle: const Text(
-                                'Select your starting gear determined by class (optional)'),
-                            onTap: cls != null ? () => null : null,
+                            subtitle: Text(controller.items.isEmpty && controller.coins == 0
+                                ? 'Select your starting gear determined by class (optional)'
+                                : [
+                                    controller.coins > 0
+                                        ? NumberFormat('#0.#').format(controller.coins) + ' coins'
+                                        : null,
+                                    controller.items
+                                        .map((i) =>
+                                            '${NumberFormat('#0.#').format(i.amount)} × ${i.name}')
+                                        .join(', '),
+                                  ].whereType<String>().join(', ')),
+                            onTap: cls != null
+                                ? () => Get.to(
+                                      () => StartingGearFormView(
+                                        onChanged: controller.setStartingGear,
+                                      ),
+                                      binding: StartingGearFormBinding(
+                                        selections: controller.startingGear,
+                                        characterClass: cls!,
+                                      ),
+                                      preventDuplicates: false,
+                                    )
+                                : null,
                           ),
                           _Card(
                             // contentPadding: EdgeInsets.symmetric(horizontal: 16, vertical: 12),
                             // TODO intl
                             title: const Text('Select Moves & Spells'),
-                            subtitle: const Text('No Moves, No Spells selected'),
-                            onTap: cls != null ? () => null : null,
+                            subtitle: Text(
+                                '${controller.moves.length} Moves, ${controller.spells.length} Spells selected'),
+                            onTap: cls != null
+                                ? () => Get.to(
+                                      () => SelectMovesSpellsView(
+                                        onChanged: controller.setMovesSpells,
+                                      ),
+                                      binding: SelectMovesSpellsBinding(
+                                        moves: controller.moves,
+                                        spells: controller.spells,
+                                        rollStats: controller.rollStats.value,
+                                        characterClass: controller.characterClass.value!,
+                                      ),
+                                      preventDuplicates: false,
+                                    )
+                                : null,
                           ),
                         ],
                       ),

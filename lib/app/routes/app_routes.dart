@@ -11,7 +11,9 @@ abstract class Routes {
   static const importExport = _Paths.importExport;
   static const createCharacter = _Paths.createCharacter;
   static const editBasicInfo = _Paths.editBasicInfo;
-  static const ROLL_STATS_FORM = _Paths.ROLL_STATS_FORM;
+  static const rollStats = _Paths.rollStats;
+  static const startingGear = _Paths.startingGear;
+  static const selectMovesSpells = _Paths.createCharacter + _Paths.selectMovesSpells;
 }
 
 abstract class _Paths {
@@ -24,5 +26,7 @@ abstract class _Paths {
   static const importExport = '/import-export';
   static const createCharacter = '/create-character';
   static const editBasicInfo = '/edit-basic-info';
-  static const ROLL_STATS_FORM = '/roll-stats-form';
+  static const rollStats = '/roll-stats';
+  static const startingGear = '/starting-gear';
+  static const selectMovesSpells = '/select-moves-spells';
 }

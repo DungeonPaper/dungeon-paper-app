@@ -8,6 +8,8 @@ import '../modules/AddRepositoryItems/bindings/add_repository_items_binding.dart
 import '../modules/AddRepositoryItems/views/add_moves_view.dart';
 import '../modules/CharacterList/bindings/character_list_binding.dart';
 import '../modules/CharacterList/views/character_list_view.dart';
+import '../modules/CreateCharacter/SelectMovesSpells/bindings/select_moves_spells_binding.dart';
+import '../modules/CreateCharacter/SelectMovesSpells/views/select_moves_spells_view.dart';
 import '../modules/CreateCharacter/bindings/create_character_binding.dart';
 import '../modules/CreateCharacter/views/create_character_view.dart';
 import '../modules/Home/bindings/home_binding.dart';
@@ -18,6 +20,8 @@ import '../modules/RollStatsForm/bindings/roll_stats_form_binding.dart';
 import '../modules/RollStatsForm/views/roll_stats_form_view.dart';
 import '../modules/Settings/bindings/settings_binding.dart';
 import '../modules/Settings/views/settings_view.dart';
+import '../modules/StartingGearForm/bindings/starting_gear_form_binding.dart';
+import '../modules/StartingGearForm/views/starting_gear_form_view.dart';
 import '../widgets/views/roll_dice_view.dart';
 
 part 'app_routes.dart';
@@ -86,6 +90,16 @@ class AppPages {
     //   name: _Paths.ROLL_STATS_FORM,
     //   page: () => RollStatsFormView(),
     //   binding: RollStatsFormBinding(),
+    // ),
+    // GetPage(
+    //   name: _Paths.startingGear,
+    //   page: () => StartingGearFormView(),
+    //   binding: StartingGearFormBinding(),
+    // ),
+    // GetPage(
+    //   name: _Paths.SELECT_MOVES_SPELLS,
+    //   page: () => SelectMovesSpellsView(),
+    //   binding: SelectMovesSpellsBinding(),
     // ),
   ];
 }

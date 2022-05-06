@@ -1,3 +1,6 @@
+import 'package:dungeon_paper/app/data/services/character_service.dart';
+import 'package:dungeon_paper/app/modules/RollStatsForm/bindings/roll_stats_form_binding.dart';
+import 'package:dungeon_paper/app/modules/RollStatsForm/views/roll_stats_form_view.dart';
 import 'package:dungeon_paper/app/widgets/atoms/svg_icon.dart';
 import 'package:dungeon_paper/app/widgets/dialogs/character_bio_dialog.dart';
 import 'package:dungeon_paper/core/dw_icons.dart';
@@ -5,7 +8,7 @@ import 'package:dungeon_paper/generated/l10n.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-class HomeCharacterExtras extends StatelessWidget {
+class HomeCharacterExtras extends GetView<CharacterService> {
   const HomeCharacterExtras({Key? key}) : super(key: key);
 
   @override
@@ -14,7 +17,14 @@ class HomeCharacterExtras extends StatelessWidget {
       alignment: WrapAlignment.center,
       children: [
         IconButton(
-          onPressed: null,
+          onPressed: () => Get.to(
+            () => RollStatsFormView(
+              onChanged: (rollStats) =>
+                  controller.updateCharacter(controller.current!.copyWith(rollStats: rollStats)),
+            ),
+            binding: RollStatsFormBinding(rollStats: controller.current!.rollStats),
+            preventDuplicates: false,
+          ),
           icon: const SvgIcon(DwIcons.dice_d6_numbered),
           tooltip: S.current.characterRollsTitle,
           // visualDensity: VisualDensity.compact,

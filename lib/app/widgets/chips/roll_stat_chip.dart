@@ -45,10 +45,14 @@ class RollStatChip extends StatelessWidget {
                     data: IconThemeData(size: 16, color: theme.colorScheme.onSurface),
                   ),
                   const SizedBox(width: 4),
-                  Text(
-                    valStr,
-                    textScaleFactor: 1.5,
-                    style: const TextStyle(fontWeight: FontWeight.bold),
+                  SizedBox(
+                    width: 32,
+                    child: Text(
+                      valStr,
+                      textScaleFactor: 1.5,
+                      style: const TextStyle(fontWeight: FontWeight.bold),
+                      textAlign: TextAlign.center,
+                    ),
                   ),
                   const SizedBox(width: 6),
                   Expanded(
