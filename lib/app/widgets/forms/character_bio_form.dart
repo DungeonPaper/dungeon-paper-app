@@ -34,8 +34,8 @@ class _CharacterBioFormState extends State<CharacterBioForm> {
     bioDesc = TextEditingController(text: char.bio.description);
     looks = TextEditingController(text: char.bio.looks);
     alignmentName = char.bio.alignment.key;
-    alignmentValue = TextEditingController();
-    bonds = [];
+    alignmentValue = TextEditingController(text: char.bio.alignment.description);
+    bonds = char.bonds.map((e) => TextEditingController(text: e.description)).toList();
     dirty = false;
   }
 

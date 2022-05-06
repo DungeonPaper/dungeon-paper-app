@@ -2,6 +2,7 @@ import 'package:dungeon_paper/app/themes/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/framework.dart';
+import 'package:get/get.dart';
 
 class AdvancedFloatingActionButton extends StatelessWidget {
   /// Creates a circular floating action button.
@@ -34,7 +35,22 @@ class AdvancedFloatingActionButton extends StatelessWidget {
     this.materialTapTargetSize,
     this.isExtended = false,
     this.enableFeedback,
-  }) : super(key: key);
+  })  : assert(elevation == null || elevation >= 0.0),
+        assert(focusElevation == null || focusElevation >= 0.0),
+        assert(hoverElevation == null || hoverElevation >= 0.0),
+        assert(highlightElevation == null || highlightElevation >= 0.0),
+        assert(disabledElevation == null || disabledElevation >= 0.0),
+        assert(mini != null),
+        assert(clipBehavior != null),
+        assert(isExtended != null),
+        assert(autofocus != null),
+        _floatingActionButtonType =
+            mini ? _FloatingActionButtonType.small : _FloatingActionButtonType.regular,
+        _extendedLabel = null,
+        extendedIconLabelSpacing = null,
+        extendedPadding = null,
+        extendedTextStyle = null,
+        super(key: key);
 
   /// Creates a small circular floating action button.
   ///
@@ -45,56 +61,44 @@ class AdvancedFloatingActionButton extends StatelessWidget {
   /// Additionally, [elevation], [focusElevation], [hoverElevation],
   /// [highlightElevation], and [disabledElevation] (if specified) must be
   /// non-negative.
-  static FloatingActionButton small({
+  const AdvancedFloatingActionButton.small({
     Key? key,
-    Widget? child,
-    String? tooltip,
-    Color? foregroundColor,
-    Color? backgroundColor = DwColors.success,
-    Color? focusColor,
-    Color? hoverColor,
-    Color? splashColor,
-    Object? heroTag = const _DefaultHeroTag(),
-    double? elevation,
-    double? focusElevation,
-    double? hoverElevation,
-    double? highlightElevation,
-    double? disabledElevation,
-    required void Function()? onPressed,
-    MouseCursor? mouseCursor,
-    ShapeBorder? shape,
-    Clip clipBehavior = Clip.none,
-    FocusNode? focusNode,
-    bool autofocus = false,
-    MaterialTapTargetSize? materialTapTargetSize,
-    bool? enableFeedback,
-  }) =>
-      FloatingActionButton.small(
-        key: key,
-        child: child,
-        tooltip: tooltip,
-        foregroundColor: onPressed != null
-            ? foregroundColor ?? (backgroundColor == DwColors.success ? Colors.white : null)
-            : null,
-        backgroundColor: onPressed == null ? null : backgroundColor,
-        focusColor: focusColor,
-        hoverColor: hoverColor,
-        splashColor: splashColor,
-        heroTag: heroTag,
-        elevation: elevation,
-        focusElevation: focusElevation,
-        hoverElevation: hoverElevation,
-        highlightElevation: highlightElevation,
-        disabledElevation: disabledElevation,
-        onPressed: onPressed,
-        mouseCursor: mouseCursor,
-        shape: shape,
-        clipBehavior: clipBehavior,
-        focusNode: focusNode,
-        autofocus: autofocus,
-        materialTapTargetSize: materialTapTargetSize,
-        enableFeedback: enableFeedback,
-      );
+    this.child,
+    this.tooltip,
+    this.foregroundColor,
+    this.backgroundColor,
+    this.focusColor,
+    this.hoverColor,
+    this.splashColor,
+    this.heroTag = const _DefaultHeroTag(),
+    this.elevation,
+    this.focusElevation,
+    this.hoverElevation,
+    this.highlightElevation,
+    this.disabledElevation,
+    required this.onPressed,
+    this.mouseCursor,
+    this.shape,
+    this.clipBehavior = Clip.none,
+    this.focusNode,
+    this.autofocus = false,
+    this.materialTapTargetSize,
+    this.enableFeedback,
+  })  : assert(elevation == null || elevation >= 0.0),
+        assert(focusElevation == null || focusElevation >= 0.0),
+        assert(hoverElevation == null || hoverElevation >= 0.0),
+        assert(highlightElevation == null || highlightElevation >= 0.0),
+        assert(disabledElevation == null || disabledElevation >= 0.0),
+        assert(clipBehavior != null),
+        assert(autofocus != null),
+        _floatingActionButtonType = _FloatingActionButtonType.small,
+        mini = true,
+        isExtended = false,
+        _extendedLabel = null,
+        extendedIconLabelSpacing = null,
+        extendedPadding = null,
+        extendedTextStyle = null,
+        super(key: key);
 
   /// Creates a large circular floating action button.
   ///
@@ -105,56 +109,44 @@ class AdvancedFloatingActionButton extends StatelessWidget {
   /// Additionally, [elevation], [focusElevation], [hoverElevation],
   /// [highlightElevation], and [disabledElevation] (if specified) must be
   /// non-negative.
-  static FloatingActionButton large({
+  const AdvancedFloatingActionButton.large({
     Key? key,
-    Widget? child,
-    String? tooltip,
-    Color? foregroundColor,
-    Color? backgroundColor = DwColors.success,
-    Color? focusColor,
-    Color? hoverColor,
-    Color? splashColor,
-    Object? heroTag = const _DefaultHeroTag(),
-    double? elevation,
-    double? focusElevation,
-    double? hoverElevation,
-    double? highlightElevation,
-    double? disabledElevation,
-    required void Function()? onPressed,
-    MouseCursor? mouseCursor,
-    ShapeBorder? shape,
-    Clip clipBehavior = Clip.none,
-    FocusNode? focusNode,
-    bool autofocus = false,
-    MaterialTapTargetSize? materialTapTargetSize,
-    bool? enableFeedback,
-  }) =>
-      FloatingActionButton.large(
-        key: key,
-        child: child,
-        tooltip: tooltip,
-        foregroundColor: onPressed != null
-            ? foregroundColor ?? (backgroundColor == DwColors.success ? Colors.white : null)
-            : null,
-        backgroundColor: onPressed == null ? null : backgroundColor,
-        focusColor: focusColor,
-        hoverColor: hoverColor,
-        splashColor: splashColor,
-        heroTag: heroTag,
-        elevation: elevation,
-        focusElevation: focusElevation,
-        hoverElevation: hoverElevation,
-        highlightElevation: highlightElevation,
-        disabledElevation: disabledElevation,
-        onPressed: onPressed,
-        mouseCursor: mouseCursor,
-        shape: shape,
-        clipBehavior: clipBehavior,
-        focusNode: focusNode,
-        autofocus: autofocus,
-        materialTapTargetSize: materialTapTargetSize,
-        enableFeedback: enableFeedback,
-      );
+    this.child,
+    this.tooltip,
+    this.foregroundColor,
+    this.backgroundColor,
+    this.focusColor,
+    this.hoverColor,
+    this.splashColor,
+    this.heroTag = const _DefaultHeroTag(),
+    this.elevation,
+    this.focusElevation,
+    this.hoverElevation,
+    this.highlightElevation,
+    this.disabledElevation,
+    required this.onPressed,
+    this.mouseCursor,
+    this.shape,
+    this.clipBehavior = Clip.none,
+    this.focusNode,
+    this.autofocus = false,
+    this.materialTapTargetSize,
+    this.enableFeedback,
+  })  : assert(elevation == null || elevation >= 0.0),
+        assert(focusElevation == null || focusElevation >= 0.0),
+        assert(hoverElevation == null || hoverElevation >= 0.0),
+        assert(highlightElevation == null || highlightElevation >= 0.0),
+        assert(disabledElevation == null || disabledElevation >= 0.0),
+        assert(clipBehavior != null),
+        assert(autofocus != null),
+        _floatingActionButtonType = _FloatingActionButtonType.large,
+        mini = false,
+        isExtended = false,
+        _extendedLabel = null,
+        extendedIconLabelSpacing = null,
+        extendedPadding = null,
+        extendedTextStyle = null,
+        super(key: key);
 
   /// Creates a wider [StadiumBorder]-shaped floating action button with
   /// an optional [icon] and a [label].
@@ -162,65 +154,47 @@ class AdvancedFloatingActionButton extends StatelessWidget {
   /// The [label], [autofocus], and [clipBehavior] arguments must not be null.
   /// Additionally, [elevation], [highlightElevation], and [disabledElevation]
   /// (if specified) must be non-negative.
-
-  static FloatingActionButton extended({
+  const AdvancedFloatingActionButton.extended({
     Key? key,
-    required Widget label,
+    this.tooltip,
+    this.foregroundColor,
+    this.backgroundColor,
+    this.focusColor,
+    this.hoverColor,
+    this.heroTag = const _DefaultHeroTag(),
+    this.elevation,
+    this.focusElevation,
+    this.hoverElevation,
+    this.splashColor,
+    this.highlightElevation,
+    this.disabledElevation,
+    required this.onPressed,
+    this.mouseCursor = SystemMouseCursors.click,
+    this.shape,
+    this.isExtended = true,
+    this.materialTapTargetSize,
+    this.clipBehavior = Clip.none,
+    this.focusNode,
+    this.autofocus = false,
+    this.extendedIconLabelSpacing,
+    this.extendedPadding,
+    this.extendedTextStyle,
     Widget? icon,
-    String? tooltip,
-    Color? foregroundColor,
-    Color? backgroundColor = DwColors.success,
-    Color? focusColor,
-    Color? hoverColor,
-    Color? splashColor,
-    Object? heroTag = const _DefaultHeroTag(),
-    double? elevation,
-    double? focusElevation,
-    double? hoverElevation,
-    double? highlightElevation,
-    double? disabledElevation,
-    required void Function()? onPressed,
-    MouseCursor? mouseCursor,
-    ShapeBorder? shape,
-    Clip clipBehavior = Clip.none,
-    FocusNode? focusNode,
-    bool autofocus = false,
-    MaterialTapTargetSize? materialTapTargetSize,
-    bool? enableFeedback,
-    double? extendedIconLabelSpacing,
-    EdgeInsetsGeometry? extendedPadding,
-    TextStyle? extendedTextStyle,
-  }) =>
-      FloatingActionButton.extended(
-        key: key,
-        label: label,
-        icon: icon,
-        tooltip: tooltip,
-        foregroundColor: onPressed != null
-            ? foregroundColor ?? (backgroundColor == DwColors.success ? Colors.white : null)
-            : null,
-        backgroundColor: onPressed == null ? null : backgroundColor,
-        focusColor: focusColor,
-        hoverColor: hoverColor,
-        splashColor: splashColor,
-        heroTag: heroTag,
-        elevation: elevation,
-        focusElevation: focusElevation,
-        hoverElevation: hoverElevation,
-        highlightElevation: highlightElevation,
-        disabledElevation: disabledElevation,
-        onPressed: onPressed,
-        mouseCursor: mouseCursor,
-        shape: shape,
-        clipBehavior: clipBehavior,
-        focusNode: focusNode,
-        autofocus: autofocus,
-        materialTapTargetSize: materialTapTargetSize,
-        enableFeedback: enableFeedback,
-        extendedIconLabelSpacing: extendedIconLabelSpacing,
-        extendedPadding: extendedPadding,
-        extendedTextStyle: extendedTextStyle,
-      );
+    required Widget label,
+    this.enableFeedback,
+  })  : assert(elevation == null || elevation >= 0.0),
+        assert(focusElevation == null || focusElevation >= 0.0),
+        assert(hoverElevation == null || hoverElevation >= 0.0),
+        assert(highlightElevation == null || highlightElevation >= 0.0),
+        assert(disabledElevation == null || disabledElevation >= 0.0),
+        assert(isExtended != null),
+        assert(clipBehavior != null),
+        assert(autofocus != null),
+        mini = false,
+        _floatingActionButtonType = _FloatingActionButtonType.extended,
+        child = icon,
+        _extendedLabel = label,
+        super(key: key);
 
   /// The widget below this widget in the tree.
   ///
@@ -423,34 +397,149 @@ class AdvancedFloatingActionButton extends StatelessWidget {
   ///  * [Feedback] for providing platform-specific feedback to certain actions.
   final bool? enableFeedback;
 
+  /// The spacing between the icon and the label for an extended
+  /// [FloatingActionButton].
+  ///
+  /// If null, [FloatingActionButtonThemeData.extendedIconLabelSpacing] is used.
+  /// If that is also null, the default is 8.0.
+  final double? extendedIconLabelSpacing;
+
+  /// The padding for an extended [FloatingActionButton]'s content.
+  ///
+  /// If null, [FloatingActionButtonThemeData.extendedPadding] is used. If that
+  /// is also null, the default is
+  /// `EdgeInsetsDirectional.only(start: 16.0, end: 20.0)` if an icon is
+  /// provided, and `EdgeInsetsDirectional.only(start: 20.0, end: 20.0)` if not.
+  final EdgeInsetsGeometry? extendedPadding;
+
+  /// The text style for an extended [FloatingActionButton]'s label.
+  ///
+  /// If null, [FloatingActionButtonThemeData.extendedTextStyle] is used. If
+  /// that is also null, then [TextTheme.button] with a letter spacing of 1.2
+  /// is used.
+  final TextStyle? extendedTextStyle;
+
+  final _FloatingActionButtonType _floatingActionButtonType;
+
+  final Widget? _extendedLabel;
+
   @override
   Widget build(BuildContext context) {
-    return FloatingActionButton(
-      child: child,
-      tooltip: tooltip,
-      foregroundColor:
-          foregroundColor ?? (backgroundColor == DwColors.success ? Colors.white : null),
-      backgroundColor: onPressed == null ? Theme.of(context).disabledColor : backgroundColor,
-      focusColor: focusColor,
-      hoverColor: hoverColor,
-      splashColor: splashColor,
-      heroTag: heroTag,
-      onPressed: onPressed,
-      mouseCursor: mouseCursor,
-      elevation: elevation,
-      focusElevation: focusElevation,
-      hoverElevation: hoverElevation,
-      highlightElevation: highlightElevation,
-      disabledElevation: disabledElevation,
-      mini: mini,
-      shape: shape,
-      clipBehavior: clipBehavior,
-      isExtended: isExtended,
-      focusNode: focusNode,
-      autofocus: autofocus,
-      materialTapTargetSize: materialTapTargetSize,
-      enableFeedback: enableFeedback,
-    );
+    final _fgColor = foregroundColor ?? (backgroundColor == DwColors.success ? Colors.white : null);
+    final _bgColor = onPressed == null
+        ? Theme.of(context).disabledColor.withOpacity(0.3)
+        // ? Theme.of(context).brightness == Brightness.light
+        //     ? Theme.of(context).disabledColor.withOpacity(0.3)
+        //     : Theme.of(context).disabledColor.withOpacity(0.3)
+        : backgroundColor;
+
+    switch (_floatingActionButtonType) {
+      case _FloatingActionButtonType.small:
+        return FloatingActionButton.small(
+          key: key,
+          child: child,
+          tooltip: tooltip,
+          foregroundColor: _fgColor,
+          backgroundColor: _bgColor,
+          focusColor: focusColor,
+          hoverColor: hoverColor,
+          splashColor: splashColor,
+          heroTag: heroTag,
+          elevation: elevation,
+          focusElevation: focusElevation,
+          hoverElevation: hoverElevation,
+          highlightElevation: highlightElevation,
+          disabledElevation: disabledElevation,
+          onPressed: onPressed,
+          mouseCursor: mouseCursor,
+          shape: shape,
+          clipBehavior: clipBehavior,
+          focusNode: focusNode,
+          autofocus: autofocus,
+          materialTapTargetSize: materialTapTargetSize,
+          enableFeedback: enableFeedback,
+        );
+      case _FloatingActionButtonType.large:
+        return FloatingActionButton.large(
+          key: key,
+          child: child,
+          tooltip: tooltip,
+          foregroundColor: _fgColor,
+          backgroundColor: _bgColor,
+          focusColor: focusColor,
+          hoverColor: hoverColor,
+          splashColor: splashColor,
+          heroTag: heroTag,
+          elevation: elevation,
+          focusElevation: focusElevation,
+          hoverElevation: hoverElevation,
+          highlightElevation: highlightElevation,
+          disabledElevation: disabledElevation,
+          onPressed: onPressed,
+          mouseCursor: mouseCursor,
+          shape: shape,
+          clipBehavior: clipBehavior,
+          focusNode: focusNode,
+          autofocus: autofocus,
+          materialTapTargetSize: materialTapTargetSize,
+          enableFeedback: enableFeedback,
+        );
+      case _FloatingActionButtonType.extended:
+        return FloatingActionButton.extended(
+          key: key,
+          tooltip: tooltip,
+          foregroundColor: _fgColor,
+          backgroundColor: _bgColor,
+          focusColor: focusColor,
+          hoverColor: hoverColor,
+          heroTag: heroTag,
+          elevation: elevation,
+          focusElevation: focusElevation,
+          hoverElevation: hoverElevation,
+          splashColor: splashColor,
+          highlightElevation: highlightElevation,
+          disabledElevation: disabledElevation,
+          onPressed: onPressed,
+          mouseCursor: mouseCursor,
+          shape: shape,
+          isExtended: isExtended,
+          materialTapTargetSize: materialTapTargetSize,
+          clipBehavior: clipBehavior,
+          focusNode: focusNode,
+          autofocus: autofocus,
+          extendedIconLabelSpacing: extendedIconLabelSpacing,
+          extendedPadding: extendedPadding,
+          extendedTextStyle: extendedTextStyle,
+          icon: child,
+          label: _extendedLabel!,
+        );
+      default:
+        return FloatingActionButton(
+          child: child,
+          tooltip: tooltip,
+          foregroundColor: _fgColor,
+          backgroundColor: _bgColor,
+          focusColor: focusColor,
+          hoverColor: hoverColor,
+          splashColor: splashColor,
+          heroTag: heroTag,
+          onPressed: onPressed,
+          mouseCursor: mouseCursor,
+          elevation: elevation,
+          focusElevation: focusElevation,
+          hoverElevation: hoverElevation,
+          highlightElevation: highlightElevation,
+          disabledElevation: disabledElevation,
+          mini: mini,
+          shape: shape,
+          clipBehavior: clipBehavior,
+          isExtended: isExtended,
+          focusNode: focusNode,
+          autofocus: autofocus,
+          materialTapTargetSize: materialTapTargetSize,
+          enableFeedback: enableFeedback,
+        );
+    }
   }
 }
 
@@ -458,4 +547,11 @@ class _DefaultHeroTag {
   const _DefaultHeroTag();
   @override
   String toString() => '<default FloatingActionButton tag>';
+}
+
+enum _FloatingActionButtonType {
+  regular,
+  small,
+  large,
+  extended,
 }

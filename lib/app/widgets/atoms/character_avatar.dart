@@ -7,7 +7,7 @@ import 'package:get/get.dart';
 
 class CharacterAvatar extends GetView {
   final Character? character;
-  final Widget Function(String avatarUrl, double size) builder;
+  final Widget Function(BuildContext context, String avatarUrl, double size) builder;
   final double size;
 
   const CharacterAvatar._({
@@ -21,7 +21,7 @@ class CharacterAvatar extends GetView {
     Key? key,
     Character? character,
     required double size,
-    required final Widget Function(String avatarUrl, double size) builder,
+    required final Widget Function(BuildContext context, String avatarUrl, double size) builder,
   }) =>
       CharacterAvatar._(key: key, character: character, size: size, builder: builder);
 
@@ -49,47 +49,54 @@ class CharacterAvatar extends GetView {
   @override
   Widget build(BuildContext context) {
     if (character != null) {
-      return renderForChar(character);
+      return _renderForChar(context, character);
     }
     return Obx(() {
       final ctrl = Get.find<CharacterService>();
-      return renderForChar(ctrl.current);
+      return _renderForChar(context, ctrl.current);
     });
   }
 
-  static Widget _rRectBuilder(String url, double size) => ClipRRect(
+  static Widget _rRectBuilder(BuildContext context, String url, double size) => ClipRRect(
         borderRadius: BorderRadius.circular(size / 8),
-        child: CachedNetworkImage(
-          imageUrl: url,
-          width: size,
-          height: size,
-          fit: BoxFit.cover,
-        ),
+        child: _renderImage(context, url, size),
       );
 
-  static Widget _circleBuilder(String url, double size) => CircleAvatar(
+  static Widget _circleBuilder(BuildContext context, String url, double size) => CircleAvatar(
         // clipBehavior: Clip.hardEdge,
-        foregroundImage: CachedNetworkImageProvider(url),
+        foregroundImage: _renderImageProvider(url),
         radius: size / 2,
       );
 
-  static Widget _squircleBuilder(String url, double size) => Material(
+  static CachedNetworkImageProvider? _renderImageProvider(String url) =>
+      url.isNotEmpty ? CachedNetworkImageProvider(url) : null;
+
+  static Widget _squircleBuilder(BuildContext context, String url, double size) => Material(
         shape: ContinuousRectangleBorder(borderRadius: BorderRadius.circular(size / 2)),
         clipBehavior: Clip.antiAlias,
-        child: CachedNetworkImage(
-          imageUrl: url,
-          width: size,
-          height: size,
-          fit: BoxFit.cover,
-        ),
+        child: _renderImage(context, url, size),
       );
 
-  Widget renderForChar(Character? char) {
-    return builder(
-      char?.avatarUrl.isNotEmpty == true
-          ? char!.avatarUrl
-          : 'https://placeholder.photo/img/704.png?text=Avatar',
-      size,
+  static Widget _renderImage(BuildContext context, String url, double size) {
+    if (url.isNotEmpty) {
+      return CachedNetworkImage(
+        imageUrl: url,
+        width: size,
+        height: size,
+        fit: BoxFit.cover,
+      );
+    }
+
+    final theme = Theme.of(context);
+    final textStyle = theme.primaryTextTheme.subtitle1!;
+    return Container(
+      color: ThemeData.estimateBrightnessForColor(textStyle.color!) == Brightness.dark
+          ? theme.primaryColorLight
+          : theme.primaryColorDark,
+      child: Icon(Icons.person, size: size),
     );
   }
+
+  Widget _renderForChar(BuildContext context, Character? char) =>
+      builder(context, char?.avatarUrl ?? '', size);
 }

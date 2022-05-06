@@ -91,6 +91,4 @@ class CharacterBioDialog extends GetView<CharacterService> {
       ),
     );
   }
-
-  void _save() {}
 }

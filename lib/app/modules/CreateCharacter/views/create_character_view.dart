@@ -2,6 +2,7 @@ import 'dart:ui';
 
 import 'package:dungeon_paper/app/data/models/character.dart';
 import 'package:dungeon_paper/app/data/models/character_class.dart';
+import 'package:dungeon_paper/app/data/services/character_service.dart';
 import 'package:dungeon_paper/app/modules/AddRepositoryItems/bindings/add_repository_items_binding.dart';
 import 'package:dungeon_paper/app/modules/AddRepositoryItems/controllers/add_repository_items_controller.dart';
 import 'package:dungeon_paper/app/modules/AddRepositoryItems/views/add_character_classes_view.dart';
@@ -36,6 +37,23 @@ class CreateCharacterView extends GetView<CreateCharacterController> {
             title: Container(),
             backgroundColor: Colors.transparent,
             foregroundColor: Colors.white,
+          ),
+          floatingActionButton: Obx(
+            () => AdvancedFloatingActionButton.extended(
+              onPressed: controller.isValid
+                  ? () {
+                      Get.find<CharacterService>().createCharacter(
+                        controller.getAsCharacter(),
+                        switchToCharacter: true,
+                      );
+                      Get.back();
+                    }
+                  : null,
+              icon: const Icon(Icons.person_add),
+              label: Text(
+                S.current.createGeneric(Character),
+              ),
+            ),
           ),
           body: Obx(
             () => Center(
@@ -132,13 +150,6 @@ class CreateCharacterView extends GetView<CreateCharacterController> {
                   ),
                 ),
               ),
-            ),
-          ),
-          floatingActionButton: AdvancedFloatingActionButton.extended(
-            onPressed: () => null,
-            icon: const Icon(Icons.person_add),
-            label: Text(
-              S.current.createGeneric(Character),
             ),
           ),
         ),

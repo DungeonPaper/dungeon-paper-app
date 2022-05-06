@@ -41,7 +41,7 @@ class Bio {
         alignment: AlignmentValue(
           meta: Meta.version(1),
           key: 'good',
-          description: 'Do something good',
+          description: '',
         ),
       );
 

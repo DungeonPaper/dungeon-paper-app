@@ -1,3 +1,4 @@
+import 'package:dungeon_paper/app/themes/colors.dart';
 import 'package:dynamic_themes/dynamic_themes.dart';
 import 'package:flutter/material.dart';
 import 'theme_utils.dart';
@@ -9,6 +10,10 @@ final rRectShape = RoundedRectangleBorder(borderRadius: borderRadius);
 final baseCardTheme = CardTheme(shape: rRectShape);
 final _dark = ThemeData.dark();
 final _light = ThemeData.light();
+const _fabTheme = FloatingActionButtonThemeData(
+  backgroundColor: DwColors.success,
+  foregroundColor: Colors.white,
+);
 
 const _inputDecorationTheme = InputDecorationTheme(
   floatingLabelBehavior: FloatingLabelBehavior.always,
@@ -42,6 +47,7 @@ final parchmentTheme = ThemeData(
       shape: rRectShape,
     ),
   ),
+  floatingActionButtonTheme: _fabTheme,
 );
 final darkTheme = _dark.copyWith(
   // primaryColor: primaryColor,
@@ -63,6 +69,7 @@ final darkTheme = _dark.copyWith(
       shape: rRectShape,
     ),
   ),
+  floatingActionButtonTheme: _fabTheme,
 );
 
 class AppThemes {
