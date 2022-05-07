@@ -20,7 +20,7 @@ class NumberTextField extends StatelessWidget {
     this.initialValue,
     this.focusNode,
     this.decoration = const InputDecoration(),
-    this.keyboardType,
+    TextInputType? keyboardType,
     this.textCapitalization = TextCapitalization.none,
     this.textInputAction,
     this.style,
@@ -71,7 +71,11 @@ class NumberTextField extends StatelessWidget {
     this.minValue,
     this.maxValue,
     required this.numberType,
-  }) : super(key: key);
+  })  : keyboardType = keyboardType ??
+            (numberType == NumberType.double
+                ? const TextInputType.numberWithOptions(decimal: true)
+                : const TextInputType.numberWithOptions(decimal: false)),
+        super(key: key);
 
   final String? initialValue;
   final FocusNode? focusNode;
