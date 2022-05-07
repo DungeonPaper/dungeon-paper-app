@@ -26,7 +26,7 @@ class HomeView extends GetView<CharacterService> {
       appBar: AppBar(
         leading: IconButton(
           icon: Icon(
-            Theme.of(context).brightness == Brightness.dark
+            Theme.of(context).brightness == Brightness.light
                 ? Icons.light_mode
                 : Icons.light_mode_outlined,
           ),

@@ -37,7 +37,7 @@ class HomeCharacterExtras extends GetView<CharacterService> {
         ),
         IconButton(
           onPressed: null,
-          icon: const Icon(Icons.handshake),
+          icon: Transform.scale(child: const Icon(Icons.handshake), scaleX: -1),
           tooltip: S.current.characterBondsDialogTitle,
           // visualDensity: VisualDensity.compact,
         ),
