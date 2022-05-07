@@ -3,14 +3,16 @@ import 'package:dungeon_paper/core/utils/string_utils.dart';
 
 import '../list_utils.dart';
 
+typedef NestedStringIterable = Iterable<Iterable<String>>;
+
 abstract class ContentGenerator {
-  final repository = LocalizedRepository<Iterable<Iterable<String>>>();
+  final repository = LocalizedRepository<NestedStringIterable>();
 
   ContentGenerator() {
     repository.loadData(mapping);
   }
 
-  abstract final Map<String, Map<String, Iterable<Iterable<String>>>> mapping;
+  abstract final Map<String, Map<String, NestedStringIterable>> mapping;
 
   String Function(String) transformer = toTitleCase;
 

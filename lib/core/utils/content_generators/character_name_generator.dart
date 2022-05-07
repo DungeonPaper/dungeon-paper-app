@@ -1,8 +1,9 @@
+import 'package:dungeon_paper/core/localized_repository.dart';
 import 'package:dungeon_paper/core/utils/content_generators/content_generator.dart';
 
 class CharacterNameGenerator extends ContentGenerator {
   @override
-  final mapping = <String, Map<String, Iterable<Iterable<String>>>>{
+  final mapping = <Locale, Map<String, NestedStringIterable>>{
     'en': {
       'first': [firstNamesP1, firstNamesP2],
       'last': [
