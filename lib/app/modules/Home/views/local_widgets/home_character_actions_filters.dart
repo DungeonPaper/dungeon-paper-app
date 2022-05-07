@@ -35,7 +35,6 @@ class HomeCharacterActionsFilters extends StatelessWidget {
                         onUpdateHidden(!show!
                             ? {...hidden, type}
                             : {...hidden.where((element) => element != type)});
-                        Get.back();
                       },
                     ),
                   ),

@@ -44,7 +44,7 @@ class ItemFilters extends EntityFilters<Item> {
         spell.name,
         spell.description,
         ...spell.tags.map((t) => t.name),
-        ...spell.tags.map((t) => t.value),
+        ...spell.tags.map((t) => t.value?.toString()),
       ].any((el) => cleanStr(el ?? '').contains(cleanStr(search!)))) {
         return false;
       }

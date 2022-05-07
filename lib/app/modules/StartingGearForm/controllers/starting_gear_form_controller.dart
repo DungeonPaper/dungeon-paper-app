@@ -1,4 +1,3 @@
-
 import 'package:dungeon_paper/app/data/models/character_class.dart';
 import 'package:dungeon_paper/app/data/models/gear_choice.dart';
 import 'package:dungeon_paper/app/data/models/gear_selection.dart';
@@ -43,5 +42,4 @@ class StartingGearFormController extends GetxController {
 
   bool isSelected(GearSelection selection) =>
       selectedOptions.firstWhereOrNull((item) => keyFor(item) == keyFor(selection)) != null;
-
 }

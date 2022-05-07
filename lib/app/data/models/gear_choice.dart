@@ -8,11 +8,15 @@ class GearChoice extends dw.GearChoice {
     required String key,
     required String description,
     required List<GearSelection> selections,
+    List<int> preselect = const [],
+    int? maxSelections,
   })  : _selections = selections,
         super(
           key: key,
           description: description,
           selections: selections,
+          preselect: preselect,
+          maxSelections: maxSelections,
         );
 
   @override
@@ -23,11 +27,15 @@ class GearChoice extends dw.GearChoice {
     String? key,
     String? description,
     List<GearSelection>? selections,
+    List<int>? preselect,
+    int? maxSelections,
   }) =>
       GearChoice(
         key: key ?? this.key,
         description: description ?? this.description,
         selections: selections ?? this.selections,
+        preselect: preselect ?? this.preselect,
+        maxSelections: maxSelections ?? this.maxSelections,
       );
 
   factory GearChoice.fromRawJson(String str) => GearChoice.fromJson(json.decode(str));
@@ -36,10 +44,16 @@ class GearChoice extends dw.GearChoice {
         key: gearChoice.key,
         description: gearChoice.description,
         selections: gearChoice.selections.map((s) => GearSelection.fromDwGearSelection(s)).toList(),
+        preselect: gearChoice.preselect,
+        maxSelections: gearChoice.maxSelections,
       );
 
   factory GearChoice.fromJson(Map<String, dynamic> json) =>
       GearChoice.fromDwGearChoice(dw.GearChoice.fromJson(json));
+
+  @override
+  List<GearSelection> get preselectedGearSelections =>
+      super.preselectedGearSelections.map((e) => GearSelection.fromDwGearSelection(e)).toList();
 
   @override
   Map<String, dynamic> toJson() => {

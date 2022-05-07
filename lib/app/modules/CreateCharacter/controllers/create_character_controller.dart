@@ -26,14 +26,14 @@ class CreateCharacterController extends GetxController {
         characterClass.value != null,
       ].every((element) => element == true);
 
-  List<Item> get items => startingGear.fold(
-      <Item>[],
-      (previousValue, element) => [
-            ...previousValue,
-            ...element.options.map(
-              (e) => Item.fromDwItem(e.item, amount: e.amount),
-            )
-          ]);
+  List<Item> get items => startingGear.fold(<Item>[], (previousValue, element) {
+        return [
+          ...previousValue,
+          ...element.options.map(
+            (e) => Item.fromDwItem(e.item, amount: e.amount),
+          )
+        ];
+      });
 
   double get coins =>
       startingGear.fold(0, (previousValue, element) => previousValue + element.coins);
@@ -46,7 +46,9 @@ class CreateCharacterController extends GetxController {
 
   void setClass(CharacterClass cls) {
     characterClass.value = cls;
-    setStartingGear([]);
+    // TODO remove dupes + use item amount
+    setStartingGear(
+        cls.gearChoices.fold([], (all, cur) => [...all, ...cur.preselectedGearSelections]));
     addStartingMoves();
     setDirty();
   }

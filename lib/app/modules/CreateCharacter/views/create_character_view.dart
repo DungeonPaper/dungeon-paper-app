@@ -3,6 +3,7 @@ import 'dart:ui';
 import 'package:dungeon_paper/app/data/models/character.dart';
 import 'package:dungeon_paper/app/data/models/character_class.dart';
 import 'package:dungeon_paper/app/data/services/character_service.dart';
+import 'package:dungeon_paper/app/model_utils/model_key.dart';
 import 'package:dungeon_paper/app/modules/AddRepositoryItems/bindings/add_repository_items_binding.dart';
 import 'package:dungeon_paper/app/modules/AddRepositoryItems/controllers/add_repository_items_controller.dart';
 import 'package:dungeon_paper/app/modules/AddRepositoryItems/views/add_character_classes_view.dart';
@@ -161,6 +162,13 @@ class CreateCharacterView extends GetView<CreateCharacterController> {
                                       preventDuplicates: false,
                                     )
                                 : null,
+                            valid: cls == null
+                                ? false
+                                : cls!.gearChoices.every(
+                                    (c) => c.selections.any(
+                                      (s) => controller.startingGear.map(keyFor).contains(s.key),
+                                    ),
+                                  ),
                           ),
                           _Card(
                             // contentPadding: EdgeInsets.symmetric(horizontal: 16, vertical: 12),
