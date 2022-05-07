@@ -25,6 +25,15 @@
     <meta name="apple-mobile-web-app-status-bar-style" content="black" />
     <meta name="apple-mobile-web-app-title" content="dungeonpaper" />
     <link rel="apple-touch-icon" href="icons/Icon-192.png" />
+    <link
+      rel="stylesheet"
+      href="packages/image_cropper_for_web/src/croppie/js/croppie.css"
+    />
+    <script
+      defer
+      src="packages/image_cropper_for_web/src/croppie/js/exif.js"
+    ></script>
+    <script src="packages/image_cropper_for_web/src/croppie/js/croppie.min.js"></script>
 
     <!-- Favicon -->
     <link rel="icon" type="image/png" href="favicon.png" />
@@ -56,8 +65,9 @@
           // Wait for registration to finish before dropping the <script> tag.
           // Otherwise, the browser will load the script multiple times,
           // potentially different versions.
-          var serviceWorkerUrl = "flutter_service_worker.js?v=" + serviceWorkerVersion;
-          navigator.serviceWorker.register(serviceWorkerUrl).then(reg => {
+          var serviceWorkerUrl =
+            "flutter_service_worker.js?v=" + serviceWorkerVersion;
+          navigator.serviceWorker.register(serviceWorkerUrl).then((reg) => {
             function waitForActivation(serviceWorker) {
               serviceWorker.addEventListener("statechange", () => {
                 if (serviceWorker.state == "activated") {
@@ -87,7 +97,9 @@
           // fallback to plaint <script> tag.
           setTimeout(() => {
             if (!scriptLoaded) {
-              console.warn("Failed to load app from service worker. Falling back to plain <script> tag.");
+              console.warn(
+                "Failed to load app from service worker. Falling back to plain <script> tag."
+              );
               loadMainDartJs();
             }
           }, 4000);

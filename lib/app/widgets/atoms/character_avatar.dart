@@ -84,9 +84,40 @@ class CharacterAvatar extends GetView {
         width: size,
         height: size,
         fit: BoxFit.cover,
+        progressIndicatorBuilder: (context, url, state) => Container(
+          color: Theme.of(context).unselectedWidgetColor,
+          width: size,
+          height: size,
+          child: Center(
+            child: SizedBox(
+              width: size / 2,
+              height: size / 2,
+              child: const CircularProgressIndicator.adaptive(
+                strokeWidth: 6,
+              ),
+            ),
+          ),
+        ),
+        errorWidget: (context, url, err) => Stack(
+          children: [
+            _buildDefaultImage(context, size),
+            const Positioned(
+                bottom: 8,
+                left: 0,
+                right: 0,
+                child: Text(
+                  'Error loading image',
+                  textAlign: TextAlign.center,
+                )),
+          ],
+        ),
       );
     }
 
+    return _buildDefaultImage(context, size);
+  }
+
+  static Widget _buildDefaultImage(BuildContext context, double size) {
     final theme = Theme.of(context);
     final textStyle = theme.primaryTextTheme.subtitle1!;
     return Container(
