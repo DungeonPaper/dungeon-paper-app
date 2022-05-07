@@ -387,22 +387,22 @@ class RichTextField extends StatelessWidget {
     var _suffix = suffix ?? prefix;
 
     // if text is empty, or selection starts directly after newline - remove prefix newlines
-    if (_controller.text.trim().isEmpty ||
-        (_controller.selection.isValid &&
-            _controller.text.substring(
-                    max(_controller.selection.start - 1, 0), _controller.selection.start) ==
-                '\n')) {
-      final originalText = text;
-      text = text.trimLeft();
-      prefix = prefix.trimLeft();
-      // _suffix = _suffix.trimLeft();
-      if (originalText.startsWith('\n') && selectionStartOffset != null) {
-        selectionStartOffset -= 1;
-      }
-      if (originalText.endsWith('\n') && selectionEndOffset != null) {
-        selectionEndOffset += 1;
-      }
-    }
+    // if (_controller.text.trim().isEmpty ||
+    //     (_controller.selection.isValid &&
+    //         _controller.text.substring(
+    //                 max(_controller.selection.start - 1, 0), _controller.selection.start) ==
+    //             '\n')) {
+    //   final originalText = text;
+    //   text = text.trimLeft();
+    //   prefix = prefix.trimLeft();
+    //   // _suffix = _suffix.trimLeft();
+    //   if (originalText.startsWith('\n') && selectionStartOffset != null) {
+    //     selectionStartOffset -= 1;
+    //   }
+    //   if (originalText.endsWith('\n') && selectionEndOffset != null) {
+    //     selectionEndOffset += 1;
+    //   }
+    // }
     return () {
       if (!_controller.selection.isCollapsed) {
         _wrapWith(prefix, _suffix);
