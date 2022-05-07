@@ -21,7 +21,7 @@ class RollStatChip extends StatelessWidget {
     final theme = Theme.of(context);
     final brightness = ThemeData.estimateBrightnessForColor(theme.canvasColor);
     final isDark = brightness == Brightness.dark;
-    final rollBadgeTextOpacity = isDark ? 0.5 : 0.6;
+    final rollBadgeModifierOpacity = isDark ? 0.5 : 0.4;
     final rollBadgeBgOpacity = isDark ? 0.8 : 0.1;
 
     return InkWell(
@@ -69,18 +69,16 @@ class RollStatChip extends StatelessWidget {
                                 child: const SvgIcon(DwIcons.dice_d6),
                                 data: IconTheme.of(context).copyWith(
                                   size: 12,
-                                  color:
-                                      theme.colorScheme.onSurface.withOpacity(rollBadgeTextOpacity),
+                                  color: theme.colorScheme.onSurface
+                                      .withOpacity(rollBadgeModifierOpacity),
                                 ),
                               ),
                               const SizedBox(width: 2),
                               Text(
                                 '$modSign$modStr',
-                                textScaleFactor: 0.8,
-                                style: TextStyle(
-                                  color:
-                                      theme.colorScheme.onSurface.withOpacity(rollBadgeTextOpacity),
-                                ),
+                                // textScaleFactor: 0.8,
+                                style: TextStyle(color: theme.colorScheme.onSurface),
+                                //.withOpacity(rollBadgeModifierOpacity),
                               ),
                             ],
                           ),
