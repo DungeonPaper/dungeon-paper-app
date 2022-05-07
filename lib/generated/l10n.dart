@@ -217,6 +217,16 @@ class S {
     );
   }
 
+  /// `Basic Information`
+  String get basicInformationTitle {
+    return Intl.message(
+      'Basic Information',
+      name: 'basicInformationTitle',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `Cancel`
   String get cancel {
     return Intl.message(

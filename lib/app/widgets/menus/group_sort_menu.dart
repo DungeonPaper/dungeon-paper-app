@@ -1,3 +1,4 @@
+import 'package:dungeon_paper/app/widgets/atoms/popup_menu_item_list_tile.dart';
 import 'package:dungeon_paper/generated/l10n.dart';
 import 'package:flutter/material.dart';
 
@@ -52,12 +53,9 @@ class GroupSortMenu extends StatelessWidget {
       PopupMenuItem(
         enabled: index < maxIndex,
         value: 'down',
-        child: Row(
-          children: [
-            const Icon(Icons.move_down),
-            const SizedBox(width: 8),
-            Text(S.current.sortMoveDown),
-          ],
+        child: PopupMenuItemListTile(
+          icon: const Icon(Icons.move_down),
+          label: Text(S.current.sortMoveDown),
         ),
       ),
     ];

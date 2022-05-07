@@ -201,6 +201,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "allGeneric": m7,
         "alreadyAdded": MessageLookupByLibrary.simpleMessage("Already added"),
         "appName": MessageLookupByLibrary.simpleMessage("Dungeon Paper"),
+        "basicInformationTitle":
+            MessageLookupByLibrary.simpleMessage("Basic Information"),
         "cancel": MessageLookupByLibrary.simpleMessage("Cancel"),
         "characterBarHp": MessageLookupByLibrary.simpleMessage("HP"),
         "characterBarXp": MessageLookupByLibrary.simpleMessage("XP"),

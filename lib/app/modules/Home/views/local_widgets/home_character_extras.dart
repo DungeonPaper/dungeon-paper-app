@@ -1,6 +1,9 @@
 import 'package:dungeon_paper/app/data/services/character_service.dart';
+import 'package:dungeon_paper/app/modules/BasicInfoForm/bindings/basic_info_form_binding.dart';
+import 'package:dungeon_paper/app/modules/BasicInfoForm/views/basic_info_form_view.dart';
 import 'package:dungeon_paper/app/modules/RollStatsForm/bindings/roll_stats_form_binding.dart';
 import 'package:dungeon_paper/app/modules/RollStatsForm/views/roll_stats_form_view.dart';
+import 'package:dungeon_paper/app/widgets/atoms/popup_menu_item_list_tile.dart';
 import 'package:dungeon_paper/app/widgets/atoms/svg_icon.dart';
 import 'package:dungeon_paper/app/widgets/dialogs/character_bio_dialog.dart';
 import 'package:dungeon_paper/core/dw_icons.dart';
@@ -16,6 +19,26 @@ class HomeCharacterExtras extends GetView<CharacterService> {
     return Wrap(
       alignment: WrapAlignment.center,
       children: [
+        PopupMenuButton<String>(
+          icon: const Icon(Icons.person),
+          onSelected: _onCharacterMenuSelect,
+          itemBuilder: (context) => [
+            PopupMenuItem<String>(
+              value: 'name_photo',
+              child: PopupMenuItemListTile(
+                icon: const Icon(Icons.photo),
+                label: Text(S.current.basicInformationTitle),
+              ),
+            ),
+            PopupMenuItem<String>(
+              value: 'bio',
+              child: PopupMenuItemListTile(
+                icon: const Icon(Icons.text_snippet),
+                label: Text(S.current.characterBioDialogTitle),
+              ),
+            ),
+          ],
+        ),
         IconButton(
           onPressed: () => Get.to(
             () => RollStatsFormView(
@@ -27,12 +50,6 @@ class HomeCharacterExtras extends GetView<CharacterService> {
           ),
           icon: const SvgIcon(DwIcons.dice_d6_numbered),
           tooltip: S.current.characterRollsTitle,
-          // visualDensity: VisualDensity.compact,
-        ),
-        IconButton(
-          onPressed: _openBio,
-          icon: const Icon(Icons.library_books),
-          tooltip: S.current.characterBioDialogTitle,
           // visualDensity: VisualDensity.compact,
         ),
         IconButton(
@@ -57,6 +74,29 @@ class HomeCharacterExtras extends GetView<CharacterService> {
           // disabledColor: Theme.of(context).colorScheme.onPrimary.withOpacity(0.5),
         ),
       ],
+    );
+  }
+
+  void _onCharacterMenuSelect(value) {
+    final map = <String, void Function()>{
+      'name_photo': _openBasicInfo,
+      'bio': _openBio,
+    };
+    final cb = map[value]!;
+    cb.call();
+  }
+
+  void _openBasicInfo() {
+    Get.to(
+      () => BasicInfoFormView(
+        onChanged: (name, avatar) => controller.updateCharacter(
+          controller.current!.copyWith(displayName: name, avatarUrl: avatar),
+        ),
+      ),
+      binding: BasicInfoFormBinding(
+        name: controller.current!.displayName,
+        avatarUrl: controller.current!.avatarUrl,
+      ),
     );
   }
 
