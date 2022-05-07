@@ -49,7 +49,7 @@ class _AddTagDialogState extends State<AddTagDialog> {
               });
             },
             itemBuilder: (ctx) => [
-              for (final tag in {...repo.my.tags.values, ...repo.builtIn.tags.values})
+              for (final tag in allTags)
                 PopupMenuItem<dw.Tag>(
                   child: Text(S.current.tagCopyFrom(toTitleCase(tag.name))),
                   value: tag,
@@ -67,9 +67,7 @@ class _AddTagDialogState extends State<AddTagDialog> {
             decoration: InputDecoration(
               filled: true,
               label: Text(
-                S.current.genericNameField(
-                  S.current.entity(dw.Tag),
-                ),
+                S.current.genericNameField(S.current.entity(dw.Tag)),
               ),
             ),
           ),
@@ -82,9 +80,7 @@ class _AddTagDialogState extends State<AddTagDialog> {
             decoration: InputDecoration(
               filled: true,
               label: Text(
-                S.current.genericValueField(
-                  S.current.entity(dw.Tag),
-                ),
+                S.current.genericValueField(S.current.entity(dw.Tag)),
               ),
             ),
           ),
@@ -97,9 +93,7 @@ class _AddTagDialogState extends State<AddTagDialog> {
             decoration: InputDecoration(
               filled: true,
               label: Text(
-                S.current.genericDescriptionField(
-                  S.current.entity(dw.Tag),
-                ),
+                S.current.genericDescriptionField(S.current.entity(dw.Tag)),
               ),
             ),
           ),
@@ -122,6 +116,9 @@ class _AddTagDialogState extends State<AddTagDialog> {
         description: desc.text,
         value: tryParse(value.text),
       );
+
+  List<dw.Tag> get allTags => {...repo.my.tags.values, ...repo.builtIn.tags.values}.toList()
+    ..sort((a, b) => a.name.toLowerCase().compareTo(b.name.toLowerCase()));
 
   dynamic tryParse(String text) {
     if (RegExp(r'[a-z]').hasMatch(text)) {
