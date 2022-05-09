@@ -13,6 +13,8 @@ import 'package:dungeon_paper/app/data/models/race.dart';
 import 'package:dungeon_paper/app/data/models/spell.dart';
 import 'package:dungeon_paper/app/data/models/user.dart';
 import 'package:dungeon_paper/app/model_utils/model_key.dart';
+import 'package:dungeon_paper/core/utils/uuid.dart';
+import 'package:dungeon_world_data/dungeon_world_data.dart' as dw;
 // import 'package:dungeon_world_data/gear_option.dart';
 // import 'package:dungeon_world_data/dungeon_world_data.dart' as dw;
 
@@ -40,8 +42,8 @@ T copyWithMeta<T extends WithMeta>(dynamic object, Meta? meta) {
   }
 }
 
-T forkMeta<T extends WithMeta>(dynamic object, User user, [Meta? meta]) => copyWithMeta(
-      object,
+T forkMeta<T extends WithMeta>(dynamic object, User user, [Meta? meta]) => copyWithMeta<T>(
+      object.copyWithInherited(key: uuid()),
       ((meta ?? object.meta) as Meta).fork(createdBy: user.displayName, sourceKey: keyFor(object)),
     );
 

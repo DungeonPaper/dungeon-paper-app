@@ -3,7 +3,9 @@ import 'package:dungeon_paper/app/data/models/item.dart';
 import 'package:dungeon_paper/app/data/models/move.dart';
 import 'package:dungeon_paper/app/data/models/spell.dart';
 import 'package:dungeon_paper/app/data/services/character_service.dart';
+import 'package:dungeon_paper/app/data/services/repository_service.dart';
 import 'package:dungeon_paper/app/model_utils/character_utils.dart';
+import 'package:dungeon_paper/app/model_utils/model_json.dart';
 import 'package:dungeon_paper/app/model_utils/model_key.dart';
 import 'package:dungeon_paper/app/modules/AddRepositoryItems/bindings/add_repository_items_binding.dart';
 import 'package:dungeon_paper/app/modules/AddRepositoryItems/controllers/add_repository_items_controller.dart';
@@ -21,6 +23,7 @@ import 'package:dungeon_paper/app/widgets/dialogs/confirm_delete_dialog.dart';
 import 'package:dungeon_paper/app/widgets/menus/entity_edit_menu.dart';
 import 'package:dungeon_paper/app/widgets/menus/group_sort_menu.dart';
 import 'package:dungeon_paper/app/widgets/molecules/categorized_list.dart';
+import 'package:dungeon_paper/core/storage_handler/storage_handler.dart';
 import 'package:dungeon_paper/core/utils/list_utils.dart';
 import 'package:dungeon_paper/generated/l10n.dart';
 import 'package:flutter/material.dart';
@@ -203,6 +206,7 @@ class ActionsCardList<T> extends GetView<CharacterService> {
   final void Function(int oldIndex, int newIndex) onReorder;
 
   Character get char => controller.current!;
+  RepositoryService get repo => Get.find();
 
   @override
   Widget build(BuildContext context) {
@@ -214,9 +218,12 @@ class ActionsCardList<T> extends GetView<CharacterService> {
         TextButton.icon(
           onPressed: () => Get.to(
             () => addPageBuilder(
-              onAdd: (objects) => controller.updateCharacter(
-                CharacterUtils.addByType<T>(char, objects),
-              ),
+              onAdd: (objects) {
+                controller.updateCharacter(
+                  CharacterUtils.addByType<T>(char, objects),
+                );
+                StorageHandler.instance.addMissingObjects(objects);
+              },
             ),
             binding: AddRepositoryItemsBinding(),
             arguments: addPageArguments,
@@ -235,9 +242,12 @@ class ActionsCardList<T> extends GetView<CharacterService> {
               child: cardBuilder(
                 obj,
                 onDelete: _confirmDeleteDlg(context, obj, nameFor(obj)),
-                onSave: (_obj) => controller.updateCharacter(
-                  CharacterUtils.updateByType<T>(char, [_obj]),
-                ),
+                onSave: (_obj) {
+                  controller.updateCharacter(
+                    CharacterUtils.updateByType<T>(char, [_obj]),
+                  );
+                  StorageHandler.instance.addMissingObjects([_obj]);
+                },
               ),
             ),
           )

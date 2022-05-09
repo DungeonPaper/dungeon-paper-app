@@ -2,6 +2,8 @@ import 'dart:async';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:cloud_firestore/cloud_firestore.dart' as fs;
+import 'package:dungeon_paper/app/model_utils/model_json.dart';
+import 'package:dungeon_paper/app/model_utils/model_key.dart';
 import 'package:localstore/localstore.dart';
 
 typedef DocData = Map<String, dynamic>;
@@ -18,6 +20,15 @@ class StorageHandler implements StorageDelegate {
   };
 
   StorageDelegate get delegate => delegates[currentDelegate]!;
+
+  addMissingObjects<T>(Iterable<T> objects) async {
+    for (final obj in objects) {
+      var storageKey = storageKeyFor<T>(obj);
+      if (await getDocument(storageKey, keyFor<T>(obj)) == null) {
+        StorageHandler.instance.create(storageKey, keyFor<T>(obj), toJsonFor<T>(obj));
+      }
+    }
+  }
 
   @override
   Future<DocData?> getDocument(String collection, String document) =>

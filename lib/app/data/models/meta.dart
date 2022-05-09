@@ -4,6 +4,8 @@ import 'package:dungeon_paper/app/data/services/user_service.dart';
 import 'package:get/instance_manager.dart';
 
 class Meta<T> {
+  static const _app = true;
+
   Meta._({
     required this.schemaVersion,
     DateTime? created,
@@ -32,7 +34,7 @@ class Meta<T> {
     String? language,
   }) =>
       Meta._(
-        createdBy: createdBy ?? Get.find<UserService>().current.displayName,
+        createdBy: createdBy ?? '', // ?? Get.find<UserService>().current.displayName,
         schemaVersion: schemaVersion,
         created: created ?? DateTime.now(),
         updated: updated,
@@ -73,8 +75,21 @@ class Meta<T> {
               sharing: MetaSharing.fork(
                 sourceOwner: this.createdBy,
                 sourceKey: sourceKey,
+                sourceVersion: schemaVersion,
               ),
             );
+
+  static Meta originalOf<T>(Meta<T> meta) => meta.sharing == null
+      ? meta
+      : Meta._(
+          createdBy: meta.sharing!.sourceOwner!,
+          schemaVersion: meta.schemaVersion,
+          created: meta.created,
+          updated: meta.updated,
+          sharing: meta.sharing,
+          data: meta.data,
+          language: meta.language,
+        );
 
   factory Meta.fromRawJson(String str) => Meta.fromJson(json.decode(str));
 
@@ -82,7 +97,7 @@ class Meta<T> {
 
   factory Meta.fromJson(Map<String, dynamic> json, [T Function(dynamic json)? parseData]) => Meta._(
         created: json['created'] != null ? DateTime.parse(json['created']) : DateTime.now(),
-        createdBy: json['createdBy'] ?? 'Guest',
+        createdBy: json['createdBy'],
         data: json['data'] != null
             ? parseData != null
                 ? parseData(json['data'])
@@ -117,6 +132,7 @@ class MetaSharing {
     this.shared = false,
     this.sourceKey,
     this.sourceOwner,
+    required this.sourceVersion,
     this.dirty = false,
   });
 
@@ -124,11 +140,13 @@ class MetaSharing {
     this.shared = false,
     this.sourceOwner,
   })  : dirty = false,
+        sourceVersion = 1,
         sourceKey = null;
 
   MetaSharing.fork({
     this.sourceKey,
     this.sourceOwner,
+    required this.sourceVersion,
     this.dirty = false,
   }) : shared = false;
 
@@ -136,6 +154,7 @@ class MetaSharing {
   final bool dirty;
   final String? sourceKey;
   final String? sourceOwner;
+  final int sourceVersion;
 
   bool get isFork => sourceOwner?.isNotEmpty == true && sourceKey?.isNotEmpty == true;
   bool get isSource => !isFork;
@@ -145,12 +164,14 @@ class MetaSharing {
     bool? dirty,
     String? sourceKey,
     String? sourceOwner,
+    int? sourceVersion,
   }) =>
       MetaSharing._(
         shared: shared ?? this.shared,
         dirty: dirty ?? this.dirty,
         sourceKey: sourceKey ?? this.sourceKey,
         sourceOwner: sourceOwner ?? this.sourceOwner,
+        sourceVersion: sourceVersion ?? this.sourceVersion,
       );
 
   factory MetaSharing.fromRawJson(String str) => MetaSharing.fromJson(json.decode(str));
@@ -163,6 +184,7 @@ class MetaSharing {
       dirty: json['dirty'] ?? false,
       sourceKey: json['sourceKey'],
       sourceOwner: json['sourceOwner'],
+      sourceVersion: json['sourceVersion'] ?? 1,
     );
   }
 
@@ -172,7 +194,7 @@ class MetaSharing {
     bool? dirty,
     String? owner,
   }) {
-    final _m = meta ?? MetaSharing.fork();
+    final _m = meta ?? MetaSharing.fork(sourceVersion: 1);
     if (owner == _m.sourceOwner) {
       return _m;
     }
@@ -188,9 +210,11 @@ class MetaSharing {
         'dirty': dirty,
         'sourceKey': sourceKey,
         'sourceOwner': sourceOwner,
+        'sourceVersion': sourceVersion,
       };
 }
 
 abstract class WithMeta<T> {
   abstract final Meta<T> meta;
+  abstract final String key;
 }

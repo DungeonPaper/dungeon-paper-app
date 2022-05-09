@@ -37,3 +37,25 @@ String nameFor<T>(T object) {
   }
   throw TypeError();
 }
+
+String storageKeyFor<T>([T? object]) {
+  switch (T) {
+    case CharacterClass:
+      return 'Classes';
+    case Item:
+      return 'Items';
+    case Monster:
+      return 'Monsters';
+    case Move:
+      return 'Moves';
+    case Race:
+      return 'Races';
+    case Spell:
+      return 'Spells';
+    case dw.Tag:
+      return 'Tags';
+    case Note:
+      return 'Notes';
+  }
+  throw TypeError();
+}

@@ -10,6 +10,8 @@ import 'meta.dart';
 import 'package:dungeon_world_data/dungeon_world_data.dart' as dw;
 
 class CharacterClass extends dw.CharacterClass implements WithMeta {
+  get isApp => true;
+
   CharacterClass({
     required Meta meta,
     required String name,
@@ -97,7 +99,7 @@ class CharacterClass extends dw.CharacterClass implements WithMeta {
       );
 
   factory CharacterClass.fromDwCharacterClass(dw.CharacterClass cls) => CharacterClass(
-        meta: Meta.version(1),
+        meta: Meta.tryParse(cls.meta),
         name: cls.name,
         key: cls.key,
         description: cls.description,

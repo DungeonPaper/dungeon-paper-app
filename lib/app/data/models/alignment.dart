@@ -18,8 +18,10 @@ class AlignmentValue extends dw.Alignment implements WithMeta {
 
   factory AlignmentValue.fromRawJson(String str) => AlignmentValue.fromJson(json.decode(str));
 
-  factory AlignmentValue.fromDwAlignmentValue(dw.Alignment original) =>
-      AlignmentValue(meta: Meta.version(1), key: original.key, description: original.description);
+  factory AlignmentValue.fromDwAlignmentValue(dw.Alignment original) => AlignmentValue(
+      meta: Meta.version(1, createdBy: '__repo__'),
+      key: original.key,
+      description: original.description);
 
   factory AlignmentValue.fromJson(Map<String, dynamic> json) => AlignmentValue(
         meta: Meta.tryParse(json['_meta']),
@@ -86,7 +88,7 @@ class AlignmentValues extends dw.AlignmentValues {
       );
 
   factory AlignmentValues.fromDwAlignmentValues(dw.AlignmentValues original) => AlignmentValues(
-        meta: Meta.version(1),
+        meta: Meta.version(1, createdBy: '__repo__'),
         good: original.good,
         evil: original.evil,
         lawful: original.lawful,

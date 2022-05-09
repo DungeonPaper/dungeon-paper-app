@@ -43,7 +43,8 @@ class MetaSyncMenu<T> extends StatelessWidget {
           child: Text('Version: ${meta.schemaVersion}\n'
               'Dirty: ${meta.sharing?.dirty ?? 'false'}\n'
               'isFork: ${meta.sharing?.isFork}\n'
-              'sourceOwner: ${meta.sharing?.sourceOwner}'),
+              'sourceOwner: ${meta.sharing?.sourceOwner}\n'
+              'createdBy: ${meta.createdBy}'),
           enabled: false,
         ),
         PopupMenuItem(

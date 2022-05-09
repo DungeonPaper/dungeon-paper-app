@@ -55,7 +55,7 @@ class AddRepositoryItemsController<T extends WithMeta, F extends EntityFilters>
       selected.clear();
       for (final sel in preSelections) {
         removed.addIf(
-          removed.firstWhereOrNull((element) => keyFor(element) == keyFor(sel)) == null,
+          removed.firstWhereOrNull(_compare(sel)) == null,
           sel,
         );
       }
@@ -63,17 +63,24 @@ class AddRepositoryItemsController<T extends WithMeta, F extends EntityFilters>
 
     if (state) {
       selected.addIf(
-        selected.firstWhereOrNull((element) => keyFor(element) == keyFor(item)) == null,
+        selected.firstWhereOrNull(_compare(item)) == null,
         item,
       );
-      removed.removeWhere((element) => keyFor(element) == keyFor(item));
+      removed.removeWhere(_compare(item));
     } else {
-      selected.removeWhere((element) => keyFor(element) == keyFor(item));
+      selected.removeWhere(_compare(item));
       removed.addIf(
-        removed.firstWhereOrNull((element) => keyFor(element) == keyFor(item)) == null,
+        removed.firstWhereOrNull(_compare(item)) == null,
         item,
       );
     }
+  }
+
+  _compare(T item) {
+    return (T element) {
+      return (element.meta.sharing?.sourceKey ?? element.key) == item.key ||
+          element.key == item.key;
+    };
   }
 
   void saveCustomItem(String storageKey, T item, Iterable<T> preSelections, bool multiple) {
@@ -102,13 +109,14 @@ class AddRepositoryItemsController<T extends WithMeta, F extends EntityFilters>
           isInCurrentSelectedList(item);
 
   bool isInCurrentSelectedList(T item) =>
-      selected.firstWhereOrNull((element) => keyFor(element) == keyFor(item)) != null;
+      selected.firstWhereOrNull(
+          (element) => (element.meta.sharing?.sourceKey ?? element.key) == item.key) !=
+      null;
 
-  bool isRemoved(T item) =>
-      removed.firstWhereOrNull((element) => keyFor(element) == keyFor(item)) != null;
+  bool isRemoved(T item) => removed.firstWhereOrNull(_compare(item)) != null;
 
   bool isPreSelected(T item, Iterable<T> preSelections, bool multiple) =>
-      preSelections.toList().firstWhereOrNull((element) => keyFor(element) == keyFor(item)) != null;
+      preSelections.toList().firstWhereOrNull(_compare(item)) != null;
 
   bool isEnabled(T item, Iterable<T> preSelections, bool multiple) => multiple
       ?
