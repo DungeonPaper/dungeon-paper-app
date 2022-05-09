@@ -42,5 +42,12 @@ T copyWithMeta<T extends WithMeta>(dynamic object, Meta? meta) {
 
 T forkMeta<T extends WithMeta>(dynamic object, User user, [Meta? meta]) => copyWithMeta(
       object,
-      (meta ?? object.meta).fork(createdBy: user.displayName, sourceKey: keyFor(object)),
+      ((meta ?? object.meta) as Meta).fork(createdBy: user.displayName, sourceKey: keyFor(object)),
     );
+
+T increaseMetaVersion<T extends WithMeta>(dynamic object) {
+  return copyWithMeta(
+    object,
+    object.meta.copyWith(schemaVersion: object.meta.schemaVersion + 1),
+  );
+}

@@ -64,14 +64,17 @@ class Meta<T> {
     required String createdBy,
     required String sourceKey,
   }) =>
-      copyWith(
-        createdBy: createdBy,
-        created: DateTime.now(),
-        sharing: MetaSharing.fork(
-          sourceOwner: this.createdBy,
-          sourceKey: sourceKey,
-        ),
-      );
+      createdBy == this.createdBy
+          ? this
+          : copyWith(
+              schemaVersion: 1,
+              createdBy: createdBy,
+              created: DateTime.now(),
+              sharing: MetaSharing.fork(
+                sourceOwner: this.createdBy,
+                sourceKey: sourceKey,
+              ),
+            );
 
   factory Meta.fromRawJson(String str) => Meta.fromJson(json.decode(str));
 
@@ -170,6 +173,9 @@ class MetaSharing {
     String? owner,
   }) {
     final _m = meta ?? MetaSharing.fork();
+    if (owner == _m.sourceOwner) {
+      return _m;
+    }
     return _m.copyWith(
       sourceKey: _m.sourceKey ?? sourceKey,
       sourceOwner: owner,
@@ -179,12 +185,12 @@ class MetaSharing {
 
   Map<String, dynamic> toJson() => {
         'shared': shared,
-        'outOfSync': dirty,
-        'originalKey': sourceKey,
-        'createdBy': sourceOwner,
+        'dirty': dirty,
+        'sourceKey': sourceKey,
+        'sourceOwner': sourceOwner,
       };
 }
 
-abstract class WithMeta {
-  abstract final Meta meta;
+abstract class WithMeta<T> {
+  abstract final Meta<T> meta;
 }

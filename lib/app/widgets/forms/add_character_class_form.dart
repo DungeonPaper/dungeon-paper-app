@@ -55,10 +55,7 @@ class AddCharacterClassFormController extends DynamicFormController<CharacterCla
   @override
   CharacterClass setData(Map<String, dynamic> data) {
     entity.value = entity.value.copyWithInherited(
-      meta: entity.value.meta.copyWith(
-        sharing:
-            MetaSharing.createFork(entity.value.key, meta: entity.value.meta.sharing, dirty: true),
-      ),
+      meta: entity.value.meta,
       name: data['name'],
       description: data['description'],
     );

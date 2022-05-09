@@ -57,10 +57,7 @@ class AddNoteFormController extends DynamicFormController<Note> {
   @override
   Note setData(Map<String, dynamic> data) {
     entity.value = entity.value.copyWith(
-      meta: entity.value.meta.copyWith(
-        sharing:
-            MetaSharing.createFork(entity.value.key, meta: entity.value.meta.sharing, dirty: true),
-      ),
+      meta: entity.value.meta,
       title: data['title'],
       description: data['description'],
       category: data['category'],

@@ -13,27 +13,8 @@ import 'package:dungeon_paper/app/data/models/spell.dart';
 import 'package:dungeon_world_data/gear_option.dart';
 import 'package:dungeon_world_data/dungeon_world_data.dart' as dw;
 
-String keyFor<T>(T object) {
-  final dyn = object as dynamic;
-  switch (T) {
-    case AlignmentValue:
-    case CharacterClass:
-    case CharacterStats:
-    case Character:
-    case GearChoice:
-    case GearSelection:
-    case GearOption:
-    case Item:
-    case Monster:
-    case Move:
-    case Note:
-    case Race:
-    case Spell:
-      return dyn.key;
-    case dw.Tag:
-      return dyn.name;
-  }
-  throw TypeError();
+String keyFor<T>(dynamic object) {
+  return object.key;
 }
 
 String nameFor<T>(T object) {

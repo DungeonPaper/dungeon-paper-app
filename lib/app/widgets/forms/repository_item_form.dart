@@ -4,8 +4,10 @@ import 'package:dungeon_paper/app/data/models/meta.dart';
 import 'package:dungeon_paper/app/data/models/move.dart';
 import 'package:dungeon_paper/app/data/models/note.dart';
 import 'package:dungeon_paper/app/data/models/spell.dart';
+import 'package:dungeon_paper/app/model_utils/model_meta.dart';
 import 'package:dungeon_paper/app/widgets/atoms/advanced_floating_action_button.dart';
 import 'package:dungeon_paper/app/widgets/atoms/confirm_exit_view.dart';
+import 'package:dungeon_paper/app/widgets/atoms/meta_sync_menu.dart';
 import 'package:dungeon_paper/app/widgets/forms/add_item_form.dart';
 import 'package:dungeon_paper/app/widgets/forms/add_move_form.dart';
 import 'package:dungeon_paper/app/widgets/forms/add_note_form.dart';
@@ -42,32 +44,13 @@ class RepositoryItemForm<T extends WithMeta> extends GetView<DynamicFormControll
           appBar: AppBar(
             title: title,
             actions: [
-              PopupMenuButton<String>(
-                itemBuilder: (ctx) => items,
-                onSelected: (value) => _handleMenu(value),
-                icon: Stack(children: [
-                  const Icon(Icons.more_vert),
-                  if (data.meta.sharing?.dirty == true)
-                    Positioned(
-                      top: 0,
-                      left: 0,
-                      child: Container(
-                        width: 8,
-                        height: 8,
-                        decoration: BoxDecoration(
-                          shape: BoxShape.circle,
-                          color: Colors.orange[400],
-                        ),
-                      ),
-                    ),
-                ]),
-              ),
+              MetaSyncMenu(entity: data),
             ],
           ),
           body: buildForm(context),
           floatingActionButton: AdvancedFloatingActionButton.extended(
             onPressed: () {
-              onSave(data);
+              onSave(increaseMetaVersion(data));
               Get.back();
             },
             label: Text(S.current.save),
@@ -77,19 +60,6 @@ class RepositoryItemForm<T extends WithMeta> extends GetView<DynamicFormControll
       ),
     );
   }
-
-  final items = const <PopupMenuItem<String>>[
-    PopupMenuItem(
-      // TODO intl
-      child: Text('Update original'),
-      value: 'push',
-    ),
-    PopupMenuItem(
-      // TODO intl
-      child: Text('Revert changes'),
-      value: 'pull',
-    ),
-  ];
 
   Widget get title => Text(
         type == ItemFormType.create
@@ -122,21 +92,6 @@ class RepositoryItemForm<T extends WithMeta> extends GetView<DynamicFormControll
         return AddCharacterClassForm(onChange: setEntity, type: type);
       default:
         throw UnsupportedError('Unsupported type: $T');
-    }
-  }
-
-  _handleMenu(String? value) {
-    final curItem = data;
-
-    switch (value) {
-      case 'push':
-        debugPrint('Update original');
-        break;
-      case 'pull':
-        debugPrint('Revert changes');
-        break;
-      default:
-        throw UnsupportedError('Bad menu item value: $value');
     }
   }
 }

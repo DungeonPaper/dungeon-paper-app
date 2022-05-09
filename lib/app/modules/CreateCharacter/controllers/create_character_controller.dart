@@ -5,7 +5,10 @@ import 'package:dungeon_paper/app/data/models/item.dart';
 import 'package:dungeon_paper/app/data/models/move.dart';
 import 'package:dungeon_paper/app/data/models/roll_stats.dart';
 import 'package:dungeon_paper/app/data/models/spell.dart';
+import 'package:dungeon_paper/app/data/models/user.dart';
 import 'package:dungeon_paper/app/data/services/repository_service.dart';
+import 'package:dungeon_paper/app/data/services/user_service.dart';
+import 'package:dungeon_paper/app/model_utils/model_meta.dart';
 import 'package:get/get.dart';
 
 class CreateCharacterController extends GetxController {
@@ -21,6 +24,8 @@ class CreateCharacterController extends GetxController {
 
   final dirty = false.obs;
 
+  User get user => Get.find<UserService>().current;
+
   bool get isValid => [
         name.isNotEmpty,
         characterClass.value != null,
@@ -30,7 +35,7 @@ class CreateCharacterController extends GetxController {
         return [
           ...previousValue,
           ...element.options.map(
-            (e) => Item.fromDwItem(e.item, amount: e.amount),
+            (e) => forkMeta(Item.fromDwItem(e.item, amount: e.amount), user),
           )
         ];
       });
@@ -83,7 +88,10 @@ class CreateCharacterController extends GetxController {
               //  || m.category == MoveCategory.basic,
               )
           .map(
-            (move) => Move.fromDwMove(move, favorited: move.category != MoveCategory.basic),
+            (move) => forkMeta<Move>(
+              Move.fromDwMove(move, favorited: move.category != MoveCategory.basic),
+              user,
+            ),
           )
           .toList(),
     );
