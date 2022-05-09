@@ -20,9 +20,15 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class RepositoryService extends GetxService {
-  final builtIn =
-      RepositoryCache(id: 'playbook', cachePrefix: 'repo', loadRemote: RemoteBehavior.whenAnyEmpty);
-  final my = RepositoryCache(id: 'personal', loadRemote: RemoteBehavior.always);
+  final builtIn = RepositoryCache(
+    id: 'playbook',
+    cachePrefix: 'repo',
+    loadRemote: RemoteBehavior.whenAnyEmpty,
+  );
+  final my = RepositoryCache(
+    id: 'personal',
+    loadRemote: RemoteBehavior.always,
+  );
   StorageDelegate get storage => StorageHandler.instance;
 
   void clear() {
@@ -38,7 +44,14 @@ class RepositoryService extends GetxService {
   }
 
   Future<RepositoryService> init() async {
-    await builtIn.init(Future(() => api.requests.getDefaultRepository(ignoreCache: true)));
+    await builtIn.init(Future(() {
+      try {
+        throw TypeError();
+        return api.requests.getDefaultRepository(ignoreCache: true);
+      } catch (_) {
+        return SearchResponse.fromPackageRepo();
+      }
+    }));
     await my.init(
       Future(
         () async => SearchResponse.fromJson({

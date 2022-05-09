@@ -83,6 +83,19 @@ class SearchResponse {
         tags: json['Tags'] != null ? List.from(json['Tags'].map((x) => dw.Tag.fromJson(x))) : null,
       );
 
+  factory SearchResponse.fromPackageRepo() => SearchResponse(
+        classes: dw.dungeonWorldData.characterClasses.values
+            .map((e) => CharacterClass.fromDwCharacterClass(e))
+            .toList(),
+        items: dw.dungeonWorldData.items.values.map((e) => Item.fromDwItem(e)).toList(),
+        monsters: dw.dungeonWorldData.monsters.values.map((e) => Monster.fromDwMonster(e)).toList(),
+        moves: dw.dungeonWorldData.moves.values.map((e) => Move.fromDwMove(e)).toList(),
+        spells: dw.dungeonWorldData.spells.values.map((e) => Spell.fromDwSpell(e)).toList(),
+        races: dw.dungeonWorldData.races.values.map((e) => Race.fromDwRace(e)).toList(),
+        tags: dw.dungeonWorldData.tags.values.toList(),
+        // notes: [],
+      );
+
   bool get isAnyEmpty => [
         classes,
         items,
