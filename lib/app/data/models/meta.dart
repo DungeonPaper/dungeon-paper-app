@@ -60,6 +60,19 @@ class Meta<T> {
         language: language ?? this.language,
       );
 
+  Meta<T> fork({
+    required String createdBy,
+    required String sourceKey,
+  }) =>
+      copyWith(
+        createdBy: createdBy,
+        created: DateTime.now(),
+        sharing: MetaSharing.fork(
+          sourceOwner: this.createdBy,
+          sourceKey: sourceKey,
+        ),
+      );
+
   factory Meta.fromRawJson(String str) => Meta.fromJson(json.decode(str));
 
   String toRawJson() => json.encode(toJson());
@@ -121,8 +134,8 @@ class MetaSharing {
   final String? sourceKey;
   final String? sourceOwner;
 
-  bool get isSource => sourceOwner?.isNotEmpty == true && sourceKey?.isNotEmpty == true;
-  bool get isFork => !isSource;
+  bool get isFork => sourceOwner?.isNotEmpty == true && sourceKey?.isNotEmpty == true;
+  bool get isSource => !isFork;
 
   MetaSharing copyWith({
     bool? shared,

@@ -3,7 +3,7 @@ import 'dart:convert';
 import 'package:dungeon_paper/app/data/models/meta.dart';
 import 'package:dungeon_world_data/dungeon_world_data.dart' as dw;
 
-class Monster extends dw.Monster {
+class Monster extends dw.Monster implements WithMeta {
   Monster({
     required Meta meta,
     required String key,

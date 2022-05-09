@@ -5,7 +5,7 @@ import 'package:dungeon_world_data/dungeon_world_data.dart' as dw;
 
 import 'meta.dart';
 
-class Race extends dw.Race {
+class Race extends dw.Race implements WithMeta {
   Race({
     required Meta meta,
     required String key,

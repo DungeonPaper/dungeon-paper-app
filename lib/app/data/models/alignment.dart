@@ -4,13 +4,14 @@ import 'package:flutter/material.dart';
 
 import 'meta.dart';
 
-class AlignmentValue extends dw.Alignment {
+class AlignmentValue extends dw.Alignment implements WithMeta {
   AlignmentValue({
     required this.meta,
     required String key,
     required String description,
   }) : super(key: key, description: description);
 
+  @override
   final Meta meta;
 
   static final allKeys = <String>['good', 'lawful', 'neutral', 'chaotic', 'evil'];

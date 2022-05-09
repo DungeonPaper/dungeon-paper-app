@@ -9,7 +9,7 @@ import 'gear_choice.dart';
 import 'meta.dart';
 import 'package:dungeon_world_data/dungeon_world_data.dart' as dw;
 
-class CharacterClass extends dw.CharacterClass with WithMeta {
+class CharacterClass extends dw.CharacterClass implements WithMeta {
   CharacterClass({
     required Meta meta,
     required String name,

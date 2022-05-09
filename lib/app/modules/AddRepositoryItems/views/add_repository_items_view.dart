@@ -130,7 +130,7 @@ class AddRepositoryItemsView<T extends WithMeta, F extends EntityFilters<T>>
               : null,
           onPressed: controller.selected.isNotEmpty
               ? () {
-                  onAdd(controller.selected);
+                  onAdd(controller.selectedWithMeta);
                   Get.back();
                 }
               : null,
