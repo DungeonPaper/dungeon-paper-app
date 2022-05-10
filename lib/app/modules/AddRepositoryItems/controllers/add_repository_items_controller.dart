@@ -3,10 +3,8 @@ import 'dart:async';
 import 'package:dungeon_paper/app/data/models/meta.dart';
 import 'package:dungeon_paper/app/data/services/character_service.dart';
 import 'package:dungeon_paper/app/data/services/repository_service.dart';
-import 'package:dungeon_paper/app/data/services/user_service.dart';
 import 'package:dungeon_paper/app/model_utils/model_json.dart';
 import 'package:dungeon_paper/app/model_utils/model_key.dart';
-import 'package:dungeon_paper/app/model_utils/model_meta.dart';
 import 'package:dungeon_paper/core/storage_handler/storage_handler.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -95,8 +93,8 @@ class AddRepositoryItemsController<T extends WithMeta, F extends EntityFilters>
     StorageHandler.instance.delete(storageKey, keyFor(item));
   }
 
-  List<T> get selectedWithMeta =>
-      selected.map((e) => forkMeta<T>(e, Get.find<UserService>().current)).toList();
+  List<T> get selectedWithMeta => selected;
+  // selected.map((e) => forkMeta<T>(e, Get.find<UserService>().current)).toList();
 
   bool isSelected(T item, Iterable<T> preSelections, bool multiple) => multiple
       ?

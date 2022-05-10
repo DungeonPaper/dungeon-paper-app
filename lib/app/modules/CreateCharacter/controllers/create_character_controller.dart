@@ -2,14 +2,12 @@ import 'package:dungeon_paper/app/data/models/character.dart';
 import 'package:dungeon_paper/app/data/models/character_class.dart';
 import 'package:dungeon_paper/app/data/models/gear_selection.dart';
 import 'package:dungeon_paper/app/data/models/item.dart';
-import 'package:dungeon_paper/app/data/models/meta.dart';
 import 'package:dungeon_paper/app/data/models/move.dart';
 import 'package:dungeon_paper/app/data/models/roll_stats.dart';
 import 'package:dungeon_paper/app/data/models/spell.dart';
 import 'package:dungeon_paper/app/data/models/user.dart';
 import 'package:dungeon_paper/app/data/services/repository_service.dart';
 import 'package:dungeon_paper/app/data/services/user_service.dart';
-import 'package:dungeon_paper/app/model_utils/model_meta.dart';
 import 'package:get/get.dart';
 
 class CreateCharacterController extends GetxController {
@@ -32,14 +30,16 @@ class CreateCharacterController extends GetxController {
         characterClass.value != null,
       ].every((element) => element == true);
 
-  List<Item> get items => startingGear.fold(<Item>[], (previousValue, element) {
-        return [
+  List<Item> get items => startingGear.fold(
+        <Item>[],
+        (previousValue, element) => Item.unifyItems([
           ...previousValue,
           ...element.options.map(
-            (e) => forkMeta(Item.fromDwItem(e.item, amount: e.amount), user),
+            (e) => Item.fromDwItem(e.item, amount: e.amount),
+            // (e) => forkMeta(Item.fromDwItem(e.item, amount: e.amount), user),
           )
-        ];
-      });
+        ]),
+      );
 
   double get coins =>
       startingGear.fold(0, (previousValue, element) => previousValue + element.coins);
@@ -51,8 +51,9 @@ class CreateCharacterController extends GetxController {
   }
 
   void setClass(CharacterClass cls) {
-    characterClass.value = copyWithMeta(
-        cls.copyWithInherited(key: cls.meta.sharing!.sourceKey), Meta.originalOf(cls.meta));
+    characterClass.value = cls;
+    // characterClass.value = copyWithMeta(
+    //     cls.copyWithInherited(key: cls.meta.sharing!.sourceKey), Meta.originalOf(cls.meta));
     // TODO remove dupes + use item amount
     setStartingGear(
         cls.gearChoices.fold([], (all, cur) => [...all, ...cur.preselectedGearSelections]));
@@ -90,10 +91,11 @@ class CreateCharacterController extends GetxController {
               //  || m.category == MoveCategory.basic,
               )
           .map(
-            (move) => forkMeta<Move>(
-              Move.fromDwMove(move, favorited: move.category != MoveCategory.basic),
-              user,
-            ),
+            (move) => Move.fromDwMove(move, favorited: move.category != MoveCategory.basic),
+            // (move) => forkMeta<Move>(
+            //   Move.fromDwMove(move, favorited: move.category != MoveCategory.basic),
+            //   user,
+            // ),
           )
           .toList(),
     );

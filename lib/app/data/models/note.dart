@@ -19,6 +19,7 @@ class Note implements WithMeta {
 
   @override
   final Meta meta;
+  @override
   final String key;
   final String title;
   final String description;

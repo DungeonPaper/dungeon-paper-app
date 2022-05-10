@@ -46,6 +46,7 @@ class Character implements WithMeta {
 
   @override
   final Meta<CharacterMeta> meta;
+  @override
   final String key;
   final String displayName;
   final String avatarUrl;

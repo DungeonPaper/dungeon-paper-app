@@ -1,7 +1,5 @@
 import 'package:dungeon_paper/app/data/models/meta.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/src/foundation/key.dart';
-import 'package:flutter/src/widgets/framework.dart';
 
 class MetaSyncMenu<T> extends StatelessWidget {
   const MetaSyncMenu({
@@ -44,15 +42,17 @@ class MetaSyncMenu<T> extends StatelessWidget {
               'Dirty: ${meta.sharing?.dirty ?? 'false'}\n'
               'isFork: ${meta.sharing?.isFork}\n'
               'sourceOwner: ${meta.sharing?.sourceOwner}\n'
-              'createdBy: ${meta.createdBy}'),
+              'createdBy: ${meta.createdBy}\n'
+              'key: ${entity.key}\n'
+              'sourceKey: ${meta.sharing?.sourceKey}'),
           enabled: false,
         ),
-        PopupMenuItem(
+        const PopupMenuItem(
           // TODO intl
           child: Text('Update original'),
           value: 'push',
         ),
-        PopupMenuItem(
+        const PopupMenuItem(
           // TODO intl
           child: Text('Revert changes'),
           value: 'pull',

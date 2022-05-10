@@ -4,6 +4,8 @@ import 'package:dungeon_paper/app/data/models/meta.dart';
 import 'package:dungeon_paper/app/data/models/move.dart';
 import 'package:dungeon_paper/app/data/models/note.dart';
 import 'package:dungeon_paper/app/data/models/spell.dart';
+import 'package:dungeon_paper/app/data/models/user.dart';
+import 'package:dungeon_paper/app/data/services/user_service.dart';
 import 'package:dungeon_paper/app/model_utils/model_meta.dart';
 import 'package:dungeon_paper/app/widgets/atoms/advanced_floating_action_button.dart';
 import 'package:dungeon_paper/app/widgets/atoms/confirm_exit_view.dart';
@@ -50,7 +52,8 @@ class RepositoryItemForm<T extends WithMeta> extends GetView<DynamicFormControll
           body: buildForm(context),
           floatingActionButton: AdvancedFloatingActionButton.extended(
             onPressed: () {
-              onSave(increaseMetaVersion(data));
+              onSave(increaseMetaVersion(forkMeta(data, user)));
+              // onSave(increaseMetaVersion(data));
               Get.back();
             },
             label: Text(S.current.save),
@@ -60,6 +63,8 @@ class RepositoryItemForm<T extends WithMeta> extends GetView<DynamicFormControll
       ),
     );
   }
+
+  User get user => Get.find<UserService>().current;
 
   Widget get title => Text(
         type == ItemFormType.create

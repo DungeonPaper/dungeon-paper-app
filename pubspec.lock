@@ -161,7 +161,7 @@ packages:
       path: "../dungeon_world_data"
       relative: true
     source: path
-    version: "2.0.5-nullsafety"
+    version: "3.0.0"
   dynamic_themes:
     dependency: "direct main"
     description:
@@ -960,5 +960,5 @@ packages:
     source: hosted
     version: "3.1.0"
 sdks:
-  dart: ">=2.17.0-0 <3.0.0"
+  dart: ">=2.17.0-266.5.beta <3.0.0"
   flutter: ">=2.10.0"

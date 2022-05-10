@@ -112,4 +112,16 @@ class Item extends dw.Item implements WithMeta {
   static DwIconData get genericIcon => DwIcons.swap_bag;
   static int Function(Item a, Item b) sorter(ItemFilters filters) =>
       (a, b) => a.name.toLowerCase().compareTo(b.name.toLowerCase());
+
+  static List<Item> unifyItems(Iterable<Item> items) {
+    final map = <String, Item>{};
+    for (final item in items) {
+      if (map[item.key] != null) {
+        map[item.key] = map[item.key]!.copyWithInherited(amount: map[item.key]!.amount + 1);
+      } else {
+        map[item.key] = item;
+      }
+    }
+    return map.values.toList();
+  }
 }
