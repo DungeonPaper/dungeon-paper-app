@@ -1,19 +1,21 @@
 import 'package:dungeon_paper/app/data/models/character.dart';
 import 'package:dungeon_paper/app/data/models/item.dart';
+import 'package:dungeon_paper/app/data/models/meta.dart';
 import 'package:dungeon_paper/app/data/models/move.dart';
 import 'package:dungeon_paper/app/data/models/spell.dart';
 import 'package:dungeon_paper/app/data/services/character_service.dart';
+import 'package:dungeon_paper/app/data/services/library_service.dart';
 import 'package:dungeon_paper/app/data/services/repository_service.dart';
 import 'package:dungeon_paper/app/model_utils/character_utils.dart';
 import 'package:dungeon_paper/app/model_utils/model_key.dart';
-import 'package:dungeon_paper/app/modules/AddRepositoryItems/bindings/add_repository_items_binding.dart';
-import 'package:dungeon_paper/app/modules/AddRepositoryItems/controllers/add_repository_items_controller.dart';
-import 'package:dungeon_paper/app/modules/AddRepositoryItems/views/add_items_view.dart';
-import 'package:dungeon_paper/app/modules/AddRepositoryItems/views/add_moves_view.dart';
-import 'package:dungeon_paper/app/modules/AddRepositoryItems/views/add_spells_view.dart';
-import 'package:dungeon_paper/app/modules/AddRepositoryItems/views/filters/item_filters.dart';
-import 'package:dungeon_paper/app/modules/AddRepositoryItems/views/filters/move_filters.dart';
-import 'package:dungeon_paper/app/modules/AddRepositoryItems/views/filters/spell_filters.dart';
+import 'package:dungeon_paper/app/modules/LibraryList/bindings/library_list_binding.dart';
+import 'package:dungeon_paper/app/modules/LibraryList/controllers/library_list_controller.dart';
+import 'package:dungeon_paper/app/modules/LibraryList/views/items_library_list_view.dart';
+import 'package:dungeon_paper/app/modules/LibraryList/views/moves_library_list_view.dart';
+import 'package:dungeon_paper/app/modules/LibraryList/views/spells_library_list_view.dart';
+import 'package:dungeon_paper/app/modules/LibraryList/views/filters/item_filters.dart';
+import 'package:dungeon_paper/app/modules/LibraryList/views/filters/move_filters.dart';
+import 'package:dungeon_paper/app/modules/LibraryList/views/filters/spell_filters.dart';
 import 'package:dungeon_paper/app/modules/Home/views/local_widgets/home_character_actions_summary.dart';
 import 'package:dungeon_paper/app/widgets/cards/item_card.dart';
 import 'package:dungeon_paper/app/widgets/cards/move_card.dart';
@@ -65,7 +67,7 @@ class HomeCharacterActionsView extends GetView<CharacterService> {
       index: char.actionCategories.toList().indexOf('Move'),
       onReorder: _onReorder,
       list: char.moves,
-      addPageBuilder: ({required onAdd}) => AddMovesView(
+      addPageBuilder: ({required onAdd}) => MovesLibraryListView(
         onAdd: onAdd,
         rollStats: char.rollStats,
         selections: char.moves,
@@ -101,7 +103,7 @@ class HomeCharacterActionsView extends GetView<CharacterService> {
       index: char.actionCategories.toList().indexOf('Spell'),
       onReorder: _onReorder,
       list: char.spells,
-      addPageBuilder: ({required onAdd}) => AddSpellsView(
+      addPageBuilder: ({required onAdd}) => SpellsLibraryListView(
         onAdd: onAdd,
         rollStats: char.rollStats,
         selections: char.spells,
@@ -137,7 +139,7 @@ class HomeCharacterActionsView extends GetView<CharacterService> {
       index: char.actionCategories.toList().indexOf('Item'),
       onReorder: _onReorder,
       list: char.items,
-      addPageBuilder: ({required onAdd}) => AddItemsView(
+      addPageBuilder: ({required onAdd}) => ItemsLibraryListView(
         onAdd: onAdd,
         selections: char.items,
       ),
@@ -179,7 +181,7 @@ class HomeCharacterActionsView extends GetView<CharacterService> {
   }
 }
 
-class ActionsCardList<T> extends GetView<CharacterService> {
+class ActionsCardList<T extends WithMeta> extends GetView<CharacterService> {
   const ActionsCardList({
     Key? key,
     required this.addPageBuilder,
@@ -206,6 +208,7 @@ class ActionsCardList<T> extends GetView<CharacterService> {
 
   Character get char => controller.current!;
   RepositoryService get repo => Get.find();
+  LibraryService get library => Get.find();
 
   @override
   Widget build(BuildContext context) {
@@ -216,22 +219,18 @@ class ActionsCardList<T> extends GetView<CharacterService> {
       trailing: [
         TextButton.icon(
           onPressed: () => Get.to(
-            () => addPageBuilder(
-              onAdd: (objects) {
-                controller.updateCharacter(
-                  CharacterUtils.addByType<T>(char, objects),
-                );
-                StorageHandler.instance.addMissingObjects(objects);
-              },
-            ),
-            binding: AddRepositoryItemsBinding(),
+            () => addPageBuilder(onAdd: library.addToCharacter),
+            binding: LibraryListBinding(),
             arguments: addPageArguments,
           ),
           label: Text(S.current.addGeneric(S.current.entityPlural(T))),
           icon: const Icon(Icons.add),
         ),
         GroupSortMenu(
-            index: index, maxIndex: Character.allActionCategories.length, onReorder: onReorder)
+          index: index,
+          maxIndex: Character.allActionCategories.length,
+          onReorder: onReorder,
+        )
       ],
       children: list
           .map(

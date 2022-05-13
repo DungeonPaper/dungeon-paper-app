@@ -37,16 +37,21 @@ class RepositoryService extends GetxService {
   }
 
   @override
+  void onInit() {
+    super.onInit();
+    _init();
+  }
+
+  @override
   void onClose() async {
     super.onClose();
     builtIn.dispose();
     my.dispose();
   }
 
-  Future<RepositoryService> init() async {
+  Future<RepositoryService> _init() async {
     await builtIn.init(Future(() {
       try {
-        throw TypeError();
         return api.requests.getDefaultRepository(ignoreCache: true);
       } catch (_) {
         return SearchResponse.fromPackageRepo();

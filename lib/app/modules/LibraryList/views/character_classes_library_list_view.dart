@@ -2,8 +2,8 @@ import 'package:dungeon_paper/app/data/models/character.dart';
 import 'package:dungeon_paper/app/data/models/character_class.dart';
 import 'package:dungeon_paper/app/data/services/repository_service.dart';
 import 'package:dungeon_paper/app/model_utils/character_utils.dart';
-import 'package:dungeon_paper/app/modules/AddRepositoryItems/controllers/add_repository_items_controller.dart';
-import 'package:dungeon_paper/app/modules/AddRepositoryItems/views/add_repository_items_view.dart';
+import 'package:dungeon_paper/app/modules/LibraryList/controllers/library_list_controller.dart';
+import 'package:dungeon_paper/app/modules/LibraryList/views/library_list_view.dart';
 import 'package:dungeon_paper/app/themes/button_themes.dart';
 import 'package:dungeon_paper/app/widgets/cards/character_class_card.dart';
 import 'package:dungeon_paper/app/widgets/menus/entity_edit_menu.dart';
@@ -14,9 +14,9 @@ import 'package:get/get.dart';
 
 import 'filters/character_class_filters.dart';
 
-class AddCharacterClassesView
-    extends GetView<AddRepositoryItemsController<CharacterClass, CharacterClassFilters>> {
-  const AddCharacterClassesView({
+class CharacterClassesLibraryListView
+    extends GetView<LibraryListController<CharacterClass, CharacterClassFilters>> {
+  const CharacterClassesLibraryListView({
     Key? key,
     required this.onChanged,
     required this.selection,
@@ -30,7 +30,7 @@ class AddCharacterClassesView
 
   @override
   Widget build(BuildContext context) {
-    return AddRepositoryItemsView<CharacterClass, CharacterClassFilters>(
+    return LibraryListView<CharacterClass, CharacterClassFilters>(
       storageKey: 'Classes',
       title: Text(S.current.addGeneric(S.current.entityPlural(CharacterClass))),
       multiple: false,

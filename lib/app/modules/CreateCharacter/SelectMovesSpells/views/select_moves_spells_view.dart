@@ -1,12 +1,12 @@
 import 'package:dungeon_paper/app/data/models/move.dart';
 import 'package:dungeon_paper/app/data/models/spell.dart';
 import 'package:dungeon_paper/app/model_utils/character_utils.dart';
-import 'package:dungeon_paper/app/modules/AddRepositoryItems/bindings/add_repository_items_binding.dart';
-import 'package:dungeon_paper/app/modules/AddRepositoryItems/controllers/add_repository_items_controller.dart';
-import 'package:dungeon_paper/app/modules/AddRepositoryItems/views/add_moves_view.dart';
-import 'package:dungeon_paper/app/modules/AddRepositoryItems/views/add_spells_view.dart';
-import 'package:dungeon_paper/app/modules/AddRepositoryItems/views/filters/move_filters.dart';
-import 'package:dungeon_paper/app/modules/AddRepositoryItems/views/filters/spell_filters.dart';
+import 'package:dungeon_paper/app/modules/LibraryList/bindings/library_list_binding.dart';
+import 'package:dungeon_paper/app/modules/LibraryList/controllers/library_list_controller.dart';
+import 'package:dungeon_paper/app/modules/LibraryList/views/moves_library_list_view.dart';
+import 'package:dungeon_paper/app/modules/LibraryList/views/spells_library_list_view.dart';
+import 'package:dungeon_paper/app/modules/LibraryList/views/filters/move_filters.dart';
+import 'package:dungeon_paper/app/modules/LibraryList/views/filters/spell_filters.dart';
 import 'package:dungeon_paper/app/themes/button_themes.dart';
 import 'package:dungeon_paper/app/widgets/atoms/advanced_floating_action_button.dart';
 import 'package:dungeon_paper/app/widgets/atoms/confirm_exit_view.dart';
@@ -94,7 +94,7 @@ class SelectMovesSpellsView extends GetView<SelectMovesSpellsController> {
                   child: OutlinedButton.icon(
                     style: ButtonThemes.primaryOutlined(context),
                     onPressed: () => Get.to(
-                      () => AddMovesView(
+                      () => MovesLibraryListView(
                         onAdd: (moves) {
                           controller.dirty.value = true;
                           controller.moves.value = addByKey(
@@ -106,7 +106,7 @@ class SelectMovesSpellsView extends GetView<SelectMovesSpellsController> {
                         classKeys: [controller.characterClass.value.key],
                         selections: controller.moves,
                       ),
-                      binding: AddRepositoryItemsBinding(),
+                      binding: LibraryListBinding(),
                       arguments: {
                         FiltersGroup.playbook: MoveFilters(
                           classKey: controller.characterClass.value.key,
@@ -165,7 +165,7 @@ class SelectMovesSpellsView extends GetView<SelectMovesSpellsController> {
                   child: OutlinedButton.icon(
                     style: ButtonThemes.primaryOutlined(context),
                     onPressed: () => Get.to(
-                      () => AddSpellsView(
+                      () => SpellsLibraryListView(
                         onAdd: (spells) {
                           controller.dirty.value = true;
                           controller.spells.value = addByKey(
@@ -177,7 +177,7 @@ class SelectMovesSpellsView extends GetView<SelectMovesSpellsController> {
                         classKeys: [controller.characterClass.value.key],
                         selections: controller.spells,
                       ),
-                      binding: AddRepositoryItemsBinding(),
+                      binding: LibraryListBinding(),
                       arguments: {
                         FiltersGroup.playbook: SpellFilters(
                           classKey: controller.characterClass.value.key,

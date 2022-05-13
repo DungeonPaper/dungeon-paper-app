@@ -1,8 +1,8 @@
 import 'package:dungeon_paper/app/data/models/character.dart';
 import 'package:dungeon_paper/app/data/models/item.dart';
 import 'package:dungeon_paper/app/model_utils/character_utils.dart';
-import 'package:dungeon_paper/app/modules/AddRepositoryItems/controllers/add_repository_items_controller.dart';
-import 'package:dungeon_paper/app/modules/AddRepositoryItems/views/add_repository_items_view.dart';
+import 'package:dungeon_paper/app/modules/LibraryList/controllers/library_list_controller.dart';
+import 'package:dungeon_paper/app/modules/LibraryList/views/library_list_view.dart';
 import 'package:dungeon_paper/app/themes/button_themes.dart';
 import 'package:dungeon_paper/app/widgets/cards/item_card.dart';
 import 'package:dungeon_paper/app/widgets/menus/entity_edit_menu.dart';
@@ -13,8 +13,8 @@ import 'package:get/get.dart';
 
 import 'filters/item_filters.dart';
 
-class AddItemsView extends GetView<AddRepositoryItemsController<Item, ItemFilters>> {
-  const AddItemsView({
+class ItemsLibraryListView extends GetView<LibraryListController<Item, ItemFilters>> {
+  const ItemsLibraryListView({
     Key? key,
     required this.onAdd,
     required this.selections,
@@ -26,7 +26,7 @@ class AddItemsView extends GetView<AddRepositoryItemsController<Item, ItemFilter
 
   @override
   Widget build(BuildContext context) {
-    return AddRepositoryItemsView<Item, ItemFilters>(
+    return LibraryListView<Item, ItemFilters>(
       storageKey: 'Items',
       title: Text(S.current.addGeneric(S.current.entityPlural(Item))),
       filterFn: (item, filters) => filters.filter(item),

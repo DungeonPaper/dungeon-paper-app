@@ -1,6 +1,6 @@
 import 'dart:convert';
 
-import 'package:dungeon_paper/app/modules/AddRepositoryItems/views/filters/character_class_filters.dart';
+import 'package:dungeon_paper/app/modules/LibraryList/views/filters/character_class_filters.dart';
 import 'package:dungeon_paper/core/utils/uuid.dart';
 import 'package:flutter/material.dart';
 

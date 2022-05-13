@@ -1,5 +1,5 @@
 import 'dart:convert';
-import 'package:dungeon_paper/app/modules/AddRepositoryItems/views/filters/move_filters.dart';
+import 'package:dungeon_paper/app/modules/LibraryList/views/filters/move_filters.dart';
 import 'package:dungeon_world_data/dungeon_world_data.dart' as dw;
 export 'package:dungeon_world_data/move.dart' show MoveCategory;
 

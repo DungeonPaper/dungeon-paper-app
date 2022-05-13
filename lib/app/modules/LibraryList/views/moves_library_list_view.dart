@@ -1,21 +1,22 @@
 import 'package:dungeon_paper/app/data/models/character.dart';
+import 'package:dungeon_paper/app/data/models/move.dart';
 import 'package:dungeon_paper/app/data/models/roll_stats.dart';
-import 'package:dungeon_paper/app/data/models/spell.dart';
+import 'package:dungeon_paper/app/data/services/repository_service.dart';
 import 'package:dungeon_paper/app/model_utils/character_utils.dart';
-import 'package:dungeon_paper/app/modules/AddRepositoryItems/controllers/add_repository_items_controller.dart';
-import 'package:dungeon_paper/app/modules/AddRepositoryItems/views/add_repository_items_view.dart';
+import 'package:dungeon_paper/app/modules/LibraryList/controllers/library_list_controller.dart';
+import 'package:dungeon_paper/app/modules/LibraryList/views/library_list_view.dart';
 import 'package:dungeon_paper/app/themes/button_themes.dart';
-import 'package:dungeon_paper/app/widgets/cards/spell_card.dart';
+import 'package:dungeon_paper/app/widgets/cards/move_card.dart';
 import 'package:dungeon_paper/app/widgets/menus/entity_edit_menu.dart';
 import 'package:dungeon_paper/generated/l10n.dart';
 import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
 
-import 'filters/spell_filters.dart';
+import 'filters/move_filters.dart';
 
-class AddSpellsView extends GetView<AddRepositoryItemsController<Spell, SpellFilters>> {
-  const AddSpellsView({
+class MovesLibraryListView extends GetView<LibraryListController<Move, MoveFilters>> {
+  const MovesLibraryListView({
     Key? key,
     required this.onAdd,
     required this.selections,
@@ -23,30 +24,31 @@ class AddSpellsView extends GetView<AddRepositoryItemsController<Spell, SpellFil
     required this.rollStats,
   }) : super(key: key);
 
-  final void Function(Iterable<Spell> spells) onAdd;
-  final Iterable<Spell> selections;
+  final void Function(Iterable<Move> moves) onAdd;
+  final Iterable<Move> selections;
   final List<String> classKeys;
   final RollStats rollStats;
 
+  RepositoryService get service => controller.repo.value;
   Character get char => controller.chars.value.current!;
 
   @override
   Widget build(BuildContext context) {
-    return AddRepositoryItemsView<Spell, SpellFilters>(
-      storageKey: 'Spells',
-      title: Text(S.current.addGeneric(S.current.entityPlural(Spell))),
-      filterFn: (spell, filters) => filters.filter(spell),
-      sortFn: (filters) => Spell.sorter(filters),
-      filtersBuilder: (group, filters, onChange) => SpellFiltersView(
+    return LibraryListView<Move, MoveFilters>(
+      storageKey: 'Moves',
+      title: Text(S.current.addGeneric(S.current.entityPlural(Move))),
+      extraData: {'classKeys': classKeys, 'rollStats': rollStats},
+      filtersBuilder: (group, filters, onChange) => MoveFiltersView(
         group: group,
         filters: filters,
         onChange: (f) => onChange(group, f),
         searchController: controller.search[group]!,
       ),
-      extraData: {'classKeys': classKeys, 'rollStats': rollStats},
+      filterFn: (move, filters) => filters.filter(move),
+      sortFn: (filters) => Move.sorter(filters),
       cardBuilder: (
         ctx,
-        spell, {
+        move, {
         required selected,
         required selectable,
         onToggle,
@@ -55,28 +57,28 @@ class AddSpellsView extends GetView<AddRepositoryItemsController<Spell, SpellFil
         required label,
         required icon,
       }) =>
-          SpellCard(
-        spell: spell,
+          MoveCard(
+        move: move,
         showDice: false,
         showStar: false,
         actions: [
           EntityEditMenu(
             onEdit: onUpdate != null
-                ? CharacterUtils.openSpellPage(
+                ? CharacterUtils.openMovePage(
                     rollStats: char.rollStats,
-                    classKeys: spell.classKeys,
-                    spell: spell,
+                    classKeys: move.classKeys,
+                    move: move,
                     onSave: onUpdate,
                   )
                 : null,
-            onDelete: onDelete != null ? () => onDelete(spell) : null,
+            onDelete: onDelete != null ? () => onDelete(move) : null,
           ),
           ElevatedButton.icon(
             style: ButtonThemes.primaryElevated(context),
             onPressed: onToggle,
             label: label,
             icon: icon,
-          )
+          ),
         ],
       ),
       onAdd: onAdd,

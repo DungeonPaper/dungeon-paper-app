@@ -2,7 +2,7 @@ import 'package:dungeon_paper/app/data/models/meta.dart';
 import 'package:dungeon_paper/app/data/models/character_class.dart';
 import 'package:dungeon_paper/app/widgets/forms/dynamic_form/dynamic_form.dart';
 import 'package:dungeon_paper/app/widgets/forms/dynamic_form/form_input_data.dart';
-import 'package:dungeon_paper/app/widgets/forms/repository_item_form.dart';
+import 'package:dungeon_paper/app/widgets/forms/library_entity_form.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 

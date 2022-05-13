@@ -4,8 +4,8 @@ import 'package:get/get.dart';
 
 import '../data/services/character_service.dart';
 import '../model_utils/character_utils.dart';
-import '../modules/AddRepositoryItems/bindings/add_repository_items_binding.dart';
-import '../modules/AddRepositoryItems/views/add_moves_view.dart';
+import '../modules/LibraryList/bindings/library_list_binding.dart';
+import '../modules/LibraryList/views/moves_library_list_view.dart';
 import '../modules/CharacterList/bindings/character_list_binding.dart';
 import '../modules/CharacterList/views/character_list_view.dart';
 import '../modules/CreateCharacter/bindings/create_character_binding.dart';
@@ -42,7 +42,7 @@ class AppPages {
     ),
     GetPage(
       name: _Paths.addMoves,
-      page: () => AddMovesView(
+      page: () => MovesLibraryListView(
         rollStats: characterService.current!.rollStats,
         onAdd: (moves) => characterService.updateCharacter(
           CharacterUtils.updateMoves(characterService.current!, moves),
@@ -50,7 +50,7 @@ class AppPages {
         selections: characterService.current!.moves,
         classKeys: [characterService.current!.characterClass.key],
       ),
-      binding: AddRepositoryItemsBinding(),
+      binding: LibraryListBinding(),
     ),
     GetPage(
       name: _Paths.rollDice,

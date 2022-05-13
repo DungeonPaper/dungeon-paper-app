@@ -1,6 +1,6 @@
 import 'package:dungeon_paper/app/data/models/meta.dart';
 import 'package:dungeon_paper/app/model_utils/model_key.dart';
-import 'package:dungeon_paper/app/modules/AddRepositoryItems/controllers/add_repository_items_controller.dart';
+import 'package:dungeon_paper/app/modules/LibraryList/controllers/library_list_controller.dart';
 import 'package:dungeon_paper/app/themes/colors.dart';
 import 'package:dungeon_paper/app/widgets/atoms/advanced_floating_action_button.dart';
 import 'package:dungeon_paper/app/widgets/dialogs/confirm_delete_dialog.dart';
@@ -9,7 +9,7 @@ import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
 
-import 'add_repository_item_card_list.dart';
+import 'library_card_list.dart';
 
 typedef CardBuilder<T> = Widget Function(
   BuildContext context,
@@ -23,9 +23,9 @@ typedef CardBuilder<T> = Widget Function(
   void Function(T item)? onDelete,
 });
 
-class AddRepositoryItemsView<T extends WithMeta, F extends EntityFilters<T>>
-    extends GetView<AddRepositoryItemsController<T, F>> {
-  AddRepositoryItemsView({
+class LibraryListView<T extends WithMeta, F extends EntityFilters<T>>
+    extends GetView<LibraryListController<T, F>> {
+  LibraryListView({
     Key? key,
     required this.title,
     required this.cardBuilder,
@@ -91,7 +91,7 @@ class AddRepositoryItemsView<T extends WithMeta, F extends EntityFilters<T>>
                 child: TabBarView(
                   controller: controller.tabController,
                   children: [
-                    AddRepositoryItemCardList<T, F>(
+                    LibraryCardList<T, F>(
                       group: FiltersGroup.playbook,
                       useFilters: useFilters,
                       filtersBuilder: filtersBuilder,
@@ -101,7 +101,7 @@ class AddRepositoryItemsView<T extends WithMeta, F extends EntityFilters<T>>
                         (item) => _wrapWithSelection(context, item, FiltersGroup.playbook),
                       ),
                     ),
-                    AddRepositoryItemCardList<T, F>(
+                    LibraryCardList<T, F>(
                       group: FiltersGroup.my,
                       onSave: (item) =>
                           controller.saveCustomItem(storageKey, item, preSelections, multiple),

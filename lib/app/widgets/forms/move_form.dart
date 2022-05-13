@@ -1,21 +1,22 @@
 import 'package:dungeon_paper/app/data/models/meta.dart';
-import 'package:dungeon_paper/app/data/models/spell.dart';
+import 'package:dungeon_paper/app/data/models/move.dart';
 import 'package:dungeon_paper/app/data/models/roll_stats.dart';
 import 'package:dungeon_paper/app/widgets/forms/dynamic_form/dynamic_form.dart';
 import 'package:dungeon_paper/app/widgets/forms/dynamic_form/form_input_data.dart';
-import 'package:dungeon_paper/app/widgets/forms/repository_item_form.dart';
+import 'package:dungeon_paper/app/widgets/forms/library_entity_form.dart';
 import 'package:dungeon_paper/core/utils/list_utils.dart';
+import 'package:dungeon_paper/generated/l10n.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-class AddSpellForm extends GetView<DynamicFormController<Spell>> {
-  const AddSpellForm({
+class MoveForm extends GetView<DynamicFormController<Move>> {
+  const MoveForm({
     Key? key,
     required this.onChange,
     required this.type,
   }) : super(key: key);
 
-  final void Function(Spell spell) onChange;
+  final void Function(Move move) onChange;
   final ItemFormType type;
 
   @override
@@ -23,46 +24,67 @@ class AddSpellForm extends GetView<DynamicFormController<Spell>> {
     return DynamicForm(
       inputs: controller.inputs,
       onChange: (d) => onChange(controller.setData(d)),
+      builder: (context, inputs) {
+        return ListView(
+          padding: const EdgeInsets.symmetric(horizontal: 16).copyWith(bottom: 70),
+          children: [
+            inputs[0],
+            const SizedBox(height: 16),
+            Row(
+              children: [
+                Expanded(child: inputs[1]),
+                const SizedBox(width: 16),
+                Expanded(child: inputs[2]),
+              ],
+            ),
+            const SizedBox(height: 16),
+            for (final input in inputs.sublist(3))
+              Padding(padding: const EdgeInsets.only(bottom: 16), child: input),
+          ],
+        );
+      },
     );
   }
 }
 
-class AddSpellFormController extends DynamicFormController<Spell> {
-  AddSpellFormController({required this.spell, required this.rollStats});
+class AddMoveFormController extends DynamicFormController<Move> {
+  AddMoveFormController({required this.move, required this.rollStats});
 
-  final Spell? spell;
+  final Move? move;
   final RollStats rollStats;
 
   @override
   void init() {
-    if (spell != null) {
-      entity.value = spell!.copyWithInherited(
-        meta: spell!.meta.copyWith(
-          sharing: MetaSharing.createFork(spell!.key, meta: spell!.meta.sharing, dirty: false),
+    if (move != null) {
+      entity.value = move!.copyWithInherited(
+        meta: move!.meta.copyWith(
+          sharing: MetaSharing.createFork(move!.key, meta: move!.meta.sharing, dirty: false),
         ),
       );
-      setFromEntity(spell!);
+      setFromEntity(move!);
     }
     createInputs();
   }
 
   @override
-  final entity = Spell.empty().obs;
+  final entity = Move.empty().obs;
 
-  Spell setFromEntity(Spell spell) => setData({
-        'name': spell.name,
-        'description': spell.description,
-        'explanation': spell.explanation,
-        'tags': spell.tags,
-        'dice': spell.dice,
-        'classKeys': spell.classKeys,
+  Move setFromEntity(Move move) => setData({
+        'name': move.name,
+        'category': move.category,
+        'description': move.description,
+        'explanation': move.explanation,
+        'tags': move.tags,
+        'dice': move.dice,
+        'classKeys': move.classKeys,
       });
 
   @override
-  Spell setData(Map<String, dynamic> data) {
+  Move setData(Map<String, dynamic> data) {
     entity.value = entity.value.copyWithInherited(
       meta: entity.value.meta,
       name: data['name'],
+      category: data['category'],
       description: data['description'],
       explanation: data['explanation'],
       tags: data['tags'],
@@ -79,9 +101,23 @@ class AddSpellFormController extends DynamicFormController<Spell> {
         name: 'name',
         // TODO intl + hint text
         data: FormTextInputData(
-          label: 'Spell name',
+          label: 'Move name',
           textCapitalization: TextCapitalization.words,
           text: entity.value.name,
+        ),
+      ),
+      FormInputData(
+        name: 'category',
+        data: FormDropdownInputData(
+          value: entity.value.category,
+          // TODO intl
+          label: const Text('Category'),
+          items: MoveCategory.values.map(
+            (cat) => DropdownMenuItem(
+              child: Text(S.current.moveCategoryWithLevelShort(cat.name)),
+              value: cat,
+            ),
+          ),
         ),
       ),
       FormInputData(
@@ -103,7 +139,7 @@ class AddSpellFormController extends DynamicFormController<Spell> {
         name: 'description',
         // TODO intl + hint text
         data: FormTextInputData(
-          label: 'Spell description',
+          label: 'Move description',
           maxLines: 10,
           minLines: 5,
           rich: true,
@@ -115,7 +151,7 @@ class AddSpellFormController extends DynamicFormController<Spell> {
         name: 'explanation',
         // TODO intl + hint text
         data: FormTextInputData(
-          label: 'Spell explanation',
+          label: 'Move explanation',
           maxLines: 10,
           minLines: 5,
           rich: true,

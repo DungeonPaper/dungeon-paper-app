@@ -4,10 +4,10 @@ import 'package:dungeon_paper/app/data/models/character.dart';
 import 'package:dungeon_paper/app/data/models/character_class.dart';
 import 'package:dungeon_paper/app/data/services/character_service.dart';
 import 'package:dungeon_paper/app/model_utils/model_key.dart';
-import 'package:dungeon_paper/app/modules/AddRepositoryItems/bindings/add_repository_items_binding.dart';
-import 'package:dungeon_paper/app/modules/AddRepositoryItems/controllers/add_repository_items_controller.dart';
-import 'package:dungeon_paper/app/modules/AddRepositoryItems/views/add_character_classes_view.dart';
-import 'package:dungeon_paper/app/modules/AddRepositoryItems/views/filters/character_class_filters.dart';
+import 'package:dungeon_paper/app/modules/LibraryList/bindings/library_list_binding.dart';
+import 'package:dungeon_paper/app/modules/LibraryList/controllers/library_list_controller.dart';
+import 'package:dungeon_paper/app/modules/LibraryList/views/character_classes_library_list_view.dart';
+import 'package:dungeon_paper/app/modules/LibraryList/views/filters/character_class_filters.dart';
 import 'package:dungeon_paper/app/modules/BasicInfoForm/bindings/basic_info_form_binding.dart';
 import 'package:dungeon_paper/app/modules/BasicInfoForm/views/basic_info_form_view.dart';
 import 'package:dungeon_paper/app/modules/RollStatsForm/bindings/roll_stats_form_binding.dart';
@@ -106,11 +106,11 @@ class CreateCharacterView extends GetView<CreateCharacterController> {
                                     'Base HP: ${cls!.hp}, Load: ${cls!.load}, Damage Dice: ${cls!.damageDice}'),
                             valid: cls != null,
                             onTap: () => Get.to(
-                              () => AddCharacterClassesView(
+                              () => CharacterClassesLibraryListView(
                                 selection: controller.characterClass.value,
                                 onChanged: (cls) => controller.setClass(cls),
                               ),
-                              binding: AddRepositoryItemsBinding(),
+                              binding: LibraryListBinding(),
                               arguments: {
                                 FiltersGroup.playbook: CharacterClassFilters(),
                                 FiltersGroup.my: CharacterClassFilters()

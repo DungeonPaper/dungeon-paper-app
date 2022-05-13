@@ -3,17 +3,17 @@ import 'package:dungeon_paper/app/data/models/item.dart';
 import 'package:dungeon_paper/app/data/models/meta.dart';
 import 'package:dungeon_paper/app/data/models/move.dart';
 import 'package:dungeon_paper/app/data/models/spell.dart';
-import 'package:dungeon_paper/app/modules/AddRepositoryItems/bindings/repository_item_form_binding.dart';
-import 'package:dungeon_paper/app/modules/AddRepositoryItems/controllers/add_repository_items_controller.dart';
+import 'package:dungeon_paper/app/modules/LibraryList/bindings/library_form_binding.dart';
+import 'package:dungeon_paper/app/modules/LibraryList/controllers/library_list_controller.dart';
 import 'package:dungeon_paper/app/themes/button_themes.dart';
-import 'package:dungeon_paper/app/widgets/forms/repository_item_form.dart';
+import 'package:dungeon_paper/app/widgets/forms/library_entity_form.dart';
 import 'package:dungeon_paper/generated/l10n.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-class AddRepositoryItemCardList<T extends WithMeta, F extends EntityFilters>
-    extends GetView<AddRepositoryItemsController<T, F>> {
-  const AddRepositoryItemCardList({
+class LibraryCardList<T extends WithMeta, F extends EntityFilters>
+    extends GetView<LibraryListController<T, F>> {
+  const LibraryCardList({
     Key? key,
     required this.useFilters,
     required this.filtersBuilder,
@@ -50,7 +50,7 @@ class AddRepositoryItemCardList<T extends WithMeta, F extends EntityFilters>
                     child: ElevatedButton.icon(
                       style: ButtonThemes.primaryElevated(context),
                       onPressed: () => Get.to(
-                        () => RepositoryItemForm<T>(
+                        () => LibraryEntityForm<T>(
                           onSave: onSave!,
                           type: ItemFormType.create,
                         ),

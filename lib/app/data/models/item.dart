@@ -1,5 +1,5 @@
 import 'dart:convert';
-import 'package:dungeon_paper/app/modules/AddRepositoryItems/views/filters/item_filters.dart';
+import 'package:dungeon_paper/app/modules/LibraryList/views/filters/item_filters.dart';
 import 'package:dungeon_paper/core/dw_icons.dart';
 import 'package:dungeon_paper/core/utils/string_utils.dart';
 import 'package:dungeon_paper/core/utils/uuid.dart';

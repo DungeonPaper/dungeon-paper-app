@@ -76,6 +76,7 @@ class CreateCharacterController extends GetxController {
   void setDirty() {
     dirty.value = true;
   }
+  
 
   void setStartingGear(List<GearSelection> selections) {
     startingGear.clear();

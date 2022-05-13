@@ -10,24 +10,24 @@ import 'package:dungeon_paper/app/model_utils/model_meta.dart';
 import 'package:dungeon_paper/app/widgets/atoms/advanced_floating_action_button.dart';
 import 'package:dungeon_paper/app/widgets/atoms/confirm_exit_view.dart';
 import 'package:dungeon_paper/app/widgets/atoms/meta_sync_menu.dart';
-import 'package:dungeon_paper/app/widgets/forms/add_item_form.dart';
-import 'package:dungeon_paper/app/widgets/forms/add_move_form.dart';
-import 'package:dungeon_paper/app/widgets/forms/add_note_form.dart';
-import 'package:dungeon_paper/app/widgets/forms/add_spell_form.dart';
+import 'package:dungeon_paper/app/widgets/forms/item_form.dart';
+import 'package:dungeon_paper/app/widgets/forms/move_form.dart';
+import 'package:dungeon_paper/app/widgets/forms/note_form.dart';
+import 'package:dungeon_paper/app/widgets/forms/spell_form.dart';
 import 'package:dungeon_paper/app/widgets/forms/dynamic_form/dynamic_form.dart';
 import 'package:dungeon_paper/generated/l10n.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-import 'add_character_class_form.dart';
+import 'character_class_form.dart';
 
 enum ItemFormType {
   edit,
   create,
 }
 
-class RepositoryItemForm<T extends WithMeta> extends GetView<DynamicFormController<T>> {
-  const RepositoryItemForm({
+class LibraryEntityForm<T extends WithMeta> extends GetView<DynamicFormController<T>> {
+  const LibraryEntityForm({
     Key? key,
     required this.onSave,
     required this.type,
@@ -80,19 +80,19 @@ class RepositoryItemForm<T extends WithMeta> extends GetView<DynamicFormControll
   Widget buildForm(BuildContext context) {
     switch (T) {
       case Move:
-        return AddMoveForm(
+        return MoveForm(
           onChange: setEntity,
           type: type,
         );
       case Spell:
-        return AddSpellForm(
+        return SpellForm(
           onChange: setEntity,
           type: type,
         );
       case Item:
-        return AddItemForm(onChange: setEntity, type: type);
+        return ItemForm(onChange: setEntity, type: type);
       case Note:
-        return AddNoteForm(onChange: setEntity, type: type);
+        return NoteForm(onChange: setEntity, type: type);
       case CharacterClass:
         return AddCharacterClassForm(onChange: setEntity, type: type);
       default:

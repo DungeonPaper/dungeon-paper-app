@@ -15,8 +15,8 @@ enum FiltersGroup {
   // online,
 }
 
-class AddRepositoryItemsController<T extends WithMeta, F extends EntityFilters>
-    extends GetxController with GetSingleTickerProviderStateMixin {
+class LibraryListController<T extends WithMeta, F extends EntityFilters> extends GetxController
+    with GetSingleTickerProviderStateMixin {
   final repo = Get.find<RepositoryService>().obs;
   final chars = Get.find<CharacterService>().obs;
   final selected = <T>[].obs;

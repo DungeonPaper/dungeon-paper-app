@@ -66,14 +66,8 @@ class CharacterService extends GetxService {
   @override
   void onInit() async {
     super.onInit();
-    init();
-  }
-
-  Future<CharacterService> init() async {
     pageController.addListener(refreshPage);
     await _listenToChars();
-
-    return this;
   }
 
   Future<void> _listenToChars() async {

@@ -5,8 +5,8 @@ import 'package:dungeon_paper/app/data/models/move.dart';
 import 'package:dungeon_paper/app/data/models/character.dart';
 import 'package:dungeon_paper/app/data/models/roll_stats.dart';
 import 'package:dungeon_paper/app/data/models/spell.dart';
-import 'package:dungeon_paper/app/modules/AddRepositoryItems/bindings/repository_item_form_binding.dart';
-import 'package:dungeon_paper/app/widgets/forms/repository_item_form.dart';
+import 'package:dungeon_paper/app/modules/LibraryList/bindings/library_form_binding.dart';
+import 'package:dungeon_paper/app/widgets/forms/library_entity_form.dart';
 import 'package:dungeon_paper/core/utils/list_utils.dart';
 import 'package:get/get.dart';
 
@@ -32,7 +32,7 @@ class CharacterUtils {
     required List<String> classKeys,
   }) =>
       () => Get.to(
-            () => RepositoryItemForm<Move>(
+            () => LibraryEntityForm<Move>(
               onSave: onSave,
               type: move == null ? ItemFormType.create : ItemFormType.edit,
             ),
@@ -66,7 +66,7 @@ class CharacterUtils {
     required List<String> classKeys,
   }) =>
       () => Get.to(
-            () => RepositoryItemForm<Spell>(
+            () => LibraryEntityForm<Spell>(
               onSave: onSave,
               type: spell == null ? ItemFormType.create : ItemFormType.edit,
             ),
@@ -98,7 +98,7 @@ class CharacterUtils {
     required void Function(Item item) onSave,
   }) =>
       () => Get.to(
-            () => RepositoryItemForm<Item>(
+            () => LibraryEntityForm<Item>(
               onSave: onSave,
               type: item == null ? ItemFormType.create : ItemFormType.edit,
             ),
@@ -127,7 +127,7 @@ class CharacterUtils {
     required void Function(Note note) onSave,
   }) =>
       () => Get.to(
-            () => RepositoryItemForm<Note>(
+            () => LibraryEntityForm<Note>(
               onSave: onSave,
               type: note == null ? ItemFormType.create : ItemFormType.edit,
             ),
@@ -144,7 +144,7 @@ class CharacterUtils {
     required void Function(CharacterClass item) onSave,
   }) =>
       () => Get.to(
-            () => RepositoryItemForm<CharacterClass>(
+            () => LibraryEntityForm<CharacterClass>(
               onSave: onSave,
               type: characterClass == null ? ItemFormType.create : ItemFormType.edit,
             ),

@@ -1,22 +1,21 @@
 import 'package:dungeon_paper/app/data/models/character.dart';
-import 'package:dungeon_paper/app/data/models/note.dart';
 import 'package:dungeon_paper/app/data/models/roll_stats.dart';
-import 'package:dungeon_paper/app/data/services/repository_service.dart';
+import 'package:dungeon_paper/app/data/models/spell.dart';
 import 'package:dungeon_paper/app/model_utils/character_utils.dart';
-import 'package:dungeon_paper/app/modules/AddRepositoryItems/controllers/add_repository_items_controller.dart';
-import 'package:dungeon_paper/app/modules/AddRepositoryItems/views/add_repository_items_view.dart';
+import 'package:dungeon_paper/app/modules/LibraryList/controllers/library_list_controller.dart';
+import 'package:dungeon_paper/app/modules/LibraryList/views/library_list_view.dart';
 import 'package:dungeon_paper/app/themes/button_themes.dart';
-import 'package:dungeon_paper/app/widgets/cards/note_card.dart';
+import 'package:dungeon_paper/app/widgets/cards/spell_card.dart';
 import 'package:dungeon_paper/app/widgets/menus/entity_edit_menu.dart';
 import 'package:dungeon_paper/generated/l10n.dart';
 import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
 
-import 'filters/note_filters.dart';
+import 'filters/spell_filters.dart';
 
-class AddNotesView extends GetView<AddRepositoryItemsController<Note, NoteFilters>> {
-  const AddNotesView({
+class SpellsLibraryListView extends GetView<LibraryListController<Spell, SpellFilters>> {
+  const SpellsLibraryListView({
     Key? key,
     required this.onAdd,
     required this.selections,
@@ -24,28 +23,30 @@ class AddNotesView extends GetView<AddRepositoryItemsController<Note, NoteFilter
     required this.rollStats,
   }) : super(key: key);
 
-  final void Function(Iterable<Note> notes) onAdd;
-  final Iterable<Note> selections;
+  final void Function(Iterable<Spell> spells) onAdd;
+  final Iterable<Spell> selections;
   final List<String> classKeys;
   final RollStats rollStats;
 
-  RepositoryService get service => controller.repo.value;
   Character get char => controller.chars.value.current!;
 
   @override
   Widget build(BuildContext context) {
-    return AddRepositoryItemsView<Note, NoteFilters>(
-      storageKey: 'Notes',
-      title: Text(S.current.addGeneric(S.current.entityPlural(Note))),
-      filtersBuilder: (group, filters, onChange) => NoteFiltersView(
+    return LibraryListView<Spell, SpellFilters>(
+      storageKey: 'Spells',
+      title: Text(S.current.addGeneric(S.current.entityPlural(Spell))),
+      filterFn: (spell, filters) => filters.filter(spell),
+      sortFn: (filters) => Spell.sorter(filters),
+      filtersBuilder: (group, filters, onChange) => SpellFiltersView(
+        group: group,
         filters: filters,
         onChange: (f) => onChange(group, f),
         searchController: controller.search[group]!,
       ),
-      filterFn: (notes, filters) => filters.filter(notes),
+      extraData: {'classKeys': classKeys, 'rollStats': rollStats},
       cardBuilder: (
         ctx,
-        note, {
+        spell, {
         required selected,
         required selectable,
         onToggle,
@@ -54,25 +55,28 @@ class AddNotesView extends GetView<AddRepositoryItemsController<Note, NoteFilter
         required label,
         required icon,
       }) =>
-          NoteCard(
-        note: note,
+          SpellCard(
+        spell: spell,
+        showDice: false,
         showStar: false,
         actions: [
           EntityEditMenu(
             onEdit: onUpdate != null
-                ? CharacterUtils.openNotePage(
-                    note: note,
+                ? CharacterUtils.openSpellPage(
+                    rollStats: char.rollStats,
+                    classKeys: spell.classKeys,
+                    spell: spell,
                     onSave: onUpdate,
                   )
                 : null,
-            onDelete: onDelete != null ? () => onDelete(note) : null,
+            onDelete: onDelete != null ? () => onDelete(spell) : null,
           ),
           ElevatedButton.icon(
             style: ButtonThemes.primaryElevated(context),
             onPressed: onToggle,
             label: label,
             icon: icon,
-          ),
+          )
         ],
       ),
       onAdd: onAdd,

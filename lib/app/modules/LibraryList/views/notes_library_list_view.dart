@@ -1,22 +1,22 @@
 import 'package:dungeon_paper/app/data/models/character.dart';
-import 'package:dungeon_paper/app/data/models/move.dart';
+import 'package:dungeon_paper/app/data/models/note.dart';
 import 'package:dungeon_paper/app/data/models/roll_stats.dart';
 import 'package:dungeon_paper/app/data/services/repository_service.dart';
 import 'package:dungeon_paper/app/model_utils/character_utils.dart';
-import 'package:dungeon_paper/app/modules/AddRepositoryItems/controllers/add_repository_items_controller.dart';
-import 'package:dungeon_paper/app/modules/AddRepositoryItems/views/add_repository_items_view.dart';
+import 'package:dungeon_paper/app/modules/LibraryList/controllers/library_list_controller.dart';
+import 'package:dungeon_paper/app/modules/LibraryList/views/library_list_view.dart';
 import 'package:dungeon_paper/app/themes/button_themes.dart';
-import 'package:dungeon_paper/app/widgets/cards/move_card.dart';
+import 'package:dungeon_paper/app/widgets/cards/note_card.dart';
 import 'package:dungeon_paper/app/widgets/menus/entity_edit_menu.dart';
 import 'package:dungeon_paper/generated/l10n.dart';
 import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
 
-import 'filters/move_filters.dart';
+import 'filters/note_filters.dart';
 
-class AddMovesView extends GetView<AddRepositoryItemsController<Move, MoveFilters>> {
-  const AddMovesView({
+class NotesLibraryListView extends GetView<LibraryListController<Note, NoteFilters>> {
+  const NotesLibraryListView({
     Key? key,
     required this.onAdd,
     required this.selections,
@@ -24,8 +24,8 @@ class AddMovesView extends GetView<AddRepositoryItemsController<Move, MoveFilter
     required this.rollStats,
   }) : super(key: key);
 
-  final void Function(Iterable<Move> moves) onAdd;
-  final Iterable<Move> selections;
+  final void Function(Iterable<Note> notes) onAdd;
+  final Iterable<Note> selections;
   final List<String> classKeys;
   final RollStats rollStats;
 
@@ -34,21 +34,18 @@ class AddMovesView extends GetView<AddRepositoryItemsController<Move, MoveFilter
 
   @override
   Widget build(BuildContext context) {
-    return AddRepositoryItemsView<Move, MoveFilters>(
-      storageKey: 'Moves',
-      title: Text(S.current.addGeneric(S.current.entityPlural(Move))),
-      extraData: {'classKeys': classKeys, 'rollStats': rollStats},
-      filtersBuilder: (group, filters, onChange) => MoveFiltersView(
-        group: group,
+    return LibraryListView<Note, NoteFilters>(
+      storageKey: 'Notes',
+      title: Text(S.current.addGeneric(S.current.entityPlural(Note))),
+      filtersBuilder: (group, filters, onChange) => NoteFiltersView(
         filters: filters,
         onChange: (f) => onChange(group, f),
         searchController: controller.search[group]!,
       ),
-      filterFn: (move, filters) => filters.filter(move),
-      sortFn: (filters) => Move.sorter(filters),
+      filterFn: (notes, filters) => filters.filter(notes),
       cardBuilder: (
         ctx,
-        move, {
+        note, {
         required selected,
         required selectable,
         onToggle,
@@ -57,21 +54,18 @@ class AddMovesView extends GetView<AddRepositoryItemsController<Move, MoveFilter
         required label,
         required icon,
       }) =>
-          MoveCard(
-        move: move,
-        showDice: false,
+          NoteCard(
+        note: note,
         showStar: false,
         actions: [
           EntityEditMenu(
             onEdit: onUpdate != null
-                ? CharacterUtils.openMovePage(
-                    rollStats: char.rollStats,
-                    classKeys: move.classKeys,
-                    move: move,
+                ? CharacterUtils.openNotePage(
+                    note: note,
                     onSave: onUpdate,
                   )
                 : null,
-            onDelete: onDelete != null ? () => onDelete(move) : null,
+            onDelete: onDelete != null ? () => onDelete(note) : null,
           ),
           ElevatedButton.icon(
             style: ButtonThemes.primaryElevated(context),

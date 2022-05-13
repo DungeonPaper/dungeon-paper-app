@@ -2,13 +2,13 @@ import 'package:dungeon_paper/app/data/models/meta.dart';
 import 'package:dungeon_paper/app/data/models/note.dart';
 import 'package:dungeon_paper/app/widgets/forms/dynamic_form/dynamic_form.dart';
 import 'package:dungeon_paper/app/widgets/forms/dynamic_form/form_input_data.dart';
-import 'package:dungeon_paper/app/widgets/forms/repository_item_form.dart';
+import 'package:dungeon_paper/app/widgets/forms/library_entity_form.dart';
 import 'package:dungeon_paper/generated/l10n.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-class AddNoteForm extends GetView<DynamicFormController<Note>> {
-  const AddNoteForm({
+class NoteForm extends GetView<DynamicFormController<Note>> {
+  const NoteForm({
     Key? key,
     required this.onChange,
     required this.type,
