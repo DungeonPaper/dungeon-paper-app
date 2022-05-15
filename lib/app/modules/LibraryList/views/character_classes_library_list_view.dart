@@ -69,3 +69,19 @@ class CharacterClassesLibraryListView
     );
   }
 }
+
+class CharacterClassLibraryListArguments
+    extends LibraryListArguments<CharacterClass, CharacterClassFilters> {
+  CharacterClassLibraryListArguments({
+    required super.onAdd,
+    required super.preSelections,
+  }) : super(
+          sortFn: CharacterClass.sorter,
+          filterFn: (cls, filters) => filters.filter(cls),
+          filters: {
+            FiltersGroup.playbook: CharacterClassFilters(),
+            FiltersGroup.my: CharacterClassFilters(),
+          },
+          extraData: const {},
+        );
+}

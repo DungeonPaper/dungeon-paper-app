@@ -37,19 +37,10 @@ class ModelPages {
     return () => Get.to(
           () => const MovesLibraryListView(),
           binding: LibraryListBinding(),
-          arguments: LibraryListArguments<Move, MoveFilters>(
+          arguments: MoveLibraryListArguments(
+            character: char,
             onAdd: onAdd ?? library.upsertToCharacter,
             preSelections: char.moves,
-            filters: {
-              FiltersGroup.playbook: MoveFilters(classKey: char.characterClass.key),
-              FiltersGroup.my: MoveFilters(classKey: char.characterClass.key),
-            },
-            extraData: {
-              'abilityScores': [char.abilityScores],
-              'classKeys': [char.characterClass.key],
-            },
-            filterFn: (move, filters) => filters.filter(move),
-            sortFn: Move.sorter,
           ),
         );
   }
@@ -83,19 +74,10 @@ class ModelPages {
     return () => Get.to(
           () => const SpellsLibraryListView(),
           binding: LibraryListBinding(),
-          arguments: LibraryListArguments<Spell, SpellFilters>(
+          arguments: SpellLibraryListArguments(
+            character: char,
             onAdd: onAdd ?? library.upsertToCharacter,
             preSelections: char.spells,
-            filters: {
-              FiltersGroup.playbook: SpellFilters(classKey: char.characterClass.key),
-              FiltersGroup.my: SpellFilters(classKey: char.characterClass.key),
-            },
-            extraData: {
-              'abilityScores': [char.abilityScores],
-              'classKeys': [char.characterClass.key],
-            },
-            filterFn: (spell, filters) => filters.filter(spell),
-            sortFn: Spell.sorter,
           ),
         );
   }
@@ -129,18 +111,9 @@ class ModelPages {
     return () => Get.to(
           () => const ItemsLibraryListView(),
           binding: LibraryListBinding(),
-          arguments: LibraryListArguments<Item, ItemFilters>(
+          arguments: ItemLibraryListArguments(
             onAdd: onAdd ?? library.upsertToCharacter,
             preSelections: char.items,
-            filters: {
-              FiltersGroup.playbook: ItemFilters(),
-              FiltersGroup.my: ItemFilters(),
-            },
-            extraData: {
-              'abilityScores': [char.abilityScores],
-            },
-            filterFn: (item, filters) => filters.filter(item),
-            sortFn: Item.sorter,
           ),
         );
   }
@@ -169,16 +142,9 @@ class ModelPages {
     return () => Get.to(
           () => const NotesLibraryListView(),
           binding: LibraryListBinding(),
-          arguments: LibraryListArguments<Note, NoteFilters>(
+          arguments: NoteLibraryListArguments(
             onAdd: onAdd ?? library.upsertToCharacter,
             preSelections: char.notes,
-            filters: {
-              FiltersGroup.playbook: NoteFilters(),
-              FiltersGroup.my: NoteFilters(),
-            },
-            extraData: const {},
-            filterFn: (note, filters) => filters.filter(note),
-            sortFn: (f) => (a, b) => 0,
           ),
         );
   }
@@ -207,20 +173,13 @@ class ModelPages {
     return () => Get.to(
           () => const CharacterClassesLibraryListView(),
           binding: LibraryListBinding(),
-          arguments: LibraryListArguments<CharacterClass, CharacterClassFilters>(
+          arguments: CharacterClassLibraryListArguments(
             onAdd: (list) => onAdd != null
                 ? onAdd(list.elementAt(0))
                 : controller.updateCharacter(
                     char.copyWith(characterClass: list.elementAt(0)),
                   ),
             preSelections: [char.characterClass],
-            filters: {
-              FiltersGroup.playbook: CharacterClassFilters(),
-              FiltersGroup.my: CharacterClassFilters(),
-            },
-            extraData: const {},
-            filterFn: (note, filters) => filters.filter(note),
-            sortFn: CharacterClass.sorter,
           ),
         );
   }

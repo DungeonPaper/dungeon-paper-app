@@ -188,7 +188,7 @@ abstract class EntityFilters<T> {
   int get totalFilterCount => filterActiveList.length;
 }
 
-class LibraryListArguments<T extends WithMeta, F extends EntityFilters<T>> {
+abstract class LibraryListArguments<T extends WithMeta, F extends EntityFilters<T>> {
   final Map<FiltersGroup, F?> filters;
 
   final void Function(Iterable<T> items) onAdd;

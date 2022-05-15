@@ -18,7 +18,7 @@ class SpellsLibraryListView extends GetView<LibraryListController<Spell, SpellFi
     Key? key,
   }) : super(key: key);
 
-  Character get char => controller.chars.value.current!;
+  Character get character => controller.chars.value.current!;
 
   @override
   Widget build(BuildContext context) {
@@ -49,7 +49,7 @@ class SpellsLibraryListView extends GetView<LibraryListController<Spell, SpellFi
           EntityEditMenu(
             onEdit: onUpdate != null
                 ? ModelPages.openSpellPage(
-                    abilityScores: char.abilityScores,
+                    abilityScores: character.abilityScores,
                     classKeys: spell.classKeys,
                     spell: spell,
                     onSave: onUpdate,
@@ -67,4 +67,23 @@ class SpellsLibraryListView extends GetView<LibraryListController<Spell, SpellFi
       ),
     );
   }
+}
+
+class SpellLibraryListArguments extends LibraryListArguments<Spell, SpellFilters> {
+  SpellLibraryListArguments({
+    required Character? character,
+    required super.onAdd,
+    required super.preSelections,
+  }) : super(
+          sortFn: Spell.sorter,
+          filterFn: (spell, filters) => filters.filter(spell),
+          filters: {
+            FiltersGroup.playbook: SpellFilters(classKey: character?.characterClass.key),
+            FiltersGroup.my: SpellFilters(classKey: character?.characterClass.key),
+          },
+          extraData: {
+            'abilityScores': character?.abilityScores,
+            'classKeys': character != null ? [character.characterClass.key] : null,
+          },
+        );
 }

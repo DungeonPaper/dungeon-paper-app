@@ -68,19 +68,10 @@ class HomeCharacterActionsView extends GetView<CharacterService> {
       onReorder: _onReorder,
       list: char.moves,
       addPageBuilder: () => const MovesLibraryListView(),
-      addPageArguments: ({required onAdd}) => LibraryListArguments<Move, MoveFilters>(
+      addPageArguments: ({required onAdd}) => MoveLibraryListArguments(
+        character: char,
         onAdd: onAdd,
         preSelections: char.moves,
-        filters: {
-          FiltersGroup.playbook: MoveFilters(classKey: char.characterClass.key),
-          FiltersGroup.my: MoveFilters(classKey: char.characterClass.key),
-        },
-        extraData: {
-          'abilityScores': [char.abilityScores],
-          'classKeys': [char.characterClass.key],
-        },
-        filterFn: (move, filters) => filters.filter(move),
-        sortFn: Move.sorter,
       ),
       cardBuilder: (move, {required onSave, required onDelete}) => MoveCard(
         move: move,
@@ -109,19 +100,10 @@ class HomeCharacterActionsView extends GetView<CharacterService> {
       onReorder: _onReorder,
       list: char.spells,
       addPageBuilder: () => const SpellsLibraryListView(),
-      addPageArguments: ({required onAdd}) => LibraryListArguments<Spell, SpellFilters>(
+      addPageArguments: ({required onAdd}) => SpellLibraryListArguments(
+        character: char,
         onAdd: onAdd,
         preSelections: char.spells,
-        filters: {
-          FiltersGroup.playbook: SpellFilters(classKey: char.characterClass.key),
-          FiltersGroup.my: SpellFilters(classKey: char.characterClass.key),
-        },
-        extraData: {
-          'abilityScores': [char.abilityScores],
-          'classKeys': [char.characterClass.key],
-        },
-        filterFn: (spell, filters) => filters.filter(spell),
-        sortFn: Spell.sorter,
       ),
       cardBuilder: (spell, {required onSave, required onDelete}) => SpellCard(
         spell: spell,
@@ -150,16 +132,9 @@ class HomeCharacterActionsView extends GetView<CharacterService> {
       onReorder: _onReorder,
       list: char.items,
       addPageBuilder: () => const ItemsLibraryListView(),
-      addPageArguments: ({required onAdd}) => LibraryListArguments<Item, ItemFilters>(
+      addPageArguments: ({required onAdd}) => ItemLibraryListArguments(
         onAdd: onAdd,
         preSelections: char.items,
-        filters: {
-          FiltersGroup.playbook: ItemFilters(),
-          FiltersGroup.my: ItemFilters(),
-        },
-        extraData: const {},
-        filterFn: (item, filters) => filters.filter(item),
-        sortFn: Item.sorter,
       ),
       cardBuilder: (item, {required onSave, required onDelete}) => ItemCard(
         item: item,

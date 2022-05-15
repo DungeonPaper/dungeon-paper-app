@@ -70,3 +70,22 @@ class MovesLibraryListView extends GetView<LibraryListController<Move, MoveFilte
     );
   }
 }
+
+class MoveLibraryListArguments extends LibraryListArguments<Move, MoveFilters> {
+  MoveLibraryListArguments({
+    required Character? character,
+    required super.onAdd,
+    required super.preSelections,
+  }) : super(
+          sortFn: Move.sorter,
+          filterFn: (move, filters) => filters.filter(move),
+          filters: {
+            FiltersGroup.playbook: MoveFilters(classKey: character?.characterClass.key),
+            FiltersGroup.my: MoveFilters(classKey: character?.characterClass.key),
+          },
+          extraData: {
+            'abilityScores': character?.abilityScores,
+            'classKeys': character != null ? [character.characterClass.key] : null,
+          },
+        );
+}

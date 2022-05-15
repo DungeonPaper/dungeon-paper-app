@@ -110,20 +110,11 @@ class CreateCharacterView extends GetView<CreateCharacterController> {
                             onTap: () => Get.to(
                               () => const CharacterClassesLibraryListView(),
                               binding: LibraryListBinding(),
-                              arguments:
-                                  LibraryListArguments<CharacterClass, CharacterClassFilters>(
-                                filters: {
-                                  FiltersGroup.playbook: CharacterClassFilters(),
-                                  FiltersGroup.my: CharacterClassFilters()
-                                },
-                                filterFn: (cls, filters) => filters.filter(cls),
-                                sortFn: CharacterClass.sorter,
+                              arguments: CharacterClassLibraryListArguments(
                                 preSelections: controller.characterClass.value != null
                                     ? [controller.characterClass.value!]
                                     : [],
                                 onAdd: (cls) => controller.setClass(cls.first),
-                                extraData: const {},
-                                multiple: false,
                               ),
                               preventDuplicates: false,
                             ),

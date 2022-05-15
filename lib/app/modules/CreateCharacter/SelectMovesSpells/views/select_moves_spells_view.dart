@@ -1,3 +1,4 @@
+import 'package:dungeon_paper/app/data/models/character.dart';
 import 'package:dungeon_paper/app/data/models/move.dart';
 import 'package:dungeon_paper/app/data/models/spell.dart';
 import 'package:dungeon_paper/app/model_utils/model_pages.dart';
@@ -96,7 +97,9 @@ class SelectMovesSpellsView extends GetView<SelectMovesSpellsController> {
                     onPressed: () => Get.to(
                       () => const MovesLibraryListView(),
                       binding: LibraryListBinding(),
-                      arguments: LibraryListArguments<Move, MoveFilters>(
+                      arguments: MoveLibraryListArguments(
+                        character: null,
+                        preSelections: controller.moves,
                         onAdd: (moves) {
                           controller.dirty.value = true;
                           controller.moves.value = addByKey(
@@ -104,21 +107,6 @@ class SelectMovesSpellsView extends GetView<SelectMovesSpellsController> {
                             moves.map((m) => m.copyWithInherited(favorited: true)),
                           );
                         },
-                        extraData: {
-                          'abilityScores': controller.abilityScores.value,
-                          'classKeys': [controller.characterClass.value.key],
-                        },
-                        preSelections: controller.moves,
-                        filters: {
-                          FiltersGroup.playbook: MoveFilters(
-                            classKey: controller.characterClass.value.key,
-                          ),
-                          FiltersGroup.my: MoveFilters(
-                            classKey: controller.characterClass.value.key,
-                          )
-                        },
-                        filterFn: (move, filters) => filters.filter(move),
-                        sortFn: Move.sorter,
                       ),
                     ),
                     label: Text(S.current.addGeneric(S.current.entityPlural(Move))),
@@ -172,29 +160,16 @@ class SelectMovesSpellsView extends GetView<SelectMovesSpellsController> {
                     onPressed: () => Get.to(
                       () => const SpellsLibraryListView(),
                       binding: LibraryListBinding(),
-                      arguments: LibraryListArguments<Spell, SpellFilters>(
-                        onAdd: (moves) {
+                      arguments: SpellLibraryListArguments(
+                        character: null,
+                        preSelections: controller.spells,
+                        onAdd: (spells) {
                           controller.dirty.value = true;
                           controller.spells.value = addByKey(
                             controller.spells,
-                            moves.map((m) => m.copyWithInherited(prepared: true)),
+                            spells.map((m) => m.copyWithInherited(prepared: true)),
                           );
                         },
-                        extraData: {
-                          'abilityScores': controller.abilityScores.value,
-                          'classKeys': [controller.characterClass.value.key],
-                        },
-                        preSelections: controller.spells,
-                        filters: {
-                          FiltersGroup.playbook: SpellFilters(
-                            classKey: controller.characterClass.value.key,
-                          ),
-                          FiltersGroup.my: SpellFilters(
-                            classKey: controller.characterClass.value.key,
-                          )
-                        },
-                        filterFn: (spell, filters) => filters.filter(spell),
-                        sortFn: Spell.sorter,
                       ),
                     ),
                     label: Text(S.current.addGeneric(S.current.entityPlural(Spell))),

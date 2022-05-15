@@ -20,7 +20,7 @@ class NotesLibraryListView extends GetView<LibraryListController<Note, NoteFilte
   }) : super(key: key);
 
   RepositoryService get service => controller.repo.value;
-  Character get char => controller.chars.value.current!;
+  Character get character => controller.chars.value.current!;
 
   @override
   Widget build(BuildContext context) {
@@ -65,4 +65,19 @@ class NotesLibraryListView extends GetView<LibraryListController<Note, NoteFilte
       ),
     );
   }
+}
+
+class NoteLibraryListArguments extends LibraryListArguments<Note, NoteFilters> {
+  NoteLibraryListArguments({
+    required super.onAdd,
+    required super.preSelections,
+  }) : super(
+          sortFn: (f) => (a, b) => 0,
+          filterFn: (note, filters) => filters.filter(note),
+          filters: {
+            FiltersGroup.playbook: NoteFilters(),
+            FiltersGroup.my: NoteFilters(),
+          },
+          extraData: const {},
+        );
 }
