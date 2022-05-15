@@ -3,19 +3,22 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class AbilityScoresFormController extends GetxController {
-  final Rx<AbilityScores> abilityScores;
-  final textControllers = <String, TextEditingController>{};
   final dirty = false.obs;
 
-  AbilityScoresFormController({
-    AbilityScores? abilityScores,
-  }) : abilityScores = (abilityScores ??
-                AbilityScores.dungeonWorld(dex: 10, str: 10, wis: 10, con: 10, intl: 10, cha: 10))
-            .obs {
-    _initTextControllers();
-  }
+  final Rx<AbilityScores> abilityScores =
+      AbilityScores.dungeonWorld(dex: 10, str: 10, wis: 10, con: 10, intl: 10, cha: 10).obs;
+  final textControllers = <String, TextEditingController>{};
+  late final void Function(AbilityScores abilityScores) onChanged;
 
-  void _initTextControllers() {
+  AbilityScoresFormController();
+
+  @override
+  void onReady() {
+    super.onReady();
+    final AbilityScoresFormArguments args = Get.arguments;
+    if (args.abilityScores != null) {
+      abilityScores.value = args.abilityScores!;
+    }
     for (final ctrl in textControllers.values) {
       ctrl.removeListener(validate);
     }
@@ -24,6 +27,7 @@ class AbilityScoresFormController extends GetxController {
       textControllers[stat.key] = TextEditingController(text: stat.value.toString())
         ..addListener(validate);
     }
+    onChanged = args.onChanged;
   }
 
   void validate() {
@@ -33,4 +37,14 @@ class AbilityScoresFormController extends GetxController {
         stat.key: int.tryParse(textControllers[stat.key]!.text) ?? stat.value
     });
   }
+}
+
+class AbilityScoresFormArguments {
+  final AbilityScores? abilityScores;
+  final void Function(AbilityScores abilityScores) onChanged;
+
+  AbilityScoresFormArguments({
+    required this.abilityScores,
+    required this.onChanged,
+  });
 }

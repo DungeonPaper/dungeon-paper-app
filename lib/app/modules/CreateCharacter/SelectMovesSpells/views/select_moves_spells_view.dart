@@ -1,13 +1,10 @@
-import 'package:dungeon_paper/app/data/models/character.dart';
 import 'package:dungeon_paper/app/data/models/move.dart';
 import 'package:dungeon_paper/app/data/models/spell.dart';
 import 'package:dungeon_paper/app/model_utils/model_pages.dart';
 import 'package:dungeon_paper/app/modules/LibraryList/bindings/library_list_binding.dart';
-import 'package:dungeon_paper/app/modules/LibraryList/controllers/library_list_controller.dart';
 import 'package:dungeon_paper/app/modules/LibraryList/views/moves_library_list_view.dart';
 import 'package:dungeon_paper/app/modules/LibraryList/views/spells_library_list_view.dart';
-import 'package:dungeon_paper/app/modules/LibraryList/views/filters/move_filters.dart';
-import 'package:dungeon_paper/app/modules/LibraryList/views/filters/spell_filters.dart';
+import 'package:dungeon_paper/app/routes/app_pages.dart';
 import 'package:dungeon_paper/app/themes/button_themes.dart';
 import 'package:dungeon_paper/app/widgets/atoms/advanced_floating_action_button.dart';
 import 'package:dungeon_paper/app/widgets/atoms/confirm_exit_view.dart';
@@ -25,10 +22,7 @@ import '../controllers/select_moves_spells_controller.dart';
 class SelectMovesSpellsView extends GetView<SelectMovesSpellsController> {
   const SelectMovesSpellsView({
     Key? key,
-    required this.onChanged,
   }) : super(key: key);
-
-  final void Function(List<Move> moves, List<Spell> spells) onChanged;
 
   @override
   Widget build(BuildContext context) {
@@ -94,9 +88,8 @@ class SelectMovesSpellsView extends GetView<SelectMovesSpellsController> {
                   height: 48,
                   child: OutlinedButton.icon(
                     style: ButtonThemes.primaryOutlined(context),
-                    onPressed: () => Get.to(
-                      () => const MovesLibraryListView(),
-                      binding: LibraryListBinding(),
+                    onPressed: () => Get.toNamed(
+                      Routes.moves,
                       arguments: MoveLibraryListArguments(
                         character: null,
                         preSelections: controller.moves,
@@ -157,9 +150,8 @@ class SelectMovesSpellsView extends GetView<SelectMovesSpellsController> {
                   height: 48,
                   child: OutlinedButton.icon(
                     style: ButtonThemes.primaryOutlined(context),
-                    onPressed: () => Get.to(
-                      () => const SpellsLibraryListView(),
-                      binding: LibraryListBinding(),
+                    onPressed: () => Get.toNamed(
+                      Routes.spells,
                       arguments: SpellLibraryListArguments(
                         character: null,
                         preSelections: controller.spells,
@@ -186,7 +178,7 @@ class SelectMovesSpellsView extends GetView<SelectMovesSpellsController> {
   }
 
   _save() {
-    onChanged(controller.moves, controller.spells);
+    controller.onChanged(controller.moves, controller.spells);
     Get.back();
   }
 }

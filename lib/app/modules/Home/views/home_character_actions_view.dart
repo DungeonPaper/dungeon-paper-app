@@ -14,10 +14,8 @@ import 'package:dungeon_paper/app/modules/LibraryList/controllers/library_list_c
 import 'package:dungeon_paper/app/modules/LibraryList/views/items_library_list_view.dart';
 import 'package:dungeon_paper/app/modules/LibraryList/views/moves_library_list_view.dart';
 import 'package:dungeon_paper/app/modules/LibraryList/views/spells_library_list_view.dart';
-import 'package:dungeon_paper/app/modules/LibraryList/views/filters/item_filters.dart';
-import 'package:dungeon_paper/app/modules/LibraryList/views/filters/move_filters.dart';
-import 'package:dungeon_paper/app/modules/LibraryList/views/filters/spell_filters.dart';
 import 'package:dungeon_paper/app/modules/Home/views/local_widgets/home_character_actions_summary.dart';
+import 'package:dungeon_paper/app/routes/app_pages.dart';
 import 'package:dungeon_paper/app/widgets/cards/item_card.dart';
 import 'package:dungeon_paper/app/widgets/cards/move_card.dart';
 import 'package:dungeon_paper/app/widgets/cards/spell_card.dart';
@@ -67,7 +65,7 @@ class HomeCharacterActionsView extends GetView<CharacterService> {
       index: char.actionCategories.toList().indexOf('Move'),
       onReorder: _onReorder,
       list: char.moves,
-      addPageBuilder: () => const MovesLibraryListView(),
+      route: Routes.moves,
       addPageArguments: ({required onAdd}) => MoveLibraryListArguments(
         character: char,
         onAdd: onAdd,
@@ -99,7 +97,7 @@ class HomeCharacterActionsView extends GetView<CharacterService> {
       index: char.actionCategories.toList().indexOf('Spell'),
       onReorder: _onReorder,
       list: char.spells,
-      addPageBuilder: () => const SpellsLibraryListView(),
+      route: Routes.spells,
       addPageArguments: ({required onAdd}) => SpellLibraryListArguments(
         character: char,
         onAdd: onAdd,
@@ -131,7 +129,7 @@ class HomeCharacterActionsView extends GetView<CharacterService> {
       index: char.actionCategories.toList().indexOf('Item'),
       onReorder: _onReorder,
       list: char.items,
-      addPageBuilder: () => const ItemsLibraryListView(),
+      route: Routes.items,
       addPageArguments: ({required onAdd}) => ItemLibraryListArguments(
         onAdd: onAdd,
         preSelections: char.items,
@@ -173,7 +171,7 @@ class HomeCharacterActionsView extends GetView<CharacterService> {
 class ActionsCardList<T extends WithMeta> extends GetView<CharacterService> {
   const ActionsCardList({
     Key? key,
-    required this.addPageBuilder,
+    required this.route,
     required this.addPageArguments,
     required this.cardBuilder,
     required this.list,
@@ -181,7 +179,7 @@ class ActionsCardList<T extends WithMeta> extends GetView<CharacterService> {
     required this.onReorder,
   }) : super(key: key);
 
-  final Widget Function() addPageBuilder;
+  final String route;
   final LibraryListArguments<T, EntityFilters<T>> Function({
     required void Function(Iterable<T> obj) onAdd,
   }) addPageArguments;
@@ -207,9 +205,8 @@ class ActionsCardList<T extends WithMeta> extends GetView<CharacterService> {
       itemPadding: const EdgeInsets.only(bottom: 8),
       trailing: [
         TextButton.icon(
-          onPressed: () => Get.to(
-            () => addPageBuilder(),
-            binding: LibraryListBinding(),
+          onPressed: () => Get.toNamed(
+            route,
             arguments: addPageArguments(onAdd: library.upsertToCharacter),
           ),
           label: Text(S.current.addGeneric(S.current.entityPlural(T))),

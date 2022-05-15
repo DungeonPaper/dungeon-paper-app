@@ -1,4 +1,3 @@
-import 'package:dungeon_paper/app/data/models/gear_selection.dart';
 import 'package:dungeon_paper/app/widgets/atoms/advanced_floating_action_button.dart';
 import 'package:dungeon_paper/app/widgets/atoms/confirm_exit_view.dart';
 import 'package:dungeon_paper/generated/l10n.dart';
@@ -12,10 +11,7 @@ import '../controllers/starting_gear_form_controller.dart';
 class StartingGearFormView extends GetView<StartingGearFormController> {
   const StartingGearFormView({
     Key? key,
-    required this.onChanged,
   }) : super(key: key);
-
-  final void Function(List<GearSelection> selectedOptions) onChanged;
 
   @override
   Widget build(BuildContext context) {
@@ -74,7 +70,7 @@ class StartingGearFormView extends GetView<StartingGearFormController> {
   }
 
   _save() {
-    onChanged(controller.selectedOptions);
+    controller.onChanged(controller.selectedOptions);
     Get.back();
   }
 }

@@ -13,10 +13,7 @@ import 'package:get/get.dart';
 class AbilityScoresFormView extends GetView<AbilityScoresFormController> {
   const AbilityScoresFormView({
     Key? key,
-    required this.onChanged,
   }) : super(key: key);
-
-  final void Function(AbilityScores abilityScores) onChanged;
 
   @override
   Widget build(BuildContext context) {
@@ -102,7 +99,7 @@ class AbilityScoresFormView extends GetView<AbilityScoresFormController> {
   }
 
   _save() {
-    onChanged(controller.abilityScores.value);
+    controller.onChanged(controller.abilityScores.value);
     Get.back();
   }
 }

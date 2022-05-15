@@ -16,10 +16,7 @@ import '../controllers/basic_info_form_controller.dart';
 class BasicInfoFormView extends GetView<BasicInfoFormController> {
   const BasicInfoFormView({
     Key? key,
-    required this.onChanged,
   }) : super(key: key);
-
-  final void Function(String name, String avatar) onChanged;
 
   @override
   Widget build(BuildContext context) {
@@ -144,7 +141,7 @@ class BasicInfoFormView extends GetView<BasicInfoFormController> {
   }
 
   _save() {
-    onChanged(controller.name.value.text, controller.avatarUrl.value.text);
+    controller.onChanged(controller.name.value.text, controller.avatarUrl.value.text);
     Get.back();
   }
 }

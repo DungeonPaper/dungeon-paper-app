@@ -6,14 +6,10 @@ import 'package:flutter_file_dialog/flutter_file_dialog.dart';
 import 'package:image_cropper/image_cropper.dart';
 
 class BasicInfoFormController extends GetxController {
-  BasicInfoFormController({
-    String name = '',
-    String avatarUrl = '',
-  })  : name = TextEditingController(text: name).obs,
-        avatarUrl = TextEditingController(text: avatarUrl).obs;
+  final Rx<TextEditingController> name = TextEditingController().obs;
+  final Rx<TextEditingController> avatarUrl = TextEditingController().obs;
+  late final void Function(String name, String avatar) onChanged;
 
-  final Rx<TextEditingController> name;
-  final Rx<TextEditingController> avatarUrl;
   final Rx<File?> photoFile = Rx(null);
   final dirty = false.obs;
 
@@ -43,6 +39,11 @@ class BasicInfoFormController extends GetxController {
   @override
   void onReady() {
     super.onReady();
+    final BasicInfoFormArguments args = Get.arguments;
+    onChanged = args.onChanged;
+    name.value = TextEditingController(text: args.name);
+    avatarUrl.value = TextEditingController(text: args.avatarUrl);
+
     name.value.addListener(_refreshName);
     avatarUrl.value.addListener(_refreshAvatarUrl);
   }
@@ -67,4 +68,16 @@ class BasicInfoFormController extends GetxController {
   void _setDirty() {
     dirty.value = true;
   }
+}
+
+class BasicInfoFormArguments {
+  final String name;
+  final String avatarUrl;
+  final void Function(String name, String avatar) onChanged;
+
+  BasicInfoFormArguments({
+    required this.name,
+    required this.avatarUrl,
+    required this.onChanged,
+  });
 }

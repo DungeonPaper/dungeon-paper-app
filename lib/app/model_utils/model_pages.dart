@@ -9,17 +9,12 @@ import 'package:dungeon_paper/app/data/services/character_service.dart';
 import 'package:dungeon_paper/app/data/services/library_service.dart';
 import 'package:dungeon_paper/app/modules/LibraryList/bindings/library_form_binding.dart';
 import 'package:dungeon_paper/app/modules/LibraryList/bindings/library_list_binding.dart';
-import 'package:dungeon_paper/app/modules/LibraryList/controllers/library_list_controller.dart';
 import 'package:dungeon_paper/app/modules/LibraryList/views/character_classes_library_list_view.dart';
-import 'package:dungeon_paper/app/modules/LibraryList/views/filters/character_class_filters.dart';
-import 'package:dungeon_paper/app/modules/LibraryList/views/filters/item_filters.dart';
-import 'package:dungeon_paper/app/modules/LibraryList/views/filters/move_filters.dart';
-import 'package:dungeon_paper/app/modules/LibraryList/views/filters/note_filters.dart';
-import 'package:dungeon_paper/app/modules/LibraryList/views/filters/spell_filters.dart';
 import 'package:dungeon_paper/app/modules/LibraryList/views/items_library_list_view.dart';
 import 'package:dungeon_paper/app/modules/LibraryList/views/moves_library_list_view.dart';
 import 'package:dungeon_paper/app/modules/LibraryList/views/notes_library_list_view.dart';
 import 'package:dungeon_paper/app/modules/LibraryList/views/spells_library_list_view.dart';
+import 'package:dungeon_paper/app/routes/app_pages.dart';
 import 'package:dungeon_paper/app/widgets/forms/library_entity_form.dart';
 import 'package:get/get.dart';
 
@@ -34,9 +29,8 @@ class ModelPages {
     void Function(Iterable<Move> list)? onAdd,
   }) {
     final char = character ?? _char;
-    return () => Get.to(
-          () => const MovesLibraryListView(),
-          binding: LibraryListBinding(),
+    return () => Get.toNamed(
+          Routes.moves,
           arguments: MoveLibraryListArguments(
             character: char,
             onAdd: onAdd ?? library.upsertToCharacter,
@@ -71,9 +65,8 @@ class ModelPages {
     void Function(Iterable<Spell> list)? onAdd,
   }) {
     final char = character ?? _char;
-    return () => Get.to(
-          () => const SpellsLibraryListView(),
-          binding: LibraryListBinding(),
+    return () => Get.toNamed(
+          Routes.spells,
           arguments: SpellLibraryListArguments(
             character: char,
             onAdd: onAdd ?? library.upsertToCharacter,
@@ -108,9 +101,8 @@ class ModelPages {
     void Function(Iterable<Item> list)? onAdd,
   }) {
     final char = character ?? _char;
-    return () => Get.to(
-          () => const ItemsLibraryListView(),
-          binding: LibraryListBinding(),
+    return () => Get.toNamed(
+          Routes.items,
           arguments: ItemLibraryListArguments(
             onAdd: onAdd ?? library.upsertToCharacter,
             preSelections: char.items,
@@ -139,9 +131,8 @@ class ModelPages {
     void Function(Iterable<Note> list)? onAdd,
   }) {
     final char = character ?? _char;
-    return () => Get.to(
-          () => const NotesLibraryListView(),
-          binding: LibraryListBinding(),
+    return () => Get.toNamed(
+          Routes.notes,
           arguments: NoteLibraryListArguments(
             onAdd: onAdd ?? library.upsertToCharacter,
             preSelections: char.notes,
@@ -170,9 +161,8 @@ class ModelPages {
     void Function(CharacterClass cls)? onAdd,
   }) {
     final char = character ?? _char;
-    return () => Get.to(
-          () => const CharacterClassesLibraryListView(),
-          binding: LibraryListBinding(),
+    return () => Get.toNamed(
+          Routes.characterClass,
           arguments: CharacterClassLibraryListArguments(
             onAdd: (list) => onAdd != null
                 ? onAdd(list.elementAt(0))

@@ -5,19 +5,18 @@ import 'package:dungeon_paper/app/model_utils/model_key.dart';
 import 'package:get/get.dart';
 
 class StartingGearFormController extends GetxController {
-  final RxList<GearSelection> selectedOptions;
   final availableGear = <GearChoice>[].obs;
-  final CharacterClass characterClass;
   final dirty = false.obs;
 
-  StartingGearFormController({
-    required this.characterClass,
-    List<GearSelection>? selections,
-  }) : selectedOptions = (selections ?? []).obs;
+  late final RxList<GearSelection> selectedOptions;
+  late final CharacterClass characterClass;
+  late final void Function(List<GearSelection> selectedOptions) onChanged;
 
   @override
-  void onInit() {
-    super.onInit();
+  void onReady() {
+    super.onReady();
+    final StartingGearFormArguments args = Get.arguments;
+    selectedOptions = args.selectedOptions.obs;
     getGear();
   }
 
@@ -42,4 +41,16 @@ class StartingGearFormController extends GetxController {
 
   bool isSelected(GearSelection selection) =>
       selectedOptions.firstWhereOrNull((item) => keyFor(item) == keyFor(selection)) != null;
+}
+
+class StartingGearFormArguments {
+  final List<GearSelection> selectedOptions;
+  final CharacterClass characterClass;
+  final void Function(List<GearSelection> selectedOptions) onChanged;
+
+  StartingGearFormArguments({
+    required this.selectedOptions,
+    required this.characterClass,
+    required this.onChanged,
+  });
 }

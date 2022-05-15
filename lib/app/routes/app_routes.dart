@@ -5,28 +5,51 @@ abstract class Routes {
   Routes._();
   static const home = _Paths.home;
   static const characterList = _Paths.characterList;
-  static const addMoves = _Paths.addMoves;
   static const rollDice = _Paths.rollDice;
   static const settings = _Paths.settings;
   static const importExport = _Paths.importExport;
-  static const createCharacter = _Paths.createCharacter;
-  static const editBasicInfo = _Paths.editBasicInfo;
+
+  static const moves = _Paths.moves;
+  static const spells = _Paths.spells;
+  static const items = _Paths.items;
+  static const notes = _Paths.notes;
+  static const basicInfo = _Paths.basicInfo;
+  static const bondsFlags = _Paths.bondsFlags;
   static const abilityScores = _Paths.abilityScores;
-  static const startingGear = _Paths.startingGear;
-  static const selectMovesSpells = _Paths.createCharacter + _Paths.selectMovesSpells;
+  static const characterClass = _Paths.characterClass;
+
+  static listByType<T extends WithMeta>() => {
+        Move: _Paths.moves,
+        Spell: _Paths.spells,
+        Item: _Paths.items,
+      }[T];
+
+  static const createCharacter = _Paths.createCharacter;
+  static const createCharacterSelectClass = _Paths.createCharacter + _Paths.characterClass;
+  static const createCharacterAbilityScores = _Paths.createCharacter + _Paths.abilityScores;
+  static const createCharacterMovesSpells = _Paths.createCharacter + _Paths.selectMovesSpells;
+  static const createCharacterBasicInfo = _Paths.createCharacter + _Paths.basicInfo;
+  static const createCharacterStartingGear = _Paths.createCharacter + _Paths.startingGear;
 }
 
 abstract class _Paths {
   _Paths._();
   static const home = '/';
   static const characterList = '/character-list';
-  static const addMoves = '/add-moves';
-  static const rollDice = '/roll-dice';
+  static const rollDice = '/roll';
   static const settings = '/settings';
   static const importExport = '/import-export';
+
   static const createCharacter = '/create-character';
-  static const editBasicInfo = '/edit-basic-info';
+  static const basicInfo = '/basic-info';
   static const abilityScores = '/roll-stats';
   static const startingGear = '/starting-gear';
-  static const selectMovesSpells = '/select-moves-spells';
+  static const selectMovesSpells = '/moves-spells';
+  static const characterClass = '/character-class';
+
+  static const moves = '/moves';
+  static const spells = '/spells';
+  static const items = '/items';
+  static const notes = '/notes';
+  static const bondsFlags = '/bonds-flags';
 }

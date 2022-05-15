@@ -4,16 +4,19 @@ import 'package:dungeon_paper/app/data/models/character.dart';
 import 'package:dungeon_paper/app/data/models/character_class.dart';
 import 'package:dungeon_paper/app/data/services/character_service.dart';
 import 'package:dungeon_paper/app/model_utils/model_key.dart';
+import 'package:dungeon_paper/app/modules/AbilityScoresForm/controllers/ability_scores_form_controller.dart';
+import 'package:dungeon_paper/app/modules/BasicInfoForm/controllers/basic_info_form_controller.dart';
+import 'package:dungeon_paper/app/modules/CreateCharacter/SelectMovesSpells/controllers/select_moves_spells_controller.dart';
 import 'package:dungeon_paper/app/modules/LibraryList/bindings/library_list_binding.dart';
-import 'package:dungeon_paper/app/modules/LibraryList/controllers/library_list_controller.dart';
 import 'package:dungeon_paper/app/modules/LibraryList/views/character_classes_library_list_view.dart';
-import 'package:dungeon_paper/app/modules/LibraryList/views/filters/character_class_filters.dart';
 import 'package:dungeon_paper/app/modules/BasicInfoForm/bindings/basic_info_form_binding.dart';
 import 'package:dungeon_paper/app/modules/BasicInfoForm/views/basic_info_form_view.dart';
 import 'package:dungeon_paper/app/modules/AbilityScoresForm/bindings/ability_scores_form_binding.dart';
 import 'package:dungeon_paper/app/modules/AbilityScoresForm/views/ability_scores_form_view.dart';
 import 'package:dungeon_paper/app/modules/StartingGearForm/bindings/starting_gear_form_binding.dart';
+import 'package:dungeon_paper/app/modules/StartingGearForm/controllers/starting_gear_form_controller.dart';
 import 'package:dungeon_paper/app/modules/StartingGearForm/views/starting_gear_form_view.dart';
+import 'package:dungeon_paper/app/routes/app_pages.dart';
 import 'package:dungeon_paper/app/themes/colors.dart';
 import 'package:dungeon_paper/app/widgets/atoms/advanced_floating_action_button.dart';
 import 'package:dungeon_paper/app/widgets/atoms/character_avatar.dart';
@@ -88,13 +91,12 @@ class CreateCharacterView extends GetView<CreateCharacterController> {
                                 ? const Text('Select name & picture (required)')
                                 : Text('Level 1 ${cls?.name ?? ''}'),
                             valid: controller.name.isNotEmpty,
-                            onTap: () => Get.to(
-                              () => BasicInfoFormView(
-                                onChanged: controller.setBasicInfo,
-                              ),
-                              binding: BasicInfoFormBinding(
-                                name: controller.name.value,
+                            onTap: () => Get.toNamed(
+                              Routes.createCharacterBasicInfo,
+                              arguments: BasicInfoFormArguments(
                                 avatarUrl: controller.avatarUrl.value,
+                                name: controller.name.value,
+                                onChanged: controller.setBasicInfo,
                               ),
                               preventDuplicates: false,
                             ),
@@ -107,9 +109,8 @@ class CreateCharacterView extends GetView<CreateCharacterController> {
                                 : Text(
                                     'Base HP: ${cls!.hp}, Load: ${cls!.load}, Damage Dice: ${cls!.damageDice}'),
                             valid: cls != null,
-                            onTap: () => Get.to(
-                              () => const CharacterClassesLibraryListView(),
-                              binding: LibraryListBinding(),
+                            onTap: () => Get.toNamed(
+                              Routes.createCharacterSelectClass,
                               arguments: CharacterClassLibraryListArguments(
                                 preSelections: controller.characterClass.value != null
                                     ? [controller.characterClass.value!]
@@ -128,13 +129,13 @@ class CreateCharacterView extends GetView<CreateCharacterController> {
                                   .map((stat) => '${stat.key}: ${stat.value}')
                                   .join(', '),
                             ),
-                            onTap: () => Get.to(
-                              () => AbilityScoresFormView(
+                            onTap: () => Get.toNamed(
+                              Routes.createCharacterAbilityScores,
+                              arguments: AbilityScoresFormArguments(
                                 onChanged: (abilityScores) =>
                                     controller.setAbilityScores(abilityScores),
+                                abilityScores: controller.abilityScores.value,
                               ),
-                              binding: AbilityScoresFormBinding(
-                                  abilityScores: controller.abilityScores.value),
                               preventDuplicates: false,
                             ),
                           ),
@@ -154,12 +155,11 @@ class CreateCharacterView extends GetView<CreateCharacterController> {
                                         .join(', '),
                                   ].whereType<String>().join(', ')),
                             onTap: cls != null
-                                ? () => Get.to(
-                                      () => StartingGearFormView(
+                                ? () => Get.toNamed(
+                                      Routes.createCharacterStartingGear,
+                                      arguments: StartingGearFormArguments(
                                         onChanged: controller.setStartingGear,
-                                      ),
-                                      binding: StartingGearFormBinding(
-                                        selections: controller.startingGear,
+                                        selectedOptions: controller.startingGear,
                                         characterClass: cls!,
                                       ),
                                       preventDuplicates: false,
@@ -180,11 +180,10 @@ class CreateCharacterView extends GetView<CreateCharacterController> {
                             subtitle: Text(
                                 '${controller.moves.length} Moves, ${controller.spells.length} Spells selected'),
                             onTap: cls != null
-                                ? () => Get.to(
-                                      () => SelectMovesSpellsView(
+                                ? () => Get.toNamed(
+                                      Routes.createCharacterMovesSpells,
+                                      arguments: SelectMovesSpellsArguments(
                                         onChanged: controller.setMovesSpells,
-                                      ),
-                                      binding: SelectMovesSpellsBinding(
                                         moves: controller.moves,
                                         spells: controller.spells,
                                         abilityScores: controller.abilityScores.value,
