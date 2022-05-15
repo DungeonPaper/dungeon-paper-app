@@ -1,4 +1,3 @@
-
 import 'package:dungeon_paper/app/data/models/character_class.dart';
 import 'package:dungeon_paper/app/data/models/ability_scores.dart';
 import 'package:dungeon_paper/app/data/services/repository_service.dart';
@@ -11,8 +10,8 @@ class SelectMovesSpellsController extends GetxController {
   final dirty = false.obs;
   final repo = Get.find<RepositoryService>();
 
-  late final RxList<Move> moves;
-  late final RxList<Spell> spells;
+  final moves = <Move>[].obs;
+  final spells = <Spell>[].obs;
   late final Rx<AbilityScores> abilityScores;
   late final Rx<CharacterClass> characterClass;
   late final void Function(List<Move> moves, List<Spell> spells) onChanged;
@@ -21,8 +20,8 @@ class SelectMovesSpellsController extends GetxController {
   void onReady() {
     super.onReady();
     final SelectMovesSpellsArguments args = Get.arguments;
-    moves = args.moves.obs;
-    spells = args.spells.obs;
+    moves.value = args.moves;
+    spells.value = args.spells;
     abilityScores = args.abilityScores.obs;
     characterClass = args.characterClass.obs;
     onChanged = args.onChanged;

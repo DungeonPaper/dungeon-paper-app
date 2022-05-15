@@ -8,6 +8,7 @@ import 'package:dungeon_paper/app/modules/BasicInfoForm/bindings/basic_info_form
 import 'package:dungeon_paper/app/modules/BasicInfoForm/views/basic_info_form_view.dart';
 import 'package:dungeon_paper/app/modules/CreateCharacter/SelectMovesSpells/bindings/select_moves_spells_binding.dart';
 import 'package:dungeon_paper/app/modules/CreateCharacter/SelectMovesSpells/views/select_moves_spells_view.dart';
+import 'package:dungeon_paper/app/modules/LibraryList/views/character_classes_library_list_view.dart';
 import 'package:dungeon_paper/app/modules/LibraryList/views/items_library_list_view.dart';
 import 'package:dungeon_paper/app/modules/LibraryList/views/spells_library_list_view.dart';
 import 'package:dungeon_paper/app/modules/StartingGearForm/bindings/starting_gear_form_binding.dart';
@@ -49,21 +50,25 @@ class AppPages {
       name: Routes.home,
       page: () => const HomeView(),
       binding: HomeBinding(),
+      preventDuplicates: false,
     ),
     GetPage(
       name: Routes.characterList,
       page: () => const CharacterListPageView(),
       binding: CharacterListPageBinding(),
+      preventDuplicates: false,
     ),
     GetPage(
       name: Routes.settings,
       page: () => SettingsView(),
       binding: SettingsBinding(),
+      preventDuplicates: false,
     ),
     GetPage(
       name: Routes.importExport,
       page: () => const ImportExportView(),
       binding: ImportExportBinding(),
+      preventDuplicates: false,
     ),
     GetPage(
       name: Routes.rollDice,
@@ -77,36 +82,43 @@ class AppPages {
       name: Routes.moves,
       page: () => const MovesLibraryListView(),
       binding: LibraryListBinding(),
+      preventDuplicates: false,
     ),
     GetPage(
       name: Routes.spells,
       page: () => const SpellsLibraryListView(),
       binding: LibraryListBinding(),
+      preventDuplicates: false,
     ),
     GetPage(
       name: Routes.items,
       page: () => const ItemsLibraryListView(),
       binding: LibraryListBinding(),
+      preventDuplicates: false,
     ),
     GetPage(
       name: Routes.bondsFlags,
       page: () => const BondsFlagsFormView(),
       binding: BondsFlagsFormBinding(),
+      preventDuplicates: false,
     ),
     GetPage(
       name: Routes.basicInfo,
       page: () => const BasicInfoFormView(),
       binding: BasicInfoFormBinding(),
+      preventDuplicates: false,
     ),
     GetPage(
       name: Routes.abilityScores,
       page: () => const AbilityScoresFormView(),
       binding: AbilityScoresFormBinding(),
+      preventDuplicates: false,
     ),
     GetPage(
       name: Routes.bondsFlags,
       page: () => const BondsFlagsFormView(),
       binding: AbilityScoresFormBinding(),
+      preventDuplicates: false,
     ),
 
     //
@@ -115,30 +127,40 @@ class AppPages {
       name: Routes.createCharacter,
       page: () => const CreateCharacterView(),
       binding: CreateCharacterBinding(),
+      preventDuplicates: false,
       opaque: false,
       fullscreenDialog: true,
+    ),
+    GetPage(
+      name: Routes.createCharacterSelectClass,
+      page: () => const CharacterClassesLibraryListView(),
+      binding: LibraryListBinding(),
       preventDuplicates: false,
     ),
     GetPage(
       name: Routes.createCharacterStartingGear,
       page: () => const StartingGearFormView(),
       binding: StartingGearFormBinding(),
+      preventDuplicates: false,
     ),
     GetPage(
       name: Routes.createCharacterMovesSpells,
       page: () => const SelectMovesSpellsView(),
       binding: SelectMovesSpellsBinding(),
+      preventDuplicates: false,
     ),
 
     GetPage(
       name: Routes.createCharacterBasicInfo,
       page: () => const BasicInfoFormView(),
       binding: BasicInfoFormBinding(),
+      preventDuplicates: false,
     ),
     GetPage(
       name: Routes.createCharacterAbilityScores,
       page: () => const AbilityScoresFormView(),
       binding: AbilityScoresFormBinding(),
+      preventDuplicates: false,
     ),
   ];
 }

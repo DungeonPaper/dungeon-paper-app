@@ -17,6 +17,8 @@ class StartingGearFormController extends GetxController {
     super.onReady();
     final StartingGearFormArguments args = Get.arguments;
     selectedOptions = args.selectedOptions.obs;
+    characterClass = args.characterClass;
+    onChanged = args.onChanged;
     getGear();
   }
 
