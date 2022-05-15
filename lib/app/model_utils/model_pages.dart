@@ -8,7 +8,6 @@ import 'package:dungeon_paper/app/data/models/spell.dart';
 import 'package:dungeon_paper/app/data/services/character_service.dart';
 import 'package:dungeon_paper/app/data/services/library_service.dart';
 import 'package:dungeon_paper/app/modules/LibraryList/bindings/library_form_binding.dart';
-import 'package:dungeon_paper/app/modules/LibraryList/bindings/library_list_binding.dart';
 import 'package:dungeon_paper/app/modules/LibraryList/views/character_classes_library_list_view.dart';
 import 'package:dungeon_paper/app/modules/LibraryList/views/items_library_list_view.dart';
 import 'package:dungeon_paper/app/modules/LibraryList/views/moves_library_list_view.dart';

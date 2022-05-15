@@ -7,15 +7,8 @@ import 'package:dungeon_paper/app/model_utils/model_key.dart';
 import 'package:dungeon_paper/app/modules/AbilityScoresForm/controllers/ability_scores_form_controller.dart';
 import 'package:dungeon_paper/app/modules/BasicInfoForm/controllers/basic_info_form_controller.dart';
 import 'package:dungeon_paper/app/modules/CreateCharacter/SelectMovesSpells/controllers/select_moves_spells_controller.dart';
-import 'package:dungeon_paper/app/modules/LibraryList/bindings/library_list_binding.dart';
 import 'package:dungeon_paper/app/modules/LibraryList/views/character_classes_library_list_view.dart';
-import 'package:dungeon_paper/app/modules/BasicInfoForm/bindings/basic_info_form_binding.dart';
-import 'package:dungeon_paper/app/modules/BasicInfoForm/views/basic_info_form_view.dart';
-import 'package:dungeon_paper/app/modules/AbilityScoresForm/bindings/ability_scores_form_binding.dart';
-import 'package:dungeon_paper/app/modules/AbilityScoresForm/views/ability_scores_form_view.dart';
-import 'package:dungeon_paper/app/modules/StartingGearForm/bindings/starting_gear_form_binding.dart';
 import 'package:dungeon_paper/app/modules/StartingGearForm/controllers/starting_gear_form_controller.dart';
-import 'package:dungeon_paper/app/modules/StartingGearForm/views/starting_gear_form_view.dart';
 import 'package:dungeon_paper/app/routes/app_pages.dart';
 import 'package:dungeon_paper/app/themes/colors.dart';
 import 'package:dungeon_paper/app/widgets/atoms/advanced_floating_action_button.dart';
@@ -27,8 +20,6 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 
-import '../SelectMovesSpells/bindings/select_moves_spells_binding.dart';
-import '../SelectMovesSpells/views/select_moves_spells_view.dart';
 import '../controllers/create_character_controller.dart';
 
 class CreateCharacterView extends GetView<CreateCharacterController> {

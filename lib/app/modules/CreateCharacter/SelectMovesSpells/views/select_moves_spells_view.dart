@@ -1,7 +1,6 @@
 import 'package:dungeon_paper/app/data/models/move.dart';
 import 'package:dungeon_paper/app/data/models/spell.dart';
 import 'package:dungeon_paper/app/model_utils/model_pages.dart';
-import 'package:dungeon_paper/app/modules/LibraryList/bindings/library_list_binding.dart';
 import 'package:dungeon_paper/app/modules/LibraryList/views/moves_library_list_view.dart';
 import 'package:dungeon_paper/app/modules/LibraryList/views/spells_library_list_view.dart';
 import 'package:dungeon_paper/app/routes/app_pages.dart';
