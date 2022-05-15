@@ -37,7 +37,6 @@ class NoteFilters extends EntityFilters<Note> {
   });
 
   @override
-  // ignore: avoid_renaming_method_parameters
   bool filter(Note note) {
     if (search != null && search!.isNotEmpty) {
       if (![

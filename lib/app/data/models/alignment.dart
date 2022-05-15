@@ -52,6 +52,18 @@ class AlignmentValue extends dw.Alignment implements WithMeta {
       );
 
   @override
+  AlignmentValue copyWithInherited({
+    Meta? meta,
+    String? key,
+    String? description,
+  }) =>
+      copyWith(
+        meta: meta,
+        key: key,
+        description: description,
+      );
+
+  @override
   Map<String, dynamic> toJson() => {
         '_meta': meta,
         ...super.toJson(),

@@ -27,28 +27,18 @@ class SpellForm extends GetView<DynamicFormController<Spell>> {
   }
 }
 
-class AddSpellFormController extends DynamicFormController<Spell> {
-  AddSpellFormController({required this.spell, required this.rollStats});
+class SpellFormController extends DynamicFormController<Spell> {
+  SpellFormController({required this.spell, required this.rollStats});
 
   final Spell? spell;
   final RollStats rollStats;
-
   @override
-  void init() {
-    if (spell != null) {
-      entity.value = spell!.copyWithInherited(
-        meta: spell!.meta.copyWith(
-          sharing: MetaSharing.createFork(spell!.key, meta: spell!.meta.sharing, dirty: false),
-        ),
-      );
-      setFromEntity(spell!);
-    }
-    createInputs();
-  }
+  Spell? get argument => spell;
 
   @override
   final entity = Spell.empty().obs;
 
+  @override
   Spell setFromEntity(Spell spell) => setData({
         'name': spell.name,
         'description': spell.description,
@@ -73,6 +63,7 @@ class AddSpellFormController extends DynamicFormController<Spell> {
     return entity.value;
   }
 
+  @override
   void createInputs() {
     inputs = <FormInputData>[
       FormInputData<FormTextInputData>(

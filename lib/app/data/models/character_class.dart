@@ -51,6 +51,7 @@ class CharacterClass extends dw.CharacterClass implements WithMeta {
   List<GearChoice> get gearChoices => _gearChoices;
   final List<GearChoice> _gearChoices;
 
+  @override
   CharacterClass copyWithInherited({
     Meta? meta,
     String? name,

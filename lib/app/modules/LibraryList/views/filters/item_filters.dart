@@ -37,7 +37,6 @@ class ItemFilters extends EntityFilters<Item> {
   });
 
   @override
-  // ignore: avoid_renaming_method_parameters
   bool filter(Item spell) {
     if (search != null && search!.isNotEmpty) {
       if (![

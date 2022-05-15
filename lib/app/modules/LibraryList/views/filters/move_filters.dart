@@ -95,7 +95,6 @@ class MoveFilters extends EntityFilters<Move> {
   });
 
   @override
-  // ignore: avoid_renaming_method_parameters
   bool filter(Move move) {
     if (category != null) {
       if (move.category != category) {

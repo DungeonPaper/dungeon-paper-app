@@ -195,7 +195,7 @@ class ActionsCardList<T extends WithMeta> extends GetView<CharacterService> {
   final Widget Function({
     required void Function(Iterable<T> obj) onAdd,
   }) addPageBuilder;
-  final dynamic addPageArguments;
+  final Map<FiltersGroup, EntityFilters>? addPageArguments;
   final Widget Function(
     T object, {
     required void Function() onDelete,
@@ -219,7 +219,7 @@ class ActionsCardList<T extends WithMeta> extends GetView<CharacterService> {
       trailing: [
         TextButton.icon(
           onPressed: () => Get.to(
-            () => addPageBuilder(onAdd: library.addToCharacter),
+            () => addPageBuilder(onAdd: library.upsertToCharacter),
             binding: LibraryListBinding(),
             arguments: addPageArguments,
           ),
@@ -241,10 +241,7 @@ class ActionsCardList<T extends WithMeta> extends GetView<CharacterService> {
                 obj,
                 onDelete: _confirmDeleteDlg(context, obj, nameFor(obj)),
                 onSave: (_obj) {
-                  controller.updateCharacter(
-                    CharacterUtils.updateByType<T>(char, [_obj]),
-                  );
-                  StorageHandler.instance.addMissingObjects([_obj]);
+                  library.upsertToCharacter([_obj]);
                 },
               ),
             ),

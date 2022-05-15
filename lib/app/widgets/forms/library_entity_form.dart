@@ -52,8 +52,7 @@ class LibraryEntityForm<T extends WithMeta> extends GetView<DynamicFormControlle
           body: buildForm(context),
           floatingActionButton: AdvancedFloatingActionButton.extended(
             onPressed: () {
-              onSave(increaseMetaVersion(forkMeta(data, user)));
-              // onSave(increaseMetaVersion(data));
+              onSave(data);
               Get.back();
             },
             label: Text(S.current.save),

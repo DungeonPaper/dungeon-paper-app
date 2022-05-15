@@ -1,9 +1,18 @@
+import 'dart:async';
 import 'dart:math';
 
 import 'package:dungeon_paper/app/model_utils/model_key.dart';
 
 extension IterableUtils<T> on Iterable<T> {
   T sample() => _sample(this);
+
+  Future<Iterable<T>> mapAsync(FutureOr<T> Function(T item) toElement) async {
+    final out = <T>[];
+    for (final item in this) {
+      out.add(await toElement(item));
+    }
+    return out;
+  }
 }
 
 T sample<T>(Iterable<T> list) {

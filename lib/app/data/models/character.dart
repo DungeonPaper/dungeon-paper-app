@@ -24,7 +24,7 @@ import 'race.dart';
 import 'roll_stats.dart';
 import 'spell.dart';
 
-class Character implements WithMeta {
+class Character implements WithMeta<Character, CharacterMeta> {
   Character({
     required this.meta,
     required this.key,
@@ -87,7 +87,46 @@ class Character implements WithMeta {
 
   static const allActionCategories = {'Move', 'Spell', 'Item'};
 
+  @override
   Character copyWith({
+    Meta<CharacterMeta>? meta,
+    String? key,
+    String? displayName,
+    CharacterSettings? settings,
+    String? avatarUrl,
+    CharacterClass? characterClass,
+    List<Move>? moves,
+    List<Spell>? spells,
+    List<Item>? items,
+    double? coins,
+    List<Note>? notes,
+    CharacterStats? stats,
+    RollStats? rollStats,
+    List<Bond>? bonds,
+    Bio? bio,
+    Race? race,
+  }) =>
+      Character(
+        meta: meta ?? this.meta,
+        key: key ?? this.key,
+        displayName: displayName ?? this.displayName,
+        settings: settings ?? this.settings,
+        avatarUrl: avatarUrl ?? this.avatarUrl,
+        characterClass: characterClass ?? this.characterClass,
+        moves: moves ?? this.moves,
+        spells: spells ?? this.spells,
+        items: items ?? this.items,
+        coins: coins ?? this.coins,
+        notes: notes ?? this.notes,
+        stats: stats ?? this.stats,
+        rollStats: rollStats ?? this.rollStats,
+        bonds: bonds ?? this.bonds,
+        bio: bio ?? this.bio,
+        race: race ?? this.race,
+      );
+
+  @override
+  Character copyWithInherited({
     Meta<CharacterMeta>? meta,
     String? key,
     String? displayName,

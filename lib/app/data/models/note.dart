@@ -29,6 +29,7 @@ class Note implements WithMeta {
 
   String get localizedCategory => category.isEmpty ? S.current.noteNoCategory : category;
 
+  @override
   Note copyWith({
     Meta? meta,
     String? key,
@@ -46,6 +47,25 @@ class Note implements WithMeta {
         category: category ?? this.category,
         tags: tags ?? this.tags,
         favorited: favorited ?? this.favorited,
+      );
+  @override
+  Note copyWithInherited({
+    Meta? meta,
+    String? key,
+    String? title,
+    String? description,
+    String? category,
+    List<dw.Tag>? tags,
+    bool? favorited,
+  }) =>
+      copyWith(
+        meta: meta,
+        key: key,
+        title: title,
+        description: description,
+        category: category,
+        tags: tags,
+        favorited: favorited,
       );
 
   factory Note.fromRawJson(String str) => Note.fromJson(json.decode(str));

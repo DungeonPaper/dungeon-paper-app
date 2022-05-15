@@ -2,10 +2,8 @@ import 'dart:async';
 
 import 'package:dungeon_paper/app/data/models/meta.dart';
 import 'package:dungeon_paper/app/data/services/character_service.dart';
+import 'package:dungeon_paper/app/data/services/library_service.dart';
 import 'package:dungeon_paper/app/data/services/repository_service.dart';
-import 'package:dungeon_paper/app/model_utils/model_json.dart';
-import 'package:dungeon_paper/app/model_utils/model_key.dart';
-import 'package:dungeon_paper/core/storage_handler/storage_handler.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -28,7 +26,8 @@ class LibraryListController<T extends WithMeta, F extends EntityFilters> extends
   @override
   void onInit() {
     super.onInit();
-    filters.addAll(Get.arguments);
+    assert(Get.arguments != null);
+    filters.addAll(Get.arguments.cast<FiltersGroup, F?>());
     search[FiltersGroup.playbook] ??= TextEditingController();
     search[FiltersGroup.playbook]!.addListener(_updatePlaybookSearch);
     search[FiltersGroup.my] ??= TextEditingController();
@@ -84,14 +83,16 @@ class LibraryListController<T extends WithMeta, F extends EntityFilters> extends
   void saveCustomItem(String storageKey, T item, Iterable<T> preSelections, bool multiple) {
     toggleItem(item, true, preSelections, multiple);
     debugPrint('Saving $item');
-    StorageHandler.instance.create(storageKey, keyFor(item), toJsonFor(item));
+    library.upsertToLibrary<T>([item]);
   }
 
   void deleteCustomItem(String storageKey, T item, Iterable<T> preSelections, bool multiple) {
     toggleItem(item, false, preSelections, multiple);
     debugPrint('Deleting $item');
-    StorageHandler.instance.delete(storageKey, keyFor(item));
+    library.removeFromLibrary<T>([item]);
   }
+
+  LibraryService get library => Get.find();
 
   List<T> get selectedWithMeta => selected;
   // selected.map((e) => forkMeta<T>(e, Get.find<UserService>().current)).toList();

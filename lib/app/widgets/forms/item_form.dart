@@ -1,4 +1,3 @@
-import 'package:dungeon_paper/app/data/models/meta.dart';
 import 'package:dungeon_paper/app/data/models/item.dart';
 import 'package:dungeon_paper/app/widgets/forms/dynamic_form/dynamic_form.dart';
 import 'package:dungeon_paper/app/widgets/forms/dynamic_form/form_input_data.dart';
@@ -25,27 +24,18 @@ class ItemForm extends GetView<DynamicFormController<Item>> {
   }
 }
 
-class AddItemFormController extends DynamicFormController<Item> {
-  AddItemFormController({required this.item});
+class ItemFormController extends DynamicFormController<Item> {
+  ItemFormController({required this.item});
 
   final Item? item;
 
   @override
-  void init() {
-    if (item != null) {
-      entity.value = item!.copyWithInherited(
-        meta: item!.meta.copyWith(
-          sharing: MetaSharing.createFork(item!.key, meta: item!.meta.sharing, dirty: false),
-        ),
-      );
-      setFromEntity(item!);
-    }
-    createInputs();
-  }
+  Item? get argument => item;
 
   @override
   final entity = Item.empty().obs;
 
+  @override
   Item setFromEntity(Item item) => setData({
         'name': item.name,
         'description': item.description,
@@ -64,6 +54,7 @@ class AddItemFormController extends DynamicFormController<Item> {
     return entity.value;
   }
 
+  @override
   void createInputs() {
     inputs = <FormInputData>[
       FormInputData<FormTextInputData>(

@@ -1,6 +1,9 @@
 import 'dart:async';
 
+import 'package:dungeon_paper/app/data/models/meta.dart';
+import 'package:dungeon_paper/app/data/models/user.dart';
 import 'package:dungeon_paper/app/data/services/repository_service.dart';
+import 'package:dungeon_paper/app/data/services/user_service.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -78,7 +81,7 @@ class DynamicFormState extends State<DynamicForm> {
   }
 }
 
-abstract class DynamicFormController<T> extends GetxController {
+abstract class DynamicFormController<T extends WithMeta> extends GetxController {
   final repo = Get.find<RepositoryService>();
 
   abstract final Rx<T> entity;
@@ -87,7 +90,36 @@ abstract class DynamicFormController<T> extends GetxController {
   T setData(Map<String, dynamic> data);
   late final List<FormInputData> inputs;
 
-  FutureOr<void> init();
+  @mustCallSuper
+  FutureOr<void> init() {
+    if (argument != null) {
+      // when editing, create a fork of the move
+      entity.value = argument!.copyWithInherited(
+        meta: argument!.meta.fork(
+          createdBy: user.username,
+          sourceKey: argument!.key,
+        ),
+      );
+      setFromEntity(argument!);
+    } else {
+      // when creating new item, set the correct owner now
+      entity.value = entity.value.copyWithInherited(
+        meta: argument!.meta.copyWith(
+          createdBy: user.username,
+        ),
+      );
+    }
+    createInputs();
+  }
+
+  UserService get users => Get.find();
+  User get user => users.current;
+
+  T setFromEntity(T argument);
+
+  void createInputs();
+
+  T? get argument;
 
   @override
   void onInit() {

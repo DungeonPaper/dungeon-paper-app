@@ -17,7 +17,7 @@ String nameFor<T>(T object) {
   final dyn = object as dynamic;
   switch (T) {
     case Character:
-      return dyn.displayName;
+      return dyn.username;
     case CharacterClass:
     case Item:
     case Monster:

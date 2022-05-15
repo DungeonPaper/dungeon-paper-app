@@ -2,23 +2,25 @@ import 'dart:convert';
 
 class User {
   User({
+    required this.username,
     required this.displayName,
     required this.email,
     required this.avatarUrl,
-    this.isGuest = false,
   });
 
+  final String username;
   final String displayName;
   final String email;
   final String avatarUrl;
-  final bool isGuest;
 
   User copyWith({
+    String? username,
     String? displayName,
     String? email,
     String? avatarUrl,
   }) =>
       User(
+        username: username ?? this.username,
         displayName: displayName ?? this.displayName,
         email: email ?? this.email,
         avatarUrl: avatarUrl ?? this.avatarUrl,
@@ -29,16 +31,24 @@ class User {
   String toRawJson() => json.encode(toJson());
 
   factory User.fromJson(Map<String, dynamic> json) => User(
+        username: json['username'],
         displayName: json['displayName'],
         email: json['email'],
         avatarUrl: json['avatarURL'],
       );
 
-  factory User.guest() => User(displayName: 'Guest', email: '', isGuest: true, avatarUrl: '');
+  factory User.guest() => User(
+        displayName: 'Guest',
+        username: 'guest',
+        email: '',
+        avatarUrl: '',
+      );
 
   Map<String, dynamic> toJson() => {
-        'displayName': displayName,
+        'username': username,
         'email': email,
         'avatarURL': avatarUrl,
       };
+
+  bool get isGuest => username == 'guest';
 }

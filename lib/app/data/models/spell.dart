@@ -36,6 +36,7 @@ class Spell extends dw.Spell implements WithMeta {
   final Meta _meta;
   final bool prepared;
 
+  @override
   Spell copyWithInherited({
     Meta? meta,
     String? key,

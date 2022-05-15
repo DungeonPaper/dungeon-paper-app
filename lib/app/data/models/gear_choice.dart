@@ -63,12 +63,12 @@ class GearChoice extends dw.GearChoice {
 
   static List<Item> selectionToItems(List<GearSelection> selections, {bool equipped = false}) =>
       selections.fold<List<Item>>([], (acc, sel) {
-        return [
+        return Item.unifyItems([
           ...acc,
           ...sel.options.map(
-            (opt) => Item.fromDwItem(opt.item, amount: opt.amount, equipped: equipped),
+            (e) => Item.fromDwItem(e.item, amount: e.amount),
           )
-        ];
+        ]);
       });
 
   static double selectionToCoins(List<GearSelection> selections) =>

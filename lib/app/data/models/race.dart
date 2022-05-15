@@ -32,6 +32,7 @@ class Race extends dw.Race implements WithMeta {
 
   final bool favorited;
 
+  @override
   Race copyWithInherited({
     Meta? meta,
     String? key,

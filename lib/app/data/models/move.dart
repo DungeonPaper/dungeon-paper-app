@@ -37,6 +37,7 @@ class Move extends dw.Move implements WithMeta {
   final Meta _meta;
   final bool favorited;
 
+  @override
   Move copyWithInherited({
     Meta? meta,
     String? key,

@@ -47,7 +47,7 @@ class UserMenuPopover extends GetView<CharacterService> {
                         children: [
                           ListTile(
                             visualDensity: VisualDensity.compact,
-                            title: Text(userService.current.displayName, style: textStyle),
+                            title: Text(userService.current.username, style: textStyle),
                             subtitle: Text(userService.current.email.isNotEmpty
                                 ? userService.current.email
                                 : S.current.userUnregistered),

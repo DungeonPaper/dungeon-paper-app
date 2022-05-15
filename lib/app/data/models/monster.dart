@@ -27,7 +27,8 @@ class Monster extends dw.Monster implements WithMeta {
   Meta get meta => _meta;
   final Meta _meta;
 
-  Monster copyInheritedWith({
+  @override
+  Monster copyWithInherited({
     Meta? meta,
     String? key,
     String? name,

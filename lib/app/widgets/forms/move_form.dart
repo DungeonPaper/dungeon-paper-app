@@ -1,4 +1,3 @@
-import 'package:dungeon_paper/app/data/models/meta.dart';
 import 'package:dungeon_paper/app/data/models/move.dart';
 import 'package:dungeon_paper/app/data/models/roll_stats.dart';
 import 'package:dungeon_paper/app/widgets/forms/dynamic_form/dynamic_form.dart';
@@ -47,28 +46,19 @@ class MoveForm extends GetView<DynamicFormController<Move>> {
   }
 }
 
-class AddMoveFormController extends DynamicFormController<Move> {
-  AddMoveFormController({required this.move, required this.rollStats});
+class MoveFormController extends DynamicFormController<Move> {
+  MoveFormController({required this.move, required this.rollStats});
 
   final Move? move;
   final RollStats rollStats;
 
   @override
-  void init() {
-    if (move != null) {
-      entity.value = move!.copyWithInherited(
-        meta: move!.meta.copyWith(
-          sharing: MetaSharing.createFork(move!.key, meta: move!.meta.sharing, dirty: false),
-        ),
-      );
-      setFromEntity(move!);
-    }
-    createInputs();
-  }
+  Move? get argument => move;
 
   @override
   final entity = Move.empty().obs;
 
+  @override
   Move setFromEntity(Move move) => setData({
         'name': move.name,
         'category': move.category,
@@ -95,6 +85,7 @@ class AddMoveFormController extends DynamicFormController<Move> {
     return entity.value;
   }
 
+  @override
   void createInputs() {
     inputs = <FormInputData>[
       FormInputData<FormTextInputData>(

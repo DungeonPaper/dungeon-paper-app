@@ -29,6 +29,8 @@ import '../SelectMovesSpells/views/select_moves_spells_view.dart';
 import '../controllers/create_character_controller.dart';
 
 class CreateCharacterView extends GetView<CreateCharacterController> {
+  const CreateCharacterView({Key? key}) : super(key: key);
+
   CharacterClass? get cls => controller.characterClass.value;
   @override
   Widget build(BuildContext context) {
@@ -200,28 +202,6 @@ class CreateCharacterView extends GetView<CreateCharacterController> {
             ),
           ),
         ),
-      ),
-    );
-  }
-}
-
-class _MissingInfoIcon extends StatelessWidget {
-  const _MissingInfoIcon({
-    Key? key,
-  }) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.all(4),
-      child: const Icon(
-        Icons.error_outline_rounded,
-        size: 16,
-        color: Colors.black,
-      ),
-      decoration: const ShapeDecoration(
-        shape: CircleBorder(),
-        color: DwColors.warning,
       ),
     );
   }

@@ -66,7 +66,6 @@ class SpellFilters extends EntityFilters<Spell> {
   });
 
   @override
-  // ignore: avoid_renaming_method_parameters
   bool filter(Spell spell) {
     if (search != null && search!.isNotEmpty) {
       if (![

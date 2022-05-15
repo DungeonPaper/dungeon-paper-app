@@ -1,5 +1,6 @@
 import 'package:dungeon_paper/app/data/models/character.dart';
 import 'package:dungeon_paper/app/data/models/character_class.dart';
+import 'package:dungeon_paper/app/data/models/gear_choice.dart';
 import 'package:dungeon_paper/app/data/models/gear_selection.dart';
 import 'package:dungeon_paper/app/data/models/item.dart';
 import 'package:dungeon_paper/app/data/models/move.dart';
@@ -30,19 +31,9 @@ class CreateCharacterController extends GetxController {
         characterClass.value != null,
       ].every((element) => element == true);
 
-  List<Item> get items => startingGear.fold(
-        <Item>[],
-        (previousValue, element) => Item.unifyItems([
-          ...previousValue,
-          ...element.options.map(
-            (e) => Item.fromDwItem(e.item, amount: e.amount),
-            // (e) => forkMeta(Item.fromDwItem(e.item, amount: e.amount), user),
-          )
-        ]),
-      );
+  List<Item> get items => GearChoice.selectionToItems(startingGear);
 
-  double get coins =>
-      startingGear.fold(0, (previousValue, element) => previousValue + element.coins);
+  double get coins => GearChoice.selectionToCoins(startingGear);
 
   void setBasicInfo(String name, String avatar) {
     this.name.value = name;
@@ -52,9 +43,6 @@ class CreateCharacterController extends GetxController {
 
   void setClass(CharacterClass cls) {
     characterClass.value = cls;
-    // characterClass.value = copyWithMeta(
-    //     cls.copyWithInherited(key: cls.meta.sharing!.sourceKey), Meta.originalOf(cls.meta));
-    // TODO remove dupes + use item amount
     setStartingGear(
         cls.gearChoices.fold([], (all, cur) => [...all, ...cur.preselectedGearSelections]));
     addStartingMoves();
@@ -76,7 +64,6 @@ class CreateCharacterController extends GetxController {
   void setDirty() {
     dirty.value = true;
   }
-  
 
   void setStartingGear(List<GearSelection> selections) {
     startingGear.clear();
@@ -88,15 +75,9 @@ class CreateCharacterController extends GetxController {
     moves.addAll(
       [...repo.builtIn.moves.values, ...repo.my.moves.values]
           .where((m) => (m.classKeys.contains(characterClass.value!.key) &&
-                  m.category == MoveCategory.starting)
-              //  || m.category == MoveCategory.basic,
-              )
+              m.category == MoveCategory.starting))
           .map(
             (move) => Move.fromDwMove(move, favorited: move.category != MoveCategory.basic),
-            // (move) => forkMeta<Move>(
-            //   Move.fromDwMove(move, favorited: move.category != MoveCategory.basic),
-            //   user,
-            // ),
           )
           .toList(),
     );

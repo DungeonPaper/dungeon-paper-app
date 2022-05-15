@@ -25,23 +25,28 @@ class RepositoryItemFormBinding<T> extends Bindings {
     switch (T) {
       case Move:
         Get.put<DynamicFormController<Move>>(
-          AddMoveFormController(move: item, rollStats: extraData['rollStats']),
+          MoveFormController(move: item, rollStats: extraData['rollStats']),
         );
         break;
       case Spell:
         Get.put<DynamicFormController<Spell>>(
-          AddSpellFormController(spell: item, rollStats: extraData['rollStats']),
+          SpellFormController(spell: item, rollStats: extraData['rollStats']),
         );
         break;
       case Item:
-        Get.put<DynamicFormController<Item>>(AddItemFormController(item: item));
+        Get.put<DynamicFormController<Item>>(
+          ItemFormController(item: item),
+        );
         break;
       case Note:
-        Get.put<DynamicFormController<Note>>(AddNoteFormController(note: item));
+        Get.put<DynamicFormController<Note>>(
+          NoteFormController(note: item),
+        );
         break;
       case CharacterClass:
         Get.put<DynamicFormController<CharacterClass>>(
-            AddCharacterClassFormController(characterClass: item));
+          CharacterClassFormController(characterClass: item),
+        );
         break;
       default:
         throw UnsupportedError('Type $T is unsupported');

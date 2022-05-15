@@ -3,6 +3,7 @@ import 'package:dungeon_paper/app/data/models/move.dart';
 import 'package:dungeon_paper/app/data/models/note.dart';
 import 'package:dungeon_paper/app/data/models/spell.dart';
 import 'package:dungeon_paper/app/data/services/character_service.dart';
+import 'package:dungeon_paper/app/data/services/library_service.dart';
 import 'package:dungeon_paper/app/model_utils/character_utils.dart';
 import 'package:dungeon_paper/app/widgets/cards/item_card.dart';
 import 'package:dungeon_paper/app/widgets/cards/item_card_mini.dart';
@@ -30,6 +31,8 @@ class HomeCharacterDynamicCards extends GetView<CharacterService> {
   List<Item> get items => (controller.current?.items ?? <Item>[]).where((m) => m.equipped).toList();
   List<Note> get notes =>
       (controller.current?.notes ?? <Note>[]).where((n) => n.favorited).toList();
+
+  LibraryService get library => Get.find();
 
   @override
   Widget build(BuildContext context) {
@@ -124,9 +127,7 @@ class HomeCharacterDynamicCards extends GetView<CharacterService> {
                         rollStats: controller.current!.rollStats,
                         classKeys: moves[index].classKeys,
                         move: moves[index],
-                        onSave: (move) => controller.updateCharacter(
-                          CharacterUtils.updateMoves(controller.current!, [move]),
-                        ),
+                        onSave: (move) => library.upsertToCharacter([move]),
                       ),
                       onDelete: _delete(
                         context,

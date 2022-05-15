@@ -1,13 +1,13 @@
 import 'package:dungeon_paper/app/data/models/meta.dart';
 import 'package:flutter/material.dart';
 
-class MetaSyncMenu<T> extends StatelessWidget {
+class MetaSyncMenu<T, M> extends StatelessWidget {
   const MetaSyncMenu({
     Key? key,
     required this.entity,
   }) : super(key: key);
 
-  final WithMeta<T> entity;
+  final WithMeta<T, dynamic> entity;
 
   @override
   Widget build(BuildContext context) {
@@ -33,7 +33,7 @@ class MetaSyncMenu<T> extends StatelessWidget {
     );
   }
 
-  Meta<T> get meta => entity.meta;
+  Meta<M> get meta => entity.meta as Meta<M>;
 
   List<PopupMenuItem<String>> get items => [
         PopupMenuItem(

@@ -38,13 +38,14 @@ T copyWithMeta<T extends WithMeta>(dynamic object, Meta? meta) {
   }
 }
 
+/// Returns an item with forked meta, or the same meta if its by the same user
 T forkMeta<T extends WithMeta>(dynamic object, User user, [Meta? meta]) {
   final Meta _m = (meta ?? object.meta);
-  final _o = _m.createdBy == user.displayName ? object : object.copyWithInherited(key: uuid());
+  final _o = _m.createdBy == user.username ? object : object.copyWithInherited(key: uuid());
 
   return copyWithMeta<T>(
     _o,
-    _m.fork(createdBy: user.displayName, sourceKey: keyFor(object)),
+    _m.fork(createdBy: user.username, sourceKey: keyFor(object)),
   );
 }
 

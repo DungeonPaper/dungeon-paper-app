@@ -42,6 +42,7 @@ class Item extends dw.Item implements WithMeta {
           0
       : 0;
 
+  @override
   Item copyWithInherited({
     Meta? meta,
     double? amount,

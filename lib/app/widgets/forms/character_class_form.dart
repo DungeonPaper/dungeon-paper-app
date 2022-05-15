@@ -1,4 +1,3 @@
-import 'package:dungeon_paper/app/data/models/meta.dart';
 import 'package:dungeon_paper/app/data/models/character_class.dart';
 import 'package:dungeon_paper/app/widgets/forms/dynamic_form/dynamic_form.dart';
 import 'package:dungeon_paper/app/widgets/forms/dynamic_form/form_input_data.dart';
@@ -25,28 +24,18 @@ class AddCharacterClassForm extends GetView<DynamicFormController<CharacterClass
   }
 }
 
-class AddCharacterClassFormController extends DynamicFormController<CharacterClass> {
-  AddCharacterClassFormController({required this.characterClass});
+class CharacterClassFormController extends DynamicFormController<CharacterClass> {
+  CharacterClassFormController({required this.characterClass});
 
   final CharacterClass? characterClass;
 
   @override
-  void init() {
-    if (characterClass != null) {
-      entity.value = characterClass!.copyWithInherited(
-        meta: characterClass!.meta.copyWith(
-          sharing: MetaSharing.createFork(characterClass!.key,
-              meta: characterClass!.meta.sharing, dirty: false),
-        ),
-      );
-      setFromEntity(characterClass!);
-    }
-    createInputs();
-  }
+  CharacterClass? get argument => characterClass;
 
   @override
   final entity = CharacterClass.empty().obs;
 
+  @override
   CharacterClass setFromEntity(CharacterClass characterClass) => setData({
         'name': characterClass.name,
         'description': characterClass.description,
@@ -63,6 +52,7 @@ class AddCharacterClassFormController extends DynamicFormController<CharacterCla
     return entity.value;
   }
 
+  @override
   void createInputs() {
     inputs = <FormInputData>[
       FormInputData<FormTextInputData>(

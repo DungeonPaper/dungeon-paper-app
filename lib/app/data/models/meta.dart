@@ -1,9 +1,6 @@
 import 'dart:convert';
 
-
 class Meta<T> {
-  static const _app = true;
-
   Meta._({
     required this.schemaVersion,
     DateTime? created,
@@ -21,6 +18,8 @@ class Meta<T> {
   final int schemaVersion;
   final MetaSharing? sharing;
   final DateTime? updated;
+
+  bool get isFork => sharing != null && sharing!.isFork;
 
   factory Meta.version(
     int schemaVersion, {
@@ -77,16 +76,16 @@ class Meta<T> {
               ),
             );
 
-  static Meta originalOf<T>(Meta<T> meta) => meta.sharing == null
-      ? meta
+  Meta originalOf() => sharing == null
+      ? this
       : Meta._(
-          createdBy: meta.sharing!.sourceOwner!,
-          schemaVersion: meta.schemaVersion,
-          created: meta.created,
-          updated: meta.updated,
-          sharing: meta.sharing,
-          data: meta.data,
-          language: meta.language,
+          createdBy: sharing!.sourceOwner!,
+          schemaVersion: schemaVersion,
+          created: created,
+          updated: updated,
+          sharing: sharing,
+          data: data,
+          language: language,
         );
 
   factory Meta.fromRawJson(String str) => Meta.fromJson(json.decode(str));
@@ -134,7 +133,7 @@ class MetaSharing {
     this.dirty = false,
   });
 
-  MetaSharing.source({
+  MetaSharing.createSource({
     this.shared = false,
     this.sourceOwner,
   })  : dirty = false,
@@ -212,7 +211,9 @@ class MetaSharing {
       };
 }
 
-abstract class WithMeta<T> {
-  abstract final Meta<T> meta;
+abstract class WithMeta<T, M> {
+  abstract final Meta<M> meta;
   abstract final String key;
+  T copyWith({Meta<M>? meta});
+  T copyWithInherited({Meta<M>? meta}) => copyWith(meta: meta);
 }
