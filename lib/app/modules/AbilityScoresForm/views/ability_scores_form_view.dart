@@ -1,5 +1,5 @@
-import 'package:dungeon_paper/app/data/models/roll_stats.dart';
-import 'package:dungeon_paper/app/modules/RollStatsForm/controllers/roll_stats_form_controller.dart';
+import 'package:dungeon_paper/app/data/models/ability_scores.dart';
+import 'package:dungeon_paper/app/modules/AbilityScoresForm/controllers/ability_scores_form_controller.dart';
 import 'package:dungeon_paper/app/widgets/atoms/advanced_floating_action_button.dart';
 import 'package:dungeon_paper/app/widgets/atoms/confirm_exit_view.dart';
 import 'package:dungeon_paper/app/widgets/atoms/number_text_field.dart';
@@ -10,13 +10,13 @@ import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
 
-class RollStatsFormView extends GetView<RollStatsFormController> {
-  const RollStatsFormView({
+class AbilityScoresFormView extends GetView<AbilityScoresFormController> {
+  const AbilityScoresFormView({
     Key? key,
     required this.onChanged,
   }) : super(key: key);
 
-  final void Function(RollStats rollStats) onChanged;
+  final void Function(AbilityScores abilityScores) onChanged;
 
   @override
   Widget build(BuildContext context) {
@@ -40,16 +40,16 @@ class RollStatsFormView extends GetView<RollStatsFormController> {
               padding: const EdgeInsets.all(16),
               shrinkWrap: true,
               onReorder: (int oldIndex, int newIndex) {
-                controller.rollStats.value = controller.rollStats.value
-                    .copyWith(stats: reorder(controller.rollStats.value.stats, oldIndex, newIndex));
+                controller.abilityScores.value = controller.abilityScores.value.copyWith(
+                    stats: reorder(controller.abilityScores.value.stats, oldIndex, newIndex));
               },
               children: sortByPredefined(
                 controller.textControllers.keys.toList(),
-                order: controller.rollStats.value.stats.map((stat) => stat.key).toList(),
+                order: controller.abilityScores.value.stats.map((stat) => stat.key).toList(),
               ).map(
                 (statKey) {
-                  final stat =
-                      controller.rollStats.value.stats.firstWhere((stat) => stat.key == statKey);
+                  final stat = controller.abilityScores.value.stats
+                      .firstWhere((stat) => stat.key == statKey);
                   return Padding(
                     key: Key('stat-$statKey'),
                     padding: const EdgeInsets.symmetric(vertical: 4),
@@ -63,7 +63,7 @@ class RollStatsFormView extends GetView<RollStatsFormController> {
                             children: [
                               IconTheme.merge(
                                 data: const IconThemeData(size: 16),
-                                child: RollStat.iconFor(statKey),
+                                child: AbilityScore.iconFor(statKey),
                               ),
                               const SizedBox(width: 8),
                               Text(stat.name),
@@ -102,7 +102,7 @@ class RollStatsFormView extends GetView<RollStatsFormController> {
   }
 
   _save() {
-    onChanged(controller.rollStats.value);
+    onChanged(controller.abilityScores.value);
     Get.back();
   }
 }

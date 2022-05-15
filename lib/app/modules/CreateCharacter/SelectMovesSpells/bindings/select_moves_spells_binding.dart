@@ -1,6 +1,6 @@
 import 'package:dungeon_paper/app/data/models/character_class.dart';
 import 'package:dungeon_paper/app/data/models/move.dart';
-import 'package:dungeon_paper/app/data/models/roll_stats.dart';
+import 'package:dungeon_paper/app/data/models/ability_scores.dart';
 import 'package:dungeon_paper/app/data/models/spell.dart';
 import 'package:get/get.dart';
 
@@ -9,13 +9,13 @@ import '../controllers/select_moves_spells_controller.dart';
 class SelectMovesSpellsBinding extends Bindings {
   final List<Move> moves;
   final List<Spell> spells;
-  final RollStats rollStats;
+  final AbilityScores abilityScores;
   final CharacterClass characterClass;
 
   SelectMovesSpellsBinding({
     required this.moves,
     required this.spells,
-    required this.rollStats,
+    required this.abilityScores,
     required this.characterClass,
   });
 
@@ -25,7 +25,7 @@ class SelectMovesSpellsBinding extends Bindings {
       SelectMovesSpellsController(
         moves: moves,
         spells: spells,
-        rollStats: rollStats,
+        abilityScores: abilityScores,
         characterClass: characterClass,
       ),
     );

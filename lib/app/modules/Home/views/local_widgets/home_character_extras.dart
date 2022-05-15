@@ -1,8 +1,8 @@
 import 'package:dungeon_paper/app/data/services/character_service.dart';
 import 'package:dungeon_paper/app/modules/BasicInfoForm/bindings/basic_info_form_binding.dart';
 import 'package:dungeon_paper/app/modules/BasicInfoForm/views/basic_info_form_view.dart';
-import 'package:dungeon_paper/app/modules/RollStatsForm/bindings/roll_stats_form_binding.dart';
-import 'package:dungeon_paper/app/modules/RollStatsForm/views/roll_stats_form_view.dart';
+import 'package:dungeon_paper/app/modules/AbilityScoresForm/bindings/ability_scores_form_binding.dart';
+import 'package:dungeon_paper/app/modules/AbilityScoresForm/views/ability_scores_form_view.dart';
 import 'package:dungeon_paper/app/widgets/atoms/popup_menu_item_list_tile.dart';
 import 'package:dungeon_paper/app/widgets/atoms/svg_icon.dart';
 import 'package:dungeon_paper/app/widgets/dialogs/character_bio_dialog.dart';
@@ -41,11 +41,11 @@ class HomeCharacterExtras extends GetView<CharacterService> {
         ),
         IconButton(
           onPressed: () => Get.to(
-            () => RollStatsFormView(
-              onChanged: (rollStats) =>
-                  controller.updateCharacter(controller.current!.copyWith(rollStats: rollStats)),
+            () => AbilityScoresFormView(
+              onChanged: (abilityScores) => controller
+                  .updateCharacter(controller.current!.copyWith(abilityScores: abilityScores)),
             ),
-            binding: RollStatsFormBinding(rollStats: controller.current!.rollStats),
+            binding: AbilityScoresFormBinding(abilityScores: controller.current!.abilityScores),
             preventDuplicates: false,
           ),
           icon: const SvgIcon(DwIcons.dice_d6_numbered),

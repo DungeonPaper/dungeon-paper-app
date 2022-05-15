@@ -4,7 +4,7 @@ import 'package:dungeon_paper/app/data/models/gear_choice.dart';
 import 'package:dungeon_paper/app/data/models/gear_selection.dart';
 import 'package:dungeon_paper/app/data/models/item.dart';
 import 'package:dungeon_paper/app/data/models/move.dart';
-import 'package:dungeon_paper/app/data/models/roll_stats.dart';
+import 'package:dungeon_paper/app/data/models/ability_scores.dart';
 import 'package:dungeon_paper/app/data/models/spell.dart';
 import 'package:dungeon_paper/app/data/models/user.dart';
 import 'package:dungeon_paper/app/data/services/repository_service.dart';
@@ -15,8 +15,8 @@ class CreateCharacterController extends GetxController {
   final name = ''.obs;
   final avatarUrl = ''.obs;
   final characterClass = Rx<CharacterClass?>(null);
-  final rollStats =
-      RollStats.dungeonWorld(dex: 10, str: 10, wis: 10, con: 10, intl: 10, cha: 10).obs;
+  final abilityScores =
+      AbilityScores.dungeonWorld(dex: 10, str: 10, wis: 10, con: 10, intl: 10, cha: 10).obs;
   final startingGear = <GearSelection>[].obs;
   final moves = <Move>[].obs;
   final spells = <Spell>[].obs;
@@ -49,8 +49,8 @@ class CreateCharacterController extends GetxController {
     setDirty();
   }
 
-  void setRollStats(RollStats stats) {
-    rollStats.value = stats;
+  void setAbilityScores(AbilityScores stats) {
+    abilityScores.value = stats;
     setDirty();
   }
 
@@ -87,7 +87,7 @@ class CreateCharacterController extends GetxController {
         displayName: name.value,
         avatarUrl: avatarUrl.value,
         characterClass: characterClass.value,
-        rollStats: rollStats.value,
+        abilityScores: abilityScores.value,
         moves: moves,
         spells: spells,
         items: items,

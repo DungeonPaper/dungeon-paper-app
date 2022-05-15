@@ -10,8 +10,8 @@ import 'package:dungeon_paper/app/modules/LibraryList/views/character_classes_li
 import 'package:dungeon_paper/app/modules/LibraryList/views/filters/character_class_filters.dart';
 import 'package:dungeon_paper/app/modules/BasicInfoForm/bindings/basic_info_form_binding.dart';
 import 'package:dungeon_paper/app/modules/BasicInfoForm/views/basic_info_form_view.dart';
-import 'package:dungeon_paper/app/modules/RollStatsForm/bindings/roll_stats_form_binding.dart';
-import 'package:dungeon_paper/app/modules/RollStatsForm/views/roll_stats_form_view.dart';
+import 'package:dungeon_paper/app/modules/AbilityScoresForm/bindings/ability_scores_form_binding.dart';
+import 'package:dungeon_paper/app/modules/AbilityScoresForm/views/ability_scores_form_view.dart';
 import 'package:dungeon_paper/app/modules/StartingGearForm/bindings/starting_gear_form_binding.dart';
 import 'package:dungeon_paper/app/modules/StartingGearForm/views/starting_gear_form_view.dart';
 import 'package:dungeon_paper/app/themes/colors.dart';
@@ -125,15 +125,17 @@ class CreateCharacterView extends GetView<CreateCharacterController> {
                             // TODO intl
                             title: const Text('Select Ability Scores'),
                             subtitle: Text(
-                              controller.rollStats.value.stats
+                              controller.abilityScores.value.stats
                                   .map((stat) => '${stat.key}: ${stat.value}')
                                   .join(', '),
                             ),
                             onTap: () => Get.to(
-                              () => RollStatsFormView(
-                                onChanged: (rollStats) => controller.setRollStats(rollStats),
+                              () => AbilityScoresFormView(
+                                onChanged: (abilityScores) =>
+                                    controller.setAbilityScores(abilityScores),
                               ),
-                              binding: RollStatsFormBinding(rollStats: controller.rollStats.value),
+                              binding: AbilityScoresFormBinding(
+                                  abilityScores: controller.abilityScores.value),
                               preventDuplicates: false,
                             ),
                           ),
@@ -186,7 +188,7 @@ class CreateCharacterView extends GetView<CreateCharacterController> {
                                       binding: SelectMovesSpellsBinding(
                                         moves: controller.moves,
                                         spells: controller.spells,
-                                        rollStats: controller.rollStats.value,
+                                        abilityScores: controller.abilityScores.value,
                                         characterClass: controller.characterClass.value!,
                                       ),
                                       preventDuplicates: false,

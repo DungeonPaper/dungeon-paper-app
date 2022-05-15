@@ -1,5 +1,5 @@
 import 'package:dungeon_paper/app/data/models/character.dart';
-import 'package:dungeon_paper/app/data/models/roll_stats.dart';
+import 'package:dungeon_paper/app/data/models/ability_scores.dart';
 import 'package:dungeon_paper/app/data/models/spell.dart';
 import 'package:dungeon_paper/app/model_utils/character_utils.dart';
 import 'package:dungeon_paper/app/modules/LibraryList/controllers/library_list_controller.dart';
@@ -20,13 +20,13 @@ class SpellsLibraryListView extends GetView<LibraryListController<Spell, SpellFi
     required this.onAdd,
     required this.selections,
     required this.classKeys,
-    required this.rollStats,
+    required this.abilityScores,
   }) : super(key: key);
 
   final void Function(Iterable<Spell> spells) onAdd;
   final Iterable<Spell> selections;
   final List<String> classKeys;
-  final RollStats rollStats;
+  final AbilityScores abilityScores;
 
   Character get char => controller.chars.value.current!;
 
@@ -43,7 +43,7 @@ class SpellsLibraryListView extends GetView<LibraryListController<Spell, SpellFi
         onChange: (f) => onChange(group, f),
         searchController: controller.search[group]!,
       ),
-      extraData: {'classKeys': classKeys, 'rollStats': rollStats},
+      extraData: {'classKeys': classKeys, 'abilityScores': abilityScores},
       cardBuilder: (
         ctx,
         spell, {
@@ -63,7 +63,7 @@ class SpellsLibraryListView extends GetView<LibraryListController<Spell, SpellFi
           EntityEditMenu(
             onEdit: onUpdate != null
                 ? CharacterUtils.openSpellPage(
-                    rollStats: char.rollStats,
+                    abilityScores: char.abilityScores,
                     classKeys: spell.classKeys,
                     spell: spell,
                     onSave: onUpdate,

@@ -7,6 +7,7 @@ import 'package:dungeon_paper/app/data/models/move.dart';
 import 'package:dungeon_paper/app/data/models/note.dart';
 import 'package:dungeon_paper/app/data/models/race.dart';
 import 'package:dungeon_paper/app/data/models/spell.dart';
+import 'package:dungeon_paper/app/data/models/user.dart';
 import 'package:dungeon_world_data/dungeon_world_data.dart' as dw;
 
 String keyFor<T>(dynamic object) {
@@ -16,8 +17,10 @@ String keyFor<T>(dynamic object) {
 String nameFor<T>(T object) {
   final dyn = object as dynamic;
   switch (T) {
-    case Character:
+    case User:
       return dyn.username;
+    case Character:
+      return dyn.displayName;
     case CharacterClass:
     case Item:
     case Monster:

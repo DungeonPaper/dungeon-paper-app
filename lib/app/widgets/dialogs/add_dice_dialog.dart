@@ -1,4 +1,4 @@
-import 'package:dungeon_paper/app/data/models/roll_stats.dart';
+import 'package:dungeon_paper/app/data/models/ability_scores.dart';
 import 'package:dungeon_paper/app/data/services/repository_service.dart';
 import 'package:dungeon_paper/app/themes/button_themes.dart';
 import 'package:dungeon_paper/app/themes/themes.dart';
@@ -15,12 +15,12 @@ class AddDiceDialog extends StatefulWidget {
     Key? key,
     this.dice,
     this.onSave,
-    required this.rollStats,
+    required this.abilityScores,
   }) : super(key: key);
 
   final dw.Dice? dice;
   final void Function(dw.Dice dice)? onSave;
-  final RollStats rollStats;
+  final AbilityScores abilityScores;
 
   @override
   State<AddDiceDialog> createState() => _AddDiceDialogState();
@@ -159,7 +159,7 @@ class _AddDiceDialogState extends State<AddDiceDialog> {
                 hint: Text(S.current.diceUseStatLabel),
                 onChanged: (value) => setState(() => modifierStat = value),
                 items: [
-                  for (final stat in widget.rollStats.stats)
+                  for (final stat in widget.abilityScores.stats)
                     DropdownMenuItem<String>(
                       child: Text(S.current.diceUseStatValue(stat.name, stat.key)),
                       value: stat.key,

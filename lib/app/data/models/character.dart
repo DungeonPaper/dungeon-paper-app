@@ -21,7 +21,7 @@ import 'meta.dart';
 import 'move.dart';
 import 'note.dart';
 import 'race.dart';
-import 'roll_stats.dart';
+import 'ability_scores.dart';
 import 'spell.dart';
 
 class Character implements WithMeta<Character, CharacterMeta> {
@@ -37,7 +37,7 @@ class Character implements WithMeta<Character, CharacterMeta> {
     this.coins = 0,
     required this.notes,
     required this.stats,
-    required this.rollStats,
+    required this.abilityScores,
     required this.bonds,
     required this.bio,
     required this.race,
@@ -57,19 +57,19 @@ class Character implements WithMeta<Character, CharacterMeta> {
   final double coins;
   final List<Note> notes;
   final CharacterStats stats;
-  final RollStats rollStats;
+  final AbilityScores abilityScores;
   final List<Bond> bonds;
   final Bio bio;
   final Race race;
   final CharacterSettings settings;
 
   int get currentHp => clamp(stats.currentHp, 0, maxHp);
-  int get maxHp => stats.maxHp ?? (characterClass.hp + rollStats.hpBaseValue);
+  int get maxHp => stats.maxHp ?? (characterClass.hp + abilityScores.hpBaseValue);
   int get currentExp => stats.currentExp;
   int get maxExp => stats.maxExp;
   double get currentHpPercent => clamp(stats.currentHp / maxHp, 0, 1);
   double get currentExpPercent => clamp(stats.currentExp / maxExp, 0, 1);
-  int get maxLoad => stats.load ?? (characterClass.load + rollStats.loadBaseValue);
+  int get maxLoad => stats.load ?? (characterClass.load + abilityScores.loadBaseValue);
   int get currentLoad => items.fold(0, (weight, item) => weight + item.weight);
   Set<String> get noteCategories => Set.from(
         (<String>[
@@ -101,7 +101,7 @@ class Character implements WithMeta<Character, CharacterMeta> {
     double? coins,
     List<Note>? notes,
     CharacterStats? stats,
-    RollStats? rollStats,
+    AbilityScores? abilityScores,
     List<Bond>? bonds,
     Bio? bio,
     Race? race,
@@ -119,7 +119,7 @@ class Character implements WithMeta<Character, CharacterMeta> {
         coins: coins ?? this.coins,
         notes: notes ?? this.notes,
         stats: stats ?? this.stats,
-        rollStats: rollStats ?? this.rollStats,
+        abilityScores: abilityScores ?? this.abilityScores,
         bonds: bonds ?? this.bonds,
         bio: bio ?? this.bio,
         race: race ?? this.race,
@@ -139,7 +139,7 @@ class Character implements WithMeta<Character, CharacterMeta> {
     double? coins,
     List<Note>? notes,
     CharacterStats? stats,
-    RollStats? rollStats,
+    AbilityScores? abilityScores,
     List<Bond>? bonds,
     Bio? bio,
     Race? race,
@@ -157,7 +157,7 @@ class Character implements WithMeta<Character, CharacterMeta> {
         coins: coins ?? this.coins,
         notes: notes ?? this.notes,
         stats: stats ?? this.stats,
-        rollStats: rollStats ?? this.rollStats,
+        abilityScores: abilityScores ?? this.abilityScores,
         bonds: bonds ?? this.bonds,
         bio: bio ?? this.bio,
         race: race ?? this.race,
@@ -190,7 +190,7 @@ class Character implements WithMeta<Character, CharacterMeta> {
         // load: characterClass.load,
       ),
       moves: [],
-      rollStats: RollStats.dungeonWorld(
+      abilityScores: AbilityScores.dungeonWorld(
         cha: rand.nextInt(20),
         con: rand.nextInt(20),
         dex: rand.nextInt(20),
@@ -243,7 +243,7 @@ class Character implements WithMeta<Character, CharacterMeta> {
         coins: json['coins'],
         notes: List<Note>.from(json['notes'].map((x) => Note.fromJson(x))),
         stats: CharacterStats.fromJson(json['stats']),
-        rollStats: RollStats.fromJson(json['rollStats']),
+        abilityScores: AbilityScores.fromJson(json['abilityScores']),
         bonds: List<Bond>.from(json['bonds'].map((x) => Bond.fromJson(x))),
         bio: Bio.fromJson(json['bio']),
         race: Race.fromJson(json['race']),
@@ -262,7 +262,7 @@ class Character implements WithMeta<Character, CharacterMeta> {
         'coins': coins,
         'notes': List<dynamic>.from(notes.map((x) => x.toJson())),
         'stats': stats.toJson(),
-        'rollStats': rollStats.toJson(),
+        'abilityScores': abilityScores.toJson(),
         'bonds': List<dynamic>.from(bonds.map((x) => x.toJson())),
         'bio': bio.toJson(),
         'race': race.toJson(),

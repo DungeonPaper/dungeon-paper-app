@@ -1,6 +1,6 @@
 import 'package:dungeon_paper/app/data/models/character.dart';
 import 'package:dungeon_paper/app/data/models/note.dart';
-import 'package:dungeon_paper/app/data/models/roll_stats.dart';
+import 'package:dungeon_paper/app/data/models/ability_scores.dart';
 import 'package:dungeon_paper/app/data/services/repository_service.dart';
 import 'package:dungeon_paper/app/model_utils/character_utils.dart';
 import 'package:dungeon_paper/app/modules/LibraryList/controllers/library_list_controller.dart';
@@ -21,13 +21,13 @@ class NotesLibraryListView extends GetView<LibraryListController<Note, NoteFilte
     required this.onAdd,
     required this.selections,
     required this.classKeys,
-    required this.rollStats,
+    required this.abilityScores,
   }) : super(key: key);
 
   final void Function(Iterable<Note> notes) onAdd;
   final Iterable<Note> selections;
   final List<String> classKeys;
-  final RollStats rollStats;
+  final AbilityScores abilityScores;
 
   RepositoryService get service => controller.repo.value;
   Character get char => controller.chars.value.current!;

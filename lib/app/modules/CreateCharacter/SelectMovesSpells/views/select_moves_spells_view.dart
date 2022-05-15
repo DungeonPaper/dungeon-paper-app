@@ -71,7 +71,7 @@ class SelectMovesSpellsView extends GetView<SelectMovesSpellsController> {
                               actions: [
                                 EntityEditMenu(
                                   onEdit: CharacterUtils.openMovePage(
-                                    rollStats: controller.rollStats.value,
+                                    abilityScores: controller.abilityScores.value,
                                     classKeys: move.classKeys,
                                     move: move,
                                     onSave: (_move) => controller.moves.value =
@@ -102,7 +102,7 @@ class SelectMovesSpellsView extends GetView<SelectMovesSpellsController> {
                             moves.map((m) => m.copyWithInherited(favorited: true)),
                           );
                         },
-                        rollStats: controller.rollStats.value,
+                        abilityScores: controller.abilityScores.value,
                         classKeys: [controller.characterClass.value.key],
                         selections: controller.moves,
                       ),
@@ -173,7 +173,7 @@ class SelectMovesSpellsView extends GetView<SelectMovesSpellsController> {
                             spells.map((s) => s.copyWithInherited(prepared: true)),
                           );
                         },
-                        rollStats: controller.rollStats.value,
+                        abilityScores: controller.abilityScores.value,
                         classKeys: [controller.characterClass.value.key],
                         selections: controller.spells,
                       ),

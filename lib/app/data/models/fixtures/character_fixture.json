@@ -107,7 +107,7 @@
             "overrideMaxHP": null
         }
     },
-    "rollStats": {
+    "abilityScores": {
         "dex": 10,
         "str": 10,
         "wis": 10,

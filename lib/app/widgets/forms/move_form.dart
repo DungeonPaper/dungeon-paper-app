@@ -1,5 +1,5 @@
 import 'package:dungeon_paper/app/data/models/move.dart';
-import 'package:dungeon_paper/app/data/models/roll_stats.dart';
+import 'package:dungeon_paper/app/data/models/ability_scores.dart';
 import 'package:dungeon_paper/app/widgets/forms/dynamic_form/dynamic_form.dart';
 import 'package:dungeon_paper/app/widgets/forms/dynamic_form/form_input_data.dart';
 import 'package:dungeon_paper/app/widgets/forms/library_entity_form.dart';
@@ -47,10 +47,10 @@ class MoveForm extends GetView<DynamicFormController<Move>> {
 }
 
 class MoveFormController extends DynamicFormController<Move> {
-  MoveFormController({required this.move, required this.rollStats});
+  MoveFormController({required this.move, required this.abilityScores});
 
   final Move? move;
-  final RollStats rollStats;
+  final AbilityScores abilityScores;
 
   @override
   Move? get argument => move;
@@ -154,7 +154,7 @@ class MoveFormController extends DynamicFormController<Move> {
         name: 'dice',
         data: FormDiceInputData(
           value: entity.value.dice,
-          rollStats: rollStats,
+          abilityScores: abilityScores,
           guessFrom: {'description', 'explanation'},
         ),
       ),

@@ -1,6 +1,6 @@
 import 'dart:async';
 
-import 'package:dungeon_paper/app/data/models/roll_stats.dart';
+import 'package:dungeon_paper/app/data/models/ability_scores.dart';
 import 'package:dungeon_paper/app/model_utils/dice_utils.dart';
 import 'package:dungeon_paper/app/model_utils/tag_utils.dart';
 import 'package:dungeon_paper/app/themes/themes.dart';

@@ -4,7 +4,7 @@ import 'package:dungeon_paper/app/modules/Home/views/local_widgets/home_characte
 import 'package:dungeon_paper/app/themes/button_themes.dart';
 import 'package:dungeon_paper/app/widgets/atoms/svg_icon.dart';
 import 'package:dungeon_paper/app/widgets/molecules/character_subtitle.dart';
-import 'package:dungeon_paper/app/widgets/molecules/roll_stats_grid.dart';
+import 'package:dungeon_paper/app/widgets/molecules/ability_scores_grid.dart';
 import 'package:dungeon_paper/core/dw_icons.dart';
 import 'package:dungeon_paper/generated/l10n.dart';
 import 'package:flutter/material.dart';
@@ -25,7 +25,7 @@ class HomeCharacterView extends GetView<CharacterService> {
         if (char == null) {
           return Container();
         }
-        final rollStats = char.rollStats.stats;
+        final abilityScores = char.abilityScores.stats;
         return ListView(
           padding: const EdgeInsets.only(bottom: 0),
           // crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -86,7 +86,7 @@ class HomeCharacterView extends GetView<CharacterService> {
             )),
             p(const SizedBox(height: 16)),
             p(Center(
-              child: RollStatsGrid(rollStats: rollStats),
+              child: AbilityScoresGrid(abilityScores: abilityScores),
             )),
             p(const SizedBox(height: 16)),
             p(Center(

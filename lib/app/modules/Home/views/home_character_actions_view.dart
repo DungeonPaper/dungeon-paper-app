@@ -69,7 +69,7 @@ class HomeCharacterActionsView extends GetView<CharacterService> {
       list: char.moves,
       addPageBuilder: ({required onAdd}) => MovesLibraryListView(
         onAdd: onAdd,
-        rollStats: char.rollStats,
+        abilityScores: char.abilityScores,
         selections: char.moves,
         classKeys: [char.characterClass.key],
       ),
@@ -85,7 +85,7 @@ class HomeCharacterActionsView extends GetView<CharacterService> {
             onEdit: CharacterUtils.openMovePage(
               move: move,
               classKeys: move.classKeys,
-              rollStats: char.rollStats,
+              abilityScores: char.abilityScores,
               onSave: onSave,
             ),
           ),
@@ -105,7 +105,7 @@ class HomeCharacterActionsView extends GetView<CharacterService> {
       list: char.spells,
       addPageBuilder: ({required onAdd}) => SpellsLibraryListView(
         onAdd: onAdd,
-        rollStats: char.rollStats,
+        abilityScores: char.abilityScores,
         selections: char.spells,
         classKeys: [char.characterClass.key],
       ),
@@ -121,7 +121,7 @@ class HomeCharacterActionsView extends GetView<CharacterService> {
             onEdit: CharacterUtils.openSpellPage(
               spell: spell,
               classKeys: spell.classKeys,
-              rollStats: char.rollStats,
+              abilityScores: char.abilityScores,
               onSave: onSave,
             ),
           ),

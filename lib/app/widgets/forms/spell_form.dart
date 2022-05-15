@@ -1,6 +1,6 @@
 import 'package:dungeon_paper/app/data/models/meta.dart';
 import 'package:dungeon_paper/app/data/models/spell.dart';
-import 'package:dungeon_paper/app/data/models/roll_stats.dart';
+import 'package:dungeon_paper/app/data/models/ability_scores.dart';
 import 'package:dungeon_paper/app/widgets/forms/dynamic_form/dynamic_form.dart';
 import 'package:dungeon_paper/app/widgets/forms/dynamic_form/form_input_data.dart';
 import 'package:dungeon_paper/app/widgets/forms/library_entity_form.dart';
@@ -28,10 +28,10 @@ class SpellForm extends GetView<DynamicFormController<Spell>> {
 }
 
 class SpellFormController extends DynamicFormController<Spell> {
-  SpellFormController({required this.spell, required this.rollStats});
+  SpellFormController({required this.spell, required this.abilityScores});
 
   final Spell? spell;
-  final RollStats rollStats;
+  final AbilityScores abilityScores;
   @override
   Spell? get argument => spell;
 
@@ -118,7 +118,7 @@ class SpellFormController extends DynamicFormController<Spell> {
         name: 'dice',
         data: FormDiceInputData(
           value: entity.value.dice,
-          rollStats: rollStats,
+          abilityScores: abilityScores,
           guessFrom: {'description', 'explanation'},
         ),
       ),

@@ -30,7 +30,7 @@ class RollDiceView extends StatefulWidget {
 class _RollDiceViewState extends State<RollDiceView> with TickerProviderStateMixin {
   final diceSize = 56.0;
   final diceSpacing = 24.0;
-  late AnimationStatus rollStatus;
+  late AnimationStatus abilityScoreus;
   late List<List<_AnimSet>> animations;
   late List<dw.Dice> dice;
   late List<dw.Dice> withoutModDice;
@@ -45,7 +45,7 @@ class _RollDiceViewState extends State<RollDiceView> with TickerProviderStateMix
     super.initState();
     withoutModDice = widget.dice;
     dice = _applyMods(widget.dice);
-    rollStatus = AnimationStatus.dismissed;
+    abilityScoreus = AnimationStatus.dismissed;
     _roll();
     _setupAnimations();
   }
@@ -62,7 +62,7 @@ class _RollDiceViewState extends State<RollDiceView> with TickerProviderStateMix
       // blendMode: BlendMode.darken,
       child: Scaffold(
         appBar: AppBar(
-          title: Text(rollStatus == AnimationStatus.completed
+          title: Text(abilityScoreus == AnimationStatus.completed
               ? 'Result: $totalResult'
               : 'Rolling ${flat.length} dice'),
           centerTitle: true,
@@ -218,7 +218,7 @@ class _RollDiceViewState extends State<RollDiceView> with TickerProviderStateMix
         .map(
           (d) => d.needsModifier
               ? d.copyWithModifierValue(
-                  charService.current!.rollStats.getStat(d.modifierStat!).modifier,
+                  charService.current!.abilityScores.getStat(d.modifierStat!).modifier,
                 )
               : d,
         )
@@ -279,7 +279,7 @@ class _RollDiceViewState extends State<RollDiceView> with TickerProviderStateMix
 
   void _updateAnimStatus() {
     setState(() {
-      rollStatus = animations.first.first.controller.status != AnimationStatus.completed ||
+      abilityScoreus = animations.first.first.controller.status != AnimationStatus.completed ||
               animations.last.last.controller.status != AnimationStatus.completed
           ? AnimationStatus.forward
           : AnimationStatus.completed;

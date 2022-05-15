@@ -3,7 +3,7 @@ part of 'form_input_data.dart';
 class FormDiceInputData extends BaseInputData<List<dw.Dice>> {
   FormDiceInputData({
     required List<dw.Dice> value,
-    required this.rollStats,
+    required this.abilityScores,
     required this.guessFrom,
   }) {
     init(value);
@@ -19,7 +19,7 @@ class FormDiceInputData extends BaseInputData<List<dw.Dice>> {
   late Map<String, String> _resultsCache;
   late Set<dw.Dice> guesses;
 
-  final RollStats rollStats;
+  final AbilityScores abilityScores;
   final Set<String> guessFrom;
 
   void init(List<dw.Dice> value) {
@@ -77,7 +77,7 @@ class FormDiceInputData extends BaseInputData<List<dw.Dice>> {
                 onPressed: () => Get.dialog(
                   AddDiceDialog(
                     dice: dice.value,
-                    rollStats: rollStats,
+                    abilityScores: abilityScores,
                     onSave: (_dice) {
                       controller.value = updateByIndex(controller.value, _dice, dice.index);
                     },
@@ -92,7 +92,7 @@ class FormDiceInputData extends BaseInputData<List<dw.Dice>> {
               backgroundColor: Theme.of(context).primaryColor,
               onPressed: () => Get.dialog(
                 AddDiceDialog(
-                  rollStats: rollStats,
+                  abilityScores: abilityScores,
                   onSave: (dice) {
                     controller.value = [...controller.value, dice];
                   },

@@ -1,6 +1,6 @@
 import 'package:dungeon_paper/app/data/models/character.dart';
 import 'package:dungeon_paper/app/data/models/move.dart';
-import 'package:dungeon_paper/app/data/models/roll_stats.dart';
+import 'package:dungeon_paper/app/data/models/ability_scores.dart';
 import 'package:dungeon_paper/app/data/services/repository_service.dart';
 import 'package:dungeon_paper/app/model_utils/character_utils.dart';
 import 'package:dungeon_paper/app/modules/LibraryList/controllers/library_list_controller.dart';
@@ -21,13 +21,13 @@ class MovesLibraryListView extends GetView<LibraryListController<Move, MoveFilte
     required this.onAdd,
     required this.selections,
     required this.classKeys,
-    required this.rollStats,
+    required this.abilityScores,
   }) : super(key: key);
 
   final void Function(Iterable<Move> moves) onAdd;
   final Iterable<Move> selections;
   final List<String> classKeys;
-  final RollStats rollStats;
+  final AbilityScores abilityScores;
 
   RepositoryService get service => controller.repo.value;
   Character get char => controller.chars.value.current!;
@@ -37,7 +37,7 @@ class MovesLibraryListView extends GetView<LibraryListController<Move, MoveFilte
     return LibraryListView<Move, MoveFilters>(
       storageKey: 'Moves',
       title: Text(S.current.addGeneric(S.current.entityPlural(Move))),
-      extraData: {'classKeys': classKeys, 'rollStats': rollStats},
+      extraData: {'classKeys': classKeys, 'abilityScores': abilityScores},
       filtersBuilder: (group, filters, onChange) => MoveFiltersView(
         group: group,
         filters: filters,
@@ -65,7 +65,7 @@ class MovesLibraryListView extends GetView<LibraryListController<Move, MoveFilte
           EntityEditMenu(
             onEdit: onUpdate != null
                 ? CharacterUtils.openMovePage(
-                    rollStats: char.rollStats,
+                    abilityScores: char.abilityScores,
                     classKeys: move.classKeys,
                     move: move,
                     onSave: onUpdate,

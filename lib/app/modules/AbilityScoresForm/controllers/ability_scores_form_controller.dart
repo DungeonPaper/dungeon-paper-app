@@ -1,16 +1,16 @@
-import 'package:dungeon_paper/app/data/models/roll_stats.dart';
+import 'package:dungeon_paper/app/data/models/ability_scores.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-class RollStatsFormController extends GetxController {
-  final Rx<RollStats> rollStats;
+class AbilityScoresFormController extends GetxController {
+  final Rx<AbilityScores> abilityScores;
   final textControllers = <String, TextEditingController>{};
   final dirty = false.obs;
 
-  RollStatsFormController({
-    RollStats? rollStats,
-  }) : rollStats = (rollStats ??
-                RollStats.dungeonWorld(dex: 10, str: 10, wis: 10, con: 10, intl: 10, cha: 10))
+  AbilityScoresFormController({
+    AbilityScores? abilityScores,
+  }) : abilityScores = (abilityScores ??
+                AbilityScores.dungeonWorld(dex: 10, str: 10, wis: 10, con: 10, intl: 10, cha: 10))
             .obs {
     _initTextControllers();
   }
@@ -20,7 +20,7 @@ class RollStatsFormController extends GetxController {
       ctrl.removeListener(validate);
     }
     textControllers.clear();
-    for (final stat in rollStats.value.stats) {
+    for (final stat in abilityScores.value.stats) {
       textControllers[stat.key] = TextEditingController(text: stat.value.toString())
         ..addListener(validate);
     }
@@ -28,8 +28,8 @@ class RollStatsFormController extends GetxController {
 
   void validate() {
     dirty.value = true;
-    rollStats.value = rollStats.value.copyWithStatValues({
-      for (final stat in rollStats.value.stats)
+    abilityScores.value = abilityScores.value.copyWithStatValues({
+      for (final stat in abilityScores.value.stats)
         stat.key: int.tryParse(textControllers[stat.key]!.text) ?? stat.value
     });
   }

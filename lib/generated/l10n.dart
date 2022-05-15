@@ -1660,10 +1660,10 @@ class S {
   }
 
   /// `Roll +{stat}`
-  String rollStatButtonTooltip(Object stat) {
+  String abilityScoreButtonTooltip(Object stat) {
     return Intl.message(
       'Roll +$stat',
-      name: 'rollStatButtonTooltip',
+      name: 'abilityScoreButtonTooltip',
       desc: '',
       args: [stat],
     );

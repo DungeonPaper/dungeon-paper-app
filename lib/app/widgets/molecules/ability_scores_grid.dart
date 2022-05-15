@@ -1,16 +1,16 @@
-import 'package:dungeon_paper/app/data/models/roll_stats.dart';
+import 'package:dungeon_paper/app/data/models/ability_scores.dart';
 import 'package:flutter/material.dart';
 
-import '../chips/roll_stat_chip.dart';
+import '../chips/ability_score_chip.dart';
 
-class RollStatsGrid extends StatelessWidget {
-  const RollStatsGrid({
+class AbilityScoresGrid extends StatelessWidget {
+  const AbilityScoresGrid({
     Key? key,
-    required this.rollStats,
+    required this.abilityScores,
     this.showDice = true,
   }) : super(key: key);
 
-  final List<RollStat> rollStats;
+  final List<AbilityScore> abilityScores;
   final bool showDice;
 
   @override
@@ -22,10 +22,10 @@ class RollStatsGrid extends StatelessWidget {
           spacing: 4,
           runSpacing: 4,
           children: [
-            for (var stat in rollStats)
+            for (var stat in abilityScores)
               SizedBox(
                 width: constraints.maxWidth / 3 - 8,
-                child: RollStatChip(
+                child: AbilityScoreChip(
                   stat: stat,
                   showDice: showDice,
                 ),

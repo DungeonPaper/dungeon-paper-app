@@ -25,12 +25,12 @@ class RepositoryItemFormBinding<T> extends Bindings {
     switch (T) {
       case Move:
         Get.put<DynamicFormController<Move>>(
-          MoveFormController(move: item, rollStats: extraData['rollStats']),
+          MoveFormController(move: item, abilityScores: extraData['abilityScores']),
         );
         break;
       case Spell:
         Get.put<DynamicFormController<Spell>>(
-          SpellFormController(spell: item, rollStats: extraData['rollStats']),
+          SpellFormController(spell: item, abilityScores: extraData['abilityScores']),
         );
         break;
       case Item:

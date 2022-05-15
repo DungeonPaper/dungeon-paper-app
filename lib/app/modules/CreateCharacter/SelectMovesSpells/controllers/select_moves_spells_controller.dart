@@ -1,7 +1,7 @@
 import 'dart:async';
 
 import 'package:dungeon_paper/app/data/models/character_class.dart';
-import 'package:dungeon_paper/app/data/models/roll_stats.dart';
+import 'package:dungeon_paper/app/data/models/ability_scores.dart';
 import 'package:dungeon_paper/app/data/services/repository_service.dart';
 import 'package:dungeon_paper/core/utils/string_utils.dart';
 import 'package:get/get.dart';
@@ -12,17 +12,17 @@ class SelectMovesSpellsController extends GetxController {
   final RxList<Move> moves;
   final RxList<Spell> spells;
   final dirty = false.obs;
-  final Rx<RollStats> rollStats;
+  final Rx<AbilityScores> abilityScores;
   final Rx<CharacterClass> characterClass;
 
   SelectMovesSpellsController({
     required List<Move> moves,
     required List<Spell> spells,
-    required RollStats rollStats,
+    required AbilityScores abilityScores,
     required CharacterClass characterClass,
   })  : moves = moves.obs,
         spells = spells.obs,
-        rollStats = rollStats.obs,
+        abilityScores = abilityScores.obs,
         characterClass = characterClass.obs;
 
   final repo = Get.find<RepositoryService>();

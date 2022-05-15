@@ -43,7 +43,7 @@ class AppPages {
     GetPage(
       name: _Paths.addMoves,
       page: () => MovesLibraryListView(
-        rollStats: characterService.current!.rollStats,
+        abilityScores: characterService.current!.abilityScores,
         onAdd: (moves) => characterService.updateCharacter(
           CharacterUtils.updateMoves(characterService.current!, moves),
         ),
@@ -82,8 +82,8 @@ class AppPages {
     // ),
     // GetPage(
     //   name: _Paths.ROLL_STATS_FORM,
-    //   page: () => RollStatsFormView(),
-    //   binding: RollStatsFormBinding(),
+    //   page: () => AbilityScoresFormView(),
+    //   binding: AbilityScoresFormBinding(),
     // ),
     // GetPage(
     //   name: _Paths.startingGear,

@@ -3,7 +3,7 @@ import 'package:dungeon_paper/app/data/models/item.dart';
 import 'package:dungeon_paper/app/data/models/note.dart';
 import 'package:dungeon_paper/app/data/models/move.dart';
 import 'package:dungeon_paper/app/data/models/character.dart';
-import 'package:dungeon_paper/app/data/models/roll_stats.dart';
+import 'package:dungeon_paper/app/data/models/ability_scores.dart';
 import 'package:dungeon_paper/app/data/models/spell.dart';
 import 'package:dungeon_paper/app/modules/LibraryList/bindings/library_form_binding.dart';
 import 'package:dungeon_paper/app/widgets/forms/library_entity_form.dart';
@@ -28,7 +28,7 @@ class CharacterUtils {
   static void Function() openMovePage({
     required Move? move,
     required void Function(Move move) onSave,
-    required RollStats rollStats,
+    required AbilityScores abilityScores,
     required List<String> classKeys,
   }) =>
       () => Get.to(
@@ -39,7 +39,7 @@ class CharacterUtils {
             binding: RepositoryItemFormBinding<Move>(
               item: move,
               extraData: {
-                'rollStats': rollStats,
+                'abilityScores': abilityScores,
                 'classKeys': classKeys,
               },
             ),
@@ -62,7 +62,7 @@ class CharacterUtils {
   static void Function() openSpellPage({
     required Spell? spell,
     required void Function(Spell spell) onSave,
-    required RollStats rollStats,
+    required AbilityScores abilityScores,
     required List<String> classKeys,
   }) =>
       () => Get.to(
@@ -73,7 +73,7 @@ class CharacterUtils {
             binding: RepositoryItemFormBinding<Spell>(
               item: spell,
               extraData: {
-                'rollStats': rollStats,
+                'abilityScores': abilityScores,
                 'classKeys': classKeys,
               },
             ),

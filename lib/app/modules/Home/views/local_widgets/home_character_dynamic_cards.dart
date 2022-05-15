@@ -124,7 +124,7 @@ class HomeCharacterDynamicCards extends GetView<CharacterService> {
                   actions: [
                     EntityEditMenu(
                       onEdit: CharacterUtils.openMovePage(
-                        rollStats: controller.current!.rollStats,
+                        abilityScores: controller.current!.abilityScores,
                         classKeys: moves[index].classKeys,
                         move: moves[index],
                         onSave: (move) => library.upsertToCharacter([move]),
@@ -176,7 +176,7 @@ class HomeCharacterDynamicCards extends GetView<CharacterService> {
                   actions: [
                     EntityEditMenu(
                       onEdit: CharacterUtils.openSpellPage(
-                        rollStats: controller.current!.rollStats,
+                        abilityScores: controller.current!.abilityScores,
                         classKeys: spells[index].classKeys,
                         spell: spells[index],
                         onSave: (spell) => controller.updateCharacter(

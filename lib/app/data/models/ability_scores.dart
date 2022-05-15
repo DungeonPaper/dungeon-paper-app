@@ -5,12 +5,12 @@ import 'package:flutter/material.dart';
 import '../../../core/dw_icons.dart';
 import '../../widgets/atoms/svg_icon.dart';
 
-class RollStats {
-  RollStats({
-    required Iterable<RollStat> stats,
+class AbilityScores {
+  AbilityScores({
+    required Iterable<AbilityScore> stats,
   }) : stats = stats.toList();
 
-  factory RollStats.dungeonWorld({
+  factory AbilityScores.dungeonWorld({
     required int dex,
     required int str,
     required int wis,
@@ -18,38 +18,38 @@ class RollStats {
     required int intl,
     required int cha,
   }) =>
-      RollStats(stats: [
-        RollStat(
+      AbilityScores(stats: [
+        AbilityScore(
           key: 'STR',
           name: 'Strength',
           description: 'Measures muscle and physical power.',
           value: str,
         ),
-        RollStat(
+        AbilityScore(
           key: 'DEX',
           name: 'Dexterity',
           description: 'Measures agility, reflexes and balance.',
           value: dex,
         ),
-        RollStat(
+        AbilityScore(
           key: 'CON',
           name: 'Constitution',
           description: "Represents your character's health and stamina.",
           value: con,
         ),
-        RollStat(
+        AbilityScore(
           key: 'INT',
           name: 'Intelligence',
           description: 'Determines how well your character learns and reasons.',
           value: intl,
         ),
-        RollStat(
+        AbilityScore(
           key: 'WIS',
           name: 'Wisdom',
           description: "Describes a character's willpower, common sense, awareness, and intuition.",
           value: wis,
         ),
-        RollStat(
+        AbilityScore(
           key: 'CHA',
           name: 'Charisma',
           description:
@@ -58,31 +58,32 @@ class RollStats {
         ),
       ]);
 
-  final List<RollStat> stats;
+  final List<AbilityScore> stats;
 
-  Map<String, RollStat> get statsMap => Map.fromIterable(stats, key: (s) => s.key);
+  Map<String, AbilityScore> get statsMap => Map.fromIterable(stats, key: (s) => s.key);
 
-  RollStats copyWith({
-    Iterable<RollStat>? stats,
+  AbilityScores copyWith({
+    Iterable<AbilityScore>? stats,
   }) =>
-      RollStats(stats: stats ?? this.stats);
+      AbilityScores(stats: stats ?? this.stats);
 
-  RollStats copyWithStatValues(Map<String, int> map) => copyWith(
+  AbilityScores copyWithStatValues(Map<String, int> map) => copyWith(
         stats: stats.map(
           (stat) => map.containsKey(stat.key) ? stat.copyWith(value: map[stat.key]) : stat,
         ),
       );
 
-  RollStats copyWithDebilities(Iterable<String> keys, {required bool isDebilitated}) => copyWith(
+  AbilityScores copyWithDebilities(Iterable<String> keys, {required bool isDebilitated}) =>
+      copyWith(
         stats:
             stats.map((e) => keys.contains(e.key) ? e.copyWith(isDebilitated: isDebilitated) : e),
       );
 
-  factory RollStats.fromRawJson(String str) => RollStats.fromJson(json.decode(str));
+  factory AbilityScores.fromRawJson(String str) => AbilityScores.fromJson(json.decode(str));
 
   String toRawJson() => json.encode(toJson());
 
-  RollStat getStat(String statKey) {
+  AbilityScore getStat(String statKey) {
     statKey = statKey.trim().toUpperCase();
     if (!statsMap.containsKey(statKey)) {
       throw Exception('Stat $statKey not found, available: ${statsMap.keys}');
@@ -90,12 +91,12 @@ class RollStats {
     return statsMap[statKey]!;
   }
 
-  RollStat? get dex => getStat('DEX');
-  RollStat? get str => getStat('STR');
-  RollStat? get wis => getStat('WIS');
-  RollStat? get con => getStat('CON');
-  RollStat? get intl => getStat('INT');
-  RollStat? get cha => getStat('CHA');
+  AbilityScore? get dex => getStat('DEX');
+  AbilityScore? get str => getStat('STR');
+  AbilityScore? get wis => getStat('WIS');
+  AbilityScore? get con => getStat('CON');
+  AbilityScore? get intl => getStat('INT');
+  AbilityScore? get cha => getStat('CHA');
 
   int? get dexMod => dex?.modifier;
   int? get strMod => str?.modifier;
@@ -114,8 +115,8 @@ class RollStats {
   int get hpBaseValue => con?.value ?? 0;
   int get loadBaseValue => str?.value ?? 0;
 
-  factory RollStats.fromJson(Map<String, dynamic> json) => RollStats(
-        stats: List<RollStat>.from(json['stats'].map((x) => RollStat.fromJson(x))),
+  factory AbilityScores.fromJson(Map<String, dynamic> json) => AbilityScores(
+        stats: List<AbilityScore>.from(json['stats'].map((x) => AbilityScore.fromJson(x))),
       );
 
   Map<String, dynamic> toJson() => {
@@ -123,14 +124,14 @@ class RollStats {
       };
 }
 
-class RollStat {
+class AbilityScore {
   final String key;
   final String name;
   final String description;
   final int value;
   final bool isDebilitated;
 
-  RollStat({
+  AbilityScore({
     required String key,
     required this.name,
     required this.value,
@@ -138,7 +139,7 @@ class RollStat {
     this.isDebilitated = false,
   }) : key = key.trim().toUpperCase();
 
-  factory RollStat.fromJson(Map<String, dynamic> json) => RollStat(
+  factory AbilityScore.fromJson(Map<String, dynamic> json) => AbilityScore(
         key: json['key'],
         name: json['name'],
         value: json['value'],
@@ -154,14 +155,14 @@ class RollStat {
         'isDebilitated': isDebilitated,
       };
 
-  RollStat copyWith({
+  AbilityScore copyWith({
     String? key,
     String? name,
     String? description,
     int? value,
     bool? isDebilitated,
   }) =>
-      RollStat(
+      AbilityScore(
         key: key ?? this.key,
         name: name ?? this.name,
         description: description ?? this.description,

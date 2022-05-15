@@ -1,15 +1,15 @@
-import 'package:dungeon_paper/app/data/models/roll_stats.dart';
+import 'package:dungeon_paper/app/data/models/ability_scores.dart';
 import 'package:dungeon_paper/app/model_utils/dice_utils.dart';
 import 'package:dungeon_paper/app/widgets/atoms/svg_icon.dart';
 import 'package:dungeon_paper/core/dw_icons.dart';
 import 'package:flutter/material.dart';
 import 'package:dungeon_world_data/dungeon_world_data.dart' as dw;
 
-class RollStatChip extends StatelessWidget {
-  final RollStat stat;
+class AbilityScoreChip extends StatelessWidget {
+  final AbilityScore stat;
   final bool showDice;
 
-  const RollStatChip({Key? key, required this.stat, this.showDice = true}) : super(key: key);
+  const AbilityScoreChip({Key? key, required this.stat, this.showDice = true}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
