@@ -23,8 +23,7 @@ class AbilityScoresFormView extends GetView<AbilityScoresFormController> {
         dirty: controller.dirty.value,
         child: Scaffold(
           appBar: AppBar(
-            // TODO intl
-            title: const Text('Ability Scores'),
+            title: Text(S.current.entityPlural(AbilityScore)),
             centerTitle: true,
           ),
           floatingActionButton: AdvancedFloatingActionButton.extended(

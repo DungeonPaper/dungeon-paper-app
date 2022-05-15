@@ -50,6 +50,16 @@ class S {
     return Localizations.of<S>(context, S);
   }
 
+  /// `Roll +{stat}`
+  String abilityScoreButtonTooltip(Object stat) {
+    return Intl.message(
+      'Roll +$stat',
+      name: 'abilityScoreButtonTooltip',
+      desc: '',
+      args: [stat],
+    );
+  }
+
   /// `About`
   String get aboutTitle {
     return Intl.message(
@@ -212,6 +222,36 @@ class S {
     return Intl.message(
       'Dungeon Paper',
       name: 'appName',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Choose Photo...`
+  String get basicInfoImageChoose {
+    return Intl.message(
+      'Choose Photo...',
+      name: 'basicInfoImageChoose',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Choose New Photo...`
+  String get basicInfoImageChooseNew {
+    return Intl.message(
+      'Choose New Photo...',
+      name: 'basicInfoImageChooseNew',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Remove Photo`
+  String get basicInfoImageRemove {
+    return Intl.message(
+      'Remove Photo',
+      name: 'basicInfoImageRemove',
       desc: '',
       args: [],
     );
@@ -560,6 +600,27 @@ class S {
     );
   }
 
+  /// `Base HP: {hp}, Load: {load}, Damage Dice: {damageDice}`
+  String createCharacterClassDescription(
+      Object hp, Object load, Object damageDice) {
+    return Intl.message(
+      'Base HP: $hp, Load: $load, Damage Dice: $damageDice',
+      name: 'createCharacterClassDescription',
+      desc: '',
+      args: [hp, load, damageDice],
+    );
+  }
+
+  /// `No class selected (required)`
+  String get createCharacterClassHelpText {
+    return Intl.message(
+      'No class selected (required)',
+      name: 'createCharacterClassHelpText',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `Biography/description`
   String get createCharacterDescFieldLabel {
     return Intl.message(
@@ -690,6 +751,37 @@ class S {
     );
   }
 
+  /// `{amount} coins`
+  String createCharacterStartingGearDescriptionCoins(Object amount) {
+    return Intl.message(
+      '$amount coins',
+      name: 'createCharacterStartingGearDescriptionCoins',
+      desc: '',
+      args: [amount],
+    );
+  }
+
+  /// `{amount} × {name}`
+  String createCharacterStartingGearDescriptionItem(
+      Object amount, Object name) {
+    return Intl.message(
+      '$amount × $name',
+      name: 'createCharacterStartingGearDescriptionItem',
+      desc: '',
+      args: [amount, name],
+    );
+  }
+
+  /// `Select your starting gear determined by class (optional)`
+  String get createCharacterStartingGearHelpText {
+    return Intl.message(
+      'Select your starting gear determined by class (optional)',
+      name: 'createCharacterStartingGearHelpText',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `{step, select, information {Basic Information} charClass {Class} stats {Ability Scores} movesSpells {Moves & Spells} background {Background & Bonds} gear {Starting Gear}}`
   String createCharacterStep(Object step) {
     return Intl.select(
@@ -723,6 +815,36 @@ class S {
     return Intl.message(
       'Create Character',
       name: 'createCharacterTitle',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Unnamed Traveler`
+  String get createCharacterTravelerBlankName {
+    return Intl.message(
+      'Unnamed Traveler',
+      name: 'createCharacterTravelerBlankName',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Level 1 {cls}`
+  String createCharacterTravelerDescription(Object cls) {
+    return Intl.message(
+      'Level 1 $cls',
+      name: 'createCharacterTravelerDescription',
+      desc: '',
+      args: [cls],
+    );
+  }
+
+  /// `Select name & picture (required)`
+  String get createCharacterTravelerHelpText {
+    return Intl.message(
+      'Select name & picture (required)',
+      name: 'createCharacterTravelerHelpText',
       desc: '',
       args: [],
     );
@@ -938,7 +1060,7 @@ class S {
     );
   }
 
-  /// `{runtimeType, select, CharacterClass {Class} Item {Item} Monster {Monster} Move {Move} Race {Race} Spell {Spell} Tag {Tag} MoveCategory {Category} other {{runtimeType}}}`
+  /// `{runtimeType, select, CharacterClass {Class} Item {Item} Monster {Monster} Move {Move} Race {Race} Spell {Spell} Tag {Tag} MoveCategory {Category} GearSelection {Starting Gear} Dice {Dice}  other {{runtimeType}}}`
   String entity(Object runtimeType) {
     return Intl.select(
       runtimeType,
@@ -951,6 +1073,8 @@ class S {
         'Spell': 'Spell',
         'Tag': 'Tag',
         'MoveCategory': 'Category',
+        'GearSelection': 'Starting Gear',
+        'Dice': 'Dice',
         'other': '$runtimeType',
       },
       name: 'entity',
@@ -959,7 +1083,7 @@ class S {
     );
   }
 
-  /// `{runtimeType, select, CharacterClass {Classes} Item {Items} Monster {Monsters} Move {Moves} Race {Races} Spell {Spells} Tag {Tags} MoveCategory {Categories} Dice {Dice} other {{runtimeType}s}}`
+  /// `{runtimeType, select, CharacterClass {Classes} Item {Items} Monster {Monsters} Move {Moves} Race {Races} Spell {Spells} Tag {Tags} MoveCategory {Categories} Dice {Dice} GearSelection {Starting Gear}other {{runtimeType}s}}`
   String entityPlural(Object runtimeType) {
     return Intl.select(
       runtimeType,
@@ -973,6 +1097,7 @@ class S {
         'Tag': 'Tags',
         'MoveCategory': 'Categories',
         'Dice': 'Dice',
+        'GearSelection': 'Starting Gear',
         'other': '${runtimeType}s',
       },
       name: 'entityPlural',
@@ -1659,16 +1784,6 @@ class S {
     );
   }
 
-  /// `Roll +{stat}`
-  String abilityScoreButtonTooltip(Object stat) {
-    return Intl.message(
-      'Roll +$stat',
-      name: 'abilityScoreButtonTooltip',
-      desc: '',
-      args: [stat],
-    );
-  }
-
   /// `Save`
   String get save {
     return Intl.message(
@@ -1756,6 +1871,16 @@ class S {
       name: 'selectToAdd',
       desc: '',
       args: [string],
+    );
+  }
+
+  /// `OR`
+  String get separatorOr {
+    return Intl.message(
+      'OR',
+      name: 'separatorOr',
+      desc: '',
+      args: [],
     );
   }
 

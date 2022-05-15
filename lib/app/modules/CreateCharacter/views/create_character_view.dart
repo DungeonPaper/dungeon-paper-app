@@ -1,7 +1,9 @@
 import 'dart:ui';
 
+import 'package:dungeon_paper/app/data/models/ability_scores.dart';
 import 'package:dungeon_paper/app/data/models/character.dart';
 import 'package:dungeon_paper/app/data/models/character_class.dart';
+import 'package:dungeon_paper/app/data/models/gear_selection.dart';
 import 'package:dungeon_paper/app/data/services/character_service.dart';
 import 'package:dungeon_paper/app/model_utils/model_key.dart';
 import 'package:dungeon_paper/app/modules/AbilityScoresForm/controllers/ability_scores_form_controller.dart';
@@ -74,13 +76,13 @@ class CreateCharacterView extends GetView<CreateCharacterController> {
                               character:
                                   Character.empty().copyWith(avatarUrl: controller.avatarUrl.value),
                             ),
-                            // TODO intl
                             title: controller.name.isEmpty
-                                ? const Text('Unnamed Traveler')
+                                ? Text(S.current.createCharacterTravelerBlankName)
                                 : Text(controller.name.value),
                             subtitle: controller.name.isEmpty
-                                ? const Text('Select name & picture (required)')
-                                : Text('Level 1 ${cls?.name ?? ''}'),
+                                ? Text(S.current.createCharacterTravelerHelpText)
+                                : Text(
+                                    S.current.createCharacterTravelerDescription(cls?.name ?? '')),
                             valid: controller.name.isNotEmpty,
                             onTap: () => Get.toNamed(
                               Routes.createCharacterBasicInfo,
@@ -93,12 +95,15 @@ class CreateCharacterView extends GetView<CreateCharacterController> {
                             ),
                           ),
                           _Card(
-                            // TODO intl
-                            title: cls == null ? const Text('Select Class') : Text(cls!.name),
+                            title: cls == null
+                                ? Text(S.current.selectGeneric(S.current.entity(CharacterClass)))
+                                : Text(cls!.name),
                             subtitle: cls == null
-                                ? const Text('No class selected (required)')
+                                ? Text(S.current.createCharacterClassHelpText)
                                 : Text(
-                                    'Base HP: ${cls!.hp}, Load: ${cls!.load}, Damage Dice: ${cls!.damageDice}'),
+                                    S.current.createCharacterClassDescription(
+                                        cls!.hp, cls!.load, cls!.damageDice),
+                                  ),
                             valid: cls != null,
                             onTap: () => Get.toNamed(
                               Routes.createCharacterSelectClass,
@@ -113,8 +118,8 @@ class CreateCharacterView extends GetView<CreateCharacterController> {
                           ),
                           _Card(
                             contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-                            // TODO intl
-                            title: const Text('Select Ability Scores'),
+                            title:
+                                Text(S.current.selectGeneric(S.current.entityPlural(AbilityScore))),
                             subtitle: Text(
                               controller.abilityScores.value.stats
                                   .map((stat) => '${stat.key}: ${stat.value}')
@@ -132,17 +137,21 @@ class CreateCharacterView extends GetView<CreateCharacterController> {
                           ),
                           _Card(
                             contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-                            // TODO intl
-                            title: const Text('Select Starting Gear'),
+                            title: Text(S.current.selectGeneric(S.current.entity(GearSelection))),
                             subtitle: Text(controller.items.isEmpty && controller.coins == 0
-                                ? 'Select your starting gear determined by class (optional)'
+                                ? S.current.createCharacterStartingGearHelpText
                                 : [
                                     controller.coins > 0
-                                        ? NumberFormat('#0.#').format(controller.coins) + ' coins'
+                                        ? S.current.createCharacterStartingGearDescriptionCoins(
+                                            NumberFormat('#0.#').format(controller.coins),
+                                          )
                                         : null,
                                     controller.items
                                         .map((i) =>
-                                            '${NumberFormat('#0.#').format(i.amount)} × ${i.name}')
+                                            S.current.createCharacterStartingGearDescriptionItem(
+                                              NumberFormat('#0.#').format(i.amount),
+                                              i.name,
+                                            ))
                                         .join(', '),
                                   ].whereType<String>().join(', ')),
                             onTap: cls != null

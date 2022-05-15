@@ -25,13 +25,11 @@ class BasicInfoFormView extends GetView<BasicInfoFormController> {
         dirty: controller.dirty.value,
         child: Scaffold(
           appBar: AppBar(
-            // TODO intl
-            title: const Text('Basic Information'),
+            title: Text(S.current.basicInformationTitle),
             centerTitle: true,
           ),
           floatingActionButton: AdvancedFloatingActionButton.extended(
             onPressed: _save,
-            // TODO intl
             label: Text(S.current.save),
             icon: const Icon(Icons.save),
           ),
@@ -85,8 +83,7 @@ class BasicInfoFormView extends GetView<BasicInfoFormController> {
                           child: ElevatedButton.icon(
                             onPressed: controller.pickPhoto,
                             icon: const Icon(Icons.upload_file),
-                            // TODO intl
-                            label: const Text('Choose New Photo...'),
+                            label: Text(S.current.basicInfoImageChooseNew),
                           ),
                         ),
                         const SizedBox(width: 16),
@@ -94,8 +91,7 @@ class BasicInfoFormView extends GetView<BasicInfoFormController> {
                           child: ElevatedButton.icon(
                             onPressed: () => null,
                             icon: const Icon(Icons.close),
-                            // TODO intl
-                            label: const Text('Remove Photo'),
+                            label: Text(S.current.basicInfoImageRemove),
                           ),
                         ),
                       ],
@@ -107,18 +103,16 @@ class BasicInfoFormView extends GetView<BasicInfoFormController> {
                     child: ElevatedButton.icon(
                       onPressed: controller.pickPhoto,
                       icon: const Icon(Icons.upload_file),
-                      // TODO intl
-                      label: const Text('Choose Photo...'),
+                      label: Text(S.current.basicInfoImageChoose),
                     ),
                   ),
                 Row(
-                  children: const [
-                    Expanded(child: Divider(height: 48)),
-                    SizedBox(width: 8),
-                    // TODO intl
-                    Text('OR'),
-                    SizedBox(width: 8),
-                    Expanded(child: Divider(height: 48)),
+                  children: [
+                    const Expanded(child: Divider(height: 48)),
+                    const SizedBox(width: 8),
+                    Text(S.current.separatorOr),
+                    const SizedBox(width: 8),
+                    const Expanded(child: Divider(height: 48)),
                   ],
                 ),
                 TextFormField(
