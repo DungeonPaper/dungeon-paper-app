@@ -238,7 +238,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "characterNoCategory":
             MessageLookupByLibrary.simpleMessage("No Category"),
         "characterRollsTitle":
-            MessageLookupByLibrary.simpleMessage("Stats/Rolls"),
+            MessageLookupByLibrary.simpleMessage("Ability Scores"),
         "coins": MessageLookupByLibrary.simpleMessage("Coins"),
         "coinsWithCount": m10,
         "confirm": MessageLookupByLibrary.simpleMessage("Confirm"),

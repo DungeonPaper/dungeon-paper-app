@@ -69,7 +69,7 @@ class AppPages {
     ),
     GetPage(
       name: _Paths.createCharacter,
-      page: () => CreateCharacterView(),
+      page: () => const CreateCharacterView(),
       binding: CreateCharacterBinding(),
       opaque: false,
       fullscreenDialog: true,

@@ -407,10 +407,10 @@ class S {
     );
   }
 
-  /// `Stats/Rolls`
+  /// `Ability Scores`
   String get characterRollsTitle {
     return Intl.message(
-      'Stats/Rolls',
+      'Ability Scores',
       name: 'characterRollsTitle',
       desc: '',
       args: [],

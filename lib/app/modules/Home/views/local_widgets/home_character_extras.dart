@@ -3,7 +3,7 @@ import 'package:dungeon_paper/app/modules/BasicInfoForm/bindings/basic_info_form
 import 'package:dungeon_paper/app/modules/BasicInfoForm/views/basic_info_form_view.dart';
 import 'package:dungeon_paper/app/modules/AbilityScoresForm/bindings/ability_scores_form_binding.dart';
 import 'package:dungeon_paper/app/modules/AbilityScoresForm/views/ability_scores_form_view.dart';
-import 'package:dungeon_paper/app/widgets/atoms/popup_menu_item_list_tile.dart';
+import 'package:dungeon_paper/app/widgets/atoms/menu_button.dart';
 import 'package:dungeon_paper/app/widgets/atoms/svg_icon.dart';
 import 'package:dungeon_paper/app/widgets/dialogs/character_bio_dialog.dart';
 import 'package:dungeon_paper/core/dw_icons.dart';
@@ -19,24 +19,27 @@ class HomeCharacterExtras extends GetView<CharacterService> {
     return Wrap(
       alignment: WrapAlignment.center,
       children: [
-        PopupMenuButton<String>(
+        MenuButton<String>(
           icon: const Icon(Icons.person),
-          onSelected: _onCharacterMenuSelect,
-          itemBuilder: (context) => [
-            PopupMenuItem<String>(
-              value: 'name_photo',
-              child: PopupMenuItemListTile(
-                icon: const Icon(Icons.photo),
-                label: Text(S.current.basicInformationTitle),
-              ),
+          items: [
+            MenuEntry(
+              id: 'name_photo',
+              icon: const Icon(Icons.photo),
+              label: Text(S.current.basicInformationTitle),
+              onSelect: _openBasicInfo,
             ),
-            PopupMenuItem<String>(
-              value: 'bio',
-              child: PopupMenuItemListTile(
-                icon: const Icon(Icons.text_snippet),
-                label: Text(S.current.characterBioDialogTitle),
-              ),
+            MenuEntry(
+              id: 'bio',
+              icon: const Icon(Icons.text_snippet),
+              label: Text(S.current.characterBioDialogTitle),
+              onSelect: _openBio,
             ),
+            // MenuEntry(
+            //   id: 'bio',
+            //   icon: const Icon(Icons.text_snippet),
+            //   label: Text(S.current.characterBioDialogTitle),
+            //   onSelect: _openBio,
+            // ),
           ],
         ),
         IconButton(
@@ -75,15 +78,6 @@ class HomeCharacterExtras extends GetView<CharacterService> {
         ),
       ],
     );
-  }
-
-  void _onCharacterMenuSelect(value) {
-    final map = <String, void Function()>{
-      'name_photo': _openBasicInfo,
-      'bio': _openBio,
-    };
-    final cb = map[value]!;
-    cb.call();
   }
 
   void _openBasicInfo() {

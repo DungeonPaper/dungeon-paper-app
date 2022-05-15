@@ -35,7 +35,7 @@
   "characterHeaderSubtitle": "Level {level} ∙ {charClass} ∙ {race} ∙",
   "characterListTitle": "All Characters",
   "characterNoCategory": "No Category",
-  "characterRollsTitle": "Stats/Rolls",
+  "characterRollsTitle": "Ability Scores",
   "coins": "Coins",
   "coinsWithCount": "{count, plural, =0 {No coins} one {One coin} other {{fmtCount} coins}}",
   "confirm": "Confirm",

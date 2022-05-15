@@ -1,6 +1,7 @@
 import 'package:dungeon_paper/app/model_utils/model_key.dart';
 import 'package:dungeon_paper/app/modules/ImportExport/controllers/import_export_controller.dart';
 import 'package:dungeon_paper/app/widgets/atoms/expansion_row.dart';
+import 'package:dungeon_paper/app/widgets/atoms/menu_button.dart';
 import 'package:dungeon_paper/generated/l10n.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -26,31 +27,22 @@ class ListCard<T, C extends ImportExportSelectionData> extends GetView<C> {
             style: textTheme.titleLarge,
           ),
           trailing: [
-            PopupMenuButton<bool>(
-              onSelected: (state) => controller.toggleAll<T>(state),
-              itemBuilder: (context) => [
-                PopupMenuItem<bool>(
-                  value: true,
-                  child: Row(
-                    children: [
-                      const Icon(Icons.select_all),
-                      const SizedBox(width: 8),
-                      Text(S.current.selectAll)
-                    ],
-                  ),
+            MenuButton<bool>(
+              items: [
+                MenuEntry<bool>(
+                  id: true,
+                  icon: const Icon(Icons.select_all),
+                  label: Text(S.current.selectAll),
+                  onSelect: () => controller.toggleAll<T>(true),
                 ),
-                PopupMenuItem<bool>(
-                  value: false,
-                  child: Row(
-                    children: [
-                      const Icon(Icons.clear),
-                      const SizedBox(width: 8),
-                      Text(S.current.selectNone)
-                    ],
-                  ),
+                MenuEntry<bool>(
+                  id: false,
+                  icon: const Icon(Icons.clear),
+                  label: Text(S.current.selectNone),
+                  onSelect: () => controller.toggleAll<T>(false),
                 ),
               ],
-            )
+            ),
           ],
           children: [
             for (final item in list)

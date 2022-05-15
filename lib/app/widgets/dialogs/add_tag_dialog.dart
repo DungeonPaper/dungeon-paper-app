@@ -1,4 +1,5 @@
 import 'package:dungeon_paper/app/data/services/repository_service.dart';
+import 'package:dungeon_paper/app/widgets/atoms/menu_button.dart';
 import 'package:dungeon_paper/core/utils/string_utils.dart';
 import 'package:dungeon_paper/generated/l10n.dart';
 import 'package:flutter/material.dart';
@@ -39,20 +40,20 @@ class _AddTagDialogState extends State<AddTagDialog> {
       title: Row(
         children: [
           Expanded(child: Text(S.current.createGeneric(dw.Tag))),
-          PopupMenuButton<dw.Tag>(
+          MenuButton<dw.Tag>(
             child: const Icon(Icons.list),
-            onSelected: (tag) {
-              setState(() {
-                name.text = tag.name;
-                desc.text = tag.description;
-                value.text = tag.value?.toString() ?? '';
-              });
-            },
-            itemBuilder: (ctx) => [
+            items: [
               for (final tag in allTags)
-                PopupMenuItem<dw.Tag>(
-                  child: Text(S.current.tagCopyFrom(toTitleCase(tag.name))),
-                  value: tag,
+                MenuEntry<dw.Tag>(
+                  label: Text(S.current.tagCopyFrom(toTitleCase(tag.name))),
+                  id: tag,
+                  onSelect: () {
+                    setState(() {
+                      name.text = tag.name;
+                      desc.text = tag.description;
+                      value.text = tag.value?.toString() ?? '';
+                    });
+                  },
                 )
             ],
           )

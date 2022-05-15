@@ -1,4 +1,4 @@
-
+import 'package:dungeon_paper/app/widgets/atoms/menu_button.dart';
 import 'package:dungeon_paper/generated/l10n.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -243,32 +243,30 @@ class RichTextField extends StatelessWidget {
             tooltip: S.current.formatItalic,
             onTap: _wrapOrAppendCb('*italic*', '*', null, 1, -1),
           ),
-          PopupMenuButton(
-            itemBuilder: (context) => [
-              PopupMenuItem(
-                  child: Text(S.current.formatHeading(1), style: mdTheme.h1), value: 'h1'),
-              PopupMenuItem(
-                  child: Text(S.current.formatHeading(2), style: mdTheme.h2), value: 'h2'),
-              PopupMenuItem(
-                  child: Text(S.current.formatHeading(3), style: mdTheme.h3), value: 'h3'),
-              PopupMenuItem(
-                  child: Text(S.current.formatHeading(4), style: mdTheme.h4), value: 'h4'),
-              PopupMenuItem(
-                  child: Text(S.current.formatHeading(5), style: mdTheme.h5), value: 'h5'),
-              PopupMenuItem(
-                  child: Text(S.current.formatHeading(6), style: mdTheme.h6), value: 'h6'),
-            ],
-            onSelected: (value) => {
-              for (var i = 1; i <= 6; i++)
-                'h$i': _wrapOrAppendCb(
+          MenuButton(
+            items: List.generate(6, (i) => i + 1).map(
+              (i) => MenuEntry(
+                label: Text(
+                  S.current.formatHeading(i),
+                  style: {
+                    'h1': mdTheme.h1,
+                    'h2': mdTheme.h2,
+                    'h3': mdTheme.h3,
+                    'h4': mdTheme.h4,
+                    'h5': mdTheme.h5,
+                    'h6': mdTheme.h6,
+                  }['h$i']!,
+                ),
+                id: 'h$i',
+                onSelect: _wrapOrAppendCb(
                   '\n${List.filled(i, "#").join("")} ${S.current.formatHeading(i)}\n',
                   '\n${List.filled(i, "#").join("")} ',
                   '\n',
                   2 + i,
                   -1,
                 ),
-            }[value]
-                ?.call(),
+              ),
+            ),
             child: RichButton(
               icon: const Icon(Icons.format_size),
               tooltip: S.current.formatHeadings,

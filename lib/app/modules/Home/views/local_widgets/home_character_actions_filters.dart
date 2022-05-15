@@ -1,3 +1,4 @@
+import 'package:dungeon_paper/app/widgets/atoms/menu_button.dart';
 import 'package:dungeon_paper/generated/l10n.dart';
 import 'package:flutter/material.dart';
 
@@ -13,37 +14,34 @@ class HomeCharacterActionsFilters extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return PopupMenuButton<String>(
+    return MenuButton<String>(
       icon: const Icon(Icons.filter_list_alt),
-      onSelected: (type) => onUpdateHidden(
-        !hidden.contains(type)
-            ? {...hidden, type}
-            : {...hidden.where((element) => element != type)},
-      ),
-      itemBuilder: (context) => ['Move', 'Spell', 'Item']
+      items: ['Move', 'Spell', 'Item']
           .map(
-            (type) => PopupMenuItem<String>(
-              value: type,
-              child: Row(
-                children: [
-                  SizedBox(
-                    width: 30,
-                    child: Checkbox(
-                      value: !hidden.contains(type),
-                      onChanged: (show) {
-                        onUpdateHidden(!show!
-                            ? {...hidden, type}
-                            : {...hidden.where((element) => element != type)});
-                      },
-                    ),
-                  ),
-                  const SizedBox(width: 8),
-                  Expanded(child: Text(S.current.entityPlural(type))),
-                ],
+            (type) => MenuEntry(
+              id: type,
+              icon: SizedBox(
+                width: 30,
+                child: Checkbox(
+                  value: !hidden.contains(type),
+                  onChanged: (show) {
+                    onUpdateHidden(!show!
+                        ? {...hidden, type}
+                        : {...hidden.where((element) => element != type)});
+                  },
+                ),
               ),
+              label: Expanded(child: Text(S.current.entityPlural(type))),
+              onSelect: _onSelected(type),
             ),
           )
           .toList(),
     );
   }
+
+  void Function() _onSelected(type) => () => onUpdateHidden(
+        !hidden.contains(type)
+            ? {...hidden, type}
+            : {...hidden.where((element) => element != type)},
+      );
 }

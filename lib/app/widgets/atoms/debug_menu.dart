@@ -1,6 +1,7 @@
 import 'package:dungeon_paper/app/routes/app_pages.dart';
 import 'package:dungeon_paper/app/data/services/character_service.dart';
 import 'package:dungeon_paper/app/widgets/atoms/debug_dialog.dart';
+import 'package:dungeon_paper/app/widgets/atoms/menu_button.dart';
 import 'package:dungeon_paper/core/http/api.dart';
 import 'package:dungeon_paper/core/http/api_requests/search.dart';
 import 'package:dungeon_paper/core/storage_handler/storage_handler.dart';
@@ -15,42 +16,55 @@ class DebugMenu extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return PopupMenuButton(
+    return MenuButton(
       child: const Padding(
         padding: EdgeInsets.all(8),
         child: Icon(Icons.bug_report),
       ),
-      itemBuilder: (context) => [
-        const PopupMenuItem(child: Text('Toggle dark mode'), value: 'toggleDarkMode'),
-        const PopupMenuItem(child: Text('Randomize Char Data'), value: 'updateChar'),
-        const PopupMenuItem(child: Text('Clear all Char Data'), value: 'clearChars'),
-        const PopupMenuItem(child: Text('Open create char page'), value: 'createChar'),
-        const PopupMenuItem(child: Text('View JSON'), value: 'viewCharJson'),
-        const PopupMenuItem(child: Text('Search'), value: 'search'),
+      items: [
+        MenuEntry(
+          label: const Text('Toggle dark mode'),
+          id: 'toggleDarkMode',
+          onSelect: _toggleTheme,
+        ),
+        MenuEntry(
+          label: const Text('Clear all Char Data'),
+          id: 'clearChars',
+          onSelect: _clearChars,
+        ),
+        MenuEntry(
+          label: const Text('Open create char page'),
+          id: 'createChar',
+          onSelect: _createChar,
+        ),
+        MenuEntry(
+          label: const Text('View JSON'),
+          id: 'viewCharJson',
+          onSelect: _viewCharJson,
+        ),
+        MenuEntry(
+          label: const Text('Search'),
+          id: 'search',
+          onSelect: _search,
+        ),
       ],
-      onSelected: (value) {
-        if (actionMap[value] == null) {
-          throw Exception('Unsupported');
-        }
-        actionMap[value]!.call();
-      },
     );
   }
 
   Map<String, void Function()> get actionMap => {
-        'toggleDarkMode': toggleTheme,
-        'createChar': createChar,
-        'clearChars': clearChars,
-        'viewCharJson': viewCharJson,
-        'search': search,
+        'toggleDarkMode': _toggleTheme,
+        'createChar': _createChar,
+        'clearChars': _clearChars,
+        'viewCharJson': _viewCharJson,
+        'search': _search,
       };
 
-  void toggleTheme() {
+  void _toggleTheme() {
     var theme = DynamicTheme.of(Get.context!)!;
     theme.setTheme(theme.themeId == AppThemes.dark ? AppThemes.parchment : AppThemes.dark);
   }
 
-  void clearChars() async {
+  void _clearChars() async {
     final CharacterService controller = Get.find();
     controller.clear();
     final all = await StorageHandler.instance.getCollection('Characters');
@@ -59,17 +73,17 @@ class DebugMenu extends StatelessWidget {
     }
   }
 
-  void createChar() {
+  void _createChar() {
     Get.toNamed(Routes.createCharacter);
   }
 
-  void viewCharJson() {
+  void _viewCharJson() {
     final CharacterService controller = Get.find();
 
     Get.dialog(DebugDialog(text: controller.current!.toRawJson()));
   }
 
-  void search() async {
+  void _search() async {
     final resp = await api.requests
         .search(SearchRequest(types: {SearchType.moves, SearchType.spells}, query: 'magic'));
   }

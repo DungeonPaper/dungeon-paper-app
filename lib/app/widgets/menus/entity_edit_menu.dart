@@ -1,3 +1,4 @@
+import 'package:dungeon_paper/app/widgets/atoms/menu_button.dart';
 import 'package:dungeon_paper/generated/l10n.dart';
 import 'package:flutter/material.dart';
 
@@ -21,54 +22,31 @@ class EntityEditMenu extends StatelessWidget {
       type: MaterialType.transparency,
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
       clipBehavior: Clip.antiAlias,
-      child: PopupMenuButton(
+      child: MenuButton(
         child: const Padding(
           padding: EdgeInsets.all(8),
           child: Icon(Icons.more_vert),
         ),
-        onSelected: (value) => <String, void Function()?>{
-          'remove': onDelete,
-          'edit': onEdit,
-        }[value]
-            ?.call(),
-        itemBuilder: (context) => [
+        items: [
           if (onEdit != null)
-            PopupMenuItem(
-              child: Row(
-                children: [
-                  const SizedBox(
-                    width: 40,
-                    child: Align(
-                      alignment: Alignment.centerLeft,
-                      child: Icon(Icons.edit),
-                    ),
-                  ),
-                  Text(S.current.edit),
-                ],
-              ),
-              value: 'edit',
+            MenuEntry(
+              id: 'edit',
+              icon: const Icon(Icons.edit),
+              label: Text(S.current.edit),
+              onSelect: onEdit!,
             ),
           if (onDelete != null)
-            PopupMenuItem(
-              child: DefaultTextStyle.merge(
-                style: TextStyle(color: Theme.of(context).errorColor),
-                child: IconTheme(
-                  data: IconThemeData(color: Theme.of(context).errorColor),
-                  child: Row(
-                    children: [
-                      const SizedBox(
-                        width: 40,
-                        child: Align(
-                          alignment: Alignment.centerLeft,
-                          child: Icon(Icons.delete),
-                        ),
-                      ),
-                      Text(S.current.remove),
-                    ],
-                  ),
-                ),
+            MenuEntry(
+              id: 'remove',
+              icon: IconTheme(
+                data: IconThemeData(color: Theme.of(context).errorColor),
+                child: const Icon(Icons.delete),
               ),
-              value: 'remove',
+              label: DefaultTextStyle.merge(
+                style: TextStyle(color: Theme.of(context).errorColor),
+                child: Text(S.current.remove),
+              ),
+              onSelect: onDelete!,
             ),
         ],
       ),
