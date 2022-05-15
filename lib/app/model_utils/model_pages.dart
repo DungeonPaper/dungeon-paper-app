@@ -21,7 +21,6 @@ import 'package:dungeon_paper/app/modules/LibraryList/views/moves_library_list_v
 import 'package:dungeon_paper/app/modules/LibraryList/views/notes_library_list_view.dart';
 import 'package:dungeon_paper/app/modules/LibraryList/views/spells_library_list_view.dart';
 import 'package:dungeon_paper/app/widgets/forms/library_entity_form.dart';
-import 'package:dungeon_paper/core/utils/list_utils.dart';
 import 'package:get/get.dart';
 
 class ModelPages {

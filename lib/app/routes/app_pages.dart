@@ -3,7 +3,6 @@ import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
 
 import '../data/services/character_service.dart';
-import '../model_utils/character_utils.dart';
 import '../modules/LibraryList/bindings/library_list_binding.dart';
 import '../modules/LibraryList/views/moves_library_list_view.dart';
 import '../modules/CharacterList/bindings/character_list_binding.dart';
