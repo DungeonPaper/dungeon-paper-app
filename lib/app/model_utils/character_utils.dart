@@ -25,26 +25,6 @@ class CharacterUtils {
         moves: reorder(char.moves, oldIndex, newIndex),
       );
 
-  static void Function() openMovePage({
-    required Move? move,
-    required void Function(Move move) onSave,
-    required AbilityScores abilityScores,
-    required List<String> classKeys,
-  }) =>
-      () => Get.to(
-            () => LibraryEntityForm<Move>(
-              onSave: onSave,
-              type: move == null ? ItemFormType.create : ItemFormType.edit,
-            ),
-            binding: RepositoryItemFormBinding<Move>(
-              item: move,
-              extraData: {
-                'abilityScores': abilityScores,
-                'classKeys': classKeys,
-              },
-            ),
-          );
-
   // Spells
   static Character updateSpells(Character char, Iterable<Spell> spells) => char.copyWith(
         spells: updateByKey(char.spells, spells),
@@ -58,26 +38,6 @@ class CharacterUtils {
   static Character reorderSpells(Character char, int oldIndex, int newIndex) => char.copyWith(
         spells: reorder(char.spells, oldIndex, newIndex),
       );
-
-  static void Function() openSpellPage({
-    required Spell? spell,
-    required void Function(Spell spell) onSave,
-    required AbilityScores abilityScores,
-    required List<String> classKeys,
-  }) =>
-      () => Get.to(
-            () => LibraryEntityForm<Spell>(
-              onSave: onSave,
-              type: spell == null ? ItemFormType.create : ItemFormType.edit,
-            ),
-            binding: RepositoryItemFormBinding<Spell>(
-              item: spell,
-              extraData: {
-                'abilityScores': abilityScores,
-                'classKeys': classKeys,
-              },
-            ),
-          );
 
   // Items
   static Character updateItems(Character char, Iterable<Item> items) => char.copyWith(
@@ -93,21 +53,6 @@ class CharacterUtils {
         items: reorder(char.items, oldIndex, newIndex),
       );
 
-  static void Function() openItemPage({
-    required Item? item,
-    required void Function(Item item) onSave,
-  }) =>
-      () => Get.to(
-            () => LibraryEntityForm<Item>(
-              onSave: onSave,
-              type: item == null ? ItemFormType.create : ItemFormType.edit,
-            ),
-            binding: RepositoryItemFormBinding<Item>(
-              item: item,
-              extraData: const {},
-            ),
-          );
-
   // Notes
   static Character updateNotes(Character char, Iterable<Note> notes) => char.copyWith(
         notes: updateByKey(char.notes, notes),
@@ -122,37 +67,7 @@ class CharacterUtils {
         notes: reorder(char.notes, oldIndex, newIndex),
       );
 
-  static void Function() openNotePage({
-    required Note? note,
-    required void Function(Note note) onSave,
-  }) =>
-      () => Get.to(
-            () => LibraryEntityForm<Note>(
-              onSave: onSave,
-              type: note == null ? ItemFormType.create : ItemFormType.edit,
-            ),
-            binding: RepositoryItemFormBinding<Note>(
-              item: note,
-              extraData: const {},
-            ),
-          );
-
   // CHARACTER CLASS
-
-  static void Function() openCharacterClassPage({
-    required CharacterClass? characterClass,
-    required void Function(CharacterClass item) onSave,
-  }) =>
-      () => Get.to(
-            () => LibraryEntityForm<CharacterClass>(
-              onSave: onSave,
-              type: characterClass == null ? ItemFormType.create : ItemFormType.edit,
-            ),
-            binding: RepositoryItemFormBinding<CharacterClass>(
-              item: characterClass,
-              extraData: const {},
-            ),
-          );
 
   // COMBINED
 

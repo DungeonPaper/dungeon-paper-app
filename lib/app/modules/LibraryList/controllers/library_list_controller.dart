@@ -4,6 +4,7 @@ import 'package:dungeon_paper/app/data/models/meta.dart';
 import 'package:dungeon_paper/app/data/services/character_service.dart';
 import 'package:dungeon_paper/app/data/services/library_service.dart';
 import 'package:dungeon_paper/app/data/services/repository_service.dart';
+import 'package:dungeon_paper/app/model_utils/model_key.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -13,21 +14,43 @@ enum FiltersGroup {
   // online,
 }
 
-class LibraryListController<T extends WithMeta, F extends EntityFilters> extends GetxController
+class LibraryListController<T extends WithMeta, F extends EntityFilters<T>> extends GetxController
     with GetSingleTickerProviderStateMixin {
   final repo = Get.find<RepositoryService>().obs;
   final chars = Get.find<CharacterService>().obs;
+
   final selected = <T>[].obs;
   final removed = <T>[].obs;
   final filters = <FiltersGroup, F?>{}.obs;
   final search = <FiltersGroup, TextEditingController>{}.obs;
+
+  late final void Function(Iterable<T> items) onAdd;
+  late final bool Function(T item, F filters) filterFn;
+  late final int Function(T a, T b) Function(F filters) sortFn;
+  late final bool multiple;
+  late final Iterable<T> preSelections;
+  late final Map<String, dynamic> extraData;
+
   late final TabController tabController;
+
+  Iterable<T> get builtInList => filterList(
+      repo.value.builtIn.listByType<T>().values.toList(), FiltersGroup.playbook, filterFn, sortFn);
+  Iterable<T> get myList =>
+      filterList(repo.value.my.listByType<T>().values.toList(), FiltersGroup.my, filterFn, sortFn);
+  String get storageKey => storageKeyFor<T>();
 
   @override
   void onInit() {
     super.onInit();
     assert(Get.arguments != null);
-    filters.addAll(Get.arguments.cast<FiltersGroup, F?>());
+    final LibraryListArguments<T, F> args = Get.arguments;
+    filters.addAll(args.filters.cast<FiltersGroup, F?>());
+    onAdd = args.onAdd;
+    filterFn = args.filterFn;
+    sortFn = args.sortFn;
+    multiple = args.multiple;
+    preSelections = args.preSelections;
+    extraData = args.extraData;
     search[FiltersGroup.playbook] ??= TextEditingController();
     search[FiltersGroup.playbook]!.addListener(_updatePlaybookSearch);
     search[FiltersGroup.my] ??= TextEditingController();
@@ -47,7 +70,7 @@ class LibraryListController<T extends WithMeta, F extends EntityFilters> extends
     this.filters.refresh();
   }
 
-  void toggleItem(T item, bool state, Iterable<T> preSelections, bool multiple) {
+  void toggleItem(T item, bool state) {
     if (!multiple) {
       selected.clear();
       for (final sel in preSelections) {
@@ -80,14 +103,14 @@ class LibraryListController<T extends WithMeta, F extends EntityFilters> extends
     };
   }
 
-  void saveCustomItem(String storageKey, T item, Iterable<T> preSelections, bool multiple) {
-    toggleItem(item, true, preSelections, multiple);
+  void saveCustomItem(String storageKey, T item) {
+    toggleItem(item, true);
     debugPrint('Saving $item');
     library.upsertToLibrary<T>([item]);
   }
 
-  void deleteCustomItem(String storageKey, T item, Iterable<T> preSelections, bool multiple) {
-    toggleItem(item, false, preSelections, multiple);
+  void deleteCustomItem(String storageKey, T item) {
+    toggleItem(item, false);
     debugPrint('Deleting $item');
     library.removeFromLibrary<T>([item]);
   }
@@ -97,15 +120,14 @@ class LibraryListController<T extends WithMeta, F extends EntityFilters> extends
   List<T> get selectedWithMeta => selected;
   // selected.map((e) => forkMeta<T>(e, Get.find<UserService>().current)).toList();
 
-  bool isSelected(T item, Iterable<T> preSelections, bool multiple) => multiple
+  bool isSelected(T item) => multiple
       ?
       // multiple: if is selected or pre-selected
-      isInCurrentSelectedList(item) || isPreSelected(item, preSelections, multiple)
+      isInCurrentSelectedList(item) || isPreSelected(item)
       :
       // single: if is pre-selected, then only if it was not removed,
       //         if not pre-selected, then only if nothing else is selected
-      (isPreSelected(item, preSelections, multiple) && !isRemoved(item)) ||
-          isInCurrentSelectedList(item);
+      (isPreSelected(item) && !isRemoved(item)) || isInCurrentSelectedList(item);
 
   bool isInCurrentSelectedList(T item) =>
       selected.firstWhereOrNull(
@@ -114,13 +136,12 @@ class LibraryListController<T extends WithMeta, F extends EntityFilters> extends
 
   bool isRemoved(T item) => removed.firstWhereOrNull(_compare(item)) != null;
 
-  bool isPreSelected(T item, Iterable<T> preSelections, bool multiple) =>
-      preSelections.toList().firstWhereOrNull(_compare(item)) != null;
+  bool isPreSelected(T item) => preSelections.toList().firstWhereOrNull(_compare(item)) != null;
 
-  bool isEnabled(T item, Iterable<T> preSelections, bool multiple) => multiple
+  bool isEnabled(T item) => multiple
       ?
       // multiple: if is not pre-selected
-      !isPreSelected(item, preSelections, multiple)
+      !isPreSelected(item)
       : true;
   // single: if is pre-selected or nothing is selected
   // isPreSelected(item, preSelections, multiple) ||
@@ -165,4 +186,25 @@ abstract class EntityFilters<T> {
   int get activeFilterCount => filterActiveList.where((element) => element == true).length;
 
   int get totalFilterCount => filterActiveList.length;
+}
+
+class LibraryListArguments<T extends WithMeta, F extends EntityFilters<T>> {
+  final Map<FiltersGroup, F?> filters;
+
+  final void Function(Iterable<T> items) onAdd;
+  final bool Function(T item, F filters) filterFn;
+  final int Function(T a, T b) Function(F filters) sortFn;
+  final bool multiple;
+  final Iterable<T> preSelections;
+  final Map<String, dynamic> extraData;
+
+  LibraryListArguments({
+    required this.filters,
+    required this.onAdd,
+    required this.filterFn,
+    required this.sortFn,
+    this.multiple = true,
+    required this.preSelections,
+    required this.extraData,
+  });
 }

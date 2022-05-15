@@ -1,6 +1,7 @@
 import 'package:dungeon_paper/app/data/models/character.dart';
 import 'package:dungeon_paper/app/data/models/item.dart';
 import 'package:dungeon_paper/app/model_utils/character_utils.dart';
+import 'package:dungeon_paper/app/model_utils/model_pages.dart';
 import 'package:dungeon_paper/app/modules/LibraryList/controllers/library_list_controller.dart';
 import 'package:dungeon_paper/app/modules/LibraryList/views/library_list_view.dart';
 import 'package:dungeon_paper/app/themes/button_themes.dart';
@@ -16,21 +17,14 @@ import 'filters/item_filters.dart';
 class ItemsLibraryListView extends GetView<LibraryListController<Item, ItemFilters>> {
   const ItemsLibraryListView({
     Key? key,
-    required this.onAdd,
-    required this.selections,
   }) : super(key: key);
 
-  final void Function(Iterable<Item> items) onAdd;
-  final Iterable<Item> selections;
   Character get char => controller.chars.value.current!;
 
   @override
   Widget build(BuildContext context) {
     return LibraryListView<Item, ItemFilters>(
-      storageKey: 'Items',
       title: Text(S.current.addGeneric(S.current.entityPlural(Item))),
-      filterFn: (item, filters) => filters.filter(item),
-      sortFn: (filters) => Item.sorter(filters),
       filtersBuilder: (group, filters, onChange) => ItemFiltersView(
         filters: filters,
         onChange: (f) => onChange(group, f),
@@ -53,7 +47,7 @@ class ItemsLibraryListView extends GetView<LibraryListController<Item, ItemFilte
         actions: [
           EntityEditMenu(
             onEdit: onUpdate != null
-                ? CharacterUtils.openItemPage(
+                ? ModelPages.openItemPage(
                     item: item,
                     onSave: onUpdate,
                   )
@@ -68,8 +62,6 @@ class ItemsLibraryListView extends GetView<LibraryListController<Item, ItemFilte
           )
         ],
       ),
-      onAdd: onAdd,
-      preSelections: selections,
     );
   }
 }

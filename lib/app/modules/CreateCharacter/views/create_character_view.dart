@@ -108,15 +108,23 @@ class CreateCharacterView extends GetView<CreateCharacterController> {
                                     'Base HP: ${cls!.hp}, Load: ${cls!.load}, Damage Dice: ${cls!.damageDice}'),
                             valid: cls != null,
                             onTap: () => Get.to(
-                              () => CharacterClassesLibraryListView(
-                                selection: controller.characterClass.value,
-                                onChanged: (cls) => controller.setClass(cls),
-                              ),
+                              () => const CharacterClassesLibraryListView(),
                               binding: LibraryListBinding(),
-                              arguments: {
-                                FiltersGroup.playbook: CharacterClassFilters(),
-                                FiltersGroup.my: CharacterClassFilters()
-                              },
+                              arguments:
+                                  LibraryListArguments<CharacterClass, CharacterClassFilters>(
+                                filters: {
+                                  FiltersGroup.playbook: CharacterClassFilters(),
+                                  FiltersGroup.my: CharacterClassFilters()
+                                },
+                                filterFn: (cls, filters) => filters.filter(cls),
+                                sortFn: CharacterClass.sorter,
+                                preSelections: controller.characterClass.value != null
+                                    ? [controller.characterClass.value!]
+                                    : [],
+                                onAdd: (cls) => controller.setClass(cls.first),
+                                extraData: const {},
+                                multiple: false,
+                              ),
                               preventDuplicates: false,
                             ),
                           ),

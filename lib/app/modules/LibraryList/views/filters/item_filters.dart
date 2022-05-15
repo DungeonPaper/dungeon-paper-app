@@ -37,13 +37,13 @@ class ItemFilters extends EntityFilters<Item> {
   });
 
   @override
-  bool filter(Item spell) {
+  bool filter(Item item) {
     if (search != null && search!.isNotEmpty) {
       if (![
-        spell.name,
-        spell.description,
-        ...spell.tags.map((t) => t.name),
-        ...spell.tags.map((t) => t.value?.toString()),
+        item.name,
+        item.description,
+        ...item.tags.map((t) => t.name),
+        ...item.tags.map((t) => t.value?.toString()),
       ].any((el) => cleanStr(el ?? '').contains(cleanStr(search!)))) {
         return false;
       }

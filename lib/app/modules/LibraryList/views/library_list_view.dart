@@ -29,36 +29,15 @@ class LibraryListView<T extends WithMeta, F extends EntityFilters<T>>
     Key? key,
     required this.title,
     required this.cardBuilder,
-    required this.onAdd,
-    required this.preSelections,
-    required this.storageKey,
-    this.filtersBuilder,
-    this.filterFn,
-    this.sortFn,
-    this.extraData = const {},
-    this.multiple = true,
+    required this.filtersBuilder,
   }) : super(key: key);
 
   final Widget title;
   final CardBuilder<T> cardBuilder;
-  final void Function(Iterable<T> items) onAdd;
   final pageStorageBucket = PageStorageBucket();
   final Widget Function(
           FiltersGroup group, F filters, void Function(FiltersGroup group, F filters) update)?
       filtersBuilder;
-  final bool Function(T item, F filters)? filterFn;
-  final int Function(T a, T b) Function(F filters)? sortFn;
-  final bool multiple;
-  final Iterable<T> preSelections;
-  final String storageKey;
-  final Map<String, dynamic> extraData;
-  Iterable<T> get builtInList => controller.filterList(
-      controller.repo.value.builtIn.listByType<T>().values.toList(),
-      FiltersGroup.playbook,
-      filterFn,
-      sortFn);
-  Iterable<T> get myList => controller.filterList(
-      controller.repo.value.my.listByType<T>().values.toList(), FiltersGroup.my, filterFn, sortFn);
 
   bool get useFilters => filtersBuilder != null;
   F get playbookFilters => controller.filters[FiltersGroup.playbook]!;
@@ -96,20 +75,19 @@ class LibraryListView<T extends WithMeta, F extends EntityFilters<T>>
                       useFilters: useFilters,
                       filtersBuilder: filtersBuilder,
                       filters: playbookFilters,
-                      extraData: extraData,
-                      children: builtInList.map(
+                      extraData: controller.extraData,
+                      children: controller.builtInList.map(
                         (item) => _wrapWithSelection(context, item, FiltersGroup.playbook),
                       ),
                     ),
                     LibraryCardList<T, F>(
                       group: FiltersGroup.my,
-                      onSave: (item) =>
-                          controller.saveCustomItem(storageKey, item, preSelections, multiple),
-                      extraData: extraData,
+                      onSave: (item) => controller.saveCustomItem(controller.storageKey, item),
+                      extraData: controller.extraData,
                       useFilters: useFilters,
                       filtersBuilder: filtersBuilder,
                       filters: myFilters,
-                      children: myList.map(
+                      children: controller.myList.map(
                         (item) => _wrapWithSelection(context, item, FiltersGroup.my),
                       ),
                     ),
@@ -124,26 +102,28 @@ class LibraryListView<T extends WithMeta, F extends EntityFilters<T>>
       floatingActionButton: Obx(
         () => AdvancedFloatingActionButton.extended(
           icon: controller.selected.isNotEmpty
-              ? multiple
+              ? controller.multiple
                   ? const Icon(Icons.add)
                   : const Icon(Icons.check)
               : null,
           onPressed: controller.selected.isNotEmpty
               ? () {
-                  onAdd(controller.selectedWithMeta);
+                  controller.onAdd(controller.selectedWithMeta);
                   Get.back();
                 }
               : null,
           label: Text(
             controller.selected.isNotEmpty
-                ? multiple
+                ? controller.multiple
                     ? S.current.addWithCount(S.current.pluralize(
                         controller.selected.length,
                         S.current.entity(T),
                         S.current.entityPlural(T),
                       ))
                     : S.current.selectGeneric(nameFor(controller.selected.first))
-                : S.current.selectToAdd(multiple ? S.current.entityPlural(T) : S.current.entity(T)),
+                : S.current.selectToAdd(
+                    controller.multiple ? S.current.entityPlural(T) : S.current.entity(T),
+                  ),
           ),
         ),
       ),
@@ -152,22 +132,21 @@ class LibraryListView<T extends WithMeta, F extends EntityFilters<T>>
 
   Widget _wrapWithSelection(BuildContext context, T item, FiltersGroup group) => Obx(
         () {
-          var isPreSelected = controller.isPreSelected(item, preSelections, multiple);
-          var selected = controller.isSelected(item, preSelections, multiple);
-          var enabled = controller.isEnabled(item, preSelections, multiple);
-          var onToggle = enabled
-              ? () => controller.toggleItem(item, !selected, preSelections, multiple)
-              : null;
+          var isPreSelected = controller.isPreSelected(item);
+          var selected = controller.isSelected(item);
+          var enabled = controller.isEnabled(item);
+          var onToggle = enabled ? () => controller.toggleItem(item, !selected) : null;
+
           return Container(
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(10),
               border: Border.all(
                 width: 2,
                 color: selected
-                    ? multiple && isPreSelected
+                    ? controller.multiple && isPreSelected
                         ? Colors.grey
                         : DwColors.success
-                    : multiple && !controller.isEnabled(item, preSelections, multiple)
+                    : controller.multiple && !controller.isEnabled(item)
                         ? Colors.grey
                         : Colors.transparent,
               ),
@@ -182,30 +161,35 @@ class LibraryListView<T extends WithMeta, F extends EntityFilters<T>>
                 enabled
                     ? !selected
                         ? S.current.select
-                        : multiple
+                        : controller.multiple
                             ? S.current.remove
                             : S.current.unselect
-                    : multiple
+                    : controller.multiple
                         ? S.current.alreadyAdded
                         : S.current.select,
               ),
               icon: Icon(
                 enabled
                     ? !selected
-                        ? multiple
+                        ? controller.multiple
                             ? Icons.add
                             : Icons.check
                         : Icons.remove
-                    : multiple
+                    : controller.multiple
                         ? Icons.add
                         : Icons.check,
               ),
               onUpdate: group == FiltersGroup.my
-                  ? (item) => controller.saveCustomItem(storageKey, item, preSelections, multiple)
+                  ? (item) => controller.saveCustomItem(controller.storageKey, item)
                   : null,
               onDelete: group == FiltersGroup.my
-                  ? (item) => awaitDeleteConfirmation<T>(context, nameFor(item),
-                      () => controller.deleteCustomItem(storageKey, item, preSelections, multiple))
+                  ? (item) => awaitDeleteConfirmation<T>(
+                      context,
+                      nameFor(item),
+                      () => controller.deleteCustomItem(
+                            controller.storageKey,
+                            item,
+                          ))
                   : null,
             ),
           );

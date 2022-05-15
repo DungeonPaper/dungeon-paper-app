@@ -5,6 +5,7 @@ import 'package:dungeon_paper/app/data/models/spell.dart';
 import 'package:dungeon_paper/app/data/services/character_service.dart';
 import 'package:dungeon_paper/app/data/services/library_service.dart';
 import 'package:dungeon_paper/app/model_utils/character_utils.dart';
+import 'package:dungeon_paper/app/model_utils/model_pages.dart';
 import 'package:dungeon_paper/app/widgets/cards/item_card.dart';
 import 'package:dungeon_paper/app/widgets/cards/item_card_mini.dart';
 import 'package:dungeon_paper/app/widgets/cards/move_card.dart';
@@ -73,7 +74,7 @@ class HomeCharacterDynamicCards extends GetView<CharacterService> {
                   note: notes[index],
                   actions: [
                     EntityEditMenu(
-                      onEdit: CharacterUtils.openNotePage(
+                      onEdit: ModelPages.openNotePage(
                         note: notes[index],
                         onSave: (note) => controller.updateCharacter(
                           CharacterUtils.updateNotes(controller.current!, [note]),
@@ -123,7 +124,7 @@ class HomeCharacterDynamicCards extends GetView<CharacterService> {
                   move: moves[index],
                   actions: [
                     EntityEditMenu(
-                      onEdit: CharacterUtils.openMovePage(
+                      onEdit: ModelPages.openMovePage(
                         abilityScores: controller.current!.abilityScores,
                         classKeys: moves[index].classKeys,
                         move: moves[index],
@@ -175,7 +176,7 @@ class HomeCharacterDynamicCards extends GetView<CharacterService> {
                   spell: spells[index],
                   actions: [
                     EntityEditMenu(
-                      onEdit: CharacterUtils.openSpellPage(
+                      onEdit: ModelPages.openSpellPage(
                         abilityScores: controller.current!.abilityScores,
                         classKeys: spells[index].classKeys,
                         spell: spells[index],
@@ -229,7 +230,7 @@ class HomeCharacterDynamicCards extends GetView<CharacterService> {
                   item: items[index],
                   actions: [
                     EntityEditMenu(
-                      onEdit: CharacterUtils.openItemPage(
+                      onEdit: ModelPages.openItemPage(
                         item: items[index],
                         onSave: (item) => controller.updateCharacter(
                           CharacterUtils.updateItems(controller.current!, [item]),

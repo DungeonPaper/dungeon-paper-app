@@ -42,14 +42,7 @@ class AppPages {
     ),
     GetPage(
       name: _Paths.addMoves,
-      page: () => MovesLibraryListView(
-        abilityScores: characterService.current!.abilityScores,
-        onAdd: (moves) => characterService.updateCharacter(
-          CharacterUtils.updateMoves(characterService.current!, moves),
-        ),
-        selections: characterService.current!.moves,
-        classKeys: [characterService.current!.characterClass.key],
-      ),
+      page: () => const MovesLibraryListView(),
       binding: LibraryListBinding(),
     ),
     GetPage(

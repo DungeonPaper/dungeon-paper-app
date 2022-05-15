@@ -1,6 +1,7 @@
 import 'package:dungeon_paper/app/data/models/move.dart';
 import 'package:dungeon_paper/app/data/models/spell.dart';
 import 'package:dungeon_paper/app/model_utils/character_utils.dart';
+import 'package:dungeon_paper/app/model_utils/model_pages.dart';
 import 'package:dungeon_paper/app/modules/LibraryList/bindings/library_list_binding.dart';
 import 'package:dungeon_paper/app/modules/LibraryList/controllers/library_list_controller.dart';
 import 'package:dungeon_paper/app/modules/LibraryList/views/moves_library_list_view.dart';
@@ -70,7 +71,7 @@ class SelectMovesSpellsView extends GetView<SelectMovesSpellsController> {
                               showStar: false,
                               actions: [
                                 EntityEditMenu(
-                                  onEdit: CharacterUtils.openMovePage(
+                                  onEdit: ModelPages.openMovePage(
                                     abilityScores: controller.abilityScores.value,
                                     classKeys: move.classKeys,
                                     move: move,
@@ -94,7 +95,9 @@ class SelectMovesSpellsView extends GetView<SelectMovesSpellsController> {
                   child: OutlinedButton.icon(
                     style: ButtonThemes.primaryOutlined(context),
                     onPressed: () => Get.to(
-                      () => MovesLibraryListView(
+                      () => const MovesLibraryListView(),
+                      binding: LibraryListBinding(),
+                      arguments: LibraryListArguments<Move, MoveFilters>(
                         onAdd: (moves) {
                           controller.dirty.value = true;
                           controller.moves.value = addByKey(
@@ -102,19 +105,22 @@ class SelectMovesSpellsView extends GetView<SelectMovesSpellsController> {
                             moves.map((m) => m.copyWithInherited(favorited: true)),
                           );
                         },
-                        abilityScores: controller.abilityScores.value,
-                        classKeys: [controller.characterClass.value.key],
-                        selections: controller.moves,
+                        extraData: {
+                          'abilityScores': controller.abilityScores.value,
+                          'classKeys': [controller.characterClass.value.key],
+                        },
+                        preSelections: controller.moves,
+                        filters: {
+                          FiltersGroup.playbook: MoveFilters(
+                            classKey: controller.characterClass.value.key,
+                          ),
+                          FiltersGroup.my: MoveFilters(
+                            classKey: controller.characterClass.value.key,
+                          )
+                        },
+                        filterFn: (move, filters) => filters.filter(move),
+                        sortFn: Move.sorter,
                       ),
-                      binding: LibraryListBinding(),
-                      arguments: {
-                        FiltersGroup.playbook: MoveFilters(
-                          classKey: controller.characterClass.value.key,
-                        ),
-                        FiltersGroup.my: MoveFilters(
-                          classKey: controller.characterClass.value.key,
-                        )
-                      },
                     ),
                     label: Text(S.current.addGeneric(S.current.entityPlural(Move))),
                     icon: const Icon(Icons.add),
@@ -165,27 +171,32 @@ class SelectMovesSpellsView extends GetView<SelectMovesSpellsController> {
                   child: OutlinedButton.icon(
                     style: ButtonThemes.primaryOutlined(context),
                     onPressed: () => Get.to(
-                      () => SpellsLibraryListView(
-                        onAdd: (spells) {
+                      () => const SpellsLibraryListView(),
+                      binding: LibraryListBinding(),
+                      arguments: LibraryListArguments<Spell, SpellFilters>(
+                        onAdd: (moves) {
                           controller.dirty.value = true;
                           controller.spells.value = addByKey(
                             controller.spells,
-                            spells.map((s) => s.copyWithInherited(prepared: true)),
+                            moves.map((m) => m.copyWithInherited(prepared: true)),
                           );
                         },
-                        abilityScores: controller.abilityScores.value,
-                        classKeys: [controller.characterClass.value.key],
-                        selections: controller.spells,
+                        extraData: {
+                          'abilityScores': controller.abilityScores.value,
+                          'classKeys': [controller.characterClass.value.key],
+                        },
+                        preSelections: controller.spells,
+                        filters: {
+                          FiltersGroup.playbook: SpellFilters(
+                            classKey: controller.characterClass.value.key,
+                          ),
+                          FiltersGroup.my: SpellFilters(
+                            classKey: controller.characterClass.value.key,
+                          )
+                        },
+                        filterFn: (spell, filters) => filters.filter(spell),
+                        sortFn: Spell.sorter,
                       ),
-                      binding: LibraryListBinding(),
-                      arguments: {
-                        FiltersGroup.playbook: SpellFilters(
-                          classKey: controller.characterClass.value.key,
-                        ),
-                        FiltersGroup.my: SpellFilters(
-                          classKey: controller.characterClass.value.key,
-                        ),
-                      },
                     ),
                     label: Text(S.current.addGeneric(S.current.entityPlural(Spell))),
                     icon: const Icon(Icons.add),

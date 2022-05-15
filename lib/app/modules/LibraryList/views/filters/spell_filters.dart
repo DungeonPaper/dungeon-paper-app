@@ -62,7 +62,7 @@ class SpellFilters extends EntityFilters<Spell> {
 
   SpellFilters({
     this.search,
-    this.classKey,
+    required this.classKey,
   });
 
   @override

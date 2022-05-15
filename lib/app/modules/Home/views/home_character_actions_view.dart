@@ -8,6 +8,7 @@ import 'package:dungeon_paper/app/data/services/library_service.dart';
 import 'package:dungeon_paper/app/data/services/repository_service.dart';
 import 'package:dungeon_paper/app/model_utils/character_utils.dart';
 import 'package:dungeon_paper/app/model_utils/model_key.dart';
+import 'package:dungeon_paper/app/model_utils/model_pages.dart';
 import 'package:dungeon_paper/app/modules/LibraryList/bindings/library_list_binding.dart';
 import 'package:dungeon_paper/app/modules/LibraryList/controllers/library_list_controller.dart';
 import 'package:dungeon_paper/app/modules/LibraryList/views/items_library_list_view.dart';
@@ -66,22 +67,27 @@ class HomeCharacterActionsView extends GetView<CharacterService> {
       index: char.actionCategories.toList().indexOf('Move'),
       onReorder: _onReorder,
       list: char.moves,
-      addPageBuilder: ({required onAdd}) => MovesLibraryListView(
+      addPageBuilder: () => const MovesLibraryListView(),
+      addPageArguments: ({required onAdd}) => LibraryListArguments<Move, MoveFilters>(
         onAdd: onAdd,
-        abilityScores: char.abilityScores,
-        selections: char.moves,
-        classKeys: [char.characterClass.key],
+        preSelections: char.moves,
+        filters: {
+          FiltersGroup.playbook: MoveFilters(classKey: char.characterClass.key),
+          FiltersGroup.my: MoveFilters(classKey: char.characterClass.key),
+        },
+        extraData: {
+          'abilityScores': [char.abilityScores],
+          'classKeys': [char.characterClass.key],
+        },
+        filterFn: (move, filters) => filters.filter(move),
+        sortFn: Move.sorter,
       ),
-      addPageArguments: {
-        FiltersGroup.playbook: MoveFilters(classKey: char.characterClass.key),
-        FiltersGroup.my: MoveFilters(classKey: char.characterClass.key),
-      },
       cardBuilder: (move, {required onSave, required onDelete}) => MoveCard(
         move: move,
         actions: [
           EntityEditMenu(
             onDelete: onDelete,
-            onEdit: CharacterUtils.openMovePage(
+            onEdit: ModelPages.openMovePage(
               move: move,
               classKeys: move.classKeys,
               abilityScores: char.abilityScores,
@@ -102,22 +108,27 @@ class HomeCharacterActionsView extends GetView<CharacterService> {
       index: char.actionCategories.toList().indexOf('Spell'),
       onReorder: _onReorder,
       list: char.spells,
-      addPageBuilder: ({required onAdd}) => SpellsLibraryListView(
+      addPageBuilder: () => const SpellsLibraryListView(),
+      addPageArguments: ({required onAdd}) => LibraryListArguments<Spell, SpellFilters>(
         onAdd: onAdd,
-        abilityScores: char.abilityScores,
-        selections: char.spells,
-        classKeys: [char.characterClass.key],
+        preSelections: char.spells,
+        filters: {
+          FiltersGroup.playbook: SpellFilters(classKey: char.characterClass.key),
+          FiltersGroup.my: SpellFilters(classKey: char.characterClass.key),
+        },
+        extraData: {
+          'abilityScores': [char.abilityScores],
+          'classKeys': [char.characterClass.key],
+        },
+        filterFn: (spell, filters) => filters.filter(spell),
+        sortFn: Spell.sorter,
       ),
-      addPageArguments: {
-        FiltersGroup.playbook: SpellFilters(classKey: char.characterClass.key),
-        FiltersGroup.my: SpellFilters(classKey: char.characterClass.key),
-      },
       cardBuilder: (spell, {required onSave, required onDelete}) => SpellCard(
         spell: spell,
         actions: [
           EntityEditMenu(
             onDelete: onDelete,
-            onEdit: CharacterUtils.openSpellPage(
+            onEdit: ModelPages.openSpellPage(
               spell: spell,
               classKeys: spell.classKeys,
               abilityScores: char.abilityScores,
@@ -138,20 +149,24 @@ class HomeCharacterActionsView extends GetView<CharacterService> {
       index: char.actionCategories.toList().indexOf('Item'),
       onReorder: _onReorder,
       list: char.items,
-      addPageBuilder: ({required onAdd}) => ItemsLibraryListView(
+      addPageBuilder: () => const ItemsLibraryListView(),
+      addPageArguments: ({required onAdd}) => LibraryListArguments<Item, ItemFilters>(
         onAdd: onAdd,
-        selections: char.items,
+        preSelections: char.items,
+        filters: {
+          FiltersGroup.playbook: ItemFilters(),
+          FiltersGroup.my: ItemFilters(),
+        },
+        extraData: const {},
+        filterFn: (item, filters) => filters.filter(item),
+        sortFn: Item.sorter,
       ),
-      addPageArguments: {
-        FiltersGroup.playbook: ItemFilters(),
-        FiltersGroup.my: ItemFilters(),
-      },
       cardBuilder: (item, {required onSave, required onDelete}) => ItemCard(
         item: item,
         actions: [
           EntityEditMenu(
             onDelete: onDelete,
-            onEdit: CharacterUtils.openItemPage(
+            onEdit: ModelPages.openItemPage(
               item: item,
               onSave: onSave,
             ),
@@ -184,17 +199,17 @@ class ActionsCardList<T extends WithMeta> extends GetView<CharacterService> {
   const ActionsCardList({
     Key? key,
     required this.addPageBuilder,
-    this.addPageArguments,
+    required this.addPageArguments,
     required this.cardBuilder,
     required this.list,
     required this.index,
     required this.onReorder,
   }) : super(key: key);
 
-  final Widget Function({
+  final Widget Function() addPageBuilder;
+  final LibraryListArguments<T, EntityFilters<T>> Function({
     required void Function(Iterable<T> obj) onAdd,
-  }) addPageBuilder;
-  final Map<FiltersGroup, EntityFilters>? addPageArguments;
+  }) addPageArguments;
   final Widget Function(
     T object, {
     required void Function() onDelete,
@@ -218,9 +233,9 @@ class ActionsCardList<T extends WithMeta> extends GetView<CharacterService> {
       trailing: [
         TextButton.icon(
           onPressed: () => Get.to(
-            () => addPageBuilder(onAdd: library.upsertToCharacter),
+            () => addPageBuilder(),
             binding: LibraryListBinding(),
-            arguments: addPageArguments,
+            arguments: addPageArguments(onAdd: library.upsertToCharacter),
           ),
           label: Text(S.current.addGeneric(S.current.entityPlural(T))),
           icon: const Icon(Icons.add),

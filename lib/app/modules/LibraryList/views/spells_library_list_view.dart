@@ -2,6 +2,7 @@ import 'package:dungeon_paper/app/data/models/character.dart';
 import 'package:dungeon_paper/app/data/models/ability_scores.dart';
 import 'package:dungeon_paper/app/data/models/spell.dart';
 import 'package:dungeon_paper/app/model_utils/character_utils.dart';
+import 'package:dungeon_paper/app/model_utils/model_pages.dart';
 import 'package:dungeon_paper/app/modules/LibraryList/controllers/library_list_controller.dart';
 import 'package:dungeon_paper/app/modules/LibraryList/views/library_list_view.dart';
 import 'package:dungeon_paper/app/themes/button_themes.dart';
@@ -17,33 +18,20 @@ import 'filters/spell_filters.dart';
 class SpellsLibraryListView extends GetView<LibraryListController<Spell, SpellFilters>> {
   const SpellsLibraryListView({
     Key? key,
-    required this.onAdd,
-    required this.selections,
-    required this.classKeys,
-    required this.abilityScores,
   }) : super(key: key);
-
-  final void Function(Iterable<Spell> spells) onAdd;
-  final Iterable<Spell> selections;
-  final List<String> classKeys;
-  final AbilityScores abilityScores;
 
   Character get char => controller.chars.value.current!;
 
   @override
   Widget build(BuildContext context) {
     return LibraryListView<Spell, SpellFilters>(
-      storageKey: 'Spells',
       title: Text(S.current.addGeneric(S.current.entityPlural(Spell))),
-      filterFn: (spell, filters) => filters.filter(spell),
-      sortFn: (filters) => Spell.sorter(filters),
       filtersBuilder: (group, filters, onChange) => SpellFiltersView(
         group: group,
         filters: filters,
         onChange: (f) => onChange(group, f),
         searchController: controller.search[group]!,
       ),
-      extraData: {'classKeys': classKeys, 'abilityScores': abilityScores},
       cardBuilder: (
         ctx,
         spell, {
@@ -62,7 +50,7 @@ class SpellsLibraryListView extends GetView<LibraryListController<Spell, SpellFi
         actions: [
           EntityEditMenu(
             onEdit: onUpdate != null
-                ? CharacterUtils.openSpellPage(
+                ? ModelPages.openSpellPage(
                     abilityScores: char.abilityScores,
                     classKeys: spell.classKeys,
                     spell: spell,
@@ -79,8 +67,6 @@ class SpellsLibraryListView extends GetView<LibraryListController<Spell, SpellFi
           )
         ],
       ),
-      onAdd: onAdd,
-      preSelections: selections,
     );
   }
 }

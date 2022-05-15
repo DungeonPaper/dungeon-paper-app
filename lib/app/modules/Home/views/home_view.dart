@@ -1,5 +1,6 @@
 import 'package:dungeon_paper/app/data/models/note.dart';
 import 'package:dungeon_paper/app/model_utils/character_utils.dart';
+import 'package:dungeon_paper/app/model_utils/model_pages.dart';
 import 'package:dungeon_paper/app/modules/Home/views/home_character_actions_view.dart';
 import 'package:dungeon_paper/app/modules/Home/views/home_character_journal_view.dart';
 import 'package:dungeon_paper/app/themes/themes.dart';
@@ -75,7 +76,7 @@ class HomeView extends GetView<CharacterService> {
                 label: Text(S.current.createGeneric(Note)),
                 icon: const Icon(Icons.add),
                 onPressed: inPageRange
-                    ? CharacterUtils.openNotePage(
+                    ? ModelPages.openNotePage(
                         note: null,
                         onSave: (note) => controller.updateCharacter(
                           CharacterUtils.addByType<Note>(controller.current!, [note]),

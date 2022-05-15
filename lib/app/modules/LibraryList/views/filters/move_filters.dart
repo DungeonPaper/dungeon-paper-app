@@ -91,7 +91,7 @@ class MoveFilters extends EntityFilters<Move> {
   MoveFilters({
     this.category,
     this.search,
-    this.classKey,
+    required this.classKey,
   });
 
   @override

@@ -1,0 +1,243 @@
+import 'package:dungeon_paper/app/data/models/character_class.dart';
+import 'package:dungeon_paper/app/data/models/item.dart';
+import 'package:dungeon_paper/app/data/models/note.dart';
+import 'package:dungeon_paper/app/data/models/move.dart';
+import 'package:dungeon_paper/app/data/models/character.dart';
+import 'package:dungeon_paper/app/data/models/ability_scores.dart';
+import 'package:dungeon_paper/app/data/models/spell.dart';
+import 'package:dungeon_paper/app/data/services/character_service.dart';
+import 'package:dungeon_paper/app/data/services/library_service.dart';
+import 'package:dungeon_paper/app/modules/LibraryList/bindings/library_form_binding.dart';
+import 'package:dungeon_paper/app/modules/LibraryList/bindings/library_list_binding.dart';
+import 'package:dungeon_paper/app/modules/LibraryList/controllers/library_list_controller.dart';
+import 'package:dungeon_paper/app/modules/LibraryList/views/character_classes_library_list_view.dart';
+import 'package:dungeon_paper/app/modules/LibraryList/views/filters/character_class_filters.dart';
+import 'package:dungeon_paper/app/modules/LibraryList/views/filters/item_filters.dart';
+import 'package:dungeon_paper/app/modules/LibraryList/views/filters/move_filters.dart';
+import 'package:dungeon_paper/app/modules/LibraryList/views/filters/note_filters.dart';
+import 'package:dungeon_paper/app/modules/LibraryList/views/filters/spell_filters.dart';
+import 'package:dungeon_paper/app/modules/LibraryList/views/items_library_list_view.dart';
+import 'package:dungeon_paper/app/modules/LibraryList/views/moves_library_list_view.dart';
+import 'package:dungeon_paper/app/modules/LibraryList/views/notes_library_list_view.dart';
+import 'package:dungeon_paper/app/modules/LibraryList/views/spells_library_list_view.dart';
+import 'package:dungeon_paper/app/widgets/forms/library_entity_form.dart';
+import 'package:dungeon_paper/core/utils/list_utils.dart';
+import 'package:get/get.dart';
+
+class ModelPages {
+  static CharacterService get controller => Get.find();
+  static LibraryService get library => Get.find();
+  static Character get _char => controller.current!;
+
+  static void Function() openMovesList({
+    Character? character,
+    Iterable<Move>? list,
+    void Function(Iterable<Move> list)? onAdd,
+  }) {
+    final char = character ?? _char;
+    return () => Get.to(
+          () => const MovesLibraryListView(),
+          binding: LibraryListBinding(),
+          arguments: LibraryListArguments<Move, MoveFilters>(
+            onAdd: onAdd ?? library.upsertToCharacter,
+            preSelections: char.moves,
+            filters: {
+              FiltersGroup.playbook: MoveFilters(classKey: char.characterClass.key),
+              FiltersGroup.my: MoveFilters(classKey: char.characterClass.key),
+            },
+            extraData: {
+              'abilityScores': [char.abilityScores],
+              'classKeys': [char.characterClass.key],
+            },
+            filterFn: (move, filters) => filters.filter(move),
+            sortFn: Move.sorter,
+          ),
+        );
+  }
+
+  static void Function() openMovePage({
+    required Move? move,
+    required void Function(Move move) onSave,
+    required AbilityScores abilityScores,
+    required List<String> classKeys,
+  }) =>
+      () => Get.to(
+            () => LibraryEntityForm<Move>(
+              onSave: onSave,
+              type: move == null ? ItemFormType.create : ItemFormType.edit,
+            ),
+            binding: RepositoryItemFormBinding<Move>(
+              item: move,
+              extraData: {
+                'abilityScores': abilityScores,
+                'classKeys': classKeys,
+              },
+            ),
+          );
+
+  static void Function() openSpellsList({
+    Character? character,
+    Iterable<Spell>? list,
+    void Function(Iterable<Spell> list)? onAdd,
+  }) {
+    final char = character ?? _char;
+    return () => Get.to(
+          () => const SpellsLibraryListView(),
+          binding: LibraryListBinding(),
+          arguments: LibraryListArguments<Spell, SpellFilters>(
+            onAdd: onAdd ?? library.upsertToCharacter,
+            preSelections: char.spells,
+            filters: {
+              FiltersGroup.playbook: SpellFilters(classKey: char.characterClass.key),
+              FiltersGroup.my: SpellFilters(classKey: char.characterClass.key),
+            },
+            extraData: {
+              'abilityScores': [char.abilityScores],
+              'classKeys': [char.characterClass.key],
+            },
+            filterFn: (spell, filters) => filters.filter(spell),
+            sortFn: Spell.sorter,
+          ),
+        );
+  }
+
+  static void Function() openSpellPage({
+    required Spell? spell,
+    required void Function(Spell spell) onSave,
+    required AbilityScores abilityScores,
+    required List<String> classKeys,
+  }) =>
+      () => Get.to(
+            () => LibraryEntityForm<Spell>(
+              onSave: onSave,
+              type: spell == null ? ItemFormType.create : ItemFormType.edit,
+            ),
+            binding: RepositoryItemFormBinding<Spell>(
+              item: spell,
+              extraData: {
+                'abilityScores': abilityScores,
+                'classKeys': classKeys,
+              },
+            ),
+          );
+
+  static void Function() openItemsList({
+    Character? character,
+    Iterable<Item>? list,
+    void Function(Iterable<Item> list)? onAdd,
+  }) {
+    final char = character ?? _char;
+    return () => Get.to(
+          () => const ItemsLibraryListView(),
+          binding: LibraryListBinding(),
+          arguments: LibraryListArguments<Item, ItemFilters>(
+            onAdd: onAdd ?? library.upsertToCharacter,
+            preSelections: char.items,
+            filters: {
+              FiltersGroup.playbook: ItemFilters(),
+              FiltersGroup.my: ItemFilters(),
+            },
+            extraData: {
+              'abilityScores': [char.abilityScores],
+            },
+            filterFn: (item, filters) => filters.filter(item),
+            sortFn: Item.sorter,
+          ),
+        );
+  }
+
+  static void Function() openItemPage({
+    required Item? item,
+    required void Function(Item item) onSave,
+  }) =>
+      () => Get.to(
+            () => LibraryEntityForm<Item>(
+              onSave: onSave,
+              type: item == null ? ItemFormType.create : ItemFormType.edit,
+            ),
+            binding: RepositoryItemFormBinding<Item>(
+              item: item,
+              extraData: const {},
+            ),
+          );
+
+  static void Function() openNotesList({
+    Character? character,
+    Iterable<Note>? list,
+    void Function(Iterable<Note> list)? onAdd,
+  }) {
+    final char = character ?? _char;
+    return () => Get.to(
+          () => const NotesLibraryListView(),
+          binding: LibraryListBinding(),
+          arguments: LibraryListArguments<Note, NoteFilters>(
+            onAdd: onAdd ?? library.upsertToCharacter,
+            preSelections: char.notes,
+            filters: {
+              FiltersGroup.playbook: NoteFilters(),
+              FiltersGroup.my: NoteFilters(),
+            },
+            extraData: const {},
+            filterFn: (note, filters) => filters.filter(note),
+            sortFn: (f) => (a, b) => 0,
+          ),
+        );
+  }
+
+  static void Function() openNotePage({
+    required Note? note,
+    required void Function(Note note) onSave,
+  }) =>
+      () => Get.to(
+            () => LibraryEntityForm<Note>(
+              onSave: onSave,
+              type: note == null ? ItemFormType.create : ItemFormType.edit,
+            ),
+            binding: RepositoryItemFormBinding<Note>(
+              item: note,
+              extraData: const {},
+            ),
+          );
+
+  static void Function() openCharacterClassesList({
+    Character? character,
+    Iterable<CharacterClass>? list,
+    void Function(CharacterClass cls)? onAdd,
+  }) {
+    final char = character ?? _char;
+    return () => Get.to(
+          () => const CharacterClassesLibraryListView(),
+          binding: LibraryListBinding(),
+          arguments: LibraryListArguments<CharacterClass, CharacterClassFilters>(
+            onAdd: (list) => onAdd != null
+                ? onAdd(list.elementAt(0))
+                : controller.updateCharacter(
+                    char.copyWith(characterClass: list.elementAt(0)),
+                  ),
+            preSelections: [char.characterClass],
+            filters: {
+              FiltersGroup.playbook: CharacterClassFilters(),
+              FiltersGroup.my: CharacterClassFilters(),
+            },
+            extraData: const {},
+            filterFn: (note, filters) => filters.filter(note),
+            sortFn: CharacterClass.sorter,
+          ),
+        );
+  }
+
+  static void Function() openCharacterClassPage({
+    required CharacterClass? characterClass,
+    required void Function(CharacterClass item) onSave,
+  }) =>
+      () => Get.to(
+            () => LibraryEntityForm<CharacterClass>(
+              onSave: onSave,
+              type: characterClass == null ? ItemFormType.create : ItemFormType.edit,
+            ),
+            binding: RepositoryItemFormBinding<CharacterClass>(
+              item: characterClass,
+              extraData: const {},
+            ),
+          );
+}

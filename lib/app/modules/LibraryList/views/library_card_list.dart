@@ -11,7 +11,7 @@ import 'package:dungeon_paper/generated/l10n.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-class LibraryCardList<T extends WithMeta, F extends EntityFilters>
+class LibraryCardList<T extends WithMeta, F extends EntityFilters<T>>
     extends GetView<LibraryListController<T, F>> {
   const LibraryCardList({
     Key? key,

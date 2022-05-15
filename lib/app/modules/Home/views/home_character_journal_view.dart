@@ -5,6 +5,7 @@ import 'package:dungeon_paper/app/data/models/spell.dart';
 import 'package:dungeon_paper/app/data/services/character_service.dart';
 import 'package:dungeon_paper/app/model_utils/character_utils.dart';
 import 'package:dungeon_paper/app/model_utils/model_key.dart';
+import 'package:dungeon_paper/app/model_utils/model_pages.dart';
 import 'package:dungeon_paper/app/themes/button_themes.dart';
 import 'package:dungeon_paper/app/widgets/cards/note_card.dart';
 import 'package:dungeon_paper/app/widgets/menus/entity_edit_menu.dart';
@@ -72,7 +73,7 @@ class HomeCharacterJournalView extends GetView<CharacterService> {
                           actions: [
                             EntityEditMenu(
                               onDelete: confirmDelete(context, note, note.title),
-                              onEdit: CharacterUtils.openNotePage(
+                              onEdit: ModelPages.openNotePage(
                                 note: note,
                                 onSave: (_note) {
                                   controller.updateCharacter(
