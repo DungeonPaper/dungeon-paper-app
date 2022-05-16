@@ -5,6 +5,7 @@ import 'package:dungeon_paper/app/routes/app_pages.dart';
 import 'package:dungeon_paper/app/widgets/atoms/menu_button.dart';
 import 'package:dungeon_paper/app/widgets/atoms/svg_icon.dart';
 import 'package:dungeon_paper/app/widgets/dialogs/character_bio_dialog.dart';
+import 'package:dungeon_paper/app/widgets/dialogs/character_bonds_flags_dialog.dart';
 import 'package:dungeon_paper/core/dw_icons.dart';
 import 'package:dungeon_paper/generated/l10n.dart';
 import 'package:flutter/material.dart';
@@ -33,12 +34,6 @@ class HomeCharacterExtras extends GetView<CharacterService> {
               label: Text(S.current.characterBioDialogTitle),
               onSelect: _openBio,
             ),
-            // MenuEntry(
-            //   id: 'bio',
-            //   icon: const Icon(Icons.text_snippet),
-            //   label: Text(S.current.characterBioDialogTitle),
-            //   onSelect: _openBio,
-            // ),
           ],
         ),
         IconButton(
@@ -55,9 +50,9 @@ class HomeCharacterExtras extends GetView<CharacterService> {
           tooltip: S.current.characterRollsTitle,
         ),
         IconButton(
-          onPressed: null,
+          onPressed: _openBondsFlags,
           icon: Transform.scale(child: const Icon(Icons.handshake), scaleX: -1),
-          tooltip: S.current.characterBondsDialogTitle,
+          tooltip: S.current.characterBondsFlagsDialogTitle,
         ),
         IconButton(
           onPressed: null,
@@ -89,5 +84,9 @@ class HomeCharacterExtras extends GetView<CharacterService> {
 
   void _openBio() {
     Get.dialog(const CharacterBioDialog());
+  }
+
+  void _openBondsFlags() {
+    Get.dialog(const CharacterBondsFlagsDialog());
   }
 }

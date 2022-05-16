@@ -9,8 +9,8 @@ import 'package:flutter_markdown/flutter_markdown.dart';
 import 'package:get/get.dart';
 import 'package:url_launcher/url_launcher.dart';
 
-class CharacterBioDialog extends GetView<CharacterService> {
-  const CharacterBioDialog({Key? key}) : super(key: key);
+class CharacterBondsFlagsDialog extends GetView<CharacterService> {
+  const CharacterBondsFlagsDialog({Key? key}) : super(key: key);
 
   Character get char => controller.current!;
 
@@ -22,10 +22,10 @@ class CharacterBioDialog extends GetView<CharacterService> {
       title: Row(
         mainAxisSize: MainAxisSize.max,
         children: [
-          Expanded(child: Text(S.current.characterBioDialogTitle)),
+          Expanded(child: Text(S.current.characterBondsFlagsDialogTitle)),
           IconButton(
             onPressed: () {
-              Get.toNamed(Routes.bio);
+              Get.toNamed(Routes.bondsFlags);
             },
             icon: const Icon(Icons.edit, size: 20),
           )
@@ -46,7 +46,7 @@ class CharacterBioDialog extends GetView<CharacterService> {
             mainAxisSize: MainAxisSize.min,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text(S.current.characterBioDialogDescLabel, style: textTheme.caption),
+              Text('Bonds', style: textTheme.caption),
               char.bio.description.isNotEmpty
                   ? MarkdownBody(
                       data: char.bio.description,
@@ -54,32 +54,6 @@ class CharacterBioDialog extends GetView<CharacterService> {
                     )
                   : Text(S.current.noDescription),
               const SizedBox(height: 16),
-              Text(S.current.characterBioDialogLooksLabel, style: textTheme.caption),
-              char.bio.looks.isNotEmpty
-                  ? MarkdownBody(
-                      data: char.bio.looks,
-                      onTapLink: (_, url, __) => launch(url!),
-                    )
-                  : Text(S.current.noDescription),
-              const SizedBox(height: 16),
-              Row(
-                children: [
-                  Text(
-                    S.current.characterBioDialogAlignmentNameDisplayLabel,
-                    style: textTheme.caption,
-                  ),
-                  const SizedBox(width: 4),
-                  IconTheme.merge(
-                    data: IconThemeData(size: 14, color: textTheme.caption!.color!),
-                    child: char.bio.alignment.icon,
-                  ),
-                  const SizedBox(width: 4),
-                  Text(
-                    S.current.alignment(char.bio.alignment.key),
-                    style: textTheme.caption,
-                  ),
-                ],
-              ),
               char.bio.alignment.description.isNotEmpty
                   ? MarkdownBody(
                       data: char.bio.alignment.description,

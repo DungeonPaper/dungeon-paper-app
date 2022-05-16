@@ -13,10 +13,11 @@ abstract class Routes {
   static const spells = _Paths.spells;
   static const items = _Paths.items;
   static const notes = _Paths.notes;
+  static const characterClass = _Paths.characterClass;
   static const basicInfo = _Paths.basicInfo;
   static const bondsFlags = _Paths.bondsFlags;
   static const abilityScores = _Paths.abilityScores;
-  static const characterClass = _Paths.characterClass;
+  static const bio = _Paths.bio;
 
   static listByType<T extends WithMeta>() => {
         Move: _Paths.moves,
@@ -52,4 +53,5 @@ abstract class _Paths {
   static const items = '/items';
   static const notes = '/notes';
   static const bondsFlags = '/bonds-flags';
+  static const bio = '/biography';
 }

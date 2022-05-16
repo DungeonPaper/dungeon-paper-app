@@ -246,7 +246,7 @@ class MessageLookup extends MessageLookupByLibrary {
             "Describe your character\'s appearance. You may use the presets from the buttons above."),
         "characterBioDialogTitle":
             MessageLookupByLibrary.simpleMessage("Character Biography"),
-        "characterBondsDialogTitle":
+        "characterBondsFlagsDialogTitle":
             MessageLookupByLibrary.simpleMessage("Bonds/Flags"),
         "characterDebilitiesDialogTitle":
             MessageLookupByLibrary.simpleMessage("Debilities"),

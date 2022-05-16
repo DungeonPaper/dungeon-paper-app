@@ -13,6 +13,7 @@ import 'package:dungeon_paper/app/modules/LibraryList/views/items_library_list_v
 import 'package:dungeon_paper/app/modules/LibraryList/views/spells_library_list_view.dart';
 import 'package:dungeon_paper/app/modules/StartingGearForm/bindings/starting_gear_form_binding.dart';
 import 'package:dungeon_paper/app/modules/StartingGearForm/views/starting_gear_form_view.dart';
+import 'package:dungeon_paper/app/widgets/forms/character_bio_form.dart';
 import 'package:flutter/widgets.dart';
 
 import 'package:get/get.dart';
@@ -100,6 +101,11 @@ class AppPages {
       name: Routes.bondsFlags,
       page: () => const BondsFlagsFormView(),
       binding: BondsFlagsFormBinding(),
+      preventDuplicates: false,
+    ),
+    GetPage(
+      name: Routes.bio,
+      page: () => const CharacterBioForm(),
       preventDuplicates: false,
     ),
     GetPage(

@@ -34,7 +34,7 @@
   "characterBioDialogLooksLabel": "Looks",
   "characterBioDialogLooksPlaceholder": "Describe your character's appearance. You may use the presets from the buttons above.",
   "characterBioDialogTitle": "Character Biography",
-  "characterBondsDialogTitle": "Bonds/Flags",
+  "characterBondsFlagsDialogTitle": "Bonds/Flags",
   "characterDebilitiesDialogTitle": "Debilities",
   "characterHeaderSubtitle": "Level {level} ∙ {charClass} ∙ {race} ∙",
   "characterListTitle": "All Characters",

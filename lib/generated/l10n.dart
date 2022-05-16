@@ -398,10 +398,10 @@ class S {
   }
 
   /// `Bonds/Flags`
-  String get characterBondsDialogTitle {
+  String get characterBondsFlagsDialogTitle {
     return Intl.message(
       'Bonds/Flags',
-      name: 'characterBondsDialogTitle',
+      name: 'characterBondsFlagsDialogTitle',
       desc: '',
       args: [],
     );
