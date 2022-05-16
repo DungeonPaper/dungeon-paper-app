@@ -3,6 +3,7 @@ part of 'app_pages.dart';
 
 abstract class Routes {
   Routes._();
+
   static const home = _Paths.home;
   static const characterList = _Paths.characterList;
   static const rollDice = _Paths.rollDice;
@@ -35,6 +36,7 @@ abstract class Routes {
 
 abstract class _Paths {
   _Paths._();
+
   static const home = '/';
   static const characterList = '/character-list';
   static const rollDice = '/roll';

@@ -60,6 +60,26 @@ class S {
     );
   }
 
+  /// `It may not be permanent, but for now you don't look so good.`
+  String get abilityScoreChaDebilityDescription {
+    return Intl.message(
+      'It may not be permanent, but for now you don\'t look so good.',
+      name: 'abilityScoreChaDebilityDescription',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Scarred`
+  String get abilityScoreChaDebilityName {
+    return Intl.message(
+      'Scarred',
+      name: 'abilityScoreChaDebilityName',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `Measures a character's personality, personal magnetism, ability to lead, and appearance.`
   String get abilityScoreChaDescription {
     return Intl.message(
@@ -75,6 +95,26 @@ class S {
     return Intl.message(
       'Charisma',
       name: 'abilityScoreChaName',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Something just isn't right inside. Maybe you've got a disease or a wasting illness. Maybe you just drank too much ale last night and it's coming back to haunt you.`
+  String get abilityScoreConDebilityDescription {
+    return Intl.message(
+      'Something just isn\'t right inside. Maybe you\'ve got a disease or a wasting illness. Maybe you just drank too much ale last night and it\'s coming back to haunt you.',
+      name: 'abilityScoreConDebilityDescription',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Sick`
+  String get abilityScoreConDebilityName {
+    return Intl.message(
+      'Sick',
+      name: 'abilityScoreConDebilityName',
       desc: '',
       args: [],
     );
@@ -100,6 +140,26 @@ class S {
     );
   }
 
+  /// `You're unsteady on your feet and you've got a shake in your hands.`
+  String get abilityScoreDexDebilityDescription {
+    return Intl.message(
+      'You\'re unsteady on your feet and you\'ve got a shake in your hands.',
+      name: 'abilityScoreDexDebilityDescription',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Shaky`
+  String get abilityScoreDexDebilityName {
+    return Intl.message(
+      'Shaky',
+      name: 'abilityScoreDexDebilityName',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `Measures agility, reflexes and balance.`
   String get abilityScoreDexDescription {
     return Intl.message(
@@ -115,6 +175,26 @@ class S {
     return Intl.message(
       'Dexterity',
       name: 'abilityScoreDexName',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `That last knock to the head shook something loose. Brain not work so good.`
+  String get abilityScoreIntDebilityDescription {
+    return Intl.message(
+      'That last knock to the head shook something loose. Brain not work so good.',
+      name: 'abilityScoreIntDebilityDescription',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Stunned`
+  String get abilityScoreIntDebilityName {
+    return Intl.message(
+      'Stunned',
+      name: 'abilityScoreIntDebilityName',
       desc: '',
       args: [],
     );
@@ -140,6 +220,26 @@ class S {
     );
   }
 
+  /// `Ears ringing. Vision blurred. You're more than a little out of it.`
+  String get abilityScoreWisDebilityDescription {
+    return Intl.message(
+      'Ears ringing. Vision blurred. You\'re more than a little out of it.',
+      name: 'abilityScoreWisDebilityDescription',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Confused`
+  String get abilityScoreWisDebilityName {
+    return Intl.message(
+      'Confused',
+      name: 'abilityScoreWisDebilityName',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `Measures muscle and physical power.`
   String get abilityScoreStrDescription {
     return Intl.message(
@@ -155,6 +255,26 @@ class S {
     return Intl.message(
       'Strength',
       name: 'abilityScoreStrName',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `You can't exert much force. Maybe it's just fatigue and injury, or maybe your strength was drained by magic.`
+  String get abilityScoreStrDebilityDescription {
+    return Intl.message(
+      'You can\'t exert much force. Maybe it\'s just fatigue and injury, or maybe your strength was drained by magic.',
+      name: 'abilityScoreStrDebilityDescription',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Weak`
+  String get abilityScoreStrDebilityName {
+    return Intl.message(
+      'Weak',
+      name: 'abilityScoreStrDebilityName',
       desc: '',
       args: [],
     );
@@ -997,6 +1117,16 @@ class S {
       name: 'createGeneric',
       desc: '',
       args: [entity],
+    );
+  }
+
+  /// `{name} ({key})`
+  String debilityLabel(Object name, Object key) {
+    return Intl.message(
+      '$name ($key)',
+      name: 'debilityLabel',
+      desc: '',
+      args: [name, key],
     );
   }
 

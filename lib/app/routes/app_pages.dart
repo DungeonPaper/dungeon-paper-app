@@ -21,6 +21,8 @@ import '../modules/CreateCharacter/SelectMovesSpells/bindings/select_moves_spell
 import '../modules/CreateCharacter/SelectMovesSpells/views/select_moves_spells_view.dart';
 import '../modules/CreateCharacter/bindings/create_character_binding.dart';
 import '../modules/CreateCharacter/views/create_character_view.dart';
+import '../modules/DebilitiesForm/bindings/debilities_form_binding.dart';
+import '../modules/DebilitiesForm/views/debilities_form_view.dart';
 import '../modules/Home/bindings/home_binding.dart';
 import '../modules/Home/views/home_view.dart';
 import '../modules/ImportExport/bindings/import_export_binding.dart';
@@ -105,7 +107,7 @@ class AppPages {
       preventDuplicates: false,
     ),
     GetPage(
-      name: _Paths.bio,
+      name: Routes.bio,
       page: () => const BioFormView(),
       binding: BioFormBinding(),
     ),

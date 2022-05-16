@@ -23,13 +23,15 @@ class AbilityScoreChip extends StatelessWidget {
     final isDark = brightness == Brightness.dark;
     final rollBadgeModifierOpacity = isDark ? 0.5 : 0.4;
     final rollBadgeBgOpacity = isDark ? 0.8 : 0.1;
+    final cardColor =
+        stat.isDebilitated ? theme.errorColor.withOpacity(0.15) : theme.cardColor.withOpacity(0.5);
 
     return InkWell(
       onTap: () => DiceUtils.openRollDialog([dw.Dice(amount: 2, sides: 6, modifierStat: stat.key)]),
       borderRadius: BorderRadius.circular(10),
       child: Material(
         borderRadius: BorderRadius.circular(10),
-        color: theme.cardColor.withOpacity(0.5),
+        color: cardColor,
         clipBehavior: Clip.none,
         child: Container(
           padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 8),

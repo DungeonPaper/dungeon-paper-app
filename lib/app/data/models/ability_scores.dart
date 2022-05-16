@@ -24,36 +24,48 @@ class AbilityScores {
           key: 'STR',
           name: S.current.abilityScoreStrName,
           description: S.current.abilityScoreStrDescription,
+          debilityName: S.current.abilityScoreStrDebilityName,
+          debilityDescription: S.current.abilityScoreStrDebilityDescription,
           value: str,
         ),
         AbilityScore(
           key: 'DEX',
           name: S.current.abilityScoreDexName,
           description: S.current.abilityScoreDexDescription,
+          debilityName: S.current.abilityScoreDexDebilityName,
+          debilityDescription: S.current.abilityScoreDexDebilityDescription,
           value: dex,
         ),
         AbilityScore(
           key: 'CON',
           name: S.current.abilityScoreConName,
           description: S.current.abilityScoreConDescription,
+          debilityName: S.current.abilityScoreConDebilityName,
+          debilityDescription: S.current.abilityScoreConDebilityDescription,
           value: con,
         ),
         AbilityScore(
           key: 'INT',
           name: S.current.abilityScoreIntName,
           description: S.current.abilityScoreIntDescription,
+          debilityName: S.current.abilityScoreIntDebilityName,
+          debilityDescription: S.current.abilityScoreIntDebilityDescription,
           value: intl,
         ),
         AbilityScore(
           key: 'WIS',
           name: S.current.abilityScoreWisName,
           description: S.current.abilityScoreWisDescription,
+          debilityName: S.current.abilityScoreWisDebilityName,
+          debilityDescription: S.current.abilityScoreWisDebilityDescription,
           value: wis,
         ),
         AbilityScore(
           key: 'CHA',
           name: S.current.abilityScoreChaName,
           description: S.current.abilityScoreChaDescription,
+          debilityName: S.current.abilityScoreChaDebilityName,
+          debilityDescription: S.current.abilityScoreChaDebilityDescription,
           value: cha,
         ),
       ]);
@@ -130,12 +142,16 @@ class AbilityScore {
   final String description;
   final int value;
   final bool isDebilitated;
+  final String debilityName;
+  final String debilityDescription;
 
   AbilityScore({
     required String key,
     required this.name,
     required this.value,
     required this.description,
+    required this.debilityName,
+    required this.debilityDescription,
     this.isDebilitated = false,
   }) : key = key.trim().toUpperCase();
 
@@ -145,6 +161,8 @@ class AbilityScore {
         value: json['value'],
         description: json['description'],
         isDebilitated: json['isDebilitated'],
+        debilityName: json['debilityName'],
+        debilityDescription: json['debilityDescription'],
       );
 
   Map<String, dynamic> toJson() => {
@@ -153,6 +171,8 @@ class AbilityScore {
         'value': value,
         'description': description,
         'isDebilitated': isDebilitated,
+        'debilityName': debilityName,
+        'debilityDescription': debilityDescription,
       };
 
   AbilityScore copyWith({
@@ -161,6 +181,8 @@ class AbilityScore {
     String? description,
     int? value,
     bool? isDebilitated,
+    String? debilityName,
+    String? debilityDescription,
   }) =>
       AbilityScore(
         key: key ?? this.key,
@@ -168,9 +190,11 @@ class AbilityScore {
         description: description ?? this.description,
         value: value ?? this.value,
         isDebilitated: isDebilitated ?? this.isDebilitated,
+        debilityName: debilityName ?? this.debilityName,
+        debilityDescription: debilityDescription ?? this.debilityDescription,
       );
 
-  int get modifier => modifierForValue(value);
+  int get modifier => isDebilitated ? modifierForValue(value) - 1 : modifierForValue(value);
   Widget get icon => iconFor(key);
   static iconFor(String key) => _icons[key.toLowerCase()] ?? _icons['_other']!;
 

@@ -6,6 +6,7 @@ import 'package:dungeon_paper/app/widgets/atoms/menu_button.dart';
 import 'package:dungeon_paper/app/widgets/atoms/svg_icon.dart';
 import 'package:dungeon_paper/app/widgets/dialogs/character_bio_dialog.dart';
 import 'package:dungeon_paper/app/widgets/dialogs/character_bonds_flags_dialog.dart';
+import 'package:dungeon_paper/app/widgets/dialogs/debilities_dialog.dart';
 import 'package:dungeon_paper/core/dw_icons.dart';
 import 'package:dungeon_paper/generated/l10n.dart';
 import 'package:flutter/material.dart';
@@ -55,7 +56,7 @@ class HomeCharacterExtras extends GetView<CharacterService> {
           tooltip: S.current.characterBondsFlagsDialogTitle,
         ),
         IconButton(
-          onPressed: null,
+          onPressed: _openDebilities,
           icon: const Icon(Icons.personal_injury),
           tooltip: S.current.characterDebilitiesDialogTitle,
         ),
@@ -88,5 +89,9 @@ class HomeCharacterExtras extends GetView<CharacterService> {
 
   void _openBondsFlags() {
     Get.dialog(const CharacterBondsFlagsDialog());
+  }
+
+  void _openDebilities() {
+    Get.dialog(const CharacterDebilitiesDialog());
   }
 }

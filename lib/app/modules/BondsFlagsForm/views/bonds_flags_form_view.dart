@@ -39,6 +39,8 @@ class BondsFlagsFormView extends GetView<BondsFlagsFormController> {
                 title: TextField(
                   controller: bond.value,
                   textCapitalization: TextCapitalization.sentences,
+                  minLines: 1,
+                  maxLines: 5,
                 ),
               ),
             OutlinedButton.icon(
@@ -61,6 +63,8 @@ class BondsFlagsFormView extends GetView<BondsFlagsFormController> {
                 title: TextField(
                   controller: flag.value,
                   textCapitalization: TextCapitalization.sentences,
+                  minLines: 1,
+                  maxLines: 5,
                 ),
               ),
             OutlinedButton.icon(
