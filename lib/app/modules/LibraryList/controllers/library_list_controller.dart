@@ -15,7 +15,7 @@ enum FiltersGroup {
 }
 
 class LibraryListController<T extends WithMeta, F extends EntityFilters<T>> extends GetxController
-    with GetSingleTickerProviderStateMixin {
+    with GetSingleTickerProviderStateMixin, LibraryServiceMixin {
   final repo = Get.find<RepositoryService>().obs;
   final chars = Get.find<CharacterService>().obs;
 
@@ -114,8 +114,6 @@ class LibraryListController<T extends WithMeta, F extends EntityFilters<T>> exte
     debugPrint('Deleting $item');
     library.removeFromLibrary<T>([item]);
   }
-
-  LibraryService get library => Get.find();
 
   List<T> get selectedWithMeta => selected;
   // selected.map((e) => forkMeta<T>(e, Get.find<UserService>().current)).toList();

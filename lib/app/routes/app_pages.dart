@@ -106,7 +106,7 @@ class AppPages {
     ),
     GetPage(
       name: _Paths.bio,
-      page: () => BioFormView(),
+      page: () => const BioFormView(),
       binding: BioFormBinding(),
     ),
     GetPage(

@@ -167,7 +167,8 @@ class HomeCharacterActionsView extends GetView<CharacterService> {
   }
 }
 
-class ActionsCardList<T extends WithMeta> extends GetView<CharacterService> {
+class ActionsCardList<T extends WithMeta> extends GetView<CharacterService>
+    with LibraryServiceMixin, RepositoryServiceMixin {
   const ActionsCardList({
     Key? key,
     required this.route,
@@ -193,8 +194,6 @@ class ActionsCardList<T extends WithMeta> extends GetView<CharacterService> {
   final void Function(int oldIndex, int newIndex) onReorder;
 
   Character get char => controller.current!;
-  RepositoryService get repo => Get.find();
-  LibraryService get library => Get.find();
 
   @override
   Widget build(BuildContext context) {

@@ -21,7 +21,7 @@ class BondsFlagsFormView extends GetView<BondsFlagsFormController> {
         ),
         floatingActionButton: AdvancedFloatingActionButton.extended(
           onPressed: controller.save,
-          icon: Icon(Icons.save),
+          icon: const Icon(Icons.save),
           label: Text(S.current.save),
         ),
         body: ListView(
@@ -33,7 +33,7 @@ class BondsFlagsFormView extends GetView<BondsFlagsFormController> {
               ListTile(
                 contentPadding: const EdgeInsets.all(0),
                 trailing: IconButton(
-                  icon: Icon(Icons.remove),
+                  icon: const Icon(Icons.remove),
                   onPressed: () => controller.removeBond(bond.index),
                 ),
                 title: TextField(
@@ -43,8 +43,8 @@ class BondsFlagsFormView extends GetView<BondsFlagsFormController> {
               ),
             OutlinedButton.icon(
               onPressed: () => controller.addBond(),
-              label: Text('Create Bond'),
-              icon: Icon(Icons.add),
+              label: const Text('Create Bond'),
+              icon: const Icon(Icons.add),
             ),
 
             const Divider(height: 24),
@@ -55,7 +55,7 @@ class BondsFlagsFormView extends GetView<BondsFlagsFormController> {
               ListTile(
                 contentPadding: const EdgeInsets.all(0),
                 trailing: IconButton(
-                  icon: Icon(Icons.remove),
+                  icon: const Icon(Icons.remove),
                   onPressed: () => controller.removeFlag(flag.index),
                 ),
                 title: TextField(
@@ -65,8 +65,8 @@ class BondsFlagsFormView extends GetView<BondsFlagsFormController> {
               ),
             OutlinedButton.icon(
               onPressed: () => controller.addFlag(),
-              label: Text('Create Flag'),
-              icon: Icon(Icons.add),
+              label: const Text('Create Flag'),
+              icon: const Icon(Icons.add),
             ),
           ],
         ),

@@ -7,6 +7,7 @@ import 'package:dungeon_paper/app/data/models/item.dart';
 import 'package:dungeon_paper/app/data/models/move.dart';
 import 'package:dungeon_paper/app/data/models/spell.dart';
 import 'package:dungeon_paper/app/data/services/character_service.dart';
+import 'package:dungeon_paper/app/data/services/library_service.dart';
 import 'package:dungeon_paper/app/data/services/repository_service.dart';
 import 'package:dungeon_paper/app/model_utils/model_key.dart';
 import 'package:dungeon_paper/core/utils/list_utils.dart';
@@ -20,18 +21,15 @@ import 'package:path_provider/path_provider.dart';
 import 'import_export_controller.dart';
 
 class ExportController extends GetxController
-    with GetSingleTickerProviderStateMixin
+    with GetSingleTickerProviderStateMixin, CharacterServiceMixin, RepositoryServiceMixin
     implements ImportExportSelectionData {
   final toExport = ExportSelections().obs;
 
-  CharacterService get characterService => Get.find();
-  RepositoryService get repoService => Get.find();
-
   List<Character> get characters => characterService.all;
-  List<Move> get moves => repoService.my.moves.values.toList();
-  List<Spell> get spells => repoService.my.spells.values.toList();
-  List<Item> get items => repoService.my.items.values.toList();
-  List<CharacterClass> get classes => repoService.my.classes.values.toList();
+  List<Move> get moves => repo.my.moves.values.toList();
+  List<Spell> get spells => repo.my.spells.values.toList();
+  List<Item> get items => repo.my.items.values.toList();
+  List<CharacterClass> get classes => repo.my.classes.values.toList();
 
   @override
   void onInit() {

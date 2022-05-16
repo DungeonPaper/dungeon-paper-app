@@ -245,3 +245,8 @@ class RepositoryCache {
     }
   }
 }
+
+mixin RepositoryServiceMixin {
+  RepositoryService get repository => Get.find();
+  RepositoryService get repo => repository;
+}

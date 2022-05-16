@@ -22,7 +22,7 @@ import 'package:get/get.dart';
 
 import 'horizontal_list_card_view.dart';
 
-class HomeCharacterDynamicCards extends GetView<CharacterService> {
+class HomeCharacterDynamicCards extends GetView<CharacterService> with LibraryServiceMixin {
   const HomeCharacterDynamicCards({Key? key}) : super(key: key);
 
   List<Move> get moves =>
@@ -32,8 +32,6 @@ class HomeCharacterDynamicCards extends GetView<CharacterService> {
   List<Item> get items => (controller.current?.items ?? <Item>[]).where((m) => m.equipped).toList();
   List<Note> get notes =>
       (controller.current?.notes ?? <Note>[]).where((n) => n.favorited).toList();
-
-  LibraryService get library => Get.find();
 
   @override
   Widget build(BuildContext context) {

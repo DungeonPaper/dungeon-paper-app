@@ -23,9 +23,6 @@ class ImportController extends GetxController
     implements ImportExportSelectionData {
   final Rx<ImportSelections?> toImport = Rx(null);
 
-  CharacterService get characterService => Get.find();
-  RepositoryService get repoService => Get.find();
-
   List<Character> get characters => toImport.value!.allCharacters.toList();
   List<Move> get moves => toImport.value!.allMoves.toList();
   List<Spell> get spells => toImport.value!.allSpells.toList();

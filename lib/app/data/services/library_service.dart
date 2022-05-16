@@ -55,3 +55,7 @@ class LibraryService extends GetxService {
     );
   }
 }
+
+mixin LibraryServiceMixin {
+  LibraryService get library => Get.find();
+}
