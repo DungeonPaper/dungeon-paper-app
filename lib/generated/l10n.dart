@@ -60,6 +60,126 @@ class S {
     );
   }
 
+  /// `Measures a character's personality, personal magnetism, ability to lead, and appearance.`
+  String get abilityScoreChaDescription {
+    return Intl.message(
+      'Measures a character\'s personality, personal magnetism, ability to lead, and appearance.',
+      name: 'abilityScoreChaDescription',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Charisma`
+  String get abilityScoreChaName {
+    return Intl.message(
+      'Charisma',
+      name: 'abilityScoreChaName',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Represents your character's health and stamina.`
+  String get abilityScoreConDescription {
+    return Intl.message(
+      'Represents your character\'s health and stamina.',
+      name: 'abilityScoreConDescription',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Constitution`
+  String get abilityScoreConName {
+    return Intl.message(
+      'Constitution',
+      name: 'abilityScoreConName',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Measures agility, reflexes and balance.`
+  String get abilityScoreDexDescription {
+    return Intl.message(
+      'Measures agility, reflexes and balance.',
+      name: 'abilityScoreDexDescription',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Dexterity`
+  String get abilityScoreDexName {
+    return Intl.message(
+      'Dexterity',
+      name: 'abilityScoreDexName',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Determines how well your character learns and reasons.`
+  String get abilityScoreIntDescription {
+    return Intl.message(
+      'Determines how well your character learns and reasons.',
+      name: 'abilityScoreIntDescription',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Intelligence`
+  String get abilityScoreIntName {
+    return Intl.message(
+      'Intelligence',
+      name: 'abilityScoreIntName',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Measures muscle and physical power.`
+  String get abilityScoreStrDescription {
+    return Intl.message(
+      'Measures muscle and physical power.',
+      name: 'abilityScoreStrDescription',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Strength`
+  String get abilityScoreStrName {
+    return Intl.message(
+      'Strength',
+      name: 'abilityScoreStrName',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Describes a character's willpower, common sense, awareness, and intuition.`
+  String get abilityScoreWisDescription {
+    return Intl.message(
+      'Describes a character\'s willpower, common sense, awareness, and intuition.',
+      name: 'abilityScoreWisDescription',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Wisdom`
+  String get abilityScoreWisName {
+    return Intl.message(
+      'Wisdom',
+      name: 'abilityScoreWisName',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `About`
   String get aboutTitle {
     return Intl.message(
@@ -397,10 +517,10 @@ class S {
     );
   }
 
-  /// `Bonds/Flags`
+  /// `Bonds & Flags`
   String get characterBondsFlagsDialogTitle {
     return Intl.message(
-      'Bonds/Flags',
+      'Bonds & Flags',
       name: 'characterBondsFlagsDialogTitle',
       desc: '',
       args: [],

@@ -30,6 +30,9 @@ final parchmentTheme = ThemeData(
     elevation: 0,
     centerTitle: true,
   ),
+  dialogTheme: DialogTheme(
+    shape: rRectShape,
+  ),
   cardTheme: baseCardTheme,
   fontFamily: 'Nunito',
   bottomNavigationBarTheme: _light.bottomNavigationBarTheme.copyWith(
@@ -57,6 +60,9 @@ final darkTheme = _dark.copyWith(
     backgroundColor: _dark.scaffoldBackgroundColor,
     elevation: 0,
     centerTitle: true,
+  ),
+  dialogTheme: DialogTheme(
+    shape: rRectShape,
   ),
   cardTheme: baseCardTheme,
   popupMenuTheme: PopupMenuThemeData(

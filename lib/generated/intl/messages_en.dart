@@ -197,6 +197,27 @@ class MessageLookup extends MessageLookupByLibrary {
   final messages = _notInlinedMessages(_notInlinedMessages);
   static Map<String, Function> _notInlinedMessages(_) => <String, Function>{
         "abilityScoreButtonTooltip": m0,
+        "abilityScoreChaDescription": MessageLookupByLibrary.simpleMessage(
+            "Measures a character\'s personality, personal magnetism, ability to lead, and appearance."),
+        "abilityScoreChaName": MessageLookupByLibrary.simpleMessage("Charisma"),
+        "abilityScoreConDescription": MessageLookupByLibrary.simpleMessage(
+            "Represents your character\'s health and stamina."),
+        "abilityScoreConName":
+            MessageLookupByLibrary.simpleMessage("Constitution"),
+        "abilityScoreDexDescription": MessageLookupByLibrary.simpleMessage(
+            "Measures agility, reflexes and balance."),
+        "abilityScoreDexName":
+            MessageLookupByLibrary.simpleMessage("Dexterity"),
+        "abilityScoreIntDescription": MessageLookupByLibrary.simpleMessage(
+            "Determines how well your character learns and reasons."),
+        "abilityScoreIntName":
+            MessageLookupByLibrary.simpleMessage("Intelligence"),
+        "abilityScoreStrDescription": MessageLookupByLibrary.simpleMessage(
+            "Measures muscle and physical power."),
+        "abilityScoreStrName": MessageLookupByLibrary.simpleMessage("Strength"),
+        "abilityScoreWisDescription": MessageLookupByLibrary.simpleMessage(
+            "Describes a character\'s willpower, common sense, awareness, and intuition."),
+        "abilityScoreWisName": MessageLookupByLibrary.simpleMessage("Wisdom"),
         "aboutTitle": MessageLookupByLibrary.simpleMessage("About"),
         "actionSummaryChipCoins": m1,
         "actionSummaryChipLoad": m2,
@@ -247,7 +268,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "characterBioDialogTitle":
             MessageLookupByLibrary.simpleMessage("Character Biography"),
         "characterBondsFlagsDialogTitle":
-            MessageLookupByLibrary.simpleMessage("Bonds/Flags"),
+            MessageLookupByLibrary.simpleMessage("Bonds & Flags"),
         "characterDebilitiesDialogTitle":
             MessageLookupByLibrary.simpleMessage("Debilities"),
         "characterHeaderSubtitle": m9,

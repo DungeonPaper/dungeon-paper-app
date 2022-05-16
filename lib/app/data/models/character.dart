@@ -12,7 +12,7 @@ import 'package:dungeon_paper/core/utils/uuid.dart';
 import 'package:dungeon_world_data/dungeon_world_data.dart' as dw;
 
 import 'bio.dart';
-import 'bond.dart';
+import 'session_marks.dart';
 import 'character_class.dart';
 import 'character_settings.dart';
 import 'item.dart';
@@ -38,7 +38,7 @@ class Character implements WithMeta<Character, CharacterMeta> {
     required this.notes,
     required this.stats,
     required this.abilityScores,
-    required this.bonds,
+    required this.sessionMarks,
     required this.bio,
     required this.race,
     required this.settings,
@@ -58,7 +58,7 @@ class Character implements WithMeta<Character, CharacterMeta> {
   final List<Note> notes;
   final CharacterStats stats;
   final AbilityScores abilityScores;
-  final List<Bond> bonds;
+  final List<SessionMark> sessionMarks;
   final Bio bio;
   final Race race;
   final CharacterSettings settings;
@@ -84,6 +84,10 @@ class Character implements WithMeta<Character, CharacterMeta> {
         ),
       );
   dw.Dice get damageDice => stats.damageDice ?? characterClass.damageDice;
+  List<SessionMark> get bonds =>
+      sessionMarks.where((e) => e.type == dw.SessionMarkType.bond).toList();
+  List<SessionMark> get flags =>
+      sessionMarks.where((e) => e.type == dw.SessionMarkType.flag).toList();
 
   static const allActionCategories = {'Move', 'Spell', 'Item'};
 
@@ -102,7 +106,7 @@ class Character implements WithMeta<Character, CharacterMeta> {
     List<Note>? notes,
     CharacterStats? stats,
     AbilityScores? abilityScores,
-    List<Bond>? bonds,
+    List<SessionMark>? sessionMarks,
     Bio? bio,
     Race? race,
   }) =>
@@ -120,7 +124,7 @@ class Character implements WithMeta<Character, CharacterMeta> {
         notes: notes ?? this.notes,
         stats: stats ?? this.stats,
         abilityScores: abilityScores ?? this.abilityScores,
-        bonds: bonds ?? this.bonds,
+        sessionMarks: sessionMarks ?? this.sessionMarks,
         bio: bio ?? this.bio,
         race: race ?? this.race,
       );
@@ -140,7 +144,7 @@ class Character implements WithMeta<Character, CharacterMeta> {
     List<Note>? notes,
     CharacterStats? stats,
     AbilityScores? abilityScores,
-    List<Bond>? bonds,
+    List<SessionMark>? sessionMarks,
     Bio? bio,
     Race? race,
   }) =>
@@ -158,7 +162,7 @@ class Character implements WithMeta<Character, CharacterMeta> {
         notes: notes ?? this.notes,
         stats: stats ?? this.stats,
         abilityScores: abilityScores ?? this.abilityScores,
-        bonds: bonds ?? this.bonds,
+        sessionMarks: sessionMarks ?? this.sessionMarks,
         bio: bio ?? this.bio,
         race: race ?? this.race,
       );
@@ -177,7 +181,7 @@ class Character implements WithMeta<Character, CharacterMeta> {
       items: [],
       coins: 0,
       bio: Bio.empty(),
-      bonds: [],
+      sessionMarks: [],
       characterClass: characterClass,
       notes: [],
       stats: CharacterStats(
@@ -244,7 +248,8 @@ class Character implements WithMeta<Character, CharacterMeta> {
         notes: List<Note>.from(json['notes'].map((x) => Note.fromJson(x))),
         stats: CharacterStats.fromJson(json['stats']),
         abilityScores: AbilityScores.fromJson(json['abilityScores']),
-        bonds: List<Bond>.from(json['bonds'].map((x) => Bond.fromJson(x))),
+        sessionMarks:
+            List<SessionMark>.from(json['sessionMarks'].map((x) => SessionMark.fromJson(x))),
         bio: Bio.fromJson(json['bio']),
         race: Race.fromJson(json['race']),
       );
@@ -263,7 +268,7 @@ class Character implements WithMeta<Character, CharacterMeta> {
         'notes': List<dynamic>.from(notes.map((x) => x.toJson())),
         'stats': stats.toJson(),
         'abilityScores': abilityScores.toJson(),
-        'bonds': List<dynamic>.from(bonds.map((x) => x.toJson())),
+        'sessionMarks': List<dynamic>.from(sessionMarks.map((x) => x.toJson())),
         'bio': bio.toJson(),
         'race': race.toJson(),
       };

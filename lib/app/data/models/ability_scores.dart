@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:dungeon_paper/generated/l10n.dart';
 import 'package:flutter/material.dart';
 
 import '../../../core/dw_icons.dart';
@@ -21,39 +22,38 @@ class AbilityScores {
       AbilityScores(stats: [
         AbilityScore(
           key: 'STR',
-          name: 'Strength',
-          description: 'Measures muscle and physical power.',
+          name: S.current.abilityScoreStrName,
+          description: S.current.abilityScoreStrDescription,
           value: str,
         ),
         AbilityScore(
           key: 'DEX',
-          name: 'Dexterity',
-          description: 'Measures agility, reflexes and balance.',
+          name: S.current.abilityScoreDexName,
+          description: S.current.abilityScoreDexDescription,
           value: dex,
         ),
         AbilityScore(
           key: 'CON',
-          name: 'Constitution',
-          description: "Represents your character's health and stamina.",
+          name: S.current.abilityScoreConName,
+          description: S.current.abilityScoreConDescription,
           value: con,
         ),
         AbilityScore(
           key: 'INT',
-          name: 'Intelligence',
-          description: 'Determines how well your character learns and reasons.',
+          name: S.current.abilityScoreIntName,
+          description: S.current.abilityScoreIntDescription,
           value: intl,
         ),
         AbilityScore(
           key: 'WIS',
-          name: 'Wisdom',
-          description: "Describes a character's willpower, common sense, awareness, and intuition.",
+          name: S.current.abilityScoreWisName,
+          description: S.current.abilityScoreWisDescription,
           value: wis,
         ),
         AbilityScore(
           key: 'CHA',
-          name: 'Charisma',
-          description:
-              "Measures a character's personality, personal magnetism, ability to lead, and appearance.",
+          name: S.current.abilityScoreChaName,
+          description: S.current.abilityScoreChaDescription,
           value: cha,
         ),
       ]);

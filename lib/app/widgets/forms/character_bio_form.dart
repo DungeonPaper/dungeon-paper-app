@@ -34,14 +34,12 @@ class _CharacterBioFormState extends State<CharacterBioForm> {
     looks = TextEditingController(text: char.bio.looks);
     alignmentName = char.bio.alignment.key;
     alignmentValue = TextEditingController(text: char.bio.alignment.description);
-    bonds = char.bonds.map((e) => TextEditingController(text: e.description)).toList();
+    bonds = char.sessionMarks.map((e) => TextEditingController(text: e.description)).toList();
     dirty = false;
   }
 
   @override
   Widget build(BuildContext context) {
-    final textTheme = Theme.of(context).textTheme;
-
     return ConfirmExitView(
       dirty: dirty,
       child: Scaffold(

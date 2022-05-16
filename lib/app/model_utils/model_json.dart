@@ -1,6 +1,6 @@
 import 'package:dungeon_paper/app/data/models/alignment.dart';
 import 'package:dungeon_paper/app/data/models/bio.dart';
-import 'package:dungeon_paper/app/data/models/bond.dart';
+import 'package:dungeon_paper/app/data/models/session_marks.dart';
 import 'package:dungeon_paper/app/data/models/character.dart';
 import 'package:dungeon_paper/app/data/models/character_class.dart';
 import 'package:dungeon_paper/app/data/models/character_stats.dart';
@@ -20,7 +20,7 @@ Map<String, dynamic> toJsonFor<T>(T object) {
   switch (T) {
     case AlignmentValue:
     case Bio:
-    case Bond:
+    case SessionMark:
     case CharacterClass:
     case CharacterStats:
     case Character:
@@ -45,8 +45,8 @@ T fromJsonFor<T>(Map<String, dynamic> json) {
       return AlignmentValue.fromJson(json) as T;
     case Bio:
       return Bio.fromJson(json) as T;
-    case Bond:
-      return Bond.fromJson(json) as T;
+    case SessionMark:
+      return SessionMark.fromJson(json) as T;
     case CharacterClass:
       return CharacterClass.fromJson(json) as T;
     case CharacterStats:

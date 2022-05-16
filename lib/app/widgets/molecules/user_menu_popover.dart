@@ -38,7 +38,7 @@ class UserMenuPopover extends GetView<CharacterService> {
                 top: 0,
                 child: Card(
                   child: Padding(
-                    padding: const EdgeInsets.all(16),
+                    padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
                     child: SizedBox(
                       width: maxW,
                       child: Column(
@@ -47,7 +47,9 @@ class UserMenuPopover extends GetView<CharacterService> {
                         children: [
                           ListTile(
                             visualDensity: VisualDensity.compact,
-                            title: Text(userService.current.username, style: textStyle),
+                            title: Text(
+                                '${userService.current.displayName} (@${userService.current.username})',
+                                style: textStyle),
                             subtitle: Text(userService.current.email.isNotEmpty
                                 ? userService.current.email
                                 : S.current.userUnregistered),
