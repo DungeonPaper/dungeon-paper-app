@@ -39,13 +39,19 @@ class LibraryService extends GetxService {
     }
   }
 
-  void upsertToCharacter<T extends WithMeta>(Iterable<T> items, [Character? char]) async {
-    items = await items.mapAsync((e) async => e.meta.isFork && e.meta.createdBy == user.username
-        ? increaseMetaVersion(e)
-        : forkMeta(e, user));
+  void upsertToCharacter<T extends WithMeta>(
+    Iterable<T> items, {
+    Character? char,
+    bool fork = true,
+  }) async {
+    if (fork) {
+      items = items.map((e) => (e.meta.isFork && e.meta.createdBy == user.username)
+          ? increaseMetaVersion(e)
+          : forkMeta(e, user));
+    }
 
     chars.updateCharacter(
-      CharacterUtils.addByType<T>(char ?? chars.current!, items),
+      CharacterUtils.upsertByType<T>(char ?? chars.current!, items),
     );
   }
 

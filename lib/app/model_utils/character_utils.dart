@@ -67,38 +67,41 @@ class CharacterUtils {
   // COMBINED
 
   static Character updateByType<T>(Character char, Iterable<T> items) => char.copyWith(
-        moves: T == Move ? updateByKey(listByType<Move>(char).toList(), items.cast<Move>()) : null,
-        spells:
-            T == Spell ? updateByKey(listByType<Spell>(char).toList(), items.cast<Spell>()) : null,
-        items: T == Item ? updateByKey(listByType<Item>(char).toList(), items.cast<Item>()) : null,
-        notes: T == Note ? updateByKey(listByType<Note>(char).toList(), items.cast<Note>()) : null,
+        moves: T == Move ? updateByKey(char.moves, items.cast<Move>()) : null,
+        spells: T == Spell ? updateByKey(char.spells, items.cast<Spell>()) : null,
+        items: T == Item ? updateByKey(char.items, items.cast<Item>()) : null,
+        notes: T == Note ? updateByKey(char.notes, items.cast<Note>()) : null,
       );
 
   static Character addByType<T>(Character char, Iterable<T> items) => char.copyWith(
-        moves: T == Move ? addByKey(listByType<Move>(char).toList(), items.cast<Move>()) : null,
-        spells: T == Spell ? addByKey(listByType<Spell>(char).toList(), items.cast<Spell>()) : null,
-        items: T == Item ? addByKey(listByType<Item>(char).toList(), items.cast<Item>()) : null,
-        notes: T == Note ? addByKey(listByType<Note>(char).toList(), items.cast<Note>()) : null,
+        moves: T == Move ? addByKey(char.moves, items.cast<Move>()) : null,
+        spells: T == Spell ? addByKey(char.spells, items.cast<Spell>()) : null,
+        items: T == Item ? addByKey(char.items, items.cast<Item>()) : null,
+        notes: T == Note ? addByKey(char.notes, items.cast<Note>()) : null,
+      );
+
+  static Character upsertByType<T>(Character char, Iterable<T> items) => char.copyWith(
+        moves: T == Move ? upsertByKey(char.moves, items.cast<Move>()) : null,
+        spells: T == Spell ? upsertByKey(char.spells, items.cast<Spell>()) : null,
+        items: T == Item ? upsertByKey(char.items, items.cast<Item>()) : null,
+        notes: T == Note ? upsertByKey(char.notes, items.cast<Note>()) : null,
       );
 
   static Character removeByType<T>(Character char, Iterable<T> items) => char.copyWith(
-        moves: T == Move ? removeByKey(listByType<Move>(char).toList(), items.cast<Move>()) : null,
-        spells:
-            T == Spell ? removeByKey(listByType<Spell>(char).toList(), items.cast<Spell>()) : null,
-        items: T == Item ? removeByKey(listByType<Item>(char).toList(), items.cast<Item>()) : null,
-        notes: T == Note ? removeByKey(listByType<Note>(char).toList(), items.cast<Note>()) : null,
+        moves: T == Move ? removeByKey(char.moves, items.cast<Move>()) : null,
+        spells: T == Spell ? removeByKey(char.spells, items.cast<Spell>()) : null,
+        items: T == Item ? removeByKey(char.items, items.cast<Item>()) : null,
+        notes: T == Note ? removeByKey(char.notes, items.cast<Note>()) : null,
       );
 
   static Character reorderByType<T>(Character char, int oldIndex, int newIndex,
           {dynamic extraData}) =>
       char.copyWith(
-        moves: T == Move ? reorder(listByType<Move>(char).toList(), oldIndex, newIndex) : null,
-        spells: T == Spell ? reorder(listByType<Spell>(char).toList(), oldIndex, newIndex) : null,
-        items: T == Item ? reorder(listByType<Item>(char).toList(), oldIndex, newIndex) : null,
-        notes: T == Note
-            ? _reorderNotes(
-                listByType<Note>(char).toList(), oldIndex, newIndex, extraData as String)
-            : null,
+        moves: T == Move ? reorder(char.moves, oldIndex, newIndex) : null,
+        spells: T == Spell ? reorder(char.spells, oldIndex, newIndex) : null,
+        items: T == Item ? reorder(char.items, oldIndex, newIndex) : null,
+        notes:
+            T == Note ? _reorderNotes(char.notes, oldIndex, newIndex, extraData as String) : null,
       );
 
   static List<Note> _reorderNotes(List<Note> notes, int oldIndex, int newIndex, String category) {

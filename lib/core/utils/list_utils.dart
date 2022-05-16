@@ -72,7 +72,7 @@ List<T> sortByPredefined<T>(
 
 List<T> updateByKey<T>(List<T> list, Iterable<T> items, {dynamic Function(T item)? key}) {
   final keyGetter = key ?? keyFor;
-  final keys = items.map(keyGetter).toList();
+  final keys = items.map(keyGetter);
   return list
       .map((x) =>
           keys.contains(keyGetter(x)) ? items.firstWhere((y) => keyGetter(x) == keyGetter(y)) : x)
@@ -84,13 +84,29 @@ List<T> updateByIndex<T>(List<T> list, T item, int index) =>
 
 List<T> addByKey<T>(List<T> list, Iterable<T> items, {dynamic Function(T item)? key}) {
   final keyGetter = key ?? keyFor;
-  final keys = items.map(keyGetter).toList();
+  final keys = items.map(keyGetter);
   return [...list.where((x) => !keys.contains(keyGetter(x))), ...items];
+}
+
+List<T> upsertByKey<T>(List<T> list, Iterable<T> items, {dynamic Function(T item)? key}) {
+  final keyGetter = key ?? keyFor;
+  final keys = items.map(keyGetter);
+  final existingKeys = list.map(keyGetter);
+
+  return [
+    ...list
+        .map((x) =>
+            keys.contains(keyGetter(x)) ? items.firstWhere((y) => keyGetter(x) == keyGetter(y)) : x)
+        .toList(),
+    ...items.where((x) {
+      return !existingKeys.contains(keyGetter(x));
+    })
+  ];
 }
 
 List<T> removeByKey<T>(List<T> list, Iterable<T> items, {dynamic Function(T item)? key}) {
   final keyGetter = key ?? keyFor;
-  final keys = items.map(keyGetter).toList();
+  final keys = items.map(keyGetter);
   return [...list]..removeWhere((x) => keys.contains(keyGetter(x)));
 }
 

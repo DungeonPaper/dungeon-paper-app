@@ -79,11 +79,11 @@ class HomeCharacterActionsView extends GetView<CharacterService> {
               move: move,
               classKeys: move.classKeys,
               abilityScores: char.abilityScores,
-              onSave: onSave,
+              onSave: onSave(true),
             ),
           ),
         ],
-        onSave: onSave,
+        onSave: onSave(false),
       ),
     );
   }
@@ -111,11 +111,11 @@ class HomeCharacterActionsView extends GetView<CharacterService> {
               spell: spell,
               classKeys: spell.classKeys,
               abilityScores: char.abilityScores,
-              onSave: onSave,
+              onSave: onSave(true),
             ),
           ),
         ],
-        onSave: onSave,
+        onSave: onSave(false),
       ),
     );
   }
@@ -140,11 +140,11 @@ class HomeCharacterActionsView extends GetView<CharacterService> {
             onDelete: onDelete,
             onEdit: ModelPages.openItemPage(
               item: item,
-              onSave: onSave,
+              onSave: onSave(true),
             ),
           ),
         ],
-        onSave: onSave,
+        onSave: onSave(false),
       ),
     );
   }
@@ -186,7 +186,7 @@ class ActionsCardList<T extends WithMeta> extends GetView<CharacterService>
   final Widget Function(
     T object, {
     required void Function() onDelete,
-    required void Function(T object) onSave,
+    required void Function(T object) Function(bool fork) onSave,
     // required void Function() onEdit,
   }) cardBuilder;
   final List<T> list;
@@ -224,8 +224,8 @@ class ActionsCardList<T extends WithMeta> extends GetView<CharacterService>
               child: cardBuilder(
                 obj,
                 onDelete: _confirmDeleteDlg(context, obj, nameFor(obj)),
-                onSave: (_obj) {
-                  library.upsertToCharacter([_obj]);
+                onSave: (fork) => (_obj) {
+                  library.upsertToCharacter([_obj], fork: fork);
                 },
               ),
             ),

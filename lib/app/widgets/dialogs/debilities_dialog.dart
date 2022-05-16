@@ -42,7 +42,16 @@ class CharacterDebilitiesDialog extends GetView<CharacterService> with Character
                     contentPadding: const EdgeInsets.all(0),
                     title: Text(S.current.debilityLabel(ability.debilityName, ability.key)),
                     subtitle: Text(ability.debilityDescription),
-                    leading: Switch.adaptive(
+                    onTap: () => charService.updateCharacter(
+                      char.copyWith(
+                        abilityScores: char.abilityScores.copyWith(
+                          stats: char.abilityScores.stats.map((e) => e.key == ability.key
+                              ? e.copyWith(isDebilitated: !e.isDebilitated)
+                              : e),
+                        ),
+                      ),
+                    ),
+                    trailing: Switch.adaptive(
                       value: ability.isDebilitated,
                       onChanged: (checked) => charService.updateCharacter(
                         char.copyWith(
