@@ -156,4 +156,8 @@ class CharacterService extends GetxService {
 
 mixin CharacterServiceMixin {
   CharacterService get characterService => Get.find();
+  CharacterService get charService => characterService;
+
+  Character get character => characterService.current!;
+  Character get char => character;
 }

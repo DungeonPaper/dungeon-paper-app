@@ -72,7 +72,5 @@ class GearChoice extends dw.GearChoice {
       });
 
   static double selectionToCoins(List<GearSelection> selections) =>
-      selections.fold<double>(0, (acc, sel) {
-        return acc + sel.coins;
-      });
+      selections.fold(0.0, (acc, sel) => acc + sel.coins);
 }

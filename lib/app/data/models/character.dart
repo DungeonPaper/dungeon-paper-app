@@ -71,6 +71,7 @@ class Character implements WithMeta<Character, CharacterMeta> {
   double get currentExpPercent => clamp(stats.currentExp / maxExp, 0, 1);
   int get maxLoad => stats.load ?? (characterClass.load + abilityScores.loadBaseValue);
   int get currentLoad => items.fold(0, (weight, item) => weight + item.weight);
+
   Set<String> get noteCategories => Set.from(
         (<String>[
           ...settings.noteCategoriesSort,

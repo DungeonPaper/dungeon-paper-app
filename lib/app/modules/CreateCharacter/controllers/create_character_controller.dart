@@ -44,7 +44,8 @@ class CreateCharacterController extends GetxController {
   void setClass(CharacterClass cls) {
     characterClass.value = cls;
     setStartingGear(
-        cls.gearChoices.fold([], (all, cur) => [...all, ...cur.preselectedGearSelections]));
+      cls.gearChoices.fold([], (all, cur) => [...all, ...cur.preselectedGearSelections]),
+    );
     addStartingMoves();
     setDirty();
   }

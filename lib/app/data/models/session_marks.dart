@@ -9,13 +9,25 @@ class SessionMark extends dw.SessionMark {
     required super.type,
   });
 
+  SessionMark.bond({
+    required super.key,
+    required super.description,
+    required super.completed,
+  }) : super(type: dw.SessionMarkType.bond);
+
+  SessionMark.flag({
+    required super.key,
+    required super.description,
+    required super.completed,
+  }) : super(type: dw.SessionMarkType.flag);
+
   factory SessionMark.fromRawJson(String str) => SessionMark.fromJson(json.decode(str));
 
   factory SessionMark.fromJson(Map<String, dynamic> json) => SessionMark(
         key: json['key'],
         completed: json['completed'],
         description: json['description'],
-        type: json['type'],
+        type: dw.SessionMarkType.values.firstWhere((e) => e.name == json['type']),
       );
 
   SessionMark copyWithInherited({
