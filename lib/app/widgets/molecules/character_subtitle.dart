@@ -29,21 +29,25 @@ class CharacterSubtitle extends StatelessWidget {
             // S.current.alignment(char.bio.alignment.key),
           ),
         ),
-        Transform.translate(
-          offset: const Offset(0, 2.5),
-          child: IconTheme.merge(
-            data: const IconThemeData(size: 14),
-            child: character.bio.alignment.icon,
-          ),
-        ),
-        Text(
-          // S.current.characterHeaderSubtitle(
-          //   char.stats.level,
-          //   char.characterClass.name,
-          // "test",
-          // char.bio.toRawJson() ?? 'test',
-          S.current.alignment(character.bio.alignment.key),
-          // ),
+        Row(
+          mainAxisSize: MainAxisSize.min,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            IconTheme.merge(
+              data: const IconThemeData(size: 14),
+              child: character.bio.alignment.icon,
+            ),
+            const SizedBox(width: 4),
+            Text(
+              // S.current.characterHeaderSubtitle(
+              //   char.stats.level,
+              //   char.characterClass.name,
+              // "test",
+              // char.bio.toRawJson() ?? 'test',
+              S.current.alignment(character.bio.alignment.key),
+              // ),
+            ),
+          ],
         ),
       ],
     );

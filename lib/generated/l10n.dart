@@ -1749,6 +1749,16 @@ class S {
     );
   }
 
+  /// `× {amount}`
+  String itemAmountX(Object amount) {
+    return Intl.message(
+      '× $amount',
+      name: 'itemAmountX',
+      desc: '',
+      args: [amount],
+    );
+  }
+
   /// `{count, plural, =0 {No items} one {One item} other {{count} items}}`
   String itemsWithCount(num count) {
     return Intl.plural(

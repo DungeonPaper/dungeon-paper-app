@@ -1,4 +1,7 @@
 import 'package:dungeon_paper/app/widgets/atoms/svg_icon.dart';
+import 'package:dungeon_paper/app/widgets/chips/item_amount_chip.dart';
+import 'package:dungeon_paper/app/widgets/chips/item_damage_chip.dart';
+import 'package:dungeon_paper/app/widgets/chips/item_weight_chip.dart';
 import 'package:dungeon_paper/app/widgets/chips/tag_chip.dart';
 import 'package:flutter/material.dart';
 
@@ -38,6 +41,17 @@ class ItemCard extends StatelessWidget {
       maxContentHeight: maxContentHeight,
       expandable: expandable,
       explanation: '',
+      leading: [
+        if (item.damage != 0) ...[
+          ItemDamageChip(item: item),
+          const SizedBox(width: 4),
+        ],
+        if (item.weight > 0) ...[
+          ItemWeightChip(item: item),
+          const SizedBox(width: 4),
+        ],
+        ItemAmountChip(item: item),
+      ],
       chips: item.tags.map((t) => TagChip.openDescription(tag: t)),
       dice: const [],
       icon: showIcon ? SvgIcon(item.icon, size: 16) : null,

@@ -42,6 +42,14 @@ class Item extends dw.Item implements WithMeta {
           0
       : 0;
 
+  int get damage => settings.countDamage
+      ? tags
+              .cast<dw.Tag?>()
+              .firstWhere((tag) => cleanStr(tag?.name ?? '') == 'damage', orElse: () => null)
+              ?.value ??
+          0
+      : 0;
+
   @override
   Item copyWithInherited({
     Meta? meta,

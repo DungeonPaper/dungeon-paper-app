@@ -51,6 +51,10 @@ class CharacterListPageView extends GetView<CharacterService> {
                             child: ListTile(
                               leading: CharacterAvatar.squircle(character: char, size: 48),
                               title: Text(char.displayName),
+                              subtitle: CharacterSubtitle(
+                                character: char,
+                                wrapAlignment: WrapAlignment.start,
+                              ),
                               trailing: EntityEditMenu(
                                 onEdit: null,
                                 onDelete: () => awaitDeleteConfirmation<Character>(
@@ -59,7 +63,6 @@ class CharacterListPageView extends GetView<CharacterService> {
                                   () => controller.deleteCharacter(char),
                                 ),
                               ),
-                              subtitle: CharacterSubtitle(character: char),
                             ),
                           ),
                         ),
