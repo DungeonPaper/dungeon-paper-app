@@ -15,16 +15,6 @@ class StorageHandler implements StorageDelegate {
 
   StorageDelegate get delegate => delegates[currentDelegate]!;
 
-  // TODO move to library service
-  addMissingObjects<T>(Iterable<T> objects) async {
-    for (final obj in objects) {
-      var storageKey = storageKeyFor<T>(obj);
-      if (await getDocument(storageKey, keyFor<T>(obj)) == null) {
-        StorageHandler.instance.create(storageKey, keyFor<T>(obj), toJsonFor<T>(obj));
-      }
-    }
-  }
-
   @override
   Future<DocData?> getDocument(String collection, String document) =>
       delegate.getDocument(collection, document);
