@@ -7,9 +7,9 @@ import 'meta.dart';
 class AlignmentValue extends dw.Alignment implements WithMeta {
   AlignmentValue({
     required this.meta,
-    required String key,
-    required String description,
-  }) : super(key: key, description: description);
+    required super.description,
+    required super.type,
+  });
 
   @override
   final Meta meta;
@@ -20,12 +20,12 @@ class AlignmentValue extends dw.Alignment implements WithMeta {
 
   factory AlignmentValue.fromDwAlignmentValue(dw.Alignment original) => AlignmentValue(
       meta: Meta.version(1, createdBy: '__repo__'),
-      key: original.key,
+      type: original.type,
       description: original.description);
 
   factory AlignmentValue.fromJson(Map<String, dynamic> json) => AlignmentValue(
         meta: Meta.tryParse(json['_meta']),
-        key: json['key'],
+        type: json['type'],
         description: json['description'],
       );
 
@@ -42,24 +42,24 @@ class AlignmentValue extends dw.Alignment implements WithMeta {
   @override
   AlignmentValue copyWith({
     Meta? meta,
-    String? key,
+    dw.AlignmentType? type,
     String? description,
   }) =>
       AlignmentValue(
         meta: meta ?? this.meta,
-        key: key ?? this.key,
+        type: type ?? this.type,
         description: description ?? this.description,
       );
 
   @override
   AlignmentValue copyWithInherited({
     Meta? meta,
-    String? key,
+    dw.AlignmentType? type,
     String? description,
   }) =>
       copyWith(
         meta: meta,
-        key: key,
+        type: type,
         description: description,
       );
 

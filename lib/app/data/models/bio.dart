@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:dungeon_paper/app/data/models/alignment.dart';
 import 'package:dungeon_paper/app/data/models/meta.dart';
+import 'package:dungeon_world_data/dungeon_world_data.dart' as dw;
 
 class Bio {
   Bio({
@@ -40,7 +41,7 @@ class Bio {
         looks: '',
         alignment: AlignmentValue(
           meta: Meta.version(1),
-          key: 'good',
+          type: dw.AlignmentType.good,
           description: '',
         ),
       );
