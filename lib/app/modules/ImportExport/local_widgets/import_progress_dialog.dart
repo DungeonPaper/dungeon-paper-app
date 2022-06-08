@@ -24,7 +24,8 @@ class ImportProgressDialog extends GetView<ImportController> {
                 ),
               ),
               const SizedBox(width: 16),
-              Text('${controller.leftCount} / ${controller.selectionsCount}'),
+              Text(
+                  '${controller.selectionsCount - controller.leftCount.value} / ${controller.selectionsCount}'),
             ],
           )
         ],

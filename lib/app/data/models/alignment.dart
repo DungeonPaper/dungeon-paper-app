@@ -25,7 +25,7 @@ class AlignmentValue extends dw.Alignment implements WithMeta {
 
   factory AlignmentValue.fromJson(Map<String, dynamic> json) => AlignmentValue(
         meta: Meta.tryParse(json['_meta']),
-        type: json['type'],
+        type: dw.AlignmentType.values.firstWhere((element) => element.name == json['type']),
         description: json['description'],
       );
 
@@ -66,6 +66,7 @@ class AlignmentValue extends dw.Alignment implements WithMeta {
   @override
   Map<String, dynamic> toJson() => {
         '_meta': meta,
+        'type': type.name,
         ...super.toJson(),
       };
 }

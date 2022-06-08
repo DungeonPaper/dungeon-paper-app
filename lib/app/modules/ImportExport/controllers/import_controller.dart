@@ -130,8 +130,10 @@ class ImportController extends GetxController
       leftCount.value = selectionsCount;
 
       Get.dialog(const ImportProgressDialog(), barrierDismissible: false);
-
       importStep.value = Character;
+
+      await Future.delayed(const Duration(milliseconds: 500));
+
       for (final char in characters) {
         await StorageHandler.instance.create('Characters', char.key, char.toJson());
         leftCount.value -= 1;
@@ -156,7 +158,7 @@ class ImportController extends GetxController
         await StorageHandler.instance.create('Items', items.key, items.toJson());
         leftCount.value -= 1;
       }
-      await Future.delayed(const Duration(seconds: 1));
+      await Future.delayed(const Duration(milliseconds: 500));
       Get.back();
 
       Get.rawSnackbar(
