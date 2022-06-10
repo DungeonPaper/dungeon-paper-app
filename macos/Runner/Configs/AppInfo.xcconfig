@@ -5,10 +5,10 @@
 // 'flutter create' template.
 
 // The application's name. By default this is also the title of the Flutter window.
-PRODUCT_NAME = dungeon_paper_2
+PRODUCT_NAME = Dungeon Paper
 
 // The application's bundle identifier
-PRODUCT_BUNDLE_IDENTIFIER = app.dungeonPaper2
+PRODUCT_BUNDLE_IDENTIFIER = app.dungeonPaper
 
 // The copyright displayed in application information
 PRODUCT_COPYRIGHT = Copyright © 2022 app. All rights reserved.

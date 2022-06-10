@@ -1,4 +1,4 @@
-package app.dungeon_paper_2
+package app.dungeonpaper
 
 import io.flutter.embedding.android.FlutterActivity
 

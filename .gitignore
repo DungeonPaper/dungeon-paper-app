@@ -49,3 +49,4 @@ app.*.map.json
 # dart pub global activate flutterfire_cli
 # flutterfire configure
 lib/firebase_options.dart
+google-services.json

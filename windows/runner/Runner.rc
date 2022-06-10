@@ -90,12 +90,12 @@ BEGIN
         BLOCK "040904e4"
         BEGIN
             VALUE "CompanyName", "app" "\0"
-            VALUE "FileDescription", "dungeon_paper_2" "\0"
+            VALUE "FileDescription", "dungeonpaper" "\0"
             VALUE "FileVersion", VERSION_AS_STRING "\0"
-            VALUE "InternalName", "dungeon_paper_2" "\0"
+            VALUE "InternalName", "dungeonpaper" "\0"
             VALUE "LegalCopyright", "Copyright (C) 2022 app. All rights reserved." "\0"
-            VALUE "OriginalFilename", "dungeon_paper_2.exe" "\0"
-            VALUE "ProductName", "dungeon_paper_2" "\0"
+            VALUE "OriginalFilename", "dungeonpaper.exe" "\0"
+            VALUE "ProductName", "dungeonpaper" "\0"
             VALUE "ProductVersion", VERSION_AS_STRING "\0"
         END
     END

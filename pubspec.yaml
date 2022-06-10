@@ -11,7 +11,6 @@ version: 2.0.0+207
 # In iOS, build-name is used as CFBundleShortVersionString while build-number used as CFBundleVersion.
 # Read more about iOS versioning at
 # https://developer.apple.com/library/archive/documentation/General/Reference/InfoPlistKeyReference/Articles/CoreFoundationKeys.html
-
 # The following line prevents the package from being accidentally published to
 # pub.dev using `flutter pub publish`. This is preferred for private packages.
 publish_to: "none" # Remove this line if you wish to publish to pub.dev
@@ -34,6 +33,7 @@ dependencies:
     path: ../dungeon_world_data
   dynamic_themes: ^1.1.0
   firebase_analytics: ^9.1.0
+  firebase_auth: ^3.3.19
   firebase_core: ^1.12.0
   firebase_crashlytics: ^2.5.1
   flutter:
@@ -42,6 +42,7 @@ dependencies:
   flutter_markdown: ^0.6.9
   flutter_svg: ^1.0.3
   get: ^4.6.1
+  google_sign_in: ^5.3.3
   http: ^0.13.4
   image_cropper: ^2.0.2
   intl: ^0.17.0
