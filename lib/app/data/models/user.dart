@@ -5,25 +5,25 @@ class User {
     required this.username,
     required this.displayName,
     required this.email,
-    required this.avatarUrl,
+    required this.photoUrl,
   });
 
   final String username;
   final String displayName;
   final String email;
-  final String avatarUrl;
+  final String photoUrl;
 
   User copyWith({
     String? username,
     String? displayName,
     String? email,
-    String? avatarUrl,
+    String? photoUrl,
   }) =>
       User(
         username: username ?? this.username,
         displayName: displayName ?? this.displayName,
         email: email ?? this.email,
-        avatarUrl: avatarUrl ?? this.avatarUrl,
+        photoUrl: photoUrl ?? this.photoUrl,
       );
 
   factory User.fromRawJson(String str) => User.fromJson(json.decode(str));
@@ -34,20 +34,20 @@ class User {
         username: json['username'],
         displayName: json['displayName'],
         email: json['email'],
-        avatarUrl: json['avatarURL'],
+        photoUrl: json['photoURL'],
       );
 
   factory User.guest() => User(
         displayName: 'Guest',
         username: 'guest',
         email: '',
-        avatarUrl: '',
+        photoUrl: '',
       );
 
   Map<String, dynamic> toJson() => {
         'username': username,
         'email': email,
-        'avatarURL': avatarUrl,
+        'photoURL': photoUrl,
       };
 
   bool get isGuest => username == 'guest';

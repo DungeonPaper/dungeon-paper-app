@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'package:dungeon_world_data/dungeon_world_data.dart' as dw;
+import 'package:dungeon_world_data/dungeon_world_data.dart';
 
 class CharacterStats {
   CharacterStats({
@@ -51,7 +52,7 @@ class CharacterStats {
         currentHp: json['currentHP'],
         currentExp: json['currentEXP'],
         armor: json['armor'],
-        damageDice: json['damageDice'],
+        damageDice: json['damageDice'] != null ? Dice.fromJson(json['damageDice']) : null,
         load: json['load'],
       );
 

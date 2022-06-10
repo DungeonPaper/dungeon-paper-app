@@ -160,7 +160,7 @@ class AbilityScore {
         name: json['name'],
         value: json['value'],
         description: json['description'],
-        isDebilitated: json['isDebilitated'],
+        isDebilitated: json['isDebilitated'] ?? false,
         debilityName: json['debilityName'],
         debilityDescription: json['debilityDescription'],
       );

@@ -245,7 +245,7 @@ class Character implements WithMeta<Character, CharacterMeta> {
         moves: List<Move>.from(json['moves'].map((x) => Move.fromJson(x))),
         spells: List<Spell>.from(json['spells'].map((x) => Spell.fromJson(x))),
         items: List<Item>.from(json['items'].map((x) => Item.fromJson(x))),
-        coins: json['coins'],
+        coins: ((json['coins'] ?? 0) as num).toDouble(),
         notes: List<Note>.from(json['notes'].map((x) => Note.fromJson(x))),
         stats: CharacterStats.fromJson(json['stats']),
         abilityScores: AbilityScores.fromJson(json['abilityScores']),

@@ -14,7 +14,7 @@ class UserMenu extends StatelessWidget {
     );
   }
 
-  Material _buildChild() {
+  Widget _buildChild() {
     return Material(
       color: Colors.transparent,
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(28)),
@@ -22,8 +22,8 @@ class UserMenu extends StatelessWidget {
       child: InkWell(
         onTap: () => Get.dialog(UserMenuPopover()),
         child: const Padding(
-          padding: EdgeInsets.symmetric(horizontal: 8),
-          child: UserAvatar(size: 40),
+          padding: EdgeInsets.all(8),
+          child: UserAvatar(),
         ),
       ),
     );

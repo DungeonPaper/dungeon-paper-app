@@ -1,6 +1,7 @@
 import 'dart:math';
 
 import 'package:dungeon_paper/app/data/models/character.dart';
+import 'package:dungeon_paper/app/data/services/auth_service.dart';
 import 'package:dungeon_paper/app/data/services/character_service.dart';
 import 'package:dungeon_paper/app/data/services/user_service.dart';
 import 'package:dungeon_paper/app/routes/app_pages.dart';
@@ -12,7 +13,7 @@ import 'package:get/get.dart';
 import '../atoms/character_avatar.dart';
 import '../atoms/user_avatar.dart';
 
-class UserMenuPopover extends GetView<CharacterService> {
+class UserMenuPopover extends GetView<CharacterService> with AuthServiceMixin {
   UserMenuPopover({Key? key}) : super(key: key);
 
   final UserService userService = Get.find();
@@ -24,7 +25,8 @@ class UserMenuPopover extends GetView<CharacterService> {
       padding: const EdgeInsets.all(16),
       builder: () {
         final textStyle = TextStyle(color: Theme.of(context).colorScheme.onSurface);
-        final maxW = min(350, MediaQuery.of(context).size.width - 100).toDouble();
+        final maxW = min(332.0, MediaQuery.of(context).size.width - 32);
+        final maxH = MediaQuery.of(context).size.height - 72;
         const avatarSize = 64.0;
 
         return ListTileTheme.merge(
@@ -36,24 +38,42 @@ class UserMenuPopover extends GetView<CharacterService> {
               Positioned(
                 right: 0,
                 top: 0,
-                child: Card(
-                  child: Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-                    child: SizedBox(
-                      width: maxW,
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        mainAxisSize: MainAxisSize.min,
+                child: SafeArea(
+                  child: Card(
+                    child: ConstrainedBox(
+                      constraints: BoxConstraints(maxWidth: maxW, maxHeight: maxH),
+                      // height: maxH,
+                      child: ListView(
+                        // crossAxisAlignment: CrossAxisAlignment.start,
+                        // mainAxisSize: MainAxisSize.min,
+                        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                        shrinkWrap: true,
                         children: [
                           ListTile(
                             visualDensity: VisualDensity.compact,
                             title: Text(
-                                '${userService.current.displayName} (@${userService.current.username})',
-                                style: textStyle),
-                            subtitle: Text(userService.current.email.isNotEmpty
-                                ? userService.current.email
-                                : S.current.userUnregistered),
-                            trailing: const UserAvatar(),
+                              '${userService.current.displayName} (@${userService.current.username})',
+                              style: textStyle,
+                            ),
+                            subtitle: Text(
+                              userService.current.email.isNotEmpty
+                                  ? userService.current.email
+                                  : S.current.userUnregistered,
+                            ),
+                            trailing: userService.isGuest
+                                ? Row(
+                                    mainAxisSize: MainAxisSize.min,
+                                    children: [
+                                      ElevatedButton.icon(
+                                        onPressed: () => authService.loginWithGoogle(),
+                                        icon: const Icon(Icons.login),
+                                        label: Text(S.current.userLoginButton),
+                                      ),
+                                      const SizedBox(width: 16),
+                                      const UserAvatar(),
+                                    ],
+                                  )
+                                : const UserAvatar(),
                           ),
                           const Divider(),
                           const SizedBox(height: 8),
@@ -81,12 +101,15 @@ class UserMenuPopover extends GetView<CharacterService> {
                                           CharacterAvatar.squircle(
                                               character: char, size: avatarSize),
                                           const SizedBox(height: 4),
-                                          Text(
-                                            char.displayName,
-                                            overflow: TextOverflow.ellipsis,
-                                            textScaleFactor: 0.8,
-                                            textAlign: TextAlign.center,
-                                            style: textStyle,
+                                          SizedBox(
+                                            width: 60,
+                                            child: Text(
+                                              char.displayName,
+                                              overflow: TextOverflow.ellipsis,
+                                              textScaleFactor: 0.8,
+                                              textAlign: TextAlign.center,
+                                              style: textStyle,
+                                            ),
                                           ),
                                         ],
                                       ),
@@ -141,6 +164,15 @@ class UserMenuPopover extends GetView<CharacterService> {
                             leading: const Icon(Icons.info),
                             onTap: () => null,
                           ),
+                          if (!userService.isGuest) ...[
+                            const Divider(),
+                            ListTile(
+                              visualDensity: VisualDensity.compact,
+                              title: Text(S.current.userLogoutButton),
+                              leading: const Icon(Icons.logout),
+                              onTap: () => null,
+                            ),
+                          ],
                         ],
                       ),
                     ),

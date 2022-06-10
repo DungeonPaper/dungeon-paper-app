@@ -13,12 +13,18 @@ class UserAvatar extends GetView<UserService> {
 
   @override
   Widget build(BuildContext context) {
-    return CircleAvatar(
-      radius: size != null ? size! / 2 : null,
-      child: const Icon(Icons.person),
-      foregroundImage: controller.current.avatarUrl.isNotEmpty
-          ? CachedNetworkImageProvider(controller.current.avatarUrl)
-          : null,
+    return Obx(
+      () => CircleAvatar(
+        radius: size != null ? size! / 2 : null,
+        child: const Icon(Icons.person),
+        foregroundImage: controller.current.photoUrl.isNotEmpty
+            ? CachedNetworkImageProvider(
+                controller.current.photoUrl,
+                maxWidth: size?.toInt(),
+                maxHeight: size?.toInt(),
+              )
+            : null,
+      ),
     );
   }
 }

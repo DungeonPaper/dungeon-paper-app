@@ -212,6 +212,8 @@
   "themeTurnDark": "Switch to Dark Mode",
   "themeTurnLight": "Switch to Light Mode",
   "unselect": "Unselect",
+  "userLoginButton": "Sign in",
+  "userLogoutButton": "Sign out",
   "userMenuMoreChars": "More",
   "userMenuRecentCharacters": "Recent Characters",
   "userUnregistered": "Not registered"

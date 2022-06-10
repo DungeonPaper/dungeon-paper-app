@@ -65,7 +65,7 @@ class AlignmentValue extends dw.Alignment implements WithMeta {
 
   @override
   Map<String, dynamic> toJson() => {
-        '_meta': meta,
+        '_meta': meta.toJson(),
         'type': type.name,
         ...super.toJson(),
       };

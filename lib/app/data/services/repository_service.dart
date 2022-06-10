@@ -39,7 +39,7 @@ class RepositoryService extends GetxService {
   @override
   void onInit() {
     super.onInit();
-    _init();
+    loadAllData();
   }
 
   @override
@@ -49,7 +49,7 @@ class RepositoryService extends GetxService {
     my.dispose();
   }
 
-  Future<RepositoryService> _init() async {
+  Future<RepositoryService> loadAllData() async {
     await builtIn.init(Future(() {
       try {
         return api.requests.getDefaultRepository(ignoreCache: true);

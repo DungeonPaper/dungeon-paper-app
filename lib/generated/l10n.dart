@@ -2262,6 +2262,26 @@ class S {
     );
   }
 
+  /// `Sign in`
+  String get userLoginButton {
+    return Intl.message(
+      'Sign in',
+      name: 'userLoginButton',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Sign out`
+  String get userLogoutButton {
+    return Intl.message(
+      'Sign out',
+      name: 'userLogoutButton',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `More`
   String get userMenuMoreChars {
     return Intl.message(

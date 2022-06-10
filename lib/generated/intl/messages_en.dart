@@ -518,6 +518,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "themeTurnLight":
             MessageLookupByLibrary.simpleMessage("Switch to Light Mode"),
         "unselect": MessageLookupByLibrary.simpleMessage("Unselect"),
+        "userLoginButton": MessageLookupByLibrary.simpleMessage("Sign in"),
+        "userLogoutButton": MessageLookupByLibrary.simpleMessage("Sign out"),
         "userMenuMoreChars": MessageLookupByLibrary.simpleMessage("More"),
         "userMenuRecentCharacters":
             MessageLookupByLibrary.simpleMessage("Recent Characters"),

@@ -1,5 +1,7 @@
 import 'dart:convert';
 
+import 'package:cloud_firestore/cloud_firestore.dart';
+
 class Meta<T> {
   Meta._({
     required this.schemaVersion,
@@ -93,7 +95,12 @@ class Meta<T> {
   String toRawJson() => json.encode(toJson());
 
   factory Meta.fromJson(Map<String, dynamic> json, [T Function(dynamic json)? parseData]) => Meta._(
-        created: json['created'] != null ? DateTime.parse(json['created']) : DateTime.now(),
+        // TODO extract to helper func
+        created: json['created'] != null
+            ? json['created'] is String
+                ? DateTime.parse(json['created'])
+                : (json['created'] as Timestamp).toDate()
+            : DateTime.now(),
         createdBy: json['createdBy'],
         data: json['data'] != null
             ? parseData != null
@@ -103,7 +110,12 @@ class Meta<T> {
         language: json['language'],
         schemaVersion: json['schemaVersion'] ?? 1,
         sharing: json['sharing'] != null ? MetaSharing.fromJson(json['sharing']) : null,
-        updated: json['updated'] != null ? DateTime.parse(json['updated']) : null,
+        // TODO extract to helper func
+        updated: json['updated'] != null
+            ? json['updated'] is String
+                ? DateTime.parse(json['updated'])
+                : (json['updated'] as Timestamp).toDate()
+            : null,
       );
 
   factory Meta.tryParse(dynamic meta, {String? owner, T Function(dynamic json)? parseData}) =>

@@ -3,27 +3,29 @@ part of 'storage_handler.dart';
 class FirestoreDelegate extends StorageDelegate {
   final storage = FirebaseFirestore.instance;
 
+  String get prefix => _collectionPrefix != null ? _collectionPrefix! + '/' : '';
+
   @override
   Future<List<DocData>> getCollection(String collection) => storage
-      .collection(collection)
+      .collection(prefix + collection)
       .get()
       .then((list) => list.docs.map((snap) => snap.data()).toList());
 
   @override
   Future<DocData?> getDocument(String collection, String document) =>
-      storage.collection(collection).doc(document).get().then((snap) => snap.data());
+      storage.collection(prefix + collection).doc(document).get().then((snap) => snap.data());
 
   @override
   Future<void> create(String collection, String document, DocData value) =>
-      storage.collection(collection).doc(document).set(value, fs.SetOptions(merge: true));
+      storage.collection(prefix + collection).doc(document).set(value, fs.SetOptions(merge: true));
 
   @override
   Future<void> delete(String collection, String document) =>
-      storage.collection(collection).doc(document).delete();
+      storage.collection(prefix + collection).doc(document).delete();
 
   @override
   Future<void> update(String collection, String document, DocData value) =>
-      storage.collection(collection).doc(document).update(value);
+      storage.collection(prefix + collection).doc(document).update(value);
 
   @override
   StreamSubscription<List<DocData>> collectionListener(
@@ -33,7 +35,7 @@ class FirestoreDelegate extends StorageDelegate {
     void Function()? onDone,
     bool? cancelOnError,
   }) {
-    return asCollectionStream(storage.collection(collection).snapshots()).listen(
+    return asCollectionStream(storage.collection(prefix + collection).snapshots()).listen(
       onData,
       onError: onError,
       onDone: onDone,
@@ -50,7 +52,8 @@ class FirestoreDelegate extends StorageDelegate {
     void Function()? onDone,
     bool? cancelOnError,
   }) {
-    return asDocumentStream(storage.collection(collection).doc(document).snapshots()).listen(
+    return asDocumentStream(storage.collection(prefix + collection).doc(document).snapshots())
+        .listen(
       onData,
       onError: onError,
       onDone: onDone,

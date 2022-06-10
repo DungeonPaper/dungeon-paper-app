@@ -93,7 +93,7 @@ class Item extends dw.Item implements WithMeta {
 
   factory Item.fromJson(Map<String, dynamic> json) => Item.fromDwItem(
         dw.Item.fromJson(json),
-        amount: json['amount'],
+        amount: ((json['amount'] ?? 0) as num).toDouble(),
         settings: json['settings'],
         equipped: json['equipped'],
       );

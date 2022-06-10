@@ -104,9 +104,10 @@ abstract class DynamicFormController<T extends WithMeta> extends GetxController 
     } else {
       // when creating new item, set the correct owner now
       entity.value = entity.value.copyWithInherited(
-        meta: argument!.meta.copyWith(
-          createdBy: user.username,
-        ),
+        meta: argument?.meta.copyWith(
+              createdBy: user.username,
+            ) ??
+            Meta.version(1),
       );
     }
     createInputs();
