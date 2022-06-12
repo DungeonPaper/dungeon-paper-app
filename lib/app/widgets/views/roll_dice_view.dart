@@ -64,9 +64,11 @@ class _RollDiceViewState extends State<RollDiceView> with TickerProviderStateMix
       // blendMode: BlendMode.darken,
       child: Scaffold(
         appBar: AppBar(
-          title: Text(rollStatus == AnimationStatus.completed
-              ? 'Result: $totalResult'
-              : 'Rolling ${flat.length} dice'),
+          title: Text(
+            rollStatus == AnimationStatus.completed
+                ? S.current.rollDialogTitleRolled(totalResult)
+                : S.current.rollDialogTitleRolling(flat.length),
+          ),
           centerTitle: true,
           backgroundColor: Colors.transparent,
           foregroundColor: Colors.white,
@@ -114,20 +116,19 @@ class _RollDiceViewState extends State<RollDiceView> with TickerProviderStateMix
                                         mainAxisSize: MainAxisSize.min,
                                         crossAxisAlignment: CrossAxisAlignment.start,
                                         children: [
-                                          // TODO intl
                                           Text(
-                                            'Total: ${results[group.index].total}',
+                                            S.current
+                                                .rollDialogResultTotal(results[group.index].total),
                                             style:
                                                 textTheme.headline6!.copyWith(color: Colors.white),
                                           ),
                                           Text(
-                                            'Dice: ' +
-                                                (withoutModDice[group.index]).toString() +
-                                                ' | '
-                                                    'Modifier: ' +
-                                                (group.value.modifierWithSign.isEmpty
-                                                    ? '+0'
-                                                    : group.value.modifierWithSign),
+                                            S.current.rollDialogResultBreakdown(
+                                              (withoutModDice[group.index]).toString(),
+                                              (group.value.modifierWithSign.isEmpty
+                                                  ? '+0'
+                                                  : group.value.modifierWithSign),
+                                            ),
                                             style: textTheme.bodyText2!
                                                 .copyWith(color: Colors.white.withOpacity(0.75)),
                                           ),

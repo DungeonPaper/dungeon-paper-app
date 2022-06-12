@@ -179,24 +179,32 @@ class MessageLookup extends MessageLookupByLibrary {
   static String m45(count, singular, plural) =>
       "${Intl.plural(count, one: 'One ${singular}', other: '${count} ${plural}')}";
 
-  static String m46(entity) => "Save ${entity}";
+  static String m46(dice, mod) => "Dice: ${dice} | Modifier: ${mod}";
 
-  static String m47(entity) => "Type to search ${entity}";
+  static String m47(total) => "Total: ${total}";
 
-  static String m48(entity) => "Select ${entity}";
+  static String m48(total) => "Total: ${total}";
 
-  static String m49(string) => "Select ${string} to add";
+  static String m49(count) => "Rolling ${count} dice";
 
-  static String m50(level) => "${Intl.select(level, {
+  static String m50(entity) => "Save ${entity}";
+
+  static String m51(entity) => "Type to search ${entity}";
+
+  static String m52(entity) => "Select ${entity}";
+
+  static String m53(string) => "Select ${string} to add";
+
+  static String m54(level) => "${Intl.select(level, {
             'cantrip': 'Cantrip',
             'rote': 'Rote',
             'other': 'Level ${level}',
           })}";
 
-  static String m51(count) =>
+  static String m55(count) =>
       "${Intl.plural(count, zero: 'No spells', one: 'One spell', other: '${count} spells')}";
 
-  static String m52(tag) => "Copy from: ${tag}";
+  static String m56(tag) => "Copy from: ${tag}";
 
   final messages = _notInlinedMessages(_notInlinedMessages);
   static Map<String, Function> _notInlinedMessages(_) => <String, Function>{
@@ -501,24 +509,28 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Hack & Slash"),
         "rollBasicActionButton":
             MessageLookupByLibrary.simpleMessage("Basic Action"),
+        "rollDialogResultBreakdown": m46,
+        "rollDialogResultTotal": m47,
+        "rollDialogTitleRolled": m48,
+        "rollDialogTitleRolling": m49,
         "save": MessageLookupByLibrary.simpleMessage("Save"),
-        "saveGeneric": m46,
+        "saveGeneric": m50,
         "searchPlaceholder":
             MessageLookupByLibrary.simpleMessage("Type to search"),
-        "searchPlaceholderGeneric": m47,
+        "searchPlaceholderGeneric": m51,
         "select": MessageLookupByLibrary.simpleMessage("Select"),
         "selectAll": MessageLookupByLibrary.simpleMessage("Select All"),
-        "selectGeneric": m48,
+        "selectGeneric": m52,
         "selectNone": MessageLookupByLibrary.simpleMessage("Select None"),
-        "selectToAdd": m49,
+        "selectToAdd": m53,
         "separatorOr": MessageLookupByLibrary.simpleMessage("OR"),
         "settingsTitle": MessageLookupByLibrary.simpleMessage("Settings"),
         "sortMoveDown": MessageLookupByLibrary.simpleMessage("Move down"),
         "sortMoveUp": MessageLookupByLibrary.simpleMessage("Move up"),
-        "spellLevel": m50,
+        "spellLevel": m54,
         "spells": MessageLookupByLibrary.simpleMessage("Spells"),
-        "spellsWithCount": m51,
-        "tagCopyFrom": m52,
+        "spellsWithCount": m55,
+        "tagCopyFrom": m56,
         "tagDetails": MessageLookupByLibrary.simpleMessage("Tag Information"),
         "themeTurnDark":
             MessageLookupByLibrary.simpleMessage("Switch to Dark Mode"),

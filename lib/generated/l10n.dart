@@ -220,21 +220,21 @@ class S {
     );
   }
 
-  /// `Ears ringing. Vision blurred. You're more than a little out of it.`
-  String get abilityScoreWisDebilityDescription {
+  /// `You can't exert much force. Maybe it's just fatigue and injury, or maybe your strength was drained by magic.`
+  String get abilityScoreStrDebilityDescription {
     return Intl.message(
-      'Ears ringing. Vision blurred. You\'re more than a little out of it.',
-      name: 'abilityScoreWisDebilityDescription',
+      'You can\'t exert much force. Maybe it\'s just fatigue and injury, or maybe your strength was drained by magic.',
+      name: 'abilityScoreStrDebilityDescription',
       desc: '',
       args: [],
     );
   }
 
-  /// `Confused`
-  String get abilityScoreWisDebilityName {
+  /// `Weak`
+  String get abilityScoreStrDebilityName {
     return Intl.message(
-      'Confused',
-      name: 'abilityScoreWisDebilityName',
+      'Weak',
+      name: 'abilityScoreStrDebilityName',
       desc: '',
       args: [],
     );
@@ -260,21 +260,21 @@ class S {
     );
   }
 
-  /// `You can't exert much force. Maybe it's just fatigue and injury, or maybe your strength was drained by magic.`
-  String get abilityScoreStrDebilityDescription {
+  /// `Ears ringing. Vision blurred. You're more than a little out of it.`
+  String get abilityScoreWisDebilityDescription {
     return Intl.message(
-      'You can\'t exert much force. Maybe it\'s just fatigue and injury, or maybe your strength was drained by magic.',
-      name: 'abilityScoreStrDebilityDescription',
+      'Ears ringing. Vision blurred. You\'re more than a little out of it.',
+      name: 'abilityScoreWisDebilityDescription',
       desc: '',
       args: [],
     );
   }
 
-  /// `Weak`
-  String get abilityScoreStrDebilityName {
+  /// `Confused`
+  String get abilityScoreWisDebilityName {
     return Intl.message(
-      'Weak',
-      name: 'abilityScoreStrDebilityName',
+      'Confused',
+      name: 'abilityScoreWisDebilityName',
       desc: '',
       args: [],
     );
@@ -487,21 +487,21 @@ class S {
     );
   }
 
-  /// `You need to be signed in to upload images.`
-  String get basicInfoImageNeedAccountPrefix {
-    return Intl.message(
-      'You need to be signed in to upload images.',
-      name: 'basicInfoImageNeedAccountPrefix',
-      desc: '',
-      args: [],
-    );
-  }
-
   /// `Sign in or create an account`
   String get basicInfoImageNeedAccountLinkLabel {
     return Intl.message(
       'Sign in or create an account',
       name: 'basicInfoImageNeedAccountLinkLabel',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `You need to be signed in to upload images.`
+  String get basicInfoImageNeedAccountPrefix {
+    return Intl.message(
+      'You need to be signed in to upload images.',
+      name: 'basicInfoImageNeedAccountPrefix',
       desc: '',
       args: [],
     );
@@ -1769,16 +1769,6 @@ class S {
     );
   }
 
-  /// `Items`
-  String get items {
-    return Intl.message(
-      'Items',
-      name: 'items',
-      desc: '',
-      args: [],
-    );
-  }
-
   /// `× {amount}`
   String itemAmountX(Object amount) {
     return Intl.message(
@@ -1786,6 +1776,16 @@ class S {
       name: 'itemAmountX',
       desc: '',
       args: [amount],
+    );
+  }
+
+  /// `Items`
+  String get items {
+    return Intl.message(
+      'Items',
+      name: 'items',
+      desc: '',
+      args: [],
     );
   }
 
@@ -2071,6 +2071,46 @@ class S {
       name: 'rollBasicActionButton',
       desc: '',
       args: [],
+    );
+  }
+
+  /// `Dice: {dice} | Modifier: {mod}`
+  String rollDialogResultBreakdown(Object dice, Object mod) {
+    return Intl.message(
+      'Dice: $dice | Modifier: $mod',
+      name: 'rollDialogResultBreakdown',
+      desc: '',
+      args: [dice, mod],
+    );
+  }
+
+  /// `Total: {total}`
+  String rollDialogResultTotal(Object total) {
+    return Intl.message(
+      'Total: $total',
+      name: 'rollDialogResultTotal',
+      desc: '',
+      args: [total],
+    );
+  }
+
+  /// `Total: {total}`
+  String rollDialogTitleRolled(Object total) {
+    return Intl.message(
+      'Total: $total',
+      name: 'rollDialogTitleRolled',
+      desc: '',
+      args: [total],
+    );
+  }
+
+  /// `Rolling {count} dice`
+  String rollDialogTitleRolling(Object count) {
+    return Intl.message(
+      'Rolling $count dice',
+      name: 'rollDialogTitleRolling',
+      desc: '',
+      args: [count],
     );
   }
 
