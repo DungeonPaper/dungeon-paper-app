@@ -16,12 +16,25 @@ class UserService extends GetxService with RepositoryServiceMixin {
     debugPrint('loading user data for $email');
     StorageHandler.instance.currentDelegate = 'firestore';
     StorageHandler.instance.setCollectionPrefix('Data/$email');
-    repo.loadAllData();
+    repo.my.clear();
+    repo.my.clearListeners();
+    await repo.loadBuiltInRepo();
+    await repo.loadMyRepo();
     final dbUser = await FirestoreDelegate().getDocument('Data', email!);
     _current.value = User.fromJson(dbUser!);
   }
 
   bool get isGuest => current.isGuest;
+  bool get isLoggedIn => !isGuest;
+
+  void loadGuestData() async {
+    StorageHandler.instance.currentDelegate = 'local';
+    StorageHandler.instance.setCollectionPrefix(null);
+    repo.my.clear();
+    repo.my.clearListeners();
+    await repo.loadBuiltInRepo();
+    await repo.loadMyRepo();
+  }
 }
 
 mixin UserServiceMixin {

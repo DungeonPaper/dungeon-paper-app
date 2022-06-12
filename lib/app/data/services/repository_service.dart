@@ -18,17 +18,12 @@ import 'package:dungeon_paper/core/storage_handler/storage_handler.dart';
 import 'package:dungeon_world_data/dungeon_world_data.dart' as dw;
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:localstore/localstore.dart';
 
 class RepositoryService extends GetxService {
-  final builtIn = RepositoryCache(
-    id: 'playbook',
-    cachePrefix: 'repo',
-    loadRemote: RemoteBehavior.whenAnyEmpty,
-  );
-  final my = RepositoryCache(
-    id: 'personal',
-    loadRemote: RemoteBehavior.always,
-  );
+  final builtIn = BuiltInRepository(id: 'playbook');
+  final my = PersonalRepository(id: 'personal');
+
   StorageDelegate get storage => StorageHandler.instance;
 
   void clear() {
@@ -39,7 +34,7 @@ class RepositoryService extends GetxService {
   @override
   void onInit() {
     super.onInit();
-    loadAllData();
+    // loadAllData();
   }
 
   @override
@@ -49,29 +44,17 @@ class RepositoryService extends GetxService {
     my.dispose();
   }
 
-  Future<RepositoryService> loadAllData() async {
-    await builtIn.init(Future(() {
-      try {
-        return api.requests.getDefaultRepository(ignoreCache: true);
-      } catch (_) {
-        return SearchResponse.fromPackageRepo();
-      }
-    }));
-    await my.init(
-      Future(
-        () async => SearchResponse.fromJson({
-          'classes': await storage.getCollection('Classes'),
-          'items': await storage.getCollection('Items'),
-          'monsters': await storage.getCollection('Monsters'),
-          'moves': await storage.getCollection('Moves'),
-          'races': await storage.getCollection('Races'),
-          'spells': await storage.getCollection('Spells'),
-          'tags': await storage.getCollection('Tags'),
-          'notes': await storage.getCollection('Notes'),
-        }),
-      ),
-    );
-    return this;
+  Future<void> loadAllData() async {
+    await loadBuiltInRepo();
+    await loadMyRepo();
+  }
+
+  Future<void> loadBuiltInRepo() {
+    return builtIn.init();
+  }
+
+  Future<void> loadMyRepo() async {
+    await my.init();
   }
 }
 
@@ -82,12 +65,12 @@ enum RemoteBehavior {
   never,
 }
 
-class RepositoryCache {
-  RepositoryCache({required this.id, this.cachePrefix, required this.loadRemote});
+abstract class RepositoryCache {
+  RepositoryCache({required this.id});
 
-  final String? cachePrefix;
+  String? get cachePrefix;
   final String id;
-  final RemoteBehavior loadRemote;
+  abstract final RemoteBehavior loadRemote;
 
   final classes = <String, CharacterClass>{}.obs;
   final items = <String, Item>{}.obs;
@@ -102,19 +85,20 @@ class RepositoryCache {
 
   StorageDelegate get storage => StorageHandler.instance;
   StorageDelegate get cache => CacheHandler.instance;
+  Future<SearchResponse> get getFromRemote;
 
-  Future<void> init(Future<SearchResponse> getFromRemote) async {
-    debugPrint('Initializing repo: $id');
+  Future<void> init() async {
+    debugPrint('Initializing repo: $id, cache prefix: "${cacheKey('')}"');
 
     final cacheRes = SearchResponse.fromJson({
-      'Classes': await cache.getCollection(keyClasses),
-      'Items': await cache.getCollection(keyItems),
-      'Monsters': await cache.getCollection(keyMonsters),
-      'Moves': await cache.getCollection(keyMoves),
-      'Races': await cache.getCollection(keyRaces),
-      'Spells': await cache.getCollection(keySpells),
-      'Tags': await cache.getCollection(keyTags),
-      'Notes': await cache.getCollection(keyNotes),
+      'Classes': await cache.getCollection(cacheKey('Classes')),
+      'Items': await cache.getCollection(cacheKey('Items')),
+      'Monsters': await cache.getCollection(cacheKey('Monsters')),
+      'Moves': await cache.getCollection(cacheKey('Moves')),
+      'Races': await cache.getCollection(cacheKey('Races')),
+      'Spells': await cache.getCollection(cacheKey('Spells')),
+      'Tags': await cache.getCollection(cacheKey('Tags')),
+      'Notes': await cache.getCollection(cacheKey('Notes')),
     });
 
     final behaviorMap = <RemoteBehavior, bool>{
@@ -128,7 +112,8 @@ class RepositoryCache {
 
     if (shouldLoadFromRemote) {
       debugPrint('Cache invalid for $id, loading from remote');
-      await setAllFrom(await getFromRemote, saveIntoCache: true);
+      final resp = await getFromRemote;
+      await setAllFrom(resp, saveIntoCache: true);
     } else {
       debugPrint('Cache valid for $id, loading from cache');
       await setAllFrom(cacheRes, saveIntoCache: false);
@@ -138,23 +123,82 @@ class RepositoryCache {
   }
 
   void registerListeners() {
+    debugPrint(
+        'registering listeners for $id, delegate: $storage, listener prefix: "${listenerKey('')}"');
+
     subs.addAll([
-      storage.collectionListener(keyClasses,
-          (d) => classes.value = {for (var x in d) x['key']: CharacterClass.fromJson(x)}),
       storage.collectionListener(
-          keyItems, (d) => items.value = {for (var x in d) x['key']: Item.fromJson(x)}),
+        listenerKey('Classes'),
+        (d) {
+          if (d.isNotEmpty) {
+            debugPrint('Update in Classes for $id: ${[for (var x in d) x['key']].join(',')}');
+            classes.value = {for (var x in d) x['key']: CharacterClass.fromJson(x)};
+          }
+        },
+      ),
       storage.collectionListener(
-          keyMonsters, (d) => monsters.value = {for (var x in d) x['key']: Monster.fromJson(x)}),
+        listenerKey('Items'),
+        (d) {
+          if (d.isNotEmpty) {
+            debugPrint('Update in Items for $id: ${[for (var x in d) x['key']].join(',')}');
+            items.value = {for (var x in d) x['key']: Item.fromJson(x)};
+          }
+        },
+      ),
       storage.collectionListener(
-          keyMoves, (d) => moves.value = {for (var x in d) x['key']: Move.fromJson(x)}),
+        listenerKey('Monsters'),
+        (d) {
+          if (d.isNotEmpty) {
+            debugPrint('Update in Monsters for $id: ${[for (var x in d) x['key']].join(',')}');
+            monsters.value = {for (var x in d) x['key']: Monster.fromJson(x)};
+          }
+        },
+      ),
       storage.collectionListener(
-          keyRaces, (d) => races.value = {for (var x in d) x['key']: Race.fromJson(x)}),
+        listenerKey('Moves'),
+        (d) {
+          if (d.isNotEmpty) {
+            debugPrint('Update in Moves for $id: ${[for (var x in d) x['key']].join(',')}');
+            moves.value = {for (var x in d) x['key']: Move.fromJson(x)};
+          }
+        },
+      ),
       storage.collectionListener(
-          keySpells, (d) => spells.value = {for (var x in d) x['key']: Spell.fromJson(x)}),
+        listenerKey('Races'),
+        (d) {
+          if (d.isNotEmpty) {
+            debugPrint('Update in Races for $id: ${[for (var x in d) x['key']].join(',')}');
+            races.value = {for (var x in d) x['key']: Race.fromJson(x)};
+          }
+        },
+      ),
       storage.collectionListener(
-          keyTags, (d) => tags.value = {for (var x in d) x['name']: dw.Tag.fromJson(x)}),
+        listenerKey('Spells'),
+        (d) {
+          if (d.isNotEmpty) {
+            debugPrint('Update in Spells for $id: ${[for (var x in d) x['key']].join(',')}');
+            spells.value = {for (var x in d) x['key']: Spell.fromJson(x)};
+          }
+        },
+      ),
       storage.collectionListener(
-          keyNotes, (d) => notes.value = {for (var x in d) x['key']: Note.fromJson(x)}),
+        listenerKey('Tags'),
+        (d) {
+          if (d.isNotEmpty) {
+            debugPrint('Update in Tags for $id: ${[for (var x in d) x['name']].join(',')}');
+            tags.value = {for (var x in d) x['name']: dw.Tag.fromJson(x)};
+          }
+        },
+      ),
+      storage.collectionListener(
+        listenerKey('Notes'),
+        (d) {
+          if (d.isNotEmpty) {
+            debugPrint('Update in Notes for $id: ${[for (var x in d) x['key']].join(',')}');
+            notes.value = {for (var x in d) x['key']: Note.fromJson(x)};
+          }
+        },
+      ),
     ]);
   }
 
@@ -174,26 +218,21 @@ class RepositoryCache {
     required bool saveIntoCache,
   }) async {
     await Future.wait([
-      updateList<CharacterClass>(keyClasses, classes, resp.classes, saveIntoCache: saveIntoCache),
-      updateList<Item>(keyItems, items, resp.items, saveIntoCache: saveIntoCache),
-      updateList<Monster>(keyMonsters, monsters, resp.monsters, saveIntoCache: saveIntoCache),
-      updateList<Move>(keyMoves, moves, resp.moves, saveIntoCache: saveIntoCache),
-      updateList<Race>(keyRaces, races, resp.races, saveIntoCache: saveIntoCache),
-      updateList<Spell>(keySpells, spells, resp.spells, saveIntoCache: saveIntoCache),
-      updateList<Note>(keyTags, notes, resp.notes, saveIntoCache: saveIntoCache),
-      updateList<dw.Tag>(keyTags, tags, resp.tags, saveIntoCache: saveIntoCache),
+      updateList<CharacterClass>(cacheKey('Classes'), classes, resp.classes,
+          saveIntoCache: saveIntoCache),
+      updateList<Item>(cacheKey('Items'), items, resp.items, saveIntoCache: saveIntoCache),
+      updateList<Monster>(cacheKey('Monsters'), monsters, resp.monsters,
+          saveIntoCache: saveIntoCache),
+      updateList<Move>(cacheKey('Moves'), moves, resp.moves, saveIntoCache: saveIntoCache),
+      updateList<Race>(cacheKey('Races'), races, resp.races, saveIntoCache: saveIntoCache),
+      updateList<Spell>(cacheKey('Spells'), spells, resp.spells, saveIntoCache: saveIntoCache),
+      updateList<Note>(cacheKey('Tags'), notes, resp.notes, saveIntoCache: saveIntoCache),
+      updateList<dw.Tag>(cacheKey('Tags'), tags, resp.tags, saveIntoCache: saveIntoCache),
     ]);
   }
 
-  String _key(String key) => (cachePrefix ?? '') + key;
-  String get keyClasses => _key('Classes');
-  String get keyItems => _key('Items');
-  String get keyMonsters => _key('Monsters');
-  String get keyMoves => _key('Moves');
-  String get keyRaces => _key('Races');
-  String get keySpells => _key('Spells');
-  String get keyTags => _key('Tags');
-  String get keyNotes => _key('Notes');
+  String cacheKey(String key) => (cachePrefix ?? '') + key;
+  String listenerKey(String key) => cacheKey(key);
 
   void clear() {
     classes.clear();
@@ -240,10 +279,64 @@ class RepositoryCache {
 
     list.addAll(Map.fromIterable(resp, key: (x) => keyFor(x as T)));
 
-    if (saveIntoCache) {
+    if (saveIntoCache && list.isNotEmpty) {
       for (final x in list.values) await cache.create(collectionName, keyFor(x), toJsonFor(x));
     }
   }
+}
+
+class BuiltInRepository extends RepositoryCache {
+  BuiltInRepository({
+    required super.id,
+  });
+
+  @override
+  String? get cachePrefix => 'repo';
+
+  @override
+  Future<SearchResponse> getFromRemote = Future(() {
+    try {
+      debugPrint('Getting repo content');
+      return api.requests.getDefaultRepository(ignoreCache: true);
+    } catch (_) {
+      debugPrint('Failed getting repo content, using built-in');
+      return SearchResponse.fromPackageRepo();
+    }
+  });
+
+  @override
+  StorageDelegate get storage => cache;
+
+  @override
+  RemoteBehavior get loadRemote => RemoteBehavior.whenAnyEmpty;
+
+  @override
+  String listenerKey(String key) =>
+      StorageHandler.instance.currentDelegate == 'firestore' ? key : cacheKey(key);
+}
+
+class PersonalRepository extends RepositoryCache {
+  PersonalRepository({required super.id});
+
+  @override
+  Future<SearchResponse> get getFromRemote => Future(
+        () async => SearchResponse.fromJson({
+          'Classes': await storage.getCollection('Classes'),
+          'Items': await storage.getCollection('Items'),
+          'Monsters': await storage.getCollection('Monsters'),
+          'Moves': await storage.getCollection('Moves'),
+          'Races': await storage.getCollection('Races'),
+          'Spells': await storage.getCollection('Spells'),
+          'Tags': await storage.getCollection('Tags'),
+          'Notes': await storage.getCollection('Notes'),
+        }),
+      );
+
+  @override
+  String? get cachePrefix => null;
+
+  @override
+  RemoteBehavior get loadRemote => RemoteBehavior.always;
 }
 
 mixin RepositoryServiceMixin {

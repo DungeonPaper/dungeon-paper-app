@@ -31,13 +31,15 @@ class Api {
 }
 
 class Response extends http.Response {
-  Response(String body, int statusCode,
-      {http.BaseRequest? request,
-      Map<String, String> headers = const {},
-      bool isRedirect = false,
-      bool persistentConnection = true,
-      String? reasonPhrase})
-      : super(
+  Response(
+    String body,
+    int statusCode, {
+    http.BaseRequest? request,
+    Map<String, String> headers = const {},
+    bool isRedirect = false,
+    bool persistentConnection = true,
+    String? reasonPhrase,
+  }) : super(
           body,
           statusCode,
           request: request,

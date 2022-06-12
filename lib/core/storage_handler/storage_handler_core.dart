@@ -11,20 +11,28 @@ class StorageHandler implements StorageDelegate {
   final delegates = <String, StorageDelegate>{
     'local': LocalStorageDelegate(),
     'firestore': FirestoreDelegate(),
+    'firestoreGlobal': FirestoreDelegate(),
   };
 
   StorageDelegate get delegate => delegates[currentDelegate]!;
 
   @override
-  Future<DocData?> getDocument(String collection, String document) =>
-      delegate.getDocument(collection, document);
+  Future<DocData?> getDocument(String collection, String document) {
+    debugPrint('Get document: $collection/$document');
+    return delegate.getDocument(collection, document);
+  }
 
   @override
-  Future<void> create(String collection, String document, DocData value) =>
-      delegate.create(collection, document, value);
+  Future<void> create(String collection, String document, DocData value) {
+    debugPrint('Create document: $collection/$document');
+    return delegate.create(collection, document, value);
+  }
 
   @override
-  Future<List<DocData>> getCollection(String collection) => delegate.getCollection(collection);
+  Future<List<DocData>> getCollection(String collection) {
+    debugPrint('Get collection: $collection');
+    return delegate.getCollection(collection);
+  }
 
   @override
   String? _collectionPrefix;
@@ -36,11 +44,16 @@ class StorageHandler implements StorageDelegate {
   String? get collectionPrefix => delegate.collectionPrefix;
 
   @override
-  Future<void> delete(String collection, String document) => delegate.delete(collection, document);
+  Future<void> delete(String collection, String document) {
+    debugPrint('Delete document: $collection/$document');
+    return delegate.delete(collection, document);
+  }
 
   @override
-  Future<void> update(String collection, String document, DocData value) =>
-      delegate.update(collection, document, value);
+  Future<void> update(String collection, String document, DocData value) {
+    debugPrint('Update document: $collection/$document');
+    return delegate.update(collection, document, value);
+  }
 
   @override
   StreamSubscription<List<DocData>> collectionListener(
@@ -49,9 +62,11 @@ class StorageHandler implements StorageDelegate {
     Function? onError,
     void Function()? onDone,
     bool? cancelOnError,
-  }) =>
-      delegate.collectionListener(collection, onData,
-          onError: onError, onDone: onDone, cancelOnError: cancelOnError);
+  }) {
+    debugPrint('Listen to collection: $collection');
+    return delegate.collectionListener(collection, onData,
+        onError: onError, onDone: onDone, cancelOnError: cancelOnError);
+  }
 
   @override
   StreamSubscription<DocData?> documentListener(
@@ -61,7 +76,9 @@ class StorageHandler implements StorageDelegate {
     Function? onError,
     void Function()? onDone,
     bool? cancelOnError,
-  }) =>
-      delegate.documentListener(collection, document, onData,
-          onError: onError, onDone: onDone, cancelOnError: cancelOnError);
+  }) {
+    debugPrint('Listen to document: $collection/$document');
+    return delegate.documentListener(collection, document, onData,
+        onError: onError, onDone: onDone, cancelOnError: cancelOnError);
+  }
 }
