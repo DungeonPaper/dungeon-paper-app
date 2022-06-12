@@ -16,7 +16,7 @@ class CharacterService extends GetxService {
 
   final _pageController = PageController(initialPage: 1).obs;
   final lastIntPage = 0.obs;
-  late StreamSubscription? _sub;
+  StreamSubscription? _sub;
 
   PageController get pageController => _pageController.value;
   double get page => pageController.hasClients && pageController.positions.length == 1
@@ -81,15 +81,10 @@ class CharacterService extends GetxService {
     _all.addAll(Map.fromIterable(list, key: (c) => c.key));
 
     if (_all.isNotEmpty && _current.value == null) {
-      final hasLastChar = prefs.containsKey(PrefKeys.lastLoadedCharacter);
+      final hasLastChar = _all.values.any((c) => c.meta.data?.lastUsed != null);
       if (hasLastChar) {
-        final lastChar = prefs.getString(PrefKeys.lastLoadedCharacter);
-        if (_all.containsKey(lastChar)) {
-          _current.value = lastChar;
-        } else {
-          _current.value = _all.keys.first;
-          prefs.setString(PrefKeys.lastLoadedCharacter, _current.value!);
-        }
+        final lastChar = charsByLastUsed.first;
+        _current.value = lastChar.key;
       } else {
         _current.value = _all.keys.first;
         prefs.setString(PrefKeys.lastLoadedCharacter, _current.value!);

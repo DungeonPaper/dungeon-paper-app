@@ -18,7 +18,6 @@ import 'package:dungeon_paper/core/storage_handler/storage_handler.dart';
 import 'package:dungeon_world_data/dungeon_world_data.dart' as dw;
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:localstore/localstore.dart';
 
 class RepositoryService extends GetxService {
   final builtIn = BuiltInRepository(id: 'playbook');
@@ -31,11 +30,6 @@ class RepositoryService extends GetxService {
     my.clear();
   }
 
-  @override
-  void onInit() {
-    super.onInit();
-    // loadAllData();
-  }
 
   @override
   void onClose() async {

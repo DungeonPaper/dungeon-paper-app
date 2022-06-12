@@ -6,6 +6,7 @@ import 'package:google_sign_in/google_sign_in.dart';
 
 class AuthService extends GetxService with UserServiceMixin {
   FirebaseAuth get auth => FirebaseAuth.instance;
+  final gSignIn = GoogleSignIn.standard();
 
   Future<UserCredential> loginWithPassword({
     required String email,
@@ -14,7 +15,7 @@ class AuthService extends GetxService with UserServiceMixin {
       auth.signInWithEmailAndPassword(email: email, password: password);
 
   Future<UserCredential> loginWithGoogle() async {
-    final gUser = await GoogleSignIn.standard().signIn();
+    final gUser = await gSignIn.signIn();
     if (gUser == null) {
       throw StateError('user_cancel');
     }
@@ -29,6 +30,7 @@ class AuthService extends GetxService with UserServiceMixin {
 
   logout() {
     auth.signOut();
+    gSignIn.signOut();
   }
 
   @override
