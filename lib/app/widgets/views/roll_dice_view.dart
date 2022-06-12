@@ -30,10 +30,11 @@ class RollDiceView extends StatefulWidget {
 class _RollDiceViewState extends State<RollDiceView> with TickerProviderStateMixin {
   final diceSize = 56.0;
   final diceSpacing = 24.0;
-  late AnimationStatus abilityScoreus;
+  late AnimationStatus rollStatus;
   late List<List<_AnimSet>> animations;
   late List<dw.Dice> dice;
   late List<dw.Dice> withoutModDice;
+  late ScrollController scrollController;
   var results = <dw.DiceRoll>[];
 
   CharacterService get charService => Get.find();
@@ -45,7 +46,8 @@ class _RollDiceViewState extends State<RollDiceView> with TickerProviderStateMix
     super.initState();
     withoutModDice = widget.dice;
     dice = _applyMods(widget.dice);
-    abilityScoreus = AnimationStatus.dismissed;
+    rollStatus = AnimationStatus.dismissed;
+    scrollController = ScrollController();
     _roll();
     _setupAnimations();
   }
@@ -62,7 +64,7 @@ class _RollDiceViewState extends State<RollDiceView> with TickerProviderStateMix
       // blendMode: BlendMode.darken,
       child: Scaffold(
         appBar: AppBar(
-          title: Text(abilityScoreus == AnimationStatus.completed
+          title: Text(rollStatus == AnimationStatus.completed
               ? 'Result: $totalResult'
               : 'Rolling ${flat.length} dice'),
           centerTitle: true,
@@ -71,12 +73,16 @@ class _RollDiceViewState extends State<RollDiceView> with TickerProviderStateMix
         ),
         backgroundColor: bgColor,
         body: LayoutBuilder(builder: (context, constraints) {
-          final maxHeight = MediaQuery.of(context).size.height;
+          final maxHeight = MediaQuery.of(context).size.height +
+              (scrollController.hasClients && scrollController.positions.isNotEmpty
+                  ? scrollController.position.maxScrollExtent
+                  : 0);
 
           return Center(
             child: Padding(
               padding: const EdgeInsets.only(bottom: 80),
               child: SingleChildScrollView(
+                controller: scrollController,
                 child: Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 24),
                   child: Column(
@@ -249,7 +255,7 @@ class _RollDiceViewState extends State<RollDiceView> with TickerProviderStateMix
 
   void _runAnimations() async {
     _walkAnimations((anim, groupIndex, animIndex) async {
-      await Future.delayed(Duration(milliseconds: (groupIndex * 30) + (animIndex * 30)));
+      await Future.delayed(const Duration(milliseconds: 30));
       anim.controller.forward();
     });
   }
@@ -264,6 +270,9 @@ class _RollDiceViewState extends State<RollDiceView> with TickerProviderStateMix
   }
 
   void _setupAnimations() async {
+    _walkAnimations(((animation, groupIndex, animIndex) {
+      animation.controller.removeListener(_updateAnimStatus);
+    }));
     animations = List.generate(
       dice.length,
       (index) => List.generate(
@@ -271,7 +280,10 @@ class _RollDiceViewState extends State<RollDiceView> with TickerProviderStateMix
         (index) => _AnimSet(vsync: this),
       ),
     );
-    animations.first.first.controller.addListener(_updateAnimStatus);
+    rollStatus = AnimationStatus.forward;
+    _walkAnimations(
+      ((animation, groupIndex, animIndex) => animation.controller.addListener(_updateAnimStatus)),
+    );
     animations.last.last.controller.addListener(_updateAnimStatus);
     _runAnimations();
     // animController.forward();
@@ -279,22 +291,18 @@ class _RollDiceViewState extends State<RollDiceView> with TickerProviderStateMix
 
   void _updateAnimStatus() {
     setState(() {
-      abilityScoreus = animations.first.first.controller.status != AnimationStatus.completed ||
-              animations.last.last.controller.status != AnimationStatus.completed
-          ? AnimationStatus.forward
-          : AnimationStatus.completed;
+      if (animations.last.last.controller.status == AnimationStatus.completed) {
+        rollStatus = AnimationStatus.completed;
+      }
     });
   }
 
   @override
   void dispose() {
-    animations.first.first.controller.removeListener(_updateAnimStatus);
-    animations.last.last.controller.removeListener(_updateAnimStatus);
-    for (final group in animations) {
-      for (final animation in group) {
-        animation.dispose();
-      }
-    }
+    _walkAnimations(((animation, groupIndex, animIndex) {
+      animation.controller.removeListener(_updateAnimStatus);
+      animation.dispose();
+    }));
     super.dispose();
   }
 }
