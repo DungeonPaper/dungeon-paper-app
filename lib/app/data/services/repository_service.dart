@@ -87,28 +87,11 @@ abstract class RepositoryCache {
   StorageDelegate get cache => CacheHandler.instance;
   Future<SearchResponse> get getFromRemote;
 
-  Future<void> init() async {
+  Future<void> init({bool ignoreCache = false}) async {
     debugPrint('Initializing repo: $id, cache prefix: "${cacheKey('')}"');
 
-    final cacheRes = SearchResponse.fromJson({
-      'Classes': await cache.getCollection(cacheKey('Classes')),
-      'Items': await cache.getCollection(cacheKey('Items')),
-      'Monsters': await cache.getCollection(cacheKey('Monsters')),
-      'Moves': await cache.getCollection(cacheKey('Moves')),
-      'Races': await cache.getCollection(cacheKey('Races')),
-      'Spells': await cache.getCollection(cacheKey('Spells')),
-      'Tags': await cache.getCollection(cacheKey('Tags')),
-      'Notes': await cache.getCollection(cacheKey('Notes')),
-    });
-
-    final behaviorMap = <RemoteBehavior, bool>{
-      RemoteBehavior.whenAnyEmpty: cacheRes.isAnyEmpty,
-      RemoteBehavior.whenAllEmpty: cacheRes.isAllEmpty,
-      RemoteBehavior.always: true,
-      RemoteBehavior.never: false,
-    };
-
-    final shouldLoadFromRemote = behaviorMap[loadRemote]!;
+    final cacheRes = await getCacheResponse();
+    final shouldLoadFromRemote = ignoreCache ? true : await shouldUseRemote(cacheRes);
 
     if (shouldLoadFromRemote) {
       debugPrint('Cache invalid for $id, loading from remote');
@@ -120,6 +103,30 @@ abstract class RepositoryCache {
     }
 
     registerListeners();
+  }
+
+  Future<SearchResponse> getCacheResponse() async {
+    return SearchResponse.fromJson({
+      'Classes': await cache.getCollection(cacheKey('Classes')),
+      'Items': await cache.getCollection(cacheKey('Items')),
+      'Monsters': await cache.getCollection(cacheKey('Monsters')),
+      'Moves': await cache.getCollection(cacheKey('Moves')),
+      'Races': await cache.getCollection(cacheKey('Races')),
+      'Spells': await cache.getCollection(cacheKey('Spells')),
+      'Tags': await cache.getCollection(cacheKey('Tags')),
+      'Notes': await cache.getCollection(cacheKey('Notes')),
+    });
+  }
+
+  Future<bool> shouldUseRemote(SearchResponse cacheRes) async {
+    final behaviorMap = <RemoteBehavior, bool>{
+      RemoteBehavior.whenAnyEmpty: cacheRes.isAnyEmpty,
+      RemoteBehavior.whenAllEmpty: cacheRes.isAllEmpty,
+      RemoteBehavior.always: true,
+      RemoteBehavior.never: false,
+    };
+
+    return behaviorMap[loadRemote]!;
   }
 
   void registerListeners() {

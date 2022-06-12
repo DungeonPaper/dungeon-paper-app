@@ -27,6 +27,10 @@ class AuthService extends GetxService with UserServiceMixin {
     );
   }
 
+  logout() {
+    auth.signOut();
+  }
+
   @override
   void onInit() {
     super.onInit();

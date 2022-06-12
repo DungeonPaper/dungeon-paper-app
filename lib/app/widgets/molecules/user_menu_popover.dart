@@ -29,157 +29,159 @@ class UserMenuPopover extends GetView<CharacterService> with AuthServiceMixin {
         final maxH = MediaQuery.of(context).size.height - 72;
         const avatarSize = 64.0;
 
-        return ListTileTheme.merge(
-          minLeadingWidth: 10,
-          dense: true,
-          contentPadding: EdgeInsets.zero,
-          child: Stack(
-            children: [
-              Positioned(
-                right: 0,
-                top: 0,
-                child: SafeArea(
-                  child: Card(
-                    child: ConstrainedBox(
-                      constraints: BoxConstraints(maxWidth: maxW, maxHeight: maxH),
-                      // height: maxH,
-                      child: ListView(
-                        // crossAxisAlignment: CrossAxisAlignment.start,
-                        // mainAxisSize: MainAxisSize.min,
-                        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-                        shrinkWrap: true,
-                        children: [
-                          ListTile(
-                            visualDensity: VisualDensity.compact,
-                            title: Text(
-                              '${userService.current.displayName} (@${userService.current.username})',
-                              style: textStyle,
+        return Obx(
+          () => ListTileTheme.merge(
+            minLeadingWidth: 10,
+            dense: true,
+            contentPadding: EdgeInsets.zero,
+            child: Stack(
+              children: [
+                Positioned(
+                  right: 0,
+                  top: 0,
+                  child: SafeArea(
+                    child: Card(
+                      child: ConstrainedBox(
+                        constraints: BoxConstraints(maxWidth: maxW, maxHeight: maxH),
+                        // height: maxH,
+                        child: ListView(
+                          // crossAxisAlignment: CrossAxisAlignment.start,
+                          // mainAxisSize: MainAxisSize.min,
+                          padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                          shrinkWrap: true,
+                          children: [
+                            ListTile(
+                              visualDensity: VisualDensity.compact,
+                              title: Text(
+                                '${userService.current.displayName} (@${userService.current.username})',
+                                style: textStyle,
+                              ),
+                              subtitle: Text(
+                                userService.current.email.isNotEmpty
+                                    ? userService.current.email
+                                    : S.current.userUnregistered,
+                              ),
+                              trailing: userService.isGuest
+                                  ? Row(
+                                      mainAxisSize: MainAxisSize.min,
+                                      children: [
+                                        ElevatedButton.icon(
+                                          onPressed: () => authService.loginWithGoogle(),
+                                          icon: const Icon(Icons.login),
+                                          label: Text(S.current.userLoginButton),
+                                        ),
+                                        const SizedBox(width: 16),
+                                        const UserAvatar(),
+                                      ],
+                                    )
+                                  : const UserAvatar(),
                             ),
-                            subtitle: Text(
-                              userService.current.email.isNotEmpty
-                                  ? userService.current.email
-                                  : S.current.userUnregistered,
+                            const Divider(),
+                            const SizedBox(height: 8),
+                            Text(
+                              S.current.userMenuRecentCharacters,
+                              style: Theme.of(context).textTheme.caption,
                             ),
-                            trailing: userService.isGuest
-                                ? Row(
-                                    mainAxisSize: MainAxisSize.min,
-                                    children: [
-                                      ElevatedButton.icon(
-                                        onPressed: () => authService.loginWithGoogle(),
-                                        icon: const Icon(Icons.login),
-                                        label: Text(S.current.userLoginButton),
-                                      ),
-                                      const SizedBox(width: 16),
-                                      const UserAvatar(),
-                                    ],
-                                  )
-                                : const UserAvatar(),
-                          ),
-                          const Divider(),
-                          const SizedBox(height: 8),
-                          Text(
-                            S.current.userMenuRecentCharacters,
-                            style: Theme.of(context).textTheme.caption,
-                          ),
-                          Padding(
-                            padding: const EdgeInsets.only(top: 8),
-                            child: Wrap(
-                              spacing: 4,
-                              runSpacing: 4,
-                              children: [
-                                for (final char in controller.charsByLastUsed.take(4))
-                                  InkWell(
-                                    borderRadius: BorderRadius.circular(8),
-                                    onTap: () {
-                                      controller.setCurrent(char.key);
-                                      Get.back();
-                                    },
-                                    child: Padding(
-                                      padding: const EdgeInsets.all(4),
-                                      child: Column(
-                                        children: [
-                                          CharacterAvatar.squircle(
-                                              character: char, size: avatarSize),
-                                          const SizedBox(height: 4),
-                                          SizedBox(
-                                            width: 60,
-                                            child: Text(
-                                              char.displayName,
-                                              overflow: TextOverflow.ellipsis,
-                                              textScaleFactor: 0.8,
-                                              textAlign: TextAlign.center,
-                                              style: textStyle,
+                            Padding(
+                              padding: const EdgeInsets.only(top: 8),
+                              child: Wrap(
+                                spacing: 4,
+                                runSpacing: 4,
+                                children: [
+                                  for (final char in controller.charsByLastUsed.take(4))
+                                    InkWell(
+                                      borderRadius: BorderRadius.circular(8),
+                                      onTap: () {
+                                        controller.setCurrent(char.key);
+                                        Get.back();
+                                      },
+                                      child: Padding(
+                                        padding: const EdgeInsets.all(4),
+                                        child: Column(
+                                          children: [
+                                            CharacterAvatar.squircle(
+                                                character: char, size: avatarSize),
+                                            const SizedBox(height: 4),
+                                            SizedBox(
+                                              width: 60,
+                                              child: Text(
+                                                char.displayName,
+                                                overflow: TextOverflow.ellipsis,
+                                                textScaleFactor: 0.8,
+                                                textAlign: TextAlign.center,
+                                                style: textStyle,
+                                              ),
                                             ),
-                                          ),
-                                        ],
+                                          ],
+                                        ),
                                       ),
                                     ),
-                                  ),
-                              ],
+                                ],
+                              ),
                             ),
-                          ),
-                          const SizedBox(height: 8),
-                          const Divider(),
-                          ListTile(
-                            visualDensity: VisualDensity.compact,
-                            title: Text(S.current.addGeneric(S.current.entity(Character))),
-                            leading: const Icon(Icons.person_add),
-                            onTap: () {
-                              Get.back();
-                              Get.toNamed(Routes.createCharacter);
-                            },
-                          ),
-                          ListTile(
-                            visualDensity: VisualDensity.compact,
-                            dense: true,
-                            title: Text(S.current.allGeneric(S.current.entityPlural(Character))),
-                            leading: const Icon(Icons.group),
-                            onTap: () {
-                              Get.back();
-                              Get.toNamed(Routes.characterList);
-                            },
-                          ),
-                          const Divider(),
-                          ListTile(
-                            visualDensity: VisualDensity.compact,
-                            title: Text(S.current.importExportTitle),
-                            leading: const Icon(Icons.import_export),
-                            onTap: () {
-                              Get.back();
-                              Get.toNamed(Routes.importExport);
-                            },
-                          ),
-                          ListTile(
-                            visualDensity: VisualDensity.compact,
-                            title: Text(S.current.settingsTitle),
-                            leading: const Icon(Icons.settings),
-                            onTap: () {
-                              Get.back();
-                              Get.toNamed(Routes.settings);
-                            },
-                          ),
-                          ListTile(
-                            visualDensity: VisualDensity.compact,
-                            title: Text(S.current.aboutTitle),
-                            leading: const Icon(Icons.info),
-                            onTap: () => null,
-                          ),
-                          if (!userService.isGuest) ...[
+                            const SizedBox(height: 8),
                             const Divider(),
                             ListTile(
                               visualDensity: VisualDensity.compact,
-                              title: Text(S.current.userLogoutButton),
-                              leading: const Icon(Icons.logout),
+                              title: Text(S.current.addGeneric(S.current.entity(Character))),
+                              leading: const Icon(Icons.person_add),
+                              onTap: () {
+                                Get.back();
+                                Get.toNamed(Routes.createCharacter);
+                              },
+                            ),
+                            ListTile(
+                              visualDensity: VisualDensity.compact,
+                              dense: true,
+                              title: Text(S.current.allGeneric(S.current.entityPlural(Character))),
+                              leading: const Icon(Icons.group),
+                              onTap: () {
+                                Get.back();
+                                Get.toNamed(Routes.characterList);
+                              },
+                            ),
+                            const Divider(),
+                            ListTile(
+                              visualDensity: VisualDensity.compact,
+                              title: Text(S.current.importExportTitle),
+                              leading: const Icon(Icons.import_export),
+                              onTap: () {
+                                Get.back();
+                                Get.toNamed(Routes.importExport);
+                              },
+                            ),
+                            ListTile(
+                              visualDensity: VisualDensity.compact,
+                              title: Text(S.current.settingsTitle),
+                              leading: const Icon(Icons.settings),
+                              onTap: () {
+                                Get.back();
+                                Get.toNamed(Routes.settings);
+                              },
+                            ),
+                            ListTile(
+                              visualDensity: VisualDensity.compact,
+                              title: Text(S.current.aboutTitle),
+                              leading: const Icon(Icons.info),
                               onTap: () => null,
                             ),
+                            if (!userService.isGuest) ...[
+                              const Divider(),
+                              ListTile(
+                                visualDensity: VisualDensity.compact,
+                                title: Text(S.current.userLogoutButton),
+                                leading: const Icon(Icons.logout),
+                                onTap: () => userService.logout(),
+                              ),
+                            ],
                           ],
-                        ],
+                        ),
                       ),
                     ),
                   ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
         );
       },

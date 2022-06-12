@@ -16,7 +16,7 @@ class CharacterService extends GetxService {
 
   final _pageController = PageController(initialPage: 1).obs;
   final lastIntPage = 0.obs;
-  late StreamSubscription _sub;
+  late StreamSubscription? _sub;
 
   PageController get pageController => _pageController.value;
   double get page => pageController.hasClients && pageController.positions.length == 1
@@ -67,10 +67,11 @@ class CharacterService extends GetxService {
   void onInit() async {
     super.onInit();
     pageController.addListener(refreshPage);
-    await _listenToChars();
+    await registerCharacterListener();
   }
 
-  Future<void> _listenToChars() async {
+  Future<void> registerCharacterListener() async {
+    _sub?.cancel();
     _sub = StorageHandler.instance.collectionListener('Characters', charsListener);
   }
 
@@ -144,7 +145,7 @@ class CharacterService extends GetxService {
   @override
   void onClose() {
     pageController.removeListener(refreshPage);
-    _sub.cancel();
+    _sub?.cancel();
   }
 
   void updateAll(Iterable<Character> chars) {
