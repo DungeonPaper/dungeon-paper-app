@@ -487,6 +487,36 @@ class S {
     );
   }
 
+  /// `You need to be signed in to upload images.`
+  String get basicInfoImageNeedAccountPrefix {
+    return Intl.message(
+      'You need to be signed in to upload images.',
+      name: 'basicInfoImageNeedAccountPrefix',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Sign in or create an account`
+  String get basicInfoImageNeedAccountLinkLabel {
+    return Intl.message(
+      'Sign in or create an account',
+      name: 'basicInfoImageNeedAccountLinkLabel',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `, or upload using your own URL below.`
+  String get basicInfoImageNeedAccountSuffix {
+    return Intl.message(
+      ', or upload using your own URL below.',
+      name: 'basicInfoImageNeedAccountSuffix',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `Remove Photo`
   String get basicInfoImageRemove {
     return Intl.message(

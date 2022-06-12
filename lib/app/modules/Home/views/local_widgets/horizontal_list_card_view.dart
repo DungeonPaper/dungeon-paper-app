@@ -29,6 +29,7 @@ class HorizontalCardListView<T> extends StatelessWidget {
     if (items.isEmpty) {
       return Container();
     }
+    final displayedItems = itemsObs.isEmpty ? items : itemsObs;
     return SizedBox(
       height: cardSize.height,
       width: double.infinity,
@@ -39,7 +40,7 @@ class HorizontalCardListView<T> extends StatelessWidget {
         // itemExtent: 2,
         padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
         children: [
-          for (final item in enumerate(itemsObs.isEmpty ? items : itemsObs))
+          for (final item in enumerate(displayedItems))
             Padding(
               padding: EdgeInsets.only(right: item.index == items.length - 1 ? 0 : 8),
               child: SizedBox(
@@ -54,12 +55,15 @@ class HorizontalCardListView<T> extends StatelessWidget {
                       ExpandedCardDialogView<T>(
                         // heroTag: getKeyFor(item.value),
                         heroTag: null,
-                        builder: (context) => expandedCardBuilder(
-                          context,
-                          item.value,
-                          item.index,
-                          // onUpdate
-                        ),
+                        builder: (context) =>
+                            item.value != null && item.index < displayedItems.length
+                                ? expandedCardBuilder(
+                                    context,
+                                    item.value,
+                                    item.index,
+                                    // onUpdate
+                                  )
+                                : Container(),
                       ),
                       // opaque: false,
                       // transition: Transition.downToUp,

@@ -268,6 +268,13 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Choose Photo..."),
         "basicInfoImageChooseNew":
             MessageLookupByLibrary.simpleMessage("Choose New Photo..."),
+        "basicInfoImageNeedAccountLinkLabel":
+            MessageLookupByLibrary.simpleMessage(
+                "Sign in or create an account"),
+        "basicInfoImageNeedAccountPrefix": MessageLookupByLibrary.simpleMessage(
+            "You need to be signed in to upload images."),
+        "basicInfoImageNeedAccountSuffix": MessageLookupByLibrary.simpleMessage(
+            ", or upload using your own URL below."),
         "basicInfoImageRemove":
             MessageLookupByLibrary.simpleMessage("Remove Photo"),
         "basicInformationTitle":
