@@ -37,7 +37,7 @@ class ItemCardMini extends StatelessWidget {
           ItemWeightChip(item: item),
           const SizedBox(width: 4),
         ],
-        ItemAmountChip(item: item),
+        if (item.amount != 1) ItemAmountChip(item: item),
       ],
       dice: const [],
       icon: showIcon ? SvgIcon(item.icon, size: 16) : null,

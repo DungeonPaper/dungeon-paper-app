@@ -50,7 +50,7 @@ class ItemCard extends StatelessWidget {
           ItemWeightChip(item: item),
           const SizedBox(width: 4),
         ],
-        ItemAmountChip(item: item),
+        if (item.amount != 1) ItemAmountChip(item: item),
       ],
       chips: item.tags.map((t) => TagChip.openDescription(tag: t)),
       dice: const [],
