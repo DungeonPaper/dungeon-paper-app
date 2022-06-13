@@ -66,7 +66,7 @@ class UserMenuPopover extends GetView<CharacterService> with AuthServiceMixin {
                                       mainAxisSize: MainAxisSize.min,
                                       children: [
                                         ElevatedButton.icon(
-                                          onPressed: () => authService.loginWithGoogle(),
+                                          onPressed: () => Get.toNamed(Routes.login),
                                           icon: const Icon(Icons.login),
                                           label: Text(S.current.userLoginButton),
                                         ),

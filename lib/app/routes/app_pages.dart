@@ -30,6 +30,8 @@ import '../modules/LibraryList/views/character_classes_library_list_view.dart';
 import '../modules/LibraryList/views/items_library_list_view.dart';
 import '../modules/LibraryList/views/moves_library_list_view.dart';
 import '../modules/LibraryList/views/spells_library_list_view.dart';
+import '../modules/Login/bindings/login_binding.dart';
+import '../modules/Login/views/login_view.dart';
 import '../modules/Settings/bindings/settings_binding.dart';
 import '../modules/Settings/views/settings_view.dart';
 import '../modules/StartingGearForm/bindings/starting_gear_form_binding.dart';
@@ -48,6 +50,11 @@ class AppPages {
   static const initial = Routes.home;
 
   static final routes = [
+    GetPage(
+      name: _Paths.login,
+      page: () => const LoginView(),
+      binding: LoginBinding(),
+    ),
     GetPage(
       name: Routes.home,
       page: () => const HomeView(),

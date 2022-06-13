@@ -1,6 +1,7 @@
 import 'package:dungeon_paper/app/data/models/character.dart';
 import 'package:dungeon_paper/app/data/services/user_service.dart';
 import 'package:dungeon_paper/app/themes/colors.dart';
+import 'package:dungeon_paper/app/widgets/atoms/LabeledDivider.dart';
 import 'package:dungeon_paper/app/widgets/atoms/advanced_floating_action_button.dart';
 import 'package:dungeon_paper/app/widgets/atoms/character_avatar.dart';
 import 'package:dungeon_paper/app/widgets/atoms/confirm_exit_view.dart';
@@ -140,15 +141,7 @@ class BasicInfoFormView extends GetView<BasicInfoFormController> with UserServic
                     ),
                   )
                 ],
-                Row(
-                  children: [
-                    const Expanded(child: Divider(height: 48)),
-                    const SizedBox(width: 8),
-                    Text(S.current.separatorOr),
-                    const SizedBox(width: 8),
-                    const Expanded(child: Divider(height: 48)),
-                  ],
-                ),
+                LabeledDivider(label: Text(S.current.separatorOr)),
                 TextFormField(
                   controller: controller.avatarUrl.value,
                   textInputAction: TextInputAction.done,

@@ -31,7 +31,7 @@ class _RollDiceViewState extends State<RollDiceView> with TickerProviderStateMix
   final diceSize = 56.0;
   final diceSpacing = 24.0;
   late AnimationStatus rollStatus;
-  late List<List<_AnimSet>> animations;
+  List<List<_AnimSet>> animations = [];
   late List<dw.Dice> dice;
   late List<dw.Dice> withoutModDice;
   late ScrollController scrollController;
@@ -237,6 +237,8 @@ class _RollDiceViewState extends State<RollDiceView> with TickerProviderStateMix
   }
 
   _reRoll() async {
+    rollStatus = AnimationStatus.forward;
+
     // play back quickly
     await _walkAnimations((animation, groupIndex, animIndex) {
       animation.controller.duration = RollDiceView.rollAnimResetDuration;
@@ -262,7 +264,8 @@ class _RollDiceViewState extends State<RollDiceView> with TickerProviderStateMix
   }
 
   FutureOr<void> _walkAnimations(
-      FutureOr<void> Function(_AnimSet animation, int groupIndex, int animIndex) cb) async {
+    FutureOr<void> Function(_AnimSet animation, int groupIndex, int animIndex) cb,
+  ) async {
     for (final group in enumerate(animations)) {
       for (final anim in enumerate(group.value)) {
         await cb(anim.value, group.index, anim.index);
@@ -287,7 +290,6 @@ class _RollDiceViewState extends State<RollDiceView> with TickerProviderStateMix
     );
     animations.last.last.controller.addListener(_updateAnimStatus);
     _runAnimations();
-    // animController.forward();
   }
 
   void _updateAnimStatus() {

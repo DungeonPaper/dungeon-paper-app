@@ -141,18 +141,20 @@ class RichTextField extends StatelessWidget {
   }
 
   Widget _buildInput(BuildContext context) {
+    final _label = label != null ? Text(label!) : null;
+
     return TextFormField(
       controller: controller,
       initialValue: initialValue,
       focusNode: focusNode,
       decoration: decoration?.copyWith(
             hintText: hintText,
-            label: label != null ? Text(label!) : null,
+            label: _label,
           ) ??
           InputDecoration(
             filled: true,
             hintText: hintText,
-            label: label != null ? Text(label!) : null,
+            label: _label,
           ),
       keyboardType: keyboardType,
       textCapitalization: textCapitalization,
@@ -205,14 +207,12 @@ class RichTextField extends StatelessWidget {
 
   SizedBox _buildRichControls(BuildContext context) {
     final theme = Theme.of(context);
-    final textTheme = theme.textTheme;
+    // final textTheme = theme.textTheme;
     final mdTheme = MarkdownStyleSheet.fromTheme(theme);
     const divider = Padding(padding: EdgeInsets.symmetric(vertical: 8), child: VerticalDivider());
     const thinDivider = Padding(
       padding: EdgeInsets.symmetric(vertical: 8),
-      child: VerticalDivider(
-        width: 4,
-      ),
+      child: VerticalDivider(width: 4),
     );
     return SizedBox(
       height: 40,

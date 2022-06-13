@@ -32,6 +32,7 @@ dependencies:
   dungeon_world_data:
     path: ../dungeon_world_data
   dynamic_themes: ^1.1.0
+  email_validator: ^2.0.1
   firebase_analytics: ^9.1.0
   firebase_auth: ^3.3.19
   firebase_core: ^1.12.0
