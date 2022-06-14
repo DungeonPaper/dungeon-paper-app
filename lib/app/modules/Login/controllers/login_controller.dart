@@ -2,6 +2,7 @@ import 'package:dungeon_paper/app/data/services/auth_service.dart';
 import 'package:dungeon_paper/app/data/services/character_service.dart';
 import 'package:dungeon_paper/app/data/services/loading_service.dart';
 import 'package:dungeon_paper/app/modules/Login/views/login_progress_dialog_view.dart';
+import 'package:dungeon_paper/app/routes/app_pages.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -16,16 +17,14 @@ class LoginController extends GetxController
 
   void loginWithPassword() async {
     await authService.loginWithPassword(email: email.text, password: password.text);
-    Get.back();
+    Get.offAllNamed(Routes.home);
   }
 
   void loginWithGoogle() async {
     loadingService.loadingUser = true;
     loadingService.loadingCharacters = false;
     await authService.loginWithGoogle();
-    Get.back();
-    Get.dialog(const LoginProgressDialogView());
-    charService.displayingLoader.value = true;
+    Get.offAllNamed(Routes.home);
   }
 
   @override

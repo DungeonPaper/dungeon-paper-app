@@ -12,7 +12,6 @@ import 'loading_service.dart';
 class CharacterService extends GetxService with LoadingServiceMixin {
   final all = <String, Character>{}.obs;
   final _current = Rx<String?>(null);
-  final displayingLoader = false.obs;
 
   final _pageController = PageController(initialPage: 1).obs;
   final lastIntPage = 0.obs;
@@ -80,9 +79,6 @@ class CharacterService extends GetxService with LoadingServiceMixin {
 
     all.addAll(Map.fromIterable(list, key: (c) => c.key));
     loadingService.loadingCharacters = false;
-    if (displayingLoader.value) {
-      Get.back();
-    }
 
     if (all.isNotEmpty && _current.value == null) {
       final hasLastChar = all.values.any((c) => c.meta.data?.lastUsed != null);
