@@ -24,7 +24,7 @@ class ExportController extends GetxController
     implements ImportExportSelectionData {
   final toExport = ExportSelections().obs;
 
-  List<Character> get characters => characterService.all;
+  List<Character> get characters => characterService.allAsList;
   List<Move> get moves => repo.my.moves.values.toList();
   List<Spell> get spells => repo.my.spells.values.toList();
   List<Item> get items => repo.my.items.values.toList();

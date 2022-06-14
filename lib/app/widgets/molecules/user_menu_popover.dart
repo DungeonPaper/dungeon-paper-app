@@ -66,7 +66,10 @@ class UserMenuPopover extends GetView<CharacterService> with AuthServiceMixin {
                                       mainAxisSize: MainAxisSize.min,
                                       children: [
                                         ElevatedButton.icon(
-                                          onPressed: () => Get.toNamed(Routes.login),
+                                          onPressed: () {
+                                            Get.back();
+                                            Get.toNamed(Routes.login);
+                                          },
                                           icon: const Icon(Icons.login),
                                           label: Text(S.current.userLoginButton),
                                         ),
@@ -171,7 +174,10 @@ class UserMenuPopover extends GetView<CharacterService> with AuthServiceMixin {
                                 visualDensity: VisualDensity.compact,
                                 title: Text(S.current.userLogoutButton),
                                 leading: const Icon(Icons.logout),
-                                onTap: () => userService.logout(),
+                                onTap: () {
+                                  Get.back();
+                                  userService.logout();
+                                },
                               ),
                             ],
                           ],

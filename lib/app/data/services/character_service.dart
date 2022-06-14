@@ -9,10 +9,12 @@ import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
 
 import '../models/character.dart';
+import 'loading_service.dart';
 
-class CharacterService extends GetxService {
-  final _all = <String, Character>{}.obs;
+class CharacterService extends GetxService with LoadingServiceMixin {
+  final all = <String, Character>{}.obs;
   final _current = Rx<String?>(null);
+  final displayingLoader = false.obs;
 
   final _pageController = PageController(initialPage: 1).obs;
   final lastIntPage = 0.obs;
@@ -23,13 +25,13 @@ class CharacterService extends GetxService {
       ? pageController.page ?? 0
       : 0;
 
-  Character? get current => _current.value != null ? _all[_current.value] : null;
+  Character? get current => _current.value != null ? all[_current.value] : null;
 
-  List<Character> get all => _all.values.toList();
+  List<Character> get allAsList => all.values.toList();
 
   Map<String, List<Character>> get charsByCategory {
     final out = <String, List<Character>>{};
-    for (final char in _all.values) {
+    for (final char in all.values) {
       out[char.settings.category ?? ''] ??= [];
       out[char.settings.category ?? '']!.add(char);
     }
@@ -41,12 +43,12 @@ class CharacterService extends GetxService {
   }
 
   void clear() {
-    _all.clear();
+    all.clear();
     _current.value = null;
   }
 
   void setCurrent(String key) {
-    if (_all.containsKey(key)) {
+    if (all.containsKey(key)) {
       _current.value = key;
       updateCharacter(
         current!.copyWith(
@@ -58,7 +60,7 @@ class CharacterService extends GetxService {
   }
 
   Iterable<Character> get charsByLastUsed {
-    final copy = [..._all.values];
+    final copy = [...all.values];
     copy.sort(dateComparator(order: SortOrder.desc, parse: (char) => char?.meta.data?.lastUsed));
     return copy;
   }
@@ -78,16 +80,19 @@ class CharacterService extends GetxService {
   void charsListener(List<DocData> json) {
     var list = json.map((c) => Character.fromJson(c));
 
-    _all.addAll(Map.fromIterable(list, key: (c) => c.key));
+    all.addAll(Map.fromIterable(list, key: (c) => c.key));
+    loadingService.setLoading(LoadKey.characters, false);
+    if (displayingLoader.value) {
+      Get.back();
+    }
 
-    if (_all.isNotEmpty && _current.value == null) {
-      final hasLastChar = _all.values.any((c) => c.meta.data?.lastUsed != null);
+    if (all.isNotEmpty && _current.value == null) {
+      final hasLastChar = all.values.any((c) => c.meta.data?.lastUsed != null);
       if (hasLastChar) {
         final lastChar = charsByLastUsed.first;
         _current.value = lastChar.key;
       } else {
-        _current.value = _all.keys.first;
-        prefs.setString(PrefKeys.lastLoadedCharacter, _current.value!);
+        _current.value = all.keys.first;
       }
     }
   }
@@ -107,9 +112,9 @@ class CharacterService extends GetxService {
 
   void updateCharacter(Character character, {bool switchToCharacter = false}) {
     // (StorageHandler.instance.delegate as LocalStorageDelegate).storage.collection('Characters');
-    _all[character.key] = character;
+    all[character.key] = character;
     StorageHandler.instance.update('Characters', character.key, character.toJson());
-    if (switchToCharacter || _current.value == null || !_all.containsKey(_current.value)) {
+    if (switchToCharacter || _current.value == null || !all.containsKey(_current.value)) {
       setCurrent(character.key);
     }
     debugPrint('Updated char: ${character.key} (${character.displayName})');
@@ -117,7 +122,7 @@ class CharacterService extends GetxService {
   }
 
   void createCharacter(Character character, {bool switchToCharacter = false}) {
-    _all[character.key] = character;
+    all[character.key] = character;
     StorageHandler.instance.create('Characters', character.key, character.toJson());
     if (switchToCharacter || _current.value == null) {
       _current.value = character.key;
@@ -127,10 +132,10 @@ class CharacterService extends GetxService {
   }
 
   void deleteCharacter(Character character) {
-    _all.remove(character.key);
+    all.remove(character.key);
     StorageHandler.instance.delete('Characters', character.key);
     if (character.key == _current.value) {
-      _current.value = _all.keys.first;
+      _current.value = all.keys.first;
     }
     debugPrint('Deleted char: ${character.key} (${character.displayName})');
   }

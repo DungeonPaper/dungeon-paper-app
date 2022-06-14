@@ -1,5 +1,5 @@
 import 'package:dungeon_paper/app/data/services/auth_service.dart';
-import 'package:dungeon_paper/app/widgets/atoms/LabeledDivider.dart';
+import 'package:dungeon_paper/app/widgets/atoms/labeled_divider.dart';
 import 'package:dungeon_paper/generated/l10n.dart';
 import 'package:email_validator/email_validator.dart';
 import 'package:flutter/material.dart';
@@ -8,7 +8,7 @@ import 'package:get/get.dart';
 
 import '../controllers/login_controller.dart';
 
-class LoginView extends GetView<LoginController> with AuthServiceMixin {
+class LoginView extends GetView<LoginController> {
   const LoginView({Key? key}) : super(key: key);
 
   @override
@@ -29,7 +29,7 @@ class LoginView extends GetView<LoginController> with AuthServiceMixin {
                 child: Column(
                   children: [
                     TextFormField(
-                      controller: controller.username,
+                      controller: controller.email,
                       keyboardType: TextInputType.emailAddress,
                       autofillHints: const [AutofillHints.email],
                       decoration: const InputDecoration(
@@ -61,19 +61,14 @@ class LoginView extends GetView<LoginController> with AuthServiceMixin {
                     ),
                     Obx(
                       () => ElevatedButton(
-                        onPressed: controller.valid
-                            ? () => authService.loginWithPassword(
-                                  email: controller.username.text,
-                                  password: controller.password.text,
-                                )
-                            : null,
+                        onPressed: controller.valid ? controller.loginWithPassword : null,
                         // TODO intl
                         child: const Text('Sign in'),
                       ),
                     ),
                     LabeledDivider(label: Text(S.current.separatorOr)),
                     ElevatedButton(
-                      onPressed: () => authService.loginWithGoogle(),
+                      onPressed: controller.loginWithGoogle,
                       child: Text('Sign in with Google'),
                     ),
                   ],

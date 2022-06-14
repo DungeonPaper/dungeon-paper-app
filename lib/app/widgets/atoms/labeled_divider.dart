@@ -4,19 +4,23 @@ class LabeledDivider extends StatelessWidget {
   const LabeledDivider({
     Key? key,
     required this.label,
+    this.height = 48,
+    this.gap = 8,
   }) : super(key: key);
 
   final Widget label;
+  final double height;
+  final double gap;
 
   @override
   Widget build(BuildContext context) {
     return Row(
       children: [
-        const Expanded(child: Divider(height: 48)),
-        const SizedBox(width: 8),
+        Expanded(child: Divider(height: height)),
+        SizedBox(width: gap),
         label,
-        const SizedBox(width: 8),
-        const Expanded(child: Divider(height: 48)),
+        SizedBox(width: gap),
+        Expanded(child: Divider(height: height)),
       ],
     );
   }

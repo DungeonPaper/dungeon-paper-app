@@ -14,7 +14,7 @@ class UserService extends GetxService
   final _current = User.guest().obs;
   User get current => _current.value;
 
-  void loadUserData(fba.User user) async {
+  Future<void> loadUserData(fba.User user) async {
     final email = user.email;
     debugPrint('loading user data for $email');
     StorageHandler.instance.currentDelegate = 'firestore';
