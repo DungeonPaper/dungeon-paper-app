@@ -26,7 +26,6 @@ class LoginController extends GetxController
     Get.back();
     Get.dialog(const LoginProgressDialogView());
     charService.displayingLoader.value = true;
-    loadingService.setLoading(LoadKey.user, false);
   }
 
   @override

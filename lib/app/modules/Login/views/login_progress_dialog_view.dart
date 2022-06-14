@@ -26,16 +26,18 @@ class LoginProgressDialogView extends GetView<LoadingService> with CharacterServ
 
   @override
   Widget build(BuildContext context) {
-    return AlertDialog(
-      // TODO intl
-      title: Text(title),
-      content: const SizedBox(
-        width: 100,
-        height: 100,
-        child: Center(
-          child: Padding(
-            padding: EdgeInsets.all(24),
-            child: CircularProgressIndicator.adaptive(),
+    return Obx(
+      () => AlertDialog(
+        // TODO intl
+        title: Text(title),
+        content: const SizedBox(
+          width: 100,
+          height: 100,
+          child: Center(
+            child: Padding(
+              padding: EdgeInsets.all(24),
+              child: CircularProgressIndicator.adaptive(),
+            ),
           ),
         ),
       ),
