@@ -1,5 +1,6 @@
 import 'package:dungeon_paper/app/data/services/character_service.dart';
 import 'package:dungeon_paper/app/data/services/loading_service.dart';
+import 'package:dungeon_paper/generated/l10n.dart';
 import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
@@ -13,22 +14,21 @@ class LoginProgressDialogView extends GetView<LoadingService> with CharacterServ
   const LoginProgressDialogView({Key? key}) : super(key: key);
 
   String get title {
-    if (controller.isLoading(LoadKey.user)) {
-      return 'Signing in...';
+    if (controller.loadingUser) {
+      return S.current.loadingUser;
     }
 
-    if (controller.isLoading(LoadKey.characters)) {
-      return 'Loading characters...';
+    if (controller.loadingCharacters) {
+      return S.current.loadingCharacters;
     }
 
-    return 'Loading info...';
+    return S.current.loadingGeneral;
   }
 
   @override
   Widget build(BuildContext context) {
     return Obx(
       () => AlertDialog(
-        // TODO intl
         title: Text(title),
         content: const SizedBox(
           width: 100,

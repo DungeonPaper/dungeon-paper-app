@@ -1802,6 +1802,36 @@ class S {
     );
   }
 
+  /// `Getting characters...`
+  String get loadingCharacters {
+    return Intl.message(
+      'Getting characters...',
+      name: 'loadingCharacters',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Loading...`
+  String get loadingGeneral {
+    return Intl.message(
+      'Loading...',
+      name: 'loadingGeneral',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Signing in...`
+  String get loadingUser {
+    return Intl.message(
+      'Signing in...',
+      name: 'loadingUser',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `Content Preview`
   String get markdownPreview {
     return Intl.message(

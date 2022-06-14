@@ -1,4 +1,3 @@
-import 'package:dungeon_paper/app/data/services/auth_service.dart';
 import 'package:dungeon_paper/app/widgets/atoms/labeled_divider.dart';
 import 'package:dungeon_paper/generated/l10n.dart';
 import 'package:email_validator/email_validator.dart';
@@ -69,7 +68,7 @@ class LoginView extends GetView<LoginController> {
                     LabeledDivider(label: Text(S.current.separatorOr)),
                     ElevatedButton(
                       onPressed: controller.loginWithGoogle,
-                      child: Text('Sign in with Google'),
+                      child: const Text('Sign in with Google'),
                     ),
                   ],
                 ),

@@ -20,8 +20,8 @@ class LoginController extends GetxController
   }
 
   void loginWithGoogle() async {
-    loadingService.setLoading(LoadKey.user, true);
-    loadingService.setLoading(LoadKey.characters, true);
+    loadingService.loadingUser = true;
+    loadingService.loadingCharacters = false;
     await authService.loginWithGoogle();
     Get.back();
     Get.dialog(const LoginProgressDialogView());

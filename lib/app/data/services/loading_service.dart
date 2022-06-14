@@ -1,8 +1,4 @@
-import 'package:dungeon_paper/app/data/services/user_service.dart';
-import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:google_sign_in/google_sign_in.dart';
 
 enum LoadKey {
   user,
@@ -17,11 +13,17 @@ class LoadingService extends GetxService {
     LoadKey.characters: false,
   }.obs;
 
-  void setLoading(LoadKey key, bool value) {
-    _map[key] = value;
-  }
+  bool get loadingUser => _map[LoadKey.user] == true;
+  set loadingUser(bool value) => _map[LoadKey.user] = value;
 
-  bool isLoading(LoadKey key) => _map[key] == true;
+  bool get loadingCharacters => _map[LoadKey.characters] == true;
+  set loadingCharacters(bool value) => _map[LoadKey.characters] = value;
+
+  bool get loadingRepo => _map[LoadKey.repo] == true;
+  set loadingRepo(bool value) => _map[LoadKey.repo] = value;
+
+  bool get loadingLibrary => _map[LoadKey.library] == true;
+  set loadingLibrary(bool value) => _map[LoadKey.library] = value;
 }
 
 mixin LoadingServiceMixin {

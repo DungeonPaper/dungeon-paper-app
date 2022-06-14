@@ -27,7 +27,7 @@ class UserService extends GetxService
     final dbUser = await FirestoreDelegate().getDocument('Data', email!);
     _current.value = User.fromJson(dbUser!);
     charService.registerCharacterListener();
-    loadingService.setLoading(LoadKey.user, false);
+    loadingService.loadingUser = false;
   }
 
   bool get isGuest => current.isGuest;

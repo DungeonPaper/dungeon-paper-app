@@ -1,7 +1,5 @@
 import 'dart:async';
 
-import 'package:dungeon_paper/core/pref_keys.dart';
-import 'package:dungeon_paper/core/shared_preferences.dart';
 import 'package:dungeon_paper/core/storage_handler/storage_handler.dart';
 import 'package:dungeon_paper/core/utils/date_utils.dart';
 import 'package:dungeon_paper/core/utils/enums.dart';
@@ -81,7 +79,7 @@ class CharacterService extends GetxService with LoadingServiceMixin {
     var list = json.map((c) => Character.fromJson(c));
 
     all.addAll(Map.fromIterable(list, key: (c) => c.key));
-    loadingService.setLoading(LoadKey.characters, false);
+    loadingService.loadingCharacters = false;
     if (displayingLoader.value) {
       Get.back();
     }

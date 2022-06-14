@@ -481,6 +481,10 @@ class MessageLookup extends MessageLookupByLibrary {
         "itemAmountX": m36,
         "items": MessageLookupByLibrary.simpleMessage("Items"),
         "itemsWithCount": m37,
+        "loadingCharacters":
+            MessageLookupByLibrary.simpleMessage("Getting characters..."),
+        "loadingGeneral": MessageLookupByLibrary.simpleMessage("Loading..."),
+        "loadingUser": MessageLookupByLibrary.simpleMessage("Signing in..."),
         "markdownPreview":
             MessageLookupByLibrary.simpleMessage("Content Preview"),
         "moveCategory": m38,
