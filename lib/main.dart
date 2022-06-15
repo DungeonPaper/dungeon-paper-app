@@ -33,7 +33,10 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return DynamicTheme(
       themeCollection: themeCollection,
-      defaultThemeId: prefs.getInt(PrefKeys.selectedThemeId) ?? AppThemes.parchment,
+      defaultThemeId: prefs.getInt(PrefKeys.selectedThemeId) ??
+          (MediaQuery.of(context).platformBrightness == Brightness.light
+              ? AppThemes.parchment
+              : AppThemes.dark),
       builder: (context, value) {
         // key: Key(DynamicTheme.of(context)?.themeId.toString() ?? 'none'),
         return GetMaterialApp(

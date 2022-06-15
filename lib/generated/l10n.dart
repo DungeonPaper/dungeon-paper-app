@@ -697,6 +697,56 @@ class S {
     );
   }
 
+  /// `{alignment}`
+  String characterHeaderSubtitleAlignment(Object alignment) {
+    return Intl.message(
+      '$alignment',
+      name: 'characterHeaderSubtitleAlignment',
+      desc: '',
+      args: [alignment],
+    );
+  }
+
+  /// `{charClass}`
+  String characterHeaderSubtitleClass(Object charClass) {
+    return Intl.message(
+      '$charClass',
+      name: 'characterHeaderSubtitleClass',
+      desc: '',
+      args: [charClass],
+    );
+  }
+
+  /// `Level {level}`
+  String characterHeaderSubtitleLevel(Object level) {
+    return Intl.message(
+      'Level $level',
+      name: 'characterHeaderSubtitleLevel',
+      desc: '',
+      args: [level],
+    );
+  }
+
+  /// `{race}`
+  String characterHeaderSubtitleRace(Object race) {
+    return Intl.message(
+      '$race',
+      name: 'characterHeaderSubtitleRace',
+      desc: '',
+      args: [race],
+    );
+  }
+
+  /// ` ∙ `
+  String get characterHeaderSubtitleSeparator {
+    return Intl.message(
+      ' ∙ ',
+      name: 'characterHeaderSubtitleSeparator',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `All Characters`
   String get characterListTitle {
     return Intl.message(
@@ -1340,7 +1390,7 @@ class S {
     );
   }
 
-  /// `{runtimeType, select, CharacterClass {Class} Item {Item} Monster {Monster} Move {Move} Race {Race} Spell {Spell} Tag {Tag} MoveCategory {Category} GearSelection {Starting Gear} Dice {Dice}  other {{runtimeType}}}`
+  /// `{runtimeType, select, CharacterClass {Class} Item {Item} Monster {Monster} Move {Move} Race {Race} Spell {Spell} Tag {Tag} MoveCategory {Category} GearSelection {Starting Gear} Dice {Dice} AbilityScore {Ability Score} other {{runtimeType}}}`
   String entity(Object runtimeType) {
     return Intl.select(
       runtimeType,
@@ -1355,6 +1405,7 @@ class S {
         'MoveCategory': 'Category',
         'GearSelection': 'Starting Gear',
         'Dice': 'Dice',
+        'AbilityScore': 'Ability Score',
         'other': '$runtimeType',
       },
       name: 'entity',
@@ -1363,7 +1414,7 @@ class S {
     );
   }
 
-  /// `{runtimeType, select, CharacterClass {Classes} Item {Items} Monster {Monsters} Move {Moves} Race {Races} Spell {Spells} Tag {Tags} MoveCategory {Categories} Dice {Dice} GearSelection {Starting Gear}other {{runtimeType}s}}`
+  /// `{runtimeType, select, CharacterClass {Classes} Item {Items} Monster {Monsters} Move {Moves} Race {Races} Spell {Spells} Tag {Tags} MoveCategory {Categories} Dice {Dice} GearSelection {Starting Gear} AbilityScore {Ability Scores} other {{runtimeType}s}}`
   String entityPlural(Object runtimeType) {
     return Intl.select(
       runtimeType,
@@ -1378,6 +1429,7 @@ class S {
         'MoveCategory': 'Categories',
         'Dice': 'Dice',
         'GearSelection': 'Starting Gear',
+        'AbilityScore': 'Ability Scores',
         'other': '${runtimeType}s',
       },
       name: 'entityPlural',

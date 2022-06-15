@@ -13,6 +13,15 @@ extension IterableUtils<T> on Iterable<T> {
     }
     return out;
   }
+
+  Iterable<T> joinObjects(T separator) {
+    return [
+      for (final i in enumerate(this)) ...[
+        i.value,
+        if (i.value != last) separator,
+      ],
+    ];
+  }
 }
 
 T sample<T>(Iterable<T> list) {

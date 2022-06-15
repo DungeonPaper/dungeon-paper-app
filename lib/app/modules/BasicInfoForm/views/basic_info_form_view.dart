@@ -1,6 +1,8 @@
 import 'package:dungeon_paper/app/data/models/character.dart';
 import 'package:dungeon_paper/app/data/services/user_service.dart';
+import 'package:dungeon_paper/app/routes/app_pages.dart';
 import 'package:dungeon_paper/app/themes/colors.dart';
+import 'package:dungeon_paper/app/widgets/atoms/hyperlink.dart';
 import 'package:dungeon_paper/app/widgets/atoms/labeled_divider.dart';
 import 'package:dungeon_paper/app/widgets/atoms/advanced_floating_action_button.dart';
 import 'package:dungeon_paper/app/widgets/atoms/character_avatar.dart';
@@ -9,7 +11,6 @@ import 'package:dungeon_paper/core/dw_icons.dart';
 import 'package:dungeon_paper/core/utils/content_generators/character_name_generator.dart';
 import 'package:dungeon_paper/core/utils/platform_string.dart';
 import 'package:dungeon_paper/generated/l10n.dart';
-import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
@@ -123,15 +124,10 @@ class BasicInfoFormView extends GetView<BasicInfoFormController> with UserServic
                             ),
                           ),
                           TextSpan(text: S.current.basicInfoImageNeedAccountPrefix + ' '),
-                          TextSpan(
-                            text: S.current.basicInfoImageNeedAccountLinkLabel,
-                            style: theme.textTheme.bodyText2!.copyWith(
-                              color: Colors.blue[700],
-                              decoration: TextDecoration.underline,
-                            ),
-                            recognizer: TapGestureRecognizer()
-                              // TODO open login screen
-                              ..onTap = () => debugPrint('Tapped link'),
+                          Hyperlink.textSpan(
+                            context,
+                            S.current.basicInfoImageNeedAccountLinkLabel,
+                            onTap: () => Get.toNamed(Routes.login),
                           ),
                           TextSpan(text: S.current.basicInfoImageNeedAccountSuffix),
                         ],

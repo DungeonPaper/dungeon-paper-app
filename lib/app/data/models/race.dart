@@ -5,6 +5,7 @@ import 'package:dungeon_world_data/dungeon_world_data.dart' as dw;
 import 'package:flutter/material.dart';
 
 import 'meta.dart';
+import 'move.dart';
 
 class Race extends dw.Race implements WithMeta {
   Race({
@@ -87,6 +88,18 @@ class Race extends dw.Race implements WithMeta {
         name: '',
         tags: [],
       );
+
+  Move toMove() => Move(
+      category: dw.MoveCategory.other,
+      classKeys: classKeys,
+      description: description,
+      dice: [],
+      explanation: explanation,
+      key: key,
+      meta: meta,
+      name: name,
+      tags: tags,
+      favorited: favorited);
 
   IconData get icon => DwIcons.riposte;
   static IconData get genericIcon => DwIcons.riposte;

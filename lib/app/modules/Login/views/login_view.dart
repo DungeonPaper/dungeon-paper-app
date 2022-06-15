@@ -1,4 +1,5 @@
 import 'package:dungeon_paper/app/widgets/atoms/labeled_divider.dart';
+import 'package:dungeon_paper/core/utils/password_validator.dart';
 import 'package:dungeon_paper/generated/l10n.dart';
 import 'package:email_validator/email_validator.dart';
 import 'package:flutter/material.dart';
@@ -53,10 +54,7 @@ class LoginView extends GetView<LoginController> {
                         label: Text('Password'),
                         floatingLabelBehavior: FloatingLabelBehavior.auto,
                       ),
-                      // TODO extract to password validator (or use old one)
-                      validator: (password) => password == null || password.length >= 8
-                          ? null
-                          : 'Password must contain at least 8 characters',
+                      validator: PasswordValidator.getMessage,
                     ),
                     Obx(
                       () => ElevatedButton(

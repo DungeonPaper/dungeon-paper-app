@@ -38,6 +38,7 @@ class AlignmentValue extends dw.Alignment implements WithMeta {
   };
 
   Widget get icon => iconMap[key]!;
+  IconData get iconData => (icon as Icon).icon!;
 
   @override
   AlignmentValue copyWith({

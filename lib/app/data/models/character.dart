@@ -216,18 +216,19 @@ class Character implements WithMeta<Character, CharacterMeta> {
     );
   }
 
-  factory Character.withClass({required CharacterClass characterClass}) {
+  factory Character.withClass({required CharacterClass characterClass, Race? race}) {
     return Character.empty().copyWith(
       characterClass: characterClass,
-      race: Race(
-        key: uuid(),
-        name: 'Human',
-        classKeys: [characterClass.key],
-        description: '',
-        explanation: '',
-        meta: Meta.version(1),
-        tags: [],
-      ),
+      race: race ??
+          Race(
+            key: uuid(),
+            name: 'Human',
+            classKeys: [characterClass.key],
+            description: '',
+            explanation: '',
+            meta: Meta.version(1),
+            tags: [],
+          ),
     );
   }
 

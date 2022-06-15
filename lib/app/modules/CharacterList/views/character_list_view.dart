@@ -53,7 +53,7 @@ class CharacterListPageView extends GetView<CharacterService> {
                               title: Text(char.displayName),
                               subtitle: CharacterSubtitle(
                                 character: char,
-                                wrapAlignment: WrapAlignment.start,
+                                textAlign: TextAlign.start,
                               ),
                               trailing: EntityEditMenu(
                                 onEdit: null,
