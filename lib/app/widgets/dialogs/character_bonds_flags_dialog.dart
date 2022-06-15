@@ -16,13 +16,20 @@ class CharacterBondsFlagsDialog extends GetView<CharacterService> with Character
 
   @override
   Widget build(BuildContext context) {
-    final textTheme = Theme.of(context).textTheme;
+    final theme = Theme.of(context);
+    final textTheme = theme.textTheme;
 
     return AlertDialog(
       title: Row(
         mainAxisSize: MainAxisSize.max,
         children: [
-          Expanded(child: Text(S.current.characterBondsFlagsDialogTitle)),
+          Expanded(
+            child: Obx(
+              () => Text(
+                SessionMark.categoryTitle(bonds: bonds, flags: flags),
+              ),
+            ),
+          ),
           IconButton(
             onPressed: () {
               Get.toNamed(
@@ -44,7 +51,7 @@ class CharacterBondsFlagsDialog extends GetView<CharacterService> with Character
       actions: [
         ElevatedButton.icon(
           icon: const Icon(Icons.check),
-          label: Text(S.current.ok),
+          label: Text(S.current.done),
           onPressed: () => Get.back(),
           style: ButtonThemes.primaryElevated(context),
         )
@@ -59,8 +66,38 @@ class CharacterBondsFlagsDialog extends GetView<CharacterService> with Character
               mainAxisSize: MainAxisSize.min,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                // TODO intl
-                if (bonds.isNotEmpty) Text('Bonds', style: textTheme.caption),
+                if (bonds.isEmpty && flags.isEmpty)
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 8),
+                    child: Row(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Transform.translate(
+                          offset: const Offset(0, 2),
+                          child: Container(
+                            child: Icon(
+                              Icons.question_mark,
+                              size: 12,
+                              color: theme.cardColor,
+                            ),
+                            decoration: BoxDecoration(
+                              color: textTheme.caption!.color,
+                              shape: BoxShape.circle,
+                            ),
+                          ),
+                        ),
+                        const SizedBox(width: 8),
+                        Expanded(
+                          child: Text(
+                            S.current.characterBondsFlagsDialogNoData,
+                            style: textTheme.caption,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                if (bonds.isNotEmpty && flags.isNotEmpty)
+                  Text(S.current.characterBondsFlagsDialogBonds, style: textTheme.caption),
                 for (final bond in bonds) ...[
                   ListTile(
                     visualDensity: VisualDensity.compact,
@@ -87,8 +124,8 @@ class CharacterBondsFlagsDialog extends GetView<CharacterService> with Character
                     title: Text(bond.description),
                   ),
                 ],
-                // TODO intl
-                if (flags.isNotEmpty) Text('Flags', style: textTheme.caption),
+                if (bonds.isNotEmpty && flags.isNotEmpty)
+                  Text(S.current.characterBondsFlagsDialogFlags, style: textTheme.caption),
                 for (final flag in flags) ...[
                   ListTile(
                     visualDensity: VisualDensity.compact,

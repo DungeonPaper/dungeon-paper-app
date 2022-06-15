@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'package:dungeon_paper/generated/l10n.dart';
 import 'package:dungeon_world_data/dungeon_world_data.dart' as dw;
 
 class SessionMark extends dw.SessionMark {
@@ -42,4 +43,16 @@ class SessionMark extends dw.SessionMark {
         completed: completed ?? this.completed,
         type: type ?? this.type,
       );
+
+  static String categoryTitle({
+    required List<SessionMark> bonds,
+    required List<SessionMark> flags,
+  }) =>
+      bonds.isNotEmpty && flags.isNotEmpty
+          ? S.current.characterBondsFlagsDialogTitle
+          : flags.isNotEmpty
+              ? S.current.characterBondsFlagsDialogFlags
+              : bonds.isNotEmpty
+                  ? S.current.characterBondsFlagsDialogBonds
+                  : S.current.characterBondsFlagsDialogTitle;
 }

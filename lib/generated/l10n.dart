@@ -677,6 +677,36 @@ class S {
     );
   }
 
+  /// `Bonds`
+  String get characterBondsFlagsDialogBonds {
+    return Intl.message(
+      'Bonds',
+      name: 'characterBondsFlagsDialogBonds',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Flags`
+  String get characterBondsFlagsDialogFlags {
+    return Intl.message(
+      'Flags',
+      name: 'characterBondsFlagsDialogFlags',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `You have no bonds or flags. You can add some using the edit button above, then mark them off as completed as you go along your adventure.`
+  String get characterBondsFlagsDialogNoData {
+    return Intl.message(
+      'You have no bonds or flags. You can add some using the edit button above, then mark them off as completed as you go along your adventure.',
+      name: 'characterBondsFlagsDialogNoData',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `Debilities`
   String get characterDebilitiesDialogTitle {
     return Intl.message(
@@ -1325,6 +1355,16 @@ class S {
     return Intl.message(
       'Number, e.g. 2 or -1',
       name: 'diceUseValuePlaceholder',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Done`
+  String get done {
+    return Intl.message(
+      'Done',
+      name: 'done',
       desc: '',
       args: [],
     );

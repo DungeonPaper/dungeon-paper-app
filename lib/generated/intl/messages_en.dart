@@ -321,6 +321,12 @@ class MessageLookup extends MessageLookupByLibrary {
             "Describe your character\'s appearance. You may use the presets from the buttons above."),
         "characterBioDialogTitle":
             MessageLookupByLibrary.simpleMessage("Character Biography"),
+        "characterBondsFlagsDialogBonds":
+            MessageLookupByLibrary.simpleMessage("Bonds"),
+        "characterBondsFlagsDialogFlags":
+            MessageLookupByLibrary.simpleMessage("Flags"),
+        "characterBondsFlagsDialogNoData": MessageLookupByLibrary.simpleMessage(
+            "You have no bonds or flags. You can add some using the edit button above, then mark them off as completed as you go along your adventure."),
         "characterBondsFlagsDialogTitle":
             MessageLookupByLibrary.simpleMessage("Bonds & Flags"),
         "characterDebilitiesDialogTitle":
@@ -428,6 +434,7 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Modifier value"),
         "diceUseValuePlaceholder":
             MessageLookupByLibrary.simpleMessage("Number, e.g. 2 or -1"),
+        "done": MessageLookupByLibrary.simpleMessage("Done"),
         "dynamicCategoriesItems":
             MessageLookupByLibrary.simpleMessage("Equipped Items"),
         "dynamicCategoriesMoves":

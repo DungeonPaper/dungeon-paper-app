@@ -1,3 +1,4 @@
+import 'package:dungeon_paper/app/data/models/session_marks.dart';
 import 'package:dungeon_paper/app/data/services/character_service.dart';
 import 'package:dungeon_paper/app/modules/AbilityScoresForm/controllers/ability_scores_form_controller.dart';
 import 'package:dungeon_paper/app/modules/BasicInfoForm/controllers/basic_info_form_controller.dart';
@@ -49,10 +50,15 @@ class HomeCharacterExtras extends GetView<CharacterService> {
           icon: const Icon(DwIcons.dice_d6_numbered),
           tooltip: S.current.characterRollsTitle,
         ),
-        IconButton(
-          onPressed: _openBondsFlags,
-          icon: Transform.scale(child: const Icon(Icons.handshake), scaleX: -1),
-          tooltip: S.current.characterBondsFlagsDialogTitle,
+        Obx(
+          () => IconButton(
+            onPressed: _openBondsFlags,
+            icon: Transform.scale(child: const Icon(Icons.handshake), scaleX: -1),
+            tooltip: SessionMark.categoryTitle(
+              bonds: controller.current?.bonds ?? [],
+              flags: controller.current?.flags ?? [],
+            ),
+          ),
         ),
         IconButton(
           onPressed: _openDebilities,

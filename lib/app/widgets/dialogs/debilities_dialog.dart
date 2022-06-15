@@ -14,7 +14,7 @@ class CharacterDebilitiesDialog extends GetView<CharacterService> with Character
 
   @override
   Widget build(BuildContext context) {
-    final textTheme = Theme.of(context).textTheme;
+    // final textTheme = Theme.of(context).textTheme;
 
     return AlertDialog(
       title: Text(S.current.characterDebilitiesDialogTitle),
@@ -42,12 +42,15 @@ class CharacterDebilitiesDialog extends GetView<CharacterService> with Character
                     contentPadding: const EdgeInsets.all(0),
                     title: Text(S.current.debilityLabel(ability.debilityName, ability.key)),
                     subtitle: Text(ability.debilityDescription),
+                    dense: true,
                     onTap: () => charService.updateCharacter(
                       char.copyWith(
                         abilityScores: char.abilityScores.copyWith(
-                          stats: char.abilityScores.stats.map((e) => e.key == ability.key
-                              ? e.copyWith(isDebilitated: !e.isDebilitated)
-                              : e),
+                          stats: char.abilityScores.stats.map(
+                            (e) => e.key == ability.key
+                                ? e.copyWith(isDebilitated: !e.isDebilitated)
+                                : e,
+                          ),
                         ),
                       ),
                     ),
