@@ -157,14 +157,16 @@ class _CharacterHomeNavBarState extends State<CharacterHomeNavBar> {
         mainAxisAlignment: MainAxisAlignment.spaceAround,
         children: enumerate(items.keys)
             .map(
-              (item) => _NavItem(
-                icon: items[item.value]!,
-                label: item.value,
-                selected: currentIndex == item.index,
-                onTap: () => widget.pageController.animateToPage(
-                  item.index,
-                  duration: const Duration(milliseconds: 300),
-                  curve: Curves.easeOutQuad,
+              (item) => Expanded(
+                child: _NavItem(
+                  icon: items[item.value]!,
+                  label: item.value,
+                  selected: currentIndex == item.index,
+                  onTap: () => widget.pageController.animateToPage(
+                    item.index,
+                    duration: const Duration(milliseconds: 300),
+                    curve: Curves.easeOutQuad,
+                  ),
                 ),
               ),
             )
@@ -190,6 +192,7 @@ class _NavItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var theme = Theme.of(context);
+    const duration = const Duration(milliseconds: 250);
     return Material(
       child: InkWell(
         onTap: onTap,
@@ -198,32 +201,34 @@ class _NavItem extends StatelessWidget {
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
-              Container(
-                // duration: const Duration(milliseconds: 150),
-                child: Padding(
-                  padding: const EdgeInsets.symmetric(vertical: 3),
-                  child: IconTheme(
-                    child: icon,
-                    data: IconThemeData(
-                      color: selected ? theme.colorScheme.onPrimary : theme.colorScheme.onSurface,
+              ClipPath(
+                clipper: const ShapeBorderClipper(shape: StadiumBorder()),
+                child: AnimatedContainer(
+                  duration: duration,
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(vertical: 3),
+                    child: IconTheme(
+                      child: icon,
+                      data: IconThemeData(
+                        color: selected ? theme.colorScheme.onPrimary : theme.colorScheme.onSurface,
+                      ),
                     ),
                   ),
+                  width: selected ? 60 : 40,
+                  color: selected ? theme.colorScheme.primary : Colors.transparent,
                 ),
-                width: 60,
-                decoration: selected
-                    ? ShapeDecoration(
-                        color: theme.colorScheme.primary,
-                        shape: const StadiumBorder(
-                          side: BorderSide.none,
-                        ),
-                      )
-                    : null,
               ),
               const SizedBox(height: 2),
-              Text(
-                label,
-                style: theme.textTheme.caption!.copyWith(fontWeight: FontWeight.w600),
-                textScaleFactor: 1.1,
+              AnimatedDefaultTextStyle(
+                duration: duration,
+                style: theme.textTheme.caption!.copyWith(
+                  fontWeight: FontWeight.w600,
+                  color: selected ? theme.colorScheme.primary : null,
+                ),
+                child: Text(
+                  label,
+                  textScaleFactor: 1.1,
+                ),
               ),
             ],
           ),
