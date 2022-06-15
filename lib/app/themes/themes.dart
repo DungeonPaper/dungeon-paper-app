@@ -5,7 +5,7 @@ import 'theme_utils.dart';
 
 const scaffoldBackgroundColor = Color(0xfffcf5e5);
 const primaryColor = Color(0xff8d775f);
-final borderRadius = BorderRadius.circular(10);
+final borderRadius = BorderRadius.circular(20);
 final rRectShape = RoundedRectangleBorder(borderRadius: borderRadius);
 final baseCardTheme = CardTheme(shape: rRectShape);
 final _dark = ThemeData.dark();
@@ -14,10 +14,17 @@ const _fabTheme = FloatingActionButtonThemeData(
   backgroundColor: DwColors.success,
   foregroundColor: Colors.white,
 );
-
-const _inputDecorationTheme = InputDecorationTheme(
+final inputBorderRadius = borderRadius.copyWith(
+  bottomLeft: const Radius.circular(8),
+  bottomRight: const Radius.circular(8),
+);
+final inputDecorationTheme = InputDecorationTheme(
   floatingLabelBehavior: FloatingLabelBehavior.always,
   filled: true,
+  border: UnderlineInputBorder(
+    // borderSide: BorderSide.none,
+    borderRadius: inputBorderRadius,
+  ),
 );
 
 final parchmentTheme = ThemeData(
@@ -43,7 +50,7 @@ final parchmentTheme = ThemeData(
   popupMenuTheme: PopupMenuThemeData(
     shape: rRectShape,
   ),
-  inputDecorationTheme: _inputDecorationTheme,
+  inputDecorationTheme: inputDecorationTheme,
   elevatedButtonTheme: ElevatedButtonThemeData(
     style: ElevatedButton.styleFrom(
       primary: primaryColor,
@@ -68,7 +75,7 @@ final darkTheme = _dark.copyWith(
   popupMenuTheme: PopupMenuThemeData(
     shape: rRectShape,
   ),
-  inputDecorationTheme: _inputDecorationTheme,
+  inputDecorationTheme: inputDecorationTheme,
   elevatedButtonTheme: ElevatedButtonThemeData(
     style: ElevatedButton.styleFrom(
       primary: _dark.primaryColor,

@@ -68,45 +68,42 @@ class SelectBox<T> extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final enabled = value != null || onChanged != null;
-
-    if (label == null) {
-      return _Container(
-        disabled: !enabled,
-        // color: Colors.red,
-        child: buildDropdown(),
-      );
-    }
-
+    final hasLabel = label != null;
+    final height = hasLabel ? 62.5 : 48.0;
     final theme = Theme.of(context);
 
-    // return ConstrainedBox(
-    //   constraints: BoxConstraints(minWidth: 80, maxWidth: 170),
-    //   child: InputDecorator(
-    //     decoration: InputDecoration(
-    //       // contentPadding: EdgeInsets.only(top: 8),
-    //       filled: true,
-    //       label: label,
-    //     ),
-    //     child: buildDropdown(),
-    //   ),
-    // );
+    const Color darkEnabled = Color(0x1AFFFFFF);
+    const Color darkDisabled = Color(0x0DFFFFFF);
+    const Color lightEnabled = Color(0x0A000000);
+    const Color lightDisabled = Color(0x05000000);
 
-    return _Container(
-      disabled: !enabled,
-      label: true,
-      // color: Colors.red,
-      child: Stack(
-        children: [
-          Padding(
-            padding: const EdgeInsets.only(top: 1, left: 3),
-            child: DefaultTextStyle(style: theme.textTheme.caption!, child: label!),
+    final fill = theme.brightness == Brightness.dark
+        ? enabled
+            ? darkEnabled
+            : darkDisabled
+        : enabled
+            ? lightEnabled
+            : lightDisabled;
+
+    final borderColor = theme.brightness == Brightness.dark
+        ? Colors.white.withOpacity(0.55)
+        : Colors.black.withOpacity(0.55);
+
+    return SizedBox(
+      height: height,
+      child: InputDecorator(
+          decoration: InputDecoration(
+            label: label,
+            border: UnderlineInputBorder(
+              borderRadius: inputBorderRadius,
+              borderSide: BorderSide(
+                color: borderColor,
+                style: BorderStyle.solid,
+                width: 1,
+              ),
+            ),
           ),
-          Padding(
-            padding: const EdgeInsets.only(top: 12, left: 3, bottom: 2),
-            child: buildDropdown(),
-          ),
-        ],
-      ),
+          child: buildDropdown()),
     );
   }
 
@@ -137,67 +134,6 @@ class SelectBox<T> extends StatelessWidget {
       style: style,
       underline: underline ?? Container(),
       value: value,
-    );
-  }
-}
-
-class _Container extends StatelessWidget {
-  const _Container({Key? key, this.disabled = false, required this.child, this.label = false})
-      : super(key: key);
-
-  final bool disabled;
-  final Widget child;
-  final bool label;
-
-  @override
-  Widget build(BuildContext context) {
-    final theme = Theme.of(context);
-
-    const Color darkEnabled = Color(0x1AFFFFFF);
-    const Color darkDisabled = Color(0x0DFFFFFF);
-    const Color lightEnabled = Color(0x0A000000);
-    const Color lightDisabled = Color(0x05000000);
-
-    final height = label ? 62.5 : 48.0;
-
-    final fill = theme.brightness == Brightness.dark
-        ? !disabled
-            ? darkEnabled
-            : darkDisabled
-        : !disabled
-            ? lightEnabled
-            : lightDisabled;
-
-    final borderColor = theme.brightness == Brightness.dark
-        ? Colors.white.withOpacity(0.55)
-        : Colors.black.withOpacity(0.55);
-
-    return Container(
-      decoration: BoxDecoration(
-        color: fill,
-        borderRadius: const BorderRadius.only(
-          topLeft: Radius.circular(4),
-          topRight: Radius.circular(4),
-          bottomLeft: Radius.circular(0),
-          bottomRight: Radius.circular(0),
-        ),
-      ),
-      child: Container(
-        height: height,
-        decoration: BoxDecoration(
-          border: Border(
-            bottom: BorderSide(
-              width: 1,
-              style: BorderStyle.solid,
-              color: borderColor,
-            ),
-          ),
-        ),
-        child: Padding(
-          padding: const EdgeInsets.all(8.0).copyWith(bottom: label ? 0.0 : 8.0),
-          child: child,
-        ),
-      ),
     );
   }
 }

@@ -1,5 +1,6 @@
 import 'package:dungeon_paper/app/data/models/ability_scores.dart';
 import 'package:dungeon_paper/app/model_utils/dice_utils.dart';
+import 'package:dungeon_paper/app/themes/themes.dart';
 import 'package:dungeon_paper/core/dw_icons.dart';
 import 'package:flutter/material.dart';
 import 'package:dungeon_world_data/dungeon_world_data.dart' as dw;
@@ -29,7 +30,7 @@ class AbilityScoreChip extends StatelessWidget {
       onTap: () => DiceUtils.openRollDialog([dw.Dice(amount: 2, sides: 6, modifierStat: stat.key)]),
       borderRadius: BorderRadius.circular(10),
       child: Material(
-        borderRadius: BorderRadius.circular(10),
+        borderRadius: rRectShape.borderRadius,
         color: cardColor,
         clipBehavior: Clip.none,
         child: Container(

@@ -72,7 +72,7 @@ class CharacterAvatar extends GetView {
       url.isNotEmpty ? CachedNetworkImageProvider(url) : null;
 
   static Widget _squircleBuilder(BuildContext context, String url, double size) => Material(
-        shape: ContinuousRectangleBorder(borderRadius: BorderRadius.circular(size / 2)),
+        shape: ContinuousRectangleBorder(borderRadius: BorderRadius.circular(size / 1.5)),
         clipBehavior: Clip.antiAlias,
         child: _renderImage(context, url, size),
       );

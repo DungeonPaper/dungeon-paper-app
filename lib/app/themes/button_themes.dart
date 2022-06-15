@@ -1,8 +1,8 @@
+import 'package:dungeon_paper/app/themes/themes.dart' as t;
 import 'package:flutter/material.dart';
 
 class ButtonThemes {
-  static final borderRadius = BorderRadius.circular(10);
-  static final rRectShape = RoundedRectangleBorder(borderRadius: borderRadius);
+  static final rRectShape = t.rRectShape;
 
   static ButtonStyle primaryElevated(BuildContext context, {double? backgroundOpacity}) =>
       ElevatedButton.styleFrom(

@@ -10,6 +10,7 @@ import 'package:dungeon_paper/app/themes/themes.dart';
 import 'package:dungeon_paper/app/widgets/atoms/advanced_floating_action_button.dart';
 import 'package:dungeon_paper/app/widgets/atoms/user_menu.dart';
 import 'package:dungeon_paper/core/dw_icons.dart';
+import 'package:dungeon_paper/core/utils/list_utils.dart';
 import 'package:dynamic_themes/dynamic_themes.dart';
 import 'package:flutter/material.dart';
 
@@ -139,29 +140,95 @@ class _CharacterHomeNavBarState extends State<CharacterHomeNavBar> {
 
   @override
   Widget build(BuildContext context) {
-    return BottomNavigationBar(
-      currentIndex: widget.pageController.positions.length == 1
-          ? widget.pageController.page?.round() ?? 1
-          : 1,
-      onTap: (page) => widget.pageController.animateToPage(
-        page,
-        duration: const Duration(milliseconds: 500),
-        curve: Curves.easeOutQuad,
+    var currentIndex =
+        widget.pageController.positions.length == 1 ? widget.pageController.page?.round() ?? 1 : 1;
+
+    final items = <String, Icon>{
+      S.current.navActions: const Icon(DwIcons.hand_rock),
+      S.current.navCharacter: const Icon(Icons.person),
+      S.current.navJournal: const Icon(DwIcons.scroll_quill),
+    };
+
+    return Material(
+      type: MaterialType.canvas,
+      child: Row(
+        mainAxisSize: MainAxisSize.max,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        mainAxisAlignment: MainAxisAlignment.spaceAround,
+        children: enumerate(items.keys)
+            .map(
+              (item) => _NavItem(
+                icon: items[item.value]!,
+                label: item.value,
+                selected: currentIndex == item.index,
+                onTap: () => widget.pageController.animateToPage(
+                  item.index,
+                  duration: const Duration(milliseconds: 300),
+                  curve: Curves.easeOutQuad,
+                ),
+              ),
+            )
+            .toList(),
       ),
-      items: [
-        BottomNavigationBarItem(
-          icon: const Icon(DwIcons.hand_rock),
-          label: S.current.navActions,
+    );
+  }
+}
+
+class _NavItem extends StatelessWidget {
+  const _NavItem({
+    required this.icon,
+    required this.label,
+    required this.selected,
+    required this.onTap,
+  });
+
+  final Widget icon;
+  final String label;
+  final bool selected;
+  final void Function() onTap;
+
+  @override
+  Widget build(BuildContext context) {
+    var theme = Theme.of(context);
+    return Material(
+      child: InkWell(
+        onTap: onTap,
+        child: Padding(
+          padding: const EdgeInsets.all(6),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Container(
+                // duration: const Duration(milliseconds: 150),
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 3),
+                  child: IconTheme(
+                    child: icon,
+                    data: IconThemeData(
+                      color: selected ? theme.colorScheme.onPrimary : theme.colorScheme.onSurface,
+                    ),
+                  ),
+                ),
+                width: 60,
+                decoration: selected
+                    ? ShapeDecoration(
+                        color: theme.colorScheme.primary,
+                        shape: const StadiumBorder(
+                          side: BorderSide.none,
+                        ),
+                      )
+                    : null,
+              ),
+              const SizedBox(height: 2),
+              Text(
+                label,
+                style: theme.textTheme.caption!.copyWith(fontWeight: FontWeight.w600),
+                textScaleFactor: 1.1,
+              ),
+            ],
+          ),
         ),
-        BottomNavigationBarItem(
-          icon: const Icon(Icons.person),
-          label: S.current.navCharacter,
-        ),
-        BottomNavigationBarItem(
-          icon: const Icon(DwIcons.scroll_quill),
-          label: S.current.navJournal,
-        ),
-      ],
+      ),
     );
   }
 }

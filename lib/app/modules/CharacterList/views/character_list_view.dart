@@ -42,7 +42,9 @@ class CharacterListPageView extends GetView<CharacterService> {
                       child: Card(
                         margin: EdgeInsets.zero,
                         child: ListTileTheme.merge(
-                          minLeadingWidth: 60,
+                          minLeadingWidth: 48,
+                          minVerticalPadding: 8,
+                          horizontalTitleGap: 10,
                           child: InkWell(
                             onTap: () {
                               controller.setCurrent(char.key);
