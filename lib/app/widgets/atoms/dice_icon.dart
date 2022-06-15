@@ -1,4 +1,3 @@
-import 'package:dungeon_paper/app/widgets/atoms/svg_icon.dart';
 import 'package:dungeon_paper/core/dw_icons.dart';
 import 'package:flutter/material.dart';
 import 'package:dungeon_world_data/dungeon_world_data.dart' as dw;
@@ -25,7 +24,7 @@ class DiceIcon extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SvgIcon(
+    return Icon(
       DwIcons.diceIcon(sides),
       size: size,
       color: color,

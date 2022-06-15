@@ -4,7 +4,6 @@ import 'package:dungeon_paper/generated/l10n.dart';
 import 'package:flutter/material.dart';
 
 import '../../../core/dw_icons.dart';
-import '../../widgets/atoms/svg_icon.dart';
 
 class AbilityScores {
   AbilityScores({
@@ -215,12 +214,12 @@ class AbilityScore {
   }
 
   static const _icons = <String, Widget>{
-    'dex': SvgIcon(DwIcons.stat_dex),
-    'str': SvgIcon(DwIcons.stat_str),
-    'wis': SvgIcon(DwIcons.stat_wis),
-    'con': SvgIcon(DwIcons.stat_con),
-    'int': SvgIcon(DwIcons.stat_int),
-    'cha': SvgIcon(DwIcons.stat_cha),
+    'dex': Icon(DwIcons.stat_dex),
+    'str': Icon(DwIcons.stat_str),
+    'wis': Icon(DwIcons.stat_wis),
+    'con': Icon(DwIcons.stat_con),
+    'int': Icon(DwIcons.stat_int),
+    'cha': Icon(DwIcons.stat_cha),
     '_other': Icon(Icons.help),
   };
 }

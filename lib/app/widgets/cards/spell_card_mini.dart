@@ -1,4 +1,3 @@
-import 'package:dungeon_paper/app/widgets/atoms/svg_icon.dart';
 import 'package:dungeon_paper/app/widgets/chips/spell_level_chip.dart';
 import 'package:flutter/material.dart';
 
@@ -30,7 +29,7 @@ class SpellCardMini extends StatelessWidget {
       description: spell.description,
       chips: [SpellLevelChip(level: spell.level)],
       dice: showDice ? spell.dice : [],
-      icon: showIcon ? SvgIcon(spell.icon, size: 16) : null,
+      icon: showIcon ? Icon(spell.icon, size: 16) : null,
       starred: spell.prepared,
       showStar: showStar,
       onStarChanged: (prepared) => onSave?.call(spell.copyWithInherited(prepared: prepared)),

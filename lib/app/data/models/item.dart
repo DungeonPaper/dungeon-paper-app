@@ -4,6 +4,7 @@ import 'package:dungeon_paper/core/dw_icons.dart';
 import 'package:dungeon_paper/core/utils/string_utils.dart';
 import 'package:dungeon_paper/core/utils/uuid.dart';
 import 'package:dungeon_world_data/dungeon_world_data.dart' as dw;
+import 'package:flutter/material.dart';
 
 import 'item_settings.dart';
 import 'meta.dart';
@@ -117,8 +118,8 @@ class Item extends dw.Item implements WithMeta {
         'equipped': equipped,
       };
 
-  DwIconData get icon => DwIcons.swap_bag;
-  static DwIconData get genericIcon => DwIcons.swap_bag;
+  IconData get icon => DwIcons.swap_bag;
+  static IconData get genericIcon => DwIcons.swap_bag;
   static int Function(Item a, Item b) sorter(ItemFilters filters) =>
       (a, b) => a.name.toLowerCase().compareTo(b.name.toLowerCase());
 

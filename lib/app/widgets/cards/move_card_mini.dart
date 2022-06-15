@@ -1,4 +1,3 @@
-import 'package:dungeon_paper/app/widgets/atoms/svg_icon.dart';
 import 'package:dungeon_paper/app/widgets/chips/move_category_chip.dart';
 import 'package:flutter/material.dart';
 
@@ -35,7 +34,7 @@ class MoveCardMini extends StatelessWidget {
         )
       ],
       dice: move.dice,
-      icon: showIcon ? SvgIcon(move.icon, size: 16) : null,
+      icon: showIcon ? Icon(move.icon, size: 16) : null,
       starred: move.favorited,
       showStar: showStar,
       onStarChanged: (favorited) => onSave?.call(move.copyWithInherited(favorited: favorited)),

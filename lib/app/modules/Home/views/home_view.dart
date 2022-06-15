@@ -5,7 +5,6 @@ import 'package:dungeon_paper/app/modules/Home/views/home_character_actions_view
 import 'package:dungeon_paper/app/modules/Home/views/home_character_journal_view.dart';
 import 'package:dungeon_paper/app/themes/themes.dart';
 import 'package:dungeon_paper/app/widgets/atoms/advanced_floating_action_button.dart';
-import 'package:dungeon_paper/app/widgets/atoms/svg_icon.dart';
 import 'package:dungeon_paper/app/widgets/atoms/user_menu.dart';
 import 'package:dungeon_paper/core/dw_icons.dart';
 import 'package:dynamic_themes/dynamic_themes.dart';
@@ -142,7 +141,7 @@ class _CharacterHomeNavBarState extends State<CharacterHomeNavBar> {
       ),
       items: [
         BottomNavigationBarItem(
-          icon: const SvgIcon(DwIcons.hand_rock),
+          icon: const Icon(DwIcons.hand_rock),
           label: S.current.navActions,
         ),
         BottomNavigationBarItem(
@@ -150,7 +149,7 @@ class _CharacterHomeNavBarState extends State<CharacterHomeNavBar> {
           label: S.current.navCharacter,
         ),
         BottomNavigationBarItem(
-          icon: const SvgIcon(DwIcons.scroll_quill),
+          icon: const Icon(DwIcons.scroll_quill),
           label: S.current.navJournal,
         ),
       ],

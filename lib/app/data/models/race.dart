@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'package:dungeon_paper/core/dw_icons.dart';
 import 'package:dungeon_paper/core/utils/uuid.dart';
 import 'package:dungeon_world_data/dungeon_world_data.dart' as dw;
+import 'package:flutter/material.dart';
 
 import 'meta.dart';
 
@@ -87,8 +88,8 @@ class Race extends dw.Race implements WithMeta {
         tags: [],
       );
 
-  DwIconData get icon => DwIcons.riposte;
-  static DwIconData get genericIcon => DwIcons.riposte;
+  IconData get icon => DwIcons.riposte;
+  static IconData get genericIcon => DwIcons.riposte;
 
   @override
   Map<String, dynamic> toJson() => {

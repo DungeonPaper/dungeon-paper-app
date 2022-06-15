@@ -1,4 +1,3 @@
-import 'package:dungeon_paper/app/widgets/atoms/svg_icon.dart';
 import 'package:dungeon_paper/app/widgets/chips/item_amount_chip.dart';
 import 'package:dungeon_paper/app/widgets/chips/item_damage_chip.dart';
 import 'package:dungeon_paper/app/widgets/chips/item_weight_chip.dart';
@@ -54,7 +53,7 @@ class ItemCard extends StatelessWidget {
       ],
       chips: item.tags.map((t) => TagChip.openDescription(tag: t)),
       dice: const [],
-      icon: showIcon ? SvgIcon(item.icon, size: 16) : null,
+      icon: showIcon ? Icon(item.icon, size: 16) : null,
       starred: item.equipped,
       showStar: showStar,
       onStarChanged: (equipped) => onSave?.call(item.copyWithInherited(equipped: equipped)),

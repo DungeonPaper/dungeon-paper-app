@@ -1,5 +1,4 @@
 import 'package:dungeon_paper/app/data/models/item.dart';
-import 'package:dungeon_paper/app/widgets/atoms/svg_icon.dart';
 import 'package:dungeon_paper/app/widgets/chips/item_amount_chip.dart';
 import 'package:dungeon_paper/app/widgets/chips/item_damage_chip.dart';
 import 'package:dungeon_paper/app/widgets/chips/item_weight_chip.dart';
@@ -40,7 +39,7 @@ class ItemCardMini extends StatelessWidget {
         if (item.amount != 1) ItemAmountChip(item: item),
       ],
       dice: const [],
-      icon: showIcon ? SvgIcon(item.icon, size: 16) : null,
+      icon: showIcon ? Icon(item.icon, size: 16) : null,
       starred: item.equipped,
       showStar: showStar,
       onStarChanged: (equipped) => onSave?.call(item.copyWithInherited(equipped: equipped)),

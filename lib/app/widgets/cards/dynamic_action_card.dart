@@ -9,7 +9,6 @@ import 'package:url_launcher/url_launcher.dart';
 
 import '../../../core/dw_icons.dart';
 import '../atoms/background_icon_button.dart';
-import '../atoms/svg_icon.dart';
 
 class DynamicActionCard extends StatelessWidget {
   const DynamicActionCard({
@@ -167,7 +166,7 @@ class DynamicActionCard extends StatelessWidget {
               padding: const EdgeInsets.only(bottom: 2.5),
               child: BackgroundIconButton(
                 elevation: 1.5,
-                icon: const SvgIcon(DwIcons.dice_d6, size: 20),
+                icon: const Icon(DwIcons.dice_d6, size: 20),
                 iconColor: Theme.of(context).colorScheme.onPrimary,
                 color: Theme.of(context).primaryColor,
                 size: 40,

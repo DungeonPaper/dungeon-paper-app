@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 
-import '../../../core/dw_icons.dart';
 
 class SvgIcon extends StatelessWidget {
   const SvgIcon(
@@ -11,7 +10,7 @@ class SvgIcon extends StatelessWidget {
     this.size,
   }) : super(key: key);
 
-  final DwIconData icon;
+  final IconData icon;
   final Color? color;
   final double? size;
 
@@ -21,7 +20,7 @@ class SvgIcon extends StatelessWidget {
     final iconTheme = IconTheme.of(context);
 
     return SvgPicture.asset(
-      icon.assetPath,
+      icon.fontFamily!,
       color: color ?? iconTheme.color,
       width: size ?? iconTheme.size,
       height: size ?? iconTheme.size,

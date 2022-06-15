@@ -2,7 +2,6 @@ import 'package:dungeon_paper/app/data/services/character_service.dart';
 import 'package:dungeon_paper/app/model_utils/dice_utils.dart';
 import 'package:dungeon_paper/app/modules/Home/views/local_widgets/home_character_extras.dart';
 import 'package:dungeon_paper/app/themes/button_themes.dart';
-import 'package:dungeon_paper/app/widgets/atoms/svg_icon.dart';
 import 'package:dungeon_paper/app/widgets/molecules/character_subtitle.dart';
 import 'package:dungeon_paper/app/widgets/molecules/ability_scores_grid.dart';
 import 'package:dungeon_paper/core/dw_icons.dart';
@@ -103,7 +102,7 @@ class HomeCharacterView extends GetView<CharacterService> {
                           onPressed: () => DiceUtils.openRollDialog([dw.Dice.d6 * 2]),
                           style: ButtonThemes.primaryElevated(context),
                           label: Text(S.current.rollBasicActionButton),
-                          icon: const SvgIcon(DwIcons.dice_d6),
+                          icon: const Icon(DwIcons.dice_d6),
                         ),
                       ),
                       const SizedBox(width: 16),
@@ -113,7 +112,7 @@ class HomeCharacterView extends GetView<CharacterService> {
                               [dw.Dice(sides: 6, amount: 2, modifierStat: 'STR'), char.damageDice]),
                           style: ButtonThemes.primaryElevated(context),
                           label: Text(S.current.rollAttackDamageButton),
-                          icon: const SvgIcon(DwIcons.dice_d6),
+                          icon: const Icon(DwIcons.dice_d6),
                         ),
                       ),
                     ],

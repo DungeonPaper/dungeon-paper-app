@@ -1,9 +1,7 @@
 import 'package:dungeon_paper/app/data/models/item.dart';
-import 'package:dungeon_paper/app/widgets/atoms/svg_icon.dart';
 import 'package:dungeon_paper/core/dw_icons.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-
 
 class ItemWeightChip extends StatelessWidget {
   const ItemWeightChip({Key? key, required this.item}) : super(key: key);
@@ -17,7 +15,7 @@ class ItemWeightChip extends StatelessWidget {
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          SvgIcon(DwIcons.dumbbell, size: 12, color: Theme.of(context).colorScheme.onPrimary),
+          Icon(DwIcons.dumbbell, size: 12, color: Theme.of(context).colorScheme.onPrimary),
           const SizedBox(width: 4),
           Text(
             NumberFormat('#.#').format(item.amount * item.weight),

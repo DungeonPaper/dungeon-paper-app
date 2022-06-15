@@ -5,7 +5,6 @@ import 'package:dungeon_paper/app/widgets/atoms/labeled_divider.dart';
 import 'package:dungeon_paper/app/widgets/atoms/advanced_floating_action_button.dart';
 import 'package:dungeon_paper/app/widgets/atoms/character_avatar.dart';
 import 'package:dungeon_paper/app/widgets/atoms/confirm_exit_view.dart';
-import 'package:dungeon_paper/app/widgets/atoms/svg_icon.dart';
 import 'package:dungeon_paper/core/dw_icons.dart';
 import 'package:dungeon_paper/core/utils/content_generators/character_name_generator.dart';
 import 'package:dungeon_paper/core/utils/platform_string.dart';
@@ -61,7 +60,7 @@ class BasicInfoFormView extends GetView<BasicInfoFormController> with UserServic
                         touch: S.current.createCharRandomizeNameTooltipTouch,
                         mouse: S.current.createCharRandomizeNameTooltipClick,
                       ),
-                      icon: const SvgIcon(DwIcons.dice_d6_numbered),
+                      icon: const Icon(DwIcons.dice_d6_numbered),
                       onPressed: () {
                         controller.name.value.text = CharacterNameGenerator().generate();
                       },

@@ -1,12 +1,11 @@
 import 'package:dungeon_paper/app/routes/app_pages.dart';
-import 'package:dungeon_paper/app/widgets/atoms/svg_icon.dart';
 import 'package:dungeon_paper/core/dw_icons.dart';
 import 'package:dungeon_world_data/dungeon_world_data.dart' as dw;
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class DiceUtils {
-  static Widget iconOf(dw.Dice? tag) => const SvgIcon(DwIcons.dice_d6);
+  static Widget iconOf(dw.Dice? tag) => const Icon(DwIcons.dice_d6);
 
   static Set<dw.Dice> guessFromString(String str) {
     final basicRollPattern = RegExp(r'\broll([+-][a-z0-9]+)\b', caseSensitive: false);
@@ -29,7 +28,7 @@ class DiceUtils {
 
   static Offset iconCenterOffset(dw.Dice dice) =>
       {
-        4: const Offset(0, 8),
+        4: const Offset(3, 4),
       }[dice.sides] ??
       Offset.zero;
 }

@@ -3,7 +3,6 @@ import 'package:dungeon_paper/app/modules/AbilityScoresForm/controllers/ability_
 import 'package:dungeon_paper/app/modules/BasicInfoForm/controllers/basic_info_form_controller.dart';
 import 'package:dungeon_paper/app/routes/app_pages.dart';
 import 'package:dungeon_paper/app/widgets/atoms/menu_button.dart';
-import 'package:dungeon_paper/app/widgets/atoms/svg_icon.dart';
 import 'package:dungeon_paper/app/widgets/dialogs/character_bio_dialog.dart';
 import 'package:dungeon_paper/app/widgets/dialogs/character_bonds_flags_dialog.dart';
 import 'package:dungeon_paper/app/widgets/dialogs/debilities_dialog.dart';
@@ -47,7 +46,7 @@ class HomeCharacterExtras extends GetView<CharacterService> {
             ),
             preventDuplicates: false,
           ),
-          icon: const SvgIcon(DwIcons.dice_d6_numbered),
+          icon: const Icon(DwIcons.dice_d6_numbered),
           tooltip: S.current.characterRollsTitle,
         ),
         IconButton(

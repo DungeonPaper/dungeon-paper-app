@@ -1,6 +1,5 @@
 import 'package:dungeon_paper/app/data/models/ability_scores.dart';
 import 'package:dungeon_paper/app/model_utils/dice_utils.dart';
-import 'package:dungeon_paper/app/widgets/atoms/svg_icon.dart';
 import 'package:dungeon_paper/core/dw_icons.dart';
 import 'package:flutter/material.dart';
 import 'package:dungeon_world_data/dungeon_world_data.dart' as dw;
@@ -68,7 +67,7 @@ class AbilityScoreChip extends StatelessWidget {
                             mainAxisSize: MainAxisSize.min,
                             children: [
                               IconTheme(
-                                child: const SvgIcon(DwIcons.dice_d6),
+                                child: const Icon(DwIcons.dice_d6),
                                 data: IconTheme.of(context).copyWith(
                                   size: 12,
                                   color: theme.colorScheme.onSurface

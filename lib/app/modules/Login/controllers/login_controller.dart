@@ -1,7 +1,6 @@
 import 'package:dungeon_paper/app/data/services/auth_service.dart';
 import 'package:dungeon_paper/app/data/services/character_service.dart';
 import 'package:dungeon_paper/app/data/services/loading_service.dart';
-import 'package:dungeon_paper/app/modules/Login/views/login_progress_dialog_view.dart';
 import 'package:dungeon_paper/app/routes/app_pages.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
