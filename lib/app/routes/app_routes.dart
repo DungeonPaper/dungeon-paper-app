@@ -11,11 +11,13 @@ abstract class Routes {
   static const settings = _Paths.settings;
   static const importExport = _Paths.importExport;
 
+  static const library = _Paths.library;
   static const moves = _Paths.moves;
   static const spells = _Paths.spells;
   static const items = _Paths.items;
   static const notes = _Paths.notes;
   static const characterClass = _Paths.characterClass;
+
   static const basicInfo = _Paths.basicInfo;
   static const bondsFlags = _Paths.bondsFlags;
   static const abilityScores = _Paths.abilityScores;
@@ -52,6 +54,7 @@ abstract class _Paths {
   static const selectMovesSpells = '/moves-spells';
   static const characterClass = '/character-class';
 
+  static const library = '/library';
   static const moves = '/moves';
   static const spells = '/spells';
   static const items = '/items';

@@ -30,7 +30,6 @@ class RepositoryService extends GetxService {
     my.clear();
   }
 
-
   @override
   void onClose() async {
     super.onClose();
@@ -246,8 +245,11 @@ abstract class RepositoryCache {
     tags.clear();
   }
 
-  RxMap<String, T> listByType<T>() {
-    switch (T) {
+  RxMap<String, T> listByType<T>([Type? type]) {
+    assert(T != dynamic || type != null);
+    final t = T != dynamic ? T : type;
+
+    switch (t) {
       case CharacterClass:
         return classes as RxMap<String, T>;
       case Item:

@@ -179,6 +179,8 @@
   "itemAmountX": "× {amount}",
   "items": "Items",
   "itemsWithCount": "{count, plural, =0 {No items} one {One item} other {{count} items}}",
+  "libraryCollectionListItemSubtitle": "{count} {plural}",
+  "libraryCollectionTitle": "My Library",
   "loadingCharacters": "Getting characters...",
   "loadingGeneral": "Loading...",
   "loadingUser": "Signing in...",

@@ -1,5 +1,6 @@
 import 'package:dungeon_paper/app/data/models/character_class.dart';
 import 'package:dungeon_paper/app/data/models/item.dart';
+import 'package:dungeon_paper/app/data/models/meta.dart';
 import 'package:dungeon_paper/app/data/models/note.dart';
 import 'package:dungeon_paper/app/data/models/move.dart';
 import 'package:dungeon_paper/app/data/models/character.dart';
@@ -21,6 +22,29 @@ class ModelPages {
   static CharacterService get controller => Get.find();
   static LibraryService get library => Get.find();
   static Character get _char => controller.current!;
+
+  static void Function() openLibraryList<T extends WithMeta>({
+    Character? character,
+    void Function(Iterable<T> list)? onAdd,
+    Type? type,
+  }) {
+    final map = <Type, Function()>{
+      Move: () => openMovesList(character: character, onAdd: (l) => onAdd?.call(l as Iterable<T>)),
+      Spell: () =>
+          openSpellsList(character: character, onAdd: (l) => onAdd?.call(l as Iterable<T>)),
+      Item: () => openItemsList(character: character, onAdd: (l) => onAdd?.call(l as Iterable<T>)),
+      CharacterClass: () => openCharacterClassesList(
+          character: character, onAdd: (l) => onAdd?.call(l as Iterable<T>)),
+    };
+
+    final t = type ?? T;
+
+    if (map[t] == null) {
+      throw TypeError();
+    }
+
+    return map[t]!.call();
+  }
 
   static void Function() openMovesList({
     Character? character,

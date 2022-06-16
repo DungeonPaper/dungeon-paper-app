@@ -31,18 +31,17 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
+    final platformBrightness =
+        MediaQueryData.fromWindow(WidgetsBinding.instance.window).platformBrightness;
+    final defaultTheme =
+        platformBrightness == Brightness.light ? AppThemes.parchment : AppThemes.dark;
+
     return DynamicTheme(
       themeCollection: themeCollection,
-      defaultThemeId: prefs.getInt(PrefKeys.selectedThemeId) ?? AppThemes.parchment,
-      // defaultThemeId: prefs.getInt(PrefKeys.selectedThemeId) ??
-      //     (MediaQuery.of(context).platformBrightness == Brightness.light
-      //         ? AppThemes.parchment
-      //         : AppThemes.dark),
+      defaultThemeId: prefs.getInt(PrefKeys.selectedThemeId) ?? defaultTheme,
       builder: (context, value) {
-        // key: Key(DynamicTheme.of(context)?.themeId.toString() ?? 'none'),
         return GetMaterialApp(
           scrollBehavior: MultiPlatformScrollBehavior(),
-          // key: Key(DynamicTheme.of(context)?.themeId.toString() ?? ""),
           title: S.current.appName,
           theme: value,
           initialRoute: AppPages.initial,

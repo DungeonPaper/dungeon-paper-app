@@ -1894,6 +1894,26 @@ class S {
     );
   }
 
+  /// `{count} {plural}`
+  String libraryCollectionListItemSubtitle(Object count, Object plural) {
+    return Intl.message(
+      '$count $plural',
+      name: 'libraryCollectionListItemSubtitle',
+      desc: '',
+      args: [count, plural],
+    );
+  }
+
+  /// `My Library`
+  String get libraryCollectionTitle {
+    return Intl.message(
+      'My Library',
+      name: 'libraryCollectionTitle',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `Getting characters...`
   String get loadingCharacters {
     return Intl.message(

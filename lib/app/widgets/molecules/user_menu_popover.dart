@@ -41,6 +41,7 @@ class UserMenuPopover extends GetView<CharacterService> with AuthServiceMixin {
                   top: 0,
                   child: SafeArea(
                     child: Card(
+                      clipBehavior: Clip.antiAlias,
                       child: ConstrainedBox(
                         constraints: BoxConstraints(maxWidth: maxW, maxHeight: maxH),
                         // height: maxH,
@@ -80,49 +81,62 @@ class UserMenuPopover extends GetView<CharacterService> with AuthServiceMixin {
                                   : const UserAvatar(),
                             ),
                             const Divider(),
-                            const SizedBox(height: 8),
-                            Text(
-                              S.current.userMenuRecentCharacters,
-                              style: Theme.of(context).textTheme.caption,
-                            ),
-                            Padding(
-                              padding: const EdgeInsets.only(top: 8),
-                              child: Wrap(
-                                spacing: 4,
-                                runSpacing: 4,
-                                children: [
-                                  for (final char in controller.charsByLastUsed.take(4))
-                                    InkWell(
-                                      borderRadius: BorderRadius.circular(8),
-                                      onTap: () {
-                                        controller.setCurrent(char.key);
-                                        Get.back();
-                                      },
-                                      child: Padding(
-                                        padding: const EdgeInsets.all(4),
-                                        child: Column(
-                                          children: [
-                                            CharacterAvatar.squircle(
-                                                character: char, size: avatarSize),
-                                            const SizedBox(height: 4),
-                                            SizedBox(
-                                              width: 60,
-                                              child: Text(
-                                                char.displayName,
-                                                overflow: TextOverflow.ellipsis,
-                                                textScaleFactor: 0.8,
-                                                textAlign: TextAlign.center,
-                                                style: textStyle,
+                            if (controller.charsByLastUsed.isNotEmpty) ...[
+                              const SizedBox(height: 8),
+                              Text(
+                                S.current.userMenuRecentCharacters,
+                                style: Theme.of(context).textTheme.caption,
+                              ),
+                              Padding(
+                                padding: const EdgeInsets.only(top: 8),
+                                child: Wrap(
+                                  spacing: 4,
+                                  runSpacing: 4,
+                                  children: [
+                                    for (final char in controller.charsByLastUsed.take(4))
+                                      InkWell(
+                                        borderRadius: BorderRadius.circular(8),
+                                        onTap: () {
+                                          controller.setCurrent(char.key);
+                                          Get.back();
+                                        },
+                                        child: Padding(
+                                          padding: const EdgeInsets.all(4),
+                                          child: Column(
+                                            children: [
+                                              CharacterAvatar.squircle(
+                                                  character: char, size: avatarSize),
+                                              const SizedBox(height: 4),
+                                              SizedBox(
+                                                width: 60,
+                                                child: Text(
+                                                  char.displayName,
+                                                  overflow: TextOverflow.ellipsis,
+                                                  textScaleFactor: 0.8,
+                                                  textAlign: TextAlign.center,
+                                                  style: textStyle,
+                                                ),
                                               ),
-                                            ),
-                                          ],
+                                            ],
+                                          ),
                                         ),
                                       ),
-                                    ),
-                                ],
+                                  ],
+                                ),
                               ),
+                              const SizedBox(height: 8),
+                              const Divider(),
+                            ],
+                            ListTile(
+                              visualDensity: VisualDensity.compact,
+                              title: Text(S.current.libraryCollectionTitle),
+                              // TODO update icon
+                              leading: const Icon(Icons.local_library),
+                              onTap: () {
+                                Get.back();
+                                Get.toNamed(Routes.library);
+                              },
                             ),
-                            const SizedBox(height: 8),
                             const Divider(),
                             ListTile(
                               visualDensity: VisualDensity.compact,

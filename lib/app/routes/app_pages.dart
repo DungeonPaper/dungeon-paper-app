@@ -25,9 +25,11 @@ import '../modules/Home/bindings/home_binding.dart';
 import '../modules/Home/views/home_view.dart';
 import '../modules/ImportExport/bindings/import_export_binding.dart';
 import '../modules/ImportExport/views/import_export_view.dart';
+import '../modules/LibraryList/bindings/library_collection_binding.dart';
 import '../modules/LibraryList/bindings/library_list_binding.dart';
 import '../modules/LibraryList/views/character_classes_library_list_view.dart';
 import '../modules/LibraryList/views/items_library_list_view.dart';
+import '../modules/LibraryList/views/library_collection_view.dart';
 import '../modules/LibraryList/views/moves_library_list_view.dart';
 import '../modules/LibraryList/views/spells_library_list_view.dart';
 import '../modules/Login/bindings/login_binding.dart';
@@ -88,6 +90,12 @@ class AppPages {
     //
 
     GetPage(
+      name: Routes.library,
+      page: () => const LibraryCollectionView(),
+      binding: LibraryCollectionBinding(),
+      preventDuplicates: false,
+    ),
+    GetPage(
       name: Routes.moves,
       page: () => const MovesLibraryListView(),
       binding: LibraryListBinding(),
@@ -105,6 +113,15 @@ class AppPages {
       binding: LibraryListBinding(),
       preventDuplicates: false,
     ),
+    GetPage(
+      name: Routes.characterClass,
+      page: () => const CharacterClassesLibraryListView(),
+      binding: LibraryListBinding(),
+      preventDuplicates: false,
+    ),
+
+    //
+
     GetPage(
       name: Routes.bondsFlags,
       page: () => const BondsFlagsFormView(),
