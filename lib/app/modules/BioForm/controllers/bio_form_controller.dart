@@ -32,7 +32,7 @@ class BioFormController extends GetxController with CharacterServiceMixin {
         looks: looks.value.text.replaceAll(RegExp('\\s*\n'), '  \n'),
         alignment: char.bio.alignment.copyWith(
           description: alignmentValue.value.text,
-          type: getEnumByName(dw.AlignmentType, alignmentName.value),
+          type: getEnumByName(dw.AlignmentType.values, alignmentName.value),
         ),
       ),
     ));
