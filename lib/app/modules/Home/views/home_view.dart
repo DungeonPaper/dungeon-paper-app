@@ -192,7 +192,7 @@ class _NavItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var theme = Theme.of(context);
-    const duration = const Duration(milliseconds: 250);
+    const duration = Duration(milliseconds: 250);
     return Material(
       child: InkWell(
         onTap: onTap,

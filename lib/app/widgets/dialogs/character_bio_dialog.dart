@@ -14,6 +14,7 @@ class CharacterBioDialog extends GetView with CharacterServiceMixin {
   @override
   Widget build(BuildContext context) {
     final textTheme = Theme.of(context).textTheme;
+    // final maxContentHeight = MediaQuery.of(context).size.height - 250;
 
     return AlertDialog(
       title: Row(
@@ -42,6 +43,7 @@ class CharacterBioDialog extends GetView with CharacterServiceMixin {
           child: Column(
             mainAxisSize: MainAxisSize.min,
             crossAxisAlignment: CrossAxisAlignment.start,
+            // shrinkWrap: true,
             children: [
               Text(S.current.characterBioDialogDescLabel, style: textTheme.caption),
               char.bio.description.isNotEmpty
@@ -53,10 +55,25 @@ class CharacterBioDialog extends GetView with CharacterServiceMixin {
               const SizedBox(height: 16),
               Text(S.current.characterBioDialogLooksLabel, style: textTheme.caption),
               char.bio.looks.isNotEmpty
-                  ? MarkdownBody(
-                      data: char.bio.looks,
-                      onTapLink: (_, url, __) => launch(url!),
-                    )
+                  ? Text(char.bio.looks, style: textTheme.bodyText1)
+                  // TODO broken...?!
+                  // ? ConstrainedBox(
+                  //     constraints: BoxConstraints.loose(Size.fromHeight(maxContentHeight)),
+                  // ? SizedBox(
+                  //     height: 120,
+                  //     width: MediaQuery.of(context).size.width - 100,
+                  //     // ? IntrinsicWidth(
+                  //     //     child: IntrinsicHeight(
+                  //     child:
+                  // ? MarkdownBody(
+                  //     shrinkWrap: true,
+                  //     // fitContent: true,
+                  //     data: char.bio.looks,
+                  //     onTapLink: (_, url, __) => launch(url!),
+                  //   )
+                  // ,
+                  //   )
+                  // )
                   : Text(S.current.noDescription),
               const SizedBox(height: 16),
               Row(
