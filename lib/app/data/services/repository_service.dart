@@ -314,8 +314,7 @@ class BuiltInRepository extends RepositoryCache {
   RemoteBehavior get loadRemote => RemoteBehavior.whenAnyEmpty;
 
   @override
-  String listenerKey(String key) =>
-      StorageHandler.instance.currentDelegate == 'firestore' ? key : cacheKey(key);
+  String listenerKey(String key) => cacheKey(key);
 }
 
 class PersonalRepository extends RepositoryCache {
