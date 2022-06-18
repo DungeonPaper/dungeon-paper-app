@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'package:dungeon_paper/app/model_utils/model_icon.dart';
 import 'package:dungeon_paper/app/modules/LibraryList/views/filters/item_filters.dart';
 import 'package:dungeon_paper/core/dw_icons.dart';
 import 'package:dungeon_paper/core/utils/string_utils.dart';
@@ -9,7 +10,7 @@ import 'package:flutter/material.dart';
 import 'item_settings.dart';
 import 'meta.dart';
 
-class Item extends dw.Item implements WithMeta {
+class Item extends dw.Item implements WithMeta, WithIcon {
   Item({
     required Meta meta,
     this.amount = 1,
@@ -118,7 +119,8 @@ class Item extends dw.Item implements WithMeta {
         'equipped': equipped,
       };
 
-  IconData get icon => DwIcons.swap_bag;
+  @override
+  IconData get icon => genericIcon;
   static IconData get genericIcon => DwIcons.swap_bag;
   static int Function(Item a, Item b) sorter(ItemFilters filters) =>
       (a, b) => a.name.toLowerCase().compareTo(b.name.toLowerCase());

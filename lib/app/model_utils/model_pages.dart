@@ -21,20 +21,19 @@ import 'package:get/get.dart';
 class ModelPages {
   static CharacterService get controller => Get.find();
   static LibraryService get library => Get.find();
-  static Character get _char => controller.current!;
+  static Character? get _char => controller.current;
 
   static void Function() openLibraryList<T extends WithMeta>({
-    Character? character,
-    void Function(Iterable<T> list)? onAdd,
+    // Character? character,
+    // void Function(Iterable<T> list)? onAdd,
     Type? type,
   }) {
     final map = <Type, Function()>{
-      Move: () => openMovesList(character: character, onAdd: (l) => onAdd?.call(l as Iterable<T>)),
-      Spell: () =>
-          openSpellsList(character: character, onAdd: (l) => onAdd?.call(l as Iterable<T>)),
-      Item: () => openItemsList(character: character, onAdd: (l) => onAdd?.call(l as Iterable<T>)),
-      CharacterClass: () => openCharacterClassesList(
-          character: character, onAdd: (l) => onAdd?.call(l as Iterable<T>)),
+      Move: () => openMovesList(),
+      Spell: () => openSpellsList(),
+      Item: () => openItemsList(),
+      CharacterClass: () => openCharacterClassesList(),
+      // Race: () => openRacesList(),
     };
 
     final t = type ?? T;
@@ -51,13 +50,13 @@ class ModelPages {
     Iterable<Move>? list,
     void Function(Iterable<Move> list)? onAdd,
   }) {
-    final char = character ?? _char;
+    final char = character;
     return () => Get.toNamed(
           Routes.moves,
           arguments: MoveLibraryListArguments(
             character: char,
-            onAdd: onAdd ?? library.upsertToCharacter,
-            preSelections: char.moves,
+            onAdd: onAdd, // ?? library.upsertToCharacter,
+            preSelections: char?.moves ?? [],
           ),
         );
   }
@@ -87,13 +86,13 @@ class ModelPages {
     Iterable<Spell>? list,
     void Function(Iterable<Spell> list)? onAdd,
   }) {
-    final char = character ?? _char;
+    final char = character;
     return () => Get.toNamed(
           Routes.spells,
           arguments: SpellLibraryListArguments(
             character: char,
-            onAdd: onAdd ?? library.upsertToCharacter,
-            preSelections: char.spells,
+            onAdd: onAdd, // ?? library.upsertToCharacter,
+            preSelections: char?.spells ?? [],
           ),
         );
   }
@@ -123,12 +122,12 @@ class ModelPages {
     Iterable<Item>? list,
     void Function(Iterable<Item> list)? onAdd,
   }) {
-    final char = character ?? _char;
+    final char = character;
     return () => Get.toNamed(
           Routes.items,
           arguments: ItemLibraryListArguments(
-            onAdd: onAdd ?? library.upsertToCharacter,
-            preSelections: char.items,
+            onAdd: onAdd, // ?? library.upsertToCharacter,
+            preSelections: char?.items ?? [],
           ),
         );
   }
@@ -153,12 +152,12 @@ class ModelPages {
     Iterable<Note>? list,
     void Function(Iterable<Note> list)? onAdd,
   }) {
-    final char = character ?? _char;
+    final char = character;
     return () => Get.toNamed(
           Routes.notes,
           arguments: NoteLibraryListArguments(
-            onAdd: onAdd ?? library.upsertToCharacter,
-            preSelections: char.notes,
+            onAdd: onAdd, // ?? library.upsertToCharacter,
+            preSelections: char?.notes ?? [],
           ),
         );
   }
@@ -183,16 +182,18 @@ class ModelPages {
     Iterable<CharacterClass>? list,
     void Function(CharacterClass cls)? onAdd,
   }) {
-    final char = character ?? _char;
+    final char = character;
     return () => Get.toNamed(
           Routes.characterClass,
           arguments: CharacterClassLibraryListArguments(
             onAdd: (list) => onAdd != null
                 ? onAdd(list.elementAt(0))
-                : controller.updateCharacter(
-                    char.copyWith(characterClass: list.elementAt(0)),
-                  ),
-            preSelections: [char.characterClass],
+                : char != null
+                    ? controller.updateCharacter(
+                        char.copyWith(characterClass: list.elementAt(0)),
+                      )
+                    : null,
+            preSelections: char != null ? [char.characterClass] : [],
           ),
         );
   }

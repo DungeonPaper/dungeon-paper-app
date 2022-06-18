@@ -15,7 +15,7 @@ enum FiltersGroup {
 }
 
 class LibraryListController<T extends WithMeta, F extends EntityFilters<T>> extends GetxController
-    with GetSingleTickerProviderStateMixin, LibraryServiceMixin {
+    with GetSingleTickerProviderStateMixin, LibraryServiceMixin, CharacterServiceMixin {
   final repo = Get.find<RepositoryService>().obs;
   final chars = Get.find<CharacterService>().obs;
 
@@ -24,7 +24,7 @@ class LibraryListController<T extends WithMeta, F extends EntityFilters<T>> exte
   final filters = <FiltersGroup, F?>{}.obs;
   final search = <FiltersGroup, TextEditingController>{}.obs;
 
-  late final void Function(Iterable<T> items) onAdd;
+  late final void Function(Iterable<T> items)? onAdd;
   late final bool Function(T item, F filters) filterFn;
   late final int Function(T a, T b) Function(F filters) sortFn;
   late final bool multiple;
@@ -55,7 +55,15 @@ class LibraryListController<T extends WithMeta, F extends EntityFilters<T>> exte
     search[FiltersGroup.playbook]!.addListener(_updatePlaybookSearch);
     search[FiltersGroup.my] ??= TextEditingController();
     search[FiltersGroup.my]!.addListener(_updateMySearch);
-    tabController = TabController(length: 3, vsync: this);
+    tabController = TabController(
+      initialIndex: maybeChar != null
+          ? repo.value.my.classes.keys.contains(character.characterClass.key)
+              ? 1
+              : 0
+          : 0,
+      length: 3,
+      vsync: this,
+    );
   }
 
   @override
@@ -189,7 +197,7 @@ abstract class EntityFilters<T> {
 abstract class LibraryListArguments<T extends WithMeta, F extends EntityFilters<T>> {
   final Map<FiltersGroup, F?> filters;
 
-  final void Function(Iterable<T> items) onAdd;
+  final void Function(Iterable<T> items)? onAdd;
   final bool Function(T item, F filters) filterFn;
   final int Function(T a, T b) Function(F filters) sortFn;
   final bool multiple;

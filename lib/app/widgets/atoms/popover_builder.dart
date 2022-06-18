@@ -19,14 +19,17 @@ class PopoverBuilder extends GetView {
     return SafeArea(
       child: GestureDetector(
         onTap: () => Get.back(),
+        behavior: HitTestBehavior.opaque,
         child: Container(
           color: Colors.black.withOpacity(0.75),
           padding: padding,
-          child: Hero(
-            tag: heroTag,
-            child: Material(
-              type: MaterialType.transparency,
-              child: builder(),
+          child: AbsorbPointer(
+            child: Hero(
+              tag: heroTag,
+              child: Material(
+                type: MaterialType.transparency,
+                child: builder(),
+              ),
             ),
           ),
         ),

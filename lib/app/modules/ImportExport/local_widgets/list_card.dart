@@ -1,3 +1,4 @@
+import 'package:dungeon_paper/app/model_utils/model_icon.dart';
 import 'package:dungeon_paper/app/model_utils/model_key.dart';
 import 'package:dungeon_paper/app/modules/ImportExport/controllers/import_export_controller.dart';
 import 'package:dungeon_paper/app/widgets/atoms/expansion_row.dart';
@@ -22,9 +23,20 @@ class ListCard<T, C extends ImportExportSelectionData> extends GetView<C> {
         margin: const EdgeInsets.only(top: 16),
         child: ExpansionRow(
           initiallyExpanded: true,
-          title: Text(
-            S.current.myGeneric(S.current.entityPlural(T)),
-            style: textTheme.titleLarge,
+          title: Row(
+            children: [
+              Icon(
+                genericIconFor(T),
+                color: textTheme.titleLarge!.color,
+              ),
+              const SizedBox(width: 8),
+              Expanded(
+                child: Text(
+                  S.current.myGeneric(S.current.entityPlural(T)),
+                  style: textTheme.titleLarge,
+                ),
+              ),
+            ],
           ),
           trailing: [
             MenuButton<bool>(

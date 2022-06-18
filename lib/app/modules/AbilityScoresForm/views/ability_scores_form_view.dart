@@ -59,7 +59,7 @@ class AbilityScoresFormView extends GetView<AbilityScoresFormController> {
                             children: [
                               IconTheme.merge(
                                 data: const IconThemeData(size: 16),
-                                child: AbilityScore.iconFor(statKey),
+                                child: Icon(AbilityScore.iconFor(statKey)),
                               ),
                               const SizedBox(width: 8),
                               Text(stat.name),

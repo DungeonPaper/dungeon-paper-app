@@ -1,10 +1,11 @@
 import 'dart:convert';
+import 'package:dungeon_paper/app/model_utils/model_icon.dart';
 import 'package:dungeon_world_data/dungeon_world_data.dart' as dw;
 import 'package:flutter/material.dart';
 
 import 'meta.dart';
 
-class AlignmentValue extends dw.Alignment implements WithMeta {
+class AlignmentValue extends dw.Alignment implements WithMeta, WithIcon {
   AlignmentValue({
     required this.meta,
     required super.description,
@@ -29,16 +30,16 @@ class AlignmentValue extends dw.Alignment implements WithMeta {
         description: json['description'],
       );
 
-  static final iconMap = <String, Widget?>{
-    'good': const Icon(Icons.mood),
-    'lawful': const Icon(Icons.sentiment_satisfied),
-    'neutral': const Icon(Icons.sentiment_neutral),
-    'chaotic': const Icon(Icons.sentiment_dissatisfied),
-    'evil': const Icon(Icons.mood_bad),
+  static final iconMap = <String, IconData>{
+    'good': Icons.mood,
+    'lawful': Icons.sentiment_satisfied,
+    'neutral': Icons.sentiment_neutral,
+    'chaotic': Icons.sentiment_dissatisfied,
+    'evil': Icons.mood_bad,
   };
 
-  Widget get icon => iconMap[key]!;
-  IconData get iconData => (icon as Icon).icon!;
+  @override
+  IconData get icon => iconMap[key]!;
 
   @override
   AlignmentValue copyWith({

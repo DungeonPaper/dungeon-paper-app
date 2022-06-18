@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'package:dungeon_paper/app/model_utils/model_icon.dart';
 import 'package:dungeon_paper/app/modules/LibraryList/views/filters/spell_filters.dart';
 import 'package:dungeon_paper/core/utils/uuid.dart';
 import 'package:dungeon_world_data/dungeon_world_data.dart' as dw;
@@ -7,7 +8,7 @@ import 'package:flutter/material.dart';
 import '../../../core/dw_icons.dart';
 import 'meta.dart';
 
-class Spell extends dw.Spell implements WithMeta {
+class Spell extends dw.Spell implements WithMeta, WithIcon {
   Spell({
     required Meta meta,
     required String key,
@@ -101,6 +102,7 @@ class Spell extends dw.Spell implements WithMeta {
         'prepared': prepared,
       };
 
+  @override
   IconData get icon => DwIcons.book_cover;
   static IconData get genericIcon => DwIcons.book_cover;
   static int Function(Spell a, Spell b) sorter(SpellFilters filters) => (a, b) {

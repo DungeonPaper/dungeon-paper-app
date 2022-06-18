@@ -5,11 +5,13 @@
 import 'dart:convert';
 import 'dart:math';
 
+import 'package:dungeon_paper/app/model_utils/model_icon.dart';
 import 'package:dungeon_paper/core/utils/enums.dart';
 import 'package:dungeon_paper/core/utils/math_utils.dart';
 import 'package:dungeon_paper/core/utils/string_utils.dart';
 import 'package:dungeon_paper/core/utils/uuid.dart';
 import 'package:dungeon_world_data/dungeon_world_data.dart' as dw;
+import 'package:flutter/material.dart';
 
 import 'bio.dart';
 import 'session_marks.dart';
@@ -24,7 +26,7 @@ import 'race.dart';
 import 'ability_scores.dart';
 import 'spell.dart';
 
-class Character implements WithMeta<Character, CharacterMeta> {
+class Character implements WithMeta<Character, CharacterMeta>, WithIcon {
   Character({
     required this.meta,
     required this.key,
@@ -274,6 +276,10 @@ class Character implements WithMeta<Character, CharacterMeta> {
         'bio': bio.toJson(),
         'race': race.toJson(),
       };
+
+  @override
+  IconData get icon => genericIcon;
+  static IconData get genericIcon => Icons.person;
 }
 
 class CharacterMeta {

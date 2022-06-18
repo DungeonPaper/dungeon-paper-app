@@ -154,5 +154,7 @@ mixin CharacterServiceMixin {
   CharacterService get charService => characterService;
 
   Character get character => characterService.current!;
+  Character? get maybeCharacter => characterService.current;
   Character get char => character;
+  Character? get maybeChar => maybeCharacter;
 }

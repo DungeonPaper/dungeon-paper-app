@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'package:dungeon_paper/app/model_utils/model_icon.dart';
 import 'package:dungeon_paper/app/modules/LibraryList/views/filters/move_filters.dart';
 import 'package:dungeon_world_data/dungeon_world_data.dart' as dw;
 import 'package:flutter/material.dart';
@@ -8,7 +9,7 @@ import '../../../core/dw_icons.dart';
 import '../../../core/utils/uuid.dart';
 import 'meta.dart';
 
-class Move extends dw.Move implements WithMeta {
+class Move extends dw.Move implements WithMeta, WithIcon {
   Move({
     required Meta meta,
     required String key,
@@ -108,7 +109,8 @@ class Move extends dw.Move implements WithMeta {
   @override
   String toString() => 'Move(key: $key, name: $name)';
 
-  IconData get icon => DwIcons.riposte;
+  @override
+  IconData get icon => genericIcon;
   static IconData get genericIcon => DwIcons.riposte;
   static int Function(Move a, Move b) sorter(MoveFilters filters) => (a, b) {
         final cat = a.category.index.compareTo(b.category.index);

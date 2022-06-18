@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'package:dungeon_paper/app/model_utils/model_icon.dart';
 import 'package:dungeon_paper/core/utils/uuid.dart';
 import 'package:dungeon_paper/generated/l10n.dart';
 import 'package:dungeon_world_data/dungeon_world_data.dart' as dw;
@@ -6,7 +7,7 @@ import 'package:flutter/material.dart';
 
 import 'meta.dart';
 
-class Note implements WithMeta {
+class Note implements WithMeta, WithIcon {
   Note({
     required this.meta,
     required this.key,
@@ -102,6 +103,7 @@ class Note implements WithMeta {
         'favorited': favorited,
       };
 
+  @override
   IconData get icon => Icons.speaker_notes;
   static IconData get genericIcon => Icons.speaker_notes;
 }

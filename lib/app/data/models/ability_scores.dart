@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:dungeon_paper/app/model_utils/model_icon.dart';
 import 'package:dungeon_paper/generated/l10n.dart';
 import 'package:flutter/material.dart';
 
@@ -135,7 +136,7 @@ class AbilityScores {
       };
 }
 
-class AbilityScore {
+class AbilityScore implements WithIcon {
   final String key;
   final String name;
   final String description;
@@ -194,8 +195,9 @@ class AbilityScore {
       );
 
   int get modifier => isDebilitated ? modifierForValue(value) - 1 : modifierForValue(value);
-  Widget get icon => iconFor(key);
-  static iconFor(String key) => _icons[key.toLowerCase()] ?? _icons['_other']!;
+  @override
+  IconData get icon => iconFor(key);
+  static IconData iconFor(String key) => _icons[key.toLowerCase()] ?? _icons['_other']!;
 
   static int modifierForValue(int value) {
     var modifiers = {1: -3, 4: -2, 6: -1, 9: 0, 13: 1, 16: 2, 18: 3};
@@ -213,13 +215,13 @@ class AbilityScore {
     return -1;
   }
 
-  static const _icons = <String, Widget>{
-    'dex': Icon(DwIcons.stat_dex),
-    'str': Icon(DwIcons.stat_str),
-    'wis': Icon(DwIcons.stat_wis),
-    'con': Icon(DwIcons.stat_con),
-    'int': Icon(DwIcons.stat_int),
-    'cha': Icon(DwIcons.stat_cha),
-    '_other': Icon(Icons.help),
+  static const _icons = <String, IconData>{
+    'dex': DwIcons.stat_dex,
+    'str': DwIcons.stat_str,
+    'wis': DwIcons.stat_wis,
+    'con': DwIcons.stat_con,
+    'int': DwIcons.stat_int,
+    'cha': DwIcons.stat_cha,
+    '_other': Icons.help,
   };
 }

@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'package:dungeon_paper/app/model_utils/model_icon.dart';
 import 'package:dungeon_paper/core/dw_icons.dart';
 import 'package:dungeon_paper/core/utils/uuid.dart';
 import 'package:dungeon_world_data/dungeon_world_data.dart' as dw;
@@ -7,7 +8,7 @@ import 'package:flutter/material.dart';
 import 'meta.dart';
 import 'move.dart';
 
-class Race extends dw.Race implements WithMeta {
+class Race extends dw.Race implements WithMeta, WithIcon {
   Race({
     required Meta meta,
     required String key,
@@ -101,7 +102,8 @@ class Race extends dw.Race implements WithMeta {
       tags: tags,
       favorited: favorited);
 
-  IconData get icon => DwIcons.riposte;
+  @override
+  IconData get icon => genericIcon;
   static IconData get genericIcon => DwIcons.riposte;
 
   @override

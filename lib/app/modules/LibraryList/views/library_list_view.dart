@@ -101,32 +101,34 @@ class LibraryListView<T extends WithMeta, F extends EntityFilters<T>>
         ),
       ),
       floatingActionButton: Obx(
-        () => AdvancedFloatingActionButton.extended(
-          icon: controller.selected.isNotEmpty
-              ? controller.multiple
-                  ? const Icon(Icons.add)
-                  : const Icon(Icons.check)
-              : null,
-          onPressed: controller.selected.isNotEmpty
-              ? () {
-                  controller.onAdd(controller.selectedWithMeta);
-                  Get.back();
-                }
-              : null,
-          label: Text(
-            controller.selected.isNotEmpty
-                ? controller.multiple
-                    ? S.current.addWithCount(S.current.pluralize(
-                        controller.selected.length,
-                        S.current.entity(T),
-                        S.current.entityPlural(T),
-                      ))
-                    : S.current.selectGeneric(nameFor(controller.selected.first))
-                : S.current.selectToAdd(
-                    controller.multiple ? S.current.entityPlural(T) : S.current.entity(T),
-                  ),
-          ),
-        ),
+        () => controller.onAdd.obs.value != null
+            ? AdvancedFloatingActionButton.extended(
+                icon: controller.selected.isNotEmpty
+                    ? controller.multiple
+                        ? const Icon(Icons.add)
+                        : const Icon(Icons.check)
+                    : null,
+                onPressed: controller.selected.isNotEmpty
+                    ? () {
+                        controller.onAdd!(controller.selectedWithMeta);
+                        Get.back();
+                      }
+                    : null,
+                label: Text(
+                  controller.selected.isNotEmpty
+                      ? controller.multiple
+                          ? S.current.addWithCount(S.current.pluralize(
+                              controller.selected.length,
+                              S.current.entity(T),
+                              S.current.entityPlural(T),
+                            ))
+                          : S.current.selectGeneric(nameFor(controller.selected.first))
+                      : S.current.selectToAdd(
+                          controller.multiple ? S.current.entityPlural(T) : S.current.entity(T),
+                        ),
+                ),
+              )
+            : Container(),
       ),
     );
   }

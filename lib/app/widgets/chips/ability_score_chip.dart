@@ -43,7 +43,7 @@ class AbilityScoreChip extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   IconTheme(
-                    child: stat.icon,
+                    child: Icon(stat.icon),
                     data: IconThemeData(size: 18, color: theme.colorScheme.onSurface),
                   ),
                   const SizedBox(width: 4),

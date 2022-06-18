@@ -1,6 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:dungeon_paper/app/data/models/character.dart';
 import 'package:dungeon_paper/app/data/services/character_service.dart';
+import 'package:dungeon_paper/app/widgets/atoms/avatar_circular_progress.dart';
 import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
@@ -84,20 +85,7 @@ class CharacterAvatar extends GetView {
         width: size,
         height: size,
         fit: BoxFit.cover,
-        progressIndicatorBuilder: (context, url, state) => Container(
-          color: Theme.of(context).unselectedWidgetColor,
-          width: size,
-          height: size,
-          child: Center(
-            child: SizedBox(
-              width: size / 2,
-              height: size / 2,
-              child: const CircularProgressIndicator.adaptive(
-                strokeWidth: 6,
-              ),
-            ),
-          ),
-        ),
+        progressIndicatorBuilder: (context, url, state) => AvatarCircularProgress(size: size),
         errorWidget: (context, url, err) => Stack(
           children: [
             _buildDefaultImage(context, size),

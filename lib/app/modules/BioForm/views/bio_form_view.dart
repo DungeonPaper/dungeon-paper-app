@@ -61,7 +61,7 @@ class BioFormView extends GetView<BioFormController> with CharacterServiceMixin 
                         value: a,
                         child: Row(
                           children: [
-                            AlignmentValue.iconMap[a]!,
+                            Icon(AlignmentValue.iconMap[a]!),
                             const SizedBox(width: 4),
                             Text(S.current.alignment(a)),
                           ],

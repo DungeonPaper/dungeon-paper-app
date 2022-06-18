@@ -85,7 +85,7 @@ class CharacterBioDialog extends GetView with CharacterServiceMixin {
                   const SizedBox(width: 4),
                   IconTheme.merge(
                     data: IconThemeData(size: 14, color: textTheme.caption!.color!),
-                    child: char.bio.alignment.icon,
+                    child: Icon(char.bio.alignment.icon),
                   ),
                   const SizedBox(width: 4),
                   Text(

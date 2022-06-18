@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:dungeon_paper/app/model_utils/model_icon.dart';
 import 'package:dungeon_paper/app/modules/LibraryList/views/filters/character_class_filters.dart';
 import 'package:dungeon_paper/core/utils/uuid.dart';
 import 'package:flutter/material.dart';
@@ -9,7 +10,7 @@ import 'gear_choice.dart';
 import 'meta.dart';
 import 'package:dungeon_world_data/dungeon_world_data.dart' as dw;
 
-class CharacterClass extends dw.CharacterClass implements WithMeta {
+class CharacterClass extends dw.CharacterClass implements WithMeta, WithIcon {
   get isApp => true;
 
   CharacterClass({
@@ -121,7 +122,8 @@ class CharacterClass extends dw.CharacterClass implements WithMeta {
         '_meta': meta.toJson(),
       };
 
-  IconData get icon => Icons.person_outline;
+  @override
+  IconData get icon => genericIcon;
   static IconData get genericIcon => Icons.person_outline;
 
   static int Function(CharacterClass a, CharacterClass b) sorter(CharacterClassFilters filters) =>
