@@ -60,7 +60,7 @@ class HPDialogView extends GetView<HPDialogController> {
                         child: WheelSpinner(
                           value: controller.overrideHP.value.toDouble(),
                           min: 0,
-                          max: controller.char.maxHp.toDouble(),
+                          max: controller.maxHP.toDouble(),
                           // childBuilder: (_) => Text(_.toString()),
                           minMaxLabelBuilder: (_) => '',
                           onSlideUpdate: (value) => controller.overrideHP.value = value.round(),
@@ -110,7 +110,7 @@ class HPDialogView extends GetView<HPDialogController> {
                 mainAxisAlignment: MainAxisAlignment.end,
                 children: [
                   TextButton.icon(
-                    onPressed: () => Get.back(),
+                    onPressed: controller.close,
                     label: Text(S.current.cancel),
                     icon: Icon(Icons.close),
                   ),

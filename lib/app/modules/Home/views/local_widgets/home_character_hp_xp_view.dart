@@ -1,6 +1,8 @@
 import 'package:dungeon_paper/app/data/services/character_service.dart';
 import 'package:dungeon_paper/app/modules/HPDialog/bindings/hp_dialog_binding.dart';
+import 'package:dungeon_paper/app/modules/HPDialog/controllers/hp_dialog_controller.dart';
 import 'package:dungeon_paper/app/modules/HPDialog/views/hp_dialog_view.dart';
+import 'package:dungeon_paper/app/routes/app_pages.dart';
 import 'package:dungeon_paper/app/widgets/atoms/exp_bar.dart';
 import 'package:dungeon_paper/app/widgets/atoms/hp_bar.dart';
 import 'package:flutter/material.dart';
@@ -21,9 +23,12 @@ class HomeCharacterHpExpView extends GetView<CharacterService> {
               child: HpBar(),
             ),
             borderRadius: BorderRadius.circular(10),
-            onTap: () {
-              HPDialogBinding().dependencies();
-              Get.dialog(const HPDialogView());
+            onTap: () async {
+              Get.put(HPDialogController());
+              await Get.dialog(const HPDialogView());
+              await Future.delayed(Duration(milliseconds: 500));
+              Get.delete<HPDialogController>();
+              // Get.toNamed(Routes.hpDialog);
             },
           ),
         ),

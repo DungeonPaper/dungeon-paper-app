@@ -30,17 +30,12 @@ abstract class Routes {
       }[T];
 
   static const createCharacter = _Paths.createCharacter;
-  static const createCharacterSelectClass =
-      _Paths.createCharacter + _Paths.characterClass;
-  static const createCharacterAbilityScores =
-      _Paths.createCharacter + _Paths.abilityScores;
-  static const createCharacterMovesSpells =
-      _Paths.createCharacter + _Paths.selectMovesSpells;
-  static const createCharacterBasicInfo =
-      _Paths.createCharacter + _Paths.basicInfo;
-  static const createCharacterStartingGear =
-      _Paths.createCharacter + _Paths.startingGear;
-  static const H_P_DIALOG = _Paths.H_P_DIALOG;
+  static const createCharacterSelectClass = _Paths.createCharacter + _Paths.characterClass;
+  static const createCharacterAbilityScores = _Paths.createCharacter + _Paths.abilityScores;
+  static const createCharacterMovesSpells = _Paths.createCharacter + _Paths.selectMovesSpells;
+  static const createCharacterBasicInfo = _Paths.createCharacter + _Paths.basicInfo;
+  static const createCharacterStartingGear = _Paths.createCharacter + _Paths.startingGear;
+  static const hpDialog = _Paths.hpDialog;
 }
 
 abstract class _Paths {
@@ -67,5 +62,5 @@ abstract class _Paths {
   static const notes = '/notes';
   static const bondsFlags = '/bonds-flags';
   static const bio = '/biography';
-  static const H_P_DIALOG = '/h-p-dialog';
+  static const hpDialog = '/edit-hp';
 }

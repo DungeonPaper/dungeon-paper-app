@@ -196,9 +196,10 @@ class AppPages {
       preventDuplicates: false,
     ),
     GetPage(
-      name: _Paths.H_P_DIALOG,
+      name: Routes.hpDialog,
       page: () => const HPDialogView(),
       binding: HPDialogBinding(),
+      opaque: false,
     ),
   ];
 }
