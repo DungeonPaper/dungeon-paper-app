@@ -21,6 +21,8 @@ import '../modules/CreateCharacter/SelectMovesSpells/bindings/select_moves_spell
 import '../modules/CreateCharacter/SelectMovesSpells/views/select_moves_spells_view.dart';
 import '../modules/CreateCharacter/bindings/create_character_binding.dart';
 import '../modules/CreateCharacter/views/create_character_view.dart';
+import '../modules/HPDialog/bindings/hp_dialog_binding.dart';
+import '../modules/HPDialog/views/hp_dialog_view.dart';
 import '../modules/Home/bindings/home_binding.dart';
 import '../modules/Home/views/home_view.dart';
 import '../modules/ImportExport/bindings/import_export_binding.dart';
@@ -192,6 +194,11 @@ class AppPages {
       page: () => const AbilityScoresFormView(),
       binding: AbilityScoresFormBinding(),
       preventDuplicates: false,
+    ),
+    GetPage(
+      name: _Paths.H_P_DIALOG,
+      page: () => const HPDialogView(),
+      binding: HPDialogBinding(),
     ),
   ];
 }

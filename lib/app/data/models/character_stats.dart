@@ -42,6 +42,16 @@ class CharacterStats {
         load: load ?? this.load,
       );
 
+  CharacterStats copyWithMaxHp(int? maxHp) => CharacterStats(
+        level: level,
+        maxHp: maxHp,
+        currentHp: currentHp,
+        currentExp: currentExp,
+        armor: armor,
+        damageDice: damageDice,
+        load: load,
+      );
+
   factory CharacterStats.fromRawJson(String str) => CharacterStats.fromJson(json.decode(str));
 
   String toRawJson() => json.encode(toJson());

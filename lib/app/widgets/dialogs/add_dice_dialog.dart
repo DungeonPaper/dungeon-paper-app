@@ -10,6 +10,7 @@ import 'package:get/get.dart';
 
 enum ModifierType { stat, fixed }
 
+// TODO use Getx
 class AddDiceDialog extends StatefulWidget {
   const AddDiceDialog({
     Key? key,

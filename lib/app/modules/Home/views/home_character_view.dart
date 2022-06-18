@@ -29,7 +29,7 @@ class HomeCharacterView extends GetView<CharacterService> {
           padding: const EdgeInsets.only(bottom: 0),
           // crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            p(const HomeCharacterHeaderView()),
+            pad(const HomeCharacterHeaderView()),
             const SizedBox(height: 8),
             Text(
               char.displayName,
@@ -38,7 +38,7 @@ class HomeCharacterView extends GetView<CharacterService> {
             ),
             CharacterSubtitle(character: char),
             const SizedBox(height: 4),
-            p(const HomeCharacterExtras()),
+            pad(const HomeCharacterExtras()),
             // p(Row(
             //   mainAxisSize: MainAxisSize.min,
             //   mainAxisAlignment: MainAxisAlignment.center,
@@ -76,19 +76,21 @@ class HomeCharacterView extends GetView<CharacterService> {
             //     // ),
             //   ],
             // )),
-            p(const SizedBox(height: 8)),
-            p(const Center(
-              child: SizedBox(
-                width: 500,
-                child: HomeCharacterHpExpView(),
-              ),
-            )),
-            p(const SizedBox(height: 16)),
-            p(Center(
+            pad(const SizedBox(height: 4)),
+            pad(
+                const Center(
+                  child: SizedBox(
+                    width: 500,
+                    child: HomeCharacterHpExpView(),
+                  ),
+                ),
+                8),
+            pad(const SizedBox(height: 12)),
+            pad(Center(
               child: AbilityScoresGrid(abilityScores: abilityScores),
             )),
-            p(const SizedBox(height: 16)),
-            p(Center(
+            pad(const SizedBox(height: 16)),
+            pad(Center(
               child: IconTheme(
                 data: IconTheme.of(context).copyWith(size: 16),
                 child: SizedBox(
@@ -120,7 +122,7 @@ class HomeCharacterView extends GetView<CharacterService> {
                 ),
               ),
             )),
-            p(const SizedBox(height: 12)),
+            pad(const SizedBox(height: 12)),
             const HomeCharacterDynamicCards(),
           ],
         );
@@ -128,8 +130,8 @@ class HomeCharacterView extends GetView<CharacterService> {
     );
   }
 
-  Widget p(Widget child) => Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 16),
+  Widget pad(Widget child, [double? amount]) => Padding(
+        padding: EdgeInsets.symmetric(horizontal: amount ?? 16),
         child: child,
       );
 }

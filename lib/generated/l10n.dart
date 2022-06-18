@@ -1721,6 +1721,76 @@ class S {
     );
   }
 
+  /// `HP`
+  String get hp {
+    return Intl.message(
+      'HP',
+      name: 'hp',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Modify HP`
+  String get hpDialogTitle {
+    return Intl.message(
+      'Modify HP',
+      name: 'hpDialogTitle',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Current HP`
+  String get hpDialogCurrentHP {
+    return Intl.message(
+      'Current HP',
+      name: 'hpDialogCurrentHP',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Heal\n+{amount}`
+  String hpDialogChangeAdd(Object amount) {
+    return Intl.message(
+      'Heal\n+$amount',
+      name: 'hpDialogChangeAdd',
+      desc: '',
+      args: [amount],
+    );
+  }
+
+  /// `No Change`
+  String get hpDialogChangeNeutral {
+    return Intl.message(
+      'No Change',
+      name: 'hpDialogChangeNeutral',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Damage\n-{amount}`
+  String hpDialogChangeRemove(Object amount) {
+    return Intl.message(
+      'Damage\n-$amount',
+      name: 'hpDialogChangeRemove',
+      desc: '',
+      args: [amount],
+    );
+  }
+
+  /// `Override Max HP:`
+  String get hpDialogChangeOverrideMax {
+    return Intl.message(
+      'Override Max HP:',
+      name: 'hpDialogChangeOverrideMax',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `{entity} description`
   String genericDescriptionField(Object entity) {
     return Intl.message(

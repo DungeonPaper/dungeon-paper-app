@@ -66,8 +66,15 @@ class Character implements WithMeta<Character, CharacterMeta>, WithIcon {
   final CharacterSettings settings;
 
   int get currentHp => clamp(stats.currentHp, 0, maxHp);
-  int get maxHp => stats.maxHp ?? (characterClass.hp + abilityScores.hpBaseValue);
+  int get maxHp => stats.maxHp ?? defaultMaxHp;
+  int get defaultMaxHp => (characterClass.hp + abilityScores.hpBaseValue);
   int get currentExp => stats.currentExp;
+  int get pendingExp {
+    final marks = sessionMarks.where((m) => m.completed).length;
+    // TODO add end of session questions to calculation?
+    return marks;
+  }
+
   int get maxExp => stats.maxExp;
   double get currentHpPercent => clamp(stats.currentHp / maxHp, 0, 1);
   double get currentExpPercent => clamp(stats.currentExp / maxExp, 0, 1);

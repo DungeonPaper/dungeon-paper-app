@@ -994,6 +994,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.0.0"
+  wheel_spinner:
+    dependency: "direct main"
+    description:
+      name: wheel_spinner
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.0.7-nullsafety"
   win32:
     dependency: transitive
     description:
