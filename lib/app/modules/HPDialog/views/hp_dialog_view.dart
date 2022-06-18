@@ -29,6 +29,7 @@ class HPDialogView extends GetView<HPDialogController> {
                 currentHp: controller.overrideHP.value,
                 maxHp: controller.maxHP,
               ),
+              const SizedBox(height: 24),
               SizedBox(
                 width: 400,
                 child: Row(
@@ -53,7 +54,7 @@ class HPDialogView extends GetView<HPDialogController> {
                     Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 32),
                       child: Container(
-                        decoration: BoxDecoration(borderRadius: borderRadius, color: Colors.red),
+                        decoration: BoxDecoration(borderRadius: borderRadius),
                         clipBehavior: Clip.antiAlias,
                         width: 60,
                         height: 100,
@@ -62,22 +63,39 @@ class HPDialogView extends GetView<HPDialogController> {
                           min: 0,
                           max: controller.maxHP.toDouble(),
                           // childBuilder: (_) => Text(_.toString()),
+                          borderRadius: borderRadius,
                           minMaxLabelBuilder: (_) => '',
                           onSlideUpdate: (value) => controller.overrideHP.value = value.round(),
-                          boxDecoration: BoxDecoration(
-                            gradient: LinearGradient(
-                              begin: Alignment.topCenter,
-                              end: Alignment.bottomCenter,
-                              stops: [0.0, 0.2, 0.8, 1.0],
-                              colors: [
-                                Colors.grey[350]!,
-                                Colors.grey[50]!,
-                                Colors.grey[50]!,
-                                Colors.grey[350]!
-                              ],
-                            ),
-                            borderRadius: borderRadius,
-                          ),
+                          dividerColor:
+                              theme.brightness == Brightness.light ? null : Colors.grey[800],
+                          boxDecoration: (theme.brightness == Brightness.light
+                                  ? BoxDecoration(
+                                      gradient: LinearGradient(
+                                        begin: Alignment.topCenter,
+                                        end: Alignment.bottomCenter,
+                                        stops: const [0.0, 0.2, 0.8, 1.0],
+                                        colors: [
+                                          Colors.grey[350]!,
+                                          Colors.grey[50]!,
+                                          Colors.grey[50]!,
+                                          Colors.grey[350]!
+                                        ],
+                                      ),
+                                    )
+                                  : BoxDecoration(
+                                      gradient: LinearGradient(
+                                        begin: Alignment.topCenter,
+                                        end: Alignment.bottomCenter,
+                                        stops: const [0.0, 0.2, 0.8, 1.0],
+                                        colors: [
+                                          Colors.black,
+                                          Colors.grey[900]!,
+                                          Colors.grey[900]!,
+                                          Colors.black
+                                        ],
+                                      ),
+                                    ))
+                              .copyWith(borderRadius: borderRadius),
                         ),
                       ),
                     ),
