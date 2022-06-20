@@ -2,6 +2,7 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
+import 'package:dungeon_paper/app/themes/themes.dart';
 import 'package:flutter/material.dart';
 
 const Duration _kExpand = Duration(milliseconds: 200);
@@ -324,6 +325,7 @@ class _CustomExpansionTileState extends State<CustomExpansionTile>
             iconColor: _iconColor.value,
             textColor: _headerColor.value,
             child: ListTile(
+              shape: rRectShape,
               onTap: widget.expandable ? _handleTap : null,
               contentPadding: widget.tilePadding,
               leading: widget.leading ?? _buildLeadingIcon(context),

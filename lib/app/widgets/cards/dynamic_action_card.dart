@@ -59,72 +59,70 @@ class DynamicActionCard extends StatelessWidget {
     final expanded = false.obs;
 
     return OrientationBuilder(
-      builder: (context, orientation) => Obx(
-        () {
-          final children = _buildChildren(context);
+      builder: (context, orientation) {
+        final children = _buildChildren(context);
 
-          var star = Container(
-            width: 20,
-            height: 20,
-            padding: EdgeInsets.only(
-              left: leading.isNotEmpty ? 8 : 0,
-              right: trailing.isNotEmpty ? 8 : 0,
-            ),
-            child: IconButton(
-              visualDensity: VisualDensity.compact,
-              padding: EdgeInsets.zero,
-              icon: IconTheme(
-                data: IconTheme.of(context).copyWith(
-                  size: 16,
-                  color: Theme.of(context).colorScheme.onSurface.withOpacity(0.3),
-                ),
-                child: starred
-                    ? starredIcon ?? const Icon(Icons.star_rounded)
-                    : unstarredIcon ?? const Icon(Icons.star_border_rounded),
+        var star = Container(
+          width: 20,
+          height: 20,
+          padding: EdgeInsets.only(
+            left: leading.isNotEmpty ? 8 : 0,
+            right: trailing.isNotEmpty ? 8 : 0,
+          ),
+          child: IconButton(
+            visualDensity: VisualDensity.compact,
+            padding: EdgeInsets.zero,
+            icon: IconTheme(
+              data: IconTheme.of(context).copyWith(
+                size: 16,
+                color: Theme.of(context).colorScheme.onSurface.withOpacity(0.3),
               ),
-              onPressed: () => onStarChanged?.call(!starred),
+              child: starred
+                  ? starredIcon ?? const Icon(Icons.star_rounded)
+                  : unstarredIcon ?? const Icon(Icons.star_border_rounded),
             ),
-          );
+            onPressed: () => onStarChanged?.call(!starred),
+          ),
+        );
 
-          return Card(
-            margin: EdgeInsets.zero,
-            elevation: expanded.value == true ? 5 : 1,
-            child: ExpansionRow(
-              expandable: expandable,
-              title: Text(title),
-              expansionKey: expansionKey,
-              onExpansion: (state) => expanded.value = state,
-              initiallyExpanded: initiallyExpanded,
-              childrenPadding: const EdgeInsets.all(8).copyWith(top: 0),
-              icon: icon,
-              trailing: [
-                ...leading,
-                showStar
-                    ? expandable
-                        ? star
-                        : Padding(
-                            padding: const EdgeInsets.only(right: 8),
-                            child: star,
-                          )
-                    : const SizedBox.shrink(),
-                ...trailing
-              ],
-              children: maxContentHeight == null
-                  ? children
-                  : [
-                      ConstrainedBox(
-                        constraints: BoxConstraints.loose(Size.fromHeight(maxContentHeight!)),
-                        child: ListView(
-                          shrinkWrap: true,
-                          children: children.sublist(0, children.length - 2),
-                        ),
+        return Card(
+          margin: EdgeInsets.zero,
+          // elevation: expanded.value == true ? 5 : 1,
+          child: ExpansionRow(
+            expandable: expandable,
+            title: Text(title),
+            expansionKey: expansionKey,
+            onExpansion: (state) => expanded.value = state,
+            initiallyExpanded: initiallyExpanded,
+            childrenPadding: const EdgeInsets.all(8).copyWith(top: 0),
+            icon: icon,
+            trailing: [
+              ...leading,
+              showStar
+                  ? expandable
+                      ? star
+                      : Padding(
+                          padding: const EdgeInsets.only(right: 8),
+                          child: star,
+                        )
+                  : const SizedBox.shrink(),
+              ...trailing
+            ],
+            children: maxContentHeight == null
+                ? children
+                : [
+                    ConstrainedBox(
+                      constraints: BoxConstraints.loose(Size.fromHeight(maxContentHeight!)),
+                      child: ListView(
+                        shrinkWrap: true,
+                        children: children.sublist(0, children.length - 2),
                       ),
-                      children[children.length - 1],
-                    ],
-            ),
-          );
-        },
-      ),
+                    ),
+                    children[children.length - 1],
+                  ],
+          ),
+        );
+      },
     );
   }
 

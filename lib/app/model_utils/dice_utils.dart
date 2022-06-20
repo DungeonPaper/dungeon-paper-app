@@ -13,7 +13,7 @@ class DiceUtils {
 
   static Offset iconCenterOffset(dw.Dice dice) =>
       {
-        4: const Offset(3, 4),
+        4: const Offset(0, 4),
       }[dice.sides] ??
       Offset.zero;
 }

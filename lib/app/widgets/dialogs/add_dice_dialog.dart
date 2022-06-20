@@ -93,10 +93,12 @@ class _AddDiceDialogState extends State<AddDiceDialog> {
             children: [
               Expanded(
                 child: ElevatedButton(
-                  style: ButtonThemes.primaryElevated(
-                    context,
-                    backgroundOpacity: modifierType == ModifierType.fixed ? 1 : 0.4,
-                  ).copyWith(
+                  style: (ButtonThemes.primaryElevated(
+                            context,
+                            backgroundOpacity: modifierType == ModifierType.fixed ? 1 : 0.4,
+                          ) ??
+                          ElevatedButton.styleFrom())
+                      .copyWith(
                     elevation: MaterialStateProperty.resolveWith(
                       (_) => modifierType == ModifierType.fixed ? 1 : 0,
                     ),
@@ -115,10 +117,12 @@ class _AddDiceDialogState extends State<AddDiceDialog> {
               ),
               Expanded(
                 child: ElevatedButton(
-                  style: ButtonThemes.primaryElevated(
-                    context,
-                    backgroundOpacity: modifierType == ModifierType.stat ? 1 : 0.4,
-                  ).copyWith(
+                  style: (ButtonThemes.primaryElevated(
+                            context,
+                            backgroundOpacity: modifierType == ModifierType.stat ? 1 : 0.4,
+                          ) ??
+                          ElevatedButton.styleFrom())
+                      .copyWith(
                     elevation: MaterialStateProperty.resolveWith(
                       (_) => modifierType == ModifierType.stat ? 1 : 0,
                     ),

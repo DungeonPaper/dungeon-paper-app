@@ -10,6 +10,7 @@ final rRectShape = RoundedRectangleBorder(borderRadius: borderRadius);
 final baseCardTheme = CardTheme(shape: rRectShape);
 final _dark = ThemeData.dark();
 final _light = ThemeData.light();
+final _lightM3 = ThemeData(useMaterial3: true);
 const _fabTheme = FloatingActionButtonThemeData(
   backgroundColor: DwColors.success,
   foregroundColor: Colors.white,
@@ -52,12 +53,12 @@ final parchmentTheme = ThemeData(
     shape: rRectShape,
   ),
   inputDecorationTheme: inputDecorationTheme,
-  elevatedButtonTheme: ElevatedButtonThemeData(
-    style: ElevatedButton.styleFrom(
-      primary: primaryColor,
-      shape: rRectShape,
-    ),
-  ),
+  // elevatedButtonTheme: ElevatedButtonThemeData(
+  //   style: ElevatedButton.styleFrom(
+  //     primary: primaryColor,
+  //     shape: rRectShape,
+  //   ),
+  // ),
   floatingActionButtonTheme: _fabTheme,
 );
 final darkTheme = _dark.copyWith(
@@ -78,12 +79,13 @@ final darkTheme = _dark.copyWith(
     shape: rRectShape,
   ),
   inputDecorationTheme: inputDecorationTheme,
-  elevatedButtonTheme: ElevatedButtonThemeData(
-    style: ElevatedButton.styleFrom(
-      primary: _dark.primaryColor,
-      shape: rRectShape,
-    ),
-  ),
+  splashFactory: _lightM3.splashFactory,
+  // elevatedButtonTheme: ElevatedButtonThemeData(
+  //   style: ElevatedButton.styleFrom(
+  //     primary: _dark.primaryColor,
+  //     shape: rRectShape,
+  //   ),
+  // ),
   floatingActionButtonTheme: _fabTheme,
 );
 
