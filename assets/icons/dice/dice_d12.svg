@@ -1,13 +1,1 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
-<svg width="100%" height="100%" viewBox="0 0 20 20" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" xmlns:serif="http://www.serif.com/" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:2;">
-    <g>
-        <g>
-            <g>
-                <g>
-                    <path d="M19.295,6.419l-3.376,-4.649l-5.463,-1.77l0,4.437l4.617,3.354l4.222,-1.372Zm-9.752,-1.982l-0,-4.437l-5.463,1.77l-3.376,4.649l4.222,1.371l4.617,-3.353Zm-2.297,9.273l5.507,0l1.701,-5.238l-4.455,-3.237l-4.454,3.237l1.701,5.238Zm-0.102,0.914l-2.607,3.594l5.462,1.77l5.463,-1.77l-2.607,-3.594l-5.711,-0Zm8.208,-5.966l-1.763,5.426l2.609,3.591l3.376,-4.646l-0,-5.741l-4.222,1.37Zm-10.713,0l-4.223,-1.37l0,5.744l3.376,4.646l2.609,-3.591l-1.762,-5.429Z" style="fill-rule:nonzero;"/>
-                </g>
-            </g>
-        </g>
-    </g>
-</svg>
+<?xml version="1.0" encoding="UTF-8" standalone="no"?><!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd"><svg width="100%" height="100%" viewBox="0 0 100 100" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" xmlns:serif="http://www.serif.com/" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:2;"><g><g><g><g><path d="M88.727,35.079l-14.065,-19.37l-22.761,-7.376l0,18.489l19.234,13.975l17.592,-5.718Zm-40.633,-8.257l-0,-18.489l-22.761,7.376l-14.065,19.37l17.592,5.711l19.234,-13.968Zm-9.571,38.637l22.949,0l7.086,-21.825l-18.56,-13.49l-18.561,13.49l7.086,21.825Zm-0.423,3.808l-10.863,14.974l22.761,7.377l22.76,-7.377l-10.863,-14.974l-23.795,-0Zm34.199,-24.858l-7.346,22.606l10.873,14.966l14.065,-19.361l0,-23.919l-17.592,5.708Zm-44.638,0l-17.592,-5.71l-0,23.933l14.065,19.36l10.872,-14.965l-7.345,-22.618Z" style="fill-rule:nonzero;"/></g></g></g></g></svg>

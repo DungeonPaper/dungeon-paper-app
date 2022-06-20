@@ -28,6 +28,7 @@ final inputDecorationTheme = InputDecorationTheme(
 );
 
 final parchmentTheme = ThemeData(
+  useMaterial3: true,
   primaryColor: primaryColor,
   colorScheme: _light.colorScheme.copyWith(secondary: primaryColor, tertiary: primaryColor),
   scaffoldBackgroundColor: scaffoldBackgroundColor,
@@ -61,6 +62,7 @@ final parchmentTheme = ThemeData(
 );
 final darkTheme = _dark.copyWith(
   // primaryColor: primaryColor,
+  useMaterial3: true,
   textTheme: copyTextThemeWith(_dark.textTheme, fontFamily: 'Nunito'),
   primaryTextTheme: copyTextThemeWith(_dark.primaryTextTheme, fontFamily: 'Nunito'),
   appBarTheme: AppBarTheme(

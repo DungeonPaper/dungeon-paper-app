@@ -114,7 +114,7 @@ class FormDiceInputData extends BaseInputData<List<dw.Dice>> {
 
   void _refreshGuess() {
     final guessStr = guessInputs.map((i) => i.data.value).join(' ');
-    guesses = dw.Dice.guessFromString(guessStr);
+    guesses = dw.Dice.guessFromString(guessStr).toSet();
     controller.value = [...controller.value];
   }
 

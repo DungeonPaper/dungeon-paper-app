@@ -195,6 +195,7 @@ class _NavItem extends StatelessWidget {
     const duration = Duration(milliseconds: 250);
     return Material(
       child: InkWell(
+        splashColor: theme.colorScheme.primary.withOpacity(0.2),
         onTap: onTap,
         child: Padding(
           padding: const EdgeInsets.all(6),

@@ -11,22 +11,22 @@ class DwIcons {
   static const _kFontFam = 'DwIcons';
   static const String? _kFontPkg = null;
 
-  static const IconData armor = IconData(0xe800, fontFamily: _kFontFam, fontPackage: _kFontPkg);
-  static const IconData book_cover =
-      IconData(0xe801, fontFamily: _kFontFam, fontPackage: _kFontPkg);
   static const IconData coin_stack =
-      IconData(0xe802, fontFamily: _kFontFam, fontPackage: _kFontPkg);
+      IconData(0xe800, fontFamily: _kFontFam, fontPackage: _kFontPkg);
   static const IconData dice_d6_numbered =
-      IconData(0xe803, fontFamily: _kFontFam, fontPackage: _kFontPkg);
-  static const IconData dumbbell = IconData(0xe804, fontFamily: _kFontFam, fontPackage: _kFontPkg);
+      IconData(0xe801, fontFamily: _kFontFam, fontPackage: _kFontPkg);
+  static const IconData dumbbell = IconData(0xe802, fontFamily: _kFontFam, fontPackage: _kFontPkg);
   static const IconData exclamation =
+      IconData(0xe803, fontFamily: _kFontFam, fontPackage: _kFontPkg);
+  static const IconData armor = IconData(0xe804, fontFamily: _kFontFam, fontPackage: _kFontPkg);
+  static const IconData book_cover =
       IconData(0xe805, fontFamily: _kFontFam, fontPackage: _kFontPkg);
   static const IconData hand_rock = IconData(0xe806, fontFamily: _kFontFam, fontPackage: _kFontPkg);
   static const IconData knapsack = IconData(0xe807, fontFamily: _kFontFam, fontPackage: _kFontPkg);
   static const IconData quill = IconData(0xe808, fontFamily: _kFontFam, fontPackage: _kFontPkg);
   static const IconData riposte = IconData(0xe809, fontFamily: _kFontFam, fontPackage: _kFontPkg);
   static const IconData scroll_quill =
-      IconData(0xe81a, fontFamily: _kFontFam, fontPackage: _kFontPkg);
+      IconData(0xe80a, fontFamily: _kFontFam, fontPackage: _kFontPkg);
   static const IconData swap_bag = IconData(0xe80b, fontFamily: _kFontFam, fontPackage: _kFontPkg);
   static const IconData swords = IconData(0xe80c, fontFamily: _kFontFam, fontPackage: _kFontPkg);
   static const IconData stat_cha = IconData(0xe80d, fontFamily: _kFontFam, fontPackage: _kFontPkg);
@@ -35,12 +35,12 @@ class DwIcons {
   static const IconData stat_int = IconData(0xe810, fontFamily: _kFontFam, fontPackage: _kFontPkg);
   static const IconData stat_str = IconData(0xe811, fontFamily: _kFontFam, fontPackage: _kFontPkg);
   static const IconData stat_wis = IconData(0xe812, fontFamily: _kFontFam, fontPackage: _kFontPkg);
-  static const IconData dice_d8 = IconData(0xe813, fontFamily: _kFontFam, fontPackage: _kFontPkg);
-  static const IconData dice_d6 = IconData(0xe815, fontFamily: _kFontFam, fontPackage: _kFontPkg);
+  static const IconData dice_d4 = IconData(0xe813, fontFamily: _kFontFam, fontPackage: _kFontPkg);
+  static const IconData dice_d6 = IconData(0xe814, fontFamily: _kFontFam, fontPackage: _kFontPkg);
+  static const IconData dice_d8 = IconData(0xe815, fontFamily: _kFontFam, fontPackage: _kFontPkg);
   static const IconData dice_d10 = IconData(0xe816, fontFamily: _kFontFam, fontPackage: _kFontPkg);
   static const IconData dice_d12 = IconData(0xe817, fontFamily: _kFontFam, fontPackage: _kFontPkg);
   static const IconData dice_d20 = IconData(0xe818, fontFamily: _kFontFam, fontPackage: _kFontPkg);
-  static const IconData dice_d4 = IconData(0xe819, fontFamily: _kFontFam, fontPackage: _kFontPkg);
 
   static IconData statIcon(String stat) => {
         'cha': DwIcons.stat_cha,
