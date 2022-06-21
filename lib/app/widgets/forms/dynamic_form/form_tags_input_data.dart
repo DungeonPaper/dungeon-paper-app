@@ -41,8 +41,10 @@ class FormTagsInputData extends BaseInputData<List<dw.Tag>> {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(S.current.entityPlural(dw.Tag), style: Theme.of(context).textTheme.caption),
+        const SizedBox(height: 6),
         Wrap(
           spacing: 8,
+          runSpacing: 8,
           crossAxisAlignment: WrapCrossAlignment.center,
           children: [
             for (final tag in TagUtils.excludeMetaTags(value))

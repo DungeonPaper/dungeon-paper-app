@@ -67,8 +67,10 @@ class FormDiceInputData extends BaseInputData<List<dw.Dice>> {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(S.current.entityPlural(dw.Dice), style: Theme.of(context).textTheme.caption),
+        const SizedBox(height: 6),
         Wrap(
           spacing: 8,
+          runSpacing: 8,
           crossAxisAlignment: WrapCrossAlignment.center,
           children: [
             for (final dice in enumerate(value))

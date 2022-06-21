@@ -7,7 +7,6 @@ import 'package:flutter_markdown/flutter_markdown.dart';
 import 'package:get/get.dart';
 import 'package:url_launcher/url_launcher.dart';
 
-
 class DynamicActionCard extends StatelessWidget {
   const DynamicActionCard({
     Key? key,
@@ -151,7 +150,7 @@ class DynamicActionCard extends StatelessWidget {
           Expanded(
             child: Wrap(
               spacing: chipsSpacing,
-              runSpacing: 0,
+              runSpacing: 6,
               children: chips.toList(),
             ),
           ),

@@ -135,10 +135,10 @@ class LibraryListView<T extends WithMeta, F extends EntityFilters<T>>
 
   Widget _wrapWithSelection(BuildContext context, T item, FiltersGroup group) => Obx(
         () {
-          var isPreSelected = controller.isPreSelected(item);
-          var selected = controller.isSelected(item);
-          var enabled = controller.isEnabled(item);
-          var onToggle = enabled ? () => controller.toggleItem(item, !selected) : null;
+          final isPreSelected = controller.isPreSelected(item);
+          final selected = controller.isSelected(item);
+          final enabled = controller.isEnabled(item);
+          final onToggle = enabled ? () => controller.toggleItem(item, !selected) : null;
 
           return Container(
             decoration: BoxDecoration(

@@ -20,8 +20,8 @@ class SelectMovesSpellsController extends GetxController {
   void onReady() {
     super.onReady();
     final SelectMovesSpellsArguments args = Get.arguments;
-    moves.value = args.moves;
-    spells.value = args.spells;
+    moves.value = args.moves.toList();
+    spells.value = args.spells.toList();
     abilityScores = args.abilityScores.obs;
     characterClass = args.characterClass.obs;
     onChanged = args.onChanged;
