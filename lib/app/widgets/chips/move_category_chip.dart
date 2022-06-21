@@ -1,3 +1,5 @@
+import 'package:dungeon_paper/app/widgets/chips/advanced_chip.dart';
+import 'package:dungeon_paper/app/widgets/chips/primary_chip.dart';
 import 'package:flutter/material.dart';
 
 import '../../../generated/l10n.dart';
@@ -7,29 +9,19 @@ class MoveCategoryChip extends StatelessWidget {
   const MoveCategoryChip({
     Key? key,
     required this.category,
+    this.visualDensity,
     this.advancedLevelDisplay = AdvancedLevelDisplay.none,
   }) : super(key: key);
 
   final MoveCategory category;
   final AdvancedLevelDisplay advancedLevelDisplay;
+  final VisualDensity? visualDensity;
 
   @override
   Widget build(BuildContext context) {
-    final theme = Theme.of(context);
-    return Container(
-      child: Text(
-        _text,
-        style: TextStyle(
-          fontSize: 10,
-          color: theme.colorScheme.onPrimary,
-        ),
-      ),
-      padding: const EdgeInsets.symmetric(horizontal: 4, vertical: 2),
-      decoration: ShapeDecoration(
-        color: theme.primaryColor.withOpacity(0.5),
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(4)),
-      ),
-      // labelPadding: EdgeInsets.zero,
+    return PrimaryChip(
+      label: _text,
+      visualDensity: visualDensity ?? VisualDensity.compact,
     );
   }
 

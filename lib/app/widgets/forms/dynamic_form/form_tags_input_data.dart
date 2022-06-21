@@ -61,7 +61,6 @@ class FormTagsInputData extends BaseInputData<List<dw.Tag>> {
             TagChip(
               tag: dw.Tag(name: S.current.addGeneric(dw.Tag), value: null),
               icon: const Icon(Icons.add),
-              backgroundColor: Theme.of(context).primaryColor,
               onPressed: () => Get.dialog(
                 AddTagDialog(
                   onSave: (tag) {

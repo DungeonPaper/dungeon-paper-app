@@ -11,16 +11,16 @@ class DwIcons {
   static const _kFontFam = 'DwIcons';
   static const String? _kFontPkg = null;
 
-  static const IconData coin_stack =
-      IconData(0xe800, fontFamily: _kFontFam, fontPackage: _kFontPkg);
-  static const IconData dice_d6_numbered =
-      IconData(0xe801, fontFamily: _kFontFam, fontPackage: _kFontPkg);
-  static const IconData dumbbell = IconData(0xe802, fontFamily: _kFontFam, fontPackage: _kFontPkg);
-  static const IconData exclamation =
-      IconData(0xe803, fontFamily: _kFontFam, fontPackage: _kFontPkg);
-  static const IconData armor = IconData(0xe804, fontFamily: _kFontFam, fontPackage: _kFontPkg);
+  static const IconData armor = IconData(0xe800, fontFamily: _kFontFam, fontPackage: _kFontPkg);
   static const IconData book_cover =
+      IconData(0xe801, fontFamily: _kFontFam, fontPackage: _kFontPkg);
+  static const IconData coin_stack =
       IconData(0xe805, fontFamily: _kFontFam, fontPackage: _kFontPkg);
+  static const IconData dice_d6_numbered =
+      IconData(0xe802, fontFamily: _kFontFam, fontPackage: _kFontPkg);
+  static const IconData dumbbell = IconData(0xe803, fontFamily: _kFontFam, fontPackage: _kFontPkg);
+  static const IconData exclamation =
+      IconData(0xe804, fontFamily: _kFontFam, fontPackage: _kFontPkg);
   static const IconData hand_rock = IconData(0xe806, fontFamily: _kFontFam, fontPackage: _kFontPkg);
   static const IconData knapsack = IconData(0xe807, fontFamily: _kFontFam, fontPackage: _kFontPkg);
   static const IconData quill = IconData(0xe808, fontFamily: _kFontFam, fontPackage: _kFontPkg);

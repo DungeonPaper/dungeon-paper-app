@@ -5,16 +5,39 @@ import 'theme_utils.dart';
 
 const scaffoldBackgroundColor = Color(0xfffcf5e5);
 const primaryColor = Color(0xff8d775f);
+final _light = ThemeData.light();
+final secondaryColor = _light.colorScheme.primary;
 final borderRadius = BorderRadius.circular(20);
 final rRectShape = RoundedRectangleBorder(borderRadius: borderRadius);
-final baseCardTheme = CardTheme(shape: rRectShape);
 final _dark = ThemeData.dark();
-final _light = ThemeData.light();
-final _lightM3 = ThemeData(useMaterial3: true);
-const _fabTheme = FloatingActionButtonThemeData(
-  backgroundColor: DwColors.success,
-  foregroundColor: Colors.white,
+final parchmentColorScheme = ColorScheme.fromSeed(
+  seedColor: primaryColor,
+  primary: primaryColor,
+  secondary: secondaryColor,
+  onSecondary: ThemeData.estimateBrightnessForColor(secondaryColor) == Brightness.light
+      ? Colors.black
+      : Colors.white,
 );
+final darkColorScheme = ColorScheme.fromSeed(
+  brightness: Brightness.dark,
+  seedColor: _dark.colorScheme.primary,
+  secondary: secondaryColor,
+  onSecondary: ThemeData.estimateBrightnessForColor(secondaryColor) == Brightness.light
+      ? Colors.black
+      : Colors.white,
+);
+final _lightM3 = ThemeData(
+  useMaterial3: true,
+  colorScheme: parchmentColorScheme,
+  primaryColor: parchmentColorScheme.primary,
+);
+final _darkM3 = ThemeData(
+  useMaterial3: true,
+  brightness: Brightness.dark,
+  colorScheme: darkColorScheme,
+  primaryColor: darkColorScheme.primary,
+);
+final baseCardTheme = _lightM3.cardTheme.copyWith(shape: rRectShape);
 final inputBorderRadius = borderRadius.copyWith(
   bottomLeft: const Radius.circular(8),
   bottomRight: const Radius.circular(8),
@@ -23,70 +46,83 @@ final inputDecorationTheme = InputDecorationTheme(
   floatingLabelBehavior: FloatingLabelBehavior.always,
   filled: true,
   border: UnderlineInputBorder(
-    // borderSide: BorderSide.none,
     borderRadius: inputBorderRadius,
   ),
 );
 
-final parchmentTheme = ThemeData(
+final parchmentBase = ThemeData.from(
   useMaterial3: true,
-  primaryColor: primaryColor,
-  colorScheme: _light.colorScheme.copyWith(secondary: primaryColor, tertiary: primaryColor),
+  colorScheme: parchmentColorScheme,
+  textTheme: copyTextThemeWith(
+    _lightM3.textTheme,
+    fontFamily: 'Nunito',
+  ),
+);
+
+final darkBase = ThemeData.from(
+  useMaterial3: true,
+  colorScheme: darkColorScheme,
+  textTheme: copyTextThemeWith(
+    _darkM3.textTheme,
+    fontFamily: 'Nunito',
+  ),
+);
+
+final parchmentTheme = parchmentBase.copyWith(
+  useMaterial3: true,
   scaffoldBackgroundColor: scaffoldBackgroundColor,
-  appBarTheme: AppBarTheme(
+  appBarTheme: parchmentBase.appBarTheme.copyWith(
     backgroundColor: scaffoldBackgroundColor,
     foregroundColor: ThemeData.light().colorScheme.onSurface,
     elevation: 0,
     centerTitle: true,
   ),
-  dialogTheme: DialogTheme(
+  dialogTheme: parchmentBase.dialogTheme.copyWith(
     shape: rRectShape,
   ),
-  cardTheme: baseCardTheme,
-  fontFamily: 'Nunito',
-  bottomNavigationBarTheme: _light.bottomNavigationBarTheme.copyWith(
-    backgroundColor: scaffoldBackgroundColor,
-    // selectedItemColor: primaryColor,
-    // showSelectedLabels: false,
-  ),
-  popupMenuTheme: PopupMenuThemeData(
+  cardTheme: parchmentBase.cardTheme.copyWith(shape: rRectShape),
+  popupMenuTheme: parchmentBase.popupMenuTheme.copyWith(
     shape: rRectShape,
   ),
-  inputDecorationTheme: inputDecorationTheme,
-  // elevatedButtonTheme: ElevatedButtonThemeData(
-  //   style: ElevatedButton.styleFrom(
-  //     primary: primaryColor,
-  //     shape: rRectShape,
-  //   ),
-  // ),
-  floatingActionButtonTheme: _fabTheme,
+  inputDecorationTheme: parchmentBase.inputDecorationTheme.copyWith(
+    floatingLabelBehavior: FloatingLabelBehavior.always,
+    filled: true,
+    border: UnderlineInputBorder(
+      borderRadius: inputBorderRadius,
+    ),
+  ),
+  floatingActionButtonTheme: parchmentBase.floatingActionButtonTheme.copyWith(
+    backgroundColor: DwColors.success,
+    foregroundColor: Colors.white,
+  ),
 );
-final darkTheme = _dark.copyWith(
-  // primaryColor: primaryColor,
+
+final darkTheme = darkBase.copyWith(
   useMaterial3: true,
-  textTheme: copyTextThemeWith(_dark.textTheme, fontFamily: 'Nunito'),
-  primaryTextTheme: copyTextThemeWith(_dark.primaryTextTheme, fontFamily: 'Nunito'),
   appBarTheme: AppBarTheme(
-    backgroundColor: _dark.scaffoldBackgroundColor,
+    backgroundColor: darkBase.scaffoldBackgroundColor,
     elevation: 0,
     centerTitle: true,
   ),
-  dialogTheme: DialogTheme(
+  dialogTheme: darkBase.dialogTheme.copyWith(
     shape: rRectShape,
   ),
-  cardTheme: baseCardTheme,
-  popupMenuTheme: PopupMenuThemeData(
+  cardTheme: darkBase.cardTheme.copyWith(shape: rRectShape),
+  popupMenuTheme: darkBase.popupMenuTheme.copyWith(
     shape: rRectShape,
   ),
-  inputDecorationTheme: inputDecorationTheme,
-  splashFactory: _lightM3.splashFactory,
-  // elevatedButtonTheme: ElevatedButtonThemeData(
-  //   style: ElevatedButton.styleFrom(
-  //     primary: _dark.primaryColor,
-  //     shape: rRectShape,
-  //   ),
-  // ),
-  floatingActionButtonTheme: _fabTheme,
+  inputDecorationTheme: darkBase.inputDecorationTheme.copyWith(
+    floatingLabelBehavior: FloatingLabelBehavior.always,
+    filled: true,
+    border: UnderlineInputBorder(
+      borderRadius: inputBorderRadius,
+    ),
+  ),
+  splashFactory: InkSparkle.splashFactory,
+  floatingActionButtonTheme: darkBase.floatingActionButtonTheme.copyWith(
+    backgroundColor: DwColors.success,
+    foregroundColor: Colors.white,
+  ),
 );
 
 class AppThemes {

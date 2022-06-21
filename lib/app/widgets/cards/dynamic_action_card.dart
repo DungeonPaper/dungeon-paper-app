@@ -1,5 +1,6 @@
 import 'package:dungeon_paper/app/model_utils/dice_utils.dart';
 import 'package:dungeon_paper/app/widgets/atoms/expansion_row.dart';
+import 'package:dungeon_paper/app/widgets/atoms/roll_dice_button.dart';
 import 'package:dungeon_paper/generated/l10n.dart';
 import 'package:dungeon_world_data/dice.dart';
 import 'package:flutter/material.dart';
@@ -87,7 +88,7 @@ class DynamicActionCard extends StatelessWidget {
 
         return Card(
           margin: EdgeInsets.zero,
-          // elevation: expanded.value == true ? 5 : 1,
+          elevation: expanded.value ? 5 : 1,
           child: ExpansionRow(
             expandable: expandable,
             title: Text(title),
@@ -162,14 +163,7 @@ class DynamicActionCard extends StatelessWidget {
           if (dice.isNotEmpty)
             Padding(
               padding: const EdgeInsets.only(bottom: 2.5),
-              child: BackgroundIconButton(
-                elevation: 1.5,
-                icon: const Icon(DwIcons.dice_d6, size: 20),
-                iconColor: Theme.of(context).colorScheme.onPrimary,
-                color: Theme.of(context).primaryColor,
-                size: 40,
-                onPressed: () => DiceUtils.openRollDialog(dice),
-              ),
+              child: RollDiceButton(dice: dice),
             ),
         ],
       )

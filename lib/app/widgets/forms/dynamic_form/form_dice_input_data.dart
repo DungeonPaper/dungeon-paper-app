@@ -87,7 +87,7 @@ class FormDiceInputData extends BaseInputData<List<dw.Dice>> {
               ),
             DiceChip(
               dice: dw.Dice.d6,
-              label: Text(S.current.addGeneric(dw.Dice)),
+              label: S.current.addGeneric(dw.Dice),
               icon: const Icon(Icons.add),
               backgroundColor: Theme.of(context).primaryColor,
               onPressed: () => Get.dialog(
@@ -103,7 +103,7 @@ class FormDiceInputData extends BaseInputData<List<dw.Dice>> {
                 .where((guess) => !value.map((d) => d.toString()).contains(guess.toString())))
               DiceChip(
                 dice: dice,
-                label: Text(S.current.diceSuggestion(dice.toString())),
+                label: S.current.diceSuggestion(dice.toString()),
                 onPressed: () => controller.value = [...controller.value, dice],
               ),
           ],

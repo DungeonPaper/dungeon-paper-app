@@ -1,5 +1,6 @@
 import 'package:dungeon_paper/app/model_utils/tag_utils.dart';
 import 'package:dungeon_paper/app/widgets/chips/advanced_chip.dart';
+import 'package:dungeon_paper/app/widgets/chips/primary_chip.dart';
 import 'package:dungeon_paper/app/widgets/dialogs/view_tag_dialog.dart';
 import 'package:dungeon_paper/core/utils/string_utils.dart';
 import 'package:flutter/material.dart';
@@ -15,15 +16,17 @@ class TagChip extends StatelessWidget {
     this.onDeleted,
     this.icon,
     this.backgroundColor,
+    this.visualDensity,
   }) : super(key: key);
 
   factory TagChip.openDescription({
     Key? key,
     required dw.Tag tag,
-    final void Function()? onPressed,
-    final void Function()? onDeleted,
-    final Widget? icon,
-    final Color? backgroundColor,
+    void Function()? onPressed,
+    void Function()? onDeleted,
+    Widget? icon,
+    Color? backgroundColor,
+    VisualDensity? visualDensity,
   }) =>
       TagChip(
         key: key,
@@ -42,34 +45,18 @@ class TagChip extends StatelessWidget {
   final void Function()? onPressed;
   final void Function()? onDeleted;
   final Widget? icon;
+  final VisualDensity? visualDensity;
   final Color? backgroundColor;
 
   @override
   Widget build(BuildContext context) {
-    final theme = Theme.of(context);
     // TODO fix case in data
     final name = toTitleCase(tag.name);
 
-    return AdvancedChip(
-      deleteIconColor: Theme.of(context).colorScheme.onPrimary,
-      avatar: IconTheme(
-        data: IconThemeData(
-          color: Theme.of(context).colorScheme.onPrimary,
-          size: 16,
-        ),
-        child: icon != null ? icon! : TagUtils.iconOf(tag),
-      ),
-      label: Text(
-        tag.value != null ? '$name: ${tag.value}' : name,
-        style: TextStyle(
-          color: theme.colorScheme.onPrimary,
-        ),
-      ),
-      backgroundColor: backgroundColor ?? theme.primaryColor.withOpacity(0.7),
-      labelPadding: const EdgeInsets.symmetric(horizontal: 8, vertical: 0),
-      visualDensity: VisualDensity.compact,
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
-      isEnabled: true,
+    return PrimaryChip(
+      icon: icon != null ? icon! : TagUtils.iconOf(tag),
+      label: tag.value != null ? '$name: ${tag.value}' : name,
+      visualDensity: visualDensity,
       onDeleted: onDeleted,
       onPressed: onPressed,
     );

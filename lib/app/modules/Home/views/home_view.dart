@@ -191,11 +191,16 @@ class _NavItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var theme = Theme.of(context);
+    final theme = Theme.of(context);
+    final colorScheme = theme.colorScheme;
+    final selectedColor = colorScheme.secondary;
+    final selectedFgColor = theme.colorScheme.onSecondary;
+    final unselectedFgColor = theme.colorScheme.onSurface;
     const duration = Duration(milliseconds: 250);
+
     return Material(
       child: InkWell(
-        splashColor: theme.colorScheme.primary.withOpacity(0.2),
+        splashColor: selectedColor.withOpacity(0.2),
         onTap: onTap,
         child: Padding(
           padding: const EdgeInsets.all(6),
@@ -211,12 +216,12 @@ class _NavItem extends StatelessWidget {
                     child: IconTheme(
                       child: icon,
                       data: IconThemeData(
-                        color: selected ? theme.colorScheme.onPrimary : theme.colorScheme.onSurface,
+                        color: selected ? selectedFgColor : unselectedFgColor,
                       ),
                     ),
                   ),
                   width: selected ? 60 : 40,
-                  color: selected ? theme.colorScheme.primary : Colors.transparent,
+                  color: selected ? selectedColor : Colors.transparent,
                 ),
               ),
               const SizedBox(height: 2),
@@ -224,7 +229,7 @@ class _NavItem extends StatelessWidget {
                 duration: duration,
                 style: theme.textTheme.caption!.copyWith(
                   fontWeight: FontWeight.w600,
-                  color: selected ? theme.colorScheme.primary : null,
+                  color: selected ? selectedColor : null,
                 ),
                 child: Text(
                   label,

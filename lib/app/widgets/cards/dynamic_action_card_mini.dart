@@ -1,4 +1,5 @@
 import 'package:dungeon_paper/app/model_utils/dice_utils.dart';
+import 'package:dungeon_paper/app/widgets/atoms/roll_dice_button.dart';
 import 'package:dungeon_paper/generated/l10n.dart';
 import 'package:dungeon_world_data/dice.dart';
 import 'package:flutter/material.dart';
@@ -51,6 +52,10 @@ class DynamicActionCardMini extends StatelessWidget {
   }
 
   Widget buildCard(BuildContext context) {
+    final theme = Theme.of(context);
+    final colorScheme = theme.colorScheme;
+    final textTheme = theme.textTheme;
+    final titleFgColor = colorScheme.secondary;
     return Card(
       margin: EdgeInsets.zero,
       child: Padding(
@@ -65,7 +70,7 @@ class DynamicActionCardMini extends StatelessWidget {
                   IconTheme(
                     data: IconTheme.of(context).copyWith(
                       size: 20,
-                      color: Theme.of(context).colorScheme.primary,
+                      color: titleFgColor,
                     ),
                     child: icon!,
                   ),
@@ -77,9 +82,9 @@ class DynamicActionCardMini extends StatelessWidget {
                   title,
                   overflow: TextOverflow.ellipsis,
                   maxLines: 1,
-                  style: Theme.of(context).textTheme.bodyText1!.copyWith(
-                        color: Theme.of(context).colorScheme.primary,
-                      ),
+                  style: textTheme.bodyText1!.copyWith(
+                    color: titleFgColor,
+                  ),
                 )),
                 showStar
                     ? SizedBox(
@@ -91,7 +96,7 @@ class DynamicActionCardMini extends StatelessWidget {
                           iconSize: 16,
                           icon: Icon(
                             starred ? Icons.star_rounded : Icons.star_border_rounded,
-                            color: Theme.of(context).colorScheme.onSurface.withOpacity(0.3),
+                            color: colorScheme.onSurface.withOpacity(0.3),
                           ),
                           onPressed: () => onStarChanged(!starred),
                         ),
@@ -111,8 +116,7 @@ class DynamicActionCardMini extends StatelessWidget {
                     // fitContent: true,
                     // shrinkWrap: true,
                     // fitContent: true,
-                    styleSheet: MarkdownStyleSheet.fromTheme(Theme.of(context))
-                        .copyWith(textScaleFactor: 0.9),
+                    styleSheet: MarkdownStyleSheet.fromTheme(theme).copyWith(textScaleFactor: 0.9),
                     physics: const NeverScrollableScrollPhysics(),
                     onTapLink: (text, href, title) => launch(href!),
                   ),
@@ -137,15 +141,7 @@ class DynamicActionCardMini extends StatelessWidget {
               children: [
                 ...chips,
                 Expanded(child: Container()),
-                if (dice.isNotEmpty)
-                  BackgroundIconButton(
-                    elevation: 1.5,
-                    icon: const Icon(DwIcons.dice_d6, size: 20),
-                    iconColor: Theme.of(context).colorScheme.onPrimary,
-                    color: Theme.of(context).primaryColor,
-                    size: 40,
-                    onPressed: () => DiceUtils.openRollDialog(dice),
-                  ),
+                if (dice.isNotEmpty) RollDiceButton(dice: dice, size: 45),
               ],
             )
           ],
