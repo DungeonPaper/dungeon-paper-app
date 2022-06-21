@@ -10,16 +10,17 @@ class UserMenu extends StatelessWidget {
   Widget build(BuildContext context) {
     return Material(
       color: Colors.transparent,
-      child: _buildChild(),
+      child: _buildChild(context),
     );
   }
 
-  Widget _buildChild() {
+  Widget _buildChild(BuildContext context) {
     return Material(
       color: Colors.transparent,
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(28)),
       clipBehavior: Clip.antiAlias,
       child: InkWell(
+        splashColor: Theme.of(context).colorScheme.secondary,
         onTap: () => Get.dialog(UserMenuPopover()),
         child: const Padding(
           padding: EdgeInsets.all(8),

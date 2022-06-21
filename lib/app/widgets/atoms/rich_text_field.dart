@@ -440,6 +440,7 @@ class RichButton extends StatelessWidget {
         message: tooltip,
         child: onTap != null
             ? InkWell(
+                splashColor: Theme.of(context).colorScheme.secondary,
                 borderRadius: BorderRadius.circular(4),
                 onTap: onTap,
                 child: child,

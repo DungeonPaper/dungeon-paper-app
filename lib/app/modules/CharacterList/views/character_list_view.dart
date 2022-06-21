@@ -47,6 +47,7 @@ class CharacterListPageView extends GetView<CharacterService> {
                           minVerticalPadding: 8,
                           horizontalTitleGap: 10,
                           child: InkWell(
+                            splashColor: Theme.of(context).colorScheme.secondary,
                             onTap: () {
                               controller.setCurrent(char.key);
                               Get.offAllNamed(Routes.home);

@@ -72,7 +72,7 @@ final parchmentTheme = parchmentBase.copyWith(
   useMaterial3: true,
   scaffoldBackgroundColor: scaffoldBackgroundColor,
   appBarTheme: parchmentBase.appBarTheme.copyWith(
-    backgroundColor: scaffoldBackgroundColor,
+    backgroundColor: Colors.transparent,
     foregroundColor: ThemeData.light().colorScheme.onSurface,
     elevation: 0,
     centerTitle: true,
@@ -100,7 +100,7 @@ final parchmentTheme = parchmentBase.copyWith(
 final darkTheme = darkBase.copyWith(
   useMaterial3: true,
   appBarTheme: AppBarTheme(
-    backgroundColor: darkBase.scaffoldBackgroundColor,
+    backgroundColor: Colors.transparent,
     elevation: 0,
     centerTitle: true,
   ),

@@ -1,4 +1,5 @@
 import 'package:dungeon_paper/app/model_utils/dice_utils.dart';
+import 'package:dungeon_paper/app/themes/themes.dart';
 import 'package:dungeon_paper/app/widgets/atoms/roll_dice_button.dart';
 import 'package:dungeon_paper/generated/l10n.dart';
 import 'package:dungeon_world_data/dice.dart';
@@ -42,110 +43,116 @@ class DynamicActionCardMini extends StatelessWidget {
     if (onTap != null) {
       return Material(
         color: Colors.transparent,
-        child: InkWell(
-          onTap: onTap,
-          child: buildCard(context),
+        child: Card(
+          margin: EdgeInsets.zero,
+          child: InkWell(
+            borderRadius: borderRadius,
+            splashColor: Theme.of(context).colorScheme.secondary,
+            onTap: onTap,
+            child: buildCardContent(context),
+          ),
         ),
       );
     }
-    return buildCard(context);
+    return Card(
+      margin: EdgeInsets.zero,
+      child: buildCardContent(context),
+    );
   }
 
-  Widget buildCard(BuildContext context) {
+  Padding buildCardContent(BuildContext context) {
     final theme = Theme.of(context);
     final colorScheme = theme.colorScheme;
     final textTheme = theme.textTheme;
     final titleFgColor = colorScheme.secondary;
-    return Card(
-      margin: EdgeInsets.zero,
-      child: Padding(
-        padding: const EdgeInsets.all(8.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: [
-            Row(
-              mainAxisSize: MainAxisSize.max,
-              children: [
-                if (icon != null) ...[
-                  IconTheme(
-                    data: IconTheme.of(context).copyWith(
-                      size: 20,
-                      color: titleFgColor,
-                    ),
-                    child: icon!,
-                  ),
-                  const SizedBox(width: 8),
-                ],
-                // TODO use Stack with the icon to create larger tap area while maintaining max text available width
-                Expanded(
-                    child: Text(
-                  title,
-                  overflow: TextOverflow.ellipsis,
-                  maxLines: 1,
-                  style: textTheme.bodyText1!.copyWith(
+
+    return Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          Row(
+            mainAxisSize: MainAxisSize.max,
+            children: [
+              if (icon != null) ...[
+                IconTheme(
+                  data: IconTheme.of(context).copyWith(
+                    size: 20,
                     color: titleFgColor,
                   ),
-                )),
-                showStar
-                    ? SizedBox(
-                        width: 20,
-                        height: 20,
-                        child: IconButton(
-                          // visualDensity: VisualDensity.compact,
-                          padding: EdgeInsets.zero,
-                          iconSize: 16,
-                          icon: Icon(
-                            starred ? Icons.star_rounded : Icons.star_border_rounded,
-                            color: colorScheme.onSurface.withOpacity(0.3),
-                          ),
-                          onPressed: () => onStarChanged(!starred),
+                  child: icon!,
+                ),
+                const SizedBox(width: 8),
+              ],
+              // TODO use Stack with the icon to create larger tap area while maintaining max text available width
+              Expanded(
+                  child: Text(
+                title,
+                overflow: TextOverflow.ellipsis,
+                maxLines: 1,
+                style: textTheme.bodyText1!.copyWith(
+                  color: titleFgColor,
+                ),
+              )),
+              showStar
+                  ? SizedBox(
+                      width: 20,
+                      height: 20,
+                      child: IconButton(
+                        // visualDensity: VisualDensity.compact,
+                        padding: EdgeInsets.zero,
+                        iconSize: 16,
+                        icon: Icon(
+                          starred ? Icons.star_rounded : Icons.star_border_rounded,
+                          color: colorScheme.onSurface.withOpacity(0.3),
                         ),
-                      )
-                    : const SizedBox.shrink(),
-              ],
-            ),
-            const SizedBox(height: 6),
-            Expanded(
-              // child: Container(),
-              child: LayoutBuilder(builder: (context, constraints) {
-                return ClipRect(
-                  // clipper: RectClipper(constraints.maxWidth, constraints.maxHeight),
-                  child: Markdown(
-                    padding: EdgeInsets.zero,
-                    data: description.isNotEmpty ? description : S.current.noDescription,
-                    // fitContent: true,
-                    // shrinkWrap: true,
-                    // fitContent: true,
-                    styleSheet: MarkdownStyleSheet.fromTheme(theme).copyWith(textScaleFactor: 0.9),
-                    physics: const NeverScrollableScrollPhysics(),
-                    onTapLink: (text, href, title) => launch(href!),
-                  ),
-                );
-              }),
-              // child: Text(
-              //   description.isNotEmpty ? description : S.current.noDescription,
-              //   overflow: TextOverflow.ellipsis,
-              //   maxLines: dice.isNotEmpty
-              //       ? 3
-              //       : chips.isNotEmpty
-              //           ? 4
-              //           : 5,
-              //   textScaleFactor: 0.9,
-              //   style: const TextStyle(fontWeight: FontWeight.w200),
-              // ),
-            ),
-            const SizedBox(height: 4),
-            Row(
-              crossAxisAlignment: CrossAxisAlignment.end,
-              mainAxisSize: MainAxisSize.max,
-              children: [
-                ...chips,
-                Expanded(child: Container()),
-                if (dice.isNotEmpty) RollDiceButton(dice: dice, size: 45),
-              ],
-            )
-          ],
-        ),
+                        onPressed: () => onStarChanged(!starred),
+                      ),
+                    )
+                  : const SizedBox.shrink(),
+            ],
+          ),
+          const SizedBox(height: 6),
+          Expanded(
+            // child: Container(),
+            child: LayoutBuilder(builder: (context, constraints) {
+              return ClipRect(
+                // clipper: RectClipper(constraints.maxWidth, constraints.maxHeight),
+                child: Markdown(
+                  padding: EdgeInsets.zero,
+                  data: description.isNotEmpty ? description : S.current.noDescription,
+                  // fitContent: true,
+                  // shrinkWrap: true,
+                  // fitContent: true,
+                  styleSheet: MarkdownStyleSheet.fromTheme(theme).copyWith(textScaleFactor: 0.9),
+                  physics: const NeverScrollableScrollPhysics(),
+                  onTapLink: (text, href, title) => launch(href!),
+                ),
+              );
+            }),
+            // child: Text(
+            //   description.isNotEmpty ? description : S.current.noDescription,
+            //   overflow: TextOverflow.ellipsis,
+            //   maxLines: dice.isNotEmpty
+            //       ? 3
+            //       : chips.isNotEmpty
+            //           ? 4
+            //           : 5,
+            //   textScaleFactor: 0.9,
+            //   style: const TextStyle(fontWeight: FontWeight.w200),
+            // ),
+          ),
+          const SizedBox(height: 4),
+          Row(
+            crossAxisAlignment: CrossAxisAlignment.end,
+            mainAxisSize: MainAxisSize.max,
+            children: [
+              ...chips,
+              Expanded(child: Container()),
+              if (dice.isNotEmpty) RollDiceButton(dice: dice, size: 45),
+            ],
+          )
+        ],
       ),
     );
   }

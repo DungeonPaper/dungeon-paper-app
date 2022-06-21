@@ -3,6 +3,7 @@
 // found in the LICENSE file.
 
 import 'package:dungeon_paper/app/themes/themes.dart';
+import 'package:dungeon_paper/app/widgets/atoms/custom_list_tile.dart';
 import 'package:flutter/material.dart';
 
 const Duration _kExpand = Duration(milliseconds: 200);
@@ -324,14 +325,14 @@ class _CustomExpansionTileState extends State<CustomExpansionTile>
           ListTileTheme.merge(
             iconColor: _iconColor.value,
             textColor: _headerColor.value,
-            child: ListTile(
+            child: CustomListTile(
               shape: rRectShape,
               onTap: widget.expandable ? _handleTap : null,
               contentPadding: widget.tilePadding,
               leading: widget.leading ?? _buildLeadingIcon(context),
-              title: IconTheme(
-                child: widget.title,
+              title: IconTheme.merge(
                 data: IconThemeData(color: _iconColor.value),
+                child: widget.title,
               ),
               subtitle: widget.subtitle,
               trailing: widget.trailing ?? _buildTrailingIcon(context),

@@ -5,6 +5,7 @@ import 'package:dungeon_paper/app/data/services/auth_service.dart';
 import 'package:dungeon_paper/app/data/services/character_service.dart';
 import 'package:dungeon_paper/app/data/services/user_service.dart';
 import 'package:dungeon_paper/app/routes/app_pages.dart';
+import 'package:dungeon_paper/app/themes/themes.dart';
 import 'package:dungeon_paper/app/widgets/atoms/popover_builder.dart';
 import 'package:dungeon_paper/generated/l10n.dart';
 import 'package:flutter/material.dart';
@@ -94,7 +95,8 @@ class UserMenuPopover extends GetView<CharacterService> with AuthServiceMixin {
                                 children: [
                                   for (final char in controller.charsByLastUsed.take(4))
                                     InkWell(
-                                      borderRadius: BorderRadius.circular(8),
+                                      splashColor: Theme.of(context).colorScheme.secondary,
+                                      borderRadius: borderRadius,
                                       onTap: () {
                                         controller.setCurrent(char.key);
                                         Get.back();

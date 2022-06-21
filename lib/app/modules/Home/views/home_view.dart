@@ -200,7 +200,7 @@ class _NavItem extends StatelessWidget {
 
     return Material(
       child: InkWell(
-        splashColor: selectedColor.withOpacity(0.2),
+        splashColor: Theme.of(context).colorScheme.secondary,
         onTap: onTap,
         child: Padding(
           padding: const EdgeInsets.all(6),
