@@ -130,13 +130,14 @@ class HPDialogView extends GetView<HPDialogController> {
                   TextButton.icon(
                     onPressed: controller.close,
                     label: Text(S.current.cancel),
-                    icon: Icon(Icons.close),
+                    icon: const Icon(Icons.close),
+                    style: ButtonThemes.errorText(context),
                   ),
                   const SizedBox(width: 8),
                   ElevatedButton.icon(
                     onPressed: controller.save,
                     label: Text(S.current.save),
-                    icon: Icon(Icons.check),
+                    icon: const Icon(Icons.check),
                   ),
                 ],
               ),

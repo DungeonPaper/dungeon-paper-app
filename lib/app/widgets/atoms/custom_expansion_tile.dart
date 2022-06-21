@@ -325,6 +325,8 @@ class _CustomExpansionTileState extends State<CustomExpansionTile>
           ListTileTheme.merge(
             iconColor: _iconColor.value,
             textColor: _headerColor.value,
+            horizontalTitleGap: 0,
+            minLeadingWidth: 36,
             child: CustomListTile(
               shape: rRectShape,
               onTap: widget.expandable ? _handleTap : null,

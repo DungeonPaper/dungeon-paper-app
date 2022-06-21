@@ -1,5 +1,4 @@
-import 'package:dungeon_paper/app/model_utils/dice_utils.dart';
-import 'package:dungeon_paper/app/widgets/atoms/expansion_row.dart';
+import 'package:dungeon_paper/app/widgets/atoms/custom_expansion_panel.dart';
 import 'package:dungeon_paper/app/widgets/atoms/roll_dice_button.dart';
 import 'package:dungeon_paper/generated/l10n.dart';
 import 'package:dungeon_world_data/dice.dart';
@@ -8,8 +7,6 @@ import 'package:flutter_markdown/flutter_markdown.dart';
 import 'package:get/get.dart';
 import 'package:url_launcher/url_launcher.dart';
 
-import '../../../core/dw_icons.dart';
-import '../atoms/background_icon_button.dart';
 
 class DynamicActionCard extends StatelessWidget {
   const DynamicActionCard({
@@ -89,7 +86,7 @@ class DynamicActionCard extends StatelessWidget {
         return Card(
           margin: EdgeInsets.zero,
           elevation: expanded.value ? 5 : 1,
-          child: ExpansionRow(
+          child: CustomExpansionPanel(
             expandable: expandable,
             title: Text(title),
             expansionKey: expansionKey,

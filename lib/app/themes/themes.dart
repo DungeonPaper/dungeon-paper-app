@@ -96,6 +96,11 @@ final parchmentTheme = parchmentBase.copyWith(
     backgroundColor: DwColors.success,
     foregroundColor: Colors.white,
   ),
+  tabBarTheme: parchmentBase.tabBarTheme.copyWith(
+    labelStyle: parchmentBase.textTheme.bodyMedium!.copyWith(fontFamily: 'Nunito'),
+    unselectedLabelStyle: parchmentBase.textTheme.bodyMedium!.copyWith(fontFamily: 'Nunito'),
+    indicator: UnderlineTabIndicator(borderSide: BorderSide(color: secondaryColor, width: 4)),
+  ),
 );
 
 final parchmentSplashColor = parchmentTheme.colorScheme.secondary.withOpacity(0.2);
@@ -103,7 +108,7 @@ final parchmentSplashColor = parchmentTheme.colorScheme.secondary.withOpacity(0.
 final darkTheme = darkBase.copyWith(
   useMaterial3: true,
   splashColor: secondaryColor.withOpacity(0.1),
-  appBarTheme: AppBarTheme(
+  appBarTheme: const AppBarTheme(
     backgroundColor: Colors.transparent,
     elevation: 0,
     centerTitle: true,
@@ -126,6 +131,11 @@ final darkTheme = darkBase.copyWith(
   floatingActionButtonTheme: darkBase.floatingActionButtonTheme.copyWith(
     backgroundColor: DwColors.success,
     foregroundColor: Colors.white,
+  ),
+  tabBarTheme: darkBase.tabBarTheme.copyWith(
+    labelStyle: darkBase.textTheme.bodyMedium!.copyWith(fontFamily: 'Nunito'),
+    unselectedLabelStyle: darkBase.textTheme.bodyMedium!.copyWith(fontFamily: 'Nunito'),
+    indicator: UnderlineTabIndicator(borderSide: BorderSide(color: secondaryColor, width: 4)),
   ),
 );
 final darkSplashColor = darkTheme.colorScheme.secondary.withOpacity(0.2);

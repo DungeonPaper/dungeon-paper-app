@@ -1,4 +1,4 @@
-import 'package:dungeon_paper/app/widgets/atoms/expansion_row.dart';
+import 'package:dungeon_paper/app/widgets/atoms/custom_expansion_panel.dart';
 import 'package:flutter/material.dart';
 
 class CategorizedList extends StatelessWidget {
@@ -23,7 +23,7 @@ class CategorizedList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ExpansionRow(
+    return CustomExpansionPanel(
       title: title,
       trailing: trailing,
       initiallyExpanded: initiallyExpanded,

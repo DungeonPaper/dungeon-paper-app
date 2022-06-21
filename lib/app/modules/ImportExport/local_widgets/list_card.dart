@@ -1,7 +1,7 @@
 import 'package:dungeon_paper/app/model_utils/model_icon.dart';
 import 'package:dungeon_paper/app/model_utils/model_key.dart';
 import 'package:dungeon_paper/app/modules/ImportExport/controllers/import_export_controller.dart';
-import 'package:dungeon_paper/app/widgets/atoms/expansion_row.dart';
+import 'package:dungeon_paper/app/widgets/atoms/custom_expansion_panel.dart';
 import 'package:dungeon_paper/app/widgets/atoms/menu_button.dart';
 import 'package:dungeon_paper/generated/l10n.dart';
 import 'package:flutter/material.dart';
@@ -21,7 +21,7 @@ class ListCard<T, C extends ImportExportSelectionData> extends GetView<C> {
     return Obx(
       () => Card(
         margin: const EdgeInsets.only(top: 16),
-        child: ExpansionRow(
+        child: CustomExpansionPanel(
           initiallyExpanded: true,
           title: Row(
             children: [

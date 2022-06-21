@@ -1,5 +1,4 @@
 import 'package:dungeon_paper/app/model_utils/dice_utils.dart';
-import 'package:dungeon_paper/app/widgets/atoms/background_icon_button.dart';
 import 'package:dungeon_paper/core/dw_icons.dart';
 import 'package:dungeon_world_data/dice.dart';
 import 'package:flutter/material.dart';

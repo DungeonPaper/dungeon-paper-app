@@ -83,5 +83,6 @@ class CharacterClassLibraryListArguments
             FiltersGroup.my: CharacterClassFilters(),
           },
           extraData: const {},
+          multiple: false,
         );
 }

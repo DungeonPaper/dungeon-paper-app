@@ -1,5 +1,6 @@
 import 'package:dungeon_paper/app/data/models/ability_scores.dart';
 import 'package:dungeon_paper/app/model_utils/dice_utils.dart';
+import 'package:dungeon_paper/app/themes/colors.dart';
 import 'package:dungeon_paper/app/themes/themes.dart';
 import 'package:dungeon_paper/core/dw_icons.dart';
 import 'package:flutter/material.dart';
@@ -23,13 +24,15 @@ class AbilityScoreChip extends StatelessWidget {
     final isDark = brightness == Brightness.dark;
     final rollBadgeModifierOpacity = isDark ? 0.5 : 0.4;
     final rollBadgeBgOpacity = isDark ? 0.8 : 0.1;
+    final isLight = theme.brightness == Brightness.light;
     final cardColor = stat.isDebilitated
-        ? theme.errorColor.withOpacity(0.15)
+        ? Color.alphaBlend(
+            DwColors.error.withOpacity(isLight ? 0.4 : 0.2), theme.scaffoldBackgroundColor)
         : theme.cardTheme.color?.withOpacity(0.5);
 
     return Card(
-      // elevation: 1,
       margin: EdgeInsets.zero,
+      color: cardColor,
       child: InkWell(
         splashColor: Theme.of(context).splashColor,
         onTap: () =>

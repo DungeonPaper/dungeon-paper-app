@@ -1,5 +1,4 @@
 import 'package:dungeon_paper/app/model_utils/dice_utils.dart';
-import 'package:dungeon_paper/app/widgets/chips/advanced_chip.dart';
 import 'package:dungeon_paper/app/widgets/chips/primary_chip.dart';
 import 'package:flutter/material.dart';
 

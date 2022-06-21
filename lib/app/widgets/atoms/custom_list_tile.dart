@@ -6,7 +6,6 @@ import 'dart:math' as math;
 
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
-import 'package:flutter/widgets.dart';
 
 /// Defines the title font used for [CustomListTile] descendants of a [ListTileTheme].
 ///
@@ -317,11 +316,7 @@ class CustomListTile extends StatelessWidget {
     this.horizontalTitleGap,
     this.minVerticalPadding,
     this.minLeadingWidth,
-  })  : assert(isThreeLine != null),
-        assert(enabled != null),
-        assert(selected != null),
-        assert(autofocus != null),
-        assert(!isThreeLine || subtitle != null);
+  })  : assert(!isThreeLine || subtitle != null);
 
   /// A widget to display before the title.
   ///
@@ -578,7 +573,6 @@ class CustomListTile extends StatelessWidget {
   ///  * [Divider], which you can use to obtain this effect manually.
   static Iterable<Widget> divideTiles(
       {BuildContext? context, required Iterable<Widget> tiles, Color? color}) {
-    assert(tiles != null);
     assert(color != null || context != null);
     tiles = tiles.toList();
 
@@ -865,14 +859,7 @@ class _ListTile extends RenderObjectWidget
     required this.minVerticalPadding,
     required this.minLeadingWidth,
     this.subtitleBaselineType,
-  })  : assert(isThreeLine != null),
-        assert(isDense != null),
-        assert(visualDensity != null),
-        assert(textDirection != null),
-        assert(titleBaselineType != null),
-        assert(horizontalTitleGap != null),
-        assert(minVerticalPadding != null),
-        assert(minLeadingWidth != null);
+  });
 
   final Widget? leading;
   final Widget title;
@@ -946,15 +933,7 @@ class _RenderListTile extends RenderBox with SlottedContainerRenderObjectMixin<_
     required double horizontalTitleGap,
     required double minVerticalPadding,
     required double minLeadingWidth,
-  })  : assert(isDense != null),
-        assert(visualDensity != null),
-        assert(isThreeLine != null),
-        assert(textDirection != null),
-        assert(titleBaselineType != null),
-        assert(horizontalTitleGap != null),
-        assert(minVerticalPadding != null),
-        assert(minLeadingWidth != null),
-        _isDense = isDense,
+  })  : _isDense = isDense,
         _visualDensity = visualDensity,
         _isThreeLine = isThreeLine,
         _textDirection = textDirection,
@@ -983,7 +962,6 @@ class _RenderListTile extends RenderBox with SlottedContainerRenderObjectMixin<_
   bool get isDense => _isDense;
   bool _isDense;
   set isDense(bool value) {
-    assert(value != null);
     if (_isDense == value) return;
     _isDense = value;
     markNeedsLayout();
@@ -992,7 +970,6 @@ class _RenderListTile extends RenderBox with SlottedContainerRenderObjectMixin<_
   VisualDensity get visualDensity => _visualDensity;
   VisualDensity _visualDensity;
   set visualDensity(VisualDensity value) {
-    assert(value != null);
     if (_visualDensity == value) return;
     _visualDensity = value;
     markNeedsLayout();
@@ -1001,7 +978,6 @@ class _RenderListTile extends RenderBox with SlottedContainerRenderObjectMixin<_
   bool get isThreeLine => _isThreeLine;
   bool _isThreeLine;
   set isThreeLine(bool value) {
-    assert(value != null);
     if (_isThreeLine == value) return;
     _isThreeLine = value;
     markNeedsLayout();
@@ -1010,7 +986,6 @@ class _RenderListTile extends RenderBox with SlottedContainerRenderObjectMixin<_
   TextDirection get textDirection => _textDirection;
   TextDirection _textDirection;
   set textDirection(TextDirection value) {
-    assert(value != null);
     if (_textDirection == value) return;
     _textDirection = value;
     markNeedsLayout();
@@ -1019,7 +994,6 @@ class _RenderListTile extends RenderBox with SlottedContainerRenderObjectMixin<_
   TextBaseline get titleBaselineType => _titleBaselineType;
   TextBaseline _titleBaselineType;
   set titleBaselineType(TextBaseline value) {
-    assert(value != null);
     if (_titleBaselineType == value) return;
     _titleBaselineType = value;
     markNeedsLayout();
@@ -1038,7 +1012,6 @@ class _RenderListTile extends RenderBox with SlottedContainerRenderObjectMixin<_
   double get _effectiveHorizontalTitleGap => _horizontalTitleGap + visualDensity.horizontal * 2.0;
 
   set horizontalTitleGap(double value) {
-    assert(value != null);
     if (_horizontalTitleGap == value) return;
     _horizontalTitleGap = value;
     markNeedsLayout();
@@ -1048,7 +1021,6 @@ class _RenderListTile extends RenderBox with SlottedContainerRenderObjectMixin<_
   double _minVerticalPadding;
 
   set minVerticalPadding(double value) {
-    assert(value != null);
     if (_minVerticalPadding == value) return;
     _minVerticalPadding = value;
     markNeedsLayout();
@@ -1058,7 +1030,6 @@ class _RenderListTile extends RenderBox with SlottedContainerRenderObjectMixin<_
   double _minLeadingWidth;
 
   set minLeadingWidth(double value) {
-    assert(value != null);
     if (_minLeadingWidth == value) return;
     _minLeadingWidth = value;
     markNeedsLayout();
@@ -1282,8 +1253,9 @@ class _RenderListTile extends RenderBox with SlottedContainerRenderObjectMixin<_
           if (hasLeading) _positionBox(leading!, Offset(0.0, leadingY));
           _positionBox(title!, Offset(titleStart, titleY));
           if (hasSubtitle) _positionBox(subtitle!, Offset(titleStart, subtitleY!));
-          if (hasTrailing)
+          if (hasTrailing) {
             _positionBox(trailing!, Offset(tileWidth - trailingSize.width, trailingY));
+          }
           break;
         }
     }
@@ -1313,7 +1285,6 @@ class _RenderListTile extends RenderBox with SlottedContainerRenderObjectMixin<_
 
   @override
   bool hitTestChildren(BoxHitTestResult result, {required Offset position}) {
-    assert(position != null);
     for (final RenderBox child in children) {
       final BoxParentData parentData = child.parentData! as BoxParentData;
       final bool isHit = result.addWithPaintOffset(

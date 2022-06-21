@@ -2,7 +2,6 @@ import 'dart:async';
 import 'dart:math';
 
 import 'package:dungeon_paper/app/data/services/character_service.dart';
-import 'package:dungeon_paper/app/data/services/user_service.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -61,6 +60,7 @@ class HPDialogController extends GetxController with CharacterServiceMixin {
 
   listener([dynamic value]) {
     overrideHP.value = min(maxHP, overrideHP.value);
+    overrideHP.refresh();
   }
 
   @override
