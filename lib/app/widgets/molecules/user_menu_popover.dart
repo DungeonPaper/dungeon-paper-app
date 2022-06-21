@@ -95,7 +95,7 @@ class UserMenuPopover extends GetView<CharacterService> with AuthServiceMixin {
                                 children: [
                                   for (final char in controller.charsByLastUsed.take(4))
                                     InkWell(
-                                      splashColor: Theme.of(context).colorScheme.secondary,
+                                      splashColor: Theme.of(context).splashColor,
                                       borderRadius: borderRadius,
                                       onTap: () {
                                         controller.setCurrent(char.key);

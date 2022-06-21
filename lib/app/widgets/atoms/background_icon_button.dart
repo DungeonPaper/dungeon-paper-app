@@ -104,7 +104,7 @@ class BackgroundIconButton extends StatelessWidget {
         splashRadius: splashRadius,
         focusColor: focusColor,
         hoverColor: hoverColor,
-        splashColor: splashColor,
+        splashColor: Theme.of(context).splashColor,
         highlightColor: highlightColor,
         disabledColor: disabledColor,
         mouseCursor: mouseCursor,

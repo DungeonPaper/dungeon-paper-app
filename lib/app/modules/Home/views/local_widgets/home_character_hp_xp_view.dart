@@ -18,7 +18,7 @@ class HomeCharacterHpExpView extends GetView<CharacterService> {
       children: [
         Expanded(
           child: InkWell(
-            splashColor: Theme.of(context).colorScheme.secondary,
+            splashColor: Theme.of(context).splashColor,
             child: const Padding(
               padding: EdgeInsets.all(4),
               child: HpBar(),
@@ -36,7 +36,7 @@ class HomeCharacterHpExpView extends GetView<CharacterService> {
         const SizedBox(width: 16),
         Expanded(
           child: InkWell(
-            splashColor: Theme.of(context).colorScheme.secondary,
+            splashColor: Theme.of(context).splashColor,
             child: const Padding(
               padding: EdgeInsets.all(4),
               child: ExpBar(),

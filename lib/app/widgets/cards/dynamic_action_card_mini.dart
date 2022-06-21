@@ -47,7 +47,7 @@ class DynamicActionCardMini extends StatelessWidget {
           margin: EdgeInsets.zero,
           child: InkWell(
             borderRadius: borderRadius,
-            splashColor: Theme.of(context).colorScheme.secondary,
+            splashColor: Theme.of(context).splashColor,
             onTap: onTap,
             child: buildCardContent(context),
           ),

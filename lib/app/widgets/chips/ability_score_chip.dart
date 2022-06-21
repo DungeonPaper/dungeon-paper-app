@@ -31,7 +31,7 @@ class AbilityScoreChip extends StatelessWidget {
       // elevation: 1,
       margin: EdgeInsets.zero,
       child: InkWell(
-        splashColor: Theme.of(context).colorScheme.secondary,
+        splashColor: Theme.of(context).splashColor,
         onTap: () =>
             DiceUtils.openRollDialog([dw.Dice(amount: 2, sides: 6, modifierStat: stat.key)]),
         borderRadius: borderRadius,

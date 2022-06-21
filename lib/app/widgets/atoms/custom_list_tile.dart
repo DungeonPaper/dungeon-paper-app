@@ -756,7 +756,7 @@ class CustomListTile extends StatelessWidget {
       focusColor: focusColor,
       hoverColor: hoverColor,
       autofocus: autofocus,
-      splashColor: Theme.of(context).colorScheme.secondary,
+      splashColor: Theme.of(context).splashColor,
       enableFeedback: enableFeedback ?? tileTheme.enableFeedback ?? true,
       child: Semantics(
         selected: selected,

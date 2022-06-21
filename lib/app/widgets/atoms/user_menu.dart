@@ -20,7 +20,7 @@ class UserMenu extends StatelessWidget {
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(28)),
       clipBehavior: Clip.antiAlias,
       child: InkWell(
-        splashColor: Theme.of(context).colorScheme.secondary,
+        splashColor: Theme.of(context).splashColor,
         onTap: () => Get.dialog(UserMenuPopover()),
         child: const Padding(
           padding: EdgeInsets.all(8),

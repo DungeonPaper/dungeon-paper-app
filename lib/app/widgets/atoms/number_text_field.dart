@@ -138,10 +138,12 @@ class NumberTextField extends StatelessWidget {
       decoration: (decoration ?? const InputDecoration()).copyWith(
         prefixIcon: IconButton(
           icon: const Icon(Icons.remove),
+          splashColor: Colors.red,
           onPressed: _decr,
         ),
         suffixIcon: IconButton(
           icon: const Icon(Icons.add),
+          splashColor: Theme.of(context).colorScheme.secondary,
           onPressed: _incr,
         ),
       ),

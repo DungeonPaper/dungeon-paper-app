@@ -70,6 +70,7 @@ final darkBase = ThemeData.from(
 
 final parchmentTheme = parchmentBase.copyWith(
   useMaterial3: true,
+  splashColor: secondaryColor.withOpacity(0.1),
   scaffoldBackgroundColor: scaffoldBackgroundColor,
   appBarTheme: parchmentBase.appBarTheme.copyWith(
     backgroundColor: Colors.transparent,
@@ -97,8 +98,11 @@ final parchmentTheme = parchmentBase.copyWith(
   ),
 );
 
+final parchmentSplashColor = parchmentTheme.colorScheme.secondary.withOpacity(0.2);
+
 final darkTheme = darkBase.copyWith(
   useMaterial3: true,
+  splashColor: secondaryColor.withOpacity(0.1),
   appBarTheme: AppBarTheme(
     backgroundColor: Colors.transparent,
     elevation: 0,
@@ -124,6 +128,7 @@ final darkTheme = darkBase.copyWith(
     foregroundColor: Colors.white,
   ),
 );
+final darkSplashColor = darkTheme.colorScheme.secondary.withOpacity(0.2);
 
 class AppThemes {
   static const parchment = 0;
