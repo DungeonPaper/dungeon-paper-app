@@ -477,11 +477,21 @@ class S {
     );
   }
 
-  /// `Choose New Photo...`
+  /// `Change Photo...`
   String get basicInfoImageChooseNew {
     return Intl.message(
-      'Choose New Photo...',
+      'Change Photo...',
       name: 'basicInfoImageChooseNew',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `UPLOADING...`
+  String get basicInfoImageUploading {
+    return Intl.message(
+      'UPLOADING...',
+      name: 'basicInfoImageUploading',
       desc: '',
       args: [],
     );

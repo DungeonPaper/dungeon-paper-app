@@ -13,13 +13,15 @@ class BasicInfoFormController extends GetxController with UserServiceMixin {
   final Rx<TextEditingController> name = TextEditingController().obs;
   final Rx<TextEditingController> avatarUrl = TextEditingController().obs;
   late final void Function(String name, String avatar) onChanged;
+  final uploading = false.obs;
 
   final Rx<File?> photoFile = Rx(null);
   final dirty = false.obs;
 
   bool get hasPhotoFile => photoFile.value != null;
+  bool get isUploading => uploading.value;
 
-  void pickPhoto() async {
+  void startUploadFlow() async {
     final res = await FlutterFileDialog.pickFile(
       params: const OpenFileDialogParams(
           dialogType: OpenFileDialogType.image,
@@ -32,12 +34,27 @@ class BasicInfoFormController extends GetxController with UserServiceMixin {
       return;
     }
 
-    final cropped = await ImageCropper()
-        .cropImage(sourcePath: res, aspectRatio: const CropAspectRatio(ratioX: 1, ratioY: 1));
+    uploading.value = true;
+    try {
+      final cropped = await ImageCropper()
+          .cropImage(sourcePath: res, aspectRatio: const CropAspectRatio(ratioX: 1, ratioY: 1));
 
-    final file = File(cropped?.path ?? res);
+      final file = File(cropped?.path ?? res);
+      photoFile.value = file;
 
-    avatarUrl.value.text = await _uploadPhoto(file);
+      avatarUrl.value.text = await _uploadPhoto(file);
+    } catch (e) {
+      Get.rawSnackbar(
+          message:
+              'Error while uploading photo. Try again later, or contact support using the "About" page.');
+    } finally {
+      uploading.value = false;
+    }
+  }
+
+  void resetPhoto() {
+    photoFile.value = null;
+    avatarUrl.value.text = '';
   }
 
   @override

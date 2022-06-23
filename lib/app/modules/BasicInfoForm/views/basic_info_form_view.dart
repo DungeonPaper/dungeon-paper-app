@@ -86,7 +86,7 @@ class BasicInfoFormView extends GetView<BasicInfoFormController> with UserServic
                       children: [
                         Expanded(
                           child: ElevatedButton.icon(
-                            onPressed: controller.pickPhoto,
+                            onPressed: controller.isUploading ? null : controller.startUploadFlow,
                             icon: const Icon(Icons.upload_file),
                             label: Text(S.current.basicInfoImageChooseNew),
                           ),
@@ -94,7 +94,7 @@ class BasicInfoFormView extends GetView<BasicInfoFormController> with UserServic
                         const SizedBox(width: 16),
                         Expanded(
                           child: ElevatedButton.icon(
-                            onPressed: () => null,
+                            onPressed: controller.isUploading ? null : controller.resetPhoto,
                             icon: const Icon(Icons.close),
                             label: Text(S.current.basicInfoImageRemove),
                           ),
@@ -106,7 +106,9 @@ class BasicInfoFormView extends GetView<BasicInfoFormController> with UserServic
                   SizedBox(
                     height: 40,
                     child: ElevatedButton.icon(
-                      onPressed: userService.isLoggedIn ? controller.pickPhoto : null,
+                      onPressed: !controller.isUploading && userService.isLoggedIn
+                          ? controller.startUploadFlow
+                          : null,
                       icon: const Icon(Icons.upload_file),
                       label: Text(S.current.basicInfoImageChoose),
                     ),
@@ -136,10 +138,17 @@ class BasicInfoFormView extends GetView<BasicInfoFormController> with UserServic
                     ),
                   )
                 ],
-                LabeledDivider(label: Text(S.current.separatorOr)),
+                LabeledDivider(
+                  label: Text(
+                    controller.isUploading
+                        ? S.current.basicInfoImageUploading
+                        : S.current.separatorOr,
+                  ),
+                ),
                 TextFormField(
                   controller: controller.avatarUrl.value,
                   textInputAction: TextInputAction.done,
+                  enabled: !controller.isUploading,
                   // onChanged: (val) => updateControllers(),
                   decoration: InputDecoration(
                     labelText: S.current.createCharacterAvatarFieldLabel,

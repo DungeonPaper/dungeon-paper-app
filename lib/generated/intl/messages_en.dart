@@ -293,7 +293,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "basicInfoImageChoose":
             MessageLookupByLibrary.simpleMessage("Choose Photo..."),
         "basicInfoImageChooseNew":
-            MessageLookupByLibrary.simpleMessage("Choose New Photo..."),
+            MessageLookupByLibrary.simpleMessage("Change Photo..."),
         "basicInfoImageNeedAccountLinkLabel":
             MessageLookupByLibrary.simpleMessage(
                 "Sign in or create an account"),
@@ -303,6 +303,8 @@ class MessageLookup extends MessageLookupByLibrary {
             ", or upload using your own URL below."),
         "basicInfoImageRemove":
             MessageLookupByLibrary.simpleMessage("Remove Photo"),
+        "basicInfoImageUploading":
+            MessageLookupByLibrary.simpleMessage("UPLOADING..."),
         "basicInformationTitle":
             MessageLookupByLibrary.simpleMessage("Basic Information"),
         "cancel": MessageLookupByLibrary.simpleMessage("Cancel"),
