@@ -247,7 +247,7 @@ class _CustomExpansionTileState extends State<CustomExpansionTile>
     _iconTurns = _controller.drive(_halfTween.chain(_easeInTween));
     _borderColor = _controller.drive(_borderColorTween.chain(_easeOutTween));
     _headerColor = _controller.drive(_headerColorTween.chain(_easeInTween));
-    _iconColor = _controller.drive(_iconColorTween.chain(_easeInTween));
+    _iconColor = _controller.drive(_iconColorTween.chain(_easeOutTween));
     _backgroundColor = _controller.drive(_backgroundColorTween.chain(_easeOutTween));
 
     _isExpanded = PageStorage.of(context)?.readState(context) as bool? ?? widget.initiallyExpanded;
@@ -309,47 +309,45 @@ class _CustomExpansionTileState extends State<CustomExpansionTile>
   }
 
   Widget _buildChildren(BuildContext context, Widget? child) {
-    final Color borderSideColor = _borderColor.value ?? Colors.transparent;
-
-    return Container(
-      decoration: BoxDecoration(
-        color: _backgroundColor.value ?? Colors.transparent,
-        border: Border(
-          top: BorderSide(color: borderSideColor),
-          bottom: BorderSide(color: borderSideColor),
+    // final Color borderSideColor = _borderColor.value ?? Colors.transparent;
+    //
+    // return Container(
+    //   decoration: BoxDecoration(
+    //     color: _backgroundColor.value ?? Colors.transparent,
+    //     border: Border(
+    //       top: BorderSide(color: borderSideColor),
+    //       bottom: BorderSide(color: borderSideColor),
+    //     ),
+    //   ),
+    //   child:
+    return Wrap(
+      // mainAxisSize: MainAxisSize.min,
+      children: <Widget>[
+        ListTileTheme.merge(
+          iconColor: _iconColor.value,
+          textColor: _headerColor.value,
+          horizontalTitleGap: 0,
+          minLeadingWidth: 36,
+          child: CustomListTile(
+            shape: rRectShape,
+            onTap: widget.expandable ? _handleTap : null,
+            contentPadding: widget.tilePadding,
+            leading: widget.leading ?? _buildLeadingIcon(context),
+            title: widget.title,
+            subtitle: widget.subtitle,
+            trailing: widget.trailing ?? _buildTrailingIcon(context),
+            visualDensity: widget.visualDensity,
+          ),
         ),
-      ),
-      child: Wrap(
-        // mainAxisSize: MainAxisSize.min,
-        children: <Widget>[
-          ListTileTheme.merge(
-            iconColor: _iconColor.value,
-            textColor: _headerColor.value,
-            horizontalTitleGap: 0,
-            minLeadingWidth: 36,
-            child: CustomListTile(
-              shape: rRectShape,
-              onTap: widget.expandable ? _handleTap : null,
-              contentPadding: widget.tilePadding,
-              leading: widget.leading ?? _buildLeadingIcon(context),
-              title: IconTheme.merge(
-                data: IconThemeData(color: _iconColor.value),
-                child: widget.title,
-              ),
-              subtitle: widget.subtitle,
-              trailing: widget.trailing ?? _buildTrailingIcon(context),
-              visualDensity: widget.visualDensity,
-            ),
+        ClipRect(
+          child: Align(
+            alignment: widget.expandedAlignment ?? Alignment.center,
+            heightFactor: _heightFactor.value,
+            child: child,
           ),
-          ClipRect(
-            child: Align(
-              alignment: widget.expandedAlignment ?? Alignment.center,
-              heightFactor: _heightFactor.value,
-              child: child,
-            ),
-          ),
-        ],
-      ),
+        ),
+      ],
+      // ),
     );
   }
 

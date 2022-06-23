@@ -13,11 +13,15 @@ class ButtonThemes {
 
   static ButtonStyle? errorElevated(BuildContext context) => ElevatedButton.styleFrom(
         primary: Theme.of(context).errorColor,
+        onPrimary: Theme.of(context).colorScheme.onError,
         shape: rRectShape,
       );
 
   static ButtonStyle? errorText(BuildContext context) => TextButton.styleFrom(
         primary: Theme.of(context).errorColor,
+        textStyle: Theme.of(context).textTheme.button!.copyWith(
+              color: Theme.of(context).colorScheme.onError,
+            ),
         shape: rRectShape,
       );
 

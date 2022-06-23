@@ -1,4 +1,5 @@
 import 'package:dungeon_paper/app/themes/button_themes.dart';
+import 'package:dungeon_paper/app/widgets/molecules/dialog_controls.dart';
 import 'package:dungeon_paper/generated/l10n.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -16,15 +17,13 @@ class ConfirmExitView extends StatelessWidget {
 
   final Widget? title;
   final Widget? text;
-  final Widget? okLabel;
-  final Widget? cancelLabel;
+  final String? okLabel;
+  final String? cancelLabel;
   final Widget child;
   final bool dirty;
 
   static final _defaultTitle = Text(S.current.confirmExitDefaultTitle);
   static final _defaultText = Text(S.current.confirmExitDefaultText);
-  static final _defaultOkLabel = Text(S.current.confirmExitDefaultOkLabel);
-  static final _defaultCancelLabel = Text(S.current.confirmExitDefaultCancelLabel);
 
   @override
   Widget build(BuildContext context) {
@@ -50,31 +49,40 @@ Future<bool> confirmExit<T>(
   BuildContext context, {
   Widget? title,
   Widget? text,
-  Widget? okLabel,
-  Widget? cancelLabel,
+  String? okLabel,
+  String? cancelLabel,
 }) {
-  return Get.dialog<bool>(
-    AlertDialog(
+  return Get.dialog<bool>(const ConfirmExitDialog()).then((res) => res == true);
+}
+
+class ConfirmExitDialog extends StatelessWidget {
+  final Widget? title;
+  final Widget? text;
+  final String? okLabel;
+  final String? cancelLabel;
+
+  const ConfirmExitDialog({
+    Key? key,
+    this.title,
+    this.text,
+    this.okLabel,
+    this.cancelLabel,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return AlertDialog(
       title: title ?? ConfirmExitView._defaultTitle,
       content: text ?? ConfirmExitView._defaultText,
-      actions: [
-        TextButton.icon(
-          icon: const Icon(Icons.close),
-          label: okLabel ?? ConfirmExitView._defaultOkLabel,
-          onPressed: () => Get.back(result: true),
-          style: ButtonThemes.errorText(context),
-        ),
-        ElevatedButton(
-          // icon: const Icon(Icons.close),
-          child: cancelLabel ?? ConfirmExitView._defaultCancelLabel,
-          onPressed: () => Get.back(result: false),
-          // style: ButtonThemes.primaryElevated(context),
-        ),
-        // const SizedBox(width: 8),
-        // const SizedBox(width: 0),
-      ],
-    ),
-  ).then((res) => res == true);
+      actions: DialogControls.confirmExit(
+        context,
+        exitLabel: okLabel,
+        onExit: () => Get.back(result: true),
+        continueLabel: cancelLabel,
+        onContinue: () => Get.back(result: false),
+      ),
+    );
+  }
 }
 
 Future<void> awaitConfirmation(Future<bool> confirmation, void Function() callback) =>
@@ -87,8 +95,8 @@ Future<void> awaitExitConfirmation<T>(
   void Function() onConfirmed, {
   Widget? title,
   Widget? text,
-  Widget? okLabel,
-  Widget? cancelLabel,
+  String? okLabel,
+  String? cancelLabel,
 }) =>
     awaitConfirmation(
         confirmExit<T>(

@@ -91,6 +91,8 @@ class DynamicActionCard extends StatelessWidget {
             expansionKey: expansionKey,
             onExpansion: (state) => expanded.value = state,
             initiallyExpanded: initiallyExpanded,
+            iconColor: Theme.of(context).colorScheme.secondary,
+            textColor: Theme.of(context).colorScheme.secondary,
             childrenPadding: const EdgeInsets.all(8).copyWith(top: 0),
             icon: icon,
             trailing: [

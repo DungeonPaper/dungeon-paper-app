@@ -1,8 +1,11 @@
 import 'package:dungeon_paper/app/data/models/character.dart';
 import 'package:dungeon_paper/app/data/services/character_service.dart';
+import 'package:dungeon_paper/app/widgets/chips/primary_chip.dart';
+import 'package:dungeon_paper/app/widgets/dialogs/coins_dialog.dart';
 import 'package:dungeon_paper/core/dw_icons.dart';
 import 'package:dungeon_paper/generated/l10n.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:get/get_state_manager/get_state_manager.dart';
 import 'package:intl/intl.dart';
 
@@ -27,16 +30,22 @@ class HomeCharacterActionsSummary extends GetView<CharacterService> {
               spacing: 4,
               runSpacing: 4,
               children: [
-                Chip(
-                  visualDensity: VisualDensity.compact,
-                  avatar: const Icon(DwIcons.dumbbell, size: 16),
-                  label: Text(S.current.actionSummaryChipLoad(char.currentLoad, char.maxLoad)),
+                PrimaryChip(
+                  // visualDensity: VisualDensity.compact,
+                  icon: const Icon(DwIcons.dumbbell, size: 16),
+                  label: S.current.actionSummaryChipLoad(char.currentLoad, char.maxLoad),
                 ),
-                Chip(
-                  visualDensity: VisualDensity.compact,
-                  avatar: const Icon(DwIcons.coin_stack, size: 16),
-                  label: Text(
-                    S.current.actionSummaryChipCoins(NumberFormat.compact().format(char.coins)),
+                PrimaryChip(
+                  // visualDensity: VisualDensity.compact,
+                  icon: const Icon(DwIcons.coin_stack, size: 16),
+                  label: S.current.actionSummaryChipCoins(
+                    NumberFormat.compact().format(char.coins),
+                  ),
+                  onPressed: () => Get.dialog(
+                    CoinsDialog(
+                      coins: char.coins,
+                      onChanged: (coins) => controller.updateCharacter(char.copyWith(coins: coins)),
+                    ),
                   ),
                 ),
               ],

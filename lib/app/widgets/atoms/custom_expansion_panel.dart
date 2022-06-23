@@ -18,6 +18,10 @@ class CustomExpansionPanel extends StatelessWidget {
   final Iterable<Widget> trailing;
   final Widget? icon;
   final double minIconWidth;
+  final Color? iconColor;
+  final Color? collapsedIconColor;
+  final Color? textColor;
+  final Color? collapsedTextColor;
 
   static const defaultPadding = EdgeInsets.symmetric(horizontal: 8);
 
@@ -38,6 +42,10 @@ class CustomExpansionPanel extends StatelessWidget {
     this.onExpansion,
     this.showArrow = true,
     this.minIconWidth = 20,
+    this.iconColor,
+    this.collapsedIconColor,
+    this.textColor,
+    this.collapsedTextColor,
   }) : super(key: key);
 
   @override
@@ -71,6 +79,10 @@ class CustomExpansionPanel extends StatelessWidget {
         expandedCrossAxisAlignment: CrossAxisAlignment.stretch,
         trailing: !showArrow ? const SizedBox.shrink() : null,
         visualDensity: VisualDensity.compact,
+        iconColor: iconColor,
+        collapsedIconColor: collapsedIconColor,
+        textColor: textColor,
+        collapsedTextColor: collapsedTextColor,
       ),
     );
   }

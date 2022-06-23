@@ -79,13 +79,14 @@ class HomeCharacterView extends GetView<CharacterService> {
             // )),
             pad(const SizedBox(height: 4)),
             pad(
-                const Center(
-                  child: SizedBox(
-                    width: 500,
-                    child: HomeCharacterHpExpView(),
-                  ),
+              const Center(
+                child: SizedBox(
+                  width: 500,
+                  child: HomeCharacterHpExpView(),
                 ),
-                8),
+              ),
+              8,
+            ),
             pad(Center(
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,

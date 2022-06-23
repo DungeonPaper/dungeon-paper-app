@@ -7,6 +7,7 @@ import 'package:dungeon_paper/app/themes/colors.dart';
 import 'package:dungeon_paper/app/themes/themes.dart';
 import 'package:dungeon_paper/app/widgets/atoms/hp_bar.dart';
 import 'package:dungeon_paper/app/widgets/atoms/number_text_field.dart';
+import 'package:dungeon_paper/app/widgets/molecules/dialog_controls.dart';
 import 'package:dungeon_paper/generated/l10n.dart';
 import 'package:flutter/material.dart';
 
@@ -146,20 +147,7 @@ class _HPDialogState extends State<HPDialog> with CharacterServiceMixin {
               const SizedBox(height: 24),
               Row(
                 mainAxisAlignment: MainAxisAlignment.end,
-                children: [
-                  TextButton.icon(
-                    onPressed: close,
-                    label: Text(S.current.cancel),
-                    icon: const Icon(Icons.close),
-                    style: ButtonThemes.errorText(context),
-                  ),
-                  const SizedBox(width: 8),
-                  ElevatedButton.icon(
-                    onPressed: save,
-                    label: Text(S.current.save),
-                    icon: const Icon(Icons.check),
-                  ),
-                ],
+                children: DialogControls.save(context, onSave: save, onCancel: close, spacing: 8),
               ),
             ],
           ),
