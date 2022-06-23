@@ -131,4 +131,12 @@ class DialogControls {
         onCancel: onCancel,
         spacing: spacing,
       );
+
+  static List<Widget> done(BuildContext context, void Function() onDone) => [
+        ElevatedButton.icon(
+          onPressed: onDone,
+          icon: const Icon(Icons.check),
+          label: Text(S.current.done),
+        ),
+      ];
 }

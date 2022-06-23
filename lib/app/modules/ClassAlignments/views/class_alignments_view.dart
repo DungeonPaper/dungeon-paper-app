@@ -2,6 +2,7 @@ import 'package:dungeon_paper/app/data/models/alignment.dart';
 import 'package:dungeon_paper/app/themes/colors.dart';
 import 'package:dungeon_paper/app/themes/themes.dart';
 import 'package:dungeon_paper/app/widgets/atoms/advanced_floating_action_button.dart';
+import 'package:dungeon_paper/app/widgets/molecules/dialog_controls.dart';
 import 'package:dungeon_paper/generated/l10n.dart';
 import 'package:flutter/material.dart';
 
@@ -67,13 +68,8 @@ class ClassAlignmentsView extends GetView<ClassAlignmentsController> {
                                             !isSelected ? () => controller.select(alignment) : null,
                                       ),
                                   ]
-                                : [
-                                    ElevatedButton.icon(
-                                      icon: const Icon(Icons.check),
-                                      label: Text(S.current.done),
-                                      onPressed: () => controller.toggleEdit(alignment, false),
-                                    ),
-                                  ],
+                                : DialogControls.done(
+                                    context, () => controller.toggleEdit(alignment, false)),
                           ),
                         ),
                         Padding(

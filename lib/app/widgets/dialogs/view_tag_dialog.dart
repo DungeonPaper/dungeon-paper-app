@@ -1,4 +1,5 @@
 import 'package:dungeon_paper/app/themes/button_themes.dart';
+import 'package:dungeon_paper/app/widgets/molecules/dialog_controls.dart';
 import 'package:dungeon_paper/core/utils/string_utils.dart';
 import 'package:dungeon_paper/generated/l10n.dart';
 import 'package:flutter/material.dart';
@@ -80,13 +81,7 @@ class ViewTagDialog extends StatelessWidget {
           ],
         ],
       ),
-      actions: [
-        ElevatedButton(
-          onPressed: () => Get.back(),
-          child: Text(S.current.ok),
-          style: ButtonThemes.primaryElevated(context),
-        ),
-      ],
+      actions: DialogControls.done(context, () => Get.back()),
     );
   }
 }

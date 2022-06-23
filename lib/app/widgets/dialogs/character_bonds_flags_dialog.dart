@@ -3,6 +3,7 @@ import 'package:dungeon_paper/app/data/services/character_service.dart';
 import 'package:dungeon_paper/app/modules/BondsFlagsForm/controllers/bonds_flags_form_controller.dart';
 import 'package:dungeon_paper/app/routes/app_pages.dart';
 import 'package:dungeon_paper/app/themes/button_themes.dart';
+import 'package:dungeon_paper/app/widgets/molecules/dialog_controls.dart';
 import 'package:dungeon_paper/core/utils/list_utils.dart';
 import 'package:dungeon_paper/generated/l10n.dart';
 import 'package:flutter/material.dart';
@@ -49,14 +50,7 @@ class CharacterBondsFlagsDialog extends GetView<CharacterService> with Character
         ],
       ),
       contentPadding: const EdgeInsets.all(16),
-      actions: [
-        ElevatedButton.icon(
-          icon: const Icon(Icons.check),
-          label: Text(S.current.done),
-          onPressed: () => Get.back(),
-          style: ButtonThemes.primaryElevated(context),
-        )
-      ],
+      actions: DialogControls.done(context, () => Get.back()),
       content: Obx(
         () => SingleChildScrollView(
           child: ListTileTheme.merge(

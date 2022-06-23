@@ -21,7 +21,7 @@ class BasicInfoFormController extends GetxController with UserServiceMixin {
   bool get hasPhotoFile => photoFile.value != null;
   bool get isUploading => uploading.value;
 
-  void startUploadFlow() async {
+  void startUploadFlow(BuildContext context) async {
     final res = await FlutterFileDialog.pickFile(
       params: const OpenFileDialogParams(
           dialogType: OpenFileDialogType.image,
@@ -36,12 +36,25 @@ class BasicInfoFormController extends GetxController with UserServiceMixin {
 
     uploading.value = true;
     try {
-      final cropped = await ImageCropper()
-          .cropImage(sourcePath: res, aspectRatio: const CropAspectRatio(ratioX: 1, ratioY: 1));
+      final theme = Theme.of(context);
+      final textTheme = theme.textTheme;
+      final colorScheme = theme.colorScheme;
+      final cropped = await ImageCropper().cropImage(
+        sourcePath: res,
+        aspectRatio: const CropAspectRatio(ratioX: 1, ratioY: 1),
+        uiSettings: [
+          AndroidUiSettings(
+            backgroundColor: theme.scaffoldBackgroundColor,
+            toolbarWidgetColor: colorScheme.secondary,
+          ),
+        ],
+      );
+      if (cropped == null) {
+        throw Exception('User cancel');
+      }
 
-      final file = File(cropped?.path ?? res);
+      final file = File(cropped.path);
       photoFile.value = file;
-
       avatarUrl.value.text = await _uploadPhoto(file);
     } catch (e) {
       Get.rawSnackbar(

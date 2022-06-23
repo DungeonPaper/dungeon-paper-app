@@ -86,7 +86,9 @@ class BasicInfoFormView extends GetView<BasicInfoFormController> with UserServic
                       children: [
                         Expanded(
                           child: ElevatedButton.icon(
-                            onPressed: controller.isUploading ? null : controller.startUploadFlow,
+                            onPressed: controller.isUploading
+                                ? null
+                                : () => controller.startUploadFlow(context),
                             icon: const Icon(Icons.upload_file),
                             label: Text(S.current.basicInfoImageChooseNew),
                           ),
@@ -107,7 +109,7 @@ class BasicInfoFormView extends GetView<BasicInfoFormController> with UserServic
                     height: 40,
                     child: ElevatedButton.icon(
                       onPressed: !controller.isUploading && userService.isLoggedIn
-                          ? controller.startUploadFlow
+                          ? () => controller.startUploadFlow(context)
                           : null,
                       icon: const Icon(Icons.upload_file),
                       label: Text(S.current.basicInfoImageChoose),
@@ -139,11 +141,19 @@ class BasicInfoFormView extends GetView<BasicInfoFormController> with UserServic
                   )
                 ],
                 LabeledDivider(
-                  label: Text(
-                    controller.isUploading
-                        ? S.current.basicInfoImageUploading
-                        : S.current.separatorOr,
-                  ),
+                  label: controller.isUploading
+                      ? Row(
+                          children: [
+                            const SizedBox(
+                              width: 20,
+                              height: 20,
+                              child: CircularProgressIndicator(strokeWidth: 3),
+                            ),
+                            const SizedBox(width: 8),
+                            Text(S.current.basicInfoImageUploading),
+                          ],
+                        )
+                      : Text(S.current.separatorOr),
                 ),
                 TextFormField(
                   controller: controller.avatarUrl.value,
