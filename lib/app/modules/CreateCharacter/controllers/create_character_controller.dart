@@ -1,4 +1,5 @@
 import 'package:dungeon_paper/app/data/models/alignment.dart';
+import 'package:dungeon_paper/app/data/models/bio.dart';
 import 'package:dungeon_paper/app/data/models/character.dart';
 import 'package:dungeon_paper/app/data/models/character_class.dart';
 import 'package:dungeon_paper/app/data/models/gear_choice.dart';
@@ -114,5 +115,10 @@ class CreateCharacterController extends GetxController {
                 .map((bond) => SessionMark.bond(description: bond, completed: false, key: uuid()))
                 .toList() ??
             [],
+        bio: Bio(
+          looks: '',
+          description: '',
+          alignment: alignment.value!,
+        ),
       );
 }

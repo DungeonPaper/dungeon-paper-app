@@ -103,7 +103,7 @@ class CharacterBondsFlagsDialog extends GetView<CharacterService> with Character
                   ListTile(
                     visualDensity: VisualDensity.compact,
                     dense: true,
-                    onTap: () => onChecked(bond, !bond.completed),
+                    onTap: () => onChecked(bond),
                     leading: Checkbox(
                       value: bond.completed,
                       onChanged: (val) => onChecked(bond, val),
@@ -117,25 +117,10 @@ class CharacterBondsFlagsDialog extends GetView<CharacterService> with Character
                   ListTile(
                     visualDensity: VisualDensity.compact,
                     dense: true,
-                    onTap: () => controller.updateCharacter(
-                      char.copyWith(
-                        sessionMarks: sessionMarks
-                            .map((e) => e.key == flag.key
-                                ? e.copyWithInherited(completed: !flag.completed)
-                                : e)
-                            .toList(),
-                      ),
-                    ),
+                    onTap: () => onChecked(flag),
                     leading: Checkbox(
                       value: flag.completed,
-                      onChanged: (val) => controller.updateCharacter(
-                        char.copyWith(
-                          sessionMarks: sessionMarks
-                              .map((e) =>
-                                  e.key == flag.key ? e.copyWithInherited(completed: val) : e)
-                              .toList(),
-                        ),
-                      ),
+                      onChanged: (val) => onChecked(flag, val),
                     ),
                     title: Text(flag.description),
                   ),
@@ -148,10 +133,17 @@ class CharacterBondsFlagsDialog extends GetView<CharacterService> with Character
     );
   }
 
-  void onChecked(SessionMark sessionMark, bool? val) {
+  void onChecked(SessionMark sessionMark, [bool? val]) {
     return controller.updateCharacter(
       char.copyWith(
-        sessionMarks: updateByKey(sessionMarks, [sessionMark]),
+        sessionMarks: updateByKey(
+          sessionMarks,
+          [
+            sessionMark.copyWithInherited(
+              completed: val ?? !sessionMark.completed,
+            )
+          ],
+        ),
       ),
     );
   }

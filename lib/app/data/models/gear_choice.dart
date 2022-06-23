@@ -66,7 +66,7 @@ class GearChoice extends dw.GearChoice {
         return Item.unifyItems([
           ...acc,
           ...sel.options.map(
-            (e) => Item.fromDwItem(e.item, amount: e.amount),
+            (e) => Item.fromDwItem(e.item, amount: e.amount, equipped: equipped),
           )
         ]);
       });
