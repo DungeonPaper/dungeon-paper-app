@@ -428,6 +428,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "createCharacterTravelerHelpText": MessageLookupByLibrary.simpleMessage(
             "Select name & picture (required)"),
         "createGeneric": m24,
+        "customRollButtons":
+            MessageLookupByLibrary.simpleMessage("Quick Roll Buttons"),
         "debilityLabel": m25,
         "diceAmount": MessageLookupByLibrary.simpleMessage("Amount"),
         "diceRollAgain": MessageLookupByLibrary.simpleMessage("Roll again"),

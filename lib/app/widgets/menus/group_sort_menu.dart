@@ -21,14 +21,14 @@ class GroupSortMenu extends StatelessWidget {
       items: [
         MenuEntry(
           disabled: index <= 0,
-          id: 'up',
+          value: 'up',
           icon: const Icon(Icons.move_up),
           label: Text(S.current.sortMoveUp),
           onSelect: () => onReorder(index, index - 1),
         ),
         MenuEntry(
           disabled: index >= maxIndex - 1,
-          id: 'down',
+          value: 'down',
           icon: const Icon(Icons.move_down),
           label: Text(S.current.sortMoveDown),
           onSelect: () => onReorder(index, index + 1),

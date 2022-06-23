@@ -46,7 +46,7 @@ class _AddTagDialogState extends State<AddTagDialog> {
               for (final tag in allTags)
                 MenuEntry<dw.Tag>(
                   label: Text(S.current.tagCopyFrom(toTitleCase(tag.name))),
-                  id: tag,
+                  value: tag,
                   onSelect: () {
                     setState(() {
                       name.text = tag.name;

@@ -24,16 +24,22 @@ class HomeCharacterExtras extends GetView<CharacterService> {
           icon: const Icon(Icons.person),
           items: [
             MenuEntry(
-              id: 'name_photo',
+              value: 'name_photo',
               icon: const Icon(Icons.photo),
               label: Text(S.current.basicInformationTitle),
               onSelect: _openBasicInfo,
             ),
             MenuEntry(
-              id: 'bio',
+              value: 'bio',
               icon: const Icon(Icons.text_snippet),
               label: Text(S.current.characterBioDialogTitle),
               onSelect: _openBio,
+            ),
+            MenuEntry(
+              value: 'roll_buttons',
+              icon: const Icon(DwIcons.dice_d6_numbered),
+              label: Text(S.current.customRollButtons),
+              onSelect: _openRollButtons,
             ),
           ],
         ),
@@ -98,5 +104,9 @@ class HomeCharacterExtras extends GetView<CharacterService> {
 
   void _openDebilities() {
     Get.dialog(const CharacterDebilitiesDialog());
+  }
+
+  void _openRollButtons() {
+    Get.dialog(const CharacterBioDialog());
   }
 }

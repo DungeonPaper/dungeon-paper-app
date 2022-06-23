@@ -817,6 +817,16 @@ class S {
     );
   }
 
+  /// `Quick Roll Buttons`
+  String get customRollButtons {
+    return Intl.message(
+      'Quick Roll Buttons',
+      name: 'customRollButtons',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `Coins`
   String get coins {
     return Intl.message(

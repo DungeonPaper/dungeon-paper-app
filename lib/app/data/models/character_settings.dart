@@ -1,5 +1,7 @@
 import 'dart:convert';
 
+import 'package:dungeon_paper/app/data/models/roll_button.dart';
+
 class CharacterSettings {
   CharacterSettings({
     required this.noteCategoriesSort,
@@ -8,6 +10,7 @@ class CharacterSettings {
     required this.actionCategoriesHide,
     this.sortOrder,
     this.category,
+    required this.rollButtons,
   });
 
   final Set<String> noteCategoriesSort;
@@ -16,6 +19,7 @@ class CharacterSettings {
   final Set<String> actionCategoriesHide;
   final int? sortOrder;
   final String? category;
+  final List<RollButton?> rollButtons;
 
   CharacterSettings copyWith({
     Set<String>? noteCategoriesSort,
@@ -24,6 +28,7 @@ class CharacterSettings {
     Set<String>? quickCategoriesSort,
     int? sortOrder,
     String? category,
+    List<RollButton?>? rollButtons,
   }) =>
       CharacterSettings(
         noteCategoriesSort: noteCategoriesSort ?? this.noteCategoriesSort,
@@ -32,6 +37,7 @@ class CharacterSettings {
         quickCategoriesSort: quickCategoriesSort ?? this.quickCategoriesSort,
         sortOrder: sortOrder ?? this.sortOrder,
         category: category ?? this.category,
+        rollButtons: rollButtons ?? this.rollButtons,
       );
 
   factory CharacterSettings.fromRawJson(String str) => CharacterSettings.fromJson(json.decode(str));
@@ -45,6 +51,8 @@ class CharacterSettings {
         quickCategoriesSort: Set<String>.from(json['quickCategoriesSort'] ?? []),
         sortOrder: json['sortOrder'],
         category: json['category'],
+        rollButtons: List<RollButton?>.from(
+            (json['rollButtons'] ?? []).map((x) => x != null ? RollButton.fromJson(x) : null)),
       );
 
   factory CharacterSettings.empty() => CharacterSettings(
@@ -52,6 +60,7 @@ class CharacterSettings {
         actionCategoriesSort: {},
         actionCategoriesHide: {},
         quickCategoriesSort: {},
+        rollButtons: [],
       );
 
   Map<String, dynamic> toJson() => {
@@ -61,5 +70,6 @@ class CharacterSettings {
         'quickCategoriesSort': List<dynamic>.from(quickCategoriesSort),
         'sortOrder': sortOrder,
         'category': category,
+        'rollButtons': List<dynamic>.from(rollButtons.map((x) => x?.toJson())),
       };
 }

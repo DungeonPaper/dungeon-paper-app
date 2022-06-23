@@ -30,14 +30,14 @@ class EntityEditMenu extends StatelessWidget {
         items: [
           if (onEdit != null)
             MenuEntry(
-              id: 'edit',
+              value: 'edit',
               icon: const Icon(Icons.edit),
               label: Text(S.current.edit),
               onSelect: onEdit!,
             ),
           if (onDelete != null)
             MenuEntry(
-              id: 'remove',
+              value: 'remove',
               icon: IconTheme(
                 data: IconThemeData(color: Theme.of(context).errorColor),
                 child: const Icon(Icons.delete),

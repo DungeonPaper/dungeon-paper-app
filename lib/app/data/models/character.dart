@@ -5,11 +5,13 @@
 import 'dart:convert';
 import 'dart:math';
 
+import 'package:dungeon_paper/app/data/models/roll_button.dart';
 import 'package:dungeon_paper/app/model_utils/model_icon.dart';
 import 'package:dungeon_paper/core/utils/enums.dart';
 import 'package:dungeon_paper/core/utils/math_utils.dart';
 import 'package:dungeon_paper/core/utils/string_utils.dart';
 import 'package:dungeon_paper/core/utils/uuid.dart';
+import 'package:dungeon_paper/generated/l10n.dart';
 import 'package:dungeon_world_data/dungeon_world_data.dart' as dw;
 import 'package:flutter/material.dart';
 
@@ -81,6 +83,22 @@ class Character implements WithMeta<Character, CharacterMeta>, WithIcon {
   int get maxLoad => stats.load ?? (characterClass.load + abilityScores.loadBaseValue);
   int get currentLoad => items.fold(0, (weight, item) => weight + item.weight);
   int get armor => stats.armor ?? items.fold(0, (armor, item) => armor + item.armor);
+
+  RollButton get basicActionRollButton =>
+      RollButton(label: S.current.rollBasicActionButton, dice: [dw.Dice.d6 * 2]);
+  RollButton get attackDamageRollButton => RollButton(
+        label: S.current.rollAttackDamageButton,
+        dice: [dw.Dice.fromJson('2d6+STR'), damageDice],
+      );
+
+  List<RollButton> get rollButtons => [
+        settings.rollButtons.isNotEmpty
+            ? settings.rollButtons[0] ?? basicActionRollButton
+            : basicActionRollButton,
+        settings.rollButtons.length > 2
+            ? settings.rollButtons[1] ?? attackDamageRollButton
+            : attackDamageRollButton
+      ];
 
   Set<String> get noteCategories => Set.from(
         (<String>[

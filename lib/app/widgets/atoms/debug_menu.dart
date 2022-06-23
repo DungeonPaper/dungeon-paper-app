@@ -24,27 +24,27 @@ class DebugMenu extends StatelessWidget {
       items: [
         MenuEntry(
           label: const Text('Toggle dark mode'),
-          id: 'toggleDarkMode',
+          value: 'toggleDarkMode',
           onSelect: _toggleTheme,
         ),
         MenuEntry(
           label: const Text('Clear all Char Data'),
-          id: 'clearChars',
+          value: 'clearChars',
           onSelect: _clearChars,
         ),
         MenuEntry(
           label: const Text('Open create char page'),
-          id: 'createChar',
+          value: 'createChar',
           onSelect: _createChar,
         ),
         MenuEntry(
           label: const Text('View JSON'),
-          id: 'viewCharJson',
+          value: 'viewCharJson',
           onSelect: _viewCharJson,
         ),
         MenuEntry(
           label: const Text('Search'),
-          id: 'search',
+          value: 'search',
           onSelect: _search,
         ),
       ],

@@ -257,7 +257,7 @@ class RichTextField extends StatelessWidget {
                     'h6': mdTheme.h6,
                   }['h$i']!,
                 ),
-                id: 'h$i',
+                value: 'h$i',
                 onSelect: _wrapOrAppendCb(
                   '\n${List.filled(i, "#").join("")} ${S.current.formatHeading(i)}\n',
                   '\n${List.filled(i, "#").join("")} ',

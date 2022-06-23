@@ -42,13 +42,13 @@ class ListCard<T, C extends ImportExportSelectionData> extends GetView<C> {
             MenuButton<bool>(
               items: [
                 MenuEntry<bool>(
-                  id: true,
+                  value: true,
                   icon: const Icon(Icons.select_all),
                   label: Text(S.current.selectAll),
                   onSelect: () => controller.toggleAll<T>(true),
                 ),
                 MenuEntry<bool>(
-                  id: false,
+                  value: false,
                   icon: const Icon(Icons.clear),
                   label: Text(S.current.selectNone),
                   onSelect: () => controller.toggleAll<T>(false),

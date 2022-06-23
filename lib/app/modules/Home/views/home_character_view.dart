@@ -121,19 +121,18 @@ class HomeCharacterView extends GetView<CharacterService> {
                     children: [
                       Expanded(
                         child: ElevatedButton.icon(
-                          onPressed: () => DiceUtils.openRollDialog([dw.Dice.d6 * 2]),
+                          onPressed: () => DiceUtils.openRollDialog(char.rollButtons[0].dice),
                           style: ButtonThemes.primaryElevated(context),
-                          label: Text(S.current.rollBasicActionButton),
+                          label: Text(char.rollButtons[0].label),
                           icon: const Icon(DwIcons.dice_d6),
                         ),
                       ),
                       const SizedBox(width: 16),
                       Expanded(
                         child: ElevatedButton.icon(
-                          onPressed: () => DiceUtils.openRollDialog(
-                              [dw.Dice(sides: 6, amount: 2, modifierStat: 'STR'), char.damageDice]),
+                          onPressed: () => DiceUtils.openRollDialog(char.rollButtons[1].dice),
                           style: ButtonThemes.primaryElevated(context),
-                          label: Text(S.current.rollAttackDamageButton),
+                          label: Text(char.rollButtons[1].label),
                           icon: const Icon(DwIcons.dice_d6),
                         ),
                       ),

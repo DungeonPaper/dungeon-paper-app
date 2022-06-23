@@ -176,12 +176,12 @@ class MenuButton<V> extends StatelessWidget {
           .map(
             (e) => PopupMenuItem<V>(
               child: PopupMenuItemListTile(icon: e.icon, label: e.label),
-              value: e.id,
+              value: e.value,
               enabled: !e.disabled,
             ),
           )
           .toList(),
-      onSelected: (key) => items.firstWhere((element) => element.id == key).onSelect?.call(),
+      onSelected: (key) => items.firstWhere((element) => element.value == key).onSelect?.call(),
       initialValue: initialValue,
       onCanceled: onCanceled,
       tooltip: tooltip,
@@ -205,14 +205,14 @@ class MenuButton<V> extends StatelessWidget {
 class MenuEntry<V> {
   final Widget label;
   final Widget? icon;
-  final V id;
+  final V value;
   final void Function()? onSelect;
   final bool disabled;
 
   MenuEntry({
     required this.label,
     this.icon,
-    required this.id,
+    required this.value,
     required this.onSelect,
     this.disabled = false,
   });

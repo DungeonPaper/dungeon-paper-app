@@ -46,19 +46,19 @@ class MetaSyncMenu<T, M> extends StatelessWidget {
               'key: ${entity.key}\n'
               'sourceKey: ${meta.sharing?.sourceKey}'),
           disabled: true,
-          id: '',
+          value: '',
           onSelect: null,
         ),
         MenuEntry(
           // TODO intl
           label: const Text('Update original'),
-          id: 'push',
+          value: 'push',
           onSelect: () => debugPrint('Update original'),
         ),
         MenuEntry(
           // TODO intl
           label: const Text('Revert changes'),
-          id: 'pull',
+          value: 'pull',
           onSelect: () => debugPrint('Revert changes'),
         ),
       ];

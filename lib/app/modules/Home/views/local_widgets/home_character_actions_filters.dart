@@ -19,7 +19,7 @@ class HomeCharacterActionsFilters extends StatelessWidget {
       items: ['Move', 'Spell', 'Item']
           .map(
             (type) => MenuEntry(
-              id: type,
+              value: type,
               icon: SizedBox(
                 width: 30,
                 child: Checkbox(
