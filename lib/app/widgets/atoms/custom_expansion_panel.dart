@@ -6,6 +6,7 @@ class CustomExpansionPanel extends StatelessWidget {
   final bool expandable;
   final Key? expansionKey;
   final Widget title;
+  final Widget? subtitle;
   final List<Widget> children;
   final bool? expanded;
   final bool? initiallyExpanded;
@@ -25,6 +26,7 @@ class CustomExpansionPanel extends StatelessWidget {
     this.expandable = true,
     this.expansionKey,
     required this.title,
+    this.subtitle,
     required this.children,
     this.icon,
     this.expanded,
@@ -40,7 +42,7 @@ class CustomExpansionPanel extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var originalTheme = Theme.of(context);
+    final originalTheme = Theme.of(context);
     return Theme(
       data: originalTheme.copyWith(dividerColor: Colors.transparent),
       child: CustomExpansionTile(
@@ -62,6 +64,7 @@ class CustomExpansionPanel extends StatelessWidget {
             ...trailing,
           ],
         ),
+        subtitle: subtitle,
         children: children.map((child) => Theme(data: originalTheme, child: child)).toList(),
         tilePadding: titlePadding ?? defaultPadding,
         childrenPadding: childrenPadding ?? defaultPadding,

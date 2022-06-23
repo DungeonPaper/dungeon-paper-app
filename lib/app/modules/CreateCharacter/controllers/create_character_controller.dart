@@ -37,7 +37,7 @@ class CreateCharacterController extends GetxController {
         characterClass.value != null,
       ].every((element) => element == true);
 
-  List<Item> get items => GearChoice.selectionToItems(startingGear);
+  List<Item> get items => GearChoice.selectionToItems(startingGear, equipped: true);
 
   double get coins => GearChoice.selectionToCoins(startingGear);
 
@@ -74,8 +74,8 @@ class CreateCharacterController extends GetxController {
   void setMovesSpells(List<Move> moves, List<Spell> spells) {
     this.moves.clear();
     this.spells.clear();
-    this.moves.addAll(moves);
-    this.spells.addAll(spells);
+    this.moves.addAll(moves.map((e) => e.copyWithInherited(favorited: true)));
+    this.spells.addAll(spells.map((e) => e.copyWithInherited(prepared: true)));
   }
 
   void setDirty() {
@@ -94,7 +94,8 @@ class CreateCharacterController extends GetxController {
           .where((m) => (m.classKeys.contains(characterClass.value!.key) &&
               m.category == MoveCategory.starting))
           .map(
-            (move) => Move.fromDwMove(move, favorited: move.category != MoveCategory.basic),
+            // favorited: move.category != MoveCategory.basic
+            (move) => Move.fromDwMove(move, favorited: true),
           )
           .toList(),
     );

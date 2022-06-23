@@ -18,6 +18,8 @@ import 'package:dungeon_paper/app/themes/colors.dart';
 import 'package:dungeon_paper/app/widgets/atoms/advanced_floating_action_button.dart';
 import 'package:dungeon_paper/app/widgets/atoms/character_avatar.dart';
 import 'package:dungeon_paper/app/widgets/atoms/confirm_exit_view.dart';
+import 'package:dungeon_paper/app/widgets/atoms/custom_expansion_panel.dart';
+import 'package:dungeon_paper/app/widgets/atoms/custom_expansion_tile.dart';
 import 'package:dungeon_paper/generated/l10n.dart';
 import 'package:flutter/material.dart';
 
@@ -120,39 +122,6 @@ class CreateCharacterView extends GetView<CreateCharacterController> {
                               preventDuplicates: false,
                             ),
                           ),
-                          // Alignment
-                          _Card(
-                            // contentPadding: EdgeInsets.symmetric(horizontal: 16, vertical: 12),
-                            contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 0),
-
-                            title: Text(controller.alignment.value != null
-                                ? S.current.entity(AlignmentValue) +
-                                    ': ' +
-                                    S.current.alignment(controller.alignment.value!.type)
-                                : S.current.selectGeneric(S.current.entity(AlignmentValue))),
-                            subtitle: Text(
-                              controller.alignment.value != null
-                                  ? controller.alignment.value!.description
-                                  :
-                                  // TODO intl
-                                  'No Alignment selected',
-                              overflow: TextOverflow.ellipsis,
-                              maxLines: 1,
-                            ),
-                            onTap: cls != null
-                                ? () => Get.toNamed(
-                                      Routes.classAlignments,
-                                      arguments: ClassAlignmentsArguments(
-                                        onChanged: controller.setAlignment,
-                                        alignments: controller.characterClass.value!.alignments,
-                                        preselected: controller.alignment.value?.type,
-                                        selectable: true,
-                                        editable: true,
-                                      ),
-                                      preventDuplicates: false,
-                                    )
-                                : null,
-                          ),
                           // Ability Scores
                           _Card(
                             contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
@@ -173,6 +142,43 @@ class CreateCharacterView extends GetView<CreateCharacterController> {
                               preventDuplicates: false,
                             ),
                           ),
+                          // Alignment
+                          _Card(
+                            // contentPadding: EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+                            contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 0),
+
+                            title: Text(controller.alignment.value != null
+                                ? S.current.entity(AlignmentValue) +
+                                    ': ' +
+                                    S.current.alignment(controller.alignment.value!.type)
+                                : S.current.selectGeneric(S.current.entity(AlignmentValue))),
+                            subtitle: controller.alignment.value != null
+                                ? controller.alignment.value!.description.isNotEmpty
+                                    ? Text(controller.alignment.value!.description,
+                                        overflow: TextOverflow.ellipsis, maxLines: 1)
+                                    : null
+                                :
+                                // TODO intl
+                                Text('No Alignment selected'),
+                            onTap: cls != null
+                                ? () => Get.toNamed(
+                                      Routes.classAlignments,
+                                      arguments: ClassAlignmentsArguments(
+                                        onChanged: controller.setAlignment,
+                                        alignments: controller.characterClass.value!.alignments,
+                                        preselected: controller.alignment.value?.type,
+                                        selectable: true,
+                                        editable: true,
+                                      ),
+                                      preventDuplicates: false,
+                                    )
+                                : null,
+                          ),
+                          // CustomExpansionPanel(
+                          //   title: Text('Optional'),
+                          //   subtitle: Text('Starting gear, moves & spells'),
+                          //   childrenPadding: EdgeInsets.zero,
+                          //   children: [
                           // Starting Gear
                           _Card(
                             contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
@@ -233,6 +239,8 @@ class CreateCharacterView extends GetView<CreateCharacterController> {
                                     )
                                 : null,
                           ),
+                          //   ],
+                          // ),
                         ],
                       ),
                     ),
