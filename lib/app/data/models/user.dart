@@ -30,6 +30,9 @@ class User {
 
   String toRawJson() => json.encode(toJson());
 
+  String? get documentPath => isLoggedIn ? 'Data/$email' : null;
+  String? get fileStoragePath => isLoggedIn ? documentPath! + '/Uploads' : null;
+
   factory User.fromJson(Map<String, dynamic> json) => User(
         username: json['username'],
         displayName: json['displayName'],
@@ -51,4 +54,5 @@ class User {
       };
 
   bool get isGuest => username == 'guest';
+  bool get isLoggedIn => !isGuest;
 }

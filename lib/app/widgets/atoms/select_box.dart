@@ -94,14 +94,7 @@ class SelectBox<T> extends StatelessWidget {
       child: InputDecorator(
           decoration: InputDecoration(
             label: label,
-            border: UnderlineInputBorder(
-              borderRadius: inputBorderRadius,
-              borderSide: BorderSide(
-                color: borderColor,
-                style: BorderStyle.solid,
-                width: 1,
-              ),
-            ),
+            border: Theme.of(context).inputDecorationTheme.border,
           ),
           child: buildDropdown()),
     );

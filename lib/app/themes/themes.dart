@@ -38,14 +38,16 @@ final _darkM3 = ThemeData(
   primaryColor: darkColorScheme.primary,
 );
 final baseCardTheme = _lightM3.cardTheme.copyWith(shape: rRectShape);
-final inputBorderRadius = borderRadius.copyWith(
-  bottomLeft: const Radius.circular(8),
-  bottomRight: const Radius.circular(8),
-);
+final inputBorderRadius = borderRadius;
+// .copyWith(
+//   bottomLeft: const Radius.circular(8),
+//   bottomRight: const Radius.circular(8),
+// );
 final inputDecorationTheme = InputDecorationTheme(
   floatingLabelBehavior: FloatingLabelBehavior.always,
   filled: true,
-  border: UnderlineInputBorder(
+  border: OutlineInputBorder(
+    borderSide: BorderSide.none,
     borderRadius: inputBorderRadius,
   ),
 );
@@ -89,6 +91,7 @@ final parchmentTheme = parchmentBase.copyWith(
     floatingLabelBehavior: FloatingLabelBehavior.always,
     filled: true,
     border: UnderlineInputBorder(
+      borderSide: BorderSide.none,
       borderRadius: inputBorderRadius,
     ),
   ),
@@ -124,6 +127,7 @@ final darkTheme = darkBase.copyWith(
     floatingLabelBehavior: FloatingLabelBehavior.always,
     filled: true,
     border: UnderlineInputBorder(
+      borderSide: BorderSide.none,
       borderRadius: inputBorderRadius,
     ),
   ),
