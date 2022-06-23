@@ -1,3 +1,7 @@
+import 'dart:async';
+import 'dart:math';
+
+import 'package:dungeon_paper/app/data/services/character_service.dart';
 import 'package:dungeon_paper/app/themes/button_themes.dart';
 import 'package:dungeon_paper/app/themes/colors.dart';
 import 'package:dungeon_paper/app/themes/themes.dart';
@@ -9,10 +13,27 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:wheel_spinner/wheel_spinner.dart';
 
-import '../controllers/hp_dialog_controller.dart';
+enum ValueChange { positive, neutral, negative }
 
-class HPDialogView extends GetView<HPDialogController> {
-  const HPDialogView({Key? key}) : super(key: key);
+class HPDialog extends StatefulWidget {
+  const HPDialog({Key? key}) : super(key: key);
+
+  @override
+  State<HPDialog> createState() => _HPDialogState();
+}
+
+class _HPDialogState extends State<HPDialog> with CharacterServiceMixin {
+  late int overrideHP;
+  late bool shouldOverrideMaxHP;
+  late TextEditingController overrideMaxHp;
+
+  @override
+  void initState() {
+    overrideHP = char.currentHp;
+    shouldOverrideMaxHP = char.stats.maxHp != null;
+    overrideMaxHp = TextEditingController(text: char.maxHp.toString())..addListener(clampCurrentHP);
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -26,8 +47,8 @@ class HPDialogView extends GetView<HPDialogController> {
             mainAxisSize: MainAxisSize.min,
             children: [
               HpBar(
-                currentHp: controller.overrideHP.value,
-                maxHp: controller.maxHP,
+                currentHp: overrideHP,
+                maxHp: maxHP,
               ),
               const SizedBox(height: 24),
               SizedBox(
@@ -36,15 +57,15 @@ class HPDialogView extends GetView<HPDialogController> {
                   children: [
                     Expanded(
                       child: Text(
-                        controller.isChangeNeutral
+                        isChangeNeutral
                             ? S.current.hpDialogChangeNeutral
-                            : controller.isChangePositive
-                                ? S.current.hpDialogChangeAdd(controller.changeAmount)
-                                : S.current.hpDialogChangeRemove(controller.changeAmount),
+                            : isChangePositive
+                                ? S.current.hpDialogChangeAdd(changeAmount)
+                                : S.current.hpDialogChangeRemove(changeAmount),
                         style: textTheme.headline5!.copyWith(
-                          color: controller.isChangeNeutral
+                          color: isChangeNeutral
                               ? null
-                              : controller.isChangePositive
+                              : isChangePositive
                                   ? DwColors.success
                                   : theme.colorScheme.error,
                         ),
@@ -59,13 +80,13 @@ class HPDialogView extends GetView<HPDialogController> {
                         width: 60,
                         height: 100,
                         child: WheelSpinner(
-                          value: controller.overrideHP.value.toDouble(),
+                          value: overrideHP.toDouble(),
                           min: 0,
-                          max: controller.maxHP.toDouble(),
+                          max: maxHP.toDouble(),
                           // childBuilder: (_) => Text(_.toString()),
                           borderRadius: borderRadius,
                           minMaxLabelBuilder: (_) => '',
-                          onSlideUpdate: (value) => controller.overrideHP.value = value.round(),
+                          onSlideUpdate: (value) => setState(() => overrideHP = value.round()),
                           dividerColor:
                               theme.brightness == Brightness.light ? null : Colors.grey[800],
                           boxDecoration: (theme.brightness == Brightness.light
@@ -103,21 +124,20 @@ class HPDialogView extends GetView<HPDialogController> {
                 ),
               ),
               ListTile(
-                onTap: () =>
-                    controller.shouldOverrideMaxHP.value = !controller.shouldOverrideMaxHP.value,
+                onTap: () => setState(() => shouldOverrideMaxHP = !shouldOverrideMaxHP),
                 leading: Checkbox(
-                  value: controller.shouldOverrideMaxHP.value,
-                  onChanged: (value) => controller.shouldOverrideMaxHP.value = value!,
+                  value: shouldOverrideMaxHP,
+                  onChanged: (value) => setState(() => shouldOverrideMaxHP = value!),
                 ),
                 title: Padding(
                   padding: const EdgeInsets.only(top: 24, bottom: 8),
                   child: Text(S.current.hpDialogChangeOverrideMax),
                 ),
                 subtitle: NumberTextField(
-                  controller: controller.overrideMaxHp,
+                  controller: overrideMaxHp,
                   numberType: NumberType.int,
                   minValue: 0,
-                  enabled: controller.shouldOverrideMaxHP.value,
+                  enabled: shouldOverrideMaxHP,
                 ),
                 dense: true,
                 visualDensity: VisualDensity.compact,
@@ -128,14 +148,14 @@ class HPDialogView extends GetView<HPDialogController> {
                 mainAxisAlignment: MainAxisAlignment.end,
                 children: [
                   TextButton.icon(
-                    onPressed: controller.close,
+                    onPressed: close,
                     label: Text(S.current.cancel),
                     icon: const Icon(Icons.close),
                     style: ButtonThemes.errorText(context),
                   ),
                   const SizedBox(width: 8),
                   ElevatedButton.icon(
-                    onPressed: controller.save,
+                    onPressed: save,
                     label: Text(S.current.save),
                     icon: const Icon(Icons.check),
                   ),
@@ -146,5 +166,41 @@ class HPDialogView extends GetView<HPDialogController> {
         ),
       ),
     );
+  }
+
+  int get currentHP => char.currentHp;
+  int get maxHP => shouldOverrideMaxHP
+      ? int.tryParse(overrideMaxHp.text) ?? char.defaultMaxHp
+      : char.defaultMaxHp;
+
+  ValueChange get change => currentHP == overrideHP
+      ? ValueChange.neutral
+      : currentHP > overrideHP
+          ? ValueChange.negative
+          : ValueChange.positive;
+
+  int get changeAmount => (overrideHP - currentHP).abs();
+
+  bool get isChangePositive => change == ValueChange.positive;
+  bool get isChangeNegative => change == ValueChange.negative;
+  bool get isChangeNeutral => change == ValueChange.neutral;
+
+  clampCurrentHP([dynamic value]) {
+    setState(() => overrideHP = min(maxHP, overrideHP));
+  }
+
+  void save() {
+    charService.updateCharacter(
+      char.copyWith(
+        stats: char.stats
+            .copyWith(currentHp: overrideHP)
+            .copyWithMaxHp(shouldOverrideMaxHP ? maxHP : null),
+      ),
+    );
+    close();
+  }
+
+  void close() async {
+    Get.back();
   }
 }
