@@ -17,7 +17,7 @@ class CharacterStats {
   final int? maxHp;
   final int currentHp;
   final int currentExp;
-  final int armor;
+  final int? armor;
   final dw.Dice? damageDice;
   final int? load;
 

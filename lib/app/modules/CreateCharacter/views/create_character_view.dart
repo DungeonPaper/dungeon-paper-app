@@ -1,6 +1,7 @@
 import 'dart:ui';
 
 import 'package:dungeon_paper/app/data/models/ability_scores.dart';
+import 'package:dungeon_paper/app/data/models/alignment.dart';
 import 'package:dungeon_paper/app/data/models/character.dart';
 import 'package:dungeon_paper/app/data/models/character_class.dart';
 import 'package:dungeon_paper/app/data/models/gear_selection.dart';
@@ -8,6 +9,7 @@ import 'package:dungeon_paper/app/data/services/character_service.dart';
 import 'package:dungeon_paper/app/model_utils/model_key.dart';
 import 'package:dungeon_paper/app/modules/AbilityScoresForm/controllers/ability_scores_form_controller.dart';
 import 'package:dungeon_paper/app/modules/BasicInfoForm/controllers/basic_info_form_controller.dart';
+import 'package:dungeon_paper/app/modules/ClassAlignments/controllers/class_alignments_controller.dart';
 import 'package:dungeon_paper/app/modules/CreateCharacter/SelectMovesSpells/controllers/select_moves_spells_controller.dart';
 import 'package:dungeon_paper/app/modules/LibraryList/views/character_classes_library_list_view.dart';
 import 'package:dungeon_paper/app/modules/StartingGearForm/controllers/starting_gear_form_controller.dart';
@@ -70,6 +72,7 @@ class CreateCharacterView extends GetView<CreateCharacterController> {
                       child: Column(
                         mainAxisSize: MainAxisSize.min,
                         children: [
+                          // Basic Info
                           _Card(
                             leading: CharacterAvatar.squircle(
                               size: 48,
@@ -94,6 +97,7 @@ class CreateCharacterView extends GetView<CreateCharacterController> {
                               preventDuplicates: false,
                             ),
                           ),
+                          // Class
                           _Card(
                             title: cls == null
                                 ? Text(S.current.selectGeneric(S.current.entity(CharacterClass)))
@@ -116,6 +120,40 @@ class CreateCharacterView extends GetView<CreateCharacterController> {
                               preventDuplicates: false,
                             ),
                           ),
+                          // Alignment
+                          _Card(
+                            // contentPadding: EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+                            contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 0),
+
+                            title: Text(controller.alignment.value != null
+                                ? S.current.entity(AlignmentValue) +
+                                    ': ' +
+                                    S.current.alignment(controller.alignment.value!.type)
+                                : S.current.selectGeneric(S.current.entity(AlignmentValue))),
+                            subtitle: Text(
+                              controller.alignment.value != null
+                                  ? controller.alignment.value!.description
+                                  :
+                                  // TODO intl
+                                  'No Alignment selected',
+                              overflow: TextOverflow.ellipsis,
+                              maxLines: 1,
+                            ),
+                            onTap: cls != null
+                                ? () => Get.toNamed(
+                                      Routes.classAlignments,
+                                      arguments: ClassAlignmentsArguments(
+                                        onChanged: controller.setAlignment,
+                                        alignments: controller.characterClass.value!.alignments,
+                                        preselected: controller.alignment.value?.type,
+                                        selectable: true,
+                                        editable: true,
+                                      ),
+                                      preventDuplicates: false,
+                                    )
+                                : null,
+                          ),
+                          // Ability Scores
                           _Card(
                             contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
                             title:
@@ -135,6 +173,7 @@ class CreateCharacterView extends GetView<CreateCharacterController> {
                               preventDuplicates: false,
                             ),
                           ),
+                          // Starting Gear
                           _Card(
                             contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
                             title: Text(S.current.selectGeneric(S.current.entity(GearSelection))),
@@ -173,6 +212,7 @@ class CreateCharacterView extends GetView<CreateCharacterController> {
                                     ),
                                   ),
                           ),
+                          // Moves & Spells
                           _Card(
                             // contentPadding: EdgeInsets.symmetric(horizontal: 16, vertical: 12),
                             // TODO intl
@@ -215,6 +255,7 @@ class _Card extends StatelessWidget {
     required this.title,
     required this.subtitle,
     this.valid = true,
+    this.isThreeLine = false,
     required this.onTap,
   }) : super(key: key);
 
@@ -223,6 +264,7 @@ class _Card extends StatelessWidget {
   final Widget? title;
   final Widget? subtitle;
   final bool valid;
+  final bool isThreeLine;
   final GestureTapCallback? onTap;
 
   bool get isEnabled => onTap != null;
@@ -259,6 +301,7 @@ class _Card extends StatelessWidget {
                 ),
               )
             : null,
+        isThreeLine: isThreeLine,
         // trailing: isIncomplete ?  _MissingInfoIcon() : null,
       ),
     );

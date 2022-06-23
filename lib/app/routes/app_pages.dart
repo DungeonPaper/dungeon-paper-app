@@ -17,6 +17,8 @@ import '../modules/BondsFlagsForm/bindings/bonds_flags_form_binding.dart';
 import '../modules/BondsFlagsForm/views/bonds_flags_form_view.dart';
 import '../modules/CharacterList/bindings/character_list_binding.dart';
 import '../modules/CharacterList/views/character_list_view.dart';
+import '../modules/ClassAlignments/bindings/class_alignments_binding.dart';
+import '../modules/ClassAlignments/views/class_alignments_view.dart';
 import '../modules/CreateCharacter/SelectMovesSpells/bindings/select_moves_spells_binding.dart';
 import '../modules/CreateCharacter/SelectMovesSpells/views/select_moves_spells_view.dart';
 import '../modules/CreateCharacter/bindings/create_character_binding.dart';
@@ -192,6 +194,11 @@ class AppPages {
       page: () => const AbilityScoresFormView(),
       binding: AbilityScoresFormBinding(),
       preventDuplicates: false,
+    ),
+    GetPage(
+      name: _Paths.classAlignments,
+      page: () => const ClassAlignmentsView(),
+      binding: ClassAlignmentsBinding(),
     ),
   ];
 }

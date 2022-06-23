@@ -1,15 +1,20 @@
+import 'package:dungeon_paper/app/data/models/alignment.dart';
 import 'package:dungeon_paper/app/data/models/character.dart';
 import 'package:dungeon_paper/app/data/models/character_class.dart';
 import 'package:dungeon_paper/app/data/models/gear_choice.dart';
 import 'package:dungeon_paper/app/data/models/gear_selection.dart';
 import 'package:dungeon_paper/app/data/models/item.dart';
+import 'package:dungeon_paper/app/data/models/meta.dart';
 import 'package:dungeon_paper/app/data/models/move.dart';
 import 'package:dungeon_paper/app/data/models/ability_scores.dart';
+import 'package:dungeon_paper/app/data/models/session_marks.dart';
 import 'package:dungeon_paper/app/data/models/spell.dart';
 import 'package:dungeon_paper/app/data/models/user.dart';
 import 'package:dungeon_paper/app/data/services/repository_service.dart';
 import 'package:dungeon_paper/app/data/services/user_service.dart';
+import 'package:dungeon_paper/core/utils/uuid.dart';
 import 'package:get/get.dart';
+import 'package:dungeon_world_data/dungeon_world_data.dart' as dw;
 
 class CreateCharacterController extends GetxController {
   final name = ''.obs;
@@ -20,6 +25,7 @@ class CreateCharacterController extends GetxController {
   final startingGear = <GearSelection>[].obs;
   final moves = <Move>[].obs;
   final spells = <Spell>[].obs;
+  final alignment = Rx<AlignmentValue?>(null);
   final repo = Get.find<RepositoryService>();
 
   final dirty = false.obs;
@@ -52,6 +58,16 @@ class CreateCharacterController extends GetxController {
 
   void setAbilityScores(AbilityScores stats) {
     abilityScores.value = stats;
+    setDirty();
+  }
+
+  void setAlignment(AlignmentValues alignments, dw.AlignmentType? selected) {
+    if (selected == null) {
+      return;
+    }
+    alignment.value = AlignmentValue.empty(type: selected).copyWith(
+      description: alignments.byType(selected),
+    );
     setDirty();
   }
 
@@ -93,5 +109,9 @@ class CreateCharacterController extends GetxController {
         spells: spells,
         items: items,
         coins: coins,
+        sessionMarks: characterClass.value?.bonds
+                .map((bond) => SessionMark.bond(description: bond, completed: false, key: uuid()))
+                .toList() ??
+            [],
       );
 }

@@ -107,6 +107,7 @@ class MessageLookup extends MessageLookupByLibrary {
             'GearSelection': 'Starting Gear',
             'Dice': 'Dice',
             'AbilityScore': 'Ability Score',
+            'AlignmentValue': 'Alignment',
             'other': '${runtimeType}',
           })}";
 
@@ -122,6 +123,7 @@ class MessageLookup extends MessageLookupByLibrary {
             'Dice': 'Dice',
             'GearSelection': 'Starting Gear',
             'AbilityScore': 'Ability Scores',
+            'AlignmentValue': 'Alignment',
             'other': '${runtimeType}s',
           })}";
 
@@ -568,6 +570,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "selectGeneric": m59,
         "selectNone": MessageLookupByLibrary.simpleMessage("Select None"),
         "selectToAdd": m60,
+        "selected": MessageLookupByLibrary.simpleMessage("Selected"),
         "separatorOr": MessageLookupByLibrary.simpleMessage("OR"),
         "settingsTitle": MessageLookupByLibrary.simpleMessage("Settings"),
         "sortMoveDown": MessageLookupByLibrary.simpleMessage("Move down"),

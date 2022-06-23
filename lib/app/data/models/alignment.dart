@@ -39,7 +39,17 @@ class AlignmentValue extends dw.Alignment implements WithMeta, WithIcon {
   };
 
   @override
-  IconData get icon => iconMap[key]!;
+  IconData get icon => iconOf(type);
+  static IconData iconOf(dw.AlignmentType key) => iconMap[key.name]!;
+
+  factory AlignmentValue.empty({
+    dw.AlignmentType? type,
+  }) =>
+      AlignmentValue(
+        meta: Meta.version(1),
+        description: '',
+        type: type ?? dw.AlignmentType.good,
+      );
 
   @override
   AlignmentValue copyWith({
@@ -91,6 +101,29 @@ class AlignmentValues extends dw.AlignmentValues {
 
   final Meta meta;
 
+  String byType(dw.AlignmentType type) {
+    final map = {
+      dw.AlignmentType.good: good,
+      dw.AlignmentType.evil: evil,
+      dw.AlignmentType.lawful: lawful,
+      dw.AlignmentType.neutral: neutral,
+      dw.AlignmentType.chaotic: chaotic,
+    };
+    if (map[type] == null) {
+      throw TypeError();
+    }
+    return map[type]!;
+  }
+
+  factory AlignmentValues.empty() => AlignmentValues(
+        meta: Meta.version(1),
+        good: '',
+        evil: '',
+        lawful: '',
+        neutral: '',
+        chaotic: '',
+      );
+
   factory AlignmentValues.fromRawJson(String str) => AlignmentValues.fromJson(json.decode(str));
 
   factory AlignmentValues.fromJson(Map<String, dynamic> json) => AlignmentValues(
@@ -100,6 +133,23 @@ class AlignmentValues extends dw.AlignmentValues {
         lawful: json['lawful'],
         neutral: json['neutral'],
         chaotic: json['chaotic'],
+      );
+
+  AlignmentValues copyWithInherited({
+    Meta? meta,
+    String? good,
+    String? evil,
+    String? lawful,
+    String? neutral,
+    String? chaotic,
+  }) =>
+      AlignmentValues(
+        meta: meta ?? this.meta,
+        good: good ?? this.good,
+        evil: evil ?? this.evil,
+        lawful: lawful ?? this.lawful,
+        neutral: neutral ?? this.neutral,
+        chaotic: chaotic ?? this.chaotic,
       );
 
   factory AlignmentValues.fromDwAlignmentValues(dw.AlignmentValues original) => AlignmentValues(

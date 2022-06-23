@@ -3,6 +3,7 @@ import 'package:dungeon_paper/app/data/services/character_service.dart';
 import 'package:dungeon_paper/app/modules/BondsFlagsForm/controllers/bonds_flags_form_controller.dart';
 import 'package:dungeon_paper/app/routes/app_pages.dart';
 import 'package:dungeon_paper/app/themes/button_themes.dart';
+import 'package:dungeon_paper/core/utils/list_utils.dart';
 import 'package:dungeon_paper/generated/l10n.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -101,25 +102,11 @@ class CharacterBondsFlagsDialog extends GetView<CharacterService> with Character
                 for (final bond in bonds) ...[
                   ListTile(
                     visualDensity: VisualDensity.compact,
-                    onTap: () => controller.updateCharacter(
-                      char.copyWith(
-                        sessionMarks: sessionMarks
-                            .map((e) => e.key == bond.key
-                                ? e.copyWithInherited(completed: !bond.completed)
-                                : e)
-                            .toList(),
-                      ),
-                    ),
+                    dense: true,
+                    onTap: () => onChecked(bond, !bond.completed),
                     leading: Checkbox(
                       value: bond.completed,
-                      onChanged: (val) => controller.updateCharacter(
-                        char.copyWith(
-                          sessionMarks: sessionMarks
-                              .map((e) =>
-                                  e.key == bond.key ? e.copyWithInherited(completed: val) : e)
-                              .toList(),
-                        ),
-                      ),
+                      onChanged: (val) => onChecked(bond, val),
                     ),
                     title: Text(bond.description),
                   ),
@@ -129,6 +116,7 @@ class CharacterBondsFlagsDialog extends GetView<CharacterService> with Character
                 for (final flag in flags) ...[
                   ListTile(
                     visualDensity: VisualDensity.compact,
+                    dense: true,
                     onTap: () => controller.updateCharacter(
                       char.copyWith(
                         sessionMarks: sessionMarks
@@ -156,6 +144,14 @@ class CharacterBondsFlagsDialog extends GetView<CharacterService> with Character
             ),
           ),
         ),
+      ),
+    );
+  }
+
+  void onChecked(SessionMark sessionMark, bool? val) {
+    return controller.updateCharacter(
+      char.copyWith(
+        sessionMarks: updateByKey(sessionMarks, [sessionMark]),
       ),
     );
   }

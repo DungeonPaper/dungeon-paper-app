@@ -36,6 +36,7 @@ abstract class Routes {
   static const createCharacterBasicInfo = _Paths.createCharacter + _Paths.basicInfo;
   static const createCharacterStartingGear = _Paths.createCharacter + _Paths.startingGear;
   static const hpDialog = _Paths.hpDialog;
+  static const classAlignments = _Paths.classAlignments;
 }
 
 abstract class _Paths {
@@ -63,4 +64,5 @@ abstract class _Paths {
   static const bondsFlags = '/bonds-flags';
   static const bio = '/biography';
   static const hpDialog = '/edit-hp';
+  static const classAlignments = '/class-alignments';
 }

@@ -16,7 +16,7 @@ class AbilityScoresGrid extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ConstrainedBox(
-      constraints: const BoxConstraints(maxWidth: 600),
+      constraints: const BoxConstraints(maxWidth: 380),
       child: LayoutBuilder(builder: (context, constraints) {
         return Wrap(
           spacing: 4,

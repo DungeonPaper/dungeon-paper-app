@@ -36,21 +36,15 @@ class Item extends dw.Item implements WithMeta, WithIcon {
   final double amount;
   final bool equipped;
 
-  int get weight => settings.countWeight
-      ? tags
-              .cast<dw.Tag?>()
-              .firstWhere((tag) => cleanStr(tag?.name ?? '') == 'weight', orElse: () => null)
-              ?.value ??
-          0
-      : 0;
+  dw.Tag? findTag(String name) => tags
+      .cast<dw.Tag?>()
+      .firstWhere((tag) => cleanStr(tag?.name ?? '') == name, orElse: () => null);
 
-  int get damage => settings.countDamage
-      ? tags
-              .cast<dw.Tag?>()
-              .firstWhere((tag) => cleanStr(tag?.name ?? '') == 'damage', orElse: () => null)
-              ?.value ??
-          0
+  int get weight => settings.countWeight ? findTag('weight')?.value ?? 0 : 0;
+  int get armor => settings.countArmor && (findTag('worn') != null ? equipped : false)
+      ? findTag('armor')?.value ?? 0
       : 0;
+  int get damage => settings.countDamage ? findTag('damage')?.value ?? 0 : 0;
 
   @override
   Item copyWithInherited({

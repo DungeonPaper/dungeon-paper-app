@@ -2,6 +2,7 @@ import 'package:dungeon_paper/app/data/services/character_service.dart';
 import 'package:dungeon_paper/app/model_utils/dice_utils.dart';
 import 'package:dungeon_paper/app/modules/Home/views/local_widgets/home_character_extras.dart';
 import 'package:dungeon_paper/app/themes/button_themes.dart';
+import 'package:dungeon_paper/app/widgets/chips/primary_chip.dart';
 import 'package:dungeon_paper/app/widgets/molecules/character_subtitle.dart';
 import 'package:dungeon_paper/app/widgets/molecules/ability_scores_grid.dart';
 import 'package:dungeon_paper/core/dw_icons.dart';
@@ -85,6 +86,24 @@ class HomeCharacterView extends GetView<CharacterService> {
                   ),
                 ),
                 8),
+            pad(Center(
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  PrimaryChip(
+                    icon: const Icon(DwIcons.swords),
+                    // visualDensity: VisualDensity.compact,
+                    label: char.damageDice.toString(),
+                  ),
+                  const SizedBox(width: 8),
+                  PrimaryChip(
+                    icon: const Icon(DwIcons.armor),
+                    // visualDensity: VisualDensity.compact,
+                    label: char.armor.toString(),
+                  ),
+                ],
+              ),
+            )),
             pad(const SizedBox(height: 12)),
             pad(Center(
               child: AbilityScoresGrid(abilityScores: abilityScores),
