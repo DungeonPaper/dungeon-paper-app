@@ -6,6 +6,7 @@ import 'package:dungeon_paper/app/routes/app_pages.dart';
 import 'package:dungeon_paper/app/widgets/atoms/menu_button.dart';
 import 'package:dungeon_paper/app/widgets/dialogs/character_bio_dialog.dart';
 import 'package:dungeon_paper/app/widgets/dialogs/character_bonds_flags_dialog.dart';
+import 'package:dungeon_paper/app/widgets/dialogs/custom_roll_buttons_dialog.dart';
 import 'package:dungeon_paper/app/widgets/dialogs/debilities_dialog.dart';
 import 'package:dungeon_paper/core/dw_icons.dart';
 import 'package:dungeon_paper/generated/l10n.dart';
@@ -107,6 +108,15 @@ class HomeCharacterExtras extends GetView<CharacterService> {
   }
 
   void _openRollButtons() {
-    Get.dialog(const CharacterBioDialog());
+    Get.dialog(
+      CutomRollButtonsDialog(
+        character: controller.current!,
+        onChanged: (rollButtons) => controller.updateCharacter(
+          controller.current!.copyWith(
+            settings: controller.current!.settings.copyWith(rollButtons: rollButtons),
+          ),
+        ),
+      ),
+    );
   }
 }

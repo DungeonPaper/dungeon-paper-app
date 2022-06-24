@@ -1,3 +1,4 @@
+import 'package:dungeon_paper/app/data/models/roll_button.dart';
 import 'package:dungeon_paper/app/data/services/character_service.dart';
 import 'package:dungeon_paper/app/model_utils/dice_utils.dart';
 import 'package:dungeon_paper/app/modules/Home/views/local_widgets/home_character_extras.dart';
@@ -121,7 +122,8 @@ class HomeCharacterView extends GetView<CharacterService> {
                     children: [
                       Expanded(
                         child: ElevatedButton.icon(
-                          onPressed: () => DiceUtils.openRollDialog(char.rollButtons[0].dice),
+                          onPressed: () =>
+                              DiceUtils.openRollDialog(char.rollButtons[0].diceFor(char)),
                           style: ButtonThemes.primaryElevated(context),
                           label: Text(char.rollButtons[0].label),
                           icon: const Icon(DwIcons.dice_d6),
@@ -130,7 +132,8 @@ class HomeCharacterView extends GetView<CharacterService> {
                       const SizedBox(width: 16),
                       Expanded(
                         child: ElevatedButton.icon(
-                          onPressed: () => DiceUtils.openRollDialog(char.rollButtons[1].dice),
+                          onPressed: () =>
+                              DiceUtils.openRollDialog(char.rollButtons[1].diceFor(char)),
                           style: ButtonThemes.primaryElevated(context),
                           label: Text(char.rollButtons[1].label),
                           icon: const Icon(DwIcons.dice_d6),

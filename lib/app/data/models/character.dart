@@ -84,18 +84,24 @@ class Character implements WithMeta<Character, CharacterMeta>, WithIcon {
   int get currentLoad => items.fold(0, (weight, item) => weight + item.weight);
   int get armor => stats.armor ?? items.fold(0, (armor, item) => armor + item.armor);
 
-  RollButton get basicActionRollButton =>
-      RollButton(label: S.current.rollBasicActionButton, dice: [dw.Dice.d6 * 2]);
-  RollButton get attackDamageRollButton => RollButton(
-        label: S.current.rollAttackDamageButton,
-        dice: [dw.Dice.fromJson('2d6+STR'), damageDice],
+  RollButton get basicActionRollButton => RollButton.custom(
+        label: S.current.rollBasicActionButton,
+        dice: [dw.Dice.d6 * 2],
       );
+  RollButton get attackDamageRollButton => RollButton.damageDice(
+        label: S.current.rollAttackDamageButton,
+      );
+
+  List<RollButton> get defaultRollButtons => [
+        basicActionRollButton,
+        attackDamageRollButton,
+      ];
 
   List<RollButton> get rollButtons => [
         settings.rollButtons.isNotEmpty
             ? settings.rollButtons[0] ?? basicActionRollButton
             : basicActionRollButton,
-        settings.rollButtons.length > 2
+        settings.rollButtons.length > 1
             ? settings.rollButtons[1] ?? attackDamageRollButton
             : attackDamageRollButton
       ];
