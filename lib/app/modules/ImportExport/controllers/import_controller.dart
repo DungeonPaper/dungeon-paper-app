@@ -140,7 +140,7 @@ class ImportController extends GetxController
       }
       importStep.value = CharacterClass;
       for (final cls in classes) {
-        await StorageHandler.instance.create('Classes', cls.key, cls.toJson());
+        await StorageHandler.instance.create('CharacterClasses', cls.key, cls.toJson());
         leftCount.value -= 1;
       }
       importStep.value = Move;

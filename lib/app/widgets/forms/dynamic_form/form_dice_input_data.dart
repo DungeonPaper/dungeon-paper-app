@@ -16,8 +16,8 @@ class FormDiceInputData extends BaseInputData<List<dw.Dice>> {
   late final ValueNotifierStream<List<dw.Dice>> stream;
   late final StreamSubscription subscription;
   late List<StreamSubscription> guessListeners;
+  late List<ValueNotifier<String>> guessNotifiers;
   late Map<String, String> _resultsCache;
-  late Set<dw.Dice> guesses;
 
   final AbilityScores abilityScores;
   final Set<String> guessFrom;
@@ -26,7 +26,7 @@ class FormDiceInputData extends BaseInputData<List<dw.Dice>> {
     controller = ValueNotifier(value);
     stream = ValueNotifierStream<List<dw.Dice>>(controller);
     guessListeners = [];
-    guesses = {};
+    guessNotifiers = [];
     _resultsCache = {};
   }
 
@@ -35,6 +35,7 @@ class FormDiceInputData extends BaseInputData<List<dw.Dice>> {
     for (final field in guessInputs) {
       debugPrint('adding listener for ${field.name}');
       guessListeners.add(field.data.listen(_listen(field.name)));
+      guessNotifiers.add(ValueNotifier(field.data.value));
     }
   }
 
@@ -63,67 +64,20 @@ class FormDiceInputData extends BaseInputData<List<dw.Dice>> {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Text(S.current.entityPlural(dw.Dice), style: Theme.of(context).textTheme.caption),
-        const SizedBox(height: 6),
-        Wrap(
-          spacing: 8,
-          runSpacing: 8,
-          crossAxisAlignment: WrapCrossAlignment.center,
-          children: [
-            for (final dice in enumerate(value))
-              DiceChip(
-                dice: dice.value,
-                onPressed: () => Get.dialog(
-                  AddDiceDialog(
-                    dice: dice.value,
-                    abilityScores: abilityScores,
-                    onSave: (_dice) {
-                      controller.value = updateByIndex(controller.value, _dice, dice.index);
-                    },
-                  ),
-                ),
-                onDeleted: () => controller.value = [...controller.value..removeAt(dice.index)],
-              ),
-            DiceChip(
-              dice: dw.Dice.d6,
-              label: S.current.addGeneric(dw.Dice),
-              icon: const Icon(Icons.add),
-              backgroundColor: Theme.of(context).primaryColor,
-              onPressed: () => Get.dialog(
-                AddDiceDialog(
-                  abilityScores: abilityScores,
-                  onSave: (dice) {
-                    controller.value = [...controller.value, dice];
-                  },
-                ),
-              ),
-            ),
-            for (final dice in guesses
-                .where((guess) => !value.map((d) => d.toString()).contains(guess.toString())))
-              DiceChip(
-                dice: dice,
-                label: S.current.diceSuggestion(dice.toString()),
-                onPressed: () => controller.value = [...controller.value, dice],
-              ),
-          ],
-        ),
-      ],
+    return DiceListInput(
+      controller: controller,
+      abilityScores: abilityScores,
+      guessFrom: guessNotifiers,
     );
-  }
-
-  void _refreshGuess() {
-    final guessStr = guessInputs.map((i) => i.data.value).join(' ');
-    guesses = dw.Dice.guessFromString(guessStr).toSet();
-    controller.value = [...controller.value];
   }
 
   void Function(dynamic event) _listen(String name) {
     return (data) {
       _resultsCache[name] = data;
-      _refreshGuess();
+      final idx = guessFrom.toList().indexOf(name);
+      if (idx >= 0) {
+        guessNotifiers[idx].value = data;
+      }
     };
   }
 }

@@ -100,7 +100,7 @@ abstract class RepositoryCache {
 
   Future<SearchResponse> getCacheResponse() async {
     return SearchResponse.fromJson({
-      'Classes': await cache.getCollection(cacheKey('Classes')),
+      'CharacterClasses': await cache.getCollection(cacheKey('CharacterClasses')),
       'Items': await cache.getCollection(cacheKey('Items')),
       'Monsters': await cache.getCollection(cacheKey('Monsters')),
       'Moves': await cache.getCollection(cacheKey('Moves')),
@@ -128,10 +128,10 @@ abstract class RepositoryCache {
 
     subs.addAll([
       storage.collectionListener(
-        listenerKey('Classes'),
+        listenerKey('CharacterClasses'),
         (d) {
           if (d.isNotEmpty) {
-            debugPrint('Update in Classes for $id: ${[for (var x in d) x['key']].join(',')}');
+            debugPrint('Update in CharacterClasses for $id: ${[for (var x in d) x['key']].join(',')}');
             classes.value = {for (var x in d) x['key']: CharacterClass.fromJson(x)};
           }
         },
@@ -218,7 +218,7 @@ abstract class RepositoryCache {
     required bool saveIntoCache,
   }) async {
     await Future.wait([
-      updateList<CharacterClass>(cacheKey('Classes'), classes, resp.classes,
+      updateList<CharacterClass>(cacheKey('CharacterClasses'), classes, resp.classes,
           saveIntoCache: saveIntoCache),
       updateList<Item>(cacheKey('Items'), items, resp.items, saveIntoCache: saveIntoCache),
       updateList<Monster>(cacheKey('Monsters'), monsters, resp.monsters,
@@ -323,7 +323,7 @@ class PersonalRepository extends RepositoryCache {
   @override
   Future<SearchResponse> get getFromRemote => Future(
         () async => SearchResponse.fromJson({
-          'Classes': await storage.getCollection('Classes'),
+          'CharacterClasses': await storage.getCollection('CharacterClasses'),
           'Items': await storage.getCollection('Items'),
           'Monsters': await storage.getCollection('Monsters'),
           'Moves': await storage.getCollection('Moves'),

@@ -21,7 +21,7 @@ enum SearchType {
 }
 
 final searchTypeToString = <SearchType, String>{
-  SearchType.classes: 'Classes',
+  SearchType.classes: 'CharacterClasses',
   SearchType.items: 'Items',
   SearchType.monsters: 'Monsters',
   SearchType.moves: 'Moves',
@@ -68,22 +68,36 @@ class SearchResponse {
     this.tags,
   });
 
+  static List<T> values<T>(dynamic object) =>
+      object is List<T> ? object : (object as Map<String, T>).values.toList();
+
   factory SearchResponse.fromJson(Map<String, dynamic> json) {
     debugPrint('Parsing response: ${json.map((k, v) => MapEntry(k, v.length))}');
     return SearchResponse(
-      classes: json['Classes'] != null
-          ? List.from(json['Classes'].map((x) => CharacterClass.fromJson(x)))
+      classes: json['CharacterClasses'] != null
+          ? List.from(values(json['CharacterClasses']).map((x) => CharacterClass.fromJson(x)))
           : null,
-      items: json['Items'] != null ? List.from(json['Items'].map((x) => Item.fromJson(x))) : null,
+      items: json['Items'] != null
+          ? List.from(values(json['Items']).map((x) => Item.fromJson(x)))
+          : null,
       monsters: json['Monsters'] != null
-          ? List.from(json['Monsters'].map((x) => Monster.fromJson(x)))
+          ? List.from(values(json['Monsters']).map((x) => Monster.fromJson(x)))
           : null,
-      moves: json['Moves'] != null ? List.from(json['Moves'].map((x) => Move.fromJson(x))) : null,
-      races: json['Races'] != null ? List.from(json['Races'].map((x) => Race.fromJson(x))) : null,
-      spells:
-          json['Spells'] != null ? List.from(json['Spells'].map((x) => Spell.fromJson(x))) : null,
-      notes: json['Notes'] != null ? List.from(json['Notes'].map((x) => Note.fromJson(x))) : null,
-      tags: json['Tags'] != null ? List.from(json['Tags'].map((x) => dw.Tag.fromJson(x))) : null,
+      moves: json['Moves'] != null
+          ? List.from(values(json['Moves']).map((x) => Move.fromJson(x)))
+          : null,
+      races: json['Races'] != null
+          ? List.from(values(json['Races']).map((x) => Race.fromJson(x)))
+          : null,
+      spells: json['Spells'] != null
+          ? List.from(values(json['Spells']).map((x) => Spell.fromJson(x)))
+          : null,
+      notes: json['Notes'] != null
+          ? List.from(values(json['Notes']).map((x) => Note.fromJson(x)))
+          : null,
+      tags: json['Tags'] != null
+          ? List.from(values(json['Tags']).map((x) => dw.Tag.fromJson(x)))
+          : null,
     );
   }
 

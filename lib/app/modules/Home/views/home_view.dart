@@ -3,6 +3,7 @@ import 'package:dungeon_paper/app/data/services/loading_service.dart';
 import 'package:dungeon_paper/app/data/services/user_service.dart';
 import 'package:dungeon_paper/app/model_utils/character_utils.dart';
 import 'package:dungeon_paper/app/model_utils/model_pages.dart';
+import 'package:dungeon_paper/app/modules/Home/views/home_app_bar.dart';
 import 'package:dungeon_paper/app/modules/Home/views/home_character_actions_view.dart';
 import 'package:dungeon_paper/app/modules/Home/views/home_character_journal_view.dart';
 import 'package:dungeon_paper/app/modules/Home/views/home_loader_view.dart';
@@ -28,25 +29,7 @@ class HomeView extends GetView<CharacterService> with UserServiceMixin, LoadingS
   Widget build(BuildContext context) {
     return Obx(
       () => Scaffold(
-        appBar: AppBar(
-          leading: IconButton(
-            icon: Icon(
-              Theme.of(context).brightness == Brightness.light
-                  ? Icons.light_mode
-                  : Icons.light_mode_outlined,
-            ),
-            onPressed: toggleTheme,
-            tooltip: Theme.of(context).brightness == Brightness.light
-                ? S.current.themeTurnDark
-                : S.current.themeTurnLight,
-          ),
-          title: Text(S.current.appName),
-          actions: const [
-            // DebugMenu(),
-            UserMenu(),
-          ],
-          automaticallyImplyLeading: false,
-        ),
+        appBar: const HomeAppBar(),
         body: loadingService.loadingUser || loadingService.loadingCharacters
             ? const HomeLoaderView()
             : PageView(
@@ -101,11 +84,6 @@ class HomeView extends GetView<CharacterService> with UserServiceMixin, LoadingS
         ),
       ),
     );
-  }
-
-  void toggleTheme() {
-    var theme = DynamicTheme.of(Get.context!)!;
-    theme.setTheme(theme.themeId == AppThemes.dark ? AppThemes.parchment : AppThemes.dark);
   }
 }
 

@@ -40,7 +40,7 @@ String nameFor<T>(T object) {
 String storageKeyFor<T>([T? object]) {
   switch (T) {
     case CharacterClass:
-      return 'Classes';
+      return 'CharacterClasses';
     case Item:
       return 'Items';
     case Monster:

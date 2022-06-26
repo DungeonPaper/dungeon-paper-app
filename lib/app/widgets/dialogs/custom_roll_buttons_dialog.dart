@@ -131,6 +131,7 @@ class _RollButtonListTileState extends State<_RollButtonListTile> {
         DiceListInput(
           controller: dice,
           abilityScores: widget.character.abilityScores,
+          guessFrom: [],
         ),
       ],
     );
