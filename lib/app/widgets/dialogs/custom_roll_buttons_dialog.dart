@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:dungeon_paper/app/data/models/character.dart';
 import 'package:dungeon_paper/app/data/models/roll_button.dart';
 import 'package:dungeon_paper/app/widgets/atoms/select_box.dart';
@@ -54,13 +56,18 @@ class _CustomRollButtonsDialogState extends State<CustomRollButtonsDialog>
         children: [
           TabBar(
             controller: tabController,
+            labelColor: Theme.of(context).colorScheme.onSurface,
             tabs: [
               Tab(text: S.current.customButtonLeft),
               Tab(text: S.current.customButtonRight),
             ],
           ),
-          ConstrainedBox(
-            constraints: const BoxConstraints.tightFor(width: 400, height: 300),
+          SizedBox(
+            width: 400,
+            height: min(
+              MediaQuery.of(context).size.height - MediaQuery.of(context).viewInsets.bottom - 310,
+              300,
+            ),
             child: TabBarView(
               controller: tabController,
               physics: const NeverScrollableScrollPhysics(),
