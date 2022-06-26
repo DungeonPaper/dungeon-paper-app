@@ -109,7 +109,7 @@ class HomeCharacterExtras extends GetView<CharacterService> {
 
   void _openRollButtons() {
     Get.dialog(
-      CutomRollButtonsDialog(
+      CustomRollButtonsDialog(
         character: controller.current!,
         onChanged: (rollButtons) => controller.updateCharacter(
           controller.current!.copyWith(

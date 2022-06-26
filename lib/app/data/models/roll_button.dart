@@ -2,51 +2,48 @@ import 'package:dungeon_paper/app/data/models/character.dart';
 import 'package:dungeon_paper/core/utils/enum_utils.dart';
 import 'package:dungeon_world_data/dungeon_world_data.dart' as dw;
 
-enum RollButtonType {
-  damageDice,
-  custom,
+enum SpecialDice {
+  damage,
 }
 
 class RollButton {
   final String label;
   final List<dw.Dice> dice;
-  final RollButtonType type;
+  final List<SpecialDice> specialDice;
 
   List<dw.Dice> diceFor(Character character) {
-    switch (type) {
-      case RollButtonType.damageDice:
-        return [dw.Dice.fromJson('2d6+STR'), character.damageDice];
-      case RollButtonType.custom:
-      default:
-        return dice;
-    }
+    return dice + specialDiceFor(character, specialDice);
   }
 
   RollButton({
     required this.label,
     required this.dice,
-    required this.type,
+    required this.specialDice,
   });
-
-  RollButton.custom({
-    required this.label,
-    required this.dice,
-  }) : type = RollButtonType.custom;
-
-  RollButton.damageDice({
-    required this.label,
-  })  : type = RollButtonType.damageDice,
-        dice = const [];
 
   factory RollButton.fromJson(Map<String, dynamic> json) => RollButton(
         label: json['label'],
-        dice: List<dw.Dice>.from(json['dice'].map((x) => dw.Dice.fromJson(x))),
-        type: getEnumByName(RollButtonType.values, json['type'] ?? 'custom'),
+        dice: List<dw.Dice>.from((json['dice'] ?? []).map((x) => dw.Dice.fromJson(x))),
+        specialDice: List<SpecialDice>.from(
+          (json['specialDice'] ?? []).map((x) => getEnumByName(SpecialDice.values, x)),
+        ),
       );
 
   Map<String, dynamic> toJson() => {
         'label': label,
         'dice': dice.map((d) => d.toJson()).toList(),
-        'type': type.name,
+        'specialDice': specialDice.map((d) => d.name).toList(),
       };
+
+  List<dw.Dice> specialDiceFor(Character character, List<SpecialDice> specialDice) => specialDice
+      .map((d) {
+        switch (d) {
+          case SpecialDice.damage:
+            return character.damageDice;
+          default:
+            return null;
+        }
+      })
+      .whereType<dw.Dice>()
+      .toList();
 }

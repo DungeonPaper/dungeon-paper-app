@@ -1250,6 +1250,26 @@ class S {
     );
   }
 
+  /// `Left Button`
+  String get customButtonLeft {
+    return Intl.message(
+      'Left Button',
+      name: 'customButtonLeft',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Right Button`
+  String get customButtonRight {
+    return Intl.message(
+      'Right Button',
+      name: 'customButtonRight',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `{name} ({key})`
   String debilityLabel(Object name, Object key) {
     return Intl.message(
@@ -2283,6 +2303,16 @@ class S {
     return Intl.message(
       'Remove',
       name: 'remove',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Reset to default`
+  String get resetToDefault {
+    return Intl.message(
+      'Reset to default',
+      name: 'resetToDefault',
       desc: '',
       args: [],
     );

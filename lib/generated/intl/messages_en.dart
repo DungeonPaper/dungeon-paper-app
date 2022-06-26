@@ -428,6 +428,9 @@ class MessageLookup extends MessageLookupByLibrary {
         "createCharacterTravelerHelpText": MessageLookupByLibrary.simpleMessage(
             "Select name & picture (required)"),
         "createGeneric": m24,
+        "customButtonLeft": MessageLookupByLibrary.simpleMessage("Left Button"),
+        "customButtonRight":
+            MessageLookupByLibrary.simpleMessage("Right Button"),
         "customRollButtons":
             MessageLookupByLibrary.simpleMessage("Quick Roll Buttons"),
         "debilityLabel": m25,
@@ -556,6 +559,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "quickIconsNote": MessageLookupByLibrary.simpleMessage("+ Note"),
         "quickIconsSpells": MessageLookupByLibrary.simpleMessage("Spells"),
         "remove": MessageLookupByLibrary.simpleMessage("Remove"),
+        "resetToDefault":
+            MessageLookupByLibrary.simpleMessage("Reset to default"),
         "rollAttackDamageButton":
             MessageLookupByLibrary.simpleMessage("Hack & Slash"),
         "rollBasicActionButton":

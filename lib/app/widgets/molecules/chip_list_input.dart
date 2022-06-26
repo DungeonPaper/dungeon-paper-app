@@ -16,9 +16,11 @@ class ChipListInput<T> extends StatefulWidget {
     required this.dialogBuilder,
     this.trailing = const [],
     this.leading = const [],
+    this.label,
   });
 
   final ValueNotifier<List<T>>? controller;
+  final Widget? label;
   final Widget Function(
     BuildContext context,
     Enumerated<T>? value, {
@@ -43,8 +45,18 @@ class _ChipListInputState<T> extends State<ChipListInput<T>> {
 
   @override
   void initState() {
-    controller = widget.controller ?? ValueNotifier([]);
+    controller = (widget.controller ?? ValueNotifier([]))..addListener(_listener);
     super.initState();
+  }
+
+  void _listener() {
+    setState(() {});
+  }
+
+  @override
+  void dispose() {
+    controller.removeListener(_listener);
+    super.dispose();
   }
 
   @override
@@ -52,7 +64,10 @@ class _ChipListInputState<T> extends State<ChipListInput<T>> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text(S.current.entityPlural(T), style: Theme.of(context).textTheme.caption),
+        DefaultTextStyle(
+          child: widget.label ?? Text(S.current.entityPlural(T)),
+          style: Theme.of(context).textTheme.caption!,
+        ),
         const SizedBox(height: 6),
         Wrap(
           spacing: 8,

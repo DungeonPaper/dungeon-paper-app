@@ -84,17 +84,31 @@ class Character implements WithMeta<Character, CharacterMeta>, WithIcon {
   int get currentLoad => items.fold(0, (weight, item) => weight + item.weight);
   int get armor => stats.armor ?? items.fold(0, (armor, item) => armor + item.armor);
 
-  RollButton get basicActionRollButton => RollButton.custom(
+  RollButton get basicActionRollButton => RollButton(
         label: S.current.rollBasicActionButton,
         dice: [dw.Dice.d6 * 2],
+        specialDice: [],
       );
-  RollButton get attackDamageRollButton => RollButton.damageDice(
+  RollButton get hackAndSlashRollButton => RollButton(
         label: S.current.rollAttackDamageButton,
+        dice: [dw.Dice.fromJson('2d6+STR')],
+        specialDice: [SpecialDice.damage],
+      );
+
+  RollButton get volleyRollButton => RollButton(
+        label: S.current.rollAttackDamageButton,
+        dice: [dw.Dice.fromJson('2d6+DEX')],
+        specialDice: [SpecialDice.damage],
       );
 
   List<RollButton> get defaultRollButtons => [
         basicActionRollButton,
-        attackDamageRollButton,
+        hackAndSlashRollButton,
+      ];
+
+  List<RollButton?> get rawRollButtons => [
+        settings.rollButtons.isNotEmpty ? settings.rollButtons[0] : null,
+        settings.rollButtons.length > 1 ? settings.rollButtons[1] : null,
       ];
 
   List<RollButton> get rollButtons => [
@@ -102,8 +116,8 @@ class Character implements WithMeta<Character, CharacterMeta>, WithIcon {
             ? settings.rollButtons[0] ?? basicActionRollButton
             : basicActionRollButton,
         settings.rollButtons.length > 1
-            ? settings.rollButtons[1] ?? attackDamageRollButton
-            : attackDamageRollButton
+            ? settings.rollButtons[1] ?? hackAndSlashRollButton
+            : hackAndSlashRollButton
       ];
 
   Set<String> get noteCategories => Set.from(

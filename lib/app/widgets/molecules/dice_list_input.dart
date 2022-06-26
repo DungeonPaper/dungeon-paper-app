@@ -34,6 +34,7 @@ class _DiceListInputState extends State<DiceListInput> {
   void initState() {
     super.initState();
     controller = widget.controller ?? ValueNotifier([]);
+    guesses = {};
     for (var element in widget.guessFrom) {
       element.addListener(_guessListener);
     }
