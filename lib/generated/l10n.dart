@@ -2338,6 +2338,26 @@ class S {
     );
   }
 
+  /// `Volley`
+  String get rollVolleyButton {
+    return Intl.message(
+      'Volley',
+      name: 'rollVolleyButton',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Button Text`
+  String get rollButtonLabel {
+    return Intl.message(
+      'Button Text',
+      name: 'rollButtonLabel',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `Dice: {dice} | Modifier: {mod}`
   String rollDialogResultBreakdown(Object dice, Object mod) {
     return Intl.message(
@@ -2515,6 +2535,40 @@ class S {
       name: 'sortMoveUp',
       desc: '',
       args: [],
+    );
+  }
+
+  /// `Special Dice`
+  String get specialDice {
+    return Intl.message(
+      'Special Dice',
+      name: 'specialDice',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Use preset`
+  String get rollButtonUsePreset {
+    return Intl.message(
+      'Use preset',
+      name: 'rollButtonUsePreset',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `{button, select, damage {Damage} other {{button}}}`
+  String specialRollButton(Object button) {
+    return Intl.select(
+      button,
+      {
+        'damage': 'Damage',
+        'other': '$button',
+      },
+      name: 'specialRollButton',
+      desc: '',
+      args: [button],
     );
   }
 

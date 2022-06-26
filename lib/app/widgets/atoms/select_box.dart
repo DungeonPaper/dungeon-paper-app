@@ -92,11 +92,12 @@ class SelectBox<T> extends StatelessWidget {
     return SizedBox(
       height: height,
       child: InputDecorator(
-          decoration: InputDecoration(
-            label: label,
-            border: Theme.of(context).inputDecorationTheme.border,
-          ),
-          child: buildDropdown()),
+        decoration: InputDecoration(
+          label: label,
+          border: Theme.of(context).inputDecorationTheme.border,
+        ),
+        child: buildDropdown(),
+      ),
     );
   }
 

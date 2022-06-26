@@ -10,6 +10,7 @@ class PrimaryChip extends StatelessWidget {
     this.icon,
     this.visualDensity,
     this.isEnabled,
+    this.backgroundColor,
   }) : super(key: key);
 
   final String label;
@@ -17,6 +18,7 @@ class PrimaryChip extends StatelessWidget {
   final void Function()? onDeleted;
   final Widget? icon;
   final VisualDensity? visualDensity;
+  final Color? backgroundColor;
   final bool? isEnabled;
 
   @override
@@ -25,7 +27,7 @@ class PrimaryChip extends StatelessWidget {
     final colorScheme = theme.colorScheme;
     final isLight = theme.brightness == Brightness.light;
     final fgColor = isLight ? colorScheme.onPrimary : colorScheme.onSecondary;
-    final bgColor = isLight ? colorScheme.primary : colorScheme.secondary;
+    final bgColor = backgroundColor ?? (isLight ? colorScheme.primary : colorScheme.secondary);
     final isCompact = visualDensity == VisualDensity.compact;
     final hasIcon = icon != null;
 

@@ -13,14 +13,16 @@ class ChipListInput<T> extends StatefulWidget {
     super.key,
     this.controller,
     required this.chipBuilder,
-    required this.dialogBuilder,
+    this.dialogBuilder,
+    this.addValue,
     this.trailing = const [],
     this.leading = const [],
     this.label,
-  });
+  }) : assert(dialogBuilder != null || addValue != null);
 
   final ValueNotifier<List<T>>? controller;
   final Widget? label;
+  final T? addValue;
   final Widget Function(
     BuildContext context,
     Enumerated<T>? value, {
@@ -32,7 +34,7 @@ class ChipListInput<T> extends StatefulWidget {
     BuildContext context,
     Enumerated<T>? value, {
     required void Function(T _dice) onSave,
-  }) dialogBuilder;
+  })? dialogBuilder;
   final List<Widget> trailing;
   final List<Widget> leading;
 
@@ -81,29 +83,35 @@ class _ChipListInputState<T> extends State<ChipListInput<T>> {
                 dice,
                 onDeleteChip: () =>
                     setState(() => controller.value = [...controller.value..removeAt(dice.index)]),
-                onTapChip: () => Get.dialog(
-                  widget.dialogBuilder(
-                    context,
-                    dice,
-                    onSave: (_value) {
-                      setState(() =>
-                          controller.value = updateByIndex(controller.value, _value, dice.index));
-                    },
-                  ),
-                ),
+                onTapChip: widget.dialogBuilder != null
+                    ? () => Get.dialog(
+                          widget.dialogBuilder!(
+                            context,
+                            dice,
+                            onSave: (_value) {
+                              setState(() => controller.value =
+                                  updateByIndex(controller.value, _value, dice.index));
+                            },
+                          ),
+                        )
+                    // ignore: avoid_returning_null_for_void
+                    : () => null,
               ),
             widget.chipBuilder(
               context,
               null,
-              onTapChip: () => Get.dialog(
-                widget.dialogBuilder(
-                  context,
-                  null,
-                  onSave: (_value) {
-                    setState(() => controller.value = [...controller.value, _value]);
-                  },
-                ),
-              ),
+              onTapChip: widget.dialogBuilder != null
+                  ? () => Get.dialog(
+                        widget.dialogBuilder!(
+                          context,
+                          null,
+                          onSave: (_value) {
+                            setState(() => controller.value = [...controller.value, _value]);
+                          },
+                        ),
+                      )
+                  : () =>
+                      setState(() => controller.value = [...controller.value, widget.addValue!]),
             ),
             ...widget.trailing,
           ],

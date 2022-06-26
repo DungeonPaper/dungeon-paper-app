@@ -1,8 +1,10 @@
 import 'package:dungeon_paper/app/data/models/character.dart';
 import 'package:dungeon_paper/app/data/models/roll_button.dart';
+import 'package:dungeon_paper/app/widgets/atoms/select_box.dart';
 import 'package:dungeon_paper/app/widgets/forms/dynamic_form/form_input_data.dart';
 import 'package:dungeon_paper/app/widgets/molecules/dice_list_input.dart';
 import 'package:dungeon_paper/app/widgets/molecules/dialog_controls.dart';
+import 'package:dungeon_paper/app/widgets/molecules/special_dice_list_input.dart';
 import 'package:dungeon_paper/core/dw_icons.dart';
 import 'package:dungeon_paper/core/utils/list_utils.dart';
 import 'package:dungeon_paper/generated/l10n.dart';
@@ -58,7 +60,7 @@ class _CustomRollButtonsDialogState extends State<CustomRollButtonsDialog>
             ],
           ),
           ConstrainedBox(
-            constraints: BoxConstraints.tightFor(width: 400, height: 200),
+            constraints: const BoxConstraints.tightFor(width: 400, height: 300),
             child: TabBarView(
               controller: tabController,
               physics: const NeverScrollableScrollPhysics(),
@@ -70,7 +72,7 @@ class _CustomRollButtonsDialogState extends State<CustomRollButtonsDialog>
                       child: _RollButtonListTile(
                         rollButton: button.value,
                         character: widget.character,
-                        defaultButton: widget.character.defaultRollButtons[button.index],
+                        defaultButton: Character.defaultRollButtons[button.index],
                         onChanged: (val) => setState(() => rollButtons[button.index] = val),
                       ),
                     ),
@@ -154,49 +156,106 @@ class _RollButtonListTileState extends State<_RollButtonListTile> {
       mainAxisSize: MainAxisSize.min,
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
-        ElevatedButton(
-          onPressed:
-              isDefault ? null : () => setState(() => updateFields(widget.defaultButton, true)),
-          child: Text(S.current.resetToDefault),
+        Row(
+          children: [
+            Expanded(
+              child: SelectBox<RollButton>(
+                isExpanded: true,
+                hint: Text(S.current.rollButtonUsePreset),
+                items: [
+                  // DropdownMenuItem(
+                  //   value: null,
+                  //   child: Text(Character.basicActionRollButton.label),
+                  // ),
+                  DropdownMenuItem(
+                    value: Character.basicActionRollButton,
+                    child: Text(Character.basicActionRollButton.label),
+                  ),
+                  DropdownMenuItem(
+                    value: Character.hackAndSlashRollButton,
+                    child: Text(Character.hackAndSlashRollButton.label),
+                  ),
+                ],
+                onChanged: (button) {
+                  setState(() {
+                    if (button != null) {
+                      updateFields(button, isSameAsDefault(button));
+                    }
+                  });
+                },
+              ),
+            ),
+            const SizedBox(width: 8),
+            Expanded(
+              child: SizedBox(
+                height: 48,
+                child: ElevatedButton(
+                  onPressed: isDefault
+                      ? null
+                      : () => setState(() => updateFields(widget.defaultButton, true)),
+                  child: Text(S.current.resetToDefault),
+                ),
+              ),
+            ),
+          ],
         ),
+        const SizedBox(height: 16),
         TextFormField(
           controller: label,
+          decoration: InputDecoration(
+            labelText: S.current.rollButtonLabel,
+          ),
         ),
-        const SizedBox(height: 8),
+        const SizedBox(height: 16),
         DiceListInput(
           controller: dice,
           abilityScores: widget.character.abilityScores,
           guessFrom: const [],
         ),
+        const SizedBox(height: 16),
+        SpecialDiceListInput(controller: specialDice),
       ],
     );
   }
 
   void listener() {
     setState(() {
-      final defaultDice = widget.defaultButton.dice;
-      final defaultSpecialDice = widget.defaultButton.dice;
       if (label.text != widget.defaultButton.label) {
         isDefault = false;
       }
-      isDefault = label.text == widget.defaultButton.label &&
-          enumerate(dice.value).every(
-            (element) {
-              return defaultDice.length >= element.index + 1 &&
-                  defaultDice[element.index].toString() == element.value.toString();
-            },
-          ) &&
-          enumerate(specialDice.value).every(
-            (element) {
-              return defaultSpecialDice.length >= element.index + 1 &&
-                  defaultSpecialDice[element.index].toString() == element.value.toString();
-            },
-          );
-      widget.onChanged(RollButton(
+      final rollButton = RollButton(
         label: label.text,
         dice: dice.value,
         specialDice: specialDice.value,
-      ));
+      );
+      isDefault = isSameAsDefault(rollButton);
+      widget.onChanged(rollButton);
     });
+  }
+
+  bool isSameAsDefault(RollButton rollButton) {
+    final defaultDice = widget.defaultButton.dice;
+    final defaultSpecialDice = widget.defaultButton.specialDice;
+
+    final conditions = [
+      rollButton.label == widget.defaultButton.label,
+      compareArrays(defaultDice, rollButton.dice),
+      compareArrays(defaultSpecialDice, rollButton.specialDice),
+    ];
+
+    debugPrint('conditions: $conditions');
+
+    return conditions.every((element) => element == true);
+  }
+
+  bool compareArrays<T>(List<T> defaultDice, List<T> dice) {
+    return defaultDice.length == dice.length &&
+        enumerate(dice).every(
+          (element) {
+            debugPrint(
+                'index: ${element.index} value ${element.value} == ${defaultDice[element.index]}');
+            return defaultDice[element.index].toString() == element.value.toString();
+          },
+        );
   }
 }

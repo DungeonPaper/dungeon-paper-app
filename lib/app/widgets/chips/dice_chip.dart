@@ -38,6 +38,7 @@ class DiceChip extends StatelessWidget {
       icon: icon != null ? icon! : DiceUtils.iconOf(dice),
       label: label ?? dice.toString(),
       visualDensity: visualDensity,
+      backgroundColor: backgroundColor,
       // shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
       // isEnabled: true,
       onDeleted: onDeleted,

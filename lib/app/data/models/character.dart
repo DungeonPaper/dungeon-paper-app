@@ -83,25 +83,26 @@ class Character implements WithMeta<Character, CharacterMeta>, WithIcon {
   int get maxLoad => stats.load ?? (characterClass.load + abilityScores.loadBaseValue);
   int get currentLoad => items.fold(0, (weight, item) => weight + item.weight);
   int get armor => stats.armor ?? items.fold(0, (armor, item) => armor + item.armor);
+  int get damageModifier => items.fold(0, (mod, item) => mod + item.damage);
 
-  RollButton get basicActionRollButton => RollButton(
+  static RollButton get basicActionRollButton => RollButton(
         label: S.current.rollBasicActionButton,
         dice: [dw.Dice.d6 * 2],
         specialDice: [],
       );
-  RollButton get hackAndSlashRollButton => RollButton(
+  static RollButton get hackAndSlashRollButton => RollButton(
         label: S.current.rollAttackDamageButton,
         dice: [dw.Dice.fromJson('2d6+STR')],
         specialDice: [SpecialDice.damage],
       );
 
-  RollButton get volleyRollButton => RollButton(
-        label: S.current.rollAttackDamageButton,
+  static RollButton get volleyRollButton => RollButton(
+        label: S.current.rollVolleyButton,
         dice: [dw.Dice.fromJson('2d6+DEX')],
         specialDice: [SpecialDice.damage],
       );
 
-  List<RollButton> get defaultRollButtons => [
+  static List<RollButton> get defaultRollButtons => [
         basicActionRollButton,
         hackAndSlashRollButton,
       ];
@@ -132,7 +133,8 @@ class Character implements WithMeta<Character, CharacterMeta>, WithIcon {
           (cat) => !settings.actionCategoriesHide.contains(cat),
         ),
       );
-  dw.Dice get damageDice => stats.damageDice ?? characterClass.damageDice;
+  dw.Dice get damageDice =>
+      stats.damageDice ?? characterClass.damageDice.copyWithModifierValue(damageModifier);
   List<SessionMark> get bonds =>
       sessionMarks.where((e) => e.type == dw.SessionMarkType.bond).toList();
   List<SessionMark> get flags =>
@@ -235,11 +237,11 @@ class Character implements WithMeta<Character, CharacterMeta>, WithIcon {
       notes: [],
       stats: CharacterStats(
         level: 1,
-        armor: 0,
+        armor: null,
         currentExp: 0,
         currentHp: 20,
         // damageDice: characterClass.damageDice,
-        maxHp: 20,
+        maxHp: null,
         // load: characterClass.load,
       ),
       moves: [],

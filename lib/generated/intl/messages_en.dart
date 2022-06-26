@@ -213,16 +213,21 @@ class MessageLookup extends MessageLookupByLibrary {
 
   static String m60(string) => "Select ${string} to add";
 
-  static String m61(level) => "${Intl.select(level, {
+  static String m61(button) => "${Intl.select(button, {
+            'damage': 'Damage',
+            'other': '${button}',
+          })}";
+
+  static String m62(level) => "${Intl.select(level, {
             'cantrip': 'Cantrip',
             'rote': 'Rote',
             'other': 'Level ${level}',
           })}";
 
-  static String m62(count) =>
+  static String m63(count) =>
       "${Intl.plural(count, zero: 'No spells', one: 'One spell', other: '${count} spells')}";
 
-  static String m63(tag) => "Copy from: ${tag}";
+  static String m64(tag) => "Copy from: ${tag}";
 
   final messages = _notInlinedMessages(_notInlinedMessages);
   static Map<String, Function> _notInlinedMessages(_) => <String, Function>{
@@ -565,10 +570,14 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Hack & Slash"),
         "rollBasicActionButton":
             MessageLookupByLibrary.simpleMessage("Basic Action"),
+        "rollButtonLabel": MessageLookupByLibrary.simpleMessage("Button Text"),
+        "rollButtonUsePreset":
+            MessageLookupByLibrary.simpleMessage("Use preset"),
         "rollDialogResultBreakdown": m53,
         "rollDialogResultTotal": m54,
         "rollDialogTitleRolled": m55,
         "rollDialogTitleRolling": m56,
+        "rollVolleyButton": MessageLookupByLibrary.simpleMessage("Volley"),
         "save": MessageLookupByLibrary.simpleMessage("Save"),
         "saveGeneric": m57,
         "searchPlaceholder":
@@ -584,10 +593,12 @@ class MessageLookup extends MessageLookupByLibrary {
         "settingsTitle": MessageLookupByLibrary.simpleMessage("Settings"),
         "sortMoveDown": MessageLookupByLibrary.simpleMessage("Move down"),
         "sortMoveUp": MessageLookupByLibrary.simpleMessage("Move up"),
-        "spellLevel": m61,
+        "specialDice": MessageLookupByLibrary.simpleMessage("Special Dice"),
+        "specialRollButton": m61,
+        "spellLevel": m62,
         "spells": MessageLookupByLibrary.simpleMessage("Spells"),
-        "spellsWithCount": m62,
-        "tagCopyFrom": m63,
+        "spellsWithCount": m63,
+        "tagCopyFrom": m64,
         "tagDetails": MessageLookupByLibrary.simpleMessage("Tag Information"),
         "themeTurnDark":
             MessageLookupByLibrary.simpleMessage("Switch to Dark Mode"),
