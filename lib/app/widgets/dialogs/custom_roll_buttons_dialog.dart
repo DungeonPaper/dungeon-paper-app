@@ -175,6 +175,10 @@ class _RollButtonListTileState extends State<_RollButtonListTile> {
                     value: Character.hackAndSlashRollButton,
                     child: Text(Character.hackAndSlashRollButton.label),
                   ),
+                  DropdownMenuItem(
+                    value: Character.volleyRollButton,
+                    child: Text(Character.volleyRollButton.label),
+                  ),
                 ],
                 onChanged: (button) {
                   setState(() {
