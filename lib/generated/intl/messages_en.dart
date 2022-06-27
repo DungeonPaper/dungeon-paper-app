@@ -577,6 +577,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "rollDialogResultTotal": m54,
         "rollDialogTitleRolled": m55,
         "rollDialogTitleRolling": m56,
+        "rollDiscernRealitiesButton":
+            MessageLookupByLibrary.simpleMessage("Discern Realities"),
         "rollVolleyButton": MessageLookupByLibrary.simpleMessage("Volley"),
         "save": MessageLookupByLibrary.simpleMessage("Save"),
         "saveGeneric": m57,

@@ -221,6 +221,7 @@
   "rollAttackDamageButton": "Hack & Slash",
   "rollBasicActionButton": "Basic Action",
   "rollVolleyButton": "Volley",
+  "rollDiscernRealitiesButton": "Discern Realities",
   "rollButtonLabel": "Button Text",
   "rollDialogResultBreakdown": "Dice: {dice} | Modifier: {mod}",
   "rollDialogResultTotal": "Total: {total}",

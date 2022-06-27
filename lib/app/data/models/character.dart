@@ -102,6 +102,12 @@ class Character implements WithMeta<Character, CharacterMeta>, WithIcon {
         specialDice: [SpecialDice.damage],
       );
 
+  static RollButton get discernRealitiesRollButton => RollButton(
+        label: S.current.rollDiscernRealitiesButton,
+        dice: [dw.Dice.fromJson('2d6+WIS')],
+        specialDice: [],
+      );
+
   static List<RollButton> get defaultRollButtons => [
         basicActionRollButton,
         hackAndSlashRollButton,

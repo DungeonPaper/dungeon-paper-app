@@ -170,22 +170,20 @@ class _RollButtonListTileState extends State<_RollButtonListTile> {
                 isExpanded: true,
                 hint: Text(S.current.rollButtonUsePreset),
                 items: [
-                  // DropdownMenuItem(
-                  //   value: null,
-                  //   child: Text(Character.basicActionRollButton.label),
-                  // ),
-                  DropdownMenuItem(
-                    value: Character.basicActionRollButton,
-                    child: Text(Character.basicActionRollButton.label),
-                  ),
-                  DropdownMenuItem(
-                    value: Character.hackAndSlashRollButton,
-                    child: Text(Character.hackAndSlashRollButton.label),
-                  ),
-                  DropdownMenuItem(
-                    value: Character.volleyRollButton,
-                    child: Text(Character.volleyRollButton.label),
-                  ),
+                  for (final button in [
+                    Character.basicActionRollButton,
+                    Character.hackAndSlashRollButton,
+                    Character.volleyRollButton,
+                    Character.discernRealitiesRollButton
+                  ])
+                    DropdownMenuItem(
+                      value: button,
+                      child: Text(
+                        button.label,
+                        textScaleFactor: 0.85,
+                        overflow: TextOverflow.fade,
+                      ),
+                    ),
                 ],
                 onChanged: (button) {
                   setState(() {

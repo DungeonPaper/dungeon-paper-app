@@ -2348,6 +2348,16 @@ class S {
     );
   }
 
+  /// `Discern Realities`
+  String get rollDiscernRealitiesButton {
+    return Intl.message(
+      'Discern Realities',
+      name: 'rollDiscernRealitiesButton',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `Button Text`
   String get rollButtonLabel {
     return Intl.message(
