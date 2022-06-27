@@ -467,6 +467,16 @@ class S {
     );
   }
 
+  /// `Armor`
+  String get armor {
+    return Intl.message(
+      'Armor',
+      name: 'armor',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `Choose Photo...`
   String get basicInfoImageChoose {
     return Intl.message(

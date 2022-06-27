@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 class DialogControls {
   static List<Widget> custom(
     BuildContext context, {
-    required void Function() onConfirm,
+    required void Function()? onConfirm,
     required String confirmLabel,
     Widget? confirmIcon,
     required void Function() onCancel,
@@ -100,7 +100,7 @@ class DialogControls {
 
   static List<Widget> save(
     BuildContext context, {
-    required void Function() onSave,
+    required void Function()? onSave,
     required void Function() onCancel,
     double? spacing = 0,
   }) =>

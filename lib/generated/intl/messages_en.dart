@@ -295,6 +295,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "allGeneric": m8,
         "alreadyAdded": MessageLookupByLibrary.simpleMessage("Already added"),
         "appName": MessageLookupByLibrary.simpleMessage("Dungeon Paper"),
+        "armor": MessageLookupByLibrary.simpleMessage("Armor"),
         "basicInfoImageChoose":
             MessageLookupByLibrary.simpleMessage("Choose Photo..."),
         "basicInfoImageChooseNew":

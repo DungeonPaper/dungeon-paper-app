@@ -3,6 +3,7 @@ import 'package:dungeon_paper/app/model_utils/dice_utils.dart';
 import 'package:dungeon_paper/app/modules/Home/views/local_widgets/home_character_extras.dart';
 import 'package:dungeon_paper/app/themes/button_themes.dart';
 import 'package:dungeon_paper/app/widgets/chips/primary_chip.dart';
+import 'package:dungeon_paper/app/widgets/dialogs/armor_dialog.dart';
 import 'package:dungeon_paper/app/widgets/molecules/character_subtitle.dart';
 import 'package:dungeon_paper/app/widgets/molecules/ability_scores_grid.dart';
 import 'package:dungeon_paper/core/dw_icons.dart';
@@ -99,6 +100,16 @@ class HomeCharacterView extends GetView<CharacterService> {
                     icon: const Icon(DwIcons.armor),
                     // visualDensity: VisualDensity.compact,
                     label: char.armor.toString(),
+                    onPressed: () => Get.dialog(
+                      ArmorDialog(
+                        armor: char.stats.armor,
+                        onChanged: (armor) => controller.updateCharacter(
+                          char.copyWith(
+                            stats: char.stats.copyWithArmor(armor),
+                          ),
+                        ),
+                      ),
+                    ),
                   ),
                 ],
               ),

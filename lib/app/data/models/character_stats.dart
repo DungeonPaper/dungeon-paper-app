@@ -75,4 +75,14 @@ class CharacterStats {
         'damageDice': damageDice?.toJson(),
         'load': load,
       };
+
+  CharacterStats copyWithArmor(int? armor) => CharacterStats(
+        level: level,
+        maxHp: maxHp,
+        currentHp: currentHp,
+        currentExp: currentExp,
+        armor: armor,
+        damageDice: damageDice,
+        load: load,
+      );
 }
