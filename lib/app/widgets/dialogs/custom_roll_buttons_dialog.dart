@@ -174,7 +174,12 @@ class _RollButtonListTileState extends State<_RollButtonListTile> {
                     Character.basicActionRollButton,
                     Character.hackAndSlashRollButton,
                     Character.volleyRollButton,
-                    Character.discernRealitiesRollButton
+                    Character.discernRealitiesRollButton,
+                    for (final move in widget.character.moves.where((move) => move.dice.isNotEmpty))
+                      RollButton(label: move.name, dice: move.dice, specialDice: []),
+                    for (final spell
+                        in widget.character.spells.where((spell) => spell.dice.isNotEmpty))
+                      RollButton(label: spell.name, dice: spell.dice, specialDice: []),
                   ])
                     DropdownMenuItem(
                       value: button,
