@@ -440,7 +440,7 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Quick Roll Buttons"),
         "debilityLabel": m25,
         "diceAmount": MessageLookupByLibrary.simpleMessage("Amount"),
-        "diceRollAgain": MessageLookupByLibrary.simpleMessage("Roll again"),
+        "diceRollAgain": MessageLookupByLibrary.simpleMessage("Roll"),
         "diceSeparator": MessageLookupByLibrary.simpleMessage("d"),
         "diceSides": MessageLookupByLibrary.simpleMessage("Sides"),
         "diceSuggestion": m26,

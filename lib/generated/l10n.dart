@@ -1290,10 +1290,10 @@ class S {
     );
   }
 
-  /// `Roll again`
+  /// `Roll`
   String get diceRollAgain {
     return Intl.message(
-      'Roll again',
+      'Roll',
       name: 'diceRollAgain',
       desc: '',
       args: [],

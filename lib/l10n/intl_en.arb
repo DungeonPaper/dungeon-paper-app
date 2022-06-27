@@ -122,7 +122,7 @@
   "customButtonRight": "Right Button",
   "debilityLabel": "{name} ({key})",
   "diceAmount": "Amount",
-  "diceRollAgain": "Roll again",
+  "diceRollAgain": "Roll",
   "diceSeparator": "d",
   "diceSides": "Sides",
   "diceSuggestion": "Suggested: {dice}",

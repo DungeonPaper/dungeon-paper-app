@@ -35,6 +35,7 @@ class _DiceListInputState extends State<DiceListInput> {
     super.initState();
     controller = widget.controller ?? ValueNotifier([]);
     guesses = {};
+    controller.addListener(_guessListener);
     for (var element in widget.guessFrom) {
       element.addListener(_guessListener);
     }
@@ -70,9 +71,11 @@ class _DiceListInputState extends State<DiceListInput> {
   }
 
   void _refreshGuess() {
-    final guessStr = widget.guessFrom.join(' ');
-    guesses = dw.Dice.guessFromString(guessStr).toSet();
-    controller.value = [...controller.value];
+    if (widget.guessFrom.isNotEmpty) {
+      final guessStr = widget.guessFrom.join(' ');
+      guesses = dw.Dice.guessFromString(guessStr).toSet();
+      controller.value = [...controller.value];
+    }
   }
 
   void _guessListener() {
@@ -81,6 +84,7 @@ class _DiceListInputState extends State<DiceListInput> {
 
   @override
   void dispose() {
+    controller.removeListener(_guessListener);
     for (var element in widget.guessFrom) {
       element.removeListener(_guessListener);
     }
