@@ -7,7 +7,6 @@ import 'package:dungeon_paper/generated/l10n.dart';
 import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
-import 'package:path/path.dart';
 
 import '../controllers/class_alignments_controller.dart';
 

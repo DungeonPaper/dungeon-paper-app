@@ -88,6 +88,7 @@ class BioFormView extends GetView<BioFormController> with CharacterServiceMixin 
                   hintText: S.current.characterBioDialogAlignmentDescriptionPlaceholder,
                 ),
               ),
+              const SizedBox(height: 80),
             ],
           ),
         ),

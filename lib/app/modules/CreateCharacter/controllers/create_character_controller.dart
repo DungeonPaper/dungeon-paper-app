@@ -5,7 +5,6 @@ import 'package:dungeon_paper/app/data/models/character_class.dart';
 import 'package:dungeon_paper/app/data/models/gear_choice.dart';
 import 'package:dungeon_paper/app/data/models/gear_selection.dart';
 import 'package:dungeon_paper/app/data/models/item.dart';
-import 'package:dungeon_paper/app/data/models/meta.dart';
 import 'package:dungeon_paper/app/data/models/move.dart';
 import 'package:dungeon_paper/app/data/models/ability_scores.dart';
 import 'package:dungeon_paper/app/data/models/session_marks.dart';

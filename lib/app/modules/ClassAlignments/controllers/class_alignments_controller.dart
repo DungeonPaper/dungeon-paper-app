@@ -1,5 +1,4 @@
 import 'package:dungeon_paper/app/data/models/alignment.dart';
-import 'package:dungeon_paper/app/data/models/character_class.dart';
 import 'package:dungeon_world_data/dungeon_world_data.dart' as dw;
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';

@@ -18,8 +18,6 @@ import 'package:dungeon_paper/app/themes/colors.dart';
 import 'package:dungeon_paper/app/widgets/atoms/advanced_floating_action_button.dart';
 import 'package:dungeon_paper/app/widgets/atoms/character_avatar.dart';
 import 'package:dungeon_paper/app/widgets/atoms/confirm_exit_view.dart';
-import 'package:dungeon_paper/app/widgets/atoms/custom_expansion_panel.dart';
-import 'package:dungeon_paper/app/widgets/atoms/custom_expansion_tile.dart';
 import 'package:dungeon_paper/generated/l10n.dart';
 import 'package:flutter/material.dart';
 
@@ -159,7 +157,7 @@ class CreateCharacterView extends GetView<CreateCharacterController> {
                                     : null
                                 :
                                 // TODO intl
-                                Text('No Alignment selected'),
+                                const Text('No Alignment selected'),
                             onTap: cls != null
                                 ? () => Get.toNamed(
                                       Routes.classAlignments,

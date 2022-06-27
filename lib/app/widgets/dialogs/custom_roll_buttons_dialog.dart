@@ -3,7 +3,6 @@ import 'dart:math';
 import 'package:dungeon_paper/app/data/models/character.dart';
 import 'package:dungeon_paper/app/data/models/roll_button.dart';
 import 'package:dungeon_paper/app/widgets/atoms/select_box.dart';
-import 'package:dungeon_paper/app/widgets/forms/dynamic_form/form_input_data.dart';
 import 'package:dungeon_paper/app/widgets/molecules/dice_list_input.dart';
 import 'package:dungeon_paper/app/widgets/molecules/dialog_controls.dart';
 import 'package:dungeon_paper/app/widgets/molecules/special_dice_list_input.dart';

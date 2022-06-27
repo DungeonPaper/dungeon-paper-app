@@ -6,7 +6,6 @@ import 'package:dungeon_paper/core/dw_icons.dart';
 import 'package:dungeon_paper/generated/l10n.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:get/get_state_manager/get_state_manager.dart';
 import 'package:intl/intl.dart';
 
 import 'home_character_actions_filters.dart';

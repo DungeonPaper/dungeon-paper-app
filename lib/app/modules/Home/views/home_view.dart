@@ -7,12 +7,9 @@ import 'package:dungeon_paper/app/modules/Home/views/home_app_bar.dart';
 import 'package:dungeon_paper/app/modules/Home/views/home_character_actions_view.dart';
 import 'package:dungeon_paper/app/modules/Home/views/home_character_journal_view.dart';
 import 'package:dungeon_paper/app/modules/Home/views/home_loader_view.dart';
-import 'package:dungeon_paper/app/themes/themes.dart';
 import 'package:dungeon_paper/app/widgets/atoms/advanced_floating_action_button.dart';
-import 'package:dungeon_paper/app/widgets/atoms/user_menu.dart';
 import 'package:dungeon_paper/core/dw_icons.dart';
 import 'package:dungeon_paper/core/utils/list_utils.dart';
-import 'package:dynamic_themes/dynamic_themes.dart';
 import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
