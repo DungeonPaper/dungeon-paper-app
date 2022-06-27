@@ -125,7 +125,7 @@ class _RollButtonListTileState extends State<_RollButtonListTile> {
   late TextEditingController label;
   late ValueNotifier<List<dw.Dice>> dice;
   late ValueNotifier<List<SpecialDice>> specialDice;
-  late bool isDefault;
+  bool get isDefault => isSameAsDefault(rollButton);
 
   @override
   void initState() {
@@ -140,14 +140,12 @@ class _RollButtonListTileState extends State<_RollButtonListTile> {
     label = TextEditingController(text: rollButton.label);
     dice = ValueNotifier(rollButton.dice);
     specialDice = ValueNotifier(rollButton.specialDice);
-    this.isDefault = isDefault;
   }
 
   void updateFields(RollButton rollButton, bool isDefault) {
     label.text = rollButton.label;
     dice.value = rollButton.dice;
     specialDice.value = rollButton.specialDice;
-    this.isDefault = isDefault;
   }
 
   @override
@@ -234,18 +232,15 @@ class _RollButtonListTileState extends State<_RollButtonListTile> {
 
   void listener() {
     setState(() {
-      if (label.text != widget.defaultButton.label) {
-        isDefault = false;
-      }
-      final rollButton = RollButton(
+      widget.onChanged(rollButton);
+    });
+  }
+
+  RollButton get rollButton => RollButton(
         label: label.text,
         dice: dice.value,
         specialDice: specialDice.value,
       );
-      isDefault = isSameAsDefault(rollButton);
-      widget.onChanged(rollButton);
-    });
-  }
 
   bool isSameAsDefault(RollButton rollButton) {
     final defaultDice = widget.defaultButton.dice;
