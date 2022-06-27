@@ -85,4 +85,14 @@ class CharacterStats {
         damageDice: damageDice,
         load: load,
       );
+
+  CharacterStats copyWithLoad(int? load) => CharacterStats(
+        level: level,
+        maxHp: maxHp,
+        currentHp: currentHp,
+        currentExp: currentExp,
+        armor: armor,
+        damageDice: damageDice,
+        load: load,
+      );
 }

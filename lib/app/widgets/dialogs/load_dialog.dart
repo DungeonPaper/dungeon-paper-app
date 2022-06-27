@@ -5,29 +5,29 @@ import 'package:dungeon_paper/generated/l10n.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-class ArmorDialog extends StatefulWidget {
-  const ArmorDialog({
+class LoadDialog extends StatefulWidget {
+  const LoadDialog({
     super.key,
-    required this.armor,
+    required this.load,
     required this.onChanged,
   });
 
-  final int? armor;
-  final void Function(int? armor) onChanged;
+  final int? load;
+  final void Function(int? load) onChanged;
 
   @override
-  State<ArmorDialog> createState() => _ArmorDialogState();
+  State<LoadDialog> createState() => _LoadDialogState();
 }
 
-class _ArmorDialogState extends State<ArmorDialog> {
+class _LoadDialogState extends State<LoadDialog> {
   late TextEditingController controller;
   late bool useDefault;
 
   @override
   void initState() {
     super.initState();
-    useDefault = widget.armor == null;
-    controller = TextEditingController(text: widget.armor?.toString() ?? '');
+    useDefault = widget.load == null;
+    controller = TextEditingController(text: widget.load?.toString() ?? '');
     controller.addListener(_listener);
   }
 
@@ -36,9 +36,9 @@ class _ArmorDialogState extends State<ArmorDialog> {
     return AlertDialog(
       title: Row(
         children: [
-          const Icon(DwIcons.armor, size: 32),
+          const Icon(DwIcons.dumbbell, size: 32),
           const SizedBox(width: 12),
-          Expanded(child: Text(S.current.armor)),
+          Expanded(child: Text(S.current.maxLoad)),
         ],
       ),
       content: SingleChildScrollView(
@@ -66,7 +66,7 @@ class _ArmorDialogState extends State<ArmorDialog> {
                 ),
               ),
               // TODO intl
-              title: Text('Automatically calculate armor'),
+              title: Text('Automatically calculate max load'),
             ),
             NumberTextField(
               controller: controller,

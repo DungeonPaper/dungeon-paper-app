@@ -2,6 +2,7 @@ import 'package:dungeon_paper/app/data/models/character.dart';
 import 'package:dungeon_paper/app/data/services/character_service.dart';
 import 'package:dungeon_paper/app/widgets/chips/primary_chip.dart';
 import 'package:dungeon_paper/app/widgets/dialogs/coins_dialog.dart';
+import 'package:dungeon_paper/app/widgets/dialogs/load_dialog.dart';
 import 'package:dungeon_paper/core/dw_icons.dart';
 import 'package:dungeon_paper/generated/l10n.dart';
 import 'package:flutter/material.dart';
@@ -33,6 +34,16 @@ class HomeCharacterActionsSummary extends GetView<CharacterService> {
                   // visualDensity: VisualDensity.compact,
                   icon: const Icon(DwIcons.dumbbell, size: 16),
                   label: S.current.actionSummaryChipLoad(char.currentLoad, char.maxLoad),
+                  onPressed: () => Get.dialog(
+                    LoadDialog(
+                      load: char.stats.load,
+                      onChanged: (load) => controller.updateCharacter(
+                        char.copyWith(
+                          stats: char.stats.copyWithLoad(load),
+                        ),
+                      ),
+                    ),
+                  ),
                 ),
                 PrimaryChip(
                   // visualDensity: VisualDensity.compact,

@@ -2036,6 +2036,16 @@ class S {
     );
   }
 
+  /// `Max Load`
+  String get maxLoad {
+    return Intl.message(
+      'Max Load',
+      name: 'maxLoad',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `Getting characters...`
   String get loadingCharacters {
     return Intl.message(

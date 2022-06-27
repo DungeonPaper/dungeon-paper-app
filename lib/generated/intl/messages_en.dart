@@ -543,6 +543,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "loadingUser": MessageLookupByLibrary.simpleMessage("Signing in..."),
         "markdownPreview":
             MessageLookupByLibrary.simpleMessage("Content Preview"),
+        "maxLoad": MessageLookupByLibrary.simpleMessage("Max Load"),
         "moveCategory": m45,
         "moveCategoryWithLevel": m46,
         "moveCategoryWithLevelShort": m47,
