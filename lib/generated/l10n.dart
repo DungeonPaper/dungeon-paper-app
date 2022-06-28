@@ -1280,6 +1280,16 @@ class S {
     );
   }
 
+  /// `Damage Dice`
+  String get damageDice {
+    return Intl.message(
+      'Damage Dice',
+      name: 'damageDice',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `{name} ({key})`
   String debilityLabel(Object name, Object key) {
     return Intl.message(

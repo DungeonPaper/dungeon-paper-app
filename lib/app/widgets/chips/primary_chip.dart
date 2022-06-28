@@ -11,6 +11,7 @@ class PrimaryChip extends StatelessWidget {
     this.visualDensity,
     this.isEnabled,
     this.backgroundColor,
+    this.tooltip,
   }) : super(key: key);
 
   final String label;
@@ -20,6 +21,7 @@ class PrimaryChip extends StatelessWidget {
   final VisualDensity? visualDensity;
   final Color? backgroundColor;
   final bool? isEnabled;
+  final String? tooltip;
 
   @override
   Widget build(BuildContext context) {
@@ -58,6 +60,7 @@ class PrimaryChip extends StatelessWidget {
       isEnabled: isEnabled ?? true,
       onDeleted: onDeleted,
       onPressed: onPressed,
+      tooltip: tooltip,
     );
   }
 }

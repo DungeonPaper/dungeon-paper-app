@@ -121,6 +121,7 @@
   "createGeneric": "Create {entity}",
   "customButtonLeft": "Left Button",
   "customButtonRight": "Right Button",
+  "damageDice": "Damage Dice",
   "debilityLabel": "{name} ({key})",
   "diceAmount": "Amount",
   "diceRollAgain": "Roll",

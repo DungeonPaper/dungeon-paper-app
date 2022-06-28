@@ -67,7 +67,7 @@ class SelectBox<T> extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final enabled = value != null || onChanged != null;
+    final enabled = onChanged != null;
     final hasLabel = label != null;
     final height = hasLabel ? 62.5 : 48.0;
     final theme = Theme.of(context);
@@ -94,6 +94,7 @@ class SelectBox<T> extends StatelessWidget {
       child: InputDecorator(
         decoration: InputDecoration(
           label: label,
+          enabled: enabled,
           border: Theme.of(context).inputDecorationTheme.border,
         ),
         child: buildDropdown(),

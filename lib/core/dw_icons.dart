@@ -58,5 +58,6 @@ class DwIcons {
         10: DwIcons.dice_d10,
         12: DwIcons.dice_d12,
         20: DwIcons.dice_d20,
+        100: DwIcons.dice_d20,
       }[sides]!;
 }

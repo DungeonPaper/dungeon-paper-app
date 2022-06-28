@@ -3,6 +3,7 @@ import 'dart:ui';
 
 import 'package:dungeon_paper/app/data/services/character_service.dart';
 import 'package:dungeon_paper/app/model_utils/dice_utils.dart';
+import 'package:dungeon_paper/app/themes/colors.dart';
 import 'package:dungeon_paper/app/widgets/atoms/advanced_floating_action_button.dart';
 import 'package:dungeon_paper/app/widgets/atoms/dice_icon.dart';
 import 'package:dungeon_paper/app/widgets/molecules/dice_list_input.dart';
@@ -57,10 +58,6 @@ class _RollDiceViewState extends State<RollDiceView> with TickerProviderStateMix
   @override
   Widget build(BuildContext context) {
     final bgColor = Colors.black.withOpacity(0.85);
-    final cardColor = Theme.of(context).brightness == Brightness.light
-        ? Colors.black.withOpacity(0.4)
-        : Colors.white.withOpacity(0.1);
-    final textTheme = Theme.of(context).textTheme;
     return BackdropFilter(
       filter: ImageFilter.blur(sigmaX: 5, sigmaY: 5),
       // blendMode: BlendMode.darken,
@@ -76,13 +73,8 @@ class _RollDiceViewState extends State<RollDiceView> with TickerProviderStateMix
           foregroundColor: Colors.white,
         ),
         backgroundColor: bgColor,
-        body: LayoutBuilder(builder: (context, constraints) {
-          final maxHeight = MediaQuery.of(context).size.height +
-              (scrollController.hasClients && scrollController.positions.isNotEmpty
-                  ? scrollController.position.maxScrollExtent
-                  : 0);
-
-          return Center(
+        body: LayoutBuilder(
+          builder: (context, constraints) => Center(
             child: Padding(
               padding: const EdgeInsets.only(bottom: 80),
               child: Column(
@@ -96,6 +88,7 @@ class _RollDiceViewState extends State<RollDiceView> with TickerProviderStateMix
                       controller: withoutModDice,
                       abilityScores: charService.current!.abilityScores,
                       guessFrom: const [],
+                      labelColor: Colors.white,
                     ),
                   ),
                   Expanded(
@@ -108,129 +101,7 @@ class _RollDiceViewState extends State<RollDiceView> with TickerProviderStateMix
                             // mainAxisAlignment: MainAxisAlignment.start,
                             crossAxisAlignment: CrossAxisAlignment.stretch,
                             children: [
-                              for (final group in enumerate(dice.value))
-                                Padding(
-                                  padding: group.index != dice.value.length - 1
-                                      ? const EdgeInsets.only(bottom: 24)
-                                      : EdgeInsets.zero,
-                                  child: Material(
-                                    color: cardColor.withOpacity(cardColor.opacity *
-                                        animations[group.index].first.opacity.value),
-                                    shape: RoundedRectangleBorder(
-                                        borderRadius: BorderRadius.circular(10)),
-                                    child: Padding(
-                                      padding: const EdgeInsets.all(8),
-                                      child: Column(
-                                        crossAxisAlignment: CrossAxisAlignment.start,
-                                        children: [
-                                          Opacity(
-                                            opacity: animations[group.index].first.opacity.value,
-                                            child: Transform.translate(
-                                              offset: Offset(
-                                                0,
-                                                animations[group.index].first.y.value * maxHeight,
-                                              ),
-                                              child: Column(
-                                                mainAxisSize: MainAxisSize.min,
-                                                crossAxisAlignment: CrossAxisAlignment.start,
-                                                children: [
-                                                  Text(
-                                                    S.current.rollDialogResultTotal(
-                                                        results.isNotEmpty
-                                                            ? results[group.index].total
-                                                            : 0),
-                                                    style: textTheme.headline6!
-                                                        .copyWith(color: Colors.white),
-                                                  ),
-                                                  Text(
-                                                    S.current.rollDialogResultBreakdown(
-                                                      (withoutModDice.value[group.index])
-                                                          .toString(),
-                                                      (group.value.modifierWithSign.isEmpty
-                                                          ? '+0'
-                                                          : group.value.modifierWithSign),
-                                                    ),
-                                                    style: textTheme.bodyText2!.copyWith(
-                                                        color: Colors.white.withOpacity(0.75)),
-                                                  ),
-                                                ],
-                                              ),
-                                            ),
-                                          ),
-                                          const SizedBox(height: 8),
-                                          Wrap(
-                                            alignment: WrapAlignment.start,
-                                            crossAxisAlignment: WrapCrossAlignment.center,
-                                            runSpacing: diceSpacing,
-                                            spacing: diceSpacing,
-                                            children: [
-                                              for (final d
-                                                  in enumerate(dw.Dice.flatten([group.value])))
-                                                Transform.translate(
-                                                  offset: Offset(
-                                                    0,
-                                                    animations[group.index][d.index].y.value *
-                                                        maxHeight,
-                                                  ),
-                                                  child: Transform.rotate(
-                                                    angle: degToRad(360 *
-                                                        3 *
-                                                        animations[group.index][d.index]
-                                                            .angle
-                                                            .value),
-                                                    child: Stack(
-                                                      children: [
-                                                        DiceIcon.from(
-                                                          group.value,
-                                                          size: diceSize,
-                                                          color: Colors.white,
-                                                        ),
-                                                        Positioned.fill(
-                                                          child: Opacity(
-                                                            opacity: animations[group.index]
-                                                                    [d.index]
-                                                                .opacity
-                                                                .value,
-                                                            child: Center(
-                                                              child: Transform.translate(
-                                                                offset: DiceUtils.iconCenterOffset(
-                                                                    group.value),
-                                                                child: SizedBox(
-                                                                  width: 30,
-                                                                  height: 30,
-                                                                  child: Material(
-                                                                    type: MaterialType.circle,
-                                                                    color: Colors.black,
-                                                                    child: Center(
-                                                                      child: Text(
-                                                                        results.isNotEmpty
-                                                                            ? results[group.index]
-                                                                                .results[d.index]
-                                                                                .toString()
-                                                                            : '',
-                                                                        style: const TextStyle(
-                                                                          color: Colors.white,
-                                                                        ),
-                                                                        textScaleFactor: 1.5,
-                                                                      ),
-                                                                    ),
-                                                                  ),
-                                                                ),
-                                                              ),
-                                                            ),
-                                                          ),
-                                                        ),
-                                                      ],
-                                                    ),
-                                                  ),
-                                                ),
-                                            ],
-                                          ),
-                                        ],
-                                      ),
-                                    ),
-                                  ),
-                                ),
+                              for (final group in enumerate(dice.value)) _groupBuilder(group),
                             ],
                           ),
                         ),
@@ -240,8 +111,8 @@ class _RollDiceViewState extends State<RollDiceView> with TickerProviderStateMix
                 ],
               ),
             ),
-          );
-        }),
+          ),
+        ),
         floatingActionButton: AdvancedFloatingActionButton.extended(
           label: Text(S.current.diceRollAgain),
           icon: const Icon(Icons.refresh),
@@ -250,6 +121,146 @@ class _RollDiceViewState extends State<RollDiceView> with TickerProviderStateMix
         floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
       ),
     );
+  }
+
+  Padding _groupBuilder(Enumerated<dw.Dice> group) {
+    final maxHeight = _getMaxHeight(context);
+    final cardColor = Theme.of(context).brightness == Brightness.light
+        ? Colors.black.withOpacity(0.4)
+        : Colors.white.withOpacity(0.1);
+    final textTheme = Theme.of(context).textTheme;
+    final currentAnimGroup = animations[group.index];
+    return Padding(
+      padding: group.index != dice.value.length - 1
+          ? const EdgeInsets.only(bottom: 24)
+          : EdgeInsets.zero,
+      child: Material(
+        color: cardColor.withOpacity(cardColor.opacity * currentAnimGroup.first.opacity.value),
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+        child: Padding(
+          padding: const EdgeInsets.all(8),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Opacity(
+                opacity: currentAnimGroup.first.opacity.value,
+                child: Transform.translate(
+                  offset: Offset(
+                    0,
+                    currentAnimGroup.first.y.value * maxHeight,
+                  ),
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        S.current.rollDialogResultTotal(
+                            results.isNotEmpty ? results[group.index].total : 0),
+                        style: textTheme.headline6!.copyWith(color: Colors.white),
+                      ),
+                      Text(
+                        S.current.rollDialogResultBreakdown(
+                          (withoutModDice.value[group.index]).toString(),
+                          (group.value.modifierWithSign.isEmpty
+                              ? '+0'
+                              : group.value.modifierWithSign),
+                        ),
+                        style: textTheme.bodyText2!.copyWith(color: Colors.white.withOpacity(0.75)),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+              const SizedBox(height: 8),
+              Wrap(
+                alignment: WrapAlignment.start,
+                crossAxisAlignment: WrapCrossAlignment.center,
+                runSpacing: diceSpacing,
+                spacing: diceSpacing,
+                children: [
+                  for (final d in enumerate(dw.Dice.flatten([group.value])))
+                    Builder(builder: _diceBuilder(group, d)),
+                ],
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+
+  Widget Function(BuildContext context) _diceBuilder(
+    Enumerated<dw.Dice> group,
+    Enumerated<dw.Dice> d,
+  ) {
+    return (context) {
+      final maxHeight = _getMaxHeight(context);
+      final isDark = Theme.of(context).brightness == Brightness.dark;
+      final currentAnim = animations[group.index][d.index];
+      final currentResult = results.isNotEmpty ? results[group.index].results[d.index] : null;
+
+      var colorScheme = Theme.of(context).colorScheme;
+      var textContainerColor = currentResult == group.value.sides
+          ? DwColors.success
+          : results[group.index].results[d.index] == 1
+              ? isDark
+                  ? colorScheme.errorContainer
+                  : colorScheme.error
+              : Colors.black;
+      var resultStr = (currentResult ?? '').toString();
+      return Transform.translate(
+        offset: Offset(
+          0,
+          currentAnim.y.value * maxHeight,
+        ),
+        child: Transform.rotate(
+          angle: degToRad(360 * 3 * currentAnim.angle.value),
+          child: Stack(
+            children: [
+              DiceIcon.from(
+                group.value,
+                size: diceSize,
+                color: Colors.white,
+              ),
+              Positioned.fill(
+                child: Opacity(
+                  opacity: currentAnim.opacity.value,
+                  child: Center(
+                    child: Transform.translate(
+                      offset: DiceUtils.iconCenterOffset(group.value),
+                      child: SizedBox(
+                        width: 30,
+                        height: 30,
+                        child: Material(
+                          type: MaterialType.circle,
+                          color: textContainerColor,
+                          child: Center(
+                            child: Text(
+                              resultStr,
+                              style: const TextStyle(
+                                color: Colors.white,
+                              ),
+                              textScaleFactor: resultStr.length > 2 ? 1 : 1.5,
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+            ],
+          ),
+        ),
+      );
+    };
+  }
+
+  double _getMaxHeight(BuildContext context) {
+    return MediaQuery.of(context).size.height +
+        (scrollController.hasClients && scrollController.positions.isNotEmpty
+            ? scrollController.position.maxScrollExtent
+            : 0);
   }
 
   List<dw.Dice> _applyMods(List<dw.Dice> dice) {

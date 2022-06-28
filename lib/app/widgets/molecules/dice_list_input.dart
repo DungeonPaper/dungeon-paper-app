@@ -1,4 +1,3 @@
-
 import 'package:dungeon_paper/app/data/models/ability_scores.dart';
 import 'package:dungeon_paper/app/widgets/chips/dice_chip.dart';
 import 'package:dungeon_paper/app/widgets/dialogs/add_dice_dialog.dart';
@@ -14,11 +13,13 @@ class DiceListInput extends StatefulWidget {
     this.controller,
     required this.abilityScores,
     required this.guessFrom,
+    this.labelColor,
   });
 
   final ValueNotifier<List<dw.Dice>>? controller;
   final AbilityScores abilityScores;
   final List<ValueNotifier<String>> guessFrom;
+  final Color? labelColor;
 
   @override
   State<DiceListInput> createState() => _DiceListInputState();
@@ -55,6 +56,7 @@ class _DiceListInputState extends State<DiceListInput> {
         onPressed: onTapChip,
         onDeleted: onDeleteChip,
       ),
+      labelColor: widget.labelColor,
       trailing: [
         for (final dice in guesses.where(
           (guess) => !controller.value.map((d) => d.toString()).contains(guess.toString()),

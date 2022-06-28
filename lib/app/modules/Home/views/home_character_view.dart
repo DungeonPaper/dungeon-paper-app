@@ -4,9 +4,11 @@ import 'package:dungeon_paper/app/modules/Home/views/local_widgets/home_characte
 import 'package:dungeon_paper/app/themes/button_themes.dart';
 import 'package:dungeon_paper/app/widgets/chips/primary_chip.dart';
 import 'package:dungeon_paper/app/widgets/dialogs/armor_dialog.dart';
+import 'package:dungeon_paper/app/widgets/dialogs/damage_dice_dialog.dart';
 import 'package:dungeon_paper/app/widgets/molecules/character_subtitle.dart';
 import 'package:dungeon_paper/app/widgets/molecules/ability_scores_grid.dart';
 import 'package:dungeon_paper/core/dw_icons.dart';
+import 'package:dungeon_paper/generated/l10n.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'local_widgets/home_character_dynamic_cards.dart';
@@ -94,9 +96,22 @@ class HomeCharacterView extends GetView<CharacterService> {
                     icon: const Icon(DwIcons.swords),
                     // visualDensity: VisualDensity.compact,
                     label: char.damageDice.toString(),
+                    tooltip: S.current.damageDice,
+                    onPressed: () => Get.dialog(
+                      DamageDiceDialog(
+                        damage: char.stats.damageDice,
+                        abilityScores: char.abilityScores,
+                        onChanged: (damage) => controller.updateCharacter(
+                          char.copyWith(
+                            stats: char.stats.copyWithDamageDice(damage),
+                          ),
+                        ),
+                      ),
+                    ),
                   ),
                   const SizedBox(width: 8),
                   PrimaryChip(
+                    tooltip: S.current.armor,
                     icon: const Icon(DwIcons.armor),
                     // visualDensity: VisualDensity.compact,
                     label: char.armor.toString(),

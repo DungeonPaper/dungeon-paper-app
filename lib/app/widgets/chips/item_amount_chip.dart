@@ -17,7 +17,6 @@ class ItemAmountChip extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final theme = Theme.of(context);
     return PrimaryChip(
       label: S.current.itemAmountX(NumberFormat('#.##').format(item.amount)),
       visualDensity: visualDensity ?? VisualDensity.compact,

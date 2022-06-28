@@ -439,6 +439,7 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Right Button"),
         "customRollButtons":
             MessageLookupByLibrary.simpleMessage("Quick Roll Buttons"),
+        "damageDice": MessageLookupByLibrary.simpleMessage("Damage Dice"),
         "debilityLabel": m25,
         "diceAmount": MessageLookupByLibrary.simpleMessage("Amount"),
         "diceRollAgain": MessageLookupByLibrary.simpleMessage("Roll"),

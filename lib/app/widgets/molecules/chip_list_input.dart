@@ -14,6 +14,7 @@ class ChipListInput<T> extends StatefulWidget {
     this.trailing = const [],
     this.leading = const [],
     this.label,
+    this.labelColor,
   }) : assert(dialogBuilder != null || addValue != null);
 
   final ValueNotifier<List<T>>? controller;
@@ -33,6 +34,7 @@ class ChipListInput<T> extends StatefulWidget {
   })? dialogBuilder;
   final List<Widget> trailing;
   final List<Widget> leading;
+  final Color? labelColor;
 
   @override
   State<ChipListInput> createState() => _ChipListInputState<T>();
@@ -64,7 +66,7 @@ class _ChipListInputState<T> extends State<ChipListInput<T>> {
       children: [
         DefaultTextStyle(
           child: widget.label ?? Text(S.current.entityPlural(T)),
-          style: Theme.of(context).textTheme.caption!,
+          style: Theme.of(context).textTheme.caption!.copyWith(color: widget.labelColor),
         ),
         const SizedBox(height: 6),
         Wrap(

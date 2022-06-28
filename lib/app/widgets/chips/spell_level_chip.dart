@@ -15,7 +15,6 @@ class SpellLevelChip extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final theme = Theme.of(context);
     return PrimaryChip(
       label: S.current.spellLevel(level),
       visualDensity: visualDensity ?? VisualDensity.compact,

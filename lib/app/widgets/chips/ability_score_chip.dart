@@ -16,14 +16,12 @@ class AbilityScoreChip extends StatelessWidget {
   Widget build(BuildContext context) {
     final valStr = stat.value.toString();
     final statKey = stat.key;
-    final statName = stat.name;
     final modSign = stat.modifier >= 0 ? '+' : '-';
     final modStr = stat.modifier.abs().toString();
     final theme = Theme.of(context);
     final brightness = ThemeData.estimateBrightnessForColor(theme.canvasColor);
     final isDark = brightness == Brightness.dark;
     final rollBadgeModifierOpacity = isDark ? 0.5 : 0.4;
-    final rollBadgeBgOpacity = isDark ? 0.8 : 0.1;
     final isLight = theme.brightness == Brightness.light;
     final cardColor = stat.isDebilitated
         ? Color.alphaBlend(

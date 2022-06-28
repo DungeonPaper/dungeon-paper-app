@@ -130,7 +130,6 @@ class UserMenuPopover extends GetView<CharacterService> with AuthServiceMixin {
                           ListTile(
                             visualDensity: VisualDensity.compact,
                             title: Text(S.current.libraryCollectionTitle),
-                            // TODO update icon
                             leading: const Icon(Icons.local_library),
                             onTap: () {
                               Get.back();
