@@ -1,5 +1,4 @@
 import 'package:dungeon_paper/app/data/models/ability_scores.dart';
-import 'package:dungeon_paper/app/widgets/atoms/number_text_field.dart';
 import 'package:dungeon_paper/app/widgets/forms/dice_form.dart';
 import 'package:dungeon_paper/app/widgets/molecules/dialog_controls.dart';
 import 'package:dungeon_paper/core/dw_icons.dart';
@@ -64,7 +63,7 @@ class _DamageDiceDialogState extends State<DamageDiceDialog> {
                 ),
               ),
               // TODO intl
-              title: Text('Use damage dice from class & equipped items'),
+              title: const Text('Use damage dice from class & equipped items'),
             ),
             DiceForm(
               dice: damage,

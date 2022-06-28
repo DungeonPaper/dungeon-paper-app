@@ -34,6 +34,7 @@ class HomeCharacterActionsSummary extends GetView<CharacterService> {
                   // visualDensity: VisualDensity.compact,
                   icon: const Icon(DwIcons.dumbbell, size: 16),
                   label: S.current.actionSummaryChipLoad(char.currentLoad, char.maxLoad),
+                  tooltip: S.current.maxLoad,
                   onPressed: () => Get.dialog(
                     LoadDialog(
                       load: char.stats.load,
@@ -51,6 +52,7 @@ class HomeCharacterActionsSummary extends GetView<CharacterService> {
                   label: S.current.actionSummaryChipCoins(
                     NumberFormat.compact().format(char.coins),
                   ),
+                  tooltip: S.current.coins,
                   onPressed: () => Get.dialog(
                     CoinsDialog(
                       coins: char.coins,

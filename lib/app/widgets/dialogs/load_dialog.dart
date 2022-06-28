@@ -66,7 +66,7 @@ class _LoadDialogState extends State<LoadDialog> {
                 ),
               ),
               // TODO intl
-              title: Text('Automatically calculate max load'),
+              title: const Text('Automatically calculate max load'),
             ),
             NumberTextField(
               controller: controller,

@@ -27,7 +27,7 @@ class CharacterSubtitle extends StatelessWidget {
             children: [
               WidgetSpan(
                 child: Transform.translate(
-                  offset: const Offset(0, -2),
+                  offset: const Offset(0, 1),
                   child: Text(
                     String.fromCharCode(character.bio.alignment.icon.codePoint),
                     style: DefaultTextStyle.of(context).style.copyWith(
