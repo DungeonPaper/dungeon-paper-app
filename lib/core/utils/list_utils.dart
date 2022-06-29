@@ -22,6 +22,29 @@ extension IterableUtils<T> on Iterable<T> {
       ],
     ];
   }
+
+  Map<Key, List<T>> groupBy<Key>(Key Function(T item) keyFn) {
+    final out = <Key, List<T>>{};
+    for (final item in this) {
+      final key = keyFn(item);
+      out[key] ??= <T>[];
+      out[key]!.add(item);
+    }
+    return out;
+  }
+
+  List<T> uniqueBy<Key>(Key Function(T item) keyFn) {
+    final out = <T>[];
+    final keys = <Key>[];
+    for (final item in this) {
+      final key = keyFn(item);
+      if (!keys.contains(key)) {
+        keys.add(key);
+        out.add(item);
+      }
+    }
+    return out;
+  }
 }
 
 T sample<T>(Iterable<T> list) {

@@ -3,8 +3,6 @@ import 'package:dungeon_paper/app/widgets/molecules/user_menu_popover.dart';
 import 'package:flutter/widgets.dart';
 
 import 'package:get/get.dart';
-import 'package:get/get_navigation/src/routes/circular_reveal_clipper.dart';
-import 'package:get/get_navigation/src/routes/default_transitions.dart';
 
 import '../data/models/item.dart';
 import '../data/models/meta.dart';

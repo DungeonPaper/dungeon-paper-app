@@ -13,6 +13,7 @@ class ItemCard extends StatelessWidget {
     Key? key,
     required this.item,
     this.showStar = true,
+    this.hideCount = false,
     this.showIcon = true,
     this.onSave,
     this.initiallyExpanded,
@@ -24,6 +25,7 @@ class ItemCard extends StatelessWidget {
 
   final Item item;
   final bool showStar;
+  final bool hideCount;
   final bool showIcon;
   final bool? initiallyExpanded;
   final void Function(Item item)? onSave;
@@ -54,7 +56,7 @@ class ItemCard extends StatelessWidget {
           ItemArmorChip(item: item),
           const SizedBox(width: 4),
         ],
-        if (item.amount != 1) ItemAmountChip(item: item),
+        if (!hideCount && item.amount != 1) ItemAmountChip(item: item),
       ],
       chips: item.tags.map((t) => TagChip.openDescription(tag: t)),
       dice: const [],

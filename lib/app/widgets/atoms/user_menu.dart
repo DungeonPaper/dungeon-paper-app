@@ -1,6 +1,5 @@
 import 'package:dungeon_paper/app/routes/app_pages.dart';
 import 'package:dungeon_paper/app/widgets/atoms/user_avatar.dart';
-import 'package:dungeon_paper/app/widgets/molecules/user_menu_popover.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
