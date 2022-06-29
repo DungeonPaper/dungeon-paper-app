@@ -1,12 +1,13 @@
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class UniversalSearchController extends GetxController {
-  //TODO: Implement UniversalSearchController
+  final search = TextEditingController(text: '');
 
-  final count = 0.obs;
   @override
   void onInit() {
     super.onInit();
+    search.addListener(update);
   }
 
   @override
@@ -17,7 +18,6 @@ class UniversalSearchController extends GetxController {
   @override
   void onClose() {
     super.onClose();
+    search.removeListener(update);
   }
-
-  void increment() => count.value++;
 }

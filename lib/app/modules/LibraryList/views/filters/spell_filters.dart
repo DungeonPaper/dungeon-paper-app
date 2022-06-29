@@ -28,6 +28,7 @@ class SpellFiltersView extends StatelessWidget {
   Widget build(BuildContext context) {
     return EntityFiltersView<Spell, SpellFilters>(
       filters: filters,
+      emptyFilters: SpellFilters(classKey: null),
       onChange: onChange,
       searchController: searchController,
       filterWidgetsBuilder: (context, f) => [

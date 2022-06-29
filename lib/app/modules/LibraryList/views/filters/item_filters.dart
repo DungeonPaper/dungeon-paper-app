@@ -23,6 +23,7 @@ class ItemFiltersView extends StatelessWidget {
   Widget build(BuildContext context) {
     return EntityFiltersView<Item, ItemFilters>(
       filters: filters,
+      emptyFilters: ItemFilters(),
       onChange: onChange,
       searchController: searchController,
     );

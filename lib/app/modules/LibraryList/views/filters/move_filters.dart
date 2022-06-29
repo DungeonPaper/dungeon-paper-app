@@ -29,6 +29,7 @@ class MoveFiltersView extends StatelessWidget {
   Widget build(BuildContext context) {
     return EntityFiltersView<Move, MoveFilters>(
       filters: filters,
+      emptyFilters: MoveFilters(classKey: null),
       onChange: onChange,
       searchController: searchController,
       filterWidgetsBuilder: (context, f) => [

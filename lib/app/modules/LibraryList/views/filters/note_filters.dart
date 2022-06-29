@@ -23,6 +23,7 @@ class NoteFiltersView extends StatelessWidget {
   Widget build(BuildContext context) {
     return EntityFiltersView<Note, NoteFilters>(
       filters: filters,
+      emptyFilters: NoteFilters(),
       onChange: onChange,
       searchController: searchController,
     );

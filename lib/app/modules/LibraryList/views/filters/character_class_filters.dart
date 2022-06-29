@@ -26,6 +26,7 @@ class CharacterClassFiltersView extends StatelessWidget {
   Widget build(BuildContext context) {
     return EntityFiltersView<CharacterClass, CharacterClassFilters>(
       filters: filters,
+      emptyFilters: CharacterClassFilters(),
       onChange: onChange,
       searchController: searchController,
       filterWidgetsBuilder: (context, f) => [],
