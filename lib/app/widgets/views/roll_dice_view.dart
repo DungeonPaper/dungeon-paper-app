@@ -199,15 +199,15 @@ class _RollDiceViewState extends State<RollDiceView> with TickerProviderStateMix
       final currentAnim = animations[group.index][d.index];
       final currentResult = results.isNotEmpty ? results[group.index].results[d.index] : null;
 
-      var colorScheme = Theme.of(context).colorScheme;
-      var textContainerColor = currentResult == group.value.sides
+      final colorScheme = Theme.of(context).colorScheme;
+      final textContainerColor = currentResult == group.value.sides
           ? DwColors.success
-          : results[group.index].results[d.index] == 1
+          : currentResult == 1
               ? isDark
                   ? colorScheme.errorContainer
                   : colorScheme.error
               : Colors.black;
-      var resultStr = (currentResult ?? '').toString();
+      final resultStr = (currentResult ?? '').toString();
       return Transform.translate(
         offset: Offset(
           0,
