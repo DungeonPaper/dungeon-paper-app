@@ -50,6 +50,46 @@ class S {
     return Localizations.of<S>(context, S);
   }
 
+  /// ``
+  String get abilityScoreBondDebilityDescription {
+    return Intl.message(
+      '',
+      name: 'abilityScoreBondDebilityDescription',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Lonely`
+  String get abilityScoreBondDebilityName {
+    return Intl.message(
+      'Lonely',
+      name: 'abilityScoreBondDebilityName',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `When a move has you roll+BOND you'll count the number of bonds you have with the character in question and add that to the roll.`
+  String get abilityScoreBondDescription {
+    return Intl.message(
+      'When a move has you roll+BOND you\'ll count the number of bonds you have with the character in question and add that to the roll.',
+      name: 'abilityScoreBondDescription',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Charisma`
+  String get abilityScoreBondName {
+    return Intl.message(
+      'Charisma',
+      name: 'abilityScoreBondName',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `Roll +{stat}`
   String abilityScoreButtonTooltip(Object stat) {
     return Intl.message(
@@ -452,6 +492,16 @@ class S {
     return Intl.message(
       'Already added',
       name: 'alreadyAdded',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Amount`
+  String get amount {
+    return Intl.message(
+      'Amount',
+      name: 'amount',
       desc: '',
       args: [],
     );
@@ -1275,6 +1325,16 @@ class S {
     return Intl.message(
       'Right Button',
       name: 'customButtonRight',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Damage`
+  String get damage {
+    return Intl.message(
+      'Damage',
+      name: 'damage',
       desc: '',
       args: [],
     );

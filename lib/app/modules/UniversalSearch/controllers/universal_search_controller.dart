@@ -55,8 +55,8 @@ class UniversalSearchController extends GetxController
     }
     final entries = sources.entries;
     final map = enumerate(entries).map((e) {
-      final flatten2 = flatten(e.value.value);
-      final where = flatten2.where((e) => searchFor(e.runtimeType, e, search.text));
+      final flattened = flatten(e.value.value);
+      final where = flattened.where((e) => searchFor(e.runtimeType, e, search.text));
       final uniqueBy = where.uniqueBy((e) => keyFor(e));
       if (uniqueBy.isEmpty) {
         return [];

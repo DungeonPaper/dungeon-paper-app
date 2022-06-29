@@ -2,7 +2,6 @@ import 'package:dungeon_paper/app/data/models/item.dart';
 import 'package:dungeon_paper/app/widgets/chips/primary_chip.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-
 import '../../../generated/l10n.dart';
 
 class ItemAmountChip extends StatelessWidget {
@@ -19,6 +18,7 @@ class ItemAmountChip extends StatelessWidget {
   Widget build(BuildContext context) {
     return PrimaryChip(
       label: S.current.itemAmountX(NumberFormat('#.##').format(item.amount)),
+      tooltip: S.current.amount,
       visualDensity: visualDensity ?? VisualDensity.compact,
     );
   }

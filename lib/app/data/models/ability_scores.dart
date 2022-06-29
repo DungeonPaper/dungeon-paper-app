@@ -97,6 +97,17 @@ class AbilityScores {
 
   AbilityScore getStat(String statKey) {
     statKey = statKey.trim().toUpperCase();
+    if (statKey == 'BOND') {
+      return AbilityScore(
+        key: 'BOND',
+        name: S.current.abilityScoreBondName,
+        value: 10,
+        isDebilitated: false,
+        description: S.current.abilityScoreBondDescription,
+        debilityName: S.current.abilityScoreBondDebilityName,
+        debilityDescription: S.current.abilityScoreBondDebilityDescription,
+      );
+    }
     if (!statsMap.containsKey(statKey)) {
       throw Exception('Stat $statKey not found, available: ${statsMap.keys}');
     }

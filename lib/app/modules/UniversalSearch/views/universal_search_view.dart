@@ -34,7 +34,7 @@ class UniversalSearchView extends GetView<UniversalSearchController> {
           ),
           centerTitle: true,
           backgroundColor: Colors.transparent,
-          automaticallyImplyLeading: false,
+          // automaticallyImplyLeading: false,
         ),
         body: Obx(
           () => ListView.builder(

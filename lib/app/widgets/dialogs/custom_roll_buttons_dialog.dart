@@ -1,7 +1,9 @@
 import 'dart:math';
 
 import 'package:dungeon_paper/app/data/models/character.dart';
+import 'package:dungeon_paper/app/data/models/move.dart';
 import 'package:dungeon_paper/app/data/models/roll_button.dart';
+import 'package:dungeon_paper/app/data/services/repository_service.dart';
 import 'package:dungeon_paper/app/widgets/atoms/select_box.dart';
 import 'package:dungeon_paper/app/widgets/molecules/dice_list_input.dart';
 import 'package:dungeon_paper/app/widgets/molecules/dialog_controls.dart';
@@ -120,7 +122,7 @@ class _RollButtonListTile extends StatefulWidget {
   State<_RollButtonListTile> createState() => _RollButtonListTileState();
 }
 
-class _RollButtonListTileState extends State<_RollButtonListTile> {
+class _RollButtonListTileState extends State<_RollButtonListTile> with RepositoryServiceMixin {
   late TextEditingController label;
   late ValueNotifier<List<dw.Dice>> dice;
   late ValueNotifier<List<SpecialDice>> specialDice;
@@ -172,12 +174,12 @@ class _RollButtonListTileState extends State<_RollButtonListTile> {
                     Character.hackAndSlashRollButton,
                     Character.volleyRollButton,
                     Character.discernRealitiesRollButton,
-                    for (final move in widget.character.moves.where((move) => move.dice.isNotEmpty))
+                    for (final move in moves)
                       RollButton(label: move.name, dice: move.dice, specialDice: []),
                     for (final spell
                         in widget.character.spells.where((spell) => spell.dice.isNotEmpty))
                       RollButton(label: spell.name, dice: spell.dice, specialDice: []),
-                  ])
+                  ].uniqueBy((item) => item.label))
                     DropdownMenuItem(
                       value: button,
                       child: Text(
@@ -228,6 +230,13 @@ class _RollButtonListTileState extends State<_RollButtonListTile> {
       ],
     );
   }
+
+  Iterable<Move> get moves => [
+        ...widget.character.moves,
+        ...repo.builtIn.moves.values
+            .where((move) => [MoveCategory.basic, MoveCategory.special].contains(move.category)),
+      ].where((move) => move.dice.isNotEmpty).toList()
+        ..sort((a, b) => a.name.compareTo(b.name));
 
   void listener() {
     setState(() {

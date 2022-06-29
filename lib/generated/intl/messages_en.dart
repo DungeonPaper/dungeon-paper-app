@@ -231,6 +231,14 @@ class MessageLookup extends MessageLookupByLibrary {
 
   final messages = _notInlinedMessages(_notInlinedMessages);
   static Map<String, Function> _notInlinedMessages(_) => <String, Function>{
+        "abilityScoreBondDebilityDescription":
+            MessageLookupByLibrary.simpleMessage(""),
+        "abilityScoreBondDebilityName":
+            MessageLookupByLibrary.simpleMessage("Lonely"),
+        "abilityScoreBondDescription": MessageLookupByLibrary.simpleMessage(
+            "When a move has you roll+BOND you\'ll count the number of bonds you have with the character in question and add that to the roll."),
+        "abilityScoreBondName":
+            MessageLookupByLibrary.simpleMessage("Charisma"),
         "abilityScoreButtonTooltip": m0,
         "abilityScoreChaDebilityDescription":
             MessageLookupByLibrary.simpleMessage(
@@ -294,6 +302,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "all": MessageLookupByLibrary.simpleMessage("All"),
         "allGeneric": m8,
         "alreadyAdded": MessageLookupByLibrary.simpleMessage("Already added"),
+        "amount": MessageLookupByLibrary.simpleMessage("Amount"),
         "appName": MessageLookupByLibrary.simpleMessage("Dungeon Paper"),
         "armor": MessageLookupByLibrary.simpleMessage("Armor"),
         "basicInfoImageChoose":
@@ -439,6 +448,7 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Right Button"),
         "customRollButtons":
             MessageLookupByLibrary.simpleMessage("Quick Roll Buttons"),
+        "damage": MessageLookupByLibrary.simpleMessage("Damage"),
         "damageDice": MessageLookupByLibrary.simpleMessage("Damage Dice"),
         "debilityLabel": m25,
         "diceAmount": MessageLookupByLibrary.simpleMessage("Amount"),
