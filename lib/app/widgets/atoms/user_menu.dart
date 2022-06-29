@@ -1,3 +1,4 @@
+import 'package:dungeon_paper/app/routes/app_pages.dart';
 import 'package:dungeon_paper/app/widgets/atoms/user_avatar.dart';
 import 'package:dungeon_paper/app/widgets/molecules/user_menu_popover.dart';
 import 'package:flutter/material.dart';
@@ -21,7 +22,7 @@ class UserMenu extends StatelessWidget {
       clipBehavior: Clip.antiAlias,
       child: InkWell(
         splashColor: Theme.of(context).splashColor,
-        onTap: () => Get.dialog(UserMenuPopover()),
+        onTap: () => Get.toNamed(Routes.userMenu),
         child: const Padding(
           padding: EdgeInsets.all(8),
           child: UserAvatar(),

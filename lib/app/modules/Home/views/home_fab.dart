@@ -14,9 +14,12 @@ class HomeFAB extends StatefulWidget {
 }
 
 class _HomeFABState extends State<HomeFAB> with CharacterServiceMixin {
+  late bool inPageRange;
+
   @override
   void initState() {
     super.initState();
+    inPageRange = getPageIsInRange();
     charService.pageController.addListener(_refresh);
   }
 
@@ -26,14 +29,16 @@ class _HomeFABState extends State<HomeFAB> with CharacterServiceMixin {
     super.dispose();
   }
 
+  bool getPageIsInRange() {
+    final distance = (charService.page - pageNum.toDouble()).abs();
+    return distance <= 0.5;
+  }
+
   static const pageNum = 2;
   static const duration = Duration(milliseconds: 250);
 
   @override
   Widget build(BuildContext context) {
-    final distance = (charService.page - pageNum.toDouble()).abs();
-    final inPageRange = distance <= 0.5;
-
     return AnimatedScale(
       scale: inPageRange ? 1.0 : 0.0,
       duration: duration,
@@ -67,6 +72,8 @@ class _HomeFABState extends State<HomeFAB> with CharacterServiceMixin {
   }
 
   void _refresh() {
-    setState(() {});
+    if (inPageRange != getPageIsInRange()) {
+      setState(() => inPageRange = getPageIsInRange());
+    }
   }
 }

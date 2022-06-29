@@ -1,4 +1,5 @@
 import 'package:dungeon_paper/app/routes/custom_transitions.dart';
+import 'package:dungeon_paper/app/widgets/molecules/user_menu_popover.dart';
 import 'package:flutter/widgets.dart';
 
 import 'package:get/get.dart';
@@ -63,6 +64,18 @@ class AppPages {
       name: Routes.login,
       page: () => const LoginView(),
       binding: LoginBinding(),
+    ),
+    GetPage(
+      name: Routes.userMenu,
+      page: () => UserMenuPopover(),
+      preventDuplicates: false,
+      fullscreenDialog: true,
+      opaque: false,
+      customTransition: CustomTransitions.circularReveal(
+        alignment: Alignment.topRight,
+        offset: const Offset(-24, 64),
+      ),
+      transition: Transition.circularReveal,
     ),
     GetPage(
       name: Routes.home,
