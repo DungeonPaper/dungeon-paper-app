@@ -1,4 +1,5 @@
 import 'package:dungeon_paper/app/widgets/chips/item_amount_chip.dart';
+import 'package:dungeon_paper/app/widgets/chips/item_armor_chip.dart';
 import 'package:dungeon_paper/app/widgets/chips/item_damage_chip.dart';
 import 'package:dungeon_paper/app/widgets/chips/item_weight_chip.dart';
 import 'package:dungeon_paper/app/widgets/chips/tag_chip.dart';
@@ -47,6 +48,10 @@ class ItemCard extends StatelessWidget {
         ],
         if (item.weight > 0) ...[
           ItemWeightChip(item: item),
+          const SizedBox(width: 4),
+        ],
+        if (item.armor > 0) ...[
+          ItemArmorChip(item: item),
           const SizedBox(width: 4),
         ],
         if (item.amount != 1) ItemAmountChip(item: item),

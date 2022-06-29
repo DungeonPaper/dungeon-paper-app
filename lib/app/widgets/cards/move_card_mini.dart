@@ -31,7 +31,7 @@ class MoveCardMini extends StatelessWidget {
         MoveCategoryChip(
           category: move.category,
           advancedLevelDisplay: advancedLevelDisplay,
-        )
+        ),
       ],
       dice: move.dice,
       icon: showIcon ? Icon(move.icon, size: 16) : null,
