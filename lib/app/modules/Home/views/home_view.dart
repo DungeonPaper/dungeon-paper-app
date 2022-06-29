@@ -20,6 +20,7 @@ import '../../../../generated/l10n.dart';
 // import '../../../widgets/atoms/debug_menu.dart';
 import '../../../data/services/character_service.dart';
 import 'home_character_view.dart';
+import 'home_fab.dart';
 import 'home_nav_bar.dart';
 
 class HomeView extends GetView<CharacterService> with UserServiceMixin, LoadingServiceMixin {
@@ -27,10 +28,10 @@ class HomeView extends GetView<CharacterService> with UserServiceMixin, LoadingS
 
   @override
   Widget build(BuildContext context) {
-    return Obx(
-      () => Scaffold(
-        appBar: const HomeAppBar(),
-        body: loadingService.loadingUser || loadingService.loadingCharacters
+    return Scaffold(
+      appBar: const HomeAppBar(),
+      body: Obx(
+        () => loadingService.loadingUser || loadingService.loadingCharacters
             ? const HomeLoaderView()
             : PageView(
                 controller: controller.pageController,
@@ -40,52 +41,11 @@ class HomeView extends GetView<CharacterService> with UserServiceMixin, LoadingS
                   HomeCharacterJournalView(),
                 ],
               ),
-        floatingActionButton: userService.isLoggedIn
-            ? Builder(
-                builder: (context) {
-                  const pageNum = 2;
-                  final direction = controller.page - pageNum.toDouble();
-                  final distance = direction.abs();
-                  final inPageRange = distance <= 0.5;
-                  const duration = Duration(milliseconds: 250);
-
-                  return AnimatedScale(
-                    scale: inPageRange ? 1.0 : 0.0,
-                    duration: duration,
-                    child: AnimatedOpacity(
-                      opacity: inPageRange ? 1.0 : 0.0,
-                      duration: duration,
-                      child: AdvancedFloatingActionButton.extended(
-                        label: AnimatedScale(
-                          scale: inPageRange ? 1.0 : 0.0,
-                          duration: duration,
-                          child: Text(
-                            S.current.createGeneric(Note),
-                          ),
-                        ),
-                        icon: AnimatedScale(
-                          scale: inPageRange ? 1.0 : 0.0,
-                          duration: duration,
-                          child: const Icon(Icons.add),
-                        ),
-                        onPressed: inPageRange
-                            ? ModelPages.openNotePage(
-                                note: null,
-                                onSave: (note) => controller.updateCharacter(
-                                  CharacterUtils.addByType<Note>(controller.current!, [note]),
-                                ),
-                              )
-                            : null,
-                      ),
-                    ),
-                  );
-                },
-              )
-            : null,
-        bottomNavigationBar: Obx(
-          () => HomeNavBar(pageController: controller.pageController),
-        ),
       ),
+      floatingActionButton: Obx(
+        () => userService.isLoggedIn ? const HomeFAB() : Container(),
+      ),
+      bottomNavigationBar: HomeNavBar(pageController: controller.pageController),
     );
   }
 }

@@ -10,19 +10,32 @@ import '../models/character.dart';
 import 'loading_service.dart';
 
 class CharacterService extends GetxService with LoadingServiceMixin {
-  final all = <String, Character>{}.obs;
-  final _current = Rx<String?>(null);
+  static CharacterService find() => Get.find();
 
-  final _pageController = PageController(initialPage: 1).obs;
-  final lastIntPage = 0.obs;
+  final all = <String, Character>{}.obs;
+  final _currentKey = Rx<String?>(null);
+  final _pageController = PageController(initialPage: 1);
   StreamSubscription? _sub;
 
-  PageController get pageController => _pageController.value;
+  @override
+  void onInit() async {
+    super.onInit();
+    // pageController.addListener(refreshPage);
+    await registerCharacterListener();
+  }
+
+  @override
+  void onClose() {
+    // pageController.removeListener(refreshPage);
+    _sub?.cancel();
+  }
+
+  PageController get pageController => _pageController;
   double get page => pageController.hasClients && pageController.positions.length == 1
       ? pageController.page ?? 0
       : 0;
 
-  Character? get current => _current.value != null ? all[_current.value] : null;
+  Character? get current => _currentKey.value != null ? all[_currentKey.value] : null;
 
   List<Character> get allAsList => all.values.toList();
 
@@ -39,14 +52,25 @@ class CharacterService extends GetxService with LoadingServiceMixin {
     return out;
   }
 
+  Iterable<Character> get charsByLastUsed {
+    final copy = [...all.values];
+    copy.sort(dateComparator(order: SortOrder.desc, parse: (char) => char?.meta.data?.lastUsed));
+    return copy;
+  }
+
+  Future<void> registerCharacterListener() async {
+    _sub?.cancel();
+    _sub = StorageHandler.instance.collectionListener('Characters', charsListener);
+  }
+
   void clear() {
     all.clear();
-    _current.value = null;
+    _currentKey.value = null;
   }
 
   void setCurrent(String key) {
     if (all.containsKey(key)) {
-      _current.value = key;
+      _currentKey.value = key;
       updateCharacter(
         current!.copyWith(
           meta: current!.meta.copyWith(
@@ -56,59 +80,28 @@ class CharacterService extends GetxService with LoadingServiceMixin {
     }
   }
 
-  Iterable<Character> get charsByLastUsed {
-    final copy = [...all.values];
-    copy.sort(dateComparator(order: SortOrder.desc, parse: (char) => char?.meta.data?.lastUsed));
-    return copy;
-  }
-
-  @override
-  void onInit() async {
-    super.onInit();
-    pageController.addListener(refreshPage);
-    await registerCharacterListener();
-  }
-
-  Future<void> registerCharacterListener() async {
-    _sub?.cancel();
-    _sub = StorageHandler.instance.collectionListener('Characters', charsListener);
-  }
-
   void charsListener(List<DocData> json) {
     var list = json.map((c) => Character.fromJson(c));
 
     all.addAll(Map.fromIterable(list, key: (c) => c.key));
     loadingService.loadingCharacters = false;
 
-    if (all.isNotEmpty && _current.value == null) {
+    if (all.isNotEmpty && _currentKey.value == null) {
       final hasLastChar = all.values.any((c) => c.meta.data?.lastUsed != null);
       if (hasLastChar) {
         final lastChar = charsByLastUsed.first;
-        _current.value = lastChar.key;
+        _currentKey.value = lastChar.key;
       } else {
-        _current.value = all.keys.first;
+        _currentKey.value = all.keys.first;
       }
     }
   }
-
-  void refreshPage() {
-    _current.refresh();
-    _pageController.refresh();
-    if (page == page.toInt()) {
-      lastIntPage.value = page.toInt();
-    }
-  }
-
-  // @override
-  // void onReady() {
-  //   super.onReady();
-  // }
 
   void updateCharacter(Character character, {bool switchToCharacter = false}) {
     // (StorageHandler.instance.delegate as LocalStorageDelegate).storage.collection('Characters');
     all[character.key] = character;
     StorageHandler.instance.update('Characters', character.key, character.toJson());
-    if (switchToCharacter || _current.value == null || !all.containsKey(_current.value)) {
+    if (switchToCharacter || _currentKey.value == null || !all.containsKey(_currentKey.value)) {
       setCurrent(character.key);
     }
     debugPrint('Updated char: ${character.key} (${character.displayName})');
@@ -118,8 +111,8 @@ class CharacterService extends GetxService with LoadingServiceMixin {
   void createCharacter(Character character, {bool switchToCharacter = false}) {
     all[character.key] = character;
     StorageHandler.instance.create('Characters', character.key, character.toJson());
-    if (switchToCharacter || _current.value == null) {
-      _current.value = character.key;
+    if (switchToCharacter || _currentKey.value == null) {
+      _currentKey.value = character.key;
     }
     debugPrint('Created char: ${character.key} (${character.displayName})');
     debugPrint(character.toRawJson());
@@ -128,18 +121,10 @@ class CharacterService extends GetxService with LoadingServiceMixin {
   void deleteCharacter(Character character) {
     all.remove(character.key);
     StorageHandler.instance.delete('Characters', character.key);
-    if (character.key == _current.value) {
-      _current.value = all.keys.first;
+    if (character.key == _currentKey.value) {
+      _currentKey.value = all.keys.first;
     }
     debugPrint('Deleted char: ${character.key} (${character.displayName})');
-  }
-
-  static CharacterService find() => Get.find();
-
-  @override
-  void onClose() {
-    pageController.removeListener(refreshPage);
-    _sub?.cancel();
   }
 
   void updateAll(Iterable<Character> chars) {
