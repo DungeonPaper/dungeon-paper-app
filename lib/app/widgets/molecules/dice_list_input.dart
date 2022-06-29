@@ -73,8 +73,10 @@ class _DiceListInputState extends State<DiceListInput> {
   void _refreshGuess() {
     if (widget.guessFrom.isNotEmpty) {
       final guessStr = widget.guessFrom.join(' ');
-      guesses = dw.Dice.guessFromString(guessStr).toSet();
-      controller.value = [...controller.value];
+      setState(() {
+        guesses = dw.Dice.guessFromString(guessStr).toSet();
+        // controller.value = [...controller.value];
+      });
     }
   }
 
