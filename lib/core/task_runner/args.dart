@@ -16,10 +16,11 @@ enum Device {
 class ArgOptions {
   ArgOptions({
     this.help = false,
-    this.test = true,
-    this.build = true,
-    this.push = true,
-    this.install = true,
+    this.test = false,
+    this.build = false,
+    this.bundle = false,
+    this.push = false,
+    this.install = false,
     required this.device,
     Version? version,
     this.platform = Device.all,
@@ -37,6 +38,7 @@ class ArgOptions {
       help: res['help'],
       test: res['test'],
       build: res['build'],
+      bundle: res['bundle'],
       push: res['push'],
       install: res['install'],
       platform: Device.values.firstWhere(
@@ -50,6 +52,7 @@ class ArgOptions {
   bool help;
   bool test;
   bool build;
+  bool bundle;
   bool push;
   bool install;
   String? device;
@@ -76,6 +79,7 @@ class ArgOptions {
   Map<String, bool> get mapLabels => {
         'Test': test,
         'Build': build,
+        'Bundle': bundle,
         'Push': push,
         'Install': install,
       };
@@ -90,6 +94,11 @@ final argParser = ArgParser()
   ..addFlag(
     'build',
     abbr: 'b',
+    defaultsTo: false,
+  )
+  ..addFlag(
+    'bundle',
+    abbr: 'u',
     defaultsTo: false,
   )
   ..addFlag(

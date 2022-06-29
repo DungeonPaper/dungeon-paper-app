@@ -34,6 +34,7 @@
       "args": [
         "lib/core/task_runner/deploy.dart",
         "--build",
+        "--bundle",
         "-l",
         "${input:platform}",
         "--push",

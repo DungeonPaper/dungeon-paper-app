@@ -39,14 +39,20 @@ final pushAndroid = TaskGroup(
   ],
 );
 
-final buildAndroid = TaskGroup(
-  condition: (o) => o.build == true,
+final bundleAndroid = TaskGroup(
+  condition: (o) => o.bundle == true,
   tasks: [
     LogTask((o) => 'Building App Bundle'),
     ProcessTask.staticArgs(
       'flutter',
       args: ['build', 'appbundle', '--target-platform', 'android-arm,android-arm64,android-x64'],
     ),
+  ],
+);
+
+final buildAndroid = TaskGroup(
+  condition: (o) => o.build == true,
+  tasks: [
     LogTask((o) => 'Building APK'),
     ProcessTask.staticArgs(
       'flutter',
@@ -59,6 +65,7 @@ final android = DeviceTaskGroup(
   device: Device.android,
   tasks: [
     buildAndroid,
+    bundleAndroid,
     pushAndroid,
     installAndroid,
   ],
