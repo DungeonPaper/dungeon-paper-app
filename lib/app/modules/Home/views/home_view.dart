@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:dungeon_paper/app/data/models/note.dart';
 import 'package:dungeon_paper/app/data/services/loading_service.dart';
 import 'package:dungeon_paper/app/data/services/user_service.dart';
@@ -41,16 +43,9 @@ class HomeView extends GetView<CharacterService> with UserServiceMixin, LoadingS
             ? Builder(
                 builder: (context) {
                   const pageNum = 2;
-
-                  /// negative = page is going down
-                  /// positive = page is going up
-                  final direction = controller.page - controller.lastIntPage.toDouble();
+                  final direction = controller.page - pageNum.toDouble();
                   final distance = direction.abs();
-                  final inPageRange = direction >= 0.0
-                      ? controller.page <= pageNum &&
-                          controller.page > pageNum - 1 &&
-                          (distance == 0.0 || distance >= 0.5)
-                      : controller.page >= pageNum - 1 && (distance == 0.0 || distance <= 0.5);
+                  final inPageRange = distance <= 0.5;
                   const duration = Duration(milliseconds: 250);
 
                   return AnimatedScale(
@@ -60,8 +55,18 @@ class HomeView extends GetView<CharacterService> with UserServiceMixin, LoadingS
                       opacity: inPageRange ? 1.0 : 0.0,
                       duration: duration,
                       child: AdvancedFloatingActionButton.extended(
-                        label: Text(S.current.createGeneric(Note)),
-                        icon: const Icon(Icons.add),
+                        label: AnimatedScale(
+                          scale: inPageRange ? 1.0 : 0.0,
+                          duration: duration,
+                          child: Text(
+                            S.current.createGeneric(Note),
+                          ),
+                        ),
+                        icon: AnimatedScale(
+                          scale: inPageRange ? 1.0 : 0.0,
+                          duration: duration,
+                          child: const Icon(Icons.add),
+                        ),
                         onPressed: inPageRange
                             ? ModelPages.openNotePage(
                                 note: null,

@@ -57,7 +57,7 @@ class _RollDiceViewState extends State<RollDiceView> with TickerProviderStateMix
 
   @override
   Widget build(BuildContext context) {
-    final bgColor = Colors.black.withOpacity(0.85);
+    const bgColor = Colors.black54;
     return BackdropFilter(
       filter: ImageFilter.blur(sigmaX: 5, sigmaY: 5),
       // blendMode: BlendMode.darken,

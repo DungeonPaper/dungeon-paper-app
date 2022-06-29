@@ -1,3 +1,4 @@
+import 'package:dungeon_paper/app/routes/app_pages.dart';
 import 'package:dungeon_paper/app/themes/themes.dart';
 import 'package:dungeon_paper/app/widgets/atoms/user_menu.dart';
 import 'package:dungeon_paper/generated/l10n.dart';
@@ -23,9 +24,12 @@ class HomeAppBar extends StatelessWidget implements PreferredSizeWidget {
             : S.current.themeTurnLight,
       ),
       title: Text(S.current.appName),
-      actions: const [
-        // DebugMenu(),
-        UserMenu(),
+      actions: [
+        IconButton(
+          icon: const Icon(Icons.search),
+          onPressed: () => Get.toNamed(Routes.universalSearch),
+        ),
+        const UserMenu(),
       ],
       automaticallyImplyLeading: false,
     );

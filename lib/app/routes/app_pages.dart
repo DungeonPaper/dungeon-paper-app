@@ -1,6 +1,9 @@
+import 'package:dungeon_paper/app/routes/custom_transitions.dart';
 import 'package:flutter/widgets.dart';
 
 import 'package:get/get.dart';
+import 'package:get/get_navigation/src/routes/circular_reveal_clipper.dart';
+import 'package:get/get_navigation/src/routes/default_transitions.dart';
 
 import '../data/models/item.dart';
 import '../data/models/meta.dart';
@@ -40,6 +43,8 @@ import '../modules/Settings/bindings/settings_binding.dart';
 import '../modules/Settings/views/settings_view.dart';
 import '../modules/StartingGearForm/bindings/starting_gear_form_binding.dart';
 import '../modules/StartingGearForm/views/starting_gear_form_view.dart';
+import '../modules/UniversalSearch/bindings/universal_search_binding.dart';
+import '../modules/UniversalSearch/views/universal_search_view.dart';
 import '../widgets/views/roll_dice_view.dart';
 
 part 'app_routes.dart';
@@ -55,7 +60,7 @@ class AppPages {
 
   static final routes = [
     GetPage(
-      name: _Paths.login,
+      name: Routes.login,
       page: () => const LoginView(),
       binding: LoginBinding(),
     ),
@@ -87,6 +92,11 @@ class AppPages {
       name: Routes.rollDice,
       page: () => RollDiceView(dice: Get.arguments),
       opaque: false,
+      fullscreenDialog: true,
+      customTransition: CustomTransitions.circularReveal(
+        alignment: Alignment.bottomCenter,
+      ),
+      transition: Transition.circularReveal,
     ),
 
     //
@@ -196,9 +206,31 @@ class AppPages {
       preventDuplicates: false,
     ),
     GetPage(
-      name: _Paths.classAlignments,
+      name: Routes.classAlignments,
       page: () => const ClassAlignmentsView(),
       binding: ClassAlignmentsBinding(),
     ),
+    GetPage(
+      name: Routes.universalSearch,
+      page: () => const UniversalSearchView(),
+      binding: UniversalSearchBinding(),
+      opaque: false,
+      fullscreenDialog: true,
+      customTransition: CustomTransitions.circularReveal(
+        alignment: Alignment.topRight,
+        offset: const Offset(-76, 64),
+      ),
+      transition: Transition.circularReveal,
+      preventDuplicates: false,
+    ),
   ];
+}
+
+class CustomTransitions {
+  static CustomTransition circularReveal({
+    Offset? offset,
+    Alignment? alignment,
+  }) {
+    return CustomCircularRevealTransition(offset: offset, alignment: alignment);
+  }
 }

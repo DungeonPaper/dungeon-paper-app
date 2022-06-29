@@ -37,6 +37,7 @@ abstract class Routes {
   static const createCharacterStartingGear = _Paths.createCharacter + _Paths.startingGear;
   static const hpDialog = _Paths.hpDialog;
   static const classAlignments = _Paths.classAlignments;
+  static const universalSearch = _Paths.universalSearch;
 }
 
 abstract class _Paths {
@@ -65,4 +66,5 @@ abstract class _Paths {
   static const bio = '/biography';
   static const hpDialog = '/edit-hp';
   static const classAlignments = '/class-alignments';
+  static const universalSearch = '/universal-search';
 }
