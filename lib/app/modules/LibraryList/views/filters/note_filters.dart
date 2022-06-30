@@ -46,7 +46,7 @@ class NoteFilters extends EntityFilters<Note> {
         note.title,
         note.description,
         ...note.tags.map((t) => t.name),
-        ...note.tags.map((t) => t.value),
+        ...note.tags.map((t) => t.value?.toString()),
       ].any((el) => cleanStr(el ?? '').contains(cleanStr(search!)))) {
         return false;
       }

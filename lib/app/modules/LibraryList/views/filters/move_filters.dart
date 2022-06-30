@@ -111,8 +111,8 @@ class MoveFilters extends EntityFilters<Move> {
         move.description,
         move.explanation,
         ...move.tags.map((t) => t.name),
-        ...move.tags.map((t) => t.value),
-      ].any((el) => cleanStr(el).contains(cleanStr(search!)))) {
+        ...move.tags.map((t) => t.value?.toString()),
+      ].any((el) => cleanStr(el ?? '').contains(cleanStr(search!)))) {
         return false;
       }
     }

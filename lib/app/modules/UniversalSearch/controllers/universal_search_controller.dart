@@ -17,33 +17,55 @@ import 'package:dungeon_paper/generated/l10n.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
+enum SourceType {
+  character,
+  myLibrary,
+  builtInLibrary,
+}
+
 class UniversalSearchController extends GetxController
     with RepositoryServiceMixin, CharacterServiceMixin {
   final _search = TextEditingController(text: '').obs;
 
   TextEditingController get search => _search.value;
 
-  Map<Type, List<List>> get sources => {
-        Move: [
-          char.moves,
-          repo.my.moves.values.toList(),
-          repo.builtIn.moves.values.toList(),
+  bool get hasCharacter => charService.all.isNotEmpty;
+
+  final enabledSources =
+      <SourceType>{SourceType.character, SourceType.myLibrary, SourceType.builtInLibrary}.obs;
+
+  Map<Type, List<Iterable>> get sources => {
+        Move: <Iterable<Move>>[
+          sourceEnabled(SourceType.character) ? charService.current?.moves ?? [] : [],
+          sourceEnabled(SourceType.myLibrary) ? repo.my.moves.values : [],
+          sourceEnabled(SourceType.builtInLibrary) ? repo.builtIn.moves.values : [],
         ],
-        Spell: [
-          char.spells,
-          repo.my.spells.values.toList(),
-          repo.builtIn.spells.values.toList(),
+        Spell: <Iterable<Spell>>[
+          sourceEnabled(SourceType.character) ? charService.current?.spells ?? [] : [],
+          sourceEnabled(SourceType.myLibrary) ? repo.my.spells.values : [],
+          sourceEnabled(SourceType.builtInLibrary) ? repo.builtIn.spells.values : [],
         ],
-        Item: [
-          char.items,
-          repo.my.items.values.toList(),
-          repo.builtIn.items.values.toList(),
+        Item: <Iterable<Item>>[
+          sourceEnabled(SourceType.character) ? charService.current?.items ?? [] : [],
+          sourceEnabled(SourceType.myLibrary) ? repo.my.items.values : [],
+          sourceEnabled(SourceType.builtInLibrary) ? repo.builtIn.items.values : [],
         ],
-        CharacterClass: [
-          repo.my.classes.values.toList(),
-          repo.builtIn.classes.values.toList(),
+        CharacterClass: <Iterable<CharacterClass>>[
+          sourceEnabled(SourceType.myLibrary) ? repo.my.classes.values : [],
+          sourceEnabled(SourceType.builtInLibrary) ? repo.builtIn.classes.values : [],
         ],
       };
+
+  void toggleSource(SourceType type, [bool? value]) {
+    final _value = value ?? !sourceEnabled(type);
+    if (_value) {
+      enabledSources.add(type);
+    } else {
+      enabledSources.remove(type);
+    }
+  }
+
+  bool sourceEnabled(SourceType type) => enabledSources.contains(type);
 
   @override
   void onInit() {
@@ -53,9 +75,10 @@ class UniversalSearchController extends GetxController
 
   List<T> getSource<T>() => flatten(sources[T] as List<List<T>>);
 
-  List<T> flatten<T>(List<List<T>> list) => list.fold(<T>[], (all, current) => all + current);
+  List<T> flatten<T>(List<Iterable<T>> list) =>
+      list.fold(<T>[], (all, current) => all..addAll(current));
 
-  Future<List<List>> get results {
+  Future<List<List>> get results async {
     if (search.text.trim().isEmpty) {
       return Future.value([]);
     }
@@ -85,6 +108,7 @@ class UniversalSearchController extends GetxController
           ? [SearchSeparator(S.current.entityPlural(list.first.runtimeType)), ...list]
           : list;
     });
+
     return Future.value(map.toList());
   }
 
