@@ -44,7 +44,7 @@ class SearchField extends StatelessWidget {
                 decoration: InputDecoration(
                   filled: false,
                   hintText: hintText ?? S.current.searchPlaceholder,
-                  suffixIcon: const Icon(Icons.search),
+                  prefixIcon: const Icon(Icons.search),
                 ),
               ),
             ),

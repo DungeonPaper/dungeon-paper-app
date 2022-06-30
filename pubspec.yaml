@@ -54,6 +54,7 @@ dependencies:
   path_provider: ^2.0.9
   popover: ^0.2.6+3
   shared_preferences: ^2.0.13
+  skeleton_loader: ^2.0.0+4
   url_launcher: ^6.0.20
   uuid: ^3.0.5
   wakelock: ^0.6.1+1

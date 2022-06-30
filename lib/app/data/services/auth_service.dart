@@ -37,6 +37,7 @@ class AuthService extends GetxService with UserServiceMixin, LoadingServiceMixin
   @override
   void onInit() {
     super.onInit();
+
     auth.userChanges().listen((user) {
       debugPrint('user changed $user');
 

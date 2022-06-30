@@ -9,7 +9,9 @@ class HomeCharacterHeaderView extends GetView<CharacterService> {
   @override
   Widget build(BuildContext context) {
     return Center(
-      child: CharacterAvatar.squircle(size: 176),
+      child: CharacterAvatar.squircle(size: avatarSize),
     );
   }
+
+  static const avatarSize = 176.0;
 }

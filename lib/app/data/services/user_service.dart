@@ -15,15 +15,24 @@ class UserService extends GetxService
   final _current = User.guest().obs;
   User get current => _current.value;
 
+  Future<void> loadBuiltInRepo() {
+    repo.builtIn.clear();
+    repo.builtIn.clearListeners();
+    return repo.builtIn.init();
+  }
+
+  Future<void> loadMyRepo() {
+    repo.my.clear();
+    repo.my.clearListeners();
+    return repo.my.init(ignoreCache: true);
+  }
+
   Future<void> loadUserData(fba.User user) async {
     final email = user.email;
     debugPrint('loading user data for $email');
     StorageHandler.instance.currentDelegate = 'firestore';
     StorageHandler.instance.setCollectionPrefix('Data/$email');
-    repo.my.clear();
-    repo.my.clearListeners();
-    await repo.builtIn.init();
-    await repo.my.init(ignoreCache: true);
+    await loadMyRepo();
     final dbUser = await FirestoreDelegate().getDocument('Data', email!);
     _current.value = User.fromJson(dbUser!);
     charService.registerCharacterListener();
@@ -36,10 +45,7 @@ class UserService extends GetxService
   void loadGuestData() async {
     StorageHandler.instance.currentDelegate = 'local';
     StorageHandler.instance.setCollectionPrefix(null);
-    repo.my.clear();
-    repo.my.clearListeners();
-    await repo.builtIn.init();
-    await repo.my.init(ignoreCache: true);
+    await loadMyRepo();
     charService.registerCharacterListener();
   }
 
@@ -47,6 +53,12 @@ class UserService extends GetxService
     authService.logout();
     charService.clear();
     _current.value = User.guest();
+  }
+
+  @override
+  void onInit() {
+    super.onInit();
+    loadBuiltInRepo();
   }
 }
 

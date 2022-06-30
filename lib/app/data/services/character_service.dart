@@ -85,6 +85,7 @@ class CharacterService extends GetxService with LoadingServiceMixin {
 
     all.addAll(Map.fromIterable(list, key: (c) => c.key));
     loadingService.loadingCharacters = false;
+    loadingService.afterFirstLoad = false;
 
     if (all.isNotEmpty && _currentKey.value == null) {
       final hasLastChar = all.values.any((c) => c.meta.data?.lastUsed != null);

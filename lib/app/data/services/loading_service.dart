@@ -5,6 +5,7 @@ enum LoadKey {
   characters,
   repo,
   library,
+  afterFirstLoad,
 }
 
 class LoadingService extends GetxService {
@@ -24,6 +25,9 @@ class LoadingService extends GetxService {
 
   bool get loadingLibrary => _map[LoadKey.library] == true;
   set loadingLibrary(bool value) => _map[LoadKey.library] = value;
+
+  bool get afterFirstLoad => _map[LoadKey.afterFirstLoad] == true;
+  set afterFirstLoad(bool value) => _map[LoadKey.afterFirstLoad] = value;
 }
 
 mixin LoadingServiceMixin {

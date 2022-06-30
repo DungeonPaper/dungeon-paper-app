@@ -25,16 +25,22 @@ class UniversalSearchView extends GetView<UniversalSearchController> {
       child: Scaffold(
         backgroundColor: Colors.black54,
         appBar: AppBar(
-          title: Padding(
-            padding: const EdgeInsets.only(right: 28),
-            child: SearchField(
-              controller: controller.search,
-              autofocus: true,
-            ),
+          // leading: Container(),
+          leadingWidth: 0,
+          title: SearchField(
+            controller: controller.search,
+            autofocus: true,
           ),
           centerTitle: true,
           backgroundColor: Colors.transparent,
-          // automaticallyImplyLeading: false,
+          automaticallyImplyLeading: false,
+          actions: [
+            IconButton(
+              icon: Icon(Icons.close),
+              // onPressed: () => controller.search.clear(),
+              onPressed: () => Get.back(),
+            ),
+          ],
         ),
         body: Obx(
           () => ListView.builder(

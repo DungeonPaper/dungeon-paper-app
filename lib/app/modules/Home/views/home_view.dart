@@ -1,4 +1,3 @@
-
 import 'package:dungeon_paper/app/data/services/loading_service.dart';
 import 'package:dungeon_paper/app/data/services/user_service.dart';
 import 'package:dungeon_paper/app/modules/Home/views/home_app_bar.dart';
@@ -23,16 +22,18 @@ class HomeView extends GetView<CharacterService> with UserServiceMixin, LoadingS
     return Scaffold(
       appBar: const HomeAppBar(),
       body: Obx(
-        () => loadingService.loadingUser || loadingService.loadingCharacters
-            ? const HomeLoaderView()
-            : PageView(
-                controller: controller.pageController,
-                children: const [
-                  HomeCharacterActionsView(),
-                  HomeCharacterView(),
-                  HomeCharacterJournalView(),
-                ],
-              ),
+        () {
+          return isLoading
+              ? const HomeLoaderView()
+              : PageView(
+                  controller: controller.pageController,
+                  children: const [
+                    HomeCharacterActionsView(),
+                    HomeCharacterView(),
+                    HomeCharacterJournalView(),
+                  ],
+                );
+        },
       ),
       floatingActionButton: Obx(
         () => userService.isLoggedIn ? const HomeFAB() : Container(),
@@ -40,4 +41,8 @@ class HomeView extends GetView<CharacterService> with UserServiceMixin, LoadingS
       bottomNavigationBar: HomeNavBar(pageController: controller.pageController),
     );
   }
+
+  bool get isLoading =>
+      !loadingService.afterFirstLoad &&
+      (loadingService.loadingUser || loadingService.loadingCharacters);
 }
