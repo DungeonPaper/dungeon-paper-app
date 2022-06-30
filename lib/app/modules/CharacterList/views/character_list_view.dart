@@ -3,6 +3,7 @@ import 'package:dungeon_paper/app/data/services/character_service.dart';
 import 'package:dungeon_paper/app/model_utils/character_utils.dart';
 import 'package:dungeon_paper/app/routes/app_pages.dart';
 import 'package:dungeon_paper/app/themes/button_themes.dart';
+import 'package:dungeon_paper/app/widgets/atoms/advanced_floating_action_button.dart';
 import 'package:dungeon_paper/app/widgets/atoms/character_avatar.dart';
 import 'package:dungeon_paper/app/widgets/dialogs/confirm_delete_dialog.dart';
 import 'package:dungeon_paper/app/widgets/menus/entity_edit_menu.dart';
@@ -23,6 +24,11 @@ class CharacterListPageView extends GetView<CharacterService> {
       appBar: AppBar(
         title: Text(S.current.characterListTitle),
         centerTitle: true,
+      ),
+      floatingActionButton: AdvancedFloatingActionButton.extended(
+        onPressed: () => Get.toNamed(Routes.createCharacter),
+        label: Text(S.current.createCharacterAddButton),
+        icon: const Icon(Icons.add),
       ),
       body: Obx(
         () => ListView(
@@ -74,19 +80,6 @@ class CharacterListPageView extends GetView<CharacterService> {
                     ),
                 ],
               ),
-            const SizedBox(height: 8),
-            SizedBox(
-              height: 48,
-              child: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 8),
-                child: ElevatedButton.icon(
-                  style: ButtonThemes.primaryElevated(context),
-                  onPressed: () => Get.toNamed(Routes.createCharacter),
-                  label: Text(S.current.createCharacterAddButton),
-                  icon: const Icon(Icons.add),
-                ),
-              ),
-            ),
           ],
         ),
       ),

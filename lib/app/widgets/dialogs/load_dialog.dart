@@ -52,6 +52,7 @@ class _LoadDialogState extends State<LoadDialog> {
                   controller.text = '';
                 }
               }),
+              dense: true,
               visualDensity: VisualDensity.compact,
               leading: SizedBox(
                 width: 20,

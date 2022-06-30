@@ -142,7 +142,7 @@ class UserMenuPopover extends GetView<CharacterService> with AuthServiceMixin {
                               const Divider(),
                               ListTile(
                                 visualDensity: VisualDensity.compact,
-                                title: Text(S.current.addGeneric(S.current.entity(Character))),
+                                title: Text(S.current.createGeneric(S.current.entity(Character))),
                                 leading: const Icon(Icons.person_add),
                                 onTap: () {
                                   Get.back();

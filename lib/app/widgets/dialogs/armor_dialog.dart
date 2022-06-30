@@ -53,6 +53,7 @@ class _ArmorDialogState extends State<ArmorDialog> {
                 }
               }),
               visualDensity: VisualDensity.compact,
+              dense: true,
               leading: SizedBox(
                 width: 20,
                 child: Checkbox(

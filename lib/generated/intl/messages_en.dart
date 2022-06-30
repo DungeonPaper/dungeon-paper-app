@@ -389,7 +389,7 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage(
                 "Tap to generate a random name"),
         "createCharacterAddButton":
-            MessageLookupByLibrary.simpleMessage("Add Character"),
+            MessageLookupByLibrary.simpleMessage("Create Character"),
         "createCharacterAvatarFieldLabel":
             MessageLookupByLibrary.simpleMessage("Photo URL"),
         "createCharacterAvatarFieldPlaceholder":

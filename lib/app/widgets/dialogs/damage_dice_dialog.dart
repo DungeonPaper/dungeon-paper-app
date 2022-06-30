@@ -52,6 +52,7 @@ class _DamageDiceDialogState extends State<DamageDiceDialog> {
               onTap: () => setState(() {
                 useDefault = !useDefault;
               }),
+              dense: true,
               visualDensity: VisualDensity.compact,
               leading: SizedBox(
                 width: 20,

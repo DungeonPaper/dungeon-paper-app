@@ -980,10 +980,10 @@ class S {
     );
   }
 
-  /// `Add Character`
+  /// `Create Character`
   String get createCharacterAddButton {
     return Intl.message(
-      'Add Character',
+      'Create Character',
       name: 'createCharacterAddButton',
       desc: '',
       args: [],
