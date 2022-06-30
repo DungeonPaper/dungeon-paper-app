@@ -135,19 +135,19 @@ class _CardByType extends StatelessWidget {
       case Move:
         return MoveCard(
           move: result,
-          showStar: false,
+          showStar: result.favorited,
           highlightWords: highlightWords,
         );
       case Spell:
         return SpellCard(
           spell: result,
-          showStar: false,
+          showStar: result.prepared,
           highlightWords: highlightWords,
         );
       case Item:
         return ItemCard(
           item: result,
-          showStar: false,
+          showStar: result.equipped,
           hideCount: true,
           highlightWords: highlightWords,
         );
