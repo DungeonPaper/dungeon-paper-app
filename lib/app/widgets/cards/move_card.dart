@@ -19,6 +19,7 @@ class MoveCard extends StatelessWidget {
     this.maxContentHeight,
     this.expandable = true,
     this.advancedLevelDisplay = AdvancedLevelDisplay.short,
+    this.highlightWords = const [],
   }) : super(key: key);
 
   final Move move;
@@ -32,6 +33,7 @@ class MoveCard extends StatelessWidget {
   final double? maxContentHeight;
   final bool expandable;
   final AdvancedLevelDisplay advancedLevelDisplay;
+  final List<String> highlightWords;
 
   @override
   Widget build(BuildContext context) {
@@ -50,6 +52,7 @@ class MoveCard extends StatelessWidget {
       onStarChanged: (favorited) => onSave?.call(move.copyWithInherited(favorited: favorited)),
       initiallyExpanded: initiallyExpanded,
       actions: actions,
+      highlightWords: highlightWords,
       leading: [
         MoveCategoryChip(category: move.category, advancedLevelDisplay: advancedLevelDisplay),
       ],

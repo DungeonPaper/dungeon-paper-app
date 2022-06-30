@@ -1,5 +1,6 @@
 import 'package:dungeon_paper/app/widgets/atoms/custom_expansion_panel.dart';
 import 'package:dungeon_paper/app/widgets/atoms/roll_dice_button.dart';
+import 'package:dungeon_paper/core/utils/markdown_highlight.dart';
 import 'package:dungeon_paper/generated/l10n.dart';
 import 'package:dungeon_world_data/dice.dart';
 import 'package:flutter/material.dart';
@@ -29,6 +30,7 @@ class DynamicActionCard extends StatelessWidget {
     this.leading = const [],
     this.trailing = const [],
     this.expandable = true,
+    this.highlightWords = const [],
   }) : super(key: key);
 
   final bool expandable;
@@ -50,6 +52,7 @@ class DynamicActionCard extends StatelessWidget {
   final Iterable<Widget> actions;
   final Iterable<Widget> trailing;
   final Iterable<Widget> leading;
+  final List<String> highlightWords;
 
   @override
   Widget build(BuildContext context) {
@@ -87,7 +90,12 @@ class DynamicActionCard extends StatelessWidget {
           elevation: expanded.value ? 5 : 1,
           child: CustomExpansionPanel(
             expandable: expandable,
-            title: Text(title),
+            title: HighlightText(
+              title,
+              highlightWords: highlightWords,
+              normalTextStyle: Theme.of(context).textTheme.subtitle1,
+              textStyle: Theme.of(context).textTheme.subtitle1!,
+            ),
             expansionKey: expansionKey,
             onExpansion: (state) => expanded.value = state,
             initiallyExpanded: initiallyExpanded,
@@ -131,7 +139,11 @@ class DynamicActionCard extends StatelessWidget {
     return [
       // Divider(height: 16, color: dividerColor),
       description.isNotEmpty
-          ? MarkdownBody(data: description, onTapLink: (text, href, title) => launch(href!))
+          ? _renderMarkdown(
+              context,
+              description,
+              // style: Theme.of(context).textTheme.bodyText1,
+            )
           : Text(
               S.current.noDescription,
               style: Theme.of(context).textTheme.bodyText1,
@@ -142,7 +154,7 @@ class DynamicActionCard extends StatelessWidget {
           padding: const EdgeInsets.only(top: 16, bottom: 4),
           child: Text(S.current.explanation, style: Theme.of(context).textTheme.caption),
         ),
-        MarkdownBody(data: explanation!, onTapLink: (text, href, title) => launch(href!)),
+        _renderMarkdown(context, explanation!),
       ],
       Divider(height: 24, color: dividerColor),
       Row(
@@ -166,5 +178,85 @@ class DynamicActionCard extends StatelessWidget {
         ],
       )
     ];
+  }
+
+  MarkdownBody _renderMarkdown(BuildContext context, String text, {TextStyle? style}) {
+    return MarkdownBody(
+      data: _highlight(text),
+      onTapLink: (text, href, title) => launch(href!),
+      inlineSyntaxes: [HighlightSyntax()],
+      builders: {
+        'mark': HighlightBuilder(context, textStyle: style),
+      },
+    );
+  }
+
+  String _highlight(String text) {
+    for (final word in highlightWords) {
+      text = text.replaceAllMapped(
+        RegExp(word, caseSensitive: false),
+        (match) => '==${match[0]}==',
+      );
+    }
+    return text;
+  }
+}
+
+class HighlightText extends StatelessWidget {
+  const HighlightText(
+    this.text, {
+    super.key,
+    required this.highlightWords,
+    this.textStyle,
+    this.normalTextStyle,
+  });
+
+  final String text;
+  final TextStyle? textStyle;
+  final TextStyle? normalTextStyle;
+  final List<String> highlightWords;
+
+  @override
+  Widget build(BuildContext context) {
+    final _text = _highlight(text).split('==');
+    final normalStyle = normalTextStyle ?? Theme.of(context).textTheme.bodyMedium!;
+    final defaultHighlightStyle = HighlightBuilder.getDefaultHighlightStyle(context);
+    final highlightStyle = normalStyle.copyWith(
+      color: defaultHighlightStyle.color,
+      backgroundColor: defaultHighlightStyle.backgroundColor,
+      fontStyle: defaultHighlightStyle.fontStyle,
+    );
+    final words = highlightWords.map((word) => word.toLowerCase()).toSet();
+
+    return DefaultTextStyle.merge(
+      child: RichText(
+        text: TextSpan(
+          children: [
+            for (final word in _text)
+              if (words.contains(word.toLowerCase()))
+                TextSpan(
+                  text: word,
+                  style: highlightStyle,
+                )
+              else
+                TextSpan(
+                  text: word,
+                  style: normalStyle,
+                ),
+          ],
+          style: textStyle,
+        ),
+      ),
+    );
+  }
+
+  String _highlight(String text) {
+    for (final word in highlightWords) {
+      text = text.replaceAllMapped(
+        RegExp(word, caseSensitive: false),
+        (match) => '==${match[0]}==',
+      );
+    }
+    return text;
   }
 }

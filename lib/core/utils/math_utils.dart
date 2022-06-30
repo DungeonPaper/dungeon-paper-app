@@ -11,3 +11,6 @@ Iterable<int> range(int start, [int? end]) {
   final num _max = end ?? start;
   return Iterable.generate((_max - min).toInt(), (i) => min + i);
 }
+
+T avg<T extends num>(Iterable<T> values) =>
+    values.reduce((a, b) => a + b as T) / values.length as T;

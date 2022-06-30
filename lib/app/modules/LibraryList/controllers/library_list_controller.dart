@@ -182,6 +182,7 @@ class LibraryListController<T extends WithMeta, F extends EntityFilters<T>> exte
 abstract class EntityFilters<T> {
   void setSearch(String search);
   bool filter(T item);
+  double getScore(T item);
 
   final controller = StreamController<EntityFilters<T>>.broadcast();
 
@@ -192,6 +193,8 @@ abstract class EntityFilters<T> {
   int get activeFilterCount => filterActiveList.where((element) => element == true).length;
 
   int get totalFilterCount => filterActiveList.length;
+
+  int sortByScore(T a, T b) => getScore(b).compareTo(getScore(a));
 }
 
 abstract class LibraryListArguments<T extends WithMeta, F extends EntityFilters<T>> {

@@ -223,7 +223,7 @@ class AppPages {
     ),
     GetPage(
       name: Routes.universalSearch,
-      page: () => const UniversalSearchView(),
+      page: () => UniversalSearchView(),
       binding: UniversalSearchBinding(),
       opaque: false,
       fullscreenDialog: true,

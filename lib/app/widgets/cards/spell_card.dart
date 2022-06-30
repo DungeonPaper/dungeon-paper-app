@@ -17,6 +17,7 @@ class SpellCard extends StatelessWidget {
     this.expansionKey,
     this.maxContentHeight,
     this.expandable = true,
+    this.highlightWords = const [],
   }) : super(key: key);
 
   final Spell spell;
@@ -29,6 +30,7 @@ class SpellCard extends StatelessWidget {
   final PageStorageKey? expansionKey;
   final double? maxContentHeight;
   final bool expandable;
+  final List<String> highlightWords;
 
   @override
   Widget build(BuildContext context) {
@@ -48,6 +50,7 @@ class SpellCard extends StatelessWidget {
       initiallyExpanded: initiallyExpanded,
       actions: actions,
       expansionKey: expansionKey ?? PageStorageKey(spell.key),
+      highlightWords: highlightWords,
     );
   }
 }

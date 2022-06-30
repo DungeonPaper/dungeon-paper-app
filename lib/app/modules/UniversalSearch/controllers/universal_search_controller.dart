@@ -1,11 +1,17 @@
 import 'package:dungeon_paper/app/data/models/character_class.dart';
 import 'package:dungeon_paper/app/data/models/item.dart';
 import 'package:dungeon_paper/app/data/models/move.dart';
+import 'package:dungeon_paper/app/data/models/note.dart';
 import 'package:dungeon_paper/app/data/models/spell.dart';
 import 'package:dungeon_paper/app/data/services/character_service.dart';
 import 'package:dungeon_paper/app/data/services/repository_service.dart';
 import 'package:dungeon_paper/app/model_utils/model_key.dart';
 import 'package:dungeon_paper/app/model_utils/model_search.dart';
+import 'package:dungeon_paper/app/modules/LibraryList/views/filters/character_class_filters.dart';
+import 'package:dungeon_paper/app/modules/LibraryList/views/filters/item_filters.dart';
+import 'package:dungeon_paper/app/modules/LibraryList/views/filters/move_filters.dart';
+import 'package:dungeon_paper/app/modules/LibraryList/views/filters/note_filters.dart';
+import 'package:dungeon_paper/app/modules/LibraryList/views/filters/spell_filters.dart';
 import 'package:dungeon_paper/core/utils/list_utils.dart';
 import 'package:dungeon_paper/generated/l10n.dart';
 import 'package:flutter/material.dart';
@@ -49,26 +55,43 @@ class UniversalSearchController extends GetxController
 
   List<T> flatten<T>(List<List<T>> list) => list.fold(<T>[], (all, current) => all + current);
 
-  List get results {
+  Future<List<List>> get results {
     if (search.text.trim().isEmpty) {
-      return [];
+      return Future.value([]);
     }
     final entries = sources.entries;
     final map = enumerate(entries).map((e) {
-      final flattened = flatten(e.value.value);
-      final where = flattened.where((e) => searchFor(e.runtimeType, e, search.text));
-      final uniqueBy = where.uniqueBy((e) => keyFor(e));
-      if (uniqueBy.isEmpty) {
+      final list = flatten(e.value.value)
+          .where((e) => searchFor(e.runtimeType, e, search.text))
+          .uniqueBy((e) => keyFor(e));
+
+      if (list.isEmpty) {
         return [];
       }
+
+      final sorters = {
+        Move: (a, b) => MoveFilters(search: search.text, classKey: null).sortByScore(a, b),
+        Spell: (a, b) =>
+            SpellFilters(search: search.text, classKey: null, level: null).sortByScore(a, b),
+        Item: (a, b) => ItemFilters(search: search.text).sortByScore(a, b),
+        CharacterClass: (a, b) => CharacterClassFilters(search: search.text).sortByScore(a, b),
+      };
+
+      list.sort(
+        (a, b) => sorters[a.runtimeType]!(a, b),
+      );
+
       return e.index < entries.length
-          ? [SearchSeparator(S.current.entityPlural(uniqueBy.first.runtimeType)), ...uniqueBy]
-          : uniqueBy;
+          ? [SearchSeparator(S.current.entityPlural(list.first.runtimeType)), ...list]
+          : list;
     });
-    return map.toList();
+    return Future.value(map.toList());
   }
 
-  List get flatResults => results.fold(<dynamic>[], (all, current) => all + current);
+  Future<List> get flatResults async {
+    final res = await results;
+    return res.fold<List<dynamic>>(<dynamic>[], (all, current) => all + current);
+  }
 
   @override
   void onClose() {

@@ -21,6 +21,7 @@ class ItemCard extends StatelessWidget {
     this.expansionKey,
     this.maxContentHeight,
     this.expandable = true,
+    this.highlightWords = const [],
   }) : super(key: key);
 
   final Item item;
@@ -33,6 +34,7 @@ class ItemCard extends StatelessWidget {
   final PageStorageKey? expansionKey;
   final double? maxContentHeight;
   final bool expandable;
+  final List<String> highlightWords;
 
   @override
   Widget build(BuildContext context) {
@@ -66,6 +68,7 @@ class ItemCard extends StatelessWidget {
       onStarChanged: (equipped) => onSave?.call(item.copyWithInherited(equipped: equipped)),
       actions: actions,
       expansionKey: expansionKey ?? PageStorageKey(item.key),
+      highlightWords: highlightWords,
     );
   }
 }

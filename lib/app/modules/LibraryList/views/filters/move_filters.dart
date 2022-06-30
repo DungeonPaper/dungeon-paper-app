@@ -4,11 +4,13 @@ import 'package:dungeon_paper/app/data/services/repository_service.dart';
 import 'package:dungeon_paper/app/modules/LibraryList/controllers/library_list_controller.dart';
 import 'package:dungeon_paper/app/modules/LibraryList/views/entity_filters.dart';
 import 'package:dungeon_paper/app/widgets/atoms/select_box.dart';
+import 'package:dungeon_paper/core/utils/math_utils.dart';
 import 'package:dungeon_paper/core/utils/string_utils.dart';
 import 'package:dungeon_paper/generated/l10n.dart';
 import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
+import 'package:string_similarity/string_similarity.dart';
 
 class MoveFiltersView extends StatelessWidget {
   MoveFiltersView({
@@ -131,4 +133,23 @@ class MoveFilters extends EntityFilters<Move> {
 
   @override
   List<bool?> get filterActiveList => [category != null, classKey?.isNotEmpty];
+
+  @override
+  double getScore(Move move) {
+    return avg(
+      [
+            category == move.category ? 1.0 : 0.0,
+            classKey != null && move.classKeys.map(cleanStr).contains(cleanStr(classKey!))
+                ? 1.0
+                : 0.0,
+          ] +
+          [move.name, move.description, move.explanation]
+              .map(
+                (e) => (search?.isEmpty ?? true) || e.isEmpty
+                    ? 0.0
+                    : StringSimilarity.compareTwoStrings(search!, e),
+              )
+              .toList(),
+    );
+  }
 }

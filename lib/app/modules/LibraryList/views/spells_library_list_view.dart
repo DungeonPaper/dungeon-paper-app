@@ -78,8 +78,14 @@ class SpellLibraryListArguments extends LibraryListArguments<Spell, SpellFilters
           sortFn: Spell.sorter,
           filterFn: (spell, filters) => filters.filter(spell),
           filters: {
-            FiltersGroup.playbook: SpellFilters(classKey: character?.characterClass.key),
-            FiltersGroup.my: SpellFilters(classKey: character?.characterClass.key),
+            FiltersGroup.playbook: SpellFilters(
+              classKey: character?.characterClass.key,
+              level: null,
+            ),
+            FiltersGroup.my: SpellFilters(
+              classKey: character?.characterClass.key,
+              level: null,
+            ),
           },
           extraData: {
             'abilityScores': character?.abilityScores,

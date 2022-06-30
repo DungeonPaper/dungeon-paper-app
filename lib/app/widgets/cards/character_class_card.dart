@@ -16,6 +16,7 @@ class CharacterClassCard extends StatelessWidget {
     this.expansionKey,
     this.maxContentHeight,
     this.expandable = true,
+    this.highlightWords = const [],
   }) : super(key: key);
 
   final CharacterClass characterClass;
@@ -28,6 +29,7 @@ class CharacterClassCard extends StatelessWidget {
   final PageStorageKey? expansionKey;
   final double? maxContentHeight;
   final bool expandable;
+  final List<String> highlightWords;
 
   @override
   Widget build(BuildContext context) {
@@ -41,6 +43,7 @@ class CharacterClassCard extends StatelessWidget {
       showStar: false,
       initiallyExpanded: initiallyExpanded,
       actions: actions,
+      highlightWords: highlightWords,
     );
   }
 }

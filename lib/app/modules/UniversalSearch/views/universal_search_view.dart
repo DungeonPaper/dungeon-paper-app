@@ -16,7 +16,9 @@ import 'package:get/get.dart';
 import '../controllers/universal_search_controller.dart';
 
 class UniversalSearchView extends GetView<UniversalSearchController> {
-  const UniversalSearchView({Key? key}) : super(key: key);
+  UniversalSearchView({Key? key}) : super(key: key);
+
+  final bucket = PageStorageBucket();
 
   @override
   Widget build(BuildContext context) {
@@ -36,17 +38,35 @@ class UniversalSearchView extends GetView<UniversalSearchController> {
           automaticallyImplyLeading: false,
           actions: [
             IconButton(
-              icon: Icon(Icons.close),
+              icon: const Icon(Icons.close),
               // onPressed: () => controller.search.clear(),
               onPressed: () => Get.back(),
             ),
           ],
         ),
         body: Obx(
-          () => ListView.builder(
-            padding: const EdgeInsets.all(12),
-            itemCount: controller.flatResults.length,
-            itemBuilder: (context, index) => _CardByType(controller.flatResults[index]),
+          () => PageStorage(
+            bucket: bucket,
+            child: FutureBuilder<List<dynamic>>(
+                future: controller.flatResults,
+                builder: (context, value) {
+                  if (value.data == null) {
+                    return SizedBox.fromSize(
+                      size: Size.square(50),
+                      child: CircularProgressIndicator(
+                        color: Theme.of(context).colorScheme.secondary,
+                      ),
+                    );
+                  }
+                  return ListView.builder(
+                    padding: const EdgeInsets.all(12),
+                    itemCount: value.data!.length,
+                    itemBuilder: (context, index) => _CardByType(
+                      value.data![index],
+                      highlightWords: [controller.search.text.trim()],
+                    ),
+                  );
+                }),
           ),
         ),
       ),
@@ -55,9 +75,14 @@ class UniversalSearchView extends GetView<UniversalSearchController> {
 }
 
 class _CardByType extends StatelessWidget {
-  const _CardByType(this.result, {super.key});
+  const _CardByType(
+    this.result, {
+    super.key,
+    required this.highlightWords,
+  });
 
   final dynamic result;
+  final List<String> highlightWords;
 
   @override
   Widget build(BuildContext context) {
@@ -72,13 +97,30 @@ class _CardByType extends StatelessWidget {
   StatelessWidget _buildRow() {
     switch (result.runtimeType) {
       case Move:
-        return MoveCard(move: result, showStar: false);
+        return MoveCard(
+          move: result,
+          showStar: false,
+          highlightWords: highlightWords,
+        );
       case Spell:
-        return SpellCard(spell: result, showStar: false);
+        return SpellCard(
+          spell: result,
+          showStar: false,
+          highlightWords: highlightWords,
+        );
       case Item:
-        return ItemCard(item: result, showStar: false, hideCount: true);
+        return ItemCard(
+          item: result,
+          showStar: false,
+          hideCount: true,
+          highlightWords: highlightWords,
+        );
       case CharacterClass:
-        return CharacterClassCard(characterClass: result, showStar: false);
+        return CharacterClassCard(
+          characterClass: result,
+          showStar: false,
+          highlightWords: highlightWords,
+        );
       case SearchSeparator:
         return Text(result.text);
       default:

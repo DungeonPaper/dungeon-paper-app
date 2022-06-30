@@ -112,11 +112,14 @@ class Move extends dw.Move implements WithMeta, WithIcon {
   @override
   IconData get icon => genericIcon;
   static IconData get genericIcon => DwIcons.riposte;
-  static int Function(Move a, Move b) sorter(MoveFilters filters) => (a, b) {
-        final cat = a.category.index.compareTo(b.category.index);
-        if (cat != 0) {
-          return cat;
-        }
-        return a.name.toLowerCase().compareTo(b.name.toLowerCase());
-      };
+
+  static int Function(Move a, Move b) sorter(MoveFilters filters) => sort;
+
+  static int sort(Move a, Move b) {
+    final cat = a.category.index.compareTo(b.category.index);
+    if (cat != 0) {
+      return cat;
+    }
+    return a.name.toLowerCase().compareTo(b.name.toLowerCase());
+  }
 }

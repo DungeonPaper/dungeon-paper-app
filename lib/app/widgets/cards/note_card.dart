@@ -16,6 +16,7 @@ class NoteCard extends StatelessWidget {
     this.expansionKey,
     this.maxContentHeight,
     this.expandable = true,
+    this.highlightWords = const [],
   }) : super(key: key);
 
   final Note note;
@@ -27,6 +28,7 @@ class NoteCard extends StatelessWidget {
   final PageStorageKey? expansionKey;
   final double? maxContentHeight;
   final bool expandable;
+  final List<String> highlightWords;
 
   @override
   Widget build(BuildContext context) {
@@ -45,6 +47,7 @@ class NoteCard extends StatelessWidget {
       onStarChanged: (favorited) => onSave?.call(note.copyWith(favorited: favorited)),
       actions: actions,
       expansionKey: expansionKey ?? PageStorageKey(note.key),
+      highlightWords: highlightWords,
     );
   }
 }

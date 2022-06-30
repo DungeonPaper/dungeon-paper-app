@@ -13,6 +13,7 @@ class RaceCard extends StatelessWidget {
     this.showIcon = true,
     this.initiallyExpanded = false,
     this.expansionKey,
+    this.highlightWords = const [],
   }) : super(key: key);
 
   final Race race;
@@ -21,6 +22,7 @@ class RaceCard extends StatelessWidget {
   final bool initiallyExpanded;
   final PageStorageKey? expansionKey;
   final void Function(Race move)? onSave;
+  final List<String> highlightWords;
 
   @override
   Widget build(BuildContext context) {
@@ -36,6 +38,7 @@ class RaceCard extends StatelessWidget {
       onStarChanged: (favorited) => onSave?.call(race.copyWithInherited(favorited: favorited)),
       initiallyExpanded: initiallyExpanded,
       expansionKey: expansionKey ?? PageStorageKey(race.key),
+      highlightWords: highlightWords,
     );
   }
 }
