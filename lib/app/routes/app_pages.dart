@@ -1,8 +1,8 @@
-import 'package:dungeon_paper/core/http/api_requests/migration.dart';
 import 'package:flutter/widgets.dart';
 
 import 'package:get/get.dart';
 
+import '../../core/http/api_requests/migration.dart';
 import '../data/models/item.dart';
 import '../data/models/meta.dart';
 import '../data/models/move.dart';
@@ -10,6 +10,8 @@ import '../data/models/spell.dart';
 import '../data/services/character_service.dart';
 import '../modules/AbilityScoresForm/bindings/ability_scores_form_binding.dart';
 import '../modules/AbilityScoresForm/views/ability_scores_form_view.dart';
+import '../modules/About/bindings/about_binding.dart';
+import '../modules/About/views/about_view.dart';
 import '../modules/BasicInfoForm/bindings/basic_info_form_binding.dart';
 import '../modules/BasicInfoForm/views/basic_info_form_view.dart';
 import '../modules/BioForm/bindings/bio_form_binding.dart';
@@ -244,6 +246,11 @@ class AppPages {
       name: Routes.migration,
       page: () => const MigrationView(),
       binding: MigrationBinding(),
+    ),
+    GetPage(
+      name: Routes.about,
+      page: () => const AboutView(),
+      binding: AboutBinding(),
     ),
   ];
 }

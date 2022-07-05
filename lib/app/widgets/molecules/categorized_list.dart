@@ -6,17 +6,21 @@ class CategorizedList extends StatelessWidget {
     Key? key,
     required this.children,
     required this.title,
-    this.trailing = const [],
-    this.leading = const [],
+    this.titleLeading = const [],
+    this.titleTrailing = const [],
     this.onReorder,
     this.initiallyExpanded = true,
     this.itemPadding,
+    this.leading = const [],
+    this.trailing = const [],
   }) : super(key: key);
 
   final Widget title;
   final List<Widget> children;
-  final List<Widget> trailing;
+  final List<Widget> titleLeading;
+  final List<Widget> titleTrailing;
   final List<Widget> leading;
+  final List<Widget> trailing;
   final bool initiallyExpanded;
   final void Function(int oldIndex, int newIndex)? onReorder;
   final EdgeInsets? itemPadding;
@@ -25,10 +29,12 @@ class CategorizedList extends StatelessWidget {
   Widget build(BuildContext context) {
     return CustomExpansionPanel(
       title: title,
-      trailing: trailing,
+      trailing: titleTrailing,
+      leading: titleLeading,
       initiallyExpanded: initiallyExpanded,
       children: onReorder != null
           ? [
+              ...leading,
               ReorderableListView(
                 children: children,
                 onReorder: onReorder!,
@@ -36,7 +42,8 @@ class CategorizedList extends StatelessWidget {
                 physics: const NeverScrollableScrollPhysics(),
                 // buildDefaultDragHandles: true,
                 // padding: itemPadding,
-              )
+              ),
+              ...trailing,
             ]
           : children
               .map((child) => itemPadding != null

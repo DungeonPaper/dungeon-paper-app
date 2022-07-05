@@ -40,6 +40,7 @@ abstract class Routes {
   static const classAlignments = _Paths.classAlignments;
   static const universalSearch = _Paths.universalSearch;
   static const migration = _Paths.migration;
+  static const about = _Paths.about;
 }
 
 abstract class _Paths {
@@ -71,4 +72,5 @@ abstract class _Paths {
   static const classAlignments = '/class-alignments';
   static const universalSearch = '/universal-search';
   static const migration = '/migration';
+  static const about = '/about';
 }

@@ -184,50 +184,54 @@ class MessageLookup extends MessageLookupByLibrary {
             'other': 'Other',
           })}";
 
-  static String m48(count) =>
+  static String m48(entity) => "Move ${entity} to bottom";
+
+  static String m49(entity) => "Move ${entity} to top";
+
+  static String m50(count) =>
       "${Intl.plural(count, zero: 'No moves', one: 'One move', other: '${count} moves')}";
 
-  static String m49(entity) => "My ${entity}";
+  static String m51(entity) => "My ${entity}";
 
-  static String m50(entity) => "No ${entity}";
+  static String m52(entity) => "No ${entity}";
 
-  static String m51(count) =>
+  static String m53(count) =>
       "${Intl.plural(count, zero: 'No notes', one: 'One note', other: '${count} notes')}";
 
-  static String m52(count, singular, plural) =>
+  static String m54(count, singular, plural) =>
       "${Intl.plural(count, one: 'One ${singular}', other: '${count} ${plural}')}";
 
-  static String m53(dice, mod) => "Dice: ${dice} | Modifier: ${mod}";
+  static String m55(dice, mod) => "Dice: ${dice} | Modifier: ${mod}";
 
-  static String m54(total) => "Total: ${total}";
+  static String m56(total) => "Total: ${total}";
 
-  static String m55(total) => "Total: ${total}";
+  static String m57(total) => "Total: ${total}";
 
-  static String m56(count) => "Rolling ${count} dice";
+  static String m58(count) => "Rolling ${count} dice";
 
-  static String m57(entity) => "Save ${entity}";
+  static String m59(entity) => "Save ${entity}";
 
-  static String m58(entity) => "Type to search ${entity}";
+  static String m60(entity) => "Type to search ${entity}";
 
-  static String m59(entity) => "Select ${entity}";
+  static String m61(entity) => "Select ${entity}";
 
-  static String m60(string) => "Select ${string} to add";
+  static String m62(string) => "Select ${string} to add";
 
-  static String m61(button) => "${Intl.select(button, {
+  static String m63(button) => "${Intl.select(button, {
             'damage': 'Damage',
             'other': '${button}',
           })}";
 
-  static String m62(level) => "${Intl.select(level, {
+  static String m64(level) => "${Intl.select(level, {
             'cantrip': 'Cantrip',
             'rote': 'Rote',
             'other': 'Level ${level}',
           })}";
 
-  static String m63(count) =>
+  static String m65(count) =>
       "${Intl.plural(count, zero: 'No spells', one: 'One spell', other: '${count} spells')}";
 
-  static String m64(tag) => "Copy from: ${tag}";
+  static String m66(tag) => "Copy from: ${tag}";
 
   final messages = _notInlinedMessages(_notInlinedMessages);
   static Map<String, Function> _notInlinedMessages(_) => <String, Function>{
@@ -558,20 +562,24 @@ class MessageLookup extends MessageLookupByLibrary {
         "moveCategory": m45,
         "moveCategoryWithLevel": m46,
         "moveCategoryWithLevelShort": m47,
+        "moveToEnd": MessageLookupByLibrary.simpleMessage("Move to bottom"),
+        "moveToEndGeneric": m48,
+        "moveToStart": MessageLookupByLibrary.simpleMessage("Move to top"),
+        "moveToStartGeneric": m49,
         "moves": MessageLookupByLibrary.simpleMessage("Moves"),
-        "movesWithCount": m48,
-        "myGeneric": m49,
+        "movesWithCount": m50,
+        "myGeneric": m51,
         "navActions": MessageLookupByLibrary.simpleMessage("Use"),
         "navCharacter": MessageLookupByLibrary.simpleMessage("Character"),
         "navJournal": MessageLookupByLibrary.simpleMessage("Journal"),
         "noDescription":
             MessageLookupByLibrary.simpleMessage("‹No description provided›"),
-        "noGeneric": m50,
+        "noGeneric": m52,
         "noteNoCategory": MessageLookupByLibrary.simpleMessage("General"),
         "notes": MessageLookupByLibrary.simpleMessage("Notes"),
-        "notesWithCount": m51,
+        "notesWithCount": m53,
         "ok": MessageLookupByLibrary.simpleMessage("OK"),
-        "pluralize": m52,
+        "pluralize": m54,
         "quickIconsItems": MessageLookupByLibrary.simpleMessage("Items"),
         "quickIconsMoves": MessageLookupByLibrary.simpleMessage("Moves"),
         "quickIconsNote": MessageLookupByLibrary.simpleMessage("+ Note"),
@@ -586,34 +594,34 @@ class MessageLookup extends MessageLookupByLibrary {
         "rollButtonLabel": MessageLookupByLibrary.simpleMessage("Button Text"),
         "rollButtonUsePreset":
             MessageLookupByLibrary.simpleMessage("Use preset"),
-        "rollDialogResultBreakdown": m53,
-        "rollDialogResultTotal": m54,
-        "rollDialogTitleRolled": m55,
-        "rollDialogTitleRolling": m56,
+        "rollDialogResultBreakdown": m55,
+        "rollDialogResultTotal": m56,
+        "rollDialogTitleRolled": m57,
+        "rollDialogTitleRolling": m58,
         "rollDiscernRealitiesButton":
             MessageLookupByLibrary.simpleMessage("Discern Realities"),
         "rollVolleyButton": MessageLookupByLibrary.simpleMessage("Volley"),
         "save": MessageLookupByLibrary.simpleMessage("Save"),
-        "saveGeneric": m57,
+        "saveGeneric": m59,
         "searchPlaceholder":
             MessageLookupByLibrary.simpleMessage("Type to search"),
-        "searchPlaceholderGeneric": m58,
+        "searchPlaceholderGeneric": m60,
         "select": MessageLookupByLibrary.simpleMessage("Select"),
         "selectAll": MessageLookupByLibrary.simpleMessage("Select All"),
-        "selectGeneric": m59,
+        "selectGeneric": m61,
         "selectNone": MessageLookupByLibrary.simpleMessage("Select None"),
-        "selectToAdd": m60,
+        "selectToAdd": m62,
         "selected": MessageLookupByLibrary.simpleMessage("Selected"),
         "separatorOr": MessageLookupByLibrary.simpleMessage("OR"),
         "settingsTitle": MessageLookupByLibrary.simpleMessage("Settings"),
         "sortMoveDown": MessageLookupByLibrary.simpleMessage("Move down"),
         "sortMoveUp": MessageLookupByLibrary.simpleMessage("Move up"),
         "specialDice": MessageLookupByLibrary.simpleMessage("Special Dice"),
-        "specialRollButton": m61,
-        "spellLevel": m62,
+        "specialRollButton": m63,
+        "spellLevel": m64,
         "spells": MessageLookupByLibrary.simpleMessage("Spells"),
-        "spellsWithCount": m63,
-        "tagCopyFrom": m64,
+        "spellsWithCount": m65,
+        "tagCopyFrom": m66,
         "tagDetails": MessageLookupByLibrary.simpleMessage("Tag Information"),
         "themeTurnDark":
             MessageLookupByLibrary.simpleMessage("Switch to Dark Mode"),

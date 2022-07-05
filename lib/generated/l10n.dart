@@ -2210,6 +2210,46 @@ class S {
     );
   }
 
+  /// `Move to bottom`
+  String get moveToEnd {
+    return Intl.message(
+      'Move to bottom',
+      name: 'moveToEnd',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Move {entity} to bottom`
+  String moveToEndGeneric(Object entity) {
+    return Intl.message(
+      'Move $entity to bottom',
+      name: 'moveToEndGeneric',
+      desc: '',
+      args: [entity],
+    );
+  }
+
+  /// `Move to top`
+  String get moveToStart {
+    return Intl.message(
+      'Move to top',
+      name: 'moveToStart',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Move {entity} to top`
+  String moveToStartGeneric(Object entity) {
+    return Intl.message(
+      'Move $entity to top',
+      name: 'moveToStartGeneric',
+      desc: '',
+      args: [entity],
+    );
+  }
+
   /// `Moves`
   String get moves {
     return Intl.message(

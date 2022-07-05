@@ -63,7 +63,7 @@ class CustomCircularRevealTransition extends CustomTransition {
         centerAlignment: this.alignment ?? Alignment.center,
         centerOffset: offset ?? Offset.zero,
         minRadius: 0,
-        maxRadius: MediaQuery.of(context).size.longestSide * 1.25,
+        maxRadius: MediaQuery.of(context).size.longestSide * 2,
       ),
       child: child,
     );

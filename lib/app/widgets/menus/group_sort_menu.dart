@@ -6,12 +6,16 @@ class GroupSortMenu extends StatelessWidget {
   const GroupSortMenu({
     Key? key,
     required this.index,
-    required this.maxIndex,
+    required this.totalItemCount,
     required this.onReorder,
+    this.leading = const [],
+    this.trailing = const [],
   }) : super(key: key);
 
   final int index;
-  final int maxIndex;
+  final int totalItemCount;
+  final List<MenuEntry<String>> leading;
+  final List<MenuEntry<String>> trailing;
   final void Function(int oldIndex, int newIndex) onReorder;
 
   @override
@@ -19,6 +23,7 @@ class GroupSortMenu extends StatelessWidget {
     return MenuButton<String>(
       iconSize: 20,
       items: [
+        ...leading,
         MenuEntry(
           disabled: index <= 0,
           value: 'up',
@@ -27,12 +32,13 @@ class GroupSortMenu extends StatelessWidget {
           onSelect: () => onReorder(index, index - 1),
         ),
         MenuEntry(
-          disabled: index >= maxIndex - 1,
+          disabled: index >= totalItemCount - 1,
           value: 'down',
           icon: const Icon(Icons.move_down),
           label: Text(S.current.sortMoveDown),
           onSelect: () => onReorder(index, index + 1),
         ),
+        ...trailing,
       ],
     );
   }

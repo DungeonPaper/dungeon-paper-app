@@ -1,7 +1,9 @@
 import 'package:dungeon_paper/app/data/models/character.dart';
+import 'package:dungeon_paper/app/data/models/character_settings.dart';
 import 'package:dungeon_paper/app/data/models/item.dart';
 import 'package:dungeon_paper/app/data/models/meta.dart';
 import 'package:dungeon_paper/app/data/models/move.dart';
+import 'package:dungeon_paper/app/data/models/race.dart';
 import 'package:dungeon_paper/app/data/models/spell.dart';
 import 'package:dungeon_paper/app/data/services/character_service.dart';
 import 'package:dungeon_paper/app/data/services/library_service.dart';
@@ -15,8 +17,10 @@ import 'package:dungeon_paper/app/modules/LibraryList/views/moves_library_list_v
 import 'package:dungeon_paper/app/modules/LibraryList/views/spells_library_list_view.dart';
 import 'package:dungeon_paper/app/modules/Home/views/local_widgets/home_character_actions_summary.dart';
 import 'package:dungeon_paper/app/routes/app_pages.dart';
+import 'package:dungeon_paper/app/widgets/atoms/menu_button.dart';
 import 'package:dungeon_paper/app/widgets/cards/item_card.dart';
 import 'package:dungeon_paper/app/widgets/cards/move_card.dart';
+import 'package:dungeon_paper/app/widgets/cards/race_card.dart';
 import 'package:dungeon_paper/app/widgets/cards/spell_card.dart';
 import 'package:dungeon_paper/app/widgets/dialogs/confirm_delete_dialog.dart';
 import 'package:dungeon_paper/app/widgets/menus/entity_edit_menu.dart';
@@ -57,14 +61,35 @@ class HomeCharacterActionsView extends GetView<CharacterService> {
   }
 
   Widget? get movesList {
-    if (char.settings.actionCategoriesHide.contains('Move')) {
+    if (char.settings.actionCategories.hidden.contains('Move')) {
       return null;
     }
+    var raceCard = RaceCard(
+      race: char.race,
+      onSave: (race) => controller.updateCharacter(
+        char.copyWithInherited(race: race),
+      ),
+      actions: [
+        EntityEditMenu(
+          onDelete: null,
+          onEdit: ModelPages.openRacePage(
+            race: char.race,
+            classKeys: char.race.classKeys,
+            abilityScores: char.abilityScores,
+            onSave: (race) => controller.updateCharacter(
+              char.copyWithInherited(race: race),
+            ),
+          ),
+        ),
+      ],
+    );
     return ActionsCardList<Move>(
       index: char.actionCategories.toList().indexOf('Move'),
       onReorder: _onReorder,
       list: char.moves,
       route: Routes.moves,
+      leading: char.settings.racePosition == RacePosition.start ? [raceCard] : [],
+      trailing: char.settings.racePosition == RacePosition.end ? [raceCard] : [],
       addPageArguments: ({required onAdd}) => MoveLibraryListArguments(
         character: char,
         onAdd: onAdd,
@@ -89,7 +114,7 @@ class HomeCharacterActionsView extends GetView<CharacterService> {
   }
 
   Widget? get spellsList {
-    if (char.settings.actionCategoriesHide.contains('Spell')) {
+    if (char.settings.actionCategories.hidden.contains('Spell')) {
       return null;
     }
     return ActionsCardList<Spell>(
@@ -121,7 +146,7 @@ class HomeCharacterActionsView extends GetView<CharacterService> {
   }
 
   Widget? get itemsList {
-    if (char.settings.actionCategoriesHide.contains('Item')) {
+    if (char.settings.actionCategories.hidden.contains('Item')) {
       return null;
     }
     return ActionsCardList<Item>(
@@ -153,12 +178,14 @@ class HomeCharacterActionsView extends GetView<CharacterService> {
     controller.updateCharacter(
       char.copyWith(
         settings: char.settings.copyWith(
-          actionCategoriesSort: Set.from(
-            reorder(
-              char.actionCategories.toList(),
-              oldIndex,
-              newIndex,
-              useReorderableOffset: false,
+          actionCategories: char.settings.actionCategories.copyWithInherited(
+            sortOrder: Set.from(
+              reorder(
+                char.actionCategories.toList(),
+                oldIndex,
+                newIndex,
+                useReorderableOffset: false,
+              ),
             ),
           ),
         ),
@@ -177,9 +204,13 @@ class ActionsCardList<T extends WithMeta> extends GetView<CharacterService>
     required this.list,
     required this.index,
     required this.onReorder,
+    this.leading = const [],
+    this.trailing = const [],
   }) : super(key: key);
 
   final String route;
+  final List<Widget> leading;
+  final List<Widget> trailing;
   final LibraryListArguments<T, EntityFilters<T>> Function({
     required void Function(Iterable<T> obj) onAdd,
   }) addPageArguments;
@@ -201,7 +232,7 @@ class ActionsCardList<T extends WithMeta> extends GetView<CharacterService>
       initiallyExpanded: true,
       title: Text(S.current.entityPlural(T)),
       itemPadding: const EdgeInsets.only(bottom: 8),
-      trailing: [
+      titleTrailing: [
         TextButton.icon(
           onPressed: () => Get.toNamed(
             route,
@@ -212,29 +243,68 @@ class ActionsCardList<T extends WithMeta> extends GetView<CharacterService>
         ),
         GroupSortMenu(
           index: index,
-          maxIndex: Character.allActionCategories.length,
+          totalItemCount: Character.allActionCategories.length,
           onReorder: onReorder,
-        )
-      ],
-      children: list
-          .map(
-            (obj) => Padding(
-              key: Key('type-$T-' + keyFor<T>(obj)),
-              padding: const EdgeInsets.symmetric(vertical: 4),
-              child: cardBuilder(
-                obj,
-                onDelete: _confirmDeleteDlg(context, obj, nameFor(obj)),
-                onSave: (fork) => (_obj) {
-                  library.upsertToCharacter([_obj], fork: fork);
-                },
+          trailing: [
+            // Move to start of list
+            MenuEntry(
+              value: 'move_to_start',
+              label: Text(S.current.moveToStartGeneric(S.current.entity(Race))),
+              onSelect: () => controller.updateCharacter(
+                char.copyWith(
+                  settings: char.settings.copyWith(racePosition: RacePosition.start),
+                ),
               ),
             ),
-          )
-          .toList(),
+            // Move to end of list
+            MenuEntry(
+              value: 'move_to_end',
+              label: Text(S.current.moveToEndGeneric(S.current.entity(Race))),
+              onSelect: () => controller.updateCharacter(
+                char.copyWith(
+                  settings: char.settings.copyWith(racePosition: RacePosition.end),
+                ),
+              ),
+            ),
+          ],
+        )
+      ],
+      leading: [
+        ...leading.map(
+          (obj) => _wrapChild(child: obj),
+        ),
+        if (leading.isNotEmpty) const Divider(height: 16),
+      ],
+      trailing: [
+        if (trailing.isNotEmpty) const Divider(height: 16),
+        ...trailing.map(
+          (obj) => _wrapChild(child: obj),
+        ),
+      ],
+      children: [
+        ...list.map(
+          (obj) => _wrapChild(
+            key: Key('type-$T-' + keyFor<T>(obj)),
+            child: cardBuilder(
+              obj,
+              onDelete: _confirmDeleteDlg(context, obj, nameFor(obj)),
+              onSave: (fork) => (_obj) {
+                library.upsertToCharacter([_obj], fork: fork);
+              },
+            ),
+          ),
+        ),
+      ],
       onReorder: (oldIndex, newIndex) =>
           controller.updateCharacter(CharacterUtils.reorderByType<T>(char, oldIndex, newIndex)),
     );
   }
+
+  Widget _wrapChild({Key? key, required Widget child}) => Padding(
+        key: key,
+        padding: const EdgeInsets.symmetric(vertical: 4),
+        child: child,
+      );
 
   void Function() _confirmDeleteDlg(BuildContext context, T object, String name) {
     return () => awaitDeleteConfirmation<T>(

@@ -64,11 +64,15 @@ class HomeCharacterActionsSummary extends GetView<CharacterService> {
             ),
           ),
           HomeCharacterActionsFilters(
-            hidden: char.settings.actionCategoriesHide,
+            hidden: char.settings.actionCategories.hidden,
             onUpdateHidden: (filters) {
               controller.updateCharacter(
                 char.copyWith(
-                  settings: char.settings.copyWith(actionCategoriesHide: filters),
+                  settings: char.settings.copyWith(
+                    actionCategories: char.settings.actionCategories.copyWithInherited(
+                      hidden: filters,
+                    ),
+                  ),
                 ),
               );
             },

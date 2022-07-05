@@ -14,6 +14,7 @@ class RaceCard extends StatelessWidget {
     this.initiallyExpanded = false,
     this.expansionKey,
     this.highlightWords = const [],
+    this.actions = const [],
   }) : super(key: key);
 
   final Race race;
@@ -23,6 +24,7 @@ class RaceCard extends StatelessWidget {
   final PageStorageKey? expansionKey;
   final void Function(Race move)? onSave;
   final List<String> highlightWords;
+  final Iterable<Widget> actions;
 
   @override
   Widget build(BuildContext context) {
@@ -39,6 +41,7 @@ class RaceCard extends StatelessWidget {
       initiallyExpanded: initiallyExpanded,
       expansionKey: expansionKey ?? PageStorageKey(race.key),
       highlightWords: highlightWords,
+      actions: actions,
     );
   }
 }

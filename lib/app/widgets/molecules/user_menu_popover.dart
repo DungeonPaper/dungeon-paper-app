@@ -198,7 +198,10 @@ class UserMenuPopover extends GetView<CharacterService> with AuthServiceMixin {
                                   visualDensity: VisualDensity.compact,
                                   title: Text(S.current.aboutTitle),
                                   leading: const Icon(Icons.info),
-                                  onTap: () => null,
+                                  onTap: () {
+                                    Get.back();
+                                    Get.toNamed(Routes.about);
+                                  },
                                 ),
                                 // Logout
                                 if (!userService.isGuest) ...[

@@ -51,10 +51,10 @@ class HomeCharacterJournalView extends GetView<CharacterService> {
                 key: Key('note-category-' + cat.value),
                 initiallyExpanded: true,
                 title: Text(cat.value.isEmpty ? S.current.noteNoCategory : cat.value),
-                trailing: [
+                titleTrailing: [
                   GroupSortMenu(
                     index: cat.index,
-                    maxIndex: char.noteCategories.length - 1,
+                    totalItemCount: char.noteCategories.length - 1,
                     onReorder: _move,
                   ),
                 ],
@@ -151,12 +151,14 @@ class HomeCharacterJournalView extends GetView<CharacterService> {
     return controller.updateCharacter(
       char.copyWith(
         settings: char.settings.copyWith(
-          noteCategoriesSort: Set.from(
-            reorder(
-              char.noteCategories.toList(),
-              oldIndex,
-              newIndex,
-              useReorderableOffset: false,
+          noteCategories: char.settings.noteCategories.copyWithInherited(
+            sortOrder: Set.from(
+              reorder(
+                char.noteCategories.toList(),
+                oldIndex,
+                newIndex,
+                useReorderableOffset: false,
+              ),
             ),
           ),
         ),

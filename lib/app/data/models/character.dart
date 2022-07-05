@@ -127,18 +127,11 @@ class Character implements WithMeta<Character, CharacterMeta>, WithIcon {
             : hackAndSlashRollButton
       ];
 
-  Set<String> get noteCategories => Set.from(
-        (<String>[
-          ...settings.noteCategoriesSort,
-          ...(notes.map((note) => note.localizedCategory).toList()
-            ..sort(stringSorter(order: SortOrder.asc))),
-        ]),
-      );
-  Set<String> get actionCategories => Set.from(
-        <String>[...settings.actionCategoriesSort, ...allActionCategories].where(
-          (cat) => !settings.actionCategoriesHide.contains(cat),
-        ),
-      );
+  Set<String> get noteCategories =>
+      settings.noteCategories.getSorted(notes.map((note) => note.localizedCategory).toSet());
+
+  Set<String> get actionCategories => settings.actionCategories.getSorted(allActionCategories);
+
   dw.Dice get damageDice =>
       stats.damageDice ?? characterClass.damageDice.copyWithModifierValue(damageModifier);
   List<SessionMark> get bonds =>

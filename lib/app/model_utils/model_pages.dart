@@ -5,6 +5,7 @@ import 'package:dungeon_paper/app/data/models/note.dart';
 import 'package:dungeon_paper/app/data/models/move.dart';
 import 'package:dungeon_paper/app/data/models/character.dart';
 import 'package:dungeon_paper/app/data/models/ability_scores.dart';
+import 'package:dungeon_paper/app/data/models/race.dart';
 import 'package:dungeon_paper/app/data/models/spell.dart';
 import 'package:dungeon_paper/app/data/services/character_service.dart';
 import 'package:dungeon_paper/app/data/services/library_service.dart';
@@ -74,6 +75,26 @@ class ModelPages {
             ),
             binding: RepositoryItemFormBinding<Move>(
               item: move,
+              extraData: {
+                'abilityScores': abilityScores,
+                'classKeys': classKeys,
+              },
+            ),
+          );
+
+  static void Function() openRacePage({
+    required Race? race,
+    required void Function(Race race) onSave,
+    required AbilityScores abilityScores,
+    required List<String> classKeys,
+  }) =>
+      () => Get.to(
+            () => LibraryEntityForm<Race>(
+              onSave: onSave,
+              type: race == null ? ItemFormType.create : ItemFormType.edit,
+            ),
+            binding: RepositoryItemFormBinding<Race>(
+              item: race,
               extraData: {
                 'abilityScores': abilityScores,
                 'classKeys': classKeys,
