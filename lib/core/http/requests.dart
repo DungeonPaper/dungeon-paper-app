@@ -12,8 +12,9 @@ class Requests {
     return SearchResponse.fromJson(resp.json);
   }
 
-  Future<void> migrateUser(MigrationDetails details) async {
-    // TODO implement auth guard
-    await api.get('/migrate_user?${details.toString()}&__no_token=__no_token');
+  Future<void> migrateUser(String idToken, MigrationDetails details) async {
+    await api.get('/migrate_user?${details.toString()}', headers: {
+      'Authorization': 'Bearer $idToken',
+    });
   }
 }

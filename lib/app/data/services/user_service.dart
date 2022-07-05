@@ -39,7 +39,7 @@ class UserService extends GetxService
     await loadMyRepo();
     var dbUser = await FirestoreDelegate().getDocument('Data', email!);
     if (dbUser == null) {
-      final resp = await _migrateUser(user.email!);
+      final resp = await _migrateUser(user.email!, await user.getIdToken());
       if (resp == null) {
         // TODO intl
         Get.rawSnackbar(title: 'Canceled');
@@ -76,7 +76,7 @@ class UserService extends GetxService
     loadBuiltInRepo();
   }
 
-  Future<User?> _migrateUser(String email) async {
+  Future<User?> _migrateUser(String email, String idToken) async {
     final migrationDetails = await Get.toNamed(
       Routes.migration,
       arguments: MigrationArguments(email: email),
@@ -84,7 +84,7 @@ class UserService extends GetxService
     if (migrationDetails == null) {
       return null;
     }
-    await api.requests.migrateUser(migrationDetails);
+    await api.requests.migrateUser(idToken, migrationDetails);
     final userDoc = await FirestoreDelegate().getDocument('Data', email);
     return User.fromJson(userDoc!);
   }
