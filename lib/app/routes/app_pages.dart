@@ -1,5 +1,4 @@
-import 'package:dungeon_paper/app/routes/custom_transitions.dart';
-import 'package:dungeon_paper/app/widgets/molecules/user_menu_popover.dart';
+import 'package:dungeon_paper/core/http/api_requests/migration.dart';
 import 'package:flutter/widgets.dart';
 
 import 'package:get/get.dart';
@@ -38,13 +37,17 @@ import '../modules/LibraryList/views/moves_library_list_view.dart';
 import '../modules/LibraryList/views/spells_library_list_view.dart';
 import '../modules/Login/bindings/login_binding.dart';
 import '../modules/Login/views/login_view.dart';
+import '../modules/Migration/bindings/migration_binding.dart';
+import '../modules/Migration/views/migration_view.dart';
 import '../modules/Settings/bindings/settings_binding.dart';
 import '../modules/Settings/views/settings_view.dart';
 import '../modules/StartingGearForm/bindings/starting_gear_form_binding.dart';
 import '../modules/StartingGearForm/views/starting_gear_form_view.dart';
 import '../modules/UniversalSearch/bindings/universal_search_binding.dart';
 import '../modules/UniversalSearch/views/universal_search_view.dart';
+import '../widgets/molecules/user_menu_popover.dart';
 import '../widgets/views/roll_dice_view.dart';
+import 'custom_transitions.dart';
 
 part 'app_routes.dart';
 
@@ -236,6 +239,11 @@ class AppPages {
       // transitionDuration: const Duration(seconds: 1),
       transition: Transition.circularReveal,
       preventDuplicates: false,
+    ),
+    GetPage(
+      name: Routes.migration,
+      page: () => const MigrationView(),
+      binding: MigrationBinding(),
     ),
   ];
 }

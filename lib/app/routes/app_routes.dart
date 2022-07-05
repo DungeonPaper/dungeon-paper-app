@@ -39,6 +39,7 @@ abstract class Routes {
   static const hpDialog = _Paths.hpDialog;
   static const classAlignments = _Paths.classAlignments;
   static const universalSearch = _Paths.universalSearch;
+  static const migration = _Paths.migration;
 }
 
 abstract class _Paths {
@@ -69,4 +70,5 @@ abstract class _Paths {
   static const hpDialog = '/edit-hp';
   static const classAlignments = '/class-alignments';
   static const universalSearch = '/universal-search';
+  static const migration = '/migration';
 }
