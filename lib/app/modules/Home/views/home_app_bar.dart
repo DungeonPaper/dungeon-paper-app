@@ -18,34 +18,9 @@ class HomeAppBar extends StatelessWidget with LoadingServiceMixin implements Pre
         onPressed: () => Get.toNamed(Routes.universalSearch),
       ),
       title: Text(S.current.appName),
-      actions: [
-        // IconButton(
-        //   icon: Icon(Icons.bug_report),
-        //   onPressed: () {
-        //     loadingService.afterFirstLoad = false;
-        //     loadingService.loadingCharacters = !loadingService.loadingCharacters;
-        //   },
-        // ),
-        IconButton(
-          icon: Icon(
-            Theme.of(context).brightness == Brightness.light
-                ? Icons.light_mode
-                : Icons.light_mode_outlined,
-          ),
-          onPressed: toggleTheme,
-          tooltip: Theme.of(context).brightness == Brightness.light
-              ? S.current.themeTurnDark
-              : S.current.themeTurnLight,
-        ),
-        const UserMenu(),
-      ],
+      actions: const [UserMenu()],
       automaticallyImplyLeading: false,
     );
-  }
-
-  void toggleTheme() {
-    var theme = DynamicTheme.of(Get.context!)!;
-    theme.setTheme(theme.themeId == AppThemes.dark ? AppThemes.parchment : AppThemes.dark);
   }
 
   @override
