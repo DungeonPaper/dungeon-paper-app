@@ -26,27 +26,19 @@ class UniversalSearchView extends GetView<UniversalSearchController> {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
+
     return BackdropFilter(
       filter: ImageFilter.blur(sigmaX: 5, sigmaY: 5),
       child: Scaffold(
         backgroundColor: Colors.black54,
         appBar: AppBar(
-          // leading: Container(),
-          leadingWidth: 0,
           title: SearchField(
             controller: controller.search,
             autofocus: true,
           ),
           centerTitle: true,
           backgroundColor: Colors.transparent,
-          automaticallyImplyLeading: false,
-          actions: [
-            IconButton(
-              icon: const Icon(Icons.close),
-              // onPressed: () => controller.search.clear(),
-              onPressed: () => Get.back(),
-            ),
-          ],
+          automaticallyImplyLeading: true,
         ),
         body: Obx(
           () => PageStorage(

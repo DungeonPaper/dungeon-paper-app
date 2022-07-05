@@ -3,6 +3,7 @@ import 'package:dungeon_paper/app/data/services/character_service.dart';
 import 'package:dungeon_paper/app/model_utils/character_utils.dart';
 import 'package:dungeon_paper/app/routes/app_pages.dart';
 import 'package:dungeon_paper/app/themes/button_themes.dart';
+import 'package:dungeon_paper/app/themes/themes.dart';
 import 'package:dungeon_paper/app/widgets/atoms/advanced_floating_action_button.dart';
 import 'package:dungeon_paper/app/widgets/atoms/character_avatar.dart';
 import 'package:dungeon_paper/app/widgets/dialogs/confirm_delete_dialog.dart';
@@ -53,6 +54,7 @@ class CharacterListPageView extends GetView<CharacterService> {
                           minVerticalPadding: 8,
                           horizontalTitleGap: 10,
                           child: InkWell(
+                            borderRadius: borderRadius,
                             splashColor: Theme.of(context).splashColor,
                             onTap: () {
                               controller.setCurrent(char.key);

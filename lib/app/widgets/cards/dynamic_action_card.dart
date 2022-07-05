@@ -194,7 +194,7 @@ class DynamicActionCard extends StatelessWidget {
   String _highlight(String text) {
     for (final word in highlightWords) {
       text = text.replaceAllMapped(
-        RegExp(word, caseSensitive: false),
+        RegExp(word.replaceAll('\\', ''), caseSensitive: false),
         (match) => '==${match[0]}==',
       );
     }
@@ -253,7 +253,7 @@ class HighlightText extends StatelessWidget {
   String _highlight(String text) {
     for (final word in highlightWords) {
       text = text.replaceAllMapped(
-        RegExp(word, caseSensitive: false),
+        RegExp(word.replaceAll('\\', ''), caseSensitive: false),
         (match) => '==${match[0]}==',
       );
     }
