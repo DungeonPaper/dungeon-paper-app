@@ -22,6 +22,12 @@ class SessionMark extends dw.SessionMark {
     required super.completed,
   }) : super(type: dw.SessionMarkType.flag);
 
+  SessionMark.endOfSession({
+    required super.key,
+    required super.description,
+    required super.completed,
+  }) : super(type: dw.SessionMarkType.endOfSession);
+
   factory SessionMark.fromRawJson(String str) => SessionMark.fromJson(json.decode(str));
 
   factory SessionMark.fromJson(Map<String, dynamic> json) => SessionMark(
