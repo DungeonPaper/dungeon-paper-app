@@ -15,7 +15,6 @@ class SettingsView extends GetView<SettingsController> with CharacterServiceMixi
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     final textTheme = theme.textTheme;
-    final caption = textTheme.caption!;
     return Scaffold(
       appBar: AppBar(
         title: Text(S.current.settingsTitle),
@@ -23,7 +22,10 @@ class SettingsView extends GetView<SettingsController> with CharacterServiceMixi
       ),
       body: ListView(
         children: [
-          _sectionTitle(context, S.current.settingsGeneral),
+          _sectionTitle(
+            context,
+            S.current.settingsGeneral,
+          ),
           Obx(
             () => SwitchListTile.adaptive(
               title: Text(S.current.settingsKeepScreenAwake),
@@ -33,11 +35,20 @@ class SettingsView extends GetView<SettingsController> with CharacterServiceMixi
               ),
             ),
           ),
-          _sectionTitle(context, S.current.settingsDefaultLightTheme),
+          Obx(
+            () => _sectionTitle(
+              context,
+              S.current.settingsDefaultLightTheme,
+              onChangeSeeAll: (val) => controller.seeAll[Brightness.light] = val,
+              seeAll: controller.seeAll[Brightness.light]!,
+            ),
+          ),
           _pad(
             Obx(
               () => ThemeSelector(
-                themes: AppThemes.allLightThemes,
+                themes: controller.seeAll[Brightness.light]!
+                    ? AppThemes.allThemes
+                    : AppThemes.allLightThemes,
                 selected: controller.settings.defaultLightTheme,
                 onSelected: (theme) async {
                   await controller.updateSettings(
@@ -51,11 +62,20 @@ class SettingsView extends GetView<SettingsController> with CharacterServiceMixi
             ),
             horizontal: 8,
           ),
-          _sectionTitle(context, S.current.settingsDefaultDarkTheme),
+          Obx(
+            () => _sectionTitle(
+              context,
+              S.current.settingsDefaultDarkTheme,
+              onChangeSeeAll: (val) => controller.seeAll[Brightness.dark] = val,
+              seeAll: controller.seeAll[Brightness.dark]!,
+            ),
+          ),
           _pad(
             Obx(
               () => ThemeSelector(
-                themes: AppThemes.allDarkThemes,
+                themes: controller.seeAll[Brightness.dark]!
+                    ? AppThemes.allThemes
+                    : AppThemes.allDarkThemes,
                 selected: controller.settings.defaultDarkTheme,
                 onSelected: (theme) async {
                   await controller.updateSettings(
@@ -74,11 +94,24 @@ class SettingsView extends GetView<SettingsController> with CharacterServiceMixi
     );
   }
 
-  Widget _sectionTitle(BuildContext context, String labelText) {
+  Widget _sectionTitle(
+    BuildContext context,
+    String labelText, {
+    void Function(bool)? onChangeSeeAll,
+    bool? seeAll,
+  }) {
     final theme = Theme.of(context);
     final textTheme = theme.textTheme;
     final caption = textTheme.caption!;
-    return _pad(Text(labelText, style: caption));
+    return _pad(Row(
+      children: [
+        Expanded(child: Text(labelText, style: caption)),
+        if (seeAll != null && onChangeSeeAll != null) ...[
+          Text('See all'),
+          Switch.adaptive(value: seeAll, onChanged: onChangeSeeAll),
+        ],
+      ],
+    ));
   }
 
   Widget _pad(Widget child, {double horizontal = 16}) {

@@ -114,6 +114,8 @@ class AppThemes {
   static const inferno = 7;
   static const fairy = 8;
 
+  static List<int> allThemes = themes.keys.toList();
+
   static List<int> allLightThemes = themes.entries
       .where((e) => e.value.brightness == Brightness.light)
       .map((e) => e.key)

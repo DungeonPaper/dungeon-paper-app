@@ -1,6 +1,5 @@
 import 'package:dungeon_paper/app/modules/Settings/views/theme_selector.dart';
 import 'package:dungeon_paper/app/themes/themes.dart';
-import 'package:dungeon_paper/app/widgets/atoms/advanced_floating_action_button.dart';
 import 'package:dungeon_paper/generated/l10n.dart';
 import 'package:flutter/material.dart';
 
@@ -18,11 +17,6 @@ class SelectCharacterThemeView extends GetView<SelectCharacterThemeController> {
         title: const Text('Character Theme'),
         centerTitle: true,
       ),
-      floatingActionButton: AdvancedFloatingActionButton.extended(
-        onPressed: controller.save,
-        label: Text(S.current.save),
-        icon: const Icon(Icons.save),
-      ),
       body: ListView(
         children: [
           Obx(
@@ -31,15 +25,20 @@ class SelectCharacterThemeView extends GetView<SelectCharacterThemeController> {
               S.current.settingsDefaultLightTheme,
               onReset: () => controller.lightTheme.value = null,
               resetEnabled: controller.lightTheme.value != null,
+              onChangeSeeAll: (val) => controller.seeAll[Brightness.light] = val,
+              seeAll: controller.seeAll[Brightness.light]!,
             ),
           ),
           _pad(
             Obx(
               () => ThemeSelector(
-                themes: AppThemes.allLightThemes,
+                themes: controller.seeAll[Brightness.light]!
+                    ? AppThemes.allThemes
+                    : AppThemes.allLightThemes,
                 selected: controller.lightTheme.value,
                 onSelected: (theme) async {
                   controller.lightTheme.value = theme;
+                  controller.save();
                 },
               ),
             ),
@@ -51,15 +50,20 @@ class SelectCharacterThemeView extends GetView<SelectCharacterThemeController> {
               S.current.settingsDefaultDarkTheme,
               onReset: () => controller.darkTheme.value = null,
               resetEnabled: controller.darkTheme.value != null,
+              onChangeSeeAll: (val) => controller.seeAll[Brightness.dark] = val,
+              seeAll: controller.seeAll[Brightness.dark]!,
             ),
           ),
           _pad(
             Obx(
               () => ThemeSelector(
-                themes: AppThemes.allDarkThemes,
+                themes: controller.seeAll[Brightness.dark]!
+                    ? AppThemes.allThemes
+                    : AppThemes.allDarkThemes,
                 selected: controller.darkTheme.value,
                 onSelected: (theme) async {
                   controller.darkTheme.value = theme;
+                  controller.save();
                 },
               ),
             ),
@@ -74,6 +78,8 @@ class SelectCharacterThemeView extends GetView<SelectCharacterThemeController> {
     BuildContext context,
     String labelText, {
     required void Function() onReset,
+    required void Function(bool) onChangeSeeAll,
+    required bool seeAll,
     required bool resetEnabled,
   }) {
     final theme = Theme.of(context);
@@ -82,6 +88,8 @@ class SelectCharacterThemeView extends GetView<SelectCharacterThemeController> {
     return _pad(Row(
       children: [
         Expanded(child: Text(labelText, style: caption)),
+        Text('See all'),
+        Switch.adaptive(value: seeAll, onChanged: onChangeSeeAll),
         ElevatedButton(onPressed: resetEnabled ? onReset : null, child: Text('Use Default')),
       ],
     ));

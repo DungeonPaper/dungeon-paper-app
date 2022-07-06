@@ -20,7 +20,12 @@ class ThemeSelector extends StatelessWidget {
   Widget build(BuildContext context) {
     return Wrap(
       children: [
-        for (final theme in themes)
+        for (final theme in themes
+          ..sort(
+            (a, b) => AppThemes.getTheme(b).brightness.name.compareTo(
+                  AppThemes.getTheme(a).brightness.name,
+                ),
+          ))
           _ThemePreview(
             theme: theme,
             selected: theme == selected,
