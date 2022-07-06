@@ -1,22 +1,22 @@
-import 'package:flutter/material.dart' as m;
-import 'package:flutter_markdown/flutter_markdown.dart';
-import 'package:markdown/markdown.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_markdown/flutter_markdown.dart' as flutter_markdown;
+import 'package:markdown/markdown.dart' as markdown;
 
-class HighlightSyntax extends InlineSyntax {
+class HighlightSyntax extends markdown.InlineSyntax {
   HighlightSyntax() : super('==([^=]+)==');
   // ,
   //       requiresDelimiterRun: true, allowIntraWord: true, tags: [DelimiterTag('mark', 2)]);
 
   @override
-  bool onMatch(InlineParser parser, Match match) {
-    final element = Element(
-        'mark', [Element.text('span', match.input.substring(match.start + 2, match.end - 2))]);
+  bool onMatch(markdown.InlineParser parser, Match match) {
+    final element = markdown.Element('mark',
+        [markdown.Element.text('span', match.input.substring(match.start + 2, match.end - 2))]);
     parser.addNode(element);
     return true;
   }
 }
 
-class HighlightBuilder extends MarkdownElementBuilder {
+class HighlightBuilder extends flutter_markdown.MarkdownElementBuilder {
   HighlightBuilder(
     this.context, {
     this.color,
@@ -25,37 +25,125 @@ class HighlightBuilder extends MarkdownElementBuilder {
   }) : assert(textStyle == null || (color == null && backgroundColor == null));
 
   /// The text color
-  final m.Color? color;
+  final Color? color;
 
   /// The background color of the text
-  final m.Color? backgroundColor;
+  final Color? backgroundColor;
 
   /// The text style. If textStyle is provided, [color] and [backgroundColor] must be null.
-  final m.TextStyle? textStyle;
+  final TextStyle? textStyle;
 
   /// The context to build the default text style from
-  final m.BuildContext context;
+  final BuildContext context;
 
   @override
-  m.Widget? visitElementAfter(Element element, m.TextStyle? preferredStyle) {
-    final highlightStyle = textStyle ??
-        getDefaultHighlightStyle(context).copyWith(
-          color: color,
-          backgroundColor: backgroundColor,
-        );
+  Widget? visitElementAfter(markdown.Element element, TextStyle? preferredStyle) {
+    final highlightStyle = getHighlightStyle(
+      context,
+      override: getDefaultHighlightStyle(context),
+      normalStyle: textStyle ?? Theme.of(context).textTheme.bodyMedium!,
+    );
 
-    return m.RichText(
-      text: m.TextSpan(
+    return RichText(
+      text: TextSpan(
         text: element.textContent,
         style: highlightStyle,
       ),
     );
   }
 
-  static m.TextStyle getDefaultHighlightStyle(m.BuildContext context) =>
-      m.Theme.of(context).textTheme.bodyMedium!.copyWith(
-            color: m.Colors.black,
-            backgroundColor: m.Colors.yellow[200],
-            fontStyle: m.FontStyle.italic,
+  static TextStyle getDefaultHighlightStyle(BuildContext context) =>
+      Theme.of(context).textTheme.bodyMedium!.copyWith(
+            color: Colors.black,
+            backgroundColor: Colors.yellow[200],
+            fontStyle: FontStyle.italic,
           );
+
+  static TextStyle getNormalStyle(BuildContext context, TextStyle? override) =>
+      override ?? Theme.of(context).textTheme.bodyMedium!;
+
+  static TextStyle getHighlightStyle(
+    BuildContext context, {
+    required TextStyle? override,
+    required TextStyle normalStyle,
+  }) {
+    final defaultHighlightStyle = getDefaultHighlightStyle(context);
+    return normalStyle.copyWith(
+      fontFamily:
+          override?.fontFamily ?? normalStyle.fontFamily ?? defaultHighlightStyle.fontFamily,
+      color: override?.color ?? normalStyle.color ?? defaultHighlightStyle.color,
+      backgroundColor: override?.backgroundColor ??
+          normalStyle.backgroundColor ??
+          defaultHighlightStyle.backgroundColor,
+      fontStyle: override?.fontStyle ?? normalStyle.fontStyle ?? defaultHighlightStyle.fontStyle,
+      fontWeight:
+          override?.fontWeight ?? normalStyle.fontWeight ?? defaultHighlightStyle.fontWeight,
+    );
+  }
+}
+
+class HighlightText extends StatelessWidget {
+  const HighlightText(
+    this.text, {
+    super.key,
+    required this.highlightWords,
+    this.highlightStyle,
+    this.normalTextStyle,
+  });
+
+  final String text;
+  final TextStyle? highlightStyle;
+  final TextStyle? normalTextStyle;
+  final List<String> highlightWords;
+
+  @override
+  Widget build(BuildContext context) {
+    final _text = _highlight(text).split('==');
+    final normalStyle = HighlightBuilder.getNormalStyle(context, normalTextStyle);
+    final hlStyle = HighlightBuilder.getHighlightStyle(
+      context,
+      normalStyle: normalStyle,
+      override: highlightStyle,
+    );
+    final words = highlightWords.map((word) => word.toLowerCase()).toSet();
+
+    return DefaultTextStyle.merge(
+      style: normalStyle,
+      child: Builder(builder: (context) {
+        var def = DefaultTextStyle.of(context).style;
+        return RichText(
+          text: TextSpan(
+            children: [
+              for (final word in _text)
+                if (words.contains(word.toLowerCase()))
+                  TextSpan(
+                    text: word,
+                    style: hlStyle,
+                  )
+                else
+                  TextSpan(
+                    text: word,
+                    style: def,
+                  ),
+            ],
+            style: highlightStyle,
+          ),
+        );
+      }),
+    );
+  }
+
+  String _highlight(String text) {
+    for (final word in highlightWords) {
+      text = text.replaceAllMapped(
+        RegExp(word.replaceAll('\\', ''), caseSensitive: false),
+        (match) => '==${match[0]}==',
+      );
+    }
+    return text;
+  }
+
+  static markdownBuilder(BuildContext context, {TextStyle? textStyle}) {
+    return HighlightBuilder(context, textStyle: textStyle);
+  }
 }

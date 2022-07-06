@@ -110,7 +110,7 @@ class _DynamicActionCardState extends State<DynamicActionCard> {
                 fontSize: Theme.of(context).textTheme.subtitle1!.fontSize,
                 color: color,
               ),
-              textStyle: Theme.of(context).textTheme.subtitle1!,
+              // highlightStyle: Theme.of(context).textTheme.subtitle1!.copyWith(color: color),
             ),
             key: widget.expansionKey,
             onExpansion: (val) {
@@ -207,76 +207,13 @@ class _DynamicActionCardState extends State<DynamicActionCard> {
       onTapLink: (text, href, title) => launch(href!),
       inlineSyntaxes: [HighlightSyntax()],
       builders: {
-        'mark': HighlightBuilder(context, textStyle: style),
+        'mark': HighlightText.markdownBuilder(context),
       },
     );
   }
 
   String _highlight(String text) {
     for (final word in widget.highlightWords) {
-      text = text.replaceAllMapped(
-        RegExp(word.replaceAll('\\', ''), caseSensitive: false),
-        (match) => '==${match[0]}==',
-      );
-    }
-    return text;
-  }
-}
-
-class HighlightText extends StatelessWidget {
-  const HighlightText(
-    this.text, {
-    super.key,
-    required this.highlightWords,
-    this.textStyle,
-    this.normalTextStyle,
-  });
-
-  final String text;
-  final TextStyle? textStyle;
-  final TextStyle? normalTextStyle;
-  final List<String> highlightWords;
-
-  @override
-  Widget build(BuildContext context) {
-    final _text = _highlight(text).split('==');
-    final defaultHighlightStyle = HighlightBuilder.getDefaultHighlightStyle(context);
-    final normalStyle = normalTextStyle ?? Theme.of(context).textTheme.bodyMedium!;
-    final highlightStyle = normalStyle.copyWith(
-      color: defaultHighlightStyle.color,
-      backgroundColor: defaultHighlightStyle.backgroundColor,
-      fontStyle: defaultHighlightStyle.fontStyle,
-    );
-    final words = highlightWords.map((word) => word.toLowerCase()).toSet();
-
-    return DefaultTextStyle.merge(
-      style: normalStyle,
-      child: Builder(builder: (context) {
-        var def = DefaultTextStyle.of(context).style;
-        return RichText(
-          text: TextSpan(
-            children: [
-              for (final word in _text)
-                if (words.contains(word.toLowerCase()))
-                  TextSpan(
-                    text: word,
-                    style: highlightStyle,
-                  )
-                else
-                  TextSpan(
-                    text: word,
-                    style: def,
-                  ),
-            ],
-            style: textStyle,
-          ),
-        );
-      }),
-    );
-  }
-
-  String _highlight(String text) {
-    for (final word in highlightWords) {
       text = text.replaceAllMapped(
         RegExp(word.replaceAll('\\', ''), caseSensitive: false),
         (match) => '==${match[0]}==',

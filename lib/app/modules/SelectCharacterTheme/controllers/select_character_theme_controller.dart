@@ -15,10 +15,10 @@ class SelectCharacterThemeController extends GetxController
     super.onReady();
     lightTheme.value = char.settings.lightTheme;
     darkTheme.value = char.settings.darkTheme;
-    if (!AppThemes.allLightThemes.contains(lightTheme.value)) {
+    if (lightTheme.value != null && !AppThemes.allLightThemes.contains(lightTheme.value)) {
       seeAll[Brightness.light] = true;
     }
-    if (!AppThemes.allDarkThemes.contains(darkTheme.value)) {
+    if (darkTheme.value != null && !AppThemes.allDarkThemes.contains(darkTheme.value)) {
       seeAll[Brightness.dark] = true;
     }
   }

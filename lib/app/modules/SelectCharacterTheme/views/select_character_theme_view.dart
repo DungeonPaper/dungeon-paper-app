@@ -23,7 +23,10 @@ class SelectCharacterThemeView extends GetView<SelectCharacterThemeController> {
             () => _sectionTitle(
               context,
               S.current.settingsDefaultLightTheme,
-              onReset: () => controller.lightTheme.value = null,
+              onReset: () {
+                controller.lightTheme.value = null;
+                controller.save();
+              },
               resetEnabled: controller.lightTheme.value != null,
               onChangeSeeAll: (val) => controller.seeAll[Brightness.light] = val,
               seeAll: controller.seeAll[Brightness.light]!,
@@ -48,7 +51,10 @@ class SelectCharacterThemeView extends GetView<SelectCharacterThemeController> {
             () => _sectionTitle(
               context,
               S.current.settingsDefaultDarkTheme,
-              onReset: () => controller.darkTheme.value = null,
+              onReset: () {
+                controller.darkTheme.value = null;
+                controller.save();
+              },
               resetEnabled: controller.darkTheme.value != null,
               onChangeSeeAll: (val) => controller.seeAll[Brightness.dark] = val,
               seeAll: controller.seeAll[Brightness.dark]!,
