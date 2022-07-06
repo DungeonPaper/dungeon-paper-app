@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:dungeon_paper/app/data/models/user.dart';
 import 'package:dungeon_paper/app/data/services/auth_service.dart';
 import 'package:dungeon_paper/app/data/services/character_service.dart';
@@ -18,6 +20,7 @@ class UserService extends GetxService
     with RepositoryServiceMixin, AuthServiceMixin, CharacterServiceMixin, LoadingServiceMixin {
   final _current = User.guest().obs;
   User get current => _current.value;
+  StreamSubscription? _sub;
 
   Future<void> loadBuiltInRepo() {
     repo.builtIn.clear();
@@ -50,6 +53,7 @@ class UserService extends GetxService
     } else {
       _current.value = User.fromJson(dbUser);
     }
+    _registerUserListener();
     charService.registerCharacterListener();
     loadingService.loadingUser = false;
   }
@@ -76,6 +80,14 @@ class UserService extends GetxService
     loadBuiltInRepo();
   }
 
+  // update user to Firestore
+  Future<User> updateUser(User user) async {
+    final email = user.email;
+    debugPrint('updating user data for $email: ${user.toJson()}');
+    await StorageHandler.instance.firestoreGlobal.update('Data', email, user.toJson());
+    return user;
+  }
+
   Future<User?> _migrateUser(String email, String idToken) async {
     final migrationDetails = await Get.toNamed(
       Routes.migration,
@@ -88,8 +100,24 @@ class UserService extends GetxService
     final userDoc = await FirestoreDelegate().getDocument('Data', email);
     return User.fromJson(userDoc!);
   }
+
+  void _registerUserListener() {
+    _sub?.cancel();
+    debugPrint('registering user listener');
+    _sub = StorageHandler.instance.firestoreGlobal
+        .documentListener('Data', current.email, _updateUser);
+  }
+
+  void _updateUser(DocData? data) {
+    if (data == null) {
+      return;
+    }
+    final user = User.fromJson(data);
+    _current.value = user;
+  }
 }
 
 mixin UserServiceMixin {
   UserService get userService => Get.find();
+  User get user => userService.current;
 }

@@ -14,6 +14,10 @@ class StorageHandler implements StorageDelegate {
     'firestoreGlobal': FirestoreDelegate(),
   };
 
+  FirestoreDelegate get firestore => delegates['firestore'] as FirestoreDelegate;
+  FirestoreDelegate get firestoreGlobal => delegates['firestoreGlobal'] as FirestoreDelegate;
+  LocalStorageDelegate get local => delegates['local'] as LocalStorageDelegate;
+
   StorageDelegate get delegate => delegates[currentDelegate]!;
 
   @override

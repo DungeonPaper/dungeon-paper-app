@@ -6,6 +6,7 @@ import 'dart:convert';
 import 'dart:math';
 
 import 'package:dungeon_paper/app/data/models/roll_button.dart';
+import 'package:dungeon_paper/app/data/models/user.dart';
 import 'package:dungeon_paper/app/model_utils/model_icon.dart';
 import 'package:dungeon_paper/core/utils/enums.dart';
 import 'package:dungeon_paper/core/utils/math_utils.dart';
@@ -71,11 +72,7 @@ class Character implements WithMeta<Character, CharacterMeta>, WithIcon {
   int get maxHp => stats.maxHp ?? defaultMaxHp;
   int get defaultMaxHp => (characterClass.hp + abilityScores.hpBaseValue);
   int get currentExp => stats.currentExp;
-  int get pendingExp {
-    final marks = sessionMarks.where((m) => m.completed).length;
-    // TODO add end of session questions to calculation?
-    return marks;
-  }
+  int get pendingExp => sessionMarks.where((m) => m.completed).length;
 
   int get maxExp => stats.maxExp;
   double get currentHpPercent => clamp(stats.currentHp / maxHp, 0, 1);
@@ -84,6 +81,8 @@ class Character implements WithMeta<Character, CharacterMeta>, WithIcon {
   int get currentLoad => items.fold(0, (weight, item) => weight + item.weight);
   int get armor => stats.armor ?? items.fold(0, (armor, item) => armor + item.armor);
   int get damageModifier => items.fold(0, (mod, item) => mod + item.damage);
+
+  int getLightTheme(User user) => settings.lightTheme ?? user.settings.defaultLightTheme;
 
   static RollButton get basicActionRollButton => RollButton(
         label: S.current.rollBasicActionButton,
@@ -119,12 +118,8 @@ class Character implements WithMeta<Character, CharacterMeta>, WithIcon {
       ];
 
   List<RollButton> get rollButtons => [
-        settings.rollButtons.isNotEmpty
-            ? settings.rollButtons[0] ?? basicActionRollButton
-            : basicActionRollButton,
-        settings.rollButtons.length > 1
-            ? settings.rollButtons[1] ?? hackAndSlashRollButton
-            : hackAndSlashRollButton
+        rawRollButtons[0] ?? basicActionRollButton,
+        rawRollButtons[1] ?? hackAndSlashRollButton,
       ];
 
   Set<String> get noteCategories =>
@@ -134,10 +129,15 @@ class Character implements WithMeta<Character, CharacterMeta>, WithIcon {
 
   dw.Dice get damageDice =>
       stats.damageDice ?? characterClass.damageDice.copyWithModifierValue(damageModifier);
+
   List<SessionMark> get bonds =>
       sessionMarks.where((e) => e.type == dw.SessionMarkType.bond).toList();
+
   List<SessionMark> get flags =>
       sessionMarks.where((e) => e.type == dw.SessionMarkType.flag).toList();
+
+  List<SessionMark> get endOfSessionMarks =>
+      sessionMarks.where((e) => e.type == dw.SessionMarkType.endOfSession).toList();
 
   static const allActionCategories = {'Move', 'Spell', 'Item'};
 
@@ -160,23 +160,23 @@ class Character implements WithMeta<Character, CharacterMeta>, WithIcon {
     Bio? bio,
     Race? race,
   }) =>
-      Character(
-        meta: meta ?? this.meta,
-        key: key ?? this.key,
-        displayName: displayName ?? this.displayName,
-        settings: settings ?? this.settings,
-        avatarUrl: avatarUrl ?? this.avatarUrl,
-        characterClass: characterClass ?? this.characterClass,
-        moves: moves ?? this.moves,
-        spells: spells ?? this.spells,
-        items: items ?? this.items,
-        coins: coins ?? this.coins,
-        notes: notes ?? this.notes,
-        stats: stats ?? this.stats,
-        abilityScores: abilityScores ?? this.abilityScores,
-        sessionMarks: sessionMarks ?? this.sessionMarks,
-        bio: bio ?? this.bio,
-        race: race ?? this.race,
+      copyWithInherited(
+        meta: this.meta,
+        key: this.key,
+        displayName: this.displayName,
+        settings: this.settings,
+        avatarUrl: this.avatarUrl,
+        characterClass: this.characterClass,
+        moves: this.moves,
+        spells: this.spells,
+        items: this.items,
+        coins: this.coins,
+        notes: this.notes,
+        stats: this.stats,
+        abilityScores: this.abilityScores,
+        sessionMarks: this.sessionMarks,
+        bio: this.bio,
+        race: this.race,
       );
 
   @override
@@ -221,7 +221,16 @@ class Character implements WithMeta<Character, CharacterMeta>, WithIcon {
 
   factory Character.empty() {
     final rand = Random();
-    var characterClass = CharacterClass.empty();
+    final characterClass = CharacterClass.empty();
+    final abilityScores = AbilityScores.dungeonWorld(
+      cha: rand.nextInt(20),
+      con: rand.nextInt(20),
+      dex: rand.nextInt(20),
+      intl: rand.nextInt(20),
+      str: rand.nextInt(20),
+      wis: rand.nextInt(20),
+    );
+
     return Character(
       key: uuid(),
       meta: Meta.empty(),
@@ -236,22 +245,11 @@ class Character implements WithMeta<Character, CharacterMeta>, WithIcon {
       notes: [],
       stats: CharacterStats(
         level: 1,
-        armor: null,
         currentExp: 0,
-        currentHp: 20,
-        // damageDice: characterClass.damageDice,
-        maxHp: null,
-        // load: characterClass.load,
+        currentHp: characterClass.hp + abilityScores.hpBaseValue,
       ),
       moves: [],
-      abilityScores: AbilityScores.dungeonWorld(
-        cha: rand.nextInt(20),
-        con: rand.nextInt(20),
-        dex: rand.nextInt(20),
-        intl: rand.nextInt(20),
-        str: rand.nextInt(20),
-        wis: rand.nextInt(20),
-      ),
+      abilityScores: abilityScores,
       spells: [],
       race: Race(
         key: uuid(),
@@ -295,12 +293,12 @@ class Character implements WithMeta<Character, CharacterMeta>, WithIcon {
         moves: List<Move>.from(json['moves'].map((x) => Move.fromJson(x))),
         spells: List<Spell>.from(json['spells'].map((x) => Spell.fromJson(x))),
         items: List<Item>.from(json['items'].map((x) => Item.fromJson(x))),
-        coins: ((json['coins'] ?? 0) as num).toDouble(),
+        coins: (json['coins'] ?? 0).toDouble(),
         notes: List<Note>.from(json['notes'].map((x) => Note.fromJson(x))),
         stats: CharacterStats.fromJson(json['stats']),
         abilityScores: AbilityScores.fromJson(json['abilityScores']),
-        sessionMarks:
-            List<SessionMark>.from(json['sessionMarks'].map((x) => SessionMark.fromJson(x))),
+        sessionMarks: List<SessionMark>.from(
+            json['sessionMarks'].map((x) => SessionMark.fromJson(x))),
         bio: Bio.fromJson(json['bio']),
         race: Race.fromJson(json['race']),
       );

@@ -2648,6 +2648,46 @@ class S {
     );
   }
 
+  /// `Default dark theme`
+  String get settingsDefaultDarkTheme {
+    return Intl.message(
+      'Default dark theme',
+      name: 'settingsDefaultDarkTheme',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Default light theme`
+  String get settingsDefaultLightTheme {
+    return Intl.message(
+      'Default light theme',
+      name: 'settingsDefaultLightTheme',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `General`
+  String get settingsGeneral {
+    return Intl.message(
+      'General',
+      name: 'settingsGeneral',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Keep screen awake while using the app`
+  String get settingsKeepScreenAwake {
+    return Intl.message(
+      'Keep screen awake while using the app',
+      name: 'settingsKeepScreenAwake',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `Settings`
   String get settingsTitle {
     return Intl.message(

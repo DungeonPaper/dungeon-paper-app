@@ -7,7 +7,7 @@ class CharacterStats {
     required this.level,
     required this.currentHp,
     required this.currentExp,
-    required this.armor,
+    this.armor,
     this.maxHp,
     this.damageDice,
     this.load,

@@ -147,6 +147,18 @@ final darkSplashColor = darkTheme.colorScheme.secondary.withOpacity(0.2);
 class AppThemes {
   static const parchment = 0;
   static const dark = 1;
+
+  static List<int> allLightThemes = [parchment];
+  static List<int> allDarkThemes = [dark];
+
+  static ThemeData getTheme(int theme) => themeCollection[theme];
+
+  static const _themeNames = {
+    AppThemes.parchment: 'Parchment',
+    AppThemes.dark: 'Dark',
+  };
+
+  static String getThemeName(int theme) => _themeNames[theme]!;
 }
 
 final themeCollection = ThemeCollection(

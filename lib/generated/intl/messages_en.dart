@@ -613,6 +613,13 @@ class MessageLookup extends MessageLookupByLibrary {
         "selectToAdd": m62,
         "selected": MessageLookupByLibrary.simpleMessage("Selected"),
         "separatorOr": MessageLookupByLibrary.simpleMessage("OR"),
+        "settingsDefaultDarkTheme":
+            MessageLookupByLibrary.simpleMessage("Default dark theme"),
+        "settingsDefaultLightTheme":
+            MessageLookupByLibrary.simpleMessage("Default light theme"),
+        "settingsGeneral": MessageLookupByLibrary.simpleMessage("General"),
+        "settingsKeepScreenAwake": MessageLookupByLibrary.simpleMessage(
+            "Keep screen awake while using the app"),
         "settingsTitle": MessageLookupByLibrary.simpleMessage("Settings"),
         "sortMoveDown": MessageLookupByLibrary.simpleMessage("Move down"),
         "sortMoveUp": MessageLookupByLibrary.simpleMessage("Move up"),

@@ -10,21 +10,15 @@ enum RacePosition { start, end }
 @immutable
 class CharacterSettings {
   const CharacterSettings({
-    this.noteCategories = const NoteCategoryList(
-      sortOrder: {},
-    ),
-    this.actionCategories = const ActionCategoryList(
-      sortOrder: {},
-      hidden: {},
-    ),
-    this.quickCategories = const ActionCategoryList(
-      sortOrder: {},
-      hidden: {},
-    ),
+    this.noteCategories = const NoteCategoryList(sortOrder: {}),
+    this.actionCategories = const ActionCategoryList(sortOrder: {}, hidden: {}),
+    this.quickCategories = const ActionCategoryList(sortOrder: {}, hidden: {}),
     this.sortOrder,
     this.category,
     required this.rollButtons,
     this.racePosition = RacePosition.start,
+    this.lightTheme,
+    this.darkTheme,
   });
 
   final NoteCategoryList noteCategories;
@@ -35,6 +29,8 @@ class CharacterSettings {
   final String? category;
   final List<RollButton?> rollButtons;
   final RacePosition racePosition;
+  final int? lightTheme;
+  final int? darkTheme;
 
   CharacterSettings copyWith({
     int? sortOrder,
@@ -44,6 +40,8 @@ class CharacterSettings {
     ActionCategoryList? actionCategories,
     ActionCategoryList? quickCategories,
     RacePosition? racePosition,
+    int? lightTheme,
+    int? darkTheme,
   }) =>
       CharacterSettings(
         sortOrder: sortOrder ?? this.sortOrder,
@@ -53,6 +51,8 @@ class CharacterSettings {
         noteCategories: noteCategories ?? this.noteCategories,
         racePosition: racePosition ?? this.racePosition,
         quickCategories: quickCategories ?? this.quickCategories,
+        lightTheme: lightTheme ?? this.lightTheme,
+        darkTheme: darkTheme ?? this.darkTheme,
       );
 
   factory CharacterSettings.fromRawJson(String str) => CharacterSettings.fromJson(json.decode(str));
@@ -77,12 +77,14 @@ class CharacterSettings {
               ),
         sortOrder: json['sortOrder'],
         category: json['category'],
-        rollButtons: List<RollButton?>.from(
-            (json['rollButtons'] ?? []).map((x) => x != null ? RollButton.fromJson(x) : null)),
+        rollButtons: List<RollButton?>.from((json['rollButtons'] ?? [])
+            .map((x) => x != null ? RollButton.fromJson(x) : null)),
         racePosition: RacePosition.values.firstWhere(
           (element) => element.name == json['racePosition'],
           orElse: () => RacePosition.start,
         ),
+        lightTheme: json['lightTheme'],
+        darkTheme: json['darkTheme'],
       );
 
   factory CharacterSettings.empty() => const CharacterSettings(
@@ -106,6 +108,8 @@ class CharacterSettings {
         'actionCategories': actionCategories.toJson(),
         'quickCategories': quickCategories.toJson(),
         'racePosition': racePosition.name,
+        'lightTheme': lightTheme,
+        'darkTheme': darkTheme,
       };
 }
 
