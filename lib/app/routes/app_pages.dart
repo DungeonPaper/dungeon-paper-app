@@ -41,6 +41,8 @@ import '../modules/Login/bindings/login_binding.dart';
 import '../modules/Login/views/login_view.dart';
 import '../modules/Migration/bindings/migration_binding.dart';
 import '../modules/Migration/views/migration_view.dart';
+import '../modules/SelectCharacterTheme/bindings/select_character_theme_binding.dart';
+import '../modules/SelectCharacterTheme/views/select_character_theme_view.dart';
 import '../modules/Settings/bindings/settings_binding.dart';
 import '../modules/Settings/views/settings_view.dart';
 import '../modules/StartingGearForm/bindings/starting_gear_form_binding.dart';
@@ -251,6 +253,11 @@ class AppPages {
       name: Routes.about,
       page: () => const AboutView(),
       binding: AboutBinding(),
+    ),
+    GetPage(
+      name: Routes.selectCharacterTheme,
+      page: () => const SelectCharacterThemeView(),
+      binding: SelectCharacterThemeBinding(),
     ),
   ];
 }

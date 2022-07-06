@@ -77,8 +77,8 @@ class CharacterSettings {
               ),
         sortOrder: json['sortOrder'],
         category: json['category'],
-        rollButtons: List<RollButton?>.from((json['rollButtons'] ?? [])
-            .map((x) => x != null ? RollButton.fromJson(x) : null)),
+        rollButtons: List<RollButton?>.from(
+            (json['rollButtons'] ?? []).map((x) => x != null ? RollButton.fromJson(x) : null)),
         racePosition: RacePosition.values.firstWhere(
           (element) => element.name == json['racePosition'],
           orElse: () => RacePosition.start,
@@ -111,6 +111,18 @@ class CharacterSettings {
         'lightTheme': lightTheme,
         'darkTheme': darkTheme,
       };
+
+  CharacterSettings copyWithThemes({int? lightTheme, int? darkTheme}) => CharacterSettings(
+        lightTheme: lightTheme,
+        darkTheme: darkTheme,
+        sortOrder: sortOrder,
+        category: category,
+        rollButtons: rollButtons,
+        actionCategories: actionCategories,
+        noteCategories: noteCategories,
+        racePosition: racePosition,
+        quickCategories: quickCategories,
+      );
 }
 
 @immutable

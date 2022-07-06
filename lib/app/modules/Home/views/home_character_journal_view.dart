@@ -147,7 +147,7 @@ class HomeCharacterJournalView extends GetView<CharacterService> {
     };
   }
 
-  void _move(int oldIndex, int newIndex) {
+  Future<void> _move(int oldIndex, int newIndex) {
     return controller.updateCharacter(
       char.copyWith(
         settings: char.settings.copyWith(

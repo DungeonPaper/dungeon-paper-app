@@ -41,6 +41,7 @@ abstract class Routes {
   static const universalSearch = _Paths.universalSearch;
   static const migration = _Paths.migration;
   static const about = _Paths.about;
+  static const selectCharacterTheme = _Paths.selectCharacterTheme;
 }
 
 abstract class _Paths {
@@ -73,4 +74,5 @@ abstract class _Paths {
   static const universalSearch = '/universal-search';
   static const migration = '/migration';
   static const about = '/about';
+  static const selectCharacterTheme = '/select-character-theme';
 }

@@ -126,7 +126,7 @@ class CharacterBondsFlagsDialog extends GetView<CharacterService> with Character
     );
   }
 
-  void onChecked(SessionMark sessionMark, [bool? val]) {
+  Future<void> onChecked(SessionMark sessionMark, [bool? val]) {
     return controller.updateCharacter(
       char.copyWith(
         sessionMarks: updateByKey(

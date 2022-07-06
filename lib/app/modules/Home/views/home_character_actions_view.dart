@@ -91,6 +91,28 @@ class HomeCharacterActionsView extends GetView<CharacterService> {
       route: Routes.moves,
       leading: char.settings.racePosition == RacePosition.start ? [raceCard] : [],
       trailing: char.settings.racePosition == RacePosition.end ? [raceCard] : [],
+      menuTrailing: [
+        // Move to start of list
+        MenuEntry(
+          value: 'move_to_start',
+          label: Text(S.current.moveToStartGeneric(S.current.entity(Race))),
+          onSelect: () => controller.updateCharacter(
+            char.copyWith(
+              settings: char.settings.copyWith(racePosition: RacePosition.start),
+            ),
+          ),
+        ),
+        // Move to end of list
+        MenuEntry(
+          value: 'move_to_end',
+          label: Text(S.current.moveToEndGeneric(S.current.entity(Race))),
+          onSelect: () => controller.updateCharacter(
+            char.copyWith(
+              settings: char.settings.copyWith(racePosition: RacePosition.end),
+            ),
+          ),
+        ),
+      ],
       addPageArguments: ({required onAdd}) => MoveLibraryListArguments(
         character: char,
         onAdd: onAdd,
@@ -206,6 +228,8 @@ class ActionsCardList<T extends WithMeta> extends GetView<CharacterService>
     required this.list,
     required this.index,
     required this.onReorder,
+    this.menuLeading = const [],
+    this.menuTrailing = const [],
     this.leading = const [],
     this.trailing = const [],
   }) : super(key: key);
@@ -225,6 +249,8 @@ class ActionsCardList<T extends WithMeta> extends GetView<CharacterService>
   final List<T> list;
   final int index;
   final void Function(int oldIndex, int newIndex) onReorder;
+  final List<MenuEntry<String>> menuLeading;
+  final List<MenuEntry<String>> menuTrailing;
 
   Character get char => controller.current;
 
@@ -247,28 +273,8 @@ class ActionsCardList<T extends WithMeta> extends GetView<CharacterService>
           index: index,
           totalItemCount: Character.allActionCategories.length,
           onReorder: onReorder,
-          trailing: [
-            // Move to start of list
-            MenuEntry(
-              value: 'move_to_start',
-              label: Text(S.current.moveToStartGeneric(S.current.entity(Race))),
-              onSelect: () => controller.updateCharacter(
-                char.copyWith(
-                  settings: char.settings.copyWith(racePosition: RacePosition.start),
-                ),
-              ),
-            ),
-            // Move to end of list
-            MenuEntry(
-              value: 'move_to_end',
-              label: Text(S.current.moveToEndGeneric(S.current.entity(Race))),
-              onSelect: () => controller.updateCharacter(
-                char.copyWith(
-                  settings: char.settings.copyWith(racePosition: RacePosition.end),
-                ),
-              ),
-            ),
-          ],
+          leading: menuLeading,
+          trailing: menuTrailing,
         )
       ],
       leading: [

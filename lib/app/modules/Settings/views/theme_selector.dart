@@ -8,12 +8,12 @@ class ThemeSelector extends StatelessWidget {
   const ThemeSelector({
     super.key,
     required this.themes,
-    required this.selected,
+    this.selected,
     required this.onSelected,
   });
 
   final List<int> themes;
-  final int selected;
+  final int? selected;
   final Function(int) onSelected;
 
   @override

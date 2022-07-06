@@ -42,6 +42,12 @@ class HomeCharacterExtras extends GetView<CharacterService> {
               label: Text(S.current.customRollButtons),
               onSelect: _openRollButtons,
             ),
+            MenuEntry(
+              value: 'theme',
+              icon: const Icon(Icons.brush),
+              label: Text(S.current.characterSelectTheme),
+              onSelect: _openThemeSelect,
+            ),
           ],
         ),
         IconButton(
@@ -118,5 +124,9 @@ class HomeCharacterExtras extends GetView<CharacterService> {
         ),
       ),
     );
+  }
+
+  void _openThemeSelect() {
+    Get.toNamed(Routes.selectCharacterTheme);
   }
 }

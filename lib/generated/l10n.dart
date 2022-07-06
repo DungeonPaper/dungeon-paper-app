@@ -867,6 +867,16 @@ class S {
     );
   }
 
+  /// `Select Character Theme`
+  String get characterSelectTheme {
+    return Intl.message(
+      'Select Character Theme',
+      name: 'characterSelectTheme',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `Ability Scores`
   String get characterRollsTitle {
     return Intl.message(

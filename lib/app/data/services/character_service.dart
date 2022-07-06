@@ -109,15 +109,15 @@ class CharacterService extends GetxService with LoadingServiceMixin, UserService
     }
   }
 
-  void updateCharacter(Character character, {bool switchToCharacter = false}) {
+  Future<void> updateCharacter(Character character, {bool switchToCharacter = false}) {
     // (StorageHandler.instance.delegate as LocalStorageDelegate).storage.collection('Characters');
     all[character.key] = character;
-    StorageHandler.instance.update('Characters', character.key, character.toJson());
     if (switchToCharacter || _currentKey.value == null || !all.containsKey(_currentKey.value)) {
       setCurrent(character.key);
     }
     debugPrint('Updated char: ${character.key} (${character.displayName})');
     debugPrint(character.toRawJson());
+    return StorageHandler.instance.update('Characters', character.key, character.toJson());
   }
 
   void createCharacter(Character character, {bool switchToCharacter = false}) {
