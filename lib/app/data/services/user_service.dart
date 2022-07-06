@@ -115,6 +115,7 @@ class UserService extends GetxService
     }
     final user = User.fromJson(data);
     _current.value = user;
+    charService.switchToCharacterTheme(char);
   }
 }
 

@@ -87,8 +87,13 @@ class CharacterService extends GetxService with LoadingServiceMixin, UserService
   }
 
   void switchToCharacterTheme(Character character) {
-    debugPrint('switching to theme ${character.getCurrentTheme(user)}');
-    DynamicTheme.of(Get.context!)!.setTheme(character.getCurrentTheme(user));
+    final dynamicTheme = DynamicTheme.of(Get.context!)!;
+    final currentTheme = dynamicTheme.themeId;
+    final newTheme = character.getCurrentTheme(user);
+    if (currentTheme != newTheme) {
+      debugPrint('switching to theme ${character.getCurrentTheme(user)}');
+      dynamicTheme.setTheme(newTheme);
+    }
   }
 
   void charsListener(List<DocData> json) {
@@ -107,6 +112,8 @@ class CharacterService extends GetxService with LoadingServiceMixin, UserService
         _currentKey.value = all.keys.first;
       }
     }
+
+    switchToCharacterTheme(current);
   }
 
   Future<void> updateCharacter(Character character, {bool switchToCharacter = false}) {

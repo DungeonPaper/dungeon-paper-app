@@ -79,6 +79,7 @@ final depthsTheme = createTheme(
   ),
   scaffoldBackgroundColor: Color.fromARGB(255, 4, 28, 63),
   brightness: Brightness.dark,
+  surfaceColor: Color.fromARGB(255, 1, 12, 31),
 );
 
 final fairyTheme = createTheme(
@@ -101,6 +102,31 @@ final infernoTheme = createTheme(
   ),
   scaffoldBackgroundColor: Color.fromARGB(255, 82, 4, 4),
   brightness: Brightness.dark,
+  surfaceColor: Color.fromARGB(255, 50, 2, 2),
+);
+
+final bonfireTheme = createTheme(
+  createColorScheme(
+    Color.fromARGB(255, 83, 21, 21),
+    brightness: Brightness.light,
+    primary: Color.fromARGB(255, 179, 21, 3),
+    secondary: Color.fromARGB(255, 188, 71, 32),
+  ),
+  scaffoldBackgroundColor: Color.fromARGB(255, 255, 184, 153),
+  brightness: Brightness.light,
+  surfaceColor: Color.fromARGB(255, 254, 196, 155),
+);
+
+final marshTheme = createTheme(
+  createColorScheme(
+    Color.fromARGB(255, 17, 71, 20),
+    brightness: Brightness.dark,
+    primary: Color.fromARGB(255, 89, 113, 3),
+    secondary: Color.fromARGB(255, 89, 113, 3),
+  ),
+  scaffoldBackgroundColor: Color.fromARGB(255, 9, 44, 10),
+  brightness: Brightness.dark,
+  surfaceColor: Color.fromARGB(255, 4, 23, 4),
 );
 
 class AppThemes {
@@ -113,6 +139,8 @@ class AppThemes {
   static const depths = 6;
   static const inferno = 7;
   static const fairy = 8;
+  static const bonfire = 9;
+  static const marsh = 10;
 
   static List<int> allThemes = themes.keys.toList();
 
@@ -137,6 +165,8 @@ class AppThemes {
     AppThemes.depths: depthsTheme,
     AppThemes.inferno: infernoTheme,
     AppThemes.fairy: fairyTheme,
+    AppThemes.bonfire: bonfireTheme,
+    AppThemes.marsh: marshTheme,
   };
 
   static const _themeNames = {
@@ -149,6 +179,8 @@ class AppThemes {
     AppThemes.depths: 'Depths',
     AppThemes.inferno: 'Inferno',
     AppThemes.fairy: 'Fairy',
+    AppThemes.bonfire: 'Bonfire',
+    AppThemes.marsh: 'Marsh',
   };
 }
 

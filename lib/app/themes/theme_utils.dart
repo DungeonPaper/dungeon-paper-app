@@ -78,6 +78,7 @@ ColorScheme createColorScheme(Color seedColor,
 ThemeData createTheme(
   ColorScheme colorScheme, {
   Color? scaffoldBackgroundColor,
+  Color? surfaceColor,
   required Brightness brightness,
 }) {
   final textTheme = brightness == Brightness.light ? lightM3.textTheme : darkM3.textTheme;
@@ -100,7 +101,8 @@ ThemeData createTheme(
     dialogTheme: base.dialogTheme.copyWith(
       shape: rRectShape,
     ),
-    cardTheme: base.cardTheme.copyWith(shape: rRectShape),
+    cardColor: surfaceColor,
+    cardTheme: base.cardTheme.copyWith(shape: rRectShape, color: surfaceColor),
     popupMenuTheme: base.popupMenuTheme.copyWith(
       shape: rRectShape,
     ),

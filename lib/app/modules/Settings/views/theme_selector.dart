@@ -1,8 +1,6 @@
+import 'package:dungeon_paper/app/themes/colors.dart';
 import 'package:dungeon_paper/app/themes/themes.dart';
-import 'package:dungeon_paper/core/utils/math_utils.dart';
-import 'package:dungeon_paper/generated/l10n.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/framework.dart';
 
 class ThemeSelector extends StatelessWidget {
   const ThemeSelector({
@@ -52,27 +50,24 @@ class _ThemePreview extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final ctxTheme = Theme.of(context);
-    final ctxTextTheme = ctxTheme.textTheme;
     final ctxColorScheme = ctxTheme.colorScheme;
-    final bodySmall = ctxTextTheme.bodySmall!;
     final themeData = AppThemes.getTheme(theme);
     const size = 80.0;
     final textDirection = Directionality.of(context);
 
     return Container(
       padding: const EdgeInsets.all(8),
-      width: size + 16,
+      width: size + 24,
       child: Column(
         children: [
           SizedBox(
-            height: size,
-            width: size,
+            height: size + 8,
+            width: size + 8,
             child: Material(
               shape: rRectShape.copyWith(borderRadius: rRectShape.borderRadius / 2),
-              color: selected ? ctxColorScheme.secondary : Colors.transparent,
-              clipBehavior: Clip.antiAlias,
+              color: Colors.black54,
               child: Padding(
-                padding: const EdgeInsets.all(2),
+                padding: const EdgeInsets.all(4),
                 child: Material(
                   shape: rRectShape.copyWith(borderRadius: rRectShape.borderRadius / 2),
                   color: themeData.scaffoldBackgroundColor,
@@ -89,39 +84,28 @@ class _ThemePreview extends StatelessWidget {
                           child: Container(
                             color: themeData.canvasColor,
                             height: 20,
-                            // child: Padding(
-                            //   padding: const EdgeInsets.all(4).copyWith(bottom: 6),
-                            //   child: Text(
-                            //     AppThemes.getThemeName(theme),
-                            //     style: bodySmall.copyWith(color: ctxColorScheme.onSurface),
-                            //     textScaleFactor: 0.9,
-                            //   ),
-                            // ),
                           ),
                         ),
                         Positioned.directional(
                           textDirection: textDirection,
                           bottom: 6,
-                          start: 32,
-                          child: Row(
-                            children: [
-                              Padding(
-                                padding: const EdgeInsets.only(right: 10),
-                                child: Container(
-                                  width: size * 0.2,
-                                  height: 8,
-                                  decoration: BoxDecoration(
-                                    color: themeData.colorScheme.secondary,
-                                    borderRadius: borderRadius / 4,
-                                  ),
-                                ),
+                          start: 0,
+                          end: 0,
+                          child: Center(
+                            child: Container(
+                              width: size * 0.2,
+                              height: 8,
+                              decoration: BoxDecoration(
+                                color: themeData.colorScheme.secondary,
+                                borderRadius: borderRadius / 4,
                               ),
-                            ],
+                            ),
                           ),
                         ),
+                        // Card
                         Positioned.directional(
                           textDirection: textDirection,
-                          bottom: 26,
+                          top: 2,
                           start: 8,
                           end: 8,
                           child: SizedBox(
@@ -148,6 +132,24 @@ class _ThemePreview extends StatelessWidget {
                             ),
                           ),
                         ),
+                        if (selected)
+                          Positioned.directional(
+                            textDirection: textDirection,
+                            end: 6,
+                            bottom: 6,
+                            child: const Material(
+                              type: MaterialType.circle,
+                              child: Padding(
+                                padding: EdgeInsets.all(3),
+                                child: Icon(
+                                  Icons.check,
+                                  size: 16,
+                                  color: Colors.white,
+                                ),
+                              ),
+                              color: DwColors.success,
+                            ),
+                          ),
                       ],
                     ),
                   ),

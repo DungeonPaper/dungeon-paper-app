@@ -58,6 +58,7 @@ class TagChip extends StatelessWidget {
       visualDensity: visualDensity,
       onDeleted: onDeleted,
       onPressed: onPressed,
+      tooltip: tag.description,
     );
   }
 }
