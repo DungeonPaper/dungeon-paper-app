@@ -45,6 +45,6 @@ class UserSettings {
         'keepScreenAwake': keepScreenAwake,
         'defaultLightTheme': defaultLightTheme,
         'defaultDarkTheme': defaultDarkTheme,
-        'brightnessOverride': brightnessOverride,
+        'brightnessOverride': brightnessOverride?.name,
       };
 }

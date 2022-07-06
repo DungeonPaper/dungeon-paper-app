@@ -1,3 +1,4 @@
+import 'package:dungeon_paper/app/data/services/character_service.dart';
 import 'package:dungeon_paper/app/themes/themes.dart';
 import 'package:dungeon_paper/generated/l10n.dart';
 import 'package:flutter/material.dart';
@@ -7,7 +8,7 @@ import 'package:get/get.dart';
 import '../controllers/settings_controller.dart';
 import 'theme_selector.dart';
 
-class SettingsView extends GetView<SettingsController> {
+class SettingsView extends GetView<SettingsController> with CharacterServiceMixin {
   const SettingsView({super.key});
 
   @override
@@ -34,22 +35,36 @@ class SettingsView extends GetView<SettingsController> {
           ),
           _sectionTitle(context, S.current.settingsDefaultLightTheme),
           _pad(
-            ThemeSelector(
-              themes: AppThemes.allLightThemes,
-              selected: controller.settings.defaultLightTheme,
-              onSelected: (theme) => controller.updateSettings(
-                controller.settings.copyWith(defaultLightTheme: theme),
+            Obx(
+              () => ThemeSelector(
+                themes: AppThemes.allLightThemes,
+                selected: controller.settings.defaultLightTheme,
+                onSelected: (theme) async {
+                  await controller.updateSettings(
+                    controller.settings.copyWith(defaultLightTheme: theme),
+                  );
+                  if (controller.user.brightness == Brightness.light) {
+                    charService.switchToCharacterTheme(character);
+                  }
+                },
               ),
             ),
             horizontal: 8,
           ),
           _sectionTitle(context, S.current.settingsDefaultDarkTheme),
           _pad(
-            ThemeSelector(
-              themes: AppThemes.allDarkThemes,
-              selected: controller.settings.defaultDarkTheme,
-              onSelected: (theme) => controller.updateSettings(
-                controller.settings.copyWith(defaultDarkTheme: theme),
+            Obx(
+              () => ThemeSelector(
+                themes: AppThemes.allDarkThemes,
+                selected: controller.settings.defaultDarkTheme,
+                onSelected: (theme) async {
+                  await controller.updateSettings(
+                    controller.settings.copyWith(defaultDarkTheme: theme),
+                  );
+                  if (controller.user.brightness == Brightness.dark) {
+                    charService.switchToCharacterTheme(character);
+                  }
+                },
               ),
             ),
             horizontal: 8,

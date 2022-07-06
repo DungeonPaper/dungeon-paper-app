@@ -40,22 +40,21 @@ class ThemeBrightnessSwitch extends StatelessWidget with UserServiceMixin, Chara
   Widget build(BuildContext context) {
     return builder(
       context,
-      icon: icon(context),
-      title: title(context),
+      icon: icon(user),
+      title: title(user),
       onChanged: () => onChanged?.call(
         _toggleTheme(context, user, char),
       ),
     );
   }
 
-  static Brightness brightnessOf(BuildContext context) => Theme.of(context).brightness;
+  static Brightness brightnessOf(User user) => user.brightness;
 
-  static IconData icon(BuildContext context) =>
-      brightnessOf(context) == Brightness.light ? Icons.light_mode : Icons.light_mode_outlined;
+  static IconData icon(User user) =>
+      brightnessOf(user) == Brightness.light ? Icons.light_mode : Icons.light_mode_outlined;
 
-  static String title(BuildContext context) => brightnessOf(context) == Brightness.light
-      ? S.current.themeTurnDark
-      : S.current.themeTurnLight;
+  static String title(User user) =>
+      brightnessOf(user) == Brightness.light ? S.current.themeTurnDark : S.current.themeTurnLight;
 
   static Widget _listTileBuilder(
     BuildContext context, {
@@ -83,16 +82,18 @@ class ThemeBrightnessSwitch extends StatelessWidget with UserServiceMixin, Chara
       );
 
   static Brightness _toggleTheme(BuildContext context, User user, Character character) {
-    final theme = DynamicTheme.of(context)!;
-    final isDark = theme.themeId == AppThemes.dark;
-    final brightness = isDark ? Brightness.light : Brightness.dark;
-    theme.setTheme(character.getThemeForBrightness(user, brightness));
+    final currentIsDark = user.brightness == Brightness.dark;
+    final brightness = currentIsDark ? Brightness.light : Brightness.dark;
     final userService = Get.find<UserService>();
-    userService.updateUser(
-      user.copyWith(
-        settings: user.settings.copyWith(brightnessOverride: brightness),
-      ),
-    );
+    final charService = Get.find<CharacterService>();
+    debugPrint('Toggling theme to $brightness');
+    userService
+        .updateUser(
+          user.copyWith(
+            settings: user.settings.copyWith(brightnessOverride: brightness),
+          ),
+        )
+        .then((value) => charService.switchToCharacterTheme(character));
     return brightness;
   }
 }

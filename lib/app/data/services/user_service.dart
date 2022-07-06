@@ -7,6 +7,7 @@ import 'package:dungeon_paper/app/data/services/loading_service.dart';
 import 'package:dungeon_paper/app/data/services/repository_service.dart';
 import 'package:dungeon_paper/app/modules/Migration/controllers/migration_controller.dart';
 import 'package:dungeon_paper/app/routes/app_pages.dart';
+import 'package:dungeon_paper/app/themes/theme_utils.dart';
 import 'package:dungeon_paper/core/http/api.dart';
 import 'package:dungeon_paper/core/http/api_requests/migration.dart';
 import 'package:dungeon_paper/core/storage_handler/storage_handler.dart';

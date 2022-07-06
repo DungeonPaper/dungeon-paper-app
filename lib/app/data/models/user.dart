@@ -1,6 +1,8 @@
 import 'dart:convert';
 
 import 'package:dungeon_paper/app/data/models/user_settings.dart';
+import 'package:dungeon_paper/app/themes/theme_utils.dart';
+import 'package:flutter/material.dart';
 
 class User {
   User({
@@ -66,4 +68,6 @@ class User {
 
   bool get isGuest => username == 'guest';
   bool get isLoggedIn => !isGuest;
+
+  Brightness get brightness => settings.brightnessOverride ?? getCurrentPlatformBrightness();
 }

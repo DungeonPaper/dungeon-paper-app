@@ -54,7 +54,28 @@ TextTheme copyTextThemeWith(
       overline: original.overline?.copyWith(fontFamily: fontFamily, color: normalColor),
     );
 
-ThemeData createLightTheme(
+ColorScheme createColorScheme(Color seedColor,
+    {required Brightness brightness, Color? secondary, Color? primary, bool highContrast = false}) {
+  final defaultBase = brightness == Brightness.light
+      ? !highContrast
+          ? const ColorScheme.light()
+          : const ColorScheme.highContrastLight()
+      : !highContrast
+          ? const ColorScheme.dark()
+          : const ColorScheme.highContrastDark();
+  return ColorScheme.fromSeed(
+    brightness: brightness,
+    seedColor: seedColor,
+    primary: primary,
+    secondary: secondary,
+    onSecondary:
+        ThemeData.estimateBrightnessForColor(secondary ?? defaultBase.secondary) == Brightness.light
+            ? Colors.black
+            : Colors.white,
+  );
+}
+
+ThemeData createTheme(
   ColorScheme colorScheme, {
   Color? scaffoldBackgroundColor,
   required Brightness brightness,

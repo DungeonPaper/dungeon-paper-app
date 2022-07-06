@@ -54,98 +54,110 @@ class _ThemePreview extends StatelessWidget {
     const size = 80.0;
     final textDirection = Directionality.of(context);
 
-    return Padding(
+    return Container(
       padding: const EdgeInsets.all(8),
-      child: SizedBox(
-        width: size,
-        height: size,
-        child: Material(
-          shape: rRectShape.copyWith(borderRadius: rRectShape.borderRadius / 2),
-          color: selected ? ctxColorScheme.secondary : Colors.transparent,
-          clipBehavior: Clip.antiAlias,
-          child: Padding(
-            padding: const EdgeInsets.all(2),
+      width: size + 16,
+      child: Column(
+        children: [
+          SizedBox(
+            height: size,
+            width: size,
             child: Material(
               shape: rRectShape.copyWith(borderRadius: rRectShape.borderRadius / 2),
-              color: themeData.scaffoldBackgroundColor,
+              color: selected ? ctxColorScheme.secondary : Colors.transparent,
               clipBehavior: Clip.antiAlias,
-              child: InkWell(
-                onTap: onTap,
-                child: Stack(
-                  children: [
-                    Positioned.directional(
-                      textDirection: textDirection,
-                      bottom: 0,
-                      start: 0,
-                      end: 0,
-                      child: Container(
-                        color: themeData.canvasColor,
-                        height: 20,
-                        // child: Padding(
-                        //   padding: const EdgeInsets.all(4).copyWith(bottom: 6),
-                        //   child: Text(
-                        //     AppThemes.getThemeName(theme),
-                        //     style: bodySmall.copyWith(color: ctxColorScheme.onSurface),
-                        //     textScaleFactor: 0.9,
-                        //   ),
-                        // ),
-                      ),
-                    ),
-                    Positioned.directional(
-                      textDirection: textDirection,
-                      bottom: 6,
-                      start: 32,
-                      child: Row(
-                        children: [
-                          Padding(
-                            padding: const EdgeInsets.only(right: 10),
-                            child: Container(
-                              width: size * 0.2,
-                              height: 8,
-                              decoration: BoxDecoration(
-                                color: themeData.colorScheme.secondary,
-                                borderRadius: borderRadius / 4,
-                              ),
-                            ),
+              child: Padding(
+                padding: const EdgeInsets.all(2),
+                child: Material(
+                  shape: rRectShape.copyWith(borderRadius: rRectShape.borderRadius / 2),
+                  color: themeData.scaffoldBackgroundColor,
+                  clipBehavior: Clip.antiAlias,
+                  child: InkWell(
+                    onTap: onTap,
+                    child: Stack(
+                      children: [
+                        Positioned.directional(
+                          textDirection: textDirection,
+                          bottom: 0,
+                          start: 0,
+                          end: 0,
+                          child: Container(
+                            color: themeData.canvasColor,
+                            height: 20,
+                            // child: Padding(
+                            //   padding: const EdgeInsets.all(4).copyWith(bottom: 6),
+                            //   child: Text(
+                            //     AppThemes.getThemeName(theme),
+                            //     style: bodySmall.copyWith(color: ctxColorScheme.onSurface),
+                            //     textScaleFactor: 0.9,
+                            //   ),
+                            // ),
                           ),
-                        ],
-                      ),
-                    ),
-                    Positioned.directional(
-                      textDirection: textDirection,
-                      bottom: 26,
-                      start: 8,
-                      end: 8,
-                      child: SizedBox(
-                        child: Card(
-                          margin: EdgeInsets.zero,
-                          elevation: 1,
-                          color: themeData.cardColor,
-                          shape: rRectShape.copyWith(borderRadius: rRectShape.borderRadius / 2),
-                          child: Padding(
-                            padding: const EdgeInsets.all(8.0).copyWith(top: 22),
-                            child: Align(
-                              alignment: Alignment.bottomRight,
-                              child: SizedBox(
-                                width: 16,
-                                height: 16,
-                                child: Material(
-                                  elevation: 5,
-                                  type: MaterialType.circle,
-                                  color: themeData.primaryColor,
+                        ),
+                        Positioned.directional(
+                          textDirection: textDirection,
+                          bottom: 6,
+                          start: 32,
+                          child: Row(
+                            children: [
+                              Padding(
+                                padding: const EdgeInsets.only(right: 10),
+                                child: Container(
+                                  width: size * 0.2,
+                                  height: 8,
+                                  decoration: BoxDecoration(
+                                    color: themeData.colorScheme.secondary,
+                                    borderRadius: borderRadius / 4,
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                        Positioned.directional(
+                          textDirection: textDirection,
+                          bottom: 26,
+                          start: 8,
+                          end: 8,
+                          child: SizedBox(
+                            child: Card(
+                              margin: EdgeInsets.zero,
+                              elevation: 1,
+                              color: themeData.cardColor,
+                              shape: rRectShape.copyWith(borderRadius: rRectShape.borderRadius / 2),
+                              child: Padding(
+                                padding: const EdgeInsets.all(8.0).copyWith(top: 22),
+                                child: Align(
+                                  alignment: Alignment.bottomRight,
+                                  child: SizedBox(
+                                    width: 16,
+                                    height: 16,
+                                    child: Material(
+                                      elevation: 5,
+                                      type: MaterialType.circle,
+                                      color: themeData.primaryColor,
+                                    ),
+                                  ),
                                 ),
                               ),
                             ),
                           ),
                         ),
-                      ),
+                      ],
                     ),
-                  ],
+                  ),
                 ),
               ),
             ),
           ),
-        ),
+          Text(
+            AppThemes.getThemeName(theme),
+            overflow: TextOverflow.fade,
+            maxLines: 2,
+            textAlign: TextAlign.center,
+            textScaleFactor: 0.75,
+          ),
+        ],
       ),
     );
   }
