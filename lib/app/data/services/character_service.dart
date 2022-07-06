@@ -113,7 +113,9 @@ class CharacterService extends GetxService with LoadingServiceMixin, UserService
       }
     }
 
-    switchToCharacterTheme(current);
+    if (_currentKey.value != null) {
+      switchToCharacterTheme(current);
+    }
   }
 
   Future<void> updateCharacter(Character character, {bool switchToCharacter = false}) {

@@ -867,10 +867,10 @@ class S {
     );
   }
 
-  /// `Select Character Theme`
+  /// `Character Theme`
   String get characterSelectTheme {
     return Intl.message(
-      'Select Character Theme',
+      'Character Theme',
       name: 'characterSelectTheme',
       desc: '',
       args: [],

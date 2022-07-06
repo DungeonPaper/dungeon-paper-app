@@ -1,11 +1,10 @@
 import 'package:dungeon_paper/app/themes/themes.dart';
-import 'package:dungeon_paper/app/widgets/atoms/roll_dice_button.dart';
+import 'package:dungeon_paper/app/widgets/atoms/round_roll_button.dart';
 import 'package:dungeon_paper/generated/l10n.dart';
 import 'package:dungeon_world_data/dice.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_markdown/flutter_markdown.dart';
 import 'package:url_launcher/url_launcher.dart';
-
 
 class DynamicActionCardMini extends StatelessWidget {
   const DynamicActionCardMini({
@@ -146,7 +145,7 @@ class DynamicActionCardMini extends StatelessWidget {
             children: [
               ...chips,
               Expanded(child: Container()),
-              if (dice.isNotEmpty) RollDiceButton(dice: dice, size: 45),
+              if (dice.isNotEmpty) RoundRollButton(dice: dice, size: 45),
             ],
           )
         ],

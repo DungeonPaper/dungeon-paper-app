@@ -257,10 +257,14 @@ class _RollDiceViewState extends State<RollDiceView> with TickerProviderStateMix
   }
 
   double _getMaxHeight(BuildContext context) {
-    return MediaQuery.of(context).size.height +
-        (scrollController.hasClients && scrollController.positions.isNotEmpty
-            ? scrollController.position.maxScrollExtent
-            : 0);
+    try {
+      return MediaQuery.of(context).size.height +
+          (scrollController.hasClients && scrollController.positions.isNotEmpty
+              ? scrollController.position.maxScrollExtent
+              : 0);
+    } catch (e) {
+      return 0;
+    }
   }
 
   List<dw.Dice> _applyMods(List<dw.Dice> dice) {
@@ -321,7 +325,7 @@ class _RollDiceViewState extends State<RollDiceView> with TickerProviderStateMix
     }
   }
 
-  void _setupAnimations([bool start = true]) async {
+  void _setupAnimations([bool start = true]) {
     _walkAnimations(((animation, groupIndex, animIndex) {
       animation.controller.removeListener(_updateAnimStatus);
     }));
@@ -353,7 +357,7 @@ class _RollDiceViewState extends State<RollDiceView> with TickerProviderStateMix
   @override
   void dispose() {
     _walkAnimations(((animation, groupIndex, animIndex) {
-      animation.controller.removeListener(_updateAnimStatus);
+      // animation.controller.removeListener(_updateAnimStatus);
       animation.dispose();
     }));
     super.dispose();

@@ -374,7 +374,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "characterRollsTitle":
             MessageLookupByLibrary.simpleMessage("Ability Scores"),
         "characterSelectTheme":
-            MessageLookupByLibrary.simpleMessage("Select Character Theme"),
+            MessageLookupByLibrary.simpleMessage("Character Theme"),
         "coins": MessageLookupByLibrary.simpleMessage("Coins"),
         "coinsWithCount": m14,
         "confirm": MessageLookupByLibrary.simpleMessage("Confirm"),

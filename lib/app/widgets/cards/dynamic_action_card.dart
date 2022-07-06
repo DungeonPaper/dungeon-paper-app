@@ -1,6 +1,6 @@
 import 'package:dungeon_paper/app/widgets/atoms/custom_expansion_panel.dart';
 import 'package:dungeon_paper/app/widgets/atoms/custom_expansion_tile.dart';
-import 'package:dungeon_paper/app/widgets/atoms/roll_dice_button.dart';
+import 'package:dungeon_paper/app/widgets/atoms/round_roll_button.dart';
 import 'package:dungeon_paper/core/utils/markdown_highlight.dart';
 import 'package:dungeon_paper/generated/l10n.dart';
 import 'package:dungeon_world_data/dice.dart';
@@ -194,7 +194,7 @@ class _DynamicActionCardState extends State<DynamicActionCard> {
           if (widget.dice.isNotEmpty)
             Padding(
               padding: const EdgeInsets.only(bottom: 2.5),
-              child: RollDiceButton(dice: widget.dice),
+              child: RoundRollButton(dice: widget.dice),
             ),
         ],
       )

@@ -3,8 +3,8 @@ import 'package:dungeon_paper/core/dw_icons.dart';
 import 'package:dungeon_world_data/dice.dart';
 import 'package:flutter/material.dart';
 
-class RollDiceButton extends StatelessWidget {
-  const RollDiceButton({
+class RoundRollButton extends StatelessWidget {
+  const RoundRollButton({
     Key? key,
     required this.dice,
     this.size = 50,
@@ -16,20 +16,22 @@ class RollDiceButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
+    final colorScheme = theme.colorScheme;
+    final bgColor = colorScheme.primary;
+    final fgColor = ThemeData.estimateBrightnessForColor(bgColor) == Brightness.light
+        ? Colors.black
+        : Colors.white;
     return ElevatedButton(
-      // elevation: 1.5,
       child: Icon(
         DwIcons.dice_d6,
         size: size / 2,
-        color: theme.colorScheme.onSecondary,
+        // color: fgColor,
       ),
-      // iconColor: theme.elevatedButtonTheme.style?.backgroundColor?.resolve({}),
-      // color: theme.buttonTheme.colorScheme!.background,
-      // size: size,
       style: ElevatedButton.styleFrom(
         padding: EdgeInsets.zero,
         minimumSize: Size.square(size),
-        primary: theme.colorScheme.secondary,
+        onPrimary: fgColor,
+        primary: bgColor,
       ),
       onPressed: () => DiceUtils.openRollDialog(dice),
     );

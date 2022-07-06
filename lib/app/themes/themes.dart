@@ -42,7 +42,8 @@ final abyssTheme = createTheme(
   createColorScheme(
     Colors.black,
     brightness: Brightness.dark,
-    secondary: secondaryColor,
+    primary: Colors.purple,
+    secondary: Color.fromARGB(255, 152, 74, 165),
     highContrast: true,
   ),
   brightness: Brightness.dark,
@@ -93,6 +94,18 @@ final fairyTheme = createTheme(
   brightness: Brightness.light,
 );
 
+final luxuryTheme = createTheme(
+  createColorScheme(
+    Color.fromARGB(255, 95, 8, 55),
+    brightness: Brightness.dark,
+    primary: Colors.purple,
+    secondary: Colors.red[900],
+  ),
+  scaffoldBackgroundColor: Color.fromARGB(255, 79, 5, 45),
+  brightness: Brightness.dark,
+  surfaceColor: Color.fromARGB(255, 47, 2, 26),
+);
+
 final infernoTheme = createTheme(
   createColorScheme(
     Color.fromARGB(255, 82, 4, 4),
@@ -141,6 +154,7 @@ class AppThemes {
   static const fairy = 8;
   static const bonfire = 9;
   static const marsh = 10;
+  static const luxury = 11;
 
   static List<int> allThemes = themes.keys.toList();
 
@@ -156,17 +170,21 @@ class AppThemes {
   static String getThemeName(int theme) => _themeNames[theme]!;
 
   static final themes = {
+    // Light themes
     AppThemes.parchment: parchmentTheme,
-    AppThemes.dark: darkTheme,
     AppThemes.legacy: legacyTheme,
-    AppThemes.abyss: abyssTheme,
     AppThemes.sky: skyTheme,
+    AppThemes.bonfire: bonfireTheme,
     AppThemes.forest: forestTheme,
+    AppThemes.fairy: fairyTheme,
+
+    // Dark themes
+    AppThemes.dark: darkTheme,
+    AppThemes.abyss: abyssTheme,
     AppThemes.depths: depthsTheme,
     AppThemes.inferno: infernoTheme,
-    AppThemes.fairy: fairyTheme,
-    AppThemes.bonfire: bonfireTheme,
     AppThemes.marsh: marshTheme,
+    AppThemes.luxury: luxuryTheme,
   };
 
   static const _themeNames = {
@@ -181,6 +199,7 @@ class AppThemes {
     AppThemes.fairy: 'Fairy',
     AppThemes.bonfire: 'Bonfire',
     AppThemes.marsh: 'Marsh',
+    AppThemes.luxury: 'Luxury',
   };
 }
 
