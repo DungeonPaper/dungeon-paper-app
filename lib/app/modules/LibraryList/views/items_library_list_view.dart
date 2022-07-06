@@ -18,7 +18,7 @@ class ItemsLibraryListView extends GetView<LibraryListController<Item, ItemFilte
     Key? key,
   }) : super(key: key);
 
-  Character get char => controller.chars.value.current!;
+  Character get char => controller.chars.value.current;
 
   @override
   Widget build(BuildContext context) {

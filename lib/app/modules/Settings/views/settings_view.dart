@@ -34,24 +34,26 @@ class SettingsView extends GetView<SettingsController> {
           ),
           _sectionTitle(context, S.current.settingsDefaultLightTheme),
           _pad(
-              ThemeSelector(
-                themes: AppThemes.allLightThemes,
-                selected: controller.settings.defaultLightTheme,
-                onSelected: (theme) => controller.updateSettings(
-                  controller.settings.copyWith(defaultLightTheme: theme),
-                ),
+            ThemeSelector(
+              themes: AppThemes.allLightThemes,
+              selected: controller.settings.defaultLightTheme,
+              onSelected: (theme) => controller.updateSettings(
+                controller.settings.copyWith(defaultLightTheme: theme),
               ),
-              horizontal: 8),
+            ),
+            horizontal: 8,
+          ),
           _sectionTitle(context, S.current.settingsDefaultDarkTheme),
           _pad(
-              ThemeSelector(
-                themes: AppThemes.allDarkThemes,
-                selected: controller.settings.defaultDarkTheme,
-                onSelected: (theme) => controller.updateSettings(
-                  controller.settings.copyWith(defaultDarkTheme: theme),
-                ),
+            ThemeSelector(
+              themes: AppThemes.allDarkThemes,
+              selected: controller.settings.defaultDarkTheme,
+              onSelected: (theme) => controller.updateSettings(
+                controller.settings.copyWith(defaultDarkTheme: theme),
               ),
-              horizontal: 8),
+            ),
+            horizontal: 8,
+          ),
         ],
       ),
     );

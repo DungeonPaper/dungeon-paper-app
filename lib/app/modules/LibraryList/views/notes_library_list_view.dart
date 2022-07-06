@@ -20,7 +20,7 @@ class NotesLibraryListView extends GetView<LibraryListController<Note, NoteFilte
   }) : super(key: key);
 
   RepositoryService get service => controller.repo.value;
-  Character get character => controller.chars.value.current!;
+  Character get character => controller.chars.value.current;
 
   @override
   Widget build(BuildContext context) {

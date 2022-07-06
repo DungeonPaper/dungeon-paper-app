@@ -50,13 +50,13 @@ class LibraryService extends GetxService {
     }
 
     chars.updateCharacter(
-      CharacterUtils.upsertByType<T>(char ?? chars.current!, items),
+      CharacterUtils.upsertByType<T>(char ?? chars.current, items),
     );
   }
 
   void removeFromCharacter<T extends WithMeta>(Iterable<T> items, [Character? char]) async {
     chars.updateCharacter(
-      CharacterUtils.removeByType<T>(char ?? chars.current!, items),
+      CharacterUtils.removeByType<T>(char ?? chars.current, items),
     );
   }
 }

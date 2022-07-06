@@ -36,17 +36,17 @@ class UniversalSearchController extends GetxController
 
   Map<Type, List<Iterable>> get sources => {
         Move: <Iterable<Move>>[
-          sourceEnabled(SourceType.character) ? charService.current?.moves ?? [] : [],
+          sourceEnabled(SourceType.character) ? charService.maybeCurrent?.moves ?? [] : [],
           sourceEnabled(SourceType.myLibrary) ? repo.my.moves.values : [],
           sourceEnabled(SourceType.builtInLibrary) ? repo.builtIn.moves.values : [],
         ],
         Spell: <Iterable<Spell>>[
-          sourceEnabled(SourceType.character) ? charService.current?.spells ?? [] : [],
+          sourceEnabled(SourceType.character) ? charService.maybeCurrent?.spells ?? [] : [],
           sourceEnabled(SourceType.myLibrary) ? repo.my.spells.values : [],
           sourceEnabled(SourceType.builtInLibrary) ? repo.builtIn.spells.values : [],
         ],
         Item: <Iterable<Item>>[
-          sourceEnabled(SourceType.character) ? charService.current?.items ?? [] : [],
+          sourceEnabled(SourceType.character) ? charService.maybeCurrent?.items ?? [] : [],
           sourceEnabled(SourceType.myLibrary) ? repo.my.items.values : [],
           sourceEnabled(SourceType.builtInLibrary) ? repo.builtIn.items.values : [],
         ],

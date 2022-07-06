@@ -20,7 +20,7 @@ class MovesLibraryListView extends GetView<LibraryListController<Move, MoveFilte
   }) : super(key: key);
 
   RepositoryService get service => controller.repo.value;
-  Character get char => controller.chars.value.current!;
+  Character get char => controller.chars.value.current;
 
   @override
   Widget build(BuildContext context) {

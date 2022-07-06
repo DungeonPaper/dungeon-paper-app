@@ -21,14 +21,14 @@ import 'package:get/get.dart';
 class HomeCharacterJournalView extends GetView<CharacterService> {
   const HomeCharacterJournalView({Key? key}) : super(key: key);
 
-  Character get char => controller.current!;
+  Character get char => controller.current;
 
   @override
   Widget build(BuildContext context) {
     return PageStorage(
       bucket: PageStorageBucket(),
       child: Obx(() {
-        if (controller.current == null) {
+        if (controller.maybeCurrent == null) {
           return Container();
         }
         // return ReorderableListView(

@@ -31,8 +31,7 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    final platformBrightness =
-        MediaQueryData.fromWindow(WidgetsBinding.instance.window).platformBrightness;
+    final platformBrightness = getCurrentPlatformBrightness();
     final defaultTheme =
         platformBrightness == Brightness.light ? AppThemes.parchment : AppThemes.dark;
 

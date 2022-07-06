@@ -86,7 +86,7 @@ class _RollDiceViewState extends State<RollDiceView> with TickerProviderStateMix
                     padding: const EdgeInsets.all(16).copyWith(top: 0),
                     child: DiceListInput(
                       controller: withoutModDice,
-                      abilityScores: charService.current!.abilityScores,
+                      abilityScores: charService.current.abilityScores,
                       guessFrom: const [],
                       labelColor: Colors.white,
                     ),
@@ -268,7 +268,7 @@ class _RollDiceViewState extends State<RollDiceView> with TickerProviderStateMix
         .map(
           (d) => d.needsModifier
               ? d.copyWithModifierValue(
-                  charService.current!.abilityScores.getStat(d.modifierStat!).modifier,
+                  charService.current.abilityScores.getStat(d.modifierStat!).modifier,
                 )
               : d,
         )

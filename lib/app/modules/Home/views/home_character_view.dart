@@ -22,7 +22,7 @@ class HomeCharacterView extends GetView<CharacterService> {
   Widget build(BuildContext context) {
     return Obx(
       () {
-        final char = controller.current;
+        final char = controller.maybeCurrent;
         if (char == null) {
           return Container();
         }

@@ -26,12 +26,13 @@ class HomeCharacterDynamicCards extends GetView<CharacterService> with LibrarySe
   const HomeCharacterDynamicCards({Key? key}) : super(key: key);
 
   List<Move> get moves =>
-      (controller.current?.moves ?? <Move>[]).where((m) => m.favorited).toList();
+      (controller.maybeCurrent?.moves ?? <Move>[]).where((m) => m.favorited).toList();
   List<Spell> get spells =>
-      (controller.current?.spells ?? <Spell>[]).where((m) => m.prepared).toList();
-  List<Item> get items => (controller.current?.items ?? <Item>[]).where((m) => m.equipped).toList();
+      (controller.maybeCurrent?.spells ?? <Spell>[]).where((m) => m.prepared).toList();
+  List<Item> get items =>
+      (controller.maybeCurrent?.items ?? <Item>[]).where((m) => m.equipped).toList();
   List<Note> get notes =>
-      (controller.current?.notes ?? <Note>[]).where((n) => n.favorited).toList();
+      (controller.maybeCurrent?.notes ?? <Note>[]).where((n) => n.favorited).toList();
 
   @override
   Widget build(BuildContext context) {
@@ -60,7 +61,7 @@ class HomeCharacterDynamicCards extends GetView<CharacterService> with LibrarySe
                   note: notes[index],
                   onTap: onTap,
                   onSave: (_note) => controller.updateCharacter(
-                    CharacterUtils.updateNotes(controller.current!, [_note]),
+                    CharacterUtils.updateNotes(controller.current, [_note]),
                   ),
                 ),
               ),
@@ -75,7 +76,7 @@ class HomeCharacterDynamicCards extends GetView<CharacterService> with LibrarySe
                       onEdit: ModelPages.openNotePage(
                         note: notes[index],
                         onSave: (note) => controller.updateCharacter(
-                          CharacterUtils.updateNotes(controller.current!, [note]),
+                          CharacterUtils.updateNotes(controller.current, [note]),
                         ),
                       ),
                       onDelete: _delete(
@@ -83,13 +84,13 @@ class HomeCharacterDynamicCards extends GetView<CharacterService> with LibrarySe
                         note,
                         note.title,
                         () => controller.updateCharacter(
-                          CharacterUtils.removeNotes(controller.current!, [note]),
+                          CharacterUtils.removeNotes(controller.current, [note]),
                         ),
                       ),
                     ),
                   ],
                   onSave: (_note) => controller.updateCharacter(
-                    CharacterUtils.updateNotes(controller.current!, [_note]),
+                    CharacterUtils.updateNotes(controller.current, [_note]),
                   ),
                 ),
               ),
@@ -110,7 +111,7 @@ class HomeCharacterDynamicCards extends GetView<CharacterService> with LibrarySe
                   move: moves[index],
                   onTap: onTap,
                   onSave: (_move) => controller.updateCharacter(
-                    CharacterUtils.updateMoves(controller.current!, [_move]),
+                    CharacterUtils.updateMoves(controller.current, [_move]),
                   ),
                 ),
               ),
@@ -123,7 +124,7 @@ class HomeCharacterDynamicCards extends GetView<CharacterService> with LibrarySe
                   actions: [
                     EntityEditMenu(
                       onEdit: ModelPages.openMovePage(
-                        abilityScores: controller.current!.abilityScores,
+                        abilityScores: controller.current.abilityScores,
                         classKeys: moves[index].classKeys,
                         move: moves[index],
                         onSave: (move) => library.upsertToCharacter([move]),
@@ -133,13 +134,13 @@ class HomeCharacterDynamicCards extends GetView<CharacterService> with LibrarySe
                         move,
                         move.name,
                         () => controller.updateCharacter(
-                          CharacterUtils.removeMoves(controller.current!, [move]),
+                          CharacterUtils.removeMoves(controller.current, [move]),
                         ),
                       ),
                     ),
                   ],
                   onSave: (_move) => controller.updateCharacter(
-                    CharacterUtils.updateMoves(controller.current!, [_move]),
+                    CharacterUtils.updateMoves(controller.current, [_move]),
                   ),
                 ),
               ),
@@ -162,7 +163,7 @@ class HomeCharacterDynamicCards extends GetView<CharacterService> with LibrarySe
                   spell: spells[index],
                   onTap: onTap,
                   onSave: (_spell) => controller.updateCharacter(
-                    CharacterUtils.updateSpells(controller.current!, [_spell]),
+                    CharacterUtils.updateSpells(controller.current, [_spell]),
                   ),
                 ),
               ),
@@ -175,11 +176,11 @@ class HomeCharacterDynamicCards extends GetView<CharacterService> with LibrarySe
                   actions: [
                     EntityEditMenu(
                       onEdit: ModelPages.openSpellPage(
-                        abilityScores: controller.current!.abilityScores,
+                        abilityScores: controller.current.abilityScores,
                         classKeys: spells[index].classKeys,
                         spell: spells[index],
                         onSave: (spell) => controller.updateCharacter(
-                          CharacterUtils.updateSpells(controller.current!, [spell]),
+                          CharacterUtils.updateSpells(controller.current, [spell]),
                         ),
                       ),
                       onDelete: _delete(
@@ -187,13 +188,13 @@ class HomeCharacterDynamicCards extends GetView<CharacterService> with LibrarySe
                         spell,
                         spell.name,
                         () => controller.updateCharacter(
-                          CharacterUtils.removeSpells(controller.current!, [spell]),
+                          CharacterUtils.removeSpells(controller.current, [spell]),
                         ),
                       ),
                     ),
                   ],
                   onSave: (_spell) => controller.updateCharacter(
-                    CharacterUtils.updateSpells(controller.current!, [_spell]),
+                    CharacterUtils.updateSpells(controller.current, [_spell]),
                   ),
                 ),
               ),
@@ -216,7 +217,7 @@ class HomeCharacterDynamicCards extends GetView<CharacterService> with LibrarySe
                   item: items[index],
                   onTap: onTap,
                   onSave: (_item) => controller.updateCharacter(
-                    CharacterUtils.updateItems(controller.current!, [_item]),
+                    CharacterUtils.updateItems(controller.current, [_item]),
                   ),
                 ),
               ),
@@ -231,7 +232,7 @@ class HomeCharacterDynamicCards extends GetView<CharacterService> with LibrarySe
                       onEdit: ModelPages.openItemPage(
                         item: items[index],
                         onSave: (item) => controller.updateCharacter(
-                          CharacterUtils.updateItems(controller.current!, [item]),
+                          CharacterUtils.updateItems(controller.current, [item]),
                         ),
                       ),
                       onDelete: _delete(
@@ -239,13 +240,13 @@ class HomeCharacterDynamicCards extends GetView<CharacterService> with LibrarySe
                         item,
                         item.name,
                         () => controller.updateCharacter(
-                          CharacterUtils.removeItems(controller.current!, [item]),
+                          CharacterUtils.removeItems(controller.current, [item]),
                         ),
                       ),
                     ),
                   ],
                   onSave: (_item) => controller.updateCharacter(
-                    CharacterUtils.updateItems(controller.current!, [_item]),
+                    CharacterUtils.updateItems(controller.current, [_item]),
                   ),
                 ),
               ),

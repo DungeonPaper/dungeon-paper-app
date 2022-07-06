@@ -11,7 +11,7 @@ class ExpBar extends StatelessWidget {
   Widget build(BuildContext context) {
     return Obx(() {
       final CharacterService controller = Get.find();
-      var char = controller.current;
+      var char = controller.maybeCurrent;
       return Column(
         mainAxisSize: MainAxisSize.min,
         children: [

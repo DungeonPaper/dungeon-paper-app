@@ -48,9 +48,9 @@ class HomeCharacterExtras extends GetView<CharacterService> {
           onPressed: () => Get.toNamed(
             Routes.abilityScores,
             arguments: AbilityScoresFormArguments(
-              abilityScores: controller.current!.abilityScores,
+              abilityScores: controller.current.abilityScores,
               onChanged: (abilityScores) => controller
-                  .updateCharacter(controller.current!.copyWith(abilityScores: abilityScores)),
+                  .updateCharacter(controller.current.copyWith(abilityScores: abilityScores)),
             ),
             preventDuplicates: false,
           ),
@@ -62,8 +62,8 @@ class HomeCharacterExtras extends GetView<CharacterService> {
             onPressed: _openBondsFlags,
             icon: Transform.scale(child: const Icon(Icons.handshake), scaleX: -1),
             tooltip: SessionMark.categoryTitle(
-              bonds: controller.current?.bonds ?? [],
-              flags: controller.current?.flags ?? [],
+              bonds: controller.maybeCurrent?.bonds ?? [],
+              flags: controller.maybeCurrent?.flags ?? [],
             ),
           ),
         ),
@@ -87,10 +87,10 @@ class HomeCharacterExtras extends GetView<CharacterService> {
       Routes.basicInfo,
       arguments: BasicInfoFormArguments(
         onChanged: (name, avatar) => controller.updateCharacter(
-          controller.current!.copyWith(displayName: name, avatarUrl: avatar),
+          controller.current.copyWith(displayName: name, avatarUrl: avatar),
         ),
-        name: controller.current!.displayName,
-        avatarUrl: controller.current!.avatarUrl,
+        name: controller.current.displayName,
+        avatarUrl: controller.current.avatarUrl,
       ),
     );
   }
@@ -110,10 +110,10 @@ class HomeCharacterExtras extends GetView<CharacterService> {
   void _openRollButtons() {
     Get.dialog(
       CustomRollButtonsDialog(
-        character: controller.current!,
+        character: controller.current,
         onChanged: (rollButtons) => controller.updateCharacter(
-          controller.current!.copyWith(
-            settings: controller.current!.settings.copyWith(rollButtons: rollButtons),
+          controller.current.copyWith(
+            settings: controller.current.settings.copyWith(rollButtons: rollButtons),
           ),
         ),
       ),

@@ -1,148 +1,51 @@
-import 'package:dungeon_paper/app/themes/colors.dart';
 import 'package:dynamic_themes/dynamic_themes.dart';
 import 'package:flutter/material.dart';
 import 'theme_utils.dart';
+export 'theme_utils.dart';
 
-const scaffoldBackgroundColor = Color(0xfffcf5e5);
-const primaryColor = Color(0xff8d775f);
-final _light = ThemeData.light();
-final secondaryColor = _light.colorScheme.primary;
-final borderRadius = BorderRadius.circular(20);
-final rRectShape = RoundedRectangleBorder(borderRadius: borderRadius);
-final _dark = ThemeData.dark();
-final parchmentColorScheme = ColorScheme.fromSeed(
-  seedColor: primaryColor,
-  primary: primaryColor,
-  secondary: secondaryColor,
-  onSecondary: ThemeData.estimateBrightnessForColor(secondaryColor) == Brightness.light
-      ? Colors.black
-      : Colors.white,
+const parchmentBackgroundColor = Color(0xfffcf5e5);
+const parchmentPrimaryColor = Color(0xff8d775f);
+final secondaryColor = ThemeData.light().colorScheme.primary;
+
+final parchmentTheme = createLightTheme(
+  createColorScheme(
+    parchmentPrimaryColor,
+    brightness: Brightness.light,
+    primary: parchmentPrimaryColor,
+    secondary: secondaryColor,
+  ),
+  scaffoldBackgroundColor: parchmentBackgroundColor,
+  brightness: Brightness.light,
 );
-final darkColorScheme = ColorScheme.fromSeed(
+
+final darkTheme = createLightTheme(
+  createColorScheme(
+    ThemeData.dark().colorScheme.primary,
+    brightness: Brightness.dark,
+    secondary: secondaryColor,
+  ),
   brightness: Brightness.dark,
-  seedColor: _dark.colorScheme.primary,
-  secondary: secondaryColor,
-  onSecondary: ThemeData.estimateBrightnessForColor(secondaryColor) == Brightness.light
-      ? Colors.black
-      : Colors.white,
-);
-final _lightM3 = ThemeData(
-  useMaterial3: true,
-  colorScheme: parchmentColorScheme,
-  primaryColor: parchmentColorScheme.primary,
-);
-final _darkM3 = ThemeData(
-  useMaterial3: true,
-  brightness: Brightness.dark,
-  colorScheme: darkColorScheme,
-  primaryColor: darkColorScheme.primary,
-);
-final baseCardTheme = _lightM3.cardTheme.copyWith(shape: rRectShape);
-final inputBorderRadius = borderRadius;
-// .copyWith(
-//   bottomLeft: const Radius.circular(8),
-//   bottomRight: const Radius.circular(8),
-// );
-final inputDecorationTheme = InputDecorationTheme(
-  floatingLabelBehavior: FloatingLabelBehavior.always,
-  filled: true,
-  border: OutlineInputBorder(
-    borderSide: BorderSide.none,
-    borderRadius: inputBorderRadius,
-  ),
 );
 
-final parchmentBase = ThemeData.from(
-  useMaterial3: true,
-  colorScheme: parchmentColorScheme,
-  textTheme: copyTextThemeWith(
-    _lightM3.textTheme,
-    fontFamily: 'Nunito',
-  ),
-);
-
-final darkBase = ThemeData.from(
-  useMaterial3: true,
-  colorScheme: darkColorScheme,
-  textTheme: copyTextThemeWith(
-    _darkM3.textTheme,
-    fontFamily: 'Nunito',
-  ),
-);
-
-final parchmentTheme = parchmentBase.copyWith(
-  useMaterial3: true,
-  splashColor: secondaryColor.withOpacity(0.1),
-  scaffoldBackgroundColor: scaffoldBackgroundColor,
-  appBarTheme: parchmentBase.appBarTheme.copyWith(
-    backgroundColor: Colors.transparent,
-    foregroundColor: ThemeData.light().colorScheme.onSurface,
-    elevation: 0,
-    centerTitle: true,
-  ),
-  dialogTheme: parchmentBase.dialogTheme.copyWith(
-    shape: rRectShape,
-  ),
-  cardTheme: parchmentBase.cardTheme.copyWith(shape: rRectShape),
-  popupMenuTheme: parchmentBase.popupMenuTheme.copyWith(
-    shape: rRectShape,
-  ),
-  inputDecorationTheme: parchmentBase.inputDecorationTheme.copyWith(
-    floatingLabelBehavior: FloatingLabelBehavior.always,
-    filled: true,
-    border: UnderlineInputBorder(
-      borderSide: BorderSide.none,
-      borderRadius: inputBorderRadius,
-    ),
-  ),
-  floatingActionButtonTheme: parchmentBase.floatingActionButtonTheme.copyWith(
-    backgroundColor: DwColors.success,
-    foregroundColor: Colors.white,
-  ),
-  tabBarTheme: parchmentBase.tabBarTheme.copyWith(
-    labelStyle: parchmentBase.textTheme.bodyMedium!.copyWith(fontFamily: 'Nunito'),
-    unselectedLabelStyle: parchmentBase.textTheme.bodyMedium!.copyWith(fontFamily: 'Nunito'),
-    indicator: UnderlineTabIndicator(borderSide: BorderSide(color: secondaryColor, width: 4)),
-  ),
-);
-
-final parchmentSplashColor = parchmentTheme.colorScheme.secondary.withOpacity(0.2);
-
-final darkTheme = darkBase.copyWith(
-  useMaterial3: true,
-  splashColor: secondaryColor.withOpacity(0.1),
-  appBarTheme: const AppBarTheme(
-    backgroundColor: Colors.transparent,
-    elevation: 0,
-    centerTitle: true,
-  ),
-  dialogTheme: darkBase.dialogTheme.copyWith(
-    shape: rRectShape,
-  ),
-  cardTheme: darkBase.cardTheme.copyWith(shape: rRectShape),
-  popupMenuTheme: darkBase.popupMenuTheme.copyWith(
-    shape: rRectShape,
-  ),
-  inputDecorationTheme: darkBase.inputDecorationTheme.copyWith(
-    floatingLabelBehavior: FloatingLabelBehavior.always,
-    filled: true,
-    border: UnderlineInputBorder(
-      borderSide: BorderSide.none,
-      borderRadius: inputBorderRadius,
-    ),
-  ),
-  splashFactory: InkSparkle.splashFactory,
-  floatingActionButtonTheme: darkBase.floatingActionButtonTheme.copyWith(
-    backgroundColor: DwColors.success,
-    foregroundColor: Colors.white,
-  ),
-  tabBarTheme: darkBase.tabBarTheme.copyWith(
-    labelStyle: darkBase.textTheme.bodyMedium!.copyWith(fontFamily: 'Nunito'),
-    unselectedLabelStyle: darkBase.textTheme.bodyMedium!.copyWith(fontFamily: 'Nunito'),
-    indicator: UnderlineTabIndicator(borderSide: BorderSide(color: secondaryColor, width: 4)),
-  ),
-);
-final darkSplashColor = darkTheme.colorScheme.secondary.withOpacity(0.2);
+ColorScheme createColorScheme(
+  Color seedColor, {
+  required Brightness brightness,
+  Color? secondary,
+  Color? primary,
+}) {
+  final defaultBase =
+      brightness == Brightness.light ? const ColorScheme.light() : const ColorScheme.dark();
+  return ColorScheme.fromSeed(
+    brightness: brightness,
+    seedColor: seedColor,
+    primary: primary,
+    secondary: secondary,
+    onSecondary:
+        ThemeData.estimateBrightnessForColor(secondary ?? defaultBase.secondary) == Brightness.light
+            ? Colors.black
+            : Colors.white,
+  );
+}
 
 class AppThemes {
   static const parchment = 0;

@@ -1,5 +1,37 @@
 import 'package:flutter/material.dart';
 
+import 'colors.dart';
+
+final borderRadius = BorderRadius.circular(20);
+final rRectShape = RoundedRectangleBorder(borderRadius: borderRadius);
+
+final lightColorScheme = ColorScheme.light();
+final darkColorScheme = ColorScheme.dark();
+
+final lightM3 = ThemeData(
+  useMaterial3: true,
+  colorScheme: lightColorScheme,
+  primaryColor: lightColorScheme.primary,
+);
+
+final darkM3 = ThemeData(
+  useMaterial3: true,
+  brightness: Brightness.dark,
+  colorScheme: darkColorScheme,
+  primaryColor: darkColorScheme.primary,
+);
+
+final baseCardTheme = lightM3.cardTheme.copyWith(shape: rRectShape);
+final inputBorderRadius = borderRadius;
+final inputDecorationTheme = InputDecorationTheme(
+  floatingLabelBehavior: FloatingLabelBehavior.always,
+  filled: true,
+  border: OutlineInputBorder(
+    borderSide: BorderSide.none,
+    borderRadius: inputBorderRadius,
+  ),
+);
+
 TextTheme copyTextThemeWith(
   TextTheme original, {
   String? fontFamily,
@@ -21,3 +53,60 @@ TextTheme copyTextThemeWith(
       button: original.button?.copyWith(fontFamily: fontFamily, color: normalColor),
       overline: original.overline?.copyWith(fontFamily: fontFamily, color: normalColor),
     );
+
+ThemeData createLightTheme(
+  ColorScheme colorScheme, {
+  Color? scaffoldBackgroundColor,
+  required Brightness brightness,
+}) {
+  final textTheme = brightness == Brightness.light ? lightM3.textTheme : darkM3.textTheme;
+  final base = ThemeData.from(
+    useMaterial3: true,
+    colorScheme: colorScheme,
+    textTheme: copyTextThemeWith(textTheme, fontFamily: 'Nunito'),
+  );
+
+  return base.copyWith(
+    useMaterial3: true,
+    splashColor: colorScheme.secondary.withOpacity(0.1),
+    scaffoldBackgroundColor: scaffoldBackgroundColor,
+    appBarTheme: base.appBarTheme.copyWith(
+      backgroundColor: Colors.transparent,
+      foregroundColor: base.colorScheme.onSurface,
+      elevation: 0,
+      centerTitle: true,
+    ),
+    dialogTheme: base.dialogTheme.copyWith(
+      shape: rRectShape,
+    ),
+    cardTheme: base.cardTheme.copyWith(shape: rRectShape),
+    popupMenuTheme: base.popupMenuTheme.copyWith(
+      shape: rRectShape,
+    ),
+    inputDecorationTheme: base.inputDecorationTheme.copyWith(
+      floatingLabelBehavior: FloatingLabelBehavior.always,
+      filled: true,
+      border: UnderlineInputBorder(
+        borderSide: BorderSide.none,
+        borderRadius: inputBorderRadius,
+      ),
+    ),
+    floatingActionButtonTheme: base.floatingActionButtonTheme.copyWith(
+      backgroundColor: DwColors.success,
+      foregroundColor: Colors.white,
+    ),
+    tabBarTheme: base.tabBarTheme.copyWith(
+      labelStyle: base.textTheme.bodyMedium!.copyWith(fontFamily: 'Nunito'),
+      unselectedLabelStyle: base.textTheme.bodyMedium!.copyWith(fontFamily: 'Nunito'),
+      indicator: UnderlineTabIndicator(
+        borderSide: BorderSide(
+          color: colorScheme.secondary,
+          width: 4,
+        ),
+      ),
+    ),
+  );
+}
+
+Brightness getCurrentPlatformBrightness() =>
+    MediaQueryData.fromWindow(WidgetsBinding.instance.window).platformBrightness;

@@ -14,7 +14,7 @@ class HpBar extends StatelessWidget {
   Widget build(BuildContext context) {
     return Obx(() {
       final CharacterService controller = Get.find();
-      final char = controller.current;
+      final char = controller.maybeCurrent;
       final curValue = currentHp ?? char?.currentHp;
       final maxValue = maxHp ?? char?.maxHp;
       final curPercent = curValue != null && maxValue != null ? curValue / maxValue : 1.0;

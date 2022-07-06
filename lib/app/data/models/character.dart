@@ -8,6 +8,7 @@ import 'dart:math';
 import 'package:dungeon_paper/app/data/models/roll_button.dart';
 import 'package:dungeon_paper/app/data/models/user.dart';
 import 'package:dungeon_paper/app/model_utils/model_icon.dart';
+import 'package:dungeon_paper/app/themes/themes.dart';
 import 'package:dungeon_paper/core/utils/enums.dart';
 import 'package:dungeon_paper/core/utils/math_utils.dart';
 import 'package:dungeon_paper/core/utils/string_utils.dart';
@@ -83,6 +84,13 @@ class Character implements WithMeta<Character, CharacterMeta>, WithIcon {
   int get damageModifier => items.fold(0, (mod, item) => mod + item.damage);
 
   int getLightTheme(User user) => settings.lightTheme ?? user.settings.defaultLightTheme;
+  int getDarkTheme(User user) => settings.darkTheme ?? user.settings.defaultDarkTheme;
+
+  int getCurrentTheme(User user) => getThemeForBrightness(
+      user, user.settings.brightnessOverride ?? getCurrentPlatformBrightness());
+
+  int getThemeForBrightness(User user, Brightness brightness) =>
+      brightness == Brightness.light ? getLightTheme(user) : getDarkTheme(user);
 
   static RollButton get basicActionRollButton => RollButton(
         label: S.current.rollBasicActionButton,
@@ -297,8 +305,8 @@ class Character implements WithMeta<Character, CharacterMeta>, WithIcon {
         notes: List<Note>.from(json['notes'].map((x) => Note.fromJson(x))),
         stats: CharacterStats.fromJson(json['stats']),
         abilityScores: AbilityScores.fromJson(json['abilityScores']),
-        sessionMarks: List<SessionMark>.from(
-            json['sessionMarks'].map((x) => SessionMark.fromJson(x))),
+        sessionMarks:
+            List<SessionMark>.from(json['sessionMarks'].map((x) => SessionMark.fromJson(x))),
         bio: Bio.fromJson(json['bio']),
         race: Race.fromJson(json['race']),
       );

@@ -1,15 +1,18 @@
 import 'dart:async';
 
+import 'package:dungeon_paper/app/data/services/user_service.dart';
+import 'package:dungeon_paper/app/themes/themes.dart';
 import 'package:dungeon_paper/core/storage_handler/storage_handler.dart';
 import 'package:dungeon_paper/core/utils/date_utils.dart';
 import 'package:dungeon_paper/core/utils/enums.dart';
+import 'package:dynamic_themes/dynamic_themes.dart';
 import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
 
 import '../models/character.dart';
 import 'loading_service.dart';
 
-class CharacterService extends GetxService with LoadingServiceMixin {
+class CharacterService extends GetxService with LoadingServiceMixin, UserServiceMixin {
   static CharacterService find() => Get.find();
 
   final all = <String, Character>{}.obs;
@@ -35,7 +38,8 @@ class CharacterService extends GetxService with LoadingServiceMixin {
       ? pageController.page ?? 0
       : 0;
 
-  Character? get current => _currentKey.value != null ? all[_currentKey.value] : null;
+  Character? get maybeCurrent => _currentKey.value != null ? all[_currentKey.value] : null;
+  Character get current => maybeCurrent!;
 
   List<Character> get allAsList => all.values.toList();
 
@@ -71,10 +75,11 @@ class CharacterService extends GetxService with LoadingServiceMixin {
   void setCurrent(String key) {
     if (all.containsKey(key)) {
       _currentKey.value = key;
+      DynamicTheme.of(Get.context!)!.setTheme(current.getCurrentTheme(user));
       updateCharacter(
-        current!.copyWith(
-          meta: current!.meta.copyWith(
-              data: (current!.meta.data ?? CharacterMeta()).copyWith(lastUsed: DateTime.now())),
+        current.copyWith(
+          meta: current.meta.copyWith(
+              data: (current.meta.data ?? CharacterMeta()).copyWith(lastUsed: DateTime.now())),
         ),
       );
     }
@@ -139,8 +144,8 @@ mixin CharacterServiceMixin {
   CharacterService get characterService => Get.find();
   CharacterService get charService => characterService;
 
-  Character get character => characterService.current!;
-  Character? get maybeCharacter => characterService.current;
+  Character get character => characterService.current;
+  Character? get maybeCharacter => characterService.maybeCurrent;
   Character get char => character;
   Character? get maybeChar => maybeCharacter;
 }

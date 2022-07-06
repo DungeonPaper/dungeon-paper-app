@@ -56,7 +56,7 @@ class _ThemePreview extends StatelessWidget {
 
     return Padding(
       padding: const EdgeInsets.all(8),
-      child: Container(
+      child: SizedBox(
         width: size,
         height: size,
         child: Material(

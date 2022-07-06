@@ -18,7 +18,7 @@ class SpellsLibraryListView extends GetView<LibraryListController<Spell, SpellFi
     Key? key,
   }) : super(key: key);
 
-  Character get character => controller.chars.value.current!;
+  Character get character => controller.chars.value.current;
 
   @override
   Widget build(BuildContext context) {

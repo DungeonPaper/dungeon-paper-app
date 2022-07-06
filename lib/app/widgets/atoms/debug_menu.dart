@@ -80,7 +80,7 @@ class DebugMenu extends StatelessWidget {
   void _viewCharJson() {
     final CharacterService controller = Get.find();
 
-    Get.dialog(DebugDialog(text: controller.current!.toRawJson()));
+    Get.dialog(DebugDialog(text: controller.current.toRawJson()));
   }
 
   void _search() async {

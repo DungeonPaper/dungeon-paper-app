@@ -54,7 +54,7 @@ class CharacterAvatar extends GetView {
     }
     return Obx(() {
       final ctrl = Get.find<CharacterService>();
-      return _renderForChar(context, ctrl.current);
+      return _renderForChar(context, ctrl.maybeCurrent);
     });
   }
 
