@@ -52,6 +52,6 @@ T forkMeta<T extends WithMeta>(dynamic object, User user, [Meta? meta]) {
 T increaseMetaVersion<T extends WithMeta>(dynamic object) {
   return copyWithMeta(
     object,
-    object.meta.copyWith(schemaVersion: object.meta.schemaVersion + 1),
+    object.meta.copyWith(version: object.meta.version + 1),
   );
 }

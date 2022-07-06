@@ -350,9 +350,10 @@ class _CustomExpansionTileState extends State<CustomExpansionTile>
             title: Row(
               children: [
                 ...widget.leading,
-                DefaultTextStyle(
-                  style: Theme.of(context).textTheme.subtitle1!.copyWith(color: _headerColor.value),
-                  child: Expanded(
+                Expanded(
+                  child: DefaultTextStyle(
+                    style:
+                        Theme.of(context).textTheme.subtitle1!.copyWith(color: _headerColor.value),
                     child: widget.title ??
                         widget.titleBuilder!.call(
                           context,

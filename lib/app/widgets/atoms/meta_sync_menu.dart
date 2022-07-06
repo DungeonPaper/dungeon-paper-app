@@ -38,7 +38,7 @@ class MetaSyncMenu<T, M> extends StatelessWidget {
   List<MenuEntry<String>> get items => [
         MenuEntry(
           // TODO intl
-          label: Text('Version: ${meta.schemaVersion}\n'
+          label: Text('Version: ${meta.version}\n'
               'Dirty: ${meta.sharing?.dirty ?? 'false'}\n'
               'isFork: ${meta.sharing?.isFork}\n'
               'sourceOwner: ${meta.sharing?.sourceOwner}\n'

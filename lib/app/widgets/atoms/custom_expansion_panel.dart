@@ -15,8 +15,8 @@ class CustomExpansionPanel extends StatelessWidget {
   final bool showArrow;
   final EdgeInsets? titlePadding;
   final EdgeInsets? childrenPadding;
-  final Iterable<Widget> leading;
-  final Iterable<Widget> trailing;
+  final List<Widget> leading;
+  final List<Widget> trailing;
   final Widget? icon;
   final double minIconWidth;
   final Color? iconColor;
@@ -68,7 +68,9 @@ class CustomExpansionPanel extends StatelessWidget {
       tilePadding: titlePadding ?? defaultPadding,
       childrenPadding: childrenPadding ?? defaultPadding,
       expandedCrossAxisAlignment: CrossAxisAlignment.stretch,
-      trailing: !showArrow ? const [SizedBox.shrink()] : [],
+      // trailing: !showArrow ? const [SizedBox.shrink()] : [],
+      leading: leading,
+      trailing: trailing,
       visualDensity: VisualDensity.compact,
       iconColor: iconColor,
       collapsedIconColor: collapsedIconColor,

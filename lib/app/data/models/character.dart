@@ -224,7 +224,7 @@ class Character implements WithMeta<Character, CharacterMeta>, WithIcon {
     var characterClass = CharacterClass.empty();
     return Character(
       key: uuid(),
-      meta: Meta.version(1),
+      meta: Meta.empty(),
       displayName: '',
       settings: CharacterSettings.empty(),
       avatarUrl: '',
@@ -259,7 +259,7 @@ class Character implements WithMeta<Character, CharacterMeta>, WithIcon {
         classKeys: [characterClass.key],
         description: '',
         explanation: '',
-        meta: Meta.version(1),
+        meta: Meta.empty(),
         tags: [],
       ),
     );
@@ -275,7 +275,7 @@ class Character implements WithMeta<Character, CharacterMeta>, WithIcon {
             classKeys: [characterClass.key],
             description: '',
             explanation: '',
-            meta: Meta.version(1),
+            meta: Meta.empty(),
             tags: [],
           ),
     );

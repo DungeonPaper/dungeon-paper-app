@@ -67,7 +67,7 @@ class Spell extends dw.Spell implements WithMeta, WithIcon {
   factory Spell.fromRawJson(String str) => Spell.fromJson(json.decode(str));
 
   factory Spell.fromDwSpell(dw.Spell spell, {bool? prepared}) => Spell(
-        meta: spell.meta != null ? Meta.fromJson(spell.meta) : Meta.version(1),
+        meta: spell.meta != null ? Meta.fromJson(spell.meta) : Meta.empty(),
         key: spell.key,
         name: spell.name,
         description: spell.description,
@@ -83,7 +83,7 @@ class Spell extends dw.Spell implements WithMeta, WithIcon {
       Spell.fromDwSpell(dw.Spell.fromJson(json), prepared: json['prepared']);
 
   factory Spell.empty() => Spell(
-        meta: Meta.version(1),
+        meta: Meta.empty(),
         classKeys: [],
         description: '',
         dice: [],

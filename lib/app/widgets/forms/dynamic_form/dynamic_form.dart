@@ -107,7 +107,7 @@ abstract class DynamicFormController<T extends WithMeta> extends GetxController 
         meta: argument?.meta.copyWith(
               createdBy: user.username,
             ) ??
-            Meta.version(1),
+            Meta.empty(),
       );
     }
     createInputs();

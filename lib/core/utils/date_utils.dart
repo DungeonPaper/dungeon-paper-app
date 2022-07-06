@@ -1,3 +1,5 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+
 import 'enums.dart';
 
 // TODO use createSorter
@@ -26,4 +28,8 @@ int Function(T? date1, T? date2) dateComparator<T>({
 
     return a.compareTo(b) * orderMultiplier;
   };
+}
+
+DateTime parseDate<T>(T date) {
+  return date is String ? DateTime.parse(date) : (date as Timestamp).toDate();
 }

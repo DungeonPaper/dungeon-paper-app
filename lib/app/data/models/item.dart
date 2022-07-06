@@ -96,7 +96,7 @@ class Item extends dw.Item implements WithMeta, WithIcon {
   factory Item.empty() => Item(
         description: '',
         key: uuid(),
-        meta: Meta.version(1),
+        meta: Meta.empty(),
         name: '',
         settings: ItemSettings(),
         tags: [],

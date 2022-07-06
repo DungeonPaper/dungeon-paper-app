@@ -87,7 +87,7 @@ class Note implements WithMeta, WithIcon {
         description: '',
         favorited: false,
         key: uuid(),
-        meta: Meta.version(1),
+        meta: Meta.empty(),
         tags: [],
         title: '',
         category: '',

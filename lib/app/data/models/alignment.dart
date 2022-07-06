@@ -20,7 +20,7 @@ class AlignmentValue extends dw.Alignment implements WithMeta, WithIcon {
   factory AlignmentValue.fromRawJson(String str) => AlignmentValue.fromJson(json.decode(str));
 
   factory AlignmentValue.fromDwAlignmentValue(dw.Alignment original) => AlignmentValue(
-      meta: Meta.version(1, createdBy: '__repo__'),
+      meta: Meta.empty(createdBy: '__repo__'),
       type: original.type,
       description: original.description);
 
@@ -46,7 +46,7 @@ class AlignmentValue extends dw.Alignment implements WithMeta, WithIcon {
     dw.AlignmentType? type,
   }) =>
       AlignmentValue(
-        meta: Meta.version(1),
+        meta: Meta.empty(),
         description: '',
         type: type ?? dw.AlignmentType.good,
       );
@@ -116,7 +116,7 @@ class AlignmentValues extends dw.AlignmentValues {
   }
 
   factory AlignmentValues.empty() => AlignmentValues(
-        meta: Meta.version(1),
+        meta: Meta.empty(),
         good: '',
         evil: '',
         lawful: '',
@@ -153,7 +153,7 @@ class AlignmentValues extends dw.AlignmentValues {
       );
 
   factory AlignmentValues.fromDwAlignmentValues(dw.AlignmentValues original) => AlignmentValues(
-        meta: Meta.version(1, createdBy: '__repo__'),
+        meta: Meta.empty(createdBy: '__repo__'),
         good: original.good,
         evil: original.evil,
         lawful: original.lawful,

@@ -103,18 +103,15 @@ class _DynamicActionCardState extends State<DynamicActionCard> {
           elevation: expanded ? 5 : 1,
           child: CustomExpansionPanel(
             expandable: widget.expandable,
-            titleBuilder: (context, color) {
-              debugPrint("color: $color");
-              return HighlightText(
-                widget.title,
-                highlightWords: widget.highlightWords,
-                normalTextStyle: TextStyle(
-                  fontSize: Theme.of(context).textTheme.subtitle1!.fontSize,
-                  color: color,
-                ),
-                textStyle: Theme.of(context).textTheme.subtitle1!,
-              );
-            },
+            titleBuilder: (context, color) => HighlightText(
+              widget.title,
+              highlightWords: widget.highlightWords,
+              normalTextStyle: TextStyle(
+                fontSize: Theme.of(context).textTheme.subtitle1!.fontSize,
+                color: color,
+              ),
+              textStyle: Theme.of(context).textTheme.subtitle1!,
+            ),
             key: widget.expansionKey,
             onExpansion: (val) {
               setState(() {

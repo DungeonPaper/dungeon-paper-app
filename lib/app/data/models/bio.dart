@@ -40,7 +40,7 @@ class Bio {
         description: '',
         looks: '',
         alignment: AlignmentValue(
-          meta: Meta.version(1),
+          meta: Meta.empty(),
           type: dw.AlignmentType.good,
           description: '',
         ),

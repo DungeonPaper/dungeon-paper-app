@@ -68,7 +68,7 @@ class Move extends dw.Move implements WithMeta, WithIcon {
   factory Move.fromRawJson(String str) => Move.fromJson(json.decode(str));
 
   factory Move.fromDwMove(dw.Move move, {Meta? meta, bool? favorited}) => Move(
-        meta: meta ?? Meta.version(1),
+        meta: meta ?? Meta.empty(),
         key: move.key,
         name: move.name,
         description: move.description,
@@ -93,7 +93,7 @@ class Move extends dw.Move implements WithMeta, WithIcon {
         description: '',
         dice: [],
         explanation: '',
-        meta: Meta.version(1),
+        meta: Meta.empty(),
         name: '',
         tags: [],
         favorited: false,

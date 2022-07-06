@@ -81,7 +81,7 @@ class CharacterClass extends dw.CharacterClass implements WithMeta, WithIcon {
   factory CharacterClass.fromRawJson(String str) => CharacterClass.fromJson(json.decode(str));
 
   factory CharacterClass.empty() => CharacterClass(
-        meta: Meta.version(1),
+        meta: Meta.empty(),
         key: uuid(),
         name: '',
         bonds: [],
@@ -91,7 +91,7 @@ class CharacterClass extends dw.CharacterClass implements WithMeta, WithIcon {
         load: 0,
         hp: 20,
         alignments: AlignmentValues(
-          meta: Meta.version(1),
+          meta: Meta.empty(),
           neutral: '',
           chaotic: '',
           evil: '',

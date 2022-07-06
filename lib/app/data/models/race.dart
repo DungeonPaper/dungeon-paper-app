@@ -60,7 +60,7 @@ class Race extends dw.Race implements WithMeta, WithIcon {
   factory Race.fromRawJson(String str) => Race.fromJson(json.decode(str));
 
   factory Race.fromDwRace(dw.Race race, {Meta? meta, bool favorited = false}) => Race(
-        meta: race.meta != null ? Meta.fromJson(race.meta) : Meta.version(1),
+        meta: race.meta != null ? Meta.fromJson(race.meta) : Meta.empty(),
         key: race.key,
         name: race.name,
         description: race.description,
@@ -85,7 +85,7 @@ class Race extends dw.Race implements WithMeta, WithIcon {
         description: '',
         explanation: '',
         key: uuid(),
-        meta: Meta.version(1),
+        meta: Meta.empty(),
         name: '',
         tags: [],
       );

@@ -1,10 +1,12 @@
 import 'dart:convert';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:dungeon_paper/core/utils/date_utils.dart';
+import 'package:dungeon_paper/core/utils/uuid.dart';
 
 class Meta<T> {
   Meta._({
-    required this.schemaVersion,
+    required this.version,
     DateTime? created,
     this.updated,
     this.sharing,
@@ -17,14 +19,16 @@ class Meta<T> {
   late final DateTime created;
   final T? data;
   final String? language;
-  final int schemaVersion;
+  final String version;
   final MetaSharing? sharing;
   final DateTime? updated;
 
   bool get isFork => sharing != null && sharing!.isFork;
 
-  factory Meta.version(
-    int schemaVersion, {
+  bool get isOutOfSync => isFork && sharing!.sourceVersion != version;
+
+  factory Meta.empty({
+    String? version,
     String? createdBy,
     DateTime? created,
     DateTime? updated,
@@ -34,7 +38,7 @@ class Meta<T> {
   }) =>
       Meta._(
         createdBy: createdBy ?? '', // ?? Get.find<UserService>().current.displayName,
-        schemaVersion: schemaVersion,
+        version: version ?? uuid(),
         created: created ?? DateTime.now(),
         updated: updated,
         sharing: sharing,
@@ -45,7 +49,7 @@ class Meta<T> {
   Meta<T> copyWith({
     DateTime? created,
     DateTime? updated,
-    int? schemaVersion,
+    String? version,
     MetaSharing? sharing,
     String? createdBy,
     T? data,
@@ -55,7 +59,7 @@ class Meta<T> {
         createdBy: createdBy ?? this.createdBy,
         created: created ?? this.created,
         updated: updated ?? this.updated,
-        schemaVersion: schemaVersion ?? this.schemaVersion,
+        version: version ?? this.version,
         sharing: sharing ?? this.sharing,
         data: data ?? this.data,
         language: language ?? this.language,
@@ -68,13 +72,13 @@ class Meta<T> {
       createdBy == this.createdBy
           ? this
           : copyWith(
-              schemaVersion: 1,
+              version: uuid(),
               createdBy: createdBy,
               created: DateTime.now(),
               sharing: MetaSharing.fork(
                 sourceOwner: this.createdBy,
                 sourceKey: sourceKey,
-                sourceVersion: schemaVersion,
+                sourceVersion: version,
               ),
             );
 
@@ -82,7 +86,7 @@ class Meta<T> {
       ? this
       : Meta._(
           createdBy: sharing!.sourceOwner!,
-          schemaVersion: schemaVersion,
+          version: version,
           created: created,
           updated: updated,
           sharing: sharing,
@@ -95,12 +99,7 @@ class Meta<T> {
   String toRawJson() => json.encode(toJson());
 
   factory Meta.fromJson(Map<String, dynamic> json, [T Function(dynamic json)? parseData]) => Meta._(
-        // TODO extract to helper func
-        created: json['created'] != null
-            ? json['created'] is String
-                ? DateTime.parse(json['created'])
-                : (json['created'] as Timestamp).toDate()
-            : DateTime.now(),
+        created: json['created'] != null ? parseDate(json['created']) : DateTime.now(),
         createdBy: json['createdBy'],
         data: json['data'] != null
             ? parseData != null
@@ -108,14 +107,9 @@ class Meta<T> {
                 : json['data']
             : null,
         language: json['language'],
-        schemaVersion: json['schemaVersion'] ?? 1,
+        version: json['version']?.toString() ?? uuid(),
         sharing: json['sharing'] != null ? MetaSharing.fromJson(json['sharing']) : null,
-        // TODO extract to helper func
-        updated: json['updated'] != null
-            ? json['updated'] is String
-                ? DateTime.parse(json['updated'])
-                : (json['updated'] as Timestamp).toDate()
-            : null,
+        updated: json['updated'] != null ? parseDate(json['updated']) : null,
       );
 
   factory Meta.tryParse(dynamic meta, {String? owner, T Function(dynamic json)? parseData}) =>
@@ -123,14 +117,14 @@ class Meta<T> {
           ? meta is Meta<T>
               ? meta
               : Meta.fromJson(meta, parseData)
-          : Meta.version(1, createdBy: owner);
+          : Meta.empty(createdBy: owner);
 
   Map<String, dynamic> toJson([dynamic Function(T? data)? dumpData]) => {
         'created': created.toString(),
         'createdBy': createdBy,
         'data': dumpData != null ? dumpData(data) : data,
         'language': language,
-        'schemaVersion': schemaVersion,
+        'version': version,
         'sharing': sharing?.toJson(),
         'updated': updated?.toString(),
       };
@@ -149,7 +143,7 @@ class MetaSharing {
     this.shared = false,
     this.sourceOwner,
   })  : dirty = false,
-        sourceVersion = 1,
+        sourceVersion = uuid(),
         sourceKey = null;
 
   MetaSharing.fork({
@@ -163,7 +157,7 @@ class MetaSharing {
   final bool dirty;
   final String? sourceKey;
   final String? sourceOwner;
-  final int sourceVersion;
+  final String sourceVersion;
 
   bool get isFork => sourceOwner?.isNotEmpty == true && sourceKey?.isNotEmpty == true;
   bool get isSource => !isFork;
@@ -173,7 +167,7 @@ class MetaSharing {
     bool? dirty,
     String? sourceKey,
     String? sourceOwner,
-    int? sourceVersion,
+    String? sourceVersion,
   }) =>
       MetaSharing._(
         shared: shared ?? this.shared,
@@ -187,15 +181,13 @@ class MetaSharing {
 
   String toRawJson() => json.encode(toJson());
 
-  factory MetaSharing.fromJson(Map<String, dynamic> json) {
-    return MetaSharing._(
-      shared: json['shared'] ?? false,
-      dirty: json['dirty'] ?? false,
-      sourceKey: json['sourceKey'],
-      sourceOwner: json['sourceOwner'],
-      sourceVersion: json['sourceVersion'] ?? 1,
-    );
-  }
+  factory MetaSharing.fromJson(Map<String, dynamic> json) => MetaSharing._(
+        shared: json['shared'] ?? false,
+        dirty: json['dirty'] ?? false,
+        sourceKey: json['sourceKey'],
+        sourceOwner: json['sourceOwner'],
+        sourceVersion: json['sourceVersion']?.toString() ?? uuid(),
+      );
 
   factory MetaSharing.createFork(
     String sourceKey, {
@@ -203,7 +195,7 @@ class MetaSharing {
     bool? dirty,
     String? owner,
   }) {
-    final _m = meta ?? MetaSharing.fork(sourceVersion: 1);
+    final _m = meta ?? MetaSharing.fork(sourceVersion: uuid());
     if (owner == _m.sourceOwner) {
       return _m;
     }

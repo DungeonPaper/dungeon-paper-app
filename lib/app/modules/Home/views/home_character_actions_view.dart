@@ -22,6 +22,7 @@ import 'package:dungeon_paper/app/widgets/cards/item_card.dart';
 import 'package:dungeon_paper/app/widgets/cards/move_card.dart';
 import 'package:dungeon_paper/app/widgets/cards/race_card.dart';
 import 'package:dungeon_paper/app/widgets/cards/spell_card.dart';
+import 'package:dungeon_paper/app/widgets/chips/move_category_chip.dart';
 import 'package:dungeon_paper/app/widgets/dialogs/confirm_delete_dialog.dart';
 import 'package:dungeon_paper/app/widgets/menus/entity_edit_menu.dart';
 import 'package:dungeon_paper/app/widgets/menus/group_sort_menu.dart';
@@ -97,6 +98,7 @@ class HomeCharacterActionsView extends GetView<CharacterService> {
       ),
       cardBuilder: (move, {required onSave, required onDelete}) => MoveCard(
         move: move,
+        advancedLevelDisplay: AdvancedLevelDisplay.none,
         actions: [
           EntityEditMenu(
             onDelete: onDelete,
