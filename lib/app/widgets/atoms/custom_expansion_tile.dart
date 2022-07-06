@@ -45,12 +45,13 @@ class CustomExpansionTile extends StatefulWidget {
   const CustomExpansionTile({
     Key? key,
     this.expandable = true,
-    this.leading,
-    required this.title,
+    this.title,
+    this.titleBuilder,
     this.subtitle,
     this.onExpansionChanged,
     this.children = const <Widget>[],
-    this.trailing,
+    this.leading = const <Widget>[],
+    this.trailing = const <Widget>[],
     this.visualDensity,
     this.initiallyExpanded = false,
     this.maintainState = false,
@@ -65,6 +66,8 @@ class CustomExpansionTile extends StatefulWidget {
     this.iconColor,
     this.collapsedIconColor,
     this.controlAffinity,
+    this.icon,
+    this.minIconWidth = 20,
   })  :
         // ignore: unnecessary_null_comparison
         assert(initiallyExpanded != null),
@@ -75,6 +78,7 @@ class CustomExpansionTile extends StatefulWidget {
           'CrossAxisAlignment.baseline is not supported since the expanded children '
           'are aligned in a column, not a row. Try to use another constant.',
         ),
+        assert(title != null || titleBuilder != null),
         super(key: key);
 
   /// CUSTOM - is expansion even enabled?
@@ -86,12 +90,18 @@ class CustomExpansionTile extends StatefulWidget {
   ///
   /// Note that depending on the value of [controlAffinity], the [leading] widget
   /// may replace the rotating expansion arrow icon.
-  final Widget? leading;
+  final List<Widget> leading;
 
   /// The primary content of the list item.
   ///
   /// Typically a [Text] widget.
-  final Widget title;
+  final Widget? title;
+
+  final Widget Function(BuildContext context, Color color)? titleBuilder;
+
+  final Widget? icon;
+
+  final double minIconWidth;
 
   /// Additional content displayed below the title.
   ///
@@ -120,7 +130,7 @@ class CustomExpansionTile extends StatefulWidget {
   ///
   /// Note that depending on the value of [controlAffinity], the [trailing] widget
   /// may replace the rotating expansion arrow icon.
-  final Widget? trailing;
+  final List<Widget> trailing;
 
   /// Defines how compact the list tile's layout will be.
   ///
@@ -224,7 +234,6 @@ class _CustomExpansionTileState extends State<CustomExpansionTile>
   static final Animatable<double> _easeInTween = CurveTween(curve: Curves.easeIn);
   static final Animatable<double> _halfTween = Tween<double>(begin: 0.0, end: 0.5);
 
-  final ColorTween _borderColorTween = ColorTween();
   final ColorTween _headerColorTween = ColorTween();
   final ColorTween _iconColorTween = ColorTween();
   final ColorTween _backgroundColorTween = ColorTween();
@@ -232,7 +241,6 @@ class _CustomExpansionTileState extends State<CustomExpansionTile>
   late AnimationController _controller;
   late Animation<double> _iconTurns;
   late Animation<double> _heightFactor;
-  late Animation<Color?> _borderColor;
   late Animation<Color?> _headerColor;
   late Animation<Color?> _iconColor;
   late Animation<Color?> _backgroundColor;
@@ -245,7 +253,6 @@ class _CustomExpansionTileState extends State<CustomExpansionTile>
     _controller = AnimationController(duration: _kExpand, vsync: this);
     _heightFactor = _controller.drive(_easeInTween);
     _iconTurns = _controller.drive(_halfTween.chain(_easeInTween));
-    _borderColor = _controller.drive(_borderColorTween.chain(_easeOutTween));
     _headerColor = _controller.drive(_headerColorTween.chain(_easeInTween));
     _iconColor = _controller.drive(_iconColorTween.chain(_easeOutTween));
     _backgroundColor = _controller.drive(_backgroundColorTween.chain(_easeOutTween));
@@ -309,7 +316,6 @@ class _CustomExpansionTileState extends State<CustomExpansionTile>
   }
 
   Widget _buildChildren(BuildContext context, Widget? child) {
-    // final Color borderSideColor = _borderColor.value ?? Colors.transparent;
     //
     // return Container(
     //   decoration: BoxDecoration(
@@ -332,10 +338,33 @@ class _CustomExpansionTileState extends State<CustomExpansionTile>
             shape: rRectShape,
             onTap: widget.expandable ? _handleTap : null,
             contentPadding: widget.tilePadding,
-            leading: widget.leading ?? _buildLeadingIcon(context),
-            title: widget.title,
+            leading: (widget.icon != null)
+                ? Padding(
+                    padding: const EdgeInsets.only(right: 8),
+                    child: SizedBox(
+                      width: widget.minIconWidth,
+                      child: widget.icon!,
+                    ),
+                  )
+                : _buildLeadingIcon(context),
+            title: Row(
+              children: [
+                ...widget.leading,
+                DefaultTextStyle(
+                  style: Theme.of(context).textTheme.subtitle1!.copyWith(color: _headerColor.value),
+                  child: Expanded(
+                    child: widget.title ??
+                        widget.titleBuilder!.call(
+                          context,
+                          _headerColor.value!,
+                        ),
+                  ),
+                ),
+                ...widget.trailing,
+              ],
+            ),
             subtitle: widget.subtitle,
-            trailing: widget.trailing ?? _buildTrailingIcon(context),
+            trailing: _buildTrailingIcon(context),
             visualDensity: widget.visualDensity,
           ),
         ),
@@ -355,7 +384,6 @@ class _CustomExpansionTileState extends State<CustomExpansionTile>
   void didChangeDependencies() {
     final ThemeData theme = Theme.of(context);
     final ColorScheme colorScheme = theme.colorScheme;
-    _borderColorTween.end = theme.dividerColor;
     _headerColorTween
       ..begin = widget.collapsedTextColor ?? theme.textTheme.subtitle1!.color
       ..end = widget.textColor ?? colorScheme.primary;

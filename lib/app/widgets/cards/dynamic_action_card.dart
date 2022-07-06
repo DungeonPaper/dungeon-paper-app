@@ -1,4 +1,5 @@
 import 'package:dungeon_paper/app/widgets/atoms/custom_expansion_panel.dart';
+import 'package:dungeon_paper/app/widgets/atoms/custom_expansion_tile.dart';
 import 'package:dungeon_paper/app/widgets/atoms/roll_dice_button.dart';
 import 'package:dungeon_paper/core/utils/markdown_highlight.dart';
 import 'package:dungeon_paper/generated/l10n.dart';
@@ -8,7 +9,7 @@ import 'package:flutter_markdown/flutter_markdown.dart';
 import 'package:get/get.dart';
 import 'package:url_launcher/url_launcher.dart';
 
-class DynamicActionCard extends StatelessWidget {
+class DynamicActionCard extends StatefulWidget {
   const DynamicActionCard({
     Key? key,
     this.expansionKey,
@@ -20,6 +21,7 @@ class DynamicActionCard extends StatelessWidget {
     this.explanation,
     this.maxContentHeight,
     this.initiallyExpanded,
+    this.onExpansion,
     this.showStar = true,
     this.starredIcon,
     this.unstarredIcon,
@@ -44,6 +46,7 @@ class DynamicActionCard extends StatelessWidget {
   final Widget? unstarredIcon;
   final bool starred;
   final bool? initiallyExpanded;
+  final void Function(bool)? onExpansion;
   final bool showStar;
   final List<Dice> dice;
   final Iterable<Widget> chips;
@@ -55,19 +58,29 @@ class DynamicActionCard extends StatelessWidget {
   final List<String> highlightWords;
 
   @override
-  Widget build(BuildContext context) {
-    final expanded = false.obs;
+  State<DynamicActionCard> createState() => _DynamicActionCardState();
+}
 
+class _DynamicActionCardState extends State<DynamicActionCard> {
+  late bool expanded;
+
+  @override
+  void initState() {
+    super.initState();
+    expanded = widget.initiallyExpanded ?? false;
+  }
+
+  @override
+  Widget build(BuildContext context) {
     return OrientationBuilder(
       builder: (context, orientation) {
         final children = _buildChildren(context);
-
         var star = Container(
           width: 20,
           height: 20,
           padding: EdgeInsets.only(
-            left: leading.isNotEmpty ? 8 : 0,
-            right: trailing.isNotEmpty ? 8 : 0,
+            left: widget.leading.isNotEmpty ? 8 : 0,
+            right: widget.trailing.isNotEmpty ? 8 : 0,
           ),
           child: IconButton(
             visualDensity: VisualDensity.compact,
@@ -77,49 +90,60 @@ class DynamicActionCard extends StatelessWidget {
                 size: 16,
                 color: Theme.of(context).colorScheme.onSurface.withOpacity(0.3),
               ),
-              child: starred
-                  ? starredIcon ?? const Icon(Icons.star_rounded)
-                  : unstarredIcon ?? const Icon(Icons.star_border_rounded),
+              child: widget.starred
+                  ? widget.starredIcon ?? const Icon(Icons.star_rounded)
+                  : widget.unstarredIcon ?? const Icon(Icons.star_border_rounded),
             ),
-            onPressed: () => onStarChanged?.call(!starred),
+            onPressed: () => widget.onStarChanged?.call(!widget.starred),
           ),
         );
 
         return Card(
           margin: EdgeInsets.zero,
-          elevation: expanded.value ? 5 : 1,
+          elevation: expanded ? 5 : 1,
           child: CustomExpansionPanel(
-            expandable: expandable,
-            title: HighlightText(
-              title,
-              highlightWords: highlightWords,
-              normalTextStyle: Theme.of(context).textTheme.subtitle1,
-              textStyle: Theme.of(context).textTheme.subtitle1!,
-            ),
-            expansionKey: expansionKey,
-            onExpansion: (state) => expanded.value = state,
-            initiallyExpanded: initiallyExpanded,
+            expandable: widget.expandable,
+            titleBuilder: (context, color) {
+              debugPrint("color: $color");
+              return HighlightText(
+                widget.title,
+                highlightWords: widget.highlightWords,
+                normalTextStyle: TextStyle(
+                  fontSize: Theme.of(context).textTheme.subtitle1!.fontSize,
+                  color: color,
+                ),
+                textStyle: Theme.of(context).textTheme.subtitle1!,
+              );
+            },
+            key: widget.expansionKey,
+            onExpansion: (val) {
+              setState(() {
+                expanded = val;
+              });
+              widget.onExpansion?.call(val);
+            },
+            initiallyExpanded: widget.initiallyExpanded ?? false,
             iconColor: Theme.of(context).colorScheme.secondary,
             textColor: Theme.of(context).colorScheme.secondary,
             childrenPadding: const EdgeInsets.all(8).copyWith(top: 0),
-            icon: icon,
+            icon: widget.icon,
             trailing: [
-              ...leading,
-              showStar
-                  ? expandable
+              ...widget.leading,
+              widget.showStar
+                  ? widget.expandable
                       ? star
                       : Padding(
                           padding: const EdgeInsets.only(right: 8),
                           child: star,
                         )
                   : const SizedBox.shrink(),
-              ...trailing
+              ...widget.trailing
             ],
-            children: maxContentHeight == null
+            children: widget.maxContentHeight == null
                 ? children
                 : [
                     ConstrainedBox(
-                      constraints: BoxConstraints.loose(Size.fromHeight(maxContentHeight!)),
+                      constraints: BoxConstraints.loose(Size.fromHeight(widget.maxContentHeight!)),
                       child: ListView(
                         shrinkWrap: true,
                         children: children.sublist(0, children.length - 2),
@@ -138,10 +162,10 @@ class DynamicActionCard extends StatelessWidget {
 
     return [
       // Divider(height: 16, color: dividerColor),
-      description.isNotEmpty
+      widget.description.isNotEmpty
           ? _renderMarkdown(
               context,
-              description,
+              widget.description,
               // style: Theme.of(context).textTheme.bodyText1,
             )
           : Text(
@@ -149,12 +173,12 @@ class DynamicActionCard extends StatelessWidget {
               style: Theme.of(context).textTheme.bodyText1,
             ),
       // Divider(height: 32, color: dividerColor),
-      if (explanation != null && explanation!.isNotEmpty) ...[
+      if (widget.explanation != null && widget.explanation!.isNotEmpty) ...[
         Padding(
           padding: const EdgeInsets.only(top: 16, bottom: 4),
           child: Text(S.current.explanation, style: Theme.of(context).textTheme.caption),
         ),
-        _renderMarkdown(context, explanation!),
+        _renderMarkdown(context, widget.explanation!),
       ],
       Divider(height: 24, color: dividerColor),
       Row(
@@ -163,17 +187,17 @@ class DynamicActionCard extends StatelessWidget {
         children: [
           Expanded(
             child: Wrap(
-              spacing: chipsSpacing,
+              spacing: widget.chipsSpacing,
               runSpacing: 6,
-              children: chips.toList(),
+              children: widget.chips.toList(),
             ),
           ),
-          ...actions,
-          if (actions.isNotEmpty && dice.isNotEmpty) const SizedBox(width: 8),
-          if (dice.isNotEmpty)
+          ...widget.actions,
+          if (widget.actions.isNotEmpty && widget.dice.isNotEmpty) const SizedBox(width: 8),
+          if (widget.dice.isNotEmpty)
             Padding(
               padding: const EdgeInsets.only(bottom: 2.5),
-              child: RollDiceButton(dice: dice),
+              child: RollDiceButton(dice: widget.dice),
             ),
         ],
       )
@@ -192,7 +216,7 @@ class DynamicActionCard extends StatelessWidget {
   }
 
   String _highlight(String text) {
-    for (final word in highlightWords) {
+    for (final word in widget.highlightWords) {
       text = text.replaceAllMapped(
         RegExp(word.replaceAll('\\', ''), caseSensitive: false),
         (match) => '==${match[0]}==',
@@ -219,8 +243,8 @@ class HighlightText extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final _text = _highlight(text).split('==');
-    final normalStyle = normalTextStyle ?? Theme.of(context).textTheme.bodyMedium!;
     final defaultHighlightStyle = HighlightBuilder.getDefaultHighlightStyle(context);
+    final normalStyle = normalTextStyle ?? Theme.of(context).textTheme.bodyMedium!;
     final highlightStyle = normalStyle.copyWith(
       color: defaultHighlightStyle.color,
       backgroundColor: defaultHighlightStyle.backgroundColor,
@@ -229,24 +253,28 @@ class HighlightText extends StatelessWidget {
     final words = highlightWords.map((word) => word.toLowerCase()).toSet();
 
     return DefaultTextStyle.merge(
-      child: RichText(
-        text: TextSpan(
-          children: [
-            for (final word in _text)
-              if (words.contains(word.toLowerCase()))
-                TextSpan(
-                  text: word,
-                  style: highlightStyle,
-                )
-              else
-                TextSpan(
-                  text: word,
-                  style: normalStyle,
-                ),
-          ],
-          style: textStyle,
-        ),
-      ),
+      style: normalStyle,
+      child: Builder(builder: (context) {
+        var def = DefaultTextStyle.of(context).style;
+        return RichText(
+          text: TextSpan(
+            children: [
+              for (final word in _text)
+                if (words.contains(word.toLowerCase()))
+                  TextSpan(
+                    text: word,
+                    style: highlightStyle,
+                  )
+                else
+                  TextSpan(
+                    text: word,
+                    style: def,
+                  ),
+            ],
+            style: textStyle,
+          ),
+        );
+      }),
     );
   }
 

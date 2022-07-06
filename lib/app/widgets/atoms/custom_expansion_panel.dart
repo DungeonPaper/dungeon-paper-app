@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:get/state_manager.dart';
 
 import 'custom_expansion_tile.dart';
 
 class CustomExpansionPanel extends StatelessWidget {
   final bool expandable;
   final Key? expansionKey;
-  final Widget title;
+  final Widget? title;
   final Widget? subtitle;
   final List<Widget> children;
   final bool? expanded;
@@ -22,6 +23,7 @@ class CustomExpansionPanel extends StatelessWidget {
   final Color? collapsedIconColor;
   final Color? textColor;
   final Color? collapsedTextColor;
+  final Widget Function(BuildContext context, Color color)? titleBuilder;
 
   static const defaultPadding = EdgeInsets.symmetric(horizontal: 8);
 
@@ -29,7 +31,8 @@ class CustomExpansionPanel extends StatelessWidget {
     Key? key,
     this.expandable = true,
     this.expansionKey,
-    required this.title,
+    this.title,
+    this.titleBuilder,
     this.subtitle,
     required this.children,
     this.icon,
@@ -51,39 +54,26 @@ class CustomExpansionPanel extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final originalTheme = Theme.of(context);
-    return Theme(
-      data: originalTheme.copyWith(dividerColor: Colors.transparent),
-      child: CustomExpansionTile(
-        key: expansionKey,
-        initiallyExpanded: initiallyExpanded ?? false,
-        onExpansionChanged: (state) => onExpansion?.call(state),
-        expandable: expandable,
-        title: Row(
-          children: [
-            if (icon != null) ...[
-              SizedBox(
-                width: minIconWidth,
-                child: icon!,
-              ),
-              const SizedBox(width: 8),
-            ],
-            ...leading,
-            Expanded(child: title),
-            ...trailing,
-          ],
-        ),
-        subtitle: subtitle,
-        children: children.map((child) => Theme(data: originalTheme, child: child)).toList(),
-        tilePadding: titlePadding ?? defaultPadding,
-        childrenPadding: childrenPadding ?? defaultPadding,
-        expandedCrossAxisAlignment: CrossAxisAlignment.stretch,
-        trailing: !showArrow ? const SizedBox.shrink() : null,
-        visualDensity: VisualDensity.compact,
-        iconColor: iconColor,
-        collapsedIconColor: collapsedIconColor,
-        textColor: textColor,
-        collapsedTextColor: collapsedTextColor,
-      ),
+    return CustomExpansionTile(
+      key: expansionKey,
+      initiallyExpanded: initiallyExpanded ?? false,
+      onExpansionChanged: (state) => onExpansion?.call(state),
+      expandable: expandable,
+      title: title,
+      titleBuilder: titleBuilder,
+      icon: icon,
+      minIconWidth: minIconWidth,
+      subtitle: subtitle,
+      children: children.map((child) => Theme(data: originalTheme, child: child)).toList(),
+      tilePadding: titlePadding ?? defaultPadding,
+      childrenPadding: childrenPadding ?? defaultPadding,
+      expandedCrossAxisAlignment: CrossAxisAlignment.stretch,
+      trailing: !showArrow ? const [SizedBox.shrink()] : [],
+      visualDensity: VisualDensity.compact,
+      iconColor: iconColor,
+      collapsedIconColor: collapsedIconColor,
+      textColor: textColor,
+      collapsedTextColor: collapsedTextColor,
     );
   }
 }
