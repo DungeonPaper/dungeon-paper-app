@@ -61,13 +61,15 @@ class _DiceFormState extends State<DiceForm> {
           mainAxisSize: MainAxisSize.min,
           children: [
             Expanded(
-              child: TextFormField(
+              child: NumberTextField(
+                numberType: NumberType.int,
                 controller: amount,
                 keyboardType: const TextInputType.numberWithOptions(decimal: false),
                 enabled: widget.enabled,
                 decoration: InputDecoration(
                   filled: true,
                   label: Text(S.current.diceAmount),
+                  alignLabelWithHint: true,
                 ),
               ),
             ),
@@ -78,6 +80,7 @@ class _DiceFormState extends State<DiceForm> {
               child: SelectBox<int>(
                 value: sides,
                 label: Text(S.current.diceSides),
+                isExpanded: true,
                 items: [
                   for (final i in [4, 6, 8, 10, 12, 20, 100])
                     DropdownMenuItem<int>(child: Text(i.toString()), value: i)

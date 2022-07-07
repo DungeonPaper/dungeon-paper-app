@@ -103,6 +103,7 @@ class MoveFormController extends DynamicFormController<Move> {
           value: entity.value.category,
           // TODO intl
           label: const Text('Category'),
+          isExpanded: true,
           items: MoveCategory.values.map(
             (cat) => DropdownMenuItem(
               child: Text(S.current.moveCategoryWithLevelShort(cat.name)),
@@ -114,9 +115,9 @@ class MoveFormController extends DynamicFormController<Move> {
       FormInputData(
         name: 'classKeys',
         data: FormDropdownInputData(
-          isExpanded: true,
           value: entity.value.classKeys.isNotEmpty ? entity.value.classKeys[0] : null,
           // TODO intl
+          isExpanded: true,
           label: const Text('Class'),
           items: {...repo.builtIn.classes.values, ...repo.my.classes.values}.map(
             (cls) => DropdownMenuItem(

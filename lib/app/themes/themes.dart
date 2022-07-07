@@ -50,15 +50,15 @@ final abyssTheme = createTheme(
 );
 
 final skyTheme = createTheme(
-  createColorScheme(
-    Colors.cyan,
+    createColorScheme(
+      Colors.cyan,
+      brightness: Brightness.light,
+      primary: Colors.blue[900],
+      secondary: Colors.blue[900],
+    ),
+    scaffoldBackgroundColor: Colors.cyan[100],
     brightness: Brightness.light,
-    primary: Colors.blue[900],
-    secondary: Colors.blue[900],
-  ),
-  scaffoldBackgroundColor: Colors.cyan[100],
-  brightness: Brightness.light,
-);
+    surfaceColor: Color.fromARGB(255, 221, 252, 255));
 
 final forestTheme = createTheme(
   createColorScheme(
@@ -92,6 +92,7 @@ final fairyTheme = createTheme(
   ),
   scaffoldBackgroundColor: Colors.pink[100],
   brightness: Brightness.light,
+  surfaceColor: Color.fromARGB(255, 255, 226, 236),
 );
 
 final luxuryTheme = createTheme(
@@ -127,7 +128,7 @@ final bonfireTheme = createTheme(
   ),
   scaffoldBackgroundColor: Color.fromARGB(255, 255, 184, 153),
   brightness: Brightness.light,
-  surfaceColor: Color.fromARGB(255, 254, 196, 155),
+  surfaceColor: Color.fromARGB(255, 255, 228, 208),
 );
 
 final marshTheme = createTheme(

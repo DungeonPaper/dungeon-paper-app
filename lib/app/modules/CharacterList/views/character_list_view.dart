@@ -1,5 +1,6 @@
 import 'package:dungeon_paper/app/data/models/character.dart';
 import 'package:dungeon_paper/app/data/services/character_service.dart';
+import 'package:dungeon_paper/app/data/services/user_service.dart';
 import 'package:dungeon_paper/app/model_utils/character_utils.dart';
 import 'package:dungeon_paper/app/routes/app_pages.dart';
 import 'package:dungeon_paper/app/themes/button_themes.dart';
@@ -16,7 +17,7 @@ import 'package:get/get.dart';
 
 import '../../../../generated/l10n.dart';
 
-class CharacterListPageView extends GetView<CharacterService> {
+class CharacterListPageView extends GetView<CharacterService> with UserServiceMixin {
   const CharacterListPageView({Key? key}) : super(key: key);
 
   @override
@@ -44,41 +45,49 @@ class CharacterListPageView extends GetView<CharacterService> {
                 ),
                 children: [
                   for (var char in controller.charsByCategory[cat]!)
-                    Padding(
+                    Builder(
                       key: Key(char.key),
-                      padding: const EdgeInsets.symmetric(vertical: 4),
-                      child: Card(
-                        margin: EdgeInsets.zero,
-                        child: ListTileTheme.merge(
-                          minLeadingWidth: 48,
-                          minVerticalPadding: 8,
-                          horizontalTitleGap: 10,
-                          child: InkWell(
-                            borderRadius: borderRadius,
-                            splashColor: Theme.of(context).splashColor,
-                            onTap: () {
-                              controller.setCurrent(char.key);
-                              Get.offAllNamed(Routes.home);
-                            },
-                            child: ListTile(
-                              leading: CharacterAvatar.squircle(character: char, size: 48),
-                              title: Text(char.displayName),
-                              subtitle: CharacterSubtitle(
-                                character: char,
-                                textAlign: TextAlign.start,
-                              ),
-                              trailing: EntityEditMenu(
-                                onEdit: null,
-                                onDelete: () => awaitDeleteConfirmation<Character>(
-                                  context,
-                                  char.displayName,
-                                  () => controller.deleteCharacter(char),
+                      builder: (context) {
+                        final charTheme = AppThemes.getTheme(char.getCurrentTheme(user));
+                        return Padding(
+                          padding: const EdgeInsets.symmetric(vertical: 4),
+                          child: Card(
+                            margin: EdgeInsets.zero,
+                            color: charTheme.scaffoldBackgroundColor,
+                            child: ListTileTheme.merge(
+                              minLeadingWidth: 48,
+                              minVerticalPadding: 16,
+                              horizontalTitleGap: 10,
+                              textColor: charTheme.colorScheme.onBackground,
+                              // textColor: ThemeData.estimateBrightnessForColor(charTheme.scaffoldBackgroundColor) == Brightness.light ? Colors.black : Colors.white,
+                              child: InkWell(
+                                borderRadius: borderRadius,
+                                splashColor: Theme.of(context).splashColor,
+                                onTap: () {
+                                  controller.setCurrent(char.key);
+                                  Get.offAllNamed(Routes.home);
+                                },
+                                child: ListTile(
+                                  leading: CharacterAvatar.squircle(character: char, size: 48),
+                                  title: Text(char.displayName),
+                                  subtitle: CharacterSubtitle(
+                                    character: char,
+                                    textAlign: TextAlign.start,
+                                  ),
+                                  trailing: EntityEditMenu(
+                                    onEdit: null,
+                                    onDelete: () => awaitDeleteConfirmation<Character>(
+                                      context,
+                                      char.displayName,
+                                      () => controller.deleteCharacter(char),
+                                    ),
+                                  ),
                                 ),
                               ),
                             ),
                           ),
-                        ),
-                      ),
+                        );
+                      },
                     ),
                 ],
               ),

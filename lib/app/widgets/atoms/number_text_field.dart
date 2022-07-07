@@ -136,16 +136,20 @@ class NumberTextField extends StatelessWidget {
       initialValue: initialValue,
       focusNode: focusNode,
       decoration: (decoration ?? const InputDecoration()).copyWith(
-        prefixIcon: IconButton(
-          icon: const Icon(Icons.remove),
-          splashColor: Colors.red.withOpacity(0.2),
-          onPressed: _decr,
-        ),
-        suffixIcon: IconButton(
-          icon: const Icon(Icons.add),
-          splashColor: Theme.of(context).colorScheme.secondary.withOpacity(0.2),
-          onPressed: _incr,
-        ),
+        prefix: decoration?.prefixIcon ??
+            IconButton(
+              icon: const Icon(Icons.remove),
+              iconSize: 16,
+              splashColor: Colors.red.withOpacity(0.2),
+              onPressed: _decr,
+            ),
+        suffix: decoration?.suffixIcon ??
+            IconButton(
+              icon: const Icon(Icons.add),
+              iconSize: 16,
+              splashColor: Colors.green.withOpacity(0.2),
+              onPressed: _incr,
+            ),
       ),
       keyboardType: keyboardType,
       textCapitalization: textCapitalization,

@@ -69,7 +69,7 @@ class SelectBox<T> extends StatelessWidget {
   Widget build(BuildContext context) {
     final enabled = onChanged != null;
     final hasLabel = label != null;
-    final height = hasLabel ? 62.5 : 48.0;
+    final height = hasLabel ? 72.0 : 48.0;
     final theme = Theme.of(context);
 
     const Color darkEnabled = Color(0x1AFFFFFF);
