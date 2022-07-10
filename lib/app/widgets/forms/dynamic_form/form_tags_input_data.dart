@@ -10,6 +10,9 @@ class FormTagsInputData extends BaseInputData<List<dw.Tag>> {
   @override
   List<dw.Tag> get value => controller.value;
 
+  @override
+  set value(List<dw.Tag> value) => controller.value = value;
+
   late final ValueNotifier<List<dw.Tag>> controller;
   late final ValueNotifierStream<List<dw.Tag>> stream;
   late final StreamSubscription subscription;
@@ -39,4 +42,13 @@ class FormTagsInputData extends BaseInputData<List<dw.Tag>> {
   Widget build(BuildContext context) {
     return TagListInput(controller: controller);
   }
+
+  @override
+  bool equals(List<dw.Tag> other) =>
+      other.length == value.length &&
+      enumerate(value).every((tag) => [
+            tag.value.name == other[tag.index].name,
+            tag.value.value == other[tag.index].value,
+            tag.value.description == other[tag.index].description,
+          ].every((e) => e == true));
 }

@@ -68,6 +68,7 @@ class AlignmentValue extends dw.Alignment implements WithMeta, WithIcon {
     Meta? meta,
     dw.AlignmentType? type,
     String? description,
+    String? key,
   }) =>
       copyWith(
         meta: meta,

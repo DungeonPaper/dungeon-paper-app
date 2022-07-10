@@ -19,9 +19,11 @@ class SpellForm extends GetView<DynamicFormController<Spell>> {
 
   @override
   Widget build(BuildContext context) {
-    return DynamicForm(
+    return DynamicForm<Spell>(
+      entity: controller.entity.value,
       inputs: controller.inputs,
       onChange: (d) => onChange(controller.setData(d)),
+      onReplace: (d) => onChange(controller.setFromEntity(d)),
     );
   }
 }
@@ -39,6 +41,7 @@ class SpellFormController extends DynamicFormController<Spell> {
 
   @override
   Spell setFromEntity(Spell spell) => setData({
+        'meta': spell.meta,
         'name': spell.name,
         'description': spell.description,
         'explanation': spell.explanation,
@@ -49,17 +52,21 @@ class SpellFormController extends DynamicFormController<Spell> {
 
   @override
   Spell setData(Map<String, dynamic> data) {
+    final classKeysList = asList<String>(data['classKeys']);
     entity.value = entity.value.copyWithInherited(
-      meta: entity.value.meta,
+      meta: data['meta'] ?? entity.value.meta,
       name: data['name'],
       description: data['description'],
       explanation: data['explanation'],
       tags: data['tags'],
       dice: data['dice'],
-      classKeys: asList(data['classKeys']),
+      classKeys: classKeysList,
     );
 
-    return entity.value;
+    return super.setData({
+      ...data,
+      'classKeys': classKeysList.isEmpty ? null : classKeysList[0],
+    });
   }
 
   @override
@@ -79,6 +86,7 @@ class SpellFormController extends DynamicFormController<Spell> {
         data: FormDropdownInputData(
           isExpanded: true,
           value: entity.value.classKeys.isNotEmpty ? entity.value.classKeys[0] : null,
+          compareTo: (a, b) => a.toString() == b.toString(),
           // TODO intl
           label: const Text('Class'),
           items: {...repo.builtIn.classes.values, ...repo.my.classes.values}.map(

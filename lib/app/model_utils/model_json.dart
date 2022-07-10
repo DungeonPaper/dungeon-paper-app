@@ -15,9 +15,9 @@ import 'package:dungeon_paper/app/data/models/spell.dart';
 import 'package:dungeon_world_data/gear_option.dart';
 import 'package:dungeon_world_data/dungeon_world_data.dart' as dw;
 
-Map<String, dynamic> toJsonFor<T>(T object) {
+Map<String, dynamic> toJsonFor(dynamic object) {
   final dyn = object as dynamic;
-  switch (T) {
+  switch (object.runtimeType) {
     case AlignmentValue:
     case Bio:
     case SessionMark:

@@ -1,8 +1,8 @@
 part of 'form_input_data.dart';
 
-class FormDropdownInputData<T> extends BaseInputData {
+class FormDropdownInputData<T> extends BaseInputData<T> {
   FormDropdownInputData({
-    required this.value,
+    required T value,
     required this.items, //
     this.label,
     //
@@ -29,15 +29,20 @@ class FormDropdownInputData<T> extends BaseInputData {
     this.enableFeedback,
     this.alignment = AlignmentDirectional.centerStart,
     this.borderRadius,
-  }) {
+    this.compareTo,
+  }) : controller = ValueNotifier(value) {
     init();
   }
 
   @override
-  final T value;
+  T get value => controller.value;
+
+  @override
+  set value(T value) => controller.value = value;
 
   final Iterable<DropdownMenuItem<T>> items;
   final Widget? label;
+  final bool Function(T, T)? compareTo;
 
   final Widget? hint;
   final Widget? disabledHint;
@@ -62,17 +67,16 @@ class FormDropdownInputData<T> extends BaseInputData {
   final AlignmentGeometry alignment;
   final BorderRadius? borderRadius;
 
-  late final ValueNotifier<T> controller;
+  final ValueNotifier<T> controller;
   late final ValueNotifierStream<T> stream;
   late final StreamSubscription subscription;
 
   void init() {
-    controller = ValueNotifier(value);
     stream = ValueNotifierStream<T>(controller);
   }
 
   @override
-  StreamSubscription listen(void Function(dynamic event)? onData,
+  StreamSubscription<T> listen(void Function(T event)? onData,
           {Function? onError, void Function()? onDone, bool? cancelOnError}) =>
       stream.listen(onData, onError: onError, onDone: onDone, cancelOnError: cancelOnError);
 
@@ -113,4 +117,7 @@ class FormDropdownInputData<T> extends BaseInputData {
       borderRadius: borderRadius ?? rRectShape.borderRadius.resolve(TextDirection.ltr),
     );
   }
+
+  @override
+  bool equals(T other) => compareTo != null ? compareTo!(value, other) : value == other;
 }

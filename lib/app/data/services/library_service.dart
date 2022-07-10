@@ -8,6 +8,7 @@ import 'package:dungeon_paper/app/model_utils/model_json.dart';
 import 'package:dungeon_paper/app/model_utils/model_key.dart';
 import 'package:dungeon_paper/app/model_utils/model_meta.dart';
 import 'package:dungeon_paper/core/storage_handler/storage_handler.dart';
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class LibraryService extends GetxService {
@@ -41,14 +42,23 @@ class LibraryService extends GetxService {
   void upsertToCharacter<T extends WithMeta>(
     Iterable<T> items, {
     Character? char,
-    bool fork = true,
+    ForkBehavior forkBehavior = ForkBehavior.none,
   }) async {
-    if (fork) {
-      items = items.map((e) => (e.meta.isFork && e.meta.createdBy == user.username)
-          ? increaseMetaVersion(e)
-          : forkMeta(e, user));
+    if (forkBehavior != ForkBehavior.none) {
+      // items = items.map((e) => (e.meta.createdBy == user.username)
+      //     ? increaseMetaVersion(e)
+      //     : forkMeta(e, user));
+      items = items.map(
+        (e) {
+          debugPrint('forking $e: $forkBehavior');
+          return forkBehavior == ForkBehavior.fork
+              ? forkMeta(e, user, force: true)
+              : increaseMetaVersion(e);
+        },
+      );
     }
-
+    var m = items.elementAt(0).meta;
+    debugPrint('upserting meta ${m.toJson()}');
     chars.updateCharacter(
       CharacterUtils.upsertByType<T>(char ?? chars.current, items),
     );
@@ -59,6 +69,12 @@ class LibraryService extends GetxService {
       CharacterUtils.removeByType<T>(char ?? chars.current, items),
     );
   }
+}
+
+enum ForkBehavior {
+  fork,
+  increaseVersion,
+  none,
 }
 
 mixin LibraryServiceMixin {

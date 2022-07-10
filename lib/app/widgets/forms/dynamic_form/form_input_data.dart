@@ -8,6 +8,7 @@ import 'package:dungeon_paper/app/widgets/forms/dynamic_form/dynamic_form.dart';
 import 'package:dungeon_paper/app/widgets/molecules/dice_list_input.dart';
 import 'package:dungeon_paper/app/widgets/molecules/tag_list_input.dart';
 import 'package:dungeon_paper/core/utils/interfaces.dart';
+import 'package:dungeon_paper/core/utils/list_utils.dart';
 import 'package:dungeon_paper/core/utils/streams.dart';
 import 'package:dungeon_world_data/dungeon_world_data.dart' as dw;
 import 'package:flutter/material.dart';
@@ -27,9 +28,12 @@ abstract class BaseInputData<T> extends Stream<T> implements Disposable {
   late DynamicFormState form;
 
   T get value;
+  set value(T value);
+
   Widget build(BuildContext context);
 
   void onFormInit() {}
+  bool equals(T other);
 }
 
 class FormInputData<T extends BaseInputData> {

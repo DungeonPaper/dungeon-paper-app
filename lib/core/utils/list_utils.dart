@@ -144,6 +144,6 @@ List<T> removeByKey<T>(List<T> list, Iterable<T> items, {dynamic Function(T item
 
 List<T> asList<T>(dynamic item) => item == null
     ? []
-    : item is List
-        ? item.cast<T>()
+    : item is Iterable
+        ? item.cast<T>().toList()
         : <T>[item];

@@ -18,9 +18,11 @@ class NoteForm extends GetView<DynamicFormController<Note>> {
 
   @override
   Widget build(BuildContext context) {
-    return DynamicForm(
+    return DynamicForm<Note>(
+      entity: controller.entity.value,
       inputs: controller.inputs,
       onChange: (d) => onChange(controller.setData(d)),
+      onReplace: (d) => onChange(controller.setFromEntity(d)),
     );
   }
 }
@@ -53,7 +55,7 @@ class NoteFormController extends DynamicFormController<Note> {
       tags: data['tags'],
     );
 
-    return entity.value;
+    return super.setData(data);
   }
 
   @override

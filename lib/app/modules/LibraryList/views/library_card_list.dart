@@ -55,7 +55,8 @@ class LibraryCardList<T extends WithMeta, F extends EntityFilters<T>>
                           type: ItemFormType.create,
                         ),
                         binding: RepositoryItemFormBinding<T>(
-                          item: _createEmpty(),
+                          // item: _createEmpty(),
+                          item: null,
                           extraData: extraData,
                         ),
                       ),

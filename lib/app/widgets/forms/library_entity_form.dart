@@ -34,7 +34,7 @@ class LibraryEntityForm<T extends WithMeta> extends GetView<DynamicFormControlle
 
   final void Function(T item) onSave;
   final ItemFormType type;
-  T get data => controller.entity.value;
+  T get entity => controller.entity.value;
 
   @override
   Widget build(BuildContext context) {
@@ -45,13 +45,13 @@ class LibraryEntityForm<T extends WithMeta> extends GetView<DynamicFormControlle
           appBar: AppBar(
             title: title,
             actions: [
-              MetaSyncMenu(entity: data),
+              MetaSyncMenu(entity: entity),
             ],
           ),
-          body: buildForm(context),
+          body: buildForm(context, entity),
           floatingActionButton: AdvancedFloatingActionButton.extended(
             onPressed: () {
-              onSave(data);
+              onSave(entity);
               Get.back();
             },
             label: Text(S.current.save),
@@ -75,7 +75,7 @@ class LibraryEntityForm<T extends WithMeta> extends GetView<DynamicFormControlle
     controller.dirty.value = true;
   }
 
-  Widget buildForm(BuildContext context) {
+  Widget buildForm(BuildContext context, T entity) {
     switch (T) {
       case Move:
         return MoveForm(
@@ -88,11 +88,20 @@ class LibraryEntityForm<T extends WithMeta> extends GetView<DynamicFormControlle
           type: type,
         );
       case Item:
-        return ItemForm(onChange: setEntity, type: type);
+        return ItemForm(
+          onChange: setEntity,
+          type: type,
+        );
       case Note:
-        return NoteForm(onChange: setEntity, type: type);
+        return NoteForm(
+          onChange: setEntity,
+          type: type,
+        );
       case CharacterClass:
-        return AddCharacterClassForm(onChange: setEntity, type: type);
+        return AddCharacterClassForm(
+          onChange: setEntity,
+          type: type,
+        );
       default:
         throw UnsupportedError('Unsupported type: $T');
     }

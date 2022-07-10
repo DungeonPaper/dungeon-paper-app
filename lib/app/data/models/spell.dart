@@ -1,9 +1,12 @@
 import 'dart:convert';
+import 'package:dungeon_paper/app/data/models/user.dart';
+import 'package:dungeon_paper/app/data/services/user_service.dart';
 import 'package:dungeon_paper/app/model_utils/model_icon.dart';
 import 'package:dungeon_paper/app/modules/LibraryList/views/filters/spell_filters.dart';
 import 'package:dungeon_paper/core/utils/uuid.dart';
 import 'package:dungeon_world_data/dungeon_world_data.dart' as dw;
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 import '../../../core/dw_icons.dart';
 import 'meta.dart';
@@ -83,7 +86,7 @@ class Spell extends dw.Spell implements WithMeta, WithIcon {
       Spell.fromDwSpell(dw.Spell.fromJson(json), prepared: json['prepared']);
 
   factory Spell.empty() => Spell(
-        meta: Meta.empty(),
+        meta: Meta.empty(createdBy: user.username),
         classKeys: [],
         description: '',
         dice: [],
@@ -113,4 +116,6 @@ class Spell extends dw.Spell implements WithMeta, WithIcon {
         }
         return a.name.toLowerCase().compareTo(b.name.toLowerCase());
       };
+
+  static User get user => Get.find<UserService>().current;
 }

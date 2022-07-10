@@ -264,7 +264,9 @@ class ActionsCardList<T extends WithMeta> extends GetView<CharacterService>
         TextButton.icon(
           onPressed: () => Get.toNamed(
             route,
-            arguments: addPageArguments(onAdd: library.upsertToCharacter),
+            arguments: addPageArguments(
+              onAdd: (items) => library.upsertToCharacter(items, forkBehavior: ForkBehavior.fork),
+            ),
           ),
           label: Text(S.current.addGeneric(S.current.entityPlural(T))),
           icon: const Icon(Icons.add),
@@ -297,7 +299,7 @@ class ActionsCardList<T extends WithMeta> extends GetView<CharacterService>
               obj,
               onDelete: _confirmDeleteDlg(context, obj, nameFor(obj)),
               onSave: (fork) => (_obj) {
-                library.upsertToCharacter([_obj], fork: fork);
+                library.upsertToCharacter([_obj], forkBehavior: ForkBehavior.increaseVersion);
               },
             ),
           ),

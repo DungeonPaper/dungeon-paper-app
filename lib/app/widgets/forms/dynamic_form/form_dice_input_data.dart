@@ -12,6 +12,9 @@ class FormDiceInputData extends BaseInputData<List<dw.Dice>> {
   @override
   List<dw.Dice> get value => controller.value;
 
+  @override
+  set value(List<dw.Dice> value) => controller.value = value;
+
   late final ValueNotifier<List<dw.Dice>> controller;
   late final ValueNotifierStream<List<dw.Dice>> stream;
   late final StreamSubscription subscription;
@@ -80,4 +83,9 @@ class FormDiceInputData extends BaseInputData<List<dw.Dice>> {
       }
     };
   }
+
+  @override
+  bool equals(List<dw.Dice> other) =>
+      other.length == value.length &&
+      enumerate(value).every((dice) => dice.value.toString() == other[dice.index].toString());
 }

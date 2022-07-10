@@ -40,7 +40,7 @@ class MetaSyncMenu<T, M> extends StatelessWidget {
           // TODO intl
           label: Text('Version: ${meta.version}\n'
               'Dirty: ${meta.sharing?.dirty ?? 'false'}\n'
-              'isFork: ${meta.sharing?.isFork}\n'
+              'isFork: ${meta.isForkOf(entity)}\n'
               'sourceOwner: ${meta.sharing?.sourceOwner}\n'
               'createdBy: ${meta.createdBy}\n'
               'key: ${entity.key}\n'

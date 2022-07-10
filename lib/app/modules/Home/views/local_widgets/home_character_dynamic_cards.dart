@@ -127,7 +127,8 @@ class HomeCharacterDynamicCards extends GetView<CharacterService> with LibrarySe
                         abilityScores: controller.current.abilityScores,
                         classKeys: moves[index].classKeys,
                         move: moves[index],
-                        onSave: (move) => library.upsertToCharacter([move]),
+                        onSave: (move) => library
+                            .upsertToCharacter([move], forkBehavior: ForkBehavior.increaseVersion),
                       ),
                       onDelete: _delete(
                         context,

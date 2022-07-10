@@ -143,6 +143,11 @@ class FormTextInputData extends BaseInputData<String> {
   String get value => controller.text;
 
   @override
+  set value(String value) {
+    controller.text = value;
+  }
+
+  @override
   Widget build(BuildContext context) {
     if (!rich) {
       return TextFormField(
@@ -258,4 +263,7 @@ class FormTextInputData extends BaseInputData<String> {
       enableIMEPersonalizedLearning: enableIMEPersonalizedLearning,
     );
   }
+
+  @override
+  bool equals(String other) => value == other;
 }

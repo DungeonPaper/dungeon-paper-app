@@ -17,9 +17,11 @@ class AddCharacterClassForm extends GetView<DynamicFormController<CharacterClass
 
   @override
   Widget build(BuildContext context) {
-    return DynamicForm(
+    return DynamicForm<CharacterClass>(
+      entity: controller.entity.value,
       inputs: controller.inputs,
       onChange: (d) => onChange(controller.setData(d)),
+      onReplace: (d) => onChange(controller.setFromEntity(d)),
     );
   }
 }

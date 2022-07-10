@@ -20,10 +20,12 @@ class MoveForm extends GetView<DynamicFormController<Move>> {
 
   @override
   Widget build(BuildContext context) {
-    return DynamicForm(
+    return DynamicForm<Move>(
+      entity: controller.entity.value,
       inputs: controller.inputs,
       onChange: (d) => onChange(controller.setData(d)),
-      builder: (context, inputs) {
+      onReplace: (d) => onChange(controller.setFromEntity(d)),
+      builder: (context, inputs, entity) {
         return ListView(
           padding: const EdgeInsets.symmetric(horizontal: 16).copyWith(bottom: 70),
           children: [
@@ -82,7 +84,7 @@ class MoveFormController extends DynamicFormController<Move> {
       classKeys: asList(data['classKeys']),
     );
 
-    return entity.value;
+    return super.setData(data);
   }
 
   @override

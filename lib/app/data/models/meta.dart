@@ -1,10 +1,13 @@
 import 'dart:convert';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:dungeon_paper/app/data/services/repository_service.dart';
+import 'package:dungeon_paper/app/model_utils/model_key.dart';
 import 'package:dungeon_paper/core/utils/date_utils.dart';
 import 'package:dungeon_paper/core/utils/uuid.dart';
+import 'package:flutter/material.dart';
 
-class Meta<T> {
+class Meta<T> with RepositoryServiceMixin {
   Meta._({
     required this.version,
     DateTime? created,
@@ -23,9 +26,22 @@ class Meta<T> {
   final MetaSharing? sharing;
   final DateTime? updated;
 
-  bool get isFork => sharing != null && sharing!.isFork;
+  T? getLibraryCopy<T extends WithMeta>() => repo.my
+      .listByType(T)
+      .entries
+      .cast<MapEntry<String, T?>>()
+      .firstWhere(
+        (e) => keyFor(e.value) == sharing?.sourceKey,
+        orElse: () => const MapEntry('not_found', null),
+      )
+      .value;
 
-  bool get isOutOfSync => isFork && sharing!.sourceVersion != version;
+  bool get isFork => sharing != null;
+  bool get isSource => !isFork;
+
+  bool isForkOf(WithMeta parent) => isFork && sharing!.sourceKey == parent.key;
+  bool isSourceOf(WithMeta parent) => !isForkOf(parent);
+  bool isOutOfSyncWith(WithMeta parent) => isForkOf(parent) && sharing!.sourceVersion != version;
 
   factory Meta.empty({
     String? version,
@@ -68,25 +84,28 @@ class Meta<T> {
   Meta<T> fork({
     required String createdBy,
     required String sourceKey,
-  }) =>
-      createdBy == this.createdBy
-          ? this
-          : copyWith(
-              version: uuid(),
-              createdBy: createdBy,
-              created: DateTime.now(),
-              sharing: MetaSharing.fork(
-                sourceOwner: this.createdBy,
-                sourceKey: sourceKey,
-                sourceVersion: version,
-              ),
-            );
+    bool force = false,
+  }) {
+    debugPrint('force: $force, createdBy: $createdBy, sourceKey: $sourceKey');
+    return !force && createdBy == this.createdBy
+        ? this
+        : copyWith(
+            version: uuid(),
+            createdBy: createdBy,
+            created: DateTime.now(),
+            sharing: MetaSharing.fork(
+              sourceOwner: this.createdBy,
+              sourceKey: sourceKey,
+              sourceVersion: version,
+            ),
+          );
+  }
 
   Meta originalOf() => sharing == null
       ? this
       : Meta._(
           createdBy: sharing!.sourceOwner!,
-          version: version,
+          version: sharing!.sourceVersion,
           created: created,
           updated: updated,
           sharing: sharing,
@@ -159,8 +178,8 @@ class MetaSharing {
   final String? sourceOwner;
   final String sourceVersion;
 
-  bool get isFork => sourceOwner?.isNotEmpty == true && sourceKey?.isNotEmpty == true;
-  bool get isSource => !isFork;
+  // bool get isFork => sourceOwner?.isNotEmpty == true && sourceKey?.isNotEmpty == true;
+  // bool get isSource => !isFork;
 
   MetaSharing copyWith({
     bool? shared,
@@ -219,5 +238,5 @@ abstract class WithMeta<T, M> {
   abstract final Meta<M> meta;
   abstract final String key;
   T copyWith({Meta<M>? meta});
-  T copyWithInherited({Meta<M>? meta}) => copyWith(meta: meta);
+  T copyWithInherited({Meta<M>? meta, String? key}) => copyWith(meta: meta);
 }
