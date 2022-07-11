@@ -1,5 +1,4 @@
 import 'dart:convert';
-import 'package:dungeon_paper/app/data/models/user.dart';
 import 'package:dungeon_paper/core/http/api_requests/search.dart';
 import 'package:http/http.dart' as http;
 

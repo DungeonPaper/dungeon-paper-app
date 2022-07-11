@@ -5,8 +5,8 @@ import 'colors.dart';
 final borderRadius = BorderRadius.circular(20);
 final rRectShape = RoundedRectangleBorder(borderRadius: borderRadius);
 
-final lightColorScheme = ColorScheme.light();
-final darkColorScheme = ColorScheme.dark();
+const lightColorScheme = ColorScheme.light();
+const darkColorScheme = ColorScheme.dark();
 
 final lightM3 = ThemeData(
   useMaterial3: true,

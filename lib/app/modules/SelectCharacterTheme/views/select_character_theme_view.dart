@@ -94,9 +94,9 @@ class SelectCharacterThemeView extends GetView<SelectCharacterThemeController> {
     return _pad(Row(
       children: [
         Expanded(child: Text(labelText, style: caption)),
-        Text('See all'),
+        const Text('See all'),
         Switch.adaptive(value: seeAll, onChanged: onChangeSeeAll),
-        ElevatedButton(onPressed: resetEnabled ? onReset : null, child: Text('Use Default')),
+        ElevatedButton(onPressed: resetEnabled ? onReset : null, child: const Text('Use Default')),
       ],
     ));
   }

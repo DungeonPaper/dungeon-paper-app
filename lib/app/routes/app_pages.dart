@@ -2,7 +2,6 @@ import 'package:flutter/widgets.dart';
 
 import 'package:get/get.dart';
 
-import '../../core/http/api_requests/migration.dart';
 import '../data/models/item.dart';
 import '../data/models/meta.dart';
 import '../data/models/move.dart';
@@ -96,7 +95,7 @@ class AppPages {
     ),
     GetPage(
       name: Routes.settings,
-      page: () => SettingsView(),
+      page: () => const SettingsView(),
       binding: SettingsBinding(),
       preventDuplicates: false,
     ),

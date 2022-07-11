@@ -1,12 +1,9 @@
 import 'dart:async';
 
-import 'package:dungeon_paper/app/data/models/item.dart';
 import 'package:dungeon_paper/app/data/models/meta.dart';
 import 'package:dungeon_paper/app/data/models/user.dart';
 import 'package:dungeon_paper/app/data/services/repository_service.dart';
 import 'package:dungeon_paper/app/data/services/user_service.dart';
-import 'package:dungeon_paper/app/model_utils/model_json.dart';
-import 'package:dungeon_paper/app/model_utils/model_meta.dart';
 import 'package:dungeon_paper/app/widgets/forms/entity_share_form.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -129,9 +126,9 @@ abstract class DynamicFormController<T extends WithMeta> extends GetxController 
       // when editing, create a fork of the move
       // entity.value = forkMeta(argument, user);
       createInputs();
-      debugPrint("Before copy");
+      debugPrint('Before copy');
       final copy = entity.value.copyWithInherited(key: argument!.key, meta: argument!.meta);
-      debugPrint("copy $copy");
+      debugPrint('copy $copy');
       entity.value = copy;
       setFromEntity(argument!);
     } else {

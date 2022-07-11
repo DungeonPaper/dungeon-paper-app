@@ -52,7 +52,7 @@ class UniversalSearchView extends GetView<UniversalSearchController> {
                     crossAxisAlignment: WrapCrossAlignment.center,
                     children: [
                       // TODO intl
-                      Text('Search in: '),
+                      const Text('Search in: '),
                       if (controller.hasCharacter)
                         _FilterChip(
                           label: S.current.entity(Character),
@@ -75,7 +75,7 @@ class UniversalSearchView extends GetView<UniversalSearchController> {
                       if (value.data == null) {
                         return Center(
                           child: SizedBox.fromSize(
-                            size: Size.square(50),
+                            size: const Size.square(50),
                             child: CircularProgressIndicator(
                               color: Theme.of(context).colorScheme.secondary,
                             ),

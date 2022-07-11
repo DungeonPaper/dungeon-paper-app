@@ -3,11 +3,9 @@ import 'package:dungeon_paper/app/data/models/user.dart';
 import 'package:dungeon_paper/app/data/services/character_service.dart';
 import 'package:dungeon_paper/app/data/services/user_service.dart';
 import 'package:dungeon_paper/generated/l10n.dart';
-import 'package:dynamic_themes/dynamic_themes.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-import '../../themes/themes.dart';
 
 class ThemeBrightnessSwitch extends StatelessWidget with UserServiceMixin, CharacterServiceMixin {
   const ThemeBrightnessSwitch({
