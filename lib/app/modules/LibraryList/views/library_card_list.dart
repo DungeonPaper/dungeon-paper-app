@@ -2,11 +2,17 @@ import 'package:dungeon_paper/app/data/models/character_class.dart';
 import 'package:dungeon_paper/app/data/models/item.dart';
 import 'package:dungeon_paper/app/data/models/meta.dart';
 import 'package:dungeon_paper/app/data/models/move.dart';
+import 'package:dungeon_paper/app/data/models/note.dart';
 import 'package:dungeon_paper/app/data/models/spell.dart';
 import 'package:dungeon_paper/app/modules/LibraryList/bindings/library_form_binding.dart';
 import 'package:dungeon_paper/app/modules/LibraryList/controllers/library_list_controller.dart';
 import 'package:dungeon_paper/app/themes/button_themes.dart';
+import 'package:dungeon_paper/app/widgets/forms/character_class_form.dart';
+import 'package:dungeon_paper/app/widgets/forms/item_form.dart';
 import 'package:dungeon_paper/app/widgets/forms/library_entity_form.dart';
+import 'package:dungeon_paper/app/widgets/forms/move_form.dart';
+import 'package:dungeon_paper/app/widgets/forms/note_form.dart';
+import 'package:dungeon_paper/app/widgets/forms/spell_form.dart';
 import 'package:dungeon_paper/generated/l10n.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -50,16 +56,12 @@ class LibraryCardList<T extends WithMeta, F extends EntityFilters<T>>
                     child: ElevatedButton.icon(
                       style: ButtonThemes.primaryElevated(context),
                       onPressed: () => Get.to(
-                        () => LibraryEntityForm<T>(
-                          onSave: onSave!,
-                          type: ItemFormType.create,
-                        ),
-                        binding: RepositoryItemFormBinding<T>(
-                          // item: _createEmpty(),
-                          item: null,
-                          extraData: extraData,
-                        ),
-                      ),
+                          () => LibraryEntityForm<T>(
+                                onSave: onSave!,
+                                type: ItemFormType.create,
+                              ),
+                          binding: RepositoryItemFormBinding<T>(),
+                          arguments: createPageArgsByType(extraData)),
                       label: Text(S.current.createGeneric(S.current.entity(T))),
                       icon: const Icon(Icons.add),
                     ),
@@ -86,22 +88,45 @@ class LibraryCardList<T extends WithMeta, F extends EntityFilters<T>>
     );
   }
 
-  T _createEmpty() {
+  // T _createEmpty() {
+  //   switch (T) {
+  //     case Move:
+  //       return Move.empty().copyWithInherited(
+  //         classKeys: extraData['classKeys'],
+  //       ) as T;
+  //     case Spell:
+  //       return Spell.empty().copyWithInherited(
+  //         classKeys: extraData['classKeys'],
+  //       ) as T;
+  //     case Item:
+  //       return Item.empty().copyWithInherited() as T;
+  //     case CharacterClass:
+  //       return CharacterClass.empty().copyWithInherited() as T;
+  //     default:
+  //       throw UnsupportedError('createEmpty: Type $T is not supported');
+  //   }
+  // }
+
+  createPageArgsByType(Map<String, dynamic> extraData) {
     switch (T) {
       case Move:
-        return Move.empty().copyWithInherited(
-          classKeys: extraData['classKeys'],
-        ) as T;
+        return MoveFormArguments(
+          move: null,
+          abilityScores: extraData['abilityScores'],
+        );
       case Spell:
-        return Spell.empty().copyWithInherited(
-          classKeys: extraData['classKeys'],
-        ) as T;
+        return SpellFormArguments(
+          spell: null,
+          abilityScores: extraData['abilityScores'],
+        );
       case Item:
-        return Item.empty().copyWithInherited() as T;
+        return ItemFormArguments(item: null);
+      case Note:
+        return NoteFormArguments(note: null);
       case CharacterClass:
-        return CharacterClass.empty().copyWithInherited() as T;
-      default:
-        throw UnsupportedError('createEmpty: Type $T is not supported');
+        return CharacterClassFormArguments(characterClass: null);
+      // TODO add race
     }
+    throw TypeError();
   }
 }

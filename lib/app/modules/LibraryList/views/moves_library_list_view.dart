@@ -52,7 +52,6 @@ class MovesLibraryListView extends GetView<LibraryListController<Move, MoveFilte
             onEdit: onUpdate != null
                 ? ModelPages.openMovePage(
                     abilityScores: char.abilityScores,
-                    classKeys: move.classKeys,
                     move: move,
                     onSave: onUpdate,
                   )

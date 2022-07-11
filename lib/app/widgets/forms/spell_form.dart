@@ -29,15 +29,22 @@ class SpellForm extends GetView<DynamicFormController<Spell>> {
 }
 
 class SpellFormController extends DynamicFormController<Spell> {
-  SpellFormController({required this.spell, required this.abilityScores});
+  late final Spell? spell;
+  late final AbilityScores abilityScores;
 
-  final Spell? spell;
-  final AbilityScores abilityScores;
   @override
   Spell? get argument => spell;
 
   @override
   final entity = Spell.empty().obs;
+
+  @override
+  void onInit() {
+    final SpellFormArguments args = Get.arguments;
+    spell = args.spell;
+    abilityScores = args.abilityScores;
+    super.onInit();
+  }
 
   @override
   Spell setFromEntity(Spell spell) => setData({
@@ -135,4 +142,16 @@ class SpellFormController extends DynamicFormController<Spell> {
       ),
     ];
   }
+}
+
+class SpellFormArguments {
+  final Spell? spell;
+  final AbilityScores abilityScores;
+  // final List<String> classKeys;
+
+  SpellFormArguments({
+    required this.spell,
+    required this.abilityScores,
+    // required this.classKeys,
+  });
 }

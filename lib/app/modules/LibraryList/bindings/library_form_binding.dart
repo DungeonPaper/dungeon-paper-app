@@ -12,41 +12,25 @@ import 'package:dungeon_paper/app/widgets/forms/dynamic_form/dynamic_form.dart';
 import 'package:get/get.dart';
 
 class RepositoryItemFormBinding<T> extends Bindings {
-  RepositoryItemFormBinding({
-    required this.item,
-    this.extraData = const {},
-  });
-
-  final dynamic item;
-  final Map<String, dynamic> extraData;
+  RepositoryItemFormBinding();
 
   @override
   void dependencies() {
     switch (T) {
       case Move:
-        Get.put<DynamicFormController<Move>>(
-          MoveFormController(move: item, abilityScores: extraData['abilityScores']),
-        );
+        Get.put<DynamicFormController<Move>>(MoveFormController());
         break;
       case Spell:
-        Get.put<DynamicFormController<Spell>>(
-          SpellFormController(spell: item, abilityScores: extraData['abilityScores']),
-        );
+        Get.put<DynamicFormController<Spell>>(SpellFormController());
         break;
       case Item:
-        Get.put<DynamicFormController<Item>>(
-          ItemFormController(item: item),
-        );
+        Get.put<DynamicFormController<Item>>(ItemFormController());
         break;
       case Note:
-        Get.put<DynamicFormController<Note>>(
-          NoteFormController(note: item),
-        );
+        Get.put<DynamicFormController<Note>>(NoteFormController());
         break;
       case CharacterClass:
-        Get.put<DynamicFormController<CharacterClass>>(
-          CharacterClassFormController(characterClass: item),
-        );
+        Get.put<DynamicFormController<CharacterClass>>(CharacterClassFormController());
         break;
       default:
         throw UnsupportedError('Type $T is unsupported');

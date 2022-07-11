@@ -27,15 +27,20 @@ class ItemForm extends GetView<DynamicFormController<Item>> {
 }
 
 class ItemFormController extends DynamicFormController<Item> {
-  ItemFormController({required this.item});
-
-  final Item? item;
+  late final Item? item;
 
   @override
   Item? get argument => item;
 
   @override
   final entity = Item.empty().obs;
+
+  @override
+  void onInit() {
+    final ItemFormArguments args = Get.arguments;
+    item = args.item;
+    super.onInit();
+  }
 
   @override
   Item setFromEntity(Item item) => setData({
@@ -86,4 +91,12 @@ class ItemFormController extends DynamicFormController<Item> {
       ),
     ];
   }
+}
+
+class ItemFormArguments {
+  final Item? item;
+
+  ItemFormArguments({
+    required this.item,
+  });
 }

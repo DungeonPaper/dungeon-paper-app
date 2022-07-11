@@ -16,7 +16,12 @@ import 'package:dungeon_paper/app/modules/LibraryList/views/moves_library_list_v
 import 'package:dungeon_paper/app/modules/LibraryList/views/notes_library_list_view.dart';
 import 'package:dungeon_paper/app/modules/LibraryList/views/spells_library_list_view.dart';
 import 'package:dungeon_paper/app/routes/app_pages.dart';
+import 'package:dungeon_paper/app/widgets/forms/character_class_form.dart';
+import 'package:dungeon_paper/app/widgets/forms/item_form.dart';
 import 'package:dungeon_paper/app/widgets/forms/library_entity_form.dart';
+import 'package:dungeon_paper/app/widgets/forms/move_form.dart';
+import 'package:dungeon_paper/app/widgets/forms/note_form.dart';
+import 'package:dungeon_paper/app/widgets/forms/spell_form.dart';
 import 'package:get/get.dart';
 
 class ModelPages {
@@ -66,40 +71,31 @@ class ModelPages {
     required Move? move,
     required void Function(Move move) onSave,
     required AbilityScores abilityScores,
-    required List<String> classKeys,
   }) =>
       () => Get.to(
             () => LibraryEntityForm<Move>(
               onSave: onSave,
               type: move == null ? ItemFormType.create : ItemFormType.edit,
             ),
-            binding: RepositoryItemFormBinding<Move>(
-              item: move,
-              extraData: {
-                'abilityScores': abilityScores,
-                'classKeys': classKeys,
-              },
-            ),
+            binding: RepositoryItemFormBinding<Move>(),
+            arguments: MoveFormArguments(move: move, abilityScores: abilityScores),
           );
 
   static void Function() openRacePage({
     required Race? race,
     required void Function(Race race) onSave,
     required AbilityScores abilityScores,
-    required List<String> classKeys,
   }) =>
       () => Get.to(
             () => LibraryEntityForm<Race>(
               onSave: onSave,
               type: race == null ? ItemFormType.create : ItemFormType.edit,
             ),
-            binding: RepositoryItemFormBinding<Race>(
-              item: race,
-              extraData: {
-                'abilityScores': abilityScores,
-                'classKeys': classKeys,
-              },
-            ),
+            binding: RepositoryItemFormBinding<Race>(),
+            // TODO add arguments
+            // arguments: RaceFormArguments(
+
+            // )
           );
 
   static void Function() openSpellsList({
@@ -129,13 +125,8 @@ class ModelPages {
               onSave: onSave,
               type: spell == null ? ItemFormType.create : ItemFormType.edit,
             ),
-            binding: RepositoryItemFormBinding<Spell>(
-              item: spell,
-              extraData: {
-                'abilityScores': abilityScores,
-                'classKeys': classKeys,
-              },
-            ),
+            binding: RepositoryItemFormBinding<Spell>(),
+            arguments: SpellFormArguments(spell: spell, abilityScores: abilityScores),
           );
 
   static void Function() openItemsList({
@@ -162,10 +153,8 @@ class ModelPages {
               onSave: onSave,
               type: item == null ? ItemFormType.create : ItemFormType.edit,
             ),
-            binding: RepositoryItemFormBinding<Item>(
-              item: item,
-              extraData: const {},
-            ),
+            binding: RepositoryItemFormBinding<Item>(),
+            arguments: ItemFormArguments(item: item),
           );
 
   static void Function() openNotesList({
@@ -192,10 +181,8 @@ class ModelPages {
               onSave: onSave,
               type: note == null ? ItemFormType.create : ItemFormType.edit,
             ),
-            binding: RepositoryItemFormBinding<Note>(
-              item: note,
-              extraData: const {},
-            ),
+            binding: RepositoryItemFormBinding<Note>(),
+            arguments: NoteFormArguments(note: note),
           );
 
   static void Function() openCharacterClassesList({
@@ -228,9 +215,7 @@ class ModelPages {
               onSave: onSave,
               type: characterClass == null ? ItemFormType.create : ItemFormType.edit,
             ),
-            binding: RepositoryItemFormBinding<CharacterClass>(
-              item: characterClass,
-              extraData: const {},
-            ),
+            binding: RepositoryItemFormBinding<CharacterClass>(),
+            arguments: CharacterClassFormArguments(characterClass: characterClass),
           );
 }

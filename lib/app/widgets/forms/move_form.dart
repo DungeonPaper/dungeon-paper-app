@@ -49,10 +49,8 @@ class MoveForm extends GetView<DynamicFormController<Move>> {
 }
 
 class MoveFormController extends DynamicFormController<Move> {
-  MoveFormController({required this.move, required this.abilityScores});
-
-  final Move? move;
-  final AbilityScores abilityScores;
+  late final Move? move;
+  late final AbilityScores abilityScores;
 
   @override
   Move? get argument => move;
@@ -70,6 +68,14 @@ class MoveFormController extends DynamicFormController<Move> {
         'dice': move.dice,
         'classKeys': move.classKeys,
       });
+
+  @override
+  void onInit() {
+    final MoveFormArguments args = Get.arguments;
+    move = args.move;
+    abilityScores = args.abilityScores;
+    super.onInit();
+  }
 
   @override
   Move setData(Map<String, dynamic> data) {
@@ -167,4 +173,14 @@ class MoveFormController extends DynamicFormController<Move> {
       ),
     ];
   }
+}
+
+class MoveFormArguments {
+  final Move? move;
+  final AbilityScores abilityScores;
+
+  MoveFormArguments({
+    required this.move,
+    required this.abilityScores,
+  });
 }

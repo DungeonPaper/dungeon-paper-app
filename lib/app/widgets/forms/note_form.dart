@@ -28,14 +28,19 @@ class NoteForm extends GetView<DynamicFormController<Note>> {
 }
 
 class NoteFormController extends DynamicFormController<Note> {
-  NoteFormController({required this.note});
-
-  final Note? note;
+  late final Note? note;
   @override
   Note? get argument => note;
 
   @override
   final entity = Note.empty().obs;
+
+  @override
+  void onInit() {
+    final NoteFormArguments args = Get.arguments;
+    note = args.note;
+    super.onInit();
+  }
 
   @override
   Note setFromEntity(Note note) => setData({
@@ -98,4 +103,12 @@ class NoteFormController extends DynamicFormController<Note> {
       ),
     ];
   }
+}
+
+class NoteFormArguments {
+  final Note? note;
+
+  NoteFormArguments({
+    required this.note,
+  });
 }

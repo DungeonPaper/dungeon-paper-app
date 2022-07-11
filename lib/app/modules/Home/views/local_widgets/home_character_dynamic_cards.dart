@@ -125,7 +125,6 @@ class HomeCharacterDynamicCards extends GetView<CharacterService> with LibrarySe
                     EntityEditMenu(
                       onEdit: ModelPages.openMovePage(
                         abilityScores: controller.current.abilityScores,
-                        classKeys: moves[index].classKeys,
                         move: moves[index],
                         onSave: (move) => library
                             .upsertToCharacter([move], forkBehavior: ForkBehavior.increaseVersion),

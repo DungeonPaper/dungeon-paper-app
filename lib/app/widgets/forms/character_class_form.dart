@@ -27,15 +27,20 @@ class AddCharacterClassForm extends GetView<DynamicFormController<CharacterClass
 }
 
 class CharacterClassFormController extends DynamicFormController<CharacterClass> {
-  CharacterClassFormController({required this.characterClass});
-
-  final CharacterClass? characterClass;
+  late final CharacterClass? characterClass;
 
   @override
   CharacterClass? get argument => characterClass;
 
   @override
   final entity = CharacterClass.empty().obs;
+
+  @override
+  void onInit() {
+    final CharacterClassFormArguments args = Get.arguments;
+    characterClass = args.characterClass;
+    super.onInit();
+  }
 
   @override
   CharacterClass setFromEntity(CharacterClass characterClass) => setData({
@@ -80,4 +85,12 @@ class CharacterClassFormController extends DynamicFormController<CharacterClass>
       ),
     ];
   }
+}
+
+class CharacterClassFormArguments {
+  final CharacterClass? characterClass;
+
+  CharacterClassFormArguments({
+    required this.characterClass,
+  });
 }
