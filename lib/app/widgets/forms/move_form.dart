@@ -20,7 +20,7 @@ class MoveForm extends GetView<DynamicFormController<Move>> {
 
   @override
   Widget build(BuildContext context) {
-    return DynamicForm<Move>(
+    return DynamicForm(
       entity: controller.entity.value,
       inputs: controller.inputs,
       onChange: (d) => onChange(controller.setData(d)),
@@ -79,18 +79,22 @@ class MoveFormController extends DynamicFormController<Move> {
 
   @override
   Move setData(Map<String, dynamic> data) {
+    final classKeysList = asList<String>(data['classKeys']);
     entity.value = entity.value.copyWithInherited(
-      meta: entity.value.meta,
+      meta: data['meta'] ?? entity.value.meta,
       name: data['name'],
       category: data['category'],
       description: data['description'],
       explanation: data['explanation'],
       tags: data['tags'],
       dice: data['dice'],
-      classKeys: asList(data['classKeys']),
+      classKeys: classKeysList,
     );
 
-    return super.setData(data);
+    return super.setData({
+      ...data,
+      'classKeys': classKeysList.isEmpty ? null : classKeysList[0],
+    });
   }
 
   @override

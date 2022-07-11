@@ -71,7 +71,7 @@ class DynamicFormState<T extends WithMeta> extends State<DynamicForm<T>> {
 
   @override
   Widget build(BuildContext context) {
-    var builder = widget.builder ?? _defaultBuilder;
+    final builder = widget.builder ?? _defaultBuilder;
     return builder(
       context,
       [
@@ -81,7 +81,7 @@ class DynamicFormState<T extends WithMeta> extends State<DynamicForm<T>> {
           onChange: widget.onReplace,
         ),
       ],
-      widget.entity,
+      widget.entity as dynamic,
     );
   }
 

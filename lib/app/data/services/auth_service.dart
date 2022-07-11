@@ -42,7 +42,7 @@ class AuthService extends GetxService with UserServiceMixin, LoadingServiceMixin
       debugPrint('user changed $user');
 
       if (user != null) {
-        loadingService.loadingCharacters = true;
+        loadingService.loadingCharacters = userService.isGuest;
         userService.loadUserData(user);
       } else {
         userService.loadGuestData();

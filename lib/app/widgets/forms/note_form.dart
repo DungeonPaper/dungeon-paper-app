@@ -53,7 +53,7 @@ class NoteFormController extends DynamicFormController<Note> {
   @override
   Note setData(Map<String, dynamic> data) {
     entity.value = entity.value.copyWith(
-      meta: entity.value.meta,
+      meta: data['meta'] ?? entity.value.meta,
       title: data['title'],
       description: data['description'],
       category: data['category'],

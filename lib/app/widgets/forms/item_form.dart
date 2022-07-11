@@ -2,6 +2,7 @@ import 'package:dungeon_paper/app/data/models/item.dart';
 import 'package:dungeon_paper/app/widgets/forms/dynamic_form/dynamic_form.dart';
 import 'package:dungeon_paper/app/widgets/forms/dynamic_form/form_input_data.dart';
 import 'package:dungeon_paper/app/widgets/forms/library_entity_form.dart';
+import 'package:dungeon_paper/core/utils/list_utils.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -52,13 +53,13 @@ class ItemFormController extends DynamicFormController<Item> {
   @override
   Item setData(Map<String, dynamic> data) {
     entity.value = entity.value.copyWithInherited(
-      meta: entity.value.meta,
+      meta: data['meta'] ?? entity.value.meta,
       name: data['name'],
       description: data['description'],
       tags: data['tags'],
     );
 
-    return entity.value;
+    return super.setData(data);
   }
 
   @override
