@@ -6,7 +6,6 @@ import 'package:dungeon_paper/app/data/models/character.dart';
 import 'package:dungeon_paper/app/data/models/character_class.dart';
 import 'package:dungeon_paper/app/data/models/gear_selection.dart';
 import 'package:dungeon_paper/app/data/services/character_service.dart';
-import 'package:dungeon_paper/app/model_utils/model_key.dart';
 import 'package:dungeon_paper/app/modules/AbilityScoresForm/controllers/ability_scores_form_controller.dart';
 import 'package:dungeon_paper/app/modules/BasicInfoForm/controllers/basic_info_form_controller.dart';
 import 'package:dungeon_paper/app/modules/ClassAlignments/controllers/class_alignments_controller.dart';
@@ -212,7 +211,8 @@ class CreateCharacterView extends GetView<CreateCharacterController> {
                                 ? false
                                 : cls!.gearChoices.every(
                                     (c) => c.selections.any(
-                                      (s) => controller.startingGear.map(keyFor).contains(s.key),
+                                      (s) =>
+                                          controller.startingGear.map((x) => x.key).contains(s.key),
                                     ),
                                   ),
                           ),

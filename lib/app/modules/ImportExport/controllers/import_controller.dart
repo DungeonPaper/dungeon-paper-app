@@ -4,9 +4,9 @@ import 'dart:io';
 import 'package:dungeon_paper/app/data/models/character.dart';
 import 'package:dungeon_paper/app/data/models/character_class.dart';
 import 'package:dungeon_paper/app/data/models/item.dart';
+import 'package:dungeon_paper/app/data/models/meta.dart';
 import 'package:dungeon_paper/app/data/models/move.dart';
 import 'package:dungeon_paper/app/data/models/spell.dart';
-import 'package:dungeon_paper/app/model_utils/model_key.dart';
 import 'package:dungeon_paper/app/modules/ImportExport/local_widgets/import_progress_dialog.dart';
 import 'package:dungeon_paper/core/storage_handler/storage_handler.dart';
 import 'package:dungeon_paper/core/utils/list_utils.dart';
@@ -36,10 +36,10 @@ class ImportController extends GetxController
   final leftCount = 0.obs;
 
   @override
-  void toggle<T>(T item, bool state) => _toggleImportList<T>([item], state);
+  void toggle<T extends WithMeta>(T item, bool state) => _toggleImportList<T>([item], state);
 
   @override
-  void toggleAll<T>(bool state) => _toggleImportList<T>(listByType<T>(), state);
+  void toggleAll<T extends WithMeta>(bool state) => _toggleImportList<T>(listByType<T>(), state);
 
   void _toggleImportList<T>(List<T> items, bool state) {
     switch (T) {
@@ -65,8 +65,8 @@ class ImportController extends GetxController
   }
 
   @override
-  bool isSelected<T>(T item) {
-    return toImport.value!.listByType<T>(selected: true).map(keyFor).contains(keyFor(item));
+  bool isSelected<T extends WithMeta>(T item) {
+    return toImport.value!.listByType<T>(selected: true).map((x) => x.key).contains(item.key);
   }
 
   List<T> _toggleInList<T>(List<T> list, List<T> items, bool state) {
@@ -78,7 +78,7 @@ class ImportController extends GetxController
   }
 
   @override
-  List<T> listByType<T>() {
+  List<T> listByType<T extends WithMeta>() {
     switch (T) {
       case Character:
         return characters as List<T>;

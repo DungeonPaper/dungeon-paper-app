@@ -4,7 +4,6 @@ import 'package:dungeon_paper/app/data/models/note.dart';
 import 'package:dungeon_paper/app/data/models/spell.dart';
 import 'package:dungeon_paper/app/data/services/character_service.dart';
 import 'package:dungeon_paper/app/model_utils/character_utils.dart';
-import 'package:dungeon_paper/app/model_utils/model_key.dart';
 import 'package:dungeon_paper/app/model_utils/model_pages.dart';
 import 'package:dungeon_paper/app/themes/button_themes.dart';
 import 'package:dungeon_paper/app/widgets/cards/note_card.dart';
@@ -66,7 +65,7 @@ class HomeCharacterJournalView extends GetView<CharacterService> {
                     .where((note) => note.localizedCategory == cat.value)
                     .map(
                       (note) => Padding(
-                        key: Key('note-' + keyFor(note)),
+                        key: Key('note-' + note.key),
                         padding: const EdgeInsets.symmetric(vertical: 4),
                         child: NoteCard(
                           note: note,

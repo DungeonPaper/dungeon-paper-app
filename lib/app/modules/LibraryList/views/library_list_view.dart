@@ -1,5 +1,4 @@
 import 'package:dungeon_paper/app/data/models/meta.dart';
-import 'package:dungeon_paper/app/model_utils/model_key.dart';
 import 'package:dungeon_paper/app/modules/LibraryList/controllers/library_list_controller.dart';
 import 'package:dungeon_paper/app/themes/colors.dart';
 import 'package:dungeon_paper/app/themes/themes.dart';
@@ -122,7 +121,7 @@ class LibraryListView<T extends WithMeta, F extends EntityFilters<T>>
                               S.current.entity(T),
                               S.current.entityPlural(T),
                             ))
-                          : S.current.selectGeneric(nameFor(controller.selected.first))
+                          : S.current.selectGeneric(controller.selected.first.displayName)
                       : S.current.selectToAdd(
                           controller.multiple ? S.current.entityPlural(T) : S.current.entity(T),
                         ),
@@ -188,7 +187,7 @@ class LibraryListView<T extends WithMeta, F extends EntityFilters<T>>
               onDelete: group == FiltersGroup.my
                   ? (item) => awaitDeleteConfirmation<T>(
                       context,
-                      nameFor(item),
+                      item.displayName,
                       () => controller.deleteCustomItem(
                             controller.storageKey,
                             item,

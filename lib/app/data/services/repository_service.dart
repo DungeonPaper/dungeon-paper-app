@@ -4,13 +4,12 @@ import 'dart:async';
 
 import 'package:dungeon_paper/app/data/models/character_class.dart';
 import 'package:dungeon_paper/app/data/models/item.dart';
+import 'package:dungeon_paper/app/data/models/meta.dart';
 import 'package:dungeon_paper/app/data/models/monster.dart';
 import 'package:dungeon_paper/app/data/models/move.dart';
 import 'package:dungeon_paper/app/data/models/note.dart';
 import 'package:dungeon_paper/app/data/models/race.dart';
 import 'package:dungeon_paper/app/data/models/spell.dart';
-import 'package:dungeon_paper/app/model_utils/model_json.dart';
-import 'package:dungeon_paper/app/model_utils/model_key.dart';
 import 'package:dungeon_paper/core/http/api.dart';
 import 'package:dungeon_paper/core/http/api_requests/search.dart';
 import 'package:dungeon_paper/core/storage_handler/storage_handler.dart';
@@ -131,7 +130,8 @@ abstract class RepositoryCache {
         listenerKey('CharacterClasses'),
         (d) {
           if (d.isNotEmpty) {
-            debugPrint('Update in CharacterClasses for $id: ${[for (var x in d) x['key']].join(',')}');
+            debugPrint(
+                'Update in CharacterClasses for $id: ${[for (var x in d) x['key']].join(',')}');
             classes.value = {for (var x in d) x['key']: CharacterClass.fromJson(x)};
           }
         },
@@ -280,10 +280,11 @@ abstract class RepositoryCache {
       return;
     }
 
-    list.addAll(Map.fromIterable(resp, key: (x) => keyFor(x as T)));
+    list.addAll(Map.fromIterable(resp, key: (x) => x.key));
 
     if (saveIntoCache && list.isNotEmpty) {
-      for (final x in list.values) await cache.create(collectionName, keyFor(x), toJsonFor(x));
+      for (final x in list.values)
+        await cache.create(collectionName, Meta.keyFor(x), Meta.toJsonFor(x));
     }
   }
 }

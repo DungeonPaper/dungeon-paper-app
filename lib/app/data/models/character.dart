@@ -7,7 +7,6 @@ import 'dart:math';
 
 import 'package:dungeon_paper/app/data/models/roll_button.dart';
 import 'package:dungeon_paper/app/data/models/user.dart';
-import 'package:dungeon_paper/app/model_utils/model_icon.dart';
 import 'package:dungeon_paper/core/utils/math_utils.dart';
 import 'package:dungeon_paper/core/utils/uuid.dart';
 import 'package:dungeon_paper/generated/l10n.dart';
@@ -329,6 +328,9 @@ class Character implements WithMeta<Character, CharacterMeta>, WithIcon {
   @override
   IconData get icon => genericIcon;
   static IconData get genericIcon => Icons.person;
+
+  @override
+  String get storageKey => Meta.storageKeyFor(Character);
 }
 
 class CharacterMeta {

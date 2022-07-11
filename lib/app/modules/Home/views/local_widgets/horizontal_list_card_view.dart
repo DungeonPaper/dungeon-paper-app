@@ -1,10 +1,10 @@
-import 'package:dungeon_paper/app/model_utils/model_key.dart';
+import 'package:dungeon_paper/app/data/models/meta.dart';
 import 'package:dungeon_paper/app/modules/Home/views/expanded_card_dialog_view.dart';
 import 'package:dungeon_paper/core/utils/list_utils.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-class HorizontalCardListView<T> extends StatelessWidget {
+class HorizontalCardListView<T extends WithMeta> extends StatelessWidget {
   HorizontalCardListView({
     Key? key,
     required this.cardSize,
@@ -56,6 +56,7 @@ class HorizontalCardListView<T> extends StatelessWidget {
                         // heroTag: getKeyFor(item.value),
                         heroTag: null,
                         builder: (context) =>
+                            // ignore: unnecessary_null_comparison
                             item.value != null && item.index < displayedItems.length
                                 ? expandedCardBuilder(
                                     context,
@@ -79,7 +80,7 @@ class HorizontalCardListView<T> extends StatelessWidget {
     );
   }
 
-  String getKeyFor(T item) => [item.runtimeType, keyFor(item)].join('-');
+  String getKeyFor(T item) => [item.runtimeType, item.key].join('-');
 
   void onUpdate(Iterable<T> items) {
     itemsObs.value = [...items];

@@ -59,4 +59,10 @@ class Monster extends dw.Monster implements WithMeta {
         tags: List<dw.Tag>.from(json['tags'].map((x) => dw.Tag.fromJson(x))),
         moves: List<String>.from(json['moves'].map((x) => x)),
       );
+
+  @override
+  String get displayName => name;
+
+  @override
+  String get storageKey => Meta.storageKeyFor(Monster);
 }

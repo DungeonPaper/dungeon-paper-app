@@ -1,5 +1,4 @@
 import 'dart:convert';
-import 'package:dungeon_paper/app/model_utils/model_icon.dart';
 import 'package:dungeon_paper/app/modules/LibraryList/views/filters/item_filters.dart';
 import 'package:dungeon_paper/core/dw_icons.dart';
 import 'package:dungeon_paper/core/utils/string_utils.dart';
@@ -129,4 +128,9 @@ class Item extends dw.Item implements WithMeta, WithIcon {
     }
     return map.values.toList();
   }
+
+  @override
+  String get displayName => name;
+  @override
+  String get storageKey => Meta.storageKeyFor(Item);
 }

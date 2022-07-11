@@ -1,9 +1,9 @@
 import 'package:dungeon_paper/app/data/models/character_class.dart';
 import 'package:dungeon_paper/app/data/models/item.dart';
+import 'package:dungeon_paper/app/data/models/meta.dart';
 import 'package:dungeon_paper/app/data/models/move.dart';
 import 'package:dungeon_paper/app/data/models/spell.dart';
 import 'package:dungeon_paper/app/data/services/repository_service.dart';
-import 'package:dungeon_paper/app/model_utils/model_icon.dart';
 import 'package:dungeon_paper/app/model_utils/model_pages.dart';
 import 'package:dungeon_paper/generated/l10n.dart';
 import 'package:flutter/material.dart';
@@ -42,7 +42,7 @@ class LibraryCollectionView extends GetView<LibraryCollectionController>
                 height: double.infinity,
                 child: Align(
                   alignment: Alignment.centerLeft,
-                  child: Icon(genericIconFor(type), size: 32),
+                  child: Icon(Meta.genericIconFor(type), size: 32),
                 ),
               ),
               title: Text(

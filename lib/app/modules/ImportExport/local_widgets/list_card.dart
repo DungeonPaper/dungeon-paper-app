@@ -1,5 +1,4 @@
-import 'package:dungeon_paper/app/model_utils/model_icon.dart';
-import 'package:dungeon_paper/app/model_utils/model_key.dart';
+import 'package:dungeon_paper/app/data/models/meta.dart';
 import 'package:dungeon_paper/app/modules/ImportExport/controllers/import_export_controller.dart';
 import 'package:dungeon_paper/app/widgets/atoms/custom_expansion_panel.dart';
 import 'package:dungeon_paper/app/widgets/atoms/menu_button.dart';
@@ -7,7 +6,7 @@ import 'package:dungeon_paper/generated/l10n.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-class ListCard<T, C extends ImportExportSelectionData> extends GetView<C> {
+class ListCard<T extends WithMeta, C extends ImportExportSelectionData> extends GetView<C> {
   const ListCard({
     Key? key,
   }) : super(key: key);
@@ -26,7 +25,7 @@ class ListCard<T, C extends ImportExportSelectionData> extends GetView<C> {
           title: Row(
             children: [
               Icon(
-                genericIconFor(T),
+                Meta.genericIconFor(T),
                 color: textTheme.titleLarge!.color,
               ),
               const SizedBox(width: 8),
@@ -60,7 +59,7 @@ class ListCard<T, C extends ImportExportSelectionData> extends GetView<C> {
             for (final item in list)
               ListTile(
                 onTap: () => controller.toggle<T>(item, !controller.isSelected<T>(item)),
-                title: Text(nameFor(item)),
+                title: Text(item.displayName),
                 leading: Checkbox(
                   value: controller.isSelected<T>(item),
                   onChanged: (state) => controller.toggle<T>(item, state!),

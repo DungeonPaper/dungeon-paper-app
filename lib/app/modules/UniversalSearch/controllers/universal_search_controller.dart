@@ -4,7 +4,6 @@ import 'package:dungeon_paper/app/data/models/move.dart';
 import 'package:dungeon_paper/app/data/models/spell.dart';
 import 'package:dungeon_paper/app/data/services/character_service.dart';
 import 'package:dungeon_paper/app/data/services/repository_service.dart';
-import 'package:dungeon_paper/app/model_utils/model_key.dart';
 import 'package:dungeon_paper/app/model_utils/model_search.dart';
 import 'package:dungeon_paper/app/modules/LibraryList/views/filters/character_class_filters.dart';
 import 'package:dungeon_paper/app/modules/LibraryList/views/filters/item_filters.dart';
@@ -84,7 +83,7 @@ class UniversalSearchController extends GetxController
     final map = enumerate(entries).map((e) {
       final list = flatten(e.value.value)
           .where((e) => searchFor(e.runtimeType, e, search.text))
-          .uniqueBy((e) => keyFor(e));
+          .uniqueBy((e) => e.key);
 
       if (list.isEmpty) {
         return [];

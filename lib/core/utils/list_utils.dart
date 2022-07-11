@@ -1,7 +1,7 @@
 import 'dart:async';
 import 'dart:math';
 
-import 'package:dungeon_paper/app/model_utils/model_key.dart';
+import 'package:dungeon_paper/app/data/models/meta.dart';
 
 extension IterableUtils<T> on Iterable<T> {
   T sample() => _sample(this);
@@ -103,7 +103,7 @@ List<T> sortByPredefined<T>(
 }
 
 List<T> updateByKey<T>(List<T> list, Iterable<T> items, {dynamic Function(T item)? key}) {
-  final keyGetter = key ?? keyFor;
+  final keyGetter = key ?? Meta.keyFor;
   final keys = items.map(keyGetter);
   return list
       .map((x) =>
@@ -115,13 +115,13 @@ List<T> updateByIndex<T>(List<T> list, T item, int index) =>
     enumerate<T>(list).map((x) => x.index == index ? item : x.value).toList();
 
 List<T> addByKey<T>(List<T> list, Iterable<T> items, {dynamic Function(T item)? key}) {
-  final keyGetter = key ?? keyFor;
+  final keyGetter = key ?? Meta.keyFor;
   final keys = items.map(keyGetter);
   return [...list.where((x) => !keys.contains(keyGetter(x))), ...items];
 }
 
 List<T> upsertByKey<T>(List<T> list, Iterable<T> items, {dynamic Function(T item)? key}) {
-  final keyGetter = key ?? keyFor;
+  final keyGetter = key ?? Meta.keyFor;
   final keys = items.map(keyGetter);
   final existingKeys = list.map(keyGetter);
 
@@ -137,7 +137,7 @@ List<T> upsertByKey<T>(List<T> list, Iterable<T> items, {dynamic Function(T item
 }
 
 List<T> removeByKey<T>(List<T> list, Iterable<T> items, {dynamic Function(T item)? key}) {
-  final keyGetter = key ?? keyFor;
+  final keyGetter = key ?? Meta.keyFor;
   final keys = items.map(keyGetter);
   return [...list]..removeWhere((x) => keys.contains(keyGetter(x)));
 }

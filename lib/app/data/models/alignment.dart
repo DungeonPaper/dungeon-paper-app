@@ -1,5 +1,4 @@
 import 'dart:convert';
-import 'package:dungeon_paper/app/model_utils/model_icon.dart';
 import 'package:dungeon_world_data/dungeon_world_data.dart' as dw;
 import 'package:flutter/material.dart';
 
@@ -82,6 +81,12 @@ class AlignmentValue extends dw.Alignment implements WithMeta, WithIcon {
         'type': type.name,
         ...super.toJson(),
       };
+
+  @override
+  String get displayName => description;
+
+  @override
+  String get storageKey => throw TypeError();
 }
 
 class AlignmentValues extends dw.AlignmentValues {

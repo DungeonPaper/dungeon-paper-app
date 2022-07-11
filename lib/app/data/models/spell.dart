@@ -1,7 +1,6 @@
 import 'dart:convert';
 import 'package:dungeon_paper/app/data/models/user.dart';
 import 'package:dungeon_paper/app/data/services/user_service.dart';
-import 'package:dungeon_paper/app/model_utils/model_icon.dart';
 import 'package:dungeon_paper/app/modules/LibraryList/views/filters/spell_filters.dart';
 import 'package:dungeon_paper/core/utils/uuid.dart';
 import 'package:dungeon_world_data/dungeon_world_data.dart' as dw;
@@ -118,4 +117,10 @@ class Spell extends dw.Spell implements WithMeta, WithIcon {
       };
 
   static User get user => Get.find<UserService>().current;
+
+  @override
+  String get displayName => name;
+
+  @override
+  String get storageKey => Meta.storageKeyFor(Spell);
 }

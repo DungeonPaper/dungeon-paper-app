@@ -1,5 +1,4 @@
 import 'dart:convert';
-import 'package:dungeon_paper/app/model_utils/model_icon.dart';
 import 'package:dungeon_paper/core/dw_icons.dart';
 import 'package:dungeon_paper/core/utils/uuid.dart';
 import 'package:dungeon_world_data/dungeon_world_data.dart' as dw;
@@ -112,4 +111,10 @@ class Race extends dw.Race implements WithMeta, WithIcon {
         '_meta': meta.toJson(),
         'favorited': favorited,
       };
+
+  @override
+  String get displayName => name;
+
+  @override
+  String get storageKey => Meta.storageKeyFor(Race);
 }

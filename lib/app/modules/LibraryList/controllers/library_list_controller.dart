@@ -4,7 +4,6 @@ import 'package:dungeon_paper/app/data/models/meta.dart';
 import 'package:dungeon_paper/app/data/services/character_service.dart';
 import 'package:dungeon_paper/app/data/services/library_service.dart';
 import 'package:dungeon_paper/app/data/services/repository_service.dart';
-import 'package:dungeon_paper/app/model_utils/model_key.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -37,7 +36,7 @@ class LibraryListController<T extends WithMeta, F extends EntityFilters<T>> exte
       repo.value.builtIn.listByType<T>().values.toList(), FiltersGroup.playbook, filterFn, sortFn);
   Iterable<T> get myList =>
       filterList(repo.value.my.listByType<T>().values.toList(), FiltersGroup.my, filterFn, sortFn);
-  String get storageKey => storageKeyFor<T>();
+  String get storageKey => Meta.storageKeyFor(T);
 
   @override
   void onInit() {

@@ -4,11 +4,11 @@ import 'dart:io';
 import 'package:dungeon_paper/app/data/models/character.dart';
 import 'package:dungeon_paper/app/data/models/character_class.dart';
 import 'package:dungeon_paper/app/data/models/item.dart';
+import 'package:dungeon_paper/app/data/models/meta.dart';
 import 'package:dungeon_paper/app/data/models/move.dart';
 import 'package:dungeon_paper/app/data/models/spell.dart';
 import 'package:dungeon_paper/app/data/services/character_service.dart';
 import 'package:dungeon_paper/app/data/services/repository_service.dart';
-import 'package:dungeon_paper/app/model_utils/model_key.dart';
 import 'package:dungeon_paper/core/utils/list_utils.dart';
 import 'package:dungeon_paper/generated/l10n.dart';
 import 'package:flutter_file_dialog/flutter_file_dialog.dart';
@@ -41,10 +41,10 @@ class ExportController extends GetxController
   }
 
   @override
-  void toggle<T>(T item, bool state) => _toggleExportList<T>([item], state);
+  void toggle<T extends WithMeta>(T item, bool state) => _toggleExportList<T>([item], state);
 
   @override
-  void toggleAll<T>(bool state) => _toggleExportList<T>(listByType<T>(), state);
+  void toggleAll<T extends WithMeta>(bool state) => _toggleExportList<T>(listByType<T>(), state);
 
   void _toggleExportList<T>(List<T> items, bool state) {
     switch (T) {
@@ -70,8 +70,8 @@ class ExportController extends GetxController
   }
 
   @override
-  bool isSelected<T>(T item) {
-    return toExport.value.listByType<T>().map(keyFor).contains(keyFor(item));
+  bool isSelected<T extends WithMeta>(T item) {
+    return toExport.value.listByType<T>().map((x) => x.key).contains(item.key);
   }
 
   List<T> _toggleInList<T>(List<T> list, List<T> items, bool state) {
@@ -127,7 +127,7 @@ class ExportController extends GetxController
   }
 
   @override
-  List<T> listByType<T>() {
+  List<T> listByType<T extends WithMeta>() {
     switch (T) {
       case Character:
         return characters as List<T>;

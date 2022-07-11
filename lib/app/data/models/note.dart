@@ -1,5 +1,4 @@
 import 'dart:convert';
-import 'package:dungeon_paper/app/model_utils/model_icon.dart';
 import 'package:dungeon_paper/core/utils/uuid.dart';
 import 'package:dungeon_paper/generated/l10n.dart';
 import 'package:dungeon_world_data/dungeon_world_data.dart' as dw;
@@ -106,4 +105,10 @@ class Note implements WithMeta, WithIcon {
   @override
   IconData get icon => Icons.speaker_notes;
   static IconData get genericIcon => Icons.speaker_notes;
+
+  @override
+  String get displayName => title;
+
+  @override
+  String get storageKey => Meta.storageKeyFor(Note);
 }

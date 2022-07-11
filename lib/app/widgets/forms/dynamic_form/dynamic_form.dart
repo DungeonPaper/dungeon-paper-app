@@ -4,7 +4,6 @@ import 'package:dungeon_paper/app/data/models/meta.dart';
 import 'package:dungeon_paper/app/data/models/user.dart';
 import 'package:dungeon_paper/app/data/services/repository_service.dart';
 import 'package:dungeon_paper/app/data/services/user_service.dart';
-import 'package:dungeon_paper/app/model_utils/model_meta.dart';
 import 'package:dungeon_paper/app/widgets/forms/entity_share_form.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -117,7 +116,7 @@ abstract class DynamicFormController<T extends WithMeta> extends GetxController 
       dirty.value = false;
     }
     if (dirty.value) {
-      entity.value = increaseMetaVersion(entity.value);
+      entity.value = Meta.increaseMetaVersion(entity.value);
     }
     return entity.value;
   }

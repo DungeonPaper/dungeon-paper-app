@@ -1,5 +1,4 @@
 import 'dart:convert';
-import 'package:dungeon_paper/app/model_utils/model_icon.dart';
 import 'package:dungeon_paper/app/modules/LibraryList/views/filters/move_filters.dart';
 import 'package:dungeon_world_data/dungeon_world_data.dart' as dw;
 import 'package:flutter/material.dart';
@@ -122,4 +121,10 @@ class Move extends dw.Move implements WithMeta, WithIcon {
     }
     return a.name.toLowerCase().compareTo(b.name.toLowerCase());
   }
+
+  @override
+  String get displayName => name;
+
+  @override
+  String get storageKey => Meta.storageKeyFor(Move);
 }

@@ -4,9 +4,6 @@ import 'package:dungeon_paper/app/data/models/user.dart';
 import 'package:dungeon_paper/app/data/services/character_service.dart';
 import 'package:dungeon_paper/app/data/services/user_service.dart';
 import 'package:dungeon_paper/app/model_utils/character_utils.dart';
-import 'package:dungeon_paper/app/model_utils/model_json.dart';
-import 'package:dungeon_paper/app/model_utils/model_key.dart';
-import 'package:dungeon_paper/app/model_utils/model_meta.dart';
 import 'package:dungeon_paper/core/storage_handler/storage_handler.dart';
 import 'package:dungeon_paper/core/utils/uuid.dart';
 import 'package:flutter/material.dart';
@@ -18,24 +15,24 @@ class LibraryService extends GetxService {
   User get user => Get.find<UserService>().current;
 
   Future<bool> existsInLibrary<T extends WithMeta>(T item) async {
-    final res = await storage.getDocument(storageKeyFor<T>(), item.key);
+    final res = await storage.getDocument(item.storageKey, item.key);
     return res != null;
   }
 
   void upsertToLibrary<T extends WithMeta>(Iterable<T> items) async {
     for (final item in items) {
-      var storageKey = storageKeyFor<T>();
+      var storageKey = item.storageKey;
       if (await existsInLibrary(item)) {
-        storage.update(storageKey, item.key, toJsonFor(item));
+        storage.update(storageKey, item.key, item.toJson());
       } else {
-        storage.create(storageKey, item.key, toJsonFor(item));
+        storage.create(storageKey, item.key, item.toJson());
       }
     }
   }
 
   void removeFromLibrary<T extends WithMeta>(Iterable<T> items) {
     for (final item in items) {
-      var storageKey = storageKeyFor<T>();
+      var storageKey = item.storageKey;
       storage.delete(storageKey, item.key);
     }
   }
@@ -53,12 +50,12 @@ class LibraryService extends GetxService {
         (e) {
           debugPrint('forking $e: $forkBehavior');
           return [ForkBehavior.fork, ForkBehavior.both].contains(forkBehavior)
-              ? forkMeta(
+              ? Meta.forkMeta(
                   e,
                   user,
                   version: forkBehavior == ForkBehavior.both ? uuid() : null,
                 )
-              : increaseMetaVersion(e);
+              : Meta.increaseMetaVersion(e);
         },
       );
     }

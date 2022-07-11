@@ -1,3 +1,4 @@
+import 'package:dungeon_paper/app/data/models/meta.dart';
 import 'package:dungeon_paper/app/modules/ImportExport/controllers/export_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -28,9 +29,9 @@ class ImportExportController extends GetxController with GetSingleTickerProvider
 }
 
 abstract class ImportExportSelectionData {
-  void toggle<T>(T item, bool state);
-  void toggleAll<T>(bool state);
-  bool isSelected<T>(T item);
+  void toggle<T extends WithMeta>(T item, bool state);
+  void toggleAll<T extends WithMeta>(bool state);
+  bool isSelected<T extends WithMeta>(T item);
 
-  List<T> listByType<T>();
+  List<T> listByType<T extends WithMeta>();
 }
