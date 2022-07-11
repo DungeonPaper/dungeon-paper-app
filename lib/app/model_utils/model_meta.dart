@@ -39,7 +39,7 @@ T copyWithMeta<T extends WithMeta>(dynamic object, Meta? meta) {
 }
 
 /// Returns an item with forked meta, or the same meta if its by the same user
-T forkMeta<T extends WithMeta>(dynamic object, User user, {Meta? meta, bool force = false}) {
+T forkMeta<T extends WithMeta>(dynamic object, User user, {Meta? meta, String? version}) {
   final Meta _m = (meta ?? object.meta);
   // final _o =
   //     force || _m.createdBy != user.username ? object.copyWithInherited(key: uuid()) : object;
@@ -50,12 +50,12 @@ T forkMeta<T extends WithMeta>(dynamic object, User user, {Meta? meta, bool forc
     _m.fork(
       createdBy: user.username,
       sourceKey: keyFor(object),
-      force: force,
+      version: version,
     ),
   );
 }
 
-T increaseMetaVersion<T extends WithMeta>(dynamic object) {
+T increaseMetaVersion<T extends WithMeta>(T object) {
   return copyWithMeta(
     object,
     object.meta.copyWith(version: uuid()),

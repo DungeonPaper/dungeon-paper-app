@@ -4,6 +4,7 @@ import 'package:dungeon_paper/app/data/models/meta.dart';
 import 'package:dungeon_paper/app/data/models/user.dart';
 import 'package:dungeon_paper/app/data/services/repository_service.dart';
 import 'package:dungeon_paper/app/data/services/user_service.dart';
+import 'package:dungeon_paper/app/model_utils/model_meta.dart';
 import 'package:dungeon_paper/app/widgets/forms/entity_share_form.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -107,13 +108,16 @@ abstract class DynamicFormController<T extends WithMeta> extends GetxController 
   T setData(Map<String, dynamic> data) {
     for (final input in inputs) {
       if (data.containsKey(input.name) && !input.data.equals(data[input.name])) {
-        debugPrint(
-            'updating form data: ${input.name}: [${input.data.value}] != [${data[input.name]}]');
         input.data.value = data[input.name];
+        dirty.value = true;
       }
     }
     if (data.containsKey('meta')) {
       entity.value = entity.value.copyWithInherited(meta: data['meta']);
+      dirty.value = false;
+    }
+    if (dirty.value) {
+      entity.value = increaseMetaVersion(entity.value);
     }
     return entity.value;
   }

@@ -1,3 +1,5 @@
+import 'package:get/get.dart';
+
 abstract class PasswordValidation {
   PasswordValidation(this.message);
 
@@ -44,10 +46,9 @@ class PasswordValidator {
   ];
 
   static PasswordValidation? getError(String? password) =>
-      (_validators.cast<PasswordValidation?>()).firstWhere(
-        (vl) => vl?.validate(password) == false,
-        orElse: () => null,
-      );
+      (_validators.cast<PasswordValidation?>()).toList().firstWhereOrNull(
+            (vl) => vl?.validate(password) == false,
+          );
 
   static bool validate(String? password) => getError(password) == null;
 

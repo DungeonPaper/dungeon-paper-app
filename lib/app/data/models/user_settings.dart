@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:dungeon_paper/app/themes/themes.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 class UserSettings {
   final bool keepScreenAwake;
@@ -35,9 +36,8 @@ class UserSettings {
         keepScreenAwake: json['keepScreenAwake'],
         defaultLightTheme: json['defaultLightTheme'],
         defaultDarkTheme: json['defaultDarkTheme'],
-        brightnessOverride: Brightness.values.cast<Brightness?>().firstWhere(
+        brightnessOverride: Brightness.values.cast<Brightness?>().firstWhereOrNull(
               (element) => element!.name == json['brightnessOverride'],
-              orElse: () => null,
             ),
       );
 

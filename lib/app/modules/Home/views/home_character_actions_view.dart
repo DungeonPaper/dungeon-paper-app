@@ -75,7 +75,6 @@ class HomeCharacterActionsView extends GetView<CharacterService> {
           onDelete: null,
           onEdit: ModelPages.openRacePage(
             race: char.race,
-            classKeys: char.race.classKeys,
             abilityScores: char.abilityScores,
             onSave: (race) => controller.updateCharacter(
               char.copyWithInherited(race: race),
@@ -126,7 +125,6 @@ class HomeCharacterActionsView extends GetView<CharacterService> {
             onDelete: onDelete,
             onEdit: ModelPages.openMovePage(
               move: move,
-              classKeys: move.classKeys,
               abilityScores: char.abilityScores,
               onSave: onSave(true),
             ),
@@ -299,7 +297,7 @@ class ActionsCardList<T extends WithMeta> extends GetView<CharacterService>
               obj,
               onDelete: _confirmDeleteDlg(context, obj, nameFor(obj)),
               onSave: (fork) => (_obj) {
-                library.upsertToCharacter([_obj], forkBehavior: ForkBehavior.increaseVersion);
+                library.upsertToCharacter([_obj], forkBehavior: ForkBehavior.none);
               },
             ),
           ),

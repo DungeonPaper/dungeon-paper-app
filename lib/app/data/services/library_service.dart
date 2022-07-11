@@ -8,6 +8,7 @@ import 'package:dungeon_paper/app/model_utils/model_json.dart';
 import 'package:dungeon_paper/app/model_utils/model_key.dart';
 import 'package:dungeon_paper/app/model_utils/model_meta.dart';
 import 'package:dungeon_paper/core/storage_handler/storage_handler.dart';
+import 'package:dungeon_paper/core/utils/uuid.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -51,8 +52,12 @@ class LibraryService extends GetxService {
       items = items.map(
         (e) {
           debugPrint('forking $e: $forkBehavior');
-          return forkBehavior == ForkBehavior.fork
-              ? forkMeta(e, user, force: true)
+          return [ForkBehavior.fork, ForkBehavior.both].contains(forkBehavior)
+              ? forkMeta(
+                  e,
+                  user,
+                  version: forkBehavior == ForkBehavior.both ? uuid() : null,
+                )
               : increaseMetaVersion(e);
         },
       );
@@ -75,6 +80,7 @@ enum ForkBehavior {
   fork,
   increaseVersion,
   none,
+  both,
 }
 
 mixin LibraryServiceMixin {

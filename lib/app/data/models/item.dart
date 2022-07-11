@@ -6,6 +6,7 @@ import 'package:dungeon_paper/core/utils/string_utils.dart';
 import 'package:dungeon_paper/core/utils/uuid.dart';
 import 'package:dungeon_world_data/dungeon_world_data.dart' as dw;
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 import 'item_settings.dart';
 import 'meta.dart';
@@ -36,9 +37,8 @@ class Item extends dw.Item implements WithMeta, WithIcon {
   final double amount;
   final bool equipped;
 
-  dw.Tag? findTag(String name) => tags
-      .cast<dw.Tag?>()
-      .firstWhere((tag) => cleanStr(tag?.name ?? '') == name, orElse: () => null);
+  dw.Tag? findTag(String name) =>
+      tags.cast<dw.Tag?>().firstWhereOrNull((tag) => cleanStr(tag?.name ?? '') == name);
   bool get isWorn => findTag('worn') != null;
 
   int get weight => settings.countWeight ? findTag('weight')?.value ?? 0 : 0;

@@ -66,7 +66,6 @@ class SelectMovesSpellsView extends GetView<SelectMovesSpellsController> {
                                 EntityEditMenu(
                                   onEdit: ModelPages.openMovePage(
                                     abilityScores: controller.abilityScores.value,
-                                    classKeys: move.classKeys,
                                     move: move,
                                     onSave: (_move) => controller.moves.value =
                                         updateByKey(controller.moves, [_move]),

@@ -5,6 +5,7 @@ import 'package:dungeon_paper/app/model_utils/model_key.dart';
 import 'package:dungeon_paper/core/utils/date_utils.dart';
 import 'package:dungeon_paper/core/utils/uuid.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 class Meta<T> with RepositoryServiceMixin {
   Meta._({
@@ -25,15 +26,12 @@ class Meta<T> with RepositoryServiceMixin {
   final MetaSharing? sharing;
   final DateTime? updated;
 
-  T? getLibraryCopy<T extends WithMeta>() => repo.my
-      .listByType(T)
+  T? getLibraryCopy() => repo.my
+      .listByType<T>()
       .entries
-      .cast<MapEntry<String, T?>>()
-      .firstWhere(
-        (e) => keyFor(e.value) == sharing?.sourceKey,
-        orElse: () => const MapEntry('not_found', null),
-      )
-      .value;
+      .toList()
+      .firstWhereOrNull((e) => keyFor(e.value) == sharing?.sourceKey)
+      ?.value;
 
   bool get isFork => sharing != null;
   bool get isSource => !isFork;
@@ -83,34 +81,18 @@ class Meta<T> with RepositoryServiceMixin {
   Meta<T> fork({
     required String createdBy,
     required String sourceKey,
-    bool force = false,
-  }) {
-    debugPrint('force: $force, createdBy: $createdBy, sourceKey: $sourceKey');
-    return !force && createdBy == this.createdBy
-        ? this
-        : copyWith(
-            version: uuid(),
-            createdBy: createdBy,
-            created: DateTime.now(),
-            sharing: MetaSharing.fork(
-              sourceOwner: this.createdBy,
-              sourceKey: sourceKey,
-              sourceVersion: version,
-            ),
-          );
-  }
-
-  Meta originalOf() => sharing == null
-      ? this
-      : Meta._(
-          createdBy: sharing!.sourceOwner!,
-          version: sharing!.sourceVersion,
-          created: created,
-          updated: updated,
-          sharing: sharing,
-          data: data,
-          language: language,
-        );
+    String? version,
+  }) =>
+      copyWith(
+        version: version,
+        createdBy: createdBy,
+        created: DateTime.now(),
+        sharing: MetaSharing.fork(
+          sourceOwner: this.createdBy,
+          sourceKey: sourceKey,
+          sourceVersion: this.version,
+        ),
+      );
 
   factory Meta.fromRawJson(String str) => Meta.fromJson(json.decode(str));
 
