@@ -199,7 +199,7 @@ class _DynamicActionCardState extends State<DynamicActionCard> {
     ];
   }
 
-  MarkdownBody _renderMarkdown(BuildContext context, String text, {TextStyle? style}) {
+  MarkdownBody _renderMarkdown(BuildContext context, String text) {
     return MarkdownBody(
       data: _highlight(text),
       onTapLink: (text, href, title) => launch(href!),

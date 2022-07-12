@@ -44,7 +44,7 @@ class _DiceListInputState extends State<DiceListInput> {
 
   @override
   Widget build(BuildContext context) {
-    bool isNotAtMax = widget.maxCount != null && controller.value.length < widget.maxCount!;
+    bool isNotAtMax = widget.maxCount == null || controller.value.length < widget.maxCount!;
 
     return ChipListInput<dw.Dice>(
       controller: controller,

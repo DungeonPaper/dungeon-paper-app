@@ -92,6 +92,7 @@ class Note implements WithMeta, WithIcon {
         category: '',
       );
 
+  @override
   Map<String, dynamic> toJson() => {
         '_meta': meta.toJson(),
         'key': key,

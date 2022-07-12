@@ -37,7 +37,6 @@ class BasicInfoFormController extends GetxController with UserServiceMixin {
     uploading.value = true;
     try {
       final theme = Theme.of(context);
-      final textTheme = theme.textTheme;
       final colorScheme = theme.colorScheme;
       final cropped = await ImageCropper().cropImage(
         sourcePath: res,

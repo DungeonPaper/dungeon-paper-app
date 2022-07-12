@@ -53,12 +53,12 @@ class CharacterClassFormController extends DynamicFormController<CharacterClass>
   @override
   CharacterClass setData(Map<String, dynamic> data) {
     entity.value = entity.value.copyWithInherited(
-      meta: entity.value.meta,
+      meta: data['meta'] ?? entity.value.meta,
       name: data['name'],
       description: data['description'],
     );
 
-    return entity.value;
+    return super.setData(data);
   }
 
   @override

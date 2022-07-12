@@ -262,7 +262,6 @@ class _Card extends StatelessWidget {
     required this.title,
     required this.subtitle,
     this.valid = true,
-    this.isThreeLine = false,
     required this.onTap,
   }) : super(key: key);
 
@@ -271,7 +270,6 @@ class _Card extends StatelessWidget {
   final Widget? title;
   final Widget? subtitle;
   final bool valid;
-  final bool isThreeLine;
   final GestureTapCallback? onTap;
 
   bool get isEnabled => onTap != null;
@@ -308,7 +306,6 @@ class _Card extends StatelessWidget {
                 ),
               )
             : null,
-        isThreeLine: isThreeLine,
         // trailing: isIncomplete ?  _MissingInfoIcon() : null,
       ),
     );

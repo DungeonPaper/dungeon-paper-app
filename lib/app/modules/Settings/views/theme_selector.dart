@@ -32,6 +32,7 @@ class ThemeSelector extends StatelessWidget {
 // _ThemePreview stateless widget
 class _ThemePreview extends StatelessWidget {
   const _ThemePreview({
+    // ignore: unused_element
     super.key,
     required this.theme,
     required this.selected,
@@ -44,8 +45,6 @@ class _ThemePreview extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final ctxTheme = Theme.of(context);
-    final ctxColorScheme = ctxTheme.colorScheme;
     final themeData = AppThemes.getTheme(theme);
     const size = 80.0;
     final textDirection = Directionality.of(context);

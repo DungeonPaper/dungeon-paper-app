@@ -86,8 +86,4 @@ class _DamageDiceDialogState extends State<DamageDiceDialog> {
   void cancel() {
     Get.back();
   }
-
-  void _listener() {
-    setState(() {});
-  }
 }

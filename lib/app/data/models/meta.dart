@@ -19,7 +19,6 @@ import 'character.dart';
 import 'gear_choice.dart';
 import 'gear_selection.dart';
 import 'item.dart';
-import 'meta.dart';
 import 'monster.dart';
 import 'move.dart';
 import 'note.dart';

@@ -50,6 +50,7 @@ class Character implements WithMeta<Character, CharacterMeta>, WithIcon {
   final Meta<CharacterMeta> meta;
   @override
   final String key;
+  @override
   final String displayName;
   final String avatarUrl;
   final CharacterClass characterClass;
@@ -306,6 +307,7 @@ class Character implements WithMeta<Character, CharacterMeta>, WithIcon {
         race: Race.fromJson(json['race']),
       );
 
+  @override
   Map<String, dynamic> toJson() => {
         '_meta': meta.toJson((data) => data?.toJson()),
         'key': key,

@@ -243,7 +243,6 @@ class _CustomExpansionTileState extends State<CustomExpansionTile>
   late Animation<double> _heightFactor;
   late Animation<Color?> _headerColor;
   late Animation<Color?> _iconColor;
-  late Animation<Color?> _backgroundColor;
 
   bool _isExpanded = false;
 
@@ -255,7 +254,6 @@ class _CustomExpansionTileState extends State<CustomExpansionTile>
     _iconTurns = _controller.drive(_halfTween.chain(_easeInTween));
     _headerColor = _controller.drive(_headerColorTween.chain(_easeInTween));
     _iconColor = _controller.drive(_iconColorTween.chain(_easeOutTween));
-    _backgroundColor = _controller.drive(_backgroundColorTween.chain(_easeOutTween));
 
     _isExpanded = PageStorage.of(context)?.readState(context) as bool? ?? widget.initiallyExpanded;
     if (_isExpanded) _controller.value = 1.0;

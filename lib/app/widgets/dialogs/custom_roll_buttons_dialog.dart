@@ -106,6 +106,7 @@ class _CustomRollButtonsDialogState extends State<CustomRollButtonsDialog>
 
 class _RollButtonListTile extends StatefulWidget {
   const _RollButtonListTile({
+    // ignore: unused_element
     super.key,
     required this.rollButton,
     required this.defaultButton,

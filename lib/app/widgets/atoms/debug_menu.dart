@@ -2,8 +2,6 @@ import 'package:dungeon_paper/app/routes/app_pages.dart';
 import 'package:dungeon_paper/app/data/services/character_service.dart';
 import 'package:dungeon_paper/app/widgets/atoms/debug_dialog.dart';
 import 'package:dungeon_paper/app/widgets/atoms/menu_button.dart';
-import 'package:dungeon_paper/core/http/api.dart';
-import 'package:dungeon_paper/core/http/api_requests/search.dart';
 import 'package:dungeon_paper/core/storage_handler/storage_handler.dart';
 import 'package:dynamic_themes/dynamic_themes.dart';
 import 'package:flutter/material.dart';

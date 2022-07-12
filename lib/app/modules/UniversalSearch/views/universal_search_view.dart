@@ -25,8 +25,6 @@ class UniversalSearchView extends GetView<UniversalSearchController> {
 
   @override
   Widget build(BuildContext context) {
-    final theme = Theme.of(context);
-
     return BackdropFilter(
       filter: ImageFilter.blur(sigmaX: 5, sigmaY: 5),
       child: Scaffold(
@@ -104,6 +102,7 @@ class UniversalSearchView extends GetView<UniversalSearchController> {
 class _CardByType extends StatelessWidget {
   const _CardByType(
     this.result, {
+    // ignore: unused_element
     super.key,
     required this.highlightWords,
   });
@@ -164,6 +163,7 @@ class _CardByType extends StatelessWidget {
 
 class _FilterChip extends GetView<UniversalSearchController> {
   const _FilterChip({
+    // ignore: unused_element
     super.key,
     required this.label,
     required this.sourceType,

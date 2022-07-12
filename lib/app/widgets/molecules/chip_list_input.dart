@@ -63,7 +63,7 @@ class _ChipListInputState<T> extends State<ChipListInput<T>> {
 
   @override
   Widget build(BuildContext context) {
-    final isNotAtMax = widget.maxCount != null && controller.value.length < widget.maxCount!;
+    final isNotAtMax = widget.maxCount == null || controller.value.length < widget.maxCount!;
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [

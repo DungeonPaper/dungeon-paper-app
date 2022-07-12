@@ -13,8 +13,6 @@ class SettingsView extends GetView<SettingsController> with CharacterServiceMixi
 
   @override
   Widget build(BuildContext context) {
-    final theme = Theme.of(context);
-    final textTheme = theme.textTheme;
     return Scaffold(
       appBar: AppBar(
         title: Text(S.current.settingsTitle),

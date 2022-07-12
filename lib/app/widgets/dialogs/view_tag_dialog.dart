@@ -35,7 +35,6 @@ class ViewTagDialog extends StatelessWidget {
                       ),
                       style: textTheme.caption,
                     ),
-                    // TODO fix case in data
                     Text(
                       toTitleCase(tag.name),
                       textScaleFactor: 1.8,

@@ -1,9 +1,11 @@
 {
     "cSpell.words": [
         "Actionables",
+        "Animatable",
         "appbundle",
         "autovalidate",
         "cupertino",
+        "dartpad",
         "dungeonpaper",
         "favorited",
         "getx",
@@ -16,6 +18,7 @@
         "schyler",
         "sdcard",
         "sublist",
+        "themedata",
         "unfocus",
         "upsert",
         "vsync",

@@ -27,7 +27,6 @@ import 'package:get/get.dart';
 class ModelPages {
   static CharacterService get controller => Get.find();
   static LibraryService get library => Get.find();
-  static Character? get _char => controller.maybeCurrent;
 
   static void Function() openLibraryList<T extends WithMeta>({
     // Character? character,
