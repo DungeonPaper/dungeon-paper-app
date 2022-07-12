@@ -10,6 +10,7 @@ import 'package:dungeon_paper/app/routes/app_pages.dart';
 import 'package:dungeon_paper/core/http/api.dart';
 import 'package:dungeon_paper/core/http/api_requests/migration.dart';
 import 'package:dungeon_paper/core/storage_handler/storage_handler.dart';
+import 'package:dungeon_paper/generated/l10n.dart';
 import 'package:firebase_auth/firebase_auth.dart' as fba;
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -37,15 +38,15 @@ class UserService extends GetxService
   Future<void> loadUserData(fba.User user) async {
     final email = user.email;
     debugPrint('loading user data for $email');
+    api.requests.idToken = await user.getIdToken();
     StorageHandler.instance.currentDelegate = 'firestore';
     StorageHandler.instance.setCollectionPrefix('Data/$email');
     await loadMyRepo();
     var dbUser = await FirestoreDelegate().getDocument('Data', email!);
     if (dbUser == null) {
-      final resp = await _migrateUser(user.email!, await user.getIdToken());
+      final resp = await _migrateUser(user.email!);
       if (resp == null) {
-        // TODO intl
-        Get.rawSnackbar(title: 'Canceled');
+        Get.rawSnackbar(title: S.current.errorUserOperationCanceled);
         loadingService.loadingUser = false;
         return;
       }
@@ -88,7 +89,7 @@ class UserService extends GetxService
     return user;
   }
 
-  Future<User?> _migrateUser(String email, String idToken) async {
+  Future<User?> _migrateUser(String email) async {
     final migrationDetails = await Get.toNamed(
       Routes.migration,
       arguments: MigrationArguments(email: email),
@@ -96,7 +97,7 @@ class UserService extends GetxService
     if (migrationDetails == null) {
       return null;
     }
-    await api.requests.migrateUser(idToken, migrationDetails);
+    await api.requests.migrateUser(migrationDetails);
     final userDoc = await FirestoreDelegate().getDocument('Data', email);
     return User.fromJson(userDoc!);
   }

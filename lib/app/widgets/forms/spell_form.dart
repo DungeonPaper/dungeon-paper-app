@@ -4,6 +4,7 @@ import 'package:dungeon_paper/app/widgets/forms/dynamic_form/dynamic_form.dart';
 import 'package:dungeon_paper/app/widgets/forms/dynamic_form/form_input_data.dart';
 import 'package:dungeon_paper/app/widgets/forms/library_entity_form.dart';
 import 'package:dungeon_paper/core/utils/list_utils.dart';
+import 'package:dungeon_paper/generated/l10n.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -81,9 +82,8 @@ class SpellFormController extends DynamicFormController<Spell> {
     inputs = <FormInputData>[
       FormInputData<FormTextInputData>(
         name: 'name',
-        // TODO intl + hint text
         data: FormTextInputData(
-          label: 'Spell name',
+          label: S.current.formGeneralNameGeneric(S.current.entity(Spell)),
           textCapitalization: TextCapitalization.words,
           text: entity.value.name,
         ),
@@ -94,8 +94,7 @@ class SpellFormController extends DynamicFormController<Spell> {
           isExpanded: true,
           value: entity.value.classKeys.isNotEmpty ? entity.value.classKeys[0] : null,
           compareTo: (a, b) => a.toString() == b.toString(),
-          // TODO intl
-          label: const Text('Class'),
+          label: Text(S.current.entity(Spell)),
           items: {...repo.builtIn.classes.values, ...repo.my.classes.values}.map(
             (cls) => DropdownMenuItem(
               child: Text(cls.name),
@@ -106,9 +105,8 @@ class SpellFormController extends DynamicFormController<Spell> {
       ),
       FormInputData<FormTextInputData>(
         name: 'description',
-        // TODO intl + hint text
         data: FormTextInputData(
-          label: 'Spell description',
+          label: S.current.formGeneralDescriptionGeneric(S.current.entity(Spell)),
           maxLines: 10,
           minLines: 5,
           rich: true,
@@ -118,9 +116,8 @@ class SpellFormController extends DynamicFormController<Spell> {
       ),
       FormInputData<FormTextInputData>(
         name: 'explanation',
-        // TODO intl + hint text
         data: FormTextInputData(
-          label: 'Spell explanation',
+          label: S.current.formGeneralExplanationGeneric(S.current.entity(Spell)),
           maxLines: 10,
           minLines: 5,
           rich: true,

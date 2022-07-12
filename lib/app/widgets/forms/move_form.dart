@@ -1,3 +1,4 @@
+import 'package:dungeon_paper/app/data/models/character_class.dart';
 import 'package:dungeon_paper/app/data/models/move.dart';
 import 'package:dungeon_paper/app/data/models/ability_scores.dart';
 import 'package:dungeon_paper/app/widgets/forms/dynamic_form/dynamic_form.dart';
@@ -102,9 +103,8 @@ class MoveFormController extends DynamicFormController<Move> {
     inputs = <FormInputData>[
       FormInputData<FormTextInputData>(
         name: 'name',
-        // TODO intl + hint text
         data: FormTextInputData(
-          label: 'Move name',
+          label: S.current.formGeneralNameGeneric(S.current.entity(Move)),
           textCapitalization: TextCapitalization.words,
           text: entity.value.name,
         ),
@@ -113,8 +113,7 @@ class MoveFormController extends DynamicFormController<Move> {
         name: 'category',
         data: FormDropdownInputData(
           value: entity.value.category,
-          // TODO intl
-          label: const Text('Category'),
+          label: Text(S.current.entity(MoveCategory)),
           isExpanded: true,
           items: MoveCategory.values.map(
             (cat) => DropdownMenuItem(
@@ -128,9 +127,8 @@ class MoveFormController extends DynamicFormController<Move> {
         name: 'classKeys',
         data: FormDropdownInputData(
           value: entity.value.classKeys.isNotEmpty ? entity.value.classKeys[0] : null,
-          // TODO intl
           isExpanded: true,
-          label: const Text('Class'),
+          label: Text(S.current.entity(CharacterClass)),
           items: {...repo.builtIn.classes.values, ...repo.my.classes.values}.map(
             (cls) => DropdownMenuItem(
               child: Text(cls.name),
@@ -141,9 +139,8 @@ class MoveFormController extends DynamicFormController<Move> {
       ),
       FormInputData<FormTextInputData>(
         name: 'description',
-        // TODO intl + hint text
         data: FormTextInputData(
-          label: 'Move description',
+          label: S.current.formGeneralDescriptionGeneric(S.current.entity(Move)),
           maxLines: 10,
           minLines: 5,
           rich: true,
@@ -153,9 +150,8 @@ class MoveFormController extends DynamicFormController<Move> {
       ),
       FormInputData<FormTextInputData>(
         name: 'explanation',
-        // TODO intl + hint text
         data: FormTextInputData(
-          label: 'Move explanation',
+          label: S.current.formGeneralExplanationGeneric(S.current.entity(Move)),
           maxLines: 10,
           minLines: 5,
           rich: true,

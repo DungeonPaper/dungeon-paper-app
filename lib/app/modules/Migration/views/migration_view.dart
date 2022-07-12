@@ -1,5 +1,6 @@
 import 'package:dungeon_paper/app/widgets/atoms/advanced_floating_action_button.dart';
 import 'package:dungeon_paper/app/widgets/atoms/select_box.dart';
+import 'package:dungeon_paper/generated/l10n.dart';
 import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
@@ -13,13 +14,14 @@ class MigrationView extends GetView<MigrationController> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('MigrationView'),
+        // TODO intl
+        title: const Text('Migration View'),
         centerTitle: true,
       ),
       floatingActionButton: Obx(
         () => AdvancedFloatingActionButton.extended(
           onPressed: controller.isValid ? controller.done : null,
-          label: const Text('Continue'),
+          label: Text(S.current.continueLabel),
           icon: const Icon(Icons.check),
         ),
       ),
@@ -35,10 +37,9 @@ class MigrationView extends GetView<MigrationController> {
                 Obx(
                   () => TextFormField(
                     controller: controller.username,
-                    decoration: const InputDecoration(
-                      // TODO intl
-                      label: Text('Username'),
-                      hintText: 'Pick a username',
+                    decoration: InputDecoration(
+                      label: Text(S.current.signupUsername),
+                      hintText: S.current.signupUsernamePlaceholder,
                     ),
                   ),
                 ),
@@ -46,10 +47,9 @@ class MigrationView extends GetView<MigrationController> {
                 Obx(
                   () => SelectBox(
                     value: controller.language,
-                    // TODO intl
-                    label: const Text('Default Data Language'),
+                    label: Text(S.current.signupDefaultDataLanguage),
                     items: const [
-                      DropdownMenuItem(child: Text('EN'), value: 'EN'),
+                      DropdownMenuItem(child: Text('EN'), value: 'English'),
                     ],
                     onChanged: null,
                   ),

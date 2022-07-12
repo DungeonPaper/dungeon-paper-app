@@ -30,7 +30,7 @@ class SelectMovesSpellsView extends GetView<SelectMovesSpellsController> {
       dirty: controller.dirty.value,
       child: Scaffold(
         appBar: AppBar(
-          title: const Text('Select Moves & Spells'),
+          title: Text(S.current.selectGeneric(S.current.createCharacterMovesSpells)),
           centerTitle: true,
         ),
         floatingActionButton: AdvancedFloatingActionButton.extended(

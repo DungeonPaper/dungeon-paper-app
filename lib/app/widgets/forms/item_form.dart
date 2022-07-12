@@ -3,6 +3,7 @@ import 'package:dungeon_paper/app/widgets/forms/dynamic_form/dynamic_form.dart';
 import 'package:dungeon_paper/app/widgets/forms/dynamic_form/form_input_data.dart';
 import 'package:dungeon_paper/app/widgets/forms/library_entity_form.dart';
 import 'package:dungeon_paper/core/utils/list_utils.dart';
+import 'package:dungeon_paper/generated/l10n.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -67,18 +68,16 @@ class ItemFormController extends DynamicFormController<Item> {
     inputs = <FormInputData>[
       FormInputData<FormTextInputData>(
         name: 'name',
-        // TODO intl + hint text
         data: FormTextInputData(
-          label: 'Item name',
+          label: S.current.formGeneralNameGeneric(S.current.entity(Item)),
           textCapitalization: TextCapitalization.words,
           text: entity.value.name,
         ),
       ),
       FormInputData<FormTextInputData>(
         name: 'description',
-        // TODO intl + hint text
         data: FormTextInputData(
-          label: 'Item description',
+          label: S.current.formGeneralDescriptionGeneric(S.current.entity(Item)),
           maxLines: 10,
           minLines: 5,
           rich: true,

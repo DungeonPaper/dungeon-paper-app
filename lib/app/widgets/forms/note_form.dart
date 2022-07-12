@@ -68,18 +68,16 @@ class NoteFormController extends DynamicFormController<Note> {
     inputs = <FormInputData>[
       FormInputData<FormTextInputData>(
         name: 'title',
-        // TODO intl + hint text
         data: FormTextInputData(
-          label: 'Note title',
+          label: S.current.formGeneralTitleGeneric(S.current.entity(Note)),
           textCapitalization: TextCapitalization.words,
           text: entity.value.title,
         ),
       ),
       FormInputData<FormTextInputData>(
         name: 'category',
-        // TODO intl + hint text
         data: FormTextInputData(
-          label: 'Note category',
+          label: S.current.formGeneralCategoryGeneric(S.current.entity(Note)),
           textCapitalization: TextCapitalization.words,
           text: entity.value.category,
           hintText: S.current.noteNoCategory,
@@ -87,9 +85,8 @@ class NoteFormController extends DynamicFormController<Note> {
       ),
       FormInputData<FormTextInputData>(
         name: 'description',
-        // TODO intl + hint text
         data: FormTextInputData(
-          label: 'Note description',
+          label: S.current.formGeneralDescriptionGeneric(S.current.entity(Note)),
           maxLines: 20,
           minLines: 5,
           rich: true,

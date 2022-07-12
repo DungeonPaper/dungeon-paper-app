@@ -66,8 +66,7 @@ class _LoadDialogState extends State<LoadDialog> {
                   }),
                 ),
               ),
-              // TODO intl
-              title: const Text('Automatically calculate max load'),
+              title: Text(S.current.characterAutoMaxLoad),
             ),
             NumberTextField(
               controller: controller,

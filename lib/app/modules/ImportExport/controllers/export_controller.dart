@@ -101,7 +101,7 @@ class ExportController extends GetxController
           // }));
           Get.rawSnackbar(
             title: S.current.exportFailedTitle,
-            message: S.current.exportCanceledMessage,
+            message: S.current.errorUserOperationCanceled,
           );
         } else {
           // unawaited(analytics.logEvent(name: Events.ExportSuccess, parameters: {

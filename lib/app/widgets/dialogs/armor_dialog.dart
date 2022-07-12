@@ -66,8 +66,7 @@ class _ArmorDialogState extends State<ArmorDialog> {
                   }),
                 ),
               ),
-              // TODO intl
-              title: const Text('Automatically calculate armor'),
+              title: Text(S.current.characterAutoArmor),
             ),
             NumberTextField(
               controller: controller,

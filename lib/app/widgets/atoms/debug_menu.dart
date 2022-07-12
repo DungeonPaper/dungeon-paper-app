@@ -42,11 +42,6 @@ class DebugMenu extends StatelessWidget {
           value: 'viewCharJson',
           onSelect: _viewCharJson,
         ),
-        MenuEntry(
-          label: const Text('Search'),
-          value: 'search',
-          onSelect: _search,
-        ),
       ],
     );
   }
@@ -56,7 +51,6 @@ class DebugMenu extends StatelessWidget {
         'createChar': _createChar,
         'clearChars': _clearChars,
         'viewCharJson': _viewCharJson,
-        'search': _search,
       };
 
   void _toggleTheme() {
@@ -81,10 +75,5 @@ class DebugMenu extends StatelessWidget {
     final CharacterService controller = Get.find();
 
     Get.dialog(DebugDialog(text: controller.current.toRawJson()));
-  }
-
-  void _search() async {
-    final resp = await api.requests
-        .search(SearchRequest(types: {SearchType.moves, SearchType.spells}, query: 'magic'));
   }
 }

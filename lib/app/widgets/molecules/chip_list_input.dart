@@ -15,6 +15,7 @@ class ChipListInput<T> extends StatefulWidget {
     this.leading = const [],
     this.label,
     this.labelColor,
+    this.maxCount,
   }) : assert(dialogBuilder != null || addValue != null);
 
   final ValueNotifier<List<T>>? controller;
@@ -35,6 +36,7 @@ class ChipListInput<T> extends StatefulWidget {
   final List<Widget> trailing;
   final List<Widget> leading;
   final Color? labelColor;
+  final int? maxCount;
 
   @override
   State<ChipListInput> createState() => _ChipListInputState<T>();
@@ -61,6 +63,7 @@ class _ChipListInputState<T> extends State<ChipListInput<T>> {
 
   @override
   Widget build(BuildContext context) {
+    final isNotAtMax = widget.maxCount != null && controller.value.length < widget.maxCount!;
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -95,22 +98,23 @@ class _ChipListInputState<T> extends State<ChipListInput<T>> {
                     // ignore: avoid_returning_null_for_void
                     : () => null,
               ),
-            widget.chipBuilder(
-              context,
-              null,
-              onTapChip: widget.dialogBuilder != null
-                  ? () => Get.dialog(
-                        widget.dialogBuilder!(
-                          context,
-                          null,
-                          onSave: (_value) {
-                            setState(() => controller.value = [...controller.value, _value]);
-                          },
-                        ),
-                      )
-                  : () =>
-                      setState(() => controller.value = [...controller.value, widget.addValue!]),
-            ),
+            if (isNotAtMax)
+              widget.chipBuilder(
+                context,
+                null,
+                onTapChip: widget.dialogBuilder != null
+                    ? () => Get.dialog(
+                          widget.dialogBuilder!(
+                            context,
+                            null,
+                            onSave: (_value) {
+                              setState(() => controller.value = [...controller.value, _value]);
+                            },
+                          ),
+                        )
+                    : () =>
+                        setState(() => controller.value = [...controller.value, widget.addValue!]),
+              ),
             ...widget.trailing,
           ],
         ),

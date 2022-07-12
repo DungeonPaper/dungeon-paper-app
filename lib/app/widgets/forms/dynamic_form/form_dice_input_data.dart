@@ -5,6 +5,7 @@ class FormDiceInputData extends BaseInputData<List<dw.Dice>> {
     required List<dw.Dice> value,
     required this.abilityScores,
     required this.guessFrom,
+    this.maxCount,
   }) {
     init(value);
   }
@@ -24,6 +25,7 @@ class FormDiceInputData extends BaseInputData<List<dw.Dice>> {
 
   final AbilityScores abilityScores;
   final Set<String> guessFrom;
+  final int? maxCount;
 
   void init(List<dw.Dice> value) {
     controller = ValueNotifier(value);
@@ -71,6 +73,7 @@ class FormDiceInputData extends BaseInputData<List<dw.Dice>> {
       controller: controller,
       abilityScores: abilityScores,
       guessFrom: guessNotifiers,
+      maxCount: maxCount,
     );
   }
 

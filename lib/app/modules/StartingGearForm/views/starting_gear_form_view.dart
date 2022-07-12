@@ -1,3 +1,4 @@
+import 'package:dungeon_paper/app/data/models/gear_selection.dart';
 import 'package:dungeon_paper/app/widgets/atoms/advanced_floating_action_button.dart';
 import 'package:dungeon_paper/app/widgets/atoms/confirm_exit_view.dart';
 import 'package:dungeon_paper/generated/l10n.dart';
@@ -20,7 +21,7 @@ class StartingGearFormView extends GetView<StartingGearFormController> {
         dirty: controller.dirty.value,
         child: Scaffold(
           appBar: AppBar(
-            title: const Text('Select Starting Gear'),
+            title: Text(S.current.selectGeneric(S.current.entity(GearSelection))),
           ),
           floatingActionButton: AdvancedFloatingActionButton.extended(
             onPressed: _save,

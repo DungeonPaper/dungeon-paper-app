@@ -617,6 +617,36 @@ class S {
     );
   }
 
+  /// `Use armor from class & equipped items`
+  String get characterAutoArmor {
+    return Intl.message(
+      'Use armor from class & equipped items',
+      name: 'characterAutoArmor',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Use damage dice from class & equipped items`
+  String get characterAutoDamage {
+    return Intl.message(
+      'Use damage dice from class & equipped items',
+      name: 'characterAutoDamage',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Use class base HP + Constitution (score)`
+  String get characterAutoMaxLoad {
+    return Intl.message(
+      'Use class base HP + Constitution (score)',
+      name: 'characterAutoMaxLoad',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `HP`
   String get characterBarHp {
     return Intl.message(
@@ -747,11 +777,31 @@ class S {
     );
   }
 
+  /// `Bond`
+  String get characterBondsFlagsDialogBond {
+    return Intl.message(
+      'Bond',
+      name: 'characterBondsFlagsDialogBond',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `Bonds`
   String get characterBondsFlagsDialogBonds {
     return Intl.message(
       'Bonds',
       name: 'characterBondsFlagsDialogBonds',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Flag`
+  String get characterBondsFlagsDialogFlag {
+    return Intl.message(
+      'Flag',
+      name: 'characterBondsFlagsDialogFlag',
       desc: '',
       args: [],
     );
@@ -990,6 +1040,16 @@ class S {
     );
   }
 
+  /// `Continue`
+  String get continueLabel {
+    return Intl.message(
+      'Continue',
+      name: 'continueLabel',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `Create Character`
   String get createCharacterAddButton {
     return Intl.message(
@@ -1121,6 +1181,16 @@ class S {
     );
   }
 
+  /// `Moves & Spells`
+  String get createCharacterMovesSpells {
+    return Intl.message(
+      'Moves & Spells',
+      name: 'createCharacterMovesSpells',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `Preview Character`
   String get createCharacterPreviewPageTitle {
     return Intl.message(
@@ -1219,24 +1289,6 @@ class S {
       name: 'createCharacterStartingGearHelpText',
       desc: '',
       args: [],
-    );
-  }
-
-  /// `{step, select, information {Basic Information} charClass {Class} stats {Ability Scores} movesSpells {Moves & Spells} background {Background & Bonds} gear {Starting Gear}}`
-  String createCharacterStep(Object step) {
-    return Intl.select(
-      step,
-      {
-        'information': 'Basic Information',
-        'charClass': 'Class',
-        'stats': 'Ability Scores',
-        'movesSpells': 'Moves & Spells',
-        'background': 'Background & Bonds',
-        'gear': 'Starting Gear',
-      },
-      name: 'createCharacterStep',
-      desc: '',
-      args: [step],
     );
   }
 
@@ -1623,6 +1675,36 @@ class S {
     );
   }
 
+  /// `None selected`
+  String get errorNoSelection {
+    return Intl.message(
+      'None selected',
+      name: 'errorNoSelection',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `No {entity} selected`
+  String errorNoSelectionGeneric(Object entity) {
+    return Intl.message(
+      'No $entity selected',
+      name: 'errorNoSelectionGeneric',
+      desc: '',
+      args: [entity],
+    );
+  }
+
+  /// `Operation canceled`
+  String get errorUserOperationCanceled {
+    return Intl.message(
+      'Operation canceled',
+      name: 'errorUserOperationCanceled',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `Further details`
   String get explanation {
     return Intl.message(
@@ -1638,16 +1720,6 @@ class S {
     return Intl.message(
       'Export',
       name: 'export',
-      desc: '',
-      args: [],
-    );
-  }
-
-  /// `Operation was canceled`
-  String get exportCanceledMessage {
-    return Intl.message(
-      'Operation was canceled',
-      name: 'exportCanceledMessage',
       desc: '',
       args: [],
     );
@@ -1690,6 +1762,126 @@ class S {
       name: 'exportSuccessfulTitle',
       desc: '',
       args: [],
+    );
+  }
+
+  /// `Give a general description of your class. Describe a calling for the type of person or creature that would choose or be raised in to this adventuring profession.`
+  String get formCharacterClassDescriptionPlaceholder {
+    return Intl.message(
+      'Give a general description of your class. Describe a calling for the type of person or creature that would choose or be raised in to this adventuring profession.',
+      name: 'formCharacterClassDescriptionPlaceholder',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Enter the class name`
+  String get formCharacterClassNamePlaceholder {
+    return Intl.message(
+      'Enter the class name',
+      name: 'formCharacterClassNamePlaceholder',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Category`
+  String get formGeneralCategory {
+    return Intl.message(
+      'Category',
+      name: 'formGeneralCategory',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `{entity} category`
+  String formGeneralCategoryGeneric(Object entity) {
+    return Intl.message(
+      '$entity category',
+      name: 'formGeneralCategoryGeneric',
+      desc: '',
+      args: [entity],
+    );
+  }
+
+  /// `Name`
+  String get formGeneralName {
+    return Intl.message(
+      'Name',
+      name: 'formGeneralName',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `{entity} name`
+  String formGeneralNameGeneric(Object entity) {
+    return Intl.message(
+      '$entity name',
+      name: 'formGeneralNameGeneric',
+      desc: '',
+      args: [entity],
+    );
+  }
+
+  /// `Title`
+  String get formGeneralTitle {
+    return Intl.message(
+      'Title',
+      name: 'formGeneralTitle',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `{entity} title`
+  String formGeneralTitleGeneric(Object entity) {
+    return Intl.message(
+      '$entity title',
+      name: 'formGeneralTitleGeneric',
+      desc: '',
+      args: [entity],
+    );
+  }
+
+  /// `Description`
+  String get formGeneralDescription {
+    return Intl.message(
+      'Description',
+      name: 'formGeneralDescription',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `{entity} description`
+  String formGeneralDescriptionGeneric(Object entity) {
+    return Intl.message(
+      '$entity description',
+      name: 'formGeneralDescriptionGeneric',
+      desc: '',
+      args: [entity],
+    );
+  }
+
+  /// `Explanation`
+  String get formGeneralExplanation {
+    return Intl.message(
+      'Explanation',
+      name: 'formGeneralExplanation',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `{entity} explanation`
+  String formGeneralExplanationGeneric(Object entity) {
+    return Intl.message(
+      '$entity explanation',
+      name: 'formGeneralExplanationGeneric',
+      desc: '',
+      args: [entity],
     );
   }
 
@@ -2568,6 +2760,26 @@ class S {
     );
   }
 
+  /// `See all`
+  String get seeAll {
+    return Intl.message(
+      'See all',
+      name: 'seeAll',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Search in: `
+  String get searchIn {
+    return Intl.message(
+      'Search in: ',
+      name: 'searchIn',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `Type to search`
   String get searchPlaceholder {
     return Intl.message(
@@ -2703,6 +2915,196 @@ class S {
     return Intl.message(
       'Settings',
       name: 'settingsTitle',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Sign in`
+  String get signinButton {
+    return Intl.message(
+      'Sign in',
+      name: 'signinButton',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Sign in with Google`
+  String get signinWithGoogleButton {
+    return Intl.message(
+      'Sign in with Google',
+      name: 'signinWithGoogleButton',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Sign in with Apple`
+  String get signinWithAppleButton {
+    return Intl.message(
+      'Sign in with Apple',
+      name: 'signinWithAppleButton',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Sign in with Facebook`
+  String get signinWithFacebookButton {
+    return Intl.message(
+      'Sign in with Facebook',
+      name: 'signinWithFacebookButton',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Sign out`
+  String get signoutButton {
+    return Intl.message(
+      'Sign out',
+      name: 'signoutButton',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Email`
+  String get signupEmail {
+    return Intl.message(
+      'Email',
+      name: 'signupEmail',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Enter your email`
+  String get signupEmailPlaceholder {
+    return Intl.message(
+      'Enter your email',
+      name: 'signupEmailPlaceholder',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Please enter a valid email`
+  String get signupEmailValidation {
+    return Intl.message(
+      'Please enter a valid email',
+      name: 'signupEmailValidation',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Password`
+  String get signupPassword {
+    return Intl.message(
+      'Password',
+      name: 'signupPassword',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Enter your password`
+  String get signupPasswordPlaceholder {
+    return Intl.message(
+      'Enter your password',
+      name: 'signupPasswordPlaceholder',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Password must be at least {length} characters`
+  String signupPasswordValidationLength(Object length) {
+    return Intl.message(
+      'Password must be at least $length characters',
+      name: 'signupPasswordValidationLength',
+      desc: '',
+      args: [length],
+    );
+  }
+
+  /// `Password must contain at least one capital letter`
+  String get signupPasswordValidationPatternLetter {
+    return Intl.message(
+      'Password must contain at least one capital letter',
+      name: 'signupPasswordValidationPatternLetter',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Password must contain at least one number`
+  String get signupPasswordValidationPatternNumber {
+    return Intl.message(
+      'Password must contain at least one number',
+      name: 'signupPasswordValidationPatternNumber',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Password must contain {pattern}`
+  String signupPasswordValidationPatternGeneric(Object pattern) {
+    return Intl.message(
+      'Password must contain $pattern',
+      name: 'signupPasswordValidationPatternGeneric',
+      desc: '',
+      args: [pattern],
+    );
+  }
+
+  /// `Username`
+  String get signupUsername {
+    return Intl.message(
+      'Username',
+      name: 'signupUsername',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Pick a unique username`
+  String get signupUsernamePlaceholder {
+    return Intl.message(
+      'Pick a unique username',
+      name: 'signupUsernamePlaceholder',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Username must be at least {length} characters`
+  String signupUsernameValidation(Object length) {
+    return Intl.message(
+      'Username must be at least $length characters',
+      name: 'signupUsernameValidation',
+      desc: '',
+      args: [length],
+    );
+  }
+
+  /// `Username must only contain letters, numbers, dashes and underscores`
+  String get signupUsernameValidationPattern {
+    return Intl.message(
+      'Username must only contain letters, numbers, dashes and underscores',
+      name: 'signupUsernameValidationPattern',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Default data language`
+  String get signupDefaultDataLanguage {
+    return Intl.message(
+      'Default data language',
+      name: 'signupDefaultDataLanguage',
       desc: '',
       args: [],
     );
@@ -2845,6 +3247,16 @@ class S {
     return Intl.message(
       'Unselect',
       name: 'unselect',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Use default`
+  String get useDefault {
+    return Intl.message(
+      'Use default',
+      name: 'useDefault',
       desc: '',
       args: [],
     );

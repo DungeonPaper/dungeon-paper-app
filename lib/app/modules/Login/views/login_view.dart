@@ -32,26 +32,25 @@ class LoginView extends GetView<LoginController> {
                       controller: controller.email,
                       keyboardType: TextInputType.emailAddress,
                       autofillHints: const [AutofillHints.email],
-                      decoration: const InputDecoration(
+                      decoration: InputDecoration(
                         filled: true,
-                        // TODO intl
-                        label: Text('Email'),
+                        label: Text(S.current.signupEmail),
                         floatingLabelBehavior: FloatingLabelBehavior.auto,
+                        hintText: S.current.signupEmailPlaceholder,
                       ),
-                      // TODO intl
                       validator: (email) => email == null || EmailValidator.validate(email)
                           ? null
-                          : 'Email must be valid',
+                          : S.current.signupEmailValidation,
                     ),
                     const SizedBox(height: 8),
                     TextFormField(
                       controller: controller.password,
                       obscureText: true,
                       autofillHints: const [AutofillHints.password],
-                      decoration: const InputDecoration(
+                      decoration: InputDecoration(
                         filled: true,
-                        // TODO intl
-                        label: Text('Password'),
+                        label: Text(S.current.signupPassword),
+                        hintText: S.current.signupPasswordPlaceholder,
                         floatingLabelBehavior: FloatingLabelBehavior.auto,
                       ),
                       validator: PasswordValidator.getMessage,
@@ -59,14 +58,13 @@ class LoginView extends GetView<LoginController> {
                     Obx(
                       () => ElevatedButton(
                         onPressed: controller.valid ? controller.loginWithPassword : null,
-                        // TODO intl
-                        child: const Text('Sign in'),
+                        child: Text(S.current.signinButton),
                       ),
                     ),
                     LabeledDivider(label: Text(S.current.separatorOr)),
                     ElevatedButton(
                       onPressed: controller.loginWithGoogle,
-                      child: const Text('Sign in with Google'),
+                      child: Text(S.current.signinWithGoogleButton),
                     ),
                   ],
                 ),

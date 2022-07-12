@@ -2,6 +2,7 @@ import 'package:dungeon_paper/app/data/models/meta.dart';
 import 'package:dungeon_paper/app/widgets/atoms/menu_button.dart';
 import 'package:flutter/material.dart';
 
+// TODO remove this class and use EntityShareMenu instead
 class MetaSyncMenu<T, M> extends StatelessWidget {
   const MetaSyncMenu({
     Key? key,
@@ -37,7 +38,6 @@ class MetaSyncMenu<T, M> extends StatelessWidget {
 
   List<MenuEntry<String>> get items => [
         MenuEntry(
-          // TODO intl
           label: Text('Version: ${meta.version}\n'
               'Dirty: ${meta.sharing?.dirty ?? 'false'}\n'
               'isFork: ${meta.isForkOf(entity)}\n'
@@ -50,13 +50,11 @@ class MetaSyncMenu<T, M> extends StatelessWidget {
           onSelect: null,
         ),
         MenuEntry(
-          // TODO intl
           label: const Text('Update original'),
           value: 'push',
           onSelect: () => debugPrint('Update original'),
         ),
         MenuEntry(
-          // TODO intl
           label: const Text('Revert changes'),
           value: 'pull',
           onSelect: () => debugPrint('Revert changes'),

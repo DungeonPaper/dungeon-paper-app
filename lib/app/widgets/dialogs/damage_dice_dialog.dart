@@ -63,8 +63,7 @@ class _DamageDiceDialogState extends State<DamageDiceDialog> {
                   }),
                 ),
               ),
-              // TODO intl
-              title: const Text('Use damage dice from class & equipped items'),
+              title: Text(S.current.characterAutoDamage),
             ),
             DiceForm(
               dice: damage,

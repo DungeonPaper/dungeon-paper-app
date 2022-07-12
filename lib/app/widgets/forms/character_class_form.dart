@@ -1,7 +1,9 @@
+import 'package:dungeon_paper/app/data/models/ability_scores.dart';
 import 'package:dungeon_paper/app/data/models/character_class.dart';
 import 'package:dungeon_paper/app/widgets/forms/dynamic_form/dynamic_form.dart';
 import 'package:dungeon_paper/app/widgets/forms/dynamic_form/form_input_data.dart';
 import 'package:dungeon_paper/app/widgets/forms/library_entity_form.dart';
+import 'package:dungeon_paper/generated/l10n.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -64,18 +66,17 @@ class CharacterClassFormController extends DynamicFormController<CharacterClass>
     inputs = <FormInputData>[
       FormInputData<FormTextInputData>(
         name: 'name',
-        // TODO intl + hint text
         data: FormTextInputData(
-          label: 'Name',
+          label: S.current.formGeneralName,
           textCapitalization: TextCapitalization.words,
           text: entity.value.name,
         ),
       ),
       FormInputData<FormTextInputData>(
         name: 'description',
-        // TODO intl + hint text
         data: FormTextInputData(
-          label: 'Description',
+          label: S.current.formGeneralDescription,
+          hintText: S.current.formCharacterClassDescriptionPlaceholder,
           maxLines: 20,
           minLines: 5,
           rich: true,
@@ -83,6 +84,22 @@ class CharacterClassFormController extends DynamicFormController<CharacterClass>
           text: entity.value.description,
         ),
       ),
+      FormInputData(
+        name: 'damage',
+        data: FormDiceInputData(
+          abilityScores: AbilityScores.dungeonWorld(
+            cha: 12,
+            con: 12,
+            dex: 12,
+            str: 12,
+            wis: 12,
+            intl: 12,
+          ),
+          guessFrom: {},
+          value: [entity.value.damageDice],
+          maxCount: 1,
+        ),
+      )
     ];
   }
 }

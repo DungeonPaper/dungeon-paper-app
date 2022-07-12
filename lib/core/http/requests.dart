@@ -1,20 +1,19 @@
 part of 'api.dart';
 
 class Requests {
+  String? idToken;
+
+  Map<String, String> get authorizationHeaders {
+    assert(idToken != null, 'idToken must be set');
+    return {'Authorization': 'Bearer $idToken'};
+  }
+
   Future<SearchResponse> getDefaultRepository({bool ignoreCache = false}) async {
     final Map<String, String> headers = ignoreCache ? {'Cache-Control': 'no-cache'} : {};
-    final resp = await api.get('/get_default_repository', headers: headers);
+    final resp = await api.get('/library/default', headers: headers);
     return SearchResponse.fromJson(resp.json);
   }
 
-  Future<SearchResponse> search(SearchRequest request) async {
-    final resp = await api.get('/search?' + request.toString());
-    return SearchResponse.fromJson(resp.json);
-  }
-
-  Future<void> migrateUser(String idToken, MigrationDetails details) async {
-    await api.get('/migrate_user?${details.toString()}', headers: {
-      'Authorization': 'Bearer $idToken',
-    });
-  }
+  Future<void> migrateUser(MigrationDetails details) async =>
+      api.get('/user/migrate?${details.toString()}', headers: authorizationHeaders);
 }

@@ -107,7 +107,7 @@ class SettingsView extends GetView<SettingsController> with CharacterServiceMixi
       children: [
         Expanded(child: Text(labelText, style: caption)),
         if (seeAll != null && onChangeSeeAll != null) ...[
-          const Text('See all'),
+          Text(S.current.seeAll),
           Switch.adaptive(value: seeAll, onChanged: onChangeSeeAll),
         ],
       ],

@@ -51,8 +51,7 @@ class UniversalSearchView extends GetView<UniversalSearchController> {
                     runSpacing: 0,
                     crossAxisAlignment: WrapCrossAlignment.center,
                     children: [
-                      // TODO intl
-                      const Text('Search in: '),
+                      Text(S.current.searchIn),
                       if (controller.hasCharacter)
                         _FilterChip(
                           label: S.current.entity(Character),

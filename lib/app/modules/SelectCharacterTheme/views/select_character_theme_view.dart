@@ -13,8 +13,7 @@ class SelectCharacterThemeView extends GetView<SelectCharacterThemeController> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        // TODO intl
-        title: const Text('Character Theme'),
+        title: Text(S.current.characterSelectTheme),
         centerTitle: true,
       ),
       body: ListView(
@@ -94,9 +93,9 @@ class SelectCharacterThemeView extends GetView<SelectCharacterThemeController> {
     return _pad(Row(
       children: [
         Expanded(child: Text(labelText, style: caption)),
-        const Text('See all'),
+        Text(S.current.seeAll),
         Switch.adaptive(value: seeAll, onChanged: onChangeSeeAll),
-        ElevatedButton(onPressed: resetEnabled ? onReset : null, child: const Text('Use Default')),
+        ElevatedButton(onPressed: resetEnabled ? onReset : null, child: Text(S.current.useDefault)),
       ],
     ));
   }

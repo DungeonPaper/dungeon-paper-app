@@ -154,9 +154,10 @@ class CreateCharacterView extends GetView<CreateCharacterController> {
                                     ? Text(controller.alignment.value!.description,
                                         overflow: TextOverflow.ellipsis, maxLines: 1)
                                     : null
-                                :
-                                // TODO intl
-                                const Text('No Alignment selected'),
+                                : Text(
+                                    S.current
+                                        .errorNoSelectionGeneric(S.current.entity(AlignmentValue)),
+                                  ),
                             onTap: cls != null
                                 ? () => Get.toNamed(
                                       Routes.classAlignments,
@@ -219,8 +220,8 @@ class CreateCharacterView extends GetView<CreateCharacterController> {
                           // Moves & Spells
                           _Card(
                             // contentPadding: EdgeInsets.symmetric(horizontal: 16, vertical: 12),
-                            // TODO intl
-                            title: const Text('Select Moves & Spells'),
+                            title:
+                                Text(S.current.selectGeneric(S.current.createCharacterMovesSpells)),
                             subtitle: Text(
                                 '${controller.moves.length} Moves, ${controller.spells.length} Spells selected'),
                             onTap: cls != null

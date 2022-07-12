@@ -14,12 +14,14 @@ class DiceListInput extends StatefulWidget {
     required this.abilityScores,
     required this.guessFrom,
     this.labelColor,
+    this.maxCount,
   });
 
   final ValueNotifier<List<dw.Dice>>? controller;
   final AbilityScores abilityScores;
   final List<ValueNotifier<String>> guessFrom;
   final Color? labelColor;
+  final int? maxCount;
 
   @override
   State<DiceListInput> createState() => _DiceListInputState();
@@ -42,6 +44,8 @@ class _DiceListInputState extends State<DiceListInput> {
 
   @override
   Widget build(BuildContext context) {
+    bool isNotAtMax = widget.maxCount != null && controller.value.length < widget.maxCount!;
+
     return ChipListInput<dw.Dice>(
       controller: controller,
       dialogBuilder: (context, dice, {required onSave}) => AddDiceDialog(
@@ -56,16 +60,18 @@ class _DiceListInputState extends State<DiceListInput> {
         onPressed: onTapChip,
         onDeleted: onDeleteChip,
       ),
+      maxCount: widget.maxCount,
       labelColor: widget.labelColor,
       trailing: [
-        for (final dice in guesses.where(
-          (guess) => !controller.value.map((d) => d.toString()).contains(guess.toString()),
-        ))
-          DiceChip(
-            dice: dice,
-            label: S.current.diceSuggestion(dice.toString()),
-            onPressed: () => controller.value = [...controller.value, dice],
-          ),
+        if (isNotAtMax)
+          for (final dice in guesses.where(
+            (guess) => !controller.value.map((d) => d.toString()).contains(guess.toString()),
+          ))
+            DiceChip(
+              dice: dice,
+              label: S.current.diceSuggestion(dice.toString()),
+              onPressed: () => controller.value = [...controller.value, dice],
+            ),
       ],
     );
   }

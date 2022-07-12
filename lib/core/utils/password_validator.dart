@@ -1,3 +1,4 @@
+import 'package:dungeon_paper/generated/l10n.dart';
 import 'package:get/get.dart';
 
 abstract class PasswordValidation {
@@ -12,7 +13,7 @@ class PasswordLengthValidation extends PasswordValidation {
 
   PasswordLengthValidation({
     required this.minLength,
-  }) : super('Password is too short');
+  }) : super(S.current.signupPasswordValidationLength(minLength));
 
   @override
   bool validate(String? password) => password == null || password.length >= minLength;
@@ -24,7 +25,7 @@ class PasswordContainsValidation extends PasswordValidation {
   PasswordContainsValidation({
     required this.pattern,
     String? message,
-  }) : super(message ?? 'Password must contain $pattern');
+  }) : super(message ?? S.current.signupPasswordValidationPatternGeneric(pattern));
 
   @override
   bool validate(String? password) => password == null || password.contains(pattern);
@@ -37,11 +38,11 @@ class PasswordValidator {
     PasswordLengthValidation(minLength: minLength),
     PasswordContainsValidation(
       pattern: RegExp('[A-Z]'),
-      message: 'Password must contain at least 1 capital letter',
+      message: S.current.signupPasswordValidationPatternLetter,
     ),
     PasswordContainsValidation(
       pattern: RegExp('[0-9]'),
-      message: 'Password must contain at least 1 number',
+      message: S.current.signupPasswordValidationPatternNumber,
     ),
   ];
 
