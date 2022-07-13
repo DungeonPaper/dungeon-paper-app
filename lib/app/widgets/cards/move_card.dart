@@ -1,3 +1,4 @@
+import 'package:dungeon_paper/app/data/models/ability_scores.dart';
 import 'package:dungeon_paper/app/widgets/chips/move_category_chip.dart';
 import 'package:dungeon_paper/app/widgets/chips/tag_chip.dart';
 import 'package:flutter/material.dart';
@@ -20,6 +21,7 @@ class MoveCard extends StatelessWidget {
     this.expandable = true,
     this.advancedLevelDisplay = AdvancedLevelDisplay.short,
     this.highlightWords = const [],
+    this.abilityScores,
   }) : super(key: key);
 
   final Move move;
@@ -34,6 +36,7 @@ class MoveCard extends StatelessWidget {
   final bool expandable;
   final AdvancedLevelDisplay advancedLevelDisplay;
   final List<String> highlightWords;
+  final AbilityScores? abilityScores;
 
   @override
   Widget build(BuildContext context) {
@@ -56,6 +59,7 @@ class MoveCard extends StatelessWidget {
       leading: [
         MoveCategoryChip(category: move.category, advancedLevelDisplay: advancedLevelDisplay),
       ],
+      abilityScores: abilityScores,
     );
   }
 }

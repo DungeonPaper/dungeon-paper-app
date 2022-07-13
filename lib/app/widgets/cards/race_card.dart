@@ -1,3 +1,4 @@
+import 'package:dungeon_paper/app/data/models/ability_scores.dart';
 import 'package:dungeon_paper/app/data/models/race.dart';
 import 'package:dungeon_paper/app/widgets/chips/tag_chip.dart';
 import 'package:flutter/material.dart';
@@ -15,6 +16,7 @@ class RaceCard extends StatelessWidget {
     this.expansionKey,
     this.highlightWords = const [],
     this.actions = const [],
+    required this.abilityScores,
   }) : super(key: key);
 
   final Race race;
@@ -25,6 +27,7 @@ class RaceCard extends StatelessWidget {
   final void Function(Race move)? onSave;
   final List<String> highlightWords;
   final Iterable<Widget> actions;
+  final AbilityScores? abilityScores;
 
   @override
   Widget build(BuildContext context) {
@@ -42,6 +45,7 @@ class RaceCard extends StatelessWidget {
       expansionKey: expansionKey ?? PageStorageKey(race.key),
       highlightWords: highlightWords,
       actions: actions,
+      abilityScores: abilityScores,
     );
   }
 }

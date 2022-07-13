@@ -13,11 +13,7 @@ class MigrationView extends GetView<MigrationController> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        // TODO intl
-        title: const Text('Migration View'),
-        centerTitle: true,
-      ),
+      appBar: AppBar(),
       floatingActionButton: Obx(
         () => AdvancedFloatingActionButton.extended(
           onPressed: controller.isValid ? controller.done : null,

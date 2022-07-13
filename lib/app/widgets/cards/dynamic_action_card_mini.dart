@@ -1,3 +1,4 @@
+import 'package:dungeon_paper/app/data/models/ability_scores.dart';
 import 'package:dungeon_paper/app/themes/themes.dart';
 import 'package:dungeon_paper/app/widgets/atoms/round_roll_button.dart';
 import 'package:dungeon_paper/generated/l10n.dart';
@@ -20,7 +21,9 @@ class DynamicActionCardMini extends StatelessWidget {
     this.chips = const [],
     required this.onStarChanged,
     this.onTap,
-  }) : super(key: key);
+    this.abilityScores,
+  })  : assert(dice.length == 0 || abilityScores != null),
+        super(key: key);
 
   final String title;
   final Widget? icon;
@@ -33,6 +36,7 @@ class DynamicActionCardMini extends StatelessWidget {
   final Iterable<Widget> chips;
   final void Function(bool starred) onStarChanged;
   final void Function()? onTap;
+  final AbilityScores? abilityScores;
 
   @override
   Widget build(BuildContext context) {
@@ -145,7 +149,12 @@ class DynamicActionCardMini extends StatelessWidget {
             children: [
               ...chips,
               Expanded(child: Container()),
-              if (dice.isNotEmpty) RoundRollButton(dice: dice, size: 45),
+              if (dice.isNotEmpty)
+                RoundRollButton(
+                  dice: dice,
+                  size: 45,
+                  abilityScores: abilityScores,
+                ),
             ],
           )
         ],

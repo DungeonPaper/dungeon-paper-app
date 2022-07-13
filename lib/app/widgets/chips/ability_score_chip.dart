@@ -26,7 +26,8 @@ class AbilityScoreChip extends StatelessWidget {
     final cardColor = stat.isDebilitated
         ? Color.alphaBlend(
             DwColors.error.withOpacity(isLight ? 0.4 : 0.2), theme.scaffoldBackgroundColor)
-        : theme.cardTheme.color?.withOpacity(0.5);
+        // : Color.alphaBlend(theme.cardColor.withOpacity(0.5), theme.scaffoldBackgroundColor);
+        : theme.cardColor;
 
     return Card(
       margin: EdgeInsets.zero,

@@ -1,5 +1,6 @@
 {
   "@@locale": "en",
+  "abilityScoreInfo": "You can drag & drop the stat cards to change the order in which they appear throughout this character's screens.",
   "abilityScoreBondDebilityDescription": "",
   "abilityScoreBondDebilityName": "Lonely",
   "abilityScoreBondDescription": "When a move has you roll+BOND you'll count the number of bonds you have with the character in question and add that to the roll.",
@@ -21,6 +22,7 @@
   "abilityScoreIntDebilityName": "Stunned",
   "abilityScoreIntDescription": "Determines how well your character learns and reasons.",
   "abilityScoreIntName": "Intelligence",
+  "abilityScoreModifierValueLabel": "Modifier:\n{modifier}",
   "abilityScoreStrDebilityDescription": "You can't exert much force. Maybe it's just fatigue and injury, or maybe your strength was drained by magic.",
   "abilityScoreStrDebilityName": "Weak",
   "abilityScoreStrDescription": "Measures muscle and physical power.",
@@ -257,6 +259,8 @@
   "rollVolleyButton": "Volley",
   "rollDiscernRealitiesButton": "Discern Realities",
   "rollButtonLabel": "Button Text",
+  "rollButtonTooltip": "Roll {dice}",
+  "rollButtonTooltipWithDebility": "Roll {dice}\n* Rolling with debility",
   "rollDialogResultBreakdown": "Dice: {dice} | Modifier: {mod}",
   "rollDialogResultTotal": "Total: {total}",
   "rollDialogTitleRolled": "Total: {total}",

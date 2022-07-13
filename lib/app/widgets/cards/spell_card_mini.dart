@@ -1,3 +1,4 @@
+import 'package:dungeon_paper/app/data/models/ability_scores.dart';
 import 'package:dungeon_paper/app/widgets/chips/spell_level_chip.dart';
 import 'package:flutter/material.dart';
 
@@ -13,6 +14,7 @@ class SpellCardMini extends StatelessWidget {
     this.showIcon = true,
     this.onSave,
     this.onTap,
+    required this.abilityScores,
   }) : super(key: key);
 
   final Spell spell;
@@ -21,6 +23,7 @@ class SpellCardMini extends StatelessWidget {
   final bool showIcon;
   final void Function(Spell spell)? onSave;
   final void Function()? onTap;
+  final AbilityScores? abilityScores;
 
   @override
   Widget build(BuildContext context) {
@@ -34,6 +37,7 @@ class SpellCardMini extends StatelessWidget {
       showStar: showStar,
       onStarChanged: (prepared) => onSave?.call(spell.copyWithInherited(prepared: prepared)),
       onTap: onTap,
+      abilityScores: abilityScores,
     );
   }
 }

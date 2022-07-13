@@ -62,7 +62,7 @@ class SpellsLibraryListView extends GetView<LibraryListController<Spell, SpellFi
             onPressed: onToggle,
             label: label,
             icon: icon,
-          )
+          ),
         ],
       ),
     );

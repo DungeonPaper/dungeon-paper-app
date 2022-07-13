@@ -50,6 +50,16 @@ class S {
     return Localizations.of<S>(context, S);
   }
 
+  /// `You can drag & drop the stat cards to change the order in which they appear throughout this character's screens.`
+  String get abilityScoreInfo {
+    return Intl.message(
+      'You can drag & drop the stat cards to change the order in which they appear throughout this character\'s screens.',
+      name: 'abilityScoreInfo',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// ``
   String get abilityScoreBondDebilityDescription {
     return Intl.message(
@@ -257,6 +267,16 @@ class S {
       name: 'abilityScoreIntName',
       desc: '',
       args: [],
+    );
+  }
+
+  /// `Modifier:\n{modifier}`
+  String abilityScoreModifierValueLabel(Object modifier) {
+    return Intl.message(
+      'Modifier:\n$modifier',
+      name: 'abilityScoreModifierValueLabel',
+      desc: '',
+      args: [modifier],
     );
   }
 
@@ -2697,6 +2717,26 @@ class S {
       name: 'rollButtonLabel',
       desc: '',
       args: [],
+    );
+  }
+
+  /// `Roll {dice}`
+  String rollButtonTooltip(Object dice) {
+    return Intl.message(
+      'Roll $dice',
+      name: 'rollButtonTooltip',
+      desc: '',
+      args: [dice],
+    );
+  }
+
+  /// `Roll {dice}\n* Rolling with debility`
+  String rollButtonTooltipWithDebility(Object dice) {
+    return Intl.message(
+      'Roll $dice\n* Rolling with debility',
+      name: 'rollButtonTooltipWithDebility',
+      desc: '',
+      args: [dice],
     );
   }
 

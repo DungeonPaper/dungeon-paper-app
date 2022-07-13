@@ -69,6 +69,7 @@ class HomeCharacterActionsView extends GetView<CharacterService> {
       onSave: (race) => controller.updateCharacter(
         char.copyWithInherited(race: race),
       ),
+      abilityScores: char.abilityScores,
       actions: [
         EntityEditMenu(
           onDelete: null,
@@ -90,26 +91,28 @@ class HomeCharacterActionsView extends GetView<CharacterService> {
       leading: char.settings.racePosition == RacePosition.start ? [raceCard] : [],
       trailing: char.settings.racePosition == RacePosition.end ? [raceCard] : [],
       menuTrailing: [
-        // Move to start of list
-        MenuEntry(
-          value: 'move_to_start',
-          label: Text(S.current.moveToStartGeneric(S.current.entity(Race))),
-          onSelect: () => controller.updateCharacter(
-            char.copyWith(
-              settings: char.settings.copyWith(racePosition: RacePosition.start),
+        if (char.settings.racePosition != RacePosition.start)
+          // Move to start of list
+          MenuEntry(
+            value: 'move_to_start',
+            label: Text(S.current.moveToStartGeneric(S.current.entity(Race))),
+            onSelect: () => controller.updateCharacter(
+              char.copyWith(
+                settings: char.settings.copyWith(racePosition: RacePosition.start),
+              ),
             ),
           ),
-        ),
-        // Move to end of list
-        MenuEntry(
-          value: 'move_to_end',
-          label: Text(S.current.moveToEndGeneric(S.current.entity(Race))),
-          onSelect: () => controller.updateCharacter(
-            char.copyWith(
-              settings: char.settings.copyWith(racePosition: RacePosition.end),
+        if (char.settings.racePosition != RacePosition.end)
+          // Move to end of list
+          MenuEntry(
+            value: 'move_to_end',
+            label: Text(S.current.moveToEndGeneric(S.current.entity(Race))),
+            onSelect: () => controller.updateCharacter(
+              char.copyWith(
+                settings: char.settings.copyWith(racePosition: RacePosition.end),
+              ),
             ),
           ),
-        ),
       ],
       addPageArguments: ({required onAdd}) => MoveLibraryListArguments(
         character: char,

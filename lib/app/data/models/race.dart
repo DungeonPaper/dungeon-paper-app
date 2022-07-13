@@ -103,7 +103,7 @@ class Race extends dw.Race implements WithMeta, WithIcon {
 
   @override
   IconData get icon => genericIcon;
-  static IconData get genericIcon => DwIcons.riposte;
+  static IconData get genericIcon => Icons.pets;
 
   @override
   Map<String, dynamic> toJson() => {

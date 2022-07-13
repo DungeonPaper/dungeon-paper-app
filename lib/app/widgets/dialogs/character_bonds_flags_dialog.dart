@@ -2,6 +2,7 @@ import 'package:dungeon_paper/app/data/models/session_marks.dart';
 import 'package:dungeon_paper/app/data/services/character_service.dart';
 import 'package:dungeon_paper/app/modules/BondsFlagsForm/controllers/bonds_flags_form_controller.dart';
 import 'package:dungeon_paper/app/routes/app_pages.dart';
+import 'package:dungeon_paper/app/widgets/atoms/help_text.dart';
 import 'package:dungeon_paper/app/widgets/molecules/dialog_controls.dart';
 import 'package:dungeon_paper/core/utils/list_utils.dart';
 import 'package:dungeon_paper/generated/l10n.dart';
@@ -63,31 +64,8 @@ class CharacterBondsFlagsDialog extends GetView<CharacterService> with Character
                 if (bonds.isEmpty && flags.isEmpty)
                   Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 8),
-                    child: Row(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Transform.translate(
-                          offset: const Offset(0, 2),
-                          child: Container(
-                            child: Icon(
-                              Icons.question_mark,
-                              size: 12,
-                              color: theme.cardColor,
-                            ),
-                            decoration: BoxDecoration(
-                              color: textTheme.caption!.color,
-                              shape: BoxShape.circle,
-                            ),
-                          ),
-                        ),
-                        const SizedBox(width: 8),
-                        Expanded(
-                          child: Text(
-                            S.current.characterBondsFlagsDialogNoData,
-                            style: textTheme.caption,
-                          ),
-                        ),
-                      ],
+                    child: HelpText(
+                      text: S.current.characterBondsFlagsDialogNoData,
                     ),
                   ),
                 if (bonds.isNotEmpty && flags.isNotEmpty)

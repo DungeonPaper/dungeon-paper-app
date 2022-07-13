@@ -1,3 +1,4 @@
+import 'package:dungeon_paper/app/data/models/ability_scores.dart';
 import 'package:dungeon_paper/app/widgets/atoms/custom_expansion_panel.dart';
 import 'package:dungeon_paper/app/widgets/atoms/round_roll_button.dart';
 import 'package:dungeon_paper/core/utils/markdown_highlight.dart';
@@ -31,7 +32,9 @@ class DynamicActionCard extends StatefulWidget {
     this.trailing = const [],
     this.expandable = true,
     this.highlightWords = const [],
-  }) : super(key: key);
+    this.abilityScores,
+  })  : assert(dice.length == 0 || abilityScores != null),
+        super(key: key);
 
   final bool expandable;
   final double? maxContentHeight;
@@ -54,6 +57,7 @@ class DynamicActionCard extends StatefulWidget {
   final Iterable<Widget> trailing;
   final Iterable<Widget> leading;
   final List<String> highlightWords;
+  final AbilityScores? abilityScores;
 
   @override
   State<DynamicActionCard> createState() => _DynamicActionCardState();
@@ -192,7 +196,10 @@ class _DynamicActionCardState extends State<DynamicActionCard> {
           if (widget.dice.isNotEmpty)
             Padding(
               padding: const EdgeInsets.only(bottom: 2.5),
-              child: RoundRollButton(dice: widget.dice),
+              child: RoundRollButton(
+                dice: widget.dice,
+                abilityScores: widget.abilityScores,
+              ),
             ),
         ],
       )

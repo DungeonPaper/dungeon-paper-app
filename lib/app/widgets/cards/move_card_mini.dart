@@ -1,3 +1,4 @@
+import 'package:dungeon_paper/app/data/models/ability_scores.dart';
 import 'package:dungeon_paper/app/widgets/chips/move_category_chip.dart';
 import 'package:flutter/material.dart';
 
@@ -13,6 +14,7 @@ class MoveCardMini extends StatelessWidget {
     this.showIcon = true,
     this.onTap,
     this.advancedLevelDisplay = AdvancedLevelDisplay.short,
+    this.abilityScores,
   }) : super(key: key);
 
   final Move move;
@@ -21,6 +23,7 @@ class MoveCardMini extends StatelessWidget {
   final void Function(Move move)? onSave;
   final void Function()? onTap;
   final AdvancedLevelDisplay advancedLevelDisplay;
+  final AbilityScores? abilityScores;
 
   @override
   Widget build(BuildContext context) {
@@ -39,6 +42,7 @@ class MoveCardMini extends StatelessWidget {
       showStar: showStar,
       onStarChanged: (favorited) => onSave?.call(move.copyWithInherited(favorited: favorited)),
       onTap: onTap,
+      abilityScores: abilityScores,
     );
   }
 }

@@ -1,3 +1,4 @@
+import 'package:dungeon_paper/app/data/models/ability_scores.dart';
 import 'package:dungeon_paper/app/widgets/chips/spell_level_chip.dart';
 import 'package:flutter/material.dart';
 
@@ -18,6 +19,7 @@ class SpellCard extends StatelessWidget {
     this.maxContentHeight,
     this.expandable = true,
     this.highlightWords = const [],
+    this.abilityScores,
   }) : super(key: key);
 
   final Spell spell;
@@ -31,6 +33,7 @@ class SpellCard extends StatelessWidget {
   final double? maxContentHeight;
   final bool expandable;
   final List<String> highlightWords;
+  final AbilityScores? abilityScores;
 
   @override
   Widget build(BuildContext context) {
@@ -51,6 +54,7 @@ class SpellCard extends StatelessWidget {
       actions: actions,
       expansionKey: expansionKey ?? PageStorageKey(spell.key),
       highlightWords: highlightWords,
+      abilityScores: abilityScores,
     );
   }
 }

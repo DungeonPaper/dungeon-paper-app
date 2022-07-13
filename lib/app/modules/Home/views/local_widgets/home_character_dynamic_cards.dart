@@ -113,6 +113,7 @@ class HomeCharacterDynamicCards extends GetView<CharacterService> with LibrarySe
                   onSave: (_move) => controller.updateCharacter(
                     CharacterUtils.updateMoves(controller.current, [_move]),
                   ),
+                  abilityScores: controller.current.abilityScores,
                 ),
               ),
               expandedCardBuilder: (context, move, index) => Obx(
@@ -121,6 +122,7 @@ class HomeCharacterDynamicCards extends GetView<CharacterService> with LibrarySe
                   expandable: false,
                   initiallyExpanded: true,
                   move: moves[index],
+                  abilityScores: controller.current.abilityScores,
                   actions: [
                     EntityEditMenu(
                       onEdit: ModelPages.openMovePage(
@@ -165,6 +167,7 @@ class HomeCharacterDynamicCards extends GetView<CharacterService> with LibrarySe
                   onSave: (_spell) => controller.updateCharacter(
                     CharacterUtils.updateSpells(controller.current, [_spell]),
                   ),
+                  abilityScores: controller.current.abilityScores,
                 ),
               ),
               expandedCardBuilder: (context, spell, index) => Obx(
@@ -173,6 +176,7 @@ class HomeCharacterDynamicCards extends GetView<CharacterService> with LibrarySe
                   expandable: false,
                   initiallyExpanded: true,
                   spell: spells[index],
+                  abilityScores: controller.current.abilityScores,
                   actions: [
                     EntityEditMenu(
                       onEdit: ModelPages.openSpellPage(
