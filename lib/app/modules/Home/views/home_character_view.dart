@@ -33,11 +33,11 @@ class HomeCharacterView extends GetView<CharacterService> {
           children: [
             pad(const HomeCharacterHeaderView()),
             const SizedBox(height: 8),
-            Text(
+            pad(Text(
               char.displayName,
               textScaleFactor: 1.4,
               textAlign: TextAlign.center,
-            ),
+            )),
             CharacterSubtitle(character: char),
             const SizedBox(height: 4),
             pad(const HomeCharacterExtras()),

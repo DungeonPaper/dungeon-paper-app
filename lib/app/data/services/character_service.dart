@@ -98,8 +98,6 @@ class CharacterService extends GetxService with LoadingServiceMixin, UserService
     var list = json.map((c) => Character.fromJson(c));
 
     all.addAll(Map.fromIterable(list, key: (c) => c.key));
-    loadingService.loadingCharacters = false;
-    loadingService.afterFirstLoad = false;
 
     if (all.isNotEmpty && _currentKey.value == null) {
       final hasLastChar = all.values.any((c) => c.meta.data?.lastUsed != null);
@@ -114,6 +112,9 @@ class CharacterService extends GetxService with LoadingServiceMixin, UserService
     if (_currentKey.value != null) {
       switchToCharacterTheme(current);
     }
+
+    loadingService.loadingCharacters = false;
+    loadingService.afterFirstLoad = !loadingService.loadingUser;
   }
 
   Future<void> updateCharacter(Character character, {bool switchToCharacter = false}) {

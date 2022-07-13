@@ -15,6 +15,8 @@ class LoginController extends GetxController
   bool get valid => _valid.value;
 
   void loginWithPassword() async {
+    loadingService.loadingUser = true;
+    loadingService.loadingCharacters = false;
     await authService.loginWithPassword(email: email.text, password: password.text);
     Get.offAllNamed(Routes.home);
   }

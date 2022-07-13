@@ -46,6 +46,7 @@ class HomeCharacterActionsView extends GetView<CharacterService> {
           return Container();
         }
         return ListView(
+          padding: const EdgeInsets.only(bottom: 16),
           children: [
             const HomeCharacterActionsSummary(),
             for (final cat in char.actionCategories)
@@ -122,6 +123,7 @@ class HomeCharacterActionsView extends GetView<CharacterService> {
       cardBuilder: (move, {required onSave, required onDelete}) => MoveCard(
         move: move,
         advancedLevelDisplay: AdvancedLevelDisplay.none,
+        abilityScores: char.abilityScores,
         actions: [
           EntityEditMenu(
             onDelete: onDelete,
@@ -153,6 +155,7 @@ class HomeCharacterActionsView extends GetView<CharacterService> {
       ),
       cardBuilder: (spell, {required onSave, required onDelete}) => SpellCard(
         spell: spell,
+        abilityScores: char.abilityScores,
         actions: [
           EntityEditMenu(
             onDelete: onDelete,

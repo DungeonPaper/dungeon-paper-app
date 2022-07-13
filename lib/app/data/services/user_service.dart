@@ -48,6 +48,7 @@ class UserService extends GetxService
       if (resp == null) {
         Get.rawSnackbar(title: S.current.errorUserOperationCanceled);
         loadingService.loadingUser = false;
+        loadingService.afterFirstLoad = !loadingService.loadingCharacters;
         return;
       }
       _current.value = resp;
@@ -57,6 +58,7 @@ class UserService extends GetxService
     _registerUserListener();
     charService.registerCharacterListener();
     loadingService.loadingUser = false;
+    loadingService.afterFirstLoad = !loadingService.loadingCharacters;
   }
 
   bool get isGuest => current.isGuest;
@@ -67,6 +69,8 @@ class UserService extends GetxService
     StorageHandler.instance.setCollectionPrefix(null);
     await loadMyRepo();
     charService.registerCharacterListener();
+    loadingService.loadingUser = false;
+    loadingService.afterFirstLoad = true;
   }
 
   void logout() {

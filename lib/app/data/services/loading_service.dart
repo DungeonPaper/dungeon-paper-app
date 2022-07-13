@@ -10,8 +10,11 @@ enum LoadKey {
 
 class LoadingService extends GetxService {
   final _map = <LoadKey, bool>{
-    LoadKey.user: false,
+    LoadKey.user: true,
     LoadKey.characters: false,
+    LoadKey.repo: true,
+    LoadKey.library: true,
+    LoadKey.afterFirstLoad: false,
   }.obs;
 
   bool get loadingUser => _map[LoadKey.user] == true;

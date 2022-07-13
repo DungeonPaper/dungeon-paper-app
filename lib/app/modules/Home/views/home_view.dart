@@ -42,7 +42,11 @@ class HomeView extends GetView<CharacterService> with UserServiceMixin, LoadingS
     );
   }
 
-  bool get isLoading =>
-      !loadingService.afterFirstLoad &&
-      (loadingService.loadingUser || loadingService.loadingCharacters);
+  bool get isLoading {
+    debugPrint('afterFirstLoad: ${loadingService.afterFirstLoad}, '
+        'loadingUser: ${loadingService.loadingUser}, '
+        'loadingCharacters: ${loadingService.loadingCharacters}');
+    return !loadingService.afterFirstLoad &&
+        (loadingService.loadingUser || loadingService.loadingCharacters);
+  }
 }
