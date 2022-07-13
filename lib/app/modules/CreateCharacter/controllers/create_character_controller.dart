@@ -2,6 +2,7 @@ import 'package:dungeon_paper/app/data/models/alignment.dart';
 import 'package:dungeon_paper/app/data/models/bio.dart';
 import 'package:dungeon_paper/app/data/models/character.dart';
 import 'package:dungeon_paper/app/data/models/character_class.dart';
+import 'package:dungeon_paper/app/data/models/character_stats.dart';
 import 'package:dungeon_paper/app/data/models/gear_choice.dart';
 import 'package:dungeon_paper/app/data/models/gear_selection.dart';
 import 'package:dungeon_paper/app/data/models/item.dart';
@@ -35,6 +36,7 @@ class CreateCharacterController extends GetxController {
   bool get isValid => [
         name.isNotEmpty,
         characterClass.value != null,
+        alignment.value != null,
       ].every((element) => element == true);
 
   List<Item> get items => GearChoice.selectionToItems(startingGear, equipped: true);
@@ -110,6 +112,11 @@ class CreateCharacterController extends GetxController {
         spells: spells,
         items: items,
         coins: coins,
+        stats: CharacterStats(
+          level: 1,
+          currentHp: characterClass.value!.hp + abilityScores.value.conMod!,
+          currentExp: 0,
+        ),
         sessionMarks: characterClass.value?.bonds
                 .map((bond) => SessionMark.bond(description: bond, completed: false, key: uuid()))
                 .toList() ??

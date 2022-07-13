@@ -48,7 +48,7 @@ class SpellsLibraryListView extends GetView<LibraryListController<Spell, SpellFi
         actions: [
           EntityEditMenu(
             onEdit: onUpdate != null
-                ? ModelPages.openSpellPage(
+                ? () => ModelPages.openSpellPage(
                     abilityScores: character.abilityScores,
                     classKeys: spell.classKeys,
                     spell: spell,

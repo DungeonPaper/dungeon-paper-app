@@ -28,16 +28,16 @@ class ModelPages {
   static CharacterService get controller => Get.find();
   static LibraryService get library => Get.find();
 
-  static void Function() openLibraryList<T extends WithMeta>({
+  static void openLibraryList<T extends WithMeta>({
     // Character? character,
     // void Function(Iterable<T> list)? onAdd,
     Type? type,
   }) {
     final map = <Type, Function()>{
-      Move: () => openMovesList(),
-      Spell: () => openSpellsList(),
-      Item: () => openItemsList(),
-      CharacterClass: () => openCharacterClassesList(),
+      Move: openMovesList,
+      Spell: openSpellsList,
+      Item: openItemsList,
+      CharacterClass: openCharacterClassesList,
       // Race: () => openRacesList(),
     };
 
@@ -47,40 +47,42 @@ class ModelPages {
       throw TypeError();
     }
 
-    return map[t]!.call();
+    map[t]!.call();
   }
 
-  static void Function() openMovesList({
+  static void openMovesList({
     Character? character,
-    Iterable<Move>? list,
+    Iterable<Move>? preSelections,
+    MoveCategory? category,
     void Function(Iterable<Move> list)? onAdd,
   }) {
     final char = character;
-    return () => Get.toNamed(
-          Routes.moves,
-          arguments: MoveLibraryListArguments(
-            character: char,
-            onAdd: onAdd, // ?? library.upsertToCharacter,
-            preSelections: char?.moves ?? [],
-          ),
-        );
+    Get.toNamed(
+      Routes.moves,
+      arguments: MoveLibraryListArguments(
+        character: char,
+        category: category,
+        onAdd: onAdd, // ?? library.upsertToCharacter,
+        preSelections: char?.moves ?? [],
+      ),
+    );
   }
 
-  static void Function() openMovePage({
+  static void openMovePage({
     required Move? move,
     required void Function(Move move) onSave,
     required AbilityScores abilityScores,
   }) =>
-      () => Get.to(
-            () => LibraryEntityForm<Move>(
-              onSave: onSave,
-              type: move == null ? ItemFormType.create : ItemFormType.edit,
-            ),
-            binding: RepositoryItemFormBinding<Move>(),
-            arguments: MoveFormArguments(move: move, abilityScores: abilityScores),
-          );
+      Get.to(
+        () => LibraryEntityForm<Move>(
+          onSave: onSave,
+          type: move == null ? ItemFormType.create : ItemFormType.edit,
+        ),
+        binding: RepositoryItemFormBinding<Move>(),
+        arguments: MoveFormArguments(move: move, abilityScores: abilityScores),
+      );
 
-  static void Function() openRacePage({
+  static void openRacePage({
     required Race? race,
     required void Function(Race race) onSave,
     required AbilityScores abilityScores,
@@ -97,23 +99,23 @@ class ModelPages {
             // )
           );
 
-  static void Function() openSpellsList({
+  static void openSpellsList({
     Character? character,
     Iterable<Spell>? list,
     void Function(Iterable<Spell> list)? onAdd,
   }) {
     final char = character;
-    return () => Get.toNamed(
-          Routes.spells,
-          arguments: SpellLibraryListArguments(
-            character: char,
-            onAdd: onAdd, // ?? library.upsertToCharacter,
-            preSelections: char?.spells ?? [],
-          ),
-        );
+    Get.toNamed(
+      Routes.spells,
+      arguments: SpellLibraryListArguments(
+        character: char,
+        onAdd: onAdd, // ?? library.upsertToCharacter,
+        preSelections: char?.spells ?? [],
+      ),
+    );
   }
 
-  static void Function() openSpellPage({
+  static void openSpellPage({
     required Spell? spell,
     required void Function(Spell spell) onSave,
     required AbilityScores abilityScores,
@@ -128,22 +130,22 @@ class ModelPages {
             arguments: SpellFormArguments(spell: spell, abilityScores: abilityScores),
           );
 
-  static void Function() openItemsList({
+  static void openItemsList({
     Character? character,
     Iterable<Item>? list,
     void Function(Iterable<Item> list)? onAdd,
   }) {
     final char = character;
-    return () => Get.toNamed(
-          Routes.items,
-          arguments: ItemLibraryListArguments(
-            onAdd: onAdd, // ?? library.upsertToCharacter,
-            preSelections: char?.items ?? [],
-          ),
-        );
+    Get.toNamed(
+      Routes.items,
+      arguments: ItemLibraryListArguments(
+        onAdd: onAdd, // ?? library.upsertToCharacter,
+        preSelections: char?.items ?? [],
+      ),
+    );
   }
 
-  static void Function() openItemPage({
+  static void openItemPage({
     required Item? item,
     required void Function(Item item) onSave,
   }) =>
@@ -156,22 +158,22 @@ class ModelPages {
             arguments: ItemFormArguments(item: item),
           );
 
-  static void Function() openNotesList({
+  static void openNotesList({
     Character? character,
     Iterable<Note>? list,
     void Function(Iterable<Note> list)? onAdd,
   }) {
     final char = character;
-    return () => Get.toNamed(
-          Routes.notes,
-          arguments: NoteLibraryListArguments(
-            onAdd: onAdd, // ?? library.upsertToCharacter,
-            preSelections: char?.notes ?? [],
-          ),
-        );
+    Get.toNamed(
+      Routes.notes,
+      arguments: NoteLibraryListArguments(
+        onAdd: onAdd, // ?? library.upsertToCharacter,
+        preSelections: char?.notes ?? [],
+      ),
+    );
   }
 
-  static void Function() openNotePage({
+  static void openNotePage({
     required Note? note,
     required void Function(Note note) onSave,
   }) =>
@@ -184,28 +186,28 @@ class ModelPages {
             arguments: NoteFormArguments(note: note),
           );
 
-  static void Function() openCharacterClassesList({
+  static void openCharacterClassesList({
     Character? character,
     Iterable<CharacterClass>? list,
     void Function(CharacterClass cls)? onAdd,
   }) {
     final char = character;
-    return () => Get.toNamed(
-          Routes.characterClass,
-          arguments: CharacterClassLibraryListArguments(
-            onAdd: (list) => onAdd != null
-                ? onAdd(list.elementAt(0))
-                : char != null
-                    ? controller.updateCharacter(
-                        char.copyWith(characterClass: list.elementAt(0)),
-                      )
-                    : null,
-            preSelections: char != null ? [char.characterClass] : [],
-          ),
-        );
+    Get.toNamed(
+      Routes.characterClass,
+      arguments: CharacterClassLibraryListArguments(
+        onAdd: (list) => onAdd != null
+            ? onAdd(list.elementAt(0))
+            : char != null
+                ? controller.updateCharacter(
+                    char.copyWith(characterClass: list.elementAt(0)),
+                  )
+                : null,
+        preSelections: char != null ? [char.characterClass] : [],
+      ),
+    );
   }
 
-  static void Function() openCharacterClassPage({
+  static void openCharacterClassPage({
     required CharacterClass? characterClass,
     required void Function(CharacterClass item) onSave,
   }) =>

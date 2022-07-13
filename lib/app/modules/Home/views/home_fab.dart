@@ -59,12 +59,12 @@ class _HomeFABState extends State<HomeFAB> with CharacterServiceMixin {
             child: const Icon(Icons.add),
           ),
           onPressed: inPageRange
-              ? ModelPages.openNotePage(
-                  note: null,
-                  onSave: (note) => charService.updateCharacter(
-                    CharacterUtils.addByType<Note>(char, [note]),
-                  ),
-                )
+              ? () => ModelPages.openNotePage(
+                    note: null,
+                    onSave: (note) => charService.updateCharacter(
+                      CharacterUtils.addByType<Note>(char, [note]),
+                    ),
+                  )
               : null,
         ),
       ),

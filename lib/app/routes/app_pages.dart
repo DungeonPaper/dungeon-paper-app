@@ -226,6 +226,7 @@ class AppPages {
       name: Routes.classAlignments,
       page: () => const ClassAlignmentsView(),
       binding: ClassAlignmentsBinding(),
+      preventDuplicates: false,
     ),
     GetPage(
       name: Routes.universalSearch,
@@ -247,16 +248,19 @@ class AppPages {
       name: Routes.migration,
       page: () => const MigrationView(),
       binding: MigrationBinding(),
+      preventDuplicates: false,
     ),
     GetPage(
       name: Routes.about,
       page: () => const AboutView(),
       binding: AboutBinding(),
+      preventDuplicates: false,
     ),
     GetPage(
       name: Routes.selectCharacterTheme,
       page: () => const SelectCharacterThemeView(),
       binding: SelectCharacterThemeBinding(),
+      preventDuplicates: false,
     ),
   ];
 }

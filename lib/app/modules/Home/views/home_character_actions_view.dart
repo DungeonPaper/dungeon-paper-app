@@ -73,7 +73,7 @@ class HomeCharacterActionsView extends GetView<CharacterService> {
       actions: [
         EntityEditMenu(
           onDelete: null,
-          onEdit: ModelPages.openRacePage(
+          onEdit: () => ModelPages.openRacePage(
             race: char.race,
             abilityScores: char.abilityScores,
             onSave: (race) => controller.updateCharacter(
@@ -126,7 +126,7 @@ class HomeCharacterActionsView extends GetView<CharacterService> {
         actions: [
           EntityEditMenu(
             onDelete: onDelete,
-            onEdit: ModelPages.openMovePage(
+            onEdit: () => ModelPages.openMovePage(
               move: move,
               abilityScores: char.abilityScores,
               onSave: onSave(true),
@@ -158,7 +158,7 @@ class HomeCharacterActionsView extends GetView<CharacterService> {
         actions: [
           EntityEditMenu(
             onDelete: onDelete,
-            onEdit: ModelPages.openSpellPage(
+            onEdit: () => ModelPages.openSpellPage(
               spell: spell,
               classKeys: spell.classKeys,
               abilityScores: char.abilityScores,
@@ -189,7 +189,7 @@ class HomeCharacterActionsView extends GetView<CharacterService> {
         actions: [
           EntityEditMenu(
             onDelete: onDelete,
-            onEdit: ModelPages.openItemPage(
+            onEdit: () => ModelPages.openItemPage(
               item: item,
               onSave: onSave(true),
             ),

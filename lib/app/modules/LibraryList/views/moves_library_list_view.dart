@@ -50,11 +50,11 @@ class MovesLibraryListView extends GetView<LibraryListController<Move, MoveFilte
         actions: [
           EntityEditMenu(
             onEdit: onUpdate != null
-                ? ModelPages.openMovePage(
-                    abilityScores: char.abilityScores,
-                    move: move,
-                    onSave: onUpdate,
-                  )
+                ? () => ModelPages.openMovePage(
+                      abilityScores: char.abilityScores,
+                      move: move,
+                      onSave: onUpdate,
+                    )
                 : null,
             onDelete: onDelete != null ? () => onDelete(move) : null,
           ),
@@ -75,12 +75,15 @@ class MoveLibraryListArguments extends LibraryListArguments<Move, MoveFilters> {
     required Character? character,
     required super.onAdd,
     required super.preSelections,
+    MoveCategory? category,
   }) : super(
           sortFn: Move.sorter,
           filterFn: (move, filters) => filters.filter(move),
           filters: {
-            FiltersGroup.playbook: MoveFilters(classKey: character?.characterClass.key),
-            FiltersGroup.my: MoveFilters(classKey: character?.characterClass.key),
+            FiltersGroup.playbook:
+                MoveFilters(classKey: character?.characterClass.key, category: category),
+            FiltersGroup.my:
+                MoveFilters(classKey: character?.characterClass.key, category: category),
           },
           extraData: {
             'abilityScores': character?.abilityScores,

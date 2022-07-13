@@ -78,7 +78,7 @@ class HomeCharacterDynamicCards extends GetView<CharacterService> with LibrarySe
                   note: notes[index],
                   actions: [
                     EntityEditMenu(
-                      onEdit: ModelPages.openNotePage(
+                      onEdit: () => ModelPages.openNotePage(
                         note: notes[index],
                         onSave: (note) => controller.updateCharacter(
                           CharacterUtils.updateNotes(controller.current, [note]),
@@ -123,7 +123,7 @@ class HomeCharacterDynamicCards extends GetView<CharacterService> with LibrarySe
                             race: controller.current.race,
                             actions: [
                               EntityEditMenu(
-                                onEdit: ModelPages.openRacePage(
+                                onEdit: () => ModelPages.openRacePage(
                                   abilityScores: controller.current.abilityScores,
                                   race: controller.current.race,
                                   onSave: (_race) => controller.updateCharacter(
@@ -166,7 +166,7 @@ class HomeCharacterDynamicCards extends GetView<CharacterService> with LibrarySe
                     abilityScores: controller.current.abilityScores,
                     actions: [
                       EntityEditMenu(
-                        onEdit: ModelPages.openMovePage(
+                        onEdit: () => ModelPages.openMovePage(
                           abilityScores: controller.current.abilityScores,
                           move: moves[index],
                           onSave: (move) => library.upsertToCharacter([move],
@@ -229,7 +229,7 @@ class HomeCharacterDynamicCards extends GetView<CharacterService> with LibrarySe
                   abilityScores: controller.current.abilityScores,
                   actions: [
                     EntityEditMenu(
-                      onEdit: ModelPages.openSpellPage(
+                      onEdit: () => ModelPages.openSpellPage(
                         abilityScores: controller.current.abilityScores,
                         classKeys: spells[index].classKeys,
                         spell: spells[index],
@@ -283,7 +283,7 @@ class HomeCharacterDynamicCards extends GetView<CharacterService> with LibrarySe
                   item: items[index],
                   actions: [
                     EntityEditMenu(
-                      onEdit: ModelPages.openItemPage(
+                      onEdit: () => ModelPages.openItemPage(
                         item: items[index],
                         onSave: (item) => controller.updateCharacter(
                           CharacterUtils.updateItems(controller.current, [item]),

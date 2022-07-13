@@ -66,11 +66,11 @@ class BondsFlagsFormController extends GetxController {
   }
 
   void save() {
-    var newBonds = enumerate(bonds)
+    final newBonds = enumerate(bonds)
         .map((e) => e.value.copyWithInherited(description: bondsDesc[e.index].text))
         .where((e) => e.description.isNotEmpty)
         .toList();
-    var newFlags = enumerate(flags)
+    final newFlags = enumerate(flags)
         .map((e) => e.value.copyWithInherited(description: flagsDesc[e.index].text))
         .where((e) => e.description.isNotEmpty)
         .toList();

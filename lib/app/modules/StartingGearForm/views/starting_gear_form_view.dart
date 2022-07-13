@@ -29,14 +29,31 @@ class StartingGearFormView extends GetView<StartingGearFormController> {
             icon: const Icon(Icons.save),
           ),
           body: ListView(
+            padding: const EdgeInsets.all(16).copyWith(bottom: 80),
             children: controller.availableGear
-                .map((choice) => Card(
+                .map(
+                  (choice) => Padding(
+                    padding: const EdgeInsets.only(bottom: 16),
+                    child: Card(
+                      margin: EdgeInsets.zero,
                       child: Padding(
                         padding: const EdgeInsets.all(8),
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.stretch,
                           children: [
-                            Text(choice.description),
+                            ListTile(
+                              title: Text(choice.description),
+                              subtitle: Text(
+                                choice.maxSelections != null
+                                    ? S.current.createCharacterStartingGearChoiceCountWithMax(
+                                        controller.selectionCount(choice),
+                                        choice.maxSelections!,
+                                      )
+                                    : S.current.createCharacterStartingGearChoiceCountNoMax(
+                                        controller.selectionCount(choice),
+                                      ),
+                              ),
+                            ),
                             ...choice.selections.map(
                               (sel) => ListTile(
                                 onTap: () {
@@ -62,7 +79,9 @@ class StartingGearFormView extends GetView<StartingGearFormController> {
                           ],
                         ),
                       ),
-                    ))
+                    ),
+                  ),
+                )
                 .toList(),
           ),
         ),

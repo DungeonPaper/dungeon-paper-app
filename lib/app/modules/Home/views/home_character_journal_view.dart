@@ -72,7 +72,7 @@ class HomeCharacterJournalView extends GetView<CharacterService> {
                           actions: [
                             EntityEditMenu(
                               onDelete: confirmDelete(context, note, note.title),
-                              onEdit: ModelPages.openNotePage(
+                              onEdit: () => ModelPages.openNotePage(
                                 note: note,
                                 onSave: (_note) {
                                   controller.updateCharacter(

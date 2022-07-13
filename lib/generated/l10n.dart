@@ -577,16 +577,6 @@ class S {
     );
   }
 
-  /// `UPLOADING...`
-  String get basicInfoImageUploading {
-    return Intl.message(
-      'UPLOADING...',
-      name: 'basicInfoImageUploading',
-      desc: '',
-      args: [],
-    );
-  }
-
   /// `Sign in or create an account`
   String get basicInfoImageNeedAccountLinkLabel {
     return Intl.message(
@@ -622,6 +612,16 @@ class S {
     return Intl.message(
       'Remove Photo',
       name: 'basicInfoImageRemove',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `UPLOADING...`
+  String get basicInfoImageUploading {
+    return Intl.message(
+      'UPLOADING...',
+      name: 'basicInfoImageUploading',
       desc: '',
       args: [],
     );
@@ -797,16 +797,6 @@ class S {
     );
   }
 
-  /// `Bonds & Flags`
-  String get characterBondsFlagsDialogTitle {
-    return Intl.message(
-      'Bonds & Flags',
-      name: 'characterBondsFlagsDialogTitle',
-      desc: '',
-      args: [],
-    );
-  }
-
   /// `Bond`
   String get characterBondsFlagsDialogBond {
     return Intl.message(
@@ -852,6 +842,16 @@ class S {
     return Intl.message(
       'You have no bonds or flags. You can add some using the edit button above, then mark them off as completed as you go along your adventure.',
       name: 'characterBondsFlagsDialogNoData',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Bonds & Flags`
+  String get characterBondsFlagsDialogTitle {
+    return Intl.message(
+      'Bonds & Flags',
+      name: 'characterBondsFlagsDialogTitle',
       desc: '',
       args: [],
     );
@@ -947,16 +947,6 @@ class S {
     );
   }
 
-  /// `Character Theme`
-  String get characterSelectTheme {
-    return Intl.message(
-      'Character Theme',
-      name: 'characterSelectTheme',
-      desc: '',
-      args: [],
-    );
-  }
-
   /// `Ability Scores`
   String get characterRollsTitle {
     return Intl.message(
@@ -967,11 +957,11 @@ class S {
     );
   }
 
-  /// `Quick Roll Buttons`
-  String get customRollButtons {
+  /// `Character Theme`
+  String get characterSelectTheme {
     return Intl.message(
-      'Quick Roll Buttons',
-      name: 'customRollButtons',
+      'Character Theme',
+      name: 'characterSelectTheme',
       desc: '',
       args: [],
     );
@@ -1181,6 +1171,16 @@ class S {
     );
   }
 
+  /// `Moves & Spells`
+  String get createCharacterMovesSpells {
+    return Intl.message(
+      'Moves & Spells',
+      name: 'createCharacterMovesSpells',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `Character Name`
   String get createCharacterNameFieldLabel {
     return Intl.message(
@@ -1208,16 +1208,6 @@ class S {
       name: 'createCharacterPreviewPageMaxHp',
       desc: '',
       args: [hp],
-    );
-  }
-
-  /// `Moves & Spells`
-  String get createCharacterMovesSpells {
-    return Intl.message(
-      'Moves & Spells',
-      name: 'createCharacterMovesSpells',
-      desc: '',
-      args: [],
     );
   }
 
@@ -1288,6 +1278,27 @@ class S {
       name: 'createCharacterSaveButton',
       desc: '',
       args: [],
+    );
+  }
+
+  /// `{count} selected`
+  String createCharacterStartingGearChoiceCountNoMax(Object count) {
+    return Intl.message(
+      '$count selected',
+      name: 'createCharacterStartingGearChoiceCountNoMax',
+      desc: '',
+      args: [count],
+    );
+  }
+
+  /// `{count} selected (class allowance: {max})`
+  String createCharacterStartingGearChoiceCountWithMax(
+      Object count, Object max) {
+    return Intl.message(
+      '$count selected (class allowance: $max)',
+      name: 'createCharacterStartingGearChoiceCountWithMax',
+      desc: '',
+      args: [count, max],
     );
   }
 
@@ -1417,6 +1428,16 @@ class S {
     return Intl.message(
       'Right Button',
       name: 'customButtonRight',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Quick Roll Buttons`
+  String get customRollButtons {
+    return Intl.message(
+      'Quick Roll Buttons',
+      name: 'customRollButtons',
       desc: '',
       args: [],
     );
@@ -1725,6 +1746,16 @@ class S {
     );
   }
 
+  /// `No {entity} selected (required)`
+  String errorNoSelectionGenericRequired(Object entity) {
+    return Intl.message(
+      'No $entity selected (required)',
+      name: 'errorNoSelectionGenericRequired',
+      desc: '',
+      args: [entity],
+    );
+  }
+
   /// `Operation canceled`
   String get errorUserOperationCanceled {
     return Intl.message(
@@ -1792,126 +1823,6 @@ class S {
       name: 'exportSuccessfulTitle',
       desc: '',
       args: [],
-    );
-  }
-
-  /// `Give a general description of your class. Describe a calling for the type of person or creature that would choose or be raised in to this adventuring profession.`
-  String get formCharacterClassDescriptionPlaceholder {
-    return Intl.message(
-      'Give a general description of your class. Describe a calling for the type of person or creature that would choose or be raised in to this adventuring profession.',
-      name: 'formCharacterClassDescriptionPlaceholder',
-      desc: '',
-      args: [],
-    );
-  }
-
-  /// `Enter the class name`
-  String get formCharacterClassNamePlaceholder {
-    return Intl.message(
-      'Enter the class name',
-      name: 'formCharacterClassNamePlaceholder',
-      desc: '',
-      args: [],
-    );
-  }
-
-  /// `Category`
-  String get formGeneralCategory {
-    return Intl.message(
-      'Category',
-      name: 'formGeneralCategory',
-      desc: '',
-      args: [],
-    );
-  }
-
-  /// `{entity} category`
-  String formGeneralCategoryGeneric(Object entity) {
-    return Intl.message(
-      '$entity category',
-      name: 'formGeneralCategoryGeneric',
-      desc: '',
-      args: [entity],
-    );
-  }
-
-  /// `Name`
-  String get formGeneralName {
-    return Intl.message(
-      'Name',
-      name: 'formGeneralName',
-      desc: '',
-      args: [],
-    );
-  }
-
-  /// `{entity} name`
-  String formGeneralNameGeneric(Object entity) {
-    return Intl.message(
-      '$entity name',
-      name: 'formGeneralNameGeneric',
-      desc: '',
-      args: [entity],
-    );
-  }
-
-  /// `Title`
-  String get formGeneralTitle {
-    return Intl.message(
-      'Title',
-      name: 'formGeneralTitle',
-      desc: '',
-      args: [],
-    );
-  }
-
-  /// `{entity} title`
-  String formGeneralTitleGeneric(Object entity) {
-    return Intl.message(
-      '$entity title',
-      name: 'formGeneralTitleGeneric',
-      desc: '',
-      args: [entity],
-    );
-  }
-
-  /// `Description`
-  String get formGeneralDescription {
-    return Intl.message(
-      'Description',
-      name: 'formGeneralDescription',
-      desc: '',
-      args: [],
-    );
-  }
-
-  /// `{entity} description`
-  String formGeneralDescriptionGeneric(Object entity) {
-    return Intl.message(
-      '$entity description',
-      name: 'formGeneralDescriptionGeneric',
-      desc: '',
-      args: [entity],
-    );
-  }
-
-  /// `Explanation`
-  String get formGeneralExplanation {
-    return Intl.message(
-      'Explanation',
-      name: 'formGeneralExplanation',
-      desc: '',
-      args: [],
-    );
-  }
-
-  /// `{entity} explanation`
-  String formGeneralExplanationGeneric(Object entity) {
-    return Intl.message(
-      '$entity explanation',
-      name: 'formGeneralExplanationGeneric',
-      desc: '',
-      args: [entity],
     );
   }
 
@@ -2075,73 +1986,123 @@ class S {
     );
   }
 
-  /// `HP`
-  String get hp {
+  /// `Give a general description of your class. Describe a calling for the type of person or creature that would choose or be raised in to this adventuring profession.`
+  String get formCharacterClassDescriptionPlaceholder {
     return Intl.message(
-      'HP',
-      name: 'hp',
+      'Give a general description of your class. Describe a calling for the type of person or creature that would choose or be raised in to this adventuring profession.',
+      name: 'formCharacterClassDescriptionPlaceholder',
       desc: '',
       args: [],
     );
   }
 
-  /// `Modify HP`
-  String get hpDialogTitle {
+  /// `Enter the class name`
+  String get formCharacterClassNamePlaceholder {
     return Intl.message(
-      'Modify HP',
-      name: 'hpDialogTitle',
+      'Enter the class name',
+      name: 'formCharacterClassNamePlaceholder',
       desc: '',
       args: [],
     );
   }
 
-  /// `Current HP`
-  String get hpDialogCurrentHP {
+  /// `Category`
+  String get formGeneralCategory {
     return Intl.message(
-      'Current HP',
-      name: 'hpDialogCurrentHP',
+      'Category',
+      name: 'formGeneralCategory',
       desc: '',
       args: [],
     );
   }
 
-  /// `Heal\n+{amount}`
-  String hpDialogChangeAdd(Object amount) {
+  /// `{entity} category`
+  String formGeneralCategoryGeneric(Object entity) {
     return Intl.message(
-      'Heal\n+$amount',
-      name: 'hpDialogChangeAdd',
+      '$entity category',
+      name: 'formGeneralCategoryGeneric',
       desc: '',
-      args: [amount],
+      args: [entity],
     );
   }
 
-  /// `No Change`
-  String get hpDialogChangeNeutral {
+  /// `Description`
+  String get formGeneralDescription {
     return Intl.message(
-      'No Change',
-      name: 'hpDialogChangeNeutral',
+      'Description',
+      name: 'formGeneralDescription',
       desc: '',
       args: [],
     );
   }
 
-  /// `Damage\n-{amount}`
-  String hpDialogChangeRemove(Object amount) {
+  /// `{entity} description`
+  String formGeneralDescriptionGeneric(Object entity) {
     return Intl.message(
-      'Damage\n-$amount',
-      name: 'hpDialogChangeRemove',
+      '$entity description',
+      name: 'formGeneralDescriptionGeneric',
       desc: '',
-      args: [amount],
+      args: [entity],
     );
   }
 
-  /// `Override Max HP:`
-  String get hpDialogChangeOverrideMax {
+  /// `Explanation`
+  String get formGeneralExplanation {
     return Intl.message(
-      'Override Max HP:',
-      name: 'hpDialogChangeOverrideMax',
+      'Explanation',
+      name: 'formGeneralExplanation',
       desc: '',
       args: [],
+    );
+  }
+
+  /// `{entity} explanation`
+  String formGeneralExplanationGeneric(Object entity) {
+    return Intl.message(
+      '$entity explanation',
+      name: 'formGeneralExplanationGeneric',
+      desc: '',
+      args: [entity],
+    );
+  }
+
+  /// `Name`
+  String get formGeneralName {
+    return Intl.message(
+      'Name',
+      name: 'formGeneralName',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `{entity} name`
+  String formGeneralNameGeneric(Object entity) {
+    return Intl.message(
+      '$entity name',
+      name: 'formGeneralNameGeneric',
+      desc: '',
+      args: [entity],
+    );
+  }
+
+  /// `Title`
+  String get formGeneralTitle {
+    return Intl.message(
+      'Title',
+      name: 'formGeneralTitle',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `{entity} title`
+  String formGeneralTitleGeneric(Object entity) {
+    return Intl.message(
+      '$entity title',
+      name: 'formGeneralTitleGeneric',
+      desc: '',
+      args: [entity],
     );
   }
 
@@ -2172,6 +2133,76 @@ class S {
       name: 'genericValueField',
       desc: '',
       args: [entity],
+    );
+  }
+
+  /// `HP`
+  String get hp {
+    return Intl.message(
+      'HP',
+      name: 'hp',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Heal\n+{amount}`
+  String hpDialogChangeAdd(Object amount) {
+    return Intl.message(
+      'Heal\n+$amount',
+      name: 'hpDialogChangeAdd',
+      desc: '',
+      args: [amount],
+    );
+  }
+
+  /// `No Change`
+  String get hpDialogChangeNeutral {
+    return Intl.message(
+      'No Change',
+      name: 'hpDialogChangeNeutral',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Override Max HP:`
+  String get hpDialogChangeOverrideMax {
+    return Intl.message(
+      'Override Max HP:',
+      name: 'hpDialogChangeOverrideMax',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Damage\n-{amount}`
+  String hpDialogChangeRemove(Object amount) {
+    return Intl.message(
+      'Damage\n-$amount',
+      name: 'hpDialogChangeRemove',
+      desc: '',
+      args: [amount],
+    );
+  }
+
+  /// `Current HP`
+  String get hpDialogCurrentHP {
+    return Intl.message(
+      'Current HP',
+      name: 'hpDialogCurrentHP',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Modify HP`
+  String get hpDialogTitle {
+    return Intl.message(
+      'Modify HP',
+      name: 'hpDialogTitle',
+      desc: '',
+      args: [],
     );
   }
 
@@ -2338,16 +2369,6 @@ class S {
     );
   }
 
-  /// `Max Load`
-  String get maxLoad {
-    return Intl.message(
-      'Max Load',
-      name: 'maxLoad',
-      desc: '',
-      args: [],
-    );
-  }
-
   /// `Getting characters...`
   String get loadingCharacters {
     return Intl.message(
@@ -2383,6 +2404,16 @@ class S {
     return Intl.message(
       'Content Preview',
       name: 'markdownPreview',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Max Load`
+  String get maxLoad {
+    return Intl.message(
+      'Max Load',
+      name: 'maxLoad',
       desc: '',
       args: [],
     );
@@ -2442,6 +2473,29 @@ class S {
     );
   }
 
+  /// `Moves`
+  String get moves {
+    return Intl.message(
+      'Moves',
+      name: 'moves',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `{count, plural, =0 {No moves} one {One move} other {{count} moves}}`
+  String movesWithCount(num count) {
+    return Intl.plural(
+      count,
+      zero: 'No moves',
+      one: 'One move',
+      other: '$count moves',
+      name: 'movesWithCount',
+      desc: '',
+      args: [count],
+    );
+  }
+
   /// `Move to bottom`
   String get moveToEnd {
     return Intl.message(
@@ -2479,29 +2533,6 @@ class S {
       name: 'moveToStartGeneric',
       desc: '',
       args: [entity],
-    );
-  }
-
-  /// `Moves`
-  String get moves {
-    return Intl.message(
-      'Moves',
-      name: 'moves',
-      desc: '',
-      args: [],
-    );
-  }
-
-  /// `{count, plural, =0 {No moves} one {One move} other {{count} moves}}`
-  String movesWithCount(num count) {
-    return Intl.plural(
-      count,
-      zero: 'No moves',
-      one: 'One move',
-      other: '$count moves',
-      name: 'movesWithCount',
-      desc: '',
-      args: [count],
     );
   }
 
@@ -2700,26 +2731,6 @@ class S {
     );
   }
 
-  /// `Volley`
-  String get rollVolleyButton {
-    return Intl.message(
-      'Volley',
-      name: 'rollVolleyButton',
-      desc: '',
-      args: [],
-    );
-  }
-
-  /// `Discern Realities`
-  String get rollDiscernRealitiesButton {
-    return Intl.message(
-      'Discern Realities',
-      name: 'rollDiscernRealitiesButton',
-      desc: '',
-      args: [],
-    );
-  }
-
   /// `Button Text`
   String get rollButtonLabel {
     return Intl.message(
@@ -2747,6 +2758,16 @@ class S {
       name: 'rollButtonTooltipWithDebility',
       desc: '',
       args: [dice],
+    );
+  }
+
+  /// `Use preset`
+  String get rollButtonUsePreset {
+    return Intl.message(
+      'Use preset',
+      name: 'rollButtonUsePreset',
+      desc: '',
+      args: [],
     );
   }
 
@@ -2790,6 +2811,26 @@ class S {
     );
   }
 
+  /// `Discern Realities`
+  String get rollDiscernRealitiesButton {
+    return Intl.message(
+      'Discern Realities',
+      name: 'rollDiscernRealitiesButton',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Volley`
+  String get rollVolleyButton {
+    return Intl.message(
+      'Volley',
+      name: 'rollVolleyButton',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `Save`
   String get save {
     return Intl.message(
@@ -2807,16 +2848,6 @@ class S {
       name: 'saveGeneric',
       desc: '',
       args: [entity],
-    );
-  }
-
-  /// `See all`
-  String get seeAll {
-    return Intl.message(
-      'See all',
-      name: 'seeAll',
-      desc: '',
-      args: [],
     );
   }
 
@@ -2850,6 +2881,16 @@ class S {
     );
   }
 
+  /// `See all`
+  String get seeAll {
+    return Intl.message(
+      'See all',
+      name: 'seeAll',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `Select`
   String get select {
     return Intl.message(
@@ -2860,21 +2901,21 @@ class S {
     );
   }
 
-  /// `Selected`
-  String get selected {
-    return Intl.message(
-      'Selected',
-      name: 'selected',
-      desc: '',
-      args: [],
-    );
-  }
-
   /// `Select All`
   String get selectAll {
     return Intl.message(
       'Select All',
       name: 'selectAll',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Selected`
+  String get selected {
+    return Intl.message(
+      'Selected',
+      name: 'selected',
       desc: '',
       args: [],
     );
@@ -2980,16 +3021,6 @@ class S {
     );
   }
 
-  /// `Sign in with Google`
-  String get signinWithGoogleButton {
-    return Intl.message(
-      'Sign in with Google',
-      name: 'signinWithGoogleButton',
-      desc: '',
-      args: [],
-    );
-  }
-
   /// `Sign in with Apple`
   String get signinWithAppleButton {
     return Intl.message(
@@ -3010,11 +3041,31 @@ class S {
     );
   }
 
+  /// `Sign in with Google`
+  String get signinWithGoogleButton {
+    return Intl.message(
+      'Sign in with Google',
+      name: 'signinWithGoogleButton',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `Sign out`
   String get signoutButton {
     return Intl.message(
       'Sign out',
       name: 'signoutButton',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Default data language`
+  String get signupDefaultDataLanguage {
+    return Intl.message(
+      'Default data language',
+      name: 'signupDefaultDataLanguage',
       desc: '',
       args: [],
     );
@@ -3080,6 +3131,16 @@ class S {
     );
   }
 
+  /// `Password must contain {pattern}`
+  String signupPasswordValidationPatternGeneric(Object pattern) {
+    return Intl.message(
+      'Password must contain $pattern',
+      name: 'signupPasswordValidationPatternGeneric',
+      desc: '',
+      args: [pattern],
+    );
+  }
+
   /// `Password must contain at least one capital letter`
   String get signupPasswordValidationPatternLetter {
     return Intl.message(
@@ -3097,16 +3158,6 @@ class S {
       name: 'signupPasswordValidationPatternNumber',
       desc: '',
       args: [],
-    );
-  }
-
-  /// `Password must contain {pattern}`
-  String signupPasswordValidationPatternGeneric(Object pattern) {
-    return Intl.message(
-      'Password must contain $pattern',
-      name: 'signupPasswordValidationPatternGeneric',
-      desc: '',
-      args: [pattern],
     );
   }
 
@@ -3150,16 +3201,6 @@ class S {
     );
   }
 
-  /// `Default data language`
-  String get signupDefaultDataLanguage {
-    return Intl.message(
-      'Default data language',
-      name: 'signupDefaultDataLanguage',
-      desc: '',
-      args: [],
-    );
-  }
-
   /// `Move down`
   String get sortMoveDown {
     return Intl.message(
@@ -3185,16 +3226,6 @@ class S {
     return Intl.message(
       'Special Dice',
       name: 'specialDice',
-      desc: '',
-      args: [],
-    );
-  }
-
-  /// `Use preset`
-  String get rollButtonUsePreset {
-    return Intl.message(
-      'Use preset',
-      name: 'rollButtonUsePreset',
       desc: '',
       args: [],
     );

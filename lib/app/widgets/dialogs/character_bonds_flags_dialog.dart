@@ -40,8 +40,9 @@ class CharacterBondsFlagsDialog extends GetView<CharacterService> with Character
                   bonds: bonds,
                   flags: flags,
                   onChanged: (bonds, flags) => controller.updateCharacter(
-                    character
-                        .copyWith(sessionMarks: [...bonds, ...flags, ...char.endOfSessionMarks]),
+                    character.copyWith(
+                      sessionMarks: updateByKey(char.sessionMarks, [...bonds, ...flags]),
+                    ),
                   ),
                 ),
               );

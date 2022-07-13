@@ -143,20 +143,23 @@ class CreateCharacterView extends GetView<CreateCharacterController> {
                           _Card(
                             // contentPadding: EdgeInsets.symmetric(horizontal: 16, vertical: 12),
                             contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 0),
-
+                            valid: controller.alignment.value != null,
                             title: Text(controller.alignment.value != null
                                 ? S.current.entity(AlignmentValue) +
                                     ': ' +
                                     S.current.alignment(controller.alignment.value!.type)
                                 : S.current.selectGeneric(S.current.entity(AlignmentValue))),
                             subtitle: controller.alignment.value != null
-                                ? controller.alignment.value!.description.isNotEmpty
-                                    ? Text(controller.alignment.value!.description,
-                                        overflow: TextOverflow.ellipsis, maxLines: 1)
-                                    : null
+                                ? Text(
+                                    controller.alignment.value!.description.isNotEmpty
+                                        ? controller.alignment.value!.description
+                                        : S.current.noDescription,
+                                    overflow: TextOverflow.ellipsis,
+                                    maxLines: 1,
+                                  )
                                 : Text(
-                                    S.current
-                                        .errorNoSelectionGeneric(S.current.entity(AlignmentValue)),
+                                    S.current.errorNoSelectionGenericRequired(
+                                        S.current.entity(AlignmentValue)),
                                   ),
                             onTap: cls != null
                                 ? () => Get.toNamed(
@@ -177,6 +180,7 @@ class CreateCharacterView extends GetView<CreateCharacterController> {
                           //   subtitle: Text('Starting gear, moves & spells'),
                           //   childrenPadding: EdgeInsets.zero,
                           //   children: [
+
                           // Starting Gear
                           _Card(
                             contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),

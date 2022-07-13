@@ -35,7 +35,7 @@ class LibraryCollectionView extends GetView<LibraryCollectionController>
 
           return Card(
             child: ListTile(
-              onTap: ModelPages.openLibraryList(type: type),
+              onTap: () => ModelPages.openLibraryList(type: type),
               horizontalTitleGap: 8,
               leading: Container(
                 constraints: const BoxConstraints(maxWidth: 32),

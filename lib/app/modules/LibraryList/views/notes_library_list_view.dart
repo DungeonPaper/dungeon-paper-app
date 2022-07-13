@@ -48,10 +48,10 @@ class NotesLibraryListView extends GetView<LibraryListController<Note, NoteFilte
         actions: [
           EntityEditMenu(
             onEdit: onUpdate != null
-                ? ModelPages.openNotePage(
-                    note: note,
-                    onSave: onUpdate,
-                  )
+                ? () => ModelPages.openNotePage(
+                      note: note,
+                      onSave: onUpdate,
+                    )
                 : null,
             onDelete: onDelete != null ? () => onDelete(note) : null,
           ),

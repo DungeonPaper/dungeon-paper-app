@@ -51,10 +51,10 @@ class CharacterClassesLibraryListView
         actions: [
           EntityEditMenu(
             onEdit: onUpdate != null
-                ? ModelPages.openCharacterClassPage(
-                    characterClass: characterClass,
-                    onSave: onUpdate,
-                  )
+                ? () => ModelPages.openCharacterClassPage(
+                      characterClass: characterClass,
+                      onSave: onUpdate,
+                    )
                 : null,
             onDelete: onDelete != null ? () => onDelete(characterClass) : null,
           ),

@@ -1,3 +1,4 @@
+import 'package:dungeon_paper/app/data/models/character.dart';
 import 'package:dungeon_paper/app/data/models/move.dart';
 import 'package:dungeon_paper/app/data/models/spell.dart';
 import 'package:dungeon_paper/app/model_utils/model_pages.dart';
@@ -64,7 +65,7 @@ class SelectMovesSpellsView extends GetView<SelectMovesSpellsController> {
                               showStar: false,
                               actions: [
                                 EntityEditMenu(
-                                  onEdit: ModelPages.openMovePage(
+                                  onEdit: () => ModelPages.openMovePage(
                                     abilityScores: controller.abilityScores.value,
                                     move: move,
                                     onSave: (_move) => controller.moves.value =
@@ -86,19 +87,19 @@ class SelectMovesSpellsView extends GetView<SelectMovesSpellsController> {
                   height: 48,
                   child: OutlinedButton.icon(
                     style: ButtonThemes.primaryOutlined(context),
-                    onPressed: () => Get.toNamed(
-                      Routes.moves,
-                      arguments: MoveLibraryListArguments(
-                        character: null,
-                        preSelections: controller.moves,
-                        onAdd: (moves) {
-                          controller.dirty.value = true;
-                          controller.moves.value = addByKey(
-                            controller.moves,
-                            moves.map((m) => m.copyWithInherited(favorited: true)),
-                          );
-                        },
+                    onPressed: () => ModelPages.openMovesList(
+                      character: Character.empty().copyWith(
+                        characterClass: controller.characterClass.value,
                       ),
+                      preSelections: controller.moves,
+                      category: MoveCategory.advanced1,
+                      onAdd: (moves) {
+                        controller.dirty.value = true;
+                        controller.moves.value = addByKey(
+                          controller.moves,
+                          moves.map((m) => m.copyWithInherited(favorited: true)),
+                        );
+                      },
                     ),
                     label: Text(S.current.addGeneric(S.current.entityPlural(Move))),
                     icon: const Icon(Icons.add),
@@ -148,19 +149,18 @@ class SelectMovesSpellsView extends GetView<SelectMovesSpellsController> {
                   height: 48,
                   child: OutlinedButton.icon(
                     style: ButtonThemes.primaryOutlined(context),
-                    onPressed: () => Get.toNamed(
-                      Routes.spells,
-                      arguments: SpellLibraryListArguments(
-                        character: null,
-                        preSelections: controller.spells,
-                        onAdd: (spells) {
-                          controller.dirty.value = true;
-                          controller.spells.value = addByKey(
-                            controller.spells,
-                            spells.map((m) => m.copyWithInherited(prepared: true)),
-                          );
-                        },
+                    onPressed: () => ModelPages.openSpellsList(
+                      character: Character.empty().copyWith(
+                        characterClass: controller.characterClass.value,
                       ),
+                      list: controller.spells,
+                      onAdd: (spells) {
+                        controller.dirty.value = true;
+                        controller.spells.value = addByKey(
+                          controller.spells,
+                          spells.map((m) => m.copyWithInherited(prepared: true)),
+                        );
+                      },
                     ),
                     label: Text(S.current.addGeneric(S.current.entityPlural(Spell))),
                     icon: const Icon(Icons.add),

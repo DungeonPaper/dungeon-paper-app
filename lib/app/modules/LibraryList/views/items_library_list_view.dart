@@ -46,7 +46,7 @@ class ItemsLibraryListView extends GetView<LibraryListController<Item, ItemFilte
         actions: [
           EntityEditMenu(
             onEdit: onUpdate != null
-                ? ModelPages.openItemPage(
+                ? () => ModelPages.openItemPage(
                     item: item,
                     onSave: onUpdate,
                   )
