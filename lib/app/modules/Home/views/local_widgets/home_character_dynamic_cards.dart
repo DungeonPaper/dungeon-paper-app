@@ -1,6 +1,8 @@
+import 'package:dungeon_paper/app/data/models/character_settings.dart';
 import 'package:dungeon_paper/app/data/models/item.dart';
 import 'package:dungeon_paper/app/data/models/move.dart';
 import 'package:dungeon_paper/app/data/models/note.dart';
+import 'package:dungeon_paper/app/data/models/race.dart';
 import 'package:dungeon_paper/app/data/models/spell.dart';
 import 'package:dungeon_paper/app/data/services/character_service.dart';
 import 'package:dungeon_paper/app/data/services/library_service.dart';
@@ -12,6 +14,8 @@ import 'package:dungeon_paper/app/widgets/cards/move_card.dart';
 import 'package:dungeon_paper/app/widgets/cards/move_card_mini.dart';
 import 'package:dungeon_paper/app/widgets/cards/note_card.dart';
 import 'package:dungeon_paper/app/widgets/cards/note_card_mini.dart';
+import 'package:dungeon_paper/app/widgets/cards/race_card.dart';
+import 'package:dungeon_paper/app/widgets/cards/race_card_mini.dart';
 import 'package:dungeon_paper/app/widgets/cards/spell_card.dart';
 import 'package:dungeon_paper/app/widgets/cards/spell_card_mini.dart';
 import 'package:dungeon_paper/app/widgets/dialogs/confirm_delete_dialog.dart';
@@ -20,6 +24,7 @@ import 'package:dungeon_paper/generated/l10n.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
+import '../expanded_card_dialog_view.dart';
 import 'horizontal_list_card_view.dart';
 
 class HomeCharacterDynamicCards extends GetView<CharacterService> with LibraryServiceMixin {
@@ -103,50 +108,95 @@ class HomeCharacterDynamicCards extends GetView<CharacterService> with LibrarySe
                 padding: const EdgeInsets.symmetric(horizontal: 16),
                 child: Text(S.current.dynamicCategoriesMoves),
               ),
-            HorizontalCardListView<Move>(
-              cardSize: cardSize,
-              items: moves,
-              cardBuilder: (context, move, index, onTap) => Obx(
-                () => MoveCardMini(
-                  move: moves[index],
-                  onTap: onTap,
-                  onSave: (_move) => controller.updateCharacter(
-                    CharacterUtils.updateMoves(controller.current, [_move]),
-                  ),
-                  abilityScores: controller.current.abilityScores,
-                ),
-              ),
-              expandedCardBuilder: (context, move, index) => Obx(
-                () => MoveCard(
-                  maxContentHeight: maxContentHeight,
-                  expandable: false,
-                  initiallyExpanded: true,
-                  move: moves[index],
-                  abilityScores: controller.current.abilityScores,
-                  actions: [
-                    EntityEditMenu(
-                      onEdit: ModelPages.openMovePage(
-                        abilityScores: controller.current.abilityScores,
-                        move: moves[index],
-                        onSave: (move) => library
-                            .upsertToCharacter([move], forkBehavior: ForkBehavior.increaseVersion),
-                      ),
-                      onDelete: _delete(
-                        context,
-                        move,
-                        move.name,
-                        () => controller.updateCharacter(
-                          CharacterUtils.removeMoves(controller.current, [move]),
+            Builder(builder: (context) {
+              final raceCardMini = controller.current.race.favorited
+                  ? RaceCardMini(
+                      race: controller.current.race,
+                      onTap: () => Get.dialog(
+                        ExpandedCardDialogView<Race>(
+                          // heroTag: getKeyFor(item.value),
+                          heroTag: null,
+                          builder: (context) => RaceCard(
+                            maxContentHeight: maxContentHeight,
+                            expandable: false,
+                            initiallyExpanded: true,
+                            race: controller.current.race,
+                            actions: [
+                              EntityEditMenu(
+                                onEdit: ModelPages.openRacePage(
+                                  abilityScores: controller.current.abilityScores,
+                                  race: controller.current.race,
+                                  onSave: (_race) => controller.updateCharacter(
+                                    controller.current.copyWith(race: _race),
+                                  ),
+                                ),
+                                onDelete: null,
+                              ),
+                            ],
+                            onSave: (_race) => controller.updateCharacter(
+                              controller.current.copyWith(race: _race),
+                            ),
+                          ),
                         ),
                       ),
+                      onSave: (_race) => controller.updateCharacter(
+                        controller.current.copyWith(race: _race),
+                      ),
+                    )
+                  : null;
+              return HorizontalCardListView<Move>(
+                cardSize: cardSize,
+                items: moves,
+                cardBuilder: (context, move, index, onTap) => Obx(
+                  () => MoveCardMini(
+                    move: moves[index],
+                    onTap: onTap,
+                    onSave: (_move) => controller.updateCharacter(
+                      CharacterUtils.updateMoves(controller.current, [_move]),
                     ),
-                  ],
-                  onSave: (_move) => controller.updateCharacter(
-                    CharacterUtils.updateMoves(controller.current, [_move]),
+                    abilityScores: controller.current.abilityScores,
                   ),
                 ),
-              ),
-            ),
+                expandedCardBuilder: (context, move, index) => Obx(
+                  () => MoveCard(
+                    maxContentHeight: maxContentHeight,
+                    expandable: false,
+                    initiallyExpanded: true,
+                    move: moves[index],
+                    abilityScores: controller.current.abilityScores,
+                    actions: [
+                      EntityEditMenu(
+                        onEdit: ModelPages.openMovePage(
+                          abilityScores: controller.current.abilityScores,
+                          move: moves[index],
+                          onSave: (move) => library.upsertToCharacter([move],
+                              forkBehavior: ForkBehavior.increaseVersion),
+                        ),
+                        onDelete: _delete(
+                          context,
+                          move,
+                          move.name,
+                          () => controller.updateCharacter(
+                            CharacterUtils.removeMoves(controller.current, [move]),
+                          ),
+                        ),
+                      ),
+                    ],
+                    onSave: (_move) => controller.updateCharacter(
+                      CharacterUtils.updateMoves(controller.current, [_move]),
+                    ),
+                  ),
+                ),
+                leading: raceCardMini != null &&
+                        controller.current.settings.racePosition == RacePosition.start
+                    ? [raceCardMini]
+                    : [],
+                trailing: raceCardMini != null &&
+                        controller.current.settings.racePosition == RacePosition.end
+                    ? [raceCardMini]
+                    : [],
+              );
+            }),
             //
             // SPELLS
             //

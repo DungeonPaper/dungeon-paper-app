@@ -65,12 +65,11 @@ class HomeCharacterActionsView extends GetView<CharacterService> {
     if (char.settings.actionCategories.hidden.contains('Move')) {
       return null;
     }
-    var raceCard = RaceCard(
+    final raceCard = RaceCard(
       race: char.race,
       onSave: (race) => controller.updateCharacter(
         char.copyWithInherited(race: race),
       ),
-      abilityScores: char.abilityScores,
       actions: [
         EntityEditMenu(
           onDelete: null,

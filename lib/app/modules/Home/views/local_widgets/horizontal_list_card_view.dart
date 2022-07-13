@@ -11,6 +11,8 @@ class HorizontalCardListView<T extends WithMeta> extends StatelessWidget {
     required this.items,
     required this.cardBuilder,
     required this.expandedCardBuilder,
+    this.leading = const [],
+    this.trailing = const [],
   }) : super(key: key);
 
   final Size cardSize;
@@ -23,6 +25,8 @@ class HorizontalCardListView<T extends WithMeta> extends StatelessWidget {
   ) expandedCardBuilder;
   final Iterable<T> items;
   final itemsObs = <T>[].obs;
+  final List<Widget> leading;
+  final List<Widget> trailing;
 
   @override
   Widget build(BuildContext context) {
@@ -40,6 +44,15 @@ class HorizontalCardListView<T extends WithMeta> extends StatelessWidget {
         // itemExtent: 2,
         padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
         children: [
+          ...leading.map(
+            (c) => Padding(
+              padding: const EdgeInsets.only(right: 8),
+              child: SizedBox(
+                width: cardSize.width,
+                child: c,
+              ),
+            ),
+          ),
           for (final item in enumerate(displayedItems))
             Padding(
               padding: EdgeInsets.only(right: item.index == items.length - 1 ? 0 : 8),
@@ -75,6 +88,15 @@ class HorizontalCardListView<T extends WithMeta> extends StatelessWidget {
                 ),
               ),
             ),
+          ...trailing.map(
+            (c) => Padding(
+              padding: const EdgeInsets.only(left: 8),
+              child: SizedBox(
+                width: cardSize.width,
+                child: c,
+              ),
+            ),
+          ),
         ],
       ),
     );
