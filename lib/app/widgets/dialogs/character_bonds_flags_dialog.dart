@@ -40,7 +40,8 @@ class CharacterBondsFlagsDialog extends GetView<CharacterService> with Character
                   bonds: bonds,
                   flags: flags,
                   onChanged: (bonds, flags) => controller.updateCharacter(
-                    character.copyWith(sessionMarks: [...bonds, ...flags]),
+                    character
+                        .copyWith(sessionMarks: [...bonds, ...flags, ...char.endOfSessionMarks]),
                   ),
                 ),
               );
@@ -71,29 +72,25 @@ class CharacterBondsFlagsDialog extends GetView<CharacterService> with Character
                 if (bonds.isNotEmpty && flags.isNotEmpty)
                   Text(S.current.characterBondsFlagsDialogBonds, style: textTheme.caption),
                 for (final bond in bonds) ...[
-                  ListTile(
+                  CheckboxListTile(
+                    title: Text(bond.description),
                     visualDensity: VisualDensity.compact,
                     dense: true,
-                    onTap: () => onChecked(bond),
-                    leading: Checkbox(
-                      value: bond.completed,
-                      onChanged: (val) => onChecked(bond, val),
-                    ),
-                    title: Text(bond.description),
+                    value: bond.completed,
+                    onChanged: (val) => onChecked(bond, val),
+                    controlAffinity: ListTileControlAffinity.leading,
                   ),
                 ],
                 if (bonds.isNotEmpty && flags.isNotEmpty)
                   Text(S.current.characterBondsFlagsDialogFlags, style: textTheme.caption),
                 for (final flag in flags) ...[
-                  ListTile(
+                  CheckboxListTile(
+                    title: Text(flag.description),
                     visualDensity: VisualDensity.compact,
                     dense: true,
-                    onTap: () => onChecked(flag),
-                    leading: Checkbox(
-                      value: flag.completed,
-                      onChanged: (val) => onChecked(flag, val),
-                    ),
-                    title: Text(flag.description),
+                    value: flag.completed,
+                    onChanged: (val) => onChecked(flag, val),
+                    controlAffinity: ListTileControlAffinity.leading,
                   ),
                 ],
               ],

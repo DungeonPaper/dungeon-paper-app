@@ -41,43 +41,6 @@ class HomeCharacterView extends GetView<CharacterService> {
             CharacterSubtitle(character: char),
             const SizedBox(height: 4),
             pad(const HomeCharacterExtras()),
-            // p(Row(
-            //   mainAxisSize: MainAxisSize.min,
-            //   mainAxisAlignment: MainAxisAlignment.center,
-            //   children: [
-            //     // IconButton(
-            //     //   iconSize: 20,
-            //     //   icon: const Icon(Icons.library_books),
-            //     //   onPressed: () => Get.dialog(const CharacterBioDialog()),
-            //     // ),
-            //     Column(
-            //       mainAxisSize: MainAxisSize.min,
-            //       // crossAxisAlignment: CrossAxisAlignment.start,
-            //       children: [
-            //         Text(
-            //           char.displayName,
-            //           textScaleFactor: 1.4,
-            //           textAlign: TextAlign.center,
-            //         ),
-            //         Text(
-            //           S.current.characterHeaderSubtitle(
-            //             char.stats.level,
-            //             char.characterClass.name,
-            //             // "test",
-            //             // char.bio.toRawJson() ?? 'test',
-            //             S.current.alignment(char.bio.alignment.key),
-            //           ),
-            //           textAlign: TextAlign.center,
-            //         ),
-            //       ],
-            //     ),
-            //     // IconButton(
-            //     //   iconSize: 20,
-            //     //   icon: const Icon(Icons.edit),
-            //     //   onPressed: () => null,
-            //     // ),
-            //   ],
-            // )),
             pad(const SizedBox(height: 4)),
             pad(
               const Center(

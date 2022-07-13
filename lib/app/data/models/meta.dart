@@ -148,7 +148,7 @@ class Meta<DataType> with RepositoryServiceMixin {
         'updated': updated?.toString(),
       };
 
-  static String keyFor(dynamic object) => object is WithMeta
+  static String keyFor(dynamic object) => object is WithKey
       ? object.key
       : object is dw.Tag
           ? object.name
@@ -352,9 +352,12 @@ class MetaSharing {
       };
 }
 
-abstract class WithMeta<T, M> {
-  abstract final Meta<M> meta;
+abstract class WithKey {
   abstract final String key;
+}
+
+abstract class WithMeta<T, M> implements WithKey {
+  abstract final Meta<M> meta;
   T copyWith({Meta<M>? meta});
   T copyWithInherited({Meta<M>? meta, String? key}) => copyWith(meta: meta);
   String get displayName;

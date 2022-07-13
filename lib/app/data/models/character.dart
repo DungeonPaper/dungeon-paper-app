@@ -71,6 +71,7 @@ class Character implements WithMeta<Character, CharacterMeta>, WithIcon {
   int get defaultMaxHp => (characterClass.hp + abilityScores.hpBaseValue);
   int get currentExp => stats.currentExp;
   int get pendingExp => sessionMarks.where((m) => m.completed).length;
+  double get pendingExpPercent => pendingExp / maxExp;
 
   int get maxExp => stats.maxExp;
   double get currentHpPercent => clamp(stats.currentHp / maxHp, 0, 1);
@@ -133,9 +134,8 @@ class Character implements WithMeta<Character, CharacterMeta>, WithIcon {
   Set<String> get actionCategories => settings.actionCategories.getSorted(allActionCategories);
 
   dw.Dice get damageDice => stats.damageDice ?? defaultDamageDice;
-  
-  dw.Dice get defaultDamageDice =>
-      characterClass.damageDice.copyWithModifierValue(damageModifier);
+
+  dw.Dice get defaultDamageDice => characterClass.damageDice.copyWithModifierValue(damageModifier);
 
   List<SessionMark> get bonds =>
       sessionMarks.where((e) => e.type == dw.SessionMarkType.bond).toList();

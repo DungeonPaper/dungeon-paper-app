@@ -1,4 +1,5 @@
 import 'package:dungeon_paper/app/data/services/character_service.dart';
+import 'package:dungeon_paper/app/widgets/atoms/buffer_progress_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -15,15 +16,22 @@ class ExpBar extends StatelessWidget {
       return Column(
         mainAxisSize: MainAxisSize.min,
         children: [
-          ClipRRect(
-            borderRadius: BorderRadius.circular(10),
-            child: LinearProgressIndicator(
-              value: char != null ? char.currentExpPercent : 1,
-              minHeight: 17.5,
-              color: const Color(0xff1e88e5),
-              backgroundColor: Colors.blue[100],
-            ),
+          BufferProgressBar(
+            value: char != null ? char.currentExpPercent : 1,
+            bufferValue: char != null ? char.currentExpPercent + char.pendingExpPercent : 0,
+            height: 17.5,
+            color: const Color(0xff1e88e5),
+            backgroundColor: Colors.blue[100],
           ),
+          // ClipRRect(
+          //   borderRadius: BorderRadius.circular(10),
+          //   child: LinearProgressIndicator(
+          //     value: char != null ? char.currentExpPercent : 1,
+          //     minHeight: 17.5,
+          //     color: const Color(0xff1e88e5),
+          //     backgroundColor: Colors.blue[100],
+          //   ),
+          // ),
           const SizedBox(height: 4),
           Row(
             mainAxisAlignment: MainAxisAlignment.center,

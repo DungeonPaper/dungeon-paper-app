@@ -2,7 +2,9 @@ import 'dart:convert';
 import 'package:dungeon_paper/generated/l10n.dart';
 import 'package:dungeon_world_data/dungeon_world_data.dart' as dw;
 
-class SessionMark extends dw.SessionMark {
+import 'meta.dart';
+
+class SessionMark extends dw.SessionMark implements WithKey {
   SessionMark({
     required super.key,
     required super.description,
