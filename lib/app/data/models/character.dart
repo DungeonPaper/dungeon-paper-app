@@ -77,7 +77,8 @@ class Character implements WithMeta<Character, CharacterMeta>, WithIcon {
   double get currentExpPercent => clamp(stats.currentExp / maxExp, 0, 1);
   int get maxLoad => stats.load ?? (characterClass.load + abilityScores.loadBaseValue);
   int get currentLoad => items.fold(0, (weight, item) => weight + item.weight);
-  int get armor => stats.armor ?? items.fold(0, (armor, item) => armor + item.armor);
+  int get armor => stats.armor ?? defaultArmor;
+  int get defaultArmor => items.fold(0, (armor, item) => armor + item.armor);
   int get damageModifier => items.fold(0, (mod, item) => mod + item.damage);
 
   int getLightTheme(User user) => settings.lightTheme ?? user.settings.defaultLightTheme;
@@ -131,8 +132,10 @@ class Character implements WithMeta<Character, CharacterMeta>, WithIcon {
 
   Set<String> get actionCategories => settings.actionCategories.getSorted(allActionCategories);
 
-  dw.Dice get damageDice =>
-      stats.damageDice ?? characterClass.damageDice.copyWithModifierValue(damageModifier);
+  dw.Dice get damageDice => stats.damageDice ?? defaultDamageDice;
+  
+  dw.Dice get defaultDamageDice =>
+      characterClass.damageDice.copyWithModifierValue(damageModifier);
 
   List<SessionMark> get bonds =>
       sessionMarks.where((e) => e.type == dw.SessionMarkType.bond).toList();

@@ -50,16 +50,6 @@ class S {
     return Localizations.of<S>(context, S);
   }
 
-  /// `You can drag & drop the stat cards to change the order in which they appear throughout this character's screens.`
-  String get abilityScoreInfo {
-    return Intl.message(
-      'You can drag & drop the stat cards to change the order in which they appear throughout this character\'s screens.',
-      name: 'abilityScoreInfo',
-      desc: '',
-      args: [],
-    );
-  }
-
   /// ``
   String get abilityScoreBondDebilityDescription {
     return Intl.message(
@@ -230,6 +220,16 @@ class S {
     );
   }
 
+  /// `You can drag & drop the stat cards to change the order in which they appear throughout this character's screens.`
+  String get abilityScoreInfo {
+    return Intl.message(
+      'You can drag & drop the stat cards to change the order in which they appear throughout this character\'s screens.',
+      name: 'abilityScoreInfo',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `That last knock to the head shook something loose. Brain not work so good.`
   String get abilityScoreIntDebilityDescription {
     return Intl.message(
@@ -277,6 +277,16 @@ class S {
       name: 'abilityScoreModifierValueLabel',
       desc: '',
       args: [modifier],
+    );
+  }
+
+  /// `Roll random stat`
+  String get abilityScoreRollButtonTooltip {
+    return Intl.message(
+      'Roll random stat',
+      name: 'abilityScoreRollButtonTooltip',
+      desc: '',
+      args: [],
     );
   }
 

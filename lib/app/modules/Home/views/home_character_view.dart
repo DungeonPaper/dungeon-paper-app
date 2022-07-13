@@ -100,6 +100,7 @@ class HomeCharacterView extends GetView<CharacterService> {
                     onPressed: () => Get.dialog(
                       DamageDiceDialog(
                         damage: char.stats.damageDice,
+                        defaultDamage: char.defaultDamageDice,
                         abilityScores: char.abilityScores,
                         onChanged: (damage) => controller.updateCharacter(
                           char.copyWith(
@@ -118,6 +119,7 @@ class HomeCharacterView extends GetView<CharacterService> {
                     onPressed: () => Get.dialog(
                       ArmorDialog(
                         armor: char.stats.armor,
+                        defaultArmor: char.defaultArmor,
                         onChanged: (armor) => controller.updateCharacter(
                           char.copyWith(
                             stats: char.stats.copyWithArmor(armor),

@@ -294,6 +294,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "abilityScoreIntName":
             MessageLookupByLibrary.simpleMessage("Intelligence"),
         "abilityScoreModifierValueLabel": m1,
+        "abilityScoreRollButtonTooltip":
+            MessageLookupByLibrary.simpleMessage("Roll random stat"),
         "abilityScoreStrDebilityDescription": MessageLookupByLibrary.simpleMessage(
             "You can\'t exert much force. Maybe it\'s just fatigue and injury, or maybe your strength was drained by magic."),
         "abilityScoreStrDebilityName":

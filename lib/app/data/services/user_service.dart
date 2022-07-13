@@ -42,7 +42,7 @@ class UserService extends GetxService
     StorageHandler.instance.currentDelegate = 'firestore';
     StorageHandler.instance.setCollectionPrefix('Data/$email');
     await loadMyRepo();
-    var dbUser = await FirestoreDelegate().getDocument('Data', email!);
+    var dbUser = await StorageHandler.instance.firestoreGlobal.getDocument('Data', email!);
     if (dbUser == null) {
       final resp = await _migrateUser(user.email!);
       if (resp == null) {

@@ -93,7 +93,8 @@ class AbilityScoresFormView extends GetView<AbilityScoresFormController> {
                                     crossAxisAlignment: CrossAxisAlignment.center,
                                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                     children: [
-                                      Expanded(
+                                      SizedBox(
+                                        width: 170,
                                         child: Padding(
                                           padding: const EdgeInsets.symmetric(horizontal: 8),
                                           child: NumberTextField(
@@ -107,16 +108,19 @@ class AbilityScoresFormView extends GetView<AbilityScoresFormController> {
                                         ),
                                       ),
                                       Padding(
-                                        padding: const EdgeInsets.symmetric(horizontal: 8),
-                                        child: Text(S.current
-                                            .abilityScoreModifierValueLabel(stat.modifier)),
+                                        padding: const EdgeInsets.symmetric(horizontal: 8)
+                                            .copyWith(right: 16),
+                                        child: Text(
+                                          S.current.abilityScoreModifierValueLabel(stat.modifier),
+                                        ),
                                       ),
-                                      const SizedBox(width: 8),
                                       RoundIconButton(
                                         icon: DiceIcon.from(dw.Dice.d6),
                                         onPressed: () => controller.textControllers[stat.key]!
                                             .text = Random().nextInt(21).toString(),
+                                        tooltip: S.current.abilityScoreRollButtonTooltip,
                                       ),
+                                      Expanded(child: Container()),
                                       Padding(
                                         padding: const EdgeInsets.symmetric(horizontal: 8),
                                         child: EntityEditMenu(

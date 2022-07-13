@@ -100,13 +100,7 @@ class CharacterService extends GetxService with LoadingServiceMixin, UserService
     all.addAll(Map.fromIterable(list, key: (c) => c.key));
 
     if (all.isNotEmpty && _currentKey.value == null) {
-      final hasLastChar = all.values.any((c) => c.meta.data?.lastUsed != null);
-      if (hasLastChar) {
-        final lastChar = charsByLastUsed.first;
-        _currentKey.value = lastChar.key;
-      } else {
-        _currentKey.value = all.keys.first;
-      }
+      switchToLastUsedChar();
     }
 
     if (_currentKey.value != null) {
@@ -115,6 +109,16 @@ class CharacterService extends GetxService with LoadingServiceMixin, UserService
 
     loadingService.loadingCharacters = false;
     loadingService.afterFirstLoad = !loadingService.loadingUser;
+  }
+
+  void switchToLastUsedChar() {
+    final hasLastChar = all.values.any((c) => c.meta.data?.lastUsed != null);
+    if (hasLastChar) {
+      final lastChar = charsByLastUsed.first;
+      _currentKey.value = lastChar.key;
+    } else {
+      _currentKey.value = all.keys.first;
+    }
   }
 
   Future<void> updateCharacter(Character character, {bool switchToCharacter = false}) {

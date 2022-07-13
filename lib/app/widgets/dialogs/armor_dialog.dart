@@ -9,10 +9,12 @@ class ArmorDialog extends StatefulWidget {
   const ArmorDialog({
     super.key,
     required this.armor,
+    required this.defaultArmor,
     required this.onChanged,
   });
 
   final int? armor;
+  final int defaultArmor;
   final void Function(int? armor) onChanged;
 
   @override
@@ -27,7 +29,8 @@ class _ArmorDialogState extends State<ArmorDialog> {
   void initState() {
     super.initState();
     useDefault = widget.armor == null;
-    controller = TextEditingController(text: widget.armor?.toString() ?? '');
+    controller =
+        TextEditingController(text: widget.armor?.toString() ?? widget.defaultArmor.toString());
     controller.addListener(_listener);
   }
 
@@ -44,41 +47,37 @@ class _ArmorDialogState extends State<ArmorDialog> {
       content: SingleChildScrollView(
         child: Column(
           children: [
-            ListTile(
-              minLeadingWidth: 20,
-              onTap: () => setState(() {
-                useDefault = !useDefault;
-                if (useDefault) {
-                  controller.text = '';
+            CheckboxListTile(
+              // minLeadingWidth: 20,
+              title: Text(S.current.characterAutoArmor),
+              dense: true,
+              visualDensity: VisualDensity.compact,
+              controlAffinity: ListTileControlAffinity.leading,
+              value: useDefault,
+              onChanged: (value) => setState(() {
+                final _value = value ?? !useDefault;
+                useDefault = _value;
+                if (_value) {
+                  controller.text = '${widget.defaultArmor}';
                 }
               }),
-              visualDensity: VisualDensity.compact,
-              dense: true,
-              leading: SizedBox(
-                width: 20,
-                child: Checkbox(
-                  value: useDefault,
-                  onChanged: (value) => setState(() {
-                    useDefault = value!;
-                    if (value) {
-                      controller.text = '';
-                    }
-                  }),
-                ),
-              ),
-              title: Text(S.current.characterAutoArmor),
             ),
+            const SizedBox(height: 8),
             NumberTextField(
               controller: controller,
               numberType: NumberType.int,
+              decoration: InputDecoration(hintText: '0', label: Text(S.current.armor)),
               minValue: 0,
               enabled: !useDefault,
             )
           ],
         ),
       ),
-      actions: DialogControls.save(context,
-          onSave: useDefault || controller.text.isNotEmpty ? save : null, onCancel: cancel),
+      actions: DialogControls.save(
+        context,
+        onSave: useDefault || controller.text.isNotEmpty ? save : null,
+        onCancel: cancel,
+      ),
     );
   }
 

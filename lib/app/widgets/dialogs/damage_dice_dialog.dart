@@ -11,11 +11,13 @@ class DamageDiceDialog extends StatefulWidget {
   const DamageDiceDialog({
     super.key,
     required this.damage,
+    required this.defaultDamage,
     required this.onChanged,
     required this.abilityScores,
   });
 
   final dw.Dice? damage;
+  final dw.Dice defaultDamage;
   final void Function(dw.Dice? damage) onChanged;
   final AbilityScores abilityScores;
 
@@ -47,24 +49,21 @@ class _DamageDiceDialogState extends State<DamageDiceDialog> {
       content: SingleChildScrollView(
         child: Column(
           children: [
-            ListTile(
-              minLeadingWidth: 20,
-              onTap: () => setState(() {
-                useDefault = !useDefault;
-              }),
+            CheckboxListTile(
+              title: Text(S.current.characterAutoDamage),
               dense: true,
               visualDensity: VisualDensity.compact,
-              leading: SizedBox(
-                width: 20,
-                child: Checkbox(
-                  value: useDefault,
-                  onChanged: (value) => setState(() {
-                    useDefault = value!;
-                  }),
-                ),
-              ),
-              title: Text(S.current.characterAutoDamage),
+              controlAffinity: ListTileControlAffinity.leading,
+              value: useDefault,
+              onChanged: (value) => setState(() {
+                final _value = value ?? !useDefault;
+                useDefault = _value;
+                if (_value) {
+                  damage = widget.defaultDamage;
+                }
+              }),
             ),
+            const SizedBox(height: 8),
             DiceForm(
               dice: damage,
               onChanged: (dw.Dice _dice) => setState(() => damage = _dice),

@@ -151,7 +151,8 @@ class NumberTextField extends StatelessWidget {
               onPressed: _incr,
             ),
       ),
-      keyboardType: keyboardType,
+      keyboardType:
+          keyboardType ?? TextInputType.numberWithOptions(decimal: numberType == NumberType.double),
       textCapitalization: textCapitalization,
       textInputAction: textInputAction,
       style: style,

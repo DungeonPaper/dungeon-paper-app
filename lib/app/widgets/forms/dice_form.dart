@@ -64,10 +64,9 @@ class _DiceFormState extends State<DiceForm> {
               child: NumberTextField(
                 numberType: NumberType.int,
                 controller: amount,
-                keyboardType: const TextInputType.numberWithOptions(decimal: false),
                 enabled: widget.enabled,
+                minValue: 1,
                 decoration: InputDecoration(
-                  filled: true,
                   label: Text(S.current.diceAmount),
                   alignLabelWithHint: true,
                 ),
@@ -162,10 +161,8 @@ class _DiceFormState extends State<DiceForm> {
             child: NumberTextField(
               numberType: NumberType.int,
               controller: modifierNum,
-              keyboardType: const TextInputType.numberWithOptions(decimal: false),
               enabled: widget.enabled,
               decoration: InputDecoration(
-                filled: true,
                 hintText: S.current.diceUseValuePlaceholder,
                 label: Text(S.current.diceUseValueLabel),
               ),
