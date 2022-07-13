@@ -47,7 +47,7 @@ final stringSorter = createSorter<String, String>(
   (val) => (val ?? '').toLowerCase().trim(),
 );
 
-String cleanStr(String str) => str.toLowerCase().trim();
+String cleanStr(String str) => str.toLowerCase();
 
 bool Function(String) stringFilter(String search) =>
     (str) => cleanStr(str).contains(cleanStr(search));

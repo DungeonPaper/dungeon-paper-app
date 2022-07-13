@@ -1,5 +1,6 @@
 import 'dart:ui';
 
+import 'package:dungeon_paper/app/data/models/ability_scores.dart';
 import 'package:dungeon_paper/app/data/models/character.dart';
 import 'package:dungeon_paper/app/data/models/character_class.dart';
 import 'package:dungeon_paper/app/data/models/item.dart';
@@ -86,6 +87,7 @@ class UniversalSearchView extends GetView<UniversalSearchController> {
                           itemBuilder: (context, index) => _CardByType(
                             value.data![index],
                             highlightWords: [controller.search.text.trim()],
+                            abilityScores: controller.char.abilityScores,
                           ),
                         ),
                       );
@@ -105,10 +107,12 @@ class _CardByType extends StatelessWidget {
     // ignore: unused_element
     super.key,
     required this.highlightWords,
+    required this.abilityScores,
   });
 
   final dynamic result;
   final List<String> highlightWords;
+  final AbilityScores abilityScores;
 
   @override
   Widget build(BuildContext context) {
@@ -127,12 +131,14 @@ class _CardByType extends StatelessWidget {
           move: result,
           showStar: result.favorited,
           highlightWords: highlightWords,
+          abilityScores: abilityScores,
         );
       case Spell:
         return SpellCard(
           spell: result,
           showStar: result.prepared,
           highlightWords: highlightWords,
+          abilityScores: abilityScores,
         );
       case Item:
         return ItemCard(
