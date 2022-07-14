@@ -5,20 +5,33 @@ import 'package:get/get.dart';
 
 import '../../../generated/l10n.dart';
 
-class ExpBar extends StatelessWidget {
-  const ExpBar({Key? key}) : super(key: key);
+class ExpBar extends StatelessWidget with CharacterServiceMixin {
+  const ExpBar({
+    Key? key,
+    this.currentExp,
+    this.maxExp,
+    this.pendingExp,
+  }) : super(key: key);
+
+  final int? currentExp;
+  final int? maxExp;
+  final int? pendingExp;
 
   @override
   Widget build(BuildContext context) {
     return Obx(() {
-      final CharacterService controller = Get.find();
-      var char = controller.maybeCurrent;
+      final char = maybeChar;
+      final curValue = currentExp ?? char?.currentExp;
+      final maxValue = maxExp ?? char?.maxExp;
+      final curPercent = curValue != null && maxValue != null ? curValue / maxValue : 1.0;
+      final curBuffer = char != null ? curPercent + (pendingExp ?? char.pendingExpPercent) : 0.0;
+
       return Column(
         mainAxisSize: MainAxisSize.min,
         children: [
           BufferProgressBar(
-            value: char != null ? char.currentExpPercent : 1,
-            bufferValue: char != null ? char.currentExpPercent + char.pendingExpPercent : 0,
+            value: curPercent,
+            bufferValue: curBuffer,
             height: 17.5,
             color: const Color(0xff1e88e5),
             backgroundColor: Colors.blue[100],

@@ -1,6 +1,8 @@
 import 'dart:convert';
+import 'package:dungeon_paper/core/utils/math_utils.dart';
 import 'package:dungeon_world_data/dungeon_world_data.dart' as dw;
 import 'package:dungeon_world_data/dungeon_world_data.dart';
+import 'package:flutter/material.dart';
 
 class CharacterStats {
   CharacterStats({
@@ -21,7 +23,12 @@ class CharacterStats {
   final dw.Dice? damageDice;
   final int? load;
 
-  int get maxExp => level + 7;
+  int get maxExp => maxExpForLevel(level);
+  static int maxExpForLevel(int level) => level + 7;
+
+  int get totalMaxExp => totalMaxExpForLevel(level);
+  static int totalMaxExpForLevel(int level) =>
+      range(1, level).fold<int>(8, (acc, l) => acc + maxExpForLevel(l + 1));
 
   CharacterStats copyWith({
     int? level,

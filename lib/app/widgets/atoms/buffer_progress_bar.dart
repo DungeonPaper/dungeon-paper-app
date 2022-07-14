@@ -22,9 +22,10 @@ class BufferProgressBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ClipRRect(
-      borderRadius: BorderRadius.circular(10),
-      child: Container(
+    return SizedBox(
+      height: height,
+      child: ClipRRect(
+        borderRadius: BorderRadius.circular(10),
         child: LayoutBuilder(builder: (context, constraints) {
           return Stack(
             children: [

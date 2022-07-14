@@ -4,8 +4,12 @@ import 'package:get/get.dart';
 
 import '../../../generated/l10n.dart';
 
-class HpBar extends StatelessWidget {
-  const HpBar({Key? key, this.currentHp, this.maxHp}) : super(key: key);
+class HpBar extends StatelessWidget with CharacterServiceMixin {
+  const HpBar({
+    Key? key,
+    this.currentHp,
+    this.maxHp,
+  }) : super(key: key);
 
   final int? currentHp;
   final int? maxHp;
@@ -13,8 +17,7 @@ class HpBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Obx(() {
-      final CharacterService controller = Get.find();
-      final char = controller.maybeCurrent;
+      final char = maybeChar;
       final curValue = currentHp ?? char?.currentHp;
       final maxValue = maxHp ?? char?.maxHp;
       final curPercent = curValue != null && maxValue != null ? curValue / maxValue : 1.0;

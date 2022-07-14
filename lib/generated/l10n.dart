@@ -1766,6 +1766,66 @@ class S {
     );
   }
 
+  /// `Add\n+{amount}`
+  String expDialogChangeAdd(Object amount) {
+    return Intl.message(
+      'Add\n+$amount',
+      name: 'expDialogChangeAdd',
+      desc: '',
+      args: [amount],
+    );
+  }
+
+  /// `No Change`
+  String get expDialogChangeNeutral {
+    return Intl.message(
+      'No Change',
+      name: 'expDialogChangeNeutral',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Override Max EXP:`
+  String get expDialogChangeOverrideMax {
+    return Intl.message(
+      'Override Max EXP:',
+      name: 'expDialogChangeOverrideMax',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Reduce\n-{amount}`
+  String expDialogChangeRemove(Object amount) {
+    return Intl.message(
+      'Reduce\n-$amount',
+      name: 'expDialogChangeRemove',
+      desc: '',
+      args: [amount],
+    );
+  }
+
+  /// `Current EXP`
+  String get expDialogCurrentEXP {
+    return Intl.message(
+      'Current EXP',
+      name: 'expDialogCurrentEXP',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Modify EXP`
+  String get expDialogTitle {
+    return Intl.message(
+      'Modify EXP',
+      name: 'expDialogTitle',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `Further details`
   String get explanation {
     return Intl.message(

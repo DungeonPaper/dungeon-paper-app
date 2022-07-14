@@ -6,6 +6,7 @@ import 'package:dungeon_paper/app/themes/themes.dart';
 import 'package:dungeon_paper/app/widgets/atoms/hp_bar.dart';
 import 'package:dungeon_paper/app/widgets/atoms/number_text_field.dart';
 import 'package:dungeon_paper/app/widgets/molecules/dialog_controls.dart';
+import 'package:dungeon_paper/app/widgets/molecules/value_change_slider.dart';
 import 'package:dungeon_paper/generated/l10n.dart';
 import 'package:flutter/material.dart';
 
@@ -52,74 +53,18 @@ class _HPDialogState extends State<HPDialog> with CharacterServiceMixin {
               const SizedBox(height: 24),
               SizedBox(
                 width: 400,
-                child: Row(
-                  children: [
-                    Expanded(
-                      child: Text(
-                        isChangeNeutral
-                            ? S.current.hpDialogChangeNeutral
-                            : isChangePositive
-                                ? S.current.hpDialogChangeAdd(changeAmount)
-                                : S.current.hpDialogChangeRemove(changeAmount),
-                        style: textTheme.headline5!.copyWith(
-                          color: isChangeNeutral
-                              ? null
-                              : isChangePositive
-                                  ? DwColors.success
-                                  : theme.colorScheme.error,
-                        ),
-                        textAlign: TextAlign.center,
-                      ),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 32),
-                      child: Container(
-                        decoration: BoxDecoration(borderRadius: borderRadius),
-                        clipBehavior: Clip.antiAlias,
-                        width: 60,
-                        height: 100,
-                        child: WheelSpinner(
-                          value: overrideHP.toDouble(),
-                          min: 0,
-                          max: maxHP.toDouble(),
-                          // childBuilder: (_) => Text(_.toString()),
-                          borderRadius: borderRadius,
-                          minMaxLabelBuilder: (_) => '',
-                          onSlideUpdate: (value) => setState(() => overrideHP = value.round()),
-                          dividerColor:
-                              theme.brightness == Brightness.light ? null : Colors.grey[800],
-                          boxDecoration: (theme.brightness == Brightness.light
-                                  ? BoxDecoration(
-                                      gradient: LinearGradient(
-                                        begin: Alignment.topCenter,
-                                        end: Alignment.bottomCenter,
-                                        stops: const [0.0, 0.2, 0.8, 1.0],
-                                        colors: [
-                                          Colors.grey[350]!,
-                                          Colors.grey[50]!,
-                                          Colors.grey[50]!,
-                                          Colors.grey[350]!
-                                        ],
-                                      ),
-                                    )
-                                  : BoxDecoration(
-                                      gradient: LinearGradient(
-                                        begin: Alignment.topCenter,
-                                        end: Alignment.bottomCenter,
-                                        stops: const [0.0, 0.2, 0.8, 1.0],
-                                        colors: [
-                                          Colors.black,
-                                          Colors.grey[900]!,
-                                          Colors.grey[900]!,
-                                          Colors.black
-                                        ],
-                                      ),
-                                    ))
-                              .copyWith(borderRadius: borderRadius),
-                        ),
-                      ),
-                    ),
-                  ],
+                child: SizedBox(
+                  width: 400,
+                  child: ValueChangeSlider<int>(
+                    value: currentHP,
+                    minValue: 0,
+                    maxValue: maxHP,
+                    updatedValue: overrideHP,
+                    onChange: (val) => setState(() => overrideHP = val.round()),
+                    positiveText: S.current.hpDialogChangeAdd,
+                    neutralText: (_) => S.current.hpDialogChangeNeutral,
+                    negativeText: S.current.hpDialogChangeRemove,
+                  ),
                 ),
               ),
               ListTile(
