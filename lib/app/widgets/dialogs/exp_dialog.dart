@@ -63,7 +63,7 @@ class _EXPDialogState extends State<EXPDialog> with CharacterServiceMixin {
       content: SingleChildScrollView(
         child: Obx(
           () {
-            var level = maxExp - 7;
+            final level = maxExp - 7;
 
             return Column(
               mainAxisSize: MainAxisSize.min,
@@ -74,7 +74,7 @@ class _EXPDialogState extends State<EXPDialog> with CharacterServiceMixin {
                   child: ExpBar(
                     currentExp: clamp(overrideExp, 0, maxExp),
                     maxExp: maxExp,
-                    pendingExp: (char.pendingExp + eosPendingExp),
+                    pendingExp: totalPendingExp,
                   ),
                 ),
                 const SizedBox(height: 24),
@@ -169,6 +169,8 @@ class _EXPDialogState extends State<EXPDialog> with CharacterServiceMixin {
       ? CharacterStats.maxExpForLevel(int.tryParse(levelOverride.text) ?? char.stats.level)
       : char.maxExp;
   int get eosPendingExp => eosMarks.where((mark) => mark.completed).length;
+  int get totalPendingExp => char.pendingExp + eosPendingExp;
+  bool get shouldOverrideExp => overrideExp != currentExp;
 
   // TODO use
   clampCurrentEXP([dynamic value]) {
@@ -176,15 +178,28 @@ class _EXPDialogState extends State<EXPDialog> with CharacterServiceMixin {
   }
 
   void save() {
-    // TODO level up logic
+    final beforeLevelExp = char.stats.currentExp + totalPendingExp;
+    int updatedLevel = char.stats.level;
+    int updatedExp = beforeLevelExp;
+
+    while (updatedExp >= CharacterStats.maxExpForLevel(updatedLevel)) {
+      updatedExp = beforeLevelExp - CharacterStats.maxExpForLevel(updatedLevel);
+      updatedLevel++;
+    }
+
     charService.updateCharacter(
       char.copyWith(
         stats: char.stats.copyWith(
-          currentExp: overrideExp,
-          level: shouldOverrideLevel ? int.parse(levelOverride.text) : null,
+          currentExp: shouldOverrideExp ? overrideExp : updatedExp,
+          level:
+              shouldOverrideLevel ? int.tryParse(levelOverride.text) ?? updatedLevel : updatedLevel,
         ),
+        sessionMarks: char.sessionMarks.map((e) => e.copyWithInherited(completed: false)).toList(),
       ),
     );
+
+    // TODO pop-up level up dialog if needed
+
     close();
   }
 
