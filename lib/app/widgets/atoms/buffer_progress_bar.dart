@@ -1,6 +1,5 @@
 import 'package:dungeon_paper/core/utils/math_utils.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/framework.dart';
 
 class BufferProgressBar extends StatelessWidget {
   const BufferProgressBar({

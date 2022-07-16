@@ -1,8 +1,6 @@
 import 'dart:math';
 
 import 'package:dungeon_paper/app/data/services/character_service.dart';
-import 'package:dungeon_paper/app/themes/colors.dart';
-import 'package:dungeon_paper/app/themes/themes.dart';
 import 'package:dungeon_paper/app/widgets/atoms/hp_bar.dart';
 import 'package:dungeon_paper/app/widgets/atoms/number_text_field.dart';
 import 'package:dungeon_paper/app/widgets/molecules/dialog_controls.dart';
@@ -11,7 +9,6 @@ import 'package:dungeon_paper/generated/l10n.dart';
 import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
-import 'package:wheel_spinner/wheel_spinner.dart';
 
 enum ValueChange { positive, neutral, negative }
 

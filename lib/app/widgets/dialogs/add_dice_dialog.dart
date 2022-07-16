@@ -26,7 +26,6 @@ class AddDiceDialog extends StatefulWidget {
 
 class _AddDiceDialogState extends State<AddDiceDialog> {
   final RepositoryService repo = Get.find();
-  // late int amount;
   late dw.Dice dice;
 
   @override

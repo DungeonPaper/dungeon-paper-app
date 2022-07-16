@@ -3,12 +3,8 @@ import 'dart:math';
 import 'package:dungeon_paper/app/data/models/character_stats.dart';
 import 'package:dungeon_paper/app/data/models/session_marks.dart';
 import 'package:dungeon_paper/app/data/services/character_service.dart';
-import 'package:dungeon_paper/app/themes/colors.dart';
-import 'package:dungeon_paper/app/themes/themes.dart';
 import 'package:dungeon_paper/app/widgets/atoms/custom_expansion_panel.dart';
-import 'package:dungeon_paper/app/widgets/atoms/custom_expansion_tile.dart';
 import 'package:dungeon_paper/app/widgets/atoms/exp_bar.dart';
-import 'package:dungeon_paper/app/widgets/atoms/hp_bar.dart';
 import 'package:dungeon_paper/app/widgets/atoms/number_text_field.dart';
 import 'package:dungeon_paper/app/widgets/molecules/dialog_controls.dart';
 import 'package:dungeon_paper/app/widgets/molecules/value_change_slider.dart';
@@ -18,7 +14,6 @@ import 'package:dungeon_paper/generated/l10n.dart';
 import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
-import 'package:wheel_spinner/wheel_spinner.dart';
 
 enum ValueChange { positive, neutral, negative }
 
@@ -179,12 +174,16 @@ class _EXPDialogState extends State<EXPDialog> with CharacterServiceMixin {
       updatedLevel++;
     }
 
+    final finalExp = shouldOverrideExp ? overrideExp : updatedExp;
+    final finalLevel =
+        shouldOverrideLevel ? int.tryParse(levelOverride.text) ?? updatedLevel : updatedLevel;
+
     charService.updateCharacter(
       char.copyWith(
         stats: char.stats.copyWith(
-          currentExp: shouldOverrideExp ? overrideExp : updatedExp,
+          currentExp: finalExp,
           level:
-              shouldOverrideLevel ? int.tryParse(levelOverride.text) ?? updatedLevel : updatedLevel,
+              finalExp >= CharacterStats.maxExpForLevel(finalLevel) ? finalLevel + 1 : finalLevel,
         ),
         sessionMarks: char.sessionMarks.map((e) => e.copyWithInherited(completed: false)).toList(),
       ),

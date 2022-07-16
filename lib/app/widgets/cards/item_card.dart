@@ -1,4 +1,3 @@
-import 'package:dungeon_paper/app/data/models/ability_scores.dart';
 import 'package:dungeon_paper/app/widgets/chips/item_amount_chip.dart';
 import 'package:dungeon_paper/app/widgets/chips/item_armor_chip.dart';
 import 'package:dungeon_paper/app/widgets/chips/item_damage_chip.dart';

@@ -2,7 +2,6 @@ import 'dart:convert';
 import 'package:dungeon_paper/core/utils/math_utils.dart';
 import 'package:dungeon_world_data/dungeon_world_data.dart' as dw;
 import 'package:dungeon_world_data/dungeon_world_data.dart';
-import 'package:flutter/material.dart';
 
 class CharacterStats {
   CharacterStats({
