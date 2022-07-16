@@ -48,15 +48,7 @@ class _EXPDialogState extends State<EXPDialog> with CharacterServiceMixin {
 
   @override
   Widget build(BuildContext context) {
-    // final theme = Theme.of(context);
-    // final textTheme = theme.textTheme;
     const dlgWidth = 400.0;
-
-    // debugPrint('total max exp for level 1: ${CharacterStats.totalMaxExpForLevel(1)}\n\n'
-    //     'total max exp for level 2: ${CharacterStats.totalMaxExpForLevel(2)}\n\n'
-    //     'total max exp for level 3: ${CharacterStats.totalMaxExpForLevel(3)}\n\n'
-    //     'total max exp for level 4: ${CharacterStats.totalMaxExpForLevel(4)}\n\n'
-    //     'total max exp for level 5: ${CharacterStats.totalMaxExpForLevel(5)}');
 
     return AlertDialog(
       title: Text(S.current.expDialogTitle),
