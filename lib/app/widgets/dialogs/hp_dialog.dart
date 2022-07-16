@@ -34,8 +34,6 @@ class _HPDialogState extends State<HPDialog> with CharacterServiceMixin {
 
   @override
   Widget build(BuildContext context) {
-    final theme = Theme.of(context);
-    final textTheme = theme.textTheme;
     const dlgWidth = 400.0;
 
     return AlertDialog(

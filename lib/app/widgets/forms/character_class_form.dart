@@ -22,7 +22,7 @@ class AddCharacterClassForm extends GetView<DynamicFormController<CharacterClass
     return DynamicForm<CharacterClass>(
       entity: controller.entity.value,
       inputs: controller.inputs,
-      onChange: (d) => onChange(controller.setData(d)),
+      onChange: (d) => onChange(controller.setData(d, setDirty: true)),
       onReplace: (d) => onChange(controller.setFromEntity(d)),
     );
   }
@@ -48,17 +48,17 @@ class CharacterClassFormController extends DynamicFormController<CharacterClass>
   CharacterClass setFromEntity(CharacterClass characterClass) => setData({
         'name': characterClass.name,
         'description': characterClass.description,
-      });
+      }, setDirty: false);
 
   @override
-  CharacterClass setData(Map<String, dynamic> data) {
+  CharacterClass setData(Map<String, dynamic> data, {required bool setDirty}) {
     entity.value = entity.value.copyWithInherited(
       meta: data['meta'] ?? entity.value.meta,
       name: data['name'],
       description: data['description'],
     );
 
-    return super.setData(data);
+    return super.setData(data, setDirty: setDirty);
   }
 
   @override

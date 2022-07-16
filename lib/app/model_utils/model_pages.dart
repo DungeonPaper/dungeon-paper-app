@@ -21,6 +21,7 @@ import 'package:dungeon_paper/app/widgets/forms/item_form.dart';
 import 'package:dungeon_paper/app/widgets/forms/library_entity_form.dart';
 import 'package:dungeon_paper/app/widgets/forms/move_form.dart';
 import 'package:dungeon_paper/app/widgets/forms/note_form.dart';
+import 'package:dungeon_paper/app/widgets/forms/race_form.dart';
 import 'package:dungeon_paper/app/widgets/forms/spell_form.dart';
 import 'package:get/get.dart';
 
@@ -87,17 +88,17 @@ class ModelPages {
     required void Function(Race race) onSave,
     required AbilityScores abilityScores,
   }) =>
-      () => Get.to(
-            () => LibraryEntityForm<Race>(
-              onSave: onSave,
-              type: race == null ? ItemFormType.create : ItemFormType.edit,
-            ),
-            binding: RepositoryItemFormBinding<Race>(),
-            // TODO add arguments
-            // arguments: RaceFormArguments(
-
-            // )
-          );
+      Get.to(
+        () => LibraryEntityForm<Race>(
+          onSave: onSave,
+          type: race == null ? ItemFormType.create : ItemFormType.edit,
+        ),
+        binding: RepositoryItemFormBinding<Race>(),
+        arguments: RaceFormArguments(
+          race: race,
+          abilityScores: abilityScores,
+        ),
+      );
 
   static void openSpellsList({
     Character? character,

@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'package:dungeon_paper/app/modules/LibraryList/views/filters/race_filters.dart';
 import 'package:dungeon_paper/core/utils/uuid.dart';
 import 'package:dungeon_world_data/dungeon_world_data.dart' as dw;
 import 'package:flutter/material.dart';
@@ -103,6 +104,12 @@ class Race extends dw.Race implements WithMeta, WithIcon {
   @override
   IconData get icon => genericIcon;
   static IconData get genericIcon => Icons.pets;
+
+  static int Function(Race a, Race b) sorter(RaceFilters filters) => sort;
+
+  static int sort(Race a, Race b) {
+    return a.name.toLowerCase().compareTo(b.name.toLowerCase());
+  }
 
   @override
   Map<String, dynamic> toJson() => {

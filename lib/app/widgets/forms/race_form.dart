@@ -1,5 +1,5 @@
 import 'package:dungeon_paper/app/data/models/character_class.dart';
-import 'package:dungeon_paper/app/data/models/move.dart';
+import 'package:dungeon_paper/app/data/models/race.dart';
 import 'package:dungeon_paper/app/data/models/ability_scores.dart';
 import 'package:dungeon_paper/app/widgets/forms/dynamic_form/dynamic_form.dart';
 import 'package:dungeon_paper/app/widgets/forms/dynamic_form/form_input_data.dart';
@@ -9,14 +9,14 @@ import 'package:dungeon_paper/generated/l10n.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-class MoveForm extends GetView<DynamicFormController<Move>> {
-  const MoveForm({
+class RaceForm extends GetView<DynamicFormController<Race>> {
+  const RaceForm({
     Key? key,
     required this.onChange,
     required this.type,
   }) : super(key: key);
 
-  final void Function(Move move) onChange;
+  final void Function(Race race) onChange;
   final ItemFormType type;
 
   @override
@@ -26,69 +26,46 @@ class MoveForm extends GetView<DynamicFormController<Move>> {
       inputs: controller.inputs,
       onChange: (d) => onChange(controller.setData(d, setDirty: true)),
       onReplace: (d) => onChange(controller.setFromEntity(d)),
-      builder: (context, inputs, entity) {
-        return ListView(
-          padding: const EdgeInsets.symmetric(horizontal: 16).copyWith(bottom: 70),
-          children: [
-            inputs[0],
-            const SizedBox(height: 16),
-            Row(
-              children: [
-                Expanded(child: inputs[1]),
-                const SizedBox(width: 16),
-                Expanded(child: inputs[2]),
-              ],
-            ),
-            const SizedBox(height: 16),
-            for (final input in inputs.sublist(3))
-              Padding(padding: const EdgeInsets.only(bottom: 16), child: input),
-          ],
-        );
-      },
     );
   }
 }
 
-class MoveFormController extends DynamicFormController<Move> {
-  late final Move? move;
+class RaceFormController extends DynamicFormController<Race> {
+  late final Race? race;
   late final AbilityScores abilityScores;
 
   @override
-  Move? get argument => move;
+  Race? get argument => race;
 
   @override
-  final entity = Move.empty().obs;
+  final entity = Race.empty().obs;
 
   @override
-  Move setFromEntity(Move move) => setData({
-        'name': move.name,
-        'category': move.category,
-        'description': move.description,
-        'explanation': move.explanation,
-        'tags': move.tags,
-        'dice': move.dice,
-        'classKeys': move.classKeys,
+  Race setFromEntity(Race race) => setData({
+        'name': race.name,
+        'description': race.description,
+        'explanation': race.explanation,
+        'tags': race.tags,
+        'classKeys': race.classKeys,
       }, setDirty: false);
 
   @override
   void onInit() {
-    final MoveFormArguments args = Get.arguments;
-    move = args.move;
+    final RaceFormArguments args = Get.arguments;
+    race = args.race;
     abilityScores = args.abilityScores;
     super.onInit();
   }
 
   @override
-  Move setData(Map<String, dynamic> data, {required bool setDirty}) {
+  Race setData(Map<String, dynamic> data, {required bool setDirty}) {
     final classKeysList = asList<String>(data['classKeys']);
     entity.value = entity.value.copyWithInherited(
       meta: data['meta'] ?? entity.value.meta,
       name: data['name'],
-      category: data['category'],
       description: data['description'],
       explanation: data['explanation'],
       tags: data['tags'],
-      dice: data['dice'],
       classKeys: classKeysList,
     );
 
@@ -104,23 +81,9 @@ class MoveFormController extends DynamicFormController<Move> {
       FormInputData<FormTextInputData>(
         name: 'name',
         data: FormTextInputData(
-          label: S.current.formGeneralNameGeneric(S.current.entity(Move)),
+          label: S.current.formGeneralNameGeneric(S.current.entity(Race)),
           textCapitalization: TextCapitalization.words,
           text: entity.value.name,
-        ),
-      ),
-      FormInputData(
-        name: 'category',
-        data: FormDropdownInputData(
-          value: entity.value.category,
-          label: Text(S.current.entity(MoveCategory)),
-          isExpanded: true,
-          items: MoveCategory.values.map(
-            (cat) => DropdownMenuItem(
-              child: Text(S.current.moveCategoryWithLevelShort(cat.name)),
-              value: cat,
-            ),
-          ),
         ),
       ),
       FormInputData(
@@ -140,7 +103,7 @@ class MoveFormController extends DynamicFormController<Move> {
       FormInputData<FormTextInputData>(
         name: 'description',
         data: FormTextInputData(
-          label: S.current.formGeneralDescriptionGeneric(S.current.entity(Move)),
+          label: S.current.formGeneralDescriptionGeneric(S.current.entity(Race)),
           maxLines: 10,
           minLines: 5,
           rich: true,
@@ -151,20 +114,12 @@ class MoveFormController extends DynamicFormController<Move> {
       FormInputData<FormTextInputData>(
         name: 'explanation',
         data: FormTextInputData(
-          label: S.current.formGeneralExplanationGeneric(S.current.entity(Move)),
+          label: S.current.formGeneralExplanationGeneric(S.current.entity(Race)),
           maxLines: 10,
           minLines: 5,
           rich: true,
           textCapitalization: TextCapitalization.sentences,
           text: entity.value.explanation,
-        ),
-      ),
-      FormInputData<FormDiceInputData>(
-        name: 'dice',
-        data: FormDiceInputData(
-          value: entity.value.dice,
-          abilityScores: abilityScores,
-          guessFrom: {'description', 'explanation'},
         ),
       ),
       FormInputData<FormTagsInputData>(
@@ -175,12 +130,12 @@ class MoveFormController extends DynamicFormController<Move> {
   }
 }
 
-class MoveFormArguments {
-  final Move? move;
+class RaceFormArguments {
+  final Race? race;
   final AbilityScores abilityScores;
 
-  MoveFormArguments({
-    required this.move,
+  RaceFormArguments({
+    required this.race,
     required this.abilityScores,
   });
 }

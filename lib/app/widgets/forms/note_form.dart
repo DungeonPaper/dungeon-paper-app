@@ -21,7 +21,7 @@ class NoteForm extends GetView<DynamicFormController<Note>> {
     return DynamicForm<Note>(
       entity: controller.entity.value,
       inputs: controller.inputs,
-      onChange: (d) => onChange(controller.setData(d)),
+      onChange: (d) => onChange(controller.setData(d, setDirty: true)),
       onReplace: (d) => onChange(controller.setFromEntity(d)),
     );
   }
@@ -48,10 +48,10 @@ class NoteFormController extends DynamicFormController<Note> {
         'description': note.description,
         'category': note.category,
         'tags': note.tags,
-      });
+      }, setDirty: false);
 
   @override
-  Note setData(Map<String, dynamic> data) {
+  Note setData(Map<String, dynamic> data, {required bool setDirty}) {
     entity.value = entity.value.copyWith(
       meta: data['meta'] ?? entity.value.meta,
       title: data['title'],
@@ -60,7 +60,7 @@ class NoteFormController extends DynamicFormController<Note> {
       tags: data['tags'],
     );
 
-    return super.setData(data);
+    return super.setData(data, setDirty: setDirty);
   }
 
   @override

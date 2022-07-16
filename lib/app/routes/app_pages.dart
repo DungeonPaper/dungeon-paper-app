@@ -1,3 +1,4 @@
+import 'package:dungeon_paper/app/modules/LibraryList/views/racees_library_list_view.dart';
 import 'package:flutter/widgets.dart';
 
 import 'package:get/get.dart';
@@ -145,6 +146,12 @@ class AppPages {
     GetPage(
       name: Routes.characterClass,
       page: () => const CharacterClassesLibraryListView(),
+      binding: LibraryListBinding(),
+      preventDuplicates: false,
+    ),
+    GetPage(
+      name: Routes.races,
+      page: () => const RacesLibraryListView(),
       binding: LibraryListBinding(),
       preventDuplicates: false,
     ),

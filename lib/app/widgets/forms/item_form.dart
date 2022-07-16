@@ -21,7 +21,7 @@ class ItemForm extends GetView<DynamicFormController<Item>> {
     return DynamicForm<Item>(
       entity: controller.entity.value,
       inputs: controller.inputs,
-      onChange: (d) => onChange(controller.setData(d)),
+      onChange: (d) => onChange(controller.setData(d, setDirty: true)),
       onReplace: (d) => onChange(controller.setFromEntity(d)),
     );
   }
@@ -48,10 +48,10 @@ class ItemFormController extends DynamicFormController<Item> {
         'name': item.name,
         'description': item.description,
         'tags': item.tags,
-      });
+      }, setDirty: false);
 
   @override
-  Item setData(Map<String, dynamic> data) {
+  Item setData(Map<String, dynamic> data, {required bool setDirty}) {
     entity.value = entity.value.copyWithInherited(
       meta: data['meta'] ?? entity.value.meta,
       name: data['name'],
@@ -59,7 +59,7 @@ class ItemFormController extends DynamicFormController<Item> {
       tags: data['tags'],
     );
 
-    return super.setData(data);
+    return super.setData(data, setDirty: setDirty);
   }
 
   @override

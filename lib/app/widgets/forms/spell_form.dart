@@ -23,7 +23,7 @@ class SpellForm extends GetView<DynamicFormController<Spell>> {
     return DynamicForm<Spell>(
       entity: controller.entity.value,
       inputs: controller.inputs,
-      onChange: (d) => onChange(controller.setData(d)),
+      onChange: (d) => onChange(controller.setData(d, setDirty: true)),
       onReplace: (d) => onChange(controller.setFromEntity(d)),
     );
   }
@@ -56,10 +56,10 @@ class SpellFormController extends DynamicFormController<Spell> {
         'tags': spell.tags,
         'dice': spell.dice,
         'classKeys': spell.classKeys,
-      });
+      }, setDirty: false);
 
   @override
-  Spell setData(Map<String, dynamic> data) {
+  Spell setData(Map<String, dynamic> data, {required bool setDirty}) {
     final classKeysList = asList<String>(data['classKeys']);
     entity.value = entity.value.copyWithInherited(
       meta: data['meta'] ?? entity.value.meta,
@@ -74,7 +74,7 @@ class SpellFormController extends DynamicFormController<Spell> {
     return super.setData({
       ...data,
       'classKeys': classKeysList.isEmpty ? null : classKeysList[0],
-    });
+    }, setDirty: setDirty);
   }
 
   @override

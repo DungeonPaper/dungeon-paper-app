@@ -3,6 +3,7 @@ import 'package:dungeon_paper/app/data/models/item.dart';
 import 'package:dungeon_paper/app/data/models/meta.dart';
 import 'package:dungeon_paper/app/data/models/move.dart';
 import 'package:dungeon_paper/app/data/models/note.dart';
+import 'package:dungeon_paper/app/data/models/race.dart';
 import 'package:dungeon_paper/app/data/models/spell.dart';
 import 'package:dungeon_paper/app/data/models/user.dart';
 import 'package:dungeon_paper/app/data/services/user_service.dart';
@@ -12,6 +13,7 @@ import 'package:dungeon_paper/app/widgets/atoms/meta_sync_menu.dart';
 import 'package:dungeon_paper/app/widgets/forms/item_form.dart';
 import 'package:dungeon_paper/app/widgets/forms/move_form.dart';
 import 'package:dungeon_paper/app/widgets/forms/note_form.dart';
+import 'package:dungeon_paper/app/widgets/forms/race_form.dart';
 import 'package:dungeon_paper/app/widgets/forms/spell_form.dart';
 import 'package:dungeon_paper/app/widgets/forms/dynamic_form/dynamic_form.dart';
 import 'package:dungeon_paper/generated/l10n.dart';
@@ -99,6 +101,11 @@ class LibraryEntityForm<T extends WithMeta> extends GetView<DynamicFormControlle
         );
       case CharacterClass:
         return AddCharacterClassForm(
+          onChange: setEntity,
+          type: type,
+        );
+      case Race:
+        return RaceForm(
           onChange: setEntity,
           type: type,
         );

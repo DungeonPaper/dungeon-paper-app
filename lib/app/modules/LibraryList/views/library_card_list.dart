@@ -3,6 +3,7 @@ import 'package:dungeon_paper/app/data/models/item.dart';
 import 'package:dungeon_paper/app/data/models/meta.dart';
 import 'package:dungeon_paper/app/data/models/move.dart';
 import 'package:dungeon_paper/app/data/models/note.dart';
+import 'package:dungeon_paper/app/data/models/race.dart';
 import 'package:dungeon_paper/app/data/models/spell.dart';
 import 'package:dungeon_paper/app/modules/LibraryList/bindings/library_form_binding.dart';
 import 'package:dungeon_paper/app/modules/LibraryList/controllers/library_list_controller.dart';
@@ -12,6 +13,7 @@ import 'package:dungeon_paper/app/widgets/forms/item_form.dart';
 import 'package:dungeon_paper/app/widgets/forms/library_entity_form.dart';
 import 'package:dungeon_paper/app/widgets/forms/move_form.dart';
 import 'package:dungeon_paper/app/widgets/forms/note_form.dart';
+import 'package:dungeon_paper/app/widgets/forms/race_form.dart';
 import 'package:dungeon_paper/app/widgets/forms/spell_form.dart';
 import 'package:dungeon_paper/generated/l10n.dart';
 import 'package:flutter/material.dart';
@@ -125,7 +127,8 @@ class LibraryCardList<T extends WithMeta, F extends EntityFilters<T>>
         return NoteFormArguments(note: null);
       case CharacterClass:
         return CharacterClassFormArguments(characterClass: null);
-      // TODO add race
+      case Race:
+        return RaceFormArguments(race: null, abilityScores: extraData['abilityScores']);
     }
     throw TypeError();
   }

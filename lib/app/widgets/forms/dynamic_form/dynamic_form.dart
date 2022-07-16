@@ -104,16 +104,16 @@ abstract class DynamicFormController<T extends WithMeta> extends GetxController 
   final dirty = false.obs;
 
   @mustCallSuper
-  T setData(Map<String, dynamic> data) {
+  T setData(Map<String, dynamic> data, {required bool setDirty}) {
     for (final input in inputs) {
       if (data.containsKey(input.name) && !input.data.equals(data[input.name])) {
         input.data.value = data[input.name];
-        dirty.value = true;
+        dirty.value = setDirty;
       }
     }
     if (data.containsKey('meta')) {
       entity.value = entity.value.copyWithInherited(meta: data['meta']);
-      dirty.value = false;
+      dirty.value = setDirty;
     }
     if (dirty.value) {
       entity.value = Meta.increaseMetaVersion(entity.value);

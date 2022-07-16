@@ -16,6 +16,7 @@ abstract class Routes {
   static const moves = _Paths.moves;
   static const spells = _Paths.spells;
   static const items = _Paths.items;
+  static const races = _Paths.races;
   static const notes = _Paths.notes;
   static const characterClass = _Paths.characterClass;
 
@@ -66,6 +67,7 @@ abstract class _Paths {
   static const moves = '/moves';
   static const spells = '/spells';
   static const items = '/items';
+  static const races = '/races';
   static const notes = '/notes';
   static const bondsFlags = '/bonds-flags';
   static const bio = '/biography';
