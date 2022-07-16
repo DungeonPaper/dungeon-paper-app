@@ -39,6 +39,8 @@ class _HPDialogState extends State<HPDialog> with CharacterServiceMixin {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     final textTheme = theme.textTheme;
+    const dlgWidth = 400.0;
+
     return AlertDialog(
       title: Text(S.current.hpDialogTitle),
       content: SingleChildScrollView(
@@ -46,15 +48,18 @@ class _HPDialogState extends State<HPDialog> with CharacterServiceMixin {
           () => Column(
             mainAxisSize: MainAxisSize.min,
             children: [
-              HpBar(
-                currentHp: overrideHP,
-                maxHp: maxHP,
+              SizedBox(
+                width: dlgWidth,
+                child: HpBar(
+                  currentHp: overrideHP,
+                  maxHp: maxHP,
+                ),
               ),
               const SizedBox(height: 24),
               SizedBox(
-                width: 400,
+                width: dlgWidth,
                 child: SizedBox(
-                  width: 400,
+                  width: dlgWidth,
                   child: ValueChangeSlider<int>(
                     value: currentHP,
                     minValue: 0,

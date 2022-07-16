@@ -7,6 +7,7 @@ import 'dart:math';
 
 import 'package:dungeon_paper/app/data/models/roll_button.dart';
 import 'package:dungeon_paper/app/data/models/user.dart';
+import 'package:dungeon_paper/core/utils/list_utils.dart';
 import 'package:dungeon_paper/core/utils/math_utils.dart';
 import 'package:dungeon_paper/core/utils/uuid.dart';
 import 'package:dungeon_paper/generated/l10n.dart';
@@ -143,8 +144,31 @@ class Character implements WithMeta<Character, CharacterMeta>, WithIcon {
   List<SessionMark> get flags =>
       sessionMarks.where((e) => e.type == dw.SessionMarkType.flag).toList();
 
-  List<SessionMark> get endOfSessionMarks =>
-      sessionMarks.where((e) => e.type == dw.SessionMarkType.endOfSession).toList();
+  List<SessionMark> get endOfSessionMarks => sessionMarks
+      .where((e) => e.type == dw.SessionMarkType.endOfSession)
+      .withDefaultValue(defaultEndOfSessionMarks)
+      .toList();
+
+  static List<SessionMark> get defaultEndOfSessionMarks => [
+        SessionMark(
+          key: uuid(),
+          type: dw.SessionMarkType.endOfSession,
+          description: S.current.endOfSessionQ1,
+          completed: false,
+        ),
+        SessionMark(
+          key: uuid(),
+          type: dw.SessionMarkType.endOfSession,
+          description: S.current.endOfSessionQ2,
+          completed: false,
+        ),
+        SessionMark(
+          key: uuid(),
+          type: dw.SessionMarkType.endOfSession,
+          description: S.current.endOfSessionQ3,
+          completed: false,
+        ),
+      ];
 
   static const allActionCategories = {'Move', 'Spell', 'Item'};
 

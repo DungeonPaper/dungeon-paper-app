@@ -1663,6 +1663,56 @@ class S {
     );
   }
 
+  /// `Did we learn something new and important about the world?`
+  String get endOfSessionQ1 {
+    return Intl.message(
+      'Did we learn something new and important about the world?',
+      name: 'endOfSessionQ1',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Did we overcome a notable monster or enemy?`
+  String get endOfSessionQ2 {
+    return Intl.message(
+      'Did we overcome a notable monster or enemy?',
+      name: 'endOfSessionQ2',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Did we loot a memorable treasure?`
+  String get endOfSessionQ3 {
+    return Intl.message(
+      'Did we loot a memorable treasure?',
+      name: 'endOfSessionQ3',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `End of Session Questions`
+  String get endOfSessionQuestions {
+    return Intl.message(
+      'End of Session Questions',
+      name: 'endOfSessionQuestions',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Answer these questions as a group. For each "yes" answer, XP is marked.`
+  String get endOfSessionQuestionsSubtitle {
+    return Intl.message(
+      'Answer these questions as a group. For each "yes" answer, XP is marked.',
+      name: 'endOfSessionQuestionsSubtitle',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `{runtimeType, select, CharacterClass {Class} Item {Item} Monster {Monster} Move {Move} Race {Race} Spell {Spell} Tag {Tag} MoveCategory {Category} GearSelection {Starting Gear} Dice {Dice} AbilityScore {Ability Score} AlignmentValue {Alignment} other {{runtimeType}}}`
   String entity(Object runtimeType) {
     return Intl.select(
@@ -1786,31 +1836,11 @@ class S {
     );
   }
 
-  /// `Override EXP`
+  /// `Override EXP & Level`
   String get expDialogChangeOverride {
     return Intl.message(
-      'Override EXP',
+      'Override EXP & Level',
       name: 'expDialogChangeOverride',
-      desc: '',
-      args: [],
-    );
-  }
-
-  /// `Override Level`
-  String get expDialogLevelOverride {
-    return Intl.message(
-      'Override Level',
-      name: 'expDialogLevelOverride',
-      desc: '',
-      args: [],
-    );
-  }
-
-  /// `Set level manually`
-  String get expDialogLevelShouldOverride {
-    return Intl.message(
-      'Set level manually',
-      name: 'expDialogLevelShouldOverride',
       desc: '',
       args: [],
     );
@@ -1831,6 +1861,26 @@ class S {
     return Intl.message(
       'Current EXP',
       name: 'expDialogCurrentEXP',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `End Session`
+  String get expDialogEndSession {
+    return Intl.message(
+      'End Session',
+      name: 'expDialogEndSession',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Set level manually`
+  String get expDialogLevelShouldOverride {
+    return Intl.message(
+      'Set level manually',
+      name: 'expDialogLevelShouldOverride',
       desc: '',
       args: [],
     );

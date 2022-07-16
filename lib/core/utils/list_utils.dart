@@ -23,6 +23,11 @@ extension IterableUtils<T> on Iterable<T> {
     ];
   }
 
+  /// Gives a default iterable of [T]s if the original is empty.
+  Iterable<T> withDefaultValue(Iterable<T> defaultValue) {
+    return isEmpty ? defaultValue : this;
+  }
+
   Map<Key, List<T>> groupBy<Key>(Key Function(T item) keyFn) {
     final out = <Key, List<T>>{};
     for (final item in this) {

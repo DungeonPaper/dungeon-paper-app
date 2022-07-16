@@ -101,16 +101,18 @@ class DialogControls {
   static List<Widget> save(
     BuildContext context, {
     required void Function()? onSave,
+    String? saveLabel,
     required void Function() onCancel,
+    String? cancelLabel,
     double? spacing = 0,
   }) =>
       custom(
         context,
         confirmIcon: const Icon(Icons.check),
-        confirmLabel: S.current.save,
+        confirmLabel: saveLabel ?? S.current.save,
         onConfirm: onSave,
         cancelIcon: const Icon(Icons.close),
-        cancelLabel: S.current.cancel,
+        cancelLabel: cancelLabel ?? S.current.cancel,
         onCancel: onCancel,
         spacing: spacing,
       );

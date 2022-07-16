@@ -528,6 +528,16 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Prepared Spells"),
         "edit": MessageLookupByLibrary.simpleMessage("Edit"),
         "editGeneric": m30,
+        "endOfSessionQ1": MessageLookupByLibrary.simpleMessage(
+            "Did we learn something new and important about the world?"),
+        "endOfSessionQ2": MessageLookupByLibrary.simpleMessage(
+            "Did we overcome a notable monster or enemy?"),
+        "endOfSessionQ3": MessageLookupByLibrary.simpleMessage(
+            "Did we loot a memorable treasure?"),
+        "endOfSessionQuestions":
+            MessageLookupByLibrary.simpleMessage("End of Session Questions"),
+        "endOfSessionQuestionsSubtitle": MessageLookupByLibrary.simpleMessage(
+            "Answer these questions as a group. For each \"yes\" answer, XP is marked."),
         "entity": m31,
         "entityPlural": m32,
         "entityWithCount": m33,
@@ -541,12 +551,12 @@ class MessageLookup extends MessageLookupByLibrary {
         "expDialogChangeNeutral":
             MessageLookupByLibrary.simpleMessage("No Change"),
         "expDialogChangeOverride":
-            MessageLookupByLibrary.simpleMessage("Override EXP"),
+            MessageLookupByLibrary.simpleMessage("Override EXP & Level"),
         "expDialogChangeRemove": m37,
         "expDialogCurrentEXP":
             MessageLookupByLibrary.simpleMessage("Current EXP"),
-        "expDialogLevelOverride":
-            MessageLookupByLibrary.simpleMessage("Override Level"),
+        "expDialogEndSession":
+            MessageLookupByLibrary.simpleMessage("End Session"),
         "expDialogLevelShouldOverride":
             MessageLookupByLibrary.simpleMessage("Set level manually"),
         "expDialogTitle": MessageLookupByLibrary.simpleMessage("Modify EXP"),

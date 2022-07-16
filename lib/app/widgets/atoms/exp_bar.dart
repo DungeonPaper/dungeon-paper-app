@@ -21,17 +21,19 @@ class ExpBar extends StatelessWidget with CharacterServiceMixin {
   Widget build(BuildContext context) {
     return Obx(() {
       final char = maybeChar;
-      final curValue = currentExp ?? char?.currentExp;
       final maxValue = maxExp ?? char?.maxExp;
+      final curValue = currentExp ?? char?.currentExp ?? 0;
+
       final curPercent = curValue != null && maxValue != null ? curValue / maxValue : 1.0;
-      final curBuffer = char != null ? curPercent + (pendingExp ?? char.pendingExpPercent) : 0.0;
+      final curBuffer = char != null ? curValue + (pendingExp ?? char.pendingExp) : 0;
+      final curBufferPercent = curBuffer / (maxValue ?? double.infinity);
 
       return Column(
         mainAxisSize: MainAxisSize.min,
         children: [
           BufferProgressBar(
             value: curPercent,
-            bufferValue: curBuffer,
+            bufferValue: curBufferPercent,
             height: 17.5,
             color: const Color(0xff1e88e5),
             backgroundColor: Colors.blue[100],

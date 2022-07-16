@@ -1,4 +1,5 @@
 import 'package:dungeon_paper/app/data/services/character_service.dart';
+import 'package:dungeon_paper/app/widgets/atoms/buffer_progress_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -25,14 +26,11 @@ class HpBar extends StatelessWidget with CharacterServiceMixin {
       return Column(
         mainAxisSize: MainAxisSize.min,
         children: [
-          ClipRRect(
-            borderRadius: BorderRadius.circular(10),
-            child: LinearProgressIndicator(
-              value: curPercent,
-              minHeight: 17.5,
-              color: Colors.red,
-              backgroundColor: Colors.black,
-            ),
+          BufferProgressBar(
+            value: curPercent,
+            height: 17.5,
+            color: Colors.red,
+            backgroundColor: Colors.black,
           ),
           const SizedBox(height: 4),
           Row(
