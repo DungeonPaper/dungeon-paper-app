@@ -1786,11 +1786,31 @@ class S {
     );
   }
 
-  /// `Override Max EXP:`
-  String get expDialogChangeOverrideMax {
+  /// `Override EXP`
+  String get expDialogChangeOverride {
     return Intl.message(
-      'Override Max EXP:',
-      name: 'expDialogChangeOverrideMax',
+      'Override EXP',
+      name: 'expDialogChangeOverride',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Override Level`
+  String get expDialogLevelOverride {
+    return Intl.message(
+      'Override Level',
+      name: 'expDialogLevelOverride',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Set level manually`
+  String get expDialogLevelShouldOverride {
+    return Intl.message(
+      'Set level manually',
+      name: 'expDialogLevelShouldOverride',
       desc: '',
       args: [],
     );
@@ -2406,6 +2426,16 @@ class S {
       name: 'itemsWithCount',
       desc: '',
       args: [count],
+    );
+  }
+
+  /// `Level`
+  String get level {
+    return Intl.message(
+      'Level',
+      name: 'level',
+      desc: '',
+      args: [],
     );
   }
 

@@ -4,6 +4,8 @@ import 'package:dungeon_paper/app/data/models/character_stats.dart';
 import 'package:dungeon_paper/app/data/services/character_service.dart';
 import 'package:dungeon_paper/app/themes/colors.dart';
 import 'package:dungeon_paper/app/themes/themes.dart';
+import 'package:dungeon_paper/app/widgets/atoms/custom_expansion_panel.dart';
+import 'package:dungeon_paper/app/widgets/atoms/custom_expansion_tile.dart';
 import 'package:dungeon_paper/app/widgets/atoms/exp_bar.dart';
 import 'package:dungeon_paper/app/widgets/atoms/hp_bar.dart';
 import 'package:dungeon_paper/app/widgets/atoms/number_text_field.dart';
@@ -27,10 +29,18 @@ class EXPDialog extends StatefulWidget {
 
 class _EXPDialogState extends State<EXPDialog> with CharacterServiceMixin {
   late int overrideExp;
+  late bool manualExpExpanded;
+  late bool manualLevelExpanded;
+  late TextEditingController levelOverride;
+  late bool shouldOverrideLevel;
 
   @override
   void initState() {
     overrideExp = char.currentExp;
+    manualExpExpanded = false;
+    manualLevelExpanded = false;
+    levelOverride = TextEditingController(text: char.stats.level.toString());
+    shouldOverrideLevel = false;
     super.initState();
   }
 
@@ -51,6 +61,7 @@ class _EXPDialogState extends State<EXPDialog> with CharacterServiceMixin {
         child: Obx(
           () {
             var level = maxExp - 7;
+
             return Column(
               mainAxisSize: MainAxisSize.min,
               children: [
@@ -64,14 +75,58 @@ class _EXPDialogState extends State<EXPDialog> with CharacterServiceMixin {
                 const SizedBox(height: 24),
                 SizedBox(
                   width: 400,
-                  child: ValueChangeSlider<int>(
-                    value: currentExp,
-                    minValue: level > 1 ? -CharacterStats.totalMaxExpForLevel(level - 1) : 0,
-                    updatedValue: overrideExp,
-                    onChange: (val) => setState(() => overrideExp = val.round()),
-                    positiveText: S.current.expDialogChangeAdd,
-                    neutralText: (_) => S.current.expDialogChangeNeutral,
-                    negativeText: S.current.expDialogChangeRemove,
+                  height: manualExpExpanded ? 150 : 48,
+                  child: CustomExpansionPanel(
+                    title: Text(S.current.expDialogChangeOverride),
+                    expanded: manualExpExpanded,
+                    onExpansion: (value) {
+                      setState(() {
+                        manualExpExpanded = value;
+                      });
+                    },
+                    children: [
+                      ValueChangeSlider<int>(
+                        value: currentExp,
+                        minValue: 0,
+                        maxValue: CharacterStats.maxExpForLevel(level),
+                        updatedValue: overrideExp,
+                        onChange: (val) => setState(() => overrideExp = val.round()),
+                        positiveText: S.current.expDialogChangeAdd,
+                        neutralText: (_) => S.current.expDialogChangeNeutral,
+                        negativeText: S.current.expDialogChangeRemove,
+                      ),
+                    ],
+                  ),
+                ),
+                // const SizedBox(height: 24),
+                SizedBox(
+                  width: 400,
+                  height: manualLevelExpanded ? 150 : 48,
+                  child: CustomExpansionPanel(
+                    title: Text(S.current.expDialogLevelOverride),
+                    expanded: manualLevelExpanded,
+                    onExpansion: (value) {
+                      setState(() {
+                        manualLevelExpanded = value;
+                      });
+                    },
+                    children: [
+                      CheckboxListTile(
+                        value: shouldOverrideLevel,
+                        title: Text(S.current.expDialogLevelShouldOverride),
+                        onChanged: (val) => setState(() {
+                          shouldOverrideLevel = val!;
+                        }),
+                      ),
+                      NumberTextField(
+                        enabled: shouldOverrideLevel,
+                        decoration: InputDecoration(label: Text(S.current.level)),
+                        numberType: NumberType.int,
+                        controller: levelOverride,
+                        onChanged: (_) => setState(() {}),
+                        minValue: 1,
+                      ),
+                    ],
                   ),
                 ),
                 const SizedBox(height: 24),
@@ -88,20 +143,11 @@ class _EXPDialogState extends State<EXPDialog> with CharacterServiceMixin {
   }
 
   int get currentExp => char.currentExp;
-  int get maxExp => char.maxExp;
+  int get maxExp => shouldOverrideLevel
+      ? CharacterStats.maxExpForLevel(int.tryParse(levelOverride.text) ?? char.stats.level)
+      : char.maxExp;
 
-  ValueChange get change => currentExp == overrideExp
-      ? ValueChange.neutral
-      : currentExp > overrideExp
-          ? ValueChange.negative
-          : ValueChange.positive;
-
-  int get changeAmount => (overrideExp - currentExp).abs();
-
-  bool get isChangePositive => change == ValueChange.positive;
-  bool get isChangeNegative => change == ValueChange.negative;
-  bool get isChangeNeutral => change == ValueChange.neutral;
-
+  // TODO use
   clampCurrentEXP([dynamic value]) {
     setState(() => overrideExp = min(maxExp, overrideExp));
   }
@@ -109,12 +155,17 @@ class _EXPDialogState extends State<EXPDialog> with CharacterServiceMixin {
   void save() {
     // TODO level up logic
     charService.updateCharacter(
-      char.copyWith(stats: char.stats.copyWith(currentExp: overrideExp)),
+      char.copyWith(
+        stats: char.stats.copyWith(
+          currentExp: overrideExp,
+          level: shouldOverrideLevel ? int.parse(levelOverride.text) : null,
+        ),
+      ),
     );
     close();
   }
 
-  void close() async {
+  void close() {
     Get.back();
   }
 }

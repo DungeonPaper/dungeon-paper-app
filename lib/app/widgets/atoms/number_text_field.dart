@@ -217,11 +217,13 @@ class NumberTextField extends StatelessWidget {
   void _decr() {
     controller?.text =
         max((_parse(controller?.text ?? '') ?? 1) - 1, minValue ?? -double.infinity).toString();
+    onChanged?.call(controller?.text ?? '');
   }
 
   void _incr() {
     controller?.text =
         min((_parse(controller?.text ?? '') ?? 0) + 1, maxValue ?? double.infinity).toString();
+    onChanged?.call(controller?.text ?? '');
   }
 }
 

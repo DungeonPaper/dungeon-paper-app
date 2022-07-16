@@ -540,11 +540,15 @@ class MessageLookup extends MessageLookupByLibrary {
         "expDialogChangeAdd": m36,
         "expDialogChangeNeutral":
             MessageLookupByLibrary.simpleMessage("No Change"),
-        "expDialogChangeOverrideMax":
-            MessageLookupByLibrary.simpleMessage("Override Max EXP:"),
+        "expDialogChangeOverride":
+            MessageLookupByLibrary.simpleMessage("Override EXP"),
         "expDialogChangeRemove": m37,
         "expDialogCurrentEXP":
             MessageLookupByLibrary.simpleMessage("Current EXP"),
+        "expDialogLevelOverride":
+            MessageLookupByLibrary.simpleMessage("Override Level"),
+        "expDialogLevelShouldOverride":
+            MessageLookupByLibrary.simpleMessage("Set level manually"),
         "expDialogTitle": MessageLookupByLibrary.simpleMessage("Modify EXP"),
         "explanation": MessageLookupByLibrary.simpleMessage("Further details"),
         "export": MessageLookupByLibrary.simpleMessage("Export"),
@@ -626,6 +630,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "itemAmountX": m53,
         "items": MessageLookupByLibrary.simpleMessage("Items"),
         "itemsWithCount": m54,
+        "level": MessageLookupByLibrary.simpleMessage("Level"),
         "libraryCollectionListItemSubtitle": m55,
         "libraryCollectionTitle":
             MessageLookupByLibrary.simpleMessage("My Library"),

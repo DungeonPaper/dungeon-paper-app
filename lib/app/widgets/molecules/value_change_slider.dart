@@ -45,6 +45,8 @@ class ValueChangeSlider<N extends num> extends StatelessWidget {
     final theme = Theme.of(context);
     final textTheme = theme.textTheme;
 
+    const width = 70.0;
+
     return Row(
       children: [
         Expanded(
@@ -69,7 +71,7 @@ class ValueChangeSlider<N extends num> extends StatelessWidget {
           child: Container(
             decoration: BoxDecoration(borderRadius: borderRadius),
             clipBehavior: Clip.antiAlias,
-            width: 60,
+            width: width,
             height: 100,
             child: WheelSpinner(
               value: updatedValue.toDouble(),
@@ -80,6 +82,7 @@ class ValueChangeSlider<N extends num> extends StatelessWidget {
               minMaxLabelBuilder: (_) => '',
               onSlideUpdate: (val) => onChange((N == int ? val.toInt() : val.toDouble()) as N),
               dividerColor: theme.brightness == Brightness.light ? null : Colors.grey[800],
+              width: width,
               boxDecoration: (theme.brightness == Brightness.light
                       ? BoxDecoration(
                           gradient: LinearGradient(

@@ -52,10 +52,10 @@ class ExpBar extends StatelessWidget with CharacterServiceMixin {
               Text(S.current.characterBarXp),
               const SizedBox(width: 8),
               Text(
-                char?.currentExp.toString() ?? '-',
+                curValue?.toString() ?? '-',
                 style: const TextStyle(fontWeight: FontWeight.bold),
               ),
-              Text('/' + (char?.maxExp.toString() ?? '-')),
+              Text('/' + (maxValue?.toString() ?? '-')),
             ],
           )
         ],
