@@ -1,7 +1,7 @@
 import 'package:dungeon_paper/app/data/services/character_service.dart';
-import 'package:dungeon_paper/app/widgets/atoms/exp_bar.dart';
+import 'package:dungeon_paper/app/widgets/atoms/xp_bar.dart';
 import 'package:dungeon_paper/app/widgets/atoms/hp_bar.dart';
-import 'package:dungeon_paper/app/widgets/dialogs/exp_dialog.dart';
+import 'package:dungeon_paper/app/widgets/dialogs/xp_dialog.dart';
 import 'package:dungeon_paper/app/widgets/dialogs/hp_dialog.dart';
 import 'package:flutter/material.dart';
 

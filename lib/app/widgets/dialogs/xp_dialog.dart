@@ -4,7 +4,7 @@ import 'package:dungeon_paper/app/data/models/character_stats.dart';
 import 'package:dungeon_paper/app/data/models/session_marks.dart';
 import 'package:dungeon_paper/app/data/services/character_service.dart';
 import 'package:dungeon_paper/app/widgets/atoms/custom_expansion_panel.dart';
-import 'package:dungeon_paper/app/widgets/atoms/exp_bar.dart';
+import 'package:dungeon_paper/app/widgets/atoms/xp_bar.dart';
 import 'package:dungeon_paper/app/widgets/atoms/number_text_field.dart';
 import 'package:dungeon_paper/app/widgets/molecules/dialog_controls.dart';
 import 'package:dungeon_paper/app/widgets/molecules/value_change_slider.dart';
@@ -25,7 +25,7 @@ class EXPDialog extends StatefulWidget {
 }
 
 class _EXPDialogState extends State<EXPDialog> with CharacterServiceMixin {
-  late int overrideExp;
+  late int overrideXp;
   late bool manualExpExpanded;
   late TextEditingController levelOverride;
   late bool shouldOverrideLevel;
@@ -33,7 +33,7 @@ class _EXPDialogState extends State<EXPDialog> with CharacterServiceMixin {
 
   @override
   void initState() {
-    overrideExp = char.currentExp;
+    overrideXp = char.currentXp;
     manualExpExpanded = false;
     levelOverride = TextEditingController(text: char.stats.level.toString());
     shouldOverrideLevel = false;
@@ -50,7 +50,7 @@ class _EXPDialogState extends State<EXPDialog> with CharacterServiceMixin {
       content: SingleChildScrollView(
         child: Obx(
           () {
-            final level = maxExp - 7;
+            final level = maxXp - 7;
 
             return Column(
               mainAxisSize: MainAxisSize.min,
@@ -59,9 +59,9 @@ class _EXPDialogState extends State<EXPDialog> with CharacterServiceMixin {
                 SizedBox(
                   width: dlgWidth,
                   child: ExpBar(
-                    currentExp: clamp(overrideExp, 0, maxExp),
-                    maxExp: maxExp,
-                    pendingExp: totalPendingExp,
+                    currentXp: clamp(overrideXp, 0, maxXp),
+                    maxXp: maxXp,
+                    pendingXp: totalPendingXp,
                   ),
                 ),
                 const SizedBox(height: 24),
@@ -102,11 +102,11 @@ class _EXPDialogState extends State<EXPDialog> with CharacterServiceMixin {
                     },
                     children: [
                       ValueChangeSlider<int>(
-                        value: currentExp,
+                        value: currentXp,
                         minValue: 0,
                         maxValue: CharacterStats.maxExpForLevel(level),
-                        updatedValue: overrideExp,
-                        onChange: (val) => setState(() => overrideExp = val.round()),
+                        updatedValue: overrideXp,
+                        onChange: (val) => setState(() => overrideXp = val.round()),
                         positiveText: S.current.expDialogChangeAdd,
                         neutralText: (_) => S.current.expDialogChangeNeutral,
                         negativeText: S.current.expDialogChangeRemove,
@@ -151,39 +151,38 @@ class _EXPDialogState extends State<EXPDialog> with CharacterServiceMixin {
     );
   }
 
-  int get currentExp => char.currentExp;
-  int get maxExp => shouldOverrideLevel
+  int get currentXp => char.currentXp;
+  int get maxXp => shouldOverrideLevel
       ? CharacterStats.maxExpForLevel(int.tryParse(levelOverride.text) ?? char.stats.level)
-      : char.maxExp;
-  int get eosPendingExp => eosMarks.where((mark) => mark.completed).length;
-  int get totalPendingExp => char.pendingExp + eosPendingExp;
-  bool get shouldOverrideExp => overrideExp != currentExp;
+      : char.maxXp;
+  int get eosPendingXp => eosMarks.where((mark) => mark.completed).length;
+  int get totalPendingXp => char.pendingXp + eosPendingXp;
+  bool get shouldOverrideXp => overrideXp != currentXp;
 
   // TODO use
   clampCurrentEXP([dynamic value]) {
-    setState(() => overrideExp = min(maxExp, overrideExp));
+    setState(() => overrideXp = min(maxXp, overrideXp));
   }
 
   void save() {
-    final beforeLevelExp = char.stats.currentExp + totalPendingExp;
+    final beforeLevelXp = char.stats.currentXp + totalPendingXp;
     int updatedLevel = char.stats.level;
-    int updatedExp = beforeLevelExp;
+    int updatedXp = beforeLevelXp;
 
-    while (updatedExp >= CharacterStats.maxExpForLevel(updatedLevel)) {
-      updatedExp = beforeLevelExp - CharacterStats.maxExpForLevel(updatedLevel);
+    while (updatedXp >= CharacterStats.maxExpForLevel(updatedLevel)) {
+      updatedXp = beforeLevelXp - CharacterStats.maxExpForLevel(updatedLevel);
       updatedLevel++;
     }
 
-    final finalExp = shouldOverrideExp ? overrideExp : updatedExp;
+    final finalXp = shouldOverrideXp ? overrideXp : updatedXp;
     final finalLevel =
         shouldOverrideLevel ? int.tryParse(levelOverride.text) ?? updatedLevel : updatedLevel;
 
     charService.updateCharacter(
       char.copyWith(
         stats: char.stats.copyWith(
-          currentExp: finalExp,
-          level:
-              finalExp >= CharacterStats.maxExpForLevel(finalLevel) ? finalLevel + 1 : finalLevel,
+          currentXp: finalXp,
+          level: finalXp >= CharacterStats.maxExpForLevel(finalLevel) ? finalLevel + 1 : finalLevel,
         ),
         sessionMarks: char.sessionMarks.map((e) => e.copyWithInherited(completed: false)).toList(),
       ),

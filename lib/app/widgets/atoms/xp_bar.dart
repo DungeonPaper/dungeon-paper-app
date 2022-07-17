@@ -8,25 +8,25 @@ import '../../../generated/l10n.dart';
 class ExpBar extends StatelessWidget with CharacterServiceMixin {
   const ExpBar({
     Key? key,
-    this.currentExp,
-    this.maxExp,
-    this.pendingExp,
+    this.currentXp,
+    this.maxXp,
+    this.pendingXp,
   }) : super(key: key);
 
-  final int? currentExp;
-  final int? maxExp;
-  final int? pendingExp;
+  final int? currentXp;
+  final int? maxXp;
+  final int? pendingXp;
 
   @override
   Widget build(BuildContext context) {
     return Obx(
       () {
         final char = maybeChar;
-        final maxValue = maxExp ?? char?.maxExp;
-        final curValue = currentExp ?? char?.currentExp ?? 0;
+        final maxValue = maxXp ?? char?.maxXp;
+        final curValue = currentXp ?? char?.currentXp ?? 0;
 
         final curPercent = maxValue != null ? curValue / maxValue : 0.0;
-        final curPending = char != null ? pendingExp ?? char.pendingExp : 0;
+        final curPending = char != null ? pendingXp ?? char.pendingXp : 0;
         final curBuffer = char != null ? curValue + (curPending) : 0;
         final curBufferPercent = curBuffer / (maxValue ?? double.infinity);
 
@@ -36,6 +36,7 @@ class ExpBar extends StatelessWidget with CharacterServiceMixin {
             BufferProgressBar(
               value: curPercent,
               bufferValue: curBufferPercent,
+              bufferColor: Color.fromARGB(255, 117, 188, 251),
               height: 17.5,
               color: const Color(0xff1e88e5),
               backgroundColor: Colors.blue[100],

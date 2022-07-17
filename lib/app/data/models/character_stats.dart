@@ -7,7 +7,7 @@ class CharacterStats {
   CharacterStats({
     required this.level,
     required this.currentHp,
-    required this.currentExp,
+    required this.currentXp,
     this.armor,
     this.maxHp,
     this.damageDice,
@@ -17,15 +17,15 @@ class CharacterStats {
   final int level;
   final int? maxHp;
   final int currentHp;
-  final int currentExp;
+  final int currentXp;
   final int? armor;
   final dw.Dice? damageDice;
   final int? load;
 
-  int get maxExp => maxExpForLevel(level);
+  int get maxXp => maxExpForLevel(level);
   static int maxExpForLevel(int level) => level + 7;
 
-  int get totalMaxExp => totalMaxExpForLevel(level);
+  int get totalMaxXp => totalMaxExpForLevel(level);
   static int totalMaxExpForLevel(int level) =>
       range(1, level).fold<int>(8, (acc, l) => acc + maxExpForLevel(l + 1));
 
@@ -33,7 +33,7 @@ class CharacterStats {
     int? level,
     int? maxHp,
     int? currentHp,
-    int? currentExp,
+    int? currentXp,
     int? armor,
     dw.Dice? damageDice,
     int? load,
@@ -42,7 +42,7 @@ class CharacterStats {
         level: level ?? this.level,
         maxHp: maxHp ?? this.maxHp,
         currentHp: currentHp ?? this.currentHp,
-        currentExp: currentExp ?? this.currentExp,
+        currentXp: currentXp ?? this.currentXp,
         armor: armor ?? this.armor,
         damageDice: damageDice ?? this.damageDice,
         load: load ?? this.load,
@@ -52,7 +52,7 @@ class CharacterStats {
         level: level,
         maxHp: maxHp,
         currentHp: currentHp,
-        currentExp: currentExp,
+        currentXp: currentXp,
         armor: armor,
         damageDice: damageDice,
         load: load,
@@ -66,7 +66,7 @@ class CharacterStats {
         level: json['level'],
         maxHp: json['maxHP'],
         currentHp: json['currentHP'],
-        currentExp: json['currentEXP'],
+        currentXp: json['currentXP'],
         armor: json['armor'],
         damageDice: json['damageDice'] != null ? Dice.fromJson(json['damageDice']) : null,
         load: json['load'],
@@ -76,7 +76,7 @@ class CharacterStats {
         'level': level,
         'maxHP': maxHp,
         'currentHP': currentHp,
-        'currentEXP': currentExp,
+        'currentXP': currentXp,
         'armor': armor,
         'damageDice': damageDice?.toJson(),
         'load': load,
@@ -86,7 +86,7 @@ class CharacterStats {
         level: level,
         maxHp: maxHp,
         currentHp: currentHp,
-        currentExp: currentExp,
+        currentXp: currentXp,
         armor: armor,
         damageDice: damageDice,
         load: load,
@@ -96,7 +96,7 @@ class CharacterStats {
         level: level,
         maxHp: maxHp,
         currentHp: currentHp,
-        currentExp: currentExp,
+        currentXp: currentXp,
         armor: armor,
         damageDice: damageDice,
         load: load,
@@ -106,7 +106,7 @@ class CharacterStats {
         level: level,
         maxHp: maxHp,
         currentHp: currentHp,
-        currentExp: currentExp,
+        currentXp: currentXp,
         armor: armor,
         damageDice: damageDice,
         load: load,
@@ -120,17 +120,16 @@ class CharacterStats {
           level == other.level &&
           maxHp == other.maxHp &&
           currentHp == other.currentHp &&
-          currentExp == other.currentExp &&
+          currentXp == other.currentXp &&
           armor == other.armor &&
           damageDice == other.damageDice &&
           load == other.load;
 
   @override
-  int get hashCode =>
-      Object.hashAll([level, maxHp, currentHp, currentExp, armor, damageDice, load]);
+  int get hashCode => Object.hashAll([level, maxHp, currentHp, currentXp, armor, damageDice, load]);
 
   String get debugProperties =>
-      'level: $level, maxHp: $maxHp, currentHp: $currentHp, currentExp: $currentExp, armor: $armor, damageDice: $damageDice, load: $load';
+      'level: $level, maxHp: $maxHp, currentHp: $currentHp, currentXp: $currentXp, armor: $armor, damageDice: $damageDice, load: $load';
 
   @override
   String toString() => 'CharacterStats($debugProperties)';

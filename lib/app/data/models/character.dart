@@ -70,13 +70,13 @@ class Character implements WithMeta<Character, CharacterMeta>, WithIcon {
   int get currentHp => clamp(stats.currentHp, 0, maxHp);
   int get maxHp => stats.maxHp ?? defaultMaxHp;
   int get defaultMaxHp => (characterClass.hp + abilityScores.hpBaseValue);
-  int get currentExp => stats.currentExp;
-  int get pendingExp => sessionMarks.where((m) => m.completed).length;
-  double get pendingExpPercent => pendingExp / maxExp;
+  int get currentXp => stats.currentXp;
+  int get pendingXp => sessionMarks.where((m) => m.completed).length;
+  double get pendingExpPercent => pendingXp / maxXp;
 
-  int get maxExp => stats.maxExp;
+  int get maxXp => stats.maxXp;
   double get currentHpPercent => clamp(stats.currentHp / maxHp, 0, 1);
-  double get currentExpPercent => clamp(stats.currentExp / maxExp, 0, 1);
+  double get currentExpPercent => clamp(stats.currentXp / maxXp, 0, 1);
   int get maxLoad => stats.load ?? (characterClass.load + abilityScores.loadBaseValue);
   int get currentLoad => items.fold(0, (weight, item) => weight + item.weight);
   int get armor => stats.armor ?? defaultArmor;
@@ -276,7 +276,7 @@ class Character implements WithMeta<Character, CharacterMeta>, WithIcon {
       notes: [],
       stats: CharacterStats(
         level: 1,
-        currentExp: 0,
+        currentXp: 0,
         currentHp: characterClass.hp + abilityScores.hpBaseValue,
       ),
       moves: [],

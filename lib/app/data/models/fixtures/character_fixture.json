@@ -1,132 +1,119 @@
 {
-    "_meta": {
+  "_meta": {
+    "created": "",
+    "updated": "",
+    "schemaVersion": 2,
+    "originalKey": "1234565432"
+  },
+  "key": "b43d0bd2-334e-465a-b050-2346caad22e8",
+  "displayName": "Atri",
+  "classKey": "immolator",
+  "moves": [
+    {
+      "_meta": {
         "created": "",
         "updated": "",
-        "schemaVersion": 2,
-        "originalKey": "1234565432"
-    },
-    "key": "b43d0bd2-334e-465a-b050-2346caad22e8",
-    "displayName": "Atri",
-    "classKey": "immolator",
-    "moves": [
+        "schema_version": 2
+      },
+      "key": "b43d0bd2-334e-465a-b050-2346caad22e8",
+      "name": "Dirty Fighter",
+      "description": "When using a precise or hand weapon, your backstab deals an extra +1d8 damage and all other attacks deal +1d4 damage.",
+      "explanation": "",
+      "dice": ["1d8", "1d4"],
+      "classKeys": ["thief"],
+      "tags": [
         {
-            "_meta": {
-                "created": "",
-                "updated": "",
-                "schema_version": 2
-            },
-            "key": "b43d0bd2-334e-465a-b050-2346caad22e8",
-            "name": "Dirty Fighter",
-            "description": "When using a precise or hand weapon, your backstab deals an extra +1d8 damage and all other attacks deal +1d4 damage.",
-            "explanation": "",
-            "dice": [
-                "1d8",
-                "1d4"
-            ],
-            "classKeys": [
-                "thief"
-            ],
-            "tags": [
-                {
-                    "name": "Tag",
-                    "value": 1
-                },
-                {
-                    "name": "Another Tag",
-                    "value": null
-                }
-            ]
-        }
-    ],
-    "spells": [
+          "name": "Tag",
+          "value": 1
+        },
         {
-            "_meta": {
-                "created": "",
-                "updated": "",
-                "schema_version": 2
-            },
-            "key": "b43d0bd2-334e-465a-b050-2346caad22e8",
-            "name": "Detect Magic",
-            "description": "One of your senses is briefly attuned to magic. The GM will tell you what here is magical.",
-            "explanation": "",
-            "dice": [
-                "2d6"
-            ],
-            "classKeys": [
-                ""
-            ],
-            "tags": [
-                {
-                    "name": "Tag",
-                    "value": 1
-                },
-                {
-                    "name": "Another Tag",
-                    "value": null
-                }
-            ]
+          "name": "Another Tag",
+          "value": null
         }
-    ],
-    "items": [
-        {
-            "_meta": {
-                "created": "",
-                "updated": "",
-                "schema_version": 2
-            },
-            "amount": 1,
-            "key": "b43d0bd2-334e-465a-b050-2346caad22e8",
-            "name": "Axe",
-            "settings": {
-                "countArmor": true,
-                "countDamage": true,
-                "countWeight": true,
-                "equipped": true
-            },
-            "tags": [
-                {
-                    "name": "Tag",
-                    "value": 1
-                },
-                {
-                    "name": "Another Tag",
-                    "value": null
-                }
-            ]
-        }
-    ],
-    "isShared": true,
-    "stats": {
-        "level": 1,
-        "maxHP": 20,
-        "currentHP": 20,
-        "currentEXP": 0,
-        "armor": 0,
-        "hitDice": "2d6",
-        "settings": {
-            "overrideMaxHP": null
-        }
-    },
-    "abilityScores": {
-        "dex": 10,
-        "str": 10,
-        "wis": 10,
-        "con": 10,
-        "int": 10,
-        "cha": 10
-    },
-    "bonds": [
-        {
-            "key": "b43d0bd2-334e-465a-b050-2346caad22e8",
-            "description": "Make friends with _________"
-        }
-    ],
-    "bio": {
-        "looks": [
-            "Scaley skin",
-            "Red eyes",
-            "Slim figure"
-        ],
-        "description": "He's a black lizard"
+      ]
     }
+  ],
+  "spells": [
+    {
+      "_meta": {
+        "created": "",
+        "updated": "",
+        "schema_version": 2
+      },
+      "key": "b43d0bd2-334e-465a-b050-2346caad22e8",
+      "name": "Detect Magic",
+      "description": "One of your senses is briefly attuned to magic. The GM will tell you what here is magical.",
+      "explanation": "",
+      "dice": ["2d6"],
+      "classKeys": [""],
+      "tags": [
+        {
+          "name": "Tag",
+          "value": 1
+        },
+        {
+          "name": "Another Tag",
+          "value": null
+        }
+      ]
+    }
+  ],
+  "items": [
+    {
+      "_meta": {
+        "created": "",
+        "updated": "",
+        "schema_version": 2
+      },
+      "amount": 1,
+      "key": "b43d0bd2-334e-465a-b050-2346caad22e8",
+      "name": "Axe",
+      "settings": {
+        "countArmor": true,
+        "countDamage": true,
+        "countWeight": true,
+        "equipped": true
+      },
+      "tags": [
+        {
+          "name": "Tag",
+          "value": 1
+        },
+        {
+          "name": "Another Tag",
+          "value": null
+        }
+      ]
+    }
+  ],
+  "isShared": true,
+  "stats": {
+    "level": 1,
+    "maxHP": 20,
+    "currentHP": 20,
+    "currentXP": 0,
+    "armor": 0,
+    "hitDice": "2d6",
+    "settings": {
+      "overrideMaxHP": null
+    }
+  },
+  "abilityScores": {
+    "dex": 10,
+    "str": 10,
+    "wis": 10,
+    "con": 10,
+    "int": 10,
+    "cha": 10
+  },
+  "bonds": [
+    {
+      "key": "b43d0bd2-334e-465a-b050-2346caad22e8",
+      "description": "Make friends with _________"
+    }
+  ],
+  "bio": {
+    "looks": ["Scaley skin", "Red eyes", "Slim figure"],
+    "description": "He's a black lizard"
+  }
 }

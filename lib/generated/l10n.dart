@@ -26,9 +26,7 @@ class S {
   static const AppLocalizationDelegate delegate = AppLocalizationDelegate();
 
   static Future<S> load(Locale locale) {
-    final name = (locale.countryCode?.isEmpty ?? false)
-        ? locale.languageCode
-        : locale.toString();
+    final name = (locale.countryCode?.isEmpty ?? false) ? locale.languageCode : locale.toString();
     final localeName = Intl.canonicalizedLocale(name);
     return initializeMessages(localeName).then((_) {
       Intl.defaultLocale = localeName;
@@ -1121,8 +1119,7 @@ class S {
   }
 
   /// `Base HP: {hp}, Load: {load}, Damage Dice: {damageDice}`
-  String createCharacterClassDescription(
-      Object hp, Object load, Object damageDice) {
+  String createCharacterClassDescription(Object hp, Object load, Object damageDice) {
     return Intl.message(
       'Base HP: $hp, Load: $load, Damage Dice: $damageDice',
       name: 'createCharacterClassDescription',
@@ -1292,8 +1289,7 @@ class S {
   }
 
   /// `{count} selected (class allowance: {max})`
-  String createCharacterStartingGearChoiceCountWithMax(
-      Object count, Object max) {
+  String createCharacterStartingGearChoiceCountWithMax(Object count, Object max) {
     return Intl.message(
       '$count selected (class allowance: $max)',
       name: 'createCharacterStartingGearChoiceCountWithMax',
@@ -1313,8 +1309,7 @@ class S {
   }
 
   /// `{amount} × {name}`
-  String createCharacterStartingGearDescriptionItem(
-      Object amount, Object name) {
+  String createCharacterStartingGearDescriptionItem(Object amount, Object name) {
     return Intl.message(
       '$amount × $name',
       name: 'createCharacterStartingGearDescriptionItem',
@@ -1836,10 +1831,10 @@ class S {
     );
   }
 
-  /// `Override EXP & Level`
+  /// `Override XP & Level`
   String get expDialogChangeOverride {
     return Intl.message(
-      'Override EXP & Level',
+      'Override XP & Level',
       name: 'expDialogChangeOverride',
       desc: '',
       args: [],
@@ -1856,11 +1851,11 @@ class S {
     );
   }
 
-  /// `Current EXP`
-  String get expDialogCurrentEXP {
+  /// `Current XP`
+  String get expDialogCurrentXP {
     return Intl.message(
-      'Current EXP',
-      name: 'expDialogCurrentEXP',
+      'Current XP',
+      name: 'expDialogCurrentXP',
       desc: '',
       args: [],
     );
@@ -1886,10 +1881,10 @@ class S {
     );
   }
 
-  /// `Modify EXP`
+  /// `Modify XP`
   String get expDialogTitle {
     return Intl.message(
-      'Modify EXP',
+      'Modify XP',
       name: 'expDialogTitle',
       desc: '',
       args: [],

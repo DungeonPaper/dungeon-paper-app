@@ -119,7 +119,7 @@ class CreateCharacterController extends GetxController {
         stats: CharacterStats(
           level: 1,
           currentHp: characterClass.value!.hp + abilityScores.value.conMod!,
-          currentExp: 0,
+          currentXp: 0,
         ),
         sessionMarks: [
           ...(characterClass.value?.bonds
