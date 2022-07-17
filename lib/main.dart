@@ -20,7 +20,6 @@ void main() async {
   await S.load(const Locale('en', 'US'));
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
   await loadSharedPrefs();
-  Wakelock.toggle(enable: true);
   await initServices();
   runApp(const MyApp());
 }

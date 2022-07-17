@@ -71,6 +71,8 @@ class User {
 
   Brightness get brightness => settings.brightnessOverride ?? getCurrentPlatformBrightness();
 
+  void applySettings() => settings.apply();
+
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
