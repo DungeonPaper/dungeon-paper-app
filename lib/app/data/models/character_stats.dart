@@ -111,4 +111,27 @@ class CharacterStats {
         damageDice: damageDice,
         load: load,
       );
+
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      other is CharacterStats &&
+          runtimeType == other.runtimeType &&
+          level == other.level &&
+          maxHp == other.maxHp &&
+          currentHp == other.currentHp &&
+          currentExp == other.currentExp &&
+          armor == other.armor &&
+          damageDice == other.damageDice &&
+          load == other.load;
+
+  @override
+  int get hashCode =>
+      Object.hashAll([level, maxHp, currentHp, currentExp, armor, damageDice, load]);
+
+  String get debugProperties =>
+      'level: $level, maxHp: $maxHp, currentHp: $currentHp, currentExp: $currentExp, armor: $armor, damageDice: $damageDice, load: $load';
+
+  @override
+  String toString() => 'CharacterStats{$debugProperties}';
 }

@@ -63,4 +63,24 @@ class SessionMark extends dw.SessionMark implements WithKey {
               : bonds.isNotEmpty
                   ? S.current.characterBondsFlagsDialogBonds
                   : S.current.characterBondsFlagsDialogTitle;
+
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      other is SessionMark &&
+          runtimeType == other.runtimeType &&
+          key == other.key &&
+          description == other.description &&
+          completed == other.completed &&
+          type == other.type;
+
+  @override
+  int get hashCode => Object.hashAll([key, description, completed, type]);
+
+  @override
+  String get debugProperties =>
+      'key: $key, description: $description, completed: $completed, type: $type';
+
+  @override
+  String toString() => 'SessionMark($debugProperties)';
 }

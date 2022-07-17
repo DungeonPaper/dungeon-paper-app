@@ -123,6 +123,40 @@ class CharacterSettings {
         racePosition: racePosition,
         quickCategories: quickCategories,
       );
+
+  String get debugProperties =>
+      'sortOrder: $sortOrder, category: $category, rollButtons: $rollButtons, noteCategories: $noteCategories, actionCategories: $actionCategories, quickCategories: $quickCategories, racePosition: $racePosition, lightTheme: $lightTheme, darkTheme: $darkTheme';
+
+  @override
+  String toString() => 'CharacterSettings{$debugProperties}';
+
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      other is CharacterSettings &&
+          runtimeType == other.runtimeType &&
+          sortOrder == other.sortOrder &&
+          category == other.category &&
+          rollButtons == other.rollButtons &&
+          noteCategories == other.noteCategories &&
+          actionCategories == other.actionCategories &&
+          quickCategories == other.quickCategories &&
+          racePosition == other.racePosition &&
+          lightTheme == other.lightTheme &&
+          darkTheme == other.darkTheme;
+
+  @override
+  int get hashCode => Object.hashAll([
+        sortOrder,
+        category,
+        rollButtons,
+        noteCategories,
+        actionCategories,
+        quickCategories,
+        racePosition,
+        lightTheme,
+        darkTheme,
+      ]);
 }
 
 @immutable
@@ -175,6 +209,27 @@ class OrderedCategoryList {
             (cat) => !hidden.contains(cat),
           )
           .toSet();
+
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      other is OrderedCategoryList &&
+          runtimeType == other.runtimeType &&
+          hidden == other.hidden &&
+          sortOrder == other.sortOrder &&
+          canHide == other.canHide;
+
+  @override
+  int get hashCode => Object.hashAll([
+        hidden,
+        sortOrder,
+        canHide,
+      ]);
+
+  String get debugProperties => 'hidden: $hidden, sortOrder: $sortOrder, canHide: $canHide';
+
+  @override
+  String toString() => 'OrderedCategoryList{$debugProperties}';
 }
 
 @immutable
@@ -197,6 +252,12 @@ class NoteCategoryList extends OrderedCategoryList {
       NoteCategoryList(
         sortOrder: sortOrder ?? this.sortOrder,
       );
+
+  @override
+  String get debugProperties => 'sortOrder: $sortOrder';
+
+  @override
+  String toString() => 'NoteCategoryList{$debugProperties}';
 }
 
 @immutable
@@ -224,4 +285,10 @@ class ActionCategoryList extends OrderedCategoryList {
         sortOrder: sortOrder ?? this.sortOrder,
         hidden: hidden ?? this.hidden,
       );
+
+  @override
+  String get debugProperties => 'sortOrder: $sortOrder, hidden: $hidden';
+
+  @override
+  String toString() => 'ActionCategoryList{$debugProperties}';
 }

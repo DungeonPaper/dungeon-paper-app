@@ -106,9 +106,6 @@ class Move extends dw.Move implements WithMeta, WithIcon {
       };
 
   @override
-  String toString() => 'Move(key: $key, name: $name)';
-
-  @override
   IconData get icon => genericIcon;
   static IconData get genericIcon => DwIcons.riposte;
 
@@ -130,4 +127,29 @@ class Move extends dw.Move implements WithMeta, WithIcon {
 
   @override
   dw.EntityReference get reference => Meta.referenceFor(this);
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      other is Move &&
+          runtimeType == other.runtimeType &&
+          meta == other.meta &&
+          key == other.key &&
+          name == other.name &&
+          description == other.description &&
+          explanation == other.explanation &&
+          dice == other.dice &&
+          classKeys == other.classKeys &&
+          tags == other.tags &&
+          category == other.category;
+
+  @override
+  int get hashCode =>
+      Object.hashAll([meta, key, name, description, explanation, dice, classKeys, tags, category]);
+
+  @override
+  String get debugProperties =>
+      'name: $name, description: $description, explanation: $explanation, dice: $dice, classKeys: $classKeys, tags: $tags, category: $category';
+
+  @override
+  String toString() => 'Move($debugProperties)';
 }

@@ -47,4 +47,24 @@ class UserSettings {
         'defaultDarkTheme': defaultDarkTheme,
         'brightnessOverride': brightnessOverride?.name,
       };
+
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      other is UserSettings &&
+          runtimeType == other.runtimeType &&
+          keepScreenAwake == other.keepScreenAwake &&
+          defaultLightTheme == other.defaultLightTheme &&
+          defaultDarkTheme == other.defaultDarkTheme &&
+          brightnessOverride == other.brightnessOverride;
+
+  @override
+  int get hashCode =>
+      Object.hashAll([keepScreenAwake, defaultLightTheme, defaultDarkTheme, brightnessOverride]);
+
+  String get debugProperties =>
+      'keepScreenAwake: $keepScreenAwake, defaultLightTheme: $defaultLightTheme, defaultDarkTheme: $defaultDarkTheme, brightnessOverride: $brightnessOverride';
+
+  @override
+  String toString() => 'UserSettings($debugProperties)';
 }

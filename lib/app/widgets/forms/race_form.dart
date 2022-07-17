@@ -27,25 +27,6 @@ class RaceForm extends GetView<DynamicFormController<Race>> {
       inputs: controller.inputs,
       onChange: (d) => onChange(controller.setData(d, setDirty: true)),
       onReplace: (d) => onChange(controller.setFromEntity(d)),
-      builder: (context, inputs, entity) {
-        return ListView(
-          padding: const EdgeInsets.symmetric(horizontal: 16).copyWith(bottom: 70),
-          children: [
-            inputs[0],
-            const SizedBox(height: 16),
-            Row(
-              children: [
-                Expanded(child: inputs[1]),
-                const SizedBox(width: 16),
-                Expanded(child: inputs[2]),
-              ],
-            ),
-            const SizedBox(height: 16),
-            for (final input in inputs.sublist(3))
-              Padding(padding: const EdgeInsets.only(bottom: 16), child: input),
-          ],
-        );
-      },
     );
   }
 }

@@ -137,4 +137,27 @@ class Item extends dw.Item implements WithMeta, WithIcon {
 
   @override
   dw.EntityReference get reference => Meta.referenceFor(this);
+
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      other is Item &&
+          runtimeType == other.runtimeType &&
+          key == other.key &&
+          name == other.name &&
+          description == other.description &&
+          tags == other.tags &&
+          settings == other.settings &&
+          amount == other.amount &&
+          equipped == other.equipped;
+
+  @override
+  int get hashCode => Object.hashAll([key, name, description, tags, settings, amount, equipped]);
+
+  @override
+  String get debugProperties =>
+      'key: $key, name: $name, description: $description, tags: $tags, settings: $settings, amount: $amount, equipped: $equipped';
+
+  @override
+  String toString() => 'Item{$debugProperties}';
 }

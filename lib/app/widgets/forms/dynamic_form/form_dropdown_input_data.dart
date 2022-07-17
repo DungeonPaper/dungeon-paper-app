@@ -92,7 +92,6 @@ class FormDropdownInputData<T> extends BaseInputData<T> {
       value: controller.value,
       items: items.toList(),
       onChanged: (value) => controller.value = value, // data.onChange,
-
       hint: hint,
       disabledHint: disabledHint,
       onTap: onTap,

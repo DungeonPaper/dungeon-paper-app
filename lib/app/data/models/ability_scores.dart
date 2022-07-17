@@ -145,6 +145,19 @@ class AbilityScores {
   Map<String, dynamic> toJson() => {
         'stats': stats.map((s) => s.toJson()).toList(),
       };
+
+  @override
+  bool operator ==(Object? other) =>
+      identical(this, other) ||
+      other is AbilityScores && runtimeType == other.runtimeType && stats == other.stats;
+
+  @override
+  int get hashCode => Object.hashAll(stats);
+
+  String get debugProperties => stats.map((s) => '${s.key}: ${s.value}').join(', ');
+
+  @override
+  String toString() => 'AbilityScores($debugProperties)';
 }
 
 class AbilityScore implements WithIcon {
@@ -235,4 +248,27 @@ class AbilityScore implements WithIcon {
     'cha': DwIcons.stat_cha,
     '_other': Icons.help,
   };
+
+  @override
+  bool operator ==(Object? other) =>
+      identical(this, other) ||
+      other is AbilityScore &&
+          runtimeType == other.runtimeType &&
+          key == other.key &&
+          name == other.name &&
+          description == other.description &&
+          value == other.value &&
+          isDebilitated == other.isDebilitated &&
+          debilityName == other.debilityName &&
+          debilityDescription == other.debilityDescription;
+
+  @override
+  int get hashCode => Object.hashAll(
+      [key, name, description, value, isDebilitated, debilityName, debilityDescription]);
+
+  String get debugProperties =>
+      'key: $key, value: $value, name: $name, description: $description, isDebilitated: $isDebilitated, debilityName: $debilityName, debilityDescription: $debilityDescription';
+
+  @override
+  String toString() => 'AbilityScore($debugProperties)';
 }

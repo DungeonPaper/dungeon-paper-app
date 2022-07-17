@@ -115,4 +115,26 @@ class Note implements WithMeta, WithIcon {
 
   @override
   dw.EntityReference get reference => Meta.referenceFor(this);
+
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      other is Note &&
+          runtimeType == other.runtimeType &&
+          meta == other.meta &&
+          key == other.key &&
+          title == other.title &&
+          description == other.description &&
+          category == other.category &&
+          tags == other.tags &&
+          favorite == other.favorite;
+
+  @override
+  int get hashCode => Object.hashAll([meta, key, title, description, category, tags, favorite]);
+
+  String get debugProperties =>
+      'meta: $meta, key: $key, title: $title, description: $description, category: $category, tags: $tags, favorite: $favorite';
+
+  @override
+  String toString() => 'Note{$debugProperties}';
 }

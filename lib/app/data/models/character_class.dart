@@ -22,6 +22,7 @@ class CharacterClass extends dw.CharacterClass implements WithMeta, WithIcon {
     required int hp,
     required AlignmentValues alignments,
     required List<String> bonds,
+    required List<String> flags,
     required List<GearChoice> gearChoices,
   })  : _meta = meta,
         _alignments = alignments,
@@ -36,6 +37,7 @@ class CharacterClass extends dw.CharacterClass implements WithMeta, WithIcon {
           hp: hp,
           alignments: alignments,
           bonds: bonds,
+          flags: flags,
           gearChoices: gearChoices,
         );
 
@@ -62,6 +64,7 @@ class CharacterClass extends dw.CharacterClass implements WithMeta, WithIcon {
     int? hp,
     AlignmentValues? alignments,
     List<String>? bonds,
+    List<String>? flags,
     List<GearChoice>? gearChoices,
   }) =>
       CharacterClass(
@@ -74,6 +77,7 @@ class CharacterClass extends dw.CharacterClass implements WithMeta, WithIcon {
         hp: hp ?? this.hp,
         alignments: alignments ?? this.alignments,
         bonds: bonds ?? this.bonds,
+        flags: flags ?? this.flags,
         gearChoices: gearChoices ?? this.gearChoices,
       );
 
@@ -84,6 +88,7 @@ class CharacterClass extends dw.CharacterClass implements WithMeta, WithIcon {
         key: uuid(),
         name: '',
         bonds: [],
+        flags: [],
         damageDice: dw.Dice.d6,
         description: '',
         gearChoices: [],
@@ -109,6 +114,7 @@ class CharacterClass extends dw.CharacterClass implements WithMeta, WithIcon {
         hp: cls.hp,
         alignments: AlignmentValues.fromDwAlignmentValues(cls.alignments),
         bonds: cls.bonds,
+        flags: cls.flags,
         gearChoices: cls.gearChoices.map((c) => GearChoice.fromDwGearChoice(c)).toList(),
       );
 

@@ -94,7 +94,7 @@ class SpellFormController extends DynamicFormController<Spell> {
         data: FormDropdownInputData(
           value: entity.value.classKeys.isNotEmpty ? entity.value.classKeys[0] : null,
           isExpanded: true,
-          compareTo: (a, b) => a.toString() == b.toString(),
+          compareTo: (a, b) => a.key == b.key,
           label: Text(S.current.entity(Spell)),
           items: {...repo.builtIn.classes.values, ...repo.my.classes.values}.map(
             (cls) => DropdownMenuItem(

@@ -68,4 +68,27 @@ class Monster extends dw.Monster implements WithMeta {
 
   @override
   dw.EntityReference get reference => Meta.referenceFor(this);
+
+  @override
+  bool operator ==(Object? other) =>
+      identical(this, other) ||
+      other is Monster &&
+          runtimeType == other.runtimeType &&
+          meta == other.meta &&
+          key == other.key &&
+          name == other.name &&
+          description == other.description &&
+          instinct == other.instinct &&
+          tags == other.tags &&
+          moves == other.moves;
+
+  @override
+  int get hashCode => Object.hashAll([meta, key, name, description, instinct, tags, moves]);
+
+  @override
+  String get debugProperties =>
+      'meta: $meta, key: $key, name: $name, description: $description, instinct: $instinct, tags: $tags, moves: $moves';
+
+  @override
+  String toString() => 'Monster($debugProperties)';
 }

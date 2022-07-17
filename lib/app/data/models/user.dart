@@ -70,4 +70,24 @@ class User {
   bool get isLoggedIn => !isGuest;
 
   Brightness get brightness => settings.brightnessOverride ?? getCurrentPlatformBrightness();
+
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      other is User &&
+          runtimeType == other.runtimeType &&
+          username == other.username &&
+          displayName == other.displayName &&
+          email == other.email &&
+          photoUrl == other.photoUrl &&
+          settings == other.settings;
+
+  @override
+  int get hashCode => Object.hashAll([username, displayName, email, photoUrl, settings]);
+
+  String get debugProperties =>
+      'username: $username, displayName: $displayName, email: $email, photoUrl: $photoUrl, settings: $settings';
+
+  @override
+  String toString() => 'User($debugProperties)';
 }

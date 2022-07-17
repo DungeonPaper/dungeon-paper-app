@@ -271,6 +271,29 @@ class Meta<DataType> with RepositoryServiceMixin {
         name: object.displayName,
         type: object.runtimeType.toString(),
       );
+
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      other is Meta &&
+          runtimeType == other.runtimeType &&
+          created == other.created &&
+          createdBy == other.createdBy &&
+          updated == other.updated &&
+          version == other.version &&
+          sharing == other.sharing &&
+          data == other.data &&
+          language == other.language;
+
+  @override
+  int get hashCode =>
+      Object.hashAll([created, createdBy, updated, version, sharing, data, language]);
+
+  String get debugProperties =>
+      'created: $created, createdBy: $createdBy, updated: $updated, version: $version, sharing: $sharing, data: $data, language: $language';
+
+  @override
+  String toString() => 'Meta{$debugProperties}';
 }
 
 class MetaSharing {
@@ -356,6 +379,26 @@ class MetaSharing {
         'sourceOwner': sourceOwner,
         'sourceVersion': sourceVersion,
       };
+
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      other is MetaSharing &&
+          runtimeType == other.runtimeType &&
+          shared == other.shared &&
+          dirty == other.dirty &&
+          sourceKey == other.sourceKey &&
+          sourceOwner == other.sourceOwner &&
+          sourceVersion == other.sourceVersion;
+
+  @override
+  int get hashCode => Object.hashAll([shared, dirty, sourceKey, sourceOwner, sourceVersion]);
+
+  String get debugProperties =>
+      'shared: $shared, dirty: $dirty, sourceKey: $sourceKey, sourceOwner: $sourceOwner, sourceVersion: $sourceVersion';
+
+  @override
+  String toString() => 'MetaSharing{$debugProperties}';
 }
 
 abstract class WithKey {

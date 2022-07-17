@@ -73,4 +73,31 @@ class GearChoice extends dw.GearChoice {
 
   static double selectionToCoins(List<GearSelection> selections) =>
       selections.fold(0.0, (acc, sel) => acc + sel.coins);
+
+  @override
+  bool operator ==(Object? other) =>
+      identical(this, other) ||
+      other is GearChoice &&
+          runtimeType == other.runtimeType &&
+          key == other.key &&
+          description == other.description &&
+          selections == other.selections &&
+          preselect == other.preselect &&
+          maxSelections == other.maxSelections;
+
+  @override
+  int get hashCode => Object.hashAll([
+        key,
+        description,
+        selections,
+        preselect,
+        maxSelections,
+      ]);
+
+  @override
+  String get debugProperties =>
+      'key: $key, description: $description, selections: $selections, preselect: $preselect, maxSelections: $maxSelections';
+
+  @override
+  String toString() => 'GearChoice($debugProperties)';
 }

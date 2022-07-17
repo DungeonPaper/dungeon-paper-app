@@ -136,4 +136,29 @@ class Race extends dw.Race implements WithMeta, WithIcon {
 
   @override
   dw.EntityReference get reference => Meta.referenceFor(this);
+
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      other is Race &&
+          runtimeType == other.runtimeType &&
+          meta == other.meta &&
+          key == other.key &&
+          name == other.name &&
+          description == other.description &&
+          explanation == other.explanation &&
+          classKeys == other.classKeys &&
+          tags == other.tags &&
+          dice == other.dice;
+
+  @override
+  int get hashCode =>
+      Object.hashAll([meta, key, name, description, explanation, classKeys, tags, dice]);
+
+  @override
+  String get debugProperties =>
+      'meta: $meta, key: $key, name: $name, description: $description, explanation: $explanation, classKeys: $classKeys, tags: $tags, dice: $dice';
+
+  @override
+  String toString() => 'Race($debugProperties)';
 }

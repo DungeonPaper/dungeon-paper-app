@@ -365,6 +365,48 @@ class Character implements WithMeta<Character, CharacterMeta>, WithIcon {
 
   @override
   dw.EntityReference get reference => Meta.referenceFor(this);
+
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      other is Character &&
+          runtimeType == other.runtimeType &&
+          meta == other.meta &&
+          key == other.key &&
+          displayName == other.displayName &&
+          avatarUrl == other.avatarUrl &&
+          settings == other.settings &&
+          characterClass == other.characterClass &&
+          moves == other.moves &&
+          spells == other.spells &&
+          items == other.items &&
+          coins == other.coins &&
+          notes == other.notes &&
+          stats == other.stats &&
+          abilityScores == other.abilityScores &&
+          sessionMarks == other.sessionMarks &&
+          bio == other.bio &&
+          race == other.race;
+
+  @override
+  int get hashCode => Object.hashAll([
+        meta,
+        key,
+        displayName,
+        avatarUrl,
+        settings,
+        characterClass,
+        moves,
+        spells,
+        items,
+        coins,
+        notes,
+        stats,
+        abilityScores,
+        sessionMarks,
+        bio,
+        race,
+      ]);
 }
 
 class CharacterMeta {
@@ -386,4 +428,17 @@ class CharacterMeta {
   Map<String, dynamic> toJson() => {
         'lastUsed': lastUsed?.toString(),
       };
+
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      other is CharacterMeta && runtimeType == other.runtimeType && lastUsed == other.lastUsed;
+
+  @override
+  int get hashCode => Object.hashAll([lastUsed]);
+
+  String get debugProperties => 'lastUsed: $lastUsed';
+
+  @override
+  String toString() => 'CharacterMeta{$debugProperties}';
 }

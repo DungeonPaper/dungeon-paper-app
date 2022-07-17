@@ -90,6 +90,24 @@ class AlignmentValue extends dw.Alignment implements WithMeta, WithIcon {
 
   @override
   dw.EntityReference get reference => Meta.referenceFor(this);
+
+  @override
+  String get debugProperties => 'meta: $meta, type: $type, description: $description';
+
+  @override
+  String toString() => 'AlignmentValue($debugProperties)';
+
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      other is AlignmentValue &&
+          runtimeType == other.runtimeType &&
+          meta == other.meta &&
+          type == other.type &&
+          description == other.description;
+
+  @override
+  int get hashCode => Object.hashAll([meta, type, description]);
 }
 
 class AlignmentValues extends dw.AlignmentValues {
@@ -175,4 +193,26 @@ class AlignmentValues extends dw.AlignmentValues {
         '_meta': meta.toJson(),
         ...super.toJson(),
       };
+
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      other is AlignmentValues &&
+          runtimeType == other.runtimeType &&
+          meta == other.meta &&
+          good == other.good &&
+          evil == other.evil &&
+          lawful == other.lawful &&
+          neutral == other.neutral &&
+          chaotic == other.chaotic;
+
+  @override
+  int get hashCode => Object.hashAll([meta, good, evil, lawful, neutral, chaotic]);
+
+  @override
+  String get debugProperties =>
+      'meta: $meta, good: $good, evil: $evil, lawful: $lawful, neutral: $neutral, chaotic: $chaotic';
+
+  @override
+  String toString() => 'AlignmentValues($debugProperties)';
 }

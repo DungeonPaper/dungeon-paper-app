@@ -51,4 +51,21 @@ class Bio {
         'description': description,
         'alignment': alignment.toJson(),
       };
+
+  String get debugProperties => 'looks: $looks, description: $description, alignment: $alignment';
+
+  @override
+  String toString() => 'Bio($debugProperties)';
+
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      other is Bio &&
+          runtimeType == other.runtimeType &&
+          looks == other.looks &&
+          description == other.description &&
+          alignment == other.alignment;
+
+  @override
+  int get hashCode => Object.hashAll([looks, description, alignment]);
 }

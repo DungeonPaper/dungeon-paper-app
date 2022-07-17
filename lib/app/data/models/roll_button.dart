@@ -46,4 +46,21 @@ class RollButton {
       })
       .whereType<dw.Dice>()
       .toList();
+
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      other is RollButton &&
+          runtimeType == other.runtimeType &&
+          label == other.label &&
+          dice == other.dice &&
+          specialDice == other.specialDice;
+
+  @override
+  int get hashCode => Object.hashAll([label, dice, specialDice]);
+
+  String get debugProperties => 'label: $label, dice: $dice, specialDice: $specialDice';
+
+  @override
+  String toString() => 'RollButton($debugProperties)';
 }

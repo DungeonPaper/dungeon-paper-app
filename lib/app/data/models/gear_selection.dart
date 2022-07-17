@@ -44,4 +44,24 @@ class GearSelection extends dw.GearSelection {
         options: List<GearOption>.from((json['options'] ?? []).map((x) => GearOption.fromJson(x))),
         coins: json['coins'] ?? 0,
       );
+
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      other is GearSelection &&
+          runtimeType == other.runtimeType &&
+          key == other.key &&
+          description == other.description &&
+          options == other.options &&
+          coins == other.coins;
+
+  @override
+  int get hashCode => Object.hashAll([key, description, options, coins]);
+
+  @override
+  String get debugProperties =>
+      'key: $key, description: $description, options: $options, coins: $coins';
+
+  @override
+  String toString() => 'GearSelection($debugProperties)';
 }

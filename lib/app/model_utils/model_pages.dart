@@ -140,14 +140,14 @@ class ModelPages {
     required AbilityScores abilityScores,
     required List<dw.EntityReference> classKeys,
   }) =>
-      () => Get.to(
-            () => LibraryEntityForm<Spell>(
-              onSave: onSave,
-              type: spell == null ? ItemFormType.create : ItemFormType.edit,
-            ),
-            binding: RepositoryItemFormBinding<Spell>(),
-            arguments: SpellFormArguments(spell: spell, abilityScores: abilityScores),
-          );
+      Get.to(
+        () => LibraryEntityForm<Spell>(
+          onSave: onSave,
+          type: spell == null ? ItemFormType.create : ItemFormType.edit,
+        ),
+        binding: RepositoryItemFormBinding<Spell>(),
+        arguments: SpellFormArguments(spell: spell, abilityScores: abilityScores),
+      );
 
   static void openItemsList({
     Character? character,
@@ -168,14 +168,14 @@ class ModelPages {
     required Item? item,
     required void Function(Item item) onSave,
   }) =>
-      () => Get.to(
-            () => LibraryEntityForm<Item>(
-              onSave: onSave,
-              type: item == null ? ItemFormType.create : ItemFormType.edit,
-            ),
-            binding: RepositoryItemFormBinding<Item>(),
-            arguments: ItemFormArguments(item: item),
-          );
+      Get.to(
+        () => LibraryEntityForm<Item>(
+          onSave: onSave,
+          type: item == null ? ItemFormType.create : ItemFormType.edit,
+        ),
+        binding: RepositoryItemFormBinding<Item>(),
+        arguments: ItemFormArguments(item: item),
+      );
 
   static void openNotesList({
     Character? character,
@@ -196,14 +196,14 @@ class ModelPages {
     required Note? note,
     required void Function(Note note) onSave,
   }) =>
-      () => Get.to(
-            () => LibraryEntityForm<Note>(
-              onSave: onSave,
-              type: note == null ? ItemFormType.create : ItemFormType.edit,
-            ),
-            binding: RepositoryItemFormBinding<Note>(),
-            arguments: NoteFormArguments(note: note),
-          );
+      Get.to(
+        () => LibraryEntityForm<Note>(
+          onSave: onSave,
+          type: note == null ? ItemFormType.create : ItemFormType.edit,
+        ),
+        binding: RepositoryItemFormBinding<Note>(),
+        arguments: NoteFormArguments(note: note),
+      );
 
   static void openCharacterClassesList({
     Character? character,
@@ -230,12 +230,12 @@ class ModelPages {
     required CharacterClass? characterClass,
     required void Function(CharacterClass item) onSave,
   }) =>
-      () => Get.to(
-            () => LibraryEntityForm<CharacterClass>(
-              onSave: onSave,
-              type: characterClass == null ? ItemFormType.create : ItemFormType.edit,
-            ),
-            binding: RepositoryItemFormBinding<CharacterClass>(),
-            arguments: CharacterClassFormArguments(characterClass: characterClass),
-          );
+      Get.to(
+        () => LibraryEntityForm<CharacterClass>(
+          onSave: onSave,
+          type: characterClass == null ? ItemFormType.create : ItemFormType.edit,
+        ),
+        binding: RepositoryItemFormBinding<CharacterClass>(),
+        arguments: CharacterClassFormArguments(characterClass: characterClass),
+      );
 }

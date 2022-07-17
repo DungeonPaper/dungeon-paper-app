@@ -37,4 +37,22 @@ class ItemSettings {
         'countDamage': countDamage,
         'countWeight': countWeight,
       };
+
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      other is ItemSettings &&
+          runtimeType == other.runtimeType &&
+          countArmor == other.countArmor &&
+          countDamage == other.countDamage &&
+          countWeight == other.countWeight;
+
+  @override
+  int get hashCode => Object.hashAll([countArmor, countDamage, countWeight]);
+
+  String get debugProperties =>
+      'countArmor: $countArmor, countDamage: $countDamage, countWeight: $countWeight';
+
+  @override
+  String toString() => 'ItemSettings($debugProperties)';
 }
