@@ -155,7 +155,6 @@ class Race extends dw.Race implements WithMeta, WithIcon {
   int get hashCode =>
       Object.hashAll([meta, key, name, description, explanation, classKeys, tags, dice]);
 
-  @override
   String get debugProperties =>
       'meta: $meta, key: $key, name: $name, description: $description, explanation: $explanation, classKeys: $classKeys, tags: $tags, dice: $dice';
 

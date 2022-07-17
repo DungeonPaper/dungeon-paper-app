@@ -14,7 +14,7 @@ import 'package:dungeon_paper/app/modules/LibraryList/views/character_classes_li
 import 'package:dungeon_paper/app/modules/LibraryList/views/items_library_list_view.dart';
 import 'package:dungeon_paper/app/modules/LibraryList/views/moves_library_list_view.dart';
 import 'package:dungeon_paper/app/modules/LibraryList/views/notes_library_list_view.dart';
-import 'package:dungeon_paper/app/modules/LibraryList/views/racees_library_list_view.dart';
+import 'package:dungeon_paper/app/modules/LibraryList/views/races_library_list_view.dart';
 import 'package:dungeon_paper/app/modules/LibraryList/views/spells_library_list_view.dart';
 import 'package:dungeon_paper/app/routes/app_pages.dart';
 import 'package:dungeon_paper/app/widgets/forms/character_class_form.dart';

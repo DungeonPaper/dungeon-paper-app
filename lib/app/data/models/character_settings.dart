@@ -128,7 +128,7 @@ class CharacterSettings {
       'sortOrder: $sortOrder, category: $category, rollButtons: $rollButtons, noteCategories: $noteCategories, actionCategories: $actionCategories, quickCategories: $quickCategories, racePosition: $racePosition, lightTheme: $lightTheme, darkTheme: $darkTheme';
 
   @override
-  String toString() => 'CharacterSettings{$debugProperties}';
+  String toString() => 'CharacterSettings($debugProperties)';
 
   @override
   bool operator ==(Object other) =>
@@ -229,7 +229,7 @@ class OrderedCategoryList {
   String get debugProperties => 'hidden: $hidden, sortOrder: $sortOrder, canHide: $canHide';
 
   @override
-  String toString() => 'OrderedCategoryList{$debugProperties}';
+  String toString() => 'OrderedCategoryList($debugProperties)';
 }
 
 @immutable
@@ -257,7 +257,7 @@ class NoteCategoryList extends OrderedCategoryList {
   String get debugProperties => 'sortOrder: $sortOrder';
 
   @override
-  String toString() => 'NoteCategoryList{$debugProperties}';
+  String toString() => 'NoteCategoryList($debugProperties)';
 }
 
 @immutable
@@ -290,5 +290,5 @@ class ActionCategoryList extends OrderedCategoryList {
   String get debugProperties => 'sortOrder: $sortOrder, hidden: $hidden';
 
   @override
-  String toString() => 'ActionCategoryList{$debugProperties}';
+  String toString() => 'ActionCategoryList($debugProperties)';
 }

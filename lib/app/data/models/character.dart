@@ -407,6 +407,12 @@ class Character implements WithMeta<Character, CharacterMeta>, WithIcon {
         bio,
         race,
       ]);
+
+  String get debugProperties =>
+      'meta: $meta, key: $key, displayName: $displayName, avatarUrl: $avatarUrl, settings: $settings, characterClass: $characterClass, moves: $moves, spells: $spells, items: $items, coins: $coins, notes: $notes, stats: $stats, abilityScores: $abilityScores, sessionMarks: $sessionMarks, bio: $bio, race: $race';
+
+  @override
+  String toString() => 'Character($debugProperties)';
 }
 
 class CharacterMeta {
@@ -440,5 +446,5 @@ class CharacterMeta {
   String get debugProperties => 'lastUsed: $lastUsed';
 
   @override
-  String toString() => 'CharacterMeta{$debugProperties}';
+  String toString() => 'CharacterMeta($debugProperties)';
 }

@@ -136,5 +136,5 @@ class Note implements WithMeta, WithIcon {
       'meta: $meta, key: $key, title: $title, description: $description, category: $category, tags: $tags, favorite: $favorite';
 
   @override
-  String toString() => 'Note{$debugProperties}';
+  String toString() => 'Note($debugProperties)';
 }

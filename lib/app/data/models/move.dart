@@ -146,9 +146,8 @@ class Move extends dw.Move implements WithMeta, WithIcon {
   int get hashCode =>
       Object.hashAll([meta, key, name, description, explanation, dice, classKeys, tags, category]);
 
-  @override
   String get debugProperties =>
-      'name: $name, description: $description, explanation: $explanation, dice: $dice, classKeys: $classKeys, tags: $tags, category: $category';
+      'meta: $meta, name: $name, description: $description, explanation: $explanation, dice: $dice, classKeys: $classKeys, tags: $tags, category: $category';
 
   @override
   String toString() => 'Move($debugProperties)';

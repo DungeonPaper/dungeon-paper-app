@@ -1,4 +1,4 @@
-import 'package:dungeon_paper/app/modules/LibraryList/views/racees_library_list_view.dart';
+import 'package:dungeon_paper/app/modules/LibraryList/views/races_library_list_view.dart';
 import 'package:flutter/widgets.dart';
 
 import 'package:get/get.dart';

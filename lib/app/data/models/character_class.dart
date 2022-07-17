@@ -142,4 +142,32 @@ class CharacterClass extends dw.CharacterClass implements WithMeta, WithIcon {
 
   @override
   dw.EntityReference get reference => Meta.referenceFor(this);
+
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      other is CharacterClass &&
+          runtimeType == other.runtimeType &&
+          meta == other.meta &&
+          name == other.name &&
+          key == other.key &&
+          description == other.description &&
+          damageDice == other.damageDice &&
+          load == other.load &&
+          hp == other.hp &&
+          alignments == other.alignments &&
+          bonds == other.bonds &&
+          flags == other.flags &&
+          gearChoices == other.gearChoices;
+
+  @override
+  int get hashCode => Object.hashAll(
+      [meta, name, key, description, damageDice, load, hp, alignments, bonds, flags, gearChoices]);
+
+  @override
+  String get debugProperties =>
+      'meta: $meta, name: $name, key: $key, description: $description, damageDice: $damageDice, load: $load, hp: $hp, alignments: $alignments, bonds: $bonds, flags: $flags, gearChoices: $gearChoices';
+
+  @override
+  String toString() => 'CharacterClass($debugProperties)';
 }

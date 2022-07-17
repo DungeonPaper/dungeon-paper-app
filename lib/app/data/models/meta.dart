@@ -293,7 +293,7 @@ class Meta<DataType> with RepositoryServiceMixin {
       'created: $created, createdBy: $createdBy, updated: $updated, version: $version, sharing: $sharing, data: $data, language: $language';
 
   @override
-  String toString() => 'Meta{$debugProperties}';
+  String toString() => 'Meta($debugProperties)';
 }
 
 class MetaSharing {
@@ -398,7 +398,7 @@ class MetaSharing {
       'shared: $shared, dirty: $dirty, sourceKey: $sourceKey, sourceOwner: $sourceOwner, sourceVersion: $sourceVersion';
 
   @override
-  String toString() => 'MetaSharing{$debugProperties}';
+  String toString() => 'MetaSharing($debugProperties)';
 }
 
 abstract class WithKey {

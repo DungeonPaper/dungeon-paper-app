@@ -133,5 +133,5 @@ class CharacterStats {
       'level: $level, maxHp: $maxHp, currentHp: $currentHp, currentExp: $currentExp, armor: $armor, damageDice: $damageDice, load: $load';
 
   @override
-  String toString() => 'CharacterStats{$debugProperties}';
+  String toString() => 'CharacterStats($debugProperties)';
 }
