@@ -58,6 +58,7 @@ class GearSelection extends dw.GearSelection {
   @override
   int get hashCode => Object.hashAll([key, description, options, coins]);
 
+  @override
   String get debugProperties =>
       'key: $key, description: $description, options: $options, coins: $coins';
 

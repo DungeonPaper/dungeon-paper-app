@@ -5,7 +5,9 @@ import 'package:dungeon_paper/app/data/models/move.dart';
 import 'package:dungeon_paper/app/data/models/race.dart';
 import 'package:dungeon_paper/app/data/models/spell.dart';
 import 'package:dungeon_paper/app/data/services/repository_service.dart';
+import 'package:dungeon_paper/app/data/services/user_service.dart';
 import 'package:dungeon_paper/app/model_utils/model_pages.dart';
+import 'package:dungeon_paper/app/widgets/atoms/menu_button.dart';
 import 'package:dungeon_paper/generated/l10n.dart';
 import 'package:flutter/material.dart';
 
@@ -15,7 +17,7 @@ import 'package:intl/intl.dart';
 import '../controllers/library_collection_controller.dart';
 
 class LibraryCollectionView extends GetView<LibraryCollectionController>
-    with RepositoryServiceMixin {
+    with RepositoryServiceMixin, UserServiceMixin {
   static const List<Type> types = [Move, Spell, Item, CharacterClass, Race];
 
   const LibraryCollectionView({Key? key}) : super(key: key);
@@ -28,43 +30,58 @@ class LibraryCollectionView extends GetView<LibraryCollectionController>
       appBar: AppBar(
         title: Text(S.current.libraryCollectionTitle),
         centerTitle: true,
+        actions: [
+          MenuButton(
+            items: [
+              MenuEntry(
+                label: Text(S.current.reloadLibrary),
+                icon: const Icon(Icons.refresh),
+                value: 'refresh',
+                onSelect: () => userService.loadBuiltInRepo(ignoreCache: true),
+              ),
+            ],
+          )
+        ],
       ),
       body: ListView.builder(
         padding: const EdgeInsets.all(8),
         itemCount: types.length,
         itemBuilder: (context, index) {
-          final type = types[index];
-
-          return Card(
-            child: ListTile(
-              onTap: () => ModelPages.openLibraryList(type: type),
-              horizontalTitleGap: 8,
-              leading: Container(
-                constraints: const BoxConstraints(maxWidth: 32),
-                height: double.infinity,
-                child: Align(
-                  alignment: Alignment.centerLeft,
-                  child: Icon(Meta.genericIconFor(type), size: 32),
+          return Obx(
+            () {
+              final type = types[index];
+              return Card(
+                child: ListTile(
+                  onTap: () => ModelPages.openLibraryList(type: type),
+                  horizontalTitleGap: 8,
+                  leading: Container(
+                    constraints: const BoxConstraints(maxWidth: 32),
+                    height: double.infinity,
+                    child: Align(
+                      alignment: Alignment.centerLeft,
+                      child: Icon(Meta.genericIconFor(type), size: 32),
+                    ),
+                  ),
+                  title: Text(
+                    S.current.entityPlural(type),
+                    style: textTheme.headline6,
+                  ),
+                  subtitle: Text(
+                    [
+                      S.current.libraryCollectionListItemSubtitle(
+                        NumberFormat('#,###,###').format(repo.builtIn.listByType(type).length),
+                        S.current.libraryCollectionListItemSubtitleType('builtIn'),
+                      ),
+                      S.current.libraryCollectionListItemSubtitle(
+                        NumberFormat('#,###,###').format(repo.my.listByType(type).length),
+                        S.current.libraryCollectionListItemSubtitleType('my'),
+                      ),
+                    ].join(' | '),
+                  ),
+                  trailing: const Icon(Icons.chevron_right),
                 ),
-              ),
-              title: Text(
-                S.current.entityPlural(type),
-                style: textTheme.headline6,
-              ),
-              subtitle: Text(
-                [
-                  S.current.libraryCollectionListItemSubtitle(
-                    NumberFormat('#,###,###').format(repo.builtIn.listByType(type).length),
-                    S.current.libraryCollectionListItemSubtitleType('builtIn'),
-                  ),
-                  S.current.libraryCollectionListItemSubtitle(
-                    NumberFormat('#,###,###').format(repo.my.listByType(type).length),
-                    S.current.libraryCollectionListItemSubtitleType('my'),
-                  ),
-                ].join(' | '),
-              ),
-              trailing: const Icon(Icons.chevron_right),
-            ),
+              );
+            },
           );
         },
       ),

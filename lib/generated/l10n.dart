@@ -2846,6 +2846,16 @@ class S {
     );
   }
 
+  /// `Reload Library`
+  String get reloadLibrary {
+    return Intl.message(
+      'Reload Library',
+      name: 'reloadLibrary',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `Remove`
   String get remove {
     return Intl.message(

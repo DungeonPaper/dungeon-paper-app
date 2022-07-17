@@ -154,6 +154,7 @@ class Item extends dw.Item implements WithMeta, WithIcon {
   @override
   int get hashCode => Object.hashAll([key, name, description, tags, settings, amount, equipped]);
 
+  @override
   String get debugProperties =>
       'meta: $meta, key: $key, name: $name, description: $description, tags: $tags, settings: $settings, amount: $amount, equipped: $equipped';
 

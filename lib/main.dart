@@ -9,7 +9,6 @@ import 'package:dynamic_themes/dynamic_themes.dart';
 import 'package:flutter/material.dart';
 import 'package:get/route_manager.dart';
 import 'package:firebase_core/firebase_core.dart';
-import 'package:wakelock/wakelock.dart';
 
 import 'app/themes/themes.dart';
 import 'firebase_options.dart';

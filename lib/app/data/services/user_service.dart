@@ -23,10 +23,10 @@ class UserService extends GetxService
   User get current => _current.value;
   StreamSubscription? _sub;
 
-  Future<void> loadBuiltInRepo() {
+  Future<void> loadBuiltInRepo({bool ignoreCache = false}) async {
     repo.builtIn.clear();
     repo.builtIn.clearListeners();
-    return repo.builtIn.init();
+    return repo.builtIn.init(ignoreCache: ignoreCache);
   }
 
   Future<void> loadMyRepo() {

@@ -91,6 +91,7 @@ class AlignmentValue extends dw.Alignment implements WithMeta, WithIcon {
   @override
   dw.EntityReference get reference => Meta.referenceFor(this);
 
+  @override
   String get debugProperties => 'type: $type, description: $description';
 
   @override
@@ -208,6 +209,7 @@ class AlignmentValues extends dw.AlignmentValues {
   @override
   int get hashCode => Object.hashAll([meta, good, evil, lawful, neutral, chaotic]);
 
+  @override
   String get debugProperties =>
       'meta: $meta, good: $good, evil: $evil, lawful: $lawful, neutral: $neutral, chaotic: $chaotic';
 

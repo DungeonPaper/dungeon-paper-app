@@ -1,4 +1,6 @@
+import 'package:dungeon_paper/app/widgets/chips/advanced_chip.dart';
 import 'package:dungeon_paper/app/widgets/chips/move_category_chip.dart';
+import 'package:dungeon_paper/app/widgets/chips/primary_chip.dart';
 import 'package:dungeon_paper/app/widgets/chips/tag_chip.dart';
 import 'package:flutter/material.dart';
 
@@ -19,6 +21,7 @@ class RaceCard extends StatelessWidget {
     this.expandable = true,
     this.advancedLevelDisplay = AdvancedLevelDisplay.short,
     this.highlightWords = const [],
+    this.showClasses = false,
   }) : super(key: key);
 
   final Race race;
@@ -32,6 +35,7 @@ class RaceCard extends StatelessWidget {
   final bool expandable;
   final AdvancedLevelDisplay advancedLevelDisplay;
   final List<String> highlightWords;
+  final bool showClasses;
 
   @override
   Widget build(BuildContext context) {
@@ -51,7 +55,14 @@ class RaceCard extends StatelessWidget {
       initiallyExpanded: initiallyExpanded,
       actions: actions,
       highlightWords: highlightWords,
-      leading: const [],
+      leading: showClasses && race.classKeys.isNotEmpty
+          ? [
+              PrimaryChip(
+                label: race.classKeys.first.name,
+                visualDensity: VisualDensity.compact,
+              )
+            ]
+          : const [],
     );
   }
 }

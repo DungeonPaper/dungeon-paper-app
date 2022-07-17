@@ -85,6 +85,7 @@ class Monster extends dw.Monster implements WithMeta {
   @override
   int get hashCode => Object.hashAll([meta, key, name, description, instinct, tags, moves]);
 
+  @override
   String get debugProperties =>
       'meta: $meta, key: $key, name: $name, description: $description, instinct: $instinct, tags: $tags, moves: $moves';
 

@@ -683,6 +683,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "quickIconsMoves": MessageLookupByLibrary.simpleMessage("Moves"),
         "quickIconsNote": MessageLookupByLibrary.simpleMessage("+ Note"),
         "quickIconsSpells": MessageLookupByLibrary.simpleMessage("Spells"),
+        "reloadLibrary": MessageLookupByLibrary.simpleMessage("Reload Library"),
         "remove": MessageLookupByLibrary.simpleMessage("Remove"),
         "resetToDefault":
             MessageLookupByLibrary.simpleMessage("Reset to default"),

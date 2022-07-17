@@ -46,6 +46,7 @@ class RacesLibraryListView extends GetView<LibraryListController<Race, RaceFilte
           RaceCard(
         race: race,
         showStar: false,
+        showClasses: true,
         actions: [
           EntityEditMenu(
             onEdit: onUpdate != null

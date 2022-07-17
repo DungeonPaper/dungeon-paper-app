@@ -146,6 +146,7 @@ class Spell extends dw.Spell implements WithMeta, WithIcon {
   int get hashCode =>
       Object.hashAll([meta, key, name, description, explanation, level, classKeys, dice, tags]);
 
+  @override
   String get debugProperties =>
       'meta: $meta, key: $key, name: $name, description: $description, explanation: $explanation, level: $level, classKeys: $classKeys, dice: $dice, tags: $tags';
 
