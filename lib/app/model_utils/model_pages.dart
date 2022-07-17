@@ -14,6 +14,7 @@ import 'package:dungeon_paper/app/modules/LibraryList/views/character_classes_li
 import 'package:dungeon_paper/app/modules/LibraryList/views/items_library_list_view.dart';
 import 'package:dungeon_paper/app/modules/LibraryList/views/moves_library_list_view.dart';
 import 'package:dungeon_paper/app/modules/LibraryList/views/notes_library_list_view.dart';
+import 'package:dungeon_paper/app/modules/LibraryList/views/racees_library_list_view.dart';
 import 'package:dungeon_paper/app/modules/LibraryList/views/spells_library_list_view.dart';
 import 'package:dungeon_paper/app/routes/app_pages.dart';
 import 'package:dungeon_paper/app/widgets/forms/character_class_form.dart';
@@ -35,11 +36,11 @@ class ModelPages {
     Type? type,
   }) {
     final map = <Type, Function()>{
-      Move: openMovesList,
-      Spell: openSpellsList,
-      Item: openItemsList,
-      CharacterClass: openCharacterClassesList,
-      // Race: () => openRacesList(),
+      Move: () => openMovesList(),
+      Spell: () => openSpellsList(),
+      Item: () => openItemsList(),
+      CharacterClass: () => openCharacterClassesList(),
+      Race: () => openRacesList(),
     };
 
     final t = type ?? T;
@@ -65,6 +66,22 @@ class ModelPages {
         category: category,
         onAdd: onAdd, // ?? library.upsertToCharacter,
         preSelections: char?.moves ?? [],
+      ),
+    );
+  }
+
+  static void openRacesList({
+    Character? character,
+    Iterable<Race>? preSelections,
+    void Function(Iterable<Race> list)? onAdd,
+  }) {
+    final char = character;
+    Get.toNamed(
+      Routes.races,
+      arguments: RaceLibraryListArguments(
+        character: char,
+        onAdd: onAdd, // ?? library.upsertToCharacter,
+        preSelections: char != null ? [char.race] : [],
       ),
     );
   }

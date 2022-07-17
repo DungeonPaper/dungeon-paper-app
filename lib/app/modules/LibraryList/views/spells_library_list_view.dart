@@ -49,20 +49,21 @@ class SpellsLibraryListView extends GetView<LibraryListController<Spell, SpellFi
           EntityEditMenu(
             onEdit: onUpdate != null
                 ? () => ModelPages.openSpellPage(
-                    abilityScores: character.abilityScores,
-                    classKeys: spell.classKeys,
-                    spell: spell,
-                    onSave: onUpdate,
-                  )
+                      abilityScores: character.abilityScores,
+                      classKeys: spell.classKeys,
+                      spell: spell,
+                      onSave: onUpdate,
+                    )
                 : null,
             onDelete: onDelete != null ? () => onDelete(spell) : null,
           ),
-          ElevatedButton.icon(
-            style: ButtonThemes.primaryElevated(context),
-            onPressed: onToggle,
-            label: label,
-            icon: icon,
-          ),
+          if (selectable)
+            ElevatedButton.icon(
+              style: ButtonThemes.primaryElevated(context),
+              onPressed: onToggle,
+              label: label,
+              icon: icon,
+            ),
         ],
       ),
     );

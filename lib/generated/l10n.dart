@@ -2489,13 +2489,28 @@ class S {
     );
   }
 
-  /// `{count} {plural}`
-  String libraryCollectionListItemSubtitle(Object count, Object plural) {
+  /// `{count} in {type}`
+  String libraryCollectionListItemSubtitle(Object count, Object type) {
     return Intl.message(
-      '$count $plural',
+      '$count in $type',
       name: 'libraryCollectionListItemSubtitle',
       desc: '',
-      args: [count, plural],
+      args: [count, type],
+    );
+  }
+
+  /// `{type, select, builtIn {Playbook} my {My Library} other {{type}}}`
+  String libraryCollectionListItemSubtitleType(Object type) {
+    return Intl.select(
+      type,
+      {
+        'builtIn': 'Playbook',
+        'my': 'My Library',
+        'other': '$type',
+      },
+      name: 'libraryCollectionListItemSubtitleType',
+      desc: '',
+      args: [type],
     );
   }
 

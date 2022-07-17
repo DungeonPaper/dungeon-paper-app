@@ -5,7 +5,9 @@ import 'package:dungeon_paper/app/data/models/alignment.dart';
 import 'package:dungeon_paper/app/data/models/character.dart';
 import 'package:dungeon_paper/app/data/models/character_class.dart';
 import 'package:dungeon_paper/app/data/models/gear_selection.dart';
+import 'package:dungeon_paper/app/data/models/race.dart';
 import 'package:dungeon_paper/app/data/services/character_service.dart';
+import 'package:dungeon_paper/app/model_utils/model_pages.dart';
 import 'package:dungeon_paper/app/modules/AbilityScoresForm/controllers/ability_scores_form_controller.dart';
 import 'package:dungeon_paper/app/modules/BasicInfoForm/controllers/basic_info_form_controller.dart';
 import 'package:dungeon_paper/app/modules/ClassAlignments/controllers/class_alignments_controller.dart';
@@ -118,6 +120,26 @@ class CreateCharacterView extends GetView<CreateCharacterController> {
                               ),
                               preventDuplicates: false,
                             ),
+                          ),
+                          // Race
+                          _Card(
+                            title: controller.race.value == null
+                                ? Text(S.current.selectGeneric(S.current.entity(Race)))
+                                : Text(controller.race.value!.name),
+                            subtitle: controller.race.value == null
+                                ? Text(S.current.errorNoSelectionGeneric(S.current.entity(Race)))
+                                : Text(
+                                    controller.race.value!.description,
+                                    overflow: TextOverflow.ellipsis,
+                                  ),
+                            onTap: cls != null
+                                ? () => ModelPages.openRacesList(
+                                      preSelections: controller.race.value != null
+                                          ? [controller.race.value!]
+                                          : [],
+                                      onAdd: (_races) => controller.race.value = _races.first,
+                                    )
+                                : null,
                           ),
                           // Ability Scores
                           _Card(

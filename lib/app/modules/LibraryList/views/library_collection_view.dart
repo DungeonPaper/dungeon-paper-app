@@ -2,6 +2,7 @@ import 'package:dungeon_paper/app/data/models/character_class.dart';
 import 'package:dungeon_paper/app/data/models/item.dart';
 import 'package:dungeon_paper/app/data/models/meta.dart';
 import 'package:dungeon_paper/app/data/models/move.dart';
+import 'package:dungeon_paper/app/data/models/race.dart';
 import 'package:dungeon_paper/app/data/models/spell.dart';
 import 'package:dungeon_paper/app/data/services/repository_service.dart';
 import 'package:dungeon_paper/app/model_utils/model_pages.dart';
@@ -9,12 +10,13 @@ import 'package:dungeon_paper/generated/l10n.dart';
 import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
+import 'package:intl/intl.dart';
 
 import '../controllers/library_collection_controller.dart';
 
 class LibraryCollectionView extends GetView<LibraryCollectionController>
     with RepositoryServiceMixin {
-  static const List<Type> types = [Move, Spell, Item, CharacterClass];
+  static const List<Type> types = [Move, Spell, Item, CharacterClass, Race];
 
   const LibraryCollectionView({Key? key}) : super(key: key);
 
@@ -50,10 +52,16 @@ class LibraryCollectionView extends GetView<LibraryCollectionController>
                 style: textTheme.headline6,
               ),
               subtitle: Text(
-                S.current.libraryCollectionListItemSubtitle(
-                  repo.my.listByType(type).length,
-                  S.current.entityPlural(type),
-                ),
+                [
+                  S.current.libraryCollectionListItemSubtitle(
+                    NumberFormat('#,###,###').format(repo.builtIn.listByType(type).length),
+                    S.current.libraryCollectionListItemSubtitleType('builtIn'),
+                  ),
+                  S.current.libraryCollectionListItemSubtitle(
+                    NumberFormat('#,###,###').format(repo.my.listByType(type).length),
+                    S.current.libraryCollectionListItemSubtitleType('my'),
+                  ),
+                ].join(' | '),
               ),
               trailing: const Icon(Icons.chevron_right),
             ),

@@ -15,7 +15,7 @@ class EntityEditMenu extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     if (onEdit == null && onDelete == null) {
-      return Container();
+      return const EntityEditMenuBlank();
     }
 
     return Material(
@@ -51,5 +51,14 @@ class EntityEditMenu extends StatelessWidget {
         ],
       ),
     );
+  }
+}
+
+class EntityEditMenuBlank extends StatelessWidget {
+  const EntityEditMenuBlank({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Container();
   }
 }

@@ -57,12 +57,13 @@ class RacesLibraryListView extends GetView<LibraryListController<Race, RaceFilte
                 : null,
             onDelete: onDelete != null ? () => onDelete(race) : null,
           ),
-          ElevatedButton.icon(
-            style: ButtonThemes.primaryElevated(context),
-            onPressed: onToggle,
-            label: label,
-            icon: icon,
-          ),
+          if (selectable)
+            ElevatedButton.icon(
+              style: ButtonThemes.primaryElevated(context),
+              onPressed: onToggle,
+              label: label,
+              icon: icon,
+            ),
         ],
       ),
     );
@@ -85,5 +86,6 @@ class RaceLibraryListArguments extends LibraryListArguments<Race, RaceFilters> {
             'abilityScores': character?.abilityScores,
             'classKeys': character != null ? [character.characterClass.key] : null,
           },
+          multiple: false,
         );
 }

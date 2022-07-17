@@ -1,7 +1,9 @@
 import 'package:dungeon_paper/app/data/models/character_class.dart';
 import 'package:dungeon_paper/app/data/models/item.dart';
 import 'package:dungeon_paper/app/data/models/move.dart';
+import 'package:dungeon_paper/app/data/models/race.dart';
 import 'package:dungeon_paper/app/data/models/spell.dart';
+import 'package:dungeon_paper/app/modules/LibraryList/views/filters/race_filters.dart';
 import 'package:get/get.dart';
 
 import 'package:dungeon_paper/app/modules/LibraryList/controllers/library_list_controller.dart';
@@ -25,6 +27,9 @@ class LibraryListBinding extends Bindings {
     );
     Get.lazyPut<LibraryListController<CharacterClass, CharacterClassFilters>>(
       () => LibraryListController<CharacterClass, CharacterClassFilters>(),
+    );
+    Get.lazyPut<LibraryListController<Race, RaceFilters>>(
+      () => LibraryListController<Race, RaceFilters>(),
     );
   }
 }

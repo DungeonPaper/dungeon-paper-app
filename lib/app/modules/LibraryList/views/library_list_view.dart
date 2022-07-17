@@ -137,6 +137,7 @@ class LibraryListView<T extends WithMeta, F extends EntityFilters<T>>
           final isPreSelected = controller.isPreSelected(item);
           final selected = controller.isSelected(item);
           final enabled = controller.isEnabled(item);
+          final selectable = controller.selectable;
           final onToggle = enabled ? () => controller.toggleItem(item, !selected) : null;
 
           return Container(
@@ -157,7 +158,7 @@ class LibraryListView<T extends WithMeta, F extends EntityFilters<T>>
               context,
               item,
               selected: selected,
-              selectable: enabled,
+              selectable: selectable && enabled,
               onToggle: onToggle,
               label: Text(
                 enabled

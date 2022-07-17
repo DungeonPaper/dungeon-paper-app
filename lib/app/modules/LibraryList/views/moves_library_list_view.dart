@@ -58,12 +58,13 @@ class MovesLibraryListView extends GetView<LibraryListController<Move, MoveFilte
                 : null,
             onDelete: onDelete != null ? () => onDelete(move) : null,
           ),
-          ElevatedButton.icon(
-            style: ButtonThemes.primaryElevated(context),
-            onPressed: onToggle,
-            label: label,
-            icon: icon,
-          ),
+          if (selectable)
+            ElevatedButton.icon(
+              style: ButtonThemes.primaryElevated(context),
+              onPressed: onToggle,
+              label: label,
+              icon: icon,
+            ),
         ],
       ),
     );

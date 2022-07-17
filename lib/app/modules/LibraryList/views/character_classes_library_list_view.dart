@@ -58,12 +58,13 @@ class CharacterClassesLibraryListView
                 : null,
             onDelete: onDelete != null ? () => onDelete(characterClass) : null,
           ),
-          ElevatedButton.icon(
-            style: ButtonThemes.primaryElevated(context),
-            onPressed: onToggle,
-            label: label,
-            icon: icon,
-          ),
+          if (selectable)
+            ElevatedButton.icon(
+              style: ButtonThemes.primaryElevated(context),
+              onPressed: onToggle,
+              label: label,
+              icon: icon,
+            ),
         ],
       ),
     );

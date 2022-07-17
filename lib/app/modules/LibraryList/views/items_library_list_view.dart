@@ -47,18 +47,19 @@ class ItemsLibraryListView extends GetView<LibraryListController<Item, ItemFilte
           EntityEditMenu(
             onEdit: onUpdate != null
                 ? () => ModelPages.openItemPage(
-                    item: item,
-                    onSave: onUpdate,
-                  )
+                      item: item,
+                      onSave: onUpdate,
+                    )
                 : null,
             onDelete: onDelete != null ? () => onDelete(item) : null,
           ),
-          ElevatedButton.icon(
-            style: ButtonThemes.primaryElevated(context),
-            onPressed: onToggle,
-            label: label,
-            icon: icon,
-          )
+          if (selectable)
+            ElevatedButton.icon(
+              style: ButtonThemes.primaryElevated(context),
+              onPressed: onToggle,
+              label: label,
+              icon: icon,
+            )
         ],
       ),
     );

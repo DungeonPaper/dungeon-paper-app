@@ -171,9 +171,15 @@ class MessageLookup extends MessageLookupByLibrary {
   static String m54(count) =>
       "${Intl.plural(count, zero: 'No items', one: 'One item', other: '${count} items')}";
 
-  static String m55(count, plural) => "${count} ${plural}";
+  static String m55(count, type) => "${count} in ${type}";
 
-  static String m56(category) => "${Intl.select(category, {
+  static String m56(type) => "${Intl.select(type, {
+            'builtIn': 'Playbook',
+            'my': 'My Library',
+            'other': '${type}',
+          })}";
+
+  static String m57(category) => "${Intl.select(category, {
             'starting': 'Starting',
             'basic': 'Basic',
             'special': 'Special',
@@ -182,7 +188,7 @@ class MessageLookup extends MessageLookupByLibrary {
             'other': 'Other',
           })}";
 
-  static String m57(category) => "${Intl.select(category, {
+  static String m58(category) => "${Intl.select(category, {
             'starting': 'Starting',
             'basic': 'Basic',
             'special': 'Special',
@@ -191,7 +197,7 @@ class MessageLookup extends MessageLookupByLibrary {
             'other': 'Other',
           })}";
 
-  static String m58(category) => "${Intl.select(category, {
+  static String m59(category) => "${Intl.select(category, {
             'starting': 'Starting',
             'basic': 'Basic',
             'special': 'Special',
@@ -200,64 +206,64 @@ class MessageLookup extends MessageLookupByLibrary {
             'other': 'Other',
           })}";
 
-  static String m59(entity) => "Move ${entity} to bottom";
+  static String m60(entity) => "Move ${entity} to bottom";
 
-  static String m60(entity) => "Move ${entity} to top";
+  static String m61(entity) => "Move ${entity} to top";
 
-  static String m61(count) =>
+  static String m62(count) =>
       "${Intl.plural(count, zero: 'No moves', one: 'One move', other: '${count} moves')}";
 
-  static String m62(entity) => "My ${entity}";
+  static String m63(entity) => "My ${entity}";
 
-  static String m63(entity) => "No ${entity}";
+  static String m64(entity) => "No ${entity}";
 
-  static String m64(count) =>
+  static String m65(count) =>
       "${Intl.plural(count, zero: 'No notes', one: 'One note', other: '${count} notes')}";
 
-  static String m65(count, singular, plural) =>
+  static String m66(count, singular, plural) =>
       "${Intl.plural(count, one: 'One ${singular}', other: '${count} ${plural}')}";
 
-  static String m66(dice) => "Roll ${dice}";
+  static String m67(dice) => "Roll ${dice}";
 
-  static String m67(dice) => "Roll ${dice}\n* Rolling with debility";
+  static String m68(dice) => "Roll ${dice}\n* Rolling with debility";
 
-  static String m68(dice, mod) => "Dice: ${dice} | Modifier: ${mod}";
-
-  static String m69(total) => "Total: ${total}";
+  static String m69(dice, mod) => "Dice: ${dice} | Modifier: ${mod}";
 
   static String m70(total) => "Total: ${total}";
 
-  static String m71(count) => "Rolling ${count} dice";
+  static String m71(total) => "Total: ${total}";
 
-  static String m72(entity) => "Save ${entity}";
+  static String m72(count) => "Rolling ${count} dice";
 
-  static String m73(entity) => "Type to search ${entity}";
+  static String m73(entity) => "Save ${entity}";
 
-  static String m74(entity) => "Select ${entity}";
+  static String m74(entity) => "Type to search ${entity}";
 
-  static String m75(string) => "Select ${string} to add";
+  static String m75(entity) => "Select ${entity}";
 
-  static String m76(length) => "Password must be at least ${length} characters";
+  static String m76(string) => "Select ${string} to add";
 
-  static String m77(pattern) => "Password must contain ${pattern}";
+  static String m77(length) => "Password must be at least ${length} characters";
 
-  static String m78(length) => "Username must be at least ${length} characters";
+  static String m78(pattern) => "Password must contain ${pattern}";
 
-  static String m79(button) => "${Intl.select(button, {
+  static String m79(length) => "Username must be at least ${length} characters";
+
+  static String m80(button) => "${Intl.select(button, {
             'damage': 'Damage',
             'other': '${button}',
           })}";
 
-  static String m80(level) => "${Intl.select(level, {
+  static String m81(level) => "${Intl.select(level, {
             'cantrip': 'Cantrip',
             'rote': 'Rote',
             'other': 'Level ${level}',
           })}";
 
-  static String m81(count) =>
+  static String m82(count) =>
       "${Intl.plural(count, zero: 'No spells', one: 'One spell', other: '${count} spells')}";
 
-  static String m82(tag) => "Copy from: ${tag}";
+  static String m83(tag) => "Copy from: ${tag}";
 
   final messages = _notInlinedMessages(_notInlinedMessages);
   static Map<String, Function> _notInlinedMessages(_) => <String, Function>{
@@ -642,6 +648,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "itemsWithCount": m54,
         "level": MessageLookupByLibrary.simpleMessage("Level"),
         "libraryCollectionListItemSubtitle": m55,
+        "libraryCollectionListItemSubtitleType": m56,
         "libraryCollectionTitle":
             MessageLookupByLibrary.simpleMessage("My Library"),
         "loadingCharacters":
@@ -651,27 +658,27 @@ class MessageLookup extends MessageLookupByLibrary {
         "markdownPreview":
             MessageLookupByLibrary.simpleMessage("Content Preview"),
         "maxLoad": MessageLookupByLibrary.simpleMessage("Max Load"),
-        "moveCategory": m56,
-        "moveCategoryWithLevel": m57,
-        "moveCategoryWithLevelShort": m58,
+        "moveCategory": m57,
+        "moveCategoryWithLevel": m58,
+        "moveCategoryWithLevelShort": m59,
         "moveToEnd": MessageLookupByLibrary.simpleMessage("Move to bottom"),
-        "moveToEndGeneric": m59,
+        "moveToEndGeneric": m60,
         "moveToStart": MessageLookupByLibrary.simpleMessage("Move to top"),
-        "moveToStartGeneric": m60,
+        "moveToStartGeneric": m61,
         "moves": MessageLookupByLibrary.simpleMessage("Moves"),
-        "movesWithCount": m61,
-        "myGeneric": m62,
+        "movesWithCount": m62,
+        "myGeneric": m63,
         "navActions": MessageLookupByLibrary.simpleMessage("Use"),
         "navCharacter": MessageLookupByLibrary.simpleMessage("Character"),
         "navJournal": MessageLookupByLibrary.simpleMessage("Journal"),
         "noDescription":
             MessageLookupByLibrary.simpleMessage("‹No description provided›"),
-        "noGeneric": m63,
+        "noGeneric": m64,
         "noteNoCategory": MessageLookupByLibrary.simpleMessage("General"),
         "notes": MessageLookupByLibrary.simpleMessage("Notes"),
-        "notesWithCount": m64,
+        "notesWithCount": m65,
         "ok": MessageLookupByLibrary.simpleMessage("OK"),
-        "pluralize": m65,
+        "pluralize": m66,
         "quickIconsItems": MessageLookupByLibrary.simpleMessage("Items"),
         "quickIconsMoves": MessageLookupByLibrary.simpleMessage("Moves"),
         "quickIconsNote": MessageLookupByLibrary.simpleMessage("+ Note"),
@@ -684,29 +691,29 @@ class MessageLookup extends MessageLookupByLibrary {
         "rollBasicActionButton":
             MessageLookupByLibrary.simpleMessage("Basic Action"),
         "rollButtonLabel": MessageLookupByLibrary.simpleMessage("Button Text"),
-        "rollButtonTooltip": m66,
-        "rollButtonTooltipWithDebility": m67,
+        "rollButtonTooltip": m67,
+        "rollButtonTooltipWithDebility": m68,
         "rollButtonUsePreset":
             MessageLookupByLibrary.simpleMessage("Use preset"),
-        "rollDialogResultBreakdown": m68,
-        "rollDialogResultTotal": m69,
-        "rollDialogTitleRolled": m70,
-        "rollDialogTitleRolling": m71,
+        "rollDialogResultBreakdown": m69,
+        "rollDialogResultTotal": m70,
+        "rollDialogTitleRolled": m71,
+        "rollDialogTitleRolling": m72,
         "rollDiscernRealitiesButton":
             MessageLookupByLibrary.simpleMessage("Discern Realities"),
         "rollVolleyButton": MessageLookupByLibrary.simpleMessage("Volley"),
         "save": MessageLookupByLibrary.simpleMessage("Save"),
-        "saveGeneric": m72,
+        "saveGeneric": m73,
         "searchIn": MessageLookupByLibrary.simpleMessage("Search in: "),
         "searchPlaceholder":
             MessageLookupByLibrary.simpleMessage("Type to search"),
-        "searchPlaceholderGeneric": m73,
+        "searchPlaceholderGeneric": m74,
         "seeAll": MessageLookupByLibrary.simpleMessage("See all"),
         "select": MessageLookupByLibrary.simpleMessage("Select"),
         "selectAll": MessageLookupByLibrary.simpleMessage("Select All"),
-        "selectGeneric": m74,
+        "selectGeneric": m75,
         "selectNone": MessageLookupByLibrary.simpleMessage("Select None"),
-        "selectToAdd": m75,
+        "selectToAdd": m76,
         "selected": MessageLookupByLibrary.simpleMessage("Selected"),
         "separatorOr": MessageLookupByLibrary.simpleMessage("OR"),
         "settingsDefaultDarkTheme":
@@ -735,8 +742,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "signupPassword": MessageLookupByLibrary.simpleMessage("Password"),
         "signupPasswordPlaceholder":
             MessageLookupByLibrary.simpleMessage("Enter your password"),
-        "signupPasswordValidationLength": m76,
-        "signupPasswordValidationPatternGeneric": m77,
+        "signupPasswordValidationLength": m77,
+        "signupPasswordValidationPatternGeneric": m78,
         "signupPasswordValidationPatternLetter":
             MessageLookupByLibrary.simpleMessage(
                 "Password must contain at least one capital letter"),
@@ -746,17 +753,17 @@ class MessageLookup extends MessageLookupByLibrary {
         "signupUsername": MessageLookupByLibrary.simpleMessage("Username"),
         "signupUsernamePlaceholder":
             MessageLookupByLibrary.simpleMessage("Pick a unique username"),
-        "signupUsernameValidation": m78,
+        "signupUsernameValidation": m79,
         "signupUsernameValidationPattern": MessageLookupByLibrary.simpleMessage(
             "Username must only contain letters, numbers, dashes and underscores"),
         "sortMoveDown": MessageLookupByLibrary.simpleMessage("Move down"),
         "sortMoveUp": MessageLookupByLibrary.simpleMessage("Move up"),
         "specialDice": MessageLookupByLibrary.simpleMessage("Special Dice"),
-        "specialRollButton": m79,
-        "spellLevel": m80,
+        "specialRollButton": m80,
+        "spellLevel": m81,
         "spells": MessageLookupByLibrary.simpleMessage("Spells"),
-        "spellsWithCount": m81,
-        "tagCopyFrom": m82,
+        "spellsWithCount": m82,
+        "tagCopyFrom": m83,
         "tagDetails": MessageLookupByLibrary.simpleMessage("Tag Information"),
         "themeTurnDark":
             MessageLookupByLibrary.simpleMessage("Switch to Dark Mode"),

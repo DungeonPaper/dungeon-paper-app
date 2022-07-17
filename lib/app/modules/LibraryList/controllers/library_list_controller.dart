@@ -29,9 +29,9 @@ class LibraryListController<T extends WithMeta, F extends EntityFilters<T>> exte
   late final bool multiple;
   late final Iterable<T> preSelections;
   late final Map<String, dynamic> extraData;
-
   late final TabController tabController;
 
+  bool get selectable => onAdd != null;
   Iterable<T> get builtInList => filterList(
       repo.value.builtIn.listByType<T>().values.toList(), FiltersGroup.playbook, filterFn, sortFn);
   Iterable<T> get myList =>

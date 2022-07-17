@@ -1,6 +1,7 @@
 import 'package:dungeon_paper/app/data/models/ability_scores.dart';
 import 'package:dungeon_paper/app/widgets/atoms/custom_expansion_panel.dart';
 import 'package:dungeon_paper/app/widgets/atoms/round_roll_button.dart';
+import 'package:dungeon_paper/app/widgets/menus/entity_edit_menu.dart';
 import 'package:dungeon_paper/core/utils/markdown_highlight.dart';
 import 'package:dungeon_paper/generated/l10n.dart';
 import 'package:dungeon_world_data/dice.dart';
@@ -158,7 +159,11 @@ class _DynamicActionCardState extends State<DynamicActionCard> {
 
   List<Widget> _buildChildren(BuildContext context) {
     final dividerColor = Theme.of(context).dividerColor;
-
+    final bottomHasContent = widget.chips.isNotEmpty ||
+        widget.actions
+            .where((el) => (el is! EntityEditMenu) || (el.onDelete != null || el.onEdit != null))
+            .isNotEmpty ||
+        widget.dice.isNotEmpty;
     return [
       // Divider(height: 16, color: dividerColor),
       widget.description.isNotEmpty
@@ -179,30 +184,32 @@ class _DynamicActionCardState extends State<DynamicActionCard> {
         ),
         _renderMarkdown(context, widget.explanation!),
       ],
-      Divider(height: 24, color: dividerColor),
-      Row(
-        crossAxisAlignment: CrossAxisAlignment.end,
-        mainAxisSize: MainAxisSize.max,
-        children: [
-          Expanded(
-            child: Wrap(
-              spacing: widget.chipsSpacing,
-              runSpacing: 6,
-              children: widget.chips.toList(),
-            ),
-          ),
-          ...widget.actions,
-          if (widget.actions.isNotEmpty && widget.dice.isNotEmpty) const SizedBox(width: 8),
-          if (widget.dice.isNotEmpty)
-            Padding(
-              padding: const EdgeInsets.only(bottom: 2.5),
-              child: RoundRollButton(
-                dice: widget.dice,
-                abilityScores: widget.abilityScores,
+      if (bottomHasContent) ...[
+        Divider(height: 24, color: dividerColor),
+        Row(
+          crossAxisAlignment: CrossAxisAlignment.end,
+          mainAxisSize: MainAxisSize.max,
+          children: [
+            Expanded(
+              child: Wrap(
+                spacing: widget.chipsSpacing,
+                runSpacing: 6,
+                children: widget.chips.toList(),
               ),
             ),
-        ],
-      )
+            ...widget.actions,
+            if (widget.actions.isNotEmpty && widget.dice.isNotEmpty) const SizedBox(width: 8),
+            if (widget.dice.isNotEmpty)
+              Padding(
+                padding: const EdgeInsets.only(bottom: 2.5),
+                child: RoundRollButton(
+                  dice: widget.dice,
+                  abilityScores: widget.abilityScores,
+                ),
+              ),
+          ],
+        )
+      ],
     ];
   }
 

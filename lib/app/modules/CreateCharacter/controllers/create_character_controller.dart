@@ -8,6 +8,7 @@ import 'package:dungeon_paper/app/data/models/gear_selection.dart';
 import 'package:dungeon_paper/app/data/models/item.dart';
 import 'package:dungeon_paper/app/data/models/move.dart';
 import 'package:dungeon_paper/app/data/models/ability_scores.dart';
+import 'package:dungeon_paper/app/data/models/race.dart';
 import 'package:dungeon_paper/app/data/models/session_marks.dart';
 import 'package:dungeon_paper/app/data/models/spell.dart';
 import 'package:dungeon_paper/app/data/models/user.dart';
@@ -27,8 +28,9 @@ class CreateCharacterController extends GetxController {
   final moves = <Move>[].obs;
   final spells = <Spell>[].obs;
   final alignment = Rx<AlignmentValue?>(null);
-  final repo = Get.find<RepositoryService>();
+  final race = Rx<Race?>(null);
 
+  final repo = Get.find<RepositoryService>();
   final dirty = false.obs;
 
   User get user => Get.find<UserService>().current;
