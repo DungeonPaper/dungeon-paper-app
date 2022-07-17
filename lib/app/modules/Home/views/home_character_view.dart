@@ -35,8 +35,9 @@ class HomeCharacterView extends GetView<CharacterService> {
                 child: Row(
                   mainAxisSize: MainAxisSize.max,
                   crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Expanded(child: Column(children: _buildLeftCol(context))),
+                    Column(children: _buildLeftCol(context)),
                     const SizedBox(width: 16),
                     const Expanded(child: HomeCharacterDynamicCards()),
                   ],

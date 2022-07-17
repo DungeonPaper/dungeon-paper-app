@@ -36,7 +36,7 @@ class ExpBar extends StatelessWidget with CharacterServiceMixin {
             BufferProgressBar(
               value: curPercent,
               bufferValue: curBufferPercent,
-              bufferColor: Color.fromARGB(255, 117, 188, 251),
+              bufferColor: const Color.fromARGB(255, 117, 188, 251),
               height: 17.5,
               color: const Color(0xff1e88e5),
               backgroundColor: Colors.blue[100],

@@ -101,6 +101,16 @@ class SearchResponse {
     );
   }
 
+  SearchResponse.empty()
+      : classes = [],
+        items = [],
+        monsters = [],
+        moves = [],
+        spells = [],
+        races = [],
+        tags = [],
+        notes = [];
+
   factory SearchResponse.fromPackageRepo() => SearchResponse(
         classes: dw.dungeonWorldData.characterClasses.values
             .map((e) => CharacterClass.fromDwCharacterClass(e))

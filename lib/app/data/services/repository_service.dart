@@ -82,7 +82,7 @@ abstract class RepositoryCache {
   Future<void> init({bool ignoreCache = false}) async {
     debugPrint('Initializing repo: $id, cache prefix: "${cacheKey('')}"');
 
-    final cacheRes = await getCacheResponse();
+    final cacheRes = ignoreCache ? SearchResponse.empty() : await getCacheResponse();
     final shouldLoadFromRemote = ignoreCache ? true : await shouldUseRemote(cacheRes);
 
     if (shouldLoadFromRemote) {

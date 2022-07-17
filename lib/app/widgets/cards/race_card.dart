@@ -1,4 +1,3 @@
-import 'package:dungeon_paper/app/widgets/chips/advanced_chip.dart';
 import 'package:dungeon_paper/app/widgets/chips/move_category_chip.dart';
 import 'package:dungeon_paper/app/widgets/chips/primary_chip.dart';
 import 'package:dungeon_paper/app/widgets/chips/tag_chip.dart';
