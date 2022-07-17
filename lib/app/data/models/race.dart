@@ -14,9 +14,10 @@ class Race extends dw.Race implements WithMeta, WithIcon {
     required String name,
     required String description,
     required String explanation,
-    required List<String> classKeys,
+    required List<dw.EntityReference> classKeys,
     required List<dw.Tag> tags,
-    this.favorited = false,
+    required List<dw.Dice> dice,
+    this.favorite = false,
   })  : _meta = meta,
         super(
           meta: meta,
@@ -26,13 +27,14 @@ class Race extends dw.Race implements WithMeta, WithIcon {
           explanation: explanation,
           classKeys: classKeys,
           tags: tags,
+          dice: dice,
         );
 
   @override
   Meta get meta => _meta;
   final Meta _meta;
 
-  final bool favorited;
+  final bool favorite;
 
   @override
   Race copyWithInherited({
@@ -41,9 +43,10 @@ class Race extends dw.Race implements WithMeta, WithIcon {
     String? name,
     String? description,
     String? explanation,
-    List<String>? classKeys,
+    List<dw.EntityReference>? classKeys,
     List<dw.Tag>? tags,
-    bool? favorited,
+    bool? favorite,
+    List<dw.Dice>? dice,
   }) =>
       Race(
         meta: meta ?? this.meta,
@@ -53,12 +56,13 @@ class Race extends dw.Race implements WithMeta, WithIcon {
         explanation: explanation ?? this.explanation,
         classKeys: classKeys ?? this.classKeys,
         tags: tags ?? this.tags,
-        favorited: favorited ?? this.favorited,
+        favorite: favorite ?? this.favorite,
+        dice: dice ?? this.dice,
       );
 
   factory Race.fromRawJson(String str) => Race.fromJson(json.decode(str));
 
-  factory Race.fromDwRace(dw.Race race, {Meta? meta, bool favorited = false}) => Race(
+  factory Race.fromDwRace(dw.Race race, {Meta? meta, bool favorite = false}) => Race(
         meta: race.meta != null ? Meta.fromJson(race.meta) : Meta.empty(),
         key: race.key,
         name: race.name,
@@ -66,18 +70,22 @@ class Race extends dw.Race implements WithMeta, WithIcon {
         explanation: race.explanation,
         classKeys: race.classKeys,
         tags: race.tags,
-        favorited: favorited,
+        favorite: favorite,
+        dice: race.dice,
       );
 
   factory Race.fromJson(Map<String, dynamic> json) => Race(
-      meta: Meta.tryParse(json['_meta']),
-      key: json['key'],
-      name: json['name'],
-      description: json['description'],
-      explanation: json['explanation'],
-      classKeys: List<String>.from(json['classKeys'].map((x) => x)),
-      tags: List<dw.Tag>.from(json['tags'].map((x) => dw.Tag.fromJson(x))),
-      favorited: json['favorited'] ?? false);
+        meta: Meta.tryParse(json['_meta']),
+        key: json['key'],
+        name: json['name'],
+        description: json['description'],
+        explanation: json['explanation'],
+        classKeys: List<dw.EntityReference>.from(
+            json['classKeys'].map((x) => dw.EntityReference.fromJson(x))),
+        tags: List<dw.Tag>.from(json['tags'].map((x) => dw.Tag.fromJson(x))),
+        favorite: json['favorite'] ?? false,
+        dice: List<dw.Dice>.from(json['dice'].map((x) => dw.Dice.fromJson(x))),
+      );
 
   factory Race.empty() => Race(
         classKeys: [],
@@ -87,19 +95,21 @@ class Race extends dw.Race implements WithMeta, WithIcon {
         meta: Meta.empty(),
         name: '',
         tags: [],
+        dice: [],
       );
 
   Move toMove() => Move(
-      category: dw.MoveCategory.other,
-      classKeys: classKeys,
-      description: description,
-      dice: [],
-      explanation: explanation,
-      key: key,
-      meta: meta,
-      name: name,
-      tags: tags,
-      favorited: favorited);
+        category: dw.MoveCategory.other,
+        classKeys: classKeys,
+        description: description,
+        explanation: explanation,
+        key: key,
+        meta: meta,
+        name: name,
+        tags: tags,
+        dice: dice,
+        favorite: favorite,
+      );
 
   @override
   IconData get icon => genericIcon;
@@ -115,7 +125,7 @@ class Race extends dw.Race implements WithMeta, WithIcon {
   Map<String, dynamic> toJson() => {
         ...super.toJson(),
         '_meta': meta.toJson(),
-        'favorited': favorited,
+        'favorite': favorite,
       };
 
   @override
@@ -123,4 +133,7 @@ class Race extends dw.Race implements WithMeta, WithIcon {
 
   @override
   String get storageKey => Meta.storageKeyFor(Race);
+
+  @override
+  dw.EntityReference get reference => Meta.referenceFor(this);
 }

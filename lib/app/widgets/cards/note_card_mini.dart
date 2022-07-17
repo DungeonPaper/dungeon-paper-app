@@ -27,9 +27,9 @@ class NoteCardMini extends StatelessWidget {
       chips: const [],
       dice: const [],
       icon: showIcon ? Icon(note.icon, size: 16) : null,
-      starred: note.favorited,
+      starred: note.favorite,
       showStar: showStar,
-      onStarChanged: (favorited) => onSave?.call(note.copyWith(favorited: favorited)),
+      onStarChanged: (favorite) => onSave?.call(note.copyWith(favorite: favorite)),
       onTap: onTap,
     );
   }

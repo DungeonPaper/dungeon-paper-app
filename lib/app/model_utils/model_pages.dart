@@ -24,6 +24,7 @@ import 'package:dungeon_paper/app/widgets/forms/move_form.dart';
 import 'package:dungeon_paper/app/widgets/forms/note_form.dart';
 import 'package:dungeon_paper/app/widgets/forms/race_form.dart';
 import 'package:dungeon_paper/app/widgets/forms/spell_form.dart';
+import 'package:dungeon_world_data/dungeon_world_data.dart' as dw;
 import 'package:get/get.dart';
 
 class ModelPages {
@@ -137,7 +138,7 @@ class ModelPages {
     required Spell? spell,
     required void Function(Spell spell) onSave,
     required AbilityScores abilityScores,
-    required List<String> classKeys,
+    required List<dw.EntityReference> classKeys,
   }) =>
       () => Get.to(
             () => LibraryEntityForm<Spell>(

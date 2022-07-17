@@ -14,7 +14,7 @@ class Note implements WithMeta, WithIcon {
     required this.description,
     required this.category,
     required this.tags,
-    required this.favorited,
+    required this.favorite,
   });
 
   @override
@@ -25,7 +25,7 @@ class Note implements WithMeta, WithIcon {
   final String description;
   final String category;
   final List<dw.Tag> tags;
-  final bool favorited;
+  final bool favorite;
 
   String get localizedCategory => category.isEmpty ? S.current.noteNoCategory : category;
 
@@ -37,7 +37,7 @@ class Note implements WithMeta, WithIcon {
     String? description,
     String? category,
     List<dw.Tag>? tags,
-    bool? favorited,
+    bool? favorite,
   }) =>
       Note(
         meta: meta ?? this.meta,
@@ -46,7 +46,7 @@ class Note implements WithMeta, WithIcon {
         description: description ?? this.description,
         category: category ?? this.category,
         tags: tags ?? this.tags,
-        favorited: favorited ?? this.favorited,
+        favorite: favorite ?? this.favorite,
       );
   @override
   Note copyWithInherited({
@@ -56,7 +56,7 @@ class Note implements WithMeta, WithIcon {
     String? description,
     String? category,
     List<dw.Tag>? tags,
-    bool? favorited,
+    bool? favorite,
   }) =>
       copyWith(
         meta: meta,
@@ -65,7 +65,7 @@ class Note implements WithMeta, WithIcon {
         description: description,
         category: category,
         tags: tags,
-        favorited: favorited,
+        favorite: favorite,
       );
 
   factory Note.fromRawJson(String str) => Note.fromJson(json.decode(str));
@@ -79,12 +79,12 @@ class Note implements WithMeta, WithIcon {
         description: json['description'],
         category: json['category'] ?? '',
         tags: List<dw.Tag>.from(json['tags'].map((x) => dw.Tag.fromJson(x))),
-        favorited: json['favorited'] ?? false,
+        favorite: json['favorite'] ?? false,
       );
 
   factory Note.empty() => Note(
         description: '',
-        favorited: false,
+        favorite: false,
         key: uuid(),
         meta: Meta.empty(),
         tags: [],
@@ -100,7 +100,7 @@ class Note implements WithMeta, WithIcon {
         'category': category,
         'description': description,
         'tags': List<dynamic>.from(tags.map((x) => x.toJson())),
-        'favorited': favorited,
+        'favorite': favorite,
       };
 
   @override
@@ -112,4 +112,7 @@ class Note implements WithMeta, WithIcon {
 
   @override
   String get storageKey => Meta.storageKeyFor(Note);
+
+  @override
+  dw.EntityReference get reference => Meta.referenceFor(this);
 }

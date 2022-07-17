@@ -87,6 +87,9 @@ class AlignmentValue extends dw.Alignment implements WithMeta, WithIcon {
 
   @override
   String get storageKey => throw TypeError();
+
+  @override
+  dw.EntityReference get reference => Meta.referenceFor(this);
 }
 
 class AlignmentValues extends dw.AlignmentValues {

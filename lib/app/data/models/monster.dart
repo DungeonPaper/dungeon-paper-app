@@ -65,4 +65,7 @@ class Monster extends dw.Monster implements WithMeta {
 
   @override
   String get storageKey => Meta.storageKeyFor(Monster);
+
+  @override
+  dw.EntityReference get reference => Meta.referenceFor(this);
 }

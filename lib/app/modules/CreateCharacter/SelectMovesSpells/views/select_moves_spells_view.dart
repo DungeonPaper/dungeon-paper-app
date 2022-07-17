@@ -94,7 +94,7 @@ class SelectMovesSpellsView extends GetView<SelectMovesSpellsController> {
                         controller.dirty.value = true;
                         controller.moves.value = addByKey(
                           controller.moves,
-                          moves.map((m) => m.copyWithInherited(favorited: true)),
+                          moves.map((m) => m.copyWithInherited(favorite: true)),
                         );
                       },
                     ),

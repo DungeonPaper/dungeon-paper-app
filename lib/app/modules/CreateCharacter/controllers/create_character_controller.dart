@@ -39,6 +39,7 @@ class CreateCharacterController extends GetxController {
         name.isNotEmpty,
         characterClass.value != null,
         alignment.value != null,
+        race.value != null,
       ].every((element) => element == true);
 
   List<Item> get items => GearChoice.selectionToItems(startingGear, equipped: true);
@@ -78,7 +79,7 @@ class CreateCharacterController extends GetxController {
   void setMovesSpells(List<Move> moves, List<Spell> spells) {
     this.moves.clear();
     this.spells.clear();
-    this.moves.addAll(moves.map((e) => e.copyWithInherited(favorited: true)));
+    this.moves.addAll(moves.map((e) => e.copyWithInherited(favorite: true)));
     this.spells.addAll(spells.map((e) => e.copyWithInherited(prepared: true)));
   }
 
@@ -98,8 +99,8 @@ class CreateCharacterController extends GetxController {
           .where((m) => (m.classKeys.contains(characterClass.value!.key) &&
               m.category == MoveCategory.starting))
           .map(
-            // favorited: move.category != MoveCategory.basic
-            (move) => Move.fromDwMove(move, favorited: true),
+            // favorite: move.category != MoveCategory.basic
+            (move) => Move.fromDwMove(move, favorite: true),
           )
           .toList(),
     );
@@ -114,19 +115,23 @@ class CreateCharacterController extends GetxController {
         spells: spells,
         items: items,
         coins: coins,
+        race: race.value,
         stats: CharacterStats(
           level: 1,
           currentHp: characterClass.value!.hp + abilityScores.value.conMod!,
           currentExp: 0,
         ),
-        sessionMarks: characterClass.value?.bonds
-                .map((bond) => SessionMark.bond(description: bond, completed: false, key: uuid()))
-                .toList() ??
-            [],
+        sessionMarks: [
+          ...(characterClass.value?.bonds
+                  .map((bond) => SessionMark.bond(description: bond, completed: false, key: uuid()))
+                  .toList() ??
+              []),
+          ...Character.defaultEndOfSessionMarks,
+        ],
         bio: Bio(
           looks: '',
           description: '',
-          alignment: alignment.value!,
+          alignment: alignment.value ?? AlignmentValue.empty(),
         ),
       );
 }

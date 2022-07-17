@@ -85,7 +85,7 @@ class RaceFilters extends EntityFilters<Race> {
     }
 
     if (classKey != null) {
-      if (!race.classKeys.map(cleanStr).contains(cleanStr(classKey!))) {
+      if (!race.classKeys.map((x) => cleanStr(x.key)).contains(cleanStr(classKey!))) {
         return false;
       }
     }
@@ -104,7 +104,8 @@ class RaceFilters extends EntityFilters<Race> {
   double getScore(Race race) {
     return avg(
       [
-            classKey != null && race.classKeys.map(cleanStr).contains(cleanStr(classKey!))
+            classKey != null &&
+                    race.classKeys.map((x) => cleanStr(x.key)).contains(cleanStr(classKey!))
                 ? 1.0
                 : 0.0,
           ] +

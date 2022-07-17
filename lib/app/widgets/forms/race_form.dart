@@ -8,6 +8,7 @@ import 'package:dungeon_paper/core/utils/list_utils.dart';
 import 'package:dungeon_paper/generated/l10n.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:dungeon_world_data/dungeon_world_data.dart' as dw;
 
 class RaceForm extends GetView<DynamicFormController<Race>> {
   const RaceForm({
@@ -26,6 +27,25 @@ class RaceForm extends GetView<DynamicFormController<Race>> {
       inputs: controller.inputs,
       onChange: (d) => onChange(controller.setData(d, setDirty: true)),
       onReplace: (d) => onChange(controller.setFromEntity(d)),
+      builder: (context, inputs, entity) {
+        return ListView(
+          padding: const EdgeInsets.symmetric(horizontal: 16).copyWith(bottom: 70),
+          children: [
+            inputs[0],
+            const SizedBox(height: 16),
+            Row(
+              children: [
+                Expanded(child: inputs[1]),
+                const SizedBox(width: 16),
+                Expanded(child: inputs[2]),
+              ],
+            ),
+            const SizedBox(height: 16),
+            for (final input in inputs.sublist(3))
+              Padding(padding: const EdgeInsets.only(bottom: 16), child: input),
+          ],
+        );
+      },
     );
   }
 }
@@ -46,6 +66,7 @@ class RaceFormController extends DynamicFormController<Race> {
         'description': race.description,
         'explanation': race.explanation,
         'tags': race.tags,
+        'dice': race.dice,
         'classKeys': race.classKeys,
       }, setDirty: false);
 
@@ -59,13 +80,14 @@ class RaceFormController extends DynamicFormController<Race> {
 
   @override
   Race setData(Map<String, dynamic> data, {required bool setDirty}) {
-    final classKeysList = asList<String>(data['classKeys']);
+    final classKeysList = asList<dw.EntityReference>(data['classKeys']);
     entity.value = entity.value.copyWithInherited(
       meta: data['meta'] ?? entity.value.meta,
       name: data['name'],
       description: data['description'],
       explanation: data['explanation'],
       tags: data['tags'],
+      dice: data['dice'],
       classKeys: classKeysList,
     );
 
@@ -91,11 +113,12 @@ class RaceFormController extends DynamicFormController<Race> {
         data: FormDropdownInputData(
           value: entity.value.classKeys.isNotEmpty ? entity.value.classKeys[0] : null,
           isExpanded: true,
+          compareTo: (a, b) => a.toString() == b.toString(),
           label: Text(S.current.entity(CharacterClass)),
           items: {...repo.builtIn.classes.values, ...repo.my.classes.values}.map(
             (cls) => DropdownMenuItem(
               child: Text(cls.name),
-              value: cls.key,
+              value: cls.reference,
             ),
           ),
         ),
@@ -120,6 +143,14 @@ class RaceFormController extends DynamicFormController<Race> {
           rich: true,
           textCapitalization: TextCapitalization.sentences,
           text: entity.value.explanation,
+        ),
+      ),
+      FormInputData<FormDiceInputData>(
+        name: 'dice',
+        data: FormDiceInputData(
+          value: entity.value.dice,
+          abilityScores: abilityScores,
+          guessFrom: {'description', 'explanation'},
         ),
       ),
       FormInputData<FormTagsInputData>(

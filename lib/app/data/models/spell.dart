@@ -18,7 +18,7 @@ class Spell extends dw.Spell implements WithMeta, WithIcon {
     required String description,
     required String explanation,
     required String level,
-    required List<String> classKeys,
+    required List<dw.EntityReference> classKeys,
     required List<dw.Dice> dice,
     required List<dw.Tag> tags,
     this.prepared = false,
@@ -48,7 +48,7 @@ class Spell extends dw.Spell implements WithMeta, WithIcon {
     String? description,
     String? explanation,
     String? level,
-    List<String>? classKeys,
+    List<dw.EntityReference>? classKeys,
     List<dw.Dice>? dice,
     List<dw.Tag>? tags,
     bool? prepared,
@@ -123,4 +123,7 @@ class Spell extends dw.Spell implements WithMeta, WithIcon {
 
   @override
   String get storageKey => Meta.storageKeyFor(Spell);
+
+  @override
+  dw.EntityReference get reference => Meta.referenceFor(this);
 }

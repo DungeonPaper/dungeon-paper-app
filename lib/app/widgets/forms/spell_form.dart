@@ -7,6 +7,7 @@ import 'package:dungeon_paper/core/utils/list_utils.dart';
 import 'package:dungeon_paper/generated/l10n.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:dungeon_world_data/dungeon_world_data.dart' as dw;
 
 class SpellForm extends GetView<DynamicFormController<Spell>> {
   const SpellForm({
@@ -60,7 +61,7 @@ class SpellFormController extends DynamicFormController<Spell> {
 
   @override
   Spell setData(Map<String, dynamic> data, {required bool setDirty}) {
-    final classKeysList = asList<String>(data['classKeys']);
+    final classKeysList = asList<dw.EntityReference>(data['classKeys']);
     entity.value = entity.value.copyWithInherited(
       meta: data['meta'] ?? entity.value.meta,
       name: data['name'],
@@ -91,14 +92,14 @@ class SpellFormController extends DynamicFormController<Spell> {
       FormInputData(
         name: 'classKeys',
         data: FormDropdownInputData(
-          isExpanded: true,
           value: entity.value.classKeys.isNotEmpty ? entity.value.classKeys[0] : null,
+          isExpanded: true,
           compareTo: (a, b) => a.toString() == b.toString(),
           label: Text(S.current.entity(Spell)),
           items: {...repo.builtIn.classes.values, ...repo.my.classes.values}.map(
             (cls) => DropdownMenuItem(
               child: Text(cls.name),
-              value: cls.key,
+              value: cls.reference,
             ),
           ),
         ),
@@ -144,7 +145,7 @@ class SpellFormController extends DynamicFormController<Spell> {
 class SpellFormArguments {
   final Spell? spell;
   final AbilityScores abilityScores;
-  // final List<String> classKeys;
+  // final List<dw.EntityReference> classKeys;
 
   SpellFormArguments({
     required this.spell,

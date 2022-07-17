@@ -129,7 +129,7 @@ class _CardByType extends StatelessWidget {
       case Move:
         return MoveCard(
           move: result,
-          showStar: result.favorited,
+          showStar: result.favorite,
           highlightWords: highlightWords,
           abilityScores: abilityScores,
         );

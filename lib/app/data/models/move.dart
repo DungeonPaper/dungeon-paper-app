@@ -16,10 +16,10 @@ class Move extends dw.Move implements WithMeta, WithIcon {
     required String description,
     required String explanation,
     required List<dw.Dice> dice,
-    required List<String> classKeys,
+    required List<dw.EntityReference> classKeys,
     required List<dw.Tag> tags,
     required dw.MoveCategory category,
-    this.favorited = false,
+    this.favorite = false,
   })  : _meta = meta,
         super(
           meta: meta,
@@ -36,7 +36,7 @@ class Move extends dw.Move implements WithMeta, WithIcon {
   @override
   Meta get meta => _meta;
   final Meta _meta;
-  final bool favorited;
+  final bool favorite;
 
   @override
   Move copyWithInherited({
@@ -46,10 +46,10 @@ class Move extends dw.Move implements WithMeta, WithIcon {
     String? description,
     String? explanation,
     List<dw.Dice>? dice,
-    List<String>? classKeys,
+    List<dw.EntityReference>? classKeys,
     List<dw.Tag>? tags,
     dw.MoveCategory? category,
-    bool? favorited,
+    bool? favorite,
   }) =>
       Move(
         meta: meta ?? this.meta,
@@ -61,12 +61,12 @@ class Move extends dw.Move implements WithMeta, WithIcon {
         classKeys: classKeys ?? this.classKeys,
         tags: tags ?? this.tags,
         category: category ?? this.category,
-        favorited: favorited ?? this.favorited,
+        favorite: favorite ?? this.favorite,
       );
 
   factory Move.fromRawJson(String str) => Move.fromJson(json.decode(str));
 
-  factory Move.fromDwMove(dw.Move move, {Meta? meta, bool? favorited}) => Move(
+  factory Move.fromDwMove(dw.Move move, {Meta? meta, bool? favorite}) => Move(
         meta: meta ?? Meta.empty(),
         key: move.key,
         name: move.name,
@@ -76,13 +76,13 @@ class Move extends dw.Move implements WithMeta, WithIcon {
         classKeys: move.classKeys,
         tags: move.tags,
         category: move.category,
-        favorited: favorited ?? false,
+        favorite: favorite ?? false,
       );
 
   factory Move.fromJson(Map<String, dynamic> json) => Move.fromDwMove(
         dw.Move.fromJson(json),
         meta: json['_meta'] != null ? Meta.fromJson(json['_meta']) : null,
-        favorited: json['favorited'],
+        favorite: json['favorite'],
       );
 
   factory Move.empty() => Move(
@@ -95,14 +95,14 @@ class Move extends dw.Move implements WithMeta, WithIcon {
         meta: Meta.empty(),
         name: '',
         tags: [],
-        favorited: false,
+        favorite: false,
       );
 
   @override
   Map<String, dynamic> toJson() => {
         ...super.toJson(),
         '_meta': meta.toJson(),
-        'favorited': favorited,
+        'favorite': favorite,
       };
 
   @override
@@ -127,4 +127,7 @@ class Move extends dw.Move implements WithMeta, WithIcon {
 
   @override
   String get storageKey => Meta.storageKeyFor(Move);
+
+  @override
+  dw.EntityReference get reference => Meta.referenceFor(this);
 }

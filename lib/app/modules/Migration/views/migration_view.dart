@@ -30,6 +30,7 @@ class MigrationView extends GetView<MigrationController> {
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
+                // TODO add some intro text, "Welcome to Dungeon Paper v2!"
                 Obx(
                   () => TextFormField(
                     controller: controller.username,
@@ -45,7 +46,7 @@ class MigrationView extends GetView<MigrationController> {
                     value: controller.language,
                     label: Text(S.current.signupDefaultDataLanguage),
                     items: const [
-                      DropdownMenuItem(child: Text('EN'), value: 'English'),
+                      DropdownMenuItem(child: Text('English'), value: 'EN'),
                     ],
                     onChanged: null,
                   ),

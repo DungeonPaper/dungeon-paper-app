@@ -31,13 +31,13 @@ class HomeCharacterDynamicCards extends GetView<CharacterService> with LibrarySe
   const HomeCharacterDynamicCards({Key? key}) : super(key: key);
 
   List<Move> get moves =>
-      (controller.maybeCurrent?.moves ?? <Move>[]).where((m) => m.favorited).toList();
+      (controller.maybeCurrent?.moves ?? <Move>[]).where((m) => m.favorite).toList();
   List<Spell> get spells =>
       (controller.maybeCurrent?.spells ?? <Spell>[]).where((m) => m.prepared).toList();
   List<Item> get items =>
       (controller.maybeCurrent?.items ?? <Item>[]).where((m) => m.equipped).toList();
   List<Note> get notes =>
-      (controller.maybeCurrent?.notes ?? <Note>[]).where((n) => n.favorited).toList();
+      (controller.maybeCurrent?.notes ?? <Note>[]).where((n) => n.favorite).toList();
 
   @override
   Widget build(BuildContext context) {
@@ -109,7 +109,7 @@ class HomeCharacterDynamicCards extends GetView<CharacterService> with LibrarySe
                 child: Text(S.current.dynamicCategoriesMoves),
               ),
             Builder(builder: (context) {
-              final raceCardMini = controller.current.race.favorited
+              final raceCardMini = controller.current.race.favorite
                   ? RaceCardMini(
                       race: controller.current.race,
                       onTap: () => Get.dialog(

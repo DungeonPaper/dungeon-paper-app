@@ -119,7 +119,7 @@ class MoveFilters extends EntityFilters<Move> {
 
     if (classKey != null) {
       if (![MoveCategory.basic, MoveCategory.special].contains(category) &&
-          !move.classKeys.map(cleanStr).contains(cleanStr(classKey!))) {
+          !move.classKeys.map((x) => cleanStr(x.key)).contains(cleanStr(classKey!))) {
         return false;
       }
     }
@@ -139,7 +139,8 @@ class MoveFilters extends EntityFilters<Move> {
     return avg(
       [
             category == move.category ? 1.0 : 0.0,
-            classKey != null && move.classKeys.map(cleanStr).contains(cleanStr(classKey!))
+            classKey != null &&
+                    move.classKeys.map((x) => cleanStr(x.key)).contains(cleanStr(classKey!))
                 ? 1.0
                 : 0.0,
           ] +

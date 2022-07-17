@@ -265,6 +265,12 @@ class Meta<DataType> with RepositoryServiceMixin {
     }
     throw TypeError();
   }
+
+  static referenceFor(WithMeta object) => dw.EntityReference(
+        key: object.key,
+        name: object.displayName,
+        type: object.runtimeType.toString(),
+      );
 }
 
 class MetaSharing {
@@ -363,6 +369,7 @@ abstract class WithMeta<T, M> implements WithKey {
   String get displayName;
   String get storageKey;
   dynamic toJson();
+  dw.EntityReference get reference;
 }
 
 abstract class WithIcon {

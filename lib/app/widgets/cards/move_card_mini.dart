@@ -38,9 +38,9 @@ class MoveCardMini extends StatelessWidget {
       ],
       dice: move.dice,
       icon: showIcon ? Icon(move.icon, size: 16) : null,
-      starred: move.favorited,
+      starred: move.favorite,
       showStar: showStar,
-      onStarChanged: (favorited) => onSave?.call(move.copyWithInherited(favorited: favorited)),
+      onStarChanged: (favorite) => onSave?.call(move.copyWithInherited(favorite: favorite)),
       onTap: onTap,
       abilityScores: abilityScores,
     );

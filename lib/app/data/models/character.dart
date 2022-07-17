@@ -285,11 +285,12 @@ class Character implements WithMeta<Character, CharacterMeta>, WithIcon {
       race: Race(
         key: uuid(),
         name: 'Human',
-        classKeys: [characterClass.key],
+        classKeys: [characterClass.reference],
         description: '',
         explanation: '',
         meta: Meta.empty(),
         tags: [],
+        dice: [],
       ),
     );
   }
@@ -301,11 +302,12 @@ class Character implements WithMeta<Character, CharacterMeta>, WithIcon {
           Race(
             key: uuid(),
             name: 'Human',
-            classKeys: [characterClass.key],
+            classKeys: [characterClass.reference],
             description: '',
             explanation: '',
             meta: Meta.empty(),
             tags: [],
+            dice: [],
           ),
     );
   }
@@ -360,6 +362,9 @@ class Character implements WithMeta<Character, CharacterMeta>, WithIcon {
 
   @override
   String get storageKey => Meta.storageKeyFor(Character);
+
+  @override
+  dw.EntityReference get reference => Meta.referenceFor(this);
 }
 
 class CharacterMeta {

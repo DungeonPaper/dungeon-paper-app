@@ -91,7 +91,7 @@ class SpellFilters extends EntityFilters<Spell> {
     }
 
     if (classKey != null) {
-      if (!spell.classKeys.map(cleanStr).contains(cleanStr(classKey!))) {
+      if (!spell.classKeys.map((x) => cleanStr(x.key)).contains(cleanStr(classKey!))) {
         return false;
       }
     }
@@ -109,7 +109,8 @@ class SpellFilters extends EntityFilters<Spell> {
     return avg(
       [
             level == spell.level ? 1.0 : 0.0,
-            classKey != null && spell.classKeys.map(cleanStr).contains(cleanStr(classKey!))
+            classKey != null &&
+                    spell.classKeys.map((x) => cleanStr(x.key)).contains(cleanStr(classKey!))
                 ? 1.0
                 : 0.0,
           ] +

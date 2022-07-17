@@ -133,4 +133,7 @@ class CharacterClass extends dw.CharacterClass implements WithMeta, WithIcon {
 
   @override
   String get storageKey => Meta.storageKeyFor(CharacterClass);
+
+  @override
+  dw.EntityReference get reference => Meta.referenceFor(this);
 }

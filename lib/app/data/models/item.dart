@@ -131,6 +131,10 @@ class Item extends dw.Item implements WithMeta, WithIcon {
 
   @override
   String get displayName => name;
+
   @override
   String get storageKey => Meta.storageKeyFor(Item);
+
+  @override
+  dw.EntityReference get reference => Meta.referenceFor(this);
 }

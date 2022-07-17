@@ -134,12 +134,14 @@ class CreateCharacterView extends GetView<CreateCharacterController> {
                                   ),
                             onTap: cls != null
                                 ? () => ModelPages.openRacesList(
+                                      character: controller.getAsCharacter(),
                                       preSelections: controller.race.value != null
                                           ? [controller.race.value!]
                                           : [],
                                       onAdd: (_races) => controller.race.value = _races.first,
                                     )
                                 : null,
+                            valid: controller.race.value != null,
                           ),
                           // Ability Scores
                           _Card(

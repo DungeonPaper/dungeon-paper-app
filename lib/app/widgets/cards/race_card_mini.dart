@@ -27,9 +27,9 @@ class RaceCardMini extends StatelessWidget {
       chips: const [],
       dice: const [],
       icon: showIcon ? Icon(race.icon, size: 16) : null,
-      starred: race.favorited,
+      starred: race.favorite,
       showStar: showStar,
-      onStarChanged: (favorited) => onSave?.call(race.copyWithInherited(favorited: favorited)),
+      onStarChanged: (favorite) => onSave?.call(race.copyWithInherited(favorite: favorite)),
       onTap: onTap,
     );
   }
