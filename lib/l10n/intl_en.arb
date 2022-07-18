@@ -176,7 +176,7 @@
   "expDialogChangeNeutral": "No Change",
   "expDialogChangeOverride": "Override XP & Level",
   "expDialogChangeRemove": "Reduce\n-{amount}",
-  "expDialogCurrentEXP": "Current XP",
+  "expDialogCurrentXP": "Current XP",
   "expDialogEndSession": "End Session",
   "expDialogLevelShouldOverride": "Set level manually",
   "expDialogTitle": "Modify XP",
