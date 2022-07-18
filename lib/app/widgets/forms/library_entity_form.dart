@@ -9,7 +9,6 @@ import 'package:dungeon_paper/app/data/models/user.dart';
 import 'package:dungeon_paper/app/data/services/user_service.dart';
 import 'package:dungeon_paper/app/widgets/atoms/advanced_floating_action_button.dart';
 import 'package:dungeon_paper/app/widgets/atoms/confirm_exit_view.dart';
-import 'package:dungeon_paper/app/widgets/atoms/meta_sync_menu.dart';
 import 'package:dungeon_paper/app/widgets/forms/item_form.dart';
 import 'package:dungeon_paper/app/widgets/forms/move_form.dart';
 import 'package:dungeon_paper/app/widgets/forms/note_form.dart';

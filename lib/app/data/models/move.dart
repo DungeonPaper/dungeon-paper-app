@@ -8,7 +8,7 @@ import '../../../core/dw_icons.dart';
 import '../../../core/utils/uuid.dart';
 import 'meta.dart';
 
-class Move extends dw.Move implements WithMeta, WithIcon {
+class Move extends dw.Move with WithMeta, WithIcon {
   Move({
     required Meta meta,
     required String key,
@@ -124,9 +124,6 @@ class Move extends dw.Move implements WithMeta, WithIcon {
 
   @override
   String get storageKey => Meta.storageKeyFor(Move);
-
-  @override
-  dw.EntityReference get reference => Meta.referenceFor(this);
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||

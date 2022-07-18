@@ -9,7 +9,7 @@ import 'gear_choice.dart';
 import 'meta.dart';
 import 'package:dungeon_world_data/dungeon_world_data.dart' as dw;
 
-class CharacterClass extends dw.CharacterClass implements WithMeta, WithIcon {
+class CharacterClass extends dw.CharacterClass with WithMeta, WithIcon {
   get isApp => true;
 
   CharacterClass({
@@ -139,9 +139,6 @@ class CharacterClass extends dw.CharacterClass implements WithMeta, WithIcon {
 
   @override
   String get storageKey => Meta.storageKeyFor(CharacterClass);
-
-  @override
-  dw.EntityReference get reference => Meta.referenceFor(this);
 
   @override
   bool operator ==(Object other) =>

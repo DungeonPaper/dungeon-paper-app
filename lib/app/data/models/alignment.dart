@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 
 import 'meta.dart';
 
-class AlignmentValue extends dw.Alignment implements WithMeta, WithIcon {
+class AlignmentValue extends dw.Alignment with WithMeta, WithIcon {
   AlignmentValue({
     required this.meta,
     required super.description,
@@ -87,9 +87,6 @@ class AlignmentValue extends dw.Alignment implements WithMeta, WithIcon {
 
   @override
   String get storageKey => throw TypeError();
-
-  @override
-  dw.EntityReference get reference => Meta.referenceFor(this);
 
   @override
   String get debugProperties => 'type: $type, description: $description';

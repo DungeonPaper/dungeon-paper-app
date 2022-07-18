@@ -3,7 +3,7 @@ import 'dart:convert';
 import 'package:dungeon_paper/app/data/models/meta.dart';
 import 'package:dungeon_world_data/dungeon_world_data.dart' as dw;
 
-class Monster extends dw.Monster implements WithMeta {
+class Monster extends dw.Monster with WithMeta {
   Monster({
     required Meta meta,
     required String key,
@@ -65,9 +65,6 @@ class Monster extends dw.Monster implements WithMeta {
 
   @override
   String get storageKey => Meta.storageKeyFor(Monster);
-
-  @override
-  dw.EntityReference get reference => Meta.referenceFor(this);
 
   @override
   bool operator ==(Object? other) =>

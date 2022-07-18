@@ -27,7 +27,7 @@ import 'race.dart';
 import 'ability_scores.dart';
 import 'spell.dart';
 
-class Character implements WithMeta<Character, CharacterMeta>, WithIcon {
+class Character with WithMeta<Character, CharacterMeta>, WithIcon {
   Character({
     required this.meta,
     required this.key,
@@ -362,9 +362,6 @@ class Character implements WithMeta<Character, CharacterMeta>, WithIcon {
 
   @override
   String get storageKey => Meta.storageKeyFor(Character);
-
-  @override
-  dw.EntityReference get reference => Meta.referenceFor(this);
 
   @override
   bool operator ==(Object other) =>

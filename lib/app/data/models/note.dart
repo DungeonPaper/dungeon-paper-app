@@ -6,7 +6,7 @@ import 'package:flutter/material.dart';
 
 import 'meta.dart';
 
-class Note implements WithMeta, WithIcon {
+class Note with WithMeta, WithIcon {
   Note({
     required this.meta,
     required this.key,
@@ -112,9 +112,6 @@ class Note implements WithMeta, WithIcon {
 
   @override
   String get storageKey => Meta.storageKeyFor(Note);
-
-  @override
-  dw.EntityReference get reference => Meta.referenceFor(this);
 
   @override
   bool operator ==(Object other) =>

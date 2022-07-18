@@ -325,9 +325,6 @@ class MetaSharing {
   final String? sourceOwner;
   final String sourceVersion;
 
-  // bool get isFork => sourceOwner?.isNotEmpty == true && sourceKey?.isNotEmpty == true;
-  // bool get isSource => !isFork;
-
   MetaSharing copyWith({
     bool? shared,
     bool? dirty,
@@ -405,14 +402,17 @@ abstract class WithKey {
   abstract final String key;
 }
 
-abstract class WithMeta<T, M> implements WithKey {
-  abstract final Meta<M> meta;
+abstract class MetaInterface<T, M> {
   T copyWith({Meta<M>? meta});
   T copyWithInherited({Meta<M>? meta, String? key}) => copyWith(meta: meta);
+  dynamic toJson();
+}
+
+mixin WithMeta<T, M> implements WithKey, MetaInterface<T, M> {
+  abstract final Meta<M> meta;
   String get displayName;
   String get storageKey;
-  dynamic toJson();
-  dw.EntityReference get reference;
+  dw.EntityReference get reference => Meta.referenceFor(this);
 }
 
 abstract class WithIcon {

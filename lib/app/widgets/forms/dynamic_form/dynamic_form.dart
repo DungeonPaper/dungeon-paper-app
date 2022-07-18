@@ -122,7 +122,7 @@ abstract class DynamicFormController<T extends WithMeta> extends GetxController 
     return entity.value;
   }
 
-  late final List<FormInputData> inputs;
+  late List<FormInputData> inputs;
 
   @mustCallSuper
   FutureOr<void> init() {

@@ -7,7 +7,7 @@ import 'package:flutter/material.dart';
 import 'meta.dart';
 import 'move.dart';
 
-class Race extends dw.Race implements WithMeta, WithIcon {
+class Race extends dw.Race with WithMeta, WithIcon {
   Race({
     required Meta meta,
     required String key,
@@ -133,9 +133,6 @@ class Race extends dw.Race implements WithMeta, WithIcon {
 
   @override
   String get storageKey => Meta.storageKeyFor(Race);
-
-  @override
-  dw.EntityReference get reference => Meta.referenceFor(this);
 
   @override
   bool operator ==(Object other) =>

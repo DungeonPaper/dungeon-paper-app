@@ -108,6 +108,7 @@ class MessageLookup extends MessageLookupByLibrary {
             'Dice': 'Dice',
             'AbilityScore': 'Ability Score',
             'AlignmentValue': 'Alignment',
+            'Playbook': 'Playbook',
             'other': '${runtimeType}',
           })}";
 
@@ -124,6 +125,7 @@ class MessageLookup extends MessageLookupByLibrary {
             'GearSelection': 'Starting Gear',
             'AbilityScore': 'Ability Scores',
             'AlignmentValue': 'Alignment',
+            'Playbook': 'Playbooks',
             'other': '${runtimeType}s',
           })}";
 

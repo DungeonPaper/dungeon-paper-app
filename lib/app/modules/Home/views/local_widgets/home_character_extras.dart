@@ -1,3 +1,4 @@
+import 'package:dungeon_paper/app/data/models/campaign.dart';
 import 'package:dungeon_paper/app/data/models/race.dart';
 import 'package:dungeon_paper/app/data/models/session_marks.dart';
 import 'package:dungeon_paper/app/data/services/character_service.dart';
@@ -89,8 +90,7 @@ class HomeCharacterExtras extends GetView<CharacterService> {
         IconButton(
           onPressed: null,
           icon: const Icon(Icons.groups),
-          // TODO update intl - use model when exists
-          tooltip: S.current.entity('Campaign'),
+          tooltip: S.current.entity(S.current.entityPlural(Campaign)),
         ),
       ],
     );

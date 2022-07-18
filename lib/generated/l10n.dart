@@ -1723,7 +1723,7 @@ class S {
     );
   }
 
-  /// `{runtimeType, select, CharacterClass {Class} Item {Item} Monster {Monster} Move {Move} Race {Race} Spell {Spell} Tag {Tag} MoveCategory {Category} GearSelection {Starting Gear} Dice {Dice} AbilityScore {Ability Score} AlignmentValue {Alignment} other {{runtimeType}}}`
+  /// `{runtimeType, select, CharacterClass {Class} Item {Item} Monster {Monster} Move {Move} Race {Race} Spell {Spell} Tag {Tag} MoveCategory {Category} GearSelection {Starting Gear} Dice {Dice} AbilityScore {Ability Score} AlignmentValue {Alignment} Playbook {Playbook} other {{runtimeType}}}`
   String entity(Object runtimeType) {
     return Intl.select(
       runtimeType,
@@ -1740,6 +1740,7 @@ class S {
         'Dice': 'Dice',
         'AbilityScore': 'Ability Score',
         'AlignmentValue': 'Alignment',
+        'Playbook': 'Playbook',
         'other': '$runtimeType',
       },
       name: 'entity',
@@ -1748,7 +1749,7 @@ class S {
     );
   }
 
-  /// `{runtimeType, select, CharacterClass {Classes} Item {Items} Monster {Monsters} Move {Moves} Race {Races} Spell {Spells} Tag {Tags} MoveCategory {Categories} Dice {Dice} GearSelection {Starting Gear} AbilityScore {Ability Scores} AlignmentValue {Alignment} other {{runtimeType}s}}`
+  /// `{runtimeType, select, CharacterClass {Classes} Item {Items} Monster {Monsters} Move {Moves} Race {Races} Spell {Spells} Tag {Tags} MoveCategory {Categories} Dice {Dice} GearSelection {Starting Gear} AbilityScore {Ability Scores} AlignmentValue {Alignment} Playbook {Playbooks} other {{runtimeType}s}}`
   String entityPlural(Object runtimeType) {
     return Intl.select(
       runtimeType,
@@ -1765,6 +1766,7 @@ class S {
         'GearSelection': 'Starting Gear',
         'AbilityScore': 'Ability Scores',
         'AlignmentValue': 'Alignment',
+        'Playbook': 'Playbooks',
         'other': '${runtimeType}s',
       },
       name: 'entityPlural',

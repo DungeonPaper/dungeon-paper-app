@@ -10,7 +10,7 @@ import 'package:get/get.dart';
 import '../../../core/dw_icons.dart';
 import 'meta.dart';
 
-class Spell extends dw.Spell implements WithMeta, WithIcon {
+class Spell extends dw.Spell with WithMeta, WithIcon {
   Spell({
     required Meta meta,
     required String key,
@@ -123,9 +123,6 @@ class Spell extends dw.Spell implements WithMeta, WithIcon {
 
   @override
   String get storageKey => Meta.storageKeyFor(Spell);
-
-  @override
-  dw.EntityReference get reference => Meta.referenceFor(this);
 
   @override
   bool operator ==(Object? other) =>

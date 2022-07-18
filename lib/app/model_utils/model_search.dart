@@ -8,11 +8,6 @@ import 'package:dungeon_paper/app/modules/LibraryList/views/filters/item_filters
 import 'package:dungeon_paper/app/modules/LibraryList/views/filters/move_filters.dart';
 import 'package:dungeon_paper/app/modules/LibraryList/views/filters/note_filters.dart';
 import 'package:dungeon_paper/app/modules/LibraryList/views/filters/spell_filters.dart';
-import 'package:flutter/material.dart';
-
-abstract class WithIcon {
-  IconData get icon;
-}
 
 bool searchFor(Type t, dynamic object, String search) {
   switch (t) {

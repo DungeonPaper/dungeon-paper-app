@@ -31,8 +31,8 @@ class SpellForm extends GetView<DynamicFormController<Spell>> {
 }
 
 class SpellFormController extends DynamicFormController<Spell> {
-  late final Spell? spell;
-  late final AbilityScores abilityScores;
+  late Spell? spell;
+  late AbilityScores abilityScores;
 
   @override
   Spell? get argument => spell;
@@ -94,7 +94,7 @@ class SpellFormController extends DynamicFormController<Spell> {
         data: FormDropdownInputData(
           value: entity.value.classKeys.isNotEmpty ? entity.value.classKeys[0] : null,
           isExpanded: true,
-          compareTo: (a, b) => a.key == b.key,
+          compareTo: (a, b) => a?.key == b?.key,
           label: Text(S.current.entity(Spell)),
           items: {...repo.builtIn.classes.values, ...repo.my.classes.values}.map(
             (cls) => DropdownMenuItem(
