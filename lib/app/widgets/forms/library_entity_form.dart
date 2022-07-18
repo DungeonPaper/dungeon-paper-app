@@ -46,9 +46,6 @@ class LibraryEntityForm<T extends WithMeta> extends GetView<DynamicFormControlle
         child: Scaffold(
           appBar: AppBar(
             title: title,
-            actions: [
-              MetaSyncMenu(entity: entity),
-            ],
           ),
           body: buildForm(context, entity),
           floatingActionButton: AdvancedFloatingActionButton.extended(

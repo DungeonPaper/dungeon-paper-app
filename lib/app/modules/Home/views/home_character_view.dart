@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:dungeon_paper/app/data/services/character_service.dart';
 import 'package:dungeon_paper/app/model_utils/dice_utils.dart';
 import 'package:dungeon_paper/app/modules/Home/views/local_widgets/home_character_extras.dart';
@@ -37,7 +39,9 @@ class HomeCharacterView extends GetView<CharacterService> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Column(children: _buildLeftCol(context)),
+                    SizedBox(
+                        width: max(350, width / 2),
+                        child: Column(children: _buildLeftCol(context))),
                     const SizedBox(width: 16),
                     const Expanded(child: HomeCharacterDynamicCards()),
                   ],

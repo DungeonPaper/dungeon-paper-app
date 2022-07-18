@@ -76,6 +76,7 @@ class DynamicFormState<T extends WithMeta> extends State<DynamicForm<T>> {
       context,
       [
         ...widget.inputs.map((input) => input.build(context)),
+        const Divider(),
         EntityShareForm<T>(
           entity: widget.entity,
           onChange: widget.onReplace,

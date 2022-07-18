@@ -205,6 +205,8 @@ class MenuButton<V> extends StatelessWidget {
 class MenuEntry<V> {
   final Widget label;
   final Widget? icon;
+
+  /// required to identify which entry is being selected
   final V? value;
   final void Function()? onSelect;
   final bool disabled;

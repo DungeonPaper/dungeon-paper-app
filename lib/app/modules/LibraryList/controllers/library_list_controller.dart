@@ -78,6 +78,10 @@ class LibraryListController<T extends WithMeta, F extends EntityFilters<T>> exte
   }
 
   void toggleItem(T item, bool state) {
+    if (!selectable) {
+      return;
+    }
+
     if (!multiple) {
       selected.clear();
       for (final sel in preSelections) {

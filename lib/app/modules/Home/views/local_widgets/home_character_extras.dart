@@ -1,5 +1,7 @@
+import 'package:dungeon_paper/app/data/models/race.dart';
 import 'package:dungeon_paper/app/data/models/session_marks.dart';
 import 'package:dungeon_paper/app/data/services/character_service.dart';
+import 'package:dungeon_paper/app/model_utils/model_pages.dart';
 import 'package:dungeon_paper/app/modules/AbilityScoresForm/controllers/ability_scores_form_controller.dart';
 import 'package:dungeon_paper/app/modules/BasicInfoForm/controllers/basic_info_form_controller.dart';
 import 'package:dungeon_paper/app/routes/app_pages.dart';
@@ -37,8 +39,14 @@ class HomeCharacterExtras extends GetView<CharacterService> {
               onSelect: _openBio,
             ),
             MenuEntry(
+              value: 'race',
+              icon: Icon(Race.genericIcon),
+              label: Text(S.current.changeGeneric(S.current.entity(Race))),
+              onSelect: _openRace,
+            ),
+            MenuEntry(
               value: 'roll_buttons',
-              icon: const Icon(DwIcons.dice_d6_numbered),
+              icon: const Icon(DwIcons.dice_d6),
               label: Text(S.current.customRollButtons),
               onSelect: _openRollButtons,
             ),
@@ -60,7 +68,7 @@ class HomeCharacterExtras extends GetView<CharacterService> {
             ),
             preventDuplicates: false,
           ),
-          icon: const Icon(DwIcons.dice_d6_numbered),
+          icon: const Icon(Icons.format_list_numbered_rtl),
           tooltip: S.current.characterRollsTitle,
         ),
         Obx(
@@ -103,6 +111,18 @@ class HomeCharacterExtras extends GetView<CharacterService> {
 
   void _openBio() {
     Get.dialog(const CharacterBioDialog());
+  }
+
+  void _openRace() {
+    ModelPages.openRacesList(
+      character: controller.current,
+      preSelections: [controller.current.race],
+      onAdd: (_race) => controller.updateCharacter(
+        controller.current.copyWithInherited(
+          race: _race.first.copyWithInherited(favorite: controller.current.race.favorite),
+        ),
+      ),
+    );
   }
 
   void _openBondsFlags() {

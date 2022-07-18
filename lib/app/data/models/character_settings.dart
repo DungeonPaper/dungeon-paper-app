@@ -203,7 +203,8 @@ class OrderedCategoryList {
 
   Set<String> getSorted([Set<String> all = const {}]) => <String>{
         ...sortOrder,
-        ...(all.toList()..sort(stringSorter(order: SortOrder.asc))),
+        ...all,
+        // .toList()..sort(stringSorter(order: SortOrder.asc))
       }
           .where(
             (cat) => !hidden.contains(cat),

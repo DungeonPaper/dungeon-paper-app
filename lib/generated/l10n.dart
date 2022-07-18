@@ -26,7 +26,9 @@ class S {
   static const AppLocalizationDelegate delegate = AppLocalizationDelegate();
 
   static Future<S> load(Locale locale) {
-    final name = (locale.countryCode?.isEmpty ?? false) ? locale.languageCode : locale.toString();
+    final name = (locale.countryCode?.isEmpty ?? false)
+        ? locale.languageCode
+        : locale.toString();
     final localeName = Intl.canonicalizedLocale(name);
     return initializeMessages(localeName).then((_) {
       Intl.defaultLocale = localeName;
@@ -645,6 +647,16 @@ class S {
     );
   }
 
+  /// `Change {entity}`
+  String changeGeneric(Object entity) {
+    return Intl.message(
+      'Change $entity',
+      name: 'changeGeneric',
+      desc: '',
+      args: [entity],
+    );
+  }
+
   /// `Use armor from class & equipped items`
   String get characterAutoArmor {
     return Intl.message(
@@ -1119,7 +1131,8 @@ class S {
   }
 
   /// `Base HP: {hp}, Load: {load}, Damage Dice: {damageDice}`
-  String createCharacterClassDescription(Object hp, Object load, Object damageDice) {
+  String createCharacterClassDescription(
+      Object hp, Object load, Object damageDice) {
     return Intl.message(
       'Base HP: $hp, Load: $load, Damage Dice: $damageDice',
       name: 'createCharacterClassDescription',
@@ -1289,7 +1302,8 @@ class S {
   }
 
   /// `{count} selected (class allowance: {max})`
-  String createCharacterStartingGearChoiceCountWithMax(Object count, Object max) {
+  String createCharacterStartingGearChoiceCountWithMax(
+      Object count, Object max) {
     return Intl.message(
       '$count selected (class allowance: $max)',
       name: 'createCharacterStartingGearChoiceCountWithMax',
@@ -1309,7 +1323,8 @@ class S {
   }
 
   /// `{amount} × {name}`
-  String createCharacterStartingGearDescriptionItem(Object amount, Object name) {
+  String createCharacterStartingGearDescriptionItem(
+      Object amount, Object name) {
     return Intl.message(
       '$amount × $name',
       name: 'createCharacterStartingGearDescriptionItem',
@@ -1768,6 +1783,36 @@ class S {
       name: 'entityWithCount',
       desc: '',
       args: [count, entPlural, ent],
+    );
+  }
+
+  /// `This {entity} is In Sync with its linked library item`
+  String entityShareStatusInSync(Object entity) {
+    return Intl.message(
+      'This $entity is In Sync with its linked library item',
+      name: 'entityShareStatusInSync',
+      desc: '',
+      args: [entity],
+    );
+  }
+
+  /// `This {entity} is Out of Sync with its linked library item`
+  String entityShareStatusOutOfSync(Object entity) {
+    return Intl.message(
+      'This $entity is Out of Sync with its linked library item',
+      name: 'entityShareStatusOutOfSync',
+      desc: '',
+      args: [entity],
+    );
+  }
+
+  /// `This {entity} is not linked to any library item`
+  String entityShareStatusDetached(Object entity) {
+    return Intl.message(
+      'This $entity is not linked to any library item',
+      name: 'entityShareStatusDetached',
+      desc: '',
+      args: [entity],
     );
   }
 
