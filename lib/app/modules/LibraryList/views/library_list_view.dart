@@ -11,17 +11,31 @@ import 'package:get/get.dart';
 
 import 'library_card_list.dart';
 
-typedef CardBuilder<T> = Widget Function(
-  BuildContext context,
-  T item, {
-  required bool selected,
-  required bool selectable,
-  required Widget label,
-  required Widget icon,
-  void Function()? onToggle,
-  void Function(T item)? onUpdate,
-  void Function(T item)? onDelete,
-});
+typedef CardBuilder<T> = Widget Function(BuildContext context, CardBuilderData data);
+
+class CardBuilderData<T> {
+  final T item;
+  final bool selected;
+  final bool selectable;
+  final Widget label;
+  final Widget icon;
+  final void Function()? onToggle;
+  final void Function(T item)? onUpdate;
+  final void Function(T item)? onDelete;
+  final List<String> highlightWords;
+
+  CardBuilderData({
+    required this.item,
+    required this.selected,
+    required this.selectable,
+    required this.label,
+    required this.icon,
+    required this.highlightWords,
+    this.onToggle,
+    this.onUpdate,
+    this.onDelete,
+  });
+}
 
 class LibraryListView<T extends WithMeta, F extends EntityFilters<T>>
     extends GetView<LibraryListController<T, F>> {
@@ -116,11 +130,13 @@ class LibraryListView<T extends WithMeta, F extends EntityFilters<T>>
                 label: Text(
                   controller.selected.isNotEmpty
                       ? controller.multiple
-                          ? S.current.addWithCount(S.current.pluralize(
-                              controller.selected.length,
-                              S.current.entity(T),
-                              S.current.entityPlural(T),
-                            ))
+                          ? S.current.addWithCount(
+                              S.current.pluralize(
+                                controller.selected.length,
+                                S.current.entity(T),
+                                S.current.entityPlural(T),
+                              ),
+                            )
                           : S.current.selectGeneric(controller.selected.first.displayName)
                       : S.current.selectToAdd(
                           controller.multiple ? S.current.entityPlural(T) : S.current.entity(T),
@@ -139,6 +155,48 @@ class LibraryListView<T extends WithMeta, F extends EntityFilters<T>>
           final enabled = controller.isEnabled(item);
           final selectable = controller.selectable;
           final onToggle = enabled ? () => controller.toggleItem(item, !selected) : null;
+          final cardData = CardBuilderData<T>(
+            item: item,
+            selected: selected,
+            selectable: selectable && enabled,
+            onToggle: onToggle,
+            label: Text(
+              enabled
+                  ? !selected
+                      ? S.current.select
+                      : controller.multiple
+                          ? S.current.remove
+                          : S.current.unselect
+                  : controller.multiple
+                      ? S.current.alreadyAdded
+                      : S.current.select,
+            ),
+            icon: Icon(
+              enabled
+                  ? !selected
+                      ? controller.multiple
+                          ? Icons.add
+                          : Icons.check
+                      : Icons.remove
+                  : controller.multiple
+                      ? Icons.add
+                      : Icons.check,
+            ),
+            onUpdate: group == FiltersGroup.my
+                ? (item) => controller.saveCustomItem(controller.storageKey, item)
+                : null,
+            onDelete: group == FiltersGroup.my
+                ? (item) => awaitDeleteConfirmation<T>(
+                      context,
+                      item.displayName,
+                      () => controller.deleteCustomItem(
+                        controller.storageKey,
+                        item,
+                      ),
+                    )
+                : null,
+            highlightWords: [controller.search[group]!.value.text],
+          );
 
           return Container(
             decoration: BoxDecoration(
@@ -154,47 +212,7 @@ class LibraryListView<T extends WithMeta, F extends EntityFilters<T>>
                         : Colors.transparent,
               ),
             ),
-            child: cardBuilder(
-              context,
-              item,
-              selected: selected,
-              selectable: selectable && enabled,
-              onToggle: onToggle,
-              label: Text(
-                enabled
-                    ? !selected
-                        ? S.current.select
-                        : controller.multiple
-                            ? S.current.remove
-                            : S.current.unselect
-                    : controller.multiple
-                        ? S.current.alreadyAdded
-                        : S.current.select,
-              ),
-              icon: Icon(
-                enabled
-                    ? !selected
-                        ? controller.multiple
-                            ? Icons.add
-                            : Icons.check
-                        : Icons.remove
-                    : controller.multiple
-                        ? Icons.add
-                        : Icons.check,
-              ),
-              onUpdate: group == FiltersGroup.my
-                  ? (item) => controller.saveCustomItem(controller.storageKey, item)
-                  : null,
-              onDelete: group == FiltersGroup.my
-                  ? (item) => awaitDeleteConfirmation<T>(
-                      context,
-                      item.displayName,
-                      () => controller.deleteCustomItem(
-                            controller.storageKey,
-                            item,
-                          ))
-                  : null,
-            ),
+            child: cardBuilder(context, cardData),
           );
         },
       );

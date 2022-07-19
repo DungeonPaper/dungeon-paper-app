@@ -29,36 +29,26 @@ class ItemsLibraryListView extends GetView<LibraryListController<Item, ItemFilte
         onChange: (f) => onChange(group, f),
         searchController: controller.search[group]!,
       ),
-      cardBuilder: (
-        ctx,
-        item, {
-        required selected,
-        required selectable,
-        onToggle,
-        onUpdate,
-        onDelete,
-        required label,
-        required icon,
-      }) =>
-          ItemCard(
-        item: item,
+      cardBuilder: (ctx, data) => ItemCard(
+        item: data.item,
         showStar: false,
+        highlightWords: data.highlightWords,
         actions: [
           EntityEditMenu(
-            onEdit: onUpdate != null
+            onEdit: data.onUpdate != null
                 ? () => ModelPages.openItemPage(
-                      item: item,
-                      onSave: onUpdate,
+                      item: data.item,
+                      onSave: data.onUpdate!,
                     )
                 : null,
-            onDelete: onDelete != null ? () => onDelete(item) : null,
+            onDelete: data.onDelete != null ? () => data.onDelete!(data.item) : null,
           ),
-          if (selectable)
+          if (data.selectable)
             ElevatedButton.icon(
               style: ButtonThemes.primaryElevated(context),
-              onPressed: onToggle,
-              label: label,
-              icon: icon,
+              onPressed: data.onToggle,
+              label: data.label,
+              icon: data.icon,
             )
         ],
       ),

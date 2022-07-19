@@ -68,13 +68,23 @@ class HighlightBuilder extends flutter_markdown.MarkdownElementBuilder {
     required TextStyle normalStyle,
   }) {
     final defaultHighlightStyle = getDefaultHighlightStyle(context);
+    final normalColorBrightness =
+        ThemeData.estimateBrightnessForColor(normalStyle.color ?? defaultHighlightStyle.color!);
+    final backgroundColor = override?.backgroundColor ??
+        normalStyle.backgroundColor ??
+        defaultHighlightStyle.backgroundColor;
+    final highlightBackgroundColorBrightness =
+        ThemeData.estimateBrightnessForColor(backgroundColor!);
+    final brightnessHighlightColor = normalColorBrightness == highlightBackgroundColorBrightness
+        ? normalColorBrightness == Brightness.dark
+            ? Colors.white
+            : Colors.black
+        : null;
     return normalStyle.copyWith(
       fontFamily:
           override?.fontFamily ?? normalStyle.fontFamily ?? defaultHighlightStyle.fontFamily,
-      color: override?.color ?? normalStyle.color ?? defaultHighlightStyle.color,
-      backgroundColor: override?.backgroundColor ??
-          normalStyle.backgroundColor ??
-          defaultHighlightStyle.backgroundColor,
+      color: override?.color ?? brightnessHighlightColor ?? defaultHighlightStyle.color,
+      backgroundColor: backgroundColor,
       fontStyle: override?.fontStyle ?? normalStyle.fontStyle ?? defaultHighlightStyle.fontStyle,
       fontWeight:
           override?.fontWeight ?? normalStyle.fontWeight ?? defaultHighlightStyle.fontWeight,

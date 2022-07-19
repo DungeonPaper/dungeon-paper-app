@@ -30,39 +30,29 @@ class SpellsLibraryListView extends GetView<LibraryListController<Spell, SpellFi
         onChange: (f) => onChange(group, f),
         searchController: controller.search[group]!,
       ),
-      cardBuilder: (
-        ctx,
-        spell, {
-        required selected,
-        required selectable,
-        onToggle,
-        onUpdate,
-        onDelete,
-        required label,
-        required icon,
-      }) =>
-          SpellCard(
-        spell: spell,
+      cardBuilder: (ctx, data) => SpellCard(
+        spell: data.item,
         showDice: false,
         showStar: false,
+        highlightWords: data.highlightWords,
         actions: [
           EntityEditMenu(
-            onEdit: onUpdate != null
+            onEdit: data.onUpdate != null
                 ? () => ModelPages.openSpellPage(
                       abilityScores: character.abilityScores,
-                      classKeys: spell.classKeys,
-                      spell: spell,
-                      onSave: onUpdate,
+                      classKeys: data.item.classKeys,
+                      spell: data.item,
+                      onSave: data.onUpdate!,
                     )
                 : null,
-            onDelete: onDelete != null ? () => onDelete(spell) : null,
+            onDelete: data.onDelete != null ? () => data.onDelete!(data.item) : null,
           ),
-          if (selectable)
+          if (data.selectable)
             ElevatedButton.icon(
               style: ButtonThemes.primaryElevated(context),
-              onPressed: onToggle,
-              label: label,
-              icon: icon,
+              onPressed: data.onToggle,
+              label: data.label,
+              icon: data.icon,
             ),
         ],
       ),

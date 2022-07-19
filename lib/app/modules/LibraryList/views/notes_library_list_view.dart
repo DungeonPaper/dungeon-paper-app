@@ -31,36 +31,26 @@ class NotesLibraryListView extends GetView<LibraryListController<Note, NoteFilte
         onChange: (f) => onChange(group, f),
         searchController: controller.search[group]!,
       ),
-      cardBuilder: (
-        ctx,
-        note, {
-        required selected,
-        required selectable,
-        onToggle,
-        onUpdate,
-        onDelete,
-        required label,
-        required icon,
-      }) =>
-          NoteCard(
-        note: note,
+      cardBuilder: (ctx, data) => NoteCard(
+        note: data.item,
         showStar: false,
+        highlightWords: data.highlightWords,
         actions: [
           EntityEditMenu(
-            onEdit: onUpdate != null
+            onEdit: data.onUpdate != null
                 ? () => ModelPages.openNotePage(
-                      note: note,
-                      onSave: onUpdate,
+                      note: data.item,
+                      onSave: data.onUpdate!,
                     )
                 : null,
-            onDelete: onDelete != null ? () => onDelete(note) : null,
+            onDelete: data.onDelete != null ? () => data.onDelete!(data.item) : null,
           ),
-          if (selectable)
+          if (data.selectable)
             ElevatedButton.icon(
               style: ButtonThemes.primaryElevated(context),
-              onPressed: onToggle,
-              label: label,
-              icon: icon,
+              onPressed: data.onToggle,
+              label: data.label,
+              icon: data.icon,
             ),
         ],
       ),

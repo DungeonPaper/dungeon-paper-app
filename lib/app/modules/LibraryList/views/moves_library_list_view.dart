@@ -32,38 +32,28 @@ class MovesLibraryListView extends GetView<LibraryListController<Move, MoveFilte
         onChange: (f) => onChange(group, f),
         searchController: controller.search[group]!,
       ),
-      cardBuilder: (
-        ctx,
-        move, {
-        required selected,
-        required selectable,
-        onToggle,
-        onUpdate,
-        onDelete,
-        required label,
-        required icon,
-      }) =>
-          MoveCard(
-        move: move,
+      cardBuilder: (ctx, data) => MoveCard(
+        move: data.item,
         showDice: false,
         showStar: false,
+        highlightWords: data.highlightWords,
         actions: [
           EntityEditMenu(
-            onEdit: onUpdate != null
+            onEdit: data.onUpdate != null
                 ? () => ModelPages.openMovePage(
                       abilityScores: char.abilityScores,
-                      move: move,
-                      onSave: onUpdate,
+                      move: data.item,
+                      onSave: data.onUpdate!,
                     )
                 : null,
-            onDelete: onDelete != null ? () => onDelete(move) : null,
+            onDelete: data.onDelete != null ? () => data.onDelete!(data.item) : null,
           ),
-          if (selectable)
+          if (data.selectable)
             ElevatedButton.icon(
               style: ButtonThemes.primaryElevated(context),
-              onPressed: onToggle,
-              label: label,
-              icon: icon,
+              onPressed: data.onToggle,
+              label: data.label,
+              icon: data.icon,
             ),
         ],
       ),

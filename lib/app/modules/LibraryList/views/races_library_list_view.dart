@@ -32,38 +32,28 @@ class RacesLibraryListView extends GetView<LibraryListController<Race, RaceFilte
         onChange: (f) => onChange(group, f),
         searchController: controller.search[group]!,
       ),
-      cardBuilder: (
-        ctx,
-        race, {
-        required selected,
-        required selectable,
-        onToggle,
-        onUpdate,
-        onDelete,
-        required label,
-        required icon,
-      }) =>
-          RaceCard(
-        race: race,
+      cardBuilder: (ctx, data) => RaceCard(
+        race: data.item,
         showStar: false,
         showClasses: true,
+        highlightWords: data.highlightWords,
         actions: [
           EntityEditMenu(
-            onEdit: onUpdate != null
+            onEdit: data.onUpdate != null
                 ? () => ModelPages.openRacePage(
                       abilityScores: char.abilityScores,
-                      race: race,
-                      onSave: onUpdate,
+                      race: data.item,
+                      onSave: data.onUpdate!,
                     )
                 : null,
-            onDelete: onDelete != null ? () => onDelete(race) : null,
+            onDelete: data.onDelete != null ? () => data.onDelete!(data.item) : null,
           ),
-          if (selectable)
+          if (data.selectable)
             ElevatedButton.icon(
               style: ButtonThemes.primaryElevated(context),
-              onPressed: onToggle,
-              label: label,
-              icon: icon,
+              onPressed: data.onToggle,
+              label: data.label,
+              icon: data.icon,
             ),
         ],
       ),
