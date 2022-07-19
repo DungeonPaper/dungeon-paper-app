@@ -2,7 +2,7 @@ import 'package:dungeon_paper/app/data/models/meta.dart';
 import 'package:dungeon_world_data/dungeon_world_data.dart' as dw;
 import 'package:flutter/material.dart';
 
-class Campaign with WithMeta, WithIcon {
+class Campaign implements WithMeta, WithIcon {
   @override
   final Meta meta;
   @override
@@ -96,4 +96,7 @@ class Campaign with WithMeta, WithIcon {
 
   @override
   String get storageKey => 'Campaigns';
+
+  @override
+  dw.EntityReference get reference => Meta.referenceFor(this);
 }

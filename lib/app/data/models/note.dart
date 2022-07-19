@@ -6,7 +6,7 @@ import 'package:flutter/material.dart';
 
 import 'meta.dart';
 
-class Note with WithMeta, WithIcon {
+class Note implements WithMeta, WithIcon {
   Note({
     required this.meta,
     required this.key,
@@ -134,4 +134,7 @@ class Note with WithMeta, WithIcon {
 
   @override
   String toString() => 'Note($debugProperties)';
+
+  @override
+  dw.EntityReference get reference => Meta.referenceFor(this);
 }

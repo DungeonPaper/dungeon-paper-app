@@ -10,7 +10,7 @@ import 'package:get/get.dart';
 import '../../../core/dw_icons.dart';
 import 'meta.dart';
 
-class Spell extends dw.Spell with WithMeta, WithIcon {
+class Spell extends dw.Spell implements WithMeta, WithIcon {
   Spell({
     required Meta meta,
     required String key,

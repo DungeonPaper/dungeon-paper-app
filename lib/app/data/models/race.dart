@@ -7,7 +7,7 @@ import 'package:flutter/material.dart';
 import 'meta.dart';
 import 'move.dart';
 
-class Race extends dw.Race with WithMeta, WithIcon {
+class Race extends dw.Race implements WithMeta, WithIcon {
   Race({
     required Meta meta,
     required String key,

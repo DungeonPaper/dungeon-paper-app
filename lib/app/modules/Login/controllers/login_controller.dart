@@ -41,5 +41,9 @@ class LoginController extends GetxController
     password.removeListener(validate);
   }
 
-  bool validate() => _valid.value = formKey.currentState?.validate() ?? false;
+  bool validate() {
+    _valid.value = formKey.currentState?.validate() ?? false;
+    _valid.refresh();
+    return _valid.value;
+  }
 }

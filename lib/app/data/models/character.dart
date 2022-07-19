@@ -27,7 +27,7 @@ import 'race.dart';
 import 'ability_scores.dart';
 import 'spell.dart';
 
-class Character with WithMeta<Character, CharacterMeta>, WithIcon {
+class Character implements WithMeta<Character, CharacterMeta>, WithIcon {
   Character({
     required this.meta,
     required this.key,
@@ -410,6 +410,9 @@ class Character with WithMeta<Character, CharacterMeta>, WithIcon {
 
   @override
   String toString() => 'Character($debugProperties)';
+
+  @override
+  dw.EntityReference get reference => Meta.referenceFor(this);
 }
 
 class CharacterMeta {

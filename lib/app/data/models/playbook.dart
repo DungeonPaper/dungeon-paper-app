@@ -3,7 +3,7 @@ import 'package:dungeon_paper/app/data/models/meta.dart';
 import 'package:flutter/material.dart';
 
 @immutable
-class Playbook with WithMeta, WithIcon {
+class Playbook implements WithMeta, WithIcon {
   @override
   final Meta meta;
 
@@ -19,7 +19,7 @@ class Playbook with WithMeta, WithIcon {
   final List<dw.EntityReference> items;
   final List<dw.EntityReference> notes;
 
-  Playbook({
+  const Playbook({
     required this.meta,
     required this.key,
     required this.name,
@@ -125,4 +125,7 @@ class Playbook with WithMeta, WithIcon {
 
   @override
   String get storageKey => 'Playbooks';
+
+  @override
+  dw.EntityReference get reference => Meta.referenceFor(this);
 }

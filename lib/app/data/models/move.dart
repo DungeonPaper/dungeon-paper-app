@@ -8,7 +8,7 @@ import '../../../core/dw_icons.dart';
 import '../../../core/utils/uuid.dart';
 import 'meta.dart';
 
-class Move extends dw.Move with WithMeta, WithIcon {
+class Move extends dw.Move implements WithMeta, WithIcon {
   Move({
     required Meta meta,
     required String key,

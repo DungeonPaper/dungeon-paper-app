@@ -10,7 +10,7 @@ import 'package:get/get.dart';
 import 'item_settings.dart';
 import 'meta.dart';
 
-class Item extends dw.Item with WithMeta, WithIcon {
+class Item extends dw.Item implements WithMeta, WithIcon {
   Item({
     required Meta meta,
     this.amount = 1,
