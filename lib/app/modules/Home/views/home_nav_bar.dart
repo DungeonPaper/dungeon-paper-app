@@ -1,5 +1,8 @@
+import 'dart:math';
+
 import 'package:dungeon_paper/core/dw_icons.dart';
 import 'package:dungeon_paper/core/utils/list_utils.dart';
+import 'package:dungeon_paper/core/utils/math_utils.dart';
 import 'package:dungeon_paper/generated/l10n.dart';
 import 'package:flutter/material.dart';
 
@@ -34,7 +37,7 @@ class _CharacterHomeNavBarState extends State<HomeNavBar> {
 
   @override
   Widget build(BuildContext context) {
-    var currentIndex =
+    final currentIndex =
         widget.pageController.positions.length == 1 ? widget.pageController.page?.round() ?? 1 : 1;
 
     final items = <String, Icon>{
@@ -45,26 +48,41 @@ class _CharacterHomeNavBarState extends State<HomeNavBar> {
 
     return Material(
       type: MaterialType.canvas,
-      child: Row(
-        mainAxisSize: MainAxisSize.max,
-        crossAxisAlignment: CrossAxisAlignment.center,
-        mainAxisAlignment: MainAxisAlignment.spaceAround,
-        children: enumerate(items.keys)
-            .map(
-              (item) => Expanded(
-                child: _NavItem(
-                  icon: items[item.value]!,
-                  label: item.value,
-                  selected: currentIndex == item.index,
-                  onTap: () => widget.pageController.animateToPage(
-                    item.index,
-                    duration: const Duration(milliseconds: 300),
-                    curve: Curves.easeOutQuad,
-                  ),
+      child: SizedBox(
+        height: 70,
+        child: InkWell(
+          splashColor: Theme.of(context).splashColor,
+          hoverColor: Colors.transparent,
+          // ignore: avoid_returning_null_for_void
+          onTap: () => null,
+          child: Center(
+            child: ConstrainedBox(
+              constraints: const BoxConstraints(
+                maxWidth: 500,
+              ),
+              child: Center(
+                child: Row(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  children: enumerate(items.keys)
+                      .map(
+                        (item) => _NavItem(
+                          icon: items[item.value]!,
+                          label: item.value,
+                          selected: currentIndex == item.index,
+                          onTap: () => widget.pageController.animateToPage(
+                            item.index,
+                            duration: const Duration(milliseconds: 300),
+                            curve: Curves.easeOutQuad,
+                          ),
+                        ),
+                      )
+                      .toList(),
                 ),
               ),
-            )
-            .toList(),
+            ),
+          ),
+        ),
       ),
     );
   }
@@ -92,46 +110,44 @@ class _NavItem extends StatelessWidget {
     final unselectedFgColor = theme.colorScheme.onSurface;
     const duration = Duration(milliseconds: 250);
 
-    return Material(
-      child: InkWell(
-        splashColor: Theme.of(context).splashColor,
-        onTap: onTap,
-        child: Padding(
-          padding: const EdgeInsets.all(6),
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              ClipPath(
-                clipper: const ShapeBorderClipper(shape: StadiumBorder()),
-                child: AnimatedContainer(
-                  duration: duration,
-                  child: Padding(
-                    padding: const EdgeInsets.symmetric(vertical: 3),
-                    child: IconTheme(
-                      child: icon,
-                      data: IconThemeData(
-                        color: selected ? selectedFgColor : unselectedFgColor,
-                      ),
+    return Listener(
+      onPointerDown: (_) => onTap(),
+      behavior: HitTestBehavior.translucent,
+      child: Padding(
+        padding: const EdgeInsets.symmetric(vertical: 6, horizontal: 16),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            ClipPath(
+              clipper: const ShapeBorderClipper(shape: StadiumBorder()),
+              child: AnimatedContainer(
+                duration: duration,
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 3),
+                  child: IconTheme(
+                    child: icon,
+                    data: IconThemeData(
+                      color: selected ? selectedFgColor : unselectedFgColor,
                     ),
                   ),
-                  width: selected ? 60 : 40,
-                  color: selected ? selectedColor : Colors.transparent,
                 ),
+                width: selected ? 60 : 40,
+                color: selected ? selectedColor : Colors.transparent,
               ),
-              const SizedBox(height: 2),
-              AnimatedDefaultTextStyle(
-                duration: duration,
-                style: theme.textTheme.caption!.copyWith(
-                  fontWeight: FontWeight.w600,
-                  color: selected ? selectedColor : null,
-                ),
-                child: Text(
-                  label,
-                  textScaleFactor: 1.1,
-                ),
+            ),
+            const SizedBox(height: 2),
+            AnimatedDefaultTextStyle(
+              duration: duration,
+              style: theme.textTheme.caption!.copyWith(
+                fontWeight: FontWeight.w600,
+                color: selected ? selectedColor : null,
               ),
-            ],
-          ),
+              child: Text(
+                label,
+                textScaleFactor: 1.1,
+              ),
+            ),
+          ],
         ),
       ),
     );

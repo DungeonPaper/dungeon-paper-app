@@ -29,10 +29,10 @@ class UserService extends GetxService
     return repo.builtIn.init(ignoreCache: ignoreCache);
   }
 
-  Future<void> loadMyRepo() {
+  Future<void> loadMyRepo({bool ignoreCache = false}) {
     repo.my.clear();
     repo.my.clearListeners();
-    return repo.my.init(ignoreCache: true);
+    return repo.my.init(ignoreCache: ignoreCache);
   }
 
   Future<void> loadUserData(fba.User user) async {

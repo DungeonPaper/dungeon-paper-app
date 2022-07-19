@@ -57,6 +57,12 @@ enum RemoteBehavior {
   never,
 }
 
+enum RepositoryStatus {
+  loading,
+  loaded,
+  error,
+}
+
 abstract class RepositoryCache {
   RepositoryCache({required this.id});
 
@@ -75,26 +81,44 @@ abstract class RepositoryCache {
 
   final subs = <StreamSubscription>[];
 
+  RepositoryStatus status = RepositoryStatus.loading;
+
+  bool get isLoading => status == RepositoryStatus.loading;
+  bool get isLoaded => status == RepositoryStatus.loaded;
+  bool get isError => status == RepositoryStatus.error;
+
   StorageDelegate get storage => StorageHandler.instance;
   StorageDelegate get cache => CacheHandler.instance;
   Future<SearchResponse> get getFromRemote;
 
   Future<void> init({bool ignoreCache = false}) async {
+    status = RepositoryStatus.loading;
     debugPrint('Initializing repo: $id, cache prefix: "${cacheKey('')}"');
 
-    final cacheRes = ignoreCache ? SearchResponse.empty() : await getCacheResponse();
-    final shouldLoadFromRemote = ignoreCache ? true : await shouldUseRemote(cacheRes);
+    try {
+      SearchResponse cacheRes;
+      try {
+        cacheRes = ignoreCache ? SearchResponse.empty() : await getCacheResponse();
+      } catch (e) {
+        cacheRes = SearchResponse.empty();
+      }
+      final shouldLoadFromRemote = ignoreCache ? true : await shouldUseRemote(cacheRes);
 
-    if (shouldLoadFromRemote) {
-      debugPrint('Cache invalid for $id, loading from remote');
-      final resp = await getFromRemote;
-      await setAllFrom(resp, saveIntoCache: true);
-    } else {
-      debugPrint('Cache valid for $id, loading from cache');
-      await setAllFrom(cacheRes, saveIntoCache: false);
+      if (shouldLoadFromRemote) {
+        debugPrint('Cache invalid for $id, loading from remote');
+        final resp = await getFromRemote;
+        await setAllFrom(resp, saveIntoCache: true);
+      } else {
+        debugPrint('Cache valid for $id, loading from cache');
+        await setAllFrom(cacheRes, saveIntoCache: false);
+      }
+
+      registerListeners();
+      status = RepositoryStatus.loaded;
+    } catch (e) {
+      status = RepositoryStatus.error;
+      rethrow;
     }
-
-    registerListeners();
   }
 
   Future<SearchResponse> getCacheResponse() async {

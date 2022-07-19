@@ -10,6 +10,7 @@ import 'package:dungeon_paper/app/widgets/dialogs/damage_dice_dialog.dart';
 import 'package:dungeon_paper/app/widgets/molecules/character_subtitle.dart';
 import 'package:dungeon_paper/app/widgets/molecules/ability_scores_grid.dart';
 import 'package:dungeon_paper/core/dw_icons.dart';
+import 'package:dungeon_paper/core/utils/math_utils.dart';
 import 'package:dungeon_paper/generated/l10n.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -40,7 +41,7 @@ class HomeCharacterView extends GetView<CharacterService> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     SizedBox(
-                        width: max(350, width / 2),
+                        width: clamp(width / 2, 350, 500),
                         child: Column(children: _buildLeftCol(context))),
                     const SizedBox(width: 16),
                     const Expanded(child: HomeCharacterDynamicCards()),

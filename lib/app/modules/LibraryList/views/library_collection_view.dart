@@ -36,8 +36,12 @@ class LibraryCollectionView extends GetView<LibraryCollectionController>
               MenuEntry(
                 label: Text(S.current.reloadLibrary),
                 icon: const Icon(Icons.refresh),
+                disabled: repo.my.isLoading || repo.builtIn.isLoading,
                 value: 'refresh',
-                onSelect: () => userService.loadBuiltInRepo(ignoreCache: true),
+                onSelect: () {
+                  userService.loadBuiltInRepo(ignoreCache: true);
+                  userService.loadMyRepo(ignoreCache: true);
+                },
               ),
             ],
           )
