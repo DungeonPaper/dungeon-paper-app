@@ -52,7 +52,6 @@ class CustomExpansionPanel extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final originalTheme = Theme.of(context);
     return CustomExpansionTile(
       key: expansionKey,
       initiallyExpanded: initiallyExpanded ?? false,
@@ -63,7 +62,7 @@ class CustomExpansionPanel extends StatelessWidget {
       icon: icon,
       minIconWidth: minIconWidth,
       subtitle: subtitle,
-      children: children.map((child) => Theme(data: originalTheme, child: child)).toList(),
+      children: children,
       tilePadding: titlePadding ?? defaultPadding,
       childrenPadding: childrenPadding ?? defaultPadding,
       expandedCrossAxisAlignment: CrossAxisAlignment.stretch,

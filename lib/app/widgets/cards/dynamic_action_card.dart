@@ -146,10 +146,10 @@ class _DynamicActionCardState extends State<DynamicActionCard> {
                       constraints: BoxConstraints.loose(Size.fromHeight(widget.maxContentHeight!)),
                       child: ListView(
                         shrinkWrap: true,
-                        children: children.sublist(0, children.length - 2),
+                        children: children.sublist(0, children.length - 1),
                       ),
                     ),
-                    children[children.length - 1],
+                    children.last,
                   ],
           ),
         );
@@ -158,7 +158,6 @@ class _DynamicActionCardState extends State<DynamicActionCard> {
   }
 
   List<Widget> _buildChildren(BuildContext context) {
-    final dividerColor = Theme.of(context).dividerColor;
     final bottomHasContent = widget.chips.isNotEmpty ||
         widget.actions
             .where((el) => (el is! EntityEditMenu) || (el.onDelete != null || el.onEdit != null))
@@ -185,7 +184,7 @@ class _DynamicActionCardState extends State<DynamicActionCard> {
         _renderMarkdown(context, widget.explanation!),
       ],
       if (bottomHasContent) ...[
-        Divider(height: 24, color: dividerColor),
+        const Divider(height: 24),
         Row(
           crossAxisAlignment: CrossAxisAlignment.end,
           mainAxisSize: MainAxisSize.max,

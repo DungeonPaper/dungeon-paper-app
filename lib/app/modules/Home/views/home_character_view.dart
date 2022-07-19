@@ -1,5 +1,3 @@
-import 'dart:math';
-
 import 'package:dungeon_paper/app/data/services/character_service.dart';
 import 'package:dungeon_paper/app/model_utils/dice_utils.dart';
 import 'package:dungeon_paper/app/modules/Home/views/local_widgets/home_character_extras.dart';
@@ -18,7 +16,7 @@ import 'local_widgets/home_character_dynamic_cards.dart';
 import 'local_widgets/home_character_header_view.dart';
 import 'local_widgets/home_character_hp_xp_view.dart';
 
-class HomeCharacterView extends GetView<CharacterService> {
+class HomeCharacterView extends GetView<CharacterService> with HomeCharacterPaddingMixin {
   const HomeCharacterView({Key? key}) : super(key: key);
 
   @override
@@ -29,44 +27,13 @@ class HomeCharacterView extends GetView<CharacterService> {
         if (char == null) {
           return Container();
         }
-        return LayoutBuilder(
-          builder: (context, constraints) {
-            final width = constraints.maxWidth;
-            final isWide = width > 750;
-            if (isWide) {
-              return SingleChildScrollView(
-                child: Row(
-                  mainAxisSize: MainAxisSize.max,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    SizedBox(
-                        width: clamp(width / 2, 350, 500),
-                        child: Column(children: _buildLeftCol(context))),
-                    const SizedBox(width: 16),
-                    const Expanded(child: HomeCharacterDynamicCards()),
-                  ],
-                ),
-              );
-            }
-            return ListView(
-              padding: const EdgeInsets.only(bottom: 0),
-              children: [
-                ..._buildLeftCol(context),
-                pad(const SizedBox(height: 12)),
-                const HomeCharacterDynamicCards(),
-              ],
-            );
-          },
+        return HomeCharacterLayout(
+          leftCol: _buildLeftCol(context),
+          rightCol: const HomeCharacterDynamicCards(),
         );
       },
     );
   }
-
-  Widget pad(Widget child, [double? amount]) => Padding(
-        padding: EdgeInsets.symmetric(horizontal: amount ?? 16),
-        child: child,
-      );
 
   List<Widget> _buildLeftCol(BuildContext context) {
     final char = controller.current;
@@ -174,4 +141,57 @@ class HomeCharacterView extends GetView<CharacterService> {
       )),
     ];
   }
+}
+
+class HomeCharacterLayout extends StatelessWidget with HomeCharacterPaddingMixin {
+  const HomeCharacterLayout({
+    super.key,
+    required this.leftCol,
+    required this.rightCol,
+  });
+
+  final List<Widget> leftCol;
+  final Widget rightCol;
+
+  @override
+  Widget build(BuildContext context) {
+    return LayoutBuilder(
+      builder: (context, constraints) {
+        final width = constraints.maxWidth;
+        final isWide = width > 750;
+        if (isWide) {
+          return SingleChildScrollView(
+            child: Row(
+              mainAxisSize: MainAxisSize.max,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                SizedBox(
+                  width: clamp(width / 2, 350, 500),
+                  child: ListView(children: leftCol, shrinkWrap: true),
+                ),
+                const SizedBox(width: 16),
+                Expanded(child: rightCol),
+              ],
+            ),
+          );
+        }
+        return ListView(
+          padding: const EdgeInsets.only(bottom: 0),
+          children: [
+            ...leftCol,
+            pad(const SizedBox(height: 12)),
+            rightCol,
+          ],
+        );
+      },
+    );
+  }
+}
+
+mixin HomeCharacterPaddingMixin {
+  Widget pad(Widget child, [double? amount]) => Padding(
+        padding: EdgeInsets.symmetric(horizontal: amount ?? 16),
+        child: child,
+      );
 }

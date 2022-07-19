@@ -1,4 +1,5 @@
 import 'package:dungeon_paper/app/data/services/loading_service.dart';
+import 'package:dungeon_paper/app/modules/Home/views/home_character_view.dart';
 import 'package:dungeon_paper/app/modules/Home/views/local_widgets/home_character_header_view.dart';
 import 'package:dungeon_paper/app/widgets/atoms/character_avatar.dart';
 import 'package:dungeon_paper/core/utils/math_utils.dart';
@@ -40,10 +41,8 @@ class HomeLoaderView extends GetView with LoadingServiceMixin {
       child: SkeletonLoader(
         baseColor: skeletonColor,
         highlightColor: skeletonHighlightColor,
-        builder: Column(
-          mainAxisSize: MainAxisSize.max,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
+        builder: HomeCharacterLayout(
+          leftCol: [
             Center(
               child: CharacterAvatar.squircle(
                 size: HomeCharacterHeaderView.avatarSize,
@@ -191,47 +190,51 @@ class HomeLoaderView extends GetView with LoadingServiceMixin {
                   ),
               ],
             ),
-            for (final _ in range(4)) ...[
-              Padding(
-                padding: const EdgeInsets.only(left: 16, bottom: 4, top: 12),
-                child: Align(
-                  alignment: Alignment.centerLeft,
-                  child: Container(
-                    height: 16,
-                    width: 100,
-                    decoration: BoxDecoration(
-                      color: skeletonColor,
-                      borderRadius: BorderRadius.circular(6),
+          ],
+          rightCol: Column(
+            children: [
+              for (final _ in range(4)) ...[
+                Padding(
+                  padding: const EdgeInsets.only(left: 16, bottom: 4, top: 12),
+                  child: Align(
+                    alignment: Alignment.centerLeft,
+                    child: Container(
+                      height: 16,
+                      width: 100,
+                      decoration: BoxDecoration(
+                        color: skeletonColor,
+                        borderRadius: BorderRadius.circular(6),
+                      ),
                     ),
                   ),
                 ),
-              ),
-              Padding(
-                padding: const EdgeInsets.all(12.0).copyWith(top: 6),
-                child: SizedBox(
-                  height: 151,
-                  child: ListView(
-                    shrinkWrap: true,
-                    scrollDirection: Axis.horizontal,
-                    physics: const NeverScrollableScrollPhysics(),
-                    children: [
-                      for (final _ in range(2))
-                        Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 4),
-                          child: Container(
-                            width: 210,
-                            decoration: BoxDecoration(
-                              color: skeletonColor,
-                              borderRadius: BorderRadius.circular(24),
+                Padding(
+                  padding: const EdgeInsets.only(bottom: 12.0, top: 6, left: 6),
+                  child: SizedBox(
+                    height: 151,
+                    child: ListView(
+                      shrinkWrap: true,
+                      scrollDirection: Axis.horizontal,
+                      physics: const NeverScrollableScrollPhysics(),
+                      children: [
+                        for (final _ in range(4))
+                          Padding(
+                            padding: const EdgeInsets.symmetric(horizontal: 4),
+                            child: Container(
+                              width: 210,
+                              decoration: BoxDecoration(
+                                color: skeletonColor,
+                                borderRadius: BorderRadius.circular(24),
+                              ),
                             ),
                           ),
-                        ),
-                    ],
+                      ],
+                    ),
                   ),
                 ),
-              ),
+              ],
             ],
-          ],
+          ),
         ),
       ),
     );
