@@ -53,6 +53,7 @@ dependencies:
   path: ^1.8.1
   path_provider: ^2.0.9
   popover: ^0.2.6+3
+  sentry_flutter: ^6.6.3
   shared_preferences: ^2.0.13
   skeleton_loader: ^2.0.0+4
   string_similarity: ^2.0.0

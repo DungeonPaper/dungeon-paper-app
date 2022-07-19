@@ -50,3 +50,4 @@ app.*.map.json
 # flutterfire configure
 lib/firebase_options.dart
 google-services.json
+secrets.dart

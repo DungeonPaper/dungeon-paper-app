@@ -15,9 +15,9 @@ Future<void> initServices() async {
   /// or moor connection, or whatever that's async.
   await Get.putAsync(() => Future.value(LoadingService()));
   await Get.putAsync(() => Future.value(RepositoryService()));
-  await Get.putAsync(() => Future.value(AuthService()));
-  await Get.putAsync(() => Future.value(UserService()));
-  await Get.putAsync(() => Future.value(CharacterService()));
   await Get.putAsync(() => Future.value(LibraryService()));
+  await Get.putAsync(() => Future.value(UserService()));
+  await Get.putAsync(() => Future.value(AuthService()));
+  await Get.putAsync(() => Future.value(CharacterService()));
   debugPrint('All services started');
 }

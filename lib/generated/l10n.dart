@@ -2308,6 +2308,26 @@ class S {
     );
   }
 
+  /// `No Characters`
+  String get homeEmptyStateTitle {
+    return Intl.message(
+      'No Characters',
+      name: 'homeEmptyStateTitle',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Create a Character to get started`
+  String get homeEmptyStateSubtitle {
+    return Intl.message(
+      'Create a Character to get started',
+      name: 'homeEmptyStateSubtitle',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `HP`
   String get hp {
     return Intl.message(

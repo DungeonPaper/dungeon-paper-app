@@ -632,6 +632,10 @@ class MessageLookup extends MessageLookupByLibrary {
         "genericDescriptionField": m51,
         "genericNameField": m52,
         "genericValueField": m53,
+        "homeEmptyStateSubtitle": MessageLookupByLibrary.simpleMessage(
+            "Create a Character to get started"),
+        "homeEmptyStateTitle":
+            MessageLookupByLibrary.simpleMessage("No Characters"),
         "hp": MessageLookupByLibrary.simpleMessage("HP"),
         "hpDialogChangeAdd": m54,
         "hpDialogChangeNeutral":
