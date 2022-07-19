@@ -70,7 +70,7 @@ class UserService extends GetxService
     await loadMyRepo();
     charService.registerCharacterListener();
     loadingService.loadingUser = false;
-    loadingService.afterFirstLoad = true;
+    loadingService.afterFirstLoad = !loadingService.loadingCharacters;
   }
 
   void logout() {
