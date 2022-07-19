@@ -17,6 +17,11 @@ import 'firebase_options.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  await initializeMessages('en');
+  await S.load(const Locale('en', 'US'));
+  await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
+  await loadSharedPrefs();
+  await initServices();
   await SentryFlutter.init(
     (options) {
       options.dsn = secrets.sentryDsn;
@@ -24,14 +29,7 @@ void main() async {
       // We recommend adjusting this value in production.
       options.tracesSampleRate = 1.0;
     },
-    appRunner: () async {
-      await initializeMessages('en');
-      await S.load(const Locale('en', 'US'));
-      await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
-      await loadSharedPrefs();
-      await initServices();
-      return runApp(const DungeonPaperApp());
-    },
+    appRunner: () => runApp(const DungeonPaperApp()),
   );
 }
 

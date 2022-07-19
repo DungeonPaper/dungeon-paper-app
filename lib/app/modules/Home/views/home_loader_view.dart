@@ -42,6 +42,7 @@ class HomeLoaderView extends GetView with LoadingServiceMixin {
         baseColor: skeletonColor,
         highlightColor: skeletonHighlightColor,
         builder: HomeCharacterLayout(
+          scrollable: false,
           leftCol: [
             Center(
               child: CharacterAvatar.squircle(
@@ -192,6 +193,7 @@ class HomeLoaderView extends GetView with LoadingServiceMixin {
             ),
           ],
           rightCol: Column(
+            mainAxisSize: MainAxisSize.min,
             children: [
               for (final _ in range(4)) ...[
                 Padding(

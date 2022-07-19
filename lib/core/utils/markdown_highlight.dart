@@ -72,9 +72,9 @@ class HighlightBuilder extends flutter_markdown.MarkdownElementBuilder {
         ThemeData.estimateBrightnessForColor(normalStyle.color ?? defaultHighlightStyle.color!);
     final backgroundColor = override?.backgroundColor ??
         normalStyle.backgroundColor ??
-        defaultHighlightStyle.backgroundColor;
+        defaultHighlightStyle.backgroundColor!;
     final highlightBackgroundColorBrightness =
-        ThemeData.estimateBrightnessForColor(backgroundColor!);
+        ThemeData.estimateBrightnessForColor(backgroundColor);
     final brightnessHighlightColor = normalColorBrightness == highlightBackgroundColorBrightness
         ? normalColorBrightness == Brightness.dark
             ? Colors.white

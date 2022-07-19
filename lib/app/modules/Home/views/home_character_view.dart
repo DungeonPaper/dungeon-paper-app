@@ -2,6 +2,7 @@ import 'package:dungeon_paper/app/data/services/character_service.dart';
 import 'package:dungeon_paper/app/model_utils/dice_utils.dart';
 import 'package:dungeon_paper/app/modules/Home/views/local_widgets/home_character_extras.dart';
 import 'package:dungeon_paper/app/themes/button_themes.dart';
+import 'package:dungeon_paper/app/widgets/atoms/max_width_layout.dart';
 import 'package:dungeon_paper/app/widgets/chips/primary_chip.dart';
 import 'package:dungeon_paper/app/widgets/dialogs/armor_dialog.dart';
 import 'package:dungeon_paper/app/widgets/dialogs/damage_dice_dialog.dart';
@@ -148,10 +149,12 @@ class HomeCharacterLayout extends StatelessWidget with HomeCharacterPaddingMixin
     super.key,
     required this.leftCol,
     required this.rightCol,
+    this.scrollable = true,
   });
 
   final List<Widget> leftCol;
   final Widget rightCol;
+  final bool scrollable;
 
   @override
   Widget build(BuildContext context) {
@@ -160,29 +163,41 @@ class HomeCharacterLayout extends StatelessWidget with HomeCharacterPaddingMixin
         final width = constraints.maxWidth;
         final isWide = width > 750;
         if (isWide) {
-          return SingleChildScrollView(
-            child: Row(
-              mainAxisSize: MainAxisSize.max,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                SizedBox(
-                  width: clamp(width / 2, 350, 500),
-                  child: ListView(children: leftCol, shrinkWrap: true),
-                ),
-                const SizedBox(width: 16),
-                Expanded(child: rightCol),
-              ],
-            ),
+          final row = Row(
+            mainAxisSize: MainAxisSize.max,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              SizedBox(
+                width: clamp(width / 2, 350, 500),
+                child: Column(children: leftCol),
+              ),
+              const SizedBox(width: 16),
+              Expanded(child: rightCol),
+            ],
+          );
+          if (scrollable) {
+            return SingleChildScrollView(
+              child: row,
+            );
+          }
+          return row;
+        }
+
+        final children = [
+          ...leftCol,
+          pad(const SizedBox(height: 12)),
+          rightCol,
+        ];
+
+        if (!scrollable) {
+          return Column(
+            children: children,
           );
         }
         return ListView(
-          padding: const EdgeInsets.only(bottom: 0),
-          children: [
-            ...leftCol,
-            pad(const SizedBox(height: 12)),
-            rightCol,
-          ],
+          shrinkWrap: !scrollable,
+          children: children,
         );
       },
     );
