@@ -214,22 +214,12 @@ class _DynamicActionCardState extends State<DynamicActionCard> {
 
   MarkdownBody _renderMarkdown(BuildContext context, String text) {
     return MarkdownBody(
-      data: _highlight(text),
+      data: HighlightText.highlight(text, widget.highlightWords),
       onTapLink: (text, href, title) => launch(href!),
       inlineSyntaxes: [HighlightSyntax()],
       builders: {
         'mark': HighlightText.markdownBuilder(context),
       },
     );
-  }
-
-  String _highlight(String text) {
-    for (final word in widget.highlightWords) {
-      text = text.replaceAllMapped(
-        RegExp(word.replaceAll('\\', ''), caseSensitive: false),
-        (match) => '==${match[0]}==',
-      );
-    }
-    return text;
   }
 }

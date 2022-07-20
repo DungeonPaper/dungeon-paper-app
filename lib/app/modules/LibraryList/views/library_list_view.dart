@@ -11,7 +11,7 @@ import 'package:get/get.dart';
 
 import 'library_card_list.dart';
 
-typedef CardBuilder<T> = Widget Function(BuildContext context, CardBuilderData data);
+typedef CardBuilder<T> = Widget Function(BuildContext context, CardBuilderData<T> data);
 
 class CardBuilderData<T> {
   final T item;
@@ -156,47 +156,46 @@ class LibraryListView<T extends WithMeta, F extends EntityFilters<T>>
           final selectable = controller.selectable;
           final onToggle = enabled ? () => controller.toggleItem(item, !selected) : null;
           final cardData = CardBuilderData<T>(
-            item: item,
-            selected: selected,
-            selectable: selectable && enabled,
-            onToggle: onToggle,
-            label: Text(
-              enabled
-                  ? !selected
-                      ? S.current.select
-                      : controller.multiple
-                          ? S.current.remove
-                          : S.current.unselect
-                  : controller.multiple
-                      ? S.current.alreadyAdded
-                      : S.current.select,
-            ),
-            icon: Icon(
-              enabled
-                  ? !selected
-                      ? controller.multiple
-                          ? Icons.add
-                          : Icons.check
-                      : Icons.remove
-                  : controller.multiple
-                      ? Icons.add
-                      : Icons.check,
-            ),
-            onUpdate: group == FiltersGroup.my
-                ? (item) => controller.saveCustomItem(controller.storageKey, item)
-                : null,
-            onDelete: group == FiltersGroup.my
-                ? (item) => awaitDeleteConfirmation<T>(
-                      context,
-                      item.displayName,
-                      () => controller.deleteCustomItem(
-                        controller.storageKey,
-                        item,
-                      ),
-                    )
-                : null,
-            highlightWords: [controller.search[group]!.value.text],
-          );
+              item: item,
+              selected: selected,
+              selectable: selectable && enabled,
+              onToggle: onToggle,
+              label: Text(
+                enabled
+                    ? !selected
+                        ? S.current.select
+                        : controller.multiple
+                            ? S.current.remove
+                            : S.current.unselect
+                    : controller.multiple
+                        ? S.current.alreadyAdded
+                        : S.current.select,
+              ),
+              icon: Icon(
+                enabled
+                    ? !selected
+                        ? controller.multiple
+                            ? Icons.add
+                            : Icons.check
+                        : Icons.remove
+                    : controller.multiple
+                        ? Icons.add
+                        : Icons.check,
+              ),
+              onUpdate: group == FiltersGroup.my
+                  ? (item) => controller.saveCustomItem(controller.storageKey, item)
+                  : null,
+              onDelete: group == FiltersGroup.my
+                  ? (item) => awaitDeleteConfirmation<T>(
+                        context,
+                        item.displayName,
+                        () => controller.deleteCustomItem(
+                          controller.storageKey,
+                          item,
+                        ),
+                      )
+                  : null,
+              highlightWords: [controller.search[group]!.value.text]);
 
           return Container(
             decoration: BoxDecoration(

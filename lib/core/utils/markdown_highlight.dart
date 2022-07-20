@@ -108,7 +108,7 @@ class HighlightText extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final _text = _highlight(text).split('==');
+    final _text = highlight(text, highlightWords).split('==');
     final normalStyle = HighlightBuilder.getNormalStyle(context, normalTextStyle);
     final hlStyle = HighlightBuilder.getHighlightStyle(
       context,
@@ -143,8 +143,8 @@ class HighlightText extends StatelessWidget {
     );
   }
 
-  String _highlight(String text) {
-    for (final word in highlightWords) {
+  static String highlight(String text, List<String> highlightWords) {
+    for (final word in highlightWords.where((t) => t.isNotEmpty)) {
       text = text.replaceAllMapped(
         RegExp(word.replaceAll('\\', ''), caseSensitive: false),
         (match) => '==${match[0]}==',
