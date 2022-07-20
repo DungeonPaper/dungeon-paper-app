@@ -42,7 +42,11 @@ class ArgOptions {
 
   factory ArgOptions.fromArgs(List<String> args) {
     final res = argParser.parse(args);
-    return ArgOptions(
+    final bump = BumpType.values.firstWhere(
+      (t) => t.name == res['bump'],
+      orElse: () => BumpType.none,
+    );
+    final preBumpOptions = ArgOptions(
       device: res['device'],
       version: Version.parse(res['version']),
       help: res['help'],
@@ -50,10 +54,7 @@ class ArgOptions {
       build: res['build'],
       bundle: res['bundle'],
       push: res['push'],
-      bump: BumpType.values.firstWhere(
-        (t) => t.name == res['bump'],
-        orElse: () => BumpType.none,
-      ),
+      bump: bump,
       install: res['install'],
       platform: Device.values.firstWhere(
         (device) => enumName(device).toLowerCase() == res['platform'].toString().toLowerCase(),
@@ -61,6 +62,8 @@ class ArgOptions {
       ),
       outputFilePrefix: getAppName(),
     );
+
+    return preBumpOptions..version = getBumpedVersion(preBumpOptions);
   }
 
   bool help;
