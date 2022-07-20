@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:dungeon_paper/app/data/models/meta.dart';
 import 'package:dungeon_paper/core/utils/icon_utils.dart';
 import 'package:dungeon_paper/generated/l10n.dart';
 import 'package:flutter/material.dart';
@@ -160,7 +161,8 @@ class AbilityScores {
   String toString() => 'AbilityScores($debugProperties)';
 }
 
-class AbilityScore with WithIcon {
+class AbilityScore with WithIcon, WithKey {
+  @override
   final String key;
   final String name;
   final String description;

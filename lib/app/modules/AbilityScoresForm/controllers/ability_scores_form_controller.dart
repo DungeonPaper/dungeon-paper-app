@@ -1,4 +1,5 @@
 import 'package:dungeon_paper/app/data/models/ability_scores.dart';
+import 'package:dungeon_paper/core/utils/list_utils.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -36,6 +37,30 @@ class AbilityScoresFormController extends GetxController {
       for (final stat in abilityScores.value.stats)
         stat.key: int.tryParse(textControllers[stat.key]!.text) ?? stat.value
     });
+  }
+
+  void updateStat(AbilityScore stat) {
+    abilityScores.value =
+        abilityScores.value.copyWith(stats: updateByKey(abilityScores.value.stats, [stat]));
+    textControllers[stat.key] ??= TextEditingController(text: stat.value.toString())
+      ..addListener(validate);
+    textControllers[stat.key]!.text = stat.value.toString();
+  }
+
+  void removeStat(AbilityScore stat) {
+    abilityScores.value =
+        abilityScores.value.copyWith(stats: removeByKey(abilityScores.value.stats, [stat]));
+    textControllers.remove(stat.key);
+  }
+
+  void addStat(AbilityScore abilityScore) {
+    if (textControllers.containsKey(abilityScore.key)) {
+      return;
+    }
+    abilityScores.value =
+        abilityScores.value.copyWith(stats: [...abilityScores.value.stats, abilityScore]);
+    textControllers[abilityScore.key] = TextEditingController(text: abilityScore.value.toString())
+      ..addListener(validate);
   }
 }
 

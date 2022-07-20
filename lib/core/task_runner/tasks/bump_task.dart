@@ -12,7 +12,7 @@ final bumpTask = TaskGroup(
       run: (o) {
         final pubspecPath = path.join(Directory.current.path, 'pubspec.yaml');
         final pubspec = File(pubspecPath).readAsStringSync();
-        final version = getBumpedVersion(o);
+        final version = o.version;
         final newPubspec = pubspec.replaceFirst(
           RegExp('version: .+'),
           'version: $version',

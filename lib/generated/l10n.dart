@@ -370,6 +370,126 @@ class S {
     );
   }
 
+  /// `Ability Score Key`
+  String get abilityScoreFormKeyLabel {
+    return Intl.message(
+      'Ability Score Key',
+      name: 'abilityScoreFormKeyLabel',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `A 3-letter unique key that identifies this ability score in dice and is used as the short label for the modifier value (and not the actual score)`
+  String get abilityScoreFormKeyDescription {
+    return Intl.message(
+      'A 3-letter unique key that identifies this ability score in dice and is used as the short label for the modifier value (and not the actual score)',
+      name: 'abilityScoreFormKeyDescription',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Ability Score Name`
+  String get abilityScoreFormNameLabel {
+    return Intl.message(
+      'Ability Score Name',
+      name: 'abilityScoreFormNameLabel',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `The name of this ability score`
+  String get abilityScoreFormNameDescription {
+    return Intl.message(
+      'The name of this ability score',
+      name: 'abilityScoreFormNameDescription',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Ability Score Description`
+  String get abilityScoreFormDescriptionLabel {
+    return Intl.message(
+      'Ability Score Description',
+      name: 'abilityScoreFormDescriptionLabel',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `A description of what this ability score represents`
+  String get abilityScoreFormDescriptionDescription {
+    return Intl.message(
+      'A description of what this ability score represents',
+      name: 'abilityScoreFormDescriptionDescription',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Debility Name`
+  String get abilityScoreFormDebilityNameLabel {
+    return Intl.message(
+      'Debility Name',
+      name: 'abilityScoreFormDebilityNameLabel',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `The name for the debility that occurs when this stat is debilitated (takes -1 until recovered).`
+  String get abilityScoreFormDebilityNameDescription {
+    return Intl.message(
+      'The name for the debility that occurs when this stat is debilitated (takes -1 until recovered).',
+      name: 'abilityScoreFormDebilityNameDescription',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Debility Description`
+  String get abilityScoreFormDebilityDescriptionLabel {
+    return Intl.message(
+      'Debility Description',
+      name: 'abilityScoreFormDebilityDescriptionLabel',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `A description of the effect causing the debility and/or how it affects your character`
+  String get abilityScoreFormDebilityDescriptionDescription {
+    return Intl.message(
+      'A description of the effect causing the debility and/or how it affects your character',
+      name: 'abilityScoreFormDebilityDescriptionDescription',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Icon`
+  String get abilityScoreFormIconLabel {
+    return Intl.message(
+      'Icon',
+      name: 'abilityScoreFormIconLabel',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Change Icon`
+  String get abilityScoreFormPickIconLabel {
+    return Intl.message(
+      'Change Icon',
+      name: 'abilityScoreFormPickIconLabel',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `About`
   String get aboutTitle {
     return Intl.message(
@@ -1815,6 +1935,66 @@ class S {
       name: 'entityShareStatusDetached',
       desc: '',
       args: [entity],
+    );
+  }
+
+  /// `Must be exactly {length} {length, plural, one {character} other {characters}}`
+  String errorExactLength(num length) {
+    return Intl.message(
+      'Must be exactly $length ${Intl.plural(length, one: 'character', other: 'characters')}',
+      name: 'errorExactLength',
+      desc: '',
+      args: [length],
+    );
+  }
+
+  /// `Must be at least {length} {length, plural, one {character} other {characters}}`
+  String errorMinLength(num length) {
+    return Intl.message(
+      'Must be at least $length ${Intl.plural(length, one: 'character', other: 'characters')}',
+      name: 'errorMinLength',
+      desc: '',
+      args: [length],
+    );
+  }
+
+  /// `Must be no more than {length} {length, plural, one {character} other {characters}}`
+  String errorMaxLength(num length) {
+    return Intl.message(
+      'Must be no more than $length ${Intl.plural(length, one: 'character', other: 'characters')}',
+      name: 'errorMaxLength',
+      desc: '',
+      args: [length],
+    );
+  }
+
+  /// `Must contain letters only`
+  String get errorOnlyLetters {
+    return Intl.message(
+      'Must contain letters only',
+      name: 'errorOnlyLetters',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Must contain {pattern}`
+  String errorMustContain(Object pattern) {
+    return Intl.message(
+      'Must contain $pattern',
+      name: 'errorMustContain',
+      desc: '',
+      args: [pattern],
+    );
+  }
+
+  /// `Must not contain {pattern}`
+  String errorMustNotContain(Object pattern) {
+    return Intl.message(
+      'Must not contain $pattern',
+      name: 'errorMustNotContain',
+      desc: '',
+      args: [pattern],
     );
   }
 

@@ -141,58 +141,71 @@ class MessageLookup extends MessageLookupByLibrary {
   static String m37(count, entPlural, ent) =>
       "${Intl.plural(count, zero: 'No ${entPlural}', one: 'One ${ent}', other: '${count} ${entPlural}')}";
 
-  static String m38(entity) => "No ${entity} selected";
+  static String m38(length) =>
+      "Must be exactly ${length} ${Intl.plural(length, one: 'character', other: 'characters')}";
 
-  static String m39(entity) => "No ${entity} selected (required)";
+  static String m39(length) =>
+      "Must be no more than ${length} ${Intl.plural(length, one: 'character', other: 'characters')}";
 
-  static String m40(amount) => "Add\n+${amount}";
+  static String m40(length) =>
+      "Must be at least ${length} ${Intl.plural(length, one: 'character', other: 'characters')}";
 
-  static String m41(amount) => "Reduce\n-${amount}";
+  static String m41(pattern) => "Must contain ${pattern}";
 
-  static String m42(entity) => "${entity} category";
+  static String m42(pattern) => "Must not contain ${pattern}";
 
-  static String m43(entity) => "${entity} description";
+  static String m43(entity) => "No ${entity} selected";
 
-  static String m44(entity) => "${entity} explanation";
+  static String m44(entity) => "No ${entity} selected (required)";
 
-  static String m45(entity) => "${entity} name";
+  static String m45(amount) => "Add\n+${amount}";
 
-  static String m46(entity) => "${entity} title";
+  static String m46(amount) => "Reduce\n-${amount}";
 
-  static String m47(n) => "Cell ${n}";
+  static String m47(entity) => "${entity} category";
 
-  static String m48(n) => "Header ${n}";
+  static String m48(entity) => "${entity} description";
 
-  static String m49(n) => "Header ${n}";
+  static String m49(entity) => "${entity} explanation";
 
-  static String m50(n) => "Heading ${n}";
+  static String m50(entity) => "${entity} name";
 
-  static String m51(entity) => "${entity} description";
+  static String m51(entity) => "${entity} title";
 
-  static String m52(entity) => "${entity} name";
+  static String m52(n) => "Cell ${n}";
 
-  static String m53(entity) => "${entity} value";
+  static String m53(n) => "Header ${n}";
 
-  static String m54(amount) => "Heal\n+${amount}";
+  static String m54(n) => "Header ${n}";
 
-  static String m55(amount) => "Damage\n-${amount}";
+  static String m55(n) => "Heading ${n}";
 
-  static String m56(entity) => "Processing ${entity}...";
+  static String m56(entity) => "${entity} description";
 
-  static String m57(amount) => "× ${amount}";
+  static String m57(entity) => "${entity} name";
 
-  static String m58(count) =>
+  static String m58(entity) => "${entity} value";
+
+  static String m59(amount) => "Heal\n+${amount}";
+
+  static String m60(amount) => "Damage\n-${amount}";
+
+  static String m61(entity) => "Processing ${entity}...";
+
+  static String m62(amount) => "× ${amount}";
+
+  static String m63(count) =>
       "${Intl.plural(count, zero: 'No items', one: 'One item', other: '${count} items')}";
 
-  static String m59(count, type) => "${count} in ${type}";
+  static String m64(count, type) => "${count} in ${type}";
 
-  static String m60(type) => "${Intl.select(type, {
+  static String m65(type) => "${Intl.select(type, {
             'builtIn': 'Playbook',
             'my': 'My Library',
             'other': '${type}',
           })}";
 
-  static String m61(category) => "${Intl.select(category, {
+  static String m66(category) => "${Intl.select(category, {
             'starting': 'Starting',
             'basic': 'Basic',
             'special': 'Special',
@@ -201,7 +214,7 @@ class MessageLookup extends MessageLookupByLibrary {
             'other': 'Other',
           })}";
 
-  static String m62(category) => "${Intl.select(category, {
+  static String m67(category) => "${Intl.select(category, {
             'starting': 'Starting',
             'basic': 'Basic',
             'special': 'Special',
@@ -210,7 +223,7 @@ class MessageLookup extends MessageLookupByLibrary {
             'other': 'Other',
           })}";
 
-  static String m63(category) => "${Intl.select(category, {
+  static String m68(category) => "${Intl.select(category, {
             'starting': 'Starting',
             'basic': 'Basic',
             'special': 'Special',
@@ -219,64 +232,64 @@ class MessageLookup extends MessageLookupByLibrary {
             'other': 'Other',
           })}";
 
-  static String m64(entity) => "Move ${entity} to bottom";
+  static String m69(entity) => "Move ${entity} to bottom";
 
-  static String m65(entity) => "Move ${entity} to top";
+  static String m70(entity) => "Move ${entity} to top";
 
-  static String m66(count) =>
+  static String m71(count) =>
       "${Intl.plural(count, zero: 'No moves', one: 'One move', other: '${count} moves')}";
 
-  static String m67(entity) => "My ${entity}";
+  static String m72(entity) => "My ${entity}";
 
-  static String m68(entity) => "No ${entity}";
+  static String m73(entity) => "No ${entity}";
 
-  static String m69(count) =>
+  static String m74(count) =>
       "${Intl.plural(count, zero: 'No notes', one: 'One note', other: '${count} notes')}";
 
-  static String m70(count, singular, plural) =>
+  static String m75(count, singular, plural) =>
       "${Intl.plural(count, one: 'One ${singular}', other: '${count} ${plural}')}";
 
-  static String m71(dice) => "Roll ${dice}";
+  static String m76(dice) => "Roll ${dice}";
 
-  static String m72(dice) => "Roll ${dice}\n* Rolling with debility";
+  static String m77(dice) => "Roll ${dice}\n* Rolling with debility";
 
-  static String m73(dice, mod) => "Dice: ${dice} | Modifier: ${mod}";
+  static String m78(dice, mod) => "Dice: ${dice} | Modifier: ${mod}";
 
-  static String m74(total) => "Total: ${total}";
+  static String m79(total) => "Total: ${total}";
 
-  static String m75(total) => "Total: ${total}";
+  static String m80(total) => "Total: ${total}";
 
-  static String m76(count) => "Rolling ${count} dice";
+  static String m81(count) => "Rolling ${count} dice";
 
-  static String m77(entity) => "Save ${entity}";
+  static String m82(entity) => "Save ${entity}";
 
-  static String m78(entity) => "Type to search ${entity}";
+  static String m83(entity) => "Type to search ${entity}";
 
-  static String m79(entity) => "Select ${entity}";
+  static String m84(entity) => "Select ${entity}";
 
-  static String m80(string) => "Select ${string} to add";
+  static String m85(string) => "Select ${string} to add";
 
-  static String m81(length) => "Password must be at least ${length} characters";
+  static String m86(length) => "Password must be at least ${length} characters";
 
-  static String m82(pattern) => "Password must contain ${pattern}";
+  static String m87(pattern) => "Password must contain ${pattern}";
 
-  static String m83(length) => "Username must be at least ${length} characters";
+  static String m88(length) => "Username must be at least ${length} characters";
 
-  static String m84(button) => "${Intl.select(button, {
+  static String m89(button) => "${Intl.select(button, {
             'damage': 'Damage',
             'other': '${button}',
           })}";
 
-  static String m85(level) => "${Intl.select(level, {
+  static String m90(level) => "${Intl.select(level, {
             'cantrip': 'Cantrip',
             'rote': 'Rote',
             'other': 'Level ${level}',
           })}";
 
-  static String m86(count) =>
+  static String m91(count) =>
       "${Intl.plural(count, zero: 'No spells', one: 'One spell', other: '${count} spells')}";
 
-  static String m87(tag) => "Copy from: ${tag}";
+  static String m92(tag) => "Copy from: ${tag}";
 
   final messages = _notInlinedMessages(_notInlinedMessages);
   static Map<String, Function> _notInlinedMessages(_) => <String, Function>{
@@ -313,6 +326,33 @@ class MessageLookup extends MessageLookupByLibrary {
             "Measures agility, reflexes and balance."),
         "abilityScoreDexName":
             MessageLookupByLibrary.simpleMessage("Dexterity"),
+        "abilityScoreFormDebilityDescriptionDescription":
+            MessageLookupByLibrary.simpleMessage(
+                "A description of the effect causing the debility and/or how it affects your character"),
+        "abilityScoreFormDebilityDescriptionLabel":
+            MessageLookupByLibrary.simpleMessage("Debility Description"),
+        "abilityScoreFormDebilityNameDescription":
+            MessageLookupByLibrary.simpleMessage(
+                "The name for the debility that occurs when this stat is debilitated (takes -1 until recovered)."),
+        "abilityScoreFormDebilityNameLabel":
+            MessageLookupByLibrary.simpleMessage("Debility Name"),
+        "abilityScoreFormDescriptionDescription":
+            MessageLookupByLibrary.simpleMessage(
+                "A description of what this ability score represents"),
+        "abilityScoreFormDescriptionLabel":
+            MessageLookupByLibrary.simpleMessage("Ability Score Description"),
+        "abilityScoreFormIconLabel":
+            MessageLookupByLibrary.simpleMessage("Icon"),
+        "abilityScoreFormKeyDescription": MessageLookupByLibrary.simpleMessage(
+            "A 3-letter unique key that identifies this ability score in dice and is used as the short label for the modifier value (and not the actual score)"),
+        "abilityScoreFormKeyLabel":
+            MessageLookupByLibrary.simpleMessage("Ability Score Key"),
+        "abilityScoreFormNameDescription": MessageLookupByLibrary.simpleMessage(
+            "The name of this ability score"),
+        "abilityScoreFormNameLabel":
+            MessageLookupByLibrary.simpleMessage("Ability Score Name"),
+        "abilityScoreFormPickIconLabel":
+            MessageLookupByLibrary.simpleMessage("Change Icon"),
         "abilityScoreInfo": MessageLookupByLibrary.simpleMessage(
             "You can drag & drop the stat cards to change the order in which they appear throughout this character\'s screens."),
         "abilityScoreIntDebilityDescription": MessageLookupByLibrary.simpleMessage(
@@ -564,18 +604,25 @@ class MessageLookup extends MessageLookupByLibrary {
         "entityShareStatusInSync": m35,
         "entityShareStatusOutOfSync": m36,
         "entityWithCount": m37,
+        "errorExactLength": m38,
+        "errorMaxLength": m39,
+        "errorMinLength": m40,
+        "errorMustContain": m41,
+        "errorMustNotContain": m42,
         "errorNoSelection":
             MessageLookupByLibrary.simpleMessage("None selected"),
-        "errorNoSelectionGeneric": m38,
-        "errorNoSelectionGenericRequired": m39,
+        "errorNoSelectionGeneric": m43,
+        "errorNoSelectionGenericRequired": m44,
+        "errorOnlyLetters":
+            MessageLookupByLibrary.simpleMessage("Must contain letters only"),
         "errorUserOperationCanceled":
             MessageLookupByLibrary.simpleMessage("Operation canceled"),
-        "expDialogChangeAdd": m40,
+        "expDialogChangeAdd": m45,
         "expDialogChangeNeutral":
             MessageLookupByLibrary.simpleMessage("No Change"),
         "expDialogChangeOverride":
             MessageLookupByLibrary.simpleMessage("Override XP & Level"),
-        "expDialogChangeRemove": m41,
+        "expDialogChangeRemove": m46,
         "expDialogCurrentXP":
             MessageLookupByLibrary.simpleMessage("Current XP"),
         "expDialogEndSession":
@@ -599,27 +646,27 @@ class MessageLookup extends MessageLookupByLibrary {
         "formCharacterClassNamePlaceholder":
             MessageLookupByLibrary.simpleMessage("Enter the class name"),
         "formGeneralCategory": MessageLookupByLibrary.simpleMessage("Category"),
-        "formGeneralCategoryGeneric": m42,
+        "formGeneralCategoryGeneric": m47,
         "formGeneralDescription":
             MessageLookupByLibrary.simpleMessage("Description"),
-        "formGeneralDescriptionGeneric": m43,
+        "formGeneralDescriptionGeneric": m48,
         "formGeneralExplanation":
             MessageLookupByLibrary.simpleMessage("Explanation"),
-        "formGeneralExplanationGeneric": m44,
+        "formGeneralExplanationGeneric": m49,
         "formGeneralName": MessageLookupByLibrary.simpleMessage("Name"),
-        "formGeneralNameGeneric": m45,
+        "formGeneralNameGeneric": m50,
         "formGeneralTitle": MessageLookupByLibrary.simpleMessage("Title"),
-        "formGeneralTitleGeneric": m46,
+        "formGeneralTitleGeneric": m51,
         "formatBold": MessageLookupByLibrary.simpleMessage("Bold"),
         "formatBulletList": MessageLookupByLibrary.simpleMessage("Bullet List"),
-        "formatCell": m47,
+        "formatCell": m52,
         "formatCheckboxList":
             MessageLookupByLibrary.simpleMessage("Check List (Checked)"),
         "formatCheckboxListUnchecked":
             MessageLookupByLibrary.simpleMessage("Check List (Unchecked)"),
-        "formatHeader": m48,
-        "formatHeaderNoNum": m49,
-        "formatHeading": m50,
+        "formatHeader": m53,
+        "formatHeaderNoNum": m54,
+        "formatHeading": m55,
         "formatHeadings": MessageLookupByLibrary.simpleMessage("Headings"),
         "formatHelp": MessageLookupByLibrary.simpleMessage("Formatting Help"),
         "formatImageURL": MessageLookupByLibrary.simpleMessage("Image URL"),
@@ -629,9 +676,9 @@ class MessageLookup extends MessageLookupByLibrary {
         "formatPreview": MessageLookupByLibrary.simpleMessage("Preview"),
         "formatTable": MessageLookupByLibrary.simpleMessage("Table"),
         "formatURL": MessageLookupByLibrary.simpleMessage("URL"),
-        "genericDescriptionField": m51,
-        "genericNameField": m52,
-        "genericValueField": m53,
+        "genericDescriptionField": m56,
+        "genericNameField": m57,
+        "genericValueField": m58,
         "homeEmptyStateLoginSubtitle": MessageLookupByLibrary.simpleMessage(
             "Online data sync, library sharing, campaigns and more!"),
         "homeEmptyStateLoginTitle": MessageLookupByLibrary.simpleMessage(
@@ -641,12 +688,12 @@ class MessageLookup extends MessageLookupByLibrary {
         "homeEmptyStateTitle":
             MessageLookupByLibrary.simpleMessage("No Characters"),
         "hp": MessageLookupByLibrary.simpleMessage("HP"),
-        "hpDialogChangeAdd": m54,
+        "hpDialogChangeAdd": m59,
         "hpDialogChangeNeutral":
             MessageLookupByLibrary.simpleMessage("No Change"),
         "hpDialogChangeOverrideMax":
             MessageLookupByLibrary.simpleMessage("Override Max HP:"),
-        "hpDialogChangeRemove": m55,
+        "hpDialogChangeRemove": m60,
         "hpDialogCurrentHP": MessageLookupByLibrary.simpleMessage("Current HP"),
         "hpDialogTitle": MessageLookupByLibrary.simpleMessage("Modify HP"),
         "import": MessageLookupByLibrary.simpleMessage("Import"),
@@ -661,19 +708,19 @@ class MessageLookup extends MessageLookupByLibrary {
             "Something went wrong.\nTry again or contact support if this persists"),
         "importFailedTitle":
             MessageLookupByLibrary.simpleMessage("Import Failed"),
-        "importProgressProcessing": m56,
+        "importProgressProcessing": m61,
         "importProgressTitle":
             MessageLookupByLibrary.simpleMessage("Importing..."),
         "importSuccessMessage": MessageLookupByLibrary.simpleMessage(
             "Your data was imported from file successfully"),
         "importSuccessTitle":
             MessageLookupByLibrary.simpleMessage("Successful"),
-        "itemAmountX": m57,
+        "itemAmountX": m62,
         "items": MessageLookupByLibrary.simpleMessage("Items"),
-        "itemsWithCount": m58,
+        "itemsWithCount": m63,
         "level": MessageLookupByLibrary.simpleMessage("Level"),
-        "libraryCollectionListItemSubtitle": m59,
-        "libraryCollectionListItemSubtitleType": m60,
+        "libraryCollectionListItemSubtitle": m64,
+        "libraryCollectionListItemSubtitleType": m65,
         "libraryCollectionTitle":
             MessageLookupByLibrary.simpleMessage("My Library"),
         "loadingCharacters":
@@ -683,27 +730,27 @@ class MessageLookup extends MessageLookupByLibrary {
         "markdownPreview":
             MessageLookupByLibrary.simpleMessage("Content Preview"),
         "maxLoad": MessageLookupByLibrary.simpleMessage("Max Load"),
-        "moveCategory": m61,
-        "moveCategoryWithLevel": m62,
-        "moveCategoryWithLevelShort": m63,
+        "moveCategory": m66,
+        "moveCategoryWithLevel": m67,
+        "moveCategoryWithLevelShort": m68,
         "moveToEnd": MessageLookupByLibrary.simpleMessage("Move to bottom"),
-        "moveToEndGeneric": m64,
+        "moveToEndGeneric": m69,
         "moveToStart": MessageLookupByLibrary.simpleMessage("Move to top"),
-        "moveToStartGeneric": m65,
+        "moveToStartGeneric": m70,
         "moves": MessageLookupByLibrary.simpleMessage("Moves"),
-        "movesWithCount": m66,
-        "myGeneric": m67,
+        "movesWithCount": m71,
+        "myGeneric": m72,
         "navActions": MessageLookupByLibrary.simpleMessage("Use"),
         "navCharacter": MessageLookupByLibrary.simpleMessage("Character"),
         "navJournal": MessageLookupByLibrary.simpleMessage("Journal"),
         "noDescription":
             MessageLookupByLibrary.simpleMessage("‹No description provided›"),
-        "noGeneric": m68,
+        "noGeneric": m73,
         "noteNoCategory": MessageLookupByLibrary.simpleMessage("General"),
         "notes": MessageLookupByLibrary.simpleMessage("Notes"),
-        "notesWithCount": m69,
+        "notesWithCount": m74,
         "ok": MessageLookupByLibrary.simpleMessage("OK"),
-        "pluralize": m70,
+        "pluralize": m75,
         "quickIconsItems": MessageLookupByLibrary.simpleMessage("Items"),
         "quickIconsMoves": MessageLookupByLibrary.simpleMessage("Moves"),
         "quickIconsNote": MessageLookupByLibrary.simpleMessage("+ Note"),
@@ -717,29 +764,29 @@ class MessageLookup extends MessageLookupByLibrary {
         "rollBasicActionButton":
             MessageLookupByLibrary.simpleMessage("Basic Action"),
         "rollButtonLabel": MessageLookupByLibrary.simpleMessage("Button Text"),
-        "rollButtonTooltip": m71,
-        "rollButtonTooltipWithDebility": m72,
+        "rollButtonTooltip": m76,
+        "rollButtonTooltipWithDebility": m77,
         "rollButtonUsePreset":
             MessageLookupByLibrary.simpleMessage("Use preset"),
-        "rollDialogResultBreakdown": m73,
-        "rollDialogResultTotal": m74,
-        "rollDialogTitleRolled": m75,
-        "rollDialogTitleRolling": m76,
+        "rollDialogResultBreakdown": m78,
+        "rollDialogResultTotal": m79,
+        "rollDialogTitleRolled": m80,
+        "rollDialogTitleRolling": m81,
         "rollDiscernRealitiesButton":
             MessageLookupByLibrary.simpleMessage("Discern Realities"),
         "rollVolleyButton": MessageLookupByLibrary.simpleMessage("Volley"),
         "save": MessageLookupByLibrary.simpleMessage("Save"),
-        "saveGeneric": m77,
+        "saveGeneric": m82,
         "searchIn": MessageLookupByLibrary.simpleMessage("Search in: "),
         "searchPlaceholder":
             MessageLookupByLibrary.simpleMessage("Type to search"),
-        "searchPlaceholderGeneric": m78,
+        "searchPlaceholderGeneric": m83,
         "seeAll": MessageLookupByLibrary.simpleMessage("See all"),
         "select": MessageLookupByLibrary.simpleMessage("Select"),
         "selectAll": MessageLookupByLibrary.simpleMessage("Select All"),
-        "selectGeneric": m79,
+        "selectGeneric": m84,
         "selectNone": MessageLookupByLibrary.simpleMessage("Select None"),
-        "selectToAdd": m80,
+        "selectToAdd": m85,
         "selected": MessageLookupByLibrary.simpleMessage("Selected"),
         "separatorOr": MessageLookupByLibrary.simpleMessage("OR"),
         "settingsDefaultDarkTheme":
@@ -768,8 +815,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "signupPassword": MessageLookupByLibrary.simpleMessage("Password"),
         "signupPasswordPlaceholder":
             MessageLookupByLibrary.simpleMessage("Enter your password"),
-        "signupPasswordValidationLength": m81,
-        "signupPasswordValidationPatternGeneric": m82,
+        "signupPasswordValidationLength": m86,
+        "signupPasswordValidationPatternGeneric": m87,
         "signupPasswordValidationPatternLetter":
             MessageLookupByLibrary.simpleMessage(
                 "Password must contain at least one capital letter"),
@@ -779,17 +826,17 @@ class MessageLookup extends MessageLookupByLibrary {
         "signupUsername": MessageLookupByLibrary.simpleMessage("Username"),
         "signupUsernamePlaceholder":
             MessageLookupByLibrary.simpleMessage("Pick a unique username"),
-        "signupUsernameValidation": m83,
+        "signupUsernameValidation": m88,
         "signupUsernameValidationPattern": MessageLookupByLibrary.simpleMessage(
             "Username must only contain letters, numbers, dashes and underscores"),
         "sortMoveDown": MessageLookupByLibrary.simpleMessage("Move down"),
         "sortMoveUp": MessageLookupByLibrary.simpleMessage("Move up"),
         "specialDice": MessageLookupByLibrary.simpleMessage("Special Dice"),
-        "specialRollButton": m84,
-        "spellLevel": m85,
+        "specialRollButton": m89,
+        "spellLevel": m90,
         "spells": MessageLookupByLibrary.simpleMessage("Spells"),
-        "spellsWithCount": m86,
-        "tagCopyFrom": m87,
+        "spellsWithCount": m91,
+        "tagCopyFrom": m92,
         "tagDetails": MessageLookupByLibrary.simpleMessage("Tag Information"),
         "themeTurnDark":
             MessageLookupByLibrary.simpleMessage("Switch to Dark Mode"),
