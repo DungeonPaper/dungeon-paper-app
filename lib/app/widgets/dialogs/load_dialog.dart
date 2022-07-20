@@ -9,10 +9,12 @@ class LoadDialog extends StatefulWidget {
   const LoadDialog({
     super.key,
     required this.load,
+    required this.defaultLoad,
     required this.onChanged,
   });
 
   final int? load;
+  final int defaultLoad;
   final void Function(int? load) onChanged;
 
   @override
@@ -27,7 +29,7 @@ class _LoadDialogState extends State<LoadDialog> {
   void initState() {
     super.initState();
     useDefault = widget.load == null;
-    controller = TextEditingController(text: widget.load?.toString() ?? '');
+    controller = TextEditingController(text: (widget.load ?? widget.defaultLoad).toString());
     controller.addListener(_listener);
   }
 
@@ -44,28 +46,17 @@ class _LoadDialogState extends State<LoadDialog> {
       content: SingleChildScrollView(
         child: Column(
           children: [
-            ListTile(
-              minLeadingWidth: 20,
-              onTap: () => setState(() {
-                useDefault = !useDefault;
-                if (useDefault) {
-                  controller.text = '';
-                }
-              }),
+            CheckboxListTile(
               dense: true,
               visualDensity: VisualDensity.compact,
-              leading: SizedBox(
-                width: 20,
-                child: Checkbox(
-                  value: useDefault,
-                  onChanged: (value) => setState(() {
-                    useDefault = value!;
-                    if (value) {
-                      controller.text = '';
-                    }
-                  }),
-                ),
-              ),
+              value: useDefault,
+              controlAffinity: ListTileControlAffinity.leading,
+              onChanged: (value) => setState(() {
+                useDefault = value!;
+                if (value) {
+                  controller.text = widget.defaultLoad.toString();
+                }
+              }),
               title: Text(S.current.characterAutoMaxLoad),
             ),
             NumberTextField(

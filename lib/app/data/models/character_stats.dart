@@ -29,6 +29,15 @@ class CharacterStats {
   static int totalMaxExpForLevel(int level) =>
       range(1, level).fold<int>(8, (acc, l) => acc + maxExpForLevel(l + 1));
 
+  factory CharacterStats.empty() => CharacterStats(
+        level: 1,
+        currentHp: 0,
+        currentXp: 0,
+        armor: null,
+        damageDice: null,
+        load: null,
+      );
+
   CharacterStats copyWith({
     int? level,
     int? maxHp,

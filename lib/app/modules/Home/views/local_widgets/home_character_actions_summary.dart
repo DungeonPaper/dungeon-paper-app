@@ -38,6 +38,7 @@ class HomeCharacterActionsSummary extends GetView<CharacterService> {
                   onPressed: () => Get.dialog(
                     LoadDialog(
                       load: char.stats.load,
+                      defaultLoad: char.defaultMaxLoad,
                       onChanged: (load) => controller.updateCharacter(
                         char.copyWith(
                           stats: char.stats.copyWithLoad(load),

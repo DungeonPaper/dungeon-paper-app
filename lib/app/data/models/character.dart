@@ -77,7 +77,8 @@ class Character implements WithMeta<Character, CharacterMeta>, WithIcon {
   int get maxXp => stats.maxXp;
   double get currentHpPercent => clamp(stats.currentHp / maxHp, 0, 1);
   double get currentExpPercent => clamp(stats.currentXp / maxXp, 0, 1);
-  int get maxLoad => stats.load ?? (characterClass.load + abilityScores.loadBaseValue);
+  int get maxLoad => stats.load ?? defaultMaxLoad;
+  int get defaultMaxLoad => characterClass.load + abilityScores.loadBaseValue;
   int get currentLoad => items.fold(0, (weight, item) => weight + item.weight);
   int get armor => stats.armor ?? defaultArmor;
   int get defaultArmor => items.fold(0, (armor, item) => armor + item.armor);
@@ -274,24 +275,13 @@ class Character implements WithMeta<Character, CharacterMeta>, WithIcon {
       sessionMarks: [],
       characterClass: characterClass,
       notes: [],
-      stats: CharacterStats(
-        level: 1,
-        currentXp: 0,
+      stats: CharacterStats.empty().copyWith(
         currentHp: characterClass.hp + abilityScores.hpBaseValue,
       ),
       moves: [],
       abilityScores: abilityScores,
       spells: [],
-      race: Race(
-        key: uuid(),
-        name: 'Human',
-        classKeys: [characterClass.reference],
-        description: '',
-        explanation: '',
-        meta: Meta.empty(),
-        tags: [],
-        dice: [],
-      ),
+      race: Race.empty(),
     );
   }
 

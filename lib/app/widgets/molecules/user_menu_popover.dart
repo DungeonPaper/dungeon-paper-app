@@ -136,27 +136,6 @@ class UserMenuPopover extends GetView<CharacterService> with AuthServiceMixin {
                                   const SizedBox(height: 8),
                                   const Divider(),
                                 ],
-                                // My Library
-                                ListTile(
-                                  visualDensity: VisualDensity.compact,
-                                  title: Text(S.current.libraryCollectionTitle),
-                                  leading: const Icon(Icons.local_library),
-                                  onTap: () {
-                                    Get.back();
-                                    Get.toNamed(Routes.library);
-                                  },
-                                ),
-                                const Divider(),
-                                // Create Character
-                                ListTile(
-                                  visualDensity: VisualDensity.compact,
-                                  title: Text(S.current.createGeneric(S.current.entity(Character))),
-                                  leading: const Icon(Icons.person_add),
-                                  onTap: () {
-                                    Get.back();
-                                    Get.toNamed(Routes.createCharacter);
-                                  },
-                                ),
                                 // All Characters
                                 ListTile(
                                   visualDensity: VisualDensity.compact,
@@ -169,9 +148,26 @@ class UserMenuPopover extends GetView<CharacterService> with AuthServiceMixin {
                                     Get.toNamed(Routes.characterList);
                                   },
                                 ),
+                                // Create Character
+                                ListTile(
+                                  visualDensity: VisualDensity.compact,
+                                  title: Text(S.current.createGeneric(S.current.entity(Character))),
+                                  leading: const Icon(Icons.person_add),
+                                  onTap: () {
+                                    Get.back();
+                                    Get.toNamed(Routes.createCharacter);
+                                  },
+                                ),
                                 const Divider(),
-                                ThemeBrightnessSwitch.listTile(
-                                  onChanged: (_) => Get.back(),
+                                // My Library
+                                ListTile(
+                                  visualDensity: VisualDensity.compact,
+                                  title: Text(S.current.libraryCollectionTitle),
+                                  leading: const Icon(Icons.local_library),
+                                  onTap: () {
+                                    Get.back();
+                                    Get.toNamed(Routes.library);
+                                  },
                                 ),
                                 // Export/Import
                                 ListTile(
@@ -182,6 +178,10 @@ class UserMenuPopover extends GetView<CharacterService> with AuthServiceMixin {
                                     Get.back();
                                     Get.toNamed(Routes.importExport);
                                   },
+                                ),
+                                const Divider(),
+                                ThemeBrightnessSwitch.listTile(
+                                  onChanged: (_) => Get.back(),
                                 ),
                                 // Settings
                                 ListTile(
