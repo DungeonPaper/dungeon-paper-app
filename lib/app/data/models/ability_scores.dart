@@ -193,6 +193,17 @@ class AbilityScore with WithIcon {
         icon: IconUtils.iconDataFromName(json['icon']),
       );
 
+  factory AbilityScore.empty() => AbilityScore(
+        key: '',
+        name: '',
+        value: 0,
+        description: '',
+        isDebilitated: false,
+        debilityName: '',
+        debilityDescription: '',
+        icon: null,
+      );
+
   Map<String, dynamic> toJson() => {
         'key': key,
         'name': name,

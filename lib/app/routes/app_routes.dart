@@ -43,6 +43,7 @@ abstract class Routes {
   static const migration = _Paths.migration;
   static const about = _Paths.about;
   static const selectCharacterTheme = _Paths.selectCharacterTheme;
+  static const abilityScoreForm = _Paths.abilityScoreForm;
 }
 
 abstract class _Paths {
@@ -73,8 +74,9 @@ abstract class _Paths {
   static const bio = '/biography';
   static const hpDialog = '/edit-hp';
   static const classAlignments = '/class-alignments';
-  static const universalSearch = '/universal-search';
+  static const universalSearch = '/search';
   static const migration = '/migration';
   static const about = '/about';
-  static const selectCharacterTheme = '/select-character-theme';
+  static const selectCharacterTheme = '/character-theme';
+  static const abilityScoreForm = '/ability-score';
 }

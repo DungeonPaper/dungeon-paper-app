@@ -1,4 +1,3 @@
-import 'package:dungeon_paper/app/modules/LibraryList/views/races_library_list_view.dart';
 import 'package:flutter/widgets.dart';
 
 import 'package:get/get.dart';
@@ -8,6 +7,8 @@ import '../data/models/meta.dart';
 import '../data/models/move.dart';
 import '../data/models/spell.dart';
 import '../data/services/character_service.dart';
+import '../modules/AbilityScoreForm/bindings/ability_score_form_binding.dart';
+import '../modules/AbilityScoreForm/views/ability_score_form_view.dart';
 import '../modules/AbilityScoresForm/bindings/ability_scores_form_binding.dart';
 import '../modules/AbilityScoresForm/views/ability_scores_form_view.dart';
 import '../modules/About/bindings/about_binding.dart';
@@ -36,6 +37,7 @@ import '../modules/LibraryList/views/character_classes_library_list_view.dart';
 import '../modules/LibraryList/views/items_library_list_view.dart';
 import '../modules/LibraryList/views/library_collection_view.dart';
 import '../modules/LibraryList/views/moves_library_list_view.dart';
+import '../modules/LibraryList/views/races_library_list_view.dart';
 import '../modules/LibraryList/views/spells_library_list_view.dart';
 import '../modules/Login/bindings/login_binding.dart';
 import '../modules/Login/views/login_view.dart';
@@ -267,6 +269,12 @@ class AppPages {
       name: Routes.selectCharacterTheme,
       page: () => const SelectCharacterThemeView(),
       binding: SelectCharacterThemeBinding(),
+      preventDuplicates: false,
+    ),
+    GetPage(
+      name: _Paths.abilityScoreForm,
+      page: () => const AbilityScoreFormView(),
+      binding: AbilityScoreFormBinding(),
       preventDuplicates: false,
     ),
   ];
