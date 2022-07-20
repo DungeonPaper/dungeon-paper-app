@@ -95,7 +95,7 @@ BEGIN
             VALUE "InternalName", "dungeonpaper" "\0"
             VALUE "LegalCopyright", "Copyright (C) 2022 app. All rights reserved." "\0"
             VALUE "OriginalFilename", "dungeonpaper.exe" "\0"
-            VALUE "ProductName", "dungeonpaper" "\0"
+            VALUE "ProductName", "Dungeon Paper" "\0"
             VALUE "ProductVersion", VERSION_AS_STRING "\0"
         END
     END
