@@ -169,23 +169,20 @@ class _EXPDialogState extends State<EXPDialog> with CharacterServiceMixin {
     int updatedLevel = shouldOverrideLevel ? int.parse(overrideLevel.text) : char.stats.level;
     int updatedXp = beforeLevelXp;
 
-    debugPrint('updatedLevel: $updatedLevel, updatedXp: $updatedXp');
-
+    // if xp is over the current level allowance, keep reducing it until it is below the current
+    // level while leveling up
     while (updatedXp >= CharacterStats.maxExpForLevel(updatedLevel)) {
       updatedXp -= CharacterStats.maxExpForLevel(updatedLevel);
       updatedLevel++;
     }
 
-    final finalXp = updatedXp;
-    final finalLevel =
-        shouldOverrideLevel ? int.tryParse(overrideLevel.text) ?? updatedLevel : updatedLevel;
-
     charService.updateCharacter(
       char.copyWith(
         stats: char.stats.copyWith(
-          currentXp: finalXp,
-          level: finalXp >= CharacterStats.maxExpForLevel(finalLevel) ? finalLevel + 1 : finalLevel,
+          currentXp: updatedXp,
+          level: updatedLevel,
         ),
+        // reset all session marks completion
         sessionMarks: char.sessionMarks.map((e) => e.copyWithInherited(completed: false)).toList(),
       ),
     );

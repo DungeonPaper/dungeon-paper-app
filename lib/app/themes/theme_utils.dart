@@ -98,6 +98,10 @@ ThemeData createTheme(
       elevation: 0,
       centerTitle: true,
     ),
+    checkboxTheme: base.checkboxTheme.copyWith(
+      fillColor: MaterialStateProperty.resolveWith((states) => colorScheme.secondary),
+      checkColor: MaterialStateProperty.resolveWith((states) => colorScheme.onSecondary),
+    ),
     dialogTheme: base.dialogTheme.copyWith(
       shape: rRectShape,
     ),

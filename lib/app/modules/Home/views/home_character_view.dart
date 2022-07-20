@@ -2,7 +2,6 @@ import 'package:dungeon_paper/app/data/services/character_service.dart';
 import 'package:dungeon_paper/app/model_utils/dice_utils.dart';
 import 'package:dungeon_paper/app/modules/Home/views/local_widgets/home_character_extras.dart';
 import 'package:dungeon_paper/app/themes/button_themes.dart';
-import 'package:dungeon_paper/app/widgets/atoms/max_width_layout.dart';
 import 'package:dungeon_paper/app/widgets/chips/primary_chip.dart';
 import 'package:dungeon_paper/app/widgets/dialogs/armor_dialog.dart';
 import 'package:dungeon_paper/app/widgets/dialogs/damage_dice_dialog.dart';
