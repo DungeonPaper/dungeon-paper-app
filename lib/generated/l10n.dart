@@ -220,6 +220,126 @@ class S {
     );
   }
 
+  /// `A description of the effect causing the debility and/or how it affects your character`
+  String get abilityScoreFormDebilityDescriptionDescription {
+    return Intl.message(
+      'A description of the effect causing the debility and/or how it affects your character',
+      name: 'abilityScoreFormDebilityDescriptionDescription',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Debility Description`
+  String get abilityScoreFormDebilityDescriptionLabel {
+    return Intl.message(
+      'Debility Description',
+      name: 'abilityScoreFormDebilityDescriptionLabel',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `The name for the debility that occurs when this stat is debilitated (takes -1 until recovered).`
+  String get abilityScoreFormDebilityNameDescription {
+    return Intl.message(
+      'The name for the debility that occurs when this stat is debilitated (takes -1 until recovered).',
+      name: 'abilityScoreFormDebilityNameDescription',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Debility Name`
+  String get abilityScoreFormDebilityNameLabel {
+    return Intl.message(
+      'Debility Name',
+      name: 'abilityScoreFormDebilityNameLabel',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `A description of what this ability score represents`
+  String get abilityScoreFormDescriptionDescription {
+    return Intl.message(
+      'A description of what this ability score represents',
+      name: 'abilityScoreFormDescriptionDescription',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Ability Score Description`
+  String get abilityScoreFormDescriptionLabel {
+    return Intl.message(
+      'Ability Score Description',
+      name: 'abilityScoreFormDescriptionLabel',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Icon`
+  String get abilityScoreFormIconLabel {
+    return Intl.message(
+      'Icon',
+      name: 'abilityScoreFormIconLabel',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `A 3-letter unique key that identifies this ability score in dice and is used as the short label for the modifier value (and not the actual score)`
+  String get abilityScoreFormKeyDescription {
+    return Intl.message(
+      'A 3-letter unique key that identifies this ability score in dice and is used as the short label for the modifier value (and not the actual score)',
+      name: 'abilityScoreFormKeyDescription',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Ability Score Key`
+  String get abilityScoreFormKeyLabel {
+    return Intl.message(
+      'Ability Score Key',
+      name: 'abilityScoreFormKeyLabel',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `The name of this ability score`
+  String get abilityScoreFormNameDescription {
+    return Intl.message(
+      'The name of this ability score',
+      name: 'abilityScoreFormNameDescription',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Ability Score Name`
+  String get abilityScoreFormNameLabel {
+    return Intl.message(
+      'Ability Score Name',
+      name: 'abilityScoreFormNameLabel',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Change Icon`
+  String get abilityScoreFormPickIconLabel {
+    return Intl.message(
+      'Change Icon',
+      name: 'abilityScoreFormPickIconLabel',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `You can drag & drop the stat cards to change the order in which they appear throughout this character's screens.`
   String get abilityScoreInfo {
     return Intl.message(
@@ -370,123 +490,33 @@ class S {
     );
   }
 
-  /// `Ability Score Key`
-  String get abilityScoreFormKeyLabel {
+  /// `About`
+  String get about {
     return Intl.message(
-      'Ability Score Key',
-      name: 'abilityScoreFormKeyLabel',
+      'About',
+      name: 'about',
       desc: '',
       args: [],
     );
   }
 
-  /// `A 3-letter unique key that identifies this ability score in dice and is used as the short label for the modifier value (and not the actual score)`
-  String get abilityScoreFormKeyDescription {
+  /// `Chen Asraf`
+  String get aboutAuthor {
     return Intl.message(
-      'A 3-letter unique key that identifies this ability score in dice and is used as the short label for the modifier value (and not the actual score)',
-      name: 'abilityScoreFormKeyDescription',
+      'Chen Asraf',
+      name: 'aboutAuthor',
       desc: '',
       args: [],
     );
   }
 
-  /// `Ability Score Name`
-  String get abilityScoreFormNameLabel {
+  /// `Copyright © 2018-{year}`
+  String aboutCopyright(Object year) {
     return Intl.message(
-      'Ability Score Name',
-      name: 'abilityScoreFormNameLabel',
+      'Copyright © 2018-$year',
+      name: 'aboutCopyright',
       desc: '',
-      args: [],
-    );
-  }
-
-  /// `The name of this ability score`
-  String get abilityScoreFormNameDescription {
-    return Intl.message(
-      'The name of this ability score',
-      name: 'abilityScoreFormNameDescription',
-      desc: '',
-      args: [],
-    );
-  }
-
-  /// `Ability Score Description`
-  String get abilityScoreFormDescriptionLabel {
-    return Intl.message(
-      'Ability Score Description',
-      name: 'abilityScoreFormDescriptionLabel',
-      desc: '',
-      args: [],
-    );
-  }
-
-  /// `A description of what this ability score represents`
-  String get abilityScoreFormDescriptionDescription {
-    return Intl.message(
-      'A description of what this ability score represents',
-      name: 'abilityScoreFormDescriptionDescription',
-      desc: '',
-      args: [],
-    );
-  }
-
-  /// `Debility Name`
-  String get abilityScoreFormDebilityNameLabel {
-    return Intl.message(
-      'Debility Name',
-      name: 'abilityScoreFormDebilityNameLabel',
-      desc: '',
-      args: [],
-    );
-  }
-
-  /// `The name for the debility that occurs when this stat is debilitated (takes -1 until recovered).`
-  String get abilityScoreFormDebilityNameDescription {
-    return Intl.message(
-      'The name for the debility that occurs when this stat is debilitated (takes -1 until recovered).',
-      name: 'abilityScoreFormDebilityNameDescription',
-      desc: '',
-      args: [],
-    );
-  }
-
-  /// `Debility Description`
-  String get abilityScoreFormDebilityDescriptionLabel {
-    return Intl.message(
-      'Debility Description',
-      name: 'abilityScoreFormDebilityDescriptionLabel',
-      desc: '',
-      args: [],
-    );
-  }
-
-  /// `A description of the effect causing the debility and/or how it affects your character`
-  String get abilityScoreFormDebilityDescriptionDescription {
-    return Intl.message(
-      'A description of the effect causing the debility and/or how it affects your character',
-      name: 'abilityScoreFormDebilityDescriptionDescription',
-      desc: '',
-      args: [],
-    );
-  }
-
-  /// `Icon`
-  String get abilityScoreFormIconLabel {
-    return Intl.message(
-      'Icon',
-      name: 'abilityScoreFormIconLabel',
-      desc: '',
-      args: [],
-    );
-  }
-
-  /// `Change Icon`
-  String get abilityScoreFormPickIconLabel {
-    return Intl.message(
-      'Change Icon',
-      name: 'abilityScoreFormPickIconLabel',
-      desc: '',
-      args: [],
+      args: [year],
     );
   }
 
@@ -497,6 +527,16 @@ class S {
       name: 'aboutTitle',
       desc: '',
       args: [],
+    );
+  }
+
+  /// `Version {version}`
+  String aboutVersion(Object version) {
+    return Intl.message(
+      'Version $version',
+      name: 'aboutVersion',
+      desc: '',
+      args: [version],
     );
   }
 
@@ -1895,16 +1935,13 @@ class S {
     );
   }
 
-  /// `{count, plural, =0 {No {entPlural}} one {One {ent}} other {{count} {entPlural}}}`
-  String entityWithCount(num count, Object entPlural, Object ent) {
-    return Intl.plural(
-      count,
-      zero: 'No $entPlural',
-      one: 'One $ent',
-      other: '$count $entPlural',
-      name: 'entityWithCount',
+  /// `This {entity} is not linked to any library item`
+  String entityShareStatusDetached(Object entity) {
+    return Intl.message(
+      'This $entity is not linked to any library item',
+      name: 'entityShareStatusDetached',
       desc: '',
-      args: [count, entPlural, ent],
+      args: [entity],
     );
   }
 
@@ -1928,13 +1965,16 @@ class S {
     );
   }
 
-  /// `This {entity} is not linked to any library item`
-  String entityShareStatusDetached(Object entity) {
-    return Intl.message(
-      'This $entity is not linked to any library item',
-      name: 'entityShareStatusDetached',
+  /// `{count, plural, =0 {No {entPlural}} one {One {ent}} other {{count} {entPlural}}}`
+  String entityWithCount(num count, Object entPlural, Object ent) {
+    return Intl.plural(
+      count,
+      zero: 'No $entPlural',
+      one: 'One $ent',
+      other: '$count $entPlural',
+      name: 'entityWithCount',
       desc: '',
-      args: [entity],
+      args: [count, entPlural, ent],
     );
   }
 
@@ -1943,16 +1983,6 @@ class S {
     return Intl.message(
       'Must be exactly $length ${Intl.plural(length, one: 'character', other: 'characters')}',
       name: 'errorExactLength',
-      desc: '',
-      args: [length],
-    );
-  }
-
-  /// `Must be at least {length} {length, plural, one {character} other {characters}}`
-  String errorMinLength(num length) {
-    return Intl.message(
-      'Must be at least $length ${Intl.plural(length, one: 'character', other: 'characters')}',
-      name: 'errorMinLength',
       desc: '',
       args: [length],
     );
@@ -1968,13 +1998,13 @@ class S {
     );
   }
 
-  /// `Must contain letters only`
-  String get errorOnlyLetters {
+  /// `Must be at least {length} {length, plural, one {character} other {characters}}`
+  String errorMinLength(num length) {
     return Intl.message(
-      'Must contain letters only',
-      name: 'errorOnlyLetters',
+      'Must be at least $length ${Intl.plural(length, one: 'character', other: 'characters')}',
+      name: 'errorMinLength',
       desc: '',
-      args: [],
+      args: [length],
     );
   }
 
@@ -2025,6 +2055,16 @@ class S {
       name: 'errorNoSelectionGenericRequired',
       desc: '',
       args: [entity],
+    );
+  }
+
+  /// `Must contain letters only`
+  String get errorOnlyLetters {
+    return Intl.message(
+      'Must contain letters only',
+      name: 'errorOnlyLetters',
+      desc: '',
+      args: [],
     );
   }
 
@@ -2488,16 +2528,6 @@ class S {
     );
   }
 
-  /// `Sign in to get more features`
-  String get homeEmptyStateLoginTitle {
-    return Intl.message(
-      'Sign in to get more features',
-      name: 'homeEmptyStateLoginTitle',
-      desc: '',
-      args: [],
-    );
-  }
-
   /// `Online data sync, library sharing, campaigns and more!`
   String get homeEmptyStateLoginSubtitle {
     return Intl.message(
@@ -2508,11 +2538,11 @@ class S {
     );
   }
 
-  /// `No Characters`
-  String get homeEmptyStateTitle {
+  /// `Sign in to get more features`
+  String get homeEmptyStateLoginTitle {
     return Intl.message(
-      'No Characters',
-      name: 'homeEmptyStateTitle',
+      'Sign in to get more features',
+      name: 'homeEmptyStateLoginTitle',
       desc: '',
       args: [],
     );
@@ -2523,6 +2553,16 @@ class S {
     return Intl.message(
       'Create a Character to get started',
       name: 'homeEmptyStateSubtitle',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `No Characters`
+  String get homeEmptyStateTitle {
+    return Intl.message(
+      'No Characters',
+      name: 'homeEmptyStateTitle',
       desc: '',
       args: [],
     );

@@ -1,11 +1,18 @@
 import 'package:get/get.dart';
+import 'package:package_info_plus/package_info_plus.dart';
+import 'package:pub_semver/pub_semver.dart';
 
 class AboutController extends GetxController {
-  //TODO: Implement AboutController
+  final version = Rx<Version?>(null);
 
-  final count = 0.obs;
+  @override
+  void onInit() {
+    super.onInit();
+    getVersion();
+  }
 
-
-
-  void increment() => count.value++;
+  Future<void> getVersion() async {
+    final info = await PackageInfo.fromPlatform();
+    version.value = Version.parse(info.version + '+' + info.buildNumber);
+  }
 }

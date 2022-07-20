@@ -92,11 +92,13 @@ abstract class RepositoryCache {
   Future<SearchResponse> get getFromRemote;
 
   Future<void> init({bool ignoreCache = false}) async {
+    clearListeners();
     status = RepositoryStatus.loading;
-    debugPrint('Initializing repo: $id, cache prefix: "${cacheKey('')}"');
+    debugPrint('[$id] Initializing repo: $id, cache prefix: "${cacheKey('')}"');
 
     try {
       SearchResponse cacheRes;
+
       try {
         cacheRes = ignoreCache ? SearchResponse.empty() : await getCacheResponse();
       } catch (e) {
@@ -105,13 +107,15 @@ abstract class RepositoryCache {
       final shouldLoadFromRemote = ignoreCache ? true : await shouldUseRemote(cacheRes);
 
       if (shouldLoadFromRemote) {
-        debugPrint('Cache invalid for $id, loading from remote');
+        debugPrint('[$id] Cache invalid, loading from remote');
         final resp = await getFromRemote;
         await setAllFrom(resp, saveIntoCache: true);
       } else {
-        debugPrint('Cache valid for $id, loading from cache');
+        debugPrint('[$id] Cache valid, loading from cache');
         await setAllFrom(cacheRes, saveIntoCache: false);
       }
+
+      debugPrint('[$id] Finished loading $id, registering listeners');
 
       registerListeners();
       status = RepositoryStatus.loaded;
@@ -147,7 +151,7 @@ abstract class RepositoryCache {
 
   void registerListeners() {
     debugPrint(
-        'registering listeners for $id, delegate: $storage, listener prefix: "${listenerKey('')}"');
+        '[$id] registering listeners, delegate: $storage, listener prefix: "${listenerKey('')}"');
 
     subs.addAll([
       storage.collectionListener(
@@ -155,7 +159,7 @@ abstract class RepositoryCache {
         (d) {
           if (d.isNotEmpty) {
             debugPrint(
-                'Update in CharacterClasses for $id: ${[for (var x in d) x['key']].join(',')}');
+                '[$id] Update in CharacterClasses: ${[for (var x in d) x['key']].join(',')}');
             classes.value = {for (var x in d) x['key']: CharacterClass.fromJson(x)};
           }
         },
@@ -164,7 +168,7 @@ abstract class RepositoryCache {
         listenerKey('Items'),
         (d) {
           if (d.isNotEmpty) {
-            debugPrint('Update in Items for $id: ${[for (var x in d) x['key']].join(',')}');
+            debugPrint('[$id] Update in Items: ${[for (var x in d) x['key']].join(',')}');
             items.value = {for (var x in d) x['key']: Item.fromJson(x)};
           }
         },
@@ -173,7 +177,7 @@ abstract class RepositoryCache {
         listenerKey('Monsters'),
         (d) {
           if (d.isNotEmpty) {
-            debugPrint('Update in Monsters for $id: ${[for (var x in d) x['key']].join(',')}');
+            debugPrint('[$id] [$id] Update in Monsters: ${[for (var x in d) x['key']].join(',')}');
             monsters.value = {for (var x in d) x['key']: Monster.fromJson(x)};
           }
         },
@@ -182,7 +186,7 @@ abstract class RepositoryCache {
         listenerKey('Moves'),
         (d) {
           if (d.isNotEmpty) {
-            debugPrint('Update in Moves for $id: ${[for (var x in d) x['key']].join(',')}');
+            debugPrint('[$id] Update in Moves: ${[for (var x in d) x['key']].join(',')}');
             moves.value = {for (var x in d) x['key']: Move.fromJson(x)};
           }
         },
@@ -191,7 +195,7 @@ abstract class RepositoryCache {
         listenerKey('Races'),
         (d) {
           if (d.isNotEmpty) {
-            debugPrint('Update in Races for $id: ${[for (var x in d) x['key']].join(',')}');
+            debugPrint('[$id] Update in Races: ${[for (var x in d) x['key']].join(',')}');
             races.value = {for (var x in d) x['key']: Race.fromJson(x)};
           }
         },
@@ -200,7 +204,7 @@ abstract class RepositoryCache {
         listenerKey('Spells'),
         (d) {
           if (d.isNotEmpty) {
-            debugPrint('Update in Spells for $id: ${[for (var x in d) x['key']].join(',')}');
+            debugPrint('[$id] Update in Spells: ${[for (var x in d) x['key']].join(',')}');
             spells.value = {for (var x in d) x['key']: Spell.fromJson(x)};
           }
         },
@@ -209,7 +213,7 @@ abstract class RepositoryCache {
         listenerKey('Tags'),
         (d) {
           if (d.isNotEmpty) {
-            debugPrint('Update in Tags for $id: ${[for (var x in d) x['name']].join(',')}');
+            debugPrint('[$id] Update in Tags: ${[for (var x in d) x['name']].join(',')}');
             tags.value = {for (var x in d) x['name']: dw.Tag.fromJson(x)};
           }
         },
@@ -218,7 +222,7 @@ abstract class RepositoryCache {
         listenerKey('Notes'),
         (d) {
           if (d.isNotEmpty) {
-            debugPrint('Update in Notes for $id: ${[for (var x in d) x['key']].join(',')}');
+            debugPrint('[$id] Update in Notes: ${[for (var x in d) x['key']].join(',')}');
             notes.value = {for (var x in d) x['key']: Note.fromJson(x)};
           }
         },
@@ -303,7 +307,7 @@ abstract class RepositoryCache {
     if (resp == null) {
       return;
     }
-
+    debugPrint('[$id] Update in $collectionName (${resp.length})');
     list.addAll(Map.fromIterable(resp, key: (x) => x.key));
 
     if (saveIntoCache && list.isNotEmpty) {
@@ -324,10 +328,10 @@ class BuiltInRepository extends RepositoryCache {
   @override
   Future<SearchResponse> getFromRemote = Future(() {
     try {
-      debugPrint('Getting repo content');
+      debugPrint('[playbook] Getting repo content');
       return api.requests.getDefaultRepository(ignoreCache: true);
     } catch (_) {
-      debugPrint('Failed getting repo content, using built-in');
+      debugPrint('[playbook] Failed getting repo content, using built-in');
       return SearchResponse.fromPackageRepo();
     }
   });

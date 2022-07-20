@@ -165,7 +165,6 @@ class CreateCharacterView extends GetView<CreateCharacterController> {
                           ),
                           // Alignment
                           _Card(
-                            // contentPadding: EdgeInsets.symmetric(horizontal: 16, vertical: 12),
                             contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 0),
                             valid: controller.alignment.value != null,
                             title: Text(controller.alignment.value != null
@@ -199,11 +198,6 @@ class CreateCharacterView extends GetView<CreateCharacterController> {
                                     )
                                 : null,
                           ),
-                          // CustomExpansionPanel(
-                          //   title: Text('Optional'),
-                          //   subtitle: Text('Starting gear, moves & spells'),
-                          //   childrenPadding: EdgeInsets.zero,
-                          //   children: [
 
                           // Starting Gear
                           _Card(
@@ -266,8 +260,6 @@ class CreateCharacterView extends GetView<CreateCharacterController> {
                                     )
                                 : null,
                           ),
-                          //   ],
-                          // ),
                         ],
                       ),
                     ),
@@ -304,14 +296,14 @@ class _Card extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final cardColor = isEnabled
+        ? valid
+            ? DwColors.success
+            : DwColors.warning
+        : Theme.of(context).colorScheme.onSurface;
     return Card(
       elevation: 0,
-      color: (isEnabled
-              ? valid
-                  ? DwColors.success
-                  : DwColors.warning
-              : Theme.of(context).colorScheme.onSurface)
-          .withOpacity(0.2),
+      color: cardColor.withOpacity(0.2),
       child: ListTile(
         onTap: onTap,
         contentPadding: contentPadding,
