@@ -2,7 +2,7 @@ import 'package:dungeon_paper/app/data/models/meta.dart';
 import 'package:dungeon_paper/app/widgets/atoms/menu_button.dart';
 import 'package:flutter/material.dart';
 
-// TODO remove this class and use EntityShareMenu instead
+@Deprecated('Use EntityShareForm')
 class MetaSyncMenu<T, M> extends StatelessWidget {
   const MetaSyncMenu({
     Key? key,
@@ -15,22 +15,24 @@ class MetaSyncMenu<T, M> extends StatelessWidget {
   Widget build(BuildContext context) {
     return MenuButton<String>(
       items: items,
-      icon: Stack(children: [
-        const Icon(Icons.more_vert),
-        if (entity.meta.sharing?.dirty == true)
-          Positioned(
-            top: 0,
-            left: 0,
-            child: Container(
-              width: 8,
-              height: 8,
-              decoration: BoxDecoration(
-                shape: BoxShape.circle,
-                color: Colors.orange[400],
+      icon: Stack(
+        children: [
+          const Icon(Icons.more_vert),
+          if (entity.meta.sharing?.dirty == true)
+            Positioned(
+              top: 0,
+              left: 0,
+              child: Container(
+                width: 8,
+                height: 8,
+                decoration: BoxDecoration(
+                  shape: BoxShape.circle,
+                  color: Colors.orange[400],
+                ),
               ),
             ),
-          ),
-      ]),
+        ],
+      ),
     );
   }
 

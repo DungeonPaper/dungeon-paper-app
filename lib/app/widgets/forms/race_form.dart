@@ -32,11 +32,7 @@ class RaceForm extends GetView<DynamicFormController<Race>> {
 }
 
 class RaceFormController extends DynamicFormController<Race> {
-  late final Race? race;
   late final AbilityScores abilityScores;
-
-  @override
-  Race? get argument => race;
 
   @override
   final entity = Race.empty().obs;
@@ -54,7 +50,9 @@ class RaceFormController extends DynamicFormController<Race> {
   @override
   void onInit() {
     final RaceFormArguments args = Get.arguments;
-    race = args.race;
+    if (args.race != null) {
+      entity.value = args.race!;
+    }
     abilityScores = args.abilityScores;
     super.onInit();
   }

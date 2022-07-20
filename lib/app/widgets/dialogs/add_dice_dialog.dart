@@ -24,8 +24,7 @@ class AddDiceDialog extends StatefulWidget {
   State<AddDiceDialog> createState() => _AddDiceDialogState();
 }
 
-class _AddDiceDialogState extends State<AddDiceDialog> {
-  final RepositoryService repo = Get.find();
+class _AddDiceDialogState extends State<AddDiceDialog> with RepositoryServiceMixin {
   late dw.Dice dice;
 
   @override
@@ -37,8 +36,9 @@ class _AddDiceDialogState extends State<AddDiceDialog> {
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
-      // TODO create OR edit
-      title: Text(S.current.createGeneric(dw.Dice)),
+      title: Text(
+        widget.dice == null ? S.current.addGeneric(dw.Dice) : S.current.editGeneric(dw.Dice),
+      ),
       content: DiceForm(
         dice: dice,
         onChanged: (dw.Dice _dice) => setState(() => dice = _dice),

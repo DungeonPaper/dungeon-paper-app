@@ -109,6 +109,9 @@ class _DynamicActionCardState extends State<DynamicActionCard> {
             titleBuilder: (context, color) => HighlightText(
               widget.title,
               highlightWords: widget.highlightWords,
+              overflow: !expanded ? TextOverflow.fade : TextOverflow.clip,
+              maxLines: !expanded ? 1 : null,
+              softWrap: expanded,
               normalTextStyle: TextStyle(
                 fontSize: Theme.of(context).textTheme.subtitle1!.fontSize,
                 color: color,
@@ -128,6 +131,7 @@ class _DynamicActionCardState extends State<DynamicActionCard> {
             childrenPadding: const EdgeInsets.all(8).copyWith(top: 0),
             icon: widget.icon,
             trailing: [
+              const SizedBox(width: 12),
               ...widget.leading,
               widget.showStar
                   ? widget.expandable

@@ -126,19 +126,9 @@ abstract class DynamicFormController<T extends WithMeta> extends GetxController 
 
   @mustCallSuper
   FutureOr<void> init() {
-    if (argument != null) {
-      // when editing, create a fork of the move
-      // entity.value = forkMeta(argument, user);
-      createInputs();
-      debugPrint('Before copy');
-      final copy = entity.value.copyWithInherited(key: argument!.key, meta: argument!.meta);
-      debugPrint('copy $copy');
-      entity.value = copy;
-      setFromEntity(argument!);
-    } else {
-      // when creating new item, set the correct owner now
-      createInputs();
-    }
+    createInputs();
+    entity.value = entity.value.copyWithInherited(key: entity.value.key, meta: entity.value.meta);
+    setFromEntity(entity.value);
   }
 
   UserService get users => Get.find();
@@ -147,8 +137,6 @@ abstract class DynamicFormController<T extends WithMeta> extends GetxController 
   T setFromEntity(T argument);
 
   void createInputs();
-
-  T? get argument;
 
   @override
   void onInit() {

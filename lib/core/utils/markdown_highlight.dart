@@ -99,12 +99,18 @@ class HighlightText extends StatelessWidget {
     required this.highlightWords,
     this.highlightStyle,
     this.normalTextStyle,
+    this.overflow = TextOverflow.clip,
+    this.maxLines,
+    this.softWrap = true,
   });
 
   final String text;
   final TextStyle? highlightStyle;
   final TextStyle? normalTextStyle;
   final List<String> highlightWords;
+  final TextOverflow overflow;
+  final int? maxLines;
+  final bool softWrap;
 
   @override
   Widget build(BuildContext context) {
@@ -122,6 +128,9 @@ class HighlightText extends StatelessWidget {
       child: Builder(builder: (context) {
         var def = DefaultTextStyle.of(context).style;
         return RichText(
+          overflow: overflow,
+          maxLines: maxLines,
+          softWrap: softWrap,
           text: TextSpan(
             children: [
               for (final word in _text)

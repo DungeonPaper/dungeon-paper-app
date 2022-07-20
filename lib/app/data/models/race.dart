@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'package:dungeon_paper/app/modules/LibraryList/views/filters/race_filters.dart';
+import 'package:dungeon_paper/core/utils/icon_utils.dart';
 import 'package:dungeon_paper/core/utils/uuid.dart';
 import 'package:dungeon_world_data/dungeon_world_data.dart' as dw;
 import 'package:flutter/material.dart';
@@ -7,7 +8,7 @@ import 'package:flutter/material.dart';
 import 'meta.dart';
 import 'move.dart';
 
-class Race extends dw.Race implements WithMeta, WithIcon {
+class Race extends dw.Race with WithIcon implements WithMeta {
   Race({
     required Meta meta,
     required String key,

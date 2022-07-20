@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:dungeon_paper/app/modules/LibraryList/views/filters/character_class_filters.dart';
+import 'package:dungeon_paper/core/utils/icon_utils.dart';
 import 'package:dungeon_paper/core/utils/uuid.dart';
 import 'package:flutter/material.dart';
 
@@ -9,7 +10,7 @@ import 'gear_choice.dart';
 import 'meta.dart';
 import 'package:dungeon_world_data/dungeon_world_data.dart' as dw;
 
-class CharacterClass extends dw.CharacterClass implements WithMeta, WithIcon {
+class CharacterClass extends dw.CharacterClass with WithIcon implements WithMeta {
   get isApp => true;
 
   CharacterClass({

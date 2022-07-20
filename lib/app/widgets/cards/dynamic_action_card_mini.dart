@@ -84,30 +84,33 @@ class DynamicActionCardMini extends StatelessWidget {
                 ),
                 const SizedBox(width: 8),
               ],
-              // TODO use Stack with the icon to create larger tap area while maintaining max text available width
               Expanded(
                 child: Text(
                   title,
-                  overflow: TextOverflow.ellipsis,
+                  overflow: TextOverflow.fade,
                   maxLines: 1,
+                  softWrap: false,
                   style: textTheme.bodyText1!.copyWith(
                     color: titleFgColor,
                   ),
                 ),
               ),
               showStar
-                  ? SizedBox(
-                      width: 24,
-                      height: 20,
-                      child: IconButton(
-                        // visualDensity: VisualDensity.compact,
-                        padding: EdgeInsets.zero,
-                        iconSize: 16,
-                        icon: Icon(
-                          starred ? Icons.star_rounded : Icons.star_border_rounded,
-                          color: colorScheme.onSurface.withOpacity(0.3),
+                  ? Padding(
+                      padding: const EdgeInsets.only(left: 8),
+                      child: SizedBox(
+                        width: 24,
+                        height: 20,
+                        child: IconButton(
+                          // visualDensity: VisualDensity.compact,
+                          padding: EdgeInsets.zero,
+                          iconSize: 16,
+                          icon: Icon(
+                            starred ? Icons.star_rounded : Icons.star_border_rounded,
+                            color: colorScheme.onSurface.withOpacity(0.3),
+                          ),
+                          onPressed: () => onStarChanged(!starred),
                         ),
-                        onPressed: () => onStarChanged(!starred),
                       ),
                     )
                   : const SizedBox.shrink(),

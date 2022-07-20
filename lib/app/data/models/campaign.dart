@@ -1,8 +1,9 @@
 import 'package:dungeon_paper/app/data/models/meta.dart';
+import 'package:dungeon_paper/core/utils/icon_utils.dart';
 import 'package:dungeon_world_data/dungeon_world_data.dart' as dw;
 import 'package:flutter/material.dart';
 
-class Campaign implements WithMeta, WithIcon {
+class Campaign with WithIcon implements WithMeta {
   @override
   final Meta meta;
   @override

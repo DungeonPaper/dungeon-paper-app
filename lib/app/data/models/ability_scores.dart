@@ -1,10 +1,10 @@
 import 'dart:convert';
 
+import 'package:dungeon_paper/core/utils/icon_utils.dart';
 import 'package:dungeon_paper/generated/l10n.dart';
 import 'package:flutter/material.dart';
 
 import '../../../core/dw_icons.dart';
-import 'meta.dart';
 
 class AbilityScores {
   AbilityScores({
@@ -160,7 +160,7 @@ class AbilityScores {
   String toString() => 'AbilityScores($debugProperties)';
 }
 
-class AbilityScore implements WithIcon {
+class AbilityScore with WithIcon {
   final String key;
   final String name;
   final String description;
@@ -168,6 +168,7 @@ class AbilityScore implements WithIcon {
   final bool isDebilitated;
   final String debilityName;
   final String debilityDescription;
+  final IconData? customIcon;
 
   AbilityScore({
     required String key,
@@ -176,8 +177,10 @@ class AbilityScore implements WithIcon {
     required this.description,
     required this.debilityName,
     required this.debilityDescription,
+    IconData? icon,
     this.isDebilitated = false,
-  }) : key = key.trim().toUpperCase();
+  })  : key = key.trim().toUpperCase(),
+        customIcon = icon;
 
   factory AbilityScore.fromJson(Map<String, dynamic> json) => AbilityScore(
         key: json['key'],
@@ -187,6 +190,7 @@ class AbilityScore implements WithIcon {
         isDebilitated: json['isDebilitated'] ?? false,
         debilityName: json['debilityName'],
         debilityDescription: json['debilityDescription'],
+        icon: IconUtils.iconDataFromName(json['icon']),
       );
 
   Map<String, dynamic> toJson() => {
@@ -197,6 +201,7 @@ class AbilityScore implements WithIcon {
         'isDebilitated': isDebilitated,
         'debilityName': debilityName,
         'debilityDescription': debilityDescription,
+        'icon': IconUtils.iconDataToJson(customIcon),
       };
 
   AbilityScore copyWith({
@@ -207,6 +212,7 @@ class AbilityScore implements WithIcon {
     bool? isDebilitated,
     String? debilityName,
     String? debilityDescription,
+    IconData? icon,
   }) =>
       AbilityScore(
         key: key ?? this.key,
@@ -216,11 +222,14 @@ class AbilityScore implements WithIcon {
         isDebilitated: isDebilitated ?? this.isDebilitated,
         debilityName: debilityName ?? this.debilityName,
         debilityDescription: debilityDescription ?? this.debilityDescription,
+        icon: icon ?? customIcon,
       );
 
   int get modifier => isDebilitated ? modifierForValue(value) - 1 : modifierForValue(value);
+
   @override
-  IconData get icon => iconFor(key);
+  IconData get icon => customIcon ?? iconFor(key);
+
   static IconData iconFor(String key) => _icons[key.toLowerCase()] ?? _icons['_other']!;
 
   static int modifierForValue(int value) {
@@ -246,7 +255,7 @@ class AbilityScore implements WithIcon {
     'con': DwIcons.stat_con,
     'int': DwIcons.stat_int,
     'cha': DwIcons.stat_cha,
-    '_other': Icons.help,
+    '_other': Icons.format_list_numbered_rtl,
   };
 
   @override

@@ -51,11 +51,7 @@ class MoveForm extends GetView<DynamicFormController<Move>> {
 }
 
 class MoveFormController extends DynamicFormController<Move> {
-  late final Move? move;
   late final AbilityScores abilityScores;
-
-  @override
-  Move? get argument => move;
 
   @override
   final entity = Move.empty().obs;
@@ -74,7 +70,9 @@ class MoveFormController extends DynamicFormController<Move> {
   @override
   void onInit() {
     final MoveFormArguments args = Get.arguments;
-    move = args.move;
+    if (args.move != null) {
+      entity.value = args.move!;
+    }
     abilityScores = args.abilityScores;
     super.onInit();
   }

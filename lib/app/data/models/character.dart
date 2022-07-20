@@ -7,6 +7,7 @@ import 'dart:math';
 
 import 'package:dungeon_paper/app/data/models/roll_button.dart';
 import 'package:dungeon_paper/app/data/models/user.dart';
+import 'package:dungeon_paper/core/utils/icon_utils.dart';
 import 'package:dungeon_paper/core/utils/list_utils.dart';
 import 'package:dungeon_paper/core/utils/math_utils.dart';
 import 'package:dungeon_paper/core/utils/uuid.dart';
@@ -27,7 +28,7 @@ import 'race.dart';
 import 'ability_scores.dart';
 import 'spell.dart';
 
-class Character implements WithMeta<Character, CharacterMeta>, WithIcon {
+class Character with WithIcon implements WithMeta<Character, CharacterMeta> {
   Character({
     required this.meta,
     required this.key,

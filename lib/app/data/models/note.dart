@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'package:dungeon_paper/core/utils/icon_utils.dart';
 import 'package:dungeon_paper/core/utils/uuid.dart';
 import 'package:dungeon_paper/generated/l10n.dart';
 import 'package:dungeon_world_data/dungeon_world_data.dart' as dw;
@@ -6,7 +7,7 @@ import 'package:flutter/material.dart';
 
 import 'meta.dart';
 
-class Note implements WithMeta, WithIcon {
+class Note with WithIcon implements WithMeta {
   Note({
     required this.meta,
     required this.key,

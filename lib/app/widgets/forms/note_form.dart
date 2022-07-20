@@ -28,17 +28,15 @@ class NoteForm extends GetView<DynamicFormController<Note>> {
 }
 
 class NoteFormController extends DynamicFormController<Note> {
-  late final Note? note;
-  @override
-  Note? get argument => note;
-
   @override
   final entity = Note.empty().obs;
 
   @override
   void onInit() {
     final NoteFormArguments args = Get.arguments;
-    note = args.note;
+    if (args.note != null) {
+      entity.value = args.note!;
+    }
     super.onInit();
   }
 

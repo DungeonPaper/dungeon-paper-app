@@ -1,7 +1,6 @@
 import 'package:dungeon_paper/app/model_utils/tag_utils.dart';
 import 'package:dungeon_paper/app/widgets/chips/primary_chip.dart';
 import 'package:dungeon_paper/app/widgets/dialogs/view_tag_dialog.dart';
-import 'package:dungeon_paper/core/utils/string_utils.dart';
 import 'package:flutter/material.dart';
 
 import 'package:dungeon_world_data/dungeon_world_data.dart' as dw;

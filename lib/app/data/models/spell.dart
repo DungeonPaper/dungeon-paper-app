@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'package:dungeon_paper/app/data/models/user.dart';
 import 'package:dungeon_paper/app/data/services/user_service.dart';
 import 'package:dungeon_paper/app/modules/LibraryList/views/filters/spell_filters.dart';
+import 'package:dungeon_paper/core/utils/icon_utils.dart';
 import 'package:dungeon_paper/core/utils/uuid.dart';
 import 'package:dungeon_world_data/dungeon_world_data.dart' as dw;
 import 'package:flutter/material.dart';
@@ -10,7 +11,7 @@ import 'package:get/get.dart';
 import '../../../core/dw_icons.dart';
 import 'meta.dart';
 
-class Spell extends dw.Spell implements WithMeta, WithIcon {
+class Spell extends dw.Spell with WithIcon implements WithMeta {
   Spell({
     required Meta meta,
     required String key,

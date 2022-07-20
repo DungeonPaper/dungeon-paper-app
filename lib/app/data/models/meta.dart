@@ -414,7 +414,3 @@ mixin WithMeta<T, M> implements WithKey, MetaInterface<T, M> {
   String get storageKey;
   dw.EntityReference get reference => Meta.referenceFor(this);
 }
-
-abstract class WithIcon {
-  IconData get icon;
-}

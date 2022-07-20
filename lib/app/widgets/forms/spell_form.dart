@@ -31,11 +31,7 @@ class SpellForm extends GetView<DynamicFormController<Spell>> {
 }
 
 class SpellFormController extends DynamicFormController<Spell> {
-  late Spell? spell;
   late AbilityScores abilityScores;
-
-  @override
-  Spell? get argument => spell;
 
   @override
   final entity = Spell.empty().obs;
@@ -43,7 +39,9 @@ class SpellFormController extends DynamicFormController<Spell> {
   @override
   void onInit() {
     final SpellFormArguments args = Get.arguments;
-    spell = args.spell;
+    if (args.spell != null) {
+      entity.value = args.spell!;
+    }
     abilityScores = args.abilityScores;
     super.onInit();
   }

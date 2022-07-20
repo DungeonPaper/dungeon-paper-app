@@ -1,10 +1,11 @@
 import 'dart:convert';
+import 'package:dungeon_paper/core/utils/icon_utils.dart';
 import 'package:dungeon_world_data/dungeon_world_data.dart' as dw;
 import 'package:flutter/material.dart';
 
 import 'meta.dart';
 
-class AlignmentValue extends dw.Alignment implements WithMeta, WithIcon {
+class AlignmentValue extends dw.Alignment with WithIcon implements WithMeta {
   AlignmentValue({
     required Meta meta,
     required super.description,

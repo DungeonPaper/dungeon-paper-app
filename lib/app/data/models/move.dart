@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'package:dungeon_paper/app/modules/LibraryList/views/filters/move_filters.dart';
+import 'package:dungeon_paper/core/utils/icon_utils.dart';
 import 'package:dungeon_world_data/dungeon_world_data.dart' as dw;
 import 'package:flutter/material.dart';
 export 'package:dungeon_world_data/move.dart' show MoveCategory;
@@ -8,7 +9,7 @@ import '../../../core/dw_icons.dart';
 import '../../../core/utils/uuid.dart';
 import 'meta.dart';
 
-class Move extends dw.Move implements WithMeta, WithIcon {
+class Move extends dw.Move with WithIcon implements WithMeta {
   Move({
     required Meta meta,
     required String key,
