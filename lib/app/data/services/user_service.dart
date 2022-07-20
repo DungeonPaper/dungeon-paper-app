@@ -39,9 +39,11 @@ class UserService extends GetxService
     api.requests.idToken = await user.getIdToken();
     StorageHandler.instance.currentDelegate = 'firestore';
     StorageHandler.instance.setCollectionPrefix('Data/$email');
-    await loadMyRepo();
-    var dbUser = await StorageHandler.instance.firestoreGlobal.getDocument('Data', email!);
-    if (dbUser == null) {
+    final shouldLoadRepo = current.email != user.email;
+    final dbUser = await StorageHandler.instance.firestoreGlobal.getDocument('Data', email!);
+    final needsMigration = dbUser == null;
+
+    if (needsMigration) {
       final resp = await _migrateUser(user.email!);
       if (resp == null) {
         Get.rawSnackbar(title: S.current.errorUserOperationCanceled);
@@ -53,8 +55,14 @@ class UserService extends GetxService
     } else {
       _current.value = User.fromJson(dbUser);
     }
+
     _registerUserListener();
     charService.registerCharacterListener();
+
+    if (shouldLoadRepo) {
+      loadMyRepo();
+    }
+
     loadingService.loadingUser = false;
     loadingService.afterFirstLoad = !loadingService.loadingCharacters;
   }

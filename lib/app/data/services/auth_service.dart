@@ -1,11 +1,13 @@
 import 'package:dungeon_paper/app/data/services/loading_service.dart';
+import 'package:dungeon_paper/app/data/services/repository_service.dart';
 import 'package:dungeon_paper/app/data/services/user_service.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 
-class AuthService extends GetxService with UserServiceMixin, LoadingServiceMixin {
+class AuthService extends GetxService
+    with UserServiceMixin, LoadingServiceMixin, RepositoryServiceMixin {
   FirebaseAuth get auth => FirebaseAuth.instance;
   final gSignIn = GoogleSignIn.standard();
 
@@ -45,9 +47,10 @@ class AuthService extends GetxService with UserServiceMixin, LoadingServiceMixin
         loadingService.loadingCharacters = !loadingService.afterFirstLoad;
         loadingService.afterFirstLoad = false;
         userService.loadUserData(user);
-      } else {
-        userService.loadGuestData();
+        return;
       }
+
+      userService.loadGuestData();
     });
   }
 }
