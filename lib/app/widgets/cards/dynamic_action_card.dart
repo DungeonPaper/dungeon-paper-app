@@ -79,7 +79,7 @@ class _DynamicActionCardState extends State<DynamicActionCard> {
       builder: (context, orientation) {
         final children = _buildChildren(context);
         var star = Container(
-          width: 20,
+          width: 32,
           height: 20,
           padding: EdgeInsets.only(
             left: widget.leading.isNotEmpty ? 8 : 0,

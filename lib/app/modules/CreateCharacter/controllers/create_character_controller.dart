@@ -96,7 +96,7 @@ class CreateCharacterController extends GetxController {
     moves.clear();
     moves.addAll(
       [...repo.builtIn.moves.values, ...repo.my.moves.values]
-          .where((m) => (m.classKeys.contains(characterClass.value!.key) &&
+          .where((m) => (m.classKeys.contains(characterClass.value!.reference) &&
               m.category == MoveCategory.starting))
           .map(
             // favorite: move.category != MoveCategory.basic

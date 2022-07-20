@@ -340,9 +340,11 @@ class _RollDiceViewState extends State<RollDiceView> with TickerProviderStateMix
     _walkAnimations(
       ((animation, groupIndex, animIndex) => animation.controller.addListener(_updateAnimStatus)),
     );
-    animations.last.last.controller.addListener(_updateAnimStatus);
-    if (start) {
-      _runAnimations();
+    if (animations.isNotEmpty && animations.last.isNotEmpty) {
+      animations.last.last.controller.addListener(_updateAnimStatus);
+      if (start) {
+        _runAnimations();
+      }
     }
   }
 

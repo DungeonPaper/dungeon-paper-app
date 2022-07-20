@@ -49,8 +49,7 @@ class TagChip extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // TODO fix case in data
-    final name = toTitleCase(tag.name);
+    final name = tag.name;
 
     return PrimaryChip(
       icon: icon != null ? icon! : TagUtils.iconOf(tag),

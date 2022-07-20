@@ -8,7 +8,6 @@ class ValueNotifierBuilder<T> extends StatefulWidget {
   }) : super(key: key);
 
   final ValueNotifier<T> value;
-  // TODO dynamic wtf
   final Widget Function(BuildContext context, dynamic value) builder;
 
   @override

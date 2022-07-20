@@ -87,7 +87,7 @@ class HomeEmptyState extends StatelessWidget with UserServiceMixin {
             ),
             if (user.isGuest) ...[
               const Divider(height: 32),
-              Container(
+              SizedBox(
                 width: 500,
                 child: Card(
                   margin: const EdgeInsets.all(32),

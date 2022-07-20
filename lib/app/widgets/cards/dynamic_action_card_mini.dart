@@ -86,17 +86,18 @@ class DynamicActionCardMini extends StatelessWidget {
               ],
               // TODO use Stack with the icon to create larger tap area while maintaining max text available width
               Expanded(
-                  child: Text(
-                title,
-                overflow: TextOverflow.ellipsis,
-                maxLines: 1,
-                style: textTheme.bodyText1!.copyWith(
-                  color: titleFgColor,
+                child: Text(
+                  title,
+                  overflow: TextOverflow.ellipsis,
+                  maxLines: 1,
+                  style: textTheme.bodyText1!.copyWith(
+                    color: titleFgColor,
+                  ),
                 ),
-              )),
+              ),
               showStar
                   ? SizedBox(
-                      width: 20,
+                      width: 24,
                       height: 20,
                       child: IconButton(
                         // visualDensity: VisualDensity.compact,
