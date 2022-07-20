@@ -6,6 +6,7 @@ import 'package:dungeon_paper/app/data/models/character_class.dart';
 import 'package:dungeon_paper/app/data/models/item.dart';
 import 'package:dungeon_paper/app/data/models/meta.dart';
 import 'package:dungeon_paper/app/data/models/move.dart';
+import 'package:dungeon_paper/app/data/models/race.dart';
 import 'package:dungeon_paper/app/data/models/spell.dart';
 import 'package:dungeon_paper/app/modules/ImportExport/local_widgets/import_progress_dialog.dart';
 import 'package:dungeon_paper/core/storage_handler/storage_handler.dart';
@@ -26,6 +27,7 @@ class ImportController extends GetxController
   List<Spell> get spells => toImport.value!.allSpells.toList();
   List<Item> get items => toImport.value!.allItems.toList();
   List<CharacterClass> get classes => toImport.value!.allClasses.toList();
+  List<Race> get races => toImport.value!.allRaces.toList();
 
   int get selectionsCount =>
       [characters, moves, spells, items, classes].fold(0, (total, list) => total + list.length);
@@ -60,6 +62,9 @@ class ImportController extends GetxController
         toImport.value!.classes =
             _toggleInList(toImport.value!.classes, items.cast<CharacterClass>(), state);
         break;
+      case Race:
+        toImport.value!.races = _toggleInList(toImport.value!.races, items.cast<Race>(), state);
+        break;
     }
     toImport.refresh();
   }
@@ -90,6 +95,8 @@ class ImportController extends GetxController
         return items as List<T>;
       case CharacterClass:
         return classes as List<T>;
+      case Race:
+        return races as List<T>;
     }
     throw TypeError();
   }
@@ -175,6 +182,7 @@ class ImportSelections {
   final List<Move> allMoves;
   final List<Spell> allSpells;
   final List<Item> allItems;
+  final List<Race> allRaces;
 
   ImportSelections({
     required this.allClasses,
@@ -182,11 +190,13 @@ class ImportSelections {
     required this.allMoves,
     required this.allSpells,
     required this.allItems,
+    required this.allRaces,
     this.classes = const [],
     this.characters = const [],
     this.moves = const [],
     this.spells = const [],
     this.items = const [],
+    this.races = const [],
   });
 
   List<CharacterClass> classes;
@@ -194,28 +204,41 @@ class ImportSelections {
   List<Move> moves;
   List<Spell> spells;
   List<Item> items;
+  List<Race> races;
 
   factory ImportSelections.fromJson(Map<String, dynamic> json) {
     final allClasses = (json['classes'] ?? [])
         .map((x) => CharacterClass.fromJson(x))
         .toList()
         .cast<CharacterClass>();
-    final allCharacters =
-        (json['characters'] ?? []).map((x) => Character.fromJson(x)).toList().cast<Character>();
-    final allMoves = (json['moves'] ?? []).map((x) => Move.fromJson(x)).toList().cast<Move>();
-    final allSpells = (json['spells'] ?? []).map((x) => Spell.fromJson(x)).toList().cast<Spell>();
-    final allItems = (json['items'] ?? []).map((x) => Item.fromJson(x)).toList().cast<Item>();
+    final allCharacters = List<dynamic>.from(json['characters'] ?? [])
+        .map((x) => Character.fromJson(x))
+        .toList()
+        .cast<Character>();
+    final allMoves =
+        List<dynamic>.from(json['moves'] ?? []).map((x) => Move.fromJson(x)).toList().cast<Move>();
+    final allSpells = List<dynamic>.from(json['spells'] ?? [])
+        .map((x) => Spell.fromJson(x))
+        .toList()
+        .cast<Spell>();
+    final allItems =
+        List<dynamic>.from(json['items'] ?? []).map((x) => Item.fromJson(x)).toList().cast<Item>();
+    final allRaces =
+        List<dynamic>.from(json['races'] ?? []).map((x) => Race.fromJson(x)).toList().cast<Race>();
+
     return ImportSelections(
       allClasses: allClasses,
       allCharacters: allCharacters,
       allMoves: allMoves,
       allSpells: allSpells,
       allItems: allItems,
+      allRaces: allRaces,
       classes: allClasses,
       characters: allCharacters,
       moves: allMoves,
       spells: allSpells,
       items: allItems,
+      races: allRaces,
     );
   }
 
@@ -231,6 +254,8 @@ class ImportSelections {
         return (selected ? items : allItems) as List<T>;
       case CharacterClass:
         return (selected ? classes : allClasses) as List<T>;
+      case Race:
+        return (selected ? races : allRaces) as List<T>;
     }
     throw TypeError();
   }
@@ -241,5 +266,6 @@ class ImportSelections {
         moves,
         spells,
         items,
+        races,
       ].any((l) => l.isNotEmpty);
 }

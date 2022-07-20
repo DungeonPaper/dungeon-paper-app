@@ -6,6 +6,7 @@ import 'package:dungeon_paper/app/data/models/character_class.dart';
 import 'package:dungeon_paper/app/data/models/item.dart';
 import 'package:dungeon_paper/app/data/models/meta.dart';
 import 'package:dungeon_paper/app/data/models/move.dart';
+import 'package:dungeon_paper/app/data/models/race.dart';
 import 'package:dungeon_paper/app/data/models/spell.dart';
 import 'package:dungeon_paper/app/data/services/character_service.dart';
 import 'package:dungeon_paper/app/data/services/repository_service.dart';
@@ -29,6 +30,7 @@ class ExportController extends GetxController
   List<Spell> get spells => repo.my.spells.values.toList();
   List<Item> get items => repo.my.items.values.toList();
   List<CharacterClass> get classes => repo.my.classes.values.toList();
+  List<Race> get races => repo.my.races.values.toList();
 
   @override
   void onInit() {
@@ -38,6 +40,7 @@ class ExportController extends GetxController
     toExport.value.spells = List.from(spells);
     toExport.value.items = List.from(items);
     toExport.value.classes = List.from(classes);
+    toExport.value.races = List.from(races);
   }
 
   @override
@@ -64,6 +67,9 @@ class ExportController extends GetxController
       case CharacterClass:
         toExport.value.classes =
             _toggleInList(toExport.value.classes, items.cast<CharacterClass>(), state);
+        break;
+      case Race:
+        toExport.value.races = _toggleInList(toExport.value.races, items.cast<Race>(), state);
         break;
     }
     toExport.refresh();
@@ -139,6 +145,8 @@ class ExportController extends GetxController
         return items as List<T>;
       case CharacterClass:
         return classes as List<T>;
+      case Race:
+        return races as List<T>;
     }
     throw TypeError();
   }
@@ -150,6 +158,7 @@ class ExportSelections {
   List<Move> moves = [];
   List<Spell> spells = [];
   List<Item> items = [];
+  List<Race> races = [];
 
   Map<String, dynamic> toJson() => {
         'classes': classes.map((x) => x.toJson()).toList(),
@@ -157,6 +166,7 @@ class ExportSelections {
         'moves': moves.map((x) => x.toJson()).toList(),
         'spells': spells.map((x) => x.toJson()).toList(),
         'items': items.map((x) => x.toJson()).toList(),
+        'races': races.map((x) => x.toJson()).toList(),
       };
 
   List<T> listByType<T>() {
@@ -171,6 +181,8 @@ class ExportSelections {
         return items as List<T>;
       case CharacterClass:
         return classes as List<T>;
+      case Race:
+        return races as List<T>;
     }
     throw TypeError();
   }

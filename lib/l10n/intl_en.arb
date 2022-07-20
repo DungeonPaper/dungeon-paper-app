@@ -221,6 +221,8 @@
   "genericDescriptionField": "{entity} description",
   "genericNameField": "{entity} name",
   "genericValueField": "{entity} value",
+  "homeEmptyStateLoginTitle": "Sign in to get more features",
+  "homeEmptyStateLoginSubtitle": "Online data sync, library sharing, campaigns and more!",
   "homeEmptyStateTitle": "No Characters",
   "homeEmptyStateSubtitle": "Create a Character to get started",
   "hp": "HP",

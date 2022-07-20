@@ -2,6 +2,7 @@ import 'package:dungeon_paper/app/data/models/character.dart';
 import 'package:dungeon_paper/app/data/models/character_class.dart';
 import 'package:dungeon_paper/app/data/models/item.dart';
 import 'package:dungeon_paper/app/data/models/move.dart';
+import 'package:dungeon_paper/app/data/models/race.dart';
 import 'package:dungeon_paper/app/data/models/spell.dart';
 import 'package:flutter/material.dart';
 
@@ -25,6 +26,7 @@ class ExportView extends GetView<ExportController> {
           ListCard<Move, ExportController>(),
           ListCard<Spell, ExportController>(),
           ListCard<Item, ExportController>(),
+          ListCard<Race, ExportController>(),
         ],
       ),
     );

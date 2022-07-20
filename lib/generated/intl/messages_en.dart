@@ -632,6 +632,10 @@ class MessageLookup extends MessageLookupByLibrary {
         "genericDescriptionField": m51,
         "genericNameField": m52,
         "genericValueField": m53,
+        "homeEmptyStateLoginSubtitle": MessageLookupByLibrary.simpleMessage(
+            "Online data sync, library sharing, campaigns and more!"),
+        "homeEmptyStateLoginTitle": MessageLookupByLibrary.simpleMessage(
+            "Sign in to get more features"),
         "homeEmptyStateSubtitle": MessageLookupByLibrary.simpleMessage(
             "Create a Character to get started"),
         "homeEmptyStateTitle":

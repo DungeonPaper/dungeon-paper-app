@@ -2,6 +2,7 @@ import 'package:dungeon_paper/app/data/models/character.dart';
 import 'package:dungeon_paper/app/data/models/character_class.dart';
 import 'package:dungeon_paper/app/data/models/item.dart';
 import 'package:dungeon_paper/app/data/models/move.dart';
+import 'package:dungeon_paper/app/data/models/race.dart';
 import 'package:dungeon_paper/app/data/models/spell.dart';
 import 'package:dungeon_paper/app/modules/ImportExport/controllers/import_controller.dart';
 import 'package:dungeon_paper/generated/l10n.dart';
@@ -33,6 +34,7 @@ class ImportView extends GetView<ImportController> {
                   const ListCard<Move, ImportController>(),
                   const ListCard<Spell, ImportController>(),
                   const ListCard<Item, ImportController>(),
+                  const ListCard<Race, ImportController>(),
                 ]
               : [
                   Text(S.current.importBrowseHelp),

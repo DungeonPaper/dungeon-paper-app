@@ -6,6 +6,7 @@ import 'package:dungeon_paper/app/modules/Home/views/home_character_actions_view
 import 'package:dungeon_paper/app/modules/Home/views/home_character_journal_view.dart';
 import 'package:dungeon_paper/app/modules/Home/views/home_loader_view.dart';
 import 'package:dungeon_paper/app/routes/app_pages.dart';
+import 'package:dungeon_paper/app/themes/button_themes.dart';
 import 'package:dungeon_paper/generated/l10n.dart';
 import 'package:flutter/material.dart';
 
@@ -55,7 +56,7 @@ class HomeView extends GetView<CharacterService>
   }
 }
 
-class HomeEmptyState extends StatelessWidget {
+class HomeEmptyState extends StatelessWidget with UserServiceMixin {
   const HomeEmptyState({super.key});
 
   @override
@@ -63,19 +64,63 @@ class HomeEmptyState extends StatelessWidget {
     final theme = Theme.of(context);
     final textTheme = theme.textTheme;
     return Center(
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          Text(S.current.homeEmptyStateTitle, style: textTheme.headline6),
-          const SizedBox(height: 16),
-          Text(S.current.homeEmptyStateSubtitle, style: textTheme.subtitle1),
-          const SizedBox(height: 16),
-          ElevatedButton.icon(
-            label: Text(S.current.createGeneric(S.current.entity(Character))),
-            icon: const Icon(Icons.person_add),
-            onPressed: () => Get.toNamed(Routes.createCharacter),
-          ),
-        ],
+      child: SingleChildScrollView(
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Text(
+              S.current.homeEmptyStateTitle,
+              style: textTheme.headline6,
+              textAlign: TextAlign.center,
+            ),
+            const SizedBox(height: 16),
+            Text(
+              S.current.homeEmptyStateSubtitle,
+              style: textTheme.subtitle1,
+              textAlign: TextAlign.center,
+            ),
+            const SizedBox(height: 16),
+            ElevatedButton.icon(
+              label: Text(S.current.createGeneric(S.current.entity(Character))),
+              icon: const Icon(Icons.person_add),
+              onPressed: () => Get.toNamed(Routes.createCharacter),
+            ),
+            if (user.isGuest) ...[
+              const Divider(height: 32),
+              Container(
+                width: 500,
+                child: Card(
+                  margin: const EdgeInsets.all(32),
+                  child: Padding(
+                    padding: const EdgeInsets.all(24),
+                    child: Column(
+                      children: [
+                        Text(
+                          S.current.homeEmptyStateLoginTitle,
+                          style: textTheme.headline6,
+                          textAlign: TextAlign.center,
+                        ),
+                        const SizedBox(height: 16),
+                        Text(
+                          S.current.homeEmptyStateLoginSubtitle,
+                          style: textTheme.subtitle1,
+                          textAlign: TextAlign.center,
+                        ),
+                        const SizedBox(height: 16),
+                        ElevatedButton.icon(
+                          label: Text(S.current.signinButton),
+                          icon: const Icon(Icons.login),
+                          onPressed: () => Get.toNamed(Routes.login),
+                          style: ButtonThemes.primaryElevated(context),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+              ),
+            ],
+          ],
+        ),
       ),
     );
   }

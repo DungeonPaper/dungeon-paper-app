@@ -2308,6 +2308,26 @@ class S {
     );
   }
 
+  /// `Sign in to get more features`
+  String get homeEmptyStateLoginTitle {
+    return Intl.message(
+      'Sign in to get more features',
+      name: 'homeEmptyStateLoginTitle',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Online data sync, library sharing, campaigns and more!`
+  String get homeEmptyStateLoginSubtitle {
+    return Intl.message(
+      'Online data sync, library sharing, campaigns and more!',
+      name: 'homeEmptyStateLoginSubtitle',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `No Characters`
   String get homeEmptyStateTitle {
     return Intl.message(
