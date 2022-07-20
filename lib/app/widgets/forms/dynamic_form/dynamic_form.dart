@@ -8,6 +8,7 @@ import 'package:dungeon_paper/app/widgets/forms/entity_share_form.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
+import '../library_entity_form.dart';
 import 'form_input_data.dart';
 
 class DynamicForm<T extends WithMeta> extends StatefulWidget {
@@ -104,6 +105,10 @@ abstract class DynamicFormController<T extends WithMeta> extends GetxController 
   abstract final Rx<T> entity;
   final dirty = false.obs;
 
+  late final void Function(T item) onChange;
+  late final FormContext type;
+  late final LibraryEntityFormArguments<T> args;
+
   @mustCallSuper
   T setData(Map<String, dynamic> data, {required bool setDirty}) {
     for (final input in inputs) {
@@ -126,6 +131,9 @@ abstract class DynamicFormController<T extends WithMeta> extends GetxController 
 
   @mustCallSuper
   FutureOr<void> init() {
+    args = Get.arguments;
+    type = args.type;
+    onChange = args.onChange;
     createInputs();
     entity.value = entity.value.copyWithInherited(key: entity.value.key, meta: entity.value.meta);
     setFromEntity(entity.value);

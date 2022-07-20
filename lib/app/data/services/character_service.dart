@@ -123,6 +123,7 @@ class CharacterService extends GetxService with LoadingServiceMixin, UserService
 
   Future<void> updateCharacter(Character character, {bool switchToCharacter = false}) {
     // (StorageHandler.instance.delegate as LocalStorageDelegate).storage.collection('Characters');
+    character = character.copyWithInherited(meta: character.meta.stampUpdate());
     all[character.key] = character;
     if (switchToCharacter || _currentKey.value == null || !all.containsKey(_currentKey.value)) {
       setCurrent(character.key);

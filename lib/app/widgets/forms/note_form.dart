@@ -7,22 +7,15 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class NoteForm extends GetView<DynamicFormController<Note>> {
-  const NoteForm({
-    Key? key,
-    required this.onChange,
-    required this.type,
-  }) : super(key: key);
-
-  final void Function(Note note) onChange;
-  final ItemFormType type;
+  const NoteForm({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return DynamicForm<Note>(
       entity: controller.entity.value,
       inputs: controller.inputs,
-      onChange: (d) => onChange(controller.setData(d, setDirty: true)),
-      onReplace: (d) => onChange(controller.setFromEntity(d)),
+      onChange: (d) => controller.onChange(controller.setData(d, setDirty: true)),
+      onReplace: (d) => controller.onChange(controller.setFromEntity(d)),
     );
   }
 }
@@ -34,8 +27,8 @@ class NoteFormController extends DynamicFormController<Note> {
   @override
   void onInit() {
     final NoteFormArguments args = Get.arguments;
-    if (args.note != null) {
-      entity.value = args.note!;
+    if (args.entity != null) {
+      entity.value = args.entity!;
     }
     super.onInit();
   }
@@ -100,10 +93,10 @@ class NoteFormController extends DynamicFormController<Note> {
   }
 }
 
-class NoteFormArguments {
-  final Note? note;
-
+class NoteFormArguments extends LibraryEntityFormArguments<Note> {
   NoteFormArguments({
-    required this.note,
+    required super.entity,
+    required super.onChange,
+    required super.type,
   });
 }

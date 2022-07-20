@@ -291,6 +291,8 @@ class MessageLookup extends MessageLookupByLibrary {
 
   static String m92(tag) => "Copy from: ${tag}";
 
+  static String m93(entity) => "View ${entity}";
+
   final messages = _notInlinedMessages(_notInlinedMessages);
   static Map<String, Function> _notInlinedMessages(_) => <String, Function>{
         "abilityScoreBondDebilityDescription":
@@ -850,6 +852,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "userMenuRecentCharacters":
             MessageLookupByLibrary.simpleMessage("Recent Characters"),
         "userUnregistered":
-            MessageLookupByLibrary.simpleMessage("Not registered")
+            MessageLookupByLibrary.simpleMessage("Not registered"),
+        "view": MessageLookupByLibrary.simpleMessage("View"),
+        "viewGeneric": m93
       };
 }

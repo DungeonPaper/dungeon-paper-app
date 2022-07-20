@@ -1,3 +1,8 @@
+import 'package:dungeon_paper/app/data/models/character_class.dart';
+import 'package:dungeon_paper/app/data/models/note.dart';
+import 'package:dungeon_paper/app/data/models/race.dart';
+import 'package:dungeon_paper/app/modules/LibraryList/bindings/library_form_binding.dart';
+import 'package:dungeon_paper/app/widgets/forms/library_entity_form.dart';
 import 'package:flutter/widgets.dart';
 
 import 'package:get/get.dart';
@@ -134,9 +139,21 @@ class AppPages {
       preventDuplicates: false,
     ),
     GetPage(
+      name: Routes.editMove,
+      page: () => const LibraryEntityForm<Move>(),
+      binding: LibraryFormBinding<Move>(),
+      preventDuplicates: false,
+    ),
+    GetPage(
       name: Routes.spells,
       page: () => const SpellsLibraryListView(),
       binding: LibraryListBinding(),
+      preventDuplicates: false,
+    ),
+    GetPage(
+      name: Routes.editSpell,
+      page: () => const LibraryEntityForm<Spell>(),
+      binding: LibraryFormBinding<Spell>(),
       preventDuplicates: false,
     ),
     GetPage(
@@ -146,15 +163,33 @@ class AppPages {
       preventDuplicates: false,
     ),
     GetPage(
-      name: Routes.characterClass,
+      name: Routes.editItem,
+      page: () => const LibraryEntityForm<Item>(),
+      binding: LibraryFormBinding<Item>(),
+      preventDuplicates: false,
+    ),
+    GetPage(
+      name: Routes.classes,
       page: () => const CharacterClassesLibraryListView(),
       binding: LibraryListBinding(),
+      preventDuplicates: false,
+    ),
+    GetPage(
+      name: Routes.editClass,
+      page: () => const LibraryEntityForm<CharacterClass>(),
+      binding: LibraryFormBinding<CharacterClass>(),
       preventDuplicates: false,
     ),
     GetPage(
       name: Routes.races,
       page: () => const RacesLibraryListView(),
       binding: LibraryListBinding(),
+      preventDuplicates: false,
+    ),
+    GetPage(
+      name: Routes.editRace,
+      page: () => const LibraryEntityForm<Race>(),
+      binding: LibraryFormBinding<Race>(),
       preventDuplicates: false,
     ),
 

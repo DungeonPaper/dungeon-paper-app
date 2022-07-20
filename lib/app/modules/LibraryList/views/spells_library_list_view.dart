@@ -6,7 +6,6 @@ import 'package:dungeon_paper/app/modules/LibraryList/views/library_list_view.da
 import 'package:dungeon_paper/app/themes/button_themes.dart';
 import 'package:dungeon_paper/app/widgets/cards/spell_card.dart';
 import 'package:dungeon_paper/app/widgets/menus/entity_edit_menu.dart';
-import 'package:dungeon_paper/generated/l10n.dart';
 import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
@@ -23,7 +22,6 @@ class SpellsLibraryListView extends GetView<LibraryListController<Spell, SpellFi
   @override
   Widget build(BuildContext context) {
     return LibraryListView<Spell, SpellFilters>(
-      title: Text(S.current.addGeneric(S.current.entityPlural(Spell))),
       filtersBuilder: (group, filters, onChange) => SpellFiltersView(
         group: group,
         filters: filters,

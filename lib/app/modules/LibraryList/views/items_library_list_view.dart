@@ -6,7 +6,6 @@ import 'package:dungeon_paper/app/modules/LibraryList/views/library_list_view.da
 import 'package:dungeon_paper/app/themes/button_themes.dart';
 import 'package:dungeon_paper/app/widgets/cards/item_card.dart';
 import 'package:dungeon_paper/app/widgets/menus/entity_edit_menu.dart';
-import 'package:dungeon_paper/generated/l10n.dart';
 import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
@@ -23,7 +22,6 @@ class ItemsLibraryListView extends GetView<LibraryListController<Item, ItemFilte
   @override
   Widget build(BuildContext context) {
     return LibraryListView<Item, ItemFilters>(
-      title: Text(S.current.addGeneric(S.current.entityPlural(Item))),
       filtersBuilder: (group, filters, onChange) => ItemFiltersView(
         filters: filters,
         onChange: (f) => onChange(group, f),

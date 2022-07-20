@@ -7,7 +7,6 @@ import 'package:dungeon_paper/app/modules/LibraryList/views/library_list_view.da
 import 'package:dungeon_paper/app/themes/button_themes.dart';
 import 'package:dungeon_paper/app/widgets/cards/character_class_card.dart';
 import 'package:dungeon_paper/app/widgets/menus/entity_edit_menu.dart';
-import 'package:dungeon_paper/generated/l10n.dart';
 import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
@@ -26,7 +25,6 @@ class CharacterClassesLibraryListView
   @override
   Widget build(BuildContext context) {
     return LibraryListView<CharacterClass, CharacterClassFilters>(
-      title: Text(S.current.addGeneric(S.current.entityPlural(CharacterClass))),
       filtersBuilder: (group, filters, onChange) => CharacterClassFiltersView(
         group: group,
         filters: filters,

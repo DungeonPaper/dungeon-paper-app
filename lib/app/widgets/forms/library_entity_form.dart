@@ -21,20 +21,14 @@ import 'package:get/get.dart';
 
 import 'character_class_form.dart';
 
-enum ItemFormType {
+enum FormContext {
   edit,
   create,
 }
 
 class LibraryEntityForm<T extends WithMeta> extends GetView<DynamicFormController<T>> {
-  const LibraryEntityForm({
-    Key? key,
-    required this.onSave,
-    required this.type,
-  }) : super(key: key);
+  const LibraryEntityForm({Key? key}) : super(key: key);
 
-  final void Function(T item) onSave;
-  final ItemFormType type;
   T get entity => controller.entity.value;
 
   @override
@@ -49,7 +43,7 @@ class LibraryEntityForm<T extends WithMeta> extends GetView<DynamicFormControlle
           body: buildForm(context, entity),
           floatingActionButton: AdvancedFloatingActionButton.extended(
             onPressed: () {
-              onSave(entity);
+              controller.onChange(entity);
               Get.back();
             },
             label: Text(S.current.save),
@@ -63,7 +57,7 @@ class LibraryEntityForm<T extends WithMeta> extends GetView<DynamicFormControlle
   User get user => Get.find<UserService>().current;
 
   Widget get title => Text(
-        type == ItemFormType.create
+        controller.type == FormContext.create
             ? S.current.addGeneric(S.current.entity(T))
             : S.current.editGeneric(S.current.entity(T)),
       );
@@ -76,37 +70,31 @@ class LibraryEntityForm<T extends WithMeta> extends GetView<DynamicFormControlle
   Widget buildForm(BuildContext context, T entity) {
     switch (T) {
       case Move:
-        return MoveForm(
-          onChange: setEntity,
-          type: type,
-        );
+        return const MoveForm();
       case Spell:
-        return SpellForm(
-          onChange: setEntity,
-          type: type,
-        );
+        return const SpellForm();
       case Item:
-        return ItemForm(
-          onChange: setEntity,
-          type: type,
-        );
+        return const ItemForm();
       case Note:
-        return NoteForm(
-          onChange: setEntity,
-          type: type,
-        );
+        return const NoteForm();
       case CharacterClass:
-        return AddCharacterClassForm(
-          onChange: setEntity,
-          type: type,
-        );
+        return const AddCharacterClassForm();
       case Race:
-        return RaceForm(
-          onChange: setEntity,
-          type: type,
-        );
+        return const RaceForm();
       default:
         throw UnsupportedError('Unsupported type: $T');
     }
   }
+}
+
+class LibraryEntityFormArguments<T extends WithMeta> {
+  final void Function(T item) onChange;
+  final FormContext type;
+  final T? entity;
+
+  LibraryEntityFormArguments({
+    required this.entity,
+    required this.onChange,
+    required this.type,
+  });
 }

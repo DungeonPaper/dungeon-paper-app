@@ -7,7 +7,6 @@ import 'package:dungeon_paper/app/modules/LibraryList/views/library_list_view.da
 import 'package:dungeon_paper/app/themes/button_themes.dart';
 import 'package:dungeon_paper/app/widgets/cards/move_card.dart';
 import 'package:dungeon_paper/app/widgets/menus/entity_edit_menu.dart';
-import 'package:dungeon_paper/generated/l10n.dart';
 import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
@@ -25,7 +24,6 @@ class MovesLibraryListView extends GetView<LibraryListController<Move, MoveFilte
   @override
   Widget build(BuildContext context) {
     return LibraryListView<Move, MoveFilters>(
-      title: Text(S.current.addGeneric(S.current.entityPlural(Move))),
       filtersBuilder: (group, filters, onChange) => MoveFiltersView(
         group: group,
         filters: filters,

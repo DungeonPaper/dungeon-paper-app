@@ -4,65 +4,82 @@ part of 'app_pages.dart';
 abstract class Routes {
   Routes._();
 
-  static const login = _Paths.login;
-  static const userMenu = _Paths.userMenu;
   static const home = _Paths.home;
+  static const about = _Paths.about;
   static const characterList = _Paths.characterList;
+  static const importExport = _Paths.importExport;
+  static const login = _Paths.login;
+  static const migration = _Paths.migration;
   static const rollDice = _Paths.rollDice;
   static const settings = _Paths.settings;
-  static const importExport = _Paths.importExport;
+  static const universalSearch = _Paths.search;
+  static const userMenu = _Paths.userMenu;
 
   static const library = _Paths.library;
-  static const moves = _Paths.moves;
-  static const spells = _Paths.spells;
-  static const items = _Paths.items;
-  static const races = _Paths.races;
-  static const notes = _Paths.notes;
-  static const characterClass = _Paths.characterClass;
-
-  static const basicInfo = _Paths.basicInfo;
-  static const bondsFlags = _Paths.bondsFlags;
-  static const abilityScores = _Paths.abilityScores;
-  static const bio = _Paths.bio;
+  static const moves = _Paths.library + _Paths.moves;
+  static const editMove = _Paths.library + _Paths.moves + _Paths.edit;
+  static const spells = _Paths.library + _Paths.spells;
+  static const editSpell = _Paths.library + _Paths.spells + _Paths.edit;
+  static const items = _Paths.library + _Paths.items;
+  static const editItem = _Paths.library + _Paths.items + _Paths.edit;
+  static const races = _Paths.library + _Paths.races;
+  static const editRace = _Paths.library + _Paths.races + _Paths.edit;
+  static const notes = _Paths.library + _Paths.notes;
+  static const editNote = _Paths.library + _Paths.notes + _Paths.edit;
+  static const classes = _Paths.library + _Paths.characterClass;
+  static const editClass = _Paths.library + _Paths.characterClass + _Paths.edit;
 
   static listByType<T extends WithMeta>() => {
-        Move: _Paths.moves,
-        Spell: _Paths.spells,
-        Item: _Paths.items,
+        Move: Routes.moves,
+        Spell: Routes.spells,
+        Item: Routes.items,
+        Race: Routes.races,
+        Note: Routes.notes,
+        CharacterClass: Routes.classes,
       }[T];
 
-  static const createCharacter = _Paths.createCharacter;
-  static const createCharacterSelectClass = _Paths.createCharacter + _Paths.characterClass;
-  static const createCharacterAbilityScores = _Paths.createCharacter + _Paths.abilityScores;
-  static const createCharacterMovesSpells = _Paths.createCharacter + _Paths.selectMovesSpells;
-  static const createCharacterBasicInfo = _Paths.createCharacter + _Paths.basicInfo;
-  static const createCharacterStartingGear = _Paths.createCharacter + _Paths.startingGear;
-  static const hpDialog = _Paths.hpDialog;
-  static const classAlignments = _Paths.classAlignments;
-  static const universalSearch = _Paths.universalSearch;
-  static const migration = _Paths.migration;
-  static const about = _Paths.about;
-  static const selectCharacterTheme = _Paths.selectCharacterTheme;
-  static const abilityScoreForm = _Paths.abilityScoreForm;
+  static const createCharacter = _Paths.character + _Paths.create;
+  static const createCharacterAbilityScores =
+      _Paths.character + _Paths.create + _Paths.abilityScores;
+  static const createCharacterBasicInfo = _Paths.character + _Paths.create + _Paths.basicInfo;
+  static const createCharacterMovesSpells =
+      _Paths.character + _Paths.create + _Paths.selectMovesSpells;
+  static const createCharacterSelectClass =
+      _Paths.character + _Paths.create + _Paths.characterClass;
+  static const createCharacterStartingGear = _Paths.character + _Paths.create + _Paths.startingGear;
+
+  static const characterClass = _Paths.character + _Paths.characterClass; // TODO add page
+  static const abilityScoreForm = _Paths.character + _Paths.abilityScoreForm;
+  static const abilityScores = _Paths.character + _Paths.abilityScores;
+  static const basicInfo = _Paths.character + _Paths.basicInfo;
+  static const bio = _Paths.character + _Paths.bio;
+  static const bondsFlags = _Paths.character + _Paths.bondsFlags;
+  static const classAlignments = _Paths.character + _Paths.classAlignments;
+  static const selectCharacterTheme = _Paths.character + _Paths.selectCharacterTheme;
 }
 
 abstract class _Paths {
   _Paths._();
 
-  static const login = '/login';
-  static const userMenu = '/user-menu';
   static const home = '/';
-  static const characterList = '/character-list';
-  static const rollDice = '/roll';
-  static const settings = '/settings';
+  static const about = '/about';
+  static const character = '/character';
+  static const characterList = '/characters';
   static const importExport = '/import-export';
+  static const login = '/login';
+  static const migration = '/migration';
+  static const rollDice = '/roll';
+  static const search = '/search';
+  static const edit = '/edit';
+  static const create = '/edit';
+  static const settings = '/settings';
+  static const userMenu = '/user-menu';
 
-  static const createCharacter = '/create-character';
-  static const basicInfo = '/basic-info';
   static const abilityScores = '/roll-stats';
+  static const basicInfo = '/basic-info';
+  static const characterClass = '/class';
+  static const selectMovesSpells = '/moves-and-spells';
   static const startingGear = '/starting-gear';
-  static const selectMovesSpells = '/moves-spells';
-  static const characterClass = '/character-class';
 
   static const library = '/library';
   static const moves = '/moves';
@@ -70,13 +87,10 @@ abstract class _Paths {
   static const items = '/items';
   static const races = '/races';
   static const notes = '/notes';
-  static const bondsFlags = '/bonds-flags';
-  static const bio = '/biography';
-  static const hpDialog = '/edit-hp';
-  static const classAlignments = '/class-alignments';
-  static const universalSearch = '/search';
-  static const migration = '/migration';
-  static const about = '/about';
-  static const selectCharacterTheme = '/character-theme';
+
   static const abilityScoreForm = '/ability-score';
+  static const bio = '/biography';
+  static const bondsFlags = '/bonds-flags';
+  static const classAlignments = '/class-alignments';
+  static const selectCharacterTheme = '/character-theme';
 }

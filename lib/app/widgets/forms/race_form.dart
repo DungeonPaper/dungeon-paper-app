@@ -11,22 +11,15 @@ import 'package:get/get.dart';
 import 'package:dungeon_world_data/dungeon_world_data.dart' as dw;
 
 class RaceForm extends GetView<DynamicFormController<Race>> {
-  const RaceForm({
-    Key? key,
-    required this.onChange,
-    required this.type,
-  }) : super(key: key);
-
-  final void Function(Race race) onChange;
-  final ItemFormType type;
+  const RaceForm({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return DynamicForm(
       entity: controller.entity.value,
       inputs: controller.inputs,
-      onChange: (d) => onChange(controller.setData(d, setDirty: true)),
-      onReplace: (d) => onChange(controller.setFromEntity(d)),
+      onChange: (d) => controller.onChange(controller.setData(d, setDirty: true)),
+      onReplace: (d) => controller.onChange(controller.setFromEntity(d)),
     );
   }
 }
@@ -50,8 +43,8 @@ class RaceFormController extends DynamicFormController<Race> {
   @override
   void onInit() {
     final RaceFormArguments args = Get.arguments;
-    if (args.race != null) {
-      entity.value = args.race!;
+    if (args.entity != null) {
+      entity.value = args.entity!;
     }
     abilityScores = args.abilityScores;
     super.onInit();
@@ -140,12 +133,13 @@ class RaceFormController extends DynamicFormController<Race> {
   }
 }
 
-class RaceFormArguments {
-  final Race? race;
+class RaceFormArguments extends LibraryEntityFormArguments<Race> {
   final AbilityScores abilityScores;
 
   RaceFormArguments({
-    required this.race,
+    required super.entity,
+    required super.onChange,
+    required super.type,
     required this.abilityScores,
   });
 }

@@ -5,8 +5,8 @@ import 'package:dungeon_paper/app/data/models/move.dart';
 import 'package:dungeon_paper/app/data/models/note.dart';
 import 'package:dungeon_paper/app/data/models/race.dart';
 import 'package:dungeon_paper/app/data/models/spell.dart';
-import 'package:dungeon_paper/app/modules/LibraryList/bindings/library_form_binding.dart';
 import 'package:dungeon_paper/app/modules/LibraryList/controllers/library_list_controller.dart';
+import 'package:dungeon_paper/app/routes/app_pages.dart';
 import 'package:dungeon_paper/app/themes/button_themes.dart';
 import 'package:dungeon_paper/app/widgets/forms/character_class_form.dart';
 import 'package:dungeon_paper/app/widgets/forms/item_form.dart';
@@ -43,41 +43,16 @@ class LibraryCardList<T extends WithMeta, F extends EntityFilters<T>>
 
   @override
   Widget build(BuildContext context) {
+    final listViewChildren = _children(context);
     return Stack(
       children: [
         Positioned.fill(
           child: Padding(
             padding: const EdgeInsets.only(top: 32),
-            child: ListView(
-              padding: const EdgeInsets.all(8).copyWith(top: 0),
-              children: [
-                const SizedBox(height: 40),
-                if (onSave != null) ...[
-                  SizedBox(
-                    height: 48,
-                    child: ElevatedButton.icon(
-                      style: ButtonThemes.primaryElevated(context),
-                      onPressed: () => Get.to(
-                          () => LibraryEntityForm<T>(
-                                onSave: onSave!,
-                                type: ItemFormType.create,
-                              ),
-                          binding: RepositoryItemFormBinding<T>(),
-                          arguments: createPageArgsByType(extraData)),
-                      label: Text(S.current.createGeneric(S.current.entity(T))),
-                      icon: const Icon(Icons.add),
-                    ),
-                  ),
-                  const Divider(height: 32),
-                ],
-                ...children.map(
-                  (child) => Padding(
-                    padding: const EdgeInsets.only(bottom: 8),
-                    child: child,
-                  ),
-                ),
-                const SizedBox(height: 80),
-              ],
+            child: ListView.builder(
+              padding: const EdgeInsets.all(8).copyWith(top: 0, bottom: 80),
+              itemBuilder: (context, index) => listViewChildren.elementAt(index),
+              itemCount: listViewChildren.length,
             ),
           ),
         ),
@@ -90,45 +65,72 @@ class LibraryCardList<T extends WithMeta, F extends EntityFilters<T>>
     );
   }
 
-  // T _createEmpty() {
-  //   switch (T) {
-  //     case Move:
-  //       return Move.empty().copyWithInherited(
-  //         classKeys: extraData['classKeys'],
-  //       ) as T;
-  //     case Spell:
-  //       return Spell.empty().copyWithInherited(
-  //         classKeys: extraData['classKeys'],
-  //       ) as T;
-  //     case Item:
-  //       return Item.empty().copyWithInherited() as T;
-  //     case CharacterClass:
-  //       return CharacterClass.empty().copyWithInherited() as T;
-  //     default:
-  //       throw UnsupportedError('createEmpty: Type $T is not supported');
-  //   }
-  // }
+  List<Widget> _children(BuildContext context) => [
+        const SizedBox(height: 40),
+        if (onSave != null) ...[
+          SizedBox(
+            height: 48,
+            child: ElevatedButton.icon(
+              style: ButtonThemes.primaryElevated(context),
+              onPressed: () => Get.toNamed(
+                Routes.listByType<T>(),
+                arguments: createPageArgsByType(extraData),
+              ),
+              label: Text(S.current.createGeneric(S.current.entity(T))),
+              icon: const Icon(Icons.add),
+            ),
+          ),
+          const Divider(height: 32),
+        ],
+        ...children.map(
+          (child) => Padding(
+            padding: const EdgeInsets.only(bottom: 8),
+            child: child,
+          ),
+        ),
+      ];
 
   createPageArgsByType(Map<String, dynamic> extraData) {
     switch (T) {
       case Move:
         return MoveFormArguments(
-          move: null,
+          entity: null,
           abilityScores: extraData['abilityScores'],
+          onChange: onSave! as void Function(Move move),
+          type: FormContext.create,
         );
       case Spell:
         return SpellFormArguments(
-          spell: null,
+          entity: null,
           abilityScores: extraData['abilityScores'],
+          onChange: onSave! as void Function(Spell spell),
+          type: FormContext.create,
         );
       case Item:
-        return ItemFormArguments(item: null);
+        return ItemFormArguments(
+          entity: null,
+          onChange: onSave! as void Function(Item item),
+          type: FormContext.create,
+        );
       case Note:
-        return NoteFormArguments(note: null);
+        return NoteFormArguments(
+          entity: null,
+          onChange: onSave! as void Function(Note note),
+          type: FormContext.create,
+        );
       case CharacterClass:
-        return CharacterClassFormArguments(characterClass: null);
+        return CharacterClassFormArguments(
+          entity: null,
+          onChange: onSave! as void Function(CharacterClass characterClass),
+          type: FormContext.create,
+        );
       case Race:
-        return RaceFormArguments(race: null, abilityScores: extraData['abilityScores']);
+        return RaceFormArguments(
+          entity: null,
+          abilityScores: extraData['abilityScores'],
+          onChange: onSave! as void Function(Race race),
+          type: FormContext.create,
+        );
     }
     throw TypeError();
   }

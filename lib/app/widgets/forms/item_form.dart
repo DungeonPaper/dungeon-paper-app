@@ -7,22 +7,15 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class ItemForm extends GetView<DynamicFormController<Item>> {
-  const ItemForm({
-    Key? key,
-    required this.onChange,
-    required this.type,
-  }) : super(key: key);
-
-  final void Function(Item item) onChange;
-  final ItemFormType type;
+  const ItemForm({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return DynamicForm<Item>(
       entity: controller.entity.value,
       inputs: controller.inputs,
-      onChange: (d) => onChange(controller.setData(d, setDirty: true)),
-      onReplace: (d) => onChange(controller.setFromEntity(d)),
+      onChange: (d) => controller.onChange(controller.setData(d, setDirty: true)),
+      onReplace: (d) => controller.onChange(controller.setFromEntity(d)),
     );
   }
 }
@@ -34,8 +27,8 @@ class ItemFormController extends DynamicFormController<Item> {
   @override
   void onInit() {
     final ItemFormArguments args = Get.arguments;
-    if (args.item != null) {
-      entity.value = args.item!;
+    if (args.entity != null) {
+      entity.value = args.entity!;
     }
     super.onInit();
   }
@@ -89,10 +82,10 @@ class ItemFormController extends DynamicFormController<Item> {
   }
 }
 
-class ItemFormArguments {
-  final Item? item;
-
+class ItemFormArguments extends LibraryEntityFormArguments<Item> {
   ItemFormArguments({
-    required this.item,
+    required super.entity,
+    required super.onChange,
+    required super.type,
   });
 }

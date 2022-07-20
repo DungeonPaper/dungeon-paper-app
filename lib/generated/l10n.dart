@@ -3819,6 +3819,26 @@ class S {
       args: [],
     );
   }
+
+  /// `View`
+  String get view {
+    return Intl.message(
+      'View',
+      name: 'view',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `View {entity}`
+  String viewGeneric(Object entity) {
+    return Intl.message(
+      'View $entity',
+      name: 'viewGeneric',
+      desc: '',
+      args: [entity],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

@@ -294,6 +294,8 @@ class Meta<DataType> with RepositoryServiceMixin {
 
   @override
   String toString() => 'Meta($debugProperties)';
+
+  Meta<DataType> stampUpdate() => copyWith(updated: DateTime.now());
 }
 
 class MetaSharing {

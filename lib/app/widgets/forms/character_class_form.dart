@@ -8,22 +8,15 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class AddCharacterClassForm extends GetView<DynamicFormController<CharacterClass>> {
-  const AddCharacterClassForm({
-    Key? key,
-    required this.onChange,
-    required this.type,
-  }) : super(key: key);
-
-  final void Function(CharacterClass characterClass) onChange;
-  final ItemFormType type;
+  const AddCharacterClassForm({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return DynamicForm<CharacterClass>(
       entity: controller.entity.value,
       inputs: controller.inputs,
-      onChange: (d) => onChange(controller.setData(d, setDirty: true)),
-      onReplace: (d) => onChange(controller.setFromEntity(d)),
+      onChange: (d) => controller.onChange(controller.setData(d, setDirty: true)),
+      onReplace: (d) => controller.onChange(controller.setFromEntity(d)),
     );
   }
 }
@@ -35,8 +28,8 @@ class CharacterClassFormController extends DynamicFormController<CharacterClass>
   @override
   void onInit() {
     final CharacterClassFormArguments args = Get.arguments;
-    if (args.characterClass != null) {
-      entity.value = args.characterClass!;
+    if (args.entity != null) {
+      entity.value = args.entity!;
     }
     super.onInit();
   }
@@ -101,10 +94,10 @@ class CharacterClassFormController extends DynamicFormController<CharacterClass>
   }
 }
 
-class CharacterClassFormArguments {
-  final CharacterClass? characterClass;
-
+class CharacterClassFormArguments extends LibraryEntityFormArguments<CharacterClass> {
   CharacterClassFormArguments({
-    required this.characterClass,
+    required super.entity,
+    required super.onChange,
+    required super.type,
   });
 }

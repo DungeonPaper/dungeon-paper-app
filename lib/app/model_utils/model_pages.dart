@@ -9,7 +9,6 @@ import 'package:dungeon_paper/app/data/models/race.dart';
 import 'package:dungeon_paper/app/data/models/spell.dart';
 import 'package:dungeon_paper/app/data/services/character_service.dart';
 import 'package:dungeon_paper/app/data/services/library_service.dart';
-import 'package:dungeon_paper/app/modules/LibraryList/bindings/library_form_binding.dart';
 import 'package:dungeon_paper/app/modules/LibraryList/views/character_classes_library_list_view.dart';
 import 'package:dungeon_paper/app/modules/LibraryList/views/items_library_list_view.dart';
 import 'package:dungeon_paper/app/modules/LibraryList/views/moves_library_list_view.dart';
@@ -92,13 +91,14 @@ class ModelPages {
     required void Function(Move move) onSave,
     required AbilityScores abilityScores,
   }) =>
-      Get.to(
-        () => LibraryEntityForm<Move>(
-          onSave: onSave,
-          type: move == null ? ItemFormType.create : ItemFormType.edit,
+      Get.toNamed(
+        Routes.editMove,
+        arguments: MoveFormArguments(
+          entity: move,
+          abilityScores: abilityScores,
+          onChange: onSave,
+          type: move == null ? FormContext.create : FormContext.edit,
         ),
-        binding: RepositoryItemFormBinding<Move>(),
-        arguments: MoveFormArguments(move: move, abilityScores: abilityScores),
       );
 
   static void openRacePage({
@@ -106,15 +106,13 @@ class ModelPages {
     required void Function(Race race) onSave,
     required AbilityScores abilityScores,
   }) =>
-      Get.to(
-        () => LibraryEntityForm<Race>(
-          onSave: onSave,
-          type: race == null ? ItemFormType.create : ItemFormType.edit,
-        ),
-        binding: RepositoryItemFormBinding<Race>(),
+      Get.toNamed(
+        Routes.editRace,
         arguments: RaceFormArguments(
-          race: race,
+          entity: race,
           abilityScores: abilityScores,
+          onChange: onSave,
+          type: race == null ? FormContext.create : FormContext.edit,
         ),
       );
 
@@ -140,13 +138,14 @@ class ModelPages {
     required AbilityScores abilityScores,
     required List<dw.EntityReference> classKeys,
   }) =>
-      Get.to(
-        () => LibraryEntityForm<Spell>(
-          onSave: onSave,
-          type: spell == null ? ItemFormType.create : ItemFormType.edit,
+      Get.toNamed(
+        Routes.editSpell,
+        arguments: SpellFormArguments(
+          entity: spell,
+          abilityScores: abilityScores,
+          onChange: onSave,
+          type: spell == null ? FormContext.create : FormContext.edit,
         ),
-        binding: RepositoryItemFormBinding<Spell>(),
-        arguments: SpellFormArguments(spell: spell, abilityScores: abilityScores),
       );
 
   static void openItemsList({
@@ -168,13 +167,13 @@ class ModelPages {
     required Item? item,
     required void Function(Item item) onSave,
   }) =>
-      Get.to(
-        () => LibraryEntityForm<Item>(
-          onSave: onSave,
-          type: item == null ? ItemFormType.create : ItemFormType.edit,
+      Get.toNamed(
+        Routes.editItem,
+        arguments: ItemFormArguments(
+          entity: item,
+          onChange: onSave,
+          type: item == null ? FormContext.create : FormContext.edit,
         ),
-        binding: RepositoryItemFormBinding<Item>(),
-        arguments: ItemFormArguments(item: item),
       );
 
   static void openNotesList({
@@ -196,13 +195,13 @@ class ModelPages {
     required Note? note,
     required void Function(Note note) onSave,
   }) =>
-      Get.to(
-        () => LibraryEntityForm<Note>(
-          onSave: onSave,
-          type: note == null ? ItemFormType.create : ItemFormType.edit,
+      Get.toNamed(
+        Routes.editNote,
+        arguments: NoteFormArguments(
+          entity: note,
+          onChange: onSave,
+          type: note == null ? FormContext.create : FormContext.edit,
         ),
-        binding: RepositoryItemFormBinding<Note>(),
-        arguments: NoteFormArguments(note: note),
       );
 
   static void openCharacterClassesList({
@@ -212,7 +211,7 @@ class ModelPages {
   }) {
     final char = character;
     Get.toNamed(
-      Routes.characterClass,
+      Routes.classes,
       arguments: CharacterClassLibraryListArguments(
         onAdd: (list) => onAdd != null
             ? onAdd(list.elementAt(0))
@@ -230,12 +229,12 @@ class ModelPages {
     required CharacterClass? characterClass,
     required void Function(CharacterClass item) onSave,
   }) =>
-      Get.to(
-        () => LibraryEntityForm<CharacterClass>(
-          onSave: onSave,
-          type: characterClass == null ? ItemFormType.create : ItemFormType.edit,
+      Get.toNamed(
+        Routes.editClass,
+        arguments: CharacterClassFormArguments(
+          entity: characterClass,
+          onChange: onSave,
+          type: characterClass == null ? FormContext.create : FormContext.edit,
         ),
-        binding: RepositoryItemFormBinding<CharacterClass>(),
-        arguments: CharacterClassFormArguments(characterClass: characterClass),
       );
 }

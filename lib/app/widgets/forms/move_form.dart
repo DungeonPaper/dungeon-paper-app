@@ -11,22 +11,15 @@ import 'package:get/get.dart';
 import 'package:dungeon_world_data/dungeon_world_data.dart' as dw;
 
 class MoveForm extends GetView<DynamicFormController<Move>> {
-  const MoveForm({
-    Key? key,
-    required this.onChange,
-    required this.type,
-  }) : super(key: key);
-
-  final void Function(Move move) onChange;
-  final ItemFormType type;
+  const MoveForm({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return DynamicForm(
       entity: controller.entity.value,
       inputs: controller.inputs,
-      onChange: (d) => onChange(controller.setData(d, setDirty: true)),
-      onReplace: (d) => onChange(controller.setFromEntity(d)),
+      onChange: (d) => controller.onChange(controller.setData(d, setDirty: true)),
+      onReplace: (d) => controller.onChange(controller.setFromEntity(d)),
       builder: (context, inputs, entity) {
         return ListView(
           padding: const EdgeInsets.symmetric(horizontal: 16).copyWith(bottom: 70),
@@ -57,6 +50,9 @@ class MoveFormController extends DynamicFormController<Move> {
   final entity = Move.empty().obs;
 
   @override
+  MoveFormArguments get args => Get.arguments;
+
+  @override
   Move setFromEntity(Move move) => setData({
         'name': move.name,
         'category': move.category,
@@ -69,9 +65,8 @@ class MoveFormController extends DynamicFormController<Move> {
 
   @override
   void onInit() {
-    final MoveFormArguments args = Get.arguments;
-    if (args.move != null) {
-      entity.value = args.move!;
+    if (args.entity != null) {
+      entity.value = args.entity!;
     }
     abilityScores = args.abilityScores;
     super.onInit();
@@ -175,12 +170,13 @@ class MoveFormController extends DynamicFormController<Move> {
   }
 }
 
-class MoveFormArguments {
-  final Move? move;
+class MoveFormArguments extends LibraryEntityFormArguments<Move> {
   final AbilityScores abilityScores;
 
   MoveFormArguments({
-    required this.move,
+    required super.entity,
     required this.abilityScores,
+    required super.onChange,
+    required super.type,
   });
 }

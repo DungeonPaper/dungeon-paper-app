@@ -13,8 +13,8 @@ import 'package:dungeon_paper/app/widgets/forms/spell_form.dart';
 import 'package:dungeon_paper/app/widgets/forms/dynamic_form/dynamic_form.dart';
 import 'package:get/get.dart';
 
-class RepositoryItemFormBinding<T> extends Bindings {
-  RepositoryItemFormBinding();
+class LibraryFormBinding<T> extends Bindings {
+  LibraryFormBinding();
 
   @override
   void dependencies() {

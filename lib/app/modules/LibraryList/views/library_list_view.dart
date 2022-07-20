@@ -41,12 +41,12 @@ class LibraryListView<T extends WithMeta, F extends EntityFilters<T>>
     extends GetView<LibraryListController<T, F>> {
   LibraryListView({
     Key? key,
-    required this.title,
+    this.title,
     required this.cardBuilder,
     required this.filtersBuilder,
   }) : super(key: key);
 
-  final Widget title;
+  final Widget? title;
   final CardBuilder<T> cardBuilder;
   final pageStorageBucket = PageStorageBucket();
   final Widget Function(
@@ -59,9 +59,15 @@ class LibraryListView<T extends WithMeta, F extends EntityFilters<T>>
 
   @override
   Widget build(BuildContext context) {
+    final entityTitleName = controller.multiple ? S.current.entityPlural(T) : S.current.entity(T);
     return Scaffold(
       appBar: AppBar(
-        title: title,
+        title: title ??
+            Text(
+              controller.selectable
+                  ? S.current.selectGeneric(entityTitleName)
+                  : S.current.viewGeneric(entityTitleName),
+            ),
         centerTitle: true,
       ),
       body: PageStorage(

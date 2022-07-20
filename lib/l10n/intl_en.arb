@@ -366,5 +366,7 @@
   "userLogoutButton": "Sign out",
   "userMenuMoreChars": "More",
   "userMenuRecentCharacters": "Recent Characters",
-  "userUnregistered": "Not registered"
+  "userUnregistered": "Not registered",
+  "view": "View",
+  "viewGeneric": "View {entity}"
 }

@@ -10,22 +10,15 @@ import 'package:get/get.dart';
 import 'package:dungeon_world_data/dungeon_world_data.dart' as dw;
 
 class SpellForm extends GetView<DynamicFormController<Spell>> {
-  const SpellForm({
-    Key? key,
-    required this.onChange,
-    required this.type,
-  }) : super(key: key);
-
-  final void Function(Spell spell) onChange;
-  final ItemFormType type;
+  const SpellForm({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return DynamicForm<Spell>(
       entity: controller.entity.value,
       inputs: controller.inputs,
-      onChange: (d) => onChange(controller.setData(d, setDirty: true)),
-      onReplace: (d) => onChange(controller.setFromEntity(d)),
+      onChange: (d) => controller.onChange(controller.setData(d, setDirty: true)),
+      onReplace: (d) => controller.onChange(controller.setFromEntity(d)),
     );
   }
 }
@@ -39,8 +32,8 @@ class SpellFormController extends DynamicFormController<Spell> {
   @override
   void onInit() {
     final SpellFormArguments args = Get.arguments;
-    if (args.spell != null) {
-      entity.value = args.spell!;
+    if (args.entity != null) {
+      entity.value = args.entity!;
     }
     abilityScores = args.abilityScores;
     super.onInit();
@@ -140,13 +133,14 @@ class SpellFormController extends DynamicFormController<Spell> {
   }
 }
 
-class SpellFormArguments {
-  final Spell? spell;
+class SpellFormArguments extends LibraryEntityFormArguments<Spell> {
   final AbilityScores abilityScores;
   // final List<dw.EntityReference> classKeys;
 
   SpellFormArguments({
-    required this.spell,
+    required super.entity,
+    required super.onChange,
+    required super.type,
     required this.abilityScores,
     // required this.classKeys,
   });
