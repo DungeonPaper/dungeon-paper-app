@@ -8,6 +8,7 @@ import 'package:dungeon_paper/generated/intl/messages_all.dart';
 import 'package:dungeon_paper/generated/l10n.dart';
 import 'package:dynamic_themes/dynamic_themes.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:get/route_manager.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:sentry_flutter/sentry_flutter.dart';
@@ -16,12 +17,14 @@ import 'app/themes/themes.dart';
 import 'firebase_options.dart';
 
 void main() async {
-  WidgetsFlutterBinding.ensureInitialized();
+  final widgetsBinding = WidgetsFlutterBinding.ensureInitialized();
+  FlutterNativeSplash.preserve(widgetsBinding: widgetsBinding);
   await initializeMessages('en');
   await S.load(const Locale('en', 'US'));
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
   await loadSharedPrefs();
   await initServices();
+  FlutterNativeSplash.remove();
   await SentryFlutter.init(
     (options) {
       options.dsn = secrets.sentryDsn;

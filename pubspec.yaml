@@ -1,6 +1,6 @@
 name: dungeon_paper
 description: A new Flutter project.
-version: 2.0.0+236
+version: 2.0.0+237
 # The above field defines the version and build number for your application.
 # A version number is three numbers separated by dots, like 1.2.43
 # followed by an optional build number separated by a +.
@@ -41,14 +41,16 @@ dependencies:
   flutter:
     sdk: flutter
   flutter_file_dialog: ^2.3.0
+  flutter_launcher_icons: ^0.9.3
   flutter_markdown: ^0.6.10+2
+  flutter_native_splash: ^2.2.5
   flutter_svg: ^1.0.3
   get: ^4.6.1
   google_sign_in: ^5.3.3
   http: ^0.13.4
   image_cropper: ^2.0.2
   intl: ^0.17.0
-  intl_generator: ^0.2.1
+  intl_generator: ^0.3.0
   localstore: ^1.2.1
   path: ^1.8.1
   path_provider: ^2.0.9
@@ -109,6 +111,9 @@ flutter:
     - assets/icons/dice/dice_d10.svg
     - assets/icons/dice/dice_d12.svg
     - assets/icons/dice/dice_d20.svg
+
+    # Images
+    - assets/images/logo.png
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.
   # For details regarding adding assets from package dependencies, see
@@ -175,3 +180,11 @@ flutter:
           style: italic
 flutter_intl:
   enabled: true
+flutter_native_splash:
+  color: "#fcf5e5"
+  color_dark: "#1c1e21"
+  image: "assets/images/logo.png"
+flutter_icons:
+  android: true
+  ios: true
+  image_path: "assets/images/logo.png"

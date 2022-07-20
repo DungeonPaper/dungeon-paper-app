@@ -15,7 +15,6 @@ import 'package:firebase_auth/firebase_auth.dart' as fba;
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-
 class UserService extends GetxService
     with RepositoryServiceMixin, AuthServiceMixin, CharacterServiceMixin, LoadingServiceMixin {
   final _current = User.guest().obs;
