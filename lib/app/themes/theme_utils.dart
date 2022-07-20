@@ -102,6 +102,10 @@ ThemeData createTheme(
       fillColor: MaterialStateProperty.resolveWith((states) => colorScheme.secondary),
       checkColor: MaterialStateProperty.resolveWith((states) => colorScheme.onSecondary),
     ),
+    switchTheme: base.switchTheme.copyWith(
+      thumbColor: MaterialStateProperty.resolveWith((states) => colorScheme.secondary),
+      trackColor: MaterialStateProperty.resolveWith((states) => colorScheme.secondaryContainer),
+    ),
     dialogTheme: base.dialogTheme.copyWith(
       shape: rRectShape,
     ),
