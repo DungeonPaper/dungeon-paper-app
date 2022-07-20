@@ -27,7 +27,7 @@ class EXPDialog extends StatefulWidget {
 class _EXPDialogState extends State<EXPDialog> with CharacterServiceMixin {
   late int overrideXp;
   late bool manualExpExpanded;
-  late TextEditingController levelOverride;
+  late TextEditingController overrideLevel;
   late bool shouldOverrideLevel;
   late List<SessionMark> eosMarks;
 
@@ -35,7 +35,7 @@ class _EXPDialogState extends State<EXPDialog> with CharacterServiceMixin {
   void initState() {
     overrideXp = char.currentXp;
     manualExpExpanded = false;
-    levelOverride = TextEditingController(text: char.stats.level.toString());
+    overrideLevel = TextEditingController(text: char.stats.level.toString());
     shouldOverrideLevel = false;
     eosMarks = char.endOfSessionMarks;
     super.initState();
@@ -124,7 +124,7 @@ class _EXPDialogState extends State<EXPDialog> with CharacterServiceMixin {
                         enabled: shouldOverrideLevel,
                         decoration: InputDecoration(label: Text(S.current.level)),
                         numberType: NumberType.int,
-                        controller: levelOverride,
+                        controller: overrideLevel,
                         onChanged: (_) => setState(() {}),
                         minValue: 1,
                       ),
@@ -153,7 +153,7 @@ class _EXPDialogState extends State<EXPDialog> with CharacterServiceMixin {
 
   int get currentXp => char.currentXp;
   int get maxXp => shouldOverrideLevel
-      ? CharacterStats.maxExpForLevel(int.tryParse(levelOverride.text) ?? char.stats.level)
+      ? CharacterStats.maxExpForLevel(int.tryParse(overrideLevel.text) ?? char.stats.level)
       : char.maxXp;
   int get eosPendingXp => eosMarks.where((mark) => mark.completed).length;
   int get totalPendingXp => char.pendingXp + eosPendingXp;
@@ -165,18 +165,20 @@ class _EXPDialogState extends State<EXPDialog> with CharacterServiceMixin {
   }
 
   void save() {
-    final beforeLevelXp = char.stats.currentXp + totalPendingXp;
-    int updatedLevel = char.stats.level;
+    final beforeLevelXp = (shouldOverrideXp ? overrideXp : char.stats.currentXp + totalPendingXp);
+    int updatedLevel = shouldOverrideLevel ? int.parse(overrideLevel.text) : char.stats.level;
     int updatedXp = beforeLevelXp;
 
+    debugPrint('updatedLevel: $updatedLevel, updatedXp: $updatedXp');
+
     while (updatedXp >= CharacterStats.maxExpForLevel(updatedLevel)) {
-      updatedXp = beforeLevelXp - CharacterStats.maxExpForLevel(updatedLevel);
+      updatedXp -= CharacterStats.maxExpForLevel(updatedLevel);
       updatedLevel++;
     }
 
-    final finalXp = shouldOverrideXp ? overrideXp : updatedXp;
+    final finalXp = updatedXp;
     final finalLevel =
-        shouldOverrideLevel ? int.tryParse(levelOverride.text) ?? updatedLevel : updatedLevel;
+        shouldOverrideLevel ? int.tryParse(overrideLevel.text) ?? updatedLevel : updatedLevel;
 
     charService.updateCharacter(
       char.copyWith(
