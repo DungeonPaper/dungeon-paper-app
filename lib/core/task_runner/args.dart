@@ -13,6 +13,15 @@ enum Device {
   linux,
 }
 
+enum BumpType {
+  pre,
+  // build,
+  patch,
+  minor,
+  major,
+  none,
+}
+
 class ArgOptions {
   ArgOptions({
     this.help = false,
@@ -21,6 +30,7 @@ class ArgOptions {
     this.bundle = false,
     this.push = false,
     this.install = false,
+    this.bump = BumpType.none,
     required this.device,
     Version? version,
     this.platform = Device.all,
@@ -40,6 +50,10 @@ class ArgOptions {
       build: res['build'],
       bundle: res['bundle'],
       push: res['push'],
+      bump: BumpType.values.firstWhere(
+        (t) => t.name == res['bump'],
+        orElse: () => BumpType.none,
+      ),
       install: res['install'],
       platform: Device.values.firstWhere(
         (device) => enumName(device).toLowerCase() == res['platform'].toString().toLowerCase(),
@@ -55,6 +69,7 @@ class ArgOptions {
   bool bundle;
   bool push;
   bool install;
+  BumpType bump;
   String? device;
   String outputFilePrefix;
   Version version;
@@ -82,6 +97,7 @@ class ArgOptions {
         'Bundle': bundle,
         'Push': push,
         'Install': install,
+        'Bump': bump != BumpType.none,
       };
 }
 
@@ -115,6 +131,11 @@ final argParser = ArgParser()
     'version',
     abbr: 'v',
     defaultsTo: getVersionString(),
+  )
+  ..addOption(
+    'bump',
+    abbr: 'm',
+    defaultsTo: 'none',
   )
   ..addOption(
     'output-filename',

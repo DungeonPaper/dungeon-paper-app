@@ -6,6 +6,7 @@ import 'args.dart';
 import 'task.dart';
 import 'task_utils.dart';
 import 'tasks/android_tasks.dart';
+import 'tasks/bump_task.dart';
 import 'tasks/ios_tasks.dart';
 import 'tasks/test_task.dart';
 import 'tasks/web_tasks.dart';
@@ -13,7 +14,7 @@ import 'tasks/web_tasks.dart';
 void main(List<String> args) {
   final options = ArgOptions.fromArgs(args);
 
-  var logTask = LogTask((o) {
+  final logTask = LogTask((o) {
     if (!o.hasActionables) {
       if (o.help) {
         print(o.parser.usage);
@@ -37,6 +38,7 @@ void main(List<String> args) {
     options: options,
     tasks: [
       logTask,
+      bumpTask,
       testTask,
       android,
       iOS,
