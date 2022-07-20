@@ -206,7 +206,7 @@ class ModelPages {
 
   static void openCharacterClassesList({
     Character? character,
-    Iterable<CharacterClass>? list,
+    CharacterClass? preSelection,
     void Function(CharacterClass cls)? onAdd,
   }) {
     final char = character;
@@ -220,7 +220,11 @@ class ModelPages {
                     char.copyWith(characterClass: list.elementAt(0)),
                   )
                 : null,
-        preSelections: char != null ? [char.characterClass] : [],
+        preSelections: preSelection != null
+            ? [preSelection]
+            : char != null
+                ? [char.characterClass]
+                : [],
       ),
     );
   }

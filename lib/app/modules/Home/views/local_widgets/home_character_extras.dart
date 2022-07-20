@@ -1,4 +1,5 @@
 import 'package:dungeon_paper/app/data/models/campaign.dart';
+import 'package:dungeon_paper/app/data/models/character_class.dart';
 import 'package:dungeon_paper/app/data/models/race.dart';
 import 'package:dungeon_paper/app/data/models/session_marks.dart';
 import 'package:dungeon_paper/app/data/services/character_service.dart';
@@ -33,11 +34,23 @@ class HomeCharacterExtras extends GetView<CharacterService> {
               label: Text(S.current.basicInformationTitle),
               onSelect: _openBasicInfo,
             ),
+            // MenuEntry(
+            //   value: 'bio',
+            //   icon: const Icon(Icons.text_snippet),
+            //   label: Text(S.current.characterBioDialogTitle),
+            //   onSelect: _openBio,
+            // ),
             MenuEntry(
-              value: 'bio',
-              icon: const Icon(Icons.text_snippet),
-              label: Text(S.current.characterBioDialogTitle),
-              onSelect: _openBio,
+              value: 'ability_scores',
+              icon: const Icon(Icons.format_list_numbered_rtl),
+              label: Text(S.current.characterRollsTitle),
+              onSelect: _openAbilityScores,
+            ),
+            MenuEntry(
+              value: 'class',
+              icon: Icon(CharacterClass.genericIcon),
+              label: Text(S.current.changeGeneric(S.current.entity(CharacterClass))),
+              onSelect: _openCharClass,
             ),
             MenuEntry(
               value: 'race',
@@ -59,18 +72,15 @@ class HomeCharacterExtras extends GetView<CharacterService> {
             ),
           ],
         ),
+        // IconButton(
+        //   onPressed: _openAbilityScores,
+        //   icon: const Icon(Icons.format_list_numbered_rtl),
+        //   tooltip: S.current.characterRollsTitle,
+        // ),
         IconButton(
-          onPressed: () => Get.toNamed(
-            Routes.abilityScores,
-            arguments: AbilityScoresFormArguments(
-              abilityScores: controller.current.abilityScores,
-              onChanged: (abilityScores) => controller
-                  .updateCharacter(controller.current.copyWith(abilityScores: abilityScores)),
-            ),
-            preventDuplicates: false,
-          ),
-          icon: const Icon(Icons.format_list_numbered_rtl),
-          tooltip: S.current.characterRollsTitle,
+          icon: const Icon(Icons.text_snippet),
+          tooltip: S.current.characterBioDialogTitle,
+          onPressed: _openBio,
         ),
         Obx(
           () => IconButton(
@@ -96,6 +106,16 @@ class HomeCharacterExtras extends GetView<CharacterService> {
     );
   }
 
+  void _openAbilityScores() => Get.toNamed(
+        Routes.abilityScores,
+        arguments: AbilityScoresFormArguments(
+          abilityScores: controller.current.abilityScores,
+          onChanged: (abilityScores) =>
+              controller.updateCharacter(controller.current.copyWith(abilityScores: abilityScores)),
+        ),
+        preventDuplicates: false,
+      );
+
   void _openBasicInfo() {
     Get.toNamed(
       Routes.basicInfo,
@@ -120,6 +140,18 @@ class HomeCharacterExtras extends GetView<CharacterService> {
       onAdd: (_race) => controller.updateCharacter(
         controller.current.copyWithInherited(
           race: _race.first.copyWithInherited(favorite: controller.current.race.favorite),
+        ),
+      ),
+    );
+  }
+
+  void _openCharClass() {
+    ModelPages.openCharacterClassesList(
+      character: controller.current,
+      onAdd: (_cls) => controller.updateCharacter(
+        // TODO add a reset dialog to confirm + ask what to reset
+        controller.current.copyWithInherited(
+          characterClass: _cls,
         ),
       ),
     );
