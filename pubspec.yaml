@@ -48,6 +48,7 @@ dependencies:
   get: ^4.6.1
   google_sign_in: ^5.3.3
   http: ^0.13.4
+  icons_launcher: ^1.2.1
   image_cropper: ^2.0.2
   intl: ^0.17.0
   intl_generator: ^0.3.0
@@ -186,6 +187,12 @@ flutter_native_splash:
   color_dark: "#1c1e21"
   image: "assets/images/logo.png"
 flutter_icons:
+  remove_alpha_ios: true
+  remove_alpha_macos: true
   android: true
+  web: true
+  macos: true
+  windows: true
+  linux: true
   ios: true
   image_path: "assets/images/logo.png"

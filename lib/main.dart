@@ -24,6 +24,7 @@ void main() async {
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
   await loadSharedPrefs();
   await initServices();
+  // debugPrint('docsDir: ' + (await getApplicationDocumentsDirectory()).path);
   FlutterNativeSplash.remove();
   await SentryFlutter.init(
     (options) {
