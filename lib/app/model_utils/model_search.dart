@@ -2,11 +2,13 @@ import 'package:dungeon_paper/app/data/models/character_class.dart';
 import 'package:dungeon_paper/app/data/models/item.dart';
 import 'package:dungeon_paper/app/data/models/move.dart';
 import 'package:dungeon_paper/app/data/models/note.dart';
+import 'package:dungeon_paper/app/data/models/race.dart';
 import 'package:dungeon_paper/app/data/models/spell.dart';
 import 'package:dungeon_paper/app/modules/LibraryList/views/filters/character_class_filters.dart';
 import 'package:dungeon_paper/app/modules/LibraryList/views/filters/item_filters.dart';
 import 'package:dungeon_paper/app/modules/LibraryList/views/filters/move_filters.dart';
 import 'package:dungeon_paper/app/modules/LibraryList/views/filters/note_filters.dart';
+import 'package:dungeon_paper/app/modules/LibraryList/views/filters/race_filters.dart';
 import 'package:dungeon_paper/app/modules/LibraryList/views/filters/spell_filters.dart';
 
 bool searchFor(Type t, dynamic object, String search) {
@@ -24,7 +26,8 @@ bool searchFor(Type t, dynamic object, String search) {
     // case AbilityScore:
     // case Character:
     // case AlignmentValue:
-    // case Race:
+    case Race:
+      return RaceFilters(classKey: null, search: search).filter(object);
   }
   throw TypeError();
 }

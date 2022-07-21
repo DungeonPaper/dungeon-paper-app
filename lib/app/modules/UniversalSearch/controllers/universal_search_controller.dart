@@ -1,6 +1,8 @@
 import 'package:dungeon_paper/app/data/models/character_class.dart';
 import 'package:dungeon_paper/app/data/models/item.dart';
+import 'package:dungeon_paper/app/data/models/meta.dart';
 import 'package:dungeon_paper/app/data/models/move.dart';
+import 'package:dungeon_paper/app/data/models/race.dart';
 import 'package:dungeon_paper/app/data/models/spell.dart';
 import 'package:dungeon_paper/app/data/services/character_service.dart';
 import 'package:dungeon_paper/app/data/services/repository_service.dart';
@@ -8,6 +10,7 @@ import 'package:dungeon_paper/app/model_utils/model_search.dart';
 import 'package:dungeon_paper/app/modules/LibraryList/views/filters/character_class_filters.dart';
 import 'package:dungeon_paper/app/modules/LibraryList/views/filters/item_filters.dart';
 import 'package:dungeon_paper/app/modules/LibraryList/views/filters/move_filters.dart';
+import 'package:dungeon_paper/app/modules/LibraryList/views/filters/race_filters.dart';
 import 'package:dungeon_paper/app/modules/LibraryList/views/filters/spell_filters.dart';
 import 'package:dungeon_paper/core/utils/list_utils.dart';
 import 'package:dungeon_paper/generated/l10n.dart';
@@ -50,6 +53,10 @@ class UniversalSearchController extends GetxController
         CharacterClass: <Iterable<CharacterClass>>[
           sourceEnabled(SourceType.myLibrary) ? repo.my.classes.values : [],
           sourceEnabled(SourceType.builtInLibrary) ? repo.builtIn.classes.values : [],
+        ],
+        Race: <Iterable<Race>>[
+          sourceEnabled(SourceType.myLibrary) ? repo.my.races.values : [],
+          sourceEnabled(SourceType.builtInLibrary) ? repo.builtIn.races.values : [],
         ],
       };
 
@@ -95,15 +102,18 @@ class UniversalSearchController extends GetxController
             SpellFilters(search: search.text, classKey: null, level: null).sortByScore(a, b),
         Item: (a, b) => ItemFilters(search: search.text).sortByScore(a, b),
         CharacterClass: (a, b) => CharacterClassFilters(search: search.text).sortByScore(a, b),
+        Race: (a, b) => RaceFilters(search: search.text, classKey: null).sortByScore(a, b),
       };
 
       list.sort(
         (a, b) => sorters[a.runtimeType]!(a, b),
       );
 
-      return e.index < entries.length
+      final result = e.index < entries.length
           ? [SearchSeparator(S.current.entityPlural(list.first.runtimeType)), ...list]
           : list;
+      debugPrint('result for ${e.value.runtimeType}: $result');
+      return result;
     });
 
     return Future.value(map.toList());

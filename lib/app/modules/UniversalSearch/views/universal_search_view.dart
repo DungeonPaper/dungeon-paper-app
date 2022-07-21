@@ -5,11 +5,13 @@ import 'package:dungeon_paper/app/data/models/character.dart';
 import 'package:dungeon_paper/app/data/models/character_class.dart';
 import 'package:dungeon_paper/app/data/models/item.dart';
 import 'package:dungeon_paper/app/data/models/move.dart';
+import 'package:dungeon_paper/app/data/models/race.dart';
 import 'package:dungeon_paper/app/data/models/spell.dart';
 import 'package:dungeon_paper/app/widgets/atoms/search_field.dart';
 import 'package:dungeon_paper/app/widgets/cards/character_class_card.dart';
 import 'package:dungeon_paper/app/widgets/cards/item_card.dart';
 import 'package:dungeon_paper/app/widgets/cards/move_card.dart';
+import 'package:dungeon_paper/app/widgets/cards/race_card.dart';
 import 'package:dungeon_paper/app/widgets/cards/spell_card.dart';
 import 'package:dungeon_paper/app/widgets/chips/primary_chip.dart';
 import 'package:dungeon_paper/generated/l10n.dart';
@@ -72,10 +74,13 @@ class UniversalSearchView extends GetView<UniversalSearchController> {
                     builder: (context, value) {
                       if (value.data == null) {
                         return Center(
-                          child: SizedBox.fromSize(
-                            size: const Size.square(50),
-                            child: CircularProgressIndicator(
-                              color: Theme.of(context).colorScheme.secondary,
+                          child: Padding(
+                            padding: const EdgeInsets.only(top: 32),
+                            child: SizedBox.fromSize(
+                              size: const Size.square(50),
+                              child: CircularProgressIndicator(
+                                color: Theme.of(context).colorScheme.secondary,
+                              ),
                             ),
                           ),
                         );
@@ -152,6 +157,13 @@ class _CardByType extends StatelessWidget {
           characterClass: result,
           showStar: false,
           highlightWords: highlightWords,
+        );
+      case Race:
+        return RaceCard(
+          race: result,
+          showStar: false,
+          highlightWords: highlightWords,
+          showClasses: true,
         );
       case SearchSeparator:
         return Text(result.text);

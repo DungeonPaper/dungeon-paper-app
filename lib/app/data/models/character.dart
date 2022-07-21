@@ -250,6 +250,19 @@ class Character with WithIcon implements WithMeta<Character, CharacterMeta> {
         race: race ?? this.race,
       );
 
+  Character copyWithSessionMarks({
+    List<SessionMark>? bonds,
+    List<SessionMark>? flags,
+    List<SessionMark>? endOfSessionMarks,
+  }) =>
+      copyWith(
+        sessionMarks: [
+          ...(bonds ?? this.bonds),
+          ...(flags ?? this.flags),
+          ...(endOfSessionMarks ?? this.endOfSessionMarks),
+        ],
+      );
+
   factory Character.fromRawJson(String str) => Character.fromJson(json.decode(str));
 
   factory Character.empty() {

@@ -1177,6 +1177,16 @@ class S {
     );
   }
 
+  /// `You can add, update or remove bonds & flags using the edit icon above.`
+  String get characterBondsFlagsDialogInfoText {
+    return Intl.message(
+      'You can add, update or remove bonds & flags using the edit icon above.',
+      name: 'characterBondsFlagsDialogInfoText',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `You have no bonds or flags. You can add some using the edit button above, then mark them off as completed as you go along your adventure.`
   String get characterBondsFlagsDialogNoData {
     return Intl.message(
@@ -1272,6 +1282,16 @@ class S {
     return Intl.message(
       'All Characters',
       name: 'characterListTitle',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Character Menu`
+  String get characterMenu {
+    return Intl.message(
+      'Character Menu',
+      name: 'characterMenu',
       desc: '',
       args: [],
     );

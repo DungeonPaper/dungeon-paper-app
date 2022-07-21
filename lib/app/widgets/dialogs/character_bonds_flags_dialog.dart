@@ -26,11 +26,7 @@ class CharacterBondsFlagsDialog extends GetView<CharacterService> with Character
         mainAxisSize: MainAxisSize.max,
         children: [
           Expanded(
-            child: Obx(
-              () => Text(
-                SessionMark.categoryTitle(bonds: bonds, flags: flags),
-              ),
-            ),
+            child: Obx(() => Text(SessionMark.categoryTitle(bonds: bonds, flags: flags))),
           ),
           IconButton(
             onPressed: () {
@@ -40,8 +36,9 @@ class CharacterBondsFlagsDialog extends GetView<CharacterService> with Character
                   bonds: bonds,
                   flags: flags,
                   onChanged: (bonds, flags) => controller.updateCharacter(
-                    character.copyWith(
-                      sessionMarks: updateByKey(char.sessionMarks, [...bonds, ...flags]),
+                    character.copyWithSessionMarks(
+                      bonds: bonds,
+                      flags: flags,
                     ),
                   ),
                 ),
@@ -70,6 +67,15 @@ class CharacterBondsFlagsDialog extends GetView<CharacterService> with Character
                       text: S.current.characterBondsFlagsDialogNoData,
                     ),
                   ),
+                if (bonds.isNotEmpty || flags.isNotEmpty) ...[
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 8),
+                    child: HelpText(
+                      text: S.current.characterBondsFlagsDialogInfoText,
+                    ),
+                  ),
+                  const Divider(height: 32),
+                ],
                 if (bonds.isNotEmpty && flags.isNotEmpty)
                   Text(S.current.characterBondsFlagsDialogBonds, style: textTheme.caption),
                 for (final bond in bonds) ...[
@@ -82,8 +88,10 @@ class CharacterBondsFlagsDialog extends GetView<CharacterService> with Character
                     controlAffinity: ListTileControlAffinity.leading,
                   ),
                 ],
-                if (bonds.isNotEmpty && flags.isNotEmpty)
+                if (bonds.isNotEmpty && flags.isNotEmpty) ...[
+                  const Divider(height: 32),
                   Text(S.current.characterBondsFlagsDialogFlags, style: textTheme.caption),
+                ],
                 for (final flag in flags) ...[
                   CheckboxListTile(
                     title: Text(flag.description),

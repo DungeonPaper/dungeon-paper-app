@@ -82,8 +82,9 @@ class _EXPDialogState extends State<EXPDialog> with CharacterServiceMixin {
                     width: dlgWidth,
                     child: CheckboxListTile(
                       value: eos.completed,
-                      dense: true,
                       title: Text(eos.description),
+                      controlAffinity: ListTileControlAffinity.leading,
+                      dense: true,
                       onChanged: (val) => _toggleEosMark(eos, val),
                     ),
                   ),
@@ -114,6 +115,7 @@ class _EXPDialogState extends State<EXPDialog> with CharacterServiceMixin {
                       const SizedBox(height: 16),
                       const Divider(height: 24),
                       CheckboxListTile(
+                        controlAffinity: ListTileControlAffinity.leading,
                         value: shouldOverrideLevel,
                         title: Text(S.current.expDialogLevelShouldOverride),
                         onChanged: (val) => setState(() {

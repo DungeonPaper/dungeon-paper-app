@@ -27,6 +27,7 @@ class HomeCharacterExtras extends GetView<CharacterService> {
       children: [
         MenuButton<String>(
           icon: const Icon(Icons.person),
+          tooltip: S.current.characterMenu,
           items: [
             MenuEntry(
               value: 'name_photo',

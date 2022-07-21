@@ -21,45 +21,48 @@ class CharacterDebilitiesDialog extends GetView<CharacterService> with Character
       contentPadding: const EdgeInsets.all(16),
       actions: DialogControls.done(context, () => Get.back()),
       content: Obx(
-        () => SingleChildScrollView(
-          child: ListTileTheme.merge(
-            minLeadingWidth: 20,
-            contentPadding: const EdgeInsets.all(0),
-            minVerticalPadding: 8,
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                for (final ability in char.abilityScores.stats)
-                  ListTile(
-                    contentPadding: const EdgeInsets.all(0),
-                    title: Text(S.current.debilityLabel(ability.debilityName, ability.key)),
-                    subtitle: Text(ability.debilityDescription),
-                    dense: true,
-                    onTap: () => charService.updateCharacter(
-                      char.copyWith(
-                        abilityScores: char.abilityScores.copyWith(
-                          stats: char.abilityScores.stats.map(
-                            (e) => e.key == ability.key
-                                ? e.copyWith(isDebilitated: !e.isDebilitated)
-                                : e,
-                          ),
-                        ),
-                      ),
-                    ),
-                    trailing: Switch.adaptive(
-                      value: ability.isDebilitated,
-                      onChanged: (checked) => charService.updateCharacter(
+        () => SizedBox(
+          width: 500,
+          child: SingleChildScrollView(
+            child: ListTileTheme.merge(
+              minLeadingWidth: 20,
+              contentPadding: const EdgeInsets.all(0),
+              minVerticalPadding: 8,
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  for (final ability in char.abilityScores.stats)
+                    ListTile(
+                      contentPadding: const EdgeInsets.all(0),
+                      title: Text(S.current.debilityLabel(ability.debilityName, ability.key)),
+                      subtitle: Text(ability.debilityDescription),
+                      dense: true,
+                      onTap: () => charService.updateCharacter(
                         char.copyWith(
                           abilityScores: char.abilityScores.copyWith(
-                            stats: char.abilityScores.stats.map((e) =>
-                                e.key == ability.key ? e.copyWith(isDebilitated: checked) : e),
+                            stats: char.abilityScores.stats.map(
+                              (e) => e.key == ability.key
+                                  ? e.copyWith(isDebilitated: !e.isDebilitated)
+                                  : e,
+                            ),
+                          ),
+                        ),
+                      ),
+                      trailing: Switch.adaptive(
+                        value: ability.isDebilitated,
+                        onChanged: (checked) => charService.updateCharacter(
+                          char.copyWith(
+                            abilityScores: char.abilityScores.copyWith(
+                              stats: char.abilityScores.stats.map((e) =>
+                                  e.key == ability.key ? e.copyWith(isDebilitated: checked) : e),
+                            ),
                           ),
                         ),
                       ),
                     ),
-                  ),
-              ],
+                ],
+              ),
             ),
           ),
         ),
