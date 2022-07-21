@@ -550,146 +550,6 @@ class S {
     );
   }
 
-  /// `Change Display Name`
-  String get accountChangeDisplayNameTitle {
-    return Intl.message(
-      'Change Display Name',
-      name: 'accountChangeDisplayNameTitle',
-      desc: '',
-      args: [],
-    );
-  }
-
-  /// `Display Name`
-  String get accountChangeDisplayNameLabel {
-    return Intl.message(
-      'Display Name',
-      name: 'accountChangeDisplayNameLabel',
-      desc: '',
-      args: [],
-    );
-  }
-
-  /// `Enter your public display name`
-  String get accountChangeDisplayNameHint {
-    return Intl.message(
-      'Enter your public display name',
-      name: 'accountChangeDisplayNameHint',
-      desc: '',
-      args: [],
-    );
-  }
-
-  /// `Change Profile Picture`
-  String get accountChangeImageTitle {
-    return Intl.message(
-      'Change Profile Picture',
-      name: 'accountChangeImageTitle',
-      desc: '',
-      args: [],
-    );
-  }
-
-  /// `Change your profile picture`
-  String get accountChangeImageSubtitle {
-    return Intl.message(
-      'Change your profile picture',
-      name: 'accountChangeImageSubtitle',
-      desc: '',
-      args: [],
-    );
-  }
-
-  /// `Change Email Address`
-  String get accountChangeEmailTitle {
-    return Intl.message(
-      'Change Email Address',
-      name: 'accountChangeEmailTitle',
-      desc: '',
-      args: [],
-    );
-  }
-
-  /// `Email Address`
-  String get accountChangeEmailLabel {
-    return Intl.message(
-      'Email Address',
-      name: 'accountChangeEmailLabel',
-      desc: '',
-      args: [],
-    );
-  }
-
-  /// `Enter your new email address`
-  String get accountChangeEmailHint {
-    return Intl.message(
-      'Enter your new email address',
-      name: 'accountChangeEmailHint',
-      desc: '',
-      args: [],
-    );
-  }
-
-  /// `Change Password`
-  String get accountChangePasswordTitle {
-    return Intl.message(
-      'Change Password',
-      name: 'accountChangePasswordTitle',
-      desc: '',
-      args: [],
-    );
-  }
-
-  /// `New Password`
-  String get accountChangePasswordLabel {
-    return Intl.message(
-      'New Password',
-      name: 'accountChangePasswordLabel',
-      desc: '',
-      args: [],
-    );
-  }
-
-  /// `Enter your new password`
-  String get accountChangePasswordHint {
-    return Intl.message(
-      'Enter your new password',
-      name: 'accountChangePasswordHint',
-      desc: '',
-      args: [],
-    );
-  }
-
-  /// `Confirm New Password`
-  String get accountChangePasswordConfirmLabel {
-    return Intl.message(
-      'Confirm New Password',
-      name: 'accountChangePasswordConfirmLabel',
-      desc: '',
-      args: [],
-    );
-  }
-
-  /// `Enter the same password again`
-  String get accountChangePasswordConfirmHint {
-    return Intl.message(
-      'Enter the same password again',
-      name: 'accountChangePasswordConfirmHint',
-      desc: '',
-      args: [],
-    );
-  }
-
-  /// `Change your password`
-  String get accountChangePasswordSubtitle {
-    return Intl.message(
-      'Change your password',
-      name: 'accountChangePasswordSubtitle',
-      desc: '',
-      args: [],
-    );
-  }
-
   /// `Account Details`
   String get accountCategoryDetails {
     return Intl.message(
@@ -705,6 +565,146 @@ class S {
     return Intl.message(
       'Connected Logins',
       name: 'accountCategorySocials',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Enter your public display name`
+  String get accountChangeDisplayNameHint {
+    return Intl.message(
+      'Enter your public display name',
+      name: 'accountChangeDisplayNameHint',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Display Name`
+  String get accountChangeDisplayNameLabel {
+    return Intl.message(
+      'Display Name',
+      name: 'accountChangeDisplayNameLabel',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Change Display Name`
+  String get accountChangeDisplayNameTitle {
+    return Intl.message(
+      'Change Display Name',
+      name: 'accountChangeDisplayNameTitle',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Enter your new email address`
+  String get accountChangeEmailHint {
+    return Intl.message(
+      'Enter your new email address',
+      name: 'accountChangeEmailHint',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Email Address`
+  String get accountChangeEmailLabel {
+    return Intl.message(
+      'Email Address',
+      name: 'accountChangeEmailLabel',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Change Email Address`
+  String get accountChangeEmailTitle {
+    return Intl.message(
+      'Change Email Address',
+      name: 'accountChangeEmailTitle',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Change your profile picture`
+  String get accountChangeImageSubtitle {
+    return Intl.message(
+      'Change your profile picture',
+      name: 'accountChangeImageSubtitle',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Change Profile Picture`
+  String get accountChangeImageTitle {
+    return Intl.message(
+      'Change Profile Picture',
+      name: 'accountChangeImageTitle',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Enter the same password again`
+  String get accountChangePasswordConfirmHint {
+    return Intl.message(
+      'Enter the same password again',
+      name: 'accountChangePasswordConfirmHint',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Confirm New Password`
+  String get accountChangePasswordConfirmLabel {
+    return Intl.message(
+      'Confirm New Password',
+      name: 'accountChangePasswordConfirmLabel',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Enter your new password`
+  String get accountChangePasswordHint {
+    return Intl.message(
+      'Enter your new password',
+      name: 'accountChangePasswordHint',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `New Password`
+  String get accountChangePasswordLabel {
+    return Intl.message(
+      'New Password',
+      name: 'accountChangePasswordLabel',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Change your password`
+  String get accountChangePasswordSubtitle {
+    return Intl.message(
+      'Change your password',
+      name: 'accountChangePasswordSubtitle',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Change Password`
+  String get accountChangePasswordTitle {
+    return Intl.message(
+      'Change Password',
+      name: 'accountChangePasswordTitle',
       desc: '',
       args: [],
     );
@@ -2278,86 +2278,6 @@ class S {
     );
   }
 
-  /// `Add\n+{amount}`
-  String expDialogChangeAdd(Object amount) {
-    return Intl.message(
-      'Add\n+$amount',
-      name: 'expDialogChangeAdd',
-      desc: '',
-      args: [amount],
-    );
-  }
-
-  /// `No Change`
-  String get expDialogChangeNeutral {
-    return Intl.message(
-      'No Change',
-      name: 'expDialogChangeNeutral',
-      desc: '',
-      args: [],
-    );
-  }
-
-  /// `Override XP & Level`
-  String get expDialogChangeOverride {
-    return Intl.message(
-      'Override XP & Level',
-      name: 'expDialogChangeOverride',
-      desc: '',
-      args: [],
-    );
-  }
-
-  /// `Reduce\n-{amount}`
-  String expDialogChangeRemove(Object amount) {
-    return Intl.message(
-      'Reduce\n-$amount',
-      name: 'expDialogChangeRemove',
-      desc: '',
-      args: [amount],
-    );
-  }
-
-  /// `Current XP`
-  String get expDialogCurrentXP {
-    return Intl.message(
-      'Current XP',
-      name: 'expDialogCurrentXP',
-      desc: '',
-      args: [],
-    );
-  }
-
-  /// `End Session`
-  String get expDialogEndSession {
-    return Intl.message(
-      'End Session',
-      name: 'expDialogEndSession',
-      desc: '',
-      args: [],
-    );
-  }
-
-  /// `Set level manually`
-  String get expDialogLevelShouldOverride {
-    return Intl.message(
-      'Set level manually',
-      name: 'expDialogLevelShouldOverride',
-      desc: '',
-      args: [],
-    );
-  }
-
-  /// `Modify XP`
-  String get expDialogTitle {
-    return Intl.message(
-      'Modify XP',
-      name: 'expDialogTitle',
-      desc: '',
-      args: [],
-    );
-  }
-
   /// `Further details`
   String get explanation {
     return Intl.message(
@@ -2578,36 +2498,6 @@ class S {
     );
   }
 
-  /// `Give a general description of your class. Describe a calling for the type of person or creature that would choose or be raised in to this adventuring profession.`
-  String get formCharacterClassDescriptionPlaceholder {
-    return Intl.message(
-      'Give a general description of your class. Describe a calling for the type of person or creature that would choose or be raised in to this adventuring profession.',
-      name: 'formCharacterClassDescriptionPlaceholder',
-      desc: '',
-      args: [],
-    );
-  }
-
-  /// `Enter the class name`
-  String get formCharacterClassNamePlaceholder {
-    return Intl.message(
-      'Enter the class name',
-      name: 'formCharacterClassNamePlaceholder',
-      desc: '',
-      args: [],
-    );
-  }
-
-  /// `Damage Dice`
-  String get formCharacterClassDamage {
-    return Intl.message(
-      'Damage Dice',
-      name: 'formCharacterClassDamage',
-      desc: '',
-      args: [],
-    );
-  }
-
   /// `Base HP`
   String get formCharacterClassBaseHp {
     return Intl.message(
@@ -2623,6 +2513,36 @@ class S {
     return Intl.message(
       'Base Load',
       name: 'formCharacterClassBaseLoad',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Damage Dice`
+  String get formCharacterClassDamage {
+    return Intl.message(
+      'Damage Dice',
+      name: 'formCharacterClassDamage',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Give a general description of your class. Describe a calling for the type of person or creature that would choose or be raised in to this adventuring profession.`
+  String get formCharacterClassDescriptionPlaceholder {
+    return Intl.message(
+      'Give a general description of your class. Describe a calling for the type of person or creature that would choose or be raised in to this adventuring profession.',
+      name: 'formCharacterClassDescriptionPlaceholder',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Enter the class name`
+  String get formCharacterClassNamePlaceholder {
+    return Intl.message(
+      'Enter the class name',
+      name: 'formCharacterClassNamePlaceholder',
       desc: '',
       args: [],
     );
@@ -2828,10 +2748,10 @@ class S {
     );
   }
 
-  /// `Override Max HP:`
+  /// `Override Max HP`
   String get hpDialogChangeOverrideMax {
     return Intl.message(
-      'Override Max HP:',
+      'Override Max HP',
       name: 'hpDialogChangeOverrideMax',
       desc: '',
       args: [],
@@ -3808,16 +3728,6 @@ class S {
     );
   }
 
-  /// `Passwords do not match`
-  String get signupPasswordValidationMatch {
-    return Intl.message(
-      'Passwords do not match',
-      name: 'signupPasswordValidationMatch',
-      desc: '',
-      args: [],
-    );
-  }
-
   /// `Enter your password`
   String get signupPasswordPlaceholder {
     return Intl.message(
@@ -3835,6 +3745,16 @@ class S {
       name: 'signupPasswordValidationLength',
       desc: '',
       args: [length],
+    );
+  }
+
+  /// `Passwords do not match`
+  String get signupPasswordValidationMatch {
+    return Intl.message(
+      'Passwords do not match',
+      name: 'signupPasswordValidationMatch',
+      desc: '',
+      args: [],
     );
   }
 
@@ -4117,6 +4037,86 @@ class S {
       name: 'viewGeneric',
       desc: '',
       args: [entity],
+    );
+  }
+
+  /// `Update manually`
+  String get xpDialogChangeOverride {
+    return Intl.message(
+      'Update manually',
+      name: 'xpDialogChangeOverride',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `End Session`
+  String get xpDialogEndSession {
+    return Intl.message(
+      'End Session',
+      name: 'xpDialogEndSession',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Changing the current XP or level manually will cause the pending XP to be discarded unless this is unchecked.`
+  String get xpDialogOverrideInfoText {
+    return Intl.message(
+      'Changing the current XP or level manually will cause the pending XP to be discarded unless this is unchecked.',
+      name: 'xpDialogOverrideInfoText',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Override Level`
+  String get xpDialogOverrideLevel {
+    return Intl.message(
+      'Override Level',
+      name: 'xpDialogOverrideLevel',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Override XP`
+  String get xpDialogOverrideXp {
+    return Intl.message(
+      'Override XP',
+      name: 'xpDialogOverrideXp',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Mark Session XP`
+  String get xpDialogTitle {
+    return Intl.message(
+      'Mark Session XP',
+      name: 'xpDialogTitle',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Update XP & Level`
+  String get xpDialogTitleOverriding {
+    return Intl.message(
+      'Update XP & Level',
+      name: 'xpDialogTitleOverriding',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Reset bonds, flags & end of session questions after saving`
+  String get xpDialogResetSessionMarks {
+    return Intl.message(
+      'Reset bonds, flags & end of session questions after saving',
+      name: 'xpDialogResetSessionMarks',
+      desc: '',
+      args: [],
     );
   }
 }

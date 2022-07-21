@@ -1,6 +1,5 @@
 import 'package:dungeon_paper/app/themes/colors.dart';
 import 'package:dungeon_paper/app/themes/themes.dart';
-import 'package:dungeon_paper/generated/l10n.dart';
 import 'package:flutter/material.dart';
 import 'package:wheel_spinner/wheel_spinner.dart';
 
@@ -52,10 +51,10 @@ class ValueChangeSlider<N extends num> extends StatelessWidget {
         Expanded(
           child: Text(
             isChangeNeutral
-                ? S.current.expDialogChangeNeutral
+                ? neutralText(changeAmount)
                 : isChangePositive
-                    ? S.current.expDialogChangeAdd(changeAmount)
-                    : S.current.expDialogChangeRemove(changeAmount),
+                    ? positiveText(changeAmount)
+                    : negativeText(changeAmount),
             style: textTheme.headline5!.copyWith(
               color: isChangeNeutral
                   ? null

@@ -67,25 +67,21 @@ class _HPDialogState extends State<HPDialog> with CharacterServiceMixin {
                   ),
                 ),
               ),
-              ListTile(
-                onTap: () => setState(() => shouldOverrideMaxHP = !shouldOverrideMaxHP),
-                leading: Checkbox(
-                  value: shouldOverrideMaxHP,
-                  onChanged: (value) => setState(() => shouldOverrideMaxHP = value!),
-                ),
-                title: Padding(
-                  padding: const EdgeInsets.only(top: 24, bottom: 8),
-                  child: Text(S.current.hpDialogChangeOverrideMax),
-                ),
-                subtitle: NumberTextField(
-                  controller: overrideMaxHp,
-                  numberType: NumberType.int,
-                  minValue: 0,
-                  enabled: shouldOverrideMaxHP,
-                ),
+              const SizedBox(height: 8),
+              const Divider(height: 32),
+              CheckboxListTile(
+                value: shouldOverrideMaxHP,
+                onChanged: (value) => setState(() => shouldOverrideMaxHP = value!),
+                title: Text(S.current.hpDialogChangeOverrideMax),
+                controlAffinity: ListTileControlAffinity.leading,
                 dense: true,
                 visualDensity: VisualDensity.compact,
-                minLeadingWidth: 24,
+              ),
+              NumberTextField(
+                controller: overrideMaxHp,
+                numberType: NumberType.int,
+                minValue: 0,
+                enabled: shouldOverrideMaxHP,
               ),
               const SizedBox(height: 24),
               Row(

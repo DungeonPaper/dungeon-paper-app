@@ -18,8 +18,6 @@ import '../atoms/user_avatar.dart';
 class UserMenuPopover extends GetView<CharacterService> with AuthServiceMixin, UserServiceMixin {
   UserMenuPopover({super.key});
 
-  final UserService userService = Get.find();
-
   @override
   Widget build(BuildContext context) {
     final textStyle = TextStyle(color: Theme.of(context).colorScheme.onSurface);

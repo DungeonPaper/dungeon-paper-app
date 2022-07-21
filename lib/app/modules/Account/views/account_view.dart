@@ -6,8 +6,6 @@ import 'package:dungeon_paper/core/utils/email_address_validator.dart';
 import 'package:dungeon_paper/core/utils/password_validator.dart';
 import 'package:dungeon_paper/core/utils/string_validator.dart';
 import 'package:dungeon_paper/generated/l10n.dart';
-import 'package:email_validator/email_validator.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
