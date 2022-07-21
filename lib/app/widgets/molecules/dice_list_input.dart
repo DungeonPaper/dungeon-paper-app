@@ -13,6 +13,7 @@ class DiceListInput extends StatefulWidget {
     this.controller,
     required this.abilityScores,
     required this.guessFrom,
+    this.label,
     this.labelColor,
     this.maxCount,
   });
@@ -22,6 +23,7 @@ class DiceListInput extends StatefulWidget {
   final List<ValueNotifier<String>> guessFrom;
   final Color? labelColor;
   final int? maxCount;
+  final Widget? label;
 
   @override
   State<DiceListInput> createState() => _DiceListInputState();
@@ -47,6 +49,7 @@ class _DiceListInputState extends State<DiceListInput> {
     bool isNotAtMax = widget.maxCount == null || controller.value.length < widget.maxCount!;
 
     return ChipListInput<dw.Dice>(
+      label: widget.label,
       controller: controller,
       dialogBuilder: (context, dice, {required onSave}) => AddDiceDialog(
         dice: dice?.value,

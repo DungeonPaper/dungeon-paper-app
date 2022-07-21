@@ -14,8 +14,8 @@ class NoteForm extends GetView<DynamicFormController<Note>> {
     return DynamicForm<Note>(
       entity: controller.entity.value,
       inputs: controller.inputs,
-      onChange: (d) => controller.onChange(controller.setData(d, setDirty: true)),
-      onReplace: (d) => controller.onChange(controller.setFromEntity(d)),
+      onChange: (d) => controller.setData(d, setDirty: true),
+      onReplace: (d) => controller.setFromEntity(d),
     );
   }
 }
@@ -96,7 +96,7 @@ class NoteFormController extends DynamicFormController<Note> {
 class NoteFormArguments extends LibraryEntityFormArguments<Note> {
   NoteFormArguments({
     required super.entity,
-    required super.onChange,
+    required super.onSave,
     required super.type,
   });
 }

@@ -18,8 +18,8 @@ class RaceForm extends GetView<DynamicFormController<Race>> {
     return DynamicForm(
       entity: controller.entity.value,
       inputs: controller.inputs,
-      onChange: (d) => controller.onChange(controller.setData(d, setDirty: true)),
-      onReplace: (d) => controller.onChange(controller.setFromEntity(d)),
+      onChange: (d) => controller.setData(d, setDirty: true),
+      onReplace: (d) => controller.setFromEntity(d),
     );
   }
 }
@@ -138,7 +138,7 @@ class RaceFormArguments extends LibraryEntityFormArguments<Race> {
 
   RaceFormArguments({
     required super.entity,
-    required super.onChange,
+    required super.onSave,
     required super.type,
     required this.abilityScores,
   });

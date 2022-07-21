@@ -540,6 +540,16 @@ class S {
     );
   }
 
+  /// `Account`
+  String get account {
+    return Intl.message(
+      'Account',
+      name: 'account',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `{coins} G`
   String actionSummaryChipCoins(Object coins) {
     return Intl.message(
@@ -2393,6 +2403,36 @@ class S {
     return Intl.message(
       'Enter the class name',
       name: 'formCharacterClassNamePlaceholder',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Damage Dice`
+  String get formCharacterClassDamage {
+    return Intl.message(
+      'Damage Dice',
+      name: 'formCharacterClassDamage',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Base HP`
+  String get formCharacterClassBaseHp {
+    return Intl.message(
+      'Base HP',
+      name: 'formCharacterClassBaseHp',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Base Load`
+  String get formCharacterClassBaseLoad {
+    return Intl.message(
+      'Base Load',
+      name: 'formCharacterClassBaseLoad',
       desc: '',
       args: [],
     );

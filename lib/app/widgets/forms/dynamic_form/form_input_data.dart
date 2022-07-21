@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:dungeon_paper/app/data/models/ability_scores.dart';
 import 'package:dungeon_paper/app/themes/themes.dart';
+import 'package:dungeon_paper/app/widgets/atoms/number_text_field.dart';
 import 'package:dungeon_paper/app/widgets/atoms/rich_text_field.dart';
 import 'package:dungeon_paper/app/widgets/atoms/select_box.dart';
 import 'package:dungeon_paper/app/widgets/forms/dynamic_form/dynamic_form.dart';
@@ -18,6 +19,7 @@ part 'form_dice_input_data.dart';
 part 'form_dropdown_input_data.dart';
 part 'form_tags_input_data.dart';
 part 'form_text_input_data.dart';
+part 'form_number_input_data.dart';
 
 enum FormInputType {
   text,

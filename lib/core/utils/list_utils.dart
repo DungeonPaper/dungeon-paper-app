@@ -62,14 +62,27 @@ const _sample = sample;
 class Enumerated<T> {
   final T value;
   final int index;
+  final bool isFirst;
+  final bool isLast;
 
-  Enumerated({required this.index, required this.value});
+  Enumerated._({
+    required this.index,
+    required this.value,
+    required int sourceLength,
+  })  : isFirst = index == 0,
+        isLast = index == sourceLength - 1;
 
   static List<Enumerated<T>> listFrom<T>(Iterable<T> list) {
     var i = 0;
     final out = <Enumerated<T>>[];
     for (final item in list) {
-      out.add(Enumerated(index: i, value: item));
+      out.add(
+        Enumerated._(
+          index: i,
+          value: item,
+          sourceLength: list.length,
+        ),
+      );
       i++;
     }
     return out;

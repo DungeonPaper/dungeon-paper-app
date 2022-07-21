@@ -18,8 +18,8 @@ class MoveForm extends GetView<DynamicFormController<Move>> {
     return DynamicForm(
       entity: controller.entity.value,
       inputs: controller.inputs,
-      onChange: (d) => controller.onChange(controller.setData(d, setDirty: true)),
-      onReplace: (d) => controller.onChange(controller.setFromEntity(d)),
+      onChange: (d) => controller.setData(d, setDirty: true),
+      onReplace: (d) => controller.setFromEntity(d),
       builder: (context, inputs, entity) {
         return ListView(
           padding: const EdgeInsets.symmetric(horizontal: 16).copyWith(bottom: 70),
@@ -176,7 +176,7 @@ class MoveFormArguments extends LibraryEntityFormArguments<Move> {
   MoveFormArguments({
     required super.entity,
     required this.abilityScores,
-    required super.onChange,
+    required super.onSave,
     required super.type,
   });
 }

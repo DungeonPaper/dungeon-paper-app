@@ -43,7 +43,7 @@ class LibraryEntityForm<T extends WithMeta> extends GetView<DynamicFormControlle
           body: buildForm(context, entity),
           floatingActionButton: AdvancedFloatingActionButton.extended(
             onPressed: () {
-              controller.onChange(entity);
+              controller.onSave(entity);
               Get.back();
             },
             label: Text(S.current.save),
@@ -88,13 +88,13 @@ class LibraryEntityForm<T extends WithMeta> extends GetView<DynamicFormControlle
 }
 
 class LibraryEntityFormArguments<T extends WithMeta> {
-  final void Function(T item) onChange;
+  final void Function(T item) onSave;
   final FormContext type;
   final T? entity;
 
   LibraryEntityFormArguments({
     required this.entity,
-    required this.onChange,
+    required this.onSave,
     required this.type,
   });
 }

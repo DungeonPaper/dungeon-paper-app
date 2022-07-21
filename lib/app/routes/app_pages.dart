@@ -1,15 +1,13 @@
-import 'package:dungeon_paper/app/data/models/character_class.dart';
-import 'package:dungeon_paper/app/data/models/note.dart';
-import 'package:dungeon_paper/app/data/models/race.dart';
-import 'package:dungeon_paper/app/modules/LibraryList/bindings/library_form_binding.dart';
-import 'package:dungeon_paper/app/widgets/forms/library_entity_form.dart';
 import 'package:flutter/widgets.dart';
 
 import 'package:get/get.dart';
 
+import '../data/models/character_class.dart';
 import '../data/models/item.dart';
 import '../data/models/meta.dart';
 import '../data/models/move.dart';
+import '../data/models/note.dart';
+import '../data/models/race.dart';
 import '../data/models/spell.dart';
 import '../data/services/character_service.dart';
 import '../modules/AbilityScoreForm/bindings/ability_score_form_binding.dart';
@@ -18,6 +16,8 @@ import '../modules/AbilityScoresForm/bindings/ability_scores_form_binding.dart';
 import '../modules/AbilityScoresForm/views/ability_scores_form_view.dart';
 import '../modules/About/bindings/about_binding.dart';
 import '../modules/About/views/about_view.dart';
+import '../modules/Account/bindings/account_binding.dart';
+import '../modules/Account/views/account_view.dart';
 import '../modules/BasicInfoForm/bindings/basic_info_form_binding.dart';
 import '../modules/BasicInfoForm/views/basic_info_form_view.dart';
 import '../modules/BioForm/bindings/bio_form_binding.dart';
@@ -37,6 +37,7 @@ import '../modules/Home/views/home_view.dart';
 import '../modules/ImportExport/bindings/import_export_binding.dart';
 import '../modules/ImportExport/views/import_export_view.dart';
 import '../modules/LibraryList/bindings/library_collection_binding.dart';
+import '../modules/LibraryList/bindings/library_form_binding.dart';
 import '../modules/LibraryList/bindings/library_list_binding.dart';
 import '../modules/LibraryList/views/character_classes_library_list_view.dart';
 import '../modules/LibraryList/views/items_library_list_view.dart';
@@ -56,6 +57,7 @@ import '../modules/StartingGearForm/bindings/starting_gear_form_binding.dart';
 import '../modules/StartingGearForm/views/starting_gear_form_view.dart';
 import '../modules/UniversalSearch/bindings/universal_search_binding.dart';
 import '../modules/UniversalSearch/views/universal_search_view.dart';
+import '../widgets/forms/library_entity_form.dart';
 import '../widgets/molecules/user_menu_popover.dart';
 import '../widgets/views/roll_dice_view.dart';
 import 'custom_transitions.dart';
@@ -311,6 +313,11 @@ class AppPages {
       page: () => const AbilityScoreFormView(),
       binding: AbilityScoreFormBinding(),
       preventDuplicates: false,
+    ),
+    GetPage(
+      name: _Paths.account,
+      page: () => const AccountView(),
+      binding: AccountBinding(),
     ),
   ];
 }

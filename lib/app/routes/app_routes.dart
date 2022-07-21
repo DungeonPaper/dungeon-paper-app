@@ -56,12 +56,14 @@ abstract class Routes {
   static const bondsFlags = _Paths.character + _Paths.bondsFlags;
   static const classAlignments = _Paths.character + _Paths.classAlignments;
   static const selectCharacterTheme = _Paths.character + _Paths.selectCharacterTheme;
+  static const account = _Paths.account;
 }
 
 abstract class _Paths {
   _Paths._();
 
   static const home = '/';
+  static const account = '/account';
   static const about = '/about';
   static const character = '/character';
   static const characterList = '/characters';

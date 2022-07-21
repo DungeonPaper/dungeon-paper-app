@@ -410,8 +410,8 @@ abstract class MetaInterface<T, M> {
   dynamic toJson();
 }
 
-mixin WithMeta<T, M> implements WithKey, MetaInterface<T, M> {
-  abstract final Meta<M> meta;
+mixin WithMeta<T, MetaDataType> implements WithKey, MetaInterface<T, MetaDataType> {
+  abstract final Meta<MetaDataType> meta;
   String get displayName;
   String get storageKey;
   dw.EntityReference get reference => Meta.referenceFor(this);

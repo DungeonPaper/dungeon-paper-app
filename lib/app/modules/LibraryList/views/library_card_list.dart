@@ -96,39 +96,39 @@ class LibraryCardList<T extends WithMeta, F extends EntityFilters<T>>
         return MoveFormArguments(
           entity: null,
           abilityScores: extraData['abilityScores'],
-          onChange: onSave! as void Function(Move move),
+          onSave: onSave! as void Function(Move move),
           type: FormContext.create,
         );
       case Spell:
         return SpellFormArguments(
           entity: null,
           abilityScores: extraData['abilityScores'],
-          onChange: onSave! as void Function(Spell spell),
+          onSave: onSave! as void Function(Spell spell),
           type: FormContext.create,
         );
       case Item:
         return ItemFormArguments(
           entity: null,
-          onChange: onSave! as void Function(Item item),
+          onSave: onSave! as void Function(Item item),
           type: FormContext.create,
         );
       case Note:
         return NoteFormArguments(
           entity: null,
-          onChange: onSave! as void Function(Note note),
+          onSave: onSave! as void Function(Note note),
           type: FormContext.create,
         );
       case CharacterClass:
         return CharacterClassFormArguments(
           entity: null,
-          onChange: onSave! as void Function(CharacterClass characterClass),
+          onSave: onSave! as void Function(CharacterClass characterClass),
           type: FormContext.create,
         );
       case Race:
         return RaceFormArguments(
           entity: null,
           abilityScores: extraData['abilityScores'],
-          onChange: onSave! as void Function(Race race),
+          onSave: onSave! as void Function(Race race),
           type: FormContext.create,
         );
     }

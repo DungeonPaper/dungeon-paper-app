@@ -105,9 +105,9 @@ abstract class DynamicFormController<T extends WithMeta> extends GetxController 
   abstract final Rx<T> entity;
   final dirty = false.obs;
 
-  late final void Function(T item) onChange;
-  late final FormContext type;
-  late final LibraryEntityFormArguments<T> args;
+  late void Function(T item) onSave;
+  late FormContext type;
+  late LibraryEntityFormArguments<T> args;
 
   @mustCallSuper
   T setData(Map<String, dynamic> data, {required bool setDirty}) {
@@ -133,9 +133,9 @@ abstract class DynamicFormController<T extends WithMeta> extends GetxController 
   FutureOr<void> init() {
     args = Get.arguments;
     type = args.type;
-    onChange = args.onChange;
+    onSave = args.onSave;
     createInputs();
-    entity.value = entity.value.copyWithInherited(key: entity.value.key, meta: entity.value.meta);
+    // entity.value = entity.value.copyWithInherited(key: entity.value.key, meta: entity.value.meta);
     setFromEntity(entity.value);
   }
 

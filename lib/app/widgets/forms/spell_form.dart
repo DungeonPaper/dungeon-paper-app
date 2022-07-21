@@ -17,8 +17,8 @@ class SpellForm extends GetView<DynamicFormController<Spell>> {
     return DynamicForm<Spell>(
       entity: controller.entity.value,
       inputs: controller.inputs,
-      onChange: (d) => controller.onChange(controller.setData(d, setDirty: true)),
-      onReplace: (d) => controller.onChange(controller.setFromEntity(d)),
+      onChange: (d) => controller.setData(d, setDirty: true),
+      onReplace: (d) => controller.setFromEntity(d),
     );
   }
 }
@@ -139,7 +139,7 @@ class SpellFormArguments extends LibraryEntityFormArguments<Spell> {
 
   SpellFormArguments({
     required super.entity,
-    required super.onChange,
+    required super.onSave,
     required super.type,
     required this.abilityScores,
     // required this.classKeys,

@@ -14,8 +14,8 @@ class ItemForm extends GetView<DynamicFormController<Item>> {
     return DynamicForm<Item>(
       entity: controller.entity.value,
       inputs: controller.inputs,
-      onChange: (d) => controller.onChange(controller.setData(d, setDirty: true)),
-      onReplace: (d) => controller.onChange(controller.setFromEntity(d)),
+      onChange: (d) => controller.setData(d, setDirty: true),
+      onReplace: (d) => controller.setFromEntity(d),
     );
   }
 }
@@ -85,7 +85,7 @@ class ItemFormController extends DynamicFormController<Item> {
 class ItemFormArguments extends LibraryEntityFormArguments<Item> {
   ItemFormArguments({
     required super.entity,
-    required super.onChange,
+    required super.onSave,
     required super.type,
   });
 }

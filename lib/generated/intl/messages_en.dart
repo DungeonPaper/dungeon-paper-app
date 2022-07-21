@@ -391,6 +391,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "aboutCopyright": m2,
         "aboutTitle": MessageLookupByLibrary.simpleMessage("About"),
         "aboutVersion": m3,
+        "account": MessageLookupByLibrary.simpleMessage("Account"),
         "actionSummaryChipCoins": m4,
         "actionSummaryChipLoad": m5,
         "actionsViewVisibleLabel": MessageLookupByLibrary.simpleMessage("Show"),
@@ -650,6 +651,12 @@ class MessageLookup extends MessageLookupByLibrary {
             "Your data was exported to file successfully"),
         "exportSuccessfulTitle":
             MessageLookupByLibrary.simpleMessage("Export Successful"),
+        "formCharacterClassBaseHp":
+            MessageLookupByLibrary.simpleMessage("Base HP"),
+        "formCharacterClassBaseLoad":
+            MessageLookupByLibrary.simpleMessage("Base Load"),
+        "formCharacterClassDamage":
+            MessageLookupByLibrary.simpleMessage("Damage Dice"),
         "formCharacterClassDescriptionPlaceholder":
             MessageLookupByLibrary.simpleMessage(
                 "Give a general description of your class. Describe a calling for the type of person or creature that would choose or be raised in to this adventuring profession."),

@@ -96,7 +96,7 @@ class ModelPages {
         arguments: MoveFormArguments(
           entity: move,
           abilityScores: abilityScores,
-          onChange: onSave,
+          onSave: onSave,
           type: move == null ? FormContext.create : FormContext.edit,
         ),
       );
@@ -111,7 +111,7 @@ class ModelPages {
         arguments: RaceFormArguments(
           entity: race,
           abilityScores: abilityScores,
-          onChange: onSave,
+          onSave: onSave,
           type: race == null ? FormContext.create : FormContext.edit,
         ),
       );
@@ -143,7 +143,7 @@ class ModelPages {
         arguments: SpellFormArguments(
           entity: spell,
           abilityScores: abilityScores,
-          onChange: onSave,
+          onSave: onSave,
           type: spell == null ? FormContext.create : FormContext.edit,
         ),
       );
@@ -171,7 +171,7 @@ class ModelPages {
         Routes.editItem,
         arguments: ItemFormArguments(
           entity: item,
-          onChange: onSave,
+          onSave: onSave,
           type: item == null ? FormContext.create : FormContext.edit,
         ),
       );
@@ -199,7 +199,7 @@ class ModelPages {
         Routes.editNote,
         arguments: NoteFormArguments(
           entity: note,
-          onChange: onSave,
+          onSave: onSave,
           type: note == null ? FormContext.create : FormContext.edit,
         ),
       );
@@ -237,7 +237,7 @@ class ModelPages {
         Routes.editClass,
         arguments: CharacterClassFormArguments(
           entity: characterClass,
-          onChange: onSave,
+          onSave: onSave,
           type: characterClass == null ? FormContext.create : FormContext.edit,
         ),
       );
