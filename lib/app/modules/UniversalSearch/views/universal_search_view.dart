@@ -47,26 +47,29 @@ class UniversalSearchView extends GetView<UniversalSearchController> {
             child: Column(
               children: [
                 Obx(
-                  () => Wrap(
-                    spacing: 8,
-                    runSpacing: 0,
-                    crossAxisAlignment: WrapCrossAlignment.center,
-                    children: [
-                      Text(S.current.searchIn),
-                      if (controller.hasCharacter)
+                  () => Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Wrap(
+                      spacing: 8,
+                      runSpacing: 0,
+                      crossAxisAlignment: WrapCrossAlignment.center,
+                      children: [
+                        Text(S.current.searchIn),
+                        if (controller.hasCharacter)
+                          _FilterChip(
+                            label: S.current.entity(Character),
+                            sourceType: SourceType.character,
+                          ),
                         _FilterChip(
-                          label: S.current.entity(Character),
-                          sourceType: SourceType.character,
+                          label: S.current.libraryCollectionTitle,
+                          sourceType: SourceType.myLibrary,
                         ),
-                      _FilterChip(
-                        label: S.current.libraryCollectionTitle,
-                        sourceType: SourceType.myLibrary,
-                      ),
-                      _FilterChip(
-                        label: S.current.addRepoItemTabPlaybook,
-                        sourceType: SourceType.builtInLibrary,
-                      ),
-                    ],
+                        _FilterChip(
+                          label: S.current.addRepoItemTabPlaybook,
+                          sourceType: SourceType.builtInLibrary,
+                        ),
+                      ],
+                    ),
                   ),
                 ),
                 FutureBuilder<List<dynamic>>(
@@ -87,7 +90,7 @@ class UniversalSearchView extends GetView<UniversalSearchController> {
                       }
                       return Expanded(
                         child: ListView.builder(
-                          padding: const EdgeInsets.all(12),
+                          padding: const EdgeInsets.all(12).copyWith(top: 0),
                           itemCount: value.data!.length,
                           itemBuilder: (context, index) => _CardByType(
                             value.data![index],

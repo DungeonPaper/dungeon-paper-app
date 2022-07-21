@@ -1,3 +1,4 @@
+import 'dart:io';
 
 import 'package:dungeon_paper/app/data/models/character_stats.dart';
 import 'package:dungeon_paper/app/data/models/session_marks.dart';
@@ -10,6 +11,7 @@ import 'package:dungeon_paper/app/widgets/molecules/dialog_controls.dart';
 import 'package:dungeon_paper/core/utils/list_utils.dart';
 import 'package:dungeon_paper/core/utils/math_utils.dart';
 import 'package:dungeon_paper/generated/l10n.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:dungeon_world_data/dungeon_world_data.dart' as dw;
 
@@ -104,7 +106,9 @@ class _EXPDialogState extends State<EXPDialog> with CharacterServiceMixin {
                 AnimatedContainer(
                   duration: const Duration(milliseconds: 250),
                   width: dlgWidth,
-                  height: manualExpExpanded ? 332 : 48,
+                  height: manualExpExpanded
+                      ? (332 + (!kIsWeb && (Platform.isIOS || Platform.isAndroid) ? 32 : 0))
+                      : 48,
                   child: CustomExpansionPanel(
                     title: Text(
                       S.current.xpDialogChangeOverride + (hasOverrides ? '*' : ''),
