@@ -601,70 +601,90 @@ class S {
   }
 
   /// `Change Email Address`
-  String get accountEmailTitle {
+  String get accountChangeEmailTitle {
     return Intl.message(
       'Change Email Address',
-      name: 'accountEmailTitle',
+      name: 'accountChangeEmailTitle',
       desc: '',
       args: [],
     );
   }
 
   /// `Email Address`
-  String get accountEmailLabel {
+  String get accountChangeEmailLabel {
     return Intl.message(
       'Email Address',
-      name: 'accountEmailLabel',
+      name: 'accountChangeEmailLabel',
       desc: '',
       args: [],
     );
   }
 
   /// `Enter your new email address`
-  String get accountEmailHint {
+  String get accountChangeEmailHint {
     return Intl.message(
       'Enter your new email address',
-      name: 'accountEmailHint',
+      name: 'accountChangeEmailHint',
       desc: '',
       args: [],
     );
   }
 
   /// `Change Password`
-  String get accountPasswordTitle {
+  String get accountChangePasswordTitle {
     return Intl.message(
       'Change Password',
-      name: 'accountPasswordTitle',
+      name: 'accountChangePasswordTitle',
       desc: '',
       args: [],
     );
   }
 
-  /// `Password`
-  String get accountPasswordLabel {
+  /// `New Password`
+  String get accountChangePasswordLabel {
     return Intl.message(
-      'Password',
-      name: 'accountPasswordLabel',
+      'New Password',
+      name: 'accountChangePasswordLabel',
       desc: '',
       args: [],
     );
   }
 
   /// `Enter your new password`
-  String get accountPasswordHint {
+  String get accountChangePasswordHint {
     return Intl.message(
       'Enter your new password',
-      name: 'accountPasswordHint',
+      name: 'accountChangePasswordHint',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Confirm New Password`
+  String get accountChangePasswordConfirmLabel {
+    return Intl.message(
+      'Confirm New Password',
+      name: 'accountChangePasswordConfirmLabel',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Enter the same password again`
+  String get accountChangePasswordConfirmHint {
+    return Intl.message(
+      'Enter the same password again',
+      name: 'accountChangePasswordConfirmHint',
       desc: '',
       args: [],
     );
   }
 
   /// `Change your password`
-  String get accountPasswordSubtitle {
+  String get accountChangePasswordSubtitle {
     return Intl.message(
       'Change your password',
-      name: 'accountPasswordSubtitle',
+      name: 'accountChangePasswordSubtitle',
       desc: '',
       args: [],
     );
@@ -2135,6 +2155,16 @@ class S {
       name: 'errorExactLength',
       desc: '',
       args: [length],
+    );
+  }
+
+  /// `Invalid email address`
+  String get errorInvalidEmail {
+    return Intl.message(
+      'Invalid email address',
+      name: 'errorInvalidEmail',
+      desc: '',
+      args: [],
     );
   }
 
@@ -3753,6 +3783,16 @@ class S {
     return Intl.message(
       'Password',
       name: 'signupPassword',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Passwords do not match`
+  String get signupPasswordValidationMatch {
+    return Intl.message(
+      'Passwords do not match',
+      name: 'signupPasswordValidationMatch',
       desc: '',
       args: [],
     );

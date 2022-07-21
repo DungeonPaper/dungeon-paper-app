@@ -50,7 +50,7 @@ class LoginView extends GetView<LoginController> {
                         hintText: S.current.signupPasswordPlaceholder,
                         floatingLabelBehavior: FloatingLabelBehavior.auto,
                       ),
-                      validator: PasswordValidator.getMessage,
+                      validator: PasswordValidator().validator,
                     ),
                     Obx(
                       () => ElevatedButton(

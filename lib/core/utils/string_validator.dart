@@ -72,7 +72,23 @@ class StringNotContainsValidation extends Validation {
   bool isValid(String? string) => string == null || !string.contains(pattern);
 }
 
-class StringValidator extends Validation {
+abstract class CompoundStringValidator extends Validation {
+  CompoundStringValidator() : super('');
+
+  List<Validation> get validators;
+
+  @override
+  bool isValid(String? string) => validators.every((v) => v.isValid(string));
+
+  @override
+  String? validator(String? string) {
+    return validators.firstWhereOrNull((v) {
+      return !v.isValid(string);
+    })?.message;
+  }
+}
+
+class StringValidator extends CompoundStringValidator {
   final int? minLength;
   final int? maxLength;
   final int? exactLength;
@@ -89,9 +105,10 @@ class StringValidator extends Validation {
     this.notContainsPattern,
     this.userFriendlyPattern,
     this.patternMessage,
-  }) : super('');
+  });
 
-  List<Validation> get _validators => [
+  @override
+  List<Validation> get validators => [
         if (minLength != null) StringMinLengthValidation(minLength: minLength!),
         if (maxLength != null) StringMaxLengthValidation(maxLength: maxLength!),
         if (exactLength != null) StringExactLengthValidation(length: exactLength!),
@@ -108,15 +125,4 @@ class StringValidator extends Validation {
             message: patternMessage,
           ),
       ];
-
-  @override
-  bool isValid(String? string) => _validators.every((v) => v.isValid(string));
-
-  @override
-  String? validator(String? string) {
-    debugPrint('validating $string');
-    return _validators.firstWhereOrNull((v) {
-      return !v.isValid(string);
-    })?.message;
-  }
 }

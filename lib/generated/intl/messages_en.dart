@@ -402,23 +402,28 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Display Name"),
         "accountChangeDisplayNameTitle":
             MessageLookupByLibrary.simpleMessage("Change Display Name"),
+        "accountChangeEmailHint": MessageLookupByLibrary.simpleMessage(
+            "Enter your new email address"),
+        "accountChangeEmailLabel":
+            MessageLookupByLibrary.simpleMessage("Email Address"),
+        "accountChangeEmailTitle":
+            MessageLookupByLibrary.simpleMessage("Change Email Address"),
         "accountChangeImageSubtitle":
             MessageLookupByLibrary.simpleMessage("Change your profile picture"),
         "accountChangeImageTitle":
             MessageLookupByLibrary.simpleMessage("Change Profile Picture"),
-        "accountEmailHint": MessageLookupByLibrary.simpleMessage(
-            "Enter your new email address"),
-        "accountEmailLabel":
-            MessageLookupByLibrary.simpleMessage("Email Address"),
-        "accountEmailTitle":
-            MessageLookupByLibrary.simpleMessage("Change Email Address"),
-        "accountPasswordHint":
+        "accountChangePasswordConfirmHint":
+            MessageLookupByLibrary.simpleMessage(
+                "Enter the same password again"),
+        "accountChangePasswordConfirmLabel":
+            MessageLookupByLibrary.simpleMessage("Confirm New Password"),
+        "accountChangePasswordHint":
             MessageLookupByLibrary.simpleMessage("Enter your new password"),
-        "accountPasswordLabel":
-            MessageLookupByLibrary.simpleMessage("Password"),
-        "accountPasswordSubtitle":
+        "accountChangePasswordLabel":
+            MessageLookupByLibrary.simpleMessage("New Password"),
+        "accountChangePasswordSubtitle":
             MessageLookupByLibrary.simpleMessage("Change your password"),
-        "accountPasswordTitle":
+        "accountChangePasswordTitle":
             MessageLookupByLibrary.simpleMessage("Change Password"),
         "actionSummaryChipCoins": m4,
         "actionSummaryChipLoad": m5,
@@ -644,6 +649,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "entityShareStatusOutOfSync": m38,
         "entityWithCount": m39,
         "errorExactLength": m40,
+        "errorInvalidEmail":
+            MessageLookupByLibrary.simpleMessage("Invalid email address"),
         "errorMaxLength": m41,
         "errorMinLength": m42,
         "errorMustContain": m43,
@@ -861,6 +868,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "signupPasswordPlaceholder":
             MessageLookupByLibrary.simpleMessage("Enter your password"),
         "signupPasswordValidationLength": m88,
+        "signupPasswordValidationMatch":
+            MessageLookupByLibrary.simpleMessage("Passwords do not match"),
         "signupPasswordValidationPatternGeneric": m89,
         "signupPasswordValidationPatternLetter":
             MessageLookupByLibrary.simpleMessage(
