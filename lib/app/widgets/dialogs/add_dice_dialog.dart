@@ -39,10 +39,12 @@ class _AddDiceDialogState extends State<AddDiceDialog> with RepositoryServiceMix
       title: Text(
         widget.dice == null ? S.current.addGeneric(dw.Dice) : S.current.editGeneric(dw.Dice),
       ),
-      content: DiceForm(
-        dice: dice,
-        onChanged: (dw.Dice _dice) => setState(() => dice = _dice),
-        abilityScores: widget.abilityScores,
+      content: SingleChildScrollView(
+        child: DiceForm(
+          dice: dice,
+          onChanged: (dw.Dice _dice) => setState(() => dice = _dice),
+          abilityScores: widget.abilityScores,
+        ),
       ),
       actions: [
         ElevatedButton(

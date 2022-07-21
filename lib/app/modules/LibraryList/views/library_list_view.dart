@@ -136,7 +136,7 @@ class LibraryListView<T extends WithMeta, F extends EntityFilters<T>>
                 label: Text(
                   controller.selected.isNotEmpty
                       ? controller.multiple
-                          ? S.current.addWithCount(
+                          ? S.current.addGeneric(
                               S.current.pluralize(
                                 controller.selected.length,
                                 S.current.entity(T),

@@ -790,17 +790,7 @@ class S {
     );
   }
 
-  /// `Add {string}`
-  String addWithCount(Object string) {
-    return Intl.message(
-      'Add $string',
-      name: 'addWithCount',
-      desc: '',
-      args: [string],
-    );
-  }
-
-  /// `{alignment, select, chaotic {Chaotic} evil {Evil} good {Good} lawful {Lawful} neutral {Neutral}}`
+  /// `{alignment, select, chaotic {Chaotic} evil {Evil} good {Good} lawful {Lawful} neutral {Neutral} other {{alignment}}}`
   String alignment(Object alignment) {
     return Intl.select(
       alignment,
@@ -810,6 +800,7 @@ class S {
         'good': 'Good',
         'lawful': 'Lawful',
         'neutral': 'Neutral',
+        'other': '$alignment',
       },
       name: 'alignment',
       desc: '',
