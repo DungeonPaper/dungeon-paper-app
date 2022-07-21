@@ -32,9 +32,8 @@ class CharacterListPageView extends GetView<CharacterService> with UserServiceMi
         icon: const Icon(Icons.add),
       ),
       body: Obx(
-        () => ListView(
-          padding: const EdgeInsets.only(bottom: 12).copyWith(bottom: 80),
-          children: [
+        () {
+          final children = [
             for (final cat in controller.charsByCategory.keys)
               CategorizedList(
                 title: Text(cat.isNotEmpty ? cat : S.current.characterNoCategory),
@@ -90,8 +89,13 @@ class CharacterListPageView extends GetView<CharacterService> with UserServiceMi
                     ),
                 ],
               ),
-          ],
-        ),
+          ];
+          return ListView.builder(
+            padding: const EdgeInsets.only(bottom: 12).copyWith(bottom: 80),
+            itemBuilder: (context, index) => children[index],
+            itemCount: children.length,
+          );
+        },
       ),
     );
   }

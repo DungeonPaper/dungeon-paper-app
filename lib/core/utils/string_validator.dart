@@ -5,10 +5,10 @@ import 'package:get/get.dart';
 abstract class Validation {
   Validation(this.message);
 
-  bool validate(String? string);
+  bool isValid(String? string);
   final String message;
 
-  String? getErrorMessage(String? string) => validate(string) ? null : message;
+  String? validator(String? string) => isValid(string) ? null : message;
 }
 
 class StringMinLengthValidation extends Validation {
@@ -19,7 +19,7 @@ class StringMinLengthValidation extends Validation {
   }) : super(S.current.errorMinLength(minLength));
 
   @override
-  bool validate(String? string) => string == null || string.length >= minLength;
+  bool isValid(String? string) => string == null || string.length >= minLength;
 }
 
 class StringExactLengthValidation extends Validation {
@@ -30,7 +30,7 @@ class StringExactLengthValidation extends Validation {
   }) : super(S.current.errorExactLength(length));
 
   @override
-  bool validate(String? string) => string == null || string.length == length;
+  bool isValid(String? string) => string == null || string.length == length;
 }
 
 class StringMaxLengthValidation extends Validation {
@@ -41,7 +41,7 @@ class StringMaxLengthValidation extends Validation {
   }) : super(S.current.errorMinLength(maxLength));
 
   @override
-  bool validate(String? string) => string == null || string.length <= maxLength;
+  bool isValid(String? string) => string == null || string.length <= maxLength;
 }
 
 class StringContainsValidation extends Validation {
@@ -55,7 +55,7 @@ class StringContainsValidation extends Validation {
   }) : super(message ?? S.current.errorMustContain(userFriendlyPattern ?? pattern));
 
   @override
-  bool validate(String? string) => string == null || string.contains(pattern);
+  bool isValid(String? string) => string == null || string.contains(pattern);
 }
 
 class StringNotContainsValidation extends Validation {
@@ -69,7 +69,7 @@ class StringNotContainsValidation extends Validation {
   }) : super(message ?? S.current.errorMustNotContain(userFriendlyPattern ?? pattern));
 
   @override
-  bool validate(String? string) => string == null || !string.contains(pattern);
+  bool isValid(String? string) => string == null || !string.contains(pattern);
 }
 
 class StringValidator extends Validation {
@@ -110,13 +110,13 @@ class StringValidator extends Validation {
       ];
 
   @override
-  bool validate(String? string) => _validators.every((v) => v.validate(string));
+  bool isValid(String? string) => _validators.every((v) => v.isValid(string));
 
   @override
-  String? getErrorMessage(String? string) {
+  String? validator(String? string) {
     debugPrint('validating $string');
     return _validators.firstWhereOrNull((v) {
-      return !v.validate(string);
+      return !v.isValid(string);
     })?.message;
   }
 }

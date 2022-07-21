@@ -10,6 +10,7 @@ class AuthService extends GetxService
     with UserServiceMixin, LoadingServiceMixin, RepositoryServiceMixin {
   FirebaseAuth get auth => FirebaseAuth.instance;
   final gSignIn = GoogleSignIn.standard();
+  final fbUser = Rx<User?>(null);
 
   Future<UserCredential> loginWithPassword({
     required String email,
@@ -42,6 +43,7 @@ class AuthService extends GetxService
 
     auth.userChanges().listen((user) {
       debugPrint('user changed $user');
+      fbUser.value = user;
 
       if (user != null) {
         loadingService.loadingCharacters = !loadingService.afterFirstLoad;

@@ -77,9 +77,9 @@ class AbilityScoreFormController extends GetxController {
         exactLength: 3,
         notContainsPattern: RegExp(r'[^a-z]', caseSensitive: false),
         patternMessage: S.current.errorOnlyLetters,
-      ).getErrorMessage(value);
+      ).validator(value);
 
-  String? requiredValidator(String? value) => StringValidator(minLength: 1).getErrorMessage(value);
+  String? requiredValidator(String? value) => StringValidator(minLength: 1).validator(value);
 
   void _update() {
     _key.refresh();

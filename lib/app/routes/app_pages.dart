@@ -194,6 +194,12 @@ class AppPages {
       binding: LibraryFormBinding<Race>(),
       preventDuplicates: false,
     ),
+    GetPage(
+      name: Routes.editNote,
+      page: () => const LibraryEntityForm<Note>(),
+      binding: LibraryFormBinding<Note>(),
+      preventDuplicates: false,
+    ),
 
     //
 

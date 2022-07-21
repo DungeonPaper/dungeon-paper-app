@@ -15,7 +15,7 @@ import 'package:get/get.dart';
 import '../atoms/character_avatar.dart';
 import '../atoms/user_avatar.dart';
 
-class UserMenuPopover extends GetView<CharacterService> with AuthServiceMixin {
+class UserMenuPopover extends GetView<CharacterService> with AuthServiceMixin, UserServiceMixin {
   UserMenuPopover({super.key});
 
   final UserService userService = Get.find();
@@ -59,6 +59,9 @@ class UserMenuPopover extends GetView<CharacterService> with AuthServiceMixin {
                               children: [
                                 // User details
                                 ListTile(
+                                  onTap: userService.isLoggedIn
+                                      ? () => Get.toNamed(Routes.account)
+                                      : null,
                                   visualDensity: VisualDensity.compact,
                                   title: Text(
                                     '${userService.current.displayName} (@${userService.current.username})',
@@ -82,10 +85,10 @@ class UserMenuPopover extends GetView<CharacterService> with AuthServiceMixin {
                                               label: Text(S.current.userLoginButton),
                                             ),
                                             const SizedBox(width: 16),
-                                            const UserAvatar(),
+                                            UserAvatar(user: user),
                                           ],
                                         )
-                                      : const UserAvatar(),
+                                      : UserAvatar(user: user),
                                 ),
                                 const Divider(),
                                 // Recent Characters

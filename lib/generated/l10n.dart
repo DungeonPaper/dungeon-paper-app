@@ -550,6 +550,146 @@ class S {
     );
   }
 
+  /// `Change Display Name`
+  String get accountChangeDisplayNameTitle {
+    return Intl.message(
+      'Change Display Name',
+      name: 'accountChangeDisplayNameTitle',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Display Name`
+  String get accountChangeDisplayNameLabel {
+    return Intl.message(
+      'Display Name',
+      name: 'accountChangeDisplayNameLabel',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Enter your public display name`
+  String get accountChangeDisplayNameHint {
+    return Intl.message(
+      'Enter your public display name',
+      name: 'accountChangeDisplayNameHint',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Change Profile Picture`
+  String get accountChangeImageTitle {
+    return Intl.message(
+      'Change Profile Picture',
+      name: 'accountChangeImageTitle',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Change your profile picture`
+  String get accountChangeImageSubtitle {
+    return Intl.message(
+      'Change your profile picture',
+      name: 'accountChangeImageSubtitle',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Change Email Address`
+  String get accountEmailTitle {
+    return Intl.message(
+      'Change Email Address',
+      name: 'accountEmailTitle',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Email Address`
+  String get accountEmailLabel {
+    return Intl.message(
+      'Email Address',
+      name: 'accountEmailLabel',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Enter your new email address`
+  String get accountEmailHint {
+    return Intl.message(
+      'Enter your new email address',
+      name: 'accountEmailHint',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Change Password`
+  String get accountPasswordTitle {
+    return Intl.message(
+      'Change Password',
+      name: 'accountPasswordTitle',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Password`
+  String get accountPasswordLabel {
+    return Intl.message(
+      'Password',
+      name: 'accountPasswordLabel',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Enter your new password`
+  String get accountPasswordHint {
+    return Intl.message(
+      'Enter your new password',
+      name: 'accountPasswordHint',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Change your password`
+  String get accountPasswordSubtitle {
+    return Intl.message(
+      'Change your password',
+      name: 'accountPasswordSubtitle',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Account Details`
+  String get accountCategoryDetails {
+    return Intl.message(
+      'Account Details',
+      name: 'accountCategoryDetails',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Connected Logins`
+  String get accountCategorySocials {
+    return Intl.message(
+      'Connected Logins',
+      name: 'accountCategorySocials',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `{coins} G`
   String actionSummaryChipCoins(Object coins) {
     return Intl.message(

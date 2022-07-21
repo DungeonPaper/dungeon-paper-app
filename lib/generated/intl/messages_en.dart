@@ -392,6 +392,34 @@ class MessageLookup extends MessageLookupByLibrary {
         "aboutTitle": MessageLookupByLibrary.simpleMessage("About"),
         "aboutVersion": m3,
         "account": MessageLookupByLibrary.simpleMessage("Account"),
+        "accountCategoryDetails":
+            MessageLookupByLibrary.simpleMessage("Account Details"),
+        "accountCategorySocials":
+            MessageLookupByLibrary.simpleMessage("Connected Logins"),
+        "accountChangeDisplayNameHint": MessageLookupByLibrary.simpleMessage(
+            "Enter your public display name"),
+        "accountChangeDisplayNameLabel":
+            MessageLookupByLibrary.simpleMessage("Display Name"),
+        "accountChangeDisplayNameTitle":
+            MessageLookupByLibrary.simpleMessage("Change Display Name"),
+        "accountChangeImageSubtitle":
+            MessageLookupByLibrary.simpleMessage("Change your profile picture"),
+        "accountChangeImageTitle":
+            MessageLookupByLibrary.simpleMessage("Change Profile Picture"),
+        "accountEmailHint": MessageLookupByLibrary.simpleMessage(
+            "Enter your new email address"),
+        "accountEmailLabel":
+            MessageLookupByLibrary.simpleMessage("Email Address"),
+        "accountEmailTitle":
+            MessageLookupByLibrary.simpleMessage("Change Email Address"),
+        "accountPasswordHint":
+            MessageLookupByLibrary.simpleMessage("Enter your new password"),
+        "accountPasswordLabel":
+            MessageLookupByLibrary.simpleMessage("Password"),
+        "accountPasswordSubtitle":
+            MessageLookupByLibrary.simpleMessage("Change your password"),
+        "accountPasswordTitle":
+            MessageLookupByLibrary.simpleMessage("Change Password"),
         "actionSummaryChipCoins": m4,
         "actionSummaryChipLoad": m5,
         "actionsViewVisibleLabel": MessageLookupByLibrary.simpleMessage("Show"),

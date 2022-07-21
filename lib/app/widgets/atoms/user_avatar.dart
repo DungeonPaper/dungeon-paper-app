@@ -1,30 +1,30 @@
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:dungeon_paper/app/data/services/user_service.dart';
+import 'package:dungeon_paper/app/data/models/user.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 
-class UserAvatar extends GetView<UserService> {
+class UserAvatar extends StatelessWidget {
   const UserAvatar({
     Key? key,
+    required this.user,
     this.size,
   }) : super(key: key);
 
   final double? size;
+  final User user;
 
   @override
   Widget build(BuildContext context) {
-    return Obx(
-      () => CircleAvatar(
-        radius: size != null ? size! / 2 : null,
-        child: const Icon(Icons.person),
-        foregroundImage: controller.current.photoUrl.isNotEmpty
-            ? CachedNetworkImageProvider(
-                controller.current.photoUrl,
-                maxWidth: size?.toInt(),
-                maxHeight: size?.toInt(),
-              )
-            : null,
-      ),
+    return CircleAvatar(
+      radius: size != null ? size! / 2 : null,
+      child: const Icon(Icons.person),
+      foregroundImage: user.photoUrl.isNotEmpty
+          ? CachedNetworkImageProvider(
+              user.photoUrl,
+              scale: 2,
+              maxWidth: size?.toInt(),
+              maxHeight: size?.toInt(),
+            )
+          : null,
     );
   }
 }

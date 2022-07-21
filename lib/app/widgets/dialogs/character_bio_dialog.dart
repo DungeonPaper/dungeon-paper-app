@@ -32,68 +32,71 @@ class CharacterBioDialog extends GetView with CharacterServiceMixin {
       contentPadding: const EdgeInsets.all(16),
       actions: DialogControls.done(context, () => Get.back()),
       content: Obx(
-        () => SingleChildScrollView(
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            // shrinkWrap: true,
-            children: [
-              Text(S.current.characterBioDialogDescLabel, style: textTheme.caption),
-              char.bio.description.isNotEmpty
-                  ? MarkdownBody(
-                      data: char.bio.description,
-                      onTapLink: (_, url, __) => launch(url!),
-                    )
-                  : Text(S.current.noDescription),
-              const SizedBox(height: 16),
-              Text(S.current.characterBioDialogLooksLabel, style: textTheme.caption),
-              char.bio.looks.isNotEmpty
-                  ? Text(char.bio.looks, style: textTheme.bodyText1)
-                  // TODO broken...?!
-                  // ? ConstrainedBox(
-                  //     constraints: BoxConstraints.loose(Size.fromHeight(maxContentHeight)),
-                  // ? SizedBox(
-                  //     height: 120,
-                  //     width: MediaQuery.of(context).size.width - 100,
-                  //     // ? IntrinsicWidth(
-                  //     //     child: IntrinsicHeight(
-                  //     child:
-                  // ? MarkdownBody(
-                  //     shrinkWrap: true,
-                  //     // fitContent: true,
-                  //     data: char.bio.looks,
-                  //     onTapLink: (_, url, __) => launch(url!),
-                  //   )
-                  // ,
-                  //   )
-                  // )
-                  : Text(S.current.noDescription),
-              const SizedBox(height: 16),
-              Row(
-                children: [
-                  Text(
-                    S.current.characterBioDialogAlignmentNameDisplayLabel,
-                    style: textTheme.caption,
-                  ),
-                  const SizedBox(width: 4),
-                  IconTheme.merge(
-                    data: IconThemeData(size: 14, color: textTheme.caption!.color!),
-                    child: Icon(char.bio.alignment.icon),
-                  ),
-                  const SizedBox(width: 4),
-                  Text(
-                    S.current.alignment(char.bio.alignment.key),
-                    style: textTheme.caption,
-                  ),
-                ],
-              ),
-              char.bio.alignment.description.isNotEmpty
-                  ? MarkdownBody(
-                      data: char.bio.alignment.description,
-                      onTapLink: (_, url, __) => launch(url!),
-                    )
-                  : Text(S.current.noDescription),
-            ],
+        () => SizedBox(
+          width: 500,
+          child: SingleChildScrollView(
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              // shrinkWrap: true,
+              children: [
+                Text(S.current.characterBioDialogDescLabel, style: textTheme.caption),
+                char.bio.description.isNotEmpty
+                    ? MarkdownBody(
+                        data: char.bio.description,
+                        onTapLink: (_, url, __) => launch(url!),
+                      )
+                    : Text(S.current.noDescription),
+                const SizedBox(height: 16),
+                Text(S.current.characterBioDialogLooksLabel, style: textTheme.caption),
+                char.bio.looks.isNotEmpty
+                    ? Text(char.bio.looks, style: textTheme.bodyText1)
+                    // TODO broken...?!
+                    // ? ConstrainedBox(
+                    //     constraints: BoxConstraints.loose(Size.fromHeight(maxContentHeight)),
+                    // ? SizedBox(
+                    //     height: 120,
+                    //     width: MediaQuery.of(context).size.width - 100,
+                    //     // ? IntrinsicWidth(
+                    //     //     child: IntrinsicHeight(
+                    //     child:
+                    // ? MarkdownBody(
+                    //     shrinkWrap: true,
+                    //     // fitContent: true,
+                    //     data: char.bio.looks,
+                    //     onTapLink: (_, url, __) => launch(url!),
+                    //   )
+                    // ,
+                    //   )
+                    // )
+                    : Text(S.current.noDescription),
+                const SizedBox(height: 16),
+                Row(
+                  children: [
+                    Text(
+                      S.current.characterBioDialogAlignmentNameDisplayLabel,
+                      style: textTheme.caption,
+                    ),
+                    const SizedBox(width: 4),
+                    IconTheme.merge(
+                      data: IconThemeData(size: 14, color: textTheme.caption!.color!),
+                      child: Icon(char.bio.alignment.icon),
+                    ),
+                    const SizedBox(width: 4),
+                    Text(
+                      S.current.alignment(char.bio.alignment.key),
+                      style: textTheme.caption,
+                    ),
+                  ],
+                ),
+                char.bio.alignment.description.isNotEmpty
+                    ? MarkdownBody(
+                        data: char.bio.alignment.description,
+                        onTapLink: (_, url, __) => launch(url!),
+                      )
+                    : Text(S.current.noDescription),
+              ],
+            ),
           ),
         ),
       ),

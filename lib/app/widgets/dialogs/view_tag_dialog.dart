@@ -19,65 +19,68 @@ class ViewTagDialog extends StatelessWidget {
 
     return AlertDialog(
       title: Text(S.current.tagDetails),
-      content: Column(
-        mainAxisSize: MainAxisSize.min,
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Row(
-            children: [
-              Expanded(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      S.current.genericNameField(
-                        S.current.entity(dw.Tag),
-                      ),
-                      style: textTheme.caption,
-                    ),
-                    Text(
-                      toTitleCase(tag.name),
-                      textScaleFactor: 1.8,
-                    ),
-                  ],
-                ),
-              ),
-              if (tag.value != null) ...[
-                const SizedBox(width: 8),
+      content: SizedBox(
+        width: 500,
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Row(
+              children: [
                 Expanded(
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        S.current.genericValueField(
+                        S.current.genericNameField(
                           S.current.entity(dw.Tag),
                         ),
                         style: textTheme.caption,
                       ),
                       Text(
-                        tag.value.toString(),
+                        toTitleCase(tag.name),
                         textScaleFactor: 1.8,
                       ),
                     ],
                   ),
                 ),
+                if (tag.value != null) ...[
+                  const SizedBox(width: 8),
+                  Expanded(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          S.current.genericValueField(
+                            S.current.entity(dw.Tag),
+                          ),
+                          style: textTheme.caption,
+                        ),
+                        Text(
+                          tag.value.toString(),
+                          textScaleFactor: 1.8,
+                        ),
+                      ],
+                    ),
+                  ),
+                ],
               ],
-            ],
-          ),
-          if (tag.description.isNotEmpty) ...[
-            const SizedBox(height: 8),
-            Text(
-              S.current.genericDescriptionField(
-                S.current.entity(dw.Tag),
+            ),
+            if (tag.description.isNotEmpty) ...[
+              const SizedBox(height: 8),
+              Text(
+                S.current.genericDescriptionField(
+                  S.current.entity(dw.Tag),
+                ),
+                style: textTheme.caption,
               ),
-              style: textTheme.caption,
-            ),
-            Text(
-              tag.description,
-              textScaleFactor: 0.9,
-            ),
+              Text(
+                tag.description,
+                textScaleFactor: 0.9,
+              ),
+            ],
           ],
-        ],
+        ),
       ),
       actions: DialogControls.done(context, () => Get.back()),
     );

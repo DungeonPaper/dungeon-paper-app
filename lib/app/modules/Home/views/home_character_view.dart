@@ -194,9 +194,10 @@ class HomeCharacterLayout extends StatelessWidget with HomeCharacterPaddingMixin
             children: children,
           );
         }
-        return ListView(
+        return ListView.builder(
           shrinkWrap: !scrollable,
-          children: children,
+          itemBuilder: (context, index) => children[index],
+          itemCount: children.length,
         );
       },
     );
