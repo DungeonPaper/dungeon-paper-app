@@ -4,9 +4,11 @@ import 'package:dungeon_paper/app/data/models/meta.dart';
 import 'package:dungeon_paper/app/data/models/move.dart';
 import 'package:dungeon_paper/app/data/models/race.dart';
 import 'package:dungeon_paper/app/data/models/spell.dart';
+import 'package:dungeon_paper/app/data/services/character_service.dart';
 import 'package:dungeon_paper/app/data/services/repository_service.dart';
 import 'package:dungeon_paper/app/data/services/user_service.dart';
 import 'package:dungeon_paper/app/model_utils/model_pages.dart';
+import 'package:dungeon_paper/app/modules/LibraryList/controllers/library_list_controller.dart';
 import 'package:dungeon_paper/app/widgets/atoms/menu_button.dart';
 import 'package:dungeon_paper/generated/l10n.dart';
 import 'package:flutter/material.dart';
@@ -17,7 +19,7 @@ import 'package:intl/intl.dart';
 import '../controllers/library_collection_controller.dart';
 
 class LibraryCollectionView extends GetView<LibraryCollectionController>
-    with RepositoryServiceMixin, UserServiceMixin {
+    with RepositoryServiceMixin, UserServiceMixin, CharacterServiceMixin {
   static const List<Type> types = [Move, Spell, Item, CharacterClass, Race];
 
   const LibraryCollectionView({Key? key}) : super(key: key);
@@ -56,7 +58,14 @@ class LibraryCollectionView extends GetView<LibraryCollectionController>
               final type = types[index];
               return Card(
                 child: ListTile(
-                  onTap: () => ModelPages.openLibraryList(type: type),
+                  onTap: () => ModelPages.openLibraryList(
+                    type: type,
+                    // initialTab: charService.maybeCurrent != null
+                    //     ? repo.my.classes.keys.contains(character.characterClass.key)
+                    //         ? FiltersGroup.my
+                    //         : FiltersGroup.playbook
+                    //     : null,
+                  ),
                   horizontalTitleGap: 8,
                   leading: Container(
                     constraints: const BoxConstraints(maxWidth: 32),

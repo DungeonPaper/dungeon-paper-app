@@ -60,6 +60,7 @@ class NoteLibraryListArguments extends LibraryListArguments<Note, NoteFilters> {
   NoteLibraryListArguments({
     required super.onAdd,
     required super.preSelections,
+    super.initialTab,
   }) : super(
           sortFn: (f) => (a, b) => 0,
           filterFn: (note, filters) => filters.filter(note),

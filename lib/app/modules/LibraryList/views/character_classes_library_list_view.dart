@@ -64,6 +64,7 @@ class CharacterClassLibraryListArguments
   CharacterClassLibraryListArguments({
     required void Function(CharacterClass cls)? onAdd,
     required super.preSelections,
+    super.initialTab,
   }) : super(
           sortFn: CharacterClass.sorter,
           filterFn: (cls, filters) => filters.filter(cls),

@@ -52,7 +52,8 @@ class LibraryCardList<T extends WithMeta, F extends EntityFilters<T>>
           child: Padding(
             padding: const EdgeInsets.only(top: 32),
             child: ListView.builder(
-              padding: const EdgeInsets.all(8).copyWith(top: 0, bottom: 80),
+              padding:
+                  const EdgeInsets.all(8).copyWith(top: 0, bottom: controller.selectable ? 80 : 4),
               itemBuilder: (context, index) => listViewChildren.elementAt(index),
               itemCount: listViewChildren.length,
             ),

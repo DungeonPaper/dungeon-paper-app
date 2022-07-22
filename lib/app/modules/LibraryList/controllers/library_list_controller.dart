@@ -60,11 +60,7 @@ class LibraryListController<T extends WithMeta, F extends EntityFilters<T>> exte
     search[FiltersGroup.my] ??= TextEditingController();
     search[FiltersGroup.my]!.addListener(_updateMySearch);
     tabController = TabController(
-      initialIndex: maybeChar != null
-          ? repo.value.my.classes.keys.contains(character.characterClass.key)
-              ? 1
-              : 0
-          : 0,
+      initialIndex: FiltersGroup.values.indexOf(args.initialTab),
       // length: 3,
       length: 2,
       vsync: this,
@@ -218,6 +214,7 @@ abstract class LibraryListArguments<T extends WithMeta, F extends EntityFilters<
   final bool multiple;
   final Iterable<T> preSelections;
   final Map<String, dynamic> extraData;
+  final FiltersGroup initialTab;
 
   LibraryListArguments({
     required this.filters,
@@ -227,5 +224,6 @@ abstract class LibraryListArguments<T extends WithMeta, F extends EntityFilters<
     this.multiple = true,
     required this.preSelections,
     required this.extraData,
-  });
+    FiltersGroup? initialTab = FiltersGroup.playbook,
+  }) : initialTab = initialTab ?? FiltersGroup.playbook;
 }

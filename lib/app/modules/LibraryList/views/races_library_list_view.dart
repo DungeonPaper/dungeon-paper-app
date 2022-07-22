@@ -64,6 +64,7 @@ class RaceLibraryListArguments extends LibraryListArguments<Race, RaceFilters> {
     required Character? character,
     required void Function(Race race)? onAdd,
     required super.preSelections,
+    required super.initialTab,
   }) : super(
           sortFn: Race.sorter,
           filterFn: (race, filters) => filters.filter(race),

@@ -63,6 +63,7 @@ class SpellLibraryListArguments extends LibraryListArguments<Spell, SpellFilters
     required Character? character,
     required super.onAdd,
     required super.preSelections,
+    super.initialTab,
   }) : super(
           sortFn: Spell.sorter,
           filterFn: (spell, filters) => filters.filter(spell),

@@ -65,6 +65,7 @@ class MoveLibraryListArguments extends LibraryListArguments<Move, MoveFilters> {
     required super.onAdd,
     required super.preSelections,
     MoveCategory? category,
+    super.initialTab,
   }) : super(
           sortFn: Move.sorter,
           filterFn: (move, filters) => filters.filter(move),

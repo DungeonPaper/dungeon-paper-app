@@ -9,6 +9,7 @@ import 'package:dungeon_paper/app/data/models/race.dart';
 import 'package:dungeon_paper/app/data/models/spell.dart';
 import 'package:dungeon_paper/app/data/services/character_service.dart';
 import 'package:dungeon_paper/app/data/services/library_service.dart';
+import 'package:dungeon_paper/app/modules/LibraryList/controllers/library_list_controller.dart';
 import 'package:dungeon_paper/app/modules/LibraryList/views/character_classes_library_list_view.dart';
 import 'package:dungeon_paper/app/modules/LibraryList/views/items_library_list_view.dart';
 import 'package:dungeon_paper/app/modules/LibraryList/views/moves_library_list_view.dart';
@@ -35,6 +36,7 @@ class ModelPages {
     Character? character,
     void Function(Iterable<T> list)? onAdd,
     Iterable<T>? preSelections,
+    FiltersGroup? initialTab,
     Type? type,
   }) {
     final map = <Type, Function()>{
@@ -42,26 +44,31 @@ class ModelPages {
             character: character,
             onAdd: onAdd as void Function(Iterable<Move>)?,
             preSelections: preSelections as Iterable<Move>?,
+            initialTab: initialTab,
           ),
       Spell: () => openSpellsList(
             character: character,
             onAdd: onAdd as void Function(Iterable<Spell>)?,
             preSelections: preSelections as Iterable<Spell>?,
+            initialTab: initialTab,
           ),
       Item: () => openItemsList(
             character: character,
             onAdd: onAdd as void Function(Iterable<Item>)?,
             preSelections: preSelections as Iterable<Item>?,
+            initialTab: initialTab,
           ),
       CharacterClass: () => openCharacterClassesList(
             character: character,
             onAdd: onAdd != null ? (x) => onAdd.call(asList<T>(x)) : null,
             preSelection: preSelections?.first as CharacterClass?,
+            initialTab: initialTab,
           ),
       Race: () => openRacesList(
             character: character,
             onAdd: onAdd != null ? (x) => onAdd.call(asList<T>(x)) : null,
             preSelection: preSelections?.first as Race?,
+            initialTab: initialTab,
           ),
     };
 
@@ -78,12 +85,14 @@ class ModelPages {
     Character? character,
     Iterable<Move>? preSelections,
     MoveCategory? category,
+    FiltersGroup? initialTab,
     void Function(Iterable<Move> list)? onAdd,
   }) {
     final char = character;
     Get.toNamed(
       Routes.moves,
       arguments: MoveLibraryListArguments(
+        initialTab: initialTab,
         character: char,
         category: category,
         onAdd: onAdd, // ?? library.upsertToCharacter,
@@ -96,11 +105,13 @@ class ModelPages {
     Character? character,
     Race? preSelection,
     void Function(Race race)? onAdd,
+    FiltersGroup? initialTab,
   }) {
     final char = character;
     Get.toNamed(
       Routes.races,
       arguments: RaceLibraryListArguments(
+        initialTab: initialTab,
         character: char,
         onAdd: onAdd, // ?? library.upsertToCharacter,
         preSelections: asList(preSelection ?? char?.race),
@@ -142,12 +153,14 @@ class ModelPages {
     Character? character,
     Iterable<Spell>? list,
     void Function(Iterable<Spell> list)? onAdd,
+    FiltersGroup? initialTab,
     Iterable<Spell>? preSelections,
   }) {
     final char = character;
     Get.toNamed(
       Routes.spells,
       arguments: SpellLibraryListArguments(
+        initialTab: initialTab,
         character: char,
         onAdd: onAdd, // ?? library.upsertToCharacter,
         preSelections: preSelections ?? char?.spells ?? [],
@@ -175,12 +188,14 @@ class ModelPages {
     Character? character,
     Iterable<Item>? list,
     void Function(Iterable<Item> list)? onAdd,
+    FiltersGroup? initialTab,
     Iterable<Item>? preSelections,
   }) {
     final char = character;
     Get.toNamed(
       Routes.items,
       arguments: ItemLibraryListArguments(
+        initialTab: initialTab,
         onAdd: onAdd, // ?? library.upsertToCharacter,
         preSelections: preSelections ?? char?.items ?? [],
       ),
@@ -204,12 +219,14 @@ class ModelPages {
     Character? character,
     Iterable<Note>? list,
     void Function(Iterable<Note> list)? onAdd,
+    FiltersGroup? initialTab,
     Iterable<Note>? preSelections,
   }) {
     final char = character;
     Get.toNamed(
       Routes.notes,
       arguments: NoteLibraryListArguments(
+        initialTab: initialTab,
         onAdd: onAdd, // ?? library.upsertToCharacter,
         preSelections: preSelections ?? char?.notes ?? [],
       ),
@@ -233,11 +250,13 @@ class ModelPages {
     Character? character,
     CharacterClass? preSelection,
     void Function(CharacterClass cls)? onAdd,
+    FiltersGroup? initialTab,
   }) {
     final char = character;
     Get.toNamed(
       Routes.classes,
       arguments: CharacterClassLibraryListArguments(
+        initialTab: initialTab,
         onAdd: onAdd ??
             (char != null
                 ? (cls) => controller.updateCharacter(char.copyWith(characterClass: cls))

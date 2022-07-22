@@ -429,6 +429,10 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Change Password"),
         "actionSummaryChipCoins": m4,
         "actionSummaryChipLoad": m5,
+        "actionsBasicMoves":
+            MessageLookupByLibrary.simpleMessage("Basic Moves"),
+        "actionsSpecialMoves":
+            MessageLookupByLibrary.simpleMessage("Special Moves"),
         "actionsViewVisibleLabel": MessageLookupByLibrary.simpleMessage("Show"),
         "addCustomGeneric": m6,
         "addExistingGeneric": m7,

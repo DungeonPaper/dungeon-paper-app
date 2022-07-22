@@ -88,7 +88,33 @@ class HomeCharacterActionsView extends GetView<CharacterService> {
       onReorder: _onReorder,
       list: char.moves,
       route: Routes.moves,
-      leading: char.settings.racePosition == RacePosition.start ? [raceCard] : [],
+      leading: [
+        Row(
+          children: [
+            Expanded(
+              child: ElevatedButton(
+                child: Text(
+                  S.current.actionsBasicMoves,
+                ),
+                onPressed: _openBasicMoves,
+              ),
+            ),
+            const SizedBox(width: 16),
+            Expanded(
+              child: ElevatedButton(
+                child: Text(
+                  S.current.actionsSpecialMoves,
+                ),
+                onPressed: _openSpecialMoves,
+              ),
+            ),
+          ],
+        ),
+        const SizedBox(height: 0),
+        const Divider(height: 1),
+        const SizedBox(height: 4),
+        if (char.settings.racePosition == RacePosition.start) raceCard,
+      ],
       trailing: char.settings.racePosition == RacePosition.end ? [raceCard] : [],
       menuTrailing: [
         if (char.settings.racePosition != RacePosition.start)
@@ -218,6 +244,14 @@ class HomeCharacterActionsView extends GetView<CharacterService> {
       ),
     );
   }
+
+  void _openBasicMoves() {
+    ModelPages.openMovesList(category: MoveCategory.basic, initialTab: FiltersGroup.playbook);
+  }
+
+  void _openSpecialMoves() {
+    ModelPages.openMovesList(category: MoveCategory.special, initialTab: FiltersGroup.playbook);
+  }
 }
 
 class ActionsCardList<T extends WithMeta> extends GetView<CharacterService>
@@ -281,18 +315,8 @@ class ActionsCardList<T extends WithMeta> extends GetView<CharacterService>
           trailing: menuTrailing,
         )
       ],
-      leading: [
-        ...leading.map(
-          (obj) => _wrapChild(child: obj),
-        ),
-        if (leading.isNotEmpty) const Divider(height: 16),
-      ],
-      trailing: [
-        if (trailing.isNotEmpty) const Divider(height: 16),
-        ...trailing.map(
-          (obj) => _wrapChild(child: obj),
-        ),
-      ],
+      leading: leading.map((obj) => _wrapChild(child: obj)).toList(),
+      trailing: trailing.map((obj) => _wrapChild(child: obj)).toList(),
       children: [
         ...list.map(
           (obj) => _wrapChild(

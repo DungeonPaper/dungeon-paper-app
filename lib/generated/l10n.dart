@@ -710,6 +710,16 @@ class S {
     );
   }
 
+  /// `Basic Moves`
+  String get actionsBasicMoves {
+    return Intl.message(
+      'Basic Moves',
+      name: 'actionsBasicMoves',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `{coins} G`
   String actionSummaryChipCoins(Object coins) {
     return Intl.message(
@@ -735,6 +745,16 @@ class S {
     return Intl.message(
       'Show',
       name: 'actionsViewVisibleLabel',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Special Moves`
+  String get actionsSpecialMoves {
+    return Intl.message(
+      'Special Moves',
+      name: 'actionsSpecialMoves',
       desc: '',
       args: [],
     );

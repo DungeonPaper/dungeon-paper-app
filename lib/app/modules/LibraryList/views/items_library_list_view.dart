@@ -58,6 +58,7 @@ class ItemLibraryListArguments extends LibraryListArguments<Item, ItemFilters> {
   ItemLibraryListArguments({
     required super.onAdd,
     required super.preSelections,
+    super.initialTab,
   }) : super(
           sortFn: Item.sorter,
           filterFn: (item, filters) => filters.filter(item),
