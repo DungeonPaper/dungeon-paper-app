@@ -16,7 +16,7 @@ class CharacterService extends GetxService with LoadingServiceMixin, UserService
 
   final all = <String, Character>{}.obs;
   final _currentKey = Rx<String?>(null);
-  final _pageController = PageController(initialPage: 1);
+  final _pageController = PageController(initialPage: 1, viewportFraction: 1.1);
   StreamSubscription? _sub;
 
   @override

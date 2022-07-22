@@ -7,6 +7,7 @@ import 'package:dungeon_paper/app/modules/Home/views/home_character_journal_view
 import 'package:dungeon_paper/app/modules/Home/views/home_loader_view.dart';
 import 'package:dungeon_paper/app/routes/app_pages.dart';
 import 'package:dungeon_paper/app/themes/button_themes.dart';
+import 'package:dungeon_paper/app/widgets/atoms/page_controller_fractional_box.dart';
 import 'package:dungeon_paper/generated/l10n.dart';
 import 'package:flutter/material.dart';
 
@@ -27,18 +28,22 @@ class HomeView extends GetView<CharacterService>
     return Scaffold(
       appBar: const HomeAppBar(),
       body: Obx(
-        () => isLoading
-            ? const HomeLoaderView()
-            : maybeChar != null
-                ? PageView(
-                    controller: controller.pageController,
-                    children: const [
-                      HomeCharacterActionsView(),
-                      HomeCharacterView(),
-                      HomeCharacterJournalView(),
-                    ],
-                  )
-                : const HomeEmptyState(),
+        () {
+          const children = [
+            HomeCharacterActionsView(),
+            HomeCharacterView(),
+            HomeCharacterJournalView(),
+          ];
+
+          return isLoading
+              ? const HomeLoaderView()
+              : maybeChar != null
+                  ? PageView(
+                      controller: controller.pageController,
+                      children: children.map(_fractionalSizedBox).toList(),
+                    )
+                  : const HomeEmptyState();
+        },
       ),
       floatingActionButton: Obx(
         () => userService.isLoggedIn ? const HomeFAB() : Container(),
@@ -46,6 +51,11 @@ class HomeView extends GetView<CharacterService>
       bottomNavigationBar: HomeNavBar(pageController: controller.pageController),
     );
   }
+
+  PageControllerFractionalBox _fractionalSizedBox(Widget child) => PageControllerFractionalBox(
+        controller: controller.pageController,
+        child: child,
+      );
 
   bool get isLoading {
     debugPrint('afterFirstLoad: ${loadingService.afterFirstLoad}, '

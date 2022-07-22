@@ -1794,6 +1794,26 @@ class S {
     );
   }
 
+  /// `Presets`
+  String get customRollButtonsUsePreset {
+    return Intl.message(
+      'Presets',
+      name: 'customRollButtonsUsePreset',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Use Default`
+  String get customRollButtonsUseDefault {
+    return Intl.message(
+      'Use Default',
+      name: 'customRollButtonsUseDefault',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `Damage`
   String get damage {
     return Intl.message(
@@ -3406,16 +3426,6 @@ class S {
       name: 'rollButtonTooltipWithDebility',
       desc: '',
       args: [dice],
-    );
-  }
-
-  /// `Use preset`
-  String get rollButtonUsePreset {
-    return Intl.message(
-      'Use preset',
-      name: 'rollButtonUsePreset',
-      desc: '',
-      args: [],
     );
   }
 

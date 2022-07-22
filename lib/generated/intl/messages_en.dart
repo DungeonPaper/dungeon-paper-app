@@ -607,6 +607,10 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Right Button"),
         "customRollButtons":
             MessageLookupByLibrary.simpleMessage("Quick Roll Buttons"),
+        "customRollButtonsUseDefault":
+            MessageLookupByLibrary.simpleMessage("Use Default"),
+        "customRollButtonsUsePreset":
+            MessageLookupByLibrary.simpleMessage("Presets"),
         "damage": MessageLookupByLibrary.simpleMessage("Damage"),
         "damageDice": MessageLookupByLibrary.simpleMessage("Damage Dice"),
         "debilityLabel": m29,
@@ -814,8 +818,6 @@ class MessageLookup extends MessageLookupByLibrary {
         "rollButtonLabel": MessageLookupByLibrary.simpleMessage("Button Text"),
         "rollButtonTooltip": m78,
         "rollButtonTooltipWithDebility": m79,
-        "rollButtonUsePreset":
-            MessageLookupByLibrary.simpleMessage("Use preset"),
         "rollDialogResultBreakdown": m80,
         "rollDialogResultTotal": m81,
         "rollDialogTitleRolled": m82,
