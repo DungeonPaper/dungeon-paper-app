@@ -44,10 +44,22 @@ class AccountView extends GetView<AccountController> {
           onTap: _openNameDialog,
         ),
       ),
-      ListTile(
-        title: Text(S.current.accountChangeImageTitle),
-        subtitle: Text(S.current.accountChangeImageSubtitle),
-        leading: const Icon(Icons.image),
+      Obx(
+        () => ListTile(
+          title: Text(S.current.accountChangeImageTitle),
+          subtitle: Text(S.current.accountChangeImageSubtitle),
+          leading: controller.uploading.value
+              ? const SizedBox(
+                  width: 24,
+                  height: 24,
+                  child: CircularProgressIndicator.adaptive(
+                    strokeWidth: 3,
+                  ),
+                )
+              : const Icon(Icons.image),
+          enabled: !controller.uploading.value,
+          onTap: !controller.uploading.value ? () => _uploadImage(context) : null,
+        ),
       ),
       Obx(
         () => ListTile(
@@ -127,6 +139,10 @@ class AccountView extends GetView<AccountController> {
         onSave: (password) => controller.authService.fbUser.value!.updatePassword(password),
       ),
     );
+  }
+
+  void _uploadImage(BuildContext context) {
+    controller.uploadPhoto(context);
   }
 }
 
