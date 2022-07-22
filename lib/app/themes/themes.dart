@@ -40,12 +40,14 @@ final darkTheme = createTheme(
 
 final abyssTheme = createTheme(
   createColorScheme(
-    Colors.black,
+    const Color.fromARGB(255, 23, 0, 23),
     brightness: Brightness.dark,
     primary: Colors.purple,
     secondary: const Color.fromARGB(255, 152, 74, 165),
     highContrast: true,
   ),
+  scaffoldBackgroundColor: const Color.fromARGB(255, 16, 4, 18),
+  surfaceColor: const Color.fromARGB(255, 15, 4, 17),
   brightness: Brightness.dark,
 );
 
@@ -56,9 +58,9 @@ final skyTheme = createTheme(
       primary: Colors.blue[900],
       secondary: Colors.blue[900],
     ),
-    scaffoldBackgroundColor: Colors.cyan[100],
+    scaffoldBackgroundColor: const Color.fromARGB(255, 239, 253, 255),
     brightness: Brightness.light,
-    surfaceColor: const Color.fromARGB(255, 221, 252, 255));
+    surfaceColor: const Color.fromARGB(255, 248, 253, 254));
 
 final forestTheme = createTheme(
   createColorScheme(
@@ -67,7 +69,7 @@ final forestTheme = createTheme(
     primary: Colors.brown,
     secondary: Colors.brown,
   ),
-  scaffoldBackgroundColor: Colors.lightGreen[200],
+  scaffoldBackgroundColor: const Color.fromARGB(255, 243, 253, 229),
   brightness: Brightness.light,
 );
 
@@ -78,7 +80,7 @@ final depthsTheme = createTheme(
     // primary: Colors.green[900],
     // secondary: Colors.green[900],
   ),
-  scaffoldBackgroundColor: const Color.fromARGB(255, 4, 28, 63),
+  scaffoldBackgroundColor: const Color.fromARGB(255, 1, 11, 26),
   brightness: Brightness.dark,
   surfaceColor: const Color.fromARGB(255, 1, 12, 31),
 );
@@ -87,12 +89,12 @@ final fairyTheme = createTheme(
   createColorScheme(
     Colors.pink,
     brightness: Brightness.light,
-    primary: Colors.purple,
-    secondary: Colors.purple,
+    primary: Colors.pink[400],
+    secondary: Colors.pink[200],
   ),
-  scaffoldBackgroundColor: Colors.pink[100],
+  scaffoldBackgroundColor: const Color.fromARGB(255, 253, 239, 244),
   brightness: Brightness.light,
-  surfaceColor: const Color.fromARGB(255, 255, 226, 236),
+  surfaceColor: const Color.fromARGB(255, 253, 248, 250),
 );
 
 final luxuryTheme = createTheme(
@@ -102,7 +104,7 @@ final luxuryTheme = createTheme(
     primary: Colors.purple,
     secondary: Colors.red[900],
   ),
-  scaffoldBackgroundColor: const Color.fromARGB(255, 79, 5, 45),
+  scaffoldBackgroundColor: const Color.fromARGB(255, 31, 4, 18),
   brightness: Brightness.dark,
   surfaceColor: const Color.fromARGB(255, 47, 2, 26),
 );
@@ -114,9 +116,9 @@ final infernoTheme = createTheme(
     primary: Colors.orange[900],
     secondary: Colors.orange[900],
   ),
-  scaffoldBackgroundColor: const Color.fromARGB(255, 82, 4, 4),
+  scaffoldBackgroundColor: const Color.fromARGB(255, 25, 1, 1),
   brightness: Brightness.dark,
-  surfaceColor: const Color.fromARGB(255, 50, 2, 2),
+  surfaceColor: const Color.fromARGB(255, 28, 1, 1),
 );
 
 final bonfireTheme = createTheme(
@@ -126,7 +128,7 @@ final bonfireTheme = createTheme(
     primary: const Color.fromARGB(255, 179, 21, 3),
     secondary: const Color.fromARGB(255, 188, 71, 32),
   ),
-  scaffoldBackgroundColor: const Color.fromARGB(255, 255, 184, 153),
+  scaffoldBackgroundColor: const Color.fromARGB(255, 255, 238, 230),
   brightness: Brightness.light,
   surfaceColor: const Color.fromARGB(255, 255, 228, 208),
 );
@@ -138,9 +140,9 @@ final marshTheme = createTheme(
     primary: const Color.fromARGB(255, 89, 113, 3),
     secondary: const Color.fromARGB(255, 89, 113, 3),
   ),
-  scaffoldBackgroundColor: const Color.fromARGB(255, 9, 44, 10),
+  scaffoldBackgroundColor: const Color.fromARGB(255, 3, 15, 3),
   brightness: Brightness.dark,
-  surfaceColor: const Color.fromARGB(255, 4, 23, 4),
+  surfaceColor: const Color.fromARGB(255, 4, 22, 4),
 );
 
 class AppThemes {
