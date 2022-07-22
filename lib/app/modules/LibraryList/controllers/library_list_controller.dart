@@ -32,10 +32,15 @@ class LibraryListController<T extends WithMeta, F extends EntityFilters<T>> exte
   late final TabController tabController;
 
   bool get selectable => onAdd != null;
-  Iterable<T> get builtInList => filterList(
-      repo.value.builtIn.listByType<T>().values.toList(), FiltersGroup.playbook, filterFn, sortFn);
-  Iterable<T> get myList =>
-      filterList(repo.value.my.listByType<T>().values.toList(), FiltersGroup.my, filterFn, sortFn);
+
+  Iterable<T> get builtInList =>
+      filterList(builtInListRaw, FiltersGroup.playbook, filterFn, sortFn);
+
+  Iterable<T> get builtInListRaw => repo.value.builtIn.listByType<T>().values.toList();
+
+  Iterable<T> get myList => filterList(myListRaw, FiltersGroup.my, filterFn, sortFn);
+
+  Iterable<T> get myListRaw => repo.value.my.listByType<T>().values.toList();
   String get storageKey => Meta.storageKeyFor(T);
 
   @override
@@ -60,7 +65,8 @@ class LibraryListController<T extends WithMeta, F extends EntityFilters<T>> exte
               ? 1
               : 0
           : 0,
-      length: 3,
+      // length: 3,
+      length: 2,
       vsync: this,
     );
   }
@@ -196,6 +202,9 @@ abstract class EntityFilters<T> {
   int get activeFilterCount => filterActiveList.where((element) => element == true).length;
 
   int get totalFilterCount => filterActiveList.length;
+
+  bool get isEmpty => activeFilterCount == 0;
+  bool get isNotEmpty => !isEmpty;
 
   int sortByScore(T a, T b) => getScore(b).compareTo(getScore(a));
 }

@@ -23,6 +23,7 @@ import 'package:dungeon_paper/app/widgets/forms/move_form.dart';
 import 'package:dungeon_paper/app/widgets/forms/note_form.dart';
 import 'package:dungeon_paper/app/widgets/forms/race_form.dart';
 import 'package:dungeon_paper/app/widgets/forms/spell_form.dart';
+import 'package:dungeon_paper/core/utils/list_utils.dart';
 import 'package:dungeon_world_data/dungeon_world_data.dart' as dw;
 import 'package:get/get.dart';
 
@@ -31,16 +32,37 @@ class ModelPages {
   static LibraryService get library => Get.find();
 
   static void openLibraryList<T extends WithMeta>({
-    // Character? character,
-    // void Function(Iterable<T> list)? onAdd,
+    Character? character,
+    void Function(Iterable<T> list)? onAdd,
+    Iterable<T>? preSelections,
     Type? type,
   }) {
     final map = <Type, Function()>{
-      Move: () => openMovesList(),
-      Spell: () => openSpellsList(),
-      Item: () => openItemsList(),
-      CharacterClass: () => openCharacterClassesList(),
-      Race: () => openRacesList(),
+      Move: () => openMovesList(
+            character: character,
+            onAdd: onAdd as void Function(Iterable<Move>)?,
+            preSelections: preSelections as Iterable<Move>?,
+          ),
+      Spell: () => openSpellsList(
+            character: character,
+            onAdd: onAdd as void Function(Iterable<Spell>)?,
+            preSelections: preSelections as Iterable<Spell>?,
+          ),
+      Item: () => openItemsList(
+            character: character,
+            onAdd: onAdd as void Function(Iterable<Item>)?,
+            preSelections: preSelections as Iterable<Item>?,
+          ),
+      CharacterClass: () => openCharacterClassesList(
+            character: character,
+            onAdd: onAdd != null ? (x) => onAdd.call(asList<T>(x)) : null,
+            preSelection: preSelections?.first as CharacterClass?,
+          ),
+      Race: () => openRacesList(
+            character: character,
+            onAdd: onAdd != null ? (x) => onAdd.call(asList<T>(x)) : null,
+            preSelection: preSelections?.first as Race?,
+          ),
     };
 
     final t = type ?? T;
@@ -72,8 +94,8 @@ class ModelPages {
 
   static void openRacesList({
     Character? character,
-    Iterable<Race>? preSelections,
-    void Function(Iterable<Race> list)? onAdd,
+    Race? preSelection,
+    void Function(Race race)? onAdd,
   }) {
     final char = character;
     Get.toNamed(
@@ -81,7 +103,7 @@ class ModelPages {
       arguments: RaceLibraryListArguments(
         character: char,
         onAdd: onAdd, // ?? library.upsertToCharacter,
-        preSelections: char != null ? [char.race] : [],
+        preSelections: asList(preSelection ?? char?.race),
       ),
     );
   }
@@ -120,6 +142,7 @@ class ModelPages {
     Character? character,
     Iterable<Spell>? list,
     void Function(Iterable<Spell> list)? onAdd,
+    Iterable<Spell>? preSelections,
   }) {
     final char = character;
     Get.toNamed(
@@ -127,7 +150,7 @@ class ModelPages {
       arguments: SpellLibraryListArguments(
         character: char,
         onAdd: onAdd, // ?? library.upsertToCharacter,
-        preSelections: char?.spells ?? [],
+        preSelections: preSelections ?? char?.spells ?? [],
       ),
     );
   }
@@ -152,13 +175,14 @@ class ModelPages {
     Character? character,
     Iterable<Item>? list,
     void Function(Iterable<Item> list)? onAdd,
+    Iterable<Item>? preSelections,
   }) {
     final char = character;
     Get.toNamed(
       Routes.items,
       arguments: ItemLibraryListArguments(
         onAdd: onAdd, // ?? library.upsertToCharacter,
-        preSelections: char?.items ?? [],
+        preSelections: preSelections ?? char?.items ?? [],
       ),
     );
   }
@@ -180,13 +204,14 @@ class ModelPages {
     Character? character,
     Iterable<Note>? list,
     void Function(Iterable<Note> list)? onAdd,
+    Iterable<Note>? preSelections,
   }) {
     final char = character;
     Get.toNamed(
       Routes.notes,
       arguments: NoteLibraryListArguments(
         onAdd: onAdd, // ?? library.upsertToCharacter,
-        preSelections: char?.notes ?? [],
+        preSelections: preSelections ?? char?.notes ?? [],
       ),
     );
   }
@@ -213,18 +238,11 @@ class ModelPages {
     Get.toNamed(
       Routes.classes,
       arguments: CharacterClassLibraryListArguments(
-        onAdd: (list) => onAdd != null
-            ? onAdd(list.elementAt(0))
-            : char != null
-                ? controller.updateCharacter(
-                    char.copyWith(characterClass: list.elementAt(0)),
-                  )
-                : null,
-        preSelections: preSelection != null
-            ? [preSelection]
-            : char != null
-                ? [char.characterClass]
-                : [],
+        onAdd: onAdd ??
+            (char != null
+                ? (cls) => controller.updateCharacter(char.copyWith(characterClass: cls))
+                : null),
+        preSelections: asList(preSelection ?? char?.characterClass),
       ),
     );
   }

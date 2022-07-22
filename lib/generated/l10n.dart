@@ -2967,6 +2967,46 @@ class S {
     );
   }
 
+  /// `Clear Filters`
+  String get libraryListNoItemsFoundClearFiltersButton {
+    return Intl.message(
+      'Clear Filters',
+      name: 'libraryListNoItemsFoundClearFiltersButton',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Try changing the search or filters to find more {entities}.`
+  String libraryListNoItemsFoundSubtitleFilters(Object entities) {
+    return Intl.message(
+      'Try changing the search or filters to find more $entities.',
+      name: 'libraryListNoItemsFoundSubtitleFilters',
+      desc: '',
+      args: [entities],
+    );
+  }
+
+  /// `No {entities} found in this list.`
+  String libraryListNoItemsFoundSubtitleNoFilters(Object entities) {
+    return Intl.message(
+      'No $entities found in this list.',
+      name: 'libraryListNoItemsFoundSubtitleNoFilters',
+      desc: '',
+      args: [entities],
+    );
+  }
+
+  /// `No {entities} found`
+  String libraryListNoItemsFoundTitle(Object entities) {
+    return Intl.message(
+      'No $entities found',
+      name: 'libraryListNoItemsFoundTitle',
+      desc: '',
+      args: [entities],
+    );
+  }
+
   /// `Getting characters...`
   String get loadingCharacters {
     return Intl.message(

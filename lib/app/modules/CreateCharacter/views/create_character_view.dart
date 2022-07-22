@@ -19,6 +19,7 @@ import 'package:dungeon_paper/app/themes/colors.dart';
 import 'package:dungeon_paper/app/widgets/atoms/advanced_floating_action_button.dart';
 import 'package:dungeon_paper/app/widgets/atoms/character_avatar.dart';
 import 'package:dungeon_paper/app/widgets/atoms/confirm_exit_view.dart';
+import 'package:dungeon_paper/core/utils/list_utils.dart';
 import 'package:dungeon_paper/generated/l10n.dart';
 import 'package:flutter/material.dart';
 
@@ -116,7 +117,7 @@ class CreateCharacterView extends GetView<CreateCharacterController> {
                                 preSelections: controller.characterClass.value != null
                                     ? [controller.characterClass.value!]
                                     : [],
-                                onAdd: (cls) => controller.setClass(cls.first),
+                                onAdd: (cls) => controller.setClass(cls),
                               ),
                               preventDuplicates: false,
                             ),
@@ -135,10 +136,8 @@ class CreateCharacterView extends GetView<CreateCharacterController> {
                             onTap: cls != null
                                 ? () => ModelPages.openRacesList(
                                       character: controller.getAsCharacter(),
-                                      preSelections: controller.race.value != null
-                                          ? [controller.race.value!]
-                                          : [],
-                                      onAdd: (_races) => controller.race.value = _races.first,
+                                      preSelection: controller.race.value,
+                                      onAdd: (race) => controller.race.value = race,
                                     )
                                 : null,
                             valid: controller.race.value != null,

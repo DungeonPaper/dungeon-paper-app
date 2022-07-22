@@ -62,7 +62,7 @@ class CharacterClassesLibraryListView
 class CharacterClassLibraryListArguments
     extends LibraryListArguments<CharacterClass, CharacterClassFilters> {
   CharacterClassLibraryListArguments({
-    required super.onAdd,
+    required void Function(CharacterClass cls)? onAdd,
     required super.preSelections,
   }) : super(
           sortFn: CharacterClass.sorter,
@@ -71,6 +71,7 @@ class CharacterClassLibraryListArguments
             FiltersGroup.playbook: CharacterClassFilters(),
             FiltersGroup.my: CharacterClassFilters(),
           },
+          onAdd: onAdd != null ? (cls) => onAdd.call(cls.first) : null,
           extraData: const {},
           multiple: false,
         );

@@ -28,6 +28,7 @@ class LibraryCardList<T extends WithMeta, F extends EntityFilters<T>>
     required this.filters,
     required this.group,
     required this.children,
+    required this.totalItemCount,
     this.extraData = const {},
     this.onSave,
   }) : super(key: key);
@@ -40,6 +41,7 @@ class LibraryCardList<T extends WithMeta, F extends EntityFilters<T>>
   final Iterable<Widget> children;
   final void Function(T item)? onSave;
   final Map<String, dynamic> extraData;
+  final int totalItemCount;
 
   @override
   Widget build(BuildContext context) {
@@ -65,30 +67,56 @@ class LibraryCardList<T extends WithMeta, F extends EntityFilters<T>>
     );
   }
 
-  List<Widget> _children(BuildContext context) => [
-        const SizedBox(height: 40),
-        if (onSave != null) ...[
-          SizedBox(
-            height: 48,
-            child: ElevatedButton.icon(
-              style: ButtonThemes.primaryElevated(context),
-              onPressed: () => Get.toNamed(
-                Routes.editByType<T>(),
-                arguments: createPageArgsByType(extraData),
-              ),
-              label: Text(S.current.createGeneric(S.current.entity(T))),
-              icon: const Icon(Icons.add),
+  List<Widget> _children(BuildContext context) {
+    final theme = Theme.of(context);
+    final textTheme = theme.textTheme;
+    return [
+      const SizedBox(height: 40),
+      if (children.isEmpty) ...[
+        const SizedBox(height: 32),
+        Text(
+          S.current.libraryListNoItemsFoundTitle(S.current.entityPlural(T)),
+          style: textTheme.headline6,
+          textAlign: TextAlign.center,
+        ),
+        const SizedBox(height: 8),
+        Center(
+          child: SizedBox(
+            width: 300,
+            child: Text(
+              filters.isEmpty
+                  ? S.current.libraryListNoItemsFoundSubtitleNoFilters(S.current.entityPlural(T))
+                  : S.current.libraryListNoItemsFoundSubtitleFilters(S.current.entityPlural(T)),
+              style: textTheme.subtitle1,
+              textAlign: TextAlign.center,
             ),
           ),
-          const Divider(height: 32),
-        ],
-        ...children.map(
-          (child) => Padding(
-            padding: const EdgeInsets.only(bottom: 8),
-            child: child,
+        ),
+        const SizedBox(height: 32),
+      ],
+      if (onSave != null) ...[
+        SizedBox(
+          height: 48,
+          child: ElevatedButton.icon(
+            style: ButtonThemes.primaryElevated(context),
+            onPressed: () => Get.toNamed(
+              Routes.editByType<T>(),
+              arguments: createPageArgsByType(extraData),
+            ),
+            label: Text(S.current.createGeneric(S.current.entity(T))),
+            icon: const Icon(Icons.add),
           ),
         ),
-      ];
+        if (children.isNotEmpty) const Divider(height: 32),
+      ],
+      ...children.map(
+        (child) => Padding(
+          padding: const EdgeInsets.only(bottom: 8),
+          child: child,
+        ),
+      ),
+    ];
+  }
 
   createPageArgsByType(Map<String, dynamic> extraData) {
     switch (T) {

@@ -62,7 +62,7 @@ class RacesLibraryListView extends GetView<LibraryListController<Race, RaceFilte
 class RaceLibraryListArguments extends LibraryListArguments<Race, RaceFilters> {
   RaceLibraryListArguments({
     required Character? character,
-    required super.onAdd,
+    required void Function(Race race)? onAdd,
     required super.preSelections,
   }) : super(
           sortFn: Race.sorter,
@@ -75,6 +75,7 @@ class RaceLibraryListArguments extends LibraryListArguments<Race, RaceFilters> {
             'abilityScores': character?.abilityScores,
             'classKeys': character != null ? [character.characterClass.key] : null,
           },
+          onAdd: onAdd != null ? (race) => onAdd.call(race.first) : null,
           multiple: false,
         );
 }

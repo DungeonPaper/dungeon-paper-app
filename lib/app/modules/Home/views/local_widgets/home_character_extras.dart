@@ -137,10 +137,10 @@ class HomeCharacterExtras extends GetView<CharacterService> {
   void _openRace() {
     ModelPages.openRacesList(
       character: controller.current,
-      preSelections: [controller.current.race],
+      preSelection: controller.current.race,
       onAdd: (_race) => controller.updateCharacter(
         controller.current.copyWithInherited(
-          race: _race.first.copyWithInherited(favorite: controller.current.race.favorite),
+          race: _race.copyWithInherited(favorite: controller.current.race.favorite),
         ),
       ),
     );

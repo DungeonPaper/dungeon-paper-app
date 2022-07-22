@@ -59,7 +59,10 @@ class LibraryListView<T extends WithMeta, F extends EntityFilters<T>>
 
   @override
   Widget build(BuildContext context) {
-    final entityTitleName = controller.multiple ? S.current.entityPlural(T) : S.current.entity(T);
+    final entityTitleName = controller.multiple || !controller.selectable
+        ? S.current.entityPlural(T)
+        : S.current.entity(T);
+
     return Scaffold(
       appBar: AppBar(
         title: title ??
@@ -83,7 +86,7 @@ class LibraryListView<T extends WithMeta, F extends EntityFilters<T>>
                 tabs: [
                   Tab(child: Text(S.current.addRepoItemTabPlaybook)),
                   Tab(child: Text(S.current.myGeneric(S.current.entityPlural(T)))),
-                  Tab(child: Text(S.current.addRepoItemTabOnline)),
+                  // Tab(child: Text(S.current.addRepoItemTabOnline)),
                 ],
               ),
               Expanded(
@@ -96,6 +99,7 @@ class LibraryListView<T extends WithMeta, F extends EntityFilters<T>>
                       filtersBuilder: filtersBuilder,
                       filters: playbookFilters,
                       extraData: controller.extraData,
+                      totalItemCount: controller.builtInListRaw.length,
                       children: controller.builtInList.map(
                         (item) => _wrapWithSelection(context, item, FiltersGroup.playbook),
                       ),
@@ -107,11 +111,12 @@ class LibraryListView<T extends WithMeta, F extends EntityFilters<T>>
                       useFilters: useFilters,
                       filtersBuilder: filtersBuilder,
                       filters: myFilters,
+                      totalItemCount: controller.myListRaw.length,
                       children: controller.myList.map(
                         (item) => _wrapWithSelection(context, item, FiltersGroup.my),
                       ),
                     ),
-                    Container(),
+                    // Container(),
                   ],
                 ),
               ),
