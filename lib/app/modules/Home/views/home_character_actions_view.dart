@@ -246,11 +246,19 @@ class HomeCharacterActionsView extends GetView<CharacterService> {
   }
 
   void _openBasicMoves() {
-    ModelPages.openMovesList(category: MoveCategory.basic, initialTab: FiltersGroup.playbook);
+    ModelPages.openMovesList(
+      category: MoveCategory.basic,
+      initialTab: FiltersGroup.playbook,
+      abilityScores: char.abilityScores,
+    );
   }
 
   void _openSpecialMoves() {
-    ModelPages.openMovesList(category: MoveCategory.special, initialTab: FiltersGroup.playbook);
+    ModelPages.openMovesList(
+      category: MoveCategory.special,
+      initialTab: FiltersGroup.playbook,
+      abilityScores: char.abilityScores,
+    );
   }
 }
 

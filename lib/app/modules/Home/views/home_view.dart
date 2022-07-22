@@ -7,6 +7,7 @@ import 'package:dungeon_paper/app/modules/Home/views/home_character_journal_view
 import 'package:dungeon_paper/app/modules/Home/views/home_loader_view.dart';
 import 'package:dungeon_paper/app/routes/app_pages.dart';
 import 'package:dungeon_paper/app/themes/button_themes.dart';
+import 'package:dungeon_paper/app/widgets/atoms/icon_span.dart';
 import 'package:dungeon_paper/app/widgets/atoms/page_controller_fractional_box.dart';
 import 'package:dungeon_paper/generated/l10n.dart';
 import 'package:flutter/material.dart';
@@ -46,9 +47,14 @@ class HomeView extends GetView<CharacterService>
         },
       ),
       floatingActionButton: Obx(
-        () => userService.isLoggedIn ? const HomeFAB() : Container(),
+        () =>
+            userService.isLoggedIn && maybeChar != null ? const HomeFAB() : const SizedBox.shrink(),
       ),
-      bottomNavigationBar: HomeNavBar(pageController: controller.pageController),
+      bottomNavigationBar: Obx(
+        () => maybeChar != null
+            ? HomeNavBar(pageController: controller.pageController)
+            : const SizedBox.shrink(),
+      ),
     );
   }
 
@@ -102,13 +108,18 @@ class HomeEmptyState extends StatelessWidget with UserServiceMixin {
                 child: Card(
                   margin: const EdgeInsets.all(32),
                   child: Padding(
-                    padding: const EdgeInsets.all(24),
+                    padding: const EdgeInsets.symmetric(vertical: 24, horizontal: 16),
                     child: Column(
                       children: [
-                        Text(
-                          S.current.homeEmptyStateLoginTitle,
-                          style: textTheme.headline6,
+                        RichText(
                           textAlign: TextAlign.center,
+                          text: TextSpan(
+                            children: [
+                              IconSpan(context, icon: Icons.person, size: 24),
+                              TextSpan(text: ' ' + S.current.homeEmptyStateLoginTitle),
+                            ],
+                            style: textTheme.headline6,
+                          ),
                         ),
                         const SizedBox(height: 16),
                         Text(

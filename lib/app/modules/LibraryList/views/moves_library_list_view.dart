@@ -1,3 +1,4 @@
+import 'package:dungeon_paper/app/data/models/ability_scores.dart';
 import 'package:dungeon_paper/app/data/models/character.dart';
 import 'package:dungeon_paper/app/data/models/move.dart';
 import 'package:dungeon_paper/app/data/services/repository_service.dart';
@@ -66,6 +67,8 @@ class MoveLibraryListArguments extends LibraryListArguments<Move, MoveFilters> {
     required super.preSelections,
     MoveCategory? category,
     super.initialTab,
+    AbilityScores? abilityScores,
+    List<String>? classKeys,
   }) : super(
           sortFn: Move.sorter,
           filterFn: (move, filters) => filters.filter(move),
@@ -76,8 +79,10 @@ class MoveLibraryListArguments extends LibraryListArguments<Move, MoveFilters> {
                 MoveFilters(classKey: character?.characterClass.key, category: category),
           },
           extraData: {
-            'abilityScores': character?.abilityScores,
-            'classKeys': character != null ? [character.characterClass.key] : null,
+            'abilityScores': abilityScores ?? character?.abilityScores,
+            'classKeys': (classKeys?.isNotEmpty ?? false)
+                ? classKeys
+                : (character != null ? [character.characterClass.key] : null),
           },
         );
 }

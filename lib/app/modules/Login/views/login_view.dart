@@ -1,4 +1,6 @@
 import 'package:dungeon_paper/app/widgets/atoms/labeled_divider.dart';
+import 'package:dungeon_paper/app/widgets/atoms/password_field.dart';
+import 'package:dungeon_paper/core/dw_icons.dart';
 import 'package:dungeon_paper/core/utils/password_validator.dart';
 import 'package:dungeon_paper/generated/l10n.dart';
 import 'package:email_validator/email_validator.dart';
@@ -32,15 +34,15 @@ class LoginView extends GetView<LoginController> {
                       decoration: InputDecoration(
                         filled: true,
                         label: Text(S.current.signupEmail),
-                        floatingLabelBehavior: FloatingLabelBehavior.auto,
+                        // floatingLabelBehavior: FloatingLabelBehavior.auto,
                         hintText: S.current.signupEmailPlaceholder,
                       ),
                       validator: (email) => email == null || EmailValidator.validate(email)
                           ? null
                           : S.current.signupEmailValidation,
                     ),
-                    const SizedBox(height: 8),
-                    TextFormField(
+                    const SizedBox(height: 16),
+                    PasswordField(
                       controller: controller.password,
                       obscureText: true,
                       autofillHints: const [AutofillHints.password],
@@ -48,20 +50,32 @@ class LoginView extends GetView<LoginController> {
                         filled: true,
                         label: Text(S.current.signupPassword),
                         hintText: S.current.signupPasswordPlaceholder,
-                        floatingLabelBehavior: FloatingLabelBehavior.auto,
+                        // floatingLabelBehavior: FloatingLabelBehavior.auto,
                       ),
                       validator: PasswordValidator().validator,
                     ),
+                    const SizedBox(height: 16),
                     Obx(
-                      () => ElevatedButton(
+                      () => ElevatedButton.icon(
                         onPressed: controller.valid ? controller.loginWithPassword : null,
-                        child: Text(S.current.signinButton),
+                        label: Text(S.current.signinButton, textScaleFactor: 1.5),
+                        style: ElevatedButton.styleFrom(
+                          padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
+                        ),
+                        icon: controller.loadingService.loadingUser
+                            ? const SizedBox(
+                                width: 24,
+                                height: 24,
+                                child: CircularProgressIndicator.adaptive(),
+                              )
+                            : const Icon(Icons.login, size: 24),
                       ),
                     ),
                     LabeledDivider(label: Text(S.current.separatorOr)),
-                    ElevatedButton(
+                    ElevatedButton.icon(
                       onPressed: controller.loginWithGoogle,
-                      child: Text(S.current.signinWithGoogleButton),
+                      label: Text(S.current.signinWithGoogleButton),
+                      icon: const Icon(DwIcons.google),
                     ),
                   ],
                 ),

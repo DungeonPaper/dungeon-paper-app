@@ -139,6 +139,7 @@ class _PasswordFieldState extends State<PasswordField> {
               iconSize: 16,
               splashColor: Colors.green.withOpacity(0.2),
               onPressed: _toggleObscureText,
+              // TODO add tooltip
             ),
       ),
       keyboardType: widget.keyboardType,

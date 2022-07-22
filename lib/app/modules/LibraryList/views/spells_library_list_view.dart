@@ -1,3 +1,4 @@
+import 'package:dungeon_paper/app/data/models/ability_scores.dart';
 import 'package:dungeon_paper/app/data/models/character.dart';
 import 'package:dungeon_paper/app/data/models/spell.dart';
 import 'package:dungeon_paper/app/model_utils/model_pages.dart';
@@ -64,6 +65,8 @@ class SpellLibraryListArguments extends LibraryListArguments<Spell, SpellFilters
     required super.onAdd,
     required super.preSelections,
     super.initialTab,
+    AbilityScores? abilityScores,
+    List<String>? classKeys,
   }) : super(
           sortFn: Spell.sorter,
           filterFn: (spell, filters) => filters.filter(spell),
@@ -78,8 +81,10 @@ class SpellLibraryListArguments extends LibraryListArguments<Spell, SpellFilters
             ),
           },
           extraData: {
-            'abilityScores': character?.abilityScores,
-            'classKeys': character != null ? [character.characterClass.key] : null,
+            'abilityScores': abilityScores ?? character?.abilityScores,
+            'classKeys': (classKeys?.isNotEmpty ?? false)
+                ? classKeys
+                : (character != null ? [character.characterClass.key] : null),
           },
         );
 }

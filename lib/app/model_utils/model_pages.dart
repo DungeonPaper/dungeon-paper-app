@@ -87,6 +87,8 @@ class ModelPages {
     MoveCategory? category,
     FiltersGroup? initialTab,
     void Function(Iterable<Move> list)? onAdd,
+    AbilityScores? abilityScores,
+    List<String>? classKeys,
   }) {
     final char = character;
     Get.toNamed(
@@ -97,6 +99,8 @@ class ModelPages {
         category: category,
         onAdd: onAdd, // ?? library.upsertToCharacter,
         preSelections: char?.moves ?? [],
+        abilityScores: abilityScores,
+        classKeys: classKeys,
       ),
     );
   }
@@ -155,6 +159,8 @@ class ModelPages {
     void Function(Iterable<Spell> list)? onAdd,
     FiltersGroup? initialTab,
     Iterable<Spell>? preSelections,
+    AbilityScores? abilityScores,
+    List<String>? classKeys,
   }) {
     final char = character;
     Get.toNamed(
@@ -164,6 +170,8 @@ class ModelPages {
         character: char,
         onAdd: onAdd, // ?? library.upsertToCharacter,
         preSelections: preSelections ?? char?.spells ?? [],
+        abilityScores: abilityScores,
+        classKeys: classKeys,
       ),
     );
   }

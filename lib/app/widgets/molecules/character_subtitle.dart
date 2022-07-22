@@ -1,4 +1,5 @@
 import 'package:dungeon_paper/app/data/models/character.dart';
+import 'package:dungeon_paper/app/widgets/atoms/icon_span.dart';
 import 'package:dungeon_paper/core/utils/list_utils.dart';
 import 'package:dungeon_paper/generated/l10n.dart';
 import 'package:flutter/material.dart';
@@ -25,16 +26,9 @@ class CharacterSubtitle extends StatelessWidget {
           TextSpan(text: S.current.characterHeaderSubtitleRace(character.race.name)),
           TextSpan(
             children: [
-              WidgetSpan(
-                child: Transform.translate(
-                  offset: const Offset(0, 1),
-                  child: Text(
-                    String.fromCharCode(character.bio.alignment.icon.codePoint),
-                    style: DefaultTextStyle.of(context).style.copyWith(
-                          fontFamily: character.bio.alignment.icon.fontFamily,
-                        ),
-                  ),
-                ),
+              IconSpan(
+                context,
+                icon: character.bio.alignment.icon,
               ),
               TextSpan(
                 text: ' ' +
