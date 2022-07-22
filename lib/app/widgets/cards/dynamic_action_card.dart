@@ -3,6 +3,7 @@ import 'package:dungeon_paper/app/widgets/atoms/custom_expansion_panel.dart';
 import 'package:dungeon_paper/app/widgets/atoms/round_roll_button.dart';
 import 'package:dungeon_paper/app/widgets/menus/entity_edit_menu.dart';
 import 'package:dungeon_paper/core/utils/markdown_highlight.dart';
+import 'package:dungeon_paper/core/utils/markdown_styles.dart';
 import 'package:dungeon_paper/generated/l10n.dart';
 import 'package:dungeon_world_data/dice.dart';
 import 'package:flutter/material.dart';
@@ -221,6 +222,7 @@ class _DynamicActionCardState extends State<DynamicActionCard> {
       data: HighlightText.highlight(text, widget.highlightWords),
       onTapLink: (text, href, title) => launch(href!),
       inlineSyntaxes: [HighlightSyntax()],
+      styleSheet: MarkdownStyles.of(context),
       builders: {
         'mark': HighlightText.markdownBuilder(context),
       },

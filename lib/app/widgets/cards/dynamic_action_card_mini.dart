@@ -1,6 +1,7 @@
 import 'package:dungeon_paper/app/data/models/ability_scores.dart';
 import 'package:dungeon_paper/app/themes/themes.dart';
 import 'package:dungeon_paper/app/widgets/atoms/round_roll_button.dart';
+import 'package:dungeon_paper/core/utils/markdown_styles.dart';
 import 'package:dungeon_paper/generated/l10n.dart';
 import 'package:dungeon_world_data/dice.dart';
 import 'package:flutter/material.dart';
@@ -128,7 +129,7 @@ class DynamicActionCardMini extends StatelessWidget {
                   // fitContent: true,
                   // shrinkWrap: true,
                   // fitContent: true,
-                  styleSheet: MarkdownStyleSheet.fromTheme(theme).copyWith(textScaleFactor: 0.9),
+                  styleSheet: MarkdownStyles.of(context).copyWith(textScaleFactor: 0.9),
                   physics: const NeverScrollableScrollPhysics(),
                   onTapLink: (text, href, title) => launch(href!),
                 ),

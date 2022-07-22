@@ -1,4 +1,5 @@
 import 'package:dungeon_paper/app/widgets/atoms/menu_button.dart';
+import 'package:dungeon_paper/core/utils/markdown_styles.dart';
 import 'package:dungeon_paper/generated/l10n.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -206,9 +207,7 @@ class RichTextField extends StatelessWidget {
   }
 
   SizedBox _buildRichControls(BuildContext context) {
-    final theme = Theme.of(context);
-    // final textTheme = theme.textTheme;
-    final mdTheme = MarkdownStyleSheet.fromTheme(theme);
+    final mdTheme = MarkdownStyles.of(context);
     const divider = Padding(padding: EdgeInsets.symmetric(vertical: 8), child: VerticalDivider());
     const thinDivider = Padding(
       padding: EdgeInsets.symmetric(vertical: 8),
@@ -476,6 +475,7 @@ class MarkdownPreviewDialog extends StatelessWidget {
             padding: const EdgeInsets.all(0),
             onTapLink: (text, href, title) => launch(href!),
             shrinkWrap: true,
+            styleSheet: MarkdownStyles.of(context),
           ),
         ),
       );

@@ -2,6 +2,7 @@ import 'package:dungeon_paper/app/data/services/character_service.dart';
 import 'package:dungeon_paper/app/modules/BioForm/controllers/bio_form_controller.dart';
 import 'package:dungeon_paper/app/routes/app_pages.dart';
 import 'package:dungeon_paper/app/widgets/molecules/dialog_controls.dart';
+import 'package:dungeon_paper/core/utils/markdown_styles.dart';
 import 'package:dungeon_paper/generated/l10n.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_markdown/flutter_markdown.dart';
@@ -45,6 +46,7 @@ class CharacterBioDialog extends GetView with CharacterServiceMixin {
                     ? MarkdownBody(
                         data: char.bio.description,
                         onTapLink: (_, url, __) => launch(url!),
+                        styleSheet: MarkdownStyles.of(context),
                       )
                     : Text(S.current.noDescription),
                 const SizedBox(height: 16),
