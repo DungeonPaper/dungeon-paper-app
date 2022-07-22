@@ -1,5 +1,6 @@
 import 'package:dungeon_paper/app/data/models/session_marks.dart';
 import 'package:dungeon_paper/app/data/services/character_service.dart';
+import 'package:dungeon_paper/app/widgets/atoms/help_text.dart';
 import 'package:dungeon_paper/app/widgets/molecules/dialog_controls.dart';
 import 'package:dungeon_paper/generated/l10n.dart';
 import 'package:flutter/material.dart';
@@ -32,12 +33,16 @@ class CharacterDebilitiesDialog extends GetView<CharacterService> with Character
                 mainAxisSize: MainAxisSize.min,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
+                  HelpText(text: S.current.characterDebilitiesDialogInfoText),
+                  const SizedBox(height: 6),
+                  const Divider(),
                   for (final ability in char.abilityScores.stats)
                     ListTile(
                       contentPadding: const EdgeInsets.all(0),
                       title: Text(S.current.debilityLabel(ability.debilityName, ability.key)),
                       subtitle: Text(ability.debilityDescription),
                       dense: true,
+                      leading: Icon(ability.icon, size: 20),
                       onTap: () => charService.updateCharacter(
                         char.copyWith(
                           abilityScores: char.abilityScores.copyWith(

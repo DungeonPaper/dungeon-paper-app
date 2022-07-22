@@ -1208,6 +1208,16 @@ class S {
     );
   }
 
+  /// `Debilities are temporary, negative conditions or states in which your character is in. When a stat is debilitated, it causes its modifier to be reduced by 1 until recovered.`
+  String get characterDebilitiesDialogInfoText {
+    return Intl.message(
+      'Debilities are temporary, negative conditions or states in which your character is in. When a stat is debilitated, it causes its modifier to be reduced by 1 until recovered.',
+      name: 'characterDebilitiesDialogInfoText',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `Level {level} ∙ {charClass} ∙ {race} ∙`
   String characterHeaderSubtitle(Object level, Object charClass, Object race) {
     return Intl.message(

@@ -506,6 +506,8 @@ class MessageLookup extends MessageLookupByLibrary {
             "You have no bonds or flags. You can add some using the edit button above, then mark them off as completed as you go along your adventure."),
         "characterBondsFlagsDialogTitle":
             MessageLookupByLibrary.simpleMessage("Bonds & Flags"),
+        "characterDebilitiesDialogInfoText": MessageLookupByLibrary.simpleMessage(
+            "Debilities are temporary, negative conditions or states in which your character is in. When a stat is debilitated, it causes its modifier to be reduced by 1 until recovered."),
         "characterDebilitiesDialogTitle":
             MessageLookupByLibrary.simpleMessage("Debilities"),
         "characterHeaderSubtitle": m12,

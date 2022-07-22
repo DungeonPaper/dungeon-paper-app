@@ -115,6 +115,7 @@
   "characterBondsFlagsDialogNoData": "You have no bonds or flags. You can add some using the edit button above, then mark them off as completed as you go along your adventure.",
   "characterBondsFlagsDialogTitle": "Bonds & Flags",
   "characterDebilitiesDialogTitle": "Debilities",
+  "characterDebilitiesDialogInfoText": "Debilities are temporary, negative conditions or states in which your character is in. When a stat is debilitated, it causes its modifier to be reduced by 1 until recovered.",
   "characterHeaderSubtitle": "Level {level} ∙ {charClass} ∙ {race} ∙",
   "characterHeaderSubtitleAlignment": "{alignment}",
   "characterHeaderSubtitleClass": "{charClass}",
