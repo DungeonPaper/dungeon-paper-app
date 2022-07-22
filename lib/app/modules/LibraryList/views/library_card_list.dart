@@ -15,20 +15,36 @@ import 'package:dungeon_paper/app/widgets/forms/move_form.dart';
 import 'package:dungeon_paper/app/widgets/forms/note_form.dart';
 import 'package:dungeon_paper/app/widgets/forms/race_form.dart';
 import 'package:dungeon_paper/app/widgets/forms/spell_form.dart';
+import 'package:dungeon_paper/core/utils/math_utils.dart';
 import 'package:dungeon_paper/generated/l10n.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class LibraryCardList<T extends WithMeta, F extends EntityFilters<T>>
     extends GetView<LibraryListController<T, F>> {
-  const LibraryCardList({
+  LibraryCardList({
     Key? key,
     required this.useFilters,
     required this.filtersBuilder,
     required this.filters,
     required this.group,
-    required this.children,
+    required List<Widget> children,
     required this.totalItemCount,
+    this.extraData = const {},
+    this.onSave,
+  })  : itemBuilder = ((BuildContext context, int index) => children[index]),
+        itemCount = children.length,
+        super(key: key);
+
+  const LibraryCardList.builder({
+    Key? key,
+    required this.useFilters,
+    required this.filtersBuilder,
+    required this.filters,
+    required this.group,
+    required this.totalItemCount,
+    required this.itemBuilder,
+    required this.itemCount,
     this.extraData = const {},
     this.onSave,
   }) : super(key: key);
@@ -38,14 +54,14 @@ class LibraryCardList<T extends WithMeta, F extends EntityFilters<T>>
       FiltersGroup, F filters, void Function(FiltersGroup group, F filters) update)? filtersBuilder;
   final F filters;
   final FiltersGroup group;
-  final Iterable<Widget> children;
   final void Function(T item)? onSave;
   final Map<String, dynamic> extraData;
+  final Widget Function(BuildContext context, int index) itemBuilder;
+  final int itemCount;
   final int totalItemCount;
 
   @override
   Widget build(BuildContext context) {
-    final listViewChildren = _children(context);
     return Stack(
       children: [
         Positioned.fill(
@@ -54,8 +70,13 @@ class LibraryCardList<T extends WithMeta, F extends EntityFilters<T>>
             child: ListView.builder(
               padding:
                   const EdgeInsets.all(8).copyWith(top: 0, bottom: controller.selectable ? 80 : 4),
-              itemBuilder: (context, index) => listViewChildren.elementAt(index),
-              itemCount: listViewChildren.length,
+              itemBuilder: (context, index) => Padding(
+                padding: const EdgeInsets.only(bottom: 8),
+                child: index < _leadingCount
+                    ? _leading(context).elementAt(index)
+                    : itemBuilder(context, index - _leadingCount),
+              ),
+              itemCount: itemCount + _leadingCount,
             ),
           ),
         ),
@@ -68,12 +89,24 @@ class LibraryCardList<T extends WithMeta, F extends EntityFilters<T>>
     );
   }
 
-  List<Widget> _children(BuildContext context) {
+  /// **Make sure to keep in sync with _leading**
+  int get _leadingCount => sum([
+        1,
+        if (itemCount == 0) 5,
+        if (onSave != null) ...[
+          1,
+          if (itemCount > 0) 1,
+        ],
+      ]);
+
+  /// **Make sure to keep in sync with _leadingCount**
+  List<Widget> _leading(BuildContext context) {
     final theme = Theme.of(context);
     final textTheme = theme.textTheme;
+
     return [
       const SizedBox(height: 40),
-      if (children.isEmpty) ...[
+      if (itemCount == 0) ...[
         const SizedBox(height: 32),
         Text(
           S.current.libraryListNoItemsFoundTitle(S.current.entityPlural(T)),
@@ -108,14 +141,8 @@ class LibraryCardList<T extends WithMeta, F extends EntityFilters<T>>
             icon: const Icon(Icons.add),
           ),
         ),
-        if (children.isNotEmpty) const Divider(height: 32),
+        if (itemCount > 0) const Divider(height: 32),
       ],
-      ...children.map(
-        (child) => Padding(
-          padding: const EdgeInsets.only(bottom: 8),
-          child: child,
-        ),
-      ),
     ];
   }
 

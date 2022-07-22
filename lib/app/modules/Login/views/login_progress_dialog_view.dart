@@ -30,9 +30,8 @@ class LoginProgressDialogView extends GetView<LoadingService> with CharacterServ
     return Obx(
       () => AlertDialog(
         title: Text(title),
-        content: const SizedBox(
-          width: 100,
-          height: 100,
+        content: SizedBox.square(
+          dimension: 100,
           child: Center(
             child: Padding(
               padding: EdgeInsets.all(24),

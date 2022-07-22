@@ -4,6 +4,7 @@
 
 import 'package:dungeon_paper/app/themes/themes.dart';
 import 'package:dungeon_paper/app/widgets/atoms/custom_list_tile.dart';
+import 'package:dungeon_paper/core/utils/math_utils.dart';
 import 'package:flutter/material.dart';
 
 const Duration _kExpand = Duration(milliseconds: 200);
@@ -42,14 +43,56 @@ class CustomExpansionTile extends StatefulWidget {
   /// Creates a single-line [ListTile] with an expansion arrow icon that expands or collapses
   /// the tile to reveal or hide the [children]. The [initiallyExpanded] property must
   /// be non-null.
-  const CustomExpansionTile({
+  CustomExpansionTile({
     Key? key,
     this.expandable = true,
     this.title,
     this.titleBuilder,
     this.subtitle,
     this.onExpansionChanged,
-    this.children = const <Widget>[],
+    List<Widget> children = const [],
+    this.leading = const <Widget>[],
+    this.trailing = const <Widget>[],
+    this.visualDensity,
+    this.initiallyExpanded = false,
+    this.maintainState = false,
+    this.tilePadding,
+    this.expandedCrossAxisAlignment,
+    this.expandedAlignment,
+    this.childrenPadding,
+    this.backgroundColor,
+    this.collapsedBackgroundColor,
+    this.textColor,
+    this.collapsedTextColor,
+    this.iconColor,
+    this.collapsedIconColor,
+    this.controlAffinity,
+    this.icon,
+    this.minIconWidth = 20,
+  })  :
+        // ignore: unnecessary_null_comparison
+        assert(initiallyExpanded != null),
+        // ignore: unnecessary_null_comparison
+        assert(maintainState != null),
+        assert(
+          expandedCrossAxisAlignment != CrossAxisAlignment.baseline,
+          'CrossAxisAlignment.baseline is not supported since the expanded children '
+          'are aligned in a column, not a row. Try to use another constant.',
+        ),
+        assert(title != null || titleBuilder != null),
+        itemBuilder = ((BuildContext context, int index) => children[index]),
+        itemCount = children.length,
+        super(key: key);
+
+  const CustomExpansionTile.builder({
+    Key? key,
+    this.expandable = true,
+    this.title,
+    this.titleBuilder,
+    this.subtitle,
+    this.onExpansionChanged,
+    required this.itemBuilder,
+    required this.itemCount,
     this.leading = const <Widget>[],
     this.trailing = const <Widget>[],
     this.visualDensity,
@@ -83,6 +126,8 @@ class CustomExpansionTile extends StatefulWidget {
 
   /// CUSTOM - is expansion even enabled?
   final bool expandable;
+  final Widget Function(BuildContext context, int index) itemBuilder;
+  final int itemCount;
 
   /// A widget to display before the title.
   ///
@@ -114,11 +159,6 @@ class CustomExpansionTile extends StatefulWidget {
   /// true. When the tile starts collapsing, this function is called with
   /// the value false.
   final ValueChanged<bool>? onExpansionChanged;
-
-  /// The widgets that are displayed when the tile expands.
-  ///
-  /// Typically [ListTile] widgets.
-  final List<Widget> children;
 
   /// The color to display behind the sublist when expanded.
   final Color? backgroundColor;
@@ -408,8 +448,16 @@ class _CustomExpansionTileState extends State<CustomExpansionTile>
           padding: widget.childrenPadding ?? EdgeInsets.zero,
           child: Column(
             crossAxisAlignment: widget.expandedCrossAxisAlignment ?? CrossAxisAlignment.center,
-            children: widget.children,
+            children: range(widget.itemCount).map((x) => widget.itemBuilder(context, x)).toList(),
           ),
+          // child: ListView.builder(
+          //   shrinkWrap: true,
+          //   physics: const NeverScrollableScrollPhysics(),
+          //   padding: widget.childrenPadding,
+          //   // crossAxisAlignment: widget.expandedCrossAxisAlignment ?? CrossAxisAlignment.center,
+          //   itemBuilder: widget.itemBuilder,
+          //   itemCount: widget.itemCount,
+          // ),
         ),
       ),
     );

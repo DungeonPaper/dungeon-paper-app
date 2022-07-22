@@ -26,7 +26,6 @@ class AbilityScoresFormView extends GetView<AbilityScoresFormController> {
 
   @override
   Widget build(BuildContext context) {
-    final textTheme = Theme.of(context).textTheme;
     return Obx(
       () => ConfirmExitView(
         dirty: controller.dirty.value,
@@ -46,106 +45,15 @@ class AbilityScoresFormView extends GetView<AbilityScoresFormController> {
               HelpText(text: S.current.abilityScoreInfo),
               const SizedBox(height: 8),
               Form(
-                child: ReorderableListView(
+                child: ReorderableListView.builder(
                   shrinkWrap: true,
                   physics: const NeverScrollableScrollPhysics(),
+                  itemCount: controller.abilityScores.value.stats.length,
                   onReorder: (int oldIndex, int newIndex) {
                     controller.abilityScores.value = controller.abilityScores.value.copyWith(
                         stats: reorder(controller.abilityScores.value.stats, oldIndex, newIndex));
                   },
-                  children: sortByPredefined(
-                    controller.textControllers.keys.toList(),
-                    order: controller.abilityScores.value.stats.map((stat) => stat.key).toList(),
-                  ).map(
-                    (statKey) {
-                      final stat = controller.abilityScores.value.stats
-                          .firstWhere((stat) => stat.key == statKey);
-                      return Padding(
-                        key: Key('stat-$statKey'),
-                        padding: const EdgeInsets.symmetric(vertical: 4),
-                        child: Card(
-                          margin: EdgeInsets.zero,
-                          child: Padding(
-                            padding: const EdgeInsets.only(bottom: 8),
-                            child: Column(
-                              mainAxisSize: MainAxisSize.min,
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                ListTile(
-                                  visualDensity: VisualDensity.compact,
-                                  title: Row(
-                                    crossAxisAlignment: CrossAxisAlignment.center,
-                                    children: [
-                                      Icon(AbilityScore.iconFor(statKey), size: 16),
-                                      const SizedBox(width: 8),
-                                      Text(stat.name),
-                                    ],
-                                  ),
-                                  subtitle: Text(stat.description, style: textTheme.caption),
-                                  minVerticalPadding: 8,
-                                ),
-                                const Divider(height: 8),
-                                const SizedBox(height: 16),
-                                Row(
-                                  mainAxisSize: MainAxisSize.max,
-                                  crossAxisAlignment: CrossAxisAlignment.center,
-                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                  children: [
-                                    SizedBox(
-                                      width: 170,
-                                      child: Padding(
-                                        padding: const EdgeInsets.symmetric(horizontal: 8),
-                                        child: NumberTextField(
-                                          controller: controller.textControllers[stat.key],
-                                          minValue: 1,
-                                          maxValue: 20,
-                                          numberType: NumberType.int,
-                                          textInputAction: TextInputAction.next,
-                                          // onChanged: (val) => updateControllers(),
-                                        ),
-                                      ),
-                                    ),
-                                    Padding(
-                                      padding: const EdgeInsets.symmetric(horizontal: 8)
-                                          .copyWith(right: 16),
-                                      child: Text(
-                                        S.current.abilityScoreModifierValueLabel(stat.modifier),
-                                      ),
-                                    ),
-                                    RoundIconButton(
-                                      icon: DiceIcon.from(dw.Dice.d6),
-                                      onPressed: () => controller.textControllers[stat.key]!.text =
-                                          Random().nextInt(21).toString(),
-                                      tooltip: S.current.abilityScoreRollButtonTooltip,
-                                    ),
-                                    Expanded(child: Container()),
-                                    Padding(
-                                      padding: const EdgeInsets.symmetric(horizontal: 8),
-                                      child: EntityEditMenu(
-                                        onEdit: () => Get.toNamed(
-                                          Routes.abilityScoreForm,
-                                          arguments: AbilityScoreFormArguments(
-                                            abilityScore: stat,
-                                            onSave: (stat) => controller.updateStat(stat),
-                                          ),
-                                        ),
-                                        onDelete: () => awaitDeleteConfirmation(
-                                          context,
-                                          stat.name,
-                                          () => controller.removeStat(stat),
-                                        ),
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ],
-                            ),
-                          ),
-                        ),
-                      );
-                    },
-                  ).toList(),
+                  itemBuilder: (context, index) => _buildCard(context, index),
                 ),
               ),
               ElevatedButton.icon(
@@ -160,6 +68,99 @@ class AbilityScoresFormView extends GetView<AbilityScoresFormController> {
                     S.current.entity(AbilityScore),
                   ),
                 ),
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+
+  Widget _buildCard(BuildContext context, int index) {
+    final theme = Theme.of(context);
+    final textTheme = theme.textTheme;
+    final statKey = sortByPredefined(
+      controller.textControllers.keys.toList(),
+      order: controller.abilityScores.value.stats.map((stat) => stat.key).toList(),
+    ).elementAt(index);
+    final stat = controller.abilityScores.value.stats.firstWhere((stat) => stat.key == statKey);
+    return Padding(
+      key: Key('stat-$statKey'),
+      padding: const EdgeInsets.symmetric(vertical: 4),
+      child: Card(
+        margin: EdgeInsets.zero,
+        child: Padding(
+          padding: const EdgeInsets.only(bottom: 8),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              ListTile(
+                visualDensity: VisualDensity.compact,
+                title: Row(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    Icon(AbilityScore.iconFor(statKey), size: 16),
+                    const SizedBox(width: 8),
+                    Text(stat.name),
+                  ],
+                ),
+                subtitle: Text(stat.description, style: textTheme.caption),
+                minVerticalPadding: 8,
+              ),
+              const Divider(height: 8),
+              const SizedBox(height: 16),
+              Row(
+                mainAxisSize: MainAxisSize.max,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  SizedBox(
+                    width: 170,
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 8),
+                      child: NumberTextField(
+                        controller: controller.textControllers[stat.key],
+                        minValue: 1,
+                        maxValue: 20,
+                        numberType: NumberType.int,
+                        textInputAction: TextInputAction.next,
+                        // onChanged: (val) => updateControllers(),
+                      ),
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 8).copyWith(right: 16),
+                    child: Text(
+                      S.current.abilityScoreModifierValueLabel(stat.modifier),
+                    ),
+                  ),
+                  RoundIconButton(
+                    icon: DiceIcon.from(dw.Dice.d6),
+                    onPressed: () => controller.textControllers[stat.key]!.text =
+                        Random().nextInt(21).toString(),
+                    tooltip: S.current.abilityScoreRollButtonTooltip,
+                  ),
+                  Expanded(child: Container()),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 8),
+                    child: EntityEditMenu(
+                      onEdit: () => Get.toNamed(
+                        Routes.abilityScoreForm,
+                        arguments: AbilityScoreFormArguments(
+                          abilityScore: stat,
+                          onSave: (stat) => controller.updateStat(stat),
+                        ),
+                      ),
+                      onDelete: () => awaitDeleteConfirmation(
+                        context,
+                        stat.name,
+                        () => controller.removeStat(stat),
+                      ),
+                    ),
+                  ),
+                ],
               ),
             ],
           ),

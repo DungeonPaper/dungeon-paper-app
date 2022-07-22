@@ -1,10 +1,27 @@
 import 'package:dungeon_paper/app/widgets/atoms/custom_expansion_panel.dart';
+import 'package:dungeon_paper/core/utils/math_utils.dart';
 import 'package:flutter/material.dart';
 
 class CategorizedList extends StatelessWidget {
-  const CategorizedList({
+  CategorizedList({
     Key? key,
-    required this.children,
+    required List<Widget> children,
+    required this.title,
+    this.titleLeading = const [],
+    this.titleTrailing = const [],
+    this.onReorder,
+    this.initiallyExpanded = true,
+    this.itemPadding,
+    this.leading = const [],
+    this.trailing = const [],
+  })  : itemBuilder = ((BuildContext context, int index) => children[index]),
+        itemCount = children.length,
+        super(key: key);
+
+  const CategorizedList.builder({
+    Key? key,
+    required this.itemBuilder,
+    required this.itemCount,
     required this.title,
     this.titleLeading = const [],
     this.titleTrailing = const [],
@@ -16,7 +33,8 @@ class CategorizedList extends StatelessWidget {
   }) : super(key: key);
 
   final Widget title;
-  final List<Widget> children;
+  final Widget Function(BuildContext context, int index) itemBuilder;
+  final int itemCount;
   final List<Widget> titleLeading;
   final List<Widget> titleTrailing;
   final List<Widget> leading;
@@ -35,8 +53,9 @@ class CategorizedList extends StatelessWidget {
       children: onReorder != null
           ? [
               ...leading,
-              ReorderableListView(
-                children: children,
+              ReorderableListView.builder(
+                itemBuilder: itemBuilder,
+                itemCount: itemCount,
                 onReorder: onReorder!,
                 shrinkWrap: true,
                 physics: const NeverScrollableScrollPhysics(),
@@ -45,14 +64,15 @@ class CategorizedList extends StatelessWidget {
               ),
               ...trailing,
             ]
-          : children
-              .map((child) => itemPadding != null
+          : range(itemCount).map((childIndex) {
+              final child = itemBuilder(context, childIndex);
+              return itemPadding != null
                   ? Padding(
                       padding: itemPadding!,
                       child: child,
                     )
-                  : child)
-              .toList(),
+                  : child;
+            }).toList(),
     );
   }
 }

@@ -63,9 +63,8 @@ class LoginView extends GetView<LoginController> {
                           padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
                         ),
                         icon: controller.loadingService.loadingUser
-                            ? const SizedBox(
-                                width: 24,
-                                height: 24,
+                            ? const SizedBox.square(
+                                dimension: 24,
                                 child: CircularProgressIndicator.adaptive(),
                               )
                             : const Icon(Icons.login, size: 24),

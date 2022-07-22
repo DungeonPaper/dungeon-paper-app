@@ -215,6 +215,7 @@ class RichTextField extends StatelessWidget {
     );
     return SizedBox(
       height: 40,
+      // TODO use ListView.builder
       child: ListView(
         scrollDirection: Axis.horizontal,
         shrinkWrap: true,

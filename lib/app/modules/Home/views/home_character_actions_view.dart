@@ -45,17 +45,20 @@ class HomeCharacterActionsView extends GetView<CharacterService> {
         if (controller.maybeCurrent == null) {
           return Container();
         }
-        return ListView(
+        return ListView.builder(
           padding: const EdgeInsets.only(bottom: 16),
-          children: [
-            const HomeCharacterActionsSummary(),
-            for (final cat in char.actionCategories)
-              {
-                'Move': movesList,
-                'Spell': spellsList,
-                'Item': itemsList,
-              }[cat],
-          ].whereType<Widget>().toList(),
+          itemBuilder: (context, index) {
+            switch (char.actionCategories.elementAt(index)) {
+              case 'Move':
+                return movesList ?? const SizedBox.shrink();
+              case 'Spell':
+                return spellsList ?? const SizedBox.shrink();
+              case 'Item':
+                return itemsList ?? const SizedBox.shrink();
+            }
+            return const SizedBox.shrink();
+          },
+          itemCount: char.actionCategories.length,
         );
       }),
     );
@@ -328,7 +331,7 @@ class ActionsCardList<T extends WithMeta> extends GetView<CharacterService>
       children: [
         ...list.map(
           (obj) => _wrapChild(
-            key: Key('type-$T-' + obj.key),
+            key: PageStorageKey('type-$T-' + obj.key),
             child: cardBuilder(
               obj,
               onDelete: _confirmDeleteDlg(context, obj, obj.displayName),

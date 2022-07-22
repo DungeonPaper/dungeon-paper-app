@@ -49,9 +49,8 @@ class AccountView extends GetView<AccountController> {
           title: Text(S.current.accountChangeImageTitle),
           subtitle: Text(S.current.accountChangeImageSubtitle),
           leading: controller.uploading.value
-              ? const SizedBox(
-                  width: 24,
-                  height: 24,
+              ? const SizedBox.square(
+                  dimension: 24,
                   child: CircularProgressIndicator.adaptive(
                     strokeWidth: 3,
                   ),

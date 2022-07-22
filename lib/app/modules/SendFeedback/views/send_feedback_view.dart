@@ -23,7 +23,7 @@ class SendFeedbackView extends GetView<SendFeedbackController> {
           onPressed: !controller.sending.value ? controller.send : null,
           label: Text(S.current.sendFeedbackSendButton),
           icon: controller.sending.value
-              ? const CircularProgressIndicator.adaptive()
+              ? const SizedBox.square(child: CircularProgressIndicator.adaptive(), dimension: 24)
               : const Icon(Icons.send),
         ),
       ),

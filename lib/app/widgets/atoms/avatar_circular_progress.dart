@@ -12,9 +12,8 @@ class AvatarCircularProgress extends StatelessWidget {
       width: size,
       height: size,
       child: Center(
-        child: SizedBox(
-          width: size / 2,
-          height: size / 2,
+        child: SizedBox.square(
+          dimension: size / 2,
           child: CircularProgressIndicator.adaptive(
             strokeWidth: size / 20,
           ),

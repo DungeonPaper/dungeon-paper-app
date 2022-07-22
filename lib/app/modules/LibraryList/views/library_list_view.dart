@@ -93,18 +93,20 @@ class LibraryListView<T extends WithMeta, F extends EntityFilters<T>>
                 child: TabBarView(
                   controller: controller.tabController,
                   children: [
-                    LibraryCardList<T, F>(
+                    LibraryCardList<T, F>.builder(
                       group: FiltersGroup.playbook,
                       useFilters: useFilters,
                       filtersBuilder: filtersBuilder,
                       filters: playbookFilters,
                       extraData: controller.extraData,
                       totalItemCount: controller.builtInListRaw.length,
-                      children: controller.builtInList.map(
-                        (item) => _wrapWithSelection(context, item, FiltersGroup.playbook),
-                      ),
+                      itemCount: controller.builtInList.length,
+                      itemBuilder: (context, index) {
+                        final item = controller.builtInList.elementAt(index);
+                        return _wrapWithSelection(context, item, FiltersGroup.playbook);
+                      },
                     ),
-                    LibraryCardList<T, F>(
+                    LibraryCardList<T, F>.builder(
                       group: FiltersGroup.my,
                       onSave: (item) => controller.saveCustomItem(controller.storageKey, item),
                       extraData: controller.extraData,
@@ -112,9 +114,11 @@ class LibraryListView<T extends WithMeta, F extends EntityFilters<T>>
                       filtersBuilder: filtersBuilder,
                       filters: myFilters,
                       totalItemCount: controller.myListRaw.length,
-                      children: controller.myList.map(
-                        (item) => _wrapWithSelection(context, item, FiltersGroup.my),
-                      ),
+                      itemCount: controller.myList.length,
+                      itemBuilder: (context, index) {
+                        final item = controller.myList.elementAt(index);
+                        return _wrapWithSelection(context, item, FiltersGroup.my);
+                      },
                     ),
                     // Container(),
                   ],

@@ -33,71 +33,100 @@ class HorizontalCardListView<T extends WithMeta> extends StatelessWidget {
     if (items.isEmpty) {
       return Container();
     }
-    final displayedItems = itemsObs.isEmpty ? items : itemsObs;
+    final displayedItems = enumerate(itemsObs.isEmpty ? items : itemsObs);
+
     return SizedBox(
       height: cardSize.height,
       width: double.infinity,
       // width: 200,
-      child: ListView(
+      child: ListView.builder(
         // shrinkWrap: true,
         scrollDirection: Axis.horizontal,
         // itemExtent: 2,
         padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-        children: [
-          ...leading.map(
-            (c) => Padding(
-              padding: const EdgeInsets.only(right: 8),
-              child: SizedBox(
-                width: cardSize.width,
-                child: c,
-              ),
-            ),
-          ),
-          for (final item in enumerate(displayedItems))
-            Padding(
-              padding: EdgeInsets.only(right: item.index == items.length - 1 ? 0 : 8),
-              child: SizedBox(
-                width: cardSize.width,
-                child: Hero(
-                  tag: getKeyFor(item.value),
-                  child: cardBuilder(
-                    context,
-                    item.value,
-                    item.index,
-                    () => Get.dialog(
-                      ExpandedCardDialogView<T>(
-                        // heroTag: getKeyFor(item.value),
-                        heroTag: null,
-                        builder: (context) =>
-                            // ignore: unnecessary_null_comparison
-                            item.value != null && item.index < displayedItems.length
-                                ? expandedCardBuilder(
-                                    context,
-                                    item.value,
-                                    item.index,
-                                    // onUpdate
-                                  )
-                                : Container(),
-                      ),
-                      // opaque: false,
-                      // transition: Transition.downToUp,
-                      // duration: Duration(milliseconds: 500),
-                    ),
-                    // onUpdate,
-                  ),
+        itemCount: leading.length + displayedItems.length + trailing.length,
+        itemBuilder: (context, index) => index < leading.length
+            ? Padding(
+                padding: const EdgeInsets.only(right: 8),
+                child: SizedBox(
+                  width: cardSize.width,
+                  child: leading[index],
                 ),
-              ),
+              )
+            : index < leading.length + displayedItems.length
+                ? Padding(
+                    padding: EdgeInsets.only(right: index == displayedItems.length ? 0 : 8),
+                    child: _buildCard(
+                      context,
+                      displayedItems.elementAt(index - leading.length),
+                    ),
+                  )
+                : Padding(
+                    padding: const EdgeInsets.only(left: 8),
+                    child: SizedBox(
+                      width: cardSize.width,
+                      child: trailing[index - leading.length - displayedItems.length],
+                    ),
+                  ),
+        // children: [
+        //   ...leading.map(
+        //     (c) => Padding(
+        //       padding: const EdgeInsets.only(right: 8),
+        //       child: SizedBox(
+        //         width: cardSize.width,
+        //         child: c,
+        //       ),
+        //     ),
+        //   ),
+        //   for (final item in enumerate(displayedItems))
+        //     Padding(
+        //       padding: EdgeInsets.only(right: item.index == items.length - 1 ? 0 : 8),
+        //       child: _buildCard(context, item),
+        //     ),
+        //   ...trailing.map(
+        //     (c) => Padding(
+        //       padding: const EdgeInsets.only(left: 8),
+        //       child: SizedBox(
+        //         width: cardSize.width,
+        //         child: c,
+        //       ),
+        //     ),
+        //   ),
+        // ],
+      ),
+    );
+  }
+
+  SizedBox _buildCard(BuildContext context, Enumerated<dynamic> item) {
+    return SizedBox(
+      width: cardSize.width,
+      child: Hero(
+        tag: getKeyFor(item.value),
+        child: cardBuilder(
+          context,
+          item.value,
+          item.index,
+          () => Get.dialog(
+            ExpandedCardDialogView<T>(
+              // heroTag: getKeyFor(item.value),
+              heroTag: null,
+              builder: (context) =>
+                  // ignore: unnecessary_null_comparison
+                  item.value != null && !item.isLast
+                      ? expandedCardBuilder(
+                          context,
+                          item.value,
+                          item.index,
+                          // onUpdate
+                        )
+                      : Container(),
             ),
-          ...trailing.map(
-            (c) => Padding(
-              padding: const EdgeInsets.only(left: 8),
-              child: SizedBox(
-                width: cardSize.width,
-                child: c,
-              ),
-            ),
+            // opaque: false,
+            // transition: Transition.downToUp,
+            // duration: Duration(milliseconds: 500),
           ),
-        ],
+          // onUpdate,
+        ),
       ),
     );
   }
