@@ -38,6 +38,15 @@ abstract class Routes {
         CharacterClass: Routes.classes,
       }[T];
 
+  static editByType<T extends WithMeta>() => {
+        Move: Routes.editMove,
+        Spell: Routes.editSpell,
+        Item: Routes.editItem,
+        Race: Routes.editRace,
+        Note: Routes.editNote,
+        CharacterClass: Routes.editClass,
+      }[T];
+
   static const createCharacter = _Paths.character + _Paths.create;
   static const createCharacterAbilityScores =
       _Paths.character + _Paths.create + _Paths.abilityScores;

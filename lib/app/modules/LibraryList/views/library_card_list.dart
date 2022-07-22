@@ -73,7 +73,7 @@ class LibraryCardList<T extends WithMeta, F extends EntityFilters<T>>
             child: ElevatedButton.icon(
               style: ButtonThemes.primaryElevated(context),
               onPressed: () => Get.toNamed(
-                Routes.listByType<T>(),
+                Routes.editByType<T>(),
                 arguments: createPageArgsByType(extraData),
               ),
               label: Text(S.current.createGeneric(S.current.entity(T))),
