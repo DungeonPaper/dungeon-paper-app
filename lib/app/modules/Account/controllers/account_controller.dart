@@ -7,6 +7,7 @@ import 'package:dungeon_paper/core/utils/upload_utils.dart';
 import 'package:dungeon_paper/core/utils/uuid.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:image_cropper/image_cropper.dart';
 
 class AccountController extends GetxController with UserServiceMixin, AuthServiceMixin {
   final uploading = false.obs;
@@ -26,6 +27,7 @@ class AccountController extends GetxController with UserServiceMixin, AuthServic
       context,
       UploadSettings(
         uploadPath: '/UserPhoto/' + uuid(),
+        cropStyle: CropStyle.circle,
         onUploadFile: (_) => uploading.value = true,
         onSuccess: (url) {
           uploading.value = false;

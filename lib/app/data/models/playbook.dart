@@ -39,17 +39,23 @@ class Playbook with WithIcon implements WithMeta {
         name: json['name'],
         description: json['description'],
         classes: List<dw.EntityReference>.from(
-            json['classes'].map((x) => dw.EntityReference.fromJson(x))),
-        moves:
-            List<dw.EntityReference>.from(json['moves'].map((x) => dw.EntityReference.fromJson(x))),
+          json['classes'].map((x) => dw.EntityReference.fromJson(x)),
+        ),
+        moves: List<dw.EntityReference>.from(
+          json['moves'].map((x) => dw.EntityReference.fromJson(x)),
+        ),
         spells: List<dw.EntityReference>.from(
-            json['spells'].map((x) => dw.EntityReference.fromJson(x))),
-        races:
-            List<dw.EntityReference>.from(json['races'].map((x) => dw.EntityReference.fromJson(x))),
-        items:
-            List<dw.EntityReference>.from(json['items'].map((x) => dw.EntityReference.fromJson(x))),
-        notes:
-            List<dw.EntityReference>.from(json['notes'].map((x) => dw.EntityReference.fromJson(x))),
+          json['spells'].map((x) => dw.EntityReference.fromJson(x)),
+        ),
+        races: List<dw.EntityReference>.from(
+          json['races'].map((x) => dw.EntityReference.fromJson(x)),
+        ),
+        items: List<dw.EntityReference>.from(
+          json['items'].map((x) => dw.EntityReference.fromJson(x)),
+        ),
+        notes: List<dw.EntityReference>.from(
+          json['notes'].map((x) => dw.EntityReference.fromJson(x)),
+        ),
       );
 
   @override

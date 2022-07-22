@@ -540,6 +540,46 @@ class S {
     );
   }
 
+  /// `Send Feedback`
+  String get aboutSendFeedback {
+    return Intl.message(
+      'Send Feedback',
+      name: 'aboutSendFeedback',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `We reply more promptly through Discord, but you can send us feedback, bug reports or suggestions about the app directly here as an alternative.`
+  String get aboutSendFeedbackSubtitle {
+    return Intl.message(
+      'We reply more promptly through Discord, but you can send us feedback, bug reports or suggestions about the app directly here as an alternative.',
+      name: 'aboutSendFeedbackSubtitle',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Join Discord`
+  String get aboutJoinDiscord {
+    return Intl.message(
+      'Join Discord',
+      name: 'aboutJoinDiscord',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Join the Discord community to ask questions, get help, send feedback, or just chat with other players.`
+  String get aboutJoinDiscordSubtitle {
+    return Intl.message(
+      'Join the Discord community to ask questions, get help, send feedback, or just chat with other players.',
+      name: 'aboutJoinDiscordSubtitle',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `Account`
   String get account {
     return Intl.message(
@@ -3636,6 +3676,46 @@ class S {
       name: 'selectToAdd',
       desc: '',
       args: [string],
+    );
+  }
+
+  /// `Send App Feedback`
+  String get sendFeedbackTitle {
+    return Intl.message(
+      'Send App Feedback',
+      name: 'sendFeedbackTitle',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Problem description`
+  String get sendFeedbackBodyLabel {
+    return Intl.message(
+      'Problem description',
+      name: 'sendFeedbackBodyLabel',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Feedback title`
+  String get sendFeedbackSendButton {
+    return Intl.message(
+      'Feedback title',
+      name: 'sendFeedbackSendButton',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Feedback title`
+  String get sendFeedbackTitleLabel {
+    return Intl.message(
+      'Feedback title',
+      name: 'sendFeedbackTitleLabel',
+      desc: '',
+      args: [],
     );
   }
 

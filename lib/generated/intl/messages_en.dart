@@ -391,6 +391,14 @@ class MessageLookup extends MessageLookupByLibrary {
         "about": MessageLookupByLibrary.simpleMessage("About"),
         "aboutAuthor": MessageLookupByLibrary.simpleMessage("Chen Asraf"),
         "aboutCopyright": m2,
+        "aboutJoinDiscord":
+            MessageLookupByLibrary.simpleMessage("Join Discord"),
+        "aboutJoinDiscordSubtitle": MessageLookupByLibrary.simpleMessage(
+            "Join the Discord community to ask questions, get help, send feedback, or just chat with other players."),
+        "aboutSendFeedback":
+            MessageLookupByLibrary.simpleMessage("Send Feedback"),
+        "aboutSendFeedbackSubtitle": MessageLookupByLibrary.simpleMessage(
+            "We reply more promptly through Discord, but you can send us feedback, bug reports or suggestions about the app directly here as an alternative."),
         "aboutTitle": MessageLookupByLibrary.simpleMessage("About"),
         "aboutVersion": m3,
         "account": MessageLookupByLibrary.simpleMessage("Account"),
@@ -844,6 +852,14 @@ class MessageLookup extends MessageLookupByLibrary {
         "selectNone": MessageLookupByLibrary.simpleMessage("Select None"),
         "selectToAdd": m87,
         "selected": MessageLookupByLibrary.simpleMessage("Selected"),
+        "sendFeedbackBodyLabel":
+            MessageLookupByLibrary.simpleMessage("Problem description"),
+        "sendFeedbackSendButton":
+            MessageLookupByLibrary.simpleMessage("Feedback title"),
+        "sendFeedbackTitle":
+            MessageLookupByLibrary.simpleMessage("Send App Feedback"),
+        "sendFeedbackTitleLabel":
+            MessageLookupByLibrary.simpleMessage("Feedback title"),
         "separatorOr": MessageLookupByLibrary.simpleMessage("OR"),
         "settingsDefaultDarkTheme":
             MessageLookupByLibrary.simpleMessage("Default dark theme"),

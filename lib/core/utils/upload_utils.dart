@@ -13,6 +13,7 @@ class UploadSettings {
   final void Function(File file)? onUploadFile;
   final void Function()? onCancel;
   final void Function(Object error)? onError;
+  final CropStyle? cropStyle;
 
   /// Don't include extension
   final String uploadPath;
@@ -22,6 +23,7 @@ class UploadSettings {
     this.onSuccess,
     this.onCancel,
     this.onError,
+    this.cropStyle,
     required this.uploadPath,
   });
 }
@@ -38,7 +40,10 @@ class UploadResponse {
   });
 }
 
-Future<File?> _pickAndCrop(BuildContext context) async {
+Future<File?> _pickAndCrop(
+  BuildContext context, {
+  CropStyle? cropStyle,
+}) async {
   final res = await FlutterFileDialog.pickFile(
     params: const OpenFileDialogParams(
         dialogType: OpenFileDialogType.image,
@@ -55,6 +60,7 @@ Future<File?> _pickAndCrop(BuildContext context) async {
   final cropped = await ImageCropper().cropImage(
     sourcePath: res,
     aspectRatio: const CropAspectRatio(ratioX: 1, ratioY: 1),
+    cropStyle: cropStyle ?? CropStyle.rectangle,
     uiSettings: [
       AndroidUiSettings(
         backgroundColor: theme.scaffoldBackgroundColor,

@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'package:dungeon_paper/core/http/api_requests/search.dart';
+import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
 import 'api_requests/migration.dart';

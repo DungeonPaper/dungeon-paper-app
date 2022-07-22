@@ -51,6 +51,8 @@ import '../modules/Migration/bindings/migration_binding.dart';
 import '../modules/Migration/views/migration_view.dart';
 import '../modules/SelectCharacterTheme/bindings/select_character_theme_binding.dart';
 import '../modules/SelectCharacterTheme/views/select_character_theme_view.dart';
+import '../modules/SendFeedback/bindings/send_feedback_binding.dart';
+import '../modules/SendFeedback/views/send_feedback_view.dart';
 import '../modules/Settings/bindings/settings_binding.dart';
 import '../modules/Settings/views/settings_view.dart';
 import '../modules/StartingGearForm/bindings/starting_gear_form_binding.dart';
@@ -324,6 +326,11 @@ class AppPages {
       name: _Paths.account,
       page: () => const AccountView(),
       binding: AccountBinding(),
+    ),
+    GetPage(
+      name: _Paths.sendFeedback,
+      page: () => const SendFeedbackView(),
+      binding: SendFeedbackBinding(),
     ),
   ];
 }

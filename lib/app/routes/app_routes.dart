@@ -66,6 +66,7 @@ abstract class Routes {
   static const classAlignments = _Paths.character + _Paths.classAlignments;
   static const selectCharacterTheme = _Paths.character + _Paths.selectCharacterTheme;
   static const account = _Paths.account;
+  static const sendFeedback = _Paths.sendFeedback;
 }
 
 abstract class _Paths {
@@ -104,4 +105,5 @@ abstract class _Paths {
   static const bondsFlags = '/bonds-flags';
   static const classAlignments = '/class-alignments';
   static const selectCharacterTheme = '/character-theme';
+  static const sendFeedback = '/feedback';
 }
