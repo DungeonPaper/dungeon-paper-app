@@ -48,7 +48,7 @@ final bundleAndroid = TaskGroup(
       args: [
         'build',
         'appbundle',
-        '--no-tree-shake-icons',
+        // '--no-tree-shake-icons',
         '--target-platform',
         'android-arm,android-arm64,android-x64'
       ],
@@ -62,7 +62,11 @@ final buildAndroid = TaskGroup(
     LogTask((o) => 'Building APK'),
     ProcessTask.staticArgs(
       'flutter',
-      args: ['build', 'apk', '--no-tree-shake-icons', '--split-per-abi'],
+      args: [
+        'build', 'apk',
+        // '--no-tree-shake-icons',
+        '--split-per-abi',
+      ],
     ),
   ],
 );

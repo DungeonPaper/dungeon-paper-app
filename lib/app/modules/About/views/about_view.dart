@@ -1,5 +1,8 @@
 import 'package:dungeon_paper/app/routes/app_pages.dart';
+import 'package:dungeon_paper/app/widgets/atoms/rainbow_text.dart';
 import 'package:dungeon_paper/core/dw_icons.dart';
+import 'package:dungeon_paper/core/utils/color_utils.dart';
+import 'package:dungeon_paper/core/utils/list_utils.dart';
 import 'package:dungeon_paper/generated/l10n.dart';
 import 'package:flutter/material.dart';
 
@@ -65,6 +68,36 @@ class AboutView extends GetView<AboutController> {
             onTap: () => Get.toNamed(Routes.sendFeedback),
             isThreeLine: true,
             visualDensity: VisualDensity.compact,
+          ),
+          const Divider(),
+          ListTile(
+            minLeadingWidth: 36,
+            leading: const Icon(Icons.favorite),
+            // TODO intl
+            title: const Text('Special Thanks'),
+            subtitle: RainbowText(
+              [
+                'dekelts',
+                'orrans',
+              ].join(', '),
+            ),
+          ),
+          ListTile(
+            minLeadingWidth: 36,
+            leading: SizedBox(width: 16),
+            // TODO intl
+            title: const Text('Icon credits'),
+            subtitle: Text(
+              [
+                'ibrandify',
+                'Freepik',
+                'FontAwesome',
+                'Skoll',
+                'Delapouite',
+                'iconmonstr',
+                'Icon8',
+              ].join(', '),
+            ),
           ),
         ],
       ),
