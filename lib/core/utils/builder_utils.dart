@@ -28,10 +28,10 @@ class ItemBuilder {
         if (leadingBuilder != null && leadingCount > 0 && index < leadingCount) {
           return leadingBuilder(context, index);
         }
-        if (index >= childrenStartIndex) {
+        if (index >= childrenStartIndex && index < trailingStartIndex) {
           return itemBuilder(context, index - leadingCount);
         }
-        if (trailingBuilder != null && trailingCount > 0 && index >= trailingStartIndex) {
+        if (trailingBuilder != null) {
           return trailingBuilder(context, index - childrenStartIndex);
         }
         return const SizedBox.shrink();
@@ -60,13 +60,13 @@ class ItemBuilder {
         if (index < leadingCount) {
           return leading[index]();
         }
-        if (index >= childrenStartIndex) {
+        if (index >= childrenStartIndex && index < trailingStartIndex) {
           return children[index - leadingCount]();
         }
-        if (index >= trailingStartIndex) {
-          return trailing[index - childrenStartIndex]();
-        }
-        return const SizedBox.shrink();
+        // if (index >= trailingStartIndex) {
+        return trailing[index - childrenStartIndex]();
+        // }
+        // return const SizedBox.shrink();
         // return trailing[index - trailingStartIndex](context);
       },
       itemCount: itemCount,

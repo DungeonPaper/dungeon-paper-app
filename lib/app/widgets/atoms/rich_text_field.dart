@@ -1,4 +1,5 @@
 import 'package:dungeon_paper/app/widgets/atoms/menu_button.dart';
+import 'package:dungeon_paper/core/utils/builder_utils.dart';
 import 'package:dungeon_paper/core/utils/markdown_styles.dart';
 import 'package:dungeon_paper/generated/l10n.dart';
 import 'package:flutter/material.dart';
@@ -213,112 +214,115 @@ class RichTextField extends StatelessWidget {
       padding: EdgeInsets.symmetric(vertical: 8),
       child: VerticalDivider(width: 4),
     );
-    return SizedBox(
-      height: 40,
-      // TODO use ListView.builder
-      child: ListView(
-        scrollDirection: Axis.horizontal,
-        shrinkWrap: true,
-        children: [
-          RichButton(
-            color: Theme.of(context).colorScheme.secondary,
-            icon: const Icon(Icons.preview_outlined),
-            tooltip: S.current.formatPreview,
-            onTap: () => _openPreview(context),
-          ),
-          RichButton(
-            color: Theme.of(context).colorScheme.secondary,
-            icon: const Icon(Icons.help),
-            tooltip: S.current.formatHelp,
-            onTap: () => launch('https://www.markdownguide.org/basic-syntax'),
-          ),
-          thinDivider,
-          RichButton(
-            icon: const Icon(Icons.format_bold),
-            tooltip: S.current.formatBold,
-            onTap: _wrapOrAppendCb('**bold**', '**', null, 2, -2),
-          ),
-          RichButton(
-            icon: const Icon(Icons.format_italic),
-            tooltip: S.current.formatItalic,
-            onTap: _wrapOrAppendCb('*italic*', '*', null, 1, -1),
-          ),
-          MenuButton(
-            items: List.generate(6, (i) => i + 1).map(
-              (i) => MenuEntry(
-                label: Text(
-                  S.current.formatHeading(i),
-                  style: {
-                    'h1': mdTheme.h1,
-                    'h2': mdTheme.h2,
-                    'h3': mdTheme.h3,
-                    'h4': mdTheme.h4,
-                    'h5': mdTheme.h5,
-                    'h6': mdTheme.h6,
-                  }['h$i']!,
-                ),
-                value: 'h$i',
-                onSelect: _wrapOrAppendCb(
-                  '\n${List.filled(i, "#").join("")} ${S.current.formatHeading(i)}\n',
-                  '\n${List.filled(i, "#").join("")} ',
-                  '\n',
-                  2 + i,
-                  -1,
+    final builder = ItemBuilder.lazyChildren(
+      children: [
+        () => RichButton(
+              color: Theme.of(context).colorScheme.secondary,
+              icon: const Icon(Icons.preview_outlined),
+              tooltip: S.current.formatPreview,
+              onTap: () => _openPreview(context),
+            ),
+        () => RichButton(
+              color: Theme.of(context).colorScheme.secondary,
+              icon: const Icon(Icons.help),
+              tooltip: S.current.formatHelp,
+              onTap: () => launch('https://www.markdownguide.org/basic-syntax'),
+            ),
+        () => thinDivider,
+        () => RichButton(
+              icon: const Icon(Icons.format_bold),
+              tooltip: S.current.formatBold,
+              onTap: _wrapOrAppendCb('**bold**', '**', null, 2, -2),
+            ),
+        () => RichButton(
+              icon: const Icon(Icons.format_italic),
+              tooltip: S.current.formatItalic,
+              onTap: _wrapOrAppendCb('*italic*', '*', null, 1, -1),
+            ),
+        () => MenuButton(
+              items: List.generate(6, (i) => i + 1).map(
+                (i) => MenuEntry(
+                  label: Text(
+                    S.current.formatHeading(i),
+                    style: {
+                      'h1': mdTheme.h1,
+                      'h2': mdTheme.h2,
+                      'h3': mdTheme.h3,
+                      'h4': mdTheme.h4,
+                      'h5': mdTheme.h5,
+                      'h6': mdTheme.h6,
+                    }['h$i']!,
+                  ),
+                  value: 'h$i',
+                  onSelect: _wrapOrAppendCb(
+                    '\n${List.filled(i, "#").join("")} ${S.current.formatHeading(i)}\n',
+                    '\n${List.filled(i, "#").join("")} ',
+                    '\n',
+                    2 + i,
+                    -1,
+                  ),
                 ),
               ),
+              child: RichButton(
+                icon: const Icon(Icons.format_size),
+                tooltip: S.current.formatHeadings,
+              ),
             ),
-            child: RichButton(
-              icon: const Icon(Icons.format_size),
-              tooltip: S.current.formatHeadings,
+        () => divider,
+        () => RichButton(
+              icon: const Icon(Icons.format_list_bulleted),
+              tooltip: S.current.formatBulletList,
+              onTap: _wrapOrAppendCb('\n- ', '\n- '),
             ),
-          ),
-          divider,
-          RichButton(
-            icon: const Icon(Icons.format_list_bulleted),
-            tooltip: S.current.formatBulletList,
-            onTap: _wrapOrAppendCb('\n- ', '\n- '),
-          ),
-          RichButton(
-            icon: const Icon(Icons.format_list_numbered),
-            tooltip: S.current.formatNumberedList,
-            onTap: _wrapOrAppendCb('\n1. ', '\n1. '),
-          ),
-          RichButton(
-            icon: const Icon(Icons.check_box_outline_blank),
-            tooltip: S.current.formatCheckboxListUnchecked,
-            onTap: _wrapOrAppendCb('\n- [ ] ', '\n- [ ] ', null, 7),
-          ),
-          RichButton(
-            icon: const Icon(Icons.check_box_outlined),
-            tooltip: S.current.formatCheckboxList,
-            onTap: _wrapOrAppendCb('\n- [x] ', '\n- [x] ', null, 7),
-          ),
-          divider,
-          RichButton(
-            icon: const Icon(Icons.link),
-            tooltip: S.current.formatURL,
-            onTap: _wrapOrAppendCb('[text](url)', '[', '](url)', 7, -1),
-          ),
-          RichButton(
-            icon: const Icon(Icons.image),
-            tooltip: S.current.formatImageURL,
-            onTap: _wrapOrAppendCb('![alt](url)', '![alt][', ']', 7, -1),
-          ),
-          RichButton(
-            icon: const Icon(Icons.table_chart_outlined),
-            tooltip: S.current.formatTable,
-            onTap: _wrapOrAppendCb(
-                '| ${S.current.formatHeader(1)} '
-                    '| ${S.current.formatHeader(2)} '
-                    '|\n|---|---|\n'
-                    '| ${S.current.formatCell(1)} '
-                    '| ${S.current.formatCell(2)} |',
-                '| ${S.current.formatHeader(' ')}|\n|---|\n| ',
-                ' |',
-                2,
-                -43),
-          ),
-        ],
+        () => RichButton(
+              icon: const Icon(Icons.format_list_numbered),
+              tooltip: S.current.formatNumberedList,
+              onTap: _wrapOrAppendCb('\n1. ', '\n1. '),
+            ),
+        () => RichButton(
+              icon: const Icon(Icons.check_box_outline_blank),
+              tooltip: S.current.formatCheckboxListUnchecked,
+              onTap: _wrapOrAppendCb('\n- [ ] ', '\n- [ ] ', null, 7),
+            ),
+        () => RichButton(
+              icon: const Icon(Icons.check_box_outlined),
+              tooltip: S.current.formatCheckboxList,
+              onTap: _wrapOrAppendCb('\n- [x] ', '\n- [x] ', null, 7),
+            ),
+        () => divider,
+        () => RichButton(
+              icon: const Icon(Icons.link),
+              tooltip: S.current.formatURL,
+              onTap: _wrapOrAppendCb('[text](url)', '[', '](url)', 7, -1),
+            ),
+        () => RichButton(
+              icon: const Icon(Icons.image),
+              tooltip: S.current.formatImageURL,
+              onTap: _wrapOrAppendCb('![alt](url)', '![alt][', ']', 7, -1),
+            ),
+        () => RichButton(
+              icon: const Icon(Icons.table_chart_outlined),
+              tooltip: S.current.formatTable,
+              onTap: _wrapOrAppendCb(
+                  '| ${S.current.formatHeader(1)} '
+                      '| ${S.current.formatHeader(2)} '
+                      '|\n|---|---|\n'
+                      '| ${S.current.formatCell(1)} '
+                      '| ${S.current.formatCell(2)} |',
+                  '| ${S.current.formatHeader(' ')}|\n|---|\n| ',
+                  ' |',
+                  2,
+                  -43),
+            ),
+      ],
+    );
+    return SizedBox(
+      height: 40,
+      child: ListView.builder(
+        scrollDirection: Axis.horizontal,
+        shrinkWrap: true,
+        itemBuilder: builder.itemBuilder,
+        itemCount: builder.itemCount,
       ),
     );
   }
