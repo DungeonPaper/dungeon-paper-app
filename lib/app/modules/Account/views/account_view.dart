@@ -2,6 +2,7 @@ import 'package:dungeon_paper/app/widgets/atoms/help_text.dart';
 import 'package:dungeon_paper/app/widgets/atoms/password_field.dart';
 import 'package:dungeon_paper/app/widgets/atoms/user_avatar.dart';
 import 'package:dungeon_paper/app/widgets/molecules/dialog_controls.dart';
+import 'package:dungeon_paper/core/utils/builder_utils.dart';
 import 'package:dungeon_paper/core/utils/email_address_validator.dart';
 import 'package:dungeon_paper/core/utils/password_validator.dart';
 import 'package:dungeon_paper/core/utils/string_validator.dart';
@@ -18,71 +19,74 @@ class AccountView extends GetView<AccountController> {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     final textTheme = theme.textTheme;
-    final children = [
-      Center(
-        child: Obx(
-          () => UserAvatar(
-            user: controller.user,
-            size: 100,
-          ),
-        ),
-      ),
-      const SizedBox(height: 8),
-      const Divider(),
-      Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 16).copyWith(top: 8),
-        child: Text(
-          S.current.accountCategoryDetails,
-          style: textTheme.caption,
-        ),
-      ),
-      Obx(
+
+    final builder = ItemBuilder.lazyChildren(
+      children: [
+        () => Center(
+              child: Obx(
+                () => UserAvatar(
+                  user: controller.user,
+                  size: 100,
+                ),
+              ),
+            ),
+        () => const SizedBox(height: 8),
+        () => const Divider(),
+        () => Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 16).copyWith(top: 8),
+              child: Text(
+                S.current.accountCategoryDetails,
+                style: textTheme.caption,
+              ),
+            ),
+        () => Obx(
+              () => ListTile(
+                title: Text(S.current.accountChangeDisplayNameTitle),
+                subtitle: Text(controller.user.displayName),
+                leading: const Icon(Icons.abc),
+                onTap: _openNameDialog,
+              ),
+            ),
+        () => Obx(
+              () => ListTile(
+                title: Text(S.current.accountChangeImageTitle),
+                subtitle: Text(S.current.accountChangeImageSubtitle),
+                leading: controller.uploading.value
+                    ? const SizedBox.square(
+                        dimension: 24,
+                        child: CircularProgressIndicator.adaptive(
+                          strokeWidth: 3,
+                        ),
+                      )
+                    : const Icon(Icons.image),
+                enabled: !controller.uploading.value,
+                onTap: !controller.uploading.value ? () => _uploadImage(context) : null,
+              ),
+            ),
+        () => Obx(
+              () => ListTile(
+                title: Text(S.current.accountChangeEmailTitle),
+                subtitle: Text(controller.user.email),
+                onTap: _openEmailDialog,
+                leading: const Icon(Icons.email),
+              ),
+            ),
         () => ListTile(
-          title: Text(S.current.accountChangeDisplayNameTitle),
-          subtitle: Text(controller.user.displayName),
-          leading: const Icon(Icons.abc),
-          onTap: _openNameDialog,
-        ),
-      ),
-      Obx(
-        () => ListTile(
-          title: Text(S.current.accountChangeImageTitle),
-          subtitle: Text(S.current.accountChangeImageSubtitle),
-          leading: controller.uploading.value
-              ? const SizedBox.square(
-                  dimension: 24,
-                  child: CircularProgressIndicator.adaptive(
-                    strokeWidth: 3,
-                  ),
-                )
-              : const Icon(Icons.image),
-          enabled: !controller.uploading.value,
-          onTap: !controller.uploading.value ? () => _uploadImage(context) : null,
-        ),
-      ),
-      Obx(
-        () => ListTile(
-          title: Text(S.current.accountChangeEmailTitle),
-          subtitle: Text(controller.user.email),
-          onTap: _openEmailDialog,
-          leading: const Icon(Icons.email),
-        ),
-      ),
-      ListTile(
-        title: Text(S.current.accountChangePasswordTitle),
-        subtitle: Text(S.current.accountChangePasswordSubtitle),
-        onTap: _openPasswordDialog,
-        leading: const Icon(Icons.key),
-      ),
-      const Divider(),
-      Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 16).copyWith(top: 8),
-        child: Text(
-          S.current.accountCategorySocials,
-          style: textTheme.caption,
-        ),
-      ),
-    ];
+              title: Text(S.current.accountChangePasswordTitle),
+              subtitle: Text(S.current.accountChangePasswordSubtitle),
+              onTap: _openPasswordDialog,
+              leading: const Icon(Icons.key),
+            ),
+        () => const Divider(),
+        () => Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 16).copyWith(top: 8),
+              child: Text(
+                S.current.accountCategorySocials,
+                style: textTheme.caption,
+              ),
+            ),
+      ],
+    );
 
     return Scaffold(
       appBar: AppBar(
@@ -90,8 +94,8 @@ class AccountView extends GetView<AccountController> {
         centerTitle: true,
       ),
       body: ListView.builder(
-        itemBuilder: (context, index) => children[index],
-        itemCount: children.length,
+        itemBuilder: builder.itemBuilder,
+        itemCount: builder.itemCount,
       ),
     );
   }
@@ -103,10 +107,12 @@ class AccountView extends GetView<AccountController> {
         inputLabel: S.current.accountChangeDisplayNameLabel,
         inputHint: S.current.accountChangeDisplayNameHint,
         value: controller.user.displayName,
-        // TODO display snackbar
-        onSave: (displayName) => controller.userService.updateUser(
-          controller.user.copyWith(displayName: displayName),
-        ),
+        onSave: (displayName) {
+          Get.rawSnackbar(message: S.current.accountChangeDisplayNameSuccess);
+          controller.userService.updateUser(
+            controller.user.copyWith(displayName: displayName),
+          );
+        },
       ),
     );
   }
@@ -119,9 +125,9 @@ class AccountView extends GetView<AccountController> {
         inputHint: S.current.accountChangeEmailHint,
         value: controller.user.email,
         validator: EmailAddressValidator().validator,
-        // TODO display snackbar
         onSave: (email) {
           // TODO move user data to new document
+          Get.rawSnackbar(message: S.current.accountChangeEmailSuccess);
           controller.authService.fbUser.value!.updateEmail(email);
           controller.userService.updateUser(
             controller.user.copyWith(email: email),
@@ -134,8 +140,10 @@ class AccountView extends GetView<AccountController> {
   void _openPasswordDialog() {
     Get.dialog(
       PasswordFieldDialog(
-        // TODO display snackbar
-        onSave: (password) => controller.authService.fbUser.value!.updatePassword(password),
+        onSave: (password) {
+          Get.rawSnackbar(message: S.current.accountChangePasswordSuccess);
+          controller.authService.fbUser.value!.updatePassword(password);
+        },
       ),
     );
   }

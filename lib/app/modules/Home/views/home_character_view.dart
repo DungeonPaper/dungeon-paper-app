@@ -8,6 +8,7 @@ import 'package:dungeon_paper/app/widgets/dialogs/damage_dice_dialog.dart';
 import 'package:dungeon_paper/app/widgets/molecules/character_subtitle.dart';
 import 'package:dungeon_paper/app/widgets/molecules/ability_scores_grid.dart';
 import 'package:dungeon_paper/core/dw_icons.dart';
+import 'package:dungeon_paper/core/utils/builder_utils.dart';
 import 'package:dungeon_paper/core/utils/math_utils.dart';
 import 'package:dungeon_paper/generated/l10n.dart';
 import 'package:flutter/material.dart';
@@ -183,21 +184,24 @@ class HomeCharacterLayout extends StatelessWidget with HomeCharacterPaddingMixin
           return row;
         }
 
-        final children = [
-          ...leftCol,
-          pad(const SizedBox(height: 12)),
-          rightCol,
-        ];
+        final builder = ItemBuilder.lazyChildren(
+          children: [
+            ...leftCol.map(((e) => () => e)),
+            () => pad(const SizedBox(height: 12)),
+            () => rightCol,
+          ],
+        );
 
         if (!scrollable) {
           return Column(
-            children: children,
+            children: [for (final i in range(builder.itemCount)) builder.itemBuilder(context, i)],
           );
         }
+
         return ListView.builder(
           shrinkWrap: !scrollable,
-          itemBuilder: (context, index) => children[index],
-          itemCount: children.length,
+          itemBuilder: builder.itemBuilder,
+          itemCount: builder.itemCount,
         );
       },
     );

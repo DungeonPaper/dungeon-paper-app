@@ -57,7 +57,7 @@ class CharacterService extends GetxService with LoadingServiceMixin, UserService
 
   Iterable<Character> get charsByLastUsed {
     final copy = [...all.values];
-    copy.sort(dateComparator(order: SortOrder.desc, parse: (char) => char?.meta.data?.lastUsed));
+    copy.sort(createSortByDate(order: SortOrder.desc, parse: (char) => char?.meta.data?.lastUsed));
     return copy;
   }
 

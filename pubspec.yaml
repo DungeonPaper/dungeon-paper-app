@@ -84,35 +84,35 @@ flutter:
   uses-material-design: true
   assets:
     # General Icons
-    - assets/icons/armor.svg
-    - assets/icons/book_cover.svg
-    - assets/icons/dice_d6_numbered.svg
-    - assets/icons/exclamation.svg
-    - assets/icons/hand_rock.svg
-    - assets/icons/knapsack.svg
-    - assets/icons/riposte.svg
-    - assets/icons/scroll_quill.svg
-    - assets/icons/swap_bag.svg
-    - assets/icons/coin_stack.svg
-    - assets/icons/dumbbell.svg
-    - assets/icons/quill.svg
-    - assets/icons/swords.svg
+    # - assets/icons/armor.svg
+    # - assets/icons/book_cover.svg
+    # - assets/icons/dice_d6_numbered.svg
+    # - assets/icons/exclamation.svg
+    # - assets/icons/hand_rock.svg
+    # - assets/icons/knapsack.svg
+    # - assets/icons/riposte.svg
+    # - assets/icons/scroll_quill.svg
+    # - assets/icons/swap_bag.svg
+    # - assets/icons/coin_stack.svg
+    # - assets/icons/dumbbell.svg
+    # - assets/icons/quill.svg
+    # - assets/icons/swords.svg
 
     #  Stat Icons
-    - assets/icons/stats/stat_cha.svg
-    - assets/icons/stats/stat_con.svg
-    - assets/icons/stats/stat_dex.svg
-    - assets/icons/stats/stat_int.svg
-    - assets/icons/stats/stat_str.svg
-    - assets/icons/stats/stat_wis.svg
+    # - assets/icons/stats/stat_cha.svg
+    # - assets/icons/stats/stat_con.svg
+    # - assets/icons/stats/stat_dex.svg
+    # - assets/icons/stats/stat_int.svg
+    # - assets/icons/stats/stat_str.svg
+    # - assets/icons/stats/stat_wis.svg
 
     # Dice icons
-    - assets/icons/dice/dice_d4.svg
-    - assets/icons/dice/dice_d6.svg
-    - assets/icons/dice/dice_d8.svg
-    - assets/icons/dice/dice_d10.svg
-    - assets/icons/dice/dice_d12.svg
-    - assets/icons/dice/dice_d20.svg
+    # - assets/icons/dice/dice_d4.svg
+    # - assets/icons/dice/dice_d6.svg
+    # - assets/icons/dice/dice_d8.svg
+    # - assets/icons/dice/dice_d10.svg
+    # - assets/icons/dice/dice_d12.svg
+    # - assets/icons/dice/dice_d20.svg
 
     # Images
     - assets/images/logo.png

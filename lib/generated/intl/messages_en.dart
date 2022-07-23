@@ -391,6 +391,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "about": MessageLookupByLibrary.simpleMessage("About"),
         "aboutAuthor": MessageLookupByLibrary.simpleMessage("Chen Asraf"),
         "aboutCopyright": m2,
+        "aboutIconCredits":
+            MessageLookupByLibrary.simpleMessage("Icon Credits"),
         "aboutJoinDiscord":
             MessageLookupByLibrary.simpleMessage("Join Discord"),
         "aboutJoinDiscordSubtitle": MessageLookupByLibrary.simpleMessage(
@@ -399,6 +401,8 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Send Feedback"),
         "aboutSendFeedbackSubtitle": MessageLookupByLibrary.simpleMessage(
             "We reply more promptly through Discord, but you can send us feedback, bug reports or suggestions about the app directly here as an alternative."),
+        "aboutSpecialThanks":
+            MessageLookupByLibrary.simpleMessage("Special Thanks"),
         "aboutTitle": MessageLookupByLibrary.simpleMessage("About"),
         "aboutVersion": m3,
         "account": MessageLookupByLibrary.simpleMessage("Account"),
@@ -410,12 +414,16 @@ class MessageLookup extends MessageLookupByLibrary {
             "Enter your public display name"),
         "accountChangeDisplayNameLabel":
             MessageLookupByLibrary.simpleMessage("Display Name"),
+        "accountChangeDisplayNameSuccess": MessageLookupByLibrary.simpleMessage(
+            "Display name changed successfully"),
         "accountChangeDisplayNameTitle":
             MessageLookupByLibrary.simpleMessage("Change Display Name"),
         "accountChangeEmailHint": MessageLookupByLibrary.simpleMessage(
             "Enter your new email address"),
         "accountChangeEmailLabel":
             MessageLookupByLibrary.simpleMessage("Email Address"),
+        "accountChangeEmailSuccess": MessageLookupByLibrary.simpleMessage(
+            "Email address changed successfully"),
         "accountChangeEmailTitle":
             MessageLookupByLibrary.simpleMessage("Change Email Address"),
         "accountChangeImageSubtitle":
@@ -433,6 +441,8 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("New Password"),
         "accountChangePasswordSubtitle":
             MessageLookupByLibrary.simpleMessage("Change your password"),
+        "accountChangePasswordSuccess": MessageLookupByLibrary.simpleMessage(
+            "Password changed successfully"),
         "accountChangePasswordTitle":
             MessageLookupByLibrary.simpleMessage("Change Password"),
         "actionSummaryChipCoins": m4,
@@ -816,6 +826,10 @@ class MessageLookup extends MessageLookupByLibrary {
         "notes": MessageLookupByLibrary.simpleMessage("Notes"),
         "notesWithCount": m76,
         "ok": MessageLookupByLibrary.simpleMessage("OK"),
+        "passwordHideTooltip":
+            MessageLookupByLibrary.simpleMessage("Hide password"),
+        "passwordShowTooltip":
+            MessageLookupByLibrary.simpleMessage("Show password"),
         "pluralize": m77,
         "quickIconsItems": MessageLookupByLibrary.simpleMessage("Items"),
         "quickIconsMoves": MessageLookupByLibrary.simpleMessage("Moves"),

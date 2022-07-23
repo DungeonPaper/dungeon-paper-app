@@ -1,11 +1,8 @@
 import 'package:dungeon_paper/app/routes/app_pages.dart';
 import 'package:dungeon_paper/app/widgets/atoms/rainbow_text.dart';
 import 'package:dungeon_paper/core/dw_icons.dart';
-import 'package:dungeon_paper/core/utils/color_utils.dart';
-import 'package:dungeon_paper/core/utils/list_utils.dart';
 import 'package:dungeon_paper/generated/l10n.dart';
 import 'package:flutter/material.dart';
-
 import 'package:get/get.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -73,8 +70,7 @@ class AboutView extends GetView<AboutController> {
           ListTile(
             minLeadingWidth: 36,
             leading: const Icon(Icons.favorite),
-            // TODO intl
-            title: const Text('Special Thanks'),
+            title: Text(S.current.aboutSpecialThanks),
             subtitle: RainbowText(
               [
                 'dekelts',
@@ -84,9 +80,8 @@ class AboutView extends GetView<AboutController> {
           ),
           ListTile(
             minLeadingWidth: 36,
-            leading: SizedBox(width: 16),
-            // TODO intl
-            title: const Text('Icon credits'),
+            leading: const SizedBox(width: 16),
+            title: Text(S.current.aboutIconCredits),
             subtitle: Text(
               [
                 'ibrandify',

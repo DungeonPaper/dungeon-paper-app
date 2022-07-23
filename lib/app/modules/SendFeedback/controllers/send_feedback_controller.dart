@@ -21,8 +21,8 @@ class SendFeedbackController extends GetxController with UserServiceMixin {
     Get.back();
     Get.rawSnackbar(
       // TODO intl
-      message: 'We will review your feedback as soon as we can.',
       title: 'Feedback sent!',
+      message: 'We will review your feedback as soon as we can.',
     );
   }
 

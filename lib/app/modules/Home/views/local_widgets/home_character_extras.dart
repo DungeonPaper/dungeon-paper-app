@@ -150,7 +150,7 @@ class HomeCharacterExtras extends GetView<CharacterService> {
     ModelPages.openCharacterClassesList(
       character: controller.current,
       onAdd: (_cls) => controller.updateCharacter(
-        // TODO add a reset dialog to confirm + ask what to reset
+        // TODO add a reset dialog to confirm + ask what to reset: moves, spells, alignment, rac
         controller.current.copyWithInherited(
           characterClass: _cls,
         ),

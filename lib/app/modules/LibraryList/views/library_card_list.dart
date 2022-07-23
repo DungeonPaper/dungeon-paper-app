@@ -15,6 +15,7 @@ import 'package:dungeon_paper/app/widgets/forms/move_form.dart';
 import 'package:dungeon_paper/app/widgets/forms/note_form.dart';
 import 'package:dungeon_paper/app/widgets/forms/race_form.dart';
 import 'package:dungeon_paper/app/widgets/forms/spell_form.dart';
+import 'package:dungeon_paper/core/utils/builder_utils.dart';
 import 'package:dungeon_paper/core/utils/math_utils.dart';
 import 'package:dungeon_paper/generated/l10n.dart';
 import 'package:flutter/material.dart';
@@ -62,6 +63,13 @@ class LibraryCardList<T extends WithMeta, F extends EntityFilters<T>>
 
   @override
   Widget build(BuildContext context) {
+    final builder = ItemBuilder.builder(
+      itemBuilder: itemBuilder,
+      itemCount: itemCount,
+      leadingCount: _leadingCount(context),
+      leadingBuilder: _leadingBuilder,
+    );
+
     return Stack(
       children: [
         Positioned.fill(
@@ -72,11 +80,9 @@ class LibraryCardList<T extends WithMeta, F extends EntityFilters<T>>
                   const EdgeInsets.all(8).copyWith(top: 0, bottom: controller.selectable ? 80 : 4),
               itemBuilder: (context, index) => Padding(
                 padding: const EdgeInsets.only(bottom: 8),
-                child: index < _leadingCount
-                    ? _leading(context).elementAt(index)
-                    : itemBuilder(context, index - _leadingCount),
+                child: builder.itemBuilder(context, index),
               ),
-              itemCount: itemCount + _leadingCount,
+              itemCount: builder.itemCount,
             ),
           ),
         ),
@@ -89,59 +95,57 @@ class LibraryCardList<T extends WithMeta, F extends EntityFilters<T>>
     );
   }
 
+  Widget _leadingBuilder(BuildContext context, int index) {
+    return _leading(context).elementAt(index).call();
+  }
+
   /// **Make sure to keep in sync with _leading**
-  int get _leadingCount => sum([
-        1,
-        if (itemCount == 0) 5,
-        if (onSave != null) ...[
-          1,
-          if (itemCount > 0) 1,
-        ],
-      ]);
+  int _leadingCount(BuildContext context) => _leading(context).length;
 
   /// **Make sure to keep in sync with _leadingCount**
-  List<Widget> _leading(BuildContext context) {
+  List<Widget Function()> _leading(BuildContext context) {
     final theme = Theme.of(context);
     final textTheme = theme.textTheme;
 
     return [
-      const SizedBox(height: 40),
+      () => const SizedBox(height: 40),
       if (itemCount == 0) ...[
-        const SizedBox(height: 32),
-        Text(
-          S.current.libraryListNoItemsFoundTitle(S.current.entityPlural(T)),
-          style: textTheme.headline6,
-          textAlign: TextAlign.center,
-        ),
-        const SizedBox(height: 8),
-        Center(
-          child: SizedBox(
-            width: 300,
-            child: Text(
-              filters.isEmpty
-                  ? S.current.libraryListNoItemsFoundSubtitleNoFilters(S.current.entityPlural(T))
-                  : S.current.libraryListNoItemsFoundSubtitleFilters(S.current.entityPlural(T)),
-              style: textTheme.subtitle1,
+        () => const SizedBox(height: 32),
+        () => Text(
+              S.current.libraryListNoItemsFoundTitle(S.current.entityPlural(T)),
+              style: textTheme.headline6,
               textAlign: TextAlign.center,
             ),
-          ),
-        ),
-        const SizedBox(height: 32),
+        () => const SizedBox(height: 8),
+        () => Center(
+              child: SizedBox(
+                width: 300,
+                child: Text(
+                  filters.isEmpty
+                      ? S.current
+                          .libraryListNoItemsFoundSubtitleNoFilters(S.current.entityPlural(T))
+                      : S.current.libraryListNoItemsFoundSubtitleFilters(S.current.entityPlural(T)),
+                  style: textTheme.subtitle1,
+                  textAlign: TextAlign.center,
+                ),
+              ),
+            ),
+        () => const SizedBox(height: 32),
       ],
       if (onSave != null) ...[
-        SizedBox(
-          height: 48,
-          child: ElevatedButton.icon(
-            style: ButtonThemes.primaryElevated(context),
-            onPressed: () => Get.toNamed(
-              Routes.editByType<T>(),
-              arguments: createPageArgsByType(extraData),
+        () => SizedBox(
+              height: 48,
+              child: ElevatedButton.icon(
+                style: ButtonThemes.primaryElevated(context),
+                onPressed: () => Get.toNamed(
+                  Routes.editByType<T>(),
+                  arguments: createPageArgsByType(extraData),
+                ),
+                label: Text(S.current.createGeneric(S.current.entity(T))),
+                icon: const Icon(Icons.add),
+              ),
             ),
-            label: Text(S.current.createGeneric(S.current.entity(T))),
-            icon: const Icon(Icons.add),
-          ),
-        ),
-        if (itemCount > 0) const Divider(height: 32),
+        if (itemCount > 0) () => const Divider(height: 32),
       ],
     ];
   }

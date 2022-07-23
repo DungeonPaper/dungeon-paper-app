@@ -1,5 +1,6 @@
 import 'package:dungeon_paper/app/data/models/meta.dart';
 import 'package:dungeon_paper/app/modules/Home/views/expanded_card_dialog_view.dart';
+import 'package:dungeon_paper/core/utils/builder_utils.dart';
 import 'package:dungeon_paper/core/utils/list_utils.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -31,9 +32,36 @@ class HorizontalCardListView<T extends WithMeta> extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     if (items.isEmpty) {
-      return Container();
+      return const SizedBox.shrink();
     }
     final displayedItems = enumerate(itemsObs.isEmpty ? items : itemsObs);
+
+    final builder = ItemBuilder.builder(
+      leadingCount: leading.length,
+      leadingBuilder: (context, index) => Padding(
+        padding: const EdgeInsets.only(right: 8),
+        child: SizedBox(
+          width: cardSize.width,
+          child: leading[index],
+        ),
+      ),
+      itemCount: displayedItems.length,
+      itemBuilder: (context, index) => Padding(
+        padding: EdgeInsets.only(right: index == displayedItems.length ? 0 : 8),
+        child: _buildCard(
+          context,
+          displayedItems.elementAt(index),
+        ),
+      ),
+      trailingCount: trailing.length,
+      trailingBuilder: (context, index) => Padding(
+        padding: const EdgeInsets.only(left: 8),
+        child: SizedBox(
+          width: cardSize.width,
+          child: trailing[index],
+        ),
+      ),
+    );
 
     return SizedBox(
       height: cardSize.height,
@@ -44,55 +72,8 @@ class HorizontalCardListView<T extends WithMeta> extends StatelessWidget {
         scrollDirection: Axis.horizontal,
         // itemExtent: 2,
         padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-        itemCount: leading.length + displayedItems.length + trailing.length,
-        itemBuilder: (context, index) => index < leading.length
-            ? Padding(
-                padding: const EdgeInsets.only(right: 8),
-                child: SizedBox(
-                  width: cardSize.width,
-                  child: leading[index],
-                ),
-              )
-            : index < leading.length + displayedItems.length
-                ? Padding(
-                    padding: EdgeInsets.only(right: index == displayedItems.length ? 0 : 8),
-                    child: _buildCard(
-                      context,
-                      displayedItems.elementAt(index - leading.length),
-                    ),
-                  )
-                : Padding(
-                    padding: const EdgeInsets.only(left: 8),
-                    child: SizedBox(
-                      width: cardSize.width,
-                      child: trailing[index - leading.length - displayedItems.length],
-                    ),
-                  ),
-        // children: [
-        //   ...leading.map(
-        //     (c) => Padding(
-        //       padding: const EdgeInsets.only(right: 8),
-        //       child: SizedBox(
-        //         width: cardSize.width,
-        //         child: c,
-        //       ),
-        //     ),
-        //   ),
-        //   for (final item in enumerate(displayedItems))
-        //     Padding(
-        //       padding: EdgeInsets.only(right: item.index == items.length - 1 ? 0 : 8),
-        //       child: _buildCard(context, item),
-        //     ),
-        //   ...trailing.map(
-        //     (c) => Padding(
-        //       padding: const EdgeInsets.only(left: 8),
-        //       child: SizedBox(
-        //         width: cardSize.width,
-        //         child: c,
-        //       ),
-        //     ),
-        //   ),
-        // ],
+        itemBuilder: builder.itemBuilder,
+        itemCount: builder.itemCount,
       ),
     );
   }

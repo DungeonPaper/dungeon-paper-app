@@ -1,3 +1,4 @@
+import 'package:dungeon_paper/generated/l10n.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -139,7 +140,7 @@ class _PasswordFieldState extends State<PasswordField> {
               iconSize: 16,
               splashColor: Colors.green.withOpacity(0.2),
               onPressed: _toggleObscureText,
-              // TODO add tooltip
+              tooltip: obscured ? S.current.passwordShowTooltip : S.current.passwordHideTooltip,
             ),
       ),
       keyboardType: widget.keyboardType,

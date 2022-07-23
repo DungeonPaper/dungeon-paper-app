@@ -3,7 +3,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'enums.dart';
 
 // TODO use createSorter
-int Function(T? date1, T? date2) dateComparator<T>({
+int Function(T? date1, T? date2) createSortByDate<T>({
   SortOrder order = SortOrder.asc,
   DateTime? Function(T? object)? parse,
 }) {

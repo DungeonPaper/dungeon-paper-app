@@ -520,23 +520,33 @@ class S {
     );
   }
 
-  /// `About`
-  String get aboutTitle {
+  /// `Icon Credits`
+  String get aboutIconCredits {
     return Intl.message(
-      'About',
-      name: 'aboutTitle',
+      'Icon Credits',
+      name: 'aboutIconCredits',
       desc: '',
       args: [],
     );
   }
 
-  /// `Version {version}`
-  String aboutVersion(Object version) {
+  /// `Join Discord`
+  String get aboutJoinDiscord {
     return Intl.message(
-      'Version $version',
-      name: 'aboutVersion',
+      'Join Discord',
+      name: 'aboutJoinDiscord',
       desc: '',
-      args: [version],
+      args: [],
+    );
+  }
+
+  /// `Join the Discord community to ask questions, get help, send feedback, or just chat with other players.`
+  String get aboutJoinDiscordSubtitle {
+    return Intl.message(
+      'Join the Discord community to ask questions, get help, send feedback, or just chat with other players.',
+      name: 'aboutJoinDiscordSubtitle',
+      desc: '',
+      args: [],
     );
   }
 
@@ -560,23 +570,33 @@ class S {
     );
   }
 
-  /// `Join Discord`
-  String get aboutJoinDiscord {
+  /// `Special Thanks`
+  String get aboutSpecialThanks {
     return Intl.message(
-      'Join Discord',
-      name: 'aboutJoinDiscord',
+      'Special Thanks',
+      name: 'aboutSpecialThanks',
       desc: '',
       args: [],
     );
   }
 
-  /// `Join the Discord community to ask questions, get help, send feedback, or just chat with other players.`
-  String get aboutJoinDiscordSubtitle {
+  /// `About`
+  String get aboutTitle {
     return Intl.message(
-      'Join the Discord community to ask questions, get help, send feedback, or just chat with other players.',
-      name: 'aboutJoinDiscordSubtitle',
+      'About',
+      name: 'aboutTitle',
       desc: '',
       args: [],
+    );
+  }
+
+  /// `Version {version}`
+  String aboutVersion(Object version) {
+    return Intl.message(
+      'Version $version',
+      name: 'aboutVersion',
+      desc: '',
+      args: [version],
     );
   }
 
@@ -630,6 +650,16 @@ class S {
     );
   }
 
+  /// `Display name changed successfully`
+  String get accountChangeDisplayNameSuccess {
+    return Intl.message(
+      'Display name changed successfully',
+      name: 'accountChangeDisplayNameSuccess',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `Change Display Name`
   String get accountChangeDisplayNameTitle {
     return Intl.message(
@@ -675,6 +705,16 @@ class S {
     return Intl.message(
       'Change your profile picture',
       name: 'accountChangeImageSubtitle',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Email address changed successfully`
+  String get accountChangeEmailSuccess {
+    return Intl.message(
+      'Email address changed successfully',
+      name: 'accountChangeEmailSuccess',
       desc: '',
       args: [],
     );
@@ -740,6 +780,16 @@ class S {
     );
   }
 
+  /// `Password changed successfully`
+  String get accountChangePasswordSuccess {
+    return Intl.message(
+      'Password changed successfully',
+      name: 'accountChangePasswordSuccess',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `Change Password`
   String get accountChangePasswordTitle {
     return Intl.message(
@@ -755,6 +805,16 @@ class S {
     return Intl.message(
       'Basic Moves',
       name: 'actionsBasicMoves',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Special Moves`
+  String get actionsSpecialMoves {
+    return Intl.message(
+      'Special Moves',
+      name: 'actionsSpecialMoves',
       desc: '',
       args: [],
     );
@@ -785,16 +845,6 @@ class S {
     return Intl.message(
       'Show',
       name: 'actionsViewVisibleLabel',
-      desc: '',
-      args: [],
-    );
-  }
-
-  /// `Special Moves`
-  String get actionsSpecialMoves {
-    return Intl.message(
-      'Special Moves',
-      name: 'actionsSpecialMoves',
       desc: '',
       args: [],
     );
@@ -1258,21 +1308,21 @@ class S {
     );
   }
 
-  /// `Debilities`
-  String get characterDebilitiesDialogTitle {
-    return Intl.message(
-      'Debilities',
-      name: 'characterDebilitiesDialogTitle',
-      desc: '',
-      args: [],
-    );
-  }
-
   /// `Debilities are temporary, negative conditions or states in which your character is in. When a stat is debilitated, it causes its modifier to be reduced by 1 until recovered.`
   String get characterDebilitiesDialogInfoText {
     return Intl.message(
       'Debilities are temporary, negative conditions or states in which your character is in. When a stat is debilitated, it causes its modifier to be reduced by 1 until recovered.',
       name: 'characterDebilitiesDialogInfoText',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Debilities`
+  String get characterDebilitiesDialogTitle {
+    return Intl.message(
+      'Debilities',
+      name: 'characterDebilitiesDialogTitle',
       desc: '',
       args: [],
     );
@@ -1864,21 +1914,21 @@ class S {
     );
   }
 
-  /// `Presets`
-  String get customRollButtonsUsePreset {
-    return Intl.message(
-      'Presets',
-      name: 'customRollButtonsUsePreset',
-      desc: '',
-      args: [],
-    );
-  }
-
   /// `Use Default`
   String get customRollButtonsUseDefault {
     return Intl.message(
       'Use Default',
       name: 'customRollButtonsUseDefault',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Presets`
+  String get customRollButtonsUsePreset {
+    return Intl.message(
+      'Presets',
+      name: 'customRollButtonsUsePreset',
       desc: '',
       args: [],
     );
@@ -3367,6 +3417,26 @@ class S {
     );
   }
 
+  /// `Hide password`
+  String get passwordHideTooltip {
+    return Intl.message(
+      'Hide password',
+      name: 'passwordHideTooltip',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Show password`
+  String get passwordShowTooltip {
+    return Intl.message(
+      'Show password',
+      name: 'passwordShowTooltip',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `{count, plural, one {One {singular}} other {{count} {plural}}}`
   String pluralize(num count, Object singular, Object plural) {
     return Intl.plural(
@@ -3679,16 +3749,6 @@ class S {
     );
   }
 
-  /// `Send App Feedback`
-  String get sendFeedbackTitle {
-    return Intl.message(
-      'Send App Feedback',
-      name: 'sendFeedbackTitle',
-      desc: '',
-      args: [],
-    );
-  }
-
   /// `Problem description`
   String get sendFeedbackBodyLabel {
     return Intl.message(
@@ -3704,6 +3764,16 @@ class S {
     return Intl.message(
       'Feedback title',
       name: 'sendFeedbackSendButton',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Send App Feedback`
+  String get sendFeedbackTitle {
+    return Intl.message(
+      'Send App Feedback',
+      name: 'sendFeedbackTitle',
       desc: '',
       args: [],
     );
@@ -4241,6 +4311,16 @@ class S {
     );
   }
 
+  /// `Reset bonds, flags & end of session questions after saving`
+  String get xpDialogResetSessionMarks {
+    return Intl.message(
+      'Reset bonds, flags & end of session questions after saving',
+      name: 'xpDialogResetSessionMarks',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `Mark Session XP`
   String get xpDialogTitle {
     return Intl.message(
@@ -4256,16 +4336,6 @@ class S {
     return Intl.message(
       'Update XP & Level',
       name: 'xpDialogTitleOverriding',
-      desc: '',
-      args: [],
-    );
-  }
-
-  /// `Reset bonds, flags & end of session questions after saving`
-  String get xpDialogResetSessionMarks {
-    return Intl.message(
-      'Reset bonds, flags & end of session questions after saving',
-      name: 'xpDialogResetSessionMarks',
       desc: '',
       args: [],
     );
