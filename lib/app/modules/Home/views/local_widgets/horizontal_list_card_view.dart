@@ -93,7 +93,7 @@ class HorizontalCardListView<T extends WithMeta> extends StatelessWidget {
               heroTag: null,
               builder: (context) =>
                   // ignore: unnecessary_null_comparison
-                  item.value != null && !item.isLast
+                  item.value != null && item.index < items.length
                       ? expandedCardBuilder(
                           context,
                           item.value,

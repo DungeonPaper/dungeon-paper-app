@@ -71,33 +71,42 @@ class HomeCharacterDynamicCards extends GetView<CharacterService> with LibrarySe
                 ),
               ),
               expandedCardBuilder: (context, note, index) => Obx(
-                () => NoteCard(
-                  maxContentHeight: maxContentHeight,
-                  expandable: false,
-                  initiallyExpanded: true,
-                  note: notes[index],
-                  actions: [
-                    EntityEditMenu(
-                      onEdit: () => ModelPages.openNotePage(
-                        note: notes[index],
-                        onSave: (note) => controller.updateCharacter(
-                          CharacterUtils.updateNotes(controller.current, [note]),
-                        ),
-                      ),
-                      onDelete: _delete(
-                        context,
-                        note,
-                        note.title,
-                        () => controller.updateCharacter(
-                          CharacterUtils.removeNotes(controller.current, [note]),
-                        ),
-                      ),
-                    ),
-                  ],
-                  onSave: (_note) => controller.updateCharacter(
-                    CharacterUtils.updateNotes(controller.current, [_note]),
-                  ),
-                ),
+                () {
+                  return notes.isNotEmpty && index < notes.length
+                      ? NoteCard(
+                          maxContentHeight: maxContentHeight,
+                          expandable: false,
+                          initiallyExpanded: true,
+                          note: notes[index],
+                          actions: [
+                            EntityEditMenu(
+                              onEdit: () => ModelPages.openNotePage(
+                                note: notes[index],
+                                onSave: (note) => controller.updateCharacter(
+                                  CharacterUtils.updateNotes(controller.current, [note]),
+                                ),
+                              ),
+                              onDelete: _delete(
+                                context,
+                                note,
+                                note.title,
+                                () => controller.updateCharacter(
+                                  CharacterUtils.removeNotes(controller.current, [note]),
+                                ),
+                              ),
+                            ),
+                          ],
+                          onSave: (_note) {
+                            controller.updateCharacter(
+                              CharacterUtils.updateNotes(controller.current, [_note]),
+                            );
+                            if (!_note.favorite) {
+                              Get.back();
+                            }
+                          },
+                        )
+                      : const SizedBox.shrink();
+                },
               ),
             ),
             //
@@ -158,34 +167,41 @@ class HomeCharacterDynamicCards extends GetView<CharacterService> with LibrarySe
                   ),
                 ),
                 expandedCardBuilder: (context, move, index) => Obx(
-                  () => MoveCard(
-                    maxContentHeight: maxContentHeight,
-                    expandable: false,
-                    initiallyExpanded: true,
-                    move: moves[index],
-                    abilityScores: controller.current.abilityScores,
-                    actions: [
-                      EntityEditMenu(
-                        onEdit: () => ModelPages.openMovePage(
-                          abilityScores: controller.current.abilityScores,
+                  () => moves.isNotEmpty && index < moves.length
+                      ? MoveCard(
+                          maxContentHeight: maxContentHeight,
+                          expandable: false,
+                          initiallyExpanded: true,
                           move: moves[index],
-                          onSave: (move) => library.upsertToCharacter([move],
-                              forkBehavior: ForkBehavior.increaseVersion),
-                        ),
-                        onDelete: _delete(
-                          context,
-                          move,
-                          move.name,
-                          () => controller.updateCharacter(
-                            CharacterUtils.removeMoves(controller.current, [move]),
-                          ),
-                        ),
-                      ),
-                    ],
-                    onSave: (_move) => controller.updateCharacter(
-                      CharacterUtils.updateMoves(controller.current, [_move]),
-                    ),
-                  ),
+                          abilityScores: controller.current.abilityScores,
+                          actions: [
+                            EntityEditMenu(
+                              onEdit: () => ModelPages.openMovePage(
+                                abilityScores: controller.current.abilityScores,
+                                move: moves[index],
+                                onSave: (move) => library.upsertToCharacter([move],
+                                    forkBehavior: ForkBehavior.increaseVersion),
+                              ),
+                              onDelete: _delete(
+                                context,
+                                move,
+                                move.name,
+                                () => controller.updateCharacter(
+                                  CharacterUtils.removeMoves(controller.current, [move]),
+                                ),
+                              ),
+                            ),
+                          ],
+                          onSave: (_move) {
+                            controller.updateCharacter(
+                              CharacterUtils.updateMoves(controller.current, [_move]),
+                            );
+                            if (!_move.favorite) {
+                              Get.back();
+                            }
+                          },
+                        )
+                      : const SizedBox.shrink(),
                 ),
                 leading: raceCardMini != null &&
                         controller.current.settings.racePosition == RacePosition.start
@@ -221,36 +237,43 @@ class HomeCharacterDynamicCards extends GetView<CharacterService> with LibrarySe
                 ),
               ),
               expandedCardBuilder: (context, spell, index) => Obx(
-                () => SpellCard(
-                  maxContentHeight: maxContentHeight,
-                  expandable: false,
-                  initiallyExpanded: true,
-                  spell: spells[index],
-                  abilityScores: controller.current.abilityScores,
-                  actions: [
-                    EntityEditMenu(
-                      onEdit: () => ModelPages.openSpellPage(
-                        abilityScores: controller.current.abilityScores,
-                        classKeys: spells[index].classKeys,
+                () => spells.isNotEmpty && index < spells.length
+                    ? SpellCard(
+                        maxContentHeight: maxContentHeight,
+                        expandable: false,
+                        initiallyExpanded: true,
                         spell: spells[index],
-                        onSave: (spell) => controller.updateCharacter(
-                          CharacterUtils.updateSpells(controller.current, [spell]),
-                        ),
-                      ),
-                      onDelete: _delete(
-                        context,
-                        spell,
-                        spell.name,
-                        () => controller.updateCharacter(
-                          CharacterUtils.removeSpells(controller.current, [spell]),
-                        ),
-                      ),
-                    ),
-                  ],
-                  onSave: (_spell) => controller.updateCharacter(
-                    CharacterUtils.updateSpells(controller.current, [_spell]),
-                  ),
-                ),
+                        abilityScores: controller.current.abilityScores,
+                        actions: [
+                          EntityEditMenu(
+                            onEdit: () => ModelPages.openSpellPage(
+                              abilityScores: controller.current.abilityScores,
+                              classKeys: spells[index].classKeys,
+                              spell: spells[index],
+                              onSave: (spell) => controller.updateCharacter(
+                                CharacterUtils.updateSpells(controller.current, [spell]),
+                              ),
+                            ),
+                            onDelete: _delete(
+                              context,
+                              spell,
+                              spell.name,
+                              () => controller.updateCharacter(
+                                CharacterUtils.removeSpells(controller.current, [spell]),
+                              ),
+                            ),
+                          ),
+                        ],
+                        onSave: (_spell) {
+                          controller.updateCharacter(
+                            CharacterUtils.updateSpells(controller.current, [_spell]),
+                          );
+                          if (!_spell.prepared) {
+                            Get.back();
+                          }
+                        },
+                      )
+                    : const SizedBox.shrink(),
               ),
             ),
             //
@@ -276,33 +299,40 @@ class HomeCharacterDynamicCards extends GetView<CharacterService> with LibrarySe
                 ),
               ),
               expandedCardBuilder: (context, item, index) => Obx(
-                () => ItemCard(
-                  maxContentHeight: maxContentHeight,
-                  expandable: false,
-                  initiallyExpanded: true,
-                  item: items[index],
-                  actions: [
-                    EntityEditMenu(
-                      onEdit: () => ModelPages.openItemPage(
+                () => items.isNotEmpty && index < items.length
+                    ? ItemCard(
+                        maxContentHeight: maxContentHeight,
+                        expandable: false,
+                        initiallyExpanded: true,
                         item: items[index],
-                        onSave: (item) => controller.updateCharacter(
-                          CharacterUtils.updateItems(controller.current, [item]),
-                        ),
-                      ),
-                      onDelete: _delete(
-                        context,
-                        item,
-                        item.name,
-                        () => controller.updateCharacter(
-                          CharacterUtils.removeItems(controller.current, [item]),
-                        ),
-                      ),
-                    ),
-                  ],
-                  onSave: (_item) => controller.updateCharacter(
-                    CharacterUtils.updateItems(controller.current, [_item]),
-                  ),
-                ),
+                        actions: [
+                          EntityEditMenu(
+                            onEdit: () => ModelPages.openItemPage(
+                              item: items[index],
+                              onSave: (item) => controller.updateCharacter(
+                                CharacterUtils.updateItems(controller.current, [item]),
+                              ),
+                            ),
+                            onDelete: _delete(
+                              context,
+                              item,
+                              item.name,
+                              () => controller.updateCharacter(
+                                CharacterUtils.removeItems(controller.current, [item]),
+                              ),
+                            ),
+                          ),
+                        ],
+                        onSave: (_item) {
+                          controller.updateCharacter(
+                            CharacterUtils.updateItems(controller.current, [_item]),
+                          );
+                          if (!_item.equipped) {
+                            Get.back();
+                          }
+                        },
+                      )
+                    : const SizedBox.shrink(),
               ),
             ),
           ]),
