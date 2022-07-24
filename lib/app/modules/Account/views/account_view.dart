@@ -125,14 +125,7 @@ class AccountView extends GetView<AccountController> {
         inputHint: S.current.accountChangeEmailHint,
         value: controller.user.email,
         validator: EmailAddressValidator().validator,
-        onSave: (email) {
-          // TODO move user data to new document
-          Get.rawSnackbar(message: S.current.accountChangeEmailSuccess);
-          controller.authService.fbUser.value!.updateEmail(email);
-          controller.userService.updateUser(
-            controller.user.copyWith(email: email),
-          );
-        },
+        onSave: controller.updateEmail,
       ),
     );
   }

@@ -1,5 +1,6 @@
 import 'package:dungeon_paper/app/data/services/user_service.dart';
 import 'package:dungeon_paper/core/http/api.dart';
+import 'package:dungeon_paper/generated/l10n.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -17,12 +18,12 @@ class SendFeedbackController extends GetxController with UserServiceMixin {
       email: user.isLoggedIn ? user.email : email.value.text,
       subject: title.value.text,
       body: body.value.text,
+      username: user.isLoggedIn ? user.username : null,
     );
     Get.back();
     Get.rawSnackbar(
-      // TODO intl
-      title: 'Feedback sent!',
-      message: 'We will review your feedback as soon as we can.',
+      title: S.current.sendFeedbackSuccessTitle,
+      message: S.current.sendFeedbackSuccessMessage,
     );
   }
 

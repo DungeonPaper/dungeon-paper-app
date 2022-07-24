@@ -11,6 +11,7 @@ import 'package:dungeon_paper/core/http/api.dart';
 import 'package:dungeon_paper/core/http/api_requests/migration.dart';
 import 'package:dungeon_paper/core/storage_handler/storage_handler.dart';
 import 'package:dungeon_paper/generated/l10n.dart';
+import 'package:email_validator/email_validator.dart';
 import 'package:firebase_auth/firebase_auth.dart' as fba;
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -41,21 +42,7 @@ class UserService extends GetxService
     StorageHandler.instance.setCollectionPrefix('Data/$email');
     final shouldLoadRepo = current.email != user.email;
     final dbUser = await StorageHandler.instance.firestoreGlobal.getDocument('Data', email!);
-    final needsMigration = dbUser == null;
-
-    if (needsMigration) {
-      final resp = await _migrateUser(user.email!);
-      if (resp == null) {
-        Get.rawSnackbar(title: S.current.errorUserOperationCanceled);
-        loadingService.loadingUser = false;
-        loadingService.afterFirstLoad = !loadingService.loadingCharacters;
-        return;
-      }
-      _current.value = resp;
-    } else {
-      _current.value = User.fromJson(dbUser);
-    }
-
+    await _setUserAfterMigration(user, dbUser);
     _registerUserListener();
     charService.registerCharacterListener();
 
@@ -126,6 +113,34 @@ class UserService extends GetxService
     final user = User.fromJson(data);
     _current.value = user;
     user.applySettings();
+  }
+
+  Future<void> _setUserAfterMigration(fba.User user, DocData? dbUser) async {
+    final needsMigration = dbUser == null;
+
+    if (needsMigration) {
+      final resp = await _migrateUser(user.email!);
+      if (resp == null) {
+        Get.rawSnackbar(title: S.current.errorUserOperationCanceled);
+        loadingService.loadingUser = false;
+        loadingService.afterFirstLoad = !loadingService.loadingCharacters;
+        return;
+      }
+      _current.value = resp;
+    } else {
+      _current.value = User.fromJson(dbUser);
+    }
+  }
+
+  updateEmail(String email) async {
+    if (email == current.email || email.trim().isEmpty) {
+      return;
+    }
+    assert(EmailValidator.validate(email));
+    final updatedUser = current.copyWith(email: email);
+    await authService.fbUser.value!.updateEmail(email);
+    await updateUser(updatedUser);
+    loadUserData(fba.FirebaseAuth.instance.currentUser!);
   }
 }
 

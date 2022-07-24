@@ -693,6 +693,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "errorNoSelectionGenericRequired": m45,
         "errorOnlyLetters":
             MessageLookupByLibrary.simpleMessage("Must contain letters only"),
+        "errorUpload": MessageLookupByLibrary.simpleMessage(
+            "Error while uploading photo. Try again later, or contact support using the \"About\" page."),
         "errorUserOperationCanceled":
             MessageLookupByLibrary.simpleMessage("Operation canceled"),
         "explanation": MessageLookupByLibrary.simpleMessage("Further details"),
@@ -870,6 +872,10 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Problem description"),
         "sendFeedbackSendButton":
             MessageLookupByLibrary.simpleMessage("Feedback title"),
+        "sendFeedbackSuccessMessage": MessageLookupByLibrary.simpleMessage(
+            "Thank you for your feedback! We will review your feedback as soon as we can."),
+        "sendFeedbackSuccessTitle":
+            MessageLookupByLibrary.simpleMessage("Feedback sent!"),
         "sendFeedbackTitle":
             MessageLookupByLibrary.simpleMessage("Send App Feedback"),
         "sendFeedbackTitleLabel":

@@ -1,5 +1,6 @@
 import 'dart:io' if (dart.library.html) 'dart:html';
 import 'package:dungeon_paper/app/data/services/user_service.dart';
+import 'package:dungeon_paper/generated/l10n.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:path/path.dart' as path;
 
@@ -94,18 +95,13 @@ Future<UploadResponse?> cropAndUploadPhoto(BuildContext context, UploadSettings 
   try {
     file = await _pickAndCrop(context);
     if (file == null) {
-      // TODO intl
-      Get.rawSnackbar(message: 'Canceled');
+      Get.rawSnackbar(message: S.current.errorUserOperationCanceled);
       settings.onCancel?.call();
       return null;
     }
     settings.onUploadFile?.call(file);
   } catch (e) {
-    // TODO intl
-    Get.rawSnackbar(
-      message:
-          'Error while uploading photo. Try again later, or contact support using the "About" page.',
-    );
+    Get.rawSnackbar(message: S.current.errorUpload);
     settings.onError?.call(e);
     return null;
   }

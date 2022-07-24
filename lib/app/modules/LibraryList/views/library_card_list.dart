@@ -16,7 +16,6 @@ import 'package:dungeon_paper/app/widgets/forms/note_form.dart';
 import 'package:dungeon_paper/app/widgets/forms/race_form.dart';
 import 'package:dungeon_paper/app/widgets/forms/spell_form.dart';
 import 'package:dungeon_paper/core/utils/builder_utils.dart';
-import 'package:dungeon_paper/core/utils/math_utils.dart';
 import 'package:dungeon_paper/generated/l10n.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';

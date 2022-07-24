@@ -21,6 +21,7 @@ class Requests {
     required String email,
     required String subject,
     required String body,
+    required String? username,
   }) async {
     final resp = await api.post(
       '/feedback',
@@ -28,6 +29,7 @@ class Requests {
         'email': email,
         'subject': subject,
         'body': body,
+        'username': username,
       },
     );
     debugPrint('sendFeedback: ${resp.body}');

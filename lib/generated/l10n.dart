@@ -690,6 +690,16 @@ class S {
     );
   }
 
+  /// `Email address changed successfully`
+  String get accountChangeEmailSuccess {
+    return Intl.message(
+      'Email address changed successfully',
+      name: 'accountChangeEmailSuccess',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `Change Email Address`
   String get accountChangeEmailTitle {
     return Intl.message(
@@ -705,16 +715,6 @@ class S {
     return Intl.message(
       'Change your profile picture',
       name: 'accountChangeImageSubtitle',
-      desc: '',
-      args: [],
-    );
-  }
-
-  /// `Email address changed successfully`
-  String get accountChangeEmailSuccess {
-    return Intl.message(
-      'Email address changed successfully',
-      name: 'accountChangeEmailSuccess',
       desc: '',
       args: [],
     );
@@ -2399,6 +2399,16 @@ class S {
     );
   }
 
+  /// `Error while uploading photo. Try again later, or contact support using the "About" page.`
+  String get errorUpload {
+    return Intl.message(
+      'Error while uploading photo. Try again later, or contact support using the "About" page.',
+      name: 'errorUpload',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `Operation canceled`
   String get errorUserOperationCanceled {
     return Intl.message(
@@ -3764,6 +3774,26 @@ class S {
     return Intl.message(
       'Feedback title',
       name: 'sendFeedbackSendButton',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Thank you for your feedback! We will review your feedback as soon as we can.`
+  String get sendFeedbackSuccessMessage {
+    return Intl.message(
+      'Thank you for your feedback! We will review your feedback as soon as we can.',
+      name: 'sendFeedbackSuccessMessage',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Feedback sent!`
+  String get sendFeedbackSuccessTitle {
+    return Intl.message(
+      'Feedback sent!',
+      name: 'sendFeedbackSuccessTitle',
       desc: '',
       args: [],
     );

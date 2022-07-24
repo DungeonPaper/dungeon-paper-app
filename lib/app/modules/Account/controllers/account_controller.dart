@@ -2,6 +2,9 @@ import 'package:dungeon_paper/app/data/services/auth_service.dart';
 import 'package:dungeon_paper/app/data/services/user_service.dart';
 import 'package:dungeon_paper/core/utils/upload_utils.dart';
 import 'package:dungeon_paper/core/utils/uuid.dart';
+import 'package:dungeon_paper/generated/l10n.dart';
+import 'package:email_validator/email_validator.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:image_cropper/image_cropper.dart';
@@ -9,15 +12,10 @@ import 'package:image_cropper/image_cropper.dart';
 class AccountController extends GetxController with UserServiceMixin, AuthServiceMixin {
   final uploading = false.obs;
 
-  // @override
-  // void onInit() {
-  //   super.onInit();
-  // }
-
-  // @override
-  // void onClose() {
-  //   super.onClose();
-  // }
+  void updateEmail(String email) async {
+    await userService.updateEmail(email);
+    Get.rawSnackbar(message: S.current.accountChangeEmailSuccess);
+  }
 
   void uploadPhoto(BuildContext context) {
     cropAndUploadPhoto(
