@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 class MenuButton<V> extends StatelessWidget {
   const MenuButton({
     Key? key,
-    required Iterable<MenuEntry<V>> items,
+    required Iterable<PopupMenuEntry<V>> items,
     this.initialValue,
     this.onCanceled,
     this.tooltip,
@@ -21,6 +21,7 @@ class MenuButton<V> extends StatelessWidget {
     this.enableFeedback,
     this.constraints,
     this.position = PopupMenuPosition.over,
+    this.onSelected,
   })  : _items = items,
         builder = null,
         super(key: key);
@@ -44,12 +45,14 @@ class MenuButton<V> extends StatelessWidget {
     this.enableFeedback,
     this.constraints,
     this.position = PopupMenuPosition.over,
+    this.onSelected,
   })  : _items = null,
         assert(builder != null),
         super(key: key);
 
-  final Iterable<MenuEntry<V>>? _items;
-  final Iterable<MenuEntry<V>> Function()? builder;
+  final Iterable<PopupMenuEntry<V>>? _items;
+  final Iterable<PopupMenuEntry<V>> Function()? builder;
+  final void Function(V value)? onSelected;
 
   /// The value of the menu item, if any, that should be highlighted when the menu opens.
   final V? initialValue;
@@ -171,17 +174,32 @@ class MenuButton<V> extends StatelessWidget {
     final items = (builder ?? () => _items!).call();
     assert(items.isNotEmpty);
 
-    return PopupMenuButton(
-      itemBuilder: (context) => items
-          .map(
-            (e) => PopupMenuItem<V>(
-              child: PopupMenuItemListTile(icon: e.icon, label: e.label),
-              value: e.value,
-              enabled: !e.disabled,
-            ),
-          )
-          .toList(),
-      onSelected: (key) => items.firstWhere((element) => element.value == key).onSelect?.call(),
+    return PopupMenuButton<V>(
+      itemBuilder: (context) => items.map(
+        (e) {
+          if (e is MenuEntry) {
+            final MenuEntry _e = e as MenuEntry;
+            return PopupMenuItem<V>(
+              child: PopupMenuItemListTile(icon: _e.icon, label: _e.label),
+              value: _e.value,
+              enabled: !_e.disabled,
+            );
+          } else {
+            return e;
+          }
+        },
+      ).toList(),
+      onSelected: (key) {
+        (items.firstWhere((element) {
+          if (element is MenuEntry) {
+            return (element as MenuEntry).value == key;
+          }
+          return false;
+        }) as MenuEntry?)
+            ?.onSelect
+            ?.call();
+        onSelected?.call(key);
+      },
       initialValue: initialValue,
       onCanceled: onCanceled,
       tooltip: tooltip,
@@ -202,20 +220,21 @@ class MenuButton<V> extends StatelessWidget {
   }
 }
 
-class MenuEntry<V> {
+class MenuEntry<V> extends PopupMenuItem<V> {
   final Widget label;
   final Widget? icon;
 
-  /// required to identify which entry is being selected
-  final V? value;
   final void Function()? onSelect;
   final bool disabled;
 
   MenuEntry({
+    super.key,
     required this.label,
     this.icon,
-    required this.value,
+    required super.value,
     required this.onSelect,
     this.disabled = false,
-  });
+  }) : super(
+          child: PopupMenuItemListTile(icon: icon, label: label),
+        );
 }

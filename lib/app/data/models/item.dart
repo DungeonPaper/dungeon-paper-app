@@ -110,6 +110,7 @@ class Item extends dw.Item with WithIcon implements WithMeta {
         '_meta': meta.toJson(),
         'amount': amount,
         'equipped': equipped,
+        'settings': settings.toJson(),
       };
 
   @override

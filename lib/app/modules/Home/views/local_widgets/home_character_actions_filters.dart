@@ -1,3 +1,4 @@
+import 'package:dungeon_paper/app/widgets/atoms/checklist_menu_entry.dart';
 import 'package:dungeon_paper/app/widgets/atoms/menu_button.dart';
 import 'package:dungeon_paper/generated/l10n.dart';
 import 'package:flutter/material.dart';
@@ -18,21 +19,15 @@ class HomeCharacterActionsFilters extends StatelessWidget {
       icon: const Icon(Icons.filter_list_alt),
       items: ['Move', 'Spell', 'Item']
           .map(
-            (type) => MenuEntry(
+            (type) => ChecklistMenuEntry(
               value: type,
-              icon: SizedBox(
-                width: 30,
-                child: Checkbox(
-                  value: !hidden.contains(type),
-                  onChanged: (show) {
-                    onUpdateHidden(!show!
-                        ? {...hidden, type}
-                        : {...hidden.where((element) => element != type)});
-                  },
-                ),
-              ),
+              checked: !hidden.contains(type),
+              onChanged: (show) {
+                onUpdateHidden(
+                  !show! ? {...hidden, type} : {...hidden.where((element) => element != type)},
+                );
+              },
               label: Expanded(child: Text(S.current.entityPlural(type))),
-              onSelect: _onSelected(type),
             ),
           )
           .toList(),

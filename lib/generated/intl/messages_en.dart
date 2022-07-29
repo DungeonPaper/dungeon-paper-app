@@ -789,6 +789,12 @@ class MessageLookup extends MessageLookupByLibrary {
         "importSuccessTitle":
             MessageLookupByLibrary.simpleMessage("Successful"),
         "itemAmountX": m61,
+        "itemSettingsCountArmor":
+            MessageLookupByLibrary.simpleMessage("Count Armor"),
+        "itemSettingsCountDamage":
+            MessageLookupByLibrary.simpleMessage("Count Damage"),
+        "itemSettingsCountWeight":
+            MessageLookupByLibrary.simpleMessage("Count Weight"),
         "items": MessageLookupByLibrary.simpleMessage("Items"),
         "itemsWithCount": m62,
         "level": MessageLookupByLibrary.simpleMessage("Level"),

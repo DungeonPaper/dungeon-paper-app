@@ -3049,6 +3049,36 @@ class S {
     );
   }
 
+  /// `Count Armor`
+  String get itemSettingsCountArmor {
+    return Intl.message(
+      'Count Armor',
+      name: 'itemSettingsCountArmor',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Count Damage`
+  String get itemSettingsCountDamage {
+    return Intl.message(
+      'Count Damage',
+      name: 'itemSettingsCountDamage',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Count Weight`
+  String get itemSettingsCountWeight {
+    return Intl.message(
+      'Count Weight',
+      name: 'itemSettingsCountWeight',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `Items`
   String get items {
     return Intl.message(

@@ -7,10 +7,14 @@ class EntityEditMenu extends StatelessWidget {
     Key? key,
     required this.onEdit,
     required this.onDelete,
+    this.leading = const [],
+    this.trailing = const [],
   }) : super(key: key);
 
   final void Function()? onEdit;
   final void Function()? onDelete;
+  final List<PopupMenuItem> leading;
+  final List<PopupMenuItem> trailing;
 
   @override
   Widget build(BuildContext context) {
@@ -27,7 +31,14 @@ class EntityEditMenu extends StatelessWidget {
           padding: EdgeInsets.all(8),
           child: Icon(Icons.more_vert),
         ),
-        items: [
+        items: <PopupMenuEntry>[
+          ...leading,
+          if (leading.isNotEmpty)
+            const PopupMenuDivider(
+                // thickness: 1,
+                // indent: 16,
+                // endIndent: 16,
+                ),
           if (onEdit != null)
             MenuEntry(
               value: 'edit',
@@ -48,6 +59,13 @@ class EntityEditMenu extends StatelessWidget {
               ),
               onSelect: onDelete!,
             ),
+          if (trailing.isNotEmpty)
+            const PopupMenuDivider(
+                // thickness: 1,
+                // indent: 16,
+                // endIndent: 16,
+                ),
+          ...trailing,
         ],
       ),
     );

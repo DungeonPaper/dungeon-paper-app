@@ -15,6 +15,7 @@ import 'package:dungeon_paper/app/modules/LibraryList/views/items_library_list_v
 import 'package:dungeon_paper/app/modules/LibraryList/views/moves_library_list_view.dart';
 import 'package:dungeon_paper/app/modules/LibraryList/views/spells_library_list_view.dart';
 import 'package:dungeon_paper/app/routes/app_pages.dart';
+import 'package:dungeon_paper/app/widgets/atoms/checklist_menu_entry.dart';
 import 'package:dungeon_paper/app/widgets/atoms/menu_button.dart';
 import 'package:dungeon_paper/app/widgets/cards/item_card.dart';
 import 'package:dungeon_paper/app/widgets/cards/move_card.dart';
@@ -231,6 +232,38 @@ class HomeCharacterActionsView extends GetView<CharacterService> {
               item: item,
               onSave: onSave(true),
             ),
+            leading: [
+              ChecklistMenuEntry(
+                value: 'countArmor',
+                checked: item.settings.countArmor,
+                label: Text(S.current.itemSettingsCountArmor),
+                onChanged: (value) => onSave(false)(
+                  item.copyWithInherited(
+                    settings: item.settings.copyWith(countArmor: value!),
+                  ),
+                ),
+              ),
+              ChecklistMenuEntry(
+                value: 'countDamage',
+                checked: item.settings.countDamage,
+                label: Text(S.current.itemSettingsCountDamage),
+                onChanged: (value) => onSave(false)(
+                  item.copyWithInherited(
+                    settings: item.settings.copyWith(countDamage: value!),
+                  ),
+                ),
+              ),
+              ChecklistMenuEntry(
+                value: 'countWeight',
+                checked: item.settings.countWeight,
+                label: Text(S.current.itemSettingsCountWeight),
+                onChanged: (value) => onSave(false)(
+                  item.copyWithInherited(
+                    settings: item.settings.copyWith(countWeight: value!),
+                  ),
+                ),
+              ),
+            ],
           ),
         ],
         onSave: onSave(false),

@@ -8,6 +8,7 @@ import 'package:dungeon_paper/app/data/services/character_service.dart';
 import 'package:dungeon_paper/app/data/services/library_service.dart';
 import 'package:dungeon_paper/app/model_utils/character_utils.dart';
 import 'package:dungeon_paper/app/model_utils/model_pages.dart';
+import 'package:dungeon_paper/app/widgets/atoms/checklist_menu_entry.dart';
 import 'package:dungeon_paper/app/widgets/cards/item_card.dart';
 import 'package:dungeon_paper/app/widgets/cards/item_card_mini.dart';
 import 'package:dungeon_paper/app/widgets/cards/move_card.dart';
@@ -321,6 +322,44 @@ class HomeCharacterDynamicCards extends GetView<CharacterService> with LibrarySe
                                 CharacterUtils.removeItems(controller.current, [item]),
                               ),
                             ),
+                            leading: [
+                              ChecklistMenuEntry(
+                                value: 'countArmor',
+                                checked: item.settings.countArmor,
+                                label: Text(S.current.itemSettingsCountArmor),
+                                onChanged: (value) => controller.updateCharacter(
+                                  CharacterUtils.updateItems(controller.current, [
+                                    item.copyWithInherited(
+                                      settings: item.settings.copyWith(countArmor: value!),
+                                    )
+                                  ]),
+                                ),
+                              ),
+                              ChecklistMenuEntry(
+                                value: 'countDamage',
+                                checked: item.settings.countDamage,
+                                label: Text(S.current.itemSettingsCountDamage),
+                                onChanged: (value) => controller.updateCharacter(
+                                  CharacterUtils.updateItems(controller.current, [
+                                    item.copyWithInherited(
+                                      settings: item.settings.copyWith(countDamage: value!),
+                                    )
+                                  ]),
+                                ),
+                              ),
+                              ChecklistMenuEntry(
+                                value: 'countWeight',
+                                checked: item.settings.countWeight,
+                                label: Text(S.current.itemSettingsCountWeight),
+                                onChanged: (value) => controller.updateCharacter(
+                                  CharacterUtils.updateItems(controller.current, [
+                                    item.copyWithInherited(
+                                      settings: item.settings.copyWith(countWeight: value!),
+                                    )
+                                  ]),
+                                ),
+                              ),
+                            ],
                           ),
                         ],
                         onSave: (_item) {
