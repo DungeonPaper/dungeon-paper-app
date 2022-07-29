@@ -25,11 +25,14 @@ import 'package:dungeon_paper/app/widgets/dialogs/confirm_delete_dialog.dart';
 import 'package:dungeon_paper/app/widgets/menus/entity_edit_menu.dart';
 import 'package:dungeon_paper/app/widgets/menus/group_sort_menu.dart';
 import 'package:dungeon_paper/app/widgets/molecules/categorized_list.dart';
+import 'package:dungeon_paper/core/utils/builder_utils.dart';
 import 'package:dungeon_paper/core/utils/list_utils.dart';
 import 'package:dungeon_paper/generated/l10n.dart';
 import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
+
+import 'local_widgets/home_character_actions_summary.dart';
 
 class HomeCharacterActionsView extends GetView<CharacterService> {
   const HomeCharacterActionsView({Key? key}) : super(key: key);
@@ -38,28 +41,35 @@ class HomeCharacterActionsView extends GetView<CharacterService> {
 
   @override
   Widget build(BuildContext context) {
+    final builder = ItemBuilder.builder(
+      leadingBuilder: (context, index) => const HomeCharacterActionsSummary(),
+      leadingCount: 1,
+      itemBuilder: (context, index) {
+        switch (char.actionCategories.elementAt(index)) {
+          case 'Move':
+            return movesList ?? const SizedBox.shrink();
+          case 'Spell':
+            return spellsList ?? const SizedBox.shrink();
+          case 'Item':
+            return itemsList ?? const SizedBox.shrink();
+        }
+
+        return const SizedBox.shrink();
+      },
+      itemCount: char.actionCategories.length,
+    );
     return PageStorage(
       bucket: PageStorageBucket(),
-      child: Obx(() {
-        if (controller.maybeCurrent == null) {
-          return Container();
-        }
-        return ListView.builder(
-          padding: const EdgeInsets.only(bottom: 16),
-          itemBuilder: (context, index) {
-            switch (char.actionCategories.elementAt(index)) {
-              case 'Move':
-                return movesList ?? const SizedBox.shrink();
-              case 'Spell':
-                return spellsList ?? const SizedBox.shrink();
-              case 'Item':
-                return itemsList ?? const SizedBox.shrink();
-            }
-            return const SizedBox.shrink();
-          },
-          itemCount: char.actionCategories.length,
-        );
-      }),
+      child: Obx(
+        () {
+          if (controller.maybeCurrent == null) {
+            return Container();
+          }
+          return builder.createListView(
+            padding: const EdgeInsets.only(bottom: 16),
+          );
+        },
+      ),
     );
   }
 

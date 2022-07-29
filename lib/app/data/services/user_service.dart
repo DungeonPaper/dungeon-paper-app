@@ -132,7 +132,7 @@ class UserService extends GetxService
     }
   }
 
-  updateEmail(String email) async {
+  Future<void> updateEmail(String email) async {
     if (email == current.email || email.trim().isEmpty) {
       return;
     }

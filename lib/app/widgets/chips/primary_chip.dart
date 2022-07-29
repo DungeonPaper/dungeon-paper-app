@@ -12,6 +12,7 @@ class PrimaryChip extends StatelessWidget {
     this.isEnabled,
     this.backgroundColor,
     this.tooltip,
+    this.deleteButtonTooltip,
   }) : super(key: key);
 
   final String label;
@@ -22,6 +23,7 @@ class PrimaryChip extends StatelessWidget {
   final Color? backgroundColor;
   final bool? isEnabled;
   final String? tooltip;
+  final String? deleteButtonTooltip;
 
   @override
   Widget build(BuildContext context) {
@@ -61,6 +63,7 @@ class PrimaryChip extends StatelessWidget {
       onDeleted: onDeleted,
       onPressed: onPressed,
       tooltip: tooltip,
+      deleteButtonTooltipMessage: deleteButtonTooltip,
     );
   }
 }

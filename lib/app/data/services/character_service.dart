@@ -88,10 +88,19 @@ class CharacterService extends GetxService with LoadingServiceMixin, UserService
     final dynamicTheme = DynamicTheme.of(Get.context!)!;
     final currentTheme = dynamicTheme.themeId;
     final newTheme = character.getCurrentTheme(user);
-    if (currentTheme != newTheme) {
-      debugPrint('switching to theme ${character.getCurrentTheme(user)}');
-      dynamicTheme.setTheme(newTheme);
+    if (currentTheme == newTheme) {
+      return;
     }
+
+    debugPrint('switching to theme ${character.getCurrentTheme(user)}');
+
+    _setTheme(newTheme);
+  }
+
+  void _setTheme(int newTheme) {
+    final dynamicTheme = DynamicTheme.of(Get.context!)!;
+    dynamicTheme.setTheme(newTheme);
+    // SystemChrome.setSystemUIOverlayStyle(getUiOverlayStyleFor(AppThemes.getTheme(newTheme)));
   }
 
   void charsListener(List<DocData> json) {

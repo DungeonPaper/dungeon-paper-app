@@ -82,10 +82,13 @@ class _FiltersWidgetsBuilder<F extends EntityFilters> extends StatelessWidget {
       icon: const Icon(Icons.filter_list_alt, size: 20),
       label: filters.activeFilterCount.toString(),
       // visualDensity: VisualDensity.compact,
-      onDeleted: () {
-        onChange(emptyFilters);
-        filters.controller.add(emptyFilters);
-      },
+      onDeleted: filters.activeFilterCount > 0
+          ? () {
+              onChange(emptyFilters);
+              filters.controller.add(emptyFilters);
+            }
+          : null,
+      deleteButtonTooltip: S.current.libraryListNoItemsFoundClearFiltersButton,
       onPressed: () => showPopover(
         context: context,
         height: max(

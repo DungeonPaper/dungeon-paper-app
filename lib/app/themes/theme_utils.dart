@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 import 'colors.dart';
 
@@ -97,6 +98,7 @@ ThemeData createTheme(
       foregroundColor: base.colorScheme.onSurface,
       elevation: 0,
       centerTitle: true,
+      systemOverlayStyle: getUiOverlayStyleFor(base),
     ),
     checkboxTheme: base.checkboxTheme.copyWith(
       fillColor: MaterialStateProperty.resolveWith((states) => colorScheme.secondary),
@@ -141,3 +143,6 @@ ThemeData createTheme(
 
 Brightness getCurrentPlatformBrightness() =>
     MediaQueryData.fromWindow(WidgetsBinding.instance.window).platformBrightness;
+
+SystemUiOverlayStyle getUiOverlayStyleFor(ThemeData theme) =>
+    theme.brightness == Brightness.light ? SystemUiOverlayStyle.dark : SystemUiOverlayStyle.light;
