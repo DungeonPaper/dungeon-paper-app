@@ -33,10 +33,4 @@ class HomeCharacterActionsFilters extends StatelessWidget {
           .toList(),
     );
   }
-
-  void Function() _onSelected(type) => () => onUpdateHidden(
-        !hidden.contains(type)
-            ? {...hidden, type}
-            : {...hidden.where((element) => element != type)},
-      );
 }
