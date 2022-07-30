@@ -394,13 +394,14 @@ class MessageLookup extends MessageLookupByLibrary {
         "aboutIconCredits":
             MessageLookupByLibrary.simpleMessage("Icon Credits"),
         "aboutJoinDiscord":
-            MessageLookupByLibrary.simpleMessage("Join Discord"),
+            MessageLookupByLibrary.simpleMessage("Join Our Discord"),
         "aboutJoinDiscordSubtitle": MessageLookupByLibrary.simpleMessage(
             "Join the Discord community to ask questions, get help, send feedback, or just chat with other players."),
         "aboutSendFeedback":
             MessageLookupByLibrary.simpleMessage("Send Feedback"),
         "aboutSendFeedbackSubtitle": MessageLookupByLibrary.simpleMessage(
             "We reply more promptly through Discord, but you can send us feedback, bug reports or suggestions about the app directly here as an alternative."),
+        "aboutSocialLinks": MessageLookupByLibrary.simpleMessage("Links"),
         "aboutSpecialThanks":
             MessageLookupByLibrary.simpleMessage("Special Thanks"),
         "aboutTitle": MessageLookupByLibrary.simpleMessage("About"),
@@ -929,6 +930,12 @@ class MessageLookup extends MessageLookupByLibrary {
         "signupUsernameValidation": m90,
         "signupUsernameValidationPattern": MessageLookupByLibrary.simpleMessage(
             "Username must only contain letters, numbers, dashes and underscores"),
+        "socialApple": MessageLookupByLibrary.simpleMessage("App Store"),
+        "socialDiscord": MessageLookupByLibrary.simpleMessage("Discord"),
+        "socialFacebook": MessageLookupByLibrary.simpleMessage("Facebook"),
+        "socialGitHub": MessageLookupByLibrary.simpleMessage("GitHub"),
+        "socialGoogle": MessageLookupByLibrary.simpleMessage("Play Store"),
+        "socialTwitter": MessageLookupByLibrary.simpleMessage("Twitter"),
         "sortMoveDown": MessageLookupByLibrary.simpleMessage("Move down"),
         "sortMoveUp": MessageLookupByLibrary.simpleMessage("Move up"),
         "specialDice": MessageLookupByLibrary.simpleMessage("Special Dice"),

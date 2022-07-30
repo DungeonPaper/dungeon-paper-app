@@ -98,7 +98,7 @@ ThemeData createTheme(
       foregroundColor: base.colorScheme.onSurface,
       elevation: 0,
       centerTitle: true,
-      systemOverlayStyle: getUiOverlayStyleFor(base),
+      systemOverlayStyle: getUiOverlayStyleFor(base).copyWith(statusBarColor: Colors.transparent),
     ),
     checkboxTheme: base.checkboxTheme.copyWith(
       fillColor: MaterialStateProperty.resolveWith((states) => colorScheme.secondary),

@@ -530,10 +530,10 @@ class S {
     );
   }
 
-  /// `Join Discord`
+  /// `Join Our Discord`
   String get aboutJoinDiscord {
     return Intl.message(
-      'Join Discord',
+      'Join Our Discord',
       name: 'aboutJoinDiscord',
       desc: '',
       args: [],
@@ -565,6 +565,16 @@ class S {
     return Intl.message(
       'We reply more promptly through Discord, but you can send us feedback, bug reports or suggestions about the app directly here as an alternative.',
       name: 'aboutSendFeedbackSubtitle',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Links`
+  String get aboutSocialLinks {
+    return Intl.message(
+      'Links',
+      name: 'aboutSocialLinks',
       desc: '',
       args: [],
     );
@@ -4104,6 +4114,66 @@ class S {
     return Intl.message(
       'Username must only contain letters, numbers, dashes and underscores',
       name: 'signupUsernameValidationPattern',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Twitter`
+  String get socialTwitter {
+    return Intl.message(
+      'Twitter',
+      name: 'socialTwitter',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Facebook`
+  String get socialFacebook {
+    return Intl.message(
+      'Facebook',
+      name: 'socialFacebook',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Discord`
+  String get socialDiscord {
+    return Intl.message(
+      'Discord',
+      name: 'socialDiscord',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `GitHub`
+  String get socialGitHub {
+    return Intl.message(
+      'GitHub',
+      name: 'socialGitHub',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Play Store`
+  String get socialGoogle {
+    return Intl.message(
+      'Play Store',
+      name: 'socialGoogle',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `App Store`
+  String get socialApple {
+    return Intl.message(
+      'App Store',
+      name: 'socialApple',
       desc: '',
       args: [],
     );

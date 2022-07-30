@@ -1,6 +1,9 @@
 import 'dart:convert';
 
+import 'package:dungeon_paper/app/data/models/item.dart';
+import 'package:dungeon_paper/app/data/models/move.dart';
 import 'package:dungeon_paper/app/data/models/roll_button.dart';
+import 'package:dungeon_paper/app/data/models/spell.dart';
 import 'package:flutter/material.dart';
 
 enum RacePosition { start, end }
@@ -158,7 +161,7 @@ class CharacterSettings {
 }
 
 @immutable
-class OrderedCategoryList {
+class OrderedCategoryList<T> {
   const OrderedCategoryList({
     // required this.categories,
     required this.sortOrder,
@@ -167,8 +170,8 @@ class OrderedCategoryList {
   });
 
   // final Set<String> categories;
-  final Set<String> hidden;
-  final Set<String> sortOrder;
+  final Set<T> hidden;
+  final Set<T> sortOrder;
   final bool canHide;
 
   Map<String, dynamic> toJson() => {
@@ -182,8 +185,8 @@ class OrderedCategoryList {
       OrderedCategoryList.fromJson(json.decode(str));
 
   factory OrderedCategoryList.fromJson(Map<String, dynamic> json) => OrderedCategoryList(
-        hidden: Set<String>.from(json['hidden']),
-        sortOrder: Set<String>.from(json['sortOrder']),
+        hidden: Set<T>.from(json['hidden']),
+        sortOrder: Set<T>.from(json['sortOrder']),
         canHide: json['canHide'],
       );
 
@@ -199,7 +202,7 @@ class OrderedCategoryList {
         canHide: canHide ?? this.canHide,
       );
 
-  Set<String> getSorted([Set<String> all = const {}]) => <String>{
+  Set<T> getSorted([Set<T> all = const {}]) => <T>{
         ...sortOrder,
         ...all,
         // .toList()..sort(stringSorter(order: SortOrder.asc))
@@ -207,7 +210,8 @@ class OrderedCategoryList {
           .where(
             (cat) => !hidden.contains(cat),
           )
-          .toSet();
+          .toSet()
+          .cast<T>();
 
   @override
   bool operator ==(Object other) =>
@@ -232,7 +236,7 @@ class OrderedCategoryList {
 }
 
 @immutable
-class NoteCategoryList extends OrderedCategoryList {
+class NoteCategoryList extends OrderedCategoryList<String> {
   const NoteCategoryList({
     // required super.categories,
     required super.sortOrder,
@@ -260,7 +264,7 @@ class NoteCategoryList extends OrderedCategoryList {
 }
 
 @immutable
-class ActionCategoryList extends OrderedCategoryList {
+class ActionCategoryList extends OrderedCategoryList<Type> {
   const ActionCategoryList({
     // required super.categories,
     required super.sortOrder,
@@ -271,14 +275,14 @@ class ActionCategoryList extends OrderedCategoryList {
       ActionCategoryList.fromJson(json.decode(str));
 
   factory ActionCategoryList.fromJson(Map<String, dynamic> json) => ActionCategoryList(
-        sortOrder: Set<String>.from(json['sortOrder']),
-        hidden: Set<String>.from(json['hidden']),
+        sortOrder: Set<Type>.from((json['sortOrder'] ?? []).map((x) => _toType(x))),
+        hidden: Set<Type>.from((json['hidden'] ?? []).map((x) => _toType(x))),
       );
 
   ActionCategoryList copyWithInherited({
     // Set<String>? categories,
-    Set<String>? sortOrder,
-    Set<String>? hidden,
+    Set<Type>? sortOrder,
+    Set<Type>? hidden,
   }) =>
       ActionCategoryList(
         sortOrder: sortOrder ?? this.sortOrder,
@@ -286,8 +290,24 @@ class ActionCategoryList extends OrderedCategoryList {
       );
 
   @override
+  Set<Type> getSorted([Set<Type> all = const {}]) =>
+      super.getSorted().map((el) => _toType(el.toString())).toSet();
+
+  @override
   String get debugProperties => 'sortOrder: $sortOrder, hidden: $hidden';
 
   @override
   String toString() => 'ActionCategoryList($debugProperties)';
+
+  static Type _toType(String el) {
+    switch (el) {
+      case 'Move':
+        return Move;
+      case 'Spell':
+        return Spell;
+      case 'Item':
+        return Item;
+    }
+    throw TypeError();
+  }
 }

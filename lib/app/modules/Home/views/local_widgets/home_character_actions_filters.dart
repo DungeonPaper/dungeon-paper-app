@@ -1,3 +1,6 @@
+import 'package:dungeon_paper/app/data/models/item.dart';
+import 'package:dungeon_paper/app/data/models/move.dart';
+import 'package:dungeon_paper/app/data/models/spell.dart';
 import 'package:dungeon_paper/app/widgets/atoms/checklist_menu_entry.dart';
 import 'package:dungeon_paper/app/widgets/atoms/menu_button.dart';
 import 'package:dungeon_paper/generated/l10n.dart';
@@ -10,16 +13,16 @@ class HomeCharacterActionsFilters extends StatelessWidget {
     required this.onUpdateHidden,
   }) : super(key: key);
 
-  final Set<String> hidden;
-  final void Function(Set<String> filters) onUpdateHidden;
+  final Set<Type> hidden;
+  final void Function(Set<Type> filters) onUpdateHidden;
 
   @override
   Widget build(BuildContext context) {
-    return MenuButton<String>(
+    return MenuButton<Type>(
       icon: const Icon(Icons.filter_list_alt),
-      items: ['Move', 'Spell', 'Item']
+      items: [Move, Spell, Item]
           .map(
-            (type) => ChecklistMenuEntry(
+            (type) => ChecklistMenuEntry<Type>(
               value: type,
               checked: !hidden.contains(type),
               onChanged: (show) {

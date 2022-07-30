@@ -134,7 +134,7 @@ class Character with WithIcon implements WithMeta<Character, CharacterMeta> {
   Set<String> get noteCategories =>
       settings.noteCategories.getSorted(notes.map((note) => note.localizedCategory).toSet());
 
-  Set<String> get actionCategories => settings.actionCategories.getSorted(allActionCategories);
+  Set<Type> get actionCategories => settings.actionCategories.getSorted(allActionCategories);
 
   dw.Dice get damageDice => stats.damageDice ?? defaultDamageDice;
 
@@ -172,7 +172,7 @@ class Character with WithIcon implements WithMeta<Character, CharacterMeta> {
         ),
       ];
 
-  static const allActionCategories = {'Move', 'Spell', 'Item'};
+  static const allActionCategories = {Move, Spell, Item};
 
   @override
   Character copyWith({
