@@ -9,13 +9,13 @@ import 'package:dungeon_paper/app/modules/LibraryList/controllers/library_list_c
 import 'package:dungeon_paper/app/routes/app_pages.dart';
 import 'package:dungeon_paper/app/themes/button_themes.dart';
 import 'package:dungeon_paper/app/widgets/forms/character_class_form.dart';
-import 'package:dungeon_paper/app/widgets/forms/item_form_new.dart';
-import 'package:dungeon_paper/app/widgets/forms/library_entity_form.dart';
+import 'package:dungeon_paper/app/widgets/forms/item_form.dart';
 import 'package:dungeon_paper/app/widgets/forms/move_form.dart';
 import 'package:dungeon_paper/app/widgets/forms/note_form.dart';
 import 'package:dungeon_paper/app/widgets/forms/race_form.dart';
 import 'package:dungeon_paper/app/widgets/forms/spell_form.dart';
 import 'package:dungeon_paper/core/utils/builder_utils.dart';
+import 'package:dungeon_paper/core/utils/enums.dart';
 import 'package:dungeon_paper/generated/l10n.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -62,26 +62,23 @@ class LibraryCardList<T extends WithMeta, F extends EntityFilters<T>>
 
   @override
   Widget build(BuildContext context) {
-    final builder = ItemBuilder.builder(
-      itemBuilder: itemBuilder,
-      itemCount: itemCount,
-      leadingCount: _leadingCount(context),
-      leadingBuilder: _leadingBuilder,
-    );
-
     return Stack(
       children: [
         Positioned.fill(
           child: Padding(
             padding: const EdgeInsets.only(top: 32),
-            child: ListView.builder(
-              padding:
-                  const EdgeInsets.all(8).copyWith(top: 0, bottom: controller.selectable ? 80 : 4),
+            child: ItemBuilder.listViewBuilder(
+              padding: const EdgeInsets.all(8).copyWith(
+                top: 0,
+                bottom: controller.selectable ? 80 : 4,
+              ),
               itemBuilder: (context, index) => Padding(
                 padding: const EdgeInsets.only(bottom: 8),
-                child: builder.itemBuilder(context, index),
+                child: itemBuilder(context, index),
               ),
-              itemCount: builder.itemCount,
+              itemCount: itemCount,
+              leadingCount: _leadingCount(context),
+              leadingBuilder: _leadingBuilder,
             ),
           ),
         ),

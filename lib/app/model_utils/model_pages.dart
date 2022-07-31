@@ -19,12 +19,11 @@ import 'package:dungeon_paper/app/modules/LibraryList/views/spells_library_list_
 import 'package:dungeon_paper/app/routes/app_pages.dart';
 import 'package:dungeon_paper/app/widgets/forms/character_class_form.dart';
 import 'package:dungeon_paper/app/widgets/forms/item_form.dart';
-import 'package:dungeon_paper/app/widgets/forms/item_form_new.dart';
-import 'package:dungeon_paper/app/widgets/forms/library_entity_form.dart';
 import 'package:dungeon_paper/app/widgets/forms/move_form.dart';
 import 'package:dungeon_paper/app/widgets/forms/note_form.dart';
 import 'package:dungeon_paper/app/widgets/forms/race_form.dart';
 import 'package:dungeon_paper/app/widgets/forms/spell_form.dart';
+import 'package:dungeon_paper/core/utils/enums.dart';
 import 'package:dungeon_paper/core/utils/list_utils.dart';
 import 'package:dungeon_world_data/dungeon_world_data.dart' as dw;
 import 'package:get/get.dart';

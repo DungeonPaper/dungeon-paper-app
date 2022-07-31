@@ -7,12 +7,12 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:dungeon_world_data/dungeon_world_data.dart' as dw;
 
-class ItemFormNew extends GetView<ItemFormControllerNew> {
-  const ItemFormNew({Key? key}) : super(key: key);
+class ItemForm extends GetView<ItemFormController> {
+  const ItemForm({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return LibraryEntityFormNew<ItemFormControllerNew>(
+    return LibraryEntityForm<ItemFormController>(
       children: [
         () => TextFormField(
               controller: controller.name,
@@ -38,7 +38,7 @@ class ItemFormNew extends GetView<ItemFormControllerNew> {
   }
 }
 
-class ItemFormControllerNew extends LibraryEntityFormController<Item, ItemFormArgumentsNew> {
+class ItemFormController extends LibraryEntityFormController<Item, ItemFormArgumentsNew> {
   final _name = TextEditingController().obs;
   final _description = TextEditingController().obs;
   final _tags = ValueNotifier<List<dw.Tag>>([]).obs;

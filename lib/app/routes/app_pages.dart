@@ -1,5 +1,5 @@
 import 'package:dungeon_paper/app/widgets/forms/character_class_form.dart';
-import 'package:dungeon_paper/app/widgets/forms/item_form_new.dart';
+import 'package:dungeon_paper/app/widgets/forms/item_form.dart';
 import 'package:dungeon_paper/app/widgets/forms/move_form.dart';
 import 'package:dungeon_paper/app/widgets/forms/note_form.dart';
 import 'package:dungeon_paper/app/widgets/forms/race_form.dart';
@@ -65,7 +65,6 @@ import '../modules/StartingGearForm/bindings/starting_gear_form_binding.dart';
 import '../modules/StartingGearForm/views/starting_gear_form_view.dart';
 import '../modules/UniversalSearch/bindings/universal_search_binding.dart';
 import '../modules/UniversalSearch/views/universal_search_view.dart';
-import '../widgets/forms/library_entity_form.dart';
 import '../widgets/molecules/user_menu_popover.dart';
 import '../widgets/views/roll_dice_view.dart';
 import 'custom_transitions.dart';
@@ -150,7 +149,7 @@ class AppPages {
     ),
     GetPage(
       name: Routes.editMove,
-      page: () => const LibraryEntityForm<Move>(),
+      page: () => const MoveForm(),
       binding: LibraryFormBinding<Move>(),
       preventDuplicates: false,
     ),
@@ -162,7 +161,7 @@ class AppPages {
     ),
     GetPage(
       name: Routes.editSpell,
-      page: () => const LibraryEntityForm<Spell>(),
+      page: () => const SpellForm(),
       binding: LibraryFormBinding<Spell>(),
       preventDuplicates: false,
     ),
@@ -172,15 +171,9 @@ class AppPages {
       binding: LibraryListBinding(),
       preventDuplicates: false,
     ),
-    // GetPage(
-    //   name: Routes.editItem,
-    //   page: () => const LibraryEntityForm<Item>(),
-    //   binding: LibraryFormBinding<Item>(),
-    //   preventDuplicates: false,
-    // ),
     GetPage(
       name: Routes.editItem,
-      page: () => const ItemFormNew(),
+      page: () => const ItemForm(),
       binding: LibraryFormBinding<Item>(),
       preventDuplicates: false,
     ),
@@ -192,7 +185,7 @@ class AppPages {
     ),
     GetPage(
       name: Routes.editClass,
-      page: () => const LibraryEntityForm<CharacterClass>(),
+      page: () => const CharacterClassForm(),
       binding: LibraryFormBinding<CharacterClass>(),
       preventDuplicates: false,
     ),
@@ -204,13 +197,13 @@ class AppPages {
     ),
     GetPage(
       name: Routes.editRace,
-      page: () => const LibraryEntityForm<Race>(),
+      page: () => const RaceForm(),
       binding: LibraryFormBinding<Race>(),
       preventDuplicates: false,
     ),
     GetPage(
       name: Routes.editNote,
-      page: () => const LibraryEntityForm<Note>(),
+      page: () => const NoteForm(),
       binding: LibraryFormBinding<Note>(),
       preventDuplicates: false,
     ),

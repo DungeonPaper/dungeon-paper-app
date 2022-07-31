@@ -1,97 +1,88 @@
 import 'package:dungeon_paper/app/data/models/note.dart';
-import 'package:dungeon_paper/app/widgets/forms/dynamic_form/dynamic_form.dart';
-import 'package:dungeon_paper/app/widgets/forms/dynamic_form/form_input_data.dart';
+import 'package:dungeon_paper/app/data/services/repository_service.dart';
+import 'package:dungeon_paper/app/widgets/atoms/rich_text_field.dart';
 import 'package:dungeon_paper/app/widgets/forms/library_entity_form.dart';
+import 'package:dungeon_paper/app/widgets/molecules/tag_list_input.dart';
 import 'package:dungeon_paper/generated/l10n.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:dungeon_world_data/dungeon_world_data.dart' as dw;
 
-class NoteForm extends GetView<DynamicFormController<Note>> {
+class NoteForm extends GetView<NoteFormController> with RepositoryServiceMixin {
   const NoteForm({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return DynamicForm<Note>(
-      entity: controller.entity.value,
-      inputs: controller.inputs,
-      onChange: (d) => controller.setData(d, setDirty: true),
-      onReplace: (d) => controller.setFromEntity(d),
+    return LibraryEntityForm<NoteFormController>(
+      children: [
+        () => TextFormField(
+              decoration: InputDecoration(
+                label: Text(S.current.formGeneralNameGeneric(S.current.entity(Note))),
+              ),
+              textCapitalization: TextCapitalization.words,
+              controller: controller.title,
+            ),
+        () => RichTextField(
+              decoration: InputDecoration(
+                label: Text(S.current.formGeneralDescriptionGeneric(S.current.entity(Note))),
+              ),
+              maxLines: 10,
+              minLines: 5,
+              rich: true,
+              textCapitalization: TextCapitalization.sentences,
+              controller: controller.description,
+            ),
+        () => TagListInput(
+              controller: controller.tags,
+            ),
+      ],
     );
   }
 }
 
-class NoteFormController extends DynamicFormController<Note> {
+class NoteFormController extends LibraryEntityFormController<Note, NoteFormArguments> {
+  final _title = TextEditingController().obs;
+  final _description = TextEditingController().obs;
+  final _category = TextEditingController().obs;
+  final _dice = ValueNotifier<List<dw.Dice>>([]).obs;
+  final _tags = ValueNotifier<List<dw.Tag>>([]).obs;
+
+  TextEditingController get title => _title.value;
+  TextEditingController get description => _description.value;
+  TextEditingController get category => _description.value;
+  ValueNotifier<List<dw.Tag>> get tags => _tags.value;
+
   @override
-  final entity = Note.empty().obs;
+  List<Rx<ValueNotifier>> get fields => [_title, _description, _category, _dice, _tags];
 
   @override
   void onInit() {
-    final NoteFormArguments args = Get.arguments;
-    if (args.entity != null) {
-      entity.value = args.entity!;
-    }
     super.onInit();
+    title.text = args.entity?.title ?? '';
+    description.text = args.entity?.description ?? '';
+    tags.value = args.entity?.tags ?? [];
+    category.text = args.entity?.category ?? '';
   }
 
   @override
-  Note setFromEntity(Note note) => setData({
-        'meta': note.meta,
-        'title': note.title,
-        'description': note.description,
-        'category': note.category,
-        'tags': note.tags,
-      }, setDirty: false);
-
-  @override
-  Note setData(Map<String, dynamic> data, {required bool setDirty}) {
-    entity.value = entity.value.copyWith(
-      meta: data['meta'] ?? entity.value.meta,
-      title: data['title'],
-      description: data['description'],
-      category: data['category'],
-      tags: data['tags'],
-    );
-
-    return super.setData(data, setDirty: setDirty);
+  void updateFromEntity(Note entity) {
+    super.updateFromEntity(entity);
+    title.text = entity.title;
+    description.text = entity.description;
+    tags.value = entity.tags;
+    category.text = entity.category;
   }
 
   @override
-  void createInputs() {
-    inputs = <FormInputData>[
-      FormInputData<FormTextInputData>(
-        name: 'title',
-        data: FormTextInputData(
-          label: S.current.formGeneralTitleGeneric(S.current.entity(Note)),
-          textCapitalization: TextCapitalization.words,
-          text: entity.value.title,
-        ),
-      ),
-      FormInputData<FormTextInputData>(
-        name: 'category',
-        data: FormTextInputData(
-          label: S.current.formGeneralCategoryGeneric(S.current.entity(Note)),
-          textCapitalization: TextCapitalization.words,
-          text: entity.value.category,
-          hintText: S.current.noteNoCategory,
-        ),
-      ),
-      FormInputData<FormTextInputData>(
-        name: 'description',
-        data: FormTextInputData(
-          label: S.current.formGeneralDescriptionGeneric(S.current.entity(Note)),
-          maxLines: 20,
-          minLines: 5,
-          rich: true,
-          textCapitalization: TextCapitalization.sentences,
-          text: entity.value.description,
-        ),
-      ),
-      FormInputData<FormTagsInputData>(
-        name: 'tags',
-        data: FormTagsInputData(value: entity.value.tags),
-      ),
-    ];
-  }
+  Note toEntity() => super.toEntity().copyWithInherited(
+        title: title.text,
+        description: description.text,
+        tags: tags.value,
+        category: category.text,
+      );
+
+  @override
+  Note empty() => Note.empty();
 }
 
 class NoteFormArguments extends LibraryEntityFormArguments<Note> {

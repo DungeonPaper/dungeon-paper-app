@@ -99,14 +99,16 @@ class _EntityShareFormState<T extends WithMeta> extends State<EntityShareForm>
             if (syncStatus == SyncStatus.outOfSync) ...[
               ElevatedButton.icon(
                 onPressed: _updateOriginal,
-                icon: Icon(Icons.upload),
-                label: Text('Update Original'),
+                icon: const Icon(Icons.upload),
+                // TODO intl
+                label: const Text('Update Original'),
               ),
               const SizedBox(width: 8),
               ElevatedButton.icon(
                 onPressed: _revertChanges,
-                icon: Icon(Icons.refresh),
-                label: Text('Revert'),
+                icon: const Icon(Icons.refresh),
+                // TODO intl
+                label: const Text('Revert'),
               ),
             ],
           ],

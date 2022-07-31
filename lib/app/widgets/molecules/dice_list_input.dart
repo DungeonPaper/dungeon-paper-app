@@ -20,7 +20,7 @@ class DiceListInput extends StatefulWidget {
 
   final ValueNotifier<List<dw.Dice>>? controller;
   final AbilityScores abilityScores;
-  final List<ValueNotifier<String>> guessFrom;
+  final List<ValueNotifier<TextEditingValue>> guessFrom;
   final Color? labelColor;
   final int? maxCount;
   final Widget? label;
