@@ -17,6 +17,7 @@
     },
     {
       "label": "Build (pick platform)",
+      "detail": "deploy.dart --build -l (pick)",
       "type": "dart",
       "command": "dart",
       "args": [
@@ -28,22 +29,8 @@
       "problemMatcher": []
     },
     {
-      "label": "Build (pick platform) + Full-push to Android",
-      "type": "dart",
-      "command": "dart",
-      "args": [
-        "lib/core/task_runner/deploy.dart",
-        "--build",
-        "--bundle",
-        "-l",
-        "${input:platform}",
-        "--push",
-        "--install"
-      ],
-      "problemMatcher": []
-    },
-    {
       "label": "Build + Full-push (Android)",
+      "detail": "deploy.dart --build -l android --push --install",
       "type": "dart",
       "command": "dart",
       "args": [
@@ -53,6 +40,20 @@
         "android",
         "--push",
         "--install"
+      ],
+      "problemMatcher": []
+    },
+    {
+      "label": "Build App (all platforms)",
+      "detail": "deploy.dart -l all --build --bundle",
+      "type": "dart",
+      "command": "dart",
+      "args": [
+        "lib/core/task_runner/deploy.dart",
+        "-l",
+        "all",
+        "--build",
+        "--bundle",
       ],
       "problemMatcher": []
     },
@@ -117,6 +118,10 @@
         {
           "value": "ios",
           "label": "iOS",
+        },
+        {
+          "value": "macos",
+          "label": "macOS",
         },
         {
           "value": "web",

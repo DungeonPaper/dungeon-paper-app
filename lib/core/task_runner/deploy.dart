@@ -2,6 +2,8 @@
 
 import 'dart:io';
 
+import 'package:dungeon_paper/core/task_runner/tasks/macos_tasks.dart';
+
 import 'args.dart';
 import 'task.dart';
 import 'task_utils.dart';
@@ -45,6 +47,7 @@ void main(List<String> args) {
       testTask,
       android,
       iOS,
+      macOS,
       web,
     ],
   ).run();
