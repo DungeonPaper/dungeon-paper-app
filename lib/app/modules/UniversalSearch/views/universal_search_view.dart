@@ -39,6 +39,7 @@ class UniversalSearchView extends GetView<UniversalSearchController> {
           ),
           centerTitle: true,
           backgroundColor: Colors.transparent,
+          foregroundColor: Colors.white,
           automaticallyImplyLeading: true,
         ),
         body: Obx(
@@ -54,7 +55,11 @@ class UniversalSearchView extends GetView<UniversalSearchController> {
                       runSpacing: 0,
                       crossAxisAlignment: WrapCrossAlignment.center,
                       children: [
-                        Text(S.current.searchIn),
+                        Text(
+                          S.current.searchIn,
+                          style:
+                              Theme.of(context).textTheme.bodyMedium!.copyWith(color: Colors.white),
+                        ),
                         if (controller.hasCharacter)
                           _FilterChip(
                             label: S.current.entity(Character),
@@ -73,33 +78,34 @@ class UniversalSearchView extends GetView<UniversalSearchController> {
                   ),
                 ),
                 FutureBuilder<List<dynamic>>(
-                    future: controller.flatResults,
-                    builder: (context, value) {
-                      if (value.data == null) {
-                        return Center(
-                          child: Padding(
-                            padding: const EdgeInsets.only(top: 32),
-                            child: SizedBox.fromSize(
-                              size: const Size.square(50),
-                              child: CircularProgressIndicator(
-                                color: Theme.of(context).colorScheme.secondary,
-                              ),
+                  future: controller.flatResults,
+                  builder: (context, value) {
+                    if (value.data == null) {
+                      return Center(
+                        child: Padding(
+                          padding: const EdgeInsets.only(top: 32),
+                          child: SizedBox.fromSize(
+                            size: const Size.square(50),
+                            child: CircularProgressIndicator(
+                              color: Theme.of(context).colorScheme.secondary,
                             ),
-                          ),
-                        );
-                      }
-                      return Expanded(
-                        child: ListView.builder(
-                          padding: const EdgeInsets.all(12).copyWith(top: 0),
-                          itemCount: value.data!.length,
-                          itemBuilder: (context, index) => _CardByType(
-                            value.data![index],
-                            highlightWords: [controller.search.text.trim()],
-                            abilityScores: controller.char.abilityScores,
                           ),
                         ),
                       );
-                    }),
+                    }
+                    return Expanded(
+                      child: ListView.builder(
+                        padding: const EdgeInsets.all(12).copyWith(top: 0),
+                        itemCount: value.data!.length,
+                        itemBuilder: (context, index) => _CardByType(
+                          value.data![index],
+                          highlightWords: [controller.search.text.trim()],
+                          abilityScores: controller.char.abilityScores,
+                        ),
+                      ),
+                    );
+                  },
+                ),
               ],
             ),
           ),
@@ -124,7 +130,7 @@ class _CardByType extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final row = _buildRow();
+    final row = _buildRow(context);
     switch (row.runtimeType) {
       case Text:
         return _padded(row, const EdgeInsets.symmetric(vertical: 8));
@@ -132,7 +138,7 @@ class _CardByType extends StatelessWidget {
     return _padded(row);
   }
 
-  StatelessWidget _buildRow() {
+  StatelessWidget _buildRow(BuildContext context) {
     switch (result.runtimeType) {
       case Move:
         return MoveCard(
@@ -169,7 +175,10 @@ class _CardByType extends StatelessWidget {
           showClasses: true,
         );
       case SearchSeparator:
-        return Text(result.text);
+        return Text(
+          result.text,
+          style: Theme.of(context).textTheme.bodyMedium!.copyWith(color: Colors.white),
+        );
       default:
         assert(false, 'Unknown type: ${result.runtimeType}');
         return Container();
