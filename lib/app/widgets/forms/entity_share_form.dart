@@ -1,5 +1,6 @@
 import 'package:dungeon_paper/app/data/models/meta.dart';
 import 'package:dungeon_paper/app/data/services/repository_service.dart';
+import 'package:dungeon_paper/app/data/services/user_service.dart';
 import 'package:dungeon_paper/generated/l10n.dart';
 import 'package:flutter/material.dart';
 
@@ -23,7 +24,7 @@ enum SyncStatus {
 }
 
 class _EntityShareFormState<T extends WithMeta> extends State<EntityShareForm>
-    with RepositoryServiceMixin {
+    with RepositoryServiceMixin, UserServiceMixin {
   T? source;
 
   IconData? get syncStatusIcon => {
@@ -78,18 +79,45 @@ class _EntityShareFormState<T extends WithMeta> extends State<EntityShareForm>
 
   @override
   Widget build(BuildContext context) {
-    return Row(
+    return Column(
       children: [
-        Icon(syncStatusIcon, color: syncStatusColor(context), size: 16),
-        const SizedBox(width: 8),
-        Expanded(
-          child: Text(
-            syncStatusText,
-            style: TextStyle(color: syncStatusColor(context)),
-            textScaleFactor: 0.9,
-          ),
+        // Text(source?.meta.toRawJson() ?? 'no source'),
+        // const Divider(),
+        // Text(widget.entity.meta.toRawJson()),
+        // const Divider(),
+        Row(
+          children: [
+            Icon(syncStatusIcon, color: syncStatusColor(context), size: 16),
+            const SizedBox(width: 8),
+            Expanded(
+              child: Text(
+                syncStatusText,
+                style: TextStyle(color: syncStatusColor(context)),
+                textScaleFactor: 0.9,
+              ),
+            ),
+            if (syncStatus == SyncStatus.outOfSync) ...[
+              ElevatedButton.icon(
+                onPressed: _updateOriginal,
+                icon: Icon(Icons.upload),
+                label: Text('Update Original'),
+              ),
+              const SizedBox(width: 8),
+              ElevatedButton.icon(
+                onPressed: _revertChanges,
+                icon: Icon(Icons.refresh),
+                label: Text('Revert'),
+              ),
+            ],
+          ],
         ),
       ],
     );
+  }
+
+  void _updateOriginal() {}
+
+  void _revertChanges() {
+    widget.onChange(Meta.forkMeta(source!, user));
   }
 }

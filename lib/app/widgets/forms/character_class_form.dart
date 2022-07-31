@@ -66,6 +66,7 @@ class CharacterClassFormController extends DynamicFormController<CharacterClass>
 
   @override
   CharacterClass setFromEntity(CharacterClass characterClass) => setData({
+        'meta': characterClass.meta,
         'name': characterClass.name,
         'description': characterClass.description,
         'damageDice': characterClass.damageDice,
@@ -154,6 +155,6 @@ class CharacterClassFormArguments extends LibraryEntityFormArguments<CharacterCl
   CharacterClassFormArguments({
     required super.entity,
     required super.onSave,
-    required super.type,
+    required super.formContext,
   });
 }

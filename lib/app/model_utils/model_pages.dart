@@ -19,6 +19,7 @@ import 'package:dungeon_paper/app/modules/LibraryList/views/spells_library_list_
 import 'package:dungeon_paper/app/routes/app_pages.dart';
 import 'package:dungeon_paper/app/widgets/forms/character_class_form.dart';
 import 'package:dungeon_paper/app/widgets/forms/item_form.dart';
+import 'package:dungeon_paper/app/widgets/forms/item_form_new.dart';
 import 'package:dungeon_paper/app/widgets/forms/library_entity_form.dart';
 import 'package:dungeon_paper/app/widgets/forms/move_form.dart';
 import 'package:dungeon_paper/app/widgets/forms/note_form.dart';
@@ -134,7 +135,7 @@ class ModelPages {
           entity: move,
           abilityScores: abilityScores,
           onSave: onSave,
-          type: move == null ? FormContext.create : FormContext.edit,
+          formContext: move == null ? FormContext.create : FormContext.edit,
         ),
       );
 
@@ -149,7 +150,7 @@ class ModelPages {
           entity: race,
           abilityScores: abilityScores,
           onSave: onSave,
-          type: race == null ? FormContext.create : FormContext.edit,
+          formContext: race == null ? FormContext.create : FormContext.edit,
         ),
       );
 
@@ -188,7 +189,7 @@ class ModelPages {
           entity: spell,
           abilityScores: abilityScores,
           onSave: onSave,
-          type: spell == null ? FormContext.create : FormContext.edit,
+          formContext: spell == null ? FormContext.create : FormContext.edit,
         ),
       );
 
@@ -216,10 +217,10 @@ class ModelPages {
   }) =>
       Get.toNamed(
         Routes.editItem,
-        arguments: ItemFormArguments(
+        arguments: ItemFormArgumentsNew(
           entity: item,
           onSave: onSave,
-          type: item == null ? FormContext.create : FormContext.edit,
+          formContext: item == null ? FormContext.create : FormContext.edit,
         ),
       );
 
@@ -250,7 +251,7 @@ class ModelPages {
         arguments: NoteFormArguments(
           entity: note,
           onSave: onSave,
-          type: note == null ? FormContext.create : FormContext.edit,
+          formContext: note == null ? FormContext.create : FormContext.edit,
         ),
       );
 
@@ -283,7 +284,7 @@ class ModelPages {
         arguments: CharacterClassFormArguments(
           entity: characterClass,
           onSave: onSave,
-          type: characterClass == null ? FormContext.create : FormContext.edit,
+          formContext: characterClass == null ? FormContext.create : FormContext.edit,
         ),
       );
 }

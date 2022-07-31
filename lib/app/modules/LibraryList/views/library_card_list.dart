@@ -9,7 +9,7 @@ import 'package:dungeon_paper/app/modules/LibraryList/controllers/library_list_c
 import 'package:dungeon_paper/app/routes/app_pages.dart';
 import 'package:dungeon_paper/app/themes/button_themes.dart';
 import 'package:dungeon_paper/app/widgets/forms/character_class_form.dart';
-import 'package:dungeon_paper/app/widgets/forms/item_form.dart';
+import 'package:dungeon_paper/app/widgets/forms/item_form_new.dart';
 import 'package:dungeon_paper/app/widgets/forms/library_entity_form.dart';
 import 'package:dungeon_paper/app/widgets/forms/move_form.dart';
 import 'package:dungeon_paper/app/widgets/forms/note_form.dart';
@@ -156,39 +156,39 @@ class LibraryCardList<T extends WithMeta, F extends EntityFilters<T>>
           entity: null,
           abilityScores: extraData['abilityScores'],
           onSave: onSave! as void Function(Move move),
-          type: FormContext.create,
+          formContext: FormContext.create,
         );
       case Spell:
         return SpellFormArguments(
           entity: null,
           abilityScores: extraData['abilityScores'],
           onSave: onSave! as void Function(Spell spell),
-          type: FormContext.create,
+          formContext: FormContext.create,
         );
       case Item:
-        return ItemFormArguments(
+        return ItemFormArgumentsNew(
           entity: null,
           onSave: onSave! as void Function(Item item),
-          type: FormContext.create,
+          formContext: FormContext.create,
         );
       case Note:
         return NoteFormArguments(
           entity: null,
           onSave: onSave! as void Function(Note note),
-          type: FormContext.create,
+          formContext: FormContext.create,
         );
       case CharacterClass:
         return CharacterClassFormArguments(
           entity: null,
           onSave: onSave! as void Function(CharacterClass characterClass),
-          type: FormContext.create,
+          formContext: FormContext.create,
         );
       case Race:
         return RaceFormArguments(
           entity: null,
           abilityScores: extraData['abilityScores'],
           onSave: onSave! as void Function(Race race),
-          type: FormContext.create,
+          formContext: FormContext.create,
         );
     }
     throw TypeError();

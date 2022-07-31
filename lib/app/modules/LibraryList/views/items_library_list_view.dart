@@ -31,6 +31,7 @@ class ItemsLibraryListView extends GetView<LibraryListController<Item, ItemFilte
         item: data.item,
         showStar: false,
         highlightWords: data.highlightWords,
+        hideCount: true,
         actions: [
           EntityEditMenu(
             onEdit: data.onUpdate != null

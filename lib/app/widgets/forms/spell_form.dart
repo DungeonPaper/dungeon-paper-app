@@ -140,8 +140,8 @@ class SpellFormArguments extends LibraryEntityFormArguments<Spell> {
   SpellFormArguments({
     required super.entity,
     required super.onSave,
-    required super.type,
     required this.abilityScores,
     // required this.classKeys,
+    required super.formContext,
   });
 }

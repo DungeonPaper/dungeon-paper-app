@@ -65,7 +65,7 @@ class ItemBuilder {
           return children[index - leadingCount]();
         }
         // if (index >= trailingStartIndex) {
-        return trailing[index - childrenStartIndex]();
+        return trailing[index - trailingStartIndex]();
         // }
         // return const SizedBox.shrink();
         // return trailing[index - trailingStartIndex](context);

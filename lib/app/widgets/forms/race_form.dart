@@ -32,6 +32,7 @@ class RaceFormController extends DynamicFormController<Race> {
 
   @override
   Race setFromEntity(Race race) => setData({
+        'meta': race.meta,
         'name': race.name,
         'description': race.description,
         'explanation': race.explanation,
@@ -139,7 +140,7 @@ class RaceFormArguments extends LibraryEntityFormArguments<Race> {
   RaceFormArguments({
     required super.entity,
     required super.onSave,
-    required super.type,
     required this.abilityScores,
+    required super.formContext,
   });
 }

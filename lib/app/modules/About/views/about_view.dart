@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:dungeon_paper/app/routes/app_pages.dart';
 import 'package:dungeon_paper/app/widgets/atoms/rainbow_text.dart';
 import 'package:dungeon_paper/core/dw_icons.dart';
@@ -169,13 +171,14 @@ class _SocialButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final mediaQuery = MediaQuery.of(context);
     return ElevatedButton.icon(
       icon: icon,
       label: label,
       onPressed: () => launch(url),
       style: ElevatedButton.styleFrom(
         primary: color,
-        minimumSize: const Size(200, 48),
+        minimumSize: Size(min(200, (mediaQuery.size.width - 40) / 2), 48),
       ),
     );
   }

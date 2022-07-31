@@ -54,6 +54,7 @@ class MoveFormController extends DynamicFormController<Move> {
 
   @override
   Move setFromEntity(Move move) => setData({
+        'meta': move.meta,
         'name': move.name,
         'category': move.category,
         'description': move.description,
@@ -177,6 +178,6 @@ class MoveFormArguments extends LibraryEntityFormArguments<Move> {
     required super.entity,
     required this.abilityScores,
     required super.onSave,
-    required super.type,
+    required super.formContext,
   });
 }

@@ -290,6 +290,15 @@ class ActionCategoryList extends OrderedCategoryList<Type> {
       );
 
   @override
+  Map<String, dynamic> toJson() {
+    return {
+      ...super.toJson(),
+      'sortOrder': sortOrder.map((x) => x.toString()).toList(),
+      'hidden': hidden.map((x) => x.toString()).toList(),
+    };
+  }
+
+  @override
   Set<Type> getSorted([Set<Type> all = const {}]) =>
       super.getSorted().map((el) => _toType(el.toString())).toSet();
 

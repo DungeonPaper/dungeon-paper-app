@@ -9,12 +9,13 @@ import 'package:dungeon_paper/app/data/models/user.dart';
 import 'package:dungeon_paper/app/data/services/user_service.dart';
 import 'package:dungeon_paper/app/widgets/atoms/advanced_floating_action_button.dart';
 import 'package:dungeon_paper/app/widgets/atoms/confirm_exit_view.dart';
-import 'package:dungeon_paper/app/widgets/forms/item_form.dart';
+import 'package:dungeon_paper/app/widgets/forms/entity_share_form.dart';
 import 'package:dungeon_paper/app/widgets/forms/move_form.dart';
 import 'package:dungeon_paper/app/widgets/forms/note_form.dart';
 import 'package:dungeon_paper/app/widgets/forms/race_form.dart';
 import 'package:dungeon_paper/app/widgets/forms/spell_form.dart';
-import 'package:dungeon_paper/app/widgets/forms/dynamic_form/dynamic_form.dart';
+import 'package:dungeon_paper/core/utils/builder_utils.dart';
+import 'package:dungeon_paper/core/utils/list_utils.dart';
 import 'package:dungeon_paper/generated/l10n.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -26,10 +27,8 @@ enum FormContext {
   create,
 }
 
-class LibraryEntityForm<T extends WithMeta> extends GetView<DynamicFormController<T>> {
+class LibraryEntityForm<T extends WithMeta> extends GetView<LibraryEntityFormController> {
   const LibraryEntityForm({Key? key}) : super(key: key);
-
-  T get entity => controller.entity.value;
 
   @override
   Widget build(BuildContext context) {
@@ -40,12 +39,9 @@ class LibraryEntityForm<T extends WithMeta> extends GetView<DynamicFormControlle
           appBar: AppBar(
             title: title,
           ),
-          body: buildForm(context, entity),
+          body: buildForm(context),
           floatingActionButton: AdvancedFloatingActionButton.extended(
-            onPressed: () {
-              controller.onSave(entity);
-              Get.back();
-            },
+            onPressed: controller.onSave,
             label: Text(S.current.save),
             icon: const Icon(Icons.save),
           ),
@@ -57,24 +53,17 @@ class LibraryEntityForm<T extends WithMeta> extends GetView<DynamicFormControlle
   User get user => Get.find<UserService>().current;
 
   Widget get title => Text(
-        controller.type == FormContext.create
+        controller.args.formContext == FormContext.create
             ? S.current.addGeneric(S.current.entity(T))
             : S.current.editGeneric(S.current.entity(T)),
       );
 
-  void setEntity(dynamic item) {
-    controller.entity.value = item as T;
-    controller.dirty.value = true;
-  }
-
-  Widget buildForm(BuildContext context, T entity) {
+  Widget buildForm(BuildContext context) {
     switch (T) {
       case Move:
         return const MoveForm();
       case Spell:
         return const SpellForm();
-      case Item:
-        return const ItemForm();
       case Note:
         return const NoteForm();
       case CharacterClass:
@@ -87,14 +76,158 @@ class LibraryEntityForm<T extends WithMeta> extends GetView<DynamicFormControlle
   }
 }
 
+class LibraryEntityFormNew<T extends LibraryEntityFormController> extends GetView<T> {
+  const LibraryEntityFormNew({
+    Key? key,
+    required this.children,
+  }) : super(key: key);
+
+  final List<Widget Function()> children;
+
+  @override
+  Widget build(BuildContext context) {
+    return Obx(
+      () => ConfirmExitView(
+        dirty: controller.dirty.value,
+        child: Scaffold(
+          appBar: AppBar(
+            title: title,
+          ),
+          body: ItemBuilder.lazyListView(
+            padding: const EdgeInsets.all(16).copyWith(bottom: 80),
+            children: children,
+            trailing: [
+              () => const Divider(height: 64),
+              () => Obx(
+                    () => EntityShareForm(
+                      entity: controller.asEntity.value,
+                      onChange: controller.updateFromEntity,
+                    ),
+                  )
+            ],
+          ),
+          floatingActionButton: AdvancedFloatingActionButton.extended(
+            onPressed: controller.onSave,
+            label: Text(S.current.save),
+            icon: const Icon(Icons.save),
+          ),
+        ),
+      ),
+    );
+  }
+
+  User get user => Get.find<UserService>().current;
+
+  Widget get title => Text(
+        controller.args.formContext == FormContext.create
+            ? S.current.addGeneric(S.current.entity(controller.empty().runtimeType))
+            : S.current.editGeneric(S.current.entity(controller.empty().runtimeType)),
+      );
+}
+
+abstract class LibraryEntityFormController<T extends WithMeta,
+    Args extends LibraryEntityFormArguments> extends GetxController {
+  final dirty = false.obs;
+  late final Args args;
+  bool afterInit = false;
+  List<Rx<ValueNotifier>> get fields;
+  late final Rx<Meta> meta;
+  late final List<String> _initialValueCache;
+  late Rx<T> asEntity;
+
+  @override
+  @mustCallSuper
+  void onInit() {
+    assert(Get.arguments is LibraryEntityFormArguments<T>);
+    args = Get.arguments;
+    asEntity = Rx(args.entity as T? ?? empty());
+    meta = Rx(args.entity?.meta ?? _forkMeta());
+    _initialValueCache = List.generate(fields.length, (i) => '');
+
+    for (var field in enumerate(fields)) {
+      field.value.value.addListener(_fieldListener(field));
+    }
+    super.onInit();
+  }
+
+  void Function() _fieldListener(Enumerated<Rx<ValueNotifier<dynamic>>> field) {
+    return () {
+      final asStr = _toString(field.value.value.value);
+      final cached = _initialValueCache[field.index];
+      if (!afterInit) {
+        _initialValueCache[field.index] = asStr;
+      }
+      if (afterInit && asStr != cached) {
+        dirty.value = true;
+        meta.value = _forkMeta();
+      }
+      field.value.refresh();
+      asEntity.value = toEntity();
+    };
+  }
+
+  String _toString(Object object) {
+    if (object is TextEditingController) {
+      return object.text;
+    }
+    if (object is TextEditingValue) {
+      return object.text;
+    }
+    if (object is WithMeta) {
+      return object.key;
+    }
+    if (object is Iterable) {
+      return '[' + object.map((e) => _toString(e)).join(',') + ']';
+    }
+    return object.toString();
+  }
+
+  @override
+  void onReady() {
+    super.onReady();
+    afterInit = true;
+  }
+
+  @override
+  void onClose() {
+    for (var field in fields) {
+      field.value.dispose();
+      field.close();
+    }
+    super.onClose();
+  }
+
+  Meta _forkMeta() {
+    var item = args.entity ?? empty();
+    if (dirty.value) {
+      item = Meta.forkOrIncrease(item);
+    }
+    return item.meta;
+  }
+
+  T empty();
+  @protected
+  T toEntity() => (args.entity as T? ?? empty()).copyWithInherited(meta: meta.value);
+
+  @mustCallSuper
+  void updateFromEntity(T entity) {
+    meta.value = entity.meta;
+  }
+
+  void onSave() {
+    args.onSave(toEntity());
+    Get.back();
+  }
+}
+
 class LibraryEntityFormArguments<T extends WithMeta> {
   final void Function(T item) onSave;
-  final FormContext type;
   final T? entity;
+  final FormContext formContext;
 
   LibraryEntityFormArguments({
     required this.entity,
     required this.onSave,
-    required this.type,
+    required this.formContext,
   });
 }

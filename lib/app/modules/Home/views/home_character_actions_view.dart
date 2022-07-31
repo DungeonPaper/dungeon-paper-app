@@ -220,7 +220,13 @@ class HomeCharacterActionsView extends GetView<CharacterService> {
       list: char.items,
       route: Routes.items,
       addPageArguments: ({required onAdd}) => ItemLibraryListArguments(
-        onAdd: onAdd,
+        onAdd: (items) => onAdd(
+          items
+              .map(
+                (x) => x.copyWithInherited(amount: x.amount == 0 ? 1 : x.amount),
+              )
+              .toList(),
+        ),
         preSelections: char.items,
       ),
       cardBuilder: (item, {required onSave, required onDelete}) => ItemCard(

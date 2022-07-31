@@ -1,3 +1,9 @@
+import 'package:dungeon_paper/app/widgets/forms/character_class_form.dart';
+import 'package:dungeon_paper/app/widgets/forms/item_form_new.dart';
+import 'package:dungeon_paper/app/widgets/forms/move_form.dart';
+import 'package:dungeon_paper/app/widgets/forms/note_form.dart';
+import 'package:dungeon_paper/app/widgets/forms/race_form.dart';
+import 'package:dungeon_paper/app/widgets/forms/spell_form.dart';
 import 'package:flutter/widgets.dart';
 
 import 'package:get/get.dart';
@@ -166,9 +172,15 @@ class AppPages {
       binding: LibraryListBinding(),
       preventDuplicates: false,
     ),
+    // GetPage(
+    //   name: Routes.editItem,
+    //   page: () => const LibraryEntityForm<Item>(),
+    //   binding: LibraryFormBinding<Item>(),
+    //   preventDuplicates: false,
+    // ),
     GetPage(
       name: Routes.editItem,
-      page: () => const LibraryEntityForm<Item>(),
+      page: () => const ItemFormNew(),
       binding: LibraryFormBinding<Item>(),
       preventDuplicates: false,
     ),

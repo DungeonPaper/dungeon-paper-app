@@ -36,6 +36,17 @@ class DynamicFormState<T extends WithMeta> extends State<DynamicForm<T>> {
   late Map<String, dynamic> data;
 
   @override
+  void didUpdateWidget(covariant DynamicForm<T> oldWidget) {
+    if (widget.entity != oldWidget.entity) {
+      debugPrint('not equal:');
+      debugPrint('old: ${oldWidget.entity.meta.version}');
+      debugPrint('new: ${widget.entity.meta.version}');
+      setState(() {});
+    }
+    super.didUpdateWidget(oldWidget);
+  }
+
+  @override
   void initState() {
     listeners = [];
     data = {};
@@ -112,6 +123,7 @@ abstract class DynamicFormController<T extends WithMeta> extends GetxController 
   @mustCallSuper
   T setData(Map<String, dynamic> data, {required bool setDirty}) {
     for (final input in inputs) {
+      debugPrint('comparing: ${input.name} - ${input.data.value} == ${data[input.name]}');
       if (data.containsKey(input.name) && !input.data.equals(data[input.name])) {
         input.data.value = data[input.name];
         dirty.value = setDirty;
@@ -121,8 +133,13 @@ abstract class DynamicFormController<T extends WithMeta> extends GetxController 
       entity.value = entity.value.copyWithInherited(meta: data['meta']);
       dirty.value = setDirty;
     }
-    if (dirty.value) {
-      entity.value = Meta.increaseMetaVersion(entity.value);
+    debugPrint('version before: ${entity.value.meta.version}');
+    if (dirty.value || setDirty) {
+      // entity.value = Meta.forkMeta(entity.value, user);
+      debugPrint('inc meta version');
+      final ent = Meta.increaseMetaVersion(entity.value);
+      debugPrint('version after: ${ent.meta.version}');
+      entity.value = ent;
     }
     return entity.value;
   }
@@ -132,7 +149,7 @@ abstract class DynamicFormController<T extends WithMeta> extends GetxController 
   @mustCallSuper
   FutureOr<void> init() {
     args = Get.arguments;
-    type = args.type;
+    type = args.formContext;
     onSave = args.onSave;
     createInputs();
     // entity.value = entity.value.copyWithInherited(key: entity.value.key, meta: entity.value.meta);

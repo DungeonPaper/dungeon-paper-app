@@ -35,6 +35,7 @@ class NoteFormController extends DynamicFormController<Note> {
 
   @override
   Note setFromEntity(Note note) => setData({
+        'meta': note.meta,
         'title': note.title,
         'description': note.description,
         'category': note.category,
@@ -97,6 +98,6 @@ class NoteFormArguments extends LibraryEntityFormArguments<Note> {
   NoteFormArguments({
     required super.entity,
     required super.onSave,
-    required super.type,
+    required super.formContext,
   });
 }

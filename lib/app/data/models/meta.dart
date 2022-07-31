@@ -4,6 +4,7 @@ import 'package:dungeon_paper/app/data/models/session_marks.dart';
 import 'package:dungeon_paper/app/data/models/spell.dart';
 import 'package:dungeon_paper/app/data/models/user.dart';
 import 'package:dungeon_paper/app/data/services/repository_service.dart';
+import 'package:dungeon_paper/app/data/services/user_service.dart';
 import 'package:dungeon_paper/core/utils/date_utils.dart';
 import 'package:dungeon_paper/core/utils/uuid.dart';
 import 'package:dungeon_world_data/gear_option.dart';
@@ -54,6 +55,7 @@ class Meta<DataType> with RepositoryServiceMixin {
   bool get isSource => !isFork;
 
   bool isForkOf(WithMeta parent) => isFork && sharing!.sourceKey == parent.key;
+  bool isOwnedBy(User user) => createdBy == user.username;
   bool isSourceOf(WithMeta parent) => !isForkOf(parent);
   bool isOutOfSyncWith(WithMeta parent) => isForkOf(parent) && sharing!.sourceVersion != version;
 
@@ -166,7 +168,7 @@ class Meta<DataType> with RepositoryServiceMixin {
     //     force || _m.createdBy != user.username ? object.copyWithInherited(key: uuid()) : object;
     final _o = object;
 
-    return Meta.copyWithMeta<T>(
+    return Meta.copyObjectWithMeta<T>(
       _o,
       _m.fork(
         createdBy: user.username,
@@ -201,13 +203,22 @@ class Meta<DataType> with RepositoryServiceMixin {
   }
 
   static T increaseMetaVersion<T extends WithMeta>(T object) {
-    return Meta.copyWithMeta(
+    return Meta.copyObjectWithMeta(
       object,
       object.meta.copyWith(version: uuid()),
     );
   }
 
-  static T copyWithMeta<T extends WithMeta>(dynamic object, Meta? meta) {
+  static User get user => Get.find<UserService>().current;
+
+  static T forkOrIncrease<T extends WithMeta>(T object) {
+    if (object.meta.isOwnedBy(user)) {
+      return increaseMetaVersion(object);
+    }
+    return forkMeta(object, user);
+  }
+
+  static T copyObjectWithMeta<T extends WithMeta>(dynamic object, Meta? meta) {
     switch (object.runtimeType) {
       case AlignmentValue:
       case CharacterClass:
