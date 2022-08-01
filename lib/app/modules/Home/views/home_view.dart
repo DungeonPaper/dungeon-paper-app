@@ -84,25 +84,7 @@ class HomeEmptyState extends StatelessWidget with UserServiceMixin {
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            Text(
-              S.current.homeEmptyStateTitle,
-              style: textTheme.headline6,
-              textAlign: TextAlign.center,
-            ),
-            const SizedBox(height: 16),
-            Text(
-              S.current.homeEmptyStateSubtitle,
-              style: textTheme.subtitle1,
-              textAlign: TextAlign.center,
-            ),
-            const SizedBox(height: 16),
-            ElevatedButton.icon(
-              label: Text(S.current.createGeneric(S.current.entity(Character))),
-              icon: const Icon(Icons.person_add),
-              onPressed: () => Get.toNamed(Routes.createCharacter),
-            ),
             if (user.isGuest) ...[
-              const Divider(height: 32),
               SizedBox(
                 width: 500,
                 child: Card(
@@ -139,7 +121,26 @@ class HomeEmptyState extends StatelessWidget with UserServiceMixin {
                   ),
                 ),
               ),
+              const Divider(height: 32),
+              const SizedBox(height: 16),
             ],
+            Text(
+              S.current.homeEmptyStateTitle,
+              style: textTheme.headline6,
+              textAlign: TextAlign.center,
+            ),
+            const SizedBox(height: 16),
+            Text(
+              S.current.homeEmptyStateSubtitle,
+              style: textTheme.subtitle1,
+              textAlign: TextAlign.center,
+            ),
+            const SizedBox(height: 16),
+            ElevatedButton.icon(
+              label: Text(S.current.createGeneric(S.current.entity(Character))),
+              icon: const Icon(Icons.person_add),
+              onPressed: () => Get.toNamed(Routes.createCharacter),
+            ),
           ],
         ),
       ),

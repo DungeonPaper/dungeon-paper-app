@@ -26,4 +26,5 @@ abstract class StorageDelegate {
   Future<void> create(String collection, String document, DocData value);
   Future<void> update(String collection, String document, DocData value);
   Future<void> delete(String collection, String document);
+  Future<void> clear();
 }

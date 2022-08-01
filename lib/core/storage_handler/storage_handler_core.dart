@@ -54,6 +54,9 @@ class StorageHandler implements StorageDelegate {
   }
 
   @override
+  Future<void> clear() => delegate.clear();
+
+  @override
   Future<void> update(String collection, String document, DocData value) {
     debugPrint('Update document: $collection/$document');
     return delegate.update(collection, document, value);

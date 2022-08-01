@@ -3499,6 +3499,16 @@ class S {
     );
   }
 
+  /// `Privacy Policy`
+  String get privacyPolicy {
+    return Intl.message(
+      'Privacy Policy',
+      name: 'privacyPolicy',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `Items`
   String get quickIconsItems {
     return Intl.message(
@@ -3914,6 +3924,46 @@ class S {
     return Intl.message(
       'Settings',
       name: 'settingsTitle',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Sign In`
+  String get signinTitle {
+    return Intl.message(
+      'Sign In',
+      name: 'signinTitle',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Sign in to your account to sync your data online, and get access to many more features.`
+  String get signinSubtitle {
+    return Intl.message(
+      'Sign in to your account to sync your data online, and get access to many more features.',
+      name: 'signinSubtitle',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Sign Up`
+  String get signupTitle {
+    return Intl.message(
+      'Sign Up',
+      name: 'signupTitle',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Enter the required details below to create your Dungeon Paper account.`
+  String get signupSubtitle {
+    return Intl.message(
+      'Enter the required details below to create your Dungeon Paper account.',
+      name: 'signupSubtitle',
       desc: '',
       args: [],
     );
@@ -4388,6 +4438,16 @@ class S {
       name: 'viewGeneric',
       desc: '',
       args: [entity],
+    );
+  }
+
+  /// `What's new?`
+  String get whatsNew {
+    return Intl.message(
+      'What\'s new?',
+      name: 'whatsNew',
+      desc: '',
+      args: [],
     );
   }
 

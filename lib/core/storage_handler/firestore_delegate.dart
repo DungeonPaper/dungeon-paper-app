@@ -72,4 +72,9 @@ class FirestoreDelegate extends StorageDelegate {
       yield query.docs.map((doc) => doc.data()).toList();
     }
   }
+
+  @override
+  Future<void> clear() async {
+    debugPrint('FirestoreDelegate.clear() was attempted.');
+  }
 }

@@ -11,6 +11,7 @@ class User {
     required this.email,
     required this.photoUrl,
     required this.settings,
+    required this.flags,
   });
 
   final String username;
@@ -18,6 +19,7 @@ class User {
   final String email;
   final String photoUrl;
   final UserSettings settings;
+  final Map<String, dynamic> flags;
 
   User copyWith({
     String? username,
@@ -25,6 +27,7 @@ class User {
     String? email,
     String? photoUrl,
     UserSettings? settings,
+    Map<String, dynamic>? flags,
   }) =>
       User(
         username: username ?? this.username,
@@ -32,6 +35,7 @@ class User {
         email: email ?? this.email,
         photoUrl: photoUrl ?? this.photoUrl,
         settings: settings ?? this.settings,
+        flags: flags ?? this.flags,
       );
 
   factory User.fromRawJson(String str) => User.fromJson(json.decode(str));
@@ -48,6 +52,7 @@ class User {
         photoUrl: json['photoURL'],
         settings:
             json['settings'] != null ? UserSettings.fromJson(json['settings']) : UserSettings(),
+        flags: json['flags'] ?? {},
       );
 
   factory User.guest() => User(
@@ -56,6 +61,7 @@ class User {
         email: '',
         photoUrl: '',
         settings: UserSettings(),
+        flags: {},
       );
 
   Map<String, dynamic> toJson() => {
@@ -64,6 +70,7 @@ class User {
         'photoURL': photoUrl,
         'displayName': displayName,
         'settings': settings.toJson(),
+        'flags': flags,
       };
 
   bool get isGuest => username == 'guest';
@@ -82,10 +89,11 @@ class User {
           displayName == other.displayName &&
           email == other.email &&
           photoUrl == other.photoUrl &&
-          settings == other.settings;
+          settings == other.settings &&
+          flags == other.flags;
 
   @override
-  int get hashCode => Object.hashAll([username, displayName, email, photoUrl, settings]);
+  int get hashCode => Object.hashAll([username, displayName, email, photoUrl, settings, flags]);
 
   String get debugProperties =>
       'username: $username, displayName: $displayName, email: $email, photoUrl: $photoUrl, settings: $settings';

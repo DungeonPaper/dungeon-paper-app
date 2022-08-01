@@ -1,6 +1,7 @@
 import 'package:dungeon_paper/app/data/services/loading_service.dart';
 import 'package:dungeon_paper/app/data/services/repository_service.dart';
 import 'package:dungeon_paper/app/data/services/user_service.dart';
+import 'package:dungeon_paper/core/storage_handler/storage_handler.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -67,6 +68,10 @@ class AuthService extends GetxService
   logout() {
     auth.signOut();
     gSignIn.signOut();
+    StorageHandler.instance.local.clear();
+    repo.my.clear();
+    repo.builtIn.clear();
+    userService.loadGuestData();
   }
 
   @override

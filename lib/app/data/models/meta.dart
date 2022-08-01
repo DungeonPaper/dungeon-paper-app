@@ -256,6 +256,11 @@ class Meta<DataType> with RepositoryServiceMixin {
     }
   }
 
+  static final allStorageKeys = <Type, String>{
+    for (final t in [CharacterClass, Character, Item, Monster, Move, Spell, Race, Note])
+      t: Meta.storageKeyFor(t),
+  };
+
   static IconData genericIconFor(Type t) {
     switch (t) {
       case Character:

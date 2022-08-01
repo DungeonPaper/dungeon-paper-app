@@ -840,6 +840,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "passwordShowTooltip":
             MessageLookupByLibrary.simpleMessage("Show password"),
         "pluralize": m77,
+        "privacyPolicy": MessageLookupByLibrary.simpleMessage("Privacy Policy"),
         "quickIconsItems": MessageLookupByLibrary.simpleMessage("Items"),
         "quickIconsMoves": MessageLookupByLibrary.simpleMessage("Moves"),
         "quickIconsNote": MessageLookupByLibrary.simpleMessage("+ Note"),
@@ -897,6 +898,9 @@ class MessageLookup extends MessageLookupByLibrary {
             "Keep screen awake while using the app"),
         "settingsTitle": MessageLookupByLibrary.simpleMessage("Settings"),
         "signinButton": MessageLookupByLibrary.simpleMessage("Sign in"),
+        "signinSubtitle": MessageLookupByLibrary.simpleMessage(
+            "Sign in to your account to sync your data online, and get access to many more features."),
+        "signinTitle": MessageLookupByLibrary.simpleMessage("Sign In"),
         "signinWithAppleButton":
             MessageLookupByLibrary.simpleMessage("Sign in with Apple"),
         "signinWithFacebookButton":
@@ -924,6 +928,9 @@ class MessageLookup extends MessageLookupByLibrary {
         "signupPasswordValidationPatternNumber":
             MessageLookupByLibrary.simpleMessage(
                 "Password must contain at least one number"),
+        "signupSubtitle": MessageLookupByLibrary.simpleMessage(
+            "Enter the required details below to create your Dungeon Paper account."),
+        "signupTitle": MessageLookupByLibrary.simpleMessage("Sign Up"),
         "signupUsername": MessageLookupByLibrary.simpleMessage("Username"),
         "signupUsernamePlaceholder":
             MessageLookupByLibrary.simpleMessage("Pick a unique username"),
@@ -960,6 +967,7 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Not registered"),
         "view": MessageLookupByLibrary.simpleMessage("View"),
         "viewGeneric": m95,
+        "whatsNew": MessageLookupByLibrary.simpleMessage("What\'s new?"),
         "xpDialogChangeOverride":
             MessageLookupByLibrary.simpleMessage("Update manually"),
         "xpDialogEndSession":

@@ -91,4 +91,19 @@ class LocalStorageDelegate extends StorageDelegate {
     }
     return colStreams[collection]!.stream.asBroadcastStream();
   }
+
+  @override
+  Future<void> clear() async {
+    for (final col in Meta.allStorageKeys.values) {
+      colStreams[col]?.close();
+      final docs = await storage.collection(col).get();
+      if (docs == null) {
+        continue;
+      }
+      for (final doc in docs.entries) {
+        docStreams['$col/${doc.key}']?.close();
+        await storage.collection(col).doc(doc.key).delete();
+      }
+    }
+  }
 }
