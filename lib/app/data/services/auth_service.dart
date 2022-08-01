@@ -70,7 +70,6 @@ class AuthService extends GetxService
     gSignIn.signOut();
     StorageHandler.instance.local.clear();
     repo.my.clear();
-    repo.builtIn.clear();
     userService.loadGuestData();
   }
 
