@@ -111,7 +111,7 @@ class AboutView extends GetView<AboutController> {
                       color: const Color.fromARGB(255, 1, 135, 95),
                     ),
                     _SocialButton(
-                      icon: const Icon(DwIcons.apple),
+                      icon: const Icon(DwIcons.app_store),
                       label: Text(S.current.socialApple),
                       url: 'https://bit.ly/DungeonPaper-iOS',
                       color: const Color.fromARGB(255, 30, 143, 232),

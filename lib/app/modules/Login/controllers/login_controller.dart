@@ -4,6 +4,7 @@ import 'package:dungeon_paper/app/data/services/loading_service.dart';
 import 'package:dungeon_paper/app/routes/app_pages.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:sentry_flutter/sentry_flutter.dart';
 
 class LoginController extends GetxController
     with AuthServiceMixin, LoadingServiceMixin, CharacterServiceMixin {
@@ -14,18 +15,38 @@ class LoginController extends GetxController
 
   bool get valid => _valid.value;
 
+  void _loginWrapper(Future<void> Function() cb) async {
+    try {
+      loadingService.loadingUser = true;
+      loadingService.loadingCharacters = false;
+      await cb();
+      Get.offAllNamed(Routes.home);
+    } catch (e) {
+      Sentry.captureException(e);
+      printError(info: e.toString());
+      loadingService.loadingUser = false;
+      loadingService.loadingCharacters = false;
+      // TODO intl
+      Get.rawSnackbar(message: 'Login failed');
+    }
+  }
+
   void loginWithPassword() async {
-    loadingService.loadingUser = true;
-    loadingService.loadingCharacters = false;
-    await authService.loginWithPassword(email: email.text, password: password.text);
-    Get.offAllNamed(Routes.home);
+    _loginWrapper(
+      () => authService.loginWithPassword(email: email.text, password: password.text),
+    );
   }
 
   void loginWithGoogle() async {
-    loadingService.loadingUser = true;
-    loadingService.loadingCharacters = false;
-    await authService.loginWithGoogle();
-    Get.offAllNamed(Routes.home);
+    _loginWrapper(
+      () => authService.loginWithGoogle(),
+    );
+  }
+
+  void loginWithApple() async {
+    _loginWrapper(
+      () => authService.loginWithApple(),
+    );
   }
 
   @override

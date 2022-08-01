@@ -1,9 +1,12 @@
+import 'dart:io';
+
 import 'package:dungeon_paper/app/widgets/atoms/labeled_divider.dart';
 import 'package:dungeon_paper/app/widgets/atoms/password_field.dart';
 import 'package:dungeon_paper/core/dw_icons.dart';
 import 'package:dungeon_paper/core/utils/password_validator.dart';
 import 'package:dungeon_paper/generated/l10n.dart';
 import 'package:email_validator/email_validator.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
@@ -25,58 +28,68 @@ class LoginView extends GetView<LoginController> {
               key: controller.formKey,
               autovalidateMode: AutovalidateMode.onUserInteraction,
               child: AutofillGroup(
-                child: Column(
-                  children: [
-                    TextFormField(
-                      controller: controller.email,
-                      keyboardType: TextInputType.emailAddress,
-                      autofillHints: const [AutofillHints.email],
-                      decoration: InputDecoration(
-                        filled: true,
-                        label: Text(S.current.signupEmail),
-                        // floatingLabelBehavior: FloatingLabelBehavior.auto,
-                        hintText: S.current.signupEmailPlaceholder,
-                      ),
-                      validator: (email) => email == null || EmailValidator.validate(email)
-                          ? null
-                          : S.current.signupEmailValidation,
-                    ),
-                    const SizedBox(height: 16),
-                    PasswordField(
-                      controller: controller.password,
-                      obscureText: true,
-                      autofillHints: const [AutofillHints.password],
-                      decoration: InputDecoration(
-                        filled: true,
-                        label: Text(S.current.signupPassword),
-                        hintText: S.current.signupPasswordPlaceholder,
-                        // floatingLabelBehavior: FloatingLabelBehavior.auto,
-                      ),
-                      validator: PasswordValidator().validator,
-                    ),
-                    const SizedBox(height: 16),
-                    Obx(
-                      () => ElevatedButton.icon(
-                        onPressed: controller.valid ? controller.loginWithPassword : null,
-                        label: Text(S.current.signinButton, textScaleFactor: 1.5),
-                        style: ElevatedButton.styleFrom(
-                          padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
+                child: SizedBox(
+                  width: 400,
+                  child: Column(
+                    children: [
+                      TextFormField(
+                        controller: controller.email,
+                        keyboardType: TextInputType.emailAddress,
+                        autofillHints: const [AutofillHints.email],
+                        decoration: InputDecoration(
+                          filled: true,
+                          label: Text(S.current.signupEmail),
+                          // floatingLabelBehavior: FloatingLabelBehavior.auto,
+                          hintText: S.current.signupEmailPlaceholder,
                         ),
-                        icon: controller.loadingService.loadingUser
-                            ? const SizedBox.square(
-                                dimension: 24,
-                                child: CircularProgressIndicator.adaptive(),
-                              )
-                            : const Icon(Icons.login, size: 24),
+                        validator: (email) => email == null || EmailValidator.validate(email)
+                            ? null
+                            : S.current.signupEmailValidation,
                       ),
-                    ),
-                    LabeledDivider(label: Text(S.current.separatorOr)),
-                    ElevatedButton.icon(
-                      onPressed: controller.loginWithGoogle,
-                      label: Text(S.current.signinWithGoogleButton),
-                      icon: const Icon(DwIcons.google),
-                    ),
-                  ],
+                      const SizedBox(height: 16),
+                      PasswordField(
+                        controller: controller.password,
+                        obscureText: true,
+                        autofillHints: const [AutofillHints.password],
+                        decoration: InputDecoration(
+                          filled: true,
+                          label: Text(S.current.signupPassword),
+                          hintText: S.current.signupPasswordPlaceholder,
+                          // floatingLabelBehavior: FloatingLabelBehavior.auto,
+                        ),
+                        validator: PasswordValidator().validator,
+                      ),
+                      const SizedBox(height: 16),
+                      Obx(
+                        () => ElevatedButton.icon(
+                          onPressed: controller.valid ? controller.loginWithPassword : null,
+                          label: Text(S.current.signinButton, textScaleFactor: 1.5),
+                          style: ElevatedButton.styleFrom(
+                            padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
+                          ),
+                          icon: controller.loadingService.loadingUser
+                              ? const SizedBox.square(
+                                  dimension: 24,
+                                  child: CircularProgressIndicator.adaptive(),
+                                )
+                              : const Icon(Icons.login, size: 24),
+                        ),
+                      ),
+                      LabeledDivider(label: Text(S.current.separatorOr)),
+                      ElevatedButton.icon(
+                        onPressed: controller.loginWithGoogle,
+                        label: Text(S.current.signinWithGoogleButton),
+                        icon: const Icon(DwIcons.google),
+                      ),
+                      const SizedBox(height: 8),
+                      if (!kIsWeb && Platform.isMacOS || Platform.isIOS)
+                        ElevatedButton.icon(
+                          onPressed: controller.loginWithApple,
+                          label: Text(S.current.signinWithAppleButton),
+                          icon: const Icon(DwIcons.apple),
+                        ),
+                    ],
+                  ),
                 ),
               ),
             ),

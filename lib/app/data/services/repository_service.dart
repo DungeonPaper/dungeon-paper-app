@@ -13,6 +13,7 @@ import 'package:dungeon_paper/app/data/models/spell.dart';
 import 'package:dungeon_paper/core/http/api.dart';
 import 'package:dungeon_paper/core/http/api_requests/search.dart';
 import 'package:dungeon_paper/core/storage_handler/storage_handler.dart';
+import 'package:dungeon_paper/core/utils/list_utils.dart';
 
 import 'package:dungeon_world_data/dungeon_world_data.dart' as dw;
 import 'package:flutter/material.dart';
@@ -108,8 +109,13 @@ abstract class RepositoryCache {
 
       if (shouldLoadFromRemote) {
         debugPrint('[$id] Cache invalid, loading from remote');
-        final resp = await getFromRemote;
-        await setAllFrom(resp, saveIntoCache: true);
+        SearchResponse resp;
+        try {
+          resp = await getFromRemote;
+          await setAllFrom(resp, saveIntoCache: true);
+        } catch (e) {
+          resp = SearchResponse.empty();
+        }
       } else {
         debugPrint('[$id] Cache valid, loading from cache');
         await setAllFrom(cacheRes, saveIntoCache: false);
@@ -157,77 +163,115 @@ abstract class RepositoryCache {
       storage.collectionListener(
         listenerKey('CharacterClasses'),
         (d) {
-          if (d.isNotEmpty) {
-            debugPrint(
-                '[$id] Update in CharacterClasses: ${[for (var x in d) x['key']].join(',')}');
-            classes.value = {for (var x in d) x['key']: CharacterClass.fromJson(x)};
-          }
+          _parseMap<CharacterClass>(
+            d,
+            key: (x) => x.key,
+            save: (x) => classes.value = x,
+            parse: (x) => CharacterClass.fromJson(x),
+          );
         },
       ),
       storage.collectionListener(
         listenerKey('Items'),
         (d) {
-          if (d.isNotEmpty) {
-            debugPrint('[$id] Update in Items: ${[for (var x in d) x['key']].join(',')}');
-            items.value = {for (var x in d) x['key']: Item.fromJson(x)};
-          }
+          _parseMap<Item>(
+            d,
+            key: (x) => x.key,
+            save: (x) => items.value = x,
+            parse: (x) => Item.fromJson(x),
+          );
         },
       ),
       storage.collectionListener(
         listenerKey('Monsters'),
         (d) {
-          if (d.isNotEmpty) {
-            debugPrint('[$id] [$id] Update in Monsters: ${[for (var x in d) x['key']].join(',')}');
-            monsters.value = {for (var x in d) x['key']: Monster.fromJson(x)};
-          }
+          _parseMap<Monster>(
+            d,
+            key: (x) => x.key,
+            save: (x) => monsters.value = x,
+            parse: (x) => Monster.fromJson(x),
+          );
         },
       ),
       storage.collectionListener(
         listenerKey('Moves'),
         (d) {
-          if (d.isNotEmpty) {
-            debugPrint('[$id] Update in Moves: ${[for (var x in d) x['key']].join(',')}');
-            moves.value = {for (var x in d) x['key']: Move.fromJson(x)};
-          }
+          _parseMap<Move>(
+            d,
+            key: (x) => x.key,
+            save: (x) => moves.value = x,
+            parse: (x) => Move.fromJson(x),
+          );
         },
       ),
       storage.collectionListener(
         listenerKey('Races'),
         (d) {
-          if (d.isNotEmpty) {
-            debugPrint('[$id] Update in Races: ${[for (var x in d) x['key']].join(',')}');
-            races.value = {for (var x in d) x['key']: Race.fromJson(x)};
-          }
+          _parseMap<Race>(
+            d,
+            key: (x) => x.key,
+            save: (x) => races.value = x,
+            parse: (x) => Race.fromJson(x),
+          );
         },
       ),
       storage.collectionListener(
         listenerKey('Spells'),
         (d) {
-          if (d.isNotEmpty) {
-            debugPrint('[$id] Update in Spells: ${[for (var x in d) x['key']].join(',')}');
-            spells.value = {for (var x in d) x['key']: Spell.fromJson(x)};
-          }
+          _parseMap<Spell>(
+            d,
+            key: (x) => x.key,
+            save: (x) => spells.value = x,
+            parse: (x) => Spell.fromJson(x),
+          );
         },
       ),
       storage.collectionListener(
         listenerKey('Tags'),
         (d) {
-          if (d.isNotEmpty) {
-            debugPrint('[$id] Update in Tags: ${[for (var x in d) x['name']].join(',')}');
-            tags.value = {for (var x in d) x['name']: dw.Tag.fromJson(x)};
-          }
+          _parseMap<dw.Tag>(
+            d,
+            key: (x) => x.name,
+            save: (x) => tags.value = x,
+            parse: (x) => dw.Tag.fromJson(x),
+          );
         },
       ),
       storage.collectionListener(
         listenerKey('Notes'),
         (d) {
-          if (d.isNotEmpty) {
-            debugPrint('[$id] Update in Notes: ${[for (var x in d) x['key']].join(',')}');
-            notes.value = {for (var x in d) x['key']: Note.fromJson(x)};
-          }
+          _parseMap<Note>(
+            d,
+            key: (x) => x.key,
+            save: (x) => notes.value = x,
+            parse: (x) => Note.fromJson(x),
+          );
         },
       ),
     ]);
+  }
+
+  Map<String, T> _parseMap<T>(
+    List<dynamic> list, {
+    required void Function(Map<String, T>) save,
+    required String Function(T) key,
+    required T Function(dynamic) parse,
+  }) {
+    if (list.isEmpty) {
+      return const {};
+    }
+    final out = <String, T>{};
+    debugPrint('[$id] Update in $T: ${list.length} items');
+    for (final entry in list) {
+      try {
+        final obj = parse(entry);
+        final _key = key(obj);
+        out[_key] = obj;
+      } catch (e) {
+        debugPrint('[$id] Error parsing $T: $entry');
+      }
+    }
+    return out;
   }
 
   void clearListeners() {
@@ -351,16 +395,22 @@ class PersonalRepository extends RepositoryCache {
 
   @override
   Future<SearchResponse> get getFromRemote => Future(
-        () async => SearchResponse.fromJson({
-          'CharacterClasses': await storage.getCollection('CharacterClasses'),
-          'Items': await storage.getCollection('Items'),
-          'Monsters': await storage.getCollection('Monsters'),
-          'Moves': await storage.getCollection('Moves'),
-          'Races': await storage.getCollection('Races'),
-          'Spells': await storage.getCollection('Spells'),
-          'Tags': await storage.getCollection('Tags'),
-          'Notes': await storage.getCollection('Notes'),
-        }),
+        () async {
+          final futures = {
+            'CharacterClasses': storage.getCollection('CharacterClasses'),
+            'Items': storage.getCollection('Items'),
+            'Monsters': storage.getCollection('Monsters'),
+            'Moves': storage.getCollection('Moves'),
+            'Races': storage.getCollection('Races'),
+            'Spells': storage.getCollection('Spells'),
+            'Tags': storage.getCollection('Tags'),
+            'Notes': storage.getCollection('Notes'),
+          };
+          return Future.wait(futures.values).then((v) async {
+            final map = {for (final e in enumerate(v)) futures.keys.elementAt(e.index): e.value};
+            return SearchResponse.fromJson(map);
+          });
+        },
       );
 
   @override

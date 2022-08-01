@@ -1,6 +1,6 @@
 name: dungeon_paper
 description: A new Flutter project.
-version: 2.0.0+268
+version: 2.0.0+269
 # The above field defines the version and build number for your application.
 # A version number is three numbers separated by dots, like 1.2.43
 # followed by an optional build number separated by a +.
@@ -59,6 +59,7 @@ dependencies:
   popover: ^0.2.6+3
   sentry_flutter: ^6.6.3
   shared_preferences: ^2.0.13
+  sign_in_with_apple: ^4.1.0
   skeleton_loader: ^2.0.0+4
   string_similarity: ^2.0.0
   url_launcher: ^6.0.20
@@ -97,7 +98,6 @@ flutter:
     # - assets/icons/dumbbell.svg
     # - assets/icons/quill.svg
     # - assets/icons/swords.svg
-
     #  Stat Icons
     # - assets/icons/stats/stat_cha.svg
     # - assets/icons/stats/stat_con.svg
@@ -105,7 +105,6 @@ flutter:
     # - assets/icons/stats/stat_int.svg
     # - assets/icons/stats/stat_str.svg
     # - assets/icons/stats/stat_wis.svg
-
     # Dice icons
     # - assets/icons/dice/dice_d4.svg
     # - assets/icons/dice/dice_d6.svg
@@ -113,7 +112,6 @@ flutter:
     # - assets/icons/dice/dice_d10.svg
     # - assets/icons/dice/dice_d12.svg
     # - assets/icons/dice/dice_d20.svg
-
     # Images
     - assets/images/logo.png
   # An image asset can refer to one or more resolution-specific "variants", see
@@ -196,3 +194,4 @@ flutter_icons:
   linux: true
   ios: true
   image_path: "assets/images/logo.png"
+  ios_image_path:
