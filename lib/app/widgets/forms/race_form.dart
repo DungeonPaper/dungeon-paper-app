@@ -17,7 +17,7 @@ class RaceForm extends GetView<RaceFormController> with RepositoryServiceMixin {
 
   @override
   Widget build(BuildContext context) {
-    return LibraryEntityForm<RaceFormController>(
+    return LibraryEntityForm<Race, RaceFormController>(
       children: [
         () => TextFormField(
               decoration: InputDecoration(

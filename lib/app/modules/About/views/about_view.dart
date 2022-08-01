@@ -157,7 +157,6 @@ final iconCredits = ([
 
 class _SocialButton extends StatelessWidget {
   const _SocialButton({
-    super.key,
     required this.icon,
     required this.label,
     required this.url,

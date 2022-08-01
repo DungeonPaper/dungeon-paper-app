@@ -80,21 +80,21 @@ class _EntityShareFormState<T extends WithMeta> extends State<EntityShareForm>
   @override
   Widget build(BuildContext context) {
     return Column(
+      crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
         // Text(source?.meta.toRawJson() ?? 'no source'),
         // const Divider(),
         // Text(widget.entity.meta.toRawJson()),
         // const Divider(),
-        Row(
+        Wrap(
+          spacing: 8,
+          runSpacing: 8,
           children: [
             Icon(syncStatusIcon, color: syncStatusColor(context), size: 16),
-            const SizedBox(width: 8),
-            Expanded(
-              child: Text(
-                syncStatusText,
-                style: TextStyle(color: syncStatusColor(context)),
-                textScaleFactor: 0.9,
-              ),
+            Text(
+              syncStatusText,
+              style: TextStyle(color: syncStatusColor(context)),
+              textScaleFactor: 0.9,
             ),
             if (syncStatus == SyncStatus.outOfSync) ...[
               ElevatedButton.icon(
@@ -103,7 +103,6 @@ class _EntityShareFormState<T extends WithMeta> extends State<EntityShareForm>
                 // TODO intl
                 label: const Text('Update Original'),
               ),
-              const SizedBox(width: 8),
               ElevatedButton.icon(
                 onPressed: _revertChanges,
                 icon: const Icon(Icons.refresh),

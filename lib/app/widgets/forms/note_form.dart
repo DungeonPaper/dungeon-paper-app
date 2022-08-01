@@ -13,7 +13,7 @@ class NoteForm extends GetView<NoteFormController> with RepositoryServiceMixin {
 
   @override
   Widget build(BuildContext context) {
-    return LibraryEntityForm<NoteFormController>(
+    return LibraryEntityForm<Note, NoteFormController>(
       children: [
         () => TextFormField(
               decoration: InputDecoration(

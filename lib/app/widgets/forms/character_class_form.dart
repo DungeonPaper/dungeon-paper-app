@@ -15,7 +15,7 @@ class CharacterClassForm extends GetView<CharacterClassFormController> {
 
   @override
   Widget build(BuildContext context) {
-    return LibraryEntityForm<CharacterClassFormController>(
+    return LibraryEntityForm<CharacterClass, CharacterClassFormController>(
       children: [
         () => TextFormField(
               controller: controller.name,

@@ -11,7 +11,9 @@ import 'package:dungeon_paper/generated/l10n.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-class LibraryEntityForm<T extends LibraryEntityFormController> extends GetView<T> {
+class LibraryEntityForm<T extends WithMeta,
+        Ctrl extends LibraryEntityFormController<T, LibraryEntityFormArguments<T>>>
+    extends GetView<Ctrl> {
   const LibraryEntityForm({
     Key? key,
     required this.children,
@@ -61,7 +63,7 @@ class LibraryEntityForm<T extends LibraryEntityFormController> extends GetView<T
 }
 
 abstract class LibraryEntityFormController<T extends WithMeta,
-    Args extends LibraryEntityFormArguments> extends GetxController {
+    Args extends LibraryEntityFormArguments<T>> extends GetxController {
   final dirty = false.obs;
   late final Args args;
   bool afterInit = false;
@@ -75,7 +77,7 @@ abstract class LibraryEntityFormController<T extends WithMeta,
   void onInit() {
     assert(Get.arguments is LibraryEntityFormArguments<T>);
     args = Get.arguments;
-    asEntity = Rx(args.entity as T? ?? empty());
+    asEntity = Rx(args.entity ?? empty());
     meta = Rx(args.entity?.meta ?? _forkMeta());
     _initialValueCache = List.generate(fields.length, (i) => '');
 
@@ -142,7 +144,7 @@ abstract class LibraryEntityFormController<T extends WithMeta,
 
   T empty();
   @protected
-  T toEntity() => (args.entity as T? ?? empty()).copyWithInherited(meta: meta.value);
+  T toEntity() => (args.entity ?? empty()).copyWithInherited(meta: meta.value);
 
   @mustCallSuper
   void updateFromEntity(T entity) {
@@ -150,7 +152,13 @@ abstract class LibraryEntityFormController<T extends WithMeta,
   }
 
   void onSave() {
-    args.onSave(toEntity());
+    debugPrint('onSave: ${args.onSave}');
+    cb(dynamic obj) {
+      args.onSave(obj);
+    }
+
+    var entity = toEntity();
+    cb(entity as dynamic);
     Get.back();
   }
 }

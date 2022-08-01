@@ -18,7 +18,7 @@ class SpellForm extends GetView<SpellFormController> with RepositoryServiceMixin
 
   @override
   Widget build(BuildContext context) {
-    return LibraryEntityForm<SpellFormController>(
+    return LibraryEntityForm<Spell, SpellFormController>(
       children: [
         () => TextFormField(
               decoration: InputDecoration(

@@ -17,7 +17,7 @@ class MoveForm extends GetView<MoveFormController> with RepositoryServiceMixin {
 
   @override
   Widget build(BuildContext context) {
-    return LibraryEntityForm<MoveFormController>(
+    return LibraryEntityForm<Move, MoveFormController>(
       children: [
         () => TextFormField(
               decoration: InputDecoration(

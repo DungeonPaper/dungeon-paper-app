@@ -12,7 +12,7 @@ class ItemForm extends GetView<ItemFormController> {
 
   @override
   Widget build(BuildContext context) {
-    return LibraryEntityForm<ItemFormController>(
+    return LibraryEntityForm<Item, ItemFormController>(
       children: [
         () => TextFormField(
               controller: controller.name,
