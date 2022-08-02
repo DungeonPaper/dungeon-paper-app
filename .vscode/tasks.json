@@ -16,6 +16,28 @@
       "problemMatcher": []
     },
     {
+      "label": "Generate Launcher Icons",
+      "type": "dart",
+      "command": "flutter",
+      "args": [
+        "pub",
+        "run",
+        "flutter_launcher_icons:main"
+      ],
+      "problemMatcher": []
+    },
+    {
+      "label": "Generate Splash Screen",
+      "type": "dart",
+      "command": "flutter",
+      "args": [
+        "pub",
+        "run",
+        "flutter_native_splash:create"
+      ],
+      "problemMatcher": []
+    },
+    {
       "label": "Build (pick platform)",
       "detail": "deploy.dart --build -l (pick)",
       "type": "dart",
