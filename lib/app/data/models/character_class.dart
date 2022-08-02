@@ -25,7 +25,7 @@ class CharacterClass extends dw.CharacterClass with WithIcon implements WithMeta
     required List<String> bonds,
     required List<String> flags,
     required List<GearChoice> gearChoices,
-    required bool isMagicUser,
+    required bool isSpellcaster,
   })  : _meta = meta,
         _alignments = alignments,
         _gearChoices = gearChoices,
@@ -41,7 +41,7 @@ class CharacterClass extends dw.CharacterClass with WithIcon implements WithMeta
           bonds: bonds,
           flags: flags,
           gearChoices: gearChoices,
-          isMagicUser: isMagicUser,
+          isSpellcaster: isSpellcaster,
         );
 
   @override
@@ -69,7 +69,7 @@ class CharacterClass extends dw.CharacterClass with WithIcon implements WithMeta
     List<String>? bonds,
     List<String>? flags,
     List<GearChoice>? gearChoices,
-    bool? isMagicUser,
+    bool? isSpellcaster,
   }) =>
       CharacterClass(
         meta: meta ?? this.meta,
@@ -83,7 +83,7 @@ class CharacterClass extends dw.CharacterClass with WithIcon implements WithMeta
         bonds: bonds ?? this.bonds,
         flags: flags ?? this.flags,
         gearChoices: gearChoices ?? this.gearChoices,
-        isMagicUser: isMagicUser ?? this.isMagicUser,
+        isSpellcaster: isSpellcaster ?? this.isSpellcaster,
       );
 
   factory CharacterClass.fromRawJson(String str) => CharacterClass.fromJson(json.decode(str));
@@ -100,7 +100,7 @@ class CharacterClass extends dw.CharacterClass with WithIcon implements WithMeta
         load: 0,
         hp: 20,
         alignments: AlignmentValues.empty(),
-        isMagicUser: false,
+        isSpellcaster: false,
       );
 
   factory CharacterClass.fromDwCharacterClass(dw.CharacterClass cls) => CharacterClass(
@@ -115,7 +115,7 @@ class CharacterClass extends dw.CharacterClass with WithIcon implements WithMeta
         bonds: cls.bonds,
         flags: cls.flags,
         gearChoices: cls.gearChoices.map((c) => GearChoice.fromDwGearChoice(c)).toList(),
-        isMagicUser: cls.isMagicUser,
+        isSpellcaster: cls.isSpellcaster,
       );
 
   factory CharacterClass.fromJson(Map<String, dynamic> json) =>
@@ -156,7 +156,7 @@ class CharacterClass extends dw.CharacterClass with WithIcon implements WithMeta
           bonds == other.bonds &&
           flags == other.flags &&
           gearChoices == other.gearChoices &&
-          isMagicUser == other.isMagicUser;
+          isSpellcaster == other.isSpellcaster;
 
   @override
   int get hashCode => Object.hashAll(
