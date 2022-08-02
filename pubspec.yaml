@@ -1,6 +1,6 @@
 name: dungeon_paper
 description: A new Flutter project.
-version: 2.0.0+269
+version: 2.0.0+270
 # The above field defines the version and build number for your application.
 # A version number is three numbers separated by dots, like 1.2.43
 # followed by an optional build number separated by a +.
@@ -37,6 +37,7 @@ dependencies:
   firebase_auth: ^3.3.19
   firebase_core: ^1.12.0
   firebase_crashlytics: ^2.5.1
+  firebase_remote_config: ^2.0.13
   firebase_storage: ^10.2.18
   flutter:
     sdk: flutter
@@ -194,4 +195,4 @@ flutter_icons:
   linux: true
   ios: true
   image_path: "assets/images/logo.png"
-  ios_image_path:
+  ios_image_path: null

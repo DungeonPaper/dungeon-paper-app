@@ -57,7 +57,7 @@ class AboutView extends GetView<AboutController> {
                 leading: const Icon(DwIcons.discord),
                 title: Text(S.current.aboutJoinDiscord),
                 subtitle: Text(S.current.aboutJoinDiscordSubtitle, style: textTheme.caption),
-                onTap: () => launch('https://bit.ly/DungeonPaper-Discord'),
+                onTap: () => launchUrl(Uri.parse('https://bit.ly/DungeonPaper-Discord')),
                 isThreeLine: true,
                 visualDensity: VisualDensity.compact,
               ),
@@ -174,7 +174,7 @@ class _SocialButton extends StatelessWidget {
     return ElevatedButton.icon(
       icon: icon,
       label: label,
-      onPressed: () => launch(url),
+      onPressed: () => launchUrl(Uri.parse(url)),
       style: ElevatedButton.styleFrom(
         primary: color,
         minimumSize: Size(min(200, (mediaQuery.size.width - 40) / 2), 48),

@@ -100,6 +100,7 @@ class LocalStorageDelegate extends StorageDelegate {
       if (docs == null) {
         continue;
       }
+      debugPrint('clearing $col');
       for (final doc in docs.entries) {
         docStreams['$col/${doc.key}']?.close();
         await storage.collection(col).doc(doc.key).delete();

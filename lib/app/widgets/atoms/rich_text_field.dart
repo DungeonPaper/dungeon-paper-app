@@ -226,7 +226,7 @@ class RichTextField extends StatelessWidget {
               color: Theme.of(context).colorScheme.secondary,
               icon: const Icon(Icons.help),
               tooltip: S.current.formatHelp,
-              onTap: () => launch('https://www.markdownguide.org/basic-syntax'),
+              onTap: () => launchUrl(Uri.parse('https://www.markdownguide.org/basic-syntax')),
             ),
         () => thinDivider,
         () => RichButton(
@@ -478,7 +478,7 @@ class MarkdownPreviewDialog extends StatelessWidget {
           child: Markdown(
             data: text.trim().isNotEmpty ? text : S.current.noDescription,
             padding: const EdgeInsets.all(0),
-            onTapLink: (text, href, title) => launch(href!),
+            onTapLink: (text, href, title) => launchUrl(Uri.parse(href!)),
             shrinkWrap: true,
             styleSheet: MarkdownStyles.of(context),
           ),

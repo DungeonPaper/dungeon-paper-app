@@ -300,7 +300,7 @@ class ActionCategoryList extends OrderedCategoryList<Type> {
 
   @override
   Set<Type> getSorted([Set<Type> all = const {}]) =>
-      super.getSorted().map((el) => _toType(el.toString())).toSet();
+      super.getSorted(all).map((el) => _toType(el.toString())).toSet();
 
   @override
   String get debugProperties => 'sortOrder: $sortOrder, hidden: $hidden';

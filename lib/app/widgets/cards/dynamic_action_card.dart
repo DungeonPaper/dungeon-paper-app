@@ -220,7 +220,7 @@ class _DynamicActionCardState extends State<DynamicActionCard> {
   MarkdownBody _renderMarkdown(BuildContext context, String text) {
     return MarkdownBody(
       data: HighlightText.highlight(text, widget.highlightWords),
-      onTapLink: (text, href, title) => launch(href!),
+      onTapLink: (text, href, title) => launchUrl(Uri.parse(href!)),
       inlineSyntaxes: [HighlightSyntax()],
       styleSheet: MarkdownStyles.of(context),
       builders: {

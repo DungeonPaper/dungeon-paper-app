@@ -39,6 +39,6 @@ class Hyperlink extends StatelessWidget {
   }
 
   static _urlTapper(String url) {
-    return () => launch(url);
+    return () => launchUrl(Uri.parse(url));
   }
 }

@@ -1,10 +1,12 @@
+import 'dart:io';
+
 import 'package:dungeon_paper/app/data/services/loading_service.dart';
 import 'package:dungeon_paper/app/data/services/repository_service.dart';
 import 'package:dungeon_paper/app/data/services/user_service.dart';
+import 'package:dungeon_paper/core/platform_helper.dart';
 import 'package:dungeon_paper/core/storage_handler/storage_handler.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
-import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:sign_in_with_apple/sign_in_with_apple.dart';
@@ -65,11 +67,20 @@ class AuthService extends GetxService
     return auth.signInWithCredential(credential);
   }
 
-  logout() {
-    auth.signOut();
-    gSignIn.signOut();
-    StorageHandler.instance.local.clear();
+  logout() async {
+    await StorageHandler.instance.local.clear();
     repo.my.clear();
+    await auth.signOut();
+    try {
+      if (PlatformHelper.canUseGoogleSignIn) {
+        await gSignIn.signOut();
+      }
+      // if (PlatformHelper.canUseAppleSignIn) {
+      //   SignInWithApple.
+      // }
+    } catch (e) {
+      debugPrint('Error while logging out: $e');
+    }
     userService.loadGuestData();
   }
 

@@ -8,6 +8,7 @@ import 'package:dungeon_paper/app/widgets/atoms/help_text.dart';
 import 'package:dungeon_paper/app/widgets/atoms/xp_bar.dart';
 import 'package:dungeon_paper/app/widgets/atoms/number_text_field.dart';
 import 'package:dungeon_paper/app/widgets/molecules/dialog_controls.dart';
+import 'package:dungeon_paper/core/platform_helper.dart';
 import 'package:dungeon_paper/core/utils/list_utils.dart';
 import 'package:dungeon_paper/core/utils/math_utils.dart';
 import 'package:dungeon_paper/generated/l10n.dart';
@@ -107,7 +108,7 @@ class _EXPDialogState extends State<EXPDialog> with CharacterServiceMixin {
                   duration: const Duration(milliseconds: 250),
                   width: dlgWidth,
                   height: manualExpExpanded
-                      ? (332 + (!kIsWeb && (Platform.isIOS || Platform.isAndroid) ? 32 : 0))
+                      ? (332 + (PlatformHelper.isIOS || PlatformHelper.isAndroid ? 32 : 0))
                       : 48,
                   child: CustomExpansionPanel(
                     title: Text(

@@ -1,12 +1,12 @@
-import 'dart:io';
 
 import 'package:dungeon_paper/app/widgets/atoms/labeled_divider.dart';
 import 'package:dungeon_paper/app/widgets/atoms/password_field.dart';
 import 'package:dungeon_paper/core/dw_icons.dart';
+import 'package:dungeon_paper/core/platform_helper.dart';
+import 'package:dungeon_paper/core/utils/list_utils.dart';
 import 'package:dungeon_paper/core/utils/password_validator.dart';
 import 'package:dungeon_paper/generated/l10n.dart';
 import 'package:email_validator/email_validator.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
@@ -50,19 +50,22 @@ class LoginView extends GetView<LoginController> {
                         textAlign: TextAlign.center,
                       ),
                       const SizedBox(height: 24),
-                      ElevatedButton.icon(
-                        onPressed: controller.loginWithGoogle,
-                        label: Text(S.current.signinWithGoogleButton),
-                        icon: const Icon(DwIcons.google),
-                      ),
-                      if (!kIsWeb && Platform.isMacOS || Platform.isIOS) ...[
-                        const SizedBox(height: 8),
-                        ElevatedButton.icon(
-                          onPressed: controller.loginWithApple,
-                          label: Text(S.current.signinWithAppleButton),
-                          icon: const Icon(DwIcons.apple),
-                        ),
-                      ],
+                      ...<Widget>[
+                        if (PlatformHelper.canUseAppleSignIn) ...[
+                          ElevatedButton.icon(
+                            onPressed: controller.loginWithGoogle,
+                            label: Text(S.current.signinWithGoogleButton),
+                            icon: const Icon(DwIcons.google),
+                          ),
+                        ],
+                        if (PlatformHelper.canUseAppleSignIn) ...[
+                          ElevatedButton.icon(
+                            onPressed: controller.loginWithApple,
+                            label: Text(S.current.signinWithAppleButton),
+                            icon: const Icon(DwIcons.apple),
+                          ),
+                        ],
+                      ].joinObjects(const SizedBox(height: 8)),
                       const SizedBox(height: 16),
                       LabeledDivider(label: Text(S.current.separatorOr)),
                       TextFormField(
@@ -110,16 +113,18 @@ class LoginView extends GetView<LoginController> {
                       ),
                       const Divider(height: 48),
                       ElevatedButton.icon(
-                        onPressed: () => launch(
-                          'https://dungeonpaper.app/privacy-policy.html?utm_medium=app&utm_source=login',
+                        onPressed: () => launchUrl(
+                          Uri.parse(
+                              'https://dungeonpaper.app/privacy-policy.html?utm_medium=app&utm_source=login'),
                         ),
                         label: Text(S.current.privacyPolicy),
                         icon: const Icon(Icons.lock),
                       ),
+                      const SizedBox(height: 8),
                       ElevatedButton.icon(
-                        onPressed: () => launch(
+                        onPressed: () => launchUrl(
                           // TODO make changelog view that uses current version
-                          'https://dungeonpaper.app/changelog.html',
+                          Uri.parse('https://dungeonpaper.app/changelog.html'),
                         ),
                         label: Text(S.current.whatsNew),
                         icon: const Icon(Icons.new_releases),

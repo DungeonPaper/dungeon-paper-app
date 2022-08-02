@@ -8,8 +8,8 @@ import 'package:dungeon_paper/app/widgets/atoms/advanced_floating_action_button.
 import 'package:dungeon_paper/app/widgets/atoms/character_avatar.dart';
 import 'package:dungeon_paper/app/widgets/atoms/confirm_exit_view.dart';
 import 'package:dungeon_paper/core/dw_icons.dart';
+import 'package:dungeon_paper/core/platform_helper.dart';
 import 'package:dungeon_paper/core/utils/content_generators/character_name_generator.dart';
-import 'package:dungeon_paper/core/utils/platform_string.dart';
 import 'package:dungeon_paper/generated/l10n.dart';
 import 'package:flutter/material.dart';
 
@@ -56,7 +56,7 @@ class BasicInfoFormView extends GetView<BasicInfoFormController> with UserServic
                     hintText: S.current.createCharacterNameFieldPlaceholder,
                     floatingLabelBehavior: FloatingLabelBehavior.always,
                     suffixIcon: IconButton(
-                      tooltip: PlatformString.byInteractionType(
+                      tooltip: PlatformHelper.byInteractionType(
                         context,
                         touch: S.current.createCharRandomizeNameTooltipTouch,
                         mouse: S.current.createCharRandomizeNameTooltipClick,

@@ -3,7 +3,6 @@ import 'dart:async';
 import 'package:cloud_firestore/cloud_firestore.dart' as fs;
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dungeon_paper/app/data/models/meta.dart';
-import 'package:dungeon_paper/core/http/api_requests/search.dart';
 import 'package:flutter/foundation.dart';
 import 'package:localstore/localstore.dart';
 
