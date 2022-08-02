@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:dungeon_paper/app/data/models/user_settings.dart';
 import 'package:dungeon_paper/app/themes/theme_utils.dart';
+import 'package:dungeon_paper/app/themes/themes.dart';
 import 'package:flutter/material.dart';
 
 class User {
@@ -75,10 +76,19 @@ class User {
 
   bool get isGuest => username == 'guest';
   bool get isLoggedIn => !isGuest;
+  bool get isSu => flags['su'] == true;
+  bool get isDm => flags['dm_tools_preview'] == true;
 
   Brightness get brightness => settings.brightnessOverride ?? getCurrentPlatformBrightness();
 
   void applySettings() => settings.apply();
+
+  void applyDefaultTheme() {
+    AppThemes.setTheme(getTheme());
+  }
+
+  int getTheme() =>
+      brightness == Brightness.light ? settings.defaultLightTheme : settings.defaultDarkTheme;
 
   @override
   bool operator ==(Object other) =>

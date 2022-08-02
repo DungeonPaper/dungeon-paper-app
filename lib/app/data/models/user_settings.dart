@@ -75,6 +75,6 @@ class UserSettings with CharacterServiceMixin {
 
     if (maybeChar != null) {
       charService.switchToCharacterTheme(char);
-    }
+    } else {}
   }
 }

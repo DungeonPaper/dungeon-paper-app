@@ -1,4 +1,3 @@
-
 import 'package:dungeon_paper/app/data/services/loading_service.dart';
 import 'package:dungeon_paper/app/data/services/repository_service.dart';
 import 'package:dungeon_paper/app/data/services/user_service.dart';
@@ -80,6 +79,7 @@ class AuthService extends GetxService
     } catch (e) {
       debugPrint('Error while logging out: $e');
     }
+    user.applyDefaultTheme();
     userService.loadGuestData();
   }
 

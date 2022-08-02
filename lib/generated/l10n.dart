@@ -3247,6 +3247,36 @@ class S {
     );
   }
 
+  /// `Welcome to\nDungeon Paper 2!`
+  String get migrationTitle {
+    return Intl.message(
+      'Welcome to\nDungeon Paper 2!',
+      name: 'migrationTitle',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `To get started, pick a username and the language for the rulebook & app. If you already have an existing Dungeon Paper account your data might take a few seconds to migrate.`
+  String get migrationSubtitle {
+    return Intl.message(
+      'To get started, pick a username and the language for the rulebook & app. If you already have an existing Dungeon Paper account your data might take a few seconds to migrate.',
+      name: 'migrationSubtitle',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Your username is unique and can not be changed later, so think carefully! It will be used to identify all your library items when publishing.`
+  String get migrationUsernameInfo {
+    return Intl.message(
+      'Your username is unique and can not be changed later, so think carefully! It will be used to identify all your library items when publishing.',
+      name: 'migrationUsernameInfo',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `{category, select, starting {Starting} basic {Basic} special {Special} advanced1 {Advanced} advanced2 {Advanced} other {Other}}`
   String moveCategory(Object category) {
     return Intl.select(

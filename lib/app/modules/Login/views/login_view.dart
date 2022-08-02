@@ -1,4 +1,3 @@
-
 import 'package:dungeon_paper/app/widgets/atoms/labeled_divider.dart';
 import 'package:dungeon_paper/app/widgets/atoms/password_field.dart';
 import 'package:dungeon_paper/core/dw_icons.dart';
@@ -51,7 +50,7 @@ class LoginView extends GetView<LoginController> {
                       ),
                       const SizedBox(height: 24),
                       ...<Widget>[
-                        if (PlatformHelper.canUseAppleSignIn) ...[
+                        if (PlatformHelper.canUseGoogleSignIn) ...[
                           ElevatedButton.icon(
                             onPressed: controller.loginWithGoogle,
                             label: Text(S.current.signinWithGoogleButton),

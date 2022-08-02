@@ -815,6 +815,12 @@ class MessageLookup extends MessageLookupByLibrary {
         "markdownPreview":
             MessageLookupByLibrary.simpleMessage("Content Preview"),
         "maxLoad": MessageLookupByLibrary.simpleMessage("Max Load"),
+        "migrationSubtitle": MessageLookupByLibrary.simpleMessage(
+            "To get started, pick a username and the language for the rulebook & app. If you already have an existing Dungeon Paper account your data might take a few seconds to migrate."),
+        "migrationTitle": MessageLookupByLibrary.simpleMessage(
+            "Welcome to\nDungeon Paper 2!"),
+        "migrationUsernameInfo": MessageLookupByLibrary.simpleMessage(
+            "Your username is unique and can not be changed later, so think carefully! It will be used to identify all your library items when publishing."),
         "moveCategory": m68,
         "moveCategoryWithLevel": m69,
         "moveCategoryWithLevelShort": m70,

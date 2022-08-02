@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:dungeon_paper/app/data/services/user_service.dart';
+import 'package:dungeon_paper/app/themes/themes.dart';
 import 'package:dungeon_paper/core/storage_handler/storage_handler.dart';
 import 'package:dungeon_paper/core/utils/date_utils.dart';
 import 'package:dungeon_paper/core/utils/enums.dart';
@@ -94,13 +95,7 @@ class CharacterService extends GetxService with LoadingServiceMixin, UserService
 
     debugPrint('switching to theme ${character.getCurrentTheme(user)}');
 
-    _setTheme(newTheme);
-  }
-
-  void _setTheme(int newTheme) {
-    final dynamicTheme = DynamicTheme.of(Get.context!)!;
-    dynamicTheme.setTheme(newTheme);
-    // SystemChrome.setSystemUIOverlayStyle(getUiOverlayStyleFor(AppThemes.getTheme(newTheme)));
+    AppThemes.setTheme(newTheme);
   }
 
   void charsListener(List<DocData> json) {

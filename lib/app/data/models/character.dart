@@ -88,9 +88,9 @@ class Character with WithIcon implements WithMeta<Character, CharacterMeta> {
   int getLightTheme(User user) => settings.lightTheme ?? user.settings.defaultLightTheme;
   int getDarkTheme(User user) => settings.darkTheme ?? user.settings.defaultDarkTheme;
 
-  int getCurrentTheme(User user) => getThemeForBrightness(user);
+  int getCurrentTheme(User user) => getThemeForUserBrightness(user);
 
-  int getThemeForBrightness(User user) =>
+  int getThemeForUserBrightness(User user) =>
       user.brightness == Brightness.light ? getLightTheme(user) : getDarkTheme(user);
 
   static RollButton get basicActionRollButton => RollButton(
