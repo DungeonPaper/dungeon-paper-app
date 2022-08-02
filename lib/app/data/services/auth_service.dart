@@ -65,7 +65,7 @@ class AuthService extends GetxService
     return auth.signInWithCredential(credential);
   }
 
-  logout() async {
+  Future<void> logout() async {
     await StorageHandler.instance.local.clear();
     repo.my.clear();
     await auth.signOut();
@@ -101,6 +101,9 @@ class AuthService extends GetxService
       userService.loadGuestData();
     });
   }
+
+  Future<UserCredential> signUp({required String email, required String password}) async =>
+      auth.createUserWithEmailAndPassword(email: email, password: password);
 }
 
 mixin AuthServiceMixin {

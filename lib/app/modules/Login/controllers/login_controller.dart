@@ -11,9 +11,15 @@ class LoginController extends GetxController
   final formKey = GlobalKey<FormState>(debugLabel: 'loginForm');
   final email = TextEditingController();
   final password = TextEditingController();
+  final passwordConfirm = TextEditingController();
   final _valid = false.obs;
+  final _signup = false.obs;
 
   bool get valid => _valid.value;
+  bool get isSignUp => _signup.value;
+  bool get isLogin => !isSignUp;
+
+  void toggleSignup() => _signup.value = !_signup.value;
 
   void _loginWrapper(Future<void> Function() cb) async {
     try {
@@ -49,17 +55,25 @@ class LoginController extends GetxController
     );
   }
 
+  void signUp() {
+    _loginWrapper(
+      () => authService.signUp(email: email.text, password: password.text),
+    );
+  }
+
   @override
   void onInit() {
     super.onInit();
     email.addListener(validate);
     password.addListener(validate);
+    passwordConfirm.addListener(validate);
   }
 
   @override
   void onClose() {
-    email.removeListener(validate);
-    password.removeListener(validate);
+    email.dispose();
+    password.dispose();
+    passwordConfirm.dispose();
   }
 
   bool validate() {

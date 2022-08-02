@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:dungeon_paper/app/data/models/user.dart';
+import 'package:dungeon_paper/app/data/models/user_settings.dart';
 import 'package:dungeon_paper/app/data/services/auth_service.dart';
 import 'package:dungeon_paper/app/data/services/character_service.dart';
 import 'package:dungeon_paper/app/data/services/loading_service.dart';
@@ -86,17 +87,29 @@ class UserService extends GetxService
     return user;
   }
 
-  Future<User?> _migrateUser(String email) async {
+  Future<User?> _migrateUser(fba.User user) async {
     final migrationDetails = await Get.toNamed(
       Routes.migration,
-      arguments: MigrationArguments(email: email),
+      arguments: MigrationArguments(email: user.email ?? ''),
     ) as MigrationDetails?;
     if (migrationDetails == null) {
       return null;
     }
     await api.requests.migrateUser(migrationDetails);
-    final userDoc = await FirestoreDelegate().getDocument('Data', email);
-    return User.fromJson(userDoc!);
+    final userDoc = await FirestoreDelegate().getDocument('Data', user.email!);
+    if (userDoc != null) {
+      return User.fromJson(userDoc);
+    }
+    final newUser = User(
+      displayName: user.displayName ?? migrationDetails.username,
+      email: user.email!,
+      flags: {},
+      photoUrl: user.photoURL ?? '',
+      settings: UserSettings(),
+      username: migrationDetails.username,
+    );
+    await FirestoreDelegate().create('Data', user.email!, newUser.toJson());
+    return newUser;
   }
 
   void _registerUserListener() {
@@ -119,7 +132,7 @@ class UserService extends GetxService
     final needsMigration = dbUser == null;
 
     if (needsMigration) {
-      final resp = await _migrateUser(user.email!);
+      final resp = await _migrateUser(user);
       if (resp == null) {
         Get.rawSnackbar(title: S.current.errorUserOperationCanceled);
         loadingService.loadingUser = false;

@@ -275,29 +275,33 @@ class MessageLookup extends MessageLookupByLibrary {
 
   static String m87(string) => "Select ${string} to add";
 
-  static String m88(length) => "Password must be at least ${length} characters";
+  static String m88(provider) => "Sign in with ${provider}";
 
-  static String m89(pattern) => "Password must contain ${pattern}";
+  static String m89(length) => "Password must be at least ${length} characters";
 
-  static String m90(length) => "Username must be at least ${length} characters";
+  static String m90(pattern) => "Password must contain ${pattern}";
 
-  static String m91(button) => "${Intl.select(button, {
+  static String m91(length) => "Username must be at least ${length} characters";
+
+  static String m92(provider) => "Sign up with ${provider}";
+
+  static String m93(button) => "${Intl.select(button, {
             'damage': 'Damage',
             'other': '${button}',
           })}";
 
-  static String m92(level) => "${Intl.select(level, {
+  static String m94(level) => "${Intl.select(level, {
             'cantrip': 'Cantrip',
             'rote': 'Rote',
             'other': 'Level ${level}',
           })}";
 
-  static String m93(count) =>
+  static String m95(count) =>
       "${Intl.plural(count, zero: 'No spells', one: 'One spell', other: '${count} spells')}";
 
-  static String m94(tag) => "Copy from: ${tag}";
+  static String m96(tag) => "Copy from: ${tag}";
 
-  static String m95(entity) => "View ${entity}";
+  static String m97(entity) => "View ${entity}";
 
   final messages = _notInlinedMessages(_notInlinedMessages);
   static Map<String, Function> _notInlinedMessages(_) => <String, Function>{
@@ -904,16 +908,24 @@ class MessageLookup extends MessageLookupByLibrary {
             "Keep screen awake while using the app"),
         "settingsTitle": MessageLookupByLibrary.simpleMessage("Settings"),
         "signinButton": MessageLookupByLibrary.simpleMessage("Sign in"),
+        "signinGoToSigninButton":
+            MessageLookupByLibrary.simpleMessage("Sign in"),
+        "signinGoToSigninLabel":
+            MessageLookupByLibrary.simpleMessage("Already have an account?"),
+        "signinGoToSignupButton":
+            MessageLookupByLibrary.simpleMessage("Sign up"),
+        "signinGoToSignupLabel":
+            MessageLookupByLibrary.simpleMessage("Don\'t have an account?"),
+        "signinProviderApple": MessageLookupByLibrary.simpleMessage("Apple"),
+        "signinProviderFacebook":
+            MessageLookupByLibrary.simpleMessage("Facebook"),
+        "signinProviderGoogle": MessageLookupByLibrary.simpleMessage("Google"),
         "signinSubtitle": MessageLookupByLibrary.simpleMessage(
             "Sign in to your account to sync your data online, and get access to many more features."),
         "signinTitle": MessageLookupByLibrary.simpleMessage("Sign In"),
-        "signinWithAppleButton":
-            MessageLookupByLibrary.simpleMessage("Sign in with Apple"),
-        "signinWithFacebookButton":
-            MessageLookupByLibrary.simpleMessage("Sign in with Facebook"),
-        "signinWithGoogleButton":
-            MessageLookupByLibrary.simpleMessage("Sign in with Google"),
+        "signinWithButton": m88,
         "signoutButton": MessageLookupByLibrary.simpleMessage("Sign out"),
+        "signupButton": MessageLookupByLibrary.simpleMessage("Sign up"),
         "signupDefaultDataLanguage":
             MessageLookupByLibrary.simpleMessage("Default data language"),
         "signupEmail": MessageLookupByLibrary.simpleMessage("Email"),
@@ -922,12 +934,17 @@ class MessageLookup extends MessageLookupByLibrary {
         "signupEmailValidation":
             MessageLookupByLibrary.simpleMessage("Please enter a valid email"),
         "signupPassword": MessageLookupByLibrary.simpleMessage("Password"),
+        "signupPasswordConfirm":
+            MessageLookupByLibrary.simpleMessage("Confirm Password"),
+        "signupPasswordConfirmPlaceholder":
+            MessageLookupByLibrary.simpleMessage(
+                "Enter the same password again"),
         "signupPasswordPlaceholder":
             MessageLookupByLibrary.simpleMessage("Enter your password"),
-        "signupPasswordValidationLength": m88,
+        "signupPasswordValidationLength": m89,
         "signupPasswordValidationMatch":
             MessageLookupByLibrary.simpleMessage("Passwords do not match"),
-        "signupPasswordValidationPatternGeneric": m89,
+        "signupPasswordValidationPatternGeneric": m90,
         "signupPasswordValidationPatternLetter":
             MessageLookupByLibrary.simpleMessage(
                 "Password must contain at least one capital letter"),
@@ -940,9 +957,10 @@ class MessageLookup extends MessageLookupByLibrary {
         "signupUsername": MessageLookupByLibrary.simpleMessage("Username"),
         "signupUsernamePlaceholder":
             MessageLookupByLibrary.simpleMessage("Pick a unique username"),
-        "signupUsernameValidation": m90,
+        "signupUsernameValidation": m91,
         "signupUsernameValidationPattern": MessageLookupByLibrary.simpleMessage(
             "Username must only contain letters, numbers, dashes and underscores"),
+        "signupWithButton": m92,
         "socialApple": MessageLookupByLibrary.simpleMessage("App Store"),
         "socialDiscord": MessageLookupByLibrary.simpleMessage("Discord"),
         "socialFacebook": MessageLookupByLibrary.simpleMessage("Facebook"),
@@ -952,11 +970,11 @@ class MessageLookup extends MessageLookupByLibrary {
         "sortMoveDown": MessageLookupByLibrary.simpleMessage("Move down"),
         "sortMoveUp": MessageLookupByLibrary.simpleMessage("Move up"),
         "specialDice": MessageLookupByLibrary.simpleMessage("Special Dice"),
-        "specialRollButton": m91,
-        "spellLevel": m92,
+        "specialRollButton": m93,
+        "spellLevel": m94,
         "spells": MessageLookupByLibrary.simpleMessage("Spells"),
-        "spellsWithCount": m93,
-        "tagCopyFrom": m94,
+        "spellsWithCount": m95,
+        "tagCopyFrom": m96,
         "tagDetails": MessageLookupByLibrary.simpleMessage("Tag Information"),
         "themeTurnDark":
             MessageLookupByLibrary.simpleMessage("Switch to Dark Mode"),
@@ -972,7 +990,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "userUnregistered":
             MessageLookupByLibrary.simpleMessage("Not registered"),
         "view": MessageLookupByLibrary.simpleMessage("View"),
-        "viewGeneric": m95,
+        "viewGeneric": m97,
         "whatsNew": MessageLookupByLibrary.simpleMessage("What\'s new?"),
         "xpDialogChangeOverride":
             MessageLookupByLibrary.simpleMessage("Update manually"),

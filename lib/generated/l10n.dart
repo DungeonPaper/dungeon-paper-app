@@ -3969,6 +3969,46 @@ class S {
     );
   }
 
+  /// `Don't have an account?`
+  String get signinGoToSignupLabel {
+    return Intl.message(
+      'Don\'t have an account?',
+      name: 'signinGoToSignupLabel',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Sign up`
+  String get signinGoToSignupButton {
+    return Intl.message(
+      'Sign up',
+      name: 'signinGoToSignupButton',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Already have an account?`
+  String get signinGoToSigninLabel {
+    return Intl.message(
+      'Already have an account?',
+      name: 'signinGoToSigninLabel',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Sign in`
+  String get signinGoToSigninButton {
+    return Intl.message(
+      'Sign in',
+      name: 'signinGoToSigninButton',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `Sign in to your account to sync your data online, and get access to many more features.`
   String get signinSubtitle {
     return Intl.message(
@@ -4009,31 +4049,61 @@ class S {
     );
   }
 
-  /// `Sign in with Apple`
-  String get signinWithAppleButton {
+  /// `Sign up`
+  String get signupButton {
     return Intl.message(
-      'Sign in with Apple',
-      name: 'signinWithAppleButton',
+      'Sign up',
+      name: 'signupButton',
       desc: '',
       args: [],
     );
   }
 
-  /// `Sign in with Facebook`
-  String get signinWithFacebookButton {
+  /// `Sign in with {provider}`
+  String signinWithButton(Object provider) {
     return Intl.message(
-      'Sign in with Facebook',
-      name: 'signinWithFacebookButton',
+      'Sign in with $provider',
+      name: 'signinWithButton',
+      desc: '',
+      args: [provider],
+    );
+  }
+
+  /// `Sign up with {provider}`
+  String signupWithButton(Object provider) {
+    return Intl.message(
+      'Sign up with $provider',
+      name: 'signupWithButton',
+      desc: '',
+      args: [provider],
+    );
+  }
+
+  /// `Facebook`
+  String get signinProviderFacebook {
+    return Intl.message(
+      'Facebook',
+      name: 'signinProviderFacebook',
       desc: '',
       args: [],
     );
   }
 
-  /// `Sign in with Google`
-  String get signinWithGoogleButton {
+  /// `Google`
+  String get signinProviderGoogle {
     return Intl.message(
-      'Sign in with Google',
-      name: 'signinWithGoogleButton',
+      'Google',
+      name: 'signinProviderGoogle',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Apple`
+  String get signinProviderApple {
+    return Intl.message(
+      'Apple',
+      name: 'signinProviderApple',
       desc: '',
       args: [],
     );
@@ -4104,6 +4174,26 @@ class S {
     return Intl.message(
       'Enter your password',
       name: 'signupPasswordPlaceholder',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Confirm Password`
+  String get signupPasswordConfirm {
+    return Intl.message(
+      'Confirm Password',
+      name: 'signupPasswordConfirm',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Enter the same password again`
+  String get signupPasswordConfirmPlaceholder {
+    return Intl.message(
+      'Enter the same password again',
+      name: 'signupPasswordConfirmPlaceholder',
       desc: '',
       args: [],
     );
