@@ -94,7 +94,7 @@ class CharacterBioDialog extends GetView with CharacterServiceMixin {
                 char.bio.alignment.description.isNotEmpty
                     ? MarkdownBody(
                         data: char.bio.alignment.description,
-                        onTapLink: (_, url, __) => launch(url!),
+                        onTapLink: (_, url, __) => launchUrl(Uri.parse(url!)),
                       )
                     : Text(S.current.noDescription),
               ],

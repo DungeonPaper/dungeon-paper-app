@@ -22,7 +22,7 @@
       "args": [
         "pub",
         "run",
-        "flutter_launcher_icons:main"
+        "icons_launcher:main"
       ],
       "problemMatcher": []
     },

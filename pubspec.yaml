@@ -42,7 +42,6 @@ dependencies:
   flutter:
     sdk: flutter
   flutter_file_dialog: ^2.3.0
-  flutter_launcher_icons: ^0.9.3
   flutter_markdown: ^0.6.10+2
   flutter_native_splash: ^2.2.5
   flutter_svg: ^1.0.3
@@ -186,15 +185,20 @@ flutter_native_splash:
   color_dark: "#1c1e21"
   image: "assets/images/logo.png"
 flutter_icons:
-  remove_alpha_ios: true
-  remove_alpha_macos: true
-  android: true
-  web: true
-  macos: true
+  image_path: "assets/images/logo.png"
+  android:
+    enable: true
+    image_path: "assets/images/launcher_icons/android.png"
+  web:
+    enable: true
+    favicon_path: "assets/images/logo.png"
+  ios:
+    enable: true
+    image_path: "assets/images/launcher_icons/ios.png"
+  macos:
+    enable: true
+    image_path: "assets/images/launcher_icons/ios.png"
   windows: true
   linux: true
-  ios: true
-  image_path: "assets/images/logo.png"
-  image_path_android: "assets/images/launcher_icons/android.png"
-  image_path_ios: "assets/images/launcher_icons/ios.png"
-  ios_image_path: null
+  remove_alpha_ios: true
+  remove_alpha_macos: true
