@@ -22,7 +22,7 @@
       "args": [
         "pub",
         "run",
-        "icons_launcher:main"
+        "icons_launcher:create"
       ],
       "problemMatcher": []
     },

@@ -48,7 +48,7 @@ dependencies:
   get: ^4.6.1
   google_sign_in: ^5.3.3
   http: ^0.13.4
-  icons_launcher: ^1.2.1
+  icons_launcher: ^2.0.2
   image_cropper: ^2.0.2
   intl: ^0.17.0
   intl_generator: ^0.3.0
@@ -184,21 +184,24 @@ flutter_native_splash:
   color: "#fcf5e5"
   color_dark: "#1c1e21"
   image: "assets/images/logo.png"
-flutter_icons:
+icons_launcher:
   image_path: "assets/images/logo.png"
-  android:
-    enable: true
-    image_path: "assets/images/launcher_icons/android.png"
-  web:
-    enable: true
-    favicon_path: "assets/images/logo.png"
-  ios:
-    enable: true
-    image_path: "assets/images/launcher_icons/ios.png"
-  macos:
-    enable: true
-    image_path: "assets/images/launcher_icons/ios.png"
-  windows: true
-  linux: true
-  remove_alpha_ios: true
-  remove_alpha_macos: true
+  platforms:
+    android:
+      enable: true
+      image_path: "assets/images/launcher_icons/android.png"
+    web:
+      enable: true
+      favicon_path: "assets/images/logo.png"
+    ios:
+      enable: true
+      image_path: "assets/images/launcher_icons/ios.png"
+    macos:
+      enable: true
+      image_path: "assets/images/launcher_icons/ios.png"
+    windows:
+      enable: true
+    linux:
+      enable: true
+    remove_alpha_ios: true
+    remove_alpha_macos: true
