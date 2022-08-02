@@ -315,6 +315,8 @@ abstract class RepositoryCache {
     spells.clear();
     notes.clear();
     tags.clear();
+    //
+    storage.clear();
   }
 
   RxMap<String, T> listByType<T>([Type? type]) {

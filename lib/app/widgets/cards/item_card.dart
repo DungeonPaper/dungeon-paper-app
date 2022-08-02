@@ -22,6 +22,7 @@ class ItemCard extends StatelessWidget {
     this.maxContentHeight,
     this.expandable = true,
     this.highlightWords = const [],
+    this.reorderablePadding = false,
   }) : super(key: key);
 
   final Item item;
@@ -35,6 +36,7 @@ class ItemCard extends StatelessWidget {
   final double? maxContentHeight;
   final bool expandable;
   final List<String> highlightWords;
+  final bool reorderablePadding;
 
   @override
   Widget build(BuildContext context) {
@@ -45,6 +47,7 @@ class ItemCard extends StatelessWidget {
       maxContentHeight: maxContentHeight,
       expandable: expandable,
       explanation: '',
+      reorderablePadding: reorderablePadding,
       leading: [
         if (item.damage != 0) ...[
           ItemDamageChip(item: item),

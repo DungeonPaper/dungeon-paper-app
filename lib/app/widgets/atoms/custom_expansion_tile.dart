@@ -69,6 +69,7 @@ class CustomExpansionTile extends StatefulWidget {
     this.controlAffinity,
     this.icon,
     this.minIconWidth = 20,
+    this.reorderablePadding = false,
   })  :
         // ignore: unnecessary_null_comparison
         assert(initiallyExpanded != null),
@@ -111,6 +112,7 @@ class CustomExpansionTile extends StatefulWidget {
     this.controlAffinity,
     this.icon,
     this.minIconWidth = 20,
+    this.reorderablePadding = false,
   })  :
         // ignore: unnecessary_null_comparison
         assert(initiallyExpanded != null),
@@ -264,6 +266,8 @@ class CustomExpansionTile extends StatefulWidget {
   /// which means that the expansion arrow icon will appear on the tile's trailing edge.
   final ListTileControlAffinity? controlAffinity;
 
+  final bool reorderablePadding;
+
   @override
   State<CustomExpansionTile> createState() => _CustomExpansionTileState();
 }
@@ -350,6 +354,12 @@ class _CustomExpansionTileState extends State<CustomExpansionTile>
   Widget? _buildTrailingIcon(BuildContext context) {
     if (!widget.expandable ||
         _effectiveAffinity(widget.controlAffinity) != ListTileControlAffinity.trailing) return null;
+    if (widget.reorderablePadding) {
+      return Padding(
+        padding: const EdgeInsets.only(right: 24),
+        child: _buildIcon(context),
+      );
+    }
     return _buildIcon(context);
   }
 

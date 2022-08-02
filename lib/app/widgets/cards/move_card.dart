@@ -22,6 +22,7 @@ class MoveCard extends StatelessWidget {
     this.advancedLevelDisplay = AdvancedLevelDisplay.short,
     this.highlightWords = const [],
     this.abilityScores,
+    this.reorderablePadding = false,
   }) : super(key: key);
 
   final Move move;
@@ -37,6 +38,7 @@ class MoveCard extends StatelessWidget {
   final AdvancedLevelDisplay advancedLevelDisplay;
   final List<String> highlightWords;
   final AbilityScores? abilityScores;
+  final bool reorderablePadding;
 
   @override
   Widget build(BuildContext context) {
@@ -46,6 +48,7 @@ class MoveCard extends StatelessWidget {
       explanation: move.explanation,
       maxContentHeight: maxContentHeight,
       expandable: expandable,
+      reorderablePadding: reorderablePadding,
       expansionKey: expansionKey ?? PageStorageKey(move.key),
       chips: move.tags.map((t) => TagChip.openDescription(tag: t)),
       dice: showDice ? move.dice : [],

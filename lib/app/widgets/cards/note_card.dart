@@ -17,6 +17,7 @@ class NoteCard extends StatelessWidget {
     this.maxContentHeight,
     this.expandable = true,
     this.highlightWords = const [],
+    this.reorderablePadding = false,
   }) : super(key: key);
 
   final Note note;
@@ -29,6 +30,7 @@ class NoteCard extends StatelessWidget {
   final double? maxContentHeight;
   final bool expandable;
   final List<String> highlightWords;
+  final bool reorderablePadding;
 
   @override
   Widget build(BuildContext context) {
@@ -39,6 +41,7 @@ class NoteCard extends StatelessWidget {
       explanation: '',
       maxContentHeight: maxContentHeight,
       expandable: expandable,
+      reorderablePadding: reorderablePadding,
       chips: note.tags.map((t) => TagChip.openDescription(tag: t)),
       dice: const [],
       icon: showIcon ? Icon(note.icon, size: 16) : null,

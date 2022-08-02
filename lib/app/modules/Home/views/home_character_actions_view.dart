@@ -159,6 +159,7 @@ class HomeCharacterActionsView extends GetView<CharacterService> {
         preSelections: char.moves,
       ),
       cardBuilder: (move, {required onSave, required onDelete}) => MoveCard(
+        reorderablePadding: true,
         move: move,
         advancedLevelDisplay: AdvancedLevelDisplay.none,
         abilityScores: char.abilityScores,
@@ -192,6 +193,7 @@ class HomeCharacterActionsView extends GetView<CharacterService> {
         preSelections: char.spells,
       ),
       cardBuilder: (spell, {required onSave, required onDelete}) => SpellCard(
+        reorderablePadding: true,
         spell: spell,
         abilityScores: char.abilityScores,
         actions: [
@@ -230,6 +232,7 @@ class HomeCharacterActionsView extends GetView<CharacterService> {
         preSelections: char.items,
       ),
       cardBuilder: (item, {required onSave, required onDelete}) => ItemCard(
+        reorderablePadding: true,
         item: item,
         actions: [
           EntityEditMenu(

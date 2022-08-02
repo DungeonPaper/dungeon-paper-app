@@ -23,6 +23,7 @@ class CustomExpansionPanel extends StatelessWidget {
   final Color? textColor;
   final Color? collapsedTextColor;
   final Widget Function(BuildContext context, Color color)? titleBuilder;
+  final bool reorderablePadding;
 
   static const defaultPadding = EdgeInsets.symmetric(horizontal: 8);
 
@@ -48,6 +49,7 @@ class CustomExpansionPanel extends StatelessWidget {
     this.collapsedIconColor,
     this.textColor,
     this.collapsedTextColor,
+    this.reorderablePadding = false,
   }) : super(key: key);
 
   @override
@@ -74,6 +76,7 @@ class CustomExpansionPanel extends StatelessWidget {
       collapsedIconColor: collapsedIconColor,
       textColor: textColor,
       collapsedTextColor: collapsedTextColor,
+      reorderablePadding: reorderablePadding,
     );
   }
 }

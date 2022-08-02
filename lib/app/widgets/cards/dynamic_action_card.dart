@@ -2,6 +2,7 @@ import 'package:dungeon_paper/app/data/models/ability_scores.dart';
 import 'package:dungeon_paper/app/widgets/atoms/custom_expansion_panel.dart';
 import 'package:dungeon_paper/app/widgets/atoms/round_roll_button.dart';
 import 'package:dungeon_paper/app/widgets/menus/entity_edit_menu.dart';
+import 'package:dungeon_paper/core/platform_helper.dart';
 import 'package:dungeon_paper/core/utils/markdown_highlight.dart';
 import 'package:dungeon_paper/core/utils/markdown_styles.dart';
 import 'package:dungeon_paper/generated/l10n.dart';
@@ -35,6 +36,7 @@ class DynamicActionCard extends StatefulWidget {
     this.expandable = true,
     this.highlightWords = const [],
     this.abilityScores,
+    this.reorderablePadding = false,
   })  : assert(dice.length == 0 || abilityScores != null),
         super(key: key);
 
@@ -60,6 +62,7 @@ class DynamicActionCard extends StatefulWidget {
   final Iterable<Widget> leading;
   final List<String> highlightWords;
   final AbilityScores? abilityScores;
+  final bool reorderablePadding;
 
   @override
   State<DynamicActionCard> createState() => _DynamicActionCardState();
@@ -107,6 +110,7 @@ class _DynamicActionCardState extends State<DynamicActionCard> {
           elevation: expanded ? 5 : 1,
           child: CustomExpansionPanel(
             expandable: widget.expandable,
+            reorderablePadding: widget.reorderablePadding,
             titleBuilder: (context, color) => HighlightText(
               widget.title,
               highlightWords: widget.highlightWords,
@@ -142,7 +146,7 @@ class _DynamicActionCardState extends State<DynamicActionCard> {
                           child: star,
                         )
                   : const SizedBox.shrink(),
-              ...widget.trailing
+              ...widget.trailing,
             ],
             children: widget.maxContentHeight == null
                 ? children

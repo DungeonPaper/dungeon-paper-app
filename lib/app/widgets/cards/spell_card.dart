@@ -20,6 +20,7 @@ class SpellCard extends StatelessWidget {
     this.expandable = true,
     this.highlightWords = const [],
     this.abilityScores,
+    this.reorderablePadding = false,
   }) : super(key: key);
 
   final Spell spell;
@@ -34,6 +35,7 @@ class SpellCard extends StatelessWidget {
   final bool expandable;
   final List<String> highlightWords;
   final AbilityScores? abilityScores;
+  final bool reorderablePadding;
 
   @override
   Widget build(BuildContext context) {
@@ -43,6 +45,7 @@ class SpellCard extends StatelessWidget {
       explanation: spell.explanation,
       maxContentHeight: maxContentHeight,
       expandable: expandable,
+      reorderablePadding: reorderablePadding,
       leading: [SpellLevelChip(level: spell.level)],
       chips: const [],
       dice: showDice ? spell.dice : [],

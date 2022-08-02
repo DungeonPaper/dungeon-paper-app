@@ -69,6 +69,7 @@ class HomeCharacterJournalView extends GetView<CharacterService> {
                         padding: const EdgeInsets.symmetric(vertical: 4),
                         child: NoteCard(
                           note: note,
+                          reorderablePadding: true,
                           actions: [
                             EntityEditMenu(
                               onDelete: confirmDelete(context, note, note.title),
