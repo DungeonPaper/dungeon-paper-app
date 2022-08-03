@@ -24,18 +24,17 @@ class UserService extends GetxService
   StreamSubscription? _sub;
 
   Future<void> loadBuiltInRepo({bool ignoreCache = false}) async {
-    repo.builtIn.clear();
-    repo.builtIn.clearListeners();
+    await repo.builtIn.dispose();
     return repo.builtIn.init(ignoreCache: ignoreCache);
   }
 
-  Future<void> loadMyRepo({bool ignoreCache = false}) {
-    repo.my.clear();
-    repo.my.clearListeners();
+  Future<void> loadMyRepo({bool ignoreCache = false}) async {
+    await repo.my.dispose();
     return repo.my.init(ignoreCache: ignoreCache);
   }
 
   Future<void> loadUserData(fba.User user) async {
+    _clearUserListener();
     final email = user.email;
     debugPrint('loading user data for $email');
     api.requests.idToken = await user.getIdToken();
@@ -59,18 +58,20 @@ class UserService extends GetxService
   bool get isLoggedIn => !isGuest;
 
   void loadGuestData() async {
+    _clearUserListener();
     StorageHandler.instance.currentDelegate = 'local';
     StorageHandler.instance.setCollectionPrefix(null);
-    await loadMyRepo();
+    await loadMyRepo(ignoreCache: true);
     charService.registerCharacterListener();
     loadingService.loadingUser = false;
     loadingService.afterFirstLoad = !loadingService.loadingCharacters;
   }
 
-  void logout() {
-    authService.logout();
+  void logout() async {
+    _clearUserListener();
     charService.clear();
     _current.value = User.guest();
+    await authService.logout();
   }
 
   @override
@@ -113,7 +114,7 @@ class UserService extends GetxService
   }
 
   void _registerUserListener() {
-    _sub?.cancel();
+    _clearUserListener();
     debugPrint('registering user listener');
     _sub = StorageHandler.instance.firestoreGlobal
         .documentListener('Data', current.email, _updateUser);
@@ -154,6 +155,12 @@ class UserService extends GetxService
     await authService.fbUser.value!.updateEmail(email);
     await updateUser(updatedUser);
     loadUserData(fba.FirebaseAuth.instance.currentUser!);
+  }
+
+  void _clearUserListener() {
+    debugPrint('clearing user listener');
+    _sub?.cancel();
+    _sub = null;
   }
 }
 

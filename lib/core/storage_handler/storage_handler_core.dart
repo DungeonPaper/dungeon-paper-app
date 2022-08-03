@@ -6,19 +6,23 @@ class StorageHandler implements StorageDelegate {
   static StorageHandler? _instance;
   static StorageHandler get instance => _instance ??= StorageHandler();
 
+  static final _firestore = FirestoreDelegate();
+  static final _firestoreGlobal = FirestoreDelegate();
+  static final _local = LocalStorageDelegate();
+
   String currentDelegate = 'local';
 
-  final delegates = <String, StorageDelegate>{
-    'local': LocalStorageDelegate(),
-    'firestore': FirestoreDelegate(),
-    'firestoreGlobal': FirestoreDelegate(),
-  };
+  Map<String, StorageDelegate Function()> get delegates => {
+        'local': () => local,
+        'firestore': () => firestore,
+        'firestoreGlobal': () => firestoreGlobal,
+      };
 
-  FirestoreDelegate get firestore => delegates['firestore'] as FirestoreDelegate;
-  FirestoreDelegate get firestoreGlobal => delegates['firestoreGlobal'] as FirestoreDelegate;
-  LocalStorageDelegate get local => delegates['local'] as LocalStorageDelegate;
+  FirestoreDelegate get firestore => _firestore;
+  FirestoreDelegate get firestoreGlobal => _firestoreGlobal;
+  LocalStorageDelegate get local => _local;
 
-  StorageDelegate get delegate => delegates[currentDelegate]!;
+  StorageDelegate get delegate => delegates[currentDelegate]!.call();
 
   @override
   Future<DocData?> getDocument(String collection, String document) {

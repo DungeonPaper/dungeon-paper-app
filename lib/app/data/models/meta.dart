@@ -253,11 +253,13 @@ class Meta<DataType> with RepositoryServiceMixin {
         return 'Races';
       case Note:
         return 'Notes';
+      case dw.Tag:
+        return 'Tags';
     }
   }
 
   static final allStorageKeys = <Type, String>{
-    for (final t in [CharacterClass, Character, Item, Monster, Move, Spell, Race, Note])
+    for (final t in [CharacterClass, Character, Item, Monster, Move, Spell, Race, Note, dw.Tag])
       t: Meta.storageKeyFor(t),
   };
 

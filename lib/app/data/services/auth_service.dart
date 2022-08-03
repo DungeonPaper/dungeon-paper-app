@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:dungeon_paper/app/data/services/loading_service.dart';
 import 'package:dungeon_paper/app/data/services/repository_service.dart';
 import 'package:dungeon_paper/app/data/services/user_service.dart';
@@ -11,6 +13,8 @@ import 'package:sign_in_with_apple/sign_in_with_apple.dart';
 
 class AuthService extends GetxService
     with UserServiceMixin, LoadingServiceMixin, RepositoryServiceMixin {
+  StreamSubscription<User?>? _sub;
+
   FirebaseAuth get auth => FirebaseAuth.instance;
   final gSignIn = GoogleSignIn.standard();
   final fbUser = Rx<User?>(null);
@@ -66,8 +70,9 @@ class AuthService extends GetxService
   }
 
   Future<void> logout() async {
-    await StorageHandler.instance.local.clear();
-    repo.my.clear();
+    _clearAuthListener();
+    // await StorageHandler.instance.local.clear();
+    await repo.my.dispose();
     await auth.signOut();
     try {
       if (PlatformHelper.canUseGoogleSignIn) {
@@ -80,30 +85,45 @@ class AuthService extends GetxService
       debugPrint('Error while logging out: $e');
     }
     user.applyDefaultTheme();
-    userService.loadGuestData();
+    _registerAuthListener();
   }
 
   @override
   void onInit() {
     super.onInit();
+    _registerAuthListener();
+  }
 
-    auth.userChanges().listen((user) {
-      debugPrint('user changed $user');
-      fbUser.value = user;
+  void _registerAuthListener() {
+    debugPrint('Registering auth listener');
+    _sub = auth.userChanges().listen(_authListener);
+  }
 
-      if (user != null) {
-        loadingService.loadingCharacters = !loadingService.afterFirstLoad;
-        loadingService.afterFirstLoad = false;
-        userService.loadUserData(user);
-        return;
-      }
+  void _authListener(user) {
+    if (_sub == null) {
+      return;
+    }
+    debugPrint('fb user changed: $user');
+    fbUser.value = user;
 
-      userService.loadGuestData();
-    });
+    if (user != null) {
+      loadingService.loadingCharacters = !loadingService.afterFirstLoad;
+      loadingService.afterFirstLoad = false;
+      userService.loadUserData(user);
+      return;
+    }
+
+    userService.loadGuestData();
   }
 
   Future<UserCredential> signUp({required String email, required String password}) async =>
       auth.createUserWithEmailAndPassword(email: email, password: password);
+
+  void _clearAuthListener() {
+    debugPrint('clearing auth listener');
+    _sub?.cancel();
+    _sub = null;
+  }
 }
 
 mixin AuthServiceMixin {

@@ -4,7 +4,10 @@ abstract class StorageDelegate {
   String? _collectionPrefix;
   String? get collectionPrefix => _collectionPrefix;
 
-  void setCollectionPrefix(String? prefix) => _collectionPrefix = prefix;
+  void setCollectionPrefix(String? prefix) {
+    debugPrint('Set collection prefix: $prefix for $this');
+    _collectionPrefix = prefix;
+  }
 
   Future<List<DocData>> getCollection(String collection);
   StreamSubscription<List<DocData>> collectionListener(

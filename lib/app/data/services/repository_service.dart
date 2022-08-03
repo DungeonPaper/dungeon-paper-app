@@ -26,15 +26,14 @@ class RepositoryService extends GetxService {
   StorageDelegate get storage => StorageHandler.instance;
 
   void clear() {
-    builtIn.clear();
-    my.clear();
+    builtIn._clearValues();
+    my._clearValues();
   }
 
   @override
   void onClose() async {
     super.onClose();
-    builtIn.dispose();
-    my.dispose();
+    await Future.wait([builtIn.dispose(), my.dispose()]);
   }
 
   Future<void> loadAllData() async {
@@ -108,12 +107,13 @@ abstract class RepositoryCache {
       final shouldLoadFromRemote = ignoreCache ? true : await shouldUseRemote(cacheRes);
 
       if (shouldLoadFromRemote) {
-        debugPrint('[$id] Cache invalid, loading from remote');
+        debugPrint('[$id] Cache ${ignoreCache ? 'skipped' : 'invalid'}, loading from remote');
         SearchResponse resp;
         try {
           resp = await getFromRemote;
           await setAllFrom(resp, saveIntoCache: true);
         } catch (e) {
+          debugPrint('[$id] Error loading from remote: $e');
           resp = SearchResponse.empty();
         }
       } else {
@@ -132,15 +132,28 @@ abstract class RepositoryCache {
   }
 
   Future<SearchResponse> getCacheResponse() async {
+    final promises = {
+      'CharacterClasses': cache.getCollection(cacheKey('CharacterClasses')),
+      'Items': cache.getCollection(cacheKey('Items')),
+      'Monsters': cache.getCollection(cacheKey('Monsters')),
+      'Moves': cache.getCollection(cacheKey('Moves')),
+      'Races': cache.getCollection(cacheKey('Races')),
+      'Spells': cache.getCollection(cacheKey('Spells')),
+      'Tags': cache.getCollection(cacheKey('Tags')),
+      'Notes': cache.getCollection(cacheKey('Notes')),
+    };
+    final resp = await Future.wait(promises.values);
+    final keys = promises.keys.toList();
+
     return SearchResponse.fromJson({
-      'CharacterClasses': await cache.getCollection(cacheKey('CharacterClasses')),
-      'Items': await cache.getCollection(cacheKey('Items')),
-      'Monsters': await cache.getCollection(cacheKey('Monsters')),
-      'Moves': await cache.getCollection(cacheKey('Moves')),
-      'Races': await cache.getCollection(cacheKey('Races')),
-      'Spells': await cache.getCollection(cacheKey('Spells')),
-      'Tags': await cache.getCollection(cacheKey('Tags')),
-      'Notes': await cache.getCollection(cacheKey('Notes')),
+      'CharacterClasses': resp[keys.indexOf('CharacterClasses')],
+      'Items': resp[keys.indexOf('Items')],
+      'Monsters': resp[keys.indexOf('Monsters')],
+      'Moves': resp[keys.indexOf('Moves')],
+      'Races': resp[keys.indexOf('Races')],
+      'Spells': resp[keys.indexOf('Spells')],
+      'Tags': resp[keys.indexOf('Tags')],
+      'Notes': resp[keys.indexOf('Notes')],
     });
   }
 
@@ -156,6 +169,7 @@ abstract class RepositoryCache {
   }
 
   void registerListeners() {
+    clearListeners();
     debugPrint(
         '[$id] registering listeners, delegate: $storage, listener prefix: "${listenerKey('')}"');
 
@@ -275,14 +289,17 @@ abstract class RepositoryCache {
   }
 
   void clearListeners() {
+    debugPrint('[$id] Clearing listeners');
     for (var sub in subs) {
       sub.cancel();
     }
+    subs.clear();
   }
 
-  void dispose() {
-    clear();
+  Future<void> dispose() async {
     clearListeners();
+    _clearValues();
+    await cache.clear();
   }
 
   Future<void> setAllFrom(
@@ -306,7 +323,7 @@ abstract class RepositoryCache {
   String cacheKey(String key) => (cachePrefix ?? '') + key;
   String listenerKey(String key) => cacheKey(key);
 
-  void clear() {
+  void _clearValues() {
     classes.clear();
     items.clear();
     monsters.clear();
@@ -315,8 +332,6 @@ abstract class RepositoryCache {
     spells.clear();
     notes.clear();
     tags.clear();
-    //
-    storage.clear();
   }
 
   RxMap<String, T> listByType<T>([Type? type]) {

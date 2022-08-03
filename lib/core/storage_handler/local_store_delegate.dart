@@ -94,16 +94,21 @@ class LocalStorageDelegate extends StorageDelegate {
 
   @override
   Future<void> clear() async {
+    debugPrint('clearing $this');
     for (final col in Meta.allStorageKeys.values) {
       colStreams[col]?.close();
+      colStreams.remove(col);
       final docs = await storage.collection(col).get();
       if (docs == null) {
         continue;
       }
       debugPrint('clearing $col');
       for (final doc in docs.entries) {
-        docStreams['$col/${doc.key}']?.close();
-        await storage.collection(col).doc(doc.key).delete();
+        final key = doc.key.substring(col.length + 2);
+        docStreams[key]?.close();
+        docStreams.remove(key);
+        await storage.collection(col).doc(key).delete();
+        debugPrint('Deleted $col/$key');
       }
     }
   }

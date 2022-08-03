@@ -63,7 +63,8 @@ class CharacterService extends GetxService with LoadingServiceMixin, UserService
   }
 
   Future<void> registerCharacterListener() async {
-    _sub?.cancel();
+    _clearCharListener();
+    debugPrint('registering character listener');
     _sub = StorageHandler.instance.collectionListener('Characters', charsListener);
   }
 
@@ -160,6 +161,12 @@ class CharacterService extends GetxService with LoadingServiceMixin, UserService
     for (final char in chars) {
       updateCharacter(char);
     }
+  }
+
+  void _clearCharListener() {
+    debugPrint('clearing char listener');
+    _sub?.cancel();
+    _sub = null;
   }
 }
 

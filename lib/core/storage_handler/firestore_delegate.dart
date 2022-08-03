@@ -62,14 +62,22 @@ class FirestoreDelegate extends StorageDelegate {
   }
 
   Stream<DocData?> asDocumentStream(Stream<DocumentSnapshot<DocData?>> source) async* {
-    await for (final snap in source) {
-      yield snap.data();
+    try {
+      await for (final snap in source) {
+        yield snap.data();
+      }
+    } catch (e) {
+      yield null;
     }
   }
 
   Stream<List<DocData>> asCollectionStream(Stream<QuerySnapshot<DocData>> source) async* {
-    await for (final query in source) {
-      yield query.docs.map((doc) => doc.data()).toList();
+    try {
+      await for (final query in source) {
+        yield query.docs.map((doc) => doc.data()).toList();
+      }
+    } catch (e) {
+      yield [];
     }
   }
 
