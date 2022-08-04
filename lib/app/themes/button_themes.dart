@@ -12,13 +12,13 @@ class ButtonThemes {
   // );
 
   static ButtonStyle? errorElevated(BuildContext context) => ElevatedButton.styleFrom(
-        primary: Theme.of(context).errorColor,
-        onPrimary: Theme.of(context).colorScheme.onError,
+        backgroundColor: Theme.of(context).errorColor,
+        foregroundColor: Theme.of(context).colorScheme.onError,
         shape: rRectShape,
       );
 
   static ButtonStyle? errorText(BuildContext context) => TextButton.styleFrom(
-        primary: Theme.of(context).errorColor,
+        backgroundColor: Theme.of(context).errorColor,
         textStyle: Theme.of(context).textTheme.button!.copyWith(
               color: Theme.of(context).colorScheme.onError,
             ),
@@ -26,7 +26,7 @@ class ButtonThemes {
       );
 
   static ButtonStyle? primaryOutlined(BuildContext context) => OutlinedButton.styleFrom(
-        primary: Theme.of(context).scaffoldBackgroundColor.computeLuminance() > 0.5
+        backgroundColor: Theme.of(context).scaffoldBackgroundColor.computeLuminance() > 0.5
             ? Theme.of(context).primaryColor
             : Theme.of(context).colorScheme.onSurface,
         shape: rRectShape,

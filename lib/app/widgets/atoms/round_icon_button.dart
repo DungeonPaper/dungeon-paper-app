@@ -50,8 +50,8 @@ class RoundIconButton extends StatelessWidget {
       style: ElevatedButton.styleFrom(
         padding: EdgeInsets.zero,
         minimumSize: Size.square(size),
-        onPrimary: fgColor,
-        primary: bgColor,
+        backgroundColor: bgColor,
+        foregroundColor: fgColor,
       ),
       onPressed: onPressed,
     );

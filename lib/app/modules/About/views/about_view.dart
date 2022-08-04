@@ -176,9 +176,9 @@ class _SocialButton extends StatelessWidget {
       label: label,
       onPressed: () => launchUrl(Uri.parse(url)),
       style: ElevatedButton.styleFrom(
-        primary: color,
+        backgroundColor: color,
+        foregroundColor: Colors.white,
         minimumSize: Size(min(200, (mediaQuery.size.width - 40) / 2), 48),
-        onPrimary: Colors.white,
       ),
     );
   }

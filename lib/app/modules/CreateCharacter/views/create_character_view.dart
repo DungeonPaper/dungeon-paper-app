@@ -5,6 +5,7 @@ import 'package:dungeon_paper/app/data/models/alignment.dart';
 import 'package:dungeon_paper/app/data/models/character.dart';
 import 'package:dungeon_paper/app/data/models/character_class.dart';
 import 'package:dungeon_paper/app/data/models/gear_selection.dart';
+import 'package:dungeon_paper/app/data/models/move.dart';
 import 'package:dungeon_paper/app/data/models/race.dart';
 import 'package:dungeon_paper/app/data/services/character_service.dart';
 import 'package:dungeon_paper/app/model_utils/model_pages.dart';
@@ -86,7 +87,8 @@ class CreateCharacterView extends GetView<CreateCharacterController> {
                             subtitle: controller.name.isEmpty
                                 ? Text(S.current.createCharacterTravelerHelpText)
                                 : Text(
-                                    S.current.createCharacterTravelerDescription(cls?.name ?? '')),
+                                    S.current.createCharacterTravelerDescription(cls?.name ?? ''),
+                                  ),
                             valid: controller.name.isNotEmpty,
                             onTap: () => Get.toNamed(
                               Routes.createCharacterBasicInfo,
@@ -240,10 +242,21 @@ class CreateCharacterView extends GetView<CreateCharacterController> {
                           // Moves & Spells
                           _Card(
                             // contentPadding: EdgeInsets.symmetric(horizontal: 16, vertical: 12),
-                            title:
-                                Text(S.current.selectGeneric(S.current.createCharacterMovesSpells)),
+                            title: Text(
+                              S.current.selectGeneric(
+                                (cls?.isSpellcaster ?? false)
+                                    ? S.current.createCharacterMovesSpells
+                                    : S.current.entityPlural(Move),
+                              ),
+                            ),
                             subtitle: Text(
-                                '${controller.moves.length} Moves, ${controller.spells.length} Spells selected'),
+                              (cls?.isSpellcaster ?? false)
+                                  ? S.current.createCharacterMovesSpellsDescription(
+                                      controller.moves.length,
+                                      controller.spells.length,
+                                    )
+                                  : S.current.movesWithCount(controller.moves.length),
+                            ),
                             onTap: cls != null
                                 ? () => Get.toNamed(
                                       Routes.createCharacterMovesSpells,

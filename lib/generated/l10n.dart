@@ -1662,6 +1662,16 @@ class S {
     );
   }
 
+  /// `{moves} Moves, {spells} Spells selected`
+  String createCharacterMovesSpellsDescription(Object moves, Object spells) {
+    return Intl.message(
+      '$moves Moves, $spells Spells selected',
+      name: 'createCharacterMovesSpellsDescription',
+      desc: '',
+      args: [moves, spells],
+    );
+  }
+
   /// `Character Name`
   String get createCharacterNameFieldLabel {
     return Intl.message(

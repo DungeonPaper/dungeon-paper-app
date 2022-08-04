@@ -41,6 +41,8 @@ class AdvancedChip extends StatelessWidget
     this.showCheckmark,
     this.checkmarkColor,
     this.avatarBorder = const CircleBorder(),
+    this.iconTheme,
+    this.surfaceTintColor,
   }) : super(key: key);
 
   @override
@@ -105,6 +107,10 @@ class AdvancedChip extends StatelessWidget
   final Color? checkmarkColor;
   @override
   final ShapeBorder avatarBorder;
+  @override
+  final IconThemeData? iconTheme;
+  @override
+  final Color? surfaceTintColor;
 
   @override
   bool get useDeleteButtonTooltip => false;
@@ -143,6 +149,8 @@ class AdvancedChip extends StatelessWidget
       checkmarkColor: checkmarkColor,
       isEnabled: isEnabled, // && (onSelected != null || onDeleted != null || onPressed != null),
       avatarBorder: avatarBorder,
+      iconTheme: iconTheme,
+      surfaceTintColor: surfaceTintColor,
     );
   }
 }
