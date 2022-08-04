@@ -18,15 +18,12 @@ class ButtonThemes {
       );
 
   static ButtonStyle? errorText(BuildContext context) => TextButton.styleFrom(
-        backgroundColor: Theme.of(context).errorColor,
-        textStyle: Theme.of(context).textTheme.button!.copyWith(
-              color: Theme.of(context).colorScheme.onError,
-            ),
+        foregroundColor: Theme.of(context).errorColor,
         shape: rRectShape,
       );
 
   static ButtonStyle? primaryOutlined(BuildContext context) => OutlinedButton.styleFrom(
-        backgroundColor: Theme.of(context).scaffoldBackgroundColor.computeLuminance() > 0.5
+        foregroundColor: Theme.of(context).scaffoldBackgroundColor.computeLuminance() > 0.5
             ? Theme.of(context).primaryColor
             : Theme.of(context).colorScheme.onSurface,
         shape: rRectShape,
