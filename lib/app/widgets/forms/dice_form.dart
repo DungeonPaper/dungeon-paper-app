@@ -75,7 +75,8 @@ class _DiceFormState extends State<DiceForm> {
             const SizedBox(width: 8),
             Text(S.current.diceSeparator),
             const SizedBox(width: 8),
-            Expanded(
+            SizedBox(
+              width: 100,
               child: SelectBox<int>(
                 value: sides,
                 label: Text(S.current.diceSides),
