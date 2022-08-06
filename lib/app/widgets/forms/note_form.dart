@@ -15,25 +15,31 @@ class NoteForm extends GetView<NoteFormController> with RepositoryServiceMixin {
   Widget build(BuildContext context) {
     return LibraryEntityForm<Note, NoteFormController>(
       children: [
-        () => TextFormField(
-              decoration: InputDecoration(
-                label: Text(S.current.formGeneralNameGeneric(S.current.entity(Note))),
+        () => Obx(
+              () => TextFormField(
+                decoration: InputDecoration(
+                  label: Text(S.current.formGeneralNameGeneric(S.current.entity(Note))),
+                ),
+                textCapitalization: TextCapitalization.words,
+                controller: controller.title,
               ),
-              textCapitalization: TextCapitalization.words,
-              controller: controller.title,
             ),
-        () => RichTextField(
-              decoration: InputDecoration(
-                label: Text(S.current.formGeneralDescriptionGeneric(S.current.entity(Note))),
+        () => Obx(
+              () => RichTextField(
+                decoration: InputDecoration(
+                  label: Text(S.current.formGeneralDescriptionGeneric(S.current.entity(Note))),
+                ),
+                maxLines: 10,
+                minLines: 5,
+                rich: true,
+                textCapitalization: TextCapitalization.sentences,
+                controller: controller.description,
               ),
-              maxLines: 10,
-              minLines: 5,
-              rich: true,
-              textCapitalization: TextCapitalization.sentences,
-              controller: controller.description,
             ),
-        () => TagListInput(
-              controller: controller.tags,
+        () => Obx(
+              () => TagListInput(
+                controller: controller.tags,
+              ),
             ),
       ],
     );

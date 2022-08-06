@@ -1,4 +1,3 @@
-import 'dart:io' if (dart.library.html) 'dart:html';
 import 'package:dungeon_paper/app/data/services/user_service.dart';
 import 'package:dungeon_paper/generated/l10n.dart';
 import 'package:firebase_storage/firebase_storage.dart';
@@ -11,7 +10,7 @@ import 'package:image_cropper/image_cropper.dart';
 
 class UploadSettings {
   final void Function(String downloadURL)? onSuccess;
-  final void Function(File file)? onUploadFile;
+  final void Function(CroppedFile file)? onUploadFile;
   final void Function()? onCancel;
   final void Function(Object error)? onError;
   final CropStyle? cropStyle;
@@ -30,7 +29,7 @@ class UploadSettings {
 }
 
 class UploadResponse {
-  final File local;
+  final CroppedFile local;
   final Reference remote;
   final String downloadURL;
 
@@ -41,15 +40,16 @@ class UploadResponse {
   });
 }
 
-Future<File?> _pickAndCrop(
+Future<CroppedFile?> _pickAndCrop(
   BuildContext context, {
   CropStyle? cropStyle,
 }) async {
   final res = await FlutterFileDialog.pickFile(
     params: const OpenFileDialogParams(
-        dialogType: OpenFileDialogType.image,
-        fileExtensionsFilter: ['png', 'jpg', 'jpeg', 'gif'],
-        mimeTypesFilter: ['image/*']),
+      dialogType: OpenFileDialogType.image,
+      fileExtensionsFilter: ['png', 'jpg', 'jpeg', 'gif'],
+      mimeTypesFilter: ['image/*'],
+    ),
   );
 
   if (res == null) {
@@ -70,14 +70,10 @@ Future<File?> _pickAndCrop(
     ],
   );
 
-  if (cropped == null) {
-    return null;
-  }
-
-  return File(cropped.path);
+  return cropped;
 }
 
-Future<Reference> _uploadPhoto(File file, String uploadPath) async {
+Future<Reference> _uploadPhoto(CroppedFile file, String uploadPath) async {
   final UserService userService = Get.find();
   assert(userService.current.isLoggedIn);
   final ext = path.extension(file.path);
@@ -85,13 +81,12 @@ Future<Reference> _uploadPhoto(File file, String uploadPath) async {
     uploadPath = '/$uploadPath';
   }
   final ref = FirebaseStorage.instance.ref(userService.current.fileStoragePath! + uploadPath + ext);
-
-  await ref.putFile(file);
+  await ref.putData(await file.readAsBytes());
   return ref;
 }
 
 Future<UploadResponse?> cropAndUploadPhoto(BuildContext context, UploadSettings settings) async {
-  File? file;
+  CroppedFile? file;
   try {
     file = await _pickAndCrop(context);
     if (file == null) {

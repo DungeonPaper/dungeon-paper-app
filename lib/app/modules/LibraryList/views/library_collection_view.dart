@@ -59,6 +59,9 @@ class LibraryCollectionView extends GetView<LibraryCollectionController>
                 child: ListTile(
                   onTap: () => ModelPages.openLibraryList(
                     type: type,
+                    abilityScores: char.abilityScores,
+                    classKeys: [],
+                    moveCategory: null,
                     // initialTab: charService.maybeCurrent != null
                     //     ? repo.my.classes.keys.contains(character.characterClass.key)
                     //         ? FiltersGroup.my

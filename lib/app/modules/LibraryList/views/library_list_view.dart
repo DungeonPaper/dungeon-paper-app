@@ -129,7 +129,7 @@ class LibraryListView<T extends WithMeta, F extends EntityFilters<T>>
         ),
       ),
       floatingActionButton: Obx(
-        () => controller.onAdd.obs.value != null
+        () => controller.onSelected.obs.value != null
             ? AdvancedFloatingActionButton.extended(
                 icon: controller.selected.isNotEmpty
                     ? controller.multiple
@@ -138,7 +138,7 @@ class LibraryListView<T extends WithMeta, F extends EntityFilters<T>>
                     : null,
                 onPressed: controller.selected.isNotEmpty
                     ? () {
-                        controller.onAdd!(controller.selectedWithMeta);
+                        controller.onSelected!(controller.selectedWithMeta);
                         Get.back();
                       }
                     : null,

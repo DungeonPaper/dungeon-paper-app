@@ -58,7 +58,7 @@ class NotesLibraryListView extends GetView<LibraryListController<Note, NoteFilte
 
 class NoteLibraryListArguments extends LibraryListArguments<Note, NoteFilters> {
   NoteLibraryListArguments({
-    required super.onAdd,
+    required super.onSelected,
     required super.preSelections,
     super.initialTab,
   }) : super(

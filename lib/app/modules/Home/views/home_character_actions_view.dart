@@ -153,9 +153,9 @@ class HomeCharacterActionsView extends GetView<CharacterService> {
             ),
           ),
       ],
-      addPageArguments: ({required onAdd}) => MoveLibraryListArguments(
+      addPageArguments: ({required onSelected}) => MoveLibraryListArguments(
         character: char,
-        onAdd: onAdd,
+        onSelected: onSelected,
         preSelections: char.moves,
       ),
       cardBuilder: (move, {required onSave, required onDelete}) => MoveCard(
@@ -187,9 +187,9 @@ class HomeCharacterActionsView extends GetView<CharacterService> {
       onReorder: _onReorder,
       list: char.spells,
       route: Routes.spells,
-      addPageArguments: ({required onAdd}) => SpellLibraryListArguments(
+      addPageArguments: ({required onSelected}) => SpellLibraryListArguments(
         character: char,
-        onAdd: onAdd,
+        onSelected: onSelected,
         preSelections: char.spells,
       ),
       cardBuilder: (spell, {required onSave, required onDelete}) => SpellCard(
@@ -221,8 +221,8 @@ class HomeCharacterActionsView extends GetView<CharacterService> {
       onReorder: _onReorder,
       list: char.items,
       route: Routes.items,
-      addPageArguments: ({required onAdd}) => ItemLibraryListArguments(
-        onAdd: (items) => onAdd(
+      addPageArguments: ({required onSelected}) => ItemLibraryListArguments(
+        onSelected: (items) => onSelected(
           items
               .map(
                 (x) => x.copyWithInherited(amount: x.amount == 0 ? 1 : x.amount),
@@ -336,7 +336,7 @@ class ActionsCardList<T extends WithMeta> extends GetView<CharacterService>
   final List<Widget> leading;
   final List<Widget> trailing;
   final LibraryListArguments<T, EntityFilters<T>> Function({
-    required void Function(Iterable<T> obj) onAdd,
+    required void Function(Iterable<T> obj) onSelected,
   }) addPageArguments;
   final Widget Function(
     T object, {
@@ -363,7 +363,8 @@ class ActionsCardList<T extends WithMeta> extends GetView<CharacterService>
           onPressed: () => Get.toNamed(
             route,
             arguments: addPageArguments(
-              onAdd: (items) => library.upsertToCharacter(items, forkBehavior: ForkBehavior.fork),
+              onSelected: (items) =>
+                  library.upsertToCharacter(items, forkBehavior: ForkBehavior.fork),
             ),
           ),
           label: Text(S.current.addGeneric(S.current.entityPlural(T))),

@@ -23,7 +23,7 @@ class LibraryListController<T extends WithMeta, F extends EntityFilters<T>> exte
   final filters = <FiltersGroup, F?>{}.obs;
   final search = <FiltersGroup, TextEditingController>{}.obs;
 
-  late final void Function(Iterable<T> items)? onAdd;
+  late final void Function(Iterable<T> items)? onSelected;
   late final bool Function(T item, F filters) filterFn;
   late final int Function(T a, T b) Function(F filters) sortFn;
   late final bool multiple;
@@ -31,7 +31,7 @@ class LibraryListController<T extends WithMeta, F extends EntityFilters<T>> exte
   late final Map<String, dynamic> extraData;
   late final TabController tabController;
 
-  bool get selectable => onAdd != null;
+  bool get selectable => onSelected != null;
 
   Iterable<T> get builtInList =>
       filterList(builtInListRaw, FiltersGroup.playbook, filterFn, sortFn);
@@ -49,7 +49,7 @@ class LibraryListController<T extends WithMeta, F extends EntityFilters<T>> exte
     assert(Get.arguments != null);
     final LibraryListArguments<T, F> args = Get.arguments;
     filters.addAll(args.filters.cast<FiltersGroup, F?>());
-    onAdd = args.onAdd;
+    onSelected = args.onSelected;
     filterFn = args.filterFn;
     sortFn = args.sortFn;
     multiple = args.multiple;
@@ -208,7 +208,7 @@ abstract class EntityFilters<T> {
 abstract class LibraryListArguments<T extends WithMeta, F extends EntityFilters<T>> {
   final Map<FiltersGroup, F?> filters;
 
-  final void Function(Iterable<T> items)? onAdd;
+  final void Function(Iterable<T> items)? onSelected;
   final bool Function(T item, F filters) filterFn;
   final int Function(T a, T b) Function(F filters) sortFn;
   final bool multiple;
@@ -218,7 +218,7 @@ abstract class LibraryListArguments<T extends WithMeta, F extends EntityFilters<
 
   LibraryListArguments({
     required this.filters,
-    required this.onAdd,
+    required this.onSelected,
     required this.filterFn,
     required this.sortFn,
     this.multiple = true,

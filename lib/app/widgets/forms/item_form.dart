@@ -14,24 +14,28 @@ class ItemForm extends GetView<ItemFormController> {
   Widget build(BuildContext context) {
     return LibraryEntityForm<Item, ItemFormController>(
       children: [
-        () => TextFormField(
-              controller: controller.name,
-              textCapitalization: TextCapitalization.words,
-              decoration: InputDecoration(
-                label: Text(S.current.formGeneralNameGeneric(S.current.entity(Item))),
+        () => Obx(
+              () => TextFormField(
+                controller: controller.name,
+                textCapitalization: TextCapitalization.words,
+                decoration: InputDecoration(
+                  label: Text(S.current.formGeneralNameGeneric(S.current.entity(Item))),
+                ),
               ),
             ),
-        () => const SizedBox(height: 16),
-        () => RichTextField(
-              controller: controller.description,
-              label: S.current.formGeneralDescriptionGeneric(S.current.entity(Item)),
-              maxLines: 10,
-              minLines: 5,
-              textCapitalization: TextCapitalization.sentences,
+        () => Obx(
+              () => RichTextField(
+                controller: controller.description,
+                label: S.current.formGeneralDescriptionGeneric(S.current.entity(Item)),
+                maxLines: 10,
+                minLines: 5,
+                textCapitalization: TextCapitalization.sentences,
+              ),
             ),
-        () => const SizedBox(height: 16),
-        () => TagListInput(
-              controller: controller.tags,
+        () => Obx(
+              () => TagListInput(
+                controller: controller.tags,
+              ),
             ),
       ],
     );

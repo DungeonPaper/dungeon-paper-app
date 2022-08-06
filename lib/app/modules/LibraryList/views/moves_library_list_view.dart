@@ -9,6 +9,7 @@ import 'package:dungeon_paper/app/themes/button_themes.dart';
 import 'package:dungeon_paper/app/widgets/cards/move_card.dart';
 import 'package:dungeon_paper/app/widgets/menus/entity_edit_menu.dart';
 import 'package:flutter/material.dart';
+import 'package:dungeon_world_data/dungeon_world_data.dart' as dw;
 
 import 'package:get/get.dart';
 
@@ -63,12 +64,12 @@ class MovesLibraryListView extends GetView<LibraryListController<Move, MoveFilte
 class MoveLibraryListArguments extends LibraryListArguments<Move, MoveFilters> {
   MoveLibraryListArguments({
     required Character? character,
-    required super.onAdd,
+    required super.onSelected,
     required super.preSelections,
     MoveCategory? category,
     super.initialTab,
     AbilityScores? abilityScores,
-    List<String>? classKeys,
+    List<dw.EntityReference>? classKeys,
   }) : super(
           sortFn: Move.sorter,
           filterFn: (move, filters) => filters.filter(move),

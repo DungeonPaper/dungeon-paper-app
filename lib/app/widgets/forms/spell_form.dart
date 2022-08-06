@@ -20,79 +20,93 @@ class SpellForm extends GetView<SpellFormController> with RepositoryServiceMixin
   Widget build(BuildContext context) {
     return LibraryEntityForm<Spell, SpellFormController>(
       children: [
-        () => TextFormField(
-              decoration: InputDecoration(
-                label: Text(S.current.formGeneralNameGeneric(S.current.entity(Spell))),
+        () => Obx(
+              () => TextFormField(
+                decoration: InputDecoration(
+                  label: Text(S.current.formGeneralNameGeneric(S.current.entity(Spell))),
+                ),
+                textCapitalization: TextCapitalization.words,
+                controller: controller.name,
               ),
-              textCapitalization: TextCapitalization.words,
-              controller: controller.name,
             ),
         () => Row(
               children: [
                 Expanded(
-                  child: SelectBox<String>(
-                    value: controller.level.value,
-                    label: Text(S.current.entity(S.current.level)),
-                    isExpanded: true,
-                    items: {'cantrip', 'rote', ...range(9).map((i) => (i + 1).toString())}
-                        .map(
-                          (lv) => DropdownMenuItem(
-                            child: Text(S.current.spellLevel(lv)),
-                            value: lv,
-                          ),
-                        )
-                        .toList(),
-                    onChanged: (value) => controller.level.value = value!,
+                  child: Obx(
+                    () => SelectBox<String>(
+                      value: controller.level.value,
+                      label: Text(S.current.entity(S.current.level)),
+                      isExpanded: true,
+                      items: {'cantrip', 'rote', ...range(9).map((i) => (i + 1).toString())}
+                          .map(
+                            (lv) => DropdownMenuItem(
+                              child: Text(S.current.spellLevel(lv)),
+                              value: lv,
+                            ),
+                          )
+                          .toList(),
+                      onChanged: (value) => controller.level.value = value!,
+                    ),
                   ),
                 ),
                 const SizedBox(width: 16),
                 Expanded(
-                  child: SelectBox<dw.EntityReference>(
-                    value: controller.classKeys.value.isNotEmpty
-                        ? controller.classKeys.value.first
-                        : null,
-                    onChanged: (value) => controller.classKeys.value = [value!],
-                    isExpanded: true,
-                    label: Text(S.current.entity(CharacterClass)),
-                    items: {...repo.builtIn.classes.values, ...repo.my.classes.values}
-                        .map(
-                          (cls) => DropdownMenuItem(
-                            child: Text(cls.name),
-                            value: cls.reference,
-                          ),
-                        )
-                        .toList(),
+                  child: Obx(
+                    () => SelectBox<dw.EntityReference>(
+                      value: controller.classKeys.value.isNotEmpty
+                          ? controller.classKeys.value.first
+                          : null,
+                      onChanged: (value) => controller.classKeys.value = [value!],
+                      isExpanded: true,
+                      label: Text(S.current.entity(CharacterClass)),
+                      items: {...repo.builtIn.classes.values, ...repo.my.classes.values}
+                          .map(
+                            (cls) => DropdownMenuItem(
+                              child: Text(cls.name),
+                              value: cls.reference,
+                            ),
+                          )
+                          .toList(),
+                    ),
                   ),
                 ),
               ],
             ),
-        () => RichTextField(
-              decoration: InputDecoration(
-                label: Text(S.current.formGeneralDescriptionGeneric(S.current.entity(Spell))),
+        () => Obx(
+              () => RichTextField(
+                decoration: InputDecoration(
+                  label: Text(S.current.formGeneralDescriptionGeneric(S.current.entity(Spell))),
+                ),
+                maxLines: 10,
+                minLines: 5,
+                rich: true,
+                textCapitalization: TextCapitalization.sentences,
+                controller: controller.description,
               ),
-              maxLines: 10,
-              minLines: 5,
-              rich: true,
-              textCapitalization: TextCapitalization.sentences,
-              controller: controller.description,
             ),
-        () => RichTextField(
-              decoration: InputDecoration(
-                label: Text(S.current.formGeneralExplanationGeneric(S.current.entity(Spell))),
+        () => Obx(
+              () => RichTextField(
+                decoration: InputDecoration(
+                  label: Text(S.current.formGeneralExplanationGeneric(S.current.entity(Spell))),
+                ),
+                maxLines: 10,
+                minLines: 5,
+                rich: true,
+                textCapitalization: TextCapitalization.sentences,
+                controller: controller.explanation,
               ),
-              maxLines: 10,
-              minLines: 5,
-              rich: true,
-              textCapitalization: TextCapitalization.sentences,
-              controller: controller.explanation,
             ),
-        () => DiceListInput(
-              controller: controller.dice,
-              abilityScores: controller.args.abilityScores,
-              guessFrom: [controller.description, controller.explanation],
+        () => Obx(
+              () => DiceListInput(
+                controller: controller.dice,
+                abilityScores: controller.args.abilityScores,
+                guessFrom: [controller.description, controller.explanation],
+              ),
             ),
-        () => TagListInput(
-              controller: controller.tags,
+        () => Obx(
+              () => TagListInput(
+                controller: controller.tags,
+              ),
             ),
       ],
     );

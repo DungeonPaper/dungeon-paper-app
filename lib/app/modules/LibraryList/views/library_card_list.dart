@@ -51,7 +51,10 @@ class LibraryCardList<T extends WithMeta, F extends EntityFilters<T>>
 
   final bool useFilters;
   final Widget Function(
-      FiltersGroup, F filters, void Function(FiltersGroup group, F filters) update)? filtersBuilder;
+    FiltersGroup,
+    F filters,
+    void Function(FiltersGroup group, F filters) update,
+  )? filtersBuilder;
   final F filters;
   final FiltersGroup group;
   final void Function(T item)? onSave;

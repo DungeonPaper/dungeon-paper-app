@@ -8,8 +8,8 @@ import 'package:dungeon_paper/app/themes/button_themes.dart';
 import 'package:dungeon_paper/app/widgets/cards/spell_card.dart';
 import 'package:dungeon_paper/app/widgets/menus/entity_edit_menu.dart';
 import 'package:flutter/material.dart';
-
 import 'package:get/get.dart';
+import 'package:dungeon_world_data/dungeon_world_data.dart' as dw;
 
 import 'filters/spell_filters.dart';
 
@@ -62,11 +62,11 @@ class SpellsLibraryListView extends GetView<LibraryListController<Spell, SpellFi
 class SpellLibraryListArguments extends LibraryListArguments<Spell, SpellFilters> {
   SpellLibraryListArguments({
     required Character? character,
-    required super.onAdd,
+    required super.onSelected,
     required super.preSelections,
     super.initialTab,
     AbilityScores? abilityScores,
-    List<String>? classKeys,
+    List<dw.EntityReference>? classKeys,
   }) : super(
           sortFn: Spell.sorter,
           filterFn: (spell, filters) => filters.filter(spell),

@@ -90,7 +90,7 @@ class SelectMovesSpellsView extends GetView<SelectMovesSpellsController> {
                       ),
                       preSelections: controller.moves,
                       category: MoveCategory.advanced1,
-                      onAdd: (moves) {
+                      onSelected: (moves) {
                         controller.dirty.value = true;
                         controller.moves.value = addByKey(
                           controller.moves,
@@ -151,7 +151,7 @@ class SelectMovesSpellsView extends GetView<SelectMovesSpellsController> {
                         characterClass: controller.characterClass.value,
                       ),
                       list: controller.spells,
-                      onAdd: (spells) {
+                      onSelected: (spells) {
                         controller.dirty.value = true;
                         controller.spells.value = addByKey(
                           controller.spells,

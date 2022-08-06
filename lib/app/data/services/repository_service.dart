@@ -285,6 +285,7 @@ abstract class RepositoryCache {
         debugPrint('[$id] Error parsing $T: $entry');
       }
     }
+    save(out);
     return out;
   }
 

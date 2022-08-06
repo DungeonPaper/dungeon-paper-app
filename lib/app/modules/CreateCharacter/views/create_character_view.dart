@@ -120,7 +120,7 @@ class CreateCharacterView extends GetView<CreateCharacterController> {
                                   preSelections: controller.characterClass.value != null
                                       ? [controller.characterClass.value!]
                                       : [],
-                                  onAdd: (cls) => controller.setClass(cls),
+                                  onSelected: (cls) => controller.setClass(cls),
                                 ),
                                 preventDuplicates: false,
                               ),
@@ -140,7 +140,7 @@ class CreateCharacterView extends GetView<CreateCharacterController> {
                                   ? () => ModelPages.openRacesList(
                                         character: controller.getAsCharacter(),
                                         preSelection: controller.race.value,
-                                        onAdd: (race) => controller.race.value = race,
+                                        onSelected: (race) => controller.race.value = race,
                                       )
                                   : null,
                               valid: controller.race.value != null,

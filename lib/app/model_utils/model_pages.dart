@@ -34,39 +34,47 @@ class ModelPages {
 
   static void openLibraryList<T extends WithMeta>({
     Character? character,
-    void Function(Iterable<T> list)? onAdd,
+    void Function(Iterable<T> list)? onSelected,
     Iterable<T>? preSelections,
     FiltersGroup? initialTab,
+    AbilityScores? abilityScores,
+    MoveCategory? moveCategory,
+    List<dw.EntityReference>? classKeys,
     Type? type,
   }) {
     final map = <Type, Function()>{
       Move: () => openMovesList(
             character: character,
-            onAdd: onAdd as void Function(Iterable<Move>)?,
+            onSelected: onSelected as void Function(Iterable<Move>)?,
             preSelections: preSelections as Iterable<Move>?,
+            abilityScores: abilityScores,
+            category: moveCategory,
+            classKeys: classKeys,
             initialTab: initialTab,
           ),
       Spell: () => openSpellsList(
             character: character,
-            onAdd: onAdd as void Function(Iterable<Spell>)?,
+            onSelected: onSelected as void Function(Iterable<Spell>)?,
             preSelections: preSelections as Iterable<Spell>?,
+            abilityScores: abilityScores,
+            classKeys: classKeys,
             initialTab: initialTab,
           ),
       Item: () => openItemsList(
             character: character,
-            onAdd: onAdd as void Function(Iterable<Item>)?,
+            onSelected: onSelected as void Function(Iterable<Item>)?,
             preSelections: preSelections as Iterable<Item>?,
             initialTab: initialTab,
           ),
       CharacterClass: () => openCharacterClassesList(
             character: character,
-            onAdd: onAdd != null ? (x) => onAdd.call(asList<T>(x)) : null,
+            onSelected: onSelected != null ? (x) => onSelected.call(asList<T>(x)) : null,
             preSelection: preSelections?.first as CharacterClass?,
             initialTab: initialTab,
           ),
       Race: () => openRacesList(
             character: character,
-            onAdd: onAdd != null ? (x) => onAdd.call(asList<T>(x)) : null,
+            onSelected: onSelected != null ? (x) => onSelected.call(asList<T>(x)) : null,
             preSelection: preSelections?.first as Race?,
             initialTab: initialTab,
           ),
@@ -86,9 +94,9 @@ class ModelPages {
     Iterable<Move>? preSelections,
     MoveCategory? category,
     FiltersGroup? initialTab,
-    void Function(Iterable<Move> list)? onAdd,
+    void Function(Iterable<Move> list)? onSelected,
     AbilityScores? abilityScores,
-    List<String>? classKeys,
+    List<dw.EntityReference>? classKeys,
   }) {
     final char = character;
     Get.toNamed(
@@ -97,7 +105,7 @@ class ModelPages {
         initialTab: initialTab,
         character: char,
         category: category,
-        onAdd: onAdd, // ?? library.upsertToCharacter,
+        onSelected: onSelected, // ?? library.upsertToCharacter,
         preSelections: char?.moves ?? [],
         abilityScores: abilityScores,
         classKeys: classKeys,
@@ -108,7 +116,7 @@ class ModelPages {
   static void openRacesList({
     Character? character,
     Race? preSelection,
-    void Function(Race race)? onAdd,
+    void Function(Race race)? onSelected,
     FiltersGroup? initialTab,
   }) {
     final char = character;
@@ -117,7 +125,7 @@ class ModelPages {
       arguments: RaceLibraryListArguments(
         initialTab: initialTab,
         character: char,
-        onAdd: onAdd, // ?? library.upsertToCharacter,
+        onSelected: onSelected, // ?? library.upsertToCharacter,
         preSelections: asList(preSelection ?? char?.race),
       ),
     );
@@ -156,11 +164,11 @@ class ModelPages {
   static void openSpellsList({
     Character? character,
     Iterable<Spell>? list,
-    void Function(Iterable<Spell> list)? onAdd,
+    void Function(Iterable<Spell> list)? onSelected,
     FiltersGroup? initialTab,
     Iterable<Spell>? preSelections,
     AbilityScores? abilityScores,
-    List<String>? classKeys,
+    List<dw.EntityReference>? classKeys,
   }) {
     final char = character;
     Get.toNamed(
@@ -168,7 +176,7 @@ class ModelPages {
       arguments: SpellLibraryListArguments(
         initialTab: initialTab,
         character: char,
-        onAdd: onAdd, // ?? library.upsertToCharacter,
+        onSelected: onSelected, // ?? library.upsertToCharacter,
         preSelections: preSelections ?? char?.spells ?? [],
         abilityScores: abilityScores,
         classKeys: classKeys,
@@ -195,7 +203,7 @@ class ModelPages {
   static void openItemsList({
     Character? character,
     Iterable<Item>? list,
-    void Function(Iterable<Item> list)? onAdd,
+    void Function(Iterable<Item> list)? onSelected,
     FiltersGroup? initialTab,
     Iterable<Item>? preSelections,
   }) {
@@ -204,7 +212,7 @@ class ModelPages {
       Routes.items,
       arguments: ItemLibraryListArguments(
         initialTab: initialTab,
-        onAdd: onAdd, // ?? library.upsertToCharacter,
+        onSelected: onSelected, // ?? library.upsertToCharacter,
         preSelections: preSelections ?? char?.items ?? [],
       ),
     );
@@ -226,7 +234,7 @@ class ModelPages {
   static void openNotesList({
     Character? character,
     Iterable<Note>? list,
-    void Function(Iterable<Note> list)? onAdd,
+    void Function(Iterable<Note> list)? onSelected,
     FiltersGroup? initialTab,
     Iterable<Note>? preSelections,
   }) {
@@ -235,7 +243,7 @@ class ModelPages {
       Routes.notes,
       arguments: NoteLibraryListArguments(
         initialTab: initialTab,
-        onAdd: onAdd, // ?? library.upsertToCharacter,
+        onSelected: onSelected, // ?? library.upsertToCharacter,
         preSelections: preSelections ?? char?.notes ?? [],
       ),
     );
@@ -257,7 +265,7 @@ class ModelPages {
   static void openCharacterClassesList({
     Character? character,
     CharacterClass? preSelection,
-    void Function(CharacterClass cls)? onAdd,
+    void Function(CharacterClass cls)? onSelected,
     FiltersGroup? initialTab,
   }) {
     final char = character;
@@ -265,7 +273,7 @@ class ModelPages {
       Routes.classes,
       arguments: CharacterClassLibraryListArguments(
         initialTab: initialTab,
-        onAdd: onAdd ??
+        onSelected: onSelected ??
             (char != null
                 ? (cls) => controller.updateCharacter(char.copyWith(characterClass: cls))
                 : null),

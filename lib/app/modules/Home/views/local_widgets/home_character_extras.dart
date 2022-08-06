@@ -138,7 +138,7 @@ class HomeCharacterExtras extends GetView<CharacterService> {
     ModelPages.openRacesList(
       character: controller.current,
       preSelection: controller.current.race,
-      onAdd: (_race) => controller.updateCharacter(
+      onSelected: (_race) => controller.updateCharacter(
         controller.current.copyWithInherited(
           race: _race.copyWithInherited(favorite: controller.current.race.favorite),
         ),
@@ -149,7 +149,7 @@ class HomeCharacterExtras extends GetView<CharacterService> {
   void _openCharClass() {
     ModelPages.openCharacterClassesList(
       character: controller.current,
-      onAdd: (_cls) => controller.updateCharacter(
+      onSelected: (_cls) => controller.updateCharacter(
         // TODO add a reset dialog to confirm + ask what to reset: moves, spells, alignment, rac
         controller.current.copyWithInherited(
           characterClass: _cls,

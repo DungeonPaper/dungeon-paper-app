@@ -57,7 +57,7 @@ class ItemsLibraryListView extends GetView<LibraryListController<Item, ItemFilte
 
 class ItemLibraryListArguments extends LibraryListArguments<Item, ItemFilters> {
   ItemLibraryListArguments({
-    required super.onAdd,
+    required super.onSelected,
     required super.preSelections,
     super.initialTab,
   }) : super(

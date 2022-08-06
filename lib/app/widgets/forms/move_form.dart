@@ -19,79 +19,91 @@ class MoveForm extends GetView<MoveFormController> with RepositoryServiceMixin {
   Widget build(BuildContext context) {
     return LibraryEntityForm<Move, MoveFormController>(
       children: [
-        () => TextFormField(
-              decoration: InputDecoration(
-                label: Text(S.current.formGeneralNameGeneric(S.current.entity(Move))),
-              ),
-              textCapitalization: TextCapitalization.words,
-              controller: controller.name,
-            ),
-        () => Row(
-              children: [
-                Expanded(
-                  child: SelectBox<MoveCategory>(
-                    value: controller.category.value,
-                    label: Text(S.current.entity(MoveCategory)),
-                    isExpanded: true,
-                    items: MoveCategory.values
-                        .map(
-                          (cat) => DropdownMenuItem(
-                            child: Text(S.current.moveCategoryWithLevelShort(cat.name)),
-                            value: cat,
-                          ),
-                        )
-                        .toList(),
-                    onChanged: (value) => controller.category.value = value!,
-                  ),
+        () => Obx(
+              () => TextFormField(
+                decoration: InputDecoration(
+                  label: Text(S.current.formGeneralNameGeneric(S.current.entity(Move))),
                 ),
-                const SizedBox(width: 16),
-                Expanded(
-                  child: SelectBox<dw.EntityReference>(
-                    value: controller.classKeys.value.isNotEmpty
-                        ? controller.classKeys.value.first
-                        : null,
-                    onChanged: (value) => controller.classKeys.value = [value!],
-                    isExpanded: true,
-                    label: Text(S.current.entity(CharacterClass)),
-                    items: {...repo.builtIn.classes.values, ...repo.my.classes.values}
-                        .map(
-                          (cls) => DropdownMenuItem(
-                            child: Text(cls.name),
-                            value: cls.reference,
-                          ),
-                        )
-                        .toList(),
+                textCapitalization: TextCapitalization.words,
+                controller: controller.name,
+              ),
+            ),
+        () => Obx(
+              () => Row(
+                children: [
+                  Expanded(
+                    child: SelectBox<MoveCategory>(
+                      value: controller.category.value,
+                      label: Text(S.current.entity(MoveCategory)),
+                      isExpanded: true,
+                      items: MoveCategory.values
+                          .map(
+                            (cat) => DropdownMenuItem(
+                              child: Text(S.current.moveCategoryWithLevelShort(cat.name)),
+                              value: cat,
+                            ),
+                          )
+                          .toList(),
+                      onChanged: (value) => controller.category.value = value!,
+                    ),
                   ),
+                  const SizedBox(width: 16),
+                  Expanded(
+                    child: SelectBox<dw.EntityReference>(
+                      value: controller.classKeys.value.isNotEmpty
+                          ? controller.classKeys.value.first
+                          : null,
+                      onChanged: (value) => controller.classKeys.value = [value!],
+                      isExpanded: true,
+                      label: Text(S.current.entity(CharacterClass)),
+                      items: {...repo.builtIn.classes.values, ...repo.my.classes.values}
+                          .map(
+                            (cls) => DropdownMenuItem(
+                              child: Text(cls.name),
+                              value: cls.reference,
+                            ),
+                          )
+                          .toList(),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+        () => Obx(
+              () => RichTextField(
+                decoration: InputDecoration(
+                  label: Text(S.current.formGeneralDescriptionGeneric(S.current.entity(Move))),
                 ),
-              ],
-            ),
-        () => RichTextField(
-              decoration: InputDecoration(
-                label: Text(S.current.formGeneralDescriptionGeneric(S.current.entity(Move))),
+                maxLines: 10,
+                minLines: 5,
+                rich: true,
+                textCapitalization: TextCapitalization.sentences,
+                controller: controller.description,
               ),
-              maxLines: 10,
-              minLines: 5,
-              rich: true,
-              textCapitalization: TextCapitalization.sentences,
-              controller: controller.description,
             ),
-        () => RichTextField(
-              decoration: InputDecoration(
-                label: Text(S.current.formGeneralExplanationGeneric(S.current.entity(Move))),
+        () => Obx(
+              () => RichTextField(
+                decoration: InputDecoration(
+                  label: Text(S.current.formGeneralExplanationGeneric(S.current.entity(Move))),
+                ),
+                maxLines: 10,
+                minLines: 5,
+                rich: true,
+                textCapitalization: TextCapitalization.sentences,
+                controller: controller.explanation,
               ),
-              maxLines: 10,
-              minLines: 5,
-              rich: true,
-              textCapitalization: TextCapitalization.sentences,
-              controller: controller.explanation,
             ),
-        () => DiceListInput(
-              controller: controller.dice,
-              abilityScores: controller.args.abilityScores,
-              guessFrom: [controller.description, controller.explanation],
+        () => Obx(
+              () => DiceListInput(
+                controller: controller.dice,
+                abilityScores: controller.args.abilityScores,
+                guessFrom: [controller.description, controller.explanation],
+              ),
             ),
-        () => TagListInput(
-              controller: controller.tags,
+        () => Obx(
+              () => TagListInput(
+                controller: controller.tags,
+              ),
             ),
       ],
     );
