@@ -142,7 +142,7 @@ class LibraryListController<T extends WithMeta, F extends EntityFilters<T>> exte
 
   bool isInCurrentSelectedList(T item) =>
       selected.firstWhereOrNull(
-          (element) => (element.meta.sharing?.sourceKey ?? element.key) == item.key) !=
+          (element) => [element.meta.sharing?.sourceKey, element.key].contains(item.key)) !=
       null;
 
   bool isRemoved(T item) => removed.firstWhereOrNull(_compare(item)) != null;
