@@ -43,15 +43,20 @@ import '../task.dart';
 final buildIOS = TaskGroup(
   condition: (o) => o.build == true,
   tasks: [
-    LogTask((o) => 'Building iOS'),
+    LogTask((o) => 'Building iOS (APP)'),
     ProcessTask.staticArgs(
       'flutter',
-      args: [
-        'build',
-        'ios',
-        // '--release-name',
-        // '--release-number',
-      ],
+      args: ['build', 'ios'],
+    ),
+  ],
+);
+final bundleIOS = TaskGroup(
+  condition: (o) => o.bundle == true,
+  tasks: [
+    LogTask((o) => 'Building iOS Bundle (IPA)'),
+    ProcessTask.staticArgs(
+      'flutter',
+      args: ['build', 'ipa'],
     ),
   ],
 );
@@ -60,6 +65,7 @@ final iOS = DeviceTaskGroup(
   device: Device.iOS,
   tasks: [
     buildIOS,
+    bundleIOS,
     // pushIOS,
     // installIOS,
   ],

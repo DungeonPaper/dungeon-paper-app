@@ -42,7 +42,7 @@ final pushAndroid = TaskGroup(
 final bundleAndroid = TaskGroup(
   condition: (o) => o.bundle == true,
   tasks: [
-    LogTask((o) => 'Building App Bundle'),
+    LogTask((o) => 'Building Android Bundle (AAB)'),
     ProcessTask.staticArgs(
       'flutter',
       args: [
@@ -59,7 +59,7 @@ final bundleAndroid = TaskGroup(
 final buildAndroid = TaskGroup(
   condition: (o) => o.build == true,
   tasks: [
-    LogTask((o) => 'Building APK'),
+    LogTask((o) => 'Building Android (APK)'),
     ProcessTask.staticArgs(
       'flutter',
       args: [
