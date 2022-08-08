@@ -1,6 +1,7 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 
+// TODO turn into widget and extract to package
 class ItemBuilder {
   final IndexedWidgetBuilder itemBuilder;
   final int itemCount;
@@ -45,9 +46,9 @@ class ItemBuilder {
   /// Takes a list of widget functions and returns a [ItemBuilder] that will build a [ListView] with the given widgets,
   /// only calling them lazily.
   factory ItemBuilder.lazyChildren({
-    required List<Widget Function()> children,
-    List<Widget Function()> leading = const [],
-    List<Widget Function()> trailing = const [],
+    required Iterable<Widget Function()> children,
+    Iterable<Widget Function()> leading = const [],
+    Iterable<Widget Function()> trailing = const [],
   }) {
     final leadingCount = leading.length;
     final trailingCount = trailing.length;
@@ -59,13 +60,13 @@ class ItemBuilder {
     return ItemBuilder._(
       itemBuilder: (context, index) {
         if (index < leadingCount) {
-          return leading[index]();
+          return leading.elementAt(index).call();
         }
         if (index >= childrenStartIndex && index < trailingStartIndex) {
-          return children[index - leadingCount]();
+          return children.elementAt(index - leadingCount).call();
         }
         // if (index >= trailingStartIndex) {
-        return trailing[index - trailingStartIndex]();
+        return trailing.elementAt(index - trailingStartIndex).call();
         // }
         // return const SizedBox.shrink();
         // return trailing[index - trailingStartIndex](context);

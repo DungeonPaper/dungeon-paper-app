@@ -1,6 +1,6 @@
 name: dungeon_paper
 description: A new Flutter project.
-version: 2.0.0+282
+version: 2.0.0+283
 # The above field defines the version and build number for your application.
 # A version number is three numbers separated by dots, like 1.2.43
 # followed by an optional build number separated by a +.
@@ -65,7 +65,7 @@ dependencies:
   url_launcher: ^6.0.20
   uuid: ^3.0.5
   wakelock: ^0.6.1+1
-  wheel_spinner: ^0.0.7-nullsafety
+  wheel_spinner: ^0.6.1
 
 dev_dependencies:
   args: ^2.3.0
@@ -205,3 +205,29 @@ icons_launcher:
       enable: true
     remove_alpha_ios: true
     remove_alpha_macos: true
+
+script_runner:
+  shell: /bin/zsh
+  scripts:
+    - name: build:android:apk
+      cmd: flutter build apk
+    - name: build:android:bundle
+      cmd: flutter build appbundle
+    - name: build:android:all
+      cmd: build:android:apk && build:android:bundle
+    - name: build:ios:app
+      cmd: flutter build ios
+    - name: build:ios:bundle
+      cmd: flutter build ipa
+    - name: build:ios:all
+      cmd: build:ios:app && build:ios:bundle
+    - name: build:macos:app
+      cmd: flutter build macos
+    - name: build:macos:all
+      cmd: build:macos:app
+    - name: build:web:app
+      cmd: flutter build web
+    - name: build:web:all
+      cmd: build:web:app
+    - name: build:all
+      cmd: build:android:all && build:ios:all && build:macos:all && build:web:all

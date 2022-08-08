@@ -11,11 +11,14 @@ import 'package:dungeon_paper/app/routes/app_pages.dart';
 import 'package:dungeon_paper/core/http/api.dart';
 import 'package:dungeon_paper/core/http/api_requests/migration.dart';
 import 'package:dungeon_paper/core/storage_handler/storage_handler.dart';
+import 'package:dungeon_paper/core/task_runner/task_utils.dart';
 import 'package:dungeon_paper/generated/l10n.dart';
 import 'package:email_validator/email_validator.dart';
 import 'package:firebase_auth/firebase_auth.dart' as fba;
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:package_info_plus/package_info_plus.dart';
+import 'package:sentry_flutter/sentry_flutter.dart';
 
 class UserService extends GetxService
     with RepositoryServiceMixin, AuthServiceMixin, CharacterServiceMixin, LoadingServiceMixin {
@@ -127,6 +130,24 @@ class UserService extends GetxService
     final user = User.fromJson(data);
     _current.value = user;
     user.applySettings();
+    _initUserExternal(user);
+  }
+
+  void _initUserExternal(User user) async {
+    final pkg = await PackageInfo.fromPlatform();
+    Sentry.configureScope(
+      (scope) => scope.setUser(
+        SentryUser(
+          email: user.email,
+          id: authService.fbUser.value?.uid,
+          username: user.username,
+          extras: {
+            'displayName': user.displayName,
+            'version': pkg.version,
+          },
+        ),
+      ),
+    );
   }
 
   Future<void> _setUserAfterMigration(fba.User user, DocData? dbUser) async {

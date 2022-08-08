@@ -76,40 +76,15 @@ class ValueChangeSlider<N extends num> extends StatelessWidget {
               value: updatedValue.toDouble(),
               min: minValue?.toDouble() ?? -double.infinity,
               max: maxValue?.toDouble() ?? double.infinity,
+              theme: (theme.brightness == Brightness.light
+                      ? WheelSpinnerThemeData.light()
+                      : WheelSpinnerThemeData.dark())
+                  .copyWith(
+                borderRadius: borderRadius,
+              ),
               // childBuilder: (_) => Text(_.toString()),
-              borderRadius: borderRadius,
               minMaxLabelBuilder: (_) => '',
               onSlideUpdate: (val) => onChange((N == int ? val.toInt() : val.toDouble()) as N),
-              dividerColor: theme.brightness == Brightness.light ? null : Colors.grey[800],
-              width: width,
-              boxDecoration: (theme.brightness == Brightness.light
-                      ? BoxDecoration(
-                          gradient: LinearGradient(
-                            begin: Alignment.topCenter,
-                            end: Alignment.bottomCenter,
-                            stops: const [0.0, 0.2, 0.8, 1.0],
-                            colors: [
-                              Colors.grey[350]!,
-                              Colors.grey[50]!,
-                              Colors.grey[50]!,
-                              Colors.grey[350]!
-                            ],
-                          ),
-                        )
-                      : BoxDecoration(
-                          gradient: LinearGradient(
-                            begin: Alignment.topCenter,
-                            end: Alignment.bottomCenter,
-                            stops: const [0.0, 0.2, 0.8, 1.0],
-                            colors: [
-                              Colors.black,
-                              Colors.grey[900]!,
-                              Colors.grey[900]!,
-                              Colors.black
-                            ],
-                          ),
-                        ))
-                  .copyWith(borderRadius: borderRadius),
             ),
           ),
         ),
