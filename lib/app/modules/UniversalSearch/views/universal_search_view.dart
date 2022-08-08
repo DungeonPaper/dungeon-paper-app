@@ -100,7 +100,8 @@ class UniversalSearchView extends GetView<UniversalSearchController> {
                         itemBuilder: (context, index) => _CardByType(
                           value.data![index],
                           highlightWords: [controller.search.text.trim()],
-                          abilityScores: controller.char.abilityScores,
+                          abilityScores: controller.maybeChar?.abilityScores ??
+                              AbilityScores.dungeonWorldAll(10),
                         ),
                       ),
                     );

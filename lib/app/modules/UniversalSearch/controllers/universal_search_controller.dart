@@ -111,7 +111,6 @@ class UniversalSearchController extends GetxController
       final result = e.index < entries.length
           ? [SearchSeparator(S.current.entityPlural(list.first.runtimeType)), ...list]
           : list;
-      debugPrint('result for ${e.value.runtimeType}: $result');
       return result;
     });
 

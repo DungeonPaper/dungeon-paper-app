@@ -99,7 +99,7 @@ class SpellForm extends GetView<SpellFormController> with RepositoryServiceMixin
         () => Obx(
               () => DiceListInput(
                 controller: controller.dice,
-                abilityScores: controller.args.abilityScores,
+                abilityScores: controller.args.abilityScores ?? AbilityScores.dungeonWorldAll(10),
                 guessFrom: [controller.description, controller.explanation],
               ),
             ),
@@ -174,7 +174,7 @@ class SpellFormController extends LibraryEntityFormController<Spell, SpellFormAr
 }
 
 class SpellFormArguments extends LibraryEntityFormArguments<Spell> {
-  final AbilityScores abilityScores;
+  final AbilityScores? abilityScores;
 
   SpellFormArguments({
     required super.entity,

@@ -210,29 +210,18 @@ script_runner:
   shell: /bin/zsh
   scripts:
     # Android
-    - name: build:android:apk
-      cmd: flutter build apk
-    - name: build:android:bundle
-      cmd: flutter build appbundle
-    - name: build:android:all
-      cmd: build:android:apk && build:android:bundle
+    - build:android:apk: flutter build apk
+    - build:android:bundle: flutter build appbundle
+    - build:android:all: build:android:apk && build:android:bundle
     # iOS
-    - name: build:ios:app
-      cmd: flutter build ios
-    - name: build:ios:bundle
-      cmd: flutter build ipa
-    - name: build:ios:all
-      cmd: build:ios:app && build:ios:bundle
+    - build:ios:app: flutter build ios
+    - build:ios:bundle: flutter build ipa
+    - build:ios:all: build:ios:app && build:ios:bundle
     # macOS
-    - name: build:macos:app
-      cmd: flutter build macos
-    - name: build:macos:all
-      cmd: build:macos:app
+    - build:macos:app: flutter build macos
+    - build:macos:all: build:macos:app
     # Web
-    - name: build:web:app
-      cmd: flutter build web
-    - name: build:web:all
-      cmd: build:web:app
+    - build:web:app: flutter build web
+    - build:web:all: build:web:app
     # All
-    - name: build:all
-      cmd: build:android:all && build:ios:all && build:macos:all && build:web:all
+    - build:all: build:android:all && build:ios:all && build:macos:all && build:web:all

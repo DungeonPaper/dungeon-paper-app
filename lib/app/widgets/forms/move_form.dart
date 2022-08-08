@@ -96,7 +96,7 @@ class MoveForm extends GetView<MoveFormController> with RepositoryServiceMixin {
         () => Obx(
               () => DiceListInput(
                 controller: controller.dice,
-                abilityScores: controller.args.abilityScores,
+                abilityScores: controller.args.abilityScores ?? AbilityScores.dungeonWorldAll(10),
                 guessFrom: [controller.description, controller.explanation],
               ),
             ),
@@ -171,7 +171,7 @@ class MoveFormController extends LibraryEntityFormController<Move, MoveFormArgum
 }
 
 class MoveFormArguments extends LibraryEntityFormArguments<Move> {
-  final AbilityScores abilityScores;
+  final AbilityScores? abilityScores;
 
   MoveFormArguments({
     required super.entity,

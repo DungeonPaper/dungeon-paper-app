@@ -4,6 +4,7 @@
 
 import 'package:dungeon_paper/app/themes/themes.dart';
 import 'package:dungeon_paper/app/widgets/atoms/custom_list_tile.dart';
+import 'package:dungeon_paper/core/platform_helper.dart';
 import 'package:dungeon_paper/core/utils/math_utils.dart';
 import 'package:flutter/material.dart';
 
@@ -354,7 +355,8 @@ class _CustomExpansionTileState extends State<CustomExpansionTile>
   Widget? _buildTrailingIcon(BuildContext context) {
     if (!widget.expandable ||
         _effectiveAffinity(widget.controlAffinity) != ListTileControlAffinity.trailing) return null;
-    if (widget.reorderablePadding) {
+    if (widget.reorderablePadding &&
+        PlatformHelper.currentInteractionType == InteractionType.mouse) {
       return Padding(
         padding: const EdgeInsets.only(right: 24),
         child: _buildIcon(context),

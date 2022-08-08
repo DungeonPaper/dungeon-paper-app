@@ -72,7 +72,7 @@ class RaceForm extends GetView<RaceFormController> with RepositoryServiceMixin {
         () => Obx(
               () => DiceListInput(
                 controller: controller.dice,
-                abilityScores: controller.args.abilityScores,
+                abilityScores: controller.args.abilityScores ?? AbilityScores.dungeonWorldAll(10),
                 guessFrom: [controller.description, controller.explanation],
               ),
             ),
@@ -142,7 +142,7 @@ class RaceFormController extends LibraryEntityFormController<Race, RaceFormArgum
 }
 
 class RaceFormArguments extends LibraryEntityFormArguments<Race> {
-  final AbilityScores abilityScores;
+  final AbilityScores? abilityScores;
 
   RaceFormArguments({
     required super.entity,

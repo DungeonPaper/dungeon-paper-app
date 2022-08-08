@@ -12,6 +12,15 @@ class AbilityScores {
     required Iterable<AbilityScore> stats,
   }) : stats = stats.toList();
 
+  factory AbilityScores.dungeonWorldAll(int value) => AbilityScores.dungeonWorld(
+        dex: value,
+        str: value,
+        wis: value,
+        con: value,
+        intl: value,
+        cha: value,
+      );
+
   factory AbilityScores.dungeonWorld({
     required int dex,
     required int str,
