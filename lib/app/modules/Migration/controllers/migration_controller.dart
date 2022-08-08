@@ -23,8 +23,8 @@ class MigrationController extends GetxController {
   }
 
   @override
-  void onReady() {
-    super.onReady();
+  void onInit() {
+    super.onInit();
     final args = Get.arguments as MigrationArguments;
     email = args.email;
     username.addListener(_refreshUsername);

@@ -6,7 +6,6 @@ import 'package:dungeon_paper/generated/l10n.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-
 class ThemeBrightnessSwitch extends StatelessWidget with UserServiceMixin, CharacterServiceMixin {
   const ThemeBrightnessSwitch({
     super.key,
@@ -41,7 +40,7 @@ class ThemeBrightnessSwitch extends StatelessWidget with UserServiceMixin, Chara
       icon: icon(user),
       title: title(user),
       onChanged: () => onChanged?.call(
-        _toggleTheme(context, user, char),
+        _toggleTheme(context, user, maybeChar),
       ),
     );
   }
@@ -79,19 +78,25 @@ class ThemeBrightnessSwitch extends StatelessWidget with UserServiceMixin, Chara
         onPressed: onChanged,
       );
 
-  static Brightness _toggleTheme(BuildContext context, User user, Character character) {
+  static Brightness _toggleTheme(BuildContext context, User user, Character? character) {
+    final currentIsDark = user.brightness == Brightness.dark;
+    final brightness = currentIsDark ? Brightness.light : Brightness.dark;
+    _updateThemeOnUser(user, character);
+    return brightness;
+  }
+
+  static void _updateThemeOnUser(User user, Character? character) async {
     final currentIsDark = user.brightness == Brightness.dark;
     final brightness = currentIsDark ? Brightness.light : Brightness.dark;
     final userService = Get.find<UserService>();
     final charService = Get.find<CharacterService>();
-    debugPrint('Toggling theme to $brightness');
-    userService
-        .updateUser(
-          user.copyWith(
-            settings: user.settings.copyWith(brightnessOverride: brightness),
-          ),
-        )
-        .then((value) => charService.switchToCharacterTheme(character));
-    return brightness;
+
+    await userService.updateUser(user.copyWith(
+      settings: user.settings.copyWith(brightnessOverride: brightness),
+    ));
+
+    if (character != null) {
+      charService.switchToCharacterTheme(character);
+    }
   }
 }
