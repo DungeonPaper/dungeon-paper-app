@@ -1,3 +1,4 @@
+import 'package:dungeon_paper/app/data/models/ability_scores.dart';
 import 'package:dungeon_paper/app/data/models/character_class.dart';
 import 'package:dungeon_paper/app/data/models/item.dart';
 import 'package:dungeon_paper/app/data/models/meta.dart';
@@ -59,7 +60,7 @@ class LibraryCollectionView extends GetView<LibraryCollectionController>
                 child: ListTile(
                   onTap: () => ModelPages.openLibraryList(
                     type: type,
-                    abilityScores: char.abilityScores,
+                    abilityScores: maybeChar?.abilityScores ?? AbilityScores.dungeonWorldAll(10),
                     classKeys: [],
                     moveCategory: null,
                     // initialTab: charService.maybeCurrent != null

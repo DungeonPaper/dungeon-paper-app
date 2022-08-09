@@ -108,7 +108,7 @@ class CharacterService extends GetxService with LoadingServiceMixin, UserService
       switchToLastUsedChar();
     }
 
-    if (_currentKey.value != null) {
+    if (maybeCurrent != null) {
       switchToCharacterTheme(current);
     }
 
@@ -121,8 +121,10 @@ class CharacterService extends GetxService with LoadingServiceMixin, UserService
     if (hasLastChar) {
       final lastChar = charsByLastUsed.first;
       _currentKey.value = lastChar.key;
-    } else {
+    } else if (all.isNotEmpty) {
       _currentKey.value = all.keys.first;
+    } else {
+      _currentKey.value = null;
     }
   }
 

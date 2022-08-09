@@ -1,5 +1,7 @@
+import 'package:dungeon_paper/app/data/models/ability_scores.dart';
 import 'package:dungeon_paper/app/data/models/character.dart';
 import 'package:dungeon_paper/app/data/models/race.dart';
+import 'package:dungeon_paper/app/data/services/character_service.dart';
 import 'package:dungeon_paper/app/data/services/repository_service.dart';
 import 'package:dungeon_paper/app/model_utils/model_pages.dart';
 import 'package:dungeon_paper/app/modules/LibraryList/controllers/library_list_controller.dart';
@@ -13,13 +15,13 @@ import 'package:get/get.dart';
 
 import 'filters/race_filters.dart';
 
-class RacesLibraryListView extends GetView<LibraryListController<Race, RaceFilters>> {
+class RacesLibraryListView extends GetView<LibraryListController<Race, RaceFilters>>
+    with CharacterServiceMixin {
   const RacesLibraryListView({
     Key? key,
   }) : super(key: key);
 
   RepositoryService get service => controller.repo.value;
-  Character get char => controller.chars.value.current;
 
   @override
   Widget build(BuildContext context) {
@@ -39,7 +41,7 @@ class RacesLibraryListView extends GetView<LibraryListController<Race, RaceFilte
           EntityEditMenu(
             onEdit: data.onUpdate != null
                 ? () => ModelPages.openRacePage(
-                      abilityScores: char.abilityScores,
+                      abilityScores: maybeChar?.abilityScores ?? AbilityScores.dungeonWorldAll(10),
                       race: data.item,
                       onSave: data.onUpdate!,
                     )
