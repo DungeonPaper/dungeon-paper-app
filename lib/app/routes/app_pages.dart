@@ -234,6 +234,12 @@ class AppPages {
       preventDuplicates: false,
     ),
     GetPage(
+      name: Routes.abilityScoreForm,
+      page: () => const AbilityScoreFormView(),
+      binding: AbilityScoreFormBinding(),
+      preventDuplicates: false,
+    ),
+    GetPage(
       name: Routes.bondsFlags,
       page: () => const BondsFlagsFormView(),
       binding: AbilityScoresFormBinding(),
