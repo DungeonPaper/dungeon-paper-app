@@ -209,6 +209,7 @@ icons_launcher:
 script_runner:
   shell: /bin/zsh
   scripts:
+    - bump: dart lib/core/task_runner/deploy.dart --bump pre
     # Android
     - build:android:apk: flutter build apk
     - build:android:bundle: flutter build appbundle
