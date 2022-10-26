@@ -1175,7 +1175,7 @@ packages:
       name: wheel_spinner
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.6.1"
+    version: "0.7.0"
   win32:
     dependency: transitive
     description:
