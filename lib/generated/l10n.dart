@@ -1118,10 +1118,10 @@ class S {
     );
   }
 
-  /// `Use class base HP + Constitution (score)`
+  /// `Use class base load + STR mod`
   String get characterAutoMaxLoad {
     return Intl.message(
-      'Use class base HP + Constitution (score)',
+      'Use class base load + STR mod',
       name: 'characterAutoMaxLoad',
       desc: '',
       args: [],

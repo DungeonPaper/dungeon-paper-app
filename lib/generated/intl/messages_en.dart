@@ -498,7 +498,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "characterAutoDamage": MessageLookupByLibrary.simpleMessage(
             "Use damage dice from class & equipped items"),
         "characterAutoMaxLoad": MessageLookupByLibrary.simpleMessage(
-            "Use class base HP + Constitution (score)"),
+            "Use class base load + STR mod"),
         "characterBarHp": MessageLookupByLibrary.simpleMessage("HP"),
         "characterBarXp": MessageLookupByLibrary.simpleMessage("XP"),
         "characterBioDialogAlignmentDescriptionLabel":

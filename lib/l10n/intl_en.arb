@@ -106,7 +106,7 @@
   "changeGeneric": "Change {entity}",
   "characterAutoArmor": "Use armor from class & equipped items",
   "characterAutoDamage": "Use damage dice from class & equipped items",
-  "characterAutoMaxLoad": "Use class base HP + Constitution (score)",
+  "characterAutoMaxLoad": "Use class base load + STR mod",
   "characterBarHp": "HP",
   "characterBarXp": "XP",
   "characterBioDialogAlignmentDescriptionLabel": "Alignment Description",
