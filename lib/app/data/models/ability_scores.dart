@@ -146,7 +146,7 @@ class AbilityScores {
   int? get chaValue => cha?.value;
 
   int get hpBaseValue => con?.value ?? 0;
-  int get loadBaseValue => str?.value ?? 0;
+  int get loadBaseValue => str?.modifier ?? 0;
 
   factory AbilityScores.fromJson(Map<String, dynamic> json) => AbilityScores(
         stats: List<AbilityScore>.from(json['stats'].map((x) => AbilityScore.fromJson(x))),
