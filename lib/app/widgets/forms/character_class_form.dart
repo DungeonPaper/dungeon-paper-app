@@ -48,18 +48,23 @@ class CharacterClassForm extends GetView<CharacterClassFormController> {
             ),
         () => Row(
               children: [
-                NumberTextField(
-                  numberType: NumberType.int,
-                  controller: controller.hp,
-                  decoration: InputDecoration(
-                    label: Text(S.current.formCharacterClassBaseHp),
+                Expanded(
+                  child: NumberTextField(
+                    numberType: NumberType.int,
+                    controller: controller.hp,
+                    decoration: InputDecoration(
+                      label: Text(S.current.formCharacterClassBaseHp),
+                    ),
                   ),
                 ),
-                NumberTextField(
-                  numberType: NumberType.int,
-                  controller: controller.load,
-                  decoration: InputDecoration(
-                    label: Text(S.current.formCharacterClassBaseLoad),
+                const SizedBox(width: 16),
+                Expanded(
+                  child: NumberTextField(
+                    numberType: NumberType.int,
+                    controller: controller.load,
+                    decoration: InputDecoration(
+                      label: Text(S.current.formCharacterClassBaseLoad),
+                    ),
                   ),
                 ),
               ],

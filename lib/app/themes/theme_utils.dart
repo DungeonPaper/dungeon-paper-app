@@ -112,6 +112,7 @@ ThemeData createTheme(
     dialogTheme: base.dialogTheme.copyWith(
       shape: rRectShape,
     ),
+    chipTheme: base.chipTheme.copyWith(shape: rRectShape),
     cardColor: surfaceColor,
     cardTheme: base.cardTheme.copyWith(shape: rRectShape, color: surfaceColor),
     popupMenuTheme: base.popupMenuTheme.copyWith(

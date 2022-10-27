@@ -141,6 +141,7 @@ class NumberTextField extends StatelessWidget {
               icon: const Icon(Icons.remove),
               iconSize: 16,
               splashColor: Colors.red.withOpacity(0.2),
+              visualDensity: VisualDensity.compact,
               onPressed: _decr,
             ),
         suffix: decoration?.suffixIcon ??
@@ -148,6 +149,7 @@ class NumberTextField extends StatelessWidget {
               icon: const Icon(Icons.add),
               iconSize: 16,
               splashColor: Colors.green.withOpacity(0.2),
+              visualDensity: VisualDensity.compact,
               onPressed: _incr,
             ),
       ),
