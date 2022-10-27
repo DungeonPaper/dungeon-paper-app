@@ -402,8 +402,10 @@ class _CustomExpansionTileState extends State<CustomExpansionTile>
                 ...widget.leading,
                 Expanded(
                   child: DefaultTextStyle(
-                    style:
-                        Theme.of(context).textTheme.subtitle1!.copyWith(color: _headerColor.value),
+                    style: Theme.of(context)
+                        .textTheme
+                        .titleMedium!
+                        .copyWith(color: _headerColor.value),
                     child: widget.title ??
                         widget.titleBuilder!.call(
                           context,
@@ -436,7 +438,7 @@ class _CustomExpansionTileState extends State<CustomExpansionTile>
     final ThemeData theme = Theme.of(context);
     final ColorScheme colorScheme = theme.colorScheme;
     _headerColorTween
-      ..begin = widget.collapsedTextColor ?? theme.textTheme.subtitle1!.color
+      ..begin = widget.collapsedTextColor ?? theme.textTheme.titleMedium!.color
       ..end = widget.textColor ?? colorScheme.primary;
     _iconColorTween
       ..begin = widget.collapsedIconColor ?? theme.unselectedWidgetColor

@@ -40,19 +40,20 @@ TextTheme copyTextThemeWith(
   Color? specialColor,
 }) =>
     original.copyWith(
-      headline1: original.headline1?.copyWith(fontFamily: fontFamily, color: specialColor),
-      headline2: original.headline2?.copyWith(fontFamily: fontFamily, color: specialColor),
-      headline3: original.headline3?.copyWith(fontFamily: fontFamily, color: specialColor),
-      headline4: original.headline4?.copyWith(fontFamily: fontFamily, color: specialColor),
-      headline5: original.headline5?.copyWith(fontFamily: fontFamily, color: specialColor),
-      headline6: original.headline6?.copyWith(fontFamily: fontFamily, color: specialColor),
-      subtitle1: original.subtitle1?.copyWith(fontFamily: fontFamily, color: specialColor),
-      subtitle2: original.subtitle2?.copyWith(fontFamily: fontFamily, color: specialColor),
-      bodyText1: original.bodyText1?.copyWith(fontFamily: fontFamily, color: normalColor),
-      bodyText2: original.bodyText2?.copyWith(fontFamily: fontFamily, color: normalColor),
-      caption: original.caption?.copyWith(fontFamily: fontFamily, color: normalColor),
-      button: original.button?.copyWith(fontFamily: fontFamily, color: normalColor),
-      overline: original.overline?.copyWith(fontFamily: fontFamily, color: normalColor),
+      displayLarge: original.displayLarge?.copyWith(fontFamily: fontFamily, color: specialColor),
+      displayMedium: original.displayMedium?.copyWith(fontFamily: fontFamily, color: specialColor),
+      displaySmall: original.displaySmall?.copyWith(fontFamily: fontFamily, color: specialColor),
+      headlineMedium:
+          original.headlineMedium?.copyWith(fontFamily: fontFamily, color: specialColor),
+      headlineSmall: original.headlineSmall?.copyWith(fontFamily: fontFamily, color: specialColor),
+      titleLarge: original.titleLarge?.copyWith(fontFamily: fontFamily, color: specialColor),
+      titleMedium: original.titleMedium?.copyWith(fontFamily: fontFamily, color: specialColor),
+      titleSmall: original.titleSmall?.copyWith(fontFamily: fontFamily, color: specialColor),
+      bodyLarge: original.bodyLarge?.copyWith(fontFamily: fontFamily, color: normalColor),
+      bodyMedium: original.bodyMedium?.copyWith(fontFamily: fontFamily, color: normalColor),
+      bodySmall: original.bodySmall?.copyWith(fontFamily: fontFamily, color: normalColor),
+      labelLarge: original.labelLarge?.copyWith(fontFamily: fontFamily, color: normalColor),
+      labelSmall: original.labelSmall?.copyWith(fontFamily: fontFamily, color: normalColor),
     );
 
 ColorScheme createColorScheme(Color seedColor,

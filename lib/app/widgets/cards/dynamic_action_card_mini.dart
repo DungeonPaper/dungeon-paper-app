@@ -91,7 +91,7 @@ class DynamicActionCardMini extends StatelessWidget {
                   overflow: TextOverflow.fade,
                   maxLines: 1,
                   softWrap: false,
-                  style: textTheme.bodyText1!.copyWith(
+                  style: textTheme.bodyLarge!.copyWith(
                     color: titleFgColor,
                   ),
                 ),

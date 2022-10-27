@@ -41,7 +41,7 @@ class CharacterBioDialog extends GetView with CharacterServiceMixin {
               crossAxisAlignment: CrossAxisAlignment.start,
               // shrinkWrap: true,
               children: [
-                Text(S.current.characterBioDialogDescLabel, style: textTheme.caption),
+                Text(S.current.characterBioDialogDescLabel, style: textTheme.bodySmall),
                 char.bio.description.isNotEmpty
                     ? MarkdownBody(
                         data: char.bio.description,
@@ -50,9 +50,9 @@ class CharacterBioDialog extends GetView with CharacterServiceMixin {
                       )
                     : Text(S.current.noDescription),
                 const SizedBox(height: 16),
-                Text(S.current.characterBioDialogLooksLabel, style: textTheme.caption),
+                Text(S.current.characterBioDialogLooksLabel, style: textTheme.bodySmall),
                 char.bio.looks.isNotEmpty
-                    ? Text(char.bio.looks, style: textTheme.bodyText1)
+                    ? Text(char.bio.looks, style: textTheme.bodyLarge)
                     // TODO broken...?!
                     // ? ConstrainedBox(
                     //     constraints: BoxConstraints.loose(Size.fromHeight(maxContentHeight)),
@@ -77,17 +77,17 @@ class CharacterBioDialog extends GetView with CharacterServiceMixin {
                   children: [
                     Text(
                       S.current.characterBioDialogAlignmentNameDisplayLabel,
-                      style: textTheme.caption,
+                      style: textTheme.bodySmall,
                     ),
                     const SizedBox(width: 4),
                     IconTheme.merge(
-                      data: IconThemeData(size: 14, color: textTheme.caption!.color!),
+                      data: IconThemeData(size: 14, color: textTheme.bodySmall!.color!),
                       child: Icon(char.bio.alignment.icon),
                     ),
                     const SizedBox(width: 4),
                     Text(
                       S.current.alignment(char.bio.alignment.key),
-                      style: textTheme.caption,
+                      style: textTheme.bodySmall,
                     ),
                   ],
                 ),

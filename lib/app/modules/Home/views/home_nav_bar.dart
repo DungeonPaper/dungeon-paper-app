@@ -1,4 +1,3 @@
-
 import 'package:dungeon_paper/core/dw_icons.dart';
 import 'package:dungeon_paper/core/utils/list_utils.dart';
 import 'package:dungeon_paper/generated/l10n.dart';
@@ -136,7 +135,7 @@ class _NavItem extends StatelessWidget {
             const SizedBox(height: 2),
             AnimatedDefaultTextStyle(
               duration: duration,
-              style: theme.textTheme.caption!.copyWith(
+              style: theme.textTheme.bodySmall!.copyWith(
                 fontWeight: FontWeight.w600,
                 color: selected ? selectedColor : null,
               ),

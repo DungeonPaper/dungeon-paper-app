@@ -50,11 +50,11 @@ class EntityEditMenu extends StatelessWidget {
             MenuEntry(
               value: 'remove',
               icon: IconTheme(
-                data: IconThemeData(color: Theme.of(context).errorColor),
+                data: IconThemeData(color: Theme.of(context).colorScheme.error),
                 child: const Icon(Icons.delete),
               ),
               label: DefaultTextStyle.merge(
-                style: TextStyle(color: Theme.of(context).errorColor),
+                style: TextStyle(color: Theme.of(context).colorScheme.error),
                 child: Text(S.current.remove),
               ),
               onSelect: onDelete!,

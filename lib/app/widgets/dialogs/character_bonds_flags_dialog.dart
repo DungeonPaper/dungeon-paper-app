@@ -77,7 +77,7 @@ class CharacterBondsFlagsDialog extends GetView<CharacterService> with Character
                   const Divider(height: 32),
                 ],
                 if (bonds.isNotEmpty && flags.isNotEmpty)
-                  Text(S.current.characterBondsFlagsDialogBonds, style: textTheme.caption),
+                  Text(S.current.characterBondsFlagsDialogBonds, style: textTheme.bodySmall),
                 for (final bond in bonds) ...[
                   CheckboxListTile(
                     title: Text(bond.description),
@@ -90,7 +90,7 @@ class CharacterBondsFlagsDialog extends GetView<CharacterService> with Character
                 ],
                 if (bonds.isNotEmpty && flags.isNotEmpty) ...[
                   const Divider(height: 32),
-                  Text(S.current.characterBondsFlagsDialogFlags, style: textTheme.caption),
+                  Text(S.current.characterBondsFlagsDialogFlags, style: textTheme.bodySmall),
                 ],
                 for (final flag in flags) ...[
                   CheckboxListTile(

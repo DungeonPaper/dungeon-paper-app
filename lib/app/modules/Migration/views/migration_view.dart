@@ -42,13 +42,13 @@ class MigrationView extends GetView<MigrationController> {
                   const SizedBox(height: 16),
                   Text(
                     S.current.migrationTitle,
-                    style: textTheme.headline4,
+                    style: textTheme.headlineMedium,
                     textAlign: TextAlign.center,
                   ),
                   const SizedBox(height: 16),
                   Text(
                     S.current.migrationSubtitle,
-                    style: textTheme.subtitle1,
+                    style: textTheme.titleMedium,
                     textAlign: TextAlign.center,
                   ),
                   const SizedBox(height: 32),
@@ -62,7 +62,7 @@ class MigrationView extends GetView<MigrationController> {
                     ),
                   ),
                   const SizedBox(height: 8),
-                  Text(S.current.migrationUsernameInfo, style: textTheme.caption),
+                  Text(S.current.migrationUsernameInfo, style: textTheme.bodySmall),
                   const SizedBox(height: 16),
                   Obx(
                     () => SelectBox(

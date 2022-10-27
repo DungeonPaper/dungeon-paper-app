@@ -16,7 +16,7 @@ class Hyperlink extends StatelessWidget {
 
     return TextSpan(
       text: text,
-      style: Theme.of(context).textTheme.bodyText2!.copyWith(
+      style: Theme.of(context).textTheme.bodyMedium!.copyWith(
             color: Colors.blue[700],
             decoration: TextDecoration.underline,
           ),
@@ -29,7 +29,7 @@ class Hyperlink extends StatelessWidget {
     return GestureDetector(
       child: Text(
         text,
-        style: Theme.of(context).textTheme.bodyText2!.copyWith(
+        style: Theme.of(context).textTheme.bodyMedium!.copyWith(
               color: Colors.blue[700],
               decoration: TextDecoration.underline,
             ),

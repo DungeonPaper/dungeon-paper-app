@@ -19,7 +19,7 @@ class CharacterSubtitle extends StatelessWidget {
     return RichText(
       textAlign: textAlign,
       text: TextSpan(
-        style: Theme.of(context).textTheme.bodyText2,
+        style: Theme.of(context).textTheme.bodyMedium,
         children: <InlineSpan>[
           TextSpan(text: S.current.characterHeaderSubtitleLevel(character.stats.level)),
           TextSpan(text: S.current.characterHeaderSubtitleClass(character.characterClass.name)),

@@ -36,7 +36,7 @@ class AccountView extends GetView<AccountController> {
               padding: const EdgeInsets.symmetric(horizontal: 16).copyWith(top: 8),
               child: Text(
                 S.current.accountCategoryDetails,
-                style: textTheme.caption,
+                style: textTheme.bodySmall,
               ),
             ),
         () => Obx(
@@ -82,7 +82,7 @@ class AccountView extends GetView<AccountController> {
               padding: const EdgeInsets.symmetric(horizontal: 16).copyWith(top: 8),
               child: Text(
                 S.current.accountCategorySocials,
-                style: textTheme.caption,
+                style: textTheme.bodySmall,
               ),
             ),
       ],

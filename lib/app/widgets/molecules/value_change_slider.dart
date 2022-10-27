@@ -55,7 +55,7 @@ class ValueChangeSlider<N extends num> extends StatelessWidget {
                 : isChangePositive
                     ? positiveText(changeAmount)
                     : negativeText(changeAmount),
-            style: textTheme.headline5!.copyWith(
+            style: textTheme.headlineSmall!.copyWith(
               color: isChangeNeutral
                   ? null
                   : isChangePositive
@@ -82,8 +82,6 @@ class ValueChangeSlider<N extends num> extends StatelessWidget {
                   .copyWith(
                 borderRadius: borderRadius,
               ),
-              // childBuilder: (_) => Text(_.toString()),
-              minMaxLabelBuilder: (_) => '',
               onSlideUpdate: (val) => onChange((N == int ? val.toInt() : val.toDouble()) as N),
             ),
           ),

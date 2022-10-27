@@ -35,7 +35,7 @@ class ViewTagDialog extends StatelessWidget {
                         S.current.genericNameField(
                           S.current.entity(dw.Tag),
                         ),
-                        style: textTheme.caption,
+                        style: textTheme.bodySmall,
                       ),
                       Text(
                         toTitleCase(tag.name),
@@ -54,7 +54,7 @@ class ViewTagDialog extends StatelessWidget {
                           S.current.genericValueField(
                             S.current.entity(dw.Tag),
                           ),
-                          style: textTheme.caption,
+                          style: textTheme.bodySmall,
                         ),
                         Text(
                           tag.value.toString(),
@@ -72,7 +72,7 @@ class ViewTagDialog extends StatelessWidget {
                 S.current.genericDescriptionField(
                   S.current.entity(dw.Tag),
                 ),
-                style: textTheme.caption,
+                style: textTheme.bodySmall,
               ),
               Text(
                 tag.description,

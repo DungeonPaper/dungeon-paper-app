@@ -156,7 +156,7 @@ class _RollDiceViewState extends State<RollDiceView> with TickerProviderStateMix
                       Text(
                         S.current.rollDialogResultTotal(
                             results.isNotEmpty ? results[group.index].total : 0),
-                        style: textTheme.headline6!.copyWith(color: Colors.white),
+                        style: textTheme.titleLarge!.copyWith(color: Colors.white),
                       ),
                       Text(
                         S.current.rollDialogResultBreakdown(
@@ -165,7 +165,8 @@ class _RollDiceViewState extends State<RollDiceView> with TickerProviderStateMix
                               ? '+0'
                               : group.value.modifierWithSign),
                         ),
-                        style: textTheme.bodyText2!.copyWith(color: Colors.white.withOpacity(0.75)),
+                        style:
+                            textTheme.bodyMedium!.copyWith(color: Colors.white.withOpacity(0.75)),
                       ),
                     ],
                   ),

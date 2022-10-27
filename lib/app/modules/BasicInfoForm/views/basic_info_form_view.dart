@@ -135,7 +135,7 @@ class BasicInfoFormView extends GetView<BasicInfoFormController> with UserServic
                           ),
                           TextSpan(text: S.current.basicInfoImageNeedAccountSuffix),
                         ],
-                        style: theme.textTheme.bodyText2,
+                        style: theme.textTheme.bodyMedium,
                       ),
                     ),
                   )

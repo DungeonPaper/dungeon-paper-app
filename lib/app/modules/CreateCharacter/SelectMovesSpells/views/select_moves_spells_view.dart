@@ -23,7 +23,7 @@ class SelectMovesSpellsView extends GetView<SelectMovesSpellsController> {
 
   @override
   Widget build(BuildContext context) {
-    var titleStyle = Theme.of(context).textTheme.headline6;
+    var titleStyle = Theme.of(context).textTheme.titleLarge;
     return ConfirmExitView(
       dirty: controller.dirty.value,
       child: Scaffold(

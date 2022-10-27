@@ -69,7 +69,7 @@ class _ChipListInputState<T> extends State<ChipListInput<T>> {
       children: [
         DefaultTextStyle(
           child: widget.label ?? Text(S.current.entityPlural(T)),
-          style: Theme.of(context).textTheme.caption!.copyWith(color: widget.labelColor),
+          style: Theme.of(context).textTheme.bodySmall!.copyWith(color: widget.labelColor),
         ),
         const SizedBox(height: 6),
         Wrap(

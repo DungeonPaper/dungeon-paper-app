@@ -117,10 +117,10 @@ class _DynamicActionCardState extends State<DynamicActionCard> {
               maxLines: !expanded ? 1 : null,
               softWrap: expanded,
               normalTextStyle: TextStyle(
-                fontSize: Theme.of(context).textTheme.subtitle1!.fontSize,
+                fontSize: Theme.of(context).textTheme.titleMedium!.fontSize,
                 color: color,
               ),
-              // highlightStyle: Theme.of(context).textTheme.subtitle1!.copyWith(color: color),
+              // highlightStyle: Theme.of(context).textTheme.titleMedium!.copyWith(color: color),
             ),
             key: widget.expansionKey,
             onExpansion: (val) {
@@ -177,17 +177,17 @@ class _DynamicActionCardState extends State<DynamicActionCard> {
           ? _renderMarkdown(
               context,
               widget.description,
-              // style: Theme.of(context).textTheme.bodyText1,
+              // style: Theme.of(context).textTheme.bodyLarge,
             )
           : Text(
               S.current.noDescription,
-              style: Theme.of(context).textTheme.bodyText1,
+              style: Theme.of(context).textTheme.bodyLarge,
             ),
       // Divider(height: 32, color: dividerColor),
       if (widget.explanation != null && widget.explanation!.isNotEmpty) ...[
         Padding(
           padding: const EdgeInsets.only(top: 16, bottom: 4),
-          child: Text(S.current.explanation, style: Theme.of(context).textTheme.caption),
+          child: Text(S.current.explanation, style: Theme.of(context).textTheme.bodySmall),
         ),
         _renderMarkdown(context, widget.explanation!),
       ],

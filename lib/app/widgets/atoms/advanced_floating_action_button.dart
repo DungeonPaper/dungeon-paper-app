@@ -414,7 +414,7 @@ class AdvancedFloatingActionButton extends StatelessWidget {
   /// The text style for an extended [FloatingActionButton]'s label.
   ///
   /// If null, [FloatingActionButtonThemeData.extendedTextStyle] is used. If
-  /// that is also null, then [TextTheme.button] with a letter spacing of 1.2
+  /// that is also null, then [TextTheme.labelLarge] with a letter spacing of 1.2
   /// is used.
   final TextStyle? extendedTextStyle;
 

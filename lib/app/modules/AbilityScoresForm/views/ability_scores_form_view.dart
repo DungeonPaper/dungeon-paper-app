@@ -106,7 +106,7 @@ class AbilityScoresFormView extends GetView<AbilityScoresFormController> {
                     Text(stat.name),
                   ],
                 ),
-                subtitle: Text(stat.description, style: textTheme.caption),
+                subtitle: Text(stat.description, style: textTheme.bodySmall),
                 minVerticalPadding: 8,
               ),
               const Divider(height: 8),

@@ -12,13 +12,13 @@ class ButtonThemes {
   // );
 
   static ButtonStyle? errorElevated(BuildContext context) => ElevatedButton.styleFrom(
-        backgroundColor: Theme.of(context).errorColor,
+        backgroundColor: Theme.of(context).colorScheme.error,
         foregroundColor: Theme.of(context).colorScheme.onError,
         shape: rRectShape,
       );
 
   static ButtonStyle? errorText(BuildContext context) => TextButton.styleFrom(
-        foregroundColor: Theme.of(context).errorColor,
+        foregroundColor: Theme.of(context).colorScheme.error,
         shape: rRectShape,
       );
 

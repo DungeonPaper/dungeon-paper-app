@@ -30,7 +30,7 @@ class BondsFlagsFormView extends GetView<BondsFlagsFormController> {
           body: ListView(
             padding: const EdgeInsets.all(16),
             children: [
-              Text(S.current.characterBondsFlagsDialogBonds, style: textTheme.headline5),
+              Text(S.current.characterBondsFlagsDialogBonds, style: textTheme.headlineSmall),
               for (final bond in enumerate(controller.bondsDesc))
                 ListTile(
                   contentPadding: const EdgeInsets.all(0),
@@ -51,7 +51,7 @@ class BondsFlagsFormView extends GetView<BondsFlagsFormController> {
                 icon: const Icon(Icons.add),
               ),
               const Divider(height: 24),
-              Text(S.current.characterBondsFlagsDialogFlags, style: textTheme.headline5),
+              Text(S.current.characterBondsFlagsDialogFlags, style: textTheme.headlineSmall),
               for (final flag in enumerate(controller.flagsDesc))
                 ListTile(
                   contentPadding: const EdgeInsets.all(0),

@@ -112,7 +112,7 @@ class LibraryCardList<T extends WithMeta, F extends EntityFilters<T>>
         () => const SizedBox(height: 32),
         () => Text(
               S.current.libraryListNoItemsFoundTitle(S.current.entityPlural(T)),
-              style: textTheme.headline6,
+              style: textTheme.titleLarge,
               textAlign: TextAlign.center,
             ),
         () => const SizedBox(height: 8),
@@ -124,7 +124,7 @@ class LibraryCardList<T extends WithMeta, F extends EntityFilters<T>>
                       ? S.current
                           .libraryListNoItemsFoundSubtitleNoFilters(S.current.entityPlural(T))
                       : S.current.libraryListNoItemsFoundSubtitleFilters(S.current.entityPlural(T)),
-                  style: textTheme.subtitle1,
+                  style: textTheme.titleMedium,
                   textAlign: TextAlign.center,
                 ),
               ),

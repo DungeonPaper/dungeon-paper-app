@@ -94,7 +94,7 @@ class UserMenuPopover extends GetView<CharacterService> with AuthServiceMixin, U
                                   const SizedBox(height: 8),
                                   Text(
                                     S.current.userMenuRecentCharacters,
-                                    style: Theme.of(context).textTheme.caption,
+                                    style: Theme.of(context).textTheme.bodySmall,
                                   ),
                                   Padding(
                                     padding: const EdgeInsets.only(top: 8),

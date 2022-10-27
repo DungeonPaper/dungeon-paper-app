@@ -40,13 +40,13 @@ class LoginView extends GetView<LoginController> {
                       children: [
                         Text(
                           controller.isLogin ? S.current.signinTitle : S.current.signupTitle,
-                          style: textTheme.headline4,
+                          style: textTheme.headlineMedium,
                           textAlign: TextAlign.center,
                         ),
                         const SizedBox(height: 8),
                         Text(
                           controller.isLogin ? S.current.signinSubtitle : S.current.signupSubtitle,
-                          style: textTheme.subtitle1,
+                          style: textTheme.titleMedium,
                           textAlign: TextAlign.center,
                         ),
                         const SizedBox(height: 24),

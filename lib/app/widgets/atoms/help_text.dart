@@ -28,7 +28,7 @@ class HelpText extends StatelessWidget {
               ),
             ),
             decoration: BoxDecoration(
-              color: textTheme.caption!.color,
+              color: textTheme.bodySmall!.color,
               shape: BoxShape.circle,
             ),
           ),
@@ -37,7 +37,7 @@ class HelpText extends StatelessWidget {
         Expanded(
           child: Text(
             text,
-            style: textTheme.caption,
+            style: textTheme.bodySmall,
           ),
         ),
       ],

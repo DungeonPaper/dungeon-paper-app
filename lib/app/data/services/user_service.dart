@@ -11,7 +11,6 @@ import 'package:dungeon_paper/app/routes/app_pages.dart';
 import 'package:dungeon_paper/core/http/api.dart';
 import 'package:dungeon_paper/core/http/api_requests/migration.dart';
 import 'package:dungeon_paper/core/storage_handler/storage_handler.dart';
-import 'package:dungeon_paper/core/task_runner/task_utils.dart';
 import 'package:dungeon_paper/generated/l10n.dart';
 import 'package:email_validator/email_validator.dart';
 import 'package:firebase_auth/firebase_auth.dart' as fba;
@@ -141,7 +140,7 @@ class UserService extends GetxService
           email: user.email,
           id: authService.fbUser.value?.uid,
           username: user.username,
-          extras: {
+          data: {
             'displayName': user.displayName,
             'version': pkg.version,
           },

@@ -89,10 +89,10 @@ class SelectCharacterThemeView extends GetView<SelectCharacterThemeController> {
   }) {
     final theme = Theme.of(context);
     final textTheme = theme.textTheme;
-    final caption = textTheme.caption!;
+    final bodySmall = textTheme.bodySmall!;
     return _pad(Row(
       children: [
-        Expanded(child: Text(labelText, style: caption)),
+        Expanded(child: Text(labelText, style: bodySmall)),
         Text(S.current.seeAll),
         Switch.adaptive(value: seeAll, onChanged: onChangeSeeAll),
         ElevatedButton(onPressed: resetEnabled ? onReset : null, child: Text(S.current.useDefault)),

@@ -107,7 +107,7 @@ class CharacterAvatar extends GetView {
 
   static Widget _buildDefaultImage(BuildContext context, double size) {
     final theme = Theme.of(context);
-    final textStyle = theme.primaryTextTheme.subtitle1!;
+    final textStyle = theme.primaryTextTheme.titleMedium!;
     return Container(
       color: ThemeData.estimateBrightnessForColor(textStyle.color!) == Brightness.dark
           ? theme.primaryColorLight

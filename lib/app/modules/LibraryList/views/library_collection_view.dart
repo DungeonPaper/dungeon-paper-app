@@ -80,7 +80,7 @@ class LibraryCollectionView extends GetView<LibraryCollectionController>
                   ),
                   title: Text(
                     S.current.entityPlural(type),
-                    style: textTheme.headline6,
+                    style: textTheme.titleLarge,
                   ),
                   subtitle: Text(
                     [
