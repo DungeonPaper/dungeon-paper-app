@@ -1,3 +1,4 @@
+import 'package:dungeon_paper/generated/l10n.dart';
 import 'package:flutter/material.dart';
 
 import '../../data/models/character_class.dart';
@@ -35,7 +36,7 @@ class CharacterClassCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return DynamicActionCard(
       title: characterClass.name,
-      description: characterClass.description,
+      description: _buildMarkdownDescription,
       maxContentHeight: maxContentHeight,
       expandable: expandable,
       expansionKey: expansionKey ?? PageStorageKey(characterClass.key),
@@ -45,5 +46,16 @@ class CharacterClassCard extends StatelessWidget {
       actions: actions,
       highlightWords: highlightWords,
     );
+  }
+
+  String get _buildMarkdownDescription {
+    final baseLoadLabel = S.current.formCharacterClassBaseLoad;
+    final baseHpLabel = S.current.formCharacterClassBaseHp;
+    final table = [
+      '| $baseHpLabel | $baseLoadLabel |',
+      '| --- | --- |',
+      '| ${characterClass.hp} | ${characterClass.load} |',
+    ].join('\n');
+    return characterClass.description + '\n\n' + table;
   }
 }
