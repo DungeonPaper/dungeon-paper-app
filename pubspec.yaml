@@ -1,6 +1,6 @@
 name: dungeon_paper
 description: A new Flutter project.
-version: 2.0.0+287
+version: 2.0.0+288
 # The above field defines the version and build number for your application.
 # A version number is three numbers separated by dots, like 1.2.43
 # followed by an optional build number separated by a +.
@@ -13,10 +13,10 @@ version: 2.0.0+287
 # https://developer.apple.com/library/archive/documentation/General/Reference/InfoPlistKeyReference/Articles/CoreFoundationKeys.html
 # The following line prevents the package from being accidentally published to
 # pub.dev using `flutter pub publish`. This is preferred for private packages.
-publish_to: "none" # Remove this line if you wish to publish to pub.dev
+publish_to: 'none' # Remove this line if you wish to publish to pub.dev
 
 environment:
-  sdk: ">=2.17.0-266.5.beta <3.0.0"
+  sdk: '>=2.19.0-255.2.beta <3.0.0'
 
 # Dependencies specify other packages that your package needs in order to work.
 # To automatically upgrade your package dependencies to the latest versions
@@ -53,7 +53,7 @@ dependencies:
   intl: ^0.17.0
   intl_generator: ^0.3.0
   localstore: ^1.2.1
-  package_info_plus: ^1.4.2
+  package_info_plus: ^3.1.0
   path: ^1.8.1
   path_provider: ^2.0.9
   popover: ^0.2.6+3
@@ -181,24 +181,24 @@ flutter:
 flutter_intl:
   enabled: true
 flutter_native_splash:
-  color: "#fcf5e5"
-  color_dark: "#1c1e21"
-  image: "assets/images/logo.png"
+  color: '#fcf5e5'
+  color_dark: '#1c1e21'
+  image: 'assets/images/logo.png'
 icons_launcher:
-  image_path: "assets/images/logo.png"
+  image_path: 'assets/images/logo.png'
   platforms:
     android:
       enable: true
-      image_path: "assets/images/launcher_icons/android.png"
+      image_path: 'assets/images/launcher_icons/android.png'
     web:
       enable: true
-      favicon_path: "assets/images/logo.png"
+      favicon_path: 'assets/images/logo.png'
     ios:
       enable: true
-      image_path: "assets/images/launcher_icons/ios.png"
+      image_path: 'assets/images/launcher_icons/ios.png'
     macos:
       enable: true
-      image_path: "assets/images/launcher_icons/ios.png"
+      image_path: 'assets/images/launcher_icons/ios.png'
     windows:
       enable: true
     linux:
@@ -209,11 +209,18 @@ icons_launcher:
 script_runner:
   shell: /bin/zsh
   scripts:
+    - name: get-version
+      cmd: dart scripts/get_version.dart
+      suppress_header_output: true
     - bump: dart lib/core/task_runner/deploy.dart --bump pre
     # Android
     - build:android:apk: flutter build apk
     - build:android:bundle: flutter build appbundle
     - build:android:all: build:android:apk && build:android:bundle
+    - push: 'version=$(get-version); echo "Pushing dungeon_paper-$version.apk"; adb
+        push build/app/outputs/flutter-apk/app-release.apk
+        /sdcard/Download/dungeon_paper-${version}.apk'
+    - install: adb install -r build/app/outputs/flutter-apk/app-release.apk
     # iOS
     - build:ios:app: flutter build ios
     - build:ios:bundle: flutter build ipa
@@ -226,4 +233,5 @@ script_runner:
     - build:web:all: build:web:app
     # All
     - build:all: build:android:all && build:ios:all && build:macos:all && build:web:all
+    - to-device: build:android:apk && push && install
     - gen:icons: flutter pub run icons_launcher:create

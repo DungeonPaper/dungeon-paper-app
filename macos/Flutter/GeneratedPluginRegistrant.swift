@@ -12,10 +12,10 @@ import firebase_core
 import firebase_crashlytics
 import firebase_remote_config
 import firebase_storage
-import package_info_plus_macos
-import path_provider_macos
+import package_info_plus
+import path_provider_foundation
 import sentry_flutter
-import shared_preferences_macos
+import shared_preferences_foundation
 import sign_in_with_apple
 import sqflite
 import url_launcher_macos
