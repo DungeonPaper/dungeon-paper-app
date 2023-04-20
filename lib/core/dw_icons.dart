@@ -13,9 +13,8 @@
 ///         Homepage:  http://fortawesome.github.com/Font-Awesome/
 
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 
-import '../app/data/models/user.dart';
+import '../app/model_utils/user_utils.dart';
 
 class DwIcons {
   DwIcons._();

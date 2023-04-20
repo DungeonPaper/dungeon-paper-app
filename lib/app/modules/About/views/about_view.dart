@@ -9,7 +9,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:url_launcher/url_launcher.dart';
 
-import '../../../data/models/user.dart';
+import '../../../model_utils/user_utils.dart';
 import '../controllers/about_controller.dart';
 
 class AboutView extends GetView<AboutController> {

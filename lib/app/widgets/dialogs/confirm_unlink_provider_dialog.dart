@@ -3,7 +3,7 @@ import 'package:dungeon_paper/generated/l10n.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-import '../../data/models/user.dart';
+import '../../model_utils/user_utils.dart';
 
 Future<bool> confirmUnlinkProvider<T>(
     BuildContext context, ProviderName provider) {

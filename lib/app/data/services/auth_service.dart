@@ -10,6 +10,8 @@ import 'package:get/get.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:sign_in_with_apple/sign_in_with_apple.dart';
 
+import '../../model_utils/user_utils.dart';
+
 class AuthService extends GetxService
     with UserServiceMixin, LoadingServiceMixin, RepositoryServiceMixin {
   StreamSubscription<User?>? _sub;
@@ -25,21 +27,62 @@ class AuthService extends GetxService
   }) async =>
       auth.signInWithEmailAndPassword(email: email, password: password);
 
+  Future<UserCredential> loginWithProvider(ProviderName provider) {
+    switch (provider) {
+      case ProviderName.google:
+        return loginWithGoogle();
+      case ProviderName.apple:
+        return loginWithApple();
+      default:
+        throw ArgumentError('Invalid provider: $provider');
+    }
+  }
+
+  Future<AuthCredential> getProviderCredential(ProviderName provider) {
+    switch (provider) {
+      case ProviderName.google:
+        return getGoogleCredential();
+      case ProviderName.apple:
+        return getAppleCredential();
+      default:
+        throw ArgumentError('Invalid provider: $provider');
+    }
+  }
+
+  Future<void> logoutFromProvider(ProviderName provider) {
+    switch (provider) {
+      case ProviderName.google:
+        return gSignIn.signOut();
+      case ProviderName.apple:
+        return Future.value();
+      default:
+        throw ArgumentError('Invalid provider: $provider');
+    }
+  }
+
   Future<UserCredential> loginWithGoogle() async {
+    final cred = await getGoogleCredential();
+    return auth.signInWithCredential(cred);
+  }
+
+  Future<AuthCredential> getGoogleCredential() async {
     final gUser = await gSignIn.signIn();
     if (gUser == null) {
       throw StateError('user_cancel');
     }
     final gAuth = await gUser.authentication;
-    return auth.signInWithCredential(
-      GoogleAuthProvider.credential(
-        idToken: gAuth.idToken,
-        accessToken: gAuth.accessToken,
-      ),
+    return GoogleAuthProvider.credential(
+      idToken: gAuth.idToken,
+      accessToken: gAuth.accessToken,
     );
   }
 
   Future<UserCredential> loginWithApple() async {
+    final credential = await getAppleCredential();
+    return auth.signInWithCredential(credential);
+  }
+
+  Future<OAuthCredential> getAppleCredential() async {
     final cred = await SignInWithApple.getAppleIDCredential(
       // webAuthenticationOptions: WebAuthenticationOptions(
       //   clientId: 'clientId',
@@ -65,8 +108,7 @@ class AuthService extends GetxService
       idToken: cred.identityToken,
       accessToken: cred.authorizationCode,
     );
-
-    return auth.signInWithCredential(credential);
+    return credential;
   }
 
   Future<void> logout() async {

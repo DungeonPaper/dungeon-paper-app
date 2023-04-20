@@ -1,4 +1,3 @@
-import 'package:dungeon_paper/app/data/models/user.dart';
 import 'package:dungeon_paper/app/widgets/atoms/help_text.dart';
 import 'package:dungeon_paper/app/widgets/atoms/password_field.dart';
 import 'package:dungeon_paper/app/widgets/atoms/user_avatar.dart';
@@ -15,6 +14,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import '../../../../core/dw_icons.dart';
+import '../../../model_utils/user_utils.dart';
 import '../controllers/account_controller.dart';
 
 class AccountView extends GetView<AccountController> {
@@ -100,42 +100,47 @@ class AccountView extends GetView<AccountController> {
           // if (PlatformHelper.canUseAppleSignIn)
           ProviderName.apple
         ]).map((provider) {
-          return () => ListTile(
-                title: Text(S.current.signinProvider(provider)),
-                // subtitle: Text(provider.),
-                leading: Icon(DwIcons.providerIcon(provider)),
-                subtitle: !PlatformHelper.canUseProvider(provider)
-                    ? Text(
-                        S.current.signinCantUseProvider(
-                            S.current.signinProvider(provider)),
-                        textScaleFactor: 0.8,
-                      )
-                    : null,
-                trailing: ElevatedButton(
-                  child: Text(
-                    isProviderLinked(provider)
-                        ? S.current.signinProviderUnlink
-                        : S.current.signinProviderLink,
-                  ),
-                  // onPressed: provider != ProviderName.password
-                  onPressed: providerCount > 1
-                      ? isProviderLinked(provider)
-                          ? () => awaitUnlinkProviderConfirmation(
-                                context,
-                                provider,
-                                () => controller.authService.fbUser!
-                                    .unlink(domainFromProviderName(provider)),
-                              )
-                          : PlatformHelper.canUseProvider(provider)
-                              ? () => awaitUnlinkProviderConfirmation(
-                                    context,
-                                    provider,
-                                    // () => controller.authService.fbUser!
-                                    //     .linkWithProvider(),
-                                    () => null,
-                                  )
-                              : null
+          return () => Obx(
+                () => ListTile(
+                  title: Text(S.current.signinProvider(provider)),
+                  // subtitle: Text(provider.),
+                  leading: Icon(DwIcons.providerIcon(provider)),
+                  subtitle: !PlatformHelper.canUseProvider(provider)
+                      ? Text(
+                          S.current.signinCantUseProvider(
+                              S.current.signinProvider(provider)),
+                          textScaleFactor: 0.8,
+                        )
                       : null,
+                  trailing: ElevatedButton(
+                    child: Text(
+                      isProviderLinked(provider)
+                          ? S.current.signinProviderUnlink
+                          : S.current.signinProviderLink,
+                    ),
+                    onPressed: providerCount > 1 &&
+                            provider != ProviderName.password
+                        ? isProviderLinked(provider)
+                            ? () => awaitUnlinkProviderConfirmation(
+                                  context,
+                                  provider,
+                                  () {
+                                    controller.authService
+                                        .logoutFromProvider(provider);
+                                    controller.authService.fbUser!.unlink(
+                                        domainFromProviderName(provider));
+                                  },
+                                )
+                            : PlatformHelper.canUseProvider(provider)
+                                ? () async {
+                                    final cred = await controller.authService
+                                        .getProviderCredential(provider);
+                                    controller.authService.fbUser!
+                                        .linkWithCredential(cred);
+                                  }
+                                : null
+                        : null,
+                  ),
                 ),
               );
         }),
