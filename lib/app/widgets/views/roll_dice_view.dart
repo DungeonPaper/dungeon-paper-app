@@ -29,7 +29,8 @@ class RollDiceView extends StatefulWidget {
   State<RollDiceView> createState() => _RollDiceViewState();
 }
 
-class _RollDiceViewState extends State<RollDiceView> with TickerProviderStateMixin {
+class _RollDiceViewState extends State<RollDiceView>
+    with TickerProviderStateMixin {
   final diceSize = 56.0;
   final diceSpacing = 24.0;
   late AnimationStatus rollStatus;
@@ -40,7 +41,8 @@ class _RollDiceViewState extends State<RollDiceView> with TickerProviderStateMix
   var results = <dw.DiceRoll>[];
 
   CharacterService get charService => Get.find();
-  int get totalResult => results.fold(0, (previousValue, element) => previousValue + element.total);
+  int get totalResult => results.fold(
+      0, (previousValue, element) => previousValue + element.total);
   List<dw.Dice> get flat => dw.Dice.flatten(dice.value);
 
   @override
@@ -101,7 +103,8 @@ class _RollDiceViewState extends State<RollDiceView> with TickerProviderStateMix
                             // mainAxisAlignment: MainAxisAlignment.start,
                             crossAxisAlignment: CrossAxisAlignment.stretch,
                             children: [
-                              for (final group in enumerate(dice.value)) _groupBuilder(group),
+                              for (final group in enumerate(dice.value))
+                                _groupBuilder(group),
                             ],
                           ),
                         ),
@@ -135,7 +138,8 @@ class _RollDiceViewState extends State<RollDiceView> with TickerProviderStateMix
           ? const EdgeInsets.only(bottom: 24)
           : EdgeInsets.zero,
       child: Material(
-        color: cardColor.withOpacity(cardColor.opacity * currentAnimGroup.first.opacity.value),
+        color: cardColor.withOpacity(
+            cardColor.opacity * currentAnimGroup.first.opacity.value),
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
         child: Padding(
           padding: const EdgeInsets.all(8),
@@ -154,9 +158,11 @@ class _RollDiceViewState extends State<RollDiceView> with TickerProviderStateMix
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        S.current.rollDialogResultTotal(
-                            results.isNotEmpty ? results[group.index].total : 0),
-                        style: textTheme.titleLarge!.copyWith(color: Colors.white),
+                        S.current.rollDialogResultTotal(results.isNotEmpty
+                            ? results[group.index].total
+                            : 0),
+                        style:
+                            textTheme.titleLarge!.copyWith(color: Colors.white),
                       ),
                       Text(
                         S.current.rollDialogResultBreakdown(
@@ -165,8 +171,8 @@ class _RollDiceViewState extends State<RollDiceView> with TickerProviderStateMix
                               ? '+0'
                               : group.value.modifierWithSign),
                         ),
-                        style:
-                            textTheme.bodyMedium!.copyWith(color: Colors.white.withOpacity(0.75)),
+                        style: textTheme.bodyMedium!
+                            .copyWith(color: Colors.white.withOpacity(0.75)),
                       ),
                     ],
                   ),
@@ -198,7 +204,8 @@ class _RollDiceViewState extends State<RollDiceView> with TickerProviderStateMix
       final maxHeight = _getMaxHeight(context);
       final isDark = Theme.of(context).brightness == Brightness.dark;
       final currentAnim = animations[group.index][d.index];
-      final currentResult = results.isNotEmpty ? results[group.index].results[d.index] : null;
+      final currentResult =
+          results.isNotEmpty ? results[group.index].results[d.index] : null;
 
       final colorScheme = Theme.of(context).colorScheme;
       final textContainerColor = currentResult == group.value.sides
@@ -273,7 +280,9 @@ class _RollDiceViewState extends State<RollDiceView> with TickerProviderStateMix
         .map(
           (d) => d.needsModifier
               ? d.copyWithModifierValue(
-                  charService.current.abilityScores.getStat(d.modifierStat!).modifier,
+                  charService.current.abilityScores
+                      .getStat(d.modifierStat!)
+                      .modifier,
                 )
               : d,
         )
@@ -316,12 +325,23 @@ class _RollDiceViewState extends State<RollDiceView> with TickerProviderStateMix
     });
   }
 
-  FutureOr<void> _walkAnimations(
-    FutureOr<void> Function(_AnimSet animation, int groupIndex, int animIndex) cb,
+  Future<void> _walkAnimations(
+    FutureOr<void> Function(_AnimSet animation, int groupIndex, int animIndex)
+        cb,
   ) async {
     for (final group in enumerate(animations)) {
       for (final anim in enumerate(group.value)) {
         await cb(anim.value, group.index, anim.index);
+      }
+    }
+  }
+
+  void _walkAnimationsSync(
+    void Function(_AnimSet animation, int groupIndex, int animIndex) cb,
+  ) {
+    for (final group in enumerate(animations)) {
+      for (final anim in enumerate(group.value)) {
+        cb(anim.value, group.index, anim.index);
       }
     }
   }
@@ -339,7 +359,8 @@ class _RollDiceViewState extends State<RollDiceView> with TickerProviderStateMix
     );
     rollStatus = AnimationStatus.forward;
     _walkAnimations(
-      ((animation, groupIndex, animIndex) => animation.controller.addListener(_updateAnimStatus)),
+      ((animation, groupIndex, animIndex) =>
+          animation.controller.addListener(_updateAnimStatus)),
     );
     if (animations.isNotEmpty && animations.last.isNotEmpty) {
       animations.last.last.controller.addListener(_updateAnimStatus);
@@ -359,7 +380,7 @@ class _RollDiceViewState extends State<RollDiceView> with TickerProviderStateMix
 
   @override
   void dispose() {
-    _walkAnimations(((animation, groupIndex, animIndex) {
+    _walkAnimationsSync(((animation, groupIndex, animIndex) {
       // animation.controller.removeListener(_updateAnimStatus);
       animation.dispose();
     }));
@@ -393,7 +414,8 @@ class _AnimSet {
     final forwardTween = Tween<double>(begin: 0, end: 1);
     final reverseTween = Tween<double>(begin: 1, end: 0);
 
-    controller = AnimationController(vsync: vsync, duration: RollDiceView.rollAnimDuration);
+    controller = AnimationController(
+        vsync: vsync, duration: RollDiceView.rollAnimDuration);
     angle = reverseTween.animate(CurvedAnimation(
       parent: controller,
       curve: const Interval(0, 0.75, curve: Curves.easeOutQuad),
