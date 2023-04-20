@@ -1,8 +1,6 @@
-import 'package:dungeon_paper/app/themes/button_themes.dart';
 import 'package:dungeon_paper/app/widgets/atoms/help_text.dart';
 import 'package:dungeon_paper/app/widgets/atoms/password_field.dart';
 import 'package:dungeon_paper/app/widgets/atoms/user_avatar.dart';
-import 'package:dungeon_paper/app/widgets/dialogs/confirm_delete_account_dialog.dart';
 import 'package:dungeon_paper/app/widgets/dialogs/confirm_unlink_provider_dialog.dart';
 import 'package:dungeon_paper/app/widgets/molecules/dialog_controls.dart';
 import 'package:dungeon_paper/core/platform_helper.dart';
@@ -97,7 +95,7 @@ class AccountView extends GetView<AccountController> {
             ),
         // ...(controller.authService.fbUser?.providerData ?? []).map((provider) {
         ...([
-          ProviderName.password,
+          // ProviderName.password,
           // if (PlatformHelper.canUseGoogleSignIn)
           ProviderName.google,
           // if (PlatformHelper.canUseAppleSignIn)
@@ -122,14 +120,13 @@ class AccountView extends GetView<AccountController> {
                             ? S.current.signinProviderUnlink
                             : S.current.signinProviderLink,
                       ),
-                      onPressed:
-                          providerCount > 1 && provider != ProviderName.password
-                              ? isProviderLinked(provider)
-                                  ? unlinkProvider(context, provider)
-                                  : PlatformHelper.canUseProvider(provider)
-                                      ? linkProvider(provider)
-                                      : null
-                              : null,
+                      onPressed: providerCount > 1
+                          ? isProviderLinked(provider)
+                              ? unlinkProvider(context, provider)
+                              : PlatformHelper.canUseProvider(provider)
+                                  ? linkProvider(provider)
+                                  : null
+                          : null,
                     ),
                   ),
                 );
