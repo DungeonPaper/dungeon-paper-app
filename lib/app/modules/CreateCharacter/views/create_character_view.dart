@@ -20,12 +20,15 @@ import 'package:dungeon_paper/app/themes/colors.dart';
 import 'package:dungeon_paper/app/widgets/atoms/advanced_floating_action_button.dart';
 import 'package:dungeon_paper/app/widgets/atoms/character_avatar.dart';
 import 'package:dungeon_paper/app/widgets/atoms/confirm_exit_view.dart';
+import 'package:dungeon_paper/app/widgets/chips/tag_chip.dart';
 import 'package:dungeon_paper/generated/l10n.dart';
 import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 
+import '../../../../core/dw_icons.dart';
+import '../../../widgets/chips/advanced_chip.dart';
 import '../controllers/create_character_controller.dart';
 
 class CreateCharacterView extends GetView<CreateCharacterController> {
@@ -80,16 +83,20 @@ class CreateCharacterView extends GetView<CreateCharacterController> {
                             _Card(
                               leading: CharacterAvatar.squircle(
                                 size: 48,
-                                character: Character.empty()
-                                    .copyWith(avatarUrl: controller.avatarUrl.value),
+                                character: Character.empty().copyWith(
+                                    avatarUrl: controller.avatarUrl.value),
                               ),
                               title: controller.name.isEmpty
-                                  ? Text(S.current.createCharacterTravelerBlankName)
+                                  ? Text(S
+                                      .current.createCharacterTravelerBlankName)
                                   : Text(controller.name.value),
                               subtitle: controller.name.isEmpty
-                                  ? Text(S.current.createCharacterTravelerHelpText)
+                                  ? Text(
+                                      S.current.createCharacterTravelerHelpText)
                                   : Text(
-                                      S.current.createCharacterTravelerDescription(cls?.name ?? ''),
+                                      S.current
+                                          .createCharacterTravelerDescription(
+                                              cls?.name ?? ''),
                                     ),
                               valid: controller.name.isNotEmpty,
                               onTap: () => Get.toNamed(
@@ -105,7 +112,8 @@ class CreateCharacterView extends GetView<CreateCharacterController> {
                             // Class
                             _Card(
                               title: cls == null
-                                  ? Text(S.current.selectGeneric(S.current.entity(CharacterClass)))
+                                  ? Text(S.current.selectGeneric(
+                                      S.current.entity(CharacterClass)))
                                   : Text(cls!.name),
                               subtitle: cls == null
                                   ? Text(S.current.createCharacterClassHelpText)
@@ -117,9 +125,10 @@ class CreateCharacterView extends GetView<CreateCharacterController> {
                               onTap: () => Get.toNamed(
                                 Routes.createCharacterSelectClass,
                                 arguments: CharacterClassLibraryListArguments(
-                                  preSelections: controller.characterClass.value != null
-                                      ? [controller.characterClass.value!]
-                                      : [],
+                                  preSelections:
+                                      controller.characterClass.value != null
+                                          ? [controller.characterClass.value!]
+                                          : [],
                                   onSelected: (cls) => controller.setClass(cls),
                                 ),
                                 preventDuplicates: false,
@@ -128,10 +137,12 @@ class CreateCharacterView extends GetView<CreateCharacterController> {
                             // Race
                             _Card(
                               title: controller.race.value == null
-                                  ? Text(S.current.selectGeneric(S.current.entity(Race)))
+                                  ? Text(S.current
+                                      .selectGeneric(S.current.entity(Race)))
                                   : Text(controller.race.value!.name),
                               subtitle: controller.race.value == null
-                                  ? Text(S.current.errorNoSelectionGeneric(S.current.entity(Race)))
+                                  ? Text(S.current.errorNoSelectionGeneric(
+                                      S.current.entity(Race)))
                                   : Text(
                                       controller.race.value!.description,
                                       overflow: TextOverflow.ellipsis,
@@ -140,27 +151,32 @@ class CreateCharacterView extends GetView<CreateCharacterController> {
                                   ? () => ModelPages.openRacesList(
                                         character: controller.getAsCharacter(),
                                         preSelection: controller.race.value,
-                                        onSelected: (race) => controller.race.value = race,
+                                        onSelected: (race) =>
+                                            controller.race.value = race,
                                       )
                                   : null,
                               valid: controller.race.value != null,
                             ),
                             // Ability Scores
                             _Card(
-                              contentPadding:
-                                  const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-                              title: Text(
-                                  S.current.selectGeneric(S.current.entityPlural(AbilityScore))),
-                              subtitle: Text(
-                                controller.abilityScores.value.stats
-                                    .map((stat) => '${stat.key}: ${stat.value}')
-                                    .join(', '),
+                              contentPadding: const EdgeInsets.symmetric(
+                                  horizontal: 16, vertical: 8),
+                              title: Text(S.current.selectGeneric(
+                                  S.current.entityPlural(AbilityScore))),
+                              // subtitle: Text(
+                              //   controller.abilityScores.value.stats
+                              //       .map((stat) => '${stat.key}: ${stat.value}')
+                              //       .join(', '),
+                              subtitle: Padding(
+                                padding: const EdgeInsets.only(top: 4.0),
+                                child: _AbilityScoreChipList(
+                                    controller: controller),
                               ),
                               onTap: () => Get.toNamed(
                                 Routes.createCharacterAbilityScores,
                                 arguments: AbilityScoresFormArguments(
-                                  onChanged: (abilityScores) =>
-                                      controller.setAbilityScores(abilityScores),
+                                  onChanged: (abilityScores) => controller
+                                      .setAbilityScores(abilityScores),
                                   abilityScores: controller.abilityScores.value,
                                 ),
                                 preventDuplicates: false,
@@ -168,18 +184,22 @@ class CreateCharacterView extends GetView<CreateCharacterController> {
                             ),
                             // Alignment
                             _Card(
-                              contentPadding:
-                                  const EdgeInsets.symmetric(horizontal: 16, vertical: 0),
+                              contentPadding: const EdgeInsets.symmetric(
+                                  horizontal: 16, vertical: 0),
                               valid: controller.alignment.value != null,
                               title: Text(controller.alignment.value != null
                                   ? S.current.entity(AlignmentValue) +
                                       ': ' +
-                                      S.current.alignment(controller.alignment.value!.type)
-                                  : S.current.selectGeneric(S.current.entity(AlignmentValue))),
+                                      S.current.alignment(
+                                          controller.alignment.value!.type)
+                                  : S.current.selectGeneric(
+                                      S.current.entity(AlignmentValue))),
                               subtitle: controller.alignment.value != null
                                   ? Text(
-                                      controller.alignment.value!.description.isNotEmpty
-                                          ? controller.alignment.value!.description
+                                      controller.alignment.value!.description
+                                              .isNotEmpty
+                                          ? controller
+                                              .alignment.value!.description
                                           : S.current.noDescription,
                                       overflow: TextOverflow.ellipsis,
                                       maxLines: 1,
@@ -193,8 +213,10 @@ class CreateCharacterView extends GetView<CreateCharacterController> {
                                         Routes.classAlignments,
                                         arguments: ClassAlignmentsArguments(
                                           onChanged: controller.setAlignment,
-                                          alignments: controller.characterClass.value!.alignments,
-                                          preselected: controller.alignment.value?.type,
+                                          alignments: controller
+                                              .characterClass.value!.alignments,
+                                          preselected:
+                                              controller.alignment.value?.type,
                                           selectable: true,
                                           editable: true,
                                         ),
@@ -205,21 +227,27 @@ class CreateCharacterView extends GetView<CreateCharacterController> {
 
                             // Starting Gear
                             _Card(
-                              contentPadding:
-                                  const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-                              title: Text(S.current.selectGeneric(S.current.entity(GearSelection))),
-                              subtitle: Text(controller.items.isEmpty && controller.coins == 0
-                                  ? S.current.createCharacterStartingGearHelpText
+                              contentPadding: const EdgeInsets.symmetric(
+                                  horizontal: 16, vertical: 8),
+                              title: Text(S.current.selectGeneric(
+                                  S.current.entity(GearSelection))),
+                              subtitle: Text(controller.items.isEmpty &&
+                                      controller.coins == 0
+                                  ? S.current
+                                      .createCharacterStartingGearHelpText
                                   : [
                                       controller.coins > 0
-                                          ? S.current.createCharacterStartingGearDescriptionCoins(
-                                              NumberFormat('#0.#').format(controller.coins),
+                                          ? S.current
+                                              .createCharacterStartingGearDescriptionCoins(
+                                              NumberFormat('#0.#')
+                                                  .format(controller.coins),
                                             )
                                           : null,
                                       controller.items
-                                          .map((i) =>
-                                              S.current.createCharacterStartingGearDescriptionItem(
-                                                NumberFormat('#0.#').format(i.amount),
+                                          .map((i) => S.current
+                                                  .createCharacterStartingGearDescriptionItem(
+                                                NumberFormat('#0.#')
+                                                    .format(i.amount),
                                                 i.name,
                                               ))
                                           .join(', '),
@@ -229,7 +257,8 @@ class CreateCharacterView extends GetView<CreateCharacterController> {
                                         Routes.createCharacterStartingGear,
                                         arguments: StartingGearFormArguments(
                                           onChanged: controller.setStartingGear,
-                                          selectedOptions: controller.startingGear,
+                                          selectedOptions:
+                                              controller.startingGear,
                                           characterClass: cls!,
                                         ),
                                         preventDuplicates: false,
@@ -257,11 +286,13 @@ class CreateCharacterView extends GetView<CreateCharacterController> {
                               ),
                               subtitle: Text(
                                 (cls?.isSpellcaster ?? false)
-                                    ? S.current.createCharacterMovesSpellsDescription(
+                                    ? S.current
+                                        .createCharacterMovesSpellsDescription(
                                         controller.moves.length,
                                         controller.spells.length,
                                       )
-                                    : S.current.movesWithCount(controller.moves.length),
+                                    : S.current.movesWithCount(
+                                        controller.moves.length),
                               ),
                               onTap: cls != null
                                   ? () => Get.toNamed(
@@ -270,8 +301,10 @@ class CreateCharacterView extends GetView<CreateCharacterController> {
                                           onChanged: controller.setMovesSpells,
                                           moves: controller.moves,
                                           spells: controller.spells,
-                                          abilityScores: controller.abilityScores.value,
-                                          characterClass: controller.characterClass.value!,
+                                          abilityScores:
+                                              controller.abilityScores.value,
+                                          characterClass:
+                                              controller.characterClass.value!,
                                         ),
                                         preventDuplicates: false,
                                       )
@@ -288,6 +321,50 @@ class CreateCharacterView extends GetView<CreateCharacterController> {
           ),
         ),
       ),
+    );
+  }
+}
+
+class _AbilityScoreChipList extends StatelessWidget {
+  const _AbilityScoreChipList({
+    super.key,
+    required this.controller,
+  });
+
+  final CreateCharacterController controller;
+
+  @override
+  Widget build(BuildContext context) {
+    return Wrap(
+      spacing: 2,
+      runSpacing: 2,
+      children: controller.abilityScores.value.stats
+          .map(
+            (stat) => ConstrainedBox(
+              constraints: const BoxConstraints(
+                minWidth: 90,
+              ),
+              child: AdvancedChip(
+                visualDensity: VisualDensity.compact,
+                padding: EdgeInsets.zero,
+                labelPadding:
+                    // EdgeInsets.zero,
+                    const EdgeInsets.only(right: 8),
+                avatar: Icon(
+                  DwIcons.statIcon(
+                    stat.key.toLowerCase(),
+                  ),
+                  size: 12,
+                ),
+                materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                label: Text(
+                  '${stat.key}: ${stat.value}',
+                  textScaleFactor: 0.8,
+                ),
+              ),
+            ),
+          )
+          .toList(),
     );
   }
 }
