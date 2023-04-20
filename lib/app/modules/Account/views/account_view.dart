@@ -1,7 +1,10 @@
+import 'package:dungeon_paper/app/data/models/user.dart';
 import 'package:dungeon_paper/app/widgets/atoms/help_text.dart';
 import 'package:dungeon_paper/app/widgets/atoms/password_field.dart';
 import 'package:dungeon_paper/app/widgets/atoms/user_avatar.dart';
+import 'package:dungeon_paper/app/widgets/dialogs/confirm_unlink_provider_dialog.dart';
 import 'package:dungeon_paper/app/widgets/molecules/dialog_controls.dart';
+import 'package:dungeon_paper/core/platform_helper.dart';
 import 'package:dungeon_paper/core/utils/builder_utils.dart';
 import 'package:dungeon_paper/core/utils/email_address_validator.dart';
 import 'package:dungeon_paper/core/utils/password_validator.dart';
@@ -11,6 +14,7 @@ import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
 
+import '../../../../core/dw_icons.dart';
 import '../controllers/account_controller.dart';
 
 class AccountView extends GetView<AccountController> {
@@ -33,7 +37,8 @@ class AccountView extends GetView<AccountController> {
         () => const SizedBox(height: 8),
         () => const Divider(),
         () => Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 16).copyWith(top: 8),
+              padding:
+                  const EdgeInsets.symmetric(horizontal: 16).copyWith(top: 8),
               child: Text(
                 S.current.accountCategoryDetails,
                 style: textTheme.bodySmall,
@@ -60,7 +65,9 @@ class AccountView extends GetView<AccountController> {
                       )
                     : const Icon(Icons.image),
                 enabled: !controller.uploading.value,
-                onTap: !controller.uploading.value ? () => _uploadImage(context) : null,
+                onTap: !controller.uploading.value
+                    ? () => _uploadImage(context)
+                    : null,
               ),
             ),
         () => Obx(
@@ -79,12 +86,59 @@ class AccountView extends GetView<AccountController> {
             ),
         () => const Divider(),
         () => Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 16).copyWith(top: 8),
+              padding:
+                  const EdgeInsets.symmetric(horizontal: 16).copyWith(top: 8),
               child: Text(
                 S.current.accountCategorySocials,
                 style: textTheme.bodySmall,
               ),
             ),
+        // ...(controller.authService.fbUser?.providerData ?? []).map((provider) {
+        ...([
+          ProviderName.password,
+          if (PlatformHelper.canUseGoogleSignIn) ProviderName.google,
+          // if (PlatformHelper.canUseAppleSignIn)
+          ProviderName.apple
+        ]).map((provider) {
+          return () => ListTile(
+                title: Text(S.current.signinProvider(provider)),
+                // subtitle: Text(provider.),
+                leading: Icon(DwIcons.providerIcon(provider)),
+                subtitle: !PlatformHelper.canUseProvider(provider)
+                    ? Text(
+                        S.current.signinCantUseProvider(
+                            S.current.signinProvider(provider)),
+                        textScaleFactor: 0.8,
+                      )
+                    : null,
+                trailing: ElevatedButton(
+                  child: Text(
+                    isProviderLinked(provider)
+                        ? S.current.signinProviderUnlink
+                        : S.current.signinProviderLink,
+                  ),
+                  // onPressed: provider != ProviderName.password
+                  onPressed: providerCount > 1
+                      ? isProviderLinked(provider)
+                          ? () => awaitUnlinkProviderConfirmation(
+                                context,
+                                provider,
+                                () => controller.authService.fbUser!
+                                    .unlink(domainFromProviderName(provider)),
+                              )
+                          : PlatformHelper.canUseProvider(provider)
+                              ? () => awaitUnlinkProviderConfirmation(
+                                    context,
+                                    provider,
+                                    // () => controller.authService.fbUser!
+                                    //     .linkWithProvider(),
+                                    () => null,
+                                  )
+                              : null
+                      : null,
+                ),
+              );
+        }),
       ],
     );
 
@@ -93,11 +147,17 @@ class AccountView extends GetView<AccountController> {
         title: Text(controller.user.username),
         centerTitle: true,
       ),
-      body: ListView.builder(
-        itemBuilder: builder.itemBuilder,
-        itemCount: builder.itemCount,
-      ),
+      body: builder.asListView(),
     );
+  }
+
+  int get providerCount =>
+      controller.authService.fbUser?.providerData.length ?? 0;
+
+  bool isProviderLinked(ProviderName provider) {
+    return controller.authService.fbUser?.providerData
+            .any((pr) => pr.providerId == domainFromProviderName(provider)) ==
+        true;
   }
 
   void _openNameDialog() {
@@ -135,7 +195,7 @@ class AccountView extends GetView<AccountController> {
       PasswordFieldDialog(
         onSave: (password) {
           Get.rawSnackbar(message: S.current.accountChangePasswordSuccess);
-          controller.authService.fbUser.value!.updatePassword(password);
+          controller.authService.fbUser!.updatePassword(password);
         },
       ),
     );

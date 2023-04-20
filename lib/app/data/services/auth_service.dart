@@ -16,7 +16,8 @@ class AuthService extends GetxService
 
   FirebaseAuth get auth => FirebaseAuth.instance;
   final gSignIn = GoogleSignIn.standard();
-  final fbUser = Rx<User?>(null);
+  final _fbUser = Rx<User?>(null);
+  User? get fbUser => _fbUser.value;
 
   Future<UserCredential> loginWithPassword({
     required String email,
@@ -103,7 +104,7 @@ class AuthService extends GetxService
       return;
     }
     debugPrint('fb user changed: $user');
-    fbUser.value = user;
+    _fbUser.value = user;
 
     if (user != null) {
       loadingService.loadingCharacters = !loadingService.afterFirstLoad;
@@ -115,7 +116,8 @@ class AuthService extends GetxService
     userService.loadGuestData();
   }
 
-  Future<UserCredential> signUp({required String email, required String password}) async =>
+  Future<UserCredential> signUp(
+          {required String email, required String password}) async =>
       auth.createUserWithEmailAndPassword(email: email, password: password);
 
   void _clearAuthListener() {

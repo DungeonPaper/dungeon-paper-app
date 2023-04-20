@@ -12,7 +12,10 @@
 ///         License:   SIL (https://github.com/FortAwesome/Font-Awesome/blob/master/LICENSE.txt)
 ///         Homepage:  http://fortawesome.github.com/Font-Awesome/
 
+import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+
+import '../app/data/models/user.dart';
 
 class DwIcons {
   DwIcons._();
@@ -21,61 +24,88 @@ class DwIcons {
   static const String? _kFontPkg = null;
 
   // General
-  static const IconData armor = IconData(0xe800, fontFamily: _kFontFam, fontPackage: _kFontPkg);
+  static const IconData armor =
+      IconData(0xe800, fontFamily: _kFontFam, fontPackage: _kFontPkg);
   static const IconData book_cover =
       IconData(0xe801, fontFamily: _kFontFam, fontPackage: _kFontPkg);
   static const IconData coin_stack =
       IconData(0xe805, fontFamily: _kFontFam, fontPackage: _kFontPkg);
-  static const IconData dumbbell = IconData(0xe803, fontFamily: _kFontFam, fontPackage: _kFontPkg);
+  static const IconData dumbbell =
+      IconData(0xe803, fontFamily: _kFontFam, fontPackage: _kFontPkg);
   static const IconData exclamation =
       IconData(0xe804, fontFamily: _kFontFam, fontPackage: _kFontPkg);
-  static const IconData hand_rock = IconData(0xe806, fontFamily: _kFontFam, fontPackage: _kFontPkg);
-  static const IconData knapsack = IconData(0xe807, fontFamily: _kFontFam, fontPackage: _kFontPkg);
-  static const IconData quill = IconData(0xe808, fontFamily: _kFontFam, fontPackage: _kFontPkg);
-  static const IconData riposte = IconData(0xe809, fontFamily: _kFontFam, fontPackage: _kFontPkg);
+  static const IconData hand_rock =
+      IconData(0xe806, fontFamily: _kFontFam, fontPackage: _kFontPkg);
+  static const IconData knapsack =
+      IconData(0xe807, fontFamily: _kFontFam, fontPackage: _kFontPkg);
+  static const IconData quill =
+      IconData(0xe808, fontFamily: _kFontFam, fontPackage: _kFontPkg);
+  static const IconData riposte =
+      IconData(0xe809, fontFamily: _kFontFam, fontPackage: _kFontPkg);
   static const IconData scroll_quill =
       IconData(0xe80a, fontFamily: _kFontFam, fontPackage: _kFontPkg);
-  static const IconData swap_bag = IconData(0xe80b, fontFamily: _kFontFam, fontPackage: _kFontPkg);
-  static const IconData swords = IconData(0xe80c, fontFamily: _kFontFam, fontPackage: _kFontPkg);
+  static const IconData swap_bag =
+      IconData(0xe80b, fontFamily: _kFontFam, fontPackage: _kFontPkg);
+  static const IconData swords =
+      IconData(0xe80c, fontFamily: _kFontFam, fontPackage: _kFontPkg);
 
   // Stats
-  static const IconData stat_cha = IconData(0xe80d, fontFamily: _kFontFam, fontPackage: _kFontPkg);
-  static const IconData stat_con = IconData(0xe80e, fontFamily: _kFontFam, fontPackage: _kFontPkg);
-  static const IconData stat_dex = IconData(0xe80f, fontFamily: _kFontFam, fontPackage: _kFontPkg);
-  static const IconData stat_int = IconData(0xe810, fontFamily: _kFontFam, fontPackage: _kFontPkg);
-  static const IconData stat_str = IconData(0xe811, fontFamily: _kFontFam, fontPackage: _kFontPkg);
-  static const IconData stat_wis = IconData(0xe812, fontFamily: _kFontFam, fontPackage: _kFontPkg);
+  static const IconData stat_cha =
+      IconData(0xe80d, fontFamily: _kFontFam, fontPackage: _kFontPkg);
+  static const IconData stat_con =
+      IconData(0xe80e, fontFamily: _kFontFam, fontPackage: _kFontPkg);
+  static const IconData stat_dex =
+      IconData(0xe80f, fontFamily: _kFontFam, fontPackage: _kFontPkg);
+  static const IconData stat_int =
+      IconData(0xe810, fontFamily: _kFontFam, fontPackage: _kFontPkg);
+  static const IconData stat_str =
+      IconData(0xe811, fontFamily: _kFontFam, fontPackage: _kFontPkg);
+  static const IconData stat_wis =
+      IconData(0xe812, fontFamily: _kFontFam, fontPackage: _kFontPkg);
 
   // Dice
-  static const IconData dice_d10 = IconData(0xe816, fontFamily: _kFontFam, fontPackage: _kFontPkg);
-  static const IconData dice_d12 = IconData(0xe817, fontFamily: _kFontFam, fontPackage: _kFontPkg);
-  static const IconData dice_d20 = IconData(0xe818, fontFamily: _kFontFam, fontPackage: _kFontPkg);
-  static const IconData dice_d4 = IconData(0xe813, fontFamily: _kFontFam, fontPackage: _kFontPkg);
-  static const IconData dice_d6 = IconData(0xe814, fontFamily: _kFontFam, fontPackage: _kFontPkg);
+  static const IconData dice_d10 =
+      IconData(0xe816, fontFamily: _kFontFam, fontPackage: _kFontPkg);
+  static const IconData dice_d12 =
+      IconData(0xe817, fontFamily: _kFontFam, fontPackage: _kFontPkg);
+  static const IconData dice_d20 =
+      IconData(0xe818, fontFamily: _kFontFam, fontPackage: _kFontPkg);
+  static const IconData dice_d4 =
+      IconData(0xe813, fontFamily: _kFontFam, fontPackage: _kFontPkg);
+  static const IconData dice_d6 =
+      IconData(0xe814, fontFamily: _kFontFam, fontPackage: _kFontPkg);
   static const IconData dice_d6_numbered =
       IconData(0xe802, fontFamily: _kFontFam, fontPackage: _kFontPkg);
-  static const IconData dice_d8 = IconData(0xe815, fontFamily: _kFontFam, fontPackage: _kFontPkg);
+  static const IconData dice_d8 =
+      IconData(0xe815, fontFamily: _kFontFam, fontPackage: _kFontPkg);
 
   // Social
-  static const IconData app_store = IconData(0xf36f, fontFamily: _kFontFam, fontPackage: _kFontPkg);
+  static const IconData app_store =
+      IconData(0xf36f, fontFamily: _kFontFam, fontPackage: _kFontPkg);
   static const IconData app_store_ios =
       IconData(0xf370, fontFamily: _kFontFam, fontPackage: _kFontPkg);
-  static const IconData apple = IconData(0xf179, fontFamily: _kFontFam, fontPackage: _kFontPkg);
-  static const IconData discord = IconData(0xf392, fontFamily: _kFontFam, fontPackage: _kFontPkg);
-  static const IconData facebook = IconData(0xf09a, fontFamily: _kFontFam, fontPackage: _kFontPkg);
+  static const IconData apple =
+      IconData(0xf179, fontFamily: _kFontFam, fontPackage: _kFontPkg);
+  static const IconData discord =
+      IconData(0xf392, fontFamily: _kFontFam, fontPackage: _kFontPkg);
+  static const IconData facebook =
+      IconData(0xf09a, fontFamily: _kFontFam, fontPackage: _kFontPkg);
   static const IconData facebook_squared =
       IconData(0xf308, fontFamily: _kFontFam, fontPackage: _kFontPkg);
   static const IconData github_circled =
       IconData(0xf09b, fontFamily: _kFontFam, fontPackage: _kFontPkg);
-  static const IconData google = IconData(0xf1a0, fontFamily: _kFontFam, fontPackage: _kFontPkg);
+  static const IconData google =
+      IconData(0xf1a0, fontFamily: _kFontFam, fontPackage: _kFontPkg);
   static const IconData google_drive =
       IconData(0xf3aa, fontFamily: _kFontFam, fontPackage: _kFontPkg);
   static const IconData google_play =
       IconData(0xf3ab, fontFamily: _kFontFam, fontPackage: _kFontPkg);
-  static const IconData linkedin = IconData(0xf0e1, fontFamily: _kFontFam, fontPackage: _kFontPkg);
+  static const IconData linkedin =
+      IconData(0xf0e1, fontFamily: _kFontFam, fontPackage: _kFontPkg);
   static const IconData linkedin_squared =
       IconData(0xf30c, fontFamily: _kFontFam, fontPackage: _kFontPkg);
-  static const IconData twitter = IconData(0xf099, fontFamily: _kFontFam, fontPackage: _kFontPkg);
+  static const IconData twitter =
+      IconData(0xf099, fontFamily: _kFontFam, fontPackage: _kFontPkg);
   static const IconData twitter_squared =
       IconData(0xf304, fontFamily: _kFontFam, fontPackage: _kFontPkg);
 
@@ -97,4 +127,18 @@ class DwIcons {
         20: DwIcons.dice_d20,
         100: DwIcons.dice_d20,
       }[sides]!;
+
+  static IconData providerIcon(ProviderName provider) => {
+        ProviderName.apple: DwIcons.apple,
+        ProviderName.discord: DwIcons.discord,
+        ProviderName.facebook: DwIcons.facebook,
+        ProviderName.github: DwIcons.github_circled,
+        ProviderName.google: DwIcons.google,
+        ProviderName.linkedin: DwIcons.linkedin,
+        ProviderName.twitter: DwIcons.twitter,
+        ProviderName.password: Icons.key,
+      }[provider]!;
+
+  static IconData providerIconFromDomain(String domain) =>
+      providerIcon(providerNameFromDomain(domain));
 }

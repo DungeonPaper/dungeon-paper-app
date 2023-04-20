@@ -39,13 +39,17 @@ class LoginView extends GetView<LoginController> {
                     () => Column(
                       children: [
                         Text(
-                          controller.isLogin ? S.current.signinTitle : S.current.signupTitle,
+                          controller.isLogin
+                              ? S.current.signinTitle
+                              : S.current.signupTitle,
                           style: textTheme.headlineMedium,
                           textAlign: TextAlign.center,
                         ),
                         const SizedBox(height: 8),
                         Text(
-                          controller.isLogin ? S.current.signinSubtitle : S.current.signupSubtitle,
+                          controller.isLogin
+                              ? S.current.signinSubtitle
+                              : S.current.signupSubtitle,
                           style: textTheme.titleMedium,
                           textAlign: TextAlign.center,
                         ),
@@ -57,8 +61,10 @@ class LoginView extends GetView<LoginController> {
                                   ? controller.loginWithGoogle
                                   : null,
                               label: Text(controller.isLogin
-                                  ? S.current.signinWithButton(S.current.signinProviderGoogle)
-                                  : S.current.signupWithButton(S.current.signinProviderGoogle)),
+                                  ? S.current.signinWithButton(
+                                      S.current.signinProvider('google'))
+                                  : S.current.signupWithButton(
+                                      S.current.signinProvider('google'))),
                               icon: const Icon(DwIcons.google),
                             ),
                           ],
@@ -68,8 +74,10 @@ class LoginView extends GetView<LoginController> {
                                   ? controller.loginWithApple
                                   : null,
                               label: Text(controller.isLogin
-                                  ? S.current.signinWithButton(S.current.signinProviderApple)
-                                  : S.current.signupWithButton(S.current.signinProviderApple)),
+                                  ? S.current.signinWithButton(
+                                      S.current.signinProvider('apple'))
+                                  : S.current.signupWithButton(
+                                      S.current.signinProvider('apple'))),
                               icon: const Icon(DwIcons.apple),
                             ),
                           ],
@@ -87,16 +95,19 @@ class LoginView extends GetView<LoginController> {
                             // floatingLabelBehavior: FloatingLabelBehavior.auto,
                             hintText: S.current.signupEmailPlaceholder,
                           ),
-                          validator: (email) => email == null || EmailValidator.validate(email)
-                              ? null
-                              : S.current.signupEmailValidation,
+                          validator: (email) =>
+                              email == null || EmailValidator.validate(email)
+                                  ? null
+                                  : S.current.signupEmailValidation,
                         ),
                         const SizedBox(height: 16),
                         PasswordField(
                           controller: controller.password,
                           obscureText: true,
                           autofillHints: [
-                            controller.isSignUp ? AutofillHints.newPassword : AutofillHints.password
+                            controller.isSignUp
+                                ? AutofillHints.newPassword
+                                : AutofillHints.password
                           ],
                           decoration: InputDecoration(
                             filled: true,
@@ -116,7 +127,8 @@ class LoginView extends GetView<LoginController> {
                             decoration: InputDecoration(
                               filled: true,
                               label: Text(S.current.signupPasswordConfirm),
-                              hintText: S.current.signupPasswordConfirmPlaceholder,
+                              hintText:
+                                  S.current.signupPasswordConfirmPlaceholder,
                               enabled: !controller.loadingService.loadingUser,
                               // floatingLabelBehavior: FloatingLabelBehavior.auto,
                             ),
@@ -135,11 +147,14 @@ class LoginView extends GetView<LoginController> {
                                   : controller.signUp
                               : null,
                           label: Text(
-                            controller.isLogin ? S.current.signinButton : S.current.signupButton,
+                            controller.isLogin
+                                ? S.current.signinButton
+                                : S.current.signupButton,
                             textScaleFactor: 1.5,
                           ),
                           style: ElevatedButton.styleFrom(
-                            padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
+                            padding: const EdgeInsets.symmetric(
+                                horizontal: 24, vertical: 12),
                           ),
                           icon: controller.loadingService.loadingUser
                               ? const SizedBox.square(
@@ -176,7 +191,8 @@ class LoginView extends GetView<LoginController> {
                         ElevatedButton.icon(
                           onPressed: () => launchUrl(
                             // TODO make changelog view that uses current version
-                            Uri.parse('https://dungeonpaper.app/changelog.html'),
+                            Uri.parse(
+                                'https://dungeonpaper.app/changelog.html'),
                           ),
                           label: Text(S.current.whatsNew),
                           icon: const Icon(Icons.new_releases),

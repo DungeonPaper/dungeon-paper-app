@@ -1501,6 +1501,26 @@ class S {
     );
   }
 
+  /// `Are you sure you want to unlink your account from {provider}?\nBy clicking "Unlink", you will no longer be able to sign in with {provider}.\n\nYou will be able to re-link your account at any time by going to your account settings.`
+  String confirmUnlinkProviderBody(Object provider) {
+    return Intl.message(
+      'Are you sure you want to unlink your account from $provider?\nBy clicking "Unlink", you will no longer be able to sign in with $provider.\n\nYou will be able to re-link your account at any time by going to your account settings.',
+      name: 'confirmUnlinkProviderBody',
+      desc: '',
+      args: [provider],
+    );
+  }
+
+  /// `Unlink from {entity}?`
+  String confirmUnlinkProviderTitle(Object entity) {
+    return Intl.message(
+      'Unlink from $entity?',
+      name: 'confirmUnlinkProviderTitle',
+      desc: '',
+      args: [entity],
+    );
+  }
+
   /// `Continue editing`
   String get confirmExitDefaultCancelLabel {
     return Intl.message(
@@ -4089,6 +4109,23 @@ class S {
     );
   }
 
+  /// `{provider, select, facebook {Facebook} google {Google} apple {Apple} password {Dungeon Paper} other {Other}}`
+  String signinProvider(Object provider) {
+    return Intl.select(
+      provider,
+      {
+        'facebook': 'Facebook',
+        'google': 'Google',
+        'apple': 'Apple',
+        'password': 'Dungeon Paper',
+        'other': 'Other',
+      },
+      name: 'signinProvider',
+      desc: '',
+      args: [provider],
+    );
+  }
+
   /// `Facebook`
   String get signinProviderFacebook {
     return Intl.message(
@@ -4116,6 +4153,46 @@ class S {
       name: 'signinProviderApple',
       desc: '',
       args: [],
+    );
+  }
+
+  /// `Link`
+  String get signinProviderLink {
+    return Intl.message(
+      'Link',
+      name: 'signinProviderLink',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Unlink`
+  String get signinProviderUnlink {
+    return Intl.message(
+      'Unlink',
+      name: 'signinProviderUnlink',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `This device only supports unlinking {provider} accounts.`
+  String signinCantUseProvider(Object provider) {
+    return Intl.message(
+      'This device only supports unlinking $provider accounts.',
+      name: 'signinCantUseProvider',
+      desc: '',
+      args: [provider],
+    );
+  }
+
+  /// `You may only unlink {provider} from this device.\nTo link accounts using the {provider} provider is only available from supported devices.`
+  String signinCantUseProviderTooltip(Object provider) {
+    return Intl.message(
+      'You may only unlink $provider from this device.\nTo link accounts using the $provider provider is only available from supported devices.',
+      name: 'signinCantUseProviderTooltip',
+      desc: '',
+      args: [provider],
     );
   }
 

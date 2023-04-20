@@ -9,6 +9,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:url_launcher/url_launcher.dart';
 
+import '../../../data/models/user.dart';
 import '../controllers/about_controller.dart';
 
 class AboutView extends GetView<AboutController> {
@@ -33,7 +34,8 @@ class AboutView extends GetView<AboutController> {
               ),
           () => Obx(
                 () => Text(
-                  S.current.aboutVersion(controller.version.value?.toString() ?? '-'),
+                  S.current.aboutVersion(
+                      controller.version.value?.toString() ?? '-'),
                   textAlign: TextAlign.center,
                   style: textTheme.bodySmall,
                 ),
@@ -56,23 +58,28 @@ class AboutView extends GetView<AboutController> {
           () => ListTile(
                 leading: const Icon(DwIcons.discord),
                 title: Text(S.current.aboutJoinDiscord),
-                subtitle: Text(S.current.aboutJoinDiscordSubtitle, style: textTheme.bodySmall),
-                onTap: () => launchUrl(Uri.parse('https://bit.ly/DungeonPaper-Discord')),
+                subtitle: Text(S.current.aboutJoinDiscordSubtitle,
+                    style: textTheme.bodySmall),
+                onTap: () =>
+                    launchUrl(Uri.parse('https://bit.ly/DungeonPaper-Discord')),
                 isThreeLine: true,
                 visualDensity: VisualDensity.compact,
               ),
           () => ListTile(
                 leading: const Icon(Icons.send),
                 title: Text(S.current.aboutSendFeedback),
-                subtitle: Text(S.current.aboutSendFeedbackSubtitle, style: textTheme.bodySmall),
+                subtitle: Text(S.current.aboutSendFeedbackSubtitle,
+                    style: textTheme.bodySmall),
                 onTap: () => Get.toNamed(Routes.sendFeedback),
                 isThreeLine: true,
                 visualDensity: VisualDensity.compact,
               ),
           () => const Divider(),
           () => Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-                child: Text(S.current.aboutSocialLinks, style: textTheme.bodySmall),
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                child: Text(S.current.aboutSocialLinks,
+                    style: textTheme.bodySmall),
               ),
           () => Padding(
                 padding: const EdgeInsets.all(16.0).copyWith(top: 0),
@@ -81,37 +88,37 @@ class AboutView extends GetView<AboutController> {
                   runSpacing: 8,
                   children: [
                     _SocialButton(
-                      icon: const Icon(DwIcons.twitter),
+                      icon: Icon(DwIcons.providerIcon(ProviderName.twitter)),
                       label: Text(S.current.socialTwitter),
                       url: 'https://bit.ly/DungeonPaper-Twitter',
                       color: const Color.fromARGB(255, 28, 157, 236),
                     ),
                     _SocialButton(
-                      icon: const Icon(DwIcons.facebook),
+                      icon: Icon(DwIcons.providerIcon(ProviderName.facebook)),
                       label: Text(S.current.socialFacebook),
                       url: 'https://bit.ly/DungeonPaper-Facebook',
                       color: const Color.fromARGB(255, 22, 116, 236),
                     ),
                     _SocialButton(
-                      icon: const Icon(DwIcons.discord),
+                      icon: Icon(DwIcons.providerIcon(ProviderName.discord)),
                       label: Text(S.current.socialDiscord),
                       url: 'https://bit.ly/DungeonPaper-Discord',
                       color: const Color.fromARGB(255, 111, 133, 212),
                     ),
                     _SocialButton(
-                      icon: const Icon(DwIcons.github_circled),
+                      icon: Icon(DwIcons.providerIcon(ProviderName.github)),
                       label: Text(S.current.socialGitHub),
                       url: 'https://bit.ly/DungeonPaper-GitHub',
                       color: const Color.fromARGB(255, 33, 32, 32),
                     ),
                     _SocialButton(
-                      icon: const Icon(DwIcons.google_play),
+                      icon: Icon(DwIcons.providerIcon(ProviderName.google)),
                       label: Text(S.current.socialGoogle),
                       url: 'https://bit.ly/DungeonPaper-Android',
                       color: const Color.fromARGB(255, 1, 135, 95),
                     ),
                     _SocialButton(
-                      icon: const Icon(DwIcons.app_store),
+                      icon: Icon(DwIcons.providerIcon(ProviderName.apple)),
                       label: Text(S.current.socialApple),
                       url: 'https://bit.ly/DungeonPaper-iOS',
                       color: const Color.fromARGB(255, 30, 143, 232),

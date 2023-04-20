@@ -20,10 +20,15 @@ import 'package:package_info_plus/package_info_plus.dart';
 import 'package:sentry_flutter/sentry_flutter.dart';
 
 class UserService extends GetxService
-    with RepositoryServiceMixin, AuthServiceMixin, CharacterServiceMixin, LoadingServiceMixin {
+    with
+        RepositoryServiceMixin,
+        AuthServiceMixin,
+        CharacterServiceMixin,
+        LoadingServiceMixin {
   final _current = User.guest().obs;
+
   User get current => _current.value;
-  StreamSubscription? _sub;
+  StreamSubscription? _userDataSub;
 
   Future<void> loadBuiltInRepo({bool ignoreCache = false}) async {
     await repo.builtIn.dispose();
@@ -43,7 +48,8 @@ class UserService extends GetxService
     StorageHandler.instance.currentDelegate = 'firestore';
     StorageHandler.instance.setCollectionPrefix('Data/$email');
     final shouldLoadRepo = current.email != user.email;
-    final dbUser = await StorageHandler.instance.firestoreGlobal.getDocument('Data', email!);
+    final dbUser = await StorageHandler.instance.firestoreGlobal
+        .getDocument('Data', email!);
     await _setUserAfterMigration(user, dbUser);
     _registerUserListener();
     charService.registerCharacterListener();
@@ -82,11 +88,18 @@ class UserService extends GetxService
     loadBuiltInRepo();
   }
 
+  @override
+  void onClose() {
+    super.onClose();
+    _userDataSub?.cancel();
+  }
+
   // update user to Firestore
   Future<User> updateUser(User user) async {
     final email = user.email;
     debugPrint('updating user data for $email: ${user.toJson()}');
-    await StorageHandler.instance.firestoreGlobal.update('Data', email, user.toJson());
+    await StorageHandler.instance.firestoreGlobal
+        .update('Data', email, user.toJson());
     return user;
   }
 
@@ -118,7 +131,7 @@ class UserService extends GetxService
   void _registerUserListener() {
     _clearUserListener();
     debugPrint('registering user listener');
-    _sub = StorageHandler.instance.firestoreGlobal
+    _userDataSub = StorageHandler.instance.firestoreGlobal
         .documentListener('Data', current.email, _updateUser);
   }
 
@@ -138,7 +151,7 @@ class UserService extends GetxService
       (scope) => scope.setUser(
         SentryUser(
           email: user.email,
-          id: authService.fbUser.value?.uid,
+          id: authService.fbUser?.uid,
           username: user.username,
           data: {
             'displayName': user.displayName,
@@ -172,15 +185,15 @@ class UserService extends GetxService
     }
     assert(EmailValidator.validate(email));
     final updatedUser = current.copyWith(email: email);
-    await authService.fbUser.value!.updateEmail(email);
+    await authService.fbUser!.updateEmail(email);
     await updateUser(updatedUser);
     loadUserData(fba.FirebaseAuth.instance.currentUser!);
   }
 
   void _clearUserListener() {
     debugPrint('clearing user listener');
-    _sub?.cancel();
-    _sub = null;
+    _userDataSub?.cancel();
+    _userDataSub = null;
   }
 }
 

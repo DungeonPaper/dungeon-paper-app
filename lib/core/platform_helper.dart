@@ -3,6 +3,8 @@ import 'dart:io';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
+import '../app/data/models/user.dart';
+
 enum DeviceType {
   mobile,
   desktop,
@@ -36,6 +38,16 @@ class PlatformHelper {
 
   static final canUseAppleSignIn = isApple;
   static final canUseGoogleSignIn = kIsWeb || isAndroid;
+  static canUseProvider(ProviderName provider) {
+    switch (provider) {
+      case ProviderName.google:
+        return canUseGoogleSignIn;
+      case ProviderName.apple:
+        return canUseAppleSignIn;
+      default:
+        return true;
+    }
+  }
 
   static OS get currentOS {
     if (isWeb) {
