@@ -810,6 +810,16 @@ class S {
     );
   }
 
+  /// `Delete Your Account`
+  String get accountDelete {
+    return Intl.message(
+      'Delete Your Account',
+      name: 'accountDelete',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `Basic Moves`
   String get actionsBasicMoves {
     return Intl.message(
@@ -1498,6 +1508,46 @@ class S {
       name: 'confirmDeleteTitle',
       desc: '',
       args: [entity],
+    );
+  }
+
+  /// `Are you sure you want to delete your account?\n\nThis action cannot be undone.`
+  String get confirmDeleteAccount1Body {
+    return Intl.message(
+      'Are you sure you want to delete your account?\n\nThis action cannot be undone.',
+      name: 'confirmDeleteAccount1Body',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Delete Your Account?`
+  String get confirmDeleteAccount1Title {
+    return Intl.message(
+      'Delete Your Account?',
+      name: 'confirmDeleteAccount1Title',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `We do not save any data for deleted accounts. All your data will be permanently deleted.\n\nAre you sure you want to delete your account?\n\nPlease confirm this one last time.`
+  String get confirmDeleteAccount2Body {
+    return Intl.message(
+      'We do not save any data for deleted accounts. All your data will be permanently deleted.\n\nAre you sure you want to delete your account?\n\nPlease confirm this one last time.',
+      name: 'confirmDeleteAccount2Body',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Are you really sure?`
+  String get confirmDeleteAccount2Title {
+    return Intl.message(
+      'Are you really sure?',
+      name: 'confirmDeleteAccount2Title',
+      desc: '',
+      args: [],
     );
   }
 

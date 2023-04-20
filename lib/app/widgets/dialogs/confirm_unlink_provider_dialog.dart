@@ -3,6 +3,7 @@ import 'package:dungeon_paper/generated/l10n.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
+import '../../../core/utils/dialog_utils.dart';
 import '../../model_utils/user_utils.dart';
 
 Future<bool> confirmUnlinkProvider<T>(
@@ -23,12 +24,6 @@ Future<bool> confirmUnlinkProvider<T>(
     ),
   ).then((res) => res == true);
 }
-
-Future<void> awaitConfirmation(
-        Future<bool> confirmation, void Function() callback) =>
-    confirmation.then((res) {
-      if (res) callback();
-    });
 
 Future<void> awaitUnlinkProviderConfirmation<T>(BuildContext context,
         ProviderName provider, void Function() onConfirmed) =>

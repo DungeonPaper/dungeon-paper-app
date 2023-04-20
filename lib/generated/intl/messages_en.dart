@@ -472,6 +472,8 @@ class MessageLookup extends MessageLookupByLibrary {
             "Password changed successfully"),
         "accountChangePasswordTitle":
             MessageLookupByLibrary.simpleMessage("Change Password"),
+        "accountDelete":
+            MessageLookupByLibrary.simpleMessage("Delete Your Account"),
         "actionSummaryChipCoins": m4,
         "actionSummaryChipLoad": m5,
         "actionsBasicMoves":
@@ -578,6 +580,14 @@ class MessageLookup extends MessageLookupByLibrary {
         "coins": MessageLookupByLibrary.simpleMessage("Coins"),
         "coinsWithCount": m17,
         "confirm": MessageLookupByLibrary.simpleMessage("Confirm"),
+        "confirmDeleteAccount1Body": MessageLookupByLibrary.simpleMessage(
+            "Are you sure you want to delete your account?\n\nThis action cannot be undone."),
+        "confirmDeleteAccount1Title":
+            MessageLookupByLibrary.simpleMessage("Delete Your Account?"),
+        "confirmDeleteAccount2Body": MessageLookupByLibrary.simpleMessage(
+            "We do not save any data for deleted accounts. All your data will be permanently deleted.\n\nAre you sure you want to delete your account?\n\nPlease confirm this one last time."),
+        "confirmDeleteAccount2Title":
+            MessageLookupByLibrary.simpleMessage("Are you really sure?"),
         "confirmDeleteBody": m18,
         "confirmDeleteTitle": m19,
         "confirmExitDefaultCancelLabel":

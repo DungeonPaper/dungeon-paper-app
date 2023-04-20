@@ -1,6 +1,8 @@
+import 'package:dungeon_paper/app/themes/button_themes.dart';
 import 'package:dungeon_paper/app/widgets/atoms/help_text.dart';
 import 'package:dungeon_paper/app/widgets/atoms/password_field.dart';
 import 'package:dungeon_paper/app/widgets/atoms/user_avatar.dart';
+import 'package:dungeon_paper/app/widgets/dialogs/confirm_delete_account_dialog.dart';
 import 'package:dungeon_paper/app/widgets/dialogs/confirm_unlink_provider_dialog.dart';
 import 'package:dungeon_paper/app/widgets/molecules/dialog_controls.dart';
 import 'package:dungeon_paper/core/platform_helper.dart';
@@ -96,54 +98,61 @@ class AccountView extends GetView<AccountController> {
         // ...(controller.authService.fbUser?.providerData ?? []).map((provider) {
         ...([
           ProviderName.password,
-          if (PlatformHelper.canUseGoogleSignIn) ProviderName.google,
+          // if (PlatformHelper.canUseGoogleSignIn)
+          ProviderName.google,
           // if (PlatformHelper.canUseAppleSignIn)
           ProviderName.apple
-        ]).map((provider) {
-          return () => Obx(
-                () => ListTile(
-                  title: Text(S.current.signinProvider(provider)),
-                  // subtitle: Text(provider.),
-                  leading: Icon(DwIcons.providerIcon(provider)),
-                  subtitle: !PlatformHelper.canUseProvider(provider)
-                      ? Text(
-                          S.current.signinCantUseProvider(
-                              S.current.signinProvider(provider)),
-                          textScaleFactor: 0.8,
-                        )
-                      : null,
-                  trailing: ElevatedButton(
-                    child: Text(
-                      isProviderLinked(provider)
-                          ? S.current.signinProviderUnlink
-                          : S.current.signinProviderLink,
-                    ),
-                    onPressed: providerCount > 1 &&
-                            provider != ProviderName.password
-                        ? isProviderLinked(provider)
-                            ? () => awaitUnlinkProviderConfirmation(
-                                  context,
-                                  provider,
-                                  () {
-                                    controller.authService
-                                        .logoutFromProvider(provider);
-                                    controller.authService.fbUser!.unlink(
-                                        domainFromProviderName(provider));
-                                  },
-                                )
-                            : PlatformHelper.canUseProvider(provider)
-                                ? () async {
-                                    final cred = await controller.authService
-                                        .getProviderCredential(provider);
-                                    controller.authService.fbUser!
-                                        .linkWithCredential(cred);
-                                  }
-                                : null
+        ]).map(
+          (provider) {
+            return () => Obx(
+                  () => ListTile(
+                    title: Text(S.current.signinProvider(provider)),
+                    // subtitle: Text(provider.),
+                    leading: Icon(DwIcons.providerIcon(provider)),
+                    subtitle: !PlatformHelper.canUseProvider(provider)
+                        ? Text(
+                            S.current.signinCantUseProvider(
+                                S.current.signinProvider(provider)),
+                            textScaleFactor: 0.8,
+                          )
                         : null,
+                    trailing: ElevatedButton(
+                      child: Text(
+                        isProviderLinked(provider)
+                            ? S.current.signinProviderUnlink
+                            : S.current.signinProviderLink,
+                      ),
+                      onPressed:
+                          providerCount > 1 && provider != ProviderName.password
+                              ? isProviderLinked(provider)
+                                  ? unlinkProvider(context, provider)
+                                  : PlatformHelper.canUseProvider(provider)
+                                      ? linkProvider(provider)
+                                      : null
+                              : null,
+                    ),
                   ),
-                ),
-              );
-        }),
+                );
+          },
+        ),
+        // () => const SizedBox(height: 32),
+        // () => Center(
+        //       child: Padding(
+        //         padding: const EdgeInsets.all(16.0),
+        //         child: OutlinedButton(
+        //           style: ButtonThemes.errorOutlined(context)!.copyWith(
+        //             padding: const MaterialStatePropertyAll(
+        //                 EdgeInsets.symmetric(horizontal: 16)),
+        //             minimumSize: const MaterialStatePropertyAll(
+        //               Size(100, 28),
+        //             ),
+        //           ),
+        //           child: Text(S.current.accountDelete),
+        //           onPressed: () =>
+        //               awaitDeleteAccountConfirmation(context, () => null),
+        //         ),
+        //       ),
+        //     ),
       ],
     );
 
@@ -159,11 +168,10 @@ class AccountView extends GetView<AccountController> {
   int get providerCount =>
       controller.authService.fbUser?.providerData.length ?? 0;
 
-  bool isProviderLinked(ProviderName provider) {
-    return controller.authService.fbUser?.providerData
-            .any((pr) => pr.providerId == domainFromProviderName(provider)) ==
-        true;
-  }
+  bool isProviderLinked(ProviderName provider) =>
+      controller.authService.fbUser?.providerData
+          .any((pr) => pr.providerId == domainFromProviderName(provider)) ==
+      true;
 
   void _openNameDialog() {
     Get.dialog(
@@ -209,6 +217,24 @@ class AccountView extends GetView<AccountController> {
   void _uploadImage(BuildContext context) {
     controller.uploadPhoto(context);
   }
+
+  Future<void> Function() unlinkProvider(
+          BuildContext context, ProviderName provider) =>
+      () => awaitUnlinkProviderConfirmation(
+            context,
+            provider,
+            () {
+              controller.authService.logoutFromProvider(provider);
+              controller.authService.fbUser!
+                  .unlink(domainFromProviderName(provider));
+            },
+          );
+
+  Future<void> Function() linkProvider(ProviderName provider) => () async {
+        final cred =
+            await controller.authService.getProviderCredential(provider);
+        controller.authService.fbUser!.linkWithCredential(cred);
+      };
 }
 
 class SingleTextFieldDialog extends StatefulWidget {

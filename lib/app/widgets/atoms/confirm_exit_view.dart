@@ -3,6 +3,8 @@ import 'package:dungeon_paper/generated/l10n.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
+import '../../../core/utils/dialog_utils.dart';
+
 class ConfirmExitView extends StatelessWidget {
   const ConfirmExitView({
     Key? key,
@@ -83,11 +85,6 @@ class ConfirmExitDialog extends StatelessWidget {
     );
   }
 }
-
-Future<void> awaitConfirmation(Future<bool> confirmation, void Function() callback) =>
-    confirmation.then((res) {
-      if (res) callback();
-    });
 
 Future<void> awaitExitConfirmation<T>(
   BuildContext context,
