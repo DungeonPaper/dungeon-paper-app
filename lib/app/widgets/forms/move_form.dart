@@ -1,6 +1,7 @@
 import 'package:dungeon_paper/app/data/models/character_class.dart';
 import 'package:dungeon_paper/app/data/models/move.dart';
 import 'package:dungeon_paper/app/data/models/ability_scores.dart';
+import 'package:dungeon_paper/app/data/models/move_templates.dart';
 import 'package:dungeon_paper/app/data/services/repository_service.dart';
 import 'package:dungeon_paper/app/widgets/atoms/rich_text_field.dart';
 import 'package:dungeon_paper/app/widgets/atoms/select_box.dart';
@@ -22,7 +23,8 @@ class MoveForm extends GetView<MoveFormController> with RepositoryServiceMixin {
         () => Obx(
               () => TextFormField(
                 decoration: InputDecoration(
-                  label: Text(S.current.formGeneralNameGeneric(S.current.entity(Move))),
+                  label: Text(
+                      S.current.formGeneralNameGeneric(S.current.entity(Move))),
                 ),
                 textCapitalization: TextCapitalization.words,
                 controller: controller.name,
@@ -39,7 +41,8 @@ class MoveForm extends GetView<MoveFormController> with RepositoryServiceMixin {
                       items: MoveCategory.values
                           .map(
                             (cat) => DropdownMenuItem(
-                              child: Text(S.current.moveCategoryWithLevelShort(cat.name)),
+                              child: Text(S.current
+                                  .moveCategoryWithLevelShort(cat.name)),
                               value: cat,
                             ),
                           )
@@ -53,10 +56,14 @@ class MoveForm extends GetView<MoveFormController> with RepositoryServiceMixin {
                       value: controller.classKeys.value.isNotEmpty
                           ? controller.classKeys.value.first
                           : null,
-                      onChanged: (value) => controller.classKeys.value = [value!],
+                      onChanged: (value) =>
+                          controller.classKeys.value = [value!],
                       isExpanded: true,
                       label: Text(S.current.entity(CharacterClass)),
-                      items: {...repo.builtIn.classes.values, ...repo.my.classes.values}
+                      items: {
+                        ...repo.builtIn.classes.values,
+                        ...repo.my.classes.values
+                      }
                           .map(
                             (cls) => DropdownMenuItem(
                               child: Text(cls.name),
@@ -72,19 +79,46 @@ class MoveForm extends GetView<MoveFormController> with RepositoryServiceMixin {
         () => Obx(
               () => RichTextField(
                 decoration: InputDecoration(
-                  label: Text(S.current.formGeneralDescriptionGeneric(S.current.entity(Move))),
+                  label: Text(S.current
+                      .formGeneralDescriptionGeneric(S.current.entity(Move))),
                 ),
                 maxLines: 10,
                 minLines: 5,
-                rich: true,
                 textCapitalization: TextCapitalization.sentences,
                 controller: controller.description,
+                customButtons: [
+                  RichButton.dropdown(
+                    icon: Icons.list_alt,
+                    // TODO intl
+                    tooltip: 'Move Templates',
+                    actions: [
+                      ...MoveTemplateList.templates.map(
+                        (template) => RichButtonAction.dropdownItem(
+                          text: Column(
+                            mainAxisSize: MainAxisSize.min,
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(template.shortLabel),
+                              Text(
+                                template.longLabel,
+                                textScaleFactor: 0.8,
+                              ),
+                            ],
+                          ),
+                          defaultContent: template.text,
+                          prefix: template.text,
+                        ),
+                      )
+                    ],
+                  )
+                ],
               ),
             ),
         () => Obx(
               () => RichTextField(
                 decoration: InputDecoration(
-                  label: Text(S.current.formGeneralExplanationGeneric(S.current.entity(Move))),
+                  label: Text(S.current
+                      .formGeneralExplanationGeneric(S.current.entity(Move))),
                 ),
                 maxLines: 10,
                 minLines: 5,
@@ -96,7 +130,8 @@ class MoveForm extends GetView<MoveFormController> with RepositoryServiceMixin {
         () => Obx(
               () => DiceListInput(
                 controller: controller.dice,
-                abilityScores: controller.args.abilityScores ?? AbilityScores.dungeonWorldAll(10),
+                abilityScores: controller.args.abilityScores ??
+                    AbilityScores.dungeonWorldAll(10),
                 guessFrom: [controller.description, controller.explanation],
               ),
             ),
@@ -110,7 +145,8 @@ class MoveForm extends GetView<MoveFormController> with RepositoryServiceMixin {
   }
 }
 
-class MoveFormController extends LibraryEntityFormController<Move, MoveFormArguments> {
+class MoveFormController
+    extends LibraryEntityFormController<Move, MoveFormArguments> {
   final _name = TextEditingController().obs;
   final _description = TextEditingController().obs;
   final _explanation = TextEditingController().obs;
