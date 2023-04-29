@@ -29,12 +29,10 @@ class HomeLoaderView extends GetView with LoadingServiceMixin {
     final theme = Theme.of(context);
     final colorScheme = theme.colorScheme;
     final brightness = theme.brightness;
-    final skeletonColor = brightness == Brightness.light
-        ? theme.cardColor.withOpacity(0.65)
-        : colorScheme.surfaceVariant;
+    final skeletonColor =
+        brightness == Brightness.light ? theme.cardColor.withOpacity(0.65) : colorScheme.surfaceVariant;
     final skeletonHighlightColor = brightness == Brightness.light
-        ? Color.alphaBlend(
-            theme.cardColor.withOpacity(0.65), colorScheme.surfaceTint.withOpacity(0.5))
+        ? Color.alphaBlend(theme.cardColor.withOpacity(0.65), colorScheme.surfaceTint.withOpacity(0.5))
         : Color.alphaBlend(theme.cardColor.withOpacity(0.65), colorScheme.surfaceTint);
 
     return SingleChildScrollView(

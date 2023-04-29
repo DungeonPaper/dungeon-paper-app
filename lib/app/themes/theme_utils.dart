@@ -43,8 +43,7 @@ TextTheme copyTextThemeWith(
       displayLarge: original.displayLarge?.copyWith(fontFamily: fontFamily, color: specialColor),
       displayMedium: original.displayMedium?.copyWith(fontFamily: fontFamily, color: specialColor),
       displaySmall: original.displaySmall?.copyWith(fontFamily: fontFamily, color: specialColor),
-      headlineMedium:
-          original.headlineMedium?.copyWith(fontFamily: fontFamily, color: specialColor),
+      headlineMedium: original.headlineMedium?.copyWith(fontFamily: fontFamily, color: specialColor),
       headlineSmall: original.headlineSmall?.copyWith(fontFamily: fontFamily, color: specialColor),
       titleLarge: original.titleLarge?.copyWith(fontFamily: fontFamily, color: specialColor),
       titleMedium: original.titleMedium?.copyWith(fontFamily: fontFamily, color: specialColor),
@@ -70,10 +69,9 @@ ColorScheme createColorScheme(Color seedColor,
     seedColor: seedColor,
     primary: primary,
     secondary: secondary,
-    onSecondary:
-        ThemeData.estimateBrightnessForColor(secondary ?? defaultBase.secondary) == Brightness.light
-            ? Colors.black
-            : Colors.white,
+    onSecondary: ThemeData.estimateBrightnessForColor(secondary ?? defaultBase.secondary) == Brightness.light
+        ? Colors.black
+        : Colors.white,
   );
 }
 

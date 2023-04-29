@@ -44,8 +44,7 @@ class SelectMovesSpellsView extends GetView<SelectMovesSpellsController> {
               // MOVES TITLE
               Obx(() => Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-                    child:
-                        Text(S.current.movesWithCount(controller.moves.length), style: titleStyle),
+                    child: Text(S.current.movesWithCount(controller.moves.length), style: titleStyle),
                   )),
               // MOVES CARDS
               Obx(
@@ -65,11 +64,9 @@ class SelectMovesSpellsView extends GetView<SelectMovesSpellsController> {
                                   onEdit: () => ModelPages.openMovePage(
                                     abilityScores: controller.abilityScores.value,
                                     move: move,
-                                    onSave: (_move) => controller.moves.value =
-                                        updateByKey(controller.moves, [_move]),
+                                    onSave: (_move) => controller.moves.value = updateByKey(controller.moves, [_move]),
                                   ),
-                                  onDelete: () => controller.moves.value =
-                                      removeByKey(controller.moves, [move]),
+                                  onDelete: () => controller.moves.value = removeByKey(controller.moves, [move]),
                                 ),
                               ],
                             ),
@@ -105,10 +102,8 @@ class SelectMovesSpellsView extends GetView<SelectMovesSpellsController> {
               ),
               // SPELLS TITLE
               Obx(() => Padding(
-                    padding:
-                        const EdgeInsets.symmetric(horizontal: 16, vertical: 8).copyWith(top: 24),
-                    child: Text(S.current.spellsWithCount(controller.spells.length),
-                        style: titleStyle),
+                    padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8).copyWith(top: 24),
+                    child: Text(S.current.spellsWithCount(controller.spells.length), style: titleStyle),
                   )),
               // SPELL CARDS
               Obx(
@@ -127,8 +122,7 @@ class SelectMovesSpellsView extends GetView<SelectMovesSpellsController> {
                                 ElevatedButton.icon(
                                   style: ButtonThemes.primaryElevated(context),
                                   onPressed: () {
-                                    controller.spells.value =
-                                        removeByKey(controller.spells, [spell]);
+                                    controller.spells.value = removeByKey(controller.spells, [spell]);
                                   },
                                   label: Text(S.current.remove),
                                   icon: const Icon(Icons.remove),

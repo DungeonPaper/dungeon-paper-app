@@ -41,12 +41,9 @@ class Campaign with WithIcon implements WithMeta {
         key: json['key'],
         name: json['name'],
         description: json['description'],
-        owners: List<dw.EntityReference>.from(
-            json['owners'].map((x) => dw.EntityReference.fromJson(x))),
-        moderators: List<dw.EntityReference>.from(
-            json['moderators'].map((x) => dw.EntityReference.fromJson(x))),
-        participants: List<dw.EntityReference>.from(
-            json['participants'].map((x) => dw.EntityReference.fromJson(x))),
+        owners: List<dw.EntityReference>.from(json['owners'].map((x) => dw.EntityReference.fromJson(x))),
+        moderators: List<dw.EntityReference>.from(json['moderators'].map((x) => dw.EntityReference.fromJson(x))),
+        participants: List<dw.EntityReference>.from(json['participants'].map((x) => dw.EntityReference.fromJson(x))),
       );
 
   @override

@@ -40,8 +40,7 @@ class CharacterListPageView extends GetView<CharacterService> with UserServiceMi
                 () => CategorizedList(
                       title: Text(cat.isNotEmpty ? cat : S.current.characterNoCategory),
                       onReorder: (oldIndex, newIndex) => controller.updateAll(
-                        CharacterUtils.reorderCharacters(controller.charsByCategory[cat]!)
-                            .call(oldIndex, newIndex),
+                        CharacterUtils.reorderCharacters(controller.charsByCategory[cat]!).call(oldIndex, newIndex),
                       ),
                       children: [
                         for (var char in controller.charsByCategory[cat]!)
@@ -68,8 +67,7 @@ class CharacterListPageView extends GetView<CharacterService> with UserServiceMi
                                         Get.offAllNamed(Routes.home);
                                       },
                                       child: ListTile(
-                                        leading:
-                                            CharacterAvatar.squircle(character: char, size: 48),
+                                        leading: CharacterAvatar.squircle(character: char, size: 48),
                                         title: Text(char.displayName),
                                         subtitle: CharacterSubtitle(
                                           character: char,
@@ -77,9 +75,11 @@ class CharacterListPageView extends GetView<CharacterService> with UserServiceMi
                                         ),
                                         trailing: EntityEditMenu(
                                           onEdit: null,
-                                          onDelete: () => awaitDeleteConfirmation<Character>(
+                                          onDelete: () => deleteDialog.confirm(
                                             context,
-                                            char.displayName,
+                                            DeleteDialogOptions(
+                                              entityName: char.displayName,
+                                            ),
                                             () => controller.deleteCharacter(char),
                                           ),
                                         ),

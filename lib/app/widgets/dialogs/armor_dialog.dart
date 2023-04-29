@@ -29,8 +29,7 @@ class _ArmorDialogState extends State<ArmorDialog> {
   void initState() {
     super.initState();
     useDefault = widget.armor == null;
-    controller =
-        TextEditingController(text: widget.armor?.toString() ?? widget.defaultArmor.toString());
+    controller = TextEditingController(text: widget.armor?.toString() ?? widget.defaultArmor.toString());
     controller.addListener(_listener);
   }
 

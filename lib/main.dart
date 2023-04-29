@@ -49,8 +49,7 @@ class DungeonPaperApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final platformBrightness = getCurrentPlatformBrightness();
-    final defaultTheme =
-        platformBrightness == Brightness.light ? AppThemes.parchment : AppThemes.dark;
+    final defaultTheme = platformBrightness == Brightness.light ? AppThemes.parchment : AppThemes.dark;
 
     return DynamicTheme(
       themeCollection: themeCollection,

@@ -1,12 +1,10 @@
-
 import 'package:dungeon_paper/app/data/services/character_service.dart';
 import 'package:dungeon_paper/app/data/services/user_service.dart';
 import 'package:dungeon_paper/app/themes/themes.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-class SelectCharacterThemeController extends GetxController
-    with CharacterServiceMixin, UserServiceMixin {
+class SelectCharacterThemeController extends GetxController with CharacterServiceMixin, UserServiceMixin {
   final seeAll = {Brightness.light: false, Brightness.dark: false}.obs;
   final lightTheme = Rx<int?>(AppThemes.parchment);
   final darkTheme = Rx<int?>(AppThemes.dark);

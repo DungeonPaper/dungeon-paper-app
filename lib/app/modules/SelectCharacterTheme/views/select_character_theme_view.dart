@@ -34,9 +34,7 @@ class SelectCharacterThemeView extends GetView<SelectCharacterThemeController> {
           _pad(
             Obx(
               () => ThemeSelector(
-                themes: controller.seeAll[Brightness.light]!
-                    ? AppThemes.allThemes
-                    : AppThemes.allLightThemes,
+                themes: controller.seeAll[Brightness.light]! ? AppThemes.allThemes : AppThemes.allLightThemes,
                 selected: controller.lightTheme.value,
                 onSelected: (theme) async {
                   controller.lightTheme.value = theme;
@@ -62,9 +60,7 @@ class SelectCharacterThemeView extends GetView<SelectCharacterThemeController> {
           _pad(
             Obx(
               () => ThemeSelector(
-                themes: controller.seeAll[Brightness.dark]!
-                    ? AppThemes.allThemes
-                    : AppThemes.allDarkThemes,
+                themes: controller.seeAll[Brightness.dark]! ? AppThemes.allThemes : AppThemes.allDarkThemes,
                 selected: controller.darkTheme.value,
                 onSelected: (theme) async {
                   controller.darkTheme.value = theme;

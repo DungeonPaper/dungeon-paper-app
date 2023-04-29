@@ -68,8 +68,7 @@ class StartingGearFormView extends GetView<StartingGearFormController> {
                                 title: Text(sel.description, maxLines: 1),
                                 subtitle: Text(
                                   sel.options
-                                      .map((opt) =>
-                                          '${NumberFormat('#0.#').format(opt.amount)}x ${opt.item.name}')
+                                      .map((opt) => '${NumberFormat('#0.#').format(opt.amount)}x ${opt.item.name}')
                                       .join(', '),
                                 ),
                                 dense: true,

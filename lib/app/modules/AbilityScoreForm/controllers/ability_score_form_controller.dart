@@ -41,12 +41,9 @@ class AbilityScoreFormController extends GetxController {
     onSave = args.onSave;
     _key.value = TextEditingController(text: entity.value.key)..addListener(_update);
     _name.value = TextEditingController(text: entity.value.name)..addListener(_update);
-    _description.value = TextEditingController(text: entity.value.description)
-      ..addListener(_update);
-    _debilityName.value = TextEditingController(text: entity.value.debilityName)
-      ..addListener(_update);
-    _debilityDescription.value = TextEditingController(text: entity.value.debilityDescription)
-      ..addListener(_update);
+    _description.value = TextEditingController(text: entity.value.description)..addListener(_update);
+    _debilityName.value = TextEditingController(text: entity.value.debilityName)..addListener(_update);
+    _debilityDescription.value = TextEditingController(text: entity.value.debilityDescription)..addListener(_update);
     _icon.value = entity.value.customIcon;
   }
 

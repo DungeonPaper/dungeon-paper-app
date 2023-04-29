@@ -140,11 +140,9 @@ class Character with WithIcon implements WithMeta<Character, CharacterMeta> {
 
   dw.Dice get defaultDamageDice => characterClass.damageDice.copyWithModifierValue(damageModifier);
 
-  List<SessionMark> get bonds =>
-      sessionMarks.where((e) => e.type == dw.SessionMarkType.bond).toList();
+  List<SessionMark> get bonds => sessionMarks.where((e) => e.type == dw.SessionMarkType.bond).toList();
 
-  List<SessionMark> get flags =>
-      sessionMarks.where((e) => e.type == dw.SessionMarkType.flag).toList();
+  List<SessionMark> get flags => sessionMarks.where((e) => e.type == dw.SessionMarkType.flag).toList();
 
   List<SessionMark> get endOfSessionMarks => sessionMarks
       .where((e) => e.type == dw.SessionMarkType.endOfSession)
@@ -323,9 +321,7 @@ class Character with WithIcon implements WithMeta<Character, CharacterMeta> {
         key: json['key'],
         displayName: json['displayName'],
         avatarUrl: json['avatarURL'],
-        settings: json['settings'] != null
-            ? CharacterSettings.fromJson(json['settings'])
-            : CharacterSettings.empty(),
+        settings: json['settings'] != null ? CharacterSettings.fromJson(json['settings']) : CharacterSettings.empty(),
         characterClass: CharacterClass.fromJson(json['class']),
         moves: List<Move>.from(json['moves'].map((x) => Move.fromJson(x))),
         spells: List<Spell>.from(json['spells'].map((x) => Spell.fromJson(x))),
@@ -334,8 +330,7 @@ class Character with WithIcon implements WithMeta<Character, CharacterMeta> {
         notes: List<Note>.from(json['notes'].map((x) => Note.fromJson(x))),
         stats: CharacterStats.fromJson(json['stats']),
         abilityScores: AbilityScores.fromJson(json['abilityScores']),
-        sessionMarks:
-            List<SessionMark>.from(json['sessionMarks'].map((x) => SessionMark.fromJson(x))),
+        sessionMarks: List<SessionMark>.from(json['sessionMarks'].map((x) => SessionMark.fromJson(x))),
         bio: Bio.fromJson(json['bio']),
         race: Race.fromJson(json['race']),
       );

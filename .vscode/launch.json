@@ -5,7 +5,7 @@
   "version": "0.2.0",
   "configurations": [
     {
-      "name": "dungeon_paper_2",
+      "name": "dungeon_paper",
       "request": "launch",
       "type": "dart",
       "args": [
@@ -14,7 +14,7 @@
       ]
     },
     {
-      "name": "dungeon_paper_2 [verbose]",
+      "name": "dungeon_paper [verbose]",
       "request": "launch",
       "type": "dart",
       "args": [
@@ -23,7 +23,7 @@
       ]
     },
     {
-      "name": "dungeon_paper_2 (profile mode)",
+      "name": "dungeon_paper (profile mode)",
       "request": "launch",
       "type": "dart",
       "flutterMode": "profile"

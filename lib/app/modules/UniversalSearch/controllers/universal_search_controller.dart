@@ -22,16 +22,14 @@ enum SourceType {
   builtInLibrary,
 }
 
-class UniversalSearchController extends GetxController
-    with RepositoryServiceMixin, CharacterServiceMixin {
+class UniversalSearchController extends GetxController with RepositoryServiceMixin, CharacterServiceMixin {
   final _search = TextEditingController(text: '').obs;
 
   TextEditingController get search => _search.value;
 
   bool get hasCharacter => charService.all.isNotEmpty;
 
-  final enabledSources =
-      <SourceType>{SourceType.character, SourceType.myLibrary, SourceType.builtInLibrary}.obs;
+  final enabledSources = <SourceType>{SourceType.character, SourceType.myLibrary, SourceType.builtInLibrary}.obs;
 
   Map<Type, List<Iterable>> get sources => {
         Move: <Iterable<Move>>[
@@ -78,8 +76,7 @@ class UniversalSearchController extends GetxController
 
   List<T> getSource<T>() => flatten(sources[T] as List<List<T>>);
 
-  List<T> flatten<T>(List<Iterable<T>> list) =>
-      list.fold(<T>[], (all, current) => all..addAll(current));
+  List<T> flatten<T>(List<Iterable<T>> list) => list.fold(<T>[], (all, current) => all..addAll(current));
 
   Future<List<List>> get results async {
     if (search.text.trim().isEmpty) {
@@ -87,9 +84,7 @@ class UniversalSearchController extends GetxController
     }
     final entries = sources.entries;
     final map = enumerate(entries).map((e) {
-      final list = flatten(e.value.value)
-          .where((e) => searchFor(e.runtimeType, e, search.text))
-          .uniqueBy((e) => e.key);
+      final list = flatten(e.value.value).where((e) => searchFor(e.runtimeType, e, search.text)).uniqueBy((e) => e.key);
 
       if (list.isEmpty) {
         return [];
@@ -97,8 +92,7 @@ class UniversalSearchController extends GetxController
 
       final sorters = {
         Move: (a, b) => MoveFilters(search: search.text, classKey: null).sortByScore(a, b),
-        Spell: (a, b) =>
-            SpellFilters(search: search.text, classKey: null, level: null).sortByScore(a, b),
+        Spell: (a, b) => SpellFilters(search: search.text, classKey: null, level: null).sortByScore(a, b),
         Item: (a, b) => ItemFilters(search: search.text).sortByScore(a, b),
         CharacterClass: (a, b) => CharacterClassFilters(search: search.text).sortByScore(a, b),
         Race: (a, b) => RaceFilters(search: search.text, classKey: null).sortByScore(a, b),
@@ -108,9 +102,8 @@ class UniversalSearchController extends GetxController
         (a, b) => sorters[a.runtimeType]!(a, b),
       );
 
-      final result = e.index < entries.length
-          ? [SearchSeparator(S.current.entityPlural(list.first.runtimeType)), ...list]
-          : list;
+      final result =
+          e.index < entries.length ? [SearchSeparator(S.current.entityPlural(list.first.runtimeType)), ...list] : list;
       return result;
     });
 

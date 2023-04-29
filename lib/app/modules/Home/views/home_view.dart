@@ -20,8 +20,7 @@ import 'home_character_view.dart';
 import 'home_fab.dart';
 import 'home_nav_bar.dart';
 
-class HomeView extends GetView<CharacterService>
-    with UserServiceMixin, LoadingServiceMixin, CharacterServiceMixin {
+class HomeView extends GetView<CharacterService> with UserServiceMixin, LoadingServiceMixin, CharacterServiceMixin {
   const HomeView({Key? key}) : super(key: key);
 
   @override
@@ -47,13 +46,10 @@ class HomeView extends GetView<CharacterService>
         },
       ),
       floatingActionButton: Obx(
-        () =>
-            userService.isLoggedIn && maybeChar != null ? const HomeFAB() : const SizedBox.shrink(),
+        () => userService.isLoggedIn && maybeChar != null ? const HomeFAB() : const SizedBox.shrink(),
       ),
       bottomNavigationBar: Obx(
-        () => maybeChar != null
-            ? HomeNavBar(pageController: controller.pageController)
-            : const SizedBox.shrink(),
+        () => maybeChar != null ? HomeNavBar(pageController: controller.pageController) : const SizedBox.shrink(),
       ),
     );
   }
@@ -67,8 +63,7 @@ class HomeView extends GetView<CharacterService>
     debugPrint('afterFirstLoad: ${loadingService.afterFirstLoad}, '
         'loadingUser: ${loadingService.loadingUser}, '
         'loadingCharacters: ${loadingService.loadingCharacters}');
-    return !loadingService.afterFirstLoad &&
-        (loadingService.loadingUser || loadingService.loadingCharacters);
+    return !loadingService.afterFirstLoad && (loadingService.loadingUser || loadingService.loadingCharacters);
   }
 }
 

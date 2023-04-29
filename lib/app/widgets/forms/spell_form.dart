@@ -53,9 +53,7 @@ class SpellForm extends GetView<SpellFormController> with RepositoryServiceMixin
                 Expanded(
                   child: Obx(
                     () => SelectBox<dw.EntityReference>(
-                      value: controller.classKeys.value.isNotEmpty
-                          ? controller.classKeys.value.first
-                          : null,
+                      value: controller.classKeys.value.isNotEmpty ? controller.classKeys.value.first : null,
                       onChanged: (value) => controller.classKeys.value = [value!],
                       isExpanded: true,
                       label: Text(S.current.entity(CharacterClass)),
@@ -131,8 +129,7 @@ class SpellFormController extends LibraryEntityFormController<Spell, SpellFormAr
   ValueNotifier<List<dw.EntityReference>> get classKeys => _classKeys.value;
 
   @override
-  List<Rx<ValueNotifier>> get fields =>
-      [_name, _description, _explanation, _dice, _tags, _category, _classKeys];
+  List<Rx<ValueNotifier>> get fields => [_name, _description, _explanation, _dice, _tags, _category, _classKeys];
 
   @override
   void onInit() {

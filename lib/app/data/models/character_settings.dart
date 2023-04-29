@@ -78,8 +78,8 @@ class CharacterSettings {
               ),
         sortOrder: json['sortOrder'],
         category: json['category'],
-        rollButtons: List<RollButton?>.from(
-            (json['rollButtons'] ?? []).map((x) => x != null ? RollButton.fromJson(x) : null)),
+        rollButtons:
+            List<RollButton?>.from((json['rollButtons'] ?? []).map((x) => x != null ? RollButton.fromJson(x) : null)),
         racePosition: RacePosition.values.firstWhere(
           (element) => element.name == json['racePosition'],
           orElse: () => RacePosition.start,
@@ -181,8 +181,7 @@ class OrderedCategoryList<T> {
         'canHide': canHide,
       };
 
-  factory OrderedCategoryList.fromRawJson(String str) =>
-      OrderedCategoryList.fromJson(json.decode(str));
+  factory OrderedCategoryList.fromRawJson(String str) => OrderedCategoryList.fromJson(json.decode(str));
 
   factory OrderedCategoryList.fromJson(Map<String, dynamic> json) => OrderedCategoryList(
         hidden: Set<T>.from(json['hidden']),
@@ -271,8 +270,7 @@ class ActionCategoryList extends OrderedCategoryList<Type> {
     required super.hidden,
   }) : super(canHide: true);
 
-  factory ActionCategoryList.fromRawJson(String str) =>
-      ActionCategoryList.fromJson(json.decode(str));
+  factory ActionCategoryList.fromRawJson(String str) => ActionCategoryList.fromJson(json.decode(str));
 
   factory ActionCategoryList.fromJson(Map<String, dynamic> json) => ActionCategoryList(
         sortOrder: Set<Type>.from((json['sortOrder'] ?? []).map((x) => _toType(x))),
@@ -299,8 +297,7 @@ class ActionCategoryList extends OrderedCategoryList<Type> {
   }
 
   @override
-  Set<Type> getSorted([Set<Type> all = const {}]) =>
-      super.getSorted(all).map((el) => _toType(el.toString())).toSet();
+  Set<Type> getSorted([Set<Type> all = const {}]) => super.getSorted(all).map((el) => _toType(el.toString())).toSet();
 
   @override
   String get debugProperties => 'sortOrder: $sortOrder, hidden: $hidden';

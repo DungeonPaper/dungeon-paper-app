@@ -7,9 +7,7 @@ import 'package:dungeon_paper/generated/l10n.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-class HomeAppBar extends StatelessWidget
-    with LoadingServiceMixin, UserServiceMixin
-    implements PreferredSizeWidget {
+class HomeAppBar extends StatelessWidget with LoadingServiceMixin, UserServiceMixin implements PreferredSizeWidget {
   const HomeAppBar({super.key});
 
   @override

@@ -15,8 +15,7 @@ import 'package:get/get.dart';
 
 import 'filters/race_filters.dart';
 
-class RacesLibraryListView extends GetView<LibraryListController<Race, RaceFilters>>
-    with CharacterServiceMixin {
+class RacesLibraryListView extends GetView<LibraryListController<Race, RaceFilters>> with CharacterServiceMixin {
   const RacesLibraryListView({
     Key? key,
   }) : super(key: key);

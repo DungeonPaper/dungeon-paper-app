@@ -57,9 +57,7 @@ class UserMenuPopover extends GetView<CharacterService> with AuthServiceMixin, U
                               children: [
                                 // User details
                                 ListTile(
-                                  onTap: userService.isLoggedIn
-                                      ? () => Get.toNamed(Routes.account)
-                                      : null,
+                                  onTap: userService.isLoggedIn ? () => Get.toNamed(Routes.account) : null,
                                   visualDensity: VisualDensity.compact,
                                   title: Text(
                                     '${userService.current.displayName} (@${userService.current.username})',
@@ -114,8 +112,7 @@ class UserMenuPopover extends GetView<CharacterService> with AuthServiceMixin, U
                                               padding: const EdgeInsets.all(4),
                                               child: Column(
                                                 children: [
-                                                  CharacterAvatar.squircle(
-                                                      character: char, size: avatarSize),
+                                                  CharacterAvatar.squircle(character: char, size: avatarSize),
                                                   const SizedBox(height: 4),
                                                   SizedBox(
                                                     width: 60,
@@ -141,8 +138,7 @@ class UserMenuPopover extends GetView<CharacterService> with AuthServiceMixin, U
                                 ListTile(
                                   visualDensity: VisualDensity.compact,
                                   dense: true,
-                                  title:
-                                      Text(S.current.allGeneric(S.current.entityPlural(Character))),
+                                  title: Text(S.current.allGeneric(S.current.entityPlural(Character))),
                                   leading: const Icon(Icons.group),
                                   onTap: () {
                                     Get.back();

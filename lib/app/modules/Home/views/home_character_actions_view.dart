@@ -363,8 +363,7 @@ class ActionsCardList<T extends WithMeta> extends GetView<CharacterService>
           onPressed: () => Get.toNamed(
             route,
             arguments: addPageArguments(
-              onSelected: (items) =>
-                  library.upsertToCharacter(items, forkBehavior: ForkBehavior.fork),
+              onSelected: (items) => library.upsertToCharacter(items, forkBehavior: ForkBehavior.fork),
             ),
           ),
           label: Text(S.current.addGeneric(S.current.entityPlural(T))),
@@ -406,9 +405,9 @@ class ActionsCardList<T extends WithMeta> extends GetView<CharacterService>
       );
 
   void Function() _confirmDeleteDlg(BuildContext context, T object, String name) {
-    return () => awaitDeleteConfirmation<T>(
+    return () => deleteDialog.confirm(
           context,
-          name,
+          DeleteDialogOptions(entityName: name),
           () => controller.updateCharacter(
             CharacterUtils.removeByType<T>(char, [object]),
           ),

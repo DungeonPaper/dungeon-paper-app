@@ -37,8 +37,7 @@ class SendFeedbackView extends GetView<SendFeedbackController> {
               Obx(
                 () => TextFormField(
                   controller: controller.email.value,
-                  validator: (email) =>
-                      email?.isEmpty ?? true ? null : EmailAddressValidator().validator(email),
+                  validator: (email) => email?.isEmpty ?? true ? null : EmailAddressValidator().validator(email),
                   decoration: InputDecoration(
                     labelText: S.current.signupEmailPlaceholder,
                   ),

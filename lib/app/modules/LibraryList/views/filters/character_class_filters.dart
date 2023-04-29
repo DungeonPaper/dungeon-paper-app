@@ -70,9 +70,7 @@ class CharacterClassFilters extends EntityFilters<CharacterClass> {
   double getScore(CharacterClass cls) {
     return avg(
       [cls.name, cls.description].map(
-        (e) => (search?.isEmpty ?? true) || e.isEmpty
-            ? 0.0
-            : StringSimilarity.compareTwoStrings(search!, e),
+        (e) => (search?.isEmpty ?? true) || e.isEmpty ? 0.0 : StringSimilarity.compareTwoStrings(search!, e),
       ),
     );
   }

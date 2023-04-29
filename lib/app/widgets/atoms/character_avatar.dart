@@ -116,6 +116,5 @@ class CharacterAvatar extends GetView {
     );
   }
 
-  Widget _renderForChar(BuildContext context, Character? char) =>
-      builder(context, char?.avatarUrl ?? '', size);
+  Widget _renderForChar(BuildContext context, Character? char) => builder(context, char?.avatarUrl ?? '', size);
 }

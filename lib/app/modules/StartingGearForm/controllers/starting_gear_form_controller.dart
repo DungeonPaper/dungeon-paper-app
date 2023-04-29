@@ -43,8 +43,7 @@ class StartingGearFormController extends GetxController {
   bool isSelected(GearSelection selection) =>
       selectedOptions.firstWhereOrNull((item) => item.key == selection.key) != null;
 
-  int selectionCount(GearChoice choice) =>
-      choice.selections.where((item) => isSelected(item)).length;
+  int selectionCount(GearChoice choice) => choice.selections.where((item) => isSelected(item)).length;
 }
 
 class StartingGearFormArguments {

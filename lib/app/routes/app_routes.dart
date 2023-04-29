@@ -95,19 +95,16 @@ abstract class Routes {
   static const createCharacter = _Paths.character + _Paths.create;
 
   /// `/character/create/roll-stats`
-  static const createCharacterAbilityScores =
-      _Paths.character + _Paths.create + _Paths.abilityScores;
+  static const createCharacterAbilityScores = _Paths.character + _Paths.create + _Paths.abilityScores;
 
   /// `/character/create/basic-info`
   static const createCharacterBasicInfo = _Paths.character + _Paths.create + _Paths.basicInfo;
 
   /// `/character/create/moves-and-spells`
-  static const createCharacterMovesSpells =
-      _Paths.character + _Paths.create + _Paths.selectMovesSpells;
+  static const createCharacterMovesSpells = _Paths.character + _Paths.create + _Paths.selectMovesSpells;
 
   /// `/character/create/`class
-  static const createCharacterSelectClass =
-      _Paths.character + _Paths.create + _Paths.characterClass;
+  static const createCharacterSelectClass = _Paths.character + _Paths.create + _Paths.characterClass;
 
   /// `/character/create/starting-gear`
   static const createCharacterStartingGear = _Paths.character + _Paths.create + _Paths.startingGear;

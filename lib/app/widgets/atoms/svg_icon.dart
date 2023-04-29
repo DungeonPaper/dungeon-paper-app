@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 
-
 class SvgIcon extends StatelessWidget {
   const SvgIcon(
     this.icon, {

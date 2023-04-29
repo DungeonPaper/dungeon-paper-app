@@ -18,17 +18,15 @@ class S {
   static S? _current;
 
   static S get current {
-    assert(_current != null,
-        'No instance of S was loaded. Try to initialize the S delegate before accessing S.current.');
+    assert(
+        _current != null, 'No instance of S was loaded. Try to initialize the S delegate before accessing S.current.');
     return _current!;
   }
 
   static const AppLocalizationDelegate delegate = AppLocalizationDelegate();
 
   static Future<S> load(Locale locale) {
-    final name = (locale.countryCode?.isEmpty ?? false)
-        ? locale.languageCode
-        : locale.toString();
+    final name = (locale.countryCode?.isEmpty ?? false) ? locale.languageCode : locale.toString();
     final localeName = Intl.canonicalizedLocale(name);
     return initializeMessages(localeName).then((_) {
       Intl.defaultLocale = localeName;
@@ -1672,8 +1670,7 @@ class S {
   }
 
   /// `Base HP: {hp}, Load: {load}, Damage Dice: {damageDice}`
-  String createCharacterClassDescription(
-      Object hp, Object load, Object damageDice) {
+  String createCharacterClassDescription(Object hp, Object load, Object damageDice) {
     return Intl.message(
       'Base HP: $hp, Load: $load, Damage Dice: $damageDice',
       name: 'createCharacterClassDescription',
@@ -1853,8 +1850,7 @@ class S {
   }
 
   /// `{count} selected (class allowance: {max})`
-  String createCharacterStartingGearChoiceCountWithMax(
-      Object count, Object max) {
+  String createCharacterStartingGearChoiceCountWithMax(Object count, Object max) {
     return Intl.message(
       '$count selected (class allowance: $max)',
       name: 'createCharacterStartingGearChoiceCountWithMax',
@@ -1874,8 +1870,7 @@ class S {
   }
 
   /// `{amount} × {name}`
-  String createCharacterStartingGearDescriptionItem(
-      Object amount, Object name) {
+  String createCharacterStartingGearDescriptionItem(Object amount, Object name) {
     return Intl.message(
       '$amount × $name',
       name: 'createCharacterStartingGearDescriptionItem',

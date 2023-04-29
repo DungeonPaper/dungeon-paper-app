@@ -9,8 +9,7 @@ List<String> splitIntoWords(String string, {bool? lowerCase, bool? upperCase}) {
   return words;
 }
 
-String wordToCapital(String string) =>
-    string.substring(0, 1).toUpperCase() + string.substring(1).toLowerCase();
+String wordToCapital(String string) => string.substring(0, 1).toUpperCase() + string.substring(1).toLowerCase();
 
 String toCamelCase(String string) {
   final words = splitIntoWords(string);
@@ -49,5 +48,4 @@ final stringSorter = createSorter<String, String>(
 
 String cleanStr(String str) => str.toLowerCase();
 
-bool Function(String) stringFilter(String search) =>
-    (str) => cleanStr(str).contains(cleanStr(search));
+bool Function(String) stringFilter(String search) => (str) => cleanStr(str).contains(cleanStr(search));

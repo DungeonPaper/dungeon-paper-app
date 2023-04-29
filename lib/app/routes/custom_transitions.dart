@@ -21,8 +21,7 @@ class CustomCircularRevealClipper extends CustomClipper<Path> {
 
   @override
   Path getClip(Size size) {
-    final center =
-        centerAlignment?.alongSize(size) ?? centerOffset ?? Offset(size.width / 2, size.height / 2);
+    final center = centerAlignment?.alongSize(size) ?? centerOffset ?? Offset(size.width / 2, size.height / 2);
     final minRadius = this.minRadius ?? 0;
     final maxRadius = this.maxRadius ?? calcMaxRadius(size, center);
 
@@ -55,8 +54,8 @@ class CustomCircularRevealTransition extends CustomTransition {
   final Offset? offset;
 
   @override
-  Widget buildTransition(BuildContext context, Curve? curve, Alignment? alignment,
-      Animation<double> animation, Animation<double> secondaryAnimation, Widget child) {
+  Widget buildTransition(BuildContext context, Curve? curve, Alignment? alignment, Animation<double> animation,
+      Animation<double> secondaryAnimation, Widget child) {
     return ClipPath(
       clipper: CustomCircularRevealClipper(
         fraction: animation.value,

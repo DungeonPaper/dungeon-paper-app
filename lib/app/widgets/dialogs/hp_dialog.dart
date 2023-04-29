@@ -96,9 +96,7 @@ class _HPDialogState extends State<HPDialog> with CharacterServiceMixin {
   }
 
   int get currentHP => char.currentHp;
-  int get maxHP => shouldOverrideMaxHP
-      ? int.tryParse(overrideMaxHp.text) ?? char.defaultMaxHp
-      : char.defaultMaxHp;
+  int get maxHP => shouldOverrideMaxHP ? int.tryParse(overrideMaxHp.text) ?? char.defaultMaxHp : char.defaultMaxHp;
 
   ValueChange get change => currentHP == overrideHP
       ? ValueChange.neutral
@@ -119,9 +117,7 @@ class _HPDialogState extends State<HPDialog> with CharacterServiceMixin {
   void save() {
     charService.updateCharacter(
       char.copyWith(
-        stats: char.stats
-            .copyWith(currentHp: overrideHP)
-            .copyWithMaxHp(shouldOverrideMaxHP ? maxHP : null),
+        stats: char.stats.copyWith(currentHp: overrideHP).copyWithMaxHp(shouldOverrideMaxHP ? maxHP : null),
       ),
     );
     close();

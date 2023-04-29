@@ -37,8 +37,7 @@ class AccountView extends GetView<AccountController> {
         () => const SizedBox(height: 8),
         () => const Divider(),
         () => Padding(
-              padding:
-                  const EdgeInsets.symmetric(horizontal: 16).copyWith(top: 8),
+              padding: const EdgeInsets.symmetric(horizontal: 16).copyWith(top: 8),
               child: Text(
                 S.current.accountCategoryDetails,
                 style: textTheme.bodySmall,
@@ -65,9 +64,7 @@ class AccountView extends GetView<AccountController> {
                       )
                     : const Icon(Icons.image),
                 enabled: !controller.uploading.value,
-                onTap: !controller.uploading.value
-                    ? () => _uploadImage(context)
-                    : null,
+                onTap: !controller.uploading.value ? () => _uploadImage(context) : null,
               ),
             ),
         () => Obx(
@@ -86,8 +83,7 @@ class AccountView extends GetView<AccountController> {
             ),
         () => const Divider(),
         () => Padding(
-              padding:
-                  const EdgeInsets.symmetric(horizontal: 16).copyWith(top: 8),
+              padding: const EdgeInsets.symmetric(horizontal: 16).copyWith(top: 8),
               child: Text(
                 S.current.accountCategorySocials,
                 style: textTheme.bodySmall,
@@ -109,16 +105,13 @@ class AccountView extends GetView<AccountController> {
                     leading: Icon(DwIcons.providerIcon(provider)),
                     subtitle: !PlatformHelper.canUseProvider(provider)
                         ? Text(
-                            S.current.signinCantUseProvider(
-                                S.current.signinProvider(provider)),
+                            S.current.signinCantUseProvider(S.current.signinProvider(provider)),
                             textScaleFactor: 0.8,
                           )
                         : null,
                     trailing: ElevatedButton(
                       child: Text(
-                        isProviderLinked(provider)
-                            ? S.current.signinProviderUnlink
-                            : S.current.signinProviderLink,
+                        isProviderLinked(provider) ? S.current.signinProviderUnlink : S.current.signinProviderLink,
                       ),
                       onPressed: providerCount > 1
                           ? isProviderLinked(provider)
@@ -162,12 +155,10 @@ class AccountView extends GetView<AccountController> {
     );
   }
 
-  int get providerCount =>
-      controller.authService.fbUser?.providerData.length ?? 0;
+  int get providerCount => controller.authService.fbUser?.providerData.length ?? 0;
 
   bool isProviderLinked(ProviderName provider) =>
-      controller.authService.fbUser?.providerData
-          .any((pr) => pr.providerId == domainFromProviderName(provider)) ==
+      controller.authService.fbUser?.providerData.any((pr) => pr.providerId == domainFromProviderName(provider)) ==
       true;
 
   void _openNameDialog() {
@@ -215,21 +206,18 @@ class AccountView extends GetView<AccountController> {
     controller.uploadPhoto(context);
   }
 
-  Future<void> Function() unlinkProvider(
-          BuildContext context, ProviderName provider) =>
+  Future<void> Function() unlinkProvider(BuildContext context, ProviderName provider) =>
       () => awaitUnlinkProviderConfirmation(
             context,
             provider,
             () {
               controller.authService.logoutFromProvider(provider);
-              controller.authService.fbUser!
-                  .unlink(domainFromProviderName(provider));
+              controller.authService.fbUser!.unlink(domainFromProviderName(provider));
             },
           );
 
   Future<void> Function() linkProvider(ProviderName provider) => () async {
-        final cred =
-            await controller.authService.getProviderCredential(provider);
+        final cred = await controller.authService.getProviderCredential(provider);
         controller.authService.fbUser!.linkWithCredential(cred);
       };
 }

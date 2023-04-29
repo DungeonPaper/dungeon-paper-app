@@ -29,8 +29,7 @@ class Task<T> {
   FutureOr<void> dispose() {}
 
   FutureOr<void> run([T? options]) async {
-    assert(options != null || this.options != null,
-        'Options must be passed either in constructor or to run options.');
+    assert(options != null || this.options != null, 'Options must be passed either in constructor or to run options.');
     await _run(options ?? this.options!);
     dispose();
   }
@@ -65,8 +64,7 @@ class TaskGroup extends Task<ArgOptions> {
 
   @override
   FutureOr<void> run([ArgOptions? options]) {
-    assert(options != null || this.options != null,
-        'Options must be passed either in constructor or to run options.');
+    assert(options != null || this.options != null, 'Options must be passed either in constructor or to run options.');
     return _runTasks(tasks, options ?? this.options!, condition).call(options ?? this.options!);
   }
 
@@ -123,8 +121,7 @@ class DeviceTaskGroup extends TaskGroup {
           options: options,
         );
 
-  static bool _isDeviceIncluded(ArgOptions o, Device device) =>
-      o.platform == Device.all || o.platform == device;
+  static bool _isDeviceIncluded(ArgOptions o, Device device) => o.platform == Device.all || o.platform == device;
 }
 
 class ProcessTask extends Task<ArgOptions> {
@@ -177,8 +174,7 @@ class ProcessTask extends Task<ArgOptions> {
           final exitCode = result.exitCode;
           if (exitCode != 0) {
             final stack = StackTrace.current;
-            final e = ProcessException(
-                _process, _args, 'Process exited with error code: $exitCode', exitCode);
+            final e = ProcessException(_process, _args, 'Process exited with error code: $exitCode', exitCode);
             _handleError(o, e, stack, onError);
           }
         } catch (e, stack) {

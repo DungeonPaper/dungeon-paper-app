@@ -94,19 +94,15 @@ class CharacterUtils {
         notes: T == Note ? removeByKey(char.notes, items.cast<Note>()) : null,
       );
 
-  static Character reorderByType<T>(Character char, int oldIndex, int newIndex,
-          {dynamic extraData}) =>
-      char.copyWith(
+  static Character reorderByType<T>(Character char, int oldIndex, int newIndex, {dynamic extraData}) => char.copyWith(
         moves: T == Move ? reorder(char.moves, oldIndex, newIndex) : null,
         spells: T == Spell ? reorder(char.spells, oldIndex, newIndex) : null,
         items: T == Item ? reorder(char.items, oldIndex, newIndex) : null,
-        notes:
-            T == Note ? _reorderNotes(char.notes, oldIndex, newIndex, extraData as String) : null,
+        notes: T == Note ? _reorderNotes(char.notes, oldIndex, newIndex, extraData as String) : null,
       );
 
   static List<Note> _reorderNotes(List<Note> notes, int oldIndex, int newIndex, String category) {
-    final sortedInCat = reorder(
-        notes.where((note) => note.localizedCategory == category).toList(), oldIndex, newIndex);
+    final sortedInCat = reorder(notes.where((note) => note.localizedCategory == category).toList(), oldIndex, newIndex);
     final otherCats = notes.where((note) => note.localizedCategory != category);
 
     return [...sortedInCat, ...otherCats];

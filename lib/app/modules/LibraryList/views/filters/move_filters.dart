@@ -139,16 +139,11 @@ class MoveFilters extends EntityFilters<Move> {
     return avg(
       [
             category == move.category ? 1.0 : 0.0,
-            classKey != null &&
-                    move.classKeys.map((x) => cleanStr(x.key)).contains(cleanStr(classKey!))
-                ? 1.0
-                : 0.0,
+            classKey != null && move.classKeys.map((x) => cleanStr(x.key)).contains(cleanStr(classKey!)) ? 1.0 : 0.0,
           ] +
           [move.name, move.description, move.explanation]
               .map(
-                (e) => (search?.isEmpty ?? true) || e.isEmpty
-                    ? 0.0
-                    : StringSimilarity.compareTwoStrings(search!, e),
+                (e) => (search?.isEmpty ?? true) || e.isEmpty ? 0.0 : StringSimilarity.compareTwoStrings(search!, e),
               )
               .toList(),
     );

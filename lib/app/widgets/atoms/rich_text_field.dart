@@ -125,8 +125,7 @@ class RichTextField extends StatelessWidget {
   final String? restorationId;
   final bool enableIMEPersonalizedLearning;
   final _defaultController = TextEditingController().obs;
-  TextEditingController get _controller =>
-      controller ?? _defaultController.value;
+  TextEditingController get _controller => controller ?? _defaultController.value;
   final List<RichButton>? customButtons;
 
   @override
@@ -213,8 +212,7 @@ class RichTextField extends StatelessWidget {
 
   SizedBox _buildRichControls(BuildContext context) {
     final mdTheme = MarkdownStyles.of(context);
-    const divider = Padding(
-        padding: EdgeInsets.symmetric(vertical: 8), child: VerticalDivider());
+    const divider = Padding(padding: EdgeInsets.symmetric(vertical: 8), child: VerticalDivider());
     const thinDivider = Padding(
       padding: EdgeInsets.symmetric(vertical: 8),
       child: VerticalDivider(width: 4),
@@ -231,8 +229,7 @@ class RichTextField extends StatelessWidget {
               color: Theme.of(context).colorScheme.secondary,
               icon: const Icon(Icons.help),
               tooltip: S.current.formatHelp,
-              onTap: () => launchUrl(
-                  Uri.parse('https://www.markdownguide.org/basic-syntax')),
+              onTap: () => launchUrl(Uri.parse('https://www.markdownguide.org/basic-syntax')),
             ),
         if (customButtons?.isNotEmpty == true) () => thinDivider,
         if (customButtons?.isNotEmpty == true)
@@ -273,8 +270,7 @@ class RichTextField extends StatelessWidget {
                           'h6': mdTheme.h6,
                         }['h$i']!,
                       ),
-                      defaultContent:
-                          '\n${List.filled(i, "#").join("")} ${S.current.formatHeading(i)}\n',
+                      defaultContent: '\n${List.filled(i, "#").join("")} ${S.current.formatHeading(i)}\n',
                       prefix: '\n${List.filled(i, "#").join("")} ',
                       suffix: '\n',
                       selectionStartOffset: 2 + i,
@@ -529,8 +525,7 @@ class RichButton {
     );
   }
 
-  void _wrapWith(TextEditingController controller, String prefix,
-      [String? suffix]) {
+  void _wrapWith(TextEditingController controller, String prefix, [String? suffix]) {
     if (controller.selection.isValid) {
       // has selection - wrap current cursor positions
       final selection = controller.selection.copyWith(
@@ -538,15 +533,12 @@ class RichButton {
         extentOffset: controller.selection.extentOffset + prefix.length,
       );
       controller.text = [
-        if (controller.selection.start > 0)
-          controller.text.substring(0, controller.selection.start),
+        if (controller.selection.start > 0) controller.text.substring(0, controller.selection.start),
         prefix,
-        controller.text
-            .substring(controller.selection.start, controller.selection.end),
+        controller.text.substring(controller.selection.start, controller.selection.end),
         suffix ?? prefix,
         if (controller.selection.end < controller.text.length)
-          controller.text
-              .substring(controller.selection.end, controller.text.length),
+          controller.text.substring(controller.selection.end, controller.text.length),
       ].join('');
       try {
         controller.selection = selection;
@@ -556,22 +548,17 @@ class RichButton {
     }
   }
 
-  void _append(TextEditingController controller, String text,
-      [int? selectionStartOffset, int? selectionEndOffset]) {
+  void _append(TextEditingController controller, String text, [int? selectionStartOffset, int? selectionEndOffset]) {
     if (controller.selection.isValid) {
       // has cursor - append at cursor position
       final selection = controller.selection.copyWith(
-        baseOffset:
-            controller.selection.baseOffset + (selectionStartOffset ?? 0),
-        extentOffset: controller.selection.extentOffset +
-            text.length +
-            (selectionEndOffset ?? 0),
+        baseOffset: controller.selection.baseOffset + (selectionStartOffset ?? 0),
+        extentOffset: controller.selection.extentOffset + text.length + (selectionEndOffset ?? 0),
       );
       controller.text = [
         controller.text.substring(0, controller.selection.start),
         text,
-        controller.text
-            .substring(controller.selection.start, controller.text.length),
+        controller.text.substring(controller.selection.start, controller.text.length),
       ].join('');
       try {
         controller.selection = selection;
@@ -593,8 +580,7 @@ class RichButton {
     }
   }
 
-  void Function() _wrapOrAppendCb(
-      TextEditingController controller, String defaultContent, String prefix,
+  void Function() _wrapOrAppendCb(TextEditingController controller, String defaultContent, String prefix,
       [String? suffix, int? selectionStartOffset, int? selectionEndOffset]) {
     var _suffix = suffix ?? prefix;
 
@@ -619,8 +605,7 @@ class RichButton {
       if (!controller.selection.isCollapsed) {
         _wrapWith(controller, prefix, _suffix);
       } else {
-        _append(controller, defaultContent, selectionStartOffset,
-            selectionEndOffset);
+        _append(controller, defaultContent, selectionStartOffset, selectionEndOffset);
       }
     };
   }

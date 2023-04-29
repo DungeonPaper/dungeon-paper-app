@@ -37,8 +37,7 @@ class CardBuilderData<T> {
   });
 }
 
-class LibraryListView<T extends WithMeta, F extends EntityFilters<T>>
-    extends GetView<LibraryListController<T, F>> {
+class LibraryListView<T extends WithMeta, F extends EntityFilters<T>> extends GetView<LibraryListController<T, F>> {
   LibraryListView({
     Key? key,
     this.title,
@@ -49,8 +48,7 @@ class LibraryListView<T extends WithMeta, F extends EntityFilters<T>>
   final Widget? title;
   final CardBuilder<T> cardBuilder;
   final pageStorageBucket = PageStorageBucket();
-  final Widget Function(
-          FiltersGroup group, F filters, void Function(FiltersGroup group, F filters) update)?
+  final Widget Function(FiltersGroup group, F filters, void Function(FiltersGroup group, F filters) update)?
       filtersBuilder;
 
   bool get useFilters => filtersBuilder != null;
@@ -59,17 +57,14 @@ class LibraryListView<T extends WithMeta, F extends EntityFilters<T>>
 
   @override
   Widget build(BuildContext context) {
-    final entityTitleName = controller.multiple || !controller.selectable
-        ? S.current.entityPlural(T)
-        : S.current.entity(T);
+    final entityTitleName =
+        controller.multiple || !controller.selectable ? S.current.entityPlural(T) : S.current.entity(T);
 
     return Scaffold(
       appBar: AppBar(
         title: title ??
             Text(
-              controller.selectable
-                  ? S.current.selectGeneric(entityTitleName)
-                  : S.current.viewGeneric(entityTitleName),
+              controller.selectable ? S.current.selectGeneric(entityTitleName) : S.current.viewGeneric(entityTitleName),
             ),
         centerTitle: true,
       ),
@@ -197,13 +192,12 @@ class LibraryListView<T extends WithMeta, F extends EntityFilters<T>>
                         ? Icons.add
                         : Icons.check,
               ),
-              onUpdate: group == FiltersGroup.my
-                  ? (item) => controller.saveCustomItem(controller.storageKey, item)
-                  : null,
+              onUpdate:
+                  group == FiltersGroup.my ? (item) => controller.saveCustomItem(controller.storageKey, item) : null,
               onDelete: group == FiltersGroup.my
-                  ? (item) => awaitDeleteConfirmation<T>(
+                  ? (item) => deleteDialog.confirm(
                         context,
-                        item.displayName,
+                        DeleteDialogOptions(entityName: item.displayName),
                         () => controller.deleteCustomItem(
                           controller.storageKey,
                           item,

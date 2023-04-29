@@ -78,8 +78,7 @@ class SessionMark extends dw.SessionMark implements WithKey {
   int get hashCode => Object.hashAll([key, description, completed, type]);
 
   @override
-  String get debugProperties =>
-      'key: $key, description: $description, completed: $completed, type: $type';
+  String get debugProperties => 'key: $key, description: $description, completed: $completed, type: $type';
 
   @override
   String toString() => 'SessionMark($debugProperties)';

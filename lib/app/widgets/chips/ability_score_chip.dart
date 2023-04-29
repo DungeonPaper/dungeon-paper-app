@@ -24,8 +24,7 @@ class AbilityScoreChip extends StatelessWidget {
     final rollBadgeModifierOpacity = isDark ? 0.5 : 0.4;
     final isLight = theme.brightness == Brightness.light;
     final cardColor = stat.isDebilitated
-        ? Color.alphaBlend(
-            DwColors.error.withOpacity(isLight ? 0.4 : 0.2), theme.scaffoldBackgroundColor)
+        ? Color.alphaBlend(DwColors.error.withOpacity(isLight ? 0.4 : 0.2), theme.scaffoldBackgroundColor)
         // : Color.alphaBlend(theme.cardColor.withOpacity(0.5), theme.scaffoldBackgroundColor);
         : theme.cardColor;
 
@@ -34,8 +33,7 @@ class AbilityScoreChip extends StatelessWidget {
       color: cardColor,
       child: InkWell(
         splashColor: Theme.of(context).splashColor,
-        onTap: () =>
-            DiceUtils.openRollDialog([dw.Dice(amount: 2, sides: 6, modifierStat: stat.key)]),
+        onTap: () => DiceUtils.openRollDialog([dw.Dice(amount: 2, sides: 6, modifierStat: stat.key)]),
         borderRadius: borderRadius,
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 8),
@@ -75,8 +73,7 @@ class AbilityScoreChip extends StatelessWidget {
                                 child: const Icon(DwIcons.dice_d6),
                                 data: IconTheme.of(context).copyWith(
                                   size: 12,
-                                  color: theme.colorScheme.onSurface
-                                      .withOpacity(rollBadgeModifierOpacity),
+                                  color: theme.colorScheme.onSurface.withOpacity(rollBadgeModifierOpacity),
                                 ),
                               ),
                               const SizedBox(width: 2),

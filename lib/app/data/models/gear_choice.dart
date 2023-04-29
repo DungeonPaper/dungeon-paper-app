@@ -48,8 +48,7 @@ class GearChoice extends dw.GearChoice {
         maxSelections: gearChoice.maxSelections,
       );
 
-  factory GearChoice.fromJson(Map<String, dynamic> json) =>
-      GearChoice.fromDwGearChoice(dw.GearChoice.fromJson(json));
+  factory GearChoice.fromJson(Map<String, dynamic> json) => GearChoice.fromDwGearChoice(dw.GearChoice.fromJson(json));
 
   @override
   List<GearSelection> get preselectedGearSelections =>
@@ -71,8 +70,7 @@ class GearChoice extends dw.GearChoice {
         ]);
       });
 
-  static double selectionToCoins(List<GearSelection> selections) =>
-      selections.fold(0.0, (acc, sel) => acc + sel.coins);
+  static double selectionToCoins(List<GearSelection> selections) => selections.fold(0.0, (acc, sel) => acc + sel.coins);
 
   @override
   bool operator ==(Object? other) =>

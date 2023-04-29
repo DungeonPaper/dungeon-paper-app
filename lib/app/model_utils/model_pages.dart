@@ -274,9 +274,7 @@ class ModelPages {
       arguments: CharacterClassLibraryListArguments(
         initialTab: initialTab,
         onSelected: onSelected ??
-            (char != null
-                ? (cls) => controller.updateCharacter(char.copyWith(characterClass: cls))
-                : null),
+            (char != null ? (cls) => controller.updateCharacter(char.copyWith(characterClass: cls)) : null),
         preSelections: asList(preSelection ?? char?.characterClass),
       ),
     );

@@ -42,11 +42,9 @@ class _DiceFormState extends State<DiceForm> {
   void initState() {
     super.initState();
     // amount = widget.dice?.amount ?? 2;
-    amount = TextEditingController(text: widget.dice?.amount.toString() ?? '2')
-      ..addListener(_onChanged);
+    amount = TextEditingController(text: widget.dice?.amount.toString() ?? '2')..addListener(_onChanged);
     sides = widget.dice?.sides ?? 6;
-    modifierNum = TextEditingController(text: (widget.dice?.modifierValue ?? 0).toString())
-      ..addListener(_onChanged);
+    modifierNum = TextEditingController(text: (widget.dice?.modifierValue ?? 0).toString())..addListener(_onChanged);
     modifierStat = widget.dice?.modifierStat;
     modifierType = widget.dice?.modifierStat != null ? ModifierType.stat : ModifierType.fixed;
   }
@@ -82,8 +80,7 @@ class _DiceFormState extends State<DiceForm> {
                 label: Text(S.current.diceSides),
                 isExpanded: true,
                 items: [
-                  for (final i in [4, 6, 8, 10, 12, 20, 100])
-                    DropdownMenuItem<int>(child: Text(i.toString()), value: i)
+                  for (final i in [4, 6, 8, 10, 12, 20, 100]) DropdownMenuItem<int>(child: Text(i.toString()), value: i)
                 ],
                 onChanged: widget.enabled
                     ? (value) => setState(() {
@@ -200,8 +197,7 @@ class _DiceFormState extends State<DiceForm> {
         amount: int.tryParse(amount.text) ?? 1,
         sides: sides,
         modifierStat: modifierType == ModifierType.stat ? modifierStat : null,
-        modifierValue:
-            modifierType == ModifierType.fixed ? int.tryParse(modifierNum.text) ?? 0 : null,
+        modifierValue: modifierType == ModifierType.fixed ? int.tryParse(modifierNum.text) ?? 0 : null,
       );
 
   void _onChanged() {

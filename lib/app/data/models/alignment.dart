@@ -21,10 +21,8 @@ class AlignmentValue extends dw.Alignment with WithIcon implements WithMeta {
 
   factory AlignmentValue.fromRawJson(String str) => AlignmentValue.fromJson(json.decode(str));
 
-  factory AlignmentValue.fromDwAlignmentValue(dw.Alignment original) => AlignmentValue(
-      meta: Meta.empty(createdBy: '__repo__'),
-      type: original.type,
-      description: original.description);
+  factory AlignmentValue.fromDwAlignmentValue(dw.Alignment original) =>
+      AlignmentValue(meta: Meta.empty(createdBy: '__repo__'), type: original.type, description: original.description);
 
   factory AlignmentValue.fromJson(Map<String, dynamic> json) => AlignmentValue(
         meta: Meta.tryParse(json['_meta']),

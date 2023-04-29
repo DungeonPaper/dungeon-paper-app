@@ -159,8 +159,8 @@ class CharacterClass extends dw.CharacterClass with WithIcon implements WithMeta
           isSpellcaster == other.isSpellcaster;
 
   @override
-  int get hashCode => Object.hashAll(
-      [meta, name, key, description, damageDice, load, hp, alignments, bonds, flags, gearChoices]);
+  int get hashCode =>
+      Object.hashAll([meta, name, key, description, damageDice, load, hp, alignments, bonds, flags, gearChoices]);
 
   @override
   String get debugProperties =>

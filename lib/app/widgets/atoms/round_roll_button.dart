@@ -27,8 +27,7 @@ class RoundRollButton extends StatelessWidget {
     final diceStr = dice.map((d) => d.toString() + (isDebilitated(d) ? ' (-1)*' : '')).join(', ');
     return RoundIconButton(
       icon: const Icon(DwIcons.dice_d6),
-      backgroundColor:
-          abilityScores != null && isRollingWithDebility ? DwColors.error.withOpacity(0.5) : null,
+      backgroundColor: abilityScores != null && isRollingWithDebility ? DwColors.error.withOpacity(0.5) : null,
       onPressed: () => DiceUtils.openRollDialog(dice),
       tooltip: isRollingWithDebility
           ? S.current.rollButtonTooltipWithDebility(diceStr)
@@ -36,6 +35,5 @@ class RoundRollButton extends StatelessWidget {
     );
   }
 
-  bool isDebilitated(Dice d) =>
-      d.modifierStat != null && abilityScores!.getStat(d.modifierStat!).isDebilitated;
+  bool isDebilitated(Dice d) => d.modifierStat != null && abilityScores!.getStat(d.modifierStat!).isDebilitated;
 }

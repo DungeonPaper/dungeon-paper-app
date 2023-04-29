@@ -236,3 +236,4 @@ script_runner:
     - build:all: build:android:all && build:ios:all && build:macos:all && build:web:all
     - to-device: build:android:apk && push && install
     - gen:icons: flutter pub run icons_launcher:create
+    - format: dart format --line-length 120 .

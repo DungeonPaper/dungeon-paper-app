@@ -34,12 +34,9 @@ class _EntityShareFormState<T extends WithMeta> extends State<EntityShareForm>
       }[syncStatus];
 
   String get syncStatusText => {
-        SyncStatus.inSync:
-            S.current.entityShareStatusInSync(S.current.entity(widget.entity.runtimeType)),
-        SyncStatus.outOfSync:
-            S.current.entityShareStatusOutOfSync(S.current.entity(widget.entity.runtimeType)),
-        SyncStatus.detached:
-            S.current.entityShareStatusDetached(S.current.entity(widget.entity.runtimeType)),
+        SyncStatus.inSync: S.current.entityShareStatusInSync(S.current.entity(widget.entity.runtimeType)),
+        SyncStatus.outOfSync: S.current.entityShareStatusOutOfSync(S.current.entity(widget.entity.runtimeType)),
+        SyncStatus.detached: S.current.entityShareStatusDetached(S.current.entity(widget.entity.runtimeType)),
       }[syncStatus]!;
 
   Color? syncStatusColor(BuildContext context) => {

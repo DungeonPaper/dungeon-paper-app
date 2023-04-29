@@ -27,8 +27,7 @@ class Api {
     Object? body,
     Encoding? encoding,
   }) async {
-    final resp =
-        await http.post(Uri.parse(baseUrl + url), headers: headers, body: body, encoding: encoding);
+    final resp = await http.post(Uri.parse(baseUrl + url), headers: headers, body: body, encoding: encoding);
     return Response.fromHttp(resp);
   }
 }

@@ -34,8 +34,7 @@ class AboutView extends GetView<AboutController> {
               ),
           () => Obx(
                 () => Text(
-                  S.current.aboutVersion(
-                      controller.version.value?.toString() ?? '-'),
+                  S.current.aboutVersion(controller.version.value?.toString() ?? '-'),
                   textAlign: TextAlign.center,
                   style: textTheme.bodySmall,
                 ),
@@ -58,28 +57,23 @@ class AboutView extends GetView<AboutController> {
           () => ListTile(
                 leading: const Icon(DwIcons.discord),
                 title: Text(S.current.aboutJoinDiscord),
-                subtitle: Text(S.current.aboutJoinDiscordSubtitle,
-                    style: textTheme.bodySmall),
-                onTap: () =>
-                    launchUrl(Uri.parse('https://bit.ly/DungeonPaper-Discord')),
+                subtitle: Text(S.current.aboutJoinDiscordSubtitle, style: textTheme.bodySmall),
+                onTap: () => launchUrl(Uri.parse('https://bit.ly/DungeonPaper-Discord')),
                 isThreeLine: true,
                 visualDensity: VisualDensity.compact,
               ),
           () => ListTile(
                 leading: const Icon(Icons.send),
                 title: Text(S.current.aboutSendFeedback),
-                subtitle: Text(S.current.aboutSendFeedbackSubtitle,
-                    style: textTheme.bodySmall),
+                subtitle: Text(S.current.aboutSendFeedbackSubtitle, style: textTheme.bodySmall),
                 onTap: () => Get.toNamed(Routes.sendFeedback),
                 isThreeLine: true,
                 visualDensity: VisualDensity.compact,
               ),
           () => const Divider(),
           () => Padding(
-                padding:
-                    const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-                child: Text(S.current.aboutSocialLinks,
-                    style: textTheme.bodySmall),
+                padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                child: Text(S.current.aboutSocialLinks, style: textTheme.bodySmall),
               ),
           () => Padding(
                 padding: const EdgeInsets.all(16.0).copyWith(top: 0),

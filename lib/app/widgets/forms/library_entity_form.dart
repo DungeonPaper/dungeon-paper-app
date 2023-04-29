@@ -11,8 +11,7 @@ import 'package:dungeon_paper/generated/l10n.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-class LibraryEntityForm<T extends WithMeta,
-        Ctrl extends LibraryEntityFormController<T, LibraryEntityFormArguments<T>>>
+class LibraryEntityForm<T extends WithMeta, Ctrl extends LibraryEntityFormController<T, LibraryEntityFormArguments<T>>>
     extends GetView<Ctrl> {
   const LibraryEntityForm({
     Key? key,
@@ -62,8 +61,8 @@ class LibraryEntityForm<T extends WithMeta,
       );
 }
 
-abstract class LibraryEntityFormController<T extends WithMeta,
-    Args extends LibraryEntityFormArguments<T>> extends GetxController {
+abstract class LibraryEntityFormController<T extends WithMeta, Args extends LibraryEntityFormArguments<T>>
+    extends GetxController {
   final dirty = false.obs;
   late final Args args;
   bool afterInit = false;

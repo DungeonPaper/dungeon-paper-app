@@ -30,8 +30,7 @@ class RaceForm extends GetView<RaceFormController> with RepositoryServiceMixin {
             ),
         () => Obx(
               () => SelectBox<dw.EntityReference>(
-                value:
-                    controller.classKeys.value.isNotEmpty ? controller.classKeys.value.first : null,
+                value: controller.classKeys.value.isNotEmpty ? controller.classKeys.value.first : null,
                 onChanged: (value) => controller.classKeys.value = [value!],
                 isExpanded: true,
                 label: Text(S.current.entity(CharacterClass)),
@@ -102,8 +101,7 @@ class RaceFormController extends LibraryEntityFormController<Race, RaceFormArgum
   ValueNotifier<List<dw.EntityReference>> get classKeys => _classKeys.value;
 
   @override
-  List<Rx<ValueNotifier>> get fields =>
-      [_name, _description, _explanation, _dice, _tags, _classKeys];
+  List<Rx<ValueNotifier>> get fields => [_name, _description, _explanation, _dice, _tags, _classKeys];
 
   @override
   void onInit() {

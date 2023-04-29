@@ -20,8 +20,7 @@ import 'package:dungeon_paper/generated/l10n.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-class LibraryCardList<T extends WithMeta, F extends EntityFilters<T>>
-    extends GetView<LibraryListController<T, F>> {
+class LibraryCardList<T extends WithMeta, F extends EntityFilters<T>> extends GetView<LibraryListController<T, F>> {
   LibraryCardList({
     Key? key,
     required this.useFilters,
@@ -121,8 +120,7 @@ class LibraryCardList<T extends WithMeta, F extends EntityFilters<T>>
                 width: 300,
                 child: Text(
                   filters.isEmpty
-                      ? S.current
-                          .libraryListNoItemsFoundSubtitleNoFilters(S.current.entityPlural(T))
+                      ? S.current.libraryListNoItemsFoundSubtitleNoFilters(S.current.entityPlural(T))
                       : S.current.libraryListNoItemsFoundSubtitleFilters(S.current.entityPlural(T)),
                   style: textTheme.titleMedium,
                   textAlign: TextAlign.center,

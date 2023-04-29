@@ -82,16 +82,14 @@ class _ChipListInputState<T> extends State<ChipListInput<T>> {
               widget.chipBuilder(
                 context,
                 dice,
-                onDeleteChip: () =>
-                    setState(() => controller.value = [...controller.value..removeAt(dice.index)]),
+                onDeleteChip: () => setState(() => controller.value = [...controller.value..removeAt(dice.index)]),
                 onTapChip: widget.dialogBuilder != null
                     ? () => Get.dialog(
                           widget.dialogBuilder!(
                             context,
                             dice,
                             onSave: (_value) {
-                              setState(() => controller.value =
-                                  updateByIndex(controller.value, _value, dice.index));
+                              setState(() => controller.value = updateByIndex(controller.value, _value, dice.index));
                             },
                           ),
                         )
@@ -112,8 +110,7 @@ class _ChipListInputState<T> extends State<ChipListInput<T>> {
                             },
                           ),
                         )
-                    : () =>
-                        setState(() => controller.value = [...controller.value, widget.addValue!]),
+                    : () => setState(() => controller.value = [...controller.value, widget.addValue!]),
               ),
             ...widget.trailing,
           ],

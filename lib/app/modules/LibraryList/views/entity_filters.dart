@@ -131,9 +131,8 @@ class _FiltersPopover<F extends EntityFilters> extends StatelessWidget {
             children: enumerate(filterWidgetsBuilder(context, filters))
                 .map(
                   (e) => Container(
-                    padding: e.index == filters.totalFilterCount - 1
-                        ? EdgeInsets.zero
-                        : const EdgeInsets.only(bottom: 16),
+                    padding:
+                        e.index == filters.totalFilterCount - 1 ? EdgeInsets.zero : const EdgeInsets.only(bottom: 16),
                     height: e.index == filters.totalFilterCount - 1 ? 64 : 80,
                     child: e.value,
                   ),

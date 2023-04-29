@@ -104,16 +104,11 @@ class RaceFilters extends EntityFilters<Race> {
   double getScore(Race race) {
     return avg(
       [
-            classKey != null &&
-                    race.classKeys.map((x) => cleanStr(x.key)).contains(cleanStr(classKey!))
-                ? 1.0
-                : 0.0,
+            classKey != null && race.classKeys.map((x) => cleanStr(x.key)).contains(cleanStr(classKey!)) ? 1.0 : 0.0,
           ] +
           [race.name, race.description, race.explanation]
               .map(
-                (e) => (search?.isEmpty ?? true) || e.isEmpty
-                    ? 0.0
-                    : StringSimilarity.compareTwoStrings(search!, e),
+                (e) => (search?.isEmpty ?? true) || e.isEmpty ? 0.0 : StringSimilarity.compareTwoStrings(search!, e),
               )
               .toList(),
     );

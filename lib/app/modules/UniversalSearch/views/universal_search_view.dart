@@ -57,8 +57,7 @@ class UniversalSearchView extends GetView<UniversalSearchController> {
                       children: [
                         Text(
                           S.current.searchIn,
-                          style:
-                              Theme.of(context).textTheme.bodyMedium!.copyWith(color: Colors.white),
+                          style: Theme.of(context).textTheme.bodyMedium!.copyWith(color: Colors.white),
                         ),
                         if (controller.hasCharacter)
                           _FilterChip(
@@ -100,8 +99,7 @@ class UniversalSearchView extends GetView<UniversalSearchController> {
                         itemBuilder: (context, index) => _CardByType(
                           value.data![index],
                           highlightWords: [controller.search.text.trim()],
-                          abilityScores: controller.maybeChar?.abilityScores ??
-                              AbilityScores.dungeonWorldAll(10),
+                          abilityScores: controller.maybeChar?.abilityScores ?? AbilityScores.dungeonWorldAll(10),
                         ),
                       ),
                     );

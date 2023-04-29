@@ -571,8 +571,7 @@ class CustomListTile extends StatelessWidget {
   /// See also:
   ///
   ///  * [Divider], which you can use to obtain this effect manually.
-  static Iterable<Widget> divideTiles(
-      {BuildContext? context, required Iterable<Widget> tiles, Color? color}) {
+  static Iterable<Widget> divideTiles({BuildContext? context, required Iterable<Widget> tiles, Color? color}) {
     assert(color != null || context != null);
     tiles = tiles.toList();
 
@@ -602,10 +601,7 @@ class CustomListTile extends StatelessWidget {
     if (!enabled) return theme.disabledColor;
 
     if (selected) {
-      return selectedColor ??
-          tileTheme.selectedColor ??
-          theme.listTileTheme.selectedColor ??
-          theme.colorScheme.primary;
+      return selectedColor ?? tileTheme.selectedColor ?? theme.listTileTheme.selectedColor ?? theme.colorScheme.primary;
     }
 
     final Color? color = iconColor ?? tileTheme.iconColor ?? theme.listTileTheme.iconColor;
@@ -625,10 +621,7 @@ class CustomListTile extends StatelessWidget {
     if (!enabled) return theme.disabledColor;
 
     if (selected) {
-      return selectedColor ??
-          tileTheme.selectedColor ??
-          theme.listTileTheme.selectedColor ??
-          theme.colorScheme.primary;
+      return selectedColor ?? tileTheme.selectedColor ?? theme.listTileTheme.selectedColor ?? theme.colorScheme.primary;
     }
 
     return textColor ?? tileTheme.textColor ?? theme.listTileTheme.textColor ?? defaultColor;
@@ -735,10 +728,9 @@ class CustomListTile extends StatelessWidget {
       if (selected) MaterialState.selected,
     };
 
-    final MouseCursor effectiveMouseCursor =
-        MaterialStateProperty.resolveAs<MouseCursor?>(mouseCursor, states) ??
-            tileTheme.mouseCursor?.resolve(states) ??
-            MaterialStateMouseCursor.clickable.resolve(states);
+    final MouseCursor effectiveMouseCursor = MaterialStateProperty.resolveAs<MouseCursor?>(mouseCursor, states) ??
+        tileTheme.mouseCursor?.resolve(states) ??
+        MaterialStateMouseCursor.clickable.resolve(states);
 
     return InkWell(
       customBorder: shape ?? tileTheme.shape,
@@ -796,28 +788,20 @@ class CustomListTile extends StatelessWidget {
     properties.add(DiagnosticsProperty<Widget>('subtitle', subtitle, defaultValue: null));
     properties.add(DiagnosticsProperty<Widget>('trailing', trailing, defaultValue: null));
     properties.add(FlagProperty('isThreeLine',
-        value: isThreeLine,
-        ifTrue: 'THREE_LINE',
-        ifFalse: 'TWO_LINE',
-        showName: true,
-        defaultValue: false));
-    properties
-        .add(FlagProperty('dense', value: dense, ifTrue: 'true', ifFalse: 'false', showName: true));
-    properties.add(
-        DiagnosticsProperty<VisualDensity>('visualDensity', visualDensity, defaultValue: null));
+        value: isThreeLine, ifTrue: 'THREE_LINE', ifFalse: 'TWO_LINE', showName: true, defaultValue: false));
+    properties.add(FlagProperty('dense', value: dense, ifTrue: 'true', ifFalse: 'false', showName: true));
+    properties.add(DiagnosticsProperty<VisualDensity>('visualDensity', visualDensity, defaultValue: null));
     properties.add(DiagnosticsProperty<ShapeBorder>('shape', shape, defaultValue: null));
     properties.add(DiagnosticsProperty<ListTileStyle>('style', style, defaultValue: null));
     properties.add(ColorProperty('selectedColor', selectedColor, defaultValue: null));
     properties.add(ColorProperty('iconColor', iconColor, defaultValue: null));
     properties.add(ColorProperty('textColor', textColor, defaultValue: null));
-    properties.add(DiagnosticsProperty<EdgeInsetsGeometry>('contentPadding', contentPadding,
-        defaultValue: null));
-    properties.add(FlagProperty('enabled',
-        value: enabled, ifTrue: 'true', ifFalse: 'false', showName: true, defaultValue: true));
+    properties.add(DiagnosticsProperty<EdgeInsetsGeometry>('contentPadding', contentPadding, defaultValue: null));
+    properties.add(
+        FlagProperty('enabled', value: enabled, ifTrue: 'true', ifFalse: 'false', showName: true, defaultValue: true));
     properties.add(DiagnosticsProperty<Function>('onTap', onTap, defaultValue: null));
     properties.add(DiagnosticsProperty<Function>('onLongPress', onLongPress, defaultValue: null));
-    properties
-        .add(DiagnosticsProperty<MouseCursor>('mouseCursor', mouseCursor, defaultValue: null));
+    properties.add(DiagnosticsProperty<MouseCursor>('mouseCursor', mouseCursor, defaultValue: null));
     properties.add(FlagProperty('selected',
         value: selected, ifTrue: 'true', ifFalse: 'false', showName: true, defaultValue: false));
     properties.add(ColorProperty('focusColor', focusColor, defaultValue: null));
@@ -827,8 +811,8 @@ class CustomListTile extends StatelessWidget {
         value: autofocus, ifTrue: 'true', ifFalse: 'false', showName: true, defaultValue: false));
     properties.add(ColorProperty('tileColor', tileColor, defaultValue: null));
     properties.add(ColorProperty('selectedTileColor', selectedTileColor, defaultValue: null));
-    properties.add(FlagProperty('enableFeedback',
-        value: enableFeedback, ifTrue: 'true', ifFalse: 'false', showName: true));
+    properties
+        .add(FlagProperty('enableFeedback', value: enableFeedback, ifTrue: 'true', ifFalse: 'false', showName: true));
     properties.add(DoubleProperty('horizontalTitleGap', horizontalTitleGap, defaultValue: null));
     properties.add(DoubleProperty('minVerticalPadding', minVerticalPadding, defaultValue: null));
     properties.add(DoubleProperty('minLeadingWidth', minLeadingWidth, defaultValue: null));
@@ -843,8 +827,7 @@ enum _ListTileSlot {
   trailing,
 }
 
-class _ListTile extends RenderObjectWidget
-    with SlottedMultiChildRenderObjectWidgetMixin<_ListTileSlot> {
+class _ListTile extends RenderObjectWidget with SlottedMultiChildRenderObjectWidgetMixin<_ListTileSlot> {
   const _ListTile({
     this.leading,
     required this.title,
@@ -1049,23 +1032,17 @@ class _RenderListTile extends RenderBox with SlottedContainerRenderObjectMixin<_
   @override
   double computeMinIntrinsicWidth(double height) {
     final double leadingWidth = leading != null
-        ? math.max(leading!.getMinIntrinsicWidth(height), _minLeadingWidth) +
-            _effectiveHorizontalTitleGap
+        ? math.max(leading!.getMinIntrinsicWidth(height), _minLeadingWidth) + _effectiveHorizontalTitleGap
         : 0.0;
-    return leadingWidth +
-        math.max(_minWidth(title, height), _minWidth(subtitle, height)) +
-        _maxWidth(trailing, height);
+    return leadingWidth + math.max(_minWidth(title, height), _minWidth(subtitle, height)) + _maxWidth(trailing, height);
   }
 
   @override
   double computeMaxIntrinsicWidth(double height) {
     final double leadingWidth = leading != null
-        ? math.max(leading!.getMaxIntrinsicWidth(height), _minLeadingWidth) +
-            _effectiveHorizontalTitleGap
+        ? math.max(leading!.getMaxIntrinsicWidth(height), _minLeadingWidth) + _effectiveHorizontalTitleGap
         : 0.0;
-    return leadingWidth +
-        math.max(_maxWidth(title, height), _maxWidth(subtitle, height)) +
-        _maxWidth(trailing, height);
+    return leadingWidth + math.max(_maxWidth(title, height), _maxWidth(subtitle, height)) + _maxWidth(trailing, height);
   }
 
   double get _defaultTileHeight {
@@ -1161,9 +1138,8 @@ class _RenderListTile extends RenderBox with SlottedContainerRenderObjectMixin<_
       '(see https://api.flutter.dev/flutter/material/ListTile-class.html#material.ListTile.4)',
     );
 
-    final double titleStart = hasLeading
-        ? math.max(_minLeadingWidth, leadingSize.width) + _effectiveHorizontalTitleGap
-        : 0.0;
+    final double titleStart =
+        hasLeading ? math.max(_minLeadingWidth, leadingSize.width) + _effectiveHorizontalTitleGap : 0.0;
     final double adjustedTrailingWidth =
         hasTrailing ? math.max(trailingSize.width + _effectiveHorizontalTitleGap, 32.0) : 0.0;
     final BoxConstraints textConstraints = looseConstraints.tighten(
@@ -1195,9 +1171,7 @@ class _RenderListTile extends RenderBox with SlottedContainerRenderObjectMixin<_
     } else {
       assert(subtitleBaselineType != null);
       titleY = titleBaseline! - _boxBaseline(title!, titleBaselineType)!;
-      subtitleY = subtitleBaseline! -
-          _boxBaseline(subtitle!, subtitleBaselineType!)! +
-          visualDensity.vertical * 2.0;
+      subtitleY = subtitleBaseline! - _boxBaseline(subtitle!, subtitleBaselineType!)! + visualDensity.vertical * 2.0;
       tileHeight = defaultTileHeight;
 
       // If the title and subtitle overlap, move the title upwards by half
@@ -1212,8 +1186,7 @@ class _RenderListTile extends RenderBox with SlottedContainerRenderObjectMixin<_
       // If the title or subtitle overflow tileHeight then punt: title
       // and subtitle are arranged in a column, tileHeight = column height plus
       // _minVerticalPadding on top and bottom.
-      if (titleY < _minVerticalPadding ||
-          (subtitleY + subtitleSize.height + _minVerticalPadding) > tileHeight) {
+      if (titleY < _minVerticalPadding || (subtitleY + subtitleSize.height + _minVerticalPadding) > tileHeight) {
         tileHeight = titleSize.height + subtitleSize.height + 2.0 * _minVerticalPadding;
         titleY = _minVerticalPadding;
         subtitleY = titleSize.height + _minVerticalPadding;

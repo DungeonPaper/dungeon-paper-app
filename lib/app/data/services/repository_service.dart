@@ -170,8 +170,7 @@ abstract class RepositoryCache {
 
   void registerListeners() {
     clearListeners();
-    debugPrint(
-        '[$id] registering listeners, delegate: $storage, listener prefix: "${listenerKey('')}"');
+    debugPrint('[$id] registering listeners, delegate: $storage, listener prefix: "${listenerKey('')}"');
 
     subs.addAll([
       storage.collectionListener(
@@ -308,11 +307,9 @@ abstract class RepositoryCache {
     required bool saveIntoCache,
   }) async {
     await Future.wait([
-      updateList<CharacterClass>(cacheKey('CharacterClasses'), classes, resp.classes,
-          saveIntoCache: saveIntoCache),
+      updateList<CharacterClass>(cacheKey('CharacterClasses'), classes, resp.classes, saveIntoCache: saveIntoCache),
       updateList<Item>(cacheKey('Items'), items, resp.items, saveIntoCache: saveIntoCache),
-      updateList<Monster>(cacheKey('Monsters'), monsters, resp.monsters,
-          saveIntoCache: saveIntoCache),
+      updateList<Monster>(cacheKey('Monsters'), monsters, resp.monsters, saveIntoCache: saveIntoCache),
       updateList<Move>(cacheKey('Moves'), moves, resp.moves, saveIntoCache: saveIntoCache),
       updateList<Race>(cacheKey('Races'), races, resp.races, saveIntoCache: saveIntoCache),
       updateList<Spell>(cacheKey('Spells'), spells, resp.spells, saveIntoCache: saveIntoCache),
@@ -373,8 +370,7 @@ abstract class RepositoryCache {
     list.addAll(Map.fromIterable(resp, key: (x) => x.key));
 
     if (saveIntoCache && list.isNotEmpty) {
-      for (final x in list.values)
-        await cache.create(collectionName, Meta.keyFor(x), Meta.toJsonFor(x));
+      for (final x in list.values) await cache.create(collectionName, Meta.keyFor(x), Meta.toJsonFor(x));
     }
   }
 }

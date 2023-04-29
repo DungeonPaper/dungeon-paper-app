@@ -52,8 +52,7 @@ class ExportController extends GetxController
   void _toggleExportList<T>(List<T> items, bool state) {
     switch (T) {
       case Character:
-        toExport.value.characters =
-            _toggleInList(toExport.value.characters, items.cast<Character>(), state);
+        toExport.value.characters = _toggleInList(toExport.value.characters, items.cast<Character>(), state);
         break;
       case Move:
         toExport.value.moves = _toggleInList(toExport.value.moves, items.cast<Move>(), state);
@@ -65,8 +64,7 @@ class ExportController extends GetxController
         toExport.value.items = _toggleInList(toExport.value.items, items.cast<Item>(), state);
         break;
       case CharacterClass:
-        toExport.value.classes =
-            _toggleInList(toExport.value.classes, items.cast<CharacterClass>(), state);
+        toExport.value.classes = _toggleInList(toExport.value.classes, items.cast<CharacterClass>(), state);
         break;
       case Race:
         toExport.value.races = _toggleInList(toExport.value.races, items.cast<Race>(), state);

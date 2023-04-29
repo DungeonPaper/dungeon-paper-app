@@ -6,10 +6,8 @@ class LocalStorageDelegate extends StorageDelegate {
   final colStreams = <String, StreamController<List<DocData>>>{};
 
   @override
-  Future<List<DocData>> getCollection(String collection) => storage
-      .collection(collection)
-      .get()
-      .then((map) => map?.values.toList().cast<DocData>() ?? <DocData>[]);
+  Future<List<DocData>> getCollection(String collection) =>
+      storage.collection(collection).get().then((map) => map?.values.toList().cast<DocData>() ?? <DocData>[]);
 
   @override
   Future<DocData?> getDocument(String collection, String document) =>
@@ -18,27 +16,24 @@ class LocalStorageDelegate extends StorageDelegate {
   @override
   Future<void> update(String collection, String document, DocData value) async {
     docStreams['$collection/$document']?.add(value);
-    colStreams[collection]?.add((await getCollection(collection))
-        .map((e) => (e['key'] ?? e['name']) == document ? value : e)
-        .toList());
+    colStreams[collection]
+        ?.add((await getCollection(collection)).map((e) => (e['key'] ?? e['name']) == document ? value : e).toList());
     return storage.collection(collection).doc(document).set(value);
   }
 
   @override
   Future<void> delete(String collection, String document) async {
     docStreams['$collection/$document']?.add(null);
-    colStreams[collection]?.add((await getCollection(collection))
-        .where((e) => (e['key'] ?? e['name']) != document)
-        .toList());
+    colStreams[collection]
+        ?.add((await getCollection(collection)).where((e) => (e['key'] ?? e['name']) != document).toList());
     return storage.collection(collection).doc(document).delete();
   }
 
   @override
   Future<void> create(String collection, String document, DocData value) async {
     docStreams['$collection/$document']?.add(value);
-    colStreams[collection]?.add(
-        (await getCollection(collection)).where((e) => (e['key'] ?? e['name']) != document).toList()
-          ..add(value));
+    colStreams[collection]
+        ?.add((await getCollection(collection)).where((e) => (e['key'] ?? e['name']) != document).toList()..add(value));
     return storage.collection(collection).doc(document).set(value);
   }
 

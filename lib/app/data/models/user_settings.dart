@@ -61,8 +61,7 @@ class UserSettings with CharacterServiceMixin {
           brightnessOverride == other.brightnessOverride;
 
   @override
-  int get hashCode =>
-      Object.hashAll([keepScreenAwake, defaultLightTheme, defaultDarkTheme, brightnessOverride]);
+  int get hashCode => Object.hashAll([keepScreenAwake, defaultLightTheme, defaultDarkTheme, brightnessOverride]);
 
   String get debugProperties =>
       'keepScreenAwake: $keepScreenAwake, defaultLightTheme: $defaultLightTheme, defaultDarkTheme: $defaultDarkTheme, brightnessOverride: $brightnessOverride';

@@ -47,9 +47,7 @@ class CharacterDebilitiesDialog extends GetView<CharacterService> with Character
                         char.copyWith(
                           abilityScores: char.abilityScores.copyWith(
                             stats: char.abilityScores.stats.map(
-                              (e) => e.key == ability.key
-                                  ? e.copyWith(isDebilitated: !e.isDebilitated)
-                                  : e,
+                              (e) => e.key == ability.key ? e.copyWith(isDebilitated: !e.isDebilitated) : e,
                             ),
                           ),
                         ),
@@ -59,8 +57,8 @@ class CharacterDebilitiesDialog extends GetView<CharacterService> with Character
                         onChanged: (checked) => charService.updateCharacter(
                           char.copyWith(
                             abilityScores: char.abilityScores.copyWith(
-                              stats: char.abilityScores.stats.map((e) =>
-                                  e.key == ability.key ? e.copyWith(isDebilitated: checked) : e),
+                              stats: char.abilityScores.stats
+                                  .map((e) => e.key == ability.key ? e.copyWith(isDebilitated: checked) : e),
                             ),
                           ),
                         ),

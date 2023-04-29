@@ -34,9 +34,7 @@ class CharacterService extends GetxService with LoadingServiceMixin, UserService
   }
 
   PageController get pageController => _pageController;
-  double get page => pageController.hasClients && pageController.positions.length == 1
-      ? pageController.page ?? 0
-      : 0;
+  double get page => pageController.hasClients && pageController.positions.length == 1 ? pageController.page ?? 0 : 0;
 
   Character? get maybeCurrent => _currentKey.value != null ? all[_currentKey.value] : null;
   Character get current => maybeCurrent!;
@@ -50,8 +48,8 @@ class CharacterService extends GetxService with LoadingServiceMixin, UserService
       out[char.settings.category ?? '']!.add(char);
     }
     for (final key in out.keys) {
-      out[key]!.sort((a, b) => (a.settings.sortOrder ?? double.infinity)
-          .compareTo(b.settings.sortOrder ?? double.infinity));
+      out[key]!
+          .sort((a, b) => (a.settings.sortOrder ?? double.infinity).compareTo(b.settings.sortOrder ?? double.infinity));
     }
     return out;
   }
@@ -79,24 +77,23 @@ class CharacterService extends GetxService with LoadingServiceMixin, UserService
       switchToCharacterTheme(current);
       updateCharacter(
         current.copyWith(
-          meta: current.meta.copyWith(
-              data: (current.meta.data ?? CharacterMeta()).copyWith(lastUsed: DateTime.now())),
+          meta: current.meta.copyWith(data: (current.meta.data ?? CharacterMeta()).copyWith(lastUsed: DateTime.now())),
         ),
       );
     }
   }
 
-  void switchToCharacterTheme(Character character) {
+  void switchToCharacterTheme(Character character) => switchToTheme(character.getCurrentTheme(user));
+
+  void switchToTheme(int themeId) {
     final dynamicTheme = DynamicTheme.of(Get.context!)!;
     final currentTheme = dynamicTheme.themeId;
-    final newTheme = character.getCurrentTheme(user);
-    if (currentTheme == newTheme) {
+    if (currentTheme == themeId) {
       return;
     }
 
-    debugPrint('switching to theme ${character.getCurrentTheme(user)}');
-
-    AppThemes.setTheme(newTheme);
+    debugPrint('switching to theme $themeId');
+    AppThemes.setTheme(themeId);
   }
 
   void charsListener(List<DocData> json) {
@@ -152,7 +149,11 @@ class CharacterService extends GetxService with LoadingServiceMixin, UserService
 
   void deleteCharacter(Character character) {
     all.remove(character.key);
-    StorageHandler.instance.delete('Characters', character.key);
+    try {
+      StorageHandler.instance.delete('Characters', character.key);
+    } catch (e) {
+      debugPrint('Error deleting character: $e');
+    }
     if (character.key == _currentKey.value) {
       _currentKey.value = all.keys.first;
     }

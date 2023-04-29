@@ -61,14 +61,11 @@ class ClassAlignmentsView extends GetView<ClassAlignmentsController> {
                                     if (controller.selectable)
                                       ElevatedButton.icon(
                                         icon: const Icon(Icons.check),
-                                        label: Text(
-                                            !isSelected ? S.current.select : S.current.selected),
-                                        onPressed:
-                                            !isSelected ? () => controller.select(alignment) : null,
+                                        label: Text(!isSelected ? S.current.select : S.current.selected),
+                                        onPressed: !isSelected ? () => controller.select(alignment) : null,
                                       ),
                                   ]
-                                : DialogControls.done(
-                                    context, () => controller.toggleEdit(alignment, false)),
+                                : DialogControls.done(context, () => controller.toggleEdit(alignment, false)),
                           ),
                         ),
                         Padding(

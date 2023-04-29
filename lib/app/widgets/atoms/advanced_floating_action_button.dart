@@ -43,8 +43,7 @@ class AdvancedFloatingActionButton extends StatelessWidget {
         assert(clipBehavior != null),
         assert(isExtended != null),
         assert(autofocus != null),
-        _floatingActionButtonType =
-            mini ? _FloatingActionButtonType.small : _FloatingActionButtonType.regular,
+        _floatingActionButtonType = mini ? _FloatingActionButtonType.small : _FloatingActionButtonType.regular,
         _extendedLabel = null,
         extendedIconLabelSpacing = null,
         extendedPadding = null,

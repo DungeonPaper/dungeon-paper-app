@@ -13,8 +13,7 @@ import 'package:get/get.dart';
 
 import 'filters/character_class_filters.dart';
 
-class CharacterClassesLibraryListView
-    extends GetView<LibraryListController<CharacterClass, CharacterClassFilters>> {
+class CharacterClassesLibraryListView extends GetView<LibraryListController<CharacterClass, CharacterClassFilters>> {
   const CharacterClassesLibraryListView({
     Key? key,
   }) : super(key: key);
@@ -59,8 +58,7 @@ class CharacterClassesLibraryListView
   }
 }
 
-class CharacterClassLibraryListArguments
-    extends LibraryListArguments<CharacterClass, CharacterClassFilters> {
+class CharacterClassLibraryListArguments extends LibraryListArguments<CharacterClass, CharacterClassFilters> {
   CharacterClassLibraryListArguments({
     required void Function(CharacterClass cls)? onSelected,
     required super.preSelections,

@@ -141,8 +141,7 @@ class Move extends dw.Move with WithIcon implements WithMeta {
           category == other.category;
 
   @override
-  int get hashCode =>
-      Object.hashAll([meta, key, name, description, explanation, dice, classKeys, tags, category]);
+  int get hashCode => Object.hashAll([meta, key, name, description, explanation, dice, classKeys, tags, category]);
 
   @override
   String get debugProperties =>

@@ -50,8 +50,8 @@ class AbilityScoresFormView extends GetView<AbilityScoresFormController> {
                   physics: const NeverScrollableScrollPhysics(),
                   itemCount: controller.abilityScores.value.stats.length,
                   onReorder: (int oldIndex, int newIndex) {
-                    controller.abilityScores.value = controller.abilityScores.value.copyWith(
-                        stats: reorder(controller.abilityScores.value.stats, oldIndex, newIndex));
+                    controller.abilityScores.value = controller.abilityScores.value
+                        .copyWith(stats: reorder(controller.abilityScores.value.stats, oldIndex, newIndex));
                   },
                   itemBuilder: (context, index) => _buildCard(context, index),
                 ),
@@ -138,8 +138,7 @@ class AbilityScoresFormView extends GetView<AbilityScoresFormController> {
                   ),
                   RoundIconButton(
                     icon: DiceIcon.from(dw.Dice.d6),
-                    onPressed: () => controller.textControllers[stat.key]!.text =
-                        Random().nextInt(21).toString(),
+                    onPressed: () => controller.textControllers[stat.key]!.text = Random().nextInt(21).toString(),
                     tooltip: S.current.abilityScoreRollButtonTooltip,
                   ),
                   Expanded(child: Container()),
@@ -153,9 +152,9 @@ class AbilityScoresFormView extends GetView<AbilityScoresFormController> {
                           onSave: (stat) => controller.updateStat(stat),
                         ),
                       ),
-                      onDelete: () => awaitDeleteConfirmation(
+                      onDelete: () => deleteDialog.confirm(
                         context,
-                        stat.name,
+                        DeleteDialogOptions(entityName: stat.name),
                         () => controller.removeStat(stat),
                       ),
                     ),

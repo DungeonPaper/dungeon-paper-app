@@ -26,8 +26,7 @@ class CharacterStats {
   static int maxExpForLevel(int level) => level + 7;
 
   int get totalMaxXp => totalMaxExpForLevel(level);
-  static int totalMaxExpForLevel(int level) =>
-      range(1, level).fold<int>(8, (acc, l) => acc + maxExpForLevel(l + 1));
+  static int totalMaxExpForLevel(int level) => range(1, level).fold<int>(8, (acc, l) => acc + maxExpForLevel(l + 1));
 
   factory CharacterStats.empty() => CharacterStats(
         level: 1,

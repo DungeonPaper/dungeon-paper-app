@@ -5,18 +5,24 @@ import 'package:get/get.dart';
 
 import '../../../core/utils/dialog_utils.dart';
 
-Future<bool> confirmDelete<T>(BuildContext context, String name) {
-  return Get.dialog<bool>(
-    AlertDialog(
+class _DeleteDialog extends ConfirmationDialog<DeleteDialogOptions> {
+  @override
+  Widget createConfirmation<T>(BuildContext context, options) {
+    return AlertDialog(
       title: Text(S.current.confirmDeleteTitle(S.current.entity(T))),
-      content: Text(S.current.confirmDeleteBody(S.current.entity(T), name)),
+      content: Text(
+        S.current.confirmDeleteBody(S.current.entity(T), options.entityName),
+      ),
       actions: DialogControls.delete(context,
-          onDelete: () => Get.back(result: true),
-          onCancel: () => Get.back(result: false)),
-    ),
-  ).then((res) => res == true);
+          onDelete: () => Get.back(result: true), onCancel: () => Get.back(result: false)),
+    );
+  }
 }
 
-Future<void> awaitDeleteConfirmation<T>(
-        BuildContext context, String name, void Function() onConfirmed) =>
-    awaitConfirmation(confirmDelete<T>(context, name), onConfirmed);
+class DeleteDialogOptions {
+  final String entityName;
+
+  DeleteDialogOptions({required this.entityName});
+}
+
+final deleteDialog = _DeleteDialog();

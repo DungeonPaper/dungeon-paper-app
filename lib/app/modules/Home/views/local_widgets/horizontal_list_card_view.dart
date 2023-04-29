@@ -67,13 +67,11 @@ class HorizontalCardListView<T extends WithMeta> extends StatelessWidget {
       height: cardSize.height,
       width: double.infinity,
       // width: 200,
-      child: ListView.builder(
+      child: builder.asListView(
         // shrinkWrap: true,
         scrollDirection: Axis.horizontal,
         // itemExtent: 2,
         padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-        itemBuilder: builder.itemBuilder,
-        itemCount: builder.itemCount,
       ),
     );
   }

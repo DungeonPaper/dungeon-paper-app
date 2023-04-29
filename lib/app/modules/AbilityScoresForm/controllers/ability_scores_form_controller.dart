@@ -25,8 +25,7 @@ class AbilityScoresFormController extends GetxController {
     }
     textControllers.clear();
     for (final stat in abilityScores.value.stats) {
-      textControllers[stat.key] = TextEditingController(text: stat.value.toString())
-        ..addListener(validate);
+      textControllers[stat.key] = TextEditingController(text: stat.value.toString())..addListener(validate);
     }
     onChanged = args.onChanged;
   }
@@ -40,16 +39,13 @@ class AbilityScoresFormController extends GetxController {
   }
 
   void updateStat(AbilityScore stat) {
-    abilityScores.value =
-        abilityScores.value.copyWith(stats: updateByKey(abilityScores.value.stats, [stat]));
-    textControllers[stat.key] ??= TextEditingController(text: stat.value.toString())
-      ..addListener(validate);
+    abilityScores.value = abilityScores.value.copyWith(stats: updateByKey(abilityScores.value.stats, [stat]));
+    textControllers[stat.key] ??= TextEditingController(text: stat.value.toString())..addListener(validate);
     textControllers[stat.key]!.text = stat.value.toString();
   }
 
   void removeStat(AbilityScore stat) {
-    abilityScores.value =
-        abilityScores.value.copyWith(stats: removeByKey(abilityScores.value.stats, [stat]));
+    abilityScores.value = abilityScores.value.copyWith(stats: removeByKey(abilityScores.value.stats, [stat]));
     textControllers.remove(stat.key);
   }
 
@@ -57,8 +53,7 @@ class AbilityScoresFormController extends GetxController {
     if (textControllers.containsKey(abilityScore.key)) {
       return;
     }
-    abilityScores.value =
-        abilityScores.value.copyWith(stats: [...abilityScores.value.stats, abilityScore]);
+    abilityScores.value = abilityScores.value.copyWith(stats: [...abilityScores.value.stats, abilityScore]);
     textControllers[abilityScore.key] = TextEditingController(text: abilityScore.value.toString())
       ..addListener(validate);
   }

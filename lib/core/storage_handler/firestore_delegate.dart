@@ -6,10 +6,8 @@ class FirestoreDelegate extends StorageDelegate {
   String get prefix => _collectionPrefix != null ? _collectionPrefix! + '/' : '';
 
   @override
-  Future<List<DocData>> getCollection(String collection) => storage
-      .collection(prefix + collection)
-      .get()
-      .then((list) => list.docs.map((snap) => snap.data()).toList());
+  Future<List<DocData>> getCollection(String collection) =>
+      storage.collection(prefix + collection).get().then((list) => list.docs.map((snap) => snap.data()).toList());
 
   @override
   Future<DocData?> getDocument(String collection, String document) =>
@@ -52,8 +50,7 @@ class FirestoreDelegate extends StorageDelegate {
     void Function()? onDone,
     bool? cancelOnError,
   }) {
-    return asDocumentStream(storage.collection(prefix + collection).doc(document).snapshots())
-        .listen(
+    return asDocumentStream(storage.collection(prefix + collection).doc(document).snapshots()).listen(
       onData,
       onError: onError,
       onDone: onDone,

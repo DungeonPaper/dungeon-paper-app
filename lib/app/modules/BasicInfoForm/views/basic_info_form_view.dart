@@ -86,9 +86,7 @@ class BasicInfoFormView extends GetView<BasicInfoFormController> with UserServic
                       children: [
                         Expanded(
                           child: ElevatedButton.icon(
-                            onPressed: controller.isUploading
-                                ? null
-                                : () => controller.startUploadFlow(context),
+                            onPressed: controller.isUploading ? null : () => controller.startUploadFlow(context),
                             icon: const Icon(Icons.upload_file),
                             label: Text(S.current.basicInfoImageChooseNew),
                           ),

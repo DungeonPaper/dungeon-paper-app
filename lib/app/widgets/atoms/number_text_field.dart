@@ -153,8 +153,7 @@ class NumberTextField extends StatelessWidget {
               onPressed: _incr,
             ),
       ),
-      keyboardType:
-          keyboardType ?? TextInputType.numberWithOptions(decimal: numberType == NumberType.double),
+      keyboardType: keyboardType ?? TextInputType.numberWithOptions(decimal: numberType == NumberType.double),
       textCapitalization: textCapitalization,
       textInputAction: textInputAction,
       style: style,
@@ -217,14 +216,12 @@ class NumberTextField extends StatelessWidget {
   }
 
   void _decr() {
-    controller?.text =
-        max((_parse(controller?.text ?? '') ?? 1) - 1, minValue ?? -double.infinity).toString();
+    controller?.text = max((_parse(controller?.text ?? '') ?? 1) - 1, minValue ?? -double.infinity).toString();
     onChanged?.call(controller?.text ?? '');
   }
 
   void _incr() {
-    controller?.text =
-        min((_parse(controller?.text ?? '') ?? 0) + 1, maxValue ?? double.infinity).toString();
+    controller?.text = min((_parse(controller?.text ?? '') ?? 0) + 1, maxValue ?? double.infinity).toString();
     onChanged?.call(controller?.text ?? '');
   }
 }

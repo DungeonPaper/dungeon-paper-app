@@ -33,8 +33,7 @@ class LibraryListController<T extends WithMeta, F extends EntityFilters<T>> exte
 
   bool get selectable => onSelected != null;
 
-  Iterable<T> get builtInList =>
-      filterList(builtInListRaw, FiltersGroup.playbook, filterFn, sortFn);
+  Iterable<T> get builtInList => filterList(builtInListRaw, FiltersGroup.playbook, filterFn, sortFn);
 
   Iterable<T> get builtInListRaw => repo.value.builtIn.listByType<T>().values.toList();
 
@@ -111,8 +110,7 @@ class LibraryListController<T extends WithMeta, F extends EntityFilters<T>> exte
 
   _compare(T item) {
     return (T element) {
-      return (element.meta.sharing?.sourceKey ?? element.key) == item.key ||
-          element.key == item.key;
+      return (element.meta.sharing?.sourceKey ?? element.key) == item.key || element.key == item.key;
     };
   }
 
@@ -141,9 +139,7 @@ class LibraryListController<T extends WithMeta, F extends EntityFilters<T>> exte
       (isPreSelected(item) && !isRemoved(item)) || isInCurrentSelectedList(item);
 
   bool isInCurrentSelectedList(T item) =>
-      selected.firstWhereOrNull(
-          (element) => [element.meta.sharing?.sourceKey, element.key].contains(item.key)) !=
-      null;
+      selected.firstWhereOrNull((element) => [element.meta.sharing?.sourceKey, element.key].contains(item.key)) != null;
 
   bool isRemoved(T item) => removed.firstWhereOrNull(_compare(item)) != null;
 

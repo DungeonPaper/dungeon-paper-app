@@ -120,14 +120,11 @@ List<T> sortByPredefined<T>(
   return out;
 }
 
-List<T> updateByKey<T>(List<T> original, Iterable<T> itemsToUpdate,
-    {dynamic Function(T item)? key}) {
+List<T> updateByKey<T>(List<T> original, Iterable<T> itemsToUpdate, {dynamic Function(T item)? key}) {
   final keyGetter = key ?? Meta.keyFor;
   final keys = itemsToUpdate.map(keyGetter);
   return original
-      .map((x) => keys.contains(keyGetter(x))
-          ? itemsToUpdate.firstWhere((y) => keyGetter(x) == keyGetter(y))
-          : x)
+      .map((x) => keys.contains(keyGetter(x)) ? itemsToUpdate.firstWhere((y) => keyGetter(x) == keyGetter(y)) : x)
       .toList();
 }
 
@@ -147,8 +144,7 @@ List<T> upsertByKey<T>(List<T> list, Iterable<T> items, {dynamic Function(T item
 
   return [
     ...list
-        .map((x) =>
-            keys.contains(keyGetter(x)) ? items.firstWhere((y) => keyGetter(x) == keyGetter(y)) : x)
+        .map((x) => keys.contains(keyGetter(x)) ? items.firstWhere((y) => keyGetter(x) == keyGetter(y)) : x)
         .toList(),
     ...items.where((x) {
       return !existingKeys.contains(keyGetter(x));

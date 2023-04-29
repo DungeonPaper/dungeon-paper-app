@@ -109,16 +109,11 @@ class SpellFilters extends EntityFilters<Spell> {
     return avg(
       [
             level == spell.level ? 1.0 : 0.0,
-            classKey != null &&
-                    spell.classKeys.map((x) => cleanStr(x.key)).contains(cleanStr(classKey!))
-                ? 1.0
-                : 0.0,
+            classKey != null && spell.classKeys.map((x) => cleanStr(x.key)).contains(cleanStr(classKey!)) ? 1.0 : 0.0,
           ] +
           [spell.name, spell.description, spell.explanation]
               .map(
-                (e) => (search?.isEmpty ?? true) || e.isEmpty
-                    ? 0.0
-                    : StringSimilarity.compareTwoStrings(search!, e),
+                (e) => (search?.isEmpty ?? true) || e.isEmpty ? 0.0 : StringSimilarity.compareTwoStrings(search!, e),
               )
               .toList(),
     );

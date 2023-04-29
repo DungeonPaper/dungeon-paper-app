@@ -44,12 +44,8 @@ class Meta<DataType> with RepositoryServiceMixin {
   final MetaSharing? sharing;
   final DateTime? updated;
 
-  M? getLibraryCopy<M extends WithMeta>() => repo.my
-      .listByType<M>()
-      .entries
-      .toList()
-      .firstWhereOrNull((e) => e.value.key == sharing?.sourceKey)
-      ?.value;
+  M? getLibraryCopy<M extends WithMeta>() =>
+      repo.my.listByType<M>().entries.toList().firstWhereOrNull((e) => e.value.key == sharing?.sourceKey)?.value;
 
   bool get isFork => sharing != null;
   bool get isSource => !isFork;
@@ -117,8 +113,7 @@ class Meta<DataType> with RepositoryServiceMixin {
 
   String toRawJson() => json.encode(toJson());
 
-  factory Meta.fromJson(Map<String, dynamic> json, [DataType Function(dynamic json)? parseData]) =>
-      Meta._(
+  factory Meta.fromJson(Map<String, dynamic> json, [DataType Function(dynamic json)? parseData]) => Meta._(
         created: json['created'] != null ? parseDate(json['created']) : DateTime.now(),
         createdBy: json['createdBy'],
         data: json['data'] != null
@@ -132,13 +127,11 @@ class Meta<DataType> with RepositoryServiceMixin {
         updated: json['updated'] != null ? parseDate(json['updated']) : null,
       );
 
-  factory Meta.tryParse(dynamic meta,
-          {String? owner, DataType Function(dynamic json)? parseData}) =>
-      meta != null
-          ? meta is Meta<DataType>
-              ? meta
-              : Meta.fromJson(meta, parseData)
-          : Meta.empty(createdBy: owner);
+  factory Meta.tryParse(dynamic meta, {String? owner, DataType Function(dynamic json)? parseData}) => meta != null
+      ? meta is Meta<DataType>
+          ? meta
+          : Meta.fromJson(meta, parseData)
+      : Meta.empty(createdBy: owner);
 
   Map<String, dynamic> toJson([dynamic Function(DataType? data)? dumpData]) => {
         'created': created.toString(),
@@ -304,8 +297,7 @@ class Meta<DataType> with RepositoryServiceMixin {
           language == other.language;
 
   @override
-  int get hashCode =>
-      Object.hashAll([created, createdBy, updated, version, sharing, data, language]);
+  int get hashCode => Object.hashAll([created, createdBy, updated, version, sharing, data, language]);
 
   String get debugProperties =>
       'created: $created, createdBy: $createdBy, updated: $updated, version: $version, sharing: $sharing, data: $data, language: $language';

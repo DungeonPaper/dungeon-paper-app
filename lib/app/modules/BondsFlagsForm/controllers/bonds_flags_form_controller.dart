@@ -17,13 +17,11 @@ class BondsFlagsFormController extends GetxController {
     super.onReady();
     final BondsFlagsFormArguments args = Get.arguments;
     bonds.value = args.bonds;
-    bondsDesc.value = args.bonds
-        .map((e) => TextEditingController(text: e.description)..addListener(_setDirty))
-        .toList();
+    bondsDesc.value =
+        args.bonds.map((e) => TextEditingController(text: e.description)..addListener(_setDirty)).toList();
     flags.value = args.flags;
-    flagsDesc.value = args.flags
-        .map((e) => TextEditingController(text: e.description)..addListener(_setDirty))
-        .toList();
+    flagsDesc.value =
+        args.flags.map((e) => TextEditingController(text: e.description)..addListener(_setDirty)).toList();
     onChanged = args.onChanged;
   }
 

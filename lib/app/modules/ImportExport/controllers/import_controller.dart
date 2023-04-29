@@ -29,8 +29,7 @@ class ImportController extends GetxController
   List<CharacterClass> get classes => toImport.value!.allClasses.toList();
   List<Race> get races => toImport.value!.allRaces.toList();
 
-  int get selectionsCount =>
-      [characters, moves, spells, items, classes].fold(0, (total, list) => total + list.length);
+  int get selectionsCount => [characters, moves, spells, items, classes].fold(0, (total, list) => total + list.length);
 
   bool get hasData => toImport.value != null;
 
@@ -46,8 +45,7 @@ class ImportController extends GetxController
   void _toggleImportList<T>(List<T> items, bool state) {
     switch (T) {
       case Character:
-        toImport.value!.characters =
-            _toggleInList(toImport.value!.characters, items.cast<Character>(), state);
+        toImport.value!.characters = _toggleInList(toImport.value!.characters, items.cast<Character>(), state);
         break;
       case Move:
         toImport.value!.moves = _toggleInList(toImport.value!.moves, items.cast<Move>(), state);
@@ -59,8 +57,7 @@ class ImportController extends GetxController
         toImport.value!.items = _toggleInList(toImport.value!.items, items.cast<Item>(), state);
         break;
       case CharacterClass:
-        toImport.value!.classes =
-            _toggleInList(toImport.value!.classes, items.cast<CharacterClass>(), state);
+        toImport.value!.classes = _toggleInList(toImport.value!.classes, items.cast<CharacterClass>(), state);
         break;
       case Race:
         toImport.value!.races = _toggleInList(toImport.value!.races, items.cast<Race>(), state);
@@ -207,24 +204,13 @@ class ImportSelections {
   List<Race> races;
 
   factory ImportSelections.fromJson(Map<String, dynamic> json) {
-    final allClasses = (json['classes'] ?? [])
-        .map((x) => CharacterClass.fromJson(x))
-        .toList()
-        .cast<CharacterClass>();
-    final allCharacters = List<dynamic>.from(json['characters'] ?? [])
-        .map((x) => Character.fromJson(x))
-        .toList()
-        .cast<Character>();
-    final allMoves =
-        List<dynamic>.from(json['moves'] ?? []).map((x) => Move.fromJson(x)).toList().cast<Move>();
-    final allSpells = List<dynamic>.from(json['spells'] ?? [])
-        .map((x) => Spell.fromJson(x))
-        .toList()
-        .cast<Spell>();
-    final allItems =
-        List<dynamic>.from(json['items'] ?? []).map((x) => Item.fromJson(x)).toList().cast<Item>();
-    final allRaces =
-        List<dynamic>.from(json['races'] ?? []).map((x) => Race.fromJson(x)).toList().cast<Race>();
+    final allClasses = (json['classes'] ?? []).map((x) => CharacterClass.fromJson(x)).toList().cast<CharacterClass>();
+    final allCharacters =
+        List<dynamic>.from(json['characters'] ?? []).map((x) => Character.fromJson(x)).toList().cast<Character>();
+    final allMoves = List<dynamic>.from(json['moves'] ?? []).map((x) => Move.fromJson(x)).toList().cast<Move>();
+    final allSpells = List<dynamic>.from(json['spells'] ?? []).map((x) => Spell.fromJson(x)).toList().cast<Spell>();
+    final allItems = List<dynamic>.from(json['items'] ?? []).map((x) => Item.fromJson(x)).toList().cast<Item>();
+    final allRaces = List<dynamic>.from(json['races'] ?? []).map((x) => Race.fromJson(x)).toList().cast<Race>();
 
     return ImportSelections(
       allClasses: allClasses,

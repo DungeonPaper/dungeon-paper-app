@@ -1,4 +1,3 @@
-
 import 'package:dungeon_paper/app/data/models/character_stats.dart';
 import 'package:dungeon_paper/app/data/models/session_marks.dart';
 import 'package:dungeon_paper/app/data/services/character_service.dart';
@@ -34,11 +33,9 @@ class _EXPDialogState extends State<EXPDialog> with CharacterServiceMixin {
 
   @override
   void initState() {
-    overrideXp = TextEditingController(text: char.currentXp.toString())
-      ..addListener(() => setState(() {}));
+    overrideXp = TextEditingController(text: char.currentXp.toString())..addListener(() => setState(() {}));
     manualExpExpanded = false;
-    overrideLevel = TextEditingController(text: currentLevel.toString())
-      ..addListener(() => setState(() {}));
+    overrideLevel = TextEditingController(text: currentLevel.toString())..addListener(() => setState(() {}));
     shouldResetSessionMarks = true;
     eosMarks = char.endOfSessionMarks;
     super.initState();
@@ -72,9 +69,7 @@ class _EXPDialogState extends State<EXPDialog> with CharacterServiceMixin {
                     currentXp: clamp(int.tryParse(overrideXp.text) ?? currentXp, 0, maxXp),
                     maxXp: maxXp,
                     pendingXp:
-                        !shouldResetSessionMarks || (!shouldOverrideXp && !shouldOverrideLevel)
-                            ? totalPendingXp
-                            : 0,
+                        !shouldResetSessionMarks || (!shouldOverrideXp && !shouldOverrideLevel) ? totalPendingXp : 0,
                   ),
                 ),
                 const SizedBox(height: 24),
@@ -105,9 +100,7 @@ class _EXPDialogState extends State<EXPDialog> with CharacterServiceMixin {
                 AnimatedContainer(
                   duration: const Duration(milliseconds: 250),
                   width: dlgWidth,
-                  height: manualExpExpanded
-                      ? (332 + (PlatformHelper.isIOS || PlatformHelper.isAndroid ? 32 : 0))
-                      : 48,
+                  height: manualExpExpanded ? (332 + (PlatformHelper.isIOS || PlatformHelper.isAndroid ? 32 : 0)) : 48,
                   child: CustomExpansionPanel(
                     title: Text(
                       S.current.xpDialogChangeOverride + (hasOverrides ? '*' : ''),
@@ -144,8 +137,7 @@ class _EXPDialogState extends State<EXPDialog> with CharacterServiceMixin {
                       const SizedBox(height: 16),
                       NumberTextField(
                         decoration: InputDecoration(
-                          labelText:
-                              S.current.xpDialogOverrideLevel + (shouldOverrideLevel ? '*' : ''),
+                          labelText: S.current.xpDialogOverrideLevel + (shouldOverrideLevel ? '*' : ''),
                         ),
                         numberType: NumberType.int,
                         controller: overrideLevel,
@@ -182,14 +174,11 @@ class _EXPDialogState extends State<EXPDialog> with CharacterServiceMixin {
       : char.maxXp;
   int get eosPendingXp => eosMarks.where((mark) => mark.completed).length;
   int get totalPendingXp =>
-      char.sessionMarks
-          .where((mark) => mark.type != dw.SessionMarkType.endOfSession && mark.completed)
-          .length +
+      char.sessionMarks.where((mark) => mark.type != dw.SessionMarkType.endOfSession && mark.completed).length +
       eosPendingXp;
   int get effectiveXp => shouldOverrideXp ? int.parse(overrideXp.text) : currentXp;
   int get effectiveLevel => shouldOverrideLevel ? int.parse(overrideLevel.text) : currentLevel;
-  bool get shouldOverrideXp =>
-      int.tryParse(overrideXp.text) != null && int.parse(overrideXp.text) != currentXp;
+  bool get shouldOverrideXp => int.tryParse(overrideXp.text) != null && int.parse(overrideXp.text) != currentXp;
 
   bool get shouldOverrideLevel =>
       int.tryParse(overrideLevel.text) != null && int.parse(overrideLevel.text) != currentLevel;

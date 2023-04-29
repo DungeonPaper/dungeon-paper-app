@@ -95,10 +95,8 @@ class AbilityScores {
         ),
       );
 
-  AbilityScores copyWithDebilities(Iterable<String> keys, {required bool isDebilitated}) =>
-      copyWith(
-        stats:
-            stats.map((e) => keys.contains(e.key) ? e.copyWith(isDebilitated: isDebilitated) : e),
+  AbilityScores copyWithDebilities(Iterable<String> keys, {required bool isDebilitated}) => copyWith(
+        stats: stats.map((e) => keys.contains(e.key) ? e.copyWith(isDebilitated: isDebilitated) : e),
       );
 
   factory AbilityScores.fromRawJson(String str) => AbilityScores.fromJson(json.decode(str));
@@ -158,8 +156,7 @@ class AbilityScores {
 
   @override
   bool operator ==(Object? other) =>
-      identical(this, other) ||
-      other is AbilityScores && runtimeType == other.runtimeType && stats == other.stats;
+      identical(this, other) || other is AbilityScores && runtimeType == other.runtimeType && stats == other.stats;
 
   @override
   int get hashCode => Object.hashAll(stats);
@@ -294,8 +291,7 @@ class AbilityScore with WithIcon, WithKey {
           debilityDescription == other.debilityDescription;
 
   @override
-  int get hashCode => Object.hashAll(
-      [key, name, description, value, isDebilitated, debilityName, debilityDescription]);
+  int get hashCode => Object.hashAll([key, name, description, value, isDebilitated, debilityName, debilityDescription]);
 
   String get debugProperties =>
       'key: $key, value: $value, name: $name, description: $description, isDebilitated: $isDebilitated, debilityName: $debilityName, debilityDescription: $debilityDescription';

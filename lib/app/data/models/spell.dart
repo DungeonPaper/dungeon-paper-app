@@ -141,8 +141,7 @@ class Spell extends dw.Spell with WithIcon implements WithMeta {
           tags == other.tags;
 
   @override
-  int get hashCode =>
-      Object.hashAll([meta, key, name, description, explanation, level, classKeys, dice, tags]);
+  int get hashCode => Object.hashAll([meta, key, name, description, explanation, level, classKeys, dice, tags]);
 
   @override
   String get debugProperties =>

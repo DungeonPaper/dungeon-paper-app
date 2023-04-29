@@ -44,9 +44,7 @@ class SettingsView extends GetView<SettingsController> with CharacterServiceMixi
           _pad(
             Obx(
               () => ThemeSelector(
-                themes: controller.seeAll[Brightness.light]!
-                    ? AppThemes.allThemes
-                    : AppThemes.allLightThemes,
+                themes: controller.seeAll[Brightness.light]! ? AppThemes.allThemes : AppThemes.allLightThemes,
                 selected: controller.settings.defaultLightTheme,
                 onSelected: (theme) async {
                   await controller.updateSettings(
@@ -71,16 +69,18 @@ class SettingsView extends GetView<SettingsController> with CharacterServiceMixi
           _pad(
             Obx(
               () => ThemeSelector(
-                themes: controller.seeAll[Brightness.dark]!
-                    ? AppThemes.allThemes
-                    : AppThemes.allDarkThemes,
+                themes: controller.seeAll[Brightness.dark]! ? AppThemes.allThemes : AppThemes.allDarkThemes,
                 selected: controller.settings.defaultDarkTheme,
                 onSelected: (theme) async {
                   await controller.updateSettings(
                     controller.settings.copyWith(defaultDarkTheme: theme),
                   );
                   if (controller.user.brightness == Brightness.dark) {
-                    charService.switchToCharacterTheme(character);
+                    if (maybeChar != null) {
+                      charService.switchToCharacterTheme(character);
+                    } else {
+                      charService.switchToTheme(theme);
+                    }
                   }
                 },
               ),

@@ -81,8 +81,7 @@ class Race extends dw.Race with WithIcon implements WithMeta {
         name: json['name'],
         description: json['description'],
         explanation: json['explanation'],
-        classKeys: List<dw.EntityReference>.from(
-            json['classKeys'].map((x) => dw.EntityReference.fromJson(x))),
+        classKeys: List<dw.EntityReference>.from(json['classKeys'].map((x) => dw.EntityReference.fromJson(x))),
         tags: List<dw.Tag>.from(json['tags'].map((x) => dw.Tag.fromJson(x))),
         favorite: json['favorite'] ?? false,
         dice: List<dw.Dice>.from(json['dice'].map((x) => dw.Dice.fromJson(x))),
@@ -150,8 +149,7 @@ class Race extends dw.Race with WithIcon implements WithMeta {
           dice == other.dice;
 
   @override
-  int get hashCode =>
-      Object.hashAll([meta, key, name, description, explanation, classKeys, tags, dice]);
+  int get hashCode => Object.hashAll([meta, key, name, description, explanation, classKeys, tags, dice]);
 
   @override
   String get debugProperties =>

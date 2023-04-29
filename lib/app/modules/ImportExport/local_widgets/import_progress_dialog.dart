@@ -13,8 +13,7 @@ class ImportProgressDialog extends GetView<ImportController> {
         title: Text(S.current.importProgressTitle),
         contentPadding: const EdgeInsets.symmetric(horizontal: 24, vertical: 32).copyWith(top: 8),
         children: [
-          Text(S.current
-              .importProgressProcessing(S.current.entityPlural(controller.importStep.value!))),
+          Text(S.current.importProgressProcessing(S.current.entityPlural(controller.importStep.value!))),
           const SizedBox(height: 8),
           Row(
             children: [
@@ -24,8 +23,7 @@ class ImportProgressDialog extends GetView<ImportController> {
                 ),
               ),
               const SizedBox(width: 16),
-              Text(
-                  '${controller.selectionsCount - controller.leftCount.value} / ${controller.selectionsCount}'),
+              Text('${controller.selectionsCount - controller.leftCount.value} / ${controller.selectionsCount}'),
             ],
           )
         ],

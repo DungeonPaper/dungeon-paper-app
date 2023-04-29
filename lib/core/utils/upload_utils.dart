@@ -110,8 +110,7 @@ Future<UploadResponse?> cropAndUploadPhoto(BuildContext context, UploadSettings 
     settings.onSuccess?.call(downloadURL);
   } catch (e) {
     Get.rawSnackbar(
-      message:
-          'Error while uploading photo. Try again later, or contact support using the "About" page.',
+      message: 'Error while uploading photo. Try again later, or contact support using the "About" page.',
     );
 
     settings.onError?.call(e);

@@ -29,8 +29,7 @@ class CustomRollButtonsDialog extends StatefulWidget {
   State<CustomRollButtonsDialog> createState() => _CustomRollButtonsDialogState();
 }
 
-class _CustomRollButtonsDialogState extends State<CustomRollButtonsDialog>
-    with SingleTickerProviderStateMixin {
+class _CustomRollButtonsDialogState extends State<CustomRollButtonsDialog> with SingleTickerProviderStateMixin {
   late List<RollButton?> rollButtons;
   late TabController tabController;
 
@@ -175,10 +174,8 @@ class _RollButtonListTileState extends State<_RollButtonListTile> with Repositor
                     Character.hackAndSlashRollButton,
                     Character.volleyRollButton,
                     Character.discernRealitiesRollButton,
-                    for (final move in moves)
-                      RollButton(label: move.name, dice: move.dice, specialDice: []),
-                    for (final spell
-                        in widget.character.spells.where((spell) => spell.dice.isNotEmpty))
+                    for (final move in moves) RollButton(label: move.name, dice: move.dice, specialDice: []),
+                    for (final spell in widget.character.spells.where((spell) => spell.dice.isNotEmpty))
                       RollButton(label: spell.name, dice: spell.dice, specialDice: []),
                   ].uniqueBy((item) => item.label))
                     DropdownMenuItem(
@@ -204,9 +201,7 @@ class _RollButtonListTileState extends State<_RollButtonListTile> with Repositor
               child: SizedBox(
                 height: 48,
                 child: ElevatedButton(
-                  onPressed: isDefault
-                      ? null
-                      : () => setState(() => updateFields(widget.defaultButton, true)),
+                  onPressed: isDefault ? null : () => setState(() => updateFields(widget.defaultButton, true)),
                   child: Text(S.current.customRollButtonsUseDefault),
                 ),
               ),
@@ -270,8 +265,7 @@ class _RollButtonListTileState extends State<_RollButtonListTile> with Repositor
     return defaultDice.length == dice.length &&
         enumerate(dice).every(
           (element) {
-            debugPrint(
-                'index: ${element.index} value ${element.value} == ${defaultDice[element.index]}');
+            debugPrint('index: ${element.index} value ${element.value} == ${defaultDice[element.index]}');
             return defaultDice[element.index].toString() == element.value.toString();
           },
         );
