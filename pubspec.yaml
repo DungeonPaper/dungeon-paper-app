@@ -1,116 +1,124 @@
 name: dungeon_paper
-description: A Dungeon World character sheet app written with Flutter.
-version: 1.2.6+84
+description: A new Flutter project.
+version: 2.0.0+290
+# The above field defines the version and build number for your application.
+# A version number is three numbers separated by dots, like 1.2.43
+# followed by an optional build number separated by a +.
+# Both the version and the builder number may be overridden in flutter
+# build by specifying --build-name and --build-number, respectively.
+# In Android, build-name is used as versionName while build-number used as versionCode.
+# Read more about Android versioning at https://developer.android.com/studio/publish/versioning
+# In iOS, build-name is used as CFBundleShortVersionString while build-number used as CFBundleVersion.
+# Read more about iOS versioning at
+# https://developer.apple.com/library/archive/documentation/General/Reference/InfoPlistKeyReference/Articles/CoreFoundationKeys.html
+# The following line prevents the package from being accidentally published to
+# pub.dev using `flutter pub publish`. This is preferred for private packages.
+publish_to: 'none' # Remove this line if you wish to publish to pub.dev
 
 environment:
-  sdk: ">=2.7.0 <3.0.0"
+  sdk: '>=2.19.0-255.2.beta <3.0.0'
 
+# Dependencies specify other packages that your package needs in order to work.
+# To automatically upgrade your package dependencies to the latest versions
+# consider running `flutter pub upgrade --major-versions`. Alternatively,
+# dependencies can be manually updated by changing the version numbers below to
+# the latest version available on pub.dev. To see which dependencies have newer
+# versions available, run `flutter pub outdated`.
 dependencies:
+  animations: ^2.0.2
+  cached_network_image: ^3.2.0
+  cloud_firestore: ^4.5.2
+  cupertino_icons: ^1.0.2
+  dungeon_world_data:
+    path: ../dungeon_world_data
+  dynamic_themes: ^1.1.0
+  email_validator: ^2.0.1
+  firebase_analytics: ^10.2.1
+  firebase_auth: ^4.4.2
+  firebase_core: ^2.10.0
+  firebase_crashlytics: ^3.1.1
+  firebase_remote_config: ^4.0.1
+  firebase_storage: ^11.1.1
   flutter:
     sdk: flutter
-  apple_sign_in: ^0.1.0
-  cached_network_image: ^2.5.0
-  cloud_firestore: ^0.16.0
-  cupertino_icons: ^1.0.0
-  dungeon_world_data: ^2.0.5+9
-  email_validator: ^1.0.5
-  excel: ^1.1.5
-  facebook_app_events: ^0.8.2
-  firebase_analytics: ^7.0.1
-  firebase_auth: ^0.20.0+1
-  firebase_core: ^0.7.0
-  firebase_crashlytics: ^0.4.0+1
-  firebase_remote_config: ^0.6.0
-  firebase_storage: ^7.0.0
-  flutter_file_dialog: ^0.0.5
-  flutter_image: ^3.0.0
-  flutter_markdown: ^0.5.2
-  flutter_redux: ^0.6.0
-  flutter_staggered_grid_view: ^0.3.2
-  flutter_svg: ^0.19.0
-  flutter_typeahead: ^1.8.8
-  freezed_annotation: ^0.12.0
-  get: ^3.24.0
-  git_hooks: ^0.0.4
-  google_sign_in: ^4.4.4
-  http: ^0.12.2
-  icon_shadow: ^1.0.1
-  image_picker: ^0.6.7+17
-  logger: ^0.9.4
-  package_info_plus: ^0.6.3
-  path: ^1.7.0
-  path_provider: ^1.6.18
-  platform: ^2.2.1
-  pub_semver: ^1.4.4
-  quiver_hashcode: ^2.0.0
-  redux_logging: ^0.4.0
-  screen: ^0.0.5
-  share: ^0.6.5+2
-  shared_preferences: ^0.5.12
-  universal_html: ^1.2.3
-  url_launcher: ^5.7.2
-  uuid: ^2.2.2
-  wheel_spinner: ^0.0.6
+  flutter_file_dialog: ^2.3.0
+  flutter_markdown: ^0.6.10+2
+  flutter_native_splash: ^2.2.5
+  flutter_svg: ^1.0.3
+  get: ^4.6.1
+  google_sign_in: ^5.3.3
+  http: ^0.13.4
+  icons_launcher: ^2.0.2
+  image_cropper: ^2.0.2
+  intl: ^0.17.0
+  intl_generator: ^0.4.1
+  localstore: ^1.2.1
+  package_info_plus: ^3.1.0
+  path: ^1.8.1
+  path_provider: ^2.0.9
+  popover: ^0.2.6+3
+  sentry_flutter: ^6.6.3
+  shared_preferences: ^2.0.13
+  sign_in_with_apple: ^4.1.0
+  skeleton_loader: ^2.0.0+4
+  string_similarity: ^2.0.0
+  url_launcher: ^6.0.20
+  uuid: ^3.0.5
+  wakelock: ^0.6.2
+  wheel_spinner: ^0.7.0
 
 dev_dependencies:
+  args: ^2.3.0
+  build_runner: ^2.4.1
+  flutter_lints: ^1.0.0
   flutter_test:
     sdk: flutter
-  args: ^1.5.2
-  build_runner: ^1.10.13
-  flutter_launcher_icons: ^0.7.5
-  freezed: ^0.12.7
-  json_serializable: ^3.5.1
-  pedantic: ^1.9.2
-
-flutter_icons:
-  android: true
-  ios: true
-  image_path_android: launcher_icons/android.png
-  image_path_ios: launcher_icons/ios.png
+  pub_semver: ^2.1.0
+  test: ^1.19.5
 
 # For information on the generic Dart part of this file, see the
-# following page: https://www.dartlang.org/tools/pub/pubspec
+# following page: https://dart.dev/tools/pub/pubspec
 # The following section is specific to Flutter.
 flutter:
   # The following line ensures that the Material Icons font is
   # included with your application, so that you can use the icons in
   # the material Icons class.
   uses-material-design: true
-
-  # To add assets to your application, add an assets section, like this:
   assets:
-    - secrets.json
-    - assets/logo.png
-
-    # dice
-    - assets/dice/d4.svg
-    - assets/dice/d6.svg
-    - assets/dice/d8.svg
-    - assets/dice/d10.svg
-    - assets/dice/d12.svg
-    - assets/dice/d20.svg
-
-    # social
-    - assets/social/discord.svg
-    - assets/social/facebook.svg
-    - assets/social/github.svg
-    - assets/social/twitter.svg
-    - assets/social/google.svg
-    - assets/social/google.png
-    - assets/social/apple.svg
-
-    - assets/armor.svg
-    - assets/bag.svg
-    - assets/book-stack.svg
-    - assets/coin-stack.svg
-    - assets/dumbbell.svg
-    - assets/swords.svg
-    # - assets/quill.svg
-    # - images/a_dot_ham.jpeg
+    # General Icons
+    # - assets/icons/armor.svg
+    # - assets/icons/book_cover.svg
+    # - assets/icons/dice_d6_numbered.svg
+    # - assets/icons/exclamation.svg
+    # - assets/icons/hand_rock.svg
+    # - assets/icons/knapsack.svg
+    # - assets/icons/riposte.svg
+    # - assets/icons/scroll_quill.svg
+    # - assets/icons/swap_bag.svg
+    # - assets/icons/coin_stack.svg
+    # - assets/icons/dumbbell.svg
+    # - assets/icons/quill.svg
+    # - assets/icons/swords.svg
+    #  Stat Icons
+    # - assets/icons/stats/stat_cha.svg
+    # - assets/icons/stats/stat_con.svg
+    # - assets/icons/stats/stat_dex.svg
+    # - assets/icons/stats/stat_int.svg
+    # - assets/icons/stats/stat_str.svg
+    # - assets/icons/stats/stat_wis.svg
+    # Dice icons
+    # - assets/icons/dice/dice_d4.svg
+    # - assets/icons/dice/dice_d6.svg
+    # - assets/icons/dice/dice_d8.svg
+    # - assets/icons/dice/dice_d10.svg
+    # - assets/icons/dice/dice_d12.svg
+    # - assets/icons/dice/dice_d20.svg
+    # Images
+    - assets/images/logo.png
   # An image asset can refer to one or more resolution-specific "variants", see
-  # https://flutter.io/assets-and-images/#resolution-aware.
+  # https://flutter.dev/assets-and-images/#resolution-aware.
   # For details regarding adding assets from package dependencies, see
-  # https://flutter.io/assets-and-images/#from-packages
+  # https://flutter.dev/assets-and-images/#from-packages
   # To add custom fonts to your application, add a fonts section here,
   # in this "flutter" section. Each entry in this list should have a
   # "family" key with the font family name, and a "fonts" key with a
@@ -127,21 +135,13 @@ flutter:
   #       - asset: fonts/TrajanPro.ttf
   #       - asset: fonts/TrajanPro_Bold.ttf
   #         weight: 700
+  #
+  # For details regarding fonts from package dependencies,
+  # see https://flutter.dev/custom-fonts/#from-packages
   fonts:
-    # - family: "Noto Sans"
-    #   fonts:
-    #     - asset: assets/fonts/Noto_Sans_KR/NotoSansKR-Black.otf
-    #       weight: 900
-    #     - asset: assets/fonts/Noto_Sans_KR/NotoSansKR-Bold.otf
-    #       weight: 700
-    #     - asset: assets/fonts/Noto_Sans_KR/NotoSansKR-Medium.otf
-    #       weight: 500
-    #     - asset: assets/fonts/Noto_Sans_KR/NotoSansKR-Regular.otf
-    #       weight: 400
-    #     - asset: assets/fonts/Noto_Sans_KR/NotoSansKR-Light.otf
-    #       weight: 300
-    #     - asset: assets/fonts/Noto_Sans_KR/NotoSansKR-Thin.otf
-    #       weight: 100
+    - family: DwIcons
+      fonts:
+        - asset: assets/fonts/DwIcons.ttf
     - family: Nunito
       fonts:
         - asset: assets/fonts/Nunito/Nunito-Black.ttf
@@ -179,5 +179,61 @@ flutter:
         - asset: assets/fonts/Nunito/Nunito-ExtraLightItalic.ttf
           weight: 200
           style: italic
-  # For details regarding fonts from package dependencies,
-  # see https://flutter.io/custom-fonts/#from-packages
+flutter_intl:
+  enabled: true
+flutter_native_splash:
+  color: '#fcf5e5'
+  color_dark: '#1c1e21'
+  image: 'assets/images/logo.png'
+icons_launcher:
+  image_path: 'assets/images/logo.png'
+  platforms:
+    android:
+      enable: true
+      image_path: 'assets/images/launcher_icons/android.png'
+    web:
+      enable: true
+      favicon_path: 'assets/images/logo.png'
+    ios:
+      enable: true
+      image_path: 'assets/images/launcher_icons/ios.png'
+    macos:
+      enable: true
+      image_path: 'assets/images/launcher_icons/ios.png'
+    windows:
+      enable: true
+    linux:
+      enable: true
+    remove_alpha_ios: true
+    remove_alpha_macos: true
+
+script_runner:
+  shell: /bin/zsh
+  scripts:
+    - name: get-version
+      cmd: dart scripts/get_version.dart
+      suppress_header_output: true
+    - bump: dart lib/core/task_runner/deploy.dart --bump pre
+    # Android
+    - build:android:apk: flutter build apk
+    - build:android:bundle: flutter build appbundle
+    - build:android:all: build:android:apk && build:android:bundle
+    - push: 'version=$(get-version); echo "Pushing dungeon_paper-$version.apk"; adb
+        push build/app/outputs/flutter-apk/app-release.apk
+        /sdcard/Download/dungeon_paper-${version}.apk'
+    - install: adb install -r build/app/outputs/flutter-apk/app-release.apk
+    # iOS
+    - build:ios:app: flutter build ios
+    - build:ios:bundle: flutter build ipa
+    - build:ios:all: build:ios:app && build:ios:bundle
+    # macOS
+    - build:macos:app: flutter build macos
+    - build:macos:all: build:macos:app
+    # Web
+    - build:web:app: flutter build web
+    - build:web:all: build:web:app
+    # All
+    - build:all: build:android:all && build:ios:all && build:macos:all && build:web:all
+    - to-device: build:android:apk && push && install
+    - gen:icons: flutter pub run icons_launcher:create
+    - format: dart format --line-length 120

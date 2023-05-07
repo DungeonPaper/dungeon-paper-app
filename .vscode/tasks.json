@@ -4,11 +4,46 @@
   "version": "2.0.0",
   "tasks": [
     {
+      "label": "Generate translations from ARB files",
+      "type": "dart",
+      "command": "flutter",
+      "args": [
+        "pub",
+        "run",
+        "intl_generator:generate_from_arb",
+        "lib/generated/intl/*.dart lib/l10n/*.arb"
+      ],
+      "problemMatcher": []
+    },
+    {
+      "label": "Generate Launcher Icons",
+      "type": "dart",
+      "command": "flutter",
+      "args": [
+        "pub",
+        "run",
+        "icons_launcher:create"
+      ],
+      "problemMatcher": []
+    },
+    {
+      "label": "Generate Splash Screen",
+      "type": "dart",
+      "command": "flutter",
+      "args": [
+        "pub",
+        "run",
+        "flutter_native_splash:create"
+      ],
+      "problemMatcher": []
+    },
+    {
       "label": "Build (pick platform)",
-      "type": "shell",
+      "detail": "deploy.dart --build -l (pick)",
+      "type": "dart",
       "command": "dart",
       "args": [
-        "lib/tools/task_runner/deploy.dart",
+        "lib/core/task_runner/deploy.dart",
         "--build",
         "-l",
         "${input:platform}"
@@ -16,62 +51,80 @@
       "problemMatcher": []
     },
     {
-      "label": "Build (pick platform) + Full-push to Android",
-      "type": "shell",
+      "label": "Build + Full-push (Android)",
+      "detail": "deploy.dart --build -l android --push --install",
+      "type": "dart",
       "command": "dart",
       "args": [
-        "lib/tools/task_runner/deploy.dart",
+        "lib/core/task_runner/deploy.dart",
         "--build",
         "-l",
-        "${input:platform}",
+        "android",
         "--push",
         "--install"
+      ],
+      "problemMatcher": []
+    },
+    {
+      "label": "Build App (all platforms)",
+      "detail": "deploy.dart -l all --build --bundle",
+      "type": "dart",
+      "command": "dart",
+      "args": [
+        "lib/core/task_runner/deploy.dart",
+        "-l",
+        "all",
+        "--build",
+        "--bundle",
+      ],
+      "problemMatcher": []
+    },
+    {
+      "label": "Auto-fix all fixable problems",
+      "type": "dart",
+      "command": "dart",
+      "detail": "dart fix --apply",
+      "args": [
+        "fix",
+        "--apply"
       ],
       "problemMatcher": []
     },
     {
       "label": "Push & Install Existing APK",
-      "type": "shell",
+      "type": "dart",
       "command": "dart",
       "args": [
-        "lib/tools/task_runner/deploy.dart",
+        "lib/core/task_runner/deploy.dart",
         "--push",
-        "--install"
+        "--install",
+        "-l",
+        "android"
       ],
       "problemMatcher": []
     },
     {
       "label": "Test",
-      "type": "shell",
+      "type": "dart",
       "command": "dart",
       "args": [
-        "lib/tools/task_runner/deploy.dart",
+        "lib/core/task_runner/deploy.dart",
         "--test"
       ],
       "problemMatcher": []
     },
     {
-      "label": "Run build_runner",
+      "label": "Getx Generate",
       "type": "shell",
-      "command": "flutter",
-      "args": [
-        "pub",
-        "run",
-        "build_runner",
-        "build"
-      ],
+      "command": "${HOME}/.pub-cache/bin/get create ${input:tplType} ${input:tplName}",
       "problemMatcher": []
     },
     {
-      "label": "Clear build_runner exports",
+      "label": "Getx Generate on module",
       "type": "shell",
-      "command": "rm",
-      "args": [
-        "-rf",
-        "**/*.{g,freezed}.dart",
-      ],
+      "command": "${HOME}/.pub-cache/bin/get create ${input:tplType} ${input:tplName} on ${input:tplSub}",
       "problemMatcher": []
-    },
+    }
   ],
   "inputs": [
     {
@@ -89,6 +142,10 @@
           "label": "iOS",
         },
         {
+          "value": "macos",
+          "label": "macOS",
+        },
+        {
           "value": "web",
           "label": "Web",
         },
@@ -97,6 +154,43 @@
           "label": "All"
         }
       ]
-    }
-  ]
+    },
+    {
+      "id": "tplType",
+      "type": "pickString",
+      "description": "Pick template type",
+      "options": [
+        {
+          "value": "controller",
+          "label": "Controller"
+        },
+        {
+          "value": "page",
+          "label": "Page"
+        },
+        {
+          "value": "provider",
+          "label": "Provider"
+        },
+        {
+          "value": "screen",
+          "label": "Screen"
+        },
+        {
+          "value": "view",
+          "label": "View"
+        },
+      ]
+    },
+    {
+      "id": "tplSub",
+      "type": "promptString",
+      "description": "Create on",
+    },
+    {
+      "id": "tplName",
+      "type": "promptString",
+      "description": "Component name",
+    },
+  ],
 }

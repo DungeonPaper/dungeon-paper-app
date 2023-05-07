@@ -1,199 +1,68 @@
-import 'dart:async';
-import 'package:dungeon_paper/db/db.dart';
-import 'package:dungeon_paper/db/listeners.dart';
-import 'package:dungeon_paper/routes.dart';
-import 'package:dungeon_paper/src/controllers/characters_controller.dart';
-import 'package:dungeon_paper/src/dialogs/dialogs.dart';
-import 'package:dungeon_paper/src/flutter_utils/on_init_caller.dart';
-import 'package:dungeon_paper/src/pages/about_view/about_view.dart';
-import 'package:dungeon_paper/src/pages/account_view/account_view.dart';
-import 'package:dungeon_paper/src/pages/backup_view/backup_view.dart';
-import 'package:dungeon_paper/src/pages/character/select_race_move_view.dart';
-import 'package:dungeon_paper/src/pages/custom_classes_view/custom_classes_view.dart';
-import 'package:dungeon_paper/src/pages/character/character_view.dart';
-import 'package:dungeon_paper/src/pages/scaffold/main_view.dart';
-import 'package:dungeon_paper/src/controllers/prefs_controller.dart';
-import 'package:dungeon_paper/src/pages/settings_view/settings_view.dart';
-import 'package:dungeon_paper/src/scaffolds/inventory_item_view.dart';
-import 'package:dungeon_paper/src/scaffolds/manage_characters_view/manage_characters_view.dart';
-import 'package:dungeon_paper/src/scaffolds/move_view.dart';
-import 'package:dungeon_paper/src/scaffolds/race_move_view.dart';
-import 'package:dungeon_paper/src/scaffolds/spell_view.dart';
-import 'package:dungeon_paper/src/scaffolds/custom_class_wizard/custom_class_view.dart';
-import 'package:dungeon_paper/src/scaffolds/note_view.dart';
-import 'package:dungeon_paper/src/utils/analytics.dart';
-import 'package:dungeon_paper/src/utils/error_reporting.dart';
-import 'package:dungeon_paper/src/utils/logger.dart';
-import 'package:firebase_analytics/observer.dart';
+import 'package:dungeon_paper/app/routes/app_pages.dart';
+import 'package:dungeon_paper/app/data/services/services.dart';
+import 'package:dungeon_paper/core/multi_platform_scroll_behavior.dart';
+import 'package:dungeon_paper/core/pref_keys.dart';
+import 'package:dungeon_paper/core/remote_config.dart';
+import 'package:dungeon_paper/core/shared_preferences.dart';
+import 'package:dungeon_paper/core/utils/secrets_base.dart';
+import 'package:dungeon_paper/generated/intl/messages_all.dart';
+import 'package:dungeon_paper/generated/l10n.dart';
+import 'package:dynamic_themes/dynamic_themes.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
-import 'package:pedantic/pedantic.dart';
+import 'package:flutter_native_splash/flutter_native_splash.dart';
+import 'package:get/route_manager.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'package:sentry_flutter/sentry_flutter.dart';
 
-import 'themes/themes.dart';
-
-void withInit(Function() cb) async {
-  try {
-    WidgetsFlutterBinding.ensureInitialized();
-    Themes.init();
-    if (!kIsWeb) {
-      unawaited(initErrorReporting());
-    }
-    runZonedGuarded(cb, reportError);
-  } catch (e) {
-    logger.e(e);
-    rethrow;
-  }
-}
+import 'app/themes/themes.dart';
+import 'firebase_options.dart';
 
 void main() async {
-  await initApp(web: kIsWeb);
-  withInit(() {
-    registerConfigListener();
+  final widgetsBinding = WidgetsFlutterBinding.ensureInitialized();
 
-    // this should be last
-    prefsController.loadAll();
-    runApp(DungeonPaper());
-  });
+  FlutterNativeSplash.preserve(widgetsBinding: widgetsBinding);
+  await initializeMessages('en');
+  await S.load(const Locale('en', 'US'));
+  await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
+  await loadSharedPrefs();
+  await initRemoteConfig();
+  await initServices();
+  // debugPrint('docsDir: ' + (await getApplicationDocumentsDirectory()).path);
+  FlutterNativeSplash.remove();
+  await SentryFlutter.init(
+    (options) {
+      options.dsn = secrets.sentryDsn;
+      // Set tracesSampleRate to 1.0 to capture 100% of transactions for performance monitoring.
+      // We recommend adjusting this value in production.
+      options.tracesSampleRate = kDebugMode ? 1.0 : 0.5;
+      options.environment = kDebugMode ? 'development' : 'release';
+    },
+    appRunner: () => runApp(const DungeonPaperApp()),
+  );
 }
 
-class DungeonPaper extends StatelessWidget {
-  final FirebaseAnalyticsObserver observer =
-      FirebaseAnalyticsObserver(analytics: analytics);
+class DungeonPaperApp extends StatelessWidget {
+  const DungeonPaperApp({Key? key}) : super(key: key);
 
+  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return OnInitCaller(
-      onInit: () => analytics.logAppOpen(),
-      child: GetMaterialApp(
-        title: 'Dungeon Paper',
-        theme: Themes.currentTheme,
-        routes: {
-          Routes.home.path: (ctx) => MainContainer(initialPage: 0),
-          Routes.battle.path: (ctx) => MainContainer(initialPage: 1),
-          Routes.reference.path: (ctx) => MainContainer(initialPage: 2),
-          Routes.inventory.path: (ctx) => MainContainer(initialPage: 3),
-          Routes.notes.path: (ctx) => MainContainer(initialPage: 4),
-          Routes.account.path: (ctx) => AccountView(),
-          Routes.settings.path: (ctx) => SettingsView(),
-          Routes.backup.path: (ctx) => BackupView(),
-          Routes.customClassesList.path: (ctx) => CustomClassesView(),
-          Routes.customClassCreate.path: (ctx) =>
-              CustomClassView(mode: DialogMode.create),
-          Routes.customClassEdit.path: (ctx) {
-            final CustomClassViewArguments arguments = Get.arguments;
-            return CustomClassView(
-              mode: DialogMode.edit,
-              customClass: arguments.customClass,
-              onSave: arguments.onSave,
-            );
-          },
-          Routes.characterList.path: (ctx) => ManageCharactersView(),
-          Routes.characterCreate.path: (ctx) => CharacterView(
-                character: null,
-                mode: DialogMode.create,
-                onSave: (char) {
-                  characterController.setCurrent(
-                    characterController.all.values.firstWhere(
-                        (c) => c.displayName == char.displayName,
-                        orElse: () => characterController.current),
-                  );
-                },
-              ),
-          Routes.characterEdit.path: (ctx) {
-            final CharacterViewArguments arguments = Get.arguments;
-            return CharacterView(
-              character: arguments.character,
-              mode: DialogMode.edit,
-              onSave: arguments.onSave,
-            );
-          },
-          Routes.moveAdd.path: (ctx) {
-            final MoveViewArguments arguments = Get.arguments;
-            if (arguments == null) {
-              return MoveView.createForCharacter(
-                character: characterController.current,
-              );
-            }
-            return MoveView(
-              mode: DialogMode.create,
-              move: arguments.move,
-              onSave: arguments.onSave,
-            );
-          },
-          Routes.moveEdit.path: (ctx) {
-            final MoveViewArguments arguments = Get.arguments;
-            return MoveView(
-              mode: DialogMode.edit,
-              move: arguments.move,
-              onSave: arguments.onSave,
-            );
-          },
-          Routes.raceMoveAdd.path: (ctx) {
-            final RaceMoveViewArguments arguments = Get.arguments;
-            return RaceMoveView(
-              mode: DialogMode.create,
-              move: arguments.move,
-              onSave: arguments.onSave,
-            );
-          },
-          Routes.raceMoveEdit.path: (ctx) {
-            final SelectRaceMoveViewArguments arguments = Get.arguments;
-            return SelectRaceMoveView(
-              mode: DialogMode.edit,
-              character: arguments.character,
-              onUpdate: arguments.onUpdate,
-            );
-          },
-          Routes.spellAdd.path: (ctx) {
-            final SpellViewArguments arguments = Get.arguments;
-            if (arguments == null) {
-              return SpellView.createForCharacter(
-                character: characterController.current,
-              );
-            }
-            return SpellView(
-              mode: DialogMode.create,
-              spell: arguments.spell,
-              onSave: arguments.onSave,
-            );
-          },
-          Routes.spellEdit.path: (ctx) {
-            final SpellViewArguments arguments = Get.arguments;
-            return SpellView(
-              mode: DialogMode.edit,
-              onSave: arguments.onSave,
-              spell: arguments.spell,
-            );
-          },
-          Routes.itemAdd.path: (ctx) => InventoryItemView.createForCharacter(
-                character: characterController.current,
-              ),
-          Routes.itemEdit.path: (ctx) {
-            final InventoryItemViewArguments arguments = Get.arguments;
-            return InventoryItemView(
-              character: characterController.current,
-              item: arguments.item,
-              mode: DialogMode.edit,
-              onSave: arguments.onSave,
-            );
-          },
-          Routes.noteAdd.path: (ctx) => NoteView.createForCharacter(
-                character: characterController.current,
-              ),
-          Routes.noteEdit.path: (ctx) {
-            final NoteViewArguments arguments = Get.arguments;
-            return NoteView(
-              categories: arguments.categories,
-              mode: DialogMode.edit,
-              note: arguments.note,
-              onSave: arguments.onSave,
-            );
-          },
-          Routes.about.path: (ctx) => AboutView(),
-        },
-        navigatorObservers: [observer],
-      ),
+    final platformBrightness = getCurrentPlatformBrightness();
+    final defaultTheme = platformBrightness == Brightness.light ? AppThemes.parchment : AppThemes.dark;
+
+    return DynamicTheme(
+      themeCollection: themeCollection,
+      defaultThemeId: prefs.getInt(PrefKeys.selectedThemeId) ?? defaultTheme,
+      builder: (context, value) {
+        return GetMaterialApp(
+          scrollBehavior: MultiPlatformScrollBehavior(),
+          title: S.current.appName,
+          theme: value,
+          initialRoute: AppPages.initial,
+          getPages: AppPages.routes,
+        );
+      },
     );
   }
 }

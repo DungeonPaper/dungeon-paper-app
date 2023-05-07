@@ -1,19 +1,52 @@
+# Miscellaneous
+*.class
+*.log
+*.pyc
+*.swp
 .DS_Store
+.atom/
+.buildlog/
+.history
+.svn/
+
+# IntelliJ related
+*.iml
+*.ipr
+*.iws
+.idea/
+
+# The .vscode folder contains launch configuration and tasks you configure in
+# VS Code which you may wish to be included in version control, so this line
+# is commented out by default.
+#.vscode/
+
+# Flutter/Dart/Pub related
+**/doc/api/
+**/ios/Flutter/.last_build_id
 .dart_tool/
-
-.packages
-.pub/
-
-build/
-
 .flutter-plugins
 .flutter-plugins-dependencies
-*.log
+.packages
+.pub-cache/
+.pub/
+/build/
+
+# Web related
+
+# Symbolication related
+app.*.symbols
+
+# Obfuscation related
+app.*.map.json
+
+# Android Studio will place build artifacts here
+/android/app/debug
+/android/app/profile
+/android/app/release
+
+# When cloning this project, use commands:
+# dart pub global activate flutterfire_cli
+# flutterfire configure
+lib/firebase_options.dart
 google-services.json
-GoogleService-Info.plist
-secrets.json
-*.aab
-flutter_export_*.sh
-.tmp
-web/env.js
-.firebase/
+secrets.dart

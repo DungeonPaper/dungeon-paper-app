@@ -5,37 +5,28 @@
   "version": "0.2.0",
   "configurations": [
     {
-      "name": "Flutter",
-      "type": "dart",
+      "name": "dungeon_paper",
       "request": "launch",
-      "program": "lib/main.dart",
+      "type": "dart",
       "args": [
-        // "-v",
-        // "-d518e84af",
-        "--web-port",
-        "8090"
+        // "--no-tree-shake-icons",
+        // "--verbose"
       ]
     },
     {
-      "name": "Flutter (RELEASE)",
-      "type": "dart",
+      "name": "dungeon_paper [verbose]",
       "request": "launch",
-      "program": "lib/main.dart",
+      "type": "dart",
       "args": [
-        // "--flavor",
-        // "development"
-        // "-d711KPNY0809287",
-        // "--observatory-port 9933",
-        // "-v",
-        "--release",
-        // "--web-port", "8090"
-      ],
+        // "--no-tree-shake-icons",
+        "--verbose"
+      ]
     },
     {
-      "name": "Tests",
-      "type": "dart",
+      "name": "dungeon_paper (profile mode)",
       "request": "launch",
-      "program": "./test/"
-    },
+      "type": "dart",
+      "flutterMode": "profile"
+    }
   ]
 }
