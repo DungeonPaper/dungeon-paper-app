@@ -222,6 +222,7 @@ class _EXPDialogState extends State<EXPDialog> with CharacterServiceMixin {
   void _toggleEosMark(SessionMark eos, bool? val) {
     setState(() {
       eosMarks = updateByKey(eosMarks, [eos.copyWithInherited(completed: val ?? !eos.completed)]);
+      charService.updateCharacter(char.copyWith(sessionMarks: upsertByKey(char.sessionMarks, eosMarks)));
     });
   }
 }
