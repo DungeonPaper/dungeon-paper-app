@@ -84,6 +84,8 @@ class CharacterAvatar extends GetView {
         imageUrl: url,
         width: size,
         height: size,
+        memCacheHeight: size.toInt(),
+        memCacheWidth: size.toInt(),
         fit: BoxFit.cover,
         progressIndicatorBuilder: (context, url, state) => AvatarCircularProgress(size: size),
         errorWidget: (context, url, err) => Stack(
