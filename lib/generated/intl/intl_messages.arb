@@ -1,0 +1,3696 @@
+{
+  "@@last_modified": "2023-05-14T01:29:24.684390",
+  "abilityScoreBondDebilityDescription": "",
+  "@abilityScoreBondDebilityDescription": {
+    "description": "",
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "abilityScoreBondDebilityName": "Lonely",
+  "@abilityScoreBondDebilityName": {
+    "description": "",
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "abilityScoreBondDescription": "When a move has you roll+BOND you'll count the number of bonds you have with the character in question and add that to the roll.",
+  "@abilityScoreBondDescription": {
+    "description": "",
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "abilityScoreBondName": "Charisma",
+  "@abilityScoreBondName": {
+    "description": "",
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "abilityScoreButtonTooltip": "Roll +{stat}",
+  "@abilityScoreButtonTooltip": {
+    "description": "",
+    "type": "text",
+    "placeholders_order": [
+      "stat"
+    ],
+    "placeholders": {
+      "stat": {}
+    }
+  },
+  "abilityScoreChaDebilityDescription": "It may not be permanent, but for now you don't look so good.",
+  "@abilityScoreChaDebilityDescription": {
+    "description": "",
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "abilityScoreChaDebilityName": "Scarred",
+  "@abilityScoreChaDebilityName": {
+    "description": "",
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "abilityScoreChaDescription": "Measures a character's personality, personal magnetism, ability to lead, and appearance.",
+  "@abilityScoreChaDescription": {
+    "description": "",
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "abilityScoreChaName": "Charisma",
+  "@abilityScoreChaName": {
+    "description": "",
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "abilityScoreConDebilityDescription": "Something just isn't right inside. Maybe you've got a disease or a wasting illness. Maybe you just drank too much ale last night and it's coming back to haunt you.",
+  "@abilityScoreConDebilityDescription": {
+    "description": "",
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "abilityScoreConDebilityName": "Sick",
+  "@abilityScoreConDebilityName": {
+    "description": "",
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "abilityScoreConDescription": "Represents your character's health and stamina.",
+  "@abilityScoreConDescription": {
+    "description": "",
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "abilityScoreConName": "Constitution",
+  "@abilityScoreConName": {
+    "description": "",
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "abilityScoreDexDebilityDescription": "You're unsteady on your feet and you've got a shake in your hands.",
+  "@abilityScoreDexDebilityDescription": {
+    "description": "",
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "abilityScoreDexDebilityName": "Shaky",
+  "@abilityScoreDexDebilityName": {
+    "description": "",
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "abilityScoreDexDescription": "Measures agility, reflexes and balance.",
+  "@abilityScoreDexDescription": {
+    "description": "",
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "abilityScoreDexName": "Dexterity",
+  "@abilityScoreDexName": {
+    "description": "",
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "abilityScoreFormDebilityDescriptionDescription": "A description of the effect causing the debility and/or how it affects your character",
+  "@abilityScoreFormDebilityDescriptionDescription": {
+    "description": "",
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "abilityScoreFormDebilityDescriptionLabel": "Debility Description",
+  "@abilityScoreFormDebilityDescriptionLabel": {
+    "description": "",
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "abilityScoreFormDebilityNameDescription": "The name for the debility that occurs when this stat is debilitated (takes -1 until recovered).",
+  "@abilityScoreFormDebilityNameDescription": {
+    "description": "",
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "abilityScoreFormDebilityNameLabel": "Debility Name",
+  "@abilityScoreFormDebilityNameLabel": {
+    "description": "",
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "abilityScoreFormDescriptionDescription": "A description of what this ability score represents",
+  "@abilityScoreFormDescriptionDescription": {
+    "description": "",
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "abilityScoreFormDescriptionLabel": "Ability Score Description",
+  "@abilityScoreFormDescriptionLabel": {
+    "description": "",
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "abilityScoreFormIconLabel": "Icon",
+  "@abilityScoreFormIconLabel": {
+    "description": "",
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "abilityScoreFormKeyDescription": "A 3-letter unique key that identifies this ability score in dice and is used as the short label for the modifier value (and not the actual score)",
+  "@abilityScoreFormKeyDescription": {
+    "description": "",
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "abilityScoreFormKeyLabel": "Ability Score Key",
+  "@abilityScoreFormKeyLabel": {
+    "description": "",
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "abilityScoreFormNameDescription": "The name of this ability score",
+  "@abilityScoreFormNameDescription": {
+    "description": "",
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "abilityScoreFormNameLabel": "Ability Score Name",
+  "@abilityScoreFormNameLabel": {
+    "description": "",
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "abilityScoreFormPickIconLabel": "Change Icon",
+  "@abilityScoreFormPickIconLabel": {
+    "description": "",
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "abilityScoreInfo": "You can drag & drop the stat cards to change the order in which they appear throughout this character's screens.",
+  "@abilityScoreInfo": {
+    "description": "",
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "abilityScoreIntDebilityDescription": "That last knock to the head shook something loose. Brain not work so good.",
+  "@abilityScoreIntDebilityDescription": {
+    "description": "",
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "abilityScoreIntDebilityName": "Stunned",
+  "@abilityScoreIntDebilityName": {
+    "description": "",
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "abilityScoreIntDescription": "Determines how well your character learns and reasons.",
+  "@abilityScoreIntDescription": {
+    "description": "",
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "abilityScoreIntName": "Intelligence",
+  "@abilityScoreIntName": {
+    "description": "",
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "abilityScoreModifierValueLabel": "Modifier:\n{modifier}",
+  "@abilityScoreModifierValueLabel": {
+    "description": "",
+    "type": "text",
+    "placeholders_order": [
+      "modifier"
+    ],
+    "placeholders": {
+      "modifier": {}
+    }
+  },
+  "abilityScoreRollButtonTooltip": "Roll random stat",
+  "@abilityScoreRollButtonTooltip": {
+    "description": "",
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "abilityScoreStrDebilityDescription": "You can't exert much force. Maybe it's just fatigue and injury, or maybe your strength was drained by magic.",
+  "@abilityScoreStrDebilityDescription": {
+    "description": "",
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "abilityScoreStrDebilityName": "Weak",
+  "@abilityScoreStrDebilityName": {
+    "description": "",
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "abilityScoreStrDescription": "Measures muscle and physical power.",
+  "@abilityScoreStrDescription": {
+    "description": "",
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "abilityScoreStrName": "Strength",
+  "@abilityScoreStrName": {
+    "description": "",
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "abilityScoreWisDebilityDescription": "Ears ringing. Vision blurred. You're more than a little out of it.",
+  "@abilityScoreWisDebilityDescription": {
+    "description": "",
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "abilityScoreWisDebilityName": "Confused",
+  "@abilityScoreWisDebilityName": {
+    "description": "",
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "abilityScoreWisDescription": "Describes a character's willpower, common sense, awareness, and intuition.",
+  "@abilityScoreWisDescription": {
+    "description": "",
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "abilityScoreWisName": "Wisdom",
+  "@abilityScoreWisName": {
+    "description": "",
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "about": "About",
+  "@about": {
+    "description": "",
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "aboutAuthor": "Chen Asraf",
+  "@aboutAuthor": {
+    "description": "",
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "aboutCopyright": "Copyright © 2018-{year}",
+  "@aboutCopyright": {
+    "description": "",
+    "type": "text",
+    "placeholders_order": [
+      "year"
+    ],
+    "placeholders": {
+      "year": {}
+    }
+  },
+  "aboutIconCredits": "Icon Credits",
+  "@aboutIconCredits": {
+    "description": "",
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "aboutJoinDiscord": "Join Our Discord",
+  "@aboutJoinDiscord": {
+    "description": "",
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "aboutJoinDiscordSubtitle": "Join the Discord community to ask questions, get help, send feedback, or just chat with other players.",
+  "@aboutJoinDiscordSubtitle": {
+    "description": "",
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "aboutSendFeedback": "Send Feedback",
+  "@aboutSendFeedback": {
+    "description": "",
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "aboutSendFeedbackSubtitle": "We reply more promptly through Discord, but you can send us feedback, bug reports or suggestions about the app directly here as an alternative.",
+  "@aboutSendFeedbackSubtitle": {
+    "description": "",
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "aboutSocialLinks": "Links",
+  "@aboutSocialLinks": {
+    "description": "",
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "aboutSpecialThanks": "Special Thanks",
+  "@aboutSpecialThanks": {
+    "description": "",
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "aboutTitle": "About",
+  "@aboutTitle": {
+    "description": "",
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "aboutVersion": "Version {version}",
+  "@aboutVersion": {
+    "description": "",
+    "type": "text",
+    "placeholders_order": [
+      "version"
+    ],
+    "placeholders": {
+      "version": {}
+    }
+  },
+  "account": "Account",
+  "@account": {
+    "description": "",
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "accountCategoryDetails": "Account Details",
+  "@accountCategoryDetails": {
+    "description": "",
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "accountCategorySocials": "Connected Logins",
+  "@accountCategorySocials": {
+    "description": "",
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "accountChangeDisplayNameHint": "Enter your public display name",
+  "@accountChangeDisplayNameHint": {
+    "description": "",
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "accountChangeDisplayNameLabel": "Display Name",
+  "@accountChangeDisplayNameLabel": {
+    "description": "",
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "accountChangeDisplayNameSuccess": "Display name changed successfully",
+  "@accountChangeDisplayNameSuccess": {
+    "description": "",
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "accountChangeDisplayNameTitle": "Change Display Name",
+  "@accountChangeDisplayNameTitle": {
+    "description": "",
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "accountChangeEmailHint": "Enter your new email address",
+  "@accountChangeEmailHint": {
+    "description": "",
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "accountChangeEmailLabel": "Email Address",
+  "@accountChangeEmailLabel": {
+    "description": "",
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "accountChangeEmailSuccess": "Email address changed successfully",
+  "@accountChangeEmailSuccess": {
+    "description": "",
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "accountChangeEmailTitle": "Change Email Address",
+  "@accountChangeEmailTitle": {
+    "description": "",
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "accountChangeImageSubtitle": "Change your profile picture",
+  "@accountChangeImageSubtitle": {
+    "description": "",
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "accountChangeImageTitle": "Change Profile Picture",
+  "@accountChangeImageTitle": {
+    "description": "",
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "accountChangePasswordConfirmHint": "Enter the same password again",
+  "@accountChangePasswordConfirmHint": {
+    "description": "",
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "accountChangePasswordConfirmLabel": "Confirm New Password",
+  "@accountChangePasswordConfirmLabel": {
+    "description": "",
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "accountChangePasswordHint": "Enter your new password",
+  "@accountChangePasswordHint": {
+    "description": "",
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "accountChangePasswordLabel": "New Password",
+  "@accountChangePasswordLabel": {
+    "description": "",
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "accountChangePasswordSubtitle": "Change your password",
+  "@accountChangePasswordSubtitle": {
+    "description": "",
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "accountChangePasswordSuccess": "Password changed successfully",
+  "@accountChangePasswordSuccess": {
+    "description": "",
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "accountChangePasswordTitle": "Change Password",
+  "@accountChangePasswordTitle": {
+    "description": "",
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "accountDelete": "Delete Your Account",
+  "@accountDelete": {
+    "description": "",
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "actionsBasicMoves": "Basic Moves",
+  "@actionsBasicMoves": {
+    "description": "",
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "actionsSpecialMoves": "Special Moves",
+  "@actionsSpecialMoves": {
+    "description": "",
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "actionSummaryChipCoins": "{coins} G",
+  "@actionSummaryChipCoins": {
+    "description": "",
+    "type": "text",
+    "placeholders_order": [
+      "coins"
+    ],
+    "placeholders": {
+      "coins": {}
+    }
+  },
+  "actionSummaryChipLoad": "Load: {load}/{maxLoad}",
+  "@actionSummaryChipLoad": {
+    "description": "",
+    "type": "text",
+    "placeholders_order": [
+      "load",
+      "maxLoad"
+    ],
+    "placeholders": {
+      "load": {},
+      "maxLoad": {}
+    }
+  },
+  "actionsViewVisibleLabel": "Show",
+  "@actionsViewVisibleLabel": {
+    "description": "",
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "addCustomGeneric": "Add New {entity}",
+  "@addCustomGeneric": {
+    "description": "",
+    "type": "text",
+    "placeholders_order": [
+      "entity"
+    ],
+    "placeholders": {
+      "entity": {}
+    }
+  },
+  "addExistingGeneric": "Add Existing {entity}",
+  "@addExistingGeneric": {
+    "description": "",
+    "type": "text",
+    "placeholders_order": [
+      "entity"
+    ],
+    "placeholders": {
+      "entity": {}
+    }
+  },
+  "addGeneric": "Add {entity}",
+  "@addGeneric": {
+    "description": "",
+    "type": "text",
+    "placeholders_order": [
+      "entity"
+    ],
+    "placeholders": {
+      "entity": {}
+    }
+  },
+  "addRepoItemTabOnline": "Online",
+  "@addRepoItemTabOnline": {
+    "description": "",
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "addRepoItemTabPlaybook": "Playbook",
+  "@addRepoItemTabPlaybook": {
+    "description": "",
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "alignment": "{alignment,select, chaotic{Chaotic}evil{Evil}good{Good}lawful{Lawful}neutral{Neutral}other{{alignment}}}",
+  "@alignment": {
+    "description": "",
+    "type": "text",
+    "placeholders_order": [
+      "alignment"
+    ],
+    "placeholders": {
+      "alignment": {}
+    }
+  },
+  "alignmentLabel": "Alignment",
+  "@alignmentLabel": {
+    "description": "",
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "all": "All",
+  "@all": {
+    "description": "",
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "allGeneric": "All {entity}",
+  "@allGeneric": {
+    "description": "",
+    "type": "text",
+    "placeholders_order": [
+      "entity"
+    ],
+    "placeholders": {
+      "entity": {}
+    }
+  },
+  "alreadyAdded": "Already added",
+  "@alreadyAdded": {
+    "description": "",
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "amount": "Amount",
+  "@amount": {
+    "description": "",
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "appName": "Dungeon Paper",
+  "@appName": {
+    "description": "",
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "armor": "Armor",
+  "@armor": {
+    "description": "",
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "basicInfoImageChoose": "Choose Photo...",
+  "@basicInfoImageChoose": {
+    "description": "",
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "basicInfoImageChooseNew": "Change Photo...",
+  "@basicInfoImageChooseNew": {
+    "description": "",
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "basicInfoImageNeedAccountLinkLabel": "Sign in or create an account",
+  "@basicInfoImageNeedAccountLinkLabel": {
+    "description": "",
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "basicInfoImageNeedAccountPrefix": "You need to be signed in to upload images.",
+  "@basicInfoImageNeedAccountPrefix": {
+    "description": "",
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "basicInfoImageNeedAccountSuffix": ", or upload using your own URL below.",
+  "@basicInfoImageNeedAccountSuffix": {
+    "description": "",
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "basicInfoImageRemove": "Remove Photo",
+  "@basicInfoImageRemove": {
+    "description": "",
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "basicInfoImageUploading": "UPLOADING...",
+  "@basicInfoImageUploading": {
+    "description": "",
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "basicInformationTitle": "Basic Information",
+  "@basicInformationTitle": {
+    "description": "",
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "cancel": "Cancel",
+  "@cancel": {
+    "description": "",
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "changeGeneric": "Change {entity}",
+  "@changeGeneric": {
+    "description": "",
+    "type": "text",
+    "placeholders_order": [
+      "entity"
+    ],
+    "placeholders": {
+      "entity": {}
+    }
+  },
+  "characterAutoArmor": "Use armor from class & equipped items",
+  "@characterAutoArmor": {
+    "description": "",
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "characterAutoDamage": "Use damage dice from class & equipped items",
+  "@characterAutoDamage": {
+    "description": "",
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "characterAutoMaxLoad": "Use class base load + STR mod",
+  "@characterAutoMaxLoad": {
+    "description": "",
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "characterBarHp": "HP",
+  "@characterBarHp": {
+    "description": "",
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "characterBarXp": "XP",
+  "@characterBarXp": {
+    "description": "",
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "characterBioDialogAlignmentDescriptionLabel": "Alignment Description",
+  "@characterBioDialogAlignmentDescriptionLabel": {
+    "description": "",
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "characterBioDialogAlignmentDescriptionPlaceholder": "Alignment is your character's way of thinking and moral compass. This can center on an ethical ideal, religious strictures or early life events. It reflects what your character values and aspires to protect or create.",
+  "@characterBioDialogAlignmentDescriptionPlaceholder": {
+    "description": "",
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "characterBioDialogAlignmentNameDisplayLabel": "Alignment:",
+  "@characterBioDialogAlignmentNameDisplayLabel": {
+    "description": "",
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "characterBioDialogAlignmentNameLabel": "Alignment",
+  "@characterBioDialogAlignmentNameLabel": {
+    "description": "",
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "characterBioDialogAlignmentNamePlaceholder": "Select alignment",
+  "@characterBioDialogAlignmentNamePlaceholder": {
+    "description": "",
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "characterBioDialogDescLabel": "Character & background description",
+  "@characterBioDialogDescLabel": {
+    "description": "",
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "characterBioDialogDescPlaceholder": "Describe your character's background, personality, goals, etc.",
+  "@characterBioDialogDescPlaceholder": {
+    "description": "",
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "characterBioDialogLooksLabel": "Looks",
+  "@characterBioDialogLooksLabel": {
+    "description": "",
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "characterBioDialogLooksPlaceholder": "Describe your character's appearance. You may use the presets from the buttons above.",
+  "@characterBioDialogLooksPlaceholder": {
+    "description": "",
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "characterBioDialogTitle": "Character Biography",
+  "@characterBioDialogTitle": {
+    "description": "",
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "characterBondsFlagsDialogBond": "Bond",
+  "@characterBondsFlagsDialogBond": {
+    "description": "",
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "characterBondsFlagsDialogBonds": "Bonds",
+  "@characterBondsFlagsDialogBonds": {
+    "description": "",
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "characterBondsFlagsDialogFlag": "Flag",
+  "@characterBondsFlagsDialogFlag": {
+    "description": "",
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "characterBondsFlagsDialogFlags": "Flags",
+  "@characterBondsFlagsDialogFlags": {
+    "description": "",
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "characterBondsFlagsDialogInfoText": "You can add, update or remove bonds & flags using the edit icon above.",
+  "@characterBondsFlagsDialogInfoText": {
+    "description": "",
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "characterBondsFlagsDialogNoData": "You have no bonds or flags. You can add some using the edit button above, then mark them off as completed as you go along your adventure.",
+  "@characterBondsFlagsDialogNoData": {
+    "description": "",
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "characterBondsFlagsDialogTitle": "Bonds & Flags",
+  "@characterBondsFlagsDialogTitle": {
+    "description": "",
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "characterDebilitiesDialogInfoText": "Debilities are temporary, negative conditions or states in which your character is in. When a stat is debilitated, it causes its modifier to be reduced by 1 until recovered.",
+  "@characterDebilitiesDialogInfoText": {
+    "description": "",
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "characterDebilitiesDialogTitle": "Debilities",
+  "@characterDebilitiesDialogTitle": {
+    "description": "",
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "characterHeaderSubtitle": "Level {level} ∙ {charClass} ∙ {race} ∙",
+  "@characterHeaderSubtitle": {
+    "description": "",
+    "type": "text",
+    "placeholders_order": [
+      "level",
+      "charClass",
+      "race"
+    ],
+    "placeholders": {
+      "level": {},
+      "charClass": {},
+      "race": {}
+    }
+  },
+  "characterHeaderSubtitleAlignment": "{alignment}",
+  "@characterHeaderSubtitleAlignment": {
+    "description": "",
+    "type": "text",
+    "placeholders_order": [
+      "alignment"
+    ],
+    "placeholders": {
+      "alignment": {}
+    }
+  },
+  "characterHeaderSubtitleClass": "{charClass}",
+  "@characterHeaderSubtitleClass": {
+    "description": "",
+    "type": "text",
+    "placeholders_order": [
+      "charClass"
+    ],
+    "placeholders": {
+      "charClass": {}
+    }
+  },
+  "characterHeaderSubtitleLevel": "Level {level}",
+  "@characterHeaderSubtitleLevel": {
+    "description": "",
+    "type": "text",
+    "placeholders_order": [
+      "level"
+    ],
+    "placeholders": {
+      "level": {}
+    }
+  },
+  "characterHeaderSubtitleRace": "{race}",
+  "@characterHeaderSubtitleRace": {
+    "description": "",
+    "type": "text",
+    "placeholders_order": [
+      "race"
+    ],
+    "placeholders": {
+      "race": {}
+    }
+  },
+  "characterHeaderSubtitleSeparator": " ∙ ",
+  "@characterHeaderSubtitleSeparator": {
+    "description": "",
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "characterListTitle": "All Characters",
+  "@characterListTitle": {
+    "description": "",
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "characterMenu": "Character Menu",
+  "@characterMenu": {
+    "description": "",
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "characterNoCategory": "No Category",
+  "@characterNoCategory": {
+    "description": "",
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "characterRollsTitle": "Ability Scores",
+  "@characterRollsTitle": {
+    "description": "",
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "characterSelectTheme": "Character Theme",
+  "@characterSelectTheme": {
+    "description": "",
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "coins": "Coins",
+  "@coins": {
+    "description": "",
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "coinsWithCount": "{count,plural, =0{No coins}=1{One coin}other{{fmtCount} coins}}",
+  "@coinsWithCount": {
+    "description": "",
+    "type": "text",
+    "placeholders_order": [
+      "count",
+      "fmtCount"
+    ],
+    "placeholders": {
+      "count": {},
+      "fmtCount": {}
+    }
+  },
+  "confirm": "Confirm",
+  "@confirm": {
+    "description": "",
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "confirmDeleteBody": "Are you sure you want to remove the {entity} \"{name}\" from the list?",
+  "@confirmDeleteBody": {
+    "description": "",
+    "type": "text",
+    "placeholders_order": [
+      "entity",
+      "name"
+    ],
+    "placeholders": {
+      "entity": {},
+      "name": {}
+    }
+  },
+  "confirmDeleteTitle": "Delete {entity}?",
+  "@confirmDeleteTitle": {
+    "description": "",
+    "type": "text",
+    "placeholders_order": [
+      "entity"
+    ],
+    "placeholders": {
+      "entity": {}
+    }
+  },
+  "confirmDeleteAccount1Body": "Are you sure you want to delete your account?\n\nThis action cannot be undone.",
+  "@confirmDeleteAccount1Body": {
+    "description": "",
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "confirmDeleteAccount1Title": "Delete Your Account?",
+  "@confirmDeleteAccount1Title": {
+    "description": "",
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "confirmDeleteAccount2Body": "We do not save any data for deleted accounts. All your data will be permanently deleted.\n\nAre you sure you want to delete your account?\n\nPlease confirm this one last time.",
+  "@confirmDeleteAccount2Body": {
+    "description": "",
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "confirmDeleteAccount2Title": "Are you really sure?",
+  "@confirmDeleteAccount2Title": {
+    "description": "",
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "confirmUnlinkProviderBody": "Are you sure you want to unlink your account from {provider}?\nBy clicking \"Unlink\", you will no longer be able to sign in with {provider}.\n\nYou will be able to re-link your account at any time by going to your account settings.",
+  "@confirmUnlinkProviderBody": {
+    "description": "",
+    "type": "text",
+    "placeholders_order": [
+      "provider"
+    ],
+    "placeholders": {
+      "provider": {}
+    }
+  },
+  "confirmUnlinkProviderTitle": "Unlink from {entity}?",
+  "@confirmUnlinkProviderTitle": {
+    "description": "",
+    "type": "text",
+    "placeholders_order": [
+      "entity"
+    ],
+    "placeholders": {
+      "entity": {}
+    }
+  },
+  "confirmExitDefaultCancelLabel": "Continue editing",
+  "@confirmExitDefaultCancelLabel": {
+    "description": "",
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "confirmExitDefaultOkLabel": "Exit & Discard",
+  "@confirmExitDefaultOkLabel": {
+    "description": "",
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "confirmExitDefaultText": "Going back will lose any unsaved changes.\nAre you sure you want to go back?",
+  "@confirmExitDefaultText": {
+    "description": "",
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "confirmExitDefaultTitle": "Are you sure?",
+  "@confirmExitDefaultTitle": {
+    "description": "",
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "continueLabel": "Continue",
+  "@continueLabel": {
+    "description": "",
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "createCharacterAddButton": "Create Character",
+  "@createCharacterAddButton": {
+    "description": "",
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "createCharacterAvatarFieldLabel": "Photo URL",
+  "@createCharacterAvatarFieldLabel": {
+    "description": "",
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "createCharacterAvatarFieldPlaceholder": "Paste an image URL",
+  "@createCharacterAvatarFieldPlaceholder": {
+    "description": "",
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "createCharacterBioFieldLabel": "Biography",
+  "@createCharacterBioFieldLabel": {
+    "description": "",
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "createCharacterBioFieldPlaceholder": "Describe your character as shortly or thoroughly as you want here.\nPut your backstory, a visual description, some personality traits, etc. to help you keep in character.",
+  "@createCharacterBioFieldPlaceholder": {
+    "description": "",
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "createCharacterClassDescription": "Base HP: {hp}, Load: {load}, Damage Dice: {damageDice}",
+  "@createCharacterClassDescription": {
+    "description": "",
+    "type": "text",
+    "placeholders_order": [
+      "hp",
+      "load",
+      "damageDice"
+    ],
+    "placeholders": {
+      "hp": {},
+      "load": {},
+      "damageDice": {}
+    }
+  },
+  "createCharacterClassHelpText": "No class selected (required)",
+  "@createCharacterClassHelpText": {
+    "description": "",
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "createCharacterDescFieldLabel": "Biography/description",
+  "@createCharacterDescFieldLabel": {
+    "description": "",
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "createCharacterDescFieldPlaceholder": "Enter general information about your character - backstory, goals & ambitions, behavior descriptions, etc",
+  "@createCharacterDescFieldPlaceholder": {
+    "description": "",
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "createCharacterFinishButton": "Review",
+  "@createCharacterFinishButton": {
+    "description": "",
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "createCharacterMovesSpells": "Moves & Spells",
+  "@createCharacterMovesSpells": {
+    "description": "",
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "createCharacterMovesSpellsDescription": "{moves} Moves, {spells} Spells selected",
+  "@createCharacterMovesSpellsDescription": {
+    "description": "",
+    "type": "text",
+    "placeholders_order": [
+      "moves",
+      "spells"
+    ],
+    "placeholders": {
+      "moves": {},
+      "spells": {}
+    }
+  },
+  "createCharacterNameFieldLabel": "Character Name",
+  "@createCharacterNameFieldLabel": {
+    "description": "",
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "createCharacterNameFieldPlaceholder": "Enter your character's name",
+  "@createCharacterNameFieldPlaceholder": {
+    "description": "",
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "createCharacterPreviewPageMaxHp": "Max HP: {hp}",
+  "@createCharacterPreviewPageMaxHp": {
+    "description": "",
+    "type": "text",
+    "placeholders_order": [
+      "hp"
+    ],
+    "placeholders": {
+      "hp": {}
+    }
+  },
+  "createCharacterPreviewPageTitle": "Preview Character",
+  "@createCharacterPreviewPageTitle": {
+    "description": "",
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "createCharacterProceedTooltip": "Continue",
+  "@createCharacterProceedTooltip": {
+    "description": "",
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "createCharacterRaceDescFieldLabel": "Race description",
+  "@createCharacterRaceDescFieldLabel": {
+    "description": "",
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "createCharacterRaceDescFieldPlaceholder": "Describe a special move usable by your race. It will appear alongside the rest of the moves.",
+  "@createCharacterRaceDescFieldPlaceholder": {
+    "description": "",
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "createCharacterRaceNameFieldLabel": "Race",
+  "@createCharacterRaceNameFieldLabel": {
+    "description": "",
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "createCharacterRaceNameFieldPlaceholder": "Race name",
+  "@createCharacterRaceNameFieldPlaceholder": {
+    "description": "",
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "createCharacterSaveButton": "Create Character",
+  "@createCharacterSaveButton": {
+    "description": "",
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "createCharacterStartingGearChoiceCountNoMax": "{count} selected",
+  "@createCharacterStartingGearChoiceCountNoMax": {
+    "description": "",
+    "type": "text",
+    "placeholders_order": [
+      "count"
+    ],
+    "placeholders": {
+      "count": {}
+    }
+  },
+  "createCharacterStartingGearChoiceCountWithMax": "{count} selected (class allowance: {max})",
+  "@createCharacterStartingGearChoiceCountWithMax": {
+    "description": "",
+    "type": "text",
+    "placeholders_order": [
+      "count",
+      "max"
+    ],
+    "placeholders": {
+      "count": {},
+      "max": {}
+    }
+  },
+  "createCharacterStartingGearDescriptionCoins": "{amount} coins",
+  "@createCharacterStartingGearDescriptionCoins": {
+    "description": "",
+    "type": "text",
+    "placeholders_order": [
+      "amount"
+    ],
+    "placeholders": {
+      "amount": {}
+    }
+  },
+  "createCharacterStartingGearDescriptionItem": "{amount} × {name}",
+  "@createCharacterStartingGearDescriptionItem": {
+    "description": "",
+    "type": "text",
+    "placeholders_order": [
+      "amount",
+      "name"
+    ],
+    "placeholders": {
+      "amount": {},
+      "name": {}
+    }
+  },
+  "createCharacterStartingGearHelpText": "Select your starting gear determined by class (optional)",
+  "@createCharacterStartingGearHelpText": {
+    "description": "",
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "createCharacterStepInvalidTooltip": "{step} - Changes Required",
+  "@createCharacterStepInvalidTooltip": {
+    "description": "",
+    "type": "text",
+    "placeholders_order": [
+      "step"
+    ],
+    "placeholders": {
+      "step": {}
+    }
+  },
+  "createCharacterTitle": "Create Character",
+  "@createCharacterTitle": {
+    "description": "",
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "createCharacterTravelerBlankName": "Unnamed Traveler",
+  "@createCharacterTravelerBlankName": {
+    "description": "",
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "createCharacterTravelerDescription": "Level 1 {cls}",
+  "@createCharacterTravelerDescription": {
+    "description": "",
+    "type": "text",
+    "placeholders_order": [
+      "cls"
+    ],
+    "placeholders": {
+      "cls": {}
+    }
+  },
+  "createCharacterTravelerHelpText": "Select name & picture (required)",
+  "@createCharacterTravelerHelpText": {
+    "description": "",
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "createCharRandomizeNameTooltipClick": "Click to generate a random name",
+  "@createCharRandomizeNameTooltipClick": {
+    "description": "",
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "createCharRandomizeNameTooltipTouch": "Tap to generate a random name",
+  "@createCharRandomizeNameTooltipTouch": {
+    "description": "",
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "createGeneric": "Create {entity}",
+  "@createGeneric": {
+    "description": "",
+    "type": "text",
+    "placeholders_order": [
+      "entity"
+    ],
+    "placeholders": {
+      "entity": {}
+    }
+  },
+  "customButtonLeft": "Left Button",
+  "@customButtonLeft": {
+    "description": "",
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "customButtonRight": "Right Button",
+  "@customButtonRight": {
+    "description": "",
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "customRollButtons": "Quick Roll Buttons",
+  "@customRollButtons": {
+    "description": "",
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "customRollButtonsUseDefault": "Use Default",
+  "@customRollButtonsUseDefault": {
+    "description": "",
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "customRollButtonsUsePreset": "Presets",
+  "@customRollButtonsUsePreset": {
+    "description": "",
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "damage": "Damage",
+  "@damage": {
+    "description": "",
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "damageDice": "Damage Dice",
+  "@damageDice": {
+    "description": "",
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "debilityLabel": "{name} ({key})",
+  "@debilityLabel": {
+    "description": "",
+    "type": "text",
+    "placeholders_order": [
+      "name",
+      "key"
+    ],
+    "placeholders": {
+      "name": {},
+      "key": {}
+    }
+  },
+  "diceAmount": "Amount",
+  "@diceAmount": {
+    "description": "",
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "diceRollAgain": "Roll",
+  "@diceRollAgain": {
+    "description": "",
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "diceSeparator": "d",
+  "@diceSeparator": {
+    "description": "",
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "diceSides": "Sides",
+  "@diceSides": {
+    "description": "",
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "diceSuggestion": "Suggested: {dice}",
+  "@diceSuggestion": {
+    "description": "",
+    "type": "text",
+    "placeholders_order": [
+      "dice"
+    ],
+    "placeholders": {
+      "dice": {}
+    }
+  },
+  "diceUseStat": "Roll Stat",
+  "@diceUseStat": {
+    "description": "",
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "diceUseStatLabel": "Stat",
+  "@diceUseStatLabel": {
+    "description": "",
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "diceUseStatPlaceholder": "Select Stat",
+  "@diceUseStatPlaceholder": {
+    "description": "",
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "diceUseStatValue": "{name} ({key})",
+  "@diceUseStatValue": {
+    "description": "",
+    "type": "text",
+    "placeholders_order": [
+      "name",
+      "key"
+    ],
+    "placeholders": {
+      "name": {},
+      "key": {}
+    }
+  },
+  "diceUseValue": "Fixed Value",
+  "@diceUseValue": {
+    "description": "",
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "diceUseValueLabel": "Modifier value",
+  "@diceUseValueLabel": {
+    "description": "",
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "diceUseValuePlaceholder": "Number, e.g. 2 or -1",
+  "@diceUseValuePlaceholder": {
+    "description": "",
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "done": "Done",
+  "@done": {
+    "description": "",
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "dynamicCategoriesItems": "Equipped Items",
+  "@dynamicCategoriesItems": {
+    "description": "",
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "dynamicCategoriesMoves": "Favorite Moves",
+  "@dynamicCategoriesMoves": {
+    "description": "",
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "dynamicCategoriesNotes": "Bookmarked Notes",
+  "@dynamicCategoriesNotes": {
+    "description": "",
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "dynamicCategoriesSpells": "Prepared Spells",
+  "@dynamicCategoriesSpells": {
+    "description": "",
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "edit": "Edit",
+  "@edit": {
+    "description": "",
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "editGeneric": "Edit {entity}",
+  "@editGeneric": {
+    "description": "",
+    "type": "text",
+    "placeholders_order": [
+      "entity"
+    ],
+    "placeholders": {
+      "entity": {}
+    }
+  },
+  "endOfSessionQ1": "Did we learn something new and important about the world?",
+  "@endOfSessionQ1": {
+    "description": "",
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "endOfSessionQ2": "Did we overcome a notable monster or enemy?",
+  "@endOfSessionQ2": {
+    "description": "",
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "endOfSessionQ3": "Did we loot a memorable treasure?",
+  "@endOfSessionQ3": {
+    "description": "",
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "endOfSessionQuestions": "End of Session Questions",
+  "@endOfSessionQuestions": {
+    "description": "",
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "endOfSessionQuestionsSubtitle": "Answer these questions as a group. For each \"yes\" answer, XP is marked.",
+  "@endOfSessionQuestionsSubtitle": {
+    "description": "",
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "entity": "{runtimeType,select, CharacterClass{Class}Item{Item}Monster{Monster}Move{Move}Race{Race}Spell{Spell}Tag{Tag}MoveCategory{Category}GearSelection{Starting Gear}Dice{Dice}AbilityScore{Ability Score}AlignmentValue{Alignment}Playbook{Playbook}other{{runtimeType}}}",
+  "@entity": {
+    "description": "",
+    "type": "text",
+    "placeholders_order": [
+      "runtimeType"
+    ],
+    "placeholders": {
+      "runtimeType": {}
+    }
+  },
+  "entityPlural": "{runtimeType,select, CharacterClass{Classes}Item{Items}Monster{Monsters}Move{Moves}Race{Races}Spell{Spells}Tag{Tags}MoveCategory{Categories}Dice{Dice}GearSelection{Starting Gear}AbilityScore{Ability Scores}AlignmentValue{Alignment}Playbook{Playbooks}other{{runtimeType}s}}",
+  "@entityPlural": {
+    "description": "",
+    "type": "text",
+    "placeholders_order": [
+      "runtimeType"
+    ],
+    "placeholders": {
+      "runtimeType": {}
+    }
+  },
+  "entityShareStatusDetached": "This {entity} is not linked to any library item",
+  "@entityShareStatusDetached": {
+    "description": "",
+    "type": "text",
+    "placeholders_order": [
+      "entity"
+    ],
+    "placeholders": {
+      "entity": {}
+    }
+  },
+  "entityShareStatusInSync": "This {entity} is In Sync with its linked library item",
+  "@entityShareStatusInSync": {
+    "description": "",
+    "type": "text",
+    "placeholders_order": [
+      "entity"
+    ],
+    "placeholders": {
+      "entity": {}
+    }
+  },
+  "entityShareStatusOutOfSync": "This {entity} is Out of Sync with its linked library item",
+  "@entityShareStatusOutOfSync": {
+    "description": "",
+    "type": "text",
+    "placeholders_order": [
+      "entity"
+    ],
+    "placeholders": {
+      "entity": {}
+    }
+  },
+  "entityWithCount": "{count,plural, =0{No {entPlural}}=1{One {ent}}other{{count} {entPlural}}}",
+  "@entityWithCount": {
+    "description": "",
+    "type": "text",
+    "placeholders_order": [
+      "count",
+      "entPlural",
+      "ent"
+    ],
+    "placeholders": {
+      "count": {},
+      "entPlural": {},
+      "ent": {}
+    }
+  },
+  "errorExactLength": "Must be exactly {length} {length,plural, =1{character}other{characters}}",
+  "@errorExactLength": {
+    "description": "",
+    "type": "text",
+    "placeholders_order": [
+      "length"
+    ],
+    "placeholders": {
+      "length": {}
+    }
+  },
+  "errorInvalidEmail": "Invalid email address",
+  "@errorInvalidEmail": {
+    "description": "",
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "errorMaxLength": "Must be no more than {length} {length,plural, =1{character}other{characters}}",
+  "@errorMaxLength": {
+    "description": "",
+    "type": "text",
+    "placeholders_order": [
+      "length"
+    ],
+    "placeholders": {
+      "length": {}
+    }
+  },
+  "errorMinLength": "Must be at least {length} {length,plural, =1{character}other{characters}}",
+  "@errorMinLength": {
+    "description": "",
+    "type": "text",
+    "placeholders_order": [
+      "length"
+    ],
+    "placeholders": {
+      "length": {}
+    }
+  },
+  "errorMustContain": "Must contain {pattern}",
+  "@errorMustContain": {
+    "description": "",
+    "type": "text",
+    "placeholders_order": [
+      "pattern"
+    ],
+    "placeholders": {
+      "pattern": {}
+    }
+  },
+  "errorMustNotContain": "Must not contain {pattern}",
+  "@errorMustNotContain": {
+    "description": "",
+    "type": "text",
+    "placeholders_order": [
+      "pattern"
+    ],
+    "placeholders": {
+      "pattern": {}
+    }
+  },
+  "errorNoSelection": "None selected",
+  "@errorNoSelection": {
+    "description": "",
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "errorNoSelectionGeneric": "No {entity} selected",
+  "@errorNoSelectionGeneric": {
+    "description": "",
+    "type": "text",
+    "placeholders_order": [
+      "entity"
+    ],
+    "placeholders": {
+      "entity": {}
+    }
+  },
+  "errorNoSelectionGenericRequired": "No {entity} selected (required)",
+  "@errorNoSelectionGenericRequired": {
+    "description": "",
+    "type": "text",
+    "placeholders_order": [
+      "entity"
+    ],
+    "placeholders": {
+      "entity": {}
+    }
+  },
+  "errorOnlyLetters": "Must contain letters only",
+  "@errorOnlyLetters": {
+    "description": "",
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "errorUpload": "Error while uploading photo. Try again later, or contact support using the \"About\" page.",
+  "@errorUpload": {
+    "description": "",
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "errorUserOperationCanceled": "Operation canceled",
+  "@errorUserOperationCanceled": {
+    "description": "",
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "explanation": "Further details",
+  "@explanation": {
+    "description": "",
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "export": "Export",
+  "@export": {
+    "description": "",
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "exportFailedMessage": "Something went wrong.\nTry again or contact support if this persists",
+  "@exportFailedMessage": {
+    "description": "",
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "exportFailedTitle": "Export Failed",
+  "@exportFailedTitle": {
+    "description": "",
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "exportSuccessfulMessage": "Your data was exported to file successfully",
+  "@exportSuccessfulMessage": {
+    "description": "",
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "exportSuccessfulTitle": "Export Successful",
+  "@exportSuccessfulTitle": {
+    "description": "",
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "formatBold": "Bold",
+  "@formatBold": {
+    "description": "",
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "formatBulletList": "Bullet List",
+  "@formatBulletList": {
+    "description": "",
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "formatCell": "Cell {n}",
+  "@formatCell": {
+    "description": "",
+    "type": "text",
+    "placeholders_order": [
+      "n"
+    ],
+    "placeholders": {
+      "n": {}
+    }
+  },
+  "formatCheckboxList": "Check List (Checked)",
+  "@formatCheckboxList": {
+    "description": "",
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "formatCheckboxListUnchecked": "Check List (Unchecked)",
+  "@formatCheckboxListUnchecked": {
+    "description": "",
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "formatHeader": "Header {n}",
+  "@formatHeader": {
+    "description": "",
+    "type": "text",
+    "placeholders_order": [
+      "n"
+    ],
+    "placeholders": {
+      "n": {}
+    }
+  },
+  "formatHeaderNoNum": "Header {n}",
+  "@formatHeaderNoNum": {
+    "description": "",
+    "type": "text",
+    "placeholders_order": [
+      "n"
+    ],
+    "placeholders": {
+      "n": {}
+    }
+  },
+  "formatHeading": "Heading {n}",
+  "@formatHeading": {
+    "description": "",
+    "type": "text",
+    "placeholders_order": [
+      "n"
+    ],
+    "placeholders": {
+      "n": {}
+    }
+  },
+  "formatHeadings": "Headings",
+  "@formatHeadings": {
+    "description": "",
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "formatHelp": "Formatting Help",
+  "@formatHelp": {
+    "description": "",
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "formatImageURL": "Image URL",
+  "@formatImageURL": {
+    "description": "",
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "formatItalic": "Italic",
+  "@formatItalic": {
+    "description": "",
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "formatNumberedList": "Numbered List",
+  "@formatNumberedList": {
+    "description": "",
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "formatPreview": "Preview",
+  "@formatPreview": {
+    "description": "",
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "formatTable": "Table",
+  "@formatTable": {
+    "description": "",
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "formatURL": "URL",
+  "@formatURL": {
+    "description": "",
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "formCharacterClassBaseHp": "Base HP",
+  "@formCharacterClassBaseHp": {
+    "description": "",
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "formCharacterClassBaseLoad": "Base Load",
+  "@formCharacterClassBaseLoad": {
+    "description": "",
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "formCharacterClassDamage": "Damage Dice",
+  "@formCharacterClassDamage": {
+    "description": "",
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "formCharacterClassDescriptionPlaceholder": "Give a general description of your class. Describe a calling for the type of person or creature that would choose or be raised in to this adventuring profession.",
+  "@formCharacterClassDescriptionPlaceholder": {
+    "description": "",
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "formCharacterClassNamePlaceholder": "Enter the class name",
+  "@formCharacterClassNamePlaceholder": {
+    "description": "",
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "formGeneralCategory": "Category",
+  "@formGeneralCategory": {
+    "description": "",
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "formGeneralCategoryGeneric": "{entity} category",
+  "@formGeneralCategoryGeneric": {
+    "description": "",
+    "type": "text",
+    "placeholders_order": [
+      "entity"
+    ],
+    "placeholders": {
+      "entity": {}
+    }
+  },
+  "formGeneralDescription": "Description",
+  "@formGeneralDescription": {
+    "description": "",
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "formGeneralDescriptionGeneric": "{entity} description",
+  "@formGeneralDescriptionGeneric": {
+    "description": "",
+    "type": "text",
+    "placeholders_order": [
+      "entity"
+    ],
+    "placeholders": {
+      "entity": {}
+    }
+  },
+  "formGeneralExplanation": "Explanation",
+  "@formGeneralExplanation": {
+    "description": "",
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "formGeneralExplanationGeneric": "{entity} explanation",
+  "@formGeneralExplanationGeneric": {
+    "description": "",
+    "type": "text",
+    "placeholders_order": [
+      "entity"
+    ],
+    "placeholders": {
+      "entity": {}
+    }
+  },
+  "formGeneralName": "Name",
+  "@formGeneralName": {
+    "description": "",
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "formGeneralNameGeneric": "{entity} name",
+  "@formGeneralNameGeneric": {
+    "description": "",
+    "type": "text",
+    "placeholders_order": [
+      "entity"
+    ],
+    "placeholders": {
+      "entity": {}
+    }
+  },
+  "formGeneralTitle": "Title",
+  "@formGeneralTitle": {
+    "description": "",
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "formGeneralTitleGeneric": "{entity} title",
+  "@formGeneralTitleGeneric": {
+    "description": "",
+    "type": "text",
+    "placeholders_order": [
+      "entity"
+    ],
+    "placeholders": {
+      "entity": {}
+    }
+  },
+  "genericDescriptionField": "{entity} description",
+  "@genericDescriptionField": {
+    "description": "",
+    "type": "text",
+    "placeholders_order": [
+      "entity"
+    ],
+    "placeholders": {
+      "entity": {}
+    }
+  },
+  "genericNameField": "{entity} name",
+  "@genericNameField": {
+    "description": "",
+    "type": "text",
+    "placeholders_order": [
+      "entity"
+    ],
+    "placeholders": {
+      "entity": {}
+    }
+  },
+  "genericValueField": "{entity} value",
+  "@genericValueField": {
+    "description": "",
+    "type": "text",
+    "placeholders_order": [
+      "entity"
+    ],
+    "placeholders": {
+      "entity": {}
+    }
+  },
+  "homeEmptyStateLoginSubtitle": "Online data sync, library sharing, campaigns and more!",
+  "@homeEmptyStateLoginSubtitle": {
+    "description": "",
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "homeEmptyStateLoginTitle": "Sign in to get more features",
+  "@homeEmptyStateLoginTitle": {
+    "description": "",
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "homeEmptyStateSubtitle": "Create a Character to get started",
+  "@homeEmptyStateSubtitle": {
+    "description": "",
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "homeEmptyStateTitle": "No Characters",
+  "@homeEmptyStateTitle": {
+    "description": "",
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "hp": "HP",
+  "@hp": {
+    "description": "",
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "hpDialogChangeAdd": "Heal\n+{amount}",
+  "@hpDialogChangeAdd": {
+    "description": "",
+    "type": "text",
+    "placeholders_order": [
+      "amount"
+    ],
+    "placeholders": {
+      "amount": {}
+    }
+  },
+  "hpDialogChangeNeutral": "No Change",
+  "@hpDialogChangeNeutral": {
+    "description": "",
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "hpDialogChangeOverrideMax": "Override Max HP",
+  "@hpDialogChangeOverrideMax": {
+    "description": "",
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "hpDialogChangeRemove": "Damage\n-{amount}",
+  "@hpDialogChangeRemove": {
+    "description": "",
+    "type": "text",
+    "placeholders_order": [
+      "amount"
+    ],
+    "placeholders": {
+      "amount": {}
+    }
+  },
+  "hpDialogCurrentHP": "Current HP",
+  "@hpDialogCurrentHP": {
+    "description": "",
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "hpDialogTitle": "Modify HP",
+  "@hpDialogTitle": {
+    "description": "",
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "import": "Import",
+  "@import": {
+    "description": "",
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "importBrowseFile": "Browse...",
+  "@importBrowseFile": {
+    "description": "",
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "importBrowseHelp": "To start importing, pick the file you want to import from.\nYou will then be able to select what to save and what to leave out.",
+  "@importBrowseHelp": {
+    "description": "",
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "importClearFile": "Clear selected file",
+  "@importClearFile": {
+    "description": "",
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "importExportTitle": "Export/Import",
+  "@importExportTitle": {
+    "description": "",
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "importFailedMessage": "Something went wrong.\nTry again or contact support if this persists",
+  "@importFailedMessage": {
+    "description": "",
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "importFailedTitle": "Import Failed",
+  "@importFailedTitle": {
+    "description": "",
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "importProgressProcessing": "Processing {entity}...",
+  "@importProgressProcessing": {
+    "description": "",
+    "type": "text",
+    "placeholders_order": [
+      "entity"
+    ],
+    "placeholders": {
+      "entity": {}
+    }
+  },
+  "importProgressTitle": "Importing...",
+  "@importProgressTitle": {
+    "description": "",
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "importSuccessMessage": "Your data was imported from file successfully",
+  "@importSuccessMessage": {
+    "description": "",
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "importSuccessTitle": "Successful",
+  "@importSuccessTitle": {
+    "description": "",
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "itemAmountX": "× {amount}",
+  "@itemAmountX": {
+    "description": "",
+    "type": "text",
+    "placeholders_order": [
+      "amount"
+    ],
+    "placeholders": {
+      "amount": {}
+    }
+  },
+  "itemSettingsCountArmor": "Count Armor",
+  "@itemSettingsCountArmor": {
+    "description": "",
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "itemSettingsCountDamage": "Count Damage",
+  "@itemSettingsCountDamage": {
+    "description": "",
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "itemSettingsCountWeight": "Count Weight",
+  "@itemSettingsCountWeight": {
+    "description": "",
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "items": "Items",
+  "@items": {
+    "description": "",
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "itemsWithCount": "{count,plural, =0{No items}=1{One item}other{{count} items}}",
+  "@itemsWithCount": {
+    "description": "",
+    "type": "text",
+    "placeholders_order": [
+      "count"
+    ],
+    "placeholders": {
+      "count": {}
+    }
+  },
+  "level": "Level",
+  "@level": {
+    "description": "",
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "libraryCollectionListItemSubtitle": "{count} in {type}",
+  "@libraryCollectionListItemSubtitle": {
+    "description": "",
+    "type": "text",
+    "placeholders_order": [
+      "count",
+      "type"
+    ],
+    "placeholders": {
+      "count": {},
+      "type": {}
+    }
+  },
+  "libraryCollectionListItemSubtitleType": "{type,select, builtIn{Playbook}my{My Library}other{{type}}}",
+  "@libraryCollectionListItemSubtitleType": {
+    "description": "",
+    "type": "text",
+    "placeholders_order": [
+      "type"
+    ],
+    "placeholders": {
+      "type": {}
+    }
+  },
+  "libraryCollectionTitle": "My Library",
+  "@libraryCollectionTitle": {
+    "description": "",
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "libraryListNoItemsFoundClearFiltersButton": "Clear Filters",
+  "@libraryListNoItemsFoundClearFiltersButton": {
+    "description": "",
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "libraryListNoItemsFoundSubtitleFilters": "Try changing the search or filters to find more {entities}.",
+  "@libraryListNoItemsFoundSubtitleFilters": {
+    "description": "",
+    "type": "text",
+    "placeholders_order": [
+      "entities"
+    ],
+    "placeholders": {
+      "entities": {}
+    }
+  },
+  "libraryListNoItemsFoundSubtitleNoFilters": "No {entities} found in this list.",
+  "@libraryListNoItemsFoundSubtitleNoFilters": {
+    "description": "",
+    "type": "text",
+    "placeholders_order": [
+      "entities"
+    ],
+    "placeholders": {
+      "entities": {}
+    }
+  },
+  "libraryListNoItemsFoundTitle": "No {entities} found",
+  "@libraryListNoItemsFoundTitle": {
+    "description": "",
+    "type": "text",
+    "placeholders_order": [
+      "entities"
+    ],
+    "placeholders": {
+      "entities": {}
+    }
+  },
+  "loadingCharacters": "Getting characters...",
+  "@loadingCharacters": {
+    "description": "",
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "loadingGeneral": "Loading...",
+  "@loadingGeneral": {
+    "description": "",
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "loadingUser": "Signing in...",
+  "@loadingUser": {
+    "description": "",
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "markdownPreview": "Content Preview",
+  "@markdownPreview": {
+    "description": "",
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "maxLoad": "Max Load",
+  "@maxLoad": {
+    "description": "",
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "migrationTitle": "Welcome to\nDungeon Paper 2!",
+  "@migrationTitle": {
+    "description": "",
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "migrationSubtitle": "To get started, pick a username and the language for the rulebook & app. If you already have an existing Dungeon Paper account your data might take a few seconds to migrate.",
+  "@migrationSubtitle": {
+    "description": "",
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "migrationUsernameInfo": "Your username is unique and can not be changed later, so think carefully! It will be used to identify all your library items when publishing.",
+  "@migrationUsernameInfo": {
+    "description": "",
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "moveCategory": "{category,select, starting{Starting}basic{Basic}special{Special}advanced1{Advanced}advanced2{Advanced}other{Other}}",
+  "@moveCategory": {
+    "description": "",
+    "type": "text",
+    "placeholders_order": [
+      "category"
+    ],
+    "placeholders": {
+      "category": {}
+    }
+  },
+  "moveCategoryWithLevel": "{category,select, starting{Starting}basic{Basic}special{Special}advanced1{Advanced (level 1-5)}advanced2{Advanced (level 6-10)}other{Other}}",
+  "@moveCategoryWithLevel": {
+    "description": "",
+    "type": "text",
+    "placeholders_order": [
+      "category"
+    ],
+    "placeholders": {
+      "category": {}
+    }
+  },
+  "moveCategoryWithLevelShort": "{category,select, starting{Starting}basic{Basic}special{Special}advanced1{Advanced (1-5)}advanced2{Advanced (6-10)}other{Other}}",
+  "@moveCategoryWithLevelShort": {
+    "description": "",
+    "type": "text",
+    "placeholders_order": [
+      "category"
+    ],
+    "placeholders": {
+      "category": {}
+    }
+  },
+  "moves": "Moves",
+  "@moves": {
+    "description": "",
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "movesWithCount": "{count,plural, =0{No moves}=1{One move}other{{count} moves}}",
+  "@movesWithCount": {
+    "description": "",
+    "type": "text",
+    "placeholders_order": [
+      "count"
+    ],
+    "placeholders": {
+      "count": {}
+    }
+  },
+  "moveToEnd": "Move to bottom",
+  "@moveToEnd": {
+    "description": "",
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "moveToEndGeneric": "Move {entity} to bottom",
+  "@moveToEndGeneric": {
+    "description": "",
+    "type": "text",
+    "placeholders_order": [
+      "entity"
+    ],
+    "placeholders": {
+      "entity": {}
+    }
+  },
+  "moveToStart": "Move to top",
+  "@moveToStart": {
+    "description": "",
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "moveToStartGeneric": "Move {entity} to top",
+  "@moveToStartGeneric": {
+    "description": "",
+    "type": "text",
+    "placeholders_order": [
+      "entity"
+    ],
+    "placeholders": {
+      "entity": {}
+    }
+  },
+  "myGeneric": "My {entity}",
+  "@myGeneric": {
+    "description": "",
+    "type": "text",
+    "placeholders_order": [
+      "entity"
+    ],
+    "placeholders": {
+      "entity": {}
+    }
+  },
+  "navActions": "Use",
+  "@navActions": {
+    "description": "",
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "navCharacter": "Character",
+  "@navCharacter": {
+    "description": "",
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "navJournal": "Journal",
+  "@navJournal": {
+    "description": "",
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "noDescription": "‹No description provided›",
+  "@noDescription": {
+    "description": "",
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "noGeneric": "No {entity}",
+  "@noGeneric": {
+    "description": "",
+    "type": "text",
+    "placeholders_order": [
+      "entity"
+    ],
+    "placeholders": {
+      "entity": {}
+    }
+  },
+  "noteNoCategory": "General",
+  "@noteNoCategory": {
+    "description": "",
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "notes": "Notes",
+  "@notes": {
+    "description": "",
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "notesWithCount": "{count,plural, =0{No notes}=1{One note}other{{count} notes}}",
+  "@notesWithCount": {
+    "description": "",
+    "type": "text",
+    "placeholders_order": [
+      "count"
+    ],
+    "placeholders": {
+      "count": {}
+    }
+  },
+  "ok": "OK",
+  "@ok": {
+    "description": "",
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "passwordHideTooltip": "Hide password",
+  "@passwordHideTooltip": {
+    "description": "",
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "passwordShowTooltip": "Show password",
+  "@passwordShowTooltip": {
+    "description": "",
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "pluralize": "{count,plural, =1{One {singular}}other{{count} {plural}}}",
+  "@pluralize": {
+    "description": "",
+    "type": "text",
+    "placeholders_order": [
+      "count",
+      "singular",
+      "plural"
+    ],
+    "placeholders": {
+      "count": {},
+      "singular": {},
+      "plural": {}
+    }
+  },
+  "privacyPolicy": "Privacy Policy",
+  "@privacyPolicy": {
+    "description": "",
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "quickIconsItems": "Items",
+  "@quickIconsItems": {
+    "description": "",
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "quickIconsMoves": "Moves",
+  "@quickIconsMoves": {
+    "description": "",
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "quickIconsNote": "+ Note",
+  "@quickIconsNote": {
+    "description": "",
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "quickIconsSpells": "Spells",
+  "@quickIconsSpells": {
+    "description": "",
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "reloadLibrary": "Reload Library",
+  "@reloadLibrary": {
+    "description": "",
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "remove": "Remove",
+  "@remove": {
+    "description": "",
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "resetToDefault": "Reset to default",
+  "@resetToDefault": {
+    "description": "",
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "rollAttackDamageButton": "Hack & Slash",
+  "@rollAttackDamageButton": {
+    "description": "",
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "rollBasicActionButton": "Basic Action",
+  "@rollBasicActionButton": {
+    "description": "",
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "rollButtonLabel": "Button Text",
+  "@rollButtonLabel": {
+    "description": "",
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "rollButtonTooltip": "Roll {dice}",
+  "@rollButtonTooltip": {
+    "description": "",
+    "type": "text",
+    "placeholders_order": [
+      "dice"
+    ],
+    "placeholders": {
+      "dice": {}
+    }
+  },
+  "rollButtonTooltipWithDebility": "Roll {dice}\n* Rolling with debility",
+  "@rollButtonTooltipWithDebility": {
+    "description": "",
+    "type": "text",
+    "placeholders_order": [
+      "dice"
+    ],
+    "placeholders": {
+      "dice": {}
+    }
+  },
+  "rollDialogResultBreakdown": "Dice: {dice} | Modifier: {mod}",
+  "@rollDialogResultBreakdown": {
+    "description": "",
+    "type": "text",
+    "placeholders_order": [
+      "dice",
+      "mod"
+    ],
+    "placeholders": {
+      "dice": {},
+      "mod": {}
+    }
+  },
+  "rollDialogResultTotal": "Total: {total}",
+  "@rollDialogResultTotal": {
+    "description": "",
+    "type": "text",
+    "placeholders_order": [
+      "total"
+    ],
+    "placeholders": {
+      "total": {}
+    }
+  },
+  "rollDialogTitleRolled": "Total: {total}",
+  "@rollDialogTitleRolled": {
+    "description": "",
+    "type": "text",
+    "placeholders_order": [
+      "total"
+    ],
+    "placeholders": {
+      "total": {}
+    }
+  },
+  "rollDialogTitleRolling": "Rolling {count} dice",
+  "@rollDialogTitleRolling": {
+    "description": "",
+    "type": "text",
+    "placeholders_order": [
+      "count"
+    ],
+    "placeholders": {
+      "count": {}
+    }
+  },
+  "rollDiscernRealitiesButton": "Discern Realities",
+  "@rollDiscernRealitiesButton": {
+    "description": "",
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "rollVolleyButton": "Volley",
+  "@rollVolleyButton": {
+    "description": "",
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "save": "Save",
+  "@save": {
+    "description": "",
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "saveGeneric": "Save {entity}",
+  "@saveGeneric": {
+    "description": "",
+    "type": "text",
+    "placeholders_order": [
+      "entity"
+    ],
+    "placeholders": {
+      "entity": {}
+    }
+  },
+  "searchIn": "Search in: ",
+  "@searchIn": {
+    "description": "",
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "searchPlaceholder": "Type to search",
+  "@searchPlaceholder": {
+    "description": "",
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "searchPlaceholderGeneric": "Type to search {entity}",
+  "@searchPlaceholderGeneric": {
+    "description": "",
+    "type": "text",
+    "placeholders_order": [
+      "entity"
+    ],
+    "placeholders": {
+      "entity": {}
+    }
+  },
+  "seeAll": "See all",
+  "@seeAll": {
+    "description": "",
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "select": "Select",
+  "@select": {
+    "description": "",
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "selectAll": "Select All",
+  "@selectAll": {
+    "description": "",
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "selected": "Selected",
+  "@selected": {
+    "description": "",
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "selectGeneric": "Select {entity}",
+  "@selectGeneric": {
+    "description": "",
+    "type": "text",
+    "placeholders_order": [
+      "entity"
+    ],
+    "placeholders": {
+      "entity": {}
+    }
+  },
+  "selectNone": "Select None",
+  "@selectNone": {
+    "description": "",
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "selectToAdd": "Select {string} to add",
+  "@selectToAdd": {
+    "description": "",
+    "type": "text",
+    "placeholders_order": [
+      "string"
+    ],
+    "placeholders": {
+      "string": {}
+    }
+  },
+  "sendFeedbackBodyLabel": "Problem description",
+  "@sendFeedbackBodyLabel": {
+    "description": "",
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "sendFeedbackSendButton": "Feedback title",
+  "@sendFeedbackSendButton": {
+    "description": "",
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "sendFeedbackSuccessMessage": "Thank you for your feedback! We will review your feedback as soon as we can.",
+  "@sendFeedbackSuccessMessage": {
+    "description": "",
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "sendFeedbackSuccessTitle": "Feedback sent!",
+  "@sendFeedbackSuccessTitle": {
+    "description": "",
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "sendFeedbackTitle": "Send App Feedback",
+  "@sendFeedbackTitle": {
+    "description": "",
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "sendFeedbackTitleLabel": "Feedback title",
+  "@sendFeedbackTitleLabel": {
+    "description": "",
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "separatorOr": "OR",
+  "@separatorOr": {
+    "description": "",
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "settingsDefaultDarkTheme": "Default dark theme",
+  "@settingsDefaultDarkTheme": {
+    "description": "",
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "settingsDefaultLightTheme": "Default light theme",
+  "@settingsDefaultLightTheme": {
+    "description": "",
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "settingsGeneral": "General",
+  "@settingsGeneral": {
+    "description": "",
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "settingsKeepScreenAwake": "Keep screen awake while using the app",
+  "@settingsKeepScreenAwake": {
+    "description": "",
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "settingsTitle": "Settings",
+  "@settingsTitle": {
+    "description": "",
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "signinTitle": "Sign In",
+  "@signinTitle": {
+    "description": "",
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "signinGoToSignupLabel": "Don't have an account?",
+  "@signinGoToSignupLabel": {
+    "description": "",
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "signinGoToSignupButton": "Sign up",
+  "@signinGoToSignupButton": {
+    "description": "",
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "signinGoToSigninLabel": "Already have an account?",
+  "@signinGoToSigninLabel": {
+    "description": "",
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "signinGoToSigninButton": "Sign in",
+  "@signinGoToSigninButton": {
+    "description": "",
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "signinSubtitle": "Sign in to your account to sync your data online, and get access to many more features.",
+  "@signinSubtitle": {
+    "description": "",
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "signupTitle": "Sign Up",
+  "@signupTitle": {
+    "description": "",
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "signupSubtitle": "Enter the required details below to create your Dungeon Paper account.",
+  "@signupSubtitle": {
+    "description": "",
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "signinButton": "Sign in",
+  "@signinButton": {
+    "description": "",
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "signupButton": "Sign up",
+  "@signupButton": {
+    "description": "",
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "signinWithButton": "Sign in with {provider}",
+  "@signinWithButton": {
+    "description": "",
+    "type": "text",
+    "placeholders_order": [
+      "provider"
+    ],
+    "placeholders": {
+      "provider": {}
+    }
+  },
+  "signupWithButton": "Sign up with {provider}",
+  "@signupWithButton": {
+    "description": "",
+    "type": "text",
+    "placeholders_order": [
+      "provider"
+    ],
+    "placeholders": {
+      "provider": {}
+    }
+  },
+  "signinProvider": "{provider,select, facebook{Facebook}google{Google}apple{Apple}password{Dungeon Paper}other{Other}}",
+  "@signinProvider": {
+    "description": "",
+    "type": "text",
+    "placeholders_order": [
+      "provider"
+    ],
+    "placeholders": {
+      "provider": {}
+    }
+  },
+  "signinProviderFacebook": "Facebook",
+  "@signinProviderFacebook": {
+    "description": "",
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "signinProviderGoogle": "Google",
+  "@signinProviderGoogle": {
+    "description": "",
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "signinProviderApple": "Apple",
+  "@signinProviderApple": {
+    "description": "",
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "signinProviderLink": "Link",
+  "@signinProviderLink": {
+    "description": "",
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "signinProviderUnlink": "Unlink",
+  "@signinProviderUnlink": {
+    "description": "",
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "signinCantUseProvider": "This device only supports unlinking {provider} accounts.",
+  "@signinCantUseProvider": {
+    "description": "",
+    "type": "text",
+    "placeholders_order": [
+      "provider"
+    ],
+    "placeholders": {
+      "provider": {}
+    }
+  },
+  "signinCantUseProviderTooltip": "You may only unlink {provider} from this device.\nTo link accounts using the {provider} provider is only available from supported devices.",
+  "@signinCantUseProviderTooltip": {
+    "description": "",
+    "type": "text",
+    "placeholders_order": [
+      "provider"
+    ],
+    "placeholders": {
+      "provider": {}
+    }
+  },
+  "signoutButton": "Sign out",
+  "@signoutButton": {
+    "description": "",
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "signupDefaultDataLanguage": "Default data language",
+  "@signupDefaultDataLanguage": {
+    "description": "",
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "signupEmail": "Email",
+  "@signupEmail": {
+    "description": "",
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "signupEmailPlaceholder": "Enter your email",
+  "@signupEmailPlaceholder": {
+    "description": "",
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "signupEmailValidation": "Please enter a valid email",
+  "@signupEmailValidation": {
+    "description": "",
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "signupPassword": "Password",
+  "@signupPassword": {
+    "description": "",
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "signupPasswordPlaceholder": "Enter your password",
+  "@signupPasswordPlaceholder": {
+    "description": "",
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "signupPasswordConfirm": "Confirm Password",
+  "@signupPasswordConfirm": {
+    "description": "",
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "signupPasswordConfirmPlaceholder": "Enter the same password again",
+  "@signupPasswordConfirmPlaceholder": {
+    "description": "",
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "signupPasswordValidationLength": "Password must be at least {length} characters",
+  "@signupPasswordValidationLength": {
+    "description": "",
+    "type": "text",
+    "placeholders_order": [
+      "length"
+    ],
+    "placeholders": {
+      "length": {}
+    }
+  },
+  "signupPasswordValidationMatch": "Passwords do not match",
+  "@signupPasswordValidationMatch": {
+    "description": "",
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "signupPasswordValidationPatternGeneric": "Password must contain {pattern}",
+  "@signupPasswordValidationPatternGeneric": {
+    "description": "",
+    "type": "text",
+    "placeholders_order": [
+      "pattern"
+    ],
+    "placeholders": {
+      "pattern": {}
+    }
+  },
+  "signupPasswordValidationPatternLetter": "Password must contain at least one capital letter",
+  "@signupPasswordValidationPatternLetter": {
+    "description": "",
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "signupPasswordValidationPatternNumber": "Password must contain at least one number",
+  "@signupPasswordValidationPatternNumber": {
+    "description": "",
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "signupUsername": "Username",
+  "@signupUsername": {
+    "description": "",
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "signupUsernamePlaceholder": "Pick a unique username",
+  "@signupUsernamePlaceholder": {
+    "description": "",
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "signupUsernameValidation": "Username must be at least {length} characters",
+  "@signupUsernameValidation": {
+    "description": "",
+    "type": "text",
+    "placeholders_order": [
+      "length"
+    ],
+    "placeholders": {
+      "length": {}
+    }
+  },
+  "signupUsernameValidationPattern": "Username must only contain letters, numbers, dashes and underscores",
+  "@signupUsernameValidationPattern": {
+    "description": "",
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "socialTwitter": "Twitter",
+  "@socialTwitter": {
+    "description": "",
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "socialFacebook": "Facebook",
+  "@socialFacebook": {
+    "description": "",
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "socialDiscord": "Discord",
+  "@socialDiscord": {
+    "description": "",
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "socialGitHub": "GitHub",
+  "@socialGitHub": {
+    "description": "",
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "socialGoogle": "Play Store",
+  "@socialGoogle": {
+    "description": "",
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "socialApple": "App Store",
+  "@socialApple": {
+    "description": "",
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "sortMoveDown": "Move down",
+  "@sortMoveDown": {
+    "description": "",
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "sortMoveUp": "Move up",
+  "@sortMoveUp": {
+    "description": "",
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "specialDice": "Special Dice",
+  "@specialDice": {
+    "description": "",
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "specialRollButton": "{button,select, damage{Damage}other{{button}}}",
+  "@specialRollButton": {
+    "description": "",
+    "type": "text",
+    "placeholders_order": [
+      "button"
+    ],
+    "placeholders": {
+      "button": {}
+    }
+  },
+  "spellLevel": "{level,select, cantrip{Cantrip}rote{Rote}other{Level {level}}}",
+  "@spellLevel": {
+    "description": "",
+    "type": "text",
+    "placeholders_order": [
+      "level"
+    ],
+    "placeholders": {
+      "level": {}
+    }
+  },
+  "spells": "Spells",
+  "@spells": {
+    "description": "",
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "spellsWithCount": "{count,plural, =0{No spells}=1{One spell}other{{count} spells}}",
+  "@spellsWithCount": {
+    "description": "",
+    "type": "text",
+    "placeholders_order": [
+      "count"
+    ],
+    "placeholders": {
+      "count": {}
+    }
+  },
+  "tagCopyFrom": "Copy from: {tag}",
+  "@tagCopyFrom": {
+    "description": "",
+    "type": "text",
+    "placeholders_order": [
+      "tag"
+    ],
+    "placeholders": {
+      "tag": {}
+    }
+  },
+  "tagDetails": "Tag Information",
+  "@tagDetails": {
+    "description": "",
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "themeTurnDark": "Switch to Dark Mode",
+  "@themeTurnDark": {
+    "description": "",
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "themeTurnLight": "Switch to Light Mode",
+  "@themeTurnLight": {
+    "description": "",
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "unselect": "Unselect",
+  "@unselect": {
+    "description": "",
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "useDefault": "Use default",
+  "@useDefault": {
+    "description": "",
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "userLoginButton": "Sign in",
+  "@userLoginButton": {
+    "description": "",
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "userLogoutButton": "Sign out",
+  "@userLogoutButton": {
+    "description": "",
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "userMenuMoreChars": "More",
+  "@userMenuMoreChars": {
+    "description": "",
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "userMenuRecentCharacters": "Recent Characters",
+  "@userMenuRecentCharacters": {
+    "description": "",
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "userUnregistered": "Not registered",
+  "@userUnregistered": {
+    "description": "",
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "view": "View",
+  "@view": {
+    "description": "",
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "viewGeneric": "View {entity}",
+  "@viewGeneric": {
+    "description": "",
+    "type": "text",
+    "placeholders_order": [
+      "entity"
+    ],
+    "placeholders": {
+      "entity": {}
+    }
+  },
+  "whatsNew": "What's new?",
+  "@whatsNew": {
+    "description": "",
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "xpDialogChangeOverride": "Update manually",
+  "@xpDialogChangeOverride": {
+    "description": "",
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "xpDialogEndSession": "End Session",
+  "@xpDialogEndSession": {
+    "description": "",
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "xpDialogOverrideInfoText": "Changing the current XP or level manually will cause the pending XP to be discarded unless this is unchecked.",
+  "@xpDialogOverrideInfoText": {
+    "description": "",
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "xpDialogOverrideLevel": "Override Level",
+  "@xpDialogOverrideLevel": {
+    "description": "",
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "xpDialogOverrideXp": "Override XP",
+  "@xpDialogOverrideXp": {
+    "description": "",
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "xpDialogResetSessionMarks": "Reset bonds, flags & end of session questions after saving",
+  "@xpDialogResetSessionMarks": {
+    "description": "",
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "xpDialogTitle": "Mark Session XP",
+  "@xpDialogTitle": {
+    "description": "",
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "xpDialogTitleOverriding": "Update XP & Level",
+  "@xpDialogTitleOverriding": {
+    "description": "",
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  }
+}

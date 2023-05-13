@@ -98,6 +98,7 @@ class Character with WithIcon implements WithMeta<Character, CharacterMeta> {
         dice: [dw.Dice.d6 * 2],
         specialDice: [],
       );
+
   static RollButton get hackAndSlashRollButton => RollButton(
         label: S.current.rollAttackDamageButton,
         dice: [dw.Dice.fromJson('2d6+STR')],
