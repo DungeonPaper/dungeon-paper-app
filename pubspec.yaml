@@ -238,4 +238,5 @@ script_runner:
     - gen:icons: flutter pub run icons_launcher:create
     - format: dart format --line-length 120
     - intl:generate_from_arb: dart run intl_generator:generate_from_arb --no-use-deferred-loading --output-dir=lib/generated/intl lib/generated/l10n.dart lib/l10n/intl_en.arb
-    - intl:extract_to_arb: dart run intl_generator:extract_to_arb --output-dir=lib/l10 lib/generated/l10n.dart
+    - intl:extract_to_arb: dart run intl_generator:extract_to_arb --output-dir=lib/l10n lib/generated/l10n.dart
+    - intl: intl:generate_from_arb && intl:extract_to_arb
