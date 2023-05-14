@@ -99,6 +99,9 @@ class LocalStorageDelegate extends StorageDelegate {
       }
       debugPrint('clearing $col');
       for (final doc in docs.entries) {
+        if (doc.key.length < col.length + 2) {
+          continue;
+        }
         final key = doc.key.substring(col.length + 2);
         docStreams[key]?.close();
         docStreams.remove(key);

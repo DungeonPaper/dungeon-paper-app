@@ -49,7 +49,7 @@ class Item extends dw.Item with WithIcon implements WithMeta {
     if (tag == null) {
       return null;
     }
-    debugPrint('tagIntValue: $tag');
+    // debugPrint('tagIntValue: $tag');
     if (tag.value is int) {
       return tag.value;
     } else if (tag.value is String) {
