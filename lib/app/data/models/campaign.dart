@@ -90,7 +90,9 @@ class Campaign with WithIcon implements WithMeta {
   String get displayName => name;
 
   @override
-  IconData get icon => Icons.groups;
+  IconData get icon => genericIcon;
+
+  static IconData get genericIcon => Icons.groups;
 
   @override
   String get storageKey => 'Campaigns';

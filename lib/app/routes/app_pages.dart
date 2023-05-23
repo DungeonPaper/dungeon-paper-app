@@ -1,9 +1,3 @@
-import 'package:dungeon_paper/app/widgets/forms/character_class_form.dart';
-import 'package:dungeon_paper/app/widgets/forms/item_form.dart';
-import 'package:dungeon_paper/app/widgets/forms/move_form.dart';
-import 'package:dungeon_paper/app/widgets/forms/note_form.dart';
-import 'package:dungeon_paper/app/widgets/forms/race_form.dart';
-import 'package:dungeon_paper/app/widgets/forms/spell_form.dart';
 import 'package:flutter/widgets.dart';
 
 import 'package:get/get.dart';
@@ -30,6 +24,10 @@ import '../modules/BioForm/bindings/bio_form_binding.dart';
 import '../modules/BioForm/views/bio_form_view.dart';
 import '../modules/BondsFlagsForm/bindings/bonds_flags_form_binding.dart';
 import '../modules/BondsFlagsForm/views/bonds_flags_form_view.dart';
+import '../modules/Campaign/CampaignsList/bindings/campaigns_list_binding.dart';
+import '../modules/Campaign/CampaignsList/views/campaigns_list_view.dart';
+import '../modules/Campaign/bindings/campaign_binding.dart';
+import '../modules/Campaign/views/campaign_view.dart';
 import '../modules/CharacterList/bindings/character_list_binding.dart';
 import '../modules/CharacterList/views/character_list_view.dart';
 import '../modules/ClassAlignments/bindings/class_alignments_binding.dart';
@@ -65,6 +63,12 @@ import '../modules/StartingGearForm/bindings/starting_gear_form_binding.dart';
 import '../modules/StartingGearForm/views/starting_gear_form_view.dart';
 import '../modules/UniversalSearch/bindings/universal_search_binding.dart';
 import '../modules/UniversalSearch/views/universal_search_view.dart';
+import '../widgets/forms/character_class_form.dart';
+import '../widgets/forms/item_form.dart';
+import '../widgets/forms/move_form.dart';
+import '../widgets/forms/note_form.dart';
+import '../widgets/forms/race_form.dart';
+import '../widgets/forms/spell_form.dart';
 import '../widgets/molecules/user_menu_popover.dart';
 import '../widgets/views/roll_dice_view.dart';
 import 'custom_transitions.dart';
@@ -342,6 +346,11 @@ class AppPages {
       name: _Paths.sendFeedback,
       page: () => const SendFeedbackView(),
       binding: SendFeedbackBinding(),
+    ),
+    GetPage(
+      name: _Paths.campaigns,
+      page: () => const CampaignsListView(),
+      binding: CampaignsListBinding(),
     ),
   ];
 }

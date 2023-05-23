@@ -95,22 +95,28 @@ abstract class Routes {
   static const createCharacter = _Paths.character + _Paths.create;
 
   /// `/character/create/roll-stats`
-  static const createCharacterAbilityScores = _Paths.character + _Paths.create + _Paths.abilityScores;
+  static const createCharacterAbilityScores =
+      _Paths.character + _Paths.create + _Paths.abilityScores;
 
   /// `/character/create/basic-info`
-  static const createCharacterBasicInfo = _Paths.character + _Paths.create + _Paths.basicInfo;
+  static const createCharacterBasicInfo =
+      _Paths.character + _Paths.create + _Paths.basicInfo;
 
   /// `/character/create/moves-and-spells`
-  static const createCharacterMovesSpells = _Paths.character + _Paths.create + _Paths.selectMovesSpells;
+  static const createCharacterMovesSpells =
+      _Paths.character + _Paths.create + _Paths.selectMovesSpells;
 
-  /// `/character/create/`class
-  static const createCharacterSelectClass = _Paths.character + _Paths.create + _Paths.characterClass;
+  /// `/character/create/class`
+  static const createCharacterSelectClass =
+      _Paths.character + _Paths.create + _Paths.characterClass;
 
   /// `/character/create/starting-gear`
-  static const createCharacterStartingGear = _Paths.character + _Paths.create + _Paths.startingGear;
+  static const createCharacterStartingGear =
+      _Paths.character + _Paths.create + _Paths.startingGear;
 
   /// `/character/class`
-  static const characterClass = _Paths.character + _Paths.characterClass; // TODO add page
+  static const characterClass =
+      _Paths.character + _Paths.characterClass; // TODO add page
 
   /// `/character/ability-score`
   static const abilityScoreForm = _Paths.character + _Paths.abilityScoreForm;
@@ -138,6 +144,9 @@ abstract class Routes {
 
   /// `/feedback`
   static const sendFeedback = _Paths.sendFeedback;
+
+  /// `/campaigns`
+  static const campaigns = _Paths.campaigns;
 }
 
 abstract class _Paths {
@@ -235,4 +244,7 @@ abstract class _Paths {
 
   /// `/feedback`
   static const sendFeedback = '/feedback';
+
+  /// `/campaign`
+  static const campaigns = '/campaigns';
 }

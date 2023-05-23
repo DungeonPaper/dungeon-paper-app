@@ -1,6 +1,7 @@
 import 'dart:math';
 import 'dart:ui';
 
+import 'package:dungeon_paper/app/data/models/campaign.dart';
 import 'package:dungeon_paper/app/data/models/character.dart';
 import 'package:dungeon_paper/app/data/services/auth_service.dart';
 import 'package:dungeon_paper/app/data/services/character_service.dart';
@@ -166,6 +167,17 @@ class UserMenuPopover extends GetView<CharacterService> with AuthServiceMixin, U
                                     Get.toNamed(Routes.library);
                                   },
                                 ),
+                                if (user.isDm)
+                                  // My Campaigns
+                                  ListTile(
+                                    visualDensity: VisualDensity.compact,
+                                    title: Text(S.current.myGeneric(S.current.entityPlural(Campaign))),
+                                    leading: Icon(Campaign.genericIcon),
+                                    onTap: () {
+                                      Get.back();
+                                      Get.toNamed(Routes.campaigns);
+                                    },
+                                  ),
                                 // Export/Import
                                 ListTile(
                                   visualDensity: VisualDensity.compact,
