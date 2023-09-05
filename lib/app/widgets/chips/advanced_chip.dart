@@ -153,4 +153,7 @@ class AdvancedChip extends StatelessWidget
       surfaceTintColor: surfaceTintColor,
     );
   }
+
+  @override
+  MaterialStateProperty<Color?>? get color => MaterialStatePropertyAll(backgroundColor);
 }

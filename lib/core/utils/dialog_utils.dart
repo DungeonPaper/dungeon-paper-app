@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 
 Future<void> awaitConfirmation(Future<bool> confirmation, void Function() callback) async {
   final res = await confirmation;
@@ -18,8 +17,9 @@ abstract class ConfirmationDialog<Options> {
 
   Widget createConfirmation<T>(BuildContext context, Options options);
   Future<bool> _createConfirmation<T>(BuildContext context, Options options) {
-    return Get.dialog<bool>(
-      createConfirmation<T>(context, options),
+    return showDialog(
+      context: context,
+      builder: (context) => createConfirmation<T>(context, options),
     ).then((res) => res == true);
   }
 }
