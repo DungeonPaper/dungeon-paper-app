@@ -65,9 +65,9 @@ dependencies:
   url_launcher: ^6.0.20
   uuid: ^3.0.5
   wakelock: ^0.6.2
-  # wheel_spinner: ^0.7.1
-  wheel_spinner:
-    path: ../wheel_spinner
+  wheel_spinner: ^0.7.2
+  # wheel_spinner:
+  #   path: ../wheel_spinner
 
 dev_dependencies:
   args: ^2.3.0

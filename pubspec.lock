@@ -1439,9 +1439,10 @@ packages:
   wheel_spinner:
     dependency: "direct main"
     description:
-      path: "../wheel_spinner"
-      relative: true
-    source: path
+      name: wheel_spinner
+      sha256: ba1358b60d44508be7cdca875d122a7fb058383601f75cb25a51306540f2e3e0
+      url: "https://pub.dev"
+    source: hosted
     version: "0.7.2"
   win32:
     dependency: transitive
