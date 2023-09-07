@@ -29,8 +29,9 @@ dependencies:
   cached_network_image: ^3.2.0
   cloud_firestore: ^4.5.2
   cupertino_icons: ^1.0.2
-  dungeon_world_data:
-    path: ../dungeon_world_data
+  # dungeon_world_data:
+    # path: ../dungeon_world_data
+  dungeon_world_data: ^3.0.1
   dynamic_themes: ^1.1.0
   email_validator: ^2.0.1
   firebase_analytics: ^10.2.1
@@ -63,7 +64,7 @@ dependencies:
   skeleton_loader: ^2.0.0+4
   string_similarity: ^2.0.0
   url_launcher: ^6.0.20
-  uuid: ^3.0.5
+  uuid: ^3.0.0
   wakelock: ^0.6.2
   wheel_spinner: ^0.7.2
   # wheel_spinner:
