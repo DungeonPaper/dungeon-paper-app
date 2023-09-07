@@ -30,6 +30,10 @@ void main() async {
   await initServices();
   // debugPrint('docsDir: ' + (await getApplicationDocumentsDirectory()).path);
   FlutterNativeSplash.remove();
+  if (secrets.sentryDsn.isEmpty) {
+    runApp(const DungeonPaperApp());
+    return;
+  }
   await SentryFlutter.init(
     (options) {
       options.dsn = secrets.sentryDsn;

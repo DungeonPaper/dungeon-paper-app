@@ -19,6 +19,8 @@ import 'package:get/get.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 import 'package:sentry_flutter/sentry_flutter.dart';
 
+import '../../../core/utils/secrets_base.dart';
+
 class UserService extends GetxService
     with RepositoryServiceMixin, AuthServiceMixin, CharacterServiceMixin, LoadingServiceMixin {
   final _current = User.guest().obs;
@@ -140,19 +142,21 @@ class UserService extends GetxService
 
   void _initUserExternal(User user) async {
     final pkg = await PackageInfo.fromPlatform();
-    Sentry.configureScope(
-      (scope) => scope.setUser(
-        SentryUser(
-          email: user.email,
-          id: authService.fbUser?.uid,
-          username: user.username,
-          data: {
-            'displayName': user.displayName,
-            'version': pkg.version,
-          },
+    if (secrets.sentryDsn.isNotEmpty) {
+      Sentry.configureScope(
+        (scope) => scope.setUser(
+          SentryUser(
+            email: user.email,
+            id: authService.fbUser?.uid,
+            username: user.username,
+            data: {
+              'displayName': user.displayName,
+              'version': pkg.version,
+            },
+          ),
         ),
-      ),
-    );
+      );
+    }
   }
 
   Future<void> _setUserAfterMigration(fba.User user, DocData? dbUser) async {
@@ -194,3 +198,4 @@ mixin UserServiceMixin {
   UserService get userService => Get.find();
   User get user => userService.current;
 }
+

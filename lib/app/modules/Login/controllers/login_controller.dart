@@ -2,6 +2,7 @@ import 'package:dungeon_paper/app/data/services/auth_service.dart';
 import 'package:dungeon_paper/app/data/services/character_service.dart';
 import 'package:dungeon_paper/app/data/services/loading_service.dart';
 import 'package:dungeon_paper/app/routes/app_pages.dart';
+import 'package:dungeon_paper/core/utils/secrets_base.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:sentry_flutter/sentry_flutter.dart';
@@ -27,7 +28,9 @@ class LoginController extends GetxController with AuthServiceMixin, LoadingServi
       await cb();
       Get.offAllNamed(Routes.home);
     } catch (e) {
-      Sentry.captureException(e);
+      if (secrets.sentryDsn.isNotEmpty) {
+        Sentry.captureException(e);
+      }
       printError(info: e.toString());
       loadingService.loadingUser = false;
       loadingService.loadingCharacters = false;
@@ -81,3 +84,4 @@ class LoginController extends GetxController with AuthServiceMixin, LoadingServi
     return _valid.value;
   }
 }
+
