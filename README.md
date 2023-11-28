@@ -70,7 +70,8 @@ don't hesitate to open an appropriate issue and I will do my best to reply promp
    flutterfire configure
    ```
 
-1. Add your firebase secrets, put this template in `lib/core/utils/secrets.dart` and update the values
+1. Add your firebase secrets, put this template in `lib/core/utils/secrets.dart` and update the
+   values
 
    ```dart
    part of 'secrets_base.dart';
@@ -80,6 +81,11 @@ don't hesitate to open an appropriate issue and I will do my best to reply promp
      final String sentryDsn = '<sentry dsn value>';
    }
    ```
+
+   Sentry DSN can remain empty to skip error reporting
+
+1. To run build scripts, install [script_runner](https://pub.dev/packages/script_runner) and use
+   `scr -h` to see all available commands
 
 As mentioned above, Firebase secret keys must be your own, and so are the databases and services
 related to them. This project uses Firebase auth, Firestore, and Crashlytics.
