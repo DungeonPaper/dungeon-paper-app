@@ -51,3 +51,4 @@ lib/firebase_options.dart
 google-services.json
 secrets.dart
 GoogleService-Info.plist
+.firebaserc

@@ -32,20 +32,6 @@ any secret keys to anyone, ever.
   Markdown
 - Roll any dice or roll your actions directly
 
-## Development Set Up
-
-1. Download Flutter
-
-   Use whatever Flutter channel you deem necessary, this should be compatible with master and beta,
-   dev breaks a lot so no commitment. More information on [Flutter.dev](https://flutter.dev).
-
-1. Connect your Firebase credentials for the app
-
-   - [Android Instructions](https://firebase.google.com/docs/android/setup)
-   - [iOS Instructions](https://firebase.google.com/docs/ios/setup)
-
-1. Build & Run the project
-
 ---
 
 ## Contributing
@@ -63,13 +49,37 @@ just a small amount to help sustain this project, I would be very very thankful!
 I welcome any issues or pull requests on GitHub. If you find a bug, or would like a new feature,
 don't hesitate to open an appropriate issue and I will do my best to reply promptly.
 
-### Help with code
+### Development Set Up
+
+1. Download Flutter
+
+   Use whatever Flutter channel you deem necessary, this should be compatible with master and beta,
+   dev breaks a lot so no commitment. More information on [Flutter.dev](https://flutter.dev).
 
 1. Fork this repository
-1. Run the project, and make your changes.
-1. Do your best to make sure nothing breaks. There are minimal tests so try QAing the change
-   yourself before proceeding
-1. Create a PR once you have a stable contribution
+
+1. Connect your Firebase credentials for the app
+
+   - [Android Instructions](https://firebase.google.com/docs/android/setup)
+   - [iOS Instructions](https://firebase.google.com/docs/ios/setup)
+
+   TL;DR: Create Firebase app, setup authentication, and run
+
+   ```shell
+   dart pub global activate flutterfire_cli
+   flutterfire configure
+   ```
+
+1. Add your firebase secrets, put this template in `lib/core/utils/secrets.dart` and update the values
+
+   ```dart
+   part of 'secrets_base.dart';
+
+   class Secrets extends SecretsBase {
+     @override
+     final String sentryDsn = '<sentry dsn value>';
+   }
+   ```
 
 As mentioned above, Firebase secret keys must be your own, and so are the databases and services
 related to them. This project uses Firebase auth, Firestore, and Crashlytics.

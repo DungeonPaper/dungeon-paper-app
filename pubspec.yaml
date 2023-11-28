@@ -221,9 +221,15 @@ script_runner:
     - build:android:apk: flutter build apk
     - build:android:bundle: flutter build appbundle
     - build:android:all: build:android:apk && build:android:bundle
-    - push: 'version=$(get-version); echo "Pushing dungeon_paper-$version.apk"; adb
-        push build/app/outputs/flutter-apk/app-release.apk
-        /sdcard/Download/dungeon_paper-${version}.apk'
+    - name: push:android:apk
+      suppress_header_output: true
+      cmd: |-
+        name=$(dart run btool get packageName)
+        version=$(dart run btool get packageVersion)
+        source="$(pwd)/build/app/outputs/flutter-apk/app-release.apk"
+        target="/sdcard/Download/$name-$version.apk"
+        echo "adb push $source $target"
+        adb push $source $target
     - install: adb install -r build/app/outputs/flutter-apk/app-release.apk
     # iOS
     - build:ios:app: flutter build ios
@@ -237,7 +243,7 @@ script_runner:
     - build:web:all: build:web:app
     # All
     - build:all: build:android:all && build:ios:all && build:macos:all && build:web:all
-    - to-device: build:android:apk && push && install
+    - to-android: build:android:apk && push:android:apk && install:android:apk
     - gen:icons: flutter pub run icons_launcher:create
     - format: dart format --line-length 120
     - intl:generate_from_arb: dart run intl_generator:generate_from_arb --no-use-deferred-loading --output-dir=lib/generated/intl lib/generated/l10n.dart lib/l10n/intl_en.arb
