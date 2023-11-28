@@ -55,7 +55,7 @@ class NoteFormController extends LibraryEntityFormController<Note, NoteFormArgum
 
   TextEditingController get title => _title.value;
   TextEditingController get description => _description.value;
-  TextEditingController get category => _description.value;
+  TextEditingController get category => _category.value;
   ValueNotifier<List<dw.Tag>> get tags => _tags.value;
 
   @override
@@ -64,6 +64,7 @@ class NoteFormController extends LibraryEntityFormController<Note, NoteFormArgum
   @override
   void onInit() {
     super.onInit();
+    debugPrint('NoteFormController onInit, ${args.entity?.description ?? ''}');
     title.text = args.entity?.title ?? '';
     description.text = args.entity?.description ?? '';
     tags.value = args.entity?.tags ?? [];
@@ -72,6 +73,7 @@ class NoteFormController extends LibraryEntityFormController<Note, NoteFormArgum
 
   @override
   void updateFromEntity(Note entity) {
+    debugPrint('NoteFormController updateFromEntity, ${entity.description}');
     super.updateFromEntity(entity);
     title.text = entity.title;
     description.text = entity.description;
