@@ -36,7 +36,7 @@ class PlatformHelper {
   static final isLinux = !kIsWeb && Platform.isLinux;
 
   static final canUseAppleSignIn = isApple;
-  static final canUseGoogleSignIn = kIsWeb || isAndroid;
+  static final canUseGoogleSignIn = isAndroid;
   static canUseProvider(ProviderName provider) {
     switch (provider) {
       case ProviderName.google:
