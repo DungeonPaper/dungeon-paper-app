@@ -1,5 +1,6 @@
 import 'package:dungeon_paper/app/data/models/ability_scores.dart';
 import 'package:dungeon_paper/app/widgets/atoms/custom_expansion_panel.dart';
+import 'package:dungeon_paper/app/widgets/atoms/custom_expansion_tile.dart';
 import 'package:dungeon_paper/app/widgets/atoms/round_roll_button.dart';
 import 'package:dungeon_paper/app/widgets/menus/entity_edit_menu.dart';
 import 'package:dungeon_paper/core/utils/markdown_highlight.dart';
@@ -50,7 +51,7 @@ class DynamicActionCard extends StatefulWidget {
   final Widget? unstarredIcon;
   final bool starred;
   final bool? initiallyExpanded;
-  final void Function(bool)? onExpansion;
+  final CancellableValueChanged<bool>? onExpansion;
   final bool showStar;
   final List<Dice> dice;
   final Iterable<Widget> chips;
@@ -124,10 +125,14 @@ class _DynamicActionCardState extends State<DynamicActionCard> {
             ),
             key: widget.expansionKey,
             onExpansion: (val) {
+              final cancel = widget.onExpansion?.call(val) ?? false;
+              if (cancel) {
+                return true;
+              }
               setState(() {
                 expanded = val;
               });
-              widget.onExpansion?.call(val);
+              return cancel;
             },
             initiallyExpanded: widget.initiallyExpanded ?? false,
             iconColor: Theme.of(context).colorScheme.secondary,

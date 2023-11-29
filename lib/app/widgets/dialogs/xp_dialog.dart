@@ -110,6 +110,7 @@ class _EXPDialogState extends State<EXPDialog> with CharacterServiceMixin {
                       setState(() {
                         manualExpExpanded = value;
                       });
+                      return false;
                     },
                     children: [
                       HelpText(text: S.current.xpDialogOverrideInfoText),

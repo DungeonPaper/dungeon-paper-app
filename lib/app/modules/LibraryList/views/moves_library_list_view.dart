@@ -48,6 +48,7 @@ class MovesLibraryListView extends GetView<LibraryListController<Move, MoveFilte
                 : null,
             onDelete: data.onDelete != null ? () => data.onDelete!(data.item) : null,
           ),
+          /*
           if (data.selectable)
             ElevatedButton.icon(
               style: ButtonThemes.primaryElevated(context),
@@ -55,6 +56,7 @@ class MovesLibraryListView extends GetView<LibraryListController<Move, MoveFilte
               label: data.label,
               icon: data.icon,
             ),
+            */
         ],
       ),
     );

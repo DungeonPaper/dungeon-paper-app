@@ -1,4 +1,5 @@
 import 'package:dungeon_paper/app/data/models/ability_scores.dart';
+import 'package:dungeon_paper/app/widgets/atoms/custom_expansion_tile.dart';
 import 'package:dungeon_paper/app/widgets/chips/spell_level_chip.dart';
 import 'package:flutter/material.dart';
 
@@ -18,6 +19,7 @@ class SpellCard extends StatelessWidget {
     this.expansionKey,
     this.maxContentHeight,
     this.expandable = true,
+    this.onExpansion,
     this.highlightWords = const [],
     this.abilityScores,
     this.reorderablePadding = false,
@@ -33,6 +35,7 @@ class SpellCard extends StatelessWidget {
   final PageStorageKey? expansionKey;
   final double? maxContentHeight;
   final bool expandable;
+  final CancellableValueChanged<bool>? onExpansion;
   final List<String> highlightWords;
   final AbilityScores? abilityScores;
   final bool reorderablePadding;
@@ -45,6 +48,7 @@ class SpellCard extends StatelessWidget {
       explanation: spell.explanation,
       maxContentHeight: maxContentHeight,
       expandable: expandable,
+      onExpansion: onExpansion,
       reorderablePadding: reorderablePadding,
       leading: [SpellLevelChip(level: spell.level)],
       chips: const [],
