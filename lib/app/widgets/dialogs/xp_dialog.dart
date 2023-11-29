@@ -18,7 +18,7 @@ import 'package:get/get.dart';
 enum ValueChange { positive, neutral, negative }
 
 class EXPDialog extends StatefulWidget {
-  const EXPDialog({Key? key}) : super(key: key);
+  const EXPDialog({super.key});
 
   @override
   State<EXPDialog> createState() => _EXPDialogState();
