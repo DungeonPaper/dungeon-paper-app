@@ -405,12 +405,11 @@ class ActionsCardList<T extends WithMeta> extends GetView<CharacterService>
       );
 
   void Function() _confirmDeleteDlg(BuildContext context, T object, String name) {
-    print('a');
     return () => deleteDialog.confirm(
           context,
           DeleteDialogOptions(
             entityName: name,
-            entityKind: S.current.entity(Character),
+            entityKind: S.current.entity(T),
           ),
           () => controller.updateCharacter(
             CharacterUtils.removeByType<T>(char, [object]),
