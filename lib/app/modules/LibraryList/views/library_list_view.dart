@@ -170,7 +170,6 @@ class LibraryListView<T extends WithMeta, F extends EntityFilters<T>> extends Ge
               onExpansion: selectable
                   ? (collapsed) {
                       final selected = controller.isSelected(item);
-                      print('mul ${controller.multiple}, col $collapsed, sel $selected');
                       if (controller.multiple) {
                         if (collapsed) return false;
                         controller.toggleItem(item, !selected);
