@@ -47,8 +47,6 @@ app.*.map.json
 # When cloning this project, use commands:
 # dart pub global activate flutterfire_cli
 # flutterfire configure
-lib/firebase_options.dart
 google-services.json
-secrets.dart
 GoogleService-Info.plist
 .firebaserc
