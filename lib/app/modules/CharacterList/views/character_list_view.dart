@@ -79,6 +79,7 @@ class CharacterListPageView extends GetView<CharacterService> with UserServiceMi
                                             context,
                                             DeleteDialogOptions(
                                               entityName: char.displayName,
+                                              entityKind: S.current.entity(Character),
                                             ),
                                             () => controller.deleteCharacter(char),
                                           ),
