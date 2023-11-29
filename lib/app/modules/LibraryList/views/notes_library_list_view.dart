@@ -33,6 +33,7 @@ class NotesLibraryListView extends GetView<LibraryListController<Note, NoteFilte
         note: data.item,
         showStar: false,
         highlightWords: data.highlightWords,
+        onExpansion: data.onExpansion,
         actions: [
           EntityEditMenu(
             onEdit: data.onUpdate != null
@@ -43,15 +44,6 @@ class NotesLibraryListView extends GetView<LibraryListController<Note, NoteFilte
                 : null,
             onDelete: data.onDelete != null ? () => data.onDelete!(data.item) : null,
           ),
-          /*
-          if (data.selectable)
-            ElevatedButton.icon(
-              style: ButtonThemes.primaryElevated(context),
-              onPressed: data.onToggle,
-              label: data.label,
-              icon: data.icon,
-            ),
-            */
         ],
       ),
     );

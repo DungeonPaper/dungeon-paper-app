@@ -1,3 +1,4 @@
+import 'package:dungeon_paper/app/widgets/atoms/custom_expansion_tile.dart';
 import 'package:dungeon_paper/app/widgets/chips/move_category_chip.dart';
 import 'package:dungeon_paper/app/widgets/chips/primary_chip.dart';
 import 'package:dungeon_paper/app/widgets/chips/tag_chip.dart';
@@ -18,6 +19,7 @@ class RaceCard extends StatelessWidget {
     this.expansionKey,
     this.maxContentHeight,
     this.expandable = true,
+    this.onExpansion,
     this.advancedLevelDisplay = AdvancedLevelDisplay.short,
     this.highlightWords = const [],
     this.showClasses = false,
@@ -32,6 +34,7 @@ class RaceCard extends StatelessWidget {
   final PageStorageKey? expansionKey;
   final double? maxContentHeight;
   final bool expandable;
+  final CancellableValueChanged<bool>? onExpansion;
   final AdvancedLevelDisplay advancedLevelDisplay;
   final List<String> highlightWords;
   final bool showClasses;
@@ -44,6 +47,7 @@ class RaceCard extends StatelessWidget {
       explanation: race.explanation,
       maxContentHeight: maxContentHeight,
       expandable: expandable,
+      onExpansion: onExpansion,
       expansionKey: expansionKey ?? PageStorageKey(race.key),
       chips: race.tags.map((t) => TagChip.openDescription(tag: t)),
       dice: const [],

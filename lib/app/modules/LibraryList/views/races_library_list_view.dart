@@ -36,6 +36,7 @@ class RacesLibraryListView extends GetView<LibraryListController<Race, RaceFilte
         showStar: false,
         showClasses: true,
         highlightWords: data.highlightWords,
+        onExpansion: data.onExpansion,
         actions: [
           EntityEditMenu(
             onEdit: data.onUpdate != null
@@ -47,15 +48,6 @@ class RacesLibraryListView extends GetView<LibraryListController<Race, RaceFilte
                 : null,
             onDelete: data.onDelete != null ? () => data.onDelete!(data.item) : null,
           ),
-          /*
-          if (data.selectable)
-            ElevatedButton.icon(
-              style: ButtonThemes.primaryElevated(context),
-              onPressed: data.onToggle,
-              label: data.label,
-              icon: data.icon,
-            ),
-            */
         ],
       ),
     );

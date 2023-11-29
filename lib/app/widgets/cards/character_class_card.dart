@@ -1,3 +1,4 @@
+import 'package:dungeon_paper/app/widgets/atoms/custom_expansion_tile.dart';
 import 'package:dungeon_paper/generated/l10n.dart';
 import 'package:flutter/material.dart';
 
@@ -17,6 +18,7 @@ class CharacterClassCard extends StatelessWidget {
     this.expansionKey,
     this.maxContentHeight,
     this.expandable = true,
+    this.onExpansion,
     this.highlightWords = const [],
   }) : super(key: key);
 
@@ -30,6 +32,7 @@ class CharacterClassCard extends StatelessWidget {
   final PageStorageKey? expansionKey;
   final double? maxContentHeight;
   final bool expandable;
+  final CancellableValueChanged<bool>? onExpansion;
   final List<String> highlightWords;
 
   @override
@@ -39,6 +42,7 @@ class CharacterClassCard extends StatelessWidget {
       description: _buildMarkdownDescription,
       maxContentHeight: maxContentHeight,
       expandable: expandable,
+      onExpansion: onExpansion,
       expansionKey: expansionKey ?? PageStorageKey(characterClass.key),
       icon: showIcon ? Icon(characterClass.icon, size: 16) : null,
       showStar: false,
