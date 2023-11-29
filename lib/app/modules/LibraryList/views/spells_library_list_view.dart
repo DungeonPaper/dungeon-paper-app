@@ -34,6 +34,7 @@ class SpellsLibraryListView extends GetView<LibraryListController<Spell, SpellFi
         showDice: false,
         showStar: false,
         highlightWords: data.highlightWords,
+        onExpansion: data.onExpansion,
         actions: [
           EntityEditMenu(
             onEdit: data.onUpdate != null
@@ -46,14 +47,6 @@ class SpellsLibraryListView extends GetView<LibraryListController<Spell, SpellFi
                 : null,
             onDelete: data.onDelete != null ? () => data.onDelete!(data.item) : null,
           ),
-          /*
-          if (data.selectable)
-            ElevatedButton.icon(
-              style: ButtonThemes.primaryElevated(context),
-              onPressed: data.onToggle,
-              label: data.label,
-              icon: data.icon,
-            ),
         ],
       ),
     );

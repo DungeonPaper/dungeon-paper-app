@@ -18,9 +18,8 @@ class CardBuilderData<T> {
   final T item;
   final bool selected;
   final bool selectable;
-  final bool multiple;
+  final CancellableValueChanged<bool>? onExpansion;
   final Widget icon;
-  final void Function()? onToggle;
   final void Function(T item)? onUpdate;
   final void Function(T item)? onDelete;
   final List<String> highlightWords;
@@ -29,10 +28,9 @@ class CardBuilderData<T> {
     required this.item,
     required this.selected,
     required this.selectable,
-    required this.multiple,
+    this.onExpansion,
     required this.icon,
     required this.highlightWords,
-    this.onToggle,
     this.onUpdate,
     this.onDelete,
   });
@@ -165,13 +163,27 @@ class LibraryListView<T extends WithMeta, F extends EntityFilters<T>> extends Ge
           final selected = controller.isSelected(item);
           final enabled = controller.isEnabled(item);
           final selectable = controller.selectable;
-          final onToggle = enabled ? () => controller.toggleItem(item, !selected) : null;
           final cardData = CardBuilderData<T>(
               item: item,
               selected: selected,
               selectable: selectable && enabled,
-              onToggle: onToggle,
-              multiple: controller.multiple,
+              onExpansion: selectable
+                  ? (collapsed) {
+                      final selected = controller.isSelected(item);
+                      print('mul ${controller.multiple}, col $collapsed, sel $selected');
+                      if (controller.multiple) {
+                        if (collapsed) return false;
+                        controller.toggleItem(item, !selected);
+                        return !selected;
+                      } else {
+                        if (!selected) {
+                          controller.toggleItem(item, true);
+                          return !collapsed;
+                        }
+                        return false;
+                      }
+                    }
+                  : null,
               icon: Icon(
                 enabled
                     ? !selected

@@ -1,3 +1,4 @@
+import 'package:dungeon_paper/app/widgets/atoms/custom_expansion_tile.dart';
 import 'package:dungeon_paper/app/widgets/chips/tag_chip.dart';
 import 'package:flutter/material.dart';
 
@@ -16,6 +17,7 @@ class NoteCard extends StatelessWidget {
     this.expansionKey,
     this.maxContentHeight,
     this.expandable = true,
+    this.onExpansion,
     this.highlightWords = const [],
     this.reorderablePadding = false,
   }) : super(key: key);
@@ -29,6 +31,7 @@ class NoteCard extends StatelessWidget {
   final PageStorageKey? expansionKey;
   final double? maxContentHeight;
   final bool expandable;
+  final CancellableValueChanged<bool>? onExpansion;
   final List<String> highlightWords;
   final bool reorderablePadding;
 
@@ -41,6 +44,7 @@ class NoteCard extends StatelessWidget {
       explanation: '',
       maxContentHeight: maxContentHeight,
       expandable: expandable,
+      onExpansion: onExpansion,
       reorderablePadding: reorderablePadding,
       chips: note.tags.map((t) => TagChip.openDescription(tag: t)),
       dice: const [],

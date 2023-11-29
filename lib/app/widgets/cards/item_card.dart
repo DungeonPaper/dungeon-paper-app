@@ -1,3 +1,4 @@
+import 'package:dungeon_paper/app/widgets/atoms/custom_expansion_tile.dart';
 import 'package:dungeon_paper/app/widgets/chips/item_amount_chip.dart';
 import 'package:dungeon_paper/app/widgets/chips/item_armor_chip.dart';
 import 'package:dungeon_paper/app/widgets/chips/item_damage_chip.dart';
@@ -21,6 +22,7 @@ class ItemCard extends StatelessWidget {
     this.expansionKey,
     this.maxContentHeight,
     this.expandable = true,
+    this.onExpansion,
     this.highlightWords = const [],
     this.reorderablePadding = false,
   }) : super(key: key);
@@ -35,6 +37,7 @@ class ItemCard extends StatelessWidget {
   final PageStorageKey? expansionKey;
   final double? maxContentHeight;
   final bool expandable;
+  final CancellableValueChanged<bool>? onExpansion;
   final List<String> highlightWords;
   final bool reorderablePadding;
 
@@ -46,6 +49,7 @@ class ItemCard extends StatelessWidget {
       description: item.description,
       maxContentHeight: maxContentHeight,
       expandable: expandable,
+      onExpansion: onExpansion,
       explanation: '',
       reorderablePadding: reorderablePadding,
       leading: [

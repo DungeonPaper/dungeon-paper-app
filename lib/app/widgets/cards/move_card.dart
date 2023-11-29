@@ -1,4 +1,5 @@
 import 'package:dungeon_paper/app/data/models/ability_scores.dart';
+import 'package:dungeon_paper/app/widgets/atoms/custom_expansion_tile.dart';
 import 'package:dungeon_paper/app/widgets/chips/move_category_chip.dart';
 import 'package:dungeon_paper/app/widgets/chips/tag_chip.dart';
 import 'package:flutter/material.dart';
@@ -15,6 +16,7 @@ class MoveCard extends StatelessWidget {
     this.showStar = true,
     this.showIcon = true,
     this.initiallyExpanded,
+    this.onExpansion,
     this.actions = const [],
     this.expansionKey,
     this.maxContentHeight,
@@ -31,6 +33,7 @@ class MoveCard extends StatelessWidget {
   final bool showStar;
   final bool showIcon;
   final bool? initiallyExpanded;
+  final CancellableValueChanged<bool>? onExpansion;
   final Iterable<Widget> actions;
   final PageStorageKey? expansionKey;
   final double? maxContentHeight;
@@ -48,6 +51,7 @@ class MoveCard extends StatelessWidget {
       explanation: move.explanation,
       maxContentHeight: maxContentHeight,
       expandable: expandable,
+      onExpansion: onExpansion,
       reorderablePadding: reorderablePadding,
       expansionKey: expansionKey ?? PageStorageKey(move.key),
       chips: move.tags.map((t) => TagChip.openDescription(tag: t)),
