@@ -1,1 +1,0 @@
-enum DialogMode { edit, create }
