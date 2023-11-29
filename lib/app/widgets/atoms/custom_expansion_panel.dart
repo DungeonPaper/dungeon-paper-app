@@ -10,7 +10,7 @@ class CustomExpansionPanel extends StatelessWidget {
   final List<Widget> children;
   final bool? expanded;
   final bool? initiallyExpanded;
-  final void Function(bool)? onExpansion;
+  final CancellableValueChanged<bool>? onExpansion;
   final bool showArrow;
   final EdgeInsets? titlePadding;
   final EdgeInsets? childrenPadding;
@@ -57,7 +57,7 @@ class CustomExpansionPanel extends StatelessWidget {
     return CustomExpansionTile(
       key: expansionKey,
       initiallyExpanded: initiallyExpanded ?? false,
-      onExpansionChanged: (state) => onExpansion?.call(state),
+      onExpansionChanged: (state) => onExpansion?.call(state) ?? false,
       expandable: expandable,
       title: title,
       titleBuilder: titleBuilder,

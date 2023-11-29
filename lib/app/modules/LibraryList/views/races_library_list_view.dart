@@ -47,6 +47,7 @@ class RacesLibraryListView extends GetView<LibraryListController<Race, RaceFilte
                 : null,
             onDelete: data.onDelete != null ? () => data.onDelete!(data.item) : null,
           ),
+          /*
           if (data.selectable)
             ElevatedButton.icon(
               style: ButtonThemes.primaryElevated(context),
@@ -54,6 +55,7 @@ class RacesLibraryListView extends GetView<LibraryListController<Race, RaceFilte
               label: data.label,
               icon: data.icon,
             ),
+            */
         ],
       ),
     );

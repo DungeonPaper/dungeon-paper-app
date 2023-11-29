@@ -43,6 +43,7 @@ class NotesLibraryListView extends GetView<LibraryListController<Note, NoteFilte
                 : null,
             onDelete: data.onDelete != null ? () => data.onDelete!(data.item) : null,
           ),
+          /*
           if (data.selectable)
             ElevatedButton.icon(
               style: ButtonThemes.primaryElevated(context),
@@ -50,6 +51,7 @@ class NotesLibraryListView extends GetView<LibraryListController<Note, NoteFilte
               label: data.label,
               icon: data.icon,
             ),
+            */
         ],
       ),
     );

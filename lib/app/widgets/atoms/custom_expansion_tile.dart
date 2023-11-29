@@ -3,12 +3,13 @@
 // found in the LICENSE file.
 
 import 'package:dungeon_paper/app/themes/themes.dart';
-import 'package:dungeon_paper/app/widgets/atoms/custom_list_tile.dart';
 import 'package:dungeon_paper/core/platform_helper.dart';
 import 'package:dungeon_paper/core/utils/math_utils.dart';
 import 'package:flutter/material.dart';
 
 const Duration _kExpand = Duration(milliseconds: 200);
+
+typedef CancellableValueChanged<T> = bool Function(T value);
 
 /// A single-line [ListTile] with an expansion arrow icon that expands or collapses
 /// the tile to reveal or hide the [children].
@@ -161,7 +162,7 @@ class CustomExpansionTile extends StatefulWidget {
   /// When the tile starts expanding, this function is called with the value
   /// true. When the tile starts collapsing, this function is called with
   /// the value false.
-  final ValueChanged<bool>? onExpansionChanged;
+  final CancellableValueChanged<bool>? onExpansionChanged;
 
   /// The color to display behind the sublist when expanded.
   final Color? backgroundColor;
@@ -310,6 +311,8 @@ class _CustomExpansionTileState extends State<CustomExpansionTile> with SingleTi
   }
 
   void _handleTap() {
+    final cancel = widget.onExpansionChanged?.call(!_isExpanded) ?? false;
+    if (cancel) return;
     setState(() {
       _isExpanded = !_isExpanded;
       if (_isExpanded) {
@@ -324,7 +327,6 @@ class _CustomExpansionTileState extends State<CustomExpansionTile> with SingleTi
       }
       PageStorage.of(context).writeState(context, _isExpanded);
     });
-    widget.onExpansionChanged?.call(_isExpanded);
   }
 
   // Platform or null affinity defaults to trailing.

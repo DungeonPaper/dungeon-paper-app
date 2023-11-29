@@ -3,6 +3,7 @@ import 'package:dungeon_paper/app/modules/LibraryList/controllers/library_list_c
 import 'package:dungeon_paper/app/themes/colors.dart';
 import 'package:dungeon_paper/app/themes/themes.dart';
 import 'package:dungeon_paper/app/widgets/atoms/advanced_floating_action_button.dart';
+import 'package:dungeon_paper/app/widgets/atoms/custom_expansion_tile.dart';
 import 'package:dungeon_paper/app/widgets/dialogs/confirm_delete_dialog.dart';
 import 'package:dungeon_paper/generated/l10n.dart';
 import 'package:flutter/material.dart';
@@ -17,7 +18,7 @@ class CardBuilderData<T> {
   final T item;
   final bool selected;
   final bool selectable;
-  final Widget label;
+  final bool multiple;
   final Widget icon;
   final void Function()? onToggle;
   final void Function(T item)? onUpdate;
@@ -28,7 +29,7 @@ class CardBuilderData<T> {
     required this.item,
     required this.selected,
     required this.selectable,
-    required this.label,
+    required this.multiple,
     required this.icon,
     required this.highlightWords,
     this.onToggle,
@@ -170,17 +171,7 @@ class LibraryListView<T extends WithMeta, F extends EntityFilters<T>> extends Ge
               selected: selected,
               selectable: selectable && enabled,
               onToggle: onToggle,
-              label: Text(
-                enabled
-                    ? !selected
-                        ? S.current.select
-                        : controller.multiple
-                            ? S.current.remove
-                            : S.current.unselect
-                    : controller.multiple
-                        ? S.current.alreadyAdded
-                        : S.current.select,
-              ),
+              multiple: controller.multiple,
               icon: Icon(
                 enabled
                     ? !selected
