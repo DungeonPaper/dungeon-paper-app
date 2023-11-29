@@ -19,7 +19,6 @@ class CardBuilderData<T> {
   final bool selected;
   final bool selectable;
   final CancellableValueChanged<bool>? onExpansion;
-  final Widget icon;
   final void Function(T item)? onUpdate;
   final void Function(T item)? onDelete;
   final List<String> highlightWords;
@@ -29,7 +28,6 @@ class CardBuilderData<T> {
     required this.selected,
     required this.selectable,
     this.onExpansion,
-    required this.icon,
     required this.highlightWords,
     this.onUpdate,
     this.onDelete,
@@ -183,17 +181,6 @@ class LibraryListView<T extends WithMeta, F extends EntityFilters<T>> extends Ge
                       }
                     }
                   : null,
-              icon: Icon(
-                enabled
-                    ? !selected
-                        ? controller.multiple
-                            ? Icons.add
-                            : Icons.check
-                        : Icons.remove
-                    : controller.multiple
-                        ? Icons.add
-                        : Icons.check,
-              ),
               onUpdate:
                   group == FiltersGroup.my ? (item) => controller.saveCustomItem(controller.storageKey, item) : null,
               onDelete: group == FiltersGroup.my
