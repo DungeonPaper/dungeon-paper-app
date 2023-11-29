@@ -186,7 +186,10 @@ class LibraryListView<T extends WithMeta, F extends EntityFilters<T>> extends Ge
               onDelete: group == FiltersGroup.my
                   ? (item) => deleteDialog.confirm(
                         context,
-                        DeleteDialogOptions(entityName: item.displayName),
+                        DeleteDialogOptions(
+                          entityName: item.displayName,
+                          entityKind: S.current.entity(item.runtimeType),
+                        ),
                         () => controller.deleteCustomItem(
                           controller.storageKey,
                           item,

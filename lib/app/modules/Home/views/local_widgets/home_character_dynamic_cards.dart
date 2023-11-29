@@ -372,7 +372,7 @@ class HomeCharacterDynamicCards extends GetView<CharacterService> with LibrarySe
   void Function() _delete<T>(BuildContext context, T item, String itemName, void Function() onRemove) {
     return () => deleteDialog.confirm(
           context,
-          DeleteDialogOptions(entityName: itemName),
+          DeleteDialogOptions(entityName: itemName, entityKind: S.current.entity(T)),
           () {
             onRemove();
             Get.back();
