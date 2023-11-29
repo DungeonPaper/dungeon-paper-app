@@ -45,7 +45,7 @@ dependencies:
   flutter_file_dialog: ^2.3.0
   flutter_markdown: ^0.6.10+2
   flutter_native_splash: ^2.2.5
-  flutter_svg: ^1.0.3
+  flutter_svg: ^2.0.9
   get: ^4.6.1
   google_sign_in: ^5.3.3
   http: ^0.13.4
@@ -73,7 +73,7 @@ dependencies:
 dev_dependencies:
   args: ^2.3.0
   build_runner: ^2.4.1
-  flutter_lints: ^1.0.0
+  flutter_lints: ^3.0.1
   flutter_test:
     sdk: flutter
   pub_semver: ^2.1.0
