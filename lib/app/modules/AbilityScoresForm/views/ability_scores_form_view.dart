@@ -21,8 +21,8 @@ import 'package:get/get.dart';
 
 class AbilityScoresFormView extends GetView<AbilityScoresFormController> {
   const AbilityScoresFormView({
-    Key? key,
-  }) : super(key: key);
+    super.key,
+  });
 
   @override
   Widget build(BuildContext context) {

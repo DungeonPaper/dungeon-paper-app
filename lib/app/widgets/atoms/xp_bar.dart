@@ -7,11 +7,11 @@ import '../../../generated/l10n.dart';
 
 class ExpBar extends StatelessWidget with CharacterServiceMixin {
   const ExpBar({
-    Key? key,
+    super.key,
     this.currentXp,
     this.maxXp,
     this.pendingXp,
-  }) : super(key: key);
+  });
 
   final int? currentXp;
   final int? maxXp;

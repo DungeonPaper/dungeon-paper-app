@@ -53,7 +53,7 @@ class AbilityScoreChip extends StatelessWidget {
                     width: 32,
                     child: Text(
                       valStr,
-                      textScaleFactor: 1.5,
+                      textScaler: const TextScaler.linear(1.5),
                       style: const TextStyle(fontWeight: FontWeight.bold),
                       textAlign: TextAlign.center,
                     ),

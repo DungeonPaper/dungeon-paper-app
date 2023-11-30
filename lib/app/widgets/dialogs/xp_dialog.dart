@@ -15,8 +15,6 @@ import 'package:dungeon_world_data/dungeon_world_data.dart' as dw;
 
 import 'package:get/get.dart';
 
-enum ValueChange { positive, neutral, negative }
-
 class EXPDialog extends StatefulWidget {
   const EXPDialog({super.key});
 

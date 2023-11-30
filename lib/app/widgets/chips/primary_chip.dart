@@ -50,7 +50,7 @@ class PrimaryChip extends StatelessWidget {
       label: Text(
         label,
         style: TextStyle(color: fgColor),
-        textScaleFactor: isCompact ? 0.65 : 0.85,
+        textScaler: TextScaler.linear(isCompact ? 0.65 : 0.85),
       ),
       padding: EdgeInsets.zero,
       backgroundColor: bgColor.withOpacity(isLight ? 0.7 : 0.4),

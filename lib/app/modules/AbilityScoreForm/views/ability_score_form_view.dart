@@ -10,7 +10,7 @@ import 'package:get/get.dart';
 import '../controllers/ability_score_form_controller.dart';
 
 class AbilityScoreFormView extends GetView<AbilityScoreFormController> {
-  const AbilityScoreFormView({Key? key}) : super(key: key);
+  const AbilityScoreFormView({super.key});
   @override
   Widget build(BuildContext context) {
     const separator = SizedBox(height: 16);
