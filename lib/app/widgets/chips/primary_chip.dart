@@ -3,17 +3,17 @@ import 'package:flutter/material.dart';
 
 class PrimaryChip extends StatelessWidget {
   const PrimaryChip({
-    Key? key,
+    super.key,
     required this.label,
     this.onPressed,
     this.onDeleted,
     this.icon,
     this.visualDensity,
-    this.isEnabled,
+    this.isEnabled = true,
     this.backgroundColor,
     this.tooltip,
     this.deleteButtonTooltip,
-  }) : super(key: key);
+  });
 
   final String label;
   final void Function()? onPressed;
@@ -21,7 +21,7 @@ class PrimaryChip extends StatelessWidget {
   final Widget? icon;
   final VisualDensity? visualDensity;
   final Color? backgroundColor;
-  final bool? isEnabled;
+  final bool isEnabled;
   final String? tooltip;
   final String? deleteButtonTooltip;
 
@@ -59,7 +59,7 @@ class PrimaryChip extends StatelessWidget {
               : const EdgeInsets.symmetric(horizontal: 8, vertical: 0))
           .copyWith(left: hasIcon ? -4 : null),
       visualDensity: visualDensity,
-      isEnabled: isEnabled ?? true,
+      isEnabled: isEnabled,
       onDeleted: onDeleted,
       onPressed: onPressed,
       tooltip: tooltip,

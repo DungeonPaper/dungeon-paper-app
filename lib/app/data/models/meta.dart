@@ -410,7 +410,7 @@ class MetaSharing {
   String toString() => 'MetaSharing($debugProperties)';
 }
 
-abstract class WithKey {
+abstract mixin class WithKey {
   abstract final String key;
 }
 

@@ -4,6 +4,7 @@ import 'package:dungeon_paper/app/data/services/character_service.dart';
 import 'package:dungeon_paper/app/widgets/atoms/custom_expansion_tile.dart';
 import 'package:dungeon_paper/app/widgets/atoms/xp_bar.dart';
 import 'package:dungeon_paper/app/widgets/atoms/number_text_field.dart';
+import 'package:dungeon_paper/app/widgets/chips/primary_chip.dart';
 import 'package:dungeon_paper/app/widgets/molecules/dialog_controls.dart';
 import 'package:dungeon_paper/core/platform_helper.dart';
 import 'package:dungeon_paper/core/utils/list_utils.dart';
@@ -28,19 +29,27 @@ class _EXPDialogState extends State<EXPDialog> with CharacterServiceMixin {
   late List<SessionMark> eosMarks;
   bool manualExpExpanded = false;
   bool shouldResetSessionMarks = false;
+  int selectedAbilityScoreIndex = 0;
 
   final endSessionCollapseController = CustomExpansionTileController();
   final levelUpCollapseController = CustomExpansionTileController();
   final overrideXPCollapseController = CustomExpansionTileController();
-  _XPAction _action = _XPAction.endSession;
-  late CustomExpansionTileController _lastActionController;
+  _XPAction action = _XPAction.endSession;
+  late CustomExpansionTileController lastActionController;
 
   @override
   void initState() {
     overrideXp = TextEditingController(text: char.currentXp.toString())..addListener(() => setState(() {}));
     overrideLevel = TextEditingController(text: currentLevel.toString())..addListener(() => setState(() {}));
     eosMarks = char.endOfSessionMarks;
-    _lastActionController = endSessionCollapseController;
+    lastActionController = endSessionCollapseController;
+    var maxStat = char.abilityScores.stats.firstOrNull?.value ?? 0;
+    for (var i = 0; i < char.abilityScores.stats.length; i += 1) {
+      if (char.abilityScores.stats[i].value > maxStat) {
+        selectedAbilityScoreIndex = i;
+        maxStat = char.abilityScores.stats[i].value;
+      }
+    }
     super.initState();
   }
 
@@ -56,7 +65,7 @@ class _EXPDialogState extends State<EXPDialog> with CharacterServiceMixin {
     const dialogWidth = 400.0;
 
     return AlertDialog(
-      title: Text(_action.title),
+      title: Text(action.title),
       content: SingleChildScrollView(
         child: Column(
           mainAxisSize: MainAxisSize.min,
@@ -74,18 +83,18 @@ class _EXPDialogState extends State<EXPDialog> with CharacterServiceMixin {
             AnimatedContainer(
                 duration: const Duration(milliseconds: 200),
                 width: dialogWidth,
-                height: _action == _XPAction.endSession ? (PlatformHelper.isMobile ? 364 : 332) : 48,
+                height: action == _XPAction.endSession ? (PlatformHelper.isMobile ? 364 : 332) : 48,
                 child: CustomExpansionTile(
                   title: const Text('End Session'),
                   initiallyExpanded: true,
                   controller: endSessionCollapseController,
-                  expandable: _action != _XPAction.endSession,
+                  expandable: action != _XPAction.endSession,
                   onExpansionChanged: (value) {
                     if (!value) return false;
                     setState(() {
-                      _lastActionController.collapse();
-                      _action = _XPAction.endSession;
-                      _lastActionController = endSessionCollapseController;
+                      lastActionController.collapse();
+                      action = _XPAction.endSession;
+                      lastActionController = endSessionCollapseController;
                     });
                     return false;
                   },
@@ -107,22 +116,42 @@ class _EXPDialogState extends State<EXPDialog> with CharacterServiceMixin {
             AnimatedContainer(
               duration: const Duration(milliseconds: 200),
               width: dialogWidth,
-              height: _action == _XPAction.levelUp ? (PlatformHelper.isMobile ? 364 : 332) : 48,
+              height: action == _XPAction.levelUp ? (PlatformHelper.isMobile ? 364 : 332) : 48,
               child: CustomExpansionTile(
                 title: const Text('Level Up'),
                 controller: levelUpCollapseController,
-                expandable: _action != _XPAction.levelUp,
+                expandable: action != _XPAction.levelUp,
                 onExpansionChanged: (value) {
                   if (!value) return false;
                   setState(() {
-                    _lastActionController.collapse();
-                    _action = _XPAction.levelUp;
-                    _lastActionController = levelUpCollapseController;
+                    lastActionController.collapse();
+                    action = _XPAction.levelUp;
+                    lastActionController = levelUpCollapseController;
                   });
                   return false;
                 },
-                children: const [
-                  Text('Select stat to increase'),
+                children: [
+                  Wrap(
+                    spacing: 5.0,
+                    children: List.generate(char.abilityScores.stats.length, (i) {
+                      final stat = char.abilityScores.stats[i];
+                      return GestureDetector(
+                        onTap: () {
+                          setState(() {
+                            selectedAbilityScoreIndex = i;
+                          });
+                        },
+                        child: PrimaryChip(
+                          visualDensity: VisualDensity.compact,
+                          label: '${stat.key} ${stat.value}',
+                          icon: Icon(stat.icon),
+                          isEnabled: selectedAbilityScoreIndex == i,
+                        ),
+                      );
+                    }),
+                  ),
+                  const SizedBox(height: 24),
+                  const Text('Remember to get a new move also'),
                 ],
               ),
             ),
@@ -130,19 +159,19 @@ class _EXPDialogState extends State<EXPDialog> with CharacterServiceMixin {
             AnimatedContainer(
               duration: const Duration(milliseconds: 200),
               width: dialogWidth,
-              height: _action == _XPAction.overrideXP ? (PlatformHelper.isMobile ? 364 : 332) : 48,
+              height: action == _XPAction.overrideXP ? (PlatformHelper.isMobile ? 364 : 332) : 48,
               child: CustomExpansionTile(
                 title: Text(
                   S.current.xpDialogChangeOverride + (hasOverrides ? '*' : ''),
                 ),
                 controller: overrideXPCollapseController,
-                expandable: _action != _XPAction.overrideXP,
+                expandable: action != _XPAction.overrideXP,
                 onExpansionChanged: (value) {
                   if (!value) return false;
                   setState(() {
-                    _lastActionController.collapse();
-                    _action = _XPAction.overrideXP;
-                    _lastActionController = overrideXPCollapseController;
+                    lastActionController.collapse();
+                    action = _XPAction.overrideXP;
+                    lastActionController = overrideXPCollapseController;
                   });
                   return false;
                 },
@@ -183,12 +212,12 @@ class _EXPDialogState extends State<EXPDialog> with CharacterServiceMixin {
               mainAxisAlignment: MainAxisAlignment.end,
               children: DialogControls.save(
                 context,
-                onSave: (_action == _XPAction.endSession)
+                onSave: (action == _XPAction.endSession)
                     ? endSession
-                    : (_action == _XPAction.levelUp)
+                    : (action == _XPAction.levelUp)
                         ? levelUp
                         : overrideXpAndLevel,
-                saveLabel: _action.saveButton,
+                saveLabel: action.saveButton,
                 onCancel: close,
                 spacing: 8,
               ),
@@ -212,20 +241,24 @@ class _EXPDialogState extends State<EXPDialog> with CharacterServiceMixin {
   bool get hasOverrides => shouldOverrideLevel || shouldOverrideXp || shouldResetSessionMarks;
 
   void endSession() {
-    save(currentXp + totalPendingXp, currentLevel, true);
+    save(currentXp + totalPendingXp, currentLevel, resetSession: true);
   }
 
-  void levelUp() {}
+  void levelUp() {
+    final newXp = currentXp - currentLevel - 7;
+    if (newXp < 0) return;
+    save(newXp, currentLevel + 1);
+  }
 
   void overrideXpAndLevel() {
     save(
       int.tryParse(overrideXp.text) ?? 0,
       int.tryParse(overrideLevel.text) ?? currentLevel,
-      shouldResetSessionMarks,
+      resetSession: shouldResetSessionMarks,
     );
   }
 
-  void save(int xp, int level, bool resetSession) {
+  void save(int xp, int level, {bool resetSession = false}) {
     charService.updateCharacter(
       char.copyWith(
         stats: char.stats.copyWith(
