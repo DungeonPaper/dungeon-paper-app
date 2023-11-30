@@ -146,7 +146,6 @@ class _EXPDialogState extends State<EXPDialog> with CharacterServiceMixin {
                     ],
                   ),
                 ),
-                // const SizedBox(height: 24),
                 const SizedBox(height: 24),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.end,

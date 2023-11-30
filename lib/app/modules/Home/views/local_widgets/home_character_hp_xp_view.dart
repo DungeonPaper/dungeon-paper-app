@@ -87,7 +87,7 @@ class _EXPState extends State<_EXP> with CharacterServiceMixin {
                 PrimaryChip(
                   label: '+1',
                   onPressed: () {
-                    showButtons();
+                    showButtons(shown: false);
                     charService.updateCharacter(
                       char.copyWith(
                         stats: char.stats.copyWith(
