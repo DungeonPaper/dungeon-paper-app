@@ -11,6 +11,8 @@ const Duration _kExpand = Duration(milliseconds: 200);
 
 typedef CancellableValueChanged<T> = bool Function(T value);
 
+const defaultPadding = EdgeInsets.symmetric(horizontal: 8);
+
 /// A single-line [ListTile] with an expansion arrow icon that expands or collapses
 /// the tile to reveal or hide the [children].
 ///
@@ -46,7 +48,7 @@ class CustomExpansionTile extends StatefulWidget {
   /// the tile to reveal or hide the [children]. The [initiallyExpanded] property must
   /// be non-null.
   CustomExpansionTile({
-    Key? key,
+    super.key,
     this.expandable = true,
     this.title,
     this.titleBuilder,
@@ -55,13 +57,13 @@ class CustomExpansionTile extends StatefulWidget {
     List<Widget> children = const [],
     this.leading = const <Widget>[],
     this.trailing = const <Widget>[],
-    this.visualDensity,
+    this.visualDensity = VisualDensity.compact,
     this.initiallyExpanded = false,
     this.maintainState = false,
-    this.tilePadding,
-    this.expandedCrossAxisAlignment,
+    this.tilePadding = defaultPadding,
+    this.childrenPadding = defaultPadding,
+    this.expandedCrossAxisAlignment = CrossAxisAlignment.stretch,
     this.expandedAlignment,
-    this.childrenPadding,
     this.backgroundColor,
     this.collapsedBackgroundColor,
     this.textColor,
@@ -72,23 +74,18 @@ class CustomExpansionTile extends StatefulWidget {
     this.icon,
     this.minIconWidth = 20,
     this.reorderablePadding = false,
-  })  :
-        // ignore: unnecessary_null_comparison
-        assert(initiallyExpanded != null),
-        // ignore: unnecessary_null_comparison
-        assert(maintainState != null),
-        assert(
+    this.controller,
+  })  : assert(
           expandedCrossAxisAlignment != CrossAxisAlignment.baseline,
           'CrossAxisAlignment.baseline is not supported since the expanded children '
           'are aligned in a column, not a row. Try to use another constant.',
         ),
         assert(title != null || titleBuilder != null),
         itemBuilder = ((BuildContext context, int index) => children[index]),
-        itemCount = children.length,
-        super(key: key);
+        itemCount = children.length;
 
   const CustomExpansionTile.builder({
-    Key? key,
+    super.key,
     this.expandable = true,
     this.title,
     this.titleBuilder,
@@ -115,18 +112,13 @@ class CustomExpansionTile extends StatefulWidget {
     this.icon,
     this.minIconWidth = 20,
     this.reorderablePadding = false,
-  })  :
-        // ignore: unnecessary_null_comparison
-        assert(initiallyExpanded != null),
-        // ignore: unnecessary_null_comparison
-        assert(maintainState != null),
-        assert(
+    this.controller,
+  })  : assert(
           expandedCrossAxisAlignment != CrossAxisAlignment.baseline,
           'CrossAxisAlignment.baseline is not supported since the expanded children '
           'are aligned in a column, not a row. Try to use another constant.',
         ),
-        assert(title != null || titleBuilder != null),
-        super(key: key);
+        assert(title != null || titleBuilder != null);
 
   /// CUSTOM - is expansion even enabled?
   final bool expandable;
@@ -270,6 +262,8 @@ class CustomExpansionTile extends StatefulWidget {
 
   final bool reorderablePadding;
 
+  final CustomExpansionTileController? controller;
+
   @override
   State<CustomExpansionTile> createState() => _CustomExpansionTileState();
 }
@@ -283,30 +277,36 @@ class _CustomExpansionTileState extends State<CustomExpansionTile> with SingleTi
   final ColorTween _iconColorTween = ColorTween();
   final ColorTween _backgroundColorTween = ColorTween();
 
-  late AnimationController _controller;
+  late AnimationController _animationController;
   late Animation<double> _iconTurns;
   late Animation<double> _heightFactor;
   late Animation<Color?> _headerColor;
   late Animation<Color?> _iconColor;
+
+  late CustomExpansionTileController _tileController;
 
   bool _isExpanded = false;
 
   @override
   void initState() {
     super.initState();
-    _controller = AnimationController(duration: _kExpand, vsync: this);
-    _heightFactor = _controller.drive(_easeInTween);
-    _iconTurns = _controller.drive(_halfTween.chain(_easeInTween));
-    _headerColor = _controller.drive(_headerColorTween.chain(_easeInTween));
-    _iconColor = _controller.drive(_iconColorTween.chain(_easeOutTween));
+    _animationController = AnimationController(duration: _kExpand, vsync: this);
+    _heightFactor = _animationController.drive(_easeInTween);
+    _iconTurns = _animationController.drive(_halfTween.chain(_easeInTween));
+    _headerColor = _animationController.drive(_headerColorTween.chain(_easeInTween));
+    _iconColor = _animationController.drive(_iconColorTween.chain(_easeOutTween));
 
     _isExpanded = PageStorage.of(context).readState(context) as bool? ?? widget.initiallyExpanded;
-    if (_isExpanded) _controller.value = 1.0;
+    if (_isExpanded) _animationController.value = 1.0;
+
+    assert(widget.controller?._state == null);
+    _tileController = widget.controller ?? CustomExpansionTileController();
+    _tileController._state = this;
   }
 
   @override
   void dispose() {
-    _controller.dispose();
+    _animationController.dispose();
     super.dispose();
   }
 
@@ -316,9 +316,9 @@ class _CustomExpansionTileState extends State<CustomExpansionTile> with SingleTi
     setState(() {
       _isExpanded = !_isExpanded;
       if (_isExpanded) {
-        _controller.forward();
+        _animationController.forward();
       } else {
-        _controller.reverse().then<void>((void value) {
+        _animationController.reverse().then<void>((void value) {
           if (!mounted) return;
           setState(() {
             // Rebuild without widget.children.
@@ -348,14 +348,16 @@ class _CustomExpansionTileState extends State<CustomExpansionTile> with SingleTi
   }
 
   Widget? _buildLeadingIcon(BuildContext context) {
-    if (!widget.expandable || _effectiveAffinity(widget.controlAffinity) != ListTileControlAffinity.leading)
+    if (!widget.expandable || _effectiveAffinity(widget.controlAffinity) != ListTileControlAffinity.leading) {
       return null;
+    }
     return _buildIcon(context);
   }
 
   Widget? _buildTrailingIcon(BuildContext context) {
-    if (!widget.expandable || _effectiveAffinity(widget.controlAffinity) != ListTileControlAffinity.trailing)
+    if (!widget.expandable || _effectiveAffinity(widget.controlAffinity) != ListTileControlAffinity.trailing) {
       return null;
+    }
     if (widget.reorderablePadding && PlatformHelper.currentInteractionType == InteractionType.mouse) {
       return Padding(
         padding: const EdgeInsets.only(right: 24),
@@ -366,18 +368,7 @@ class _CustomExpansionTileState extends State<CustomExpansionTile> with SingleTi
   }
 
   Widget _buildChildren(BuildContext context, Widget? child) {
-    //
-    // return Container(
-    //   decoration: BoxDecoration(
-    //     color: _backgroundColor.value ?? Colors.transparent,
-    //     border: Border(
-    //       top: BorderSide(color: borderSideColor),
-    //       bottom: BorderSide(color: borderSideColor),
-    //     ),
-    //   ),
-    //   child:
     return Wrap(
-      // mainAxisSize: MainAxisSize.min,
       children: <Widget>[
         ListTileTheme.merge(
           iconColor: _iconColor.value,
@@ -448,7 +439,7 @@ class _CustomExpansionTileState extends State<CustomExpansionTile> with SingleTi
 
   @override
   Widget build(BuildContext context) {
-    final bool closed = !_isExpanded && _controller.isDismissed;
+    final bool closed = !_isExpanded && _animationController.isDismissed;
     final bool shouldRemoveChildren = closed && !widget.maintainState;
 
     final Widget result = Offstage(
@@ -461,22 +452,100 @@ class _CustomExpansionTileState extends State<CustomExpansionTile> with SingleTi
             crossAxisAlignment: widget.expandedCrossAxisAlignment ?? CrossAxisAlignment.center,
             children: range(widget.itemCount).map((x) => widget.itemBuilder(context, x)).toList(),
           ),
-          // child: ListView.builder(
-          //   shrinkWrap: true,
-          //   physics: const NeverScrollableScrollPhysics(),
-          //   padding: widget.childrenPadding,
-          //   // crossAxisAlignment: widget.expandedCrossAxisAlignment ?? CrossAxisAlignment.center,
-          //   itemBuilder: widget.itemBuilder,
-          //   itemCount: widget.itemCount,
-          // ),
         ),
       ),
     );
 
     return AnimatedBuilder(
-      animation: _controller.view,
+      animation: _animationController.view,
       builder: _buildChildren,
       child: shouldRemoveChildren ? null : result,
     );
+  }
+}
+
+/// Enables control over a single [ExpansionTile]'s expanded/collapsed state.
+///
+/// It can be useful to expand or collapse an [ExpansionTile]
+/// programatically, for example to reconfigure an existing expansion
+/// tile based on a system event. To do so, create an [ExpansionTile]
+/// with an [ExpansionTileController] that's owned by a stateful widget
+/// or look up the tile's automatically created [ExpansionTileController]
+/// with [ExpansionTileController.of]
+///
+/// The controller's [expand] and [collapse] methods cause the
+/// the [ExpansionTile] to rebuild, so they may not be called from
+/// a build method.
+class CustomExpansionTileController {
+  /// Create a controller to be used with [CustomExpansionTile.controller].
+  CustomExpansionTileController();
+
+  _CustomExpansionTileState? _state;
+
+  /// Whether the [ExpansionTile] built with this controller is in expanded state.
+  ///
+  /// This property doesn't take the animation into account. It reports `true`
+  /// even if the expansion animation is not completed.
+  ///
+  /// See also:
+  ///
+  ///  * [expand], which expands the [ExpansionTile].
+  ///  * [collapse], which collapses the [ExpansionTile].
+  ///  * [ExpansionTile.controller] to create an ExpansionTile with a controller.
+  bool get isExpanded {
+    assert(_state != null);
+    return _state!._isExpanded;
+  }
+
+  /// Expands the [ExpansionTile] that was built with this controller;
+  ///
+  /// Normally the tile is expanded automatically when the user taps on the header.
+  /// It is sometimes useful to trigger the expansion programmatically due
+  /// to external changes.
+  ///
+  /// If the tile is already in the expanded state (see [isExpanded]), calling
+  /// this method has no effect.
+  ///
+  /// Calling this method may cause the [ExpansionTile] to rebuild, so it may
+  /// not be called from a build method.
+  ///
+  /// Calling this method will trigger an [ExpansionTile.onExpansionChanged] callback.
+  ///
+  /// See also:
+  ///
+  ///  * [collapse], which collapses the tile.
+  ///  * [isExpanded] to check whether the tile is expanded.
+  ///  * [ExpansionTile.controller] to create an ExpansionTile with a controller.
+  void expand() {
+    assert(_state != null);
+    if (!isExpanded) {
+      _state!._handleTap();
+    }
+  }
+
+  /// Collapses the [ExpansionTile] that was built with this controller.
+  ///
+  /// Normally the tile is collapsed automatically when the user taps on the header.
+  /// It can be useful sometimes to trigger the collapse programmatically due
+  /// to some external changes.
+  ///
+  /// If the tile is already in the collapsed state (see [isExpanded]), calling
+  /// this method has no effect.
+  ///
+  /// Calling this method may cause the [ExpansionTile] to rebuild, so it may
+  /// not be called from a build method.
+  ///
+  /// Calling this method will trigger an [ExpansionTile.onExpansionChanged] callback.
+  ///
+  /// See also:
+  ///
+  ///  * [expand], which expands the tile.
+  ///  * [isExpanded] to check whether the tile is expanded.
+  ///  * [ExpansionTile.controller] to create an ExpansionTile with a controller.
+  void collapse() {
+    assert(_state != null);
+    if (isExpanded) {
+      _state!._handleTap();
+    }
   }
 }

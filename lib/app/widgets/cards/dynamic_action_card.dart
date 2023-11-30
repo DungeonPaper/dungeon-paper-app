@@ -1,5 +1,4 @@
 import 'package:dungeon_paper/app/data/models/ability_scores.dart';
-import 'package:dungeon_paper/app/widgets/atoms/custom_expansion_panel.dart';
 import 'package:dungeon_paper/app/widgets/atoms/custom_expansion_tile.dart';
 import 'package:dungeon_paper/app/widgets/atoms/round_roll_button.dart';
 import 'package:dungeon_paper/app/widgets/menus/entity_edit_menu.dart';
@@ -13,7 +12,7 @@ import 'package:url_launcher/url_launcher.dart';
 
 class DynamicActionCard extends StatefulWidget {
   const DynamicActionCard({
-    Key? key,
+    super.key,
     this.expansionKey,
     required this.title,
     required this.icon,
@@ -37,8 +36,7 @@ class DynamicActionCard extends StatefulWidget {
     this.highlightWords = const [],
     this.abilityScores,
     this.reorderablePadding = false,
-  })  : assert(dice.length == 0 || abilityScores != null),
-        super(key: key);
+  }) : assert(dice.length == 0 || abilityScores != null);
 
   final bool expandable;
   final double? maxContentHeight;
@@ -108,7 +106,7 @@ class _DynamicActionCardState extends State<DynamicActionCard> {
         return Card(
           margin: EdgeInsets.zero,
           elevation: expanded ? 5 : 1,
-          child: CustomExpansionPanel(
+          child: CustomExpansionTile(
             expandable: widget.expandable,
             reorderablePadding: widget.reorderablePadding,
             titleBuilder: (context, color) => HighlightText(
@@ -124,7 +122,7 @@ class _DynamicActionCardState extends State<DynamicActionCard> {
               // highlightStyle: Theme.of(context).textTheme.titleMedium!.copyWith(color: color),
             ),
             key: widget.expansionKey,
-            onExpansion: (val) {
+            onExpansionChanged: (val) {
               final cancel = widget.onExpansion?.call(val) ?? false;
               if (cancel) {
                 return true;
