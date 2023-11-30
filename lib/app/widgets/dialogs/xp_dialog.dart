@@ -165,7 +165,6 @@ class _EXPDialogState extends State<EXPDialog> with CharacterServiceMixin {
                       labelText: S.current.xpDialogOverrideXp + (shouldOverrideXp ? '*' : ''),
                     ),
                     minValue: 0,
-                    maxValue: CharacterStats.maxExpForLevel(maxXp - 7),
                   ),
                   const SizedBox(height: 16),
                   NumberTextField(
@@ -174,7 +173,6 @@ class _EXPDialogState extends State<EXPDialog> with CharacterServiceMixin {
                     ),
                     numberType: NumberType.int,
                     controller: overrideLevel,
-                    onChanged: (_) => setState(() {}),
                     minValue: 1,
                   ),
                 ],
@@ -221,7 +219,7 @@ class _EXPDialogState extends State<EXPDialog> with CharacterServiceMixin {
 
   void overrideXpAndLevel() {
     save(
-      int.tryParse(overrideLevel.text) ?? 0,
+      int.tryParse(overrideXp.text) ?? 0,
       int.tryParse(overrideLevel.text) ?? currentLevel,
       shouldResetSessionMarks,
     );
