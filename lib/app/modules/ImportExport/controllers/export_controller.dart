@@ -1,5 +1,4 @@
 import 'dart:convert';
-import 'dart:io';
 
 import 'package:dungeon_paper/app/data/models/character.dart';
 import 'package:dungeon_paper/app/data/models/character_class.dart';
@@ -11,14 +10,14 @@ import 'package:dungeon_paper/app/data/models/spell.dart';
 import 'package:dungeon_paper/app/data/services/character_service.dart';
 import 'package:dungeon_paper/app/data/services/repository_service.dart';
 import 'package:dungeon_paper/core/utils/list_utils.dart';
-import 'package:dungeon_paper/generated/l10n.dart';
-import 'package:flutter_file_dialog/flutter_file_dialog.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
-import 'package:path/path.dart' as path;
-import 'package:path_provider/path_provider.dart';
 
 import 'import_export_controller.dart';
+
+import 'package:dungeon_paper/app/modules/ImportExport/platforms/cannot_export.dart'
+    if (dart.library.io) 'package:dungeon_paper/app/modules/ImportExport/platforms/native_export.dart'
+    if (dart.library.html) 'package:dungeon_paper/app/modules/ImportExport/platforms/web_export.dart';
 
 class ExportController extends GetxController
     with GetSingleTickerProviderStateMixin, CharacterServiceMixin, RepositoryServiceMixin
@@ -51,22 +50,22 @@ class ExportController extends GetxController
 
   void _toggleExportList<T>(List<T> items, bool state) {
     switch (T) {
-      case Character:
+      case Character _:
         toExport.value.characters = _toggleInList(toExport.value.characters, items.cast<Character>(), state);
         break;
-      case Move:
+      case Move _:
         toExport.value.moves = _toggleInList(toExport.value.moves, items.cast<Move>(), state);
         break;
-      case Spell:
+      case Spell _:
         toExport.value.spells = _toggleInList(toExport.value.spells, items.cast<Spell>(), state);
         break;
-      case Item:
+      case Item _:
         toExport.value.items = _toggleInList(toExport.value.items, items.cast<Item>(), state);
         break;
-      case CharacterClass:
+      case CharacterClass _:
         toExport.value.classes = _toggleInList(toExport.value.classes, items.cast<CharacterClass>(), state);
         break;
-      case Race:
+      case Race _:
         toExport.value.races = _toggleInList(toExport.value.races, items.cast<Race>(), state);
         break;
     }
@@ -88,62 +87,29 @@ class ExportController extends GetxController
 
   void Function()? getDoExport() {
     return () async {
-      final _strData = utf8.encode(json.encode(toExport.value.toJson()));
-      final tmp = await getTemporaryDirectory();
+      final strData = utf8.encode(json.encode(toExport.value.toJson()));
+
       final dt = DateFormat('yy-MM-dd_HH.mm.ss').format(DateTime.now());
       final fileName = 'DungeonPaperV2_$dt.json';
 
-      final _tmpFile = File(path.join(tmp.path, fileName));
-      await _tmpFile.writeAsBytes(_strData, mode: FileMode.writeOnly);
-
-      final params = SaveFileDialogParams(sourceFilePath: _tmpFile.path);
-      try {
-        final _path = await FlutterFileDialog.saveFile(params: params);
-        if (_path == null) {
-          // unawaited(analytics.logEvent(name: Events.ExportFail, parameters: {
-          //   'reason': 'user_canceled',
-          // }));
-          Get.rawSnackbar(
-            title: S.current.exportFailedTitle,
-            message: S.current.errorUserOperationCanceled,
-          );
-        } else {
-          // unawaited(analytics.logEvent(name: Events.ExportSuccess, parameters: {
-          //   'characters_count': _charactersToExport?.length ?? 0,
-          //   'classes_count': _classesToExport?.length ?? 0,
-          // }));
-          Get.rawSnackbar(
-            title: S.current.exportSuccessfulTitle,
-            message: S.current.exportSuccessfulMessage,
-          );
-        }
-      } catch (e) {
-        // unawaited(analytics.logEvent(name: Events.ExportFail, parameters: {
-        //   'reason': e.toString(),
-        // }));
-        Get.rawSnackbar(
-          title: S.current.exportFailedTitle,
-          message: S.current.exportFailedMessage,
-        );
-        rethrow;
-      }
+      Exporter().export(strData, fileName);
     };
   }
 
   @override
   List<T> listByType<T extends WithMeta>() {
     switch (T) {
-      case Character:
+      case Character _:
         return characters as List<T>;
-      case Move:
+      case Move _:
         return moves as List<T>;
-      case Spell:
+      case Spell _:
         return spells as List<T>;
-      case Item:
+      case Item _:
         return items as List<T>;
-      case CharacterClass:
+      case CharacterClass _:
         return classes as List<T>;
-      case Race:
+      case Race _:
         return races as List<T>;
     }
     throw TypeError();
@@ -169,17 +135,17 @@ class ExportSelections {
 
   List<T> listByType<T>() {
     switch (T) {
-      case Character:
+      case Character _:
         return characters as List<T>;
-      case Move:
+      case Move _:
         return moves as List<T>;
-      case Spell:
+      case Spell _:
         return spells as List<T>;
-      case Item:
+      case Item _:
         return items as List<T>;
-      case CharacterClass:
+      case CharacterClass _:
         return classes as List<T>;
-      case Race:
+      case Race _:
         return races as List<T>;
     }
     throw TypeError();
