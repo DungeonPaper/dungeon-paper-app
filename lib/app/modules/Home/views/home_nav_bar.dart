@@ -5,9 +5,9 @@ import 'package:flutter/material.dart';
 
 class HomeNavBar extends StatefulWidget {
   const HomeNavBar({
-    Key? key,
+    super.key,
     required this.pageController,
-  }) : super(key: key);
+  });
 
   final PageController pageController;
 
@@ -118,17 +118,17 @@ class _NavItem extends StatelessWidget {
               clipper: const ShapeBorderClipper(shape: StadiumBorder()),
               child: AnimatedContainer(
                 duration: duration,
+                width: selected ? 60 : 40,
+                color: selected ? selectedColor : Colors.transparent,
                 child: Padding(
                   padding: const EdgeInsets.symmetric(vertical: 3),
                   child: IconTheme(
-                    child: icon,
                     data: IconThemeData(
                       color: selected ? selectedFgColor : unselectedFgColor,
                     ),
+                    child: icon,
                   ),
                 ),
-                width: selected ? 60 : 40,
-                color: selected ? selectedColor : Colors.transparent,
               ),
             ),
             const SizedBox(height: 2),
@@ -140,7 +140,7 @@ class _NavItem extends StatelessWidget {
               ),
               child: Text(
                 label,
-                textScaleFactor: 1.1,
+                textScaler: const TextScaler.linear(1.1),
               ),
             ),
           ],

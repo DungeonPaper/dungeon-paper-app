@@ -18,7 +18,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class HomeCharacterJournalView extends GetView<CharacterService> {
-  const HomeCharacterJournalView({Key? key}) : super(key: key);
+  const HomeCharacterJournalView({super.key});
 
   Character get char => controller.current;
 
@@ -30,24 +30,12 @@ class HomeCharacterJournalView extends GetView<CharacterService> {
         if (controller.maybeCurrent == null) {
           return Container();
         }
-        // return ReorderableListView(
         return ListView(
-          // physics: const NeverScrollableScrollPhysics(),
           padding: const EdgeInsets.only(bottom: 70),
-          // shrinkWrap: true,
-          // onReorder: (oldIndex, newIndex) => controller.updateCharacter(
-          //   char.copyWith(
-          //     settings: char.settings.copyWith(
-          //       noteCategoriesSort: Set.from(
-          //         reorder(char.noteCategories.toList(), oldIndex, newIndex),
-          //       ),
-          //     ),
-          //   ),
-          // ),
           children: [
             for (final cat in enumerate(char.noteCategories))
               CategorizedList(
-                key: Key('note-category-' + cat.value),
+                key: Key('note-category-${cat.value}'),
                 initiallyExpanded: true,
                 title: Text(cat.value.isEmpty ? S.current.noteNoCategory : cat.value),
                 titleTrailing: [
@@ -64,7 +52,7 @@ class HomeCharacterJournalView extends GetView<CharacterService> {
                     .where((note) => note.localizedCategory == cat.value)
                     .map(
                       (note) => Padding(
-                        key: Key('note-' + note.key),
+                        key: Key('note-${note.key}'),
                         padding: const EdgeInsets.symmetric(vertical: 4),
                         child: NoteCard(
                           note: note,
@@ -74,17 +62,17 @@ class HomeCharacterJournalView extends GetView<CharacterService> {
                               onDelete: confirmDelete(context, note, note.title),
                               onEdit: () => ModelPages.openNotePage(
                                 note: note,
-                                onSave: (_note) {
+                                onSave: (note) {
                                   controller.updateCharacter(
-                                    CharacterUtils.updateByType<Note>(char, [_note]),
+                                    CharacterUtils.updateByType<Note>(char, [note]),
                                   );
                                   StorageHandler.instance.create('Notes', note.key, note.toJson());
                                 },
                               ),
                             ),
                           ],
-                          onSave: (_note) => controller.updateCharacter(
-                            CharacterUtils.updateNotes(char, [_note]),
+                          onSave: (note) => controller.updateCharacter(
+                            CharacterUtils.updateNotes(char, [note]),
                           ),
                         ),
                       ),
