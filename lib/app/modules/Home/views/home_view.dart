@@ -21,7 +21,7 @@ import 'home_fab.dart';
 import 'home_nav_bar.dart';
 
 class HomeView extends GetView<CharacterService> with UserServiceMixin, LoadingServiceMixin, CharacterServiceMixin {
-  const HomeView({Key? key}) : super(key: key);
+  const HomeView({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -45,9 +45,7 @@ class HomeView extends GetView<CharacterService> with UserServiceMixin, LoadingS
                   : const HomeEmptyState();
         },
       ),
-      floatingActionButton: Obx(
-        () => userService.isLoggedIn && maybeChar != null ? const HomeFAB() : const SizedBox.shrink(),
-      ),
+      floatingActionButton: Obx(() => maybeChar != null ? const HomeFAB() : const SizedBox.shrink()),
       bottomNavigationBar: Obx(
         () => maybeChar != null ? HomeNavBar(pageController: controller.pageController) : const SizedBox.shrink(),
       ),
@@ -93,7 +91,7 @@ class HomeEmptyState extends StatelessWidget with UserServiceMixin {
                           text: TextSpan(
                             children: [
                               IconSpan(context, icon: Icons.person, size: 24),
-                              TextSpan(text: ' ' + S.current.homeEmptyStateLoginTitle),
+                              TextSpan(text: ' ${S.current.homeEmptyStateLoginTitle}'),
                             ],
                             style: textTheme.titleLarge,
                           ),
