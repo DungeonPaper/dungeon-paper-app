@@ -5,10 +5,10 @@ import '../chips/ability_score_chip.dart';
 
 class AbilityScoresGrid extends StatelessWidget {
   const AbilityScoresGrid({
-    Key? key,
+    super.key,
     required this.abilityScores,
     this.showDice = true,
-  }) : super(key: key);
+  });
 
   final List<AbilityScore> abilityScores;
   final bool showDice;

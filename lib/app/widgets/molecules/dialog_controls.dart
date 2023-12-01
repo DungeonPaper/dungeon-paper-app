@@ -24,8 +24,8 @@ class DialogControls {
         if (cancelIcon == null)
           TextButton(
             onPressed: onCancel,
-            child: Text(cancelLabel),
             style: ButtonThemes.errorText(context),
+            child: Text(cancelLabel),
           ),
         if (spacing != null && spacing > 0) SizedBox(width: spacing),
         if (confirmIcon != null)
@@ -74,8 +74,8 @@ class DialogControls {
         if (confirmIcon == null)
           ElevatedButton(
             onPressed: onConfirm,
-            child: Text(confirmLabel),
             style: ButtonThemes.errorElevated(context),
+            child: Text(confirmLabel),
           ),
       ];
 

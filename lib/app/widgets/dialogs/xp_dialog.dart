@@ -1,3 +1,4 @@
+import 'package:dungeon_paper/app/data/models/ability_scores.dart';
 import 'package:dungeon_paper/app/data/models/character_stats.dart';
 import 'package:dungeon_paper/app/data/models/session_marks.dart';
 import 'package:dungeon_paper/app/data/services/character_service.dart';
@@ -43,11 +44,12 @@ class _EXPDialogState extends State<EXPDialog> with CharacterServiceMixin {
     overrideLevel = TextEditingController(text: currentLevel.toString())..addListener(() => setState(() {}));
     eosMarks = char.endOfSessionMarks;
     lastActionController = endSessionCollapseController;
-    var maxStat = char.abilityScores.stats.firstOrNull?.value ?? 0;
+    var maxStat = -2147483648; // Lazy way to avoid dealing with max/min, if the first stat was 18 for example
     for (var i = 0; i < char.abilityScores.stats.length; i += 1) {
-      if (char.abilityScores.stats[i].value > maxStat) {
+      final statValue = char.abilityScores.stats[i].value;
+      if (statValue > maxStat && statValue < 18) {
         selectedAbilityScoreIndex = i;
-        maxStat = char.abilityScores.stats[i].value;
+        maxStat = statValue;
       }
     }
     super.initState();
@@ -131,24 +133,39 @@ class _EXPDialogState extends State<EXPDialog> with CharacterServiceMixin {
                   return false;
                 },
                 children: [
-                  Wrap(
-                    spacing: 5.0,
-                    children: List.generate(char.abilityScores.stats.length, (i) {
-                      final stat = char.abilityScores.stats[i];
-                      return GestureDetector(
-                        onTap: () {
-                          setState(() {
-                            selectedAbilityScoreIndex = i;
-                          });
-                        },
-                        child: PrimaryChip(
-                          visualDensity: VisualDensity.compact,
-                          label: '${stat.key} ${stat.value}',
-                          icon: Icon(stat.icon),
-                          isEnabled: selectedAbilityScoreIndex == i,
-                        ),
-                      );
-                    }),
+                  const Text('Increase a stat by 1:'),
+                  const SizedBox(height: 12),
+                  ConstrainedBox(
+                    constraints: const BoxConstraints(maxWidth: 380),
+                    child: LayoutBuilder(
+                      builder: (context, constraints) {
+                        return Wrap(
+                          spacing: 4,
+                          runSpacing: 4,
+                          children: List.generate(char.abilityScores.stats.length, (i) {
+                            final stat = char.abilityScores.stats[i];
+                            return GestureDetector(
+                              onTap: stat.value < 18
+                                  ? () {
+                                      setState(() {
+                                        selectedAbilityScoreIndex = i;
+                                      });
+                                    }
+                                  : null,
+                              child: SizedBox(
+                                width: constraints.maxWidth / 3 - 8,
+                                child: PrimaryChip(
+                                  visualDensity: VisualDensity.comfortable,
+                                  label: '${stat.key} ${stat.value}',
+                                  icon: Icon(stat.icon),
+                                  isEnabled: selectedAbilityScoreIndex == i,
+                                ),
+                              ),
+                            );
+                          }),
+                        );
+                      },
+                    ),
                   ),
                   const SizedBox(height: 24),
                   const Text('Remember to get a new move also'),
@@ -214,9 +231,11 @@ class _EXPDialogState extends State<EXPDialog> with CharacterServiceMixin {
                 context,
                 onSave: (action == _XPAction.endSession)
                     ? endSession
-                    : (action == _XPAction.levelUp)
-                        ? levelUp
-                        : overrideXpAndLevel,
+                    : (action == _XPAction.overrideXP)
+                        ? overrideXpAndLevel
+                        : (action == _XPAction.levelUp && canLevelUp)
+                            ? levelUp
+                            : null,
                 saveLabel: action.saveButton,
                 onCancel: close,
                 spacing: 8,
@@ -234,6 +253,7 @@ class _EXPDialogState extends State<EXPDialog> with CharacterServiceMixin {
       ? CharacterStats.maxExpForLevel(int.tryParse(overrideLevel.text) ?? currentLevel)
       : char.maxXp;
   int get totalPendingXp => char.sessionMarks.where((mark) => mark.completed).length;
+  bool get canLevelUp => currentXp - currentLevel - 7 >= 0;
 
   bool get shouldOverrideXp => int.tryParse(overrideXp.text) != null && int.parse(overrideXp.text) != currentXp;
   bool get shouldOverrideLevel =>
@@ -245,9 +265,12 @@ class _EXPDialogState extends State<EXPDialog> with CharacterServiceMixin {
   }
 
   void levelUp() {
-    final newXp = currentXp - currentLevel - 7;
-    if (newXp < 0) return;
-    save(newXp, currentLevel + 1);
+    if (!canLevelUp) return;
+    save(
+      currentXp - currentLevel - 7,
+      currentLevel + 1,
+      abilityScoreToIncrease: char.abilityScores.stats[selectedAbilityScoreIndex],
+    );
   }
 
   void overrideXpAndLevel() {
@@ -258,9 +281,15 @@ class _EXPDialogState extends State<EXPDialog> with CharacterServiceMixin {
     );
   }
 
-  void save(int xp, int level, {bool resetSession = false}) {
+  void save(int xp, int level, {bool resetSession = false, AbilityScore? abilityScoreToIncrease}) {
+    AbilityScores? abilityScores;
+    if (abilityScoreToIncrease != null) {
+      abilityScores =
+          char.abilityScores.copyWithStatValues({abilityScoreToIncrease.key: abilityScoreToIncrease.value + 1});
+    }
     charService.updateCharacter(
       char.copyWith(
+        abilityScores: abilityScores,
         stats: char.stats.copyWith(
           currentXp: xp,
           level: level,
