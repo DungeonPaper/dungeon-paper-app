@@ -7,11 +7,11 @@ import '../../../core/utils/dialog_utils.dart';
 
 class _DeleteDialog extends ConfirmationDialog<DeleteDialogOptions> {
   @override
-  Widget createConfirmation<T>(BuildContext context, options) {
+  Widget createConfirmation<T>(BuildContext context, DeleteDialogOptions options) {
     return AlertDialog(
-      title: Text(S.current.confirmDeleteTitle(S.current.entity(T))),
+      title: Text(S.current.confirmDeleteTitle(options.entityKind)),
       content: Text(
-        S.current.confirmDeleteBody(S.current.entity(T), options.entityName),
+        S.current.confirmDeleteBody(options.entityKind, options.entityName),
       ),
       actions: DialogControls.delete(context,
           onDelete: () => Get.back(result: true), onCancel: () => Get.back(result: false)),
@@ -20,9 +20,10 @@ class _DeleteDialog extends ConfirmationDialog<DeleteDialogOptions> {
 }
 
 class DeleteDialogOptions {
+  final String entityKind;
   final String entityName;
 
-  DeleteDialogOptions({required this.entityName});
+  DeleteDialogOptions({required this.entityKind, required this.entityName});
 }
 
 final deleteDialog = _DeleteDialog();

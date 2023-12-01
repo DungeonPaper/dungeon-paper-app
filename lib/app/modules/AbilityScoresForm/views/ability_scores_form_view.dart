@@ -154,7 +154,7 @@ class AbilityScoresFormView extends GetView<AbilityScoresFormController> {
                       ),
                       onDelete: () => deleteDialog.confirm(
                         context,
-                        DeleteDialogOptions(entityName: stat.name),
+                        DeleteDialogOptions(entityName: stat.name, entityKind: S.current.entity(AbilityScore)),
                         () => controller.removeStat(stat),
                       ),
                     ),

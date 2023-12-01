@@ -45,7 +45,7 @@ dependencies:
   flutter_file_dialog: ^2.3.0
   flutter_markdown: ^0.6.10+2
   flutter_native_splash: ^2.2.5
-  flutter_svg: ^1.0.3
+  flutter_svg: ^2.0.9
   get: ^4.6.1
   google_sign_in: ^5.3.3
   http: ^0.13.4
@@ -73,7 +73,7 @@ dependencies:
 dev_dependencies:
   args: ^2.3.0
   build_runner: ^2.4.1
-  flutter_lints: ^1.0.0
+  flutter_lints: ^3.0.1
   flutter_test:
     sdk: flutter
   pub_semver: ^2.1.0
@@ -209,83 +209,3 @@ icons_launcher:
       enable: true
     remove_alpha_ios: true
     remove_alpha_macos: true
-
-script_runner:
-  shell: /bin/zsh
-  scripts:
-    - name: version
-      cmd: dart scripts/get_version.dart
-      suppress_header_output: true
-      description: Get version number
-    - name: bump
-      cmd: dart lib/core/task_runner/deploy.dart --bump pre
-      description: Bump version number
-    # Android
-    - name: build:android:apk
-      cmd: flutter build apk
-      description: Build Android APK only
-    - name: build:android:bundle
-      cmd: flutter build appbundle
-      description: Build Android unified bundle (for Play Store release)
-    - name: build:android:all
-      cmd: build:android:apk && build:android:bundle
-      description: Build Android unified bundle + standalone APK
-    - name: push:android:apk
-      description: Push APK to ADB-connected device
-      suppress_header_output: true
-      cmd: |-
-        name=$(dart run btool get packageName)
-        version=$(dart run btool get packageVersion)
-        source="$(pwd)/build/app/outputs/flutter-apk/app-release.apk"
-        target="/sdcard/Download/$name-$version.apk"
-        echo "adb push $source $target"
-        adb push $source $target
-    - name: install
-      cmd: adb install -r build/app/outputs/flutter-apk/app-release.apk
-      description: Install APK on Android (does not build)
-    # iOS
-    - name: build:ios:app
-      cmd: flutter build ios
-      description: Build iOS APP file
-    - name: build:ios:bundle
-      cmd: flutter build ipa
-      description: Build iOS IPA file
-    - name: build:ios:all
-      cmd: build:ios:app && build:ios:bundle
-      description: Build iOS IPA + APP
-    # macOS
-    - name: build:macos:app
-      cmd: flutter build macos
-      description: Build macOS App
-    - name: build:macos:all
-      cmd: build:macos:app
-      description: 'Alias for: Build macOS App'
-    # Web
-    - name: build:web:app
-      cmd: flutter build web
-      description: Build Web app
-    - name: build:web:all
-      cmd: build:web:app
-      description: 'Alias for: Build Web app'
-    # All
-    - name: build:all
-      cmd: build:android:all && build:ios:all && build:macos:all && build:web:all
-      description: Build for all platforms
-    - name: to-android
-      cmd: build:android:apk && push:android:apk && install:android:apk
-      description: Build, push and install APK to ADB connected device
-    - name: gen:icons
-      cmd: flutter pub run icons_launcher:create
-      description: Generate launcher icons
-    - name: format
-      cmd: dart format --line-length 120
-      description: Format all Dart files
-    - name: intl:generate_from_arb
-      cmd: dart run intl_generator:generate_from_arb --no-use-deferred-loading --output-dir=lib/generated/intl lib/generated/l10n.dart lib/l10n/intl_en.arb
-      description: Generate localization files from ARB file
-    - name: intl:extract_to_arb
-      cmd: dart run intl_generator:extract_to_arb --output-dir=lib/l10n lib/generated/l10n.dart
-      description: Extract localization files to ARB
-    - name: intl
-      cmd: intl:generate_from_arb && intl:extract_to_arb
-      description: Extract & Generate ARB files
