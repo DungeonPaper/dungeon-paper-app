@@ -123,7 +123,6 @@ class AbilityScoresFormView extends GetView<AbilityScoresFormController> {
                       child: NumberTextField(
                         controller: controller.textControllers[stat.key],
                         minValue: 1,
-                        maxValue: 18,
                         numberType: NumberType.int,
                         textInputAction: TextInputAction.next,
                       ),
