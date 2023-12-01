@@ -9,7 +9,7 @@ import 'export_view.dart';
 import 'import_view.dart';
 
 class ImportExportView extends GetView<ImportExportController> {
-  const ImportExportView({Key? key}) : super(key: key);
+  const ImportExportView({super.key});
 
   @override
   Widget build(BuildContext context) {
