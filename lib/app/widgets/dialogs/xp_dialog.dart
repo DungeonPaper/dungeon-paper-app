@@ -76,7 +76,7 @@ class _EXPDialogState extends State<EXPDialog> with CharacterServiceMixin {
             SizedBox(
               width: dialogWidth,
               child: ExpBar(
-                currentXp: clamp(int.tryParse(overrideXp.text) ?? currentXp, 0, maxXp),
+                currentXp: int.tryParse(overrideXp.text) ?? currentXp,
                 maxXp: maxXp,
                 pendingXp: !shouldResetSessionMarks || (!shouldOverrideXp && !shouldOverrideLevel) ? totalPendingXp : 0,
               ),
