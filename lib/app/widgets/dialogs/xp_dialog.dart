@@ -9,7 +9,6 @@ import 'package:dungeon_paper/app/widgets/chips/primary_chip.dart';
 import 'package:dungeon_paper/app/widgets/molecules/dialog_controls.dart';
 import 'package:dungeon_paper/core/platform_helper.dart';
 import 'package:dungeon_paper/core/utils/list_utils.dart';
-import 'package:dungeon_paper/core/utils/math_utils.dart';
 import 'package:dungeon_paper/generated/l10n.dart';
 import 'package:flutter/material.dart';
 
@@ -101,6 +100,13 @@ class _EXPDialogState extends State<EXPDialog> with CharacterServiceMixin {
                     return false;
                   },
                   children: [
+                    SizedBox(
+                      width: dialogWidth,
+                      child: ListTile(
+                        title: Text(S.current.endOfSessionQuestions),
+                        subtitle: Text(S.current.endOfSessionQuestionsSubtitle),
+                      ),
+                    ),
                     for (final eos in eosMarks)
                       SizedBox(
                         width: dialogWidth,
