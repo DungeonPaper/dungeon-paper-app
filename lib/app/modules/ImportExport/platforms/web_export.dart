@@ -2,7 +2,7 @@ import 'dart:convert';
 import 'dart:typed_data';
 import 'dart:html' as html;
 
-import 'package:dungeon_paper/app/modules/ImportExport/platforms/abstract_import_export.dart';
+import 'package:dungeon_paper/app/modules/ImportExport/platforms/abstract_export.dart';
 
 void downloadFileFromDataURL(String dataURL, String fileName) =>
     html.AnchorElement(href: dataURL)
