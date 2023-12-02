@@ -100,18 +100,18 @@ class ImportController extends GetxController
 
   void pickImportFile() async {
     try {
-      final _path = await FlutterFileDialog.pickFile(
+      final path = await FlutterFileDialog.pickFile(
         params: const OpenFileDialogParams(
           fileExtensionsFilter: ['json'],
           mimeTypesFilter: ['application/json'],
         ),
       );
 
-      if (_path == null) {
+      if (path == null) {
         return;
       }
 
-      final js = json.decode(await File(_path).readAsString()) as Map<String, dynamic>;
+      final js = json.decode(await File(path).readAsString()) as Map<String, dynamic>;
       toImport.value = ImportSelections.fromJson(js);
     } catch (e) {
       // unawaited(analytics.logEvent(name: Events.ImportFail, parameters: {

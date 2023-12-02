@@ -5,7 +5,7 @@ import 'package:path/path.dart' as path;
 import 'package:get/get.dart';
 import 'package:dungeon_paper/generated/l10n.dart';
 
-import 'package:dungeon_paper/app/modules/ImportExport/platforms/abstract_import_export.dart';
+import 'package:dungeon_paper/app/modules/ImportExport/platforms/abstract_export.dart';
 import 'package:path_provider/path_provider.dart';
 
 class Exporter extends AbstractExporter {
