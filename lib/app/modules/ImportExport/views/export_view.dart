@@ -13,7 +13,7 @@ import '../controllers/export_controller.dart';
 import '../local_widgets/list_card.dart';
 
 class ExportView extends GetView<ExportController> {
-  const ExportView({Key? key}) : super(key: key);
+  const ExportView({super.key});
 
   @override
   Widget build(BuildContext context) {
