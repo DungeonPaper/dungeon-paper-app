@@ -110,7 +110,6 @@ class HomeCharacterJournalView extends GetView<CharacterService> {
               onPressed: () => Get.back(result: false),
               style: ButtonThemes.primaryElevated(context),
             ),
-            // const SizedBox(width: 8),
             ElevatedButton.icon(
               icon: const Icon(Icons.delete),
               label: Text(S.current.remove),
