@@ -112,7 +112,7 @@ class ImportController extends GetxController
   }
 
   void pickImportFile() async {
-    var result = await FilePicker.platform.pickFiles();
+    var result = await FilePicker.platform.pickFiles(type: FileType.custom, allowedExtensions: ['json']);
     if (result == null) {
       Get.rawSnackbar(
         title: S.current.importFailedTitle,
