@@ -12,6 +12,7 @@ import 'package:dungeon_paper/app/modules/ImportExport/local_widgets/import_prog
 import 'package:dungeon_paper/core/storage_handler/storage_handler.dart';
 import 'package:dungeon_paper/core/utils/list_utils.dart';
 import 'package:dungeon_paper/generated/l10n.dart';
+import 'package:file_picker/file_picker.dart';
 import 'package:flutter_file_dialog/flutter_file_dialog.dart';
 import 'package:get/get.dart';
 
@@ -99,6 +100,20 @@ class ImportController extends GetxController
   }
 
   void pickImportFile() async {
+    var result = await FilePicker.platform.pickFiles();
+    if (result == null) {
+      Get.rawSnackbar(
+        title: S.current.importFailedTitle,
+        message: S.current.importFailedMessage,
+      );
+      return;
+    }
+
+    final filedata = result.files.single.bytes;
+    final filestring = utf8.decode(filedata as List<int>);
+    final filejson = json.decode(filestring);
+    toImport.value = ImportSelections.fromJson(filejson);
+    /*
     try {
       final path = await FlutterFileDialog.pickFile(
         params: const OpenFileDialogParams(
@@ -123,6 +138,7 @@ class ImportController extends GetxController
       );
       rethrow;
     }
+  */
   }
 
   void Function()? getDoImport() {
