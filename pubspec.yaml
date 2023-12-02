@@ -1,6 +1,6 @@
 name: dungeon_paper
-description: A Dungeon World character sheet app written with Flutter.
-version: 2.0.2+296
+description: A Dungeon World character sheet + helper
+version: 2.0.2+297
 # The above field defines the version and build number for your application.
 # A version number is three numbers separated by dots, like 1.2.43
 # followed by an optional build number separated by a +.
@@ -37,9 +37,9 @@ dependencies:
   firebase_analytics: ^10.7.2
   firebase_auth: ^4.15.0
   firebase_core: ^2.24.0
-  # firebase_crashlytics: ^3.4.6
   firebase_remote_config: ^4.3.6
   firebase_storage: ^11.5.3
+  file_picker: ^5.2.10
   flutter:
     sdk: flutter
   flutter_file_dialog: ^2.3.0
