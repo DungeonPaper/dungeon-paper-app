@@ -47,7 +47,7 @@ void main() async {
 }
 
 class DungeonPaperApp extends StatelessWidget {
-  const DungeonPaperApp({Key? key}) : super(key: key);
+  const DungeonPaperApp({super.key});
 
   // This widget is the root of your application.
   @override

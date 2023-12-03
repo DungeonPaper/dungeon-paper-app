@@ -1,12 +1,5 @@
 shell: /bin/zsh
 scripts:
-  - name: version
-    cmd: dart scripts/get_version.dart
-    suppress_header_output: true
-    description: Get version number
-  - name: bump
-    cmd: dart lib/core/task_runner/deploy.dart --bump pre
-    description: Bump version number
   # Android
   - name: build:android:apk
     cmd: flutter build apk

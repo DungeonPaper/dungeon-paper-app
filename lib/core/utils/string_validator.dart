@@ -37,7 +37,7 @@ class StringMaxLengthValidation extends Validation {
 
   StringMaxLengthValidation({
     required this.maxLength,
-  }) : super(S.current.errorMinLength(maxLength));
+  }) : super(S.current.errorMaxLength(maxLength));
 
   @override
   bool isValid(String? string) => string == null || string.length <= maxLength;
