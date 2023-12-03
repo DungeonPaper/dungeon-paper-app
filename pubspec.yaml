@@ -1,6 +1,6 @@
 name: dungeon_paper
 description: A new Flutter project.
-version: 2.0.0+293
+version: 2.0.1+294
 # The above field defines the version and build number for your application.
 # A version number is three numbers separated by dots, like 1.2.43
 # followed by an optional build number separated by a +.
@@ -27,19 +27,19 @@ environment:
 dependencies:
   animations: ^2.0.2
   cached_network_image: ^3.2.0
-  cloud_firestore: ^4.5.2
+  cloud_firestore: ^4.13.3
   cupertino_icons: ^1.0.2
   # dungeon_world_data:
   # path: ../dungeon_world_data
   dungeon_world_data: ^3.0.1
   dynamic_themes: ^1.1.0
   email_validator: ^2.0.1
-  firebase_analytics: ^10.2.1
-  firebase_auth: ^4.4.2
-  firebase_core: ^2.10.0
-  firebase_crashlytics: ^3.1.1
-  firebase_remote_config: ^4.0.1
-  firebase_storage: ^11.1.1
+  firebase_analytics: ^10.7.2
+  firebase_auth: ^4.15.0
+  firebase_core: ^2.24.0
+  firebase_crashlytics: ^3.4.6
+  firebase_remote_config: ^4.3.6
+  firebase_storage: ^11.5.3
   flutter:
     sdk: flutter
   flutter_file_dialog: ^2.3.0
@@ -58,7 +58,7 @@ dependencies:
   path: ^1.8.1
   path_provider: ^2.0.9
   popover: ^0.2.6+3
-  sentry_flutter: ^7.9.0
+  sentry_flutter: ^7.13.2
   shared_preferences: ^2.0.13
   sign_in_with_apple: ^4.1.0
   skeleton_loader: ^2.0.0+4
