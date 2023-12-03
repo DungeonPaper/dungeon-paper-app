@@ -52,3 +52,5 @@ google-services.json
 secrets.dart
 GoogleService-Info.plist
 .firebaserc
+# FVM
+.fvm/flutter_sdk
