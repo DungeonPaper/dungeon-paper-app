@@ -1,5 +1,4 @@
 import 'dart:convert';
-import 'dart:io';
 
 import 'package:dungeon_paper/app/data/models/character.dart';
 import 'package:dungeon_paper/app/data/models/character_class.dart';
@@ -13,7 +12,6 @@ import 'package:dungeon_paper/core/storage_handler/storage_handler.dart';
 import 'package:dungeon_paper/core/utils/list_utils.dart';
 import 'package:dungeon_paper/i18n.dart';
 import 'package:file_picker/file_picker.dart';
-import 'package:flutter_file_dialog/flutter_file_dialog.dart';
 import 'package:get/get.dart';
 
 import 'import_export_controller.dart';
@@ -112,7 +110,8 @@ class ImportController extends GetxController
   }
 
   void pickImportFile() async {
-    var result = await FilePicker.platform.pickFiles(type: FileType.custom, allowedExtensions: ['json']);
+    var result =
+        await FilePicker.platform.pickFiles(type: FileType.custom, allowedExtensions: ['json', 'dungeonpaper']);
     if (result == null) {
       Get.rawSnackbar(
         title: S.current.importFailedTitle,
