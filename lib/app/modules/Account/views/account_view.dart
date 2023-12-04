@@ -1,6 +1,7 @@
 import 'package:dungeon_paper/app/widgets/atoms/help_text.dart';
 import 'package:dungeon_paper/app/widgets/atoms/password_field.dart';
 import 'package:dungeon_paper/app/widgets/atoms/user_avatar.dart';
+import 'package:dungeon_paper/app/widgets/dialogs/confirm_delete_account_dialog.dart';
 import 'package:dungeon_paper/app/widgets/dialogs/confirm_unlink_provider_dialog.dart';
 import 'package:dungeon_paper/app/widgets/molecules/dialog_controls.dart';
 import 'package:dungeon_paper/core/platform_helper.dart';
@@ -14,6 +15,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import '../../../../core/dw_icons.dart';
+import '../../../../core/http/api.dart';
 import '../../../model_utils/user_utils.dart';
 import '../controllers/account_controller.dart';
 
@@ -125,6 +127,20 @@ class AccountView extends GetView<AccountController> {
                 );
           },
         ),
+        // delete account
+        () => ListTile(
+              title: Text(S.current.accountDelete),
+              leading: const Icon(Icons.delete_forever),
+              onTap: () => awaitDeleteAccountConfirmation(
+                context,
+                () => api.requests.sendFeedback(
+                  email: controller.user.email,
+                  subject: 'Account Deletion Request',
+                  body: 'Automated: Request Account Deletion for ${controller.user.email}',
+                  username: controller.user.username,
+                ),
+              ),
+            ),
         // () => const SizedBox(height: 32),
         // () => Center(
         //       child: Padding(
