@@ -133,12 +133,17 @@ class AccountView extends GetView<AccountController> {
               leading: const Icon(Icons.delete_forever),
               onTap: () => awaitDeleteAccountConfirmation(
                 context,
-                () => api.requests.sendFeedback(
-                  email: controller.user.email,
-                  subject: 'Account Deletion Request',
-                  body: 'Automated: Request Account Deletion for ${controller.user.email}',
-                  username: controller.user.username,
-                ),
+                () {
+                  api.requests.sendFeedback(
+                    email: controller.user.email,
+                    subject: 'Account Deletion Request',
+                    body: 'Automated: Request Account Deletion for ${controller.user.email}',
+                    username: controller.user.username,
+                  );
+                // A deletion request for your account was sent successfully
+                  Get.rawSnackbar(message: 'A deletion request for your account was sent successfully');
+                  // Get.rawSnackbar(message: S.current.accountDeleteSuccess);
+                },
               ),
             ),
         // () => const SizedBox(height: 32),

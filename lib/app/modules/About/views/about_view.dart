@@ -134,7 +134,18 @@ class AboutView extends GetView<AboutController> {
               ),
           () => ListTile(
                 minLeadingWidth: 36,
-                leading: const SizedBox(width: 16),
+                leading: const Icon(Icons.people),
+                title: const Text('Contributors'),
+                subtitle: Text(
+                  [
+                    'eldritchart',
+                    'arthurpaulino',
+                  ].join(', '),
+                ),
+              ),
+          () => ListTile(
+                minLeadingWidth: 36,
+                leading: const Icon(Icons.code),
                 title: Text(S.current.aboutIconCredits),
                 subtitle: Text(iconCredits),
               ),
