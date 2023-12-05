@@ -1,3 +1,4 @@
+import 'package:dungeon_paper/app/data/services/intl_service.dart';
 import 'package:dungeon_paper/app/widgets/atoms/menu_button.dart';
 import 'package:dungeon_paper/generated/l10n.dart';
 import 'package:flutter/material.dart';
@@ -43,7 +44,7 @@ class EntityEditMenu extends StatelessWidget {
             MenuEntry(
               value: 'edit',
               icon: const Icon(Icons.edit),
-              label: Text(S.current.edit),
+              label: Text(tr.generic.edit),
               onSelect: onEdit!,
             ),
           if (onDelete != null)
@@ -55,7 +56,7 @@ class EntityEditMenu extends StatelessWidget {
               ),
               label: DefaultTextStyle.merge(
                 style: TextStyle(color: Theme.of(context).colorScheme.error),
-                child: Text(S.current.remove),
+                child: Text(tr.generic.remove),
               ),
               onSelect: onDelete!,
             ),

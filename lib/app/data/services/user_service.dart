@@ -20,6 +20,7 @@ import 'package:package_info_plus/package_info_plus.dart';
 import 'package:sentry_flutter/sentry_flutter.dart';
 
 import '../../../core/utils/secrets_base.dart';
+import 'intl_service.dart';
 
 class UserService extends GetxService
     with RepositoryServiceMixin, AuthServiceMixin, CharacterServiceMixin, LoadingServiceMixin {
@@ -165,7 +166,7 @@ class UserService extends GetxService
     if (needsMigration) {
       final resp = await _migrateUser(user);
       if (resp == null) {
-        Get.rawSnackbar(title: S.current.errorUserOperationCanceled);
+        Get.rawSnackbar(title: tr.errors.userOperationCanceled);
         loadingService.loadingUser = false;
         loadingService.afterFirstLoad = !loadingService.loadingCharacters;
         return;

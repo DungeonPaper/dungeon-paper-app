@@ -8,6 +8,8 @@ import 'package:flutter_file_dialog/flutter_file_dialog.dart';
 import 'package:get/get.dart';
 import 'package:image_cropper/image_cropper.dart';
 
+import '../../app/data/services/intl_service.dart';
+
 class UploadSettings {
   final void Function(String downloadURL)? onSuccess;
   final void Function(CroppedFile file)? onUploadFile;
@@ -90,13 +92,13 @@ Future<UploadResponse?> cropAndUploadPhoto(BuildContext context, UploadSettings 
   try {
     file = await _pickAndCrop(context);
     if (file == null) {
-      Get.rawSnackbar(message: S.current.errorUserOperationCanceled);
+      Get.rawSnackbar(message: tr.errors.userOperationCanceled);
       settings.onCancel?.call();
       return null;
     }
     settings.onUploadFile?.call(file);
   } catch (e) {
-    Get.rawSnackbar(message: S.current.errorUpload);
+    Get.rawSnackbar(message: tr.errors.uploadError);
     settings.onError?.call(e);
     return null;
   }

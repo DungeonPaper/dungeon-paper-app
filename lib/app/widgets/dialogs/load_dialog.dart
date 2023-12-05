@@ -1,9 +1,10 @@
 import 'package:dungeon_paper/app/widgets/atoms/number_text_field.dart';
 import 'package:dungeon_paper/app/widgets/molecules/dialog_controls.dart';
 import 'package:dungeon_paper/core/dw_icons.dart';
-import 'package:dungeon_paper/generated/l10n.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+
+import '../../data/services/intl_service.dart';
 
 class LoadDialog extends StatefulWidget {
   const LoadDialog({
@@ -40,7 +41,7 @@ class _LoadDialogState extends State<LoadDialog> {
         children: [
           const Icon(DwIcons.dumbbell, size: 32),
           const SizedBox(width: 12),
-          Expanded(child: Text(S.current.maxLoad)),
+          Expanded(child: Text(tr.character.data.load.maxLoad)),
         ],
       ),
       content: SingleChildScrollView(
@@ -57,7 +58,7 @@ class _LoadDialogState extends State<LoadDialog> {
                   controller.text = widget.defaultLoad.toString();
                 }
               }),
-              title: Text(S.current.characterAutoMaxLoad),
+              title: Text(tr.character.data.load.autoMaxLoad),
             ),
             NumberTextField(
               controller: controller,

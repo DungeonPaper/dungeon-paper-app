@@ -4,21 +4,22 @@ import 'package:dungeon_paper/app/themes/button_themes.dart';
 import 'package:dungeon_paper/app/themes/themes.dart';
 import 'package:dungeon_paper/app/widgets/atoms/number_text_field.dart';
 import 'package:dungeon_paper/app/widgets/atoms/select_box.dart';
-import 'package:dungeon_paper/generated/l10n.dart';
 import 'package:flutter/material.dart';
 import 'package:dungeon_world_data/dungeon_world_data.dart' as dw;
 import 'package:get/get.dart';
+
+import '../../data/services/intl_service.dart';
 
 enum ModifierType { stat, fixed }
 
 class DiceForm extends StatefulWidget {
   const DiceForm({
-    Key? key,
+    super.key,
     this.dice,
     this.onChanged,
     required this.abilityScores,
     this.enabled = true,
-  }) : super(key: key);
+  });
 
   final dw.Dice? dice;
   final void Function(dw.Dice dice)? onChanged;
@@ -42,11 +43,16 @@ class _DiceFormState extends State<DiceForm> {
   void initState() {
     super.initState();
     // amount = widget.dice?.amount ?? 2;
-    amount = TextEditingController(text: widget.dice?.amount.toString() ?? '2')..addListener(_onChanged);
+    amount = TextEditingController(text: widget.dice?.amount.toString() ?? '2')
+      ..addListener(_onChanged);
     sides = widget.dice?.sides ?? 6;
-    modifierNum = TextEditingController(text: (widget.dice?.modifierValue ?? 0).toString())..addListener(_onChanged);
+    modifierNum = TextEditingController(
+        text: (widget.dice?.modifierValue ?? 0).toString())
+      ..addListener(_onChanged);
     modifierStat = widget.dice?.modifierStat;
-    modifierType = widget.dice?.modifierStat != null ? ModifierType.stat : ModifierType.fixed;
+    modifierType = widget.dice?.modifierStat != null
+        ? ModifierType.stat
+        : ModifierType.fixed;
   }
 
   @override
@@ -65,22 +71,23 @@ class _DiceFormState extends State<DiceForm> {
                 enabled: widget.enabled,
                 minValue: 1,
                 decoration: InputDecoration(
-                  label: Text(S.current.diceAmount),
+                  label: Text(tr.dice.form.amount),
                   alignLabelWithHint: true,
                 ),
               ),
             ),
             const SizedBox(width: 8),
-            Text(S.current.diceSeparator),
+            Text(tr.dice.form.diceSeparator),
             const SizedBox(width: 8),
             SizedBox(
               width: 100,
               child: SelectBox<int>(
                 value: sides,
-                label: Text(S.current.diceSides),
+                label: Text(tr.dice.form.sides),
                 isExpanded: true,
                 items: [
-                  for (final i in [4, 6, 8, 10, 12, 20, 100]) DropdownMenuItem<int>(child: Text(i.toString()), value: i)
+                  for (final i in [4, 6, 8, 10, 12, 20, 100])
+                    DropdownMenuItem<int>(value: i, child: Text(i.toString()))
                 ],
                 onChanged: widget.enabled
                     ? (value) => setState(() {
@@ -101,7 +108,8 @@ class _DiceFormState extends State<DiceForm> {
               child: ElevatedButton(
                 style: (ButtonThemes.primaryElevated(
                           context,
-                          backgroundOpacity: modifierType == ModifierType.fixed ? 1 : 0.4,
+                          backgroundOpacity:
+                              modifierType == ModifierType.fixed ? 1 : 0.4,
                         ) ??
                         ElevatedButton.styleFrom())
                     .copyWith(
@@ -121,14 +129,15 @@ class _DiceFormState extends State<DiceForm> {
                   modifierType = ModifierType.fixed;
                   _onChanged();
                 }),
-                child: Text(S.current.diceUseValue),
+                child: Text(tr.dice.form.modifierType.fixed),
               ),
             ),
             Expanded(
               child: ElevatedButton(
                 style: (ButtonThemes.primaryElevated(
                           context,
-                          backgroundOpacity: modifierType == ModifierType.stat ? 1 : 0.4,
+                          backgroundOpacity:
+                              modifierType == ModifierType.stat ? 1 : 0.4,
                         ) ??
                         ElevatedButton.styleFrom())
                     .copyWith(
@@ -148,7 +157,7 @@ class _DiceFormState extends State<DiceForm> {
                   modifierType = ModifierType.stat;
                   _onChanged();
                 }),
-                child: Text(S.current.diceUseStat),
+                child: Text(tr.dice.form.modifierType.modifier),
               ),
             ),
           ],
@@ -161,8 +170,8 @@ class _DiceFormState extends State<DiceForm> {
               controller: modifierNum,
               enabled: widget.enabled,
               decoration: InputDecoration(
-                hintText: S.current.diceUseValuePlaceholder,
-                label: Text(S.current.diceUseValueLabel),
+                hintText: tr.dice.form.value.placeholder,
+                label: Text(tr.dice.form.value.label),
               ),
             ),
           ),
@@ -172,8 +181,8 @@ class _DiceFormState extends State<DiceForm> {
             child: SelectBox<String>(
               value: modifierStat,
               isExpanded: true,
-              label: Text(S.current.diceUseStatPlaceholder),
-              hint: Text(S.current.diceUseStatLabel),
+              label: Text(tr.dice.form.modifier.placeholder),
+              hint: Text(tr.dice.form.modifier.label),
               onChanged: widget.enabled
                   ? (value) => setState(() {
                         modifierStat = value;
@@ -183,8 +192,9 @@ class _DiceFormState extends State<DiceForm> {
               items: [
                 for (final stat in widget.abilityScores.stats)
                   DropdownMenuItem<String>(
-                    child: Text(S.current.diceUseStatValue(stat.name, stat.key)),
                     value: stat.key,
+                    child:
+                        Text(tr.dice.form.statValue(stat.name, stat.key)),
                   )
               ],
             ),
@@ -197,7 +207,9 @@ class _DiceFormState extends State<DiceForm> {
         amount: int.tryParse(amount.text) ?? 1,
         sides: sides,
         modifierStat: modifierType == ModifierType.stat ? modifierStat : null,
-        modifierValue: modifierType == ModifierType.fixed ? int.tryParse(modifierNum.text) ?? 0 : null,
+        modifierValue: modifierType == ModifierType.fixed
+            ? int.tryParse(modifierNum.text) ?? 0
+            : null,
       );
 
   void _onChanged() {
@@ -215,3 +227,4 @@ class _DiceFormState extends State<DiceForm> {
     return int.tryParse(text);
   }
 }
+

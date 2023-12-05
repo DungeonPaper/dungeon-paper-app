@@ -1,15 +1,116 @@
+# generic name mappings
+_entSingle(String type): "${{
+  'Dice': 'Die',
+  'CharacterClass': 'Class',
+  'MoveCategory': 'Category',
+  'GearSelection': 'Starting Gear',
+  'AbilityScore': 'Ability Score',
+  'AlignmentValue': 'Alignment'
+  }[type] ?? type}"
+_entPlural(String type): "${{
+  'MoveCategory': 'Categories',
+  'CharacterClass': 'Classes',
+  'GearSelection': 'Starting Gear',
+  'AbilityScore': 'Ability Scores',
+  'AlignmentValue': 'Alignments'
+  }[type] ?? '${type}s'}"
+
+entity(Type ent): '${_entSingle(ent.toString())}'
+entityPlural(Type ent): '${_entPlural(ent.toString())}'
+entityCount(Type ent, int cnt): '${cnt == 1 ? _entSingle(ent.toString()) : _entPlural(ent.toString())}'
+
 app:
   name: Dungeon Paper
+
 generic:
+  save: Save
+  saveEntity(String ent): Save $ent
+  cancel: Cancel
+  close: Close
   view: View
   viewEntity(String ent): View $ent
   all: All
   allEntities(String ent): All $ent
   create: Create
   createEntity(String ent): Create $ent
+  add: Add
+  addEntity(String ent): Add $ent
+  remove: Remove
+  removeEntity(String ent): Remove $ent
+  edit: Edit
+  editEntity(String ent): Edit $ent
+
+errors:
+  userOperationCanceled: Operation canceled
+  uploadError: Error while uploading photo. Try again later, or contact support using the "About" page.
+
+sort:
+  moveUp: Move up
+  moveDown: Move down
+
 playbook:
-  _p(String single, int cnt): "${_plural(cnt, one: single, many: '${single}s')}"
-  Character(int cnt): "${_p('Character', cnt)}"
-  Move(int cnt): "${_p('Move', cnt)}"
-  Spell(int cnt): "${_p('Spell', cnt)}"
-  Item(int cnt): "${_p('Item', cnt)}"
+  myLibrary: My Library
+  myCampaigns: My Campaigns
+  data:
+    noDescription: ‹No description provided›
+
+settings:
+  title: Settings
+  importExport: Export/Import
+  _switchMode(String mode): 'Switch to ${mode} Mode'
+  switchToDark: "${_switchMode('Dark')}"
+  switchToLight: "${_switchMode('Light')}"
+
+user:
+  logout: Sign out
+  login: Sign in
+  notLoggedIn: Not logged in
+  recentCharacters: Recent Characters
+
+about:
+  title: About
+
+character:
+  data:
+    coins: Coins
+    load:
+      load: Load
+      maxLoad: Max Load
+      autoMaxLoad: Use class base load + STR mod
+
+dice:
+  form:
+    amount: Amount
+    sides: Sides
+    diceSeparator: d
+    modifierType:
+      fixed: Fixed Value
+      modifier: Stat Mod.
+    value:
+      placeholder: Number, e.g. 2 or -1
+      label: Modifier value
+    modifier:
+      placeholder: Select stat
+      label: Stat
+    statValue(String name, String key): $name ($key)
+
+  roll:
+    title:
+      rolled(int total): Rolled $total
+      rolling(int amt): "Rolling $amt ${_plural(amt, one: 'die', many: 'dice')}"
+    action: Roll
+    total(int amt): Total $amt
+    resultBreakdown(String dice, String mod): 'Dice: $dice | Modifier: $mod'
+
+dialogs:
+  confirmations:
+    delete:
+      title(String ent): Delete $ent?
+      body(String ent, String name): Are you sure you want to remove the $ent "$name" from the list?
+
+items:
+  amount(String amt): × $amt
+  amountTooltip: Amount
+
+search:
+  placeholder: Type to search

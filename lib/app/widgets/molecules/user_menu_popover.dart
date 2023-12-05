@@ -68,7 +68,7 @@ class UserMenuPopover extends GetView<CharacterService> with AuthServiceMixin, U
                                   subtitle: Text(
                                     userService.current.email.isNotEmpty
                                         ? userService.current.email
-                                        : S.current.userUnregistered,
+                                        : tr.user.notLoggedIn,
                                   ),
                                   trailing: userService.isGuest
                                       ? Row(
@@ -80,7 +80,7 @@ class UserMenuPopover extends GetView<CharacterService> with AuthServiceMixin, U
                                                 Get.toNamed(Routes.login);
                                               },
                                               icon: const Icon(Icons.login),
-                                              label: Text(S.current.userLoginButton),
+                                              label: Text(tr.user.login),
                                             ),
                                             const SizedBox(width: 16),
                                             UserAvatar(user: user),
@@ -93,7 +93,7 @@ class UserMenuPopover extends GetView<CharacterService> with AuthServiceMixin, U
                                 if (controller.charsByLastUsed.isNotEmpty) ...[
                                   const SizedBox(height: 8),
                                   Text(
-                                    S.current.userMenuRecentCharacters,
+                                    tr.user.recentCharacters,
                                     style: Theme.of(context).textTheme.bodySmall,
                                   ),
                                   Padding(
@@ -140,7 +140,7 @@ class UserMenuPopover extends GetView<CharacterService> with AuthServiceMixin, U
                                 ListTile(
                                   visualDensity: VisualDensity.compact,
                                   dense: true,
-                                  title: Text(tr.generic.allEntities(tr.playbook.Character(0))),
+                                  title: Text(tr.generic.allEntities(tr.entityPlural(Character))),
                                   leading: const Icon(Icons.group),
                                   onTap: () {
                                     Get.back();
@@ -150,7 +150,7 @@ class UserMenuPopover extends GetView<CharacterService> with AuthServiceMixin, U
                                 // Create Character
                                 ListTile(
                                   visualDensity: VisualDensity.compact,
-                                  title: Text(tr.generic.createEntity(tr.playbook.Character(1))),
+                                  title: Text(tr.generic.createEntity(tr.entity(Character))),
                                   leading: const Icon(Icons.person_add),
                                   onTap: () {
                                     Get.back();
@@ -161,7 +161,7 @@ class UserMenuPopover extends GetView<CharacterService> with AuthServiceMixin, U
                                 // My Library
                                 ListTile(
                                   visualDensity: VisualDensity.compact,
-                                  title: Text(S.current.libraryCollectionTitle),
+                                  title: Text(tr.playbook.myLibrary),
                                   leading: const Icon(Icons.local_library),
                                   onTap: () {
                                     Get.back();
@@ -172,7 +172,7 @@ class UserMenuPopover extends GetView<CharacterService> with AuthServiceMixin, U
                                   // My Campaigns
                                   ListTile(
                                     visualDensity: VisualDensity.compact,
-                                    title: Text(S.current.myGeneric(S.current.entityPlural(Campaign))),
+                                    title: Text(tr.playbook.myCampaigns),
                                     leading: Icon(Campaign.genericIcon),
                                     onTap: () {
                                       Get.back();
@@ -182,7 +182,7 @@ class UserMenuPopover extends GetView<CharacterService> with AuthServiceMixin, U
                                 // Export/Import
                                 ListTile(
                                   visualDensity: VisualDensity.compact,
-                                  title: Text(S.current.importExportTitle),
+                                  title: Text(tr.settings.importExport),
                                   leading: const Icon(Icons.import_export),
                                   onTap: () {
                                     Get.back();
@@ -196,7 +196,7 @@ class UserMenuPopover extends GetView<CharacterService> with AuthServiceMixin, U
                                 // Settings
                                 ListTile(
                                   visualDensity: VisualDensity.compact,
-                                  title: Text(S.current.settingsTitle),
+                                  title: Text(tr.settings.title),
                                   leading: const Icon(Icons.settings),
                                   onTap: () {
                                     Get.back();
@@ -206,7 +206,7 @@ class UserMenuPopover extends GetView<CharacterService> with AuthServiceMixin, U
                                 // About
                                 ListTile(
                                   visualDensity: VisualDensity.compact,
-                                  title: Text(S.current.aboutTitle),
+                                  title: Text(tr.about.title),
                                   leading: const Icon(Icons.info),
                                   onTap: () {
                                     Get.back();
@@ -218,7 +218,7 @@ class UserMenuPopover extends GetView<CharacterService> with AuthServiceMixin, U
                                   const Divider(),
                                   ListTile(
                                     visualDensity: VisualDensity.compact,
-                                    title: Text(S.current.userLogoutButton),
+                                    title: Text(tr.user.logout),
                                     leading: const Icon(Icons.logout),
                                     onTap: () {
                                       Get.back();

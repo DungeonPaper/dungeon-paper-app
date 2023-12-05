@@ -1,5 +1,5 @@
+import 'package:dungeon_paper/app/data/services/intl_service.dart';
 import 'package:dungeon_paper/app/widgets/molecules/dialog_controls.dart';
-import 'package:dungeon_paper/generated/l10n.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -7,14 +7,19 @@ import '../../../core/utils/dialog_utils.dart';
 
 class _DeleteDialog extends ConfirmationDialog<DeleteDialogOptions> {
   @override
-  Widget createConfirmation<T>(BuildContext context, DeleteDialogOptions options) {
+  Widget createConfirmation<T>(
+      BuildContext context, DeleteDialogOptions options) {
     return AlertDialog(
-      title: Text(S.current.confirmDeleteTitle(options.entityKind)),
+      title: Text(tr.dialogs.confirmations.delete.title(options.entityKind)),
       content: Text(
-        S.current.confirmDeleteBody(options.entityKind, options.entityName),
+        tr.dialogs.confirmations.delete
+            .body(options.entityKind, options.entityName),
       ),
-      actions: DialogControls.delete(context,
-          onDelete: () => Get.back(result: true), onCancel: () => Get.back(result: false)),
+      actions: DialogControls.delete(
+        context,
+        onDelete: () => Get.back(result: true),
+        onCancel: () => Get.back(result: false),
+      ),
     );
   }
 }
@@ -27,3 +32,4 @@ class DeleteDialogOptions {
 }
 
 final deleteDialog = _DeleteDialog();
+

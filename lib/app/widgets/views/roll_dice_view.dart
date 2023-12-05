@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:ui';
 
 import 'package:dungeon_paper/app/data/services/character_service.dart';
+import 'package:dungeon_paper/app/data/services/intl_service.dart';
 import 'package:dungeon_paper/app/model_utils/dice_utils.dart';
 import 'package:dungeon_paper/app/themes/colors.dart';
 import 'package:dungeon_paper/app/widgets/atoms/advanced_floating_action_button.dart';
@@ -65,8 +66,8 @@ class _RollDiceViewState extends State<RollDiceView> with TickerProviderStateMix
         appBar: AppBar(
           title: Text(
             rollStatus == AnimationStatus.completed
-                ? S.current.rollDialogTitleRolled(totalResult)
-                : S.current.rollDialogTitleRolling(flat.length),
+                ? tr.dice.roll.title.rolled(totalResult)
+                : tr.dice.roll.title.rolling(flat.length),
           ),
           centerTitle: true,
           backgroundColor: Colors.transparent,
@@ -114,7 +115,7 @@ class _RollDiceViewState extends State<RollDiceView> with TickerProviderStateMix
           ),
         ),
         floatingActionButton: AdvancedFloatingActionButton.extended(
-          label: Text(S.current.diceRollAgain),
+          label: Text(tr.dice.roll.action),
           icon: const Icon(Icons.refresh),
           onPressed: _reRoll,
         ),
@@ -152,11 +153,11 @@ class _RollDiceViewState extends State<RollDiceView> with TickerProviderStateMix
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        S.current.rollDialogResultTotal(results.isNotEmpty ? results[group.index].total : 0),
+                        tr.dice.roll.total(results.isNotEmpty ? results[group.index].total : 0),
                         style: textTheme.titleLarge!.copyWith(color: Colors.white),
                       ),
                       Text(
-                        S.current.rollDialogResultBreakdown(
+                        tr.dice.roll.resultBreakdown(
                           (withoutModDice.value[group.index]).toString(),
                           (group.value.modifierWithSign.isEmpty ? '+0' : group.value.modifierWithSign),
                         ),

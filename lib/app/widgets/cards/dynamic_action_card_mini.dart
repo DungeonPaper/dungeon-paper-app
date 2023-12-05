@@ -8,6 +8,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_markdown/flutter_markdown.dart';
 import 'package:url_launcher/url_launcher.dart';
 
+import '../../data/services/intl_service.dart';
+
 class DynamicActionCardMini extends StatelessWidget {
   const DynamicActionCardMini({
     Key? key,
@@ -125,7 +127,7 @@ class DynamicActionCardMini extends StatelessWidget {
                 // clipper: RectClipper(constraints.maxWidth, constraints.maxHeight),
                 child: Markdown(
                   padding: EdgeInsets.zero,
-                  data: description.isNotEmpty ? description : S.current.noDescription,
+                  data: description.isNotEmpty ? description : tr.playbook.data.noDescription,
                   // fitContent: true,
                   // shrinkWrap: true,
                   // fitContent: true,
@@ -136,7 +138,7 @@ class DynamicActionCardMini extends StatelessWidget {
               );
             }),
             // child: Text(
-            //   description.isNotEmpty ? description : S.current.noDescription,
+            //   description.isNotEmpty ? description : tr.playbook.data.noDescription,
             //   overflow: TextOverflow.ellipsis,
             //   maxLines: dice.isNotEmpty
             //       ? 3
