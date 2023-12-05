@@ -54,3 +54,4 @@ GoogleService-Info.plist
 .firebaserc
 # FVM
 .fvm/flutter_sdk
+.firebase/

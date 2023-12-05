@@ -47,6 +47,9 @@ scripts:
   - name: build:web:all
     cmd: build:web:app
     description: 'Alias for: Build Web app'
+  - name: publish:web
+    cmd: firebase deploy --only hosting
+    description: Publish web version using Firebase (requires build)
   # All
   - name: build:all
     cmd: build:android:all && build:ios:all && build:macos:all && build:web:all
