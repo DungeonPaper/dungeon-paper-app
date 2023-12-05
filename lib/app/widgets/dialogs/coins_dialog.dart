@@ -1,10 +1,10 @@
-import 'package:dungeon_paper/app/data/services/intl_service.dart';
-import 'package:dungeon_paper/app/widgets/atoms/number_text_field.dart';
-import 'package:dungeon_paper/app/widgets/molecules/dialog_controls.dart';
-import 'package:dungeon_paper/core/dw_icons.dart';
-import 'package:dungeon_paper/generated/l10n.dart';
+import 'package:dungeon_paper/i18n.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+
+import '../../../core/dw_icons.dart';
+import '../atoms/number_text_field.dart';
+import '../molecules/dialog_controls.dart';
 
 class CoinsDialog extends StatefulWidget {
   const CoinsDialog({

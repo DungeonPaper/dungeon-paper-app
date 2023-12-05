@@ -1,18 +1,16 @@
 import 'package:dungeon_paper/app/widgets/atoms/menu_button.dart';
-import 'package:dungeon_paper/generated/l10n.dart';
+import 'package:dungeon_paper/i18n.dart';
 import 'package:flutter/material.dart';
-
-import '../../data/services/intl_service.dart';
 
 class GroupSortMenu extends StatelessWidget {
   const GroupSortMenu({
-    Key? key,
+    super.key,
     required this.index,
     required this.totalItemCount,
     required this.onReorder,
     this.leading = const [],
     this.trailing = const [],
-  }) : super(key: key);
+  });
 
   final int index;
   final int totalItemCount;

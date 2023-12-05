@@ -2,7 +2,6 @@ import 'dart:async';
 import 'dart:ui';
 
 import 'package:dungeon_paper/app/data/services/character_service.dart';
-import 'package:dungeon_paper/app/data/services/intl_service.dart';
 import 'package:dungeon_paper/app/model_utils/dice_utils.dart';
 import 'package:dungeon_paper/app/themes/colors.dart';
 import 'package:dungeon_paper/app/widgets/atoms/advanced_floating_action_button.dart';
@@ -10,18 +9,18 @@ import 'package:dungeon_paper/app/widgets/atoms/dice_icon.dart';
 import 'package:dungeon_paper/app/widgets/molecules/dice_list_input.dart';
 import 'package:dungeon_paper/core/utils/list_utils.dart';
 import 'package:dungeon_paper/core/utils/math_utils.dart';
-import 'package:dungeon_paper/generated/l10n.dart';
-import 'package:flutter/material.dart';
+import 'package:dungeon_paper/i18n.dart';
 import 'package:dungeon_world_data/dungeon_world_data.dart' as dw;
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class RollDiceView extends StatefulWidget {
   final List<dw.Dice> dice;
 
   const RollDiceView({
-    Key? key,
+    super.key,
     required this.dice,
-  }) : super(key: key);
+  });
 
   static const rollAnimDuration = Duration(milliseconds: 1500);
   static const rollAnimResetDuration = Duration(milliseconds: 700);
@@ -235,7 +234,7 @@ class _RollDiceViewState extends State<RollDiceView> with TickerProviderStateMix
                               style: const TextStyle(
                                 color: Colors.white,
                               ),
-                              textScaleFactor: resultStr.length > 2 ? 1 : 1.5,
+                              textScaler: TextScaler.linear(resultStr.length > 2 ? 1 : 1.5),
                             ),
                           ),
                         ),

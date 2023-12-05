@@ -31,5 +31,3 @@ class IntlService extends GetxService {
   }
 }
 
-Messages get tr => IntlService.m;
-

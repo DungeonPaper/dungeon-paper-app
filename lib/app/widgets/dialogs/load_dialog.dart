@@ -1,10 +1,9 @@
 import 'package:dungeon_paper/app/widgets/atoms/number_text_field.dart';
 import 'package:dungeon_paper/app/widgets/molecules/dialog_controls.dart';
 import 'package:dungeon_paper/core/dw_icons.dart';
+import 'package:dungeon_paper/i18n.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-
-import '../../data/services/intl_service.dart';
 
 class LoadDialog extends StatefulWidget {
   const LoadDialog({

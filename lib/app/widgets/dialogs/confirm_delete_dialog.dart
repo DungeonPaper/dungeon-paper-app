@@ -1,5 +1,5 @@
-import 'package:dungeon_paper/app/data/services/intl_service.dart';
 import 'package:dungeon_paper/app/widgets/molecules/dialog_controls.dart';
+import 'package:dungeon_paper/i18n.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 

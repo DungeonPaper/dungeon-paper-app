@@ -7,11 +7,9 @@ import 'package:dungeon_paper/app/widgets/forms/entity_share_form.dart';
 import 'package:dungeon_paper/core/utils/builder_utils.dart';
 import 'package:dungeon_paper/core/utils/enums.dart';
 import 'package:dungeon_paper/core/utils/list_utils.dart';
-import 'package:dungeon_paper/generated/l10n.dart';
+import 'package:dungeon_paper/i18n.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-
-import '../../data/services/intl_service.dart';
 
 class LibraryEntityForm<T extends WithMeta, Ctrl extends LibraryEntityFormController<T, LibraryEntityFormArguments<T>>>
     extends GetView<Ctrl> {

@@ -1,16 +1,15 @@
-import 'package:dungeon_paper/app/data/services/intl_service.dart';
 import 'package:dungeon_paper/app/widgets/atoms/menu_button.dart';
-import 'package:dungeon_paper/generated/l10n.dart';
+import 'package:dungeon_paper/i18n.dart';
 import 'package:flutter/material.dart';
 
 class EntityEditMenu extends StatelessWidget {
   const EntityEditMenu({
-    Key? key,
+    super.key,
     required this.onEdit,
     required this.onDelete,
     this.leading = const [],
     this.trailing = const [],
-  }) : super(key: key);
+  });
 
   final void Function()? onEdit;
   final void Function()? onDelete;
@@ -28,10 +27,6 @@ class EntityEditMenu extends StatelessWidget {
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
       clipBehavior: Clip.antiAlias,
       child: MenuButton(
-        child: const Padding(
-          padding: EdgeInsets.all(8),
-          child: Icon(Icons.more_vert),
-        ),
         items: <PopupMenuEntry>[
           ...leading,
           if (leading.isNotEmpty)
@@ -68,6 +63,10 @@ class EntityEditMenu extends StatelessWidget {
                 ),
           ...trailing,
         ],
+        child: const Padding(
+          padding: EdgeInsets.all(8),
+          child: Icon(Icons.more_vert),
+        ),
       ),
     );
   }

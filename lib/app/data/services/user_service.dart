@@ -11,7 +11,7 @@ import 'package:dungeon_paper/app/routes/app_pages.dart';
 import 'package:dungeon_paper/core/http/api.dart';
 import 'package:dungeon_paper/core/http/api_requests/migration.dart';
 import 'package:dungeon_paper/core/storage_handler/storage_handler.dart';
-import 'package:dungeon_paper/generated/l10n.dart';
+import 'package:dungeon_paper/i18n.dart';
 import 'package:email_validator/email_validator.dart';
 import 'package:firebase_auth/firebase_auth.dart' as fba;
 import 'package:flutter/material.dart';
@@ -20,7 +20,6 @@ import 'package:package_info_plus/package_info_plus.dart';
 import 'package:sentry_flutter/sentry_flutter.dart';
 
 import '../../../core/utils/secrets_base.dart';
-import 'intl_service.dart';
 
 class UserService extends GetxService
     with RepositoryServiceMixin, AuthServiceMixin, CharacterServiceMixin, LoadingServiceMixin {

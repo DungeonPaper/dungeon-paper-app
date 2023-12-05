@@ -2,17 +2,15 @@ import 'package:dungeon_paper/app/data/models/ability_scores.dart';
 import 'package:dungeon_paper/app/themes/themes.dart';
 import 'package:dungeon_paper/app/widgets/atoms/round_roll_button.dart';
 import 'package:dungeon_paper/core/utils/markdown_styles.dart';
-import 'package:dungeon_paper/generated/l10n.dart';
+import 'package:dungeon_paper/i18n.dart';
 import 'package:dungeon_world_data/dice.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_markdown/flutter_markdown.dart';
 import 'package:url_launcher/url_launcher.dart';
 
-import '../../data/services/intl_service.dart';
-
 class DynamicActionCardMini extends StatelessWidget {
   const DynamicActionCardMini({
-    Key? key,
+    super.key,
     required this.title,
     required this.icon,
     required this.starred,
@@ -25,8 +23,7 @@ class DynamicActionCardMini extends StatelessWidget {
     required this.onStarChanged,
     this.onTap,
     this.abilityScores,
-  })  : assert(dice.length == 0 || abilityScores != null),
-        super(key: key);
+  })  : assert(dice.length == 0 || abilityScores != null);
 
   final String title;
   final Widget? icon;

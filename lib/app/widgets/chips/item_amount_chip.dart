@@ -1,8 +1,8 @@
 import 'package:dungeon_paper/app/data/models/item.dart';
 import 'package:dungeon_paper/app/widgets/chips/primary_chip.dart';
+import 'package:dungeon_paper/i18n.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import '../../data/services/intl_service.dart';
 
 class ItemAmountChip extends StatelessWidget {
   const ItemAmountChip({

@@ -4,11 +4,10 @@ import 'package:dungeon_paper/app/themes/button_themes.dart';
 import 'package:dungeon_paper/app/themes/themes.dart';
 import 'package:dungeon_paper/app/widgets/atoms/number_text_field.dart';
 import 'package:dungeon_paper/app/widgets/atoms/select_box.dart';
+import 'package:dungeon_paper/i18n.dart';
 import 'package:flutter/material.dart';
 import 'package:dungeon_world_data/dungeon_world_data.dart' as dw;
 import 'package:get/get.dart';
-
-import '../../data/services/intl_service.dart';
 
 enum ModifierType { stat, fixed }
 

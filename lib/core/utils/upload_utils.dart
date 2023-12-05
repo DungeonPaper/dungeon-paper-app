@@ -1,14 +1,11 @@
 import 'package:dungeon_paper/app/data/services/user_service.dart';
-import 'package:dungeon_paper/generated/l10n.dart';
+import 'package:dungeon_paper/i18n.dart';
 import 'package:firebase_storage/firebase_storage.dart';
-import 'package:path/path.dart' as path;
-
 import 'package:flutter/material.dart';
 import 'package:flutter_file_dialog/flutter_file_dialog.dart';
 import 'package:get/get.dart';
 import 'package:image_cropper/image_cropper.dart';
-
-import '../../app/data/services/intl_service.dart';
+import 'package:path/path.dart' as path;
 
 class UploadSettings {
   final void Function(String downloadURL)? onSuccess;
@@ -46,6 +43,7 @@ Future<CroppedFile?> _pickAndCrop(
   BuildContext context, {
   CropStyle? cropStyle,
 }) async {
+  final theme = Theme.of(context);
   final res = await FlutterFileDialog.pickFile(
     params: const OpenFileDialogParams(
       dialogType: OpenFileDialogType.image,
@@ -58,7 +56,6 @@ Future<CroppedFile?> _pickAndCrop(
     return null;
   }
 
-  final theme = Theme.of(context);
   final colorScheme = theme.colorScheme;
   final cropped = await ImageCropper().cropImage(
     sourcePath: res,

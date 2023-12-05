@@ -1,4 +1,3 @@
-import 'package:dungeon_paper/app/data/services/intl_service.dart';
 import 'package:dungeon_paper/app/routes/app_pages.dart';
 import 'package:dungeon_paper/app/data/services/services.dart';
 import 'package:dungeon_paper/core/multi_platform_scroll_behavior.dart';
@@ -8,6 +7,7 @@ import 'package:dungeon_paper/core/shared_preferences.dart';
 import 'package:dungeon_paper/core/utils/secrets_base.dart';
 import 'package:dungeon_paper/generated/intl/messages_all.dart';
 import 'package:dungeon_paper/generated/l10n.dart';
+import 'package:dungeon_paper/i18n.dart';
 import 'package:dynamic_themes/dynamic_themes.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
