@@ -1,0 +1,15 @@
+app:
+  name: Dungeon Paper
+generic:
+  view: View
+  viewEntity(String ent): View $ent
+  all: All
+  allEntities(String ent): All $ent
+  create: Create
+  createEntity(String ent): Create $ent
+playbook:
+  _p(String single, int cnt): "${_plural(cnt, one: single, many: '${single}s')}"
+  Character(int cnt): "${_p('Character', cnt)}"
+  Move(int cnt): "${_p('Move', cnt)}"
+  Spell(int cnt): "${_p('Spell', cnt)}"
+  Item(int cnt): "${_p('Item', cnt)}"

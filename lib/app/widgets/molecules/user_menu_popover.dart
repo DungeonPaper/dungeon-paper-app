@@ -5,6 +5,7 @@ import 'package:dungeon_paper/app/data/models/campaign.dart';
 import 'package:dungeon_paper/app/data/models/character.dart';
 import 'package:dungeon_paper/app/data/services/auth_service.dart';
 import 'package:dungeon_paper/app/data/services/character_service.dart';
+import 'package:dungeon_paper/app/data/services/intl_service.dart';
 import 'package:dungeon_paper/app/data/services/user_service.dart';
 import 'package:dungeon_paper/app/routes/app_pages.dart';
 import 'package:dungeon_paper/app/themes/themes.dart';
@@ -139,7 +140,7 @@ class UserMenuPopover extends GetView<CharacterService> with AuthServiceMixin, U
                                 ListTile(
                                   visualDensity: VisualDensity.compact,
                                   dense: true,
-                                  title: Text(S.current.allGeneric(S.current.entityPlural(Character))),
+                                  title: Text(tr.generic.allEntities(tr.playbook.Character(0))),
                                   leading: const Icon(Icons.group),
                                   onTap: () {
                                     Get.back();
@@ -149,7 +150,7 @@ class UserMenuPopover extends GetView<CharacterService> with AuthServiceMixin, U
                                 // Create Character
                                 ListTile(
                                   visualDensity: VisualDensity.compact,
-                                  title: Text(S.current.createGeneric(S.current.entity(Character))),
+                                  title: Text(tr.generic.createEntity(tr.playbook.Character(1))),
                                   leading: const Icon(Icons.person_add),
                                   onTap: () {
                                     Get.back();

@@ -49,6 +49,7 @@ dependencies:
   get: ^4.6.1
   google_sign_in: ^5.3.3
   http: ^0.13.4
+  i18n: ^4.0.8
   icons_launcher: ^2.0.2
   image_cropper: ^2.0.2
   intl: ^0.17.0

@@ -1,3 +1,4 @@
+import 'package:dungeon_paper/app/data/services/intl_service.dart';
 import 'package:dungeon_paper/app/routes/app_pages.dart';
 import 'package:dungeon_paper/app/data/services/services.dart';
 import 'package:dungeon_paper/core/multi_platform_scroll_behavior.dart';
@@ -61,7 +62,7 @@ class DungeonPaperApp extends StatelessWidget {
       builder: (context, value) {
         return GetMaterialApp(
           scrollBehavior: MultiPlatformScrollBehavior(),
-          title: S.current.appName,
+          title: tr.app.name,
           theme: value,
           initialRoute: AppPages.initial,
           getPages: AppPages.routes,
