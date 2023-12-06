@@ -91,12 +91,18 @@ class Messages {
   PlaybookMessages get playbook => PlaybookMessages(this);
   SettingsMessages get settings => SettingsMessages(this);
   UserMessages get user => UserMessages(this);
+  AuthMessages get auth => AuthMessages(this);
   AboutMessages get about => AboutMessages(this);
   CharacterMessages get character => CharacterMessages(this);
   DiceMessages get dice => DiceMessages(this);
+  TagsMessages get tags => TagsMessages(this);
   DialogsMessages get dialogs => DialogsMessages(this);
   ItemsMessages get items => ItemsMessages(this);
+  AlignmentMessages get alignment => AlignmentMessages(this);
+  BioMessages get bio => BioMessages(this);
   SearchMessages get search => SearchMessages(this);
+  XpDialogMessages get xpDialog => XpDialogMessages(this);
+  RichTextMessages get richText => RichTextMessages(this);
 }
 
 class AppMessages {
@@ -124,6 +130,11 @@ class GenericMessages {
   String removeEntity(String ent) => """Remove $ent""";
   String get edit => """Edit""";
   String editEntity(String ent) => """Edit $ent""";
+  String entityName(String ent) => """$ent name""";
+  String entityValue(String ent) => """$ent value""";
+  String entityDescription(String ent) => """$ent description""";
+  String entityExplanation(String ent) => """$ent explanation""";
+  String get noDescription => """‹No description provided›""";
 }
 
 class ErrorsMessages {
@@ -146,13 +157,6 @@ class PlaybookMessages {
   const PlaybookMessages(this._parent);
   String get myLibrary => """My Library""";
   String get myCampaigns => """My Campaigns""";
-  DataPlaybookMessages get data => DataPlaybookMessages(this);
-}
-
-class DataPlaybookMessages {
-  final PlaybookMessages _parent;
-  const DataPlaybookMessages(this._parent);
-  String get noDescription => """‹No description provided›""";
 }
 
 class SettingsMessages {
@@ -168,10 +172,93 @@ class SettingsMessages {
 class UserMessages {
   final Messages _parent;
   const UserMessages(this._parent);
-  String get logout => """Sign out""";
-  String get login => """Sign in""";
-  String get notLoggedIn => """Not logged in""";
   String get recentCharacters => """Recent Characters""";
+  String loginWith(String provider) => """Sign in with $provider""";
+  String signupWith(String provider) => """Sign up with $provider""";
+  String loginProvider(String provider) => """${{
+        'facebook': 'Facebook',
+        'google': 'Google',
+        'apple': 'Apple',
+        'password': 'Dungeon Paper',
+      }[provider] ?? 'Other'}""";
+}
+
+class AuthMessages {
+  final Messages _parent;
+  const AuthMessages(this._parent);
+  String get orSeparator => """OR""";
+  String get privacyPolicy => """Privacy Policy""";
+  String get changelog => """What's new?""";
+  LoginAuthMessages get login => LoginAuthMessages(this);
+  LogoutAuthMessages get logout => LogoutAuthMessages(this);
+  SignupAuthMessages get signup => SignupAuthMessages(this);
+}
+
+class LoginAuthMessages {
+  final AuthMessages _parent;
+  const LoginAuthMessages(this._parent);
+  String get title => """Sign In""";
+  String get subtitle =>
+      """Sign in to your account to sync your data online, and get access to many more features.""";
+  String get button => """Sign in""";
+  NoAccountLoginAuthMessages get noAccount => NoAccountLoginAuthMessages(this);
+}
+
+class NoAccountLoginAuthMessages {
+  final LoginAuthMessages _parent;
+  const NoAccountLoginAuthMessages(this._parent);
+  String get label => """Don't have an account?""";
+  String get button => """Sign up""";
+}
+
+class LogoutAuthMessages {
+  final AuthMessages _parent;
+  const LogoutAuthMessages(this._parent);
+  String get button => """Sign out""";
+}
+
+class SignupAuthMessages {
+  final AuthMessages _parent;
+  const SignupAuthMessages(this._parent);
+  String get title => """Sign Up""";
+  String get subtitle =>
+      """Enter the required details below to create your Dungeon Paper account.""";
+  String get button => """Sign up""";
+  NotLoggedInSignupAuthMessages get notLoggedIn =>
+      NotLoggedInSignupAuthMessages(this);
+  EmailSignupAuthMessages get email => EmailSignupAuthMessages(this);
+  PasswordSignupAuthMessages get password => PasswordSignupAuthMessages(this);
+}
+
+class NotLoggedInSignupAuthMessages {
+  final SignupAuthMessages _parent;
+  const NotLoggedInSignupAuthMessages(this._parent);
+  String get label => """Not logged in""";
+}
+
+class EmailSignupAuthMessages {
+  final SignupAuthMessages _parent;
+  const EmailSignupAuthMessages(this._parent);
+  String get label => """Email""";
+  String get placeholder => """Enter your email""";
+  String get error => """Please enter a valid email address""";
+}
+
+class PasswordSignupAuthMessages {
+  final SignupAuthMessages _parent;
+  const PasswordSignupAuthMessages(this._parent);
+  String get label => """Password""";
+  String get placeholder => """Enter a password""";
+  ConfirmPasswordSignupAuthMessages get confirm =>
+      ConfirmPasswordSignupAuthMessages(this);
+}
+
+class ConfirmPasswordSignupAuthMessages {
+  final PasswordSignupAuthMessages _parent;
+  const ConfirmPasswordSignupAuthMessages(this._parent);
+  String get label => """Confirm Password""";
+  String get placeholder => """Enter the same password again""";
+  String get error => """Passwords do not match""";
 }
 
 class AboutMessages {
@@ -184,6 +271,7 @@ class CharacterMessages {
   final Messages _parent;
   const CharacterMessages(this._parent);
   DataCharacterMessages get data => DataCharacterMessages(this);
+  HeaderCharacterMessages get header => HeaderCharacterMessages(this);
 }
 
 class DataCharacterMessages {
@@ -199,6 +287,16 @@ class LoadDataCharacterMessages {
   String get load => """Load""";
   String get maxLoad => """Max Load""";
   String get autoMaxLoad => """Use class base load + STR mod""";
+}
+
+class HeaderCharacterMessages {
+  final CharacterMessages _parent;
+  const HeaderCharacterMessages(this._parent);
+  String level(int lv) => """Level $lv""";
+  String characterClass(String name) => """$name""";
+  String race(String name) => """$name""";
+  String alignment(String alignment) => """$alignment""";
+  String get separator => """ ∙ """;
 }
 
 class DiceMessages {
@@ -260,6 +358,12 @@ class TitleRollDiceMessages {
       """Rolling $amt ${_plural(amt, one: 'die', many: 'dice')}""";
 }
 
+class TagsMessages {
+  final Messages _parent;
+  const TagsMessages(this._parent);
+  String copyFrom(String name) => """Copy from: $name""";
+}
+
 class DialogsMessages {
   final Messages _parent;
   const DialogsMessages(this._parent);
@@ -289,10 +393,102 @@ class ItemsMessages {
   String get amountTooltip => """Amount""";
 }
 
+class AlignmentMessages {
+  final Messages _parent;
+  const AlignmentMessages(this._parent);
+  String name(String key) => """${{
+        'chaotic': 'Chaotic',
+        'evil': 'Evil',
+        'good': 'Good',
+        'lawful': 'Lawful',
+        'neutral': 'Neutral',
+      }[key] ?? key}""";
+}
+
+class BioMessages {
+  final Messages _parent;
+  const BioMessages(this._parent);
+  DialogBioMessages get dialog => DialogBioMessages(this);
+}
+
+class DialogBioMessages {
+  final BioMessages _parent;
+  const DialogBioMessages(this._parent);
+  String get title => """Character Biography""";
+  String get description => """Character & background description""";
+  String get looks => """Appearance""";
+  String get alignment => """Alignment:""";
+}
+
 class SearchMessages {
   final Messages _parent;
   const SearchMessages(this._parent);
   String get placeholder => """Type to search""";
+}
+
+class XpDialogMessages {
+  final Messages _parent;
+  const XpDialogMessages(this._parent);
+  String get title => """Mark Session XP""";
+  String get overridingTitle => """Update XP & Level""";
+  EndOfSessionXpDialogMessages get endOfSession =>
+      EndOfSessionXpDialogMessages(this);
+  OverrideXpDialogMessages get override => OverrideXpDialogMessages(this);
+}
+
+class EndOfSessionXpDialogMessages {
+  final XpDialogMessages _parent;
+  const EndOfSessionXpDialogMessages(this._parent);
+  String get button => """End Session""";
+  QuestionsEndOfSessionXpDialogMessages get questions =>
+      QuestionsEndOfSessionXpDialogMessages(this);
+}
+
+class QuestionsEndOfSessionXpDialogMessages {
+  final EndOfSessionXpDialogMessages _parent;
+  const QuestionsEndOfSessionXpDialogMessages(this._parent);
+  String get title => """End of Session Questions""";
+  String get subtitle =>
+      """Answer these questions as a group. For each "yes" answer, XP is marked.""";
+}
+
+class OverrideXpDialogMessages {
+  final XpDialogMessages _parent;
+  const OverrideXpDialogMessages(this._parent);
+  String get title => """Update Manually""";
+  String get info =>
+      """Changing the current XP or level manually will cause the pending XP to be discarded unless this is unchecked.""";
+  String get resetCheckbox =>
+      """Reset bonds, flags & end of session questions after saving""";
+  String get xp => """Override XP""";
+  String get level => """Override Level""";
+}
+
+class RichTextMessages {
+  final Messages _parent;
+  const RichTextMessages(this._parent);
+  String get preview => """Preview""";
+  String get help => """Formatting Help""";
+  String get bold => """Bold""";
+  String get italic => """Italic""";
+  String get headings => """Headings""";
+  String heading(int depth) => """Heading $depth""";
+  String get bulletList => """Bullet List""";
+  String get numberedList => """Numbered List""";
+  CheckListRichTextMessages get checkList => CheckListRichTextMessages(this);
+  String get url => """URL""";
+  String get imageURL => """Image URL""";
+  String get table => """Table""";
+  String header(Object n) => """Header $n""";
+  String cell(int n) => """Cell $n""";
+  String get markdownPreview => """Markdown Preview""";
+}
+
+class CheckListRichTextMessages {
+  final RichTextMessages _parent;
+  const CheckListRichTextMessages(this._parent);
+  String get unchecked => """Checklist (Unchecked)""";
+  String get checked => """Checklist (Checked)""";
 }
 
 Map<String, String> get messagesMap => {
@@ -306,6 +502,7 @@ Map<String, String> get messagesMap => {
       """generic.add""": """Add""",
       """generic.remove""": """Remove""",
       """generic.edit""": """Edit""",
+      """generic.noDescription""": """‹No description provided›""",
       """errors.userOperationCanceled""": """Operation canceled""",
       """errors.uploadError""":
           """Error while uploading photo. Try again later, or contact support using the "About" page.""",
@@ -313,19 +510,40 @@ Map<String, String> get messagesMap => {
       """sort.moveDown""": """Move down""",
       """playbook.myLibrary""": """My Library""",
       """playbook.myCampaigns""": """My Campaigns""",
-      """playbook.data.noDescription""": """‹No description provided›""",
       """settings.title""": """Settings""",
       """settings.importExport""": """Export/Import""",
-      """user.logout""": """Sign out""",
-      """user.login""": """Sign in""",
-      """user.notLoggedIn""": """Not logged in""",
       """user.recentCharacters""": """Recent Characters""",
+      """auth.orSeparator""": """OR""",
+      """auth.privacyPolicy""": """Privacy Policy""",
+      """auth.changelog""": """What's new?""",
+      """auth.login.title""": """Sign In""",
+      """auth.login.subtitle""":
+          """Sign in to your account to sync your data online, and get access to many more features.""",
+      """auth.login.button""": """Sign in""",
+      """auth.login.noAccount.label""": """Don't have an account?""",
+      """auth.login.noAccount.button""": """Sign up""",
+      """auth.logout.button""": """Sign out""",
+      """auth.signup.title""": """Sign Up""",
+      """auth.signup.subtitle""":
+          """Enter the required details below to create your Dungeon Paper account.""",
+      """auth.signup.button""": """Sign up""",
+      """auth.signup.notLoggedIn.label""": """Not logged in""",
+      """auth.signup.email.label""": """Email""",
+      """auth.signup.email.placeholder""": """Enter your email""",
+      """auth.signup.email.error""": """Please enter a valid email address""",
+      """auth.signup.password.label""": """Password""",
+      """auth.signup.password.placeholder""": """Enter a password""",
+      """auth.signup.password.confirm.label""": """Confirm Password""",
+      """auth.signup.password.confirm.placeholder""":
+          """Enter the same password again""",
+      """auth.signup.password.confirm.error""": """Passwords do not match""",
       """about.title""": """About""",
       """character.data.coins""": """Coins""",
       """character.data.load.load""": """Load""",
       """character.data.load.maxLoad""": """Max Load""",
       """character.data.load.autoMaxLoad""":
           """Use class base load + STR mod""",
+      """character.header.separator""": """ ∙ """,
       """dice.form.amount""": """Amount""",
       """dice.form.sides""": """Sides""",
       """dice.form.diceSeparator""": """d""",
@@ -337,5 +555,36 @@ Map<String, String> get messagesMap => {
       """dice.form.modifier.label""": """Stat""",
       """dice.roll.action""": """Roll""",
       """items.amountTooltip""": """Amount""",
+      """bio.dialog.title""": """Character Biography""",
+      """bio.dialog.description""": """Character & background description""",
+      """bio.dialog.looks""": """Appearance""",
+      """bio.dialog.alignment""": """Alignment:""",
       """search.placeholder""": """Type to search""",
+      """xpDialog.title""": """Mark Session XP""",
+      """xpDialog.overridingTitle""": """Update XP & Level""",
+      """xpDialog.endOfSession.button""": """End Session""",
+      """xpDialog.endOfSession.questions.title""":
+          """End of Session Questions""",
+      """xpDialog.endOfSession.questions.subtitle""":
+          """Answer these questions as a group. For each "yes" answer, XP is marked.""",
+      """xpDialog.override.title""": """Update Manually""",
+      """xpDialog.override.info""":
+          """Changing the current XP or level manually will cause the pending XP to be discarded unless this is unchecked.""",
+      """xpDialog.override.resetCheckbox""":
+          """Reset bonds, flags & end of session questions after saving""",
+      """xpDialog.override.xp""": """Override XP""",
+      """xpDialog.override.level""": """Override Level""",
+      """richText.preview""": """Preview""",
+      """richText.help""": """Formatting Help""",
+      """richText.bold""": """Bold""",
+      """richText.italic""": """Italic""",
+      """richText.headings""": """Headings""",
+      """richText.bulletList""": """Bullet List""",
+      """richText.numberedList""": """Numbered List""",
+      """richText.checkList.unchecked""": """Checklist (Unchecked)""",
+      """richText.checkList.checked""": """Checklist (Checked)""",
+      """richText.url""": """URL""",
+      """richText.imageURL""": """Image URL""",
+      """richText.table""": """Table""",
+      """richText.markdownPreview""": """Markdown Preview""",
     };

@@ -67,7 +67,7 @@ class UserMenuPopover extends GetView<CharacterService> with AuthServiceMixin, U
                                   subtitle: Text(
                                     userService.current.email.isNotEmpty
                                         ? userService.current.email
-                                        : tr.user.notLoggedIn,
+                                        : tr.auth.signup.notLoggedIn.label,
                                   ),
                                   trailing: userService.isGuest
                                       ? Row(
@@ -79,7 +79,7 @@ class UserMenuPopover extends GetView<CharacterService> with AuthServiceMixin, U
                                                 Get.toNamed(Routes.login);
                                               },
                                               icon: const Icon(Icons.login),
-                                              label: Text(tr.user.login),
+                                              label: Text(tr.auth.login.button),
                                             ),
                                             const SizedBox(width: 16),
                                             UserAvatar(user: user),
@@ -120,7 +120,7 @@ class UserMenuPopover extends GetView<CharacterService> with AuthServiceMixin, U
                                                     child: Text(
                                                       char.displayName,
                                                       overflow: TextOverflow.ellipsis,
-                                                      textScaleFactor: 0.8,
+                                                      textScaler: const TextScaler.linear(0.8),
                                                       textAlign: TextAlign.center,
                                                       style: textStyle,
                                                     ),
@@ -217,7 +217,7 @@ class UserMenuPopover extends GetView<CharacterService> with AuthServiceMixin, U
                                   const Divider(),
                                   ListTile(
                                     visualDensity: VisualDensity.compact,
-                                    title: Text(tr.user.logout),
+                                    title: Text(tr.auth.logout.button),
                                     leading: const Icon(Icons.logout),
                                     onTap: () {
                                       Get.back();

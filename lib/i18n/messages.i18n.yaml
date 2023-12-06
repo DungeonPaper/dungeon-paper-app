@@ -39,6 +39,11 @@ generic:
   removeEntity(String ent): Remove $ent
   edit: Edit
   editEntity(String ent): Edit $ent
+  entityName(String ent): $ent name
+  entityValue(String ent): $ent value
+  entityDescription(String ent): $ent description
+  entityExplanation(String ent): $ent explanation
+  noDescription: ‹No description provided›
 
 errors:
   userOperationCanceled: Operation canceled
@@ -51,8 +56,6 @@ sort:
 playbook:
   myLibrary: My Library
   myCampaigns: My Campaigns
-  data:
-    noDescription: ‹No description provided›
 
 settings:
   title: Settings
@@ -62,10 +65,47 @@ settings:
   switchToLight: "${_switchMode('Light')}"
 
 user:
-  logout: Sign out
-  login: Sign in
-  notLoggedIn: Not logged in
   recentCharacters: Recent Characters
+  loginWith(String provider): Sign in with $provider
+  signupWith(String provider): Sign up with $provider
+  # `{provider, select, facebook {Facebook} google {Google} apple {Apple} password {Dungeon Paper} other {Other}}`
+  loginProvider(String provider): "${{
+    'facebook': 'Facebook',
+    'google': 'Google',
+    'apple': 'Apple',
+    'password': 'Dungeon Paper',
+    }[provider] ?? 'Other'}"
+
+auth:
+  orSeparator: OR
+  privacyPolicy: Privacy Policy
+  changelog: What's new?
+  login:
+    title: Sign In
+    subtitle: Sign in to your account to sync your data online, and get access to many more features.
+    button: Sign in
+    noAccount:
+      label: Don't have an account?
+      button: Sign up
+  logout:
+    button: Sign out
+  signup:
+    title: Sign Up
+    subtitle: Enter the required details below to create your Dungeon Paper account.
+    button: Sign up
+    notLoggedIn:
+      label: Not logged in
+    email:
+      label: Email
+      placeholder: Enter your email
+      error: Please enter a valid email address
+    password:
+      label: Password
+      placeholder: Enter a password
+      confirm:
+        label: Confirm Password
+        placeholder: Enter the same password again
+        error: Passwords do not match
 
 about:
   title: About
@@ -77,6 +117,12 @@ character:
       load: Load
       maxLoad: Max Load
       autoMaxLoad: Use class base load + STR mod
+  header:
+    level(int lv): Level $lv
+    characterClass(String name): $name
+    race(String name): $name
+    alignment(String alignment): $alignment
+    separator: ' ∙ '
 
 dice:
   form:
@@ -102,6 +148,9 @@ dice:
     total(int amt): Total $amt
     resultBreakdown(String dice, String mod): 'Dice: $dice | Modifier: $mod'
 
+tags:
+  copyFrom(String name): 'Copy from: $name'
+
 dialogs:
   confirmations:
     delete:
@@ -112,5 +161,56 @@ items:
   amount(String amt): × $amt
   amountTooltip: Amount
 
+# `{alignment, select, chaotic {Chaotic} evil {Evil} good {Good} lawful {Lawful} neutral {Neutral} other {{alignment}}}`
+alignment:
+  name(String key): "${{
+    'chaotic': 'Chaotic',
+    'evil': 'Evil',
+    'good': 'Good',
+    'lawful': 'Lawful',
+    'neutral': 'Neutral',
+    }[key] ?? key}"
+
+bio:
+  dialog:
+    title: Character Biography
+    description: Character & background description
+    looks: Appearance
+    alignment: 'Alignment:'
+
 search:
   placeholder: Type to search
+
+xpDialog:
+  title: Mark Session XP
+  overridingTitle: Update XP & Level
+  endOfSession:
+    button: End Session
+    questions:
+      title: End of Session Questions
+      subtitle: 'Answer these questions as a group. For each "yes" answer, XP is marked.'
+  override:
+    title: Update Manually
+    info: Changing the current XP or level manually will cause the pending XP to be discarded unless this is unchecked.
+    resetCheckbox: Reset bonds, flags & end of session questions after saving
+    xp: Override XP
+    level: Override Level
+
+richText:
+  preview: Preview
+  help: Formatting Help
+  bold: Bold
+  italic: Italic
+  headings: Headings
+  heading(int depth): Heading $depth
+  bulletList: Bullet List
+  numberedList: Numbered List
+  checkList:
+    unchecked: Checklist (Unchecked)
+    checked: Checklist (Checked)
+  url: URL
+  imageURL: Image URL
+  table: Table
+  header(Object n): Header $n
+  cell(int n): Cell $n
+  markdownPreview: Markdown Preview

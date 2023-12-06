@@ -124,7 +124,7 @@ class DynamicActionCardMini extends StatelessWidget {
                 // clipper: RectClipper(constraints.maxWidth, constraints.maxHeight),
                 child: Markdown(
                   padding: EdgeInsets.zero,
-                  data: description.isNotEmpty ? description : tr.playbook.data.noDescription,
+                  data: description.isNotEmpty ? description : tr.generic.noDescription,
                   // fitContent: true,
                   // shrinkWrap: true,
                   // fitContent: true,

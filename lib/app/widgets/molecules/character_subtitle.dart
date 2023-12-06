@@ -1,15 +1,15 @@
 import 'package:dungeon_paper/app/data/models/character.dart';
 import 'package:dungeon_paper/app/widgets/atoms/icon_span.dart';
 import 'package:dungeon_paper/core/utils/list_utils.dart';
-import 'package:dungeon_paper/generated/l10n.dart';
+import 'package:dungeon_paper/i18n.dart';
 import 'package:flutter/material.dart';
 
 class CharacterSubtitle extends StatelessWidget {
   const CharacterSubtitle({
-    Key? key,
+    super.key,
     required this.character,
     this.textAlign = TextAlign.center,
-  }) : super(key: key);
+  });
 
   final Character character;
   final TextAlign textAlign;
@@ -21,9 +21,11 @@ class CharacterSubtitle extends StatelessWidget {
       text: TextSpan(
         style: Theme.of(context).textTheme.bodyMedium,
         children: <InlineSpan>[
-          TextSpan(text: S.current.characterHeaderSubtitleLevel(character.stats.level)),
-          TextSpan(text: S.current.characterHeaderSubtitleClass(character.characterClass.name)),
-          TextSpan(text: S.current.characterHeaderSubtitleRace(character.race.name)),
+          TextSpan(text: tr.character.header.level(character.stats.level)),
+          TextSpan(
+              text: tr.character.header
+                  .characterClass(character.characterClass.name)),
+          TextSpan(text: tr.character.header.race(character.race.name)),
           TextSpan(
             children: [
               IconSpan(
@@ -31,16 +33,17 @@ class CharacterSubtitle extends StatelessWidget {
                 icon: character.bio.alignment.icon,
               ),
               TextSpan(
+                // ignore: prefer_interpolation_to_compose_strings
                 text: ' ' +
-                    S.current.characterHeaderSubtitleAlignment(
-                      S.current.alignment(character.bio.alignment.type),
+                    tr.character.header.alignment(
+                      tr.alignment.name(character.bio.alignment.key),
                     ),
               ),
             ],
           ),
         ]
             .joinObjects(
-              TextSpan(text: S.current.characterHeaderSubtitleSeparator),
+              TextSpan(text: tr.character.header.separator),
             )
             .toList(),
       ),
@@ -51,13 +54,13 @@ class CharacterSubtitle extends StatelessWidget {
     //   spacing: 4,
     //   children: [
     //     Text(
-    //       S.current.characterHeaderSubtitle(
+    //       tr.character.header.(
     //         character.stats.level,
     //         character.characterClass.name,
     //         character.race.name,
     //         // "test",
     //         // char.bio.toRawJson() ?? 'test',
-    //         // S.current.alignment(char.bio.alignment.key),
+    //         // tr.alignment.name(char.bio.alignment.key),
     //       ),
     //     ),
     //     Row(
@@ -70,12 +73,12 @@ class CharacterSubtitle extends StatelessWidget {
     //         ),
     //         const SizedBox(width: 4),
     //         Text(
-    //           // S.current.characterHeaderSubtitle(
+    //           // tr.character.header.(
     //           //   char.stats.level,
     //           //   char.characterClass.name,
     //           // "test",
     //           // char.bio.toRawJson() ?? 'test',
-    //           S.current.alignment(character.bio.alignment.key),
+    //           tr.alignment.name(character.bio.alignment.key),
     //           // ),
     //         ),
     //       ],
@@ -84,3 +87,4 @@ class CharacterSubtitle extends StatelessWidget {
     // );
   }
 }
+

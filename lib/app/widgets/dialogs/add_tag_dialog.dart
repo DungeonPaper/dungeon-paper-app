@@ -1,17 +1,17 @@
 import 'package:dungeon_paper/app/data/services/repository_service.dart';
 import 'package:dungeon_paper/app/widgets/atoms/menu_button.dart';
 import 'package:dungeon_paper/core/utils/string_utils.dart';
-import 'package:dungeon_paper/generated/l10n.dart';
-import 'package:flutter/material.dart';
+import 'package:dungeon_paper/i18n.dart';
 import 'package:dungeon_world_data/dungeon_world_data.dart' as dw;
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class AddTagDialog extends StatefulWidget {
   const AddTagDialog({
-    Key? key,
+    super.key,
     this.tag,
     this.onSave,
-  }) : super(key: key);
+  });
 
   final dw.Tag? tag;
   final void Function(dw.Tag tag)? onSave;
@@ -39,13 +39,12 @@ class _AddTagDialogState extends State<AddTagDialog> {
     return AlertDialog(
       title: Row(
         children: [
-          Expanded(child: Text(S.current.createGeneric(dw.Tag))),
+          Expanded(child: Text(tr.generic.createEntity(tr.entity(dw.Tag)))),
           MenuButton<dw.Tag>(
-            child: const Icon(Icons.list),
             items: [
               for (final tag in allTags)
                 MenuEntry<dw.Tag>(
-                  label: Text(S.current.tagCopyFrom(toTitleCase(tag.name))),
+                  label: Text(tr.tags.copyFrom(toTitleCase(tag.name))),
                   value: tag,
                   onSelect: () {
                     setState(() {
@@ -56,6 +55,7 @@ class _AddTagDialogState extends State<AddTagDialog> {
                   },
                 )
             ],
+            child: const Icon(Icons.list),
           )
         ],
       ),
@@ -68,7 +68,7 @@ class _AddTagDialogState extends State<AddTagDialog> {
             decoration: InputDecoration(
               filled: true,
               label: Text(
-                S.current.genericNameField(S.current.entity(dw.Tag)),
+                tr.generic.entityName(tr.entity(dw.Tag)),
               ),
             ),
           ),
@@ -81,7 +81,7 @@ class _AddTagDialogState extends State<AddTagDialog> {
             decoration: InputDecoration(
               filled: true,
               label: Text(
-                S.current.genericValueField(S.current.entity(dw.Tag)),
+                tr.generic.entityValue(tr.entity(dw.Tag)),
               ),
             ),
           ),
@@ -94,7 +94,7 @@ class _AddTagDialogState extends State<AddTagDialog> {
             decoration: InputDecoration(
               filled: true,
               label: Text(
-                S.current.genericDescriptionField(S.current.entity(dw.Tag)),
+                tr.generic.entityDescription(tr.entity(dw.Tag)),
               ),
             ),
           ),
@@ -106,7 +106,7 @@ class _AddTagDialogState extends State<AddTagDialog> {
             widget.onSave?.call(createTag());
             Get.back();
           },
-          child: Text(S.current.save),
+          child: Text(tr.generic.save),
         ),
       ],
     );
@@ -118,8 +118,9 @@ class _AddTagDialogState extends State<AddTagDialog> {
         value: tryParse(value.text),
       );
 
-  List<dw.Tag> get allTags => {...repo.my.tags.values, ...repo.builtIn.tags.values}.toList()
-    ..sort((a, b) => a.name.toLowerCase().compareTo(b.name.toLowerCase()));
+  List<dw.Tag> get allTags =>
+      {...repo.my.tags.values, ...repo.builtIn.tags.values}.toList()
+        ..sort((a, b) => a.name.toLowerCase().compareTo(b.name.toLowerCase()));
 
   dynamic tryParse(String text) {
     if (RegExp(r'[a-z]').hasMatch(text)) {
@@ -132,3 +133,4 @@ class _AddTagDialogState extends State<AddTagDialog> {
     return int.tryParse(text);
   }
 }
+
