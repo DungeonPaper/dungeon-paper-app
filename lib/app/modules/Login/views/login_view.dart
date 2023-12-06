@@ -44,11 +44,11 @@ class LoginView extends GetView<LoginController> {
                                 : null,
                             label: Text(
                               controller.isLogin
-                                  ? tr.user.loginWith(
-                                      tr.user.loginProvider('google'),
+                                  ? tr.auth.providers.loginWith(
+                                      tr.auth.providers.name('google'),
                                     )
-                                  : tr.user.signupWith(
-                                      tr.user.loginProvider('google'),
+                                  : tr.auth.providers.signupWith(
+                                      tr.auth.providers.name('google'),
                                     ),
                             ),
                             icon: const Icon(DwIcons.google),
@@ -61,11 +61,11 @@ class LoginView extends GetView<LoginController> {
                                 : null,
                             label: Text(
                               controller.isLogin
-                                  ? tr.user.loginWith(
-                                      tr.user.loginProvider('apple'),
+                                  ? tr.auth.providers.loginWith(
+                                      tr.auth.providers.name('apple'),
                                     )
-                                  : tr.user.signupWith(
-                                      tr.user.loginProvider('apple'),
+                                  : tr.auth.providers.signupWith(
+                                      tr.auth.providers.name('apple'),
                                     ),
                             ),
                             icon: const Icon(DwIcons.apple),

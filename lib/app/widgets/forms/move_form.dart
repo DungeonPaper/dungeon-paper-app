@@ -1,6 +1,6 @@
+import 'package:dungeon_paper/app/data/models/ability_scores.dart';
 import 'package:dungeon_paper/app/data/models/character_class.dart';
 import 'package:dungeon_paper/app/data/models/move.dart';
-import 'package:dungeon_paper/app/data/models/ability_scores.dart';
 import 'package:dungeon_paper/app/data/models/move_templates.dart';
 import 'package:dungeon_paper/app/data/services/repository_service.dart';
 import 'package:dungeon_paper/app/widgets/atoms/rich_text_field.dart';
@@ -9,12 +9,14 @@ import 'package:dungeon_paper/app/widgets/forms/library_entity_form.dart';
 import 'package:dungeon_paper/app/widgets/molecules/dice_list_input.dart';
 import 'package:dungeon_paper/app/widgets/molecules/tag_list_input.dart';
 import 'package:dungeon_paper/generated/l10n.dart';
+import 'package:dungeon_world_data/dungeon_world_data.dart' as dw;
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:dungeon_world_data/dungeon_world_data.dart' as dw;
+
+import '../../../i18n.dart';
 
 class MoveForm extends GetView<MoveFormController> with RepositoryServiceMixin {
-  const MoveForm({Key? key}) : super(key: key);
+  const MoveForm({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -23,7 +25,7 @@ class MoveForm extends GetView<MoveFormController> with RepositoryServiceMixin {
         () => Obx(
               () => TextFormField(
                 decoration: InputDecoration(
-                  label: Text(S.current.formGeneralNameGeneric(S.current.entity(Move))),
+                  label: Text(tr.generic.entityName(tr.entity(Move))),
                 ),
                 textCapitalization: TextCapitalization.words,
                 controller: controller.name,
@@ -40,8 +42,9 @@ class MoveForm extends GetView<MoveFormController> with RepositoryServiceMixin {
                       items: MoveCategory.values
                           .map(
                             (cat) => DropdownMenuItem(
-                              child: Text(S.current.moveCategoryWithLevelShort(cat.name)),
                               value: cat,
+                              child: Text(S.current
+                                  .moveCategoryWithLevelShort(cat.name)),
                             ),
                           )
                           .toList(),
@@ -51,15 +54,21 @@ class MoveForm extends GetView<MoveFormController> with RepositoryServiceMixin {
                   const SizedBox(width: 16),
                   Expanded(
                     child: SelectBox<dw.EntityReference>(
-                      value: controller.classKeys.value.isNotEmpty ? controller.classKeys.value.first : null,
-                      onChanged: (value) => controller.classKeys.value = [value!],
+                      value: controller.classKeys.value.isNotEmpty
+                          ? controller.classKeys.value.first
+                          : null,
+                      onChanged: (value) =>
+                          controller.classKeys.value = [value!],
                       isExpanded: true,
                       label: Text(S.current.entity(CharacterClass)),
-                      items: {...repo.builtIn.classes.values, ...repo.my.classes.values}
+                      items: {
+                        ...repo.builtIn.classes.values,
+                        ...repo.my.classes.values
+                      }
                           .map(
                             (cls) => DropdownMenuItem(
-                              child: Text(cls.name),
                               value: cls.reference,
+                              child: Text(cls.name),
                             ),
                           )
                           .toList(),
@@ -71,7 +80,8 @@ class MoveForm extends GetView<MoveFormController> with RepositoryServiceMixin {
         () => Obx(
               () => RichTextField(
                 decoration: InputDecoration(
-                  label: Text(S.current.formGeneralDescriptionGeneric(S.current.entity(Move))),
+                  label: Text(S.current
+                      .formGeneralDescriptionGeneric(S.current.entity(Move))),
                 ),
                 maxLines: 10,
                 minLines: 5,
@@ -108,7 +118,8 @@ class MoveForm extends GetView<MoveFormController> with RepositoryServiceMixin {
         () => Obx(
               () => RichTextField(
                 decoration: InputDecoration(
-                  label: Text(S.current.formGeneralExplanationGeneric(S.current.entity(Move))),
+                  label: Text(S.current
+                      .formGeneralExplanationGeneric(S.current.entity(Move))),
                 ),
                 maxLines: 10,
                 minLines: 5,
@@ -120,7 +131,8 @@ class MoveForm extends GetView<MoveFormController> with RepositoryServiceMixin {
         () => Obx(
               () => DiceListInput(
                 controller: controller.dice,
-                abilityScores: controller.args.abilityScores ?? AbilityScores.dungeonWorldAll(10),
+                abilityScores: controller.args.abilityScores ??
+                    AbilityScores.dungeonWorldAll(10),
                 guessFrom: [controller.description, controller.explanation],
               ),
             ),
@@ -134,7 +146,8 @@ class MoveForm extends GetView<MoveFormController> with RepositoryServiceMixin {
   }
 }
 
-class MoveFormController extends LibraryEntityFormController<Move, MoveFormArguments> {
+class MoveFormController
+    extends LibraryEntityFormController<Move, MoveFormArguments> {
   final _name = TextEditingController().obs;
   final _description = TextEditingController().obs;
   final _explanation = TextEditingController().obs;
@@ -152,7 +165,8 @@ class MoveFormController extends LibraryEntityFormController<Move, MoveFormArgum
   ValueNotifier<List<dw.EntityReference>> get classKeys => _classKeys.value;
 
   @override
-  List<Rx<ValueNotifier>> get fields => [_name, _description, _explanation, _dice, _tags, _category, _classKeys];
+  List<Rx<ValueNotifier>> get fields =>
+      [_name, _description, _explanation, _dice, _tags, _category, _classKeys];
 
   @override
   void onInit() {
@@ -203,3 +217,4 @@ class MoveFormArguments extends LibraryEntityFormArguments<Move> {
     required super.formContext,
   });
 }
+

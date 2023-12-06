@@ -28,15 +28,14 @@ import 'package:dungeon_paper/app/widgets/menus/group_sort_menu.dart';
 import 'package:dungeon_paper/app/widgets/molecules/categorized_list.dart';
 import 'package:dungeon_paper/core/utils/builder_utils.dart';
 import 'package:dungeon_paper/core/utils/list_utils.dart';
-import 'package:dungeon_paper/generated/l10n.dart';
 import 'package:flutter/material.dart';
-
 import 'package:get/get.dart';
 
+import '../../../../i18n.dart';
 import 'local_widgets/home_character_actions_summary.dart';
 
 class HomeCharacterActionsView extends GetView<CharacterService> {
-  const HomeCharacterActionsView({Key? key}) : super(key: key);
+  const HomeCharacterActionsView({super.key});
 
   Character get char => controller.current;
 
@@ -106,19 +105,19 @@ class HomeCharacterActionsView extends GetView<CharacterService> {
           children: [
             Expanded(
               child: ElevatedButton(
-                child: Text(
-                  S.current.actionsBasicMoves,
-                ),
                 onPressed: _openBasicMoves,
+                child: Text(
+                  tr.actions.moves.basic,
+                ),
               ),
             ),
             const SizedBox(width: 16),
             Expanded(
               child: ElevatedButton(
-                child: Text(
-                  S.current.actionsSpecialMoves,
-                ),
                 onPressed: _openSpecialMoves,
+                child: Text(
+                  tr.actions.moves.special,
+                ),
               ),
             ),
           ],
@@ -128,16 +127,18 @@ class HomeCharacterActionsView extends GetView<CharacterService> {
         const SizedBox(height: 4),
         if (char.settings.racePosition == RacePosition.start) raceCard,
       ],
-      trailing: char.settings.racePosition == RacePosition.end ? [raceCard] : [],
+      trailing:
+          char.settings.racePosition == RacePosition.end ? [raceCard] : [],
       menuTrailing: [
         if (char.settings.racePosition != RacePosition.start)
           // Move to start of list
           MenuEntry(
             value: 'move_to_start',
-            label: Text(S.current.moveToStartGeneric(S.current.entity(Race))),
+            label: Text(tr.sort.moveEntityToTop(tr.entity(Race))),
             onSelect: () => controller.updateCharacter(
               char.copyWith(
-                settings: char.settings.copyWith(racePosition: RacePosition.start),
+                settings:
+                    char.settings.copyWith(racePosition: RacePosition.start),
               ),
             ),
           ),
@@ -145,10 +146,11 @@ class HomeCharacterActionsView extends GetView<CharacterService> {
           // Move to end of list
           MenuEntry(
             value: 'move_to_end',
-            label: Text(S.current.moveToEndGeneric(S.current.entity(Race))),
+            label: Text(tr.sort.moveEntityToBottom(tr.entity(Race))),
             onSelect: () => controller.updateCharacter(
               char.copyWith(
-                settings: char.settings.copyWith(racePosition: RacePosition.end),
+                settings:
+                    char.settings.copyWith(racePosition: RacePosition.end),
               ),
             ),
           ),
@@ -225,7 +227,8 @@ class HomeCharacterActionsView extends GetView<CharacterService> {
         onSelected: (items) => onSelected(
           items
               .map(
-                (x) => x.copyWithInherited(amount: x.amount == 0 ? 1 : x.amount),
+                (x) =>
+                    x.copyWithInherited(amount: x.amount == 0 ? 1 : x.amount),
               )
               .toList(),
         ),
@@ -245,7 +248,7 @@ class HomeCharacterActionsView extends GetView<CharacterService> {
               ChecklistMenuEntry(
                 value: 'countArmor',
                 checked: item.settings.countArmor,
-                label: Text(S.current.itemSettingsCountArmor),
+                label: Text(tr.items.settings.countArmor),
                 onChanged: (value) => onSave(false)(
                   item.copyWithInherited(
                     settings: item.settings.copyWith(countArmor: value!),
@@ -255,7 +258,7 @@ class HomeCharacterActionsView extends GetView<CharacterService> {
               ChecklistMenuEntry(
                 value: 'countDamage',
                 checked: item.settings.countDamage,
-                label: Text(S.current.itemSettingsCountDamage),
+                label: Text(tr.items.settings.countDamage),
                 onChanged: (value) => onSave(false)(
                   item.copyWithInherited(
                     settings: item.settings.copyWith(countDamage: value!),
@@ -265,7 +268,7 @@ class HomeCharacterActionsView extends GetView<CharacterService> {
               ChecklistMenuEntry(
                 value: 'countWeight',
                 checked: item.settings.countWeight,
-                label: Text(S.current.itemSettingsCountWeight),
+                label: Text(tr.items.settings.countWeight),
                 onChanged: (value) => onSave(false)(
                   item.copyWithInherited(
                     settings: item.settings.copyWith(countWeight: value!),
@@ -319,7 +322,7 @@ class HomeCharacterActionsView extends GetView<CharacterService> {
 class ActionsCardList<T extends WithMeta> extends GetView<CharacterService>
     with LibraryServiceMixin, RepositoryServiceMixin {
   const ActionsCardList({
-    Key? key,
+    super.key,
     required this.route,
     required this.addPageArguments,
     required this.cardBuilder,
@@ -330,7 +333,7 @@ class ActionsCardList<T extends WithMeta> extends GetView<CharacterService>
     this.menuTrailing = const [],
     this.leading = const [],
     this.trailing = const [],
-  }) : super(key: key);
+  });
 
   final String route;
   final List<Widget> leading;
@@ -356,17 +359,18 @@ class ActionsCardList<T extends WithMeta> extends GetView<CharacterService>
   Widget build(BuildContext context) {
     return CategorizedList(
       initiallyExpanded: true,
-      title: Text(S.current.entityPlural(T)),
+      title: Text(tr.entityPlural(T)),
       itemPadding: const EdgeInsets.only(bottom: 8),
       titleTrailing: [
         TextButton.icon(
           onPressed: () => Get.toNamed(
             route,
             arguments: addPageArguments(
-              onSelected: (items) => library.upsertToCharacter(items, forkBehavior: ForkBehavior.fork),
+              onSelected: (items) => library.upsertToCharacter(items,
+                  forkBehavior: ForkBehavior.fork),
             ),
           ),
-          label: Text(S.current.addGeneric(S.current.entityPlural(T))),
+          label: Text(tr.generic.addEntity(tr.entityPlural(T))),
           icon: const Icon(Icons.add),
         ),
         GroupSortMenu(
@@ -382,19 +386,20 @@ class ActionsCardList<T extends WithMeta> extends GetView<CharacterService>
       children: [
         ...list.map(
           (obj) => _wrapChild(
-            key: PageStorageKey('type-$T-' + obj.key),
+            key: PageStorageKey('type-$T-${obj.key}'),
             child: cardBuilder(
               obj,
               onDelete: _confirmDeleteDlg(context, obj, obj.displayName),
-              onSave: (fork) => (_obj) {
-                library.upsertToCharacter([_obj], forkBehavior: ForkBehavior.none);
+              onSave: (fork) => (obj) {
+                library
+                    .upsertToCharacter([obj], forkBehavior: ForkBehavior.none);
               },
             ),
           ),
         ),
       ],
-      onReorder: (oldIndex, newIndex) =>
-          controller.updateCharacter(CharacterUtils.reorderByType<T>(char, oldIndex, newIndex)),
+      onReorder: (oldIndex, newIndex) => controller.updateCharacter(
+          CharacterUtils.reorderByType<T>(char, oldIndex, newIndex)),
     );
   }
 
@@ -404,12 +409,13 @@ class ActionsCardList<T extends WithMeta> extends GetView<CharacterService>
         child: child,
       );
 
-  void Function() _confirmDeleteDlg(BuildContext context, T object, String name) {
+  void Function() _confirmDeleteDlg(
+      BuildContext context, T object, String name) {
     return () => deleteDialog.confirm(
           context,
           DeleteDialogOptions(
             entityName: name,
-            entityKind: S.current.entity(T),
+            entityKind: tr.entity(T),
           ),
           () => controller.updateCharacter(
             CharacterUtils.removeByType<T>(char, [object]),
@@ -417,3 +423,4 @@ class ActionsCardList<T extends WithMeta> extends GetView<CharacterService>
         );
   }
 }
+

@@ -1,15 +1,16 @@
 import 'package:dungeon_paper/app/widgets/molecules/dialog_controls.dart';
 import 'package:dungeon_paper/core/utils/string_utils.dart';
-import 'package:dungeon_paper/generated/l10n.dart';
 import 'package:flutter/material.dart';
 import 'package:dungeon_world_data/dungeon_world_data.dart' as dw;
 import 'package:get/get.dart';
 
+import '../../../i18n.dart';
+
 class ViewTagDialog extends StatelessWidget {
   const ViewTagDialog({
-    Key? key,
+    super.key,
     required this.tag,
-  }) : super(key: key);
+  });
 
   final dw.Tag tag;
 
@@ -18,7 +19,7 @@ class ViewTagDialog extends StatelessWidget {
     final textTheme = Theme.of(context).textTheme;
 
     return AlertDialog(
-      title: Text(S.current.tagDetails),
+      title: Text(tr.tags.dialog.title),
       content: SizedBox(
         width: 500,
         child: Column(
@@ -32,14 +33,14 @@ class ViewTagDialog extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        S.current.genericNameField(
-                          S.current.entity(dw.Tag),
+                        tr.generic.entityName(
+                          tr.entity(dw.Tag),
                         ),
                         style: textTheme.bodySmall,
                       ),
                       Text(
                         toTitleCase(tag.name),
-                        textScaleFactor: 1.8,
+                        textScaler: const TextScaler.linear(1.8),
                       ),
                     ],
                   ),
@@ -51,14 +52,14 @@ class ViewTagDialog extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          S.current.genericValueField(
-                            S.current.entity(dw.Tag),
+                          tr.generic.entityValue(
+                            tr.entity(dw.Tag),
                           ),
                           style: textTheme.bodySmall,
                         ),
                         Text(
                           tag.value.toString(),
-                          textScaleFactor: 1.8,
+                          textScaler: const TextScaler.linear(1.8),
                         ),
                       ],
                     ),
@@ -69,14 +70,14 @@ class ViewTagDialog extends StatelessWidget {
             if (tag.description.isNotEmpty) ...[
               const SizedBox(height: 8),
               Text(
-                S.current.genericDescriptionField(
-                  S.current.entity(dw.Tag),
+                tr.generic.entityDescription(
+                  tr.entity(dw.Tag),
                 ),
                 style: textTheme.bodySmall,
               ),
               Text(
                 tag.description,
-                textScaleFactor: 0.9,
+                textScaler: const TextScaler.linear(0.9),
               ),
             ],
           ],
@@ -86,3 +87,4 @@ class ViewTagDialog extends StatelessWidget {
     );
   }
 }
+

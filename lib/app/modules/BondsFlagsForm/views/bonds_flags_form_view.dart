@@ -1,15 +1,14 @@
 import 'package:dungeon_paper/app/widgets/atoms/advanced_floating_action_button.dart';
 import 'package:dungeon_paper/app/widgets/atoms/confirm_exit_view.dart';
 import 'package:dungeon_paper/core/utils/list_utils.dart';
-import 'package:dungeon_paper/generated/l10n.dart';
 import 'package:flutter/material.dart';
-
 import 'package:get/get.dart';
 
+import '../../../../i18n.dart';
 import '../controllers/bonds_flags_form_controller.dart';
 
 class BondsFlagsFormView extends GetView<BondsFlagsFormController> {
-  const BondsFlagsFormView({Key? key}) : super(key: key);
+  const BondsFlagsFormView({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -19,18 +18,18 @@ class BondsFlagsFormView extends GetView<BondsFlagsFormController> {
         dirty: controller.dirty.value,
         child: Scaffold(
           appBar: AppBar(
-            title: Text(S.current.characterBondsFlagsDialogTitle),
+            title: Text(tr.flags.title),
             centerTitle: true,
           ),
           floatingActionButton: AdvancedFloatingActionButton.extended(
             onPressed: controller.save,
             icon: const Icon(Icons.save),
-            label: Text(S.current.save),
+            label: Text(tr.generic.save),
           ),
           body: ListView(
             padding: const EdgeInsets.all(16),
             children: [
-              Text(S.current.characterBondsFlagsDialogBonds, style: textTheme.headlineSmall),
+              Text(tr.flags.bonds, style: textTheme.headlineSmall),
               for (final bond in enumerate(controller.bondsDesc))
                 ListTile(
                   contentPadding: const EdgeInsets.all(0),
@@ -47,11 +46,11 @@ class BondsFlagsFormView extends GetView<BondsFlagsFormController> {
                 ),
               OutlinedButton.icon(
                 onPressed: () => controller.addBond(),
-                label: Text(S.current.createGeneric(S.current.characterBondsFlagsDialogBond)),
+                label: Text(tr.generic.createEntity(tr.flags.bond)),
                 icon: const Icon(Icons.add),
               ),
               const Divider(height: 24),
-              Text(S.current.characterBondsFlagsDialogFlags, style: textTheme.headlineSmall),
+              Text(tr.flags.flags, style: textTheme.headlineSmall),
               for (final flag in enumerate(controller.flagsDesc))
                 ListTile(
                   contentPadding: const EdgeInsets.all(0),
@@ -68,7 +67,7 @@ class BondsFlagsFormView extends GetView<BondsFlagsFormController> {
                 ),
               OutlinedButton.icon(
                 onPressed: () => controller.addFlag(),
-                label: Text(S.current.createGeneric(S.current.characterBondsFlagsDialogFlag)),
+                label: Text(tr.generic.createEntity(tr.flags.flag)),
                 icon: const Icon(Icons.add),
               ),
             ],

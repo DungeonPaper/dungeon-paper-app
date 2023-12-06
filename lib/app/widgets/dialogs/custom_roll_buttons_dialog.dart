@@ -15,6 +15,8 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:dungeon_world_data/dungeon_world_data.dart' as dw;
 
+import '../../../i18n.dart';
+
 class CustomRollButtonsDialog extends StatefulWidget {
   const CustomRollButtonsDialog({
     super.key,
@@ -47,7 +49,7 @@ class _CustomRollButtonsDialogState extends State<CustomRollButtonsDialog> with 
         children: [
           const Icon(DwIcons.dice_d6_numbered, size: 24),
           const SizedBox(width: 8),
-          Text(S.current.customRollButtons),
+          Text(tr.customRolls.title),
         ],
       ),
       content: Column(
@@ -58,8 +60,8 @@ class _CustomRollButtonsDialogState extends State<CustomRollButtonsDialog> with 
             controller: tabController,
             labelColor: Theme.of(context).colorScheme.onSurface,
             tabs: [
-              Tab(text: S.current.customButtonLeft),
-              Tab(text: S.current.customButtonRight),
+              Tab(text: tr.customRolls.left),
+              Tab(text: tr.customRolls.right),
             ],
           ),
           SizedBox(
@@ -167,7 +169,7 @@ class _RollButtonListTileState extends State<_RollButtonListTile> with Repositor
             Expanded(
               child: SelectBox<RollButton>(
                 isExpanded: true,
-                hint: Text(S.current.customRollButtonsUsePreset),
+                hint: Text(tr.customRolls.presets),
                 items: [
                   for (final button in [
                     Character.basicActionRollButton,
@@ -202,7 +204,7 @@ class _RollButtonListTileState extends State<_RollButtonListTile> with Repositor
                 height: 48,
                 child: ElevatedButton(
                   onPressed: isDefault ? null : () => setState(() => updateFields(widget.defaultButton, true)),
-                  child: Text(S.current.customRollButtonsUseDefault),
+                  child: Text(tr.customRolls.useDefault),
                 ),
               ),
             ),
@@ -212,7 +214,7 @@ class _RollButtonListTileState extends State<_RollButtonListTile> with Repositor
         TextFormField(
           controller: label,
           decoration: InputDecoration(
-            labelText: S.current.rollButtonLabel,
+            labelText: tr.customRolls.buttonLabel,
           ),
         ),
         const SizedBox(height: 16),

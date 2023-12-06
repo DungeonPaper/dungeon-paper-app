@@ -97,12 +97,19 @@ class Messages {
   DiceMessages get dice => DiceMessages(this);
   TagsMessages get tags => TagsMessages(this);
   DialogsMessages get dialogs => DialogsMessages(this);
+  SpellsMessages get spells => SpellsMessages(this);
   ItemsMessages get items => ItemsMessages(this);
   AlignmentMessages get alignment => AlignmentMessages(this);
   BioMessages get bio => BioMessages(this);
   SearchMessages get search => SearchMessages(this);
-  XpDialogMessages get xpDialog => XpDialogMessages(this);
+  XpMessages get xp => XpMessages(this);
   RichTextMessages get richText => RichTextMessages(this);
+  CustomRollsMessages get customRolls => CustomRollsMessages(this);
+  FlagsMessages get flags => FlagsMessages(this);
+  CreateCharacterMessages get createCharacter => CreateCharacterMessages(this);
+  AccountMessages get account => AccountMessages(this);
+  ActionsMessages get actions => ActionsMessages(this);
+  AbilityScoresMessages get abilityScores => AbilityScoresMessages(this);
 }
 
 class AppMessages {
@@ -118,6 +125,7 @@ class GenericMessages {
   String saveEntity(String ent) => """Save $ent""";
   String get cancel => """Cancel""";
   String get close => """Close""";
+  String get done => """Done""";
   String get view => """View""";
   String viewEntity(String ent) => """View $ent""";
   String get all => """All""";
@@ -128,13 +136,20 @@ class GenericMessages {
   String addEntity(String ent) => """Add $ent""";
   String get remove => """Remove""";
   String removeEntity(String ent) => """Remove $ent""";
+  String get delete => """Delete""";
+  String deleteEntity(String ent) => """Delete $ent""";
   String get edit => """Edit""";
   String editEntity(String ent) => """Edit $ent""";
+  String get select => """Select""";
+  String selectEntity(String ent) => """Select $ent""";
   String entityName(String ent) => """$ent name""";
   String entityValue(String ent) => """$ent value""";
   String entityDescription(String ent) => """$ent description""";
   String entityExplanation(String ent) => """$ent explanation""";
   String get noDescription => """‹No description provided›""";
+  String noEntitySelected(String ent) => """No $ent selected""";
+  String noEntitySelectedRequired(String ent) =>
+      """No $ent selected (required)""";
 }
 
 class ErrorsMessages {
@@ -143,6 +158,14 @@ class ErrorsMessages {
   String get userOperationCanceled => """Operation canceled""";
   String get uploadError =>
       """Error while uploading photo. Try again later, or contact support using the "About" page.""";
+  String minLength(int cnt) =>
+      """Must be at least $cnt ${_plural(cnt, one: 'character', many: 'characters')}""";
+  String maxLength(int cnt) =>
+      """Must be no more than $cnt ${_plural(cnt, one: 'character', many: 'characters')}""";
+  String exactLength(int cnt) =>
+      """Must be exactly $cnt ${_plural(cnt, one: 'character', many: 'characters')}""";
+  String mustContain(String pattern) => """Must contain $pattern""";
+  String mustNotContain(String pattern) => """Must not contain $pattern""";
 }
 
 class SortMessages {
@@ -150,6 +173,8 @@ class SortMessages {
   const SortMessages(this._parent);
   String get moveUp => """Move up""";
   String get moveDown => """Move down""";
+  String moveEntityToTop(String ent) => """Move $ent to top""";
+  String moveEntityToBottom(String ent) => """Move $ent to bottom""";
 }
 
 class PlaybookMessages {
@@ -173,14 +198,6 @@ class UserMessages {
   final Messages _parent;
   const UserMessages(this._parent);
   String get recentCharacters => """Recent Characters""";
-  String loginWith(String provider) => """Sign in with $provider""";
-  String signupWith(String provider) => """Sign up with $provider""";
-  String loginProvider(String provider) => """${{
-        'facebook': 'Facebook',
-        'google': 'Google',
-        'apple': 'Apple',
-        'password': 'Dungeon Paper',
-      }[provider] ?? 'Other'}""";
 }
 
 class AuthMessages {
@@ -189,9 +206,37 @@ class AuthMessages {
   String get orSeparator => """OR""";
   String get privacyPolicy => """Privacy Policy""";
   String get changelog => """What's new?""";
+  ProvidersAuthMessages get providers => ProvidersAuthMessages(this);
+  ConfirmUnlinkAuthMessages get confirmUnlink =>
+      ConfirmUnlinkAuthMessages(this);
   LoginAuthMessages get login => LoginAuthMessages(this);
   LogoutAuthMessages get logout => LogoutAuthMessages(this);
   SignupAuthMessages get signup => SignupAuthMessages(this);
+}
+
+class ProvidersAuthMessages {
+  final AuthMessages _parent;
+  const ProvidersAuthMessages(this._parent);
+  String loginWith(String provider) => """Sign in with $provider""";
+  String signupWith(String provider) => """Sign up with $provider""";
+  String unusable(String provider) =>
+      """This device only supports unlinking $provider accounts.""";
+  String name(String provider) => """${{
+        'facebook': 'Facebook',
+        'google': 'Google',
+        'apple': 'Apple',
+        'password': 'Dungeon Paper',
+      }[provider] ?? 'Other'}""";
+  String get unlink => """Unlink""";
+  String get link => """Link""";
+}
+
+class ConfirmUnlinkAuthMessages {
+  final AuthMessages _parent;
+  const ConfirmUnlinkAuthMessages(this._parent);
+  String title(String ent) => """Unlink from $ent""";
+  String body(String ent) =>
+      """Are you sure you want to unlink your account from $ent?\nBy clicking "Unlink", you will no longer be able to sign in with $ent.\n\nYou will be able to re-link your account at any time by going to your account settings.""";
 }
 
 class LoginAuthMessages {
@@ -265,6 +310,43 @@ class AboutMessages {
   final Messages _parent;
   const AboutMessages(this._parent);
   String get title => """About""";
+  String version(String version) => """Version $version""";
+  String copyright(int year) => """Copyright © 2018-$year""";
+  String get author => """Chen Asraf""";
+  DiscordAboutMessages get discord => DiscordAboutMessages(this);
+  FeedbackAboutMessages get feedback => FeedbackAboutMessages(this);
+  SocialsAboutMessages get socials => SocialsAboutMessages(this);
+  String get specialThanks => """Special Thanks""";
+  String get contributors => """Contributors""";
+  String get icons => """Icon Credits""";
+}
+
+class DiscordAboutMessages {
+  final AboutMessages _parent;
+  const DiscordAboutMessages(this._parent);
+  String get title => """Join Our Discord""";
+  String get subtitle =>
+      """Join the Discord community to ask questions, get help, send feedback, or just chat with other players.""";
+}
+
+class FeedbackAboutMessages {
+  final AboutMessages _parent;
+  const FeedbackAboutMessages(this._parent);
+  String get title => """Send Feedback""";
+  String get subtitle =>
+      """We reply more promptly through Discord, but you can send us feedback, bug reports or suggestions about the app directly here as an alternative.""";
+}
+
+class SocialsAboutMessages {
+  final AboutMessages _parent;
+  const SocialsAboutMessages(this._parent);
+  String get title => """Links""";
+  String get twitter => """Twitter""";
+  String get facebook => """Facebook""";
+  String get discord => """Discord""";
+  String get github => """GitHub""";
+  String get google => """Play Store""";
+  String get apple => """App Store""";
 }
 
 class CharacterMessages {
@@ -279,6 +361,7 @@ class DataCharacterMessages {
   const DataCharacterMessages(this._parent);
   String get coins => """Coins""";
   LoadDataCharacterMessages get load => LoadDataCharacterMessages(this);
+  String get level => """Level""";
 }
 
 class LoadDataCharacterMessages {
@@ -362,6 +445,13 @@ class TagsMessages {
   final Messages _parent;
   const TagsMessages(this._parent);
   String copyFrom(String name) => """Copy from: $name""";
+  DialogTagsMessages get dialog => DialogTagsMessages(this);
+}
+
+class DialogTagsMessages {
+  final TagsMessages _parent;
+  const DialogTagsMessages(this._parent);
+  String get title => """Tag Information""";
 }
 
 class DialogsMessages {
@@ -376,6 +466,8 @@ class ConfirmationsDialogsMessages {
   const ConfirmationsDialogsMessages(this._parent);
   DeleteConfirmationsDialogsMessages get delete =>
       DeleteConfirmationsDialogsMessages(this);
+  ExitConfirmationsDialogsMessages get exit =>
+      ExitConfirmationsDialogsMessages(this);
 }
 
 class DeleteConfirmationsDialogsMessages {
@@ -386,11 +478,39 @@ class DeleteConfirmationsDialogsMessages {
       """Are you sure you want to remove the $ent "$name" from the list?""";
 }
 
+class ExitConfirmationsDialogsMessages {
+  final ConfirmationsDialogsMessages _parent;
+  const ExitConfirmationsDialogsMessages(this._parent);
+  String get title => """Are you sure?""";
+  String get body =>
+      """Going back will lose any unsaved changes.\nAre you sure you want to go back?""";
+  String get ok => """Exit & Discard""";
+  String get cancel => """Continue editing""";
+}
+
+class SpellsMessages {
+  final Messages _parent;
+  const SpellsMessages(this._parent);
+  String spellLevel(String level) => """${{
+        'rote': 'Rote',
+        'cantrip': 'Cantrip',
+      }[level] ?? 'Level $level'}""";
+}
+
 class ItemsMessages {
   final Messages _parent;
   const ItemsMessages(this._parent);
   String amount(String amt) => """× $amt""";
   String get amountTooltip => """Amount""";
+  SettingsItemsMessages get settings => SettingsItemsMessages(this);
+}
+
+class SettingsItemsMessages {
+  final ItemsMessages _parent;
+  const SettingsItemsMessages(this._parent);
+  String get countArmor => """Count Armor""";
+  String get countDamage => """Count Damage""";
+  String get countWeight => """Count Weight""";
 }
 
 class AlignmentMessages {
@@ -415,9 +535,42 @@ class DialogBioMessages {
   final BioMessages _parent;
   const DialogBioMessages(this._parent);
   String get title => """Character Biography""";
-  String get description => """Character & background description""";
-  String get looks => """Appearance""";
-  String get alignment => """Alignment:""";
+  DescriptionDialogBioMessages get description =>
+      DescriptionDialogBioMessages(this);
+  LooksDialogBioMessages get looks => LooksDialogBioMessages(this);
+  AlignmentDialogBioMessages get alignment => AlignmentDialogBioMessages(this);
+  AlignmentDescriptionDialogBioMessages get alignmentDescription =>
+      AlignmentDescriptionDialogBioMessages(this);
+}
+
+class DescriptionDialogBioMessages {
+  final DialogBioMessages _parent;
+  const DescriptionDialogBioMessages(this._parent);
+  String get label => """Character & background description""";
+  String get placeholder =>
+      """Describe your character's background, personality, goals, etc.""";
+}
+
+class LooksDialogBioMessages {
+  final DialogBioMessages _parent;
+  const LooksDialogBioMessages(this._parent);
+  String get label => """Appearance""";
+  String get placeholder =>
+      """Describe your character's appearance. You may use the presets from the buttons above.""";
+}
+
+class AlignmentDialogBioMessages {
+  final DialogBioMessages _parent;
+  const AlignmentDialogBioMessages(this._parent);
+  String get label => """Alignment""";
+}
+
+class AlignmentDescriptionDialogBioMessages {
+  final DialogBioMessages _parent;
+  const AlignmentDescriptionDialogBioMessages(this._parent);
+  String get label => """Alignment Description""";
+  String get placeholder =>
+      """Alignment is your character's way of thinking and moral compass. This can center on an ethical ideal, religious strictures or early life events. It reflects what your character values and aspires to protect or create.""";
 }
 
 class SearchMessages {
@@ -426,35 +579,41 @@ class SearchMessages {
   String get placeholder => """Type to search""";
 }
 
-class XpDialogMessages {
+class XpMessages {
   final Messages _parent;
-  const XpDialogMessages(this._parent);
+  const XpMessages(this._parent);
+  DialogXpMessages get dialog => DialogXpMessages(this);
+}
+
+class DialogXpMessages {
+  final XpMessages _parent;
+  const DialogXpMessages(this._parent);
   String get title => """Mark Session XP""";
   String get overridingTitle => """Update XP & Level""";
-  EndOfSessionXpDialogMessages get endOfSession =>
-      EndOfSessionXpDialogMessages(this);
-  OverrideXpDialogMessages get override => OverrideXpDialogMessages(this);
+  EndOfSessionDialogXpMessages get endOfSession =>
+      EndOfSessionDialogXpMessages(this);
+  OverrideDialogXpMessages get override => OverrideDialogXpMessages(this);
 }
 
-class EndOfSessionXpDialogMessages {
-  final XpDialogMessages _parent;
-  const EndOfSessionXpDialogMessages(this._parent);
+class EndOfSessionDialogXpMessages {
+  final DialogXpMessages _parent;
+  const EndOfSessionDialogXpMessages(this._parent);
   String get button => """End Session""";
-  QuestionsEndOfSessionXpDialogMessages get questions =>
-      QuestionsEndOfSessionXpDialogMessages(this);
+  QuestionsEndOfSessionDialogXpMessages get questions =>
+      QuestionsEndOfSessionDialogXpMessages(this);
 }
 
-class QuestionsEndOfSessionXpDialogMessages {
-  final EndOfSessionXpDialogMessages _parent;
-  const QuestionsEndOfSessionXpDialogMessages(this._parent);
+class QuestionsEndOfSessionDialogXpMessages {
+  final EndOfSessionDialogXpMessages _parent;
+  const QuestionsEndOfSessionDialogXpMessages(this._parent);
   String get title => """End of Session Questions""";
   String get subtitle =>
       """Answer these questions as a group. For each "yes" answer, XP is marked.""";
 }
 
-class OverrideXpDialogMessages {
-  final XpDialogMessages _parent;
-  const OverrideXpDialogMessages(this._parent);
+class OverrideDialogXpMessages {
+  final DialogXpMessages _parent;
+  const OverrideDialogXpMessages(this._parent);
   String get title => """Update Manually""";
   String get info =>
       """Changing the current XP or level manually will cause the pending XP to be discarded unless this is unchecked.""";
@@ -491,17 +650,376 @@ class CheckListRichTextMessages {
   String get checked => """Checklist (Checked)""";
 }
 
+class CustomRollsMessages {
+  final Messages _parent;
+  const CustomRollsMessages(this._parent);
+  String get title => """Quick Roll Buttons""";
+  String get left => """Left Button""";
+  String get right => """Right Button""";
+  String get presets => """Presets""";
+  String get useDefault => """Use Default""";
+  String get buttonLabel => """Button Label""";
+}
+
+class FlagsMessages {
+  final Messages _parent;
+  const FlagsMessages(this._parent);
+  String get title => """Bonds & Flags""";
+  String get bond => """Bond""";
+  String get bonds => """Bonds""";
+  String get flag => """Flag""";
+  String get flags => """Flags""";
+}
+
+class CreateCharacterMessages {
+  final Messages _parent;
+  const CreateCharacterMessages(this._parent);
+  BasicInfoCreateCharacterMessages get basicInfo =>
+      BasicInfoCreateCharacterMessages(this);
+  StartingGearCreateCharacterMessages get startingGear =>
+      StartingGearCreateCharacterMessages(this);
+}
+
+class BasicInfoCreateCharacterMessages {
+  final CreateCharacterMessages _parent;
+  const BasicInfoCreateCharacterMessages(this._parent);
+  String get defaultName => """Unnamed Traveler""";
+  String get helpText => """Select name & picture (required)""";
+}
+
+class StartingGearCreateCharacterMessages {
+  final CreateCharacterMessages _parent;
+  const StartingGearCreateCharacterMessages(this._parent);
+  String get helpText =>
+      """Select your starting gear determined by class (optional)""";
+  String coins(String amt) =>
+      """$amt ${_plural(double.tryParse(amt)?.ceil() ?? 0, one: 'coin', many: 'coins')}""";
+  String item(String amt, String name) => """$amt × $name""";
+}
+
+class AccountMessages {
+  final Messages _parent;
+  const AccountMessages(this._parent);
+  DetailsAccountMessages get details => DetailsAccountMessages(this);
+  ProvidersAccountMessages get providers => ProvidersAccountMessages(this);
+  DeleteAccountAccountMessages get deleteAccount =>
+      DeleteAccountAccountMessages(this);
+}
+
+class DetailsAccountMessages {
+  final AccountMessages _parent;
+  const DetailsAccountMessages(this._parent);
+  String get title => """Account details""";
+  DisplayNameDetailsAccountMessages get displayName =>
+      DisplayNameDetailsAccountMessages(this);
+  ImageDetailsAccountMessages get image => ImageDetailsAccountMessages(this);
+  EmailDetailsAccountMessages get email => EmailDetailsAccountMessages(this);
+  PasswordDetailsAccountMessages get password =>
+      PasswordDetailsAccountMessages(this);
+}
+
+class DisplayNameDetailsAccountMessages {
+  final DetailsAccountMessages _parent;
+  const DisplayNameDetailsAccountMessages(this._parent);
+  String get title => """Change Display Name""";
+  String get label => """Display name""";
+  String get placeholder => """Enter your public display name""";
+  String get success => """Display name changed successfully""";
+}
+
+class ImageDetailsAccountMessages {
+  final DetailsAccountMessages _parent;
+  const ImageDetailsAccountMessages(this._parent);
+  String get title => """Change Profile Picture""";
+  String get subtitle => """Change your profile picture""";
+}
+
+class EmailDetailsAccountMessages {
+  final DetailsAccountMessages _parent;
+  const EmailDetailsAccountMessages(this._parent);
+  String get title => """Change Email Address""";
+  String get label => """Email address""";
+  String get placeholder => """Enter a new email address""";
+  String get success => """Email changed successfully""";
+}
+
+class PasswordDetailsAccountMessages {
+  final DetailsAccountMessages _parent;
+  const PasswordDetailsAccountMessages(this._parent);
+  String get title => """Change Password""";
+  String get subtitle => """Change your password""";
+  String get success => """Password changed successfully""";
+  String get label => """New password""";
+  String get placeholder => """Enter your new password""";
+  ConfirmPasswordDetailsAccountMessages get confirm =>
+      ConfirmPasswordDetailsAccountMessages(this);
+  String get error => """Passwords do not match""";
+}
+
+class ConfirmPasswordDetailsAccountMessages {
+  final PasswordDetailsAccountMessages _parent;
+  const ConfirmPasswordDetailsAccountMessages(this._parent);
+  String get label => """Confirm New Password""";
+  String get placeholder => """Enter the same password again""";
+}
+
+class ProvidersAccountMessages {
+  final AccountMessages _parent;
+  const ProvidersAccountMessages(this._parent);
+  String get title => """Connected logins""";
+}
+
+class DeleteAccountAccountMessages {
+  final AccountMessages _parent;
+  const DeleteAccountAccountMessages(this._parent);
+  String get title => """Delete Your Account""";
+  String get success =>
+      """A deletion request for your account was sent successfully""";
+}
+
+class ActionsMessages {
+  final Messages _parent;
+  const ActionsMessages(this._parent);
+  MovesActionsMessages get moves => MovesActionsMessages(this);
+}
+
+class MovesActionsMessages {
+  final ActionsMessages _parent;
+  const MovesActionsMessages(this._parent);
+  String get basic => """Basic Moves""";
+  String get special => """Special Moves""";
+}
+
+class AbilityScoresMessages {
+  final Messages _parent;
+  const AbilityScoresMessages(this._parent);
+  String get info =>
+      """You can drag & drop the stat cards to change the order in which they appear throughout this character's screens.""";
+  RollButtonAbilityScoresMessages get rollButton =>
+      RollButtonAbilityScoresMessages(this);
+  StatsAbilityScoresMessages get stats => StatsAbilityScoresMessages(this);
+  FormAbilityScoresMessages get form => FormAbilityScoresMessages(this);
+}
+
+class RollButtonAbilityScoresMessages {
+  final AbilityScoresMessages _parent;
+  const RollButtonAbilityScoresMessages(this._parent);
+  String get stat => """Roll +{stat}""";
+  String get randStat => """Roll random stat""";
+}
+
+class StatsAbilityScoresMessages {
+  final AbilityScoresMessages _parent;
+  const StatsAbilityScoresMessages(this._parent);
+  BondStatsAbilityScoresMessages get bond =>
+      BondStatsAbilityScoresMessages(this);
+  ChaStatsAbilityScoresMessages get cha => ChaStatsAbilityScoresMessages(this);
+  ConStatsAbilityScoresMessages get con => ConStatsAbilityScoresMessages(this);
+  DexStatsAbilityScoresMessages get dex => DexStatsAbilityScoresMessages(this);
+  StrStatsAbilityScoresMessages get str => StrStatsAbilityScoresMessages(this);
+  WisStatsAbilityScoresMessages get wis => WisStatsAbilityScoresMessages(this);
+  IntlStatsAbilityScoresMessages get intl =>
+      IntlStatsAbilityScoresMessages(this);
+}
+
+class BondStatsAbilityScoresMessages {
+  final StatsAbilityScoresMessages _parent;
+  const BondStatsAbilityScoresMessages(this._parent);
+  String get name => """Bond""";
+  String get description =>
+      """When a move has you roll+bond you'll count the number of bonds you have with the character in question and add that to the roll.""";
+  DebilityBondStatsAbilityScoresMessages get debility =>
+      DebilityBondStatsAbilityScoresMessages(this);
+}
+
+class DebilityBondStatsAbilityScoresMessages {
+  final BondStatsAbilityScoresMessages _parent;
+  const DebilityBondStatsAbilityScoresMessages(this._parent);
+  String get name => """Lonely""";
+  String get description => """null""";
+}
+
+class ChaStatsAbilityScoresMessages {
+  final StatsAbilityScoresMessages _parent;
+  const ChaStatsAbilityScoresMessages(this._parent);
+  String get description =>
+      """Measures a character's personality, personal magnetism, ability to lead, and appearance.""";
+  String get name => """Charisma""";
+  DebilityChaStatsAbilityScoresMessages get debility =>
+      DebilityChaStatsAbilityScoresMessages(this);
+}
+
+class DebilityChaStatsAbilityScoresMessages {
+  final ChaStatsAbilityScoresMessages _parent;
+  const DebilityChaStatsAbilityScoresMessages(this._parent);
+  String get name => """Scarred""";
+  String get description =>
+      """It may not be permanent, but for now you don't look so good.""";
+}
+
+class ConStatsAbilityScoresMessages {
+  final StatsAbilityScoresMessages _parent;
+  const ConStatsAbilityScoresMessages(this._parent);
+  String get description =>
+      """Represents your character's health and stamina.""";
+  String get name => """Constitution""";
+  DebilityConStatsAbilityScoresMessages get debility =>
+      DebilityConStatsAbilityScoresMessages(this);
+}
+
+class DebilityConStatsAbilityScoresMessages {
+  final ConStatsAbilityScoresMessages _parent;
+  const DebilityConStatsAbilityScoresMessages(this._parent);
+  String get name => """Sick""";
+  String get description =>
+      """Something just isn't right inside. Maybe you've got a disease or a wasting illness. Maybe you just drank too much ale last night and it's coming back to haunt you.""";
+}
+
+class DexStatsAbilityScoresMessages {
+  final StatsAbilityScoresMessages _parent;
+  const DexStatsAbilityScoresMessages(this._parent);
+  String get description => """Measures agility, reflexes and balance.""";
+  String get name => """Dexterity""";
+  DebilityDexStatsAbilityScoresMessages get debility =>
+      DebilityDexStatsAbilityScoresMessages(this);
+}
+
+class DebilityDexStatsAbilityScoresMessages {
+  final DexStatsAbilityScoresMessages _parent;
+  const DebilityDexStatsAbilityScoresMessages(this._parent);
+  String get name => """Shaky""";
+  String get description =>
+      """You're unsteady on your feet and you've got a shake in your hands.""";
+}
+
+class StrStatsAbilityScoresMessages {
+  final StatsAbilityScoresMessages _parent;
+  const StrStatsAbilityScoresMessages(this._parent);
+  String get description => """Measures muscle and physical power.""";
+  String get name => """Strength""";
+  DebilityStrStatsAbilityScoresMessages get debility =>
+      DebilityStrStatsAbilityScoresMessages(this);
+}
+
+class DebilityStrStatsAbilityScoresMessages {
+  final StrStatsAbilityScoresMessages _parent;
+  const DebilityStrStatsAbilityScoresMessages(this._parent);
+  String get name => """Weak""";
+  String get description =>
+      """You can't exert much force. Maybe it's just fatigue and injury, or maybe your strength was drained by magic.""";
+}
+
+class WisStatsAbilityScoresMessages {
+  final StatsAbilityScoresMessages _parent;
+  const WisStatsAbilityScoresMessages(this._parent);
+  String get description =>
+      """Describes a character's willpower, common sense, awareness, and intuition.""";
+  String get name => """Wisdom""";
+  DebilityWisStatsAbilityScoresMessages get debility =>
+      DebilityWisStatsAbilityScoresMessages(this);
+}
+
+class DebilityWisStatsAbilityScoresMessages {
+  final WisStatsAbilityScoresMessages _parent;
+  const DebilityWisStatsAbilityScoresMessages(this._parent);
+  String get name => """Confused""";
+  String get description =>
+      """Ears ringing. Vision blurred. You're more than a little out of it.""";
+}
+
+class IntlStatsAbilityScoresMessages {
+  final StatsAbilityScoresMessages _parent;
+  const IntlStatsAbilityScoresMessages(this._parent);
+  String get description =>
+      """Determines how well your character learns and reasons.""";
+  String get name => """Intelligence""";
+  DebilityIntlStatsAbilityScoresMessages get debility =>
+      DebilityIntlStatsAbilityScoresMessages(this);
+}
+
+class DebilityIntlStatsAbilityScoresMessages {
+  final IntlStatsAbilityScoresMessages _parent;
+  const DebilityIntlStatsAbilityScoresMessages(this._parent);
+  String get name => """Stunned""";
+  String get description =>
+      """That last knock to the head shook something loose. Brain not work so good.""";
+}
+
+class FormAbilityScoresMessages {
+  final AbilityScoresMessages _parent;
+  const FormAbilityScoresMessages(this._parent);
+  String modifierValueLabel(String mod) => """Modifier:\n$mod""";
+  DebilityDescriptionFormAbilityScoresMessages get debilityDescription =>
+      DebilityDescriptionFormAbilityScoresMessages(this);
+  DebilityNameFormAbilityScoresMessages get debilityName =>
+      DebilityNameFormAbilityScoresMessages(this);
+  DescriptionFormAbilityScoresMessages get description =>
+      DescriptionFormAbilityScoresMessages(this);
+  KeyFormAbilityScoresMessages get key => KeyFormAbilityScoresMessages(this);
+  NameFormAbilityScoresMessages get name => NameFormAbilityScoresMessages(this);
+  IconFormAbilityScoresMessages get icon => IconFormAbilityScoresMessages(this);
+}
+
+class DebilityDescriptionFormAbilityScoresMessages {
+  final FormAbilityScoresMessages _parent;
+  const DebilityDescriptionFormAbilityScoresMessages(this._parent);
+  String get label => """Debility Description""";
+  String get description =>
+      """A description of the effect causing the debility and/or how it affects your character""";
+}
+
+class DebilityNameFormAbilityScoresMessages {
+  final FormAbilityScoresMessages _parent;
+  const DebilityNameFormAbilityScoresMessages(this._parent);
+  String get label => """Debility Name""";
+  String get description =>
+      """The name for the debility that occurs when this stat is debilitated (takes -1 until recovered).""";
+}
+
+class DescriptionFormAbilityScoresMessages {
+  final FormAbilityScoresMessages _parent;
+  const DescriptionFormAbilityScoresMessages(this._parent);
+  String get label => """Ability Score Description""";
+  String get description =>
+      """A description of what this ability score represents""";
+}
+
+class KeyFormAbilityScoresMessages {
+  final FormAbilityScoresMessages _parent;
+  const KeyFormAbilityScoresMessages(this._parent);
+  String get label => """Ability Score Key""";
+  String get description =>
+      """A 3-letter unique key that identifies this ability score in dice and is used as the short label for the modifier value (and not the actual score)""";
+}
+
+class NameFormAbilityScoresMessages {
+  final FormAbilityScoresMessages _parent;
+  const NameFormAbilityScoresMessages(this._parent);
+  String get label => """Ability Score Name""";
+  String get description => """The name of this ability score""";
+}
+
+class IconFormAbilityScoresMessages {
+  final FormAbilityScoresMessages _parent;
+  const IconFormAbilityScoresMessages(this._parent);
+  String get label => """Icon""";
+  String get button => """Change Icon""";
+}
+
 Map<String, String> get messagesMap => {
       """app.name""": """Dungeon Paper""",
       """generic.save""": """Save""",
       """generic.cancel""": """Cancel""",
       """generic.close""": """Close""",
+      """generic.done""": """Done""",
       """generic.view""": """View""",
       """generic.all""": """All""",
       """generic.create""": """Create""",
       """generic.add""": """Add""",
       """generic.remove""": """Remove""",
+      """generic.delete""": """Delete""",
       """generic.edit""": """Edit""",
+      """generic.select""": """Select""",
       """generic.noDescription""": """‹No description provided›""",
       """errors.userOperationCanceled""": """Operation canceled""",
       """errors.uploadError""":
@@ -516,6 +1034,8 @@ Map<String, String> get messagesMap => {
       """auth.orSeparator""": """OR""",
       """auth.privacyPolicy""": """Privacy Policy""",
       """auth.changelog""": """What's new?""",
+      """auth.providers.unlink""": """Unlink""",
+      """auth.providers.link""": """Link""",
       """auth.login.title""": """Sign In""",
       """auth.login.subtitle""":
           """Sign in to your account to sync your data online, and get access to many more features.""",
@@ -538,11 +1058,29 @@ Map<String, String> get messagesMap => {
           """Enter the same password again""",
       """auth.signup.password.confirm.error""": """Passwords do not match""",
       """about.title""": """About""",
+      """about.author""": """Chen Asraf""",
+      """about.discord.title""": """Join Our Discord""",
+      """about.discord.subtitle""":
+          """Join the Discord community to ask questions, get help, send feedback, or just chat with other players.""",
+      """about.feedback.title""": """Send Feedback""",
+      """about.feedback.subtitle""":
+          """We reply more promptly through Discord, but you can send us feedback, bug reports or suggestions about the app directly here as an alternative.""",
+      """about.socials.title""": """Links""",
+      """about.socials.twitter""": """Twitter""",
+      """about.socials.facebook""": """Facebook""",
+      """about.socials.discord""": """Discord""",
+      """about.socials.github""": """GitHub""",
+      """about.socials.google""": """Play Store""",
+      """about.socials.apple""": """App Store""",
+      """about.specialThanks""": """Special Thanks""",
+      """about.contributors""": """Contributors""",
+      """about.icons""": """Icon Credits""",
       """character.data.coins""": """Coins""",
       """character.data.load.load""": """Load""",
       """character.data.load.maxLoad""": """Max Load""",
       """character.data.load.autoMaxLoad""":
           """Use class base load + STR mod""",
+      """character.data.level""": """Level""",
       """character.header.separator""": """ ∙ """,
       """dice.form.amount""": """Amount""",
       """dice.form.sides""": """Sides""",
@@ -554,26 +1092,43 @@ Map<String, String> get messagesMap => {
       """dice.form.modifier.placeholder""": """Select stat""",
       """dice.form.modifier.label""": """Stat""",
       """dice.roll.action""": """Roll""",
+      """tags.dialog.title""": """Tag Information""",
+      """dialogs.confirmations.exit.title""": """Are you sure?""",
+      """dialogs.confirmations.exit.body""":
+          """Going back will lose any unsaved changes.\nAre you sure you want to go back?""",
+      """dialogs.confirmations.exit.ok""": """Exit & Discard""",
+      """dialogs.confirmations.exit.cancel""": """Continue editing""",
       """items.amountTooltip""": """Amount""",
+      """items.settings.countArmor""": """Count Armor""",
+      """items.settings.countDamage""": """Count Damage""",
+      """items.settings.countWeight""": """Count Weight""",
       """bio.dialog.title""": """Character Biography""",
-      """bio.dialog.description""": """Character & background description""",
-      """bio.dialog.looks""": """Appearance""",
-      """bio.dialog.alignment""": """Alignment:""",
+      """bio.dialog.description.label""":
+          """Character & background description""",
+      """bio.dialog.description.placeholder""":
+          """Describe your character's background, personality, goals, etc.""",
+      """bio.dialog.looks.label""": """Appearance""",
+      """bio.dialog.looks.placeholder""":
+          """Describe your character's appearance. You may use the presets from the buttons above.""",
+      """bio.dialog.alignment.label""": """Alignment""",
+      """bio.dialog.alignmentDescription.label""": """Alignment Description""",
+      """bio.dialog.alignmentDescription.placeholder""":
+          """Alignment is your character's way of thinking and moral compass. This can center on an ethical ideal, religious strictures or early life events. It reflects what your character values and aspires to protect or create.""",
       """search.placeholder""": """Type to search""",
-      """xpDialog.title""": """Mark Session XP""",
-      """xpDialog.overridingTitle""": """Update XP & Level""",
-      """xpDialog.endOfSession.button""": """End Session""",
-      """xpDialog.endOfSession.questions.title""":
+      """xp.dialog.title""": """Mark Session XP""",
+      """xp.dialog.overridingTitle""": """Update XP & Level""",
+      """xp.dialog.endOfSession.button""": """End Session""",
+      """xp.dialog.endOfSession.questions.title""":
           """End of Session Questions""",
-      """xpDialog.endOfSession.questions.subtitle""":
+      """xp.dialog.endOfSession.questions.subtitle""":
           """Answer these questions as a group. For each "yes" answer, XP is marked.""",
-      """xpDialog.override.title""": """Update Manually""",
-      """xpDialog.override.info""":
+      """xp.dialog.override.title""": """Update Manually""",
+      """xp.dialog.override.info""":
           """Changing the current XP or level manually will cause the pending XP to be discarded unless this is unchecked.""",
-      """xpDialog.override.resetCheckbox""":
+      """xp.dialog.override.resetCheckbox""":
           """Reset bonds, flags & end of session questions after saving""",
-      """xpDialog.override.xp""": """Override XP""",
-      """xpDialog.override.level""": """Override Level""",
+      """xp.dialog.override.xp""": """Override XP""",
+      """xp.dialog.override.level""": """Override Level""",
       """richText.preview""": """Preview""",
       """richText.help""": """Formatting Help""",
       """richText.bold""": """Bold""",
@@ -587,4 +1142,112 @@ Map<String, String> get messagesMap => {
       """richText.imageURL""": """Image URL""",
       """richText.table""": """Table""",
       """richText.markdownPreview""": """Markdown Preview""",
+      """customRolls.title""": """Quick Roll Buttons""",
+      """customRolls.left""": """Left Button""",
+      """customRolls.right""": """Right Button""",
+      """customRolls.presets""": """Presets""",
+      """customRolls.useDefault""": """Use Default""",
+      """customRolls.buttonLabel""": """Button Label""",
+      """flags.title""": """Bonds & Flags""",
+      """flags.bond""": """Bond""",
+      """flags.bonds""": """Bonds""",
+      """flags.flag""": """Flag""",
+      """flags.flags""": """Flags""",
+      """createCharacter.basicInfo.defaultName""": """Unnamed Traveler""",
+      """createCharacter.basicInfo.helpText""":
+          """Select name & picture (required)""",
+      """createCharacter.startingGear.helpText""":
+          """Select your starting gear determined by class (optional)""",
+      """account.details.title""": """Account details""",
+      """account.details.displayName.title""": """Change Display Name""",
+      """account.details.displayName.label""": """Display name""",
+      """account.details.displayName.placeholder""":
+          """Enter your public display name""",
+      """account.details.displayName.success""":
+          """Display name changed successfully""",
+      """account.details.image.title""": """Change Profile Picture""",
+      """account.details.image.subtitle""": """Change your profile picture""",
+      """account.details.email.title""": """Change Email Address""",
+      """account.details.email.label""": """Email address""",
+      """account.details.email.placeholder""": """Enter a new email address""",
+      """account.details.email.success""": """Email changed successfully""",
+      """account.details.password.title""": """Change Password""",
+      """account.details.password.subtitle""": """Change your password""",
+      """account.details.password.success""":
+          """Password changed successfully""",
+      """account.details.password.label""": """New password""",
+      """account.details.password.placeholder""": """Enter your new password""",
+      """account.details.password.confirm.label""": """Confirm New Password""",
+      """account.details.password.confirm.placeholder""":
+          """Enter the same password again""",
+      """account.details.password.error""": """Passwords do not match""",
+      """account.providers.title""": """Connected logins""",
+      """account.deleteAccount.title""": """Delete Your Account""",
+      """account.deleteAccount.success""":
+          """A deletion request for your account was sent successfully""",
+      """actions.moves.basic""": """Basic Moves""",
+      """actions.moves.special""": """Special Moves""",
+      """abilityScores.info""":
+          """You can drag & drop the stat cards to change the order in which they appear throughout this character's screens.""",
+      """abilityScores.rollButton.stat""": """Roll +{stat}""",
+      """abilityScores.rollButton.randStat""": """Roll random stat""",
+      """abilityScores.stats.bond.name""": """Bond""",
+      """abilityScores.stats.bond.description""":
+          """When a move has you roll+bond you'll count the number of bonds you have with the character in question and add that to the roll.""",
+      """abilityScores.stats.bond.debility.name""": """Lonely""",
+      """abilityScores.stats.cha.description""":
+          """Measures a character's personality, personal magnetism, ability to lead, and appearance.""",
+      """abilityScores.stats.cha.name""": """Charisma""",
+      """abilityScores.stats.cha.debility.name""": """Scarred""",
+      """abilityScores.stats.cha.debility.description""":
+          """It may not be permanent, but for now you don't look so good.""",
+      """abilityScores.stats.con.description""":
+          """Represents your character's health and stamina.""",
+      """abilityScores.stats.con.name""": """Constitution""",
+      """abilityScores.stats.con.debility.name""": """Sick""",
+      """abilityScores.stats.con.debility.description""":
+          """Something just isn't right inside. Maybe you've got a disease or a wasting illness. Maybe you just drank too much ale last night and it's coming back to haunt you.""",
+      """abilityScores.stats.dex.description""":
+          """Measures agility, reflexes and balance.""",
+      """abilityScores.stats.dex.name""": """Dexterity""",
+      """abilityScores.stats.dex.debility.name""": """Shaky""",
+      """abilityScores.stats.dex.debility.description""":
+          """You're unsteady on your feet and you've got a shake in your hands.""",
+      """abilityScores.stats.str.description""":
+          """Measures muscle and physical power.""",
+      """abilityScores.stats.str.name""": """Strength""",
+      """abilityScores.stats.str.debility.name""": """Weak""",
+      """abilityScores.stats.str.debility.description""":
+          """You can't exert much force. Maybe it's just fatigue and injury, or maybe your strength was drained by magic.""",
+      """abilityScores.stats.wis.description""":
+          """Describes a character's willpower, common sense, awareness, and intuition.""",
+      """abilityScores.stats.wis.name""": """Wisdom""",
+      """abilityScores.stats.wis.debility.name""": """Confused""",
+      """abilityScores.stats.wis.debility.description""":
+          """Ears ringing. Vision blurred. You're more than a little out of it.""",
+      """abilityScores.stats.intl.description""":
+          """Determines how well your character learns and reasons.""",
+      """abilityScores.stats.intl.name""": """Intelligence""",
+      """abilityScores.stats.intl.debility.name""": """Stunned""",
+      """abilityScores.stats.intl.debility.description""":
+          """That last knock to the head shook something loose. Brain not work so good.""",
+      """abilityScores.form.debilityDescription.label""":
+          """Debility Description""",
+      """abilityScores.form.debilityDescription.description""":
+          """A description of the effect causing the debility and/or how it affects your character""",
+      """abilityScores.form.debilityName.label""": """Debility Name""",
+      """abilityScores.form.debilityName.description""":
+          """The name for the debility that occurs when this stat is debilitated (takes -1 until recovered).""",
+      """abilityScores.form.description.label""":
+          """Ability Score Description""",
+      """abilityScores.form.description.description""":
+          """A description of what this ability score represents""",
+      """abilityScores.form.key.label""": """Ability Score Key""",
+      """abilityScores.form.key.description""":
+          """A 3-letter unique key that identifies this ability score in dice and is used as the short label for the modifier value (and not the actual score)""",
+      """abilityScores.form.name.label""": """Ability Score Name""",
+      """abilityScores.form.name.description""":
+          """The name of this ability score""",
+      """abilityScores.form.icon.label""": """Icon""",
+      """abilityScores.form.icon.button""": """Change Icon""",
     };

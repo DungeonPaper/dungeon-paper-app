@@ -41,7 +41,7 @@ class CharacterBioDialog extends GetView with CharacterServiceMixin {
               crossAxisAlignment: CrossAxisAlignment.start,
               // shrinkWrap: true,
               children: [
-                Text(tr.bio.dialog.description, style: textTheme.bodySmall),
+                Text(tr.bio.dialog.description.label, style: textTheme.bodySmall),
                 char.bio.description.isNotEmpty
                     ? MarkdownBody(
                         data: char.bio.description,
@@ -50,7 +50,7 @@ class CharacterBioDialog extends GetView with CharacterServiceMixin {
                       )
                     : Text(tr.generic.noDescription),
                 const SizedBox(height: 16),
-                Text(tr.bio.dialog.looks, style: textTheme.bodySmall),
+                Text(tr.bio.dialog.looks.label, style: textTheme.bodySmall),
                 char.bio.looks.isNotEmpty
                     ? Text(char.bio.looks, style: textTheme.bodyLarge)
                     // TODO broken...?!
@@ -76,7 +76,7 @@ class CharacterBioDialog extends GetView with CharacterServiceMixin {
                 Row(
                   children: [
                     Text(
-                      tr.bio.dialog.alignment,
+                      tr.bio.dialog.alignment.label,
                       style: textTheme.bodySmall,
                     ),
                     const SizedBox(width: 4),

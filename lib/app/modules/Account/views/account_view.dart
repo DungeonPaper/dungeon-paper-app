@@ -11,16 +11,16 @@ import 'package:dungeon_paper/core/utils/password_validator.dart';
 import 'package:dungeon_paper/core/utils/string_validator.dart';
 import 'package:dungeon_paper/generated/l10n.dart';
 import 'package:flutter/material.dart';
-
 import 'package:get/get.dart';
 
 import '../../../../core/dw_icons.dart';
 import '../../../../core/http/api.dart';
+import '../../../../i18n.dart';
 import '../../../model_utils/user_utils.dart';
 import '../controllers/account_controller.dart';
 
 class AccountView extends GetView<AccountController> {
-  const AccountView({Key? key}) : super(key: key);
+  const AccountView({super.key});
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
@@ -39,15 +39,16 @@ class AccountView extends GetView<AccountController> {
         () => const SizedBox(height: 8),
         () => const Divider(),
         () => Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 16).copyWith(top: 8),
+              padding:
+                  const EdgeInsets.symmetric(horizontal: 16).copyWith(top: 8),
               child: Text(
-                S.current.accountCategoryDetails,
+                tr.account.details.title,
                 style: textTheme.bodySmall,
               ),
             ),
         () => Obx(
               () => ListTile(
-                title: Text(S.current.accountChangeDisplayNameTitle),
+                title: Text(tr.account.details.displayName.title),
                 subtitle: Text(controller.user.displayName),
                 leading: const Icon(Icons.abc),
                 onTap: _openNameDialog,
@@ -55,8 +56,8 @@ class AccountView extends GetView<AccountController> {
             ),
         () => Obx(
               () => ListTile(
-                title: Text(S.current.accountChangeImageTitle),
-                subtitle: Text(S.current.accountChangeImageSubtitle),
+                title: Text(tr.account.details.image.title),
+                subtitle: Text(tr.account.details.image.subtitle),
                 leading: controller.uploading.value
                     ? const SizedBox.square(
                         dimension: 24,
@@ -66,28 +67,31 @@ class AccountView extends GetView<AccountController> {
                       )
                     : const Icon(Icons.image),
                 enabled: !controller.uploading.value,
-                onTap: !controller.uploading.value ? () => _uploadImage(context) : null,
+                onTap: !controller.uploading.value
+                    ? () => _uploadImage(context)
+                    : null,
               ),
             ),
         () => Obx(
               () => ListTile(
-                title: Text(S.current.accountChangeEmailTitle),
+                title: Text(tr.account.details.email.title),
                 subtitle: Text(controller.user.email),
                 onTap: _openEmailDialog,
                 leading: const Icon(Icons.email),
               ),
             ),
         () => ListTile(
-              title: Text(S.current.accountChangePasswordTitle),
-              subtitle: Text(S.current.accountChangePasswordSubtitle),
+              title: Text(tr.account.details.password.title),
+              subtitle: Text(tr.account.details.password.subtitle),
               onTap: _openPasswordDialog,
               leading: const Icon(Icons.key),
             ),
         () => const Divider(),
         () => Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 16).copyWith(top: 8),
+              padding:
+                  const EdgeInsets.symmetric(horizontal: 16).copyWith(top: 8),
               child: Text(
-                S.current.accountCategorySocials,
+                tr.account.providers.title,
                 style: textTheme.bodySmall,
               ),
             ),
@@ -102,19 +106,17 @@ class AccountView extends GetView<AccountController> {
           (provider) {
             return () => Obx(
                   () => ListTile(
-                    title: Text(S.current.signinProvider(provider)),
+                    title: Text(tr.auth.providers.name(provider.name)),
                     // subtitle: Text(provider.),
                     leading: Icon(DwIcons.providerIcon(provider)),
                     subtitle: !PlatformHelper.canUseProvider(provider)
                         ? Text(
-                            S.current.signinCantUseProvider(S.current.signinProvider(provider)),
+                            tr.auth.providers.unusable(
+                                tr.auth.providers.name(provider.name)),
                             textScaleFactor: 0.8,
                           )
                         : null,
                     trailing: ElevatedButton(
-                      child: Text(
-                        isProviderLinked(provider) ? S.current.signinProviderUnlink : S.current.signinProviderLink,
-                      ),
                       onPressed: providerCount > 1
                           ? isProviderLinked(provider)
                               ? unlinkProvider(context, provider)
@@ -122,6 +124,11 @@ class AccountView extends GetView<AccountController> {
                                   ? linkProvider(provider)
                                   : null
                           : null,
+                      child: Text(
+                        isProviderLinked(provider)
+                            ? tr.auth.providers.unlink
+                            : tr.auth.providers.link,
+                      ),
                     ),
                   ),
                 );
@@ -129,7 +136,7 @@ class AccountView extends GetView<AccountController> {
         ),
         // delete account
         () => ListTile(
-              title: Text(S.current.accountDelete),
+              title: Text(tr.account.deleteAccount.title),
               leading: const Icon(Icons.delete_forever),
               onTap: () => awaitDeleteAccountConfirmation(
                 context,
@@ -137,12 +144,12 @@ class AccountView extends GetView<AccountController> {
                   api.requests.sendFeedback(
                     email: controller.user.email,
                     subject: 'Account Deletion Request',
-                    body: 'Automated: Request Account Deletion for ${controller.user.email}',
+                    body:
+                        'Automated: Request Account Deletion for ${controller.user.email}',
                     username: controller.user.username,
                   );
-                // A deletion request for your account was sent successfully
-                  Get.rawSnackbar(message: 'A deletion request for your account was sent successfully');
-                  // Get.rawSnackbar(message: S.current.accountDeleteSuccess);
+                  // A deletion request for your account was sent successfully
+                  Get.rawSnackbar(message: tr.account.deleteAccount.success);
                 },
               ),
             ),
@@ -158,7 +165,7 @@ class AccountView extends GetView<AccountController> {
         //               Size(100, 28),
         //             ),
         //           ),
-        //           child: Text(S.current.accountDelete),
+        //           child: Text(tr.account.deleteAccount.title),
         //           onPressed: () =>
         //               awaitDeleteAccountConfirmation(context, () => null),
         //         ),
@@ -176,21 +183,23 @@ class AccountView extends GetView<AccountController> {
     );
   }
 
-  int get providerCount => controller.authService.fbUser?.providerData.length ?? 0;
+  int get providerCount =>
+      controller.authService.fbUser?.providerData.length ?? 0;
 
   bool isProviderLinked(ProviderName provider) =>
-      controller.authService.fbUser?.providerData.any((pr) => pr.providerId == domainFromProviderName(provider)) ==
+      controller.authService.fbUser?.providerData
+          .any((pr) => pr.providerId == domainFromProviderName(provider)) ==
       true;
 
   void _openNameDialog() {
     Get.dialog(
       SingleTextFieldDialog(
-        title: S.current.accountChangeDisplayNameTitle,
-        inputLabel: S.current.accountChangeDisplayNameLabel,
-        inputHint: S.current.accountChangeDisplayNameHint,
+        title: tr.account.details.displayName.title,
+        inputLabel: tr.account.details.displayName.label,
+        inputHint: tr.account.details.displayName.placeholder,
         value: controller.user.displayName,
         onSave: (displayName) {
-          Get.rawSnackbar(message: S.current.accountChangeDisplayNameSuccess);
+          Get.rawSnackbar(message: tr.account.details.displayName.success);
           controller.userService.updateUser(
             controller.user.copyWith(displayName: displayName),
           );
@@ -202,9 +211,9 @@ class AccountView extends GetView<AccountController> {
   void _openEmailDialog() {
     Get.dialog(
       SingleTextFieldDialog(
-        title: S.current.accountChangeEmailTitle,
-        inputLabel: S.current.accountChangeEmailLabel,
-        inputHint: S.current.accountChangeEmailHint,
+        title: tr.account.details.email.title,
+        inputLabel: tr.account.details.email.label,
+        inputHint: tr.account.details.email.placeholder,
         value: controller.user.email,
         validator: EmailAddressValidator().validator,
         onSave: controller.updateEmail,
@@ -216,7 +225,7 @@ class AccountView extends GetView<AccountController> {
     Get.dialog(
       PasswordFieldDialog(
         onSave: (password) {
-          Get.rawSnackbar(message: S.current.accountChangePasswordSuccess);
+          Get.rawSnackbar(message: tr.account.details.password.success);
           controller.authService.fbUser!.updatePassword(password);
         },
       ),
@@ -227,18 +236,21 @@ class AccountView extends GetView<AccountController> {
     controller.uploadPhoto(context);
   }
 
-  Future<void> Function() unlinkProvider(BuildContext context, ProviderName provider) =>
+  Future<void> Function() unlinkProvider(
+          BuildContext context, ProviderName provider) =>
       () => awaitUnlinkProviderConfirmation(
             context,
             provider,
             () {
               controller.authService.logoutFromProvider(provider);
-              controller.authService.fbUser!.unlink(domainFromProviderName(provider));
+              controller.authService.fbUser!
+                  .unlink(domainFromProviderName(provider));
             },
           );
 
   Future<void> Function() linkProvider(ProviderName provider) => () async {
-        final cred = await controller.authService.getProviderCredential(provider);
+        final cred =
+            await controller.authService.getProviderCredential(provider);
         controller.authService.fbUser!.linkWithCredential(cred);
       };
 }
@@ -370,7 +382,7 @@ class _PasswordFieldDialogState extends State<PasswordFieldDialog> {
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
-      title: Text(S.current.accountChangePasswordTitle),
+      title: Text(tr.account.details.password.title),
       content: SizedBox(
         width: 400,
         child: Form(
@@ -382,8 +394,8 @@ class _PasswordFieldDialogState extends State<PasswordFieldDialog> {
                 controller: password,
                 validator: PasswordValidator().validator,
                 decoration: InputDecoration(
-                  labelText: S.current.accountChangePasswordLabel,
-                  hintText: S.current.accountChangePasswordHint,
+                  labelText: tr.account.details.password.label,
+                  hintText: tr.account.details.password.placeholder,
                 ),
               ),
               const SizedBox(height: 16),
@@ -391,8 +403,8 @@ class _PasswordFieldDialogState extends State<PasswordFieldDialog> {
                 controller: passwordConfirm,
                 validator: _passwordValidator,
                 decoration: InputDecoration(
-                  labelText: S.current.accountChangePasswordConfirmLabel,
-                  hintText: S.current.accountChangePasswordConfirmHint,
+                  labelText: tr.account.details.password.confirm.label,
+                  hintText: tr.account.details.password.confirm.placeholder,
                 ),
               ),
             ],
@@ -418,10 +430,11 @@ class _PasswordFieldDialogState extends State<PasswordFieldDialog> {
     });
   }
 
-  String? _passwordValidator(String? _value) {
+  String? _passwordValidator(String? value) {
     if (password.text != passwordConfirm.text) {
-      return S.current.signupPasswordValidationMatch;
+      return tr.account.details.password.error;
     }
-    return PasswordValidator().validator(_value);
+    return PasswordValidator().validator(value);
   }
 }
+

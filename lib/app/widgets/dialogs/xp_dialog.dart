@@ -55,7 +55,7 @@ class _EXPDialogState extends State<EXPDialog> with CharacterServiceMixin {
 
     return AlertDialog(
       title:
-          Text(!hasOverrides ? tr.xpDialog.title : tr.xpDialog.overridingTitle),
+          Text(!hasOverrides ? tr.xp.dialog.title : tr.xp.dialog.overridingTitle),
       content: SingleChildScrollView(
         child: Obx(
           () {
@@ -82,10 +82,10 @@ class _EXPDialogState extends State<EXPDialog> with CharacterServiceMixin {
                   width: dlgWidth,
                   child: ListTile(
                     title: Text(
-                      tr.xpDialog.endOfSession.questions.title,
+                      tr.xp.dialog.endOfSession.questions.title,
                     ),
                     subtitle: Text(
-                      tr.xpDialog.endOfSession.questions.subtitle,
+                      tr.xp.dialog.endOfSession.questions.subtitle,
                     ),
                   ),
                 ),
@@ -113,7 +113,7 @@ class _EXPDialogState extends State<EXPDialog> with CharacterServiceMixin {
                       : 48,
                   child: CustomExpansionPanel(
                     title: Text(
-                      tr.xpDialog.override.title +
+                      tr.xp.dialog.override.title +
                           (hasOverrides ? '*' : ''),
                     ),
                     expanded: manualExpExpanded,
@@ -123,7 +123,7 @@ class _EXPDialogState extends State<EXPDialog> with CharacterServiceMixin {
                       });
                     },
                     children: [
-                      HelpText(text: tr.xpDialog.override.info),
+                      HelpText(text: tr.xp.dialog.override.info),
                       const SizedBox(height: 8),
                       CheckboxListTile(
                         value: shouldResetSessionMarks,
@@ -131,7 +131,7 @@ class _EXPDialogState extends State<EXPDialog> with CharacterServiceMixin {
                           () => shouldResetSessionMarks =
                               val ?? !shouldResetSessionMarks,
                         ),
-                        title: Text(tr.xpDialog.override.resetCheckbox),
+                        title: Text(tr.xp.dialog.override.resetCheckbox),
                         dense: true,
                         visualDensity: VisualDensity.compact,
                         controlAffinity: ListTileControlAffinity.leading,
@@ -141,7 +141,7 @@ class _EXPDialogState extends State<EXPDialog> with CharacterServiceMixin {
                         controller: overrideXp,
                         numberType: NumberType.int,
                         decoration: InputDecoration(
-                          labelText: tr.xpDialog.override.xp +
+                          labelText: tr.xp.dialog.override.xp +
                               (shouldOverrideXp ? '*' : ''),
                         ),
                         minValue: 0,
@@ -150,7 +150,7 @@ class _EXPDialogState extends State<EXPDialog> with CharacterServiceMixin {
                       const SizedBox(height: 16),
                       NumberTextField(
                         decoration: InputDecoration(
-                          labelText: tr.xpDialog.override.level +
+                          labelText: tr.xp.dialog.override.level +
                               (shouldOverrideLevel ? '*' : ''),
                         ),
                         numberType: NumberType.int,
@@ -169,7 +169,7 @@ class _EXPDialogState extends State<EXPDialog> with CharacterServiceMixin {
                     context,
                     onSave: save,
                     saveLabel: shouldResetSessionMarks
-                        ? tr.xpDialog.endOfSession.button
+                        ? tr.xp.dialog.endOfSession.button
                         : null,
                     onCancel: close,
                     spacing: 8,

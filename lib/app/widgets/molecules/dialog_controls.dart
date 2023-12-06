@@ -1,6 +1,7 @@
 import 'package:dungeon_paper/app/themes/button_themes.dart';
-import 'package:dungeon_paper/generated/l10n.dart';
 import 'package:flutter/material.dart';
+
+import '../../../i18n.dart';
 
 class DialogControls {
   static List<Widget> custom(
@@ -24,8 +25,8 @@ class DialogControls {
         if (cancelIcon == null)
           TextButton(
             onPressed: onCancel,
-            child: Text(cancelLabel),
             style: ButtonThemes.errorText(context),
+            child: Text(cancelLabel),
           ),
         if (spacing != null && spacing > 0) SizedBox(width: spacing),
         if (confirmIcon != null)
@@ -74,8 +75,8 @@ class DialogControls {
         if (confirmIcon == null)
           ElevatedButton(
             onPressed: onConfirm,
-            child: Text(confirmLabel),
             style: ButtonThemes.errorElevated(context),
+            child: Text(confirmLabel),
           ),
       ];
 
@@ -89,10 +90,10 @@ class DialogControls {
   }) =>
       negative(
         context,
-        confirmLabel: exitLabel ?? S.current.confirmExitDefaultOkLabel,
+        confirmLabel: exitLabel ?? tr.dialogs.confirmations.exit.ok,
         confirmIcon: const Icon(Icons.close),
         onConfirm: onExit,
-        cancelLabel: continueLabel ?? S.current.confirmExitDefaultCancelLabel,
+        cancelLabel: continueLabel ?? tr.dialogs.confirmations.exit.cancel,
         // cancelIcon: const Icon(Icons.close),
         onCancel: onContinue,
         spacing: spacing,
@@ -109,10 +110,10 @@ class DialogControls {
       custom(
         context,
         confirmIcon: const Icon(Icons.check),
-        confirmLabel: saveLabel ?? S.current.save,
+        confirmLabel: saveLabel ?? tr.generic.save,
         onConfirm: onSave,
         cancelIcon: const Icon(Icons.close),
-        cancelLabel: cancelLabel ?? S.current.cancel,
+        cancelLabel: cancelLabel ?? tr.generic.cancel,
         onCancel: onCancel,
         spacing: spacing,
       );
@@ -126,10 +127,10 @@ class DialogControls {
       negative(
         context,
         confirmIcon: const Icon(Icons.delete),
-        confirmLabel: S.current.remove,
+        confirmLabel: tr.generic.remove,
         onConfirm: onDelete,
         cancelIcon: const Icon(Icons.close),
-        cancelLabel: S.current.cancel,
+        cancelLabel: tr.generic.cancel,
         onCancel: onCancel,
         spacing: spacing,
       );
@@ -138,7 +139,8 @@ class DialogControls {
         ElevatedButton.icon(
           onPressed: onDone,
           icon: const Icon(Icons.check),
-          label: Text(S.current.done),
+          label: Text(tr.generic.done),
         ),
       ];
 }
+

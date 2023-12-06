@@ -2,10 +2,10 @@ import 'dart:convert';
 
 import 'package:dungeon_paper/app/data/models/meta.dart';
 import 'package:dungeon_paper/core/utils/icon_utils.dart';
-import 'package:dungeon_paper/generated/l10n.dart';
 import 'package:flutter/material.dart';
 
 import '../../../core/dw_icons.dart';
+import '../../../i18n.dart';
 
 class AbilityScores {
   AbilityScores({
@@ -32,50 +32,50 @@ class AbilityScores {
       AbilityScores(stats: [
         AbilityScore(
           key: 'STR',
-          name: S.current.abilityScoreStrName,
-          description: S.current.abilityScoreStrDescription,
-          debilityName: S.current.abilityScoreStrDebilityName,
-          debilityDescription: S.current.abilityScoreStrDebilityDescription,
+          name: tr.abilityScores.stats.str.name,
+          description: tr.abilityScores.stats.str.description,
+          debilityName: tr.abilityScores.stats.str.debility.name,
+          debilityDescription: tr.abilityScores.stats.str.debility.description,
           value: str,
         ),
         AbilityScore(
           key: 'DEX',
-          name: S.current.abilityScoreDexName,
-          description: S.current.abilityScoreDexDescription,
-          debilityName: S.current.abilityScoreDexDebilityName,
-          debilityDescription: S.current.abilityScoreDexDebilityDescription,
+          name: tr.abilityScores.stats.dex.name,
+          description: tr.abilityScores.stats.dex.description,
+          debilityName: tr.abilityScores.stats.dex.debility.name,
+          debilityDescription: tr.abilityScores.stats.dex.debility.description,
           value: dex,
         ),
         AbilityScore(
           key: 'CON',
-          name: S.current.abilityScoreConName,
-          description: S.current.abilityScoreConDescription,
-          debilityName: S.current.abilityScoreConDebilityName,
-          debilityDescription: S.current.abilityScoreConDebilityDescription,
+          name: tr.abilityScores.stats.con.name,
+          description: tr.abilityScores.stats.con.description,
+          debilityName: tr.abilityScores.stats.con.debility.name,
+          debilityDescription: tr.abilityScores.stats.con.debility.description,
           value: con,
         ),
         AbilityScore(
           key: 'INT',
-          name: S.current.abilityScoreIntName,
-          description: S.current.abilityScoreIntDescription,
-          debilityName: S.current.abilityScoreIntDebilityName,
-          debilityDescription: S.current.abilityScoreIntDebilityDescription,
+          name: tr.abilityScores.stats.intl.name,
+          description: tr.abilityScores.stats.intl.description,
+          debilityName: tr.abilityScores.stats.intl.debility.name,
+          debilityDescription: tr.abilityScores.stats.intl.debility.description,
           value: intl,
         ),
         AbilityScore(
           key: 'WIS',
-          name: S.current.abilityScoreWisName,
-          description: S.current.abilityScoreWisDescription,
-          debilityName: S.current.abilityScoreWisDebilityName,
-          debilityDescription: S.current.abilityScoreWisDebilityDescription,
+          name: tr.abilityScores.stats.wis.name,
+          description: tr.abilityScores.stats.wis.description,
+          debilityName: tr.abilityScores.stats.wis.debility.name,
+          debilityDescription: tr.abilityScores.stats.wis.debility.description,
           value: wis,
         ),
         AbilityScore(
           key: 'CHA',
-          name: S.current.abilityScoreChaName,
-          description: S.current.abilityScoreChaDescription,
-          debilityName: S.current.abilityScoreChaDebilityName,
-          debilityDescription: S.current.abilityScoreChaDebilityDescription,
+          name: tr.abilityScores.stats.cha.name,
+          description: tr.abilityScores.stats.cha.description,
+          debilityName: tr.abilityScores.stats.cha.debility.name,
+          debilityDescription: tr.abilityScores.stats.cha.debility.description,
           value: cha,
         ),
       ]);
@@ -108,12 +108,12 @@ class AbilityScores {
     if (statKey == 'BOND') {
       return AbilityScore(
         key: 'BOND',
-        name: S.current.abilityScoreBondName,
+        name: tr.abilityScores.stats.bond.name,
         value: 10,
         isDebilitated: false,
-        description: S.current.abilityScoreBondDescription,
-        debilityName: S.current.abilityScoreBondDebilityName,
-        debilityDescription: S.current.abilityScoreBondDebilityDescription,
+        description: tr.abilityScores.stats.bond.description,
+        debilityName: tr.abilityScores.stats.bond.debility.name,
+        debilityDescription: tr.abilityScores.stats.bond.debility.description,
       );
     }
     if (!statsMap.containsKey(statKey)) {

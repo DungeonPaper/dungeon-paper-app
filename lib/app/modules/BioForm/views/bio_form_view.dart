@@ -5,12 +5,13 @@ import 'package:dungeon_paper/app/widgets/atoms/advanced_floating_action_button.
 import 'package:dungeon_paper/app/widgets/atoms/confirm_exit_view.dart';
 import 'package:dungeon_paper/app/widgets/atoms/rich_text_field.dart';
 import 'package:dungeon_paper/app/widgets/atoms/select_box.dart';
-import 'package:dungeon_paper/generated/l10n.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
+import '../../../../i18n.dart';
+
 class BioFormView extends GetView<BioFormController> with CharacterServiceMixin {
-  const BioFormView({Key? key}) : super(key: key);
+  const BioFormView({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -19,11 +20,11 @@ class BioFormView extends GetView<BioFormController> with CharacterServiceMixin 
         dirty: controller.dirty.value,
         child: Scaffold(
           appBar: AppBar(
-            title: Text(S.current.characterBioDialogTitle),
+            title: Text(tr.bio.dialog.title),
           ),
           floatingActionButton: AdvancedFloatingActionButton.extended(
             onPressed: _save,
-            label: Text(S.current.save),
+            label: Text(tr.generic.save),
             icon: const Icon(Icons.save),
           ),
           body: ListView(
@@ -36,8 +37,8 @@ class BioFormView extends GetView<BioFormController> with CharacterServiceMixin 
                 textCapitalization: TextCapitalization.sentences,
                 onChanged: controller.setDirty,
                 decoration: InputDecoration(
-                  label: Text(S.current.characterBioDialogDescLabel),
-                  hintText: S.current.characterBioDialogDescPlaceholder,
+                  label: Text(tr.bio.dialog.description.label),
+                  hintText: tr.bio.dialog.description.placeholder,
                 ),
               ),
               const SizedBox(height: 8),
@@ -48,8 +49,8 @@ class BioFormView extends GetView<BioFormController> with CharacterServiceMixin 
                 textCapitalization: TextCapitalization.sentences,
                 onChanged: controller.setDirty,
                 decoration: InputDecoration(
-                  label: Text(S.current.characterBioDialogLooksLabel),
-                  hintText: S.current.characterBioDialogLooksPlaceholder,
+                  label: Text(tr.bio.dialog.looks.label),
+                  hintText: tr.bio.dialog.looks.placeholder,
                 ),
               ),
               const SizedBox(height: 24),
@@ -63,7 +64,7 @@ class BioFormView extends GetView<BioFormController> with CharacterServiceMixin 
                           children: [
                             Icon(AlignmentValue.iconMap[a]!),
                             const SizedBox(width: 4),
-                            Text(S.current.alignment(a)),
+                            Text(tr.alignment.name(a)),
                           ],
                         ),
                       ),
@@ -74,7 +75,7 @@ class BioFormView extends GetView<BioFormController> with CharacterServiceMixin 
                   controller.setDirty();
                 },
                 isExpanded: true,
-                label: Text(S.current.characterBioDialogAlignmentNameLabel),
+                label: Text(tr.bio.dialog.alignment.label),
               ),
               const SizedBox(height: 8),
               RichTextField(
@@ -84,8 +85,8 @@ class BioFormView extends GetView<BioFormController> with CharacterServiceMixin 
                 textCapitalization: TextCapitalization.sentences,
                 onChanged: controller.setDirty,
                 decoration: InputDecoration(
-                  label: Text(S.current.characterBioDialogAlignmentDescriptionLabel),
-                  hintText: S.current.characterBioDialogAlignmentDescriptionPlaceholder,
+                  label: Text(tr.bio.dialog.alignmentDescription.label),
+                  hintText: tr.bio.dialog.alignmentDescription.placeholder,
                 ),
               ),
               const SizedBox(height: 80),
