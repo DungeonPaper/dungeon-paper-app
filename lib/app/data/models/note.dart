@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'package:dungeon_paper/core/utils/icon_utils.dart';
 import 'package:dungeon_paper/core/utils/uuid.dart';
 import 'package:dungeon_paper/generated/l10n.dart';
+import 'package:dungeon_paper/i18n.dart';
 import 'package:dungeon_world_data/dungeon_world_data.dart' as dw;
 import 'package:flutter/material.dart';
 
@@ -28,7 +29,7 @@ class Note with WithIcon implements WithMeta {
   final List<dw.Tag> tags;
   final bool favorite;
 
-  String get localizedCategory => category.isEmpty ? S.current.noteNoCategory : category;
+  String get localizedCategory => category.isEmpty ? tr.notes.noCategory : category;
 
   @override
   Note copyWith({

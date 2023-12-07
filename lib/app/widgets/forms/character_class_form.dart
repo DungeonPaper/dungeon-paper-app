@@ -5,13 +5,13 @@ import 'package:dungeon_paper/app/widgets/atoms/rich_text_field.dart';
 import 'package:dungeon_paper/app/widgets/forms/library_entity_form.dart';
 import 'package:dungeon_paper/app/widgets/molecules/dice_list_input.dart';
 import 'package:dungeon_paper/core/utils/list_utils.dart';
-import 'package:dungeon_paper/generated/l10n.dart';
+import 'package:dungeon_paper/i18n.dart';
 import 'package:dungeon_world_data/dungeon_world_data.dart' as dw;
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class CharacterClassForm extends GetView<CharacterClassFormController> {
-  const CharacterClassForm({Key? key}) : super(key: key);
+  const CharacterClassForm({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -21,20 +21,20 @@ class CharacterClassForm extends GetView<CharacterClassFormController> {
               controller: controller.name,
               textCapitalization: TextCapitalization.words,
               decoration: InputDecoration(
-                label: Text(S.current.formGeneralNameGeneric(S.current.entity(CharacterClass))),
+                label: Text(tr.generic.entityName(tr.entity(CharacterClass))),
               ),
             ),
         () => const SizedBox(height: 16),
         () => RichTextField(
               controller: controller.description,
-              label: S.current.formGeneralDescriptionGeneric(S.current.entity(CharacterClass)),
+              label: tr.generic.entityDescription(tr.entity(CharacterClass)),
               maxLines: 10,
               minLines: 5,
               textCapitalization: TextCapitalization.sentences,
             ),
         () => DiceListInput(
               controller: controller.damageDice,
-              label: Text(S.current.formCharacterClassDamage),
+              label: Text(tr.characterClass.damageDice),
               abilityScores: AbilityScores.dungeonWorld(
                 cha: 12,
                 con: 12,
@@ -53,7 +53,7 @@ class CharacterClassForm extends GetView<CharacterClassFormController> {
                     numberType: NumberType.int,
                     controller: controller.hp,
                     decoration: InputDecoration(
-                      label: Text(S.current.formCharacterClassBaseHp),
+                      label: Text(tr.characterClass.baseHp),
                     ),
                   ),
                 ),
@@ -63,7 +63,7 @@ class CharacterClassForm extends GetView<CharacterClassFormController> {
                     numberType: NumberType.int,
                     controller: controller.load,
                     decoration: InputDecoration(
-                      label: Text(S.current.formCharacterClassBaseLoad),
+                      label: Text(tr.characterClass.baseLoad),
                     ),
                   ),
                 ),

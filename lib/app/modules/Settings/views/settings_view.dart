@@ -1,32 +1,32 @@
 import 'package:dungeon_paper/app/data/services/character_service.dart';
 import 'package:dungeon_paper/app/themes/themes.dart';
-import 'package:dungeon_paper/generated/l10n.dart';
+import 'package:dungeon_paper/i18n.dart';
 import 'package:flutter/material.dart';
-
 import 'package:get/get.dart';
 
 import '../controllers/settings_controller.dart';
 import 'theme_selector.dart';
 
-class SettingsView extends GetView<SettingsController> with CharacterServiceMixin {
+class SettingsView extends GetView<SettingsController>
+    with CharacterServiceMixin {
   const SettingsView({super.key});
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(S.current.settingsTitle),
+        title: Text(tr.settings.title),
         centerTitle: true,
       ),
       body: ListView(
         children: [
           _sectionTitle(
             context,
-            S.current.settingsGeneral,
+            tr.settings.categories.general,
           ),
           Obx(
             () => SwitchListTile.adaptive(
-              title: Text(S.current.settingsKeepScreenAwake),
+              title: Text(tr.settings.keepAwake),
               value: controller.settings.keepScreenAwake,
               onChanged: (value) => controller.updateSettings(
                 controller.settings.copyWith(keepScreenAwake: value),
@@ -36,15 +36,18 @@ class SettingsView extends GetView<SettingsController> with CharacterServiceMixi
           Obx(
             () => _sectionTitle(
               context,
-              S.current.settingsDefaultLightTheme,
-              onChangeSeeAll: (val) => controller.seeAll[Brightness.light] = val,
+              tr.settings.defaultTheme.light,
+              onChangeSeeAll: (val) =>
+                  controller.seeAll[Brightness.light] = val,
               seeAll: controller.seeAll[Brightness.light]!,
             ),
           ),
           _pad(
             Obx(
               () => ThemeSelector(
-                themes: controller.seeAll[Brightness.light]! ? AppThemes.allThemes : AppThemes.allLightThemes,
+                themes: controller.seeAll[Brightness.light]!
+                    ? AppThemes.allThemes
+                    : AppThemes.allLightThemes,
                 selected: controller.settings.defaultLightTheme,
                 onSelected: (theme) async {
                   await controller.updateSettings(
@@ -61,7 +64,7 @@ class SettingsView extends GetView<SettingsController> with CharacterServiceMixi
           Obx(
             () => _sectionTitle(
               context,
-              S.current.settingsDefaultDarkTheme,
+              tr.settings.defaultTheme.dark,
               onChangeSeeAll: (val) => controller.seeAll[Brightness.dark] = val,
               seeAll: controller.seeAll[Brightness.dark]!,
             ),
@@ -69,7 +72,9 @@ class SettingsView extends GetView<SettingsController> with CharacterServiceMixi
           _pad(
             Obx(
               () => ThemeSelector(
-                themes: controller.seeAll[Brightness.dark]! ? AppThemes.allThemes : AppThemes.allDarkThemes,
+                themes: controller.seeAll[Brightness.dark]!
+                    ? AppThemes.allThemes
+                    : AppThemes.allDarkThemes,
                 selected: controller.settings.defaultDarkTheme,
                 onSelected: (theme) async {
                   await controller.updateSettings(
@@ -105,7 +110,7 @@ class SettingsView extends GetView<SettingsController> with CharacterServiceMixi
       children: [
         Expanded(child: Text(labelText, style: bodySmall)),
         if (seeAll != null && onChangeSeeAll != null) ...[
-          Text(S.current.seeAll),
+          Text(tr.generic.seeAll),
           Switch.adaptive(value: seeAll, onChanged: onChangeSeeAll),
         ],
       ],
@@ -119,3 +124,4 @@ class SettingsView extends GetView<SettingsController> with CharacterServiceMixi
     );
   }
 }
+

@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'package:dungeon_paper/generated/l10n.dart';
+import 'package:dungeon_paper/i18n.dart';
 import 'package:dungeon_world_data/dungeon_world_data.dart' as dw;
 
 import 'meta.dart';
@@ -57,12 +58,12 @@ class SessionMark extends dw.SessionMark implements WithKey {
     required List<SessionMark> flags,
   }) =>
       bonds.isNotEmpty && flags.isNotEmpty
-          ? S.current.characterBondsFlagsDialogTitle
+          ? tr.sessionMarks.title
           : flags.isNotEmpty
-              ? S.current.characterBondsFlagsDialogFlags
+              ? tr.sessionMarks.flags
               : bonds.isNotEmpty
-                  ? S.current.characterBondsFlagsDialogBonds
-                  : S.current.characterBondsFlagsDialogTitle;
+                  ? tr.sessionMarks.bonds
+                  : tr.sessionMarks.title;
 
   @override
   bool operator ==(Object other) =>

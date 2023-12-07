@@ -13,12 +13,12 @@ import 'package:dungeon_paper/app/widgets/dialogs/character_bonds_flags_dialog.d
 import 'package:dungeon_paper/app/widgets/dialogs/custom_roll_buttons_dialog.dart';
 import 'package:dungeon_paper/app/widgets/dialogs/debilities_dialog.dart';
 import 'package:dungeon_paper/core/dw_icons.dart';
-import 'package:dungeon_paper/generated/l10n.dart';
+import 'package:dungeon_paper/i18n.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class HomeCharacterExtras extends GetView<CharacterService> {
-  const HomeCharacterExtras({Key? key}) : super(key: key);
+  const HomeCharacterExtras({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -27,66 +27,55 @@ class HomeCharacterExtras extends GetView<CharacterService> {
       children: [
         MenuButton<String>(
           icon: const Icon(Icons.person),
-          tooltip: S.current.characterMenu,
+          tooltip: tr.home.menu.character.tooltip,
           items: [
             MenuEntry(
               value: 'name_photo',
               icon: const Icon(Icons.photo),
-              label: Text(S.current.basicInformationTitle),
+              label: Text(tr.home.menu.character.basicInfo),
               onSelect: _openBasicInfo,
             ),
-            // MenuEntry(
-            //   value: 'bio',
-            //   icon: const Icon(Icons.text_snippet),
-            //   label: Text(S.current.characterBioDialogTitle),
-            //   onSelect: _openBio,
-            // ),
             MenuEntry(
               value: 'ability_scores',
               icon: const Icon(Icons.format_list_numbered_rtl),
-              label: Text(S.current.characterRollsTitle),
+              label: Text(tr.home.menu.character.abilityScores),
               onSelect: _openAbilityScores,
             ),
             MenuEntry(
               value: 'class',
               icon: Icon(CharacterClass.genericIcon),
-              label: Text(S.current.changeGeneric(S.current.entity(CharacterClass))),
+              label: Text(tr.generic.changeEntity(tr.entity(CharacterClass))),
               onSelect: _openCharClass,
             ),
             MenuEntry(
               value: 'race',
               icon: Icon(Race.genericIcon),
-              label: Text(S.current.changeGeneric(S.current.entity(Race))),
+              label: Text(tr.generic.changeEntity(tr.entity(Race))),
               onSelect: _openRace,
             ),
             MenuEntry(
               value: 'roll_buttons',
               icon: const Icon(DwIcons.dice_d6),
-              label: Text(S.current.customRollButtons),
+              label: Text(tr.home.menu.character.customRolls),
               onSelect: _openRollButtons,
             ),
             MenuEntry(
               value: 'theme',
               icon: const Icon(Icons.brush),
-              label: Text(S.current.characterSelectTheme),
+              label: Text(tr.home.menu.character.theme),
               onSelect: _openThemeSelect,
             ),
           ],
         ),
-        // IconButton(
-        //   onPressed: _openAbilityScores,
-        //   icon: const Icon(Icons.format_list_numbered_rtl),
-        //   tooltip: S.current.characterRollsTitle,
-        // ),
         IconButton(
           icon: const Icon(Icons.text_snippet),
-          tooltip: S.current.characterBioDialogTitle,
+          tooltip: tr.home.menu.bio,
           onPressed: _openBio,
         ),
         Obx(
           () => IconButton(
             onPressed: _openBondsFlags,
-            icon: Transform.scale(child: const Icon(Icons.handshake), scaleX: -1),
+            icon: Transform.scale(scaleX: -1, child: const Icon(Icons.handshake)),
             tooltip: SessionMark.categoryTitle(
               bonds: controller.maybeCurrent?.bonds ?? [],
               flags: controller.maybeCurrent?.flags ?? [],
@@ -96,12 +85,12 @@ class HomeCharacterExtras extends GetView<CharacterService> {
         IconButton(
           onPressed: _openDebilities,
           icon: const Icon(Icons.personal_injury),
-          tooltip: S.current.characterDebilitiesDialogTitle,
+          tooltip: tr.home.menu.debilities,
         ),
         IconButton(
           onPressed: null,
           icon: const Icon(Icons.groups),
-          tooltip: S.current.entity(S.current.entityPlural(Campaign)),
+          tooltip: tr.entityPlural(Campaign),
         ),
       ],
     );
@@ -138,9 +127,9 @@ class HomeCharacterExtras extends GetView<CharacterService> {
     ModelPages.openRacesList(
       character: controller.current,
       preSelection: controller.current.race,
-      onSelected: (_race) => controller.updateCharacter(
+      onSelected: (race) => controller.updateCharacter(
         controller.current.copyWithInherited(
-          race: _race.copyWithInherited(favorite: controller.current.race.favorite),
+          race: race.copyWithInherited(favorite: controller.current.race.favorite),
         ),
       ),
     );
@@ -149,10 +138,10 @@ class HomeCharacterExtras extends GetView<CharacterService> {
   void _openCharClass() {
     ModelPages.openCharacterClassesList(
       character: controller.current,
-      onSelected: (_cls) => controller.updateCharacter(
+      onSelected: (cls) => controller.updateCharacter(
         // TODO add a reset dialog to confirm + ask what to reset: moves, spells, alignment, rac
         controller.current.copyWithInherited(
-          characterClass: _cls,
+          characterClass: cls,
         ),
       ),
     );

@@ -6,6 +6,7 @@ import 'package:dungeon_paper/app/widgets/atoms/help_text.dart';
 import 'package:dungeon_paper/app/widgets/molecules/dialog_controls.dart';
 import 'package:dungeon_paper/core/utils/list_utils.dart';
 import 'package:dungeon_paper/generated/l10n.dart';
+import 'package:dungeon_paper/i18n.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -64,20 +65,20 @@ class CharacterBondsFlagsDialog extends GetView<CharacterService> with Character
                   Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 8),
                     child: HelpText(
-                      text: S.current.characterBondsFlagsDialogNoData,
+                      text: tr.sessionMarks.noData,
                     ),
                   ),
                 if (bonds.isNotEmpty || flags.isNotEmpty) ...[
                   Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 8),
                     child: HelpText(
-                      text: S.current.characterBondsFlagsDialogInfoText,
+                      text: tr.sessionMarks.info,
                     ),
                   ),
                   const Divider(height: 32),
                 ],
                 if (bonds.isNotEmpty && flags.isNotEmpty)
-                  Text(S.current.characterBondsFlagsDialogBonds, style: textTheme.bodySmall),
+                  Text(tr.sessionMarks.bond, style: textTheme.bodySmall),
                 for (final bond in bonds) ...[
                   CheckboxListTile(
                     title: Text(bond.description),
@@ -90,7 +91,7 @@ class CharacterBondsFlagsDialog extends GetView<CharacterService> with Character
                 ],
                 if (bonds.isNotEmpty && flags.isNotEmpty) ...[
                   const Divider(height: 32),
-                  Text(S.current.characterBondsFlagsDialogFlags, style: textTheme.bodySmall),
+                  Text(tr.sessionMarks.flags, style: textTheme.bodySmall),
                 ],
                 for (final flag in flags) ...[
                   CheckboxListTile(

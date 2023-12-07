@@ -10,9 +10,8 @@ import 'package:dungeon_paper/app/data/services/repository_service.dart';
 import 'package:dungeon_paper/app/data/services/user_service.dart';
 import 'package:dungeon_paper/app/model_utils/model_pages.dart';
 import 'package:dungeon_paper/app/widgets/atoms/menu_button.dart';
-import 'package:dungeon_paper/generated/l10n.dart';
+import 'package:dungeon_paper/i18n.dart';
 import 'package:flutter/material.dart';
-
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 
@@ -22,7 +21,7 @@ class LibraryCollectionView extends GetView<LibraryCollectionController>
     with RepositoryServiceMixin, UserServiceMixin, CharacterServiceMixin {
   static const List<Type> types = [Move, Spell, Item, CharacterClass, Race];
 
-  const LibraryCollectionView({Key? key}) : super(key: key);
+  const LibraryCollectionView({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -30,13 +29,13 @@ class LibraryCollectionView extends GetView<LibraryCollectionController>
     final textTheme = theme.textTheme;
     return Scaffold(
       appBar: AppBar(
-        title: Text(S.current.libraryCollectionTitle),
+        title: Text(tr.myLibrary.title),
         centerTitle: true,
         actions: [
           MenuButton(
             items: [
               MenuEntry(
-                label: Text(S.current.reloadLibrary),
+                label: Text(tr.myLibrary.reload),
                 icon: const Icon(Icons.refresh),
                 disabled: repo.my.isLoading || repo.builtIn.isLoading,
                 value: 'refresh',
@@ -79,18 +78,18 @@ class LibraryCollectionView extends GetView<LibraryCollectionController>
                     ),
                   ),
                   title: Text(
-                    S.current.entityPlural(type),
+                    tr.entityPlural(type),
                     style: textTheme.titleLarge,
                   ),
                   subtitle: Text(
                     [
-                      S.current.libraryCollectionListItemSubtitle(
+                     tr.myLibrary.itemCount(
                         NumberFormat('#,###,###').format(repo.builtIn.listByType(type).length),
-                        S.current.libraryCollectionListItemSubtitleType('builtIn'),
+                        tr.myLibrary.libraryType('builtIn'),
                       ),
-                      S.current.libraryCollectionListItemSubtitle(
+                     tr.myLibrary.itemCount(
                         NumberFormat('#,###,###').format(repo.my.listByType(type).length),
-                        S.current.libraryCollectionListItemSubtitleType('my'),
+                        tr.myLibrary.libraryType('my'),
                       ),
                     ].join(' | '),
                   ),

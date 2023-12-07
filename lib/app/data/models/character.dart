@@ -12,6 +12,7 @@ import 'package:dungeon_paper/core/utils/list_utils.dart';
 import 'package:dungeon_paper/core/utils/math_utils.dart';
 import 'package:dungeon_paper/core/utils/uuid.dart';
 import 'package:dungeon_paper/generated/l10n.dart';
+import 'package:dungeon_paper/i18n.dart';
 import 'package:dungeon_world_data/dungeon_world_data.dart' as dw;
 import 'package:flutter/material.dart';
 
@@ -154,19 +155,19 @@ class Character with WithIcon implements WithMeta<Character, CharacterMeta> {
         SessionMark(
           key: uuid(),
           type: dw.SessionMarkType.endOfSession,
-          description: S.current.endOfSessionQ1,
+          description: tr.sessionMarks.endOfSession.q1,
           completed: false,
         ),
         SessionMark(
           key: uuid(),
           type: dw.SessionMarkType.endOfSession,
-          description: S.current.endOfSessionQ2,
+          description: tr.sessionMarks.endOfSession.q2,
           completed: false,
         ),
         SessionMark(
           key: uuid(),
           type: dw.SessionMarkType.endOfSession,
-          description: S.current.endOfSessionQ3,
+          description: tr.sessionMarks.endOfSession.q3,
           completed: false,
         ),
       ];

@@ -99,10 +99,12 @@ class Messages {
   CharacterMessages get character => CharacterMessages(this);
   CharacterClassMessages get characterClass => CharacterClassMessages(this);
   DiceMessages get dice => DiceMessages(this);
+  BasicInfoMessages get basicInfo => BasicInfoMessages(this);
   TagsMessages get tags => TagsMessages(this);
   DialogsMessages get dialogs => DialogsMessages(this);
   SpellsMessages get spells => SpellsMessages(this);
   ItemsMessages get items => ItemsMessages(this);
+  NotesMessages get notes => NotesMessages(this);
   AlignmentMessages get alignment => AlignmentMessages(this);
   BioMessages get bio => BioMessages(this);
   SearchMessages get search => SearchMessages(this);
@@ -110,11 +112,12 @@ class Messages {
   XpMessages get xp => XpMessages(this);
   RichTextMessages get richText => RichTextMessages(this);
   CustomRollsMessages get customRolls => CustomRollsMessages(this);
-  FlagsMessages get flags => FlagsMessages(this);
+  SessionMarksMessages get sessionMarks => SessionMarksMessages(this);
   CreateCharacterMessages get createCharacter => CreateCharacterMessages(this);
   AccountMessages get account => AccountMessages(this);
   ActionsMessages get actions => ActionsMessages(this);
   AbilityScoresMessages get abilityScores => AbilityScoresMessages(this);
+  FeedbackMessages get feedback => FeedbackMessages(this);
 }
 
 class AppMessages {
@@ -149,8 +152,12 @@ class GenericMessages {
   String editEntity(String ent) => """Edit $ent""";
   String get select => """Select""";
   String selectEntity(String ent) => """Select $ent""";
+  String get selected => """Selected""";
   String get my => """My""";
   String myEntity(String ent) => """My $ent""";
+  String get change => """Change""";
+  String changeEntity(String ent) => """Change $ent""";
+  String get seeAll => """See All""";
   String selectToAdd(String ent) => """Select $ent to add""";
   String entityName(String ent) => """$ent name""";
   String entityValue(String ent) => """$ent value""";
@@ -216,6 +223,10 @@ class MyLibraryMessages {
   final Messages _parent;
   const MyLibraryMessages(this._parent);
   String get title => """My Library""";
+  String get reload => """Reload Library""";
+  String itemCount(String cnt, String type) => """$cnt in $type""";
+  String libraryType(String type) =>
+      """${{'builtIn': 'Playbook', 'my': 'My Library'}[type] ?? type}""";
   String get alreadyAdded => """Already added""";
   ItemTabMyLibraryMessages get itemTab => ItemTabMyLibraryMessages(this);
 }
@@ -235,6 +246,24 @@ class SettingsMessages {
   String _switchMode(String mode) => """Switch to ${mode} Mode""";
   String get switchToDark => """${_switchMode('Dark')}""";
   String get switchToLight => """${_switchMode('Light')}""";
+  CategoriesSettingsMessages get categories => CategoriesSettingsMessages(this);
+  String get keepAwake => """Keep screen awake while using the app""";
+  DefaultThemeSettingsMessages get defaultTheme =>
+      DefaultThemeSettingsMessages(this);
+}
+
+class CategoriesSettingsMessages {
+  final SettingsMessages _parent;
+  const CategoriesSettingsMessages(this._parent);
+  String get general => """General""";
+}
+
+class DefaultThemeSettingsMessages {
+  final SettingsMessages _parent;
+  const DefaultThemeSettingsMessages(this._parent);
+  String _p(String type) => """Default $type theme""";
+  String get light => """${_p('light')}""";
+  String get dark => """${_p('dark')}""";
 }
 
 class UserMessages {
@@ -353,7 +382,8 @@ class HomeMessages {
   final Messages _parent;
   const HomeMessages(this._parent);
   CategoriesHomeMessages get categories => CategoriesHomeMessages(this);
-  String get menus => """null""";
+  MenuHomeMessages get menu => MenuHomeMessages(this);
+  EmptyStateHomeMessages get emptyState => EmptyStateHomeMessages(this);
 }
 
 class CategoriesHomeMessages {
@@ -363,6 +393,40 @@ class CategoriesHomeMessages {
   String get moves => """Favorite Moves""";
   String get spells => """Prepared Spells""";
   String get items => """Equipped Items""";
+}
+
+class MenuHomeMessages {
+  final HomeMessages _parent;
+  const MenuHomeMessages(this._parent);
+  CharacterMenuHomeMessages get character => CharacterMenuHomeMessages(this);
+  String get bio => """Character Biography""";
+  String get debilities => """Debilities""";
+}
+
+class CharacterMenuHomeMessages {
+  final MenuHomeMessages _parent;
+  const CharacterMenuHomeMessages(this._parent);
+  String get tooltip => """Character Menu""";
+  String get basicInfo => """Basic Information""";
+  String get abilityScores => """Ability Scores""";
+  String get customRolls => """Quick-Roll Buttons""";
+  String get theme => """Character Theme""";
+}
+
+class EmptyStateHomeMessages {
+  final HomeMessages _parent;
+  const EmptyStateHomeMessages(this._parent);
+  GuestEmptyStateHomeMessages get guest => GuestEmptyStateHomeMessages(this);
+  String get title => """No Characters""";
+  String get subtitle => """Create a Character to get started""";
+}
+
+class GuestEmptyStateHomeMessages {
+  final EmptyStateHomeMessages _parent;
+  const GuestEmptyStateHomeMessages(this._parent);
+  String get title => """Sign in to get more features""";
+  String get subtitle =>
+      """Online data sync, library sharing, campaigns and more!""";
 }
 
 class AboutMessages {
@@ -421,6 +485,7 @@ class DataCharacterMessages {
   String get coins => """Coins""";
   LoadDataCharacterMessages get load => LoadDataCharacterMessages(this);
   String get level => """Level""";
+  String get damageDice => """Damage Dice""";
 }
 
 class LoadDataCharacterMessages {
@@ -446,6 +511,7 @@ class CharacterClassMessages {
   const CharacterClassMessages(this._parent);
   String get baseLoad => """Base Load""";
   String get baseHp => """Base HP""";
+  String get damageDice => """Damage Dice""";
 }
 
 class DiceMessages {
@@ -505,6 +571,72 @@ class TitleRollDiceMessages {
   String rolled(int total) => """Rolled $total""";
   String rolling(int amt) =>
       """Rolling $amt ${_plural(amt, one: 'die', many: 'dice')}""";
+}
+
+class BasicInfoMessages {
+  final Messages _parent;
+  const BasicInfoMessages(this._parent);
+  String get title => """Basic Information""";
+  FormBasicInfoMessages get form => FormBasicInfoMessages(this);
+}
+
+class FormBasicInfoMessages {
+  final BasicInfoMessages _parent;
+  const FormBasicInfoMessages(this._parent);
+  NameFormBasicInfoMessages get name => NameFormBasicInfoMessages(this);
+  PhotoFormBasicInfoMessages get photo => PhotoFormBasicInfoMessages(this);
+}
+
+class NameFormBasicInfoMessages {
+  final FormBasicInfoMessages _parent;
+  const NameFormBasicInfoMessages(this._parent);
+  String get label => """Character Name""";
+  String get placeholder => """Enter your character's name""";
+  RandomNameFormBasicInfoMessages get random =>
+      RandomNameFormBasicInfoMessages(this);
+}
+
+class RandomNameFormBasicInfoMessages {
+  final NameFormBasicInfoMessages _parent;
+  const RandomNameFormBasicInfoMessages(this._parent);
+  TooltipRandomNameFormBasicInfoMessages get tooltip =>
+      TooltipRandomNameFormBasicInfoMessages(this);
+}
+
+class TooltipRandomNameFormBasicInfoMessages {
+  final RandomNameFormBasicInfoMessages _parent;
+  const TooltipRandomNameFormBasicInfoMessages(this._parent);
+  String _p(String act) => """$act to generate a random name""";
+  String get touch => """${_p('Tap')}""";
+  String get click => """${_p('Click')}""";
+}
+
+class PhotoFormBasicInfoMessages {
+  final FormBasicInfoMessages _parent;
+  const PhotoFormBasicInfoMessages(this._parent);
+  String get change => """Change Photo...""";
+  String get remove => """Remove Photo""";
+  String get choose => """Choose Photo...""";
+  GuestPhotoFormBasicInfoMessages get guest =>
+      GuestPhotoFormBasicInfoMessages(this);
+  String get uploading => """UPLOADING...""";
+  String get orSeparator => """OR""";
+  UrlPhotoFormBasicInfoMessages get url => UrlPhotoFormBasicInfoMessages(this);
+}
+
+class GuestPhotoFormBasicInfoMessages {
+  final PhotoFormBasicInfoMessages _parent;
+  const GuestPhotoFormBasicInfoMessages(this._parent);
+  String get prefix => """You need to be signed in to upload images. """;
+  String get label => """Sign in or create an account""";
+  String get suffix => """, or upload using your own URL below.""";
+}
+
+class UrlPhotoFormBasicInfoMessages {
+  final PhotoFormBasicInfoMessages _parent;
+  const UrlPhotoFormBasicInfoMessages(this._parent);
+  String get label => """Image URL""";
+  String get placeholder => """Paste an image URL""";
 }
 
 class TagsMessages {
@@ -604,6 +736,12 @@ class SettingsItemsMessages {
   String get countArmor => """Count Armor""";
   String get countDamage => """Count Damage""";
   String get countWeight => """Count Weight""";
+}
+
+class NotesMessages {
+  final Messages _parent;
+  const NotesMessages(this._parent);
+  String get noCategory => """General""";
 }
 
 class AlignmentMessages {
@@ -776,14 +914,29 @@ class CustomRollsMessages {
   String get buttonLabel => """Button Label""";
 }
 
-class FlagsMessages {
+class SessionMarksMessages {
   final Messages _parent;
-  const FlagsMessages(this._parent);
+  const SessionMarksMessages(this._parent);
   String get title => """Bonds & Flags""";
   String get bond => """Bond""";
   String get bonds => """Bonds""";
   String get flag => """Flag""";
   String get flags => """Flags""";
+  String get noData =>
+      """You have no bonds or flags. You can add some using the edit button above, then mark them off as completed as you go along your adventure.""";
+  String get info =>
+      """You can add, update or remove bonds & flags using the edit icon above.""";
+  EndOfSessionSessionMarksMessages get endOfSession =>
+      EndOfSessionSessionMarksMessages(this);
+}
+
+class EndOfSessionSessionMarksMessages {
+  final SessionMarksMessages _parent;
+  const EndOfSessionSessionMarksMessages(this._parent);
+  String get q1 =>
+      """Did we learn something new and important about the world?""";
+  String get q2 => """Did we overcome a notable monster or enemy?""";
+  String get q3 => """Did we loot a memorable treasure?""";
 }
 
 class CreateCharacterMessages {
@@ -1121,6 +1274,40 @@ class IconFormAbilityScoresMessages {
   String get button => """Change Icon""";
 }
 
+class FeedbackMessages {
+  final Messages _parent;
+  const FeedbackMessages(this._parent);
+  String get title => """Send App Feedback""";
+  String get send => """Send""";
+  FormFeedbackMessages get form => FormFeedbackMessages(this);
+}
+
+class FormFeedbackMessages {
+  final FeedbackMessages _parent;
+  const FormFeedbackMessages(this._parent);
+  TitleFormFeedbackMessages get title => TitleFormFeedbackMessages(this);
+  BodyFormFeedbackMessages get body => BodyFormFeedbackMessages(this);
+  EmailFormFeedbackMessages get email => EmailFormFeedbackMessages(this);
+}
+
+class TitleFormFeedbackMessages {
+  final FormFeedbackMessages _parent;
+  const TitleFormFeedbackMessages(this._parent);
+  String get label => """Feedback title""";
+}
+
+class BodyFormFeedbackMessages {
+  final FormFeedbackMessages _parent;
+  const BodyFormFeedbackMessages(this._parent);
+  String get label => """Problem, idea or feedback description""";
+}
+
+class EmailFormFeedbackMessages {
+  final FormFeedbackMessages _parent;
+  const EmailFormFeedbackMessages(this._parent);
+  String get label => """Enter your email""";
+}
+
 Map<String, String> get messagesMap => {
       """app.name""": """Dungeon Paper""",
       """generic.save""": """Save""",
@@ -1136,7 +1323,10 @@ Map<String, String> get messagesMap => {
       """generic.delete""": """Delete""",
       """generic.edit""": """Edit""",
       """generic.select""": """Select""",
+      """generic.selected""": """Selected""",
       """generic.my""": """My""",
+      """generic.change""": """Change""",
+      """generic.seeAll""": """See All""",
       """generic.noDescription""": """‹No description provided›""",
       """loading.user""": """Signing in...""",
       """loading.characters""": """Getting characters...""",
@@ -1154,11 +1344,14 @@ Map<String, String> get messagesMap => {
       """playbook.myLibrary""": """My Library""",
       """playbook.myCampaigns""": """My Campaigns""",
       """myLibrary.title""": """My Library""",
+      """myLibrary.reload""": """Reload Library""",
       """myLibrary.alreadyAdded""": """Already added""",
       """myLibrary.itemTab.playbook""": """Playbook""",
       """myLibrary.itemTab.online""": """Online""",
       """settings.title""": """Settings""",
       """settings.importExport""": """Export/Import""",
+      """settings.categories.general""": """General""",
+      """settings.keepAwake""": """Keep screen awake while using the app""",
       """user.recentCharacters""": """Recent Characters""",
       """auth.orSeparator""": """OR""",
       """auth.privacyPolicy""": """Privacy Policy""",
@@ -1190,6 +1383,18 @@ Map<String, String> get messagesMap => {
       """home.categories.moves""": """Favorite Moves""",
       """home.categories.spells""": """Prepared Spells""",
       """home.categories.items""": """Equipped Items""",
+      """home.menu.character.tooltip""": """Character Menu""",
+      """home.menu.character.basicInfo""": """Basic Information""",
+      """home.menu.character.abilityScores""": """Ability Scores""",
+      """home.menu.character.customRolls""": """Quick-Roll Buttons""",
+      """home.menu.character.theme""": """Character Theme""",
+      """home.menu.bio""": """Character Biography""",
+      """home.menu.debilities""": """Debilities""",
+      """home.emptyState.guest.title""": """Sign in to get more features""",
+      """home.emptyState.guest.subtitle""":
+          """Online data sync, library sharing, campaigns and more!""",
+      """home.emptyState.title""": """No Characters""",
+      """home.emptyState.subtitle""": """Create a Character to get started""",
       """about.title""": """About""",
       """about.author""": """Chen Asraf""",
       """about.discord.title""": """Join Our Discord""",
@@ -1214,9 +1419,11 @@ Map<String, String> get messagesMap => {
       """character.data.load.autoMaxLoad""":
           """Use class base load + STR mod""",
       """character.data.level""": """Level""",
+      """character.data.damageDice""": """Damage Dice""",
       """character.header.separator""": """ ∙ """,
       """characterClass.baseLoad""": """Base Load""",
       """characterClass.baseHp""": """Base HP""",
+      """characterClass.damageDice""": """Damage Dice""",
       """dice.form.amount""": """Amount""",
       """dice.form.sides""": """Sides""",
       """dice.form.diceSeparator""": """d""",
@@ -1227,6 +1434,22 @@ Map<String, String> get messagesMap => {
       """dice.form.modifier.placeholder""": """Select stat""",
       """dice.form.modifier.label""": """Stat""",
       """dice.roll.action""": """Roll""",
+      """basicInfo.title""": """Basic Information""",
+      """basicInfo.form.name.label""": """Character Name""",
+      """basicInfo.form.name.placeholder""": """Enter your character's name""",
+      """basicInfo.form.photo.change""": """Change Photo...""",
+      """basicInfo.form.photo.remove""": """Remove Photo""",
+      """basicInfo.form.photo.choose""": """Choose Photo...""",
+      """basicInfo.form.photo.guest.prefix""":
+          """You need to be signed in to upload images. """,
+      """basicInfo.form.photo.guest.label""":
+          """Sign in or create an account""",
+      """basicInfo.form.photo.guest.suffix""":
+          """, or upload using your own URL below.""",
+      """basicInfo.form.photo.uploading""": """UPLOADING...""",
+      """basicInfo.form.photo.orSeparator""": """OR""",
+      """basicInfo.form.photo.url.label""": """Image URL""",
+      """basicInfo.form.photo.url.placeholder""": """Paste an image URL""",
       """tags.dialog.title""": """Tag Information""",
       """dialogs.confirmations.exit.title""": """Are you sure?""",
       """dialogs.confirmations.exit.body""":
@@ -1245,6 +1468,7 @@ Map<String, String> get messagesMap => {
       """items.settings.countArmor""": """Count Armor""",
       """items.settings.countDamage""": """Count Damage""",
       """items.settings.countWeight""": """Count Weight""",
+      """notes.noCategory""": """General""",
       """bio.dialog.title""": """Character Biography""",
       """bio.dialog.description.label""":
           """Character & background description""",
@@ -1294,11 +1518,21 @@ Map<String, String> get messagesMap => {
       """customRolls.presets""": """Presets""",
       """customRolls.useDefault""": """Use Default""",
       """customRolls.buttonLabel""": """Button Label""",
-      """flags.title""": """Bonds & Flags""",
-      """flags.bond""": """Bond""",
-      """flags.bonds""": """Bonds""",
-      """flags.flag""": """Flag""",
-      """flags.flags""": """Flags""",
+      """sessionMarks.title""": """Bonds & Flags""",
+      """sessionMarks.bond""": """Bond""",
+      """sessionMarks.bonds""": """Bonds""",
+      """sessionMarks.flag""": """Flag""",
+      """sessionMarks.flags""": """Flags""",
+      """sessionMarks.noData""":
+          """You have no bonds or flags. You can add some using the edit button above, then mark them off as completed as you go along your adventure.""",
+      """sessionMarks.info""":
+          """You can add, update or remove bonds & flags using the edit icon above.""",
+      """sessionMarks.endOfSession.q1""":
+          """Did we learn something new and important about the world?""",
+      """sessionMarks.endOfSession.q2""":
+          """Did we overcome a notable monster or enemy?""",
+      """sessionMarks.endOfSession.q3""":
+          """Did we loot a memorable treasure?""",
       """createCharacter.basicInfo.defaultName""": """Unnamed Traveler""",
       """createCharacter.basicInfo.helpText""":
           """Select name & picture (required)""",
@@ -1396,4 +1630,10 @@ Map<String, String> get messagesMap => {
           """The name of this ability score""",
       """abilityScores.form.icon.label""": """Icon""",
       """abilityScores.form.icon.button""": """Change Icon""",
+      """feedback.title""": """Send App Feedback""",
+      """feedback.send""": """Send""",
+      """feedback.form.title.label""": """Feedback title""",
+      """feedback.form.body.label""":
+          """Problem, idea or feedback description""",
+      """feedback.form.email.label""": """Enter your email""",
     };

@@ -46,8 +46,12 @@ generic:
   editEntity(String ent): Edit $ent
   select: Select
   selectEntity(String ent): Select $ent
+  selected: Selected
   my: My
   myEntity(String ent): My $ent
+  change: Change
+  changeEntity(String ent): Change $ent
+  seeAll: See All
   selectToAdd(String ent): Select $ent to add
   entityName(String ent): $ent name
   entityValue(String ent): $ent value
@@ -87,6 +91,12 @@ playbook:
 
 myLibrary:
   title: My Library
+  reload: Reload Library
+  itemCount(String cnt, String type): $cnt in $type
+  libraryType(String type): "${{
+    'builtIn': 'Playbook',
+    'my': 'My Library'
+    }[type] ?? type}"
   alreadyAdded: Already added
   itemTab:
     playbook: Playbook
@@ -98,6 +108,13 @@ settings:
   _switchMode(String mode): 'Switch to ${mode} Mode'
   switchToDark: "${_switchMode('Dark')}"
   switchToLight: "${_switchMode('Light')}"
+  categories:
+    general: General
+  keepAwake: Keep screen awake while using the app
+  defaultTheme:
+    _p(String type): Default $type theme
+    light: "${_p('light')}"
+    dark: "${_p('dark')}"
 
 user:
   recentCharacters: Recent Characters
@@ -155,7 +172,21 @@ home:
     moves: Favorite Moves
     spells: Prepared Spells
     items: Equipped Items
-  menus:
+  menu:
+    character:
+      tooltip: Character Menu
+      basicInfo: Basic Information
+      abilityScores: Ability Scores
+      customRolls: Quick-Roll Buttons
+      theme: Character Theme
+    bio: Character Biography
+    debilities: Debilities
+  emptyState:
+    guest:
+      title: Sign in to get more features
+      subtitle: Online data sync, library sharing, campaigns and more!
+    title: No Characters
+    subtitle: Create a Character to get started
 
 about:
   title: About
@@ -188,6 +219,7 @@ character:
       maxLoad: Max Load
       autoMaxLoad: Use class base load + STR mod
     level: Level
+    damageDice: Damage Dice
   header:
     level(int lv): Level $lv
     characterClass(String name): $name
@@ -198,6 +230,7 @@ character:
 characterClass:
   baseLoad: Base Load
   baseHp: Base HP
+  damageDice: Damage Dice
 
 dice:
   form:
@@ -222,6 +255,31 @@ dice:
     action: Roll
     total(int amt): Total $amt
     resultBreakdown(String dice, String mod): 'Dice: $dice | Modifier: $mod'
+
+basicInfo:
+  title: Basic Information
+  form:
+    name:
+      label: Character Name
+      placeholder: Enter your character's name
+      random:
+        tooltip:
+          _p(String act): $act to generate a random name
+          touch: "${_p('Tap')}"
+          click: "${_p('Click')}"
+    photo:
+      change: Change Photo...
+      remove: Remove Photo
+      choose: Choose Photo...
+      guest:
+        prefix: 'You need to be signed in to upload images. '
+        label: Sign in or create an account
+        suffix: ', or upload using your own URL below.'
+      uploading: UPLOADING...
+      orSeparator: OR
+      url:
+        label: Image URL
+        placeholder: Paste an image URL
 
 tags:
   copyFrom(String name): 'Copy from: $name'
@@ -259,6 +317,9 @@ items:
     countArmor: Count Armor
     countDamage: Count Damage
     countWeight: Count Weight
+
+notes:
+  noCategory: General
 
 # `{alignment, select, chaotic {Chaotic} evil {Evil} good {Good} lawful {Lawful} neutral {Neutral} other {{alignment}}}`
 alignment:
@@ -340,12 +401,18 @@ customRolls:
   useDefault: Use Default
   buttonLabel: Button Label
 
-flags:
+sessionMarks:
   title: Bonds & Flags
   bond: Bond
   bonds: Bonds
   flag: Flag
   flags: Flags
+  noData: You have no bonds or flags. You can add some using the edit button above, then mark them off as completed as you go along your adventure.
+  info: You can add, update or remove bonds & flags using the edit icon above.
+  endOfSession:
+    q1: Did we learn something new and important about the world?
+    q2: Did we overcome a notable monster or enemy?
+    q3: Did we loot a memorable treasure?
 
 createCharacter:
   basicInfo:
@@ -461,3 +528,14 @@ abilityScores:
     icon:
       label: Icon
       button: Change Icon
+
+feedback:
+  title: Send App Feedback
+  send: Send
+  form:
+    title:
+      label: Feedback title
+    body:
+      label: Problem, idea or feedback description
+    email:
+      label: Enter your email

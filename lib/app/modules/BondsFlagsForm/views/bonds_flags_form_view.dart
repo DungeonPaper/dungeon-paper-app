@@ -18,7 +18,7 @@ class BondsFlagsFormView extends GetView<BondsFlagsFormController> {
         dirty: controller.dirty.value,
         child: Scaffold(
           appBar: AppBar(
-            title: Text(tr.flags.title),
+            title: Text(tr.sessionMarks.title),
             centerTitle: true,
           ),
           floatingActionButton: AdvancedFloatingActionButton.extended(
@@ -29,7 +29,7 @@ class BondsFlagsFormView extends GetView<BondsFlagsFormController> {
           body: ListView(
             padding: const EdgeInsets.all(16),
             children: [
-              Text(tr.flags.bonds, style: textTheme.headlineSmall),
+              Text(tr.sessionMarks.bonds, style: textTheme.headlineSmall),
               for (final bond in enumerate(controller.bondsDesc))
                 ListTile(
                   contentPadding: const EdgeInsets.all(0),
@@ -46,11 +46,11 @@ class BondsFlagsFormView extends GetView<BondsFlagsFormController> {
                 ),
               OutlinedButton.icon(
                 onPressed: () => controller.addBond(),
-                label: Text(tr.generic.createEntity(tr.flags.bond)),
+                label: Text(tr.generic.createEntity(tr.sessionMarks.bond)),
                 icon: const Icon(Icons.add),
               ),
               const Divider(height: 24),
-              Text(tr.flags.flags, style: textTheme.headlineSmall),
+              Text(tr.sessionMarks.flags, style: textTheme.headlineSmall),
               for (final flag in enumerate(controller.flagsDesc))
                 ListTile(
                   contentPadding: const EdgeInsets.all(0),
@@ -67,7 +67,7 @@ class BondsFlagsFormView extends GetView<BondsFlagsFormController> {
                 ),
               OutlinedButton.icon(
                 onPressed: () => controller.addFlag(),
-                label: Text(tr.generic.createEntity(tr.flags.flag)),
+                label: Text(tr.generic.createEntity(tr.sessionMarks.flag)),
                 icon: const Icon(Icons.add),
               ),
             ],

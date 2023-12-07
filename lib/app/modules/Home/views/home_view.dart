@@ -9,9 +9,8 @@ import 'package:dungeon_paper/app/routes/app_pages.dart';
 import 'package:dungeon_paper/app/themes/button_themes.dart';
 import 'package:dungeon_paper/app/widgets/atoms/icon_span.dart';
 import 'package:dungeon_paper/app/widgets/atoms/page_controller_fractional_box.dart';
-import 'package:dungeon_paper/generated/l10n.dart';
+import 'package:dungeon_paper/i18n.dart';
 import 'package:flutter/material.dart';
-
 import 'package:get/get.dart';
 
 // import '../../../widgets/atoms/debug_menu.dart';
@@ -91,20 +90,20 @@ class HomeEmptyState extends StatelessWidget with UserServiceMixin {
                           text: TextSpan(
                             children: [
                               IconSpan(context, icon: Icons.person, size: 24),
-                              TextSpan(text: ' ${S.current.homeEmptyStateLoginTitle}'),
+                              TextSpan(text: ' ${tr.home.emptyState.guest.title}'),
                             ],
                             style: textTheme.titleLarge,
                           ),
                         ),
                         const SizedBox(height: 16),
                         Text(
-                          S.current.homeEmptyStateLoginSubtitle,
+                          tr.home.emptyState.guest.subtitle,
                           style: textTheme.titleMedium,
                           textAlign: TextAlign.center,
                         ),
                         const SizedBox(height: 16),
                         ElevatedButton.icon(
-                          label: Text(S.current.signinButton),
+                          label: Text(tr.auth.login.button),
                           icon: const Icon(Icons.login),
                           onPressed: () => Get.toNamed(Routes.login),
                           style: ButtonThemes.primaryElevated(context),
@@ -118,19 +117,19 @@ class HomeEmptyState extends StatelessWidget with UserServiceMixin {
               const SizedBox(height: 16),
             ],
             Text(
-              S.current.homeEmptyStateTitle,
+              tr.home.emptyState.title,
               style: textTheme.titleLarge,
               textAlign: TextAlign.center,
             ),
             const SizedBox(height: 16),
             Text(
-              S.current.homeEmptyStateSubtitle,
+              tr.home.emptyState.subtitle,
               style: textTheme.titleMedium,
               textAlign: TextAlign.center,
             ),
             const SizedBox(height: 16),
             ElevatedButton.icon(
-              label: Text(S.current.createGeneric(S.current.entity(Character))),
+              label: Text(tr.generic.createEntity(tr.entity(Character))),
               icon: const Icon(Icons.person_add),
               onPressed: () => Get.toNamed(Routes.createCharacter),
             ),
