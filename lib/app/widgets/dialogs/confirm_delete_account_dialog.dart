@@ -1,5 +1,5 @@
 import 'package:dungeon_paper/app/widgets/molecules/dialog_controls.dart';
-import 'package:dungeon_paper/generated/l10n.dart';
+import 'package:dungeon_paper/i18n.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -8,8 +8,8 @@ import '../../../core/utils/dialog_utils.dart';
 Future<bool> confirmDeleteAccount1<T>(BuildContext context) {
   return Get.dialog<bool>(
     AlertDialog(
-      title: Text(S.current.confirmDeleteAccount1Title),
-      content: Text(S.current.confirmDeleteAccount1Body),
+      title: Text(tr.dialogs.confirmations.deleteAccount.step1.title),
+      content: Text(tr.dialogs.confirmations.deleteAccount.step1.body),
       actions: DialogControls.delete(context,
           onDelete: () => Get.back(result: true), onCancel: () => Get.back(result: false)),
     ),
@@ -19,9 +19,8 @@ Future<bool> confirmDeleteAccount1<T>(BuildContext context) {
 Future<bool> confirmDeleteAccount2<T>(BuildContext context) {
   return Get.dialog<bool>(
     AlertDialog(
-      title: Text(S.current.confirmDeleteAccount2Title),
-      content: Text(S.current.confirmDeleteAccount2Body),
-      actions: DialogControls.delete(context,
+      title: Text(tr.dialogs.confirmations.deleteAccount.step2.title),
+      content: Text(tr.dialogs.confirmations.deleteAccount.step2.body), actions: DialogControls.delete(context,
           onDelete: () => Get.back(result: true), onCancel: () => Get.back(result: false)),
     ),
   ).then((res) => res == true);

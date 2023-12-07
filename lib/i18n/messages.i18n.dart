@@ -86,14 +86,18 @@ class Messages {
       """${cnt == 1 ? _entSingle(ent.toString()) : _entPlural(ent.toString())}""";
   AppMessages get app => AppMessages(this);
   GenericMessages get generic => GenericMessages(this);
+  LoadingMessages get loading => LoadingMessages(this);
   ErrorsMessages get errors => ErrorsMessages(this);
   SortMessages get sort => SortMessages(this);
   PlaybookMessages get playbook => PlaybookMessages(this);
+  MyLibraryMessages get myLibrary => MyLibraryMessages(this);
   SettingsMessages get settings => SettingsMessages(this);
   UserMessages get user => UserMessages(this);
   AuthMessages get auth => AuthMessages(this);
+  HomeMessages get home => HomeMessages(this);
   AboutMessages get about => AboutMessages(this);
   CharacterMessages get character => CharacterMessages(this);
+  CharacterClassMessages get characterClass => CharacterClassMessages(this);
   DiceMessages get dice => DiceMessages(this);
   TagsMessages get tags => TagsMessages(this);
   DialogsMessages get dialogs => DialogsMessages(this);
@@ -102,6 +106,7 @@ class Messages {
   AlignmentMessages get alignment => AlignmentMessages(this);
   BioMessages get bio => BioMessages(this);
   SearchMessages get search => SearchMessages(this);
+  HpMessages get hp => HpMessages(this);
   XpMessages get xp => XpMessages(this);
   RichTextMessages get richText => RichTextMessages(this);
   CustomRollsMessages get customRolls => CustomRollsMessages(this);
@@ -136,12 +141,17 @@ class GenericMessages {
   String addEntity(String ent) => """Add $ent""";
   String get remove => """Remove""";
   String removeEntity(String ent) => """Remove $ent""";
+  String get unselect => """Unselect""";
+  String unselectEntity(String ent) => """Unselect $ent""";
   String get delete => """Delete""";
   String deleteEntity(String ent) => """Delete $ent""";
   String get edit => """Edit""";
   String editEntity(String ent) => """Edit $ent""";
   String get select => """Select""";
   String selectEntity(String ent) => """Select $ent""";
+  String get my => """My""";
+  String myEntity(String ent) => """My $ent""";
+  String selectToAdd(String ent) => """Select $ent to add""";
   String entityName(String ent) => """$ent name""";
   String entityValue(String ent) => """$ent value""";
   String entityDescription(String ent) => """$ent description""";
@@ -152,12 +162,23 @@ class GenericMessages {
       """No $ent selected (required)""";
 }
 
+class LoadingMessages {
+  final Messages _parent;
+  const LoadingMessages(this._parent);
+  String get user => """Signing in...""";
+  String get characters => """Getting characters...""";
+  String get general => """Loading...""";
+}
+
 class ErrorsMessages {
   final Messages _parent;
   const ErrorsMessages(this._parent);
   String get userOperationCanceled => """Operation canceled""";
   String get uploadError =>
       """Error while uploading photo. Try again later, or contact support using the "About" page.""";
+  String get invalidEmail => """Invalid email address""";
+  InvalidPasswordErrorsMessages get invalidPassword =>
+      InvalidPasswordErrorsMessages(this);
   String minLength(int cnt) =>
       """Must be at least $cnt ${_plural(cnt, one: 'character', many: 'characters')}""";
   String maxLength(int cnt) =>
@@ -166,6 +187,13 @@ class ErrorsMessages {
       """Must be exactly $cnt ${_plural(cnt, one: 'character', many: 'characters')}""";
   String mustContain(String pattern) => """Must contain $pattern""";
   String mustNotContain(String pattern) => """Must not contain $pattern""";
+}
+
+class InvalidPasswordErrorsMessages {
+  final ErrorsMessages _parent;
+  const InvalidPasswordErrorsMessages(this._parent);
+  String get letter => """Password must contain at least one capital letter""";
+  String get number => """Password must contain at least one number""";
 }
 
 class SortMessages {
@@ -182,6 +210,21 @@ class PlaybookMessages {
   const PlaybookMessages(this._parent);
   String get myLibrary => """My Library""";
   String get myCampaigns => """My Campaigns""";
+}
+
+class MyLibraryMessages {
+  final Messages _parent;
+  const MyLibraryMessages(this._parent);
+  String get title => """My Library""";
+  String get alreadyAdded => """Already added""";
+  ItemTabMyLibraryMessages get itemTab => ItemTabMyLibraryMessages(this);
+}
+
+class ItemTabMyLibraryMessages {
+  final MyLibraryMessages _parent;
+  const ItemTabMyLibraryMessages(this._parent);
+  String get playbook => """Playbook""";
+  String get online => """Online""";
 }
 
 class SettingsMessages {
@@ -306,6 +349,22 @@ class ConfirmPasswordSignupAuthMessages {
   String get error => """Passwords do not match""";
 }
 
+class HomeMessages {
+  final Messages _parent;
+  const HomeMessages(this._parent);
+  CategoriesHomeMessages get categories => CategoriesHomeMessages(this);
+  String get menus => """null""";
+}
+
+class CategoriesHomeMessages {
+  final HomeMessages _parent;
+  const CategoriesHomeMessages(this._parent);
+  String get notes => """Bookmarked Notes""";
+  String get moves => """Favorite Moves""";
+  String get spells => """Prepared Spells""";
+  String get items => """Equipped Items""";
+}
+
 class AboutMessages {
   final Messages _parent;
   const AboutMessages(this._parent);
@@ -380,6 +439,13 @@ class HeaderCharacterMessages {
   String race(String name) => """$name""";
   String alignment(String alignment) => """$alignment""";
   String get separator => """ ∙ """;
+}
+
+class CharacterClassMessages {
+  final Messages _parent;
+  const CharacterClassMessages(this._parent);
+  String get baseLoad => """Base Load""";
+  String get baseHp => """Base HP""";
 }
 
 class DiceMessages {
@@ -468,6 +534,8 @@ class ConfirmationsDialogsMessages {
       DeleteConfirmationsDialogsMessages(this);
   ExitConfirmationsDialogsMessages get exit =>
       ExitConfirmationsDialogsMessages(this);
+  DeleteAccountConfirmationsDialogsMessages get deleteAccount =>
+      DeleteAccountConfirmationsDialogsMessages(this);
 }
 
 class DeleteConfirmationsDialogsMessages {
@@ -486,6 +554,31 @@ class ExitConfirmationsDialogsMessages {
       """Going back will lose any unsaved changes.\nAre you sure you want to go back?""";
   String get ok => """Exit & Discard""";
   String get cancel => """Continue editing""";
+}
+
+class DeleteAccountConfirmationsDialogsMessages {
+  final ConfirmationsDialogsMessages _parent;
+  const DeleteAccountConfirmationsDialogsMessages(this._parent);
+  Step1DeleteAccountConfirmationsDialogsMessages get step1 =>
+      Step1DeleteAccountConfirmationsDialogsMessages(this);
+  Step2DeleteAccountConfirmationsDialogsMessages get step2 =>
+      Step2DeleteAccountConfirmationsDialogsMessages(this);
+}
+
+class Step1DeleteAccountConfirmationsDialogsMessages {
+  final DeleteAccountConfirmationsDialogsMessages _parent;
+  const Step1DeleteAccountConfirmationsDialogsMessages(this._parent);
+  String get title => """Delete Your Account?""";
+  String get body =>
+      """Are you sure you want to delete your account?\n\nThis action cannot be undone.""";
+}
+
+class Step2DeleteAccountConfirmationsDialogsMessages {
+  final DeleteAccountConfirmationsDialogsMessages _parent;
+  const Step2DeleteAccountConfirmationsDialogsMessages(this._parent);
+  String get title => """Are you really sure?""";
+  String get body =>
+      """We do not save any data for deleted accounts. All your data will be permanently deleted.\n\nAre you sure you want to delete your account?\n\nPlease confirm this one last time.""";
 }
 
 class SpellsMessages {
@@ -577,6 +670,28 @@ class SearchMessages {
   final Messages _parent;
   const SearchMessages(this._parent);
   String get placeholder => """Type to search""";
+}
+
+class HpMessages {
+  final Messages _parent;
+  const HpMessages(this._parent);
+  DialogHpMessages get dialog => DialogHpMessages(this);
+}
+
+class DialogHpMessages {
+  final HpMessages _parent;
+  const DialogHpMessages(this._parent);
+  String get title => """Modify HP""";
+  ChangeDialogHpMessages get change => ChangeDialogHpMessages(this);
+  String get overrideMax => """Override Max HP""";
+}
+
+class ChangeDialogHpMessages {
+  final DialogHpMessages _parent;
+  const ChangeDialogHpMessages(this._parent);
+  String add(int amt) => """Heal\n+$amt""";
+  String remove(int amt) => """Damage\n-$amt""";
+  String get neutral => """No Change""";
 }
 
 class XpMessages {
@@ -1017,17 +1132,31 @@ Map<String, String> get messagesMap => {
       """generic.create""": """Create""",
       """generic.add""": """Add""",
       """generic.remove""": """Remove""",
+      """generic.unselect""": """Unselect""",
       """generic.delete""": """Delete""",
       """generic.edit""": """Edit""",
       """generic.select""": """Select""",
+      """generic.my""": """My""",
       """generic.noDescription""": """‹No description provided›""",
+      """loading.user""": """Signing in...""",
+      """loading.characters""": """Getting characters...""",
+      """loading.general""": """Loading...""",
       """errors.userOperationCanceled""": """Operation canceled""",
       """errors.uploadError""":
           """Error while uploading photo. Try again later, or contact support using the "About" page.""",
+      """errors.invalidEmail""": """Invalid email address""",
+      """errors.invalidPassword.letter""":
+          """Password must contain at least one capital letter""",
+      """errors.invalidPassword.number""":
+          """Password must contain at least one number""",
       """sort.moveUp""": """Move up""",
       """sort.moveDown""": """Move down""",
       """playbook.myLibrary""": """My Library""",
       """playbook.myCampaigns""": """My Campaigns""",
+      """myLibrary.title""": """My Library""",
+      """myLibrary.alreadyAdded""": """Already added""",
+      """myLibrary.itemTab.playbook""": """Playbook""",
+      """myLibrary.itemTab.online""": """Online""",
       """settings.title""": """Settings""",
       """settings.importExport""": """Export/Import""",
       """user.recentCharacters""": """Recent Characters""",
@@ -1057,6 +1186,10 @@ Map<String, String> get messagesMap => {
       """auth.signup.password.confirm.placeholder""":
           """Enter the same password again""",
       """auth.signup.password.confirm.error""": """Passwords do not match""",
+      """home.categories.notes""": """Bookmarked Notes""",
+      """home.categories.moves""": """Favorite Moves""",
+      """home.categories.spells""": """Prepared Spells""",
+      """home.categories.items""": """Equipped Items""",
       """about.title""": """About""",
       """about.author""": """Chen Asraf""",
       """about.discord.title""": """Join Our Discord""",
@@ -1082,6 +1215,8 @@ Map<String, String> get messagesMap => {
           """Use class base load + STR mod""",
       """character.data.level""": """Level""",
       """character.header.separator""": """ ∙ """,
+      """characterClass.baseLoad""": """Base Load""",
+      """characterClass.baseHp""": """Base HP""",
       """dice.form.amount""": """Amount""",
       """dice.form.sides""": """Sides""",
       """dice.form.diceSeparator""": """d""",
@@ -1098,6 +1233,14 @@ Map<String, String> get messagesMap => {
           """Going back will lose any unsaved changes.\nAre you sure you want to go back?""",
       """dialogs.confirmations.exit.ok""": """Exit & Discard""",
       """dialogs.confirmations.exit.cancel""": """Continue editing""",
+      """dialogs.confirmations.deleteAccount.step1.title""":
+          """Delete Your Account?""",
+      """dialogs.confirmations.deleteAccount.step1.body""":
+          """Are you sure you want to delete your account?\n\nThis action cannot be undone.""",
+      """dialogs.confirmations.deleteAccount.step2.title""":
+          """Are you really sure?""",
+      """dialogs.confirmations.deleteAccount.step2.body""":
+          """We do not save any data for deleted accounts. All your data will be permanently deleted.\n\nAre you sure you want to delete your account?\n\nPlease confirm this one last time.""",
       """items.amountTooltip""": """Amount""",
       """items.settings.countArmor""": """Count Armor""",
       """items.settings.countDamage""": """Count Damage""",
@@ -1115,6 +1258,9 @@ Map<String, String> get messagesMap => {
       """bio.dialog.alignmentDescription.placeholder""":
           """Alignment is your character's way of thinking and moral compass. This can center on an ethical ideal, religious strictures or early life events. It reflects what your character values and aspires to protect or create.""",
       """search.placeholder""": """Type to search""",
+      """hp.dialog.title""": """Modify HP""",
+      """hp.dialog.change.neutral""": """No Change""",
+      """hp.dialog.overrideMax""": """Override Max HP""",
       """xp.dialog.title""": """Mark Session XP""",
       """xp.dialog.overridingTitle""": """Update XP & Level""",
       """xp.dialog.endOfSession.button""": """End Session""",

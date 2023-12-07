@@ -2,10 +2,10 @@ import 'dart:convert';
 
 import 'package:dungeon_paper/app/data/models/meta.dart';
 import 'package:dungeon_paper/core/utils/icon_utils.dart';
+import 'package:dungeon_paper/i18n.dart';
 import 'package:flutter/material.dart';
 
 import '../../../core/dw_icons.dart';
-import '../../../i18n.dart';
 
 class AbilityScores {
   AbilityScores({

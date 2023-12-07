@@ -28,10 +28,10 @@ import 'package:dungeon_paper/app/widgets/menus/group_sort_menu.dart';
 import 'package:dungeon_paper/app/widgets/molecules/categorized_list.dart';
 import 'package:dungeon_paper/core/utils/builder_utils.dart';
 import 'package:dungeon_paper/core/utils/list_utils.dart';
+import 'package:dungeon_paper/i18n.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-import '../../../../i18n.dart';
 import 'local_widgets/home_character_actions_summary.dart';
 
 class HomeCharacterActionsView extends GetView<CharacterService> {

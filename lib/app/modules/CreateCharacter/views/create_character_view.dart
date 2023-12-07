@@ -21,13 +21,12 @@ import 'package:dungeon_paper/app/widgets/atoms/advanced_floating_action_button.
 import 'package:dungeon_paper/app/widgets/atoms/character_avatar.dart';
 import 'package:dungeon_paper/app/widgets/atoms/confirm_exit_view.dart';
 import 'package:dungeon_paper/generated/l10n.dart';
+import 'package:dungeon_paper/i18n.dart';
 import 'package:flutter/material.dart';
-
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 
 import '../../../../core/dw_icons.dart';
-import '../../../../i18n.dart';
 import '../../../widgets/chips/advanced_chip.dart';
 import '../controllers/create_character_controller.dart';
 

@@ -5,10 +5,9 @@ import 'package:dungeon_paper/app/widgets/atoms/advanced_floating_action_button.
 import 'package:dungeon_paper/app/widgets/atoms/confirm_exit_view.dart';
 import 'package:dungeon_paper/app/widgets/atoms/rich_text_field.dart';
 import 'package:dungeon_paper/app/widgets/atoms/select_box.dart';
+import 'package:dungeon_paper/i18n.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-
-import '../../../../i18n.dart';
 
 class BioFormView extends GetView<BioFormController> with CharacterServiceMixin {
   const BioFormView({super.key});

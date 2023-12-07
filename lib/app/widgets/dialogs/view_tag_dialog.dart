@@ -1,10 +1,9 @@
 import 'package:dungeon_paper/app/widgets/molecules/dialog_controls.dart';
 import 'package:dungeon_paper/core/utils/string_utils.dart';
-import 'package:flutter/material.dart';
+import 'package:dungeon_paper/i18n.dart';
 import 'package:dungeon_world_data/dungeon_world_data.dart' as dw;
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-
-import '../../../i18n.dart';
 
 class ViewTagDialog extends StatelessWidget {
   const ViewTagDialog({

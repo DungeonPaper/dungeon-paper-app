@@ -1,9 +1,9 @@
 import 'package:dungeon_paper/app/widgets/molecules/dialog_controls.dart';
+import 'package:dungeon_paper/i18n.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import '../../../core/utils/dialog_utils.dart';
-import '../../../i18n.dart';
 
 class ConfirmExitView extends StatelessWidget {
   const ConfirmExitView({

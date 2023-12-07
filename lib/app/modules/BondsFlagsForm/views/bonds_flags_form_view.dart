@@ -1,10 +1,10 @@
 import 'package:dungeon_paper/app/widgets/atoms/advanced_floating_action_button.dart';
 import 'package:dungeon_paper/app/widgets/atoms/confirm_exit_view.dart';
 import 'package:dungeon_paper/core/utils/list_utils.dart';
+import 'package:dungeon_paper/i18n.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-import '../../../../i18n.dart';
 import '../controllers/bonds_flags_form_controller.dart';
 
 class BondsFlagsFormView extends GetView<BondsFlagsFormController> {

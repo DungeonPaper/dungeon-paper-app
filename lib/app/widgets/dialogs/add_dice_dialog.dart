@@ -1,20 +1,20 @@
 import 'package:dungeon_paper/app/data/models/ability_scores.dart';
 import 'package:dungeon_paper/app/data/services/repository_service.dart';
 import 'package:dungeon_paper/app/widgets/forms/dice_form.dart';
-import 'package:dungeon_paper/generated/l10n.dart';
-import 'package:flutter/material.dart';
+import 'package:dungeon_paper/i18n.dart';
 import 'package:dungeon_world_data/dungeon_world_data.dart' as dw;
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 enum ModifierType { stat, fixed }
 
 class AddDiceDialog extends StatefulWidget {
   const AddDiceDialog({
-    Key? key,
+    super.key,
     this.dice,
     this.onSave,
     required this.abilityScores,
-  }) : super(key: key);
+  });
 
   final dw.Dice? dice;
   final void Function(dw.Dice dice)? onSave;
@@ -37,12 +37,12 @@ class _AddDiceDialogState extends State<AddDiceDialog> with RepositoryServiceMix
   Widget build(BuildContext context) {
     return AlertDialog(
       title: Text(
-        widget.dice == null ? S.current.addGeneric(dw.Dice) : S.current.editGeneric(dw.Dice),
+        widget.dice == null ? tr.generic.addEntity(tr.entity(dw.Dice)) : tr.generic.editEntity(tr.entity(dw.Dice)),
       ),
       content: SingleChildScrollView(
         child: DiceForm(
           dice: dice,
-          onChanged: (dw.Dice _dice) => setState(() => dice = _dice),
+          onChanged: (dw.Dice dice) => setState(() => dice = dice),
           abilityScores: widget.abilityScores,
         ),
       ),
@@ -52,7 +52,7 @@ class _AddDiceDialogState extends State<AddDiceDialog> with RepositoryServiceMix
             widget.onSave?.call(dice);
             Get.back();
           },
-          child: Text(S.current.save),
+          child: Text(tr.generic.save),
         ),
       ],
     );

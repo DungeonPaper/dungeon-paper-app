@@ -1,7 +1,6 @@
 import 'package:dungeon_paper/app/themes/button_themes.dart';
+import 'package:dungeon_paper/i18n.dart';
 import 'package:flutter/material.dart';
-
-import '../../../i18n.dart';
 
 class DialogControls {
   static List<Widget> custom(

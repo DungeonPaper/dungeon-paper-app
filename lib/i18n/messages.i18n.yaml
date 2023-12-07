@@ -38,12 +38,17 @@ generic:
   addEntity(String ent): Add $ent
   remove: Remove
   removeEntity(String ent): Remove $ent
+  unselect: Unselect
+  unselectEntity(String ent): Unselect $ent
   delete: Delete
   deleteEntity(String ent): Delete $ent
   edit: Edit
   editEntity(String ent): Edit $ent
   select: Select
   selectEntity(String ent): Select $ent
+  my: My
+  myEntity(String ent): My $ent
+  selectToAdd(String ent): Select $ent to add
   entityName(String ent): $ent name
   entityValue(String ent): $ent value
   entityDescription(String ent): $ent description
@@ -52,9 +57,18 @@ generic:
   noEntitySelected(String ent): No $ent selected
   noEntitySelectedRequired(String ent): No $ent selected (required)
 
+loading:
+  user: Signing in...
+  characters: Getting characters...
+  general: Loading...
+
 errors:
   userOperationCanceled: Operation canceled
   uploadError: Error while uploading photo. Try again later, or contact support using the "About" page.
+  invalidEmail: Invalid email address
+  invalidPassword:
+    letter: Password must contain at least one capital letter
+    number: Password must contain at least one number
   minLength(int cnt): "Must be at least $cnt ${_plural(cnt, one: 'character', many: 'characters')}"
   maxLength(int cnt): "Must be no more than $cnt ${_plural(cnt, one: 'character', many: 'characters')}"
   exactLength(int cnt): "Must be exactly $cnt ${_plural(cnt, one: 'character', many: 'characters')}"
@@ -70,6 +84,13 @@ sort:
 playbook:
   myLibrary: My Library
   myCampaigns: My Campaigns
+
+myLibrary:
+  title: My Library
+  alreadyAdded: Already added
+  itemTab:
+    playbook: Playbook
+    online: Online
 
 settings:
   title: Settings
@@ -128,6 +149,14 @@ auth:
         placeholder: Enter the same password again
         error: Passwords do not match
 
+home:
+  categories:
+    notes: Bookmarked Notes
+    moves: Favorite Moves
+    spells: Prepared Spells
+    items: Equipped Items
+  menus:
+
 about:
   title: About
   version(String version): Version $version
@@ -165,6 +194,10 @@ character:
     race(String name): $name
     alignment(String alignment): $alignment
     separator: ' ∙ '
+
+characterClass:
+  baseLoad: Base Load
+  baseHp: Base HP
 
 dice:
   form:
@@ -205,6 +238,13 @@ dialogs:
       body: Going back will lose any unsaved changes.\nAre you sure you want to go back?
       ok: Exit & Discard
       cancel: Continue editing
+    deleteAccount:
+      step1:
+        title: Delete Your Account?
+        body: Are you sure you want to delete your account?\n\nThis action cannot be undone.
+      step2:
+        title: Are you really sure?
+        body: We do not save any data for deleted accounts. All your data will be permanently deleted.\n\nAre you sure you want to delete your account?\n\nPlease confirm this one last time.
 
 spells:
   spellLevel(String level): "${{
@@ -247,6 +287,15 @@ bio:
 
 search:
   placeholder: Type to search
+
+hp:
+  dialog:
+    title: Modify HP
+    change:
+      add(int amt): Heal\n+$amt
+      remove(int amt): Damage\n-$amt
+      neutral: No Change
+    overrideMax: Override Max HP
 
 xp:
   dialog:

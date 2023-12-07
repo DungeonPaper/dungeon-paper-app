@@ -1,6 +1,5 @@
+import 'package:dungeon_paper/i18n.dart';
 import 'package:get/get.dart';
-
-import '../../i18n.dart';
 
 abstract class Validation {
   Validation(this.message);

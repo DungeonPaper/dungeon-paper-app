@@ -2,10 +2,10 @@ import 'package:dungeon_paper/app/data/models/ability_scores.dart';
 import 'package:dungeon_paper/app/widgets/atoms/advanced_floating_action_button.dart';
 import 'package:dungeon_paper/app/widgets/atoms/help_text.dart';
 import 'package:dungeon_paper/core/utils/enums.dart';
+import 'package:dungeon_paper/i18n.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-import '../../../../i18n.dart';
 import '../controllers/ability_score_form_controller.dart';
 
 class AbilityScoreFormView extends GetView<AbilityScoreFormController> {

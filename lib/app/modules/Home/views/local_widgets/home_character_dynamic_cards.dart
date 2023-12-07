@@ -21,7 +21,7 @@ import 'package:dungeon_paper/app/widgets/cards/spell_card.dart';
 import 'package:dungeon_paper/app/widgets/cards/spell_card_mini.dart';
 import 'package:dungeon_paper/app/widgets/dialogs/confirm_delete_dialog.dart';
 import 'package:dungeon_paper/app/widgets/menus/entity_edit_menu.dart';
-import 'package:dungeon_paper/generated/l10n.dart';
+import 'package:dungeon_paper/i18n.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -29,7 +29,7 @@ import '../expanded_card_dialog_view.dart';
 import 'horizontal_list_card_view.dart';
 
 class HomeCharacterDynamicCards extends GetView<CharacterService> with LibraryServiceMixin {
-  const HomeCharacterDynamicCards({Key? key}) : super(key: key);
+  const HomeCharacterDynamicCards({super.key});
 
   List<Move> get moves => (controller.maybeCurrent?.moves ?? <Move>[]).where((m) => m.favorite).toList();
   List<Spell> get spells => (controller.maybeCurrent?.spells ?? <Spell>[]).where((m) => m.prepared).toList();
@@ -49,7 +49,7 @@ class HomeCharacterDynamicCards extends GetView<CharacterService> with LibrarySe
           const SizedBox(height: 10),
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 16),
-            child: Text(S.current.dynamicCategoriesNotes),
+            child: Text(tr.home.categories.notes),
           ),
         ],
         HorizontalCardListView<Note>(
@@ -59,8 +59,8 @@ class HomeCharacterDynamicCards extends GetView<CharacterService> with LibrarySe
             () => NoteCardMini(
               note: notes[index],
               onTap: onTap,
-              onSave: (_note) => controller.updateCharacter(
-                CharacterUtils.updateNotes(controller.current, [_note]),
+              onSave: (note) => controller.updateCharacter(
+                CharacterUtils.updateNotes(controller.current, [note]),
               ),
             ),
           ),
@@ -90,11 +90,11 @@ class HomeCharacterDynamicCards extends GetView<CharacterService> with LibrarySe
                           ),
                         ),
                       ],
-                      onSave: (_note) {
+                      onSave: (note) {
                         controller.updateCharacter(
-                          CharacterUtils.updateNotes(controller.current, [_note]),
+                          CharacterUtils.updateNotes(controller.current, [note]),
                         );
-                        if (!_note.favorite) {
+                        if (!note.favorite) {
                           Get.back();
                         }
                       },
@@ -109,7 +109,7 @@ class HomeCharacterDynamicCards extends GetView<CharacterService> with LibrarySe
         if (moves.isNotEmpty)
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 16),
-            child: Text(S.current.dynamicCategoriesMoves),
+            child: Text(tr.home.categories.moves),
           ),
         Builder(builder: (context) {
           final raceCardMini = controller.current.race.favorite
@@ -129,21 +129,21 @@ class HomeCharacterDynamicCards extends GetView<CharacterService> with LibrarySe
                             onEdit: () => ModelPages.openRacePage(
                               abilityScores: controller.current.abilityScores,
                               race: controller.current.race,
-                              onSave: (_race) => controller.updateCharacter(
-                                controller.current.copyWith(race: _race),
+                              onSave: (race) => controller.updateCharacter(
+                                controller.current.copyWith(race: race),
                               ),
                             ),
                             onDelete: null,
                           ),
                         ],
-                        onSave: (_race) => controller.updateCharacter(
-                          controller.current.copyWith(race: _race),
+                        onSave: (race) => controller.updateCharacter(
+                          controller.current.copyWith(race: race),
                         ),
                       ),
                     ),
                   ),
-                  onSave: (_race) => controller.updateCharacter(
-                    controller.current.copyWith(race: _race),
+                  onSave: (race) => controller.updateCharacter(
+                    controller.current.copyWith(race: race),
                   ),
                 )
               : null;
@@ -154,8 +154,8 @@ class HomeCharacterDynamicCards extends GetView<CharacterService> with LibrarySe
               () => MoveCardMini(
                 move: moves[index],
                 onTap: onTap,
-                onSave: (_move) => controller.updateCharacter(
-                  CharacterUtils.updateMoves(controller.current, [_move]),
+                onSave: (move) => controller.updateCharacter(
+                  CharacterUtils.updateMoves(controller.current, [move]),
                 ),
                 abilityScores: controller.current.abilityScores,
               ),
@@ -186,11 +186,11 @@ class HomeCharacterDynamicCards extends GetView<CharacterService> with LibrarySe
                           ),
                         ),
                       ],
-                      onSave: (_move) {
+                      onSave: (move) {
                         controller.updateCharacter(
-                          CharacterUtils.updateMoves(controller.current, [_move]),
+                          CharacterUtils.updateMoves(controller.current, [move]),
                         );
-                        if (!_move.favorite) {
+                        if (!move.favorite) {
                           Get.back();
                         }
                       },
@@ -212,7 +212,7 @@ class HomeCharacterDynamicCards extends GetView<CharacterService> with LibrarySe
           const SizedBox(height: 10),
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 16),
-            child: Text(S.current.dynamicCategoriesSpells),
+            child: Text(tr.home.categories.spells),
           ),
         ],
         HorizontalCardListView<Spell>(
@@ -222,8 +222,8 @@ class HomeCharacterDynamicCards extends GetView<CharacterService> with LibrarySe
             () => SpellCardMini(
               spell: spells[index],
               onTap: onTap,
-              onSave: (_spell) => controller.updateCharacter(
-                CharacterUtils.updateSpells(controller.current, [_spell]),
+              onSave: (spell) => controller.updateCharacter(
+                CharacterUtils.updateSpells(controller.current, [spell]),
               ),
               abilityScores: controller.current.abilityScores,
             ),
@@ -256,11 +256,11 @@ class HomeCharacterDynamicCards extends GetView<CharacterService> with LibrarySe
                         ),
                       ),
                     ],
-                    onSave: (_spell) {
+                    onSave: (spell) {
                       controller.updateCharacter(
-                        CharacterUtils.updateSpells(controller.current, [_spell]),
+                        CharacterUtils.updateSpells(controller.current, [spell]),
                       );
-                      if (!_spell.prepared) {
+                      if (!spell.prepared) {
                         Get.back();
                       }
                     },
@@ -275,7 +275,7 @@ class HomeCharacterDynamicCards extends GetView<CharacterService> with LibrarySe
           const SizedBox(height: 10),
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 16),
-            child: Text(S.current.dynamicCategoriesItems),
+            child: Text(tr.home.categories.items),
           ),
         ],
         HorizontalCardListView<Item>(
@@ -285,8 +285,8 @@ class HomeCharacterDynamicCards extends GetView<CharacterService> with LibrarySe
             () => ItemCardMini(
               item: items[index],
               onTap: onTap,
-              onSave: (_item) => controller.updateCharacter(
-                CharacterUtils.updateItems(controller.current, [_item]),
+              onSave: (item) => controller.updateCharacter(
+                CharacterUtils.updateItems(controller.current, [item]),
               ),
             ),
           ),
@@ -317,7 +317,7 @@ class HomeCharacterDynamicCards extends GetView<CharacterService> with LibrarySe
                           ChecklistMenuEntry(
                             value: 'countArmor',
                             checked: item.settings.countArmor,
-                            label: Text(S.current.itemSettingsCountArmor),
+                            label: Text(tr.items.settings.countArmor),
                             onChanged: (value) => controller.updateCharacter(
                               CharacterUtils.updateItems(controller.current, [
                                 item.copyWithInherited(
@@ -329,7 +329,7 @@ class HomeCharacterDynamicCards extends GetView<CharacterService> with LibrarySe
                           ChecklistMenuEntry(
                             value: 'countDamage',
                             checked: item.settings.countDamage,
-                            label: Text(S.current.itemSettingsCountDamage),
+                            label: Text(tr.items.settings.countDamage),
                             onChanged: (value) => controller.updateCharacter(
                               CharacterUtils.updateItems(controller.current, [
                                 item.copyWithInherited(
@@ -341,7 +341,7 @@ class HomeCharacterDynamicCards extends GetView<CharacterService> with LibrarySe
                           ChecklistMenuEntry(
                             value: 'countWeight',
                             checked: item.settings.countWeight,
-                            label: Text(S.current.itemSettingsCountWeight),
+                            label: Text(tr.items.settings.countWeight),
                             onChanged: (value) => controller.updateCharacter(
                               CharacterUtils.updateItems(controller.current, [
                                 item.copyWithInherited(
@@ -353,11 +353,11 @@ class HomeCharacterDynamicCards extends GetView<CharacterService> with LibrarySe
                         ],
                       ),
                     ],
-                    onSave: (_item) {
+                    onSave: (item) {
                       controller.updateCharacter(
-                        CharacterUtils.updateItems(controller.current, [_item]),
+                        CharacterUtils.updateItems(controller.current, [item]),
                       );
-                      if (!_item.equipped) {
+                      if (!item.equipped) {
                         Get.back();
                       }
                     },
@@ -372,7 +372,7 @@ class HomeCharacterDynamicCards extends GetView<CharacterService> with LibrarySe
   void Function() _delete<T>(BuildContext context, T item, String itemName, void Function() onRemove) {
     return () => deleteDialog.confirm(
           context,
-          DeleteDialogOptions(entityName: itemName, entityKind: S.current.entity(T)),
+          DeleteDialogOptions(entityName: itemName, entityKind: tr.entity(T)),
           () {
             onRemove();
             Get.back();

@@ -9,13 +9,12 @@ import 'package:dungeon_paper/core/utils/builder_utils.dart';
 import 'package:dungeon_paper/core/utils/email_address_validator.dart';
 import 'package:dungeon_paper/core/utils/password_validator.dart';
 import 'package:dungeon_paper/core/utils/string_validator.dart';
-import 'package:dungeon_paper/generated/l10n.dart';
+import 'package:dungeon_paper/i18n.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import '../../../../core/dw_icons.dart';
 import '../../../../core/http/api.dart';
-import '../../../../i18n.dart';
 import '../../../model_utils/user_utils.dart';
 import '../controllers/account_controller.dart';
 

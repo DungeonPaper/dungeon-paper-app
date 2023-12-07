@@ -1,9 +1,9 @@
 import 'package:dungeon_paper/app/widgets/molecules/dialog_controls.dart';
+import 'package:dungeon_paper/i18n.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import '../../../core/utils/dialog_utils.dart';
-import '../../../i18n.dart';
 import '../../model_utils/user_utils.dart';
 
 Future<bool> confirmUnlinkProvider<T>(BuildContext context, ProviderName provider) {
