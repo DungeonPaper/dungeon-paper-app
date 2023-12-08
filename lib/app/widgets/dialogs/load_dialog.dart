@@ -29,7 +29,8 @@ class _LoadDialogState extends State<LoadDialog> {
   void initState() {
     super.initState();
     useDefault = widget.load == null;
-    controller = TextEditingController(text: (widget.load ?? widget.defaultLoad).toString());
+    controller = TextEditingController(
+        text: (widget.load ?? widget.defaultLoad).toString());
     controller.addListener(_listener);
   }
 
@@ -69,7 +70,8 @@ class _LoadDialogState extends State<LoadDialog> {
         ),
       ),
       actions: DialogControls.save(context,
-          onSave: useDefault || controller.text.isNotEmpty ? save : null, onCancel: cancel),
+          onSave: useDefault || controller.text.isNotEmpty ? save : null,
+          onCancel: cancel),
     );
   }
 

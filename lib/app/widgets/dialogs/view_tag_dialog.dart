@@ -86,4 +86,3 @@ class ViewTagDialog extends StatelessWidget {
     );
   }
 }
-

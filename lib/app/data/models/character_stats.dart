@@ -26,7 +26,8 @@ class CharacterStats {
   static int maxExpForLevel(int level) => level + 7;
 
   int get totalMaxXp => totalMaxExpForLevel(level);
-  static int totalMaxExpForLevel(int level) => range(1, level).fold<int>(8, (acc, l) => acc + maxExpForLevel(l + 1));
+  static int totalMaxExpForLevel(int level) =>
+      range(1, level).fold<int>(8, (acc, l) => acc + maxExpForLevel(l + 1));
 
   factory CharacterStats.empty() => CharacterStats(
         level: 1,
@@ -66,7 +67,8 @@ class CharacterStats {
         load: load,
       );
 
-  factory CharacterStats.fromRawJson(String str) => CharacterStats.fromJson(json.decode(str));
+  factory CharacterStats.fromRawJson(String str) =>
+      CharacterStats.fromJson(json.decode(str));
 
   String toRawJson() => json.encode(toJson());
 
@@ -76,7 +78,9 @@ class CharacterStats {
         currentHp: json['currentHP'],
         currentXp: json['currentXP'],
         armor: json['armor'],
-        damageDice: json['damageDice'] != null ? Dice.fromJson(json['damageDice']) : null,
+        damageDice: json['damageDice'] != null
+            ? Dice.fromJson(json['damageDice'])
+            : null,
         load: json['load'],
       );
 
@@ -134,7 +138,8 @@ class CharacterStats {
           load == other.load;
 
   @override
-  int get hashCode => Object.hashAll([level, maxHp, currentHp, currentXp, armor, damageDice, load]);
+  int get hashCode => Object.hashAll(
+      [level, maxHp, currentHp, currentXp, armor, damageDice, load]);
 
   String get debugProperties =>
       'level: $level, maxHp: $maxHp, currentHp: $currentHp, currentXp: $currentXp, armor: $armor, damageDice: $damageDice, load: $load';

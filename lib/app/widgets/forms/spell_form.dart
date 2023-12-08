@@ -194,4 +194,3 @@ class SpellFormArguments extends LibraryEntityFormArguments<Spell> {
     required super.formContext,
   });
 }
-

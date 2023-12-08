@@ -57,22 +57,26 @@ class AboutView extends GetView<AboutController> {
           () => ListTile(
                 leading: const Icon(DwIcons.discord),
                 title: Text(tr.about.discord.title),
-                subtitle: Text(tr.about.discord.subtitle, style: textTheme.bodySmall),
-                onTap: () => launchUrl(Uri.parse('https://bit.ly/DungeonPaper-Discord')),
+                subtitle:
+                    Text(tr.about.discord.subtitle, style: textTheme.bodySmall),
+                onTap: () =>
+                    launchUrl(Uri.parse('https://bit.ly/DungeonPaper-Discord')),
                 isThreeLine: true,
                 visualDensity: VisualDensity.compact,
               ),
           () => ListTile(
                 leading: const Icon(Icons.send),
                 title: Text(tr.about.feedback.title),
-                subtitle: Text(tr.about.feedback.subtitle, style: textTheme.bodySmall),
+                subtitle: Text(tr.about.feedback.subtitle,
+                    style: textTheme.bodySmall),
                 onTap: () => Get.toNamed(Routes.sendFeedback),
                 isThreeLine: true,
                 visualDensity: VisualDensity.compact,
               ),
           () => const Divider(),
           () => Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
                 child: Text(tr.about.socials.title, style: textTheme.bodySmall),
               ),
           () => Padding(

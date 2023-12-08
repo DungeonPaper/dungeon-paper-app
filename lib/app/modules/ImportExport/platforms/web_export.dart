@@ -4,9 +4,10 @@ import 'dart:html' as html;
 
 import 'package:dungeon_paper/app/modules/ImportExport/platforms/abstract_import_export.dart';
 
-void downloadFileFromDataURL(String dataURL, String fileName) => html.AnchorElement(href: dataURL)
-  ..setAttribute('download', fileName)
-  ..click();
+void downloadFileFromDataURL(String dataURL, String fileName) =>
+    html.AnchorElement(href: dataURL)
+      ..setAttribute('download', fileName)
+      ..click();
 
 class Exporter extends AbstractExporter {
   @override

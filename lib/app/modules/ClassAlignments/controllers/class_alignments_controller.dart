@@ -8,7 +8,8 @@ class ClassAlignmentsController extends GetxController {
   final selected = Rx<dw.AlignmentType?>(null);
   bool selectable = false;
   bool editable = false;
-  late final void Function(AlignmentValues alignments, dw.AlignmentType? selected)? onChanged;
+  late final void Function(
+      AlignmentValues alignments, dw.AlignmentType? selected)? onChanged;
   final sortedAlignmentTypes = dw.AlignmentType.values.toList();
   final editing = <dw.AlignmentType, bool>{}.obs;
   final textControllers = <dw.AlignmentType, TextEditingController>{}.obs;
@@ -46,7 +47,8 @@ class ClassAlignmentsController extends GetxController {
   }
 
   bool isEditing(dw.AlignmentType type) => editable && editing[type] == true;
-  bool isSelected(dw.AlignmentType type) => selectable && selected.value == type;
+  bool isSelected(dw.AlignmentType type) =>
+      selectable && selected.value == type;
 
   void save() {
     final updated = alignments.value.copyWithInherited(
@@ -64,7 +66,8 @@ class ClassAlignmentsController extends GetxController {
 
 class ClassAlignmentsArguments {
   final AlignmentValues? alignments;
-  final void Function(AlignmentValues alignments, dw.AlignmentType? selected)? onChanged;
+  final void Function(AlignmentValues alignments, dw.AlignmentType? selected)?
+      onChanged;
   final bool selectable;
   final dw.AlignmentType? preselected;
   final bool editable;

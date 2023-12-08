@@ -3,7 +3,6 @@ import 'package:dungeon_paper/i18n.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-
 class ChipListInput<T> extends StatefulWidget {
   const ChipListInput({
     super.key,
@@ -47,7 +46,8 @@ class _ChipListInputState<T> extends State<ChipListInput<T>> {
 
   @override
   void initState() {
-    controller = (widget.controller ?? ValueNotifier([]))..addListener(_listener);
+    controller = (widget.controller ?? ValueNotifier([]))
+      ..addListener(_listener);
     super.initState();
   }
 
@@ -63,12 +63,16 @@ class _ChipListInputState<T> extends State<ChipListInput<T>> {
 
   @override
   Widget build(BuildContext context) {
-    final isNotAtMax = widget.maxCount == null || controller.value.length < widget.maxCount!;
+    final isNotAtMax =
+        widget.maxCount == null || controller.value.length < widget.maxCount!;
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         DefaultTextStyle(
-          style: Theme.of(context).textTheme.bodySmall!.copyWith(color: widget.labelColor),
+          style: Theme.of(context)
+              .textTheme
+              .bodySmall!
+              .copyWith(color: widget.labelColor),
           child: widget.label ?? Text(tr.entityPlural(T)),
         ),
         const SizedBox(height: 6),
@@ -82,14 +86,17 @@ class _ChipListInputState<T> extends State<ChipListInput<T>> {
               widget.chipBuilder(
                 context,
                 dice,
-                onDeleteChip: () => setState(() => controller.value = [...controller.value..removeAt(dice.index)]),
+                onDeleteChip: () => setState(() => controller.value = [
+                      ...controller.value..removeAt(dice.index)
+                    ]),
                 onTapChip: widget.dialogBuilder != null
                     ? () => Get.dialog(
                           widget.dialogBuilder!(
                             context,
                             dice,
                             onSave: (value) {
-                              setState(() => controller.value = updateByIndex(controller.value, value, dice.index));
+                              setState(() => controller.value = updateByIndex(
+                                  controller.value, value, dice.index));
                             },
                           ),
                         )
@@ -106,11 +113,17 @@ class _ChipListInputState<T> extends State<ChipListInput<T>> {
                             context,
                             null,
                             onSave: (value) {
-                              setState(() => controller.value = [...controller.value, value]);
+                              setState(() => controller.value = [
+                                    ...controller.value,
+                                    value
+                                  ]);
                             },
                           ),
                         )
-                    : () => setState(() => controller.value = [...controller.value, widget.addValue as T]),
+                    : () => setState(() => controller.value = [
+                          ...controller.value,
+                          widget.addValue as T
+                        ]),
               ),
             ...widget.trailing,
           ],
@@ -131,8 +144,7 @@ Widget Function(
     Enumerated<T>? value, {
     void Function()? onDeleteChip,
     required void Function() onTapChip,
-  })
-      chipBuilder,
+  }) chipBuilder,
 ) {
   return (context, value, {onDeleteChip, required onTapChip}) => chipBuilder(
         context,

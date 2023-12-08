@@ -5,7 +5,8 @@ import 'package:get/get.dart';
 
 import 'import_controller.dart';
 
-class ImportExportController extends GetxController with GetSingleTickerProviderStateMixin {
+class ImportExportController extends GetxController
+    with GetSingleTickerProviderStateMixin {
   late final Rx<TabController> tab;
 
   @override

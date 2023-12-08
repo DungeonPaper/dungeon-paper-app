@@ -91,7 +91,8 @@ class AbilityScoreFormView extends GetView<AbilityScoreFormController> {
             Obx(
               () => Align(
                 alignment: Alignment.centerLeft,
-                child: Icon(controller.icon ?? AbilityScore.iconFor(controller.key.text)),
+                child: Icon(controller.icon ??
+                    AbilityScore.iconFor(controller.key.text)),
               ),
             ),
             separator,

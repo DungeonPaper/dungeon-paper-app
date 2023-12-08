@@ -13,7 +13,8 @@ import 'package:get/get.dart';
 
 import 'filters/note_filters.dart';
 
-class NotesLibraryListView extends GetView<LibraryListController<Note, NoteFilters>> {
+class NotesLibraryListView
+    extends GetView<LibraryListController<Note, NoteFilters>> {
   const NotesLibraryListView({
     Key? key,
   }) : super(key: key);
@@ -41,7 +42,8 @@ class NotesLibraryListView extends GetView<LibraryListController<Note, NoteFilte
                       onSave: data.onUpdate!,
                     )
                 : null,
-            onDelete: data.onDelete != null ? () => data.onDelete!(data.item) : null,
+            onDelete:
+                data.onDelete != null ? () => data.onDelete!(data.item) : null,
           ),
           if (data.selectable)
             ElevatedButton.icon(

@@ -43,4 +43,3 @@ class RoundRollButton extends StatelessWidget {
       d.modifierStat != null &&
       abilityScores!.getStat(d.modifierStat!).isDebilitated;
 }
-

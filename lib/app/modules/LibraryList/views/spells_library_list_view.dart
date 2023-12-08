@@ -13,7 +13,8 @@ import 'package:dungeon_world_data/dungeon_world_data.dart' as dw;
 
 import 'filters/spell_filters.dart';
 
-class SpellsLibraryListView extends GetView<LibraryListController<Spell, SpellFilters>> {
+class SpellsLibraryListView
+    extends GetView<LibraryListController<Spell, SpellFilters>> {
   const SpellsLibraryListView({
     Key? key,
   }) : super(key: key);
@@ -44,7 +45,8 @@ class SpellsLibraryListView extends GetView<LibraryListController<Spell, SpellFi
                       onSave: data.onUpdate!,
                     )
                 : null,
-            onDelete: data.onDelete != null ? () => data.onDelete!(data.item) : null,
+            onDelete:
+                data.onDelete != null ? () => data.onDelete!(data.item) : null,
           ),
           if (data.selectable)
             ElevatedButton.icon(
@@ -59,7 +61,8 @@ class SpellsLibraryListView extends GetView<LibraryListController<Spell, SpellFi
   }
 }
 
-class SpellLibraryListArguments extends LibraryListArguments<Spell, SpellFilters> {
+class SpellLibraryListArguments
+    extends LibraryListArguments<Spell, SpellFilters> {
   SpellLibraryListArguments({
     required Character? character,
     required super.onSelected,

@@ -43,7 +43,9 @@ class AdvancedFloatingActionButton extends StatelessWidget {
         assert(clipBehavior != null),
         assert(isExtended != null),
         assert(autofocus != null),
-        _floatingActionButtonType = mini ? _FloatingActionButtonType.small : _FloatingActionButtonType.regular,
+        _floatingActionButtonType = mini
+            ? _FloatingActionButtonType.small
+            : _FloatingActionButtonType.regular,
         _extendedLabel = null,
         extendedIconLabelSpacing = null,
         extendedPadding = null,
@@ -423,7 +425,8 @@ class AdvancedFloatingActionButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final _fgColor = foregroundColor ?? (backgroundColor == DwColors.success ? Colors.white : null);
+    final _fgColor = foregroundColor ??
+        (backgroundColor == DwColors.success ? Colors.white : null);
     final _bgColor = onPressed == null
         ? Theme.of(context).disabledColor.withOpacity(0.3)
         // ? Theme.of(context).brightness == Brightness.light

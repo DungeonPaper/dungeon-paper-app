@@ -74,7 +74,8 @@ class CharacterClassForm extends GetView<CharacterClassFormController> {
   }
 }
 
-class CharacterClassFormController extends LibraryEntityFormController<CharacterClass, CharacterClassFormArguments> {
+class CharacterClassFormController extends LibraryEntityFormController<
+    CharacterClass, CharacterClassFormArguments> {
   final _name = TextEditingController().obs;
   final _description = TextEditingController().obs;
   final _damageDice = ValueNotifier<List<dw.Dice>>([dw.Dice.d4]).obs;
@@ -123,7 +124,8 @@ class CharacterClassFormController extends LibraryEntityFormController<Character
       );
 }
 
-class CharacterClassFormArguments extends LibraryEntityFormArguments<CharacterClass> {
+class CharacterClassFormArguments
+    extends LibraryEntityFormArguments<CharacterClass> {
   CharacterClassFormArguments({
     required super.entity,
     required super.onSave,

@@ -17,7 +17,8 @@ import 'local_widgets/home_character_dynamic_cards.dart';
 import 'local_widgets/home_character_header_view.dart';
 import 'local_widgets/home_character_hp_xp_view.dart';
 
-class HomeCharacterView extends GetView<CharacterService> with HomeCharacterPaddingMixin {
+class HomeCharacterView extends GetView<CharacterService>
+    with HomeCharacterPaddingMixin {
   const HomeCharacterView({super.key});
 
   @override
@@ -120,7 +121,8 @@ class HomeCharacterView extends GetView<CharacterService> with HomeCharacterPadd
               children: [
                 Expanded(
                   child: ElevatedButton.icon(
-                    onPressed: () => DiceUtils.openRollDialog(char.rollButtons[0].diceFor(char)),
+                    onPressed: () => DiceUtils.openRollDialog(
+                        char.rollButtons[0].diceFor(char)),
                     style: ButtonThemes.primaryElevated(context),
                     label: Text(char.rollButtons[0].label),
                     icon: const Icon(DwIcons.dice_d6),
@@ -129,7 +131,8 @@ class HomeCharacterView extends GetView<CharacterService> with HomeCharacterPadd
                 const SizedBox(width: 16),
                 Expanded(
                   child: ElevatedButton.icon(
-                    onPressed: () => DiceUtils.openRollDialog(char.rollButtons[1].diceFor(char)),
+                    onPressed: () => DiceUtils.openRollDialog(
+                        char.rollButtons[1].diceFor(char)),
                     style: ButtonThemes.primaryElevated(context),
                     label: Text(char.rollButtons[1].label),
                     icon: const Icon(DwIcons.dice_d6),
@@ -144,7 +147,8 @@ class HomeCharacterView extends GetView<CharacterService> with HomeCharacterPadd
   }
 }
 
-class HomeCharacterLayout extends StatelessWidget with HomeCharacterPaddingMixin {
+class HomeCharacterLayout extends StatelessWidget
+    with HomeCharacterPaddingMixin {
   const HomeCharacterLayout({
     super.key,
     required this.leftCol,
@@ -194,7 +198,10 @@ class HomeCharacterLayout extends StatelessWidget with HomeCharacterPaddingMixin
 
         if (!scrollable) {
           return Column(
-            children: [for (final i in range(builder.itemCount)) builder.itemBuilder(context, i)],
+            children: [
+              for (final i in range(builder.itemCount))
+                builder.itemBuilder(context, i)
+            ],
           );
         }
 

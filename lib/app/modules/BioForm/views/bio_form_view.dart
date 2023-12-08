@@ -9,7 +9,8 @@ import 'package:dungeon_paper/i18n.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-class BioFormView extends GetView<BioFormController> with CharacterServiceMixin {
+class BioFormView extends GetView<BioFormController>
+    with CharacterServiceMixin {
   const BioFormView({super.key});
 
   @override

@@ -8,7 +8,8 @@ import 'api_requests/migration.dart';
 part 'requests.dart';
 
 class Api {
-  static const baseUrl = 'https://us-central1-dw-sheet.cloudfunctions.net/main/api';
+  static const baseUrl =
+      'https://us-central1-dw-sheet.cloudfunctions.net/main/api';
   final requests = Requests();
 
   Future<Response> get(
@@ -27,7 +28,8 @@ class Api {
     Object? body,
     Encoding? encoding,
   }) async {
-    final resp = await http.post(Uri.parse(baseUrl + url), headers: headers, body: body, encoding: encoding);
+    final resp = await http.post(Uri.parse(baseUrl + url),
+        headers: headers, body: body, encoding: encoding);
     return Response.fromHttp(resp);
   }
 }

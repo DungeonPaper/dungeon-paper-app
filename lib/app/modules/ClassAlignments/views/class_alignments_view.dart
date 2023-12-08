@@ -26,13 +26,15 @@ class ClassAlignmentsView extends GetView<ClassAlignmentsController> {
             )
           : null,
       body: ListView(
-        padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 0).copyWith(bottom: 80),
+        padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 0)
+            .copyWith(bottom: 80),
         children: [
           for (final alignment in controller.sortedAlignmentTypes)
             Padding(
               padding: const EdgeInsets.only(bottom: 8),
               child: Obx(() {
-                final description = controller.alignments.value.byType(alignment);
+                final description =
+                    controller.alignments.value.byType(alignment);
                 final isEditing = controller.isEditing(alignment);
                 final isSelected = controller.isSelected(alignment);
 
@@ -54,25 +56,37 @@ class ClassAlignmentsView extends GetView<ClassAlignmentsController> {
                                     if (controller.editable)
                                       IconButton(
                                         icon: const Icon(Icons.edit),
-                                        onPressed: () => controller.toggleEdit(alignment, true),
+                                        onPressed: () => controller.toggleEdit(
+                                            alignment, true),
                                         iconSize: 16,
                                       ),
                                     if (controller.selectable)
                                       ElevatedButton.icon(
                                         icon: const Icon(Icons.check),
-                                        label: Text(!isSelected ? tr.generic.select : tr.generic.selected),
-                                        onPressed: !isSelected ? () => controller.select(alignment) : null,
+                                        label: Text(!isSelected
+                                            ? tr.generic.select
+                                            : tr.generic.selected),
+                                        onPressed: !isSelected
+                                            ? () => controller.select(alignment)
+                                            : null,
                                       ),
                                   ]
-                                : DialogControls.done(context, () => controller.toggleEdit(alignment, false)),
+                                : DialogControls.done(
+                                    context,
+                                    () => controller.toggleEdit(
+                                        alignment, false)),
                           ),
                         ),
                         Padding(
-                          padding: const EdgeInsets.all(8).copyWith(left: 56, top: 0),
+                          padding: const EdgeInsets.all(8)
+                              .copyWith(left: 56, top: 0),
                           child: !isEditing
-                              ? Text(description.isEmpty ? tr.generic.noDescription : description)
+                              ? Text(description.isEmpty
+                                  ? tr.generic.noDescription
+                                  : description)
                               : TextField(
-                                  controller: controller.textControllers[alignment]!,
+                                  controller:
+                                      controller.textControllers[alignment]!,
                                 ),
                         )
                       ],

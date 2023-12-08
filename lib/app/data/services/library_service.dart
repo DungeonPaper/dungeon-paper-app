@@ -66,7 +66,8 @@ class LibraryService extends GetxService {
     );
   }
 
-  void removeFromCharacter<T extends WithMeta>(Iterable<T> items, [Character? char]) async {
+  void removeFromCharacter<T extends WithMeta>(Iterable<T> items,
+      [Character? char]) async {
     chars.updateCharacter(
       CharacterUtils.removeByType<T>(char ?? chars.current, items),
     );

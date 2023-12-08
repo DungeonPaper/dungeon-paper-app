@@ -53,7 +53,8 @@ class DebugMenu extends StatelessWidget {
 
   void _toggleTheme() {
     var theme = DynamicTheme.of(Get.context!)!;
-    theme.setTheme(theme.themeId == AppThemes.dark ? AppThemes.parchment : AppThemes.dark);
+    theme.setTheme(
+        theme.themeId == AppThemes.dark ? AppThemes.parchment : AppThemes.dark);
   }
 
   void _clearChars() async {

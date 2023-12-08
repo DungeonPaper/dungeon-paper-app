@@ -27,13 +27,14 @@ class SelectMovesSpellsController extends GetxController {
     onChanged = args.onChanged;
   }
 
-  Iterable<Move> get sortedMoves => [...moves]..sort((a, b) => a.category == b.category
-      ? cleanStr(a.name).compareTo(cleanStr(b.name))
-      : a.category == MoveCategory.basic
-          ? -1
-          : b.category == MoveCategory.basic
-              ? 1
-              : 0);
+  Iterable<Move> get sortedMoves =>
+      [...moves]..sort((a, b) => a.category == b.category
+          ? cleanStr(a.name).compareTo(cleanStr(b.name))
+          : a.category == MoveCategory.basic
+              ? -1
+              : b.category == MoveCategory.basic
+                  ? 1
+                  : 0);
 }
 
 class SelectMovesSpellsArguments {

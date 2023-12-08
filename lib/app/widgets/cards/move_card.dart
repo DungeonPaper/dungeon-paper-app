@@ -55,12 +55,15 @@ class MoveCard extends StatelessWidget {
       icon: showIcon ? Icon(move.icon, size: 16) : null,
       starred: move.favorite,
       showStar: showStar,
-      onStarChanged: (favorite) => onSave?.call(move.copyWithInherited(favorite: favorite)),
+      onStarChanged: (favorite) =>
+          onSave?.call(move.copyWithInherited(favorite: favorite)),
       initiallyExpanded: initiallyExpanded,
       actions: actions,
       highlightWords: highlightWords,
       leading: [
-        MoveCategoryChip(category: move.category, advancedLevelDisplay: advancedLevelDisplay),
+        MoveCategoryChip(
+            category: move.category,
+            advancedLevelDisplay: advancedLevelDisplay),
       ],
       abilityScores: abilityScores,
     );

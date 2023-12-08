@@ -45,4 +45,3 @@ class SendFeedbackController extends GetxController with UserServiceMixin {
     super.onClose();
   }
 }
-

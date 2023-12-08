@@ -6,7 +6,8 @@ import 'package:dungeon_paper/i18n.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-class CharacterDebilitiesDialog extends GetView<CharacterService> with CharacterServiceMixin {
+class CharacterDebilitiesDialog extends GetView<CharacterService>
+    with CharacterServiceMixin {
   const CharacterDebilitiesDialog({super.key});
 
   List<SessionMark> get bonds => char.bonds;
@@ -39,7 +40,8 @@ class CharacterDebilitiesDialog extends GetView<CharacterService> with Character
                   for (final ability in char.abilityScores.stats)
                     ListTile(
                       contentPadding: const EdgeInsets.all(0),
-                      title: Text(tr.debilities.label(ability.debilityName, ability.key)),
+                      title: Text(tr.debilities
+                          .label(ability.debilityName, ability.key)),
                       subtitle: Text(ability.debilityDescription),
                       dense: true,
                       leading: Icon(ability.icon, size: 20),
@@ -47,7 +49,9 @@ class CharacterDebilitiesDialog extends GetView<CharacterService> with Character
                         char.copyWith(
                           abilityScores: char.abilityScores.copyWith(
                             stats: char.abilityScores.stats.map(
-                              (e) => e.key == ability.key ? e.copyWith(isDebilitated: !e.isDebilitated) : e,
+                              (e) => e.key == ability.key
+                                  ? e.copyWith(isDebilitated: !e.isDebilitated)
+                                  : e,
                             ),
                           ),
                         ),
@@ -57,8 +61,10 @@ class CharacterDebilitiesDialog extends GetView<CharacterService> with Character
                         onChanged: (checked) => charService.updateCharacter(
                           char.copyWith(
                             abilityScores: char.abilityScores.copyWith(
-                              stats: char.abilityScores.stats
-                                  .map((e) => e.key == ability.key ? e.copyWith(isDebilitated: checked) : e),
+                              stats: char.abilityScores.stats.map((e) =>
+                                  e.key == ability.key
+                                      ? e.copyWith(isDebilitated: checked)
+                                      : e),
                             ),
                           ),
                         ),

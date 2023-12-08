@@ -20,7 +20,10 @@ import 'package:dungeon_paper/app/modules/ImportExport/platforms/abstract_import
     if (dart.library.html) 'package:dungeon_paper/app/modules/ImportExport/platforms/web_export.dart';
 
 class ExportController extends GetxController
-    with GetSingleTickerProviderStateMixin, CharacterServiceMixin, RepositoryServiceMixin
+    with
+        GetSingleTickerProviderStateMixin,
+        CharacterServiceMixin,
+        RepositoryServiceMixin
     implements ImportExportSelectionData {
   final toExport = ExportSelections().obs;
 
@@ -43,30 +46,38 @@ class ExportController extends GetxController
   }
 
   @override
-  void toggle<T extends WithMeta>(T item, bool state) => _toggleExportList<T>([item], state);
+  void toggle<T extends WithMeta>(T item, bool state) =>
+      _toggleExportList<T>([item], state);
 
   @override
-  void toggleAll<T extends WithMeta>(bool state) => _toggleExportList<T>(listByType<T>(), state);
+  void toggleAll<T extends WithMeta>(bool state) =>
+      _toggleExportList<T>(listByType<T>(), state);
 
   void _toggleExportList<T>(List<T> items, bool state) {
     switch (T) {
       case Character:
-        toExport.value.characters = _toggleInList(toExport.value.characters, items.cast<Character>(), state);
+        toExport.value.characters = _toggleInList(
+            toExport.value.characters, items.cast<Character>(), state);
         break;
       case Move:
-        toExport.value.moves = _toggleInList(toExport.value.moves, items.cast<Move>(), state);
+        toExport.value.moves =
+            _toggleInList(toExport.value.moves, items.cast<Move>(), state);
         break;
       case Spell:
-        toExport.value.spells = _toggleInList(toExport.value.spells, items.cast<Spell>(), state);
+        toExport.value.spells =
+            _toggleInList(toExport.value.spells, items.cast<Spell>(), state);
         break;
       case Item:
-        toExport.value.items = _toggleInList(toExport.value.items, items.cast<Item>(), state);
+        toExport.value.items =
+            _toggleInList(toExport.value.items, items.cast<Item>(), state);
         break;
       case CharacterClass:
-        toExport.value.classes = _toggleInList(toExport.value.classes, items.cast<CharacterClass>(), state);
+        toExport.value.classes = _toggleInList(
+            toExport.value.classes, items.cast<CharacterClass>(), state);
         break;
       case Race:
-        toExport.value.races = _toggleInList(toExport.value.races, items.cast<Race>(), state);
+        toExport.value.races =
+            _toggleInList(toExport.value.races, items.cast<Race>(), state);
         break;
     }
     toExport.refresh();

@@ -57,7 +57,9 @@ class ArgOptions {
       bump: bump,
       install: res['install'],
       platform: Device.values.firstWhere(
-        (device) => enumName(device).toLowerCase() == res['platform'].toString().toLowerCase(),
+        (device) =>
+            enumName(device).toLowerCase() ==
+            res['platform'].toString().toLowerCase(),
         orElse: () => Device.android,
       ),
       outputFilePrefix: getAppName(),
@@ -78,9 +80,11 @@ class ArgOptions {
   Version version;
   Device platform = Device.android;
 
-  String get deviceFilePath => '/sdcard/Download/$outputFilePrefix-$version.apk';
+  String get deviceFilePath =>
+      '/sdcard/Download/$outputFilePrefix-$version.apk';
 
-  String get localOutputPath => 'build/app/outputs/apk/release/app-arm64-v8a-release.apk';
+  String get localOutputPath =>
+      'build/app/outputs/apk/release/app-arm64-v8a-release.apk';
 
   List<String> get deviceArgs => device != null ? ['-s', device!] : [];
 

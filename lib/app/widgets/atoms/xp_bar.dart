@@ -64,4 +64,3 @@ class ExpBar extends StatelessWidget with CharacterServiceMixin {
     );
   }
 }
-

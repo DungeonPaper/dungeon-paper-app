@@ -68,7 +68,8 @@ class ItemCard extends StatelessWidget {
       icon: showIcon ? Icon(item.icon, size: 16) : null,
       starred: item.equipped,
       showStar: showStar,
-      onStarChanged: (equipped) => onSave?.call(item.copyWithInherited(equipped: equipped)),
+      onStarChanged: (equipped) =>
+          onSave?.call(item.copyWithInherited(equipped: equipped)),
       actions: actions,
       expansionKey: expansionKey ?? PageStorageKey(item.key),
       highlightWords: highlightWords,

@@ -217,4 +217,3 @@ class MoveFormArguments extends LibraryEntityFormArguments<Move> {
     required super.formContext,
   });
 }
-

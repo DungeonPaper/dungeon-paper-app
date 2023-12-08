@@ -27,7 +27,8 @@ class SearchField extends StatelessWidget {
 
     return Material(
       elevation: elevation ?? 5,
-      color: Color.alphaBlend(_getFillColor(theme), theme.scaffoldBackgroundColor),
+      color:
+          Color.alphaBlend(_getFillColor(theme), theme.scaffoldBackgroundColor),
       shape: const StadiumBorder(),
       shadowColor: Colors.black87,
       child: Padding(

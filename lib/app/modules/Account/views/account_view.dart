@@ -436,4 +436,3 @@ class _PasswordFieldDialogState extends State<PasswordFieldDialog> {
     return PasswordValidator().validator(value);
   }
 }
-

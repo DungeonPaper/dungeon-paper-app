@@ -150,4 +150,3 @@ class _FiltersPopover<F extends EntityFilters> extends StatelessWidget {
     );
   }
 }
-

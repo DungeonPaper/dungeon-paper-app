@@ -110,4 +110,3 @@ class SelectCharacterThemeView extends GetView<SelectCharacterThemeController> {
     );
   }
 }
-

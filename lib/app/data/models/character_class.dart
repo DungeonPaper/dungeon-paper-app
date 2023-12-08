@@ -10,7 +10,9 @@ import 'gear_choice.dart';
 import 'meta.dart';
 import 'package:dungeon_world_data/dungeon_world_data.dart' as dw;
 
-class CharacterClass extends dw.CharacterClass with WithIcon implements WithMeta {
+class CharacterClass extends dw.CharacterClass
+    with WithIcon
+    implements WithMeta {
   get isApp => true;
 
   CharacterClass({
@@ -86,7 +88,8 @@ class CharacterClass extends dw.CharacterClass with WithIcon implements WithMeta
         isSpellcaster: isSpellcaster ?? this.isSpellcaster,
       );
 
-  factory CharacterClass.fromRawJson(String str) => CharacterClass.fromJson(json.decode(str));
+  factory CharacterClass.fromRawJson(String str) =>
+      CharacterClass.fromJson(json.decode(str));
 
   factory CharacterClass.empty() => CharacterClass(
         meta: Meta.empty(),
@@ -103,7 +106,8 @@ class CharacterClass extends dw.CharacterClass with WithIcon implements WithMeta
         isSpellcaster: false,
       );
 
-  factory CharacterClass.fromDwCharacterClass(dw.CharacterClass cls) => CharacterClass(
+  factory CharacterClass.fromDwCharacterClass(dw.CharacterClass cls) =>
+      CharacterClass(
         meta: Meta.tryParse(cls.meta),
         name: cls.name,
         key: cls.key,
@@ -114,7 +118,8 @@ class CharacterClass extends dw.CharacterClass with WithIcon implements WithMeta
         alignments: AlignmentValues.fromDwAlignmentValues(cls.alignments),
         bonds: cls.bonds,
         flags: cls.flags,
-        gearChoices: cls.gearChoices.map((c) => GearChoice.fromDwGearChoice(c)).toList(),
+        gearChoices:
+            cls.gearChoices.map((c) => GearChoice.fromDwGearChoice(c)).toList(),
         isSpellcaster: cls.isSpellcaster,
       );
 
@@ -131,7 +136,8 @@ class CharacterClass extends dw.CharacterClass with WithIcon implements WithMeta
   IconData get icon => genericIcon;
   static IconData get genericIcon => Icons.person_outline;
 
-  static int Function(CharacterClass a, CharacterClass b) sorter(CharacterClassFilters filters) =>
+  static int Function(CharacterClass a, CharacterClass b) sorter(
+          CharacterClassFilters filters) =>
       (a, b) => a.name.toLowerCase().compareTo(b.name.toLowerCase());
 
   @override
@@ -159,8 +165,19 @@ class CharacterClass extends dw.CharacterClass with WithIcon implements WithMeta
           isSpellcaster == other.isSpellcaster;
 
   @override
-  int get hashCode =>
-      Object.hashAll([meta, name, key, description, damageDice, load, hp, alignments, bonds, flags, gearChoices]);
+  int get hashCode => Object.hashAll([
+        meta,
+        name,
+        key,
+        description,
+        damageDice,
+        load,
+        hp,
+        alignments,
+        bonds,
+        flags,
+        gearChoices
+      ]);
 
   @override
   String get debugProperties =>

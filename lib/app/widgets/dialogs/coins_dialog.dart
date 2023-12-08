@@ -44,7 +44,8 @@ class _CoinsDialogState extends State<CoinsDialog> {
           children: [
             NumberTextField(
               controller: controller,
-              decoration: InputDecoration(hintText: '0', label: Text(tr.character.data.coins)),
+              decoration: InputDecoration(
+                  hintText: '0', label: Text(tr.character.data.coins)),
               numberType: NumberType.double,
               minValue: 0.0,
             )

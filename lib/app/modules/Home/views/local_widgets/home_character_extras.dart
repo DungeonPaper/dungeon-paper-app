@@ -75,7 +75,8 @@ class HomeCharacterExtras extends GetView<CharacterService> {
         Obx(
           () => IconButton(
             onPressed: _openBondsFlags,
-            icon: Transform.scale(scaleX: -1, child: const Icon(Icons.handshake)),
+            icon:
+                Transform.scale(scaleX: -1, child: const Icon(Icons.handshake)),
             tooltip: SessionMark.categoryTitle(
               bonds: controller.maybeCurrent?.bonds ?? [],
               flags: controller.maybeCurrent?.flags ?? [],
@@ -100,8 +101,8 @@ class HomeCharacterExtras extends GetView<CharacterService> {
         Routes.abilityScores,
         arguments: AbilityScoresFormArguments(
           abilityScores: controller.current.abilityScores,
-          onChanged: (abilityScores) =>
-              controller.updateCharacter(controller.current.copyWith(abilityScores: abilityScores)),
+          onChanged: (abilityScores) => controller.updateCharacter(
+              controller.current.copyWith(abilityScores: abilityScores)),
         ),
         preventDuplicates: false,
       );
@@ -129,7 +130,8 @@ class HomeCharacterExtras extends GetView<CharacterService> {
       preSelection: controller.current.race,
       onSelected: (race) => controller.updateCharacter(
         controller.current.copyWithInherited(
-          race: race.copyWithInherited(favorite: controller.current.race.favorite),
+          race: race.copyWithInherited(
+              favorite: controller.current.race.favorite),
         ),
       ),
     );
@@ -161,7 +163,8 @@ class HomeCharacterExtras extends GetView<CharacterService> {
         character: controller.current,
         onChanged: (rollButtons) => controller.updateCharacter(
           controller.current.copyWith(
-            settings: controller.current.settings.copyWith(rollButtons: rollButtons),
+            settings:
+                controller.current.settings.copyWith(rollButtons: rollButtons),
           ),
         ),
       ),

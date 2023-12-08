@@ -3,7 +3,8 @@ import 'enums.dart';
 int Function(T1? date1, T1? date2) Function({
   SortOrder order,
   T2? Function(T1? object)? parse,
-}) createSorter<T1 extends Comparable, T2 extends Comparable>([T2 Function(T2? object)? postParse]) {
+}) createSorter<T1 extends Comparable, T2 extends Comparable>(
+    [T2 Function(T2? object)? postParse]) {
   T2 _postParse(T2? x) => postParse != null ? postParse(x) : x as T2;
 
   return ({order = SortOrder.asc, parse}) {

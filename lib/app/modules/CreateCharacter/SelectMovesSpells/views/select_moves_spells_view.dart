@@ -182,4 +182,3 @@ class SelectMovesSpellsView extends GetView<SelectMovesSpellsController> {
     Get.back();
   }
 }
-

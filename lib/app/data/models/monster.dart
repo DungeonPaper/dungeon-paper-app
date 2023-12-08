@@ -48,7 +48,8 @@ class Monster extends dw.Monster implements WithMeta {
       );
 
   factory Monster.fromRawJson(String str) => Monster.fromJson(json.decode(str));
-  factory Monster.fromDwMonster(dw.Monster monster) => Monster.fromJson(monster.toJson());
+  factory Monster.fromDwMonster(dw.Monster monster) =>
+      Monster.fromJson(monster.toJson());
 
   factory Monster.fromJson(Map<String, dynamic> json) => Monster(
         meta: Meta.tryParse(json['_meta']),
@@ -80,7 +81,8 @@ class Monster extends dw.Monster implements WithMeta {
           moves == other.moves;
 
   @override
-  int get hashCode => Object.hashAll([meta, key, name, description, instinct, tags, moves]);
+  int get hashCode =>
+      Object.hashAll([meta, key, name, description, instinct, tags, moves]);
 
   @override
   String get debugProperties =>

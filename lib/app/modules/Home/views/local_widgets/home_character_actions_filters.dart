@@ -27,7 +27,9 @@ class HomeCharacterActionsFilters extends StatelessWidget {
               checked: !hidden.contains(type),
               onChanged: (show) {
                 onUpdateHidden(
-                  !show! ? {...hidden, type} : {...hidden.where((element) => element != type)},
+                  !show!
+                      ? {...hidden, type}
+                      : {...hidden.where((element) => element != type)},
                 );
               },
               label: Expanded(child: Text(tr.entityPlural(type))),

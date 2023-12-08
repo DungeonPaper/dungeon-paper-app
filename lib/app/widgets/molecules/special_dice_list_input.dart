@@ -48,4 +48,3 @@ class _SpecialDiceListInputState extends State<SpecialDiceListInput> {
     );
   }
 }
-

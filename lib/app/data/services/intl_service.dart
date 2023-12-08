@@ -30,4 +30,3 @@ class IntlService extends GetxService {
     return _m[locale]!;
   }
 }
-

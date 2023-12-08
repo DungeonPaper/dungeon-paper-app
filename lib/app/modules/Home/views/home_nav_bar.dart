@@ -34,7 +34,9 @@ class _CharacterHomeNavBarState extends State<HomeNavBar> {
 
   @override
   Widget build(BuildContext context) {
-    final currentIndex = widget.pageController.positions.length == 1 ? widget.pageController.page?.round() ?? 1 : 1;
+    final currentIndex = widget.pageController.positions.length == 1
+        ? widget.pageController.page?.round() ?? 1
+        : 1;
 
     final items = <String, Icon>{
       tr.nav.actions: const Icon(DwIcons.hand_rock),

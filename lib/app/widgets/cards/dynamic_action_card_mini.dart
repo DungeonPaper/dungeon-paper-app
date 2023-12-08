@@ -23,7 +23,7 @@ class DynamicActionCardMini extends StatelessWidget {
     required this.onStarChanged,
     this.onTap,
     this.abilityScores,
-  })  : assert(dice.length == 0 || abilityScores != null);
+  }) : assert(dice.length == 0 || abilityScores != null);
 
   final String title;
   final Widget? icon;
@@ -106,7 +106,9 @@ class DynamicActionCardMini extends StatelessWidget {
                           padding: EdgeInsets.zero,
                           iconSize: 16,
                           icon: Icon(
-                            starred ? Icons.star_rounded : Icons.star_border_rounded,
+                            starred
+                                ? Icons.star_rounded
+                                : Icons.star_border_rounded,
                             color: colorScheme.onSurface.withOpacity(0.3),
                           ),
                           onPressed: () => onStarChanged(!starred),
@@ -124,11 +126,14 @@ class DynamicActionCardMini extends StatelessWidget {
                 // clipper: RectClipper(constraints.maxWidth, constraints.maxHeight),
                 child: Markdown(
                   padding: EdgeInsets.zero,
-                  data: description.isNotEmpty ? description : tr.generic.noDescription,
+                  data: description.isNotEmpty
+                      ? description
+                      : tr.generic.noDescription,
                   // fitContent: true,
                   // shrinkWrap: true,
                   // fitContent: true,
-                  styleSheet: MarkdownStyles.of(context).copyWith(textScaleFactor: 0.9),
+                  styleSheet:
+                      MarkdownStyles.of(context).copyWith(textScaleFactor: 0.9),
                   physics: const NeverScrollableScrollPhysics(),
                   onTapLink: (text, href, title) => launchUrl(Uri.parse(href!)),
                 ),
@@ -182,5 +187,6 @@ class RectClipper extends CustomClipper<Rect> {
 
   @override
   bool shouldReclip(covariant RectClipper oldClipper) =>
-      oldClipper.size.width != size.width || oldClipper.size.height != size.height;
+      oldClipper.size.width != size.width ||
+      oldClipper.size.height != size.height;
 }

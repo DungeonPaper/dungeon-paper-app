@@ -24,7 +24,8 @@ class CharacterBioDialog extends GetView with CharacterServiceMixin {
           Expanded(child: Text(tr.bio.dialog.title)),
           IconButton(
             onPressed: () {
-              Get.toNamed(Routes.bio, arguments: BioFormArguments(character: character));
+              Get.toNamed(Routes.bio,
+                  arguments: BioFormArguments(character: character));
             },
             icon: const Icon(Icons.edit, size: 20),
           )
@@ -41,7 +42,8 @@ class CharacterBioDialog extends GetView with CharacterServiceMixin {
               crossAxisAlignment: CrossAxisAlignment.start,
               // shrinkWrap: true,
               children: [
-                Text(tr.bio.dialog.description.label, style: textTheme.bodySmall),
+                Text(tr.bio.dialog.description.label,
+                    style: textTheme.bodySmall),
                 char.bio.description.isNotEmpty
                     ? MarkdownBody(
                         data: char.bio.description,
@@ -81,7 +83,8 @@ class CharacterBioDialog extends GetView with CharacterServiceMixin {
                     ),
                     const SizedBox(width: 4),
                     IconTheme.merge(
-                      data: IconThemeData(size: 14, color: textTheme.bodySmall!.color!),
+                      data: IconThemeData(
+                          size: 14, color: textTheme.bodySmall!.color!),
                       child: Icon(char.bio.alignment.icon),
                     ),
                     const SizedBox(width: 4),

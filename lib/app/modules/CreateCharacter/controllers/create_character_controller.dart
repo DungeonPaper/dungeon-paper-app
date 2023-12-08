@@ -22,7 +22,9 @@ class CreateCharacterController extends GetxController {
   final name = ''.obs;
   final avatarUrl = ''.obs;
   final characterClass = Rx<CharacterClass?>(null);
-  final abilityScores = AbilityScores.dungeonWorld(dex: 10, str: 10, wis: 10, con: 10, intl: 10, cha: 10).obs;
+  final abilityScores = AbilityScores.dungeonWorld(
+          dex: 10, str: 10, wis: 10, con: 10, intl: 10, cha: 10)
+      .obs;
   final startingGear = <GearSelection>[].obs;
   final moves = <Move>[].obs;
   final spells = <Spell>[].obs;
@@ -41,7 +43,8 @@ class CreateCharacterController extends GetxController {
         race.value != null,
       ].every((element) => element == true);
 
-  List<Item> get items => GearChoice.selectionToItems(startingGear, equipped: true);
+  List<Item> get items =>
+      GearChoice.selectionToItems(startingGear, equipped: true);
 
   double get coins => GearChoice.selectionToCoins(startingGear);
 
@@ -54,7 +57,8 @@ class CreateCharacterController extends GetxController {
   void setClass(CharacterClass cls) {
     characterClass.value = cls;
     setStartingGear(
-      cls.gearChoices.fold([], (all, cur) => [...all, ...cur.preselectedGearSelections]),
+      cls.gearChoices
+          .fold([], (all, cur) => [...all, ...cur.preselectedGearSelections]),
     );
     addStartingMoves();
     setDirty();
@@ -95,7 +99,9 @@ class CreateCharacterController extends GetxController {
     moves.clear();
     moves.addAll(
       [...repo.builtIn.moves.values, ...repo.my.moves.values]
-          .where((m) => (m.classKeys.contains(characterClass.value!.reference) && m.category == MoveCategory.starting))
+          .where((m) =>
+              (m.classKeys.contains(characterClass.value!.reference) &&
+                  m.category == MoveCategory.starting))
           .map(
             // favorite: move.category != MoveCategory.basic
             (move) => Move.fromDwMove(move, favorite: true),
@@ -121,7 +127,8 @@ class CreateCharacterController extends GetxController {
         ),
         sessionMarks: [
           ...(characterClass.value?.bonds
-                  .map((bond) => SessionMark.bond(description: bond, completed: false, key: uuid()))
+                  .map((bond) => SessionMark.bond(
+                      description: bond, completed: false, key: uuid()))
                   .toList() ??
               []),
           ...Character.defaultEndOfSessionMarks,

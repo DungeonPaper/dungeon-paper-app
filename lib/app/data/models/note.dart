@@ -142,4 +142,3 @@ class Note with WithIcon implements WithMeta {
   @override
   dw.EntityReference get reference => Meta.referenceFor(this);
 }
-

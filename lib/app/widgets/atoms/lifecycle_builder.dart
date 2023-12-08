@@ -23,7 +23,8 @@ class LifecycleView extends StatefulWidget {
   })  : child = null,
         super(key: key);
 
-  static Widget Function(BuildContext context) childBuilder(Widget child) => (_) => child;
+  static Widget Function(BuildContext context) childBuilder(Widget child) =>
+      (_) => child;
 
   @override
   _LifecycleBuilderState createState() => _LifecycleBuilderState();

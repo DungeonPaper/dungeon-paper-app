@@ -27,7 +27,9 @@ class ItemBuilder {
 
     return ItemBuilder._(
       itemBuilder: (context, index) {
-        if (leadingBuilder != null && leadingCount > 0 && index < leadingCount) {
+        if (leadingBuilder != null &&
+            leadingCount > 0 &&
+            index < leadingCount) {
           return leadingBuilder(context, index);
         }
         if (index >= childrenStartIndex && index < trailingStartIndex) {
@@ -85,7 +87,8 @@ class ItemBuilder {
     double? cacheExtent,
     int? semanticChildCount,
     DragStartBehavior dragStartBehavior = DragStartBehavior.start,
-    ScrollViewKeyboardDismissBehavior keyboardDismissBehavior = ScrollViewKeyboardDismissBehavior.manual,
+    ScrollViewKeyboardDismissBehavior keyboardDismissBehavior =
+        ScrollViewKeyboardDismissBehavior.manual,
     String? restorationId,
     Clip clipBehavior = Clip.hardEdge,
     ChildIndexGetter? findChildIndexCallback,
@@ -135,7 +138,8 @@ class ItemBuilder {
     double? cacheExtent,
     int? semanticChildCount,
     DragStartBehavior dragStartBehavior = DragStartBehavior.start,
-    ScrollViewKeyboardDismissBehavior keyboardDismissBehavior = ScrollViewKeyboardDismissBehavior.manual,
+    ScrollViewKeyboardDismissBehavior keyboardDismissBehavior =
+        ScrollViewKeyboardDismissBehavior.manual,
     String? restorationId,
     Clip clipBehavior = Clip.hardEdge,
     ChildIndexGetter? findChildIndexCallback,
@@ -188,7 +192,8 @@ class ItemBuilder {
     double? cacheExtent,
     int? semanticChildCount,
     DragStartBehavior dragStartBehavior = DragStartBehavior.start,
-    ScrollViewKeyboardDismissBehavior keyboardDismissBehavior = ScrollViewKeyboardDismissBehavior.manual,
+    ScrollViewKeyboardDismissBehavior keyboardDismissBehavior =
+        ScrollViewKeyboardDismissBehavior.manual,
     String? restorationId,
     Clip clipBehavior = Clip.hardEdge,
     ChildIndexGetter? findChildIndexCallback,
@@ -236,7 +241,8 @@ class ItemBuilder {
     double? cacheExtent,
     int? semanticChildCount,
     DragStartBehavior dragStartBehavior = DragStartBehavior.start,
-    ScrollViewKeyboardDismissBehavior keyboardDismissBehavior = ScrollViewKeyboardDismissBehavior.manual,
+    ScrollViewKeyboardDismissBehavior keyboardDismissBehavior =
+        ScrollViewKeyboardDismissBehavior.manual,
     String? restorationId,
     Clip clipBehavior = Clip.hardEdge,
     ChildIndexGetter? findChildIndexCallback,

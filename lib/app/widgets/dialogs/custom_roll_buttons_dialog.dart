@@ -26,16 +26,21 @@ class CustomRollButtonsDialog extends StatefulWidget {
   final void Function(List<RollButton?> rollButtons) onChanged;
 
   @override
-  State<CustomRollButtonsDialog> createState() => _CustomRollButtonsDialogState();
+  State<CustomRollButtonsDialog> createState() =>
+      _CustomRollButtonsDialogState();
 }
 
-class _CustomRollButtonsDialogState extends State<CustomRollButtonsDialog> with SingleTickerProviderStateMixin {
+class _CustomRollButtonsDialogState extends State<CustomRollButtonsDialog>
+    with SingleTickerProviderStateMixin {
   late List<RollButton?> rollButtons;
   late TabController tabController;
 
   @override
   void initState() {
-    rollButtons = [widget.character.rawRollButtons[0], widget.character.rawRollButtons[1]];
+    rollButtons = [
+      widget.character.rawRollButtons[0],
+      widget.character.rawRollButtons[1]
+    ];
     tabController = TabController(length: rollButtons.length, vsync: this);
     super.initState();
   }
@@ -65,7 +70,9 @@ class _CustomRollButtonsDialogState extends State<CustomRollButtonsDialog> with 
           SizedBox(
             width: 400,
             height: min(
-              MediaQuery.of(context).size.height - MediaQuery.of(context).viewInsets.bottom - 310,
+              MediaQuery.of(context).size.height -
+                  MediaQuery.of(context).viewInsets.bottom -
+                  310,
               300,
             ),
             child: TabBarView(
@@ -79,8 +86,10 @@ class _CustomRollButtonsDialogState extends State<CustomRollButtonsDialog> with 
                       child: _RollButtonListTile(
                         rollButton: button.value,
                         character: widget.character,
-                        defaultButton: Character.defaultRollButtons[button.index],
-                        onChanged: (val) => setState(() => rollButtons[button.index] = val),
+                        defaultButton:
+                            Character.defaultRollButtons[button.index],
+                        onChanged: (val) =>
+                            setState(() => rollButtons[button.index] = val),
                       ),
                     ),
                   ),
@@ -122,7 +131,8 @@ class _RollButtonListTile extends StatefulWidget {
   State<_RollButtonListTile> createState() => _RollButtonListTileState();
 }
 
-class _RollButtonListTileState extends State<_RollButtonListTile> with RepositoryServiceMixin {
+class _RollButtonListTileState extends State<_RollButtonListTile>
+    with RepositoryServiceMixin {
   late TextEditingController label;
   late ValueNotifier<List<dw.Dice>> dice;
   late ValueNotifier<List<SpecialDice>> specialDice;
@@ -131,7 +141,8 @@ class _RollButtonListTileState extends State<_RollButtonListTile> with Repositor
   @override
   void initState() {
     super.initState();
-    initFields(widget.rollButton ?? widget.defaultButton, widget.rollButton == null);
+    initFields(
+        widget.rollButton ?? widget.defaultButton, widget.rollButton == null);
     label.addListener(listener);
     dice.addListener(listener);
     specialDice.addListener(listener);
@@ -174,9 +185,13 @@ class _RollButtonListTileState extends State<_RollButtonListTile> with Repositor
                     Character.hackAndSlashRollButton,
                     Character.volleyRollButton,
                     Character.discernRealitiesRollButton,
-                    for (final move in moves) RollButton(label: move.name, dice: move.dice, specialDice: []),
-                    for (final spell in widget.character.spells.where((spell) => spell.dice.isNotEmpty))
-                      RollButton(label: spell.name, dice: spell.dice, specialDice: []),
+                    for (final move in moves)
+                      RollButton(
+                          label: move.name, dice: move.dice, specialDice: []),
+                    for (final spell in widget.character.spells
+                        .where((spell) => spell.dice.isNotEmpty))
+                      RollButton(
+                          label: spell.name, dice: spell.dice, specialDice: []),
                   ].uniqueBy((item) => item.label))
                     DropdownMenuItem(
                       value: button,
@@ -201,7 +216,10 @@ class _RollButtonListTileState extends State<_RollButtonListTile> with Repositor
               child: SizedBox(
                 height: 48,
                 child: ElevatedButton(
-                  onPressed: isDefault ? null : () => setState(() => updateFields(widget.defaultButton, true)),
+                  onPressed: isDefault
+                      ? null
+                      : () => setState(
+                          () => updateFields(widget.defaultButton, true)),
                   child: Text(tr.generic.useDefault),
                 ),
               ),
@@ -229,8 +247,8 @@ class _RollButtonListTileState extends State<_RollButtonListTile> with Repositor
 
   Iterable<Move> get moves => [
         ...widget.character.moves,
-        ...repo.builtIn.moves.values
-            .where((move) => [MoveCategory.basic, MoveCategory.special].contains(move.category)),
+        ...repo.builtIn.moves.values.where((move) =>
+            [MoveCategory.basic, MoveCategory.special].contains(move.category)),
       ].where((move) => move.dice.isNotEmpty).toList()
         ..sort((a, b) => a.name.compareTo(b.name));
 
@@ -265,8 +283,10 @@ class _RollButtonListTileState extends State<_RollButtonListTile> with Repositor
     return defaultDice.length == dice.length &&
         enumerate(dice).every(
           (element) {
-            debugPrint('index: ${element.index} value ${element.value} == ${defaultDice[element.index]}');
-            return defaultDice[element.index].toString() == element.value.toString();
+            debugPrint(
+                'index: ${element.index} value ${element.value} == ${defaultDice[element.index]}');
+            return defaultDice[element.index].toString() ==
+                element.value.toString();
           },
         );
   }

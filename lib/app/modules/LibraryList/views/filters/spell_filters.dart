@@ -40,9 +40,13 @@ class SpellFiltersView extends StatelessWidget {
           items: [
             DropdownMenuItem<String>(
               value: null,
-              child: Text(tr.generic.allEntities(tr.entityPlural(CharacterClass))),
+              child:
+                  Text(tr.generic.allEntities(tr.entityPlural(CharacterClass))),
             ),
-            ...<CharacterClass>{...repo.builtIn.classes.values, ...repo.my.classes.values}.map(
+            ...<CharacterClass>{
+              ...repo.builtIn.classes.values,
+              ...repo.my.classes.values
+            }.map(
               (cls) => DropdownMenuItem<String>(
                 value: cls.key,
                 child: Text(cls.name),
@@ -91,7 +95,9 @@ class SpellFilters extends EntityFilters<Spell> {
     }
 
     if (classKey != null) {
-      if (!spell.classKeys.map((x) => cleanStr(x.key)).contains(cleanStr(classKey!))) {
+      if (!spell.classKeys
+          .map((x) => cleanStr(x.key))
+          .contains(cleanStr(classKey!))) {
         return false;
       }
     }
@@ -109,11 +115,18 @@ class SpellFilters extends EntityFilters<Spell> {
     return avg(
       [
             level == spell.level ? 1.0 : 0.0,
-            classKey != null && spell.classKeys.map((x) => cleanStr(x.key)).contains(cleanStr(classKey!)) ? 1.0 : 0.0,
+            classKey != null &&
+                    spell.classKeys
+                        .map((x) => cleanStr(x.key))
+                        .contains(cleanStr(classKey!))
+                ? 1.0
+                : 0.0,
           ] +
           [spell.name, spell.description, spell.explanation]
               .map(
-                (e) => (search?.isEmpty ?? true) || e.isEmpty ? 0.0 : StringSimilarity.compareTwoStrings(search!, e),
+                (e) => (search?.isEmpty ?? true) || e.isEmpty
+                    ? 0.0
+                    : StringSimilarity.compareTwoStrings(search!, e),
               )
               .toList(),
     );

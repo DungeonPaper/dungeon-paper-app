@@ -43,4 +43,3 @@ class ImportProgressDialog extends GetView<ImportController> {
     );
   }
 }
-

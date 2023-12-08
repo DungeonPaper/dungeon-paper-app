@@ -36,4 +36,3 @@ class CampaignsListView extends GetView<CampaignsListController> {
     );
   }
 }
-

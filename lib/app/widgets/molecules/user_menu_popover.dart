@@ -16,7 +16,8 @@ import 'package:get/get.dart';
 import '../atoms/character_avatar.dart';
 import '../atoms/user_avatar.dart';
 
-class UserMenuPopover extends GetView<CharacterService> with AuthServiceMixin, UserServiceMixin {
+class UserMenuPopover extends GetView<CharacterService>
+    with AuthServiceMixin, UserServiceMixin {
   UserMenuPopover({super.key});
 
   @override
@@ -46,19 +47,23 @@ class UserMenuPopover extends GetView<CharacterService> with AuthServiceMixin, U
                     child: Card(
                       clipBehavior: Clip.antiAlias,
                       child: ConstrainedBox(
-                        constraints: BoxConstraints(maxWidth: maxW, maxHeight: maxH),
+                        constraints:
+                            BoxConstraints(maxWidth: maxW, maxHeight: maxH),
                         child: GestureDetector(
                           behavior: HitTestBehavior.opaque,
                           // ignore: avoid_returning_null_for_void
                           onTap: () => null,
                           child: Obx(
                             () => ListView(
-                              padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                              padding: const EdgeInsets.symmetric(
+                                  horizontal: 16, vertical: 8),
                               shrinkWrap: true,
                               children: [
                                 // User details
                                 ListTile(
-                                  onTap: userService.isLoggedIn ? () => Get.toNamed(Routes.account) : null,
+                                  onTap: userService.isLoggedIn
+                                      ? () => Get.toNamed(Routes.account)
+                                      : null,
                                   visualDensity: VisualDensity.compact,
                                   title: Text(
                                     '${userService.current.displayName} (@${userService.current.username})',
@@ -93,7 +98,8 @@ class UserMenuPopover extends GetView<CharacterService> with AuthServiceMixin, U
                                   const SizedBox(height: 8),
                                   Text(
                                     tr.user.recentCharacters,
-                                    style: Theme.of(context).textTheme.bodySmall,
+                                    style:
+                                        Theme.of(context).textTheme.bodySmall,
                                   ),
                                   Padding(
                                     padding: const EdgeInsets.only(top: 8),
@@ -101,9 +107,12 @@ class UserMenuPopover extends GetView<CharacterService> with AuthServiceMixin, U
                                       spacing: 4,
                                       runSpacing: 4,
                                       children: [
-                                        for (final char in controller.charsByLastUsed.take(4))
+                                        for (final char in controller
+                                            .charsByLastUsed
+                                            .take(4))
                                           InkWell(
-                                            splashColor: Theme.of(context).splashColor,
+                                            splashColor:
+                                                Theme.of(context).splashColor,
                                             borderRadius: borderRadius,
                                             onTap: () {
                                               controller.setCurrent(char.key);
@@ -113,15 +122,21 @@ class UserMenuPopover extends GetView<CharacterService> with AuthServiceMixin, U
                                               padding: const EdgeInsets.all(4),
                                               child: Column(
                                                 children: [
-                                                  CharacterAvatar.squircle(character: char, size: avatarSize),
+                                                  CharacterAvatar.squircle(
+                                                      character: char,
+                                                      size: avatarSize),
                                                   const SizedBox(height: 4),
                                                   SizedBox(
                                                     width: 60,
                                                     child: Text(
                                                       char.displayName,
-                                                      overflow: TextOverflow.ellipsis,
-                                                      textScaler: const TextScaler.linear(0.8),
-                                                      textAlign: TextAlign.center,
+                                                      overflow:
+                                                          TextOverflow.ellipsis,
+                                                      textScaler:
+                                                          const TextScaler
+                                                              .linear(0.8),
+                                                      textAlign:
+                                                          TextAlign.center,
                                                       style: textStyle,
                                                     ),
                                                   ),
@@ -139,7 +154,8 @@ class UserMenuPopover extends GetView<CharacterService> with AuthServiceMixin, U
                                 ListTile(
                                   visualDensity: VisualDensity.compact,
                                   dense: true,
-                                  title: Text(tr.generic.allEntities(tr.entityPlural(Character))),
+                                  title: Text(tr.generic
+                                      .allEntities(tr.entityPlural(Character))),
                                   leading: const Icon(Icons.group),
                                   onTap: () {
                                     Get.back();
@@ -149,7 +165,8 @@ class UserMenuPopover extends GetView<CharacterService> with AuthServiceMixin, U
                                 // Create Character
                                 ListTile(
                                   visualDensity: VisualDensity.compact,
-                                  title: Text(tr.generic.createEntity(tr.entity(Character))),
+                                  title: Text(tr.generic
+                                      .createEntity(tr.entity(Character))),
                                   leading: const Icon(Icons.person_add),
                                   onTap: () {
                                     Get.back();

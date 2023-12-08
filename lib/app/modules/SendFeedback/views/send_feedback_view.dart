@@ -22,7 +22,8 @@ class SendFeedbackView extends GetView<SendFeedbackController> {
           onPressed: !controller.sending.value ? controller.send : null,
           label: Text(tr.feedback.send),
           icon: controller.sending.value
-              ? const SizedBox.square(dimension: 24, child: CircularProgressIndicator.adaptive())
+              ? const SizedBox.square(
+                  dimension: 24, child: CircularProgressIndicator.adaptive())
               : const Icon(Icons.send),
         ),
       ),
@@ -36,7 +37,9 @@ class SendFeedbackView extends GetView<SendFeedbackController> {
               Obx(
                 () => TextFormField(
                   controller: controller.email.value,
-                  validator: (email) => email?.isEmpty ?? true ? null : EmailAddressValidator().validator(email),
+                  validator: (email) => email?.isEmpty ?? true
+                      ? null
+                      : EmailAddressValidator().validator(email),
                   decoration: InputDecoration(
                     labelText: tr.feedback.form.email.label,
                   ),
@@ -47,7 +50,8 @@ class SendFeedbackView extends GetView<SendFeedbackController> {
             TextFormField(
               controller: controller.title.value,
               textCapitalization: TextCapitalization.sentences,
-              validator: StringValidator(minLength: 1, maxLength: 100).validator,
+              validator:
+                  StringValidator(minLength: 1, maxLength: 100).validator,
               decoration: InputDecoration(
                 labelText: tr.feedback.form.title.label,
               ),
@@ -58,7 +62,8 @@ class SendFeedbackView extends GetView<SendFeedbackController> {
               minLines: 10,
               maxLines: 10,
               textCapitalization: TextCapitalization.sentences,
-              validator: StringValidator(minLength: 1, maxLength: 100).validator,
+              validator:
+                  StringValidator(minLength: 1, maxLength: 100).validator,
               decoration: InputDecoration(
                 labelText: tr.feedback.form.body.label,
               ),

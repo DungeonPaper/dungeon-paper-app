@@ -6,7 +6,6 @@ import 'package:dungeon_paper/i18n.dart';
 import 'package:dungeon_world_data/dungeon_world_data.dart' as dw;
 import 'package:flutter/material.dart';
 
-
 class DiceListInput extends StatefulWidget {
   const DiceListInput({
     super.key,
@@ -46,7 +45,8 @@ class _DiceListInputState extends State<DiceListInput> {
 
   @override
   Widget build(BuildContext context) {
-    bool isNotAtMax = widget.maxCount == null || controller.value.length < widget.maxCount!;
+    bool isNotAtMax =
+        widget.maxCount == null || controller.value.length < widget.maxCount!;
 
     return ChipListInput<dw.Dice>(
       label: widget.label,
@@ -56,7 +56,8 @@ class _DiceListInputState extends State<DiceListInput> {
         abilityScores: widget.abilityScores,
         onSave: onSave,
       ),
-      chipBuilder: (context, dice, {onDeleteChip, required onTapChip}) => DiceChip(
+      chipBuilder: (context, dice, {onDeleteChip, required onTapChip}) =>
+          DiceChip(
         dice: dice != null ? dice.value : dw.Dice.d6,
         label: dice != null ? null : tr.generic.addEntity(tr.entity(dw.Dice)),
         icon: dice != null ? null : const Icon(Icons.add),
@@ -68,7 +69,9 @@ class _DiceListInputState extends State<DiceListInput> {
       trailing: [
         if (isNotAtMax)
           for (final dice in guesses.where(
-            (guess) => !controller.value.map((d) => d.toString()).contains(guess.toString()),
+            (guess) => !controller.value
+                .map((d) => d.toString())
+                .contains(guess.toString()),
           ))
             DiceChip(
               dice: dice,

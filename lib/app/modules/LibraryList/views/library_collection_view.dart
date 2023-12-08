@@ -59,7 +59,8 @@ class LibraryCollectionView extends GetView<LibraryCollectionController>
                 child: ListTile(
                   onTap: () => ModelPages.openLibraryList(
                     type: type,
-                    abilityScores: maybeChar?.abilityScores ?? AbilityScores.dungeonWorldAll(10),
+                    abilityScores: maybeChar?.abilityScores ??
+                        AbilityScores.dungeonWorldAll(10),
                     classKeys: [],
                     moveCategory: null,
                     // initialTab: charService.maybeCurrent != null
@@ -83,12 +84,14 @@ class LibraryCollectionView extends GetView<LibraryCollectionController>
                   ),
                   subtitle: Text(
                     [
-                     tr.myLibrary.itemCount(
-                        NumberFormat('#,###,###').format(repo.builtIn.listByType(type).length),
+                      tr.myLibrary.itemCount(
+                        NumberFormat('#,###,###')
+                            .format(repo.builtIn.listByType(type).length),
                         tr.myLibrary.libraryType('builtIn'),
                       ),
-                     tr.myLibrary.itemCount(
-                        NumberFormat('#,###,###').format(repo.my.listByType(type).length),
+                      tr.myLibrary.itemCount(
+                        NumberFormat('#,###,###')
+                            .format(repo.my.listByType(type).length),
                         tr.myLibrary.libraryType('my'),
                       ),
                     ].join(' | '),

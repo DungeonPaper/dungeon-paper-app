@@ -76,12 +76,14 @@ class ValueChangeSlider<N extends num> extends StatelessWidget {
               value: updatedValue.toDouble(),
               min: minValue?.toDouble() ?? -double.infinity,
               max: maxValue?.toDouble() ?? double.infinity,
-              theme:
-                  (theme.brightness == Brightness.light ? WheelSpinnerThemeData.light() : WheelSpinnerThemeData.dark())
-                      .copyWith(
+              theme: (theme.brightness == Brightness.light
+                      ? WheelSpinnerThemeData.light()
+                      : WheelSpinnerThemeData.dark())
+                  .copyWith(
                 borderRadius: borderRadius,
               ),
-              onSlideUpdate: (val) => onChange((N == int ? val.toInt() : val.toDouble()) as N),
+              onSlideUpdate: (val) =>
+                  onChange((N == int ? val.toInt() : val.toDouble()) as N),
             ),
           ),
         ),

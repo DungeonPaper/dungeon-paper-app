@@ -16,7 +16,9 @@ import 'package:get/get.dart';
 
 import 'filters/move_filters.dart';
 
-class MovesLibraryListView extends GetView<LibraryListController<Move, MoveFilters>> with CharacterServiceMixin {
+class MovesLibraryListView
+    extends GetView<LibraryListController<Move, MoveFilters>>
+    with CharacterServiceMixin {
   const MovesLibraryListView({
     Key? key,
   }) : super(key: key);
@@ -41,12 +43,14 @@ class MovesLibraryListView extends GetView<LibraryListController<Move, MoveFilte
           EntityEditMenu(
             onEdit: data.onUpdate != null
                 ? () => ModelPages.openMovePage(
-                      abilityScores: maybeChar?.abilityScores ?? AbilityScores.dungeonWorldAll(10),
+                      abilityScores: maybeChar?.abilityScores ??
+                          AbilityScores.dungeonWorldAll(10),
                       move: data.item,
                       onSave: data.onUpdate!,
                     )
                 : null,
-            onDelete: data.onDelete != null ? () => data.onDelete!(data.item) : null,
+            onDelete:
+                data.onDelete != null ? () => data.onDelete!(data.item) : null,
           ),
           if (data.selectable)
             ElevatedButton.icon(
@@ -74,8 +78,10 @@ class MoveLibraryListArguments extends LibraryListArguments<Move, MoveFilters> {
           sortFn: Move.sorter,
           filterFn: (move, filters) => filters.filter(move),
           filters: {
-            FiltersGroup.playbook: MoveFilters(classKey: character?.characterClass.key, category: category),
-            FiltersGroup.my: MoveFilters(classKey: character?.characterClass.key, category: category),
+            FiltersGroup.playbook: MoveFilters(
+                classKey: character?.characterClass.key, category: category),
+            FiltersGroup.my: MoveFilters(
+                classKey: character?.characterClass.key, category: category),
           },
           extraData: {
             'abilityScores': abilityScores ?? character?.abilityScores,

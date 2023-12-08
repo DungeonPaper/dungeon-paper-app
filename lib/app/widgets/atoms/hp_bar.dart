@@ -50,4 +50,3 @@ class HpBar extends StatelessWidget with CharacterServiceMixin {
     });
   }
 }
-

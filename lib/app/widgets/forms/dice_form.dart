@@ -192,8 +192,7 @@ class _DiceFormState extends State<DiceForm> {
                 for (final stat in widget.abilityScores.stats)
                   DropdownMenuItem<String>(
                     value: stat.key,
-                    child:
-                        Text(tr.dice.form.statValue(stat.name, stat.key)),
+                    child: Text(tr.dice.form.statValue(stat.name, stat.key)),
                   )
               ],
             ),
@@ -226,4 +225,3 @@ class _DiceFormState extends State<DiceForm> {
     return int.tryParse(text);
   }
 }
-

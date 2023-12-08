@@ -162,4 +162,3 @@ class SearchSeparator {
 
   SearchSeparator(this.text);
 }
-

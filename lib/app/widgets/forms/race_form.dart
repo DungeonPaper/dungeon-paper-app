@@ -30,18 +30,21 @@ class RaceForm extends GetView<RaceFormController> with RepositoryServiceMixin {
             ),
         () => Obx(
               () => SelectBox<dw.EntityReference>(
-                value: controller.classKeys.value.isNotEmpty ? controller.classKeys.value.first : null,
+                value: controller.classKeys.value.isNotEmpty
+                    ? controller.classKeys.value.first
+                    : null,
                 onChanged: (value) => controller.classKeys.value = [value!],
                 isExpanded: true,
                 label: Text(tr.entity(CharacterClass)),
-                items: {...repo.builtIn.classes.values, ...repo.my.classes.values}
-                    .map(
-                      (cls) => DropdownMenuItem(
-                        value: cls.reference,
-                        child: Text(cls.name),
-                      ),
-                    )
-                    .toList(),
+                items:
+                    {...repo.builtIn.classes.values, ...repo.my.classes.values}
+                        .map(
+                          (cls) => DropdownMenuItem(
+                            value: cls.reference,
+                            child: Text(cls.name),
+                          ),
+                        )
+                        .toList(),
               ),
             ),
         () => Obx(
@@ -71,7 +74,8 @@ class RaceForm extends GetView<RaceFormController> with RepositoryServiceMixin {
         () => Obx(
               () => DiceListInput(
                 controller: controller.dice,
-                abilityScores: controller.args.abilityScores ?? AbilityScores.dungeonWorldAll(10),
+                abilityScores: controller.args.abilityScores ??
+                    AbilityScores.dungeonWorldAll(10),
                 guessFrom: [controller.description, controller.explanation],
               ),
             ),
@@ -85,7 +89,8 @@ class RaceForm extends GetView<RaceFormController> with RepositoryServiceMixin {
   }
 }
 
-class RaceFormController extends LibraryEntityFormController<Race, RaceFormArguments> {
+class RaceFormController
+    extends LibraryEntityFormController<Race, RaceFormArguments> {
   final _name = TextEditingController().obs;
   final _description = TextEditingController().obs;
   final _explanation = TextEditingController().obs;
@@ -101,7 +106,8 @@ class RaceFormController extends LibraryEntityFormController<Race, RaceFormArgum
   ValueNotifier<List<dw.EntityReference>> get classKeys => _classKeys.value;
 
   @override
-  List<Rx<ValueNotifier>> get fields => [_name, _description, _explanation, _dice, _tags, _classKeys];
+  List<Rx<ValueNotifier>> get fields =>
+      [_name, _description, _explanation, _dice, _tags, _classKeys];
 
   @override
   void onInit() {

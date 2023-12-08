@@ -35,14 +35,16 @@ class BufferProgressBar extends StatelessWidget {
                 duration: _duration,
                 height: height,
                 width: constraints.maxWidth,
-                color: backgroundColor ?? Theme.of(context).colorScheme.primaryContainer,
+                color: backgroundColor ??
+                    Theme.of(context).colorScheme.primaryContainer,
               ),
               if (bufferValue != null)
                 AnimatedContainer(
                   duration: _duration,
                   height: height,
                   width: constraints.maxWidth * clamp(bufferValue!, 0, 1),
-                  color: bufferColor ?? Theme.of(context).colorScheme.primary.withOpacity(0.3),
+                  color: bufferColor ??
+                      Theme.of(context).colorScheme.primary.withOpacity(0.3),
                 ),
               AnimatedContainer(
                 duration: _duration,

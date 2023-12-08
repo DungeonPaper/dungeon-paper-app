@@ -153,7 +153,9 @@ class NumberTextField extends StatelessWidget {
               onPressed: _incr,
             ),
       ),
-      keyboardType: keyboardType ?? TextInputType.numberWithOptions(decimal: numberType == NumberType.double),
+      keyboardType: keyboardType ??
+          TextInputType.numberWithOptions(
+              decimal: numberType == NumberType.double),
       textCapitalization: textCapitalization,
       textInputAction: textInputAction,
       style: style,
@@ -183,7 +185,8 @@ class NumberTextField extends StatelessWidget {
       onSaved: onSaved,
       validator: validator,
       inputFormatters: [
-        NumberInputFormatter(min: minValue, max: maxValue, numberType: numberType),
+        NumberInputFormatter(
+            min: minValue, max: maxValue, numberType: numberType),
         ...?inputFormatters,
       ],
       enabled: enabled,
@@ -216,12 +219,16 @@ class NumberTextField extends StatelessWidget {
   }
 
   void _decr() {
-    controller?.text = max((_parse(controller?.text ?? '') ?? 1) - 1, minValue ?? -double.infinity).toString();
+    controller?.text = max((_parse(controller?.text ?? '') ?? 1) - 1,
+            minValue ?? -double.infinity)
+        .toString();
     onChanged?.call(controller?.text ?? '');
   }
 
   void _incr() {
-    controller?.text = min((_parse(controller?.text ?? '') ?? 0) + 1, maxValue ?? double.infinity).toString();
+    controller?.text = min((_parse(controller?.text ?? '') ?? 0) + 1,
+            maxValue ?? double.infinity)
+        .toString();
     onChanged?.call(controller?.text ?? '');
   }
 }
@@ -243,14 +250,16 @@ class NumberInputFormatter extends TextInputFormatter {
   final NumberType numberType;
 
   @override
-  TextEditingValue formatEditUpdate(TextEditingValue oldValue, TextEditingValue newValue) {
+  TextEditingValue formatEditUpdate(
+      TextEditingValue oldValue, TextEditingValue newValue) {
     if (newValue.text.isEmpty) {
       return newValue;
     }
 
     final value = double.tryParse(newValue.text);
 
-    if (value != null && ((max != null && value > max!) || (min != null && value < min!))) {
+    if (value != null &&
+        ((max != null && value > max!) || (min != null && value < min!))) {
       return oldValue;
     }
 
@@ -262,7 +271,8 @@ class NumberInputFormatter extends TextInputFormatter {
     }
   }
 
-  TextEditingValue _doubleFormat(TextEditingValue oldValue, TextEditingValue newValue) {
+  TextEditingValue _doubleFormat(
+      TextEditingValue oldValue, TextEditingValue newValue) {
     if (newValue.text.endsWith('.')) {
       return newValue;
     }
@@ -274,7 +284,8 @@ class NumberInputFormatter extends TextInputFormatter {
     return oldValue;
   }
 
-  TextEditingValue _intFormat(TextEditingValue oldValue, TextEditingValue newValue) {
+  TextEditingValue _intFormat(
+      TextEditingValue oldValue, TextEditingValue newValue) {
     if (int.tryParse(newValue.text) != null) {
       return newValue;
     }

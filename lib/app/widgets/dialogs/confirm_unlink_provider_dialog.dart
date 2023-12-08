@@ -6,11 +6,14 @@ import 'package:get/get.dart';
 import '../../../core/utils/dialog_utils.dart';
 import '../../model_utils/user_utils.dart';
 
-Future<bool> confirmUnlinkProvider<T>(BuildContext context, ProviderName provider) {
+Future<bool> confirmUnlinkProvider<T>(
+    BuildContext context, ProviderName provider) {
   return Get.dialog<bool>(
     AlertDialog(
-      title: Text(tr.auth.confirmUnlink.title(tr.auth.providers.name(provider.name))),
-      content: Text(tr.auth.confirmUnlink.body(tr.auth.providers.name(provider.name))),
+      title: Text(
+          tr.auth.confirmUnlink.title(tr.auth.providers.name(provider.name))),
+      content: Text(
+          tr.auth.confirmUnlink.body(tr.auth.providers.name(provider.name))),
       actions: DialogControls.negative(
         context,
         confirmLabel: tr.auth.providers.unlink,
@@ -22,6 +25,6 @@ Future<bool> confirmUnlinkProvider<T>(BuildContext context, ProviderName provide
   ).then((res) => res == true);
 }
 
-Future<void> awaitUnlinkProviderConfirmation<T>(
-        BuildContext context, ProviderName provider, void Function() onConfirmed) =>
+Future<void> awaitUnlinkProviderConfirmation<T>(BuildContext context,
+        ProviderName provider, void Function() onConfirmed) =>
     awaitConfirmation(confirmUnlinkProvider<T>(context, provider), onConfirmed);

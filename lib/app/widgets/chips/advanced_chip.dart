@@ -147,7 +147,8 @@ class AdvancedChip extends StatelessWidget
       selectedShadowColor: selectedShadowColor,
       showCheckmark: showCheckmark,
       checkmarkColor: checkmarkColor,
-      isEnabled: isEnabled, // && (onSelected != null || onDeleted != null || onPressed != null),
+      isEnabled:
+          isEnabled, // && (onSelected != null || onDeleted != null || onPressed != null),
       avatarBorder: avatarBorder,
       iconTheme: iconTheme,
       surfaceTintColor: surfaceTintColor,
@@ -155,5 +156,6 @@ class AdvancedChip extends StatelessWidget
   }
 
   @override
-  MaterialStateProperty<Color?>? get color => MaterialStatePropertyAll(backgroundColor);
+  MaterialStateProperty<Color?>? get color =>
+      MaterialStatePropertyAll(backgroundColor);
 }

@@ -9,7 +9,8 @@ enum LoginProgressStep {
   loadChars,
 }
 
-class LoginProgressDialogView extends GetView<LoadingService> with CharacterServiceMixin {
+class LoginProgressDialogView extends GetView<LoadingService>
+    with CharacterServiceMixin {
   const LoginProgressDialogView({super.key});
 
   String get title {

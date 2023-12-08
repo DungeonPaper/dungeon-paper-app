@@ -64,7 +64,9 @@ class ItemFilters extends EntityFilters<Item> {
   double getScore(Item item) {
     return avg(
       [item.name, item.description].map(
-        (e) => (search?.isEmpty ?? true) || e.isEmpty ? 0.0 : StringSimilarity.compareTwoStrings(search!, e),
+        (e) => (search?.isEmpty ?? true) || e.isEmpty
+            ? 0.0
+            : StringSimilarity.compareTwoStrings(search!, e),
       ),
     );
   }

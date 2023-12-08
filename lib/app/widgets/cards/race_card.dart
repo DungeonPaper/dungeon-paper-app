@@ -50,7 +50,8 @@ class RaceCard extends StatelessWidget {
       icon: showIcon ? Icon(race.icon, size: 16) : null,
       starred: race.favorite,
       showStar: showStar,
-      onStarChanged: (favorite) => onSave?.call(race.copyWithInherited(favorite: favorite)),
+      onStarChanged: (favorite) =>
+          onSave?.call(race.copyWithInherited(favorite: favorite)),
       initiallyExpanded: initiallyExpanded,
       actions: actions,
       highlightWords: highlightWords,

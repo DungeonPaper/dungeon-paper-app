@@ -48,7 +48,8 @@ class HomeCharacterJournalView extends GetView<CharacterService> {
               CategorizedList(
                 key: Key('note-category-${cat.value}'),
                 initiallyExpanded: true,
-                title: Text(cat.value.isEmpty ? tr.notes.noCategory : cat.value),
+                title:
+                    Text(cat.value.isEmpty ? tr.notes.noCategory : cat.value),
                 titleTrailing: [
                   GroupSortMenu(
                     index: cat.index,
@@ -57,7 +58,8 @@ class HomeCharacterJournalView extends GetView<CharacterService> {
                   ),
                 ],
                 onReorder: (oldIndex, newIndex) => controller.updateCharacter(
-                  CharacterUtils.reorderByType<Note>(char, oldIndex, newIndex, extraData: cat.value),
+                  CharacterUtils.reorderByType<Note>(char, oldIndex, newIndex,
+                      extraData: cat.value),
                 ),
                 children: char.notes
                     .where((note) => note.localizedCategory == cat.value)
@@ -70,14 +72,17 @@ class HomeCharacterJournalView extends GetView<CharacterService> {
                           reorderablePadding: true,
                           actions: [
                             EntityEditMenu(
-                              onDelete: confirmDelete(context, note, note.title),
+                              onDelete:
+                                  confirmDelete(context, note, note.title),
                               onEdit: () => ModelPages.openNotePage(
                                 note: note,
                                 onSave: (note) {
                                   controller.updateCharacter(
-                                    CharacterUtils.updateByType<Note>(char, [note]),
+                                    CharacterUtils.updateByType<Note>(
+                                        char, [note]),
                                   );
-                                  StorageHandler.instance.create('Notes', note.key, note.toJson());
+                                  StorageHandler.instance
+                                      .create('Notes', note.key, note.toJson());
                                 },
                               ),
                             ),
@@ -97,12 +102,14 @@ class HomeCharacterJournalView extends GetView<CharacterService> {
   }
 
   // TODO use existing confirmDelete
-  void Function() confirmDelete<T>(BuildContext context, T object, String name) {
+  void Function() confirmDelete<T>(
+      BuildContext context, T object, String name) {
     return () async {
       final result = await Get.dialog<bool>(
         AlertDialog(
           title: Text(tr.dialogs.confirmations.delete.title(tr.entity(T))),
-          content: Text(tr.dialogs.confirmations.delete.body(tr.entity(T), name)),
+          content:
+              Text(tr.dialogs.confirmations.delete.body(tr.entity(T), name)),
           actions: [
             ElevatedButton.icon(
               icon: const Icon(Icons.close),
@@ -130,7 +137,8 @@ class HomeCharacterJournalView extends GetView<CharacterService> {
             break;
           case Spell:
             controller.updateCharacter(
-              char.copyWith(spells: removeByKey(char.spells, [object as Spell])),
+              char.copyWith(
+                  spells: removeByKey(char.spells, [object as Spell])),
             );
             break;
           case Item:

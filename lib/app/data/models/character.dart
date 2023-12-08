@@ -465,4 +465,3 @@ class CharacterMeta {
   @override
   String toString() => 'CharacterMeta($debugProperties)';
 }
-

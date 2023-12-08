@@ -17,7 +17,9 @@ class HorizontalCardListView<T extends WithMeta> extends StatelessWidget {
   }) : super(key: key);
 
   final Size cardSize;
-  final Widget Function(BuildContext context, T item, int index, void Function() onTap) cardBuilder;
+  final Widget Function(
+          BuildContext context, T item, int index, void Function() onTap)
+      cardBuilder;
   final Widget Function(
     BuildContext context,
     T item,

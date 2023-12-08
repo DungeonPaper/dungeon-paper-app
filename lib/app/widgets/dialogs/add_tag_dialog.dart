@@ -133,4 +133,3 @@ class _AddTagDialogState extends State<AddTagDialog> {
     return int.tryParse(text);
   }
 }
-

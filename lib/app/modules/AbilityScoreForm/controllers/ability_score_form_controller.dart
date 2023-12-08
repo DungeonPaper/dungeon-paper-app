@@ -122,4 +122,3 @@ class AbilityScoreFormArguments {
     required this.onSave,
   });
 }
-

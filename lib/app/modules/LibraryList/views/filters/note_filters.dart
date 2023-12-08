@@ -64,7 +64,9 @@ class NoteFilters extends EntityFilters<Note> {
   double getScore(Note note) {
     return avg(
       [note.title, note.description].map(
-        (e) => (search?.isEmpty ?? true) || e.isEmpty ? 0.0 : StringSimilarity.compareTwoStrings(search!, e),
+        (e) => (search?.isEmpty ?? true) || e.isEmpty
+            ? 0.0
+            : StringSimilarity.compareTwoStrings(search!, e),
       ),
     );
   }

@@ -33,7 +33,8 @@ class GearSelection extends dw.GearSelection {
         coins: coins ?? this.coins,
       );
 
-  factory GearSelection.fromRawJson(String str) => GearSelection.fromJson(json.decode(str));
+  factory GearSelection.fromRawJson(String str) =>
+      GearSelection.fromJson(json.decode(str));
 
   factory GearSelection.fromDwGearSelection(dw.GearSelection gearSelection) =>
       GearSelection.fromJson(gearSelection.toJson());
@@ -41,7 +42,8 @@ class GearSelection extends dw.GearSelection {
   factory GearSelection.fromJson(Map<String, dynamic> json) => GearSelection(
         key: json['key'],
         description: json['description'] ?? '',
-        options: List<GearOption>.from((json['options'] ?? []).map((x) => GearOption.fromJson(x))),
+        options: List<GearOption>.from(
+            (json['options'] ?? []).map((x) => GearOption.fromJson(x))),
         coins: json['coins'] ?? 0,
       );
 
@@ -59,7 +61,8 @@ class GearSelection extends dw.GearSelection {
   int get hashCode => Object.hashAll([key, description, options, coins]);
 
   @override
-  String get debugProperties => 'key: $key, description: $description, options: $options, coins: $coins';
+  String get debugProperties =>
+      'key: $key, description: $description, options: $options, coins: $coins';
 
   @override
   String toString() => 'GearSelection($debugProperties)';

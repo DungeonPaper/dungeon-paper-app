@@ -8,14 +8,17 @@ class Requests {
     return {'Authorization': 'Bearer $idToken'};
   }
 
-  Future<SearchResponse> getDefaultRepository({bool ignoreCache = false}) async {
-    final Map<String, String> headers = ignoreCache ? {'Cache-Control': 'no-cache'} : {};
+  Future<SearchResponse> getDefaultRepository(
+      {bool ignoreCache = false}) async {
+    final Map<String, String> headers =
+        ignoreCache ? {'Cache-Control': 'no-cache'} : {};
     final resp = await api.get('/library/default', headers: headers);
     return SearchResponse.fromJson(resp.json);
   }
 
   Future<void> migrateUser(MigrationDetails details) =>
-      api.get('/user/migrate?${details.toString()}', headers: authorizationHeaders);
+      api.get('/user/migrate?${details.toString()}',
+          headers: authorizationHeaders);
 
   Future<void> sendFeedback({
     required String email,

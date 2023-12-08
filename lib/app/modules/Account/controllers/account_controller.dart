@@ -35,4 +35,3 @@ class AccountController extends GetxController
     );
   }
 }
-

@@ -29,9 +29,8 @@ class ValueNotifierStream<T> extends Stream<T> {
     void Function()? onDone,
     bool? cancelOnError,
   }) =>
-      controller.stream
-          .asBroadcastStream()
-          .listen(onData, onError: onError, onDone: onDone, cancelOnError: cancelOnError);
+      controller.stream.asBroadcastStream().listen(onData,
+          onError: onError, onDone: onDone, cancelOnError: cancelOnError);
 }
 
 class TextEditingControllerStream extends Stream<String> {
@@ -50,7 +49,8 @@ class TextEditingControllerStream extends Stream<String> {
     void Function()? onDone,
     bool? cancelOnError,
   }) {
-    return stream.listen(onData, onError: onError, onDone: onDone, cancelOnError: cancelOnError);
+    return stream.listen(onData,
+        onError: onError, onDone: onDone, cancelOnError: cancelOnError);
   }
 
   void init() {

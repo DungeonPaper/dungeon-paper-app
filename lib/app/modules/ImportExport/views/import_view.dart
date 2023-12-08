@@ -57,4 +57,3 @@ class ImportView extends GetView<ImportController> {
     );
   }
 }
-

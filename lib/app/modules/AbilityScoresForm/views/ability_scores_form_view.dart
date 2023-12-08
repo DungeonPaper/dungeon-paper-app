@@ -49,8 +49,10 @@ class AbilityScoresFormView extends GetView<AbilityScoresFormController> {
                   physics: const NeverScrollableScrollPhysics(),
                   itemCount: controller.abilityScores.value.stats.length,
                   onReorder: (int oldIndex, int newIndex) {
-                    controller.abilityScores.value = controller.abilityScores.value
-                        .copyWith(stats: reorder(controller.abilityScores.value.stats, oldIndex, newIndex));
+                    controller.abilityScores.value =
+                        controller.abilityScores.value.copyWith(
+                            stats: reorder(controller.abilityScores.value.stats,
+                                oldIndex, newIndex));
                   },
                   itemBuilder: (context, index) => _buildCard(context, index),
                 ),
@@ -80,9 +82,11 @@ class AbilityScoresFormView extends GetView<AbilityScoresFormController> {
     final textTheme = theme.textTheme;
     final statKey = sortByPredefined(
       controller.textControllers.keys.toList(),
-      order: controller.abilityScores.value.stats.map((stat) => stat.key).toList(),
+      order:
+          controller.abilityScores.value.stats.map((stat) => stat.key).toList(),
     ).elementAt(index);
-    final stat = controller.abilityScores.value.stats.firstWhere((stat) => stat.key == statKey);
+    final stat = controller.abilityScores.value.stats
+        .firstWhere((stat) => stat.key == statKey);
     return Padding(
       key: Key('stat-$statKey'),
       padding: const EdgeInsets.symmetric(vertical: 4),
@@ -130,14 +134,17 @@ class AbilityScoresFormView extends GetView<AbilityScoresFormController> {
                     ),
                   ),
                   Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 8).copyWith(right: 16),
+                    padding: const EdgeInsets.symmetric(horizontal: 8)
+                        .copyWith(right: 16),
                     child: Text(
-                      tr.abilityScores.form.modifierValueLabel(stat.modifier.toString()),
+                      tr.abilityScores.form
+                          .modifierValueLabel(stat.modifier.toString()),
                     ),
                   ),
                   RoundIconButton(
                     icon: DiceIcon.from(dw.Dice.d6),
-                    onPressed: () => controller.textControllers[stat.key]!.text = Random().nextInt(21).toString(),
+                    onPressed: () => controller.textControllers[stat.key]!
+                        .text = Random().nextInt(21).toString(),
                     tooltip: tr.abilityScores.rollButton.randStat,
                   ),
                   Expanded(child: Container()),
@@ -153,7 +160,9 @@ class AbilityScoresFormView extends GetView<AbilityScoresFormController> {
                       ),
                       onDelete: () => deleteDialog.confirm(
                         context,
-                        DeleteDialogOptions(entityName: stat.name, entityKind: tr.entity(AbilityScore)),
+                        DeleteDialogOptions(
+                            entityName: stat.name,
+                            entityKind: tr.entity(AbilityScore)),
                         () => controller.removeStat(stat),
                       ),
                     ),

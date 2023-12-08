@@ -50,7 +50,9 @@ class User {
         displayName: json['displayName'],
         email: json['email'],
         photoUrl: json['photoURL'],
-        settings: json['settings'] != null ? UserSettings.fromJson(json['settings']) : UserSettings(),
+        settings: json['settings'] != null
+            ? UserSettings.fromJson(json['settings'])
+            : UserSettings(),
         flags: json['flags'] ?? {},
       );
 
@@ -77,7 +79,8 @@ class User {
   bool get isSu => flags['su'] == true;
   bool get isDm => flags['dm_tools_preview'] == true;
 
-  Brightness get brightness => settings.brightnessOverride ?? getCurrentPlatformBrightness();
+  Brightness get brightness =>
+      settings.brightnessOverride ?? getCurrentPlatformBrightness();
 
   void applySettings() => settings.apply();
 
@@ -85,7 +88,9 @@ class User {
     AppThemes.setTheme(getTheme());
   }
 
-  int getTheme() => brightness == Brightness.light ? settings.defaultLightTheme : settings.defaultDarkTheme;
+  int getTheme() => brightness == Brightness.light
+      ? settings.defaultLightTheme
+      : settings.defaultDarkTheme;
 
   @override
   bool operator ==(Object other) =>
@@ -100,7 +105,8 @@ class User {
           flags == other.flags;
 
   @override
-  int get hashCode => Object.hashAll([username, displayName, email, photoUrl, settings, flags]);
+  int get hashCode =>
+      Object.hashAll([username, displayName, email, photoUrl, settings, flags]);
 
   String get debugProperties =>
       'username: $username, displayName: $displayName, email: $email, photoUrl: $photoUrl, settings: $settings';

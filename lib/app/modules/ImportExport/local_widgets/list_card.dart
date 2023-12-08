@@ -6,7 +6,8 @@ import 'package:dungeon_paper/i18n.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-class ListCard<T extends WithMeta, C extends ImportExportSelectionData> extends GetView<C> {
+class ListCard<T extends WithMeta, C extends ImportExportSelectionData>
+    extends GetView<C> {
   const ListCard({
     super.key,
   });
@@ -58,7 +59,8 @@ class ListCard<T extends WithMeta, C extends ImportExportSelectionData> extends 
           children: [
             for (final item in list)
               ListTile(
-                onTap: () => controller.toggle<T>(item, !controller.isSelected<T>(item)),
+                onTap: () =>
+                    controller.toggle<T>(item, !controller.isSelected<T>(item)),
                 title: Text(item.displayName),
                 leading: Checkbox(
                   value: controller.isSelected<T>(item),

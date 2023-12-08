@@ -127,4 +127,3 @@ class CharacterBondsFlagsDialog extends GetView<CharacterService>
     );
   }
 }
-

@@ -12,7 +12,8 @@ class AbilityScores {
     required Iterable<AbilityScore> stats,
   }) : stats = stats.toList();
 
-  factory AbilityScores.dungeonWorldAll(int value) => AbilityScores.dungeonWorld(
+  factory AbilityScores.dungeonWorldAll(int value) =>
+      AbilityScores.dungeonWorld(
         dex: value,
         str: value,
         wis: value,
@@ -82,7 +83,8 @@ class AbilityScores {
 
   final List<AbilityScore> stats;
 
-  Map<String, AbilityScore> get statsMap => Map.fromIterable(stats, key: (s) => s.key);
+  Map<String, AbilityScore> get statsMap =>
+      Map.fromIterable(stats, key: (s) => s.key);
 
   AbilityScores copyWith({
     Iterable<AbilityScore>? stats,
@@ -91,15 +93,22 @@ class AbilityScores {
 
   AbilityScores copyWithStatValues(Map<String, int> map) => copyWith(
         stats: stats.map(
-          (stat) => map.containsKey(stat.key) ? stat.copyWith(value: map[stat.key]) : stat,
+          (stat) => map.containsKey(stat.key)
+              ? stat.copyWith(value: map[stat.key])
+              : stat,
         ),
       );
 
-  AbilityScores copyWithDebilities(Iterable<String> keys, {required bool isDebilitated}) => copyWith(
-        stats: stats.map((e) => keys.contains(e.key) ? e.copyWith(isDebilitated: isDebilitated) : e),
+  AbilityScores copyWithDebilities(Iterable<String> keys,
+          {required bool isDebilitated}) =>
+      copyWith(
+        stats: stats.map((e) => keys.contains(e.key)
+            ? e.copyWith(isDebilitated: isDebilitated)
+            : e),
       );
 
-  factory AbilityScores.fromRawJson(String str) => AbilityScores.fromJson(json.decode(str));
+  factory AbilityScores.fromRawJson(String str) =>
+      AbilityScores.fromJson(json.decode(str));
 
   String toRawJson() => json.encode(toJson());
 
@@ -147,7 +156,8 @@ class AbilityScores {
   int get loadBaseValue => str?.modifier ?? 0;
 
   factory AbilityScores.fromJson(Map<String, dynamic> json) => AbilityScores(
-        stats: List<AbilityScore>.from(json['stats'].map((x) => AbilityScore.fromJson(x))),
+        stats: List<AbilityScore>.from(
+            json['stats'].map((x) => AbilityScore.fromJson(x))),
       );
 
   Map<String, dynamic> toJson() => {
@@ -156,12 +166,16 @@ class AbilityScores {
 
   @override
   bool operator ==(Object? other) =>
-      identical(this, other) || other is AbilityScores && runtimeType == other.runtimeType && stats == other.stats;
+      identical(this, other) ||
+      other is AbilityScores &&
+          runtimeType == other.runtimeType &&
+          stats == other.stats;
 
   @override
   int get hashCode => Object.hashAll(stats);
 
-  String get debugProperties => stats.map((s) => '${s.key}: ${s.value}').join(', ');
+  String get debugProperties =>
+      stats.map((s) => '${s.key}: ${s.value}').join(', ');
 
   @override
   String toString() => 'AbilityScores($debugProperties)';
@@ -244,12 +258,14 @@ class AbilityScore with WithIcon, WithKey {
         icon: icon ?? customIcon,
       );
 
-  int get modifier => isDebilitated ? modifierForValue(value) - 1 : modifierForValue(value);
+  int get modifier =>
+      isDebilitated ? modifierForValue(value) - 1 : modifierForValue(value);
 
   @override
   IconData get icon => customIcon ?? iconFor(key);
 
-  static IconData iconFor(String key) => _icons[key.toLowerCase()] ?? _icons['_other']!;
+  static IconData iconFor(String key) =>
+      _icons[key.toLowerCase()] ?? _icons['_other']!;
 
   static int modifierForValue(int value) {
     var modifiers = {1: -3, 4: -2, 6: -1, 9: 0, 13: 1, 16: 2, 18: 3};
@@ -291,7 +307,15 @@ class AbilityScore with WithIcon, WithKey {
           debilityDescription == other.debilityDescription;
 
   @override
-  int get hashCode => Object.hashAll([key, name, description, value, isDebilitated, debilityName, debilityDescription]);
+  int get hashCode => Object.hashAll([
+        key,
+        name,
+        description,
+        value,
+        isDebilitated,
+        debilityName,
+        debilityDescription
+      ]);
 
   String get debugProperties =>
       'key: $key, value: $value, name: $name, description: $description, isDebilitated: $isDebilitated, debilityName: $debilityName, debilityDescription: $debilityDescription';

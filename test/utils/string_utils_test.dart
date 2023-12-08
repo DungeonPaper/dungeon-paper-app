@@ -5,13 +5,16 @@ void main() {
   group('String Utils', () {
     group('splitIntoWords', () {
       test('should work with spaces', () {
-        expect(splitIntoWords('one two three'), equals(['one', 'two', 'three']));
+        expect(
+            splitIntoWords('one two three'), equals(['one', 'two', 'three']));
       });
       test('should work with underscores', () {
-        expect(splitIntoWords('one_two_three'), equals(['one', 'two', 'three']));
+        expect(
+            splitIntoWords('one_two_three'), equals(['one', 'two', 'three']));
       });
       test('should work with numbers', () {
-        expect(splitIntoWords('one_2_two_three'), equals(['one', '2', 'two', 'three']));
+        expect(splitIntoWords('one_2_two_three'),
+            equals(['one', '2', 'two', 'three']));
       });
       test('should work with pascalCase', () {
         expect(splitIntoWords('OneTwoThree'), equals(['One', 'Two', 'Three']));

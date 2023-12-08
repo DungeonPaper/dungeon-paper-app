@@ -54,8 +54,8 @@ class _EXPDialogState extends State<EXPDialog> with CharacterServiceMixin {
     const dlgWidth = 400.0;
 
     return AlertDialog(
-      title:
-          Text(!hasOverrides ? tr.xp.dialog.title : tr.xp.dialog.overridingTitle),
+      title: Text(
+          !hasOverrides ? tr.xp.dialog.title : tr.xp.dialog.overridingTitle),
       content: SingleChildScrollView(
         child: Obx(
           () {
@@ -113,8 +113,7 @@ class _EXPDialogState extends State<EXPDialog> with CharacterServiceMixin {
                       : 48,
                   child: CustomExpansionPanel(
                     title: Text(
-                      tr.xp.dialog.override.title +
-                          (hasOverrides ? '*' : ''),
+                      tr.xp.dialog.override.title + (hasOverrides ? '*' : ''),
                     ),
                     expanded: manualExpExpanded,
                     onExpansion: (value) {
@@ -257,4 +256,3 @@ class _EXPDialogState extends State<EXPDialog> with CharacterServiceMixin {
     });
   }
 }
-

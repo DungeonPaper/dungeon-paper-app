@@ -36,7 +36,7 @@ class DynamicActionCard extends StatefulWidget {
     this.highlightWords = const [],
     this.abilityScores,
     this.reorderablePadding = false,
-  })  : assert(dice.length == 0 || abilityScores != null);
+  }) : assert(dice.length == 0 || abilityScores != null);
 
   final bool expandable;
   final double? maxContentHeight;
@@ -97,7 +97,8 @@ class _DynamicActionCardState extends State<DynamicActionCard> {
               ),
               child: widget.starred
                   ? widget.starredIcon ?? const Icon(Icons.star_rounded)
-                  : widget.unstarredIcon ?? const Icon(Icons.star_border_rounded),
+                  : widget.unstarredIcon ??
+                      const Icon(Icons.star_border_rounded),
             ),
             onPressed: () => widget.onStarChanged?.call(!widget.starred),
           ),
@@ -150,7 +151,8 @@ class _DynamicActionCardState extends State<DynamicActionCard> {
                 ? children
                 : [
                     ConstrainedBox(
-                      constraints: BoxConstraints.loose(Size.fromHeight(widget.maxContentHeight!)),
+                      constraints: BoxConstraints.loose(
+                          Size.fromHeight(widget.maxContentHeight!)),
                       child: ListView(
                         shrinkWrap: true,
                         children: children.sublist(0, children.length - 1),
@@ -167,7 +169,9 @@ class _DynamicActionCardState extends State<DynamicActionCard> {
   List<Widget> _buildChildren(BuildContext context) {
     final bottomHasContent = widget.chips.isNotEmpty ||
         widget.actions
-            .where((el) => (el is! EntityEditMenu) || (el.onDelete != null || el.onEdit != null))
+            .where((el) =>
+                (el is! EntityEditMenu) ||
+                (el.onDelete != null || el.onEdit != null))
             .isNotEmpty ||
         widget.dice.isNotEmpty;
     return [
@@ -186,7 +190,8 @@ class _DynamicActionCardState extends State<DynamicActionCard> {
       if (widget.explanation != null && widget.explanation!.isNotEmpty) ...[
         Padding(
           padding: const EdgeInsets.only(top: 16, bottom: 4),
-          child: Text(tr.generic.explanation, style: Theme.of(context).textTheme.bodySmall),
+          child: Text(tr.generic.explanation,
+              style: Theme.of(context).textTheme.bodySmall),
         ),
         _renderMarkdown(context, widget.explanation!),
       ],
@@ -204,7 +209,8 @@ class _DynamicActionCardState extends State<DynamicActionCard> {
               ),
             ),
             ...widget.actions,
-            if (widget.actions.isNotEmpty && widget.dice.isNotEmpty) const SizedBox(width: 8),
+            if (widget.actions.isNotEmpty && widget.dice.isNotEmpty)
+              const SizedBox(width: 8),
             if (widget.dice.isNotEmpty)
               Padding(
                 padding: const EdgeInsets.only(bottom: 2.5),

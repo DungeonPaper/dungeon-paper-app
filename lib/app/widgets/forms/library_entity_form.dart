@@ -11,8 +11,10 @@ import 'package:dungeon_paper/i18n.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-class LibraryEntityForm<T extends WithMeta, Ctrl extends LibraryEntityFormController<T, LibraryEntityFormArguments<T>>>
-    extends GetView<Ctrl> {
+class LibraryEntityForm<
+    T extends WithMeta,
+    Ctrl extends LibraryEntityFormController<T,
+        LibraryEntityFormArguments<T>>> extends GetView<Ctrl> {
   const LibraryEntityForm({
     super.key,
     required this.children,
@@ -31,7 +33,8 @@ class LibraryEntityForm<T extends WithMeta, Ctrl extends LibraryEntityFormContro
           ),
           body: ItemBuilder.lazyListView(
             padding: const EdgeInsets.all(16).copyWith(bottom: 80),
-            children: children.joinObjects(() => const SizedBox(height: 16)).toList(),
+            children:
+                children.joinObjects(() => const SizedBox(height: 16)).toList(),
             trailing: [
               () => const Divider(height: 64),
               () => Obx(
@@ -61,8 +64,8 @@ class LibraryEntityForm<T extends WithMeta, Ctrl extends LibraryEntityFormContro
       );
 }
 
-abstract class LibraryEntityFormController<T extends WithMeta, Args extends LibraryEntityFormArguments<T>>
-    extends GetxController {
+abstract class LibraryEntityFormController<T extends WithMeta,
+    Args extends LibraryEntityFormArguments<T>> extends GetxController {
   final dirty = false.obs;
   late final Args args;
   bool afterInit = false;

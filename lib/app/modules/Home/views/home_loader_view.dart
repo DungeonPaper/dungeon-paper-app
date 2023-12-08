@@ -28,11 +28,14 @@ class HomeLoaderView extends GetView with LoadingServiceMixin {
     final theme = Theme.of(context);
     final colorScheme = theme.colorScheme;
     final brightness = theme.brightness;
-    final skeletonColor =
-        brightness == Brightness.light ? theme.cardColor.withOpacity(0.65) : colorScheme.surfaceVariant;
+    final skeletonColor = brightness == Brightness.light
+        ? theme.cardColor.withOpacity(0.65)
+        : colorScheme.surfaceVariant;
     final skeletonHighlightColor = brightness == Brightness.light
-        ? Color.alphaBlend(theme.cardColor.withOpacity(0.65), colorScheme.surfaceTint.withOpacity(0.5))
-        : Color.alphaBlend(theme.cardColor.withOpacity(0.65), colorScheme.surfaceTint);
+        ? Color.alphaBlend(theme.cardColor.withOpacity(0.65),
+            colorScheme.surfaceTint.withOpacity(0.5))
+        : Color.alphaBlend(
+            theme.cardColor.withOpacity(0.65), colorScheme.surfaceTint);
 
     return SingleChildScrollView(
       child: SkeletonLoader(
@@ -158,7 +161,8 @@ class HomeLoaderView extends GetView with LoadingServiceMixin {
                 children: [
                   for (final _ in range(3))
                     Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 2).copyWith(bottom: 4),
+                      padding: const EdgeInsets.symmetric(horizontal: 2)
+                          .copyWith(bottom: 4),
                       child: Container(
                         height: 56,
                         width: 118,

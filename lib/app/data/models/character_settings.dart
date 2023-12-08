@@ -56,11 +56,13 @@ class CharacterSettings {
         darkTheme: darkTheme ?? this.darkTheme,
       );
 
-  factory CharacterSettings.fromRawJson(String str) => CharacterSettings.fromJson(json.decode(str));
+  factory CharacterSettings.fromRawJson(String str) =>
+      CharacterSettings.fromJson(json.decode(str));
 
   String toRawJson() => json.encode(toJson());
 
-  factory CharacterSettings.fromJson(Map<String, dynamic> json) => CharacterSettings(
+  factory CharacterSettings.fromJson(Map<String, dynamic> json) =>
+      CharacterSettings(
         noteCategories: json['noteCategories'] != null
             ? NoteCategoryList.fromJson(json['noteCategories'])
             : const NoteCategoryList(sortOrder: {}),
@@ -78,8 +80,8 @@ class CharacterSettings {
               ),
         sortOrder: json['sortOrder'],
         category: json['category'],
-        rollButtons:
-            List<RollButton?>.from((json['rollButtons'] ?? []).map((x) => x != null ? RollButton.fromJson(x) : null)),
+        rollButtons: List<RollButton?>.from((json['rollButtons'] ?? [])
+            .map((x) => x != null ? RollButton.fromJson(x) : null)),
         racePosition: RacePosition.values.firstWhere(
           (element) => element.name == json['racePosition'],
           orElse: () => RacePosition.start,
@@ -113,7 +115,8 @@ class CharacterSettings {
         'darkTheme': darkTheme,
       };
 
-  CharacterSettings copyWithThemes({int? lightTheme, int? darkTheme}) => CharacterSettings(
+  CharacterSettings copyWithThemes({int? lightTheme, int? darkTheme}) =>
+      CharacterSettings(
         lightTheme: lightTheme,
         darkTheme: darkTheme,
         sortOrder: sortOrder,
@@ -181,9 +184,11 @@ class OrderedCategoryList<T> {
         'canHide': canHide,
       };
 
-  factory OrderedCategoryList.fromRawJson(String str) => OrderedCategoryList.fromJson(json.decode(str));
+  factory OrderedCategoryList.fromRawJson(String str) =>
+      OrderedCategoryList.fromJson(json.decode(str));
 
-  factory OrderedCategoryList.fromJson(Map<String, dynamic> json) => OrderedCategoryList(
+  factory OrderedCategoryList.fromJson(Map<String, dynamic> json) =>
+      OrderedCategoryList(
         hidden: Set<T>.from(json['hidden']),
         sortOrder: Set<T>.from(json['sortOrder']),
         canHide: json['canHide'],
@@ -228,7 +233,8 @@ class OrderedCategoryList<T> {
         canHide,
       ]);
 
-  String get debugProperties => 'hidden: $hidden, sortOrder: $sortOrder, canHide: $canHide';
+  String get debugProperties =>
+      'hidden: $hidden, sortOrder: $sortOrder, canHide: $canHide';
 
   @override
   String toString() => 'OrderedCategoryList($debugProperties)';
@@ -241,9 +247,11 @@ class NoteCategoryList extends OrderedCategoryList<String> {
     required super.sortOrder,
   }) : super(canHide: false, hidden: const {});
 
-  factory NoteCategoryList.fromRawJson(String str) => NoteCategoryList.fromJson(json.decode(str));
+  factory NoteCategoryList.fromRawJson(String str) =>
+      NoteCategoryList.fromJson(json.decode(str));
 
-  factory NoteCategoryList.fromJson(Map<String, dynamic> json) => NoteCategoryList(
+  factory NoteCategoryList.fromJson(Map<String, dynamic> json) =>
+      NoteCategoryList(
         sortOrder: Set<String>.from(json['sortOrder']),
       );
 
@@ -270,10 +278,13 @@ class ActionCategoryList extends OrderedCategoryList<Type> {
     required super.hidden,
   }) : super(canHide: true);
 
-  factory ActionCategoryList.fromRawJson(String str) => ActionCategoryList.fromJson(json.decode(str));
+  factory ActionCategoryList.fromRawJson(String str) =>
+      ActionCategoryList.fromJson(json.decode(str));
 
-  factory ActionCategoryList.fromJson(Map<String, dynamic> json) => ActionCategoryList(
-        sortOrder: Set<Type>.from((json['sortOrder'] ?? []).map((x) => _toType(x))),
+  factory ActionCategoryList.fromJson(Map<String, dynamic> json) =>
+      ActionCategoryList(
+        sortOrder:
+            Set<Type>.from((json['sortOrder'] ?? []).map((x) => _toType(x))),
         hidden: Set<Type>.from((json['hidden'] ?? []).map((x) => _toType(x))),
       );
 
@@ -297,7 +308,8 @@ class ActionCategoryList extends OrderedCategoryList<Type> {
   }
 
   @override
-  Set<Type> getSorted([Set<Type> all = const {}]) => super.getSorted(all).map((el) => _toType(el.toString())).toSet();
+  Set<Type> getSorted([Set<Type> all = const {}]) =>
+      super.getSorted(all).map((el) => _toType(el.toString())).toSet();
 
   @override
   String get debugProperties => 'sortOrder: $sortOrder, hidden: $hidden';

@@ -19,7 +19,8 @@ import 'home_character_view.dart';
 import 'home_fab.dart';
 import 'home_nav_bar.dart';
 
-class HomeView extends GetView<CharacterService> with UserServiceMixin, LoadingServiceMixin, CharacterServiceMixin {
+class HomeView extends GetView<CharacterService>
+    with UserServiceMixin, LoadingServiceMixin, CharacterServiceMixin {
   const HomeView({super.key});
 
   @override
@@ -44,14 +45,18 @@ class HomeView extends GetView<CharacterService> with UserServiceMixin, LoadingS
                   : const HomeEmptyState();
         },
       ),
-      floatingActionButton: Obx(() => maybeChar != null ? const HomeFAB() : const SizedBox.shrink()),
+      floatingActionButton: Obx(
+          () => maybeChar != null ? const HomeFAB() : const SizedBox.shrink()),
       bottomNavigationBar: Obx(
-        () => maybeChar != null ? HomeNavBar(pageController: controller.pageController) : const SizedBox.shrink(),
+        () => maybeChar != null
+            ? HomeNavBar(pageController: controller.pageController)
+            : const SizedBox.shrink(),
       ),
     );
   }
 
-  PageControllerFractionalBox _fractionalSizedBox(Widget child) => PageControllerFractionalBox(
+  PageControllerFractionalBox _fractionalSizedBox(Widget child) =>
+      PageControllerFractionalBox(
         controller: controller.pageController,
         child: child,
       );
@@ -60,7 +65,8 @@ class HomeView extends GetView<CharacterService> with UserServiceMixin, LoadingS
     debugPrint('afterFirstLoad: ${loadingService.afterFirstLoad}, '
         'loadingUser: ${loadingService.loadingUser}, '
         'loadingCharacters: ${loadingService.loadingCharacters}');
-    return !loadingService.afterFirstLoad && (loadingService.loadingUser || loadingService.loadingCharacters);
+    return !loadingService.afterFirstLoad &&
+        (loadingService.loadingUser || loadingService.loadingCharacters);
   }
 }
 
@@ -82,7 +88,8 @@ class HomeEmptyState extends StatelessWidget with UserServiceMixin {
                 child: Card(
                   margin: const EdgeInsets.all(32),
                   child: Padding(
-                    padding: const EdgeInsets.symmetric(vertical: 24, horizontal: 16),
+                    padding: const EdgeInsets.symmetric(
+                        vertical: 24, horizontal: 16),
                     child: Column(
                       children: [
                         RichText(
@@ -90,7 +97,8 @@ class HomeEmptyState extends StatelessWidget with UserServiceMixin {
                           text: TextSpan(
                             children: [
                               IconSpan(context, icon: Icons.person, size: 24),
-                              TextSpan(text: ' ${tr.home.emptyState.guest.title}'),
+                              TextSpan(
+                                  text: ' ${tr.home.emptyState.guest.title}'),
                             ],
                             style: textTheme.titleLarge,
                           ),

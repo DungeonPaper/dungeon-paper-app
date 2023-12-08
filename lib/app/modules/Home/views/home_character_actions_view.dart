@@ -423,4 +423,3 @@ class ActionsCardList<T extends WithMeta> extends GetView<CharacterService>
         );
   }
 }
-

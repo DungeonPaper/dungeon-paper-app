@@ -88,7 +88,8 @@ class SelectBox<T> extends StatelessWidget {
     return DropdownButton<T>(
       alignment: alignment,
       autofocus: autofocus,
-      borderRadius: borderRadius ?? rRectShape.borderRadius.resolve(TextDirection.ltr),
+      borderRadius:
+          borderRadius ?? rRectShape.borderRadius.resolve(TextDirection.ltr),
       disabledHint: disabledHint,
       dropdownColor: dropdownColor,
       elevation: elevation,

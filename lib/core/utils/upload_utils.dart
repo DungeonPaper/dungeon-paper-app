@@ -79,12 +79,14 @@ Future<Reference> _uploadPhoto(CroppedFile file, String uploadPath) async {
   if (!uploadPath.startsWith('/')) {
     uploadPath = '/$uploadPath';
   }
-  final ref = FirebaseStorage.instance.ref(userService.current.fileStoragePath! + uploadPath + ext);
+  final ref = FirebaseStorage.instance
+      .ref(userService.current.fileStoragePath! + uploadPath + ext);
   await ref.putData(await file.readAsBytes());
   return ref;
 }
 
-Future<UploadResponse?> cropAndUploadPhoto(BuildContext context, UploadSettings settings) async {
+Future<UploadResponse?> cropAndUploadPhoto(
+    BuildContext context, UploadSettings settings) async {
   CroppedFile? file;
   try {
     file = await _pickAndCrop(context);
@@ -109,7 +111,8 @@ Future<UploadResponse?> cropAndUploadPhoto(BuildContext context, UploadSettings 
     settings.onSuccess?.call(downloadURL);
   } catch (e) {
     Get.rawSnackbar(
-      message: 'Error while uploading photo. Try again later, or contact support using the "About" page.',
+      message:
+          'Error while uploading photo. Try again later, or contact support using the "About" page.',
     );
 
     settings.onError?.call(e);

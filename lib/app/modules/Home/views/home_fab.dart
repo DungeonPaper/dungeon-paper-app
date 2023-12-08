@@ -77,4 +77,3 @@ class _HomeFABState extends State<HomeFAB> with CharacterServiceMixin {
     }
   }
 }
-

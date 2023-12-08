@@ -41,9 +41,14 @@ class ImportExportView extends GetView<ImportExportController> {
       ),
       floatingActionButton: Obx(
         () => AdvancedFloatingActionButton.extended(
-          label: Text(controller.tab.value.index == 0 ? tr.backup.exporting.button : tr.backup.importing.button),
-          icon: Icon(controller.tab.value.index == 0 ? Icons.upload : Icons.download),
-          onPressed: controller.tab.value.index == 0 ? controller.doExport : controller.doImport,
+          label: Text(controller.tab.value.index == 0
+              ? tr.backup.exporting.button
+              : tr.backup.importing.button),
+          icon: Icon(
+              controller.tab.value.index == 0 ? Icons.upload : Icons.download),
+          onPressed: controller.tab.value.index == 0
+              ? controller.doExport
+              : controller.doImport,
         ),
       ),
     );

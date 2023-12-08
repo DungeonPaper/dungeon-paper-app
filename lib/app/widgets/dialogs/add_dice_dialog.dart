@@ -24,7 +24,8 @@ class AddDiceDialog extends StatefulWidget {
   State<AddDiceDialog> createState() => _AddDiceDialogState();
 }
 
-class _AddDiceDialogState extends State<AddDiceDialog> with RepositoryServiceMixin {
+class _AddDiceDialogState extends State<AddDiceDialog>
+    with RepositoryServiceMixin {
   late dw.Dice dice;
 
   @override
@@ -37,7 +38,9 @@ class _AddDiceDialogState extends State<AddDiceDialog> with RepositoryServiceMix
   Widget build(BuildContext context) {
     return AlertDialog(
       title: Text(
-        widget.dice == null ? tr.generic.addEntity(tr.entity(dw.Dice)) : tr.generic.editEntity(tr.entity(dw.Dice)),
+        widget.dice == null
+            ? tr.generic.addEntity(tr.entity(dw.Dice))
+            : tr.generic.editEntity(tr.entity(dw.Dice)),
       ),
       content: SingleChildScrollView(
         child: DiceForm(

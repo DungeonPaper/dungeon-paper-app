@@ -86,4 +86,3 @@ class HomeCharacterActionsSummary extends GetView<CharacterService> {
     );
   }
 }
-

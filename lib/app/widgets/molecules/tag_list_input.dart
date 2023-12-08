@@ -26,8 +26,12 @@ class TagListInput extends StatelessWidget {
         tag: tag?.value,
         onSave: onSave,
       ),
-      chipBuilder: (context, tag, {onDeleteChip, required onTapChip}) => TagChip(
-        tag: tag != null ? tag.value : dw.Tag(name: tr.generic.addEntity(tr.entity(dw.Tag)), value: null),
+      chipBuilder: (context, tag, {onDeleteChip, required onTapChip}) =>
+          TagChip(
+        tag: tag != null
+            ? tag.value
+            : dw.Tag(
+                name: tr.generic.addEntity(tr.entity(dw.Tag)), value: null),
         icon: tag != null ? null : const Icon(Icons.add),
         onPressed: onTapChip,
         onDeleted: onDeleteChip,

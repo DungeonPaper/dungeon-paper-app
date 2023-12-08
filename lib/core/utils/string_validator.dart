@@ -51,7 +51,8 @@ class StringContainsValidation extends Validation {
     required this.pattern,
     this.userFriendlyPattern,
     String? message,
-  }) : super(message ?? tr.errors.mustContain((userFriendlyPattern ?? pattern).toString()));
+  }) : super(message ??
+            tr.errors.mustContain((userFriendlyPattern ?? pattern).toString()));
 
   @override
   bool isValid(String? string) => string == null || string.contains(pattern);
@@ -65,7 +66,9 @@ class StringNotContainsValidation extends Validation {
     required this.pattern,
     this.userFriendlyPattern,
     String? message,
-  }) : super(message ?? tr.errors.mustNotContain((userFriendlyPattern ?? pattern).toString()));
+  }) : super(message ??
+            tr.errors
+                .mustNotContain((userFriendlyPattern ?? pattern).toString()));
 
   @override
   bool isValid(String? string) => string == null || !string.contains(pattern);
@@ -110,7 +113,8 @@ class StringValidator extends CompoundStringValidator {
   List<Validation> get validators => [
         if (minLength != null) StringMinLengthValidation(minLength: minLength!),
         if (maxLength != null) StringMaxLengthValidation(maxLength: maxLength!),
-        if (exactLength != null) StringExactLengthValidation(length: exactLength!),
+        if (exactLength != null)
+          StringExactLengthValidation(length: exactLength!),
         if (containsPattern != null)
           StringContainsValidation(
             pattern: containsPattern!,

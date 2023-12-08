@@ -133,8 +133,7 @@ class BasicInfoFormView extends GetView<BasicInfoFormController>
                                   color: DwColors.warning, size: 16),
                             ),
                           ),
-                          TextSpan(
-                              text: tr.basicInfo.form.photo.guest.prefix),
+                          TextSpan(text: tr.basicInfo.form.photo.guest.prefix),
                           Hyperlink.textSpan(
                             context,
                             tr.basicInfo.form.photo.guest.label,
@@ -188,4 +187,3 @@ class BasicInfoFormView extends GetView<BasicInfoFormController>
     Get.back();
   }
 }
-

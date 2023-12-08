@@ -42,7 +42,8 @@ class ItemForm extends GetView<ItemFormController> {
   }
 }
 
-class ItemFormController extends LibraryEntityFormController<Item, ItemFormArgumentsNew> {
+class ItemFormController
+    extends LibraryEntityFormController<Item, ItemFormArgumentsNew> {
   final _name = TextEditingController().obs;
   final _description = TextEditingController().obs;
   final _tags = ValueNotifier<List<dw.Tag>>([]).obs;

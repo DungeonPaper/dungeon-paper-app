@@ -35,10 +35,13 @@ class RoundIconButton extends StatelessWidget {
   Widget _buildButton(BuildContext context) {
     final theme = Theme.of(context);
     final colorScheme = theme.colorScheme;
-    final bgColor = Color.alphaBlend(backgroundColor ?? Colors.transparent, colorScheme.primary);
+    final bgColor = Color.alphaBlend(
+        backgroundColor ?? Colors.transparent, colorScheme.primary);
     final fgColor = Color.alphaBlend(
       foregroundColor ?? Colors.transparent,
-      (ThemeData.estimateBrightnessForColor(bgColor) == Brightness.light ? Colors.black : Colors.white),
+      (ThemeData.estimateBrightnessForColor(bgColor) == Brightness.light
+          ? Colors.black
+          : Colors.white),
     );
     return ElevatedButton(
       child: IconTheme.merge(

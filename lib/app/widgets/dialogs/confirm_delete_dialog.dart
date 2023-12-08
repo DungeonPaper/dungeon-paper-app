@@ -32,4 +32,3 @@ class DeleteDialogOptions {
 }
 
 final deleteDialog = _DeleteDialog();
-

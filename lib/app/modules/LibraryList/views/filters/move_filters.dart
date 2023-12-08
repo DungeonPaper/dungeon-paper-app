@@ -158,4 +158,3 @@ class MoveFilters extends EntityFilters<Move> {
     );
   }
 }
-

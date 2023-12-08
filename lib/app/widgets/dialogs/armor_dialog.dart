@@ -29,7 +29,8 @@ class _ArmorDialogState extends State<ArmorDialog> {
   void initState() {
     super.initState();
     useDefault = widget.armor == null;
-    controller = TextEditingController(text: widget.armor?.toString() ?? widget.defaultArmor.toString());
+    controller = TextEditingController(
+        text: widget.armor?.toString() ?? widget.defaultArmor.toString());
     controller.addListener(_listener);
   }
 
@@ -65,7 +66,8 @@ class _ArmorDialogState extends State<ArmorDialog> {
             NumberTextField(
               controller: controller,
               numberType: NumberType.int,
-              decoration: InputDecoration(hintText: '0', label: Text(tr.armor.dialog.title)),
+              decoration: InputDecoration(
+                  hintText: '0', label: Text(tr.armor.dialog.title)),
               minValue: 0,
               enabled: !useDefault,
             )

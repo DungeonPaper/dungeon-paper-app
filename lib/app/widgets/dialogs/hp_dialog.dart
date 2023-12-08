@@ -27,7 +27,8 @@ class _HPDialogState extends State<HPDialog> with CharacterServiceMixin {
   void initState() {
     overrideHP = char.currentHp;
     shouldOverrideMaxHP = char.stats.maxHp != null;
-    overrideMaxHp = TextEditingController(text: char.maxHp.toString())..addListener(clampCurrentHP);
+    overrideMaxHp = TextEditingController(text: char.maxHp.toString())
+      ..addListener(clampCurrentHP);
     super.initState();
   }
 
@@ -70,7 +71,8 @@ class _HPDialogState extends State<HPDialog> with CharacterServiceMixin {
               const Divider(height: 32),
               CheckboxListTile(
                 value: shouldOverrideMaxHP,
-                onChanged: (value) => setState(() => shouldOverrideMaxHP = value!),
+                onChanged: (value) =>
+                    setState(() => shouldOverrideMaxHP = value!),
                 title: Text(tr.hp.dialog.overrideMax),
                 controlAffinity: ListTileControlAffinity.leading,
                 dense: true,
@@ -85,7 +87,8 @@ class _HPDialogState extends State<HPDialog> with CharacterServiceMixin {
               const SizedBox(height: 24),
               Row(
                 mainAxisAlignment: MainAxisAlignment.end,
-                children: DialogControls.save(context, onSave: save, onCancel: close, spacing: 8),
+                children: DialogControls.save(context,
+                    onSave: save, onCancel: close, spacing: 8),
               ),
             ],
           ),
@@ -95,7 +98,9 @@ class _HPDialogState extends State<HPDialog> with CharacterServiceMixin {
   }
 
   int get currentHP => char.currentHp;
-  int get maxHP => shouldOverrideMaxHP ? int.tryParse(overrideMaxHp.text) ?? char.defaultMaxHp : char.defaultMaxHp;
+  int get maxHP => shouldOverrideMaxHP
+      ? int.tryParse(overrideMaxHp.text) ?? char.defaultMaxHp
+      : char.defaultMaxHp;
 
   ValueChange get change => currentHP == overrideHP
       ? ValueChange.neutral
@@ -116,7 +121,9 @@ class _HPDialogState extends State<HPDialog> with CharacterServiceMixin {
   void save() {
     charService.updateCharacter(
       char.copyWith(
-        stats: char.stats.copyWith(currentHp: overrideHP).copyWithMaxHp(shouldOverrideMaxHP ? maxHP : null),
+        stats: char.stats
+            .copyWith(currentHp: overrideHP)
+            .copyWithMaxHp(shouldOverrideMaxHP ? maxHP : null),
       ),
     );
     close();

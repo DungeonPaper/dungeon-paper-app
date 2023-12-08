@@ -45,11 +45,13 @@ class StartingGearFormView extends GetView<StartingGearFormController> {
                               title: Text(choice.description),
                               subtitle: Text(
                                 choice.maxSelections != null
-                                    ? tr.createCharacter.startingGear.count.withMax(
+                                    ? tr.createCharacter.startingGear.count
+                                        .withMax(
                                         controller.selectionCount(choice),
                                         choice.maxSelections!,
                                       )
-                                    : tr.createCharacter.startingGear.count.noMax(
+                                    : tr.createCharacter.startingGear.count
+                                        .noMax(
                                         controller.selectionCount(choice),
                                       ),
                               ),
@@ -68,7 +70,8 @@ class StartingGearFormView extends GetView<StartingGearFormController> {
                                 title: Text(sel.description, maxLines: 1),
                                 subtitle: Text(
                                   sel.options
-                                      .map((opt) => '${NumberFormat('#0.#').format(opt.amount)}x ${opt.item.name}')
+                                      .map((opt) =>
+                                          '${NumberFormat('#0.#').format(opt.amount)}x ${opt.item.name}')
                                       .join(', '),
                                 ),
                                 dense: true,
