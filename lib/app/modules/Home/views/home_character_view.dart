@@ -10,7 +10,7 @@ import 'package:dungeon_paper/app/widgets/molecules/ability_scores_grid.dart';
 import 'package:dungeon_paper/core/dw_icons.dart';
 import 'package:dungeon_paper/core/utils/builder_utils.dart';
 import 'package:dungeon_paper/core/utils/math_utils.dart';
-import 'package:dungeon_paper/generated/l10n.dart';
+import 'package:dungeon_paper/i18n.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'local_widgets/home_character_dynamic_cards.dart';
@@ -18,7 +18,7 @@ import 'local_widgets/home_character_header_view.dart';
 import 'local_widgets/home_character_hp_xp_view.dart';
 
 class HomeCharacterView extends GetView<CharacterService> with HomeCharacterPaddingMixin {
-  const HomeCharacterView({Key? key}) : super(key: key);
+  const HomeCharacterView({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -45,7 +45,7 @@ class HomeCharacterView extends GetView<CharacterService> with HomeCharacterPadd
       const SizedBox(height: 8),
       pad(Text(
         char.displayName,
-        textScaleFactor: 1.4,
+        textScaler: const TextScaler.linear(1.4),
         textAlign: TextAlign.center,
       )),
       CharacterSubtitle(character: char),
@@ -69,7 +69,7 @@ class HomeCharacterView extends GetView<CharacterService> with HomeCharacterPadd
               icon: const Icon(DwIcons.swords),
               // visualDensity: VisualDensity.compact,
               label: char.damageDice.toString(),
-              tooltip: S.current.damageDice,
+              tooltip: tr.character.data.damageDice,
               onPressed: () => Get.dialog(
                 DamageDiceDialog(
                   damage: char.stats.damageDice,
@@ -85,7 +85,7 @@ class HomeCharacterView extends GetView<CharacterService> with HomeCharacterPadd
             ),
             const SizedBox(width: 8),
             PrimaryChip(
-              tooltip: S.current.armor,
+              tooltip: tr.armor.title,
               icon: const Icon(DwIcons.armor),
               // visualDensity: VisualDensity.compact,
               label: char.armor.toString(),

@@ -2,7 +2,7 @@ import 'package:dungeon_paper/app/data/models/character.dart';
 import 'package:dungeon_paper/app/data/models/user.dart';
 import 'package:dungeon_paper/app/data/services/character_service.dart';
 import 'package:dungeon_paper/app/data/services/user_service.dart';
-import 'package:dungeon_paper/generated/l10n.dart';
+import 'package:dungeon_paper/i18n.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -51,7 +51,7 @@ class ThemeBrightnessSwitch extends StatelessWidget with UserServiceMixin, Chara
       brightnessOf(user) == Brightness.light ? Icons.light_mode : Icons.light_mode_outlined;
 
   static String title(User user) =>
-      brightnessOf(user) == Brightness.light ? S.current.themeTurnDark : S.current.themeTurnLight;
+      brightnessOf(user) == Brightness.light ? tr.settings.switchToDark : tr.settings.switchToLight;
 
   static Widget _listTileBuilder(
     BuildContext context, {

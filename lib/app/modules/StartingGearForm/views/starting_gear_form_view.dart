@@ -1,7 +1,7 @@
 import 'package:dungeon_paper/app/data/models/gear_selection.dart';
 import 'package:dungeon_paper/app/widgets/atoms/advanced_floating_action_button.dart';
 import 'package:dungeon_paper/app/widgets/atoms/confirm_exit_view.dart';
-import 'package:dungeon_paper/generated/l10n.dart';
+import 'package:dungeon_paper/i18n.dart';
 import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
@@ -11,8 +11,8 @@ import '../controllers/starting_gear_form_controller.dart';
 
 class StartingGearFormView extends GetView<StartingGearFormController> {
   const StartingGearFormView({
-    Key? key,
-  }) : super(key: key);
+    super.key,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -21,11 +21,11 @@ class StartingGearFormView extends GetView<StartingGearFormController> {
         dirty: controller.dirty.value,
         child: Scaffold(
           appBar: AppBar(
-            title: Text(S.current.selectGeneric(S.current.entity(GearSelection))),
+            title: Text(tr.generic.selectEntity(tr.entity(GearSelection))),
           ),
           floatingActionButton: AdvancedFloatingActionButton.extended(
             onPressed: _save,
-            label: Text(S.current.save),
+            label: Text(tr.generic.save),
             icon: const Icon(Icons.save),
           ),
           body: ListView(
@@ -45,11 +45,11 @@ class StartingGearFormView extends GetView<StartingGearFormController> {
                               title: Text(choice.description),
                               subtitle: Text(
                                 choice.maxSelections != null
-                                    ? S.current.createCharacterStartingGearChoiceCountWithMax(
+                                    ? tr.createCharacter.startingGear.count.withMax(
                                         controller.selectionCount(choice),
                                         choice.maxSelections!,
                                       )
-                                    : S.current.createCharacterStartingGearChoiceCountNoMax(
+                                    : tr.createCharacter.startingGear.count.noMax(
                                         controller.selectionCount(choice),
                                       ),
                               ),

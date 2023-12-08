@@ -95,25 +95,25 @@ class Character with WithIcon implements WithMeta<Character, CharacterMeta> {
       user.brightness == Brightness.light ? getLightTheme(user) : getDarkTheme(user);
 
   static RollButton get basicActionRollButton => RollButton(
-        label: S.current.rollBasicActionButton,
+        label: tr.customRolls.presets.basicAction,
         dice: [dw.Dice.d6 * 2],
         specialDice: [],
       );
 
   static RollButton get hackAndSlashRollButton => RollButton(
-        label: S.current.rollAttackDamageButton,
+        label: tr.customRolls.presets.hackAndSlash,
         dice: [dw.Dice.fromJson('2d6+STR')],
         specialDice: [SpecialDice.damage],
       );
 
   static RollButton get volleyRollButton => RollButton(
-        label: S.current.rollVolleyButton,
+        label: tr.customRolls.presets.volley,
         dice: [dw.Dice.fromJson('2d6+DEX')],
         specialDice: [SpecialDice.damage],
       );
 
   static RollButton get discernRealitiesRollButton => RollButton(
-        label: S.current.rollDiscernRealitiesButton,
+        label: tr.customRolls.presets.discernRealities,
         dice: [dw.Dice.fromJson('2d6+WIS')],
         specialDice: [],
       );

@@ -20,7 +20,6 @@ import 'package:dungeon_paper/app/themes/colors.dart';
 import 'package:dungeon_paper/app/widgets/atoms/advanced_floating_action_button.dart';
 import 'package:dungeon_paper/app/widgets/atoms/character_avatar.dart';
 import 'package:dungeon_paper/app/widgets/atoms/confirm_exit_view.dart';
-import 'package:dungeon_paper/generated/l10n.dart';
 import 'package:dungeon_paper/i18n.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -31,7 +30,7 @@ import '../../../widgets/chips/advanced_chip.dart';
 import '../controllers/create_character_controller.dart';
 
 class CreateCharacterView extends GetView<CreateCharacterController> {
-  const CreateCharacterView({Key? key}) : super(key: key);
+  const CreateCharacterView({super.key});
 
   CharacterClass? get cls => controller.characterClass.value;
   @override
@@ -83,19 +82,20 @@ class CreateCharacterView extends GetView<CreateCharacterController> {
                               leading: CharacterAvatar.squircle(
                                 size: 48,
                                 character: Character.empty().copyWith(
-                                    avatarUrl: controller.avatarUrl.value),
+                                  avatarUrl: controller.avatarUrl.value,
+                                ),
                               ),
                               title: controller.name.isEmpty
-                                  ? Text(S
-                                      .current.createCharacterTravelerBlankName)
+                                  ? Text(
+                                      tr.createCharacter.basicInfo.defaultName,
+                                    )
                                   : Text(controller.name.value),
                               subtitle: controller.name.isEmpty
-                                  ? Text(
-                                      S.current.createCharacterTravelerHelpText)
+                                  ? Text(tr.createCharacter.basicInfo.helpText)
                                   : Text(
-                                      S.current
-                                          .createCharacterTravelerDescription(
-                                              cls?.name ?? ''),
+                                      tr.createCharacter.basicInfo.description(
+                                        cls?.name ?? '',
+                                      ),
                                     ),
                               valid: controller.name.isNotEmpty,
                               onTap: () => Get.toNamed(
@@ -115,10 +115,15 @@ class CreateCharacterView extends GetView<CreateCharacterController> {
                                       .selectEntity(tr.entity(CharacterClass)))
                                   : Text(cls!.name),
                               subtitle: cls == null
-                                  ? Text(S.current.createCharacterClassHelpText)
+                                  ? Text(tr.createCharacter.characterClass
+                                      .noSelection)
                                   : Text(
-                                      S.current.createCharacterClassDescription(
-                                          cls!.hp, cls!.load, cls!.damageDice),
+                                      tr.createCharacter.characterClass
+                                          .description(
+                                        cls!.hp,
+                                        cls!.load,
+                                        cls!.damageDice.toString(),
+                                      ),
                                     ),
                               valid: cls != null,
                               onTap: () => Get.toNamed(
@@ -239,13 +244,16 @@ class CreateCharacterView extends GetView<CreateCharacterController> {
                                   ? tr.createCharacter.startingGear.helpText
                                   : [
                                       controller.coins > 0
-                                          ? tr.createCharacter.startingGear.coins(
+                                          ? tr.createCharacter.startingGear
+                                              .coins(
                                               NumberFormat('#0.#')
                                                   .format(controller.coins),
                                             )
                                           : null,
                                       controller.items
-                                          .map((i) => tr.createCharacter.startingGear.item(
+                                          .map((i) => tr
+                                                  .createCharacter.startingGear
+                                                  .item(
                                                 NumberFormat('#0.#')
                                                     .format(i.amount),
                                                 i.name,
@@ -280,19 +288,21 @@ class CreateCharacterView extends GetView<CreateCharacterController> {
                               title: Text(
                                 tr.generic.selectEntity(
                                   (cls?.isSpellcaster ?? false)
-                                      ? S.current.createCharacterMovesSpells
+                                      ? tr.createCharacter.movesSpells.title
                                       : tr.entityPlural(Move),
                                 ),
                               ),
                               subtitle: Text(
                                 (cls?.isSpellcaster ?? false)
-                                    ? S.current
-                                        .createCharacterMovesSpellsDescription(
+                                    ? tr.createCharacter.movesSpells
+                                        .description(
                                         controller.moves.length,
                                         controller.spells.length,
                                       )
-                                    : S.current.movesWithCount(
-                                        controller.moves.length),
+                                    : tr.entityCountNum(
+                                        Move,
+                                        controller.moves.length,
+                                      ),
                               ),
                               onTap: cls != null
                                   ? () => Get.toNamed(
@@ -327,7 +337,6 @@ class CreateCharacterView extends GetView<CreateCharacterController> {
 
 class _AbilityScoreChipList extends StatelessWidget {
   const _AbilityScoreChipList({
-    super.key,
     required this.controller,
   });
 
@@ -371,14 +380,13 @@ class _AbilityScoreChipList extends StatelessWidget {
 
 class _Card extends StatelessWidget {
   const _Card({
-    Key? key,
     this.contentPadding,
     this.leading,
     required this.title,
     required this.subtitle,
     this.valid = true,
     required this.onTap,
-  }) : super(key: key);
+  });
 
   final EdgeInsets? contentPadding;
   final Widget? leading;

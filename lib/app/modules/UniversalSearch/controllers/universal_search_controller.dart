@@ -13,6 +13,7 @@ import 'package:dungeon_paper/app/modules/LibraryList/views/filters/race_filters
 import 'package:dungeon_paper/app/modules/LibraryList/views/filters/spell_filters.dart';
 import 'package:dungeon_paper/core/utils/list_utils.dart';
 import 'package:dungeon_paper/generated/l10n.dart';
+import 'package:dungeon_paper/i18n.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -103,7 +104,7 @@ class UniversalSearchController extends GetxController with RepositoryServiceMix
       );
 
       final result =
-          e.index < entries.length ? [SearchSeparator(S.current.entityPlural(list.first.runtimeType)), ...list] : list;
+          e.index < entries.length ? [SearchSeparator(tr.entityPlural(list.first.runtimeType)), ...list] : list;
       return result;
     });
 

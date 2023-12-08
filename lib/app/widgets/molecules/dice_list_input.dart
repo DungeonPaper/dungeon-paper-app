@@ -2,10 +2,10 @@ import 'package:dungeon_paper/app/data/models/ability_scores.dart';
 import 'package:dungeon_paper/app/widgets/chips/dice_chip.dart';
 import 'package:dungeon_paper/app/widgets/dialogs/add_dice_dialog.dart';
 import 'package:dungeon_paper/app/widgets/molecules/chip_list_input.dart';
-import 'package:flutter/material.dart';
+import 'package:dungeon_paper/i18n.dart';
 import 'package:dungeon_world_data/dungeon_world_data.dart' as dw;
+import 'package:flutter/material.dart';
 
-import '../../../generated/l10n.dart';
 
 class DiceListInput extends StatefulWidget {
   const DiceListInput({
@@ -58,7 +58,7 @@ class _DiceListInputState extends State<DiceListInput> {
       ),
       chipBuilder: (context, dice, {onDeleteChip, required onTapChip}) => DiceChip(
         dice: dice != null ? dice.value : dw.Dice.d6,
-        label: dice != null ? null : S.current.addGeneric(dw.Dice),
+        label: dice != null ? null : tr.generic.addEntity(tr.entity(dw.Dice)),
         icon: dice != null ? null : const Icon(Icons.add),
         onPressed: onTapChip,
         onDeleted: onDeleteChip,
@@ -72,7 +72,7 @@ class _DiceListInputState extends State<DiceListInput> {
           ))
             DiceChip(
               dice: dice,
-              label: S.current.diceSuggestion(dice.toString()),
+              label: tr.dice.suggestion(dice.toString()),
               onPressed: () => controller.value = [...controller.value, dice],
             ),
       ],

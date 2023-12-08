@@ -1,23 +1,23 @@
 # generic name mappings
-_entSingle(String type): "${{
-  'Dice': 'Die',
-  'CharacterClass': 'Class',
-  'MoveCategory': 'Category',
-  'GearSelection': 'Starting Gear',
-  'AbilityScore': 'Ability Score',
-  'AlignmentValue': 'Alignment'
-  }[type] ?? type}"
-_entPlural(String type): "${{
-  'MoveCategory': 'Categories',
-  'CharacterClass': 'Classes',
-  'GearSelection': 'Starting Gear',
-  'AbilityScore': 'Ability Scores',
-  'AlignmentValue': 'Alignments'
-  }[type] ?? '${type}s'}"
+_entSingle(String type): |-
+  ${_select(type, {
+    'Dice': 'Die',
+    'CharacterClass': 'Class',
+    'MoveCategory': 'Category',
+    'GearSelection': 'Starting Gear',
+    'AbilityScore': 'Ability Score',
+    'AlignmentValue': 'Alignment'
+  })}
+_entPlural(String type): |-
+  ${_select(type, {
+    'MoveCategory': 'Categories',
+    'CharacterClass': 'Classes',
+  }, other: '${_entSingle(type)}s')}
 
 entity(Type ent): '${_entSingle(ent.toString())}'
 entityPlural(Type ent): '${_entPlural(ent.toString())}'
 entityCount(Type ent, int cnt): '${cnt == 1 ? _entSingle(ent.toString()) : _entPlural(ent.toString())}'
+entityCountNum(Type ent, int cnt): '$cnt ${entityCount(ent, cnt)}'
 
 app:
   name: Dungeon Paper
@@ -29,6 +29,7 @@ generic:
   close: Close
   done: Done
   view: View
+  continue_: Continue
   viewEntity(String ent): View $ent
   all: All
   allEntities(String ent): All $ent
@@ -44,22 +45,32 @@ generic:
   deleteEntity(String ent): Delete $ent
   edit: Edit
   editEntity(String ent): Edit $ent
+  yes: Yes
+  no: No
+  noEntity(String ent): No $ent
   select: Select
   selectEntity(String ent): Select $ent
   selected: Selected
+  selectAll: Select All
+  selectNone: Select None
   my: My
   myEntity(String ent): My $ent
   change: Change
   changeEntity(String ent): Change $ent
   seeAll: See All
   selectToAdd(String ent): Select $ent to add
+  name: Name
   entityName(String ent): $ent name
+  value: Value
   entityValue(String ent): $ent value
+  description: Description
   entityDescription(String ent): $ent description
+  explanation: Explanation
   entityExplanation(String ent): $ent explanation
   noDescription: ‹No description provided›
   noEntitySelected(String ent): No $ent selected
   noEntitySelectedRequired(String ent): No $ent selected (required)
+  useDefault: Use Default
 
 loading:
   user: Signing in...
@@ -78,6 +89,7 @@ errors:
   exactLength(int cnt): "Must be exactly $cnt ${_plural(cnt, one: 'character', many: 'characters')}"
   mustContain(String pattern): Must contain $pattern
   mustNotContain(String pattern): Must not contain $pattern
+  onlyLetters: Must contain letters only
 
 sort:
   moveUp: Move up
@@ -86,6 +98,7 @@ sort:
   moveEntityToBottom(String ent): Move $ent to bottom
 
 playbook:
+  title: Playbook
   myLibrary: My Library
   myCampaigns: My Campaigns
 
@@ -93,14 +106,34 @@ myLibrary:
   title: My Library
   reload: Reload Library
   itemCount(String cnt, String type): $cnt in $type
-  libraryType(String type): "${{
-    'builtIn': 'Playbook',
-    'my': 'My Library'
-    }[type] ?? type}"
+  libraryType(String type): |-
+    ${_select(type, {
+      'builtIn': 'Playbook',
+      'my': 'My Library'
+    })}
   alreadyAdded: Already added
   itemTab:
     playbook: Playbook
     online: Online
+  emptyState:
+    title(String ent): No $ent found
+    subtitle:
+      filters(String ent): No $ent found in this list.
+      noFilters(String ent): Try changing the search or filters to find more $ent.
+  filters:
+    clear: Clear Filters
+
+nav:
+  actions: Use
+  character: Character
+  journal: Journal
+
+sync:
+  entity:
+    status:
+      inSync(String ent): This $ent is In Sync with its linked library item
+      outOfSync(String ent): This $entity is Out of Sync with its linked library item
+      detached(String ent): This $entity is not linked to any library item
 
 settings:
   title: Settings
@@ -128,12 +161,13 @@ auth:
     signupWith(String provider): Sign up with $provider
     unusable(String provider): This device only supports unlinking $provider accounts.
     # `{provider, select, facebook {Facebook} google {Google} apple {Apple} password {Dungeon Paper} other {Other}}`
-    name(String provider): "${{
+    name(String provider): |-
+      ${_select(provider, {
       'facebook': 'Facebook',
       'google': 'Google',
       'apple': 'Apple',
       'password': 'Dungeon Paper',
-      }[provider] ?? 'Other'}"
+      }, other: 'Other')}
     unlink: Unlink
     link: Link
   confirmUnlink:
@@ -167,11 +201,21 @@ auth:
         error: Passwords do not match
 
 home:
+  bars:
+    xp: XP
+    hp: HP
   categories:
     notes: Bookmarked Notes
     moves: Favorite Moves
     spells: Prepared Spells
     items: Equipped Items
+  summary:
+    load:
+      label(int cur, int max): 'Load: $cur/$max'
+      tooltip: Max Load
+    coins:
+      label(String amt): $amt G
+      tooltip: Coins
   menu:
     character:
       tooltip: Character Menu
@@ -220,12 +264,19 @@ character:
       autoMaxLoad: Use class base load + STR mod
     level: Level
     damageDice: Damage Dice
+    calculateDamage: Use damage dice from class & equipped items
   header:
     level(int lv): Level $lv
     characterClass(String name): $name
     race(String name): $name
     alignment(String alignment): $alignment
     separator: ' ∙ '
+  noCategory: No Category
+  theme:
+    title: Character Theme
+    _defaultTheme(String type): Default $type theme
+    defaultLight: "${_defaultTheme('light')}"
+    defaultDark: "${_defaultTheme('dark')}"
 
 characterClass:
   baseLoad: Base Load
@@ -233,6 +284,7 @@ characterClass:
   damageDice: Damage Dice
 
 dice:
+  suggestion(String dice): 'Suggested: $dice'
   form:
     amount: Amount
     sides: Sides
@@ -281,6 +333,12 @@ basicInfo:
         label: Image URL
         placeholder: Paste an image URL
 
+debilities:
+  label(String name, String key): $name ($key)
+  dialog:
+    title: Debilities
+    info: Debilities are temporary, negative conditions or states in which your character is in. When a stat is debilitated, it causes its modifier to be reduced by 1 until recovered.
+
 tags:
   copyFrom(String name): 'Copy from: $name'
   dialog:
@@ -304,11 +362,39 @@ dialogs:
         title: Are you really sure?
         body: We do not save any data for deleted accounts. All your data will be permanently deleted.\n\nAre you sure you want to delete your account?\n\nPlease confirm this one last time.
 
+moves:
+  category:
+    shortName(String cat): |-
+      ${_select(cat, {
+        'starting': 'Starting',
+        'basic': 'Basic',
+        'special': 'Special',
+        'advanced1': 'Advanced',
+        'advanced2': 'Advanced',
+      }, other: 'Other')}
+    mediumName(String cat): |-
+      ${_select(cat, {
+        'starting': 'Starting',
+        'basic': 'Basic',
+        'special': 'Special',
+        'advanced1': 'Advanced (1-5)',
+        'advanced2': 'Advanced (6-10)',
+      }, other: 'Other')}
+    longName(String cat): |-
+      ${_select(cat, {
+        'starting': 'Starting',
+        'basic': 'Basic',
+        'special': 'Special',
+        'advanced1': 'Advanced (level 1-5)',
+        'advanced2': 'Advanced (level 6-10)',
+      }, other: 'Other')}
+
 spells:
-  spellLevel(String level): "${{
-    'rote': 'Rote',
-    'cantrip': 'Cantrip',
-    }[level] ?? 'Level $level'}"
+  spellLevel(String level): |-
+    ${_select(level, {
+      'rote': 'Rote',
+      'cantrip': 'Cantrip',
+    }, other: 'Level $level')}
 
 items:
   amount(String amt): × $amt
@@ -323,13 +409,14 @@ notes:
 
 # `{alignment, select, chaotic {Chaotic} evil {Evil} good {Good} lawful {Lawful} neutral {Neutral} other {{alignment}}}`
 alignment:
-  name(String key): "${{
-    'chaotic': 'Chaotic',
-    'evil': 'Evil',
-    'good': 'Good',
-    'lawful': 'Lawful',
-    'neutral': 'Neutral',
-    }[key] ?? key}"
+  name(String key): |-
+    ${_select(key, {
+      'chaotic': 'Chaotic',
+      'evil': 'Evil',
+      'good': 'Good',
+      'lawful': 'Lawful',
+      'neutral': 'Neutral',
+    })}
 
 bio:
   dialog:
@@ -348,6 +435,8 @@ bio:
 
 search:
   placeholder: Type to search
+  placeholderEntity(String ent): Type to search $ent
+  searchIn: Search in
 
 hp:
   dialog:
@@ -374,6 +463,12 @@ xp:
       xp: Override XP
       level: Override Level
 
+armor:
+  title: Armor
+  dialog:
+    title: Armor
+    autoArmor: Use armor from class & equipped items
+
 richText:
   preview: Preview
   help: Formatting Help
@@ -397,9 +492,19 @@ customRolls:
   title: Quick Roll Buttons
   left: Left Button
   right: Right Button
-  presets: Presets
-  useDefault: Use Default
   buttonLabel: Button Label
+  specialDice:
+    title: Special Dice
+    button(String btn): "${_select(btn, {'damage': 'Damage'}, other: btn)}"
+  tooltip:
+    rollNormal(String dice): Roll $dice\n* Rolling with debility
+    rollWithDebility(String dice): Roll $dice
+  presets:
+    title: Presets
+    basicAction: Basic Action
+    hackAndSlash: Hack & Slash
+    volley: Volley
+    discernRealities: Discern Realities
 
 sessionMarks:
   title: Bonds & Flags
@@ -415,13 +520,23 @@ sessionMarks:
     q3: Did we loot a memorable treasure?
 
 createCharacter:
+  characterClass:
+    noSelection: No class selected (required)
+    description(int hp, int load, String damageDice): 'Base HP: $hp, Load: $load, Damage Dice: $damageDice'
   basicInfo:
     defaultName: Unnamed Traveler
     helpText: Select name & picture (required)
+    description(String cls): Level 1 $cls
   startingGear:
     helpText: Select your starting gear determined by class (optional)
     coins(String amt): "$amt ${_plural(double.tryParse(amt)?.ceil() ?? 0, one: 'coin', many: 'coins')}"
     item(String amt, String name): $amt × $name
+    count:
+      withMax(int cnt, int max): '$cnt selected (class allowance: $max)'
+      noMax(int cnt): $cnt selected
+  movesSpells:
+    title: Moves & Spells
+    description(int moves, int spells): $moves Moves, $spells Spells selected
 
 account:
   details:
@@ -445,6 +560,9 @@ account:
       success: Password changed successfully
       label: New password
       placeholder: Enter your new password
+      visibility:
+        show: Show password
+        hide: Hide password
       confirm:
         label: Confirm New Password
         placeholder: Enter the same password again
@@ -539,3 +657,44 @@ feedback:
       label: Problem, idea or feedback description
     email:
       label: Enter your email
+  success:
+    title: Feedback sent!
+    message: Thank you for your feedback! We will review your feedback as soon as we can.
+
+migration:
+  title: Welcome to\nDungeon Paper 2!
+  subtitle: To get started, pick a username and the language for the rulebook & app. If you already have an existing Dungeon Paper account your data might take a few seconds to migrate.
+  username:
+    label: Username
+    placeholder: Pick a unique username
+    info: Your username is unique and can not be changed later, so think carefully! It will be used to identify all your library items when publishing.
+  language:
+    data: Default data language
+
+backup:
+  title: Export/Import
+  importing:
+    title: Import
+    button: Import
+    progress:
+      title: Importing...
+      processing(String ent): Processing $ent...
+    file:
+      browse: Browse...
+      clearFile: Clear selected file
+      info: To start importing, pick the file you want to import from.\nYou will then be able to select what to save and what to leave out.
+    success:
+      title: Import Successful
+      message: Your data was imported from file successfully
+    error:
+      title: Import Failed
+      message: Something went wrong.\nTry again or contact support if this persists
+  exporting:
+    title: Export
+    button: Export
+    error:
+      title: Export Failed
+      message: Something went wrong.\nTry again or contact support if this persists
+    success:
+      title: Export Successful
+      message: Your data was exported to file successfully

@@ -11,25 +11,24 @@ import 'package:dungeon_paper/app/widgets/menus/entity_edit_menu.dart';
 import 'package:dungeon_paper/app/widgets/molecules/categorized_list.dart';
 import 'package:dungeon_paper/app/widgets/molecules/character_subtitle.dart';
 import 'package:dungeon_paper/core/utils/builder_utils.dart';
+import 'package:dungeon_paper/i18n.dart';
 import 'package:flutter/material.dart';
-
 import 'package:get/get.dart';
 
-import '../../../../generated/l10n.dart';
 
 class CharacterListPageView extends GetView<CharacterService> with UserServiceMixin {
-  const CharacterListPageView({Key? key}) : super(key: key);
+  const CharacterListPageView({super.key});
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(S.current.characterListTitle),
+        title: Text(tr.generic.allEntities(tr.entity(Character))),
         centerTitle: true,
       ),
       floatingActionButton: AdvancedFloatingActionButton.extended(
         onPressed: () => Get.toNamed(Routes.createCharacter),
-        label: Text(S.current.createCharacterAddButton),
+        label: Text(tr.generic.createEntity(tr.entity(Character))),
         icon: const Icon(Icons.add),
       ),
       body: Obx(
@@ -38,7 +37,7 @@ class CharacterListPageView extends GetView<CharacterService> with UserServiceMi
             children: [
               for (final cat in controller.charsByCategory.keys)
                 () => CategorizedList(
-                      title: Text(cat.isNotEmpty ? cat : S.current.characterNoCategory),
+                      title: Text(cat.isNotEmpty ? cat : tr.character.noCategory),
                       onReorder: (oldIndex, newIndex) => controller.updateAll(
                         CharacterUtils.reorderCharacters(controller.charsByCategory[cat]!).call(oldIndex, newIndex),
                       ),
@@ -79,7 +78,7 @@ class CharacterListPageView extends GetView<CharacterService> with UserServiceMi
                                             context,
                                             DeleteDialogOptions(
                                               entityName: char.displayName,
-                                              entityKind: S.current.entity(Character),
+                                              entityKind: tr.entity(Character),
                                             ),
                                             () => controller.deleteCharacter(char),
                                           ),

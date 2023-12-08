@@ -6,15 +6,14 @@ import 'package:dungeon_paper/app/data/models/race.dart';
 import 'package:dungeon_paper/app/data/models/spell.dart';
 import 'package:dungeon_paper/app/modules/ImportExport/controllers/import_controller.dart';
 import 'package:dungeon_paper/core/utils/builder_utils.dart';
-import 'package:dungeon_paper/generated/l10n.dart';
+import 'package:dungeon_paper/i18n.dart';
 import 'package:flutter/material.dart';
-
 import 'package:get/get.dart';
 
 import '../local_widgets/list_card.dart';
 
 class ImportView extends GetView<ImportController> {
-  const ImportView({Key? key}) : super(key: key);
+  const ImportView({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -28,7 +27,7 @@ class ImportView extends GetView<ImportController> {
                     () => ElevatedButton.icon(
                           onPressed: () => controller.toImport.value = null,
                           icon: const Icon(Icons.clear),
-                          label: Text(S.current.importClearFile),
+                          label: Text(tr.backup.importing.file.clearFile),
                         ),
                     () => const ListCard<Character, ImportController>(),
                     () => const ListCard<CharacterClass, ImportController>(),
@@ -40,11 +39,11 @@ class ImportView extends GetView<ImportController> {
                 )
               : ItemBuilder.lazyChildren(
                   children: [
-                    () => Text(S.current.importBrowseHelp),
+                    () => Text(tr.backup.importing.file.info),
                     () => ElevatedButton.icon(
                           onPressed: controller.pickImportFile,
                           icon: const Icon(Icons.file_open),
-                          label: Text(S.current.importBrowseFile),
+                          label: Text(tr.backup.importing.file.browse),
                         )
                   ],
                 );
@@ -58,3 +57,4 @@ class ImportView extends GetView<ImportController> {
     );
   }
 }
+

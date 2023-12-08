@@ -1,16 +1,16 @@
 import 'package:dungeon_paper/app/widgets/chips/primary_chip.dart';
+import 'package:dungeon_paper/i18n.dart';
 import 'package:flutter/material.dart';
 
-import '../../../generated/l10n.dart';
 import '../../data/models/move.dart';
 
 class MoveCategoryChip extends StatelessWidget {
   const MoveCategoryChip({
-    Key? key,
+    super.key,
     required this.category,
     this.visualDensity,
     this.advancedLevelDisplay = AdvancedLevelDisplay.none,
-  }) : super(key: key);
+  });
 
   final MoveCategory category;
   final AdvancedLevelDisplay advancedLevelDisplay;
@@ -27,11 +27,11 @@ class MoveCategoryChip extends StatelessWidget {
   String get _text {
     switch (advancedLevelDisplay) {
       case AdvancedLevelDisplay.none:
-        return S.current.moveCategory(category);
+        return tr.moves.category.shortName(category.name);
       case AdvancedLevelDisplay.short:
-        return S.current.moveCategoryWithLevelShort(category);
+        return tr.moves.category.mediumName(category.name);
       case AdvancedLevelDisplay.full:
-        return S.current.moveCategoryWithLevel(category);
+        return tr.moves.category.longName(category.name);
     }
   }
 }

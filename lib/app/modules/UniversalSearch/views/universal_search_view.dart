@@ -14,15 +14,14 @@ import 'package:dungeon_paper/app/widgets/cards/move_card.dart';
 import 'package:dungeon_paper/app/widgets/cards/race_card.dart';
 import 'package:dungeon_paper/app/widgets/cards/spell_card.dart';
 import 'package:dungeon_paper/app/widgets/chips/primary_chip.dart';
-import 'package:dungeon_paper/generated/l10n.dart';
+import 'package:dungeon_paper/i18n.dart';
 import 'package:flutter/material.dart';
-
 import 'package:get/get.dart';
 
 import '../controllers/universal_search_controller.dart';
 
 class UniversalSearchView extends GetView<UniversalSearchController> {
-  UniversalSearchView({Key? key}) : super(key: key);
+  UniversalSearchView({super.key});
 
   final bucket = PageStorageBucket();
 
@@ -56,20 +55,20 @@ class UniversalSearchView extends GetView<UniversalSearchController> {
                       crossAxisAlignment: WrapCrossAlignment.center,
                       children: [
                         Text(
-                          S.current.searchIn,
+                          '${tr.search.searchIn}: ',
                           style: Theme.of(context).textTheme.bodyMedium!.copyWith(color: Colors.white),
                         ),
                         if (controller.hasCharacter)
                           _FilterChip(
-                            label: S.current.entity(Character),
+                            label: tr.entity(Character),
                             sourceType: SourceType.character,
                           ),
                         _FilterChip(
-                          label: S.current.libraryCollectionTitle,
+                          label: tr.myLibrary.title,
                           sourceType: SourceType.myLibrary,
                         ),
                         _FilterChip(
-                          label: S.current.addRepoItemTabPlaybook,
+                          label: tr.playbook.title,
                           sourceType: SourceType.builtInLibrary,
                         ),
                       ],

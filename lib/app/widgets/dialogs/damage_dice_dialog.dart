@@ -2,10 +2,10 @@ import 'package:dungeon_paper/app/data/models/ability_scores.dart';
 import 'package:dungeon_paper/app/widgets/forms/dice_form.dart';
 import 'package:dungeon_paper/app/widgets/molecules/dialog_controls.dart';
 import 'package:dungeon_paper/core/dw_icons.dart';
-import 'package:dungeon_paper/generated/l10n.dart';
+import 'package:dungeon_paper/i18n.dart';
+import 'package:dungeon_world_data/dungeon_world_data.dart' as dw;
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:dungeon_world_data/dungeon_world_data.dart' as dw;
 
 class DamageDiceDialog extends StatefulWidget {
   const DamageDiceDialog({
@@ -43,22 +43,22 @@ class _DamageDiceDialogState extends State<DamageDiceDialog> {
         children: [
           const Icon(DwIcons.dumbbell, size: 32),
           const SizedBox(width: 12),
-          Expanded(child: Text(S.current.damageDice)),
+          Expanded(child: Text(tr.character.data.damageDice)),
         ],
       ),
       content: SingleChildScrollView(
         child: Column(
           children: [
             CheckboxListTile(
-              title: Text(S.current.characterAutoDamage),
+              title: Text(tr.character.data.calculateDamage),
               dense: true,
               visualDensity: VisualDensity.compact,
               controlAffinity: ListTileControlAffinity.leading,
               value: useDefault,
               onChanged: (value) => setState(() {
-                final _value = value ?? !useDefault;
-                useDefault = _value;
-                if (_value) {
+                final rValue = value ?? !useDefault;
+                useDefault = rValue;
+                if (rValue) {
                   damage = widget.defaultDamage;
                 }
               }),
@@ -66,7 +66,7 @@ class _DamageDiceDialogState extends State<DamageDiceDialog> {
             const SizedBox(height: 8),
             DiceForm(
               dice: damage,
-              onChanged: (dw.Dice _dice) => setState(() => damage = _dice),
+              onChanged: (dw.Dice dice) => setState(() => damage = dice),
               abilityScores: widget.abilityScores,
               enabled: !useDefault,
             ),

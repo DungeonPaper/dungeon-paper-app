@@ -1,10 +1,9 @@
 import 'package:dungeon_paper/app/widgets/chips/tag_chip.dart';
 import 'package:dungeon_paper/app/widgets/dialogs/add_tag_dialog.dart';
 import 'package:dungeon_paper/app/widgets/molecules/chip_list_input.dart';
-import 'package:flutter/material.dart';
+import 'package:dungeon_paper/i18n.dart';
 import 'package:dungeon_world_data/dungeon_world_data.dart' as dw;
-
-import '../../../generated/l10n.dart';
+import 'package:flutter/material.dart';
 
 class TagListInput extends StatelessWidget {
   const TagListInput({
@@ -28,7 +27,7 @@ class TagListInput extends StatelessWidget {
         onSave: onSave,
       ),
       chipBuilder: (context, tag, {onDeleteChip, required onTapChip}) => TagChip(
-        tag: tag != null ? tag.value : dw.Tag(name: S.current.addGeneric(dw.Tag), value: null),
+        tag: tag != null ? tag.value : dw.Tag(name: tr.generic.addEntity(tr.entity(dw.Tag)), value: null),
         icon: tag != null ? null : const Icon(Icons.add),
         onPressed: onTapChip,
         onDeleted: onDeleteChip,

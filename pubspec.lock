@@ -627,10 +627,9 @@ packages:
   i18n:
     dependency: "direct main"
     description:
-      name: i18n
-      sha256: cfd452e0170ab9ba0fb117d6c16b879177c19969956647f60280d272aa996b35
-      url: "https://pub.dev"
-    source: hosted
+      path: "../i18n"
+      relative: true
+    source: path
     version: "4.0.8"
   icons_launcher:
     dependency: "direct main"

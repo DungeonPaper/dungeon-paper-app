@@ -167,7 +167,7 @@ class _RollButtonListTileState extends State<_RollButtonListTile> with Repositor
             Expanded(
               child: SelectBox<RollButton>(
                 isExpanded: true,
-                hint: Text(tr.customRolls.presets),
+                hint: Text(tr.customRolls.presets.title),
                 items: [
                   for (final button in [
                     Character.basicActionRollButton,
@@ -202,7 +202,7 @@ class _RollButtonListTileState extends State<_RollButtonListTile> with Repositor
                 height: 48,
                 child: ElevatedButton(
                   onPressed: isDefault ? null : () => setState(() => updateFields(widget.defaultButton, true)),
-                  child: Text(tr.customRolls.useDefault),
+                  child: Text(tr.generic.useDefault),
                 ),
               ),
             ),

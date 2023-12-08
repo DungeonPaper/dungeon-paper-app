@@ -9,17 +9,16 @@ import 'package:dungeon_paper/app/widgets/cards/move_card.dart';
 import 'package:dungeon_paper/app/widgets/cards/spell_card.dart';
 import 'package:dungeon_paper/app/widgets/menus/entity_edit_menu.dart';
 import 'package:dungeon_paper/core/utils/list_utils.dart';
-import 'package:dungeon_paper/generated/l10n.dart';
+import 'package:dungeon_paper/i18n.dart';
 import 'package:flutter/material.dart';
-
 import 'package:get/get.dart';
 
 import '../controllers/select_moves_spells_controller.dart';
 
 class SelectMovesSpellsView extends GetView<SelectMovesSpellsController> {
   const SelectMovesSpellsView({
-    Key? key,
-  }) : super(key: key);
+    super.key,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -28,12 +27,13 @@ class SelectMovesSpellsView extends GetView<SelectMovesSpellsController> {
       dirty: controller.dirty.value,
       child: Scaffold(
         appBar: AppBar(
-          title: Text(S.current.selectGeneric(S.current.createCharacterMovesSpells)),
+          title: Text(
+              tr.generic.selectEntity(tr.createCharacter.movesSpells.title)),
           centerTitle: true,
         ),
         floatingActionButton: AdvancedFloatingActionButton.extended(
           onPressed: _save,
-          label: Text(S.current.save),
+          label: Text(tr.generic.save),
           icon: const Icon(Icons.save),
         ),
         body: SingleChildScrollView(
@@ -43,8 +43,11 @@ class SelectMovesSpellsView extends GetView<SelectMovesSpellsController> {
             children: [
               // MOVES TITLE
               Obx(() => Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-                    child: Text(S.current.movesWithCount(controller.moves.length), style: titleStyle),
+                    padding:
+                        const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                    child: Text(
+                        tr.entityCountNum(Move, controller.moves.length),
+                        style: titleStyle),
                   )),
               // MOVES CARDS
               Obx(
@@ -62,11 +65,14 @@ class SelectMovesSpellsView extends GetView<SelectMovesSpellsController> {
                               actions: [
                                 EntityEditMenu(
                                   onEdit: () => ModelPages.openMovePage(
-                                    abilityScores: controller.abilityScores.value,
+                                    abilityScores:
+                                        controller.abilityScores.value,
                                     move: move,
-                                    onSave: (_move) => controller.moves.value = updateByKey(controller.moves, [_move]),
+                                    onSave: (move) => controller.moves.value =
+                                        updateByKey(controller.moves, [move]),
                                   ),
-                                  onDelete: () => controller.moves.value = removeByKey(controller.moves, [move]),
+                                  onDelete: () => controller.moves.value =
+                                      removeByKey(controller.moves, [move]),
                                 ),
                               ],
                             ),
@@ -95,15 +101,18 @@ class SelectMovesSpellsView extends GetView<SelectMovesSpellsController> {
                         );
                       },
                     ),
-                    label: Text(S.current.addGeneric(S.current.entityPlural(Move))),
+                    label: Text(tr.generic.addEntity(tr.entityPlural(Move))),
                     icon: const Icon(Icons.add),
                   ),
                 ),
               ),
               // SPELLS TITLE
               Obx(() => Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8).copyWith(top: 24),
-                    child: Text(S.current.spellsWithCount(controller.spells.length), style: titleStyle),
+                    padding:
+                        const EdgeInsets.symmetric(horizontal: 16, vertical: 8)
+                            .copyWith(top: 24),
+                    child: Text(tr.entityCount(Spell, controller.spells.length),
+                        style: titleStyle),
                   )),
               // SPELL CARDS
               Obx(
@@ -122,9 +131,10 @@ class SelectMovesSpellsView extends GetView<SelectMovesSpellsController> {
                                 ElevatedButton.icon(
                                   style: ButtonThemes.primaryElevated(context),
                                   onPressed: () {
-                                    controller.spells.value = removeByKey(controller.spells, [spell]);
+                                    controller.spells.value =
+                                        removeByKey(controller.spells, [spell]);
                                   },
-                                  label: Text(S.current.remove),
+                                  label: Text(tr.generic.remove),
                                   icon: const Icon(Icons.remove),
                                 )
                               ],
@@ -149,11 +159,12 @@ class SelectMovesSpellsView extends GetView<SelectMovesSpellsController> {
                         controller.dirty.value = true;
                         controller.spells.value = addByKey(
                           controller.spells,
-                          spells.map((m) => m.copyWithInherited(prepared: true)),
+                          spells
+                              .map((m) => m.copyWithInherited(prepared: true)),
                         );
                       },
                     ),
-                    label: Text(S.current.addGeneric(S.current.entityPlural(Spell))),
+                    label: Text(tr.generic.addEntity(tr.entityPlural(Spell))),
                     icon: const Icon(Icons.add),
                   ),
                 ),
@@ -171,3 +182,4 @@ class SelectMovesSpellsView extends GetView<SelectMovesSpellsController> {
     Get.back();
   }
 }
+

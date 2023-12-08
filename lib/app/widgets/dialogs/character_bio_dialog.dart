@@ -76,7 +76,7 @@ class CharacterBioDialog extends GetView with CharacterServiceMixin {
                 Row(
                   children: [
                     Text(
-                      tr.bio.dialog.alignment.label,
+                      '${tr.bio.dialog.alignment.label}: ',
                       style: textTheme.bodySmall,
                     ),
                     const SizedBox(width: 4),

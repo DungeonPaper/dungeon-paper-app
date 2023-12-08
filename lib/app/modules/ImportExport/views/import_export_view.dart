@@ -1,7 +1,6 @@
 import 'package:dungeon_paper/app/widgets/atoms/advanced_floating_action_button.dart';
-import 'package:dungeon_paper/generated/l10n.dart';
+import 'package:dungeon_paper/i18n.dart';
 import 'package:flutter/material.dart';
-
 import 'package:get/get.dart';
 
 import '../controllers/import_export_controller.dart';
@@ -17,7 +16,7 @@ class ImportExportView extends GetView<ImportExportController> {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text(S.current.importExportTitle),
+        title: Text(tr.backup.title),
         centerTitle: true,
       ),
       body: Column(
@@ -25,8 +24,8 @@ class ImportExportView extends GetView<ImportExportController> {
           TabBar(
             controller: controller.tab.value,
             tabs: [
-              Tab(child: Text(S.current.export, style: textStyle)),
-              Tab(child: Text(S.current.import, style: textStyle)),
+              Tab(child: Text(tr.backup.exporting.title, style: textStyle)),
+              Tab(child: Text(tr.backup.importing.title, style: textStyle)),
             ],
           ),
           Expanded(
@@ -42,7 +41,7 @@ class ImportExportView extends GetView<ImportExportController> {
       ),
       floatingActionButton: Obx(
         () => AdvancedFloatingActionButton.extended(
-          label: Text(controller.tab.value.index == 0 ? S.current.export : S.current.import),
+          label: Text(controller.tab.value.index == 0 ? tr.backup.exporting.button : tr.backup.importing.button),
           icon: Icon(controller.tab.value.index == 0 ? Icons.upload : Icons.download),
           onPressed: controller.tab.value.index == 0 ? controller.doExport : controller.doImport,
         ),

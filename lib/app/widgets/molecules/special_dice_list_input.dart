@@ -2,10 +2,9 @@ import 'package:dungeon_paper/app/data/models/roll_button.dart';
 import 'package:dungeon_paper/app/themes/colors.dart';
 import 'package:dungeon_paper/app/widgets/chips/dice_chip.dart';
 import 'package:dungeon_paper/app/widgets/molecules/chip_list_input.dart';
-import 'package:flutter/material.dart';
+import 'package:dungeon_paper/i18n.dart';
 import 'package:dungeon_world_data/dungeon_world_data.dart' as dw;
-
-import '../../../generated/l10n.dart';
+import 'package:flutter/material.dart';
 
 class SpecialDiceListInput extends StatefulWidget {
   const SpecialDiceListInput({
@@ -32,14 +31,16 @@ class _SpecialDiceListInputState extends State<SpecialDiceListInput> {
   Widget build(BuildContext context) {
     return ChipListInput<SpecialDice>(
       controller: controller,
-      label: Text(S.current.specialDice),
+      label: Text(tr.customRolls.specialDice.title),
       addValue: SpecialDice.damage,
-      chipBuilder: (context, dice, {onDeleteChip, required onTapChip}) => DiceChip(
+      chipBuilder: (context, dice, {onDeleteChip, required onTapChip}) =>
+          DiceChip(
         dice: dw.Dice.d6,
         backgroundColor: DwColors.warning,
         label: dice != null
-            ? S.current.specialRollButton(dice.value)
-            : S.current.addGeneric(S.current.specialRollButton(SpecialDice.damage)),
+            ? tr.customRolls.specialDice.button(dice.value.name)
+            : tr.generic.addEntity(
+                tr.customRolls.specialDice.button(SpecialDice.damage.name)),
         icon: dice != null ? null : const Icon(Icons.add),
         onPressed: onTapChip,
         onDeleted: onDeleteChip,
@@ -47,3 +48,4 @@ class _SpecialDiceListInputState extends State<SpecialDiceListInput> {
     );
   }
 }
+

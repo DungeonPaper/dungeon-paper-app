@@ -1,17 +1,16 @@
 import 'package:dungeon_paper/app/data/services/character_service.dart';
 import 'package:dungeon_paper/app/widgets/atoms/buffer_progress_bar.dart';
+import 'package:dungeon_paper/i18n.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-import '../../../generated/l10n.dart';
-
 class ExpBar extends StatelessWidget with CharacterServiceMixin {
   const ExpBar({
-    Key? key,
+    super.key,
     this.currentXp,
     this.maxXp,
     this.pendingXp,
-  }) : super(key: key);
+  });
 
   final int? currentXp;
   final int? maxXp;
@@ -45,13 +44,13 @@ class ExpBar extends StatelessWidget with CharacterServiceMixin {
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Text(S.current.characterBarXp),
+                Text(tr.home.bars.xp),
                 const SizedBox(width: 8),
                 Text(
                   curValue.toString(),
                   style: const TextStyle(fontWeight: FontWeight.bold),
                 ),
-                Text('/' + (maxValue?.toString() ?? '-')),
+                Text('/${maxValue?.toString() ?? '-'}'),
                 if (curPending > 0)
                   Text(
                     '(+$curPending)',
@@ -65,3 +64,4 @@ class ExpBar extends StatelessWidget with CharacterServiceMixin {
     );
   }
 }
+

@@ -6,19 +6,19 @@ import 'package:dungeon_paper/app/modules/LibraryList/views/entity_filters.dart'
 import 'package:dungeon_paper/app/widgets/atoms/select_box.dart';
 import 'package:dungeon_paper/core/utils/math_utils.dart';
 import 'package:dungeon_paper/core/utils/string_utils.dart';
-import 'package:dungeon_paper/generated/l10n.dart';
+import 'package:dungeon_paper/i18n.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:string_similarity/string_similarity.dart';
 
 class SpellFiltersView extends StatelessWidget {
   SpellFiltersView({
-    Key? key,
+    super.key,
     required this.group,
     required this.filters,
     required this.onChange,
     required this.searchController,
-  }) : super(key: key);
+  });
 
   final SpellFilters filters;
   final FiltersGroup group;
@@ -35,17 +35,17 @@ class SpellFiltersView extends StatelessWidget {
       searchController: searchController,
       filterWidgetsBuilder: (context, f) => [
         SelectBox<String>(
-          label: Text(S.current.entityPlural(Spell)),
+          label: Text(tr.entityPlural(Spell)),
           value: f.classKey,
           items: [
             DropdownMenuItem<String>(
-              child: Text(S.current.allGeneric(S.current.entityPlural(CharacterClass))),
               value: null,
+              child: Text(tr.generic.allEntities(tr.entityPlural(CharacterClass))),
             ),
             ...<CharacterClass>{...repo.builtIn.classes.values, ...repo.my.classes.values}.map(
               (cls) => DropdownMenuItem<String>(
-                child: Text(cls.name),
                 value: cls.key,
+                child: Text(cls.name),
               ),
             ),
           ],

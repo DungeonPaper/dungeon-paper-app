@@ -1,24 +1,23 @@
 import 'package:dungeon_paper/app/data/models/campaign.dart';
-import 'package:dungeon_paper/generated/l10n.dart';
+import 'package:dungeon_paper/i18n.dart';
 import 'package:flutter/material.dart';
-
 import 'package:get/get.dart';
 
 import '../controllers/campaigns_list_controller.dart';
 
 class CampaignsListView extends GetView<CampaignsListController> {
-  const CampaignsListView({Key? key}) : super(key: key);
+  const CampaignsListView({super.key});
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(S.current.myGeneric(S.current.entityPlural(Campaign))),
+        title: Text(tr.generic.myEntity(tr.entityPlural(Campaign))),
         centerTitle: true,
       ),
       body: Obx(
         () => controller.campaigns.isEmpty
             ? Center(
-                child: Text(S.current.noGeneric(S.current.entityPlural(Campaign))),
+                child: Text(tr.generic.noEntity(tr.entityPlural(Campaign))),
               )
             : ListView.builder(
                 itemCount: controller.campaigns.length,
@@ -37,3 +36,4 @@ class CampaignsListView extends GetView<CampaignsListController> {
     );
   }
 }
+

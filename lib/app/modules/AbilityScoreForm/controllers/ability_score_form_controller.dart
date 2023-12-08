@@ -1,7 +1,7 @@
 import 'package:dungeon_paper/app/data/models/ability_scores.dart';
 import 'package:dungeon_paper/core/utils/enums.dart';
 import 'package:dungeon_paper/core/utils/string_validator.dart';
-import 'package:dungeon_paper/generated/l10n.dart';
+import 'package:dungeon_paper/i18n.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -14,13 +14,16 @@ class AbilityScoreFormController extends GetxController {
   late final Rx<TextEditingController> _name = TextEditingController().obs;
   TextEditingController get name => _name.value;
 
-  late final Rx<TextEditingController> _description = TextEditingController().obs;
+  late final Rx<TextEditingController> _description =
+      TextEditingController().obs;
   TextEditingController get description => _description.value;
 
-  late final Rx<TextEditingController> _debilityName = TextEditingController().obs;
+  late final Rx<TextEditingController> _debilityName =
+      TextEditingController().obs;
   TextEditingController get debilityName => _debilityName.value;
 
-  late final Rx<TextEditingController> _debilityDescription = TextEditingController().obs;
+  late final Rx<TextEditingController> _debilityDescription =
+      TextEditingController().obs;
   TextEditingController get debilityDescription => _debilityDescription.value;
 
   late final Rx<IconData?> _icon = Rx(null);
@@ -34,16 +37,23 @@ class AbilityScoreFormController extends GetxController {
   void onInit() {
     super.onInit();
     final AbilityScoreFormArguments args = Get.arguments;
-    formContext = args.abilityScore != null ? FormContext.edit : FormContext.create;
+    formContext =
+        args.abilityScore != null ? FormContext.edit : FormContext.create;
     if (args.abilityScore != null) {
       entity.value = args.abilityScore!;
     }
     onSave = args.onSave;
-    _key.value = TextEditingController(text: entity.value.key)..addListener(_update);
-    _name.value = TextEditingController(text: entity.value.name)..addListener(_update);
-    _description.value = TextEditingController(text: entity.value.description)..addListener(_update);
-    _debilityName.value = TextEditingController(text: entity.value.debilityName)..addListener(_update);
-    _debilityDescription.value = TextEditingController(text: entity.value.debilityDescription)..addListener(_update);
+    _key.value = TextEditingController(text: entity.value.key)
+      ..addListener(_update);
+    _name.value = TextEditingController(text: entity.value.name)
+      ..addListener(_update);
+    _description.value = TextEditingController(text: entity.value.description)
+      ..addListener(_update);
+    _debilityName.value = TextEditingController(text: entity.value.debilityName)
+      ..addListener(_update);
+    _debilityDescription.value =
+        TextEditingController(text: entity.value.debilityDescription)
+          ..addListener(_update);
     _icon.value = entity.value.customIcon;
   }
 
@@ -73,10 +83,11 @@ class AbilityScoreFormController extends GetxController {
   String? keyValidator(String? value) => StringValidator(
         exactLength: 3,
         notContainsPattern: RegExp(r'[^a-z]', caseSensitive: false),
-        patternMessage: S.current.errorOnlyLetters,
+        patternMessage: tr.errors.onlyLetters,
       ).validator(value);
 
-  String? requiredValidator(String? value) => StringValidator(minLength: 1).validator(value);
+  String? requiredValidator(String? value) =>
+      StringValidator(minLength: 1).validator(value);
 
   void _update() {
     _key.refresh();
@@ -111,3 +122,4 @@ class AbilityScoreFormArguments {
     required this.onSave,
   });
 }
+

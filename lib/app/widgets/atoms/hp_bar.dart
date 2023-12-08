@@ -1,16 +1,15 @@
 import 'package:dungeon_paper/app/data/services/character_service.dart';
 import 'package:dungeon_paper/app/widgets/atoms/buffer_progress_bar.dart';
+import 'package:dungeon_paper/i18n.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-import '../../../generated/l10n.dart';
-
 class HpBar extends StatelessWidget with CharacterServiceMixin {
   const HpBar({
-    Key? key,
+    super.key,
     this.currentHp,
     this.maxHp,
-  }) : super(key: key);
+  });
 
   final int? currentHp;
   final int? maxHp;
@@ -21,7 +20,8 @@ class HpBar extends StatelessWidget with CharacterServiceMixin {
       final char = maybeChar;
       final curValue = currentHp ?? char?.currentHp;
       final maxValue = maxHp ?? char?.maxHp;
-      final curPercent = curValue != null && maxValue != null ? curValue / maxValue : 1.0;
+      final curPercent =
+          curValue != null && maxValue != null ? curValue / maxValue : 1.0;
 
       return Column(
         mainAxisSize: MainAxisSize.min,
@@ -36,13 +36,13 @@ class HpBar extends StatelessWidget with CharacterServiceMixin {
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Text(S.current.characterBarHp),
+              Text(tr.home.bars.hp),
               const SizedBox(width: 8),
               Text(
                 curValue?.toString() ?? '-',
                 style: const TextStyle(fontWeight: FontWeight.bold),
               ),
-              Text('/' + (maxValue?.toString() ?? '-')),
+              Text('/${maxValue?.toString() ?? '-'}'),
             ],
           )
         ],
@@ -50,3 +50,4 @@ class HpBar extends StatelessWidget with CharacterServiceMixin {
     });
   }
 }
+

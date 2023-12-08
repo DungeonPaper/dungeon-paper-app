@@ -1,7 +1,7 @@
 import 'package:dungeon_paper/app/widgets/atoms/number_text_field.dart';
 import 'package:dungeon_paper/app/widgets/molecules/dialog_controls.dart';
 import 'package:dungeon_paper/core/dw_icons.dart';
-import 'package:dungeon_paper/generated/l10n.dart';
+import 'package:dungeon_paper/i18n.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -40,7 +40,7 @@ class _ArmorDialogState extends State<ArmorDialog> {
         children: [
           const Icon(DwIcons.armor, size: 32),
           const SizedBox(width: 12),
-          Expanded(child: Text(S.current.armor)),
+          Expanded(child: Text(tr.armor.dialog.title)),
         ],
       ),
       content: SingleChildScrollView(
@@ -48,15 +48,15 @@ class _ArmorDialogState extends State<ArmorDialog> {
           children: [
             CheckboxListTile(
               // minLeadingWidth: 20,
-              title: Text(S.current.characterAutoArmor),
+              title: Text(tr.armor.dialog.title),
               dense: true,
               visualDensity: VisualDensity.compact,
               controlAffinity: ListTileControlAffinity.leading,
               value: useDefault,
               onChanged: (value) => setState(() {
-                final _value = value ?? !useDefault;
-                useDefault = _value;
-                if (_value) {
+                final newValue = value ?? !useDefault;
+                useDefault = newValue;
+                if (newValue) {
                   controller.text = '${widget.defaultArmor}';
                 }
               }),
@@ -65,7 +65,7 @@ class _ArmorDialogState extends State<ArmorDialog> {
             NumberTextField(
               controller: controller,
               numberType: NumberType.int,
-              decoration: InputDecoration(hintText: '0', label: Text(S.current.armor)),
+              decoration: InputDecoration(hintText: '0', label: Text(tr.armor.dialog.title)),
               minValue: 0,
               enabled: !useDefault,
             )

@@ -36,7 +36,7 @@ class MoveForm extends GetView<MoveFormController> with RepositoryServiceMixin {
                   Expanded(
                     child: SelectBox<MoveCategory>(
                       value: controller.category.value,
-                      label: Text(S.current.entity(MoveCategory)),
+                      label: Text(tr.entity(MoveCategory)),
                       isExpanded: true,
                       items: MoveCategory.values
                           .map(
@@ -59,7 +59,7 @@ class MoveForm extends GetView<MoveFormController> with RepositoryServiceMixin {
                       onChanged: (value) =>
                           controller.classKeys.value = [value!],
                       isExpanded: true,
-                      label: Text(S.current.entity(CharacterClass)),
+                      label: Text(tr.entity(CharacterClass)),
                       items: {
                         ...repo.builtIn.classes.values,
                         ...repo.my.classes.values
@@ -80,7 +80,7 @@ class MoveForm extends GetView<MoveFormController> with RepositoryServiceMixin {
               () => RichTextField(
                 decoration: InputDecoration(
                   label: Text(S.current
-                      .formGeneralDescriptionGeneric(S.current.entity(Move))),
+                      .formGeneralDescriptionGeneric(tr.entity(Move))),
                 ),
                 maxLines: 10,
                 minLines: 5,
@@ -118,7 +118,7 @@ class MoveForm extends GetView<MoveFormController> with RepositoryServiceMixin {
               () => RichTextField(
                 decoration: InputDecoration(
                   label: Text(S.current
-                      .formGeneralExplanationGeneric(S.current.entity(Move))),
+                      .formGeneralExplanationGeneric(tr.entity(Move))),
                 ),
                 maxLines: 10,
                 minLines: 5,

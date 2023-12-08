@@ -1,8 +1,8 @@
 import 'package:dungeon_paper/core/utils/list_utils.dart';
+import 'package:dungeon_paper/i18n.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-import '../../../generated/l10n.dart';
 
 class ChipListInput<T> extends StatefulWidget {
   const ChipListInput({
@@ -68,8 +68,8 @@ class _ChipListInputState<T> extends State<ChipListInput<T>> {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         DefaultTextStyle(
-          child: widget.label ?? Text(S.current.entityPlural(T)),
           style: Theme.of(context).textTheme.bodySmall!.copyWith(color: widget.labelColor),
+          child: widget.label ?? Text(tr.entityPlural(T)),
         ),
         const SizedBox(height: 6),
         Wrap(
@@ -88,8 +88,8 @@ class _ChipListInputState<T> extends State<ChipListInput<T>> {
                           widget.dialogBuilder!(
                             context,
                             dice,
-                            onSave: (_value) {
-                              setState(() => controller.value = updateByIndex(controller.value, _value, dice.index));
+                            onSave: (value) {
+                              setState(() => controller.value = updateByIndex(controller.value, value, dice.index));
                             },
                           ),
                         )
@@ -105,12 +105,12 @@ class _ChipListInputState<T> extends State<ChipListInput<T>> {
                           widget.dialogBuilder!(
                             context,
                             null,
-                            onSave: (_value) {
-                              setState(() => controller.value = [...controller.value, _value]);
+                            onSave: (value) {
+                              setState(() => controller.value = [...controller.value, value]);
                             },
                           ),
                         )
-                    : () => setState(() => controller.value = [...controller.value, widget.addValue!]),
+                    : () => setState(() => controller.value = [...controller.value, widget.addValue as T]),
               ),
             ...widget.trailing,
           ],

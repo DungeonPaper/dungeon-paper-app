@@ -2,13 +2,13 @@ import 'package:dungeon_paper/app/data/models/item.dart';
 import 'package:dungeon_paper/app/widgets/atoms/rich_text_field.dart';
 import 'package:dungeon_paper/app/widgets/forms/library_entity_form.dart';
 import 'package:dungeon_paper/app/widgets/molecules/tag_list_input.dart';
-import 'package:dungeon_paper/generated/l10n.dart';
+import 'package:dungeon_paper/i18n.dart';
+import 'package:dungeon_world_data/dungeon_world_data.dart' as dw;
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:dungeon_world_data/dungeon_world_data.dart' as dw;
 
 class ItemForm extends GetView<ItemFormController> {
-  const ItemForm({Key? key}) : super(key: key);
+  const ItemForm({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -19,14 +19,14 @@ class ItemForm extends GetView<ItemFormController> {
                 controller: controller.name,
                 textCapitalization: TextCapitalization.words,
                 decoration: InputDecoration(
-                  label: Text(S.current.formGeneralNameGeneric(S.current.entity(Item))),
+                  label: Text(tr.generic.entityName(tr.entity(Item))),
                 ),
               ),
             ),
         () => Obx(
               () => RichTextField(
                 controller: controller.description,
-                label: S.current.formGeneralDescriptionGeneric(S.current.entity(Item)),
+                label: tr.generic.entityDescription(tr.entity(Item)),
                 maxLines: 10,
                 minLines: 5,
                 textCapitalization: TextCapitalization.sentences,
