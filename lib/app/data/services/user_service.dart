@@ -11,7 +11,7 @@ import 'package:dungeon_paper/app/routes/app_pages.dart';
 import 'package:dungeon_paper/core/http/api.dart';
 import 'package:dungeon_paper/core/http/api_requests/migration.dart';
 import 'package:dungeon_paper/core/storage_handler/storage_handler.dart';
-import 'package:dungeon_paper/generated/l10n.dart';
+import 'package:dungeon_paper/i18n.dart';
 import 'package:email_validator/email_validator.dart';
 import 'package:firebase_auth/firebase_auth.dart' as fba;
 import 'package:flutter/material.dart';
@@ -22,7 +22,11 @@ import 'package:sentry_flutter/sentry_flutter.dart';
 import '../../../core/utils/secrets_base.dart';
 
 class UserService extends GetxService
-    with RepositoryServiceMixin, AuthServiceMixin, CharacterServiceMixin, LoadingServiceMixin {
+    with
+        RepositoryServiceMixin,
+        AuthServiceMixin,
+        CharacterServiceMixin,
+        LoadingServiceMixin {
   final _current = User.guest().obs;
 
   User get current => _current.value;
@@ -46,7 +50,8 @@ class UserService extends GetxService
     StorageHandler.instance.currentDelegate = 'firestore';
     StorageHandler.instance.setCollectionPrefix('Data/$email');
     final shouldLoadRepo = current.email != user.email;
-    final dbUser = await StorageHandler.instance.firestoreGlobal.getDocument('Data', email!);
+    final dbUser = await StorageHandler.instance.firestoreGlobal
+        .getDocument('Data', email!);
     await _setUserAfterMigration(user, dbUser);
     _registerUserListener();
     charService.registerCharacterListener();
@@ -95,7 +100,8 @@ class UserService extends GetxService
   Future<User> updateUser(User user) async {
     final email = user.email;
     debugPrint('updating user data for $email: ${user.toJson()}');
-    await StorageHandler.instance.firestoreGlobal.update('Data', email, user.toJson());
+    await StorageHandler.instance.firestoreGlobal
+        .update('Data', email, user.toJson());
     return user;
   }
 
@@ -127,7 +133,8 @@ class UserService extends GetxService
   void _registerUserListener() {
     _clearUserListener();
     debugPrint('registering user listener');
-    _userDataSub = StorageHandler.instance.firestoreGlobal.documentListener('Data', current.email, _updateUser);
+    _userDataSub = StorageHandler.instance.firestoreGlobal
+        .documentListener('Data', current.email, _updateUser);
   }
 
   void _updateUser(DocData? data) {
@@ -165,7 +172,7 @@ class UserService extends GetxService
     if (needsMigration) {
       final resp = await _migrateUser(user);
       if (resp == null) {
-        Get.rawSnackbar(title: S.current.errorUserOperationCanceled);
+        Get.rawSnackbar(title: tr.errors.userOperationCanceled);
         loadingService.loadingUser = false;
         loadingService.afterFirstLoad = !loadingService.loadingCharacters;
         return;
@@ -198,4 +205,3 @@ mixin UserServiceMixin {
   UserService get userService => Get.find();
   User get user => userService.current;
 }
-

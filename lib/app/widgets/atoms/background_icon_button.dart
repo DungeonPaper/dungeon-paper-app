@@ -118,5 +118,7 @@ class BackgroundIconButton extends StatelessWidget {
   }
 
   Color bgColor(BuildContext context) =>
-      color ?? ElevatedButtonTheme.of(context).style?.backgroundColor?.resolve({}) ?? Theme.of(context).primaryColor;
+      color ??
+      ElevatedButtonTheme.of(context).style?.backgroundColor?.resolve({}) ??
+      Theme.of(context).primaryColor;
 }

@@ -2,15 +2,14 @@ import 'package:dungeon_paper/app/data/models/ability_scores.dart';
 import 'package:dungeon_paper/app/widgets/atoms/advanced_floating_action_button.dart';
 import 'package:dungeon_paper/app/widgets/atoms/help_text.dart';
 import 'package:dungeon_paper/core/utils/enums.dart';
-import 'package:dungeon_paper/generated/l10n.dart';
+import 'package:dungeon_paper/i18n.dart';
 import 'package:flutter/material.dart';
-
 import 'package:get/get.dart';
 
 import '../controllers/ability_score_form_controller.dart';
 
 class AbilityScoreFormView extends GetView<AbilityScoreFormController> {
-  const AbilityScoreFormView({Key? key}) : super(key: key);
+  const AbilityScoreFormView({super.key});
   @override
   Widget build(BuildContext context) {
     const separator = SizedBox(height: 16);
@@ -18,15 +17,15 @@ class AbilityScoreFormView extends GetView<AbilityScoreFormController> {
       appBar: AppBar(
         title: Text(
           controller.formContext == FormContext.create
-              ? S.current.addGeneric(S.current.entity(AbilityScore))
-              : S.current.editGeneric(S.current.entity(AbilityScore)),
+              ? tr.generic.addEntity(tr.entity(AbilityScore))
+              : tr.generic.editEntity(tr.entity(AbilityScore)),
         ),
         centerTitle: true,
       ),
       floatingActionButton: Obx(
         () => AdvancedFloatingActionButton.extended(
           onPressed: controller.isValid ? controller.save : null,
-          label: Text(S.current.save),
+          label: Text(tr.generic.save),
           icon: const Icon(Icons.save),
         ),
       ),
@@ -38,20 +37,20 @@ class AbilityScoreFormView extends GetView<AbilityScoreFormController> {
             TextFormField(
               controller: controller.key,
               decoration: InputDecoration(
-                labelText: S.current.abilityScoreFormKeyLabel,
+                labelText: tr.abilityScores.form.key.label,
               ),
               validator: controller.keyValidator,
             ),
             Padding(
               padding: const EdgeInsets.only(top: 4),
-              child: HelpText(text: S.current.abilityScoreFormKeyDescription),
+              child: HelpText(text: tr.abilityScores.form.key.description),
             ),
             separator,
             TextFormField(
               controller: controller.name,
               decoration: InputDecoration(
-                labelText: S.current.abilityScoreFormNameLabel,
-                hintText: S.current.abilityScoreFormNameDescription,
+                labelText: tr.abilityScores.form.name.label,
+                hintText: tr.abilityScores.form.name.description,
               ),
               validator: controller.requiredValidator,
             ),
@@ -61,8 +60,8 @@ class AbilityScoreFormView extends GetView<AbilityScoreFormController> {
               minLines: 3,
               maxLines: 3,
               decoration: InputDecoration(
-                labelText: S.current.abilityScoreFormDescriptionLabel,
-                hintText: S.current.abilityScoreFormDescriptionDescription,
+                labelText: tr.abilityScores.form.description.label,
+                hintText: tr.abilityScores.form.description.description,
               ),
               validator: controller.requiredValidator,
             ),
@@ -70,8 +69,8 @@ class AbilityScoreFormView extends GetView<AbilityScoreFormController> {
             TextFormField(
               controller: controller.debilityName,
               decoration: InputDecoration(
-                labelText: S.current.abilityScoreFormDebilityNameLabel,
-                hintText: S.current.abilityScoreFormDebilityNameDescription,
+                labelText: tr.abilityScores.form.debilityName.label,
+                hintText: tr.abilityScores.form.debilityName.description,
               ),
               validator: controller.requiredValidator,
             ),
@@ -81,25 +80,26 @@ class AbilityScoreFormView extends GetView<AbilityScoreFormController> {
               minLines: 3,
               maxLines: 3,
               decoration: InputDecoration(
-                labelText: S.current.abilityScoreFormDebilityDescriptionLabel,
-                hintText: S.current.abilityScoreFormDebilityDescriptionDescription,
+                labelText: tr.abilityScores.form.debilityDescription.label,
+                hintText: tr.abilityScores.form.debilityDescription.description,
               ),
               validator: controller.requiredValidator,
             ),
             separator,
-            Text(S.current.abilityScoreFormIconLabel),
+            Text(tr.abilityScores.form.icon.label),
             separator,
             Obx(
               () => Align(
                 alignment: Alignment.centerLeft,
-                child: Icon(controller.icon ?? AbilityScore.iconFor(controller.key.text)),
+                child: Icon(controller.icon ??
+                    AbilityScore.iconFor(controller.key.text)),
               ),
             ),
             separator,
             ElevatedButton(
               onPressed: () => controller.pickIcon(context),
               child: Text(
-                S.current.abilityScoreFormPickIconLabel,
+                tr.abilityScores.form.icon.button,
               ),
             ),
           ],

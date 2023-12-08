@@ -31,7 +31,8 @@ class PrimaryChip extends StatelessWidget {
     final colorScheme = theme.colorScheme;
     final isLight = theme.brightness == Brightness.light;
     final fgColor = isLight ? colorScheme.onPrimary : colorScheme.onSecondary;
-    final bgColor = backgroundColor ?? (isLight ? colorScheme.primary : colorScheme.secondary);
+    final bgColor = backgroundColor ??
+        (isLight ? colorScheme.primary : colorScheme.secondary);
     final isCompact = visualDensity == VisualDensity.compact;
     final hasIcon = icon != null;
 

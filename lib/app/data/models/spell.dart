@@ -109,8 +109,13 @@ class Spell extends dw.Spell with WithIcon implements WithMeta {
   IconData get icon => DwIcons.book_cover;
   static IconData get genericIcon => DwIcons.book_cover;
   static int Function(Spell a, Spell b) sorter(SpellFilters filters) => (a, b) {
-        final levelOrder = ['cantrip', 'rote', ...List.generate(9, (i) => '${i + 1}')];
-        final level = levelOrder.indexOf(a.level).compareTo(levelOrder.indexOf(b.level));
+        final levelOrder = [
+          'cantrip',
+          'rote',
+          ...List.generate(9, (i) => '${i + 1}')
+        ];
+        final level =
+            levelOrder.indexOf(a.level).compareTo(levelOrder.indexOf(b.level));
         if (level != 0) {
           return level;
         }
@@ -141,7 +146,17 @@ class Spell extends dw.Spell with WithIcon implements WithMeta {
           tags == other.tags;
 
   @override
-  int get hashCode => Object.hashAll([meta, key, name, description, explanation, level, classKeys, dice, tags]);
+  int get hashCode => Object.hashAll([
+        meta,
+        key,
+        name,
+        description,
+        explanation,
+        level,
+        classKeys,
+        dice,
+        tags
+      ]);
 
   @override
   String get debugProperties =>

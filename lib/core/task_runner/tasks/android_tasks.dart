@@ -11,7 +11,8 @@ final installAndroid = TaskGroup(
       onError: (o, e, stack) async {
         TaskGroup(
           tasks: [
-            LogTask.staticArgs('Failed to install. Uninstalling old version...'),
+            LogTask.staticArgs(
+                'Failed to install. Uninstalling old version...'),
             ProcessTask.staticArgs(
               'adb',
               args: [...o.deviceArgs, 'uninstall', 'app.dungeonpaper'],
@@ -34,7 +35,8 @@ final pushAndroid = TaskGroup(
     LogTask((o) => 'Pushing to ${o.deviceFilePath}'),
     ProcessTask(
       (_) => 'adb',
-      args: (o) => [...o.deviceArgs, 'push', o.localOutputPath, o.deviceFilePath],
+      args: (o) =>
+          [...o.deviceArgs, 'push', o.localOutputPath, o.deviceFilePath],
     ),
   ],
 );

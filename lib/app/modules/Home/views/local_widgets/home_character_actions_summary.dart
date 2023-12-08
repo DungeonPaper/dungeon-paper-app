@@ -4,7 +4,7 @@ import 'package:dungeon_paper/app/widgets/chips/primary_chip.dart';
 import 'package:dungeon_paper/app/widgets/dialogs/coins_dialog.dart';
 import 'package:dungeon_paper/app/widgets/dialogs/load_dialog.dart';
 import 'package:dungeon_paper/core/dw_icons.dart';
-import 'package:dungeon_paper/generated/l10n.dart';
+import 'package:dungeon_paper/i18n.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
@@ -13,8 +13,8 @@ import 'home_character_actions_filters.dart';
 
 class HomeCharacterActionsSummary extends GetView<CharacterService> {
   const HomeCharacterActionsSummary({
-    Key? key,
-  }) : super(key: key);
+    super.key,
+  });
 
   Character get char => controller.current;
 
@@ -33,8 +33,9 @@ class HomeCharacterActionsSummary extends GetView<CharacterService> {
                 PrimaryChip(
                   // visualDensity: VisualDensity.compact,
                   icon: const Icon(DwIcons.dumbbell, size: 16),
-                  label: S.current.actionSummaryChipLoad(char.currentLoad, char.maxLoad),
-                  tooltip: S.current.maxLoad,
+                  label: tr.home.summary.load
+                      .label(char.currentLoad, char.maxLoad),
+                  tooltip: tr.home.summary.load.tooltip,
                   onPressed: () => Get.dialog(
                     LoadDialog(
                       load: char.stats.load,
@@ -50,14 +51,15 @@ class HomeCharacterActionsSummary extends GetView<CharacterService> {
                 PrimaryChip(
                   // visualDensity: VisualDensity.compact,
                   icon: const Icon(DwIcons.coin_stack, size: 16),
-                  label: S.current.actionSummaryChipCoins(
+                  label: tr.home.summary.coins.label(
                     NumberFormat.compact().format(char.coins),
                   ),
-                  tooltip: S.current.coins,
+                  tooltip: tr.home.summary.coins.tooltip,
                   onPressed: () => Get.dialog(
                     CoinsDialog(
                       coins: char.coins,
-                      onChanged: (coins) => controller.updateCharacter(char.copyWith(coins: coins)),
+                      onChanged: (coins) => controller
+                          .updateCharacter(char.copyWith(coins: coins)),
                     ),
                   ),
                 ),
@@ -70,7 +72,8 @@ class HomeCharacterActionsSummary extends GetView<CharacterService> {
               controller.updateCharacter(
                 char.copyWith(
                   settings: char.settings.copyWith(
-                    actionCategories: char.settings.actionCategories.copyWithInherited(
+                    actionCategories:
+                        char.settings.actionCategories.copyWithInherited(
                       hidden: filters,
                     ),
                   ),

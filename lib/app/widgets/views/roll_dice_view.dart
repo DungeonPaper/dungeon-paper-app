@@ -9,18 +9,18 @@ import 'package:dungeon_paper/app/widgets/atoms/dice_icon.dart';
 import 'package:dungeon_paper/app/widgets/molecules/dice_list_input.dart';
 import 'package:dungeon_paper/core/utils/list_utils.dart';
 import 'package:dungeon_paper/core/utils/math_utils.dart';
-import 'package:dungeon_paper/generated/l10n.dart';
-import 'package:flutter/material.dart';
+import 'package:dungeon_paper/i18n.dart';
 import 'package:dungeon_world_data/dungeon_world_data.dart' as dw;
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class RollDiceView extends StatefulWidget {
   final List<dw.Dice> dice;
 
   const RollDiceView({
-    Key? key,
+    super.key,
     required this.dice,
-  }) : super(key: key);
+  });
 
   static const rollAnimDuration = Duration(milliseconds: 1500);
   static const rollAnimResetDuration = Duration(milliseconds: 700);
@@ -29,7 +29,8 @@ class RollDiceView extends StatefulWidget {
   State<RollDiceView> createState() => _RollDiceViewState();
 }
 
-class _RollDiceViewState extends State<RollDiceView> with TickerProviderStateMixin {
+class _RollDiceViewState extends State<RollDiceView>
+    with TickerProviderStateMixin {
   final diceSize = 56.0;
   final diceSpacing = 24.0;
   late AnimationStatus rollStatus;
@@ -40,7 +41,8 @@ class _RollDiceViewState extends State<RollDiceView> with TickerProviderStateMix
   var results = <dw.DiceRoll>[];
 
   CharacterService get charService => Get.find();
-  int get totalResult => results.fold(0, (previousValue, element) => previousValue + element.total);
+  int get totalResult => results.fold(
+      0, (previousValue, element) => previousValue + element.total);
   List<dw.Dice> get flat => dw.Dice.flatten(dice.value);
 
   @override
@@ -65,8 +67,8 @@ class _RollDiceViewState extends State<RollDiceView> with TickerProviderStateMix
         appBar: AppBar(
           title: Text(
             rollStatus == AnimationStatus.completed
-                ? S.current.rollDialogTitleRolled(totalResult)
-                : S.current.rollDialogTitleRolling(flat.length),
+                ? tr.dice.roll.title.rolled(totalResult)
+                : tr.dice.roll.title.rolling(flat.length),
           ),
           centerTitle: true,
           backgroundColor: Colors.transparent,
@@ -101,7 +103,8 @@ class _RollDiceViewState extends State<RollDiceView> with TickerProviderStateMix
                             // mainAxisAlignment: MainAxisAlignment.start,
                             crossAxisAlignment: CrossAxisAlignment.stretch,
                             children: [
-                              for (final group in enumerate(dice.value)) _groupBuilder(group),
+                              for (final group in enumerate(dice.value))
+                                _groupBuilder(group),
                             ],
                           ),
                         ),
@@ -114,7 +117,7 @@ class _RollDiceViewState extends State<RollDiceView> with TickerProviderStateMix
           ),
         ),
         floatingActionButton: AdvancedFloatingActionButton.extended(
-          label: Text(S.current.diceRollAgain),
+          label: Text(tr.dice.roll.action),
           icon: const Icon(Icons.refresh),
           onPressed: _reRoll,
         ),
@@ -131,9 +134,12 @@ class _RollDiceViewState extends State<RollDiceView> with TickerProviderStateMix
     final textTheme = Theme.of(context).textTheme;
     final currentAnimGroup = animations[group.index];
     return Padding(
-      padding: group.index != dice.value.length - 1 ? const EdgeInsets.only(bottom: 24) : EdgeInsets.zero,
+      padding: group.index != dice.value.length - 1
+          ? const EdgeInsets.only(bottom: 24)
+          : EdgeInsets.zero,
       child: Material(
-        color: cardColor.withOpacity(cardColor.opacity * currentAnimGroup.first.opacity.value),
+        color: cardColor.withOpacity(
+            cardColor.opacity * currentAnimGroup.first.opacity.value),
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
         child: Padding(
           padding: const EdgeInsets.all(8),
@@ -152,15 +158,21 @@ class _RollDiceViewState extends State<RollDiceView> with TickerProviderStateMix
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        S.current.rollDialogResultTotal(results.isNotEmpty ? results[group.index].total : 0),
-                        style: textTheme.titleLarge!.copyWith(color: Colors.white),
+                        tr.dice.roll.total(results.isNotEmpty
+                            ? results[group.index].total
+                            : 0),
+                        style:
+                            textTheme.titleLarge!.copyWith(color: Colors.white),
                       ),
                       Text(
-                        S.current.rollDialogResultBreakdown(
+                        tr.dice.roll.resultBreakdown(
                           (withoutModDice.value[group.index]).toString(),
-                          (group.value.modifierWithSign.isEmpty ? '+0' : group.value.modifierWithSign),
+                          (group.value.modifierWithSign.isEmpty
+                              ? '+0'
+                              : group.value.modifierWithSign),
                         ),
-                        style: textTheme.bodyMedium!.copyWith(color: Colors.white.withOpacity(0.75)),
+                        style: textTheme.bodyMedium!
+                            .copyWith(color: Colors.white.withOpacity(0.75)),
                       ),
                     ],
                   ),
@@ -173,7 +185,8 @@ class _RollDiceViewState extends State<RollDiceView> with TickerProviderStateMix
                 runSpacing: diceSpacing,
                 spacing: diceSpacing,
                 children: [
-                  for (final d in enumerate(dw.Dice.flatten([group.value]))) Builder(builder: _diceBuilder(group, d)),
+                  for (final d in enumerate(dw.Dice.flatten([group.value])))
+                    Builder(builder: _diceBuilder(group, d)),
                 ],
               ),
             ],
@@ -191,7 +204,8 @@ class _RollDiceViewState extends State<RollDiceView> with TickerProviderStateMix
       final maxHeight = _getMaxHeight(context);
       final isDark = Theme.of(context).brightness == Brightness.dark;
       final currentAnim = animations[group.index][d.index];
-      final currentResult = results.isNotEmpty ? results[group.index].results[d.index] : null;
+      final currentResult =
+          results.isNotEmpty ? results[group.index].results[d.index] : null;
 
       final colorScheme = Theme.of(context).colorScheme;
       final textContainerColor = currentResult == group.value.sides
@@ -234,7 +248,8 @@ class _RollDiceViewState extends State<RollDiceView> with TickerProviderStateMix
                               style: const TextStyle(
                                 color: Colors.white,
                               ),
-                              textScaleFactor: resultStr.length > 2 ? 1 : 1.5,
+                              textScaler: TextScaler.linear(
+                                  resultStr.length > 2 ? 1 : 1.5),
                             ),
                           ),
                         ),
@@ -266,7 +281,9 @@ class _RollDiceViewState extends State<RollDiceView> with TickerProviderStateMix
         .map(
           (d) => d.needsModifier
               ? d.copyWithModifierValue(
-                  charService.current.abilityScores.getStat(d.modifierStat!).modifier,
+                  charService.current.abilityScores
+                      .getStat(d.modifierStat!)
+                      .modifier,
                 )
               : d,
         )
@@ -310,7 +327,8 @@ class _RollDiceViewState extends State<RollDiceView> with TickerProviderStateMix
   }
 
   Future<void> _walkAnimations(
-    FutureOr<void> Function(_AnimSet animation, int groupIndex, int animIndex) cb,
+    FutureOr<void> Function(_AnimSet animation, int groupIndex, int animIndex)
+        cb,
   ) async {
     for (final group in enumerate(animations)) {
       for (final anim in enumerate(group.value)) {
@@ -342,7 +360,8 @@ class _RollDiceViewState extends State<RollDiceView> with TickerProviderStateMix
     );
     rollStatus = AnimationStatus.forward;
     _walkAnimations(
-      ((animation, groupIndex, animIndex) => animation.controller.addListener(_updateAnimStatus)),
+      ((animation, groupIndex, animIndex) =>
+          animation.controller.addListener(_updateAnimStatus)),
     );
     if (animations.isNotEmpty && animations.last.isNotEmpty) {
       animations.last.last.controller.addListener(_updateAnimStatus);
@@ -396,7 +415,8 @@ class _AnimSet {
     final forwardTween = Tween<double>(begin: 0, end: 1);
     final reverseTween = Tween<double>(begin: 1, end: 0);
 
-    controller = AnimationController(vsync: vsync, duration: RollDiceView.rollAnimDuration);
+    controller = AnimationController(
+        vsync: vsync, duration: RollDiceView.rollAnimDuration);
     angle = reverseTween.animate(CurvedAnimation(
       parent: controller,
       curve: const Interval(0, 0.75, curve: Curves.easeOutQuad),

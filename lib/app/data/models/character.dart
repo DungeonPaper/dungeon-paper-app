@@ -11,21 +11,21 @@ import 'package:dungeon_paper/core/utils/icon_utils.dart';
 import 'package:dungeon_paper/core/utils/list_utils.dart';
 import 'package:dungeon_paper/core/utils/math_utils.dart';
 import 'package:dungeon_paper/core/utils/uuid.dart';
-import 'package:dungeon_paper/generated/l10n.dart';
+import 'package:dungeon_paper/i18n.dart';
 import 'package:dungeon_world_data/dungeon_world_data.dart' as dw;
 import 'package:flutter/material.dart';
 
+import 'ability_scores.dart';
 import 'bio.dart';
-import 'session_marks.dart';
 import 'character_class.dart';
 import 'character_settings.dart';
-import 'item.dart';
 import 'character_stats.dart';
+import 'item.dart';
 import 'meta.dart';
 import 'move.dart';
 import 'note.dart';
 import 'race.dart';
-import 'ability_scores.dart';
+import 'session_marks.dart';
 import 'spell.dart';
 
 class Character with WithIcon implements WithMeta<Character, CharacterMeta> {
@@ -85,34 +85,38 @@ class Character with WithIcon implements WithMeta<Character, CharacterMeta> {
   int get defaultArmor => items.fold(0, (armor, item) => armor + item.armor);
   int get damageModifier => items.fold(0, (mod, item) => mod + item.damage);
 
-  int getLightTheme(User user) => settings.lightTheme ?? user.settings.defaultLightTheme;
-  int getDarkTheme(User user) => settings.darkTheme ?? user.settings.defaultDarkTheme;
+  int getLightTheme(User user) =>
+      settings.lightTheme ?? user.settings.defaultLightTheme;
+  int getDarkTheme(User user) =>
+      settings.darkTheme ?? user.settings.defaultDarkTheme;
 
   int getCurrentTheme(User user) => getThemeForUserBrightness(user);
 
   int getThemeForUserBrightness(User user) =>
-      user.brightness == Brightness.light ? getLightTheme(user) : getDarkTheme(user);
+      user.brightness == Brightness.light
+          ? getLightTheme(user)
+          : getDarkTheme(user);
 
   static RollButton get basicActionRollButton => RollButton(
-        label: S.current.rollBasicActionButton,
+        label: tr.customRolls.presets.basicAction,
         dice: [dw.Dice.d6 * 2],
         specialDice: [],
       );
 
   static RollButton get hackAndSlashRollButton => RollButton(
-        label: S.current.rollAttackDamageButton,
+        label: tr.customRolls.presets.hackAndSlash,
         dice: [dw.Dice.fromJson('2d6+STR')],
         specialDice: [SpecialDice.damage],
       );
 
   static RollButton get volleyRollButton => RollButton(
-        label: S.current.rollVolleyButton,
+        label: tr.customRolls.presets.volley,
         dice: [dw.Dice.fromJson('2d6+DEX')],
         specialDice: [SpecialDice.damage],
       );
 
   static RollButton get discernRealitiesRollButton => RollButton(
-        label: S.current.rollDiscernRealitiesButton,
+        label: tr.customRolls.presets.discernRealities,
         dice: [dw.Dice.fromJson('2d6+WIS')],
         specialDice: [],
       );
@@ -132,18 +136,22 @@ class Character with WithIcon implements WithMeta<Character, CharacterMeta> {
         rawRollButtons[1] ?? hackAndSlashRollButton,
       ];
 
-  Set<String> get noteCategories =>
-      settings.noteCategories.getSorted(notes.map((note) => note.localizedCategory).toSet());
+  Set<String> get noteCategories => settings.noteCategories
+      .getSorted(notes.map((note) => note.localizedCategory).toSet());
 
-  Set<Type> get actionCategories => settings.actionCategories.getSorted(allActionCategories);
+  Set<Type> get actionCategories =>
+      settings.actionCategories.getSorted(allActionCategories);
 
   dw.Dice get damageDice => stats.damageDice ?? defaultDamageDice;
 
-  dw.Dice get defaultDamageDice => characterClass.damageDice.copyWithModifierValue(damageModifier);
+  dw.Dice get defaultDamageDice =>
+      characterClass.damageDice.copyWithModifierValue(damageModifier);
 
-  List<SessionMark> get bonds => sessionMarks.where((e) => e.type == dw.SessionMarkType.bond).toList();
+  List<SessionMark> get bonds =>
+      sessionMarks.where((e) => e.type == dw.SessionMarkType.bond).toList();
 
-  List<SessionMark> get flags => sessionMarks.where((e) => e.type == dw.SessionMarkType.flag).toList();
+  List<SessionMark> get flags =>
+      sessionMarks.where((e) => e.type == dw.SessionMarkType.flag).toList();
 
   List<SessionMark> get endOfSessionMarks => sessionMarks
       .where((e) => e.type == dw.SessionMarkType.endOfSession)
@@ -154,19 +162,19 @@ class Character with WithIcon implements WithMeta<Character, CharacterMeta> {
         SessionMark(
           key: uuid(),
           type: dw.SessionMarkType.endOfSession,
-          description: S.current.endOfSessionQ1,
+          description: tr.sessionMarks.endOfSession.q1,
           completed: false,
         ),
         SessionMark(
           key: uuid(),
           type: dw.SessionMarkType.endOfSession,
-          description: S.current.endOfSessionQ2,
+          description: tr.sessionMarks.endOfSession.q2,
           completed: false,
         ),
         SessionMark(
           key: uuid(),
           type: dw.SessionMarkType.endOfSession,
-          description: S.current.endOfSessionQ3,
+          description: tr.sessionMarks.endOfSession.q3,
           completed: false,
         ),
       ];
@@ -262,7 +270,8 @@ class Character with WithIcon implements WithMeta<Character, CharacterMeta> {
         ],
       );
 
-  factory Character.fromRawJson(String str) => Character.fromJson(json.decode(str));
+  factory Character.fromRawJson(String str) =>
+      Character.fromJson(json.decode(str));
 
   factory Character.empty() {
     final rand = Random();
@@ -298,7 +307,8 @@ class Character with WithIcon implements WithMeta<Character, CharacterMeta> {
     );
   }
 
-  factory Character.withClass({required CharacterClass characterClass, Race? race}) {
+  factory Character.withClass(
+      {required CharacterClass characterClass, Race? race}) {
     return Character.empty().copyWith(
       characterClass: characterClass,
       race: race ??
@@ -318,11 +328,14 @@ class Character with WithIcon implements WithMeta<Character, CharacterMeta> {
   String toRawJson() => json.encode(toJson());
 
   factory Character.fromJson(Map<String, dynamic> json) => Character(
-        meta: Meta.tryParse(json['_meta'], parseData: (data) => CharacterMeta.fromJson(data)),
+        meta: Meta.tryParse(json['_meta'],
+            parseData: (data) => CharacterMeta.fromJson(data)),
         key: json['key'],
         displayName: json['displayName'],
         avatarUrl: json['avatarURL'],
-        settings: json['settings'] != null ? CharacterSettings.fromJson(json['settings']) : CharacterSettings.empty(),
+        settings: json['settings'] != null
+            ? CharacterSettings.fromJson(json['settings'])
+            : CharacterSettings.empty(),
         characterClass: CharacterClass.fromJson(json['class']),
         moves: List<Move>.from(json['moves'].map((x) => Move.fromJson(x))),
         spells: List<Spell>.from(json['spells'].map((x) => Spell.fromJson(x))),
@@ -331,7 +344,8 @@ class Character with WithIcon implements WithMeta<Character, CharacterMeta> {
         notes: List<Note>.from(json['notes'].map((x) => Note.fromJson(x))),
         stats: CharacterStats.fromJson(json['stats']),
         abilityScores: AbilityScores.fromJson(json['abilityScores']),
-        sessionMarks: List<SessionMark>.from(json['sessionMarks'].map((x) => SessionMark.fromJson(x))),
+        sessionMarks: List<SessionMark>.from(
+            json['sessionMarks'].map((x) => SessionMark.fromJson(x))),
         bio: Bio.fromJson(json['bio']),
         race: Race.fromJson(json['race']),
       );
@@ -421,7 +435,8 @@ class CharacterMeta {
   CharacterMeta({this.lastUsed});
 
   factory CharacterMeta.fromJson(Map<String, dynamic> json) => CharacterMeta(
-        lastUsed: json['lastUsed'] != null ? DateTime.parse(json['lastUsed']) : null,
+        lastUsed:
+            json['lastUsed'] != null ? DateTime.parse(json['lastUsed']) : null,
       );
 
   CharacterMeta copyWith({
@@ -438,7 +453,9 @@ class CharacterMeta {
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
-      other is CharacterMeta && runtimeType == other.runtimeType && lastUsed == other.lastUsed;
+      other is CharacterMeta &&
+          runtimeType == other.runtimeType &&
+          lastUsed == other.lastUsed;
 
   @override
   int get hashCode => Object.hashAll([lastUsed]);

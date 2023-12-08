@@ -7,16 +7,18 @@ import 'package:dungeon_paper/app/widgets/forms/entity_share_form.dart';
 import 'package:dungeon_paper/core/utils/builder_utils.dart';
 import 'package:dungeon_paper/core/utils/enums.dart';
 import 'package:dungeon_paper/core/utils/list_utils.dart';
-import 'package:dungeon_paper/generated/l10n.dart';
+import 'package:dungeon_paper/i18n.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-class LibraryEntityForm<T extends WithMeta, Ctrl extends LibraryEntityFormController<T, LibraryEntityFormArguments<T>>>
-    extends GetView<Ctrl> {
+class LibraryEntityForm<
+    T extends WithMeta,
+    Ctrl extends LibraryEntityFormController<T,
+        LibraryEntityFormArguments<T>>> extends GetView<Ctrl> {
   const LibraryEntityForm({
-    Key? key,
+    super.key,
     required this.children,
-  }) : super(key: key);
+  });
 
   final List<Widget Function()> children;
 
@@ -31,7 +33,8 @@ class LibraryEntityForm<T extends WithMeta, Ctrl extends LibraryEntityFormContro
           ),
           body: ItemBuilder.lazyListView(
             padding: const EdgeInsets.all(16).copyWith(bottom: 80),
-            children: children.joinObjects(() => const SizedBox(height: 16)).toList(),
+            children:
+                children.joinObjects(() => const SizedBox(height: 16)).toList(),
             trailing: [
               () => const Divider(height: 64),
               () => Obx(
@@ -44,7 +47,7 @@ class LibraryEntityForm<T extends WithMeta, Ctrl extends LibraryEntityFormContro
           ),
           floatingActionButton: AdvancedFloatingActionButton.extended(
             onPressed: controller.onSave,
-            label: Text(S.current.save),
+            label: Text(tr.generic.save),
             icon: const Icon(Icons.save),
           ),
         ),
@@ -56,13 +59,13 @@ class LibraryEntityForm<T extends WithMeta, Ctrl extends LibraryEntityFormContro
 
   Widget get title => Text(
         controller.args.formContext == FormContext.create
-            ? S.current.addGeneric(S.current.entity(controller.empty().runtimeType))
-            : S.current.editGeneric(S.current.entity(controller.empty().runtimeType)),
+            ? tr.generic.addEntity(tr.entity(controller.empty().runtimeType))
+            : tr.generic.editEntity(tr.entity(controller.empty().runtimeType)),
       );
 }
 
-abstract class LibraryEntityFormController<T extends WithMeta, Args extends LibraryEntityFormArguments<T>>
-    extends GetxController {
+abstract class LibraryEntityFormController<T extends WithMeta,
+    Args extends LibraryEntityFormArguments<T>> extends GetxController {
   final dirty = false.obs;
   late final Args args;
   bool afterInit = false;
@@ -113,7 +116,7 @@ abstract class LibraryEntityFormController<T extends WithMeta, Args extends Libr
       return object.key;
     }
     if (object is Iterable) {
-      return '[' + object.map((e) => _toString(e)).join(',') + ']';
+      return '[${object.map((e) => _toString(e)).join(',')}]';
     }
     return object.toString();
   }

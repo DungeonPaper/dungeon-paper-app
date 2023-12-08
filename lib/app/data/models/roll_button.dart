@@ -23,9 +23,11 @@ class RollButton {
 
   factory RollButton.fromJson(Map<String, dynamic> json) => RollButton(
         label: json['label'],
-        dice: List<dw.Dice>.from((json['dice'] ?? []).map((x) => dw.Dice.fromJson(x))),
+        dice: List<dw.Dice>.from(
+            (json['dice'] ?? []).map((x) => dw.Dice.fromJson(x))),
         specialDice: List<SpecialDice>.from(
-          (json['specialDice'] ?? []).map((x) => getEnumByName(SpecialDice.values, x)),
+          (json['specialDice'] ?? [])
+              .map((x) => getEnumByName(SpecialDice.values, x)),
         ),
       );
 
@@ -35,17 +37,19 @@ class RollButton {
         'specialDice': specialDice.map((d) => d.name).toList(),
       };
 
-  List<dw.Dice> specialDiceFor(Character character, List<SpecialDice> specialDice) => specialDice
-      .map((d) {
-        switch (d) {
-          case SpecialDice.damage:
-            return character.damageDice;
-          default:
-            return null;
-        }
-      })
-      .whereType<dw.Dice>()
-      .toList();
+  List<dw.Dice> specialDiceFor(
+          Character character, List<SpecialDice> specialDice) =>
+      specialDice
+          .map((d) {
+            switch (d) {
+              case SpecialDice.damage:
+                return character.damageDice;
+              default:
+                return null;
+            }
+          })
+          .whereType<dw.Dice>()
+          .toList();
 
   @override
   bool operator ==(Object other) =>
@@ -59,7 +63,8 @@ class RollButton {
   @override
   int get hashCode => Object.hashAll([label, dice, specialDice]);
 
-  String get debugProperties => 'label: $label, dice: $dice, specialDice: $specialDice';
+  String get debugProperties =>
+      'label: $label, dice: $dice, specialDice: $specialDice';
 
   @override
   String toString() => 'RollButton($debugProperties)';

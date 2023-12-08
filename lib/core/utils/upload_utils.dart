@@ -1,12 +1,11 @@
 import 'package:dungeon_paper/app/data/services/user_service.dart';
-import 'package:dungeon_paper/generated/l10n.dart';
+import 'package:dungeon_paper/i18n.dart';
 import 'package:firebase_storage/firebase_storage.dart';
-import 'package:path/path.dart' as path;
-
 import 'package:flutter/material.dart';
 import 'package:flutter_file_dialog/flutter_file_dialog.dart';
 import 'package:get/get.dart';
 import 'package:image_cropper/image_cropper.dart';
+import 'package:path/path.dart' as path;
 
 class UploadSettings {
   final void Function(String downloadURL)? onSuccess;
@@ -44,6 +43,7 @@ Future<CroppedFile?> _pickAndCrop(
   BuildContext context, {
   CropStyle? cropStyle,
 }) async {
+  final theme = Theme.of(context);
   final res = await FlutterFileDialog.pickFile(
     params: const OpenFileDialogParams(
       dialogType: OpenFileDialogType.image,
@@ -56,7 +56,6 @@ Future<CroppedFile?> _pickAndCrop(
     return null;
   }
 
-  final theme = Theme.of(context);
   final colorScheme = theme.colorScheme;
   final cropped = await ImageCropper().cropImage(
     sourcePath: res,
@@ -80,23 +79,25 @@ Future<Reference> _uploadPhoto(CroppedFile file, String uploadPath) async {
   if (!uploadPath.startsWith('/')) {
     uploadPath = '/$uploadPath';
   }
-  final ref = FirebaseStorage.instance.ref(userService.current.fileStoragePath! + uploadPath + ext);
+  final ref = FirebaseStorage.instance
+      .ref(userService.current.fileStoragePath! + uploadPath + ext);
   await ref.putData(await file.readAsBytes());
   return ref;
 }
 
-Future<UploadResponse?> cropAndUploadPhoto(BuildContext context, UploadSettings settings) async {
+Future<UploadResponse?> cropAndUploadPhoto(
+    BuildContext context, UploadSettings settings) async {
   CroppedFile? file;
   try {
     file = await _pickAndCrop(context);
     if (file == null) {
-      Get.rawSnackbar(message: S.current.errorUserOperationCanceled);
+      Get.rawSnackbar(message: tr.errors.userOperationCanceled);
       settings.onCancel?.call();
       return null;
     }
     settings.onUploadFile?.call(file);
   } catch (e) {
-    Get.rawSnackbar(message: S.current.errorUpload);
+    Get.rawSnackbar(message: tr.errors.uploadError);
     settings.onError?.call(e);
     return null;
   }
@@ -110,7 +111,8 @@ Future<UploadResponse?> cropAndUploadPhoto(BuildContext context, UploadSettings 
     settings.onSuccess?.call(downloadURL);
   } catch (e) {
     Get.rawSnackbar(
-      message: 'Error while uploading photo. Try again later, or contact support using the "About" page.',
+      message:
+          'Error while uploading photo. Try again later, or contact support using the "About" page.',
     );
 
     settings.onError?.call(e);

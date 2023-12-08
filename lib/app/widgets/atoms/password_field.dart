@@ -1,4 +1,4 @@
-import 'package:dungeon_paper/generated/l10n.dart';
+import 'package:dungeon_paper/i18n.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -136,11 +136,15 @@ class _PasswordFieldState extends State<PasswordField> {
       decoration: (widget.decoration ?? const InputDecoration()).copyWith(
         suffix: widget.decoration?.suffixIcon ??
             IconButton(
-              icon: obscured ? const Icon(Icons.visibility) : const Icon(Icons.visibility_off),
+              icon: obscured
+                  ? const Icon(Icons.visibility)
+                  : const Icon(Icons.visibility_off),
               iconSize: 16,
               splashColor: Colors.green.withOpacity(0.2),
               onPressed: _toggleObscureText,
-              tooltip: obscured ? S.current.passwordShowTooltip : S.current.passwordHideTooltip,
+              tooltip: obscured
+                  ? tr.account.details.password.visibility.show
+                  : tr.account.details.password.visibility.hide,
             ),
       ),
       keyboardType: widget.keyboardType,

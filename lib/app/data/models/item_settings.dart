@@ -22,7 +22,8 @@ class ItemSettings {
         countWeight: countWeight ?? this.countWeight,
       );
 
-  factory ItemSettings.fromRawJson(String str) => ItemSettings.fromJson(json.decode(str));
+  factory ItemSettings.fromRawJson(String str) =>
+      ItemSettings.fromJson(json.decode(str));
 
   String toRawJson() => json.encode(toJson());
 
@@ -50,7 +51,8 @@ class ItemSettings {
   @override
   int get hashCode => Object.hashAll([countArmor, countDamage, countWeight]);
 
-  String get debugProperties => 'countArmor: $countArmor, countDamage: $countDamage, countWeight: $countWeight';
+  String get debugProperties =>
+      'countArmor: $countArmor, countDamage: $countDamage, countWeight: $countWeight';
 
   @override
   String toString() => 'ItemSettings($debugProperties)';

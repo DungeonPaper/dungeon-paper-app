@@ -1,0 +1,700 @@
+# generic name mappings
+_entSingle(String type): |-
+  ${_select(type, {
+    'Dice': 'Die',
+    'CharacterClass': 'Class',
+    'MoveCategory': 'Category',
+    'GearSelection': 'Starting Gear',
+    'AbilityScore': 'Ability Score',
+    'AlignmentValue': 'Alignment'
+  })}
+_entPlural(String type): |-
+  ${_select(type, {
+    'MoveCategory': 'Categories',
+    'CharacterClass': 'Classes',
+  }, other: '${_entSingle(type)}s')}
+
+entity(Type ent): '${_entSingle(ent.toString())}'
+entityPlural(Type ent): '${_entPlural(ent.toString())}'
+entityCount(Type ent, int cnt): '${cnt == 1 ? _entSingle(ent.toString()) : _entPlural(ent.toString())}'
+entityCountNum(Type ent, int cnt): '$cnt ${entityCount(ent, cnt)}'
+
+app:
+  name: Dungeon Paper
+
+generic:
+  save: Save
+  saveEntity(String ent): Save $ent
+  cancel: Cancel
+  close: Close
+  done: Done
+  view: View
+  continue_: Continue
+  viewEntity(String ent): View $ent
+  all: All
+  allEntities(String ent): All $ent
+  create: Create
+  createEntity(String ent): Create $ent
+  add: Add
+  addEntity(String ent): Add $ent
+  remove: Remove
+  removeEntity(String ent): Remove $ent
+  unselect: Unselect
+  unselectEntity(String ent): Unselect $ent
+  delete: Delete
+  deleteEntity(String ent): Delete $ent
+  edit: Edit
+  editEntity(String ent): Edit $ent
+  yes: Yes
+  no: No
+  noEntity(String ent): No $ent
+  select: Select
+  selectEntity(String ent): Select $ent
+  selected: Selected
+  selectAll: Select All
+  selectNone: Select None
+  my: My
+  myEntity(String ent): My $ent
+  change: Change
+  changeEntity(String ent): Change $ent
+  seeAll: See All
+  selectToAdd(String ent): Select $ent to add
+  name: Name
+  entityName(String ent): $ent name
+  value: Value
+  entityValue(String ent): $ent value
+  description: Description
+  entityDescription(String ent): $ent description
+  explanation: Explanation
+  entityExplanation(String ent): $ent explanation
+  noDescription: ‹No description provided›
+  noEntitySelected(String ent): No $ent selected
+  noEntitySelectedRequired(String ent): No $ent selected (required)
+  useDefault: Use Default
+
+loading:
+  user: Signing in...
+  characters: Getting characters...
+  general: Loading...
+
+errors:
+  userOperationCanceled: Operation canceled
+  uploadError: Error while uploading photo. Try again later, or contact support using the "About" page.
+  invalidEmail: Invalid email address
+  invalidPassword:
+    letter: Password must contain at least one capital letter
+    number: Password must contain at least one number
+  minLength(int cnt): "Must be at least $cnt ${_plural(cnt, one: 'character', many: 'characters')}"
+  maxLength(int cnt): "Must be no more than $cnt ${_plural(cnt, one: 'character', many: 'characters')}"
+  exactLength(int cnt): "Must be exactly $cnt ${_plural(cnt, one: 'character', many: 'characters')}"
+  mustContain(String pattern): Must contain $pattern
+  mustNotContain(String pattern): Must not contain $pattern
+  onlyLetters: Must contain letters only
+
+sort:
+  moveUp: Move up
+  moveDown: Move down
+  moveEntityToTop(String ent): Move $ent to top
+  moveEntityToBottom(String ent): Move $ent to bottom
+
+playbook:
+  title: Playbook
+  myLibrary: My Library
+  myCampaigns: My Campaigns
+
+myLibrary:
+  title: My Library
+  reload: Reload Library
+  itemCount(String cnt, String type): $cnt in $type
+  libraryType(String type): |-
+    ${_select(type, {
+      'builtIn': 'Playbook',
+      'my': 'My Library'
+    })}
+  alreadyAdded: Already added
+  itemTab:
+    playbook: Playbook
+    online: Online
+  emptyState:
+    title(String ent): No $ent found
+    subtitle:
+      filters(String ent): No $ent found in this list.
+      noFilters(String ent): Try changing the search or filters to find more $ent.
+  filters:
+    clear: Clear Filters
+
+nav:
+  actions: Use
+  character: Character
+  journal: Journal
+
+sync:
+  entity:
+    status:
+      inSync(String ent): This $ent is In Sync with its linked library item
+      outOfSync(String ent): This $ent is Out of Sync with its linked library item
+      detached(String ent): This $ent is not linked to any library item
+
+settings:
+  title: Settings
+  importExport: Export/Import
+  _switchMode(String mode): 'Switch to ${mode} Mode'
+  switchToDark: "${_switchMode('Dark')}"
+  switchToLight: "${_switchMode('Light')}"
+  categories:
+    general: General
+  keepAwake: Keep screen awake while using the app
+  defaultTheme:
+    _p(String type): Default $type theme
+    light: "${_p('light')}"
+    dark: "${_p('dark')}"
+
+user:
+  recentCharacters: Recent Characters
+
+auth:
+  orSeparator: OR
+  privacyPolicy: Privacy Policy
+  changelog: What's new?
+  providers:
+    loginWith(String provider): Sign in with $provider
+    signupWith(String provider): Sign up with $provider
+    unusable(String provider): This device only supports unlinking $provider accounts.
+    # `{provider, select, facebook {Facebook} google {Google} apple {Apple} password {Dungeon Paper} other {Other}}`
+    name(String provider): |-
+      ${_select(provider, {
+      'facebook': 'Facebook',
+      'google': 'Google',
+      'apple': 'Apple',
+      'password': 'Dungeon Paper',
+      }, other: 'Other')}
+    unlink: Unlink
+    link: Link
+  confirmUnlink:
+    title(String ent): Unlink from $ent
+    body(String ent): Are you sure you want to unlink your account from $ent?\nBy clicking "Unlink", you will no longer be able to sign in with $ent.\n\nYou will be able to re-link your account at any time by going to your account settings.
+  login:
+    title: Sign In
+    subtitle: Sign in to your account to sync your data online, and get access to many more features.
+    button: Sign in
+    noAccount:
+      label: Don't have an account?
+      button: Sign up
+  logout:
+    button: Sign out
+  signup:
+    title: Sign Up
+    subtitle: Enter the required details below to create your Dungeon Paper account.
+    button: Sign up
+    notLoggedIn:
+      label: Not logged in
+    email:
+      label: Email
+      placeholder: Enter your email
+      error: Please enter a valid email address
+    password:
+      label: Password
+      placeholder: Enter a password
+      confirm:
+        label: Confirm Password
+        placeholder: Enter the same password again
+        error: Passwords do not match
+
+home:
+  bars:
+    xp: XP
+    hp: HP
+  categories:
+    notes: Bookmarked Notes
+    moves: Favorite Moves
+    spells: Prepared Spells
+    items: Equipped Items
+  summary:
+    load:
+      label(int cur, int max): 'Load: $cur/$max'
+      tooltip: Max Load
+    coins:
+      label(String amt): $amt G
+      tooltip: Coins
+  menu:
+    character:
+      tooltip: Character Menu
+      basicInfo: Basic Information
+      abilityScores: Ability Scores
+      customRolls: Quick-Roll Buttons
+      theme: Character Theme
+    bio: Character Biography
+    debilities: Debilities
+  emptyState:
+    guest:
+      title: Sign in to get more features
+      subtitle: Online data sync, library sharing, campaigns and more!
+    title: No Characters
+    subtitle: Create a Character to get started
+
+about:
+  title: About
+  version(String version): Version $version
+  copyright(int year): Copyright © 2018-$year
+  author: Chen Asraf
+  discord:
+    title: Join Our Discord
+    subtitle: Join the Discord community to ask questions, get help, send feedback, or just chat with other players.
+  feedback:
+    title: Send Feedback
+    subtitle: We reply more promptly through Discord, but you can send us feedback, bug reports or suggestions about the app directly here as an alternative.
+  socials:
+    title: Links
+    twitter: Twitter
+    facebook: Facebook
+    discord: Discord
+    github: GitHub
+    google: Play Store
+    apple: App Store
+  specialThanks: Special Thanks
+  contributors: Contributors
+  icons: Icon Credits
+
+character:
+  data:
+    coins: Coins
+    load:
+      load: Load
+      maxLoad: Max Load
+      autoMaxLoad: Use class base load + STR mod
+    level: Level
+    damageDice: Damage Dice
+    calculateDamage: Use damage dice from class & equipped items
+  header:
+    level(int lv): Level $lv
+    characterClass(String name): $name
+    race(String name): $name
+    alignment(String alignment): $alignment
+    separator: ' ∙ '
+  noCategory: No Category
+  theme:
+    title: Character Theme
+    _defaultTheme(String type): Default $type theme
+    defaultLight: "${_defaultTheme('light')}"
+    defaultDark: "${_defaultTheme('dark')}"
+
+characterClass:
+  baseLoad: Base Load
+  baseHp: Base HP
+  damageDice: Damage Dice
+
+dice:
+  suggestion(String dice): 'Suggested: $dice'
+  form:
+    amount: Amount
+    sides: Sides
+    diceSeparator: d
+    modifierType:
+      fixed: Fixed Value
+      modifier: Stat Mod.
+    value:
+      placeholder: Number, e.g. 2 or -1
+      label: Modifier value
+    modifier:
+      placeholder: Select stat
+      label: Stat
+    statValue(String name, String key): $name ($key)
+
+  roll:
+    title:
+      rolled(int total): Rolled $total
+      rolling(int amt): "Rolling $amt ${_plural(amt, one: 'die', many: 'dice')}"
+    action: Roll
+    total(int amt): Total $amt
+    resultBreakdown(String dice, String mod): 'Dice: $dice | Modifier: $mod'
+
+basicInfo:
+  title: Basic Information
+  form:
+    name:
+      label: Character Name
+      placeholder: Enter your character's name
+      random:
+        tooltip:
+          _p(String act): $act to generate a random name
+          touch: "${_p('Tap')}"
+          click: "${_p('Click')}"
+    photo:
+      change: Change Photo...
+      remove: Remove Photo
+      choose: Choose Photo...
+      guest:
+        prefix: 'You need to be signed in to upload images. '
+        label: Sign in or create an account
+        suffix: ', or upload using your own URL below.'
+      uploading: UPLOADING...
+      orSeparator: OR
+      url:
+        label: Image URL
+        placeholder: Paste an image URL
+
+debilities:
+  label(String name, String key): $name ($key)
+  dialog:
+    title: Debilities
+    info: Debilities are temporary, negative conditions or states in which your character is in. When a stat is debilitated, it causes its modifier to be reduced by 1 until recovered.
+
+tags:
+  copyFrom(String name): 'Copy from: $name'
+  dialog:
+    title: Tag Information
+
+dialogs:
+  confirmations:
+    delete:
+      title(String ent): Delete $ent?
+      body(String ent, String name): Are you sure you want to remove the $ent "$name" from the list?
+    exit:
+      title: Are you sure?
+      body: Going back will lose any unsaved changes.\nAre you sure you want to go back?
+      ok: Exit & Discard
+      cancel: Continue editing
+    deleteAccount:
+      step1:
+        title: Delete Your Account?
+        body: Are you sure you want to delete your account?\n\nThis action cannot be undone.
+      step2:
+        title: Are you really sure?
+        body: We do not save any data for deleted accounts. All your data will be permanently deleted.\n\nAre you sure you want to delete your account?\n\nPlease confirm this one last time.
+
+moves:
+  category:
+    shortName(String cat): |-
+      ${_select(cat, {
+        'starting': 'Starting',
+        'basic': 'Basic',
+        'special': 'Special',
+        'advanced1': 'Advanced',
+        'advanced2': 'Advanced',
+      }, other: 'Other')}
+    mediumName(String cat): |-
+      ${_select(cat, {
+        'starting': 'Starting',
+        'basic': 'Basic',
+        'special': 'Special',
+        'advanced1': 'Advanced (1-5)',
+        'advanced2': 'Advanced (6-10)',
+      }, other: 'Other')}
+    longName(String cat): |-
+      ${_select(cat, {
+        'starting': 'Starting',
+        'basic': 'Basic',
+        'special': 'Special',
+        'advanced1': 'Advanced (level 1-5)',
+        'advanced2': 'Advanced (level 6-10)',
+      }, other: 'Other')}
+
+spells:
+  spellLevel(String level): |-
+    ${_select(level, {
+      'rote': 'Rote',
+      'cantrip': 'Cantrip',
+    }, other: 'Level $level')}
+
+items:
+  amount(String amt): × $amt
+  amountTooltip: Amount
+  settings:
+    countArmor: Count Armor
+    countDamage: Count Damage
+    countWeight: Count Weight
+
+notes:
+  noCategory: General
+
+# `{alignment, select, chaotic {Chaotic} evil {Evil} good {Good} lawful {Lawful} neutral {Neutral} other {{alignment}}}`
+alignment:
+  name(String key): |-
+    ${_select(key, {
+      'chaotic': 'Chaotic',
+      'evil': 'Evil',
+      'good': 'Good',
+      'lawful': 'Lawful',
+      'neutral': 'Neutral',
+    })}
+
+bio:
+  dialog:
+    title: Character Biography
+    description:
+      label: Character & background description
+      placeholder: Describe your character's background, personality, goals, etc.
+    looks:
+      label: Appearance
+      placeholder: Describe your character's appearance. You may use the presets from the buttons above.
+    alignment:
+      label: Alignment
+    alignmentDescription:
+      label: Alignment Description
+      placeholder: Alignment is your character's way of thinking and moral compass. This can center on an ethical ideal, religious strictures or early life events. It reflects what your character values and aspires to protect or create.
+
+search:
+  placeholder: Type to search
+  placeholderEntity(String ent): Type to search $ent
+  searchIn: Search in
+
+hp:
+  dialog:
+    title: Modify HP
+    change:
+      add(int amt): Heal\n+$amt
+      remove(int amt): Damage\n-$amt
+      neutral: No Change
+    overrideMax: Override Max HP
+
+xp:
+  dialog:
+    title: Mark Session XP
+    overridingTitle: Update XP & Level
+    endOfSession:
+      button: End Session
+      questions:
+        title: End of Session Questions
+        subtitle: 'Answer these questions as a group. For each "yes" answer, XP is marked.'
+    override:
+      title: Update Manually
+      info: Changing the current XP or level manually will cause the pending XP to be discarded unless this is unchecked.
+      resetCheckbox: Reset bonds, flags & end of session questions after saving
+      xp: Override XP
+      level: Override Level
+
+armor:
+  title: Armor
+  dialog:
+    title: Armor
+    autoArmor: Use armor from class & equipped items
+
+richText:
+  preview: Preview
+  help: Formatting Help
+  bold: Bold
+  italic: Italic
+  headings: Headings
+  heading(int depth): Heading $depth
+  bulletList: Bullet List
+  numberedList: Numbered List
+  checkList:
+    unchecked: Checklist (Unchecked)
+    checked: Checklist (Checked)
+  url: URL
+  imageURL: Image URL
+  table: Table
+  header(Object n): Header $n
+  cell(int n): Cell $n
+  markdownPreview: Markdown Preview
+
+customRolls:
+  title: Quick Roll Buttons
+  left: Left Button
+  right: Right Button
+  buttonLabel: Button Label
+  specialDice:
+    title: Special Dice
+    button(String btn): "${_select(btn, {'damage': 'Damage'}, other: btn)}"
+  tooltip:
+    rollNormal(String dice): Roll $dice\n* Rolling with debility
+    rollWithDebility(String dice): Roll $dice
+  presets:
+    title: Presets
+    basicAction: Basic Action
+    hackAndSlash: Hack & Slash
+    volley: Volley
+    discernRealities: Discern Realities
+
+sessionMarks:
+  title: Bonds & Flags
+  bond: Bond
+  bonds: Bonds
+  flag: Flag
+  flags: Flags
+  noData: You have no bonds or flags. You can add some using the edit button above, then mark them off as completed as you go along your adventure.
+  info: You can add, update or remove bonds & flags using the edit icon above.
+  endOfSession:
+    q1: Did we learn something new and important about the world?
+    q2: Did we overcome a notable monster or enemy?
+    q3: Did we loot a memorable treasure?
+
+createCharacter:
+  characterClass:
+    noSelection: No class selected (required)
+    description(int hp, int load, String damageDice): 'Base HP: $hp, Load: $load, Damage Dice: $damageDice'
+  basicInfo:
+    defaultName: Unnamed Traveler
+    helpText: Select name & picture (required)
+    description(String cls): Level 1 $cls
+  startingGear:
+    helpText: Select your starting gear determined by class (optional)
+    coins(String amt): "$amt ${_plural(double.tryParse(amt)?.ceil() ?? 0, one: 'coin', many: 'coins')}"
+    item(String amt, String name): $amt × $name
+    count:
+      withMax(int cnt, int max): '$cnt selected (class allowance: $max)'
+      noMax(int cnt): $cnt selected
+  movesSpells:
+    title: Moves & Spells
+    description(int moves, int spells): $moves Moves, $spells Spells selected
+
+account:
+  details:
+    title: Account details
+    displayName:
+      title: Change Display Name
+      label: Display name
+      placeholder: Enter your public display name
+      success: Display name changed successfully
+    image:
+      title: Change Profile Picture
+      subtitle: Change your profile picture
+    email:
+      title: Change Email Address
+      label: Email address
+      placeholder: Enter a new email address
+      success: Email changed successfully
+    password:
+      title: Change Password
+      subtitle: Change your password
+      success: Password changed successfully
+      label: New password
+      placeholder: Enter your new password
+      visibility:
+        show: Show password
+        hide: Hide password
+      confirm:
+        label: Confirm New Password
+        placeholder: Enter the same password again
+      error: Passwords do not match
+  providers:
+    title: Connected logins
+  deleteAccount:
+    title: Delete Your Account
+    success: A deletion request for your account was sent successfully
+
+actions:
+  moves:
+    basic: Basic Moves
+    special: Special Moves
+
+abilityScores:
+  info: You can drag & drop the stat cards to change the order in which they appear throughout this character's screens.
+  rollButton:
+    stat: Roll +{stat}
+    randStat: Roll random stat
+  stats:
+    bond:
+      name: Bond
+      description: When a move has you roll+bond you'll count the number of bonds you have with the character in question and add that to the roll.
+      debility:
+        name: Lonely
+        description:
+    cha:
+      description: Measures a character's personality, personal magnetism, ability to lead, and appearance.
+      name: Charisma
+      debility:
+        name: Scarred
+        description: It may not be permanent, but for now you don't look so good.
+    con:
+      description: Represents your character's health and stamina.
+      name: Constitution
+      debility:
+        name: Sick
+        description: Something just isn't right inside. Maybe you've got a disease or a wasting illness. Maybe you just drank too much ale last night and it's coming back to haunt you.
+    dex:
+      description: Measures agility, reflexes and balance.
+      name: Dexterity
+      debility:
+        name: Shaky
+        description: You're unsteady on your feet and you've got a shake in your hands.
+    str:
+      description: Measures muscle and physical power.
+      name: Strength
+      debility:
+        name: Weak
+        description: You can't exert much force. Maybe it's just fatigue and injury, or maybe your strength was drained by magic.
+    wis:
+      description: Describes a character's willpower, common sense, awareness, and intuition.
+      name: Wisdom
+      debility:
+        name: Confused
+        description: Ears ringing. Vision blurred. You're more than a little out of it.
+    intl:
+      description: Determines how well your character learns and reasons.
+      name: Intelligence
+      debility:
+        name: Stunned
+        description: That last knock to the head shook something loose. Brain not work so good.
+  form:
+    modifierValueLabel(String mod): Modifier:\n$mod
+    debilityDescription:
+      label: Debility Description
+      description: A description of the effect causing the debility and/or how it affects your character
+    debilityName:
+      label: Debility Name
+      description: The name for the debility that occurs when this stat is debilitated (takes -1 until recovered).
+    description:
+      label: Ability Score Description
+      description: A description of what this ability score represents
+    key:
+      label: Ability Score Key
+      description: A 3-letter unique key that identifies this ability score in dice and is used as the short label for the modifier value (and not the actual score)
+    name:
+      label: Ability Score Name
+      description: The name of this ability score
+    icon:
+      label: Icon
+      button: Change Icon
+
+feedback:
+  title: Send App Feedback
+  send: Send
+  form:
+    title:
+      label: Feedback title
+    body:
+      label: Problem, idea or feedback description
+    email:
+      label: Enter your email
+  success:
+    title: Feedback sent!
+    message: Thank you for your feedback! We will review your feedback as soon as we can.
+
+migration:
+  title: Welcome to\nDungeon Paper 2!
+  subtitle: To get started, pick a username and the language for the rulebook & app. If you already have an existing Dungeon Paper account your data might take a few seconds to migrate.
+  username:
+    label: Username
+    placeholder: Pick a unique username
+    info: Your username is unique and can not be changed later, so think carefully! It will be used to identify all your library items when publishing.
+  language:
+    data: Default data language
+
+backup:
+  title: Export/Import
+  importing:
+    title: Import
+    button: Import
+    progress:
+      title: Importing...
+      processing(String ent): Processing $ent...
+    file:
+      browse: Browse...
+      clearFile: Clear selected file
+      info: To start importing, pick the file you want to import from.\nYou will then be able to select what to save and what to leave out.
+    success:
+      title: Import Successful
+      message: Your data was imported from file successfully
+    error:
+      title: Import Failed
+      message: Something went wrong.\nTry again or contact support if this persists
+  exporting:
+    title: Export
+    button: Export
+    error:
+      title: Export Failed
+      message: Something went wrong.\nTry again or contact support if this persists
+    success:
+      title: Export Successful
+      message: Your data was exported to file successfully

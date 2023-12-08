@@ -624,6 +624,15 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "4.0.2"
+  i18n:
+    dependency: "direct main"
+    description:
+      path: "."
+      ref: next
+      resolved-ref: "8b5c9110c6e87773b91a5b0f3505f99279212da6"
+      url: "https://github.com/chenasraf/i18n.git"
+    source: git
+    version: "4.0.8"
   icons_launcher:
     dependency: "direct main"
     description:
@@ -936,6 +945,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.2.3"
+  quick_log:
+    dependency: transitive
+    description:
+      name: quick_log
+      sha256: b684b8ac632a12059412116fed3081260dc2a5e4b6dcf00dbfd0744cc57e3d96
+      url: "https://pub.dev"
+    source: hosted
+    version: "5.3.1"
   quiver:
     dependency: transitive
     description:

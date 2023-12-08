@@ -1,14 +1,13 @@
 import 'package:dungeon_paper/app/widgets/atoms/advanced_floating_action_button.dart';
 import 'package:dungeon_paper/app/widgets/atoms/select_box.dart';
-import 'package:dungeon_paper/generated/l10n.dart';
+import 'package:dungeon_paper/i18n.dart';
 import 'package:flutter/material.dart';
-
 import 'package:get/get.dart';
 
 import '../controllers/migration_controller.dart';
 
 class MigrationView extends GetView<MigrationController> {
-  const MigrationView({Key? key}) : super(key: key);
+  const MigrationView({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -20,7 +19,7 @@ class MigrationView extends GetView<MigrationController> {
       floatingActionButton: Obx(
         () => AdvancedFloatingActionButton.extended(
           onPressed: controller.isValid ? controller.done : null,
-          label: Text(S.current.continueLabel),
+          label: Text(tr.generic.continue_),
           icon: const Icon(Icons.check),
         ),
       ),
@@ -41,13 +40,13 @@ class MigrationView extends GetView<MigrationController> {
                   ),
                   const SizedBox(height: 16),
                   Text(
-                    S.current.migrationTitle,
+                    tr.migration.title,
                     style: textTheme.headlineMedium,
                     textAlign: TextAlign.center,
                   ),
                   const SizedBox(height: 16),
                   Text(
-                    S.current.migrationSubtitle,
+                    tr.migration.subtitle,
                     style: textTheme.titleMedium,
                     textAlign: TextAlign.center,
                   ),
@@ -56,20 +55,20 @@ class MigrationView extends GetView<MigrationController> {
                     () => TextFormField(
                       controller: controller.username,
                       decoration: InputDecoration(
-                        label: Text(S.current.signupUsername),
-                        hintText: S.current.signupUsernamePlaceholder,
+                        label: Text(tr.migration.username.label),
+                        hintText: tr.migration.username.placeholder,
                       ),
                     ),
                   ),
                   const SizedBox(height: 8),
-                  Text(S.current.migrationUsernameInfo, style: textTheme.bodySmall),
+                  Text(tr.migration.username.info, style: textTheme.bodySmall),
                   const SizedBox(height: 16),
                   Obx(
                     () => SelectBox(
                       value: controller.language,
-                      label: Text(S.current.signupDefaultDataLanguage),
+                      label: Text(tr.migration.language.data),
                       items: const [
-                        DropdownMenuItem(child: Text('English'), value: 'EN'),
+                        DropdownMenuItem(value: 'EN', child: Text('English')),
                       ],
                       onChanged: null,
                     ),

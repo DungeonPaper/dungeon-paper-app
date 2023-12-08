@@ -1,5 +1,5 @@
 import 'package:dungeon_paper/app/widgets/molecules/dialog_controls.dart';
-import 'package:dungeon_paper/generated/l10n.dart';
+import 'package:dungeon_paper/i18n.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -7,14 +7,14 @@ import '../../../core/utils/dialog_utils.dart';
 
 class ConfirmExitView extends StatelessWidget {
   const ConfirmExitView({
-    Key? key,
+    super.key,
     this.title,
     this.text,
     this.okLabel,
     this.cancelLabel,
     this.dirty = true,
     required this.child,
-  }) : super(key: key);
+  });
 
   final Widget? title;
   final Widget? text;
@@ -23,8 +23,8 @@ class ConfirmExitView extends StatelessWidget {
   final Widget child;
   final bool dirty;
 
-  static final _defaultTitle = Text(S.current.confirmExitDefaultTitle);
-  static final _defaultText = Text(S.current.confirmExitDefaultText);
+  static final _defaultTitle = Text(tr.dialogs.confirmations.exit.title);
+  static final _defaultText = Text(tr.dialogs.confirmations.exit.body);
 
   @override
   Widget build(BuildContext context) {
@@ -63,12 +63,12 @@ class ConfirmExitDialog extends StatelessWidget {
   final String? cancelLabel;
 
   const ConfirmExitDialog({
-    Key? key,
+    super.key,
     this.title,
     this.text,
     this.okLabel,
     this.cancelLabel,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {

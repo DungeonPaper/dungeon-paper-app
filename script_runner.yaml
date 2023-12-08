@@ -1,5 +1,9 @@
 shell: /bin/zsh
 scripts:
+  # Developer
+  - name: runner
+    cmd: dart run build_runner watch
+    description: Run Build Runner in watch mode
   # Android
   - name: build:android:apk
     cmd: flutter build apk

@@ -3,14 +3,14 @@ import 'package:dungeon_paper/app/modules/BioForm/controllers/bio_form_controlle
 import 'package:dungeon_paper/app/routes/app_pages.dart';
 import 'package:dungeon_paper/app/widgets/molecules/dialog_controls.dart';
 import 'package:dungeon_paper/core/utils/markdown_styles.dart';
-import 'package:dungeon_paper/generated/l10n.dart';
+import 'package:dungeon_paper/i18n.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_markdown/flutter_markdown.dart';
 import 'package:get/get.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class CharacterBioDialog extends GetView with CharacterServiceMixin {
-  const CharacterBioDialog({Key? key}) : super(key: key);
+  const CharacterBioDialog({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -21,10 +21,11 @@ class CharacterBioDialog extends GetView with CharacterServiceMixin {
       title: Row(
         mainAxisSize: MainAxisSize.max,
         children: [
-          Expanded(child: Text(S.current.characterBioDialogTitle)),
+          Expanded(child: Text(tr.bio.dialog.title)),
           IconButton(
             onPressed: () {
-              Get.toNamed(Routes.bio, arguments: BioFormArguments(character: character));
+              Get.toNamed(Routes.bio,
+                  arguments: BioFormArguments(character: character));
             },
             icon: const Icon(Icons.edit, size: 20),
           )
@@ -41,16 +42,17 @@ class CharacterBioDialog extends GetView with CharacterServiceMixin {
               crossAxisAlignment: CrossAxisAlignment.start,
               // shrinkWrap: true,
               children: [
-                Text(S.current.characterBioDialogDescLabel, style: textTheme.bodySmall),
+                Text(tr.bio.dialog.description.label,
+                    style: textTheme.bodySmall),
                 char.bio.description.isNotEmpty
                     ? MarkdownBody(
                         data: char.bio.description,
                         onTapLink: (_, url, __) => launchUrl(Uri.parse(url!)),
                         styleSheet: MarkdownStyles.of(context),
                       )
-                    : Text(S.current.noDescription),
+                    : Text(tr.generic.noDescription),
                 const SizedBox(height: 16),
-                Text(S.current.characterBioDialogLooksLabel, style: textTheme.bodySmall),
+                Text(tr.bio.dialog.looks.label, style: textTheme.bodySmall),
                 char.bio.looks.isNotEmpty
                     ? Text(char.bio.looks, style: textTheme.bodyLarge)
                     // TODO broken...?!
@@ -71,22 +73,23 @@ class CharacterBioDialog extends GetView with CharacterServiceMixin {
                     // ,
                     //   )
                     // )
-                    : Text(S.current.noDescription),
+                    : Text(tr.generic.noDescription),
                 const SizedBox(height: 16),
                 Row(
                   children: [
                     Text(
-                      S.current.characterBioDialogAlignmentNameDisplayLabel,
+                      '${tr.bio.dialog.alignment.label}: ',
                       style: textTheme.bodySmall,
                     ),
                     const SizedBox(width: 4),
                     IconTheme.merge(
-                      data: IconThemeData(size: 14, color: textTheme.bodySmall!.color!),
+                      data: IconThemeData(
+                          size: 14, color: textTheme.bodySmall!.color!),
                       child: Icon(char.bio.alignment.icon),
                     ),
                     const SizedBox(width: 4),
                     Text(
-                      S.current.alignment(char.bio.alignment.key),
+                      tr.alignment.name(char.bio.alignment.key),
                       style: textTheme.bodySmall,
                     ),
                   ],
@@ -96,7 +99,7 @@ class CharacterBioDialog extends GetView with CharacterServiceMixin {
                         data: char.bio.alignment.description,
                         onTapLink: (_, url, __) => launchUrl(Uri.parse(url!)),
                       )
-                    : Text(S.current.noDescription),
+                    : Text(tr.generic.noDescription),
               ],
             ),
           ),

@@ -1,16 +1,16 @@
 import 'package:dungeon_paper/app/widgets/atoms/menu_button.dart';
-import 'package:dungeon_paper/generated/l10n.dart';
+import 'package:dungeon_paper/i18n.dart';
 import 'package:flutter/material.dart';
 
 class GroupSortMenu extends StatelessWidget {
   const GroupSortMenu({
-    Key? key,
+    super.key,
     required this.index,
     required this.totalItemCount,
     required this.onReorder,
     this.leading = const [],
     this.trailing = const [],
-  }) : super(key: key);
+  });
 
   final int index;
   final int totalItemCount;
@@ -28,14 +28,14 @@ class GroupSortMenu extends StatelessWidget {
           disabled: index <= 0,
           value: 'up',
           icon: const Icon(Icons.move_up),
-          label: Text(S.current.sortMoveUp),
+          label: Text(tr.sort.moveUp),
           onSelect: () => onReorder(index, index - 1),
         ),
         MenuEntry(
           disabled: index >= totalItemCount - 1,
           value: 'down',
           icon: const Icon(Icons.move_down),
-          label: Text(S.current.sortMoveDown),
+          label: Text(tr.sort.moveDown),
           onSelect: () => onReorder(index, index + 1),
         ),
         ...trailing,

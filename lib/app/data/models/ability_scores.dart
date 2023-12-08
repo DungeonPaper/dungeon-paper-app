@@ -2,7 +2,7 @@ import 'dart:convert';
 
 import 'package:dungeon_paper/app/data/models/meta.dart';
 import 'package:dungeon_paper/core/utils/icon_utils.dart';
-import 'package:dungeon_paper/generated/l10n.dart';
+import 'package:dungeon_paper/i18n.dart';
 import 'package:flutter/material.dart';
 
 import '../../../core/dw_icons.dart';
@@ -12,7 +12,8 @@ class AbilityScores {
     required Iterable<AbilityScore> stats,
   }) : stats = stats.toList();
 
-  factory AbilityScores.dungeonWorldAll(int value) => AbilityScores.dungeonWorld(
+  factory AbilityScores.dungeonWorldAll(int value) =>
+      AbilityScores.dungeonWorld(
         dex: value,
         str: value,
         wis: value,
@@ -32,57 +33,58 @@ class AbilityScores {
       AbilityScores(stats: [
         AbilityScore(
           key: 'STR',
-          name: S.current.abilityScoreStrName,
-          description: S.current.abilityScoreStrDescription,
-          debilityName: S.current.abilityScoreStrDebilityName,
-          debilityDescription: S.current.abilityScoreStrDebilityDescription,
+          name: tr.abilityScores.stats.str.name,
+          description: tr.abilityScores.stats.str.description,
+          debilityName: tr.abilityScores.stats.str.debility.name,
+          debilityDescription: tr.abilityScores.stats.str.debility.description,
           value: str,
         ),
         AbilityScore(
           key: 'DEX',
-          name: S.current.abilityScoreDexName,
-          description: S.current.abilityScoreDexDescription,
-          debilityName: S.current.abilityScoreDexDebilityName,
-          debilityDescription: S.current.abilityScoreDexDebilityDescription,
+          name: tr.abilityScores.stats.dex.name,
+          description: tr.abilityScores.stats.dex.description,
+          debilityName: tr.abilityScores.stats.dex.debility.name,
+          debilityDescription: tr.abilityScores.stats.dex.debility.description,
           value: dex,
         ),
         AbilityScore(
           key: 'CON',
-          name: S.current.abilityScoreConName,
-          description: S.current.abilityScoreConDescription,
-          debilityName: S.current.abilityScoreConDebilityName,
-          debilityDescription: S.current.abilityScoreConDebilityDescription,
+          name: tr.abilityScores.stats.con.name,
+          description: tr.abilityScores.stats.con.description,
+          debilityName: tr.abilityScores.stats.con.debility.name,
+          debilityDescription: tr.abilityScores.stats.con.debility.description,
           value: con,
         ),
         AbilityScore(
           key: 'INT',
-          name: S.current.abilityScoreIntName,
-          description: S.current.abilityScoreIntDescription,
-          debilityName: S.current.abilityScoreIntDebilityName,
-          debilityDescription: S.current.abilityScoreIntDebilityDescription,
+          name: tr.abilityScores.stats.intl.name,
+          description: tr.abilityScores.stats.intl.description,
+          debilityName: tr.abilityScores.stats.intl.debility.name,
+          debilityDescription: tr.abilityScores.stats.intl.debility.description,
           value: intl,
         ),
         AbilityScore(
           key: 'WIS',
-          name: S.current.abilityScoreWisName,
-          description: S.current.abilityScoreWisDescription,
-          debilityName: S.current.abilityScoreWisDebilityName,
-          debilityDescription: S.current.abilityScoreWisDebilityDescription,
+          name: tr.abilityScores.stats.wis.name,
+          description: tr.abilityScores.stats.wis.description,
+          debilityName: tr.abilityScores.stats.wis.debility.name,
+          debilityDescription: tr.abilityScores.stats.wis.debility.description,
           value: wis,
         ),
         AbilityScore(
           key: 'CHA',
-          name: S.current.abilityScoreChaName,
-          description: S.current.abilityScoreChaDescription,
-          debilityName: S.current.abilityScoreChaDebilityName,
-          debilityDescription: S.current.abilityScoreChaDebilityDescription,
+          name: tr.abilityScores.stats.cha.name,
+          description: tr.abilityScores.stats.cha.description,
+          debilityName: tr.abilityScores.stats.cha.debility.name,
+          debilityDescription: tr.abilityScores.stats.cha.debility.description,
           value: cha,
         ),
       ]);
 
   final List<AbilityScore> stats;
 
-  Map<String, AbilityScore> get statsMap => Map.fromIterable(stats, key: (s) => s.key);
+  Map<String, AbilityScore> get statsMap =>
+      Map.fromIterable(stats, key: (s) => s.key);
 
   AbilityScores copyWith({
     Iterable<AbilityScore>? stats,
@@ -91,15 +93,22 @@ class AbilityScores {
 
   AbilityScores copyWithStatValues(Map<String, int> map) => copyWith(
         stats: stats.map(
-          (stat) => map.containsKey(stat.key) ? stat.copyWith(value: map[stat.key]) : stat,
+          (stat) => map.containsKey(stat.key)
+              ? stat.copyWith(value: map[stat.key])
+              : stat,
         ),
       );
 
-  AbilityScores copyWithDebilities(Iterable<String> keys, {required bool isDebilitated}) => copyWith(
-        stats: stats.map((e) => keys.contains(e.key) ? e.copyWith(isDebilitated: isDebilitated) : e),
+  AbilityScores copyWithDebilities(Iterable<String> keys,
+          {required bool isDebilitated}) =>
+      copyWith(
+        stats: stats.map((e) => keys.contains(e.key)
+            ? e.copyWith(isDebilitated: isDebilitated)
+            : e),
       );
 
-  factory AbilityScores.fromRawJson(String str) => AbilityScores.fromJson(json.decode(str));
+  factory AbilityScores.fromRawJson(String str) =>
+      AbilityScores.fromJson(json.decode(str));
 
   String toRawJson() => json.encode(toJson());
 
@@ -108,12 +117,12 @@ class AbilityScores {
     if (statKey == 'BOND') {
       return AbilityScore(
         key: 'BOND',
-        name: S.current.abilityScoreBondName,
+        name: tr.abilityScores.stats.bond.name,
         value: 10,
         isDebilitated: false,
-        description: S.current.abilityScoreBondDescription,
-        debilityName: S.current.abilityScoreBondDebilityName,
-        debilityDescription: S.current.abilityScoreBondDebilityDescription,
+        description: tr.abilityScores.stats.bond.description,
+        debilityName: tr.abilityScores.stats.bond.debility.name,
+        debilityDescription: tr.abilityScores.stats.bond.debility.description,
       );
     }
     if (!statsMap.containsKey(statKey)) {
@@ -147,7 +156,8 @@ class AbilityScores {
   int get loadBaseValue => str?.modifier ?? 0;
 
   factory AbilityScores.fromJson(Map<String, dynamic> json) => AbilityScores(
-        stats: List<AbilityScore>.from(json['stats'].map((x) => AbilityScore.fromJson(x))),
+        stats: List<AbilityScore>.from(
+            json['stats'].map((x) => AbilityScore.fromJson(x))),
       );
 
   Map<String, dynamic> toJson() => {
@@ -156,12 +166,16 @@ class AbilityScores {
 
   @override
   bool operator ==(Object? other) =>
-      identical(this, other) || other is AbilityScores && runtimeType == other.runtimeType && stats == other.stats;
+      identical(this, other) ||
+      other is AbilityScores &&
+          runtimeType == other.runtimeType &&
+          stats == other.stats;
 
   @override
   int get hashCode => Object.hashAll(stats);
 
-  String get debugProperties => stats.map((s) => '${s.key}: ${s.value}').join(', ');
+  String get debugProperties =>
+      stats.map((s) => '${s.key}: ${s.value}').join(', ');
 
   @override
   String toString() => 'AbilityScores($debugProperties)';
@@ -244,12 +258,14 @@ class AbilityScore with WithIcon, WithKey {
         icon: icon ?? customIcon,
       );
 
-  int get modifier => isDebilitated ? modifierForValue(value) - 1 : modifierForValue(value);
+  int get modifier =>
+      isDebilitated ? modifierForValue(value) - 1 : modifierForValue(value);
 
   @override
   IconData get icon => customIcon ?? iconFor(key);
 
-  static IconData iconFor(String key) => _icons[key.toLowerCase()] ?? _icons['_other']!;
+  static IconData iconFor(String key) =>
+      _icons[key.toLowerCase()] ?? _icons['_other']!;
 
   static int modifierForValue(int value) {
     var modifiers = {1: -3, 4: -2, 6: -1, 9: 0, 13: 1, 16: 2, 18: 3};
@@ -291,7 +307,15 @@ class AbilityScore with WithIcon, WithKey {
           debilityDescription == other.debilityDescription;
 
   @override
-  int get hashCode => Object.hashAll([key, name, description, value, isDebilitated, debilityName, debilityDescription]);
+  int get hashCode => Object.hashAll([
+        key,
+        name,
+        description,
+        value,
+        isDebilitated,
+        debilityName,
+        debilityDescription
+      ]);
 
   String get debugProperties =>
       'key: $key, value: $value, name: $name, description: $description, isDebilitated: $isDebilitated, debilityName: $debilityName, debilityDescription: $debilityDescription';

@@ -44,8 +44,12 @@ class Meta<DataType> with RepositoryServiceMixin {
   final MetaSharing? sharing;
   final DateTime? updated;
 
-  M? getLibraryCopy<M extends WithMeta>() =>
-      repo.my.listByType<M>().entries.toList().firstWhereOrNull((e) => e.value.key == sharing?.sourceKey)?.value;
+  M? getLibraryCopy<M extends WithMeta>() => repo.my
+      .listByType<M>()
+      .entries
+      .toList()
+      .firstWhereOrNull((e) => e.value.key == sharing?.sourceKey)
+      ?.value;
 
   bool get isFork => sharing != null;
   bool get isSource => !isFork;
@@ -53,7 +57,8 @@ class Meta<DataType> with RepositoryServiceMixin {
   bool isForkOf(WithMeta parent) => isFork && sharing!.sourceKey == parent.key;
   bool isOwnedBy(User user) => createdBy == user.username;
   bool isSourceOf(WithMeta parent) => !isForkOf(parent);
-  bool isOutOfSyncWith(WithMeta parent) => isForkOf(parent) && sharing!.sourceVersion != version;
+  bool isOutOfSyncWith(WithMeta parent) =>
+      isForkOf(parent) && sharing!.sourceVersion != version;
 
   factory Meta.empty({
     String? version,
@@ -65,7 +70,8 @@ class Meta<DataType> with RepositoryServiceMixin {
     String? language,
   }) =>
       Meta._(
-        createdBy: createdBy ?? '', // ?? Get.find<UserService>().current.displayName,
+        createdBy:
+            createdBy ?? '', // ?? Get.find<UserService>().current.displayName,
         version: version ?? uuid(),
         created: created ?? DateTime.now(),
         updated: updated,
@@ -113,8 +119,12 @@ class Meta<DataType> with RepositoryServiceMixin {
 
   String toRawJson() => json.encode(toJson());
 
-  factory Meta.fromJson(Map<String, dynamic> json, [DataType Function(dynamic json)? parseData]) => Meta._(
-        created: json['created'] != null ? parseDate(json['created']) : DateTime.now(),
+  factory Meta.fromJson(Map<String, dynamic> json,
+          [DataType Function(dynamic json)? parseData]) =>
+      Meta._(
+        created: json['created'] != null
+            ? parseDate(json['created'])
+            : DateTime.now(),
         createdBy: json['createdBy'],
         data: json['data'] != null
             ? parseData != null
@@ -123,15 +133,19 @@ class Meta<DataType> with RepositoryServiceMixin {
             : null,
         language: json['language'],
         version: json['version']?.toString() ?? uuid(),
-        sharing: json['sharing'] != null ? MetaSharing.fromJson(json['sharing']) : null,
+        sharing: json['sharing'] != null
+            ? MetaSharing.fromJson(json['sharing'])
+            : null,
         updated: json['updated'] != null ? parseDate(json['updated']) : null,
       );
 
-  factory Meta.tryParse(dynamic meta, {String? owner, DataType Function(dynamic json)? parseData}) => meta != null
-      ? meta is Meta<DataType>
-          ? meta
-          : Meta.fromJson(meta, parseData)
-      : Meta.empty(createdBy: owner);
+  factory Meta.tryParse(dynamic meta,
+          {String? owner, DataType Function(dynamic json)? parseData}) =>
+      meta != null
+          ? meta is Meta<DataType>
+              ? meta
+              : Meta.fromJson(meta, parseData)
+          : Meta.empty(createdBy: owner);
 
   Map<String, dynamic> toJson([dynamic Function(DataType? data)? dumpData]) => {
         'created': created.toString(),
@@ -155,7 +169,8 @@ class Meta<DataType> with RepositoryServiceMixin {
   }
 
   /// Returns an item with forked meta, or the same meta if its by the same user
-  static T forkMeta<T extends WithMeta>(T object, User user, {Meta? meta, String? version}) {
+  static T forkMeta<T extends WithMeta>(T object, User user,
+      {Meta? meta, String? version}) {
     final Meta _m = (meta ?? object.meta);
     // final _o =
     //     force || _m.createdBy != user.username ? object.copyWithInherited(key: uuid()) : object;
@@ -252,7 +267,17 @@ class Meta<DataType> with RepositoryServiceMixin {
   }
 
   static final allStorageKeys = <Type, String>{
-    for (final t in [CharacterClass, Character, Item, Monster, Move, Spell, Race, Note, dw.Tag])
+    for (final t in [
+      CharacterClass,
+      Character,
+      Item,
+      Monster,
+      Move,
+      Spell,
+      Race,
+      Note,
+      dw.Tag
+    ])
       t: Meta.storageKeyFor(t),
   };
 
@@ -297,7 +322,8 @@ class Meta<DataType> with RepositoryServiceMixin {
           language == other.language;
 
   @override
-  int get hashCode => Object.hashAll([created, createdBy, updated, version, sharing, data, language]);
+  int get hashCode => Object.hashAll(
+      [created, createdBy, updated, version, sharing, data, language]);
 
   String get debugProperties =>
       'created: $created, createdBy: $createdBy, updated: $updated, version: $version, sharing: $sharing, data: $data, language: $language';
@@ -352,7 +378,8 @@ class MetaSharing {
         sourceVersion: sourceVersion ?? this.sourceVersion,
       );
 
-  factory MetaSharing.fromRawJson(String str) => MetaSharing.fromJson(json.decode(str));
+  factory MetaSharing.fromRawJson(String str) =>
+      MetaSharing.fromJson(json.decode(str));
 
   String toRawJson() => json.encode(toJson());
 
@@ -401,7 +428,8 @@ class MetaSharing {
           sourceVersion == other.sourceVersion;
 
   @override
-  int get hashCode => Object.hashAll([shared, dirty, sourceKey, sourceOwner, sourceVersion]);
+  int get hashCode =>
+      Object.hashAll([shared, dirty, sourceKey, sourceOwner, sourceVersion]);
 
   String get debugProperties =>
       'shared: $shared, dirty: $dirty, sourceKey: $sourceKey, sourceOwner: $sourceOwner, sourceVersion: $sourceVersion';
@@ -420,7 +448,8 @@ abstract class MetaInterface<T, M> {
   dynamic toJson();
 }
 
-mixin WithMeta<T, MetaDataType> implements WithKey, MetaInterface<T, MetaDataType> {
+mixin WithMeta<T, MetaDataType>
+    implements WithKey, MetaInterface<T, MetaDataType> {
   abstract final Meta<MetaDataType> meta;
   String get displayName;
   String get storageKey;

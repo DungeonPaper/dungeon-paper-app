@@ -5,14 +5,14 @@ import 'package:dungeon_paper/app/modules/LibraryList/controllers/library_list_c
 import 'package:dungeon_paper/app/widgets/atoms/search_field.dart';
 import 'package:dungeon_paper/app/widgets/chips/primary_chip.dart';
 import 'package:dungeon_paper/core/utils/list_utils.dart';
-import 'package:dungeon_paper/generated/l10n.dart';
+import 'package:dungeon_paper/i18n.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:popover/popover.dart';
 
 class EntityFiltersView<T, F extends EntityFilters<T>> extends StatelessWidget {
   EntityFiltersView({
-    Key? key,
+    super.key,
     required this.filters,
     required this.emptyFilters,
     required this.onChange,
@@ -20,11 +20,12 @@ class EntityFiltersView<T, F extends EntityFilters<T>> extends StatelessWidget {
     this.filterWidgetsBuilder,
     this.leading = const [],
     this.trailing = const [],
-  }) : super(key: key);
+  });
 
   final F filters;
   final F emptyFilters;
-  final List<Widget> Function(BuildContext context, F filters)? filterWidgetsBuilder;
+  final List<Widget> Function(BuildContext context, F filters)?
+      filterWidgetsBuilder;
   final service = Get.find<RepositoryService>();
   final void Function(F) onChange;
   final TextEditingController searchController;
@@ -39,7 +40,7 @@ class EntityFiltersView<T, F extends EntityFilters<T>> extends StatelessWidget {
         if (leading.isNotEmpty) const SizedBox(height: 8),
         SearchField(
           controller: searchController,
-          hintText: S.current.searchPlaceholderGeneric(S.current.entity(T)),
+          hintText: tr.search.placeholderEntity(tr.entity(T)),
           trailing: filterWidgetsBuilder != null
               ? [
                   _FiltersWidgetsBuilder<F>(
@@ -60,16 +61,17 @@ class EntityFiltersView<T, F extends EntityFilters<T>> extends StatelessWidget {
 
 class _FiltersWidgetsBuilder<F extends EntityFilters> extends StatelessWidget {
   const _FiltersWidgetsBuilder({
-    Key? key,
+    super.key,
     required this.filters,
     required this.emptyFilters,
     required this.filterWidgetsBuilder,
     required this.onChange,
-  }) : super(key: key);
+  });
 
   final F filters;
   final F emptyFilters;
-  final List<Widget> Function(BuildContext context, F filters) filterWidgetsBuilder;
+  final List<Widget> Function(BuildContext context, F filters)
+      filterWidgetsBuilder;
   final void Function(F) onChange;
 
   @override
@@ -88,12 +90,14 @@ class _FiltersWidgetsBuilder<F extends EntityFilters> extends StatelessWidget {
               filters.controller.add(emptyFilters);
             }
           : null,
-      deleteButtonTooltip: S.current.libraryListNoItemsFoundClearFiltersButton,
+      deleteButtonTooltip: tr.myLibrary.filters.clear,
       onPressed: () => showPopover(
         context: context,
         height: max(
           96,
-          filters.totalFilterCount * 64 + 32 + (16 * (filters.totalFilterCount - 1)),
+          filters.totalFilterCount * 64 +
+              32 +
+              (16 * (filters.totalFilterCount - 1)),
         ),
         width: 300,
         backgroundColor: Theme.of(context).cardColor,
@@ -109,13 +113,14 @@ class _FiltersWidgetsBuilder<F extends EntityFilters> extends StatelessWidget {
 
 class _FiltersPopover<F extends EntityFilters> extends StatelessWidget {
   const _FiltersPopover({
-    Key? key,
+    super.key,
     required this.filters,
     required this.filterWidgetsBuilder,
-  }) : super(key: key);
+  });
 
   final F filters;
-  final List<Widget> Function(BuildContext context, F filters) filterWidgetsBuilder;
+  final List<Widget> Function(BuildContext context, F filters)
+      filterWidgetsBuilder;
 
   @override
   Widget build(BuildContext context) {
@@ -131,8 +136,9 @@ class _FiltersPopover<F extends EntityFilters> extends StatelessWidget {
             children: enumerate(filterWidgetsBuilder(context, filters))
                 .map(
                   (e) => Container(
-                    padding:
-                        e.index == filters.totalFilterCount - 1 ? EdgeInsets.zero : const EdgeInsets.only(bottom: 16),
+                    padding: e.index == filters.totalFilterCount - 1
+                        ? EdgeInsets.zero
+                        : const EdgeInsets.only(bottom: 16),
                     height: e.index == filters.totalFilterCount - 1 ? 64 : 80,
                     child: e.value,
                   ),

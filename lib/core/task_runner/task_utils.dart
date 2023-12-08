@@ -45,10 +45,14 @@ Version getBumpedVersion(ArgOptions o) {
         o.version.major,
         o.version.minor,
         o.version.patch,
-        pre: o.version.preRelease.isEmpty ? null : o.version.preRelease.join('.'),
+        pre: o.version.preRelease.isEmpty
+            ? null
+            : o.version.preRelease.join('.'),
         build: o.version.build.isEmpty
             ? null
-            : o.version.build.map((part) => part is String ? part : (part as num) + 1).join('.'),
+            : o.version.build
+                .map((part) => part is String ? part : (part as num) + 1)
+                .join('.'),
       );
       break;
     case BumpType.major:
@@ -67,10 +71,14 @@ Version getBumpedVersion(ArgOptions o) {
         o.version.patch,
         pre: o.version.preRelease.isEmpty
             ? null
-            : o.version.preRelease.map((part) => part is String ? part : (part as num) + 1).join('-'),
+            : o.version.preRelease
+                .map((part) => part is String ? part : (part as num) + 1)
+                .join('-'),
         build: o.version.build.isEmpty
             ? null
-            : o.version.build.map((part) => part is String ? part : (part as num) + 1).join('-'),
+            : o.version.build
+                .map((part) => part is String ? part : (part as num) + 1)
+                .join('-'),
       );
       break;
   }

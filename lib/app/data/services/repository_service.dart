@@ -100,14 +100,17 @@ abstract class RepositoryCache {
       SearchResponse cacheRes;
 
       try {
-        cacheRes = ignoreCache ? SearchResponse.empty() : await getCacheResponse();
+        cacheRes =
+            ignoreCache ? SearchResponse.empty() : await getCacheResponse();
       } catch (e) {
         cacheRes = SearchResponse.empty();
       }
-      final shouldLoadFromRemote = ignoreCache ? true : await shouldUseRemote(cacheRes);
+      final shouldLoadFromRemote =
+          ignoreCache ? true : await shouldUseRemote(cacheRes);
 
       if (shouldLoadFromRemote) {
-        debugPrint('[$id] Cache ${ignoreCache ? 'skipped' : 'invalid'}, loading from remote');
+        debugPrint(
+            '[$id] Cache ${ignoreCache ? 'skipped' : 'invalid'}, loading from remote');
         SearchResponse resp;
         try {
           resp = await getFromRemote;
@@ -170,7 +173,8 @@ abstract class RepositoryCache {
 
   void registerListeners() {
     clearListeners();
-    debugPrint('[$id] registering listeners, delegate: $storage, listener prefix: "${listenerKey('')}"');
+    debugPrint(
+        '[$id] registering listeners, delegate: $storage, listener prefix: "${listenerKey('')}"');
 
     subs.addAll([
       storage.collectionListener(
@@ -307,14 +311,23 @@ abstract class RepositoryCache {
     required bool saveIntoCache,
   }) async {
     await Future.wait([
-      updateList<CharacterClass>(cacheKey('CharacterClasses'), classes, resp.classes, saveIntoCache: saveIntoCache),
-      updateList<Item>(cacheKey('Items'), items, resp.items, saveIntoCache: saveIntoCache),
-      updateList<Monster>(cacheKey('Monsters'), monsters, resp.monsters, saveIntoCache: saveIntoCache),
-      updateList<Move>(cacheKey('Moves'), moves, resp.moves, saveIntoCache: saveIntoCache),
-      updateList<Race>(cacheKey('Races'), races, resp.races, saveIntoCache: saveIntoCache),
-      updateList<Spell>(cacheKey('Spells'), spells, resp.spells, saveIntoCache: saveIntoCache),
-      updateList<Note>(cacheKey('Tags'), notes, resp.notes, saveIntoCache: saveIntoCache),
-      updateList<dw.Tag>(cacheKey('Tags'), tags, resp.tags, saveIntoCache: saveIntoCache),
+      updateList<CharacterClass>(
+          cacheKey('CharacterClasses'), classes, resp.classes,
+          saveIntoCache: saveIntoCache),
+      updateList<Item>(cacheKey('Items'), items, resp.items,
+          saveIntoCache: saveIntoCache),
+      updateList<Monster>(cacheKey('Monsters'), monsters, resp.monsters,
+          saveIntoCache: saveIntoCache),
+      updateList<Move>(cacheKey('Moves'), moves, resp.moves,
+          saveIntoCache: saveIntoCache),
+      updateList<Race>(cacheKey('Races'), races, resp.races,
+          saveIntoCache: saveIntoCache),
+      updateList<Spell>(cacheKey('Spells'), spells, resp.spells,
+          saveIntoCache: saveIntoCache),
+      updateList<Note>(cacheKey('Tags'), notes, resp.notes,
+          saveIntoCache: saveIntoCache),
+      updateList<dw.Tag>(cacheKey('Tags'), tags, resp.tags,
+          saveIntoCache: saveIntoCache),
     ]);
   }
 
@@ -370,7 +383,8 @@ abstract class RepositoryCache {
     list.addAll(Map.fromIterable(resp, key: (x) => x.key));
 
     if (saveIntoCache && list.isNotEmpty) {
-      for (final x in list.values) await cache.create(collectionName, Meta.keyFor(x), Meta.toJsonFor(x));
+      for (final x in list.values)
+        await cache.create(collectionName, Meta.keyFor(x), Meta.toJsonFor(x));
     }
   }
 }
@@ -421,7 +435,10 @@ class PersonalRepository extends RepositoryCache {
             'Notes': storage.getCollection('Notes'),
           };
           return Future.wait(futures.values).then((v) async {
-            final map = {for (final e in enumerate(v)) futures.keys.elementAt(e.index): e.value};
+            final map = {
+              for (final e in enumerate(v))
+                futures.keys.elementAt(e.index): e.value
+            };
             return SearchResponse.fromJson(map);
           });
         },

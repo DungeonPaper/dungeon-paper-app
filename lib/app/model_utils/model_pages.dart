@@ -68,13 +68,17 @@ class ModelPages {
           ),
       CharacterClass: () => openCharacterClassesList(
             character: character,
-            onSelected: onSelected != null ? (x) => onSelected.call(asList<T>(x)) : null,
+            onSelected: onSelected != null
+                ? (x) => onSelected.call(asList<T>(x))
+                : null,
             preSelection: preSelections?.first as CharacterClass?,
             initialTab: initialTab,
           ),
       Race: () => openRacesList(
             character: character,
-            onSelected: onSelected != null ? (x) => onSelected.call(asList<T>(x)) : null,
+            onSelected: onSelected != null
+                ? (x) => onSelected.call(asList<T>(x))
+                : null,
             preSelection: preSelections?.first as Race?,
             initialTab: initialTab,
           ),
@@ -274,7 +278,10 @@ class ModelPages {
       arguments: CharacterClassLibraryListArguments(
         initialTab: initialTab,
         onSelected: onSelected ??
-            (char != null ? (cls) => controller.updateCharacter(char.copyWith(characterClass: cls)) : null),
+            (char != null
+                ? (cls) => controller
+                    .updateCharacter(char.copyWith(characterClass: cls))
+                : null),
         preSelections: asList(preSelection ?? char?.characterClass),
       ),
     );
@@ -289,7 +296,8 @@ class ModelPages {
         arguments: CharacterClassFormArguments(
           entity: characterClass,
           onSave: onSave,
-          formContext: characterClass == null ? FormContext.create : FormContext.edit,
+          formContext:
+              characterClass == null ? FormContext.create : FormContext.edit,
         ),
       );
 }

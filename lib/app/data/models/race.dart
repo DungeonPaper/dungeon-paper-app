@@ -63,7 +63,8 @@ class Race extends dw.Race with WithIcon implements WithMeta {
 
   factory Race.fromRawJson(String str) => Race.fromJson(json.decode(str));
 
-  factory Race.fromDwRace(dw.Race race, {Meta? meta, bool favorite = false}) => Race(
+  factory Race.fromDwRace(dw.Race race, {Meta? meta, bool favorite = false}) =>
+      Race(
         meta: race.meta != null ? Meta.fromJson(race.meta) : Meta.empty(),
         key: race.key,
         name: race.name,
@@ -81,7 +82,8 @@ class Race extends dw.Race with WithIcon implements WithMeta {
         name: json['name'],
         description: json['description'],
         explanation: json['explanation'],
-        classKeys: List<dw.EntityReference>.from(json['classKeys'].map((x) => dw.EntityReference.fromJson(x))),
+        classKeys: List<dw.EntityReference>.from(
+            json['classKeys'].map((x) => dw.EntityReference.fromJson(x))),
         tags: List<dw.Tag>.from(json['tags'].map((x) => dw.Tag.fromJson(x))),
         favorite: json['favorite'] ?? false,
         dice: List<dw.Dice>.from(json['dice'].map((x) => dw.Dice.fromJson(x))),
@@ -149,7 +151,8 @@ class Race extends dw.Race with WithIcon implements WithMeta {
           dice == other.dice;
 
   @override
-  int get hashCode => Object.hashAll([meta, key, name, description, explanation, classKeys, tags, dice]);
+  int get hashCode => Object.hashAll(
+      [meta, key, name, description, explanation, classKeys, tags, dice]);
 
   @override
   String get debugProperties =>

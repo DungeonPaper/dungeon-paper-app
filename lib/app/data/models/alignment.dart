@@ -17,16 +17,27 @@ class AlignmentValue extends dw.Alignment with WithIcon implements WithMeta {
   Meta get meta => _meta;
   final Meta _meta;
 
-  static final allKeys = <String>['good', 'lawful', 'neutral', 'chaotic', 'evil'];
+  static final allKeys = <String>[
+    'good',
+    'lawful',
+    'neutral',
+    'chaotic',
+    'evil'
+  ];
 
-  factory AlignmentValue.fromRawJson(String str) => AlignmentValue.fromJson(json.decode(str));
+  factory AlignmentValue.fromRawJson(String str) =>
+      AlignmentValue.fromJson(json.decode(str));
 
   factory AlignmentValue.fromDwAlignmentValue(dw.Alignment original) =>
-      AlignmentValue(meta: Meta.empty(createdBy: '__repo__'), type: original.type, description: original.description);
+      AlignmentValue(
+          meta: Meta.empty(createdBy: '__repo__'),
+          type: original.type,
+          description: original.description);
 
   factory AlignmentValue.fromJson(Map<String, dynamic> json) => AlignmentValue(
         meta: Meta.tryParse(json['_meta']),
-        type: dw.AlignmentType.values.firstWhere((element) => element.name == json['type']),
+        type: dw.AlignmentType.values
+            .firstWhere((element) => element.name == json['type']),
         description: json['description'],
       );
 
@@ -149,9 +160,11 @@ class AlignmentValues extends dw.AlignmentValues {
         chaotic: '',
       );
 
-  factory AlignmentValues.fromRawJson(String str) => AlignmentValues.fromJson(json.decode(str));
+  factory AlignmentValues.fromRawJson(String str) =>
+      AlignmentValues.fromJson(json.decode(str));
 
-  factory AlignmentValues.fromJson(Map<String, dynamic> json) => AlignmentValues(
+  factory AlignmentValues.fromJson(Map<String, dynamic> json) =>
+      AlignmentValues(
         meta: Meta.tryParse(json['_meta']),
         good: json['good'],
         evil: json['evil'],
@@ -177,7 +190,8 @@ class AlignmentValues extends dw.AlignmentValues {
         chaotic: chaotic ?? this.chaotic,
       );
 
-  factory AlignmentValues.fromDwAlignmentValues(dw.AlignmentValues original) => AlignmentValues(
+  factory AlignmentValues.fromDwAlignmentValues(dw.AlignmentValues original) =>
+      AlignmentValues(
         meta: Meta.empty(createdBy: '__repo__'),
         good: original.good,
         evil: original.evil,
@@ -205,7 +219,8 @@ class AlignmentValues extends dw.AlignmentValues {
           chaotic == other.chaotic;
 
   @override
-  int get hashCode => Object.hashAll([meta, good, evil, lawful, neutral, chaotic]);
+  int get hashCode =>
+      Object.hashAll([meta, good, evil, lawful, neutral, chaotic]);
 
   @override
   String get debugProperties =>

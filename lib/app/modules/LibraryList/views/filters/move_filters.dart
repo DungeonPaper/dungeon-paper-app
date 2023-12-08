@@ -6,20 +6,19 @@ import 'package:dungeon_paper/app/modules/LibraryList/views/entity_filters.dart'
 import 'package:dungeon_paper/app/widgets/atoms/select_box.dart';
 import 'package:dungeon_paper/core/utils/math_utils.dart';
 import 'package:dungeon_paper/core/utils/string_utils.dart';
-import 'package:dungeon_paper/generated/l10n.dart';
+import 'package:dungeon_paper/i18n.dart';
 import 'package:flutter/material.dart';
-
 import 'package:get/get.dart';
 import 'package:string_similarity/string_similarity.dart';
 
 class MoveFiltersView extends StatelessWidget {
   MoveFiltersView({
-    Key? key,
+    super.key,
     required this.filters,
     required this.group,
     required this.onChange,
     required this.searchController,
-  }) : super(key: key);
+  });
 
   final MoveFilters filters;
   final FiltersGroup group;
@@ -37,21 +36,18 @@ class MoveFiltersView extends StatelessWidget {
       filterWidgetsBuilder: (context, f) => [
         SelectBox<MoveCategory?>(
           isExpanded: true,
-          label: Text(S.current.entityPlural(MoveCategory)),
+          label: Text(tr.entityPlural(MoveCategory)),
           value: f.category,
           items: [
             DropdownMenuItem<MoveCategory?>(
-              child: Text(S.current.allGeneric(S.current.entityPlural(MoveCategory))),
               value: null,
+              child:
+                  Text(tr.generic.allEntities(tr.entityPlural(MoveCategory))),
             ),
             ...MoveCategory.values.map(
               (cat) => DropdownMenuItem<MoveCategory?>(
-                child: Text(
-                  ![MoveCategory.advanced1, MoveCategory.advanced2].contains(cat)
-                      ? S.current.moveCategory(cat)
-                      : S.current.moveCategoryWithLevel(cat),
-                ),
                 value: cat,
+                child: Text(tr.moves.category.longName(cat.name)),
               ),
             ),
           ],
@@ -61,18 +57,22 @@ class MoveFiltersView extends StatelessWidget {
           },
         ),
         SelectBox<String>(
-          label: Text(S.current.entityPlural(CharacterClass)),
+          label: Text(tr.entityPlural(CharacterClass)),
           isExpanded: true,
           value: f.classKey,
           items: [
             DropdownMenuItem<String>(
-              child: Text(S.current.allGeneric(S.current.entityPlural(CharacterClass))),
               value: null,
+              child:
+                  Text(tr.generic.allEntities(tr.entityPlural(CharacterClass))),
             ),
-            ...<CharacterClass>{...repo.builtIn.classes.values, ...repo.my.classes.values}.map(
+            ...<CharacterClass>{
+              ...repo.builtIn.classes.values,
+              ...repo.my.classes.values
+            }.map(
               (cls) => DropdownMenuItem<String>(
-                child: Text(cls.name),
                 value: cls.key,
+                child: Text(cls.name),
               ),
             ),
           ],
@@ -119,7 +119,9 @@ class MoveFilters extends EntityFilters<Move> {
 
     if (classKey != null) {
       if (![MoveCategory.basic, MoveCategory.special].contains(category) &&
-          !move.classKeys.map((x) => cleanStr(x.key)).contains(cleanStr(classKey!))) {
+          !move.classKeys
+              .map((x) => cleanStr(x.key))
+              .contains(cleanStr(classKey!))) {
         return false;
       }
     }
@@ -139,11 +141,18 @@ class MoveFilters extends EntityFilters<Move> {
     return avg(
       [
             category == move.category ? 1.0 : 0.0,
-            classKey != null && move.classKeys.map((x) => cleanStr(x.key)).contains(cleanStr(classKey!)) ? 1.0 : 0.0,
+            classKey != null &&
+                    move.classKeys
+                        .map((x) => cleanStr(x.key))
+                        .contains(cleanStr(classKey!))
+                ? 1.0
+                : 0.0,
           ] +
           [move.name, move.description, move.explanation]
               .map(
-                (e) => (search?.isEmpty ?? true) || e.isEmpty ? 0.0 : StringSimilarity.compareTwoStrings(search!, e),
+                (e) => (search?.isEmpty ?? true) || e.isEmpty
+                    ? 0.0
+                    : StringSimilarity.compareTwoStrings(search!, e),
               )
               .toList(),
     );

@@ -9,7 +9,8 @@ class BondsFlagsFormController extends GetxController {
   final flags = <SessionMark>[].obs;
   final bondsDesc = <TextEditingController>[].obs;
   final flagsDesc = <TextEditingController>[].obs;
-  late final void Function(List<SessionMark> bonds, List<SessionMark> flags) onChanged;
+  late final void Function(List<SessionMark> bonds, List<SessionMark> flags)
+      onChanged;
   final dirty = false.obs;
 
   @override
@@ -17,11 +18,15 @@ class BondsFlagsFormController extends GetxController {
     super.onReady();
     final BondsFlagsFormArguments args = Get.arguments;
     bonds.value = args.bonds;
-    bondsDesc.value =
-        args.bonds.map((e) => TextEditingController(text: e.description)..addListener(_setDirty)).toList();
+    bondsDesc.value = args.bonds
+        .map((e) =>
+            TextEditingController(text: e.description)..addListener(_setDirty))
+        .toList();
     flags.value = args.flags;
-    flagsDesc.value =
-        args.flags.map((e) => TextEditingController(text: e.description)..addListener(_setDirty)).toList();
+    flagsDesc.value = args.flags
+        .map((e) =>
+            TextEditingController(text: e.description)..addListener(_setDirty))
+        .toList();
     onChanged = args.onChanged;
   }
 
@@ -65,11 +70,13 @@ class BondsFlagsFormController extends GetxController {
 
   void save() {
     final newBonds = enumerate(bonds)
-        .map((e) => e.value.copyWithInherited(description: bondsDesc[e.index].text))
+        .map((e) =>
+            e.value.copyWithInherited(description: bondsDesc[e.index].text))
         .where((e) => e.description.isNotEmpty)
         .toList();
     final newFlags = enumerate(flags)
-        .map((e) => e.value.copyWithInherited(description: flagsDesc[e.index].text))
+        .map((e) =>
+            e.value.copyWithInherited(description: flagsDesc[e.index].text))
         .where((e) => e.description.isNotEmpty)
         .toList();
 
@@ -87,7 +94,8 @@ class BondsFlagsFormController extends GetxController {
 class BondsFlagsFormArguments {
   final List<SessionMark> bonds;
   final List<SessionMark> flags;
-  final void Function(List<SessionMark> bonds, List<SessionMark> flags) onChanged;
+  final void Function(List<SessionMark> bonds, List<SessionMark> flags)
+      onChanged;
 
   BondsFlagsFormArguments({
     required this.bonds,

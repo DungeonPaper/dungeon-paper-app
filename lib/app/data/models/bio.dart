@@ -52,7 +52,8 @@ class Bio {
         'alignment': alignment.toJson(),
       };
 
-  String get debugProperties => 'looks: $looks, description: $description, alignment: $alignment';
+  String get debugProperties =>
+      'looks: $looks, description: $description, alignment: $alignment';
 
   @override
   String toString() => 'Bio($debugProperties)';

@@ -5,15 +5,14 @@ import 'package:dungeon_paper/app/widgets/atoms/hp_bar.dart';
 import 'package:dungeon_paper/app/widgets/atoms/number_text_field.dart';
 import 'package:dungeon_paper/app/widgets/molecules/dialog_controls.dart';
 import 'package:dungeon_paper/app/widgets/molecules/value_change_slider.dart';
-import 'package:dungeon_paper/generated/l10n.dart';
+import 'package:dungeon_paper/i18n.dart';
 import 'package:flutter/material.dart';
-
 import 'package:get/get.dart';
 
 enum ValueChange { positive, neutral, negative }
 
 class HPDialog extends StatefulWidget {
-  const HPDialog({Key? key}) : super(key: key);
+  const HPDialog({super.key});
 
   @override
   State<HPDialog> createState() => _HPDialogState();
@@ -28,7 +27,8 @@ class _HPDialogState extends State<HPDialog> with CharacterServiceMixin {
   void initState() {
     overrideHP = char.currentHp;
     shouldOverrideMaxHP = char.stats.maxHp != null;
-    overrideMaxHp = TextEditingController(text: char.maxHp.toString())..addListener(clampCurrentHP);
+    overrideMaxHp = TextEditingController(text: char.maxHp.toString())
+      ..addListener(clampCurrentHP);
     super.initState();
   }
 
@@ -37,7 +37,7 @@ class _HPDialogState extends State<HPDialog> with CharacterServiceMixin {
     const dlgWidth = 400.0;
 
     return AlertDialog(
-      title: Text(S.current.hpDialogTitle),
+      title: Text(tr.hp.dialog.title),
       content: SingleChildScrollView(
         child: Obx(
           () => Column(
@@ -61,9 +61,9 @@ class _HPDialogState extends State<HPDialog> with CharacterServiceMixin {
                     maxValue: maxHP,
                     updatedValue: overrideHP,
                     onChange: (val) => setState(() => overrideHP = val.round()),
-                    positiveText: S.current.hpDialogChangeAdd,
-                    neutralText: (_) => S.current.hpDialogChangeNeutral,
-                    negativeText: S.current.hpDialogChangeRemove,
+                    positiveText: tr.hp.dialog.change.add,
+                    neutralText: (_) => tr.hp.dialog.change.neutral,
+                    negativeText: tr.hp.dialog.change.remove,
                   ),
                 ),
               ),
@@ -71,8 +71,9 @@ class _HPDialogState extends State<HPDialog> with CharacterServiceMixin {
               const Divider(height: 32),
               CheckboxListTile(
                 value: shouldOverrideMaxHP,
-                onChanged: (value) => setState(() => shouldOverrideMaxHP = value!),
-                title: Text(S.current.hpDialogChangeOverrideMax),
+                onChanged: (value) =>
+                    setState(() => shouldOverrideMaxHP = value!),
+                title: Text(tr.hp.dialog.overrideMax),
                 controlAffinity: ListTileControlAffinity.leading,
                 dense: true,
                 visualDensity: VisualDensity.compact,
@@ -86,7 +87,8 @@ class _HPDialogState extends State<HPDialog> with CharacterServiceMixin {
               const SizedBox(height: 24),
               Row(
                 mainAxisAlignment: MainAxisAlignment.end,
-                children: DialogControls.save(context, onSave: save, onCancel: close, spacing: 8),
+                children: DialogControls.save(context,
+                    onSave: save, onCancel: close, spacing: 8),
               ),
             ],
           ),
@@ -96,7 +98,9 @@ class _HPDialogState extends State<HPDialog> with CharacterServiceMixin {
   }
 
   int get currentHP => char.currentHp;
-  int get maxHP => shouldOverrideMaxHP ? int.tryParse(overrideMaxHp.text) ?? char.defaultMaxHp : char.defaultMaxHp;
+  int get maxHP => shouldOverrideMaxHP
+      ? int.tryParse(overrideMaxHp.text) ?? char.defaultMaxHp
+      : char.defaultMaxHp;
 
   ValueChange get change => currentHP == overrideHP
       ? ValueChange.neutral
@@ -117,7 +121,9 @@ class _HPDialogState extends State<HPDialog> with CharacterServiceMixin {
   void save() {
     charService.updateCharacter(
       char.copyWith(
-        stats: char.stats.copyWith(currentHp: overrideHP).copyWithMaxHp(shouldOverrideMaxHP ? maxHP : null),
+        stats: char.stats
+            .copyWith(currentHp: overrideHP)
+            .copyWithMaxHp(shouldOverrideMaxHP ? maxHP : null),
       ),
     );
     close();

@@ -1,13 +1,13 @@
 import 'package:dungeon_paper/core/dw_icons.dart';
 import 'package:dungeon_paper/core/utils/list_utils.dart';
-import 'package:dungeon_paper/generated/l10n.dart';
+import 'package:dungeon_paper/i18n.dart';
 import 'package:flutter/material.dart';
 
 class HomeNavBar extends StatefulWidget {
   const HomeNavBar({
-    Key? key,
+    super.key,
     required this.pageController,
-  }) : super(key: key);
+  });
 
   final PageController pageController;
 
@@ -34,12 +34,14 @@ class _CharacterHomeNavBarState extends State<HomeNavBar> {
 
   @override
   Widget build(BuildContext context) {
-    final currentIndex = widget.pageController.positions.length == 1 ? widget.pageController.page?.round() ?? 1 : 1;
+    final currentIndex = widget.pageController.positions.length == 1
+        ? widget.pageController.page?.round() ?? 1
+        : 1;
 
     final items = <String, Icon>{
-      S.current.navActions: const Icon(DwIcons.hand_rock),
-      S.current.navCharacter: const Icon(Icons.person),
-      S.current.navJournal: const Icon(DwIcons.scroll_quill),
+      tr.nav.actions: const Icon(DwIcons.hand_rock),
+      tr.nav.character: const Icon(Icons.person),
+      tr.nav.journal: const Icon(DwIcons.scroll_quill),
     };
 
     return Material(
@@ -118,17 +120,17 @@ class _NavItem extends StatelessWidget {
               clipper: const ShapeBorderClipper(shape: StadiumBorder()),
               child: AnimatedContainer(
                 duration: duration,
+                width: selected ? 60 : 40,
+                color: selected ? selectedColor : Colors.transparent,
                 child: Padding(
                   padding: const EdgeInsets.symmetric(vertical: 3),
                   child: IconTheme(
-                    child: icon,
                     data: IconThemeData(
                       color: selected ? selectedFgColor : unselectedFgColor,
                     ),
+                    child: icon,
                   ),
                 ),
-                width: selected ? 60 : 40,
-                color: selected ? selectedColor : Colors.transparent,
               ),
             ),
             const SizedBox(height: 2),

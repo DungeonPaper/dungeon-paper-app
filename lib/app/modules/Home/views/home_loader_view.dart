@@ -3,25 +3,24 @@ import 'package:dungeon_paper/app/modules/Home/views/home_character_view.dart';
 import 'package:dungeon_paper/app/modules/Home/views/local_widgets/home_character_header_view.dart';
 import 'package:dungeon_paper/app/widgets/atoms/character_avatar.dart';
 import 'package:dungeon_paper/core/utils/math_utils.dart';
-import 'package:dungeon_paper/generated/l10n.dart';
+import 'package:dungeon_paper/i18n.dart';
 import 'package:flutter/material.dart';
-
 import 'package:get/get.dart';
 import 'package:skeleton_loader/skeleton_loader.dart';
 
 class HomeLoaderView extends GetView with LoadingServiceMixin {
-  const HomeLoaderView({Key? key}) : super(key: key);
+  const HomeLoaderView({super.key});
 
   String get title {
     if (loadingService.loadingUser) {
-      return S.current.loadingUser;
+      return tr.loading.user;
     }
 
     if (loadingService.loadingCharacters) {
-      return S.current.loadingCharacters;
+      return tr.loading.characters;
     }
 
-    return S.current.loadingGeneral;
+    return tr.loading.general;
   }
 
   @override
@@ -29,11 +28,14 @@ class HomeLoaderView extends GetView with LoadingServiceMixin {
     final theme = Theme.of(context);
     final colorScheme = theme.colorScheme;
     final brightness = theme.brightness;
-    final skeletonColor =
-        brightness == Brightness.light ? theme.cardColor.withOpacity(0.65) : colorScheme.surfaceVariant;
+    final skeletonColor = brightness == Brightness.light
+        ? theme.cardColor.withOpacity(0.65)
+        : colorScheme.surfaceVariant;
     final skeletonHighlightColor = brightness == Brightness.light
-        ? Color.alphaBlend(theme.cardColor.withOpacity(0.65), colorScheme.surfaceTint.withOpacity(0.5))
-        : Color.alphaBlend(theme.cardColor.withOpacity(0.65), colorScheme.surfaceTint);
+        ? Color.alphaBlend(theme.cardColor.withOpacity(0.65),
+            colorScheme.surfaceTint.withOpacity(0.5))
+        : Color.alphaBlend(
+            theme.cardColor.withOpacity(0.65), colorScheme.surfaceTint);
 
     return SingleChildScrollView(
       child: SkeletonLoader(
@@ -159,7 +161,8 @@ class HomeLoaderView extends GetView with LoadingServiceMixin {
                 children: [
                   for (final _ in range(3))
                     Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 2).copyWith(bottom: 4),
+                      padding: const EdgeInsets.symmetric(horizontal: 2)
+                          .copyWith(bottom: 4),
                       child: Container(
                         height: 56,
                         width: 118,

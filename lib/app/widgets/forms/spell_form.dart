@@ -1,6 +1,6 @@
+import 'package:dungeon_paper/app/data/models/ability_scores.dart';
 import 'package:dungeon_paper/app/data/models/character_class.dart';
 import 'package:dungeon_paper/app/data/models/spell.dart';
-import 'package:dungeon_paper/app/data/models/ability_scores.dart';
 import 'package:dungeon_paper/app/data/services/repository_service.dart';
 import 'package:dungeon_paper/app/widgets/atoms/rich_text_field.dart';
 import 'package:dungeon_paper/app/widgets/atoms/select_box.dart';
@@ -8,13 +8,14 @@ import 'package:dungeon_paper/app/widgets/forms/library_entity_form.dart';
 import 'package:dungeon_paper/app/widgets/molecules/dice_list_input.dart';
 import 'package:dungeon_paper/app/widgets/molecules/tag_list_input.dart';
 import 'package:dungeon_paper/core/utils/math_utils.dart';
-import 'package:dungeon_paper/generated/l10n.dart';
+import 'package:dungeon_paper/i18n.dart';
+import 'package:dungeon_world_data/dungeon_world_data.dart' as dw;
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:dungeon_world_data/dungeon_world_data.dart' as dw;
 
-class SpellForm extends GetView<SpellFormController> with RepositoryServiceMixin {
-  const SpellForm({Key? key}) : super(key: key);
+class SpellForm extends GetView<SpellFormController>
+    with RepositoryServiceMixin {
+  const SpellForm({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -23,7 +24,7 @@ class SpellForm extends GetView<SpellFormController> with RepositoryServiceMixin
         () => Obx(
               () => TextFormField(
                 decoration: InputDecoration(
-                  label: Text(S.current.formGeneralNameGeneric(S.current.entity(Spell))),
+                  label: Text(tr.generic.entityName(tr.entity(Spell))),
                 ),
                 textCapitalization: TextCapitalization.words,
                 controller: controller.name,
@@ -35,13 +36,17 @@ class SpellForm extends GetView<SpellFormController> with RepositoryServiceMixin
                   child: Obx(
                     () => SelectBox<String>(
                       value: controller.level.value,
-                      label: Text(S.current.entity(S.current.level)),
+                      label: Text(tr.character.data.level),
                       isExpanded: true,
-                      items: {'cantrip', 'rote', ...range(9).map((i) => (i + 1).toString())}
+                      items: {
+                        'cantrip',
+                        'rote',
+                        ...range(9).map((i) => (i + 1).toString())
+                      }
                           .map(
                             (lv) => DropdownMenuItem(
-                              child: Text(S.current.spellLevel(lv)),
                               value: lv,
+                              child: Text(tr.spells.spellLevel(lv)),
                             ),
                           )
                           .toList(),
@@ -53,15 +58,21 @@ class SpellForm extends GetView<SpellFormController> with RepositoryServiceMixin
                 Expanded(
                   child: Obx(
                     () => SelectBox<dw.EntityReference>(
-                      value: controller.classKeys.value.isNotEmpty ? controller.classKeys.value.first : null,
-                      onChanged: (value) => controller.classKeys.value = [value!],
+                      value: controller.classKeys.value.isNotEmpty
+                          ? controller.classKeys.value.first
+                          : null,
+                      onChanged: (value) =>
+                          controller.classKeys.value = [value!],
                       isExpanded: true,
-                      label: Text(S.current.entity(CharacterClass)),
-                      items: {...repo.builtIn.classes.values, ...repo.my.classes.values}
+                      label: Text(tr.entity(CharacterClass)),
+                      items: {
+                        ...repo.builtIn.classes.values,
+                        ...repo.my.classes.values
+                      }
                           .map(
                             (cls) => DropdownMenuItem(
-                              child: Text(cls.name),
                               value: cls.reference,
+                              child: Text(cls.name),
                             ),
                           )
                           .toList(),
@@ -73,7 +84,7 @@ class SpellForm extends GetView<SpellFormController> with RepositoryServiceMixin
         () => Obx(
               () => RichTextField(
                 decoration: InputDecoration(
-                  label: Text(S.current.formGeneralDescriptionGeneric(S.current.entity(Spell))),
+                  label: Text(tr.generic.entityDescription(tr.entity(Spell))),
                 ),
                 maxLines: 10,
                 minLines: 5,
@@ -85,7 +96,7 @@ class SpellForm extends GetView<SpellFormController> with RepositoryServiceMixin
         () => Obx(
               () => RichTextField(
                 decoration: InputDecoration(
-                  label: Text(S.current.formGeneralExplanationGeneric(S.current.entity(Spell))),
+                  label: Text(tr.generic.entityExplanation(tr.entity(Spell))),
                 ),
                 maxLines: 10,
                 minLines: 5,
@@ -97,7 +108,8 @@ class SpellForm extends GetView<SpellFormController> with RepositoryServiceMixin
         () => Obx(
               () => DiceListInput(
                 controller: controller.dice,
-                abilityScores: controller.args.abilityScores ?? AbilityScores.dungeonWorldAll(10),
+                abilityScores: controller.args.abilityScores ??
+                    AbilityScores.dungeonWorldAll(10),
                 guessFrom: [controller.description, controller.explanation],
               ),
             ),
@@ -111,7 +123,8 @@ class SpellForm extends GetView<SpellFormController> with RepositoryServiceMixin
   }
 }
 
-class SpellFormController extends LibraryEntityFormController<Spell, SpellFormArguments> {
+class SpellFormController
+    extends LibraryEntityFormController<Spell, SpellFormArguments> {
   final _name = TextEditingController().obs;
   final _description = TextEditingController().obs;
   final _explanation = TextEditingController().obs;
@@ -129,7 +142,8 @@ class SpellFormController extends LibraryEntityFormController<Spell, SpellFormAr
   ValueNotifier<List<dw.EntityReference>> get classKeys => _classKeys.value;
 
   @override
-  List<Rx<ValueNotifier>> get fields => [_name, _description, _explanation, _dice, _tags, _category, _classKeys];
+  List<Rx<ValueNotifier>> get fields =>
+      [_name, _description, _explanation, _dice, _tags, _category, _classKeys];
 
   @override
   void onInit() {

@@ -2,7 +2,7 @@ import 'package:dungeon_paper/app/data/models/ability_scores.dart';
 import 'package:dungeon_paper/app/themes/themes.dart';
 import 'package:dungeon_paper/app/widgets/atoms/round_roll_button.dart';
 import 'package:dungeon_paper/core/utils/markdown_styles.dart';
-import 'package:dungeon_paper/generated/l10n.dart';
+import 'package:dungeon_paper/i18n.dart';
 import 'package:dungeon_world_data/dice.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_markdown/flutter_markdown.dart';
@@ -10,7 +10,7 @@ import 'package:url_launcher/url_launcher.dart';
 
 class DynamicActionCardMini extends StatelessWidget {
   const DynamicActionCardMini({
-    Key? key,
+    super.key,
     required this.title,
     required this.icon,
     required this.starred,
@@ -23,8 +23,7 @@ class DynamicActionCardMini extends StatelessWidget {
     required this.onStarChanged,
     this.onTap,
     this.abilityScores,
-  })  : assert(dice.length == 0 || abilityScores != null),
-        super(key: key);
+  }) : assert(dice.length == 0 || abilityScores != null);
 
   final String title;
   final Widget? icon;
@@ -107,7 +106,9 @@ class DynamicActionCardMini extends StatelessWidget {
                           padding: EdgeInsets.zero,
                           iconSize: 16,
                           icon: Icon(
-                            starred ? Icons.star_rounded : Icons.star_border_rounded,
+                            starred
+                                ? Icons.star_rounded
+                                : Icons.star_border_rounded,
                             color: colorScheme.onSurface.withOpacity(0.3),
                           ),
                           onPressed: () => onStarChanged(!starred),
@@ -125,18 +126,21 @@ class DynamicActionCardMini extends StatelessWidget {
                 // clipper: RectClipper(constraints.maxWidth, constraints.maxHeight),
                 child: Markdown(
                   padding: EdgeInsets.zero,
-                  data: description.isNotEmpty ? description : S.current.noDescription,
+                  data: description.isNotEmpty
+                      ? description
+                      : tr.generic.noDescription,
                   // fitContent: true,
                   // shrinkWrap: true,
                   // fitContent: true,
-                  styleSheet: MarkdownStyles.of(context).copyWith(textScaleFactor: 0.9),
+                  styleSheet:
+                      MarkdownStyles.of(context).copyWith(textScaleFactor: 0.9),
                   physics: const NeverScrollableScrollPhysics(),
                   onTapLink: (text, href, title) => launchUrl(Uri.parse(href!)),
                 ),
               );
             }),
             // child: Text(
-            //   description.isNotEmpty ? description : S.current.noDescription,
+            //   description.isNotEmpty ? description : tr.playbook.data.noDescription,
             //   overflow: TextOverflow.ellipsis,
             //   maxLines: dice.isNotEmpty
             //       ? 3
@@ -183,5 +187,6 @@ class RectClipper extends CustomClipper<Rect> {
 
   @override
   bool shouldReclip(covariant RectClipper oldClipper) =>
-      oldClipper.size.width != size.width || oldClipper.size.height != size.height;
+      oldClipper.size.width != size.width ||
+      oldClipper.size.height != size.height;
 }

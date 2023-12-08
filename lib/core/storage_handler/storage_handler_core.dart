@@ -46,7 +46,8 @@ class StorageHandler implements StorageDelegate {
   String? _collectionPrefix;
 
   @override
-  void setCollectionPrefix(String? prefix) => delegate.setCollectionPrefix(prefix);
+  void setCollectionPrefix(String? prefix) =>
+      delegate.setCollectionPrefix(prefix);
 
   @override
   String? get collectionPrefix => delegate.collectionPrefix;

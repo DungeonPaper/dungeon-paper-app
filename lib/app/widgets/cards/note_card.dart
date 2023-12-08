@@ -47,7 +47,8 @@ class NoteCard extends StatelessWidget {
       icon: showIcon ? Icon(note.icon, size: 16) : null,
       starred: note.favorite,
       showStar: showStar,
-      onStarChanged: (favorite) => onSave?.call(note.copyWith(favorite: favorite)),
+      onStarChanged: (favorite) =>
+          onSave?.call(note.copyWith(favorite: favorite)),
       actions: actions,
       expansionKey: expansionKey ?? PageStorageKey(note.key),
       highlightWords: highlightWords,

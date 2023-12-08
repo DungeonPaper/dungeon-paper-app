@@ -19,7 +19,8 @@ class ItemDamageChip extends StatelessWidget {
   Widget build(BuildContext context) {
     return PrimaryChip(
       icon: const Icon(DwIcons.dice_d6_numbered),
-      label: (item.damage.isNegative ? '-' : '+') + NumberFormat('#.#').format(item.damage.abs()),
+      label: (item.damage.isNegative ? '-' : '+') +
+          NumberFormat('#.#').format(item.damage.abs()),
       tooltip: dw.dungeonWorldData.tags['Damage']!.description,
       visualDensity: visualDensity ?? VisualDensity.compact,
     );

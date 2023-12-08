@@ -16,13 +16,14 @@ import 'package:dungeon_paper/app/widgets/forms/race_form.dart';
 import 'package:dungeon_paper/app/widgets/forms/spell_form.dart';
 import 'package:dungeon_paper/core/utils/builder_utils.dart';
 import 'package:dungeon_paper/core/utils/enums.dart';
-import 'package:dungeon_paper/generated/l10n.dart';
+import 'package:dungeon_paper/i18n.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-class LibraryCardList<T extends WithMeta, F extends EntityFilters<T>> extends GetView<LibraryListController<T, F>> {
+class LibraryCardList<T extends WithMeta, F extends EntityFilters<T>>
+    extends GetView<LibraryListController<T, F>> {
   LibraryCardList({
-    Key? key,
+    super.key,
     required this.useFilters,
     required this.filtersBuilder,
     required this.filters,
@@ -32,11 +33,10 @@ class LibraryCardList<T extends WithMeta, F extends EntityFilters<T>> extends Ge
     this.extraData = const {},
     this.onSave,
   })  : itemBuilder = ((BuildContext context, int index) => children[index]),
-        itemCount = children.length,
-        super(key: key);
+        itemCount = children.length;
 
   const LibraryCardList.builder({
-    Key? key,
+    super.key,
     required this.useFilters,
     required this.filtersBuilder,
     required this.filters,
@@ -46,7 +46,7 @@ class LibraryCardList<T extends WithMeta, F extends EntityFilters<T>> extends Ge
     required this.itemCount,
     this.extraData = const {},
     this.onSave,
-  }) : super(key: key);
+  });
 
   final bool useFilters;
   final Widget Function(
@@ -110,7 +110,7 @@ class LibraryCardList<T extends WithMeta, F extends EntityFilters<T>> extends Ge
       if (itemCount == 0) ...[
         () => const SizedBox(height: 32),
         () => Text(
-              S.current.libraryListNoItemsFoundTitle(S.current.entityPlural(T)),
+              tr.myLibrary.emptyState.title(tr.entityPlural(T)),
               style: textTheme.titleLarge,
               textAlign: TextAlign.center,
             ),
@@ -120,8 +120,10 @@ class LibraryCardList<T extends WithMeta, F extends EntityFilters<T>> extends Ge
                 width: 300,
                 child: Text(
                   filters.isEmpty
-                      ? S.current.libraryListNoItemsFoundSubtitleNoFilters(S.current.entityPlural(T))
-                      : S.current.libraryListNoItemsFoundSubtitleFilters(S.current.entityPlural(T)),
+                      ? tr.myLibrary.emptyState.subtitle
+                          .noFilters(tr.entityPlural(T))
+                      : tr.myLibrary.emptyState.subtitle
+                          .filters(tr.entityPlural(T)),
                   style: textTheme.titleMedium,
                   textAlign: TextAlign.center,
                 ),
@@ -138,7 +140,7 @@ class LibraryCardList<T extends WithMeta, F extends EntityFilters<T>> extends Ge
                   Routes.editByType<T>(),
                   arguments: createPageArgsByType(extraData),
                 ),
-                label: Text(S.current.createGeneric(S.current.entity(T))),
+                label: Text(tr.generic.createEntity(tr.entity(T))),
                 icon: const Icon(Icons.add),
               ),
             ),

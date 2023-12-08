@@ -2,14 +2,15 @@ import 'package:dungeon_paper/app/data/models/meta.dart';
 import 'package:dungeon_paper/app/modules/ImportExport/controllers/import_export_controller.dart';
 import 'package:dungeon_paper/app/widgets/atoms/custom_expansion_panel.dart';
 import 'package:dungeon_paper/app/widgets/atoms/menu_button.dart';
-import 'package:dungeon_paper/generated/l10n.dart';
+import 'package:dungeon_paper/i18n.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-class ListCard<T extends WithMeta, C extends ImportExportSelectionData> extends GetView<C> {
+class ListCard<T extends WithMeta, C extends ImportExportSelectionData>
+    extends GetView<C> {
   const ListCard({
-    Key? key,
-  }) : super(key: key);
+    super.key,
+  });
 
   List<T> get list => controller.listByType<T>();
 
@@ -31,7 +32,7 @@ class ListCard<T extends WithMeta, C extends ImportExportSelectionData> extends 
               const SizedBox(width: 8),
               Expanded(
                 child: Text(
-                  S.current.myGeneric(S.current.entityPlural(T)),
+                  tr.generic.myEntity(tr.entityPlural(T)),
                   style: textTheme.titleLarge,
                 ),
               ),
@@ -43,13 +44,13 @@ class ListCard<T extends WithMeta, C extends ImportExportSelectionData> extends 
                 MenuEntry<bool>(
                   value: true,
                   icon: const Icon(Icons.select_all),
-                  label: Text(S.current.selectAll),
+                  label: Text(tr.generic.selectAll),
                   onSelect: () => controller.toggleAll<T>(true),
                 ),
                 MenuEntry<bool>(
                   value: false,
                   icon: const Icon(Icons.clear),
-                  label: Text(S.current.selectNone),
+                  label: Text(tr.generic.selectNone),
                   onSelect: () => controller.toggleAll<T>(false),
                 ),
               ],
@@ -58,7 +59,8 @@ class ListCard<T extends WithMeta, C extends ImportExportSelectionData> extends 
           children: [
             for (final item in list)
               ListTile(
-                onTap: () => controller.toggle<T>(item, !controller.isSelected<T>(item)),
+                onTap: () =>
+                    controller.toggle<T>(item, !controller.isSelected<T>(item)),
                 title: Text(item.displayName),
                 leading: Checkbox(
                   value: controller.isSelected<T>(item),
@@ -69,7 +71,7 @@ class ListCard<T extends WithMeta, C extends ImportExportSelectionData> extends 
               Padding(
                 padding: const EdgeInsets.all(8),
                 child: Text(
-                  S.current.noGeneric(S.current.entityPlural(T)),
+                  tr.generic.noEntity(tr.entityPlural(T)),
                   textAlign: TextAlign.center,
                 ),
               ),

@@ -11,25 +11,24 @@ import 'package:dungeon_paper/app/widgets/menus/entity_edit_menu.dart';
 import 'package:dungeon_paper/app/widgets/molecules/categorized_list.dart';
 import 'package:dungeon_paper/app/widgets/molecules/character_subtitle.dart';
 import 'package:dungeon_paper/core/utils/builder_utils.dart';
+import 'package:dungeon_paper/i18n.dart';
 import 'package:flutter/material.dart';
-
 import 'package:get/get.dart';
 
-import '../../../../generated/l10n.dart';
-
-class CharacterListPageView extends GetView<CharacterService> with UserServiceMixin {
-  const CharacterListPageView({Key? key}) : super(key: key);
+class CharacterListPageView extends GetView<CharacterService>
+    with UserServiceMixin {
+  const CharacterListPageView({super.key});
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(S.current.characterListTitle),
+        title: Text(tr.generic.allEntities(tr.entity(Character))),
         centerTitle: true,
       ),
       floatingActionButton: AdvancedFloatingActionButton.extended(
         onPressed: () => Get.toNamed(Routes.createCharacter),
-        label: Text(S.current.createCharacterAddButton),
+        label: Text(tr.generic.createEntity(tr.entity(Character))),
         icon: const Icon(Icons.add),
       ),
       body: Obx(
@@ -38,18 +37,23 @@ class CharacterListPageView extends GetView<CharacterService> with UserServiceMi
             children: [
               for (final cat in controller.charsByCategory.keys)
                 () => CategorizedList(
-                      title: Text(cat.isNotEmpty ? cat : S.current.characterNoCategory),
+                      title:
+                          Text(cat.isNotEmpty ? cat : tr.character.noCategory),
                       onReorder: (oldIndex, newIndex) => controller.updateAll(
-                        CharacterUtils.reorderCharacters(controller.charsByCategory[cat]!).call(oldIndex, newIndex),
+                        CharacterUtils.reorderCharacters(
+                                controller.charsByCategory[cat]!)
+                            .call(oldIndex, newIndex),
                       ),
                       children: [
                         for (var char in controller.charsByCategory[cat]!)
                           Builder(
                             key: Key(char.key),
                             builder: (context) {
-                              final charTheme = AppThemes.getTheme(char.getCurrentTheme(user));
+                              final charTheme = AppThemes.getTheme(
+                                  char.getCurrentTheme(user));
                               return Padding(
-                                padding: const EdgeInsets.symmetric(vertical: 4),
+                                padding:
+                                    const EdgeInsets.symmetric(vertical: 4),
                                 child: Card(
                                   margin: EdgeInsets.zero,
                                   color: charTheme.scaffoldBackgroundColor,
@@ -57,17 +61,20 @@ class CharacterListPageView extends GetView<CharacterService> with UserServiceMi
                                     minLeadingWidth: 48,
                                     minVerticalPadding: 16,
                                     horizontalTitleGap: 10,
-                                    textColor: charTheme.colorScheme.onBackground,
+                                    textColor:
+                                        charTheme.colorScheme.onBackground,
                                     // textColor: ThemeData.estimateBrightnessForColor(charTheme.scaffoldBackgroundColor) == Brightness.light ? Colors.black : Colors.white,
                                     child: InkWell(
                                       borderRadius: borderRadius,
-                                      splashColor: Theme.of(context).splashColor,
+                                      splashColor:
+                                          Theme.of(context).splashColor,
                                       onTap: () {
                                         controller.setCurrent(char.key);
                                         Get.offAllNamed(Routes.home);
                                       },
                                       child: ListTile(
-                                        leading: CharacterAvatar.squircle(character: char, size: 48),
+                                        leading: CharacterAvatar.squircle(
+                                            character: char, size: 48),
                                         title: Text(char.displayName),
                                         subtitle: CharacterSubtitle(
                                           character: char,
@@ -79,9 +86,10 @@ class CharacterListPageView extends GetView<CharacterService> with UserServiceMi
                                             context,
                                             DeleteDialogOptions(
                                               entityName: char.displayName,
-                                              entityKind: S.current.entity(Character),
+                                              entityKind: tr.entity(Character),
                                             ),
-                                            () => controller.deleteCharacter(char),
+                                            () => controller
+                                                .deleteCharacter(char),
                                           ),
                                         ),
                                       ),

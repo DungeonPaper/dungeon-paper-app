@@ -273,10 +273,14 @@ class CustomExpansionTile extends StatefulWidget {
   State<CustomExpansionTile> createState() => _CustomExpansionTileState();
 }
 
-class _CustomExpansionTileState extends State<CustomExpansionTile> with SingleTickerProviderStateMixin {
-  static final Animatable<double> _easeOutTween = CurveTween(curve: Curves.easeOut);
-  static final Animatable<double> _easeInTween = CurveTween(curve: Curves.easeIn);
-  static final Animatable<double> _halfTween = Tween<double>(begin: 0.0, end: 0.5);
+class _CustomExpansionTileState extends State<CustomExpansionTile>
+    with SingleTickerProviderStateMixin {
+  static final Animatable<double> _easeOutTween =
+      CurveTween(curve: Curves.easeOut);
+  static final Animatable<double> _easeInTween =
+      CurveTween(curve: Curves.easeIn);
+  static final Animatable<double> _halfTween =
+      Tween<double>(begin: 0.0, end: 0.5);
 
   final ColorTween _headerColorTween = ColorTween();
   final ColorTween _iconColorTween = ColorTween();
@@ -299,7 +303,8 @@ class _CustomExpansionTileState extends State<CustomExpansionTile> with SingleTi
     _headerColor = _controller.drive(_headerColorTween.chain(_easeInTween));
     _iconColor = _controller.drive(_iconColorTween.chain(_easeOutTween));
 
-    _isExpanded = PageStorage.of(context).readState(context) as bool? ?? widget.initiallyExpanded;
+    _isExpanded = PageStorage.of(context).readState(context) as bool? ??
+        widget.initiallyExpanded;
     if (_isExpanded) _controller.value = 1.0;
   }
 
@@ -328,7 +333,8 @@ class _CustomExpansionTileState extends State<CustomExpansionTile> with SingleTi
   }
 
   // Platform or null affinity defaults to trailing.
-  ListTileControlAffinity _effectiveAffinity(ListTileControlAffinity? affinity) {
+  ListTileControlAffinity _effectiveAffinity(
+      ListTileControlAffinity? affinity) {
     switch (affinity ?? ListTileControlAffinity.trailing) {
       case ListTileControlAffinity.leading:
         return ListTileControlAffinity.leading;
@@ -346,15 +352,18 @@ class _CustomExpansionTileState extends State<CustomExpansionTile> with SingleTi
   }
 
   Widget? _buildLeadingIcon(BuildContext context) {
-    if (!widget.expandable || _effectiveAffinity(widget.controlAffinity) != ListTileControlAffinity.leading)
-      return null;
+    if (!widget.expandable ||
+        _effectiveAffinity(widget.controlAffinity) !=
+            ListTileControlAffinity.leading) return null;
     return _buildIcon(context);
   }
 
   Widget? _buildTrailingIcon(BuildContext context) {
-    if (!widget.expandable || _effectiveAffinity(widget.controlAffinity) != ListTileControlAffinity.trailing)
-      return null;
-    if (widget.reorderablePadding && PlatformHelper.currentInteractionType == InteractionType.mouse) {
+    if (!widget.expandable ||
+        _effectiveAffinity(widget.controlAffinity) !=
+            ListTileControlAffinity.trailing) return null;
+    if (widget.reorderablePadding &&
+        PlatformHelper.currentInteractionType == InteractionType.mouse) {
       return Padding(
         padding: const EdgeInsets.only(right: 24),
         child: _buildIcon(context),
@@ -400,7 +409,10 @@ class _CustomExpansionTileState extends State<CustomExpansionTile> with SingleTi
                 ...widget.leading,
                 Expanded(
                   child: DefaultTextStyle(
-                    style: Theme.of(context).textTheme.titleMedium!.copyWith(color: _headerColor.value),
+                    style: Theme.of(context)
+                        .textTheme
+                        .titleMedium!
+                        .copyWith(color: _headerColor.value),
                     child: widget.title ??
                         widget.titleBuilder!.call(
                           context,
@@ -456,8 +468,11 @@ class _CustomExpansionTileState extends State<CustomExpansionTile> with SingleTi
         child: Padding(
           padding: widget.childrenPadding ?? EdgeInsets.zero,
           child: Column(
-            crossAxisAlignment: widget.expandedCrossAxisAlignment ?? CrossAxisAlignment.center,
-            children: range(widget.itemCount).map((x) => widget.itemBuilder(context, x)).toList(),
+            crossAxisAlignment:
+                widget.expandedCrossAxisAlignment ?? CrossAxisAlignment.center,
+            children: range(widget.itemCount)
+                .map((x) => widget.itemBuilder(context, x))
+                .toList(),
           ),
           // child: ListView.builder(
           //   shrinkWrap: true,

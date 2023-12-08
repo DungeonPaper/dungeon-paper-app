@@ -7,7 +7,8 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:sentry_flutter/sentry_flutter.dart';
 
-class LoginController extends GetxController with AuthServiceMixin, LoadingServiceMixin, CharacterServiceMixin {
+class LoginController extends GetxController
+    with AuthServiceMixin, LoadingServiceMixin, CharacterServiceMixin {
   final formKey = GlobalKey<FormState>(debugLabel: 'loginForm');
   final email = TextEditingController();
   final password = TextEditingController();
@@ -41,7 +42,8 @@ class LoginController extends GetxController with AuthServiceMixin, LoadingServi
 
   void loginWithPassword() async {
     _loginWrapper(
-      () => authService.loginWithPassword(email: email.text, password: password.text),
+      () => authService.loginWithPassword(
+          email: email.text, password: password.text),
     );
   }
 
@@ -84,4 +86,3 @@ class LoginController extends GetxController with AuthServiceMixin, LoadingServi
     return _valid.value;
   }
 }
-

@@ -1,15 +1,15 @@
 import 'package:dungeon_paper/app/widgets/atoms/menu_button.dart';
-import 'package:dungeon_paper/generated/l10n.dart';
+import 'package:dungeon_paper/i18n.dart';
 import 'package:flutter/material.dart';
 
 class EntityEditMenu extends StatelessWidget {
   const EntityEditMenu({
-    Key? key,
+    super.key,
     required this.onEdit,
     required this.onDelete,
     this.leading = const [],
     this.trailing = const [],
-  }) : super(key: key);
+  });
 
   final void Function()? onEdit;
   final void Function()? onDelete;
@@ -27,10 +27,6 @@ class EntityEditMenu extends StatelessWidget {
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
       clipBehavior: Clip.antiAlias,
       child: MenuButton(
-        child: const Padding(
-          padding: EdgeInsets.all(8),
-          child: Icon(Icons.more_vert),
-        ),
         items: <PopupMenuEntry>[
           ...leading,
           if (leading.isNotEmpty)
@@ -43,7 +39,7 @@ class EntityEditMenu extends StatelessWidget {
             MenuEntry(
               value: 'edit',
               icon: const Icon(Icons.edit),
-              label: Text(S.current.edit),
+              label: Text(tr.generic.edit),
               onSelect: onEdit!,
             ),
           if (onDelete != null)
@@ -55,7 +51,7 @@ class EntityEditMenu extends StatelessWidget {
               ),
               label: DefaultTextStyle.merge(
                 style: TextStyle(color: Theme.of(context).colorScheme.error),
-                child: Text(S.current.remove),
+                child: Text(tr.generic.remove),
               ),
               onSelect: onDelete!,
             ),
@@ -67,6 +63,10 @@ class EntityEditMenu extends StatelessWidget {
                 ),
           ...trailing,
         ],
+        child: const Padding(
+          padding: EdgeInsets.all(8),
+          child: Icon(Icons.more_vert),
+        ),
       ),
     );
   }

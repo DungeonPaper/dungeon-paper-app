@@ -21,8 +21,11 @@ class BioFormController extends GetxController with CharacterServiceMixin {
     bioDesc.value = TextEditingController(text: char.bio.description);
     looks.value = TextEditingController(text: char.bio.looks);
     alignmentName.value = char.bio.alignment.key;
-    alignmentValue.value = TextEditingController(text: char.bio.alignment.description);
-    bonds.value = char.sessionMarks.map((e) => TextEditingController(text: e.description)).toList();
+    alignmentValue.value =
+        TextEditingController(text: char.bio.alignment.description);
+    bonds.value = char.sessionMarks
+        .map((e) => TextEditingController(text: e.description))
+        .toList();
   }
 
   void save() {

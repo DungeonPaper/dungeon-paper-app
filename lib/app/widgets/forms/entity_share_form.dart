@@ -1,7 +1,7 @@
 import 'package:dungeon_paper/app/data/models/meta.dart';
 import 'package:dungeon_paper/app/data/services/repository_service.dart';
 import 'package:dungeon_paper/app/data/services/user_service.dart';
-import 'package:dungeon_paper/generated/l10n.dart';
+import 'package:dungeon_paper/i18n.dart';
 import 'package:flutter/material.dart';
 
 class EntityShareForm<T extends WithMeta> extends StatefulWidget {
@@ -34,9 +34,12 @@ class _EntityShareFormState<T extends WithMeta> extends State<EntityShareForm>
       }[syncStatus];
 
   String get syncStatusText => {
-        SyncStatus.inSync: S.current.entityShareStatusInSync(S.current.entity(widget.entity.runtimeType)),
-        SyncStatus.outOfSync: S.current.entityShareStatusOutOfSync(S.current.entity(widget.entity.runtimeType)),
-        SyncStatus.detached: S.current.entityShareStatusDetached(S.current.entity(widget.entity.runtimeType)),
+        SyncStatus.inSync:
+            tr.sync.entity.status.inSync(tr.entity(widget.entity.runtimeType)),
+        SyncStatus.outOfSync: tr.sync.entity.status
+            .outOfSync(tr.entity(widget.entity.runtimeType)),
+        SyncStatus.detached: tr.sync.entity.status
+            .detached(tr.entity(widget.entity.runtimeType)),
       }[syncStatus]!;
 
   Color? syncStatusColor(BuildContext context) => {

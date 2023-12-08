@@ -1,7 +1,7 @@
 import 'package:dungeon_paper/app/widgets/atoms/menu_button.dart';
 import 'package:dungeon_paper/core/utils/builder_utils.dart';
 import 'package:dungeon_paper/core/utils/markdown_styles.dart';
-import 'package:dungeon_paper/generated/l10n.dart';
+import 'package:dungeon_paper/i18n.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_markdown/flutter_markdown.dart';
@@ -10,7 +10,7 @@ import 'package:url_launcher/url_launcher.dart';
 
 class RichTextField extends StatelessWidget {
   RichTextField({
-    Key? key,
+    super.key,
     this.controller,
     this.label,
     this.rich = true,
@@ -29,7 +29,7 @@ class RichTextField extends StatelessWidget {
     this.textAlignVertical,
     this.autofocus = false,
     this.readOnly = false,
-    this.toolbarOptions,
+    // this.toolbarOptions,
     this.showCursor,
     this.obscuringCharacter = '•',
     this.obscureText = false,
@@ -67,7 +67,7 @@ class RichTextField extends StatelessWidget {
     this.enableIMEPersonalizedLearning = true,
     //
     this.customButtons,
-  }) : super(key: key);
+  });
 
   final String? label;
   final String text;
@@ -88,7 +88,7 @@ class RichTextField extends StatelessWidget {
   final TextAlignVertical? textAlignVertical;
   final bool autofocus;
   final bool readOnly;
-  final ToolbarOptions? toolbarOptions;
+  // final ToolbarOptions? toolbarOptions;
   final bool? showCursor;
   final String obscuringCharacter;
   final bool obscureText;
@@ -125,7 +125,8 @@ class RichTextField extends StatelessWidget {
   final String? restorationId;
   final bool enableIMEPersonalizedLearning;
   final _defaultController = TextEditingController().obs;
-  TextEditingController get _controller => controller ?? _defaultController.value;
+  TextEditingController get _controller =>
+      controller ?? _defaultController.value;
   final List<RichButton>? customButtons;
 
   @override
@@ -146,7 +147,7 @@ class RichTextField extends StatelessWidget {
   }
 
   Widget _buildInput(BuildContext context) {
-    final _label = label != null ? Text(label!) : null;
+    final effectiveLabel = label != null ? Text(label!) : null;
 
     return TextFormField(
       controller: controller,
@@ -154,12 +155,12 @@ class RichTextField extends StatelessWidget {
       focusNode: focusNode,
       decoration: decoration?.copyWith(
             hintText: hintText,
-            label: _label,
+            label: effectiveLabel,
           ) ??
           InputDecoration(
             filled: true,
             hintText: hintText,
-            label: _label,
+            label: effectiveLabel,
           ),
       keyboardType: keyboardType,
       textCapitalization: textCapitalization,
@@ -171,7 +172,7 @@ class RichTextField extends StatelessWidget {
       textAlignVertical: textAlignVertical,
       autofocus: autofocus,
       readOnly: readOnly,
-      toolbarOptions: toolbarOptions,
+      // toolbarOptions: toolbarOptions,
       showCursor: showCursor,
       obscuringCharacter: obscuringCharacter,
       obscureText: obscureText,
@@ -212,7 +213,8 @@ class RichTextField extends StatelessWidget {
 
   SizedBox _buildRichControls(BuildContext context) {
     final mdTheme = MarkdownStyles.of(context);
-    const divider = Padding(padding: EdgeInsets.symmetric(vertical: 8), child: VerticalDivider());
+    const divider = Padding(
+        padding: EdgeInsets.symmetric(vertical: 8), child: VerticalDivider());
     const thinDivider = Padding(
       padding: EdgeInsets.symmetric(vertical: 8),
       child: VerticalDivider(width: 4),
@@ -222,14 +224,15 @@ class RichTextField extends StatelessWidget {
         () => _RichButton(
               color: Theme.of(context).colorScheme.secondary,
               icon: const Icon(Icons.preview_outlined),
-              tooltip: S.current.formatPreview,
+              tooltip: tr.richText.preview,
               onTap: () => _openPreview(context),
             ),
         () => _RichButton(
               color: Theme.of(context).colorScheme.secondary,
               icon: const Icon(Icons.help),
-              tooltip: S.current.formatHelp,
-              onTap: () => launchUrl(Uri.parse('https://www.markdownguide.org/basic-syntax')),
+              tooltip: tr.richText.help,
+              onTap: () => launchUrl(
+                  Uri.parse('https://www.markdownguide.org/basic-syntax')),
             ),
         if (customButtons?.isNotEmpty == true) () => thinDivider,
         if (customButtons?.isNotEmpty == true)
@@ -239,7 +242,7 @@ class RichTextField extends StatelessWidget {
         () => thinDivider,
         () => RichButton(
               icon: Icons.format_bold,
-              tooltip: S.current.formatBold,
+              tooltip: tr.richText.bold,
               defaultContent: '**bold**',
               prefix: '**',
               selectionStartOffset: 2,
@@ -247,7 +250,7 @@ class RichTextField extends StatelessWidget {
             ).buildButton(context, _controller),
         () => RichButton(
               icon: Icons.format_italic,
-              tooltip: S.current.formatItalic,
+              tooltip: tr.richText.italic,
               defaultContent: '*italic*',
               prefix: '*',
               selectionStartOffset: 1,
@@ -255,12 +258,12 @@ class RichTextField extends StatelessWidget {
             ).buildButton(context, _controller),
         () => RichButton.dropdown(
               icon: Icons.format_size,
-              tooltip: S.current.formatHeadings,
+              tooltip: tr.richText.headings,
               actions: List.generate(6, (i) => i + 1)
                   .map(
                     (i) => RichButtonAction.dropdownItem(
                       text: Text(
-                        S.current.formatHeading(i),
+                        tr.richText.heading(i),
                         style: {
                           'h1': mdTheme.h1,
                           'h2': mdTheme.h2,
@@ -270,7 +273,8 @@ class RichTextField extends StatelessWidget {
                           'h6': mdTheme.h6,
                         }['h$i']!,
                       ),
-                      defaultContent: '\n${List.filled(i, "#").join("")} ${S.current.formatHeading(i)}\n',
+                      defaultContent:
+                          '\n${List.filled(i, "#").join("")} ${tr.richText.heading(i)}\n',
                       prefix: '\n${List.filled(i, "#").join("")} ',
                       suffix: '\n',
                       selectionStartOffset: 2 + i,
@@ -282,26 +286,26 @@ class RichTextField extends StatelessWidget {
         () => divider,
         () => RichButton(
               icon: Icons.format_list_bulleted,
-              tooltip: S.current.formatBulletList,
+              tooltip: tr.richText.bulletList,
               defaultContent: '\n- ',
               prefix: '\n- ',
             ).buildButton(context, _controller),
         () => RichButton(
               icon: Icons.format_list_numbered,
-              tooltip: S.current.formatNumberedList,
+              tooltip: tr.richText.numberedList,
               defaultContent: '\n1. ',
               prefix: '\n1. ',
             ).buildButton(context, _controller),
         () => RichButton(
               icon: Icons.check_box_outline_blank,
-              tooltip: S.current.formatCheckboxListUnchecked,
+              tooltip: tr.richText.checkList.unchecked,
               defaultContent: '\n- [ ] ',
               prefix: '\n- [ ] ',
               selectionStartOffset: 7,
             ).buildButton(context, _controller),
         () => RichButton(
               icon: Icons.check_box_outlined,
-              tooltip: S.current.formatCheckboxList,
+              tooltip: tr.richText.checkList.checked,
               defaultContent: '\n- [x] ',
               prefix: '\n- [x] ',
               selectionStartOffset: 7,
@@ -309,7 +313,7 @@ class RichTextField extends StatelessWidget {
         () => divider,
         () => RichButton(
               icon: Icons.link,
-              tooltip: S.current.formatURL,
+              tooltip: tr.richText.url,
               defaultContent: '[text](url)',
               prefix: '[',
               suffix: '](url)',
@@ -318,7 +322,7 @@ class RichTextField extends StatelessWidget {
             ).buildButton(context, _controller),
         () => RichButton(
               icon: Icons.image,
-              tooltip: S.current.formatImageURL,
+              tooltip: tr.richText.imageURL,
               defaultContent: '![alt](url)',
               prefix: '![alt][',
               suffix: ']',
@@ -327,13 +331,13 @@ class RichTextField extends StatelessWidget {
             ).buildButton(context, _controller),
         () => RichButton(
               icon: Icons.table_chart_outlined,
-              tooltip: S.current.formatTable,
-              defaultContent: '| ${S.current.formatHeader(1)} '
-                  '| ${S.current.formatHeader(2)} '
+              tooltip: tr.richText.table,
+              defaultContent: '| ${tr.richText.header(1)} '
+                  '| ${tr.richText.header(2)} '
                   '|\n|---|---|\n'
-                  '| ${S.current.formatCell(1)} '
-                  '| ${S.current.formatCell(2)} |',
-              prefix: '| ${S.current.formatHeader(' ')}|\n|---|\n| ',
+                  '| ${tr.richText.cell(1)} '
+                  '| ${tr.richText.cell(2)} |',
+              prefix: '| ${tr.richText.header(' ')}|\n|---|\n| ',
               suffix: ' |',
               selectionStartOffset: 2,
               selectionEndOffset: -43,
@@ -360,12 +364,11 @@ class RichTextField extends StatelessWidget {
 
 class _RichButton extends StatelessWidget {
   const _RichButton({
-    Key? key,
     required this.icon,
     required this.tooltip,
     this.onTap,
     this.color,
-  }) : super(key: key);
+  });
 
   final Widget icon;
   final String tooltip;
@@ -395,9 +398,9 @@ class _RichButton extends StatelessWidget {
 
 class MarkdownPreviewDialog extends StatelessWidget {
   const MarkdownPreviewDialog({
-    Key? key,
+    super.key,
     required this.text,
-  }) : super(key: key);
+  });
 
   final String text;
 
@@ -405,7 +408,7 @@ class MarkdownPreviewDialog extends StatelessWidget {
   Widget build(BuildContext context) {
     return OrientationBuilder(builder: (context, orient) {
       return AlertDialog(
-        title: Text(S.current.markdownPreview),
+        title: Text(tr.richText.markdownPreview),
         content: ConstrainedBox(
           constraints: BoxConstraints(
             minWidth: MediaQuery.of(context).size.width - 100,
@@ -414,7 +417,7 @@ class MarkdownPreviewDialog extends StatelessWidget {
             minHeight: 10,
           ),
           child: Markdown(
-            data: text.trim().isNotEmpty ? text : S.current.noDescription,
+            data: text.trim().isNotEmpty ? text : tr.generic.noDescription,
             padding: const EdgeInsets.all(0),
             onTapLink: (text, href, title) => launchUrl(Uri.parse(href!)),
             shrinkWrap: true,
@@ -525,7 +528,8 @@ class RichButton {
     );
   }
 
-  void _wrapWith(TextEditingController controller, String prefix, [String? suffix]) {
+  void _wrapWith(TextEditingController controller, String prefix,
+      [String? suffix]) {
     if (controller.selection.isValid) {
       // has selection - wrap current cursor positions
       final selection = controller.selection.copyWith(
@@ -533,12 +537,15 @@ class RichButton {
         extentOffset: controller.selection.extentOffset + prefix.length,
       );
       controller.text = [
-        if (controller.selection.start > 0) controller.text.substring(0, controller.selection.start),
+        if (controller.selection.start > 0)
+          controller.text.substring(0, controller.selection.start),
         prefix,
-        controller.text.substring(controller.selection.start, controller.selection.end),
+        controller.text
+            .substring(controller.selection.start, controller.selection.end),
         suffix ?? prefix,
         if (controller.selection.end < controller.text.length)
-          controller.text.substring(controller.selection.end, controller.text.length),
+          controller.text
+              .substring(controller.selection.end, controller.text.length),
       ].join('');
       try {
         controller.selection = selection;
@@ -548,17 +555,22 @@ class RichButton {
     }
   }
 
-  void _append(TextEditingController controller, String text, [int? selectionStartOffset, int? selectionEndOffset]) {
+  void _append(TextEditingController controller, String text,
+      [int? selectionStartOffset, int? selectionEndOffset]) {
     if (controller.selection.isValid) {
       // has cursor - append at cursor position
       final selection = controller.selection.copyWith(
-        baseOffset: controller.selection.baseOffset + (selectionStartOffset ?? 0),
-        extentOffset: controller.selection.extentOffset + text.length + (selectionEndOffset ?? 0),
+        baseOffset:
+            controller.selection.baseOffset + (selectionStartOffset ?? 0),
+        extentOffset: controller.selection.extentOffset +
+            text.length +
+            (selectionEndOffset ?? 0),
       );
       controller.text = [
         controller.text.substring(0, controller.selection.start),
         text,
-        controller.text.substring(controller.selection.start, controller.text.length),
+        controller.text
+            .substring(controller.selection.start, controller.text.length),
       ].join('');
       try {
         controller.selection = selection;
@@ -580,9 +592,10 @@ class RichButton {
     }
   }
 
-  void Function() _wrapOrAppendCb(TextEditingController controller, String defaultContent, String prefix,
+  void Function() _wrapOrAppendCb(
+      TextEditingController controller, String defaultContent, String prefix,
       [String? suffix, int? selectionStartOffset, int? selectionEndOffset]) {
-    var _suffix = suffix ?? prefix;
+    var suffix0 = suffix ?? prefix;
 
     // if text is empty, or selection starts directly after newline - remove prefix newlines
     // if (controller.text.trim().isEmpty ||
@@ -603,9 +616,10 @@ class RichButton {
     // }
     return () {
       if (!controller.selection.isCollapsed) {
-        _wrapWith(controller, prefix, _suffix);
+        _wrapWith(controller, prefix, suffix0);
       } else {
-        _append(controller, defaultContent, selectionStartOffset, selectionEndOffset);
+        _append(controller, defaultContent, selectionStartOffset,
+            selectionEndOffset);
       }
     };
   }

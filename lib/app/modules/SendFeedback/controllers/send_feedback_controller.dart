@@ -1,6 +1,6 @@
 import 'package:dungeon_paper/app/data/services/user_service.dart';
 import 'package:dungeon_paper/core/http/api.dart';
-import 'package:dungeon_paper/generated/l10n.dart';
+import 'package:dungeon_paper/i18n.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -22,8 +22,8 @@ class SendFeedbackController extends GetxController with UserServiceMixin {
     );
     Get.back();
     Get.rawSnackbar(
-      title: S.current.sendFeedbackSuccessTitle,
-      message: S.current.sendFeedbackSuccessMessage,
+      title: tr.feedback.success.title,
+      message: tr.feedback.success.message,
     );
   }
 

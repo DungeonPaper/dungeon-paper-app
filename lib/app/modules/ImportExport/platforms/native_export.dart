@@ -1,11 +1,11 @@
 import 'dart:io';
 import 'dart:typed_data';
-import 'package:flutter_file_dialog/flutter_file_dialog.dart';
-import 'package:path/path.dart' as path;
-import 'package:get/get.dart';
-import 'package:dungeon_paper/generated/l10n.dart';
 
 import 'package:dungeon_paper/app/modules/ImportExport/platforms/abstract_import_export.dart';
+import 'package:dungeon_paper/i18n.dart';
+import 'package:flutter_file_dialog/flutter_file_dialog.dart';
+import 'package:get/get.dart';
+import 'package:path/path.dart' as path;
 import 'package:path_provider/path_provider.dart';
 
 class Exporter extends AbstractExporter {
@@ -21,19 +21,19 @@ class Exporter extends AbstractExporter {
       final path = await FlutterFileDialog.saveFile(params: params);
       if (path == null) {
         Get.rawSnackbar(
-          title: S.current.exportFailedTitle,
-          message: S.current.errorUserOperationCanceled,
+          title: tr.backup.exporting.error.title,
+          message: tr.errors.userOperationCanceled,
         );
       } else {
         Get.rawSnackbar(
-          title: S.current.exportSuccessfulTitle,
-          message: S.current.exportSuccessfulMessage,
+          title: tr.backup.exporting.success.title,
+          message: tr.backup.exporting.success.message,
         );
       }
     } catch (e) {
       Get.rawSnackbar(
-        title: S.current.exportFailedTitle,
-        message: S.current.exportFailedMessage,
+        title: tr.backup.exporting.error.title,
+        message: tr.backup.exporting.error.message,
       );
       rethrow;
     }

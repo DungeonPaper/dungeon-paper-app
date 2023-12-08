@@ -25,7 +25,10 @@ class LabeledIconButton extends StatelessWidget {
       color: theme.primaryColor,
       onPressed: onPressed,
       shadows: [
-        BoxShadow(offset: shadowOffset, blurRadius: 4, color: Colors.black.withOpacity(0.2)),
+        BoxShadow(
+            offset: shadowOffset,
+            blurRadius: 4,
+            color: Colors.black.withOpacity(0.2)),
       ],
       icon: Column(
         mainAxisSize: MainAxisSize.min,

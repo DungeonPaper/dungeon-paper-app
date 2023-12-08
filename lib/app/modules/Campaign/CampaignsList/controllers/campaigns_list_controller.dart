@@ -14,7 +14,8 @@ class CampaignsListController extends GetxController {
   @override
   void onInit() {
     super.onInit();
-    _campaignsListenerSubscription = StorageHandler.instance.collectionListener('Campaigns', _campaignsListener);
+    _campaignsListenerSubscription = StorageHandler.instance
+        .collectionListener('Campaigns', _campaignsListener);
   }
 
   @override

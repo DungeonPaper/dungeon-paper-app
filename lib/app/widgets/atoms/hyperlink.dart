@@ -10,8 +10,10 @@ class Hyperlink extends StatelessWidget {
 
   Hyperlink.url(this.text, String url, {super.key}) : onTap = _urlTapper(url);
 
-  static textSpan(BuildContext context, String text, {void Function()? onTap, String? url}) {
-    assert(onTap != null || url != null, 'Either onTap or url must be provided');
+  static textSpan(BuildContext context, String text,
+      {void Function()? onTap, String? url}) {
+    assert(
+        onTap != null || url != null, 'Either onTap or url must be provided');
     onTap ??= _urlTapper(url!);
 
     return TextSpan(

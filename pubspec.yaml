@@ -30,7 +30,7 @@ dependencies:
   cloud_firestore: ^4.13.3
   cupertino_icons: ^1.0.2
   # dungeon_world_data:
-  # path: ../dungeon_world_data
+  #   path: ../dungeon_world_data
   dungeon_world_data: ^3.0.1
   dynamic_themes: ^1.1.0
   email_validator: ^2.0.1
@@ -49,6 +49,13 @@ dependencies:
   get: ^4.6.1
   google_sign_in: ^5.3.3
   http: ^0.13.4
+  # i18n: ^4.0.8
+  # i18n:
+  #   path: ../i18n
+  i18n:
+    git:
+      url: https://github.com/chenasraf/i18n.git
+      ref: next
   icons_launcher: ^2.0.2
   image_cropper: ^2.0.2
   intl: ^0.17.0

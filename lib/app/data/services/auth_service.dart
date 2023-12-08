@@ -12,7 +12,8 @@ import 'package:sign_in_with_apple/sign_in_with_apple.dart';
 
 import '../../model_utils/user_utils.dart';
 
-class AuthService extends GetxService with UserServiceMixin, LoadingServiceMixin, RepositoryServiceMixin {
+class AuthService extends GetxService
+    with UserServiceMixin, LoadingServiceMixin, RepositoryServiceMixin {
   StreamSubscription<User?>? _sub;
 
   FirebaseAuth get auth => FirebaseAuth.instance;
@@ -157,7 +158,8 @@ class AuthService extends GetxService with UserServiceMixin, LoadingServiceMixin
     userService.loadGuestData();
   }
 
-  Future<UserCredential> signUp({required String email, required String password}) async =>
+  Future<UserCredential> signUp(
+          {required String email, required String password}) async =>
       auth.createUserWithEmailAndPassword(email: email, password: password);
 
   void _clearAuthListener() {

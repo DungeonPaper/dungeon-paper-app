@@ -162,11 +162,15 @@ class AppThemes {
 
   static List<int> allThemes = themes.keys.toList();
 
-  static List<int> allLightThemes =
-      themes.entries.where((e) => e.value.brightness == Brightness.light).map((e) => e.key).toList();
+  static List<int> allLightThemes = themes.entries
+      .where((e) => e.value.brightness == Brightness.light)
+      .map((e) => e.key)
+      .toList();
 
-  static List<int> allDarkThemes =
-      themes.entries.where((e) => e.value.brightness == Brightness.dark).map((e) => e.key).toList();
+  static List<int> allDarkThemes = themes.entries
+      .where((e) => e.value.brightness == Brightness.dark)
+      .map((e) => e.key)
+      .toList();
 
   static ThemeData getTheme(int theme) => themeCollection[theme];
   static String getThemeName(int theme) => _themeNames[theme]!;

@@ -1,5 +1,5 @@
 import 'package:dungeon_paper/core/utils/string_validator.dart';
-import 'package:dungeon_paper/generated/l10n.dart';
+import 'package:dungeon_paper/i18n.dart';
 
 class PasswordValidator extends CompoundStringValidator {
   static const minLength = 8;
@@ -9,11 +9,11 @@ class PasswordValidator extends CompoundStringValidator {
         StringMinLengthValidation(minLength: minLength),
         StringContainsValidation(
           pattern: RegExp('[A-Z]'),
-          message: S.current.signupPasswordValidationPatternLetter,
+          message: tr.errors.invalidPassword.letter,
         ),
         StringContainsValidation(
           pattern: RegExp('[0-9]'),
-          message: S.current.signupPasswordValidationPatternNumber,
+          message: tr.errors.invalidPassword.number,
         ),
       ];
 }

@@ -2,25 +2,25 @@ import 'package:dungeon_paper/app/data/models/character.dart';
 import 'package:dungeon_paper/app/data/services/user_service.dart';
 import 'package:dungeon_paper/app/routes/app_pages.dart';
 import 'package:dungeon_paper/app/themes/colors.dart';
-import 'package:dungeon_paper/app/widgets/atoms/hyperlink.dart';
-import 'package:dungeon_paper/app/widgets/atoms/labeled_divider.dart';
 import 'package:dungeon_paper/app/widgets/atoms/advanced_floating_action_button.dart';
 import 'package:dungeon_paper/app/widgets/atoms/character_avatar.dart';
 import 'package:dungeon_paper/app/widgets/atoms/confirm_exit_view.dart';
+import 'package:dungeon_paper/app/widgets/atoms/hyperlink.dart';
+import 'package:dungeon_paper/app/widgets/atoms/labeled_divider.dart';
 import 'package:dungeon_paper/core/dw_icons.dart';
 import 'package:dungeon_paper/core/platform_helper.dart';
 import 'package:dungeon_paper/core/utils/content_generators/character_name_generator.dart';
-import 'package:dungeon_paper/generated/l10n.dart';
+import 'package:dungeon_paper/i18n.dart';
 import 'package:flutter/material.dart';
-
 import 'package:get/get.dart';
 
 import '../controllers/basic_info_form_controller.dart';
 
-class BasicInfoFormView extends GetView<BasicInfoFormController> with UserServiceMixin {
+class BasicInfoFormView extends GetView<BasicInfoFormController>
+    with UserServiceMixin {
   const BasicInfoFormView({
-    Key? key,
-  }) : super(key: key);
+    super.key,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -30,12 +30,12 @@ class BasicInfoFormView extends GetView<BasicInfoFormController> with UserServic
         dirty: controller.dirty.value,
         child: Scaffold(
           appBar: AppBar(
-            title: Text(S.current.basicInformationTitle),
+            title: Text(tr.basicInfo.title),
             centerTitle: true,
           ),
           floatingActionButton: AdvancedFloatingActionButton.extended(
             onPressed: _save,
-            label: Text(S.current.save),
+            label: Text(tr.generic.save),
             icon: const Icon(Icons.save),
           ),
           body: Form(
@@ -48,22 +48,24 @@ class BasicInfoFormView extends GetView<BasicInfoFormController> with UserServic
                   autovalidateMode: AutovalidateMode.onUserInteraction,
                   controller: controller.name.value,
                   textInputAction: TextInputAction.next,
-                  validator: (val) => val == null || val.isEmpty ? 'Cannot be empty' : null,
+                  validator: (val) =>
+                      val == null || val.isEmpty ? 'Cannot be empty' : null,
                   // onChanged: (val) => updateControllers(),
                   textCapitalization: TextCapitalization.words,
                   decoration: InputDecoration(
-                    labelText: S.current.createCharacterNameFieldLabel,
-                    hintText: S.current.createCharacterNameFieldPlaceholder,
+                    labelText: tr.basicInfo.form.name.label,
+                    hintText: tr.basicInfo.form.name.placeholder,
                     floatingLabelBehavior: FloatingLabelBehavior.always,
                     suffixIcon: IconButton(
                       tooltip: PlatformHelper.byInteractionType(
                         context,
-                        touch: S.current.createCharRandomizeNameTooltipTouch,
-                        mouse: S.current.createCharRandomizeNameTooltipClick,
+                        touch: tr.basicInfo.form.name.random.tooltip.touch,
+                        mouse: tr.basicInfo.form.name.random.tooltip.click,
                       ),
                       icon: const Icon(DwIcons.dice_d6_numbered),
                       onPressed: () {
-                        controller.name.value.text = CharacterNameGenerator().generate();
+                        controller.name.value.text =
+                            CharacterNameGenerator().generate();
                       },
                     ),
                   ),
@@ -86,17 +88,21 @@ class BasicInfoFormView extends GetView<BasicInfoFormController> with UserServic
                       children: [
                         Expanded(
                           child: ElevatedButton.icon(
-                            onPressed: controller.isUploading ? null : () => controller.startUploadFlow(context),
+                            onPressed: controller.isUploading
+                                ? null
+                                : () => controller.startUploadFlow(context),
                             icon: const Icon(Icons.upload_file),
-                            label: Text(S.current.basicInfoImageChooseNew),
+                            label: Text(tr.basicInfo.form.photo.change),
                           ),
                         ),
                         const SizedBox(width: 16),
                         Expanded(
                           child: ElevatedButton.icon(
-                            onPressed: controller.isUploading ? null : controller.resetPhoto,
+                            onPressed: controller.isUploading
+                                ? null
+                                : controller.resetPhoto,
                             icon: const Icon(Icons.close),
-                            label: Text(S.current.basicInfoImageRemove),
+                            label: Text(tr.basicInfo.form.photo.remove),
                           ),
                         ),
                       ],
@@ -106,11 +112,12 @@ class BasicInfoFormView extends GetView<BasicInfoFormController> with UserServic
                   SizedBox(
                     height: 40,
                     child: ElevatedButton.icon(
-                      onPressed: !controller.isUploading && userService.isLoggedIn
-                          ? () => controller.startUploadFlow(context)
-                          : null,
+                      onPressed:
+                          !controller.isUploading && userService.isLoggedIn
+                              ? () => controller.startUploadFlow(context)
+                              : null,
                       icon: const Icon(Icons.upload_file),
-                      label: Text(S.current.basicInfoImageChoose),
+                      label: Text(tr.basicInfo.form.photo.choose),
                     ),
                   ),
                 if (userService.isGuest) ...[
@@ -122,16 +129,17 @@ class BasicInfoFormView extends GetView<BasicInfoFormController> with UserServic
                           const WidgetSpan(
                             child: Padding(
                               padding: EdgeInsets.only(right: 4),
-                              child: Icon(Icons.warning, color: DwColors.warning, size: 16),
+                              child: Icon(Icons.warning,
+                                  color: DwColors.warning, size: 16),
                             ),
                           ),
-                          TextSpan(text: S.current.basicInfoImageNeedAccountPrefix + ' '),
+                          TextSpan(text: tr.basicInfo.form.photo.guest.prefix),
                           Hyperlink.textSpan(
                             context,
-                            S.current.basicInfoImageNeedAccountLinkLabel,
+                            tr.basicInfo.form.photo.guest.label,
                             onTap: () => Get.toNamed(Routes.login),
                           ),
-                          TextSpan(text: S.current.basicInfoImageNeedAccountSuffix),
+                          TextSpan(text: tr.basicInfo.form.photo.guest.suffix),
                         ],
                         style: theme.textTheme.bodyMedium,
                       ),
@@ -148,10 +156,10 @@ class BasicInfoFormView extends GetView<BasicInfoFormController> with UserServic
                               child: CircularProgressIndicator(strokeWidth: 3),
                             ),
                             const SizedBox(width: 8),
-                            Text(S.current.basicInfoImageUploading),
+                            Text(tr.basicInfo.form.photo.uploading),
                           ],
                         )
-                      : Text(S.current.separatorOr),
+                      : Text(tr.basicInfo.form.photo.orSeparator),
                 ),
                 TextFormField(
                   controller: controller.avatarUrl.value,
@@ -159,8 +167,8 @@ class BasicInfoFormView extends GetView<BasicInfoFormController> with UserServic
                   enabled: !controller.isUploading,
                   // onChanged: (val) => updateControllers(),
                   decoration: InputDecoration(
-                    labelText: S.current.createCharacterAvatarFieldLabel,
-                    hintText: S.current.createCharacterAvatarFieldPlaceholder,
+                    labelText: tr.basicInfo.form.photo.url.label,
+                    hintText: tr.basicInfo.form.photo.url.placeholder,
                     floatingLabelBehavior: FloatingLabelBehavior.always,
                   ),
                 ),
@@ -174,7 +182,8 @@ class BasicInfoFormView extends GetView<BasicInfoFormController> with UserServic
   }
 
   _save() {
-    controller.onChanged(controller.name.value.text, controller.avatarUrl.value.text);
+    controller.onChanged(
+        controller.name.value.text, controller.avatarUrl.value.text);
     Get.back();
   }
 }

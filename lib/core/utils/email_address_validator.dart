@@ -1,9 +1,9 @@
 import 'package:dungeon_paper/core/utils/string_validator.dart';
-import 'package:dungeon_paper/generated/l10n.dart';
+import 'package:dungeon_paper/i18n.dart';
 import 'package:email_validator/email_validator.dart';
 
 class EmailAddressValidator extends Validation {
-  EmailAddressValidator() : super(S.current.errorInvalidEmail);
+  EmailAddressValidator() : super(tr.errors.invalidEmail);
 
   @override
   bool isValid(String? string) {

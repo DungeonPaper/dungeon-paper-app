@@ -52,7 +52,8 @@ class SpellCard extends StatelessWidget {
       icon: showIcon ? Icon(spell.icon, size: 16) : null,
       starred: spell.prepared,
       showStar: showStar,
-      onStarChanged: (prepared) => onSave?.call(spell.copyWithInherited(prepared: prepared)),
+      onStarChanged: (prepared) =>
+          onSave?.call(spell.copyWithInherited(prepared: prepared)),
       initiallyExpanded: initiallyExpanded,
       actions: actions,
       expansionKey: expansionKey ?? PageStorageKey(spell.key),

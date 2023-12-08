@@ -4,7 +4,7 @@ import 'package:dungeon_paper/app/widgets/atoms/round_roll_button.dart';
 import 'package:dungeon_paper/app/widgets/menus/entity_edit_menu.dart';
 import 'package:dungeon_paper/core/utils/markdown_highlight.dart';
 import 'package:dungeon_paper/core/utils/markdown_styles.dart';
-import 'package:dungeon_paper/generated/l10n.dart';
+import 'package:dungeon_paper/i18n.dart';
 import 'package:dungeon_world_data/dice.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_markdown/flutter_markdown.dart';
@@ -12,7 +12,7 @@ import 'package:url_launcher/url_launcher.dart';
 
 class DynamicActionCard extends StatefulWidget {
   const DynamicActionCard({
-    Key? key,
+    super.key,
     this.expansionKey,
     required this.title,
     required this.icon,
@@ -36,8 +36,7 @@ class DynamicActionCard extends StatefulWidget {
     this.highlightWords = const [],
     this.abilityScores,
     this.reorderablePadding = false,
-  })  : assert(dice.length == 0 || abilityScores != null),
-        super(key: key);
+  }) : assert(dice.length == 0 || abilityScores != null);
 
   final bool expandable;
   final double? maxContentHeight;
@@ -98,7 +97,8 @@ class _DynamicActionCardState extends State<DynamicActionCard> {
               ),
               child: widget.starred
                   ? widget.starredIcon ?? const Icon(Icons.star_rounded)
-                  : widget.unstarredIcon ?? const Icon(Icons.star_border_rounded),
+                  : widget.unstarredIcon ??
+                      const Icon(Icons.star_border_rounded),
             ),
             onPressed: () => widget.onStarChanged?.call(!widget.starred),
           ),
@@ -151,7 +151,8 @@ class _DynamicActionCardState extends State<DynamicActionCard> {
                 ? children
                 : [
                     ConstrainedBox(
-                      constraints: BoxConstraints.loose(Size.fromHeight(widget.maxContentHeight!)),
+                      constraints: BoxConstraints.loose(
+                          Size.fromHeight(widget.maxContentHeight!)),
                       child: ListView(
                         shrinkWrap: true,
                         children: children.sublist(0, children.length - 1),
@@ -168,7 +169,9 @@ class _DynamicActionCardState extends State<DynamicActionCard> {
   List<Widget> _buildChildren(BuildContext context) {
     final bottomHasContent = widget.chips.isNotEmpty ||
         widget.actions
-            .where((el) => (el is! EntityEditMenu) || (el.onDelete != null || el.onEdit != null))
+            .where((el) =>
+                (el is! EntityEditMenu) ||
+                (el.onDelete != null || el.onEdit != null))
             .isNotEmpty ||
         widget.dice.isNotEmpty;
     return [
@@ -180,14 +183,15 @@ class _DynamicActionCardState extends State<DynamicActionCard> {
               // style: Theme.of(context).textTheme.bodyLarge,
             )
           : Text(
-              S.current.noDescription,
+              tr.generic.noDescription,
               style: Theme.of(context).textTheme.bodyLarge,
             ),
       // Divider(height: 32, color: dividerColor),
       if (widget.explanation != null && widget.explanation!.isNotEmpty) ...[
         Padding(
           padding: const EdgeInsets.only(top: 16, bottom: 4),
-          child: Text(S.current.explanation, style: Theme.of(context).textTheme.bodySmall),
+          child: Text(tr.generic.explanation,
+              style: Theme.of(context).textTheme.bodySmall),
         ),
         _renderMarkdown(context, widget.explanation!),
       ],
@@ -205,7 +209,8 @@ class _DynamicActionCardState extends State<DynamicActionCard> {
               ),
             ),
             ...widget.actions,
-            if (widget.actions.isNotEmpty && widget.dice.isNotEmpty) const SizedBox(width: 8),
+            if (widget.actions.isNotEmpty && widget.dice.isNotEmpty)
+              const SizedBox(width: 8),
             if (widget.dice.isNotEmpty)
               Padding(
                 padding: const EdgeInsets.only(bottom: 2.5),

@@ -13,16 +13,15 @@ import 'package:dungeon_paper/app/widgets/atoms/round_icon_button.dart';
 import 'package:dungeon_paper/app/widgets/dialogs/confirm_delete_dialog.dart';
 import 'package:dungeon_paper/app/widgets/menus/entity_edit_menu.dart';
 import 'package:dungeon_paper/core/utils/list_utils.dart';
-import 'package:dungeon_paper/generated/l10n.dart';
-import 'package:flutter/material.dart';
+import 'package:dungeon_paper/i18n.dart';
 import 'package:dungeon_world_data/dungeon_world_data.dart' as dw;
-
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class AbilityScoresFormView extends GetView<AbilityScoresFormController> {
   const AbilityScoresFormView({
-    Key? key,
-  }) : super(key: key);
+    super.key,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -31,18 +30,18 @@ class AbilityScoresFormView extends GetView<AbilityScoresFormController> {
         dirty: controller.dirty.value,
         child: Scaffold(
           appBar: AppBar(
-            title: Text(S.current.entityPlural(AbilityScore)),
+            title: Text(tr.entityPlural(AbilityScore)),
             centerTitle: true,
           ),
           floatingActionButton: AdvancedFloatingActionButton.extended(
             onPressed: _save,
-            label: Text(S.current.save),
+            label: Text(tr.generic.save),
             icon: const Icon(Icons.save),
           ),
           body: ListView(
             padding: const EdgeInsets.all(16).copyWith(bottom: 80),
             children: [
-              HelpText(text: S.current.abilityScoreInfo),
+              HelpText(text: tr.abilityScores.info),
               const SizedBox(height: 8),
               Form(
                 child: ReorderableListView.builder(
@@ -50,8 +49,10 @@ class AbilityScoresFormView extends GetView<AbilityScoresFormController> {
                   physics: const NeverScrollableScrollPhysics(),
                   itemCount: controller.abilityScores.value.stats.length,
                   onReorder: (int oldIndex, int newIndex) {
-                    controller.abilityScores.value = controller.abilityScores.value
-                        .copyWith(stats: reorder(controller.abilityScores.value.stats, oldIndex, newIndex));
+                    controller.abilityScores.value =
+                        controller.abilityScores.value.copyWith(
+                            stats: reorder(controller.abilityScores.value.stats,
+                                oldIndex, newIndex));
                   },
                   itemBuilder: (context, index) => _buildCard(context, index),
                 ),
@@ -64,8 +65,8 @@ class AbilityScoresFormView extends GetView<AbilityScoresFormController> {
                     )),
                 icon: const Icon(Icons.add),
                 label: Text(
-                  S.current.addGeneric(
-                    S.current.entity(AbilityScore),
+                  tr.generic.addEntity(
+                    tr.entity(AbilityScore),
                   ),
                 ),
               ),
@@ -81,9 +82,11 @@ class AbilityScoresFormView extends GetView<AbilityScoresFormController> {
     final textTheme = theme.textTheme;
     final statKey = sortByPredefined(
       controller.textControllers.keys.toList(),
-      order: controller.abilityScores.value.stats.map((stat) => stat.key).toList(),
+      order:
+          controller.abilityScores.value.stats.map((stat) => stat.key).toList(),
     ).elementAt(index);
-    final stat = controller.abilityScores.value.stats.firstWhere((stat) => stat.key == statKey);
+    final stat = controller.abilityScores.value.stats
+        .firstWhere((stat) => stat.key == statKey);
     return Padding(
       key: Key('stat-$statKey'),
       padding: const EdgeInsets.symmetric(vertical: 4),
@@ -131,15 +134,18 @@ class AbilityScoresFormView extends GetView<AbilityScoresFormController> {
                     ),
                   ),
                   Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 8).copyWith(right: 16),
+                    padding: const EdgeInsets.symmetric(horizontal: 8)
+                        .copyWith(right: 16),
                     child: Text(
-                      S.current.abilityScoreModifierValueLabel(stat.modifier),
+                      tr.abilityScores.form
+                          .modifierValueLabel(stat.modifier.toString()),
                     ),
                   ),
                   RoundIconButton(
                     icon: DiceIcon.from(dw.Dice.d6),
-                    onPressed: () => controller.textControllers[stat.key]!.text = Random().nextInt(21).toString(),
-                    tooltip: S.current.abilityScoreRollButtonTooltip,
+                    onPressed: () => controller.textControllers[stat.key]!
+                        .text = Random().nextInt(21).toString(),
+                    tooltip: tr.abilityScores.rollButton.randStat,
                   ),
                   Expanded(child: Container()),
                   Padding(
@@ -154,7 +160,9 @@ class AbilityScoresFormView extends GetView<AbilityScoresFormController> {
                       ),
                       onDelete: () => deleteDialog.confirm(
                         context,
-                        DeleteDialogOptions(entityName: stat.name, entityKind: S.current.entity(AbilityScore)),
+                        DeleteDialogOptions(
+                            entityName: stat.name,
+                            entityKind: tr.entity(AbilityScore)),
                         () => controller.removeStat(stat),
                       ),
                     ),

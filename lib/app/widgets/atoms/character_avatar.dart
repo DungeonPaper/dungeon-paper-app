@@ -8,7 +8,8 @@ import 'package:get/get.dart';
 
 class CharacterAvatar extends GetView {
   final Character? character;
-  final Widget Function(BuildContext context, String avatarUrl, double size) builder;
+  final Widget Function(BuildContext context, String avatarUrl, double size)
+      builder;
   final double size;
 
   const CharacterAvatar._({
@@ -22,30 +23,39 @@ class CharacterAvatar extends GetView {
     Key? key,
     Character? character,
     required double size,
-    required final Widget Function(BuildContext context, String avatarUrl, double size) builder,
+    required final Widget Function(
+            BuildContext context, String avatarUrl, double size)
+        builder,
   }) =>
-      CharacterAvatar._(key: key, character: character, size: size, builder: builder);
+      CharacterAvatar._(
+          key: key, character: character, size: size, builder: builder);
 
   factory CharacterAvatar.roundedRect({
     Key? key,
     Character? character,
     required double size,
   }) =>
-      CharacterAvatar._(key: key, character: character, size: size, builder: _rRectBuilder);
+      CharacterAvatar._(
+          key: key, character: character, size: size, builder: _rRectBuilder);
 
   factory CharacterAvatar.circle({
     Key? key,
     Character? character,
     required double size,
   }) =>
-      CharacterAvatar._(key: key, character: character, size: size, builder: _circleBuilder);
+      CharacterAvatar._(
+          key: key, character: character, size: size, builder: _circleBuilder);
 
   factory CharacterAvatar.squircle({
     Key? key,
     Character? character,
     required double size,
   }) =>
-      CharacterAvatar._(key: key, character: character, size: size, builder: _squircleBuilder);
+      CharacterAvatar._(
+          key: key,
+          character: character,
+          size: size,
+          builder: _squircleBuilder);
 
   @override
   Widget build(BuildContext context) {
@@ -58,12 +68,14 @@ class CharacterAvatar extends GetView {
     });
   }
 
-  static Widget _rRectBuilder(BuildContext context, String url, double size) => ClipRRect(
+  static Widget _rRectBuilder(BuildContext context, String url, double size) =>
+      ClipRRect(
         borderRadius: BorderRadius.circular(size / 8),
         child: _renderImage(context, url, size),
       );
 
-  static Widget _circleBuilder(BuildContext context, String url, double size) => CircleAvatar(
+  static Widget _circleBuilder(BuildContext context, String url, double size) =>
+      CircleAvatar(
         // clipBehavior: Clip.hardEdge,
         foregroundImage: _renderImageProvider(url),
         radius: size / 2,
@@ -72,8 +84,11 @@ class CharacterAvatar extends GetView {
   static CachedNetworkImageProvider? _renderImageProvider(String url) =>
       url.isNotEmpty ? CachedNetworkImageProvider(url) : null;
 
-  static Widget _squircleBuilder(BuildContext context, String url, double size) => Material(
-        shape: ContinuousRectangleBorder(borderRadius: BorderRadius.circular(size / 1.5)),
+  static Widget _squircleBuilder(
+          BuildContext context, String url, double size) =>
+      Material(
+        shape: ContinuousRectangleBorder(
+            borderRadius: BorderRadius.circular(size / 1.5)),
         clipBehavior: Clip.antiAlias,
         child: _renderImage(context, url, size),
       );
@@ -87,7 +102,8 @@ class CharacterAvatar extends GetView {
         memCacheHeight: size.toInt(),
         memCacheWidth: size.toInt(),
         fit: BoxFit.cover,
-        progressIndicatorBuilder: (context, url, state) => AvatarCircularProgress(size: size),
+        progressIndicatorBuilder: (context, url, state) =>
+            AvatarCircularProgress(size: size),
         errorWidget: (context, url, err) => Stack(
           children: [
             _buildDefaultImage(context, size),
@@ -111,12 +127,14 @@ class CharacterAvatar extends GetView {
     final theme = Theme.of(context);
     final textStyle = theme.primaryTextTheme.titleMedium!;
     return Container(
-      color: ThemeData.estimateBrightnessForColor(textStyle.color!) == Brightness.dark
+      color: ThemeData.estimateBrightnessForColor(textStyle.color!) ==
+              Brightness.dark
           ? theme.primaryColorLight
           : theme.primaryColorDark,
       child: Icon(Icons.person, size: size),
     );
   }
 
-  Widget _renderForChar(BuildContext context, Character? char) => builder(context, char?.avatarUrl ?? '', size);
+  Widget _renderForChar(BuildContext context, Character? char) =>
+      builder(context, char?.avatarUrl ?? '', size);
 }

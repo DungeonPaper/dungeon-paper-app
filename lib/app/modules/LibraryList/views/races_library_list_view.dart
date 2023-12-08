@@ -15,7 +15,9 @@ import 'package:get/get.dart';
 
 import 'filters/race_filters.dart';
 
-class RacesLibraryListView extends GetView<LibraryListController<Race, RaceFilters>> with CharacterServiceMixin {
+class RacesLibraryListView
+    extends GetView<LibraryListController<Race, RaceFilters>>
+    with CharacterServiceMixin {
   const RacesLibraryListView({
     Key? key,
   }) : super(key: key);
@@ -40,12 +42,14 @@ class RacesLibraryListView extends GetView<LibraryListController<Race, RaceFilte
           EntityEditMenu(
             onEdit: data.onUpdate != null
                 ? () => ModelPages.openRacePage(
-                      abilityScores: maybeChar?.abilityScores ?? AbilityScores.dungeonWorldAll(10),
+                      abilityScores: maybeChar?.abilityScores ??
+                          AbilityScores.dungeonWorldAll(10),
                       race: data.item,
                       onSave: data.onUpdate!,
                     )
                 : null,
-            onDelete: data.onDelete != null ? () => data.onDelete!(data.item) : null,
+            onDelete:
+                data.onDelete != null ? () => data.onDelete!(data.item) : null,
           ),
           if (data.selectable)
             ElevatedButton.icon(
@@ -70,14 +74,18 @@ class RaceLibraryListArguments extends LibraryListArguments<Race, RaceFilters> {
           sortFn: Race.sorter,
           filterFn: (race, filters) => filters.filter(race),
           filters: {
-            FiltersGroup.playbook: RaceFilters(classKey: character?.characterClass.key),
-            FiltersGroup.my: RaceFilters(classKey: character?.characterClass.key),
+            FiltersGroup.playbook:
+                RaceFilters(classKey: character?.characterClass.key),
+            FiltersGroup.my:
+                RaceFilters(classKey: character?.characterClass.key),
           },
           extraData: {
             'abilityScores': character?.abilityScores,
-            'classKeys': character != null ? [character.characterClass.key] : null,
+            'classKeys':
+                character != null ? [character.characterClass.key] : null,
           },
-          onSelected: onSelected != null ? (race) => onSelected.call(race.first) : null,
+          onSelected:
+              onSelected != null ? (race) => onSelected.call(race.first) : null,
           multiple: false,
         );
 }

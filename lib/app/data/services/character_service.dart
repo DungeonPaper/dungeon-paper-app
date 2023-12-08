@@ -12,7 +12,8 @@ import 'package:get/get.dart';
 import '../models/character.dart';
 import 'loading_service.dart';
 
-class CharacterService extends GetxService with LoadingServiceMixin, UserServiceMixin {
+class CharacterService extends GetxService
+    with LoadingServiceMixin, UserServiceMixin {
   static CharacterService find() => Get.find();
 
   final all = <String, Character>{}.obs;
@@ -34,9 +35,13 @@ class CharacterService extends GetxService with LoadingServiceMixin, UserService
   }
 
   PageController get pageController => _pageController;
-  double get page => pageController.hasClients && pageController.positions.length == 1 ? pageController.page ?? 0 : 0;
+  double get page =>
+      pageController.hasClients && pageController.positions.length == 1
+          ? pageController.page ?? 0
+          : 0;
 
-  Character? get maybeCurrent => _currentKey.value != null ? all[_currentKey.value] : null;
+  Character? get maybeCurrent =>
+      _currentKey.value != null ? all[_currentKey.value] : null;
   Character get current => maybeCurrent!;
 
   List<Character> get allAsList => all.values.toList();
@@ -48,22 +53,24 @@ class CharacterService extends GetxService with LoadingServiceMixin, UserService
       out[char.settings.category ?? '']!.add(char);
     }
     for (final key in out.keys) {
-      out[key]!
-          .sort((a, b) => (a.settings.sortOrder ?? double.infinity).compareTo(b.settings.sortOrder ?? double.infinity));
+      out[key]!.sort((a, b) => (a.settings.sortOrder ?? double.infinity)
+          .compareTo(b.settings.sortOrder ?? double.infinity));
     }
     return out;
   }
 
   Iterable<Character> get charsByLastUsed {
     final copy = [...all.values];
-    copy.sort(createSortByDate(order: SortOrder.desc, parse: (char) => char?.meta.data?.lastUsed));
+    copy.sort(createSortByDate(
+        order: SortOrder.desc, parse: (char) => char?.meta.data?.lastUsed));
     return copy;
   }
 
   Future<void> registerCharacterListener() async {
     _clearCharListener();
     debugPrint('registering character listener');
-    _sub = StorageHandler.instance.collectionListener('Characters', charsListener);
+    _sub =
+        StorageHandler.instance.collectionListener('Characters', charsListener);
   }
 
   void clear() {
@@ -77,13 +84,16 @@ class CharacterService extends GetxService with LoadingServiceMixin, UserService
       switchToCharacterTheme(current);
       updateCharacter(
         current.copyWith(
-          meta: current.meta.copyWith(data: (current.meta.data ?? CharacterMeta()).copyWith(lastUsed: DateTime.now())),
+          meta: current.meta.copyWith(
+              data: (current.meta.data ?? CharacterMeta())
+                  .copyWith(lastUsed: DateTime.now())),
         ),
       );
     }
   }
 
-  void switchToCharacterTheme(Character character) => switchToTheme(character.getCurrentTheme(user));
+  void switchToCharacterTheme(Character character) =>
+      switchToTheme(character.getCurrentTheme(user));
 
   void switchToTheme(int themeId) {
     final dynamicTheme = DynamicTheme.of(Get.context!)!;
@@ -125,21 +135,26 @@ class CharacterService extends GetxService with LoadingServiceMixin, UserService
     }
   }
 
-  Future<void> updateCharacter(Character character, {bool switchToCharacter = false}) {
+  Future<void> updateCharacter(Character character,
+      {bool switchToCharacter = false}) {
     // (StorageHandler.instance.delegate as LocalStorageDelegate).storage.collection('Characters');
     character = character.copyWithInherited(meta: character.meta.stampUpdate());
     all[character.key] = character;
-    if (switchToCharacter || _currentKey.value == null || !all.containsKey(_currentKey.value)) {
+    if (switchToCharacter ||
+        _currentKey.value == null ||
+        !all.containsKey(_currentKey.value)) {
       setCurrent(character.key);
     }
     debugPrint('Updated char: ${character.key} (${character.displayName})');
     debugPrint(character.toRawJson());
-    return StorageHandler.instance.update('Characters', character.key, character.toJson());
+    return StorageHandler.instance
+        .update('Characters', character.key, character.toJson());
   }
 
   void createCharacter(Character character, {bool switchToCharacter = false}) {
     all[character.key] = character;
-    StorageHandler.instance.create('Characters', character.key, character.toJson());
+    StorageHandler.instance
+        .create('Characters', character.key, character.toJson());
     if (switchToCharacter || _currentKey.value == null) {
       _currentKey.value = character.key;
     }

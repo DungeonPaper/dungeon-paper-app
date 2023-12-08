@@ -38,21 +38,27 @@ class GearChoice extends dw.GearChoice {
         maxSelections: maxSelections ?? this.maxSelections,
       );
 
-  factory GearChoice.fromRawJson(String str) => GearChoice.fromJson(json.decode(str));
+  factory GearChoice.fromRawJson(String str) =>
+      GearChoice.fromJson(json.decode(str));
 
   factory GearChoice.fromDwGearChoice(dw.GearChoice gearChoice) => GearChoice(
         key: gearChoice.key,
         description: gearChoice.description,
-        selections: gearChoice.selections.map((s) => GearSelection.fromDwGearSelection(s)).toList(),
+        selections: gearChoice.selections
+            .map((s) => GearSelection.fromDwGearSelection(s))
+            .toList(),
         preselect: gearChoice.preselect,
         maxSelections: gearChoice.maxSelections,
       );
 
-  factory GearChoice.fromJson(Map<String, dynamic> json) => GearChoice.fromDwGearChoice(dw.GearChoice.fromJson(json));
+  factory GearChoice.fromJson(Map<String, dynamic> json) =>
+      GearChoice.fromDwGearChoice(dw.GearChoice.fromJson(json));
 
   @override
-  List<GearSelection> get preselectedGearSelections =>
-      super.preselectedGearSelections.map((e) => GearSelection.fromDwGearSelection(e)).toList();
+  List<GearSelection> get preselectedGearSelections => super
+      .preselectedGearSelections
+      .map((e) => GearSelection.fromDwGearSelection(e))
+      .toList();
 
   @override
   Map<String, dynamic> toJson() => {
@@ -60,17 +66,20 @@ class GearChoice extends dw.GearChoice {
         'selections': List<dynamic>.from(selections.map((x) => x.toJson())),
       };
 
-  static List<Item> selectionToItems(List<GearSelection> selections, {bool equipped = false}) =>
+  static List<Item> selectionToItems(List<GearSelection> selections,
+          {bool equipped = false}) =>
       selections.fold<List<Item>>([], (acc, sel) {
         return Item.unifyItems([
           ...acc,
           ...sel.options.map(
-            (e) => Item.fromDwItem(e.item, amount: e.amount, equipped: equipped),
+            (e) =>
+                Item.fromDwItem(e.item, amount: e.amount, equipped: equipped),
           )
         ]);
       });
 
-  static double selectionToCoins(List<GearSelection> selections) => selections.fold(0.0, (acc, sel) => acc + sel.coins);
+  static double selectionToCoins(List<GearSelection> selections) =>
+      selections.fold(0.0, (acc, sel) => acc + sel.coins);
 
   @override
   bool operator ==(Object? other) =>

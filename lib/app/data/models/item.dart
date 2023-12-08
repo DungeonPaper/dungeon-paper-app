@@ -37,12 +37,16 @@ class Item extends dw.Item with WithIcon implements WithMeta {
   final double amount;
   final bool equipped;
 
-  dw.Tag? findTag(String name) => tags.cast<dw.Tag?>().firstWhereOrNull((tag) => cleanStr(tag?.name ?? '') == name);
+  dw.Tag? findTag(String name) => tags
+      .cast<dw.Tag?>()
+      .firstWhereOrNull((tag) => cleanStr(tag?.name ?? '') == name);
   bool get isWorn => findTag('worn') != null;
 
   int get weight => settings.countWeight ? tagIntValue('weight') ?? 0 : 0;
-  int get armor => settings.countArmor && isWorn && equipped ? tagIntValue('armor') ?? 0 : 0;
-  int get damage => settings.countDamage && equipped ? tagIntValue('damage') ?? 0 : 0;
+  int get armor =>
+      settings.countArmor && isWorn && equipped ? tagIntValue('armor') ?? 0 : 0;
+  int get damage =>
+      settings.countDamage && equipped ? tagIntValue('damage') ?? 0 : 0;
 
   int? tagIntValue(String name) {
     final tag = findTag(name);
@@ -100,7 +104,8 @@ class Item extends dw.Item with WithIcon implements WithMeta {
         description: item.description,
         tags: item.tags,
         equipped: equipped ?? false,
-        settings: settings != null ? ItemSettings.fromJson(settings) : ItemSettings(),
+        settings:
+            settings != null ? ItemSettings.fromJson(settings) : ItemSettings(),
       );
 
   factory Item.fromJson(Map<String, dynamic> json) => Item.fromDwItem(
@@ -140,7 +145,8 @@ class Item extends dw.Item with WithIcon implements WithMeta {
     final map = <String, Item>{};
     for (final item in items) {
       if (map[item.key] != null) {
-        map[item.key] = map[item.key]!.copyWithInherited(amount: map[item.key]!.amount + 1);
+        map[item.key] =
+            map[item.key]!.copyWithInherited(amount: map[item.key]!.amount + 1);
       } else {
         map[item.key] = item;
       }
@@ -168,7 +174,8 @@ class Item extends dw.Item with WithIcon implements WithMeta {
           equipped == other.equipped;
 
   @override
-  int get hashCode => Object.hashAll([key, name, description, tags, settings, amount, equipped]);
+  int get hashCode => Object.hashAll(
+      [key, name, description, tags, settings, amount, equipped]);
 
   @override
   String get debugProperties =>

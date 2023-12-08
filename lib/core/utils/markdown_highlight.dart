@@ -9,8 +9,10 @@ class HighlightSyntax extends markdown.InlineSyntax {
 
   @override
   bool onMatch(markdown.InlineParser parser, Match match) {
-    final element = markdown.Element(
-        'mark', [markdown.Element.text('span', match.input.substring(match.start + 2, match.end - 2))]);
+    final element = markdown.Element('mark', [
+      markdown.Element.text(
+          'span', match.input.substring(match.start + 2, match.end - 2))
+    ]);
     parser.addNode(element);
     return true;
   }
@@ -37,7 +39,8 @@ class HighlightBuilder extends flutter_markdown.MarkdownElementBuilder {
   final BuildContext context;
 
   @override
-  Widget? visitElementAfter(markdown.Element element, TextStyle? preferredStyle) {
+  Widget? visitElementAfter(
+      markdown.Element element, TextStyle? preferredStyle) {
     final highlightStyle = getHighlightStyle(
       context,
       override: getDefaultHighlightStyle(context),
@@ -52,11 +55,12 @@ class HighlightBuilder extends flutter_markdown.MarkdownElementBuilder {
     );
   }
 
-  static TextStyle getDefaultHighlightStyle(BuildContext context) => Theme.of(context).textTheme.bodyMedium!.copyWith(
-        color: Colors.black,
-        backgroundColor: Colors.yellow[200],
-        fontStyle: FontStyle.italic,
-      );
+  static TextStyle getDefaultHighlightStyle(BuildContext context) =>
+      Theme.of(context).textTheme.bodyMedium!.copyWith(
+            color: Colors.black,
+            backgroundColor: Colors.yellow[200],
+            fontStyle: FontStyle.italic,
+          );
 
   static TextStyle getNormalStyle(BuildContext context, TextStyle? override) =>
       override ?? Theme.of(context).textTheme.bodyMedium!;
@@ -67,22 +71,33 @@ class HighlightBuilder extends flutter_markdown.MarkdownElementBuilder {
     required TextStyle normalStyle,
   }) {
     final defaultHighlightStyle = getDefaultHighlightStyle(context);
-    final normalColorBrightness =
-        ThemeData.estimateBrightnessForColor(normalStyle.color ?? defaultHighlightStyle.color!);
-    final backgroundColor =
-        override?.backgroundColor ?? normalStyle.backgroundColor ?? defaultHighlightStyle.backgroundColor!;
-    final highlightBackgroundColorBrightness = ThemeData.estimateBrightnessForColor(backgroundColor);
-    final brightnessHighlightColor = normalColorBrightness == highlightBackgroundColorBrightness
-        ? normalColorBrightness == Brightness.dark
-            ? Colors.white
-            : Colors.black
-        : null;
+    final normalColorBrightness = ThemeData.estimateBrightnessForColor(
+        normalStyle.color ?? defaultHighlightStyle.color!);
+    final backgroundColor = override?.backgroundColor ??
+        normalStyle.backgroundColor ??
+        defaultHighlightStyle.backgroundColor!;
+    final highlightBackgroundColorBrightness =
+        ThemeData.estimateBrightnessForColor(backgroundColor);
+    final brightnessHighlightColor =
+        normalColorBrightness == highlightBackgroundColorBrightness
+            ? normalColorBrightness == Brightness.dark
+                ? Colors.white
+                : Colors.black
+            : null;
     return normalStyle.copyWith(
-      fontFamily: override?.fontFamily ?? normalStyle.fontFamily ?? defaultHighlightStyle.fontFamily,
-      color: override?.color ?? brightnessHighlightColor ?? defaultHighlightStyle.color,
+      fontFamily: override?.fontFamily ??
+          normalStyle.fontFamily ??
+          defaultHighlightStyle.fontFamily,
+      color: override?.color ??
+          brightnessHighlightColor ??
+          defaultHighlightStyle.color,
       backgroundColor: backgroundColor,
-      fontStyle: override?.fontStyle ?? normalStyle.fontStyle ?? defaultHighlightStyle.fontStyle,
-      fontWeight: override?.fontWeight ?? normalStyle.fontWeight ?? defaultHighlightStyle.fontWeight,
+      fontStyle: override?.fontStyle ??
+          normalStyle.fontStyle ??
+          defaultHighlightStyle.fontStyle,
+      fontWeight: override?.fontWeight ??
+          normalStyle.fontWeight ??
+          defaultHighlightStyle.fontWeight,
     );
   }
 }
@@ -110,7 +125,8 @@ class HighlightText extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final _text = highlight(text, highlightWords).split('==');
-    final normalStyle = HighlightBuilder.getNormalStyle(context, normalTextStyle);
+    final normalStyle =
+        HighlightBuilder.getNormalStyle(context, normalTextStyle);
     final hlStyle = HighlightBuilder.getHighlightStyle(
       context,
       normalStyle: normalStyle,

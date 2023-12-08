@@ -1,4 +1,4 @@
-import 'package:dungeon_paper/generated/l10n.dart';
+import 'package:dungeon_paper/i18n.dart';
 import 'package:flutter/material.dart';
 
 import '../../data/models/character_class.dart';
@@ -6,7 +6,7 @@ import 'dynamic_action_card.dart';
 
 class CharacterClassCard extends StatelessWidget {
   const CharacterClassCard({
-    Key? key,
+    super.key,
     required this.characterClass,
     this.onSave,
     this.showDice = true,
@@ -18,7 +18,7 @@ class CharacterClassCard extends StatelessWidget {
     this.maxContentHeight,
     this.expandable = true,
     this.highlightWords = const [],
-  }) : super(key: key);
+  });
 
   final CharacterClass characterClass;
   final void Function(CharacterClass characterClass)? onSave;
@@ -49,13 +49,13 @@ class CharacterClassCard extends StatelessWidget {
   }
 
   String get _buildMarkdownDescription {
-    final baseLoadLabel = S.current.formCharacterClassBaseLoad;
-    final baseHpLabel = S.current.formCharacterClassBaseHp;
+    final baseLoadLabel = tr.characterClass.baseLoad;
+    final baseHpLabel = tr.characterClass.baseHp;
     final table = [
       '| $baseHpLabel | $baseLoadLabel |',
       '| --- | --- |',
       '| ${characterClass.hp} | ${characterClass.load} |',
     ].join('\n');
-    return characterClass.description + '\n\n' + table;
+    return '${characterClass.description}\n\n$table';
   }
 }

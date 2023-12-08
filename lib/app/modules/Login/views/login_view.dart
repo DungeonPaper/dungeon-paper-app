@@ -4,17 +4,16 @@ import 'package:dungeon_paper/core/dw_icons.dart';
 import 'package:dungeon_paper/core/platform_helper.dart';
 import 'package:dungeon_paper/core/utils/list_utils.dart';
 import 'package:dungeon_paper/core/utils/password_validator.dart';
-import 'package:dungeon_paper/generated/l10n.dart';
+import 'package:dungeon_paper/i18n.dart';
 import 'package:email_validator/email_validator.dart';
 import 'package:flutter/material.dart';
-
 import 'package:get/get.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import '../controllers/login_controller.dart';
 
 class LoginView extends GetView<LoginController> {
-  const LoginView({Key? key}) : super(key: key);
+  const LoginView({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -23,7 +22,7 @@ class LoginView extends GetView<LoginController> {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text(S.current.appName),
+        title: Text(tr.app.name),
       ),
       body: Center(
         child: SingleChildScrollView(
@@ -43,11 +42,15 @@ class LoginView extends GetView<LoginController> {
                             onPressed: !controller.loadingService.loadingUser
                                 ? controller.loginWithGoogle
                                 : null,
-                            label: Text(controller.isLogin
-                                ? S.current.signinWithButton(
-                                    S.current.signinProvider('google'))
-                                : S.current.signupWithButton(
-                                    S.current.signinProvider('google'))),
+                            label: Text(
+                              controller.isLogin
+                                  ? tr.auth.providers.loginWith(
+                                      tr.auth.providers.name('google'),
+                                    )
+                                  : tr.auth.providers.signupWith(
+                                      tr.auth.providers.name('google'),
+                                    ),
+                            ),
                             icon: const Icon(DwIcons.google),
                           ),
                         ],
@@ -56,11 +59,15 @@ class LoginView extends GetView<LoginController> {
                             onPressed: !controller.loadingService.loadingUser
                                 ? controller.loginWithApple
                                 : null,
-                            label: Text(controller.isLogin
-                                ? S.current.signinWithButton(
-                                    S.current.signinProvider('apple'))
-                                : S.current.signupWithButton(
-                                    S.current.signinProvider('apple'))),
+                            label: Text(
+                              controller.isLogin
+                                  ? tr.auth.providers.loginWith(
+                                      tr.auth.providers.name('apple'),
+                                    )
+                                  : tr.auth.providers.signupWith(
+                                      tr.auth.providers.name('apple'),
+                                    ),
+                            ),
                             icon: const Icon(DwIcons.apple),
                           ),
                         ],
@@ -69,16 +76,16 @@ class LoginView extends GetView<LoginController> {
                         children: [
                           Text(
                             controller.isLogin
-                                ? S.current.signinTitle
-                                : S.current.signupTitle,
+                                ? tr.auth.login.title
+                                : tr.auth.signup.title,
                             style: textTheme.headlineMedium,
                             textAlign: TextAlign.center,
                           ),
                           const SizedBox(height: 8),
                           Text(
                             controller.isLogin
-                                ? S.current.signinSubtitle
-                                : S.current.signupSubtitle,
+                                ? tr.auth.login.subtitle
+                                : tr.auth.signup.subtitle,
                             style: textTheme.titleMedium,
                             textAlign: TextAlign.center,
                           ),
@@ -87,7 +94,7 @@ class LoginView extends GetView<LoginController> {
                               .joinObjects(const SizedBox(height: 8)),
                           if (providerSignIns.isNotEmpty) ...[
                             const SizedBox(height: 16),
-                            LabeledDivider(label: Text(S.current.separatorOr)),
+                            LabeledDivider(label: Text(tr.auth.orSeparator)),
                           ],
                           TextFormField(
                             controller: controller.email,
@@ -95,15 +102,15 @@ class LoginView extends GetView<LoginController> {
                             autofillHints: const [AutofillHints.email],
                             decoration: InputDecoration(
                               filled: true,
-                              label: Text(S.current.signupEmail),
+                              label: Text(tr.auth.signup.email.label),
                               enabled: !controller.loadingService.loadingUser,
                               // floatingLabelBehavior: FloatingLabelBehavior.auto,
-                              hintText: S.current.signupEmailPlaceholder,
+                              hintText: tr.auth.signup.email.placeholder,
                             ),
                             validator: (email) =>
                                 email == null || EmailValidator.validate(email)
                                     ? null
-                                    : S.current.signupEmailValidation,
+                                    : tr.auth.signup.email.error,
                           ),
                           const SizedBox(height: 16),
                           PasswordField(
@@ -116,8 +123,8 @@ class LoginView extends GetView<LoginController> {
                             ],
                             decoration: InputDecoration(
                               filled: true,
-                              label: Text(S.current.signupPassword),
-                              hintText: S.current.signupPasswordPlaceholder,
+                              label: Text(tr.auth.signup.password.label),
+                              hintText: tr.auth.signup.password.placeholder,
                               enabled: !controller.loadingService.loadingUser,
                               // floatingLabelBehavior: FloatingLabelBehavior.auto,
                             ),
@@ -131,9 +138,10 @@ class LoginView extends GetView<LoginController> {
                               autofillHints: const [AutofillHints.newPassword],
                               decoration: InputDecoration(
                                 filled: true,
-                                label: Text(S.current.signupPasswordConfirm),
+                                label:
+                                    Text(tr.auth.signup.password.confirm.label),
                                 hintText:
-                                    S.current.signupPasswordConfirmPlaceholder,
+                                    tr.auth.signup.password.confirm.placeholder,
                                 enabled: !controller.loadingService.loadingUser,
                                 // floatingLabelBehavior: FloatingLabelBehavior.auto,
                               ),
@@ -141,8 +149,7 @@ class LoginView extends GetView<LoginController> {
                                   PasswordValidator().validator(pwd) ??
                                   (pwd == controller.password.text
                                       ? null
-                                      : S.current
-                                          .signupPasswordValidationMatch),
+                                      : tr.auth.signup.password.confirm.error),
                             ),
                           ],
                           const SizedBox(height: 16),
@@ -154,9 +161,9 @@ class LoginView extends GetView<LoginController> {
                                 : null,
                             label: Text(
                               controller.isLogin
-                                  ? S.current.signinButton
-                                  : S.current.signupButton,
-                              textScaleFactor: 1.5,
+                                  ? tr.auth.login.button
+                                  : tr.auth.signup.button,
+                              textScaler: const TextScaler.linear(1.5),
                             ),
                             style: ElevatedButton.styleFrom(
                               padding: const EdgeInsets.symmetric(
@@ -175,12 +182,10 @@ class LoginView extends GetView<LoginController> {
                             runSpacing: 8,
                             crossAxisAlignment: WrapCrossAlignment.center,
                             children: [
-                              Text(S.current.signinGoToSignupLabel),
+                              Text(tr.auth.login.noAccount.label),
                               ElevatedButton(
                                 onPressed: controller.toggleSignup,
-                                child: Text(
-                                  S.current.signinGoToSignupButton,
-                                ),
+                                child: Text(tr.auth.login.noAccount.button),
                               )
                             ],
                           ),
@@ -191,7 +196,7 @@ class LoginView extends GetView<LoginController> {
                                 'https://dungeonpaper.app/privacy-policy.html?utm_medium=app&utm_source=login',
                               ),
                             ),
-                            label: Text(S.current.privacyPolicy),
+                            label: Text(tr.auth.privacyPolicy),
                             icon: const Icon(Icons.lock),
                           ),
                           const SizedBox(height: 8),
@@ -202,7 +207,7 @@ class LoginView extends GetView<LoginController> {
                                 'https://dungeonpaper.app/changelog.html',
                               ),
                             ),
-                            label: Text(S.current.whatsNew),
+                            label: Text(tr.auth.changelog),
                             icon: const Icon(Icons.new_releases),
                           ),
                         ],
@@ -218,4 +223,3 @@ class LoginView extends GetView<LoginController> {
     );
   }
 }
-

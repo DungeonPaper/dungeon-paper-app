@@ -2,12 +2,13 @@ import 'package:dungeon_paper/app/data/models/session_marks.dart';
 import 'package:dungeon_paper/app/data/services/character_service.dart';
 import 'package:dungeon_paper/app/widgets/atoms/help_text.dart';
 import 'package:dungeon_paper/app/widgets/molecules/dialog_controls.dart';
-import 'package:dungeon_paper/generated/l10n.dart';
+import 'package:dungeon_paper/i18n.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-class CharacterDebilitiesDialog extends GetView<CharacterService> with CharacterServiceMixin {
-  const CharacterDebilitiesDialog({Key? key}) : super(key: key);
+class CharacterDebilitiesDialog extends GetView<CharacterService>
+    with CharacterServiceMixin {
+  const CharacterDebilitiesDialog({super.key});
 
   List<SessionMark> get bonds => char.bonds;
   List<SessionMark> get flags => char.flags;
@@ -18,7 +19,7 @@ class CharacterDebilitiesDialog extends GetView<CharacterService> with Character
     // final textTheme = Theme.of(context).textTheme;
 
     return AlertDialog(
-      title: Text(S.current.characterDebilitiesDialogTitle),
+      title: Text(tr.debilities.dialog.title),
       contentPadding: const EdgeInsets.all(16),
       actions: DialogControls.done(context, () => Get.back()),
       content: Obx(
@@ -33,13 +34,14 @@ class CharacterDebilitiesDialog extends GetView<CharacterService> with Character
                 mainAxisSize: MainAxisSize.min,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  HelpText(text: S.current.characterDebilitiesDialogInfoText),
+                  HelpText(text: tr.debilities.dialog.info),
                   const SizedBox(height: 6),
                   const Divider(),
                   for (final ability in char.abilityScores.stats)
                     ListTile(
                       contentPadding: const EdgeInsets.all(0),
-                      title: Text(S.current.debilityLabel(ability.debilityName, ability.key)),
+                      title: Text(tr.debilities
+                          .label(ability.debilityName, ability.key)),
                       subtitle: Text(ability.debilityDescription),
                       dense: true,
                       leading: Icon(ability.icon, size: 20),
@@ -47,7 +49,9 @@ class CharacterDebilitiesDialog extends GetView<CharacterService> with Character
                         char.copyWith(
                           abilityScores: char.abilityScores.copyWith(
                             stats: char.abilityScores.stats.map(
-                              (e) => e.key == ability.key ? e.copyWith(isDebilitated: !e.isDebilitated) : e,
+                              (e) => e.key == ability.key
+                                  ? e.copyWith(isDebilitated: !e.isDebilitated)
+                                  : e,
                             ),
                           ),
                         ),
@@ -57,8 +61,10 @@ class CharacterDebilitiesDialog extends GetView<CharacterService> with Character
                         onChanged: (checked) => charService.updateCharacter(
                           char.copyWith(
                             abilityScores: char.abilityScores.copyWith(
-                              stats: char.abilityScores.stats
-                                  .map((e) => e.key == ability.key ? e.copyWith(isDebilitated: checked) : e),
+                              stats: char.abilityScores.stats.map((e) =>
+                                  e.key == ability.key
+                                      ? e.copyWith(isDebilitated: checked)
+                                      : e),
                             ),
                           ),
                         ),

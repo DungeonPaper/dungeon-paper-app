@@ -32,7 +32,8 @@ class StartingGearFormController extends GetxController {
 
   void toggleSelect(GearSelection selection) {
     dirty.value = true;
-    final found = selectedOptions.firstWhereOrNull((item) => item.key == selection.key);
+    final found =
+        selectedOptions.firstWhereOrNull((item) => item.key == selection.key);
     if (found == null) {
       selectedOptions.add(selection);
     } else {
@@ -41,9 +42,11 @@ class StartingGearFormController extends GetxController {
   }
 
   bool isSelected(GearSelection selection) =>
-      selectedOptions.firstWhereOrNull((item) => item.key == selection.key) != null;
+      selectedOptions.firstWhereOrNull((item) => item.key == selection.key) !=
+      null;
 
-  int selectionCount(GearChoice choice) => choice.selections.where((item) => isSelected(item)).length;
+  int selectionCount(GearChoice choice) =>
+      choice.selections.where((item) => isSelected(item)).length;
 }
 
 class StartingGearFormArguments {

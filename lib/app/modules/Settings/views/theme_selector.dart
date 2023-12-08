@@ -58,12 +58,14 @@ class _ThemePreview extends StatelessWidget {
             height: size + 8,
             width: size + 8,
             child: Material(
-              shape: rRectShape.copyWith(borderRadius: rRectShape.borderRadius / 2),
+              shape: rRectShape.copyWith(
+                  borderRadius: rRectShape.borderRadius / 2),
               color: Colors.black54,
               child: Padding(
                 padding: const EdgeInsets.all(4),
                 child: Material(
-                  shape: rRectShape.copyWith(borderRadius: rRectShape.borderRadius / 2),
+                  shape: rRectShape.copyWith(
+                      borderRadius: rRectShape.borderRadius / 2),
                   color: themeData.scaffoldBackgroundColor,
                   clipBehavior: Clip.antiAlias,
                   child: InkWell(
@@ -107,9 +109,11 @@ class _ThemePreview extends StatelessWidget {
                               margin: EdgeInsets.zero,
                               elevation: 1,
                               color: themeData.cardColor,
-                              shape: rRectShape.copyWith(borderRadius: rRectShape.borderRadius / 2),
+                              shape: rRectShape.copyWith(
+                                  borderRadius: rRectShape.borderRadius / 2),
                               child: Padding(
-                                padding: const EdgeInsets.all(8.0).copyWith(top: 22),
+                                padding:
+                                    const EdgeInsets.all(8.0).copyWith(top: 22),
                                 child: Align(
                                   alignment: Alignment.bottomRight,
                                   child: SizedBox(

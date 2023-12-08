@@ -12,7 +12,8 @@ import 'package:get/get.dart';
 
 import 'filters/item_filters.dart';
 
-class ItemsLibraryListView extends GetView<LibraryListController<Item, ItemFilters>> {
+class ItemsLibraryListView
+    extends GetView<LibraryListController<Item, ItemFilters>> {
   const ItemsLibraryListView({
     Key? key,
   }) : super(key: key);
@@ -40,7 +41,8 @@ class ItemsLibraryListView extends GetView<LibraryListController<Item, ItemFilte
                       onSave: data.onUpdate!,
                     )
                 : null,
-            onDelete: data.onDelete != null ? () => data.onDelete!(data.item) : null,
+            onDelete:
+                data.onDelete != null ? () => data.onDelete!(data.item) : null,
           ),
           if (data.selectable)
             ElevatedButton.icon(

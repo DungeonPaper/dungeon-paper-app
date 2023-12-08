@@ -68,21 +68,38 @@ class SearchResponse {
     this.tags,
   });
 
-  static List<T> values<T>(dynamic object) => object is List<T> ? object : (object as Map<String, T>).values.toList();
+  static List<T> values<T>(dynamic object) =>
+      object is List<T> ? object : (object as Map<String, T>).values.toList();
 
   factory SearchResponse.fromJson(Map<String, dynamic> json) {
-    debugPrint('Parsing response: ${json.map((k, v) => MapEntry(k, v.length))}');
+    debugPrint(
+        'Parsing response: ${json.map((k, v) => MapEntry(k, v.length))}');
     return SearchResponse(
       classes: json['CharacterClasses'] != null
-          ? List.from(values(json['CharacterClasses']).map((x) => CharacterClass.fromJson(x)))
+          ? List.from(values(json['CharacterClasses'])
+              .map((x) => CharacterClass.fromJson(x)))
           : null,
-      items: json['Items'] != null ? List.from(values(json['Items']).map((x) => Item.fromJson(x))) : null,
-      monsters: json['Monsters'] != null ? List.from(values(json['Monsters']).map((x) => Monster.fromJson(x))) : null,
-      moves: json['Moves'] != null ? List.from(values(json['Moves']).map((x) => Move.fromJson(x))) : null,
-      races: json['Races'] != null ? List.from(values(json['Races']).map((x) => Race.fromJson(x))) : null,
-      spells: json['Spells'] != null ? List.from(values(json['Spells']).map((x) => Spell.fromJson(x))) : null,
-      notes: json['Notes'] != null ? List.from(values(json['Notes']).map((x) => Note.fromJson(x))) : null,
-      tags: json['Tags'] != null ? List.from(values(json['Tags']).map((x) => dw.Tag.fromJson(x))) : null,
+      items: json['Items'] != null
+          ? List.from(values(json['Items']).map((x) => Item.fromJson(x)))
+          : null,
+      monsters: json['Monsters'] != null
+          ? List.from(values(json['Monsters']).map((x) => Monster.fromJson(x)))
+          : null,
+      moves: json['Moves'] != null
+          ? List.from(values(json['Moves']).map((x) => Move.fromJson(x)))
+          : null,
+      races: json['Races'] != null
+          ? List.from(values(json['Races']).map((x) => Race.fromJson(x)))
+          : null,
+      spells: json['Spells'] != null
+          ? List.from(values(json['Spells']).map((x) => Spell.fromJson(x)))
+          : null,
+      notes: json['Notes'] != null
+          ? List.from(values(json['Notes']).map((x) => Note.fromJson(x)))
+          : null,
+      tags: json['Tags'] != null
+          ? List.from(values(json['Tags']).map((x) => dw.Tag.fromJson(x)))
+          : null,
     );
   }
 
@@ -97,13 +114,24 @@ class SearchResponse {
         notes = [];
 
   factory SearchResponse.fromPackageRepo() => SearchResponse(
-        classes:
-            dw.dungeonWorldData.characterClasses.values.map((e) => CharacterClass.fromDwCharacterClass(e)).toList(),
-        items: dw.dungeonWorldData.items.values.map((e) => Item.fromDwItem(e)).toList(),
-        monsters: dw.dungeonWorldData.monsters.values.map((e) => Monster.fromDwMonster(e)).toList(),
-        moves: dw.dungeonWorldData.moves.values.map((e) => Move.fromDwMove(e)).toList(),
-        spells: dw.dungeonWorldData.spells.values.map((e) => Spell.fromDwSpell(e)).toList(),
-        races: dw.dungeonWorldData.races.values.map((e) => Race.fromDwRace(e)).toList(),
+        classes: dw.dungeonWorldData.characterClasses.values
+            .map((e) => CharacterClass.fromDwCharacterClass(e))
+            .toList(),
+        items: dw.dungeonWorldData.items.values
+            .map((e) => Item.fromDwItem(e))
+            .toList(),
+        monsters: dw.dungeonWorldData.monsters.values
+            .map((e) => Monster.fromDwMonster(e))
+            .toList(),
+        moves: dw.dungeonWorldData.moves.values
+            .map((e) => Move.fromDwMove(e))
+            .toList(),
+        spells: dw.dungeonWorldData.spells.values
+            .map((e) => Spell.fromDwSpell(e))
+            .toList(),
+        races: dw.dungeonWorldData.races.values
+            .map((e) => Race.fromDwRace(e))
+            .toList(),
         tags: dw.dungeonWorldData.tags.values.toList(),
         // notes: [],
       );

@@ -12,13 +12,12 @@ import 'package:dungeon_paper/app/widgets/menus/group_sort_menu.dart';
 import 'package:dungeon_paper/app/widgets/molecules/categorized_list.dart';
 import 'package:dungeon_paper/core/storage_handler/storage_handler.dart';
 import 'package:dungeon_paper/core/utils/list_utils.dart';
-import 'package:dungeon_paper/generated/l10n.dart';
+import 'package:dungeon_paper/i18n.dart';
 import 'package:flutter/material.dart';
-
 import 'package:get/get.dart';
 
 class HomeCharacterJournalView extends GetView<CharacterService> {
-  const HomeCharacterJournalView({Key? key}) : super(key: key);
+  const HomeCharacterJournalView({super.key});
 
   Character get char => controller.current;
 
@@ -47,9 +46,10 @@ class HomeCharacterJournalView extends GetView<CharacterService> {
           children: [
             for (final cat in enumerate(char.noteCategories))
               CategorizedList(
-                key: Key('note-category-' + cat.value),
+                key: Key('note-category-${cat.value}'),
                 initiallyExpanded: true,
-                title: Text(cat.value.isEmpty ? S.current.noteNoCategory : cat.value),
+                title:
+                    Text(cat.value.isEmpty ? tr.notes.noCategory : cat.value),
                 titleTrailing: [
                   GroupSortMenu(
                     index: cat.index,
@@ -58,33 +58,37 @@ class HomeCharacterJournalView extends GetView<CharacterService> {
                   ),
                 ],
                 onReorder: (oldIndex, newIndex) => controller.updateCharacter(
-                  CharacterUtils.reorderByType<Note>(char, oldIndex, newIndex, extraData: cat.value),
+                  CharacterUtils.reorderByType<Note>(char, oldIndex, newIndex,
+                      extraData: cat.value),
                 ),
                 children: char.notes
                     .where((note) => note.localizedCategory == cat.value)
                     .map(
                       (note) => Padding(
-                        key: Key('note-' + note.key),
+                        key: Key('note-${note.key}'),
                         padding: const EdgeInsets.symmetric(vertical: 4),
                         child: NoteCard(
                           note: note,
                           reorderablePadding: true,
                           actions: [
                             EntityEditMenu(
-                              onDelete: confirmDelete(context, note, note.title),
+                              onDelete:
+                                  confirmDelete(context, note, note.title),
                               onEdit: () => ModelPages.openNotePage(
                                 note: note,
-                                onSave: (_note) {
+                                onSave: (note) {
                                   controller.updateCharacter(
-                                    CharacterUtils.updateByType<Note>(char, [_note]),
+                                    CharacterUtils.updateByType<Note>(
+                                        char, [note]),
                                   );
-                                  StorageHandler.instance.create('Notes', note.key, note.toJson());
+                                  StorageHandler.instance
+                                      .create('Notes', note.key, note.toJson());
                                 },
                               ),
                             ),
                           ],
-                          onSave: (_note) => controller.updateCharacter(
-                            CharacterUtils.updateNotes(char, [_note]),
+                          onSave: (note) => controller.updateCharacter(
+                            CharacterUtils.updateNotes(char, [note]),
                           ),
                         ),
                       ),
@@ -97,22 +101,25 @@ class HomeCharacterJournalView extends GetView<CharacterService> {
     );
   }
 
-  void Function() confirmDelete<T>(BuildContext context, T object, String name) {
+  // TODO use existing confirmDelete
+  void Function() confirmDelete<T>(
+      BuildContext context, T object, String name) {
     return () async {
       final result = await Get.dialog<bool>(
         AlertDialog(
-          title: Text(S.current.confirmDeleteTitle(S.current.entity(T))),
-          content: Text(S.current.confirmDeleteBody(S.current.entity(T), name)),
+          title: Text(tr.dialogs.confirmations.delete.title(tr.entity(T))),
+          content:
+              Text(tr.dialogs.confirmations.delete.body(tr.entity(T), name)),
           actions: [
             ElevatedButton.icon(
               icon: const Icon(Icons.close),
-              label: Text(S.current.cancel),
+              label: Text(tr.generic.cancel),
               onPressed: () => Get.back(result: false),
               style: ButtonThemes.primaryElevated(context),
             ),
             ElevatedButton.icon(
               icon: const Icon(Icons.delete),
-              label: Text(S.current.remove),
+              label: Text(tr.generic.remove),
               onPressed: () => Get.back(result: true),
               style: ButtonThemes.errorElevated(context),
             ),
@@ -130,7 +137,8 @@ class HomeCharacterJournalView extends GetView<CharacterService> {
             break;
           case Spell:
             controller.updateCharacter(
-              char.copyWith(spells: removeByKey(char.spells, [object as Spell])),
+              char.copyWith(
+                  spells: removeByKey(char.spells, [object as Spell])),
             );
             break;
           case Item:

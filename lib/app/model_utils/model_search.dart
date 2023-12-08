@@ -20,7 +20,8 @@ bool searchFor(Type t, dynamic object, String search) {
     case Move:
       return MoveFilters(classKey: null, search: search).filter(object);
     case Spell:
-      return SpellFilters(classKey: null, search: search, level: null).filter(object);
+      return SpellFilters(classKey: null, search: search, level: null)
+          .filter(object);
     case Note:
       return NoteFilters(search: search).filter(object);
     // case AbilityScore:
@@ -41,7 +42,8 @@ double getScoreFor(Type t, dynamic object, String search) {
     case Move:
       return MoveFilters(classKey: null, search: search).getScore(object);
     case Spell:
-      return SpellFilters(classKey: null, search: search, level: null).getScore(object);
+      return SpellFilters(classKey: null, search: search, level: null)
+          .getScore(object);
     case Note:
       return NoteFilters(search: search).getScore(object);
     // case AbilityScore:

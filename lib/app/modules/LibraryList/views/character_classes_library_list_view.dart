@@ -13,7 +13,8 @@ import 'package:get/get.dart';
 
 import 'filters/character_class_filters.dart';
 
-class CharacterClassesLibraryListView extends GetView<LibraryListController<CharacterClass, CharacterClassFilters>> {
+class CharacterClassesLibraryListView extends GetView<
+    LibraryListController<CharacterClass, CharacterClassFilters>> {
   const CharacterClassesLibraryListView({
     Key? key,
   }) : super(key: key);
@@ -43,7 +44,8 @@ class CharacterClassesLibraryListView extends GetView<LibraryListController<Char
                       onSave: data.onUpdate!,
                     )
                 : null,
-            onDelete: data.onDelete != null ? () => data.onDelete!(data.item) : null,
+            onDelete:
+                data.onDelete != null ? () => data.onDelete!(data.item) : null,
           ),
           if (data.selectable)
             ElevatedButton.icon(
@@ -58,7 +60,8 @@ class CharacterClassesLibraryListView extends GetView<LibraryListController<Char
   }
 }
 
-class CharacterClassLibraryListArguments extends LibraryListArguments<CharacterClass, CharacterClassFilters> {
+class CharacterClassLibraryListArguments
+    extends LibraryListArguments<CharacterClass, CharacterClassFilters> {
   CharacterClassLibraryListArguments({
     required void Function(CharacterClass cls)? onSelected,
     required super.preSelections,
@@ -70,7 +73,8 @@ class CharacterClassLibraryListArguments extends LibraryListArguments<CharacterC
             FiltersGroup.playbook: CharacterClassFilters(),
             FiltersGroup.my: CharacterClassFilters(),
           },
-          onSelected: onSelected != null ? (cls) => onSelected.call(cls.first) : null,
+          onSelected:
+              onSelected != null ? (cls) => onSelected.call(cls.first) : null,
           extraData: const {},
           multiple: false,
         );

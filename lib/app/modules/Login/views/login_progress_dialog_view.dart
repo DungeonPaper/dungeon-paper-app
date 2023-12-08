@@ -1,8 +1,7 @@
 import 'package:dungeon_paper/app/data/services/character_service.dart';
 import 'package:dungeon_paper/app/data/services/loading_service.dart';
-import 'package:dungeon_paper/generated/l10n.dart';
+import 'package:dungeon_paper/i18n.dart';
 import 'package:flutter/material.dart';
-
 import 'package:get/get.dart';
 
 enum LoginProgressStep {
@@ -10,19 +9,20 @@ enum LoginProgressStep {
   loadChars,
 }
 
-class LoginProgressDialogView extends GetView<LoadingService> with CharacterServiceMixin {
-  const LoginProgressDialogView({Key? key}) : super(key: key);
+class LoginProgressDialogView extends GetView<LoadingService>
+    with CharacterServiceMixin {
+  const LoginProgressDialogView({super.key});
 
   String get title {
     if (controller.loadingUser) {
-      return S.current.loadingUser;
+      return tr.loading.user;
     }
 
     if (controller.loadingCharacters) {
-      return S.current.loadingCharacters;
+      return tr.loading.characters;
     }
 
-    return S.current.loadingGeneral;
+    return tr.loading.general;
   }
 
   @override

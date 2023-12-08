@@ -5,15 +5,15 @@ import 'package:dungeon_paper/app/data/models/move.dart';
 import 'package:dungeon_paper/app/data/models/roll_button.dart';
 import 'package:dungeon_paper/app/data/services/repository_service.dart';
 import 'package:dungeon_paper/app/widgets/atoms/select_box.dart';
-import 'package:dungeon_paper/app/widgets/molecules/dice_list_input.dart';
 import 'package:dungeon_paper/app/widgets/molecules/dialog_controls.dart';
+import 'package:dungeon_paper/app/widgets/molecules/dice_list_input.dart';
 import 'package:dungeon_paper/app/widgets/molecules/special_dice_list_input.dart';
 import 'package:dungeon_paper/core/dw_icons.dart';
 import 'package:dungeon_paper/core/utils/list_utils.dart';
-import 'package:dungeon_paper/generated/l10n.dart';
+import 'package:dungeon_paper/i18n.dart';
+import 'package:dungeon_world_data/dungeon_world_data.dart' as dw;
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:dungeon_world_data/dungeon_world_data.dart' as dw;
 
 class CustomRollButtonsDialog extends StatefulWidget {
   const CustomRollButtonsDialog({
@@ -26,16 +26,21 @@ class CustomRollButtonsDialog extends StatefulWidget {
   final void Function(List<RollButton?> rollButtons) onChanged;
 
   @override
-  State<CustomRollButtonsDialog> createState() => _CustomRollButtonsDialogState();
+  State<CustomRollButtonsDialog> createState() =>
+      _CustomRollButtonsDialogState();
 }
 
-class _CustomRollButtonsDialogState extends State<CustomRollButtonsDialog> with SingleTickerProviderStateMixin {
+class _CustomRollButtonsDialogState extends State<CustomRollButtonsDialog>
+    with SingleTickerProviderStateMixin {
   late List<RollButton?> rollButtons;
   late TabController tabController;
 
   @override
   void initState() {
-    rollButtons = [widget.character.rawRollButtons[0], widget.character.rawRollButtons[1]];
+    rollButtons = [
+      widget.character.rawRollButtons[0],
+      widget.character.rawRollButtons[1]
+    ];
     tabController = TabController(length: rollButtons.length, vsync: this);
     super.initState();
   }
@@ -47,7 +52,7 @@ class _CustomRollButtonsDialogState extends State<CustomRollButtonsDialog> with 
         children: [
           const Icon(DwIcons.dice_d6_numbered, size: 24),
           const SizedBox(width: 8),
-          Text(S.current.customRollButtons),
+          Text(tr.customRolls.title),
         ],
       ),
       content: Column(
@@ -58,14 +63,16 @@ class _CustomRollButtonsDialogState extends State<CustomRollButtonsDialog> with 
             controller: tabController,
             labelColor: Theme.of(context).colorScheme.onSurface,
             tabs: [
-              Tab(text: S.current.customButtonLeft),
-              Tab(text: S.current.customButtonRight),
+              Tab(text: tr.customRolls.left),
+              Tab(text: tr.customRolls.right),
             ],
           ),
           SizedBox(
             width: 400,
             height: min(
-              MediaQuery.of(context).size.height - MediaQuery.of(context).viewInsets.bottom - 310,
+              MediaQuery.of(context).size.height -
+                  MediaQuery.of(context).viewInsets.bottom -
+                  310,
               300,
             ),
             child: TabBarView(
@@ -79,8 +86,10 @@ class _CustomRollButtonsDialogState extends State<CustomRollButtonsDialog> with 
                       child: _RollButtonListTile(
                         rollButton: button.value,
                         character: widget.character,
-                        defaultButton: Character.defaultRollButtons[button.index],
-                        onChanged: (val) => setState(() => rollButtons[button.index] = val),
+                        defaultButton:
+                            Character.defaultRollButtons[button.index],
+                        onChanged: (val) =>
+                            setState(() => rollButtons[button.index] = val),
                       ),
                     ),
                   ),
@@ -122,7 +131,8 @@ class _RollButtonListTile extends StatefulWidget {
   State<_RollButtonListTile> createState() => _RollButtonListTileState();
 }
 
-class _RollButtonListTileState extends State<_RollButtonListTile> with RepositoryServiceMixin {
+class _RollButtonListTileState extends State<_RollButtonListTile>
+    with RepositoryServiceMixin {
   late TextEditingController label;
   late ValueNotifier<List<dw.Dice>> dice;
   late ValueNotifier<List<SpecialDice>> specialDice;
@@ -131,7 +141,8 @@ class _RollButtonListTileState extends State<_RollButtonListTile> with Repositor
   @override
   void initState() {
     super.initState();
-    initFields(widget.rollButton ?? widget.defaultButton, widget.rollButton == null);
+    initFields(
+        widget.rollButton ?? widget.defaultButton, widget.rollButton == null);
     label.addListener(listener);
     dice.addListener(listener);
     specialDice.addListener(listener);
@@ -167,16 +178,20 @@ class _RollButtonListTileState extends State<_RollButtonListTile> with Repositor
             Expanded(
               child: SelectBox<RollButton>(
                 isExpanded: true,
-                hint: Text(S.current.customRollButtonsUsePreset),
+                hint: Text(tr.customRolls.presets.title),
                 items: [
                   for (final button in [
                     Character.basicActionRollButton,
                     Character.hackAndSlashRollButton,
                     Character.volleyRollButton,
                     Character.discernRealitiesRollButton,
-                    for (final move in moves) RollButton(label: move.name, dice: move.dice, specialDice: []),
-                    for (final spell in widget.character.spells.where((spell) => spell.dice.isNotEmpty))
-                      RollButton(label: spell.name, dice: spell.dice, specialDice: []),
+                    for (final move in moves)
+                      RollButton(
+                          label: move.name, dice: move.dice, specialDice: []),
+                    for (final spell in widget.character.spells
+                        .where((spell) => spell.dice.isNotEmpty))
+                      RollButton(
+                          label: spell.name, dice: spell.dice, specialDice: []),
                   ].uniqueBy((item) => item.label))
                     DropdownMenuItem(
                       value: button,
@@ -201,8 +216,11 @@ class _RollButtonListTileState extends State<_RollButtonListTile> with Repositor
               child: SizedBox(
                 height: 48,
                 child: ElevatedButton(
-                  onPressed: isDefault ? null : () => setState(() => updateFields(widget.defaultButton, true)),
-                  child: Text(S.current.customRollButtonsUseDefault),
+                  onPressed: isDefault
+                      ? null
+                      : () => setState(
+                          () => updateFields(widget.defaultButton, true)),
+                  child: Text(tr.generic.useDefault),
                 ),
               ),
             ),
@@ -212,7 +230,7 @@ class _RollButtonListTileState extends State<_RollButtonListTile> with Repositor
         TextFormField(
           controller: label,
           decoration: InputDecoration(
-            labelText: S.current.rollButtonLabel,
+            labelText: tr.customRolls.buttonLabel,
           ),
         ),
         const SizedBox(height: 16),
@@ -229,8 +247,8 @@ class _RollButtonListTileState extends State<_RollButtonListTile> with Repositor
 
   Iterable<Move> get moves => [
         ...widget.character.moves,
-        ...repo.builtIn.moves.values
-            .where((move) => [MoveCategory.basic, MoveCategory.special].contains(move.category)),
+        ...repo.builtIn.moves.values.where((move) =>
+            [MoveCategory.basic, MoveCategory.special].contains(move.category)),
       ].where((move) => move.dice.isNotEmpty).toList()
         ..sort((a, b) => a.name.compareTo(b.name));
 
@@ -265,8 +283,10 @@ class _RollButtonListTileState extends State<_RollButtonListTile> with Repositor
     return defaultDice.length == dice.length &&
         enumerate(dice).every(
           (element) {
-            debugPrint('index: ${element.index} value ${element.value} == ${defaultDice[element.index]}');
-            return defaultDice[element.index].toString() == element.value.toString();
+            debugPrint(
+                'index: ${element.index} value ${element.value} == ${defaultDice[element.index]}');
+            return defaultDice[element.index].toString() ==
+                element.value.toString();
           },
         );
   }

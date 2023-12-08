@@ -1,4 +1,4 @@
-import 'package:dungeon_paper/generated/l10n.dart';
+import 'package:dungeon_paper/i18n.dart';
 import 'package:get/get.dart';
 
 abstract class Validation {
@@ -15,7 +15,7 @@ class StringMinLengthValidation extends Validation {
 
   StringMinLengthValidation({
     required this.minLength,
-  }) : super(S.current.errorMinLength(minLength));
+  }) : super(tr.errors.minLength(minLength));
 
   @override
   bool isValid(String? string) => string == null || string.length >= minLength;
@@ -26,7 +26,7 @@ class StringExactLengthValidation extends Validation {
 
   StringExactLengthValidation({
     required this.length,
-  }) : super(S.current.errorExactLength(length));
+  }) : super(tr.errors.exactLength(length));
 
   @override
   bool isValid(String? string) => string == null || string.length == length;
@@ -37,7 +37,7 @@ class StringMaxLengthValidation extends Validation {
 
   StringMaxLengthValidation({
     required this.maxLength,
-  }) : super(S.current.errorMaxLength(maxLength));
+  }) : super(tr.errors.maxLength(maxLength));
 
   @override
   bool isValid(String? string) => string == null || string.length <= maxLength;
@@ -51,7 +51,8 @@ class StringContainsValidation extends Validation {
     required this.pattern,
     this.userFriendlyPattern,
     String? message,
-  }) : super(message ?? S.current.errorMustContain(userFriendlyPattern ?? pattern));
+  }) : super(message ??
+            tr.errors.mustContain((userFriendlyPattern ?? pattern).toString()));
 
   @override
   bool isValid(String? string) => string == null || string.contains(pattern);
@@ -65,7 +66,9 @@ class StringNotContainsValidation extends Validation {
     required this.pattern,
     this.userFriendlyPattern,
     String? message,
-  }) : super(message ?? S.current.errorMustNotContain(userFriendlyPattern ?? pattern));
+  }) : super(message ??
+            tr.errors
+                .mustNotContain((userFriendlyPattern ?? pattern).toString()));
 
   @override
   bool isValid(String? string) => string == null || !string.contains(pattern);
@@ -110,7 +113,8 @@ class StringValidator extends CompoundStringValidator {
   List<Validation> get validators => [
         if (minLength != null) StringMinLengthValidation(minLength: minLength!),
         if (maxLength != null) StringMaxLengthValidation(maxLength: maxLength!),
-        if (exactLength != null) StringExactLengthValidation(length: exactLength!),
+        if (exactLength != null)
+          StringExactLengthValidation(length: exactLength!),
         if (containsPattern != null)
           StringContainsValidation(
             pattern: containsPattern!,

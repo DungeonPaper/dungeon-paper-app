@@ -1,9 +1,10 @@
-import 'package:dungeon_paper/app/widgets/atoms/number_text_field.dart';
-import 'package:dungeon_paper/app/widgets/molecules/dialog_controls.dart';
-import 'package:dungeon_paper/core/dw_icons.dart';
-import 'package:dungeon_paper/generated/l10n.dart';
+import 'package:dungeon_paper/i18n.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+
+import '../../../core/dw_icons.dart';
+import '../atoms/number_text_field.dart';
+import '../molecules/dialog_controls.dart';
 
 class CoinsDialog extends StatefulWidget {
   const CoinsDialog({
@@ -35,7 +36,7 @@ class _CoinsDialogState extends State<CoinsDialog> {
         children: [
           const Icon(DwIcons.coin_stack, size: 32),
           const SizedBox(width: 12),
-          Expanded(child: Text(S.current.coins)),
+          Expanded(child: Text(tr.character.data.coins)),
         ],
       ),
       content: SingleChildScrollView(
@@ -43,7 +44,8 @@ class _CoinsDialogState extends State<CoinsDialog> {
           children: [
             NumberTextField(
               controller: controller,
-              decoration: InputDecoration(hintText: '0', label: Text(S.current.coins)),
+              decoration: InputDecoration(
+                  hintText: '0', label: Text(tr.character.data.coins)),
               numberType: NumberType.double,
               minValue: 0.0,
             )

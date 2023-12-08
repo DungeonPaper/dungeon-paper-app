@@ -9,9 +9,8 @@ import 'package:dungeon_paper/app/routes/app_pages.dart';
 import 'package:dungeon_paper/app/themes/button_themes.dart';
 import 'package:dungeon_paper/app/widgets/atoms/icon_span.dart';
 import 'package:dungeon_paper/app/widgets/atoms/page_controller_fractional_box.dart';
-import 'package:dungeon_paper/generated/l10n.dart';
+import 'package:dungeon_paper/i18n.dart';
 import 'package:flutter/material.dart';
-
 import 'package:get/get.dart';
 
 // import '../../../widgets/atoms/debug_menu.dart';
@@ -20,7 +19,8 @@ import 'home_character_view.dart';
 import 'home_fab.dart';
 import 'home_nav_bar.dart';
 
-class HomeView extends GetView<CharacterService> with UserServiceMixin, LoadingServiceMixin, CharacterServiceMixin {
+class HomeView extends GetView<CharacterService>
+    with UserServiceMixin, LoadingServiceMixin, CharacterServiceMixin {
   const HomeView({super.key});
 
   @override
@@ -45,14 +45,18 @@ class HomeView extends GetView<CharacterService> with UserServiceMixin, LoadingS
                   : const HomeEmptyState();
         },
       ),
-      floatingActionButton: Obx(() => maybeChar != null ? const HomeFAB() : const SizedBox.shrink()),
+      floatingActionButton: Obx(
+          () => maybeChar != null ? const HomeFAB() : const SizedBox.shrink()),
       bottomNavigationBar: Obx(
-        () => maybeChar != null ? HomeNavBar(pageController: controller.pageController) : const SizedBox.shrink(),
+        () => maybeChar != null
+            ? HomeNavBar(pageController: controller.pageController)
+            : const SizedBox.shrink(),
       ),
     );
   }
 
-  PageControllerFractionalBox _fractionalSizedBox(Widget child) => PageControllerFractionalBox(
+  PageControllerFractionalBox _fractionalSizedBox(Widget child) =>
+      PageControllerFractionalBox(
         controller: controller.pageController,
         child: child,
       );
@@ -61,7 +65,8 @@ class HomeView extends GetView<CharacterService> with UserServiceMixin, LoadingS
     debugPrint('afterFirstLoad: ${loadingService.afterFirstLoad}, '
         'loadingUser: ${loadingService.loadingUser}, '
         'loadingCharacters: ${loadingService.loadingCharacters}');
-    return !loadingService.afterFirstLoad && (loadingService.loadingUser || loadingService.loadingCharacters);
+    return !loadingService.afterFirstLoad &&
+        (loadingService.loadingUser || loadingService.loadingCharacters);
   }
 }
 
@@ -83,7 +88,8 @@ class HomeEmptyState extends StatelessWidget with UserServiceMixin {
                 child: Card(
                   margin: const EdgeInsets.all(32),
                   child: Padding(
-                    padding: const EdgeInsets.symmetric(vertical: 24, horizontal: 16),
+                    padding: const EdgeInsets.symmetric(
+                        vertical: 24, horizontal: 16),
                     child: Column(
                       children: [
                         RichText(
@@ -91,20 +97,21 @@ class HomeEmptyState extends StatelessWidget with UserServiceMixin {
                           text: TextSpan(
                             children: [
                               IconSpan(context, icon: Icons.person, size: 24),
-                              TextSpan(text: ' ${S.current.homeEmptyStateLoginTitle}'),
+                              TextSpan(
+                                  text: ' ${tr.home.emptyState.guest.title}'),
                             ],
                             style: textTheme.titleLarge,
                           ),
                         ),
                         const SizedBox(height: 16),
                         Text(
-                          S.current.homeEmptyStateLoginSubtitle,
+                          tr.home.emptyState.guest.subtitle,
                           style: textTheme.titleMedium,
                           textAlign: TextAlign.center,
                         ),
                         const SizedBox(height: 16),
                         ElevatedButton.icon(
-                          label: Text(S.current.signinButton),
+                          label: Text(tr.auth.login.button),
                           icon: const Icon(Icons.login),
                           onPressed: () => Get.toNamed(Routes.login),
                           style: ButtonThemes.primaryElevated(context),
@@ -118,19 +125,19 @@ class HomeEmptyState extends StatelessWidget with UserServiceMixin {
               const SizedBox(height: 16),
             ],
             Text(
-              S.current.homeEmptyStateTitle,
+              tr.home.emptyState.title,
               style: textTheme.titleLarge,
               textAlign: TextAlign.center,
             ),
             const SizedBox(height: 16),
             Text(
-              S.current.homeEmptyStateSubtitle,
+              tr.home.emptyState.subtitle,
               style: textTheme.titleMedium,
               textAlign: TextAlign.center,
             ),
             const SizedBox(height: 16),
             ElevatedButton.icon(
-              label: Text(S.current.createGeneric(S.current.entity(Character))),
+              label: Text(tr.generic.createEntity(tr.entity(Character))),
               icon: const Icon(Icons.person_add),
               onPressed: () => Get.toNamed(Routes.createCharacter),
             ),

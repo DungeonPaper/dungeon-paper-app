@@ -10,7 +10,8 @@ class LocalizedRepository<T> {
 
   LocalizedItem<T> operator [](String key) => forLocale(currentLocale, key);
 
-  LocalizedItem<T> forLocale(Locale locale, String key, {bool throwOnMissing = false}) {
+  LocalizedItem<T> forLocale(Locale locale, String key,
+      {bool throwOnMissing = false}) {
     if (throwOnMissing && collections[key] == null) {
       throw StateError('Key $key not found');
     }
@@ -41,7 +42,8 @@ class LocalizedRepository<T> {
 
 class LocalizedCollection<T> {
   final locales = <String, LocalizedItem<T>>{};
-  LocalizedItem<T> operator [](Locale locale) => locales[locale] ??= LocalizedItem<T>();
+  LocalizedItem<T> operator [](Locale locale) =>
+      locales[locale] ??= LocalizedItem<T>();
   void operator []=(String key, T item) => locales[key] ??= LocalizedItem<T>();
 
   bool localeExists(Locale locale) => locales.containsKey(locale);

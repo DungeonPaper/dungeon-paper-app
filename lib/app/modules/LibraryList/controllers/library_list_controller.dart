@@ -13,8 +13,12 @@ enum FiltersGroup {
   // online,
 }
 
-class LibraryListController<T extends WithMeta, F extends EntityFilters<T>> extends GetxController
-    with GetSingleTickerProviderStateMixin, LibraryServiceMixin, CharacterServiceMixin {
+class LibraryListController<T extends WithMeta, F extends EntityFilters<T>>
+    extends GetxController
+    with
+        GetSingleTickerProviderStateMixin,
+        LibraryServiceMixin,
+        CharacterServiceMixin {
   final repo = Get.find<RepositoryService>().obs;
   final chars = Get.find<CharacterService>().obs;
 
@@ -33,11 +37,14 @@ class LibraryListController<T extends WithMeta, F extends EntityFilters<T>> exte
 
   bool get selectable => onSelected != null;
 
-  Iterable<T> get builtInList => filterList(builtInListRaw, FiltersGroup.playbook, filterFn, sortFn);
+  Iterable<T> get builtInList =>
+      filterList(builtInListRaw, FiltersGroup.playbook, filterFn, sortFn);
 
-  Iterable<T> get builtInListRaw => repo.value.builtIn.listByType<T>().values.toList();
+  Iterable<T> get builtInListRaw =>
+      repo.value.builtIn.listByType<T>().values.toList();
 
-  Iterable<T> get myList => filterList(myListRaw, FiltersGroup.my, filterFn, sortFn);
+  Iterable<T> get myList =>
+      filterList(myListRaw, FiltersGroup.my, filterFn, sortFn);
 
   Iterable<T> get myListRaw => repo.value.my.listByType<T>().values.toList();
   String get storageKey => Meta.storageKeyFor(T);
@@ -110,7 +117,8 @@ class LibraryListController<T extends WithMeta, F extends EntityFilters<T>> exte
 
   _compare(T item) {
     return (T element) {
-      return (element.meta.sharing?.sourceKey ?? element.key) == item.key || element.key == item.key;
+      return (element.meta.sharing?.sourceKey ?? element.key) == item.key ||
+          element.key == item.key;
     };
   }
 
@@ -136,14 +144,18 @@ class LibraryListController<T extends WithMeta, F extends EntityFilters<T>> exte
       :
       // single: if is pre-selected, then only if it was not removed,
       //         if not pre-selected, then only if nothing else is selected
-      (isPreSelected(item) && !isRemoved(item)) || isInCurrentSelectedList(item);
+      (isPreSelected(item) && !isRemoved(item)) ||
+          isInCurrentSelectedList(item);
 
   bool isInCurrentSelectedList(T item) =>
-      selected.firstWhereOrNull((element) => [element.meta.sharing?.sourceKey, element.key].contains(item.key)) != null;
+      selected.firstWhereOrNull((element) =>
+          [element.meta.sharing?.sourceKey, element.key].contains(item.key)) !=
+      null;
 
   bool isRemoved(T item) => removed.firstWhereOrNull(_compare(item)) != null;
 
-  bool isPreSelected(T item) => preSelections.toList().firstWhereOrNull(_compare(item)) != null;
+  bool isPreSelected(T item) =>
+      preSelections.toList().firstWhereOrNull(_compare(item)) != null;
 
   bool isEnabled(T item) => multiple
       ?
@@ -161,14 +173,20 @@ class LibraryListController<T extends WithMeta, F extends EntityFilters<T>> exte
     int Function(T a, T b) Function(F filters)? sortFn,
     F? initialFilters,
   ]) {
-    final filtered = filterFn != null && (filters[group] != null || initialFilters != null)
-        ? list.where((x) => filterFn(x, filters[group] ?? initialFilters!)).toList()
-        : list.toList();
-    return sortFn != null ? (filtered..sort(sortFn(filters[group] ?? initialFilters!))) : filtered;
+    final filtered =
+        filterFn != null && (filters[group] != null || initialFilters != null)
+            ? list
+                .where((x) => filterFn(x, filters[group] ?? initialFilters!))
+                .toList()
+            : list.toList();
+    return sortFn != null
+        ? (filtered..sort(sortFn(filters[group] ?? initialFilters!)))
+        : filtered;
   }
 
   void _updatePlaybookSearch() {
-    filters[FiltersGroup.playbook]?.setSearch(search[FiltersGroup.playbook]!.text);
+    filters[FiltersGroup.playbook]
+        ?.setSearch(search[FiltersGroup.playbook]!.text);
     search.refresh();
     repo.refresh();
   }
@@ -191,7 +209,8 @@ abstract class EntityFilters<T> {
 
   List<bool?> get filterActiveList;
 
-  int get activeFilterCount => filterActiveList.where((element) => element == true).length;
+  int get activeFilterCount =>
+      filterActiveList.where((element) => element == true).length;
 
   int get totalFilterCount => filterActiveList.length;
 
@@ -201,7 +220,8 @@ abstract class EntityFilters<T> {
   int sortByScore(T a, T b) => getScore(b).compareTo(getScore(a));
 }
 
-abstract class LibraryListArguments<T extends WithMeta, F extends EntityFilters<T>> {
+abstract class LibraryListArguments<T extends WithMeta,
+    F extends EntityFilters<T>> {
   final Map<FiltersGroup, F?> filters;
 
   final void Function(Iterable<T> items)? onSelected;

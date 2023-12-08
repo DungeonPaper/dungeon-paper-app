@@ -1,9 +1,9 @@
-import 'package:dungeon_paper/generated/l10n.dart';
+import 'package:dungeon_paper/i18n.dart';
 import 'package:flutter/material.dart';
 
 class SearchField extends StatelessWidget {
   const SearchField({
-    Key? key,
+    super.key,
     required this.controller,
     this.hintText,
     this.trailing = const [],
@@ -11,7 +11,7 @@ class SearchField extends StatelessWidget {
     this.elevation,
     this.enabled,
     this.autofocus,
-  }) : super(key: key);
+  });
 
   final String? hintText;
   final Widget? suffix;
@@ -27,7 +27,8 @@ class SearchField extends StatelessWidget {
 
     return Material(
       elevation: elevation ?? 5,
-      color: Color.alphaBlend(_getFillColor(theme), theme.scaffoldBackgroundColor),
+      color:
+          Color.alphaBlend(_getFillColor(theme), theme.scaffoldBackgroundColor),
       shape: const StadiumBorder(),
       shadowColor: Colors.black87,
       child: Padding(
@@ -43,7 +44,7 @@ class SearchField extends StatelessWidget {
                 enabled: enabled,
                 decoration: InputDecoration(
                   filled: false,
-                  hintText: hintText ?? S.current.searchPlaceholder,
+                  hintText: hintText ?? tr.search.placeholder,
                   prefixIcon: const Icon(Icons.search),
                 ),
               ),

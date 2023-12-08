@@ -32,15 +32,17 @@ class UserSettings with CharacterServiceMixin {
         brightnessOverride: brightnessOverride ?? this.brightnessOverride,
       );
 
-  factory UserSettings.fromRawJson(String str) => UserSettings.fromJson(json.decode(str));
+  factory UserSettings.fromRawJson(String str) =>
+      UserSettings.fromJson(json.decode(str));
 
   factory UserSettings.fromJson(Map<String, dynamic> json) => UserSettings(
         keepScreenAwake: json['keepScreenAwake'],
         defaultLightTheme: json['defaultLightTheme'],
         defaultDarkTheme: json['defaultDarkTheme'],
-        brightnessOverride: Brightness.values.cast<Brightness?>().firstWhereOrNull(
-              (element) => element!.name == json['brightnessOverride'],
-            ),
+        brightnessOverride:
+            Brightness.values.cast<Brightness?>().firstWhereOrNull(
+                  (element) => element!.name == json['brightnessOverride'],
+                ),
       );
 
   Map<String, dynamic> toJson() => {
@@ -61,7 +63,12 @@ class UserSettings with CharacterServiceMixin {
           brightnessOverride == other.brightnessOverride;
 
   @override
-  int get hashCode => Object.hashAll([keepScreenAwake, defaultLightTheme, defaultDarkTheme, brightnessOverride]);
+  int get hashCode => Object.hashAll([
+        keepScreenAwake,
+        defaultLightTheme,
+        defaultDarkTheme,
+        brightnessOverride
+      ]);
 
   String get debugProperties =>
       'keepScreenAwake: $keepScreenAwake, defaultLightTheme: $defaultLightTheme, defaultDarkTheme: $defaultDarkTheme, brightnessOverride: $brightnessOverride';

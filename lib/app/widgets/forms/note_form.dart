@@ -3,13 +3,13 @@ import 'package:dungeon_paper/app/data/services/repository_service.dart';
 import 'package:dungeon_paper/app/widgets/atoms/rich_text_field.dart';
 import 'package:dungeon_paper/app/widgets/forms/library_entity_form.dart';
 import 'package:dungeon_paper/app/widgets/molecules/tag_list_input.dart';
-import 'package:dungeon_paper/generated/l10n.dart';
+import 'package:dungeon_paper/i18n.dart';
+import 'package:dungeon_world_data/dungeon_world_data.dart' as dw;
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:dungeon_world_data/dungeon_world_data.dart' as dw;
 
 class NoteForm extends GetView<NoteFormController> with RepositoryServiceMixin {
-  const NoteForm({Key? key}) : super(key: key);
+  const NoteForm({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -18,7 +18,9 @@ class NoteForm extends GetView<NoteFormController> with RepositoryServiceMixin {
         () => Obx(
               () => TextFormField(
                 decoration: InputDecoration(
-                  label: Text(S.current.formGeneralNameGeneric(S.current.entity(Note))),
+                  label: Text(
+                    tr.generic.entityName(tr.entity(Note)),
+                  ),
                 ),
                 textCapitalization: TextCapitalization.words,
                 controller: controller.title,
@@ -27,7 +29,9 @@ class NoteForm extends GetView<NoteFormController> with RepositoryServiceMixin {
         () => Obx(
               () => RichTextField(
                 decoration: InputDecoration(
-                  label: Text(S.current.formGeneralDescriptionGeneric(S.current.entity(Note))),
+                  label: Text(
+                    tr.generic.entityDescription(tr.entity(Note)),
+                  ),
                 ),
                 maxLines: 10,
                 minLines: 5,
@@ -46,7 +50,8 @@ class NoteForm extends GetView<NoteFormController> with RepositoryServiceMixin {
   }
 }
 
-class NoteFormController extends LibraryEntityFormController<Note, NoteFormArguments> {
+class NoteFormController
+    extends LibraryEntityFormController<Note, NoteFormArguments> {
   final _title = TextEditingController().obs;
   final _description = TextEditingController().obs;
   final _category = TextEditingController().obs;
@@ -59,7 +64,8 @@ class NoteFormController extends LibraryEntityFormController<Note, NoteFormArgum
   ValueNotifier<List<dw.Tag>> get tags => _tags.value;
 
   @override
-  List<Rx<ValueNotifier>> get fields => [_title, _description, _category, _dice, _tags];
+  List<Rx<ValueNotifier>> get fields =>
+      [_title, _description, _category, _dice, _tags];
 
   @override
   void onInit() {
