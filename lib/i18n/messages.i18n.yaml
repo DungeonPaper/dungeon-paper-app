@@ -132,8 +132,8 @@ sync:
   entity:
     status:
       inSync(String ent): This $ent is In Sync with its linked library item
-      outOfSync(String ent): This $entity is Out of Sync with its linked library item
-      detached(String ent): This $entity is not linked to any library item
+      outOfSync(String ent): This $ent is Out of Sync with its linked library item
+      detached(String ent): This $ent is not linked to any library item
 
 settings:
   title: Settings

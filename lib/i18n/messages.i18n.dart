@@ -521,13 +521,13 @@ class StatusEntitySyncMessages {
   String inSync(String ent) =>
       """This $ent is In Sync with its linked library item""";
 
-  /// `This $entity is Out of Sync with its linked library item`
+  /// `This $ent is Out of Sync with its linked library item`
   String outOfSync(String ent) =>
-      """This $entity is Out of Sync with its linked library item""";
+      """This $ent is Out of Sync with its linked library item""";
 
-  /// `This $entity is not linked to any library item`
+  /// `This $ent is not linked to any library item`
   String detached(String ent) =>
-      """This $entity is not linked to any library item""";
+      """This $ent is not linked to any library item""";
 }
 
 class SettingsMessages {

@@ -1,5 +1,5 @@
 import 'dart:convert';
-import 'package:dungeon_paper/generated/l10n.dart';
+
 import 'package:dungeon_paper/i18n.dart';
 import 'package:dungeon_world_data/dungeon_world_data.dart' as dw;
 
@@ -31,13 +31,15 @@ class SessionMark extends dw.SessionMark implements WithKey {
     required super.completed,
   }) : super(type: dw.SessionMarkType.endOfSession);
 
-  factory SessionMark.fromRawJson(String str) => SessionMark.fromJson(json.decode(str));
+  factory SessionMark.fromRawJson(String str) =>
+      SessionMark.fromJson(json.decode(str));
 
   factory SessionMark.fromJson(Map<String, dynamic> json) => SessionMark(
         key: json['key'],
         completed: json['completed'],
         description: json['description'],
-        type: dw.SessionMarkType.values.firstWhere((e) => e.name == json['type']),
+        type:
+            dw.SessionMarkType.values.firstWhere((e) => e.name == json['type']),
       );
 
   SessionMark copyWithInherited({
@@ -79,8 +81,10 @@ class SessionMark extends dw.SessionMark implements WithKey {
   int get hashCode => Object.hashAll([key, description, completed, type]);
 
   @override
-  String get debugProperties => 'key: $key, description: $description, completed: $completed, type: $type';
+  String get debugProperties =>
+      'key: $key, description: $description, completed: $completed, type: $type';
 
   @override
   String toString() => 'SessionMark($debugProperties)';
 }
+

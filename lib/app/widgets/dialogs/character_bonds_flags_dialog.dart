@@ -5,13 +5,13 @@ import 'package:dungeon_paper/app/routes/app_pages.dart';
 import 'package:dungeon_paper/app/widgets/atoms/help_text.dart';
 import 'package:dungeon_paper/app/widgets/molecules/dialog_controls.dart';
 import 'package:dungeon_paper/core/utils/list_utils.dart';
-import 'package:dungeon_paper/generated/l10n.dart';
 import 'package:dungeon_paper/i18n.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-class CharacterBondsFlagsDialog extends GetView<CharacterService> with CharacterServiceMixin {
-  const CharacterBondsFlagsDialog({Key? key}) : super(key: key);
+class CharacterBondsFlagsDialog extends GetView<CharacterService>
+    with CharacterServiceMixin {
+  const CharacterBondsFlagsDialog({super.key});
 
   List<SessionMark> get bonds => char.bonds;
   List<SessionMark> get flags => char.flags;
@@ -27,7 +27,8 @@ class CharacterBondsFlagsDialog extends GetView<CharacterService> with Character
         mainAxisSize: MainAxisSize.max,
         children: [
           Expanded(
-            child: Obx(() => Text(SessionMark.categoryTitle(bonds: bonds, flags: flags))),
+            child: Obx(() =>
+                Text(SessionMark.categoryTitle(bonds: bonds, flags: flags))),
           ),
           IconButton(
             onPressed: () {
@@ -126,3 +127,4 @@ class CharacterBondsFlagsDialog extends GetView<CharacterService> with Character
     );
   }
 }
+

@@ -5,8 +5,6 @@ import 'package:dungeon_paper/core/pref_keys.dart';
 import 'package:dungeon_paper/core/remote_config.dart';
 import 'package:dungeon_paper/core/shared_preferences.dart';
 import 'package:dungeon_paper/core/utils/secrets_base.dart';
-import 'package:dungeon_paper/generated/intl/messages_all.dart';
-import 'package:dungeon_paper/generated/l10n.dart';
 import 'package:dungeon_paper/i18n.dart';
 import 'package:dynamic_themes/dynamic_themes.dart';
 import 'package:flutter/foundation.dart';
@@ -23,8 +21,6 @@ void main() async {
   final widgetsBinding = WidgetsFlutterBinding.ensureInitialized();
 
   FlutterNativeSplash.preserve(widgetsBinding: widgetsBinding);
-  await initializeMessages('en');
-  await S.load(const Locale('en', 'US'));
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
   await loadSharedPrefs();
   await initRemoteConfig();

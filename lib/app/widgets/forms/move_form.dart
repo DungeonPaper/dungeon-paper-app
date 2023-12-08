@@ -8,7 +8,6 @@ import 'package:dungeon_paper/app/widgets/atoms/select_box.dart';
 import 'package:dungeon_paper/app/widgets/forms/library_entity_form.dart';
 import 'package:dungeon_paper/app/widgets/molecules/dice_list_input.dart';
 import 'package:dungeon_paper/app/widgets/molecules/tag_list_input.dart';
-import 'package:dungeon_paper/generated/l10n.dart';
 import 'package:dungeon_paper/i18n.dart';
 import 'package:dungeon_world_data/dungeon_world_data.dart' as dw;
 import 'package:flutter/material.dart';
@@ -42,8 +41,8 @@ class MoveForm extends GetView<MoveFormController> with RepositoryServiceMixin {
                           .map(
                             (cat) => DropdownMenuItem(
                               value: cat,
-                              child: Text(S.current
-                                  .moveCategoryWithLevelShort(cat.name)),
+                              child:
+                                  Text(tr.moves.category.shortName(cat.name)),
                             ),
                           )
                           .toList(),
@@ -79,8 +78,9 @@ class MoveForm extends GetView<MoveFormController> with RepositoryServiceMixin {
         () => Obx(
               () => RichTextField(
                 decoration: InputDecoration(
-                  label: Text(S.current
-                      .formGeneralDescriptionGeneric(tr.entity(Move))),
+                  label: Text(
+                    tr.generic.entityDescription(tr.entity(Move)),
+                  ),
                 ),
                 maxLines: 10,
                 minLines: 5,
@@ -117,8 +117,9 @@ class MoveForm extends GetView<MoveFormController> with RepositoryServiceMixin {
         () => Obx(
               () => RichTextField(
                 decoration: InputDecoration(
-                  label: Text(S.current
-                      .formGeneralExplanationGeneric(tr.entity(Move))),
+                  label: Text(
+                    tr.generic.entityExplanation(tr.entity(Move)),
+                  ),
                 ),
                 maxLines: 10,
                 minLines: 5,
