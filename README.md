@@ -82,13 +82,29 @@ don't hesitate to open an appropriate issue and I will do my best to reply promp
    }
    ```
 
-   Sentry DSN can remain empty to skip error reporting
+   Sentry DSN can remain empty to skip error reporting.
 
 1. To run build scripts, install [script_runner](https://pub.dev/packages/script_runner) and use
    `scr -h` to see all available commands
 
 As mentioned above, Firebase secret keys must be your own, and so are the databases and services
-related to them. This project uses Firebase auth, Firestore, and Crashlytics.
+related to them. This project uses Firebase auth and Cloud Firestore.
+
+### Translations
+
+This app is currently only available in English. However, it's possible to contribute translations
+if you wish to help localize the app to your language. The app should be fully-localizable easily by
+just updating the translation files.
+
+- The current main translations file is at `lib/i18n/messages.i18n.dart`
+- To add a new localization file, copy this file to `lib/i18n/messages_<lang code>.i18n.dart` (for
+  example, for Hebrew you would use `messages_he.i18n.dart`)
+- For help using the translation syntax, see the [i18n docs](https://github.com/MohiuddinM/i18n)
+- To translate the playbook data (classes, items, moves, spells, etc) we must localize a separate
+  package containing all the Dungeon World base data. This package is
+  [available here](https://github.com/DungeonPaper/dungeon_world_data), see the localization docs
+  there for more help.
+- The app and data may be translated separately and do not depend on each other.
 
 ### Help by bug reporting or requesting features
 

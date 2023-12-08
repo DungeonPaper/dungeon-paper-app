@@ -51,11 +51,11 @@ dependencies:
   http: ^0.13.4
   # i18n: ^4.0.8
   # i18n:
-  #   git:
-  #     url: https://github.com/chenasraf/i18n.git
-  #     ref: next
+  #   path: ../i18n
   i18n:
-    path: ../i18n
+    git:
+      url: https://github.com/chenasraf/i18n.git
+      ref: next
   icons_launcher: ^2.0.2
   image_cropper: ^2.0.2
   intl: ^0.17.0

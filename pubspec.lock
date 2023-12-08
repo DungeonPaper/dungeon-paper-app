@@ -627,9 +627,11 @@ packages:
   i18n:
     dependency: "direct main"
     description:
-      path: "../i18n"
-      relative: true
-    source: path
+      path: "."
+      ref: next
+      resolved-ref: "8b5c9110c6e87773b91a5b0f3505f99279212da6"
+      url: "https://github.com/chenasraf/i18n.git"
+    source: git
     version: "4.0.8"
   icons_launcher:
     dependency: "direct main"
