@@ -96,15 +96,23 @@ This app is currently only available in English. However, it's possible to contr
 if you wish to help localize the app to your language. The app should be fully-localizable easily by
 just updating the translation files.
 
-- The current main translations file is at `lib/i18n/messages.i18n.dart`
-- To add a new localization file, copy this file to `lib/i18n/messages_<lang code>.i18n.dart` (for
-  example, for Hebrew you would use `messages_he.i18n.dart`)
+- The current main translations file is at `lib/i18n/messages.i18n.yaml`
+- To add a new localization file, copy this file to `lib/i18n/messages_<lang code>.i18n.yaml` (for
+  example, for Hebrew you would use `messages_he.i18n.yaml`)
 - For help using the translation syntax, see the [i18n docs](https://github.com/MohiuddinM/i18n)
 - To translate the playbook data (classes, items, moves, spells, etc) we must localize a separate
   package containing all the Dungeon World base data. This package is
   [available here](https://github.com/DungeonPaper/dungeon_world_data), see the localization docs
   there for more help.
 - The app and data may be translated separately and do not depend on each other.
+- Use the build_runner package to generate Dart files from the yaml files.
+
+  ```bash
+  # run in watch mode, re-generates as you update the yaml
+  dart run build_runner watch
+  # generate files once
+  dart run build_runner build
+  ```
 
 ### Help by bug reporting or requesting features
 
