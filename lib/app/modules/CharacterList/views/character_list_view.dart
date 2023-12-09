@@ -22,7 +22,7 @@ class CharacterListPageView extends GetView<CharacterService>
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(tr.generic.allEntities(tr.entity(tn(Character)))),
+        title: Text(tr.generic.allEntities(tr.entityPlural(tn(Character)))),
         centerTitle: true,
       ),
       floatingActionButton: AdvancedFloatingActionButton.extended(

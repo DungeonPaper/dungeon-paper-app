@@ -55,3 +55,4 @@ GoogleService-Info.plist
 # FVM
 .fvm/flutter_sdk
 .firebase/
+cors.json
