@@ -99,8 +99,8 @@ class CharacterAvatar extends GetView {
         imageUrl: url,
         width: size,
         height: size,
-        memCacheHeight: size.toInt(),
-        memCacheWidth: size.toInt(),
+        // memCacheHeight: size.toInt(),
+        // memCacheWidth: size.toInt(),
         fit: BoxFit.cover,
         progressIndicatorBuilder: (context, url, state) =>
             AvatarCircularProgress(size: size),
@@ -108,13 +108,14 @@ class CharacterAvatar extends GetView {
           children: [
             _buildDefaultImage(context, size),
             const Positioned(
-                bottom: 8,
-                left: 0,
-                right: 0,
-                child: Text(
-                  'Error loading image',
-                  textAlign: TextAlign.center,
-                )),
+              bottom: 8,
+              left: 0,
+              right: 0,
+              child: Text(
+                'Error loading image',
+                textAlign: TextAlign.center,
+              ),
+            ),
           ],
         ),
       );
@@ -138,3 +139,4 @@ class CharacterAvatar extends GetView {
   Widget _renderForChar(BuildContext context, Character? char) =>
       builder(context, char?.avatarUrl ?? '', size);
 }
+

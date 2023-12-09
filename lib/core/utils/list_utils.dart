@@ -18,7 +18,7 @@ extension IterableUtils<T> on Iterable<T> {
     return [
       for (final i in enumerate(this)) ...[
         i.value,
-        if (i.value != last) separator,
+        if (i.index < length - 1) separator,
       ],
     ];
   }

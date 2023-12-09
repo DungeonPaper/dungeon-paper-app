@@ -10,7 +10,7 @@ class Hyperlink extends StatelessWidget {
 
   Hyperlink.url(this.text, String url, {super.key}) : onTap = _urlTapper(url);
 
-  static textSpan(BuildContext context, String text,
+  static TextSpan textSpan(BuildContext context, String text,
       {void Function()? onTap, String? url}) {
     assert(
         onTap != null || url != null, 'Either onTap or url must be provided');
@@ -29,6 +29,7 @@ class Hyperlink extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
+      onTap: onTap,
       child: Text(
         text,
         style: Theme.of(context).textTheme.bodyMedium!.copyWith(
@@ -36,7 +37,6 @@ class Hyperlink extends StatelessWidget {
               decoration: TextDecoration.underline,
             ),
       ),
-      onTap: onTap,
     );
   }
 
@@ -44,3 +44,4 @@ class Hyperlink extends StatelessWidget {
     return () => launchUrl(Uri.parse(url));
   }
 }
+

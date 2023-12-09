@@ -1,6 +1,7 @@
 import 'dart:math';
 
 import 'package:dungeon_paper/app/routes/app_pages.dart';
+import 'package:dungeon_paper/app/widgets/atoms/hyperlink.dart';
 import 'package:dungeon_paper/app/widgets/atoms/rainbow_text.dart';
 import 'package:dungeon_paper/core/dw_icons.dart';
 import 'package:dungeon_paper/core/utils/builder_utils.dart';
@@ -8,6 +9,7 @@ import 'package:dungeon_paper/i18n.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:url_launcher/url_launcher.dart';
+import 'package:dungeon_paper/core/utils/list_utils.dart';
 
 import '../../../model_utils/user_utils.dart';
 import '../controllers/about_controller.dart';
@@ -140,11 +142,19 @@ class AboutView extends GetView<AboutController> {
                 minLeadingWidth: 36,
                 leading: const Icon(Icons.people),
                 title: const Text('Contributors'),
-                subtitle: Text(
-                  [
-                    'eldritchart',
-                    'arthurpaulino',
-                  ].join(', '),
+                subtitle: RichText(
+                  text: TextSpan(
+                    children: contributors
+                        .map(
+                          (c) => Hyperlink.textSpan(
+                            context,
+                            c,
+                            url: 'https://github.com/$c',
+                          ),
+                        )
+                        .joinObjects(const TextSpan(text: ', '))
+                        .toList(),
+                  ),
                 ),
               ),
           () => ListTile(
@@ -170,6 +180,11 @@ final iconCredits = ([
   'game-icons.net',
 ]..sort((a, b) => a.toLowerCase().compareTo(b.toLowerCase())))
     .join(', ');
+
+final contributors = [
+  'arthurpaulino',
+  'magnus-ISU',
+]..sort((a, b) => a.toLowerCase().compareTo(b.toLowerCase()));
 
 class _SocialButton extends StatelessWidget {
   const _SocialButton({
@@ -199,3 +214,4 @@ class _SocialButton extends StatelessWidget {
     );
   }
 }
+
