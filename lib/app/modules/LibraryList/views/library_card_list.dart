@@ -110,7 +110,7 @@ class LibraryCardList<T extends WithMeta, F extends EntityFilters<T>>
       if (itemCount == 0) ...[
         () => const SizedBox(height: 32),
         () => Text(
-              tr.myLibrary.emptyState.title(tr.entityPlural(typeName)),
+              tr.myLibrary.emptyState.title(tr.entityPlural(tn(T))),
               style: textTheme.titleLarge,
               textAlign: TextAlign.center,
             ),
@@ -121,9 +121,9 @@ class LibraryCardList<T extends WithMeta, F extends EntityFilters<T>>
                 child: Text(
                   filters.isEmpty
                       ? tr.myLibrary.emptyState.subtitle
-                          .noFilters(tr.entityPlural(typeName))
+                          .noFilters(tr.entityPlural(tn(T)))
                       : tr.myLibrary.emptyState.subtitle
-                          .filters(tr.entityPlural(typeName)),
+                          .filters(tr.entityPlural(tn(T))),
                   style: textTheme.titleMedium,
                   textAlign: TextAlign.center,
                 ),
@@ -140,27 +140,13 @@ class LibraryCardList<T extends WithMeta, F extends EntityFilters<T>>
                   Routes.editByType<T>(),
                   arguments: createPageArgsByType(extraData),
                 ),
-                label: Text(tr.generic.createEntity(tr.entity(typeName))),
+                label: Text(tr.generic.createEntity(tr.entity(tn(T)))),
                 icon: const Icon(Icons.add),
               ),
             ),
         if (itemCount > 0) () => const Divider(height: 32),
       ],
     ];
-  }
-
-  String get typeName {
-    switch (T) {
-      case Move:
-        return tn(Move);
-      case Item:
-        return tn(Item);
-      case Spell:
-        return tn(Spell);
-      case Note:
-        return tn(Note);
-    }
-    throw TypeError();
   }
 
   createPageArgsByType(Map<String, dynamic> extraData) {

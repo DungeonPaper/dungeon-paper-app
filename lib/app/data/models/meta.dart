@@ -1,5 +1,7 @@
 import 'dart:convert';
 
+import 'package:dungeon_paper/app/data/models/ability_scores.dart';
+import 'package:dungeon_paper/app/data/models/campaign.dart';
 import 'package:dungeon_paper/app/data/models/session_marks.dart';
 import 'package:dungeon_paper/app/data/models/spell.dart';
 import 'package:dungeon_paper/app/data/models/user.dart';
@@ -266,6 +268,31 @@ class Meta<DataType> with RepositoryServiceMixin {
     }
   }
 
+  static typeFromString(String type) {
+    final map = {
+      'AbilityScore': AbilityScore,
+      'Campaign': Campaign,
+      'Character': Character,
+      'AlignmentValue': AlignmentValue,
+      'Move': Move,
+      'Spell': Spell,
+      'Item': Item,
+      'CharacterClass': CharacterClass,
+      'Race': Race,
+      'GearSelection': GearSelection,
+      'Note': Note,
+      'MoveCategory': MoveCategory,
+      'Tag': dw.Tag,
+      'Dice': dw.Dice,
+    };
+
+    if (!map.containsKey(type)) {
+      throw UnsupportedError('Type $type not supported');
+    }
+
+    return map[type];
+  }
+
   static final allStorageKeys = <Type, String>{
     for (final t in [
       CharacterClass,
@@ -455,3 +482,4 @@ mixin WithMeta<T, MetaDataType>
   String get storageKey;
   dw.EntityReference get reference => Meta.referenceFor(this);
 }
+

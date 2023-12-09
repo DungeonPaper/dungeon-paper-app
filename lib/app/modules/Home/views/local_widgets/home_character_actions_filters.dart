@@ -1,6 +1,3 @@
-import 'package:dungeon_paper/app/data/models/item.dart';
-import 'package:dungeon_paper/app/data/models/move.dart';
-import 'package:dungeon_paper/app/data/models/spell.dart';
 import 'package:dungeon_paper/app/widgets/atoms/checklist_menu_entry.dart';
 import 'package:dungeon_paper/app/widgets/atoms/menu_button.dart';
 import 'package:dungeon_paper/i18n.dart';
@@ -32,23 +29,10 @@ class HomeCharacterActionsFilters extends StatelessWidget {
                       : {...hidden.where((element) => element != type)},
                 );
               },
-              label: Expanded(child: Text('Test: ' + type)),
+              label: Expanded(child: Text(tr.entityPlural(type))),
             ),
           )
           .toList(),
     );
-  }
-
-  Type _getType(String type) {
-    switch (type) {
-      case 'Move':
-        return Move;
-      case 'Spell':
-        return Spell;
-      case 'Item':
-        return Item;
-      default:
-        throw ArgumentError.value(type, 'type', 'Invalid type');
-    }
   }
 }
