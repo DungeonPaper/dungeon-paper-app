@@ -39,8 +39,8 @@ class _AddDiceDialogState extends State<AddDiceDialog>
     return AlertDialog(
       title: Text(
         widget.dice == null
-            ? tr.generic.addEntity(tr.entity(dw.Dice))
-            : tr.generic.editEntity(tr.entity(dw.Dice)),
+            ? tr.generic.addEntity(tr.entity(tn(dw.Dice)))
+            : tr.generic.editEntity(tr.entity(tn(dw.Dice))),
       ),
       content: SingleChildScrollView(
         child: DiceForm(

@@ -30,7 +30,7 @@ class AbilityScoresFormView extends GetView<AbilityScoresFormController> {
         dirty: controller.dirty.value,
         child: Scaffold(
           appBar: AppBar(
-            title: Text(tr.entityPlural(AbilityScore)),
+            title: Text(tr.entityPlural(tn(AbilityScore))),
             centerTitle: true,
           ),
           floatingActionButton: AdvancedFloatingActionButton.extended(
@@ -66,7 +66,7 @@ class AbilityScoresFormView extends GetView<AbilityScoresFormController> {
                 icon: const Icon(Icons.add),
                 label: Text(
                   tr.generic.addEntity(
-                    tr.entity(AbilityScore),
+                    tr.entity(tn(AbilityScore)),
                   ),
                 ),
               ),
@@ -162,7 +162,7 @@ class AbilityScoresFormView extends GetView<AbilityScoresFormController> {
                         context,
                         DeleteDialogOptions(
                             entityName: stat.name,
-                            entityKind: tr.entity(AbilityScore)),
+                            entityKind: tr.entity(tn(AbilityScore))),
                         () => controller.removeStat(stat),
                       ),
                     ),

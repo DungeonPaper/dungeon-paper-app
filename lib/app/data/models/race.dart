@@ -10,26 +10,16 @@ import 'move.dart';
 
 class Race extends dw.Race with WithIcon implements WithMeta {
   Race({
-    required Meta meta,
-    required String key,
-    required String name,
-    required String description,
-    required String explanation,
-    required List<dw.EntityReference> classKeys,
-    required List<dw.Tag> tags,
-    required List<dw.Dice> dice,
+    required Meta super.meta,
+    required super.key,
+    required super.name,
+    required super.description,
+    required super.explanation,
+    required super.classKeys,
+    required super.tags,
+    required super.dice,
     this.favorite = false,
-  })  : _meta = meta,
-        super(
-          meta: meta,
-          key: key,
-          name: name,
-          description: description,
-          explanation: explanation,
-          classKeys: classKeys,
-          tags: tags,
-          dice: dice,
-        );
+  }) : _meta = meta;
 
   @override
   Meta get meta => _meta;

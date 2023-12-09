@@ -21,7 +21,7 @@ class StartingGearFormView extends GetView<StartingGearFormController> {
         dirty: controller.dirty.value,
         child: Scaffold(
           appBar: AppBar(
-            title: Text(tr.generic.selectEntity(tr.entity(GearSelection))),
+            title: Text(tr.generic.selectEntity(tr.entity(tn(GearSelection)))),
           ),
           floatingActionButton: AdvancedFloatingActionButton.extended(
             onPressed: _save,

@@ -72,8 +72,12 @@ class HomeCharacterJournalView extends GetView<CharacterService> {
                           reorderablePadding: true,
                           actions: [
                             EntityEditMenu(
-                              onDelete:
-                                  confirmDelete(context, note, note.title),
+                              onDelete: confirmDelete(
+                                context,
+                                note,
+                                note.title,
+                                tn(Note),
+                              ),
                               onEdit: () => ModelPages.openNotePage(
                                 note: note,
                                 onSave: (note) {
@@ -103,13 +107,18 @@ class HomeCharacterJournalView extends GetView<CharacterService> {
 
   // TODO use existing confirmDelete
   void Function() confirmDelete<T>(
-      BuildContext context, T object, String name) {
+    BuildContext context,
+    T object,
+    String name,
+    String typeName,
+  ) {
     return () async {
       final result = await Get.dialog<bool>(
         AlertDialog(
-          title: Text(tr.dialogs.confirmations.delete.title(tr.entity(T))),
-          content:
-              Text(tr.dialogs.confirmations.delete.body(tr.entity(T), name)),
+          title:
+              Text(tr.dialogs.confirmations.delete.title(tr.entity(typeName))),
+          content: Text(
+              tr.dialogs.confirmations.delete.body(tr.entity(typeName), name)),
           actions: [
             ElevatedButton.icon(
               icon: const Icon(Icons.close),

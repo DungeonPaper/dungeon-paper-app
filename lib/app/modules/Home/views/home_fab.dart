@@ -50,7 +50,7 @@ class _HomeFABState extends State<HomeFAB> with CharacterServiceMixin {
             scale: inPageRange ? 1.0 : 0.0,
             duration: duration,
             child: Text(
-              tr.generic.createEntity(tr.entity(Note)),
+              tr.generic.createEntity(tr.entity(tn(Note))),
             ),
           ),
           icon: AnimatedScale(

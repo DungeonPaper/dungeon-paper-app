@@ -79,7 +79,7 @@ class LibraryCollectionView extends GetView<LibraryCollectionController>
                     ),
                   ),
                   title: Text(
-                    tr.entityPlural(type),
+                    tr.entityPlural(tn(type)),
                     style: textTheme.titleLarge,
                   ),
                   subtitle: Text(

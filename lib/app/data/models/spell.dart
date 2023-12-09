@@ -13,28 +13,17 @@ import 'meta.dart';
 
 class Spell extends dw.Spell with WithIcon implements WithMeta {
   Spell({
-    required Meta meta,
-    required String key,
-    required String name,
-    required String description,
-    required String explanation,
-    required String level,
-    required List<dw.EntityReference> classKeys,
-    required List<dw.Dice> dice,
-    required List<dw.Tag> tags,
+    required Meta super.meta,
+    required super.key,
+    required super.name,
+    required super.description,
+    required super.explanation,
+    required super.level,
+    required super.classKeys,
+    required super.dice,
+    required super.tags,
     this.prepared = false,
-  })  : _meta = meta,
-        super(
-          meta: meta,
-          key: key,
-          name: name,
-          description: description,
-          explanation: explanation,
-          level: level,
-          classKeys: classKeys,
-          dice: dice,
-          tags: tags,
-        );
+  }) : _meta = meta;
 
   @override
   Meta get meta => _meta;

@@ -75,49 +75,51 @@ class Messages {
   /// ```dart
   /// """
   /// ${_select(type, {
-  ///   'Dice': 'Die',
-  ///   'CharacterClass': 'Class',
-  ///   'MoveCategory': 'Category',
-  ///   'GearSelection': 'Starting Gear',
   ///   'AbilityScore': 'Ability Score',
-  ///   'AlignmentValue': 'Alignment'
+  ///   'AlignmentValue': 'Alignment',
+  ///   'CharacterClass': 'Class',
+  ///   'Dice': 'Die',
+  ///   'GearSelection': 'Starting Gear',
+  ///   'MoveCategory': 'Category',
   /// })}
   /// """
   /// ```
   String _entSingle(String type) => """${_select(type, {
-            'Dice': 'Die',
-            'CharacterClass': 'Class',
-            'MoveCategory': 'Category',
-            'GearSelection': 'Starting Gear',
             'AbilityScore': 'Ability Score',
-            'AlignmentValue': 'Alignment'
+            'AlignmentValue': 'Alignment',
+            'CharacterClass': 'Class',
+            'Dice': 'Die',
+            'GearSelection': 'Starting Gear',
+            'MoveCategory': 'Category',
           })}""";
 
   /// ```dart
   /// """
   /// ${_select(type, {
-  ///   'MoveCategory': 'Categories',
   ///   'CharacterClass': 'Classes',
+  ///   'Dice': 'Dice',
+  ///   'MoveCategory': 'Categories',
   /// }, other: '${_entSingle(type)}s')}
   /// """
   /// ```
   String _entPlural(String type) => """${_select(type, {
-        'MoveCategory': 'Categories',
         'CharacterClass': 'Classes',
+        'Dice': 'Dice',
+        'MoveCategory': 'Categories',
       }, other: '${_entSingle(type)}s')}""";
 
   /// `${_entSingle(ent.toString())}`
-  String entity(Type ent) => """${_entSingle(ent.toString())}""";
+  String entity(String ent) => """${_entSingle(ent.toString())}""";
 
   /// `${_entPlural(ent.toString())}`
-  String entityPlural(Type ent) => """${_entPlural(ent.toString())}""";
+  String entityPlural(String ent) => """${_entPlural(ent.toString())}""";
 
   /// `${cnt == 1 ? _entSingle(ent.toString()) : _entPlural(ent.toString())}`
-  String entityCount(Type ent, int cnt) =>
+  String entityCount(String ent, int cnt) =>
       """${cnt == 1 ? _entSingle(ent.toString()) : _entPlural(ent.toString())}""";
 
   /// `$cnt ${entityCount(ent, cnt)}`
-  String entityCountNum(Type ent, int cnt) =>
+  String entityCountNum(String ent, int cnt) =>
       """$cnt ${entityCount(ent, cnt)}""";
   AppMessages get app => AppMessages(this);
   GenericMessages get generic => GenericMessages(this);
@@ -623,10 +625,10 @@ class ProvidersAuthMessages {
   /// ```dart
   /// """
   /// ${_select(provider, {
-  /// 'facebook': 'Facebook',
-  /// 'google': 'Google',
-  /// 'apple': 'Apple',
-  /// 'password': 'Dungeon Paper',
+  ///   'facebook': 'Facebook',
+  ///   'google': 'Google',
+  ///   'apple': 'Apple',
+  ///   'password': 'Dungeon Paper',
   /// }, other: 'Other')}
   /// """
   /// ```
@@ -1382,7 +1384,7 @@ class CategoryMovesMessages {
   ///   'basic': 'Basic',
   ///   'special': 'Special',
   ///   'advanced1': 'Advanced',
-  ///   'advanced2': 'Advanced',
+  ///   'advanced2': 'Advanced+',
   /// }, other: 'Other')}
   /// """
   /// ```
@@ -1391,7 +1393,7 @@ class CategoryMovesMessages {
         'basic': 'Basic',
         'special': 'Special',
         'advanced1': 'Advanced',
-        'advanced2': 'Advanced',
+        'advanced2': 'Advanced+',
       }, other: 'Other')}""";
 
   /// ```dart

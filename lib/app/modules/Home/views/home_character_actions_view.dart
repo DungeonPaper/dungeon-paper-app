@@ -97,6 +97,7 @@ class HomeCharacterActionsView extends GetView<CharacterService> {
     );
     return ActionsCardList<Move>(
       index: char.actionCategories.toList().indexOf('Move'),
+      typeName: tn(Move),
       onReorder: _onReorder,
       list: char.moves,
       route: Routes.moves,
@@ -134,7 +135,7 @@ class HomeCharacterActionsView extends GetView<CharacterService> {
           // Move to start of list
           MenuEntry(
             value: 'move_to_start',
-            label: Text(tr.sort.moveEntityToTop(tr.entity(Race))),
+            label: Text(tr.sort.moveEntityToTop(tr.entity(tn(Race)))),
             onSelect: () => controller.updateCharacter(
               char.copyWith(
                 settings:
@@ -146,7 +147,7 @@ class HomeCharacterActionsView extends GetView<CharacterService> {
           // Move to end of list
           MenuEntry(
             value: 'move_to_end',
-            label: Text(tr.sort.moveEntityToBottom(tr.entity(Race))),
+            label: Text(tr.sort.moveEntityToBottom(tr.entity(tn(Race)))),
             onSelect: () => controller.updateCharacter(
               char.copyWith(
                 settings:
@@ -186,6 +187,7 @@ class HomeCharacterActionsView extends GetView<CharacterService> {
     }
     return ActionsCardList<Spell>(
       index: char.actionCategories.toList().indexOf('Spell'),
+      typeName: tn(Spell),
       onReorder: _onReorder,
       list: char.spells,
       route: Routes.spells,
@@ -220,6 +222,7 @@ class HomeCharacterActionsView extends GetView<CharacterService> {
     }
     return ActionsCardList<Item>(
       index: char.actionCategories.toList().indexOf('Item'),
+      typeName: tn(Item),
       onReorder: _onReorder,
       list: char.items,
       route: Routes.items,
@@ -324,6 +327,7 @@ class ActionsCardList<T extends WithMeta> extends GetView<CharacterService>
   const ActionsCardList({
     super.key,
     required this.route,
+    required this.typeName,
     required this.addPageArguments,
     required this.cardBuilder,
     required this.list,
@@ -336,6 +340,7 @@ class ActionsCardList<T extends WithMeta> extends GetView<CharacterService>
   });
 
   final String route;
+  final String typeName;
   final List<Widget> leading;
   final List<Widget> trailing;
   final LibraryListArguments<T, EntityFilters<T>> Function({
@@ -359,7 +364,7 @@ class ActionsCardList<T extends WithMeta> extends GetView<CharacterService>
   Widget build(BuildContext context) {
     return CategorizedList(
       initiallyExpanded: true,
-      title: Text(tr.entityPlural(T)),
+      title: Text(tr.entityPlural(typeName)),
       itemPadding: const EdgeInsets.only(bottom: 8),
       titleTrailing: [
         TextButton.icon(
@@ -370,7 +375,7 @@ class ActionsCardList<T extends WithMeta> extends GetView<CharacterService>
                   forkBehavior: ForkBehavior.fork),
             ),
           ),
-          label: Text(tr.generic.addEntity(tr.entityPlural(T))),
+          label: Text(tr.generic.addEntity(tr.entityPlural(typeName))),
           icon: const Icon(Icons.add),
         ),
         GroupSortMenu(
@@ -415,7 +420,7 @@ class ActionsCardList<T extends WithMeta> extends GetView<CharacterService>
           context,
           DeleteDialogOptions(
             entityName: name,
-            entityKind: tr.entity(T),
+            entityKind: tr.entity(typeName),
           ),
           () => controller.updateCharacter(
             CharacterUtils.removeByType<T>(char, [object]),

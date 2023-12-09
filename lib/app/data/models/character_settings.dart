@@ -314,4 +314,3 @@ class ActionCategoryList extends OrderedCategoryList<String> {
   @override
   String toString() => 'ActionCategoryList($debugProperties)';
 }
-

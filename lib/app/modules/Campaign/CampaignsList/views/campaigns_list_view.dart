@@ -11,13 +11,13 @@ class CampaignsListView extends GetView<CampaignsListController> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(tr.generic.myEntity(tr.entityPlural(Campaign))),
+        title: Text(tr.generic.myEntity(tr.entityPlural(tn(Campaign)))),
         centerTitle: true,
       ),
       body: Obx(
         () => controller.campaigns.isEmpty
             ? Center(
-                child: Text(tr.generic.noEntity(tr.entityPlural(Campaign))),
+                child: Text(tr.generic.noEntity(tr.entityPlural(tn(Campaign)))),
               )
             : ListView.builder(
                 itemCount: controller.campaigns.length,

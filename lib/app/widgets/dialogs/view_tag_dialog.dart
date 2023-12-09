@@ -33,7 +33,7 @@ class ViewTagDialog extends StatelessWidget {
                     children: [
                       Text(
                         tr.generic.entityName(
-                          tr.entity(dw.Tag),
+                          tr.entity(tn(dw.Tag)),
                         ),
                         style: textTheme.bodySmall,
                       ),
@@ -52,7 +52,7 @@ class ViewTagDialog extends StatelessWidget {
                       children: [
                         Text(
                           tr.generic.entityValue(
-                            tr.entity(dw.Tag),
+                            tr.entity(tn(dw.Tag)),
                           ),
                           style: textTheme.bodySmall,
                         ),
@@ -70,7 +70,7 @@ class ViewTagDialog extends StatelessWidget {
               const SizedBox(height: 8),
               Text(
                 tr.generic.entityDescription(
-                  tr.entity(dw.Tag),
+                  tr.entity(tn(dw.Tag)),
                 ),
                 style: textTheme.bodySmall,
               ),

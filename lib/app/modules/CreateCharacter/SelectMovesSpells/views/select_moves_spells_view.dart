@@ -46,7 +46,10 @@ class SelectMovesSpellsView extends GetView<SelectMovesSpellsController> {
                     padding:
                         const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
                     child: Text(
-                        tr.entityCountNum(Move, controller.moves.length),
+                        tr.entityCountNum(
+                          tn(Move),
+                          controller.moves.length,
+                        ),
                         style: titleStyle),
                   )),
               // MOVES CARDS
@@ -101,7 +104,8 @@ class SelectMovesSpellsView extends GetView<SelectMovesSpellsController> {
                         );
                       },
                     ),
-                    label: Text(tr.generic.addEntity(tr.entityPlural(Move))),
+                    label:
+                        Text(tr.generic.addEntity(tr.entityPlural(tn(Move)))),
                     icon: const Icon(Icons.add),
                   ),
                 ),
@@ -111,7 +115,11 @@ class SelectMovesSpellsView extends GetView<SelectMovesSpellsController> {
                     padding:
                         const EdgeInsets.symmetric(horizontal: 16, vertical: 8)
                             .copyWith(top: 24),
-                    child: Text(tr.entityCount(Spell, controller.spells.length),
+                    child: Text(
+                        tr.entityCount(
+                          tn(Spell),
+                          controller.spells.length,
+                        ),
                         style: titleStyle),
                   )),
               // SPELL CARDS
@@ -164,7 +172,8 @@ class SelectMovesSpellsView extends GetView<SelectMovesSpellsController> {
                         );
                       },
                     ),
-                    label: Text(tr.generic.addEntity(tr.entityPlural(Spell))),
+                    label:
+                        Text(tr.generic.addEntity(tr.entityPlural(tn(Spell)))),
                     icon: const Icon(Icons.add),
                   ),
                 ),

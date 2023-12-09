@@ -22,7 +22,7 @@ class RaceForm extends GetView<RaceFormController> with RepositoryServiceMixin {
         () => Obx(
               () => TextFormField(
                 decoration: InputDecoration(
-                  label: Text(tr.generic.entityName(tr.entity(Race))),
+                  label: Text(tr.generic.entityName(tr.entity(tn(Race)))),
                 ),
                 textCapitalization: TextCapitalization.words,
                 controller: controller.name,
@@ -35,7 +35,7 @@ class RaceForm extends GetView<RaceFormController> with RepositoryServiceMixin {
                     : null,
                 onChanged: (value) => controller.classKeys.value = [value!],
                 isExpanded: true,
-                label: Text(tr.entity(CharacterClass)),
+                label: Text(tr.entity(tn(CharacterClass))),
                 items:
                     {...repo.builtIn.classes.values, ...repo.my.classes.values}
                         .map(
@@ -50,7 +50,8 @@ class RaceForm extends GetView<RaceFormController> with RepositoryServiceMixin {
         () => Obx(
               () => RichTextField(
                 decoration: InputDecoration(
-                  label: Text(tr.generic.entityDescription(tr.entity(Race))),
+                  label:
+                      Text(tr.generic.entityDescription(tr.entity(tn(Race)))),
                 ),
                 maxLines: 10,
                 minLines: 5,
@@ -62,7 +63,8 @@ class RaceForm extends GetView<RaceFormController> with RepositoryServiceMixin {
         () => Obx(
               () => RichTextField(
                 decoration: InputDecoration(
-                  label: Text(tr.generic.entityExplanation(tr.entity(Race))),
+                  label:
+                      Text(tr.generic.entityExplanation(tr.entity(tn(Race)))),
                 ),
                 maxLines: 10,
                 minLines: 5,

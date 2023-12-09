@@ -23,7 +23,7 @@ class MoveForm extends GetView<MoveFormController> with RepositoryServiceMixin {
         () => Obx(
               () => TextFormField(
                 decoration: InputDecoration(
-                  label: Text(tr.generic.entityName(tr.entity(Move))),
+                  label: Text(tr.generic.entityName(tr.entity(tn(Move)))),
                 ),
                 textCapitalization: TextCapitalization.words,
                 controller: controller.name,
@@ -35,7 +35,7 @@ class MoveForm extends GetView<MoveFormController> with RepositoryServiceMixin {
                   Expanded(
                     child: SelectBox<MoveCategory>(
                       value: controller.category.value,
-                      label: Text(tr.entity(MoveCategory)),
+                      label: Text(tr.entity(tn(MoveCategory))),
                       isExpanded: true,
                       items: MoveCategory.values
                           .map(
@@ -58,7 +58,7 @@ class MoveForm extends GetView<MoveFormController> with RepositoryServiceMixin {
                       onChanged: (value) =>
                           controller.classKeys.value = [value!],
                       isExpanded: true,
-                      label: Text(tr.entity(CharacterClass)),
+                      label: Text(tr.entity(tn(CharacterClass))),
                       items: {
                         ...repo.builtIn.classes.values,
                         ...repo.my.classes.values
@@ -79,7 +79,7 @@ class MoveForm extends GetView<MoveFormController> with RepositoryServiceMixin {
               () => RichTextField(
                 decoration: InputDecoration(
                   label: Text(
-                    tr.generic.entityDescription(tr.entity(Move)),
+                    tr.generic.entityDescription(tr.entity(tn(Move))),
                   ),
                 ),
                 maxLines: 10,
@@ -118,7 +118,7 @@ class MoveForm extends GetView<MoveFormController> with RepositoryServiceMixin {
               () => RichTextField(
                 decoration: InputDecoration(
                   label: Text(
-                    tr.generic.entityExplanation(tr.entity(Move)),
+                    tr.generic.entityExplanation(tr.entity(tn(Move))),
                   ),
                 ),
                 maxLines: 10,

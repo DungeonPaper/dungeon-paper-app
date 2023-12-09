@@ -73,7 +73,7 @@ class _ChipListInputState<T> extends State<ChipListInput<T>> {
               .textTheme
               .bodySmall!
               .copyWith(color: widget.labelColor),
-          child: widget.label ?? Text(tr.entityPlural(T)),
+          child: widget.label ?? Text(tr.entityPlural(tn(T))),
         ),
         const SizedBox(height: 6),
         Wrap(

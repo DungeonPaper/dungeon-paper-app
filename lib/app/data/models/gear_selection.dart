@@ -4,17 +4,11 @@ import 'package:dungeon_world_data/gear_option.dart';
 
 class GearSelection extends dw.GearSelection {
   GearSelection({
-    required String key,
-    required String description,
-    required List<GearOption> options,
-    required double coins,
-  })  : _options = options,
-        super(
-          key: key,
-          description: description,
-          options: options,
-          coins: coins,
-        );
+    required super.key,
+    required super.description,
+    required super.options,
+    required super.coins,
+  }) : _options = options;
 
   @override
   List<GearOption> get options => _options;

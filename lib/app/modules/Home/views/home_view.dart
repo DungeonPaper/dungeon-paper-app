@@ -137,7 +137,7 @@ class HomeEmptyState extends StatelessWidget with UserServiceMixin {
             ),
             const SizedBox(height: 16),
             ElevatedButton.icon(
-              label: Text(tr.generic.createEntity(tr.entity(Character))),
+              label: Text(tr.generic.createEntity(tr.entity(tn(Character)))),
               icon: const Icon(Icons.person_add),
               onPressed: () => Get.toNamed(Routes.createCharacter),
             ),

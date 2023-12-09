@@ -33,15 +33,16 @@ class SpellFiltersView extends StatelessWidget {
       emptyFilters: SpellFilters(classKey: null, level: null),
       onChange: onChange,
       searchController: searchController,
+      typeName: tn(Spell),
       filterWidgetsBuilder: (context, f) => [
         SelectBox<String>(
-          label: Text(tr.entityPlural(Spell)),
+          label: Text(tr.entityPlural(tn(Spell))),
           value: f.classKey,
           items: [
             DropdownMenuItem<String>(
               value: null,
-              child:
-                  Text(tr.generic.allEntities(tr.entityPlural(CharacterClass))),
+              child: Text(
+                  tr.generic.allEntities(tr.entityPlural(tn(CharacterClass)))),
             ),
             ...<CharacterClass>{
               ...repo.builtIn.classes.values,

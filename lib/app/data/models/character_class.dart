@@ -14,37 +14,22 @@ class CharacterClass extends dw.CharacterClass
     with WithIcon
     implements WithMeta {
   get isApp => true;
-
   CharacterClass({
-    required Meta meta,
-    required String name,
-    required String key,
-    required String description,
-    required dw.Dice damageDice,
-    required int load,
-    required int hp,
-    required AlignmentValues alignments,
-    required List<String> bonds,
-    required List<String> flags,
-    required List<GearChoice> gearChoices,
-    required bool isSpellcaster,
+    required Meta super.meta,
+    required super.name,
+    required super.key,
+    required super.description,
+    required super.damageDice,
+    required super.load,
+    required super.hp,
+    required AlignmentValues super.alignments,
+    required super.bonds,
+    required super.flags,
+    required List<GearChoice> super.gearChoices,
+    required super.isSpellcaster,
   })  : _meta = meta,
         _alignments = alignments,
-        _gearChoices = gearChoices,
-        super(
-          meta: meta,
-          name: name,
-          key: key,
-          description: description,
-          damageDice: damageDice,
-          load: load,
-          hp: hp,
-          alignments: alignments,
-          bonds: bonds,
-          flags: flags,
-          gearChoices: gearChoices,
-          isSpellcaster: isSpellcaster,
-        );
+        _gearChoices = gearChoices;
 
   @override
   Meta get meta => _meta;

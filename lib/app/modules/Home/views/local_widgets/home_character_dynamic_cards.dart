@@ -97,6 +97,7 @@ class HomeCharacterDynamicCards extends GetView<CharacterService>
                                 context,
                                 note,
                                 note.title,
+                                tn(Note),
                                 () => controller.updateCharacter(
                                   CharacterUtils.removeNotes(
                                       controller.current, [note]),
@@ -197,6 +198,7 @@ class HomeCharacterDynamicCards extends GetView<CharacterService>
                                 context,
                                 move,
                                 move.name,
+                                tn(Move),
                                 () => controller.updateCharacter(
                                   CharacterUtils.removeMoves(
                                       controller.current, [move]),
@@ -274,6 +276,7 @@ class HomeCharacterDynamicCards extends GetView<CharacterService>
                               context,
                               spell,
                               spell.name,
+                              tn(Spell),
                               () => controller.updateCharacter(
                                 CharacterUtils.removeSpells(
                                     controller.current, [spell]),
@@ -336,6 +339,7 @@ class HomeCharacterDynamicCards extends GetView<CharacterService>
                               context,
                               item,
                               item.name,
+                              tn(Item),
                               () => controller.updateCharacter(
                                 CharacterUtils.removeItems(
                                     controller.current, [item]),
@@ -407,11 +411,12 @@ class HomeCharacterDynamicCards extends GetView<CharacterService>
     );
   }
 
-  void Function() _delete<T>(
-      BuildContext context, T item, String itemName, void Function() onRemove) {
+  void Function() _delete<T>(BuildContext context, T item, String itemName,
+      String typeName, void Function() onRemove) {
     return () => deleteDialog.confirm(
           context,
-          DeleteDialogOptions(entityName: itemName, entityKind: tr.entity(T)),
+          DeleteDialogOptions(
+              entityName: itemName, entityKind: tr.entity(typeName)),
           () {
             onRemove();
             Get.back();

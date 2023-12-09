@@ -17,8 +17,8 @@ class AbilityScoreFormView extends GetView<AbilityScoreFormController> {
       appBar: AppBar(
         title: Text(
           controller.formContext == FormContext.create
-              ? tr.generic.addEntity(tr.entity(AbilityScore))
-              : tr.generic.editEntity(tr.entity(AbilityScore)),
+              ? tr.generic.addEntity(tr.entity(tn(AbilityScore)))
+              : tr.generic.editEntity(tr.entity(tn(AbilityScore))),
         ),
         centerTitle: true,
       ),

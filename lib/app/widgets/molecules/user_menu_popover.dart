@@ -154,8 +154,8 @@ class UserMenuPopover extends GetView<CharacterService>
                                 ListTile(
                                   visualDensity: VisualDensity.compact,
                                   dense: true,
-                                  title: Text(tr.generic
-                                      .allEntities(tr.entityPlural(Character))),
+                                  title: Text(tr.generic.allEntities(
+                                      tr.entityPlural(tn(Character)))),
                                   leading: const Icon(Icons.group),
                                   onTap: () {
                                     Get.back();
@@ -166,7 +166,7 @@ class UserMenuPopover extends GetView<CharacterService>
                                 ListTile(
                                   visualDensity: VisualDensity.compact,
                                   title: Text(tr.generic
-                                      .createEntity(tr.entity(Character))),
+                                      .createEntity(tr.entity(tn(Character)))),
                                   leading: const Icon(Icons.person_add),
                                   onTap: () {
                                     Get.back();

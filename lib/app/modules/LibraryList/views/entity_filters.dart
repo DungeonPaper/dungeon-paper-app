@@ -13,6 +13,7 @@ import 'package:popover/popover.dart';
 class EntityFiltersView<T, F extends EntityFilters<T>> extends StatelessWidget {
   EntityFiltersView({
     super.key,
+    required this.typeName,
     required this.filters,
     required this.emptyFilters,
     required this.onChange,
@@ -31,6 +32,7 @@ class EntityFiltersView<T, F extends EntityFilters<T>> extends StatelessWidget {
   final TextEditingController searchController;
   final Iterable<Widget> leading;
   final Iterable<Widget> trailing;
+  final String typeName;
 
   @override
   Widget build(BuildContext context) {
@@ -40,7 +42,7 @@ class EntityFiltersView<T, F extends EntityFilters<T>> extends StatelessWidget {
         if (leading.isNotEmpty) const SizedBox(height: 8),
         SearchField(
           controller: searchController,
-          hintText: tr.search.placeholderEntity(tr.entity(T)),
+          hintText: tr.search.placeholderEntity(tr.entity(typeName)),
           trailing: filterWidgetsBuilder != null
               ? [
                   _FiltersWidgetsBuilder<F>(

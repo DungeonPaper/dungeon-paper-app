@@ -15,7 +15,7 @@ class ClassAlignmentsView extends GetView<ClassAlignmentsController> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(tr.generic.selectEntity(tr.entity(AlignmentValue))),
+        title: Text(tr.generic.selectEntity(tr.entity(tn(AlignmentValue)))),
         centerTitle: true,
       ),
       floatingActionButton: controller.onChanged != null

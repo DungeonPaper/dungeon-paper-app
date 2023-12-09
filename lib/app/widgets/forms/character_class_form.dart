@@ -21,13 +21,15 @@ class CharacterClassForm extends GetView<CharacterClassFormController> {
               controller: controller.name,
               textCapitalization: TextCapitalization.words,
               decoration: InputDecoration(
-                label: Text(tr.generic.entityName(tr.entity(CharacterClass))),
+                label:
+                    Text(tr.generic.entityName(tr.entity(tn(CharacterClass)))),
               ),
             ),
         () => const SizedBox(height: 16),
         () => RichTextField(
               controller: controller.description,
-              label: tr.generic.entityDescription(tr.entity(CharacterClass)),
+              label:
+                  tr.generic.entityDescription(tr.entity(tn(CharacterClass))),
               maxLines: 10,
               minLines: 5,
               textCapitalization: TextCapitalization.sentences,

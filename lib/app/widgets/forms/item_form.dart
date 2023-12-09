@@ -19,14 +19,14 @@ class ItemForm extends GetView<ItemFormController> {
                 controller: controller.name,
                 textCapitalization: TextCapitalization.words,
                 decoration: InputDecoration(
-                  label: Text(tr.generic.entityName(tr.entity(Item))),
+                  label: Text(tr.generic.entityName(tr.entity(tn(Item)))),
                 ),
               ),
             ),
         () => Obx(
               () => RichTextField(
                 controller: controller.description,
-                label: tr.generic.entityDescription(tr.entity(Item)),
+                label: tr.generic.entityDescription(tr.entity(tn(Item))),
                 maxLines: 10,
                 minLines: 5,
                 textCapitalization: TextCapitalization.sentences,

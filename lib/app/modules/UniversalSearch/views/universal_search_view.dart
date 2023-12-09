@@ -63,7 +63,7 @@ class UniversalSearchView extends GetView<UniversalSearchController> {
                         ),
                         if (controller.hasCharacter)
                           _FilterChip(
-                            label: tr.entity(Character),
+                            label: tr.entity(tn(Character)),
                             sourceType: SourceType.character,
                           ),
                         _FilterChip(

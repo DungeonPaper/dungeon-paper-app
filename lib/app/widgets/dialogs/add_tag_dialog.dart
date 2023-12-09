@@ -39,7 +39,7 @@ class _AddTagDialogState extends State<AddTagDialog> {
     return AlertDialog(
       title: Row(
         children: [
-          Expanded(child: Text(tr.generic.createEntity(tr.entity(dw.Tag)))),
+          Expanded(child: Text(tr.generic.createEntity(tr.entity(tn(dw.Tag))))),
           MenuButton<dw.Tag>(
             items: [
               for (final tag in allTags)
@@ -68,7 +68,7 @@ class _AddTagDialogState extends State<AddTagDialog> {
             decoration: InputDecoration(
               filled: true,
               label: Text(
-                tr.generic.entityName(tr.entity(dw.Tag)),
+                tr.generic.entityName(tr.entity(tn(dw.Tag))),
               ),
             ),
           ),
@@ -81,7 +81,7 @@ class _AddTagDialogState extends State<AddTagDialog> {
             decoration: InputDecoration(
               filled: true,
               label: Text(
-                tr.generic.entityValue(tr.entity(dw.Tag)),
+                tr.generic.entityValue(tr.entity(tn(dw.Tag))),
               ),
             ),
           ),
@@ -94,7 +94,7 @@ class _AddTagDialogState extends State<AddTagDialog> {
             decoration: InputDecoration(
               filled: true,
               label: Text(
-                tr.generic.entityDescription(tr.entity(dw.Tag)),
+                tr.generic.entityDescription(tr.entity(tn(dw.Tag))),
               ),
             ),
           ),

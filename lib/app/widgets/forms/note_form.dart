@@ -19,7 +19,7 @@ class NoteForm extends GetView<NoteFormController> with RepositoryServiceMixin {
               () => TextFormField(
                 decoration: InputDecoration(
                   label: Text(
-                    tr.generic.entityName(tr.entity(Note)),
+                    tr.generic.entityName(tr.entity(tn(Note))),
                   ),
                 ),
                 textCapitalization: TextCapitalization.words,
@@ -30,7 +30,7 @@ class NoteForm extends GetView<NoteFormController> with RepositoryServiceMixin {
               () => RichTextField(
                 decoration: InputDecoration(
                   label: Text(
-                    tr.generic.entityDescription(tr.entity(Note)),
+                    tr.generic.entityDescription(tr.entity(tn(Note))),
                   ),
                 ),
                 maxLines: 10,

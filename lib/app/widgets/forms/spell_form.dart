@@ -24,7 +24,7 @@ class SpellForm extends GetView<SpellFormController>
         () => Obx(
               () => TextFormField(
                 decoration: InputDecoration(
-                  label: Text(tr.generic.entityName(tr.entity(Spell))),
+                  label: Text(tr.generic.entityName(tr.entity(tn(Spell)))),
                 ),
                 textCapitalization: TextCapitalization.words,
                 controller: controller.name,
@@ -64,7 +64,7 @@ class SpellForm extends GetView<SpellFormController>
                       onChanged: (value) =>
                           controller.classKeys.value = [value!],
                       isExpanded: true,
-                      label: Text(tr.entity(CharacterClass)),
+                      label: Text(tr.entity(tn(CharacterClass))),
                       items: {
                         ...repo.builtIn.classes.values,
                         ...repo.my.classes.values
@@ -84,7 +84,8 @@ class SpellForm extends GetView<SpellFormController>
         () => Obx(
               () => RichTextField(
                 decoration: InputDecoration(
-                  label: Text(tr.generic.entityDescription(tr.entity(Spell))),
+                  label:
+                      Text(tr.generic.entityDescription(tr.entity(tn(Spell)))),
                 ),
                 maxLines: 10,
                 minLines: 5,
@@ -96,7 +97,8 @@ class SpellForm extends GetView<SpellFormController>
         () => Obx(
               () => RichTextField(
                 decoration: InputDecoration(
-                  label: Text(tr.generic.entityExplanation(tr.entity(Spell))),
+                  label:
+                      Text(tr.generic.entityExplanation(tr.entity(tn(Spell)))),
                 ),
                 maxLines: 10,
                 minLines: 5,

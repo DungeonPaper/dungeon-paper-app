@@ -59,8 +59,12 @@ class LibraryEntityForm<
 
   Widget get title => Text(
         controller.args.formContext == FormContext.create
-            ? tr.generic.addEntity(tr.entity(controller.empty().runtimeType))
-            : tr.generic.editEntity(tr.entity(controller.empty().runtimeType)),
+            ? tr.generic.addEntity(tr.entity(
+                tn(controller.empty().runtimeType),
+              ))
+            : tr.generic.editEntity(tr.entity(
+                tn(controller.empty().runtimeType),
+              )),
       );
 }
 

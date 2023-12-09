@@ -4,6 +4,7 @@ import 'package:dungeon_paper/app/modules/LibraryList/controllers/library_list_c
 import 'package:dungeon_paper/app/modules/LibraryList/views/entity_filters.dart';
 import 'package:dungeon_paper/core/utils/math_utils.dart';
 import 'package:dungeon_paper/core/utils/string_utils.dart';
+import 'package:dungeon_paper/i18n.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:string_similarity/string_similarity.dart';
@@ -28,6 +29,7 @@ class NoteFiltersView extends StatelessWidget {
       emptyFilters: NoteFilters(),
       onChange: onChange,
       searchController: searchController,
+      typeName: tn(Note),
     );
   }
 }

@@ -1,23 +1,24 @@
 # generic name mappings
 _entSingle(String type): |-
   ${_select(type, {
-    'Dice': 'Die',
-    'CharacterClass': 'Class',
-    'MoveCategory': 'Category',
-    'GearSelection': 'Starting Gear',
     'AbilityScore': 'Ability Score',
-    'AlignmentValue': 'Alignment'
+    'AlignmentValue': 'Alignment',
+    'CharacterClass': 'Class',
+    'Dice': 'Die',
+    'GearSelection': 'Starting Gear',
+    'MoveCategory': 'Category',
   })}
 _entPlural(String type): |-
   ${_select(type, {
-    'MoveCategory': 'Categories',
     'CharacterClass': 'Classes',
+    'Dice': 'Dice',
+    'MoveCategory': 'Categories',
   }, other: '${_entSingle(type)}s')}
 
-entity(Type ent): '${_entSingle(ent.toString())}'
-entityPlural(Type ent): '${_entPlural(ent.toString())}'
-entityCount(Type ent, int cnt): '${cnt == 1 ? _entSingle(ent.toString()) : _entPlural(ent.toString())}'
-entityCountNum(Type ent, int cnt): '$cnt ${entityCount(ent, cnt)}'
+entity(String ent): '${_entSingle(ent.toString())}'
+entityPlural(String ent): '${_entPlural(ent.toString())}'
+entityCount(String ent, int cnt): '${cnt == 1 ? _entSingle(ent.toString()) : _entPlural(ent.toString())}'
+entityCountNum(String ent, int cnt): '$cnt ${entityCount(ent, cnt)}'
 
 app:
   name: Dungeon Paper
@@ -163,10 +164,10 @@ auth:
     # `{provider, select, facebook {Facebook} google {Google} apple {Apple} password {Dungeon Paper} other {Other}}`
     name(String provider): |-
       ${_select(provider, {
-      'facebook': 'Facebook',
-      'google': 'Google',
-      'apple': 'Apple',
-      'password': 'Dungeon Paper',
+        'facebook': 'Facebook',
+        'google': 'Google',
+        'apple': 'Apple',
+        'password': 'Dungeon Paper',
       }, other: 'Other')}
     unlink: Unlink
     link: Link
@@ -370,7 +371,7 @@ moves:
         'basic': 'Basic',
         'special': 'Special',
         'advanced1': 'Advanced',
-        'advanced2': 'Advanced',
+        'advanced2': 'Advanced+',
       }, other: 'Other')}
     mediumName(String cat): |-
       ${_select(cat, {

@@ -61,7 +61,7 @@ class CreateCharacterView extends GetView<CreateCharacterController> {
                     : null,
                 icon: const Icon(Icons.person_add),
                 label: Text(
-                  tr.generic.createEntity(tr.entity(Character)),
+                  tr.generic.createEntity(tr.entity(tn(Character))),
                 ),
               ),
             ),
@@ -111,8 +111,8 @@ class CreateCharacterView extends GetView<CreateCharacterController> {
                             // Class
                             _Card(
                               title: cls == null
-                                  ? Text(tr.generic
-                                      .selectEntity(tr.entity(CharacterClass)))
+                                  ? Text(tr.generic.selectEntity(
+                                      tr.entity(tn(CharacterClass))))
                                   : Text(cls!.name),
                               subtitle: cls == null
                                   ? Text(tr.createCharacter.characterClass
@@ -141,12 +141,12 @@ class CreateCharacterView extends GetView<CreateCharacterController> {
                             // Race
                             _Card(
                               title: controller.race.value == null
-                                  ? Text(
-                                      tr.generic.selectEntity(tr.entity(Race)))
+                                  ? Text(tr.generic
+                                      .selectEntity(tr.entity(tn(Race))))
                                   : Text(controller.race.value!.name),
                               subtitle: controller.race.value == null
                                   ? Text(tr.generic
-                                      .noEntitySelected(tr.entity(Race)))
+                                      .noEntitySelected(tr.entity(tn(Race))))
                                   : Text(
                                       controller.race.value!.description,
                                       overflow: TextOverflow.ellipsis,
@@ -165,8 +165,8 @@ class CreateCharacterView extends GetView<CreateCharacterController> {
                             _Card(
                               contentPadding: const EdgeInsets.symmetric(
                                   horizontal: 16, vertical: 8),
-                              title: Text(tr.generic
-                                  .selectEntity(tr.entityPlural(AbilityScore))),
+                              title: Text(tr.generic.selectEntity(
+                                  tr.entityPlural(tn(AbilityScore)))),
                               // subtitle: Text(
                               //   controller.abilityScores.value.stats
                               //       .map((stat) => '${stat.key}: ${stat.value}')
@@ -194,12 +194,12 @@ class CreateCharacterView extends GetView<CreateCharacterController> {
                               title: Text(
                                 controller.alignment.value != null
                                     ? [
-                                        tr.entity(AlignmentValue),
+                                        tr.entity(tn(AlignmentValue)),
                                         tr.alignment.name(controller
                                             .alignment.value!.type.name)
                                       ].join(': ')
                                     : tr.generic.selectEntity(
-                                        tr.entity(AlignmentValue),
+                                        tr.entity(tn(AlignmentValue)),
                                       ),
                               ),
                               subtitle: controller.alignment.value != null
@@ -214,7 +214,7 @@ class CreateCharacterView extends GetView<CreateCharacterController> {
                                     )
                                   : Text(
                                       tr.generic.noEntitySelectedRequired(
-                                          tr.entity(AlignmentValue)),
+                                          tr.entity(tn(AlignmentValue))),
                                     ),
                               onTap: cls != null
                                   ? () => Get.toNamed(
@@ -237,8 +237,11 @@ class CreateCharacterView extends GetView<CreateCharacterController> {
                             _Card(
                               contentPadding: const EdgeInsets.symmetric(
                                   horizontal: 16, vertical: 8),
-                              title: Text(tr.generic
-                                  .selectEntity(tr.entity(GearSelection))),
+                              title: Text(
+                                tr.generic.selectEntity(
+                                  tr.entity(tn(GearSelection)),
+                                ),
+                              ),
                               subtitle: Text(controller.items.isEmpty &&
                                       controller.coins == 0
                                   ? tr.createCharacter.startingGear.helpText
@@ -289,7 +292,7 @@ class CreateCharacterView extends GetView<CreateCharacterController> {
                                 tr.generic.selectEntity(
                                   (cls?.isSpellcaster ?? false)
                                       ? tr.createCharacter.movesSpells.title
-                                      : tr.entityPlural(Move),
+                                      : tr.entityPlural(tn(Move)),
                                 ),
                               ),
                               subtitle: Text(
@@ -300,7 +303,7 @@ class CreateCharacterView extends GetView<CreateCharacterController> {
                                         controller.spells.length,
                                       )
                                     : tr.entityCountNum(
-                                        Move,
+                                        tn(Move),
                                         controller.moves.length,
                                       ),
                               ),

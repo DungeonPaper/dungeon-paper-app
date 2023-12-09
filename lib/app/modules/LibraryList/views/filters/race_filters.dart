@@ -33,16 +33,17 @@ class RaceFiltersView extends StatelessWidget {
       emptyFilters: RaceFilters(classKey: null),
       onChange: onChange,
       searchController: searchController,
+      typeName: tn(Race),
       filterWidgetsBuilder: (context, f) => [
         SelectBox<String>(
-          label: Text(tr.entityPlural(CharacterClass)),
+          label: Text(tr.entityPlural(tn(CharacterClass))),
           isExpanded: true,
           value: f.classKey,
           items: [
             DropdownMenuItem<String>(
               value: null,
-              child:
-                  Text(tr.generic.allEntities(tr.entityPlural(CharacterClass))),
+              child: Text(
+                  tr.generic.allEntities(tr.entityPlural(tn(CharacterClass)))),
             ),
             ...<CharacterClass>{
               ...repo.builtIn.classes.values,

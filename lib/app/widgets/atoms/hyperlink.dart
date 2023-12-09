@@ -44,4 +44,3 @@ class Hyperlink extends StatelessWidget {
     return () => launchUrl(Uri.parse(url));
   }
 }
-

@@ -13,22 +13,15 @@ import 'meta.dart';
 
 class Item extends dw.Item with WithIcon implements WithMeta {
   Item({
-    required Meta meta,
+    required Meta super.meta,
     this.amount = 1,
-    required String key,
-    required String name,
-    required String description,
+    required super.key,
+    required super.name,
+    required super.description,
     required this.settings,
     this.equipped = false,
-    required List<dw.Tag> tags,
-  })  : _meta = meta,
-        super(
-          meta: meta,
-          key: key,
-          name: name,
-          description: description,
-          tags: tags,
-        );
+    required super.tags,
+  }) : _meta = meta;
 
   @override
   Meta get meta => _meta;

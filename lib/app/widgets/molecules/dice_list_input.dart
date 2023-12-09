@@ -59,7 +59,8 @@ class _DiceListInputState extends State<DiceListInput> {
       chipBuilder: (context, dice, {onDeleteChip, required onTapChip}) =>
           DiceChip(
         dice: dice != null ? dice.value : dw.Dice.d6,
-        label: dice != null ? null : tr.generic.addEntity(tr.entity(dw.Dice)),
+        label:
+            dice != null ? null : tr.generic.addEntity(tr.entity(tn(dw.Dice))),
         icon: dice != null ? null : const Icon(Icons.add),
         onPressed: onTapChip,
         onDeleted: onDeleteChip,

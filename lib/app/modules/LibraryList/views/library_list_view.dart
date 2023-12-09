@@ -59,8 +59,8 @@ class LibraryListView<T extends WithMeta, F extends EntityFilters<T>>
   @override
   Widget build(BuildContext context) {
     final entityTitleName = controller.multiple || !controller.selectable
-        ? tr.entityPlural(T)
-        : tr.entity(T);
+        ? tr.entityPlural(tn(T))
+        : tr.entity(tn(T));
 
     return Scaffold(
       appBar: AppBar(
@@ -84,7 +84,7 @@ class LibraryListView<T extends WithMeta, F extends EntityFilters<T>>
                 unselectedLabelColor: Theme.of(context).colorScheme.onSurface,
                 tabs: [
                   Tab(child: Text(tr.myLibrary.itemTab.playbook)),
-                  Tab(child: Text(tr.generic.myEntity(tr.entityPlural(T)))),
+                  Tab(child: Text(tr.generic.myEntity(tr.entityPlural(tn(T))))),
                   // Tab(child: Text(tr.myLibrary.itemTab.online)),
                 ],
               ),
@@ -148,14 +148,14 @@ class LibraryListView<T extends WithMeta, F extends EntityFilters<T>>
                   controller.selected.isNotEmpty
                       ? controller.multiple
                           ? tr.generic.addEntity(
-                              tr.entityCount(T, controller.selected.length),
+                              tr.entityCount(tn(T), controller.selected.length),
                             )
                           : tr.generic.selectEntity(
                               controller.selected.first.displayName)
                       : tr.generic.selectToAdd(
                           controller.multiple
-                              ? tr.entityPlural(T)
-                              : tr.entity(T),
+                              ? tr.entityPlural(tn(T))
+                              : tr.entity(tn(T)),
                         ),
                 ),
               )
@@ -209,7 +209,7 @@ class LibraryListView<T extends WithMeta, F extends EntityFilters<T>>
                         context,
                         DeleteDialogOptions(
                           entityName: item.displayName,
-                          entityKind: tr.entity(item.runtimeType),
+                          entityKind: tr.entity(tn(item.runtimeType)),
                         ),
                         () => controller.deleteCustomItem(
                           controller.storageKey,

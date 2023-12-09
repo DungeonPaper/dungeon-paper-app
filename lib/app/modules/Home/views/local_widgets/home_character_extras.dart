@@ -44,13 +44,14 @@ class HomeCharacterExtras extends GetView<CharacterService> {
             MenuEntry(
               value: 'class',
               icon: Icon(CharacterClass.genericIcon),
-              label: Text(tr.generic.changeEntity(tr.entity(CharacterClass))),
+              label:
+                  Text(tr.generic.changeEntity(tr.entity(tn(CharacterClass)))),
               onSelect: _openCharClass,
             ),
             MenuEntry(
               value: 'race',
               icon: Icon(Race.genericIcon),
-              label: Text(tr.generic.changeEntity(tr.entity(Race))),
+              label: Text(tr.generic.changeEntity(tr.entity(tn(Race)))),
               onSelect: _openRace,
             ),
             MenuEntry(
@@ -91,7 +92,7 @@ class HomeCharacterExtras extends GetView<CharacterService> {
         IconButton(
           onPressed: null,
           icon: const Icon(Icons.groups),
-          tooltip: tr.entityPlural(Campaign),
+          tooltip: tr.entityPlural(tn(Campaign)),
         ),
       ],
     );

@@ -6,6 +6,13 @@ import 'package:dungeon_paper/i18n.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
+import '../../../data/models/character.dart';
+import '../../../data/models/character_class.dart';
+import '../../../data/models/item.dart';
+import '../../../data/models/move.dart';
+import '../../../data/models/race.dart';
+import '../../../data/models/spell.dart';
+
 class ListCard<T extends WithMeta, C extends ImportExportSelectionData>
     extends GetView<C> {
   const ListCard({
@@ -13,6 +20,26 @@ class ListCard<T extends WithMeta, C extends ImportExportSelectionData>
   });
 
   List<T> get list => controller.listByType<T>();
+
+  String _getType(Type type) {
+    switch (type) {
+      case Character:
+        return 'Character';
+      case Move:
+        return 'Move';
+      case Spell:
+        return 'Spell';
+      case Item:
+        return 'Item';
+      case Race:
+        return 'Race';
+      case CharacterClass:
+        return 'CharacterClass';
+    }
+    return type.toString();
+  }
+
+  String get typeName => _getType(T);
 
   @override
   Widget build(BuildContext context) {
@@ -32,7 +59,7 @@ class ListCard<T extends WithMeta, C extends ImportExportSelectionData>
               const SizedBox(width: 8),
               Expanded(
                 child: Text(
-                  tr.generic.myEntity(tr.entityPlural(T)),
+                  tr.generic.myEntity(tr.entityPlural(typeName)),
                   style: textTheme.titleLarge,
                 ),
               ),
@@ -71,7 +98,7 @@ class ListCard<T extends WithMeta, C extends ImportExportSelectionData>
               Padding(
                 padding: const EdgeInsets.all(8),
                 child: Text(
-                  tr.generic.noEntity(tr.entityPlural(T)),
+                  tr.generic.noEntity(tr.entityPlural(typeName)),
                   textAlign: TextAlign.center,
                 ),
               ),

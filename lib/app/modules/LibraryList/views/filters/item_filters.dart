@@ -4,17 +4,18 @@ import 'package:dungeon_paper/app/modules/LibraryList/controllers/library_list_c
 import 'package:dungeon_paper/app/modules/LibraryList/views/entity_filters.dart';
 import 'package:dungeon_paper/core/utils/math_utils.dart';
 import 'package:dungeon_paper/core/utils/string_utils.dart';
+import 'package:dungeon_paper/i18n.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:string_similarity/string_similarity.dart';
 
 class ItemFiltersView extends StatelessWidget {
   ItemFiltersView({
-    Key? key,
+    super.key,
     required this.filters,
     required this.onChange,
     required this.searchController,
-  }) : super(key: key);
+  });
 
   final ItemFilters filters;
   final service = Get.find<RepositoryService>();
@@ -28,6 +29,7 @@ class ItemFiltersView extends StatelessWidget {
       emptyFilters: ItemFilters(),
       onChange: onChange,
       searchController: searchController,
+      typeName: tn(Item),
     );
   }
 }

@@ -32,7 +32,7 @@ class HomeCharacterActionsFilters extends StatelessWidget {
                       : {...hidden.where((element) => element != type)},
                 );
               },
-              label: Expanded(child: Text(tr.entityPlural(_getType(type)))),
+              label: Expanded(child: Text('Test: ' + type)),
             ),
           )
           .toList(),

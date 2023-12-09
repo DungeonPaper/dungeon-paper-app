@@ -3,6 +3,13 @@ import 'package:dungeon_paper/i18n.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
+import '../../../data/models/character.dart';
+import '../../../data/models/character_class.dart';
+import '../../../data/models/item.dart';
+import '../../../data/models/move.dart';
+import '../../../data/models/race.dart';
+import '../../../data/models/spell.dart';
+
 class ImportProgressDialog extends GetView<ImportController> {
   const ImportProgressDialog({super.key});
 
@@ -21,7 +28,7 @@ class ImportProgressDialog extends GetView<ImportController> {
           children: [
             Text(
               tr.backup.importing.progress.processing(
-                tr.entityPlural(controller.importStep.value!),
+                tr.entityPlural(_getType(controller.importStep.value!)),
               ),
             ),
             const SizedBox(height: 8),
@@ -41,5 +48,23 @@ class ImportProgressDialog extends GetView<ImportController> {
         );
       },
     );
+  }
+
+  String _getType(Type type) {
+    switch (type) {
+      case Character:
+        return 'Character';
+      case Move:
+        return 'Move';
+      case Spell:
+        return 'Spell';
+      case Item:
+        return 'Item';
+      case Race:
+        return 'Race';
+      case CharacterClass:
+        return 'CharacterClass';
+    }
+    return type.toString();
   }
 }

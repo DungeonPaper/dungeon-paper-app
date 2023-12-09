@@ -33,16 +33,17 @@ class MoveFiltersView extends StatelessWidget {
       emptyFilters: MoveFilters(classKey: null),
       onChange: onChange,
       searchController: searchController,
+      typeName: tn(Move),
       filterWidgetsBuilder: (context, f) => [
         SelectBox<MoveCategory?>(
           isExpanded: true,
-          label: Text(tr.entityPlural(MoveCategory)),
+          label: Text(tr.entityPlural('MoveCategory')),
           value: f.category,
           items: [
             DropdownMenuItem<MoveCategory?>(
               value: null,
               child:
-                  Text(tr.generic.allEntities(tr.entityPlural(MoveCategory))),
+                  Text(tr.generic.allEntities(tr.entityPlural('MoveCategory'))),
             ),
             ...MoveCategory.values.map(
               (cat) => DropdownMenuItem<MoveCategory?>(
@@ -57,14 +58,14 @@ class MoveFiltersView extends StatelessWidget {
           },
         ),
         SelectBox<String>(
-          label: Text(tr.entityPlural(CharacterClass)),
+          label: Text(tr.entityPlural(tn(CharacterClass))),
           isExpanded: true,
           value: f.classKey,
           items: [
             DropdownMenuItem<String>(
               value: null,
-              child:
-                  Text(tr.generic.allEntities(tr.entityPlural(CharacterClass))),
+              child: Text(
+                  tr.generic.allEntities(tr.entityPlural(tn(CharacterClass)))),
             ),
             ...<CharacterClass>{
               ...repo.builtIn.classes.values,

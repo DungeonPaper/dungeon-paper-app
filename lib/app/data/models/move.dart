@@ -11,28 +11,17 @@ import 'meta.dart';
 
 class Move extends dw.Move with WithIcon implements WithMeta {
   Move({
-    required Meta meta,
-    required String key,
-    required String name,
-    required String description,
-    required String explanation,
-    required List<dw.Dice> dice,
-    required List<dw.EntityReference> classKeys,
-    required List<dw.Tag> tags,
-    required dw.MoveCategory category,
+    required Meta super.meta,
+    required super.key,
+    required super.name,
+    required super.description,
+    required super.explanation,
+    required super.dice,
+    required super.classKeys,
+    required super.tags,
+    required super.category,
     this.favorite = false,
-  })  : _meta = meta,
-        super(
-          meta: meta,
-          key: key,
-          name: name,
-          description: description,
-          explanation: explanation,
-          dice: dice,
-          classKeys: classKeys,
-          tags: tags,
-          category: category,
-        );
+  }) : _meta = meta;
 
   @override
   Meta get meta => _meta;

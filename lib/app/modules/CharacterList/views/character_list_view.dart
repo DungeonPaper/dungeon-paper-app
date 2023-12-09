@@ -18,17 +18,16 @@ import 'package:get/get.dart';
 class CharacterListPageView extends GetView<CharacterService>
     with UserServiceMixin {
   const CharacterListPageView({super.key});
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(tr.generic.allEntities(tr.entity(Character))),
+        title: Text(tr.generic.allEntities(tr.entity(tn(Character)))),
         centerTitle: true,
       ),
       floatingActionButton: AdvancedFloatingActionButton.extended(
         onPressed: () => Get.toNamed(Routes.createCharacter),
-        label: Text(tr.generic.createEntity(tr.entity(Character))),
+        label: Text(tr.generic.createEntity(tr.entity(tn(Character)))),
         icon: const Icon(Icons.add),
       ),
       body: Obx(
@@ -86,7 +85,8 @@ class CharacterListPageView extends GetView<CharacterService>
                                             context,
                                             DeleteDialogOptions(
                                               entityName: char.displayName,
-                                              entityKind: tr.entity(Character),
+                                              entityKind:
+                                                  tr.entity(tn(Character)),
                                             ),
                                             () => controller
                                                 .deleteCharacter(char),
