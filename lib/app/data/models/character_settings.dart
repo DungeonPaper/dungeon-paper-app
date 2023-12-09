@@ -303,8 +303,8 @@ class ActionCategoryList extends OrderedCategoryList<String> {
   Map<String, dynamic> toJson() {
     return {
       ...super.toJson(),
-      'sortOrder': sortOrder,
-      'hidden': hidden,
+      'sortOrder': sortOrder.toList(),
+      'hidden': hidden.toList(),
     };
   }
 
