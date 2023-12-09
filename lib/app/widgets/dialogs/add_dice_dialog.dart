@@ -45,7 +45,7 @@ class _AddDiceDialogState extends State<AddDiceDialog>
       content: SingleChildScrollView(
         child: DiceForm(
           dice: dice,
-          onChanged: (dw.Dice dice) => setState(() => dice = dice),
+          onChanged: (dw.Dice dice) => setState(() => this.dice = dice),
           abilityScores: widget.abilityScores,
         ),
       ),

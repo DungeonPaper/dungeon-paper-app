@@ -46,7 +46,7 @@ scripts:
     description: 'Alias for: Build macOS App'
   # Web
   - name: build:web:app
-    cmd: flutter build web --profile
+    cmd: flutter build web
     description: Build Web app
   - name: build:web:all
     cmd: build:web:app

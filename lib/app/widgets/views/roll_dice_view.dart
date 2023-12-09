@@ -390,7 +390,7 @@ class _RollDiceViewState extends State<RollDiceView>
 
   void _updateDice() {
     setState(() {
-      debugPrint('Updating dice');
+      debugPrint('Updating dice, new value: ${withoutModDice.value}');
       dice.value = _applyMods(withoutModDice.value);
       results = [];
       rollStatus = AnimationStatus.dismissed;
