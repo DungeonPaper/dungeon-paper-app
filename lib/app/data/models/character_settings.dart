@@ -6,6 +6,8 @@ import 'package:dungeon_paper/app/data/models/roll_button.dart';
 import 'package:dungeon_paper/app/data/models/spell.dart';
 import 'package:flutter/material.dart';
 
+import 'note.dart';
+
 enum RacePosition { start, end }
 
 @immutable
@@ -271,7 +273,7 @@ class NoteCategoryList extends OrderedCategoryList<String> {
 }
 
 @immutable
-class ActionCategoryList extends OrderedCategoryList<Type> {
+class ActionCategoryList extends OrderedCategoryList<String> {
   const ActionCategoryList({
     // required super.categories,
     required super.sortOrder,
@@ -283,15 +285,14 @@ class ActionCategoryList extends OrderedCategoryList<Type> {
 
   factory ActionCategoryList.fromJson(Map<String, dynamic> json) =>
       ActionCategoryList(
-        sortOrder:
-            Set<Type>.from((json['sortOrder'] ?? []).map((x) => _toType(x))),
-        hidden: Set<Type>.from((json['hidden'] ?? []).map((x) => _toType(x))),
+        sortOrder: Set<String>.from(json['sortOrder'] ?? []),
+        hidden: Set<String>.from(json['hidden'] ?? []),
       );
 
   ActionCategoryList copyWithInherited({
     // Set<String>? categories,
-    Set<Type>? sortOrder,
-    Set<Type>? hidden,
+    Set<String>? sortOrder,
+    Set<String>? hidden,
   }) =>
       ActionCategoryList(
         sortOrder: sortOrder ?? this.sortOrder,
@@ -302,30 +303,15 @@ class ActionCategoryList extends OrderedCategoryList<Type> {
   Map<String, dynamic> toJson() {
     return {
       ...super.toJson(),
-      'sortOrder': sortOrder.map((x) => x.toString()).toList(),
-      'hidden': hidden.map((x) => x.toString()).toList(),
+      'sortOrder': sortOrder,
+      'hidden': hidden,
     };
   }
-
-  @override
-  Set<Type> getSorted([Set<Type> all = const {}]) =>
-      super.getSorted(all).map((el) => _toType(el.toString())).toSet();
 
   @override
   String get debugProperties => 'sortOrder: $sortOrder, hidden: $hidden';
 
   @override
   String toString() => 'ActionCategoryList($debugProperties)';
-
-  static Type _toType(String el) {
-    switch (el) {
-      case 'Move':
-        return Move;
-      case 'Spell':
-        return Spell;
-      case 'Item':
-        return Item;
-    }
-    throw TypeError();
-  }
 }
+

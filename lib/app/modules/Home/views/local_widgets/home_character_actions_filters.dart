@@ -13,16 +13,16 @@ class HomeCharacterActionsFilters extends StatelessWidget {
     required this.onUpdateHidden,
   });
 
-  final Set<Type> hidden;
-  final void Function(Set<Type> filters) onUpdateHidden;
+  final Set<String> hidden;
+  final void Function(Set<String> filters) onUpdateHidden;
 
   @override
   Widget build(BuildContext context) {
-    return MenuButton<Type>(
+    return MenuButton<String>(
       icon: const Icon(Icons.filter_list_alt),
-      items: [Move, Spell, Item]
+      items: ['Move', 'Spell', 'Item']
           .map(
-            (type) => ChecklistMenuEntry<Type>(
+            (type) => ChecklistMenuEntry<String>(
               value: type,
               checked: !hidden.contains(type),
               onChanged: (show) {
@@ -32,10 +32,23 @@ class HomeCharacterActionsFilters extends StatelessWidget {
                       : {...hidden.where((element) => element != type)},
                 );
               },
-              label: Expanded(child: Text(tr.entityPlural(type))),
+              label: Expanded(child: Text(tr.entityPlural(_getType(type)))),
             ),
           )
           .toList(),
     );
+  }
+
+  Type _getType(String type) {
+    switch (type) {
+      case 'Move':
+        return Move;
+      case 'Spell':
+        return Spell;
+      case 'Item':
+        return Item;
+      default:
+        throw ArgumentError.value(type, 'type', 'Invalid type');
+    }
   }
 }

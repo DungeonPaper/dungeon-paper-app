@@ -46,11 +46,11 @@ class HomeCharacterActionsView extends GetView<CharacterService> {
       leadingCount: 1,
       itemBuilder: (context, index) {
         switch (char.actionCategories.elementAt(index)) {
-          case Move:
+          case 'Move':
             return movesList ?? const SizedBox.shrink();
-          case Spell:
+          case 'Spell':
             return spellsList ?? const SizedBox.shrink();
-          case Item:
+          case 'Item':
             return itemsList ?? const SizedBox.shrink();
         }
 
@@ -74,7 +74,7 @@ class HomeCharacterActionsView extends GetView<CharacterService> {
   }
 
   Widget? get movesList {
-    if (char.settings.actionCategories.hidden.contains(Move)) {
+    if (char.settings.actionCategories.hidden.contains('Move')) {
       return null;
     }
     final raceCard = RaceCard(
@@ -96,7 +96,7 @@ class HomeCharacterActionsView extends GetView<CharacterService> {
       ],
     );
     return ActionsCardList<Move>(
-      index: char.actionCategories.toList().indexOf(Move),
+      index: char.actionCategories.toList().indexOf('Move'),
       onReorder: _onReorder,
       list: char.moves,
       route: Routes.moves,
@@ -181,11 +181,11 @@ class HomeCharacterActionsView extends GetView<CharacterService> {
   }
 
   Widget? get spellsList {
-    if (char.settings.actionCategories.hidden.contains(Spell)) {
+    if (char.settings.actionCategories.hidden.contains('Spell')) {
       return null;
     }
     return ActionsCardList<Spell>(
-      index: char.actionCategories.toList().indexOf(Spell),
+      index: char.actionCategories.toList().indexOf('Spell'),
       onReorder: _onReorder,
       list: char.spells,
       route: Routes.spells,
@@ -215,11 +215,11 @@ class HomeCharacterActionsView extends GetView<CharacterService> {
   }
 
   Widget? get itemsList {
-    if (char.settings.actionCategories.hidden.contains(Item)) {
+    if (char.settings.actionCategories.hidden.contains('Item')) {
       return null;
     }
     return ActionsCardList<Item>(
-      index: char.actionCategories.toList().indexOf(Item),
+      index: char.actionCategories.toList().indexOf('Item'),
       onReorder: _onReorder,
       list: char.items,
       route: Routes.items,
