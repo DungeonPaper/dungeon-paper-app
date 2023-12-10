@@ -25,9 +25,8 @@ void main() async {
   await loadSharedPrefs();
   await initRemoteConfig();
   await initServices();
-  // debugPrint('docsDir: ' + (await getApplicationDocumentsDirectory()).path);
-  FlutterNativeSplash.remove();
   if (secrets.sentryDsn.isEmpty) {
+    FlutterNativeSplash.remove();
     runApp(const DungeonPaperApp());
     return;
   }
@@ -39,14 +38,16 @@ void main() async {
       options.tracesSampleRate = kDebugMode ? 1.0 : 0.5;
       options.environment = kDebugMode ? 'development' : 'release';
     },
-    appRunner: () => runApp(const DungeonPaperApp()),
+    appRunner: () {
+      FlutterNativeSplash.remove();
+      runApp(const DungeonPaperApp());
+    },
   );
 }
 
 class DungeonPaperApp extends StatelessWidget {
   const DungeonPaperApp({super.key});
 
-  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     final platformBrightness = getCurrentPlatformBrightness();
@@ -69,3 +70,4 @@ class DungeonPaperApp extends StatelessWidget {
     );
   }
 }
+
