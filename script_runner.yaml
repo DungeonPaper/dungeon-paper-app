@@ -1,20 +1,16 @@
 shell: /bin/zsh
 scripts:
-  # Developer
-  - name: runner
-    cmd: dart run build_runner watch
-    description: Run Build Runner in watch mode
   # Android
-  - name: build:android:apk
+  - name: android:build:apk
     cmd: flutter build apk
     description: Build Android APK only
-  - name: build:android:bundle
+  - name: android:build:bundle
     cmd: flutter build appbundle
     description: Build Android unified bundle (for Play Store release)
-  - name: build:android:all
-    cmd: build:android:apk && build:android:bundle
+  - name: android:build:all
+    cmd: android:build:apk && android:build:bundle
     description: Build Android unified bundle + standalone APK
-  - name: push:android:apk
+  - name: android:push
     description: Push APK to ADB-connected device
     suppress_header_output: true
     cmd: |-
@@ -22,57 +18,78 @@ scripts:
       version=$(dart run btool get packageVersion)
       source="$(pwd)/build/app/outputs/flutter-apk/app-release.apk"
       target="/sdcard/Download/$name-$version.apk"
-      echo "adb push $source $target"
       adb push $source $target
-  - name: install
-    cmd: adb install -r build/app/outputs/flutter-apk/app-release.apk
+  - name: android:install
+    cmd: adb uninstall app.dungeonpaper; adb install -r build/app/outputs/flutter-apk/app-release.apk
     description: Install APK on Android (does not build)
+  - name: android:full
+    cmd: android:build:apk && android:push && android:install
+    description: Build, push and install APK to ADB connected device
+  - name: android:release
+    cmd: |-
+      name=$(dart run btool get packageName)
+      version=$(dart run btool get packageVersion)
+      symbols="symbols-$name-$version.zip"
+      bundleout="$name-$version.aab"
+      bundle=build/app/outputs/bundle/release/app-release.aab
+      mkdir release
+      android:build:bundle && symbols:collect && cp $bundle release/$bundleout
+    description: Builds, collects debug symbols, and places the output in release/ dir.
   # iOS
-  - name: build:ios:app
+  - name: ios:build:app
     cmd: flutter build ios
     description: Build iOS APP file
-  - name: build:ios:bundle
+  - name: ios:build:bundle
     cmd: flutter build ipa
     description: Build iOS IPA file
-  - name: build:ios:all
-    cmd: build:ios:app && build:ios:bundle
+  - name: ios:build:all
+    cmd: ios:build:app && ios:build:bundle
     description: Build iOS IPA + APP
   # macOS
-  - name: build:macos:app
+  - name: macos:build:app
     cmd: flutter build macos
     description: Build macOS App
-  - name: build:macos:all
-    cmd: build:macos:app
+  - name: macos:build:all
+    cmd: macos:build:app
     description: 'Alias for: Build macOS App'
   # Web
-  - name: build:web:app
+  - name: web:build:app
     cmd: flutter build web
     description: Build Web app
-  - name: build:web:all
-    cmd: build:web:app
+  - name: web:build:all
+    cmd: web:build:app
     description: 'Alias for: Build Web app'
   - name: publish:web
     cmd: firebase deploy --only hosting
     description: Publish web version using Firebase (requires build)
   # All
   - name: build:all
-    cmd: build:android:all && build:ios:all && build:macos:all && build:web:all
+    cmd: android:build:all && ios:build:all && macos:build:all && web:build:all
     description: Build for all platforms
-  - name: to-android
-    cmd: build:android:apk && push:android:apk && install:android:apk
-    description: Build, push and install APK to ADB connected device
-  - name: gen:icons
-    cmd: flutter pub run icons_launcher:create
-    description: Generate launcher icons
+
+  # Utils
   - name: format
     cmd: dart format --line-length 120
     description: Format all Dart files
-  - name: intl:generate_from_arb
-    cmd: dart run intl_generator:generate_from_arb --no-use-deferred-loading --output-dir=lib/generated/intl lib/generated/l10n.dart lib/l10n/intl_en.arb
-    description: Generate localization files from ARB file
-  - name: intl:extract_to_arb
-    cmd: dart run intl_generator:extract_to_arb --output-dir=lib/l10n lib/generated/l10n.dart
-    description: Extract localization files to ARB
-  - name: intl
-    cmd: intl:generate_from_arb && intl:extract_to_arb
-    description: Extract & Generate ARB files
+  - name: gen:icons
+    cmd: flutter pub run icons_launcher:create
+    description: Generate launcher icons
+  - name: intl:build
+    cmd: runner build
+    description: Build i18n files
+  - name: intl:watch
+    cmd: runner watch
+    description: Build u18n files in watch mode
+  - name: runner
+    cmd: dart run build_runner
+    description: Run Build Runner
+  - name: symbols:collect
+    cmd: |-
+      dir="$(pwd)/release"
+      name=$(dart run btool get packageName)
+      version=$(dart run btool get packageVersion)
+      filename="symbols-$name-$version.zip"
+      mkdir release
+      cd build/app/intermediates/merged_native_libs/release/out/lib
+      zip -r "$dir/$filename" */*
+    description: Create a zip of the debug symbols

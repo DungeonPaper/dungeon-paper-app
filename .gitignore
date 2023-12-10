@@ -56,3 +56,4 @@ GoogleService-Info.plist
 .fvm/flutter_sdk
 .firebase/
 cors.json
+release/
