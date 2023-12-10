@@ -124,32 +124,6 @@ class ImportController extends GetxController
     final filestring = utf8.decode(filedata as List<int>);
     final filejson = json.decode(filestring);
     toImport.value = ImportSelections.fromJson(filejson);
-    /*
-    try {
-      final path = await FlutterFileDialog.pickFile(
-        params: const OpenFileDialogParams(
-          fileExtensionsFilter: ['json'],
-          mimeTypesFilter: ['application/json'],
-        ),
-      );
-
-      if (path == null) {
-        return;
-      }
-
-      final js = json.decode(await File(path).readAsString()) as Map<String, dynamic>;
-      toImport.value = ImportSelections.fromJson(js);
-    } catch (e) {
-      // unawaited(analytics.logEvent(name: Events.ImportFail, parameters: {
-      //   'reason': e.toString(),
-      // }));
-      Get.rawSnackbar(
-        title: tr.backup.importing.error.title,
-        message: tr.backup.importing.error.message,
-      );
-      rethrow;
-    }
-  */
   }
 
   void Function()? getDoImport() {
