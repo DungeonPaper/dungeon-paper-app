@@ -114,8 +114,8 @@ class ImportController extends GetxController
         await FilePicker.platform.pickFiles(type: FileType.custom, allowedExtensions: ['json']);
     if (result == null) {
       Get.rawSnackbar(
-        title: S.current.importFailedTitle,
-        message: S.current.importFailedMessage,
+        title: tr.backup.importing.error.title,
+        message: tr.backup.importing.error.message,
       );
       return;
     }
