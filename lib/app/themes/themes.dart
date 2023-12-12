@@ -211,6 +211,9 @@ class AppThemes {
     AppThemes.marsh: 'Marsh',
     AppThemes.luxury: 'Luxury',
   };
+
+  static const defaultLightTheme = AppThemes.parchment;
+  static const defaultDarkTheme = AppThemes.dark;
 }
 
 final themeCollection = ThemeCollection(

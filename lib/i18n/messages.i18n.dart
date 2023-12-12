@@ -108,17 +108,25 @@ class Messages {
         'MoveCategory': 'Categories',
       }, other: '${_entSingle(type)}s')}""";
 
-  /// `${_entSingle(ent.toString())}`
+  /// ```dart
+  /// "${_entSingle(ent.toString())}"
+  /// ```
   String entity(String ent) => """${_entSingle(ent.toString())}""";
 
-  /// `${_entPlural(ent.toString())}`
+  /// ```dart
+  /// "${_entPlural(ent.toString())}"
+  /// ```
   String entityPlural(String ent) => """${_entPlural(ent.toString())}""";
 
-  /// `${cnt == 1 ? _entSingle(ent.toString()) : _entPlural(ent.toString())}`
+  /// ```dart
+  /// "${cnt == 1 ? _entSingle(ent.toString()) : _entPlural(ent.toString())}"
+  /// ```
   String entityCount(String ent, int cnt) =>
       """${cnt == 1 ? _entSingle(ent.toString()) : _entPlural(ent.toString())}""";
 
-  /// `$cnt ${entityCount(ent, cnt)}`
+  /// ```dart
+  /// "$cnt ${entityCount(ent, cnt)}"
+  /// ```
   String entityCountNum(String ent, int cnt) =>
       """$cnt ${entityCount(ent, cnt)}""";
   AppMessages get app => AppMessages(this);
@@ -168,7 +176,9 @@ class AppMessages {
   final Messages _parent;
   const AppMessages(this._parent);
 
-  /// `Dungeon Paper`
+  /// ```dart
+  /// "Dungeon Paper"
+  /// ```
   String get name => """Dungeon Paper""";
 }
 
@@ -176,149 +186,245 @@ class GenericMessages {
   final Messages _parent;
   const GenericMessages(this._parent);
 
-  /// `Save`
+  /// ```dart
+  /// "Save"
+  /// ```
   String get save => """Save""";
 
-  /// `Save $ent`
+  /// ```dart
+  /// "Save $ent"
+  /// ```
   String saveEntity(String ent) => """Save $ent""";
 
-  /// `Cancel`
+  /// ```dart
+  /// "Cancel"
+  /// ```
   String get cancel => """Cancel""";
 
-  /// `Close`
+  /// ```dart
+  /// "Close"
+  /// ```
   String get close => """Close""";
 
-  /// `Done`
+  /// ```dart
+  /// "Done"
+  /// ```
   String get done => """Done""";
 
-  /// `View`
+  /// ```dart
+  /// "View"
+  /// ```
   String get view => """View""";
 
-  /// `Continue`
+  /// ```dart
+  /// "Continue"
+  /// ```
   String get continue_ => """Continue""";
 
-  /// `View $ent`
+  /// ```dart
+  /// "View $ent"
+  /// ```
   String viewEntity(String ent) => """View $ent""";
 
-  /// `All`
+  /// ```dart
+  /// "All"
+  /// ```
   String get all => """All""";
 
-  /// `All $ent`
+  /// ```dart
+  /// "All $ent"
+  /// ```
   String allEntities(String ent) => """All $ent""";
 
-  /// `Create`
+  /// ```dart
+  /// "Create"
+  /// ```
   String get create => """Create""";
 
-  /// `Create $ent`
+  /// ```dart
+  /// "Create $ent"
+  /// ```
   String createEntity(String ent) => """Create $ent""";
 
-  /// `Add`
+  /// ```dart
+  /// "Add"
+  /// ```
   String get add => """Add""";
 
-  /// `Add $ent`
+  /// ```dart
+  /// "Add $ent"
+  /// ```
   String addEntity(String ent) => """Add $ent""";
 
-  /// `Remove`
+  /// ```dart
+  /// "Remove"
+  /// ```
   String get remove => """Remove""";
 
-  /// `Remove $ent`
+  /// ```dart
+  /// "Remove $ent"
+  /// ```
   String removeEntity(String ent) => """Remove $ent""";
 
-  /// `Unselect`
+  /// ```dart
+  /// "Unselect"
+  /// ```
   String get unselect => """Unselect""";
 
-  /// `Unselect $ent`
+  /// ```dart
+  /// "Unselect $ent"
+  /// ```
   String unselectEntity(String ent) => """Unselect $ent""";
 
-  /// `Delete`
+  /// ```dart
+  /// "Delete"
+  /// ```
   String get delete => """Delete""";
 
-  /// `Delete $ent`
+  /// ```dart
+  /// "Delete $ent"
+  /// ```
   String deleteEntity(String ent) => """Delete $ent""";
 
-  /// `Edit`
+  /// ```dart
+  /// "Edit"
+  /// ```
   String get edit => """Edit""";
 
-  /// `Edit $ent`
+  /// ```dart
+  /// "Edit $ent"
+  /// ```
   String editEntity(String ent) => """Edit $ent""";
 
-  /// `Yes`
+  /// ```dart
+  /// "Yes"
+  /// ```
   String get yes => """Yes""";
 
-  /// `No`
+  /// ```dart
+  /// "No"
+  /// ```
   String get no => """No""";
 
-  /// `No $ent`
+  /// ```dart
+  /// "No $ent"
+  /// ```
   String noEntity(String ent) => """No $ent""";
 
-  /// `Select`
+  /// ```dart
+  /// "Select"
+  /// ```
   String get select => """Select""";
 
-  /// `Select $ent`
+  /// ```dart
+  /// "Select $ent"
+  /// ```
   String selectEntity(String ent) => """Select $ent""";
 
-  /// `Selected`
+  /// ```dart
+  /// "Selected"
+  /// ```
   String get selected => """Selected""";
 
-  /// `Select All`
+  /// ```dart
+  /// "Select All"
+  /// ```
   String get selectAll => """Select All""";
 
-  /// `Select None`
+  /// ```dart
+  /// "Select None"
+  /// ```
   String get selectNone => """Select None""";
 
-  /// `My`
+  /// ```dart
+  /// "My"
+  /// ```
   String get my => """My""";
 
-  /// `My $ent`
+  /// ```dart
+  /// "My $ent"
+  /// ```
   String myEntity(String ent) => """My $ent""";
 
-  /// `Change`
+  /// ```dart
+  /// "Change"
+  /// ```
   String get change => """Change""";
 
-  /// `Change $ent`
+  /// ```dart
+  /// "Change $ent"
+  /// ```
   String changeEntity(String ent) => """Change $ent""";
 
-  /// `See All`
+  /// ```dart
+  /// "See All"
+  /// ```
   String get seeAll => """See All""";
 
-  /// `Select $ent to add`
+  /// ```dart
+  /// "Select $ent to add"
+  /// ```
   String selectToAdd(String ent) => """Select $ent to add""";
 
-  /// `Name`
+  /// ```dart
+  /// "Name"
+  /// ```
   String get name => """Name""";
 
-  /// `$ent name`
+  /// ```dart
+  /// "$ent name"
+  /// ```
   String entityName(String ent) => """$ent name""";
 
-  /// `Value`
+  /// ```dart
+  /// "Value"
+  /// ```
   String get value => """Value""";
 
-  /// `$ent value`
+  /// ```dart
+  /// "$ent value"
+  /// ```
   String entityValue(String ent) => """$ent value""";
 
-  /// `Description`
+  /// ```dart
+  /// "Description"
+  /// ```
   String get description => """Description""";
 
-  /// `$ent description`
+  /// ```dart
+  /// "$ent description"
+  /// ```
   String entityDescription(String ent) => """$ent description""";
 
-  /// `Explanation`
+  /// ```dart
+  /// "Explanation"
+  /// ```
   String get explanation => """Explanation""";
 
-  /// `$ent explanation`
+  /// ```dart
+  /// "$ent explanation"
+  /// ```
   String entityExplanation(String ent) => """$ent explanation""";
 
-  /// `‹No description provided›`
+  /// ```dart
+  /// "‹No description provided›"
+  /// ```
   String get noDescription => """‹No description provided›""";
 
-  /// `No $ent selected`
+  /// ```dart
+  /// "No $ent selected"
+  /// ```
   String noEntitySelected(String ent) => """No $ent selected""";
 
-  /// `No $ent selected (required)`
+  /// ```dart
+  /// "No $ent selected (required)"
+  /// ```
   String noEntitySelectedRequired(String ent) =>
       """No $ent selected (required)""";
 
-  /// `Use Default`
+  /// ```dart
+  /// "Use Default"
+  /// ```
   String get useDefault => """Use Default""";
 }
 
@@ -326,13 +432,19 @@ class LoadingMessages {
   final Messages _parent;
   const LoadingMessages(this._parent);
 
-  /// `Signing in...`
+  /// ```dart
+  /// "Signing in..."
+  /// ```
   String get user => """Signing in...""";
 
-  /// `Getting characters...`
+  /// ```dart
+  /// "Getting characters..."
+  /// ```
   String get characters => """Getting characters...""";
 
-  /// `Loading...`
+  /// ```dart
+  /// "Loading..."
+  /// ```
   String get general => """Loading...""";
 }
 
@@ -340,37 +452,55 @@ class ErrorsMessages {
   final Messages _parent;
   const ErrorsMessages(this._parent);
 
-  /// `Operation canceled`
+  /// ```dart
+  /// "Operation canceled"
+  /// ```
   String get userOperationCanceled => """Operation canceled""";
 
-  /// `Error while uploading photo. Try again later, or contact support using the "About" page.`
+  /// ```dart
+  /// "Error while uploading photo. Try again later, or contact support using the "About" page."
+  /// ```
   String get uploadError =>
       """Error while uploading photo. Try again later, or contact support using the "About" page.""";
 
-  /// `Invalid email address`
+  /// ```dart
+  /// "Invalid email address"
+  /// ```
   String get invalidEmail => """Invalid email address""";
   InvalidPasswordErrorsMessages get invalidPassword =>
       InvalidPasswordErrorsMessages(this);
 
-  /// `Must be at least $cnt ${_plural(cnt, one: 'character', many: 'characters')}`
+  /// ```dart
+  /// "Must be at least $cnt ${_plural(cnt, one: 'character', many: 'characters')}"
+  /// ```
   String minLength(int cnt) =>
       """Must be at least $cnt ${_plural(cnt, one: 'character', many: 'characters')}""";
 
-  /// `Must be no more than $cnt ${_plural(cnt, one: 'character', many: 'characters')}`
+  /// ```dart
+  /// "Must be no more than $cnt ${_plural(cnt, one: 'character', many: 'characters')}"
+  /// ```
   String maxLength(int cnt) =>
       """Must be no more than $cnt ${_plural(cnt, one: 'character', many: 'characters')}""";
 
-  /// `Must be exactly $cnt ${_plural(cnt, one: 'character', many: 'characters')}`
+  /// ```dart
+  /// "Must be exactly $cnt ${_plural(cnt, one: 'character', many: 'characters')}"
+  /// ```
   String exactLength(int cnt) =>
       """Must be exactly $cnt ${_plural(cnt, one: 'character', many: 'characters')}""";
 
-  /// `Must contain $pattern`
+  /// ```dart
+  /// "Must contain $pattern"
+  /// ```
   String mustContain(String pattern) => """Must contain $pattern""";
 
-  /// `Must not contain $pattern`
+  /// ```dart
+  /// "Must not contain $pattern"
+  /// ```
   String mustNotContain(String pattern) => """Must not contain $pattern""";
 
-  /// `Must contain letters only`
+  /// ```dart
+  /// "Must contain letters only"
+  /// ```
   String get onlyLetters => """Must contain letters only""";
 }
 
@@ -378,10 +508,14 @@ class InvalidPasswordErrorsMessages {
   final ErrorsMessages _parent;
   const InvalidPasswordErrorsMessages(this._parent);
 
-  /// `Password must contain at least one capital letter`
+  /// ```dart
+  /// "Password must contain at least one capital letter"
+  /// ```
   String get letter => """Password must contain at least one capital letter""";
 
-  /// `Password must contain at least one number`
+  /// ```dart
+  /// "Password must contain at least one number"
+  /// ```
   String get number => """Password must contain at least one number""";
 }
 
@@ -389,16 +523,24 @@ class SortMessages {
   final Messages _parent;
   const SortMessages(this._parent);
 
-  /// `Move up`
+  /// ```dart
+  /// "Move up"
+  /// ```
   String get moveUp => """Move up""";
 
-  /// `Move down`
+  /// ```dart
+  /// "Move down"
+  /// ```
   String get moveDown => """Move down""";
 
-  /// `Move $ent to top`
+  /// ```dart
+  /// "Move $ent to top"
+  /// ```
   String moveEntityToTop(String ent) => """Move $ent to top""";
 
-  /// `Move $ent to bottom`
+  /// ```dart
+  /// "Move $ent to bottom"
+  /// ```
   String moveEntityToBottom(String ent) => """Move $ent to bottom""";
 }
 
@@ -406,13 +548,19 @@ class PlaybookMessages {
   final Messages _parent;
   const PlaybookMessages(this._parent);
 
-  /// `Playbook`
+  /// ```dart
+  /// "Playbook"
+  /// ```
   String get title => """Playbook""";
 
-  /// `My Library`
+  /// ```dart
+  /// "My Library"
+  /// ```
   String get myLibrary => """My Library""";
 
-  /// `My Campaigns`
+  /// ```dart
+  /// "My Campaigns"
+  /// ```
   String get myCampaigns => """My Campaigns""";
 }
 
@@ -420,13 +568,19 @@ class MyLibraryMessages {
   final Messages _parent;
   const MyLibraryMessages(this._parent);
 
-  /// `My Library`
+  /// ```dart
+  /// "My Library"
+  /// ```
   String get title => """My Library""";
 
-  /// `Reload Library`
+  /// ```dart
+  /// "Reload Library"
+  /// ```
   String get reload => """Reload Library""";
 
-  /// `$cnt in $type`
+  /// ```dart
+  /// "$cnt in $type"
+  /// ```
   String itemCount(String cnt, String type) => """$cnt in $type""";
 
   /// ```dart
@@ -440,7 +594,9 @@ class MyLibraryMessages {
   String libraryType(String type) =>
       """${_select(type, {'builtIn': 'Playbook', 'my': 'My Library'})}""";
 
-  /// `Already added`
+  /// ```dart
+  /// "Already added"
+  /// ```
   String get alreadyAdded => """Already added""";
   ItemTabMyLibraryMessages get itemTab => ItemTabMyLibraryMessages(this);
   EmptyStateMyLibraryMessages get emptyState =>
@@ -452,10 +608,14 @@ class ItemTabMyLibraryMessages {
   final MyLibraryMessages _parent;
   const ItemTabMyLibraryMessages(this._parent);
 
-  /// `Playbook`
+  /// ```dart
+  /// "Playbook"
+  /// ```
   String get playbook => """Playbook""";
 
-  /// `Online`
+  /// ```dart
+  /// "Online"
+  /// ```
   String get online => """Online""";
 }
 
@@ -463,7 +623,9 @@ class EmptyStateMyLibraryMessages {
   final MyLibraryMessages _parent;
   const EmptyStateMyLibraryMessages(this._parent);
 
-  /// `No $ent found`
+  /// ```dart
+  /// "No $ent found"
+  /// ```
   String title(String ent) => """No $ent found""";
   SubtitleEmptyStateMyLibraryMessages get subtitle =>
       SubtitleEmptyStateMyLibraryMessages(this);
@@ -473,10 +635,14 @@ class SubtitleEmptyStateMyLibraryMessages {
   final EmptyStateMyLibraryMessages _parent;
   const SubtitleEmptyStateMyLibraryMessages(this._parent);
 
-  /// `No $ent found in this list.`
+  /// ```dart
+  /// "No $ent found in this list."
+  /// ```
   String filters(String ent) => """No $ent found in this list.""";
 
-  /// `Try changing the search or filters to find more $ent.`
+  /// ```dart
+  /// "Try changing the search or filters to find more $ent."
+  /// ```
   String noFilters(String ent) =>
       """Try changing the search or filters to find more $ent.""";
 }
@@ -485,7 +651,9 @@ class FiltersMyLibraryMessages {
   final MyLibraryMessages _parent;
   const FiltersMyLibraryMessages(this._parent);
 
-  /// `Clear Filters`
+  /// ```dart
+  /// "Clear Filters"
+  /// ```
   String get clear => """Clear Filters""";
 }
 
@@ -493,13 +661,19 @@ class NavMessages {
   final Messages _parent;
   const NavMessages(this._parent);
 
-  /// `Use`
+  /// ```dart
+  /// "Use"
+  /// ```
   String get actions => """Use""";
 
-  /// `Character`
+  /// ```dart
+  /// "Character"
+  /// ```
   String get character => """Character""";
 
-  /// `Journal`
+  /// ```dart
+  /// "Journal"
+  /// ```
   String get journal => """Journal""";
 }
 
@@ -519,15 +693,21 @@ class StatusEntitySyncMessages {
   final EntitySyncMessages _parent;
   const StatusEntitySyncMessages(this._parent);
 
-  /// `This $ent is In Sync with its linked library item`
+  /// ```dart
+  /// "This $ent is In Sync with its linked library item"
+  /// ```
   String inSync(String ent) =>
       """This $ent is In Sync with its linked library item""";
 
-  /// `This $ent is Out of Sync with its linked library item`
+  /// ```dart
+  /// "This $ent is Out of Sync with its linked library item"
+  /// ```
   String outOfSync(String ent) =>
       """This $ent is Out of Sync with its linked library item""";
 
-  /// `This $ent is not linked to any library item`
+  /// ```dart
+  /// "This $ent is not linked to any library item"
+  /// ```
   String detached(String ent) =>
       """This $ent is not linked to any library item""";
 }
@@ -536,23 +716,35 @@ class SettingsMessages {
   final Messages _parent;
   const SettingsMessages(this._parent);
 
-  /// `Settings`
+  /// ```dart
+  /// "Settings"
+  /// ```
   String get title => """Settings""";
 
-  /// `Export/Import`
+  /// ```dart
+  /// "Export/Import"
+  /// ```
   String get importExport => """Export/Import""";
 
-  /// `Switch to ${mode} Mode`
+  /// ```dart
+  /// "Switch to ${mode} Mode"
+  /// ```
   String _switchMode(String mode) => """Switch to ${mode} Mode""";
 
-  /// `${_switchMode('Dark')}`
+  /// ```dart
+  /// "${_switchMode('Dark')}"
+  /// ```
   String get switchToDark => """${_switchMode('Dark')}""";
 
-  /// `${_switchMode('Light')}`
+  /// ```dart
+  /// "${_switchMode('Light')}"
+  /// ```
   String get switchToLight => """${_switchMode('Light')}""";
   CategoriesSettingsMessages get categories => CategoriesSettingsMessages(this);
 
-  /// `Keep screen awake while using the app`
+  /// ```dart
+  /// "Keep screen awake while using the app"
+  /// ```
   String get keepAwake => """Keep screen awake while using the app""";
   DefaultThemeSettingsMessages get defaultTheme =>
       DefaultThemeSettingsMessages(this);
@@ -562,7 +754,9 @@ class CategoriesSettingsMessages {
   final SettingsMessages _parent;
   const CategoriesSettingsMessages(this._parent);
 
-  /// `General`
+  /// ```dart
+  /// "General"
+  /// ```
   String get general => """General""";
 }
 
@@ -570,13 +764,19 @@ class DefaultThemeSettingsMessages {
   final SettingsMessages _parent;
   const DefaultThemeSettingsMessages(this._parent);
 
-  /// `Default $type theme`
+  /// ```dart
+  /// "Default $type theme"
+  /// ```
   String _p(String type) => """Default $type theme""";
 
-  /// `${_p('light')}`
+  /// ```dart
+  /// "${_p('light')}"
+  /// ```
   String get light => """${_p('light')}""";
 
-  /// `${_p('dark')}`
+  /// ```dart
+  /// "${_p('dark')}"
+  /// ```
   String get dark => """${_p('dark')}""";
 }
 
@@ -584,7 +784,9 @@ class UserMessages {
   final Messages _parent;
   const UserMessages(this._parent);
 
-  /// `Recent Characters`
+  /// ```dart
+  /// "Recent Characters"
+  /// ```
   String get recentCharacters => """Recent Characters""";
 }
 
@@ -592,13 +794,19 @@ class AuthMessages {
   final Messages _parent;
   const AuthMessages(this._parent);
 
-  /// `OR`
+  /// ```dart
+  /// "OR"
+  /// ```
   String get orSeparator => """OR""";
 
-  /// `Privacy Policy`
+  /// ```dart
+  /// "Privacy Policy"
+  /// ```
   String get privacyPolicy => """Privacy Policy""";
 
-  /// `What's new?`
+  /// ```dart
+  /// "What's new?"
+  /// ```
   String get changelog => """What's new?""";
   ProvidersAuthMessages get providers => ProvidersAuthMessages(this);
   ConfirmUnlinkAuthMessages get confirmUnlink =>
@@ -612,13 +820,19 @@ class ProvidersAuthMessages {
   final AuthMessages _parent;
   const ProvidersAuthMessages(this._parent);
 
-  /// `Sign in with $provider`
+  /// ```dart
+  /// "Sign in with $provider"
+  /// ```
   String loginWith(String provider) => """Sign in with $provider""";
 
-  /// `Sign up with $provider`
+  /// ```dart
+  /// "Sign up with $provider"
+  /// ```
   String signupWith(String provider) => """Sign up with $provider""";
 
-  /// `This device only supports unlinking $provider accounts.`
+  /// ```dart
+  /// "This device only supports unlinking $provider accounts."
+  /// ```
   String unusable(String provider) =>
       """This device only supports unlinking $provider accounts.""";
 
@@ -639,10 +853,14 @@ class ProvidersAuthMessages {
         'password': 'Dungeon Paper',
       }, other: 'Other')}""";
 
-  /// `Unlink`
+  /// ```dart
+  /// "Unlink"
+  /// ```
   String get unlink => """Unlink""";
 
-  /// `Link`
+  /// ```dart
+  /// "Link"
+  /// ```
   String get link => """Link""";
 }
 
@@ -650,10 +868,14 @@ class ConfirmUnlinkAuthMessages {
   final AuthMessages _parent;
   const ConfirmUnlinkAuthMessages(this._parent);
 
-  /// `Unlink from $ent`
+  /// ```dart
+  /// "Unlink from $ent"
+  /// ```
   String title(String ent) => """Unlink from $ent""";
 
-  /// `Are you sure you want to unlink your account from $ent?\nBy clicking "Unlink", you will no longer be able to sign in with $ent.\n\nYou will be able to re-link your account at any time by going to your account settings.`
+  /// ```dart
+  /// "Are you sure you want to unlink your account from $ent?\nBy clicking "Unlink", you will no longer be able to sign in with $ent.\n\nYou will be able to re-link your account at any time by going to your account settings."
+  /// ```
   String body(String ent) =>
       """Are you sure you want to unlink your account from $ent?\nBy clicking "Unlink", you will no longer be able to sign in with $ent.\n\nYou will be able to re-link your account at any time by going to your account settings.""";
 }
@@ -662,14 +884,20 @@ class LoginAuthMessages {
   final AuthMessages _parent;
   const LoginAuthMessages(this._parent);
 
-  /// `Sign In`
+  /// ```dart
+  /// "Sign In"
+  /// ```
   String get title => """Sign In""";
 
-  /// `Sign in to your account to sync your data online, and get access to many more features.`
+  /// ```dart
+  /// "Sign in to your account to sync your data online, and get access to many more features."
+  /// ```
   String get subtitle =>
       """Sign in to your account to sync your data online, and get access to many more features.""";
 
-  /// `Sign in`
+  /// ```dart
+  /// "Sign in"
+  /// ```
   String get button => """Sign in""";
   NoAccountLoginAuthMessages get noAccount => NoAccountLoginAuthMessages(this);
 }
@@ -678,10 +906,14 @@ class NoAccountLoginAuthMessages {
   final LoginAuthMessages _parent;
   const NoAccountLoginAuthMessages(this._parent);
 
-  /// `Don't have an account?`
+  /// ```dart
+  /// "Don't have an account?"
+  /// ```
   String get label => """Don't have an account?""";
 
-  /// `Sign up`
+  /// ```dart
+  /// "Sign up"
+  /// ```
   String get button => """Sign up""";
 }
 
@@ -689,7 +921,9 @@ class LogoutAuthMessages {
   final AuthMessages _parent;
   const LogoutAuthMessages(this._parent);
 
-  /// `Sign out`
+  /// ```dart
+  /// "Sign out"
+  /// ```
   String get button => """Sign out""";
 }
 
@@ -697,14 +931,20 @@ class SignupAuthMessages {
   final AuthMessages _parent;
   const SignupAuthMessages(this._parent);
 
-  /// `Sign Up`
+  /// ```dart
+  /// "Sign Up"
+  /// ```
   String get title => """Sign Up""";
 
-  /// `Enter the required details below to create your Dungeon Paper account.`
+  /// ```dart
+  /// "Enter the required details below to create your Dungeon Paper account."
+  /// ```
   String get subtitle =>
       """Enter the required details below to create your Dungeon Paper account.""";
 
-  /// `Sign up`
+  /// ```dart
+  /// "Sign up"
+  /// ```
   String get button => """Sign up""";
   NotLoggedInSignupAuthMessages get notLoggedIn =>
       NotLoggedInSignupAuthMessages(this);
@@ -716,7 +956,9 @@ class NotLoggedInSignupAuthMessages {
   final SignupAuthMessages _parent;
   const NotLoggedInSignupAuthMessages(this._parent);
 
-  /// `Not logged in`
+  /// ```dart
+  /// "Not logged in"
+  /// ```
   String get label => """Not logged in""";
 }
 
@@ -724,13 +966,19 @@ class EmailSignupAuthMessages {
   final SignupAuthMessages _parent;
   const EmailSignupAuthMessages(this._parent);
 
-  /// `Email`
+  /// ```dart
+  /// "Email"
+  /// ```
   String get label => """Email""";
 
-  /// `Enter your email`
+  /// ```dart
+  /// "Enter your email"
+  /// ```
   String get placeholder => """Enter your email""";
 
-  /// `Please enter a valid email address`
+  /// ```dart
+  /// "Please enter a valid email address"
+  /// ```
   String get error => """Please enter a valid email address""";
 }
 
@@ -738,10 +986,14 @@ class PasswordSignupAuthMessages {
   final SignupAuthMessages _parent;
   const PasswordSignupAuthMessages(this._parent);
 
-  /// `Password`
+  /// ```dart
+  /// "Password"
+  /// ```
   String get label => """Password""";
 
-  /// `Enter a password`
+  /// ```dart
+  /// "Enter a password"
+  /// ```
   String get placeholder => """Enter a password""";
   ConfirmPasswordSignupAuthMessages get confirm =>
       ConfirmPasswordSignupAuthMessages(this);
@@ -751,13 +1003,19 @@ class ConfirmPasswordSignupAuthMessages {
   final PasswordSignupAuthMessages _parent;
   const ConfirmPasswordSignupAuthMessages(this._parent);
 
-  /// `Confirm Password`
+  /// ```dart
+  /// "Confirm Password"
+  /// ```
   String get label => """Confirm Password""";
 
-  /// `Enter the same password again`
+  /// ```dart
+  /// "Enter the same password again"
+  /// ```
   String get placeholder => """Enter the same password again""";
 
-  /// `Passwords do not match`
+  /// ```dart
+  /// "Passwords do not match"
+  /// ```
   String get error => """Passwords do not match""";
 }
 
@@ -775,10 +1033,14 @@ class BarsHomeMessages {
   final HomeMessages _parent;
   const BarsHomeMessages(this._parent);
 
-  /// `XP`
+  /// ```dart
+  /// "XP"
+  /// ```
   String get xp => """XP""";
 
-  /// `HP`
+  /// ```dart
+  /// "HP"
+  /// ```
   String get hp => """HP""";
 }
 
@@ -786,16 +1048,24 @@ class CategoriesHomeMessages {
   final HomeMessages _parent;
   const CategoriesHomeMessages(this._parent);
 
-  /// `Bookmarked Notes`
+  /// ```dart
+  /// "Bookmarked Notes"
+  /// ```
   String get notes => """Bookmarked Notes""";
 
-  /// `Favorite Moves`
+  /// ```dart
+  /// "Favorite Moves"
+  /// ```
   String get moves => """Favorite Moves""";
 
-  /// `Prepared Spells`
+  /// ```dart
+  /// "Prepared Spells"
+  /// ```
   String get spells => """Prepared Spells""";
 
-  /// `Equipped Items`
+  /// ```dart
+  /// "Equipped Items"
+  /// ```
   String get items => """Equipped Items""";
 }
 
@@ -810,10 +1080,14 @@ class LoadSummaryHomeMessages {
   final SummaryHomeMessages _parent;
   const LoadSummaryHomeMessages(this._parent);
 
-  /// `Load: $cur/$max`
+  /// ```dart
+  /// "Load: $cur/$max"
+  /// ```
   String label(int cur, int max) => """Load: $cur/$max""";
 
-  /// `Max Load`
+  /// ```dart
+  /// "Max Load"
+  /// ```
   String get tooltip => """Max Load""";
 }
 
@@ -821,10 +1095,14 @@ class CoinsSummaryHomeMessages {
   final SummaryHomeMessages _parent;
   const CoinsSummaryHomeMessages(this._parent);
 
-  /// `$amt G`
+  /// ```dart
+  /// "$amt G"
+  /// ```
   String label(String amt) => """$amt G""";
 
-  /// `Coins`
+  /// ```dart
+  /// "Coins"
+  /// ```
   String get tooltip => """Coins""";
 }
 
@@ -833,10 +1111,14 @@ class MenuHomeMessages {
   const MenuHomeMessages(this._parent);
   CharacterMenuHomeMessages get character => CharacterMenuHomeMessages(this);
 
-  /// `Character Biography`
+  /// ```dart
+  /// "Character Biography"
+  /// ```
   String get bio => """Character Biography""";
 
-  /// `Debilities`
+  /// ```dart
+  /// "Debilities"
+  /// ```
   String get debilities => """Debilities""";
 }
 
@@ -844,19 +1126,29 @@ class CharacterMenuHomeMessages {
   final MenuHomeMessages _parent;
   const CharacterMenuHomeMessages(this._parent);
 
-  /// `Character Menu`
+  /// ```dart
+  /// "Character Menu"
+  /// ```
   String get tooltip => """Character Menu""";
 
-  /// `Basic Information`
+  /// ```dart
+  /// "Basic Information"
+  /// ```
   String get basicInfo => """Basic Information""";
 
-  /// `Ability Scores`
+  /// ```dart
+  /// "Ability Scores"
+  /// ```
   String get abilityScores => """Ability Scores""";
 
-  /// `Quick-Roll Buttons`
+  /// ```dart
+  /// "Quick-Roll Buttons"
+  /// ```
   String get customRolls => """Quick-Roll Buttons""";
 
-  /// `Character Theme`
+  /// ```dart
+  /// "Character Theme"
+  /// ```
   String get theme => """Character Theme""";
 }
 
@@ -865,10 +1157,14 @@ class EmptyStateHomeMessages {
   const EmptyStateHomeMessages(this._parent);
   GuestEmptyStateHomeMessages get guest => GuestEmptyStateHomeMessages(this);
 
-  /// `No Characters`
+  /// ```dart
+  /// "No Characters"
+  /// ```
   String get title => """No Characters""";
 
-  /// `Create a Character to get started`
+  /// ```dart
+  /// "Create a Character to get started"
+  /// ```
   String get subtitle => """Create a Character to get started""";
 }
 
@@ -876,10 +1172,14 @@ class GuestEmptyStateHomeMessages {
   final EmptyStateHomeMessages _parent;
   const GuestEmptyStateHomeMessages(this._parent);
 
-  /// `Sign in to get more features`
+  /// ```dart
+  /// "Sign in to get more features"
+  /// ```
   String get title => """Sign in to get more features""";
 
-  /// `Online data sync, library sharing, campaigns and more!`
+  /// ```dart
+  /// "Online data sync, library sharing, campaigns and more!"
+  /// ```
   String get subtitle =>
       """Online data sync, library sharing, campaigns and more!""";
 }
@@ -888,28 +1188,42 @@ class AboutMessages {
   final Messages _parent;
   const AboutMessages(this._parent);
 
-  /// `About`
+  /// ```dart
+  /// "About"
+  /// ```
   String get title => """About""";
 
-  /// `Version $version`
+  /// ```dart
+  /// "Version $version"
+  /// ```
   String version(String version) => """Version $version""";
 
-  /// `Copyright © 2018-$year`
+  /// ```dart
+  /// "Copyright © 2018-$year"
+  /// ```
   String copyright(int year) => """Copyright © 2018-$year""";
 
-  /// `Chen Asraf`
+  /// ```dart
+  /// "Chen Asraf"
+  /// ```
   String get author => """Chen Asraf""";
   DiscordAboutMessages get discord => DiscordAboutMessages(this);
   FeedbackAboutMessages get feedback => FeedbackAboutMessages(this);
   SocialsAboutMessages get socials => SocialsAboutMessages(this);
 
-  /// `Special Thanks`
+  /// ```dart
+  /// "Special Thanks"
+  /// ```
   String get specialThanks => """Special Thanks""";
 
-  /// `Contributors`
+  /// ```dart
+  /// "Contributors"
+  /// ```
   String get contributors => """Contributors""";
 
-  /// `Icon Credits`
+  /// ```dart
+  /// "Icon Credits"
+  /// ```
   String get icons => """Icon Credits""";
 }
 
@@ -917,10 +1231,14 @@ class DiscordAboutMessages {
   final AboutMessages _parent;
   const DiscordAboutMessages(this._parent);
 
-  /// `Join Our Discord`
+  /// ```dart
+  /// "Join Our Discord"
+  /// ```
   String get title => """Join Our Discord""";
 
-  /// `Join the Discord community to ask questions, get help, send feedback, or just chat with other players.`
+  /// ```dart
+  /// "Join the Discord community to ask questions, get help, send feedback, or just chat with other players."
+  /// ```
   String get subtitle =>
       """Join the Discord community to ask questions, get help, send feedback, or just chat with other players.""";
 }
@@ -929,10 +1247,14 @@ class FeedbackAboutMessages {
   final AboutMessages _parent;
   const FeedbackAboutMessages(this._parent);
 
-  /// `Send Feedback`
+  /// ```dart
+  /// "Send Feedback"
+  /// ```
   String get title => """Send Feedback""";
 
-  /// `We reply more promptly through Discord, but you can send us feedback, bug reports or suggestions about the app directly here as an alternative.`
+  /// ```dart
+  /// "We reply more promptly through Discord, but you can send us feedback, bug reports or suggestions about the app directly here as an alternative."
+  /// ```
   String get subtitle =>
       """We reply more promptly through Discord, but you can send us feedback, bug reports or suggestions about the app directly here as an alternative.""";
 }
@@ -941,25 +1263,39 @@ class SocialsAboutMessages {
   final AboutMessages _parent;
   const SocialsAboutMessages(this._parent);
 
-  /// `Links`
+  /// ```dart
+  /// "Links"
+  /// ```
   String get title => """Links""";
 
-  /// `Twitter`
+  /// ```dart
+  /// "Twitter"
+  /// ```
   String get twitter => """Twitter""";
 
-  /// `Facebook`
+  /// ```dart
+  /// "Facebook"
+  /// ```
   String get facebook => """Facebook""";
 
-  /// `Discord`
+  /// ```dart
+  /// "Discord"
+  /// ```
   String get discord => """Discord""";
 
-  /// `GitHub`
+  /// ```dart
+  /// "GitHub"
+  /// ```
   String get github => """GitHub""";
 
-  /// `Play Store`
+  /// ```dart
+  /// "Play Store"
+  /// ```
   String get google => """Play Store""";
 
-  /// `App Store`
+  /// ```dart
+  /// "App Store"
+  /// ```
   String get apple => """App Store""";
 }
 
@@ -969,7 +1305,9 @@ class CharacterMessages {
   DataCharacterMessages get data => DataCharacterMessages(this);
   HeaderCharacterMessages get header => HeaderCharacterMessages(this);
 
-  /// `No Category`
+  /// ```dart
+  /// "No Category"
+  /// ```
   String get noCategory => """No Category""";
   ThemeCharacterMessages get theme => ThemeCharacterMessages(this);
 }
@@ -978,17 +1316,25 @@ class DataCharacterMessages {
   final CharacterMessages _parent;
   const DataCharacterMessages(this._parent);
 
-  /// `Coins`
+  /// ```dart
+  /// "Coins"
+  /// ```
   String get coins => """Coins""";
   LoadDataCharacterMessages get load => LoadDataCharacterMessages(this);
 
-  /// `Level`
+  /// ```dart
+  /// "Level"
+  /// ```
   String get level => """Level""";
 
-  /// `Damage Dice`
+  /// ```dart
+  /// "Damage Dice"
+  /// ```
   String get damageDice => """Damage Dice""";
 
-  /// `Use damage dice from class & equipped items`
+  /// ```dart
+  /// "Use damage dice from class & equipped items"
+  /// ```
   String get calculateDamage =>
       """Use damage dice from class & equipped items""";
 }
@@ -997,13 +1343,19 @@ class LoadDataCharacterMessages {
   final DataCharacterMessages _parent;
   const LoadDataCharacterMessages(this._parent);
 
-  /// `Load`
+  /// ```dart
+  /// "Load"
+  /// ```
   String get load => """Load""";
 
-  /// `Max Load`
+  /// ```dart
+  /// "Max Load"
+  /// ```
   String get maxLoad => """Max Load""";
 
-  /// `Use class base load + STR mod`
+  /// ```dart
+  /// "Use class base load + STR mod"
+  /// ```
   String get autoMaxLoad => """Use class base load + STR mod""";
 }
 
@@ -1011,19 +1363,29 @@ class HeaderCharacterMessages {
   final CharacterMessages _parent;
   const HeaderCharacterMessages(this._parent);
 
-  /// `Level $lv`
+  /// ```dart
+  /// "Level $lv"
+  /// ```
   String level(int lv) => """Level $lv""";
 
-  /// `$name`
+  /// ```dart
+  /// "$name"
+  /// ```
   String characterClass(String name) => """$name""";
 
-  /// `$name`
+  /// ```dart
+  /// "$name"
+  /// ```
   String race(String name) => """$name""";
 
-  /// `$alignment`
+  /// ```dart
+  /// "$alignment"
+  /// ```
   String alignment(String alignment) => """$alignment""";
 
-  /// ` ∙ `
+  /// ```dart
+  /// " ∙ "
+  /// ```
   String get separator => """ ∙ """;
 }
 
@@ -1031,16 +1393,24 @@ class ThemeCharacterMessages {
   final CharacterMessages _parent;
   const ThemeCharacterMessages(this._parent);
 
-  /// `Character Theme`
+  /// ```dart
+  /// "Character Theme"
+  /// ```
   String get title => """Character Theme""";
 
-  /// `Default $type theme`
+  /// ```dart
+  /// "Default $type theme"
+  /// ```
   String _defaultTheme(String type) => """Default $type theme""";
 
-  /// `${_defaultTheme('light')}`
+  /// ```dart
+  /// "${_defaultTheme('light')}"
+  /// ```
   String get defaultLight => """${_defaultTheme('light')}""";
 
-  /// `${_defaultTheme('dark')}`
+  /// ```dart
+  /// "${_defaultTheme('dark')}"
+  /// ```
   String get defaultDark => """${_defaultTheme('dark')}""";
 }
 
@@ -1048,13 +1418,19 @@ class CharacterClassMessages {
   final Messages _parent;
   const CharacterClassMessages(this._parent);
 
-  /// `Base Load`
+  /// ```dart
+  /// "Base Load"
+  /// ```
   String get baseLoad => """Base Load""";
 
-  /// `Base HP`
+  /// ```dart
+  /// "Base HP"
+  /// ```
   String get baseHp => """Base HP""";
 
-  /// `Damage Dice`
+  /// ```dart
+  /// "Damage Dice"
+  /// ```
   String get damageDice => """Damage Dice""";
 }
 
@@ -1062,7 +1438,9 @@ class DiceMessages {
   final Messages _parent;
   const DiceMessages(this._parent);
 
-  /// `Suggested: $dice`
+  /// ```dart
+  /// "Suggested: $dice"
+  /// ```
   String suggestion(String dice) => """Suggested: $dice""";
   FormDiceMessages get form => FormDiceMessages(this);
   RollDiceMessages get roll => RollDiceMessages(this);
@@ -1072,20 +1450,28 @@ class FormDiceMessages {
   final DiceMessages _parent;
   const FormDiceMessages(this._parent);
 
-  /// `Amount`
+  /// ```dart
+  /// "Amount"
+  /// ```
   String get amount => """Amount""";
 
-  /// `Sides`
+  /// ```dart
+  /// "Sides"
+  /// ```
   String get sides => """Sides""";
 
-  /// `d`
+  /// ```dart
+  /// "d"
+  /// ```
   String get diceSeparator => """d""";
   ModifierTypeFormDiceMessages get modifierType =>
       ModifierTypeFormDiceMessages(this);
   ValueFormDiceMessages get value => ValueFormDiceMessages(this);
   ModifierFormDiceMessages get modifier => ModifierFormDiceMessages(this);
 
-  /// `$name ($key)`
+  /// ```dart
+  /// "$name ($key)"
+  /// ```
   String statValue(String name, String key) => """$name ($key)""";
 }
 
@@ -1093,10 +1479,14 @@ class ModifierTypeFormDiceMessages {
   final FormDiceMessages _parent;
   const ModifierTypeFormDiceMessages(this._parent);
 
-  /// `Fixed Value`
+  /// ```dart
+  /// "Fixed Value"
+  /// ```
   String get fixed => """Fixed Value""";
 
-  /// `Stat Mod.`
+  /// ```dart
+  /// "Stat Mod."
+  /// ```
   String get modifier => """Stat Mod.""";
 }
 
@@ -1104,10 +1494,14 @@ class ValueFormDiceMessages {
   final FormDiceMessages _parent;
   const ValueFormDiceMessages(this._parent);
 
-  /// `Number, e.g. 2 or -1`
+  /// ```dart
+  /// "Number, e.g. 2 or -1"
+  /// ```
   String get placeholder => """Number, e.g. 2 or -1""";
 
-  /// `Modifier value`
+  /// ```dart
+  /// "Modifier value"
+  /// ```
   String get label => """Modifier value""";
 }
 
@@ -1115,10 +1509,14 @@ class ModifierFormDiceMessages {
   final FormDiceMessages _parent;
   const ModifierFormDiceMessages(this._parent);
 
-  /// `Select stat`
+  /// ```dart
+  /// "Select stat"
+  /// ```
   String get placeholder => """Select stat""";
 
-  /// `Stat`
+  /// ```dart
+  /// "Stat"
+  /// ```
   String get label => """Stat""";
 }
 
@@ -1127,13 +1525,19 @@ class RollDiceMessages {
   const RollDiceMessages(this._parent);
   TitleRollDiceMessages get title => TitleRollDiceMessages(this);
 
-  /// `Roll`
+  /// ```dart
+  /// "Roll"
+  /// ```
   String get action => """Roll""";
 
-  /// `Total $amt`
+  /// ```dart
+  /// "Total $amt"
+  /// ```
   String total(int amt) => """Total $amt""";
 
-  /// `Dice: $dice | Modifier: $mod`
+  /// ```dart
+  /// "Dice: $dice | Modifier: $mod"
+  /// ```
   String resultBreakdown(String dice, String mod) =>
       """Dice: $dice | Modifier: $mod""";
 }
@@ -1142,10 +1546,14 @@ class TitleRollDiceMessages {
   final RollDiceMessages _parent;
   const TitleRollDiceMessages(this._parent);
 
-  /// `Rolled $total`
+  /// ```dart
+  /// "Rolled $total"
+  /// ```
   String rolled(int total) => """Rolled $total""";
 
-  /// `Rolling $amt ${_plural(amt, one: 'die', many: 'dice')}`
+  /// ```dart
+  /// "Rolling $amt ${_plural(amt, one: 'die', many: 'dice')}"
+  /// ```
   String rolling(int amt) =>
       """Rolling $amt ${_plural(amt, one: 'die', many: 'dice')}""";
 }
@@ -1154,7 +1562,9 @@ class BasicInfoMessages {
   final Messages _parent;
   const BasicInfoMessages(this._parent);
 
-  /// `Basic Information`
+  /// ```dart
+  /// "Basic Information"
+  /// ```
   String get title => """Basic Information""";
   FormBasicInfoMessages get form => FormBasicInfoMessages(this);
 }
@@ -1170,10 +1580,14 @@ class NameFormBasicInfoMessages {
   final FormBasicInfoMessages _parent;
   const NameFormBasicInfoMessages(this._parent);
 
-  /// `Character Name`
+  /// ```dart
+  /// "Character Name"
+  /// ```
   String get label => """Character Name""";
 
-  /// `Enter your character's name`
+  /// ```dart
+  /// "Enter your character's name"
+  /// ```
   String get placeholder => """Enter your character's name""";
   RandomNameFormBasicInfoMessages get random =>
       RandomNameFormBasicInfoMessages(this);
@@ -1190,13 +1604,19 @@ class TooltipRandomNameFormBasicInfoMessages {
   final RandomNameFormBasicInfoMessages _parent;
   const TooltipRandomNameFormBasicInfoMessages(this._parent);
 
-  /// `$act to generate a random name`
+  /// ```dart
+  /// "$act to generate a random name"
+  /// ```
   String _p(String act) => """$act to generate a random name""";
 
-  /// `${_p('Tap')}`
+  /// ```dart
+  /// "${_p('Tap')}"
+  /// ```
   String get touch => """${_p('Tap')}""";
 
-  /// `${_p('Click')}`
+  /// ```dart
+  /// "${_p('Click')}"
+  /// ```
   String get click => """${_p('Click')}""";
 }
 
@@ -1204,21 +1624,31 @@ class PhotoFormBasicInfoMessages {
   final FormBasicInfoMessages _parent;
   const PhotoFormBasicInfoMessages(this._parent);
 
-  /// `Change Photo...`
+  /// ```dart
+  /// "Change Photo..."
+  /// ```
   String get change => """Change Photo...""";
 
-  /// `Remove Photo`
+  /// ```dart
+  /// "Remove Photo"
+  /// ```
   String get remove => """Remove Photo""";
 
-  /// `Choose Photo...`
+  /// ```dart
+  /// "Choose Photo..."
+  /// ```
   String get choose => """Choose Photo...""";
   GuestPhotoFormBasicInfoMessages get guest =>
       GuestPhotoFormBasicInfoMessages(this);
 
-  /// `UPLOADING...`
+  /// ```dart
+  /// "UPLOADING..."
+  /// ```
   String get uploading => """UPLOADING...""";
 
-  /// `OR`
+  /// ```dart
+  /// "OR"
+  /// ```
   String get orSeparator => """OR""";
   UrlPhotoFormBasicInfoMessages get url => UrlPhotoFormBasicInfoMessages(this);
 }
@@ -1227,13 +1657,19 @@ class GuestPhotoFormBasicInfoMessages {
   final PhotoFormBasicInfoMessages _parent;
   const GuestPhotoFormBasicInfoMessages(this._parent);
 
-  /// `You need to be signed in to upload images. `
+  /// ```dart
+  /// "You need to be signed in to upload images. "
+  /// ```
   String get prefix => """You need to be signed in to upload images. """;
 
-  /// `Sign in or create an account`
+  /// ```dart
+  /// "Sign in or create an account"
+  /// ```
   String get label => """Sign in or create an account""";
 
-  /// `, or upload using your own URL below.`
+  /// ```dart
+  /// ", or upload using your own URL below."
+  /// ```
   String get suffix => """, or upload using your own URL below.""";
 }
 
@@ -1241,10 +1677,14 @@ class UrlPhotoFormBasicInfoMessages {
   final PhotoFormBasicInfoMessages _parent;
   const UrlPhotoFormBasicInfoMessages(this._parent);
 
-  /// `Image URL`
+  /// ```dart
+  /// "Image URL"
+  /// ```
   String get label => """Image URL""";
 
-  /// `Paste an image URL`
+  /// ```dart
+  /// "Paste an image URL"
+  /// ```
   String get placeholder => """Paste an image URL""";
 }
 
@@ -1252,7 +1692,9 @@ class DebilitiesMessages {
   final Messages _parent;
   const DebilitiesMessages(this._parent);
 
-  /// `$name ($key)`
+  /// ```dart
+  /// "$name ($key)"
+  /// ```
   String label(String name, String key) => """$name ($key)""";
   DialogDebilitiesMessages get dialog => DialogDebilitiesMessages(this);
 }
@@ -1261,10 +1703,14 @@ class DialogDebilitiesMessages {
   final DebilitiesMessages _parent;
   const DialogDebilitiesMessages(this._parent);
 
-  /// `Debilities`
+  /// ```dart
+  /// "Debilities"
+  /// ```
   String get title => """Debilities""";
 
-  /// `Debilities are temporary, negative conditions or states in which your character is in. When a stat is debilitated, it causes its modifier to be reduced by 1 until recovered.`
+  /// ```dart
+  /// "Debilities are temporary, negative conditions or states in which your character is in. When a stat is debilitated, it causes its modifier to be reduced by 1 until recovered."
+  /// ```
   String get info =>
       """Debilities are temporary, negative conditions or states in which your character is in. When a stat is debilitated, it causes its modifier to be reduced by 1 until recovered.""";
 }
@@ -1273,7 +1719,9 @@ class TagsMessages {
   final Messages _parent;
   const TagsMessages(this._parent);
 
-  /// `Copy from: $name`
+  /// ```dart
+  /// "Copy from: $name"
+  /// ```
   String copyFrom(String name) => """Copy from: $name""";
   DialogTagsMessages get dialog => DialogTagsMessages(this);
 }
@@ -1282,7 +1730,9 @@ class DialogTagsMessages {
   final TagsMessages _parent;
   const DialogTagsMessages(this._parent);
 
-  /// `Tag Information`
+  /// ```dart
+  /// "Tag Information"
+  /// ```
   String get title => """Tag Information""";
 }
 
@@ -1308,10 +1758,14 @@ class DeleteConfirmationsDialogsMessages {
   final ConfirmationsDialogsMessages _parent;
   const DeleteConfirmationsDialogsMessages(this._parent);
 
-  /// `Delete $ent?`
+  /// ```dart
+  /// "Delete $ent?"
+  /// ```
   String title(String ent) => """Delete $ent?""";
 
-  /// `Are you sure you want to remove the $ent "$name" from the list?`
+  /// ```dart
+  /// "Are you sure you want to remove the $ent "$name" from the list?"
+  /// ```
   String body(String ent, String name) =>
       """Are you sure you want to remove the $ent "$name" from the list?""";
 }
@@ -1320,17 +1774,25 @@ class ExitConfirmationsDialogsMessages {
   final ConfirmationsDialogsMessages _parent;
   const ExitConfirmationsDialogsMessages(this._parent);
 
-  /// `Are you sure?`
+  /// ```dart
+  /// "Are you sure?"
+  /// ```
   String get title => """Are you sure?""";
 
-  /// `Going back will lose any unsaved changes.\nAre you sure you want to go back?`
+  /// ```dart
+  /// "Going back will lose any unsaved changes.\nAre you sure you want to go back?"
+  /// ```
   String get body =>
       """Going back will lose any unsaved changes.\nAre you sure you want to go back?""";
 
-  /// `Exit & Discard`
+  /// ```dart
+  /// "Exit & Discard"
+  /// ```
   String get ok => """Exit & Discard""";
 
-  /// `Continue editing`
+  /// ```dart
+  /// "Continue editing"
+  /// ```
   String get cancel => """Continue editing""";
 }
 
@@ -1347,10 +1809,14 @@ class Step1DeleteAccountConfirmationsDialogsMessages {
   final DeleteAccountConfirmationsDialogsMessages _parent;
   const Step1DeleteAccountConfirmationsDialogsMessages(this._parent);
 
-  /// `Delete Your Account?`
+  /// ```dart
+  /// "Delete Your Account?"
+  /// ```
   String get title => """Delete Your Account?""";
 
-  /// `Are you sure you want to delete your account?\n\nThis action cannot be undone.`
+  /// ```dart
+  /// "Are you sure you want to delete your account?\n\nThis action cannot be undone."
+  /// ```
   String get body =>
       """Are you sure you want to delete your account?\n\nThis action cannot be undone.""";
 }
@@ -1359,10 +1825,14 @@ class Step2DeleteAccountConfirmationsDialogsMessages {
   final DeleteAccountConfirmationsDialogsMessages _parent;
   const Step2DeleteAccountConfirmationsDialogsMessages(this._parent);
 
-  /// `Are you really sure?`
+  /// ```dart
+  /// "Are you really sure?"
+  /// ```
   String get title => """Are you really sure?""";
 
-  /// `We do not save any data for deleted accounts. All your data will be permanently deleted.\n\nAre you sure you want to delete your account?\n\nPlease confirm this one last time.`
+  /// ```dart
+  /// "We do not save any data for deleted accounts. All your data will be permanently deleted.\n\nAre you sure you want to delete your account?\n\nPlease confirm this one last time."
+  /// ```
   String get body =>
       """We do not save any data for deleted accounts. All your data will be permanently deleted.\n\nAre you sure you want to delete your account?\n\nPlease confirm this one last time.""";
 }
@@ -1457,10 +1927,14 @@ class ItemsMessages {
   final Messages _parent;
   const ItemsMessages(this._parent);
 
-  /// `× $amt`
+  /// ```dart
+  /// "× $amt"
+  /// ```
   String amount(String amt) => """× $amt""";
 
-  /// `Amount`
+  /// ```dart
+  /// "Amount"
+  /// ```
   String get amountTooltip => """Amount""";
   SettingsItemsMessages get settings => SettingsItemsMessages(this);
 }
@@ -1469,13 +1943,19 @@ class SettingsItemsMessages {
   final ItemsMessages _parent;
   const SettingsItemsMessages(this._parent);
 
-  /// `Count Armor`
+  /// ```dart
+  /// "Count Armor"
+  /// ```
   String get countArmor => """Count Armor""";
 
-  /// `Count Damage`
+  /// ```dart
+  /// "Count Damage"
+  /// ```
   String get countDamage => """Count Damage""";
 
-  /// `Count Weight`
+  /// ```dart
+  /// "Count Weight"
+  /// ```
   String get countWeight => """Count Weight""";
 }
 
@@ -1483,7 +1963,9 @@ class NotesMessages {
   final Messages _parent;
   const NotesMessages(this._parent);
 
-  /// `General`
+  /// ```dart
+  /// "General"
+  /// ```
   String get noCategory => """General""";
 }
 
@@ -1521,7 +2003,9 @@ class DialogBioMessages {
   final BioMessages _parent;
   const DialogBioMessages(this._parent);
 
-  /// `Character Biography`
+  /// ```dart
+  /// "Character Biography"
+  /// ```
   String get title => """Character Biography""";
   DescriptionDialogBioMessages get description =>
       DescriptionDialogBioMessages(this);
@@ -1535,10 +2019,14 @@ class DescriptionDialogBioMessages {
   final DialogBioMessages _parent;
   const DescriptionDialogBioMessages(this._parent);
 
-  /// `Character & background description`
+  /// ```dart
+  /// "Character & background description"
+  /// ```
   String get label => """Character & background description""";
 
-  /// `Describe your character's background, personality, goals, etc.`
+  /// ```dart
+  /// "Describe your character's background, personality, goals, etc."
+  /// ```
   String get placeholder =>
       """Describe your character's background, personality, goals, etc.""";
 }
@@ -1547,10 +2035,14 @@ class LooksDialogBioMessages {
   final DialogBioMessages _parent;
   const LooksDialogBioMessages(this._parent);
 
-  /// `Appearance`
+  /// ```dart
+  /// "Appearance"
+  /// ```
   String get label => """Appearance""";
 
-  /// `Describe your character's appearance. You may use the presets from the buttons above.`
+  /// ```dart
+  /// "Describe your character's appearance. You may use the presets from the buttons above."
+  /// ```
   String get placeholder =>
       """Describe your character's appearance. You may use the presets from the buttons above.""";
 }
@@ -1559,7 +2051,9 @@ class AlignmentDialogBioMessages {
   final DialogBioMessages _parent;
   const AlignmentDialogBioMessages(this._parent);
 
-  /// `Alignment`
+  /// ```dart
+  /// "Alignment"
+  /// ```
   String get label => """Alignment""";
 }
 
@@ -1567,10 +2061,14 @@ class AlignmentDescriptionDialogBioMessages {
   final DialogBioMessages _parent;
   const AlignmentDescriptionDialogBioMessages(this._parent);
 
-  /// `Alignment Description`
+  /// ```dart
+  /// "Alignment Description"
+  /// ```
   String get label => """Alignment Description""";
 
-  /// `Alignment is your character's way of thinking and moral compass. This can center on an ethical ideal, religious strictures or early life events. It reflects what your character values and aspires to protect or create.`
+  /// ```dart
+  /// "Alignment is your character's way of thinking and moral compass. This can center on an ethical ideal, religious strictures or early life events. It reflects what your character values and aspires to protect or create."
+  /// ```
   String get placeholder =>
       """Alignment is your character's way of thinking and moral compass. This can center on an ethical ideal, religious strictures or early life events. It reflects what your character values and aspires to protect or create.""";
 }
@@ -1579,13 +2077,19 @@ class SearchMessages {
   final Messages _parent;
   const SearchMessages(this._parent);
 
-  /// `Type to search`
+  /// ```dart
+  /// "Type to search"
+  /// ```
   String get placeholder => """Type to search""";
 
-  /// `Type to search $ent`
+  /// ```dart
+  /// "Type to search $ent"
+  /// ```
   String placeholderEntity(String ent) => """Type to search $ent""";
 
-  /// `Search in`
+  /// ```dart
+  /// "Search in"
+  /// ```
   String get searchIn => """Search in""";
 }
 
@@ -1599,11 +2103,15 @@ class DialogHpMessages {
   final HpMessages _parent;
   const DialogHpMessages(this._parent);
 
-  /// `Modify HP`
+  /// ```dart
+  /// "Modify HP"
+  /// ```
   String get title => """Modify HP""";
   ChangeDialogHpMessages get change => ChangeDialogHpMessages(this);
 
-  /// `Override Max HP`
+  /// ```dart
+  /// "Override Max HP"
+  /// ```
   String get overrideMax => """Override Max HP""";
 }
 
@@ -1611,13 +2119,19 @@ class ChangeDialogHpMessages {
   final DialogHpMessages _parent;
   const ChangeDialogHpMessages(this._parent);
 
-  /// `Heal\n+$amt`
+  /// ```dart
+  /// "Heal\n+$amt"
+  /// ```
   String add(int amt) => """Heal\n+$amt""";
 
-  /// `Damage\n-$amt`
+  /// ```dart
+  /// "Damage\n-$amt"
+  /// ```
   String remove(int amt) => """Damage\n-$amt""";
 
-  /// `No Change`
+  /// ```dart
+  /// "No Change"
+  /// ```
   String get neutral => """No Change""";
 }
 
@@ -1631,10 +2145,14 @@ class DialogXpMessages {
   final XpMessages _parent;
   const DialogXpMessages(this._parent);
 
-  /// `Mark Session XP`
+  /// ```dart
+  /// "Mark Session XP"
+  /// ```
   String get title => """Mark Session XP""";
 
-  /// `Update XP & Level`
+  /// ```dart
+  /// "Update XP & Level"
+  /// ```
   String get overridingTitle => """Update XP & Level""";
   EndOfSessionDialogXpMessages get endOfSession =>
       EndOfSessionDialogXpMessages(this);
@@ -1645,7 +2163,9 @@ class EndOfSessionDialogXpMessages {
   final DialogXpMessages _parent;
   const EndOfSessionDialogXpMessages(this._parent);
 
-  /// `End Session`
+  /// ```dart
+  /// "End Session"
+  /// ```
   String get button => """End Session""";
   QuestionsEndOfSessionDialogXpMessages get questions =>
       QuestionsEndOfSessionDialogXpMessages(this);
@@ -1655,10 +2175,14 @@ class QuestionsEndOfSessionDialogXpMessages {
   final EndOfSessionDialogXpMessages _parent;
   const QuestionsEndOfSessionDialogXpMessages(this._parent);
 
-  /// `End of Session Questions`
+  /// ```dart
+  /// "End of Session Questions"
+  /// ```
   String get title => """End of Session Questions""";
 
-  /// `Answer these questions as a group. For each "yes" answer, XP is marked.`
+  /// ```dart
+  /// "Answer these questions as a group. For each "yes" answer, XP is marked."
+  /// ```
   String get subtitle =>
       """Answer these questions as a group. For each "yes" answer, XP is marked.""";
 }
@@ -1667,21 +2191,31 @@ class OverrideDialogXpMessages {
   final DialogXpMessages _parent;
   const OverrideDialogXpMessages(this._parent);
 
-  /// `Update Manually`
+  /// ```dart
+  /// "Update Manually"
+  /// ```
   String get title => """Update Manually""";
 
-  /// `Changing the current XP or level manually will cause the pending XP to be discarded unless this is unchecked.`
+  /// ```dart
+  /// "Changing the current XP or level manually will cause the pending XP to be discarded unless this is unchecked."
+  /// ```
   String get info =>
       """Changing the current XP or level manually will cause the pending XP to be discarded unless this is unchecked.""";
 
-  /// `Reset bonds, flags & end of session questions after saving`
+  /// ```dart
+  /// "Reset bonds, flags & end of session questions after saving"
+  /// ```
   String get resetCheckbox =>
       """Reset bonds, flags & end of session questions after saving""";
 
-  /// `Override XP`
+  /// ```dart
+  /// "Override XP"
+  /// ```
   String get xp => """Override XP""";
 
-  /// `Override Level`
+  /// ```dart
+  /// "Override Level"
+  /// ```
   String get level => """Override Level""";
 }
 
@@ -1689,7 +2223,9 @@ class ArmorMessages {
   final Messages _parent;
   const ArmorMessages(this._parent);
 
-  /// `Armor`
+  /// ```dart
+  /// "Armor"
+  /// ```
   String get title => """Armor""";
   DialogArmorMessages get dialog => DialogArmorMessages(this);
 }
@@ -1698,10 +2234,14 @@ class DialogArmorMessages {
   final ArmorMessages _parent;
   const DialogArmorMessages(this._parent);
 
-  /// `Armor`
+  /// ```dart
+  /// "Armor"
+  /// ```
   String get title => """Armor""";
 
-  /// `Use armor from class & equipped items`
+  /// ```dart
+  /// "Use armor from class & equipped items"
+  /// ```
   String get autoArmor => """Use armor from class & equipped items""";
 }
 
@@ -1709,47 +2249,75 @@ class RichTextMessages {
   final Messages _parent;
   const RichTextMessages(this._parent);
 
-  /// `Preview`
+  /// ```dart
+  /// "Preview"
+  /// ```
   String get preview => """Preview""";
 
-  /// `Formatting Help`
+  /// ```dart
+  /// "Formatting Help"
+  /// ```
   String get help => """Formatting Help""";
 
-  /// `Bold`
+  /// ```dart
+  /// "Bold"
+  /// ```
   String get bold => """Bold""";
 
-  /// `Italic`
+  /// ```dart
+  /// "Italic"
+  /// ```
   String get italic => """Italic""";
 
-  /// `Headings`
+  /// ```dart
+  /// "Headings"
+  /// ```
   String get headings => """Headings""";
 
-  /// `Heading $depth`
+  /// ```dart
+  /// "Heading $depth"
+  /// ```
   String heading(int depth) => """Heading $depth""";
 
-  /// `Bullet List`
+  /// ```dart
+  /// "Bullet List"
+  /// ```
   String get bulletList => """Bullet List""";
 
-  /// `Numbered List`
+  /// ```dart
+  /// "Numbered List"
+  /// ```
   String get numberedList => """Numbered List""";
   CheckListRichTextMessages get checkList => CheckListRichTextMessages(this);
 
-  /// `URL`
+  /// ```dart
+  /// "URL"
+  /// ```
   String get url => """URL""";
 
-  /// `Image URL`
+  /// ```dart
+  /// "Image URL"
+  /// ```
   String get imageURL => """Image URL""";
 
-  /// `Table`
+  /// ```dart
+  /// "Table"
+  /// ```
   String get table => """Table""";
 
-  /// `Header $n`
+  /// ```dart
+  /// "Header $n"
+  /// ```
   String header(Object n) => """Header $n""";
 
-  /// `Cell $n`
+  /// ```dart
+  /// "Cell $n"
+  /// ```
   String cell(int n) => """Cell $n""";
 
-  /// `Markdown Preview`
+  /// ```dart
+  /// "Markdown Preview"
+  /// ```
   String get markdownPreview => """Markdown Preview""";
 }
 
@@ -1757,10 +2325,14 @@ class CheckListRichTextMessages {
   final RichTextMessages _parent;
   const CheckListRichTextMessages(this._parent);
 
-  /// `Checklist (Unchecked)`
+  /// ```dart
+  /// "Checklist (Unchecked)"
+  /// ```
   String get unchecked => """Checklist (Unchecked)""";
 
-  /// `Checklist (Checked)`
+  /// ```dart
+  /// "Checklist (Checked)"
+  /// ```
   String get checked => """Checklist (Checked)""";
 }
 
@@ -1768,16 +2340,24 @@ class CustomRollsMessages {
   final Messages _parent;
   const CustomRollsMessages(this._parent);
 
-  /// `Quick Roll Buttons`
+  /// ```dart
+  /// "Quick Roll Buttons"
+  /// ```
   String get title => """Quick Roll Buttons""";
 
-  /// `Left Button`
+  /// ```dart
+  /// "Left Button"
+  /// ```
   String get left => """Left Button""";
 
-  /// `Right Button`
+  /// ```dart
+  /// "Right Button"
+  /// ```
   String get right => """Right Button""";
 
-  /// `Button Label`
+  /// ```dart
+  /// "Button Label"
+  /// ```
   String get buttonLabel => """Button Label""";
   SpecialDiceCustomRollsMessages get specialDice =>
       SpecialDiceCustomRollsMessages(this);
@@ -1789,10 +2369,14 @@ class SpecialDiceCustomRollsMessages {
   final CustomRollsMessages _parent;
   const SpecialDiceCustomRollsMessages(this._parent);
 
-  /// `Special Dice`
+  /// ```dart
+  /// "Special Dice"
+  /// ```
   String get title => """Special Dice""";
 
-  /// `${_select(btn, {'damage': 'Damage'}, other: btn)}`
+  /// ```dart
+  /// "${_select(btn, {'damage': 'Damage'}, other: btn)}"
+  /// ```
   String button(String btn) =>
       """${_select(btn, {'damage': 'Damage'}, other: btn)}""";
 }
@@ -1801,10 +2385,14 @@ class TooltipCustomRollsMessages {
   final CustomRollsMessages _parent;
   const TooltipCustomRollsMessages(this._parent);
 
-  /// `Roll $dice\n* Rolling with debility`
+  /// ```dart
+  /// "Roll $dice\n* Rolling with debility"
+  /// ```
   String rollNormal(String dice) => """Roll $dice\n* Rolling with debility""";
 
-  /// `Roll $dice`
+  /// ```dart
+  /// "Roll $dice"
+  /// ```
   String rollWithDebility(String dice) => """Roll $dice""";
 }
 
@@ -1812,19 +2400,29 @@ class PresetsCustomRollsMessages {
   final CustomRollsMessages _parent;
   const PresetsCustomRollsMessages(this._parent);
 
-  /// `Presets`
+  /// ```dart
+  /// "Presets"
+  /// ```
   String get title => """Presets""";
 
-  /// `Basic Action`
+  /// ```dart
+  /// "Basic Action"
+  /// ```
   String get basicAction => """Basic Action""";
 
-  /// `Hack & Slash`
+  /// ```dart
+  /// "Hack & Slash"
+  /// ```
   String get hackAndSlash => """Hack & Slash""";
 
-  /// `Volley`
+  /// ```dart
+  /// "Volley"
+  /// ```
   String get volley => """Volley""";
 
-  /// `Discern Realities`
+  /// ```dart
+  /// "Discern Realities"
+  /// ```
   String get discernRealities => """Discern Realities""";
 }
 
@@ -1832,26 +2430,40 @@ class SessionMarksMessages {
   final Messages _parent;
   const SessionMarksMessages(this._parent);
 
-  /// `Bonds & Flags`
+  /// ```dart
+  /// "Bonds & Flags"
+  /// ```
   String get title => """Bonds & Flags""";
 
-  /// `Bond`
+  /// ```dart
+  /// "Bond"
+  /// ```
   String get bond => """Bond""";
 
-  /// `Bonds`
+  /// ```dart
+  /// "Bonds"
+  /// ```
   String get bonds => """Bonds""";
 
-  /// `Flag`
+  /// ```dart
+  /// "Flag"
+  /// ```
   String get flag => """Flag""";
 
-  /// `Flags`
+  /// ```dart
+  /// "Flags"
+  /// ```
   String get flags => """Flags""";
 
-  /// `You have no bonds or flags. You can add some using the edit button above, then mark them off as completed as you go along your adventure.`
+  /// ```dart
+  /// "You have no bonds or flags. You can add some using the edit button above, then mark them off as completed as you go along your adventure."
+  /// ```
   String get noData =>
       """You have no bonds or flags. You can add some using the edit button above, then mark them off as completed as you go along your adventure.""";
 
-  /// `You can add, update or remove bonds & flags using the edit icon above.`
+  /// ```dart
+  /// "You can add, update or remove bonds & flags using the edit icon above."
+  /// ```
   String get info =>
       """You can add, update or remove bonds & flags using the edit icon above.""";
   EndOfSessionSessionMarksMessages get endOfSession =>
@@ -1862,14 +2474,20 @@ class EndOfSessionSessionMarksMessages {
   final SessionMarksMessages _parent;
   const EndOfSessionSessionMarksMessages(this._parent);
 
-  /// `Did we learn something new and important about the world?`
+  /// ```dart
+  /// "Did we learn something new and important about the world?"
+  /// ```
   String get q1 =>
       """Did we learn something new and important about the world?""";
 
-  /// `Did we overcome a notable monster or enemy?`
+  /// ```dart
+  /// "Did we overcome a notable monster or enemy?"
+  /// ```
   String get q2 => """Did we overcome a notable monster or enemy?""";
 
-  /// `Did we loot a memorable treasure?`
+  /// ```dart
+  /// "Did we loot a memorable treasure?"
+  /// ```
   String get q3 => """Did we loot a memorable treasure?""";
 }
 
@@ -1890,10 +2508,14 @@ class CharacterClassCreateCharacterMessages {
   final CreateCharacterMessages _parent;
   const CharacterClassCreateCharacterMessages(this._parent);
 
-  /// `No class selected (required)`
+  /// ```dart
+  /// "No class selected (required)"
+  /// ```
   String get noSelection => """No class selected (required)""";
 
-  /// `Base HP: $hp, Load: $load, Damage Dice: $damageDice`
+  /// ```dart
+  /// "Base HP: $hp, Load: $load, Damage Dice: $damageDice"
+  /// ```
   String description(int hp, int load, String damageDice) =>
       """Base HP: $hp, Load: $load, Damage Dice: $damageDice""";
 }
@@ -1902,13 +2524,19 @@ class BasicInfoCreateCharacterMessages {
   final CreateCharacterMessages _parent;
   const BasicInfoCreateCharacterMessages(this._parent);
 
-  /// `Unnamed Traveler`
+  /// ```dart
+  /// "Unnamed Traveler"
+  /// ```
   String get defaultName => """Unnamed Traveler""";
 
-  /// `Select name & picture (required)`
+  /// ```dart
+  /// "Select name & picture (required)"
+  /// ```
   String get helpText => """Select name & picture (required)""";
 
-  /// `Level 1 $cls`
+  /// ```dart
+  /// "Level 1 $cls"
+  /// ```
   String description(String cls) => """Level 1 $cls""";
 }
 
@@ -1916,15 +2544,21 @@ class StartingGearCreateCharacterMessages {
   final CreateCharacterMessages _parent;
   const StartingGearCreateCharacterMessages(this._parent);
 
-  /// `Select your starting gear determined by class (optional)`
+  /// ```dart
+  /// "Select your starting gear determined by class (optional)"
+  /// ```
   String get helpText =>
       """Select your starting gear determined by class (optional)""";
 
-  /// `$amt ${_plural(double.tryParse(amt)?.ceil() ?? 0, one: 'coin', many: 'coins')}`
+  /// ```dart
+  /// "$amt ${_plural(double.tryParse(amt)?.ceil() ?? 0, one: 'coin', many: 'coins')}"
+  /// ```
   String coins(String amt) =>
       """$amt ${_plural(double.tryParse(amt)?.ceil() ?? 0, one: 'coin', many: 'coins')}""";
 
-  /// `$amt × $name`
+  /// ```dart
+  /// "$amt × $name"
+  /// ```
   String item(String amt, String name) => """$amt × $name""";
   CountStartingGearCreateCharacterMessages get count =>
       CountStartingGearCreateCharacterMessages(this);
@@ -1934,11 +2568,15 @@ class CountStartingGearCreateCharacterMessages {
   final StartingGearCreateCharacterMessages _parent;
   const CountStartingGearCreateCharacterMessages(this._parent);
 
-  /// `$cnt selected (class allowance: $max)`
+  /// ```dart
+  /// "$cnt selected (class allowance: $max)"
+  /// ```
   String withMax(int cnt, int max) =>
       """$cnt selected (class allowance: $max)""";
 
-  /// `$cnt selected`
+  /// ```dart
+  /// "$cnt selected"
+  /// ```
   String noMax(int cnt) => """$cnt selected""";
 }
 
@@ -1946,10 +2584,14 @@ class MovesSpellsCreateCharacterMessages {
   final CreateCharacterMessages _parent;
   const MovesSpellsCreateCharacterMessages(this._parent);
 
-  /// `Moves & Spells`
+  /// ```dart
+  /// "Moves & Spells"
+  /// ```
   String get title => """Moves & Spells""";
 
-  /// `$moves Moves, $spells Spells selected`
+  /// ```dart
+  /// "$moves Moves, $spells Spells selected"
+  /// ```
   String description(int moves, int spells) =>
       """$moves Moves, $spells Spells selected""";
 }
@@ -1967,7 +2609,9 @@ class DetailsAccountMessages {
   final AccountMessages _parent;
   const DetailsAccountMessages(this._parent);
 
-  /// `Account details`
+  /// ```dart
+  /// "Account details"
+  /// ```
   String get title => """Account details""";
   DisplayNameDetailsAccountMessages get displayName =>
       DisplayNameDetailsAccountMessages(this);
@@ -1981,16 +2625,24 @@ class DisplayNameDetailsAccountMessages {
   final DetailsAccountMessages _parent;
   const DisplayNameDetailsAccountMessages(this._parent);
 
-  /// `Change Display Name`
+  /// ```dart
+  /// "Change Display Name"
+  /// ```
   String get title => """Change Display Name""";
 
-  /// `Display name`
+  /// ```dart
+  /// "Display name"
+  /// ```
   String get label => """Display name""";
 
-  /// `Enter your public display name`
+  /// ```dart
+  /// "Enter your public display name"
+  /// ```
   String get placeholder => """Enter your public display name""";
 
-  /// `Display name changed successfully`
+  /// ```dart
+  /// "Display name changed successfully"
+  /// ```
   String get success => """Display name changed successfully""";
 }
 
@@ -1998,10 +2650,14 @@ class ImageDetailsAccountMessages {
   final DetailsAccountMessages _parent;
   const ImageDetailsAccountMessages(this._parent);
 
-  /// `Change Profile Picture`
+  /// ```dart
+  /// "Change Profile Picture"
+  /// ```
   String get title => """Change Profile Picture""";
 
-  /// `Change your profile picture`
+  /// ```dart
+  /// "Change your profile picture"
+  /// ```
   String get subtitle => """Change your profile picture""";
 }
 
@@ -2009,16 +2665,24 @@ class EmailDetailsAccountMessages {
   final DetailsAccountMessages _parent;
   const EmailDetailsAccountMessages(this._parent);
 
-  /// `Change Email Address`
+  /// ```dart
+  /// "Change Email Address"
+  /// ```
   String get title => """Change Email Address""";
 
-  /// `Email address`
+  /// ```dart
+  /// "Email address"
+  /// ```
   String get label => """Email address""";
 
-  /// `Enter a new email address`
+  /// ```dart
+  /// "Enter a new email address"
+  /// ```
   String get placeholder => """Enter a new email address""";
 
-  /// `Email changed successfully`
+  /// ```dart
+  /// "Email changed successfully"
+  /// ```
   String get success => """Email changed successfully""";
 }
 
@@ -2026,26 +2690,38 @@ class PasswordDetailsAccountMessages {
   final DetailsAccountMessages _parent;
   const PasswordDetailsAccountMessages(this._parent);
 
-  /// `Change Password`
+  /// ```dart
+  /// "Change Password"
+  /// ```
   String get title => """Change Password""";
 
-  /// `Change your password`
+  /// ```dart
+  /// "Change your password"
+  /// ```
   String get subtitle => """Change your password""";
 
-  /// `Password changed successfully`
+  /// ```dart
+  /// "Password changed successfully"
+  /// ```
   String get success => """Password changed successfully""";
 
-  /// `New password`
+  /// ```dart
+  /// "New password"
+  /// ```
   String get label => """New password""";
 
-  /// `Enter your new password`
+  /// ```dart
+  /// "Enter your new password"
+  /// ```
   String get placeholder => """Enter your new password""";
   VisibilityPasswordDetailsAccountMessages get visibility =>
       VisibilityPasswordDetailsAccountMessages(this);
   ConfirmPasswordDetailsAccountMessages get confirm =>
       ConfirmPasswordDetailsAccountMessages(this);
 
-  /// `Passwords do not match`
+  /// ```dart
+  /// "Passwords do not match"
+  /// ```
   String get error => """Passwords do not match""";
 }
 
@@ -2053,10 +2729,14 @@ class VisibilityPasswordDetailsAccountMessages {
   final PasswordDetailsAccountMessages _parent;
   const VisibilityPasswordDetailsAccountMessages(this._parent);
 
-  /// `Show password`
+  /// ```dart
+  /// "Show password"
+  /// ```
   String get show => """Show password""";
 
-  /// `Hide password`
+  /// ```dart
+  /// "Hide password"
+  /// ```
   String get hide => """Hide password""";
 }
 
@@ -2064,10 +2744,14 @@ class ConfirmPasswordDetailsAccountMessages {
   final PasswordDetailsAccountMessages _parent;
   const ConfirmPasswordDetailsAccountMessages(this._parent);
 
-  /// `Confirm New Password`
+  /// ```dart
+  /// "Confirm New Password"
+  /// ```
   String get label => """Confirm New Password""";
 
-  /// `Enter the same password again`
+  /// ```dart
+  /// "Enter the same password again"
+  /// ```
   String get placeholder => """Enter the same password again""";
 }
 
@@ -2075,7 +2759,9 @@ class ProvidersAccountMessages {
   final AccountMessages _parent;
   const ProvidersAccountMessages(this._parent);
 
-  /// `Connected logins`
+  /// ```dart
+  /// "Connected logins"
+  /// ```
   String get title => """Connected logins""";
 }
 
@@ -2083,10 +2769,14 @@ class DeleteAccountAccountMessages {
   final AccountMessages _parent;
   const DeleteAccountAccountMessages(this._parent);
 
-  /// `Delete Your Account`
+  /// ```dart
+  /// "Delete Your Account"
+  /// ```
   String get title => """Delete Your Account""";
 
-  /// `A deletion request for your account was sent successfully`
+  /// ```dart
+  /// "A deletion request for your account was sent successfully"
+  /// ```
   String get success =>
       """A deletion request for your account was sent successfully""";
 }
@@ -2101,10 +2791,14 @@ class MovesActionsMessages {
   final ActionsMessages _parent;
   const MovesActionsMessages(this._parent);
 
-  /// `Basic Moves`
+  /// ```dart
+  /// "Basic Moves"
+  /// ```
   String get basic => """Basic Moves""";
 
-  /// `Special Moves`
+  /// ```dart
+  /// "Special Moves"
+  /// ```
   String get special => """Special Moves""";
 }
 
@@ -2112,7 +2806,9 @@ class AbilityScoresMessages {
   final Messages _parent;
   const AbilityScoresMessages(this._parent);
 
-  /// `You can drag & drop the stat cards to change the order in which they appear throughout this character's screens.`
+  /// ```dart
+  /// "You can drag & drop the stat cards to change the order in which they appear throughout this character's screens."
+  /// ```
   String get info =>
       """You can drag & drop the stat cards to change the order in which they appear throughout this character's screens.""";
   RollButtonAbilityScoresMessages get rollButton =>
@@ -2125,10 +2821,14 @@ class RollButtonAbilityScoresMessages {
   final AbilityScoresMessages _parent;
   const RollButtonAbilityScoresMessages(this._parent);
 
-  /// `Roll +{stat}`
+  /// ```dart
+  /// "Roll +{stat}"
+  /// ```
   String get stat => """Roll +{stat}""";
 
-  /// `Roll random stat`
+  /// ```dart
+  /// "Roll random stat"
+  /// ```
   String get randStat => """Roll random stat""";
 }
 
@@ -2150,10 +2850,14 @@ class BondStatsAbilityScoresMessages {
   final StatsAbilityScoresMessages _parent;
   const BondStatsAbilityScoresMessages(this._parent);
 
-  /// `Bond`
+  /// ```dart
+  /// "Bond"
+  /// ```
   String get name => """Bond""";
 
-  /// `When a move has you roll+bond you'll count the number of bonds you have with the character in question and add that to the roll.`
+  /// ```dart
+  /// "When a move has you roll+bond you'll count the number of bonds you have with the character in question and add that to the roll."
+  /// ```
   String get description =>
       """When a move has you roll+bond you'll count the number of bonds you have with the character in question and add that to the roll.""";
   DebilityBondStatsAbilityScoresMessages get debility =>
@@ -2164,7 +2868,9 @@ class DebilityBondStatsAbilityScoresMessages {
   final BondStatsAbilityScoresMessages _parent;
   const DebilityBondStatsAbilityScoresMessages(this._parent);
 
-  /// `Lonely`
+  /// ```dart
+  /// "Lonely"
+  /// ```
   String get name => """Lonely""";
 
   String get description => """null""";
@@ -2174,11 +2880,15 @@ class ChaStatsAbilityScoresMessages {
   final StatsAbilityScoresMessages _parent;
   const ChaStatsAbilityScoresMessages(this._parent);
 
-  /// `Measures a character's personality, personal magnetism, ability to lead, and appearance.`
+  /// ```dart
+  /// "Measures a character's personality, personal magnetism, ability to lead, and appearance."
+  /// ```
   String get description =>
       """Measures a character's personality, personal magnetism, ability to lead, and appearance.""";
 
-  /// `Charisma`
+  /// ```dart
+  /// "Charisma"
+  /// ```
   String get name => """Charisma""";
   DebilityChaStatsAbilityScoresMessages get debility =>
       DebilityChaStatsAbilityScoresMessages(this);
@@ -2188,10 +2898,14 @@ class DebilityChaStatsAbilityScoresMessages {
   final ChaStatsAbilityScoresMessages _parent;
   const DebilityChaStatsAbilityScoresMessages(this._parent);
 
-  /// `Scarred`
+  /// ```dart
+  /// "Scarred"
+  /// ```
   String get name => """Scarred""";
 
-  /// `It may not be permanent, but for now you don't look so good.`
+  /// ```dart
+  /// "It may not be permanent, but for now you don't look so good."
+  /// ```
   String get description =>
       """It may not be permanent, but for now you don't look so good.""";
 }
@@ -2200,11 +2914,15 @@ class ConStatsAbilityScoresMessages {
   final StatsAbilityScoresMessages _parent;
   const ConStatsAbilityScoresMessages(this._parent);
 
-  /// `Represents your character's health and stamina.`
+  /// ```dart
+  /// "Represents your character's health and stamina."
+  /// ```
   String get description =>
       """Represents your character's health and stamina.""";
 
-  /// `Constitution`
+  /// ```dart
+  /// "Constitution"
+  /// ```
   String get name => """Constitution""";
   DebilityConStatsAbilityScoresMessages get debility =>
       DebilityConStatsAbilityScoresMessages(this);
@@ -2214,10 +2932,14 @@ class DebilityConStatsAbilityScoresMessages {
   final ConStatsAbilityScoresMessages _parent;
   const DebilityConStatsAbilityScoresMessages(this._parent);
 
-  /// `Sick`
+  /// ```dart
+  /// "Sick"
+  /// ```
   String get name => """Sick""";
 
-  /// `Something just isn't right inside. Maybe you've got a disease or a wasting illness. Maybe you just drank too much ale last night and it's coming back to haunt you.`
+  /// ```dart
+  /// "Something just isn't right inside. Maybe you've got a disease or a wasting illness. Maybe you just drank too much ale last night and it's coming back to haunt you."
+  /// ```
   String get description =>
       """Something just isn't right inside. Maybe you've got a disease or a wasting illness. Maybe you just drank too much ale last night and it's coming back to haunt you.""";
 }
@@ -2226,10 +2948,14 @@ class DexStatsAbilityScoresMessages {
   final StatsAbilityScoresMessages _parent;
   const DexStatsAbilityScoresMessages(this._parent);
 
-  /// `Measures agility, reflexes and balance.`
+  /// ```dart
+  /// "Measures agility, reflexes and balance."
+  /// ```
   String get description => """Measures agility, reflexes and balance.""";
 
-  /// `Dexterity`
+  /// ```dart
+  /// "Dexterity"
+  /// ```
   String get name => """Dexterity""";
   DebilityDexStatsAbilityScoresMessages get debility =>
       DebilityDexStatsAbilityScoresMessages(this);
@@ -2239,10 +2965,14 @@ class DebilityDexStatsAbilityScoresMessages {
   final DexStatsAbilityScoresMessages _parent;
   const DebilityDexStatsAbilityScoresMessages(this._parent);
 
-  /// `Shaky`
+  /// ```dart
+  /// "Shaky"
+  /// ```
   String get name => """Shaky""";
 
-  /// `You're unsteady on your feet and you've got a shake in your hands.`
+  /// ```dart
+  /// "You're unsteady on your feet and you've got a shake in your hands."
+  /// ```
   String get description =>
       """You're unsteady on your feet and you've got a shake in your hands.""";
 }
@@ -2251,10 +2981,14 @@ class StrStatsAbilityScoresMessages {
   final StatsAbilityScoresMessages _parent;
   const StrStatsAbilityScoresMessages(this._parent);
 
-  /// `Measures muscle and physical power.`
+  /// ```dart
+  /// "Measures muscle and physical power."
+  /// ```
   String get description => """Measures muscle and physical power.""";
 
-  /// `Strength`
+  /// ```dart
+  /// "Strength"
+  /// ```
   String get name => """Strength""";
   DebilityStrStatsAbilityScoresMessages get debility =>
       DebilityStrStatsAbilityScoresMessages(this);
@@ -2264,10 +2998,14 @@ class DebilityStrStatsAbilityScoresMessages {
   final StrStatsAbilityScoresMessages _parent;
   const DebilityStrStatsAbilityScoresMessages(this._parent);
 
-  /// `Weak`
+  /// ```dart
+  /// "Weak"
+  /// ```
   String get name => """Weak""";
 
-  /// `You can't exert much force. Maybe it's just fatigue and injury, or maybe your strength was drained by magic.`
+  /// ```dart
+  /// "You can't exert much force. Maybe it's just fatigue and injury, or maybe your strength was drained by magic."
+  /// ```
   String get description =>
       """You can't exert much force. Maybe it's just fatigue and injury, or maybe your strength was drained by magic.""";
 }
@@ -2276,11 +3014,15 @@ class WisStatsAbilityScoresMessages {
   final StatsAbilityScoresMessages _parent;
   const WisStatsAbilityScoresMessages(this._parent);
 
-  /// `Describes a character's willpower, common sense, awareness, and intuition.`
+  /// ```dart
+  /// "Describes a character's willpower, common sense, awareness, and intuition."
+  /// ```
   String get description =>
       """Describes a character's willpower, common sense, awareness, and intuition.""";
 
-  /// `Wisdom`
+  /// ```dart
+  /// "Wisdom"
+  /// ```
   String get name => """Wisdom""";
   DebilityWisStatsAbilityScoresMessages get debility =>
       DebilityWisStatsAbilityScoresMessages(this);
@@ -2290,10 +3032,14 @@ class DebilityWisStatsAbilityScoresMessages {
   final WisStatsAbilityScoresMessages _parent;
   const DebilityWisStatsAbilityScoresMessages(this._parent);
 
-  /// `Confused`
+  /// ```dart
+  /// "Confused"
+  /// ```
   String get name => """Confused""";
 
-  /// `Ears ringing. Vision blurred. You're more than a little out of it.`
+  /// ```dart
+  /// "Ears ringing. Vision blurred. You're more than a little out of it."
+  /// ```
   String get description =>
       """Ears ringing. Vision blurred. You're more than a little out of it.""";
 }
@@ -2302,11 +3048,15 @@ class IntlStatsAbilityScoresMessages {
   final StatsAbilityScoresMessages _parent;
   const IntlStatsAbilityScoresMessages(this._parent);
 
-  /// `Determines how well your character learns and reasons.`
+  /// ```dart
+  /// "Determines how well your character learns and reasons."
+  /// ```
   String get description =>
       """Determines how well your character learns and reasons.""";
 
-  /// `Intelligence`
+  /// ```dart
+  /// "Intelligence"
+  /// ```
   String get name => """Intelligence""";
   DebilityIntlStatsAbilityScoresMessages get debility =>
       DebilityIntlStatsAbilityScoresMessages(this);
@@ -2316,10 +3066,14 @@ class DebilityIntlStatsAbilityScoresMessages {
   final IntlStatsAbilityScoresMessages _parent;
   const DebilityIntlStatsAbilityScoresMessages(this._parent);
 
-  /// `Stunned`
+  /// ```dart
+  /// "Stunned"
+  /// ```
   String get name => """Stunned""";
 
-  /// `That last knock to the head shook something loose. Brain not work so good.`
+  /// ```dart
+  /// "That last knock to the head shook something loose. Brain not work so good."
+  /// ```
   String get description =>
       """That last knock to the head shook something loose. Brain not work so good.""";
 }
@@ -2328,7 +3082,9 @@ class FormAbilityScoresMessages {
   final AbilityScoresMessages _parent;
   const FormAbilityScoresMessages(this._parent);
 
-  /// `Modifier:\n$mod`
+  /// ```dart
+  /// "Modifier:\n$mod"
+  /// ```
   String modifierValueLabel(String mod) => """Modifier:\n$mod""";
   DebilityDescriptionFormAbilityScoresMessages get debilityDescription =>
       DebilityDescriptionFormAbilityScoresMessages(this);
@@ -2345,10 +3101,14 @@ class DebilityDescriptionFormAbilityScoresMessages {
   final FormAbilityScoresMessages _parent;
   const DebilityDescriptionFormAbilityScoresMessages(this._parent);
 
-  /// `Debility Description`
+  /// ```dart
+  /// "Debility Description"
+  /// ```
   String get label => """Debility Description""";
 
-  /// `A description of the effect causing the debility and/or how it affects your character`
+  /// ```dart
+  /// "A description of the effect causing the debility and/or how it affects your character"
+  /// ```
   String get description =>
       """A description of the effect causing the debility and/or how it affects your character""";
 }
@@ -2357,10 +3117,14 @@ class DebilityNameFormAbilityScoresMessages {
   final FormAbilityScoresMessages _parent;
   const DebilityNameFormAbilityScoresMessages(this._parent);
 
-  /// `Debility Name`
+  /// ```dart
+  /// "Debility Name"
+  /// ```
   String get label => """Debility Name""";
 
-  /// `The name for the debility that occurs when this stat is debilitated (takes -1 until recovered).`
+  /// ```dart
+  /// "The name for the debility that occurs when this stat is debilitated (takes -1 until recovered)."
+  /// ```
   String get description =>
       """The name for the debility that occurs when this stat is debilitated (takes -1 until recovered).""";
 }
@@ -2369,10 +3133,14 @@ class DescriptionFormAbilityScoresMessages {
   final FormAbilityScoresMessages _parent;
   const DescriptionFormAbilityScoresMessages(this._parent);
 
-  /// `Ability Score Description`
+  /// ```dart
+  /// "Ability Score Description"
+  /// ```
   String get label => """Ability Score Description""";
 
-  /// `A description of what this ability score represents`
+  /// ```dart
+  /// "A description of what this ability score represents"
+  /// ```
   String get description =>
       """A description of what this ability score represents""";
 }
@@ -2381,10 +3149,14 @@ class KeyFormAbilityScoresMessages {
   final FormAbilityScoresMessages _parent;
   const KeyFormAbilityScoresMessages(this._parent);
 
-  /// `Ability Score Key`
+  /// ```dart
+  /// "Ability Score Key"
+  /// ```
   String get label => """Ability Score Key""";
 
-  /// `A 3-letter unique key that identifies this ability score in dice and is used as the short label for the modifier value (and not the actual score)`
+  /// ```dart
+  /// "A 3-letter unique key that identifies this ability score in dice and is used as the short label for the modifier value (and not the actual score)"
+  /// ```
   String get description =>
       """A 3-letter unique key that identifies this ability score in dice and is used as the short label for the modifier value (and not the actual score)""";
 }
@@ -2393,10 +3165,14 @@ class NameFormAbilityScoresMessages {
   final FormAbilityScoresMessages _parent;
   const NameFormAbilityScoresMessages(this._parent);
 
-  /// `Ability Score Name`
+  /// ```dart
+  /// "Ability Score Name"
+  /// ```
   String get label => """Ability Score Name""";
 
-  /// `The name of this ability score`
+  /// ```dart
+  /// "The name of this ability score"
+  /// ```
   String get description => """The name of this ability score""";
 }
 
@@ -2404,10 +3180,14 @@ class IconFormAbilityScoresMessages {
   final FormAbilityScoresMessages _parent;
   const IconFormAbilityScoresMessages(this._parent);
 
-  /// `Icon`
+  /// ```dart
+  /// "Icon"
+  /// ```
   String get label => """Icon""";
 
-  /// `Change Icon`
+  /// ```dart
+  /// "Change Icon"
+  /// ```
   String get button => """Change Icon""";
 }
 
@@ -2415,10 +3195,14 @@ class FeedbackMessages {
   final Messages _parent;
   const FeedbackMessages(this._parent);
 
-  /// `Send App Feedback`
+  /// ```dart
+  /// "Send App Feedback"
+  /// ```
   String get title => """Send App Feedback""";
 
-  /// `Send`
+  /// ```dart
+  /// "Send"
+  /// ```
   String get send => """Send""";
   FormFeedbackMessages get form => FormFeedbackMessages(this);
   SuccessFeedbackMessages get success => SuccessFeedbackMessages(this);
@@ -2436,7 +3220,9 @@ class TitleFormFeedbackMessages {
   final FormFeedbackMessages _parent;
   const TitleFormFeedbackMessages(this._parent);
 
-  /// `Feedback title`
+  /// ```dart
+  /// "Feedback title"
+  /// ```
   String get label => """Feedback title""";
 }
 
@@ -2444,7 +3230,9 @@ class BodyFormFeedbackMessages {
   final FormFeedbackMessages _parent;
   const BodyFormFeedbackMessages(this._parent);
 
-  /// `Problem, idea or feedback description`
+  /// ```dart
+  /// "Problem, idea or feedback description"
+  /// ```
   String get label => """Problem, idea or feedback description""";
 }
 
@@ -2452,7 +3240,9 @@ class EmailFormFeedbackMessages {
   final FormFeedbackMessages _parent;
   const EmailFormFeedbackMessages(this._parent);
 
-  /// `Enter your email`
+  /// ```dart
+  /// "Enter your email"
+  /// ```
   String get label => """Enter your email""";
 }
 
@@ -2460,10 +3250,14 @@ class SuccessFeedbackMessages {
   final FeedbackMessages _parent;
   const SuccessFeedbackMessages(this._parent);
 
-  /// `Feedback sent!`
+  /// ```dart
+  /// "Feedback sent!"
+  /// ```
   String get title => """Feedback sent!""";
 
-  /// `Thank you for your feedback! We will review your feedback as soon as we can.`
+  /// ```dart
+  /// "Thank you for your feedback! We will review your feedback as soon as we can."
+  /// ```
   String get message =>
       """Thank you for your feedback! We will review your feedback as soon as we can.""";
 }
@@ -2472,10 +3266,14 @@ class MigrationMessages {
   final Messages _parent;
   const MigrationMessages(this._parent);
 
-  /// `Welcome to\nDungeon Paper 2!`
+  /// ```dart
+  /// "Welcome to\nDungeon Paper 2!"
+  /// ```
   String get title => """Welcome to\nDungeon Paper 2!""";
 
-  /// `To get started, pick a username and the language for the rulebook & app. If you already have an existing Dungeon Paper account your data might take a few seconds to migrate.`
+  /// ```dart
+  /// "To get started, pick a username and the language for the rulebook & app. If you already have an existing Dungeon Paper account your data might take a few seconds to migrate."
+  /// ```
   String get subtitle =>
       """To get started, pick a username and the language for the rulebook & app. If you already have an existing Dungeon Paper account your data might take a few seconds to migrate.""";
   UsernameMigrationMessages get username => UsernameMigrationMessages(this);
@@ -2486,13 +3284,19 @@ class UsernameMigrationMessages {
   final MigrationMessages _parent;
   const UsernameMigrationMessages(this._parent);
 
-  /// `Username`
+  /// ```dart
+  /// "Username"
+  /// ```
   String get label => """Username""";
 
-  /// `Pick a unique username`
+  /// ```dart
+  /// "Pick a unique username"
+  /// ```
   String get placeholder => """Pick a unique username""";
 
-  /// `Your username is unique and can not be changed later, so think carefully! It will be used to identify all your library items when publishing.`
+  /// ```dart
+  /// "Your username is unique and can not be changed later, so think carefully! It will be used to identify all your library items when publishing."
+  /// ```
   String get info =>
       """Your username is unique and can not be changed later, so think carefully! It will be used to identify all your library items when publishing.""";
 }
@@ -2501,7 +3305,9 @@ class LanguageMigrationMessages {
   final MigrationMessages _parent;
   const LanguageMigrationMessages(this._parent);
 
-  /// `Default data language`
+  /// ```dart
+  /// "Default data language"
+  /// ```
   String get data => """Default data language""";
 }
 
@@ -2509,7 +3315,9 @@ class BackupMessages {
   final Messages _parent;
   const BackupMessages(this._parent);
 
-  /// `Export/Import`
+  /// ```dart
+  /// "Export/Import"
+  /// ```
   String get title => """Export/Import""";
   ImportingBackupMessages get importing => ImportingBackupMessages(this);
   ExportingBackupMessages get exporting => ExportingBackupMessages(this);
@@ -2519,10 +3327,14 @@ class ImportingBackupMessages {
   final BackupMessages _parent;
   const ImportingBackupMessages(this._parent);
 
-  /// `Import`
+  /// ```dart
+  /// "Import"
+  /// ```
   String get title => """Import""";
 
-  /// `Import`
+  /// ```dart
+  /// "Import"
+  /// ```
   String get button => """Import""";
   ProgressImportingBackupMessages get progress =>
       ProgressImportingBackupMessages(this);
@@ -2536,10 +3348,14 @@ class ProgressImportingBackupMessages {
   final ImportingBackupMessages _parent;
   const ProgressImportingBackupMessages(this._parent);
 
-  /// `Importing...`
+  /// ```dart
+  /// "Importing..."
+  /// ```
   String get title => """Importing...""";
 
-  /// `Processing $ent...`
+  /// ```dart
+  /// "Processing $ent..."
+  /// ```
   String processing(String ent) => """Processing $ent...""";
 }
 
@@ -2547,13 +3363,19 @@ class FileImportingBackupMessages {
   final ImportingBackupMessages _parent;
   const FileImportingBackupMessages(this._parent);
 
-  /// `Browse...`
+  /// ```dart
+  /// "Browse..."
+  /// ```
   String get browse => """Browse...""";
 
-  /// `Clear selected file`
+  /// ```dart
+  /// "Clear selected file"
+  /// ```
   String get clearFile => """Clear selected file""";
 
-  /// `To start importing, pick the file you want to import from.\nYou will then be able to select what to save and what to leave out.`
+  /// ```dart
+  /// "To start importing, pick the file you want to import from.\nYou will then be able to select what to save and what to leave out."
+  /// ```
   String get info =>
       """To start importing, pick the file you want to import from.\nYou will then be able to select what to save and what to leave out.""";
 }
@@ -2562,10 +3384,14 @@ class SuccessImportingBackupMessages {
   final ImportingBackupMessages _parent;
   const SuccessImportingBackupMessages(this._parent);
 
-  /// `Import Successful`
+  /// ```dart
+  /// "Import Successful"
+  /// ```
   String get title => """Import Successful""";
 
-  /// `Your data was imported from file successfully`
+  /// ```dart
+  /// "Your data was imported from file successfully"
+  /// ```
   String get message => """Your data was imported from file successfully""";
 }
 
@@ -2573,10 +3399,14 @@ class ErrorImportingBackupMessages {
   final ImportingBackupMessages _parent;
   const ErrorImportingBackupMessages(this._parent);
 
-  /// `Import Failed`
+  /// ```dart
+  /// "Import Failed"
+  /// ```
   String get title => """Import Failed""";
 
-  /// `Something went wrong.\nTry again or contact support if this persists`
+  /// ```dart
+  /// "Something went wrong.\nTry again or contact support if this persists"
+  /// ```
   String get message =>
       """Something went wrong.\nTry again or contact support if this persists""";
 }
@@ -2585,10 +3415,14 @@ class ExportingBackupMessages {
   final BackupMessages _parent;
   const ExportingBackupMessages(this._parent);
 
-  /// `Export`
+  /// ```dart
+  /// "Export"
+  /// ```
   String get title => """Export""";
 
-  /// `Export`
+  /// ```dart
+  /// "Export"
+  /// ```
   String get button => """Export""";
   ErrorExportingBackupMessages get error => ErrorExportingBackupMessages(this);
   SuccessExportingBackupMessages get success =>
@@ -2599,10 +3433,14 @@ class ErrorExportingBackupMessages {
   final ExportingBackupMessages _parent;
   const ErrorExportingBackupMessages(this._parent);
 
-  /// `Export Failed`
+  /// ```dart
+  /// "Export Failed"
+  /// ```
   String get title => """Export Failed""";
 
-  /// `Something went wrong.\nTry again or contact support if this persists`
+  /// ```dart
+  /// "Something went wrong.\nTry again or contact support if this persists"
+  /// ```
   String get message =>
       """Something went wrong.\nTry again or contact support if this persists""";
 }
@@ -2611,10 +3449,14 @@ class SuccessExportingBackupMessages {
   final ExportingBackupMessages _parent;
   const SuccessExportingBackupMessages(this._parent);
 
-  /// `Export Successful`
+  /// ```dart
+  /// "Export Successful"
+  /// ```
   String get title => """Export Successful""";
 
-  /// `Your data was exported to file successfully`
+  /// ```dart
+  /// "Your data was exported to file successfully"
+  /// ```
   String get message => """Your data was exported to file successfully""";
 }
 

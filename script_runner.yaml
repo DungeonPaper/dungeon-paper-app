@@ -45,6 +45,9 @@ scripts:
   - name: ios:build:all
     cmd: ios:build:app && ios:build:bundle
     description: Build iOS IPA + APP
+  - name: ios:pod:update
+    cmd: pushd ios; pod repo update && pod install; popd
+    description: Install Pods for iOS
   # macOS
   - name: macos:build:app
     cmd: flutter build macos
@@ -52,6 +55,9 @@ scripts:
   - name: macos:build:all
     cmd: macos:build:app
     description: 'Alias for: Build macOS App'
+  - name: macos:pod:update
+    cmd: pushd macos; pod repo update && pod install; popd
+    description: Install Pods for macOS
   # Web
   - name: web:build:app
     cmd: flutter build web
@@ -66,6 +72,9 @@ scripts:
   - name: build:all
     cmd: android:build:all && ios:build:all && macos:build:all && web:build:all
     description: Build for all platforms
+  - name: apple:pod:update
+    cmd: macos:pod:update && ios:pod:update
+    description: Install Pods for macOS & iOS
 
   # Utils
   - name: format
