@@ -1,5 +1,4 @@
 import 'dart:convert';
-import 'dart:io';
 
 import 'package:dungeon_paper/app/data/models/character.dart';
 import 'package:dungeon_paper/app/data/models/character_class.dart';
@@ -12,7 +11,7 @@ import 'package:dungeon_paper/app/modules/ImportExport/local_widgets/import_prog
 import 'package:dungeon_paper/core/storage_handler/storage_handler.dart';
 import 'package:dungeon_paper/core/utils/list_utils.dart';
 import 'package:dungeon_paper/i18n.dart';
-import 'package:flutter_file_dialog/flutter_file_dialog.dart';
+import 'package:file_picker/file_picker.dart';
 import 'package:get/get.dart';
 
 import 'import_export_controller.dart';
@@ -111,31 +110,20 @@ class ImportController extends GetxController
   }
 
   void pickImportFile() async {
-    try {
-      final importPath = await FlutterFileDialog.pickFile(
-        params: const OpenFileDialogParams(
-          fileExtensionsFilter: ['json'],
-          mimeTypesFilter: ['application/json'],
-        ),
-      );
-
-      if (importPath == null) {
-        return;
-      }
-
-      final js = json.decode(await File(importPath).readAsString())
-          as Map<String, dynamic>;
-      toImport.value = ImportSelections.fromJson(js);
-    } catch (e) {
-      // unawaited(analytics.logEvent(name: Events.ImportFail, parameters: {
-      //   'reason': e.toString(),
-      // }));
+    var result =
+        await FilePicker.platform.pickFiles(type: FileType.custom, allowedExtensions: ['json']);
+    if (result == null) {
       Get.rawSnackbar(
         title: tr.backup.importing.error.title,
         message: tr.backup.importing.error.message,
       );
-      rethrow;
+      return;
     }
+
+    final filedata = result.files.single.bytes;
+    final filestring = utf8.decode(filedata as List<int>);
+    final filejson = json.decode(filestring);
+    toImport.value = ImportSelections.fromJson(filejson);
   }
 
   void Function()? getDoImport() {

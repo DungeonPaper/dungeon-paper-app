@@ -337,6 +337,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "7.0.0"
+  file_picker:
+    dependency: "direct main"
+    description:
+      name: file_picker
+      sha256: b85eb92b175767fdaa0c543bf3b0d1f610fe966412ea72845fe5ba7801e763ff
+      url: "https://pub.dev"
+    source: hosted
+    version: "5.2.10"
   firebase_analytics:
     dependency: "direct main"
     description:
@@ -510,6 +518,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.3.7"
+  flutter_plugin_android_lifecycle:
+    dependency: transitive
+    description:
+      name: flutter_plugin_android_lifecycle
+      sha256: b068ffc46f82a55844acfa4fdbb61fad72fa2aef0905548419d97f0f95c456da
+      url: "https://pub.dev"
+    source: hosted
+    version: "2.0.17"
   flutter_svg:
     dependency: "direct main"
     description:
@@ -637,10 +653,10 @@ packages:
     description:
       path: "."
       ref: next
-      resolved-ref: "11f94128574c3d85c4873e52d01667223950bcab"
+      resolved-ref: c7e92458d4f9ccf6c4cf4a6e91c372bd30f8cbef
       url: "https://github.com/chenasraf/i18n.git"
     source: git
-    version: "4.0.8"
+    version: "4.1.0"
   icons_launcher:
     dependency: "direct main"
     description:
