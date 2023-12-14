@@ -18,14 +18,10 @@ import 'app/themes/themes.dart';
 import 'firebase_options.dart';
 
 void main() async {
-  final widgetsBinding = WidgetsFlutterBinding.ensureInitialized();
-
-  FlutterNativeSplash.preserve(widgetsBinding: widgetsBinding);
-  await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
-  await loadSharedPrefs();
-  await initRemoteConfig();
-  await initServices();
   if (secrets.sentryDsn.isEmpty) {
+    final widgetsBinding = WidgetsFlutterBinding.ensureInitialized();
+    FlutterNativeSplash.preserve(widgetsBinding: widgetsBinding);
+    await _init();
     FlutterNativeSplash.remove();
     runApp(const DungeonPaperApp());
     return;
@@ -38,11 +34,21 @@ void main() async {
       options.tracesSampleRate = kDebugMode ? 1.0 : 0.5;
       options.environment = kDebugMode ? 'development' : 'release';
     },
-    appRunner: () {
+    appRunner: () async {
+      final widgetsBinding = WidgetsFlutterBinding.ensureInitialized();
+      FlutterNativeSplash.preserve(widgetsBinding: widgetsBinding);
+      await _init();
       FlutterNativeSplash.remove();
       runApp(const DungeonPaperApp());
     },
   );
+}
+
+Future<void> _init() async {
+  await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
+  await loadSharedPrefs();
+  await initRemoteConfig();
+  await initServices();
 }
 
 class DungeonPaperApp extends StatelessWidget {

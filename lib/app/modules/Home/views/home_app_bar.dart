@@ -13,29 +13,28 @@ class HomeAppBar extends StatelessWidget
 
   @override
   Widget build(BuildContext context) {
-    return Obx(
-      () => AppBar(
-        title: Text(tr.app.name),
-        automaticallyImplyLeading: false,
-        leading: IconButton(
-          icon: const Icon(Icons.search),
-          onPressed: () => Get.toNamed(Routes.universalSearch),
-        ),
-        actions: [
-          // if (user.flags['su'] == true)
-          //   IconButton(
-          //     icon: const Icon(Icons.bug_report),
-          //     onPressed: () => Get.toNamed(
-          //       Routes.migration,
-          //       arguments: MigrationArguments(email: user.email),
-          //     ),
-          //   ),
-          const UserMenu(),
-        ],
+    return AppBar(
+      title: Text(tr.app.name),
+      automaticallyImplyLeading: false,
+      leading: IconButton(
+        icon: const Icon(Icons.search),
+        onPressed: () => Get.toNamed(Routes.universalSearch),
       ),
+      actions: const [
+        // if (user.flags['su'] == true)
+        //   IconButton(
+        //     icon: const Icon(Icons.bug_report),
+        //     onPressed: () => Get.toNamed(
+        //       Routes.migration,
+        //       arguments: MigrationArguments(email: user.email),
+        //     ),
+        //   ),
+        UserMenu(),
+      ],
     );
   }
 
   @override
   Size get preferredSize => const Size.fromHeight(64);
 }
+
