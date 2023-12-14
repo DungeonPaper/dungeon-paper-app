@@ -1,6 +1,8 @@
 shell: /bin/zsh
 scripts:
+  # ===============================================================================================
   # Android
+  # ===============================================================================================
   - name: android:build:apk
     cmd: flutter build apk
     description: Build Android APK only
@@ -20,7 +22,9 @@ scripts:
       target="/sdcard/Download/$name-$version.apk"
       adb push $source $target
   - name: android:install
-    cmd: adb uninstall app.dungeonpaper; adb install -r build/app/outputs/flutter-apk/app-release.apk
+    cmd: |-
+      adb uninstall app.dungeonpaper
+      adb install -r build/app/outputs/flutter-apk/app-release.apk
     description: Install APK on Android (does not build)
   - name: android:full
     cmd: android:build:apk && android:push && android:install
@@ -35,7 +39,10 @@ scripts:
       mkdir release
       android:build:bundle && symbols:collect && cp $bundle release/$bundleout
     description: Builds, collects debug symbols, and places the output in release/ dir.
+
+  # ===============================================================================================
   # iOS
+  # ===============================================================================================
   - name: ios:build:app
     cmd: flutter build ios
     description: Build iOS APP file
@@ -48,7 +55,10 @@ scripts:
   - name: ios:pod:update
     cmd: pushd ios; pod repo update && pod install; popd
     description: Install Pods for iOS
+
+  # ===============================================================================================
   # macOS
+  # ===============================================================================================
   - name: macos:build:app
     cmd: flutter build macos
     description: Build macOS App
@@ -58,25 +68,33 @@ scripts:
   - name: macos:pod:update
     cmd: pushd macos; pod repo update && pod install; popd
     description: Install Pods for macOS
+
+  # ===============================================================================================
   # Web
+  # ===============================================================================================
   - name: web:build:app
     cmd: flutter build web
     description: Build Web app
   - name: web:build:all
     cmd: web:build:app
     description: 'Alias for: Build Web app'
-  - name: publish:web
+  - name: web:publish
     cmd: firebase deploy --only hosting
     description: Publish web version using Firebase (requires build)
+
+  # ===============================================================================================
   # All
-  - name: build:all
+  # ===============================================================================================
+  - name: build
     cmd: android:build:all && ios:build:all && macos:build:all && web:build:all
     description: Build for all platforms
   - name: apple:pod:update
     cmd: macos:pod:update && ios:pod:update
     description: Install Pods for macOS & iOS
 
+  # ===============================================================================================
   # Utils
+  # ===============================================================================================
   - name: format
     cmd: dart format --line-length 120
     description: Format all Dart files
