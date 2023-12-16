@@ -1,6 +1,6 @@
 import 'package:dungeon_paper/app/data/models/meta.dart';
 import 'package:dungeon_paper/app/modules/ImportExport/controllers/import_export_controller.dart';
-import 'package:dungeon_paper/app/widgets/atoms/custom_expansion_panel.dart';
+import 'package:dungeon_paper/app/widgets/atoms/custom_expansion_tile.dart';
 import 'package:dungeon_paper/app/widgets/atoms/menu_button.dart';
 import 'package:dungeon_paper/i18n.dart';
 import 'package:flutter/material.dart';
