@@ -192,22 +192,22 @@ class Meta<DataType> with RepositoryServiceMixin {
   static Map<String, dynamic> toJsonFor(dynamic object) {
     final dyn = object as dynamic;
     switch (object.runtimeType) {
-      case AlignmentValue:
-      case Bio:
-      case SessionMark:
-      case CharacterClass:
-      case CharacterStats:
-      case Character:
-      case GearChoice:
-      case GearSelection:
-      case GearOption:
-      case Item:
-      case Monster:
-      case Move:
-      case Note:
-      case Race:
-      case Spell:
-      case dw.Tag:
+      case AlignmentValue _:
+      case Bio _:
+      case SessionMark _:
+      case CharacterClass _:
+      case CharacterStats _:
+      case Character _:
+      case GearChoice _:
+      case GearSelection _:
+      case GearOption _:
+      case Item _:
+      case Monster _:
+      case Move _:
+      case Note _:
+      case Race _:
+      case Spell _:
+      case dw.Tag _:
         return dyn.toJson();
     }
     throw TypeError();
@@ -231,15 +231,15 @@ class Meta<DataType> with RepositoryServiceMixin {
 
   static T copyObjectWithMeta<T extends WithMeta>(dynamic object, Meta? meta) {
     switch (object.runtimeType) {
-      case AlignmentValue:
-      case CharacterClass:
-      case Character:
-      case Item:
-      case Monster:
-      case Move:
-      case Note:
-      case Race:
-      case Spell:
+      case AlignmentValue _:
+      case CharacterClass _:
+      case Character _:
+      case Item _:
+      case Monster _:
+      case Move _:
+      case Note _:
+      case Race _:
+      case Spell _:
         return object.copyWithInherited(meta: meta) as T;
       default:
         throw UnsupportedError('Type ${object.runtimeType} not supported');
@@ -248,23 +248,23 @@ class Meta<DataType> with RepositoryServiceMixin {
 
   static storageKeyFor(Type t) {
     switch (t) {
-      case CharacterClass:
+      case CharacterClass _:
         return 'CharacterClasses';
-      case Character:
+      case Character _:
         return 'Characters';
-      case Item:
+      case Item _:
         return 'Items';
-      case Monster:
+      case Monster _:
         return 'Monsters';
-      case Move:
+      case Move _:
         return 'Moves';
-      case Spell:
+      case Spell _:
         return 'Spells';
-      case Race:
+      case Race _:
         return 'Races';
-      case Note:
+      case Note _:
         return 'Notes';
-      case dw.Tag:
+      case dw.Tag _:
         return 'Tags';
     }
   }
@@ -311,20 +311,20 @@ class Meta<DataType> with RepositoryServiceMixin {
 
   static IconData genericIconFor(Type t) {
     switch (t) {
-      case Character:
+      case Character _:
         return Character.genericIcon;
-      case CharacterClass:
+      case CharacterClass _:
         return CharacterClass.genericIcon;
-      case AlignmentValue:
-      case Item:
+      case AlignmentValue _:
+      case Item _:
         return Item.genericIcon;
-      case Move:
+      case Move _:
         return Move.genericIcon;
-      case Note:
+      case Note _:
         return Note.genericIcon;
-      case Race:
+      case Race _:
         return Race.genericIcon;
-      case Spell:
+      case Spell _:
         return Spell.genericIcon;
     }
     throw TypeError();
@@ -466,7 +466,7 @@ class MetaSharing {
   String toString() => 'MetaSharing($debugProperties)';
 }
 
-abstract class WithKey {
+abstract mixin class WithKey {
   abstract final String key;
 }
 
