@@ -10,8 +10,7 @@ class AbilityScoreChip extends StatelessWidget {
   final AbilityScore stat;
   final bool showDice;
 
-  const AbilityScoreChip({Key? key, required this.stat, this.showDice = true})
-      : super(key: key);
+  const AbilityScoreChip({super.key, required this.stat, this.showDice = true});
 
   @override
   Widget build(BuildContext context) {
@@ -25,9 +24,7 @@ class AbilityScoreChip extends StatelessWidget {
     final rollBadgeModifierOpacity = isDark ? 0.5 : 0.4;
     final isLight = theme.brightness == Brightness.light;
     final cardColor = stat.isDebilitated
-        ? Color.alphaBlend(DwColors.error.withOpacity(isLight ? 0.4 : 0.2),
-            theme.scaffoldBackgroundColor)
-        // : Color.alphaBlend(theme.cardColor.withOpacity(0.5), theme.scaffoldBackgroundColor);
+        ? Color.alphaBlend(DwColors.error.withOpacity(isLight ? 0.4 : 0.2), theme.scaffoldBackgroundColor)
         : theme.cardColor;
 
     return Card(
@@ -48,16 +45,16 @@ class AbilityScoreChip extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   IconTheme(
-                    child: Icon(stat.icon),
                     data: IconThemeData(
                         size: 18, color: theme.colorScheme.onSurface),
+                    child: Icon(stat.icon),
                   ),
                   const SizedBox(width: 4),
                   SizedBox(
                     width: 32,
                     child: Text(
                       valStr,
-                      textScaleFactor: 1.5,
+                      textScaler: const TextScaler.linear(1.5),
                       style: const TextStyle(fontWeight: FontWeight.bold),
                       textAlign: TextAlign.center,
                     ),
@@ -74,20 +71,18 @@ class AbilityScoreChip extends StatelessWidget {
                             mainAxisSize: MainAxisSize.min,
                             children: [
                               IconTheme(
-                                child: const Icon(DwIcons.dice_d6),
                                 data: IconTheme.of(context).copyWith(
                                   size: 12,
                                   color: theme.colorScheme.onSurface
                                       .withOpacity(rollBadgeModifierOpacity),
                                 ),
+                                child: const Icon(DwIcons.dice_d6),
                               ),
                               const SizedBox(width: 2),
                               Text(
                                 '$modSign$modStr',
-                                // textScaleFactor: 0.8,
                                 style: TextStyle(
                                     color: theme.colorScheme.onSurface),
-                                //.withOpacity(rollBadgeModifierOpacity),
                               ),
                             ],
                           ),

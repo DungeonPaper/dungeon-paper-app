@@ -9,7 +9,7 @@ class AdvancedChip extends StatelessWidget
         DisabledChipAttributes,
         TappableChipAttributes {
   const AdvancedChip({
-    Key? key,
+    super.key,
     required this.label,
     this.avatar,
     this.labelStyle,
@@ -43,7 +43,7 @@ class AdvancedChip extends StatelessWidget
     this.avatarBorder = const CircleBorder(),
     this.iconTheme,
     this.surfaceTintColor,
-  }) : super(key: key);
+  });
 
   @override
   final Widget? avatar;

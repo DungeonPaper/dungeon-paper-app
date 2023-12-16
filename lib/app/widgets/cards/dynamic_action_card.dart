@@ -1,5 +1,5 @@
 import 'package:dungeon_paper/app/data/models/ability_scores.dart';
-import 'package:dungeon_paper/app/widgets/atoms/custom_expansion_panel.dart';
+import 'package:dungeon_paper/app/widgets/atoms/custom_expansion_tile.dart';
 import 'package:dungeon_paper/app/widgets/atoms/round_roll_button.dart';
 import 'package:dungeon_paper/app/widgets/menus/entity_edit_menu.dart';
 import 'package:dungeon_paper/core/utils/markdown_highlight.dart';
@@ -107,7 +107,7 @@ class _DynamicActionCardState extends State<DynamicActionCard> {
         return Card(
           margin: EdgeInsets.zero,
           elevation: expanded ? 5 : 1,
-          child: CustomExpansionPanel(
+          child: CustomExpansionTile(
             expandable: widget.expandable,
             reorderablePadding: widget.reorderablePadding,
             titleBuilder: (context, color) => HighlightText(
@@ -120,10 +120,9 @@ class _DynamicActionCardState extends State<DynamicActionCard> {
                 fontSize: Theme.of(context).textTheme.titleMedium!.fontSize,
                 color: color,
               ),
-              // highlightStyle: Theme.of(context).textTheme.titleMedium!.copyWith(color: color),
             ),
             key: widget.expansionKey,
-            onExpansion: (val) {
+            onExpansionChanged: (val) {
               setState(() {
                 expanded = val;
               });
