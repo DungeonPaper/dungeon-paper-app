@@ -186,7 +186,7 @@ class _EXPDialogState extends State<EXPDialog> with CharacterServiceMixin {
               width: dialogWidth,
               height: action == _XPAction.overwriteXP ? (PlatformHelper.isMobile ? 364 : 332) : 48,
               child: CustomExpansionTile(
-                title: Text(tr.xp.dialog.override.title + (hasOverwrites ? '*' : '')),
+                title: Text(tr.xp.dialog.overwrite.title + (hasOverwrites ? '*' : '')),
                 controller: overwriteXPCollapseController,
                 expandable: action != _XPAction.overwriteXP,
                 onExpansionChanged: (value) {
@@ -204,7 +204,7 @@ class _EXPDialogState extends State<EXPDialog> with CharacterServiceMixin {
                     onChanged: (val) => setState(
                       () => shouldResetSessionMarks = val!,
                     ),
-                    title: Text(tr.xp.dialog.override.resetCheckbox),
+                    title: Text(tr.xp.dialog.overwrite.resetCheckbox),
                     dense: true,
                     visualDensity: VisualDensity.compact,
                     controlAffinity: ListTileControlAffinity.leading,
@@ -214,14 +214,14 @@ class _EXPDialogState extends State<EXPDialog> with CharacterServiceMixin {
                     controller: overwriteXpText,
                     numberType: NumberType.int,
                     decoration: InputDecoration(
-                      labelText: tr.xp.dialog.override.xp + (shouldOverwriteXp ? '*' : ''),
+                      labelText: tr.xp.dialog.overwrite.xp + (shouldOverwriteXp ? '*' : ''),
                     ),
                     minValue: 0,
                   ),
                   const SizedBox(height: 16),
                   NumberTextField(
                     decoration: InputDecoration(
-                      labelText: tr.xp.dialog.override.level + (shouldOverwriteLevel ? '*' : ''),
+                      labelText: tr.xp.dialog.overwrite.level + (shouldOverwriteLevel ? '*' : ''),
                     ),
                     numberType: NumberType.int,
                     controller: overwriteLevelText,
