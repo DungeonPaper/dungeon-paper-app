@@ -699,3 +699,7 @@ backup:
     success:
       title: Export Successful
       message: Your data was exported to file successfully
+    bundles:
+      characterClass:
+        button: Export Class Bundle
+        title: Export Class Bundle

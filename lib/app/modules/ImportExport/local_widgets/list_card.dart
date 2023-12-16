@@ -12,7 +12,6 @@ import '../../../data/models/character_class.dart';
 import '../../../data/models/move.dart';
 import '../../../data/models/race.dart';
 import '../../../data/models/spell.dart';
-import '../../../widgets/chips/advanced_chip.dart';
 import '../../../widgets/chips/primary_chip.dart';
 
 class ListCard<T extends WithMeta, C extends ImportExportSelectionData>

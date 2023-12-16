@@ -6,6 +6,7 @@ import 'package:dungeon_paper/core/remote_config.dart';
 import 'package:dungeon_paper/core/shared_preferences.dart';
 import 'package:dungeon_paper/core/utils/secrets_base.dart';
 import 'package:dungeon_paper/i18n.dart';
+import 'package:dungeon_world_data/base.dart';
 import 'package:dynamic_themes/dynamic_themes.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -18,6 +19,7 @@ import 'app/themes/themes.dart';
 import 'firebase_options.dart';
 
 void main() async {
+  registerEntityTypeResolver(tn);
   if (secrets.sentryDsn.isEmpty) {
     final widgetsBinding = WidgetsFlutterBinding.ensureInitialized();
     FlutterNativeSplash.preserve(widgetsBinding: widgetsBinding);

@@ -293,10 +293,10 @@ packages:
     dependency: "direct main"
     description:
       name: dungeon_world_data
-      sha256: "221b2b11bad744c113fc0fb8453f31e1f70799f8bfb7fe829273c481fb22e056"
+      sha256: "7749f36bf3c78b201cb2209306a38e58722191b972039031dc0b87a5e11307d9"
       url: "https://pub.dev"
     source: hosted
-    version: "3.0.1"
+    version: "3.1.0"
   dynamic_themes:
     dependency: "direct main"
     description:
@@ -977,6 +977,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.2.3"
+  quick_log:
+    dependency: transitive
+    description:
+      name: quick_log
+      sha256: b684b8ac632a12059412116fed3081260dc2a5e4b6dcf00dbfd0744cc57e3d96
+      url: "https://pub.dev"
+    source: hosted
+    version: "5.3.1"
   quiver:
     dependency: transitive
     description:
@@ -1166,6 +1174,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.10.0"
+  sprintf:
+    dependency: transitive
+    description:
+      name: sprintf
+      sha256: "1fc9ffe69d4df602376b52949af107d8f5703b77cda567c4d7d86a0693120f23"
+      url: "https://pub.dev"
+    source: hosted
+    version: "7.0.0"
   sqflite:
     dependency: transitive
     description:
@@ -1354,10 +1370,10 @@ packages:
     dependency: "direct main"
     description:
       name: uuid
-      sha256: "648e103079f7c64a36dc7d39369cabb358d377078a051d6ae2ad3aa539519313"
+      sha256: "22c94e5ad1e75f9934b766b53c742572ee2677c56bc871d850a57dad0f82127f"
       url: "https://pub.dev"
     source: hosted
-    version: "3.0.7"
+    version: "4.2.2"
   vector_graphics:
     dependency: transitive
     description:

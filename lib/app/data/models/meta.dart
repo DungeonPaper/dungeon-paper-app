@@ -9,6 +9,7 @@ import 'package:dungeon_paper/app/data/services/repository_service.dart';
 import 'package:dungeon_paper/app/data/services/user_service.dart';
 import 'package:dungeon_paper/core/utils/date_utils.dart';
 import 'package:dungeon_paper/core/utils/uuid.dart';
+import 'package:dungeon_paper/i18n.dart';
 import 'package:dungeon_world_data/gear_option.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -173,14 +174,14 @@ class Meta<DataType> with RepositoryServiceMixin {
   /// Returns an item with forked meta, or the same meta if its by the same user
   static T forkMeta<T extends WithMeta>(T object, User user,
       {Meta? meta, String? version}) {
-    final Meta _m = (meta ?? object.meta);
+    final Meta m = (meta ?? object.meta);
     // final _o =
     //     force || _m.createdBy != user.username ? object.copyWithInherited(key: uuid()) : object;
-    final _o = object;
+    final o = object;
 
     return Meta.copyObjectWithMeta<T>(
-      _o,
-      _m.fork(
+      o,
+      m.fork(
         createdBy: user.username,
         sourceKey: object.key,
         version: version,
@@ -332,7 +333,7 @@ class Meta<DataType> with RepositoryServiceMixin {
   static referenceFor(WithMeta object) => dw.EntityReference(
         key: object.key,
         name: object.displayName,
-        type: object.runtimeType.toString(),
+        type: tn(object.runtimeType),
       );
 
   @override
@@ -424,12 +425,12 @@ class MetaSharing {
     bool? dirty,
     String? owner,
   }) {
-    final _m = meta ?? MetaSharing.fork(sourceVersion: uuid());
-    if (owner == _m.sourceOwner) {
-      return _m;
+    final m = meta ?? MetaSharing.fork(sourceVersion: uuid());
+    if (owner == m.sourceOwner) {
+      return m;
     }
-    return _m.copyWith(
-      sourceKey: _m.sourceKey ?? sourceKey,
+    return m.copyWith(
+      sourceKey: m.sourceKey ?? sourceKey,
       sourceOwner: owner,
       dirty: dirty,
     );

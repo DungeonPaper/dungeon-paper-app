@@ -3427,6 +3427,8 @@ class ExportingBackupMessages {
   ErrorExportingBackupMessages get error => ErrorExportingBackupMessages(this);
   SuccessExportingBackupMessages get success =>
       SuccessExportingBackupMessages(this);
+  BundlesExportingBackupMessages get bundles =>
+      BundlesExportingBackupMessages(this);
 }
 
 class ErrorExportingBackupMessages {
@@ -3458,6 +3460,28 @@ class SuccessExportingBackupMessages {
   /// "Your data was exported to file successfully"
   /// ```
   String get message => """Your data was exported to file successfully""";
+}
+
+class BundlesExportingBackupMessages {
+  final ExportingBackupMessages _parent;
+  const BundlesExportingBackupMessages(this._parent);
+  CharacterClassBundlesExportingBackupMessages get characterClass =>
+      CharacterClassBundlesExportingBackupMessages(this);
+}
+
+class CharacterClassBundlesExportingBackupMessages {
+  final BundlesExportingBackupMessages _parent;
+  const CharacterClassBundlesExportingBackupMessages(this._parent);
+
+  /// ```dart
+  /// "Export Class Bundle"
+  /// ```
+  String get button => """Export Class Bundle""";
+
+  /// ```dart
+  /// "Export Class Bundle"
+  /// ```
+  String get title => """Export Class Bundle""";
 }
 
 Map<String, String> get messagesMap => {
@@ -3861,4 +3885,8 @@ Map<String, String> get messagesMap => {
       """backup.exporting.success.title""": """Export Successful""",
       """backup.exporting.success.message""":
           """Your data was exported to file successfully""",
+      """backup.exporting.bundles.characterClass.button""":
+          """Export Class Bundle""",
+      """backup.exporting.bundles.characterClass.title""":
+          """Export Class Bundle""",
     };
