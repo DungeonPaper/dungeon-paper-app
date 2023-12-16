@@ -6,12 +6,14 @@ import 'package:dungeon_paper/i18n.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
+import '../../../../core/dw_icons.dart';
 import '../../../data/models/character.dart';
 import '../../../data/models/character_class.dart';
-import '../../../data/models/item.dart';
 import '../../../data/models/move.dart';
 import '../../../data/models/race.dart';
 import '../../../data/models/spell.dart';
+import '../../../widgets/chips/advanced_chip.dart';
+import '../../../widgets/chips/primary_chip.dart';
 
 class ListCard<T extends WithMeta, C extends ImportExportSelectionData>
     extends GetView<C> {
@@ -20,26 +22,6 @@ class ListCard<T extends WithMeta, C extends ImportExportSelectionData>
   });
 
   List<T> get list => controller.listByType<T>();
-
-  String _getType(Type type) {
-    switch (type) {
-      case Character:
-        return 'Character';
-      case Move:
-        return 'Move';
-      case Spell:
-        return 'Spell';
-      case Item:
-        return 'Item';
-      case Race:
-        return 'Race';
-      case CharacterClass:
-        return 'CharacterClass';
-    }
-    return type.toString();
-  }
-
-  String get typeName => _getType(T);
 
   @override
   Widget build(BuildContext context) {
@@ -59,7 +41,7 @@ class ListCard<T extends WithMeta, C extends ImportExportSelectionData>
               const SizedBox(width: 8),
               Expanded(
                 child: Text(
-                  tr.generic.myEntity(tr.entityPlural(typeName)),
+                  tr.generic.myEntity(tr.entityPlural(tn(T))),
                   style: textTheme.titleLarge,
                 ),
               ),
@@ -85,20 +67,29 @@ class ListCard<T extends WithMeta, C extends ImportExportSelectionData>
           ],
           children: [
             for (final item in list)
-              ListTile(
-                onTap: () =>
-                    controller.toggle<T>(item, !controller.isSelected<T>(item)),
-                title: Text(item.displayName),
-                leading: Checkbox(
-                  value: controller.isSelected<T>(item),
-                  onChanged: (state) => controller.toggle<T>(item, state!),
-                ),
-              ),
+              Builder(builder: (context) {
+                final tags = tagsByType(item);
+                return ListTile(
+                  onTap: () => controller.toggle<T>(
+                      item, !controller.isSelected<T>(item)),
+                  title: Text(item.displayName),
+                  subtitle: tags.isNotEmpty
+                      ? Wrap(
+                          spacing: 8,
+                          children: tags,
+                        )
+                      : null,
+                  leading: Checkbox(
+                    value: controller.isSelected<T>(item),
+                    onChanged: (state) => controller.toggle<T>(item, state!),
+                  ),
+                );
+              }),
             if (list.isEmpty)
               Padding(
                 padding: const EdgeInsets.all(8),
                 child: Text(
-                  tr.generic.noEntity(tr.entityPlural(typeName)),
+                  tr.generic.noEntity(tr.entityPlural(tn(T))),
                   textAlign: TextAlign.center,
                 ),
               ),
@@ -107,4 +98,68 @@ class ListCard<T extends WithMeta, C extends ImportExportSelectionData>
       ),
     );
   }
+
+  List<Widget> tagsByType(T entity) {
+    switch (entity.runtimeType) {
+      case Character:
+        final char = entity as Character;
+        return [
+          PrimaryChip(
+            icon: Icon(CharacterClass.genericIcon),
+            label: char.characterClass.name,
+          ),
+          PrimaryChip(
+            icon: const Icon(Icons.arrow_upward),
+            label: tr.character.header.level(char.stats.level),
+          ),
+        ];
+      case CharacterClass:
+        final cls = entity as CharacterClass;
+        return [
+          PrimaryChip(
+            icon: const Icon(Icons.healing),
+            // TODO intl?
+            label: [tr.characterClass.baseHp, cls.hp].join(' '),
+          ),
+          PrimaryChip(
+            icon: const Icon(DwIcons.dumbbell),
+            // TODO intl?
+            label: [tr.characterClass.baseLoad, cls.load].join(' '),
+          ),
+        ];
+      case Move:
+        final move = entity as Move;
+        return [
+          PrimaryChip(
+            icon: Icon(CharacterClass.genericIcon),
+            label: move.classKeys.map((e) => e.name).join(', '),
+          ),
+          PrimaryChip(
+            label: tr.moves.category.mediumName(move.category.name),
+          ),
+        ];
+      case Spell:
+        final spell = entity as Spell;
+        return [
+          PrimaryChip(
+            icon: Icon(CharacterClass.genericIcon),
+            label: spell.classKeys.map((e) => e.name).join(', '),
+          ),
+          PrimaryChip(
+            label: tr.spells.spellLevel(spell.level),
+          ),
+        ];
+      case Race:
+        final race = entity as Race;
+        return [
+          PrimaryChip(
+            icon: Icon(CharacterClass.genericIcon),
+            label: race.classKeys.map((e) => e.name).join(', '),
+          ),
+        ];
+      default:
+        return [];
+    }
+  }
 }
+
