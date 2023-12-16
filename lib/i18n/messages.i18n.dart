@@ -579,6 +579,12 @@ class MyLibraryMessages {
   String get reload => """Reload Library""";
 
   /// ```dart
+  /// "You can remove this $ent by finding it in the "Use" tab,\nand clicking "Remove" on its context menu."
+  /// ```
+  String selectDisabled(String ent) =>
+      """You can remove this $ent by finding it in the "Use" tab,\nand clicking "Remove" on its context menu.""";
+
+  /// ```dart
   /// "$cnt in $type"
   /// ```
   String itemCount(String cnt, String type) => """$cnt in $type""";

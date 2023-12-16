@@ -34,12 +34,12 @@ class ExportView extends GetView<ExportController> {
                 ),
               ],
             ),
-        () => const ListCard<Character, ExportController>(),
-        () => const ListCard<CharacterClass, ExportController>(),
-        () => const ListCard<Move, ExportController>(),
-        () => const ListCard<Spell, ExportController>(),
-        () => const ListCard<Item, ExportController>(),
-        () => const ListCard<Race, ExportController>(),
+        () => const ListCard<Character, ExportController>(type: ListCardType.export),
+        () => const ListCard<CharacterClass, ExportController>(type: ListCardType.export),
+        () => const ListCard<Move, ExportController>(type: ListCardType.export),
+        () => const ListCard<Spell, ExportController>(type: ListCardType.export),
+        () => const ListCard<Item, ExportController>(type: ListCardType.export),
+        () => const ListCard<Race, ExportController>(type: ListCardType.export),
       ],
     );
     return ListTileTheme.merge(

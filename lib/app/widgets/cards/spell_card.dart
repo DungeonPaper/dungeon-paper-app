@@ -1,6 +1,7 @@
 import 'package:dungeon_paper/app/data/models/ability_scores.dart';
 import 'package:dungeon_paper/app/widgets/chips/character_class_chip.dart';
 import 'package:dungeon_paper/app/widgets/chips/spell_level_chip.dart';
+import 'package:dungeon_paper/core/utils/list_utils.dart';
 import 'package:flutter/material.dart';
 
 import '../../data/models/spell.dart';
@@ -23,6 +24,8 @@ class SpellCard extends StatelessWidget {
     this.highlightWords = const [],
     this.abilityScores,
     this.reorderablePadding = false,
+    this.leading = const [],
+    this.trailing = const [],
   });
 
   final Spell spell;
@@ -39,6 +42,8 @@ class SpellCard extends StatelessWidget {
   final List<String> highlightWords;
   final AbilityScores? abilityScores;
   final bool reorderablePadding;
+  final List<Widget> leading;
+  final List<Widget> trailing;
 
   @override
   Widget build(BuildContext context) {
@@ -50,13 +55,14 @@ class SpellCard extends StatelessWidget {
       expandable: expandable,
       reorderablePadding: reorderablePadding,
       leading: [
+        ...leading,
         if (showClasses)
           for (final cls in spell.classKeys) ...[
             CharacterClassChip(characterClass: cls),
-            const SizedBox(width: 8),
           ],
         SpellLevelChip(level: spell.level),
-      ],
+        ...trailing,
+      ].joinObjects(const SizedBox(width: 8)),
       chips: const [],
       dice: showDice ? spell.dice : [],
       icon: showIcon ? Icon(spell.icon, size: 16) : null,

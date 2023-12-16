@@ -11,12 +11,11 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import 'filters/item_filters.dart';
+import 'library_select_button.dart';
 
 class ItemsLibraryListView
     extends GetView<LibraryListController<Item, ItemFilters>> {
-  const ItemsLibraryListView({
-    Key? key,
-  }) : super(key: key);
+  const ItemsLibraryListView({super.key});
 
   Character get char => controller.chars.value.current;
 
@@ -33,6 +32,13 @@ class ItemsLibraryListView
         showStar: false,
         highlightWords: data.highlightWords,
         hideCount: true,
+        trailing: [
+          if (controller.selectable)
+            LibrarySelectButton<Item>.icon(
+              selected: data.selected,
+              onPressed: data.onToggle,
+            )
+        ],
         actions: [
           EntityEditMenu(
             onEdit: data.onUpdate != null
@@ -44,12 +50,10 @@ class ItemsLibraryListView
             onDelete:
                 data.onDelete != null ? () => data.onDelete!(data.item) : null,
           ),
-          if (data.selectable)
-            ElevatedButton.icon(
-              style: ButtonThemes.primaryElevated(context),
+          if (controller.selectable)
+            LibrarySelectButton<Item>(
+              selected: data.selected,
               onPressed: data.onToggle,
-              label: data.label,
-              icon: data.icon,
             )
         ],
       ),
@@ -72,3 +76,4 @@ class ItemLibraryListArguments extends LibraryListArguments<Item, ItemFilters> {
           extraData: const {},
         );
 }
+

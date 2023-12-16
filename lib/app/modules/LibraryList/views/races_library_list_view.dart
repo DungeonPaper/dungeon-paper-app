@@ -6,7 +6,6 @@ import 'package:dungeon_paper/app/data/services/repository_service.dart';
 import 'package:dungeon_paper/app/model_utils/model_pages.dart';
 import 'package:dungeon_paper/app/modules/LibraryList/controllers/library_list_controller.dart';
 import 'package:dungeon_paper/app/modules/LibraryList/views/library_list_view.dart';
-import 'package:dungeon_paper/app/themes/button_themes.dart';
 import 'package:dungeon_paper/app/widgets/cards/race_card.dart';
 import 'package:dungeon_paper/app/widgets/menus/entity_edit_menu.dart';
 import 'package:flutter/material.dart';
@@ -14,13 +13,12 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import 'filters/race_filters.dart';
+import 'library_select_button.dart';
 
 class RacesLibraryListView
     extends GetView<LibraryListController<Race, RaceFilters>>
     with CharacterServiceMixin {
-  const RacesLibraryListView({
-    Key? key,
-  }) : super(key: key);
+  const RacesLibraryListView({super.key});
 
   RepositoryService get service => controller.repo.value;
 
@@ -38,6 +36,13 @@ class RacesLibraryListView
         showStar: false,
         showClasses: true,
         highlightWords: data.highlightWords,
+        trailing: [
+          if (controller.selectable)
+            LibrarySelectButton<Race>.icon(
+              selected: data.selected,
+              onPressed: data.onToggle,
+            )
+        ],
         actions: [
           EntityEditMenu(
             onEdit: data.onUpdate != null
@@ -51,13 +56,11 @@ class RacesLibraryListView
             onDelete:
                 data.onDelete != null ? () => data.onDelete!(data.item) : null,
           ),
-          if (data.selectable)
-            ElevatedButton.icon(
-              style: ButtonThemes.primaryElevated(context),
+          if (controller.selectable)
+            LibrarySelectButton<Race>(
+              selected: data.selected,
               onPressed: data.onToggle,
-              label: data.label,
-              icon: data.icon,
-            ),
+            )
         ],
       ),
     );
@@ -89,3 +92,4 @@ class RaceLibraryListArguments extends LibraryListArguments<Race, RaceFilters> {
           multiple: false,
         );
 }
+

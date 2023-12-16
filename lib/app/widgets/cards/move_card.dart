@@ -1,7 +1,7 @@
 import 'package:dungeon_paper/app/data/models/ability_scores.dart';
-import 'package:dungeon_paper/app/widgets/chips/character_class_chip.dart';
 import 'package:dungeon_paper/app/widgets/chips/move_category_chip.dart';
 import 'package:dungeon_paper/app/widgets/chips/tag_chip.dart';
+import 'package:dungeon_paper/core/utils/list_utils.dart';
 import 'package:flutter/material.dart';
 
 import '../../data/models/move.dart';
@@ -25,6 +25,8 @@ class MoveCard extends StatelessWidget {
     this.highlightWords = const [],
     this.abilityScores,
     this.reorderablePadding = false,
+    this.leading = const [],
+    this.trailing = const [],
   });
 
   final Move move;
@@ -42,6 +44,8 @@ class MoveCard extends StatelessWidget {
   final List<String> highlightWords;
   final AbilityScores? abilityScores;
   final bool reorderablePadding;
+  final List<Widget> leading;
+  final List<Widget> trailing;
 
   @override
   Widget build(BuildContext context) {
@@ -64,15 +68,13 @@ class MoveCard extends StatelessWidget {
       actions: actions,
       highlightWords: highlightWords,
       leading: [
-        if (showClasses)
-          for (final cls in move.classKeys) ...[
-            CharacterClassChip(characterClass: cls),
-            const SizedBox(width: 8),
-          ],
+        ...leading,
         MoveCategoryChip(
-            category: move.category,
-            advancedLevelDisplay: advancedLevelDisplay),
-      ],
+          category: move.category,
+          advancedLevelDisplay: advancedLevelDisplay,
+        ),
+        ...trailing,
+      ].joinObjects(const SizedBox(width: 8)),
       abilityScores: abilityScores,
     );
   }

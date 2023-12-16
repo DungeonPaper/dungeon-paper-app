@@ -18,6 +18,8 @@ class CharacterClassCard extends StatelessWidget {
     this.maxContentHeight,
     this.expandable = true,
     this.highlightWords = const [],
+    this.leading = const [],
+    this.trailing = const [],
   });
 
   final CharacterClass characterClass;
@@ -31,6 +33,8 @@ class CharacterClassCard extends StatelessWidget {
   final double? maxContentHeight;
   final bool expandable;
   final List<String> highlightWords;
+  final List<Widget> leading;
+  final List<Widget> trailing;
 
   @override
   Widget build(BuildContext context) {
@@ -45,6 +49,11 @@ class CharacterClassCard extends StatelessWidget {
       initiallyExpanded: initiallyExpanded,
       actions: actions,
       highlightWords: highlightWords,
+      leading: [
+        ...leading,
+        if (leading.isNotEmpty && trailing.isNotEmpty) const SizedBox(width: 8),
+        ...trailing,
+      ],
     );
   }
 
@@ -59,3 +68,4 @@ class CharacterClassCard extends StatelessWidget {
     return '${characterClass.description}\n\n$table';
   }
 }
+

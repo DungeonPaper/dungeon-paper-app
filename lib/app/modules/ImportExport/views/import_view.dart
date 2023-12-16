@@ -29,12 +29,12 @@ class ImportView extends GetView<ImportController> {
                           icon: const Icon(Icons.clear),
                           label: Text(tr.backup.importing.file.clearFile),
                         ),
-                    () => const ListCard<Character, ImportController>(),
-                    () => const ListCard<CharacterClass, ImportController>(),
-                    () => const ListCard<Move, ImportController>(),
-                    () => const ListCard<Spell, ImportController>(),
-                    () => const ListCard<Item, ImportController>(),
-                    () => const ListCard<Race, ImportController>(),
+                    () => const ListCard<Character, ImportController>(type: ListCardType.import),
+                    () => const ListCard<CharacterClass, ImportController>(type: ListCardType.import),
+                    () => const ListCard<Move, ImportController>(type: ListCardType.import),
+                    () => const ListCard<Spell, ImportController>(type: ListCardType.import),
+                    () => const ListCard<Item, ImportController>(type: ListCardType.import),
+                    () => const ListCard<Race, ImportController>(type: ListCardType.import),
                   ],
                 )
               : ItemBuilder.lazyChildren(

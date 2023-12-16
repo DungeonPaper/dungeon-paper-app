@@ -1,6 +1,7 @@
 import 'package:dungeon_paper/app/widgets/chips/character_class_chip.dart';
 import 'package:dungeon_paper/app/widgets/chips/move_category_chip.dart';
 import 'package:dungeon_paper/app/widgets/chips/tag_chip.dart';
+import 'package:dungeon_paper/core/utils/list_utils.dart';
 import 'package:flutter/material.dart';
 
 import '../../data/models/race.dart';
@@ -21,6 +22,8 @@ class RaceCard extends StatelessWidget {
     this.advancedLevelDisplay = AdvancedLevelDisplay.short,
     this.highlightWords = const [],
     this.showClasses = false,
+    this.leading = const [],
+    this.trailing = const [],
   });
 
   final Race race;
@@ -35,6 +38,8 @@ class RaceCard extends StatelessWidget {
   final AdvancedLevelDisplay advancedLevelDisplay;
   final List<String> highlightWords;
   final bool showClasses;
+  final List<Widget> leading;
+  final List<Widget> trailing;
 
   @override
   Widget build(BuildContext context) {
@@ -55,14 +60,15 @@ class RaceCard extends StatelessWidget {
       initiallyExpanded: initiallyExpanded,
       actions: actions,
       highlightWords: highlightWords,
-      leading: showClasses && race.classKeys.isNotEmpty
-          ? [
-              for (final cls in race.classKeys) ...[
-                CharacterClassChip(characterClass: cls),
-                const SizedBox(width: 8),
-              ],
-            ]
-          : const [],
+      leading: [
+        ...leading,
+        if (showClasses)
+          for (final cls in race.classKeys) ...[
+            CharacterClassChip(characterClass: cls),
+          ],
+        if (trailing.isNotEmpty) const SizedBox(width: 8),
+        ...trailing,
+      ].joinObjects(const SizedBox(width: 8)),
     );
   }
 }

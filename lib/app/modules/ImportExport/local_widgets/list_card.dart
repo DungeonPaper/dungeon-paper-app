@@ -14,12 +14,16 @@ import '../../../data/models/race.dart';
 import '../../../data/models/spell.dart';
 import '../../../widgets/chips/primary_chip.dart';
 
+enum ListCardType { import, export }
+
 class ListCard<T extends WithMeta, C extends ImportExportSelectionData>
     extends GetView<C> {
   const ListCard({
     super.key,
+    required this.type,
   });
 
+  final ListCardType type;
   List<T> get list => controller.listByType<T>();
 
   @override
@@ -40,7 +44,9 @@ class ListCard<T extends WithMeta, C extends ImportExportSelectionData>
               const SizedBox(width: 8),
               Expanded(
                 child: Text(
-                  tr.generic.myEntity(tr.entityPlural(tn(T))),
+                  type == ListCardType.import
+                      ? tr.entityPlural(tn(T))
+                      : tr.generic.myEntity(tr.entityPlural(tn(T))),
                   style: textTheme.titleLarge,
                 ),
               ),

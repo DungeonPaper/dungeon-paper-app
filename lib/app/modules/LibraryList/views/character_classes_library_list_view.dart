@@ -12,12 +12,11 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import 'filters/character_class_filters.dart';
+import 'library_select_button.dart';
 
 class CharacterClassesLibraryListView extends GetView<
     LibraryListController<CharacterClass, CharacterClassFilters>> {
-  const CharacterClassesLibraryListView({
-    Key? key,
-  }) : super(key: key);
+  const CharacterClassesLibraryListView({super.key});
 
   RepositoryService get service => controller.repo.value;
   Character get char => controller.chars.value.current;
@@ -36,6 +35,13 @@ class CharacterClassesLibraryListView extends GetView<
         showDice: false,
         showStar: false,
         highlightWords: data.highlightWords,
+        trailing: [
+          if (controller.selectable)
+            LibrarySelectButton<CharacterClass>.icon(
+              selected: data.selected,
+              onPressed: data.onToggle,
+            )
+        ],
         actions: [
           EntityEditMenu(
             onEdit: data.onUpdate != null
@@ -47,13 +53,11 @@ class CharacterClassesLibraryListView extends GetView<
             onDelete:
                 data.onDelete != null ? () => data.onDelete!(data.item) : null,
           ),
-          if (data.selectable)
-            ElevatedButton.icon(
-              style: ButtonThemes.primaryElevated(context),
+          if (controller.selectable)
+            LibrarySelectButton<CharacterClass>(
+              selected: data.selected,
               onPressed: data.onToggle,
-              label: data.label,
-              icon: data.icon,
-            ),
+            )
         ],
       ),
     );
@@ -79,3 +83,4 @@ class CharacterClassLibraryListArguments
           multiple: false,
         );
 }
+
