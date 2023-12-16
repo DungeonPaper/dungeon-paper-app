@@ -35,6 +35,9 @@ class PrimaryChip extends StatelessWidget {
         (isLight ? colorScheme.primary : colorScheme.secondary);
     final isCompact = visualDensity == VisualDensity.compact;
     final hasIcon = icon != null;
+    
+    final labelPadding = EdgeInsets.symmetric(horizontal: 8 - isCompact.c_int * 2, vertical: 0)
+      .copyWith(left: (hasIcon ? (label.isEmpty ? -8 + isCompact.c_int * 2 : -4) : null));
 
     return AdvancedChip(
       deleteIconColor: fgColor,
@@ -55,10 +58,7 @@ class PrimaryChip extends StatelessWidget {
       ),
       padding: EdgeInsets.zero,
       backgroundColor: bgColor.withOpacity(isLight ? 0.7 : 0.4),
-      labelPadding: (isCompact
-              ? const EdgeInsets.symmetric(horizontal: 6, vertical: 0)
-              : const EdgeInsets.symmetric(horizontal: 8, vertical: 0))
-          .copyWith(left: hasIcon ? -4 : null),
+      labelPadding: labelPadding,
       visualDensity: visualDensity,
       isEnabled: isEnabled,
       onDeleted: onDeleted,
@@ -67,4 +67,8 @@ class PrimaryChip extends StatelessWidget {
       deleteButtonTooltipMessage: deleteButtonTooltip,
     );
   }
+}
+
+extension on bool {
+  int get c_int => this ? 1 : 0;
 }
