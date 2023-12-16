@@ -24,9 +24,7 @@ class AbilityScoreChip extends StatelessWidget {
     final rollBadgeModifierOpacity = isDark ? 0.5 : 0.4;
     final isLight = theme.brightness == Brightness.light;
     final cardColor = stat.isDebilitated
-        ? Color.alphaBlend(DwColors.error.withOpacity(isLight ? 0.4 : 0.2),
-            theme.scaffoldBackgroundColor)
-        // : Color.alphaBlend(theme.cardColor.withOpacity(0.5), theme.scaffoldBackgroundColor);
+        ? Color.alphaBlend(DwColors.error.withOpacity(isLight ? 0.4 : 0.2), theme.scaffoldBackgroundColor)
         : theme.cardColor;
 
     return Card(
@@ -83,10 +81,8 @@ class AbilityScoreChip extends StatelessWidget {
                               const SizedBox(width: 2),
                               Text(
                                 '$modSign$modStr',
-                                // textScaleFactor: 0.8,
                                 style: TextStyle(
                                     color: theme.colorScheme.onSurface),
-                                //.withOpacity(rollBadgeModifierOpacity),
                               ),
                             ],
                           ),
