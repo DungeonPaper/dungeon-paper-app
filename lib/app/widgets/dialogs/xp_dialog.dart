@@ -88,7 +88,7 @@ class _EXPDialogState extends State<EXPDialog> with CharacterServiceMixin {
                 width: dialogWidth,
                 height: action == _XPAction.endSession ? (PlatformHelper.isMobile ? 364 : 332) : 48,
                 child: CustomExpansionTile(
-                  title: Text(tr.xp.dialog.endOfSession.button), //TODO magnus xp.dialog.endOfSession.header
+                  title: Text(tr.xp.dialog.endOfSession.title),
                   initiallyExpanded: true,
                   controller: endSessionCollapseController,
                   expandable: action != _XPAction.endSession,
@@ -128,7 +128,7 @@ class _EXPDialogState extends State<EXPDialog> with CharacterServiceMixin {
               width: dialogWidth,
               height: action == _XPAction.levelUp ? (PlatformHelper.isMobile ? 364 : 332) : 48,
               child: CustomExpansionTile(
-                title: Text(tr.xp.dialog.title), // TODO magnus tr.xp.dialog.levelUp.header
+                title: Text(tr.xp.dialog.levelUp.title),
                 controller: levelUpCollapseController,
                 expandable: action != _XPAction.levelUp,
                 onExpansionChanged: (value) {
@@ -141,7 +141,7 @@ class _EXPDialogState extends State<EXPDialog> with CharacterServiceMixin {
                   return;
                 },
                 children: [
-                  Text(tr.xp.dialog.title), // TODO magnus tr.xp.dialog.levelUp.stat
+                  Text(tr.xp.dialog.levelUp.increaseStat),
                   const SizedBox(height: 12),
                   ConstrainedBox(
                     constraints: const BoxConstraints(maxWidth: 380),
@@ -176,7 +176,7 @@ class _EXPDialogState extends State<EXPDialog> with CharacterServiceMixin {
                     ),
                   ),
                   const SizedBox(height: 24),
-                  Text(tr.xp.dialog.title), // TODO magnus tr.xp.dialog.levelUp.chooseMove
+                  Text(tr.xp.dialog.levelUp.chooseMove),
                 ],
               ),
             ),
@@ -325,11 +325,11 @@ extension on _XPAction {
   String get title {
     switch (this) {
       case _XPAction.endSession:
-        return tr.xp.dialog.title; // TODO magnus tr.xp.dialog.endOfSession.title
+        return tr.xp.dialog.endOfSession.title;
       case _XPAction.levelUp:
-        return tr.xp.dialog.title; // TODO magnus tr.xp.dialog.levelUp.title
+        return tr.xp.dialog.levelUp.title;
       case _XPAction.overwriteXP:
-        return tr.xp.dialog.title; // TODO magnus tr.xp.dialog.overwriteXP.title
+        return tr.xp.dialog.overwrite.title;
     }
   }
 
@@ -338,9 +338,9 @@ extension on _XPAction {
       case _XPAction.endSession:
         return tr.xp.dialog.endOfSession.button;
       case _XPAction.levelUp:
-        return tr.xp.dialog.title; // TODO magnus tr.xp.dialog.levelUp.button
+        return tr.xp.dialog.levelUp.button;
       case _XPAction.overwriteXP:
-        return tr.xp.dialog.title; // TODO magnus tr.xp.dialog.overwriteXP.button
+        return tr.xp.dialog.overwrite.button;
     }
   }
 }
