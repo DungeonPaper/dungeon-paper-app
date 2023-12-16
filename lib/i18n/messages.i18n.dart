@@ -2150,24 +2150,20 @@ class XpMessages {
 class DialogXpMessages {
   final XpMessages _parent;
   const DialogXpMessages(this._parent);
-
-  /// ```dart
-  /// "Mark Session XP"
-  /// ```
-  String get title => """Mark Session XP""";
-
-  /// ```dart
-  /// "Update XP & Level"
-  /// ```
-  String get overridingTitle => """Update XP & Level""";
   EndOfSessionDialogXpMessages get endOfSession =>
       EndOfSessionDialogXpMessages(this);
-  OverrideDialogXpMessages get override => OverrideDialogXpMessages(this);
+  LevelUpDialogXpMessages get levelUp => LevelUpDialogXpMessages(this);
+  OverwriteDialogXpMessages get overwrite => OverwriteDialogXpMessages(this);
 }
 
 class EndOfSessionDialogXpMessages {
   final DialogXpMessages _parent;
   const EndOfSessionDialogXpMessages(this._parent);
+
+  /// ```dart
+  /// "End Session"
+  /// ```
+  String get title => """End Session""";
 
   /// ```dart
   /// "End Session"
@@ -2193,14 +2189,44 @@ class QuestionsEndOfSessionDialogXpMessages {
       """Answer these questions as a group. For each "yes" answer, XP is marked.""";
 }
 
-class OverrideDialogXpMessages {
+class LevelUpDialogXpMessages {
   final DialogXpMessages _parent;
-  const OverrideDialogXpMessages(this._parent);
+  const LevelUpDialogXpMessages(this._parent);
 
   /// ```dart
-  /// "Update Manually"
+  /// "Level Up"
   /// ```
-  String get title => """Update Manually""";
+  String get title => """Level Up""";
+
+  /// ```dart
+  /// "Level Up"
+  /// ```
+  String get button => """Level Up""";
+
+  /// ```dart
+  /// "Increase a stat by 1:"
+  /// ```
+  String get increaseStat => """Increase a stat by 1:""";
+
+  /// ```dart
+  /// "Then, select an advanced move."
+  /// ```
+  String get chooseMove => """Then, select an advanced move.""";
+}
+
+class OverwriteDialogXpMessages {
+  final DialogXpMessages _parent;
+  const OverwriteDialogXpMessages(this._parent);
+
+  /// ```dart
+  /// "Overwrite XP and Level"
+  /// ```
+  String get title => """Overwrite XP and Level""";
+
+  /// ```dart
+  /// "Overwrite"
+  /// ```
+  String get button => """Overwrite""";
 
   /// ```dart
   /// "Changing the current XP or level manually will cause the pending XP to be discarded unless this is unchecked."
@@ -2215,14 +2241,14 @@ class OverrideDialogXpMessages {
       """Reset bonds, flags & end of session questions after saving""";
 
   /// ```dart
-  /// "Override XP"
+  /// "Overwrite XP"
   /// ```
-  String get xp => """Override XP""";
+  String get xp => """Overwrite XP""";
 
   /// ```dart
-  /// "Override Level"
+  /// "Overwrite Level"
   /// ```
-  String get level => """Override Level""";
+  String get level => """Overwrite Level""";
 }
 
 class ArmorMessages {
@@ -3695,20 +3721,24 @@ Map<String, String> get messagesMap => {
       """hp.dialog.title""": """Modify HP""",
       """hp.dialog.change.neutral""": """No Change""",
       """hp.dialog.overrideMax""": """Override Max HP""",
-      """xp.dialog.title""": """Mark Session XP""",
-      """xp.dialog.overridingTitle""": """Update XP & Level""",
+      """xp.dialog.endOfSession.title""": """End Session""",
       """xp.dialog.endOfSession.button""": """End Session""",
       """xp.dialog.endOfSession.questions.title""":
           """End of Session Questions""",
       """xp.dialog.endOfSession.questions.subtitle""":
           """Answer these questions as a group. For each "yes" answer, XP is marked.""",
-      """xp.dialog.override.title""": """Update Manually""",
-      """xp.dialog.override.info""":
+      """xp.dialog.levelUp.title""": """Level Up""",
+      """xp.dialog.levelUp.button""": """Level Up""",
+      """xp.dialog.levelUp.increaseStat""": """Increase a stat by 1:""",
+      """xp.dialog.levelUp.chooseMove""": """Then, select an advanced move.""",
+      """xp.dialog.overwrite.title""": """Overwrite XP and Level""",
+      """xp.dialog.overwrite.button""": """Overwrite""",
+      """xp.dialog.overwrite.info""":
           """Changing the current XP or level manually will cause the pending XP to be discarded unless this is unchecked.""",
-      """xp.dialog.override.resetCheckbox""":
+      """xp.dialog.overwrite.resetCheckbox""":
           """Reset bonds, flags & end of session questions after saving""",
-      """xp.dialog.override.xp""": """Override XP""",
-      """xp.dialog.override.level""": """Override Level""",
+      """xp.dialog.overwrite.xp""": """Overwrite XP""",
+      """xp.dialog.overwrite.level""": """Overwrite Level""",
       """armor.title""": """Armor""",
       """armor.dialog.title""": """Armor""",
       """armor.dialog.autoArmor""": """Use armor from class & equipped items""",
