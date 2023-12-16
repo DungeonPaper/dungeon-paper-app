@@ -1,7 +1,9 @@
 import 'package:dungeon_paper/app/widgets/atoms/xp_bar.dart';
 import 'package:dungeon_paper/app/widgets/atoms/hp_bar.dart';
+import 'package:dungeon_paper/app/widgets/chips/primary_chip.dart';
 import 'package:dungeon_paper/app/widgets/dialogs/xp_dialog.dart';
 import 'package:dungeon_paper/app/widgets/dialogs/hp_dialog.dart';
+import 'package:dungeon_paper/core/dw_icons.dart';
 import 'package:flutter/material.dart';
 
 class HomeCharacterHpExpView extends StatelessWidget {
