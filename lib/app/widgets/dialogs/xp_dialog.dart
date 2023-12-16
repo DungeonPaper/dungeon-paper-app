@@ -3,18 +3,16 @@ import 'package:dungeon_paper/app/data/models/character_stats.dart';
 import 'package:dungeon_paper/app/data/models/session_marks.dart';
 import 'package:dungeon_paper/app/data/services/character_provider.dart';
 import 'package:dungeon_paper/app/widgets/atoms/custom_expansion_tile.dart';
-import 'package:dungeon_paper/app/widgets/atoms/help_text.dart';
+import 'package:dungeon_paper/app/widgets/atoms/xp_bar.dart';
 import 'package:dungeon_paper/app/widgets/atoms/number_text_field.dart';
 import 'package:dungeon_paper/app/widgets/chips/primary_chip.dart';
-import 'package:dungeon_paper/app/widgets/atoms/xp_bar.dart';
 import 'package:dungeon_paper/app/widgets/molecules/dialog_controls.dart';
 import 'package:dungeon_paper/core/platform_helper.dart';
 import 'package:dungeon_paper/core/utils/list_utils.dart';
-import 'package:dungeon_paper/core/utils/math_utils.dart';
 import 'package:dungeon_paper/i18n.dart';
-import 'package:dungeon_world_data/dungeon_world_data.dart' as dw;
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
+
+import 'package:get/get.dart';
 
 enum _XPAction { endSession, levelUp, overwriteXP }
 
@@ -71,126 +69,187 @@ class _EXPDialogState extends State<EXPDialog> with CharacterServiceMixin {
     return AlertDialog(
       title: Text(action.title),
       content: SingleChildScrollView(
-        child: Consumer<CharacterProvider>(
-          builder: (context, charProvider, child) {
-            final level = maxXp - 7;
-
-            return Column(
-              mainAxisSize: MainAxisSize.min,
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              children: [
-                SizedBox(
-                  width: dialogWidth,
-                  child: ExpBar(
-                    currentXp: clamp(
-                        int.tryParse(overwriteXp.text) ?? currentXp, 0, maxXp),
-                    maxXp: maxXp,
-                    pendingXp: !shouldResetSessionMarks ||
-                            (!shouldOverrideXp && !shouldOverrideLevel)
-                        ? totalPendingXp
-                        : 0,
-                  ),
-                ),
-                const SizedBox(height: 24),
-                SizedBox(
-                  width: dialogWidth,
-                  child: ListTile(
-                    title: Text(
-                      tr.xp.dialog.endOfSession.questions.title,
-                    ),
-                    subtitle: Text(
-                      tr.xp.dialog.endOfSession.questions.subtitle,
-                    ),
-                  ),
-                ),
-                const SizedBox(height: 8),
-                for (final eos in eosMarks)
-                  SizedBox(
-                    width: dialogWidth,
-                    child: CheckboxListTile(
-                      value: eos.completed,
-                      title: Text(eos.description),
-                      controlAffinity: ListTileControlAffinity.leading,
-                      dense: true,
-                      onChanged: (val) => _toggleEosMark(eos, val),
-                    ),
-                  ),
-                const SizedBox(height: 24),
-                AnimatedContainer(
-                  duration: const Duration(milliseconds: 250),
-                  width: dialogWidth,
-                  height: manualExpExpanded
-                      ? (332 +
-                          (PlatformHelper.isIOS || PlatformHelper.isAndroid
-                              ? 32
-                              : 0))
-                      : 48,
-                  child: CustomExpansionPanel(
-                    title: Text(
-                      tr.xp.dialog.override.title + (hasOverrides ? '*' : ''),
-                    ),
-                    expanded: manualExpExpanded,
-                    onExpansion: (value) {
-                      setState(() {
-                        manualExpExpanded = value;
-                      });
-                    },
-                    children: [
-                      HelpText(text: tr.xp.dialog.override.info),
-                      const SizedBox(height: 8),
-                      CheckboxListTile(
-                        value: shouldResetSessionMarks,
-                        onChanged: (val) => setState(
-                          () => shouldResetSessionMarks =
-                              val ?? !shouldResetSessionMarks,
-                        ),
-                        title: Text(tr.xp.dialog.override.resetCheckbox),
-                        dense: true,
-                        visualDensity: VisualDensity.compact,
-                        controlAffinity: ListTileControlAffinity.leading,
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            SizedBox(
+              width: dialogWidth,
+              child: ExpBar(
+                currentXp: int.tryParse(overwriteXp.text) ?? currentXp,
+                maxXp: maxXp,
+                pendingXp:
+                    !shouldResetSessionMarks || (!shouldOverwriteXp && !shouldOverwriteLevel) ? totalPendingXp : 0,
+              ),
+            ),
+            const SizedBox(height: 24),
+            AnimatedContainer(
+                duration: const Duration(milliseconds: 200),
+                width: dialogWidth,
+                height: action == _XPAction.endSession ? (PlatformHelper.isMobile ? 364 : 332) : 48,
+                child: CustomExpansionTile(
+                  title: Text(tr.xp.dialog.endOfSession.button), //TODO magnus
+                  initiallyExpanded: true,
+                  controller: endSessionCollapseController,
+                  expandable: action != _XPAction.endSession,
+                  onExpansionChanged: (value) {
+                    if (!value) return;
+                    setState(() {
+                      lastActionController.collapse();
+                      action = _XPAction.endSession;
+                      lastActionController = endSessionCollapseController;
+                    });
+                    return;
+                  },
+                  children: [
+                    SizedBox(
+                      width: dialogWidth,
+                      child: ListTile(
+                        title: Text(tr.xp.dialog.endOfSession.questions.title),
+                        subtitle: Text(tr.xp.dialog.endOfSession.questions.subtitle),
                       ),
-                      const Divider(height: 32),
-                      NumberTextField(
-                        controller: overwriteXp,
-                        numberType: NumberType.int,
-                        decoration: InputDecoration(
-                          labelText: tr.xp.dialog.override.xp +
-                              (shouldOverrideXp ? '*' : ''),
+                    ),
+                    for (final eos in eosMarks)
+                      SizedBox(
+                        width: dialogWidth,
+                        child: CheckboxListTile(
+                          value: eos.completed,
+                          title: Text(eos.description),
+                          controlAffinity: ListTileControlAffinity.leading,
+                          dense: true,
+                          onChanged: (val) => _toggleEosMark(eos, val),
                         ),
-                        minValue: 0,
-                        maxValue: CharacterStats.maxExpForLevel(level),
                       ),
-                      const SizedBox(height: 16),
-                      NumberTextField(
-                        decoration: InputDecoration(
-                          labelText: tr.xp.dialog.override.level +
-                              (shouldOverrideLevel ? '*' : ''),
-                        ),
-                        numberType: NumberType.int,
-                        controller: overwriteLevel,
-                        onChanged: (_) => setState(() {}),
-                        minValue: 1,
-                      ),
-                    ],
+                  ],
+                )),
+            const SizedBox(height: 24),
+            AnimatedContainer(
+              duration: const Duration(milliseconds: 200),
+              width: dialogWidth,
+              height: action == _XPAction.levelUp ? (PlatformHelper.isMobile ? 364 : 332) : 48,
+              child: CustomExpansionTile(
+                title: Text(S.current.xpDialogHeaderLevelUp),
+                controller: levelUpCollapseController,
+                expandable: action != _XPAction.levelUp,
+                onExpansionChanged: (value) {
+                  if (!value) return;
+                  setState(() {
+                    lastActionController.collapse();
+                    action = _XPAction.levelUp;
+                    lastActionController = levelUpCollapseController;
+                  });
+                  return;
+                },
+                children: [
+                  const Text(S.current.xpDialogLevelUpStat),
+                  const SizedBox(height: 12),
+                  ConstrainedBox(
+                    constraints: const BoxConstraints(maxWidth: 380),
+                    child: LayoutBuilder(
+                      builder: (context, constraints) {
+                        return Wrap(
+                          spacing: 4,
+                          runSpacing: 4,
+                          children: List.generate(char.abilityScores.stats.length, (i) {
+                            final stat = char.abilityScores.stats[i];
+                            return GestureDetector(
+                              onTap: stat.value < 18
+                                  ? () {
+                                      setState(() {
+                                        selectedAbilityScoreIndex = i;
+                                      });
+                                    }
+                                  : null,
+                              child: SizedBox(
+                                width: constraints.maxWidth / 3 - 8,
+                                child: PrimaryChip(
+                                  visualDensity: VisualDensity.comfortable,
+                                  label: '${stat.key} ${stat.value}',
+                                  icon: Icon(stat.icon),
+                                  isEnabled: selectedAbilityScoreIndex == i,
+                                ),
+                              ),
+                            );
+                          }),
+                        );
+                      },
+                    ),
                   ),
+                  const SizedBox(height: 24),
+                  const Text(S.current.xpDialogLevelUpMove),
+                ],
+              ),
+            ),
+            const SizedBox(height: 24),
+            AnimatedContainer(
+              duration: const Duration(milliseconds: 200),
+              width: dialogWidth,
+              height: action == _XPAction.overwriteXP ? (PlatformHelper.isMobile ? 364 : 332) : 48,
+              child: CustomExpansionTile(
+                title: Text(
+                  S.current.xpDialogChangeOverwrite + (hasOverwrites ? '*' : ''),
                 ),
-                // const SizedBox(height: 24),
-                const SizedBox(height: 24),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.end,
-                  children: DialogControls.save(
-                    context,
-                    onSave: save,
-                    saveLabel: shouldResetSessionMarks
-                        ? tr.xp.dialog.endOfSession.button
-                        : null,
-                    onCancel: close,
-                    spacing: 8,
+                controller: overwriteXPCollapseController,
+                expandable: action != _XPAction.overwriteXP,
+                onExpansionChanged: (value) {
+                  if (!value) return false;
+                  setState(() {
+                    lastActionController.collapse();
+                    action = _XPAction.overwriteXP;
+                    lastActionController = overwriteXPCollapseController;
+                  });
+                  return false;
+                },
+                children: [
+                  CheckboxListTile(
+                    value: shouldResetSessionMarks,
+                    onChanged: (val) => setState(
+                      () => shouldResetSessionMarks = val!,
+                    ),
+                    title: Text(S.current.xpDialogResetSessionMarks),
+                    dense: true,
+                    visualDensity: VisualDensity.compact,
+                    controlAffinity: ListTileControlAffinity.leading,
                   ),
-                ),
-              ],
-            );
-          },
+                  const Divider(height: 32),
+                  NumberTextField(
+                    controller: overwriteXp,
+                    numberType: NumberType.int,
+                    decoration: InputDecoration(
+                      labelText: S.current.xpDialogOverwriteXp + (shouldOverwriteXp ? '*' : ''),
+                    ),
+                    minValue: 0,
+                  ),
+                  const SizedBox(height: 16),
+                  NumberTextField(
+                    decoration: InputDecoration(
+                      labelText: S.current.xpDialogOverwriteLevel + (shouldOverwriteLevel ? '*' : ''),
+                    ),
+                    numberType: NumberType.int,
+                    controller: OverwriteLevel,
+                    minValue: 1,
+                  ),
+                ],
+              ),
+            ),
+            const SizedBox(height: 24),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: DialogControls.save(
+                context,
+                onSave: (action == _XPAction.endSession)
+                    ? endSession
+                    : (action == _XPAction.overwriteXP)
+                        ? overwriteXpAndLevel
+                        : (action == _XPAction.levelUp && canLevelUp)
+                            ? levelUp
+                            : null,
+                saveLabel: action.saveButton,
+                onCancel: close,
+                spacing: 8,
+              ),
+            ),
+          ],
         ),
       ),
     );
@@ -198,61 +257,56 @@ class _EXPDialogState extends State<EXPDialog> with CharacterServiceMixin {
 
   int get currentXp => char.currentXp;
   int get currentLevel => char.stats.level;
-  int get maxXp => shouldOverrideLevel
-      ? CharacterStats.maxExpForLevel(
-          int.tryParse(overwriteLevel.text) ?? currentLevel)
+  int get maxXp => shouldOverwriteLevel
+      ? CharacterStats.maxExpForLevel(int.tryParse(overwriteLevel.text) ?? currentLevel)
       : char.maxXp;
-  int get eosPendingXp => eosMarks.where((mark) => mark.completed).length;
-  int get totalPendingXp =>
-      char.sessionMarks
-          .where((mark) =>
-              mark.type != dw.SessionMarkType.endOfSession && mark.completed)
-          .length +
-      eosPendingXp;
-  int get effectiveXp =>
-      shouldOverrideXp ? int.parse(overwriteXp.text) : currentXp;
-  int get effectiveLevel =>
-      shouldOverrideLevel ? int.parse(overwriteLevel.text) : currentLevel;
-  bool get shouldOverrideXp =>
-      int.tryParse(overwriteXp.text) != null &&
-      int.parse(overwriteXp.text) != currentXp;
+  int get totalPendingXp => char.sessionMarks.where((mark) => mark.completed).length;
+  bool get canLevelUp => currentXp - currentLevel - 7 >= 0;
 
-  bool get shouldOverrideLevel =>
-      int.tryParse(overwriteLevel.text) != null &&
-      int.parse(overwriteLevel.text) != currentLevel;
+  bool get shouldOverwriteXp => int.tryParse(overwriteXp.text) != null && int.parse(overwriteXp.text) != currentXp;
+  bool get shouldOverwriteLevel =>
+      int.tryParse(overwriteLevel.text) != null && int.parse(overwriteLevel.text) != currentLevel;
+  bool get hasOverwrites => shouldOverwriteLevel || shouldOverwriteXp || shouldResetSessionMarks;
 
-  bool get hasOverrides =>
-      shouldOverrideLevel || shouldOverrideXp || !shouldResetSessionMarks;
+  void endSession() {
+    save(currentXp + totalPendingXp, currentLevel, resetSession: true);
+  }
 
-  void save() {
-    final beforeLevelXp =
-        effectiveXp + (shouldResetSessionMarks ? totalPendingXp : 0);
-    int updatedLevel = effectiveLevel;
-    int updatedXp = beforeLevelXp;
+  void levelUp() {
+    if (!canLevelUp) return;
+    save(
+      currentXp - currentLevel - 7,
+      currentLevel + 1,
+      abilityScoreToIncrease: char.abilityScores.stats[selectedAbilityScoreIndex],
+    );
+  }
 
-    // if xp is over the current level allowance, keep reducing it until it is below the current
-    // level while leveling up
-    while (updatedXp >= CharacterStats.maxExpForLevel(updatedLevel)) {
-      updatedXp -= CharacterStats.maxExpForLevel(updatedLevel);
-      updatedLevel++;
+  void overwriteXpAndLevel() {
+    save(
+      int.tryParse(overwriteXp.text) ?? 0,
+      int.tryParse(overwriteLevel.text) ?? currentLevel,
+      resetSession: shouldResetSessionMarks,
+    );
+  }
+
+  void save(int xp, int level, {bool resetSession = false, AbilityScore? abilityScoreToIncrease}) {
+    AbilityScores? abilityScores;
+    if (abilityScoreToIncrease != null) {
+      abilityScores =
+          char.abilityScores.copyWithStatValues({abilityScoreToIncrease.key: abilityScoreToIncrease.value + 1});
     }
-
-    charProvider.updateCharacter(
+    charService.updateCharacter(
       char.copyWith(
+        abilityScores: abilityScores,
         stats: char.stats.copyWith(
-          currentXp: updatedXp,
-          level: updatedLevel,
+          currentXp: xp,
+          level: level,
         ),
-        // reset all session marks completion
-        sessionMarks: shouldResetSessionMarks
-            ? char.sessionMarks
-                .map((e) => e.copyWithInherited(completed: false))
-                .toList()
+        sessionMarks: (resetSession)
+            ? char.sessionMarks.map((e) => e.copyWithInherited(completed: false)).toList()
             : upsertByKey(char.sessionMarks, eosMarks),
       ),
     );
-
-    // TODO pop-up level up dialog if needed
 
     close();
   }
@@ -263,10 +317,32 @@ class _EXPDialogState extends State<EXPDialog> with CharacterServiceMixin {
 
   void _toggleEosMark(SessionMark eos, bool? val) {
     setState(() {
-      eosMarks = updateByKey(
-          eosMarks, [eos.copyWithInherited(completed: val ?? !eos.completed)]);
-      charProvider.updateCharacter(char.copyWith(
-          sessionMarks: upsertByKey(char.sessionMarks, eosMarks)));
+      eosMarks = updateByKey(eosMarks, [eos.copyWithInherited(completed: val ?? !eos.completed)]);
+      charService.updateCharacter(char.copyWith(sessionMarks: upsertByKey(char.sessionMarks, eosMarks)));
     });
+  }
+}
+
+extension on _XPAction {
+  String get title {
+    switch (this) {
+      case _XPAction.endSession:
+        return S.current.xpDialogTitle;
+      case _XPAction.levelUp:
+        return S.current.xpDialogTitleLevelUp;
+      case _XPAction.overwriteXP:
+        return S.current.xpDialogTitleOverriding;
+    }
+  }
+
+  String get saveButton {
+    switch (this) {
+      case _XPAction.endSession:
+        return S.current.xpDialogEndSession;
+      case _XPAction.levelUp:
+        return S.current.xpDialogSaveLevelUp;
+      case _XPAction.overwriteXP:
+        return S.current.xpDialogSaveOverwriteXp;
+    }
   }
 }

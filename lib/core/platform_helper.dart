@@ -34,6 +34,7 @@ class PlatformHelper {
   static final isMacOS = !kIsWeb && Platform.isMacOS;
   static final isWindows = !kIsWeb && Platform.isWindows;
   static final isLinux = !kIsWeb && Platform.isLinux;
+  static final isMobile = isAndroid || isIOS;
 
   static final canUseAppleSignIn = isApple;
   static final canUseGoogleSignIn = isAndroid;
