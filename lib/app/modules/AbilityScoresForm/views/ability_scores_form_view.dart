@@ -19,9 +19,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class AbilityScoresFormView extends GetView<AbilityScoresFormController> {
-  const AbilityScoresFormView({
-    super.key,
-  });
+  const AbilityScoresFormView({ super.key });
 
   @override
   Widget build(BuildContext context) {
@@ -125,11 +123,8 @@ class AbilityScoresFormView extends GetView<AbilityScoresFormController> {
                       padding: const EdgeInsets.symmetric(horizontal: 8),
                       child: NumberTextField(
                         controller: controller.textControllers[stat.key],
-                        minValue: 1,
-                        maxValue: 20,
                         numberType: NumberType.int,
                         textInputAction: TextInputAction.next,
-                        // onChanged: (val) => updateControllers(),
                       ),
                     ),
                   ),
