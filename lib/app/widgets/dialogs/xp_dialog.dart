@@ -1,9 +1,11 @@
+import 'package:dungeon_paper/app/data/models/ability_scores.dart';
 import 'package:dungeon_paper/app/data/models/character_stats.dart';
 import 'package:dungeon_paper/app/data/models/session_marks.dart';
 import 'package:dungeon_paper/app/data/services/character_service.dart';
-import 'package:dungeon_paper/app/widgets/atoms/custom_expansion_panel.dart';
+import 'package:dungeon_paper/app/widgets/atoms/custom_expansion_tile.dart';
 import 'package:dungeon_paper/app/widgets/atoms/help_text.dart';
 import 'package:dungeon_paper/app/widgets/atoms/number_text_field.dart';
+import 'package:dungeon_paper/app/widgets/chips/primary_chip.dart';
 import 'package:dungeon_paper/app/widgets/atoms/xp_bar.dart';
 import 'package:dungeon_paper/app/widgets/molecules/dialog_controls.dart';
 import 'package:dungeon_paper/core/platform_helper.dart';
@@ -14,7 +16,7 @@ import 'package:dungeon_world_data/dungeon_world_data.dart' as dw;
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-enum ValueChange { positive, neutral, negative }
+enum _XPAction { endSession, levelUp, overwriteXP }
 
 class EXPDialog extends StatefulWidget {
   const EXPDialog({super.key});
@@ -24,38 +26,50 @@ class EXPDialog extends StatefulWidget {
 }
 
 class _EXPDialogState extends State<EXPDialog> with CharacterServiceMixin {
-  late TextEditingController overrideXp;
-  late bool manualExpExpanded;
-  late TextEditingController overrideLevel;
-  late bool shouldResetSessionMarks;
+  late TextEditingController overwriteXp;
+  late TextEditingController overwriteLevel;
   late List<SessionMark> eosMarks;
+  bool manualExpExpanded = false;
+  bool shouldResetSessionMarks = false;
+  int selectedAbilityScoreIndex = 0;
+
+  final endSessionCollapseController = CustomExpansionTileController();
+  final levelUpCollapseController = CustomExpansionTileController();
+  final overwriteXPCollapseController = CustomExpansionTileController();
+  _XPAction action = _XPAction.endSession;
+  late CustomExpansionTileController lastActionController;
 
   @override
   void initState() {
-    overrideXp = TextEditingController(text: char.currentXp.toString())
-      ..addListener(() => setState(() {}));
-    manualExpExpanded = false;
-    overrideLevel = TextEditingController(text: currentLevel.toString())
-      ..addListener(() => setState(() {}));
-    shouldResetSessionMarks = true;
+    overwriteXp = TextEditingController(text: char.currentXp.toString())..addListener(() => setState(() {}));
+    overwriteLevel = TextEditingController(text: currentLevel.toString())..addListener(() => setState(() {}));
     eosMarks = char.endOfSessionMarks;
+    lastActionController = endSessionCollapseController;
+    // Calculate the maximum stat, to be selected by default for leveling up. Must handle custom stats on the sheet.
+    var maxStat = -2147483648; // Lazy way to avoid dealing with max/min, if the first stat was 18 for example
+    for (var i = 0; i < char.abilityScores.stats.length; i += 1) {
+      final statValue = char.abilityScores.stats[i].value;
+      if (statValue > maxStat && statValue < 18) {
+        selectedAbilityScoreIndex = i;
+        maxStat = statValue;
+      }
+    }
     super.initState();
   }
 
   @override
   void dispose() {
-    overrideLevel.dispose();
-    overrideXp.dispose();
+    overwriteLevel.dispose();
+    overwriteXp.dispose();
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
-    const dlgWidth = 400.0;
+    const dialogWidth = 400.0;
 
     return AlertDialog(
-      title: Text(
-          !hasOverrides ? tr.xp.dialog.title : tr.xp.dialog.overridingTitle),
+      title: Text(action.title),
       content: SingleChildScrollView(
         child: Obx(
           () {
@@ -66,10 +80,10 @@ class _EXPDialogState extends State<EXPDialog> with CharacterServiceMixin {
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
                 SizedBox(
-                  width: dlgWidth,
+                  width: dialogWidth,
                   child: ExpBar(
                     currentXp: clamp(
-                        int.tryParse(overrideXp.text) ?? currentXp, 0, maxXp),
+                        int.tryParse(overwriteXp.text) ?? currentXp, 0, maxXp),
                     maxXp: maxXp,
                     pendingXp: !shouldResetSessionMarks ||
                             (!shouldOverrideXp && !shouldOverrideLevel)
@@ -79,7 +93,7 @@ class _EXPDialogState extends State<EXPDialog> with CharacterServiceMixin {
                 ),
                 const SizedBox(height: 24),
                 SizedBox(
-                  width: dlgWidth,
+                  width: dialogWidth,
                   child: ListTile(
                     title: Text(
                       tr.xp.dialog.endOfSession.questions.title,
@@ -92,7 +106,7 @@ class _EXPDialogState extends State<EXPDialog> with CharacterServiceMixin {
                 const SizedBox(height: 8),
                 for (final eos in eosMarks)
                   SizedBox(
-                    width: dlgWidth,
+                    width: dialogWidth,
                     child: CheckboxListTile(
                       value: eos.completed,
                       title: Text(eos.description),
@@ -104,7 +118,7 @@ class _EXPDialogState extends State<EXPDialog> with CharacterServiceMixin {
                 const SizedBox(height: 24),
                 AnimatedContainer(
                   duration: const Duration(milliseconds: 250),
-                  width: dlgWidth,
+                  width: dialogWidth,
                   height: manualExpExpanded
                       ? (332 +
                           (PlatformHelper.isIOS || PlatformHelper.isAndroid
@@ -137,7 +151,7 @@ class _EXPDialogState extends State<EXPDialog> with CharacterServiceMixin {
                       ),
                       const Divider(height: 32),
                       NumberTextField(
-                        controller: overrideXp,
+                        controller: overwriteXp,
                         numberType: NumberType.int,
                         decoration: InputDecoration(
                           labelText: tr.xp.dialog.override.xp +
@@ -153,7 +167,7 @@ class _EXPDialogState extends State<EXPDialog> with CharacterServiceMixin {
                               (shouldOverrideLevel ? '*' : ''),
                         ),
                         numberType: NumberType.int,
-                        controller: overrideLevel,
+                        controller: overwriteLevel,
                         onChanged: (_) => setState(() {}),
                         minValue: 1,
                       ),
@@ -186,7 +200,7 @@ class _EXPDialogState extends State<EXPDialog> with CharacterServiceMixin {
   int get currentLevel => char.stats.level;
   int get maxXp => shouldOverrideLevel
       ? CharacterStats.maxExpForLevel(
-          int.tryParse(overrideLevel.text) ?? currentLevel)
+          int.tryParse(overwriteLevel.text) ?? currentLevel)
       : char.maxXp;
   int get eosPendingXp => eosMarks.where((mark) => mark.completed).length;
   int get totalPendingXp =>
@@ -196,16 +210,16 @@ class _EXPDialogState extends State<EXPDialog> with CharacterServiceMixin {
           .length +
       eosPendingXp;
   int get effectiveXp =>
-      shouldOverrideXp ? int.parse(overrideXp.text) : currentXp;
+      shouldOverrideXp ? int.parse(overwriteXp.text) : currentXp;
   int get effectiveLevel =>
-      shouldOverrideLevel ? int.parse(overrideLevel.text) : currentLevel;
+      shouldOverrideLevel ? int.parse(overwriteLevel.text) : currentLevel;
   bool get shouldOverrideXp =>
-      int.tryParse(overrideXp.text) != null &&
-      int.parse(overrideXp.text) != currentXp;
+      int.tryParse(overwriteXp.text) != null &&
+      int.parse(overwriteXp.text) != currentXp;
 
   bool get shouldOverrideLevel =>
-      int.tryParse(overrideLevel.text) != null &&
-      int.parse(overrideLevel.text) != currentLevel;
+      int.tryParse(overwriteLevel.text) != null &&
+      int.parse(overwriteLevel.text) != currentLevel;
 
   bool get hasOverrides =>
       shouldOverrideLevel || shouldOverrideXp || !shouldResetSessionMarks;
