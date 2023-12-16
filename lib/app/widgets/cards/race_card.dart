@@ -1,5 +1,5 @@
+import 'package:dungeon_paper/app/widgets/chips/character_class_chip.dart';
 import 'package:dungeon_paper/app/widgets/chips/move_category_chip.dart';
-import 'package:dungeon_paper/app/widgets/chips/primary_chip.dart';
 import 'package:dungeon_paper/app/widgets/chips/tag_chip.dart';
 import 'package:flutter/material.dart';
 
@@ -8,7 +8,7 @@ import 'dynamic_action_card.dart';
 
 class RaceCard extends StatelessWidget {
   const RaceCard({
-    Key? key,
+    super.key,
     required this.race,
     this.onSave,
     this.showStar = true,
@@ -21,7 +21,7 @@ class RaceCard extends StatelessWidget {
     this.advancedLevelDisplay = AdvancedLevelDisplay.short,
     this.highlightWords = const [],
     this.showClasses = false,
-  }) : super(key: key);
+  });
 
   final Race race;
   final void Function(Race race)? onSave;
@@ -57,12 +57,13 @@ class RaceCard extends StatelessWidget {
       highlightWords: highlightWords,
       leading: showClasses && race.classKeys.isNotEmpty
           ? [
-              PrimaryChip(
-                label: race.classKeys.first.name,
-                visualDensity: VisualDensity.compact,
-              )
+              for (final cls in race.classKeys) ...[
+                CharacterClassChip(characterClass: cls),
+                const SizedBox(width: 8),
+              ],
             ]
           : const [],
     );
   }
 }
+

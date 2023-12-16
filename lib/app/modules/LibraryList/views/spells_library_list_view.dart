@@ -15,9 +15,7 @@ import 'filters/spell_filters.dart';
 
 class SpellsLibraryListView
     extends GetView<LibraryListController<Spell, SpellFilters>> {
-  const SpellsLibraryListView({
-    Key? key,
-  }) : super(key: key);
+  const SpellsLibraryListView({super.key});
 
   Character get character => controller.chars.value.current;
 
@@ -34,6 +32,7 @@ class SpellsLibraryListView
         spell: data.item,
         showDice: false,
         showStar: false,
+        showClasses: true,
         highlightWords: data.highlightWords,
         actions: [
           EntityEditMenu(
@@ -91,3 +90,4 @@ class SpellLibraryListArguments
           },
         );
 }
+

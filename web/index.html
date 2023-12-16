@@ -74,6 +74,11 @@
       var serviceWorkerVersion = null
       var scriptLoaded = false
       function loadMainDartJs() {
+        // redirect to / if there is a hash, prevents argument errors from GetX
+        if (window.location.hash != '' && window.location.hash != '#/') {
+          window.location.href = '/'
+          return
+        }
         if (scriptLoaded) {
           return
         }

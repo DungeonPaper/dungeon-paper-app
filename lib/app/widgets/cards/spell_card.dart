@@ -1,4 +1,5 @@
 import 'package:dungeon_paper/app/data/models/ability_scores.dart';
+import 'package:dungeon_paper/app/widgets/chips/character_class_chip.dart';
 import 'package:dungeon_paper/app/widgets/chips/spell_level_chip.dart';
 import 'package:flutter/material.dart';
 
@@ -7,11 +8,12 @@ import 'dynamic_action_card.dart';
 
 class SpellCard extends StatelessWidget {
   const SpellCard({
-    Key? key,
+    super.key,
     required this.spell,
     this.showDice = true,
     this.showStar = true,
     this.showIcon = true,
+    this.showClasses = false,
     this.onSave,
     this.initiallyExpanded,
     this.actions = const [],
@@ -21,12 +23,13 @@ class SpellCard extends StatelessWidget {
     this.highlightWords = const [],
     this.abilityScores,
     this.reorderablePadding = false,
-  }) : super(key: key);
+  });
 
   final Spell spell;
   final bool showDice;
   final bool showStar;
   final bool showIcon;
+  final bool showClasses;
   final bool? initiallyExpanded;
   final void Function(Spell spell)? onSave;
   final Iterable<Widget> actions;
@@ -46,7 +49,14 @@ class SpellCard extends StatelessWidget {
       maxContentHeight: maxContentHeight,
       expandable: expandable,
       reorderablePadding: reorderablePadding,
-      leading: [SpellLevelChip(level: spell.level)],
+      leading: [
+        if (showClasses)
+          for (final cls in spell.classKeys) ...[
+            CharacterClassChip(characterClass: cls),
+            const SizedBox(width: 8),
+          ],
+        SpellLevelChip(level: spell.level),
+      ],
       chips: const [],
       dice: showDice ? spell.dice : [],
       icon: showIcon ? Icon(spell.icon, size: 16) : null,
@@ -62,3 +72,4 @@ class SpellCard extends StatelessWidget {
     );
   }
 }
+

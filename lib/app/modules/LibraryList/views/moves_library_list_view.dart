@@ -38,6 +38,7 @@ class MovesLibraryListView
         move: data.item,
         showDice: false,
         showStar: false,
+        showClasses: true,
         highlightWords: data.highlightWords,
         actions: [
           EntityEditMenu(

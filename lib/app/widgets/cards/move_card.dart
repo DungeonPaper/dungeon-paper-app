@@ -1,4 +1,5 @@
 import 'package:dungeon_paper/app/data/models/ability_scores.dart';
+import 'package:dungeon_paper/app/widgets/chips/character_class_chip.dart';
 import 'package:dungeon_paper/app/widgets/chips/move_category_chip.dart';
 import 'package:dungeon_paper/app/widgets/chips/tag_chip.dart';
 import 'package:flutter/material.dart';
@@ -8,12 +9,13 @@ import 'dynamic_action_card.dart';
 
 class MoveCard extends StatelessWidget {
   const MoveCard({
-    Key? key,
+    super.key,
     required this.move,
     this.onSave,
     this.showDice = true,
     this.showStar = true,
     this.showIcon = true,
+    this.showClasses = false,
     this.initiallyExpanded,
     this.actions = const [],
     this.expansionKey,
@@ -23,13 +25,14 @@ class MoveCard extends StatelessWidget {
     this.highlightWords = const [],
     this.abilityScores,
     this.reorderablePadding = false,
-  }) : super(key: key);
+  });
 
   final Move move;
   final void Function(Move move)? onSave;
   final bool showDice;
   final bool showStar;
   final bool showIcon;
+  final bool showClasses;
   final bool? initiallyExpanded;
   final Iterable<Widget> actions;
   final PageStorageKey? expansionKey;
@@ -61,6 +64,11 @@ class MoveCard extends StatelessWidget {
       actions: actions,
       highlightWords: highlightWords,
       leading: [
+        if (showClasses)
+          for (final cls in move.classKeys) ...[
+            CharacterClassChip(characterClass: cls),
+            const SizedBox(width: 8),
+          ],
         MoveCategoryChip(
             category: move.category,
             advancedLevelDisplay: advancedLevelDisplay),
@@ -69,3 +77,4 @@ class MoveCard extends StatelessWidget {
     );
   }
 }
+
