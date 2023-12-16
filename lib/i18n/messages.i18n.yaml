@@ -451,19 +451,24 @@ hp:
 
 xp:
   dialog:
-    title: Mark Session XP
-    overridingTitle: Update XP & Level
     endOfSession:
+      title: End Session
       button: End Session
       questions:
         title: End of Session Questions
         subtitle: 'Answer these questions as a group. For each "yes" answer, XP is marked.'
-    override:
-      title: Update Manually
+    levelUp:
+      title: Level Up
+      button: Level Up
+      increaseStat: 'Increase a stat by 1:'
+      chooseMove: Then, select an advanced move.
+    overwrite:
+      title: Overwrite XP and Level
+      button: Overwrite
       info: Changing the current XP or level manually will cause the pending XP to be discarded unless this is unchecked.
       resetCheckbox: Reset bonds, flags & end of session questions after saving
-      xp: Override XP
-      level: Override Level
+      xp: Overwrite XP
+      level: Overwrite Level
 
 armor:
   title: Armor
