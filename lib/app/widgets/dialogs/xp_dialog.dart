@@ -82,7 +82,7 @@ class _EXPDialogState extends State<EXPDialog> with CharacterServiceMixin {
                     !shouldResetSessionMarks || (!shouldOverwriteXp && !shouldOverwriteLevel) ? totalPendingXp : 0,
               ),
             ),
-            const SizedBox(height: 24),
+            const SizedBox(height: 8),
             AnimatedContainer(
                 duration: const Duration(milliseconds: 200),
                 width: dialogWidth,
@@ -122,7 +122,6 @@ class _EXPDialogState extends State<EXPDialog> with CharacterServiceMixin {
                       ),
                   ],
                 )),
-            const SizedBox(height: 24),
             AnimatedContainer(
               duration: const Duration(milliseconds: 200),
               width: dialogWidth,
@@ -180,7 +179,6 @@ class _EXPDialogState extends State<EXPDialog> with CharacterServiceMixin {
                 ],
               ),
             ),
-            const SizedBox(height: 24),
             AnimatedContainer(
               duration: const Duration(milliseconds: 200),
               width: dialogWidth,

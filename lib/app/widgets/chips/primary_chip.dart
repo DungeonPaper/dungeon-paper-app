@@ -36,8 +36,8 @@ class PrimaryChip extends StatelessWidget {
     final isCompact = visualDensity == VisualDensity.compact;
     final hasIcon = icon != null;
     
-    final labelPadding = EdgeInsets.symmetric(horizontal: 8 - isCompact.c_int * 2, vertical: 0)
-      .copyWith(left: (hasIcon ? (label.isEmpty ? -8 + isCompact.c_int * 2 : -4) : null));
+    final labelPadding = EdgeInsets.symmetric(horizontal: 8 - isCompact.cInt * 2, vertical: 0)
+      .copyWith(left: (hasIcon ? (label.isEmpty ? -8 + isCompact.cInt * 2 : -4) : null));
 
     return AdvancedChip(
       deleteIconColor: fgColor,
@@ -70,5 +70,5 @@ class PrimaryChip extends StatelessWidget {
 }
 
 extension on bool {
-  int get c_int => this ? 1 : 0;
+  int get cInt => this ? 1 : 0;
 }
