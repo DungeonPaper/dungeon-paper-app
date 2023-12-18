@@ -151,39 +151,39 @@ class LibraryCardList<T extends WithMeta, F extends EntityFilters<T>>
 
   createPageArgsByType(Map<String, dynamic> extraData) {
     switch (T) {
-      case Move:
+      case Move():
         return MoveFormArguments(
           entity: null,
           abilityScores: extraData['abilityScores'],
           onSave: onSave! as void Function(Move move),
           formContext: FormContext.create,
         );
-      case Spell:
+      case Spell():
         return SpellFormArguments(
           entity: null,
           abilityScores: extraData['abilityScores'],
           onSave: onSave! as void Function(Spell spell),
           formContext: FormContext.create,
         );
-      case Item:
+      case Item():
         return ItemFormArgumentsNew(
           entity: null,
           onSave: onSave! as void Function(Item item),
           formContext: FormContext.create,
         );
-      case Note:
+      case Note():
         return NoteFormArguments(
           entity: null,
           onSave: onSave! as void Function(Note note),
           formContext: FormContext.create,
         );
-      case CharacterClass:
+      case CharacterClass():
         return CharacterClassFormArguments(
           entity: null,
           onSave: onSave! as void Function(CharacterClass characterClass),
           formContext: FormContext.create,
         );
-      case Race:
+      case Race():
         return RaceFormArguments(
           entity: null,
           abilityScores: extraData['abilityScores'],

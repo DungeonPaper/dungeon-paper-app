@@ -139,18 +139,18 @@ class HomeCharacterJournalView extends GetView<CharacterService> {
 
       if (result == true) {
         switch (T) {
-          case Note:
+          case Note():
             controller.updateCharacter(
               char.copyWith(notes: removeByKey(char.notes, [object as Note])),
             );
             break;
-          case Spell:
+          case Spell():
             controller.updateCharacter(
               char.copyWith(
                   spells: removeByKey(char.spells, [object as Spell])),
             );
             break;
-          case Item:
+          case Item():
             controller.updateCharacter(
               char.copyWith(items: removeByKey(char.items, [object as Item])),
             );

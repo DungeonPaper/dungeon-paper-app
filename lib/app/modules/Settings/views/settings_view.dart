@@ -1,5 +1,6 @@
 import 'package:dungeon_paper/app/data/services/character_service.dart';
 import 'package:dungeon_paper/app/themes/themes.dart';
+import 'package:dungeon_paper/core/platform_helper.dart';
 import 'package:dungeon_paper/i18n.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -24,15 +25,16 @@ class SettingsView extends GetView<SettingsController>
             context,
             tr.settings.categories.general,
           ),
-          Obx(
-            () => SwitchListTile.adaptive(
-              title: Text(tr.settings.keepAwake),
-              value: controller.settings.keepScreenAwake,
-              onChanged: (value) => controller.updateSettings(
-                controller.settings.copyWith(keepScreenAwake: value),
+          if (PlatformHelper.isAndroid)
+            Obx(
+              () => SwitchListTile.adaptive(
+                title: Text(tr.settings.keepAwake),
+                value: controller.settings.keepScreenAwake,
+                onChanged: (value) => controller.updateSettings(
+                  controller.settings.copyWith(keepScreenAwake: value),
+                ),
               ),
             ),
-          ),
           Obx(
             () => _sectionTitle(
               context,
@@ -124,3 +126,4 @@ class SettingsView extends GetView<SettingsController>
     );
   }
 }
+

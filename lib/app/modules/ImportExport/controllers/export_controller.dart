@@ -53,27 +53,27 @@ class ExportController extends GetxController
 
   void _toggleExportList<T>(List<T> items, bool state) {
     switch (T) {
-      case Character:
+      case Character():
         toExport.value.characters = _toggleInList(
             toExport.value.characters, items.cast<Character>(), state);
         break;
-      case Move:
+      case Move():
         toExport.value.moves =
             _toggleInList(toExport.value.moves, items.cast<Move>(), state);
         break;
-      case Spell:
+      case Spell():
         toExport.value.spells =
             _toggleInList(toExport.value.spells, items.cast<Spell>(), state);
         break;
-      case Item:
+      case Item():
         toExport.value.items =
             _toggleInList(toExport.value.items, items.cast<Item>(), state);
         break;
-      case CharacterClass:
+      case CharacterClass():
         toExport.value.classes = _toggleInList(
             toExport.value.classes, items.cast<CharacterClass>(), state);
         break;
-      case Race:
+      case Race():
         toExport.value.races =
             _toggleInList(toExport.value.races, items.cast<Race>(), state);
         break;
@@ -108,17 +108,17 @@ class ExportController extends GetxController
   @override
   List<T> listByType<T extends WithMeta>() {
     switch (T) {
-      case Character:
+      case Character():
         return characters as List<T>;
-      case Move:
+      case Move():
         return moves as List<T>;
-      case Spell:
+      case Spell():
         return spells as List<T>;
-      case Item:
+      case Item():
         return items as List<T>;
-      case CharacterClass:
+      case CharacterClass():
         return classes as List<T>;
-      case Race:
+      case Race():
         return races as List<T>;
     }
     throw TypeError();
@@ -144,17 +144,17 @@ class ExportSelections {
 
   List<T> listByType<T>() {
     switch (T) {
-      case Character:
+      case Character():
         return characters as List<T>;
-      case Move:
+      case Move():
         return moves as List<T>;
-      case Spell:
+      case Spell():
         return spells as List<T>;
-      case Item:
+      case Item():
         return items as List<T>;
-      case CharacterClass:
+      case CharacterClass():
         return classes as List<T>;
-      case Race:
+      case Race():
         return races as List<T>;
     }
     throw TypeError();

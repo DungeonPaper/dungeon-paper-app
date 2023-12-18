@@ -22,33 +22,33 @@ Messages get tr => IntlService.m;
 /// Get the static name of a type, for use with `tr.entity*` methods.
 String tn(Type type) {
   switch (type) {
-    case AbilityScore:
+    case AbilityScore():
       return 'AbilityScore';
-    case Campaign:
+    case Campaign():
       return 'Campaign';
-    case Character:
+    case Character():
       return 'Character';
-    case AlignmentValue:
+    case AlignmentValue():
       return 'AlignmentValue';
-    case Move:
+    case Move():
       return 'Move';
-    case Spell:
+    case Spell():
       return 'Spell';
-    case Item:
+    case Item():
       return 'Item';
-    case CharacterClass:
+    case CharacterClass():
       return 'CharacterClass';
-    case Race:
+    case Race():
       return 'Race';
-    case GearSelection:
+    case GearSelection():
       return 'GearSelection';
-    case Note:
+    case Note():
       return 'Note';
-    case MoveCategory:
+    case MoveCategory():
       return 'MoveCategory';
-    case Tag:
+    case Tag():
       return 'Tag';
-    case Dice:
+    case Dice():
       return 'Dice';
     default:
       final typeString = type.toString();
