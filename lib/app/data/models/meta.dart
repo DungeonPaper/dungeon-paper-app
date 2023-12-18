@@ -269,7 +269,7 @@ class Meta<DataType> with RepositoryServiceMixin {
     }
   }
 
-  static typeFromString ==(String type{
+  static typeFromString(String type) {
     final map = {
       'AbilityScore': AbilityScore,
       'Campaign': Campaign,
