@@ -350,21 +350,21 @@ abstract class RepositoryCache {
     final t = T != dynamic ? T : type;
 
     switch (t) {
-      case CharacterClass():
+      case == CharacterClass:
         return classes as RxMap<String, T>;
-      case Item():
+      case == Item:
         return items as RxMap<String, T>;
-      case Monster():
+      case == Monster:
         return monsters as RxMap<String, T>;
-      case Move():
+      case == Move:
         return moves as RxMap<String, T>;
-      case Race():
+      case == Race:
         return races as RxMap<String, T>;
-      case Spell():
+      case == Spell:
         return spells as RxMap<String, T>;
-      case Note():
+      case == Note:
         return notes as RxMap<String, T>;
-      case dw.Tag():
+      case == dw.Tag:
         return tags as RxMap<String, T>;
     }
     throw TypeError();

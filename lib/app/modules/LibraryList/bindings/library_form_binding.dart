@@ -18,22 +18,22 @@ class LibraryFormBinding<T> extends Bindings {
   @override
   void dependencies() {
     switch (T) {
-      case Move():
+      case == Move:
         Get.put<MoveFormController>(MoveFormController());
         break;
-      case Spell():
+      case == Spell:
         Get.put<SpellFormController>(SpellFormController());
         break;
-      case Item():
+      case == Item:
         Get.put<ItemFormController>(ItemFormController());
         break;
-      case Note():
+      case == Note:
         Get.put<NoteFormController>(NoteFormController());
         break;
-      case CharacterClass():
+      case == CharacterClass:
         Get.put<CharacterClassFormController>(CharacterClassFormController());
         break;
-      case Race():
+      case == Race:
         Get.put<RaceFormController>(RaceFormController());
         break;
       default:

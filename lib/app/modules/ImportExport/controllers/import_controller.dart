@@ -46,27 +46,27 @@ class ImportController extends GetxController
 
   void _toggleImportList<T>(List<T> items, bool state) {
     switch (T) {
-      case Character():
+      case == Character:
         toImport.value!.characters = _toggleInList(
             toImport.value!.characters, items.cast<Character>(), state);
         break;
-      case Move():
+      case == Move:
         toImport.value!.moves =
             _toggleInList(toImport.value!.moves, items.cast<Move>(), state);
         break;
-      case Spell():
+      case == Spell:
         toImport.value!.spells =
             _toggleInList(toImport.value!.spells, items.cast<Spell>(), state);
         break;
-      case Item():
+      case == Item:
         toImport.value!.items =
             _toggleInList(toImport.value!.items, items.cast<Item>(), state);
         break;
-      case CharacterClass():
+      case == CharacterClass:
         toImport.value!.classes = _toggleInList(
             toImport.value!.classes, items.cast<CharacterClass>(), state);
         break;
-      case Race():
+      case == Race:
         toImport.value!.races =
             _toggleInList(toImport.value!.races, items.cast<Race>(), state);
         break;
@@ -93,17 +93,17 @@ class ImportController extends GetxController
   @override
   List<T> listByType<T extends WithMeta>() {
     switch (T) {
-      case Character():
+      case == Character:
         return characters as List<T>;
-      case Move():
+      case == Move:
         return moves as List<T>;
-      case Spell():
+      case == Spell:
         return spells as List<T>;
-      case Item():
+      case == Item:
         return items as List<T>;
-      case CharacterClass():
+      case == CharacterClass:
         return classes as List<T>;
-      case Race():
+      case == Race:
         return races as List<T>;
     }
     throw TypeError();
@@ -252,17 +252,17 @@ class ImportSelections {
 
   List<T> listByType<T>({required bool selected}) {
     switch (T) {
-      case Character():
+      case == Character:
         return (selected ? characters : allCharacters) as List<T>;
-      case Move():
+      case == Move:
         return (selected ? moves : allMoves) as List<T>;
-      case Spell():
+      case == Spell:
         return (selected ? spells : allSpells) as List<T>;
-      case Item():
+      case == Item:
         return (selected ? items : allItems) as List<T>;
-      case CharacterClass():
+      case == CharacterClass:
         return (selected ? classes : allClasses) as List<T>;
-      case Race():
+      case == Race:
         return (selected ? races : allRaces) as List<T>;
     }
     throw TypeError();

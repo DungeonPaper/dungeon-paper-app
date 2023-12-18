@@ -13,21 +13,21 @@ import 'package:dungeon_paper/app/modules/LibraryList/views/filters/spell_filter
 
 bool searchFor(Type t, dynamic object, String search) {
   switch (t) {
-    case CharacterClass():
+    case == CharacterClass:
       return CharacterClassFilters(search: search).filter(object);
-    case Item():
+    case == Item:
       return ItemFilters(search: search).filter(object);
-    case Move():
+    case == Move:
       return MoveFilters(classKey: null, search: search).filter(object);
-    case Spell():
+    case == Spell:
       return SpellFilters(classKey: null, search: search, level: null)
           .filter(object);
-    case Note():
+    case == Note:
       return NoteFilters(search: search).filter(object);
-    // case AbilityScore():
-    // case Character():
-    // case AlignmentValue():
-    case Race():
+    // case == AbilityScore:
+    // case == Character:
+    // case == AlignmentValue:
+    case == Race:
       return RaceFilters(classKey: null, search: search).filter(object);
   }
   throw TypeError();
@@ -35,21 +35,21 @@ bool searchFor(Type t, dynamic object, String search) {
 
 double getScoreFor(Type t, dynamic object, String search) {
   switch (t) {
-    case CharacterClass():
+    case == CharacterClass:
       return CharacterClassFilters(search: search).getScore(object);
-    case Item():
+    case == Item:
       return ItemFilters(search: search).getScore(object);
-    case Move():
+    case == Move:
       return MoveFilters(classKey: null, search: search).getScore(object);
-    case Spell():
+    case == Spell:
       return SpellFilters(classKey: null, search: search, level: null)
           .getScore(object);
-    case Note():
+    case == Note:
       return NoteFilters(search: search).getScore(object);
-    // case AbilityScore():
-    // case Character():
-    // case AlignmentValue():
-    // case Race():
+    // case == AbilityScore:
+    // case == Character:
+    // case == AlignmentValue:
+    // case == Race:
   }
   throw TypeError();
 }

@@ -106,7 +106,7 @@ class ListCard<T extends WithMeta, C extends ImportExportSelectionData>
 
   List<Widget> tagsByType(T entity) {
     switch (entity.runtimeType) {
-      case Character():
+      case == Character:
         final char = entity as Character;
         return [
           PrimaryChip(
@@ -118,7 +118,7 @@ class ListCard<T extends WithMeta, C extends ImportExportSelectionData>
             label: tr.character.header.level(char.stats.level),
           ),
         ];
-      case CharacterClass():
+      case == CharacterClass:
         final cls = entity as CharacterClass;
         return [
           PrimaryChip(
@@ -132,7 +132,7 @@ class ListCard<T extends WithMeta, C extends ImportExportSelectionData>
             label: [tr.characterClass.baseLoad, cls.load].join(' '),
           ),
         ];
-      case Move():
+      case == Move:
         final move = entity as Move;
         return [
           PrimaryChip(
@@ -143,7 +143,7 @@ class ListCard<T extends WithMeta, C extends ImportExportSelectionData>
             label: tr.moves.category.mediumName(move.category.name),
           ),
         ];
-      case Spell():
+      case == Spell:
         final spell = entity as Spell;
         return [
           PrimaryChip(
@@ -154,7 +154,7 @@ class ListCard<T extends WithMeta, C extends ImportExportSelectionData>
             label: tr.spells.spellLevel(spell.level),
           ),
         ];
-      case Race():
+      case == Race:
         final race = entity as Race;
         return [
           PrimaryChip(

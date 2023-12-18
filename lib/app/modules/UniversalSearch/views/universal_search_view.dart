@@ -134,7 +134,7 @@ class _CardByType extends StatelessWidget {
   Widget build(BuildContext context) {
     final row = _buildRow(context);
     switch (row.runtimeType) {
-      case Text():
+      case == Text:
         return _padded(row, const EdgeInsets.symmetric(vertical: 8));
     }
     return _padded(row);
@@ -142,41 +142,41 @@ class _CardByType extends StatelessWidget {
 
   StatelessWidget _buildRow(BuildContext context) {
     switch (result.runtimeType) {
-      case Move():
+      case == Move:
         return MoveCard(
           move: result,
           showStar: result.favorite,
           highlightWords: highlightWords,
           abilityScores: abilityScores,
         );
-      case Spell():
+      case == Spell:
         return SpellCard(
           spell: result,
           showStar: result.prepared,
           highlightWords: highlightWords,
           abilityScores: abilityScores,
         );
-      case Item():
+      case == Item:
         return ItemCard(
           item: result,
           showStar: result.equipped,
           hideCount: true,
           highlightWords: highlightWords,
         );
-      case CharacterClass():
+      case == CharacterClass:
         return CharacterClassCard(
           characterClass: result,
           showStar: false,
           highlightWords: highlightWords,
         );
-      case Race():
+      case == Race:
         return RaceCard(
           race: result,
           showStar: false,
           highlightWords: highlightWords,
           showClasses: true,
         );
-      case SearchSeparator():
+      case == SearchSeparator:
         return Text(
           result.text,
           style: Theme.of(context)

@@ -192,22 +192,22 @@ class Meta<DataType> with RepositoryServiceMixin {
   static Map<String, dynamic> toJsonFor(dynamic object) {
     final dyn = object as dynamic;
     switch (object.runtimeType) {
-      case AlignmentValue():
-      case Bio():
-      case SessionMark():
-      case CharacterClass():
-      case CharacterStats():
-      case Character():
-      case GearChoice():
-      case GearSelection():
-      case GearOption():
-      case Item():
-      case Monster():
-      case Move():
-      case Note():
-      case Race():
-      case Spell():
-      case dw.Tag():
+      case == AlignmentValue:
+      case == Bio:
+      case == SessionMark:
+      case == CharacterClass:
+      case == CharacterStats:
+      case == Character:
+      case == GearChoice:
+      case == GearSelection:
+      case == GearOption:
+      case == Item:
+      case == Monster:
+      case == Move:
+      case == Note:
+      case == Race:
+      case == Spell:
+      case == dw.Tag:
         return dyn.toJson();
     }
     throw TypeError();
@@ -231,15 +231,15 @@ class Meta<DataType> with RepositoryServiceMixin {
 
   static T copyObjectWithMeta<T extends WithMeta>(dynamic object, Meta? meta) {
     switch (object.runtimeType) {
-      case AlignmentValue():
-      case CharacterClass():
-      case Character():
-      case Item():
-      case Monster():
-      case Move():
-      case Note():
-      case Race():
-      case Spell():
+      case == AlignmentValue:
+      case == CharacterClass:
+      case == Character:
+      case == Item:
+      case == Monster:
+      case == Move:
+      case == Note:
+      case == Race:
+      case == Spell:
         return object.copyWithInherited(meta: meta) as T;
       default:
         throw UnsupportedError('Type ${object.runtimeType} not supported');
@@ -248,28 +248,28 @@ class Meta<DataType> with RepositoryServiceMixin {
 
   static storageKeyFor(Type t) {
     switch (t) {
-      case CharacterClass():
+      case == CharacterClass:
         return 'CharacterClasses';
-      case Character():
+      case == Character:
         return 'Characters';
-      case Item():
+      case == Item:
         return 'Items';
-      case Monster():
+      case == Monster:
         return 'Monsters';
-      case Move():
+      case == Move:
         return 'Moves';
-      case Spell():
+      case == Spell:
         return 'Spells';
-      case Race():
+      case == Race:
         return 'Races';
-      case Note():
+      case == Note:
         return 'Notes';
-      case dw.Tag():
+      case == dw.Tag:
         return 'Tags';
     }
   }
 
-  static typeFromString(String type) {
+  static typeFromString ==(String type{
     final map = {
       'AbilityScore': AbilityScore,
       'Campaign': Campaign,
@@ -311,20 +311,20 @@ class Meta<DataType> with RepositoryServiceMixin {
 
   static IconData genericIconFor(Type t) {
     switch (t) {
-      case Character():
+      case == Character:
         return Character.genericIcon;
-      case CharacterClass():
+      case == CharacterClass:
         return CharacterClass.genericIcon;
-      case AlignmentValue():
-      case Item():
+      case == AlignmentValue:
+      case == Item:
         return Item.genericIcon;
-      case Move():
+      case == Move:
         return Move.genericIcon;
-      case Note():
+      case == Note:
         return Note.genericIcon;
-      case Race():
+      case == Race:
         return Race.genericIcon;
-      case Spell():
+      case == Spell:
         return Spell.genericIcon;
     }
     throw TypeError();
