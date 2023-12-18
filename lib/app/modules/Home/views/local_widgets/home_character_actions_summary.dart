@@ -36,6 +36,7 @@ class HomeCharacterActionsSummary extends GetView<CharacterService> {
                   label: tr.home.summary.load
                       .label(char.currentLoad, char.maxLoad),
                   tooltip: tr.home.summary.load.tooltip,
+                  backgroundColor: _loadColor(char.currentLoad, char.maxLoad),
                   onPressed: () => Get.dialog(
                     LoadDialog(
                       load: char.stats.load,
@@ -85,4 +86,15 @@ class HomeCharacterActionsSummary extends GetView<CharacterService> {
       ),
     );
   }
+
+  Color? _loadColor(int currentLoad, int maxLoad) {
+    final perc = currentLoad.toDouble() / maxLoad.toDouble();
+    if (perc > 0.75) {
+      return Colors.red;
+    } else if (perc > 0.5) {
+      return Colors.orange;
+    }
+    return null;
+  }
 }
+
