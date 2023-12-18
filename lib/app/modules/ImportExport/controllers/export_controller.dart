@@ -7,12 +7,12 @@ import 'package:dungeon_paper/app/data/models/meta.dart';
 import 'package:dungeon_paper/app/data/models/move.dart';
 import 'package:dungeon_paper/app/data/models/race.dart';
 import 'package:dungeon_paper/app/data/models/spell.dart';
-import 'package:dungeon_paper/app/data/services/character_service.dart';
 import 'package:dungeon_paper/app/data/services/repository_service.dart';
 import 'package:dungeon_paper/core/utils/list_utils.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 
+import '../../../data/services/character_provider.dart';
 import '../platforms/platform_export.dart';
 import 'import_export_controller.dart';
 
@@ -20,12 +20,12 @@ import 'import_export_controller.dart';
 class ExportController extends GetxController
     with
         GetSingleTickerProviderStateMixin,
-        CharacterServiceMixin,
+        CharacterProviderMixin,
         RepositoryServiceMixin
     implements ImportExportSelectionData {
   final toExport = ExportSelections().obs;
 
-  List<Character> get characters => characterService.allAsList;
+  List<Character> get characters => characterProvider.allAsList;
   List<Move> get moves => repo.my.moves.values.toList();
   List<Spell> get spells => repo.my.spells.values.toList();
   List<Item> get items => repo.my.items.values.toList();

@@ -1,6 +1,7 @@
 import 'package:flutter/widgets.dart';
 
 import 'package:get/get.dart';
+import 'package:provider/provider.dart';
 
 import '../data/models/character_class.dart';
 import '../data/models/item.dart';
@@ -62,6 +63,7 @@ import '../modules/Settings/views/settings_view.dart';
 import '../modules/StartingGearForm/bindings/starting_gear_form_binding.dart';
 import '../modules/StartingGearForm/views/starting_gear_form_view.dart';
 import '../modules/UniversalSearch/bindings/universal_search_binding.dart';
+import '../modules/UniversalSearch/controllers/universal_search_controller.dart';
 import '../modules/UniversalSearch/views/universal_search_view.dart';
 import '../widgets/forms/character_class_form.dart';
 import '../widgets/forms/item_form.dart';
@@ -299,7 +301,10 @@ class AppPages {
     ),
     GetPage(
       name: Routes.universalSearch,
-      page: () => UniversalSearchView(),
+      page: () => ChangeNotifierProvider(
+        create: (_) => UniversalSearchController(),
+        child: UniversalSearchView(),
+      ),
       binding: UniversalSearchBinding(),
       opaque: false,
       fullscreenDialog: true,
@@ -363,3 +368,4 @@ class CustomTransitions {
     return CustomCircularRevealTransition(offset: offset, alignment: alignment);
   }
 }
+

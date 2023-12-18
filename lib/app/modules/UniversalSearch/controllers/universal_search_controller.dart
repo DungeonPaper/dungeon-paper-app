@@ -3,7 +3,7 @@ import 'package:dungeon_paper/app/data/models/item.dart';
 import 'package:dungeon_paper/app/data/models/move.dart';
 import 'package:dungeon_paper/app/data/models/race.dart';
 import 'package:dungeon_paper/app/data/models/spell.dart';
-import 'package:dungeon_paper/app/data/services/character_service.dart';
+import 'package:dungeon_paper/app/data/services/character_provider.dart';
 import 'package:dungeon_paper/app/data/services/repository_service.dart';
 import 'package:dungeon_paper/app/model_utils/model_search.dart';
 import 'package:dungeon_paper/app/modules/LibraryList/views/filters/character_class_filters.dart';
@@ -14,7 +14,6 @@ import 'package:dungeon_paper/app/modules/LibraryList/views/filters/spell_filter
 import 'package:dungeon_paper/core/utils/list_utils.dart';
 import 'package:dungeon_paper/i18n.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 
 enum SourceType {
   character,
@@ -22,24 +21,29 @@ enum SourceType {
   builtInLibrary,
 }
 
-class UniversalSearchController extends GetxController
-    with RepositoryServiceMixin, CharacterServiceMixin {
-  final _search = TextEditingController(text: '').obs;
+class UniversalSearchController extends ChangeNotifier
+    with RepositoryServiceMixin, CharacterProviderMixin {
+  final _search = TextEditingController(text: '');
 
-  TextEditingController get search => _search.value;
+  TextEditingController get search => _search;
 
-  bool get hasCharacter => charService.all.isNotEmpty;
+  bool get hasCharacter => charProvider.all.isNotEmpty;
 
   final enabledSources = <SourceType>{
     SourceType.character,
     SourceType.myLibrary,
     SourceType.builtInLibrary
-  }.obs;
+  };
+
+  @override
+  UniversalSearchController() {
+    search.addListener(_update);
+  }
 
   Map<Type, List<Iterable>> get sources => {
         Move: <Iterable<Move>>[
           sourceEnabled(SourceType.character)
-              ? charService.maybeCurrent?.moves ?? []
+              ? charProvider.maybeCurrent?.moves ?? []
               : [],
           sourceEnabled(SourceType.myLibrary) ? repo.my.moves.values : [],
           sourceEnabled(SourceType.builtInLibrary)
@@ -48,7 +52,7 @@ class UniversalSearchController extends GetxController
         ],
         Spell: <Iterable<Spell>>[
           sourceEnabled(SourceType.character)
-              ? charService.maybeCurrent?.spells ?? []
+              ? charProvider.maybeCurrent?.spells ?? []
               : [],
           sourceEnabled(SourceType.myLibrary) ? repo.my.spells.values : [],
           sourceEnabled(SourceType.builtInLibrary)
@@ -57,7 +61,7 @@ class UniversalSearchController extends GetxController
         ],
         Item: <Iterable<Item>>[
           sourceEnabled(SourceType.character)
-              ? charService.maybeCurrent?.items ?? []
+              ? charProvider.maybeCurrent?.items ?? []
               : [],
           sourceEnabled(SourceType.myLibrary) ? repo.my.items.values : [],
           sourceEnabled(SourceType.builtInLibrary)
@@ -79,21 +83,16 @@ class UniversalSearchController extends GetxController
       };
 
   void toggleSource(SourceType type, [bool? value]) {
-    final value0 = value ?? !sourceEnabled(type);
-    if (value0) {
+    final effectiveValue = value ?? !sourceEnabled(type);
+    if (effectiveValue) {
       enabledSources.add(type);
     } else {
       enabledSources.remove(type);
     }
+    notifyListeners();
   }
 
   bool sourceEnabled(SourceType type) => enabledSources.contains(type);
-
-  @override
-  void onInit() {
-    super.onInit();
-    search.addListener(_update);
-  }
 
   List<T> getSource<T>() => flatten(sources[T] as List<List<T>>);
 
@@ -140,6 +139,7 @@ class UniversalSearchController extends GetxController
       return result;
     });
 
+
     return Future.value(map.toList());
   }
 
@@ -150,13 +150,13 @@ class UniversalSearchController extends GetxController
   }
 
   @override
-  void onClose() {
-    super.onClose();
+  void dispose() {
+    super.dispose();
     search.removeListener(_update);
   }
 
   void _update() {
-    _search.refresh();
+    notifyListeners();
   }
 }
 
@@ -165,3 +165,4 @@ class SearchSeparator {
 
   SearchSeparator(this.text);
 }
+

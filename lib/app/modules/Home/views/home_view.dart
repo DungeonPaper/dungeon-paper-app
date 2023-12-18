@@ -1,4 +1,5 @@
 import 'package:dungeon_paper/app/data/models/character.dart';
+import 'package:dungeon_paper/app/data/services/character_provider.dart';
 import 'package:dungeon_paper/app/data/services/loading_service.dart';
 import 'package:dungeon_paper/app/data/services/user_service.dart';
 import 'package:dungeon_paper/app/modules/Home/views/home_app_bar.dart';
@@ -25,6 +26,8 @@ class HomeView extends GetView<CharacterService>
 
   @override
   Widget build(BuildContext context) {
+    final pro = CharacterProvider.of(context);
+    debugPrint('provider: $pro');
     return Scaffold(
       appBar: const HomeAppBar(),
       body: Obx(

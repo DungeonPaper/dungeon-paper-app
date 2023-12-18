@@ -7,6 +7,7 @@ import 'package:dungeon_paper/app/data/models/item.dart';
 import 'package:dungeon_paper/app/data/models/move.dart';
 import 'package:dungeon_paper/app/data/models/race.dart';
 import 'package:dungeon_paper/app/data/models/spell.dart';
+import 'package:dungeon_paper/app/data/services/character_provider.dart';
 import 'package:dungeon_paper/app/widgets/atoms/search_field.dart';
 import 'package:dungeon_paper/app/widgets/cards/character_class_card.dart';
 import 'package:dungeon_paper/app/widgets/cards/item_card.dart';
@@ -17,10 +18,11 @@ import 'package:dungeon_paper/app/widgets/chips/primary_chip.dart';
 import 'package:dungeon_paper/i18n.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:provider/provider.dart';
 
 import '../controllers/universal_search_controller.dart';
 
-class UniversalSearchView extends GetView<UniversalSearchController> {
+class UniversalSearchView extends StatelessWidget {
   UniversalSearchView({super.key});
 
   final bucket = PageStorageBucket();
@@ -32,50 +34,51 @@ class UniversalSearchView extends GetView<UniversalSearchController> {
       child: Scaffold(
         backgroundColor: Colors.black54,
         appBar: AppBar(
-          title: SearchField(
-            controller: controller.search,
-            autofocus: true,
-          ),
+          title: Consumer<UniversalSearchController>(
+              builder: (context, controller, _) {
+            return SearchField(
+              controller: controller.search,
+              autofocus: true,
+            );
+          }),
           centerTitle: true,
           backgroundColor: Colors.transparent,
           foregroundColor: Colors.white,
           automaticallyImplyLeading: true,
         ),
-        body: Obx(
-          () => PageStorage(
+        body: Consumer2<CharacterProvider, UniversalSearchController>(
+          builder: (context, charProvider, controller, _) => PageStorage(
             bucket: bucket,
             child: Column(
               children: [
-                Obx(
-                  () => Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Wrap(
-                      spacing: 8,
-                      runSpacing: 0,
-                      crossAxisAlignment: WrapCrossAlignment.center,
-                      children: [
-                        Text(
-                          '${tr.search.searchIn}: ',
-                          style: Theme.of(context)
-                              .textTheme
-                              .bodyMedium!
-                              .copyWith(color: Colors.white),
-                        ),
-                        if (controller.hasCharacter)
-                          _FilterChip(
-                            label: tr.entity(tn(Character)),
-                            sourceType: SourceType.character,
-                          ),
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Wrap(
+                    spacing: 8,
+                    runSpacing: 0,
+                    crossAxisAlignment: WrapCrossAlignment.center,
+                    children: [
+                      Text(
+                        '${tr.search.searchIn}: ',
+                        style: Theme.of(context)
+                            .textTheme
+                            .bodyMedium!
+                            .copyWith(color: Colors.white),
+                      ),
+                      if (controller.hasCharacter)
                         _FilterChip(
-                          label: tr.myLibrary.title,
-                          sourceType: SourceType.myLibrary,
+                          label: tr.entity(tn(Character)),
+                          sourceType: SourceType.character,
                         ),
-                        _FilterChip(
-                          label: tr.playbook.title,
-                          sourceType: SourceType.builtInLibrary,
-                        ),
-                      ],
-                    ),
+                      _FilterChip(
+                        label: tr.myLibrary.title,
+                        sourceType: SourceType.myLibrary,
+                      ),
+                      _FilterChip(
+                        label: tr.playbook.title,
+                        sourceType: SourceType.builtInLibrary,
+                      ),
+                    ],
                   ),
                 ),
                 FutureBuilder<List<dynamic>>(
@@ -196,7 +199,7 @@ class _CardByType extends StatelessWidget {
       );
 }
 
-class _FilterChip extends GetView<UniversalSearchController> {
+class _FilterChip extends StatelessWidget {
   const _FilterChip({
     // ignore: unused_element
     super.key,
@@ -209,6 +212,8 @@ class _FilterChip extends GetView<UniversalSearchController> {
 
   @override
   Widget build(BuildContext context) {
+    final UniversalSearchController controller =
+        Provider.of(context, listen: false);
     final theme = Theme.of(context);
     final selected = controller.sourceEnabled(sourceType);
 
@@ -216,9 +221,16 @@ class _FilterChip extends GetView<UniversalSearchController> {
       icon: selected ? const Icon(Icons.check) : null,
       label: label,
       backgroundColor: selected ? null : theme.disabledColor,
-      onPressed: onPressed,
+      onPressed: onPressed(context),
     );
   }
 
-  void onPressed() => controller.toggleSource(sourceType);
+  void Function() onPressed(BuildContext context) {
+    return () {
+      final UniversalSearchController controller =
+          Provider.of(context, listen: false);
+      controller.toggleSource(sourceType);
+    };
+  }
 }
+

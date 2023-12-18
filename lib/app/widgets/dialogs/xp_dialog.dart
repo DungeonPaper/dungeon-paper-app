@@ -1,6 +1,6 @@
 import 'package:dungeon_paper/app/data/models/character_stats.dart';
 import 'package:dungeon_paper/app/data/models/session_marks.dart';
-import 'package:dungeon_paper/app/data/services/character_service.dart';
+import 'package:dungeon_paper/app/data/services/character_provider.dart';
 import 'package:dungeon_paper/app/widgets/atoms/custom_expansion_panel.dart';
 import 'package:dungeon_paper/app/widgets/atoms/help_text.dart';
 import 'package:dungeon_paper/app/widgets/atoms/number_text_field.dart';
@@ -12,7 +12,7 @@ import 'package:dungeon_paper/core/utils/math_utils.dart';
 import 'package:dungeon_paper/i18n.dart';
 import 'package:dungeon_world_data/dungeon_world_data.dart' as dw;
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
+import 'package:provider/provider.dart';
 
 enum ValueChange { positive, neutral, negative }
 
@@ -23,7 +23,7 @@ class EXPDialog extends StatefulWidget {
   State<EXPDialog> createState() => _EXPDialogState();
 }
 
-class _EXPDialogState extends State<EXPDialog> with CharacterServiceMixin {
+class _EXPDialogState extends State<EXPDialog> with CharacterProviderMixin {
   late TextEditingController overrideXp;
   late bool manualExpExpanded;
   late TextEditingController overrideLevel;
@@ -57,8 +57,8 @@ class _EXPDialogState extends State<EXPDialog> with CharacterServiceMixin {
       title: Text(
           !hasOverrides ? tr.xp.dialog.title : tr.xp.dialog.overridingTitle),
       content: SingleChildScrollView(
-        child: Obx(
-          () {
+        child: Consumer<CharacterProvider>(
+          builder: (context, charProvider, child) {
             final level = maxXp - 7;
 
             return Column(
@@ -223,7 +223,7 @@ class _EXPDialogState extends State<EXPDialog> with CharacterServiceMixin {
       updatedLevel++;
     }
 
-    charService.updateCharacter(
+    charProvider.updateCharacter(
       char.copyWith(
         stats: char.stats.copyWith(
           currentXp: updatedXp,
@@ -244,14 +244,14 @@ class _EXPDialogState extends State<EXPDialog> with CharacterServiceMixin {
   }
 
   void close() {
-    Get.back();
+    Navigator.of(context).pop();
   }
 
   void _toggleEosMark(SessionMark eos, bool? val) {
     setState(() {
       eosMarks = updateByKey(
           eosMarks, [eos.copyWithInherited(completed: val ?? !eos.completed)]);
-      charService.updateCharacter(char.copyWith(
+      charProvider.updateCharacter(char.copyWith(
           sessionMarks: upsertByKey(char.sessionMarks, eosMarks)));
     });
   }

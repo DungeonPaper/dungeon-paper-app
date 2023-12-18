@@ -1,5 +1,6 @@
 import 'package:dungeon_paper/app/routes/app_pages.dart';
 import 'package:dungeon_paper/app/data/services/services.dart';
+import 'package:dungeon_paper/core/global_keys.dart';
 import 'package:dungeon_paper/core/multi_platform_scroll_behavior.dart';
 import 'package:dungeon_paper/core/pref_keys.dart';
 import 'package:dungeon_paper/core/remote_config.dart';
@@ -13,8 +14,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:get/route_manager.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:provider/provider.dart';
 import 'package:sentry_flutter/sentry_flutter.dart';
 
+import 'app/data/services/character_provider.dart';
 import 'app/themes/themes.dart';
 import 'firebase_options.dart';
 
@@ -67,12 +70,16 @@ class DungeonPaperApp extends StatelessWidget {
       themeCollection: themeCollection,
       defaultThemeId: prefs.getInt(PrefKeys.selectedThemeId) ?? defaultTheme,
       builder: (context, value) {
-        return GetMaterialApp(
-          scrollBehavior: MultiPlatformScrollBehavior(),
-          title: tr.app.name,
-          theme: value,
-          initialRoute: AppPages.initial,
-          getPages: AppPages.routes,
+        return ChangeNotifierProvider(
+          create: (_) => CharacterProvider(),
+          child: GetMaterialApp(
+            scrollBehavior: MultiPlatformScrollBehavior(),
+            title: tr.app.name,
+            theme: value,
+            key: appGlobalKey,
+            initialRoute: AppPages.initial,
+            getPages: AppPages.routes,
+          ),
         );
       },
     );
