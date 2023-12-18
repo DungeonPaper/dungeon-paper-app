@@ -133,7 +133,7 @@ class UniversalSearchController extends GetxController
 
       final result = e.index < entries.length
           ? [
-              SearchSeparator(tr.entityPlural(list.first.tn(runtimeType))),
+              SearchSeparator(tr.entityPlural(tn(list.first.runtimeType))),
               ...list
             ]
           : list;
