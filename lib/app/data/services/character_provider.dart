@@ -18,6 +18,11 @@ class CharacterProvider extends ChangeNotifier
   static CharacterProvider of(BuildContext context, {bool listen = false}) =>
       Provider.of(context, listen: listen);
 
+  static Widget consumer(
+    Widget Function(BuildContext, CharacterProvider, Widget?) builder,
+  ) =>
+      Consumer<CharacterProvider>(builder: builder);
+
   final all = <String, Character>{};
   String? _currentKey;
   final _pageController = PageController(initialPage: 1, viewportFraction: 1.1);

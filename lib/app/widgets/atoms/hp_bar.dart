@@ -1,10 +1,9 @@
-import 'package:dungeon_paper/app/data/services/character_service.dart';
+import 'package:dungeon_paper/app/data/services/character_provider.dart';
 import 'package:dungeon_paper/app/widgets/atoms/buffer_progress_bar.dart';
 import 'package:dungeon_paper/i18n.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 
-class HpBar extends StatelessWidget with CharacterServiceMixin {
+class HpBar extends StatelessWidget {
   const HpBar({
     super.key,
     this.currentHp,
@@ -16,8 +15,8 @@ class HpBar extends StatelessWidget with CharacterServiceMixin {
 
   @override
   Widget build(BuildContext context) {
-    return Obx(() {
-      final char = maybeChar;
+    return CharacterProvider.consumer((context, controller, _) {
+      final char = controller.maybeCurrent;
       final curValue = currentHp ?? char?.currentHp;
       final maxValue = maxHp ?? char?.maxHp;
       final curPercent =

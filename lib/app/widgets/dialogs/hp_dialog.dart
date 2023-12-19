@@ -1,13 +1,13 @@
 import 'dart:math';
 
-import 'package:dungeon_paper/app/data/services/character_service.dart';
+import 'package:dungeon_paper/app/data/models/character.dart';
+import 'package:dungeon_paper/app/data/services/character_provider.dart';
 import 'package:dungeon_paper/app/widgets/atoms/hp_bar.dart';
 import 'package:dungeon_paper/app/widgets/atoms/number_text_field.dart';
 import 'package:dungeon_paper/app/widgets/molecules/dialog_controls.dart';
 import 'package:dungeon_paper/app/widgets/molecules/value_change_slider.dart';
 import 'package:dungeon_paper/i18n.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 
 enum ValueChange { positive, neutral, negative }
 
@@ -18,10 +18,12 @@ class HPDialog extends StatefulWidget {
   State<HPDialog> createState() => _HPDialogState();
 }
 
-class _HPDialogState extends State<HPDialog> with CharacterServiceMixin {
+class _HPDialogState extends State<HPDialog> {
   late int overrideHP;
   late bool shouldOverrideMaxHP;
   late TextEditingController overrideMaxHp;
+  CharacterProvider get charProvider => CharacterProvider.of(context);
+  Character get char => charProvider.current;
 
   @override
   void initState() {
@@ -39,8 +41,8 @@ class _HPDialogState extends State<HPDialog> with CharacterServiceMixin {
     return AlertDialog(
       title: Text(tr.hp.dialog.title),
       content: SingleChildScrollView(
-        child: Obx(
-          () => Column(
+        child: CharacterProvider.consumer(
+          (context, controller, _) => Column(
             mainAxisSize: MainAxisSize.min,
             children: [
               SizedBox(
@@ -119,7 +121,7 @@ class _HPDialogState extends State<HPDialog> with CharacterServiceMixin {
   }
 
   void save() {
-    charService.updateCharacter(
+    charProvider.updateCharacter(
       char.copyWith(
         stats: char.stats
             .copyWith(currentHp: overrideHP)
@@ -130,6 +132,7 @@ class _HPDialogState extends State<HPDialog> with CharacterServiceMixin {
   }
 
   void close() async {
-    Get.back();
+    Navigator.of(context).pop();
   }
 }
+

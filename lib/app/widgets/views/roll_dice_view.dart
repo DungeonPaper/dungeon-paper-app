@@ -1,7 +1,7 @@
 import 'dart:async';
 import 'dart:ui';
 
-import 'package:dungeon_paper/app/data/services/character_service.dart';
+import 'package:dungeon_paper/app/data/services/character_provider.dart';
 import 'package:dungeon_paper/app/model_utils/dice_utils.dart';
 import 'package:dungeon_paper/app/themes/colors.dart';
 import 'package:dungeon_paper/app/widgets/atoms/advanced_floating_action_button.dart';
@@ -12,7 +12,6 @@ import 'package:dungeon_paper/core/utils/math_utils.dart';
 import 'package:dungeon_paper/i18n.dart';
 import 'package:dungeon_world_data/dungeon_world_data.dart' as dw;
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 
 class RollDiceView extends StatefulWidget {
   final List<dw.Dice> dice;
@@ -40,7 +39,7 @@ class _RollDiceViewState extends State<RollDiceView>
   late ScrollController scrollController;
   var results = <dw.DiceRoll>[];
 
-  CharacterService get charService => Get.find();
+  CharacterProvider get charService => CharacterProvider.of(context);
   int get totalResult => results.fold(
       0, (previousValue, element) => previousValue + element.total);
   List<dw.Dice> get flat => dw.Dice.flatten(dice.value);

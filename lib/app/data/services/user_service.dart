@@ -3,7 +3,7 @@ import 'dart:async';
 import 'package:dungeon_paper/app/data/models/user.dart';
 import 'package:dungeon_paper/app/data/models/user_settings.dart';
 import 'package:dungeon_paper/app/data/services/auth_service.dart';
-import 'package:dungeon_paper/app/data/services/character_service.dart';
+import 'package:dungeon_paper/app/data/services/character_provider.dart';
 import 'package:dungeon_paper/app/data/services/loading_service.dart';
 import 'package:dungeon_paper/app/data/services/repository_service.dart';
 import 'package:dungeon_paper/app/modules/Migration/controllers/migration_controller.dart';
@@ -25,7 +25,7 @@ class UserService extends GetxService
     with
         RepositoryServiceMixin,
         AuthServiceMixin,
-        CharacterServiceMixin,
+        CharacterProviderMixin,
         LoadingServiceMixin {
   final _current = User.guest().obs;
 
@@ -54,7 +54,7 @@ class UserService extends GetxService
         .getDocument('Data', email!);
     await _setUserAfterMigration(user, dbUser);
     _registerUserListener();
-    charService.registerCharacterListener();
+    charProvider.registerCharacterListener();
 
     if (shouldLoadRepo) {
       loadMyRepo();
@@ -72,14 +72,14 @@ class UserService extends GetxService
     StorageHandler.instance.currentDelegate = 'local';
     StorageHandler.instance.setCollectionPrefix(null);
     await loadMyRepo(ignoreCache: true);
-    charService.registerCharacterListener();
+    charProvider.registerCharacterListener();
     loadingService.loadingUser = false;
     loadingService.afterFirstLoad = !loadingService.loadingCharacters;
   }
 
   void logout() async {
     _clearUserListener();
-    charService.clear();
+    charProvider.clear();
     _current.value = User.guest();
     await authService.logout();
   }

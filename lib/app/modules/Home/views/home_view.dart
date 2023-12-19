@@ -15,23 +15,20 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 // import '../../../widgets/atoms/debug_menu.dart';
-import '../../../data/services/character_service.dart';
 import 'home_character_view.dart';
 import 'home_fab.dart';
 import 'home_nav_bar.dart';
 
-class HomeView extends GetView<CharacterService>
-    with UserServiceMixin, LoadingServiceMixin, CharacterServiceMixin {
+class HomeView extends StatelessWidget
+    with UserServiceMixin, LoadingServiceMixin, CharacterProviderMixin {
   const HomeView({super.key});
 
   @override
   Widget build(BuildContext context) {
-    final pro = CharacterProvider.of(context);
-    debugPrint('provider: $pro');
     return Scaffold(
       appBar: const HomeAppBar(),
-      body: Obx(
-        () {
+      body: CharacterProvider.consumer(
+        (context, controller, _) {
           const children = [
             HomeCharacterActionsView(),
             HomeCharacterView(),
@@ -40,7 +37,7 @@ class HomeView extends GetView<CharacterService>
 
           return isLoading
               ? const HomeLoaderView()
-              : maybeChar != null
+              : controller.maybeCurrent != null
                   ? PageView(
                       controller: controller.pageController,
                       children: children.map(_fractionalSizedBox).toList(),
@@ -48,20 +45,24 @@ class HomeView extends GetView<CharacterService>
                   : const HomeEmptyState();
         },
       ),
-      floatingActionButton: Obx(
-          () => maybeChar != null ? const HomeFAB() : const SizedBox.shrink()),
-      bottomNavigationBar: Obx(
-        () => maybeChar != null
-            ? HomeNavBar(pageController: controller.pageController)
+      floatingActionButton: CharacterProvider.consumer(
+        (context, controller, _) =>
+            maybeChar != null ? const HomeFAB() : const SizedBox.shrink(),
+      ),
+      bottomNavigationBar: CharacterProvider.consumer(
+        (context, controller, _) => maybeChar != null
+            ? CharacterProvider.consumer((context, controller, _) =>
+                HomeNavBar(pageController: controller.pageController))
             : const SizedBox.shrink(),
       ),
     );
   }
 
-  PageControllerFractionalBox _fractionalSizedBox(Widget child) =>
-      PageControllerFractionalBox(
-        controller: controller.pageController,
-        child: child,
+  Widget _fractionalSizedBox(Widget child) => CharacterProvider.consumer(
+        (context, controller, _) => PageControllerFractionalBox(
+          controller: controller.pageController,
+          child: child,
+        ),
       );
 
   bool get isLoading {
@@ -150,3 +151,4 @@ class HomeEmptyState extends StatelessWidget with UserServiceMixin {
     );
   }
 }
+

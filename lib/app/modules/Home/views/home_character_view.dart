@@ -1,4 +1,4 @@
-import 'package:dungeon_paper/app/data/services/character_service.dart';
+import 'package:dungeon_paper/app/data/services/character_provider.dart';
 import 'package:dungeon_paper/app/model_utils/dice_utils.dart';
 import 'package:dungeon_paper/app/modules/Home/views/local_widgets/home_character_extras.dart';
 import 'package:dungeon_paper/app/themes/button_themes.dart';
@@ -12,32 +12,33 @@ import 'package:dungeon_paper/core/utils/builder_utils.dart';
 import 'package:dungeon_paper/core/utils/math_utils.dart';
 import 'package:dungeon_paper/i18n.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 import 'local_widgets/home_character_dynamic_cards.dart';
 import 'local_widgets/home_character_header_view.dart';
 import 'local_widgets/home_character_hp_xp_view.dart';
 
-class HomeCharacterView extends GetView<CharacterService>
-    with HomeCharacterPaddingMixin {
+class HomeCharacterView extends StatelessWidget with HomeCharacterPaddingMixin {
   const HomeCharacterView({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return Obx(
-      () {
+    return CharacterProvider.consumer(
+      (context, controller, _) {
         final char = controller.maybeCurrent;
         if (char == null) {
           return Container();
         }
         return HomeCharacterLayout(
-          leftCol: _buildLeftCol(context),
+          leftCol: _buildLeftCol(context, controller),
           rightCol: const HomeCharacterDynamicCards(),
         );
       },
     );
   }
 
-  List<Widget> _buildLeftCol(BuildContext context) {
+  List<Widget> _buildLeftCol(
+    BuildContext context,
+    CharacterProvider controller,
+  ) {
     final char = controller.current;
     final abilityScores = char.abilityScores.stats;
 
@@ -71,8 +72,9 @@ class HomeCharacterView extends GetView<CharacterService>
               // visualDensity: VisualDensity.compact,
               label: char.damageDice.toString(),
               tooltip: tr.character.data.damageDice,
-              onPressed: () => Get.dialog(
-                DamageDiceDialog(
+              onPressed: () => showDialog(
+                context: context,
+                builder: (context) => DamageDiceDialog(
                   damage: char.stats.damageDice,
                   defaultDamage: char.defaultDamageDice,
                   abilityScores: char.abilityScores,
@@ -90,8 +92,9 @@ class HomeCharacterView extends GetView<CharacterService>
               icon: const Icon(DwIcons.armor),
               // visualDensity: VisualDensity.compact,
               label: char.armor.toString(),
-              onPressed: () => Get.dialog(
-                ArmorDialog(
+              onPressed: () => showDialog(
+                context: context,
+                builder: (context) => ArmorDialog(
                   armor: char.stats.armor,
                   defaultArmor: char.defaultArmor,
                   onChanged: (armor) => controller.updateCharacter(
@@ -221,3 +224,4 @@ mixin HomeCharacterPaddingMixin {
         child: child,
       );
 }
+

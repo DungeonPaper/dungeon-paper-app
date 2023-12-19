@@ -5,10 +5,8 @@ import 'package:dungeon_paper/app/widgets/dialogs/xp_dialog.dart';
 import 'package:dungeon_paper/app/widgets/dialogs/hp_dialog.dart';
 import 'package:flutter/material.dart';
 
-import 'package:get/get.dart';
-
-class HomeCharacterHpExpView extends GetView<CharacterService> {
-  const HomeCharacterHpExpView({Key? key}) : super(key: key);
+class HomeCharacterHpExpView extends StatelessWidget {
+  const HomeCharacterHpExpView({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -17,27 +15,34 @@ class HomeCharacterHpExpView extends GetView<CharacterService> {
         Expanded(
           child: InkWell(
             splashColor: Theme.of(context).splashColor,
+            borderRadius: BorderRadius.circular(10),
+            onTap: () => showDialog(
+              context: context,
+              builder: (context) => const HPDialog(),
+            ),
             child: const Padding(
               padding: EdgeInsets.all(4),
               child: HpBar(),
             ),
-            borderRadius: BorderRadius.circular(10),
-            onTap: () => Get.dialog(const HPDialog()),
           ),
         ),
         const SizedBox(width: 16),
         Expanded(
           child: InkWell(
             splashColor: Theme.of(context).splashColor,
+            borderRadius: BorderRadius.circular(10),
+            onTap: () => showDialog(
+              context: context,
+              builder: (context) => const EXPDialog(),
+            ),
             child: const Padding(
               padding: EdgeInsets.all(4),
               child: ExpBar(),
             ),
-            borderRadius: BorderRadius.circular(10),
-            onTap: () => Get.dialog(const EXPDialog()),
           ),
         ),
       ],
     );
   }
 }
+

@@ -1,5 +1,5 @@
 import 'package:dungeon_paper/app/data/models/note.dart';
-import 'package:dungeon_paper/app/data/services/character_service.dart';
+import 'package:dungeon_paper/app/data/services/character_provider.dart';
 import 'package:dungeon_paper/app/model_utils/character_utils.dart';
 import 'package:dungeon_paper/app/model_utils/model_pages.dart';
 import 'package:dungeon_paper/app/widgets/atoms/advanced_floating_action_button.dart';
@@ -13,24 +13,24 @@ class HomeFAB extends StatefulWidget {
   State<HomeFAB> createState() => _HomeFABState();
 }
 
-class _HomeFABState extends State<HomeFAB> with CharacterServiceMixin {
+class _HomeFABState extends State<HomeFAB> with CharacterProviderMixin {
   late bool inPageRange;
 
   @override
   void initState() {
     super.initState();
     inPageRange = getPageIsInRange();
-    charService.pageController.addListener(_refresh);
+    charProvider.pageController.addListener(_refresh);
   }
 
   @override
   void dispose() {
-    charService.pageController.removeListener(_refresh);
+    charProvider.pageController.removeListener(_refresh);
     super.dispose();
   }
 
   bool getPageIsInRange() {
-    final distance = (charService.page - pageNum.toDouble()).abs();
+    final distance = (charProvider.page - pageNum.toDouble()).abs();
     return distance <= 0.5;
   }
 
@@ -61,7 +61,7 @@ class _HomeFABState extends State<HomeFAB> with CharacterServiceMixin {
           onPressed: inPageRange
               ? () => ModelPages.openNotePage(
                     note: null,
-                    onSave: (note) => charService.updateCharacter(
+                    onSave: (note) => charProvider.updateCharacter(
                       CharacterUtils.addByType<Note>(char, [note]),
                     ),
                   )
