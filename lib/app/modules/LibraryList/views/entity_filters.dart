@@ -27,7 +27,7 @@ class EntityFiltersView<T, F extends EntityFilters<T>> extends StatelessWidget {
   final F emptyFilters;
   final List<Widget> Function(BuildContext context, F filters)?
       filterWidgetsBuilder;
-  final service = Get.find<RepositoryService>();
+  final service = Get.find<RepositoryProvider>();
   final void Function(F) onChange;
   final TextEditingController searchController;
   final Iterable<Widget> leading;

@@ -1,3 +1,4 @@
+import 'package:dungeon_paper/app/data/models/ability_scores.dart';
 import 'package:dungeon_paper/app/data/models/alignment.dart';
 import 'package:dungeon_paper/app/data/models/bio.dart';
 import 'package:dungeon_paper/app/data/models/character.dart';
@@ -7,40 +8,40 @@ import 'package:dungeon_paper/app/data/models/gear_choice.dart';
 import 'package:dungeon_paper/app/data/models/gear_selection.dart';
 import 'package:dungeon_paper/app/data/models/item.dart';
 import 'package:dungeon_paper/app/data/models/move.dart';
-import 'package:dungeon_paper/app/data/models/ability_scores.dart';
 import 'package:dungeon_paper/app/data/models/race.dart';
 import 'package:dungeon_paper/app/data/models/session_marks.dart';
 import 'package:dungeon_paper/app/data/models/spell.dart';
-import 'package:dungeon_paper/app/data/models/user.dart';
 import 'package:dungeon_paper/app/data/services/repository_service.dart';
-import 'package:dungeon_paper/app/data/services/user_service.dart';
 import 'package:dungeon_paper/core/utils/uuid.dart';
-import 'package:get/get.dart';
 import 'package:dungeon_world_data/dungeon_world_data.dart' as dw;
+import 'package:flutter/widgets.dart';
+import 'package:provider/provider.dart';
 
-class CreateCharacterController extends GetxController {
-  final name = ''.obs;
-  final avatarUrl = ''.obs;
-  final characterClass = Rx<CharacterClass?>(null);
-  final abilityScores = AbilityScores.dungeonWorld(
-          dex: 10, str: 10, wis: 10, con: 10, intl: 10, cha: 10)
-      .obs;
-  final startingGear = <GearSelection>[].obs;
-  final moves = <Move>[].obs;
-  final spells = <Spell>[].obs;
-  final alignment = Rx<AlignmentValue?>(null);
-  final race = Rx<Race?>(null);
+class CreateCharacterController extends ChangeNotifier {
+  var name = '';
+  var avatarUrl = '';
+  CharacterClass? characterClass;
+  var abilityScores = AbilityScores.dungeonWorldAll(10);
+  var startingGear = <GearSelection>[];
+  var moves = <Move>[];
+  var spells = <Spell>[];
+  AlignmentValue? alignment;
+  Race? race;
 
-  final repo = Get.find<RepositoryService>();
-  final dirty = false.obs;
+  var dirty = false;
 
-  User get user => Get.find<UserService>().current;
+  static CreateCharacterController of(BuildContext context) =>
+      Provider.of<CreateCharacterController>(context, listen: false);
+  static Widget consumer(
+    Widget Function(BuildContext, CreateCharacterController, Widget?) builder,
+  ) =>
+      Consumer<CreateCharacterController>(builder: builder);
 
   bool get isValid => [
         name.isNotEmpty,
-        characterClass.value != null,
-        alignment.value != null,
-        race.value != null,
+        characterClass != null,
+        alignment != null,
+        race != null,
       ].every((element) => element == true);
 
   List<Item> get items =>
@@ -49,23 +50,23 @@ class CreateCharacterController extends GetxController {
   double get coins => GearChoice.selectionToCoins(startingGear);
 
   void setBasicInfo(String name, String avatar) {
-    this.name.value = name;
-    avatarUrl.value = avatar;
+    this.name = name;
+    avatarUrl = avatar;
     setDirty();
   }
 
-  void setClass(CharacterClass cls) {
-    characterClass.value = cls;
+  void setClass(BuildContext context, CharacterClass cls) {
+    characterClass = cls;
     setStartingGear(
       cls.gearChoices
           .fold([], (all, cur) => [...all, ...cur.preselectedGearSelections]),
     );
-    addStartingMoves();
+    addStartingMoves(context);
     setDirty();
   }
 
   void setAbilityScores(AbilityScores stats) {
-    abilityScores.value = stats;
+    abilityScores = stats;
     setDirty();
   }
 
@@ -73,13 +74,13 @@ class CreateCharacterController extends GetxController {
     if (selected == null) {
       return;
     }
-    alignment.value = AlignmentValue.empty(type: selected).copyWith(
+    alignment = AlignmentValue.empty(type: selected).copyWith(
       description: alignments.byType(selected),
     );
     setDirty();
   }
 
-  void setMovesSpells(List<Move> moves, List<Spell> spells) {
+  void setMovesAndSpells(List<Move> moves, List<Spell> spells) {
     this.moves.clear();
     this.spells.clear();
     this.moves.addAll(moves.map((e) => e.copyWithInherited(favorite: true)));
@@ -87,7 +88,7 @@ class CreateCharacterController extends GetxController {
   }
 
   void setDirty() {
-    dirty.value = true;
+    dirty = true;
   }
 
   void setStartingGear(List<GearSelection> selections) {
@@ -95,13 +96,13 @@ class CreateCharacterController extends GetxController {
     startingGear.addAll(selections);
   }
 
-  void addStartingMoves() {
+  void addStartingMoves(BuildContext context) {
+    final repo = RepositoryProvider.of(context);
     moves.clear();
     moves.addAll(
       [...repo.builtIn.moves.values, ...repo.my.moves.values]
-          .where((m) =>
-              (m.classKeys.contains(characterClass.value!.reference) &&
-                  m.category == MoveCategory.starting))
+          .where((m) => (m.classKeys.contains(characterClass!.reference) &&
+              m.category == MoveCategory.starting))
           .map(
             // favorite: move.category != MoveCategory.basic
             (move) => Move.fromDwMove(move, favorite: true),
@@ -111,22 +112,22 @@ class CreateCharacterController extends GetxController {
   }
 
   Character getAsCharacter() => Character.empty().copyWith(
-        displayName: name.value,
-        avatarUrl: avatarUrl.value,
-        characterClass: characterClass.value,
-        abilityScores: abilityScores.value,
+        displayName: name,
+        avatarUrl: avatarUrl,
+        characterClass: characterClass,
+        abilityScores: abilityScores,
         moves: moves,
         spells: spells,
         items: items,
         coins: coins,
-        race: race.value,
+        race: race,
         stats: CharacterStats(
           level: 1,
-          currentHp: characterClass.value!.hp + abilityScores.value.conMod!,
+          currentHp: characterClass!.hp + abilityScores.conMod!,
           currentXp: 0,
         ),
         sessionMarks: [
-          ...(characterClass.value?.bonds
+          ...(characterClass?.bonds
                   .map((bond) => SessionMark.bond(
                       description: bond, completed: false, key: uuid()))
                   .toList() ??
@@ -136,7 +137,8 @@ class CreateCharacterController extends GetxController {
         bio: Bio(
           looks: '',
           description: '',
-          alignment: alignment.value ?? AlignmentValue.empty(),
+          alignment: alignment ?? AlignmentValue.empty(),
         ),
       );
 }
+

@@ -148,29 +148,27 @@ class MoveForm extends GetView<MoveFormController> with RepositoryServiceMixin {
 
 class MoveFormController
     extends LibraryEntityFormController<Move, MoveFormArguments> {
-  final _name = TextEditingController().obs;
-  final _description = TextEditingController().obs;
-  final _explanation = TextEditingController().obs;
-  final _dice = ValueNotifier<List<dw.Dice>>([]).obs;
-  final _tags = ValueNotifier<List<dw.Tag>>([]).obs;
-  final _category = ValueNotifier(MoveCategory.basic).obs;
-  final _classKeys = ValueNotifier<List<dw.EntityReference>>([]).obs;
+  final _name = TextEditingController();
+  final _description = TextEditingController();
+  final _explanation = TextEditingController();
+  final _dice = ValueNotifier<List<dw.Dice>>([]);
+  final _tags = ValueNotifier<List<dw.Tag>>([]);
+  final _category = ValueNotifier(MoveCategory.basic);
+  final _classKeys = ValueNotifier<List<dw.EntityReference>>([]);
 
-  TextEditingController get name => _name.value;
-  TextEditingController get description => _description.value;
-  TextEditingController get explanation => _explanation.value;
-  ValueNotifier<List<dw.Dice>> get dice => _dice.value;
-  ValueNotifier<List<dw.Tag>> get tags => _tags.value;
-  ValueNotifier<MoveCategory> get category => _category.value;
-  ValueNotifier<List<dw.EntityReference>> get classKeys => _classKeys.value;
+  TextEditingController get name => _name;
+  TextEditingController get description => _description;
+  TextEditingController get explanation => _explanation;
+  ValueNotifier<List<dw.Dice>> get dice => _dice;
+  ValueNotifier<List<dw.Tag>> get tags => _tags;
+  ValueNotifier<MoveCategory> get category => _category;
+  ValueNotifier<List<dw.EntityReference>> get classKeys => _classKeys;
 
   @override
-  List<Rx<ValueNotifier>> get fields =>
+  List<ValueNotifier> get fields =>
       [_name, _description, _explanation, _dice, _tags, _category, _classKeys];
 
-  @override
-  void onInit() {
-    super.onInit();
+  MoveFormController(super.context) {
     name.text = args.entity?.name ?? '';
     description.text = args.entity?.description ?? '';
     explanation.text = args.entity?.explanation ?? '';
@@ -217,3 +215,4 @@ class MoveFormArguments extends LibraryEntityFormArguments<Move> {
     required super.formContext,
   });
 }
+

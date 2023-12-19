@@ -21,7 +21,7 @@ class MovesLibraryListView
     with CharacterServiceMixin {
   const MovesLibraryListView({super.key});
 
-  RepositoryService get service => controller.repo.value;
+  RepositoryProvider get service => controller.repo.value;
 
   @override
   Widget build(BuildContext context) {

@@ -4,27 +4,27 @@ import 'package:dungeon_paper/app/widgets/atoms/confirm_exit_view.dart';
 import 'package:dungeon_paper/i18n.dart';
 import 'package:flutter/material.dart';
 
-import 'package:get/get.dart';
 import 'package:intl/intl.dart';
+import 'package:provider/provider.dart';
 
 import '../controllers/starting_gear_form_controller.dart';
 
-class StartingGearFormView extends GetView<StartingGearFormController> {
+class StartingGearFormView extends StatelessWidget {
   const StartingGearFormView({
     super.key,
   });
 
   @override
   Widget build(BuildContext context) {
-    return Obx(
-      () => ConfirmExitView(
-        dirty: controller.dirty.value,
+    return Consumer<StartingGearFormController>(
+      builder: (context, controller, _) => ConfirmExitView(
+        dirty: controller.dirty,
         child: Scaffold(
           appBar: AppBar(
             title: Text(tr.generic.selectEntity(tr.entity(tn(GearSelection)))),
           ),
           floatingActionButton: AdvancedFloatingActionButton.extended(
-            onPressed: _save,
+            onPressed: () => _save(context),
             label: Text(tr.generic.save),
             icon: const Icon(Icons.save),
           ),
@@ -91,8 +91,9 @@ class StartingGearFormView extends GetView<StartingGearFormController> {
     );
   }
 
-  _save() {
+  _save(BuildContext context) {
+    final controller = Provider.of<StartingGearFormController>(context, listen: false);
     controller.onChanged(controller.selectedOptions);
-    Get.back();
+    Navigator.of(context).pop();
   }
 }

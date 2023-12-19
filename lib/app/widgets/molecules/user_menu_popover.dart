@@ -18,7 +18,7 @@ import '../atoms/user_avatar.dart';
 
 class UserMenuPopover extends GetView<CharacterService>
     with AuthServiceMixin, UserServiceMixin {
-  UserMenuPopover({super.key});
+  const UserMenuPopover({super.key});
 
   @override
   Widget build(BuildContext context) {

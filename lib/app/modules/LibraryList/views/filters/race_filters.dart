@@ -22,7 +22,7 @@ class RaceFiltersView extends StatelessWidget {
 
   final RaceFilters filters;
   final FiltersGroup group;
-  final repo = Get.find<RepositoryService>();
+  final repo = Get.find<RepositoryProvider>();
   final void Function(RaceFilters) onChange;
   final TextEditingController searchController;
 

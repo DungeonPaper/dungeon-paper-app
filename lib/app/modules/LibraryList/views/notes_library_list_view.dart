@@ -19,7 +19,7 @@ class NotesLibraryListView
     Key? key,
   }) : super(key: key);
 
-  RepositoryService get service => controller.repo.value;
+  RepositoryProvider get service => controller.repo.value;
   Character get character => controller.chars.value.current;
 
   @override

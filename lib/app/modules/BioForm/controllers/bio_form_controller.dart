@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:dungeon_world_data/dungeon_world_data.dart' as dw;
 
-class BioFormController extends ChangeNotifier with CharacterProviderMixin {
+class BioFormController extends ChangeNotifier {
   var bioDesc = TextEditingController();
   var looks = TextEditingController();
   var alignmentName = 'good';
@@ -13,9 +13,10 @@ class BioFormController extends ChangeNotifier with CharacterProviderMixin {
   var bonds = <TextEditingController>[];
   var dirty = false;
 
-  BioFormController() {
+  BioFormController(BuildContext context) {
     final BioFormArguments args = Get.arguments;
-    final char = args.character ?? this.char;
+    final charProvider = CharacterProvider.of(context);
+    final char = args.character ?? charProvider.current;
     bioDesc = TextEditingController(text: char.bio.description);
     looks = TextEditingController(text: char.bio.looks);
     alignmentName = char.bio.alignment.key;
@@ -27,7 +28,9 @@ class BioFormController extends ChangeNotifier with CharacterProviderMixin {
   }
 
 
-  void save() {
+  void save(BuildContext context) {
+    final charProvider = CharacterProvider.of(context);
+    final char = charProvider.current;
     charProvider.updateCharacter(char.copyWith(
       bio: char.bio.copyWith(
         description: bioDesc.value.text,

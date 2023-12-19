@@ -5,28 +5,10 @@ import 'package:get/get.dart';
 
 import 'import_controller.dart';
 
-class ImportExportController extends GetxController
-    with GetSingleTickerProviderStateMixin {
-  late final Rx<TabController> tab;
-
-  @override
-  void onInit() {
-    super.onInit();
-    tab = (TabController(length: 2, vsync: this)..addListener(_refresh)).obs;
-  }
-
-  @override
-  void dispose() {
-    super.dispose();
-    tab.value.removeListener(_refresh);
-  }
-
+// TODO remove?
+class ImportExportController extends ChangeNotifier {
   void Function()? get doExport => Get.find<ExportController>().getDoExport();
   void Function()? get doImport => Get.find<ImportController>().getDoImport();
-
-  void _refresh() {
-    tab.refresh();
-  }
 }
 
 abstract class ImportExportSelectionData {
@@ -36,3 +18,4 @@ abstract class ImportExportSelectionData {
 
   List<T> listByType<T extends WithMeta>();
 }
+

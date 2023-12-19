@@ -205,16 +205,14 @@ class LibraryListView<T extends WithMeta, F extends EntityFilters<T>>
                       controller.saveCustomItem(controller.storageKey, item)
                   : null,
               onDelete: group == FiltersGroup.my
-                  ? (item) => deleteDialog.confirm(
+                  ? (item) => awaitDeleteConfirmation(
                         context,
-                        DeleteDialogOptions(
-                          entityName: item.displayName,
-                          entityKind: tr.entity(tn(item.runtimeType)),
-                        ),
+                        item.displayName,
                         () => controller.deleteCustomItem(
                           controller.storageKey,
                           item,
                         ),
+                        item.runtimeType,
                       )
                   : null,
               highlightWords: [controller.search[group]!.value.text]);
@@ -238,3 +236,4 @@ class LibraryListView<T extends WithMeta, F extends EntityFilters<T>>
         },
       );
 }
+

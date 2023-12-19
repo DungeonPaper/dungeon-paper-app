@@ -12,12 +12,11 @@ import 'package:dungeon_paper/core/platform_helper.dart';
 import 'package:dungeon_paper/core/utils/content_generators/character_name_generator.dart';
 import 'package:dungeon_paper/i18n.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
+import 'package:provider/provider.dart';
 
 import '../controllers/basic_info_form_controller.dart';
 
-class BasicInfoFormView extends GetView<BasicInfoFormController>
-    with UserServiceMixin {
+class BasicInfoFormView extends StatelessWidget with UserServiceMixin {
   const BasicInfoFormView({
     super.key,
   });
@@ -25,16 +24,16 @@ class BasicInfoFormView extends GetView<BasicInfoFormController>
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-    return Obx(
-      () => ConfirmExitView(
-        dirty: controller.dirty.value,
+    return Consumer<BasicInfoFormController>(
+      builder: (context, controller, _) => ConfirmExitView(
+        dirty: controller.dirty,
         child: Scaffold(
           appBar: AppBar(
             title: Text(tr.basicInfo.title),
             centerTitle: true,
           ),
           floatingActionButton: AdvancedFloatingActionButton.extended(
-            onPressed: _save,
+            onPressed: () => _save(context),
             label: Text(tr.generic.save),
             icon: const Icon(Icons.save),
           ),
@@ -46,7 +45,7 @@ class BasicInfoFormView extends GetView<BasicInfoFormController>
               children: [
                 TextFormField(
                   autovalidateMode: AutovalidateMode.onUserInteraction,
-                  controller: controller.name.value,
+                  controller: controller.name,
                   textInputAction: TextInputAction.next,
                   validator: (val) =>
                       val == null || val.isEmpty ? 'Cannot be empty' : null,
@@ -64,7 +63,7 @@ class BasicInfoFormView extends GetView<BasicInfoFormController>
                       ),
                       icon: const Icon(DwIcons.dice_d6_numbered),
                       onPressed: () {
-                        controller.name.value.text =
+                        controller.name.text =
                             CharacterNameGenerator().generate();
                       },
                     ),
@@ -137,7 +136,8 @@ class BasicInfoFormView extends GetView<BasicInfoFormController>
                           Hyperlink.textSpan(
                             context,
                             tr.basicInfo.form.photo.guest.label,
-                            onTap: () => Get.toNamed(Routes.login),
+                            onTap: () =>
+                                Navigator.of(context).pushNamed(Routes.login),
                           ),
                           TextSpan(text: tr.basicInfo.form.photo.guest.suffix),
                         ],
@@ -162,7 +162,7 @@ class BasicInfoFormView extends GetView<BasicInfoFormController>
                       : Text(tr.basicInfo.form.photo.orSeparator),
                 ),
                 TextFormField(
-                  controller: controller.avatarUrl.value,
+                  controller: controller.avatarUrl,
                   textInputAction: TextInputAction.done,
                   enabled: !controller.isUploading,
                   // onChanged: (val) => updateControllers(),
@@ -181,9 +181,12 @@ class BasicInfoFormView extends GetView<BasicInfoFormController>
     );
   }
 
-  _save() {
+  _save(BuildContext context) {
+    final controller =
+        Provider.of<BasicInfoFormController>(context, listen: false);
     controller.onChanged(
         controller.name.value.text, controller.avatarUrl.value.text);
-    Get.back();
+    Navigator.of(context).pop();
   }
 }
+

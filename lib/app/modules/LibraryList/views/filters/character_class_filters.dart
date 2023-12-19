@@ -21,7 +21,7 @@ class CharacterClassFiltersView extends StatelessWidget {
 
   final CharacterClassFilters filters;
   final FiltersGroup group;
-  final repo = Get.find<RepositoryService>();
+  final repo = Get.find<RepositoryProvider>();
   final void Function(CharacterClassFilters) onChange;
   final TextEditingController searchController;
 

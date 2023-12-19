@@ -30,7 +30,7 @@ class DiceForm extends StatefulWidget {
 }
 
 class _DiceFormState extends State<DiceForm> {
-  final RepositoryService repo = Get.find();
+  final RepositoryProvider repo = Get.find();
   // late int amount;
   late final TextEditingController amount;
   late int sides;

@@ -72,13 +72,13 @@ class DungeonPaperApp extends StatelessWidget {
       builder: (context, value) {
         return ChangeNotifierProvider(
           create: (_) => CharacterProvider(),
-          child: GetMaterialApp(
+          child: MaterialApp(
             scrollBehavior: MultiPlatformScrollBehavior(),
             title: tr.app.name,
             theme: value,
             key: appGlobalKey,
             initialRoute: AppPages.initial,
-            getPages: AppPages.routes,
+            routes: AppPages.routes,
           ),
         );
       },

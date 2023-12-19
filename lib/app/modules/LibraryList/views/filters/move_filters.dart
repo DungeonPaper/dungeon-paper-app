@@ -22,7 +22,7 @@ class MoveFiltersView extends StatelessWidget {
 
   final MoveFilters filters;
   final FiltersGroup group;
-  final repo = Get.find<RepositoryService>();
+  final repo = Get.find<RepositoryProvider>();
   final void Function(MoveFilters) onChange;
   final TextEditingController searchController;
 

@@ -78,24 +78,22 @@ class CharacterClassForm extends GetView<CharacterClassFormController> {
 
 class CharacterClassFormController extends LibraryEntityFormController<
     CharacterClass, CharacterClassFormArguments> {
-  final _name = TextEditingController().obs;
-  final _description = TextEditingController().obs;
-  final _damageDice = ValueNotifier<List<dw.Dice>>([dw.Dice.d4]).obs;
-  final _hp = TextEditingController().obs;
-  final _load = TextEditingController().obs;
+  final _name = TextEditingController();
+  final _description = TextEditingController();
+  final _damageDice = ValueNotifier<List<dw.Dice>>([dw.Dice.d4]);
+  final _hp = TextEditingController();
+  final _load = TextEditingController();
 
   @override
-  List<Rx<ValueNotifier>> get fields => [_name, _description, _damageDice];
+  List<ValueNotifier> get fields => [_name, _description, _damageDice];
 
-  TextEditingController get name => _name.value;
-  TextEditingController get description => _description.value;
-  ValueNotifier<List<dw.Dice>> get damageDice => _damageDice.value;
-  TextEditingController get hp => _hp.value;
-  TextEditingController get load => _load.value;
+  TextEditingController get name => _name;
+  TextEditingController get description => _description;
+  ValueNotifier<List<dw.Dice>> get damageDice => _damageDice;
+  TextEditingController get hp => _hp;
+  TextEditingController get load => _load;
 
-  @override
-  void onInit() {
-    super.onInit();
+CharacterClassFormController(super.context) {
     name.text = args.entity?.name ?? '';
     description.text = args.entity?.description ?? '';
     damageDice.value = asList(args.entity?.damageDice ?? dw.Dice.d4);

@@ -16,7 +16,7 @@ class GroupSortMenu extends StatelessWidget {
   final int totalItemCount;
   final List<MenuEntry<String>> leading;
   final List<MenuEntry<String>> trailing;
-  final void Function(int oldIndex, int newIndex) onReorder;
+  final void Function(BuildContext context, int oldIndex, int newIndex) onReorder;
 
   @override
   Widget build(BuildContext context) {
@@ -29,14 +29,14 @@ class GroupSortMenu extends StatelessWidget {
           value: 'up',
           icon: const Icon(Icons.move_up),
           label: Text(tr.sort.moveUp),
-          onSelect: () => onReorder(index, index - 1),
+          onSelect: () => onReorder(context, index, index - 1),
         ),
         MenuEntry(
           disabled: index >= totalItemCount - 1,
           value: 'down',
           icon: const Icon(Icons.move_down),
           label: Text(tr.sort.moveDown),
-          onSelect: () => onReorder(index, index + 1),
+          onSelect: () => onReorder(context, index, index + 1),
         ),
         ...trailing,
       ],

@@ -22,7 +22,7 @@ class SpellFiltersView extends StatelessWidget {
 
   final SpellFilters filters;
   final FiltersGroup group;
-  final repo = Get.find<RepositoryService>();
+  final repo = Get.find<RepositoryProvider>();
   final void Function(SpellFilters) onChange;
   final TextEditingController searchController;
 

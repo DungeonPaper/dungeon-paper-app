@@ -1,31 +1,27 @@
 import 'package:dungeon_paper/app/data/models/ability_scores.dart';
 import 'package:dungeon_paper/core/utils/list_utils.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 
-class AbilityScoresFormController extends GetxController {
-  final dirty = false.obs;
+class AbilityScoresFormController extends ChangeNotifier {
+  var dirty = false;
 
-  final Rx<AbilityScores> abilityScores = AbilityScores.dungeonWorld(
-          dex: 10, str: 10, wis: 10, con: 10, intl: 10, cha: 10)
-      .obs;
+  AbilityScores abilityScores = AbilityScores.dungeonWorldAll(10);
   final textControllers = <String, TextEditingController>{};
   late final void Function(AbilityScores abilityScores) onChanged;
 
-  AbilityScoresFormController();
-
-  @override
-  void onReady() {
-    super.onReady();
-    final AbilityScoresFormArguments args = Get.arguments;
+  AbilityScoresFormController(BuildContext context) {
+    final arguments = ModalRoute.of(context)?.settings.arguments as dynamic;
+    assert(arguments is AbilityScoresFormArguments);
+    final AbilityScoresFormArguments args =
+        arguments as AbilityScoresFormArguments;
     if (args.abilityScores != null) {
-      abilityScores.value = args.abilityScores!;
+      abilityScores = args.abilityScores!;
     }
     for (final ctrl in textControllers.values) {
       ctrl.removeListener(validate);
     }
     textControllers.clear();
-    for (final stat in abilityScores.value.stats) {
+    for (final stat in abilityScores.stats) {
       textControllers[stat.key] =
           TextEditingController(text: stat.value.toString())
             ..addListener(validate);
@@ -34,16 +30,17 @@ class AbilityScoresFormController extends GetxController {
   }
 
   void validate() {
-    dirty.value = true;
-    abilityScores.value = abilityScores.value.copyWithStatValues({
-      for (final stat in abilityScores.value.stats)
+    dirty = true;
+    abilityScores = abilityScores.copyWithStatValues({
+      for (final stat in abilityScores.stats)
         stat.key: int.tryParse(textControllers[stat.key]!.text) ?? stat.value
     });
+    notifyListeners();
   }
 
   void updateStat(AbilityScore stat) {
-    abilityScores.value = abilityScores.value
-        .copyWith(stats: updateByKey(abilityScores.value.stats, [stat]));
+    abilityScores =
+        abilityScores.copyWith(stats: updateByKey(abilityScores.stats, [stat]));
     textControllers[stat.key] ??=
         TextEditingController(text: stat.value.toString())
           ..addListener(validate);
@@ -51,8 +48,8 @@ class AbilityScoresFormController extends GetxController {
   }
 
   void removeStat(AbilityScore stat) {
-    abilityScores.value = abilityScores.value
-        .copyWith(stats: removeByKey(abilityScores.value.stats, [stat]));
+    abilityScores =
+        abilityScores.copyWith(stats: removeByKey(abilityScores.stats, [stat]));
     textControllers.remove(stat.key);
   }
 
@@ -60,11 +57,18 @@ class AbilityScoresFormController extends GetxController {
     if (textControllers.containsKey(abilityScore.key)) {
       return;
     }
-    abilityScores.value = abilityScores.value
-        .copyWith(stats: [...abilityScores.value.stats, abilityScore]);
+    abilityScores =
+        abilityScores.copyWith(stats: [...abilityScores.stats, abilityScore]);
     textControllers[abilityScore.key] =
         TextEditingController(text: abilityScore.value.toString())
           ..addListener(validate);
+  }
+
+  void onReorder(int oldIndex, int newIndex) {
+    abilityScores = abilityScores.copyWith(
+      stats: reorder(abilityScores.stats, oldIndex, newIndex),
+    );
+    notifyListeners();
   }
 }
 
@@ -77,3 +81,4 @@ class AbilityScoresFormArguments {
     required this.onChanged,
   });
 }
+

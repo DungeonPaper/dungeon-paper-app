@@ -40,7 +40,7 @@ class LoginView extends GetView<LoginController> {
                         if (PlatformHelper.canUseGoogleSignIn) ...[
                           ElevatedButton.icon(
                             onPressed: !controller.loadingService.loadingUser
-                                ? controller.loginWithGoogle
+                                ? () =>controller.loginWithGoogle(context)
                                 : null,
                             label: Text(
                               controller.isLogin
@@ -57,7 +57,7 @@ class LoginView extends GetView<LoginController> {
                         if (PlatformHelper.canUseAppleSignIn) ...[
                           ElevatedButton.icon(
                             onPressed: !controller.loadingService.loadingUser
-                                ? controller.loginWithApple
+                                ? () => controller.loginWithApple(context)
                                 : null,
                             label: Text(
                               controller.isLogin
@@ -156,8 +156,8 @@ class LoginView extends GetView<LoginController> {
                           ElevatedButton.icon(
                             onPressed: controller.valid
                                 ? controller.isLogin
-                                    ? controller.loginWithPassword
-                                    : controller.signUp
+                                    ? () => controller.loginWithPassword(context)
+                                    : () => controller.signUp(context)
                                 : null,
                             label: Text(
                               controller.isLogin

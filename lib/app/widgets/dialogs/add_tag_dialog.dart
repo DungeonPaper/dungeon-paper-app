@@ -21,7 +21,7 @@ class AddTagDialog extends StatefulWidget {
 }
 
 class _AddTagDialogState extends State<AddTagDialog> {
-  final RepositoryService repo = Get.find();
+  final RepositoryProvider repo = Get.find();
   late final TextEditingController name;
   late final TextEditingController desc;
   late final TextEditingController value;

@@ -18,7 +18,7 @@ class CharacterClassesLibraryListView extends GetView<
     LibraryListController<CharacterClass, CharacterClassFilters>> {
   const CharacterClassesLibraryListView({super.key});
 
-  RepositoryService get service => controller.repo.value;
+  RepositoryProvider get service => controller.repo.value;
   Character get char => controller.chars.value.current;
 
   @override

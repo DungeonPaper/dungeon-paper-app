@@ -52,24 +52,22 @@ class NoteForm extends GetView<NoteFormController> with RepositoryServiceMixin {
 
 class NoteFormController
     extends LibraryEntityFormController<Note, NoteFormArguments> {
-  final _title = TextEditingController().obs;
-  final _description = TextEditingController().obs;
-  final _category = TextEditingController().obs;
-  final _dice = ValueNotifier<List<dw.Dice>>([]).obs;
-  final _tags = ValueNotifier<List<dw.Tag>>([]).obs;
+  final _title = TextEditingController();
+  final _description = TextEditingController();
+  final _category = TextEditingController();
+  final _dice = ValueNotifier<List<dw.Dice>>([]);
+  final _tags = ValueNotifier<List<dw.Tag>>([]);
 
-  TextEditingController get title => _title.value;
-  TextEditingController get description => _description.value;
-  TextEditingController get category => _category.value;
-  ValueNotifier<List<dw.Tag>> get tags => _tags.value;
+  TextEditingController get title => _title;
+  TextEditingController get description => _description;
+  TextEditingController get category => _category;
+  ValueNotifier<List<dw.Tag>> get tags => _tags;
 
   @override
-  List<Rx<ValueNotifier>> get fields =>
+  List<ValueNotifier> get fields =>
       [_title, _description, _category, _dice, _tags];
 
-  @override
-  void onInit() {
-    super.onInit();
+NoteFormController(super.context) {
     debugPrint('NoteFormController onInit, ${args.entity?.description ?? ''}');
     title.text = args.entity?.title ?? '';
     description.text = args.entity?.description ?? '';

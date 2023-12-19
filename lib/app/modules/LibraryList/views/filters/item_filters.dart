@@ -18,7 +18,7 @@ class ItemFiltersView extends StatelessWidget {
   });
 
   final ItemFilters filters;
-  final service = Get.find<RepositoryService>();
+  final service = Get.find<RepositoryProvider>();
   final void Function(ItemFilters) onChange;
   final TextEditingController searchController;
 

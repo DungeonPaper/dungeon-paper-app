@@ -1,5 +1,4 @@
 import 'package:dungeon_paper/app/data/models/alignment.dart';
-import 'package:dungeon_paper/app/data/services/character_provider.dart';
 import 'package:dungeon_paper/app/modules/BioForm/controllers/bio_form_controller.dart';
 import 'package:dungeon_paper/app/widgets/atoms/advanced_floating_action_button.dart';
 import 'package:dungeon_paper/app/widgets/atoms/confirm_exit_view.dart';
@@ -9,7 +8,7 @@ import 'package:dungeon_paper/i18n.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-class BioFormView extends StatelessWidget with CharacterProviderMixin {
+class BioFormView extends StatelessWidget {
   const BioFormView({super.key});
 
   @override
@@ -99,7 +98,7 @@ class BioFormView extends StatelessWidget with CharacterProviderMixin {
   void Function() _save(BuildContext context) {
     return () {
       final controller = Provider.of<BioFormController>(context, listen: false);
-      controller.save();
+      controller.save(context);
       Navigator.of(context).pop();
     };
   }

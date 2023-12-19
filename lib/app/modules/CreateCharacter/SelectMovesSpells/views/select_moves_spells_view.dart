@@ -8,14 +8,13 @@ import 'package:dungeon_paper/app/widgets/atoms/confirm_exit_view.dart';
 import 'package:dungeon_paper/app/widgets/cards/move_card.dart';
 import 'package:dungeon_paper/app/widgets/cards/spell_card.dart';
 import 'package:dungeon_paper/app/widgets/menus/entity_edit_menu.dart';
-import 'package:dungeon_paper/core/utils/list_utils.dart';
 import 'package:dungeon_paper/i18n.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
+import 'package:provider/provider.dart';
 
 import '../controllers/select_moves_spells_controller.dart';
 
-class SelectMovesSpellsView extends GetView<SelectMovesSpellsController> {
+class SelectMovesSpellsView extends StatelessWidget {
   const SelectMovesSpellsView({
     super.key,
   });
@@ -23,38 +22,38 @@ class SelectMovesSpellsView extends GetView<SelectMovesSpellsController> {
   @override
   Widget build(BuildContext context) {
     var titleStyle = Theme.of(context).textTheme.titleLarge;
-    return ConfirmExitView(
-      dirty: controller.dirty.value,
-      child: Scaffold(
-        appBar: AppBar(
-          title: Text(
-              tr.generic.selectEntity(tr.createCharacter.movesSpells.title)),
-          centerTitle: true,
-        ),
-        floatingActionButton: AdvancedFloatingActionButton.extended(
-          onPressed: _save,
-          label: Text(tr.generic.save),
-          icon: const Icon(Icons.save),
-        ),
-        body: SingleChildScrollView(
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              // MOVES TITLE
-              Obx(() => Padding(
-                    padding:
-                        const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-                    child: Text(
-                        tr.entityCountNum(
-                          tn(Move),
-                          controller.moves.length,
-                        ),
-                        style: titleStyle),
-                  )),
-              // MOVES CARDS
-              Obx(
-                () => ListView(
+    return Consumer<SelectMovesSpellsController>(
+      builder: (context, controller, _) => ConfirmExitView(
+        dirty: controller.dirty,
+        child: Scaffold(
+          appBar: AppBar(
+            title: Text(
+                tr.generic.selectEntity(tr.createCharacter.movesSpells.title)),
+            centerTitle: true,
+          ),
+          floatingActionButton: AdvancedFloatingActionButton.extended(
+            onPressed: () => _save(context),
+            label: Text(tr.generic.save),
+            icon: const Icon(Icons.save),
+          ),
+          body: SingleChildScrollView(
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                // MOVES TITLE
+                Padding(
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                  child: Text(
+                      tr.entityCountNum(
+                        tn(Move),
+                        controller.moves.length,
+                      ),
+                      style: titleStyle),
+                ),
+                // MOVES CARDS
+                ListView(
                   shrinkWrap: true,
                   padding: const EdgeInsets.all(8),
                   physics: const NeverScrollableScrollPhysics(),
@@ -68,63 +67,58 @@ class SelectMovesSpellsView extends GetView<SelectMovesSpellsController> {
                               actions: [
                                 EntityEditMenu(
                                   onEdit: () => ModelPages.openMovePage(
-                                    abilityScores:
-                                        controller.abilityScores.value,
+                                    abilityScores: controller.abilityScores,
                                     move: move,
-                                    onSave: (move) => controller.moves.value =
-                                        updateByKey(controller.moves, [move]),
+                                    onSave: controller.updateMove,
                                   ),
-                                  onDelete: () => controller.moves.value =
-                                      removeByKey(controller.moves, [move]),
+                                  onDelete: () => controller.deleteMove(move),
                                 ),
                               ],
                             ),
                           ))
                       .toList(),
                 ),
-              ),
-              // ADD MOVES
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 8),
-                child: SizedBox(
-                  height: 48,
-                  child: OutlinedButton.icon(
-                    style: ButtonThemes.primaryOutlined(context),
-                    onPressed: () => ModelPages.openMovesList(
-                      character: Character.empty().copyWith(
-                        characterClass: controller.characterClass.value,
+                // ADD MOVES
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 8),
+                  child: SizedBox(
+                    height: 48,
+                    child: OutlinedButton.icon(
+                      style: ButtonThemes.primaryOutlined(context),
+                      onPressed: () => ModelPages.openMovesList(
+                        character: Character.empty().copyWith(
+                          characterClass: controller.characterClass,
+                        ),
+                        preSelections: controller.moves,
+                        category: MoveCategory.advanced1,
+                        onSelected: (moves) {
+                          controller.addMoves(
+                            moves.map(
+                              (m) => m.copyWithInherited(favorite: true),
+                            ),
+                          );
+                        },
                       ),
-                      preSelections: controller.moves,
-                      category: MoveCategory.advanced1,
-                      onSelected: (moves) {
-                        controller.dirty.value = true;
-                        controller.moves.value = addByKey(
-                          controller.moves,
-                          moves.map((m) => m.copyWithInherited(favorite: true)),
-                        );
-                      },
+                      label:
+                          Text(tr.generic.addEntity(tr.entityPlural(tn(Move)))),
+                      icon: const Icon(Icons.add),
                     ),
-                    label:
-                        Text(tr.generic.addEntity(tr.entityPlural(tn(Move)))),
-                    icon: const Icon(Icons.add),
                   ),
                 ),
-              ),
-              // SPELLS TITLE
-              Obx(() => Padding(
-                    padding:
-                        const EdgeInsets.symmetric(horizontal: 16, vertical: 8)
-                            .copyWith(top: 24),
-                    child: Text(
-                        tr.entityCount(
-                          tn(Spell),
-                          controller.spells.length,
-                        ),
-                        style: titleStyle),
-                  )),
-              // SPELL CARDS
-              Obx(
-                () => ListView(
+                // SPELLS TITLE
+                Padding(
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 16, vertical: 8)
+                          .copyWith(top: 24),
+                  child: Text(
+                      tr.entityCount(
+                        tn(Spell),
+                        controller.spells.length,
+                      ),
+                      style: titleStyle),
+                ),
+                // SPELL CARDS
+                ListView(
                   shrinkWrap: true,
                   padding: const EdgeInsets.all(8),
                   physics: const NeverScrollableScrollPhysics(),
@@ -139,8 +133,7 @@ class SelectMovesSpellsView extends GetView<SelectMovesSpellsController> {
                                 ElevatedButton.icon(
                                   style: ButtonThemes.primaryElevated(context),
                                   onPressed: () {
-                                    controller.spells.value =
-                                        removeByKey(controller.spells, [spell]);
+                                    controller.deleteSpell(spell);
                                   },
                                   label: Text(tr.generic.remove),
                                   icon: const Icon(Icons.remove),
@@ -150,44 +143,49 @@ class SelectMovesSpellsView extends GetView<SelectMovesSpellsController> {
                           ))
                       .toList(),
                 ),
-              ),
-              // ADD SPELLS
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 8),
-                child: SizedBox(
-                  height: 48,
-                  child: OutlinedButton.icon(
-                    style: ButtonThemes.primaryOutlined(context),
-                    onPressed: () => ModelPages.openSpellsList(
-                      character: Character.empty().copyWith(
-                        characterClass: controller.characterClass.value,
+                // ADD SPELLS
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 8),
+                  child: SizedBox(
+                    height: 48,
+                    child: OutlinedButton.icon(
+                      style: ButtonThemes.primaryOutlined(context),
+                      onPressed: () => ModelPages.openSpellsList(
+                        character: Character.empty().copyWith(
+                          characterClass: controller.characterClass,
+                        ),
+                        list: controller.spells,
+                        onSelected: (spells) {
+                          controller.addSpells(
+                            spells.map(
+                              (m) => m.copyWithInherited(prepared: true),
+                            ),
+                          );
+                        },
                       ),
-                      list: controller.spells,
-                      onSelected: (spells) {
-                        controller.dirty.value = true;
-                        controller.spells.value = addByKey(
-                          controller.spells,
-                          spells
-                              .map((m) => m.copyWithInherited(prepared: true)),
-                        );
-                      },
+                      label: Text(
+                        tr.generic.addEntity(tr.entityPlural(tn(Spell))),
+                      ),
+                      icon: const Icon(Icons.add),
                     ),
-                    label:
-                        Text(tr.generic.addEntity(tr.entityPlural(tn(Spell)))),
-                    icon: const Icon(Icons.add),
                   ),
                 ),
-              ),
-              const SizedBox(height: 80),
-            ],
+                const SizedBox(height: 80),
+              ],
+            ),
           ),
         ),
       ),
     );
   }
 
-  _save() {
+  _save(BuildContext context) {
+    final controller = Provider.of<SelectMovesSpellsController>(
+      context,
+      listen: false,
+    );
     controller.onChanged(controller.moves, controller.spells);
-    Get.back();
+    Navigator.of(context).pop();
   }
 }
+

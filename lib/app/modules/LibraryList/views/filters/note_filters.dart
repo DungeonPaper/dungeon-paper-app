@@ -18,7 +18,7 @@ class NoteFiltersView extends StatelessWidget {
   }) : super(key: key);
 
   final NoteFilters filters;
-  final service = Get.find<RepositoryService>();
+  final service = Get.find<RepositoryProvider>();
   final void Function(NoteFilters) onChange;
   final TextEditingController searchController;
 

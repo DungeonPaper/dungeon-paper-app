@@ -26,7 +26,7 @@ class LibraryEntityForm<
   Widget build(BuildContext context) {
     return Obx(
       () => ConfirmExitView(
-        dirty: controller.dirty.value,
+        dirty: controller.dirty,
         child: Scaffold(
           appBar: AppBar(
             title: title,
@@ -69,20 +69,20 @@ class LibraryEntityForm<
 }
 
 abstract class LibraryEntityFormController<T extends WithMeta,
-    Args extends LibraryEntityFormArguments<T>> extends GetxController {
-  final dirty = false.obs;
+    Args extends LibraryEntityFormArguments<T>> extends ChangeNotifier {
+  var dirty = false;
   late final Args args;
   bool afterInit = false;
-  List<Rx<ValueNotifier>> get fields;
+  List<ValueNotifier> get fields;
   late final Rx<Meta> meta;
   late final List<String> _initialValueCache;
   late Rx<T> asEntity;
 
-  @override
-  @mustCallSuper
-  void onInit() {
-    assert(Get.arguments is LibraryEntityFormArguments<T>);
-    args = Get.arguments;
+  LibraryEntityFormController(BuildContext context) : super() {
+    final arguments = ModalRoute.of(context)?.settings.arguments;
+    assert(arguments is LibraryEntityFormArguments<T>);
+    final LibraryEntityFormArguments<T> args =
+        arguments as LibraryEntityFormArguments<T>;
     asEntity = Rx(args.entity ?? empty());
     meta = Rx(args.entity?.meta ?? _forkMeta());
     _initialValueCache = List.generate(fields.length, (i) => '');
@@ -90,10 +90,10 @@ abstract class LibraryEntityFormController<T extends WithMeta,
     for (var field in enumerate(fields)) {
       field.value.value.addListener(_fieldListener(field));
     }
-    super.onInit();
+    afterInit = true;
   }
 
-  void Function() _fieldListener(Enumerated<Rx<ValueNotifier<dynamic>>> field) {
+  void Function() _fieldListener(Enumerated<ValueNotifier<dynamic>> field) {
     return () {
       final asStr = _toString(field.value.value.value);
       final cached = _initialValueCache[field.index];
@@ -101,10 +101,10 @@ abstract class LibraryEntityFormController<T extends WithMeta,
         _initialValueCache[field.index] = asStr;
       }
       if (afterInit && asStr != cached) {
-        dirty.value = true;
+        dirty = true;
         meta.value = _forkMeta();
       }
-      field.value.refresh();
+      field.value.notifyListeners();
       asEntity.value = toEntity();
     };
   }
@@ -126,23 +126,17 @@ abstract class LibraryEntityFormController<T extends WithMeta,
   }
 
   @override
-  void onReady() {
-    super.onReady();
-    afterInit = true;
-  }
-
-  @override
-  void onClose() {
+  void dispose() {
+    super.dispose();
     for (var field in fields) {
       field.value.dispose();
-      field.close();
+      field.dispose();
     }
-    super.onClose();
   }
 
   Meta _forkMeta() {
     var item = args.entity ?? empty();
-    if (dirty.value) {
+    if (dirty) {
       item = Meta.forkOrIncrease(item);
     }
     return item.meta;
@@ -180,3 +174,4 @@ class LibraryEntityFormArguments<T extends WithMeta> {
     required this.formContext,
   });
 }
+

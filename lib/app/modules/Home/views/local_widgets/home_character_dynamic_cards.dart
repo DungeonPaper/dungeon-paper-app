@@ -411,16 +411,21 @@ class HomeCharacterDynamicCards extends StatelessWidget
     );
   }
 
-  void Function() _delete<T>(BuildContext context, T item, String itemName,
-      String typeName, void Function() onRemove) {
-    return () => deleteDialog.confirm(
+  void Function() _delete<T>(
+    BuildContext context,
+    T item,
+    String itemName,
+    String typeName,
+    void Function() onRemove,
+  ) {
+    return () => awaitDeleteConfirmation(
           context,
-          DeleteDialogOptions(
-              entityName: itemName, entityKind: tr.entity(typeName)),
+          itemName,
           () {
             onRemove();
             Navigator.of(context).pop();
           },
+          T,
         );
   }
 }

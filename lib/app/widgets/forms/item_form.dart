@@ -44,20 +44,18 @@ class ItemForm extends GetView<ItemFormController> {
 
 class ItemFormController
     extends LibraryEntityFormController<Item, ItemFormArgumentsNew> {
-  final _name = TextEditingController().obs;
-  final _description = TextEditingController().obs;
-  final _tags = ValueNotifier<List<dw.Tag>>([]).obs;
+  final _name = TextEditingController();
+  final _description = TextEditingController();
+  final _tags = ValueNotifier<List<dw.Tag>>([]);
 
   @override
-  List<Rx<ValueNotifier>> get fields => [_name, _description, _tags];
+  List<ValueNotifier> get fields => [_name, _description, _tags];
 
-  TextEditingController get name => _name.value;
-  TextEditingController get description => _description.value;
-  ValueNotifier<List<dw.Tag>> get tags => _tags.value;
+  TextEditingController get name => _name;
+  TextEditingController get description => _description;
+  ValueNotifier<List<dw.Tag>> get tags => _tags;
 
-  @override
-  void onInit() {
-    super.onInit();
+  ItemFormController(super.context) {
     name.text = args.entity?.name ?? '';
     description.text = args.entity?.description ?? '';
     tags.value = args.entity?.tags ?? [];
@@ -89,3 +87,4 @@ class ItemFormArgumentsNew extends LibraryEntityFormArguments<Item> {
     required super.formContext,
   });
 }
+

@@ -7,7 +7,7 @@ import 'package:dungeon_paper/app/data/models/character_class.dart';
 import 'package:dungeon_paper/app/data/models/gear_selection.dart';
 import 'package:dungeon_paper/app/data/models/move.dart';
 import 'package:dungeon_paper/app/data/models/race.dart';
-import 'package:dungeon_paper/app/data/services/character_service.dart';
+import 'package:dungeon_paper/app/data/services/character_provider.dart';
 import 'package:dungeon_paper/app/model_utils/model_pages.dart';
 import 'package:dungeon_paper/app/modules/AbilityScoresForm/controllers/ability_scores_form_controller.dart';
 import 'package:dungeon_paper/app/modules/BasicInfoForm/controllers/basic_info_form_controller.dart';
@@ -22,22 +22,22 @@ import 'package:dungeon_paper/app/widgets/atoms/character_avatar.dart';
 import 'package:dungeon_paper/app/widgets/atoms/confirm_exit_view.dart';
 import 'package:dungeon_paper/i18n.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 
 import '../../../../core/dw_icons.dart';
 import '../../../widgets/chips/advanced_chip.dart';
 import '../controllers/create_character_controller.dart';
 
-class CreateCharacterView extends GetView<CreateCharacterController> {
+class CreateCharacterView extends StatelessWidget {
   const CreateCharacterView({super.key});
 
-  CharacterClass? get cls => controller.characterClass.value;
   @override
   Widget build(BuildContext context) {
-    return Obx(
-      () => ConfirmExitView(
-        dirty: controller.dirty.value,
+    return CreateCharacterController.consumer(
+      (context, controller, _) {
+        final cls = controller.characterClass;
+        return ConfirmExitView(
+        dirty: controller.dirty,
         child: BackdropFilter(
           filter: ImageFilter.blur(sigmaX: 5, sigmaY: 5),
           // blendMode: BlendMode.darken,
@@ -48,21 +48,19 @@ class CreateCharacterView extends GetView<CreateCharacterController> {
               backgroundColor: Colors.transparent,
               foregroundColor: Colors.white,
             ),
-            floatingActionButton: Obx(
-              () => AdvancedFloatingActionButton.extended(
-                onPressed: controller.isValid
-                    ? () {
-                        Get.find<CharacterService>().createCharacter(
-                          controller.getAsCharacter(),
-                          switchToCharacter: true,
-                        );
-                        Get.back();
-                      }
-                    : null,
-                icon: const Icon(Icons.person_add),
-                label: Text(
-                  tr.generic.createEntity(tr.entity(tn(Character))),
-                ),
+            floatingActionButton: AdvancedFloatingActionButton.extended(
+              onPressed: controller.isValid
+                  ? () {
+                      CharacterProvider.of(context).createCharacter(
+                        controller.getAsCharacter(),
+                        switchToCharacter: true,
+                      );
+                      Navigator.of(context).pop();
+                    }
+                  : null,
+              icon: const Icon(Icons.person_add),
+              label: Text(
+                tr.generic.createEntity(tr.entity(tn(Character))),
               ),
             ),
             body: Center(
@@ -82,14 +80,14 @@ class CreateCharacterView extends GetView<CreateCharacterController> {
                               leading: CharacterAvatar.squircle(
                                 size: 48,
                                 character: Character.empty().copyWith(
-                                  avatarUrl: controller.avatarUrl.value,
+                                  avatarUrl: controller.avatarUrl,
                                 ),
                               ),
                               title: controller.name.isEmpty
                                   ? Text(
                                       tr.createCharacter.basicInfo.defaultName,
                                     )
-                                  : Text(controller.name.value),
+                                  : Text(controller.name),
                               subtitle: controller.name.isEmpty
                                   ? Text(tr.createCharacter.basicInfo.helpText)
                                   : Text(
@@ -98,14 +96,13 @@ class CreateCharacterView extends GetView<CreateCharacterController> {
                                       ),
                                     ),
                               valid: controller.name.isNotEmpty,
-                              onTap: () => Get.toNamed(
+                              onTap: () => Navigator.of(context).pushNamed(
                                 Routes.createCharacterBasicInfo,
                                 arguments: BasicInfoFormArguments(
-                                  avatarUrl: controller.avatarUrl.value,
-                                  name: controller.name.value,
+                                  avatarUrl: controller.avatarUrl,
+                                  name: controller.name,
                                   onChanged: controller.setBasicInfo,
                                 ),
-                                preventDuplicates: false,
                               ),
                             ),
                             // Class
@@ -113,53 +110,52 @@ class CreateCharacterView extends GetView<CreateCharacterController> {
                               title: cls == null
                                   ? Text(tr.generic.selectEntity(
                                       tr.entity(tn(CharacterClass))))
-                                  : Text(cls!.name),
+                                  : Text(cls.name),
                               subtitle: cls == null
                                   ? Text(tr.createCharacter.characterClass
                                       .noSelection)
                                   : Text(
                                       tr.createCharacter.characterClass
                                           .description(
-                                        cls!.hp,
-                                        cls!.load,
-                                        cls!.damageDice.toString(),
+                                        cls.hp,
+                                        cls.load,
+                                        cls.damageDice.toString(),
                                       ),
                                     ),
                               valid: cls != null,
-                              onTap: () => Get.toNamed(
+                              onTap: () => Navigator.of(context).pushNamed(
                                 Routes.createCharacterSelectClass,
                                 arguments: CharacterClassLibraryListArguments(
                                   preSelections:
-                                      controller.characterClass.value != null
-                                          ? [controller.characterClass.value!]
+                                      controller.characterClass != null
+                                          ? [controller.characterClass!]
                                           : [],
-                                  onSelected: (cls) => controller.setClass(cls),
+                                  onSelected: (cls) => controller.setClass(context, cls),
                                 ),
-                                preventDuplicates: false,
                               ),
                             ),
                             // Race
                             _Card(
-                              title: controller.race.value == null
+                              title: controller.race == null
                                   ? Text(tr.generic
                                       .selectEntity(tr.entity(tn(Race))))
-                                  : Text(controller.race.value!.name),
-                              subtitle: controller.race.value == null
+                                  : Text(controller.race!.name),
+                              subtitle: controller.race == null
                                   ? Text(tr.generic
                                       .noEntitySelected(tr.entity(tn(Race))))
                                   : Text(
-                                      controller.race.value!.description,
+                                      controller.race!.description,
                                       overflow: TextOverflow.ellipsis,
                                     ),
                               onTap: cls != null
                                   ? () => ModelPages.openRacesList(
                                         character: controller.getAsCharacter(),
-                                        preSelection: controller.race.value,
+                                        preSelection: controller.race,
                                         onSelected: (race) =>
-                                            controller.race.value = race,
+                                            controller.race = race,
                                       )
                                   : null,
-                              valid: controller.race.value != null,
+                              valid: controller.race != null,
                             ),
                             // Ability Scores
                             _Card(
@@ -168,46 +164,44 @@ class CreateCharacterView extends GetView<CreateCharacterController> {
                               title: Text(tr.generic.selectEntity(
                                   tr.entityPlural(tn(AbilityScore)))),
                               // subtitle: Text(
-                              //   controller.abilityScores.value.stats
-                              //       .map((stat) => '${stat.key}: ${stat.value}')
+                              //   controller.abilityScores.stats
+                              //       .map((stat) => '${stat.key}: ${stat}')
                               //       .join(', '),
                               subtitle: Padding(
                                 padding: const EdgeInsets.only(top: 4.0),
                                 child: _AbilityScoreChipList(
                                     controller: controller),
                               ),
-                              onTap: () => Get.toNamed(
+                              onTap: () => Navigator.of(context).pushNamed(
                                 Routes.createCharacterAbilityScores,
                                 arguments: AbilityScoresFormArguments(
                                   onChanged: (abilityScores) => controller
                                       .setAbilityScores(abilityScores),
-                                  abilityScores: controller.abilityScores.value,
+                                  abilityScores: controller.abilityScores,
                                 ),
-                                preventDuplicates: false,
                               ),
                             ),
                             // Alignment
                             _Card(
                               contentPadding: const EdgeInsets.symmetric(
                                   horizontal: 16, vertical: 0),
-                              valid: controller.alignment.value != null,
+                              valid: controller.alignment != null,
                               title: Text(
-                                controller.alignment.value != null
+                                controller.alignment != null
                                     ? [
                                         tr.entity(tn(AlignmentValue)),
-                                        tr.alignment.name(controller
-                                            .alignment.value!.type.name)
+                                        tr.alignment.name(
+                                            controller.alignment!.type.name)
                                       ].join(': ')
                                     : tr.generic.selectEntity(
                                         tr.entity(tn(AlignmentValue)),
                                       ),
                               ),
-                              subtitle: controller.alignment.value != null
+                              subtitle: controller.alignment != null
                                   ? Text(
-                                      controller.alignment.value!.description
-                                              .isNotEmpty
-                                          ? controller
-                                              .alignment.value!.description
+                                      controller
+                                              .alignment!.description.isNotEmpty
+                                          ? controller.alignment!.description
                                           : tr.generic.noDescription,
                                       overflow: TextOverflow.ellipsis,
                                       maxLines: 1,
@@ -217,18 +211,17 @@ class CreateCharacterView extends GetView<CreateCharacterController> {
                                           tr.entity(tn(AlignmentValue))),
                                     ),
                               onTap: cls != null
-                                  ? () => Get.toNamed(
+                                  ? () => Navigator.of(context).pushNamed(
                                         Routes.classAlignments,
                                         arguments: ClassAlignmentsArguments(
                                           onChanged: controller.setAlignment,
                                           alignments: controller
-                                              .characterClass.value!.alignments,
+                                              .characterClass!.alignments,
                                           preselected:
-                                              controller.alignment.value?.type,
+                                              controller.alignment?.type,
                                           selectable: true,
                                           editable: true,
                                         ),
-                                        preventDuplicates: false,
                                       )
                                   : null,
                             ),
@@ -264,20 +257,19 @@ class CreateCharacterView extends GetView<CreateCharacterController> {
                                           .join(', '),
                                     ].whereType<String>().join(', ')),
                               onTap: cls != null
-                                  ? () => Get.toNamed(
+                                  ? () => Navigator.of(context).pushNamed(
                                         Routes.createCharacterStartingGear,
                                         arguments: StartingGearFormArguments(
                                           onChanged: controller.setStartingGear,
                                           selectedOptions:
                                               controller.startingGear,
-                                          characterClass: cls!,
+                                          characterClass: cls,
                                         ),
-                                        preventDuplicates: false,
                                       )
                                   : null,
                               valid: cls == null
                                   ? false
-                                  : cls!.gearChoices.every(
+                                  : cls.gearChoices.every(
                                       (c) => c.selections.any(
                                         (s) => controller.startingGear
                                             .map((x) => x.key)
@@ -308,18 +300,18 @@ class CreateCharacterView extends GetView<CreateCharacterController> {
                                       ),
                               ),
                               onTap: cls != null
-                                  ? () => Get.toNamed(
+                                  ? () => Navigator.of(context).pushNamed(
                                         Routes.createCharacterMovesSpells,
                                         arguments: SelectMovesSpellsArguments(
-                                          onChanged: controller.setMovesSpells,
+                                          onChanged:
+                                              controller.setMovesAndSpells,
                                           moves: controller.moves,
                                           spells: controller.spells,
                                           abilityScores:
-                                              controller.abilityScores.value,
+                                              controller.abilityScores,
                                           characterClass:
-                                              controller.characterClass.value!,
+                                              controller.characterClass!,
                                         ),
-                                        preventDuplicates: false,
                                       )
                                   : null,
                             ),
@@ -333,7 +325,8 @@ class CreateCharacterView extends GetView<CreateCharacterController> {
             ),
           ),
         ),
-      ),
+      );
+      },
     );
   }
 }
@@ -350,7 +343,7 @@ class _AbilityScoreChipList extends StatelessWidget {
     return Wrap(
       spacing: 2,
       runSpacing: 2,
-      children: controller.abilityScores.value.stats
+      children: controller.abilityScores.stats
           .map(
             (stat) => ConstrainedBox(
               constraints: const BoxConstraints(
@@ -371,7 +364,7 @@ class _AbilityScoreChipList extends StatelessWidget {
                 materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
                 label: Text(
                   '${stat.key}: ${stat.value}',
-                  textScaleFactor: 0.8,
+                  textScaler: const TextScaler.linear(0.8),
                 ),
               ),
             ),
@@ -437,3 +430,4 @@ class _Card extends StatelessWidget {
     );
   }
 }
+

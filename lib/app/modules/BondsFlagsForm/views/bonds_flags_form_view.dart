@@ -15,14 +15,14 @@ class BondsFlagsFormView extends GetView<BondsFlagsFormController> {
     final textTheme = Theme.of(context).textTheme;
     return Obx(
       () => ConfirmExitView(
-        dirty: controller.dirty.value,
+        dirty: controller.dirty,
         child: Scaffold(
           appBar: AppBar(
             title: Text(tr.sessionMarks.title),
             centerTitle: true,
           ),
           floatingActionButton: AdvancedFloatingActionButton.extended(
-            onPressed: controller.save,
+            onPressed: () => controller.save(context),
             icon: const Icon(Icons.save),
             label: Text(tr.generic.save),
           ),
@@ -77,3 +77,4 @@ class BondsFlagsFormView extends GetView<BondsFlagsFormController> {
     );
   }
 }
+
