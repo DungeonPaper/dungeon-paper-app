@@ -1,9 +1,10 @@
 import 'dart:async';
 
 import 'package:dungeon_paper/app/data/models/meta.dart';
-import 'package:dungeon_paper/app/data/services/character_service.dart';
-import 'package:dungeon_paper/app/data/services/library_service.dart';
-import 'package:dungeon_paper/app/data/services/repository_service.dart';
+import 'package:dungeon_paper/app/data/services/character_provider.dart';
+import 'package:dungeon_paper/app/data/services/library_provider.dart';
+import 'package:dungeon_paper/app/data/services/repository_provider.dart';
+import 'package:dungeon_paper/core/global_keys.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -14,9 +15,7 @@ enum FiltersGroup {
 }
 
 class LibraryListController<T extends WithMeta, F extends EntityFilters<T>>
-    extends ChangeNotifier with LibraryServiceMixin {
-  final repo = Get.find<RepositoryProvider>().obs;
-  final chars = Get.find<CharacterService>().obs;
+    extends ChangeNotifier with CharacterProviderMixin, RepositoryProviderMixin {
   final LibraryListArguments<T, F> arguments;
 
   final selected = <T>[];
@@ -31,12 +30,12 @@ class LibraryListController<T extends WithMeta, F extends EntityFilters<T>>
       FiltersGroup.playbook, arguments.filterFn, arguments.sortFn);
 
   Iterable<T> get builtInListRaw =>
-      repo.value.builtIn.listByType<T>().values.toList();
+      repo.builtIn.listByType<T>().values.toList();
 
   Iterable<T> get myList => filterList(
       myListRaw, FiltersGroup.my, arguments.filterFn, arguments.sortFn);
 
-  Iterable<T> get myListRaw => repo.value.my.listByType<T>().values.toList();
+  Iterable<T> get myListRaw => repo.my.listByType<T>().values.toList();
   String get storageKey => Meta.storageKeyFor(T);
 
   bool get multiple => arguments.multiple;
@@ -111,6 +110,7 @@ class LibraryListController<T extends WithMeta, F extends EntityFilters<T>>
   void saveCustomItem(String storageKey, T item) {
     toggleItem(item, true);
     debugPrint('Saving $item');
+    final library = LibraryProvider.of(appGlobalKey.currentContext!);
     library.upsertToLibrary<T>([item]);
     notifyListeners();
   }
@@ -118,6 +118,7 @@ class LibraryListController<T extends WithMeta, F extends EntityFilters<T>>
   void deleteCustomItem(String storageKey, T item) {
     toggleItem(item, false);
     debugPrint('Deleting $item');
+    final library = LibraryProvider.of(appGlobalKey.currentContext!);
     library.removeFromLibrary<T>([item]);
     notifyListeners();
   }
@@ -175,13 +176,11 @@ class LibraryListController<T extends WithMeta, F extends EntityFilters<T>>
   void _updatePlaybookSearch() {
     filters[FiltersGroup.playbook]
         ?.setSearch(search[FiltersGroup.playbook]!.text);
-    repo.refresh();
     notifyListeners();
   }
 
   void _updateMySearch() {
     filters[FiltersGroup.my]?.setSearch(search[FiltersGroup.my]!.text);
-    repo.refresh();
     notifyListeners();
   }
 }

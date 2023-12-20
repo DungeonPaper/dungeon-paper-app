@@ -1,17 +1,18 @@
 import 'dart:convert';
-import 'package:dungeon_paper/app/data/models/user.dart';
-import 'package:dungeon_paper/app/data/services/user_service.dart';
+import 'package:dungeon_paper/app/data/services/user_provider.dart';
 import 'package:dungeon_paper/app/modules/LibraryList/views/filters/spell_filters.dart';
+import 'package:dungeon_paper/core/global_keys.dart';
 import 'package:dungeon_paper/core/utils/icon_utils.dart';
 import 'package:dungeon_paper/core/utils/uuid.dart';
 import 'package:dungeon_world_data/dungeon_world_data.dart' as dw;
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 
 import '../../../core/dw_icons.dart';
 import 'meta.dart';
 
-class Spell extends dw.Spell with WithIcon implements WithMeta {
+class Spell extends dw.Spell
+    with WithIcon, UserProviderMixin
+    implements WithMeta {
   Spell({
     required Meta super.meta,
     required super.key,
@@ -74,7 +75,9 @@ class Spell extends dw.Spell with WithIcon implements WithMeta {
   factory Spell.fromJson(Map<String, dynamic> json) =>
       Spell.fromDwSpell(dw.Spell.fromJson(json), prepared: json['prepared']);
 
-  factory Spell.empty() => Spell(
+  factory Spell.empty() {
+    final user = UserProvider.of(appGlobalKey.currentContext!).current;
+    return Spell(
         meta: Meta.empty(createdBy: user.username),
         classKeys: [],
         description: '',
@@ -86,6 +89,7 @@ class Spell extends dw.Spell with WithIcon implements WithMeta {
         tags: [],
         prepared: false,
       );
+  }
 
   @override
   Map<String, dynamic> toJson() => {
@@ -110,8 +114,6 @@ class Spell extends dw.Spell with WithIcon implements WithMeta {
         }
         return a.name.toLowerCase().compareTo(b.name.toLowerCase());
       };
-
-  static User get user => Get.find<UserService>().current;
 
   @override
   String get displayName => name;
@@ -154,3 +156,4 @@ class Spell extends dw.Spell with WithIcon implements WithMeta {
   @override
   String toString() => 'Spell($debugProperties)';
 }
+

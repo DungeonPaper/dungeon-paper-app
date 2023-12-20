@@ -2,7 +2,7 @@ import 'package:dungeon_paper/app/data/models/campaign.dart';
 import 'package:dungeon_paper/app/data/models/character_class.dart';
 import 'package:dungeon_paper/app/data/models/race.dart';
 import 'package:dungeon_paper/app/data/models/session_marks.dart';
-import 'package:dungeon_paper/app/data/services/character_service.dart';
+import 'package:dungeon_paper/app/data/services/character_provider.dart';
 import 'package:dungeon_paper/app/model_utils/model_pages.dart';
 import 'package:dungeon_paper/app/modules/AbilityScoresForm/controllers/ability_scores_form_controller.dart';
 import 'package:dungeon_paper/app/modules/BasicInfoForm/controllers/basic_info_form_controller.dart';
@@ -15,9 +15,8 @@ import 'package:dungeon_paper/app/widgets/dialogs/debilities_dialog.dart';
 import 'package:dungeon_paper/core/dw_icons.dart';
 import 'package:dungeon_paper/i18n.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 
-class HomeCharacterExtras extends GetView<CharacterService> {
+class HomeCharacterExtras extends StatelessWidget with CharacterProviderMixin {
   const HomeCharacterExtras({super.key});
 
   @override
@@ -33,49 +32,49 @@ class HomeCharacterExtras extends GetView<CharacterService> {
               value: 'name_photo',
               icon: const Icon(Icons.photo),
               label: Text(tr.home.menu.character.basicInfo),
-              onSelect: _openBasicInfo,
+              onSelect: () => _openBasicInfo(context),
             ),
             MenuEntry(
               value: 'ability_scores',
               icon: const Icon(Icons.format_list_numbered_rtl),
               label: Text(tr.home.menu.character.abilityScores),
-              onSelect: _openAbilityScores,
+              onSelect: () => _openAbilityScores(context),
             ),
             MenuEntry(
               value: 'class',
               icon: Icon(CharacterClass.genericIcon),
               label:
                   Text(tr.generic.changeEntity(tr.entity(tn(CharacterClass)))),
-              onSelect: _openCharClass,
+              onSelect: () => _openCharClass(context),
             ),
             MenuEntry(
               value: 'race',
               icon: Icon(Race.genericIcon),
               label: Text(tr.generic.changeEntity(tr.entity(tn(Race)))),
-              onSelect: _openRace,
+              onSelect: () => _openRace(context),
             ),
             MenuEntry(
               value: 'roll_buttons',
               icon: const Icon(DwIcons.dice_d6),
               label: Text(tr.home.menu.character.customRolls),
-              onSelect: _openRollButtons,
+              onSelect: () => _openRollButtons(context),
             ),
             MenuEntry(
               value: 'theme',
               icon: const Icon(Icons.brush),
               label: Text(tr.home.menu.character.theme),
-              onSelect: _openThemeSelect,
+              onSelect: () => _openThemeSelect(context),
             ),
           ],
         ),
         IconButton(
           icon: const Icon(Icons.text_snippet),
           tooltip: tr.home.menu.bio,
-          onPressed: _openBio,
+          onPressed: () => _openBio(context),
         ),
-        Obx(
-          () => IconButton(
-            onPressed: _openBondsFlags,
+        CharacterProvider.consumer(
+          (context, controller, _) => IconButton(
+            onPressed: () => _openBondsFlags(context),
             icon:
                 Transform.scale(scaleX: -1, child: const Icon(Icons.handshake)),
             tooltip: SessionMark.categoryTitle(
@@ -85,7 +84,7 @@ class HomeCharacterExtras extends GetView<CharacterService> {
           ),
         ),
         IconButton(
-          onPressed: _openDebilities,
+          onPressed: () => _openDebilities(context),
           icon: const Icon(Icons.personal_injury),
           tooltip: tr.home.menu.debilities,
         ),
@@ -98,81 +97,88 @@ class HomeCharacterExtras extends GetView<CharacterService> {
     );
   }
 
-  void _openAbilityScores() => Get.toNamed(
-        Routes.abilityScores,
-        arguments: AbilityScoresFormArguments(
-          abilityScores: controller.current.abilityScores,
-          onChanged: (abilityScores) => controller.updateCharacter(
-              controller.current.copyWith(abilityScores: abilityScores)),
-        ),
-        preventDuplicates: false,
-      );
+  void _openAbilityScores(BuildContext context) {
+    Navigator.of(context).pushNamed(
+      Routes.abilityScores,
+      arguments: AbilityScoresFormArguments(
+        abilityScores: charProvider.current.abilityScores,
+        onChanged: (abilityScores) => charProvider.updateCharacter(
+            charProvider.current.copyWith(abilityScores: abilityScores)),
+      ),
+    );
+  }
 
-  void _openBasicInfo() {
-    Get.toNamed(
+  void _openBasicInfo(BuildContext context) {
+    Navigator.of(context).pushNamed(
       Routes.basicInfo,
       arguments: BasicInfoFormArguments(
-        onChanged: (name, avatar) => controller.updateCharacter(
-          controller.current.copyWith(displayName: name, avatarUrl: avatar),
+        onChanged: (name, avatar) => charProvider.updateCharacter(
+          charProvider.current.copyWith(displayName: name, avatarUrl: avatar),
         ),
-        name: controller.current.displayName,
-        avatarUrl: controller.current.avatarUrl,
+        name: charProvider.current.displayName,
+        avatarUrl: charProvider.current.avatarUrl,
       ),
     );
   }
 
-  void _openBio() {
-    Get.dialog(const CharacterBioDialog());
+  void _openBio(BuildContext context) {
+    showDialog(context: context, builder: (_) => const CharacterBioDialog());
   }
 
-  void _openRace() {
+  void _openRace(BuildContext context) {
     ModelPages.openRacesList(
-      character: controller.current,
-      preSelection: controller.current.race,
-      onSelected: (race) => controller.updateCharacter(
-        controller.current.copyWithInherited(
+      context,
+      character: charProvider.current,
+      preSelection: charProvider.current.race,
+      onSelected: (race) => charProvider.updateCharacter(
+        charProvider.current.copyWithInherited(
           race: race.copyWithInherited(
-              favorite: controller.current.race.favorite),
+              favorite: charProvider.current.race.favorite),
         ),
       ),
     );
   }
 
-  void _openCharClass() {
+  void _openCharClass(BuildContext context) {
     ModelPages.openCharacterClassesList(
-      character: controller.current,
-      onSelected: (cls) => controller.updateCharacter(
+      context,
+      character: charProvider.current,
+      onSelected: (cls) => charProvider.updateCharacter(
         // TODO add a reset dialog to confirm + ask what to reset: moves, spells, alignment, rac
-        controller.current.copyWithInherited(
+        charProvider.current.copyWithInherited(
           characterClass: cls,
         ),
       ),
     );
   }
 
-  void _openBondsFlags() {
-    Get.dialog(const CharacterBondsFlagsDialog());
+  void _openBondsFlags(BuildContext context) {
+    showDialog(
+        context: context, builder: (_) => const CharacterBondsFlagsDialog());
   }
 
-  void _openDebilities() {
-    Get.dialog(const CharacterDebilitiesDialog());
+  void _openDebilities(BuildContext context) {
+    showDialog(
+        context: context, builder: (_) => const CharacterDebilitiesDialog());
   }
 
-  void _openRollButtons() {
-    Get.dialog(
-      CustomRollButtonsDialog(
-        character: controller.current,
-        onChanged: (rollButtons) => controller.updateCharacter(
-          controller.current.copyWith(
-            settings:
-                controller.current.settings.copyWith(rollButtons: rollButtons),
+  void _openRollButtons(BuildContext context) {
+    showDialog(
+      context: context,
+      builder: (_) => CustomRollButtonsDialog(
+        character: charProvider.current,
+        onChanged: (rollButtons) => charProvider.updateCharacter(
+          charProvider.current.copyWith(
+            settings: charProvider.current.settings
+                .copyWith(rollButtons: rollButtons),
           ),
         ),
       ),
     );
   }
 
-  void _openThemeSelect() {
-    Get.toNamed(Routes.selectCharacterTheme);
+  void _openThemeSelect(BuildContext context) {
+    Navigator.of(context).pushNamed(Routes.selectCharacterTheme);
   }
 }
+

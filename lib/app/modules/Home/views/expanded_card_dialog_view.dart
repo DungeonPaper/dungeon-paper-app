@@ -1,13 +1,11 @@
 import 'package:flutter/material.dart';
 
-import 'package:get/get.dart';
-
-class ExpandedCardDialogView<T> extends GetView {
+class ExpandedCardDialogView<T> extends StatelessWidget {
   const ExpandedCardDialogView({
-    Key? key,
+    super.key,
     required this.builder,
     required this.heroTag,
-  }) : super(key: key);
+  });
 
   final Widget Function(BuildContext context) builder;
   final String? heroTag;
@@ -16,7 +14,7 @@ class ExpandedCardDialogView<T> extends GetView {
   Widget build(BuildContext context) {
     return SafeArea(
       child: GestureDetector(
-        onTap: () => Get.back(),
+        onTap: () => Navigator.of(context).pop(),
         child: Container(
           // color: Colors.black.withOpacity(0.75),
           padding: const EdgeInsets.all(32),
@@ -39,3 +37,4 @@ class ExpandedCardDialogView<T> extends GetView {
     );
   }
 }
+

@@ -1,13 +1,13 @@
 import 'package:dungeon_paper/app/data/models/session_marks.dart';
-import 'package:dungeon_paper/app/data/services/character_service.dart';
+import 'package:dungeon_paper/app/data/services/character_provider.dart';
 import 'package:dungeon_paper/app/widgets/atoms/help_text.dart';
 import 'package:dungeon_paper/app/widgets/molecules/dialog_controls.dart';
 import 'package:dungeon_paper/i18n.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-class CharacterDebilitiesDialog extends GetView<CharacterService>
-    with CharacterServiceMixin {
+class CharacterDebilitiesDialog extends StatelessWidget
+    with CharacterProviderMixin {
   const CharacterDebilitiesDialog({super.key});
 
   List<SessionMark> get bonds => char.bonds;
@@ -22,8 +22,10 @@ class CharacterDebilitiesDialog extends GetView<CharacterService>
       title: Text(tr.debilities.dialog.title),
       contentPadding: const EdgeInsets.all(16),
       actions: DialogControls.done(context, () => Get.back()),
-      content: Obx(
-        () => SizedBox(
+      content: CharacterProvider.consumer(
+        (context, charProvider, _) {
+          final char = charProvider.current;
+          return SizedBox(
           width: 500,
           child: SingleChildScrollView(
             child: ListTileTheme.merge(
@@ -45,7 +47,7 @@ class CharacterDebilitiesDialog extends GetView<CharacterService>
                       subtitle: Text(ability.debilityDescription),
                       dense: true,
                       leading: Icon(ability.icon, size: 20),
-                      onTap: () => charService.updateCharacter(
+                      onTap: () => charProvider.updateCharacter(
                         char.copyWith(
                           abilityScores: char.abilityScores.copyWith(
                             stats: char.abilityScores.stats.map(
@@ -58,7 +60,7 @@ class CharacterDebilitiesDialog extends GetView<CharacterService>
                       ),
                       trailing: Switch.adaptive(
                         value: ability.isDebilitated,
-                        onChanged: (checked) => charService.updateCharacter(
+                        onChanged: (checked) => charProvider.updateCharacter(
                           char.copyWith(
                             abilityScores: char.abilityScores.copyWith(
                               stats: char.abilityScores.stats.map((e) =>
@@ -74,7 +76,8 @@ class CharacterDebilitiesDialog extends GetView<CharacterService>
               ),
             ),
           ),
-        ),
+        );
+        },
       ),
     );
   }

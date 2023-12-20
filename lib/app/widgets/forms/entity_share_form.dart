@@ -1,8 +1,9 @@
 import 'package:dungeon_paper/app/data/models/meta.dart';
 import 'package:dungeon_paper/app/data/services/repository_service.dart';
-import 'package:dungeon_paper/app/data/services/user_service.dart';
+import 'package:dungeon_paper/app/data/services/user_provider.dart';
 import 'package:dungeon_paper/i18n.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class EntityShareForm<T extends WithMeta> extends StatefulWidget {
   const EntityShareForm({
@@ -24,7 +25,7 @@ enum SyncStatus {
 }
 
 class _EntityShareFormState<T extends WithMeta> extends State<EntityShareForm>
-    with RepositoryServiceMixin, UserServiceMixin {
+    with UserProviderMixin {
   T? source;
 
   IconData? get syncStatusIcon => {
@@ -66,6 +67,8 @@ class _EntityShareFormState<T extends WithMeta> extends State<EntityShareForm>
   }
 
   void getSourceObject(String? sourceKey) {
+    final repo = Provider.of<RepositoryProvider>(context, listen: false);
+
     if (sourceKey == null) {
       setState(() {
         source = null;
@@ -94,7 +97,7 @@ class _EntityShareFormState<T extends WithMeta> extends State<EntityShareForm>
             Text(
               syncStatusText,
               style: TextStyle(color: syncStatusColor(context)),
-              textScaleFactor: 0.9,
+              textScaler: const TextScaler.linear(0.9),
             ),
             if (syncStatus == SyncStatus.outOfSync) ...[
               ElevatedButton.icon(
@@ -122,3 +125,4 @@ class _EntityShareFormState<T extends WithMeta> extends State<EntityShareForm>
     widget.onChange(Meta.forkMeta(source!, user));
   }
 }
+

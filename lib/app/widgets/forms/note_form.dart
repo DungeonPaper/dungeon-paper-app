@@ -1,5 +1,5 @@
 import 'package:dungeon_paper/app/data/models/note.dart';
-import 'package:dungeon_paper/app/data/services/repository_service.dart';
+import 'package:dungeon_paper/app/data/services/repository_provider.dart';
 import 'package:dungeon_paper/app/widgets/atoms/rich_text_field.dart';
 import 'package:dungeon_paper/app/widgets/forms/library_entity_form.dart';
 import 'package:dungeon_paper/app/widgets/molecules/tag_list_input.dart';
@@ -8,7 +8,7 @@ import 'package:dungeon_world_data/dungeon_world_data.dart' as dw;
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-class NoteForm extends GetView<NoteFormController> with RepositoryServiceMixin {
+class NoteForm extends GetView<NoteFormController> with RepositoryProviderMixin {
   const NoteForm({super.key});
 
   @override

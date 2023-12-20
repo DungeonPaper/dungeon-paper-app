@@ -12,7 +12,8 @@ import 'package:dungeon_paper/core/utils/list_utils.dart';
 import 'package:dungeon_paper/i18n.dart';
 import 'package:flutter/material.dart';
 
-class HomeCharacterJournalView extends StatelessWidget {
+class HomeCharacterJournalView extends StatelessWidget
+    with CharacterProviderMixin {
   const HomeCharacterJournalView({super.key});
 
   @override
@@ -107,10 +108,8 @@ class HomeCharacterJournalView extends StatelessWidget {
     String typeName,
   ) {
     return () async {
-      final controller = CharacterProvider.of(context);
-      final char = controller.current;
       awaitDeleteConfirmation(context, name, () {
-        controller.updateCharacter(
+        charProvider.updateCharacter(
           char.copyWith(notes: removeByKey(char.notes, [object as Note])),
         );
       });

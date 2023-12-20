@@ -2,11 +2,11 @@ import 'dart:convert';
 import 'package:dungeon_paper/app/modules/LibraryList/views/filters/item_filters.dart';
 import 'package:dungeon_paper/core/dw_icons.dart';
 import 'package:dungeon_paper/core/utils/icon_utils.dart';
+import 'package:dungeon_paper/core/utils/list_utils.dart';
 import 'package:dungeon_paper/core/utils/string_utils.dart';
 import 'package:dungeon_paper/core/utils/uuid.dart';
 import 'package:dungeon_world_data/dungeon_world_data.dart' as dw;
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 
 import 'item_settings.dart';
 import 'meta.dart';

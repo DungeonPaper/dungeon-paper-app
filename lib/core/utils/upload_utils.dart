@@ -1,4 +1,4 @@
-import 'package:dungeon_paper/app/data/services/user_service.dart';
+import 'package:dungeon_paper/app/data/services/user_provider.dart';
 import 'package:dungeon_paper/i18n.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
@@ -6,6 +6,7 @@ import 'package:flutter_file_dialog/flutter_file_dialog.dart';
 import 'package:get/get.dart';
 import 'package:image_cropper/image_cropper.dart';
 import 'package:path/path.dart' as path;
+import 'package:provider/provider.dart';
 
 class UploadSettings {
   final void Function(String downloadURL)? onSuccess;
@@ -72,22 +73,30 @@ Future<CroppedFile?> _pickAndCrop(
   return cropped;
 }
 
-Future<Reference> _uploadPhoto(CroppedFile file, String uploadPath) async {
-  final UserService userService = Get.find();
-  assert(userService.current.isLoggedIn);
-  final ext = path.extension(file.path);
-  if (!uploadPath.startsWith('/')) {
-    uploadPath = '/$uploadPath';
-  }
-  final ref = FirebaseStorage.instance
-      .ref(userService.current.fileStoragePath! + uploadPath + ext);
-  await ref.putData(await file.readAsBytes());
-  return ref;
+Future<Reference> Function(CroppedFile file, String uploadPath)
+    _uploadPhotoFactory(BuildContext context) {
+  return (file, uploadPath) async {
+    final userProvider = UserProvider.of(context);
+    assert(userProvider.current.isLoggedIn);
+
+    final ext = path.extension(file.path);
+    if (!uploadPath.startsWith('/')) {
+      uploadPath = '/$uploadPath';
+    }
+    final ref = FirebaseStorage.instance
+        .ref(userProvider.current.fileStoragePath! + uploadPath + ext);
+    await ref.putData(await file.readAsBytes());
+    return ref;
+  };
 }
 
 Future<UploadResponse?> cropAndUploadPhoto(
-    BuildContext context, UploadSettings settings) async {
+  BuildContext context,
+  UploadSettings settings,
+) async {
   CroppedFile? file;
+  final uploadPhoto = _uploadPhotoFactory(context);
+  final messenger = ScaffoldMessenger.of(context);
   try {
     file = await _pickAndCrop(context);
     if (file == null) {
@@ -105,14 +114,17 @@ Future<UploadResponse?> cropAndUploadPhoto(
   Reference fileRef;
   String downloadURL;
   try {
-    fileRef = await _uploadPhoto(file, settings.uploadPath);
+    fileRef = await uploadPhoto(file, settings.uploadPath);
     downloadURL = await fileRef.getDownloadURL();
 
     settings.onSuccess?.call(downloadURL);
   } catch (e) {
-    Get.rawSnackbar(
-      message:
+    messenger.showSnackBar(
+      const SnackBar(
+        content: Text(
           'Error while uploading photo. Try again later, or contact support using the "About" page.',
+        ),
+      ),
     );
 
     settings.onError?.call(e);
@@ -125,3 +137,4 @@ Future<UploadResponse?> cropAndUploadPhoto(
     downloadURL: downloadURL,
   );
 }
+

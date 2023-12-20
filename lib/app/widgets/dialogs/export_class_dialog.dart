@@ -1,5 +1,5 @@
 import 'dart:convert';
-import 'package:dungeon_paper/app/data/services/repository_service.dart';
+import 'package:dungeon_paper/app/data/services/repository_provider.dart';
 import 'package:dungeon_paper/app/modules/ImportExport/controllers/export_controller.dart';
 import 'package:dungeon_paper/i18n.dart';
 import 'package:flutter/material.dart';
@@ -18,7 +18,7 @@ class ExportClassDialog extends StatefulWidget {
 }
 
 class _ExportClassDialogState extends State<ExportClassDialog>
-    with RepositoryServiceMixin {
+    with RepositoryProviderMixin {
   CharacterClass? cls;
 
   @override

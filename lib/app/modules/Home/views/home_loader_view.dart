@@ -1,22 +1,29 @@
-import 'package:dungeon_paper/app/data/services/loading_service.dart';
+import 'package:dungeon_paper/app/data/services/loading_provider.dart';
 import 'package:dungeon_paper/app/modules/Home/views/home_character_view.dart';
 import 'package:dungeon_paper/app/modules/Home/views/local_widgets/home_character_header_view.dart';
 import 'package:dungeon_paper/app/widgets/atoms/character_avatar.dart';
+import 'package:dungeon_paper/core/global_keys.dart';
 import 'package:dungeon_paper/core/utils/math_utils.dart';
 import 'package:dungeon_paper/i18n.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
+import 'package:provider/provider.dart';
 import 'package:skeleton_loader/skeleton_loader.dart';
 
-class HomeLoaderView extends GetView with LoadingServiceMixin {
+class HomeLoaderView extends StatelessWidget {
   const HomeLoaderView({super.key});
 
   String get title {
-    if (loadingService.loadingUser) {
+    final context = appGlobalKey.currentContext!;
+    final loadingProvider = Provider.of<LoadingProvider>(
+      context,
+      listen: false,
+    );
+
+    if (loadingProvider.loadingUser) {
       return tr.loading.user;
     }
 
-    if (loadingService.loadingCharacters) {
+    if (loadingProvider.loadingCharacters) {
       return tr.loading.characters;
     }
 
@@ -243,3 +250,4 @@ class HomeLoaderView extends GetView with LoadingServiceMixin {
     );
   }
 }
+

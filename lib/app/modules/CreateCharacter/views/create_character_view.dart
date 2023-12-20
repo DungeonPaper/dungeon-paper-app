@@ -28,7 +28,7 @@ import '../../../../core/dw_icons.dart';
 import '../../../widgets/chips/advanced_chip.dart';
 import '../controllers/create_character_controller.dart';
 
-class CreateCharacterView extends StatelessWidget {
+class CreateCharacterView extends StatelessWidget with CharacterProviderMixin {
   const CreateCharacterView({super.key});
 
   @override
@@ -51,7 +51,7 @@ class CreateCharacterView extends StatelessWidget {
             floatingActionButton: AdvancedFloatingActionButton.extended(
               onPressed: controller.isValid
                   ? () {
-                      CharacterProvider.of(context).createCharacter(
+                      charProvider.createCharacter(
                         controller.getAsCharacter(),
                         switchToCharacter: true,
                       );

@@ -5,7 +5,7 @@ import 'package:dungeon_paper/app/data/models/note.dart';
 import 'package:dungeon_paper/app/data/models/race.dart';
 import 'package:dungeon_paper/app/data/models/spell.dart';
 import 'package:dungeon_paper/app/data/services/character_provider.dart';
-import 'package:dungeon_paper/app/data/services/library_service.dart';
+import 'package:dungeon_paper/app/data/services/library_provider.dart';
 import 'package:dungeon_paper/app/model_utils/character_utils.dart';
 import 'package:dungeon_paper/app/model_utils/model_pages.dart';
 import 'package:dungeon_paper/app/widgets/atoms/checklist_menu_entry.dart';
@@ -28,21 +28,19 @@ import '../expanded_card_dialog_view.dart';
 import 'horizontal_list_card_view.dart';
 
 class HomeCharacterDynamicCards extends StatelessWidget
-    with LibraryServiceMixin, CharacterProviderMixin {
+    with CharacterProviderMixin {
   const HomeCharacterDynamicCards({super.key});
 
-  List<Move> get moves => (charProvider.maybeCurrent?.moves ?? <Move>[])
-      .where((m) => m.favorite)
-      .toList();
+  // TODO fix these contexts
+  List<Move> get moves =>
+      (maybeChar?.moves ?? <Move>[]).where((m) => m.favorite).toList();
   List<Spell> get spells => (charProvider.maybeCurrent?.spells ?? <Spell>[])
       .where((m) => m.prepared)
       .toList();
-  List<Item> get items => (charProvider.maybeCurrent?.items ?? <Item>[])
-      .where((m) => m.equipped)
-      .toList();
-  List<Note> get notes => (charProvider.maybeCurrent?.notes ?? <Note>[])
-      .where((n) => n.favorite)
-      .toList();
+  List<Item> get items =>
+      (maybeChar?.items ?? <Item>[]).where((m) => m.equipped).toList();
+  List<Note> get notes =>
+      (maybeChar?.notes ?? <Note>[]).where((n) => n.favorite).toList();
 
   @override
   Widget build(BuildContext context) {
@@ -180,46 +178,48 @@ class HomeCharacterDynamicCards extends StatelessWidget
             ),
             expandedCardBuilder: (context, move, index) =>
                 CharacterProvider.consumer(
-              (context, controller, _) =>
-                  moves.isNotEmpty && index < moves.length
-                      ? MoveCard(
-                          maxContentHeight: maxContentHeight,
-                          expandable: false,
-                          initiallyExpanded: true,
-                          move: moves[index],
-                          abilityScores: controller.current.abilityScores,
-                          actions: [
-                            EntityEditMenu(
-                              onEdit: () => ModelPages.openMovePage(
-                                abilityScores: controller.current.abilityScores,
-                                move: moves[index],
-                                onSave: (move) => library.upsertToCharacter(
-                                    [move],
-                                    forkBehavior: ForkBehavior.increaseVersion),
-                              ),
-                              onDelete: _delete(
-                                context,
-                                move,
-                                move.name,
-                                tn(Move),
-                                () => controller.updateCharacter(
-                                  CharacterUtils.removeMoves(
-                                      controller.current, [move]),
-                                ),
+              (context, controller, _) {
+                final library = LibraryProvider.of(context);
+                return moves.isNotEmpty && index < moves.length
+                    ? MoveCard(
+                        maxContentHeight: maxContentHeight,
+                        expandable: false,
+                        initiallyExpanded: true,
+                        move: moves[index],
+                        abilityScores: controller.current.abilityScores,
+                        actions: [
+                          EntityEditMenu(
+                            onEdit: () => ModelPages.openMovePage(
+                              abilityScores: controller.current.abilityScores,
+                              move: moves[index],
+                              onSave: (move) => library.upsertToCharacter(
+                                  [move],
+                                  forkBehavior: ForkBehavior.increaseVersion),
+                            ),
+                            onDelete: _delete(
+                              context,
+                              move,
+                              move.name,
+                              tn(Move),
+                              () => controller.updateCharacter(
+                                CharacterUtils.removeMoves(
+                                    controller.current, [move]),
                               ),
                             ),
-                          ],
-                          onSave: (move) {
-                            controller.updateCharacter(
-                              CharacterUtils.updateMoves(
-                                  controller.current, [move]),
-                            );
-                            if (!move.favorite) {
-                              Navigator.of(context).pop();
-                            }
-                          },
-                        )
-                      : const SizedBox.shrink(),
+                          ),
+                        ],
+                        onSave: (move) {
+                          controller.updateCharacter(
+                            CharacterUtils.updateMoves(
+                                controller.current, [move]),
+                          );
+                          if (!move.favorite) {
+                            Navigator.of(context).pop();
+                          }
+                        },
+                      )
+                    : const SizedBox.shrink();
+              },
             ),
             leading: raceCardMini != null &&
                     controller.current.settings.racePosition ==

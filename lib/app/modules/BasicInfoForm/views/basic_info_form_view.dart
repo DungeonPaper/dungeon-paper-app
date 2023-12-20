@@ -1,5 +1,5 @@
 import 'package:dungeon_paper/app/data/models/character.dart';
-import 'package:dungeon_paper/app/data/services/user_service.dart';
+import 'package:dungeon_paper/app/data/services/user_provider.dart';
 import 'package:dungeon_paper/app/routes/app_pages.dart';
 import 'package:dungeon_paper/app/themes/colors.dart';
 import 'package:dungeon_paper/app/widgets/atoms/advanced_floating_action_button.dart';
@@ -16,7 +16,7 @@ import 'package:provider/provider.dart';
 
 import '../controllers/basic_info_form_controller.dart';
 
-class BasicInfoFormView extends StatelessWidget with UserServiceMixin {
+class BasicInfoFormView extends StatelessWidget with UserProviderMixin {
   const BasicInfoFormView({
     super.key,
   });
@@ -112,14 +112,14 @@ class BasicInfoFormView extends StatelessWidget with UserServiceMixin {
                     height: 40,
                     child: ElevatedButton.icon(
                       onPressed:
-                          !controller.isUploading && userService.isLoggedIn
+                          !controller.isUploading && userProvider.isLoggedIn
                               ? () => controller.startUploadFlow(context)
                               : null,
                       icon: const Icon(Icons.upload_file),
                       label: Text(tr.basicInfo.form.photo.choose),
                     ),
                   ),
-                if (userService.isGuest) ...[
+                if (userProvider.isGuest) ...[
                   Padding(
                     padding: const EdgeInsets.only(top: 8),
                     child: RichText(

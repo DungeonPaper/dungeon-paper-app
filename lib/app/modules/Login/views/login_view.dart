@@ -1,3 +1,4 @@
+import 'package:dungeon_paper/app/data/services/loading_provider.dart';
 import 'package:dungeon_paper/app/widgets/atoms/labeled_divider.dart';
 import 'package:dungeon_paper/app/widgets/atoms/password_field.dart';
 import 'package:dungeon_paper/core/dw_icons.dart';
@@ -34,12 +35,12 @@ class LoginView extends GetView<LoginController> {
               child: AutofillGroup(
                 child: SizedBox(
                   width: 400,
-                  child: Obx(
-                    () {
+                  child: LoadingProvider.consumer(
+                    (context, loadingProvider, _) {
                       final providerSignIns = <Widget>[
                         if (PlatformHelper.canUseGoogleSignIn) ...[
                           ElevatedButton.icon(
-                            onPressed: !controller.loadingService.loadingUser
+                            onPressed: !loadingProvider.loadingUser
                                 ? () =>controller.loginWithGoogle(context)
                                 : null,
                             label: Text(
@@ -56,7 +57,7 @@ class LoginView extends GetView<LoginController> {
                         ],
                         if (PlatformHelper.canUseAppleSignIn) ...[
                           ElevatedButton.icon(
-                            onPressed: !controller.loadingService.loadingUser
+                            onPressed: !loadingProvider.loadingUser
                                 ? () => controller.loginWithApple(context)
                                 : null,
                             label: Text(
@@ -103,7 +104,7 @@ class LoginView extends GetView<LoginController> {
                             decoration: InputDecoration(
                               filled: true,
                               label: Text(tr.auth.signup.email.label),
-                              enabled: !controller.loadingService.loadingUser,
+                              enabled: !loadingProvider.loadingUser,
                               // floatingLabelBehavior: FloatingLabelBehavior.auto,
                               hintText: tr.auth.signup.email.placeholder,
                             ),
@@ -125,7 +126,7 @@ class LoginView extends GetView<LoginController> {
                               filled: true,
                               label: Text(tr.auth.signup.password.label),
                               hintText: tr.auth.signup.password.placeholder,
-                              enabled: !controller.loadingService.loadingUser,
+                              enabled: !loadingProvider.loadingUser,
                               // floatingLabelBehavior: FloatingLabelBehavior.auto,
                             ),
                             validator: PasswordValidator().validator,
@@ -142,7 +143,7 @@ class LoginView extends GetView<LoginController> {
                                     Text(tr.auth.signup.password.confirm.label),
                                 hintText:
                                     tr.auth.signup.password.confirm.placeholder,
-                                enabled: !controller.loadingService.loadingUser,
+                                enabled: !loadingProvider.loadingUser,
                                 // floatingLabelBehavior: FloatingLabelBehavior.auto,
                               ),
                               validator: (pwd) =>
@@ -169,7 +170,7 @@ class LoginView extends GetView<LoginController> {
                               padding: const EdgeInsets.symmetric(
                                   horizontal: 24, vertical: 12),
                             ),
-                            icon: controller.loadingService.loadingUser
+                            icon: loadingProvider.loadingUser
                                 ? const SizedBox.square(
                                     dimension: 24,
                                     child: CircularProgressIndicator.adaptive(),

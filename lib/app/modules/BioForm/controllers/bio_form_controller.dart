@@ -2,10 +2,9 @@ import 'package:dungeon_paper/app/data/models/character.dart';
 import 'package:dungeon_paper/app/data/services/character_provider.dart';
 import 'package:dungeon_paper/core/utils/enum_utils.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 import 'package:dungeon_world_data/dungeon_world_data.dart' as dw;
 
-class BioFormController extends ChangeNotifier {
+class BioFormController extends ChangeNotifier with CharacterProviderMixin {
   var bioDesc = TextEditingController();
   var looks = TextEditingController();
   var alignmentName = 'good';
@@ -14,9 +13,6 @@ class BioFormController extends ChangeNotifier {
   var dirty = false;
 
   BioFormController(BuildContext context) {
-    final BioFormArguments args = Get.arguments;
-    final charProvider = CharacterProvider.of(context);
-    final char = args.character ?? charProvider.current;
     bioDesc = TextEditingController(text: char.bio.description);
     looks = TextEditingController(text: char.bio.looks);
     alignmentName = char.bio.alignment.key;

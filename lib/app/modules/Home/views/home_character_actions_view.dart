@@ -6,8 +6,7 @@ import 'package:dungeon_paper/app/data/models/move.dart';
 import 'package:dungeon_paper/app/data/models/race.dart';
 import 'package:dungeon_paper/app/data/models/spell.dart';
 import 'package:dungeon_paper/app/data/services/character_provider.dart';
-import 'package:dungeon_paper/app/data/services/library_service.dart';
-import 'package:dungeon_paper/app/data/services/repository_service.dart';
+import 'package:dungeon_paper/app/data/services/library_provider.dart';
 import 'package:dungeon_paper/app/model_utils/character_utils.dart';
 import 'package:dungeon_paper/app/model_utils/model_pages.dart';
 import 'package:dungeon_paper/app/modules/LibraryList/controllers/library_list_controller.dart';
@@ -33,7 +32,7 @@ import 'package:flutter/material.dart';
 
 import 'local_widgets/home_character_actions_summary.dart';
 
-class HomeCharacterActionsView extends StatelessWidget {
+class HomeCharacterActionsView extends StatelessWidget with CharacterProviderMixin {
   const HomeCharacterActionsView({super.key});
 
   @override
@@ -76,7 +75,6 @@ class HomeCharacterActionsView extends StatelessWidget {
   }
 
   Widget? movesList(BuildContext context, CharacterProvider controller) {
-    final char = controller.current;
     if (char.settings.actionCategories.hidden.contains('Move')) {
       return null;
     }
@@ -185,7 +183,6 @@ class HomeCharacterActionsView extends StatelessWidget {
   }
 
   Widget? spellsList(CharacterProvider controller) {
-    final char = controller.current;
     if (char.settings.actionCategories.hidden.contains('Spell')) {
       return null;
     }
@@ -221,7 +218,6 @@ class HomeCharacterActionsView extends StatelessWidget {
   }
 
   Widget? itemsList(CharacterProvider controller) {
-    final char = controller.current;
     if (char.settings.actionCategories.hidden.contains('Item')) {
       return null;
     }
@@ -292,9 +288,7 @@ class HomeCharacterActionsView extends StatelessWidget {
   }
 
   void _onReorder(BuildContext context, int oldIndex, int newIndex) {
-    final controller = CharacterProvider.of(context);
-    final char = controller.current;
-    controller.updateCharacter(
+    charProvider.updateCharacter(
       char.copyWith(
         settings: char.settings.copyWith(
           actionCategories: char.settings.actionCategories.copyWithInherited(
@@ -313,8 +307,6 @@ class HomeCharacterActionsView extends StatelessWidget {
   }
 
   void _openBasicMoves(BuildContext context) {
-    final controller = CharacterProvider.of(context);
-    final char = controller.current;
     ModelPages.openMovesList(
       category: MoveCategory.basic,
       initialTab: FiltersGroup.playbook,
@@ -323,8 +315,6 @@ class HomeCharacterActionsView extends StatelessWidget {
   }
 
   void _openSpecialMoves(BuildContext context) {
-    final controller = CharacterProvider.of(context);
-    final char = controller.current;
     ModelPages.openMovesList(
       category: MoveCategory.special,
       initialTab: FiltersGroup.playbook,
@@ -333,8 +323,7 @@ class HomeCharacterActionsView extends StatelessWidget {
   }
 }
 
-class ActionsCardList<T extends WithMeta> extends StatelessWidget
-    with LibraryServiceMixin, RepositoryServiceMixin {
+class ActionsCardList<T extends WithMeta> extends StatelessWidget with CharacterProviderMixin {
   const ActionsCardList({
     super.key,
     required this.route,
@@ -378,18 +367,18 @@ class ActionsCardList<T extends WithMeta> extends StatelessWidget
         title: Text(tr.entityPlural(typeName)),
         itemPadding: const EdgeInsets.only(bottom: 8),
         titleTrailing: [
-          TextButton.icon(
-            onPressed: () => Navigator.pushNamed(
-              context,
-              route,
-              arguments: addPageArguments(
-                onSelected: (items) => library.upsertToCharacter(items,
-                    forkBehavior: ForkBehavior.fork),
-              ),
-            ),
-            label: Text(tr.generic.addEntity(tr.entityPlural(typeName))),
-            icon: const Icon(Icons.add),
-          ),
+          LibraryProvider.consumer((context, library, _) => TextButton.icon(
+                onPressed: () => Navigator.pushNamed(
+                  context,
+                  route,
+                  arguments: addPageArguments(
+                    onSelected: (items) => library.upsertToCharacter(items,
+                        forkBehavior: ForkBehavior.fork),
+                  ),
+                ),
+                label: Text(tr.generic.addEntity(tr.entityPlural(typeName))),
+                icon: const Icon(Icons.add),
+              )),
           GroupSortMenu(
             index: index,
             totalItemCount: Character.allActionCategories.length,
@@ -408,6 +397,7 @@ class ActionsCardList<T extends WithMeta> extends StatelessWidget
                 obj,
                 onDelete: _confirmDeleteDlg(context, obj, obj.displayName),
                 onSave: (fork) => (obj) {
+                  final library = LibraryProvider.of(context);
                   library.upsertToCharacter([obj],
                       forkBehavior: ForkBehavior.none);
                 },
@@ -433,11 +423,9 @@ class ActionsCardList<T extends WithMeta> extends StatelessWidget
     T object,
     String name,
   ) {
-    final controller = CharacterProvider.of(context);
-    final char = controller.current;
     return () {
       awaitDeleteConfirmation(context, name, () {
-        controller.updateCharacter(
+        charProvider.updateCharacter(
           char.copyWithInherited(
             moves: char.moves.where((x) => x.key != object.key).toList(),
           ),

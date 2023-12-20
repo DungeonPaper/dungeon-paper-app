@@ -1,7 +1,7 @@
 import 'dart:convert';
 
+import 'package:dungeon_paper/core/utils/list_utils.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 import 'package:wakelock/wakelock.dart';
 
 import '../../themes/themes.dart';

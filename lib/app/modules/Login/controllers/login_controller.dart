@@ -1,12 +1,10 @@
-import 'package:dungeon_paper/app/data/services/auth_service.dart';
-import 'package:dungeon_paper/app/data/services/character_service.dart';
-import 'package:dungeon_paper/app/data/services/loading_service.dart';
+import 'package:dungeon_paper/app/data/services/auth_provider.dart';
+import 'package:dungeon_paper/app/data/services/loading_provider.dart';
 import 'package:dungeon_paper/core/utils/secrets_base.dart';
 import 'package:flutter/material.dart';
 import 'package:sentry_flutter/sentry_flutter.dart';
 
-class LoginController extends ChangeNotifier
-    with AuthServiceMixin, LoadingServiceMixin, CharacterServiceMixin {
+class LoginController extends ChangeNotifier with AuthProviderMixin {
   final formKey = GlobalKey<FormState>(debugLabel: 'loginForm');
   final email = TextEditingController();
   final password = TextEditingController();
@@ -28,10 +26,11 @@ class LoginController extends ChangeNotifier
 
   void _loginWrapper(BuildContext context, Future<void> Function() cb) async {
     final messenger = ScaffoldMessenger.of(context);
+    final loadingProvider = LoadingProvider.of(context);
     try {
       final navigator = Navigator.of(context);
-      loadingService.loadingUser = true;
-      loadingService.loadingCharacters = false;
+      loadingProvider.loadingUser = true;
+      loadingProvider.loadingCharacters = false;
       await cb();
       navigator.popUntil((route) => route.isFirst);
     } catch (e) {
@@ -39,8 +38,8 @@ class LoginController extends ChangeNotifier
         Sentry.captureException(e);
       }
       debugPrint('ERROR: $e');
-      loadingService.loadingUser = false;
-      loadingService.loadingCharacters = false;
+      loadingProvider.loadingUser = false;
+      loadingProvider.loadingCharacters = false;
       // TODO intl
       messenger.showSnackBar(const SnackBar(content: Text('Login failed')));
     }
@@ -51,7 +50,7 @@ class LoginController extends ChangeNotifier
   ) async {
     _loginWrapper(
       context,
-      () => authService.loginWithPassword(
+      () => authProvider.loginWithPassword(
           email: email.text, password: password.text),
     );
   }
@@ -61,7 +60,7 @@ class LoginController extends ChangeNotifier
   ) async {
     _loginWrapper(
       context,
-      () => authService.loginWithGoogle(),
+      () => authProvider.loginWithGoogle(),
     );
   }
 
@@ -70,7 +69,7 @@ class LoginController extends ChangeNotifier
   ) async {
     _loginWrapper(
       context,
-      () => authService.loginWithApple(),
+      () => authProvider.loginWithApple(),
     );
   }
 
@@ -79,7 +78,7 @@ class LoginController extends ChangeNotifier
   ) {
     _loginWrapper(
       context,
-      () => authService.signUp(email: email.text, password: password.text),
+      () => authProvider.signUp(email: email.text, password: password.text),
     );
   }
 

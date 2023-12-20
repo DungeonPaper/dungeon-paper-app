@@ -4,7 +4,7 @@ import 'package:dungeon_paper/app/widgets/atoms/custom_expansion_panel.dart';
 import 'package:dungeon_paper/app/widgets/atoms/menu_button.dart';
 import 'package:dungeon_paper/i18n.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
+import 'package:provider/provider.dart';
 
 import '../../../../core/dw_icons.dart';
 import '../../../data/models/character.dart';
@@ -17,21 +17,24 @@ import '../../../widgets/chips/primary_chip.dart';
 enum ListCardType { import, export }
 
 class ListCard<T extends WithMeta, C extends ImportExportSelectionData>
-    extends GetView<C> {
+    extends StatelessWidget {
   const ListCard({
     super.key,
     required this.type,
   });
 
   final ListCardType type;
-  List<T> get list => controller.listByType<T>();
+  List<T> list(BuildContext context) =>
+      Provider.of<C>(context, listen: false).listByType<T>();
 
   @override
   Widget build(BuildContext context) {
     final textTheme = Theme.of(context).textTheme;
 
-    return Obx(
-      () => Card(
+    return Consumer<C>(
+      builder: (context, controller, _) {
+        final list = this.list(context);
+        return Card(
         margin: const EdgeInsets.only(top: 16),
         child: CustomExpansionPanel(
           initiallyExpanded: true,
@@ -100,7 +103,8 @@ class ListCard<T extends WithMeta, C extends ImportExportSelectionData>
               ),
           ],
         ),
-      ),
+      );
+      },
     );
   }
 

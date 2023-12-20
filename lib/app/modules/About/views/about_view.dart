@@ -7,14 +7,14 @@ import 'package:dungeon_paper/core/dw_icons.dart';
 import 'package:dungeon_paper/core/utils/builder_utils.dart';
 import 'package:dungeon_paper/i18n.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
+import 'package:provider/provider.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:dungeon_paper/core/utils/list_utils.dart';
 
 import '../../../model_utils/user_utils.dart';
 import '../controllers/about_controller.dart';
 
-class AboutView extends GetView<AboutController> {
+class AboutView extends StatelessWidget {
   const AboutView({super.key});
 
   @override
@@ -34,9 +34,9 @@ class AboutView extends GetView<AboutController> {
                 textAlign: TextAlign.center,
                 style: textTheme.headlineMedium,
               ),
-          () => Obx(
-                () => Text(
-                  tr.about.version(controller.version.value?.toString() ?? '-'),
+          () => Consumer<AboutController>(
+                builder: (context, controller, _) => Text(
+                  tr.about.version(controller.version?.toString() ?? '-'),
                   textAlign: TextAlign.center,
                   style: textTheme.bodySmall,
                 ),
@@ -71,7 +71,7 @@ class AboutView extends GetView<AboutController> {
                 title: Text(tr.about.feedback.title),
                 subtitle: Text(tr.about.feedback.subtitle,
                     style: textTheme.bodySmall),
-                onTap: () => Get.toNamed(Routes.sendFeedback),
+                onTap: () => Navigator.of(context).pushNamed(Routes.sendFeedback),
                 isThreeLine: true,
                 visualDensity: VisualDensity.compact,
               ),

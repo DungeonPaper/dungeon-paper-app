@@ -18,12 +18,10 @@ class HPDialog extends StatefulWidget {
   State<HPDialog> createState() => _HPDialogState();
 }
 
-class _HPDialogState extends State<HPDialog> {
+class _HPDialogState extends State<HPDialog> with CharacterProviderMixin {
   late int overrideHP;
   late bool shouldOverrideMaxHP;
   late TextEditingController overrideMaxHp;
-  CharacterProvider get charProvider => CharacterProvider.of(context);
-  Character get char => charProvider.current;
 
   @override
   void initState() {

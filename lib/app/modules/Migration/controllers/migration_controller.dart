@@ -1,20 +1,19 @@
 import 'package:dungeon_paper/core/http/api_requests/migration.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 
-class MigrationController extends GetxController {
-  final _username = TextEditingController(text: '').obs;
-  final _language = 'EN'.obs;
+class MigrationController extends ChangeNotifier {
+  final _username = TextEditingController(text: '');
+  final _language = 'EN';
   late final String email;
 
-  TextEditingController get username => _username.value;
-  String get language => _language.value;
+  TextEditingController get username => _username;
+  String get language => _language;
 
   bool get isValid => username.text.isNotEmpty && language.isNotEmpty;
 
-  void done() {
-    Get.back(
-      result: MigrationDetails(
+  void done(BuildContext context) {
+    Navigator.of(context).pop(
+      MigrationDetails(
         email: email,
         username: username.text,
         language: language,
@@ -22,23 +21,23 @@ class MigrationController extends GetxController {
     );
   }
 
-  @override
-  void onInit() {
-    super.onInit();
-    final args = Get.arguments as MigrationArguments;
+  MigrationController(BuildContext context) {
+    final arguments = ModalRoute.of(context)?.settings.arguments as dynamic;
+    assert(arguments is MigrationArguments);
+    final args = arguments as MigrationArguments;
     email = args.email;
     username.addListener(_refreshUsername);
   }
 
   @override
-  onClose() {
+  dispose() {
+    super.dispose();
     username.removeListener(_refreshUsername);
     username.dispose();
-    super.onClose();
   }
 
   _refreshUsername() {
-    _username.refresh();
+    notifyListeners();
   }
 }
 
@@ -47,3 +46,4 @@ class MigrationArguments {
 
   MigrationArguments({required this.email});
 }
+

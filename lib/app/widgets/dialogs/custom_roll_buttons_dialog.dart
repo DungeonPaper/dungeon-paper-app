@@ -3,7 +3,7 @@ import 'dart:math';
 import 'package:dungeon_paper/app/data/models/character.dart';
 import 'package:dungeon_paper/app/data/models/move.dart';
 import 'package:dungeon_paper/app/data/models/roll_button.dart';
-import 'package:dungeon_paper/app/data/services/repository_service.dart';
+import 'package:dungeon_paper/app/data/services/repository_provider.dart';
 import 'package:dungeon_paper/app/widgets/atoms/select_box.dart';
 import 'package:dungeon_paper/app/widgets/molecules/dialog_controls.dart';
 import 'package:dungeon_paper/app/widgets/molecules/dice_list_input.dart';
@@ -132,7 +132,7 @@ class _RollButtonListTile extends StatefulWidget {
 }
 
 class _RollButtonListTileState extends State<_RollButtonListTile>
-    with RepositoryServiceMixin {
+    with RepositoryProviderMixin {
   late TextEditingController label;
   late ValueNotifier<List<dw.Dice>> dice;
   late ValueNotifier<List<SpecialDice>> specialDice;

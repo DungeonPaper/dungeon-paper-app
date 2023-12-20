@@ -10,12 +10,13 @@ import '../data/models/move.dart';
 import '../data/models/note.dart';
 import '../data/models/race.dart';
 import '../data/models/spell.dart';
-import '../data/services/character_service.dart';
 import '../modules/AbilityScoreForm/controllers/ability_score_form_controller.dart';
 import '../modules/AbilityScoreForm/views/ability_score_form_view.dart';
 import '../modules/AbilityScoresForm/controllers/ability_scores_form_controller.dart';
 import '../modules/AbilityScoresForm/views/ability_scores_form_view.dart';
+import '../modules/About/controllers/about_controller.dart';
 import '../modules/About/views/about_view.dart';
+import '../modules/Account/controllers/account_controller.dart';
 import '../modules/Account/views/account_view.dart';
 import '../modules/BasicInfoForm/controllers/basic_info_form_controller.dart';
 import '../modules/BasicInfoForm/views/basic_info_form_view.dart';
@@ -23,9 +24,12 @@ import '../modules/BioForm/controllers/bio_form_controller.dart';
 import '../modules/BioForm/views/bio_form_view.dart';
 import '../modules/BondsFlagsForm/controllers/bonds_flags_form_controller.dart';
 import '../modules/BondsFlagsForm/views/bonds_flags_form_view.dart';
+import '../modules/Campaign/CampaignsList/controllers/campaigns_list_controller.dart';
 import '../modules/Campaign/CampaignsList/views/campaigns_list_view.dart';
 import '../modules/CharacterList/views/character_list_view.dart';
+import '../modules/ClassAlignments/controllers/class_alignments_controller.dart';
 import '../modules/ClassAlignments/views/class_alignments_view.dart';
+import '../modules/CreateCharacter/SelectMovesSpells/controllers/select_moves_spells_controller.dart';
 import '../modules/CreateCharacter/SelectMovesSpells/views/select_moves_spells_view.dart';
 import '../modules/CreateCharacter/controllers/create_character_controller.dart';
 import '../modules/CreateCharacter/views/create_character_view.dart';
@@ -40,8 +44,11 @@ import '../modules/LibraryList/views/races_library_list_view.dart';
 import '../modules/LibraryList/views/spells_library_list_view.dart';
 import '../modules/Login/controllers/login_controller.dart';
 import '../modules/Login/views/login_view.dart';
+import '../modules/Migration/controllers/migration_controller.dart';
 import '../modules/Migration/views/migration_view.dart';
+import '../modules/SelectCharacterTheme/controllers/select_character_theme_controller.dart';
 import '../modules/SelectCharacterTheme/views/select_character_theme_view.dart';
+import '../modules/SendFeedback/controllers/send_feedback_controller.dart';
 import '../modules/SendFeedback/views/send_feedback_view.dart';
 import '../modules/Settings/controllers/settings_controller.dart';
 import '../modules/Settings/views/settings_view.dart';
@@ -66,8 +73,6 @@ class AppPages {
 
   static final pageController = PageController();
 
-  static final CharacterService characterService = Get.find();
-
   static const initial = Routes.home;
 
   static final routes = {
@@ -83,7 +88,7 @@ class AppPages {
     Routes.characterList: (context) => const CharacterListPageView(),
 
     Routes.settings: (context) => ChangeNotifierProvider(
-          create: (_) => SettingsController(),
+          create: (context) => SettingsController(context),
           child: const SettingsView(),
         ),
 
@@ -183,7 +188,7 @@ class AppPages {
 
     Routes.createCharacterMovesSpells: (context) => ChangeNotifierProvider(
           child: const SelectMovesSpellsView(),
-          create: (_) => SelectMovesSpellsController(),
+          create: (context) => SelectMovesSpellsController(context),
         ),
 
     Routes.createCharacterBasicInfo: (context) => ChangeNotifierProvider(
@@ -198,7 +203,7 @@ class AppPages {
 
     Routes.classAlignments: (context) => ChangeNotifierProvider(
           child: const ClassAlignmentsView(),
-          create: (_) => ClassAlignmentsController(),
+          create: (context) => ClassAlignmentsController(context),
         ),
 
     Routes.universalSearch: (context) => ChangeNotifierProvider(
@@ -208,7 +213,7 @@ class AppPages {
 
     Routes.migration: (context) => ChangeNotifierProvider(
           child: const MigrationView(),
-          create: (_) => MigrationController(),
+          create: (context) => MigrationController(context),
         ),
 
     Routes.about: (context) => ChangeNotifierProvider(

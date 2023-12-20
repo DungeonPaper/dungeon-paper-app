@@ -1,6 +1,6 @@
 import 'package:dungeon_paper/app/data/models/character.dart';
 import 'package:dungeon_paper/app/data/services/character_provider.dart';
-import 'package:dungeon_paper/app/data/services/user_service.dart';
+import 'package:dungeon_paper/app/data/services/user_provider.dart';
 import 'package:dungeon_paper/app/model_utils/character_utils.dart';
 import 'package:dungeon_paper/app/routes/app_pages.dart';
 import 'package:dungeon_paper/app/themes/themes.dart';
@@ -14,7 +14,7 @@ import 'package:dungeon_paper/core/utils/builder_utils.dart';
 import 'package:dungeon_paper/i18n.dart';
 import 'package:flutter/material.dart';
 
-class CharacterListPageView extends StatelessWidget with UserServiceMixin {
+class CharacterListPageView extends StatelessWidget with UserProviderMixin {
   const CharacterListPageView({super.key});
   @override
   Widget build(BuildContext context) {

@@ -5,9 +5,9 @@ import 'package:dungeon_paper/app/data/models/meta.dart';
 import 'package:dungeon_paper/app/data/models/move.dart';
 import 'package:dungeon_paper/app/data/models/race.dart';
 import 'package:dungeon_paper/app/data/models/spell.dart';
-import 'package:dungeon_paper/app/data/services/character_service.dart';
-import 'package:dungeon_paper/app/data/services/repository_service.dart';
-import 'package:dungeon_paper/app/data/services/user_service.dart';
+import 'package:dungeon_paper/app/data/services/character_provider.dart';
+import 'package:dungeon_paper/app/data/services/repository_provider.dart';
+import 'package:dungeon_paper/app/data/services/user_provider.dart';
 import 'package:dungeon_paper/app/model_utils/model_pages.dart';
 import 'package:dungeon_paper/app/widgets/atoms/menu_button.dart';
 import 'package:dungeon_paper/i18n.dart';
@@ -18,7 +18,7 @@ import 'package:intl/intl.dart';
 import '../controllers/library_collection_controller.dart';
 
 class LibraryCollectionView extends GetView<LibraryCollectionController>
-    with RepositoryServiceMixin, UserServiceMixin, CharacterServiceMixin {
+    with RepositoryProviderMixin, UserProviderMixin, CharacterProviderMixin {
   static const List<Type> types = [Move, Spell, Item, CharacterClass, Race];
 
   const LibraryCollectionView({super.key});
@@ -40,8 +40,8 @@ class LibraryCollectionView extends GetView<LibraryCollectionController>
                 disabled: repo.my.isLoading || repo.builtIn.isLoading,
                 value: 'refresh',
                 onSelect: () {
-                  userService.loadBuiltInRepo(ignoreCache: true);
-                  userService.loadMyRepo(ignoreCache: true);
+                  userProvider.loadBuiltInRepo(ignoreCache: true);
+                  userProvider.loadMyRepo(ignoreCache: true);
                 },
               ),
             ],

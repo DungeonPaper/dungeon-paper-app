@@ -50,6 +50,15 @@ extension IterableUtils<T> on Iterable<T> {
     }
     return out;
   }
+
+  T? firstWhereOrNull(bool Function(T element) test) {
+    for (final element in this) {
+      if (test(element)) {
+        return element;
+      }
+    }
+    return null;
+  }
 }
 
 T sample<T>(Iterable<T> list) {
@@ -172,3 +181,4 @@ List<T> asList<T>(dynamic item) => item == null
     : item is Iterable
         ? item.cast<T>().toList()
         : <T>[item];
+

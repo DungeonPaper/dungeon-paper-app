@@ -1,18 +1,27 @@
 import 'package:dungeon_paper/app/data/models/character.dart';
 import 'package:dungeon_paper/app/data/models/meta.dart';
-import 'package:dungeon_paper/app/data/models/user.dart';
-import 'package:dungeon_paper/app/data/services/character_service.dart';
-import 'package:dungeon_paper/app/data/services/user_service.dart';
 import 'package:dungeon_paper/app/model_utils/character_utils.dart';
+import 'package:dungeon_paper/core/global_keys.dart';
 import 'package:dungeon_paper/core/storage_handler/storage_handler.dart';
 import 'package:dungeon_paper/core/utils/uuid.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
+import 'package:provider/provider.dart';
 
-class LibraryService extends GetxService {
+import 'character_provider.dart';
+import 'user_provider.dart';
+
+class LibraryProvider extends ChangeNotifier
+    with CharacterProviderMixin, UserProviderMixin {
   StorageHandler get storage => StorageHandler.instance;
-  CharacterService get chars => Get.find();
-  User get user => Get.find<UserService>().current;
+
+  static LibraryProvider of(BuildContext context, {bool listen = false}) =>
+      Provider.of<LibraryProvider>(context, listen: listen);
+
+  static Widget consumer(
+          Widget Function(
+                  BuildContext context, LibraryProvider library, Widget? child)
+              builder) =>
+      Consumer<LibraryProvider>(builder: builder);
 
   Future<bool> existsInLibrary<T extends WithMeta>(T item) async {
     final res = await storage.getDocument(item.storageKey, item.key);
@@ -46,6 +55,7 @@ class LibraryService extends GetxService {
       // items = items.map((e) => (e.meta.createdBy == user.username)
       //     ? increaseMetaVersion(e)
       //     : forkMeta(e, user));
+
       items = items.map(
         (e) {
           debugPrint('forking $e: $forkBehavior');
@@ -59,17 +69,21 @@ class LibraryService extends GetxService {
         },
       );
     }
+
     var m = items.elementAt(0).meta;
     debugPrint('upserting meta ${m.toJson()}');
-    chars.updateCharacter(
-      CharacterUtils.upsertByType<T>(char ?? chars.current, items),
+    charProvider.updateCharacter(
+      CharacterUtils.upsertByType<T>(char ?? charProvider.current, items),
     );
   }
 
-  void removeFromCharacter<T extends WithMeta>(Iterable<T> items,
-      [Character? char]) async {
-    chars.updateCharacter(
-      CharacterUtils.removeByType<T>(char ?? chars.current, items),
+  void removeFromCharacter<T extends WithMeta>(
+    BuildContext context,
+    Iterable<T> items, [
+    Character? char,
+  ]) async {
+    charProvider.updateCharacter(
+      CharacterUtils.removeByType<T>(char ?? charProvider.current, items),
     );
   }
 }
@@ -81,6 +95,8 @@ enum ForkBehavior {
   both,
 }
 
-mixin LibraryServiceMixin {
-  LibraryService get library => Get.find();
+mixin LibraryProviderMixin {
+  LibraryProvider get libraryProvider =>
+      LibraryProvider.of(appGlobalKey.currentContext!);
 }
+

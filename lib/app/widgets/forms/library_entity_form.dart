@@ -1,6 +1,4 @@
 import 'package:dungeon_paper/app/data/models/meta.dart';
-import 'package:dungeon_paper/app/data/models/user.dart';
-import 'package:dungeon_paper/app/data/services/user_service.dart';
 import 'package:dungeon_paper/app/widgets/atoms/advanced_floating_action_button.dart';
 import 'package:dungeon_paper/app/widgets/atoms/confirm_exit_view.dart';
 import 'package:dungeon_paper/app/widgets/forms/entity_share_form.dart';
@@ -9,12 +7,12 @@ import 'package:dungeon_paper/core/utils/enums.dart';
 import 'package:dungeon_paper/core/utils/list_utils.dart';
 import 'package:dungeon_paper/i18n.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
+import 'package:provider/provider.dart';
 
 class LibraryEntityForm<
     T extends WithMeta,
     Ctrl extends LibraryEntityFormController<T,
-        LibraryEntityFormArguments<T>>> extends GetView<Ctrl> {
+        LibraryEntityFormArguments<T>>> extends StatelessWidget {
   const LibraryEntityForm({
     super.key,
     required this.children,
@@ -24,12 +22,12 @@ class LibraryEntityForm<
 
   @override
   Widget build(BuildContext context) {
-    return Obx(
-      () => ConfirmExitView(
+    return Consumer<Ctrl>(
+      builder: (context, controller, _) => ConfirmExitView(
         dirty: controller.dirty,
         child: Scaffold(
           appBar: AppBar(
-            title: title,
+            title: title(controller),
           ),
           body: ItemBuilder.lazyListView(
             padding: const EdgeInsets.all(16).copyWith(bottom: 80),
@@ -37,16 +35,14 @@ class LibraryEntityForm<
                 children.joinObjects(() => const SizedBox(height: 16)).toList(),
             trailing: [
               () => const Divider(height: 64),
-              () => Obx(
-                    () => EntityShareForm(
-                      entity: controller.asEntity.value,
-                      onChange: controller.updateFromEntity,
-                    ),
-                  )
+              () => EntityShareForm(
+                    entity: controller.asEntity,
+                    onChange: controller.updateFromEntity,
+                  ),
             ],
           ),
           floatingActionButton: AdvancedFloatingActionButton.extended(
-            onPressed: controller.onSave,
+            onPressed: () => controller.onSave(context),
             label: Text(tr.generic.save),
             icon: const Icon(Icons.save),
           ),
@@ -55,9 +51,7 @@ class LibraryEntityForm<
     );
   }
 
-  User get user => Get.find<UserService>().current;
-
-  Widget get title => Text(
+  Widget title(Ctrl controller) => Text(
         controller.args.formContext == FormContext.create
             ? tr.generic.addEntity(tr.entity(
                 tn(controller.empty().runtimeType),
@@ -74,17 +68,17 @@ abstract class LibraryEntityFormController<T extends WithMeta,
   late final Args args;
   bool afterInit = false;
   List<ValueNotifier> get fields;
-  late final Rx<Meta> meta;
+  late Meta meta;
   late final List<String> _initialValueCache;
-  late Rx<T> asEntity;
+  late T asEntity;
 
   LibraryEntityFormController(BuildContext context) : super() {
     final arguments = ModalRoute.of(context)?.settings.arguments;
     assert(arguments is LibraryEntityFormArguments<T>);
     final LibraryEntityFormArguments<T> args =
         arguments as LibraryEntityFormArguments<T>;
-    asEntity = Rx(args.entity ?? empty());
-    meta = Rx(args.entity?.meta ?? _forkMeta());
+    asEntity = args.entity ?? empty();
+    meta = args.entity?.meta ?? _forkMeta();
     _initialValueCache = List.generate(fields.length, (i) => '');
 
     for (var field in enumerate(fields)) {
@@ -102,10 +96,11 @@ abstract class LibraryEntityFormController<T extends WithMeta,
       }
       if (afterInit && asStr != cached) {
         dirty = true;
-        meta.value = _forkMeta();
+        meta = _forkMeta();
       }
       field.value.notifyListeners();
-      asEntity.value = toEntity();
+      asEntity = toEntity();
+      notifyListeners();
     };
   }
 
@@ -144,14 +139,15 @@ abstract class LibraryEntityFormController<T extends WithMeta,
 
   T empty();
   @protected
-  T toEntity() => (args.entity ?? empty()).copyWithInherited(meta: meta.value);
+  T toEntity() => (args.entity ?? empty()).copyWithInherited(meta: meta);
 
   @mustCallSuper
   void updateFromEntity(T entity) {
-    meta.value = entity.meta;
+    meta = entity.meta;
+    notifyListeners();
   }
 
-  void onSave() {
+  void onSave(BuildContext context) {
     debugPrint('onSave: ${args.onSave}');
     cb(dynamic obj) {
       args.onSave(obj);
@@ -159,7 +155,7 @@ abstract class LibraryEntityFormController<T extends WithMeta,
 
     var entity = toEntity();
     cb(entity as dynamic);
-    Get.back();
+    Navigator.of(context).pop();
   }
 }
 

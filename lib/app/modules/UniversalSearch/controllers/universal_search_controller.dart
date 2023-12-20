@@ -4,7 +4,7 @@ import 'package:dungeon_paper/app/data/models/move.dart';
 import 'package:dungeon_paper/app/data/models/race.dart';
 import 'package:dungeon_paper/app/data/models/spell.dart';
 import 'package:dungeon_paper/app/data/services/character_provider.dart';
-import 'package:dungeon_paper/app/data/services/repository_service.dart';
+import 'package:dungeon_paper/app/data/services/repository_provider.dart';
 import 'package:dungeon_paper/app/model_utils/model_search.dart';
 import 'package:dungeon_paper/app/modules/LibraryList/views/filters/character_class_filters.dart';
 import 'package:dungeon_paper/app/modules/LibraryList/views/filters/item_filters.dart';
@@ -22,7 +22,7 @@ enum SourceType {
 }
 
 class UniversalSearchController extends ChangeNotifier
-    with RepositoryServiceMixin, CharacterProviderMixin {
+    with RepositoryProviderMixin, CharacterProviderMixin {
   final _search = TextEditingController(text: '');
 
   TextEditingController get search => _search;

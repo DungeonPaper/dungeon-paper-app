@@ -1,6 +1,6 @@
 import 'dart:async';
 
-import 'package:dungeon_paper/app/data/services/user_service.dart';
+import 'package:dungeon_paper/app/data/services/user_provider.dart';
 import 'package:dungeon_paper/app/themes/themes.dart';
 import 'package:dungeon_paper/core/global_keys.dart';
 import 'package:dungeon_paper/core/storage_handler/storage_handler.dart';
@@ -11,10 +11,10 @@ import 'package:flutter/widgets.dart';
 import 'package:provider/provider.dart';
 
 import '../models/character.dart';
-import 'loading_service.dart';
+import 'loading_provider.dart';
 
 class CharacterProvider extends ChangeNotifier
-    with LoadingServiceMixin, UserServiceMixin {
+    with LoadingProviderMixin, UserProviderMixin {
   static CharacterProvider of(BuildContext context, {bool listen = false}) =>
       Provider.of(context, listen: listen);
 
@@ -130,8 +130,8 @@ class CharacterProvider extends ChangeNotifier
       switchToCharacterTheme(current);
     }
 
-    loadingService.loadingCharacters = false;
-    loadingService.afterFirstLoad = !loadingService.loadingUser;
+    loadingProvider.loadingCharacters = false;
+    loadingProvider.afterFirstLoad = !loadingProvider.loadingUser;
     notifyListeners();
   }
 

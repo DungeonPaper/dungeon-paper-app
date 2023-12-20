@@ -8,6 +8,7 @@ import 'package:dungeon_paper/app/data/models/move.dart';
 import 'package:dungeon_paper/app/data/models/note.dart';
 import 'package:dungeon_paper/app/data/models/race.dart';
 import 'package:dungeon_paper/app/data/models/spell.dart';
+import 'package:dungeon_paper/core/global_keys.dart';
 import 'package:dungeon_paper/core/http/api.dart';
 import 'package:dungeon_paper/core/http/api_requests/search.dart';
 import 'package:dungeon_paper/core/storage_handler/storage_handler.dart';
@@ -15,7 +16,6 @@ import 'package:dungeon_paper/core/utils/list_utils.dart';
 
 import 'package:dungeon_world_data/dungeon_world_data.dart' as dw;
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 import 'package:provider/provider.dart';
 
 class RepositoryProvider extends ChangeNotifier {
@@ -463,8 +463,8 @@ class PersonalRepository extends RepositoryCache {
   RemoteBehavior get loadRemote => RemoteBehavior.always;
 }
 
-mixin RepositoryServiceMixin {
-  RepositoryProvider get repository => Get.find();
-  RepositoryProvider get repo => repository;
+mixin RepositoryProviderMixin {
+  RepositoryProvider get repo => RepositoryProvider.of(appGlobalKey.currentContext!);
+  RepositoryProvider get repository => repo;
 }
 

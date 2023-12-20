@@ -1,11 +1,11 @@
 import 'dart:io';
 
-import 'package:dungeon_paper/app/data/services/user_service.dart';
+import 'package:dungeon_paper/app/data/services/user_provider.dart';
 import 'package:dungeon_paper/core/utils/upload_utils.dart';
 import 'package:dungeon_paper/core/utils/uuid.dart';
 import 'package:flutter/material.dart';
 
-class BasicInfoFormController extends ChangeNotifier with UserServiceMixin {
+class BasicInfoFormController extends ChangeNotifier with UserProviderMixin {
   final TextEditingController name = TextEditingController();
   final TextEditingController avatarUrl = TextEditingController();
   late final void Function(String name, String avatar) onChanged;

@@ -12,29 +12,28 @@ import 'package:dungeon_paper/core/storage_handler/storage_handler.dart';
 import 'package:dungeon_paper/core/utils/list_utils.dart';
 import 'package:dungeon_paper/i18n.dart';
 import 'package:file_picker/file_picker.dart';
-import 'package:get/get.dart';
+import 'package:flutter/material.dart';
 
 import 'import_export_controller.dart';
 
-class ImportController extends GetxController
-    with GetSingleTickerProviderStateMixin
+class ImportController extends ChangeNotifier
     implements ImportExportSelectionData {
-  final Rx<ImportSelections?> toImport = Rx(null);
+  ImportSelections? toImport;
 
-  List<Character> get characters => toImport.value!.allCharacters.toList();
-  List<Move> get moves => toImport.value!.allMoves.toList();
-  List<Spell> get spells => toImport.value!.allSpells.toList();
-  List<Item> get items => toImport.value!.allItems.toList();
-  List<CharacterClass> get classes => toImport.value!.allClasses.toList();
-  List<Race> get races => toImport.value!.allRaces.toList();
+  List<Character> get characters => toImport!.allCharacters.toList();
+  List<Move> get moves => toImport!.allMoves.toList();
+  List<Spell> get spells => toImport!.allSpells.toList();
+  List<Item> get items => toImport!.allItems.toList();
+  List<CharacterClass> get classes => toImport!.allClasses.toList();
+  List<Race> get races => toImport!.allRaces.toList();
 
   int get selectionsCount => [characters, moves, spells, items, classes]
       .fold(0, (total, list) => total + list.length);
 
-  bool get hasData => toImport.value != null;
+  bool get hasData => toImport != null;
 
-  final importStep = Rx<Type?>(null);
-  final leftCount = 0.obs;
+  Type? importStep;
+  var leftCount = 0;
 
   @override
   void toggle<T extends WithMeta>(T item, bool state) =>
@@ -47,36 +46,36 @@ class ImportController extends GetxController
   void _toggleImportList<T>(List<T> items, bool state) {
     switch (T) {
       case == Character:
-        toImport.value!.characters = _toggleInList(
-            toImport.value!.characters, items.cast<Character>(), state);
+        toImport!.characters =
+            _toggleInList(toImport!.characters, items.cast<Character>(), state);
         break;
       case == Move:
-        toImport.value!.moves =
-            _toggleInList(toImport.value!.moves, items.cast<Move>(), state);
+        toImport!.moves =
+            _toggleInList(toImport!.moves, items.cast<Move>(), state);
         break;
       case == Spell:
-        toImport.value!.spells =
-            _toggleInList(toImport.value!.spells, items.cast<Spell>(), state);
+        toImport!.spells =
+            _toggleInList(toImport!.spells, items.cast<Spell>(), state);
         break;
       case == Item:
-        toImport.value!.items =
-            _toggleInList(toImport.value!.items, items.cast<Item>(), state);
+        toImport!.items =
+            _toggleInList(toImport!.items, items.cast<Item>(), state);
         break;
       case == CharacterClass:
-        toImport.value!.classes = _toggleInList(
-            toImport.value!.classes, items.cast<CharacterClass>(), state);
+        toImport!.classes = _toggleInList(
+            toImport!.classes, items.cast<CharacterClass>(), state);
         break;
       case == Race:
-        toImport.value!.races =
-            _toggleInList(toImport.value!.races, items.cast<Race>(), state);
+        toImport!.races =
+            _toggleInList(toImport!.races, items.cast<Race>(), state);
         break;
     }
-    toImport.refresh();
+    notifyListeners();
   }
 
   @override
   bool isSelected<T extends WithMeta>(T item) {
-    return toImport.value!
+    return toImport!
         .listByType<T>(selected: true)
         .map((x) => x.key)
         .contains(item.key);
@@ -109,13 +108,24 @@ class ImportController extends GetxController
     throw TypeError();
   }
 
-  void pickImportFile() async {
-    var result =
-        await FilePicker.platform.pickFiles(type: FileType.custom, allowedExtensions: ['json']);
+  void pickImportFile(BuildContext context) async {
+    final messenger = ScaffoldMessenger.of(context);
+    final theme = Theme.of(context);
+    final result = await FilePicker.platform
+        .pickFiles(type: FileType.custom, allowedExtensions: ['json']);
     if (result == null) {
-      Get.rawSnackbar(
-        title: tr.backup.importing.error.title,
-        message: tr.backup.importing.error.message,
+      messenger.showSnackBar(
+        SnackBar(
+          content: Column(
+            children: [
+              Text(
+                tr.backup.importing.error.title,
+                style: theme.textTheme.bodyLarge,
+              ),
+              Text(tr.backup.importing.error.message),
+            ],
+          ),
+        ),
       );
       return;
     }
@@ -123,56 +133,78 @@ class ImportController extends GetxController
     final filedata = result.files.single.bytes;
     final filestring = utf8.decode(filedata as List<int>);
     final filejson = json.decode(filestring);
-    toImport.value = ImportSelections.fromJson(filejson);
+    toImport = ImportSelections.fromJson(filejson);
   }
 
-  void Function()? getDoImport() {
-    if (!hasData || toImport.value?.hasSelections != true) {
+  void Function()? getDoImport(BuildContext context) {
+    if (!hasData || toImport?.hasSelections != true) {
       return null;
     }
 
+    final messenger = ScaffoldMessenger.of(context);
+    final theme = Theme.of(context);
     return () async {
-      leftCount.value = selectionsCount;
+      leftCount = selectionsCount;
+      final navigator = Navigator.of(context);
 
-      Get.dialog(const ImportProgressDialog(), barrierDismissible: false);
-      importStep.value = Character;
+      showDialog(
+          context: context,
+          builder: (_) => const ImportProgressDialog(),
+          barrierDismissible: false);
+      importStep = Character;
 
       await Future.delayed(const Duration(milliseconds: 500));
 
       for (final char in characters) {
         await StorageHandler.instance
             .create('Characters', char.key, char.toJson());
-        leftCount.value -= 1;
+        leftCount -= 1;
+        notifyListeners();
       }
-      importStep.value = CharacterClass;
+      importStep = CharacterClass;
       for (final cls in classes) {
         await StorageHandler.instance
             .create('CharacterClasses', cls.key, cls.toJson());
-        leftCount.value -= 1;
+        leftCount -= 1;
+        notifyListeners();
       }
-      importStep.value = Move;
+      importStep = Move;
       for (final move in moves) {
         await StorageHandler.instance.create('Moves', move.key, move.toJson());
-        leftCount.value -= 1;
+        leftCount -= 1;
+        notifyListeners();
       }
-      importStep.value = Spell;
+      importStep = Spell;
       for (final spell in spells) {
         await StorageHandler.instance
             .create('Spells', spell.key, spell.toJson());
-        leftCount.value -= 1;
+        leftCount -= 1;
+        notifyListeners();
       }
-      importStep.value = Item;
+      importStep = Item;
       for (final items in items) {
         await StorageHandler.instance
             .create('Items', items.key, items.toJson());
-        leftCount.value -= 1;
+        leftCount -= 1;
+        notifyListeners();
       }
       await Future.delayed(const Duration(milliseconds: 500));
-      Get.back();
+      navigator.pop();
 
-      Get.rawSnackbar(
-        title: tr.backup.importing.success.title,
-        message: tr.backup.importing.success.message,
+      messenger.showSnackBar(
+        SnackBar(
+          content: Column(
+            children: [
+              Text(
+                tr.backup.importing.success.title,
+                style: theme.textTheme.bodyLarge,
+              ),
+              Text(
+                tr.backup.importing.success.message,
+              ),
+            ],
+          ),
+        ),
       );
     };
   }
@@ -277,3 +309,4 @@ class ImportSelections {
         races,
       ].any((l) => l.isNotEmpty);
 }
+

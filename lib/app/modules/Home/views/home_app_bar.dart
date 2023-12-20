@@ -1,13 +1,12 @@
-import 'package:dungeon_paper/app/data/services/loading_service.dart';
-import 'package:dungeon_paper/app/data/services/user_service.dart';
+import 'package:dungeon_paper/app/data/services/loading_provider.dart';
+import 'package:dungeon_paper/app/data/services/user_provider.dart';
 import 'package:dungeon_paper/app/routes/app_pages.dart';
 import 'package:dungeon_paper/app/widgets/atoms/user_menu.dart';
 import 'package:dungeon_paper/i18n.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 
 class HomeAppBar extends StatelessWidget
-    with LoadingServiceMixin, UserServiceMixin
+    with LoadingProviderMixin, UserProviderMixin
     implements PreferredSizeWidget {
   const HomeAppBar({super.key});
 
@@ -18,7 +17,7 @@ class HomeAppBar extends StatelessWidget
       automaticallyImplyLeading: false,
       leading: IconButton(
         icon: const Icon(Icons.search),
-        onPressed: () => Get.toNamed(Routes.universalSearch),
+        onPressed: () => Navigator.of(context).pushNamed(Routes.universalSearch),
       ),
       actions: const [
         // if (user.flags['su'] == true)

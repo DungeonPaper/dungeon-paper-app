@@ -1,5 +1,5 @@
 import 'package:dungeon_paper/app/data/models/ability_scores.dart';
-import 'package:dungeon_paper/app/data/services/repository_service.dart';
+import 'package:dungeon_paper/app/data/services/repository_provider.dart';
 import 'package:dungeon_paper/app/widgets/forms/dice_form.dart';
 import 'package:dungeon_paper/i18n.dart';
 import 'package:dungeon_world_data/dungeon_world_data.dart' as dw;
@@ -25,7 +25,7 @@ class AddDiceDialog extends StatefulWidget {
 }
 
 class _AddDiceDialogState extends State<AddDiceDialog>
-    with RepositoryServiceMixin {
+    with RepositoryProviderMixin {
   late dw.Dice dice;
 
   @override

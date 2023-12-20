@@ -7,8 +7,8 @@ import 'package:dungeon_paper/app/data/models/character.dart';
 import 'package:dungeon_paper/app/data/models/ability_scores.dart';
 import 'package:dungeon_paper/app/data/models/race.dart';
 import 'package:dungeon_paper/app/data/models/spell.dart';
-import 'package:dungeon_paper/app/data/services/character_service.dart';
-import 'package:dungeon_paper/app/data/services/library_service.dart';
+import 'package:dungeon_paper/app/data/services/character_provider.dart';
+import 'package:dungeon_paper/app/data/services/library_provider.dart';
 import 'package:dungeon_paper/app/modules/LibraryList/controllers/library_list_controller.dart';
 import 'package:dungeon_paper/app/modules/LibraryList/views/character_classes_library_list_view.dart';
 import 'package:dungeon_paper/app/modules/LibraryList/views/items_library_list_view.dart';
@@ -23,16 +23,15 @@ import 'package:dungeon_paper/app/widgets/forms/move_form.dart';
 import 'package:dungeon_paper/app/widgets/forms/note_form.dart';
 import 'package:dungeon_paper/app/widgets/forms/race_form.dart';
 import 'package:dungeon_paper/app/widgets/forms/spell_form.dart';
+import 'package:dungeon_paper/core/global_keys.dart';
 import 'package:dungeon_paper/core/utils/enums.dart';
 import 'package:dungeon_paper/core/utils/list_utils.dart';
 import 'package:dungeon_world_data/dungeon_world_data.dart' as dw;
-import 'package:get/get.dart';
+import 'package:flutter/material.dart';
 
-class ModelPages {
-  static CharacterService get controller => Get.find();
-  static LibraryService get library => Get.find();
-
-  static void openLibraryList<T extends WithMeta>({
+class ModelPages with LibraryProviderMixin, CharacterProviderMixin {
+  static void openLibraryList<T extends WithMeta>(
+    BuildContext context, {
     Character? character,
     void Function(Iterable<T> list)? onSelected,
     Iterable<T>? preSelections,
@@ -44,6 +43,7 @@ class ModelPages {
   }) {
     final map = <Type, Function()>{
       Move: () => openMovesList(
+            context,
             character: character,
             onSelected: onSelected as void Function(Iterable<Move>)?,
             preSelections: preSelections as Iterable<Move>?,
@@ -53,6 +53,7 @@ class ModelPages {
             initialTab: initialTab,
           ),
       Spell: () => openSpellsList(
+            context,
             character: character,
             onSelected: onSelected as void Function(Iterable<Spell>)?,
             preSelections: preSelections as Iterable<Spell>?,
@@ -61,12 +62,14 @@ class ModelPages {
             initialTab: initialTab,
           ),
       Item: () => openItemsList(
+            context,
             character: character,
             onSelected: onSelected as void Function(Iterable<Item>)?,
             preSelections: preSelections as Iterable<Item>?,
             initialTab: initialTab,
           ),
       CharacterClass: () => openCharacterClassesList(
+            context,
             character: character,
             onSelected: onSelected != null
                 ? (x) => onSelected.call(asList<T>(x))
@@ -75,6 +78,7 @@ class ModelPages {
             initialTab: initialTab,
           ),
       Race: () => openRacesList(
+            context,
             character: character,
             onSelected: onSelected != null
                 ? (x) => onSelected.call(asList<T>(x))
@@ -93,7 +97,8 @@ class ModelPages {
     map[t]!.call();
   }
 
-  static void openMovesList({
+  static void openMovesList(
+    BuildContext context, {
     Character? character,
     Iterable<Move>? preSelections,
     MoveCategory? category,
@@ -103,7 +108,7 @@ class ModelPages {
     List<dw.EntityReference>? classKeys,
   }) {
     final char = character;
-    Get.toNamed(
+    Navigator.of(context).pushNamed(
       Routes.moves,
       arguments: MoveLibraryListArguments(
         initialTab: initialTab,
@@ -117,14 +122,15 @@ class ModelPages {
     );
   }
 
-  static void openRacesList({
+  static void openRacesList(
+    BuildContext context, {
     Character? character,
     Race? preSelection,
     void Function(Race race)? onSelected,
     FiltersGroup? initialTab,
   }) {
     final char = character;
-    Get.toNamed(
+    Navigator.of(context).pushNamed(
       Routes.races,
       arguments: RaceLibraryListArguments(
         initialTab: initialTab,
@@ -135,12 +141,13 @@ class ModelPages {
     );
   }
 
-  static void openMovePage({
+  static void openMovePage(
+    BuildContext context, {
     required Move? move,
     required void Function(Move move) onSave,
     required AbilityScores abilityScores,
   }) =>
-      Get.toNamed(
+      Navigator.of(context).pushNamed(
         Routes.editMove,
         arguments: MoveFormArguments(
           entity: move,
@@ -150,12 +157,13 @@ class ModelPages {
         ),
       );
 
-  static void openRacePage({
+  static void openRacePage(
+    BuildContext context, {
     required Race? race,
     required void Function(Race race) onSave,
     required AbilityScores abilityScores,
   }) =>
-      Get.toNamed(
+      Navigator.of(context).pushNamed(
         Routes.editRace,
         arguments: RaceFormArguments(
           entity: race,
@@ -165,7 +173,8 @@ class ModelPages {
         ),
       );
 
-  static void openSpellsList({
+  static void openSpellsList(
+    BuildContext context, {
     Character? character,
     Iterable<Spell>? list,
     void Function(Iterable<Spell> list)? onSelected,
@@ -175,7 +184,7 @@ class ModelPages {
     List<dw.EntityReference>? classKeys,
   }) {
     final char = character;
-    Get.toNamed(
+    Navigator.of(context).pushNamed(
       Routes.spells,
       arguments: SpellLibraryListArguments(
         initialTab: initialTab,
@@ -188,13 +197,14 @@ class ModelPages {
     );
   }
 
-  static void openSpellPage({
+  static void openSpellPage(
+    BuildContext context, {
     required Spell? spell,
     required void Function(Spell spell) onSave,
     required AbilityScores abilityScores,
     required List<dw.EntityReference> classKeys,
   }) =>
-      Get.toNamed(
+      Navigator.of(context).pushNamed(
         Routes.editSpell,
         arguments: SpellFormArguments(
           entity: spell,
@@ -204,7 +214,8 @@ class ModelPages {
         ),
       );
 
-  static void openItemsList({
+  static void openItemsList(
+    BuildContext context, {
     Character? character,
     Iterable<Item>? list,
     void Function(Iterable<Item> list)? onSelected,
@@ -212,7 +223,7 @@ class ModelPages {
     Iterable<Item>? preSelections,
   }) {
     final char = character;
-    Get.toNamed(
+    Navigator.of(context).pushNamed(
       Routes.items,
       arguments: ItemLibraryListArguments(
         initialTab: initialTab,
@@ -222,11 +233,12 @@ class ModelPages {
     );
   }
 
-  static void openItemPage({
+  static void openItemPage(
+    BuildContext context, {
     required Item? item,
     required void Function(Item item) onSave,
   }) =>
-      Get.toNamed(
+      Navigator.of(context).pushNamed(
         Routes.editItem,
         arguments: ItemFormArgumentsNew(
           entity: item,
@@ -235,7 +247,8 @@ class ModelPages {
         ),
       );
 
-  static void openNotesList({
+  static void openNotesList(
+    BuildContext context, {
     Character? character,
     Iterable<Note>? list,
     void Function(Iterable<Note> list)? onSelected,
@@ -243,7 +256,7 @@ class ModelPages {
     Iterable<Note>? preSelections,
   }) {
     final char = character;
-    Get.toNamed(
+    Navigator.of(context).pushNamed(
       Routes.notes,
       arguments: NoteLibraryListArguments(
         initialTab: initialTab,
@@ -253,11 +266,12 @@ class ModelPages {
     );
   }
 
-  static void openNotePage({
+  static void openNotePage(
+    BuildContext context, {
     required Note? note,
     required void Function(Note note) onSave,
   }) =>
-      Get.toNamed(
+      Navigator.of(context).pushNamed(
         Routes.editNote,
         arguments: NoteFormArguments(
           entity: note,
@@ -266,20 +280,23 @@ class ModelPages {
         ),
       );
 
-  static void openCharacterClassesList({
+  static void openCharacterClassesList(
+    BuildContext context, {
     Character? character,
     CharacterClass? preSelection,
     void Function(CharacterClass cls)? onSelected,
     FiltersGroup? initialTab,
   }) {
     final char = character;
-    Get.toNamed(
+    final charProvider = CharacterProvider.of(appGlobalKey.currentContext!);
+
+    Navigator.of(context).pushNamed(
       Routes.classes,
       arguments: CharacterClassLibraryListArguments(
         initialTab: initialTab,
         onSelected: onSelected ??
             (char != null
-                ? (cls) => controller
+                ? (cls) => charProvider
                     .updateCharacter(char.copyWith(characterClass: cls))
                 : null),
         preSelections: asList(preSelection ?? char?.characterClass),
@@ -287,11 +304,12 @@ class ModelPages {
     );
   }
 
-  static void openCharacterClassPage({
+  static void openCharacterClassPage(
+    BuildContext context, {
     required CharacterClass? characterClass,
     required void Function(CharacterClass item) onSave,
   }) =>
-      Get.toNamed(
+      Navigator.of(context).pushNamed(
         Routes.editClass,
         arguments: CharacterClassFormArguments(
           entity: characterClass,
@@ -301,3 +319,4 @@ class ModelPages {
         ),
       );
 }
+

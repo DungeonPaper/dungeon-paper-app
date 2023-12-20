@@ -2,7 +2,7 @@ import 'package:dungeon_paper/app/data/models/ability_scores.dart';
 import 'package:dungeon_paper/app/data/models/character_class.dart';
 import 'package:dungeon_paper/app/data/models/move.dart';
 import 'package:dungeon_paper/app/data/models/move_templates.dart';
-import 'package:dungeon_paper/app/data/services/repository_service.dart';
+import 'package:dungeon_paper/app/data/services/repository_provider.dart';
 import 'package:dungeon_paper/app/widgets/atoms/rich_text_field.dart';
 import 'package:dungeon_paper/app/widgets/atoms/select_box.dart';
 import 'package:dungeon_paper/app/widgets/forms/library_entity_form.dart';
@@ -11,17 +11,17 @@ import 'package:dungeon_paper/app/widgets/molecules/tag_list_input.dart';
 import 'package:dungeon_paper/i18n.dart';
 import 'package:dungeon_world_data/dungeon_world_data.dart' as dw;
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
+import 'package:provider/provider.dart';
 
-class MoveForm extends GetView<MoveFormController> with RepositoryServiceMixin {
+class MoveForm extends StatelessWidget with RepositoryProviderMixin {
   const MoveForm({super.key});
 
   @override
   Widget build(BuildContext context) {
     return LibraryEntityForm<Move, MoveFormController>(
       children: [
-        () => Obx(
-              () => TextFormField(
+        () => Consumer<MoveFormController>(
+              builder: (context, controller, _) => TextFormField(
                 decoration: InputDecoration(
                   label: Text(tr.generic.entityName(tr.entity(tn(Move)))),
                 ),
@@ -29,8 +29,8 @@ class MoveForm extends GetView<MoveFormController> with RepositoryServiceMixin {
                 controller: controller.name,
               ),
             ),
-        () => Obx(
-              () => Row(
+        () => Consumer<MoveFormController>(
+              builder: (context, controller, _) => Row(
                 children: [
                   Expanded(
                     child: SelectBox<MoveCategory>(
@@ -75,8 +75,8 @@ class MoveForm extends GetView<MoveFormController> with RepositoryServiceMixin {
                 ],
               ),
             ),
-        () => Obx(
-              () => RichTextField(
+        () => Consumer<MoveFormController>(
+              builder: (context, controller, _) => RichTextField(
                 decoration: InputDecoration(
                   label: Text(
                     tr.generic.entityDescription(tr.entity(tn(Move))),
@@ -114,8 +114,8 @@ class MoveForm extends GetView<MoveFormController> with RepositoryServiceMixin {
                 ],
               ),
             ),
-        () => Obx(
-              () => RichTextField(
+        () => Consumer<MoveFormController>(
+              builder: (context, controller, _) => RichTextField(
                 decoration: InputDecoration(
                   label: Text(
                     tr.generic.entityExplanation(tr.entity(tn(Move))),
@@ -128,16 +128,16 @@ class MoveForm extends GetView<MoveFormController> with RepositoryServiceMixin {
                 controller: controller.explanation,
               ),
             ),
-        () => Obx(
-              () => DiceListInput(
+        () => Consumer<MoveFormController>(
+              builder: (context, controller, _) => DiceListInput(
                 controller: controller.dice,
                 abilityScores: controller.args.abilityScores ??
                     AbilityScores.dungeonWorldAll(10),
                 guessFrom: [controller.description, controller.explanation],
               ),
             ),
-        () => Obx(
-              () => TagListInput(
+        () => Consumer<MoveFormController>(
+              builder: (context, controller, _) => TagListInput(
                 controller: controller.tags,
               ),
             ),
