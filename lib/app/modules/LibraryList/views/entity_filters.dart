@@ -101,6 +101,7 @@ class _FiltersWidgetsBuilder<F extends EntityFilters> extends StatelessWidget {
         width: 300,
         backgroundColor: Theme.of(context).cardColor,
         // direction: PopoverDirection.right,
+        direction: PopoverDirection.left,
         bodyBuilder: (context) => _FiltersPopover<F>(
           filterWidgetsBuilder: filterWidgetsBuilder,
           filters: filters,

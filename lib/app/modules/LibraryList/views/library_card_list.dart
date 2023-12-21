@@ -100,9 +100,11 @@ class LibraryCardList<T extends WithMeta, F extends EntityFilters<T>>
   }
 
   /// **Make sure to keep in sync with _leading**
+  /// TODO use [ItemBuilder]
   int _leadingCount(BuildContext context) => _leading(context).length;
 
   /// **Make sure to keep in sync with _leadingCount**
+  /// TODO use [ItemBuilder]
   List<Widget Function()> _leading(BuildContext context) {
     final theme = Theme.of(context);
     final textTheme = theme.textTheme;
