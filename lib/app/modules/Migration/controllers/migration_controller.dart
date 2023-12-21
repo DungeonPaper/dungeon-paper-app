@@ -1,4 +1,5 @@
 import 'package:dungeon_paper/core/http/api_requests/migration.dart';
+import 'package:dungeon_paper/core/route_arguments.dart';
 import 'package:flutter/material.dart';
 
 class MigrationController extends ChangeNotifier {
@@ -22,9 +23,7 @@ class MigrationController extends ChangeNotifier {
   }
 
   MigrationController(BuildContext context) {
-    final arguments = ModalRoute.of(context)?.settings.arguments as dynamic;
-    assert(arguments is MigrationArguments);
-    final args = arguments as MigrationArguments;
+    final args = getArgs(context);
     email = args.email;
     username.addListener(_refreshUsername);
   }

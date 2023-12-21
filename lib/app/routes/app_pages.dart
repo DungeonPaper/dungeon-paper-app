@@ -1,3 +1,4 @@
+import 'package:dungeon_paper/core/route_arguments.dart';
 import 'package:dungeon_world_data/dice.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -102,7 +103,7 @@ class AppPages {
     Routes.characterList: (context) => const CharacterListPageView(),
 
     Routes.settings: (context) => ChangeNotifierProvider(
-          create: (context) => SettingsController(context),
+          create: (_) => SettingsController(context),
           child: const SettingsView(),
         ),
 
@@ -115,8 +116,7 @@ class AppPages {
           child: const ImportExportView(),
         ),
 
-    Routes.rollDice: (context) => RollDiceView(
-        dice: ModalRoute.of(context)!.settings.arguments as List<Dice>),
+    Routes.rollDice: (context) => RollDiceView(dice: getArgs(context)),
 
     //
 
@@ -128,7 +128,7 @@ class AppPages {
         ),
 
     Routes.editMove: (context) => ChangeNotifierProvider(
-          create: (context) => MoveFormController(context),
+          create: (_) => MoveFormController(context),
           child: const MoveForm(),
         ),
 
@@ -138,7 +138,7 @@ class AppPages {
         ),
 
     Routes.editSpell: (context) => ChangeNotifierProvider(
-          create: (context) => SpellFormController(context),
+          create: (_) => SpellFormController(context),
           child: const SpellForm(),
         ),
 
@@ -148,7 +148,7 @@ class AppPages {
         ),
 
     Routes.editItem: (context) => ChangeNotifierProvider(
-          create: (context) => ItemFormController(context),
+          create: (_) => ItemFormController(context),
           child: const ItemForm(),
         ),
 
@@ -160,7 +160,7 @@ class AppPages {
         ),
 
     Routes.editClass: (context) => ChangeNotifierProvider(
-          create: (context) => CharacterClassFormController(context),
+          create: (_) => CharacterClassFormController(context),
           child: const CharacterClassForm(),
         ),
 
@@ -170,40 +170,40 @@ class AppPages {
         ),
 
     Routes.editRace: (context) => ChangeNotifierProvider(
-          create: (context) => RaceFormController(context),
+          create: (_) => RaceFormController(context),
           child: const RaceForm(),
         ),
 
     Routes.editNote: (context) => ChangeNotifierProvider(
-          create: (context) => NoteFormController(context),
+          create: (_) => NoteFormController(context),
           child: const NoteForm(),
         ),
 
     //
 
     Routes.bondsFlags: (context) => ChangeNotifierProvider(
-          create: (context) => BondsFlagsFormController(context),
+          create: (_) => BondsFlagsFormController(context),
           child: const BondsFlagsFormView(),
         ),
 
     Routes.bio: (context) => ChangeNotifierProvider(
-          create: (context) => BioFormController(context),
+          create: (_) => BioFormController(context),
           child: const BioFormView(),
         ),
 
     Routes.basicInfo: (context) => ChangeNotifierProvider(
-          create: (context) => BasicInfoFormController(context),
+          create: (_) => BasicInfoFormController(context),
           child: const BasicInfoFormView(),
         ),
 
     Routes.abilityScores: (context) => ChangeNotifierProvider(
-          create: (context) => AbilityScoresFormController(context),
+          create: (_) => AbilityScoresFormController(context),
           child: const AbilityScoresFormView(),
         ),
 
     Routes.abilityScoreForm: (context) => ChangeNotifierProvider(
           child: const AbilityScoreFormView(),
-          create: (context) => AbilityScoreFormController(context),
+          create: (_) => AbilityScoreFormController(context),
         ),
 
     //
@@ -218,27 +218,27 @@ class AppPages {
 
     Routes.createCharacterStartingGear: (context) => ChangeNotifierProvider(
           child: const StartingGearFormView(),
-          create: (context) => StartingGearFormController(context),
+          create: (_) => StartingGearFormController(context),
         ),
 
     Routes.createCharacterMovesSpells: (context) => ChangeNotifierProvider(
           child: const SelectMovesSpellsView(),
-          create: (context) => SelectMovesSpellsController(context),
+          create: (_) => SelectMovesSpellsController(context),
         ),
 
     Routes.createCharacterBasicInfo: (context) => ChangeNotifierProvider(
           child: const BasicInfoFormView(),
-          create: (context) => BasicInfoFormController(context),
+          create: (_) => BasicInfoFormController(context),
         ),
 
     Routes.createCharacterAbilityScores: (context) => ChangeNotifierProvider(
           child: const AbilityScoresFormView(),
-          create: (context) => AbilityScoresFormController(context),
+          create: (_) => AbilityScoresFormController(context),
         ),
 
     Routes.classAlignments: (context) => ChangeNotifierProvider(
           child: const ClassAlignmentsView(),
-          create: (context) => ClassAlignmentsController(context),
+          create: (_) => ClassAlignmentsController(context),
         ),
 
     Routes.universalSearch: (context) => ChangeNotifierProvider(
@@ -248,7 +248,7 @@ class AppPages {
 
     Routes.migration: (context) => ChangeNotifierProvider(
           child: const MigrationView(),
-          create: (context) => MigrationController(context),
+          create: (_) => MigrationController(context),
         ),
 
     Routes.about: (context) => ChangeNotifierProvider(
@@ -263,7 +263,7 @@ class AppPages {
 
     _Paths.abilityScoreForm: (context) => ChangeNotifierProvider(
           child: const AbilityScoreFormView(),
-          create: (context) => AbilityScoreFormController(context),
+          create: (_) => AbilityScoreFormController(context),
         ),
 
     _Paths.account: (context) => ChangeNotifierProvider(

@@ -1,6 +1,7 @@
 import 'package:dungeon_paper/app/data/models/character_class.dart';
 import 'package:dungeon_paper/app/data/models/gear_choice.dart';
 import 'package:dungeon_paper/app/data/models/gear_selection.dart';
+import 'package:dungeon_paper/core/route_arguments.dart';
 import 'package:dungeon_paper/core/utils/list_utils.dart';
 import 'package:flutter/widgets.dart';
 
@@ -13,9 +14,7 @@ class StartingGearFormController extends ChangeNotifier {
   late void Function(List<GearSelection> selectedOptions) onChanged;
 
   StartingGearFormController(BuildContext context) {
-    final arguments = ModalRoute.of(context)!.settings.arguments as dynamic;
-    assert(arguments is StartingGearFormArguments);
-    final StartingGearFormArguments args = arguments;
+    final StartingGearFormArguments args = getArgs(context);
     selectedOptions = args.selectedOptions;
     characterClass = args.characterClass;
     onChanged = args.onChanged;

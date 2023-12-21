@@ -1,4 +1,5 @@
 import 'package:dungeon_paper/app/data/models/ability_scores.dart';
+import 'package:dungeon_paper/core/route_arguments.dart';
 import 'package:dungeon_paper/core/utils/list_utils.dart';
 import 'package:flutter/material.dart';
 
@@ -10,10 +11,7 @@ class AbilityScoresFormController extends ChangeNotifier {
   late final void Function(AbilityScores abilityScores) onChanged;
 
   AbilityScoresFormController(BuildContext context) {
-    final arguments = ModalRoute.of(context)?.settings.arguments as dynamic;
-    assert(arguments is AbilityScoresFormArguments);
-    final AbilityScoresFormArguments args =
-        arguments as AbilityScoresFormArguments;
+    final AbilityScoresFormArguments args = getArgs(context);
     if (args.abilityScores != null) {
       abilityScores = args.abilityScores!;
     }
@@ -81,3 +79,4 @@ class AbilityScoresFormArguments {
     required this.onChanged,
   });
 }
+

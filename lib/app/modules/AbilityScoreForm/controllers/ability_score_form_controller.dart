@@ -1,4 +1,5 @@
 import 'package:dungeon_paper/app/data/models/ability_scores.dart';
+import 'package:dungeon_paper/core/route_arguments.dart';
 import 'package:dungeon_paper/core/utils/enums.dart';
 import 'package:dungeon_paper/core/utils/string_validator.dart';
 import 'package:dungeon_paper/i18n.dart';
@@ -30,10 +31,7 @@ class AbilityScoreFormController extends ChangeNotifier {
   late final FormContext formContext;
 
   AbilityScoreFormController(BuildContext context) {
-    final arguments = ModalRoute.of(context)?.settings.arguments as dynamic;
-    assert(arguments is AbilityScoreFormArguments);
-    final AbilityScoreFormArguments args =
-        arguments as AbilityScoreFormArguments;
+    final AbilityScoreFormArguments args = getArgs(context);
     formContext =
         args.abilityScore != null ? FormContext.edit : FormContext.create;
     if (args.abilityScore != null) {
@@ -104,3 +102,4 @@ class AbilityScoreFormArguments {
     required this.onSave,
   });
 }
+

@@ -2,6 +2,7 @@ import 'package:dungeon_paper/app/data/models/meta.dart';
 import 'package:dungeon_paper/app/widgets/atoms/advanced_floating_action_button.dart';
 import 'package:dungeon_paper/app/widgets/atoms/confirm_exit_view.dart';
 import 'package:dungeon_paper/app/widgets/forms/entity_share_form.dart';
+import 'package:dungeon_paper/core/route_arguments.dart';
 import 'package:dungeon_paper/core/utils/builder_utils.dart';
 import 'package:dungeon_paper/core/utils/enums.dart';
 import 'package:dungeon_paper/core/utils/list_utils.dart';
@@ -72,24 +73,21 @@ abstract class LibraryEntityFormController<T extends WithMeta,
   late final List<String> _initialValueCache;
   late T asEntity;
 
-  LibraryEntityFormController(BuildContext context) : super() {
-    final arguments = ModalRoute.of(context)?.settings.arguments;
-    assert(arguments is LibraryEntityFormArguments<T>);
-    final LibraryEntityFormArguments<T> args =
-        arguments as LibraryEntityFormArguments<T>;
+  LibraryEntityFormController(BuildContext context) {
+    args = getArgs(context);
     asEntity = args.entity ?? empty();
     meta = args.entity?.meta ?? _forkMeta();
     _initialValueCache = List.generate(fields.length, (i) => '');
 
     for (var field in enumerate(fields)) {
-      field.value.value.addListener(_fieldListener(field));
+      field.value.addListener(_fieldListener(field));
     }
     afterInit = true;
   }
 
   void Function() _fieldListener(Enumerated<ValueNotifier<dynamic>> field) {
     return () {
-      final asStr = _toString(field.value.value.value);
+      final asStr = _toString(field.value.value);
       final cached = _initialValueCache[field.index];
       if (!afterInit) {
         _initialValueCache[field.index] = asStr;
@@ -98,7 +96,6 @@ abstract class LibraryEntityFormController<T extends WithMeta,
         dirty = true;
         meta = _forkMeta();
       }
-      field.value.notifyListeners();
       asEntity = toEntity();
       notifyListeners();
     };
@@ -124,7 +121,6 @@ abstract class LibraryEntityFormController<T extends WithMeta,
   void dispose() {
     super.dispose();
     for (var field in fields) {
-      field.value.dispose();
       field.dispose();
     }
   }
@@ -170,3 +166,4 @@ class LibraryEntityFormArguments<T extends WithMeta> {
     required this.formContext,
   });
 }
+

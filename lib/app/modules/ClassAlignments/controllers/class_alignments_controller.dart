@@ -1,4 +1,5 @@
 import 'package:dungeon_paper/app/data/models/alignment.dart';
+import 'package:dungeon_paper/core/route_arguments.dart';
 import 'package:dungeon_world_data/dungeon_world_data.dart' as dw;
 import 'package:flutter/material.dart';
 
@@ -14,10 +15,7 @@ class ClassAlignmentsController extends ChangeNotifier {
   final textControllers = <dw.AlignmentType, TextEditingController>{};
 
   ClassAlignmentsController(BuildContext context) {
-    final arguments = ModalRoute.of(context)?.settings.arguments as dynamic;
-    assert(arguments is ClassAlignmentsArguments?);
-    final ClassAlignmentsArguments? args =
-        arguments as ClassAlignmentsArguments?;
+    final ClassAlignmentsArguments? args = getArgs(context, nullOk: true);
     if (args != null) {
       if (args.alignments != null) {
         alignments = args.alignments!;
@@ -80,3 +78,4 @@ class ClassAlignmentsArguments {
     this.preselected,
   });
 }
+

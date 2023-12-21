@@ -75,37 +75,29 @@ class DungeonPaperApp extends StatelessWidget {
         ? AppThemes.parchment
         : AppThemes.dark;
 
-    return DynamicTheme(
-      themeCollection: themeCollection,
-      defaultThemeId: prefs.getInt(PrefKeys.selectedThemeId) ?? defaultTheme,
-      builder: (context, value) {
-        return MultiProvider(
-          providers: [
-            ChangeNotifierProvider.value(value: _loadingProvider),
-            ChangeNotifierProvider.value(value: _authProvider),
-            ChangeNotifierProvider.value(value: _characterProvider),
-            ChangeNotifierProvider.value(value: _userProvider),
-            ChangeNotifierProvider.value(value: _repositoryProvider),
-            ChangeNotifierProvider.value(value: _libraryProvider),
-            // ChangeNotifierProvider(create: (_) => LoadingProvider()),
-            // ChangeNotifierProvider(create: (_) => AuthProvider()),
-            // ChangeNotifierProvider(create: (_) => CharacterProvider()),
-            // ChangeNotifierProvider(create: (_) => UserProvider()),
-            // ChangeNotifierProvider(create: (_) => RepositoryProvider()),
-            // ChangeNotifierProvider(create: (_) => LibraryProvider()),
-          ],
-          child: MaterialApp(
-            scrollBehavior: MultiPlatformScrollBehavior(),
-            title: tr.app.name,
-            theme: value,
-            key: appGlobalKey,
-            navigatorKey: navigatorKey,
-            onGenerateRoute: AppPages.onGenerateRoute,
-            initialRoute: AppPages.initial,
-            routes: AppPages.routes,
-          ),
-        );
-      },
+    return MultiProvider(
+      providers: [
+        ChangeNotifierProvider.value(value: _loadingProvider),
+        ChangeNotifierProvider.value(value: _authProvider),
+        ChangeNotifierProvider.value(value: _characterProvider),
+        ChangeNotifierProvider.value(value: _userProvider),
+        ChangeNotifierProvider.value(value: _repositoryProvider),
+        ChangeNotifierProvider.value(value: _libraryProvider),
+      ],
+      child: DynamicTheme(
+        themeCollection: themeCollection,
+        defaultThemeId: prefs.getInt(PrefKeys.selectedThemeId) ?? defaultTheme,
+        builder: (context, value) => MaterialApp(
+          scrollBehavior: MultiPlatformScrollBehavior(),
+          title: tr.app.name,
+          theme: value,
+          key: appGlobalKey,
+          navigatorKey: navigatorKey,
+          onGenerateRoute: AppPages.onGenerateRoute,
+          initialRoute: AppPages.initial,
+          routes: AppPages.routes,
+        ),
+      ),
     );
   }
 }

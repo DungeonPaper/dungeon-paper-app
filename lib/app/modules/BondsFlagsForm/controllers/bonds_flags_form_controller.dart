@@ -1,4 +1,5 @@
 import 'package:dungeon_paper/app/data/models/session_marks.dart';
+import 'package:dungeon_paper/core/route_arguments.dart';
 import 'package:dungeon_paper/core/utils/list_utils.dart';
 import 'package:dungeon_paper/core/utils/uuid.dart';
 import 'package:flutter/material.dart';
@@ -13,9 +14,7 @@ class BondsFlagsFormController extends ChangeNotifier {
   var dirty = false;
 
   BondsFlagsFormController(BuildContext context) {
-    final arguments = ModalRoute.of(context)!.settings.arguments;
-    assert(arguments is BondsFlagsFormArguments);
-    final BondsFlagsFormArguments args = arguments as BondsFlagsFormArguments;
+    final BondsFlagsFormArguments args = getArgs(context);
     bonds.addAll(args.bonds);
     bondsDesc.addAll(args.bonds
         .map((e) =>

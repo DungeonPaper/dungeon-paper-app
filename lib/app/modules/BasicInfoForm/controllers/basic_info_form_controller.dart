@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:dungeon_paper/app/data/services/user_provider.dart';
+import 'package:dungeon_paper/core/route_arguments.dart';
 import 'package:dungeon_paper/core/utils/upload_utils.dart';
 import 'package:dungeon_paper/core/utils/uuid.dart';
 import 'package:flutter/material.dart';
@@ -49,9 +50,7 @@ class BasicInfoFormController extends ChangeNotifier with UserProviderMixin {
   }
 
   BasicInfoFormController(BuildContext context) {
-    final arguments = ModalRoute.of(context)?.settings.arguments as dynamic;
-    assert(arguments is BasicInfoFormArguments);
-    final BasicInfoFormArguments args = arguments;
+    final BasicInfoFormArguments args = getArgs(context);
     onChanged = args.onChanged;
     name.text = args.name;
     avatarUrl.text = args.avatarUrl;

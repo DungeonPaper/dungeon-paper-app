@@ -2,6 +2,7 @@ import 'package:dungeon_paper/app/data/models/ability_scores.dart';
 import 'package:dungeon_paper/app/data/models/character_class.dart';
 import 'package:dungeon_paper/app/data/models/move.dart';
 import 'package:dungeon_paper/app/data/models/spell.dart';
+import 'package:dungeon_paper/core/route_arguments.dart';
 import 'package:dungeon_paper/core/utils/list_utils.dart';
 import 'package:dungeon_paper/core/utils/string_utils.dart';
 import 'package:flutter/widgets.dart';
@@ -16,10 +17,7 @@ class SelectMovesSpellsController extends ChangeNotifier {
   late final void Function(List<Move> moves, List<Spell> spells) onChanged;
 
   SelectMovesSpellsController(BuildContext context) {
-    final arguments = ModalRoute.of(context)?.settings.arguments as dynamic;
-    assert(arguments is SelectMovesSpellsArguments);
-    final SelectMovesSpellsArguments args =
-        arguments as SelectMovesSpellsArguments;
+    final SelectMovesSpellsArguments args = getArgs(context);
     moves = args.moves.toList();
     spells = args.spells.toList();
     abilityScores = args.abilityScores;
@@ -88,3 +86,4 @@ class SelectMovesSpellsArguments {
     required this.characterClass,
   });
 }
+

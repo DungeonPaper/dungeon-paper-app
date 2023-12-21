@@ -5,6 +5,7 @@ import 'package:dungeon_paper/app/data/services/character_provider.dart';
 import 'package:dungeon_paper/app/data/services/library_provider.dart';
 import 'package:dungeon_paper/app/data/services/repository_provider.dart';
 import 'package:dungeon_paper/core/global_keys.dart';
+import 'package:dungeon_paper/core/route_arguments.dart';
 import 'package:dungeon_paper/core/utils/list_utils.dart';
 import 'package:flutter/material.dart';
 
@@ -44,19 +45,12 @@ class LibraryListController<T extends WithMeta, F extends EntityFilters<T>>
   void Function(Iterable<T> items)? get onSelected => arguments.onSelected;
 
   LibraryListController(BuildContext context) {
-    arguments = ModalRoute.of(context)!.settings.arguments
-        as LibraryListArguments<T, F>;
+    arguments = getArgs(context);
     filters.addAll(arguments.filters.cast<FiltersGroup, F?>());
     search[FiltersGroup.playbook] ??= TextEditingController();
     search[FiltersGroup.playbook]!.addListener(_updatePlaybookSearch);
     search[FiltersGroup.my] ??= TextEditingController();
     search[FiltersGroup.my]!.addListener(_updateMySearch);
-    // tabController = TabController(
-    //   initialIndex: FiltersGroup.values.indexOf(arguments.initialTab),
-    //   // length: 3,
-    //   length: 2,
-    //   vsync: animatableGlobalKey.currentContext! as TickerProviderStateMixin,
-    // );
   }
 
   @override
