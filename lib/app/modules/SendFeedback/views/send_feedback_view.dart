@@ -4,7 +4,6 @@ import 'package:dungeon_paper/core/utils/email_address_validator.dart';
 import 'package:dungeon_paper/core/utils/string_validator.dart';
 import 'package:dungeon_paper/i18n.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 import 'package:provider/provider.dart';
 
 import '../../../data/services/user_provider.dart';
@@ -41,15 +40,13 @@ class SendFeedbackView extends StatelessWidget {
             padding: const EdgeInsets.all(16),
             children: [
               if (userProvider.isGuest) ...[
-                Obx(
-                  () => TextFormField(
-                    controller: controller.email,
-                    validator: (email) => email?.isEmpty ?? true
-                        ? null
-                        : EmailAddressValidator().validator(email),
-                    decoration: InputDecoration(
-                      labelText: tr.feedback.form.email.label,
-                    ),
+                TextFormField(
+                  controller: controller.email,
+                  validator: (email) => email?.isEmpty ?? true
+                      ? null
+                      : EmailAddressValidator().validator(email),
+                  decoration: InputDecoration(
+                    labelText: tr.feedback.form.email.label,
                   ),
                 ),
                 const SizedBox(height: 16),
@@ -82,4 +79,3 @@ class SendFeedbackView extends StatelessWidget {
     );
   }
 }
-

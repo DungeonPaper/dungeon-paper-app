@@ -35,4 +35,3 @@ class UserMenu extends StatelessWidget {
     );
   }
 }
-

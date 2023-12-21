@@ -88,4 +88,3 @@ class SelectMovesSpellsArguments {
     required this.characterClass,
   });
 }
-

@@ -129,4 +129,3 @@ class SettingsView extends StatelessWidget
     );
   }
 }
-

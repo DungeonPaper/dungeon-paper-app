@@ -1,17 +1,15 @@
 import 'dart:math';
 
-import 'package:dungeon_paper/app/data/services/repository_service.dart';
 import 'package:dungeon_paper/app/modules/LibraryList/controllers/library_list_controller.dart';
 import 'package:dungeon_paper/app/widgets/atoms/search_field.dart';
 import 'package:dungeon_paper/app/widgets/chips/primary_chip.dart';
 import 'package:dungeon_paper/core/utils/list_utils.dart';
 import 'package:dungeon_paper/i18n.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 import 'package:popover/popover.dart';
 
 class EntityFiltersView<T, F extends EntityFilters<T>> extends StatelessWidget {
-  EntityFiltersView({
+  const EntityFiltersView({
     super.key,
     required this.typeName,
     required this.filters,
@@ -27,7 +25,6 @@ class EntityFiltersView<T, F extends EntityFilters<T>> extends StatelessWidget {
   final F emptyFilters;
   final List<Widget> Function(BuildContext context, F filters)?
       filterWidgetsBuilder;
-  final service = Get.find<RepositoryProvider>();
   final void Function(F) onChange;
   final TextEditingController searchController;
   final Iterable<Widget> leading;

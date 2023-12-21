@@ -8,13 +8,11 @@ import 'package:dungeon_paper/core/utils/builder_utils.dart';
 import 'package:dungeon_paper/i18n.dart';
 import 'package:flutter/material.dart';
 
-import 'package:get/get.dart';
-
 import '../../../widgets/dialogs/export_class_dialog.dart';
 import '../controllers/export_controller.dart';
 import '../local_widgets/list_card.dart';
 
-class ExportView extends GetView<ExportController> {
+class ExportView extends StatelessWidget {
   const ExportView({super.key});
 
   @override
@@ -34,10 +32,13 @@ class ExportView extends GetView<ExportController> {
                 ),
               ],
             ),
-        () => const ListCard<Character, ExportController>(type: ListCardType.export),
-        () => const ListCard<CharacterClass, ExportController>(type: ListCardType.export),
+        () => const ListCard<Character, ExportController>(
+            type: ListCardType.export),
+        () => const ListCard<CharacterClass, ExportController>(
+            type: ListCardType.export),
         () => const ListCard<Move, ExportController>(type: ListCardType.export),
-        () => const ListCard<Spell, ExportController>(type: ListCardType.export),
+        () =>
+            const ListCard<Spell, ExportController>(type: ListCardType.export),
         () => const ListCard<Item, ExportController>(type: ListCardType.export),
         () => const ListCard<Race, ExportController>(type: ListCardType.export),
       ],
@@ -52,4 +53,3 @@ class ExportView extends GetView<ExportController> {
     );
   }
 }
-

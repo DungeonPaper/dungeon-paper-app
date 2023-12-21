@@ -17,7 +17,6 @@ import 'package:dungeon_paper/app/widgets/cards/spell_card.dart';
 import 'package:dungeon_paper/app/widgets/chips/primary_chip.dart';
 import 'package:dungeon_paper/i18n.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 import 'package:provider/provider.dart';
 
 import '../controllers/universal_search_controller.dart';
@@ -233,4 +232,3 @@ class _FilterChip extends StatelessWidget {
     };
   }
 }
-

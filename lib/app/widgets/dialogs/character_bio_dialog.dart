@@ -110,4 +110,3 @@ class CharacterBioDialog extends StatelessWidget with CharacterProviderMixin {
     );
   }
 }
-

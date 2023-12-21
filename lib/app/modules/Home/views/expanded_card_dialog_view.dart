@@ -37,4 +37,3 @@ class ExpandedCardDialogView<T> extends StatelessWidget {
     );
   }
 }
-

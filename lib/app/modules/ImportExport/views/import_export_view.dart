@@ -54,15 +54,15 @@ class _ImportExportViewState extends State<ImportExportView>
         ],
       ),
       floatingActionButton: Consumer<ImportExportController>(
-        builder: (context, controller, _) => AdvancedFloatingActionButton.extended(
+        builder: (context, controller, _) =>
+            AdvancedFloatingActionButton.extended(
           label: Text(tab.index == 0
               ? tr.backup.exporting.button
               : tr.backup.importing.button),
-          icon: Icon(
-              tab.index == 0 ? Icons.upload : Icons.download),
+          icon: Icon(tab.index == 0 ? Icons.upload : Icons.download),
           onPressed: tab.index == 0
-              ? controller.doExport
-              : controller.doImport,
+              ? () => controller.doExport(context)
+              : () => controller.doImport(context),
         ),
       ),
     );

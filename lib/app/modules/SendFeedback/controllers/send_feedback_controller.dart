@@ -44,4 +44,3 @@ class SendFeedbackController extends ChangeNotifier with UserProviderMixin {
     }
   }
 }
-

@@ -28,4 +28,3 @@ class IntlService extends ChangeNotifier {
     return _m[locale]!;
   }
 }
-

@@ -11,13 +11,13 @@ import 'package:dungeon_paper/app/data/models/move.dart';
 import 'package:dungeon_paper/app/data/models/race.dart';
 import 'package:dungeon_paper/app/data/models/session_marks.dart';
 import 'package:dungeon_paper/app/data/models/spell.dart';
-import 'package:dungeon_paper/app/data/services/repository_service.dart';
+import 'package:dungeon_paper/app/data/services/repository_provider.dart';
 import 'package:dungeon_paper/core/utils/uuid.dart';
 import 'package:dungeon_world_data/dungeon_world_data.dart' as dw;
 import 'package:flutter/widgets.dart';
 import 'package:provider/provider.dart';
 
-class CreateCharacterController extends ChangeNotifier {
+class CreateCharacterController extends ChangeNotifier with RepositoryProviderMixin {
   var name = '';
   var avatarUrl = '';
   CharacterClass? characterClass;
@@ -30,8 +30,8 @@ class CreateCharacterController extends ChangeNotifier {
 
   var dirty = false;
 
-  static CreateCharacterController of(BuildContext context) =>
-      Provider.of<CreateCharacterController>(context, listen: false);
+  static CreateCharacterController of(BuildContext context, {bool listen = false}) =>
+      Provider.of<CreateCharacterController>(context, listen: listen);
   static Widget consumer(
     Widget Function(BuildContext, CreateCharacterController, Widget?) builder,
   ) =>
@@ -97,7 +97,6 @@ class CreateCharacterController extends ChangeNotifier {
   }
 
   void addStartingMoves(BuildContext context) {
-    final repo = RepositoryProvider.of(context);
     moves.clear();
     moves.addAll(
       [...repo.builtIn.moves.values, ...repo.my.moves.values]
@@ -141,4 +140,3 @@ class CreateCharacterController extends ChangeNotifier {
         ),
       );
 }
-

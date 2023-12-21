@@ -1,7 +1,6 @@
 import 'package:dungeon_paper/core/utils/list_utils.dart';
 import 'package:dungeon_paper/i18n.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 
 class ChipListInput<T> extends StatefulWidget {
   const ChipListInput({
@@ -30,7 +29,7 @@ class ChipListInput<T> extends StatefulWidget {
   final Widget Function(
     BuildContext context,
     Enumerated<T>? value, {
-    required void Function(T _dice) onSave,
+    required void Function(T dice) onSave,
   })? dialogBuilder;
   final List<Widget> trailing;
   final List<Widget> leading;
@@ -90,8 +89,9 @@ class _ChipListInputState<T> extends State<ChipListInput<T>> {
                       ...controller.value..removeAt(dice.index)
                     ]),
                 onTapChip: widget.dialogBuilder != null
-                    ? () => Get.dialog(
-                          widget.dialogBuilder!(
+                    ? () => showDialog(
+                          context: context,
+                          builder: (_) => widget.dialogBuilder!(
                             context,
                             dice,
                             onSave: (value) {
@@ -108,8 +108,9 @@ class _ChipListInputState<T> extends State<ChipListInput<T>> {
                 context,
                 null,
                 onTapChip: widget.dialogBuilder != null
-                    ? () => Get.dialog(
-                          widget.dialogBuilder!(
+                    ? () => showDialog(
+                          context: context,
+                          builder: (_) => widget.dialogBuilder!(
                             context,
                             null,
                             onSave: (value) {

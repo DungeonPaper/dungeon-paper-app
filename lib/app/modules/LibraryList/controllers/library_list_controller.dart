@@ -5,8 +5,8 @@ import 'package:dungeon_paper/app/data/services/character_provider.dart';
 import 'package:dungeon_paper/app/data/services/library_provider.dart';
 import 'package:dungeon_paper/app/data/services/repository_provider.dart';
 import 'package:dungeon_paper/core/global_keys.dart';
+import 'package:dungeon_paper/core/utils/list_utils.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 
 enum FiltersGroup {
   playbook,
@@ -15,7 +15,8 @@ enum FiltersGroup {
 }
 
 class LibraryListController<T extends WithMeta, F extends EntityFilters<T>>
-    extends ChangeNotifier with CharacterProviderMixin, RepositoryProviderMixin {
+    extends ChangeNotifier
+    with CharacterProviderMixin, RepositoryProviderMixin {
   final LibraryListArguments<T, F> arguments;
 
   final selected = <T>[];
@@ -77,25 +78,22 @@ class LibraryListController<T extends WithMeta, F extends EntityFilters<T>>
     if (!arguments.multiple) {
       selected.clear();
       for (final sel in arguments.preSelections) {
-        removed.addIf(
-          removed.firstWhereOrNull(_compare(sel)) == null,
-          sel,
-        );
+        if (removed.firstWhereOrNull(_compare(sel)) == null) {
+          removed.add(sel);
+        }
       }
     }
 
     if (state) {
-      selected.addIf(
-        selected.firstWhereOrNull(_compare(item)) == null,
-        item,
-      );
+      if (selected.firstWhereOrNull(_compare(item)) == null) {
+        selected.add(item);
+      }
       removed.removeWhere(_compare(item));
     } else {
       selected.removeWhere(_compare(item));
-      removed.addIf(
-        removed.firstWhereOrNull(_compare(item)) == null,
-        item,
-      );
+      if (removed.firstWhereOrNull(_compare(item)) == null) {
+        removed.add(item);
+      }
     }
     notifyListeners();
   }
@@ -230,4 +228,3 @@ abstract class LibraryListArguments<T extends WithMeta,
     FiltersGroup? initialTab = FiltersGroup.playbook,
   }) : initialTab = initialTab ?? FiltersGroup.playbook;
 }
-

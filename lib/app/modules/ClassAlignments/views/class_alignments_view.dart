@@ -35,8 +35,7 @@ class ClassAlignmentsView extends StatelessWidget {
                 padding: const EdgeInsets.only(bottom: 8),
                 child: Builder(
                   builder: (context) {
-                    final description =
-                        controller.alignments.byType(alignment);
+                    final description = controller.alignments.byType(alignment);
                     final isEditing = controller.isEditing(alignment);
                     final isSelected = controller.isSelected(alignment);
 
@@ -118,4 +117,3 @@ class ClassAlignmentsView extends StatelessWidget {
     );
   }
 }
-

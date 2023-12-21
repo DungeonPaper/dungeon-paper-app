@@ -18,4 +18,3 @@ class CampaignView extends StatelessWidget {
     );
   }
 }
-

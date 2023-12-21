@@ -218,4 +218,3 @@ mixin CharacterProviderMixin {
   Character get char => character;
   Character? get maybeChar => maybeCharacter;
 }
-

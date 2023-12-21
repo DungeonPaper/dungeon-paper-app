@@ -57,7 +57,7 @@ class MoveCard extends StatelessWidget {
       expandable: expandable,
       reorderablePadding: reorderablePadding,
       expansionKey: expansionKey ?? PageStorageKey(move.key),
-      chips: move.tags.map((t) => TagChip.openDescription(tag: t)),
+      chips: move.tags.map((t) => TagChip.openDescription(context, tag: t)),
       dice: showDice ? move.dice : [],
       icon: showIcon ? Icon(move.icon, size: 16) : null,
       starred: move.favorite,
@@ -79,4 +79,3 @@ class MoveCard extends StatelessWidget {
     );
   }
 }
-

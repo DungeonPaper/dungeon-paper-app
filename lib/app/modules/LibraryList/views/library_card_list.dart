@@ -18,10 +18,10 @@ import 'package:dungeon_paper/core/utils/builder_utils.dart';
 import 'package:dungeon_paper/core/utils/enums.dart';
 import 'package:dungeon_paper/i18n.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
+import 'package:provider/provider.dart';
 
 class LibraryCardList<T extends WithMeta, F extends EntityFilters<T>>
-    extends GetView<LibraryListController<T, F>> {
+    extends StatelessWidget {
   LibraryCardList({
     super.key,
     required this.useFilters,
@@ -64,32 +64,34 @@ class LibraryCardList<T extends WithMeta, F extends EntityFilters<T>>
 
   @override
   Widget build(BuildContext context) {
-    return Stack(
-      children: [
-        Positioned.fill(
-          child: Padding(
-            padding: const EdgeInsets.only(top: 32),
-            child: ItemBuilder.listViewBuilder(
-              padding: const EdgeInsets.all(8).copyWith(
-                top: 0,
-                bottom: controller.selectable ? 80 : 4,
+    return Consumer<LibraryListController<T, F>>(
+      builder: (context, controller, _) => Stack(
+        children: [
+          Positioned.fill(
+            child: Padding(
+              padding: const EdgeInsets.only(top: 32),
+              child: ItemBuilder.listViewBuilder(
+                padding: const EdgeInsets.all(8).copyWith(
+                  top: 0,
+                  bottom: controller.selectable ? 80 : 4,
+                ),
+                itemBuilder: (context, index) => Padding(
+                  padding: const EdgeInsets.only(bottom: 8),
+                  child: itemBuilder(context, index),
+                ),
+                itemCount: itemCount,
+                leadingCount: _leadingCount(context),
+                leadingBuilder: _leadingBuilder,
               ),
-              itemBuilder: (context, index) => Padding(
-                padding: const EdgeInsets.only(bottom: 8),
-                child: itemBuilder(context, index),
-              ),
-              itemCount: itemCount,
-              leadingCount: _leadingCount(context),
-              leadingBuilder: _leadingBuilder,
             ),
           ),
-        ),
-        if (useFilters)
-          Padding(
-            padding: const EdgeInsets.all(8),
-            child: filtersBuilder!(group, filters, controller.setFilters),
-          ),
-      ],
+          if (useFilters)
+            Padding(
+              padding: const EdgeInsets.all(8),
+              child: filtersBuilder!(group, filters, controller.setFilters),
+            ),
+        ],
+      ),
     );
   }
 
@@ -136,7 +138,7 @@ class LibraryCardList<T extends WithMeta, F extends EntityFilters<T>>
               height: 48,
               child: ElevatedButton.icon(
                 style: ButtonThemes.primaryElevated(context),
-                onPressed: () => Get.toNamed(
+                onPressed: () => Navigator.of(context).pushNamed(
                   Routes.editByType<T>(),
                   arguments: createPageArgsByType(extraData),
                 ),

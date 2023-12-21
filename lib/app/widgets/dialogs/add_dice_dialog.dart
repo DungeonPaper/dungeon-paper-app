@@ -4,7 +4,6 @@ import 'package:dungeon_paper/app/widgets/forms/dice_form.dart';
 import 'package:dungeon_paper/i18n.dart';
 import 'package:dungeon_world_data/dungeon_world_data.dart' as dw;
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 
 enum ModifierType { stat, fixed }
 
@@ -53,7 +52,7 @@ class _AddDiceDialogState extends State<AddDiceDialog>
         ElevatedButton(
           onPressed: () {
             widget.onSave?.call(dice);
-            Get.back();
+            Navigator.of(context).pop();
           },
           child: Text(tr.generic.save),
         ),

@@ -9,14 +9,12 @@ import 'package:dungeon_paper/app/modules/LibraryList/views/library_list_view.da
 import 'package:dungeon_paper/app/widgets/cards/race_card.dart';
 import 'package:dungeon_paper/app/widgets/menus/entity_edit_menu.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 import 'package:provider/provider.dart';
 
 import 'filters/race_filters.dart';
 import 'library_select_button.dart';
 
-class RacesLibraryListView
-    extends GetView<LibraryListController<Race, RaceFilters>>
+class RacesLibraryListView extends StatelessWidget
     with CharacterProviderMixin, RepositoryProviderMixin {
   const RacesLibraryListView({super.key});
 
@@ -46,6 +44,7 @@ class RacesLibraryListView
             EntityEditMenu(
               onEdit: data.onUpdate != null
                   ? () => ModelPages.openRacePage(
+                        context,
                         abilityScores: maybeChar?.abilityScores ??
                             AbilityScores.dungeonWorldAll(10),
                         race: data.item,
@@ -93,4 +92,3 @@ class RaceLibraryListArguments extends LibraryListArguments<Race, RaceFilters> {
           multiple: false,
         );
 }
-

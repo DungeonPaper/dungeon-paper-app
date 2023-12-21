@@ -1,12 +1,11 @@
 import 'package:dungeon_paper/app/data/services/user_provider.dart';
+import 'package:dungeon_paper/app/widgets/atoms/custom_snack_bar.dart';
 import 'package:dungeon_paper/i18n.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_file_dialog/flutter_file_dialog.dart';
-import 'package:get/get.dart';
 import 'package:image_cropper/image_cropper.dart';
 import 'package:path/path.dart' as path;
-import 'package:provider/provider.dart';
 
 class UploadSettings {
   final void Function(String downloadURL)? onSuccess;
@@ -96,17 +95,17 @@ Future<UploadResponse?> cropAndUploadPhoto(
 ) async {
   CroppedFile? file;
   final uploadPhoto = _uploadPhotoFactory(context);
-  final messenger = ScaffoldMessenger.of(context);
+  final snackBar = CustomSnackBar.deferred(context);
   try {
     file = await _pickAndCrop(context);
     if (file == null) {
-      Get.rawSnackbar(message: tr.errors.userOperationCanceled);
+      snackBar.show(content: tr.errors.userOperationCanceled);
       settings.onCancel?.call();
       return null;
     }
     settings.onUploadFile?.call(file);
   } catch (e) {
-    Get.rawSnackbar(message: tr.errors.uploadError);
+    snackBar.show(content: tr.errors.uploadError);
     settings.onError?.call(e);
     return null;
   }
@@ -119,12 +118,9 @@ Future<UploadResponse?> cropAndUploadPhoto(
 
     settings.onSuccess?.call(downloadURL);
   } catch (e) {
-    messenger.showSnackBar(
-      const SnackBar(
-        content: Text(
+    snackBar.show(
+      message:
           'Error while uploading photo. Try again later, or contact support using the "About" page.',
-        ),
-      ),
     );
 
     settings.onError?.call(e);
@@ -137,4 +133,3 @@ Future<UploadResponse?> cropAndUploadPhoto(
     downloadURL: downloadURL,
   );
 }
-

@@ -79,4 +79,3 @@ class MigrationView extends StatelessWidget {
     );
   }
 }
-

@@ -47,15 +47,17 @@ class AbilityScoresFormView extends StatelessWidget {
                   physics: const NeverScrollableScrollPhysics(),
                   itemCount: controller.abilityScores.stats.length,
                   onReorder: controller.onReorder,
-                  itemBuilder: (context, index) => _buildCard(context, controller, index),
+                  itemBuilder: (context, index) =>
+                      _buildCard(context, controller, index),
                 ),
               ),
               ElevatedButton.icon(
-                onPressed: () => Navigator.of(context).pushNamed(Routes.abilityScoreForm,
-                    arguments: AbilityScoreFormArguments(
-                      abilityScore: null,
-                      onSave: controller.addStat,
-                    )),
+                onPressed: () =>
+                    Navigator.of(context).pushNamed(Routes.abilityScoreForm,
+                        arguments: AbilityScoreFormArguments(
+                          abilityScore: null,
+                          onSave: controller.addStat,
+                        )),
                 icon: const Icon(Icons.add),
                 label: Text(
                   tr.generic.addEntity(
@@ -70,13 +72,13 @@ class AbilityScoresFormView extends StatelessWidget {
     );
   }
 
-  Widget _buildCard(BuildContext context, AbilityScoresFormController controller, int index) {
+  Widget _buildCard(
+      BuildContext context, AbilityScoresFormController controller, int index) {
     final theme = Theme.of(context);
     final textTheme = theme.textTheme;
     final statKey = sortByPredefined(
       controller.textControllers.keys.toList(),
-      order:
-          controller.abilityScores.stats.map((stat) => stat.key).toList(),
+      order: controller.abilityScores.stats.map((stat) => stat.key).toList(),
     ).elementAt(index);
     final stat = controller.abilityScores.stats
         .firstWhere((stat) => stat.key == statKey);
@@ -175,4 +177,3 @@ class AbilityScoresFormView extends StatelessWidget {
     Navigator.of(context).pop();
   }
 }
-

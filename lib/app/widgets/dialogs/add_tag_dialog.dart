@@ -1,10 +1,10 @@
-import 'package:dungeon_paper/app/data/services/repository_service.dart';
+import 'package:dungeon_paper/app/data/services/repository_provider.dart';
 import 'package:dungeon_paper/app/widgets/atoms/menu_button.dart';
+import 'package:dungeon_paper/core/global_keys.dart';
 import 'package:dungeon_paper/core/utils/string_utils.dart';
 import 'package:dungeon_paper/i18n.dart';
 import 'package:dungeon_world_data/dungeon_world_data.dart' as dw;
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 
 class AddTagDialog extends StatefulWidget {
   const AddTagDialog({
@@ -21,7 +21,6 @@ class AddTagDialog extends StatefulWidget {
 }
 
 class _AddTagDialogState extends State<AddTagDialog> {
-  final RepositoryProvider repo = Get.find();
   late final TextEditingController name;
   late final TextEditingController desc;
   late final TextEditingController value;
@@ -104,7 +103,7 @@ class _AddTagDialogState extends State<AddTagDialog> {
         ElevatedButton(
           onPressed: () {
             widget.onSave?.call(createTag());
-            Get.back();
+            Navigator.of(context).pop();
           },
           child: Text(tr.generic.save),
         ),
@@ -118,9 +117,11 @@ class _AddTagDialogState extends State<AddTagDialog> {
         value: tryParse(value.text),
       );
 
-  List<dw.Tag> get allTags =>
-      {...repo.my.tags.values, ...repo.builtIn.tags.values}.toList()
-        ..sort((a, b) => a.name.toLowerCase().compareTo(b.name.toLowerCase()));
+  List<dw.Tag> get allTags {
+    final repo = RepositoryProvider.of(appGlobalKey.currentContext!);
+    return {...repo.my.tags.values, ...repo.builtIn.tags.values}.toList()
+      ..sort((a, b) => a.name.toLowerCase().compareTo(b.name.toLowerCase()));
+  }
 
   dynamic tryParse(String text) {
     if (RegExp(r'[a-z]').hasMatch(text)) {

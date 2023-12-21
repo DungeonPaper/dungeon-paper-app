@@ -94,4 +94,3 @@ class LoginController extends ChangeNotifier with AuthProviderMixin {
     return _valid = formKey.currentState?.validate() ?? false;
   }
 }
-

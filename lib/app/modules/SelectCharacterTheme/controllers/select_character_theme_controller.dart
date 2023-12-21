@@ -1,20 +1,13 @@
-import 'package:dungeon_paper/app/data/models/character.dart';
 import 'package:dungeon_paper/app/data/services/character_provider.dart';
 import 'package:dungeon_paper/app/themes/themes.dart';
-import 'package:dungeon_paper/core/global_keys.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 
-class SelectCharacterThemeController extends ChangeNotifier{
+class SelectCharacterThemeController extends ChangeNotifier with CharacterProviderMixin {
   final seeAll = {Brightness.light: false, Brightness.dark: false};
   int? lightTheme = AppThemes.parchment;
   int? darkTheme = AppThemes.dark;
 
-  CharacterProvider get charService => Provider.of<CharacterProvider>(appGlobalKey.currentContext!);
-  Character get char => charService.current;
-
   SelectCharacterThemeController() {
-
     lightTheme = char.settings.lightTheme;
     darkTheme = char.settings.darkTheme;
     if (lightTheme != null && !AppThemes.allLightThemes.contains(lightTheme)) {
@@ -26,7 +19,7 @@ class SelectCharacterThemeController extends ChangeNotifier{
   }
 
   void save() async {
-    await charService.updateCharacter(
+    await charProvider.updateCharacter(
       char.copyWith(
         settings: char.settings.copyWithThemes(
           lightTheme: lightTheme,
@@ -35,8 +28,7 @@ class SelectCharacterThemeController extends ChangeNotifier{
       ),
     );
     notifyListeners();
-    charService.switchToCharacterTheme(char);
+    charProvider.switchToCharacterTheme(char);
     // Get.back();
   }
 }
-

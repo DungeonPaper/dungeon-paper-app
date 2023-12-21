@@ -32,7 +32,7 @@ class RoundRollButton extends StatelessWidget {
       backgroundColor: abilityScores != null && isRollingWithDebility
           ? DwColors.error.withOpacity(0.5)
           : null,
-      onPressed: () => DiceUtils.openRollDialog(dice),
+      onPressed: () => DiceUtils.openRollDialog(context, dice),
       tooltip: isRollingWithDebility
           ? tr.customRolls.tooltip.rollWithDebility(diceStr)
           : tr.customRolls.tooltip.rollNormal(diceStr),

@@ -77,4 +77,3 @@ class BondsFlagsFormView extends StatelessWidget {
     );
   }
 }
-

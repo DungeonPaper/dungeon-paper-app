@@ -75,6 +75,7 @@ class HomeCharacterJournalView extends StatelessWidget
                                 tn(Note),
                               ),
                               onEdit: () => ModelPages.openNotePage(
+                                context,
                                 note: note,
                                 onSave: (note) {
                                   controller.updateCharacter(

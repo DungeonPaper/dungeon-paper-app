@@ -26,4 +26,3 @@ class SettingsController extends ChangeNotifier with UserProviderMixin {
     return userProvider.updateUser(user.copyWith(settings: settings));
   }
 }
-

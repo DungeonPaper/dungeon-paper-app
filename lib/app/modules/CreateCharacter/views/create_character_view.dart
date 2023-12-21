@@ -37,285 +37,293 @@ class CreateCharacterView extends StatelessWidget with CharacterProviderMixin {
       (context, controller, _) {
         final cls = controller.characterClass;
         return ConfirmExitView(
-        dirty: controller.dirty,
-        child: BackdropFilter(
-          filter: ImageFilter.blur(sigmaX: 5, sigmaY: 5),
-          // blendMode: BlendMode.darken,
-          child: Scaffold(
-            backgroundColor: Colors.black.withOpacity(0.85),
-            appBar: AppBar(
-              title: Container(),
-              backgroundColor: Colors.transparent,
-              foregroundColor: Colors.white,
-            ),
-            floatingActionButton: AdvancedFloatingActionButton.extended(
-              onPressed: controller.isValid
-                  ? () {
-                      charProvider.createCharacter(
-                        controller.getAsCharacter(),
-                        switchToCharacter: true,
-                      );
-                      Navigator.of(context).pop();
-                    }
-                  : null,
-              icon: const Icon(Icons.person_add),
-              label: Text(
-                tr.generic.createEntity(tr.entity(tn(Character))),
+          dirty: controller.dirty,
+          child: BackdropFilter(
+            filter: ImageFilter.blur(sigmaX: 5, sigmaY: 5),
+            // blendMode: BlendMode.darken,
+            child: Scaffold(
+              backgroundColor: Colors.black.withOpacity(0.85),
+              appBar: AppBar(
+                title: Container(),
+                backgroundColor: Colors.transparent,
+                foregroundColor: Colors.white,
               ),
-            ),
-            body: Center(
-              child: SingleChildScrollView(
-                child: Padding(
-                  padding: const EdgeInsets.only(bottom: 80),
-                  child: SizedBox(
-                    width: 340,
-                    child: Card(
-                      child: Padding(
-                        padding: const EdgeInsets.all(8),
-                        child: Column(
-                          mainAxisSize: MainAxisSize.min,
-                          children: [
-                            // Basic Info
-                            _Card(
-                              leading: CharacterAvatar.squircle(
-                                size: 48,
-                                character: Character.empty().copyWith(
-                                  avatarUrl: controller.avatarUrl,
+              floatingActionButton: AdvancedFloatingActionButton.extended(
+                onPressed: controller.isValid
+                    ? () {
+                        charProvider.createCharacter(
+                          controller.getAsCharacter(),
+                          switchToCharacter: true,
+                        );
+                        Navigator.of(context).pop();
+                      }
+                    : null,
+                icon: const Icon(Icons.person_add),
+                label: Text(
+                  tr.generic.createEntity(tr.entity(tn(Character))),
+                ),
+              ),
+              body: Center(
+                child: SingleChildScrollView(
+                  child: Padding(
+                    padding: const EdgeInsets.only(bottom: 80),
+                    child: SizedBox(
+                      width: 340,
+                      child: Card(
+                        child: Padding(
+                          padding: const EdgeInsets.all(8),
+                          child: Column(
+                            mainAxisSize: MainAxisSize.min,
+                            children: [
+                              // Basic Info
+                              _Card(
+                                leading: CharacterAvatar.squircle(
+                                  size: 48,
+                                  character: Character.empty().copyWith(
+                                    avatarUrl: controller.avatarUrl,
+                                  ),
                                 ),
-                              ),
-                              title: controller.name.isEmpty
-                                  ? Text(
-                                      tr.createCharacter.basicInfo.defaultName,
-                                    )
-                                  : Text(controller.name),
-                              subtitle: controller.name.isEmpty
-                                  ? Text(tr.createCharacter.basicInfo.helpText)
-                                  : Text(
-                                      tr.createCharacter.basicInfo.description(
-                                        cls?.name ?? '',
-                                      ),
-                                    ),
-                              valid: controller.name.isNotEmpty,
-                              onTap: () => Navigator.of(context).pushNamed(
-                                Routes.createCharacterBasicInfo,
-                                arguments: BasicInfoFormArguments(
-                                  avatarUrl: controller.avatarUrl,
-                                  name: controller.name,
-                                  onChanged: controller.setBasicInfo,
-                                ),
-                              ),
-                            ),
-                            // Class
-                            _Card(
-                              title: cls == null
-                                  ? Text(tr.generic.selectEntity(
-                                      tr.entity(tn(CharacterClass))))
-                                  : Text(cls.name),
-                              subtitle: cls == null
-                                  ? Text(tr.createCharacter.characterClass
-                                      .noSelection)
-                                  : Text(
-                                      tr.createCharacter.characterClass
-                                          .description(
-                                        cls.hp,
-                                        cls.load,
-                                        cls.damageDice.toString(),
-                                      ),
-                                    ),
-                              valid: cls != null,
-                              onTap: () => Navigator.of(context).pushNamed(
-                                Routes.createCharacterSelectClass,
-                                arguments: CharacterClassLibraryListArguments(
-                                  preSelections:
-                                      controller.characterClass != null
-                                          ? [controller.characterClass!]
-                                          : [],
-                                  onSelected: (cls) => controller.setClass(context, cls),
-                                ),
-                              ),
-                            ),
-                            // Race
-                            _Card(
-                              title: controller.race == null
-                                  ? Text(tr.generic
-                                      .selectEntity(tr.entity(tn(Race))))
-                                  : Text(controller.race!.name),
-                              subtitle: controller.race == null
-                                  ? Text(tr.generic
-                                      .noEntitySelected(tr.entity(tn(Race))))
-                                  : Text(
-                                      controller.race!.description,
-                                      overflow: TextOverflow.ellipsis,
-                                    ),
-                              onTap: cls != null
-                                  ? () => ModelPages.openRacesList(
-                                        character: controller.getAsCharacter(),
-                                        preSelection: controller.race,
-                                        onSelected: (race) =>
-                                            controller.race = race,
+                                title: controller.name.isEmpty
+                                    ? Text(
+                                        tr.createCharacter.basicInfo
+                                            .defaultName,
                                       )
-                                  : null,
-                              valid: controller.race != null,
-                            ),
-                            // Ability Scores
-                            _Card(
-                              contentPadding: const EdgeInsets.symmetric(
-                                  horizontal: 16, vertical: 8),
-                              title: Text(tr.generic.selectEntity(
-                                  tr.entityPlural(tn(AbilityScore)))),
-                              // subtitle: Text(
-                              //   controller.abilityScores.stats
-                              //       .map((stat) => '${stat.key}: ${stat}')
-                              //       .join(', '),
-                              subtitle: Padding(
-                                padding: const EdgeInsets.only(top: 4.0),
-                                child: _AbilityScoreChipList(
-                                    controller: controller),
-                              ),
-                              onTap: () => Navigator.of(context).pushNamed(
-                                Routes.createCharacterAbilityScores,
-                                arguments: AbilityScoresFormArguments(
-                                  onChanged: (abilityScores) => controller
-                                      .setAbilityScores(abilityScores),
-                                  abilityScores: controller.abilityScores,
-                                ),
-                              ),
-                            ),
-                            // Alignment
-                            _Card(
-                              contentPadding: const EdgeInsets.symmetric(
-                                  horizontal: 16, vertical: 0),
-                              valid: controller.alignment != null,
-                              title: Text(
-                                controller.alignment != null
-                                    ? [
-                                        tr.entity(tn(AlignmentValue)),
-                                        tr.alignment.name(
-                                            controller.alignment!.type.name)
-                                      ].join(': ')
-                                    : tr.generic.selectEntity(
-                                        tr.entity(tn(AlignmentValue)),
-                                      ),
-                              ),
-                              subtitle: controller.alignment != null
-                                  ? Text(
-                                      controller
-                                              .alignment!.description.isNotEmpty
-                                          ? controller.alignment!.description
-                                          : tr.generic.noDescription,
-                                      overflow: TextOverflow.ellipsis,
-                                      maxLines: 1,
-                                    )
-                                  : Text(
-                                      tr.generic.noEntitySelectedRequired(
-                                          tr.entity(tn(AlignmentValue))),
-                                    ),
-                              onTap: cls != null
-                                  ? () => Navigator.of(context).pushNamed(
-                                        Routes.classAlignments,
-                                        arguments: ClassAlignmentsArguments(
-                                          onChanged: controller.setAlignment,
-                                          alignments: controller
-                                              .characterClass!.alignments,
-                                          preselected:
-                                              controller.alignment?.type,
-                                          selectable: true,
-                                          editable: true,
+                                    : Text(controller.name),
+                                subtitle: controller.name.isEmpty
+                                    ? Text(
+                                        tr.createCharacter.basicInfo.helpText)
+                                    : Text(
+                                        tr.createCharacter.basicInfo
+                                            .description(
+                                          cls?.name ?? '',
                                         ),
+                                      ),
+                                valid: controller.name.isNotEmpty,
+                                onTap: () => Navigator.of(context).pushNamed(
+                                  Routes.createCharacterBasicInfo,
+                                  arguments: BasicInfoFormArguments(
+                                    avatarUrl: controller.avatarUrl,
+                                    name: controller.name,
+                                    onChanged: controller.setBasicInfo,
+                                  ),
+                                ),
+                              ),
+                              // Class
+                              _Card(
+                                title: cls == null
+                                    ? Text(tr.generic.selectEntity(
+                                        tr.entity(tn(CharacterClass))))
+                                    : Text(cls.name),
+                                subtitle: cls == null
+                                    ? Text(tr.createCharacter.characterClass
+                                        .noSelection)
+                                    : Text(
+                                        tr.createCharacter.characterClass
+                                            .description(
+                                          cls.hp,
+                                          cls.load,
+                                          cls.damageDice.toString(),
+                                        ),
+                                      ),
+                                valid: cls != null,
+                                onTap: () => Navigator.of(context).pushNamed(
+                                  Routes.createCharacterSelectClass,
+                                  arguments: CharacterClassLibraryListArguments(
+                                    preSelections:
+                                        controller.characterClass != null
+                                            ? [controller.characterClass!]
+                                            : [],
+                                    onSelected: (cls) =>
+                                        controller.setClass(context, cls),
+                                  ),
+                                ),
+                              ),
+                              // Race
+                              _Card(
+                                title: controller.race == null
+                                    ? Text(tr.generic
+                                        .selectEntity(tr.entity(tn(Race))))
+                                    : Text(controller.race!.name),
+                                subtitle: controller.race == null
+                                    ? Text(tr.generic
+                                        .noEntitySelected(tr.entity(tn(Race))))
+                                    : Text(
+                                        controller.race!.description,
+                                        overflow: TextOverflow.ellipsis,
+                                      ),
+                                onTap: cls != null
+                                    ? () => ModelPages.openRacesList(
+                                          context,
+                                          character:
+                                              controller.getAsCharacter(),
+                                          preSelection: controller.race,
+                                          onSelected: (race) =>
+                                              controller.race = race,
+                                        )
+                                    : null,
+                                valid: controller.race != null,
+                              ),
+                              // Ability Scores
+                              _Card(
+                                contentPadding: const EdgeInsets.symmetric(
+                                    horizontal: 16, vertical: 8),
+                                title: Text(tr.generic.selectEntity(
+                                    tr.entityPlural(tn(AbilityScore)))),
+                                // subtitle: Text(
+                                //   controller.abilityScores.stats
+                                //       .map((stat) => '${stat.key}: ${stat}')
+                                //       .join(', '),
+                                subtitle: Padding(
+                                  padding: const EdgeInsets.only(top: 4.0),
+                                  child: _AbilityScoreChipList(
+                                      controller: controller),
+                                ),
+                                onTap: () => Navigator.of(context).pushNamed(
+                                  Routes.createCharacterAbilityScores,
+                                  arguments: AbilityScoresFormArguments(
+                                    onChanged: (abilityScores) => controller
+                                        .setAbilityScores(abilityScores),
+                                    abilityScores: controller.abilityScores,
+                                  ),
+                                ),
+                              ),
+                              // Alignment
+                              _Card(
+                                contentPadding: const EdgeInsets.symmetric(
+                                    horizontal: 16, vertical: 0),
+                                valid: controller.alignment != null,
+                                title: Text(
+                                  controller.alignment != null
+                                      ? [
+                                          tr.entity(tn(AlignmentValue)),
+                                          tr.alignment.name(
+                                              controller.alignment!.type.name)
+                                        ].join(': ')
+                                      : tr.generic.selectEntity(
+                                          tr.entity(tn(AlignmentValue)),
+                                        ),
+                                ),
+                                subtitle: controller.alignment != null
+                                    ? Text(
+                                        controller.alignment!.description
+                                                .isNotEmpty
+                                            ? controller.alignment!.description
+                                            : tr.generic.noDescription,
+                                        overflow: TextOverflow.ellipsis,
+                                        maxLines: 1,
                                       )
-                                  : null,
-                            ),
+                                    : Text(
+                                        tr.generic.noEntitySelectedRequired(
+                                            tr.entity(tn(AlignmentValue))),
+                                      ),
+                                onTap: cls != null
+                                    ? () => Navigator.of(context).pushNamed(
+                                          Routes.classAlignments,
+                                          arguments: ClassAlignmentsArguments(
+                                            onChanged: controller.setAlignment,
+                                            alignments: controller
+                                                .characterClass!.alignments,
+                                            preselected:
+                                                controller.alignment?.type,
+                                            selectable: true,
+                                            editable: true,
+                                          ),
+                                        )
+                                    : null,
+                              ),
 
-                            // Starting Gear
-                            _Card(
-                              contentPadding: const EdgeInsets.symmetric(
-                                  horizontal: 16, vertical: 8),
-                              title: Text(
-                                tr.generic.selectEntity(
-                                  tr.entity(tn(GearSelection)),
+                              // Starting Gear
+                              _Card(
+                                contentPadding: const EdgeInsets.symmetric(
+                                    horizontal: 16, vertical: 8),
+                                title: Text(
+                                  tr.generic.selectEntity(
+                                    tr.entity(tn(GearSelection)),
+                                  ),
                                 ),
-                              ),
-                              subtitle: Text(controller.items.isEmpty &&
-                                      controller.coins == 0
-                                  ? tr.createCharacter.startingGear.helpText
-                                  : [
-                                      controller.coins > 0
-                                          ? tr.createCharacter.startingGear
-                                              .coins(
-                                              NumberFormat('#0.#')
-                                                  .format(controller.coins),
-                                            )
-                                          : null,
-                                      controller.items
-                                          .map((i) => tr
-                                                  .createCharacter.startingGear
-                                                  .item(
+                                subtitle: Text(controller.items.isEmpty &&
+                                        controller.coins == 0
+                                    ? tr.createCharacter.startingGear.helpText
+                                    : [
+                                        controller.coins > 0
+                                            ? tr.createCharacter.startingGear
+                                                .coins(
                                                 NumberFormat('#0.#')
-                                                    .format(i.amount),
-                                                i.name,
-                                              ))
-                                          .join(', '),
-                                    ].whereType<String>().join(', ')),
-                              onTap: cls != null
-                                  ? () => Navigator.of(context).pushNamed(
-                                        Routes.createCharacterStartingGear,
-                                        arguments: StartingGearFormArguments(
-                                          onChanged: controller.setStartingGear,
-                                          selectedOptions:
-                                              controller.startingGear,
-                                          characterClass: cls,
+                                                    .format(controller.coins),
+                                              )
+                                            : null,
+                                        controller.items
+                                            .map((i) => tr.createCharacter
+                                                    .startingGear
+                                                    .item(
+                                                  NumberFormat('#0.#')
+                                                      .format(i.amount),
+                                                  i.name,
+                                                ))
+                                            .join(', '),
+                                      ].whereType<String>().join(', ')),
+                                onTap: cls != null
+                                    ? () => Navigator.of(context).pushNamed(
+                                          Routes.createCharacterStartingGear,
+                                          arguments: StartingGearFormArguments(
+                                            onChanged:
+                                                controller.setStartingGear,
+                                            selectedOptions:
+                                                controller.startingGear,
+                                            characterClass: cls,
+                                          ),
+                                        )
+                                    : null,
+                                valid: cls == null
+                                    ? false
+                                    : cls.gearChoices.every(
+                                        (c) => c.selections.any(
+                                          (s) => controller.startingGear
+                                              .map((x) => x.key)
+                                              .contains(s.key),
                                         ),
-                                      )
-                                  : null,
-                              valid: cls == null
-                                  ? false
-                                  : cls.gearChoices.every(
-                                      (c) => c.selections.any(
-                                        (s) => controller.startingGear
-                                            .map((x) => x.key)
-                                            .contains(s.key),
                                       ),
-                                    ),
-                            ),
-                            // Moves & Spells
-                            _Card(
-                              // contentPadding: EdgeInsets.symmetric(horizontal: 16, vertical: 12),
-                              title: Text(
-                                tr.generic.selectEntity(
-                                  (cls?.isSpellcaster ?? false)
-                                      ? tr.createCharacter.movesSpells.title
-                                      : tr.entityPlural(tn(Move)),
+                              ),
+                              // Moves & Spells
+                              _Card(
+                                // contentPadding: EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+                                title: Text(
+                                  tr.generic.selectEntity(
+                                    (cls?.isSpellcaster ?? false)
+                                        ? tr.createCharacter.movesSpells.title
+                                        : tr.entityPlural(tn(Move)),
+                                  ),
                                 ),
-                              ),
-                              subtitle: Text(
-                                (cls?.isSpellcaster ?? false)
-                                    ? tr.createCharacter.movesSpells
-                                        .description(
-                                        controller.moves.length,
-                                        controller.spells.length,
-                                      )
-                                    : tr.entityCountNum(
-                                        tn(Move),
-                                        controller.moves.length,
-                                      ),
-                              ),
-                              onTap: cls != null
-                                  ? () => Navigator.of(context).pushNamed(
-                                        Routes.createCharacterMovesSpells,
-                                        arguments: SelectMovesSpellsArguments(
-                                          onChanged:
-                                              controller.setMovesAndSpells,
-                                          moves: controller.moves,
-                                          spells: controller.spells,
-                                          abilityScores:
-                                              controller.abilityScores,
-                                          characterClass:
-                                              controller.characterClass!,
+                                subtitle: Text(
+                                  (cls?.isSpellcaster ?? false)
+                                      ? tr.createCharacter.movesSpells
+                                          .description(
+                                          controller.moves.length,
+                                          controller.spells.length,
+                                        )
+                                      : tr.entityCountNum(
+                                          tn(Move),
+                                          controller.moves.length,
                                         ),
-                                      )
-                                  : null,
-                            ),
-                          ],
+                                ),
+                                onTap: cls != null
+                                    ? () => Navigator.of(context).pushNamed(
+                                          Routes.createCharacterMovesSpells,
+                                          arguments: SelectMovesSpellsArguments(
+                                            onChanged:
+                                                controller.setMovesAndSpells,
+                                            moves: controller.moves,
+                                            spells: controller.spells,
+                                            abilityScores:
+                                                controller.abilityScores,
+                                            characterClass:
+                                                controller.characterClass!,
+                                          ),
+                                        )
+                                    : null,
+                              ),
+                            ],
+                          ),
                         ),
                       ),
                     ),
@@ -324,8 +332,7 @@ class CreateCharacterView extends StatelessWidget with CharacterProviderMixin {
               ),
             ),
           ),
-        ),
-      );
+        );
       },
     );
   }

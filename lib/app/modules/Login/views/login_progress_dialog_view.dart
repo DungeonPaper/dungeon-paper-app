@@ -2,7 +2,6 @@ import 'package:dungeon_paper/app/data/services/character_provider.dart';
 import 'package:dungeon_paper/app/data/services/loading_provider.dart';
 import 'package:dungeon_paper/i18n.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 
 enum LoginProgressStep {
   signin,
@@ -27,19 +26,21 @@ class LoginProgressDialogView extends StatelessWidget
 
   @override
   Widget build(BuildContext context) {
-    return Obx(
-      () => AlertDialog(
-        title: Text(title),
-        content: const SizedBox.square(
-          dimension: 100,
-          child: Center(
-            child: Padding(
-              padding: EdgeInsets.all(24),
-              child: CircularProgressIndicator.adaptive(),
+    return LoadingProvider.consumer(
+      (context, loading, _) {
+        return AlertDialog(
+          title: Text(title),
+          content: const SizedBox.square(
+            dimension: 100,
+            child: Center(
+              child: Padding(
+                padding: EdgeInsets.all(24),
+                child: CircularProgressIndicator.adaptive(),
+              ),
             ),
           ),
-        ),
-      ),
+        );
+      },
     );
   }
 }

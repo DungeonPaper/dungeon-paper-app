@@ -46,6 +46,7 @@ class MovesLibraryListView extends StatelessWidget
             EntityEditMenu(
               onEdit: data.onUpdate != null
                   ? () => ModelPages.openMovePage(
+                        context,
                         abilityScores: maybeChar?.abilityScores ??
                             AbilityScores.dungeonWorldAll(10),
                         move: data.item,

@@ -64,4 +64,3 @@ class StartingGearFormArguments {
     required this.onChanged,
   });
 }
-

@@ -50,7 +50,7 @@ class RaceCard extends StatelessWidget {
       maxContentHeight: maxContentHeight,
       expandable: expandable,
       expansionKey: expansionKey ?? PageStorageKey(race.key),
-      chips: race.tags.map((t) => TagChip.openDescription(tag: t)),
+      chips: race.tags.map((t) => TagChip.openDescription(context, tag: t)),
       dice: const [],
       icon: showIcon ? Icon(race.icon, size: 16) : null,
       starred: race.favorite,
@@ -72,4 +72,3 @@ class RaceCard extends StatelessWidget {
     );
   }
 }
-

@@ -156,4 +156,3 @@ class RaceFormArguments extends LibraryEntityFormArguments<Race> {
     required super.formContext,
   });
 }
-

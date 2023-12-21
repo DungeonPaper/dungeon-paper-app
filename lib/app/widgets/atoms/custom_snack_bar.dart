@@ -43,4 +43,3 @@ class DeferredCustomSnackBar {
         CustomSnackBar(context: context, title: title, content: content),
       );
 }
-

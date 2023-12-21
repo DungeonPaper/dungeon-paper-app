@@ -72,7 +72,7 @@ class ItemCard extends StatelessWidget {
         ...chips,
         ...trailing,
       ].joinObjects(const SizedBox(width: 8)),
-      chips: item.tags.map((t) => TagChip.openDescription(tag: t)),
+      chips: item.tags.map((t) => TagChip.openDescription(context, tag: t)),
       dice: const [],
       icon: showIcon ? Icon(item.icon, size: 16) : null,
       starred: item.equipped,
@@ -85,4 +85,3 @@ class ItemCard extends StatelessWidget {
     );
   }
 }
-

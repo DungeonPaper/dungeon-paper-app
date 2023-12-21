@@ -1,6 +1,5 @@
 import 'package:dungeon_paper/i18n.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 
 import '../../../core/dw_icons.dart';
 import '../atoms/number_text_field.dart';
@@ -58,10 +57,10 @@ class _CoinsDialogState extends State<CoinsDialog> {
 
   void save() {
     widget.onChanged(double.parse(controller.text));
-    Get.back();
+    Navigator.of(context).pop();
   }
 
   void cancel() {
-    Get.back();
+    Navigator.of(context).pop();
   }
 }

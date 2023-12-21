@@ -139,7 +139,6 @@ class UniversalSearchController extends ChangeNotifier
       return result;
     });
 
-
     return Future.value(map.toList());
   }
 
@@ -165,4 +164,3 @@ class SearchSeparator {
 
   SearchSeparator(this.text);
 }
-

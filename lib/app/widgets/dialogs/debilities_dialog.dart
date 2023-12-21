@@ -4,7 +4,6 @@ import 'package:dungeon_paper/app/widgets/atoms/help_text.dart';
 import 'package:dungeon_paper/app/widgets/molecules/dialog_controls.dart';
 import 'package:dungeon_paper/i18n.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 
 class CharacterDebilitiesDialog extends StatelessWidget
     with CharacterProviderMixin {
@@ -21,62 +20,63 @@ class CharacterDebilitiesDialog extends StatelessWidget
     return AlertDialog(
       title: Text(tr.debilities.dialog.title),
       contentPadding: const EdgeInsets.all(16),
-      actions: DialogControls.done(context, () => Get.back()),
+      actions: DialogControls.done(context, () => Navigator.of(context).pop()),
       content: CharacterProvider.consumer(
         (context, charProvider, _) {
           final char = charProvider.current;
           return SizedBox(
-          width: 500,
-          child: SingleChildScrollView(
-            child: ListTileTheme.merge(
-              minLeadingWidth: 20,
-              contentPadding: const EdgeInsets.all(0),
-              minVerticalPadding: 8,
-              child: Column(
-                mainAxisSize: MainAxisSize.min,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  HelpText(text: tr.debilities.dialog.info),
-                  const SizedBox(height: 6),
-                  const Divider(),
-                  for (final ability in char.abilityScores.stats)
-                    ListTile(
-                      contentPadding: const EdgeInsets.all(0),
-                      title: Text(tr.debilities
-                          .label(ability.debilityName, ability.key)),
-                      subtitle: Text(ability.debilityDescription),
-                      dense: true,
-                      leading: Icon(ability.icon, size: 20),
-                      onTap: () => charProvider.updateCharacter(
-                        char.copyWith(
-                          abilityScores: char.abilityScores.copyWith(
-                            stats: char.abilityScores.stats.map(
-                              (e) => e.key == ability.key
-                                  ? e.copyWith(isDebilitated: !e.isDebilitated)
-                                  : e,
-                            ),
-                          ),
-                        ),
-                      ),
-                      trailing: Switch.adaptive(
-                        value: ability.isDebilitated,
-                        onChanged: (checked) => charProvider.updateCharacter(
+            width: 500,
+            child: SingleChildScrollView(
+              child: ListTileTheme.merge(
+                minLeadingWidth: 20,
+                contentPadding: const EdgeInsets.all(0),
+                minVerticalPadding: 8,
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    HelpText(text: tr.debilities.dialog.info),
+                    const SizedBox(height: 6),
+                    const Divider(),
+                    for (final ability in char.abilityScores.stats)
+                      ListTile(
+                        contentPadding: const EdgeInsets.all(0),
+                        title: Text(tr.debilities
+                            .label(ability.debilityName, ability.key)),
+                        subtitle: Text(ability.debilityDescription),
+                        dense: true,
+                        leading: Icon(ability.icon, size: 20),
+                        onTap: () => charProvider.updateCharacter(
                           char.copyWith(
                             abilityScores: char.abilityScores.copyWith(
-                              stats: char.abilityScores.stats.map((e) =>
-                                  e.key == ability.key
-                                      ? e.copyWith(isDebilitated: checked)
-                                      : e),
+                              stats: char.abilityScores.stats.map(
+                                (e) => e.key == ability.key
+                                    ? e.copyWith(
+                                        isDebilitated: !e.isDebilitated)
+                                    : e,
+                              ),
+                            ),
+                          ),
+                        ),
+                        trailing: Switch.adaptive(
+                          value: ability.isDebilitated,
+                          onChanged: (checked) => charProvider.updateCharacter(
+                            char.copyWith(
+                              abilityScores: char.abilityScores.copyWith(
+                                stats: char.abilityScores.stats.map((e) =>
+                                    e.key == ability.key
+                                        ? e.copyWith(isDebilitated: checked)
+                                        : e),
+                              ),
                             ),
                           ),
                         ),
                       ),
-                    ),
-                ],
+                  ],
+                ),
               ),
             ),
-          ),
-        );
+          );
         },
       ),
     );

@@ -85,6 +85,7 @@ class HomeCharacterDynamicCards extends StatelessWidget
                       actions: [
                         EntityEditMenu(
                           onEdit: () => ModelPages.openNotePage(
+                            context,
                             note: notes[index],
                             onSave: (note) => controller.updateCharacter(
                               CharacterUtils.updateNotes(
@@ -142,6 +143,7 @@ class HomeCharacterDynamicCards extends StatelessWidget
                         actions: [
                           EntityEditMenu(
                             onEdit: () => ModelPages.openRacePage(
+                              context,
                               abilityScores: controller.current.abilityScores,
                               race: controller.current.race,
                               onSave: (race) => controller.updateCharacter(
@@ -190,6 +192,7 @@ class HomeCharacterDynamicCards extends StatelessWidget
                         actions: [
                           EntityEditMenu(
                             onEdit: () => ModelPages.openMovePage(
+                              context,
                               abilityScores: controller.current.abilityScores,
                               move: moves[index],
                               onSave: (move) => library.upsertToCharacter(
@@ -269,6 +272,7 @@ class HomeCharacterDynamicCards extends StatelessWidget
                         actions: [
                           EntityEditMenu(
                             onEdit: () => ModelPages.openSpellPage(
+                              context,
                               abilityScores: controller.current.abilityScores,
                               classKeys: spells[index].classKeys,
                               spell: spells[index],
@@ -336,6 +340,7 @@ class HomeCharacterDynamicCards extends StatelessWidget
                     actions: [
                       EntityEditMenu(
                         onEdit: () => ModelPages.openItemPage(
+                          context,
                           item: items[index],
                           onSave: (item) => controller.updateCharacter(
                             CharacterUtils.updateItems(

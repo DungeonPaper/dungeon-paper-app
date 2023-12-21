@@ -5,7 +5,7 @@ import 'package:dungeon_paper/app/data/models/user_settings.dart';
 import 'package:dungeon_paper/app/data/services/auth_provider.dart';
 import 'package:dungeon_paper/app/data/services/character_provider.dart';
 import 'package:dungeon_paper/app/data/services/loading_provider.dart';
-import 'package:dungeon_paper/app/data/services/repository_service.dart';
+import 'package:dungeon_paper/app/data/services/repository_provider.dart';
 import 'package:dungeon_paper/app/modules/Migration/controllers/migration_controller.dart';
 import 'package:dungeon_paper/app/routes/app_pages.dart';
 import 'package:dungeon_paper/core/global_keys.dart';
@@ -22,7 +22,7 @@ import 'package:sentry_flutter/sentry_flutter.dart';
 
 import '../../../core/utils/secrets_base.dart';
 
-class UserProvider extends ChangeNotifier {
+class UserProvider extends ChangeNotifier with RepositoryProviderMixin {
   var _current = User.guest();
 
   User get current => _current;
@@ -35,21 +35,17 @@ class UserProvider extends ChangeNotifier {
   static UserProvider of(BuildContext context) =>
       Provider.of<UserProvider>(context, listen: false);
 
-    static consumer(BuildContext context, Widget Function(User) builder) =>
+  static consumer(BuildContext context, Widget Function(User) builder) =>
       Consumer<UserProvider>(
         builder: (context, provider, _) => builder(provider.current),
       );
 
   Future<void> loadBuiltInRepo({bool ignoreCache = false}) async {
-    final repo = Provider.of<RepositoryProvider>(appGlobalKey.currentContext!,
-        listen: false);
     await repo.builtIn.dispose();
     return repo.builtIn.init(ignoreCache: ignoreCache);
   }
 
   Future<void> loadMyRepo({bool ignoreCache = false}) async {
-    final repo = Provider.of<RepositoryProvider>(appGlobalKey.currentContext!,
-        listen: false);
     await repo.my.dispose();
     return repo.my.init(ignoreCache: ignoreCache);
   }
@@ -248,6 +244,7 @@ class UserProvider extends ChangeNotifier {
 }
 
 mixin UserProviderMixin {
-  UserProvider get userProvider => UserProvider.of(appGlobalKey.currentContext!);
+  UserProvider get userProvider =>
+      UserProvider.of(appGlobalKey.currentContext!);
   User get user => userProvider.current;
 }

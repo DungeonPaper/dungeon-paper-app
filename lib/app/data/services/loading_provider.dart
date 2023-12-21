@@ -56,7 +56,7 @@ class LoadingProvider extends ChangeNotifier {
   }
 }
 
-
 mixin LoadingProviderMixin {
-  LoadingProvider get loadingProvider => LoadingProvider.of(appGlobalKey.currentContext!);
+  LoadingProvider get loadingProvider =>
+      LoadingProvider.of(appGlobalKey.currentContext!);
 }

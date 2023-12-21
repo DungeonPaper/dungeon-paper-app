@@ -77,4 +77,3 @@ class DebugMenu extends StatelessWidget with CharacterProviderMixin {
     );
   }
 }
-

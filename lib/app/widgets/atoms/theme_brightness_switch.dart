@@ -110,4 +110,3 @@ class ThemeBrightnessSwitch extends StatelessWidget
     }
   }
 }
-

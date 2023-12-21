@@ -10,8 +10,7 @@ class AbilityScoreChip extends StatelessWidget {
   final AbilityScore stat;
   final bool showDice;
 
-  const AbilityScoreChip({Key? key, required this.stat, this.showDice = true})
-      : super(key: key);
+  const AbilityScoreChip({super.key, required this.stat, this.showDice = true});
 
   @override
   Widget build(BuildContext context) {
@@ -36,7 +35,7 @@ class AbilityScoreChip extends StatelessWidget {
       child: InkWell(
         splashColor: Theme.of(context).splashColor,
         onTap: () => DiceUtils.openRollDialog(
-            [dw.Dice(amount: 2, sides: 6, modifierStat: stat.key)]),
+            context, [dw.Dice(amount: 2, sides: 6, modifierStat: stat.key)]),
         borderRadius: borderRadius,
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 8),
@@ -48,16 +47,16 @@ class AbilityScoreChip extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   IconTheme(
-                    child: Icon(stat.icon),
                     data: IconThemeData(
                         size: 18, color: theme.colorScheme.onSurface),
+                    child: Icon(stat.icon),
                   ),
                   const SizedBox(width: 4),
                   SizedBox(
                     width: 32,
                     child: Text(
                       valStr,
-                      textScaleFactor: 1.5,
+                      textScaler: const TextScaler.linear(1.5),
                       style: const TextStyle(fontWeight: FontWeight.bold),
                       textAlign: TextAlign.center,
                     ),
@@ -74,12 +73,12 @@ class AbilityScoreChip extends StatelessWidget {
                             mainAxisSize: MainAxisSize.min,
                             children: [
                               IconTheme(
-                                child: const Icon(DwIcons.dice_d6),
                                 data: IconTheme.of(context).copyWith(
                                   size: 12,
                                   color: theme.colorScheme.onSurface
                                       .withOpacity(rollBadgeModifierOpacity),
                                 ),
+                                child: const Icon(DwIcons.dice_d6),
                               ),
                               const SizedBox(width: 2),
                               Text(
@@ -103,3 +102,4 @@ class AbilityScoreChip extends StatelessWidget {
     );
   }
 }
+

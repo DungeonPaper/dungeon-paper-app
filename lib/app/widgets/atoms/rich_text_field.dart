@@ -5,7 +5,6 @@ import 'package:dungeon_paper/i18n.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_markdown/flutter_markdown.dart';
-import 'package:get/get.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class RichTextField extends StatelessWidget {
@@ -124,9 +123,8 @@ class RichTextField extends StatelessWidget {
   final ScrollController? scrollController;
   final String? restorationId;
   final bool enableIMEPersonalizedLearning;
-  final _defaultController = TextEditingController().obs;
-  TextEditingController get _controller =>
-      controller ?? _defaultController.value;
+  final _defaultController = TextEditingController();
+  TextEditingController get _controller => controller ?? _defaultController;
   final List<RichButton>? customButtons;
 
   @override
@@ -356,8 +354,9 @@ class RichTextField extends StatelessWidget {
   }
 
   void _openPreview(BuildContext context) {
-    Get.dialog(
-      MarkdownPreviewDialog(text: _controller.text),
+    showDialog(
+      context: context,
+      builder: (_) => MarkdownPreviewDialog(text: _controller.text),
     );
   }
 }

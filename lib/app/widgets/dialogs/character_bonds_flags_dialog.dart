@@ -133,4 +133,3 @@ class CharacterBondsFlagsDialog extends StatelessWidget
     );
   }
 }
-

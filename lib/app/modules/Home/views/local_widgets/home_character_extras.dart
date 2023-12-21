@@ -181,4 +181,3 @@ class HomeCharacterExtras extends StatelessWidget with CharacterProviderMixin {
     Navigator.of(context).pushNamed(Routes.selectCharacterTheme);
   }
 }
-

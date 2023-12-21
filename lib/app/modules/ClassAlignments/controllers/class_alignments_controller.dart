@@ -13,10 +13,11 @@ class ClassAlignmentsController extends ChangeNotifier {
   final editing = <dw.AlignmentType, bool>{};
   final textControllers = <dw.AlignmentType, TextEditingController>{};
 
-ClassAlignmentsController(BuildContext context) {
+  ClassAlignmentsController(BuildContext context) {
     final arguments = ModalRoute.of(context)?.settings.arguments as dynamic;
     assert(arguments is ClassAlignmentsArguments?);
-    final ClassAlignmentsArguments? args = arguments as ClassAlignmentsArguments?;
+    final ClassAlignmentsArguments? args =
+        arguments as ClassAlignmentsArguments?;
     if (args != null) {
       if (args.alignments != null) {
         alignments = args.alignments!;
@@ -42,13 +43,12 @@ ClassAlignmentsController(BuildContext context) {
   }
 
   void select(dw.AlignmentType type) {
-    selected= type;
+    selected = type;
     notifyListeners();
   }
 
   bool isEditing(dw.AlignmentType type) => editable && editing[type] == true;
-  bool isSelected(dw.AlignmentType type) =>
-      selectable && selected == type;
+  bool isSelected(dw.AlignmentType type) => selectable && selected == type;
 
   void save(BuildContext context) {
     final updated = alignments.copyWithInherited(

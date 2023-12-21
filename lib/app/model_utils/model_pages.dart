@@ -319,4 +319,3 @@ class ModelPages with LibraryProviderMixin, CharacterProviderMixin {
         ),
       );
 }
-

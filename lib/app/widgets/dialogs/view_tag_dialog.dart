@@ -3,7 +3,6 @@ import 'package:dungeon_paper/core/utils/string_utils.dart';
 import 'package:dungeon_paper/i18n.dart';
 import 'package:dungeon_world_data/dungeon_world_data.dart' as dw;
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 
 class ViewTagDialog extends StatelessWidget {
   const ViewTagDialog({
@@ -82,7 +81,7 @@ class ViewTagDialog extends StatelessWidget {
           ],
         ),
       ),
-      actions: DialogControls.done(context, () => Get.back()),
+      actions: DialogControls.done(context, () => Navigator.of(context).pop()),
     );
   }
 }

@@ -250,4 +250,3 @@ class HomeLoaderView extends StatelessWidget {
     );
   }
 }
-

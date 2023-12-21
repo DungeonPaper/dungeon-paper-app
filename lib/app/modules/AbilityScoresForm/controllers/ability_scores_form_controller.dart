@@ -81,4 +81,3 @@ class AbilityScoresFormArguments {
     required this.onChanged,
   });
 }
-

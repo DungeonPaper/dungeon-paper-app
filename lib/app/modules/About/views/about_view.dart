@@ -71,7 +71,8 @@ class AboutView extends StatelessWidget {
                 title: Text(tr.about.feedback.title),
                 subtitle: Text(tr.about.feedback.subtitle,
                     style: textTheme.bodySmall),
-                onTap: () => Navigator.of(context).pushNamed(Routes.sendFeedback),
+                onTap: () =>
+                    Navigator.of(context).pushNamed(Routes.sendFeedback),
                 isThreeLine: true,
                 visualDensity: VisualDensity.compact,
               ),

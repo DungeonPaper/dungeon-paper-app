@@ -91,14 +91,14 @@ class ExportController extends ChangeNotifier
     return res;
   }
 
-  void Function()? getDoExport() {
+  void Function()? getDoExport(BuildContext context) {
     return () async {
       final strData = utf8.encode(json.encode(toExport.toJson()));
 
       final dt = DateFormat('yy-MM-dd_HH.mm.ss').format(DateTime.now());
       final fileName = 'DungeonPaperV2_$dt.json';
 
-      Exporter().export(strData, fileName);
+      Exporter().export(context, strData, fileName);
     };
   }
 
@@ -157,4 +157,3 @@ class ExportSelections {
     throw TypeError();
   }
 }
-

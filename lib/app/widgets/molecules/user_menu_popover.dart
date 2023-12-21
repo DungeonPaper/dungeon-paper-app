@@ -10,13 +10,12 @@ import 'package:dungeon_paper/app/themes/themes.dart';
 import 'package:dungeon_paper/app/widgets/atoms/theme_brightness_switch.dart';
 import 'package:dungeon_paper/i18n.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 import 'package:provider/provider.dart';
 
 import '../atoms/character_avatar.dart';
 import '../atoms/user_avatar.dart';
 
-class UserMenuPopover extends StatelessWidget {
+class UserMenuPopover extends StatelessWidget with CharacterProviderMixin, UserProviderMixin {
   const UserMenuPopover({super.key});
 
   @override
@@ -32,7 +31,7 @@ class UserMenuPopover extends StatelessWidget {
       dense: true,
       contentPadding: EdgeInsets.zero,
       child: GestureDetector(
-        onTap: () => Get.back(),
+        onTap: () => Navigator.of(context).pop(),
         child: BackdropFilter(
           filter: ImageFilter.blur(sigmaX: 5, sigmaY: 5),
           child: Material(
@@ -54,16 +53,6 @@ class UserMenuPopover extends StatelessWidget {
                           onTap: () => null,
                           child: Consumer<UserProvider>(
                             builder: (context, userProvider, _) {
-                              final charProvider =
-                                  Provider.of<CharacterProvider>(
-                                context,
-                                listen: false,
-                              );
-                              final userService = Provider.of<UserProvider>(
-                                context,
-                                listen: false,
-                              );
-                              final user = userService.current;
                               return ListView(
                                 padding: const EdgeInsets.symmetric(
                                   horizontal: 16,
@@ -73,27 +62,29 @@ class UserMenuPopover extends StatelessWidget {
                                 children: [
                                   // User details
                                   ListTile(
-                                    onTap: userService.isLoggedIn
-                                        ? () => Get.toNamed(Routes.account)
+                                    onTap: userProvider.isLoggedIn
+                                        ? () => Navigator.of(context)
+                                            .pushNamed(Routes.account)
                                         : null,
                                     visualDensity: VisualDensity.compact,
                                     title: Text(
-                                      '${userService.current.displayName} (@${userService.current.username})',
+                                      '${userProvider.current.displayName} (@${userProvider.current.username})',
                                       style: textStyle,
                                     ),
                                     subtitle: Text(
-                                      userService.current.email.isNotEmpty
-                                          ? userService.current.email
+                                      userProvider.current.email.isNotEmpty
+                                          ? userProvider.current.email
                                           : tr.auth.signup.notLoggedIn.label,
                                     ),
-                                    trailing: userService.isGuest
+                                    trailing: userProvider.isGuest
                                         ? Row(
                                             mainAxisSize: MainAxisSize.min,
                                             children: [
                                               ElevatedButton.icon(
                                                 onPressed: () {
-                                                  Get.back();
-                                                  Get.toNamed(Routes.login);
+                                                  Navigator.of(context).pop();
+                                                  Navigator.of(context)
+                                                      .pushNamed(Routes.login);
                                                 },
                                                 icon: const Icon(Icons.login),
                                                 label:
@@ -131,7 +122,7 @@ class UserMenuPopover extends StatelessWidget {
                                               onTap: () {
                                                 charProvider
                                                     .setCurrent(char.key);
-                                                Get.back();
+                                                Navigator.of(context).pop();
                                               },
                                               child: Padding(
                                                 padding:
@@ -174,8 +165,9 @@ class UserMenuPopover extends StatelessWidget {
                                         tr.entityPlural(tn(Character)))),
                                     leading: const Icon(Icons.group),
                                     onTap: () {
-                                      Get.back();
-                                      Get.toNamed(Routes.characterList);
+                                      Navigator.of(context).pop();
+                                      Navigator.of(context)
+                                          .pushNamed(Routes.characterList);
                                     },
                                   ),
                                   // Create Character
@@ -185,8 +177,9 @@ class UserMenuPopover extends StatelessWidget {
                                         tr.entity(tn(Character)))),
                                     leading: const Icon(Icons.person_add),
                                     onTap: () {
-                                      Get.back();
-                                      Get.toNamed(Routes.createCharacter);
+                                      Navigator.of(context).pop();
+                                      Navigator.of(context)
+                                          .pushNamed(Routes.createCharacter);
                                     },
                                   ),
                                   const Divider(),
@@ -196,8 +189,9 @@ class UserMenuPopover extends StatelessWidget {
                                     title: Text(tr.playbook.myLibrary),
                                     leading: const Icon(Icons.local_library),
                                     onTap: () {
-                                      Get.back();
-                                      Get.toNamed(Routes.library);
+                                      Navigator.of(context).pop();
+                                      Navigator.of(context)
+                                          .pushNamed(Routes.library);
                                     },
                                   ),
                                   if (user.isDm)
@@ -207,8 +201,9 @@ class UserMenuPopover extends StatelessWidget {
                                       title: Text(tr.playbook.myCampaigns),
                                       leading: Icon(Campaign.genericIcon),
                                       onTap: () {
-                                        Get.back();
-                                        Get.toNamed(Routes.campaigns);
+                                        Navigator.of(context).pop();
+                                        Navigator.of(context)
+                                            .pushNamed(Routes.campaigns);
                                       },
                                     ),
                                   // Export/Import
@@ -217,13 +212,15 @@ class UserMenuPopover extends StatelessWidget {
                                     title: Text(tr.settings.importExport),
                                     leading: const Icon(Icons.import_export),
                                     onTap: () {
-                                      Get.back();
-                                      Get.toNamed(Routes.importExport);
+                                      Navigator.of(context).pop();
+                                      Navigator.of(context)
+                                          .pushNamed(Routes.importExport);
                                     },
                                   ),
                                   const Divider(),
                                   ThemeBrightnessSwitch.listTile(
-                                    onChanged: (_) => Get.back(),
+                                    onChanged: (_) =>
+                                        Navigator.of(context).pop(),
                                   ),
                                   // Settings
                                   ListTile(
@@ -231,8 +228,9 @@ class UserMenuPopover extends StatelessWidget {
                                     title: Text(tr.settings.title),
                                     leading: const Icon(Icons.settings),
                                     onTap: () {
-                                      Get.back();
-                                      Get.toNamed(Routes.settings);
+                                      Navigator.of(context).pop();
+                                      Navigator.of(context)
+                                          .pushNamed(Routes.settings);
                                     },
                                   ),
                                   // About
@@ -241,20 +239,21 @@ class UserMenuPopover extends StatelessWidget {
                                     title: Text(tr.about.title),
                                     leading: const Icon(Icons.info),
                                     onTap: () {
-                                      Get.back();
-                                      Get.toNamed(Routes.about);
+                                      Navigator.of(context).pop();
+                                      Navigator.of(context)
+                                          .pushNamed(Routes.about);
                                     },
                                   ),
                                   // Logout
-                                  if (!userService.isGuest) ...[
+                                  if (!userProvider.isGuest) ...[
                                     const Divider(),
                                     ListTile(
                                       visualDensity: VisualDensity.compact,
                                       title: Text(tr.auth.logout.button),
                                       leading: const Icon(Icons.logout),
                                       onTap: () {
-                                        Get.back();
-                                        userService.logout();
+                                        Navigator.of(context).pop();
+                                        userProvider.logout();
                                       },
                                     ),
                                   ],
@@ -275,4 +274,3 @@ class UserMenuPopover extends StatelessWidget {
     );
   }
 }
-

@@ -4,20 +4,20 @@ import 'package:dungeon_paper/app/widgets/dialogs/view_tag_dialog.dart';
 import 'package:flutter/material.dart';
 
 import 'package:dungeon_world_data/dungeon_world_data.dart' as dw;
-import 'package:get/get.dart';
 
 class TagChip extends StatelessWidget {
   const TagChip({
-    Key? key,
+    super.key,
     required this.tag,
     this.onPressed,
     this.onDeleted,
     this.icon,
     this.backgroundColor,
     this.visualDensity,
-  }) : super(key: key);
+  });
 
-  factory TagChip.openDescription({
+  factory TagChip.openDescription(
+    BuildContext context, {
     Key? key,
     required dw.Tag tag,
     void Function()? onPressed,
@@ -32,8 +32,9 @@ class TagChip extends StatelessWidget {
         onDeleted: onDeleted,
         icon: icon,
         backgroundColor: backgroundColor,
-        onPressed: () => Get.dialog(
-          ViewTagDialog(
+        onPressed: () => showDialog(
+          context: context,
+          builder: (_) => ViewTagDialog(
             tag: tag,
           ),
         ),

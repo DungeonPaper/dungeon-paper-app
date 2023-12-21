@@ -1,7 +1,7 @@
 import 'dart:async';
 
 import 'package:dungeon_paper/app/data/services/loading_provider.dart';
-import 'package:dungeon_paper/app/data/services/repository_service.dart';
+import 'package:dungeon_paper/app/data/services/repository_provider.dart';
 import 'package:dungeon_paper/core/global_keys.dart';
 import 'package:dungeon_paper/core/platform_helper.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -13,10 +13,11 @@ import 'package:sign_in_with_apple/sign_in_with_apple.dart';
 import '../../model_utils/user_utils.dart';
 import 'user_provider.dart';
 
-class AuthProvider extends ChangeNotifier with UserProviderMixin {
+class AuthProvider extends ChangeNotifier
+    with UserProviderMixin, RepositoryProviderMixin {
   static AuthProvider of(BuildContext context, {bool listen = false}) =>
       Provider.of<AuthProvider>(context, listen: listen);
-    static Widget consumer(
+  static Widget consumer(
           Widget Function(BuildContext, AuthProvider, Widget?) builder) =>
       Consumer<AuthProvider>(builder: builder);
   StreamSubscription<User?>? _sub;
@@ -25,6 +26,11 @@ class AuthProvider extends ChangeNotifier with UserProviderMixin {
   final gSignIn = GoogleSignIn.standard();
   User? _fbUser;
   User? get fbUser => _fbUser;
+
+  AuthProvider() {
+    debugPrint('[AUTH PROVIDER] init');
+    _registerAuthListener();
+  }
 
   Future<UserCredential> loginWithPassword({
     required String email,
@@ -119,7 +125,6 @@ class AuthProvider extends ChangeNotifier with UserProviderMixin {
   Future<void> logout(BuildContext context) async {
     _clearAuthListener();
     // await StorageHandler.instance.local.clear();
-    final repo = Provider.of<RepositoryProvider>(context, listen: false);
 
     await repo.my.dispose();
     await auth.signOut();
@@ -134,10 +139,7 @@ class AuthProvider extends ChangeNotifier with UserProviderMixin {
       debugPrint('Error while logging out: $e');
     }
     user.applyDefaultTheme();
-    _registerAuthListener();
-  }
-
-  AuthProvider() {
+    notifyListeners();
     _registerAuthListener();
   }
 
@@ -184,5 +186,7 @@ class AuthProvider extends ChangeNotifier with UserProviderMixin {
 }
 
 mixin AuthProviderMixin {
-  AuthProvider get authProvider => AuthProvider.of(appGlobalKey.currentContext!);
+  AuthProvider get authProvider =>
+      AuthProvider.of(appGlobalKey.currentContext!);
 }
+

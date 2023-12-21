@@ -309,4 +309,3 @@ class ImportSelections {
         races,
       ].any((l) => l.isNotEmpty);
 }
-

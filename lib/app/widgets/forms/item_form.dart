@@ -5,39 +5,36 @@ import 'package:dungeon_paper/app/widgets/molecules/tag_list_input.dart';
 import 'package:dungeon_paper/i18n.dart';
 import 'package:dungeon_world_data/dungeon_world_data.dart' as dw;
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
+import 'package:provider/provider.dart';
 
-class ItemForm extends GetView<ItemFormController> {
+class ItemForm extends StatelessWidget {
   const ItemForm({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return LibraryEntityForm<Item, ItemFormController>(
-      children: [
-        () => Obx(
-              () => TextFormField(
+    return Consumer<ItemFormController>(
+      builder: (context, controller, _) =>
+          LibraryEntityForm<Item, ItemFormController>(
+        children: [
+          () => TextFormField(
                 controller: controller.name,
                 textCapitalization: TextCapitalization.words,
                 decoration: InputDecoration(
                   label: Text(tr.generic.entityName(tr.entity(tn(Item)))),
                 ),
               ),
-            ),
-        () => Obx(
-              () => RichTextField(
+          () => RichTextField(
                 controller: controller.description,
                 label: tr.generic.entityDescription(tr.entity(tn(Item))),
                 maxLines: 10,
                 minLines: 5,
                 textCapitalization: TextCapitalization.sentences,
               ),
-            ),
-        () => Obx(
-              () => TagListInput(
+          () => TagListInput(
                 controller: controller.tags,
               ),
-            ),
-      ],
+        ],
+      ),
     );
   }
 }
@@ -87,4 +84,3 @@ class ItemFormArgumentsNew extends LibraryEntityFormArguments<Item> {
     required super.formContext,
   });
 }
-

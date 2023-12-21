@@ -1,6 +1,7 @@
+import 'package:dungeon_paper/app/modules/ImportExport/controllers/export_controller.dart';
+import 'package:dungeon_paper/app/modules/ImportExport/controllers/import_controller.dart';
 import 'package:dungeon_world_data/dice.dart';
 import 'package:flutter/widgets.dart';
-import 'package:get/get.dart';
 import 'package:provider/provider.dart';
 
 import '../data/models/character_class.dart';
@@ -64,7 +65,7 @@ import '../widgets/forms/race_form.dart';
 import '../widgets/forms/spell_form.dart';
 import '../widgets/molecules/user_menu_popover.dart';
 import '../widgets/views/roll_dice_view.dart';
-import 'custom_transitions.dart';
+// import 'custom_transitions.dart';
 
 part 'app_routes.dart';
 
@@ -92,8 +93,12 @@ class AppPages {
           child: const SettingsView(),
         ),
 
-    Routes.importExport: (context) => ChangeNotifierProvider(
-          create: (_) => ImportExportController(),
+    Routes.importExport: (context) => MultiProvider(
+          providers: [
+            ChangeNotifierProvider(create: (_) => ImportExportController()),
+            ChangeNotifierProvider(create: (_) => ImportController()),
+            ChangeNotifierProvider(create: (_) => ExportController()),
+          ],
           child: const ImportExportView(),
         ),
 
@@ -248,12 +253,12 @@ class AppPages {
   };
 }
 
-class CustomTransitions {
-  static CustomTransition circularReveal({
-    Offset? offset,
-    Alignment? alignment,
-  }) {
-    return CustomCircularRevealTransition(offset: offset, alignment: alignment);
-  }
-}
+// class CustomTransitions {
+//   static CustomTransition circularReveal({
+//     Offset? offset,
+//     Alignment? alignment,
+//   }) {
+//     return CustomCircularRevealTransition(offset: offset, alignment: alignment);
+//   }
+// }
 

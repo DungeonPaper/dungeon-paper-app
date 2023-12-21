@@ -13,7 +13,6 @@ import 'package:dungeon_paper/core/utils/list_utils.dart';
 import 'package:dungeon_paper/i18n.dart';
 import 'package:dungeon_world_data/dungeon_world_data.dart' as dw;
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 
 class CustomRollButtonsDialog extends StatefulWidget {
   const CustomRollButtonsDialog({
@@ -101,14 +100,14 @@ class _CustomRollButtonsDialogState extends State<CustomRollButtonsDialog>
       actions: DialogControls.save(
         context,
         onSave: save,
-        onCancel: () => Get.back(),
+        onCancel: () => Navigator.of(context).pop(),
       ),
     );
   }
 
   void save() {
     widget.onChanged(rollButtons);
-    Get.back();
+    Navigator.of(context).pop();
   }
 }
 

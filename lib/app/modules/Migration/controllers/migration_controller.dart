@@ -46,4 +46,3 @@ class MigrationArguments {
 
   MigrationArguments({required this.email});
 }
-

@@ -99,4 +99,3 @@ mixin LibraryProviderMixin {
   LibraryProvider get libraryProvider =>
       LibraryProvider.of(appGlobalKey.currentContext!);
 }
-

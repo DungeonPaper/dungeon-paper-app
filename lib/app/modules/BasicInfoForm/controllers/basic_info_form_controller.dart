@@ -86,4 +86,3 @@ class BasicInfoFormArguments {
     required this.onChanged,
   });
 }
-

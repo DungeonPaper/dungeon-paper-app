@@ -96,4 +96,3 @@ class HomeCharacterActionsSummary extends StatelessWidget {
     return null;
   }
 }
-

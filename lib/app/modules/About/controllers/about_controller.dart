@@ -15,4 +15,3 @@ class AboutController extends ChangeNotifier {
     notifyListeners();
   }
 }
-

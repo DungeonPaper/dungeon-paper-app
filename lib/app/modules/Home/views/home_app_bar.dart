@@ -17,7 +17,8 @@ class HomeAppBar extends StatelessWidget
       automaticallyImplyLeading: false,
       leading: IconButton(
         icon: const Icon(Icons.search),
-        onPressed: () => Navigator.of(context).pushNamed(Routes.universalSearch),
+        onPressed: () =>
+            Navigator.of(context).pushNamed(Routes.universalSearch),
       ),
       actions: const [
         // if (user.flags['su'] == true)
@@ -36,4 +37,3 @@ class HomeAppBar extends StatelessWidget
   @override
   Size get preferredSize => const Size.fromHeight(64);
 }
-

@@ -8,70 +8,73 @@ import 'package:dungeon_paper/core/utils/list_utils.dart';
 import 'package:dungeon_paper/i18n.dart';
 import 'package:dungeon_world_data/dungeon_world_data.dart' as dw;
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
+import 'package:provider/provider.dart';
 
-class CharacterClassForm extends GetView<CharacterClassFormController> {
+class CharacterClassForm extends StatelessWidget {
   const CharacterClassForm({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return LibraryEntityForm<CharacterClass, CharacterClassFormController>(
-      children: [
-        () => TextFormField(
-              controller: controller.name,
-              textCapitalization: TextCapitalization.words,
-              decoration: InputDecoration(
+    return Consumer<CharacterClassFormController>(
+      builder: (context, controller, _) =>
+          LibraryEntityForm<CharacterClass, CharacterClassFormController>(
+        children: [
+          () => TextFormField(
+                controller: controller.name,
+                textCapitalization: TextCapitalization.words,
+                decoration: InputDecoration(
+                  label: Text(
+                      tr.generic.entityName(tr.entity(tn(CharacterClass)))),
+                ),
+              ),
+          () => const SizedBox(height: 16),
+          () => RichTextField(
+                controller: controller.description,
                 label:
-                    Text(tr.generic.entityName(tr.entity(tn(CharacterClass)))),
+                    tr.generic.entityDescription(tr.entity(tn(CharacterClass))),
+                maxLines: 10,
+                minLines: 5,
+                textCapitalization: TextCapitalization.sentences,
               ),
-            ),
-        () => const SizedBox(height: 16),
-        () => RichTextField(
-              controller: controller.description,
-              label:
-                  tr.generic.entityDescription(tr.entity(tn(CharacterClass))),
-              maxLines: 10,
-              minLines: 5,
-              textCapitalization: TextCapitalization.sentences,
-            ),
-        () => DiceListInput(
-              controller: controller.damageDice,
-              label: Text(tr.characterClass.damageDice),
-              abilityScores: AbilityScores.dungeonWorld(
-                cha: 12,
-                con: 12,
-                dex: 12,
-                str: 12,
-                wis: 12,
-                intl: 12,
+          () => DiceListInput(
+                controller: controller.damageDice,
+                label: Text(tr.characterClass.damageDice),
+                abilityScores: AbilityScores.dungeonWorld(
+                  cha: 12,
+                  con: 12,
+                  dex: 12,
+                  str: 12,
+                  wis: 12,
+                  intl: 12,
+                ),
+                guessFrom: [controller.description],
+                maxCount: 1,
               ),
-              guessFrom: [controller.description],
-              maxCount: 1,
-            ),
-        () => Row(
-              children: [
-                Expanded(
-                  child: NumberTextField(
-                    numberType: NumberType.int,
-                    controller: controller.hp,
-                    decoration: InputDecoration(
-                      label: Text(tr.characterClass.baseHp),
+          () => Row(
+                children: [
+                  Expanded(
+                    child: NumberTextField(
+                      numberType: NumberType.int,
+                      controller: controller.hp,
+                      decoration: InputDecoration(
+                        label: Text(tr.characterClass.baseHp),
+                      ),
                     ),
                   ),
-                ),
-                const SizedBox(width: 16),
-                Expanded(
-                  child: NumberTextField(
-                    numberType: NumberType.int,
-                    controller: controller.load,
-                    decoration: InputDecoration(
-                      label: Text(tr.characterClass.baseLoad),
+                  const SizedBox(width: 16),
+                  Expanded(
+                    child: NumberTextField(
+                      numberType: NumberType.int,
+                      controller: controller.load,
+                      decoration: InputDecoration(
+                        label: Text(tr.characterClass.baseLoad),
+                      ),
                     ),
                   ),
-                ),
-              ],
-            ),
-      ],
+                ],
+              ),
+        ],
+      ),
     );
   }
 }
@@ -93,7 +96,7 @@ class CharacterClassFormController extends LibraryEntityFormController<
   TextEditingController get hp => _hp;
   TextEditingController get load => _load;
 
-CharacterClassFormController(super.context) {
+  CharacterClassFormController(super.context) {
     name.text = args.entity?.name ?? '';
     description.text = args.entity?.description ?? '';
     damageDice.value = asList(args.entity?.damageDice ?? dw.Dice.d4);

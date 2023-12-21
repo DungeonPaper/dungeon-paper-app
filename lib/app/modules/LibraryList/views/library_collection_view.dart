@@ -12,12 +12,12 @@ import 'package:dungeon_paper/app/model_utils/model_pages.dart';
 import 'package:dungeon_paper/app/widgets/atoms/menu_button.dart';
 import 'package:dungeon_paper/i18n.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 import 'package:intl/intl.dart';
+import 'package:provider/provider.dart';
 
 import '../controllers/library_collection_controller.dart';
 
-class LibraryCollectionView extends GetView<LibraryCollectionController>
+class LibraryCollectionView extends StatelessWidget
     with RepositoryProviderMixin, UserProviderMixin, CharacterProviderMixin {
   static const List<Type> types = [Move, Spell, Item, CharacterClass, Race];
 
@@ -52,12 +52,13 @@ class LibraryCollectionView extends GetView<LibraryCollectionController>
         padding: const EdgeInsets.all(8),
         itemCount: types.length,
         itemBuilder: (context, index) {
-          return Obx(
-            () {
+          return Consumer<LibraryCollectionController>(
+            builder: (context, controller, _) {
               final type = types[index];
               return Card(
                 child: ListTile(
                   onTap: () => ModelPages.openLibraryList(
+                    context,
                     type: type,
                     abilityScores: maybeChar?.abilityScores ??
                         AbilityScores.dungeonWorldAll(10),

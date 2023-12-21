@@ -151,4 +151,3 @@ class HomeEmptyState extends StatelessWidget with UserProviderMixin {
     );
   }
 }
-

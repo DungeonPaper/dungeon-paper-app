@@ -32,7 +32,8 @@ import 'package:flutter/material.dart';
 
 import 'local_widgets/home_character_actions_summary.dart';
 
-class HomeCharacterActionsView extends StatelessWidget with CharacterProviderMixin {
+class HomeCharacterActionsView extends StatelessWidget
+    with CharacterProviderMixin {
   const HomeCharacterActionsView({super.key});
 
   @override
@@ -64,9 +65,9 @@ class HomeCharacterActionsView extends StatelessWidget with CharacterProviderMix
           case 'Move':
             return movesList(context, ctrl) ?? const SizedBox.shrink();
           case 'Spell':
-            return spellsList(ctrl) ?? const SizedBox.shrink();
+            return spellsList(context, ctrl) ?? const SizedBox.shrink();
           case 'Item':
-            return itemsList(ctrl) ?? const SizedBox.shrink();
+            return itemsList(context, ctrl) ?? const SizedBox.shrink();
         }
 
         return const SizedBox.shrink();
@@ -87,6 +88,7 @@ class HomeCharacterActionsView extends StatelessWidget with CharacterProviderMix
         EntityEditMenu(
           onDelete: null,
           onEdit: () => ModelPages.openRacePage(
+            context,
             race: char.race,
             abilityScores: char.abilityScores,
             onSave: (race) => controller.updateCharacter(
@@ -171,6 +173,7 @@ class HomeCharacterActionsView extends StatelessWidget with CharacterProviderMix
           EntityEditMenu(
             onDelete: onDelete,
             onEdit: () => ModelPages.openMovePage(
+              context,
               move: move,
               abilityScores: char.abilityScores,
               onSave: onSave(true),
@@ -182,7 +185,7 @@ class HomeCharacterActionsView extends StatelessWidget with CharacterProviderMix
     );
   }
 
-  Widget? spellsList(CharacterProvider controller) {
+  Widget? spellsList(BuildContext context, CharacterProvider controller) {
     if (char.settings.actionCategories.hidden.contains('Spell')) {
       return null;
     }
@@ -205,6 +208,7 @@ class HomeCharacterActionsView extends StatelessWidget with CharacterProviderMix
           EntityEditMenu(
             onDelete: onDelete,
             onEdit: () => ModelPages.openSpellPage(
+              context,
               spell: spell,
               classKeys: spell.classKeys,
               abilityScores: char.abilityScores,
@@ -217,7 +221,7 @@ class HomeCharacterActionsView extends StatelessWidget with CharacterProviderMix
     );
   }
 
-  Widget? itemsList(CharacterProvider controller) {
+  Widget? itemsList(BuildContext context, CharacterProvider controller) {
     if (char.settings.actionCategories.hidden.contains('Item')) {
       return null;
     }
@@ -245,6 +249,7 @@ class HomeCharacterActionsView extends StatelessWidget with CharacterProviderMix
           EntityEditMenu(
             onDelete: onDelete,
             onEdit: () => ModelPages.openItemPage(
+              context,
               item: item,
               onSave: onSave(true),
             ),
@@ -308,6 +313,7 @@ class HomeCharacterActionsView extends StatelessWidget with CharacterProviderMix
 
   void _openBasicMoves(BuildContext context) {
     ModelPages.openMovesList(
+      context,
       category: MoveCategory.basic,
       initialTab: FiltersGroup.playbook,
       abilityScores: char.abilityScores,
@@ -316,6 +322,7 @@ class HomeCharacterActionsView extends StatelessWidget with CharacterProviderMix
 
   void _openSpecialMoves(BuildContext context) {
     ModelPages.openMovesList(
+      context,
       category: MoveCategory.special,
       initialTab: FiltersGroup.playbook,
       abilityScores: char.abilityScores,
@@ -323,7 +330,8 @@ class HomeCharacterActionsView extends StatelessWidget with CharacterProviderMix
   }
 }
 
-class ActionsCardList<T extends WithMeta> extends StatelessWidget with CharacterProviderMixin {
+class ActionsCardList<T extends WithMeta> extends StatelessWidget
+    with CharacterProviderMixin {
   const ActionsCardList({
     super.key,
     required this.route,
@@ -434,4 +442,3 @@ class ActionsCardList<T extends WithMeta> extends StatelessWidget with Character
     };
   }
 }
-

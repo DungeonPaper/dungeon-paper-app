@@ -35,75 +35,75 @@ class ListCard<T extends WithMeta, C extends ImportExportSelectionData>
       builder: (context, controller, _) {
         final list = this.list(context);
         return Card(
-        margin: const EdgeInsets.only(top: 16),
-        child: CustomExpansionPanel(
-          initiallyExpanded: true,
-          title: Row(
-            children: [
-              Icon(
-                Meta.genericIconFor(T),
-                color: textTheme.titleLarge!.color,
-              ),
-              const SizedBox(width: 8),
-              Expanded(
-                child: Text(
-                  type == ListCardType.import
-                      ? tr.entityPlural(tn(T))
-                      : tr.generic.myEntity(tr.entityPlural(tn(T))),
-                  style: textTheme.titleLarge,
+          margin: const EdgeInsets.only(top: 16),
+          child: CustomExpansionPanel(
+            initiallyExpanded: true,
+            title: Row(
+              children: [
+                Icon(
+                  Meta.genericIconFor(T),
+                  color: textTheme.titleLarge!.color,
                 ),
-              ),
-            ],
-          ),
-          trailing: [
-            MenuButton<bool>(
-              items: [
-                MenuEntry<bool>(
-                  value: true,
-                  icon: const Icon(Icons.select_all),
-                  label: Text(tr.generic.selectAll),
-                  onSelect: () => controller.toggleAll<T>(true),
-                ),
-                MenuEntry<bool>(
-                  value: false,
-                  icon: const Icon(Icons.clear),
-                  label: Text(tr.generic.selectNone),
-                  onSelect: () => controller.toggleAll<T>(false),
+                const SizedBox(width: 8),
+                Expanded(
+                  child: Text(
+                    type == ListCardType.import
+                        ? tr.entityPlural(tn(T))
+                        : tr.generic.myEntity(tr.entityPlural(tn(T))),
+                    style: textTheme.titleLarge,
+                  ),
                 ),
               ],
             ),
-          ],
-          children: [
-            for (final item in list)
-              Builder(builder: (context) {
-                final tags = tagsByType(item);
-                return ListTile(
-                  onTap: () => controller.toggle<T>(
-                      item, !controller.isSelected<T>(item)),
-                  title: Text(item.displayName),
-                  subtitle: tags.isNotEmpty
-                      ? Wrap(
-                          spacing: 8,
-                          children: tags,
-                        )
-                      : null,
-                  leading: Checkbox(
-                    value: controller.isSelected<T>(item),
-                    onChanged: (state) => controller.toggle<T>(item, state!),
+            trailing: [
+              MenuButton<bool>(
+                items: [
+                  MenuEntry<bool>(
+                    value: true,
+                    icon: const Icon(Icons.select_all),
+                    label: Text(tr.generic.selectAll),
+                    onSelect: () => controller.toggleAll<T>(true),
                   ),
-                );
-              }),
-            if (list.isEmpty)
-              Padding(
-                padding: const EdgeInsets.all(8),
-                child: Text(
-                  tr.generic.noEntity(tr.entityPlural(tn(T))),
-                  textAlign: TextAlign.center,
-                ),
+                  MenuEntry<bool>(
+                    value: false,
+                    icon: const Icon(Icons.clear),
+                    label: Text(tr.generic.selectNone),
+                    onSelect: () => controller.toggleAll<T>(false),
+                  ),
+                ],
               ),
-          ],
-        ),
-      );
+            ],
+            children: [
+              for (final item in list)
+                Builder(builder: (context) {
+                  final tags = tagsByType(item);
+                  return ListTile(
+                    onTap: () => controller.toggle<T>(
+                        item, !controller.isSelected<T>(item)),
+                    title: Text(item.displayName),
+                    subtitle: tags.isNotEmpty
+                        ? Wrap(
+                            spacing: 8,
+                            children: tags,
+                          )
+                        : null,
+                    leading: Checkbox(
+                      value: controller.isSelected<T>(item),
+                      onChanged: (state) => controller.toggle<T>(item, state!),
+                    ),
+                  );
+                }),
+              if (list.isEmpty)
+                Padding(
+                  padding: const EdgeInsets.all(8),
+                  child: Text(
+                    tr.generic.noEntity(tr.entityPlural(tn(T))),
+                    textAlign: TextAlign.center,
+                  ),
+                ),
+            ],
+          ),
+        );
       },
     );
   }
@@ -171,4 +171,3 @@ class ListCard<T extends WithMeta, C extends ImportExportSelectionData>
     }
   }
 }
-

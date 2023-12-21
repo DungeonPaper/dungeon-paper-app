@@ -133,4 +133,3 @@ class _HPDialogState extends State<HPDialog> with CharacterProviderMixin {
     Navigator.of(context).pop();
   }
 }
-

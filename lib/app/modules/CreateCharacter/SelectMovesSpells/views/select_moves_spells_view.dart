@@ -67,6 +67,7 @@ class SelectMovesSpellsView extends StatelessWidget {
                               actions: [
                                 EntityEditMenu(
                                   onEdit: () => ModelPages.openMovePage(
+                                    context,
                                     abilityScores: controller.abilityScores,
                                     move: move,
                                     onSave: controller.updateMove,
@@ -86,6 +87,7 @@ class SelectMovesSpellsView extends StatelessWidget {
                     child: OutlinedButton.icon(
                       style: ButtonThemes.primaryOutlined(context),
                       onPressed: () => ModelPages.openMovesList(
+                        context,
                         character: Character.empty().copyWith(
                           characterClass: controller.characterClass,
                         ),
@@ -151,6 +153,7 @@ class SelectMovesSpellsView extends StatelessWidget {
                     child: OutlinedButton.icon(
                       style: ButtonThemes.primaryOutlined(context),
                       onPressed: () => ModelPages.openSpellsList(
+                        context,
                         character: Character.empty().copyWith(
                           characterClass: controller.characterClass,
                         ),

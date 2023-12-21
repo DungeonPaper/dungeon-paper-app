@@ -2,7 +2,6 @@ import 'package:dungeon_paper/app/modules/Settings/views/theme_selector.dart';
 import 'package:dungeon_paper/app/themes/themes.dart';
 import 'package:dungeon_paper/i18n.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 import 'package:provider/provider.dart';
 
 import '../controllers/select_character_theme_controller.dart';
@@ -34,7 +33,7 @@ class SelectCharacterThemeView extends StatelessWidget {
           ),
           _pad(
             Consumer<SelectCharacterThemeController>(
-            builder: (context, controller, _) => ThemeSelector(
+              builder: (context, controller, _) => ThemeSelector(
                 themes: controller.seeAll[Brightness.light]!
                     ? AppThemes.allThemes
                     : AppThemes.allLightThemes,
@@ -62,7 +61,7 @@ class SelectCharacterThemeView extends StatelessWidget {
           ),
           _pad(
             Consumer<SelectCharacterThemeController>(
-            builder: (context, controller, _) =>  ThemeSelector(
+              builder: (context, controller, _) => ThemeSelector(
                 themes: controller.seeAll[Brightness.dark]!
                     ? AppThemes.allThemes
                     : AppThemes.allDarkThemes,
@@ -111,4 +110,3 @@ class SelectCharacterThemeView extends StatelessWidget {
     );
   }
 }
-

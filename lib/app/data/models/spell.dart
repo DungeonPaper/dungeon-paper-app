@@ -78,17 +78,17 @@ class Spell extends dw.Spell
   factory Spell.empty() {
     final user = UserProvider.of(appGlobalKey.currentContext!).current;
     return Spell(
-        meta: Meta.empty(createdBy: user.username),
-        classKeys: [],
-        description: '',
-        dice: [],
-        explanation: '',
-        level: '',
-        key: uuid(),
-        name: '',
-        tags: [],
-        prepared: false,
-      );
+      meta: Meta.empty(createdBy: user.username),
+      classKeys: [],
+      description: '',
+      dice: [],
+      explanation: '',
+      level: '',
+      key: uuid(),
+      name: '',
+      tags: [],
+      prepared: false,
+    );
   }
 
   @override
@@ -156,4 +156,3 @@ class Spell extends dw.Spell
   @override
   String toString() => 'Spell($debugProperties)';
 }
-

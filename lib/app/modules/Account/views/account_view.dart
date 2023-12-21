@@ -93,7 +93,7 @@ class AccountView extends StatelessWidget {
                 style: textTheme.bodySmall,
               ),
             ),
-        // ...(controller.authService.fbUser?.providerData ?? []).map((provider) {
+        // ...(controller.authProvider.fbUser?.providerData ?? []).map((provider) {
         ...([
           // ProviderName.password,
           // if (PlatformHelper.canUseGoogleSignIn)
@@ -187,11 +187,11 @@ class AccountView extends StatelessWidget {
   }
 
   int providerCount(AccountController controller) {
-    return controller.authService.fbUser?.providerData.length ?? 0;
+    return controller.authProvider.fbUser?.providerData.length ?? 0;
   }
 
   bool isProviderLinked(AccountController controller, ProviderName provider) =>
-      controller.authService.fbUser?.providerData
+      controller.authProvider.fbUser?.providerData
           .any((pr) => pr.providerId == domainFromProviderName(provider)) ==
       true;
 
@@ -207,7 +207,7 @@ class AccountView extends StatelessWidget {
           inputHint: tr.account.details.displayName.placeholder,
           value: controller.user.displayName,
           onSave: (displayName) {
-            controller.userService.updateUser(
+            controller.userProvider.updateUser(
               controller.user.copyWith(displayName: displayName),
             );
             ScaffoldMessenger.of(context).showSnackBar(
@@ -252,7 +252,7 @@ class AccountView extends StatelessWidget {
                 content: Text(tr.account.details.password.success),
               ),
             );
-            controller.authService.fbUser!.updatePassword(password);
+            controller.authProvider.fbUser!.updatePassword(password);
           },
         );
       },
@@ -272,18 +272,20 @@ class AccountView extends StatelessWidget {
             () {
               final controller =
                   Provider.of<AccountController>(context, listen: false);
-              controller.authService.logoutFromProvider(provider);
-              controller.authService.fbUser!
+              controller.authProvider.logoutFromProvider(provider);
+              controller.authProvider.fbUser!
                   .unlink(domainFromProviderName(provider));
             },
           );
 
-  Future<void> Function() linkProvider(BuildContext context, ProviderName provider) => () async {
+  Future<void> Function() linkProvider(
+          BuildContext context, ProviderName provider) =>
+      () async {
         final controller =
             Provider.of<AccountController>(context, listen: false);
         final cred =
-            await controller.authService.getProviderCredential(provider);
-        controller.authService.fbUser!.linkWithCredential(cred);
+            await controller.authProvider.getProviderCredential(provider);
+        controller.authProvider.fbUser!.linkWithCredential(cred);
       };
 }
 
@@ -469,4 +471,3 @@ class _PasswordFieldDialogState extends State<PasswordFieldDialog> {
     return PasswordValidator().validator(value);
   }
 }
-

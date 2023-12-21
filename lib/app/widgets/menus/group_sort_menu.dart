@@ -16,7 +16,8 @@ class GroupSortMenu extends StatelessWidget {
   final int totalItemCount;
   final List<MenuEntry<String>> leading;
   final List<MenuEntry<String>> trailing;
-  final void Function(BuildContext context, int oldIndex, int newIndex) onReorder;
+  final void Function(BuildContext context, int oldIndex, int newIndex)
+      onReorder;
 
   @override
   Widget build(BuildContext context) {

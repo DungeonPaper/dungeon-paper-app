@@ -7,8 +7,10 @@ import 'import_controller.dart';
 
 // TODO remove?
 class ImportExportController extends ChangeNotifier {
-  void Function()? doExport(BuildContext context) => Provider.of<ExportController>(context).getDoExport();
-  void Function()? doImport(BuildContext context) => Provider.of<ImportController>(context).getDoImport(context);
+  void Function()? doExport(BuildContext context) =>
+      Provider.of<ExportController>(context, listen: false).getDoExport(context);
+  void Function()? doImport(BuildContext context) =>
+      Provider.of<ImportController>(context, listen: false).getDoImport(context);
 }
 
 abstract class ImportExportSelectionData {
@@ -18,4 +20,3 @@ abstract class ImportExportSelectionData {
 
   List<T> listByType<T extends WithMeta>();
 }
-

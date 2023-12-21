@@ -103,4 +103,3 @@ class BondsFlagsFormArguments {
     required this.onChanged,
   });
 }
-

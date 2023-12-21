@@ -6,17 +6,18 @@ import 'package:dungeon_paper/app/widgets/molecules/tag_list_input.dart';
 import 'package:dungeon_paper/i18n.dart';
 import 'package:dungeon_world_data/dungeon_world_data.dart' as dw;
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
+import 'package:provider/provider.dart';
 
-class NoteForm extends GetView<NoteFormController> with RepositoryProviderMixin {
+class NoteForm extends StatelessWidget with RepositoryProviderMixin {
   const NoteForm({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return LibraryEntityForm<Note, NoteFormController>(
-      children: [
-        () => Obx(
-              () => TextFormField(
+    return Consumer<NoteFormController>(
+      builder: (context, controller, _) =>
+          LibraryEntityForm<Note, NoteFormController>(
+        children: [
+          () => TextFormField(
                 decoration: InputDecoration(
                   label: Text(
                     tr.generic.entityName(tr.entity(tn(Note))),
@@ -25,9 +26,7 @@ class NoteForm extends GetView<NoteFormController> with RepositoryProviderMixin 
                 textCapitalization: TextCapitalization.words,
                 controller: controller.title,
               ),
-            ),
-        () => Obx(
-              () => RichTextField(
+          () => RichTextField(
                 decoration: InputDecoration(
                   label: Text(
                     tr.generic.entityDescription(tr.entity(tn(Note))),
@@ -39,13 +38,11 @@ class NoteForm extends GetView<NoteFormController> with RepositoryProviderMixin 
                 textCapitalization: TextCapitalization.sentences,
                 controller: controller.description,
               ),
-            ),
-        () => Obx(
-              () => TagListInput(
+          () => TagListInput(
                 controller: controller.tags,
               ),
-            ),
-      ],
+        ],
+      ),
     );
   }
 }
@@ -67,7 +64,7 @@ class NoteFormController
   List<ValueNotifier> get fields =>
       [_title, _description, _category, _dice, _tags];
 
-NoteFormController(super.context) {
+  NoteFormController(super.context) {
     debugPrint('NoteFormController onInit, ${args.entity?.description ?? ''}');
     title.text = args.entity?.title ?? '';
     description.text = args.entity?.description ?? '';

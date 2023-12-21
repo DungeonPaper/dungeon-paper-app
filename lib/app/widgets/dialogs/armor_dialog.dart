@@ -3,7 +3,6 @@ import 'package:dungeon_paper/app/widgets/molecules/dialog_controls.dart';
 import 'package:dungeon_paper/core/dw_icons.dart';
 import 'package:dungeon_paper/i18n.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 
 class ArmorDialog extends StatefulWidget {
   const ArmorDialog({
@@ -84,11 +83,11 @@ class _ArmorDialogState extends State<ArmorDialog> {
 
   void save() {
     widget.onChanged(useDefault ? null : int.parse(controller.text));
-    Get.back();
+    Navigator.of(context).pop();
   }
 
   void cancel() {
-    Get.back();
+    Navigator.of(context).pop();
   }
 
   void _listener() {

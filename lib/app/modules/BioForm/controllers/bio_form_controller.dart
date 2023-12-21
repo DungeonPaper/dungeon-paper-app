@@ -23,7 +23,6 @@ class BioFormController extends ChangeNotifier with CharacterProviderMixin {
         .toList();
   }
 
-
   void save(BuildContext context) {
     final charProvider = CharacterProvider.of(context);
     final char = charProvider.current;

@@ -222,7 +222,7 @@ class Meta<DataType> with RepositoryProviderMixin {
   }
 
   static T forkOrIncrease<T extends WithMeta>(T object) {
-  final user = UserProvider.of(appGlobalKey.currentContext!).current;
+    final user = UserProvider.of(appGlobalKey.currentContext!).current;
     if (object.meta.isOwnedBy(user)) {
       return increaseMetaVersion(object);
     }
@@ -483,4 +483,3 @@ mixin WithMeta<T, MetaDataType>
   String get storageKey;
   dw.EntityReference get reference => Meta.referenceFor(this);
 }
-

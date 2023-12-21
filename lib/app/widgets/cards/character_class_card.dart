@@ -68,4 +68,3 @@ class CharacterClassCard extends StatelessWidget {
     return '${characterClass.description}\n\n$table';
   }
 }
-

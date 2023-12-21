@@ -119,4 +119,3 @@ class HorizontalCardListView<T extends WithMeta> extends StatelessWidget {
     itemsObs.value = [...items];
   }
 }
-

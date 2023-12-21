@@ -125,7 +125,9 @@ class HomeCharacterView extends StatelessWidget with HomeCharacterPaddingMixin {
                 Expanded(
                   child: ElevatedButton.icon(
                     onPressed: () => DiceUtils.openRollDialog(
-                        char.rollButtons[0].diceFor(char)),
+                      context,
+                      char.rollButtons[0].diceFor(char),
+                    ),
                     style: ButtonThemes.primaryElevated(context),
                     label: Text(char.rollButtons[0].label),
                     icon: const Icon(DwIcons.dice_d6),
@@ -135,7 +137,9 @@ class HomeCharacterView extends StatelessWidget with HomeCharacterPaddingMixin {
                 Expanded(
                   child: ElevatedButton.icon(
                     onPressed: () => DiceUtils.openRollDialog(
-                        char.rollButtons[1].diceFor(char)),
+                      context,
+                      char.rollButtons[1].diceFor(char),
+                    ),
                     style: ButtonThemes.primaryElevated(context),
                     label: Text(char.rollButtons[1].label),
                     icon: const Icon(DwIcons.dice_d6),
@@ -224,4 +228,3 @@ mixin HomeCharacterPaddingMixin {
         child: child,
       );
 }
-

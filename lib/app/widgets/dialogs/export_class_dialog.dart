@@ -81,7 +81,6 @@ class _ExportClassDialogState extends State<ExportClassDialog>
     final dt = DateFormat('yy-MM-dd_HH.mm.ss').format(DateTime.now());
     final fileName = 'DungeonPaperV2_$dt.json';
 
-    Exporter().export(strData, fileName);
+    Exporter().export(context, strData, fileName);
   }
 }
-

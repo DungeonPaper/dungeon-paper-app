@@ -19,11 +19,17 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class RepositoryProvider extends ChangeNotifier {
-  static RepositoryProvider of(BuildContext context) =>
-      Provider.of<RepositoryProvider>(context, listen: false);
   final builtIn = BuiltInRepository(id: 'playbook');
   final my = PersonalRepository(id: 'personal');
 
+  static RepositoryProvider of(BuildContext context) =>
+      Provider.of<RepositoryProvider>(context, listen: false);
+
+  static Widget consumer(
+          Widget Function(
+                  BuildContext context, RepositoryProvider repo, Widget? child)
+              builder) =>
+      Consumer<RepositoryProvider>(builder: builder);
   StorageDelegate get storage => StorageHandler.instance;
 
   RepositoryProvider() {
@@ -464,7 +470,7 @@ class PersonalRepository extends RepositoryCache {
 }
 
 mixin RepositoryProviderMixin {
-  RepositoryProvider get repo => RepositoryProvider.of(appGlobalKey.currentContext!);
+  RepositoryProvider get repo =>
+      RepositoryProvider.of(appGlobalKey.currentContext!);
   RepositoryProvider get repository => repo;
 }
-

@@ -31,4 +31,3 @@ class CampaignsListController extends ChangeNotifier {
     notifyListeners();
   }
 }
-

@@ -60,6 +60,7 @@ class _HomeFABState extends State<HomeFAB> with CharacterProviderMixin {
           ),
           onPressed: inPageRange
               ? () => ModelPages.openNotePage(
+                    context,
                     note: null,
                     onSave: (note) => charProvider.updateCharacter(
                       CharacterUtils.addByType<Note>(char, [note]),
@@ -77,3 +78,4 @@ class _HomeFABState extends State<HomeFAB> with CharacterProviderMixin {
     }
   }
 }
+

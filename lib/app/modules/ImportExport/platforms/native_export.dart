@@ -41,4 +41,3 @@ class Exporter extends AbstractExporter {
     }
   }
 }
-
