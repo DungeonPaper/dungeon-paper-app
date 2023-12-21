@@ -1,32 +1,30 @@
 import 'package:dungeon_paper/app/data/models/session_marks.dart';
+import 'package:dungeon_paper/core/route_arguments.dart';
 import 'package:dungeon_paper/core/utils/list_utils.dart';
 import 'package:dungeon_paper/core/utils/uuid.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 
-class BondsFlagsFormController extends GetxController {
-  final bonds = <SessionMark>[].obs;
-  final flags = <SessionMark>[].obs;
-  final bondsDesc = <TextEditingController>[].obs;
-  final flagsDesc = <TextEditingController>[].obs;
+class BondsFlagsFormController extends ChangeNotifier {
+  final bonds = <SessionMark>[];
+  final flags = <SessionMark>[];
+  final bondsDesc = <TextEditingController>[];
+  final flagsDesc = <TextEditingController>[];
   late final void Function(List<SessionMark> bonds, List<SessionMark> flags)
       onChanged;
-  final dirty = false.obs;
+  var dirty = false;
 
-  @override
-  void onReady() {
-    super.onReady();
-    final BondsFlagsFormArguments args = Get.arguments;
-    bonds.value = args.bonds;
-    bondsDesc.value = args.bonds
+  BondsFlagsFormController(BuildContext context) {
+    final BondsFlagsFormArguments args = getArgs(context);
+    bonds.addAll(args.bonds);
+    bondsDesc.addAll(args.bonds
         .map((e) =>
             TextEditingController(text: e.description)..addListener(_setDirty))
-        .toList();
-    flags.value = args.flags;
-    flagsDesc.value = args.flags
+        .toList());
+    flags.addAll(args.flags);
+    flagsDesc.addAll(args.flags
         .map((e) =>
             TextEditingController(text: e.description)..addListener(_setDirty))
-        .toList();
+        .toList());
     onChanged = args.onChanged;
   }
 
@@ -61,14 +59,14 @@ class BondsFlagsFormController extends GetxController {
   }
 
   @override
-  void onClose() {
+  void dispose() {
+    super.dispose();
     for (final ctrl in [...bondsDesc, ...flagsDesc]) {
       ctrl.removeListener(_setDirty);
     }
-    super.onClose();
   }
 
-  void save() {
+  void save(BuildContext context) {
     final newBonds = enumerate(bonds)
         .map((e) =>
             e.value.copyWithInherited(description: bondsDesc[e.index].text))
@@ -81,12 +79,13 @@ class BondsFlagsFormController extends GetxController {
         .toList();
 
     onChanged(newBonds, newFlags);
-    Get.back();
+    Navigator.of(context).pop();
   }
 
   void _setDirty() {
-    if (!dirty.value) {
-      dirty.value = true;
+    if (!dirty) {
+      dirty = true;
+      notifyListeners();
     }
   }
 }

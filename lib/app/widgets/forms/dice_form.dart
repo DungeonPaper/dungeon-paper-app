@@ -1,5 +1,4 @@
 import 'package:dungeon_paper/app/data/models/ability_scores.dart';
-import 'package:dungeon_paper/app/data/services/repository_service.dart';
 import 'package:dungeon_paper/app/themes/button_themes.dart';
 import 'package:dungeon_paper/app/themes/themes.dart';
 import 'package:dungeon_paper/app/widgets/atoms/number_text_field.dart';
@@ -7,7 +6,6 @@ import 'package:dungeon_paper/app/widgets/atoms/select_box.dart';
 import 'package:dungeon_paper/i18n.dart';
 import 'package:flutter/material.dart';
 import 'package:dungeon_world_data/dungeon_world_data.dart' as dw;
-import 'package:get/get.dart';
 
 enum ModifierType { stat, fixed }
 
@@ -30,7 +28,6 @@ class DiceForm extends StatefulWidget {
 }
 
 class _DiceFormState extends State<DiceForm> {
-  final RepositoryService repo = Get.find();
   // late int amount;
   late final TextEditingController amount;
   late int sides;

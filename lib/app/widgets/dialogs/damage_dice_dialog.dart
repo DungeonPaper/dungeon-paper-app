@@ -5,7 +5,6 @@ import 'package:dungeon_paper/core/dw_icons.dart';
 import 'package:dungeon_paper/i18n.dart';
 import 'package:dungeon_world_data/dungeon_world_data.dart' as dw;
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 
 class DamageDiceDialog extends StatefulWidget {
   const DamageDiceDialog({
@@ -79,10 +78,10 @@ class _DamageDiceDialogState extends State<DamageDiceDialog> {
 
   void save() {
     widget.onChanged(useDefault ? null : damage);
-    Get.back();
+    Navigator.of(context).pop();
   }
 
   void cancel() {
-    Get.back();
+    Navigator.of(context).pop();
   }
 }

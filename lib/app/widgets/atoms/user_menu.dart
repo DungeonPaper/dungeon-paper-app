@@ -1,11 +1,12 @@
-import 'package:dungeon_paper/app/data/services/user_service.dart';
 import 'package:dungeon_paper/app/routes/app_pages.dart';
 import 'package:dungeon_paper/app/widgets/atoms/user_avatar.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
+import 'package:provider/provider.dart';
 
-class UserMenu extends StatelessWidget with UserServiceMixin {
-  const UserMenu({Key? key}) : super(key: key);
+import '../../data/services/user_provider.dart';
+
+class UserMenu extends StatelessWidget {
+  const UserMenu({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -22,10 +23,13 @@ class UserMenu extends StatelessWidget with UserServiceMixin {
       clipBehavior: Clip.antiAlias,
       child: InkWell(
         splashColor: Theme.of(context).splashColor,
-        onTap: () => Get.toNamed(Routes.userMenu),
+        onTap: () => Navigator.of(context).pushNamed(Routes.userMenu),
         child: Padding(
           padding: const EdgeInsets.all(8),
-          child: Obx(() => UserAvatar(user: user)),
+          child: Consumer<UserProvider>(
+            builder: (context, controller, _) =>
+                UserAvatar(user: controller.current),
+          ),
         ),
       ),
     );

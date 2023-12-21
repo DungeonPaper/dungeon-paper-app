@@ -1,23 +1,21 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:dungeon_paper/app/data/models/character.dart';
-import 'package:dungeon_paper/app/data/services/character_service.dart';
+import 'package:dungeon_paper/app/data/services/character_provider.dart';
 import 'package:dungeon_paper/app/widgets/atoms/avatar_circular_progress.dart';
 import 'package:flutter/material.dart';
 
-import 'package:get/get.dart';
-
-class CharacterAvatar extends GetView {
+class CharacterAvatar extends StatelessWidget {
   final Character? character;
   final Widget Function(BuildContext context, String avatarUrl, double size)
       builder;
   final double size;
 
   const CharacterAvatar._({
-    Key? key,
+    super.key,
     this.character,
     required this.size,
     required this.builder,
-  }) : super(key: key);
+  });
 
   factory CharacterAvatar({
     Key? key,
@@ -62,8 +60,7 @@ class CharacterAvatar extends GetView {
     if (character != null) {
       return _renderForChar(context, character);
     }
-    return Obx(() {
-      final ctrl = Get.find<CharacterService>();
+    return CharacterProvider.consumer((context, ctrl, _) {
       return _renderForChar(context, ctrl.maybeCurrent);
     });
   }

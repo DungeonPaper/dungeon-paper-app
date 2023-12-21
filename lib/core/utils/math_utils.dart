@@ -8,8 +8,8 @@ double degToRad(double deg) => deg * (math.pi / 180.0);
 
 Iterable<int> range(int start, [int? end]) {
   final min = end != null ? start : 0;
-  final num _max = end ?? start;
-  return Iterable.generate((_max - min).toInt(), (i) => min + i);
+  final num max = end ?? start;
+  return Iterable.generate((max - min).toInt(), (i) => min + i);
 }
 
 T avg<T extends num>(Iterable<T> values) =>

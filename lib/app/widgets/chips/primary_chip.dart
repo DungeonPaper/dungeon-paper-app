@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 
 class PrimaryChip extends StatelessWidget {
   const PrimaryChip({
-    Key? key,
+    super.key,
     required this.label,
     this.onPressed,
     this.onDeleted,
@@ -13,7 +13,7 @@ class PrimaryChip extends StatelessWidget {
     this.backgroundColor,
     this.tooltip,
     this.deleteButtonTooltip,
-  }) : super(key: key);
+  });
 
   final String label;
   final void Function()? onPressed;

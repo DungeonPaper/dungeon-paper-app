@@ -16,25 +16,23 @@ import 'package:dungeon_paper/core/utils/list_utils.dart';
 import 'package:dungeon_paper/i18n.dart';
 import 'package:dungeon_world_data/dungeon_world_data.dart' as dw;
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
+import 'package:provider/provider.dart';
 
-class AbilityScoresFormView extends GetView<AbilityScoresFormController> {
-  const AbilityScoresFormView({
-    super.key,
-  });
+class AbilityScoresFormView extends StatelessWidget {
+  const AbilityScoresFormView({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return Obx(
-      () => ConfirmExitView(
-        dirty: controller.dirty.value,
+    return Consumer<AbilityScoresFormController>(
+      builder: (context, controller, _) => ConfirmExitView(
+        dirty: controller.dirty,
         child: Scaffold(
           appBar: AppBar(
             title: Text(tr.entityPlural(tn(AbilityScore))),
             centerTitle: true,
           ),
           floatingActionButton: AdvancedFloatingActionButton.extended(
-            onPressed: _save,
+            onPressed: () => _save(context),
             label: Text(tr.generic.save),
             icon: const Icon(Icons.save),
           ),
@@ -47,22 +45,19 @@ class AbilityScoresFormView extends GetView<AbilityScoresFormController> {
                 child: ReorderableListView.builder(
                   shrinkWrap: true,
                   physics: const NeverScrollableScrollPhysics(),
-                  itemCount: controller.abilityScores.value.stats.length,
-                  onReorder: (int oldIndex, int newIndex) {
-                    controller.abilityScores.value =
-                        controller.abilityScores.value.copyWith(
-                            stats: reorder(controller.abilityScores.value.stats,
-                                oldIndex, newIndex));
-                  },
-                  itemBuilder: (context, index) => _buildCard(context, index),
+                  itemCount: controller.abilityScores.stats.length,
+                  onReorder: controller.onReorder,
+                  itemBuilder: (context, index) =>
+                      _buildCard(context, controller, index),
                 ),
               ),
               ElevatedButton.icon(
-                onPressed: () => Get.toNamed(Routes.abilityScoreForm,
-                    arguments: AbilityScoreFormArguments(
-                      abilityScore: null,
-                      onSave: controller.addStat,
-                    )),
+                onPressed: () =>
+                    Navigator.of(context).pushNamed(Routes.abilityScoreForm,
+                        arguments: AbilityScoreFormArguments(
+                          abilityScore: null,
+                          onSave: controller.addStat,
+                        )),
                 icon: const Icon(Icons.add),
                 label: Text(
                   tr.generic.addEntity(
@@ -77,15 +72,15 @@ class AbilityScoresFormView extends GetView<AbilityScoresFormController> {
     );
   }
 
-  Widget _buildCard(BuildContext context, int index) {
+  Widget _buildCard(
+      BuildContext context, AbilityScoresFormController controller, int index) {
     final theme = Theme.of(context);
     final textTheme = theme.textTheme;
     final statKey = sortByPredefined(
       controller.textControllers.keys.toList(),
-      order:
-          controller.abilityScores.value.stats.map((stat) => stat.key).toList(),
+      order: controller.abilityScores.stats.map((stat) => stat.key).toList(),
     ).elementAt(index);
-    final stat = controller.abilityScores.value.stats
+    final stat = controller.abilityScores.stats
         .firstWhere((stat) => stat.key == statKey);
     return Padding(
       key: Key('stat-$statKey'),
@@ -151,19 +146,18 @@ class AbilityScoresFormView extends GetView<AbilityScoresFormController> {
                   Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 8),
                     child: EntityEditMenu(
-                      onEdit: () => Get.toNamed(
+                      onEdit: () => Navigator.of(context).pushNamed(
                         Routes.abilityScoreForm,
                         arguments: AbilityScoreFormArguments(
                           abilityScore: stat,
                           onSave: (stat) => controller.updateStat(stat),
                         ),
                       ),
-                      onDelete: () => deleteDialog.confirm(
+                      onDelete: () => awaitDeleteConfirmation(
                         context,
-                        DeleteDialogOptions(
-                            entityName: stat.name,
-                            entityKind: tr.entity(tn(AbilityScore))),
+                        stat.name,
                         () => controller.removeStat(stat),
+                        AbilityScore,
                       ),
                     ),
                   ),
@@ -176,8 +170,10 @@ class AbilityScoresFormView extends GetView<AbilityScoresFormController> {
     );
   }
 
-  _save() {
-    controller.onChanged(controller.abilityScores.value);
-    Get.back();
+  _save(BuildContext context) {
+    final controller =
+        Provider.of<AbilityScoresFormController>(context, listen: false);
+    controller.onChanged(controller.abilityScores);
+    Navigator.of(context).pop();
   }
 }

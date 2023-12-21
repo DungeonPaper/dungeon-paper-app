@@ -1,5 +1,3 @@
-// ignore_for_file: curly_braces_in_flow_control_structures
-
 import 'dart:async';
 
 import 'package:dungeon_paper/app/data/models/character_class.dart';
@@ -10,6 +8,7 @@ import 'package:dungeon_paper/app/data/models/move.dart';
 import 'package:dungeon_paper/app/data/models/note.dart';
 import 'package:dungeon_paper/app/data/models/race.dart';
 import 'package:dungeon_paper/app/data/models/spell.dart';
+import 'package:dungeon_paper/core/global_keys.dart';
 import 'package:dungeon_paper/core/http/api.dart';
 import 'package:dungeon_paper/core/http/api_requests/search.dart';
 import 'package:dungeon_paper/core/storage_handler/storage_handler.dart';
@@ -17,13 +16,30 @@ import 'package:dungeon_paper/core/utils/list_utils.dart';
 
 import 'package:dungeon_world_data/dungeon_world_data.dart' as dw;
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
+import 'package:provider/provider.dart';
 
-class RepositoryService extends GetxService {
+class RepositoryProvider extends ChangeNotifier {
   final builtIn = BuiltInRepository(id: 'playbook');
   final my = PersonalRepository(id: 'personal');
 
+  static RepositoryProvider of(BuildContext context) =>
+      Provider.of<RepositoryProvider>(context, listen: false);
+
+  static Widget consumer(
+    Widget Function(
+      BuildContext context,
+      RepositoryProvider repo,
+      Widget? child,
+    ) builder,
+  ) =>
+      Consumer<RepositoryProvider>(builder: builder);
   StorageDelegate get storage => StorageHandler.instance;
+
+  RepositoryProvider() {
+    // loadAllData();
+    builtIn.addListener(notifyListeners);
+    my.addListener(notifyListeners);
+  }
 
   void clear() {
     builtIn._clearValues();
@@ -31,8 +47,10 @@ class RepositoryService extends GetxService {
   }
 
   @override
-  void onClose() async {
-    super.onClose();
+  void dispose() async {
+    super.dispose();
+    builtIn.removeListener(notifyListeners);
+    my.removeListener(notifyListeners);
     await Future.wait([builtIn.dispose(), my.dispose()]);
   }
 
@@ -63,21 +81,21 @@ enum RepositoryStatus {
   error,
 }
 
-abstract class RepositoryCache {
+abstract class RepositoryCache extends ChangeNotifier {
   RepositoryCache({required this.id});
 
   String? get cachePrefix;
   final String id;
   abstract final RemoteBehavior loadRemote;
 
-  final classes = <String, CharacterClass>{}.obs;
-  final items = <String, Item>{}.obs;
-  final monsters = <String, Monster>{}.obs;
-  final moves = <String, Move>{}.obs;
-  final races = <String, Race>{}.obs;
-  final spells = <String, Spell>{}.obs;
-  final tags = <String, dw.Tag>{}.obs;
-  final notes = <String, Note>{}.obs;
+  var classes = <String, CharacterClass>{};
+  var items = <String, Item>{};
+  var monsters = <String, Monster>{};
+  var moves = <String, Move>{};
+  var races = <String, Race>{};
+  var spells = <String, Spell>{};
+  var tags = <String, dw.Tag>{};
+  var notes = <String, Note>{};
 
   final subs = <StreamSubscription>[];
 
@@ -115,8 +133,8 @@ abstract class RepositoryCache {
         try {
           resp = await getFromRemote;
           await setAllFrom(resp, saveIntoCache: true);
-        } catch (e) {
-          debugPrint('[$id] Error loading from remote: $e');
+        } catch (e, stack) {
+          debugPrint('[$id] Error loading from remote: $e\n$stack');
           resp = SearchResponse.empty();
         }
       } else {
@@ -183,7 +201,7 @@ abstract class RepositoryCache {
           _parseMap<CharacterClass>(
             d,
             key: (x) => x.key,
-            save: (x) => classes.value = x,
+            save: (x) => classes = x,
             parse: (x) => CharacterClass.fromJson(x),
           );
         },
@@ -194,7 +212,7 @@ abstract class RepositoryCache {
           _parseMap<Item>(
             d,
             key: (x) => x.key,
-            save: (x) => items.value = x,
+            save: (x) => items = x,
             parse: (x) => Item.fromJson(x),
           );
         },
@@ -205,7 +223,7 @@ abstract class RepositoryCache {
           _parseMap<Monster>(
             d,
             key: (x) => x.key,
-            save: (x) => monsters.value = x,
+            save: (x) => monsters = x,
             parse: (x) => Monster.fromJson(x),
           );
         },
@@ -216,7 +234,7 @@ abstract class RepositoryCache {
           _parseMap<Move>(
             d,
             key: (x) => x.key,
-            save: (x) => moves.value = x,
+            save: (x) => moves = x,
             parse: (x) => Move.fromJson(x),
           );
         },
@@ -227,7 +245,7 @@ abstract class RepositoryCache {
           _parseMap<Race>(
             d,
             key: (x) => x.key,
-            save: (x) => races.value = x,
+            save: (x) => races = x,
             parse: (x) => Race.fromJson(x),
           );
         },
@@ -238,7 +256,7 @@ abstract class RepositoryCache {
           _parseMap<Spell>(
             d,
             key: (x) => x.key,
-            save: (x) => spells.value = x,
+            save: (x) => spells = x,
             parse: (x) => Spell.fromJson(x),
           );
         },
@@ -249,7 +267,7 @@ abstract class RepositoryCache {
           _parseMap<dw.Tag>(
             d,
             key: (x) => x.name,
-            save: (x) => tags.value = x,
+            save: (x) => tags = x,
             parse: (x) => dw.Tag.fromJson(x),
           );
         },
@@ -260,7 +278,7 @@ abstract class RepositoryCache {
           _parseMap<Note>(
             d,
             key: (x) => x.key,
-            save: (x) => notes.value = x,
+            save: (x) => notes = x,
             parse: (x) => Note.fromJson(x),
           );
         },
@@ -300,7 +318,9 @@ abstract class RepositoryCache {
     subs.clear();
   }
 
+  @override
   Future<void> dispose() async {
+    super.dispose();
     clearListeners();
     _clearValues();
     await cache.clear();
@@ -345,34 +365,34 @@ abstract class RepositoryCache {
     tags.clear();
   }
 
-  RxMap<String, T> listByType<T>([Type? type]) {
+  Map<String, T> listByType<T>([Type? type]) {
     assert(T != dynamic || type != null);
     final t = T != dynamic ? T : type;
 
     switch (t) {
       case == CharacterClass:
-        return classes as RxMap<String, T>;
+        return classes as Map<String, T>;
       case == Item:
-        return items as RxMap<String, T>;
+        return items as Map<String, T>;
       case == Monster:
-        return monsters as RxMap<String, T>;
+        return monsters as Map<String, T>;
       case == Move:
-        return moves as RxMap<String, T>;
+        return moves as Map<String, T>;
       case == Race:
-        return races as RxMap<String, T>;
+        return races as Map<String, T>;
       case == Spell:
-        return spells as RxMap<String, T>;
+        return spells as Map<String, T>;
       case == Note:
-        return notes as RxMap<String, T>;
+        return notes as Map<String, T>;
       case == dw.Tag:
-        return tags as RxMap<String, T>;
+        return tags as Map<String, T>;
     }
     throw TypeError();
   }
 
   Future<void> updateList<T>(
     String collectionName,
-    RxMap<String, T> list,
+    Map<String, T> list,
     Iterable<T>? resp, {
     required bool saveIntoCache,
   }) async {
@@ -383,8 +403,10 @@ abstract class RepositoryCache {
     list.addAll(Map.fromIterable(resp, key: (x) => x.key));
 
     if (saveIntoCache && list.isNotEmpty) {
-      for (final x in list.values)
+      for (final x in list.values) {
         await cache.create(collectionName, Meta.keyFor(x), Meta.toJsonFor(x));
+        notifyListeners();
+      }
     }
   }
 }
@@ -451,7 +473,9 @@ class PersonalRepository extends RepositoryCache {
   RemoteBehavior get loadRemote => RemoteBehavior.always;
 }
 
-mixin RepositoryServiceMixin {
-  RepositoryService get repository => Get.find();
-  RepositoryService get repo => repository;
+mixin RepositoryProviderMixin {
+  RepositoryProvider get repo =>
+      RepositoryProvider.of(appGlobalKey.currentContext!);
+  RepositoryProvider get repository => repo;
 }
+

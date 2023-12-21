@@ -1,19 +1,17 @@
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 
 import '../../../i18n/messages.i18n.dart';
 
-class IntlService extends GetxService {
+class IntlService extends ChangeNotifier {
   static final Map<Locale, Messages> _m = {};
-  static late Locale _locale;
+  static Locale _locale = const Locale('en');
+  static Locale get locale => _locale;
 
-  static Messages get m => _m[Get.locale] ?? _loadMessages(_locale);
+  static Messages get m => _m[locale] ?? _loadMessages(_locale);
   List<Locale> get supportedLocales => _m.keys.toList();
 
-  @override
-  void onInit() {
-    super.onInit();
-    _loadMessages(Get.deviceLocale ?? const Locale('en'));
+  IntlService() {
+    _loadMessages(locale);
   }
 
   static void changeLocale(Locale locale) {

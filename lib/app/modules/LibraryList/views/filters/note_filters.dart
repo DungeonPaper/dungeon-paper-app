@@ -1,24 +1,21 @@
 import 'package:dungeon_paper/app/data/models/note.dart';
-import 'package:dungeon_paper/app/data/services/repository_service.dart';
 import 'package:dungeon_paper/app/modules/LibraryList/controllers/library_list_controller.dart';
 import 'package:dungeon_paper/app/modules/LibraryList/views/entity_filters.dart';
 import 'package:dungeon_paper/core/utils/math_utils.dart';
 import 'package:dungeon_paper/core/utils/string_utils.dart';
 import 'package:dungeon_paper/i18n.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 import 'package:string_similarity/string_similarity.dart';
 
 class NoteFiltersView extends StatelessWidget {
-  NoteFiltersView({
-    Key? key,
+  const NoteFiltersView({
+    super.key,
     required this.filters,
     required this.onChange,
     required this.searchController,
-  }) : super(key: key);
+  });
 
   final NoteFilters filters;
-  final service = Get.find<RepositoryService>();
   final void Function(NoteFilters) onChange;
   final TextEditingController searchController;
 

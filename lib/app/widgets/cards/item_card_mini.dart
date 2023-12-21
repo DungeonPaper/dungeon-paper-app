@@ -9,13 +9,13 @@ import 'dynamic_action_card_mini.dart';
 
 class ItemCardMini extends StatelessWidget {
   const ItemCardMini({
-    Key? key,
+    super.key,
     required this.item,
     this.showStar = true,
     this.showIcon = true,
     this.onSave,
     this.onTap,
-  }) : super(key: key);
+  });
 
   final Item item;
   final bool showStar;

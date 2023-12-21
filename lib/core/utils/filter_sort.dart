@@ -9,11 +9,11 @@ int Function(T1? date1, T1? date2) Function({
 
   return ({order = SortOrder.asc, parse}) {
     int orderMultiplier = order == SortOrder.asc ? 1 : -1;
-    T2? _parse(T1? x) => parse != null ? parse(x) : x as T2?;
+    T2? parseFn(T1? x) => parse != null ? parse(x) : x as T2?;
 
     return (_a, _b) {
-      final T2 a = _postParse(_parse(_a));
-      final T2 b = _postParse(_parse(_b));
+      final T2 a = _postParse(parseFn(_a));
+      final T2 b = _postParse(parseFn(_b));
 
       return a.compareTo(b) * orderMultiplier;
     };

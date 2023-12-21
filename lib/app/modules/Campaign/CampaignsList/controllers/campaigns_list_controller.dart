@@ -2,29 +2,32 @@ import 'dart:async';
 
 import 'package:dungeon_paper/app/data/models/campaign.dart';
 import 'package:dungeon_paper/core/storage_handler/storage_handler.dart';
-import 'package:get/get.dart';
+import 'package:flutter/widgets.dart';
 
-class CampaignsListController extends GetxController {
+class CampaignsListController extends ChangeNotifier {
   StreamSubscription? _campaignsListenerSubscription;
-  final _campaigns = <Campaign>[].obs;
+  final _campaigns = <Campaign>[];
+  var count = 0;
 
   List<Campaign> get campaigns => _campaigns.toList();
 
-  final count = 0.obs;
-  @override
-  void onInit() {
-    super.onInit();
+  CampaignsListController() {
     _campaignsListenerSubscription = StorageHandler.instance
         .collectionListener('Campaigns', _campaignsListener);
   }
 
   @override
-  void onClose() {
+  void dispose() {
+    super.dispose();
     _campaignsListenerSubscription?.cancel();
-    super.onClose();
   }
 
   void _campaignsListener(List<DocData> data) {
-    _campaigns.value = data.map((e) => Campaign.fromJson(e)).toList();
+    _campaigns
+      ..clear()
+      ..addAll(
+        data.map((e) => Campaign.fromJson(e)).toList(),
+      );
+    notifyListeners();
   }
 }

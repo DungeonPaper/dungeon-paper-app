@@ -6,7 +6,7 @@ import 'dynamic_action_card.dart';
 
 class NoteCard extends StatelessWidget {
   const NoteCard({
-    Key? key,
+    super.key,
     required this.note,
     this.showStar = true,
     this.showIcon = true,
@@ -18,7 +18,7 @@ class NoteCard extends StatelessWidget {
     this.expandable = true,
     this.highlightWords = const [],
     this.reorderablePadding = false,
-  }) : super(key: key);
+  });
 
   final Note note;
   final bool showStar;
@@ -42,7 +42,7 @@ class NoteCard extends StatelessWidget {
       maxContentHeight: maxContentHeight,
       expandable: expandable,
       reorderablePadding: reorderablePadding,
-      chips: note.tags.map((t) => TagChip.openDescription(tag: t)),
+      chips: note.tags.map((t) => TagChip.openDescription(context, tag: t)),
       dice: const [],
       icon: showIcon ? Icon(note.icon, size: 16) : null,
       starred: note.favorite,

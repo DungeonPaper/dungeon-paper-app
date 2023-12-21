@@ -110,7 +110,7 @@ class PlatformHelper {
     T? tablet,
     DeviceType fallback = DeviceType.mobile,
   }) {
-    final _fallback = _getDeviceTypeFallback<T>(
+    final fallback0 = _getDeviceTypeFallback<T>(
       mobile: mobile,
       desktop: desktop,
       tablet: tablet,
@@ -118,20 +118,20 @@ class PlatformHelper {
     );
     if (isWeb) {
       if (MediaQuery.of(context).size.shortestSide < 800) {
-        return mobile ?? _fallback;
+        return mobile ?? fallback0;
       }
       if (MediaQuery.of(context).size.shortestSide < 1100) {
-        return tablet ?? _fallback;
+        return tablet ?? fallback0;
       }
-      return desktop ?? _fallback;
+      return desktop ?? fallback0;
     }
     if (isAndroid || isIOS || isFuchsia) {
       if (MediaQuery.of(context).size.shortestSide < 800) {
-        return mobile ?? _fallback;
+        return mobile ?? fallback0;
       }
-      return tablet ?? _fallback;
+      return tablet ?? fallback0;
     }
-    return desktop ?? _fallback;
+    return desktop ?? fallback0;
   }
 
   static T byOS<T>({
@@ -143,7 +143,7 @@ class PlatformHelper {
     T? web,
     OS fallback = OS.android,
   }) {
-    final _fallback = _getOSFallback<T>(
+    final fallback0 = _getOSFallback<T>(
       android: android,
       iOS: iOS,
       windows: windows,
@@ -153,24 +153,24 @@ class PlatformHelper {
       fallback: fallback,
     );
     if (isAndroid) {
-      return android ?? _fallback;
+      return android ?? fallback0;
     }
     if (isIOS) {
-      return iOS ?? _fallback;
+      return iOS ?? fallback0;
     }
     if (isWindows) {
-      return windows ?? _fallback;
+      return windows ?? fallback0;
     }
     if (kIsWeb) {
-      return web ?? _fallback;
+      return web ?? fallback0;
     }
     if (isMacOS) {
-      return mac ?? _fallback;
+      return mac ?? fallback0;
     }
     if (isLinux) {
-      return linux ?? _fallback;
+      return linux ?? fallback0;
     }
-    return iOS ?? _fallback;
+    return iOS ?? fallback0;
   }
 
   static T byInteractionType<T>(
@@ -179,21 +179,21 @@ class PlatformHelper {
     T? mouse,
     InteractionType fallback = InteractionType.touch,
   }) {
-    final _fallback = _getInteractionTypeFallback(
+    final fallback0 = _getInteractionTypeFallback(
       touch: touch,
       mouse: mouse,
       fallback: fallback,
     );
     if (isWeb) {
       if (MediaQuery.of(context).size.shortestSide < 800) {
-        return touch ?? _fallback;
+        return touch ?? fallback0;
       }
-      return mouse ?? _fallback;
+      return mouse ?? fallback0;
     }
     if (isAndroid || isIOS || isFuchsia) {
-      return touch ?? _fallback;
+      return touch ?? fallback0;
     }
-    return mouse ?? _fallback;
+    return mouse ?? fallback0;
   }
 
   static T _getInteractionTypeFallback<T>({

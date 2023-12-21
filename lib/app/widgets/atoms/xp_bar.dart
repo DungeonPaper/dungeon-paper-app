@@ -1,10 +1,9 @@
-import 'package:dungeon_paper/app/data/services/character_service.dart';
+import 'package:dungeon_paper/app/data/services/character_provider.dart';
 import 'package:dungeon_paper/app/widgets/atoms/buffer_progress_bar.dart';
 import 'package:dungeon_paper/i18n.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 
-class ExpBar extends StatelessWidget with CharacterServiceMixin {
+class ExpBar extends StatelessWidget {
   const ExpBar({
     super.key,
     this.currentXp,
@@ -18,9 +17,9 @@ class ExpBar extends StatelessWidget with CharacterServiceMixin {
 
   @override
   Widget build(BuildContext context) {
-    return Obx(
-      () {
-        final char = maybeChar;
+    return CharacterProvider.consumer(
+      (context, controller, _) {
+        final char = controller.maybeCurrent;
         final maxValue = maxXp ?? char?.maxXp;
         final curValue = currentXp ?? char?.currentXp ?? 0;
 

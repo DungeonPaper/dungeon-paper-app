@@ -1,7 +1,6 @@
 import 'package:dungeon_paper/app/widgets/molecules/dialog_controls.dart';
 import 'package:dungeon_paper/i18n.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 
 import '../../../core/utils/dialog_utils.dart';
 
@@ -28,19 +27,25 @@ class ConfirmExitView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return WillPopScope(
+    final navigator = Navigator.of(context);
+    return PopScope(
+      canPop: !dirty,
       child: child,
-      onWillPop: () async {
-        if (!dirty) {
-          return true;
+      onPopInvoked: (didPop) async {
+        if (didPop) {
+          return;
         }
-        return confirmExit(
+        final res = await confirmExit(
           context,
           title: title,
           text: text,
           okLabel: okLabel,
           cancelLabel: cancelLabel,
         );
+
+        if (res) {
+          navigator.pop();
+        }
       },
     );
   }
@@ -53,7 +58,9 @@ Future<bool> confirmExit<T>(
   String? okLabel,
   String? cancelLabel,
 }) {
-  return Get.dialog<bool>(const ConfirmExitDialog()).then((res) => res == true);
+  return showDialog<bool>(
+      context: context,
+      builder: (_) => const ConfirmExitDialog()).then((res) => res == true);
 }
 
 class ConfirmExitDialog extends StatelessWidget {
@@ -78,9 +85,9 @@ class ConfirmExitDialog extends StatelessWidget {
       actions: DialogControls.confirmExit(
         context,
         exitLabel: okLabel,
-        onExit: () => Get.back(result: true),
+        onExit: () => Navigator.of(context).pop(true),
         continueLabel: cancelLabel,
-        onContinue: () => Get.back(result: false),
+        onContinue: () => Navigator.of(context).pop(false),
       ),
     );
   }

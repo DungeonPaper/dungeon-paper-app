@@ -108,7 +108,13 @@ ThemeData createTheme(
   );
 
   return base.copyWith(
-    useMaterial3: true,
+    // pageTransitionsTheme: const PageTransitionsTheme(
+    //   builders: {
+    //     TargetPlatform.android: FadeUpwardsPageTransitionsBuilder(),
+    //     TargetPlatform.iOS: CupertinoPageTransitionsBuilder(),
+    //     TargetPlatform.macOS: CupertinoPageTransitionsBuilder(),
+    //   },
+    // ),
     splashColor: colorScheme.secondary.withOpacity(0.1),
     scaffoldBackgroundColor: scaffoldBackgroundColor,
     appBarTheme: base.appBarTheme.copyWith(
@@ -167,10 +173,10 @@ ThemeData createTheme(
 }
 
 Brightness getCurrentPlatformBrightness() =>
-    MediaQueryData.fromWindow(WidgetsBinding.instance.window)
-        .platformBrightness;
+    MediaQueryData.fromView(WidgetsBinding.instance.window).platformBrightness;
 
 SystemUiOverlayStyle getUiOverlayStyleFor(ThemeData theme) =>
     theme.brightness == Brightness.light
         ? SystemUiOverlayStyle.dark
         : SystemUiOverlayStyle.light;
+

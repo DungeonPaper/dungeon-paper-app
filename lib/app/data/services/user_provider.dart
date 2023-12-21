@@ -2,12 +2,13 @@ import 'dart:async';
 
 import 'package:dungeon_paper/app/data/models/user.dart';
 import 'package:dungeon_paper/app/data/models/user_settings.dart';
-import 'package:dungeon_paper/app/data/services/auth_service.dart';
-import 'package:dungeon_paper/app/data/services/character_service.dart';
-import 'package:dungeon_paper/app/data/services/loading_service.dart';
-import 'package:dungeon_paper/app/data/services/repository_service.dart';
+import 'package:dungeon_paper/app/data/services/auth_provider.dart';
+import 'package:dungeon_paper/app/data/services/character_provider.dart';
+import 'package:dungeon_paper/app/data/services/loading_provider.dart';
+import 'package:dungeon_paper/app/data/services/repository_provider.dart';
 import 'package:dungeon_paper/app/modules/Migration/controllers/migration_controller.dart';
 import 'package:dungeon_paper/app/routes/app_pages.dart';
+import 'package:dungeon_paper/core/global_keys.dart';
 import 'package:dungeon_paper/core/http/api.dart';
 import 'package:dungeon_paper/core/http/api_requests/migration.dart';
 import 'package:dungeon_paper/core/storage_handler/storage_handler.dart';
@@ -15,30 +16,37 @@ import 'package:dungeon_paper/i18n.dart';
 import 'package:email_validator/email_validator.dart';
 import 'package:firebase_auth/firebase_auth.dart' as fba;
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 import 'package:package_info_plus/package_info_plus.dart';
+import 'package:provider/provider.dart';
 import 'package:sentry_flutter/sentry_flutter.dart';
 
 import '../../../core/utils/secrets_base.dart';
 
-class UserService extends GetxService
-    with
-        RepositoryServiceMixin,
-        AuthServiceMixin,
-        CharacterServiceMixin,
-        LoadingServiceMixin {
-  final _current = User.guest().obs;
+class UserProvider extends ChangeNotifier with RepositoryProviderMixin {
+  var _current = User.guest();
 
-  User get current => _current.value;
+  User get current => _current;
   StreamSubscription? _userDataSub;
 
+  UserProvider() {
+    // loadBuiltInRepo();
+  }
+
+  static UserProvider of(BuildContext context) =>
+      Provider.of<UserProvider>(context, listen: false);
+
+  static consumer(BuildContext context, Widget Function(User) builder) =>
+      Consumer<UserProvider>(
+        builder: (context, provider, _) => builder(provider.current),
+      );
+
   Future<void> loadBuiltInRepo({bool ignoreCache = false}) async {
-    await repo.builtIn.dispose();
+    // await repo.builtIn.dispose();
     return repo.builtIn.init(ignoreCache: ignoreCache);
   }
 
   Future<void> loadMyRepo({bool ignoreCache = false}) async {
-    await repo.my.dispose();
+    // await repo.my.dispose();
     return repo.my.init(ignoreCache: ignoreCache);
   }
 
@@ -54,14 +62,20 @@ class UserService extends GetxService
         .getDocument('Data', email!);
     await _setUserAfterMigration(user, dbUser);
     _registerUserListener();
-    charService.registerCharacterListener();
+    final charProvider = Provider.of<CharacterProvider>(
+        appGlobalKey.currentContext!,
+        listen: false);
+    charProvider.registerCharacterListener();
 
     if (shouldLoadRepo) {
       loadMyRepo();
     }
 
-    loadingService.loadingUser = false;
-    loadingService.afterFirstLoad = !loadingService.loadingCharacters;
+    final loadingProvider = Provider.of<LoadingProvider>(
+        appGlobalKey.currentContext!,
+        listen: false);
+    loadingProvider.loadingUser = false;
+    loadingProvider.afterFirstLoad = !loadingProvider.loadingCharacters;
   }
 
   bool get isGuest => current.isGuest;
@@ -71,28 +85,39 @@ class UserService extends GetxService
     _clearUserListener();
     StorageHandler.instance.currentDelegate = 'local';
     StorageHandler.instance.setCollectionPrefix(null);
+    notifyListeners();
     await loadMyRepo(ignoreCache: true);
-    charService.registerCharacterListener();
-    loadingService.loadingUser = false;
-    loadingService.afterFirstLoad = !loadingService.loadingCharacters;
+    final charProvider = Provider.of<CharacterProvider>(
+        appGlobalKey.currentContext!,
+        listen: false);
+    final loadingProvider = Provider.of<LoadingProvider>(
+        appGlobalKey.currentContext!,
+        listen: false);
+    charProvider.registerCharacterListener();
+    loadingProvider.loadingUser = false;
+    loadingProvider.afterFirstLoad = !loadingProvider.loadingCharacters;
+    notifyListeners();
   }
 
   void logout() async {
     _clearUserListener();
-    charService.clear();
-    _current.value = User.guest();
-    await authService.logout();
+    final charProvider = Provider.of<CharacterProvider>(
+        appGlobalKey.currentContext!,
+        listen: false);
+    charProvider.clear();
+    _current = User.guest();
+    final context = appGlobalKey.currentContext!;
+    final authService = Provider.of<AuthProvider>(
+      context,
+      listen: false,
+    );
+    await authService.logout(context);
+    notifyListeners();
   }
 
   @override
-  void onInit() {
-    super.onInit();
-    loadBuiltInRepo();
-  }
-
-  @override
-  void onClose() {
-    super.onClose();
+  void dispose() {
+    super.dispose();
     _userDataSub?.cancel();
   }
 
@@ -106,7 +131,8 @@ class UserService extends GetxService
   }
 
   Future<User?> _migrateUser(fba.User user) async {
-    final migrationDetails = await Get.toNamed(
+    final context = appGlobalKey.currentContext!;
+    final migrationDetails = await Navigator.of(context).pushNamed(
       Routes.migration,
       arguments: MigrationArguments(email: user.email ?? ''),
     ) as MigrationDetails?;
@@ -142,7 +168,8 @@ class UserService extends GetxService
       return;
     }
     final user = User.fromJson(data);
-    _current.value = user;
+    _current = user;
+    notifyListeners();
     user.applySettings();
     _initUserExternal(user);
   }
@@ -150,6 +177,10 @@ class UserService extends GetxService
   void _initUserExternal(User user) async {
     final pkg = await PackageInfo.fromPlatform();
     if (secrets.sentryDsn.isNotEmpty) {
+      final authService = Provider.of<AuthProvider>(
+        appGlobalKey.currentContext!,
+        listen: false,
+      );
       Sentry.configureScope(
         (scope) => scope.setUser(
           SentryUser(
@@ -170,17 +201,24 @@ class UserService extends GetxService
     final needsMigration = dbUser == null;
 
     if (needsMigration) {
+      final context = appGlobalKey.currentContext!;
+      final messenger = ScaffoldMessenger.of(context);
+      final loadingProvider =
+          Provider.of<LoadingProvider>(context, listen: false);
       final resp = await _migrateUser(user);
       if (resp == null) {
-        Get.rawSnackbar(title: tr.errors.userOperationCanceled);
-        loadingService.loadingUser = false;
-        loadingService.afterFirstLoad = !loadingService.loadingCharacters;
+        messenger.showSnackBar(
+            SnackBar(content: Text(tr.errors.userOperationCanceled)));
+
+        loadingProvider.loadingUser = false;
+        loadingProvider.afterFirstLoad = !loadingProvider.loadingCharacters;
         return;
       }
-      _current.value = resp;
+      _current = resp;
     } else {
-      _current.value = User.fromJson(dbUser);
+      _current = User.fromJson(dbUser);
     }
+    notifyListeners();
   }
 
   Future<void> updateEmail(String email) async {
@@ -189,6 +227,10 @@ class UserService extends GetxService
     }
     assert(EmailValidator.validate(email));
     final updatedUser = current.copyWith(email: email);
+    final authService = Provider.of<AuthProvider>(
+      appGlobalKey.currentContext!,
+      listen: false,
+    );
     await authService.fbUser!.updateEmail(email);
     await updateUser(updatedUser);
     loadUserData(fba.FirebaseAuth.instance.currentUser!);
@@ -201,7 +243,8 @@ class UserService extends GetxService
   }
 }
 
-mixin UserServiceMixin {
-  UserService get userService => Get.find();
-  User get user => userService.current;
+mixin UserProviderMixin {
+  UserProvider get userProvider =>
+      UserProvider.of(appGlobalKey.currentContext!);
+  User get user => userProvider.current;
 }

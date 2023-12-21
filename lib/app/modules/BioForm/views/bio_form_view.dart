@@ -1,5 +1,4 @@
 import 'package:dungeon_paper/app/data/models/alignment.dart';
-import 'package:dungeon_paper/app/data/services/character_service.dart';
 import 'package:dungeon_paper/app/modules/BioForm/controllers/bio_form_controller.dart';
 import 'package:dungeon_paper/app/widgets/atoms/advanced_floating_action_button.dart';
 import 'package:dungeon_paper/app/widgets/atoms/confirm_exit_view.dart';
@@ -7,23 +6,22 @@ import 'package:dungeon_paper/app/widgets/atoms/rich_text_field.dart';
 import 'package:dungeon_paper/app/widgets/atoms/select_box.dart';
 import 'package:dungeon_paper/i18n.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
+import 'package:provider/provider.dart';
 
-class BioFormView extends GetView<BioFormController>
-    with CharacterServiceMixin {
+class BioFormView extends StatelessWidget {
   const BioFormView({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return Obx(
-      () => ConfirmExitView(
-        dirty: controller.dirty.value,
+    return Consumer<BioFormController>(
+      builder: (context, controller, _) => ConfirmExitView(
+        dirty: controller.dirty,
         child: Scaffold(
           appBar: AppBar(
             title: Text(tr.bio.dialog.title),
           ),
           floatingActionButton: AdvancedFloatingActionButton.extended(
-            onPressed: _save,
+            onPressed: _save(context),
             label: Text(tr.generic.save),
             icon: const Icon(Icons.save),
           ),
@@ -31,7 +29,7 @@ class BioFormView extends GetView<BioFormController>
             padding: const EdgeInsets.all(16),
             children: [
               RichTextField(
-                controller: controller.bioDesc.value,
+                controller: controller.bioDesc,
                 minLines: 5,
                 maxLines: 10,
                 textCapitalization: TextCapitalization.sentences,
@@ -43,7 +41,7 @@ class BioFormView extends GetView<BioFormController>
               ),
               const SizedBox(height: 8),
               RichTextField(
-                controller: controller.looks.value,
+                controller: controller.looks,
                 minLines: 4,
                 maxLines: 8,
                 textCapitalization: TextCapitalization.sentences,
@@ -55,7 +53,7 @@ class BioFormView extends GetView<BioFormController>
               ),
               const SizedBox(height: 24),
               SelectBox<String>(
-                value: controller.alignmentName.value,
+                value: controller.alignmentName,
                 items: AlignmentValue.allKeys
                     .map(
                       (a) => DropdownMenuItem<String>(
@@ -71,7 +69,7 @@ class BioFormView extends GetView<BioFormController>
                     )
                     .toList(),
                 onChanged: (v) {
-                  controller.alignmentName.value = v!;
+                  controller.alignmentName = v!;
                   controller.setDirty();
                 },
                 isExpanded: true,
@@ -79,7 +77,7 @@ class BioFormView extends GetView<BioFormController>
               ),
               const SizedBox(height: 8),
               RichTextField(
-                controller: controller.alignmentValue.value,
+                controller: controller.alignmentValue,
                 minLines: 4,
                 maxLines: 8,
                 textCapitalization: TextCapitalization.sentences,
@@ -97,8 +95,11 @@ class BioFormView extends GetView<BioFormController>
     );
   }
 
-  void _save() {
-    controller.save();
-    Get.back();
+  void Function() _save(BuildContext context) {
+    return () {
+      final controller = Provider.of<BioFormController>(context, listen: false);
+      controller.save(context);
+      Navigator.of(context).pop();
+    };
   }
 }

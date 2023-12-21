@@ -1,7 +1,7 @@
 import 'package:dungeon_paper/app/data/models/ability_scores.dart';
 import 'package:dungeon_paper/app/data/models/character_class.dart';
 import 'package:dungeon_paper/app/data/models/spell.dart';
-import 'package:dungeon_paper/app/data/services/repository_service.dart';
+import 'package:dungeon_paper/app/data/services/repository_provider.dart';
 import 'package:dungeon_paper/app/widgets/atoms/rich_text_field.dart';
 import 'package:dungeon_paper/app/widgets/atoms/select_box.dart';
 import 'package:dungeon_paper/app/widgets/forms/library_entity_form.dart';
@@ -11,18 +11,17 @@ import 'package:dungeon_paper/core/utils/math_utils.dart';
 import 'package:dungeon_paper/i18n.dart';
 import 'package:dungeon_world_data/dungeon_world_data.dart' as dw;
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
+import 'package:provider/provider.dart';
 
-class SpellForm extends GetView<SpellFormController>
-    with RepositoryServiceMixin {
+class SpellForm extends StatelessWidget with RepositoryProviderMixin {
   const SpellForm({super.key});
 
   @override
   Widget build(BuildContext context) {
     return LibraryEntityForm<Spell, SpellFormController>(
       children: [
-        () => Obx(
-              () => TextFormField(
+        () => Consumer<SpellFormController>(
+              builder: (context, controller, _) => TextFormField(
                 decoration: InputDecoration(
                   label: Text(tr.generic.entityName(tr.entity(tn(Spell)))),
                 ),
@@ -33,8 +32,8 @@ class SpellForm extends GetView<SpellFormController>
         () => Row(
               children: [
                 Expanded(
-                  child: Obx(
-                    () => SelectBox<String>(
+                  child: Consumer<SpellFormController>(
+                    builder: (context, controller, _) => SelectBox<String>(
                       value: controller.level.value,
                       label: Text(tr.character.data.level),
                       isExpanded: true,
@@ -56,8 +55,9 @@ class SpellForm extends GetView<SpellFormController>
                 ),
                 const SizedBox(width: 16),
                 Expanded(
-                  child: Obx(
-                    () => SelectBox<dw.EntityReference>(
+                  child: Consumer<SpellFormController>(
+                    builder: (context, controller, _) =>
+                        SelectBox<dw.EntityReference>(
                       value: controller.classKeys.value.isNotEmpty
                           ? controller.classKeys.value.first
                           : null,
@@ -81,8 +81,8 @@ class SpellForm extends GetView<SpellFormController>
                 ),
               ],
             ),
-        () => Obx(
-              () => RichTextField(
+        () => Consumer<SpellFormController>(
+              builder: (context, controller, _) => RichTextField(
                 decoration: InputDecoration(
                   label:
                       Text(tr.generic.entityDescription(tr.entity(tn(Spell)))),
@@ -94,8 +94,8 @@ class SpellForm extends GetView<SpellFormController>
                 controller: controller.description,
               ),
             ),
-        () => Obx(
-              () => RichTextField(
+        () => Consumer<SpellFormController>(
+              builder: (context, controller, _) => RichTextField(
                 decoration: InputDecoration(
                   label:
                       Text(tr.generic.entityExplanation(tr.entity(tn(Spell)))),
@@ -107,16 +107,16 @@ class SpellForm extends GetView<SpellFormController>
                 controller: controller.explanation,
               ),
             ),
-        () => Obx(
-              () => DiceListInput(
+        () => Consumer<SpellFormController>(
+              builder: (context, controller, _) => DiceListInput(
                 controller: controller.dice,
                 abilityScores: controller.args.abilityScores ??
                     AbilityScores.dungeonWorldAll(10),
                 guessFrom: [controller.description, controller.explanation],
               ),
             ),
-        () => Obx(
-              () => TagListInput(
+        () => Consumer<SpellFormController>(
+              builder: (context, controller, _) => TagListInput(
                 controller: controller.tags,
               ),
             ),
@@ -127,29 +127,27 @@ class SpellForm extends GetView<SpellFormController>
 
 class SpellFormController
     extends LibraryEntityFormController<Spell, SpellFormArguments> {
-  final _name = TextEditingController().obs;
-  final _description = TextEditingController().obs;
-  final _explanation = TextEditingController().obs;
-  final _dice = ValueNotifier<List<dw.Dice>>([]).obs;
-  final _tags = ValueNotifier<List<dw.Tag>>([]).obs;
-  final _category = ValueNotifier('').obs;
-  final _classKeys = ValueNotifier<List<dw.EntityReference>>([]).obs;
+  final _name = TextEditingController();
+  final _description = TextEditingController();
+  final _explanation = TextEditingController();
+  final _dice = ValueNotifier<List<dw.Dice>>([]);
+  final _tags = ValueNotifier<List<dw.Tag>>([]);
+  final _category = ValueNotifier('');
+  final _classKeys = ValueNotifier<List<dw.EntityReference>>([]);
 
-  TextEditingController get name => _name.value;
-  TextEditingController get description => _description.value;
-  TextEditingController get explanation => _explanation.value;
-  ValueNotifier<List<dw.Dice>> get dice => _dice.value;
-  ValueNotifier<List<dw.Tag>> get tags => _tags.value;
-  ValueNotifier<String> get level => _category.value;
-  ValueNotifier<List<dw.EntityReference>> get classKeys => _classKeys.value;
+  TextEditingController get name => _name;
+  TextEditingController get description => _description;
+  TextEditingController get explanation => _explanation;
+  ValueNotifier<List<dw.Dice>> get dice => _dice;
+  ValueNotifier<List<dw.Tag>> get tags => _tags;
+  ValueNotifier<String> get level => _category;
+  ValueNotifier<List<dw.EntityReference>> get classKeys => _classKeys;
 
   @override
-  List<Rx<ValueNotifier>> get fields =>
+  List<ValueNotifier> get fields =>
       [_name, _description, _explanation, _dice, _tags, _category, _classKeys];
 
-  @override
-  void onInit() {
-    super.onInit();
+  SpellFormController(super.context) {
     name.text = args.entity?.name ?? '';
     description.text = args.entity?.description ?? '';
     explanation.text = args.entity?.explanation ?? '';

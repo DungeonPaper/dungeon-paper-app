@@ -1,12 +1,9 @@
-import 'package:dungeon_paper/app/data/models/character.dart';
-import 'package:dungeon_paper/app/data/models/item.dart';
 import 'package:dungeon_paper/app/data/models/note.dart';
-import 'package:dungeon_paper/app/data/models/spell.dart';
-import 'package:dungeon_paper/app/data/services/character_service.dart';
+import 'package:dungeon_paper/app/data/services/character_provider.dart';
 import 'package:dungeon_paper/app/model_utils/character_utils.dart';
 import 'package:dungeon_paper/app/model_utils/model_pages.dart';
-import 'package:dungeon_paper/app/themes/button_themes.dart';
 import 'package:dungeon_paper/app/widgets/cards/note_card.dart';
+import 'package:dungeon_paper/app/widgets/dialogs/confirm_delete_dialog.dart';
 import 'package:dungeon_paper/app/widgets/menus/entity_edit_menu.dart';
 import 'package:dungeon_paper/app/widgets/menus/group_sort_menu.dart';
 import 'package:dungeon_paper/app/widgets/molecules/categorized_list.dart';
@@ -14,21 +11,20 @@ import 'package:dungeon_paper/core/storage_handler/storage_handler.dart';
 import 'package:dungeon_paper/core/utils/list_utils.dart';
 import 'package:dungeon_paper/i18n.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 
-class HomeCharacterJournalView extends GetView<CharacterService> {
+class HomeCharacterJournalView extends StatelessWidget
+    with CharacterProviderMixin {
   const HomeCharacterJournalView({super.key});
-
-  Character get char => controller.current;
 
   @override
   Widget build(BuildContext context) {
     return PageStorage(
       bucket: PageStorageBucket(),
-      child: Obx(() {
+      child: CharacterProvider.consumer((context, controller, _) {
         if (controller.maybeCurrent == null) {
           return Container();
         }
+        final char = controller.current;
         // return ReorderableListView(
         return ListView(
           // physics: const NeverScrollableScrollPhysics(),
@@ -79,6 +75,7 @@ class HomeCharacterJournalView extends GetView<CharacterService> {
                                 tn(Note),
                               ),
                               onEdit: () => ModelPages.openNotePage(
+                                context,
                                 note: note,
                                 onSave: (note) {
                                   controller.updateCharacter(
@@ -105,7 +102,6 @@ class HomeCharacterJournalView extends GetView<CharacterService> {
     );
   }
 
-  // TODO use existing confirmDelete
   void Function() confirmDelete<T>(
     BuildContext context,
     T object,
@@ -113,56 +109,17 @@ class HomeCharacterJournalView extends GetView<CharacterService> {
     String typeName,
   ) {
     return () async {
-      final result = await Get.dialog<bool>(
-        AlertDialog(
-          title:
-              Text(tr.dialogs.confirmations.delete.title(tr.entity(typeName))),
-          content: Text(
-              tr.dialogs.confirmations.delete.body(tr.entity(typeName), name)),
-          actions: [
-            ElevatedButton.icon(
-              icon: const Icon(Icons.close),
-              label: Text(tr.generic.cancel),
-              onPressed: () => Get.back(result: false),
-              style: ButtonThemes.primaryElevated(context),
-            ),
-            ElevatedButton.icon(
-              icon: const Icon(Icons.delete),
-              label: Text(tr.generic.remove),
-              onPressed: () => Get.back(result: true),
-              style: ButtonThemes.errorElevated(context),
-            ),
-            const SizedBox(width: 0),
-          ],
-        ),
-      );
-
-      if (result == true) {
-        switch (T) {
-          case == Note:
-            controller.updateCharacter(
-              char.copyWith(notes: removeByKey(char.notes, [object as Note])),
-            );
-            break;
-          case == Spell:
-            controller.updateCharacter(
-              char.copyWith(
-                  spells: removeByKey(char.spells, [object as Spell])),
-            );
-            break;
-          case == Item:
-            controller.updateCharacter(
-              char.copyWith(items: removeByKey(char.items, [object as Item])),
-            );
-            break;
-          default:
-            throw TypeError();
-        }
-      }
+      awaitDeleteConfirmation(context, name, () {
+        charProvider.updateCharacter(
+          char.copyWith(notes: removeByKey(char.notes, [object as Note])),
+        );
+      });
     };
   }
 
-  Future<void> _move(int oldIndex, int newIndex) {
+  Future<void> _move(BuildContext context, int oldIndex, int newIndex) {
+    final controller = CharacterProvider.of(context);
+    final char = controller.current;
     return controller.updateCharacter(
       char.copyWith(
         settings: char.settings.copyWith(
@@ -181,3 +138,4 @@ class HomeCharacterJournalView extends GetView<CharacterService> {
     );
   }
 }
+

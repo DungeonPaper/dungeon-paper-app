@@ -3,26 +3,26 @@ import 'package:dungeon_paper/app/widgets/atoms/confirm_exit_view.dart';
 import 'package:dungeon_paper/core/utils/list_utils.dart';
 import 'package:dungeon_paper/i18n.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
+import 'package:provider/provider.dart';
 
 import '../controllers/bonds_flags_form_controller.dart';
 
-class BondsFlagsFormView extends GetView<BondsFlagsFormController> {
+class BondsFlagsFormView extends StatelessWidget {
   const BondsFlagsFormView({super.key});
 
   @override
   Widget build(BuildContext context) {
     final textTheme = Theme.of(context).textTheme;
-    return Obx(
-      () => ConfirmExitView(
-        dirty: controller.dirty.value,
+    return Consumer<BondsFlagsFormController>(
+      builder: (context, controller, _) => ConfirmExitView(
+        dirty: controller.dirty,
         child: Scaffold(
           appBar: AppBar(
             title: Text(tr.sessionMarks.title),
             centerTitle: true,
           ),
           floatingActionButton: AdvancedFloatingActionButton.extended(
-            onPressed: controller.save,
+            onPressed: () => controller.save(context),
             icon: const Icon(Icons.save),
             label: Text(tr.generic.save),
           ),

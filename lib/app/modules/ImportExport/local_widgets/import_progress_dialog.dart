@@ -1,17 +1,17 @@
 import 'package:dungeon_paper/app/modules/ImportExport/controllers/import_controller.dart';
 import 'package:dungeon_paper/i18n.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
+import 'package:provider/provider.dart';
 
-class ImportProgressDialog extends GetView<ImportController> {
+class ImportProgressDialog extends StatelessWidget {
   const ImportProgressDialog({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return Obx(
-      () {
+    return Consumer<ImportController>(
+      builder: (context, controller, _) {
         final completedCount =
-            controller.selectionsCount - controller.leftCount.value;
+            controller.selectionsCount - controller.leftCount;
         final totalCount = controller.selectionsCount;
         return SimpleDialog(
           title: Text(tr.backup.importing.progress.title),
@@ -21,7 +21,7 @@ class ImportProgressDialog extends GetView<ImportController> {
           children: [
             Text(
               tr.backup.importing.progress.processing(
-                tr.entityPlural(tn(controller.importStep.value!)),
+                tr.entityPlural(tn(controller.importStep!)),
               ),
             ),
             const SizedBox(height: 8),

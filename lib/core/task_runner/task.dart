@@ -40,13 +40,11 @@ class TaskGroup extends Task<ArgOptions> {
   final List<Task<ArgOptions>> tasks;
 
   TaskGroup({
-    bool Function(ArgOptions)? condition,
+    super.condition,
     required this.tasks,
-    ArgOptions? options,
+    super.options,
   }) : super(
-          condition: condition,
           run: _runTasks(tasks, options, condition),
-          options: options,
         );
 
   TaskGroup.staticArgs({
@@ -102,27 +100,23 @@ class TaskGroup extends Task<ArgOptions> {
 class DeviceTaskGroup extends TaskGroup {
   DeviceTaskGroup({
     required Device device,
-    required List<Task<ArgOptions>> tasks,
+    required super.tasks,
     bool Function(ArgOptions)? condition,
-    ArgOptions? options,
+    super.options,
   }) : super(
           condition: condition != null
               ? (o) =>
                   condition.call(o) != false && _isDeviceIncluded(o, device)
               : (o) => _isDeviceIncluded(o, device),
-          tasks: tasks,
-          options: options,
         );
 
   DeviceTaskGroup.staticArgs({
     required Device device,
-    required List<Task<ArgOptions>> tasks,
+    required super.tasks,
     bool? condition,
-    ArgOptions? options,
+    super.options,
   }) : super(
           condition: (o) => condition != false && _isDeviceIncluded(o, device),
-          tasks: tasks,
-          options: options,
         );
 
   static bool _isDeviceIncluded(ArgOptions o, Device device) =>
@@ -133,15 +127,13 @@ class ProcessTask extends Task<ArgOptions> {
   ProcessTask(
     FutureOr<String> Function(ArgOptions) process, {
     FutureOr<List<String>> Function(ArgOptions)? args,
-    bool Function(ArgOptions)? condition,
-    ArgOptions? options,
+    super.condition,
+    super.options,
     FutureOr<void> Function(ArgOptions)? beforeAll,
     FutureOr<void> Function(ArgOptions)? afterAll,
     FutureOr<void> Function(ArgOptions, Exception, StackTrace)? onError,
   }) : super(
-          condition: condition,
           run: _runProcess(process, args, onError),
-          options: options,
         );
 
   factory ProcessTask.staticArgs(
@@ -168,19 +160,19 @@ class ProcessTask extends Task<ArgOptions> {
     FutureOr<void> Function(ArgOptions, Exception, StackTrace)? onError,
   ) =>
       (o) async {
-        final _process = await process(o);
-        final _args = await (args?.call(o) ?? <String>[]);
-        final _argsStr =
-            _args.map((a) => a.contains(' ') ? '"$a"' : a).join(' ');
-        print('\n\nRunning process: $_process $_argsStr\n\n');
+        final process0 = await process(o);
+        final args0 = await (args?.call(o) ?? <String>[]);
+        final argsStr =
+            args0.map((a) => a.contains(' ') ? '"$a"' : a).join(' ');
+        print('\n\nRunning process: $process0 $argsStr\n\n');
         try {
-          final result = await Process.run(_process, _args);
+          final result = await Process.run(process0, args0);
           stdout.write(result.stdout);
           stdout.write(result.stderr);
           final exitCode = result.exitCode;
           if (exitCode != 0) {
             final stack = StackTrace.current;
-            final e = ProcessException(_process, _args,
+            final e = ProcessException(process0, args0,
                 'Process exited with error code: $exitCode', exitCode);
             _handleError(o, e, stack, onError);
           }
@@ -213,22 +205,18 @@ class ProcessTask extends Task<ArgOptions> {
 class LogTask extends Task<ArgOptions> {
   LogTask(
     FutureOr<String> Function(ArgOptions) message, {
-    bool Function(ArgOptions)? condition,
-    ArgOptions? options,
+    super.condition,
+    super.options,
   }) : super(
-          condition: condition,
           run: _log(message),
-          options: options,
         );
 
   LogTask.staticArgs(
     String message, {
-    bool Function(ArgOptions)? condition,
-    ArgOptions? options,
+    super.condition,
+    super.options,
   }) : super(
-          condition: condition,
           run: _log((o) => message),
-          options: options,
         );
 
   FutureOr<void> log(String message) => _log((o) => message);

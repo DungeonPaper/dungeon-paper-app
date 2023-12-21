@@ -1,71 +1,60 @@
 import 'package:dungeon_paper/app/data/models/ability_scores.dart';
+import 'package:dungeon_paper/core/route_arguments.dart';
 import 'package:dungeon_paper/core/utils/enums.dart';
 import 'package:dungeon_paper/core/utils/string_validator.dart';
 import 'package:dungeon_paper/i18n.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 
-class AbilityScoreFormController extends GetxController {
-  final entity = AbilityScore.empty().obs;
+class AbilityScoreFormController extends ChangeNotifier {
+  late final AbilityScore entity;
 
-  late final Rx<TextEditingController> _key = TextEditingController().obs;
-  TextEditingController get key => _key.value;
+  late final TextEditingController _key;
+  TextEditingController get key => _key;
 
-  late final Rx<TextEditingController> _name = TextEditingController().obs;
-  TextEditingController get name => _name.value;
+  late final TextEditingController _name;
+  TextEditingController get name => _name;
 
-  late final Rx<TextEditingController> _description =
-      TextEditingController().obs;
-  TextEditingController get description => _description.value;
+  late final TextEditingController _description;
+  TextEditingController get description => _description;
 
-  late final Rx<TextEditingController> _debilityName =
-      TextEditingController().obs;
-  TextEditingController get debilityName => _debilityName.value;
+  late final TextEditingController _debilityName;
+  TextEditingController get debilityName => _debilityName;
 
-  late final Rx<TextEditingController> _debilityDescription =
-      TextEditingController().obs;
-  TextEditingController get debilityDescription => _debilityDescription.value;
+  late final TextEditingController _debilityDescription;
+  TextEditingController get debilityDescription => _debilityDescription;
 
-  late final Rx<IconData?> _icon = Rx(null);
-  IconData? get icon => _icon.value;
+  late final IconData? _icon;
+  IconData? get icon => _icon;
 
   late final void Function(AbilityScore abilityScore) onSave;
 
   late final FormContext formContext;
 
-  @override
-  void onInit() {
-    super.onInit();
-    final AbilityScoreFormArguments args = Get.arguments;
+  AbilityScoreFormController(BuildContext context) {
+    final AbilityScoreFormArguments args = getArgs(context);
     formContext =
         args.abilityScore != null ? FormContext.edit : FormContext.create;
     if (args.abilityScore != null) {
-      entity.value = args.abilityScore!;
+      entity = args.abilityScore!;
     }
     onSave = args.onSave;
-    _key.value = TextEditingController(text: entity.value.key)
-      ..addListener(_update);
-    _name.value = TextEditingController(text: entity.value.name)
-      ..addListener(_update);
-    _description.value = TextEditingController(text: entity.value.description)
-      ..addListener(_update);
-    _debilityName.value = TextEditingController(text: entity.value.debilityName)
-      ..addListener(_update);
-    _debilityDescription.value =
-        TextEditingController(text: entity.value.debilityDescription)
-          ..addListener(_update);
-    _icon.value = entity.value.customIcon;
+    _key = TextEditingController(text: entity.key);
+    _name = TextEditingController(text: entity.name);
+    _description = TextEditingController(text: entity.description);
+    _debilityName = TextEditingController(text: entity.debilityName);
+    _debilityDescription =
+        TextEditingController(text: entity.debilityDescription);
+    _icon = entity.customIcon;
   }
 
   @override
-  void onClose() {
-    _key.value.dispose();
-    _name.value.dispose();
-    _description.value.dispose();
-    _debilityName.value.dispose();
-    _debilityDescription.value.dispose();
-    _icon.close();
-    super.onClose();
+  void dispose() {
+    super.dispose();
+    _key.dispose();
+    _name.dispose();
+    _description.dispose();
+    _debilityName.dispose();
+    _debilityDescription.dispose();
   }
 
   bool get isValid => [
@@ -89,18 +78,9 @@ class AbilityScoreFormController extends GetxController {
   String? requiredValidator(String? value) =>
       StringValidator(minLength: 1).validator(value);
 
-  void _update() {
-    _key.refresh();
-    _name.refresh();
-    _description.refresh();
-    _debilityName.refresh();
-    _debilityDescription.refresh();
-    _icon.refresh();
-  }
-
-  void save() {
+  void save(BuildContext context) {
     onSave(
-      entity.value.copyWith(
+      entity.copyWith(
         key: key.text,
         name: name.text,
         description: description.text,
@@ -109,7 +89,7 @@ class AbilityScoreFormController extends GetxController {
         icon: icon,
       ),
     );
-    Get.back();
+    Navigator.of(context).pop();
   }
 }
 
@@ -122,3 +102,4 @@ class AbilityScoreFormArguments {
     required this.onSave,
   });
 }
+

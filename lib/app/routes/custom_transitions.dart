@@ -2,16 +2,15 @@ import 'dart:math' show sqrt, max;
 import 'dart:ui' show lerpDouble;
 
 import 'package:flutter/material.dart';
-import 'package:get/get_navigation/src/routes/custom_transition.dart';
 
-class CustomCircularRevealClipper extends CustomClipper<Path> {
+class CircularRevealClipper extends CustomClipper<Path> {
   final double fraction;
   final Alignment? centerAlignment;
   final Offset? centerOffset;
   final double? minRadius;
   final double? maxRadius;
 
-  CustomCircularRevealClipper({
+  CircularRevealClipper({
     required this.fraction,
     this.centerAlignment,
     this.centerOffset,
@@ -46,28 +45,41 @@ class CustomCircularRevealClipper extends CustomClipper<Path> {
   }
 }
 
-class CustomCircularRevealTransition extends CustomTransition {
-  CustomCircularRevealTransition({
-    this.alignment,
-    this.offset,
-  });
+class CircularRevealTransitionBuilder<T> extends PageRouteBuilder {
+  CircularRevealTransitionBuilder({
+    super.settings,
+    required WidgetBuilder? builder,
+    super.transitionsBuilder,
+    super.transitionDuration = const Duration(milliseconds: 300),
+    super.reverseTransitionDuration = const Duration(milliseconds: 300),
+    super.opaque = false,
+    super.barrierDismissible = false,
+    super.barrierColor,
+    super.barrierLabel,
+    super.maintainState = true,
+    super.fullscreenDialog,
+    super.allowSnapshotting = true,
+    this.alignment = Alignment.center,
+    this.offset = Offset.zero,
+    this.curve = Curves.easeInOut,
+  }) : super(pageBuilder: (context, __, ___) => builder!(context));
 
-  final Alignment? alignment;
-  final Offset? offset;
+  final Alignment alignment;
+  final Offset offset;
+  final Curve curve;
 
   @override
-  Widget buildTransition(
-      BuildContext context,
-      Curve? curve,
-      Alignment? alignment,
-      Animation<double> animation,
-      Animation<double> secondaryAnimation,
-      Widget child) {
+  Widget buildTransitions(
+    BuildContext context,
+    Animation<double> animation,
+    Animation<double> secondaryAnimation,
+    Widget child,
+  ) {
     return ClipPath(
-      clipper: CustomCircularRevealClipper(
+      clipper: CircularRevealClipper(
         fraction: animation.value,
-        centerAlignment: this.alignment ?? Alignment.center,
-        centerOffset: offset ?? Offset.zero,
+        centerAlignment: alignment,
+        centerOffset: offset,
         minRadius: 0,
         maxRadius: MediaQuery.of(context).size.longestSide * 2,
       ),
@@ -75,3 +87,4 @@ class CustomCircularRevealTransition extends CustomTransition {
     );
   }
 }
+

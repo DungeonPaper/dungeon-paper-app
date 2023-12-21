@@ -5,21 +5,22 @@ import 'package:dungeon_paper/app/data/models/campaign.dart';
 import 'package:dungeon_paper/app/data/models/session_marks.dart';
 import 'package:dungeon_paper/app/data/models/spell.dart';
 import 'package:dungeon_paper/app/data/models/user.dart';
-import 'package:dungeon_paper/app/data/services/repository_service.dart';
-import 'package:dungeon_paper/app/data/services/user_service.dart';
+import 'package:dungeon_paper/app/data/services/repository_provider.dart';
+import 'package:dungeon_paper/app/data/services/user_provider.dart';
+import 'package:dungeon_paper/core/global_keys.dart';
 import 'package:dungeon_paper/core/utils/date_utils.dart';
+import 'package:dungeon_paper/core/utils/list_utils.dart';
 import 'package:dungeon_paper/core/utils/uuid.dart';
 import 'package:dungeon_paper/i18n.dart';
+import 'package:dungeon_world_data/dungeon_world_data.dart' as dw;
 import 'package:dungeon_world_data/gear_option.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
-import 'package:dungeon_world_data/dungeon_world_data.dart' as dw;
 
 import 'alignment.dart';
 import 'bio.dart';
+import 'character.dart';
 import 'character_class.dart';
 import 'character_stats.dart';
-import 'character.dart';
 import 'gear_choice.dart';
 import 'gear_selection.dart';
 import 'item.dart';
@@ -28,7 +29,7 @@ import 'move.dart';
 import 'note.dart';
 import 'race.dart';
 
-class Meta<DataType> with RepositoryServiceMixin {
+class Meta<DataType> with RepositoryProviderMixin {
   Meta._({
     required this.version,
     DateTime? created,
@@ -220,9 +221,8 @@ class Meta<DataType> with RepositoryServiceMixin {
     );
   }
 
-  static User get user => Get.find<UserService>().current;
-
   static T forkOrIncrease<T extends WithMeta>(T object) {
+    final user = UserProvider.of(appGlobalKey.currentContext!).current;
     if (object.meta.isOwnedBy(user)) {
       return increaseMetaVersion(object);
     }
@@ -483,4 +483,3 @@ mixin WithMeta<T, MetaDataType>
   String get storageKey;
   dw.EntityReference get reference => Meta.referenceFor(this);
 }
-

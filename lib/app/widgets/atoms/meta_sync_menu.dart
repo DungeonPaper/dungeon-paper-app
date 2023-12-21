@@ -5,9 +5,9 @@ import 'package:flutter/material.dart';
 @Deprecated('Use EntityShareForm')
 class MetaSyncMenu<T, M> extends StatelessWidget {
   const MetaSyncMenu({
-    Key? key,
+    super.key,
     required this.entity,
-  }) : super(key: key);
+  });
 
   final WithMeta<T, dynamic> entity;
 

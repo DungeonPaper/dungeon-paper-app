@@ -1,38 +1,36 @@
 import 'package:dungeon_paper/app/data/models/alignment.dart';
+import 'package:dungeon_paper/core/route_arguments.dart';
 import 'package:dungeon_world_data/dungeon_world_data.dart' as dw;
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 
-class ClassAlignmentsController extends GetxController {
-  final alignments = AlignmentValues.empty().obs;
-  final selected = Rx<dw.AlignmentType?>(null);
+class ClassAlignmentsController extends ChangeNotifier {
+  var alignments = AlignmentValues.empty();
+  dw.AlignmentType? selected;
   bool selectable = false;
   bool editable = false;
   late final void Function(
       AlignmentValues alignments, dw.AlignmentType? selected)? onChanged;
   final sortedAlignmentTypes = dw.AlignmentType.values.toList();
-  final editing = <dw.AlignmentType, bool>{}.obs;
-  final textControllers = <dw.AlignmentType, TextEditingController>{}.obs;
+  final editing = <dw.AlignmentType, bool>{};
+  final textControllers = <dw.AlignmentType, TextEditingController>{};
 
-  @override
-  void onInit() {
-    super.onInit();
-    final ClassAlignmentsArguments? args = Get.arguments;
+  ClassAlignmentsController(BuildContext context) {
+    final ClassAlignmentsArguments? args = getArgs(context, nullOk: true);
     if (args != null) {
       if (args.alignments != null) {
-        alignments.value = args.alignments!;
+        alignments = args.alignments!;
       }
       selectable = args.selectable;
       editable = args.editable;
       onChanged = args.onChanged;
       if (args.preselected != null) {
-        selected.value = args.preselected!;
+        selected = args.preselected!;
       }
     }
     textControllers.addAll({
       for (final alignment in sortedAlignmentTypes)
         alignment: TextEditingController(
-          text: alignments.value.byType(alignment),
+          text: alignments.byType(alignment),
         ),
     });
   }
@@ -43,15 +41,15 @@ class ClassAlignmentsController extends GetxController {
   }
 
   void select(dw.AlignmentType type) {
-    selected.value = type;
+    selected = type;
+    notifyListeners();
   }
 
   bool isEditing(dw.AlignmentType type) => editable && editing[type] == true;
-  bool isSelected(dw.AlignmentType type) =>
-      selectable && selected.value == type;
+  bool isSelected(dw.AlignmentType type) => selectable && selected == type;
 
-  void save() {
-    final updated = alignments.value.copyWithInherited(
+  void save(BuildContext context) {
+    final updated = alignments.copyWithInherited(
       good: textControllers[dw.AlignmentType.good]!.text,
       lawful: textControllers[dw.AlignmentType.lawful]!.text,
       neutral: textControllers[dw.AlignmentType.neutral]!.text,
@@ -59,8 +57,8 @@ class ClassAlignmentsController extends GetxController {
       evil: textControllers[dw.AlignmentType.evil]!.text,
     );
 
-    onChanged?.call(updated, selected.value);
-    Get.back();
+    onChanged?.call(updated, selected);
+    Navigator.of(context).pop();
   }
 }
 
@@ -80,3 +78,4 @@ class ClassAlignmentsArguments {
     this.preselected,
   });
 }
+

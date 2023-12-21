@@ -2,11 +2,11 @@ import 'package:dungeon_paper/app/modules/Settings/views/theme_selector.dart';
 import 'package:dungeon_paper/app/themes/themes.dart';
 import 'package:dungeon_paper/i18n.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
+import 'package:provider/provider.dart';
 
 import '../controllers/select_character_theme_controller.dart';
 
-class SelectCharacterThemeView extends GetView<SelectCharacterThemeController> {
+class SelectCharacterThemeView extends StatelessWidget {
   const SelectCharacterThemeView({super.key});
   @override
   Widget build(BuildContext context) {
@@ -17,57 +17,57 @@ class SelectCharacterThemeView extends GetView<SelectCharacterThemeController> {
       ),
       body: ListView(
         children: [
-          Obx(
-            () => _sectionTitle(
+          Consumer<SelectCharacterThemeController>(
+            builder: (context, controller, _) => _sectionTitle(
               context,
               tr.character.theme.defaultLight,
               onReset: () {
-                controller.lightTheme.value = null;
+                controller.lightTheme = null;
                 controller.save();
               },
-              resetEnabled: controller.lightTheme.value != null,
+              resetEnabled: controller.lightTheme != null,
               onChangeSeeAll: (val) =>
                   controller.seeAll[Brightness.light] = val,
               seeAll: controller.seeAll[Brightness.light]!,
             ),
           ),
           _pad(
-            Obx(
-              () => ThemeSelector(
+            Consumer<SelectCharacterThemeController>(
+              builder: (context, controller, _) => ThemeSelector(
                 themes: controller.seeAll[Brightness.light]!
                     ? AppThemes.allThemes
                     : AppThemes.allLightThemes,
-                selected: controller.lightTheme.value,
+                selected: controller.lightTheme,
                 onSelected: (theme) async {
-                  controller.lightTheme.value = theme;
+                  controller.lightTheme = theme;
                   controller.save();
                 },
               ),
             ),
             horizontal: 8,
           ),
-          Obx(
-            () => _sectionTitle(
+          Consumer<SelectCharacterThemeController>(
+            builder: (context, controller, _) => _sectionTitle(
               context,
               tr.character.theme.defaultDark,
               onReset: () {
-                controller.darkTheme.value = null;
+                controller.darkTheme = null;
                 controller.save();
               },
-              resetEnabled: controller.darkTheme.value != null,
+              resetEnabled: controller.darkTheme != null,
               onChangeSeeAll: (val) => controller.seeAll[Brightness.dark] = val,
               seeAll: controller.seeAll[Brightness.dark]!,
             ),
           ),
           _pad(
-            Obx(
-              () => ThemeSelector(
+            Consumer<SelectCharacterThemeController>(
+              builder: (context, controller, _) => ThemeSelector(
                 themes: controller.seeAll[Brightness.dark]!
                     ? AppThemes.allThemes
                     : AppThemes.allDarkThemes,
-                selected: controller.darkTheme.value,
+                selected: controller.darkTheme,
                 onSelected: (theme) async {
-                  controller.darkTheme.value = theme;
+                  controller.darkTheme = theme;
                   controller.save();
                 },
               ),

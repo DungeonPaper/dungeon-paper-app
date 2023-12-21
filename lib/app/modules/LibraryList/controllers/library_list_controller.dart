@@ -1,11 +1,13 @@
 import 'dart:async';
 
 import 'package:dungeon_paper/app/data/models/meta.dart';
-import 'package:dungeon_paper/app/data/services/character_service.dart';
-import 'package:dungeon_paper/app/data/services/library_service.dart';
-import 'package:dungeon_paper/app/data/services/repository_service.dart';
+import 'package:dungeon_paper/app/data/services/character_provider.dart';
+import 'package:dungeon_paper/app/data/services/library_provider.dart';
+import 'package:dungeon_paper/app/data/services/repository_provider.dart';
+import 'package:dungeon_paper/core/global_keys.dart';
+import 'package:dungeon_paper/core/route_arguments.dart';
+import 'package:dungeon_paper/core/utils/list_utils.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 
 enum FiltersGroup {
   playbook,
@@ -14,63 +16,41 @@ enum FiltersGroup {
 }
 
 class LibraryListController<T extends WithMeta, F extends EntityFilters<T>>
-    extends GetxController
-    with
-        GetSingleTickerProviderStateMixin,
-        LibraryServiceMixin,
-        CharacterServiceMixin {
-  final repo = Get.find<RepositoryService>().obs;
-  final chars = Get.find<CharacterService>().obs;
+    extends ChangeNotifier
+    with CharacterProviderMixin, RepositoryProviderMixin {
+  late final LibraryListArguments<T, F> arguments;
 
-  final selected = <T>[].obs;
-  final removed = <T>[].obs;
-  final filters = <FiltersGroup, F?>{}.obs;
-  final search = <FiltersGroup, TextEditingController>{}.obs;
+  final selected = <T>[];
+  final removed = <T>[];
+  final filters = <FiltersGroup, F?>{};
+  final search = <FiltersGroup, TextEditingController>{};
+  // late final TabController tabController;
 
-  late final void Function(Iterable<T> items)? onSelected;
-  late final bool Function(T item, F filters) filterFn;
-  late final int Function(T a, T b) Function(F filters) sortFn;
-  late final bool multiple;
-  late final Iterable<T> preSelections;
-  late final Map<String, dynamic> extraData;
-  late final TabController tabController;
+  bool get selectable => arguments.onSelected != null;
 
-  bool get selectable => onSelected != null;
-
-  Iterable<T> get builtInList =>
-      filterList(builtInListRaw, FiltersGroup.playbook, filterFn, sortFn);
+  Iterable<T> get builtInList => filterList(builtInListRaw,
+      FiltersGroup.playbook, arguments.filterFn, arguments.sortFn);
 
   Iterable<T> get builtInListRaw =>
-      repo.value.builtIn.listByType<T>().values.toList();
+      repo.builtIn.listByType<T>().values.toList();
 
-  Iterable<T> get myList =>
-      filterList(myListRaw, FiltersGroup.my, filterFn, sortFn);
+  Iterable<T> get myList => filterList(
+      myListRaw, FiltersGroup.my, arguments.filterFn, arguments.sortFn);
 
-  Iterable<T> get myListRaw => repo.value.my.listByType<T>().values.toList();
+  Iterable<T> get myListRaw => repo.my.listByType<T>().values.toList();
   String get storageKey => Meta.storageKeyFor(T);
 
-  @override
-  void onInit() {
-    super.onInit();
-    assert(Get.arguments != null);
-    final LibraryListArguments<T, F> args = Get.arguments;
-    filters.addAll(args.filters.cast<FiltersGroup, F?>());
-    onSelected = args.onSelected;
-    filterFn = args.filterFn;
-    sortFn = args.sortFn;
-    multiple = args.multiple;
-    preSelections = args.preSelections;
-    extraData = args.extraData;
+  bool get multiple => arguments.multiple;
+  Map<String, dynamic> get extraData => arguments.extraData;
+  void Function(Iterable<T> items)? get onSelected => arguments.onSelected;
+
+  LibraryListController(BuildContext context) {
+    arguments = getArgs(context);
+    filters.addAll(arguments.filters.cast<FiltersGroup, F?>());
     search[FiltersGroup.playbook] ??= TextEditingController();
     search[FiltersGroup.playbook]!.addListener(_updatePlaybookSearch);
     search[FiltersGroup.my] ??= TextEditingController();
     search[FiltersGroup.my]!.addListener(_updateMySearch);
-    tabController = TabController(
-      initialIndex: FiltersGroup.values.indexOf(args.initialTab),
-      // length: 3,
-      length: 2,
-      vsync: this,
-    );
   }
 
   @override
@@ -82,7 +62,7 @@ class LibraryListController<T extends WithMeta, F extends EntityFilters<T>>
 
   void setFilters(FiltersGroup group, F? filters) {
     this.filters[group] = filters;
-    this.filters.refresh();
+    notifyListeners();
   }
 
   void toggleItem(T item, bool state) {
@@ -90,29 +70,27 @@ class LibraryListController<T extends WithMeta, F extends EntityFilters<T>>
       return;
     }
 
-    if (!multiple) {
+    if (!arguments.multiple) {
       selected.clear();
-      for (final sel in preSelections) {
-        removed.addIf(
-          removed.firstWhereOrNull(_compare(sel)) == null,
-          sel,
-        );
+      for (final sel in arguments.preSelections) {
+        if (removed.firstWhereOrNull(_compare(sel)) == null) {
+          removed.add(sel);
+        }
       }
     }
 
     if (state) {
-      selected.addIf(
-        selected.firstWhereOrNull(_compare(item)) == null,
-        item,
-      );
+      if (selected.firstWhereOrNull(_compare(item)) == null) {
+        selected.add(item);
+      }
       removed.removeWhere(_compare(item));
     } else {
       selected.removeWhere(_compare(item));
-      removed.addIf(
-        removed.firstWhereOrNull(_compare(item)) == null,
-        item,
-      );
+      if (removed.firstWhereOrNull(_compare(item)) == null) {
+        removed.add(item);
+      }
     }
+    notifyListeners();
   }
 
   _compare(T item) {
@@ -125,19 +103,23 @@ class LibraryListController<T extends WithMeta, F extends EntityFilters<T>>
   void saveCustomItem(String storageKey, T item) {
     toggleItem(item, true);
     debugPrint('Saving $item');
+    final library = LibraryProvider.of(appGlobalKey.currentContext!);
     library.upsertToLibrary<T>([item]);
+    notifyListeners();
   }
 
   void deleteCustomItem(String storageKey, T item) {
     toggleItem(item, false);
     debugPrint('Deleting $item');
+    final library = LibraryProvider.of(appGlobalKey.currentContext!);
     library.removeFromLibrary<T>([item]);
+    notifyListeners();
   }
 
   List<T> get selectedWithMeta => selected;
   // selected.map((e) => forkMeta<T>(e, Get.find<UserService>().current)).toList();
 
-  bool isSelected(T item) => multiple
+  bool isSelected(T item) => arguments.multiple
       ?
       // multiple: if is selected or pre-selected
       isInCurrentSelectedList(item) || isPreSelected(item)
@@ -155,9 +137,9 @@ class LibraryListController<T extends WithMeta, F extends EntityFilters<T>>
   bool isRemoved(T item) => removed.firstWhereOrNull(_compare(item)) != null;
 
   bool isPreSelected(T item) =>
-      preSelections.toList().firstWhereOrNull(_compare(item)) != null;
+      arguments.preSelections.toList().firstWhereOrNull(_compare(item)) != null;
 
-  bool isEnabled(T item) => multiple
+  bool isEnabled(T item) => arguments.multiple
       ?
       // multiple: if is not pre-selected
       !isPreSelected(item)
@@ -187,14 +169,12 @@ class LibraryListController<T extends WithMeta, F extends EntityFilters<T>>
   void _updatePlaybookSearch() {
     filters[FiltersGroup.playbook]
         ?.setSearch(search[FiltersGroup.playbook]!.text);
-    search.refresh();
-    repo.refresh();
+    notifyListeners();
   }
 
   void _updateMySearch() {
     filters[FiltersGroup.my]?.setSearch(search[FiltersGroup.my]!.text);
-    search.refresh();
-    repo.refresh();
+    notifyListeners();
   }
 }
 
@@ -243,3 +223,4 @@ abstract class LibraryListArguments<T extends WithMeta,
     FiltersGroup? initialTab = FiltersGroup.playbook,
   }) : initialTab = initialTab ?? FiltersGroup.playbook;
 }
+

@@ -1,25 +1,36 @@
 import 'dart:async';
 
-import 'package:dungeon_paper/app/data/services/loading_service.dart';
-import 'package:dungeon_paper/app/data/services/repository_service.dart';
-import 'package:dungeon_paper/app/data/services/user_service.dart';
+import 'package:dungeon_paper/app/data/services/loading_provider.dart';
+import 'package:dungeon_paper/app/data/services/repository_provider.dart';
+import 'package:dungeon_paper/core/global_keys.dart';
 import 'package:dungeon_paper/core/platform_helper.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/foundation.dart';
-import 'package:get/get.dart';
+import 'package:flutter/widgets.dart';
 import 'package:google_sign_in/google_sign_in.dart';
+import 'package:provider/provider.dart';
 import 'package:sign_in_with_apple/sign_in_with_apple.dart';
 
 import '../../model_utils/user_utils.dart';
+import 'user_provider.dart';
 
-class AuthService extends GetxService
-    with UserServiceMixin, LoadingServiceMixin, RepositoryServiceMixin {
+class AuthProvider extends ChangeNotifier
+    with UserProviderMixin, RepositoryProviderMixin {
+  static AuthProvider of(BuildContext context, {bool listen = false}) =>
+      Provider.of<AuthProvider>(context, listen: listen);
+  static Widget consumer(
+          Widget Function(BuildContext, AuthProvider, Widget?) builder) =>
+      Consumer<AuthProvider>(builder: builder);
   StreamSubscription<User?>? _sub;
 
   FirebaseAuth get auth => FirebaseAuth.instance;
   final gSignIn = GoogleSignIn.standard();
-  final _fbUser = Rx<User?>(null);
-  User? get fbUser => _fbUser.value;
+  User? _fbUser;
+  User? get fbUser => _fbUser;
+
+  AuthProvider() {
+    debugPrint('[AUTH PROVIDER] init');
+    _registerAuthListener();
+  }
 
   Future<UserCredential> loginWithPassword({
     required String email,
@@ -111,9 +122,10 @@ class AuthService extends GetxService
     return credential;
   }
 
-  Future<void> logout() async {
+  Future<void> logout(BuildContext context) async {
     _clearAuthListener();
     // await StorageHandler.instance.local.clear();
+
     await repo.my.dispose();
     await auth.signOut();
     try {
@@ -127,12 +139,7 @@ class AuthService extends GetxService
       debugPrint('Error while logging out: $e');
     }
     user.applyDefaultTheme();
-    _registerAuthListener();
-  }
-
-  @override
-  void onInit() {
-    super.onInit();
+    notifyListeners();
     _registerAuthListener();
   }
 
@@ -146,16 +153,25 @@ class AuthService extends GetxService
       return;
     }
     debugPrint('fb user changed: $user');
-    _fbUser.value = user;
+    _fbUser = user;
 
+    final context = appGlobalKey.currentContext!;
+    final userProvider = Provider.of<UserProvider>(context, listen: false);
     if (user != null) {
-      loadingService.loadingCharacters = !loadingService.afterFirstLoad;
-      loadingService.afterFirstLoad = false;
-      userService.loadUserData(user);
+      final loadingProvider = Provider.of<LoadingProvider>(
+        context,
+        listen: false,
+      );
+      loadingProvider.loadingCharacters = !loadingProvider.afterFirstLoad;
+      loadingProvider.afterFirstLoad = false;
+
+      userProvider.loadUserData(user);
+      notifyListeners();
       return;
     }
 
-    userService.loadGuestData();
+    userProvider.loadGuestData();
+    notifyListeners();
   }
 
   Future<UserCredential> signUp(
@@ -169,6 +185,8 @@ class AuthService extends GetxService
   }
 }
 
-mixin AuthServiceMixin {
-  AuthService get authService => Get.find();
+mixin AuthProviderMixin {
+  AuthProvider get authProvider =>
+      AuthProvider.of(appGlobalKey.currentContext!);
 }
+

@@ -3,7 +3,6 @@
 // found in the LICENSE file.
 
 import 'package:dungeon_paper/app/themes/themes.dart';
-import 'package:dungeon_paper/app/widgets/atoms/custom_list_tile.dart';
 import 'package:dungeon_paper/core/platform_helper.dart';
 import 'package:dungeon_paper/core/utils/math_utils.dart';
 import 'package:flutter/material.dart';
@@ -45,7 +44,7 @@ class CustomExpansionTile extends StatefulWidget {
   /// the tile to reveal or hide the [children]. The [initiallyExpanded] property must
   /// be non-null.
   CustomExpansionTile({
-    Key? key,
+    super.key,
     this.expandable = true,
     this.title,
     this.titleBuilder,
@@ -83,11 +82,10 @@ class CustomExpansionTile extends StatefulWidget {
         ),
         assert(title != null || titleBuilder != null),
         itemBuilder = ((BuildContext context, int index) => children[index]),
-        itemCount = children.length,
-        super(key: key);
+        itemCount = children.length;
 
   const CustomExpansionTile.builder({
-    Key? key,
+    super.key,
     this.expandable = true,
     this.title,
     this.titleBuilder,
@@ -124,8 +122,7 @@ class CustomExpansionTile extends StatefulWidget {
           'CrossAxisAlignment.baseline is not supported since the expanded children '
           'are aligned in a column, not a row. Try to use another constant.',
         ),
-        assert(title != null || titleBuilder != null),
-        super(key: key);
+        assert(title != null || titleBuilder != null);
 
   /// CUSTOM - is expansion even enabled?
   final bool expandable;

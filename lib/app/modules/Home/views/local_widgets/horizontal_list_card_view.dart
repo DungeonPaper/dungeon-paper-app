@@ -3,18 +3,17 @@ import 'package:dungeon_paper/app/modules/Home/views/expanded_card_dialog_view.d
 import 'package:dungeon_paper/core/utils/builder_utils.dart';
 import 'package:dungeon_paper/core/utils/list_utils.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 
 class HorizontalCardListView<T extends WithMeta> extends StatelessWidget {
   HorizontalCardListView({
-    Key? key,
+    super.key,
     required this.cardSize,
     required this.items,
     required this.cardBuilder,
     required this.expandedCardBuilder,
     this.leading = const [],
     this.trailing = const [],
-  }) : super(key: key);
+  });
 
   final Size cardSize;
   final Widget Function(
@@ -27,7 +26,7 @@ class HorizontalCardListView<T extends WithMeta> extends StatelessWidget {
     // void Function(Iterable<T>) onUpdate
   ) expandedCardBuilder;
   final Iterable<T> items;
-  final itemsObs = <T>[].obs;
+  final itemsObs = ValueNotifier<List<T>>([]);
   final List<Widget> leading;
   final List<Widget> trailing;
 
@@ -36,7 +35,8 @@ class HorizontalCardListView<T extends WithMeta> extends StatelessWidget {
     if (items.isEmpty) {
       return const SizedBox.shrink();
     }
-    final displayedItems = enumerate(itemsObs.isEmpty ? items : itemsObs);
+    final displayedItems =
+        enumerate(itemsObs.value.isEmpty ? items : itemsObs.value);
 
     final builder = ItemBuilder.builder(
       leadingCount: leading.length,
@@ -87,8 +87,9 @@ class HorizontalCardListView<T extends WithMeta> extends StatelessWidget {
           context,
           item.value,
           item.index,
-          () => Get.dialog(
-            ExpandedCardDialogView<T>(
+          () => showDialog(
+            context: context,
+            builder: (_) => ExpandedCardDialogView<T>(
               // heroTag: getKeyFor(item.value),
               heroTag: null,
               builder: (context) =>

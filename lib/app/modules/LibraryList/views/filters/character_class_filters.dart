@@ -1,5 +1,4 @@
 import 'package:dungeon_paper/app/data/models/character_class.dart';
-import 'package:dungeon_paper/app/data/services/repository_service.dart';
 import 'package:dungeon_paper/app/modules/LibraryList/controllers/library_list_controller.dart';
 import 'package:dungeon_paper/app/modules/LibraryList/views/entity_filters.dart';
 import 'package:dungeon_paper/core/utils/math_utils.dart';
@@ -7,11 +6,10 @@ import 'package:dungeon_paper/core/utils/string_utils.dart';
 import 'package:dungeon_paper/i18n.dart';
 import 'package:flutter/material.dart';
 
-import 'package:get/get.dart';
 import 'package:string_similarity/string_similarity.dart';
 
 class CharacterClassFiltersView extends StatelessWidget {
-  CharacterClassFiltersView({
+  const CharacterClassFiltersView({
     super.key,
     required this.filters,
     required this.group,
@@ -21,7 +19,6 @@ class CharacterClassFiltersView extends StatelessWidget {
 
   final CharacterClassFilters filters;
   final FiltersGroup group;
-  final repo = Get.find<RepositoryService>();
   final void Function(CharacterClassFilters) onChange;
   final TextEditingController searchController;
 

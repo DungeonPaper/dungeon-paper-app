@@ -3,12 +3,12 @@ import 'package:flutter/material.dart';
 
 class LabeledIconButton extends StatelessWidget {
   const LabeledIconButton({
-    Key? key,
+    super.key,
     required this.icon,
     required this.label,
     required this.onPressed,
     required this.shadowOffset,
-  }) : super(key: key);
+  });
 
   final Widget icon;
   final void Function() onPressed;

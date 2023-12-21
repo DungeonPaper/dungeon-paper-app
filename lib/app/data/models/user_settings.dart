@@ -1,12 +1,13 @@
 import 'dart:convert';
 
-import 'package:dungeon_paper/app/data/services/character_service.dart';
-import 'package:dungeon_paper/app/themes/themes.dart';
+import 'package:dungeon_paper/core/utils/list_utils.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 import 'package:wakelock/wakelock.dart';
 
-class UserSettings with CharacterServiceMixin {
+import '../../themes/themes.dart';
+import '../services/character_provider.dart';
+
+class UserSettings with CharacterProviderMixin {
   final bool keepScreenAwake;
   final int defaultLightTheme;
   final int defaultDarkTheme;
@@ -80,7 +81,7 @@ class UserSettings with CharacterServiceMixin {
     Wakelock.toggle(enable: keepScreenAwake);
 
     if (maybeChar != null) {
-      charService.switchToCharacterTheme(char);
+      charProvider.switchToCharacterTheme(char);
     } else {}
   }
 }

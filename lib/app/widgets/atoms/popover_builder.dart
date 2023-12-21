@@ -1,14 +1,12 @@
 import 'package:flutter/material.dart';
 
-import 'package:get/get.dart';
-
-class PopoverBuilder extends GetView {
+class PopoverBuilder extends StatelessWidget {
   const PopoverBuilder({
-    Key? key,
+    super.key,
     required this.builder,
     required this.heroTag,
     this.padding = const EdgeInsets.all(32),
-  }) : super(key: key);
+  });
 
   final Widget Function() builder;
   final String heroTag;
@@ -18,7 +16,7 @@ class PopoverBuilder extends GetView {
   Widget build(BuildContext context) {
     return SafeArea(
       child: GestureDetector(
-        onTap: () => Get.back(),
+        onTap: () => Navigator.of(context).pop(),
         behavior: HitTestBehavior.opaque,
         child: Container(
           color: Colors.black.withOpacity(0.75),

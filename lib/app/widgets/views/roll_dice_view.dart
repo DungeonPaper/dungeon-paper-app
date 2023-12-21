@@ -1,7 +1,7 @@
 import 'dart:async';
 import 'dart:ui';
 
-import 'package:dungeon_paper/app/data/services/character_service.dart';
+import 'package:dungeon_paper/app/data/services/character_provider.dart';
 import 'package:dungeon_paper/app/model_utils/dice_utils.dart';
 import 'package:dungeon_paper/app/themes/colors.dart';
 import 'package:dungeon_paper/app/widgets/atoms/advanced_floating_action_button.dart';
@@ -12,7 +12,6 @@ import 'package:dungeon_paper/core/utils/math_utils.dart';
 import 'package:dungeon_paper/i18n.dart';
 import 'package:dungeon_world_data/dungeon_world_data.dart' as dw;
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 
 class RollDiceView extends StatefulWidget {
   final List<dw.Dice> dice;
@@ -30,7 +29,7 @@ class RollDiceView extends StatefulWidget {
 }
 
 class _RollDiceViewState extends State<RollDiceView>
-    with TickerProviderStateMixin {
+    with TickerProviderStateMixin, CharacterProviderMixin {
   final diceSize = 56.0;
   final diceSpacing = 24.0;
   late AnimationStatus rollStatus;
@@ -40,7 +39,6 @@ class _RollDiceViewState extends State<RollDiceView>
   late ScrollController scrollController;
   var results = <dw.DiceRoll>[];
 
-  CharacterService get charService => Get.find();
   int get totalResult => results.fold(
       0, (previousValue, element) => previousValue + element.total);
   List<dw.Dice> get flat => dw.Dice.flatten(dice.value);
@@ -88,7 +86,7 @@ class _RollDiceViewState extends State<RollDiceView>
                     padding: const EdgeInsets.all(16).copyWith(top: 0),
                     child: DiceListInput(
                       controller: withoutModDice,
-                      abilityScores: charService.current.abilityScores,
+                      abilityScores: charProvider.current.abilityScores,
                       guessFrom: const [],
                       labelColor: Colors.white,
                     ),
@@ -281,7 +279,7 @@ class _RollDiceViewState extends State<RollDiceView>
         .map(
           (d) => d.needsModifier
               ? d.copyWithModifierValue(
-                  charService.current.abilityScores
+                  charProvider.current.abilityScores
                       .getStat(d.modifierStat!)
                       .modifier,
                 )

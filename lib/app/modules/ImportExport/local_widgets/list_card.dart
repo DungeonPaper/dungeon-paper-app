@@ -4,7 +4,7 @@ import 'package:dungeon_paper/app/widgets/atoms/custom_expansion_panel.dart';
 import 'package:dungeon_paper/app/widgets/atoms/menu_button.dart';
 import 'package:dungeon_paper/i18n.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
+import 'package:provider/provider.dart';
 
 import '../../../../core/dw_icons.dart';
 import '../../../data/models/character.dart';
@@ -17,90 +17,94 @@ import '../../../widgets/chips/primary_chip.dart';
 enum ListCardType { import, export }
 
 class ListCard<T extends WithMeta, C extends ImportExportSelectionData>
-    extends GetView<C> {
+    extends StatelessWidget {
   const ListCard({
     super.key,
     required this.type,
   });
 
   final ListCardType type;
-  List<T> get list => controller.listByType<T>();
+  List<T> list(BuildContext context) =>
+      Provider.of<C>(context, listen: false).listByType<T>();
 
   @override
   Widget build(BuildContext context) {
     final textTheme = Theme.of(context).textTheme;
 
-    return Obx(
-      () => Card(
-        margin: const EdgeInsets.only(top: 16),
-        child: CustomExpansionPanel(
-          initiallyExpanded: true,
-          title: Row(
-            children: [
-              Icon(
-                Meta.genericIconFor(T),
-                color: textTheme.titleLarge!.color,
-              ),
-              const SizedBox(width: 8),
-              Expanded(
-                child: Text(
-                  type == ListCardType.import
-                      ? tr.entityPlural(tn(T))
-                      : tr.generic.myEntity(tr.entityPlural(tn(T))),
-                  style: textTheme.titleLarge,
+    return Consumer<C>(
+      builder: (context, controller, _) {
+        final list = this.list(context);
+        return Card(
+          margin: const EdgeInsets.only(top: 16),
+          child: CustomExpansionPanel(
+            initiallyExpanded: true,
+            title: Row(
+              children: [
+                Icon(
+                  Meta.genericIconFor(T),
+                  color: textTheme.titleLarge!.color,
                 ),
-              ),
-            ],
-          ),
-          trailing: [
-            MenuButton<bool>(
-              items: [
-                MenuEntry<bool>(
-                  value: true,
-                  icon: const Icon(Icons.select_all),
-                  label: Text(tr.generic.selectAll),
-                  onSelect: () => controller.toggleAll<T>(true),
-                ),
-                MenuEntry<bool>(
-                  value: false,
-                  icon: const Icon(Icons.clear),
-                  label: Text(tr.generic.selectNone),
-                  onSelect: () => controller.toggleAll<T>(false),
+                const SizedBox(width: 8),
+                Expanded(
+                  child: Text(
+                    type == ListCardType.import
+                        ? tr.entityPlural(tn(T))
+                        : tr.generic.myEntity(tr.entityPlural(tn(T))),
+                    style: textTheme.titleLarge,
+                  ),
                 ),
               ],
             ),
-          ],
-          children: [
-            for (final item in list)
-              Builder(builder: (context) {
-                final tags = tagsByType(item);
-                return ListTile(
-                  onTap: () => controller.toggle<T>(
-                      item, !controller.isSelected<T>(item)),
-                  title: Text(item.displayName),
-                  subtitle: tags.isNotEmpty
-                      ? Wrap(
-                          spacing: 8,
-                          children: tags,
-                        )
-                      : null,
-                  leading: Checkbox(
-                    value: controller.isSelected<T>(item),
-                    onChanged: (state) => controller.toggle<T>(item, state!),
+            trailing: [
+              MenuButton<bool>(
+                items: [
+                  MenuEntry<bool>(
+                    value: true,
+                    icon: const Icon(Icons.select_all),
+                    label: Text(tr.generic.selectAll),
+                    onSelect: () => controller.toggleAll<T>(true),
                   ),
-                );
-              }),
-            if (list.isEmpty)
-              Padding(
-                padding: const EdgeInsets.all(8),
-                child: Text(
-                  tr.generic.noEntity(tr.entityPlural(tn(T))),
-                  textAlign: TextAlign.center,
-                ),
+                  MenuEntry<bool>(
+                    value: false,
+                    icon: const Icon(Icons.clear),
+                    label: Text(tr.generic.selectNone),
+                    onSelect: () => controller.toggleAll<T>(false),
+                  ),
+                ],
               ),
-          ],
-        ),
-      ),
+            ],
+            children: [
+              for (final item in list)
+                Builder(builder: (context) {
+                  final tags = tagsByType(item);
+                  return ListTile(
+                    onTap: () => controller.toggle<T>(
+                        item, !controller.isSelected<T>(item)),
+                    title: Text(item.displayName),
+                    subtitle: tags.isNotEmpty
+                        ? Wrap(
+                            spacing: 8,
+                            children: tags,
+                          )
+                        : null,
+                    leading: Checkbox(
+                      value: controller.isSelected<T>(item),
+                      onChanged: (state) => controller.toggle<T>(item, state!),
+                    ),
+                  );
+                }),
+              if (list.isEmpty)
+                Padding(
+                  padding: const EdgeInsets.all(8),
+                  child: Text(
+                    tr.generic.noEntity(tr.entityPlural(tn(T))),
+                    textAlign: TextAlign.center,
+                  ),
+                ),
+            ],
+          ),
+        );
+      },
     );
   }
 
@@ -167,4 +171,3 @@ class ListCard<T extends WithMeta, C extends ImportExportSelectionData>
     }
   }
 }
-

@@ -1,11 +1,7 @@
 import 'package:flutter/material.dart';
 
-import 'package:get/get.dart';
-
-import '../controllers/campaign_controller.dart';
-
-class CampaignView extends GetView<CampaignController> {
-  const CampaignView({Key? key}) : super(key: key);
+class CampaignView extends StatelessWidget {
+  const CampaignView({super.key});
   @override
   Widget build(BuildContext context) {
     return Scaffold(

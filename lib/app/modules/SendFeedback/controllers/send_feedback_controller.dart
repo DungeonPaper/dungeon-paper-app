@@ -1,47 +1,46 @@
-import 'package:dungeon_paper/app/data/services/user_service.dart';
 import 'package:dungeon_paper/core/http/api.dart';
 import 'package:dungeon_paper/i18n.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 
-class SendFeedbackController extends GetxController with UserServiceMixin {
-  final email = TextEditingController().obs;
-  final title = TextEditingController().obs;
-  final body = TextEditingController().obs;
-  final sending = false.obs;
+import '../../../data/services/user_provider.dart';
+
+class SendFeedbackController extends ChangeNotifier with UserProviderMixin {
+  final email = TextEditingController();
+  final title = TextEditingController();
+  final body = TextEditingController();
+  var sending = false;
 
   final GlobalKey<FormState> formKey = GlobalKey();
 
-  Future<void> send() async {
-    sending.value = true;
+  Future<void> send(BuildContext context) async {
+    sending = true;
+    final navigator = Navigator.of(context);
+    final messenger = ScaffoldMessenger.of(context);
+    final theme = Theme.of(context);
     await api.requests.sendFeedback(
-      email: user.isLoggedIn ? user.email : email.value.text,
-      subject: title.value.text,
-      body: body.value.text,
+      email: user.isLoggedIn ? user.email : email.text,
+      subject: title.text,
+      body: body.text,
       username: user.isLoggedIn ? user.username : null,
     );
-    Get.back();
-    Get.rawSnackbar(
-      title: tr.feedback.success.title,
-      message: tr.feedback.success.message,
+    navigator.pop();
+    messenger.showSnackBar(
+      SnackBar(
+        content: Column(
+          children: [
+            Text(tr.feedback.success.title, style: theme.textTheme.bodyLarge),
+            Text(tr.feedback.success.message),
+          ],
+        ),
+      ),
     );
   }
 
   @override
-  void onInit() {
-    super.onInit();
+  void dispose() {
+    super.dispose();
     for (var element in [email, title, body]) {
-      element.value.addListener(() {
-        element.refresh();
-      });
+      element.dispose();
     }
-  }
-
-  @override
-  void onClose() {
-    for (var element in [email, title, body]) {
-      element.value.dispose();
-    }
-    super.onClose();
   }
 }

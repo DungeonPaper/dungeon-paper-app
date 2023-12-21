@@ -5,13 +5,13 @@ import 'dynamic_action_card_mini.dart';
 
 class RaceCardMini extends StatelessWidget {
   const RaceCardMini({
-    Key? key,
+    super.key,
     required this.race,
     this.onSave,
     this.showStar = true,
     this.showIcon = true,
     this.onTap,
-  }) : super(key: key);
+  });
 
   final Race race;
   final bool showStar;

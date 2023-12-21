@@ -1,6 +1,6 @@
 import 'package:dungeon_paper/app/data/models/character_class.dart';
 import 'package:dungeon_paper/app/data/models/move.dart';
-import 'package:dungeon_paper/app/data/services/repository_service.dart';
+import 'package:dungeon_paper/app/data/services/repository_provider.dart';
 import 'package:dungeon_paper/app/modules/LibraryList/controllers/library_list_controller.dart';
 import 'package:dungeon_paper/app/modules/LibraryList/views/entity_filters.dart';
 import 'package:dungeon_paper/app/widgets/atoms/select_box.dart';
@@ -8,11 +8,10 @@ import 'package:dungeon_paper/core/utils/math_utils.dart';
 import 'package:dungeon_paper/core/utils/string_utils.dart';
 import 'package:dungeon_paper/i18n.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 import 'package:string_similarity/string_similarity.dart';
 
 class MoveFiltersView extends StatelessWidget {
-  MoveFiltersView({
+  const MoveFiltersView({
     super.key,
     required this.filters,
     required this.group,
@@ -22,67 +21,68 @@ class MoveFiltersView extends StatelessWidget {
 
   final MoveFilters filters;
   final FiltersGroup group;
-  final repo = Get.find<RepositoryService>();
   final void Function(MoveFilters) onChange;
   final TextEditingController searchController;
 
   @override
   Widget build(BuildContext context) {
-    return EntityFiltersView<Move, MoveFilters>(
-      filters: filters,
-      emptyFilters: MoveFilters(classKey: null),
-      onChange: onChange,
-      searchController: searchController,
-      typeName: tn(Move),
-      filterWidgetsBuilder: (context, f) => [
-        SelectBox<MoveCategory?>(
-          isExpanded: true,
-          label: Text(tr.entityPlural('MoveCategory')),
-          value: f.category,
-          items: [
-            DropdownMenuItem<MoveCategory?>(
-              value: null,
-              child:
-                  Text(tr.generic.allEntities(tr.entityPlural('MoveCategory'))),
-            ),
-            ...MoveCategory.values.map(
-              (cat) => DropdownMenuItem<MoveCategory?>(
-                value: cat,
-                child: Text(tr.moves.category.longName(cat.name)),
+    return RepositoryProvider.consumer(
+      (context, repo, _) => EntityFiltersView<Move, MoveFilters>(
+        filters: filters,
+        emptyFilters: MoveFilters(classKey: null),
+        onChange: onChange,
+        searchController: searchController,
+        typeName: tn(Move),
+        filterWidgetsBuilder: (context, f) => [
+          SelectBox<MoveCategory?>(
+            isExpanded: true,
+            label: Text(tr.entityPlural('MoveCategory')),
+            value: f.category,
+            items: [
+              DropdownMenuItem<MoveCategory?>(
+                value: null,
+                child: Text(
+                    tr.generic.allEntities(tr.entityPlural('MoveCategory'))),
               ),
-            ),
-          ],
-          onChanged: (cat) {
-            onChange(f..category = cat);
-            f.controller.add(f);
-          },
-        ),
-        SelectBox<String>(
-          label: Text(tr.entityPlural(tn(CharacterClass))),
-          isExpanded: true,
-          value: f.classKey,
-          items: [
-            DropdownMenuItem<String>(
-              value: null,
-              child: Text(
-                  tr.generic.allEntities(tr.entityPlural(tn(CharacterClass)))),
-            ),
-            ...<CharacterClass>{
-              ...repo.builtIn.classes.values,
-              ...repo.my.classes.values
-            }.map(
-              (cls) => DropdownMenuItem<String>(
-                value: cls.key,
-                child: Text(cls.name),
+              ...MoveCategory.values.map(
+                (cat) => DropdownMenuItem<MoveCategory?>(
+                  value: cat,
+                  child: Text(tr.moves.category.longName(cat.name)),
+                ),
               ),
-            ),
-          ],
-          onChanged: (key) {
-            onChange(f..classKey = key);
-            f.controller.add(f);
-          },
-        ),
-      ],
+            ],
+            onChanged: (cat) {
+              onChange(f..category = cat);
+              f.controller.add(f);
+            },
+          ),
+          SelectBox<String>(
+            label: Text(tr.entityPlural(tn(CharacterClass))),
+            isExpanded: true,
+            value: f.classKey,
+            items: [
+              DropdownMenuItem<String>(
+                value: null,
+                child: Text(tr.generic
+                    .allEntities(tr.entityPlural(tn(CharacterClass)))),
+              ),
+              ...<CharacterClass>{
+                ...repo.builtIn.classes.values,
+                ...repo.my.classes.values
+              }.map(
+                (cls) => DropdownMenuItem<String>(
+                  value: cls.key,
+                  child: Text(cls.name),
+                ),
+              ),
+            ],
+            onChanged: (key) {
+              onChange(f..classKey = key);
+              f.controller.add(f);
+            },
+          ),
+        ],
+      ),
     );
   }
 }

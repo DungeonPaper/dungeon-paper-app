@@ -1,6 +1,6 @@
+import 'package:dungeon_paper/core/global_keys.dart';
 import 'package:dynamic_themes/dynamic_themes.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 import 'theme_utils.dart';
 export 'theme_utils.dart';
 
@@ -175,7 +175,7 @@ class AppThemes {
   static ThemeData getTheme(int theme) => themeCollection[theme];
   static String getThemeName(int theme) => _themeNames[theme]!;
   static void setTheme(int theme) {
-    final dynamicTheme = DynamicTheme.of(Get.context!)!;
+    final dynamicTheme = DynamicTheme.of(appGlobalKey.currentContext!)!;
     dynamicTheme.setTheme(theme);
   }
 

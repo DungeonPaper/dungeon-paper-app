@@ -1,6 +1,7 @@
-import 'package:flutter/widgets.dart';
-
-import 'package:get/get.dart';
+import 'package:dungeon_paper/app/routes/custom_transitions.dart';
+import 'package:dungeon_paper/core/route_arguments.dart';
+import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 import '../data/models/character_class.dart';
 import '../data/models/item.dart';
@@ -9,59 +10,59 @@ import '../data/models/move.dart';
 import '../data/models/note.dart';
 import '../data/models/race.dart';
 import '../data/models/spell.dart';
-import '../data/services/character_service.dart';
-import '../modules/AbilityScoreForm/bindings/ability_score_form_binding.dart';
+import '../modules/AbilityScoreForm/controllers/ability_score_form_controller.dart';
 import '../modules/AbilityScoreForm/views/ability_score_form_view.dart';
-import '../modules/AbilityScoresForm/bindings/ability_scores_form_binding.dart';
+import '../modules/AbilityScoresForm/controllers/ability_scores_form_controller.dart';
 import '../modules/AbilityScoresForm/views/ability_scores_form_view.dart';
-import '../modules/About/bindings/about_binding.dart';
+import '../modules/About/controllers/about_controller.dart';
 import '../modules/About/views/about_view.dart';
-import '../modules/Account/bindings/account_binding.dart';
+import '../modules/Account/controllers/account_controller.dart';
 import '../modules/Account/views/account_view.dart';
-import '../modules/BasicInfoForm/bindings/basic_info_form_binding.dart';
+import '../modules/BasicInfoForm/controllers/basic_info_form_controller.dart';
 import '../modules/BasicInfoForm/views/basic_info_form_view.dart';
-import '../modules/BioForm/bindings/bio_form_binding.dart';
+import '../modules/BioForm/controllers/bio_form_controller.dart';
 import '../modules/BioForm/views/bio_form_view.dart';
-import '../modules/BondsFlagsForm/bindings/bonds_flags_form_binding.dart';
+import '../modules/BondsFlagsForm/controllers/bonds_flags_form_controller.dart';
 import '../modules/BondsFlagsForm/views/bonds_flags_form_view.dart';
-import '../modules/Campaign/CampaignsList/bindings/campaigns_list_binding.dart';
+import '../modules/Campaign/CampaignsList/controllers/campaigns_list_controller.dart';
 import '../modules/Campaign/CampaignsList/views/campaigns_list_view.dart';
-import '../modules/Campaign/bindings/campaign_binding.dart';
-import '../modules/Campaign/views/campaign_view.dart';
-import '../modules/CharacterList/bindings/character_list_binding.dart';
 import '../modules/CharacterList/views/character_list_view.dart';
-import '../modules/ClassAlignments/bindings/class_alignments_binding.dart';
+import '../modules/ClassAlignments/controllers/class_alignments_controller.dart';
 import '../modules/ClassAlignments/views/class_alignments_view.dart';
-import '../modules/CreateCharacter/SelectMovesSpells/bindings/select_moves_spells_binding.dart';
+import '../modules/CreateCharacter/SelectMovesSpells/controllers/select_moves_spells_controller.dart';
 import '../modules/CreateCharacter/SelectMovesSpells/views/select_moves_spells_view.dart';
-import '../modules/CreateCharacter/bindings/create_character_binding.dart';
+import '../modules/CreateCharacter/controllers/create_character_controller.dart';
 import '../modules/CreateCharacter/views/create_character_view.dart';
-import '../modules/Home/bindings/home_binding.dart';
 import '../modules/Home/views/home_view.dart';
-import '../modules/ImportExport/bindings/import_export_binding.dart';
+import '../modules/ImportExport/controllers/export_controller.dart';
+import '../modules/ImportExport/controllers/import_controller.dart';
+import '../modules/ImportExport/controllers/import_export_controller.dart';
 import '../modules/ImportExport/views/import_export_view.dart';
-import '../modules/LibraryList/bindings/library_collection_binding.dart';
-import '../modules/LibraryList/bindings/library_form_binding.dart';
-import '../modules/LibraryList/bindings/library_list_binding.dart';
+import '../modules/LibraryList/controllers/library_list_controller.dart';
 import '../modules/LibraryList/views/character_classes_library_list_view.dart';
+import '../modules/LibraryList/views/filters/character_class_filters.dart';
+import '../modules/LibraryList/views/filters/item_filters.dart';
+import '../modules/LibraryList/views/filters/move_filters.dart';
+import '../modules/LibraryList/views/filters/race_filters.dart';
+import '../modules/LibraryList/views/filters/spell_filters.dart';
 import '../modules/LibraryList/views/items_library_list_view.dart';
 import '../modules/LibraryList/views/library_collection_view.dart';
 import '../modules/LibraryList/views/moves_library_list_view.dart';
 import '../modules/LibraryList/views/races_library_list_view.dart';
 import '../modules/LibraryList/views/spells_library_list_view.dart';
-import '../modules/Login/bindings/login_binding.dart';
+import '../modules/Login/controllers/login_controller.dart';
 import '../modules/Login/views/login_view.dart';
-import '../modules/Migration/bindings/migration_binding.dart';
+import '../modules/Migration/controllers/migration_controller.dart';
 import '../modules/Migration/views/migration_view.dart';
-import '../modules/SelectCharacterTheme/bindings/select_character_theme_binding.dart';
+import '../modules/SelectCharacterTheme/controllers/select_character_theme_controller.dart';
 import '../modules/SelectCharacterTheme/views/select_character_theme_view.dart';
-import '../modules/SendFeedback/bindings/send_feedback_binding.dart';
+import '../modules/SendFeedback/controllers/send_feedback_controller.dart';
 import '../modules/SendFeedback/views/send_feedback_view.dart';
-import '../modules/Settings/bindings/settings_binding.dart';
+import '../modules/Settings/controllers/settings_controller.dart';
 import '../modules/Settings/views/settings_view.dart';
-import '../modules/StartingGearForm/bindings/starting_gear_form_binding.dart';
+import '../modules/StartingGearForm/controllers/starting_gear_form_controller.dart';
 import '../modules/StartingGearForm/views/starting_gear_form_view.dart';
-import '../modules/UniversalSearch/bindings/universal_search_binding.dart';
+import '../modules/UniversalSearch/controllers/universal_search_controller.dart';
 import '../modules/UniversalSearch/views/universal_search_view.dart';
 import '../widgets/forms/character_class_form.dart';
 import '../widgets/forms/item_form.dart';
@@ -71,7 +72,7 @@ import '../widgets/forms/race_form.dart';
 import '../widgets/forms/spell_form.dart';
 import '../widgets/molecules/user_menu_popover.dart';
 import '../widgets/views/roll_dice_view.dart';
-import 'custom_transitions.dart';
+// import 'custom_transitions.dart';
 
 part 'app_routes.dart';
 
@@ -80,286 +81,237 @@ class AppPages {
 
   static final pageController = PageController();
 
-  static final CharacterService characterService = Get.find();
-
   static const initial = Routes.home;
 
-  static final routes = [
-    GetPage(
-      name: Routes.login,
-      page: () => const LoginView(),
-      binding: LoginBinding(),
-    ),
-    GetPage(
-      name: Routes.userMenu,
-      page: () => UserMenuPopover(),
-      preventDuplicates: false,
-      fullscreenDialog: true,
-      opaque: false,
-      customTransition: CustomTransitions.circularReveal(
-        alignment: Alignment.topRight,
-        offset: const Offset(-24, 64),
-      ),
-      transition: Transition.circularReveal,
-    ),
-    GetPage(
-      name: Routes.home,
-      page: () => const HomeView(),
-      binding: HomeBinding(),
-      preventDuplicates: false,
-    ),
-    GetPage(
-      name: Routes.characterList,
-      page: () => const CharacterListPageView(),
-      binding: CharacterListPageBinding(),
-      preventDuplicates: false,
-    ),
-    GetPage(
-      name: Routes.settings,
-      page: () => const SettingsView(),
-      binding: SettingsBinding(),
-      preventDuplicates: false,
-    ),
-    GetPage(
-      name: Routes.importExport,
-      page: () => const ImportExportView(),
-      binding: ImportExportBinding(),
-      preventDuplicates: false,
-    ),
-    GetPage(
-      name: Routes.rollDice,
-      page: () => RollDiceView(dice: Get.arguments),
-      opaque: false,
-      fullscreenDialog: true,
-      customTransition: CustomTransitions.circularReveal(
-        alignment: Alignment.bottomCenter,
-      ),
-      transition: Transition.circularReveal,
-    ),
-
-    //
-
-    GetPage(
-      name: Routes.library,
-      page: () => const LibraryCollectionView(),
-      binding: LibraryCollectionBinding(),
-      preventDuplicates: false,
-    ),
-    GetPage(
-      name: Routes.moves,
-      page: () => const MovesLibraryListView(),
-      binding: LibraryListBinding(),
-      preventDuplicates: false,
-    ),
-    GetPage(
-      name: Routes.editMove,
-      page: () => const MoveForm(),
-      binding: LibraryFormBinding<Move>(),
-      preventDuplicates: false,
-    ),
-    GetPage(
-      name: Routes.spells,
-      page: () => const SpellsLibraryListView(),
-      binding: LibraryListBinding(),
-      preventDuplicates: false,
-    ),
-    GetPage(
-      name: Routes.editSpell,
-      page: () => const SpellForm(),
-      binding: LibraryFormBinding<Spell>(),
-      preventDuplicates: false,
-    ),
-    GetPage(
-      name: Routes.items,
-      page: () => const ItemsLibraryListView(),
-      binding: LibraryListBinding(),
-      preventDuplicates: false,
-    ),
-    GetPage(
-      name: Routes.editItem,
-      page: () => const ItemForm(),
-      binding: LibraryFormBinding<Item>(),
-      preventDuplicates: false,
-    ),
-    GetPage(
-      name: Routes.classes,
-      page: () => const CharacterClassesLibraryListView(),
-      binding: LibraryListBinding(),
-      preventDuplicates: false,
-    ),
-    GetPage(
-      name: Routes.editClass,
-      page: () => const CharacterClassForm(),
-      binding: LibraryFormBinding<CharacterClass>(),
-      preventDuplicates: false,
-    ),
-    GetPage(
-      name: Routes.races,
-      page: () => const RacesLibraryListView(),
-      binding: LibraryListBinding(),
-      preventDuplicates: false,
-    ),
-    GetPage(
-      name: Routes.editRace,
-      page: () => const RaceForm(),
-      binding: LibraryFormBinding<Race>(),
-      preventDuplicates: false,
-    ),
-    GetPage(
-      name: Routes.editNote,
-      page: () => const NoteForm(),
-      binding: LibraryFormBinding<Note>(),
-      preventDuplicates: false,
-    ),
-
-    //
-
-    GetPage(
-      name: Routes.bondsFlags,
-      page: () => const BondsFlagsFormView(),
-      binding: BondsFlagsFormBinding(),
-      preventDuplicates: false,
-    ),
-    GetPage(
-      name: Routes.bio,
-      page: () => const BioFormView(),
-      binding: BioFormBinding(),
-    ),
-    GetPage(
-      name: Routes.basicInfo,
-      page: () => const BasicInfoFormView(),
-      binding: BasicInfoFormBinding(),
-      preventDuplicates: false,
-    ),
-    GetPage(
-      name: Routes.abilityScores,
-      page: () => const AbilityScoresFormView(),
-      binding: AbilityScoresFormBinding(),
-      preventDuplicates: false,
-    ),
-    GetPage(
-      name: Routes.abilityScoreForm,
-      page: () => const AbilityScoreFormView(),
-      binding: AbilityScoreFormBinding(),
-      preventDuplicates: false,
-    ),
-    GetPage(
-      name: Routes.bondsFlags,
-      page: () => const BondsFlagsFormView(),
-      binding: AbilityScoresFormBinding(),
-      preventDuplicates: false,
-    ),
-
-    //
-
-    GetPage(
-      name: Routes.createCharacter,
-      page: () => const CreateCharacterView(),
-      binding: CreateCharacterBinding(),
-      preventDuplicates: false,
-      opaque: false,
-      fullscreenDialog: true,
-    ),
-    GetPage(
-      name: Routes.createCharacterSelectClass,
-      page: () => const CharacterClassesLibraryListView(),
-      binding: LibraryListBinding(),
-      preventDuplicates: false,
-    ),
-    GetPage(
-      name: Routes.createCharacterStartingGear,
-      page: () => const StartingGearFormView(),
-      binding: StartingGearFormBinding(),
-      preventDuplicates: false,
-    ),
-    GetPage(
-      name: Routes.createCharacterMovesSpells,
-      page: () => const SelectMovesSpellsView(),
-      binding: SelectMovesSpellsBinding(),
-      preventDuplicates: false,
-    ),
-
-    GetPage(
-      name: Routes.createCharacterBasicInfo,
-      page: () => const BasicInfoFormView(),
-      binding: BasicInfoFormBinding(),
-      preventDuplicates: false,
-    ),
-    GetPage(
-      name: Routes.createCharacterAbilityScores,
-      page: () => const AbilityScoresFormView(),
-      binding: AbilityScoresFormBinding(),
-      preventDuplicates: false,
-    ),
-    GetPage(
-      name: Routes.classAlignments,
-      page: () => const ClassAlignmentsView(),
-      binding: ClassAlignmentsBinding(),
-      preventDuplicates: false,
-    ),
-    GetPage(
-      name: Routes.universalSearch,
-      page: () => UniversalSearchView(),
-      binding: UniversalSearchBinding(),
-      opaque: false,
-      fullscreenDialog: true,
-      customTransition: CustomTransitions.circularReveal(
-        // alignment: Alignment.topRight,
-        // offset: const Offset(-76, 64),
-        alignment: Alignment.topLeft,
-        offset: const Offset(26, 64),
-      ),
-      // transitionDuration: const Duration(seconds: 1),
-      transition: Transition.circularReveal,
-      preventDuplicates: false,
-    ),
-    GetPage(
-      name: Routes.migration,
-      page: () => const MigrationView(),
-      binding: MigrationBinding(),
-      preventDuplicates: false,
-    ),
-    GetPage(
-      name: Routes.about,
-      page: () => const AboutView(),
-      binding: AboutBinding(),
-      preventDuplicates: false,
-    ),
-    GetPage(
-      name: Routes.selectCharacterTheme,
-      page: () => const SelectCharacterThemeView(),
-      binding: SelectCharacterThemeBinding(),
-      preventDuplicates: false,
-    ),
-    GetPage(
-      name: _Paths.abilityScoreForm,
-      page: () => const AbilityScoreFormView(),
-      binding: AbilityScoreFormBinding(),
-      preventDuplicates: false,
-    ),
-    GetPage(
-      name: _Paths.account,
-      page: () => const AccountView(),
-      binding: AccountBinding(),
-    ),
-    GetPage(
-      name: _Paths.sendFeedback,
-      page: () => const SendFeedbackView(),
-      binding: SendFeedbackBinding(),
-    ),
-    GetPage(
-      name: _Paths.campaigns,
-      page: () => const CampaignsListView(),
-      binding: CampaignsListBinding(),
-    ),
-  ];
-}
-
-class CustomTransitions {
-  static CustomTransition circularReveal({
-    Offset? offset,
-    Alignment? alignment,
-  }) {
-    return CustomCircularRevealTransition(offset: offset, alignment: alignment);
+  /// https://github.com/DungeonPaper/dungeon-paper-app/blob/86b660037e2e0aeb7b83930efb33785a0d829ebe/lib/app/routes/app_pages.dart#L99
+  static Route<dynamic> onGenerateRoute(RouteSettings settings) {
+    final route = settings.name;
+    final builder = routes[route];
+    debugPrint('[ROUTER] Building route $route');
+    if (builder == null) {
+      throw Exception('No route defined for $route');
+    }
+    if (transitionsMap.containsKey(route)) {
+      return transitionsMap[route]!(builder, settings);
+    }
+    return MaterialPageRoute(
+      builder: builder,
+      settings: settings,
+    );
   }
+
+  static final transitionsMap =
+      <String, Route Function(WidgetBuilder builder, RouteSettings settings)>{
+    Routes.rollDice: (builder, settings) => CircularRevealTransitionBuilder(
+          builder: builder,
+          settings: settings,
+          alignment: Alignment.bottomCenter,
+        ),
+    Routes.userMenu: (builder, settings) => CircularRevealTransitionBuilder(
+          builder: builder,
+          settings: settings,
+          alignment: Alignment.topRight,
+          offset: const Offset(-24, 64),
+        ),
+    Routes.universalSearch: (builder, settings) =>
+        CircularRevealTransitionBuilder(
+          builder: builder,
+          settings: settings,
+          alignment: Alignment.topLeft,
+          offset: const Offset(26, 64),
+        ),
+  };
+
+  static final routes = <String, WidgetBuilder>{
+    Routes.login: (context) => ChangeNotifierProvider(
+          create: (_) => LoginController(),
+          child: const LoginView(),
+        ),
+
+    Routes.userMenu: (context) => const UserMenuPopover(),
+
+    Routes.home: (context) => const HomeView(),
+
+    Routes.characterList: (context) => const CharacterListPageView(),
+
+    Routes.settings: (context) => ChangeNotifierProvider(
+          create: (_) => SettingsController(context),
+          child: const SettingsView(),
+        ),
+
+    Routes.importExport: (context) => MultiProvider(
+          providers: [
+            ChangeNotifierProvider(create: (_) => ImportExportController()),
+            ChangeNotifierProvider(create: (_) => ImportController()),
+            ChangeNotifierProvider(create: (_) => ExportController()),
+          ],
+          child: const ImportExportView(),
+        ),
+
+    Routes.rollDice: (context) => RollDiceView(dice: getArgs(context)),
+
+    //
+
+    Routes.library: (context) => const LibraryCollectionView(),
+
+    Routes.moves: (context) => ChangeNotifierProvider(
+          create: (_) => LibraryListController<Move, MoveFilters>(context),
+          child: const MovesLibraryListView(),
+        ),
+
+    Routes.editMove: (context) => ChangeNotifierProvider(
+          create: (_) => MoveFormController(context),
+          child: const MoveForm(),
+        ),
+
+    Routes.spells: (context) => ChangeNotifierProvider(
+          create: (_) => LibraryListController<Spell, SpellFilters>(context),
+          child: const SpellsLibraryListView(),
+        ),
+
+    Routes.editSpell: (context) => ChangeNotifierProvider(
+          create: (_) => SpellFormController(context),
+          child: const SpellForm(),
+        ),
+
+    Routes.items: (context) => ChangeNotifierProvider(
+          create: (_) => LibraryListController<Item, ItemFilters>(context),
+          child: const ItemsLibraryListView(),
+        ),
+
+    Routes.editItem: (context) => ChangeNotifierProvider(
+          create: (_) => ItemFormController(context),
+          child: const ItemForm(),
+        ),
+
+    Routes.classes: (context) => ChangeNotifierProvider(
+          create: (_) =>
+              LibraryListController<CharacterClass, CharacterClassFilters>(
+                  context),
+          child: const CharacterClassesLibraryListView(),
+        ),
+
+    Routes.editClass: (context) => ChangeNotifierProvider(
+          create: (_) => CharacterClassFormController(context),
+          child: const CharacterClassForm(),
+        ),
+
+    Routes.races: (context) => ChangeNotifierProvider(
+          create: (_) => LibraryListController<Race, RaceFilters>(context),
+          child: const RacesLibraryListView(),
+        ),
+
+    Routes.editRace: (context) => ChangeNotifierProvider(
+          create: (_) => RaceFormController(context),
+          child: const RaceForm(),
+        ),
+
+    Routes.editNote: (context) => ChangeNotifierProvider(
+          create: (_) => NoteFormController(context),
+          child: const NoteForm(),
+        ),
+
+    //
+
+    Routes.bondsFlags: (context) => ChangeNotifierProvider(
+          create: (_) => BondsFlagsFormController(context),
+          child: const BondsFlagsFormView(),
+        ),
+
+    Routes.bio: (context) => ChangeNotifierProvider(
+          create: (_) => BioFormController(context),
+          child: const BioFormView(),
+        ),
+
+    Routes.basicInfo: (context) => ChangeNotifierProvider(
+          create: (_) => BasicInfoFormController(context),
+          child: const BasicInfoFormView(),
+        ),
+
+    Routes.abilityScores: (context) => ChangeNotifierProvider(
+          create: (_) => AbilityScoresFormController(context),
+          child: const AbilityScoresFormView(),
+        ),
+
+    Routes.abilityScoreForm: (context) => ChangeNotifierProvider(
+          child: const AbilityScoreFormView(),
+          create: (_) => AbilityScoreFormController(context),
+        ),
+
+    //
+
+    Routes.createCharacter: (context) => ChangeNotifierProvider(
+          create: (_) => CreateCharacterController(),
+          child: const CreateCharacterView(),
+        ),
+
+    Routes.createCharacterSelectClass: (context) =>
+        const CharacterClassesLibraryListView(),
+
+    Routes.createCharacterStartingGear: (context) => ChangeNotifierProvider(
+          child: const StartingGearFormView(),
+          create: (_) => StartingGearFormController(context),
+        ),
+
+    Routes.createCharacterMovesSpells: (context) => ChangeNotifierProvider(
+          child: const SelectMovesSpellsView(),
+          create: (_) => SelectMovesSpellsController(context),
+        ),
+
+    Routes.createCharacterBasicInfo: (context) => ChangeNotifierProvider(
+          child: const BasicInfoFormView(),
+          create: (_) => BasicInfoFormController(context),
+        ),
+
+    Routes.createCharacterAbilityScores: (context) => ChangeNotifierProvider(
+          child: const AbilityScoresFormView(),
+          create: (_) => AbilityScoresFormController(context),
+        ),
+
+    Routes.classAlignments: (context) => ChangeNotifierProvider(
+          child: const ClassAlignmentsView(),
+          create: (_) => ClassAlignmentsController(context),
+        ),
+
+    Routes.universalSearch: (context) => ChangeNotifierProvider(
+          create: (_) => UniversalSearchController(),
+          child: UniversalSearchView(),
+        ),
+
+    Routes.migration: (context) => ChangeNotifierProvider(
+          child: const MigrationView(),
+          create: (_) => MigrationController(context),
+        ),
+
+    Routes.about: (context) => ChangeNotifierProvider(
+          child: const AboutView(),
+          create: (_) => AboutController(),
+        ),
+
+    Routes.selectCharacterTheme: (context) => ChangeNotifierProvider(
+          child: const SelectCharacterThemeView(),
+          create: (_) => SelectCharacterThemeController(),
+        ),
+
+    _Paths.abilityScoreForm: (context) => ChangeNotifierProvider(
+          child: const AbilityScoreFormView(),
+          create: (_) => AbilityScoreFormController(context),
+        ),
+
+    _Paths.account: (context) => ChangeNotifierProvider(
+          child: const AccountView(),
+          create: (_) => AccountController(),
+        ),
+
+    _Paths.sendFeedback: (context) => ChangeNotifierProvider(
+          child: const SendFeedbackView(),
+          create: (_) => SendFeedbackController(),
+        ),
+
+    _Paths.campaigns: (context) => ChangeNotifierProvider(
+          child: const CampaignsListView(),
+          create: (_) => CampaignsListController(),
+        ),
+  };
 }
+

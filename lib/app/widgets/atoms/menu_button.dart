@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 
 class MenuButton<V> extends StatelessWidget {
   const MenuButton({
-    Key? key,
+    super.key,
     required Iterable<PopupMenuEntry<V>> items,
     this.initialValue,
     this.onCanceled,
@@ -23,11 +23,10 @@ class MenuButton<V> extends StatelessWidget {
     this.position = PopupMenuPosition.over,
     this.onSelected,
   })  : _items = items,
-        builder = null,
-        super(key: key);
+        builder = null;
 
   const MenuButton.builder({
-    Key? key,
+    super.key,
     required this.builder,
     this.initialValue,
     this.onCanceled,
@@ -47,8 +46,7 @@ class MenuButton<V> extends StatelessWidget {
     this.position = PopupMenuPosition.over,
     this.onSelected,
   })  : _items = null,
-        assert(builder != null),
-        super(key: key);
+        assert(builder != null);
 
   final Iterable<PopupMenuEntry<V>>? _items;
   final Iterable<PopupMenuEntry<V>> Function()? builder;
@@ -178,11 +176,11 @@ class MenuButton<V> extends StatelessWidget {
       itemBuilder: (context) => items.map(
         (e) {
           if (e is MenuEntry) {
-            final MenuEntry _e = e as MenuEntry;
+            final MenuEntry entry = e as MenuEntry;
             return PopupMenuItem<V>(
-              child: PopupMenuItemListTile(icon: _e.icon, label: _e.label),
-              value: _e.value,
-              enabled: !_e.disabled,
+              value: entry.value,
+              enabled: !entry.disabled,
+              child: PopupMenuItemListTile(icon: entry.icon, label: entry.label),
             );
           } else {
             return e;
@@ -205,7 +203,6 @@ class MenuButton<V> extends StatelessWidget {
       tooltip: tooltip,
       elevation: elevation,
       padding: padding,
-      child: child,
       splashRadius: splashRadius,
       icon: icon,
       iconSize: iconSize,
@@ -216,6 +213,7 @@ class MenuButton<V> extends StatelessWidget {
       enableFeedback: enableFeedback,
       constraints: constraints,
       position: position,
+      child: child,
     );
   }
 }

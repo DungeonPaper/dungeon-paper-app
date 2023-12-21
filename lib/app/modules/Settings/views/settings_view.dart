@@ -1,15 +1,16 @@
-import 'package:dungeon_paper/app/data/services/character_service.dart';
+import 'package:dungeon_paper/app/data/services/character_provider.dart';
 import 'package:dungeon_paper/app/themes/themes.dart';
 import 'package:dungeon_paper/core/platform_helper.dart';
 import 'package:dungeon_paper/i18n.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
+import 'package:provider/provider.dart';
 
+import '../../../data/services/user_provider.dart';
 import '../controllers/settings_controller.dart';
 import 'theme_selector.dart';
 
-class SettingsView extends GetView<SettingsController>
-    with CharacterServiceMixin {
+class SettingsView extends StatelessWidget
+    with CharacterProviderMixin, UserProviderMixin {
   const SettingsView({super.key});
 
   @override
@@ -26,8 +27,8 @@ class SettingsView extends GetView<SettingsController>
             tr.settings.categories.general,
           ),
           if (PlatformHelper.isAndroid)
-            Obx(
-              () => SwitchListTile.adaptive(
+            Consumer<SettingsController>(
+              builder: (context, controller, _) => SwitchListTile.adaptive(
                 title: Text(tr.settings.keepAwake),
                 value: controller.settings.keepScreenAwake,
                 onChanged: (value) => controller.updateSettings(
@@ -35,8 +36,8 @@ class SettingsView extends GetView<SettingsController>
                 ),
               ),
             ),
-          Obx(
-            () => _sectionTitle(
+          Consumer<SettingsController>(
+            builder: (context, controller, _) => _sectionTitle(
               context,
               tr.settings.defaultTheme.light,
               onChangeSeeAll: (val) =>
@@ -45,8 +46,8 @@ class SettingsView extends GetView<SettingsController>
             ),
           ),
           _pad(
-            Obx(
-              () => ThemeSelector(
+            Consumer<SettingsController>(
+              builder: (context, controller, _) => ThemeSelector(
                 themes: controller.seeAll[Brightness.light]!
                     ? AppThemes.allThemes
                     : AppThemes.allLightThemes,
@@ -55,16 +56,17 @@ class SettingsView extends GetView<SettingsController>
                   await controller.updateSettings(
                     controller.settings.copyWith(defaultLightTheme: theme),
                   );
-                  if (controller.user.brightness == Brightness.light) {
-                    charService.switchToCharacterTheme(character);
+
+                  if (user.brightness == Brightness.light) {
+                    charProvider.switchToCharacterTheme(charProvider.current);
                   }
                 },
               ),
             ),
             horizontal: 8,
           ),
-          Obx(
-            () => _sectionTitle(
+          Consumer<SettingsController>(
+            builder: (context, controller, _) => _sectionTitle(
               context,
               tr.settings.defaultTheme.dark,
               onChangeSeeAll: (val) => controller.seeAll[Brightness.dark] = val,
@@ -72,8 +74,8 @@ class SettingsView extends GetView<SettingsController>
             ),
           ),
           _pad(
-            Obx(
-              () => ThemeSelector(
+            Consumer<SettingsController>(
+              builder: (context, controller, _) => ThemeSelector(
                 themes: controller.seeAll[Brightness.dark]!
                     ? AppThemes.allThemes
                     : AppThemes.allDarkThemes,
@@ -82,11 +84,12 @@ class SettingsView extends GetView<SettingsController>
                   await controller.updateSettings(
                     controller.settings.copyWith(defaultDarkTheme: theme),
                   );
-                  if (controller.user.brightness == Brightness.dark) {
+                  if (user.brightness == Brightness.dark) {
                     if (maybeChar != null) {
-                      charService.switchToCharacterTheme(character);
+                      final character = charProvider.current;
+                      charProvider.switchToCharacterTheme(character);
                     } else {
-                      charService.switchToTheme(theme);
+                      charProvider.switchToTheme(theme);
                     }
                   }
                 },
@@ -126,4 +129,3 @@ class SettingsView extends GetView<SettingsController>
     );
   }
 }
-

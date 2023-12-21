@@ -8,40 +8,46 @@ import 'package:dungeon_paper/app/modules/ImportExport/controllers/import_contro
 import 'package:dungeon_paper/core/utils/builder_utils.dart';
 import 'package:dungeon_paper/i18n.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
+import 'package:provider/provider.dart';
 
 import '../local_widgets/list_card.dart';
 
-class ImportView extends GetView<ImportController> {
+class ImportView extends StatelessWidget {
   const ImportView({super.key});
 
   @override
   Widget build(BuildContext context) {
     return ListTileTheme.merge(
       contentPadding: EdgeInsets.zero,
-      child: Obx(
-        () {
+      child: Consumer<ImportController>(
+        builder: (context, controller, _) {
           final builder = controller.hasData
               ? ItemBuilder.lazyChildren(
                   children: [
                     () => ElevatedButton.icon(
-                          onPressed: () => controller.toImport.value = null,
+                          onPressed: () => controller.toImport = null,
                           icon: const Icon(Icons.clear),
                           label: Text(tr.backup.importing.file.clearFile),
                         ),
-                    () => const ListCard<Character, ImportController>(type: ListCardType.import),
-                    () => const ListCard<CharacterClass, ImportController>(type: ListCardType.import),
-                    () => const ListCard<Move, ImportController>(type: ListCardType.import),
-                    () => const ListCard<Spell, ImportController>(type: ListCardType.import),
-                    () => const ListCard<Item, ImportController>(type: ListCardType.import),
-                    () => const ListCard<Race, ImportController>(type: ListCardType.import),
+                    () => const ListCard<Character, ImportController>(
+                        type: ListCardType.import),
+                    () => const ListCard<CharacterClass, ImportController>(
+                        type: ListCardType.import),
+                    () => const ListCard<Move, ImportController>(
+                        type: ListCardType.import),
+                    () => const ListCard<Spell, ImportController>(
+                        type: ListCardType.import),
+                    () => const ListCard<Item, ImportController>(
+                        type: ListCardType.import),
+                    () => const ListCard<Race, ImportController>(
+                        type: ListCardType.import),
                   ],
                 )
               : ItemBuilder.lazyChildren(
                   children: [
                     () => Text(tr.backup.importing.file.info),
                     () => ElevatedButton.icon(
-                          onPressed: controller.pickImportFile,
+                          onPressed: () => controller.pickImportFile(context),
                           icon: const Icon(Icons.file_open),
                           label: Text(tr.backup.importing.file.browse),
                         )

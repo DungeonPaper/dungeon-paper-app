@@ -28,7 +28,7 @@ class CustomExpansionPanel extends StatelessWidget {
   static const defaultPadding = EdgeInsets.symmetric(horizontal: 8);
 
   const CustomExpansionPanel({
-    Key? key,
+    super.key,
     this.expandable = true,
     this.expansionKey,
     this.title,
@@ -50,7 +50,7 @@ class CustomExpansionPanel extends StatelessWidget {
     this.textColor,
     this.collapsedTextColor,
     this.reorderablePadding = false,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -64,7 +64,6 @@ class CustomExpansionPanel extends StatelessWidget {
       icon: icon,
       minIconWidth: minIconWidth,
       subtitle: subtitle,
-      children: children,
       tilePadding: titlePadding ?? defaultPadding,
       childrenPadding: childrenPadding ?? defaultPadding,
       expandedCrossAxisAlignment: CrossAxisAlignment.stretch,
@@ -77,6 +76,7 @@ class CustomExpansionPanel extends StatelessWidget {
       textColor: textColor,
       collapsedTextColor: collapsedTextColor,
       reorderablePadding: reorderablePadding,
+      children: children,
     );
   }
 }

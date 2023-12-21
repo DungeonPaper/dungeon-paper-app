@@ -1,35 +1,41 @@
 import 'dart:async';
 
-import 'package:dungeon_paper/app/data/services/user_service.dart';
+import 'package:dungeon_paper/app/data/services/user_provider.dart';
 import 'package:dungeon_paper/app/themes/themes.dart';
+import 'package:dungeon_paper/core/global_keys.dart';
 import 'package:dungeon_paper/core/storage_handler/storage_handler.dart';
 import 'package:dungeon_paper/core/utils/date_utils.dart';
 import 'package:dungeon_paper/core/utils/enums.dart';
 import 'package:dynamic_themes/dynamic_themes.dart';
 import 'package:flutter/widgets.dart';
-import 'package:get/get.dart';
+import 'package:provider/provider.dart';
 
 import '../models/character.dart';
-import 'loading_service.dart';
+import 'loading_provider.dart';
 
-class CharacterService extends GetxService
-    with LoadingServiceMixin, UserServiceMixin {
-  static CharacterService find() => Get.find();
+class CharacterProvider extends ChangeNotifier
+    with LoadingProviderMixin, UserProviderMixin {
+  static CharacterProvider of(BuildContext context, {bool listen = false}) =>
+      Provider.of(context, listen: listen);
 
-  final all = <String, Character>{}.obs;
-  final _currentKey = Rx<String?>(null);
+  static Widget consumer(
+    Widget Function(BuildContext, CharacterProvider, Widget?) builder,
+  ) =>
+      Consumer<CharacterProvider>(builder: builder);
+
+  final all = <String, Character>{};
+  String? _currentKey;
   final _pageController = PageController(initialPage: 1, viewportFraction: 1.1);
   StreamSubscription? _sub;
 
-  @override
-  void onInit() async {
-    super.onInit();
-    // pageController.addListener(refreshPage);
-    await registerCharacterListener();
+  CharacterProvider() {
+    debugPrint('[PROVIDER] initializing character provider');
+    registerCharacterListener();
   }
 
   @override
-  void onClose() {
+  void dispose() {
+    super.dispose();
     // pageController.removeListener(refreshPage);
     _sub?.cancel();
   }
@@ -40,8 +46,7 @@ class CharacterService extends GetxService
           ? pageController.page ?? 0
           : 0;
 
-  Character? get maybeCurrent =>
-      _currentKey.value != null ? all[_currentKey.value] : null;
+  Character? get maybeCurrent => _currentKey != null ? all[_currentKey] : null;
   Character get current => maybeCurrent!;
 
   List<Character> get allAsList => all.values.toList();
@@ -68,19 +73,21 @@ class CharacterService extends GetxService
 
   Future<void> registerCharacterListener() async {
     _clearCharListener();
-    debugPrint('registering character listener');
+    debugPrint('[PROVIDER] registering character listener');
     _sub =
         StorageHandler.instance.collectionListener('Characters', charsListener);
   }
 
   void clear() {
     all.clear();
-    _currentKey.value = null;
+    _currentKey = null;
+    notifyListeners();
   }
 
   void setCurrent(String key) {
     if (all.containsKey(key)) {
-      _currentKey.value = key;
+      _currentKey = key;
+      notifyListeners();
       switchToCharacterTheme(current);
       updateCharacter(
         current.copyWith(
@@ -96,13 +103,17 @@ class CharacterService extends GetxService
       switchToTheme(character.getCurrentTheme(user));
 
   void switchToTheme(int themeId) {
-    final dynamicTheme = DynamicTheme.of(Get.context!)!;
+    if (appGlobalKey.currentContext == null) {
+      debugPrint('[PROVIDER] no context, cannot switch theme');
+      return;
+    }
+    final dynamicTheme = DynamicTheme.of(appGlobalKey.currentContext!)!;
     final currentTheme = dynamicTheme.themeId;
     if (currentTheme == themeId) {
       return;
     }
 
-    debugPrint('switching to theme $themeId');
+    debugPrint('[PROVIDER] switching to theme $themeId');
     AppThemes.setTheme(themeId);
   }
 
@@ -111,7 +122,7 @@ class CharacterService extends GetxService
 
     all.addAll(Map.fromIterable(list, key: (c) => c.key));
 
-    if (all.isNotEmpty && _currentKey.value == null) {
+    if (all.isNotEmpty && _currentKey == null) {
       switchToLastUsedChar();
     }
 
@@ -119,33 +130,38 @@ class CharacterService extends GetxService
       switchToCharacterTheme(current);
     }
 
-    loadingService.loadingCharacters = false;
-    loadingService.afterFirstLoad = !loadingService.loadingUser;
+    loadingProvider.loadingCharacters = false;
+    loadingProvider.afterFirstLoad = !loadingProvider.loadingUser;
+    notifyListeners();
   }
 
   void switchToLastUsedChar() {
     final hasLastChar = all.values.any((c) => c.meta.data?.lastUsed != null);
     if (hasLastChar) {
       final lastChar = charsByLastUsed.first;
-      _currentKey.value = lastChar.key;
+      _currentKey = lastChar.key;
     } else if (all.isNotEmpty) {
-      _currentKey.value = all.keys.first;
+      _currentKey = all.keys.first;
     } else {
-      _currentKey.value = null;
+      _currentKey = null;
     }
+    notifyListeners();
   }
 
-  Future<void> updateCharacter(Character character,
-      {bool switchToCharacter = false}) {
-    // (StorageHandler.instance.delegate as LocalStorageDelegate).storage.collection('Characters');
+  Future<void> updateCharacter(
+    Character character, {
+    bool switchToCharacter = false,
+  }) {
     character = character.copyWithInherited(meta: character.meta.stampUpdate());
     all[character.key] = character;
+    notifyListeners();
     if (switchToCharacter ||
-        _currentKey.value == null ||
-        !all.containsKey(_currentKey.value)) {
+        _currentKey == null ||
+        !all.containsKey(_currentKey)) {
       setCurrent(character.key);
     }
-    debugPrint('Updated char: ${character.key} (${character.displayName})');
+    debugPrint(
+        '[PROVIDER] Updated char: ${character.key} (${character.displayName})');
     debugPrint(character.toRawJson());
     return StorageHandler.instance
         .update('Characters', character.key, character.toJson());
@@ -155,11 +171,13 @@ class CharacterService extends GetxService
     all[character.key] = character;
     StorageHandler.instance
         .create('Characters', character.key, character.toJson());
-    if (switchToCharacter || _currentKey.value == null) {
-      _currentKey.value = character.key;
+    if (switchToCharacter || _currentKey == null) {
+      _currentKey = character.key;
     }
-    debugPrint('Created char: ${character.key} (${character.displayName})');
+    debugPrint(
+        '[PROVIDER] Created char: ${character.key} (${character.displayName})');
     debugPrint(character.toRawJson());
+    notifyListeners();
   }
 
   void deleteCharacter(Character character) {
@@ -167,12 +185,14 @@ class CharacterService extends GetxService
     try {
       StorageHandler.instance.delete('Characters', character.key);
     } catch (e) {
-      debugPrint('Error deleting character: $e');
+      debugPrint('[PROVIDER] Error deleting character: $e');
     }
-    if (character.key == _currentKey.value) {
-      _currentKey.value = all.keys.first;
+    if (character.key == _currentKey) {
+      _currentKey = all.keys.first;
     }
-    debugPrint('Deleted char: ${character.key} (${character.displayName})');
+    debugPrint(
+        '[PROVIDER] Deleted char: ${character.key} (${character.displayName})');
+    notifyListeners();
   }
 
   void updateAll(Iterable<Character> chars) {
@@ -182,18 +202,19 @@ class CharacterService extends GetxService
   }
 
   void _clearCharListener() {
-    debugPrint('clearing char listener');
+    debugPrint('[PROVIDER] clearing char listener');
     _sub?.cancel();
     _sub = null;
   }
 }
 
-mixin CharacterServiceMixin {
-  CharacterService get characterService => Get.find();
-  CharacterService get charService => characterService;
+mixin CharacterProviderMixin {
+  CharacterProvider get characterProvider =>
+      CharacterProvider.of(appGlobalKey.currentContext!);
+  CharacterProvider get charProvider => characterProvider;
 
-  Character get character => characterService.current;
-  Character? get maybeCharacter => characterService.maybeCurrent;
+  Character get character => characterProvider.current;
+  Character? get maybeCharacter => characterProvider.maybeCurrent;
   Character get char => character;
   Character? get maybeChar => maybeCharacter;
 }

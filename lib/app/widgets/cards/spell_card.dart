@@ -78,4 +78,3 @@ class SpellCard extends StatelessWidget {
     );
   }
 }
-

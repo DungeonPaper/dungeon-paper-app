@@ -5,9 +5,8 @@ import 'package:dungeon_paper/app/data/models/meta.dart';
 import 'package:dungeon_paper/app/data/models/move.dart';
 import 'package:dungeon_paper/app/data/models/race.dart';
 import 'package:dungeon_paper/app/data/models/spell.dart';
-import 'package:dungeon_paper/app/data/services/character_service.dart';
-import 'package:dungeon_paper/app/data/services/library_service.dart';
-import 'package:dungeon_paper/app/data/services/repository_service.dart';
+import 'package:dungeon_paper/app/data/services/character_provider.dart';
+import 'package:dungeon_paper/app/data/services/library_provider.dart';
 import 'package:dungeon_paper/app/model_utils/character_utils.dart';
 import 'package:dungeon_paper/app/model_utils/model_pages.dart';
 import 'package:dungeon_paper/app/modules/LibraryList/controllers/library_list_controller.dart';
@@ -30,41 +29,23 @@ import 'package:dungeon_paper/core/utils/builder_utils.dart';
 import 'package:dungeon_paper/core/utils/list_utils.dart';
 import 'package:dungeon_paper/i18n.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 
 import 'local_widgets/home_character_actions_summary.dart';
 
-class HomeCharacterActionsView extends GetView<CharacterService> {
+class HomeCharacterActionsView extends StatelessWidget
+    with CharacterProviderMixin {
   const HomeCharacterActionsView({super.key});
-
-  Character get char => controller.current;
 
   @override
   Widget build(BuildContext context) {
-    final builder = ItemBuilder.builder(
-      leadingBuilder: (context, index) => const HomeCharacterActionsSummary(),
-      leadingCount: 1,
-      itemBuilder: (context, index) {
-        switch (char.actionCategories.elementAt(index)) {
-          case 'Move':
-            return movesList ?? const SizedBox.shrink();
-          case 'Spell':
-            return spellsList ?? const SizedBox.shrink();
-          case 'Item':
-            return itemsList ?? const SizedBox.shrink();
-        }
-
-        return const SizedBox.shrink();
-      },
-      itemCount: char.actionCategories.length,
-    );
     return PageStorage(
       bucket: PageStorageBucket(),
-      child: Obx(
-        () {
+      child: CharacterProvider.consumer(
+        (context, controller, _) {
           if (controller.maybeCurrent == null) {
             return Container();
           }
+          final builder = _getBuilder(controller);
           return builder.asListView(
             padding: const EdgeInsets.only(bottom: 16),
           );
@@ -73,7 +54,28 @@ class HomeCharacterActionsView extends GetView<CharacterService> {
     );
   }
 
-  Widget? get movesList {
+  ItemBuilder _getBuilder(CharacterProvider ctrl) {
+    final char = ctrl.current;
+    return ItemBuilder.builder(
+      leadingBuilder: (context, index) => const HomeCharacterActionsSummary(),
+      leadingCount: 1,
+      itemCount: char.actionCategories.length,
+      itemBuilder: (context, index) {
+        switch (char.actionCategories.elementAt(index)) {
+          case 'Move':
+            return movesList(context, ctrl) ?? const SizedBox.shrink();
+          case 'Spell':
+            return spellsList(context, ctrl) ?? const SizedBox.shrink();
+          case 'Item':
+            return itemsList(context, ctrl) ?? const SizedBox.shrink();
+        }
+
+        return const SizedBox.shrink();
+      },
+    );
+  }
+
+  Widget? movesList(BuildContext context, CharacterProvider controller) {
     if (char.settings.actionCategories.hidden.contains('Move')) {
       return null;
     }
@@ -86,6 +88,7 @@ class HomeCharacterActionsView extends GetView<CharacterService> {
         EntityEditMenu(
           onDelete: null,
           onEdit: () => ModelPages.openRacePage(
+            context,
             race: char.race,
             abilityScores: char.abilityScores,
             onSave: (race) => controller.updateCharacter(
@@ -106,7 +109,7 @@ class HomeCharacterActionsView extends GetView<CharacterService> {
           children: [
             Expanded(
               child: ElevatedButton(
-                onPressed: _openBasicMoves,
+                onPressed: () => _openBasicMoves(context),
                 child: Text(
                   tr.actions.moves.basic,
                 ),
@@ -115,7 +118,7 @@ class HomeCharacterActionsView extends GetView<CharacterService> {
             const SizedBox(width: 16),
             Expanded(
               child: ElevatedButton(
-                onPressed: _openSpecialMoves,
+                onPressed: () => _openSpecialMoves(context),
                 child: Text(
                   tr.actions.moves.special,
                 ),
@@ -170,6 +173,7 @@ class HomeCharacterActionsView extends GetView<CharacterService> {
           EntityEditMenu(
             onDelete: onDelete,
             onEdit: () => ModelPages.openMovePage(
+              context,
               move: move,
               abilityScores: char.abilityScores,
               onSave: onSave(true),
@@ -181,7 +185,7 @@ class HomeCharacterActionsView extends GetView<CharacterService> {
     );
   }
 
-  Widget? get spellsList {
+  Widget? spellsList(BuildContext context, CharacterProvider controller) {
     if (char.settings.actionCategories.hidden.contains('Spell')) {
       return null;
     }
@@ -204,6 +208,7 @@ class HomeCharacterActionsView extends GetView<CharacterService> {
           EntityEditMenu(
             onDelete: onDelete,
             onEdit: () => ModelPages.openSpellPage(
+              context,
               spell: spell,
               classKeys: spell.classKeys,
               abilityScores: char.abilityScores,
@@ -216,7 +221,7 @@ class HomeCharacterActionsView extends GetView<CharacterService> {
     );
   }
 
-  Widget? get itemsList {
+  Widget? itemsList(BuildContext context, CharacterProvider controller) {
     if (char.settings.actionCategories.hidden.contains('Item')) {
       return null;
     }
@@ -244,6 +249,7 @@ class HomeCharacterActionsView extends GetView<CharacterService> {
           EntityEditMenu(
             onDelete: onDelete,
             onEdit: () => ModelPages.openItemPage(
+              context,
               item: item,
               onSave: onSave(true),
             ),
@@ -286,8 +292,8 @@ class HomeCharacterActionsView extends GetView<CharacterService> {
     );
   }
 
-  void _onReorder(int oldIndex, int newIndex) {
-    controller.updateCharacter(
+  void _onReorder(BuildContext context, int oldIndex, int newIndex) {
+    charProvider.updateCharacter(
       char.copyWith(
         settings: char.settings.copyWith(
           actionCategories: char.settings.actionCategories.copyWithInherited(
@@ -305,16 +311,18 @@ class HomeCharacterActionsView extends GetView<CharacterService> {
     );
   }
 
-  void _openBasicMoves() {
+  void _openBasicMoves(BuildContext context) {
     ModelPages.openMovesList(
+      context,
       category: MoveCategory.basic,
       initialTab: FiltersGroup.playbook,
       abilityScores: char.abilityScores,
     );
   }
 
-  void _openSpecialMoves() {
+  void _openSpecialMoves(BuildContext context) {
     ModelPages.openMovesList(
+      context,
       category: MoveCategory.special,
       initialTab: FiltersGroup.playbook,
       abilityScores: char.abilityScores,
@@ -322,8 +330,8 @@ class HomeCharacterActionsView extends GetView<CharacterService> {
   }
 }
 
-class ActionsCardList<T extends WithMeta> extends GetView<CharacterService>
-    with LibraryServiceMixin, RepositoryServiceMixin {
+class ActionsCardList<T extends WithMeta> extends StatelessWidget
+    with CharacterProviderMixin {
   const ActionsCardList({
     super.key,
     required this.route,
@@ -354,58 +362,62 @@ class ActionsCardList<T extends WithMeta> extends GetView<CharacterService>
   }) cardBuilder;
   final List<T> list;
   final int index;
-  final void Function(int oldIndex, int newIndex) onReorder;
+  final void Function(BuildContext context, int oldIndex, int newIndex)
+      onReorder;
   final List<MenuEntry<String>> menuLeading;
   final List<MenuEntry<String>> menuTrailing;
 
-  Character get char => controller.current;
-
   @override
   Widget build(BuildContext context) {
-    return CategorizedList(
-      initiallyExpanded: true,
-      title: Text(tr.entityPlural(typeName)),
-      itemPadding: const EdgeInsets.only(bottom: 8),
-      titleTrailing: [
-        TextButton.icon(
-          onPressed: () => Get.toNamed(
-            route,
-            arguments: addPageArguments(
-              onSelected: (items) => library.upsertToCharacter(items,
-                  forkBehavior: ForkBehavior.fork),
+    return CharacterProvider.consumer((context, controller, _) {
+      return CategorizedList(
+        initiallyExpanded: true,
+        title: Text(tr.entityPlural(typeName)),
+        itemPadding: const EdgeInsets.only(bottom: 8),
+        titleTrailing: [
+          LibraryProvider.consumer((context, library, _) => TextButton.icon(
+                onPressed: () => Navigator.pushNamed(
+                  context,
+                  route,
+                  arguments: addPageArguments(
+                    onSelected: (items) => library.upsertToCharacter(items,
+                        forkBehavior: ForkBehavior.fork),
+                  ),
+                ),
+                label: Text(tr.generic.addEntity(tr.entityPlural(typeName))),
+                icon: const Icon(Icons.add),
+              )),
+          GroupSortMenu(
+            index: index,
+            totalItemCount: Character.allActionCategories.length,
+            onReorder: onReorder,
+            leading: menuLeading,
+            trailing: menuTrailing,
+          )
+        ],
+        leading: leading.map((obj) => _wrapChild(child: obj)).toList(),
+        trailing: trailing.map((obj) => _wrapChild(child: obj)).toList(),
+        children: [
+          ...list.map(
+            (obj) => _wrapChild(
+              key: PageStorageKey('type-$T-${obj.key}'),
+              child: cardBuilder(
+                obj,
+                onDelete: _confirmDeleteDlg(context, obj, obj.displayName),
+                onSave: (fork) => (obj) {
+                  final library = LibraryProvider.of(context);
+                  library.upsertToCharacter([obj],
+                      forkBehavior: ForkBehavior.none);
+                },
+              ),
             ),
           ),
-          label: Text(tr.generic.addEntity(tr.entityPlural(typeName))),
-          icon: const Icon(Icons.add),
-        ),
-        GroupSortMenu(
-          index: index,
-          totalItemCount: Character.allActionCategories.length,
-          onReorder: onReorder,
-          leading: menuLeading,
-          trailing: menuTrailing,
-        )
-      ],
-      leading: leading.map((obj) => _wrapChild(child: obj)).toList(),
-      trailing: trailing.map((obj) => _wrapChild(child: obj)).toList(),
-      children: [
-        ...list.map(
-          (obj) => _wrapChild(
-            key: PageStorageKey('type-$T-${obj.key}'),
-            child: cardBuilder(
-              obj,
-              onDelete: _confirmDeleteDlg(context, obj, obj.displayName),
-              onSave: (fork) => (obj) {
-                library
-                    .upsertToCharacter([obj], forkBehavior: ForkBehavior.none);
-              },
-            ),
-          ),
-        ),
-      ],
-      onReorder: (oldIndex, newIndex) => controller.updateCharacter(
-          CharacterUtils.reorderByType<T>(char, oldIndex, newIndex)),
-    );
+        ],
+        onReorder: (oldIndex, newIndex) => controller.updateCharacter(
+            CharacterUtils.reorderByType<T>(
+                controller.current, oldIndex, newIndex)),
+      );
+    });
   }
 
   Widget _wrapChild({Key? key, required Widget child}) => Padding(
@@ -415,16 +427,18 @@ class ActionsCardList<T extends WithMeta> extends GetView<CharacterService>
       );
 
   void Function() _confirmDeleteDlg(
-      BuildContext context, T object, String name) {
-    return () => deleteDialog.confirm(
-          context,
-          DeleteDialogOptions(
-            entityName: name,
-            entityKind: tr.entity(typeName),
-          ),
-          () => controller.updateCharacter(
-            CharacterUtils.removeByType<T>(char, [object]),
+    BuildContext context,
+    T object,
+    String name,
+  ) {
+    return () {
+      awaitDeleteConfirmation(context, name, () {
+        charProvider.updateCharacter(
+          char.copyWithInherited(
+            moves: char.moves.where((x) => x.key != object.key).toList(),
           ),
         );
+      });
+    };
   }
 }

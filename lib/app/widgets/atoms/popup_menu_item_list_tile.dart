@@ -2,10 +2,10 @@ import 'package:flutter/material.dart';
 
 class PopupMenuItemListTile extends StatelessWidget {
   const PopupMenuItemListTile({
-    Key? key,
+    super.key,
     required this.label,
     this.icon,
-  }) : super(key: key);
+  });
 
   final Widget label;
   final Widget? icon;

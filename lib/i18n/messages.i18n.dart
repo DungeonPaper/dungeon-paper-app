@@ -735,7 +735,7 @@ class SettingsMessages {
   /// ```dart
   /// "Switch to ${mode} Mode"
   /// ```
-  String _switchMode(String mode) => """Switch to ${mode} Mode""";
+  String _switchMode(String mode) => """Switch to $mode Mode""";
 
   /// ```dart
   /// "${_switchMode('Dark')}"

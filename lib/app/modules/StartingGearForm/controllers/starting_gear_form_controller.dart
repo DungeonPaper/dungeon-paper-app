@@ -1,21 +1,21 @@
 import 'package:dungeon_paper/app/data/models/character_class.dart';
 import 'package:dungeon_paper/app/data/models/gear_choice.dart';
 import 'package:dungeon_paper/app/data/models/gear_selection.dart';
-import 'package:get/get.dart';
+import 'package:dungeon_paper/core/route_arguments.dart';
+import 'package:dungeon_paper/core/utils/list_utils.dart';
+import 'package:flutter/widgets.dart';
 
-class StartingGearFormController extends GetxController {
-  final availableGear = <GearChoice>[].obs;
-  final dirty = false.obs;
+class StartingGearFormController extends ChangeNotifier {
+  final availableGear = <GearChoice>[];
+  var dirty = false;
 
-  late final RxList<GearSelection> selectedOptions;
-  late final CharacterClass characterClass;
-  late final void Function(List<GearSelection> selectedOptions) onChanged;
+  late List<GearSelection> selectedOptions;
+  late CharacterClass characterClass;
+  late void Function(List<GearSelection> selectedOptions) onChanged;
 
-  @override
-  void onReady() {
-    super.onReady();
-    final StartingGearFormArguments args = Get.arguments;
-    selectedOptions = args.selectedOptions.obs;
+  StartingGearFormController(BuildContext context) {
+    final StartingGearFormArguments args = getArgs(context);
+    selectedOptions = args.selectedOptions;
     characterClass = args.characterClass;
     onChanged = args.onChanged;
     getGear();
@@ -27,11 +27,13 @@ class StartingGearFormController extends GetxController {
   }
 
   void getGear() async {
-    availableGear.value = characterClass.gearChoices;
+    availableGear.clear();
+    availableGear.addAll(characterClass.gearChoices);
+    notifyListeners();
   }
 
   void toggleSelect(GearSelection selection) {
-    dirty.value = true;
+    dirty = true;
     final found =
         selectedOptions.firstWhereOrNull((item) => item.key == selection.key);
     if (found == null) {
@@ -39,6 +41,7 @@ class StartingGearFormController extends GetxController {
     } else {
       selectedOptions.remove(found);
     }
+    notifyListeners();
   }
 
   bool isSelected(GearSelection selection) =>

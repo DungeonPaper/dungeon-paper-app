@@ -43,7 +43,7 @@ class User {
   String toRawJson() => json.encode(toJson());
 
   String? get documentPath => isLoggedIn ? 'Data/$email' : null;
-  String? get fileStoragePath => isLoggedIn ? documentPath! + '/Uploads' : null;
+  String? get fileStoragePath => isLoggedIn ? '${documentPath!}/Uploads' : null;
 
   factory User.fromJson(Map<String, dynamic> json) => User(
         username: json['username'],

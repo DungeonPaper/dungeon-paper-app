@@ -124,7 +124,7 @@ class HighlightText extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final _text = highlight(text, highlightWords).split('==');
+    final text = highlight(this.text, highlightWords).split('==');
     final normalStyle =
         HighlightBuilder.getNormalStyle(context, normalTextStyle);
     final hlStyle = HighlightBuilder.getHighlightStyle(
@@ -144,7 +144,7 @@ class HighlightText extends StatelessWidget {
           softWrap: softWrap,
           text: TextSpan(
             children: [
-              for (final word in _text)
+              for (final word in text)
                 if (words.contains(word.toLowerCase()))
                   TextSpan(
                     text: word,

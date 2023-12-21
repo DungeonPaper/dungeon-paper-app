@@ -4,10 +4,10 @@ import 'package:flutter/material.dart';
 
 class UserAvatar extends StatelessWidget {
   const UserAvatar({
-    Key? key,
+    super.key,
     required this.user,
     this.size,
-  }) : super(key: key);
+  });
 
   final double? size;
   final User user;
@@ -16,7 +16,6 @@ class UserAvatar extends StatelessWidget {
   Widget build(BuildContext context) {
     return CircleAvatar(
       radius: size != null ? size! / 2 : null,
-      child: const Icon(Icons.person),
       foregroundImage: user.photoUrl.isNotEmpty
           ? CachedNetworkImageProvider(
               user.photoUrl,
@@ -25,6 +24,7 @@ class UserAvatar extends StatelessWidget {
               maxHeight: size?.toInt(),
             )
           : null,
+      child: const Icon(Icons.person),
     );
   }
 }

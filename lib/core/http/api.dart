@@ -36,22 +36,14 @@ class Api {
 
 class Response extends http.Response {
   Response(
-    String body,
-    int statusCode, {
-    http.BaseRequest? request,
-    Map<String, String> headers = const {},
-    bool isRedirect = false,
-    bool persistentConnection = true,
-    String? reasonPhrase,
-  }) : super(
-          body,
-          statusCode,
-          request: request,
-          headers: headers,
-          isRedirect: isRedirect,
-          persistentConnection: persistentConnection,
-          reasonPhrase: reasonPhrase,
-        );
+    super.body,
+    super.statusCode, {
+    super.request,
+    super.headers,
+    super.isRedirect,
+    super.persistentConnection,
+    super.reasonPhrase,
+  });
 
   factory Response.fromHttp(http.Response response) => Response(
         response.body,

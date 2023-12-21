@@ -1,32 +1,16 @@
 import 'package:dungeon_paper/app/data/models/meta.dart';
 import 'package:dungeon_paper/app/modules/ImportExport/controllers/export_controller.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
+import 'package:provider/provider.dart';
 
 import 'import_controller.dart';
 
-class ImportExportController extends GetxController
-    with GetSingleTickerProviderStateMixin {
-  late final Rx<TabController> tab;
-
-  @override
-  void onInit() {
-    super.onInit();
-    tab = (TabController(length: 2, vsync: this)..addListener(_refresh)).obs;
-  }
-
-  @override
-  void dispose() {
-    super.dispose();
-    tab.value.removeListener(_refresh);
-  }
-
-  void Function()? get doExport => Get.find<ExportController>().getDoExport();
-  void Function()? get doImport => Get.find<ImportController>().getDoImport();
-
-  void _refresh() {
-    tab.refresh();
-  }
+// TODO remove?
+class ImportExportController extends ChangeNotifier {
+  void Function()? doExport(BuildContext context) =>
+      Provider.of<ExportController>(context, listen: false).getDoExport(context);
+  void Function()? doImport(BuildContext context) =>
+      Provider.of<ImportController>(context, listen: false).getDoImport(context);
 }
 
 abstract class ImportExportSelectionData {

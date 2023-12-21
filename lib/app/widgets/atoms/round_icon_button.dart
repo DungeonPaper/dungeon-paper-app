@@ -2,14 +2,14 @@ import 'package:flutter/material.dart';
 
 class RoundIconButton extends StatelessWidget {
   const RoundIconButton({
-    Key? key,
+    super.key,
     required this.icon,
     required this.onPressed,
     this.backgroundColor,
     this.foregroundColor,
     this.size = 50,
     this.tooltip,
-  }) : super(key: key);
+  });
 
   final Widget icon;
   final void Function()? onPressed;
@@ -44,10 +44,6 @@ class RoundIconButton extends StatelessWidget {
           : Colors.white),
     );
     return ElevatedButton(
-      child: IconTheme.merge(
-        child: icon,
-        data: IconThemeData(size: size / 2),
-      ),
       style: ElevatedButton.styleFrom(
         padding: EdgeInsets.zero,
         minimumSize: Size.square(size),
@@ -55,6 +51,10 @@ class RoundIconButton extends StatelessWidget {
         foregroundColor: fgColor,
       ),
       onPressed: onPressed,
+      child: IconTheme.merge(
+        child: icon,
+        data: IconThemeData(size: size / 2),
+      ),
     );
   }
 }

@@ -7,7 +7,7 @@ import 'dynamic_action_card_mini.dart';
 
 class MoveCardMini extends StatelessWidget {
   const MoveCardMini({
-    Key? key,
+    super.key,
     required this.move,
     this.onSave,
     this.showStar = true,
@@ -15,7 +15,7 @@ class MoveCardMini extends StatelessWidget {
     this.onTap,
     this.advancedLevelDisplay = AdvancedLevelDisplay.short,
     this.abilityScores,
-  }) : super(key: key);
+  });
 
   final Move move;
   final bool showStar;

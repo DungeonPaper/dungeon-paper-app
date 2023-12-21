@@ -1,7 +1,7 @@
 import 'package:dungeon_paper/app/data/models/ability_scores.dart';
 import 'package:dungeon_paper/app/data/models/character_class.dart';
 import 'package:dungeon_paper/app/data/models/race.dart';
-import 'package:dungeon_paper/app/data/services/repository_service.dart';
+import 'package:dungeon_paper/app/data/services/repository_provider.dart';
 import 'package:dungeon_paper/app/widgets/atoms/rich_text_field.dart';
 import 'package:dungeon_paper/app/widgets/atoms/select_box.dart';
 import 'package:dungeon_paper/app/widgets/forms/library_entity_form.dart';
@@ -10,17 +10,17 @@ import 'package:dungeon_paper/app/widgets/molecules/tag_list_input.dart';
 import 'package:dungeon_paper/i18n.dart';
 import 'package:dungeon_world_data/dungeon_world_data.dart' as dw;
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
+import 'package:provider/provider.dart';
 
-class RaceForm extends GetView<RaceFormController> with RepositoryServiceMixin {
+class RaceForm extends StatelessWidget with RepositoryProviderMixin {
   const RaceForm({super.key});
 
   @override
   Widget build(BuildContext context) {
     return LibraryEntityForm<Race, RaceFormController>(
       children: [
-        () => Obx(
-              () => TextFormField(
+        () => Consumer<RaceFormController>(
+              builder: (context, controller, _) => TextFormField(
                 decoration: InputDecoration(
                   label: Text(tr.generic.entityName(tr.entity(tn(Race)))),
                 ),
@@ -28,8 +28,9 @@ class RaceForm extends GetView<RaceFormController> with RepositoryServiceMixin {
                 controller: controller.name,
               ),
             ),
-        () => Obx(
-              () => SelectBox<dw.EntityReference>(
+        () => Consumer<RaceFormController>(
+              builder: (context, controller, _) =>
+                  SelectBox<dw.EntityReference>(
                 value: controller.classKeys.value.isNotEmpty
                     ? controller.classKeys.value.first
                     : null,
@@ -47,8 +48,8 @@ class RaceForm extends GetView<RaceFormController> with RepositoryServiceMixin {
                         .toList(),
               ),
             ),
-        () => Obx(
-              () => RichTextField(
+        () => Consumer<RaceFormController>(
+              builder: (context, controller, _) => RichTextField(
                 decoration: InputDecoration(
                   label:
                       Text(tr.generic.entityDescription(tr.entity(tn(Race)))),
@@ -60,8 +61,8 @@ class RaceForm extends GetView<RaceFormController> with RepositoryServiceMixin {
                 controller: controller.description,
               ),
             ),
-        () => Obx(
-              () => RichTextField(
+        () => Consumer<RaceFormController>(
+              builder: (context, controller, _) => RichTextField(
                 decoration: InputDecoration(
                   label:
                       Text(tr.generic.entityExplanation(tr.entity(tn(Race)))),
@@ -73,16 +74,16 @@ class RaceForm extends GetView<RaceFormController> with RepositoryServiceMixin {
                 controller: controller.explanation,
               ),
             ),
-        () => Obx(
-              () => DiceListInput(
+        () => Consumer<RaceFormController>(
+              builder: (context, controller, _) => DiceListInput(
                 controller: controller.dice,
                 abilityScores: controller.args.abilityScores ??
                     AbilityScores.dungeonWorldAll(10),
                 guessFrom: [controller.description, controller.explanation],
               ),
             ),
-        () => Obx(
-              () => TagListInput(
+        () => Consumer<RaceFormController>(
+              builder: (context, controller, _) => TagListInput(
                 controller: controller.tags,
               ),
             ),
@@ -93,27 +94,25 @@ class RaceForm extends GetView<RaceFormController> with RepositoryServiceMixin {
 
 class RaceFormController
     extends LibraryEntityFormController<Race, RaceFormArguments> {
-  final _name = TextEditingController().obs;
-  final _description = TextEditingController().obs;
-  final _explanation = TextEditingController().obs;
-  final _dice = ValueNotifier<List<dw.Dice>>([]).obs;
-  final _tags = ValueNotifier<List<dw.Tag>>([]).obs;
-  final _classKeys = ValueNotifier<List<dw.EntityReference>>([]).obs;
+  final _name = TextEditingController();
+  final _description = TextEditingController();
+  final _explanation = TextEditingController();
+  final _dice = ValueNotifier<List<dw.Dice>>([]);
+  final _tags = ValueNotifier<List<dw.Tag>>([]);
+  final _classKeys = ValueNotifier<List<dw.EntityReference>>([]);
 
-  TextEditingController get name => _name.value;
-  TextEditingController get description => _description.value;
-  TextEditingController get explanation => _explanation.value;
-  ValueNotifier<List<dw.Dice>> get dice => _dice.value;
-  ValueNotifier<List<dw.Tag>> get tags => _tags.value;
-  ValueNotifier<List<dw.EntityReference>> get classKeys => _classKeys.value;
+  TextEditingController get name => _name;
+  TextEditingController get description => _description;
+  TextEditingController get explanation => _explanation;
+  ValueNotifier<List<dw.Dice>> get dice => _dice;
+  ValueNotifier<List<dw.Tag>> get tags => _tags;
+  ValueNotifier<List<dw.EntityReference>> get classKeys => _classKeys;
 
   @override
-  List<Rx<ValueNotifier>> get fields =>
+  List<ValueNotifier> get fields =>
       [_name, _description, _explanation, _dice, _tags, _classKeys];
 
-  @override
-  void onInit() {
-    super.onInit();
+  RaceFormController(super.context) {
     name.text = args.entity?.name ?? '';
     description.text = args.entity?.description ?? '';
     explanation.text = args.entity?.explanation ?? '';
