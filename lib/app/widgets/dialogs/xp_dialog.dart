@@ -12,8 +12,6 @@ import 'package:dungeon_paper/core/utils/list_utils.dart';
 import 'package:dungeon_paper/i18n.dart';
 import 'package:flutter/material.dart';
 
-import 'package:get/get.dart';
-
 enum _XPAction { endSession, levelUp, overwriteXP }
 
 class EXPDialog extends StatefulWidget {
@@ -23,7 +21,7 @@ class EXPDialog extends StatefulWidget {
   State<EXPDialog> createState() => _EXPDialogState();
 }
 
-class _EXPDialogState extends State<EXPDialog> with CharacterServiceMixin {
+class _EXPDialogState extends State<EXPDialog> with CharacterProviderMixin {
   late TextEditingController overwriteXpText;
   late TextEditingController overwriteLevelText;
   late List<SessionMark> eosMarks;
@@ -291,7 +289,7 @@ class _EXPDialogState extends State<EXPDialog> with CharacterServiceMixin {
       abilityScores =
           char.abilityScores.copyWithStatValues({abilityScoreToIncrease.key: abilityScoreToIncrease.value + 1});
     }
-    charService.updateCharacter(
+    charProvider.updateCharacter(
       char.copyWith(
         abilityScores: abilityScores,
         stats: char.stats.copyWith(
@@ -314,7 +312,7 @@ class _EXPDialogState extends State<EXPDialog> with CharacterServiceMixin {
   void _toggleEosMark(SessionMark eos, bool? val) {
     setState(() {
       eosMarks = updateByKey(eosMarks, [eos.copyWithInherited(completed: val ?? !eos.completed)]);
-      charService.updateCharacter(char.copyWith(sessionMarks: upsertByKey(char.sessionMarks, eosMarks)));
+      charProvider.updateCharacter(char.copyWith(sessionMarks: upsertByKey(char.sessionMarks, eosMarks)));
     });
   }
 }

@@ -1,11 +1,10 @@
-import 'package:dungeon_paper/app/data/services/character_service.dart';
+import 'package:dungeon_paper/app/data/services/character_provider.dart';
 import 'package:dungeon_paper/app/widgets/atoms/buffer_progress_bar.dart';
 import 'package:dungeon_paper/app/widgets/chips/primary_chip.dart';
 import 'package:dungeon_paper/i18n.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 
-class ExpBar extends StatelessWidget with CharacterServiceMixin {
+class ExpBar extends StatelessWidget {
   const ExpBar({
     super.key,
     this.currentXp,
@@ -21,9 +20,9 @@ class ExpBar extends StatelessWidget with CharacterServiceMixin {
 
   @override
   Widget build(BuildContext context) {
-    return Obx(
-      () {
-        final maybeCharacter = maybeChar;
+    return CharacterProvider.consumer(
+      (context, charService, char) {
+        final maybeCharacter = charService.maybeCurrent;
 
         final curValue = currentXp ?? maybeCharacter?.currentXp ?? 0;
         final curPending = pendingXp ?? maybeCharacter?.pendingXp ?? 0;
@@ -40,29 +39,43 @@ class ExpBar extends StatelessWidget with CharacterServiceMixin {
           children: [
             Row(
               children: [
-              Expanded(
-              child: BufferProgressBar(
-              value: curPercent,
-              bufferValue: curBufferPercent,
-              bufferColor: const Color.fromARGB(255, 117, 188, 251),
-              height: 17.5,
-              color: const Color(0xff1e88e5),
-              backgroundColor: Colors.blue[100],
-            ),
-              ),
-              if (showPlusOneButton)
-                PrimaryChip(
-                  label: '+1',
-                  onPressed: () {
-                    charService.updateCharacter(
-                      char.copyWith(
-                        stats: char.stats.copyWith(
-                          currentXp: 1 + (char.stats.currentXp),
-                        ),
-                      ),
-                    );
-                  },
+                Expanded(
+                  child: BufferProgressBar(
+                    value: curPercent,
+                    bufferValue: curBufferPercent,
+                    bufferColor: const Color.fromARGB(255, 117, 188, 251),
+                    height: 17.5,
+                    color: const Color(0xff1e88e5),
+                    backgroundColor: Colors.blue[100],
+                  ),
                 ),
+                if (showPlusOneButton)
+                  Padding(
+                    padding: const EdgeInsets.only(left: 8.0),
+                    child: Container(
+                      decoration: BoxDecoration(
+                        shape: BoxShape.circle,
+                        color: Theme.of(context).colorScheme.primaryContainer,
+                      ),
+                      width: 30,
+                      height: 30,
+                      child: IconButton(
+                        icon: const Icon(Icons.plus_one, size: 18),
+                      padding: const EdgeInsets.all(0),
+                      visualDensity: VisualDensity.compact,
+                        onPressed: () {
+                          final char = charService.current;
+                          charService.updateCharacter(
+                            char.copyWith(
+                              stats: char.stats.copyWith(
+                                currentXp: 1 + (char.currentXp),
+                              ),
+                            ),
+                          );
+                        },
+                      ),
+                    ),
+                  ),
               ],
             ),
             const SizedBox(height: 4),
@@ -89,3 +102,4 @@ class ExpBar extends StatelessWidget with CharacterServiceMixin {
     );
   }
 }
+

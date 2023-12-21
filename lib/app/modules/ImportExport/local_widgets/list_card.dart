@@ -36,7 +36,7 @@ class ListCard<T extends WithMeta, C extends ImportExportSelectionData>
         final list = this.list(context);
         return Card(
           margin: const EdgeInsets.only(top: 16),
-          child: CustomExpansionPanel(
+          child: CustomExpansionTile(
             initiallyExpanded: true,
             title: Row(
               children: [
