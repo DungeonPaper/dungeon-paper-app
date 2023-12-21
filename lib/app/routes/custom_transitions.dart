@@ -47,9 +47,8 @@ class CircularRevealClipper extends CustomClipper<Path> {
 
 class CircularRevealTransitionBuilder<T> extends PageRouteBuilder {
   CircularRevealTransitionBuilder({
-    // required super.builder,
     super.settings,
-    WidgetBuilder? builder,
+    required WidgetBuilder? builder,
     super.transitionsBuilder,
     super.transitionDuration = const Duration(milliseconds: 300),
     super.reverseTransitionDuration = const Duration(milliseconds: 300),
@@ -71,10 +70,7 @@ class CircularRevealTransitionBuilder<T> extends PageRouteBuilder {
 
   @override
   Widget buildTransitions(
-    // PageRoute<T> route,
     BuildContext context,
-    // Curve? curve,
-    // Alignment? alignment,
     Animation<double> animation,
     Animation<double> secondaryAnimation,
     Widget child,
