@@ -10,7 +10,7 @@ class AdvancedFloatingActionButton extends StatelessWidget {
   /// [elevation], [highlightElevation], and [disabledElevation] (if specified)
   /// must be non-negative.
   const AdvancedFloatingActionButton({
-    Key? key,
+    super.key,
     this.child,
     this.tooltip,
     this.foregroundColor,
@@ -49,8 +49,7 @@ class AdvancedFloatingActionButton extends StatelessWidget {
         _extendedLabel = null,
         extendedIconLabelSpacing = null,
         extendedPadding = null,
-        extendedTextStyle = null,
-        super(key: key);
+        extendedTextStyle = null;
 
   /// Creates a small circular floating action button.
   ///
@@ -62,7 +61,7 @@ class AdvancedFloatingActionButton extends StatelessWidget {
   /// [highlightElevation], and [disabledElevation] (if specified) must be
   /// non-negative.
   const AdvancedFloatingActionButton.small({
-    Key? key,
+    super.key,
     this.child,
     this.tooltip,
     this.foregroundColor,
@@ -97,8 +96,7 @@ class AdvancedFloatingActionButton extends StatelessWidget {
         _extendedLabel = null,
         extendedIconLabelSpacing = null,
         extendedPadding = null,
-        extendedTextStyle = null,
-        super(key: key);
+        extendedTextStyle = null;
 
   /// Creates a large circular floating action button.
   ///
@@ -110,7 +108,7 @@ class AdvancedFloatingActionButton extends StatelessWidget {
   /// [highlightElevation], and [disabledElevation] (if specified) must be
   /// non-negative.
   const AdvancedFloatingActionButton.large({
-    Key? key,
+    super.key,
     this.child,
     this.tooltip,
     this.foregroundColor,
@@ -145,8 +143,7 @@ class AdvancedFloatingActionButton extends StatelessWidget {
         _extendedLabel = null,
         extendedIconLabelSpacing = null,
         extendedPadding = null,
-        extendedTextStyle = null,
-        super(key: key);
+        extendedTextStyle = null;
 
   /// Creates a wider [StadiumBorder]-shaped floating action button with
   /// an optional [icon] and a [label].
@@ -155,7 +152,7 @@ class AdvancedFloatingActionButton extends StatelessWidget {
   /// Additionally, [elevation], [highlightElevation], and [disabledElevation]
   /// (if specified) must be non-negative.
   const AdvancedFloatingActionButton.extended({
-    Key? key,
+    super.key,
     this.tooltip,
     this.foregroundColor,
     this.backgroundColor,
@@ -193,8 +190,7 @@ class AdvancedFloatingActionButton extends StatelessWidget {
         mini = false,
         _floatingActionButtonType = _FloatingActionButtonType.extended,
         child = icon,
-        _extendedLabel = label,
-        super(key: key);
+        _extendedLabel = label;
 
   /// The widget below this widget in the tree.
   ///
@@ -425,9 +421,9 @@ class AdvancedFloatingActionButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final _fgColor = foregroundColor ??
+    final fgColor = foregroundColor ??
         (backgroundColor == DwColors.success ? Colors.white : null);
-    final _bgColor = onPressed == null
+    final bgColor = onPressed == null
         ? Theme.of(context).disabledColor.withOpacity(0.3)
         // ? Theme.of(context).brightness == Brightness.light
         //     ? Theme.of(context).disabledColor.withOpacity(0.3)
@@ -438,10 +434,9 @@ class AdvancedFloatingActionButton extends StatelessWidget {
       case _FloatingActionButtonType.small:
         return FloatingActionButton.small(
           key: key,
-          child: child,
           tooltip: tooltip,
-          foregroundColor: _fgColor,
-          backgroundColor: _bgColor,
+          foregroundColor: fgColor,
+          backgroundColor: bgColor,
           focusColor: focusColor,
           hoverColor: hoverColor,
           splashColor: splashColor,
@@ -459,14 +454,14 @@ class AdvancedFloatingActionButton extends StatelessWidget {
           autofocus: autofocus,
           materialTapTargetSize: materialTapTargetSize,
           enableFeedback: enableFeedback,
+          child: child,
         );
       case _FloatingActionButtonType.large:
         return FloatingActionButton.large(
           key: key,
-          child: child,
           tooltip: tooltip,
-          foregroundColor: _fgColor,
-          backgroundColor: _bgColor,
+          foregroundColor: fgColor,
+          backgroundColor: bgColor,
           focusColor: focusColor,
           hoverColor: hoverColor,
           splashColor: splashColor,
@@ -484,13 +479,14 @@ class AdvancedFloatingActionButton extends StatelessWidget {
           autofocus: autofocus,
           materialTapTargetSize: materialTapTargetSize,
           enableFeedback: enableFeedback,
+          child: child,
         );
       case _FloatingActionButtonType.extended:
         return FloatingActionButton.extended(
           key: key,
           tooltip: tooltip,
-          foregroundColor: _fgColor,
-          backgroundColor: _bgColor,
+          foregroundColor: fgColor,
+          backgroundColor: bgColor,
           focusColor: focusColor,
           hoverColor: hoverColor,
           heroTag: heroTag,
@@ -516,10 +512,9 @@ class AdvancedFloatingActionButton extends StatelessWidget {
         );
       default:
         return FloatingActionButton(
-          child: child,
           tooltip: tooltip,
-          foregroundColor: _fgColor,
-          backgroundColor: _bgColor,
+          foregroundColor: fgColor,
+          backgroundColor: bgColor,
           focusColor: focusColor,
           hoverColor: hoverColor,
           splashColor: splashColor,
@@ -539,6 +534,7 @@ class AdvancedFloatingActionButton extends StatelessWidget {
           autofocus: autofocus,
           materialTapTargetSize: materialTapTargetSize,
           enableFeedback: enableFeedback,
+          child: child,
         );
     }
   }

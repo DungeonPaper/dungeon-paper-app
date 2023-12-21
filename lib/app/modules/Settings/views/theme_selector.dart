@@ -137,6 +137,7 @@ class _ThemePreview extends StatelessWidget {
                             bottom: 6,
                             child: const Material(
                               type: MaterialType.circle,
+                              color: DwColors.success,
                               child: Padding(
                                 padding: EdgeInsets.all(3),
                                 child: Icon(
@@ -145,7 +146,6 @@ class _ThemePreview extends StatelessWidget {
                                   color: Colors.white,
                                 ),
                               ),
-                              color: DwColors.success,
                             ),
                           ),
                       ],

@@ -27,20 +27,25 @@ class ConfirmExitView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // TODO update, but of course they made the new version suck.
-    return WillPopScope(
+    final navigator = Navigator.of(context);
+    return PopScope(
+      canPop: !dirty,
       child: child,
-      onWillPop: () async {
-        if (!dirty) {
-          return true;
+      onPopInvoked: (didPop) async {
+        if (didPop) {
+          return;
         }
-        return confirmExit(
+        final res = await confirmExit(
           context,
           title: title,
           text: text,
           okLabel: okLabel,
           cancelLabel: cancelLabel,
         );
+
+        if (res) {
+          navigator.pop();
+        }
       },
     );
   }

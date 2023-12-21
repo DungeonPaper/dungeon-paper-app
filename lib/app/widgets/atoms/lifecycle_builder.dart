@@ -7,21 +7,19 @@ class LifecycleView extends StatefulWidget {
   final Widget? child;
 
   LifecycleView({
-    Key? key,
+    super.key,
     this.onInit,
     this.onDispose,
     required this.child,
   })  : assert(child != null),
-        builder = childBuilder(child!),
-        super(key: key);
+        builder = childBuilder(child!);
 
   const LifecycleView.builder({
-    Key? key,
+    super.key,
     this.onInit,
     this.onDispose,
     required this.builder,
-  })  : child = null,
-        super(key: key);
+  })  : child = null;
 
   static Widget Function(BuildContext context) childBuilder(Widget child) =>
       (_) => child;

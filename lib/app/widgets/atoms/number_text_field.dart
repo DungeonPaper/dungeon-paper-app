@@ -15,7 +15,7 @@ class NumberTextField extends StatelessWidget {
   final NumberType numberType;
 
   const NumberTextField({
-    Key? key,
+    super.key,
     this.controller,
     this.initialValue,
     this.focusNode,
@@ -74,8 +74,7 @@ class NumberTextField extends StatelessWidget {
   })  : keyboardType = keyboardType ??
             (numberType == NumberType.double
                 ? const TextInputType.numberWithOptions(decimal: true)
-                : const TextInputType.numberWithOptions(decimal: false)),
-        super(key: key);
+                : const TextInputType.numberWithOptions(decimal: false));
 
   final String? initialValue;
   final FocusNode? focusNode;

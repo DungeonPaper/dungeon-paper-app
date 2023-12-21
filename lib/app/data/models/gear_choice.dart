@@ -5,19 +5,12 @@ import 'item.dart';
 
 class GearChoice extends dw.GearChoice {
   GearChoice({
-    required String key,
-    required String description,
-    required List<GearSelection> selections,
-    List<int> preselect = const [],
-    int? maxSelections,
-  })  : _selections = selections,
-        super(
-          key: key,
-          description: description,
-          selections: selections,
-          preselect: preselect,
-          maxSelections: maxSelections,
-        );
+    required super.key,
+    required super.description,
+    required List<GearSelection> super.selections,
+    super.preselect,
+    super.maxSelections,
+  })  : _selections = selections;
 
   @override
   List<GearSelection> get selections => _selections;

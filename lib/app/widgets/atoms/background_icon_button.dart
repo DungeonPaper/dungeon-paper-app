@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 class BackgroundIconButton extends StatelessWidget {
   const BackgroundIconButton({
-    Key? key,
+    super.key,
     required this.icon,
     required this.onPressed,
     this.iconSize,
@@ -27,7 +27,7 @@ class BackgroundIconButton extends StatelessWidget {
     this.decoration,
     this.shadows,
     this.elevation,
-  }) : super(key: key);
+  });
 
   final Widget icon;
 

@@ -2,10 +2,10 @@ import 'package:flutter/widgets.dart';
 
 class ValueNotifierBuilder<T> extends StatefulWidget {
   const ValueNotifierBuilder({
-    Key? key,
+    super.key,
     required this.value,
     required this.builder,
-  }) : super(key: key);
+  });
 
   final ValueNotifier<T> value;
   final Widget Function(BuildContext context, dynamic value) builder;

@@ -2,11 +2,11 @@ import 'package:flutter/material.dart';
 
 class LabeledDivider extends StatelessWidget {
   const LabeledDivider({
-    Key? key,
+    super.key,
     required this.label,
     this.height = 48,
     this.gap = 8,
-  }) : super(key: key);
+  });
 
   final Widget label;
   final double height;

@@ -162,7 +162,7 @@ List<T> upsertByKey<T>(List<T> list, Iterable<T> items,
         .map((x) => keys.contains(keyGetter(x))
             ? items.firstWhere((y) => keyGetter(x) == keyGetter(y))
             : x)
-        .toList(),
+        ,
     ...items.where((x) {
       return !existingKeys.contains(keyGetter(x));
     })

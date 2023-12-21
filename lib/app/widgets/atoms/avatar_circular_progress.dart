@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 
 class AvatarCircularProgress extends StatelessWidget {
-  const AvatarCircularProgress({Key? key, required this.size})
-      : super(key: key);
+  const AvatarCircularProgress({super.key, required this.size});
 
   final double size;
 

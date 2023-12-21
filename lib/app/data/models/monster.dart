@@ -5,23 +5,14 @@ import 'package:dungeon_world_data/dungeon_world_data.dart' as dw;
 
 class Monster extends dw.Monster implements WithMeta {
   Monster({
-    required Meta meta,
-    required String key,
-    required String name,
-    required String description,
-    required String instinct,
-    required List<dw.Tag> tags,
-    required List<String> moves,
-  })  : _meta = meta,
-        super(
-          meta: meta,
-          key: key,
-          name: name,
-          description: description,
-          instinct: instinct,
-          tags: tags,
-          moves: moves,
-        );
+    required Meta super.meta,
+    required super.key,
+    required super.name,
+    required super.description,
+    required super.instinct,
+    required super.tags,
+    required super.moves,
+  })  : _meta = meta;
 
   @override
   Meta get meta => _meta;

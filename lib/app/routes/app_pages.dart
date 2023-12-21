@@ -1,5 +1,4 @@
 import 'package:dungeon_paper/core/route_arguments.dart';
-import 'package:dungeon_world_data/dice.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 

@@ -8,25 +8,25 @@ int Function(T? date1, T? date2) createSortByDate<T>({
   DateTime? Function(T? object)? parse,
 }) {
   int orderMultiplier = order == SortOrder.asc ? 1 : -1;
-  DateTime? _parse(T? x) => parse != null ? parse(x) : x as DateTime;
+  DateTime? parse0(T? x) => parse != null ? parse(x) : x as DateTime;
 
-  return (_a, _b) {
-    final DateTime? a = _parse(_a);
-    final DateTime? b = _parse(_b);
+  return (a, b) {
+    final DateTime? parsedA = parse0(a);
+    final DateTime? parsedB = parse0(b);
 
-    if (a == null && b == null) {
+    if (parsedA == null && parsedB == null) {
       return 0;
     }
 
-    if (a == null) {
+    if (parsedA == null) {
       return -1 * orderMultiplier;
     }
 
-    if (b == null) {
+    if (parsedB == null) {
       return 1 * orderMultiplier;
     }
 
-    return a.compareTo(b) * orderMultiplier;
+    return parsedA.compareTo(parsedB) * orderMultiplier;
   };
 }
 

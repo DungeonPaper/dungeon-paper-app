@@ -7,10 +7,10 @@ import 'package:dungeon_world_data/dungeon_world_data.dart' as dw;
 
 class ItemArmorChip extends StatelessWidget {
   const ItemArmorChip({
-    Key? key,
+    super.key,
     required this.item,
     this.visualDensity,
-  }) : super(key: key);
+  });
 
   final Item item;
   final VisualDensity? visualDensity;

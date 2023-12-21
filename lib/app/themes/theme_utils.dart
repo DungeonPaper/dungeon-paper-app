@@ -108,7 +108,6 @@ ThemeData createTheme(
   );
 
   return base.copyWith(
-    useMaterial3: true,
     splashColor: colorScheme.secondary.withOpacity(0.1),
     scaffoldBackgroundColor: scaffoldBackgroundColor,
     appBarTheme: base.appBarTheme.copyWith(
@@ -167,7 +166,7 @@ ThemeData createTheme(
 }
 
 Brightness getCurrentPlatformBrightness() =>
-    MediaQueryData.fromWindow(WidgetsBinding.instance.window)
+    MediaQueryData.fromView(WidgetsBinding.instance.window)
         .platformBrightness;
 
 SystemUiOverlayStyle getUiOverlayStyleFor(ThemeData theme) =>

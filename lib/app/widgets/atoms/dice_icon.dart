@@ -4,11 +4,11 @@ import 'package:dungeon_world_data/dungeon_world_data.dart' as dw;
 
 class DiceIcon extends StatelessWidget {
   const DiceIcon({
-    Key? key,
+    super.key,
     required this.sides,
     this.size,
     this.color,
-  }) : super(key: key);
+  });
 
   final int sides;
   final double? size;
@@ -16,11 +16,10 @@ class DiceIcon extends StatelessWidget {
 
   DiceIcon.from(
     dw.Dice dice, {
-    Key? key,
+    super.key,
     this.size,
     this.color,
-  })  : sides = dice.sides,
-        super(key: key);
+  })  : sides = dice.sides;
 
   @override
   Widget build(BuildContext context) {

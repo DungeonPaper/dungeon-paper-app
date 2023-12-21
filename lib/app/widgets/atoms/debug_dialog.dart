@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 class DebugDialog extends StatefulWidget {
   final String text;
 
-  const DebugDialog({Key? key, required this.text}) : super(key: key);
+  const DebugDialog({super.key, required this.text});
 
   @override
   State<DebugDialog> createState() => _DebugDialogState();

@@ -23,7 +23,7 @@ class BufferProgressBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final _duration = duration ?? const Duration(milliseconds: 250);
+    final duration = this.duration ?? const Duration(milliseconds: 250);
     return SizedBox(
       height: height,
       child: ClipRRect(
@@ -32,7 +32,7 @@ class BufferProgressBar extends StatelessWidget {
           return Stack(
             children: [
               AnimatedContainer(
-                duration: _duration,
+                duration: duration,
                 height: height,
                 width: constraints.maxWidth,
                 color: backgroundColor ??
@@ -40,14 +40,14 @@ class BufferProgressBar extends StatelessWidget {
               ),
               if (bufferValue != null)
                 AnimatedContainer(
-                  duration: _duration,
+                  duration: duration,
                   height: height,
                   width: constraints.maxWidth * clamp(bufferValue!, 0, 1),
                   color: bufferColor ??
                       Theme.of(context).colorScheme.primary.withOpacity(0.3),
                 ),
               AnimatedContainer(
-                duration: _duration,
+                duration: duration,
                 height: height,
                 width: constraints.maxWidth * value,
                 color: color ?? Theme.of(context).primaryColor,

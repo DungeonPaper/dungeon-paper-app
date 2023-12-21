@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 
 class SelectBox<T> extends StatelessWidget {
   const SelectBox({
-    Key? key,
+    super.key,
     //
     this.label,
     //
@@ -33,7 +33,7 @@ class SelectBox<T> extends StatelessWidget {
     this.enableFeedback,
     this.alignment = AlignmentDirectional.centerStart,
     this.borderRadius,
-  }) : super(key: key);
+  });
 
   //
   final Widget? label;

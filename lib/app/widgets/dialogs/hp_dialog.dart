@@ -1,6 +1,5 @@
 import 'dart:math';
 
-import 'package:dungeon_paper/app/data/models/character.dart';
 import 'package:dungeon_paper/app/data/services/character_provider.dart';
 import 'package:dungeon_paper/app/widgets/atoms/hp_bar.dart';
 import 'package:dungeon_paper/app/widgets/atoms/number_text_field.dart';

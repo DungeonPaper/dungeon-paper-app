@@ -2,10 +2,10 @@ import 'package:flutter/material.dart';
 
 class PageControllerFractionalBox extends StatelessWidget {
   const PageControllerFractionalBox({
-    Key? key,
+    super.key,
     required this.controller,
     required this.child,
-  }) : super(key: key);
+  });
 
   final PageController controller;
   final Widget child;

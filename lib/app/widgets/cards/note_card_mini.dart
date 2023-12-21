@@ -5,13 +5,13 @@ import 'dynamic_action_card_mini.dart';
 
 class NoteCardMini extends StatelessWidget {
   const NoteCardMini({
-    Key? key,
+    super.key,
     required this.note,
     this.showStar = true,
     this.showIcon = true,
     this.onSave,
     this.onTap,
-  }) : super(key: key);
+  });
 
   final Note note;
   final bool showStar;

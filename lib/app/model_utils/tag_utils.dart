@@ -9,7 +9,7 @@ class TagUtils {
       .toList();
 
   static Widget iconOf(dw.Tag tag) => Transform.rotate(
-        child: const Icon(Icons.label),
         angle: degToRad(-45.0),
+        child: const Icon(Icons.label),
       );
 }

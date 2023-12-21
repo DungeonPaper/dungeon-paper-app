@@ -76,6 +76,7 @@ dependencies:
   wheel_spinner: ^0.7.2
   provider: ^6.1.1
   pub_semver: ^2.1.4
+  markdown: ^7.1.1
   # wheel_spinner:
   #   path: ../wheel_spinner
 

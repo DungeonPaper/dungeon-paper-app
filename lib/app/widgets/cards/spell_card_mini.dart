@@ -7,7 +7,7 @@ import 'dynamic_action_card_mini.dart';
 
 class SpellCardMini extends StatelessWidget {
   const SpellCardMini({
-    Key? key,
+    super.key,
     required this.spell,
     this.showDice = true,
     this.showStar = true,
@@ -15,7 +15,7 @@ class SpellCardMini extends StatelessWidget {
     this.onSave,
     this.onTap,
     required this.abilityScores,
-  }) : super(key: key);
+  });
 
   final Spell spell;
   final bool showDice;

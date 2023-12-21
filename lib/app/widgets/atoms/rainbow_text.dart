@@ -62,7 +62,7 @@ class RainbowText extends StatelessWidget {
             : pattern!;
     final split = text.split(splitPattern);
     final rainbow = ColorUtils.generateRainbow(split.length);
-    final _joiner = joiner ??
+    final joiner = this.joiner ??
         (splitMode == SplitMode.characters
             ? ''
             : splitMode == SplitMode.words
@@ -73,7 +73,7 @@ class RainbowText extends StatelessWidget {
         children: [
           for (final i in enumerate(split))
             TextSpan(
-              text: i.value + _joiner,
+              text: i.value + joiner,
               style: textTheme.bodyMedium!.copyWith(color: rainbow[i.index]),
             ),
         ],
@@ -82,8 +82,7 @@ class RainbowText extends StatelessWidget {
       textDirection: textDirection,
       softWrap: softWrap,
       overflow: overflow,
-      textScaleFactor: textScaleFactor,
-      maxLines: maxLines,
+      maxLines: maxLines, textScaler: TextScaler.linear(textScaleFactor),
       locale: locale,
       strutStyle: strutStyle,
       textWidthBasis: textWidthBasis,

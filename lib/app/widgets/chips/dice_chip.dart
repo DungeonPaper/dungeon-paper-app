@@ -6,7 +6,7 @@ import 'package:dungeon_world_data/dungeon_world_data.dart' as dw;
 
 class DiceChip extends StatelessWidget {
   const DiceChip({
-    Key? key,
+    super.key,
     required this.dice,
     this.onPressed,
     this.onDeleted,
@@ -14,7 +14,7 @@ class DiceChip extends StatelessWidget {
     this.backgroundColor,
     this.visualDensity,
     this.label,
-  }) : super(key: key);
+  });
 
   final dw.Dice dice;
   final void Function()? onPressed;

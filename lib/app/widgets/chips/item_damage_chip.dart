@@ -7,10 +7,10 @@ import 'package:intl/intl.dart';
 
 class ItemDamageChip extends StatelessWidget {
   const ItemDamageChip({
-    Key? key,
+    super.key,
     required this.item,
     this.visualDensity,
-  }) : super(key: key);
+  });
 
   final Item item;
   final VisualDensity? visualDensity;
