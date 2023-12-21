@@ -1,8 +1,8 @@
 import 'package:dungeon_paper/app/data/models/character_class.dart';
 import 'package:dungeon_paper/app/data/models/gear_choice.dart';
 import 'package:dungeon_paper/app/data/models/gear_selection.dart';
+import 'package:dungeon_paper/core/utils/list_utils.dart';
 import 'package:flutter/widgets.dart';
-import 'package:get/utils.dart';
 
 class StartingGearFormController extends ChangeNotifier {
   final availableGear = <GearChoice>[];

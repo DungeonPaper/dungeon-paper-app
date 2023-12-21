@@ -46,7 +46,6 @@ dependencies:
   flutter_markdown: ^0.6.10+2
   flutter_native_splash: ^2.2.5
   flutter_svg: ^2.0.9
-  get: ^4.6.1
   google_sign_in: ^5.3.3
   google_sign_in_ios: ^5.7.0
   http: ^0.13.4

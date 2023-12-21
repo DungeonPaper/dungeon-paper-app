@@ -38,8 +38,8 @@ class CardBuilderData<T> {
 }
 
 class LibraryListView<T extends WithMeta, F extends EntityFilters<T>>
-    extends StatelessWidget {
-  LibraryListView({
+    extends StatefulWidget {
+  const LibraryListView({
     super.key,
     this.title,
     required this.cardBuilder,
@@ -48,11 +48,26 @@ class LibraryListView<T extends WithMeta, F extends EntityFilters<T>>
 
   final Widget? title;
   final CardBuilder<T> cardBuilder;
-  final pageStorageBucket = PageStorageBucket();
   final Widget Function(FiltersGroup group, F filters,
       void Function(FiltersGroup group, F filters) update)? filtersBuilder;
 
-  bool get useFilters => filtersBuilder != null;
+  @override
+  State<LibraryListView<T, F>> createState() => _LibraryListViewState<T, F>();
+}
+
+class _LibraryListViewState<T extends WithMeta, F extends EntityFilters<T>>
+    extends State<LibraryListView<T, F>> with SingleTickerProviderStateMixin {
+  late final TabController tabController;
+  final pageStorageBucket = PageStorageBucket();
+
+  @override
+  void initState() {
+    super.initState();
+    tabController = TabController(length: 2, vsync: this);
+  }
+
+  bool get useFilters => widget.filtersBuilder != null;
+
   F playbookFilters(BuildContext context) {
     final controller =
         Provider.of<LibraryListController<T, F>>(context, listen: false);
@@ -75,7 +90,7 @@ class LibraryListView<T extends WithMeta, F extends EntityFilters<T>>
             : tr.entity(tn(T));
         return Scaffold(
           appBar: AppBar(
-            title: title ??
+            title: widget.title ??
                 Text(
                   controller.selectable
                       ? tr.generic.selectEntity(entityTitleName)
@@ -89,7 +104,7 @@ class LibraryListView<T extends WithMeta, F extends EntityFilters<T>>
               mainAxisSize: MainAxisSize.min,
               children: [
                 TabBar(
-                  controller: controller.tabController,
+                  controller: tabController,
                   labelColor: Theme.of(context).colorScheme.onSurface,
                   unselectedLabelColor: Theme.of(context).colorScheme.onSurface,
                   tabs: [
@@ -102,12 +117,12 @@ class LibraryListView<T extends WithMeta, F extends EntityFilters<T>>
                 ),
                 Expanded(
                   child: TabBarView(
-                    controller: controller.tabController,
+                    controller: tabController,
                     children: [
                       LibraryCardList<T, F>.builder(
                         group: FiltersGroup.playbook,
                         useFilters: useFilters,
-                        filtersBuilder: filtersBuilder,
+                        filtersBuilder: widget.filtersBuilder,
                         filters: playbookFilters(context),
                         extraData: controller.extraData,
                         totalItemCount: controller.builtInListRaw.length,
@@ -124,7 +139,7 @@ class LibraryListView<T extends WithMeta, F extends EntityFilters<T>>
                             controller.storageKey, item),
                         extraData: controller.extraData,
                         useFilters: useFilters,
-                        filtersBuilder: filtersBuilder,
+                        filtersBuilder: widget.filtersBuilder,
                         filters: myFilters(context),
                         totalItemCount: controller.myListRaw.length,
                         itemCount: controller.myList.length,
@@ -243,8 +258,9 @@ class LibraryListView<T extends WithMeta, F extends EntityFilters<T>>
                         : Colors.transparent,
               ),
             ),
-            child: cardBuilder(context, cardData),
+            child: widget.cardBuilder(context, cardData),
           );
         },
       );
 }
+

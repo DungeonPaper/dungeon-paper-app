@@ -26,14 +26,17 @@ class RepositoryProvider extends ChangeNotifier {
       Provider.of<RepositoryProvider>(context, listen: false);
 
   static Widget consumer(
-          Widget Function(
-                  BuildContext context, RepositoryProvider repo, Widget? child)
-              builder) =>
+    Widget Function(
+      BuildContext context,
+      RepositoryProvider repo,
+      Widget? child,
+    ) builder,
+  ) =>
       Consumer<RepositoryProvider>(builder: builder);
   StorageDelegate get storage => StorageHandler.instance;
 
   RepositoryProvider() {
-    // loadAllData();
+    loadAllData();
     builtIn.addListener(notifyListeners);
     my.addListener(notifyListeners);
   }
@@ -130,8 +133,8 @@ abstract class RepositoryCache extends ChangeNotifier {
         try {
           resp = await getFromRemote;
           await setAllFrom(resp, saveIntoCache: true);
-        } catch (e) {
-          debugPrint('[$id] Error loading from remote: $e');
+        } catch (e, stack) {
+          debugPrint('[$id] Error loading from remote: $e\n$stack');
           resp = SearchResponse.empty();
         }
       } else {
@@ -455,7 +458,8 @@ class PersonalRepository extends RepositoryCache {
           };
           return Future.wait(futures.values).then((v) async {
             final map = {
-              for (final e in enumerate(v)) futures.keys.elementAt(e.index): e
+              for (final e in enumerate(v))
+                futures.keys.elementAt(e.index): e.value
             };
             return SearchResponse.fromJson(map);
           });
@@ -474,3 +478,4 @@ mixin RepositoryProviderMixin {
       RepositoryProvider.of(appGlobalKey.currentContext!);
   RepositoryProvider get repository => repo;
 }
+

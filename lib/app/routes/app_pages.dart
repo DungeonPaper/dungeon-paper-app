@@ -1,7 +1,5 @@
-import 'package:dungeon_paper/app/modules/ImportExport/controllers/export_controller.dart';
-import 'package:dungeon_paper/app/modules/ImportExport/controllers/import_controller.dart';
 import 'package:dungeon_world_data/dice.dart';
-import 'package:flutter/widgets.dart';
+import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import '../data/models/character_class.dart';
@@ -35,9 +33,17 @@ import '../modules/CreateCharacter/SelectMovesSpells/views/select_moves_spells_v
 import '../modules/CreateCharacter/controllers/create_character_controller.dart';
 import '../modules/CreateCharacter/views/create_character_view.dart';
 import '../modules/Home/views/home_view.dart';
+import '../modules/ImportExport/controllers/export_controller.dart';
+import '../modules/ImportExport/controllers/import_controller.dart';
 import '../modules/ImportExport/controllers/import_export_controller.dart';
 import '../modules/ImportExport/views/import_export_view.dart';
+import '../modules/LibraryList/controllers/library_list_controller.dart';
 import '../modules/LibraryList/views/character_classes_library_list_view.dart';
+import '../modules/LibraryList/views/filters/character_class_filters.dart';
+import '../modules/LibraryList/views/filters/item_filters.dart';
+import '../modules/LibraryList/views/filters/move_filters.dart';
+import '../modules/LibraryList/views/filters/race_filters.dart';
+import '../modules/LibraryList/views/filters/spell_filters.dart';
 import '../modules/LibraryList/views/items_library_list_view.dart';
 import '../modules/LibraryList/views/library_collection_view.dart';
 import '../modules/LibraryList/views/moves_library_list_view.dart';
@@ -76,6 +82,13 @@ class AppPages {
 
   static const initial = Routes.home;
 
+  static Route<dynamic>? onGenerateRoute(RouteSettings settings) {
+    return MaterialPageRoute(
+      settings: settings,
+      builder: (context) => routes[settings.name]!(context),
+    );
+  }
+
   static final routes = {
     Routes.login: (context) => ChangeNotifierProvider(
           create: (_) => LoginController(),
@@ -109,35 +122,52 @@ class AppPages {
 
     Routes.library: (context) => const LibraryCollectionView(),
 
-    Routes.moves: (context) => const MovesLibraryListView(),
+    Routes.moves: (context) => ChangeNotifierProvider(
+          create: (_) => LibraryListController<Move, MoveFilters>(context),
+          child: const MovesLibraryListView(),
+        ),
 
     Routes.editMove: (context) => ChangeNotifierProvider(
           create: (context) => MoveFormController(context),
           child: const MoveForm(),
         ),
 
-    Routes.spells: (context) => const SpellsLibraryListView(),
+    Routes.spells: (context) => ChangeNotifierProvider(
+          create: (_) => LibraryListController<Spell, SpellFilters>(context),
+          child: const SpellsLibraryListView(),
+        ),
 
     Routes.editSpell: (context) => ChangeNotifierProvider(
           create: (context) => SpellFormController(context),
           child: const SpellForm(),
         ),
 
-    Routes.items: (context) => const ItemsLibraryListView(),
+    Routes.items: (context) => ChangeNotifierProvider(
+          create: (_) => LibraryListController<Item, ItemFilters>(context),
+          child: const ItemsLibraryListView(),
+        ),
 
     Routes.editItem: (context) => ChangeNotifierProvider(
           create: (context) => ItemFormController(context),
           child: const ItemForm(),
         ),
 
-    Routes.classes: (context) => const CharacterClassesLibraryListView(),
+    Routes.classes: (context) => ChangeNotifierProvider(
+          create: (_) =>
+              LibraryListController<CharacterClass, CharacterClassFilters>(
+                  context),
+          child: const CharacterClassesLibraryListView(),
+        ),
 
     Routes.editClass: (context) => ChangeNotifierProvider(
           create: (context) => CharacterClassFormController(context),
           child: const CharacterClassForm(),
         ),
 
-    Routes.races: (context) => const RacesLibraryListView(),
+    Routes.races: (context) => ChangeNotifierProvider(
+          create: (_) => LibraryListController<Race, RaceFilters>(context),
+          child: const RacesLibraryListView(),
+        ),
 
     Routes.editRace: (context) => ChangeNotifierProvider(
           create: (context) => RaceFormController(context),

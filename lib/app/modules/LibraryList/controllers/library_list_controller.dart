@@ -17,13 +17,13 @@ enum FiltersGroup {
 class LibraryListController<T extends WithMeta, F extends EntityFilters<T>>
     extends ChangeNotifier
     with CharacterProviderMixin, RepositoryProviderMixin {
-  final LibraryListArguments<T, F> arguments;
+  late final LibraryListArguments<T, F> arguments;
 
   final selected = <T>[];
   final removed = <T>[];
   final filters = <FiltersGroup, F?>{};
   final search = <FiltersGroup, TextEditingController>{};
-  late final TabController tabController;
+  // late final TabController tabController;
 
   bool get selectable => arguments.onSelected != null;
 
@@ -43,19 +43,20 @@ class LibraryListController<T extends WithMeta, F extends EntityFilters<T>>
   Map<String, dynamic> get extraData => arguments.extraData;
   void Function(Iterable<T> items)? get onSelected => arguments.onSelected;
 
-  LibraryListController(
-      {required this.arguments, required TickerProvider vsync}) {
+  LibraryListController(BuildContext context) {
+    arguments = ModalRoute.of(context)!.settings.arguments
+        as LibraryListArguments<T, F>;
     filters.addAll(arguments.filters.cast<FiltersGroup, F?>());
     search[FiltersGroup.playbook] ??= TextEditingController();
     search[FiltersGroup.playbook]!.addListener(_updatePlaybookSearch);
     search[FiltersGroup.my] ??= TextEditingController();
     search[FiltersGroup.my]!.addListener(_updateMySearch);
-    tabController = TabController(
-      initialIndex: FiltersGroup.values.indexOf(arguments.initialTab),
-      // length: 3,
-      length: 2,
-      vsync: vsync,
-    );
+    // tabController = TabController(
+    //   initialIndex: FiltersGroup.values.indexOf(arguments.initialTab),
+    //   // length: 3,
+    //   length: 2,
+    //   vsync: animatableGlobalKey.currentContext! as TickerProviderStateMixin,
+    // );
   }
 
   @override
@@ -228,3 +229,4 @@ abstract class LibraryListArguments<T extends WithMeta,
     FiltersGroup? initialTab = FiltersGroup.playbook,
   }) : initialTab = initialTab ?? FiltersGroup.playbook;
 }
+

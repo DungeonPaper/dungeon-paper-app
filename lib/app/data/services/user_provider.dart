@@ -41,12 +41,12 @@ class UserProvider extends ChangeNotifier with RepositoryProviderMixin {
       );
 
   Future<void> loadBuiltInRepo({bool ignoreCache = false}) async {
-    await repo.builtIn.dispose();
+    // await repo.builtIn.dispose();
     return repo.builtIn.init(ignoreCache: ignoreCache);
   }
 
   Future<void> loadMyRepo({bool ignoreCache = false}) async {
-    await repo.my.dispose();
+    // await repo.my.dispose();
     return repo.my.init(ignoreCache: ignoreCache);
   }
 

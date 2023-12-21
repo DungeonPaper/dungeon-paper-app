@@ -31,7 +31,6 @@ class HomeCharacterDynamicCards extends StatelessWidget
     with CharacterProviderMixin {
   const HomeCharacterDynamicCards({super.key});
 
-  // TODO fix these contexts
   List<Move> get moves =>
       (maybeChar?.moves ?? <Move>[]).where((m) => m.favorite).toList();
   List<Spell> get spells => (charProvider.maybeCurrent?.spells ?? <Spell>[])
@@ -46,211 +45,205 @@ class HomeCharacterDynamicCards extends StatelessWidget
   Widget build(BuildContext context) {
     const cardSize = Size(210, 151);
     final maxContentHeight = MediaQuery.of(context).size.height - 250;
-    return Column(
-      mainAxisSize: MainAxisSize.min,
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        //
-        // NOTES
-        //
-        if (notes.isNotEmpty) ...[
-          const SizedBox(height: 10),
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 16),
-            child: Text(tr.home.categories.notes),
-          ),
-        ],
-        HorizontalCardListView<Note>(
-          cardSize: cardSize,
-          items: notes,
-          cardBuilder: (context, note, index, onTap) =>
-              CharacterProvider.consumer(
-            (context, controller, _) => NoteCardMini(
+    return CharacterProvider.consumer(
+      (context, controller, _) => Column(
+        mainAxisSize: MainAxisSize.min,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          //
+          // NOTES
+          //
+          if (notes.isNotEmpty) ...[
+            const SizedBox(height: 10),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 16),
+              child: Text(tr.home.categories.notes),
+            ),
+          ],
+          HorizontalCardListView<Note>(
+            cardSize: cardSize,
+            items: notes,
+            cardBuilder: (context, note, index, onTap) => NoteCardMini(
               note: notes[index],
               onTap: onTap,
               onSave: (note) => controller.updateCharacter(
                 CharacterUtils.updateNotes(controller.current, [note]),
               ),
             ),
-          ),
-          expandedCardBuilder: (context, note, index) =>
-              CharacterProvider.consumer(
-            (context, controller, _) {
-              return notes.isNotEmpty && index < notes.length
-                  ? NoteCard(
-                      maxContentHeight: maxContentHeight,
-                      expandable: false,
-                      initiallyExpanded: true,
-                      note: notes[index],
-                      actions: [
-                        EntityEditMenu(
-                          onEdit: () => ModelPages.openNotePage(
-                            context,
-                            note: notes[index],
-                            onSave: (note) => controller.updateCharacter(
-                              CharacterUtils.updateNotes(
-                                  controller.current, [note]),
-                            ),
-                          ),
-                          onDelete: _delete(
-                            context,
-                            note,
-                            note.title,
-                            tn(Note),
-                            () => controller.updateCharacter(
-                              CharacterUtils.removeNotes(
-                                  controller.current, [note]),
-                            ),
+            expandedCardBuilder: (context, note, index) => notes.isNotEmpty &&
+                    index < notes.length
+                ? NoteCard(
+                    maxContentHeight: maxContentHeight,
+                    expandable: false,
+                    initiallyExpanded: true,
+                    note: notes[index],
+                    actions: [
+                      EntityEditMenu(
+                        onEdit: () => ModelPages.openNotePage(
+                          context,
+                          note: notes[index],
+                          onSave: (note) => controller.updateCharacter(
+                            CharacterUtils.updateNotes(
+                                controller.current, [note]),
                           ),
                         ),
-                      ],
-                      onSave: (note) {
-                        controller.updateCharacter(
-                          CharacterUtils.updateNotes(
-                              controller.current, [note]),
-                        );
-                        if (!note.favorite) {
-                          Navigator.of(context).pop();
-                        }
-                      },
-                    )
-                  : const SizedBox.shrink();
-            },
-          ),
-        ),
-        //
-        // MOVES
-        //
-        if (moves.isNotEmpty)
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 16),
-            child: Text(tr.home.categories.moves),
-          ),
-        CharacterProvider.consumer((context, controller, _) {
-          final raceCardMini = controller.current.race.favorite
-              ? RaceCardMini(
-                  race: controller.current.race,
-                  onTap: () => showDialog(
-                    context: context,
-                    builder: (context) => ExpandedCardDialogView<Race>(
-                      // heroTag: getKeyFor(item.value),
-                      heroTag: null,
-                      builder: (context) => RaceCard(
-                        maxContentHeight: maxContentHeight,
-                        expandable: false,
-                        initiallyExpanded: true,
-                        race: controller.current.race,
-                        actions: [
-                          EntityEditMenu(
-                            onEdit: () => ModelPages.openRacePage(
-                              context,
-                              abilityScores: controller.current.abilityScores,
-                              race: controller.current.race,
-                              onSave: (race) => controller.updateCharacter(
-                                controller.current.copyWith(race: race),
-                              ),
-                            ),
-                            onDelete: null,
+                        onDelete: _delete(
+                          context,
+                          note,
+                          note.title,
+                          tn(Note),
+                          () => controller.updateCharacter(
+                            CharacterUtils.removeNotes(
+                                controller.current, [note]),
                           ),
-                        ],
-                        onSave: (race) => controller.updateCharacter(
-                          controller.current.copyWith(race: race),
                         ),
                       ),
-                    ),
-                  ),
-                  onSave: (race) => controller.updateCharacter(
-                    controller.current.copyWith(race: race),
-                  ),
-                )
-              : null;
-          return HorizontalCardListView<Move>(
-            cardSize: cardSize,
-            items: moves,
-            cardBuilder: (context, move, index, onTap) =>
-                CharacterProvider.consumer(
-              (context, controller, _) => MoveCardMini(
-                move: moves[index],
-                onTap: onTap,
-                onSave: (move) => controller.updateCharacter(
-                  CharacterUtils.updateMoves(controller.current, [move]),
-                ),
-                abilityScores: controller.current.abilityScores,
-              ),
+                    ],
+                    onSave: (note) {
+                      controller.updateCharacter(
+                        CharacterUtils.updateNotes(controller.current, [note]),
+                      );
+                      if (!note.favorite) {
+                        Navigator.of(context).pop();
+                      }
+                    },
+                  )
+                : const SizedBox.shrink(),
+          ),
+          //
+          // MOVES
+          //
+          if (moves.isNotEmpty)
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 16),
+              child: Text(tr.home.categories.moves),
             ),
-            expandedCardBuilder: (context, move, index) =>
-                CharacterProvider.consumer(
-              (context, controller, _) {
-                final library = LibraryProvider.of(context);
-                return moves.isNotEmpty && index < moves.length
-                    ? MoveCard(
-                        maxContentHeight: maxContentHeight,
-                        expandable: false,
-                        initiallyExpanded: true,
-                        move: moves[index],
-                        abilityScores: controller.current.abilityScores,
-                        actions: [
-                          EntityEditMenu(
-                            onEdit: () => ModelPages.openMovePage(
-                              context,
-                              abilityScores: controller.current.abilityScores,
-                              move: moves[index],
-                              onSave: (move) => library.upsertToCharacter(
-                                  [move],
-                                  forkBehavior: ForkBehavior.increaseVersion),
-                            ),
-                            onDelete: _delete(
-                              context,
-                              move,
-                              move.name,
-                              tn(Move),
-                              () => controller.updateCharacter(
-                                CharacterUtils.removeMoves(
-                                    controller.current, [move]),
+          Builder(
+            builder: (context) {
+              final raceCardMini = controller.current.race.favorite
+                  ? RaceCardMini(
+                      race: controller.current.race,
+                      onTap: () => showDialog(
+                        context: context,
+                        builder: (context) => ExpandedCardDialogView<Race>(
+                          // heroTag: getKeyFor(item.value),
+                          heroTag: null,
+                          builder: (context) => RaceCard(
+                            maxContentHeight: maxContentHeight,
+                            expandable: false,
+                            initiallyExpanded: true,
+                            race: controller.current.race,
+                            actions: [
+                              EntityEditMenu(
+                                onEdit: () => ModelPages.openRacePage(
+                                  context,
+                                  abilityScores:
+                                      controller.current.abilityScores,
+                                  race: controller.current.race,
+                                  onSave: (race) => controller.updateCharacter(
+                                    controller.current.copyWith(race: race),
+                                  ),
+                                ),
+                                onDelete: null,
                               ),
+                            ],
+                            onSave: (race) => controller.updateCharacter(
+                              controller.current.copyWith(race: race),
                             ),
                           ),
-                        ],
-                        onSave: (move) {
-                          controller.updateCharacter(
-                            CharacterUtils.updateMoves(
-                                controller.current, [move]),
-                          );
-                          if (!move.favorite) {
-                            Navigator.of(context).pop();
-                          }
-                        },
-                      )
-                    : const SizedBox.shrink();
-              },
-            ),
-            leading: raceCardMini != null &&
-                    controller.current.settings.racePosition ==
-                        RacePosition.start
-                ? [raceCardMini]
-                : [],
-            trailing: raceCardMini != null &&
-                    controller.current.settings.racePosition == RacePosition.end
-                ? [raceCardMini]
-                : [],
-          );
-        }),
-        //
-        // SPELLS
-        //
-        if (spells.isNotEmpty) ...[
-          const SizedBox(height: 10),
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 16),
-            child: Text(tr.home.categories.spells),
+                        ),
+                      ),
+                      onSave: (race) => controller.updateCharacter(
+                        controller.current.copyWith(race: race),
+                      ),
+                    )
+                  : null;
+              return HorizontalCardListView<Move>(
+                cardSize: cardSize,
+                items: moves,
+                cardBuilder: (context, move, index, onTap) =>
+                     MoveCardMini(
+                    move: moves[index],
+                    onTap: onTap,
+                    onSave: (move) => controller.updateCharacter(
+                      CharacterUtils.updateMoves(controller.current, [move]),
+                    ),
+                    abilityScores: controller.current.abilityScores,
+                ),
+                expandedCardBuilder: (context, move, index) =>
+                    LibraryProvider.consumer(
+                  (context, library, _) {
+                    return moves.isNotEmpty && index < moves.length
+                        ? MoveCard(
+                            maxContentHeight: maxContentHeight,
+                            expandable: false,
+                            initiallyExpanded: true,
+                            move: moves[index],
+                            abilityScores: controller.current.abilityScores,
+                            actions: [
+                              EntityEditMenu(
+                                onEdit: () => ModelPages.openMovePage(
+                                  context,
+                                  abilityScores:
+                                      controller.current.abilityScores,
+                                  move: moves[index],
+                                  onSave: (move) => library.upsertToCharacter(
+                                      [move],
+                                      forkBehavior:
+                                          ForkBehavior.increaseVersion),
+                                ),
+                                onDelete: _delete(
+                                  context,
+                                  move,
+                                  move.name,
+                                  tn(Move),
+                                  () => controller.updateCharacter(
+                                    CharacterUtils.removeMoves(
+                                        controller.current, [move]),
+                                  ),
+                                ),
+                              ),
+                            ],
+                            onSave: (move) {
+                              controller.updateCharacter(
+                                CharacterUtils.updateMoves(
+                                    controller.current, [move]),
+                              );
+                              if (!move.favorite) {
+                                Navigator.of(context).pop();
+                              }
+                            },
+                          )
+                        : const SizedBox.shrink();
+                  },
+                ),
+                leading: raceCardMini != null &&
+                        controller.current.settings.racePosition ==
+                            RacePosition.start
+                    ? [raceCardMini]
+                    : [],
+                trailing: raceCardMini != null &&
+                        controller.current.settings.racePosition ==
+                            RacePosition.end
+                    ? [raceCardMini]
+                    : [],
+              );
+            },
           ),
-        ],
-        HorizontalCardListView<Spell>(
-          cardSize: cardSize,
-          items: spells,
-          cardBuilder: (context, spell, index, onTap) =>
-              CharacterProvider.consumer(
-            (context, controller, _) => SpellCardMini(
+          //
+          // SPELLS
+          //
+          if (spells.isNotEmpty) ...[
+            const SizedBox(height: 10),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 16),
+              child: Text(tr.home.categories.spells),
+            ),
+          ],
+          HorizontalCardListView<Spell>(
+            cardSize: cardSize,
+            items: spells,
+            cardBuilder: (context, spell, index, onTap) => SpellCardMini(
               spell: spells[index],
               onTap: onTap,
               onSave: (spell) => controller.updateCharacter(
@@ -258,10 +251,7 @@ class HomeCharacterDynamicCards extends StatelessWidget
               ),
               abilityScores: controller.current.abilityScores,
             ),
-          ),
-          expandedCardBuilder: (context, spell, index) =>
-              CharacterProvider.consumer(
-            (context, controller, _) =>
+            expandedCardBuilder: (context, spell, index) =>
                 spells.isNotEmpty && index < spells.length
                     ? SpellCard(
                         maxContentHeight: maxContentHeight,
@@ -305,33 +295,28 @@ class HomeCharacterDynamicCards extends StatelessWidget
                       )
                     : const SizedBox.shrink(),
           ),
-        ),
-        //
-        // ITEMS
-        //
-        if (items.isNotEmpty) ...[
-          const SizedBox(height: 10),
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 16),
-            child: Text(tr.home.categories.items),
-          ),
-        ],
-        HorizontalCardListView<Item>(
-          cardSize: cardSize,
-          items: items,
-          cardBuilder: (context, item, index, onTap) =>
-              CharacterProvider.consumer(
-            (context, controller, _) => ItemCardMini(
+          //
+          // ITEMS
+          //
+          if (items.isNotEmpty) ...[
+            const SizedBox(height: 10),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 16),
+              child: Text(tr.home.categories.items),
+            ),
+          ],
+          HorizontalCardListView<Item>(
+            cardSize: cardSize,
+            items: items,
+            cardBuilder: (context, item, index, onTap) => ItemCardMini(
               item: items[index],
               onTap: onTap,
               onSave: (item) => controller.updateCharacter(
                 CharacterUtils.updateItems(controller.current, [item]),
               ),
             ),
-          ),
-          expandedCardBuilder: (context, item, index) =>
-              CharacterProvider.consumer(
-            (context, controller, _) => items.isNotEmpty && index < items.length
+            expandedCardBuilder: (context, item, index) => items.isNotEmpty &&
+                    index < items.length
                 ? ItemCard(
                     maxContentHeight: maxContentHeight,
                     expandable: false,
@@ -411,8 +396,8 @@ class HomeCharacterDynamicCards extends StatelessWidget
                   )
                 : const SizedBox.shrink(),
           ),
-        ),
-      ],
+        ],
+      ),
     );
   }
 

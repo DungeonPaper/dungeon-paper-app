@@ -13,12 +13,9 @@ import 'package:dungeon_paper/app/widgets/atoms/menu_button.dart';
 import 'package:dungeon_paper/i18n.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import 'package:provider/provider.dart';
-
-import '../controllers/library_collection_controller.dart';
 
 class LibraryCollectionView extends StatelessWidget
-    with RepositoryProviderMixin, UserProviderMixin, CharacterProviderMixin {
+    with UserProviderMixin, CharacterProviderMixin {
   static const List<Type> types = [Move, Spell, Item, CharacterClass, Race];
 
   const LibraryCollectionView({super.key});
@@ -37,7 +34,7 @@ class LibraryCollectionView extends StatelessWidget
               MenuEntry(
                 label: Text(tr.myLibrary.reload),
                 icon: const Icon(Icons.refresh),
-                disabled: repo.my.isLoading || repo.builtIn.isLoading,
+                // disabled: repo.my.isLoading || repo.builtIn.isLoading,
                 value: 'refresh',
                 onSelect: () {
                   userProvider.loadBuiltInRepo(ignoreCache: true);
@@ -52,8 +49,8 @@ class LibraryCollectionView extends StatelessWidget
         padding: const EdgeInsets.all(8),
         itemCount: types.length,
         itemBuilder: (context, index) {
-          return Consumer<LibraryCollectionController>(
-            builder: (context, controller, _) {
+          return RepositoryProvider.consumer(
+            (context, repo, _) {
               final type = types[index];
               return Card(
                 child: ListTile(
@@ -107,3 +104,4 @@ class LibraryCollectionView extends StatelessWidget
     );
   }
 }
+

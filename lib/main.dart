@@ -99,6 +99,8 @@ class DungeonPaperApp extends StatelessWidget {
             title: tr.app.name,
             theme: value,
             key: appGlobalKey,
+            navigatorKey: navigatorKey,
+            onGenerateRoute: AppPages.onGenerateRoute,
             initialRoute: AppPages.initial,
             routes: AppPages.routes,
           ),
