@@ -29,7 +29,7 @@ class UserProvider extends ChangeNotifier with RepositoryProviderMixin {
   StreamSubscription? _userDataSub;
 
   UserProvider() {
-    loadBuiltInRepo();
+    // loadBuiltInRepo();
   }
 
   static UserProvider of(BuildContext context) =>

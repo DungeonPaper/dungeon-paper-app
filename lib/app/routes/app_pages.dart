@@ -1,3 +1,4 @@
+import 'package:dungeon_paper/app/routes/custom_transitions.dart';
 import 'package:dungeon_paper/core/route_arguments.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -82,14 +83,46 @@ class AppPages {
 
   static const initial = Routes.home;
 
-  static Route<dynamic>? onGenerateRoute(RouteSettings settings) {
+  /// https://github.com/DungeonPaper/dungeon-paper-app/blob/86b660037e2e0aeb7b83930efb33785a0d829ebe/lib/app/routes/app_pages.dart#L99
+  static Route<dynamic> onGenerateRoute(RouteSettings settings) {
+    final route = settings.name;
+    final builder = routes[route];
+    debugPrint('[ROUTER] Building route $route');
+    if (builder == null) {
+      throw Exception('No route defined for $route');
+    }
+    if (transitionsMap.containsKey(route)) {
+      return transitionsMap[route]!(builder, settings);
+    }
     return MaterialPageRoute(
+      builder: builder,
       settings: settings,
-      builder: (context) => routes[settings.name]!(context),
     );
   }
 
-  static final routes = {
+  static final transitionsMap =
+      <String, Route Function(WidgetBuilder builder, RouteSettings settings)>{
+    Routes.rollDice: (builder, settings) => CircularRevealTransitionBuilder(
+          builder: builder,
+          settings: settings,
+          alignment: Alignment.bottomCenter,
+        ),
+    Routes.userMenu: (builder, settings) => CircularRevealTransitionBuilder(
+          builder: builder,
+          settings: settings,
+          alignment: Alignment.topRight,
+          offset: const Offset(-24, 64),
+        ),
+    Routes.universalSearch: (builder, settings) =>
+        CircularRevealTransitionBuilder(
+          builder: builder,
+          settings: settings,
+          alignment: Alignment.topLeft,
+          offset: const Offset(26, 64),
+        ),
+  };
+
+  static final routes = <String, WidgetBuilder>{
     Routes.login: (context) => ChangeNotifierProvider(
           create: (_) => LoginController(),
           child: const LoginView(),
@@ -281,13 +314,4 @@ class AppPages {
         ),
   };
 }
-
-// class CustomTransitions {
-//   static CustomTransition circularReveal({
-//     Offset? offset,
-//     Alignment? alignment,
-//   }) {
-//     return CustomCircularRevealTransition(offset: offset, alignment: alignment);
-//   }
-// }
 

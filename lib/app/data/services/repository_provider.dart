@@ -36,7 +36,7 @@ class RepositoryProvider extends ChangeNotifier {
   StorageDelegate get storage => StorageHandler.instance;
 
   RepositoryProvider() {
-    loadAllData();
+    // loadAllData();
     builtIn.addListener(notifyListeners);
     my.addListener(notifyListeners);
   }

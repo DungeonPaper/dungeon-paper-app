@@ -65,8 +65,19 @@ final _userProvider = UserProvider();
 final _repositoryProvider = RepositoryProvider();
 final _libraryProvider = LibraryProvider();
 
-class DungeonPaperApp extends StatelessWidget {
+class DungeonPaperApp extends StatefulWidget {
   const DungeonPaperApp({super.key});
+
+  @override
+  State<DungeonPaperApp> createState() => _DungeonPaperAppState();
+}
+
+class _DungeonPaperAppState extends State<DungeonPaperApp> {
+  @override
+  void initState() {
+    super.initState();
+    _userProvider.loadBuiltInRepo();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -92,10 +103,10 @@ class DungeonPaperApp extends StatelessWidget {
           title: tr.app.name,
           theme: value,
           key: appGlobalKey,
-          navigatorKey: navigatorKey,
+          // navigatorKey: navigatorKey,
           onGenerateRoute: AppPages.onGenerateRoute,
           initialRoute: AppPages.initial,
-          routes: AppPages.routes,
+          // routes: AppPages.routes,
         ),
       ),
     );
