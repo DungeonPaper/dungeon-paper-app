@@ -1,6 +1,7 @@
 import 'package:dungeon_paper/app/data/services/character_provider.dart';
 import 'package:dungeon_paper/app/widgets/atoms/buffer_progress_bar.dart';
-import 'package:dungeon_paper/app/widgets/chips/primary_chip.dart';
+import 'package:dungeon_paper/core/platform_helper.dart';
+import 'package:dungeon_paper/core/utils/color_utils.dart';
 import 'package:dungeon_paper/i18n.dart';
 import 'package:flutter/material.dart';
 
@@ -34,6 +35,7 @@ class ExpBar extends StatelessWidget {
         final curBuffer = curValue + (curPending);
         final curBufferPercent = curBuffer / maxValue;
 
+        final xpColor = ColorUtils.fromHex6String('#1e88e5');
         return Column(
           mainAxisSize: MainAxisSize.min,
           children: [
@@ -45,34 +47,38 @@ class ExpBar extends StatelessWidget {
                     bufferValue: curBufferPercent,
                     bufferColor: const Color.fromARGB(255, 117, 188, 251),
                     height: 17.5,
-                    color: const Color(0xff1e88e5),
+                    color: xpColor,
                     backgroundColor: Colors.blue[100],
                   ),
                 ),
                 if (showPlusOneButton)
                   Padding(
                     padding: const EdgeInsets.only(left: 8.0),
-                    child: Container(
-                      decoration: BoxDecoration(
-                        shape: BoxShape.circle,
-                        color: Theme.of(context).colorScheme.primaryContainer,
-                      ),
-                      width: 30,
-                      height: 30,
-                      child: IconButton(
-                        icon: const Icon(Icons.plus_one, size: 18),
-                      padding: const EdgeInsets.all(0),
-                      visualDensity: VisualDensity.compact,
-                        onPressed: () {
-                          final char = charService.current;
-                          charService.updateCharacter(
-                            char.copyWith(
-                              stats: char.stats.copyWith(
-                                currentXp: 1 + (char.currentXp),
+                    child: Tooltip(
+                      message: tr.xp.bar.plusOneTooltip(PlatformHelper.actionString(context)),
+                    preferBelow: false,
+                      child: Container(
+                        decoration: BoxDecoration(
+                          shape: BoxShape.circle,
+                          color: xpColor,
+                        ),
+                        width: 30,
+                        height: 30,
+                        child: IconButton(
+                          icon: const Icon(Icons.plus_one, size: 18),
+                        padding: const EdgeInsets.all(0),
+                        visualDensity: VisualDensity.compact,
+                          onPressed: () {
+                            final char = charService.current;
+                            charService.updateCharacter(
+                              char.copyWith(
+                                stats: char.stats.copyWith(
+                                  currentXp: 1 + (char.currentXp),
+                                ),
                               ),
-                            ),
-                          );
-                        },
+                            );
+                          },
+                        ),
                       ),
                     ),
                   ),
@@ -82,7 +88,7 @@ class ExpBar extends StatelessWidget {
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Text(tr.home.bars.xp),
+                Text(tr.xp.bar.label),
                 const SizedBox(width: 8),
                 Text(
                   curValue.toString(),

@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:dungeon_paper/i18n.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import '../app/model_utils/user_utils.dart';
@@ -174,6 +175,14 @@ class PlatformHelper {
     return iOS ?? fallback0;
   }
 
+  static String actionString(BuildContext context) {
+    return byInteractionType(
+      context,
+      touch: tr.platformInteractions.tap,
+      mouse: tr.platformInteractions.click,
+    );
+  }
+
   static T byInteractionType<T>(
     BuildContext context, {
     T? touch,
@@ -250,3 +259,4 @@ class PlatformHelper {
     return android!;
   }
 }
+

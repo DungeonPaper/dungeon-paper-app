@@ -23,6 +23,12 @@ entityCountNum(String ent, int cnt): '$cnt ${entityCount(ent, cnt)}'
 app:
   name: Dungeon Paper
 
+platformInteractions:
+  tap: Tap
+  drag: Drag
+  pan: Pan
+  click: Click
+
 generic:
   save: Save
   saveEntity(String ent): Save $ent
@@ -203,9 +209,6 @@ auth:
         error: Passwords do not match
 
 home:
-  bars:
-    xp: XP
-    hp: HP
   categories:
     notes: Bookmarked Notes
     moves: Favorite Moves
@@ -317,10 +320,7 @@ basicInfo:
       label: Character Name
       placeholder: Enter your character's name
       random:
-        tooltip:
-          _p(String act): $act to generate a random name
-          touch: "${_p('Tap')}"
-          click: "${_p('Click')}"
+        tooltip(String act): $act to generate a random name
     photo:
       change: Change Photo...
       remove: Remove Photo
@@ -448,6 +448,9 @@ hp:
       remove(int amt): Damage\n-$amt
       neutral: No Change
     overrideMax: Override Max HP
+  bar:
+    label: HP
+    tooltip(String act): $act to modify your HP
 
 xp:
   dialog:
@@ -469,7 +472,10 @@ xp:
       resetCheckbox: Reset bonds, flags & end of session questions after saving
       xp: Overwrite XP
       level: Overwrite Level
-
+  bar:
+    label: XP
+    tooltip(String act): $act to end the session, level up or update your XP
+    plusOneTooltip(String act): $act to add +1 XP
 armor:
   title: Armor
   dialog:

@@ -130,6 +130,8 @@ class Messages {
   String entityCountNum(String ent, int cnt) =>
       """$cnt ${entityCount(ent, cnt)}""";
   AppMessages get app => AppMessages(this);
+  PlatformInteractionsMessages get platformInteractions =>
+      PlatformInteractionsMessages(this);
   GenericMessages get generic => GenericMessages(this);
   LoadingMessages get loading => LoadingMessages(this);
   ErrorsMessages get errors => ErrorsMessages(this);
@@ -180,6 +182,31 @@ class AppMessages {
   /// "Dungeon Paper"
   /// ```
   String get name => """Dungeon Paper""";
+}
+
+class PlatformInteractionsMessages {
+  final Messages _parent;
+  const PlatformInteractionsMessages(this._parent);
+
+  /// ```dart
+  /// "Tap"
+  /// ```
+  String get tap => """Tap""";
+
+  /// ```dart
+  /// "Drag"
+  /// ```
+  String get drag => """Drag""";
+
+  /// ```dart
+  /// "Pan"
+  /// ```
+  String get pan => """Pan""";
+
+  /// ```dart
+  /// "Click"
+  /// ```
+  String get click => """Click""";
 }
 
 class GenericMessages {
@@ -735,7 +762,7 @@ class SettingsMessages {
   /// ```dart
   /// "Switch to ${mode} Mode"
   /// ```
-  String _switchMode(String mode) => """Switch to $mode Mode""";
+  String _switchMode(String mode) => """Switch to ${mode} Mode""";
 
   /// ```dart
   /// "${_switchMode('Dark')}"
@@ -1028,26 +1055,10 @@ class ConfirmPasswordSignupAuthMessages {
 class HomeMessages {
   final Messages _parent;
   const HomeMessages(this._parent);
-  BarsHomeMessages get bars => BarsHomeMessages(this);
   CategoriesHomeMessages get categories => CategoriesHomeMessages(this);
   SummaryHomeMessages get summary => SummaryHomeMessages(this);
   MenuHomeMessages get menu => MenuHomeMessages(this);
   EmptyStateHomeMessages get emptyState => EmptyStateHomeMessages(this);
-}
-
-class BarsHomeMessages {
-  final HomeMessages _parent;
-  const BarsHomeMessages(this._parent);
-
-  /// ```dart
-  /// "XP"
-  /// ```
-  String get xp => """XP""";
-
-  /// ```dart
-  /// "HP"
-  /// ```
-  String get hp => """HP""";
 }
 
 class CategoriesHomeMessages {
@@ -1602,28 +1613,11 @@ class NameFormBasicInfoMessages {
 class RandomNameFormBasicInfoMessages {
   final NameFormBasicInfoMessages _parent;
   const RandomNameFormBasicInfoMessages(this._parent);
-  TooltipRandomNameFormBasicInfoMessages get tooltip =>
-      TooltipRandomNameFormBasicInfoMessages(this);
-}
-
-class TooltipRandomNameFormBasicInfoMessages {
-  final RandomNameFormBasicInfoMessages _parent;
-  const TooltipRandomNameFormBasicInfoMessages(this._parent);
 
   /// ```dart
   /// "$act to generate a random name"
   /// ```
-  String _p(String act) => """$act to generate a random name""";
-
-  /// ```dart
-  /// "${_p('Tap')}"
-  /// ```
-  String get touch => """${_p('Tap')}""";
-
-  /// ```dart
-  /// "${_p('Click')}"
-  /// ```
-  String get click => """${_p('Click')}""";
+  String tooltip(String act) => """$act to generate a random name""";
 }
 
 class PhotoFormBasicInfoMessages {
@@ -2103,6 +2097,7 @@ class HpMessages {
   final Messages _parent;
   const HpMessages(this._parent);
   DialogHpMessages get dialog => DialogHpMessages(this);
+  BarHpMessages get bar => BarHpMessages(this);
 }
 
 class DialogHpMessages {
@@ -2141,10 +2136,26 @@ class ChangeDialogHpMessages {
   String get neutral => """No Change""";
 }
 
+class BarHpMessages {
+  final HpMessages _parent;
+  const BarHpMessages(this._parent);
+
+  /// ```dart
+  /// "HP"
+  /// ```
+  String get label => """HP""";
+
+  /// ```dart
+  /// "$act to modify your HP"
+  /// ```
+  String tooltip(String act) => """$act to modify your HP""";
+}
+
 class XpMessages {
   final Messages _parent;
   const XpMessages(this._parent);
   DialogXpMessages get dialog => DialogXpMessages(this);
+  BarXpMessages get bar => BarXpMessages(this);
 }
 
 class DialogXpMessages {
@@ -2249,6 +2260,27 @@ class OverwriteDialogXpMessages {
   /// "Overwrite Level"
   /// ```
   String get level => """Overwrite Level""";
+}
+
+class BarXpMessages {
+  final XpMessages _parent;
+  const BarXpMessages(this._parent);
+
+  /// ```dart
+  /// "XP"
+  /// ```
+  String get label => """XP""";
+
+  /// ```dart
+  /// "$act to end the session, level up or update your XP"
+  /// ```
+  String tooltip(String act) =>
+      """$act to end the session, level up or update your XP""";
+
+  /// ```dart
+  /// "$act to add +1 XP"
+  /// ```
+  String plusOneTooltip(String act) => """$act to add +1 XP""";
 }
 
 class ArmorMessages {
@@ -3518,6 +3550,10 @@ class CharacterClassBundlesExportingBackupMessages {
 
 Map<String, String> get messagesMap => {
       """app.name""": """Dungeon Paper""",
+      """platformInteractions.tap""": """Tap""",
+      """platformInteractions.drag""": """Drag""",
+      """platformInteractions.pan""": """Pan""",
+      """platformInteractions.click""": """Click""",
       """generic.save""": """Save""",
       """generic.cancel""": """Cancel""",
       """generic.close""": """Close""",
@@ -3603,8 +3639,6 @@ Map<String, String> get messagesMap => {
       """auth.signup.password.confirm.placeholder""":
           """Enter the same password again""",
       """auth.signup.password.confirm.error""": """Passwords do not match""",
-      """home.bars.xp""": """XP""",
-      """home.bars.hp""": """HP""",
       """home.categories.notes""": """Bookmarked Notes""",
       """home.categories.moves""": """Favorite Moves""",
       """home.categories.spells""": """Prepared Spells""",
@@ -3721,6 +3755,7 @@ Map<String, String> get messagesMap => {
       """hp.dialog.title""": """Modify HP""",
       """hp.dialog.change.neutral""": """No Change""",
       """hp.dialog.overrideMax""": """Override Max HP""",
+      """hp.bar.label""": """HP""",
       """xp.dialog.endOfSession.title""": """End Session""",
       """xp.dialog.endOfSession.button""": """End Session""",
       """xp.dialog.endOfSession.questions.title""":
@@ -3739,6 +3774,7 @@ Map<String, String> get messagesMap => {
           """Reset bonds, flags & end of session questions after saving""",
       """xp.dialog.overwrite.xp""": """Overwrite XP""",
       """xp.dialog.overwrite.level""": """Overwrite Level""",
+      """xp.bar.label""": """XP""",
       """armor.title""": """Armor""",
       """armor.dialog.title""": """Armor""",
       """armor.dialog.autoArmor""": """Use armor from class & equipped items""",

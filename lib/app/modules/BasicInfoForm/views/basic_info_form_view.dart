@@ -56,10 +56,8 @@ class BasicInfoFormView extends StatelessWidget with UserProviderMixin {
                     hintText: tr.basicInfo.form.name.placeholder,
                     floatingLabelBehavior: FloatingLabelBehavior.always,
                     suffixIcon: IconButton(
-                      tooltip: PlatformHelper.byInteractionType(
-                        context,
-                        touch: tr.basicInfo.form.name.random.tooltip.touch,
-                        mouse: tr.basicInfo.form.name.random.tooltip.click,
+                      tooltip: tr.basicInfo.form.name.random.tooltip(
+                        PlatformHelper.actionString(context),
                       ),
                       icon: const Icon(DwIcons.dice_d6_numbered),
                       onPressed: () {
@@ -189,3 +187,4 @@ class BasicInfoFormView extends StatelessWidget with UserProviderMixin {
     Navigator.of(context).pop();
   }
 }
+
