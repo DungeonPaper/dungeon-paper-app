@@ -13,16 +13,16 @@ class HomeCharacterHpExpView extends StatelessWidget {
   Widget build(BuildContext context) => Row(
         children: [
           Expanded(
-            child: Tooltip(
-              message: tr.hp.bar.tooltip(PlatformHelper.actionString(context)),
-              preferBelow: false,
-              child: InkWell(
-                splashColor: Theme.of(context).splashColor,
-                borderRadius: BorderRadius.circular(10),
-                onTap: () => showDialog(
-                  context: context,
-                  builder: (_) => const HPDialog(),
-                ),
+            child: InkWell(
+              splashColor: Theme.of(context).splashColor,
+              borderRadius: BorderRadius.circular(10),
+              onTap: () => showDialog(
+                context: context,
+                builder: (_) => const HPDialog(),
+              ),
+              child: Tooltip(
+                message: tr.hp.bar.tooltip(PlatformHelper.actionString(context)),
+                preferBelow: false,
                 child: const Padding(
                   padding: EdgeInsets.all(4),
                   child: HpBar(),
@@ -32,16 +32,16 @@ class HomeCharacterHpExpView extends StatelessWidget {
           ),
           const SizedBox(width: 16),
           Expanded(
-            child: Tooltip(
-              message: tr.xp.bar.tooltip(PlatformHelper.actionString(context)),
-              preferBelow: false,
-              child: InkWell(
-                splashColor: Theme.of(context).splashColor,
-                borderRadius: BorderRadius.circular(10),
-                onTap: () => showDialog(
-                  context: context,
-                  builder: (_) => const EXPDialog(),
-                ),
+            child: InkWell(
+              splashColor: Theme.of(context).splashColor,
+              borderRadius: BorderRadius.circular(10),
+              onTap: () => showDialog(
+                context: context,
+                builder: (_) => const EXPDialog(),
+              ),
+              child: Tooltip(
+                message: tr.xp.bar.tooltip(PlatformHelper.actionString(context)),
+                preferBelow: false,
                 child: const Padding(
                   padding: EdgeInsets.all(4),
                   child: ExpBar(showPlusOneButton: true),

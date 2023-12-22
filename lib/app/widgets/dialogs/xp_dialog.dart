@@ -1,6 +1,8 @@
 import 'package:dungeon_paper/app/data/models/ability_scores.dart';
 import 'package:dungeon_paper/app/data/models/character_stats.dart';
+import 'package:dungeon_paper/app/data/models/move.dart';
 import 'package:dungeon_paper/app/data/models/session_marks.dart';
+import 'package:dungeon_paper/app/data/models/spell.dart';
 import 'package:dungeon_paper/app/data/services/character_provider.dart';
 import 'package:dungeon_paper/app/widgets/atoms/custom_expansion_tile.dart';
 import 'package:dungeon_paper/app/widgets/atoms/xp_bar.dart';
@@ -29,6 +31,8 @@ class _EXPDialogState extends State<EXPDialog> with CharacterProviderMixin {
   bool manualExpExpanded = false;
   bool shouldResetSessionMarks = false;
   int selectedAbilityScoreIndex = 0;
+  Move? selectedMove;
+  Spell? selectedSpell;
 
   final endSessionCollapseController = CustomExpansionTileController();
   final levelUpCollapseController = CustomExpansionTileController();
