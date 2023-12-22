@@ -5,6 +5,7 @@ import 'package:dungeon_paper/app/data/services/character_provider.dart';
 import 'package:dungeon_paper/app/widgets/atoms/custom_expansion_tile.dart';
 import 'package:dungeon_paper/app/widgets/atoms/xp_bar.dart';
 import 'package:dungeon_paper/app/widgets/atoms/number_text_field.dart';
+import 'package:dungeon_paper/app/widgets/chips/advanced_chip.dart';
 import 'package:dungeon_paper/app/widgets/chips/primary_chip.dart';
 import 'package:dungeon_paper/app/widgets/molecules/dialog_controls.dart';
 import 'package:dungeon_paper/core/platform_helper.dart';
@@ -37,12 +38,15 @@ class _EXPDialogState extends State<EXPDialog> with CharacterProviderMixin {
 
   @override
   void initState() {
-    overwriteXpText = TextEditingController(text: char.currentXp.toString())..addListener(() => setState(() {}));
-    overwriteLevelText = TextEditingController(text: currentLevel.toString())..addListener(() => setState(() {}));
+    overwriteXpText = TextEditingController(text: char.currentXp.toString())
+      ..addListener(() => setState(() {}));
+    overwriteLevelText = TextEditingController(text: currentLevel.toString())
+      ..addListener(() => setState(() {}));
     eosMarks = char.endOfSessionMarks;
     lastActionController = endSessionCollapseController;
     // Calculate the maximum stat, to be selected by default for leveling up. Must handle custom stats on the sheet.
-    var maxStat = -2147483648; // Lazy way to avoid dealing with max/min, if the first stat was 18 for example
+    num maxStat = double
+        .negativeInfinity; // Lazy way to avoid dealing with max/min, if the first stat was 18 for example
     for (var i = 0; i < char.abilityScores.stats.length; i += 1) {
       final statValue = char.abilityScores.stats[i].value;
       if (statValue > maxStat && statValue < 18) {
@@ -63,7 +67,8 @@ class _EXPDialogState extends State<EXPDialog> with CharacterProviderMixin {
   @override
   Widget build(BuildContext context) {
     const dialogWidth = 400.0;
-
+    final showPendingXp = !shouldResetSessionMarks ||
+        (!shouldOverwriteXp && !shouldOverwriteLevel);
     return AlertDialog(
       title: Text(action.title),
       content: SingleChildScrollView(
@@ -76,15 +81,16 @@ class _EXPDialogState extends State<EXPDialog> with CharacterProviderMixin {
               child: ExpBar(
                 currentXp: int.tryParse(overwriteXpText.text) ?? currentXp,
                 maxXp: maxXp,
-                pendingXp:
-                    !shouldResetSessionMarks || (!shouldOverwriteXp && !shouldOverwriteLevel) ? totalPendingXp : 0,
+                pendingXp: showPendingXp ? totalPendingXp : 0,
               ),
             ),
             const SizedBox(height: 8),
             AnimatedContainer(
                 duration: const Duration(milliseconds: 200),
                 width: dialogWidth,
-                height: action == _XPAction.endSession ? (PlatformHelper.isMobile ? 364 : 332) : 48,
+                height: action == _XPAction.endSession
+                    ? (PlatformHelper.isMobile ? 364 : 332)
+                    : 48,
                 child: CustomExpansionTile(
                   title: Text(tr.xp.dialog.endOfSession.title),
                   initiallyExpanded: true,
@@ -104,7 +110,8 @@ class _EXPDialogState extends State<EXPDialog> with CharacterProviderMixin {
                       width: dialogWidth,
                       child: ListTile(
                         title: Text(tr.xp.dialog.endOfSession.questions.title),
-                        subtitle: Text(tr.xp.dialog.endOfSession.questions.subtitle),
+                        subtitle:
+                            Text(tr.xp.dialog.endOfSession.questions.subtitle),
                       ),
                     ),
                     for (final eos in eosMarks)
@@ -123,7 +130,9 @@ class _EXPDialogState extends State<EXPDialog> with CharacterProviderMixin {
             AnimatedContainer(
               duration: const Duration(milliseconds: 200),
               width: dialogWidth,
-              height: action == _XPAction.levelUp ? (PlatformHelper.isMobile ? 364 : 332) : 48,
+              height: action == _XPAction.levelUp
+                  ? (PlatformHelper.isMobile ? 364 : 332)
+                  : 48,
               child: CustomExpansionTile(
                 title: Text(tr.xp.dialog.levelUp.title),
                 controller: levelUpCollapseController,
@@ -147,27 +156,39 @@ class _EXPDialogState extends State<EXPDialog> with CharacterProviderMixin {
                         return Wrap(
                           spacing: 4,
                           runSpacing: 4,
-                          children: List.generate(char.abilityScores.stats.length, (i) {
-                            final stat = char.abilityScores.stats[i];
-                            return GestureDetector(
-                              onTap: stat.value < 18
-                                  ? () {
-                                      setState(() {
-                                        selectedAbilityScoreIndex = i;
-                                      });
-                                    }
-                                  : null,
-                              child: SizedBox(
+                          children: List.generate(
+                            char.abilityScores.stats.length,
+                            (i) {
+                              final stat = char.abilityScores.stats[i];
+                              final selected = selectedAbilityScoreIndex == i;
+                              final foregroundColor = selected
+                                  ? Theme.of(context).colorScheme.onSurface
+                                  : null;
+                              final backgroundColor = selected
+                                  ? Theme.of(context)
+                                      .colorScheme
+                                      .primaryContainer
+                                  : null;
+                              return SizedBox(
                                 width: constraints.maxWidth / 3 - 8,
-                                child: PrimaryChip(
+                                child: AdvancedChip(
                                   visualDensity: VisualDensity.comfortable,
-                                  label: '${stat.key} ${stat.value}',
-                                  icon: Icon(stat.icon),
-                                  isEnabled: selectedAbilityScoreIndex == i,
+                                  label: Text('${stat.key} ${stat.value}',
+                                      style: TextStyle(color: foregroundColor)),
+                                  avatar:
+                                      Icon(stat.icon, color: foregroundColor),
+                                  // selected: selected,
+                                  backgroundColor: backgroundColor,
+                                  // isEnabled: selectedAbilityScoreIndex == i,
+                                  onPressed: stat.value < 18
+                                      ? () => setState(() {
+                                            selectedAbilityScoreIndex = i;
+                                          })
+                                      : null,
                                 ),
-                              ),
-                            );
-                          }),
+                              );
+                            },
+                          ),
                         );
                       },
                     ),
@@ -180,9 +201,12 @@ class _EXPDialogState extends State<EXPDialog> with CharacterProviderMixin {
             AnimatedContainer(
               duration: const Duration(milliseconds: 200),
               width: dialogWidth,
-              height: action == _XPAction.overwriteXP ? (PlatformHelper.isMobile ? 364 : 332) : 48,
+              height: action == _XPAction.overwriteXP
+                  ? (PlatformHelper.isMobile ? 364 : 332)
+                  : 48,
               child: CustomExpansionTile(
-                title: Text(tr.xp.dialog.overwrite.title + (hasOverwrites ? '*' : '')),
+                title: Text(
+                    tr.xp.dialog.overwrite.title + (hasOverwrites ? '*' : '')),
                 controller: overwriteXPCollapseController,
                 expandable: action != _XPAction.overwriteXP,
                 onExpansionChanged: (value) {
@@ -210,14 +234,16 @@ class _EXPDialogState extends State<EXPDialog> with CharacterProviderMixin {
                     controller: overwriteXpText,
                     numberType: NumberType.int,
                     decoration: InputDecoration(
-                      labelText: tr.xp.dialog.overwrite.xp + (shouldOverwriteXp ? '*' : ''),
+                      labelText: tr.xp.dialog.overwrite.xp +
+                          (shouldOverwriteXp ? '*' : ''),
                     ),
                     minValue: 0,
                   ),
                   const SizedBox(height: 16),
                   NumberTextField(
                     decoration: InputDecoration(
-                      labelText: tr.xp.dialog.overwrite.level + (shouldOverwriteLevel ? '*' : ''),
+                      labelText: tr.xp.dialog.overwrite.level +
+                          (shouldOverwriteLevel ? '*' : ''),
                     ),
                     numberType: NumberType.int,
                     controller: overwriteLevelText,
@@ -252,15 +278,21 @@ class _EXPDialogState extends State<EXPDialog> with CharacterProviderMixin {
   int get currentXp => char.currentXp;
   int get currentLevel => char.stats.level;
   int get maxXp => shouldOverwriteLevel
-      ? CharacterStats.maxExpForLevel(int.tryParse(overwriteLevelText.text) ?? currentLevel)
+      ? CharacterStats.maxExpForLevel(
+          int.tryParse(overwriteLevelText.text) ?? currentLevel)
       : char.maxXp;
-  int get totalPendingXp => char.sessionMarks.where((mark) => mark.completed).length;
+  int get totalPendingXp =>
+      char.sessionMarks.where((mark) => mark.completed).length;
   bool get canLevelUp => currentXp - currentLevel - 7 >= 0;
 
-  bool get shouldOverwriteXp => int.tryParse(overwriteXpText.text) != null && int.parse(overwriteXpText.text) != currentXp;
+  bool get shouldOverwriteXp =>
+      int.tryParse(overwriteXpText.text) != null &&
+      int.parse(overwriteXpText.text) != currentXp;
   bool get shouldOverwriteLevel =>
-      int.tryParse(overwriteLevelText.text) != null && int.parse(overwriteLevelText.text) != currentLevel;
-  bool get hasOverwrites => shouldOverwriteLevel || shouldOverwriteXp || shouldResetSessionMarks;
+      int.tryParse(overwriteLevelText.text) != null &&
+      int.parse(overwriteLevelText.text) != currentLevel;
+  bool get hasOverwrites =>
+      shouldOverwriteLevel || shouldOverwriteXp || shouldResetSessionMarks;
 
   void endSession() {
     save(currentXp + totalPendingXp, currentLevel, resetSession: true);
@@ -271,7 +303,8 @@ class _EXPDialogState extends State<EXPDialog> with CharacterProviderMixin {
     save(
       currentXp - currentLevel - 7,
       currentLevel + 1,
-      abilityScoreToIncrease: char.abilityScores.stats[selectedAbilityScoreIndex],
+      abilityScoreToIncrease:
+          char.abilityScores.stats[selectedAbilityScoreIndex],
     );
   }
 
@@ -283,11 +316,12 @@ class _EXPDialogState extends State<EXPDialog> with CharacterProviderMixin {
     );
   }
 
-  void save(int xp, int level, {bool resetSession = false, AbilityScore? abilityScoreToIncrease}) {
+  void save(int xp, int level,
+      {bool resetSession = false, AbilityScore? abilityScoreToIncrease}) {
     AbilityScores? abilityScores;
     if (abilityScoreToIncrease != null) {
-      abilityScores =
-          char.abilityScores.copyWithStatValues({abilityScoreToIncrease.key: abilityScoreToIncrease.value + 1});
+      abilityScores = char.abilityScores.copyWithStatValues(
+          {abilityScoreToIncrease.key: abilityScoreToIncrease.value + 1});
     }
     charProvider.updateCharacter(
       char.copyWith(
@@ -297,7 +331,9 @@ class _EXPDialogState extends State<EXPDialog> with CharacterProviderMixin {
           level: level,
         ),
         sessionMarks: (resetSession)
-            ? char.sessionMarks.map((e) => e.copyWithInherited(completed: false)).toList()
+            ? char.sessionMarks
+                .map((e) => e.copyWithInherited(completed: false))
+                .toList()
             : upsertByKey(char.sessionMarks, eosMarks),
       ),
     );
@@ -311,8 +347,10 @@ class _EXPDialogState extends State<EXPDialog> with CharacterProviderMixin {
 
   void _toggleEosMark(SessionMark eos, bool? val) {
     setState(() {
-      eosMarks = updateByKey(eosMarks, [eos.copyWithInherited(completed: val ?? !eos.completed)]);
-      charProvider.updateCharacter(char.copyWith(sessionMarks: upsertByKey(char.sessionMarks, eosMarks)));
+      eosMarks = updateByKey(
+          eosMarks, [eos.copyWithInherited(completed: val ?? !eos.completed)]);
+      charProvider.updateCharacter(char.copyWith(
+          sessionMarks: upsertByKey(char.sessionMarks, eosMarks)));
     });
   }
 }
@@ -340,3 +378,4 @@ extension on _XPAction {
     }
   }
 }
+

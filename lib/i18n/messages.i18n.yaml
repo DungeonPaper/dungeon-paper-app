@@ -464,7 +464,7 @@ xp:
       title: Level Up
       button: Level Up
       increaseStat: 'Increase a stat by 1:'
-      chooseMove: Then, select an advanced move.
+      chooseMove: 'Then, select an advanced move:'
     overwrite:
       title: Overwrite XP and Level
       button: Overwrite

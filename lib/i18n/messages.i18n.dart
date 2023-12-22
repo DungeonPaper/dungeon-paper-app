@@ -2220,9 +2220,9 @@ class LevelUpDialogXpMessages {
   String get increaseStat => """Increase a stat by 1:""";
 
   /// ```dart
-  /// "Then, select an advanced move."
+  /// "Then, select an advanced move:"
   /// ```
-  String get chooseMove => """Then, select an advanced move.""";
+  String get chooseMove => """Then, select an advanced move:""";
 }
 
 class OverwriteDialogXpMessages {
@@ -3765,7 +3765,7 @@ Map<String, String> get messagesMap => {
       """xp.dialog.levelUp.title""": """Level Up""",
       """xp.dialog.levelUp.button""": """Level Up""",
       """xp.dialog.levelUp.increaseStat""": """Increase a stat by 1:""",
-      """xp.dialog.levelUp.chooseMove""": """Then, select an advanced move.""",
+      """xp.dialog.levelUp.chooseMove""": """Then, select an advanced move:""",
       """xp.dialog.overwrite.title""": """Overwrite XP and Level""",
       """xp.dialog.overwrite.button""": """Overwrite""",
       """xp.dialog.overwrite.info""":
