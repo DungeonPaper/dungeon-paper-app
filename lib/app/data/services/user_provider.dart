@@ -52,6 +52,7 @@ class UserProvider extends ChangeNotifier with RepositoryProviderMixin {
 
   Future<void> loadUserData(fba.User user) async {
     _clearUserListener();
+    await loadBuiltInRepo();
     final email = user.email;
     debugPrint('loading user data for $email');
     api.requests.idToken = await user.getIdToken();
@@ -83,6 +84,7 @@ class UserProvider extends ChangeNotifier with RepositoryProviderMixin {
 
   void loadGuestData() async {
     _clearUserListener();
+    await loadBuiltInRepo();
     StorageHandler.instance.currentDelegate = 'local';
     StorageHandler.instance.setCollectionPrefix(null);
     notifyListeners();
