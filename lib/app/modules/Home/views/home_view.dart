@@ -12,6 +12,7 @@ import 'package:dungeon_paper/app/widgets/atoms/icon_span.dart';
 import 'package:dungeon_paper/app/widgets/atoms/page_controller_fractional_box.dart';
 import 'package:dungeon_paper/i18n.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 import 'home_character_view.dart';
 import 'home_fab.dart';
@@ -25,8 +26,8 @@ class HomeView extends StatelessWidget
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: const HomeAppBar(),
-      body: CharacterProvider.consumer(
-        (context, controller, _) {
+      body: Consumer2<CharacterProvider, LoadingProvider>(
+        builder: (context, controller, loading, _) {
           const children = [
             HomeCharacterActionsView(),
             HomeCharacterView(),
