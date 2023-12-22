@@ -4,11 +4,11 @@ import 'package:dungeon_paper/app/data/models/move.dart';
 import 'package:dungeon_paper/app/data/models/session_marks.dart';
 import 'package:dungeon_paper/app/data/models/spell.dart';
 import 'package:dungeon_paper/app/data/services/character_provider.dart';
+import 'package:dungeon_paper/app/model_utils/model_pages.dart';
 import 'package:dungeon_paper/app/widgets/atoms/custom_expansion_tile.dart';
 import 'package:dungeon_paper/app/widgets/atoms/xp_bar.dart';
 import 'package:dungeon_paper/app/widgets/atoms/number_text_field.dart';
 import 'package:dungeon_paper/app/widgets/chips/advanced_chip.dart';
-import 'package:dungeon_paper/app/widgets/chips/primary_chip.dart';
 import 'package:dungeon_paper/app/widgets/molecules/dialog_controls.dart';
 import 'package:dungeon_paper/core/platform_helper.dart';
 import 'package:dungeon_paper/core/utils/list_utils.dart';
@@ -40,6 +40,7 @@ class _EXPDialogState extends State<EXPDialog> with CharacterProviderMixin {
   _XPAction action = _XPAction.endSession;
   late CustomExpansionTileController lastActionController;
 
+  // TODO extract to controller
   @override
   void initState() {
     overwriteXpText = TextEditingController(text: char.currentXp.toString())
@@ -49,8 +50,7 @@ class _EXPDialogState extends State<EXPDialog> with CharacterProviderMixin {
     eosMarks = char.endOfSessionMarks;
     lastActionController = endSessionCollapseController;
     // Calculate the maximum stat, to be selected by default for leveling up. Must handle custom stats on the sheet.
-    num maxStat = double
-        .negativeInfinity; // Lazy way to avoid dealing with max/min, if the first stat was 18 for example
+    num maxStat = double.negativeInfinity;
     for (var i = 0; i < char.abilityScores.stats.length; i += 1) {
       final statValue = char.abilityScores.stats[i].value;
       if (statValue > maxStat && statValue < 18) {
@@ -73,6 +73,7 @@ class _EXPDialogState extends State<EXPDialog> with CharacterProviderMixin {
     const dialogWidth = 400.0;
     final showPendingXp = !shouldResetSessionMarks ||
         (!shouldOverwriteXp && !shouldOverwriteLevel);
+    final cls = char.characterClass;
     return AlertDialog(
       title: Text(action.title),
       content: SingleChildScrollView(
@@ -135,7 +136,7 @@ class _EXPDialogState extends State<EXPDialog> with CharacterProviderMixin {
               duration: const Duration(milliseconds: 200),
               width: dialogWidth,
               height: action == _XPAction.levelUp
-                  ? (PlatformHelper.isMobile ? 364 : 332)
+                  ? (PlatformHelper.isMobile ? 400 : 332)
                   : 48,
               child: CustomExpansionTile(
                 title: Text(tr.xp.dialog.levelUp.title),
@@ -177,8 +178,10 @@ class _EXPDialogState extends State<EXPDialog> with CharacterProviderMixin {
                                 width: constraints.maxWidth / 3 - 8,
                                 child: AdvancedChip(
                                   visualDensity: VisualDensity.comfortable,
-                                  label: Text('${stat.key} ${stat.value}',
-                                      style: TextStyle(color: foregroundColor)),
+                                  label: Text(
+                                    '${stat.key} ${stat.value}',
+                                    style: TextStyle(color: foregroundColor),
+                                  ),
                                   avatar:
                                       Icon(stat.icon, color: foregroundColor),
                                   // selected: selected,
@@ -198,7 +201,76 @@ class _EXPDialogState extends State<EXPDialog> with CharacterProviderMixin {
                     ),
                   ),
                   const SizedBox(height: 24),
-                  Text(tr.xp.dialog.levelUp.chooseMove),
+                  Text(
+                    tr.xp.dialog.levelUp.choose.info(
+                      cls.isSpellcaster
+                          ? tr.xp.dialog.levelUp.choose.both(
+                              tr.xp.dialog.levelUp.choose.move,
+                              tr.xp.dialog.levelUp.choose.spell,
+                            )
+                          : tr.xp.dialog.levelUp.choose.move,
+                    ),
+                  ),
+                  const SizedBox(height: 8),
+                  ListTile(
+                    title: Text(
+                      tr.generic.selectEntity(tr.xp.dialog.levelUp.choose.move),
+                    ),
+                    subtitle: Text(
+                      selectedMove?.name ??
+                          tr.generic.noEntitySelected(tr.entity(tn(Move))),
+                    ),
+                    contentPadding: const EdgeInsets.all(0),
+                    trailing: ElevatedButton(
+                      child: Text(
+                        selectedMove == null
+                            ? tr.generic.selectEntity(tr.entity(tn(Move)))
+                            : tr.generic.changeEntity(tr.entity(tn(Move))),
+                      ),
+                      onPressed: () => ModelPages.openMovesList(
+                        context,
+                        category: currentLevel + 1 >= 6
+                            ? MoveCategory.advanced2
+                            : MoveCategory.advanced1,
+                        character: char,
+                        classKeys: [cls.reference],
+                        onSelected: (move) => setState(
+                          () {
+                            selectedMove = move.single;
+                          },
+                        ),
+                      ),
+                    ),
+                  ),
+                  if (cls.isSpellcaster)
+                    ListTile(
+                      title: Text(
+                        tr.generic
+                            .selectEntity(tr.xp.dialog.levelUp.choose.spell),
+                      ),
+                      subtitle: Text(
+                        selectedSpell?.name ??
+                            tr.generic.noEntitySelected(tr.entity(tn(Spell))),
+                      ),
+                      contentPadding: const EdgeInsets.all(0),
+                      trailing: ElevatedButton(
+                        child: Text(
+                          selectedSpell == null
+                              ? tr.generic.selectEntity(tr.entity(tn(Spell)))
+                              : tr.generic.changeEntity(tr.entity(tn(Spell))),
+                        ),
+                        onPressed: () => ModelPages.openSpellsList(
+                          context,
+                          character: char,
+                          classKeys: [char.characterClass.reference],
+                          onSelected: (move) => setState(
+                            () {
+                              selectedSpell = move.single;
+                            },
+                          ),
+                        ),
+                      ),
+                    ),
                 ],
               ),
             ),
@@ -309,6 +381,8 @@ class _EXPDialogState extends State<EXPDialog> with CharacterProviderMixin {
       currentLevel + 1,
       abilityScoreToIncrease:
           char.abilityScores.stats[selectedAbilityScoreIndex],
+      move: selectedMove,
+      spell: selectedSpell,
     );
   }
 
@@ -320,8 +394,14 @@ class _EXPDialogState extends State<EXPDialog> with CharacterProviderMixin {
     );
   }
 
-  void save(int xp, int level,
-      {bool resetSession = false, AbilityScore? abilityScoreToIncrease}) {
+  void save(
+    int xp,
+    int level, {
+    bool resetSession = false,
+    AbilityScore? abilityScoreToIncrease,
+    Move? move,
+    Spell? spell,
+  }) {
     AbilityScores? abilityScores;
     if (abilityScoreToIncrease != null) {
       abilityScores = char.abilityScores.copyWithStatValues(
@@ -339,6 +419,8 @@ class _EXPDialogState extends State<EXPDialog> with CharacterProviderMixin {
                 .map((e) => e.copyWithInherited(completed: false))
                 .toList()
             : upsertByKey(char.sessionMarks, eosMarks),
+        moves: move != null ? upsertByKey(char.moves, [move]) : null,
+        spells: spell != null ? upsertByKey(char.spells, [spell]) : null,
       ),
     );
 

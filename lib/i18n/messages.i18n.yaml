@@ -464,7 +464,11 @@ xp:
       title: Level Up
       button: Level Up
       increaseStat: 'Increase a stat by 1:'
-      chooseMove: 'Then, select an advanced move:'
+      choose:
+        info(String what): 'Then, select $what:'
+        both(String ent1, String ent2): $ent1 and $ent2
+        move: an advanced move
+        spell: a spell
     overwrite:
       title: Overwrite XP and Level
       button: Overwrite

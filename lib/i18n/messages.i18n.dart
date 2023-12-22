@@ -2218,11 +2218,33 @@ class LevelUpDialogXpMessages {
   /// "Increase a stat by 1:"
   /// ```
   String get increaseStat => """Increase a stat by 1:""";
+  ChooseLevelUpDialogXpMessages get choose =>
+      ChooseLevelUpDialogXpMessages(this);
+}
+
+class ChooseLevelUpDialogXpMessages {
+  final LevelUpDialogXpMessages _parent;
+  const ChooseLevelUpDialogXpMessages(this._parent);
 
   /// ```dart
-  /// "Then, select an advanced move:"
+  /// "Then, select $what:"
   /// ```
-  String get chooseMove => """Then, select an advanced move:""";
+  String info(String what) => """Then, select $what:""";
+
+  /// ```dart
+  /// "$ent1 and $ent2"
+  /// ```
+  String both(String ent1, String ent2) => """$ent1 and $ent2""";
+
+  /// ```dart
+  /// "an advanced move"
+  /// ```
+  String get move => """an advanced move""";
+
+  /// ```dart
+  /// "a spell"
+  /// ```
+  String get spell => """a spell""";
 }
 
 class OverwriteDialogXpMessages {
@@ -3765,7 +3787,8 @@ Map<String, String> get messagesMap => {
       """xp.dialog.levelUp.title""": """Level Up""",
       """xp.dialog.levelUp.button""": """Level Up""",
       """xp.dialog.levelUp.increaseStat""": """Increase a stat by 1:""",
-      """xp.dialog.levelUp.chooseMove""": """Then, select an advanced move:""",
+      """xp.dialog.levelUp.choose.move""": """an advanced move""",
+      """xp.dialog.levelUp.choose.spell""": """a spell""",
       """xp.dialog.overwrite.title""": """Overwrite XP and Level""",
       """xp.dialog.overwrite.button""": """Overwrite""",
       """xp.dialog.overwrite.info""":
