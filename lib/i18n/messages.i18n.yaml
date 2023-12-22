@@ -408,6 +408,10 @@ items:
 
 notes:
   noCategory: General
+  emptyState:
+    title: No Notes
+    subtitle: You can record your progress, memos, lists, maps and more using the journal.
+    button: Create Note
 
 # `{alignment, select, chaotic {Chaotic} evil {Evil} good {Good} lawful {Lawful} neutral {Neutral} other {{alignment}}}`
 alignment:

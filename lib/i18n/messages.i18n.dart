@@ -1967,6 +1967,28 @@ class NotesMessages {
   /// "General"
   /// ```
   String get noCategory => """General""";
+  EmptyStateNotesMessages get emptyState => EmptyStateNotesMessages(this);
+}
+
+class EmptyStateNotesMessages {
+  final NotesMessages _parent;
+  const EmptyStateNotesMessages(this._parent);
+
+  /// ```dart
+  /// "No Notes"
+  /// ```
+  String get title => """No Notes""";
+
+  /// ```dart
+  /// "You can record your progress, memos, lists, maps and more using the journal."
+  /// ```
+  String get subtitle =>
+      """You can record your progress, memos, lists, maps and more using the journal.""";
+
+  /// ```dart
+  /// "Create Note"
+  /// ```
+  String get button => """Create Note""";
 }
 
 class AlignmentMessages {
@@ -3760,6 +3782,10 @@ Map<String, String> get messagesMap => {
       """items.settings.countDamage""": """Count Damage""",
       """items.settings.countWeight""": """Count Weight""",
       """notes.noCategory""": """General""",
+      """notes.emptyState.title""": """No Notes""",
+      """notes.emptyState.subtitle""":
+          """You can record your progress, memos, lists, maps and more using the journal.""",
+      """notes.emptyState.button""": """Create Note""",
       """bio.dialog.title""": """Character Biography""",
       """bio.dialog.description.label""":
           """Character & background description""",
