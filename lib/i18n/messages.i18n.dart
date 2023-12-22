@@ -130,6 +130,8 @@ class Messages {
   String entityCountNum(String ent, int cnt) =>
       """$cnt ${entityCount(ent, cnt)}""";
   AppMessages get app => AppMessages(this);
+  PlatformInteractionsMessages get platformInteractions =>
+      PlatformInteractionsMessages(this);
   GenericMessages get generic => GenericMessages(this);
   LoadingMessages get loading => LoadingMessages(this);
   ErrorsMessages get errors => ErrorsMessages(this);
@@ -180,6 +182,31 @@ class AppMessages {
   /// "Dungeon Paper"
   /// ```
   String get name => """Dungeon Paper""";
+}
+
+class PlatformInteractionsMessages {
+  final Messages _parent;
+  const PlatformInteractionsMessages(this._parent);
+
+  /// ```dart
+  /// "Tap"
+  /// ```
+  String get tap => """Tap""";
+
+  /// ```dart
+  /// "Drag"
+  /// ```
+  String get drag => """Drag""";
+
+  /// ```dart
+  /// "Pan"
+  /// ```
+  String get pan => """Pan""";
+
+  /// ```dart
+  /// "Click"
+  /// ```
+  String get click => """Click""";
 }
 
 class GenericMessages {
@@ -735,7 +762,7 @@ class SettingsMessages {
   /// ```dart
   /// "Switch to ${mode} Mode"
   /// ```
-  String _switchMode(String mode) => """Switch to $mode Mode""";
+  String _switchMode(String mode) => """Switch to ${mode} Mode""";
 
   /// ```dart
   /// "${_switchMode('Dark')}"
@@ -1028,26 +1055,10 @@ class ConfirmPasswordSignupAuthMessages {
 class HomeMessages {
   final Messages _parent;
   const HomeMessages(this._parent);
-  BarsHomeMessages get bars => BarsHomeMessages(this);
   CategoriesHomeMessages get categories => CategoriesHomeMessages(this);
   SummaryHomeMessages get summary => SummaryHomeMessages(this);
   MenuHomeMessages get menu => MenuHomeMessages(this);
   EmptyStateHomeMessages get emptyState => EmptyStateHomeMessages(this);
-}
-
-class BarsHomeMessages {
-  final HomeMessages _parent;
-  const BarsHomeMessages(this._parent);
-
-  /// ```dart
-  /// "XP"
-  /// ```
-  String get xp => """XP""";
-
-  /// ```dart
-  /// "HP"
-  /// ```
-  String get hp => """HP""";
 }
 
 class CategoriesHomeMessages {
@@ -1602,28 +1613,11 @@ class NameFormBasicInfoMessages {
 class RandomNameFormBasicInfoMessages {
   final NameFormBasicInfoMessages _parent;
   const RandomNameFormBasicInfoMessages(this._parent);
-  TooltipRandomNameFormBasicInfoMessages get tooltip =>
-      TooltipRandomNameFormBasicInfoMessages(this);
-}
-
-class TooltipRandomNameFormBasicInfoMessages {
-  final RandomNameFormBasicInfoMessages _parent;
-  const TooltipRandomNameFormBasicInfoMessages(this._parent);
 
   /// ```dart
   /// "$act to generate a random name"
   /// ```
-  String _p(String act) => """$act to generate a random name""";
-
-  /// ```dart
-  /// "${_p('Tap')}"
-  /// ```
-  String get touch => """${_p('Tap')}""";
-
-  /// ```dart
-  /// "${_p('Click')}"
-  /// ```
-  String get click => """${_p('Click')}""";
+  String tooltip(String act) => """$act to generate a random name""";
 }
 
 class PhotoFormBasicInfoMessages {
@@ -2103,6 +2097,7 @@ class HpMessages {
   final Messages _parent;
   const HpMessages(this._parent);
   DialogHpMessages get dialog => DialogHpMessages(this);
+  BarHpMessages get bar => BarHpMessages(this);
 }
 
 class DialogHpMessages {
@@ -2141,33 +2136,45 @@ class ChangeDialogHpMessages {
   String get neutral => """No Change""";
 }
 
+class BarHpMessages {
+  final HpMessages _parent;
+  const BarHpMessages(this._parent);
+
+  /// ```dart
+  /// "HP"
+  /// ```
+  String get label => """HP""";
+
+  /// ```dart
+  /// "$act to modify your HP"
+  /// ```
+  String tooltip(String act) => """$act to modify your HP""";
+}
+
 class XpMessages {
   final Messages _parent;
   const XpMessages(this._parent);
   DialogXpMessages get dialog => DialogXpMessages(this);
+  BarXpMessages get bar => BarXpMessages(this);
 }
 
 class DialogXpMessages {
   final XpMessages _parent;
   const DialogXpMessages(this._parent);
-
-  /// ```dart
-  /// "Mark Session XP"
-  /// ```
-  String get title => """Mark Session XP""";
-
-  /// ```dart
-  /// "Update XP & Level"
-  /// ```
-  String get overridingTitle => """Update XP & Level""";
   EndOfSessionDialogXpMessages get endOfSession =>
       EndOfSessionDialogXpMessages(this);
-  OverrideDialogXpMessages get override => OverrideDialogXpMessages(this);
+  LevelUpDialogXpMessages get levelUp => LevelUpDialogXpMessages(this);
+  OverwriteDialogXpMessages get overwrite => OverwriteDialogXpMessages(this);
 }
 
 class EndOfSessionDialogXpMessages {
   final DialogXpMessages _parent;
   const EndOfSessionDialogXpMessages(this._parent);
+
+  /// ```dart
+  /// "End Session"
+  /// ```
+  String get title => """End Session""";
 
   /// ```dart
   /// "End Session"
@@ -2193,14 +2200,44 @@ class QuestionsEndOfSessionDialogXpMessages {
       """Answer these questions as a group. For each "yes" answer, XP is marked.""";
 }
 
-class OverrideDialogXpMessages {
+class LevelUpDialogXpMessages {
   final DialogXpMessages _parent;
-  const OverrideDialogXpMessages(this._parent);
+  const LevelUpDialogXpMessages(this._parent);
 
   /// ```dart
-  /// "Update Manually"
+  /// "Level Up"
   /// ```
-  String get title => """Update Manually""";
+  String get title => """Level Up""";
+
+  /// ```dart
+  /// "Level Up"
+  /// ```
+  String get button => """Level Up""";
+
+  /// ```dart
+  /// "Increase a stat by 1:"
+  /// ```
+  String get increaseStat => """Increase a stat by 1:""";
+
+  /// ```dart
+  /// "Then, select an advanced move:"
+  /// ```
+  String get chooseMove => """Then, select an advanced move:""";
+}
+
+class OverwriteDialogXpMessages {
+  final DialogXpMessages _parent;
+  const OverwriteDialogXpMessages(this._parent);
+
+  /// ```dart
+  /// "Overwrite XP and Level"
+  /// ```
+  String get title => """Overwrite XP and Level""";
+
+  /// ```dart
+  /// "Overwrite"
+  /// ```
+  String get button => """Overwrite""";
 
   /// ```dart
   /// "Changing the current XP or level manually will cause the pending XP to be discarded unless this is unchecked."
@@ -2215,14 +2252,35 @@ class OverrideDialogXpMessages {
       """Reset bonds, flags & end of session questions after saving""";
 
   /// ```dart
-  /// "Override XP"
+  /// "Overwrite XP"
   /// ```
-  String get xp => """Override XP""";
+  String get xp => """Overwrite XP""";
 
   /// ```dart
-  /// "Override Level"
+  /// "Overwrite Level"
   /// ```
-  String get level => """Override Level""";
+  String get level => """Overwrite Level""";
+}
+
+class BarXpMessages {
+  final XpMessages _parent;
+  const BarXpMessages(this._parent);
+
+  /// ```dart
+  /// "XP"
+  /// ```
+  String get label => """XP""";
+
+  /// ```dart
+  /// "$act to end the session, level up or update your XP"
+  /// ```
+  String tooltip(String act) =>
+      """$act to end the session, level up or update your XP""";
+
+  /// ```dart
+  /// "$act to add +1 XP"
+  /// ```
+  String plusOneTooltip(String act) => """$act to add +1 XP""";
 }
 
 class ArmorMessages {
@@ -3492,6 +3550,10 @@ class CharacterClassBundlesExportingBackupMessages {
 
 Map<String, String> get messagesMap => {
       """app.name""": """Dungeon Paper""",
+      """platformInteractions.tap""": """Tap""",
+      """platformInteractions.drag""": """Drag""",
+      """platformInteractions.pan""": """Pan""",
+      """platformInteractions.click""": """Click""",
       """generic.save""": """Save""",
       """generic.cancel""": """Cancel""",
       """generic.close""": """Close""",
@@ -3577,8 +3639,6 @@ Map<String, String> get messagesMap => {
       """auth.signup.password.confirm.placeholder""":
           """Enter the same password again""",
       """auth.signup.password.confirm.error""": """Passwords do not match""",
-      """home.bars.xp""": """XP""",
-      """home.bars.hp""": """HP""",
       """home.categories.notes""": """Bookmarked Notes""",
       """home.categories.moves""": """Favorite Moves""",
       """home.categories.spells""": """Prepared Spells""",
@@ -3695,20 +3755,26 @@ Map<String, String> get messagesMap => {
       """hp.dialog.title""": """Modify HP""",
       """hp.dialog.change.neutral""": """No Change""",
       """hp.dialog.overrideMax""": """Override Max HP""",
-      """xp.dialog.title""": """Mark Session XP""",
-      """xp.dialog.overridingTitle""": """Update XP & Level""",
+      """hp.bar.label""": """HP""",
+      """xp.dialog.endOfSession.title""": """End Session""",
       """xp.dialog.endOfSession.button""": """End Session""",
       """xp.dialog.endOfSession.questions.title""":
           """End of Session Questions""",
       """xp.dialog.endOfSession.questions.subtitle""":
           """Answer these questions as a group. For each "yes" answer, XP is marked.""",
-      """xp.dialog.override.title""": """Update Manually""",
-      """xp.dialog.override.info""":
+      """xp.dialog.levelUp.title""": """Level Up""",
+      """xp.dialog.levelUp.button""": """Level Up""",
+      """xp.dialog.levelUp.increaseStat""": """Increase a stat by 1:""",
+      """xp.dialog.levelUp.chooseMove""": """Then, select an advanced move:""",
+      """xp.dialog.overwrite.title""": """Overwrite XP and Level""",
+      """xp.dialog.overwrite.button""": """Overwrite""",
+      """xp.dialog.overwrite.info""":
           """Changing the current XP or level manually will cause the pending XP to be discarded unless this is unchecked.""",
-      """xp.dialog.override.resetCheckbox""":
+      """xp.dialog.overwrite.resetCheckbox""":
           """Reset bonds, flags & end of session questions after saving""",
-      """xp.dialog.override.xp""": """Override XP""",
-      """xp.dialog.override.level""": """Override Level""",
+      """xp.dialog.overwrite.xp""": """Overwrite XP""",
+      """xp.dialog.overwrite.level""": """Overwrite Level""",
+      """xp.bar.label""": """XP""",
       """armor.title""": """Armor""",
       """armor.dialog.title""": """Armor""",
       """armor.dialog.autoArmor""": """Use armor from class & equipped items""",

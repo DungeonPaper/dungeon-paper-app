@@ -35,7 +35,7 @@ class HpBar extends StatelessWidget {
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Text(tr.home.bars.hp),
+              Text(tr.hp.bar.label),
               const SizedBox(width: 8),
               Text(
                 curValue?.toString() ?? '-',

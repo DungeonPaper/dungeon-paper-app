@@ -120,11 +120,8 @@ class AbilityScoresFormView extends StatelessWidget {
                       padding: const EdgeInsets.symmetric(horizontal: 8),
                       child: NumberTextField(
                         controller: controller.textControllers[stat.key],
-                        minValue: 1,
-                        maxValue: 20,
                         numberType: NumberType.int,
                         textInputAction: TextInputAction.next,
-                        // onChanged: (val) => updateControllers(),
                       ),
                     ),
                   ),

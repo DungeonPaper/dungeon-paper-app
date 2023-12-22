@@ -24,13 +24,23 @@ class LibrarySelectButton<T> extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    if (onPressed == null) {
+    final button = buildButton(context);
+    final message = onPressed == null
+        ? tr.myLibrary.selectDisabled(tr.entity(tn(T)))
+        : selected
+            ? tr.generic.removeEntity(tr.entity(tn(T)))
+            : tr.generic.selectEntity(tr.entity(tn(T)));
+
+    final showTooltip =
+        onPressed == null || type == LibrarySelectButtonType.iconButton;
+    if (showTooltip) {
       return Tooltip(
-        message: tr.myLibrary.selectDisabled(tr.entity(tn(T))),
-        child: buildButton(context),
+        message: message,
+        preferBelow: false,
+        child: button,
       );
     }
-    return buildButton(context);
+    return button;
   }
 
   Widget buildButton(BuildContext context) {
@@ -69,3 +79,4 @@ class LibrarySelectButton<T> extends StatelessWidget {
     }
   }
 }
+

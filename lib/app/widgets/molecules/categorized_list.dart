@@ -1,4 +1,4 @@
-import 'package:dungeon_paper/app/widgets/atoms/custom_expansion_panel.dart';
+import 'package:dungeon_paper/app/widgets/atoms/custom_expansion_tile.dart';
 import 'package:dungeon_paper/core/utils/math_utils.dart';
 import 'package:flutter/material.dart';
 
@@ -44,7 +44,7 @@ class CategorizedList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return CustomExpansionPanel(
+    return CustomExpansionTile(
       title: title,
       trailing: titleTrailing,
       leading: titleLeading,
@@ -58,8 +58,6 @@ class CategorizedList extends StatelessWidget {
                 onReorder: onReorder!,
                 shrinkWrap: true,
                 physics: const NeverScrollableScrollPhysics(),
-                // buildDefaultDragHandles: true,
-                // padding: itemPadding,
               ),
               ...trailing,
             ]

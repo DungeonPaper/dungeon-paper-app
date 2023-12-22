@@ -102,10 +102,10 @@ scripts:
     cmd: flutter pub run icons_launcher:create
     description: Generate launcher icons
   - name: intl:build
-    cmd: runner build
+    cmd: runner build -d
     description: Build i18n files
   - name: intl:watch
-    cmd: runner watch
+    cmd: runner watch -d
     description: Build u18n files in watch mode
   - name: runner
     cmd: dart run build_runner
