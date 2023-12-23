@@ -1,4 +1,5 @@
 import 'package:dungeon_paper/app/data/services/loading_provider.dart';
+import 'package:dungeon_paper/app/routes/app_pages.dart';
 import 'package:dungeon_paper/app/widgets/atoms/labeled_divider.dart';
 import 'package:dungeon_paper/app/widgets/atoms/password_field.dart';
 import 'package:dungeon_paper/core/dw_icons.dart';
@@ -208,11 +209,8 @@ class LoginView extends StatelessWidget {
                             ),
                             const SizedBox(height: 8),
                             ElevatedButton.icon(
-                              onPressed: () => launchUrl(
-                                // TODO make changelog view that uses current version
-                                Uri.parse(
-                                  'https://dungeonpaper.app/changelog.html',
-                                ),
+                              onPressed: () => Navigator.of(context).pushNamed(
+                                Routes.changelog,
                               ),
                               label: Text(tr.auth.changelog),
                               icon: const Icon(Icons.new_releases),
@@ -231,3 +229,4 @@ class LoginView extends StatelessWidget {
     );
   }
 }
+

@@ -147,6 +147,9 @@ abstract class Routes {
 
   /// `/campaigns`
   static const campaigns = _Paths.campaigns;
+
+  /// `/changelog`
+  static const changelog = _Paths.changelog;
 }
 
 abstract class _Paths {
@@ -247,4 +250,7 @@ abstract class _Paths {
 
   /// `/campaign`
   static const campaigns = '/campaigns';
+
+  /// `/changelog`
+  static const changelog = '/changelog';
 }

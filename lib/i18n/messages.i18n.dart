@@ -1224,6 +1224,7 @@ class AboutMessages {
   /// "Chen Asraf"
   /// ```
   String get author => """Chen Asraf""";
+  ChangelogAboutMessages get changelog => ChangelogAboutMessages(this);
   DiscordAboutMessages get discord => DiscordAboutMessages(this);
   FeedbackAboutMessages get feedback => FeedbackAboutMessages(this);
   SocialsAboutMessages get socials => SocialsAboutMessages(this);
@@ -1242,6 +1243,21 @@ class AboutMessages {
   /// "Icon Credits"
   /// ```
   String get icons => """Icon Credits""";
+}
+
+class ChangelogAboutMessages {
+  final AboutMessages _parent;
+  const ChangelogAboutMessages(this._parent);
+
+  /// ```dart
+  /// "What's new?"
+  /// ```
+  String get title => """What's new?""";
+
+  /// ```dart
+  /// "Change log of Dungeon Paper release versions"
+  /// ```
+  String get subtitle => """Change log of Dungeon Paper release versions""";
 }
 
 class DiscordAboutMessages {
@@ -3703,6 +3719,9 @@ Map<String, String> get messagesMap => {
       """home.emptyState.subtitle""": """Create a Character to get started""",
       """about.title""": """About""",
       """about.author""": """Chen Asraf""",
+      """about.changelog.title""": """What's new?""",
+      """about.changelog.subtitle""":
+          """Change log of Dungeon Paper release versions""",
       """about.discord.title""": """Join Our Discord""",
       """about.discord.subtitle""":
           """Join the Discord community to ask questions, get help, send feedback, or just chat with other players.""",

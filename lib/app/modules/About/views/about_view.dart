@@ -57,6 +57,16 @@ class AboutView extends StatelessWidget {
               ),
           () => const Divider(height: 48),
           () => ListTile(
+                leading: const Icon(Icons.new_releases),
+                title: Text(tr.about.changelog.title),
+                subtitle:
+                    Text(tr.about.changelog.subtitle, style: textTheme.bodySmall),
+                onTap: () =>
+                    Navigator.of(context).pushNamed(Routes.changelog),
+                isThreeLine: true,
+                visualDensity: VisualDensity.compact,
+              ),
+          () => ListTile(
                 leading: const Icon(DwIcons.discord),
                 title: Text(tr.about.discord.title),
                 subtitle:

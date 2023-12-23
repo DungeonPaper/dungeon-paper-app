@@ -26,6 +26,8 @@ import '../modules/BondsFlagsForm/controllers/bonds_flags_form_controller.dart';
 import '../modules/BondsFlagsForm/views/bonds_flags_form_view.dart';
 import '../modules/Campaign/CampaignsList/controllers/campaigns_list_controller.dart';
 import '../modules/Campaign/CampaignsList/views/campaigns_list_view.dart';
+import '../modules/Changelog/changelog_controller.dart';
+import '../modules/Changelog/changelog_view.dart';
 import '../modules/CharacterList/views/character_list_view.dart';
 import '../modules/ClassAlignments/controllers/class_alignments_controller.dart';
 import '../modules/ClassAlignments/views/class_alignments_view.dart';
@@ -311,6 +313,11 @@ class AppPages {
     _Paths.campaigns: (context) => ChangeNotifierProvider(
           child: const CampaignsListView(),
           create: (_) => CampaignsListController(),
+        ),
+
+        _Paths.changelog: (context) => ChangeNotifierProvider(
+          child: const ChangelogView(),
+          create: (_) => ChangelogController(),
         ),
   };
 }

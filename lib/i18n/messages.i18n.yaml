@@ -242,6 +242,9 @@ about:
   version(String version): Version $version
   copyright(int year): Copyright © 2018-$year
   author: Chen Asraf
+  changelog:
+    title: What's new?
+    subtitle: Change log of Dungeon Paper release versions
   discord:
     title: Join Our Discord
     subtitle: Join the Discord community to ask questions, get help, send feedback, or just chat with other players.
