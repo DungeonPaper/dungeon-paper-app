@@ -55,13 +55,13 @@ class CreateCharacterController extends ChangeNotifier with RepositoryProviderMi
     setDirty();
   }
 
-  void setClass(BuildContext context, CharacterClass cls) {
+  void setClass( CharacterClass cls) {
     characterClass = cls;
     setStartingGear(
       cls.gearChoices
           .fold([], (all, cur) => [...all, ...cur.preselectedGearSelections]),
     );
-    addStartingMoves(context);
+    addStartingMoves();
     setDirty();
   }
 
@@ -85,18 +85,21 @@ class CreateCharacterController extends ChangeNotifier with RepositoryProviderMi
     this.spells.clear();
     this.moves.addAll(moves.map((e) => e.copyWithInherited(favorite: true)));
     this.spells.addAll(spells.map((e) => e.copyWithInherited(prepared: true)));
+    setDirty();
   }
 
   void setDirty() {
     dirty = true;
+    notifyListeners();
   }
 
   void setStartingGear(List<GearSelection> selections) {
     startingGear.clear();
     startingGear.addAll(selections);
+    setDirty();
   }
 
-  void addStartingMoves(BuildContext context) {
+  void addStartingMoves() {
     moves.clear();
     moves.addAll(
       [...repo.builtIn.moves.values, ...repo.my.moves.values]
@@ -108,6 +111,12 @@ class CreateCharacterController extends ChangeNotifier with RepositoryProviderMi
           )
           .toList(),
     );
+    setDirty();
+  }
+
+  void setRace(Race race) {
+    this.race = race;
+    setDirty();
   }
 
   Character getAsCharacter() => Character.empty().copyWith(

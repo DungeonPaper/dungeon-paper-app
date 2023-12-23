@@ -91,7 +91,7 @@ class StartingGearFormView extends StatelessWidget {
     );
   }
 
-  _save(BuildContext context) {
+  void _save(BuildContext context) {
     final controller =
         Provider.of<StartingGearFormController>(context, listen: false);
     controller.onChanged(controller.selectedOptions);

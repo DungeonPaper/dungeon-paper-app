@@ -28,7 +28,8 @@ class SelectMovesSpellsView extends StatelessWidget {
         child: Scaffold(
           appBar: AppBar(
             title: Text(
-                tr.generic.selectEntity(tr.createCharacter.movesSpells.title)),
+              tr.generic.selectEntity(tr.createCharacter.movesSpells.title),
+            ),
             centerTitle: true,
           ),
           floatingActionButton: AdvancedFloatingActionButton.extended(

@@ -15,7 +15,7 @@ class StartingGearFormController extends ChangeNotifier {
 
   StartingGearFormController(BuildContext context) {
     final StartingGearFormArguments args = getArgs(context);
-    selectedOptions = args.selectedOptions;
+    selectedOptions = args.selectedOptions.toList();
     characterClass = args.characterClass;
     onChanged = args.onChanged;
     getGear();

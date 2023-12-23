@@ -247,27 +247,32 @@ class AppPages {
           child: const CreateCharacterView(),
         ),
 
-    Routes.createCharacterSelectClass: (context) =>
-        const CharacterClassesLibraryListView(),
+    Routes.createCharacterSelectClass: (context) => ChangeNotifierProvider(
+          create: (_) =>
+              LibraryListController<CharacterClass, CharacterClassFilters>(
+            context,
+          ),
+          child: const CharacterClassesLibraryListView(),
+        ),
 
     Routes.createCharacterStartingGear: (context) => ChangeNotifierProvider(
-          child: const StartingGearFormView(),
           create: (_) => StartingGearFormController(context),
+          child: const StartingGearFormView(),
         ),
 
     Routes.createCharacterMovesSpells: (context) => ChangeNotifierProvider(
-          child: const SelectMovesSpellsView(),
           create: (_) => SelectMovesSpellsController(context),
+          child: const SelectMovesSpellsView(),
         ),
 
     Routes.createCharacterBasicInfo: (context) => ChangeNotifierProvider(
-          child: const BasicInfoFormView(),
           create: (_) => BasicInfoFormController(context),
+          child: const BasicInfoFormView(),
         ),
 
     Routes.createCharacterAbilityScores: (context) => ChangeNotifierProvider(
-          child: const AbilityScoresFormView(),
           create: (_) => AbilityScoresFormController(context),
+          child: const AbilityScoresFormView(),
         ),
 
     Routes.classAlignments: (context) => ChangeNotifierProvider(
@@ -315,7 +320,7 @@ class AppPages {
           create: (_) => CampaignsListController(),
         ),
 
-        _Paths.changelog: (context) => ChangeNotifierProvider(
+    _Paths.changelog: (context) => ChangeNotifierProvider(
           child: const ChangelogView(),
           create: (_) => ChangelogController(),
         ),

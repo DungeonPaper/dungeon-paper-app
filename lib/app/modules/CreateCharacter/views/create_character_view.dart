@@ -133,8 +133,7 @@ class CreateCharacterView extends StatelessWidget with CharacterProviderMixin {
                                         controller.characterClass != null
                                             ? [controller.characterClass!]
                                             : [],
-                                    onSelected: (cls) =>
-                                        controller.setClass(context, cls),
+                                    onSelected: controller.setClass,
                                   ),
                                 ),
                               ),
@@ -157,8 +156,7 @@ class CreateCharacterView extends StatelessWidget with CharacterProviderMixin {
                                           character:
                                               controller.getAsCharacter(),
                                           preSelection: controller.race,
-                                          onSelected: (race) =>
-                                              controller.race = race,
+                                          onSelected: controller.setRace,
                                         )
                                     : null,
                                 valid: controller.race != null,
@@ -181,8 +179,7 @@ class CreateCharacterView extends StatelessWidget with CharacterProviderMixin {
                                 onTap: () => Navigator.of(context).pushNamed(
                                   Routes.createCharacterAbilityScores,
                                   arguments: AbilityScoresFormArguments(
-                                    onChanged: (abilityScores) => controller
-                                        .setAbilityScores(abilityScores),
+                                    onChanged: controller.setAbilityScores,
                                     abilityScores: controller.abilityScores,
                                   ),
                                 ),
