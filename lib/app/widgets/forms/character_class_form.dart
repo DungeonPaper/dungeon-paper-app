@@ -41,6 +41,7 @@ class CharacterClassForm extends StatelessWidget {
                 minLines: 5,
                 textCapitalization: TextCapitalization.sentences,
               ),
+          () => const Divider(height: 32),
           () => DiceListInput(
                 controller: controller.damageDice,
                 label: Text(tr.characterClass.damageDice),
@@ -79,6 +80,14 @@ class CharacterClassForm extends StatelessWidget {
                   ),
                 ],
               ),
+          () => CheckboxListTile(
+                controlAffinity: ListTileControlAffinity.leading,
+                title: Text(tr.characterClass.isSpellcaster.title),
+                subtitle: Text(tr.characterClass.isSpellcaster.subtitle),
+                value: controller.isSpellcaster.value,
+                onChanged: (value) =>
+                    controller.isSpellcaster.value = value ?? false,
+              ),
         ],
       ),
     );
@@ -102,9 +111,19 @@ class CharacterClassFormController extends LibraryEntityFormController<
       chaotic: '',
     ),
   );
+  final _isSpellcaster = ValueNotifier<bool>(false);
 
   @override
-  List<ValueNotifier> get fields => [_name, _description, _damageDice];
+  List<ValueNotifier> get fields => [
+        _name,
+        _description,
+        _damageDice,
+        _hp,
+        _load,
+        _damageDice,
+        _alignmentValues,
+        _isSpellcaster,
+      ];
 
   TextEditingController get name => _name;
   TextEditingController get description => _description;
@@ -112,6 +131,7 @@ class CharacterClassFormController extends LibraryEntityFormController<
   TextEditingController get hp => _hp;
   TextEditingController get load => _load;
   ValueNotifier<AlignmentValues> get alignmentValues => _alignmentValues;
+  ValueNotifier<bool> get isSpellcaster => _isSpellcaster;
 
   CharacterClassFormController(super.context) {
     name.text = args.entity?.name ?? '';
@@ -128,6 +148,7 @@ class CharacterClassFormController extends LibraryEntityFormController<
           lawful: '',
           chaotic: '',
         );
+    isSpellcaster.value = args.entity?.isSpellcaster ?? false;
   }
 
   @override
@@ -147,6 +168,7 @@ class CharacterClassFormController extends LibraryEntityFormController<
           lawful: '',
           chaotic: '',
         );
+    isSpellcaster.value = entity.isSpellcaster;
   }
 
   @override
@@ -160,6 +182,7 @@ class CharacterClassFormController extends LibraryEntityFormController<
         hp: int.tryParse(hp.text) ?? 0,
         load: int.tryParse(load.text) ?? 0,
         alignments: alignmentValues.value,
+        isSpellcaster: isSpellcaster.value,
       );
 }
 

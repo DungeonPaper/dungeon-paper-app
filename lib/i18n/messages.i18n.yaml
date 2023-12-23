@@ -290,6 +290,11 @@ characterClass:
   baseLoad: Base Load
   baseHp: Base HP
   damageDice: Damage Dice
+  isSpellcaster:
+    title: Spellcaster
+    subtitle: |-
+      Spellcaster classes are prompted to select spells (as well as moves) during character
+      creation and leveling up.
 
 dice:
   suggestion(String dice): 'Suggested: $dice'

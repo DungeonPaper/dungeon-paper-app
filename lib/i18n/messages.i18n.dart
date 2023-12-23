@@ -1466,6 +1466,28 @@ class CharacterClassMessages {
   /// "Damage Dice"
   /// ```
   String get damageDice => """Damage Dice""";
+  IsSpellcasterCharacterClassMessages get isSpellcaster =>
+      IsSpellcasterCharacterClassMessages(this);
+}
+
+class IsSpellcasterCharacterClassMessages {
+  final CharacterClassMessages _parent;
+  const IsSpellcasterCharacterClassMessages(this._parent);
+
+  /// ```dart
+  /// "Spellcaster"
+  /// ```
+  String get title => """Spellcaster""";
+
+  /// ```dart
+  /// """
+  /// Spellcaster classes are prompted to select spells (as well as moves) during character
+  /// creation and leveling up.
+  /// """
+  /// ```
+  String get subtitle =>
+      """Spellcaster classes are prompted to select spells (as well as moves) during character
+creation and leveling up.""";
 }
 
 class DiceMessages {
@@ -3792,6 +3814,10 @@ Map<String, String> get messagesMap => {
       """characterClass.baseLoad""": """Base Load""",
       """characterClass.baseHp""": """Base HP""",
       """characterClass.damageDice""": """Damage Dice""",
+      """characterClass.isSpellcaster.title""": """Spellcaster""",
+      """characterClass.isSpellcaster.subtitle""":
+          """Spellcaster classes are prompted to select spells (as well as moves) during character
+creation and leveling up.""",
       """dice.form.amount""": """Amount""",
       """dice.form.sides""": """Sides""",
       """dice.form.diceSeparator""": """d""",
