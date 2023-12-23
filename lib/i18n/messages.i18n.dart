@@ -2039,9 +2039,9 @@ class AlignmentValuesAlignmentMessages {
   const AlignmentValuesAlignmentMessages(this._parent);
 
   /// ```dart
-  /// "Alignment Values"
+  /// "Alignments"
   /// ```
-  String get title => """Alignment Values""";
+  String get title => """Alignments""";
 }
 
 class BioMessages {
@@ -3844,7 +3844,7 @@ Map<String, String> get messagesMap => {
       """notes.emptyState.subtitle""":
           """You can record your progress, memos, lists, maps and more using the journal.""",
       """notes.emptyState.button""": """Create Note""",
-      """alignment.alignmentValues.title""": """Alignment Values""",
+      """alignment.alignmentValues.title""": """Alignments""",
       """bio.dialog.title""": """Character Biography""",
       """bio.dialog.description.label""":
           """Character & background description""",
