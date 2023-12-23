@@ -61,6 +61,9 @@ class AlignmentValue extends dw.Alignment with WithIcon implements WithMeta {
         type: type ?? dw.AlignmentType.good,
       );
 
+  bool get isEmpty => description.isEmpty;
+  bool get isNotEmpty => !isEmpty;
+
   @override
   AlignmentValue copyWith({
     Meta? meta,
@@ -166,6 +169,17 @@ class AlignmentValues extends dw.AlignmentValues {
         chaotic: json['chaotic'],
       );
 
+  List<AlignmentValue> get values => dw.AlignmentType.values
+      .map((e) => AlignmentValue(
+            meta: meta,
+            type: e,
+            description: byType(e),
+          ))
+      .toList();
+
+  bool get isEmpty => values.every((element) => element.isEmpty);
+  bool get isNotEmpty => !isEmpty;
+
   AlignmentValues copyWithInherited({
     Meta? meta,
     String? good,
@@ -222,3 +236,4 @@ class AlignmentValues extends dw.AlignmentValues {
   @override
   String toString() => 'AlignmentValues($debugProperties)';
 }
+

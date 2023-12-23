@@ -51,14 +51,19 @@ class LibraryListController<T extends WithMeta, F extends EntityFilters<T>>
     search[FiltersGroup.playbook]!.addListener(_updatePlaybookSearch);
     search[FiltersGroup.my] ??= TextEditingController();
     search[FiltersGroup.my]!.addListener(_updateMySearch);
+    repo.my.addListener(notifyListeners);
+    repo.builtIn.addListener(notifyListeners);
   }
 
   @override
   void dispose() {
     search[FiltersGroup.playbook]!.removeListener(_updatePlaybookSearch);
     search[FiltersGroup.my]!.removeListener(_updateMySearch);
+    repo.my.removeListener(notifyListeners);
+    repo.builtIn.removeListener(notifyListeners);
     super.dispose();
   }
+
 
   void setFilters(FiltersGroup group, F? filters) {
     this.filters[group] = filters;

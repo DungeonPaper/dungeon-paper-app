@@ -64,13 +64,13 @@ class LibraryCardList<T extends WithMeta, F extends EntityFilters<T>>
 
   @override
   Widget build(BuildContext context) {
-    return Consumer<LibraryListController<T, F>>(
-      builder: (context, controller, _) => Stack(
-        children: [
-          Positioned.fill(
-            child: Padding(
-              padding: const EdgeInsets.only(top: 32),
-              child: ItemBuilder.listViewBuilder(
+    return Stack(
+      children: [
+        Positioned.fill(
+          child: Padding(
+            padding: const EdgeInsets.only(top: 32),
+            child: Consumer<LibraryListController<T, F>>(
+              builder: (context, controller, _) => ItemBuilder.listViewBuilder(
                 padding: const EdgeInsets.all(8).copyWith(
                   top: 0,
                   bottom: controller.selectable ? 80 : 4,
@@ -85,13 +85,16 @@ class LibraryCardList<T extends WithMeta, F extends EntityFilters<T>>
               ),
             ),
           ),
-          if (useFilters)
-            Padding(
-              padding: const EdgeInsets.all(8),
-              child: filtersBuilder!(group, filters, controller.setFilters),
+        ),
+        if (useFilters)
+          Padding(
+            padding: const EdgeInsets.all(8),
+            child: Consumer<LibraryListController<T, F>>(
+              builder: (context, controller, _) =>
+                  filtersBuilder!(group, filters, controller.setFilters),
             ),
-        ],
-      ),
+          ),
+      ],
     );
   }
 
@@ -198,3 +201,4 @@ class LibraryCardList<T extends WithMeta, F extends EntityFilters<T>>
     throw TypeError();
   }
 }
+

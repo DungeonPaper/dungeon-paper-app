@@ -307,6 +307,7 @@ abstract class RepositoryCache extends ChangeNotifier {
       }
     }
     save(out);
+    notifyListeners();
     return out;
   }
 
