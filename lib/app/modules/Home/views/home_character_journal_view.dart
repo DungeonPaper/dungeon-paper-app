@@ -94,77 +94,84 @@ class HomeCharacterJournalView extends StatelessWidget
               ),
             );
           }
-          return ListView(
-            // physics: const NeverScrollableScrollPhysics(),
-            padding: const EdgeInsets.only(bottom: 70),
-            // shrinkWrap: true,
-            // onReorder: (oldIndex, newIndex) => controller.updateCharacter(
-            //   char.copyWith(
-            //     settings: char.settings.copyWith(
-            //       noteCategoriesSort: Set.from(
-            //         reorder(char.noteCategories.toList(), oldIndex, newIndex),
-            //       ),
-            //     ),
-            //   ),
-            // ),
-            children: [
-              for (final cat in enumerate(char.noteCategories))
-                CategorizedList(
-                  key: Key('note-category-${cat.value}'),
-                  initiallyExpanded: true,
-                  title:
-                      Text(cat.value.isEmpty ? tr.notes.noCategory : cat.value),
-                  titleTrailing: [
-                    GroupSortMenu(
-                      index: cat.index,
-                      totalItemCount: char.noteCategories.length - 1,
-                      onReorder: _move,
-                    ),
-                  ],
-                  onReorder: (oldIndex, newIndex) => controller.updateCharacter(
-                    CharacterUtils.reorderByType<Note>(char, oldIndex, newIndex,
-                        extraData: cat.value),
-                  ),
-                  children: char.notes
-                      .where((note) => note.localizedCategory == cat.value)
-                      .map(
-                        (note) => Padding(
-                          key: Key('note-${note.key}'),
-                          padding: const EdgeInsets.symmetric(vertical: 4),
-                          child: NoteCard(
-                            note: note,
-                            reorderablePadding: true,
-                            actions: [
-                              EntityEditMenu(
-                                onDelete: confirmDelete(
-                                  context,
-                                  note,
-                                  note.title,
-                                  tn(Note),
-                                ),
-                                onEdit: () => ModelPages.openNotePage(
-                                  context,
-                                  note: note,
-                                  onSave: (note) {
-                                    controller.updateCharacter(
-                                      CharacterUtils.updateByType<Note>(
-                                          char, [note]),
-                                    );
-                                    StorageHandler.instance.create(
-                                        'Notes', note.key, note.toJson());
-                                  },
+          return Center(
+            child: SizedBox(
+              width: 800,
+              child: ListView(
+                // physics: const NeverScrollableScrollPhysics(),
+                padding: const EdgeInsets.only(bottom: 70),
+                // shrinkWrap: true,
+                // onReorder: (oldIndex, newIndex) => controller.updateCharacter(
+                //   char.copyWith(
+                //     settings: char.settings.copyWith(
+                //       noteCategoriesSort: Set.from(
+                //         reorder(char.noteCategories.toList(), oldIndex, newIndex),
+                //       ),
+                //     ),
+                //   ),
+                // ),
+                children: [
+                  for (final cat in enumerate(char.noteCategories))
+                    CategorizedList(
+                      key: Key('note-category-${cat.value}'),
+                      initiallyExpanded: true,
+                      title: Text(
+                          cat.value.isEmpty ? tr.notes.noCategory : cat.value),
+                      titleTrailing: [
+                        GroupSortMenu(
+                          index: cat.index,
+                          totalItemCount: char.noteCategories.length - 1,
+                          onReorder: _move,
+                        ),
+                      ],
+                      onReorder: (oldIndex, newIndex) =>
+                          controller.updateCharacter(
+                        CharacterUtils.reorderByType<Note>(
+                            char, oldIndex, newIndex,
+                            extraData: cat.value),
+                      ),
+                      children: char.notes
+                          .where((note) => note.localizedCategory == cat.value)
+                          .map(
+                            (note) => Padding(
+                              key: Key('note-${note.key}'),
+                              padding: const EdgeInsets.symmetric(vertical: 4),
+                              child: NoteCard(
+                                note: note,
+                                reorderablePadding: true,
+                                actions: [
+                                  EntityEditMenu(
+                                    onDelete: confirmDelete(
+                                      context,
+                                      note,
+                                      note.title,
+                                      tn(Note),
+                                    ),
+                                    onEdit: () => ModelPages.openNotePage(
+                                      context,
+                                      note: note,
+                                      onSave: (note) {
+                                        controller.updateCharacter(
+                                          CharacterUtils.updateByType<Note>(
+                                              char, [note]),
+                                        );
+                                        StorageHandler.instance.create(
+                                            'Notes', note.key, note.toJson());
+                                      },
+                                    ),
+                                  ),
+                                ],
+                                onSave: (note) => controller.updateCharacter(
+                                  CharacterUtils.updateNotes(char, [note]),
                                 ),
                               ),
-                            ],
-                            onSave: (note) => controller.updateCharacter(
-                              CharacterUtils.updateNotes(char, [note]),
                             ),
-                          ),
-                        ),
-                      )
-                      .toList(),
-                ),
-            ],
+                          )
+                          .toList(),
+                    ),
+                ],
+              ),
+            ),
           );
         },
       ),

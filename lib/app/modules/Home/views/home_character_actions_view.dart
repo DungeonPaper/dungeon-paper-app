@@ -48,8 +48,10 @@ class HomeCharacterActionsView extends StatelessWidget
             return Container();
           }
           final builder = _getBuilder(controller);
-          return builder.asListView(
-            padding: const EdgeInsets.only(bottom: 16),
+          return SizedBox(
+            child: builder.asListView(
+              padding: const EdgeInsets.only(bottom: 16),
+            ),
           );
         },
       ),
@@ -63,18 +65,28 @@ class HomeCharacterActionsView extends StatelessWidget
       leadingCount: 1,
       itemCount: char.actionCategories.length,
       itemBuilder: (context, index) {
-        switch (char.actionCategories.elementAt(index)) {
-          case 'ClassAction':
-            return classActionsList(context, ctrl) ?? const SizedBox.shrink();
-          case 'Move':
-            return movesList(context, ctrl) ?? const SizedBox.shrink();
-          case 'Spell':
-            return spellsList(context, ctrl) ?? const SizedBox.shrink();
-          case 'Item':
-            return itemsList(context, ctrl) ?? const SizedBox.shrink();
-        }
+        return Center(
+          child: SizedBox(
+            width: 800,
+            child: Builder(
+              builder: (context) {
+                switch (char.actionCategories.elementAt(index)) {
+                  case 'ClassAction':
+                    return classActionsList(context, ctrl) ??
+                        const SizedBox.shrink();
+                  case 'Move':
+                    return movesList(context, ctrl) ?? const SizedBox.shrink();
+                  case 'Spell':
+                    return spellsList(context, ctrl) ?? const SizedBox.shrink();
+                  case 'Item':
+                    return itemsList(context, ctrl) ?? const SizedBox.shrink();
+                }
 
-        return const SizedBox.shrink();
+                return const SizedBox.shrink();
+              },
+            ),
+          ),
+        );
       },
     );
   }
@@ -132,13 +144,13 @@ class HomeCharacterActionsView extends StatelessWidget
     return CategorizedList(
       initiallyExpanded: true,
       title: Text(tr.actions.classActions.title),
-        titleTrailing: [
-          GroupSortMenu(
-            index: index,
-            totalItemCount: Character.allActionCategories.length,
-            onReorder: _onReorder,
-          )
-        ],
+      titleTrailing: [
+        GroupSortMenu(
+          index: index,
+          totalItemCount: Character.allActionCategories.length,
+          onReorder: _onReorder,
+        )
+      ],
       itemPadding: const EdgeInsets.only(bottom: 8),
       children: [
         ...list.map(
