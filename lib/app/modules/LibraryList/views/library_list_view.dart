@@ -103,69 +103,75 @@ class _LibraryListViewState<T extends WithMeta, F extends EntityFilters<T>>
       ),
       body: PageStorage(
         bucket: pageStorageBucket,
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            TabBar(
-              controller: tabController,
-              labelColor: Theme.of(context).colorScheme.onSurface,
-              unselectedLabelColor: Theme.of(context).colorScheme.onSurface,
-              tabs: [
-                Tab(child: Text(tr.myLibrary.itemTab.playbook)),
-                Tab(
-                  child: Text(
-                    tr.generic.myEntity(tr.entityPlural(tn(T))),
+        child: Center(
+          child: SizedBox(
+            width: 800,
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                TabBar(
+                  controller: tabController,
+                  labelColor: Theme.of(context).colorScheme.onSurface,
+                  unselectedLabelColor: Theme.of(context).colorScheme.onSurface,
+                  tabs: [
+                    Tab(child: Text(tr.myLibrary.itemTab.playbook)),
+                    Tab(
+                      child: Text(
+                        tr.generic.myEntity(tr.entityPlural(tn(T))),
+                      ),
+                    ),
+                    // Tab(child: Text(tr.myLibrary.itemTab.online)),
+                  ],
+                ),
+                Expanded(
+                  child: TabBarView(
+                    controller: tabController,
+                    children: [
+                      Consumer<LibraryListController<T, F>>(
+                        builder: (context, controller, _) =>
+                            LibraryCardList<T, F>.builder(
+                          group: FiltersGroup.playbook,
+                          useFilters: useFilters,
+                          filtersBuilder: widget.filtersBuilder,
+                          filters: playbookFilters(context),
+                          extraData: controller.extraData,
+                          totalItemCount: controller.builtInListRaw.length,
+                          itemCount: controller.builtInList.length,
+                          itemBuilder: (context, index) {
+                            final item = controller.builtInList.elementAt(index);
+                            return _wrapWithSelection(
+                                context, item, FiltersGroup.playbook);
+                          },
+                        ),
+                      ),
+                      Consumer<LibraryListController<T, F>>(
+                        builder: (context, controller, _) =>
+                            LibraryCardList<T, F>.builder(
+                          group: FiltersGroup.my,
+                          onSave: (item) => controller.saveCustomItem(
+                              controller.storageKey, item),
+                          extraData: controller.extraData,
+                          useFilters: useFilters,
+                          filtersBuilder: widget.filtersBuilder,
+                          filters: myFilters(context),
+                          totalItemCount: controller.myListRaw.length,
+                          itemCount: controller.myList.length,
+                          itemBuilder: (context, index) {
+                            debugPrint(
+                                'Rebuilding $index, ${controller.myList.elementAt(index).displayName}');
+                            final item = controller.myList.elementAt(index);
+                            return _wrapWithSelection(
+                                context, item, FiltersGroup.my);
+                          },
+                        ),
+                      ),
+                      // Container(),
+                    ],
                   ),
                 ),
-                // Tab(child: Text(tr.myLibrary.itemTab.online)),
               ],
             ),
-            Expanded(
-              child: TabBarView(
-                controller: tabController,
-                children: [
-                  Consumer<LibraryListController<T, F>>(
-                    builder: (context, controller, _) =>
-                        LibraryCardList<T, F>.builder(
-                      group: FiltersGroup.playbook,
-                      useFilters: useFilters,
-                      filtersBuilder: widget.filtersBuilder,
-                      filters: playbookFilters(context),
-                      extraData: controller.extraData,
-                      totalItemCount: controller.builtInListRaw.length,
-                      itemCount: controller.builtInList.length,
-                      itemBuilder: (context, index) {
-                        final item = controller.builtInList.elementAt(index);
-                        return _wrapWithSelection(
-                            context, item, FiltersGroup.playbook);
-                      },
-                    ),
-                  ),
-                  Consumer<LibraryListController<T, F>>(
-                    builder: (context, controller, _) =>
-                        LibraryCardList<T, F>.builder(
-                      group: FiltersGroup.my,
-                      onSave: (item) => controller.saveCustomItem(
-                          controller.storageKey, item),
-                      extraData: controller.extraData,
-                      useFilters: useFilters,
-                      filtersBuilder: widget.filtersBuilder,
-                      filters: myFilters(context),
-                      totalItemCount: controller.myListRaw.length,
-                      itemCount: controller.myList.length,
-                      itemBuilder: (context, index) {
-                        debugPrint('Rebuilding $index, ${controller.myList.elementAt( index ).displayName}');
-                        final item = controller.myList.elementAt(index);
-                        return _wrapWithSelection(
-                            context, item, FiltersGroup.my);
-                      },
-                    ),
-                  ),
-                  // Container(),
-                ],
-              ),
-            ),
-          ],
+          ),
         ),
       ),
       floatingActionButton: Consumer<LibraryListController<T, F>>(
