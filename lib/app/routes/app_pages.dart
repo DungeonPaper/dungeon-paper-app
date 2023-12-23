@@ -78,6 +78,22 @@ import '../widgets/views/roll_dice_view.dart';
 
 part 'app_routes.dart';
 
+class DefaultPageRoute<T> extends PageRouteBuilder<T>
+    with MaterialRouteTransitionMixin<T> {
+  DefaultPageRoute(
+      {required this.builder,
+      super.settings,
+      super.fullscreenDialog,
+      super.opaque})
+      : super(pageBuilder: (ctx, _, __) => builder(ctx));
+  final WidgetBuilder builder;
+
+  @override
+  Widget buildContent(BuildContext context) {
+    return this.builder(context);
+  }
+}
+
 class AppPages {
   AppPages._();
 
@@ -85,7 +101,6 @@ class AppPages {
 
   static const initial = Routes.home;
 
-  /// https://github.com/DungeonPaper/dungeon-paper-app/blob/86b660037e2e0aeb7b83930efb33785a0d829ebe/lib/app/routes/app_pages.dart#L99
   static Route<dynamic> onGenerateRoute(RouteSettings settings) {
     final route = settings.name;
     final builder = routes[route];
@@ -96,11 +111,22 @@ class AppPages {
     if (transitionsMap.containsKey(route)) {
       return transitionsMap[route]!(builder, settings);
     }
-    return MaterialPageRoute(
+    return DefaultPageRoute(
       builder: builder,
       settings: settings,
+      fullscreenDialog: AppPages.fullscreenDialogs.contains(route),
+      opaque: !AppPages.transparentRoutes.contains(route),
     );
   }
+
+  static final fullscreenDialogs = <String>{
+    Routes.rollDice,
+    Routes.userMenu,
+    Routes.universalSearch,
+    Routes.createCharacter,
+  };
+
+  static final transparentRoutes = <String>{Routes.createCharacter};
 
   static final transitionsMap =
       <String, Route Function(WidgetBuilder builder, RouteSettings settings)>{
