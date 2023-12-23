@@ -72,15 +72,15 @@ scripts:
   # ===============================================================================================
   # Web
   # ===============================================================================================
-  - name: web:build:app
+  - name: web:build
     cmd: flutter build web
     description: Build Web app
-  - name: web:build:all
-    cmd: web:build:app
-    description: 'Alias for: Build Web app'
   - name: web:publish
     cmd: firebase deploy --only hosting
     description: Publish web version using Firebase (requires build)
+  - name: web:release
+    cmd: web:build && web:publish
+    descrition: Build & publish web version using Firebase
 
   # ===============================================================================================
   # All

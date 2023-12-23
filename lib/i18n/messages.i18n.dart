@@ -2944,6 +2944,8 @@ class ActionsMessages {
   final Messages _parent;
   const ActionsMessages(this._parent);
   MovesActionsMessages get moves => MovesActionsMessages(this);
+  ClassActionsActionsMessages get classActions =>
+      ClassActionsActionsMessages(this);
 }
 
 class MovesActionsMessages {
@@ -2959,6 +2961,21 @@ class MovesActionsMessages {
   /// "Special Moves"
   /// ```
   String get special => """Special Moves""";
+}
+
+class ClassActionsActionsMessages {
+  final ActionsMessages _parent;
+  const ClassActionsActionsMessages(this._parent);
+
+  /// ```dart
+  /// "Class Actions"
+  /// ```
+  String get title => """Class Actions""";
+
+  /// ```dart
+  /// "Mark +1 XP"
+  /// ```
+  String get markXP => """Mark +1 XP""";
 }
 
 class AbilityScoresMessages {
@@ -3989,6 +4006,8 @@ creation and leveling up.""",
           """A deletion request for your account was sent successfully""",
       """actions.moves.basic""": """Basic Moves""",
       """actions.moves.special""": """Special Moves""",
+      """actions.classActions.title""": """Class Actions""",
+      """actions.classActions.markXP""": """Mark +1 XP""",
       """abilityScores.info""":
           """You can drag & drop the stat cards to change the order in which they appear throughout this character's screens.""",
       """abilityScores.rollButton.stat""": """Roll +{stat}""",

@@ -9,6 +9,7 @@ import 'package:dungeon_paper/app/data/services/character_provider.dart';
 import 'package:dungeon_paper/app/data/services/library_provider.dart';
 import 'package:dungeon_paper/app/model_utils/character_utils.dart';
 import 'package:dungeon_paper/app/model_utils/model_pages.dart';
+import 'package:dungeon_paper/app/modules/BioForm/controllers/bio_form_controller.dart';
 import 'package:dungeon_paper/app/modules/LibraryList/controllers/library_list_controller.dart';
 import 'package:dungeon_paper/app/modules/LibraryList/views/items_library_list_view.dart';
 import 'package:dungeon_paper/app/modules/LibraryList/views/moves_library_list_view.dart';
@@ -16,6 +17,7 @@ import 'package:dungeon_paper/app/modules/LibraryList/views/spells_library_list_
 import 'package:dungeon_paper/app/routes/app_pages.dart';
 import 'package:dungeon_paper/app/widgets/atoms/checklist_menu_entry.dart';
 import 'package:dungeon_paper/app/widgets/atoms/menu_button.dart';
+import 'package:dungeon_paper/app/widgets/cards/alignment_value_card.dart';
 import 'package:dungeon_paper/app/widgets/cards/item_card.dart';
 import 'package:dungeon_paper/app/widgets/cards/move_card.dart';
 import 'package:dungeon_paper/app/widgets/cards/race_card.dart';
@@ -62,6 +64,8 @@ class HomeCharacterActionsView extends StatelessWidget
       itemCount: char.actionCategories.length,
       itemBuilder: (context, index) {
         switch (char.actionCategories.elementAt(index)) {
+          case 'ClassAction':
+            return classActionsList(context, ctrl) ?? const SizedBox.shrink();
           case 'Move':
             return movesList(context, ctrl) ?? const SizedBox.shrink();
           case 'Spell':
@@ -75,8 +79,8 @@ class HomeCharacterActionsView extends StatelessWidget
     );
   }
 
-  Widget? movesList(BuildContext context, CharacterProvider controller) {
-    if (char.settings.actionCategories.hidden.contains('Move')) {
+  Widget? classActionsList(BuildContext context, CharacterProvider controller) {
+    if (char.settings.actionCategories.hidden.contains('ClassAction')) {
       return null;
     }
     final raceCard = RaceCard(
@@ -98,6 +102,62 @@ class HomeCharacterActionsView extends StatelessWidget
         ),
       ],
     );
+    final alignmentCard = AlignmentValueCard(
+      alignment: char.bio.alignment,
+      actions: [
+        EntityEditMenu(
+          onDelete: null,
+          onEdit: () => Navigator.of(context).pushNamed(
+            Routes.bio,
+            arguments: BioFormArguments(character: char),
+          ),
+        ),
+        ElevatedButton(
+          onPressed: () => charProvider.updateCharacter(
+            char.copyWith(
+              stats: char.stats.copyWith(
+                currentXp: char.stats.currentXp + 1,
+              ),
+            ),
+          ),
+          child: Text(tr.actions.classActions.markXP),
+        ),
+      ],
+    );
+    final list = [
+      raceCard,
+      alignmentCard,
+    ];
+    final index = char.actionCategories.toList().indexOf('ClassAction');
+    return CategorizedList(
+      initiallyExpanded: true,
+      title: Text(tr.actions.classActions.title),
+        titleTrailing: [
+          GroupSortMenu(
+            index: index,
+            totalItemCount: Character.allActionCategories.length,
+            onReorder: _onReorder,
+          )
+        ],
+      itemPadding: const EdgeInsets.only(bottom: 8),
+      children: [
+        ...list.map(
+          (obj) {
+            return Padding(
+              padding: const EdgeInsets.symmetric(vertical: 4),
+              key: PageStorageKey('type-ClassAction-${obj.key}'),
+              child: obj,
+            );
+          },
+        ),
+      ],
+    );
+  }
+
+  Widget? movesList(BuildContext context, CharacterProvider controller) {
+    if (char.settings.actionCategories.hidden.contains('Move')) {
+      return null;
+    }
     return ActionsCardList<Move>(
       index: char.actionCategories.toList().indexOf('Move'),
       typeName: tn(Move),
@@ -129,10 +189,7 @@ class HomeCharacterActionsView extends StatelessWidget
         const SizedBox(height: 0),
         const Divider(height: 1),
         const SizedBox(height: 4),
-        if (char.settings.racePosition == RacePosition.start) raceCard,
       ],
-      trailing:
-          char.settings.racePosition == RacePosition.end ? [raceCard] : [],
       menuTrailing: [
         if (char.settings.racePosition != RacePosition.start)
           // Move to start of list
@@ -399,18 +456,20 @@ class ActionsCardList<T extends WithMeta> extends StatelessWidget
         trailing: trailing.map((obj) => _wrapChild(child: obj)).toList(),
         children: [
           ...list.map(
-            (obj) => _wrapChild(
-              key: PageStorageKey('type-$T-${obj.key}'),
-              child: cardBuilder(
-                obj,
-                onDelete: _confirmDeleteDlg(context, obj, obj.displayName),
-                onSave: (fork) => (obj) {
-                  final library = LibraryProvider.of(context);
-                  library.upsertToCharacter([obj],
-                      forkBehavior: ForkBehavior.none);
-                },
-              ),
-            ),
+            (obj) {
+              return _wrapChild(
+                key: PageStorageKey('type-$T-${obj.key}'),
+                child: cardBuilder(
+                  obj,
+                  onDelete: _confirmDeleteDlg(context, obj, obj.displayName),
+                  onSave: (fork) => (obj) {
+                    final library = LibraryProvider.of(context);
+                    library.upsertToCharacter([obj],
+                        forkBehavior: ForkBehavior.none);
+                  },
+                ),
+              );
+            },
           ),
         ],
         onReorder: (oldIndex, newIndex) => controller.updateCharacter(
@@ -442,3 +501,4 @@ class ActionsCardList<T extends WithMeta> extends StatelessWidget
     };
   }
 }
+

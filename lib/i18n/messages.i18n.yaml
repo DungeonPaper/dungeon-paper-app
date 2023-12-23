@@ -608,6 +608,9 @@ actions:
   moves:
     basic: Basic Moves
     special: Special Moves
+  classActions:
+    title: Class Actions
+    markXP: Mark +1 XP
 
 abilityScores:
   info: You can drag & drop the stat cards to change the order in which they appear throughout this character's screens.
